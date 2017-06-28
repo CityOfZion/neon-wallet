@@ -1,0 +1,10 @@
+webpackHotUpdate(0,{
+
+/***/ 1419:
+/***/ (function(module, exports, __webpack_require__) {
+
+	eval("'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _react = __webpack_require__(2);\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _reactVegaLite = __webpack_require__(1377);\n\nvar _reactVegaLite2 = _interopRequireDefault(_reactVegaLite);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nvar VegaMessage = function VegaMessage(_ref) {\n    var origin = _ref.origin,\n        spec = _ref.spec,\n        data = _ref.data;\n    return _react2.default.createElement(\n        'div',\n        { className: origin === 'iris' ? 'message left' : 'message right' },\n        _react2.default.createElement(_reactVegaLite2.default, { spec: spec, data: data })\n    );\n};\n\nexports.default = VegaMessage;//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9hcHAvY29tcG9uZW50cy9WZWdhTWVzc2FnZS5qcz82Y2FhIl0sIm5hbWVzIjpbIlZlZ2FNZXNzYWdlIiwib3JpZ2luIiwic3BlYyIsImRhdGEiXSwibWFwcGluZ3MiOiI7Ozs7OztBQUFBOzs7O0FBQ0E7Ozs7OztBQUVBLElBQU1BLGNBQWMsU0FBZEEsV0FBYztBQUFBLFFBQUdDLE1BQUgsUUFBR0EsTUFBSDtBQUFBLFFBQVdDLElBQVgsUUFBV0EsSUFBWDtBQUFBLFFBQWlCQyxJQUFqQixRQUFpQkEsSUFBakI7QUFBQSxXQUNoQjtBQUFBO0FBQUEsVUFBSyxXQUFhRixXQUFXLE1BQVgsR0FBb0IsY0FBcEIsR0FBcUMsZUFBdkQ7QUFDSSxpRUFBVSxNQUFNQyxJQUFoQixFQUFzQixNQUFNQyxJQUE1QjtBQURKLEtBRGdCO0FBQUEsQ0FBcEI7O2tCQU1lSCxXIiwiZmlsZSI6IjE0MTkuanMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgUmVhY3QgZnJvbSAncmVhY3QnO1xuaW1wb3J0IFZlZ2FMaXRlIGZyb20gJ3JlYWN0LXZlZ2EtbGl0ZSc7XG5cbmNvbnN0IFZlZ2FNZXNzYWdlID0gKHsgb3JpZ2luLCBzcGVjLCBkYXRhIH0pID0+XG4gICAgPGRpdiBjbGFzc05hbWUgPSB7b3JpZ2luID09PSAnaXJpcycgPyAnbWVzc2FnZSBsZWZ0JyA6ICdtZXNzYWdlIHJpZ2h0J30+XG4gICAgICAgIDxWZWdhTGl0ZSBzcGVjPXtzcGVjfSBkYXRhPXtkYXRhfSAvPlxuICAgIDwvZGl2PjtcblxuXG5leHBvcnQgZGVmYXVsdCBWZWdhTWVzc2FnZTtcblxuXG5cbi8vIFdFQlBBQ0sgRk9PVEVSIC8vXG4vLyAuL2FwcC9jb21wb25lbnRzL1ZlZ2FNZXNzYWdlLmpzIl0sInNvdXJjZVJvb3QiOiIifQ==");
+
+/***/ })
+
+})
