@@ -1,0 +1,71 @@
+@-moz-document url(https://app.antshares.org/)
+{
+  header, footer, #menu .mm-title, .mm-menu > .mm-navbar-bottom, .all-asset-btn
+  {
+    background: -moz-linear-gradient(45deg, rgba(180,220,12,1) 0%, rgba(110,186,52,1) 100%) !important;
+ /* ff3.6+ */
+    background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, rgba(180,220,12,1)), color-stop(100%, rgba(110,186,52,1))) !important;
+ /* safari4+,chrome */
+    background: -webkit-linear-gradient(45deg, rgba(180,220,12,1) 0%, rgba(110,186,52,1) 100%) !important;
+ /* safari5.1+,chrome10+ */
+    background: -o-linear-gradient(45deg, rgba(180,220,12,1) 0%, rgba(110,186,52,1) 100%) !important;
+ /* opera 11.10+ */
+    background: -ms-linear-gradient(45deg, rgba(180,220,12,1) 0%, rgba(110,186,52,1) 100%) !important;
+ /* ie10+ */
+    background: linear-gradient(45deg, rgba(180,220,12,1) 0%, rgba(110,186,52,1) 100%) !important;
+    text-transform: uppercase;
+    font-size: .9em;
+    color: #fff;
+  }
+
+  #menu .mm-panels
+  {
+    background: #eee;
+  }
+
+  .mm-listview
+  {
+    color: #222;
+    text-transform: uppercase;
+    font-size: .8em;
+  }
+
+  .lang-my-wallet::after
+  {
+    color: #fff;
+  }
+
+  .blue-panel
+  {
+    background: #eee;
+    color: #222;
+    text-transform: uppercase;
+  }
+
+  .lang-my-tx-list::before
+  {
+    content: 'Recent Transactions';
+    font-size: .5em;
+  }
+
+  .mm-panels .lang-receive::after
+  {
+    margin-left: -4px;
+  }
+
+  .change-wallet-name
+  {
+    font-weight: 300;
+  }
+
+  .ripple-container:hover, .mm-menu.mm-theme-dark .mm-listview > li.mm-selected > a:not(.mm-next)
+  {
+    border-left: 5px solid rgba(0,0,0,.2);
+  }
+
+  .menu-progress
+  {
+    color: #222;
+    font-size: .8em;
+  }
+}
