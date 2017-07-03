@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 // import { Link } from 'react-router';
 
 let Balance = ({ coins }) => {
-  console.log(coins)
+  console.log(coins);
   return <div>{ coins }</div>;
 };
 
