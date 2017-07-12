@@ -1,4 +1,40 @@
 body{
 	font-family: 'helvetica neue', 'helvetica', sans-serif;
-	font-size:12em;
+	font-size:16px;
+}
+
+button{
+	font-size:1.2em;
+	padding:5px 10px;
+}
+button a{
+	text-decoration: none;
+	color:inherit;
+}
+
+#loginPage{
+	margin:20% 20%;
+	input{
+		font-size:1.2em;
+		width:100%;
+		margin:0px 0px 10px 0px;
+		padding:5px 10px;
+		border:1px solid #efefef;
+	}
+}
+
+#balancePage{
+	margin:20% 20%;
+	#balanceList{
+		font-size:1.2em;
+		margin:0px 0px 10px 0px;
+		span.asset{
+			width:250px;
+			margin:0px 5px 0px 0px;
+			font-weight:800;
+		}
+		span.amount{
+			width:250px;
+		}
+	}
 }
