@@ -25,6 +25,18 @@ button a{
 
 #balancePage{
 	margin:20% 20%;
+	#publicAddress{
+		font-size:1.2em;
+		margin:10px 0px;
+		span.key{
+			padding:2px 3px;
+			background-color: #efefef;
+		}
+		span.descriptor{
+			margin:0px 5px 0px 0px;
+			font-weight: 800;
+		}
+	}
 	#balanceList{
 		font-size:1.2em;
 		margin:0px 0px 10px 0px;

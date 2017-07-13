@@ -3,14 +3,15 @@ import { combineReducers } from 'redux';
 import { getAccountsFromWIFKey } from '../wallet/index.js';
 import * as types from '../actions/types';
 
-const account = (state = {'wif': null, 'loggedIn': false}, action) => {
+const account = (state = {'wif': null, 'address':null, 'loggedIn': false}, action) => {
     switch (action.type) {
         case types.LOGIN:
-            const loadAccount = getAccountsFromWIFKey(action.wif);
+            const loadAccount = getAccountsFromWIFKey(action.wif)[0];
+            console.log(loadAccount);
             if(loadAccount === -1 || loadAccount === -2){
-              return {...state, wif:action.wif, loggedIn:false};
+              return {...state, wif:action.wif,  loggedIn:false};
             }
-            return {...state, wif:action.wif, loggedIn:true};
+            return {...state, wif:action.wif, address:loadAccount.address, loggedIn:true};
         default:
             return state;
     }
