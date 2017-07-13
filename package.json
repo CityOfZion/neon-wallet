@@ -34,7 +34,8 @@
     "react-split-pane": "^0.1.63",
     "react-syntax-highlighter": "^5.1.3",
     "redux": "^3.5.2",
-    "secure-random": "^1.1.1"
+    "secure-random": "^1.1.1",
+    "wif": "^2.0.6"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.6",

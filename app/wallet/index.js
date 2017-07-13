@@ -2,6 +2,7 @@ import ecurve from 'ecurve';
 import BigInteger from 'bigi';
 import { ec } from 'elliptic';
 import CryptoJS from 'crypto-js';
+import WIF from 'wif';
 const BASE58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
 import { ab2str,
   str2ab,
@@ -21,6 +22,11 @@ import buffer from 'buffer';
 
 // TODO: exporting ALL of these, but some of them are probably helpers and don't need to be exported
 // TODO: go through and add at least a basic description of everything these methods are doing
+
+export const getWIFFromPrivateKey = (privateKey) => {
+    const hexKey = ab2hexstring(privateKey);
+    return WIF.encode(128, new Buffer(hexKey, 'hex'), true)
+};
 
 export const getTxHash = ($data) => {
 	var DataHexString = CryptoJS.enc.Hex.parse($data);

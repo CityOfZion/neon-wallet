@@ -1,7 +1,18 @@
 import { routerReducer as routing } from 'react-router-redux';
 import { combineReducers } from 'redux';
-import { getAccountsFromWIFKey } from '../wallet/index.js';
+import { getAccountsFromWIFKey, generatePrivateKey, getWIFFromPrivateKey } from '../wallet/index.js';
 import * as types from '../actions/types';
+
+const generateWallet = (state = {'wif': null }, action) => {
+    switch (action.type) {
+        case types.NEW_WALLET:
+            const newPrivateKey = generatePrivateKey();
+            const newWif = getWIFFromPrivateKey(newPrivateKey);
+            return {...state, wif:newWif};
+        default:
+            return state;
+    }
+};
 
 const account = (state = {'wif': null, 'address':null, 'loggedIn': false}, action) => {
     switch (action.type) {
@@ -40,6 +51,7 @@ const wallet = (state = {'ANS': 0, 'ANC': 0 }, action) => {
 
 const rootReducer = combineReducers({
     account,
+    generateWallet,
     wallet
 });
 

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getAccountsFromWIFKey } from './index.js';
 
-const apiEndpoint = "https://antchain.xyz";
+const apiEndpoint = "http://testnet.antchain.xyz";
 
 const ANS = '\u5c0f\u8681\u80a1';
 const ANC = '\u5c0f\u8681\u5e01';

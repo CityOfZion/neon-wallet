@@ -11,6 +11,12 @@ export function login(wif){
 
 // wallet events
 
+export function newWallet(){
+  return {
+    type: types.NEW_WALLET,
+  }
+}
+
 export function setBalance(ans, anc){
   return {
     type: types.SET_BALANCE,

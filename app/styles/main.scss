@@ -4,22 +4,39 @@ body{
 }
 
 button{
-	font-size:1.2em;
-	padding:5px 10px;
+	font-size:1em;
+	padding:3px 7px;
 }
 button a{
 	text-decoration: none;
 	color:inherit;
 }
 
+// for key display
+span.key{
+	padding:2px 3px;
+	background-color: #efefef;
+}
+
 #loginPage{
 	margin:20% 20%;
 	input{
-		font-size:1.2em;
+		font-size:1em;
 		width:100%;
 		margin:0px 0px 10px 0px;
-		padding:5px 10px;
+		padding:3px 7px;
 		border:1px solid #efefef;
+	}
+	.title{
+		font-size: 1.4em;
+		margin:10px 0px;
+		font-weight:800;
+	}
+}
+
+#newWallet{
+	#walletInfo{
+		margin:10px 0px;
 	}
 }
 
@@ -28,10 +45,6 @@ button a{
 	#publicAddress{
 		font-size:1.2em;
 		margin:10px 0px;
-		span.key{
-			padding:2px 3px;
-			background-color: #efefef;
-		}
 		span.descriptor{
 			margin:0px 5px 0px 0px;
 			font-weight: 800;
