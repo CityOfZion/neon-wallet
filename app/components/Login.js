@@ -15,7 +15,7 @@ let Login = ({ dispatch, loggedIn, wif }) =>
   <div id="loginPage">
     <div className="login">
       <div className="title">Login:</div>
-      <input type="text" placeholder="Enter your private key here" onChange={() => onWifChange(dispatch)} ref={node => {input_wif = node;}} />
+      <input type="text" placeholder="Enter your private key here (WIF)" onChange={() => onWifChange(dispatch)} ref={node => {input_wif = node;}} />
       <div className="margin10">{loggedIn ? <button><Link to="/balance">Login</Link></button> : <button disabled="true">Login</button>}</div>
       <div className="margin10"><button><Link to="/create">New Wallet</Link></button></div>
     </div>

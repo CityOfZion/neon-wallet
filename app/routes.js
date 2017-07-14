@@ -4,6 +4,7 @@ import App from './components/App';
 import Login from './components/Login';
 import Balance from './components/Balance';
 import CreateWallet from './components/CreateWallet';
+import SendPage from './components/SendPage';
 
 
 export default (
@@ -11,5 +12,6 @@ export default (
 		<IndexRoute component={Login} />
 		<Route path="/create" component={CreateWallet} />
 		<Route path="/balance" component={Balance} />
+		<Route path="/send" component={Send} />
 	</Route>
 );

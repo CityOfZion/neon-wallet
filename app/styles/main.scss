@@ -13,6 +13,12 @@ button a{
 	color:inherit;
 }
 
+input{
+	font-size:1em;
+	padding:3px 7px;
+	border:1px solid #efefef;
+}
+
 // for key display
 span.key{
 	padding:2px 3px;
@@ -33,10 +39,7 @@ span.key{
 
 #loginPage{
 	input{
-		font-size:1em;
 		width:100%;
-		padding:3px 7px;
-		border:1px solid #efefef;
 	}
 }
 
@@ -51,9 +54,21 @@ span.key{
 	}
 }
 
+#sendPage{
+	#sendAddress, #sendAsset, #sendAmount{
+		margin-right:10px;
+	}
+	input#sendAddress{
+		width: 400px;
+	}
+	input#sendAmount{
+		width:80px;
+	}
+}
+
 #balancePage{
 	#publicAddress{
-		font-size:1.2em;
+		// font-size:1.2em;
 		margin:10px 0px;
 		span.descriptor{
 			margin:0px 5px 0px 0px;
@@ -61,7 +76,7 @@ span.key{
 		}
 	}
 	#balanceList{
-		font-size:1.2em;
+		// font-size:1.2em;
 		margin:0px 0px 10px 0px;
 		span.asset{
 			width:250px;
