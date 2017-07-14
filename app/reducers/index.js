@@ -3,6 +3,15 @@ import { combineReducers } from 'redux';
 import { getAccountsFromWIFKey, generatePrivateKey, getWIFFromPrivateKey } from '../wallet/index.js';
 import * as types from '../actions/types';
 
+const network = (state = {'net': 'TestNet'}, action) => {
+  switch (action.type) {
+      case types.SET_NETWORK:
+          return {...state, net:action.net};
+      default:
+          return state;
+  }
+};
+
 const transactionState = (state = {'success': null}, action) => {
   switch (action.type) {
       case types.SEND_TRANSACTION:
@@ -44,7 +53,6 @@ const account = (state = {'wif': null, 'address':null, 'loggedIn': false}, actio
 const wallet = (state = {'ANS': 0, 'ANC': 0 }, action) => {
     switch (action.type) {
         case types.SET_BALANCE:
-            console.log(action);
             let ansValue, ancValue;
             if (action.ANS !== undefined){
               ansValue = action.ANS.balance;
@@ -66,7 +74,8 @@ const rootReducer = combineReducers({
     account,
     generateWallet,
     wallet,
-    transactionState
+    transactionState,
+    network
 });
 
 export default rootReducer;

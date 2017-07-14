@@ -18,8 +18,23 @@ const ancName = "小蚁币";
 const getAns = balance => balance.filter((val) => { return val.unit === ANS })[0];
 const getAnc = balance => balance.filter((val) => { return val.unit === ANC })[0];
 
-export const getBalance = (address) => {
-    return axios.get(apiEndpoint + '/api/v1/address/info/' + address)
+export const getNetworkEndpoints = (net) => {
+  if (net === "MainNet"){
+    return {
+      apiEndpoint: "https://antchain.xyz",
+      rpcEndpoint: "http://api.otcgo.cn:10332"
+    }
+  } else {
+    return {
+      apiEndpoint: "http://testnet.antchain.xyz",
+      rpcEndpoint: "http://api.otcgo.cn:20332"
+    }
+  }
+};
+
+export const getBalance = (net, address) => {
+    const network = getNetworkEndpoints(net);
+    return axios.get(network.apiEndpoint + '/api/v1/address/info/' + address)
       .then((res) => {
         if (res.data.result !== 'No Address!') {
           // get ANS
@@ -30,13 +45,15 @@ export const getBalance = (address) => {
       })
 };
 
-export const getTransactions = (address, assetId) => {
-  return axios.get(apiEndpoint + '/api/v1/address/utxo/' + address).then((response) => {
+export const getTransactions = (net, address, assetId) => {
+  const network = getNetworkEndpoints(net);
+  return axios.get(network.apiEndpoint + '/api/v1/address/utxo/' + address).then((response) => {
     return response.data.utxo[assetId];
   });
 };
 
-export const sendAssetTransaction = (toAddress, fromWif, assetType, amount) => {
+export const sendAssetTransaction = (net, toAddress, fromWif, assetType, amount) => {
+  const network = getNetworkEndpoints(net);
   let assetId, assetName, assetSymbol;
   if (assetType === "AntShares"){
     assetId = ansId;
@@ -48,9 +65,9 @@ export const sendAssetTransaction = (toAddress, fromWif, assetType, amount) => {
     assetSymbol = 'ANC';
   }
   const fromAccount = getAccountsFromWIFKey(fromWif)[0];
-  return getBalance(fromAccount.address).then((response) => {
+  return getBalance(net, fromAccount.address).then((response) => {
     const balance = response[assetSymbol];
-    return getTransactions(fromAccount.address, assetId).then((transactions) => {
+    return getTransactions(net, fromAccount.address, assetId).then((transactions) => {
       const coinsData = {
         "assetid": assetId,
         "list": transactions,
@@ -64,7 +81,7 @@ export const sendAssetTransaction = (toAddress, fromWif, assetType, amount) => {
         headers: {"Content-Type": "application/json"}
       });
       const jsonRpcData = {"jsonrpc": "2.0", "method": "sendrawtransaction", "params": [txRawData], "id": 4};
-      return jsonRequest.post(rpcEndpoint, jsonRpcData).then((response) => {
+      return jsonRequest.post(network.rpcEndpoint, jsonRpcData).then((response) => {
         return response.data;
       });
     });

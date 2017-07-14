@@ -39,3 +39,13 @@ export function clearTransactionEvent(success){
     type: types.CLEAR_TRANSACTION,
   }
 };
+
+// global config
+
+export function setNetwork(net){
+  const network = net === "MainNet" ? "MainNet" : "TestNet";
+  return {
+    type: types.SET_NETWORK,
+    net: network
+  }
+};

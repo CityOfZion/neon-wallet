@@ -2,14 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { sendAssetTransaction } from '../wallet/api.js';
-import { sendEvent } from '../actions/index.js';
+import { sendEvent, clearTransactionEvent } from '../actions/index.js';
 
 
 let sendAddress, sendAsset, sendAmount;
 
-const sendTransaction = (dispatch, wif) => {
+const sendTransaction = (dispatch, net, wif) => {
   console.log(sendAddress.value, sendAsset.value, sendAmount.value);
-  sendAssetTransaction(sendAddress.value, wif, sendAsset.value, sendAmount.value).then((response) => {
+  sendAssetTransaction(net, sendAddress.value, wif, sendAsset.value, sendAmount.value).then((response) => {
     dispatch(sendEvent(response.result));
   });
 };
@@ -25,7 +25,7 @@ const TransactionStatus = ({status}) => {
   return message;
 };
 
-let Send = ({dispatch, wif, status}) =>
+let Send = ({dispatch, wif, status, net}) =>
   <div id="sendPage">
     <div className="title">Transfer</div>
     <div className="margin10">
@@ -37,13 +37,18 @@ let Send = ({dispatch, wif, status}) =>
       <input id="sendAmount" placeholder="Amount" ref={node => {sendAmount = node;}}/>
     </div>
     <TransactionStatus status={status} />
-    <button onClick={() => sendTransaction(dispatch, wif)}>Send Asset</button>
-    <div className="margin10"><button><Link to="/balance">Back to balance</Link></button></div>
+    <button onClick={() => sendTransaction(dispatch, net, wif)}>Send Asset</button>
+    <div className="margin10">
+      <button onClick={() => dispatch(clearTransactionEvent())}>
+        <Link to="/balance">Back to Balance</Link>
+      </button>
+    </div>
   </div>
 
 const mapStateToProps = (state) => ({
   wif: state.account.wif,
-  status: state.transactionState.success
+  status: state.transactionState.success,
+  net: state.network.net
 });
 
 Send = connect(mapStateToProps)(Send);
