@@ -3,12 +3,14 @@ import { combineReducers } from 'redux';
 import { getAccountsFromWIFKey, generatePrivateKey, getWIFFromPrivateKey } from '../wallet/index.js';
 import * as types from '../actions/types';
 
-const generateWallet = (state = {'wif': null }, action) => {
+const generateWallet = (state = {'wif': null, 'address':null}, action) => {
     switch (action.type) {
         case types.NEW_WALLET:
             const newPrivateKey = generatePrivateKey();
             const newWif = getWIFFromPrivateKey(newPrivateKey);
-            return {...state, wif:newWif};
+            const loadAccount = getAccountsFromWIFKey(newWif);
+            console.log(loadAccount);
+            return {...state, wif:newWif, address:loadAccount[0].address};
         default:
             return state;
     }

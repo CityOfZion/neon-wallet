@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router'
 import { getBalance } from '../wallet/api.js';
@@ -12,15 +12,22 @@ const initiateGetBalance = (dispatch, address) => {
   })
 };
 
-let Balance = ({ dispatch, ans, anc, address }) =>
-  <div id="balancePage" onLoad={initiateGetBalance(dispatch, address)}>
-    <div id="publicAddress"><span className="descriptor">Address:</span><span className="key">{ address }</span></div>
-    <div id="balanceList">
-      <div><span className="asset">AntShares:</span><span className="amount">{ ans }</span></div>
-      <div><span className="asset">AntCoins:</span><span className="amount">{ anc }</span></div>
-    </div>
-    <button><Link to="/">Logout</Link></button>
-  </div>;
+class Balance extends Component {
+
+  componentDidMount = () => {
+    initiateGetBalance(this.props.dispatch, this.props.address)
+  }
+
+  render = () =>
+    <div id="balancePage">
+      <div id="publicAddress"><span className="descriptor">Address:</span><span className="key">{ this.props.address }</span></div>
+      <div id="balanceList">
+        <div><span className="asset">AntShares:</span><span className="amount">{ this.props.ans }</span></div>
+        <div><span className="asset">AntCoins:</span><span className="amount">{ this.props.anc }</span></div>
+      </div>
+      <button><Link to="/">Logout</Link></button>
+    </div>;
+}
 
 const mapStateToProps = (state) => ({
   ans: state.wallet.ANS,

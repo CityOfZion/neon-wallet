@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { login, setBalance } from '../actions/index.js';
 import { Link } from 'react-router';
-import GenerateWallet from './GenerateWallet.js'
+import CreateWallet from './CreateWallet.js'
 
 let input_wif;
 
@@ -13,11 +13,11 @@ const onWifChange = (dispatch) => {
 
 let Login = ({ dispatch, loggedIn, wif }) =>
   <div id="loginPage">
-    <GenerateWallet/>
     <div className="login">
       <div className="title">Login:</div>
       <input type="text" placeholder="Enter your private key here" onChange={() => onWifChange(dispatch)} ref={node => {input_wif = node;}} />
-      <div>{loggedIn ? <button><Link to="/balance">Login</Link></button> : <button disabled="true">Login</button>}</div>
+      <div className="margin10">{loggedIn ? <button><Link to="/balance">Login</Link></button> : <button disabled="true">Login</button>}</div>
+      <div className="margin10"><button><Link to="/create">New Wallet</Link></button></div>
     </div>
   </div>;
 

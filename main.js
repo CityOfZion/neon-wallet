@@ -4,8 +4,8 @@ const BrowserWindow = electron.BrowserWindow;
 
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
-    height: 800,
-    width: 1200
+    height: 300,
+    width: 800
   });
 
   // load the local HTML file

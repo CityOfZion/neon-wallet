@@ -9,8 +9,6 @@ const ANC = '\u5c0f\u8681\u5e01';
 const getAns = balance => balance.filter((val) => { return val.unit === ANS })[0];
 const getAnc = balance => balance.filter((val) => { return val.unit === ANC })[0];
 
-const failPromise = new Promise(function(resolve, reject){return -1});
-
 export const getBalance = (address) => {
     return axios.get(apiEndpoint + '/api/v1/address/info/' + address)
       .then((res) => {

@@ -6,6 +6,7 @@ body{
 button{
 	font-size:1em;
 	padding:3px 7px;
+	margin-right:10px;
 }
 button a{
 	text-decoration: none;
@@ -18,30 +19,39 @@ span.key{
 	background-color: #efefef;
 }
 
-#loginPage{
-	margin:20% 20%;
-	input{
-		font-size:1em;
-		width:100%;
-		margin:0px 0px 10px 0px;
-		padding:3px 7px;
-		border:1px solid #efefef;
-	}
+#pageWrapper{
+	margin:30px 30px;
 	.title{
 		font-size: 1.4em;
 		margin:10px 0px;
 		font-weight:800;
+	}
+	.margin10{
+		margin:10px 0px;
+	}
+}
+
+#loginPage{
+	input{
+		font-size:1em;
+		width:100%;
+		padding:3px 7px;
+		border:1px solid #efefef;
 	}
 }
 
 #newWallet{
 	#walletInfo{
 		margin:10px 0px;
+		.label{
+			font-weight:800;
+			width:250px;
+			margin-right:10px;
+		}
 	}
 }
 
 #balancePage{
-	margin:20% 20%;
 	#publicAddress{
 		font-size:1.2em;
 		margin:10px 0px;
