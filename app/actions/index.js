@@ -24,3 +24,18 @@ export function setBalance(ans, anc){
     ANC: anc
   }
 }
+
+// transaction events
+
+export function sendEvent(success){
+  return {
+    type: types.SEND_TRANSACTION,
+    success: success
+  }
+};
+
+export function clearTransactionEvent(success){
+  return {
+    type: types.CLEAR_TRANSACTION,
+  }
+};

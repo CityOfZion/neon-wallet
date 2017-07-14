@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router'
 import { getBalance } from '../wallet/api.js';
-import { setBalance } from '../actions/index.js';
+import { setBalance, clearTransactionEvent } from '../actions/index.js';
 
 const initiateGetBalance = (dispatch, address) => {
   getBalance(address).then(function(result){
@@ -13,7 +13,8 @@ const initiateGetBalance = (dispatch, address) => {
 class Balance extends Component {
 
   componentDidMount = () => {
-    initiateGetBalance(this.props.dispatch, this.props.address)
+    initiateGetBalance(this.props.dispatch, this.props.address);
+    this.props.dispatch(clearTransactionEvent());
   }
 
   render = () =>

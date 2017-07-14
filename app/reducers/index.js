@@ -3,6 +3,17 @@ import { combineReducers } from 'redux';
 import { getAccountsFromWIFKey, generatePrivateKey, getWIFFromPrivateKey } from '../wallet/index.js';
 import * as types from '../actions/types';
 
+const transactionState = (state = {'success': null}, action) => {
+  switch (action.type) {
+      case types.SEND_TRANSACTION:
+          return {...state, success:action.success};
+      case types.CLEAR_TRANSACTION:
+          return {...state, success: null};
+      default:
+          return state;
+  }
+};
+
 const generateWallet = (state = {'wif': null, 'address':null}, action) => {
     switch (action.type) {
         case types.NEW_WALLET:
@@ -54,7 +65,8 @@ const wallet = (state = {'ANS': 0, 'ANC': 0 }, action) => {
 const rootReducer = combineReducers({
     account,
     generateWallet,
-    wallet
+    wallet,
+    transactionState
 });
 
 export default rootReducer;
