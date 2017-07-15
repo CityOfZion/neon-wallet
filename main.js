@@ -4,8 +4,9 @@ const BrowserWindow = electron.BrowserWindow;
 
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
-    height: 300,
-    width: 800
+    height: 500,
+    width: 500,
+    title: "NEO Wallet"
   });
 
   // load the local HTML file
