@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import NetworkSwitch from './NetworkSwitch';
+import { NetworkSwitch } from './NetworkSwitch';
 
 // import { Link } from 'react-router';
 

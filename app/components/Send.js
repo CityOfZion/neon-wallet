@@ -25,9 +25,10 @@ const TransactionStatus = ({status}) => {
   return message;
 };
 
-let Send = ({dispatch, wif, status, net}) =>
+let Send = ({dispatch, wif, status, ans, anc, net}) =>
   <div id="sendPage">
     <div className="title">Transfer</div>
+    <div className="margin10">There are <b>{ans}</b> AntShares and <b>{anc}</b> Antcoins available to send.</div>
     <div className="margin10">
       <input id="sendAddress" placeholder="Where to send the asset (address)" ref={node => {sendAddress = node;}}/>
       <select id="sendAsset" ref={node => {sendAsset = node;}}>
@@ -48,7 +49,9 @@ let Send = ({dispatch, wif, status, net}) =>
 const mapStateToProps = (state) => ({
   wif: state.account.wif,
   status: state.transactionState.success,
-  net: state.network.net
+  net: state.wallet.net,
+  ans: state.wallet.ANS,
+  anc: state.wallet.ANC
 });
 
 Send = connect(mapStateToProps)(Send);
