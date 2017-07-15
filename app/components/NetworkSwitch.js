@@ -5,24 +5,10 @@ import { setNetwork } from '../actions/index.js';
 let netSelect;
 
 const switchNet = (dispatch) => {
-  if (netSelect.checked == true){ 
-    dispatch(setNetwork("MainNet"))
-  }
-  else {
-    dispatch(setNetwork("TestNet"))
-  }
+  netSelect.checked == true ? dispatch(setNetwork("MainNet")) : dispatch(setNetwork("TestNet"));
 };
 
 let NetworkSwitch = ({dispatch, net}) =>
-
-  //offState = net === "MainNet" ? "MainNet" : "TestNet";
-// <div>
-//   <div id="networkSwitch">
-//     <select ref={node => {netSelect = node;}} onChange={() => switchNet(dispatch)}>
-//       {(net === "MainNet") ? <option selected>MainNet</option> : <option>MainNet</option>}
-//       {(net === "TestNet") ? <option selected>TestNet</option> : <option>TestNet</option>}
-//     </select>
-//   </div>
 
   <div id="networkSwitch">
     <input id="a" type="checkbox" ref={node => {netSelect = node;}} onChange={() => switchNet(dispatch)} />
