@@ -5,7 +5,7 @@ import { NetworkSwitch } from './NetworkSwitch';
 // import { Link } from 'react-router';
 
 let App = ({ children }) => {
-  return <div id="pageWrapper">{ children }<NetworkSwitch /></div>;
+  return <div id="pageWrapper">{ children }</div>;
 };
 
 const mapStateToProps = (state) => ({

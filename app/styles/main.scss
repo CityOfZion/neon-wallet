@@ -1,6 +1,10 @@
 body{
 	font-family: 'helvetica neue', 'helvetica', sans-serif;
 	font-size:16px;
+	padding:0px;
+	margin:0px;
+	background-color:#0F1B07;
+	color:#ccc;
 }
 
 button{
@@ -26,7 +30,7 @@ span.key{
 }
 
 #pageWrapper{
-	margin:30px 30px;
+	// margin:30px 30px;
 	.title{
 		font-size: 1.4em;
 		margin:10px 0px;
@@ -93,4 +97,92 @@ span.key{
 			width:250px;
 		}
 	}
+}
+
+// split pane stuff
+#dashboard{
+	.spacer{
+		width:84%;
+		margin:0px 8%;
+		border-top:2px solid #1A2910;
+	}
+	#title{
+		font-size:1em;
+		padding:10px 0px 0px 10px;
+		font-weight:200;
+		color:#7EA63B;
+	}
+	#send{
+		text-align:center;
+		width:100%;
+		padding:16px 0px;
+		font-weight: 200;
+		font-size:1.2em;
+	}
+	#accountInfo{
+		margin:20px 0px;
+		width:100%;
+		text-align: center;
+		.label{
+			font-size:.85em;
+		}
+		.address{
+			font-size:.65em;
+			margin-bottom:20px;
+		}
+		.qrCode{
+			margin-top:20px;
+		}
+		#balance{
+			margin:20px 0px;
+			.split{
+				display:inline-block;
+				width:50%;
+				clear:none;
+			}
+			.label{
+				font-weight:200;
+				color:#7EA63B;
+				font-size:1.1em;
+			}
+			.amountBig{
+				font-weight:200;
+				font-size:2.4em;
+				color:#7EA63B;
+				margin:0px 0px 2px 0px;
+			}
+			.fiat{
+				font-size:1.1em;
+				font-weight:200;
+			}
+		}
+	}
+	#transactionInfo{
+		padding:14px 0px;
+		text-align: center;
+		.columnHeader{
+			font-size: 1.2em;
+			font-weight: 200;
+		}
+		.headerSpacer{
+			width:84%;
+			margin:15px 8%;
+			border-top:3px solid #1A2910;
+		}
+	}
+}
+.leftSplit{
+	.Pane1{
+		background-color:#2B3C20;
+		cursor:pointer;
+	}
+	.Pane1:hover{
+		background-color:#6E8560;
+	}
+}
+.horizontal.Pane1{
+	border-bottom:1.5px solid #1A2910;
+}
+.vertical.Pane1{
+	border-right:1.5px solid #1A2910;
 }
