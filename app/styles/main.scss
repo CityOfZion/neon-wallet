@@ -158,19 +158,9 @@ span.key{
 	height: 100%;
 	.title{
 		font-size: 1.4em;
-		margin:10px 0px;
-		font-weight:800;
-	}
-	.margin10{
-		margin:10px 0px;
-	}
-}
-
-#prevPageWrapper{
-	margin:30px 30px;
-	.title{
-		font-size: 1.4em;
-		margin:10px 0px;
+		margin:0 auto;
+		padding: 10px 0;
+		text-align: center;
 		font-weight:800;
 	}
 	.margin10{
@@ -313,7 +303,9 @@ span.key{
 #balancePage{
 	#publicAddress{
 		// font-size:1.2em;
-		margin:10px 0px;
+		position: absolute;
+		bottom: 15px;
+		left: 15px;
 		span.descriptor{
 			margin:0px 5px 0px 0px;
 			font-weight: 800;
@@ -321,14 +313,19 @@ span.key{
 	}
 	#balanceList{
 		// font-size:1.2em;
-		margin:0px 0px 10px 0px;
+		margin: 50px auto;
+		text-align: center;
 		span.asset{
 			width:250px;
-			margin:0px 5px 0px 0px;
+			margin:15px auto;
+			text-align: center;
 			font-weight:800;
+			font-size: 1.4em;
 		}
 		span.amount{
 			width:250px;
+			font-weight:500;
+			font-size: 1.4em;
 		}
 	}
 }

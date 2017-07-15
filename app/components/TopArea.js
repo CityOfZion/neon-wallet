@@ -8,6 +8,7 @@ import Balance from './Balance';
 let TopArea = ({dispatch, net}) =>
 
   <div id="topArea">
+    <Balance />
     <NetworkSwitch />
   </div>
 
