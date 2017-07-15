@@ -4,8 +4,8 @@ const BrowserWindow = electron.BrowserWindow;
 
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
-    height: 500,
-    width: 500,
+    height: 526,
+    width: 726,
     title: "NEO Wallet"
   });
 

@@ -8,8 +8,15 @@ import { sendEvent, clearTransactionEvent } from '../actions/index.js';
 let sendAddress, sendAsset, sendAmount;
 
 const sendTransaction = (dispatch, net, wif) => {
-  console.log(sendAddress.value, sendAsset.value, sendAmount.value);
-  sendAssetTransaction(net, sendAddress.value, wif, sendAsset.value, sendAmount.value).then((response) => {
+  let assetValue;
+  if (sendAsset.checked === true){
+    assetValue = "AntShares";
+  }
+  else {
+    assetValue = "AntCoins"
+  }
+  console.log(sendAddress.value, assetValue, sendAmount.value);
+  sendAssetTransaction(net, sendAddress.value, wif, assetValue, sendAmount.value).then((response) => {
     dispatch(sendEvent(response.result));
   });
 };
@@ -27,21 +34,21 @@ const TransactionStatus = ({status}) => {
 
 let Send = ({dispatch, wif, status, net}) =>
   <div id="sendPage">
-    <div className="title">Transfer</div>
-    <div className="margin10">
+    <div className="title">Send</div>
+    <div className="sendForm">
       <input id="sendAddress" placeholder="Where to send the asset (address)" ref={node => {sendAddress = node;}}/>
-      <select id="sendAsset" ref={node => {sendAsset = node;}}>
-        <option>AntShares</option>
-        <option>AntCoins</option>
-      </select>
+      <div id="sendAsset">
+        <input id="b" type="checkbox" ref={node => {sendAsset = node;}} />
+        <label htmlFor="b">
+          <div className="can-toggle__switch" data-checked="NEO" data-unchecked="Gas" />
+        </label>
+      </div>
       <input id="sendAmount" placeholder="Amount" ref={node => {sendAmount = node;}}/>
-    </div>
     <TransactionStatus status={status} />
-    <button onClick={() => sendTransaction(dispatch, net, wif)}>Send Asset</button>
-    <div className="margin10">
-      <button onClick={() => dispatch(clearTransactionEvent())}>
-        <Link to="/balance">Back to Balance</Link>
-      </button>
+    <button onClick={() => sendTransaction(dispatch, net, wif)} className="sendButton">Send Asset</button>
+    <button onClick={() => dispatch(clearTransactionEvent())} className="sendButton">
+      Cancel Transaction
+    </button>
     </div>
   </div>
 

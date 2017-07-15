@@ -307,11 +307,115 @@ span.key{
 	#sendAddress, #sendAsset, #sendAmount{
 		margin-right:10px;
 	}
-	input#sendAddress{
-		width: 400px;
+	input{
+		display: block;
+		margin-left: 25%;
+		margin-right: 25%;
+		width: 50%;
+		margin-bottom: 15px;
 	}
-	input#sendAmount{
-		width:80px;
+	#sendAsset {
+		margin-left: 35%;
+		margin-bottom: 15px; 
+		  input[type="checkbox"] {
+    opacity: 0;
+    position: absolute;
+    top: 0; left: 0;
+    
+    &[disabled] ~ label {
+      pointer-events: none;
+      .can-toggle__switch { opacity: 0.4; }
+    }
+    
+    &:checked {
+      ~ label {
+        
+        .can-toggle__switch {
+          
+          &:before {
+            content: attr(data-unchecked);
+            left: 0;
+          }
+        
+          &:after {
+            content: attr(data-checked);
+          }  
+        }
+      }
+      
+      &:focus, &:hover {
+        ~ label {
+        } 
+      }
+    }
+  }
+  
+  label {
+    user-select: none;
+    position: relative;
+    display: flex;
+    align-items: center;
+    
+    .can-toggle__label-text { 
+      flex: 1;
+      padding-left: 32px;
+    }
+    
+    .can-toggle__switch {
+      position: relative;
+      
+      &:before {
+        content: attr(data-checked);
+        position: absolute;
+        top: 0;
+        text-transform: uppercase;
+        text-align: center;
+      }
+      
+      &:after {
+        content: attr(data-unchecked);
+        position: absolute;
+        z-index: 5;
+        text-transform: uppercase;
+        text-align: center;
+        background: white;
+        transform: translate3d(0,0,0);
+      }
+
+    }
+    
+  }
+  
+  // Default values for .can-toggle class
+  @include can-toggle-branding(
+  $can-toggle-off-color: #777, 
+  $can-toggle-on-color: #B4DC0C,
+  $can-toggle-inactive-text: rgba(white, 0.5),
+  $can-toggle-transition: cubic-bezier(0,1,0.5,1)
+); 
+  @include can-toggle-appearance( 
+  $can-toggle-width: 125px,
+  $can-toggle-height: 36px,
+  $can-toggle-border-radius: 4px,
+  $can-toggle-offset: 2px,
+  $can-toggle-label-font-size: 14px,
+  $can-toggle-switch-font-size: 12px,
+  $can-toggle-shadow: 0 3px 3px rgba(black, 0.4)
+);
+	}
+	.sendForm {
+		display: block;
+		margin-left: 25%;
+		margin-right: 25%;
+		width: 50%;
+		text-align: center;
+		align-content: center;
+	}
+	.sendButton {
+		margin-left: 27%;
+		margin-right: 23%;
+		width: 50%;
+		margin-bottom: 15px;
 	}
 }
 
