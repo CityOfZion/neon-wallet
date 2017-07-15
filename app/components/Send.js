@@ -32,7 +32,7 @@ const TransactionStatus = ({status}) => {
   return message;
 };
 
-let Send = ({dispatch, wif, status, net}) =>
+let Send = ({dispatch, wif, status, ans, anc, net}) =>
   <div id="sendPage">
     <div className="title">Send</div>
     <div className="sendForm">
@@ -55,7 +55,9 @@ let Send = ({dispatch, wif, status, net}) =>
 const mapStateToProps = (state) => ({
   wif: state.account.wif,
   status: state.transactionState.success,
-  net: state.network.net
+  net: state.wallet.net,
+  ans: state.wallet.ANS,
+  anc: state.wallet.ANC
 });
 
 Send = connect(mapStateToProps)(Send);

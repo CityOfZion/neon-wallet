@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import TopArea from './TopArea';
 
+
 // import { Link } from 'react-router';
 
 let App = ({ children }) => {

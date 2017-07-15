@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setNetwork } from '../actions/index.js';
+import { getBalance } from '../wallet/api.js';
+import { setBalance } from '../actions/index.js';
 
 let netSelect;
 
@@ -18,9 +20,10 @@ let NetworkSwitch = ({dispatch, net}) =>
   </div>
 
   const mapStateToProps = (state) => ({
-    net:state.network.net
+    net:state.wallet.net,
+    address:state.account.address
   });
 
   NetworkSwitch = connect(mapStateToProps)(NetworkSwitch);
 
-  export default NetworkSwitch;
+  export { NetworkSwitch, initiateGetBalance };

@@ -20,7 +20,7 @@ const initiateGetBalance = (dispatch, net, address) => {
 };
 
 class Balance extends Component {
-
+  // recheck balance on first and subsequent loads
   componentDidMount = () => {
     initiateGetBalance(this.props.dispatch, this.props.net, this.props.address);
   }
@@ -49,7 +49,7 @@ const mapStateToProps = (state) => ({
   ans: state.wallet.ANS,
   anc: state.wallet.ANC,
   address: state.account.address,
-  net: state.network.net
+  net: state.wallet.net
 });
 
 Balance = connect(mapStateToProps)(Balance);
