@@ -166,6 +166,21 @@ span.key{
 	.margin10{
 		margin:10px 0px;
 	}
+	.topRight {
+		position: absolute;
+		top: 15px;
+		right: 15px;
+
+		a {
+			color: white;
+		}
+
+		.customIcon{
+			width: 25px;
+			height: 25px;
+			padding: 0 15px;
+		}
+	}
 }
 
 #loginPage{
