@@ -9,8 +9,8 @@ import Dashboard from './containers/Dashboard';
 
 export default (
 	<Route path="/" component={App}>
-		// <IndexRoute component={Login} />
-		<IndexRoute component={Dashboard} />
+		<IndexRoute component={Login} />
+		<Route path="/dashboard" component={Dashboard} />
 		<Route path="/create" component={CreateWallet} />
 		<Route path="/balance" component={Balance} />
 		<Route path="/send" component={Send} />

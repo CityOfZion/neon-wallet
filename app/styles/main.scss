@@ -9,98 +9,87 @@ body{
 
 button{
 	font-size:1em;
-	padding:3px 7px;
+	padding:6px 12px;
 	margin-right:10px;
+	color:#ccc;
+	background-color:#2B3C20;
+	border:none;
+	cursor:pointer;
+}
+button:hover{
+	background-color:#6E8560;
 }
 button a{
 	text-decoration: none;
 	color:inherit;
 }
 
-input{
-	font-size:1em;
-	padding:3px 7px;
-	border:1px solid #efefef;
-}
-
-// for key display
-span.key{
-	padding:2px 3px;
-	background-color: #efefef;
-}
-
-#pageWrapper{
-	// margin:30px 30px;
-	.title{
-		font-size: 1.4em;
-		margin:10px 0px;
-		font-weight:800;
+#newWallet{
+	width:650px;
+	margin:20% auto;
+	.disclaimer{
+		margin-bottom:20px;
+		font-size:1.4em;
+		font-weight:200;
 	}
-	.margin10{
-		margin:10px 0px;
+	.addressBox, .privateKeyBox{
+		margin-bottom:20px;
+		display:inline-block;
+		width:40%;
+		text-align: center;
+	}
+	.addressBox{
+		margin-right:9%;
+	}
+	.privateKeyBox{
+		margin-left:9%;
+	}
+	.keyList{
+		font-size:.9em;
+		span.label{
+			margin-right:5px;
+			font-weight:800;
+		}
+	}
+	button{
+		margin-top:20px;
 	}
 }
 
 #loginPage{
 	input{
-		width:100%;
+		width:600px;
+		font-size:1.2em;
+		padding:7px 15px;
+		border:none;
+		font-weight:200;
+		background-color:#081102;
+		color:#ccc;
 	}
-}
-
-#networkSwitch{
-	position:absolute;
-	top:30px;
-	right:30px;
-}
-
-#newWallet{
-	#walletInfo{
-		margin:10px 0px;
-		.label{
-			font-weight:800;
-			width:250px;
-			margin-right:10px;
-		}
-	}
-}
-
-#sendPage{
-	#sendAddress, #sendAsset, #sendAmount{
-		margin-right:10px;
-	}
-	input#sendAddress{
-		width: 400px;
-	}
-	input#sendAmount{
-		width:80px;
-	}
-}
-
-#balancePage{
-	#publicAddress{
-		// font-size:1.2em;
-		margin:10px 0px;
-		span.descriptor{
-			margin:0px 5px 0px 0px;
-			font-weight: 800;
-		}
-	}
-	#balanceList{
-		// font-size:1.2em;
-		margin:0px 0px 10px 0px;
-		span.asset{
-			width:250px;
-			margin:0px 5px 0px 0px;
-			font-weight:800;
-		}
-		span.amount{
-			width:250px;
-		}
+	margin-top:30%;
+	text-align:center;
+	.loginButtons{
+		margin:10px auto;
+		width:630px;
+		text-align:left;
 	}
 }
 
 // split pane stuff
 #dashboard{
+	.statusMessage{
+		width:100%;
+		text-align:center;
+		font-size:.9em;
+		padding:2px 0px 3px 0px;
+		color:white;
+	}
+	.statusMessage.success{
+		background-color:#4C7631;
+	}
+	.statusMessage.fail{
+		background-color:#DB597E;
+	}
 	.spacer{
 		width:84%;
 		margin:0px 8%;
@@ -112,12 +101,98 @@ span.key{
 		font-weight:200;
 		color:#7EA63B;
 	}
+	#network{
+		position:absolute;
+		font-size:.8em;
+		right:80px;
+		top:13px;
+		span.transparent{
+			opacity:.6;
+			margin-right:4px;
+		}
+		span.netName{
+			color:#7EA63B;
+			opacity:.8;
+			cursor:pointer;
+		}
+	}
+	#logout{
+		position:absolute;
+		font-size:1.5em;
+		right:20px;
+		top:3px;
+		cursor:pointer;
+		color:#ccc;
+		opacity:.8;
+		a{
+			font-size: inherit;
+			margin:none;
+			padding:none;
+			text-decoration: none;
+			color:inherit;
+		}
+	}
+	#logout:hover{
+		opacity:.6;
+	}
 	#send{
 		text-align:center;
 		width:100%;
 		padding:16px 0px;
 		font-weight: 200;
 		font-size:1.2em;
+		span{
+			opacity:.6;
+		}
+		#upArrow{
+			position: relative;
+			font-size:1.4em;
+			top:-3px;
+			left:-1px;
+		}
+	}
+	#sendPane{
+		position:relative;
+		width:96%;
+		margin:8px auto;
+		overflow: hidden;
+		input{
+			font-size:.9em;
+			height:30px;
+			border:none;
+		}
+		button{
+			margin-top:10px;
+			background-color:#517C35;
+			height:33px;
+			margin-left:10px;
+			color:white;
+			margin-right:0px;
+		}
+		button:hover{
+			background-color:#5D913B;
+		}
+		#sendAddress{
+			width:100%;
+			input{
+				width:96%;
+				padding:0px 2%;
+			}
+		}
+		button#sendAsset{
+			background-color:#0E2003;
+		}
+		#sendAmount{
+			margin-top:3px;
+			display:inline-block;
+			width:50%;
+			height:30px;
+			margin-right:0px;
+			input{
+				width:96%;
+				padding:0px 2%;
+			}
+		}
 	}
 	#accountInfo{
 		margin:20px 0px;
@@ -129,6 +204,8 @@ span.key{
 		.address{
 			font-size:.65em;
 			margin-bottom:20px;
+			margin-top:1px;
+			letter-spacing: .07em;
 		}
 		.qrCode{
 			margin-top:20px;
@@ -155,6 +232,18 @@ span.key{
 				font-size:1.1em;
 				font-weight:200;
 			}
+			#refresh{
+				font-size:2.2em;
+				position: absolute;
+				top: 100px;
+				left:47%;
+				cursor:pointer;
+				color:#2B3C20;
+
+			}
+			#refresh:hover{
+				color:#6E8560;
+			}
 		}
 	}
 	#transactionInfo{
@@ -170,6 +259,34 @@ span.key{
 			border-top:3px solid #1A2910;
 		}
 	}
+	ul#transactionList{
+		margin:0;
+		padding:0;
+		li{
+			list-style-type: none;
+			font-weight:200;
+			border-bottom:1px solid #1A2910;
+			padding-bottom:10px;
+			margin-bottom:10px;
+			.txid{
+				position:relative;
+				top:-2px;
+				display:inline-block;
+				width:44%;
+				margin-left: 4%;
+				text-align:left;
+				font-family:'courier new';
+				font-size:.7em;
+			}
+			.amount{
+				display:inline-block;
+				width:44%;
+				margin-right: 4%;
+				text-align:right;
+				color:#7EA63B;
+			}
+		}
+	}
 }
 .leftSplit{
 	.Pane1{
@@ -177,7 +294,12 @@ span.key{
 		cursor:pointer;
 	}
 	.Pane1:hover{
-		background-color:#6E8560;
+		background-color:#4C7631;
+	}
+}
+.sendSplit{
+	.Pane1:hover{
+		background-color:#2B3C20;
 	}
 }
 .horizontal.Pane1{

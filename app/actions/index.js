@@ -9,6 +9,12 @@ export function login(wif){
   }
 };
 
+export function logout(){
+  return {
+    type: types.LOGOUT,
+  }
+};
+
 // wallet events
 
 export function newWallet(){
@@ -25,6 +31,14 @@ export function setBalance(ans, anc){
   }
 }
 
+export function setNetwork(net){
+  const network = net === "MainNet" ? "MainNet" : "TestNet";
+  return {
+    type: types.SET_NETWORK,
+    net: network
+  }
+};
+
 // transaction events
 
 export function sendEvent(success){
@@ -40,12 +54,16 @@ export function clearTransactionEvent(success){
   }
 };
 
-// global config
-
-export function setNetwork(net){
-  const network = net === "MainNet" ? "MainNet" : "TestNet";
+export function toggleAsset(){
   return {
-    type: types.SET_NETWORK,
-    net: network
+    type: types.TOGGLE_ASSET,
+  }
+};
+
+// dashboard
+
+export function toggleSendPane(){
+  return {
+    type: types.TOGGLE_SEND_PANE,
   }
 };

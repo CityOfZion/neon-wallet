@@ -3,12 +3,20 @@ import { combineReducers } from 'redux';
 import { getAccountsFromWIFKey, generatePrivateKey, getWIFFromPrivateKey } from '../wallet/index.js';
 import * as types from '../actions/types';
 
-const transactionState = (state = {'success': null}, action) => {
+const transactionState = (state = {'success': null, selectedAsset: 'NEO'}, action) => {
   switch (action.type) {
       case types.SEND_TRANSACTION:
           return {...state, success:action.success};
       case types.CLEAR_TRANSACTION:
           return {...state, success: null};
+      case types.TOGGLE_ASSET:
+          let asset;
+          if (state.selectedAsset == "NEO"){
+            asset = "GAS";
+          } else {
+            asset = "NEO";
+          }
+          return {...state, success: null, selectedAsset: asset};
       default:
           return state;
   }
@@ -36,12 +44,14 @@ const account = (state = {'wif': null, 'address':null, 'loggedIn': false}, actio
               return {...state, wif:action.wif,  loggedIn:false};
             }
             return {...state, wif:action.wif, address:loadAccount.address, loggedIn:true};
+        case types.LOGOUT:
+            return {'wif': null, address: null, 'loggedIn': false};
         default:
             return state;
     }
 };
 
-const wallet = (state = {'ANS': 0, 'ANC': 0, 'net': 'TestNet' }, action) => {
+const wallet = (state = {'ANS': 0, 'ANC': 0, 'net': 'TestNet', 'transactions': []}, action) => {
     switch (action.type) {
         case types.SET_BALANCE:
             let ansValue, ancValue;
@@ -63,11 +73,21 @@ const wallet = (state = {'ANS': 0, 'ANC': 0, 'net': 'TestNet' }, action) => {
     }
 };
 
+const dashboard = (state = {sendPane: true}, action) => {
+  switch (action.type) {
+      case types.TOGGLE_SEND_PANE:
+          return {...state, sendPane:!state.sendPane };
+      default:
+          return state;
+  }
+};
+
 const rootReducer = combineReducers({
     account,
     generateWallet,
     wallet,
     transactionState,
+    dashboard
 });
 
 export default rootReducer;

@@ -2,56 +2,44 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { sendAssetTransaction } from '../wallet/api.js';
-import { sendEvent, clearTransactionEvent } from '../actions/index.js';
+import { sendEvent, clearTransactionEvent, toggleAsset } from '../actions/index.js';
 
 
-let sendAddress, sendAsset, sendAmount;
+let sendAddress, sendAmount;
 
-const sendTransaction = (dispatch, net, wif) => {
-  console.log(sendAddress.value, sendAsset.value, sendAmount.value);
-  sendAssetTransaction(net, sendAddress.value, wif, sendAsset.value, sendAmount.value).then((response) => {
+const sendTransaction = (dispatch, net, wif, asset) => {
+  let assetSwap;
+  if (asset === "NEO"){
+    assetSwap = "AntShares";
+  } else {
+    assetSwap = "AntCoins";
+  }
+  sendAssetTransaction(net, sendAddress.value, wif, assetSwap, sendAmount.value).then((response) => {
     dispatch(sendEvent(response.result));
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+    sendAddress.value = '';
+    sendAmount.value = '';
   });
 };
 
-const TransactionStatus = ({status}) => {
-  let message = null;
-  if (status === true){
-    message = <div className="margin10">Transaction complete!</div>;
-  }
-  else if (status === false){
-    message = <div className="margin10">Transaction failed</div>;
-  }
-  return message;
-};
-
-let Send = ({dispatch, wif, status, ans, anc, net}) =>
-  <div id="sendPage">
-    <div className="title">Transfer</div>
-    <div className="margin10">There are <b>{ans}</b> AntShares and <b>{anc}</b> Antcoins available to send.</div>
-    <div className="margin10">
-      <input id="sendAddress" placeholder="Where to send the asset (address)" ref={node => {sendAddress = node;}}/>
-      <select id="sendAsset" ref={node => {sendAsset = node;}}>
-        <option>AntShares</option>
-        <option>AntCoins</option>
-      </select>
-      <input id="sendAmount" placeholder="Amount" ref={node => {sendAmount = node;}}/>
-    </div>
-    <TransactionStatus status={status} />
-    <button onClick={() => sendTransaction(dispatch, net, wif)}>Send Asset</button>
-    <div className="margin10">
-      <button onClick={() => dispatch(clearTransactionEvent())}>
-        <Link to="/balance">Back to Balance</Link>
-      </button>
-    </div>
+let Send = ({dispatch, wif, status, ans, anc, net, selectedAsset}) =>
+  <div id="sendPane">
+      <div id="sendAddress">
+        <input placeholder="Where to send the asset (address)" ref={node => {sendAddress = node;}}/>
+      </div>
+      <div id="sendAmount">
+        <input id="sendAmount" placeholder="Amount" ref={node => {sendAmount = node;}}/>
+      </div>
+      <button id="sendAsset" onClick={() => dispatch(toggleAsset())}>{selectedAsset}</button>
+    <button id="doSend" onClick={() => sendTransaction(dispatch, net, wif, selectedAsset)}>Send Asset</button>
   </div>
 
 const mapStateToProps = (state) => ({
   wif: state.account.wif,
-  status: state.transactionState.success,
   net: state.wallet.net,
   ans: state.wallet.ANS,
-  anc: state.wallet.ANC
+  anc: state.wallet.ANC,
+  selectedAsset: state.transactionState.selectedAsset
 });
 
 Send = connect(mapStateToProps)(Send);

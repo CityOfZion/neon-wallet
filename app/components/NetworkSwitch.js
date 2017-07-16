@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setNetwork } from '../actions/index.js';
-import { getBalance } from '../wallet/api.js';
+import { getBalance, getTransactions, ansId } from '../wallet/api.js';
 import { setBalance } from '../actions/index.js';
+
 
 let netSelect;
 
@@ -19,19 +20,31 @@ const initiateGetBalance = (dispatch, net, address) => {
   });
 };
 
-const switchNet = (dispatch, address) => {
-  dispatch(setNetwork(netSelect.value));
+const syncTransactionHistory = (dispatch, net, address) => {
+  getTransactions(net, address, ansId).then((response) => {
+    // TODO: no public API yet exists for ALL transation history
+    // so this does nothing for now
+  });
+};
+
+const toggleNet = (dispatch, net, address) => {
+  let newNet;
+  if (net === "MainNet"){
+    newNet = "TestNet";
+  } else {
+    newNet = "MainNet";
+  }
+  dispatch(setNetwork(newNet));
   if (address !== null){
-    initiateGetBalance(dispatch, netSelect.value, address);
+    initiateGetBalance(dispatch, newNet, address);
+    syncTransactionHistory(dispatch, newNet, address);
   }
 };
 
 let NetworkSwitch = ({dispatch, net, address}) =>
-  <div id="networkSwitch">
-    <select ref={node => {netSelect = node;}} onChange={() => switchNet(dispatch, address)}>
-      {(net === "MainNet") ? <option selected>MainNet</option> : <option>MainNet</option>}
-      {(net === "TestNet") ? <option selected>TestNet</option> : <option>TestNet</option>}
-    </select>
+  <div id="network">
+    <span className="transparent">Running on</span>
+    <span className="netName" onClick={() => toggleNet(dispatch, net, address)}>{net}</span>
   </div>
 
   const mapStateToProps = (state) => ({
@@ -41,4 +54,4 @@ let NetworkSwitch = ({dispatch, net, address}) =>
 
   NetworkSwitch = connect(mapStateToProps)(NetworkSwitch);
 
-  export { NetworkSwitch, initiateGetBalance };
+  export { NetworkSwitch, initiateGetBalance, syncTransactionHistory };
