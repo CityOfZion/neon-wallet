@@ -28,7 +28,6 @@ const generateWallet = (state = {'wif': null, 'address':null}, action) => {
             const newPrivateKey = generatePrivateKey();
             const newWif = getWIFFromPrivateKey(newPrivateKey);
             const loadAccount = getAccountsFromWIFKey(newWif);
-            console.log(loadAccount);
             return {...state, wif:newWif, address:loadAccount[0].address};
         default:
             return state;
@@ -39,7 +38,6 @@ const account = (state = {'wif': null, 'address':null, 'loggedIn': false}, actio
     switch (action.type) {
         case types.LOGIN:
             const loadAccount = getAccountsFromWIFKey(action.wif)[0];
-            console.log(loadAccount);
             if(loadAccount === -1 || loadAccount === -2){
               return {...state, wif:action.wif,  loggedIn:false};
             }
