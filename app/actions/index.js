@@ -62,8 +62,9 @@ export function toggleAsset(){
 
 // dashboard
 
-export function toggleSendPane(){
+export function togglePane(pane){
   return {
     type: types.TOGGLE_SEND_PANE,
+    pane: pane
   }
 };

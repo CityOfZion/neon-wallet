@@ -81,14 +81,14 @@ button a{
 		width:100%;
 		text-align:center;
 		font-size:.9em;
-		padding:2px 0px 3px 0px;
+		padding:5px 0px 3px 0px;
 		color:white;
 	}
 	.statusMessage.success{
 		background-color:#4C7631;
 	}
 	.statusMessage.fail{
-		background-color:#DB597E;
+		background-color:#FF3E3E;
 	}
 	.spacer{
 		width:84%;
@@ -100,6 +100,14 @@ button a{
 		padding:10px 0px 0px 10px;
 		font-weight:200;
 		color:#7EA63B;
+	}
+	#version{
+		position:absolute;
+		font-size:.8em;
+		right:230px;
+		top:13px;
+		opacity:0.6;
+
 	}
 	#network{
 		position:absolute;
@@ -151,10 +159,24 @@ button a{
 			left:-1px;
 		}
 	}
+	#confirmPane{
+		margin:0px auto;
+		button{
+			margin-top:0px;
+			background-color:#0E2003;
+			height:33px;
+			margin-left:10px;
+			color:white;
+			margin-right:0px;
+		}
+		button:hover{
+			background-color:#112704;
+		}
+	}
 	#sendPane{
 		position:relative;
 		width:96%;
-		margin:8px auto;
+		margin:8px auto 0px auto;
 		overflow: hidden;
 		input{
 			font-size:.9em;
@@ -181,6 +203,9 @@ button a{
 		}
 		button#sendAsset{
 			background-color:#0E2003;
+		}
+		button#sendAsset:hover{
+			background-color:#112704;
 		}
 		#sendAmount{
 			margin-top:3px;
@@ -300,6 +325,11 @@ button a{
 .sendSplit{
 	.Pane1:hover{
 		background-color:#2B3C20;
+	}
+}
+.confirmSplit{
+	.horizontal.Pane1{
+		border:none;
 	}
 }
 .horizontal.Pane1{

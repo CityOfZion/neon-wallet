@@ -73,10 +73,12 @@ const wallet = (state = {'ANS': 0, 'ANC': 0, 'net': 'TestNet', 'transactions': [
     }
 };
 
-const dashboard = (state = {sendPane: true}, action) => {
+const dashboard = (state = {sendPane: true, confirmPane: true}, action) => {
   switch (action.type) {
       case types.TOGGLE_SEND_PANE:
-          return {...state, sendPane:!state.sendPane };
+          let newState = {};
+          newState[action.pane] = !state[action.pane];
+          return {...state, ...newState };
       default:
           return state;
   }

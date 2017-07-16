@@ -7,13 +7,16 @@ import WalletInfo from '../components/WalletInfo';
 import TransactionHistory from '../components/TransactionHistory';
 import Logout from '../components/Logout';
 import Send from '../components/Send';
-import { toggleSendPane } from '../actions/index.js';
+import { togglePane } from '../actions/index.js';
 
 
 const TransactionStatus = ({status}) => {
+  console.log("status", status);
   let message = null;
   if (status === true){
-    message = <div className="statusMessage success">Transaction complete!</div>;
+    message = (<div className="statusMessage success">
+    Transaction complete! Your balance will automatically update when the blockchain has processed it.
+    </div>);
   }
   else if (status === false){
     message = <div className="statusMessage fail">Transaction failed</div>;
@@ -24,32 +27,36 @@ const TransactionStatus = ({status}) => {
 class Dashboard extends Component {
 
   render = () => {
-    let sendPaneClosed;
-    if (this.props.sendPane){
+    let sendPaneClosed, statusPaneSize;
+    if (this.props.sendPane == true){
       sendPaneClosed = "0%";
     } else {
-      sendPaneClosed = "15%";
+      if (this.props.confirmPane == false){
+        sendPaneClosed = "21%";
+      } else {
+        sendPaneClosed = "15%";
+      }
     }
-    let statusPaneSize;
     if (this.props.status !== null){
-      statusPaneSize = "20px";
+      statusPaneSize = "30px";
     } else {
       statusPaneSize = "0px";
     }
     const sendStyle = !this.props.sendPane ? {backgroundColor:"#4C7631"} : {};
-    console.log(sendStyle);
+
     return (<div id="dashboard">
         <SplitPane className="statusSplit" split="horizontal" size={statusPaneSize} allowResize={false}>
           <TransactionStatus status={this.props.status}/>
           <SplitPane className="navSplit" split="horizontal" size="40px" allowResize={false}>
             <div id="navBar">
               <div id="title">NeoWallet</div>
+              <div id="version">Version 0.0.1</div>
               <NetworkSwitch />
               <Logout />
             </div>
             <SplitPane split="vertical" size="50%" allowResize={false}>
               <SplitPane className="leftSplit" split="horizontal" size="55px" allowResize={false}>
-                <div id="send" onClick={() => this.props.dispatch(toggleSendPane())} style={sendStyle}>
+                <div id="send" onClick={() => this.props.dispatch(togglePane("sendPane"))} style={sendStyle}>
                   <FaArrowUpward id="upArrow" /> <span>Send</span>
                 </div>
                 <SplitPane className="sendSplit" split="horizontal" size={sendPaneClosed} allowResize={false}>
@@ -68,6 +75,7 @@ class Dashboard extends Component {
 
 const mapStateToProps = (state) => ({
   sendPane: state.dashboard.sendPane,
+  confirmPane: state.dashboard.confirmPane,
   status: state.transactionState.success
 });
 

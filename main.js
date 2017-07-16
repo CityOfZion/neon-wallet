@@ -103,6 +103,5 @@ app.on('ready', () => {
     slashes: true,
     pathname: require('path').join(__dirname, '/dist/index.html')
   });
-  console.log(url);
   mainWindow.loadURL(url)
 })

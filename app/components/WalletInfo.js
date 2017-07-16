@@ -19,10 +19,6 @@ class WalletInfo extends Component {
     handleInterval = setInterval(() => initiateGetBalance(this.props.dispatch, this.props.net, this.props.address), 1000);
   }
 
-  componentDidUpdate = () => {
-
-  }
-
   render = () => {
     if (this.props.address !== null){
       return (<div id="accountInfo">
