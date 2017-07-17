@@ -5,10 +5,8 @@ const BrowserWindow = electron.BrowserWindow;
 
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
-    height: 300,
-    width: 800,
-    minHeight: 300,
-    minWidth: 800,
+    height: 750,
+    width: 1000,
     // maxHeight: 800,
     // maxWidth:300
   });
@@ -86,7 +84,6 @@ app.on('ready', () => {
         ]
       }
     )
-
     // Window menu
     template[3].submenu = [
       {role: 'close'},
@@ -106,6 +103,5 @@ app.on('ready', () => {
     slashes: true,
     pathname: require('path').join(__dirname, '/dist/index.html')
   });
-  console.log(url);
   mainWindow.loadURL(url)
 })

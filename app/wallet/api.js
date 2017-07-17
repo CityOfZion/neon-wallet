@@ -8,8 +8,9 @@ const ANS = '\u5c0f\u8681\u80a1';
 const ANC = '\u5c0f\u8681\u5e01';
 
 // hard-code asset ids for ANS and ANC
-const ansId = "c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b";
-const ancId = "602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7";
+export const ansId = "c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b";
+export const ancId = "602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7";
+export const allAssetIds = [ansId, ancId];
 
 // hard-code asset names for ANS and ANC
 const ansName = "小蚁股";
@@ -31,6 +32,22 @@ export const getNetworkEndpoints = (net) => {
     }
   }
 };
+
+// wrapper for querying node RPC
+const queryRPC = (net, method, params, id = 1) => {
+  const network = getNetworkEndpoints(net);
+  let jsonRequest = axios.create({
+    headers: {"Content-Type": "application/json"}
+  });
+  const jsonRpcData = {"jsonrpc": "2.0", "method": method, "params": params, "id": id};
+  return jsonRequest.post(network.rpcEndpoint, jsonRpcData).then((response) => {
+    return response.data;
+  });
+};
+
+export const getBlockByIndex = (net, block) => {
+  return queryRPC(net, "getblock", [block, 1]);
+}
 
 export const getBalance = (net, address) => {
     const network = getNetworkEndpoints(net);
