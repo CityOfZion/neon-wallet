@@ -69,6 +69,26 @@ export const getTransactions = (net, address, assetId) => {
   });
 };
 
+/**
+ * @function
+ * @description
+ * Hit the bittrex api getticker to fetch the latest BTC to ANS price
+ * then hit the latest USDT to BTC conversion rate
+ *
+ * @param {number} amount - The current ANS amount in wallet
+ * @return {string} - The converted ANS to USDT fiat amount
+ */
+export const getMarketPriceUSD = (amount) => {
+  let lastBTCANS, lastUSDBTC;
+  return axios.get('https://bittrex.com/api/v1.1/public/getticker?market=BTC-ANS').then((response) => {
+      lastBTCANS = response.data.result.Last;
+      return axios.get('https://bittrex.com/api/v1.1/public/getticker?market=USDT-BTC').then((response) => {
+          lastUSDBTC = response.data.result.Last;
+          return ('$' + (lastBTCANS * lastUSDBTC * amount).toFixed(2).toString());
+      });
+  });
+};
+
 export const sendAssetTransaction = (net, toAddress, fromWif, assetType, amount) => {
   const network = getNetworkEndpoints(net);
   let assetId, assetName, assetSymbol;

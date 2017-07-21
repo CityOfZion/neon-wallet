@@ -6,7 +6,7 @@ export const LOGOUT = 'LOGOUT';
 export const SET_BALANCE = 'SET_BALANCE';
 export const NEW_WALLET = 'NEW_WALLET';
 export const SET_NETWORK = 'SET_NETWORK';
-
+export const SET_MARKET_PRICE = 'SET_MARKET_PRICE';
 
 // transaction events
 export const SEND_TRANSACTION = 'SEND_TRANSACTION';

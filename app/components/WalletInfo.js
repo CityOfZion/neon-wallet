@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import MdSync from 'react-icons/lib/md/sync';
 import QRCode from 'qrcode';
-import { initiateGetBalance } from "../components/NetworkSwitch";
+import { initiateGetBalance, initiateGetMarketPrice } from "../components/NetworkSwitch";
 
 let handleInterval;
 
@@ -13,10 +13,12 @@ class WalletInfo extends Component {
       clearInterval(handleInterval);
     }
     initiateGetBalance(this.props.dispatch, this.props.net, this.props.address);
+    initiateGetMarketPrice(this.props.dispatch, this.props.ans);  //get initial market price on wallet load
     QRCode.toCanvas(this.canvas, this.props.address, { version: 5 }, (err) => {
       if (err) console.log(err)
     });
     handleInterval = setInterval(() => initiateGetBalance(this.props.dispatch, this.props.net, this.props.address), 1000);
+    setInterval( () => initiateGetMarketPrice(this.props.dispatch, this.props.ans), 5000); // refresh market price on 5s interval
   }
 
   render = () => {
@@ -34,7 +36,7 @@ class WalletInfo extends Component {
             <div className="label">GAS</div>
             <div className="amountBig">{this.props.anc}</div>
           </div>
-          <div className="fiat">US $9344</div>
+          <div className="fiat">US {this.props.price}</div>
           <div onClick={() => initiateGetBalance(this.props.dispatch, this.props.net, this.props.address)}>
             <MdSync id="refresh"/>
           </div>
@@ -52,7 +54,8 @@ const mapStateToProps = (state) => ({
   ans: state.wallet.ANS,
   anc: state.wallet.ANC,
   address: state.account.address,
-  net: state.wallet.net
+  net: state.wallet.net,
+  price: state.wallet.price
 });
 
 WalletInfo = connect(mapStateToProps)(WalletInfo);

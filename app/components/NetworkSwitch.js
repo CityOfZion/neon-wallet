@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setNetwork } from '../actions/index.js';
-import { getBalance, getTransactions, ansId } from '../wallet/api.js';
-import { setBalance } from '../actions/index.js';
+import { getBalance, getTransactions, getMarketPriceUSD, ansId } from '../wallet/api.js';
+import { setBalance, setMarketPrice } from '../actions/index.js';
 
 
 let netSelect;
@@ -18,6 +18,13 @@ const initiateGetBalance = (dispatch, net, address) => {
       dispatch(setBalance(result.ANS, result.ANC));
     }
   });
+};
+
+// initiate a get market price event for live ANS-USDT ticker
+const initiateGetMarketPrice = (dispatch, amount) => {
+    getMarketPriceUSD(amount).then(function(result){
+      dispatch(setMarketPrice(result));
+    });
 };
 
 const syncTransactionHistory = (dispatch, net, address) => {
@@ -54,4 +61,4 @@ let NetworkSwitch = ({dispatch, net, address}) =>
 
   NetworkSwitch = connect(mapStateToProps)(NetworkSwitch);
 
-  export { NetworkSwitch, initiateGetBalance, syncTransactionHistory };
+  export { NetworkSwitch, initiateGetBalance, initiateGetMarketPrice, syncTransactionHistory };
