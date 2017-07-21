@@ -31,6 +31,13 @@ export function setBalance(ans, anc){
   }
 }
 
+export function setMarketPrice(price){
+  return {
+    type: types.SET_MARKET_PRICE,
+    price: price
+  }
+}
+
 export function setNetwork(net){
   const network = net === "MainNet" ? "MainNet" : "TestNet";
   return {
