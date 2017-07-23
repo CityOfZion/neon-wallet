@@ -3,22 +3,30 @@ import { connect } from 'react-redux';
 import MdSync from 'react-icons/lib/md/sync';
 import QRCode from 'qrcode';
 import { initiateGetBalance, initiateGetMarketPrice } from "../components/NetworkSwitch";
+import { resetPrice } from '../actions/index.js';
 
-let handleInterval;
+// need handlers on these as otherwise the interval is not cleared when switching between accounts
+let handleIntervalBalance, handleIntervalPrice;
 
 class WalletInfo extends Component {
 
   componentDidMount = () => {
-    if (handleInterval !== undefined){
-      clearInterval(handleInterval);
+
+
+    if (handleIntervalBalance !== undefined){
+      clearInterval(handleIntervalBalance);
     }
-    initiateGetBalance(this.props.dispatch, this.props.net, this.props.address);
-    initiateGetMarketPrice(this.props.dispatch, this.props.ans);  //get initial market price on wallet load
+    if (handleIntervalPrice !== undefined){
+      clearInterval(handleIntervalPrice);
+    }
+    initiateGetBalance(this.props.dispatch, this.props.net, this.props.address).then(() => {
+      initiateGetMarketPrice(this.props.dispatch, this.props.ans);  //get initial market price on wallet load
+    });
     QRCode.toCanvas(this.canvas, this.props.address, { version: 5 }, (err) => {
       if (err) console.log(err)
     });
-    handleInterval = setInterval(() => initiateGetBalance(this.props.dispatch, this.props.net, this.props.address), 1000);
-    setInterval( () => initiateGetMarketPrice(this.props.dispatch, this.props.ans), 5000); // refresh market price on 5s interval
+    handleIntervalBalance = setInterval(() => initiateGetBalance(this.props.dispatch, this.props.net, this.props.address), 1000);
+    handleIntervalPrice = setInterval( () => initiateGetMarketPrice(this.props.dispatch, this.props.ans), 5000); // refresh market price on 5s interval
   }
 
   render = () => {

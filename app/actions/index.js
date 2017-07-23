@@ -38,6 +38,12 @@ export function setMarketPrice(price){
   }
 }
 
+export function resetPrice(){
+  return {
+    type: types.RESET_PRICE,
+  }
+}
+
 export function setNetwork(net){
   const network = net === "MainNet" ? "MainNet" : "TestNet";
   return {

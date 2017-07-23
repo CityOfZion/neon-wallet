@@ -2,14 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { setNetwork } from '../actions/index.js';
 import { getBalance, getTransactions, getMarketPriceUSD, ansId } from '../wallet/api.js';
-import { setBalance, setMarketPrice } from '../actions/index.js';
+import { setBalance, setMarketPrice, resetPrice } from '../actions/index.js';
 
 
 let netSelect;
 
 // TODO: this is being imported by Balance.js, maybe refactor to helper file
 const initiateGetBalance = (dispatch, net, address) => {
-  getBalance(net, address).then(function(result){
+  return getBalance(net, address).then(function(result){
     // if account/key has never been used, may not be a valid API call
     // TODO: return/pass something better than undefined
     if(result === undefined){
@@ -43,6 +43,7 @@ const toggleNet = (dispatch, net, address) => {
   }
   dispatch(setNetwork(newNet));
   if (address !== null){
+    dispatch(resetPrice());
     initiateGetBalance(dispatch, newNet, address);
     syncTransactionHistory(dispatch, newNet, address);
   }
