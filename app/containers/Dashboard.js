@@ -31,11 +31,7 @@ class Dashboard extends Component {
     if (this.props.sendPane == true){
       sendPaneClosed = "0%";
     } else {
-      if (this.props.confirmPane == false){
-        sendPaneClosed = "21%";
-      } else {
-        sendPaneClosed = "15%";
-      }
+      sendPaneClosed = "120px";
     }
     if (this.props.status !== null){
       statusPaneSize = "30px";
@@ -75,7 +71,6 @@ class Dashboard extends Component {
 
 const mapStateToProps = (state) => ({
   sendPane: state.dashboard.sendPane,
-  confirmPane: state.dashboard.confirmPane,
   status: state.transactionState.success
 });
 
