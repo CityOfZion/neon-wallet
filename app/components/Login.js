@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { login, setBalance } from '../actions/index.js';
+import { login, setBalance, resetPrice } from '../actions/index.js';
 import { Link } from 'react-router';
 import CreateWallet from './CreateWallet.js'
 import { getBlockByIndex } from '../wallet/api.js';
@@ -10,6 +10,9 @@ let input_wif;
 const onWifChange = (dispatch) => {
   // lookup wif address to check whether it is valid and enable login
   dispatch(login(input_wif.value));
+  // somewhat hacky way to reset price on every login
+  this.props.dispatch(resetPrice());
+
 };
 
 let Login = ({ dispatch, loggedIn, wif }) =>

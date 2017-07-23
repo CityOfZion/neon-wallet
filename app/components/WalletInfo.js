@@ -2,21 +2,31 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import MdSync from 'react-icons/lib/md/sync';
 import QRCode from 'qrcode';
-import { initiateGetBalance } from "../components/NetworkSwitch";
+import { initiateGetBalance, initiateGetMarketPrice } from "../components/NetworkSwitch";
+import { resetPrice } from '../actions/index.js';
 
-let handleInterval;
+// need handlers on these as otherwise the interval is not cleared when switching between accounts
+let handleIntervalBalance, handleIntervalPrice;
 
 class WalletInfo extends Component {
 
   componentDidMount = () => {
-    if (handleInterval !== undefined){
-      clearInterval(handleInterval);
+
+
+    if (handleIntervalBalance !== undefined){
+      clearInterval(handleIntervalBalance);
     }
-    initiateGetBalance(this.props.dispatch, this.props.net, this.props.address);
+    if (handleIntervalPrice !== undefined){
+      clearInterval(handleIntervalPrice);
+    }
+    initiateGetBalance(this.props.dispatch, this.props.net, this.props.address).then(() => {
+      initiateGetMarketPrice(this.props.dispatch, this.props.ans);  //get initial market price on wallet load
+    });
     QRCode.toCanvas(this.canvas, this.props.address, { version: 5 }, (err) => {
       if (err) console.log(err)
     });
-    handleInterval = setInterval(() => initiateGetBalance(this.props.dispatch, this.props.net, this.props.address), 1000);
+    handleIntervalBalance = setInterval(() => initiateGetBalance(this.props.dispatch, this.props.net, this.props.address), 1000);
+    handleIntervalPrice = setInterval( () => initiateGetMarketPrice(this.props.dispatch, this.props.ans), 5000); // refresh market price on 5s interval
   }
 
   render = () => {
@@ -34,7 +44,7 @@ class WalletInfo extends Component {
             <div className="label">GAS</div>
             <div className="amountBig">{this.props.anc}</div>
           </div>
-          <div className="fiat">US $9344</div>
+          <div className="fiat">US {this.props.price}</div>
           <div onClick={() => initiateGetBalance(this.props.dispatch, this.props.net, this.props.address)}>
             <MdSync id="refresh"/>
           </div>
@@ -52,7 +62,8 @@ const mapStateToProps = (state) => ({
   ans: state.wallet.ANS,
   anc: state.wallet.ANC,
   address: state.account.address,
-  net: state.wallet.net
+  net: state.wallet.net,
+  price: state.wallet.price
 });
 
 WalletInfo = connect(mapStateToProps)(WalletInfo);
