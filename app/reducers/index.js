@@ -38,7 +38,7 @@ const account = (state = {'wif': null, 'address':null, 'loggedIn': false}, actio
     switch (action.type) {
         case types.LOGIN:
             const loadAccount = getAccountsFromWIFKey(action.wif)[0];
-            if(loadAccount === -1 || loadAccount === -2){
+            if(typeof loadAccount === 'undefined'){
               return {...state, wif:action.wif,  loggedIn:false};
             }
             return {...state, wif:action.wif, address:loadAccount.address, loggedIn:true};
@@ -81,12 +81,12 @@ const wallet = (state = {'ANS': 0, 'ANC': 0, 'net': 'TestNet', 'transactions': [
     }
 };
 
-const dashboard = (state = {sendPane: true, confirmPane: true}, action) => {
+const dashboard = (state = {showConfirmation: false}, action) => {
   switch (action.type) {
-      case types.TOGGLE_SEND_PANE:
-          let newState = {};
-          newState[action.pane] = !state[action.pane];
-          return {...state, ...newState };
+      case types.SHOW_CONFIRMATION:
+        return {...state, showConfirmation: true}
+      case types.HIDE_CONFIRMATION:
+        return {...state, showConfirmation: false}
       default:
           return state;
   }

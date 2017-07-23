@@ -74,10 +74,14 @@ export function toggleAsset(){
 };
 
 // dashboard
-
-export function togglePane(pane){
+export function showConfirmation(pane, override){
   return {
-    type: types.TOGGLE_SEND_PANE,
-    pane: pane
+    type: types.SHOW_CONFIRMATION
+  }
+};
+
+export function hideConfirmation(pane, override){
+  return {
+    type: types.HIDE_CONFIRMATION
   }
 };

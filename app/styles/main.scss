@@ -163,11 +163,12 @@ button a{
 		margin:0px auto;
 		button{
 			margin-top:0px;
-			background-color:#0E2003;
+			background-color:#517C35;
 			height:33px;
 			margin-left:10px;
 			color:white;
-			margin-right:0px;
+			margin-right:10px;
+			float:right;
 		}
 		button:hover{
 			background-color:#112704;
@@ -207,6 +208,7 @@ button a{
 		button#sendAsset:hover{
 			background-color:#112704;
 		}
+
 		#sendAmount{
 			margin-top:3px;
 			display:inline-block;
@@ -337,4 +339,8 @@ button a{
 }
 .vertical.Pane1{
 	border-right:1.5px solid #1A2910;
+}
+.textLink{
+	cursor:pointer;
+	text-decoration:underline;
 }
