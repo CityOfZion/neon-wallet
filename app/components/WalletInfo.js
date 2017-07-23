@@ -4,11 +4,15 @@ import MdSync from 'react-icons/lib/md/sync';
 import QRCode from 'qrcode';
 import { initiateGetBalance, initiateGetMarketPrice } from "../components/NetworkSwitch";
 import { resetPrice } from '../actions/index.js';
+import { clipboard } from 'electron';
 
 // need handlers on these as otherwise the interval is not cleared when switching between accounts
 let handleIntervalBalance, handleIntervalPrice;
 
 class WalletInfo extends Component {
+  copyPublicAddressToKeyboard() {
+    clipboard.writeText(this.props.address, 'selection')
+  }
 
   componentDidMount = () => {
 
@@ -33,7 +37,7 @@ class WalletInfo extends Component {
     if (this.props.address !== null){
       return (<div id="accountInfo">
         <div className="label">Your Public Neo Address:</div>
-        <div className="address">{this.props.address}</div>
+        <div className="address">{this.props.address}&nbsp;<span className="textLink" onClick={this.copyPublicAddressToKeyboard.bind(this)}>Copy</span></div>
         <div className="spacer"></div>
         <div id="balance">
           <div className="split">
