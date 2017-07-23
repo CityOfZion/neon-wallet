@@ -8,12 +8,12 @@ export const NEW_WALLET = 'NEW_WALLET';
 export const SET_NETWORK = 'SET_NETWORK';
 export const SET_MARKET_PRICE = 'SET_MARKET_PRICE';
 export const RESET_PRICE = 'RESET_PRICE';
+export const SET_TRANSACTION_HISTORY = 'SET_TRANSACTION_HISTORY';
 
 // transaction events
 export const SEND_TRANSACTION = 'SEND_TRANSACTION';
 export const CLEAR_TRANSACTION = 'CLEAR_TRANSACTION';
 export const TOGGLE_ASSET = 'TOGGLE_ASSET';
-
 
 // dashboard state
 export const TOGGLE_SEND_PANE = 'TOGGLE_SEND_PANE';

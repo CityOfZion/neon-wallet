@@ -287,6 +287,8 @@ button a{
 	ul#transactionList{
 		margin:0;
 		padding:0;
+		overflow-y: scroll;
+		height:600px;
 		li{
 			list-style-type: none;
 			font-weight:200;
@@ -302,6 +304,7 @@ button a{
 				text-align:left;
 				font-family:'courier new';
 				font-size:.7em;
+				overflow-x: scroll;
 			}
 			.amount{
 				display:inline-block;

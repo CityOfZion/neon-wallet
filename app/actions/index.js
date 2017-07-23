@@ -52,6 +52,13 @@ export function setNetwork(net){
   }
 };
 
+export function setTransactionHistory(transactions){
+  return {
+    type: types.SET_TRANSACTION_HISTORY,
+    transactions
+  }
+};
+
 // transaction events
 
 export function sendEvent(success){

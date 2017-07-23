@@ -22,12 +22,12 @@ const getAnc = balance => balance.filter((val) => { return val.unit === ANC })[0
 export const getNetworkEndpoints = (net) => {
   if (net === "MainNet"){
     return {
-      apiEndpoint: "https://antchain.xyz",
+      apiEndpoint: "http://neo.herokuapp.com",
       rpcEndpoint: "http://api.otcgo.cn:10332"
     }
   } else {
     return {
-      apiEndpoint: "http://testnet.antchain.xyz",
+      apiEndpoint: "http://neo-testnet.herokuapp.com", //"http://testnet.antchain.xyz",
       rpcEndpoint: "http://api.otcgo.cn:20332"
     }
   }
@@ -51,14 +51,11 @@ export const getBlockByIndex = (net, block) => {
 
 export const getBalance = (net, address) => {
     const network = getNetworkEndpoints(net);
-    return axios.get(network.apiEndpoint + '/api/v1/address/info/' + address)
+    return axios.get(network.apiEndpoint + '/balance/' + address)
       .then((res) => {
-        if (res.data.result !== 'No Address!') {
-          // get ANS
-          const ans = getAns(res.data.balance);
-          const anc = getAnc(res.data.balance);
+          const ans = res.data.NEO.balance;
+          const anc = res.data.GAS.balance;
           return {ANS: ans, ANC: anc};
-        }
       })
 };
 
@@ -86,6 +83,13 @@ export const getMarketPriceUSD = (amount) => {
           lastUSDBTC = response.data.result.Last;
           return ('$' + (lastBTCANS * lastUSDBTC * amount).toFixed(2).toString());
       });
+  });
+};
+
+export const getTransactionHistory = (net, address) => {
+  const network = getNetworkEndpoints(net);
+  return axios.get(network.apiEndpoint + '/balance_history/' + address).then((response) => {
+    return response.data.history;
   });
 };
 

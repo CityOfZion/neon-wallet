@@ -54,12 +54,12 @@ const wallet = (state = {'ANS': 0, 'ANC': 0, 'net': 'TestNet', 'transactions': [
         case types.SET_BALANCE:
             let ansValue, ancValue;
             if (action.ANS !== undefined){
-              ansValue = action.ANS.balance;
+              ansValue = action.ANS;
             } else {
               ansValue = 0;
             }
             if (action.ANC !== undefined){
-              ancValue = action.ANC.balance;
+              ancValue = action.ANC;
             } else {
               ancValue = 0;
             }
@@ -76,6 +76,8 @@ const wallet = (state = {'ANS': 0, 'ANC': 0, 'net': 'TestNet', 'transactions': [
                 currentPrice = '--';
             }
             return {...state, price: currentPrice};
+        case types.SET_TRANSACTION_HISTORY:
+            return {...state, transactions: action.transactions};
         default:
             return state;
     }

@@ -13,7 +13,7 @@ class TransactionHistory extends Component {
       <div className="columnHeader">Transaction History</div>
       <div className="headerSpacer"></div>
       <ul id="transactionList">
-        {this.props.transactions.map((t) => <li><div className="txid">{t.id}</div><div className="amount">{t.sign}{t.amount} NEO</div></li>)}
+        {this.props.transactions.map((t) => <li><div className="txid">{t.txid}</div><div className="amount">{t.NEO} NEO</div></li>)}
       </ul>
     </div>;
 }

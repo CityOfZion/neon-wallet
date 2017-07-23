@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setNetwork } from '../actions/index.js';
-import { getBalance, getTransactions, getMarketPriceUSD, ansId } from '../wallet/api.js';
-import { setBalance, setMarketPrice, resetPrice } from '../actions/index.js';
+import { getBalance, getTransactionHistory, getMarketPriceUSD, ansId } from '../wallet/api.js';
+import { setBalance, setMarketPrice, resetPrice, setTransactionHistory } from '../actions/index.js';
 
 
 let netSelect;
@@ -28,7 +28,9 @@ const initiateGetMarketPrice = (dispatch, amount) => {
 };
 
 const syncTransactionHistory = (dispatch, net, address) => {
-  getTransactions(net, address, ansId).then((response) => {
+  getTransactionHistory(net, address).then((transactions) => {
+    console.log(transactions);
+    dispatch(setTransactionHistory(transactions));
     // TODO: no public API yet exists for ALL transation history
     // so this does nothing for now
   });
