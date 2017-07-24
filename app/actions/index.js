@@ -23,11 +23,12 @@ export function newWallet(){
   }
 }
 
-export function setBalance(ans, anc){
+export function setBalance(ans, anc, price){
   return {
     type: types.SET_BALANCE,
     ANS: ans,
-    ANC: anc
+    ANC: anc,
+    price: price
   }
 }
 

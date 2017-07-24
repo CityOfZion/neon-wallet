@@ -63,7 +63,7 @@ const wallet = (state = {'ANS': 0, 'ANC': 0, 'net': 'TestNet', 'transactions': [
             } else {
               ancValue = 0;
             }
-            return {...state, 'ANS': ansValue, 'ANC': ancValue };
+            return {...state, 'ANS': ansValue, 'ANC': ancValue, 'price': action.price };
         case types.RESET_PRICE:
             return {...state, 'price': '--'};
         case types.SET_NETWORK:
