@@ -11,7 +11,7 @@ const onWifChange = (dispatch) => {
   // lookup wif address to check whether it is valid and enable login
   dispatch(login(input_wif.value));
   // somewhat hacky way to reset price on every login
-  this.props.dispatch(resetPrice());
+  // dispatch(resetPrice());
 
 };
 
