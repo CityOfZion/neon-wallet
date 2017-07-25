@@ -38,7 +38,8 @@ const sendTransaction = (dispatch, net, wif, asset) => {
 let Send = ({dispatch, wif, status, ans, anc, net, showConfirmationState, selectedAsset}) => {
   let validateTransaction = () => {
     const validatePublicAddress = verifyAddress(sendAddress.value);
-    const validateAmount = !isNaN(sendAmount.value); // TO DO: need to clarify max/min number & decimals for ANS and ANC
+    // console.log(typeof sendAmount.value != 'undefined' , sendAmount.value.length , !isNaN(sendAmount.value));
+    const validateAmount = typeof sendAmount.value != 'undefined' && sendAmount.value.length > 0 && !isNaN(sendAmount.value) && parseInt(sendAmount.value) > 0; // TO DO: need to clarify max/min number & decimals for ANS and ANC
     if (validatePublicAddress && validateAmount) {
       dispatch(showConfirmation())
     } else {

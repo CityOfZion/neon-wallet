@@ -23,11 +23,12 @@ export function newWallet(){
   }
 }
 
-export function setBalance(ans, anc){
+export function setBalance(ans, anc, price){
   return {
     type: types.SET_BALANCE,
     ANS: ans,
-    ANC: anc
+    ANC: anc,
+    price: price
   }
 }
 
@@ -49,6 +50,13 @@ export function setNetwork(net){
   return {
     type: types.SET_NETWORK,
     net: network
+  }
+};
+
+export function setTransactionHistory(transactions){
+  return {
+    type: types.SET_TRANSACTION_HISTORY,
+    transactions
   }
 };
 

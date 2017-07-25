@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import MdSync from 'react-icons/lib/md/sync';
 import QRCode from 'qrcode';
-import { initiateGetBalance, initiateGetMarketPrice } from "../components/NetworkSwitch";
+import { initiateGetBalance, intervals } from "../components/NetworkSwitch";
 import { resetPrice } from '../actions/index.js';
 import { clipboard } from 'electron';
 
 // need handlers on these as otherwise the interval is not cleared when switching between accounts
-let handleIntervalBalance, handleIntervalPrice;
 
 class WalletInfo extends Component {
   copyPublicAddressToKeyboard() {
@@ -15,22 +14,15 @@ class WalletInfo extends Component {
   }
 
   componentDidMount = () => {
-
-
-    if (handleIntervalBalance !== undefined){
-      clearInterval(handleIntervalBalance);
-    }
-    if (handleIntervalPrice !== undefined){
-      clearInterval(handleIntervalPrice);
-    }
-    initiateGetBalance(this.props.dispatch, this.props.net, this.props.address).then(() => {
-      initiateGetMarketPrice(this.props.dispatch, this.props.ans);  //get initial market price on wallet load
-    });
+    initiateGetBalance(this.props.dispatch, this.props.net, this.props.address);
     QRCode.toCanvas(this.canvas, this.props.address, { version: 5 }, (err) => {
       if (err) console.log(err)
     });
-    handleIntervalBalance = setInterval(() => initiateGetBalance(this.props.dispatch, this.props.net, this.props.address), 1000);
-    handleIntervalPrice = setInterval( () => initiateGetMarketPrice(this.props.dispatch, this.props.ans), 5000); // refresh market price on 5s interval
+    // intervals.balance = setInterval(() => initiateGetBalance(this.props.dispatch, this.props.net, this.props.address), 1000);
+  }
+
+  componentDidUpdate = () => {
+
   }
 
   render = () => {
@@ -46,7 +38,7 @@ class WalletInfo extends Component {
           </div>
           <div className="split">
             <div className="label">GAS</div>
-            <div className="amountBig">{this.props.anc}</div>
+            <div className="amountBig">{this.props.anc.toPrecision(5)}</div>
           </div>
           <div className="fiat">US {this.props.price}</div>
           <div onClick={() => initiateGetBalance(this.props.dispatch, this.props.net, this.props.address)}>

@@ -50,7 +50,7 @@ export const getInputData = ($coin, $amount) => {
 		}
 	}
 
-	// console.log('coin_ordered', coin_ordered );
+	console.log('coin_ordered', coin_ordered );
 
 	// calc sum
 	var sum = 0;
