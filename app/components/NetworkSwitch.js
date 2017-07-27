@@ -25,10 +25,10 @@ const syncTransactionHistory = (dispatch, net, address) => {
   getTransactionHistory(net, address).then((transactions) => {
     let txs = [];
     for (let i = 0; i < transactions.length; i++){
-      if (transactions[i].NEO > 0){
+      if (transactions[i].NEO !== 0){
         txs = txs.concat([{type: "NEO", amount: transactions[i].NEO, txid: transactions[i].txid, block_index: transactions[i].block_index }]);
       }
-      if (transactions[i].GAS > 0){
+      if (transactions[i].GAS !== 0){
         txs = txs.concat([{type: "GAS", amount: transactions[i].GAS, txid: transactions[i].txid, block_index: transactions[i].block_index }]);
       }
     }
@@ -42,7 +42,7 @@ const resetBalanceSync = (dispatch, net, address) => {
   }
   intervals.balance = setInterval(() =>  {
     initiateGetBalance(dispatch, net, address);
-  }, 10000);
+  }, 5000);
 };
 
 const toggleNet = (dispatch, net, address) => {
