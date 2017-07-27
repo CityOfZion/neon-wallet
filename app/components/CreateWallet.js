@@ -4,6 +4,8 @@ import { newWallet } from '../actions/index.js';
 import { Link } from 'react-router';
 import WalletInfo from './WalletInfo.js';
 import QRCode from 'qrcode';
+import { clipboard } from 'electron';
+
 
 const generateWallet = (dispatch) => {
   dispatch(newWallet());
@@ -24,6 +26,18 @@ class CreateWallet extends Component {
     });
   }
 
+  onClickCopyPublic() {
+    clipboard.writeText(this.props.address, 'selection')
+    // console.log(clipboard.readText('selection'))
+    // alert('Public address copied to clipboard')
+  }
+
+  onClickCopyPrivateWif() {
+    clipboard.writeText(this.props.wif, 'selection')
+    // console.log(clipboard.readText('selection'))
+    // alert('Private WIF key copied to clipboard')
+  }
+
   render = () =>
     <div id="newWallet">
       <div className="disclaimer">
@@ -39,6 +53,8 @@ class CreateWallet extends Component {
       </div>
       <div className="keyList"><span className="label">Public Address:</span><span className="key">{this.props.address}</span></div>
       <div className="keyList"><span className="label">Private Key:</span><span className="key">{this.props.wif}</span></div>
+      <button onClick={this.onClickCopyPublic.bind(this)}>Copy Public Address</button>
+      <button onClick={this.onClickCopyPrivateWif.bind(this)}>Copy Private Key</button>
       <button><Link to="/">Back to Login</Link></button>
     </div>;
 

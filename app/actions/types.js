@@ -17,3 +17,5 @@ export const TOGGLE_ASSET = 'TOGGLE_ASSET';
 
 // dashboard state
 export const TOGGLE_SEND_PANE = 'TOGGLE_SEND_PANE';
+export const SHOW_CONFIRMATION = 'SHOW_CONFIRMATION';
+export const HIDE_CONFIRMATION = 'HIDE_CONFIRMATION';
