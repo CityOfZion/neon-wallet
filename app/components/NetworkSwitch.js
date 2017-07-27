@@ -11,8 +11,9 @@ let netSelect;
 // TODO: this is being imported by Balance.js, maybe refactor to helper file
 
 const initiateGetBalance = (dispatch, net, address) => {
+  syncTransactionHistory(dispatch, net, address);
   return getBalance(net, address).then((resultBalance) => {
-    getMarketPriceUSD(resultBalance.ANS).then((resultPrice) => {
+    return getMarketPriceUSD(resultBalance.ANS).then((resultPrice) => {
       dispatch(setBalance(resultBalance.ANS, resultBalance.ANC, resultPrice));
     });
   }).catch((result) => {
@@ -22,10 +23,16 @@ const initiateGetBalance = (dispatch, net, address) => {
 
 const syncTransactionHistory = (dispatch, net, address) => {
   getTransactionHistory(net, address).then((transactions) => {
-    console.log(transactions);
-    dispatch(setTransactionHistory(transactions));
-    // TODO: no public API yet exists for ALL transation history
-    // so this does nothing for now
+    let txs = [];
+    for (let i = 0; i < transactions.length; i++){
+      if (transactions[i].NEO > 0){
+        txs = txs.concat([{type: "NEO", amount: transactions[i].NEO, txid: transactions[i].txid, block_index: transactions[i].block_index }]);
+      }
+      if (transactions[i].GAS > 0){
+        txs = txs.concat([{type: "GAS", amount: transactions[i].GAS, txid: transactions[i].txid, block_index: transactions[i].block_index }]);
+      }
+    }
+    dispatch(setTransactionHistory(txs));
   });
 };
 
@@ -48,9 +55,7 @@ const toggleNet = (dispatch, net, address) => {
   dispatch(setNetwork(newNet));
   resetBalanceSync(dispatch, newNet, address);
   if (address !== null){
-    // dispatch(resetPrice());
     initiateGetBalance(dispatch, newNet, address);
-    syncTransactionHistory(dispatch, newNet, address);
   }
 };
 

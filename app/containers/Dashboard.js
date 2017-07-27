@@ -11,7 +11,6 @@ import { togglePane } from '../actions/index.js';
 
 
 const TransactionStatus = ({status}) => {
-  console.log("status", status);
   let message = null;
   if (status === true){
     message = (<div className="statusMessage success">
@@ -49,7 +48,7 @@ class Dashboard extends Component {
           <TransactionStatus status={this.props.status}/>
           <SplitPane className="navSplit" split="horizontal" size="40px" allowResize={false}>
             <div id="navBar">
-              <div id="title">NeoWallet</div>
+              <div id="title">Neon</div>
               <div id="version">Version 0.0.1</div>
               <NetworkSwitch />
               <Logout />

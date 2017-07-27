@@ -28,7 +28,7 @@ class TransactionHistory extends Component {
       <div className="columnHeader">Transaction History</div>
       <div className="headerSpacer"></div>
       <ul id="transactionList">
-        {this.props.transactions.map((t) => <li><div className="txid" onClick={() => openExplorer(getExplorerLink(this.props.net, t.txid))}>{t.txid}</div><div className="amount">{t.NEO} NEO</div></li>)}
+        {this.props.transactions.map((t) => <li><div className="txid" onClick={() => openExplorer(getExplorerLink(this.props.net, t.txid))}>{t.txid}</div><div className="amount">{t.amount} {t.type}</div></li>)}
       </ul>
     </div>;
 }

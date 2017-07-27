@@ -7,6 +7,10 @@ app.on('ready', () => {
   mainWindow = new BrowserWindow({
     height: 750,
     width: 1000,
+    minHeight: 750,
+    maxHeight: 750,
+    minWidth: 1000,
+    maxWidth: 1000,
     // maxHeight: 800,
     // maxWidth:300
   });
