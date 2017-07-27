@@ -34,7 +34,7 @@ class WalletInfo extends Component {
           </div>
           <div className="split">
             <div className="label">GAS</div>
-            <div className="amountBig">{this.props.anc.toPrecision(5)}</div>
+            <div className="amountBig">{this.props.anc < 0.001 ? 0 : this.props.anc.toPrecision(5)}</div>
           </div>
           <div className="fiat">US {this.props.price}</div>
           <div onClick={() => initiateGetBalance(this.props.dispatch, this.props.net, this.props.address)}>
