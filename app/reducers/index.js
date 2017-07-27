@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import { getAccountsFromWIFKey, generatePrivateKey, getWIFFromPrivateKey } from '../wallet/index.js';
 import * as types from '../actions/types';
 
+
 const transactionState = (state = {'success': null, selectedAsset: 'NEO'}, action) => {
   switch (action.type) {
       case types.SEND_TRANSACTION:

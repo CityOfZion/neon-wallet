@@ -621,3 +621,4 @@ export const getAccountsFromWIFKey = ($WIFKey) => {
 
 	return getAccountsFromPrivateKey(privateKey);
 };
+
