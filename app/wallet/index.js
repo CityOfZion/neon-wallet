@@ -12,6 +12,9 @@ import { ab2str,
   numStoreInMemory,
   stringToBytes } from './utils';
 
+const Promise = require("bluebird");
+const storage = Promise.promisifyAll(require('electron-json-storage'));
+
 var base58 = require('base-x')(BASE58)
 
 import buffer from 'buffer';
@@ -622,3 +625,44 @@ export const getAccountsFromWIFKey = ($WIFKey) => {
 	return getAccountsFromPrivateKey(privateKey);
 };
 
+
+//Local Storage methods
+export const getLocalStorageData = () => {
+	return storage.getAllAsync().then((data) => {
+
+		console.log("local data: "+Object.keys(data));
+		return data;
+	}).catch(function(e) {
+		console.error(e.stack);
+	})
+};
+
+export const getLocalStorageLength = () => {
+	return storage.getAllAsync().then((data) => {
+
+	  var counter = Object.keys(data);
+	  var length = counter.length;
+	  console.log("length: "+length);
+	  return length;
+	});
+};
+
+export const clearLocalStorage = () => {
+	storage.clear(function(error) {
+	  if (error) throw error;
+	});
+};
+
+export const addAccountToLocalStorage = () => {
+	return getLocalStorageLength().then((length) => {
+		console.log('count: '+length);
+		let keyValue = length == 1 ? "Main_Account" : "Account_"+length;
+		console.log("key: "+keyValue)
+		storage.setAsync(keyValue, { key: "WIFKey" }).then((response) => {
+			console.log("response: "+response);
+			return response;
+		}).catch(function(e) {
+		    console.error(e.stack);
+		});
+	});
+};
