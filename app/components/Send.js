@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import { sendAssetTransaction } from '../wallet/api.js';
 import { sendEvent, clearTransactionEvent, toggleAsset, togglePane } from '../actions/index.js';
 import SplitPane from 'react-split-pane';
-
+import ReactTooltip from 'react-tooltip'
 
 let sendAddress, sendAmount, confirmButton;
 
@@ -49,7 +49,10 @@ let Send = ({dispatch, wif, status, ans, anc, net, confirmPane, selectedAsset}) 
         <div id="sendAmount">
           <input id="sendAmount" placeholder="Amount" ref={node => {sendAmount = node;}}/>
         </div>
-        <button id="sendAsset" onClick={() => dispatch(toggleAsset())}>{selectedAsset}</button>
+        <button id="sendAsset" data-tip data-for="assetTip" onClick={() => dispatch(toggleAsset())}>{selectedAsset}</button>
+        <ReactTooltip class="solidTip" id="assetTip" place="bottom" type="dark" effect="solid">
+          <span>Toggle NEO/GAS</span>
+        </ReactTooltip>
       <button id="doSend" onClick={() => dispatch(togglePane("confirmPane"))}>Send Asset</button>
     </div>
     <div id="confirmPane" onClick={() => sendTransaction(dispatch, net, wif, selectedAsset)}>

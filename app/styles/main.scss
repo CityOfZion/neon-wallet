@@ -138,7 +138,7 @@ button a{
 		top:3px;
 		cursor:pointer;
 		color:#ccc;
-		opacity:.8;
+		// opacity:.8;
 		a{
 			font-size: inherit;
 			margin:none;
@@ -148,7 +148,7 @@ button a{
 		}
 	}
 	#logout:hover{
-		opacity:.6;
+		// opacity:.6;
 	}
 	#send{
 		text-align:center;
@@ -348,4 +348,15 @@ button a{
 }
 .vertical.Pane1{
 	border-right:1.5px solid #1A2910;
+}
+
+// TODO: tool-tip seems broken
+.__react_component_tooltip {
+	&.show {
+		opacity: 1 !important;
+	}
+	&.solidTip{
+		background-color: rgba(0,0,0,1);
+		z-index:999;
+	}
 }

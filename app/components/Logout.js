@@ -3,12 +3,16 @@ import { connect } from 'react-redux';
 import { logout } from '../actions/index.js';
 import { Link } from 'react-router';
 import Power from 'react-icons/lib/md/power-settings-new';
+import ReactTooltip from 'react-tooltip'
 
 
 let Logout = ({dispatch}) =>
-  <div id="logout" onClick={() => dispatch(logout())}>
+  <div id="logout" data-tip data-for="logoutTip" onClick={() => dispatch(logout())}>
     <Link to="/"><Power /></Link>
-  </div>
+    <ReactTooltip class="solidTip" id="logoutTip" place="bottom" type="dark" effect="solid">
+      <span>Logout</span>
+    </ReactTooltip>
+  </div>;
 
   const mapStateToProps = (state) => ({
   });
