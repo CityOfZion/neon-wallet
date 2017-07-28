@@ -15,16 +15,17 @@ const sendTransaction = (dispatch, net, wif, asset) => {
   } else {
     assetSwap = "AntCoins";
   }
+  dispatch(sendEvent(true, "Processing..."))
   sendAssetTransaction(net, sendAddress.value, wif, assetSwap, sendAmount.value).then((response) => {
     if (response.result === undefined){
-      dispatch(sendEvent(false));
+      dispatch(sendEvent(false, "Transaction failed!"));
     } else {
-      dispatch(sendEvent(true));
+      dispatch(sendEvent(true, "Transaction complete! Your balance will automatically update when the blockchain has processed it."));
     }
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
   }).catch(() => {
     // TODO: more specific error messages
-    dispatch(sendEvent(false));
+    // TODO: is this ever triggering...
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
   });
   dispatch(togglePane("confirmPane"));

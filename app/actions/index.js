@@ -62,10 +62,11 @@ export function setTransactionHistory(transactions){
 
 // transaction events
 
-export function sendEvent(success){
+export function sendEvent(success, message){
   return {
     type: types.SEND_TRANSACTION,
-    success: success
+    success: success,
+    message: message
   }
 };
 

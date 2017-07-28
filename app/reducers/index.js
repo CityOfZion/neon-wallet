@@ -3,12 +3,12 @@ import { combineReducers } from 'redux';
 import { getAccountsFromWIFKey, generatePrivateKey, getWIFFromPrivateKey } from '../wallet/index.js';
 import * as types from '../actions/types';
 
-const transactionState = (state = {'success': null, selectedAsset: 'NEO'}, action) => {
+const transactionState = (state = {'success': null, message: null, selectedAsset: 'NEO'}, action) => {
   switch (action.type) {
       case types.SEND_TRANSACTION:
-          return {...state, success:action.success};
+          return {...state, success:action.success, message: action.message};
       case types.CLEAR_TRANSACTION:
-          return {...state, success: null};
+          return {...state, success: null, message: null};
       case types.TOGGLE_ASSET:
           let asset;
           if (state.selectedAsset == "NEO"){

@@ -100,6 +100,7 @@ app.on('ready', () => {
 
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
+  mainWindow.setMenu(null); // TODO: does this work?
 
   // load the local HTML file
   let url = require('url').format({
