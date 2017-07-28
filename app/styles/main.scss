@@ -1,18 +1,20 @@
 
 // backgrounds and buttons
-$main-background: #0F1B07;
-$default-button: #2B3C20;
-$default-button-hover: #6E8560;
-$dark-button: #0E2003;
-$dark-button-hover: #112704;
-$dark-input-color: #081102;
-$bright-button: #517C35;
-$bright-button-hover: #5D913B;
-$secondary-background: #1A2910;
+$main-background: #FFF;
+$default-button: #4D933B;
+$default-button-hover: #5EB248;
+$dark-button: #236312;
+$dark-button-hover: #33881C;
+$dark-input-color: #E8F4E5;
+$bright-button: #76B466;
+$bright-button-hover: #8CD678;
+$secondary-background: #E8F4E5;
 
 // text
-$default-text: #ccc;
-$thin-text-color: #7EA63B;
+$default-text: #333;
+$button-text: #fff;
+$thin-text-color: #000;
+$error-color: #FF3E3E;
 
 body{
 	font-family: 'helvetica neue', 'helvetica', sans-serif;
@@ -27,7 +29,7 @@ button{
 	font-size:1em;
 	padding:6px 12px;
 	margin-right:10px;
-	color:$default-text;
+	color:$button-text;
 	background-color:$default-button;
 	border:none;
 	cursor:pointer;
@@ -101,10 +103,10 @@ button a{
 		color:white;
 	}
 	.statusMessage.success{
-		background-color:#4C7631;
+		background-color:$default-button;
 	}
 	.statusMessage.fail{
-		background-color:#FF3E3E;
+		background-color:$error-color;
 	}
 	.spacer{
 		width:84%;
@@ -172,9 +174,9 @@ button a{
 		padding:16px 0px;
 		font-weight: 200;
 		font-size:1.2em;
-		span{
-			opacity:.6;
-		}
+		// span{
+		// 	opacity:.6;
+		// }
 		#upArrow{
 			position: relative;
 			font-size:1.4em;
@@ -208,14 +210,14 @@ button a{
 		}
 		button{
 			margin-top:10px;
-			background-color:$bright-button;
+			background-color:$default-button;
 			height:33px;
 			margin-left:10px;
 			color:white;
 			margin-right:0px;
 		}
 		button:hover{
-			background-color:$bright-button-hover;
+			background-color:$default-button-hover;
 		}
 		#sendAddress{
 			width:100%;
@@ -340,18 +342,21 @@ button a{
 		}
 	}
 }
+
 .leftSplit{
 	.Pane1{
-		background-color:$default-button;
+		background-color:$secondary-background;
 		cursor:pointer;
+		border-bottom:none;
 	}
 	.Pane1:hover{
-		background-color:$bright-button;
+		background-color:$default-button;
+		color:$button-text;
 	}
 }
 .sendSplit{
 	.Pane1:hover{
-		background-color:$default-button;
+		background-color:$secondary-background;
 	}
 }
 .confirmSplit{
@@ -360,7 +365,7 @@ button a{
 	}
 }
 .horizontal.Pane1{
-	border-bottom:1.5px solid $secondary-background;
+	// border-bottom:1.5px solid $secondary-background;
 }
 .vertical.Pane1{
 	border-right:1.5px solid $secondary-background;

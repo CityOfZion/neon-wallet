@@ -41,7 +41,8 @@ class Dashboard extends Component {
     } else {
       statusPaneSize = "0px";
     }
-    const sendStyle = !this.props.sendPane ? {backgroundColor:"#4C7631"} : {};
+    // TODO: import this from SASS... (default-button color)
+    const sendStyle = !this.props.sendPane ? {backgroundColor:"#4D933B", color:"#fff"} : {};
 
     return (<div id="dashboard">
         <SplitPane className="statusSplit" split="horizontal" size={statusPaneSize} allowResize={false}>
