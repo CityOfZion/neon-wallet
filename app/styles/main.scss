@@ -1,23 +1,39 @@
+
+// backgrounds and buttons
+$main-background: #0F1B07;
+$default-button: #2B3C20;
+$default-button-hover: #6E8560;
+$dark-button: #0E2003;
+$dark-button-hover: #112704;
+$dark-input-color: #081102;
+$bright-button: #517C35;
+$bright-button-hover: #5D913B;
+$secondary-background: #1A2910;
+
+// text
+$default-text: #ccc;
+$thin-text-color: #7EA63B;
+
 body{
 	font-family: 'helvetica neue', 'helvetica', sans-serif;
 	font-size:16px;
 	padding:0px;
 	margin:0px;
-	background-color:#0F1B07;
-	color:#ccc;
+	background-color:$main-background;
+	color:$default-text;
 }
 
 button{
 	font-size:1em;
 	padding:6px 12px;
 	margin-right:10px;
-	color:#ccc;
-	background-color:#2B3C20;
+	color:$default-text;
+	background-color:$default-button;
 	border:none;
 	cursor:pointer;
 }
 button:hover{
-	background-color:#6E8560;
+	background-color:$default-button-hover;
 }
 button a{
 	text-decoration: none;
@@ -63,8 +79,8 @@ button a{
 		padding:7px 15px;
 		border:none;
 		font-weight:200;
-		background-color:#081102;
-		color:#ccc;
+		background-color:$dark-input-color;
+		color:$default-text;
 	}
 	margin-top:30%;
 	text-align:center;
@@ -93,13 +109,13 @@ button a{
 	.spacer{
 		width:84%;
 		margin:0px 8%;
-		border-top:2px solid #1A2910;
+		border-top:2px solid $secondary-background;
 	}
 	#title{
 		font-size:1em;
 		padding:10px 0px 0px 10px;
 		font-weight:200;
-		color:#7EA63B;
+		color:$thin-text-color;
 	}
 	#version{
 		position:absolute;
@@ -126,7 +142,7 @@ button a{
 			margin-right:4px;
 		}
 		span.netName{
-			color:#7EA63B;
+			color:$thin-text-color;
 			opacity:.8;
 			cursor:pointer;
 		}
@@ -137,7 +153,7 @@ button a{
 		right:20px;
 		top:3px;
 		cursor:pointer;
-		color:#ccc;
+		color:$default-text;
 		// opacity:.8;
 		a{
 			font-size: inherit;
@@ -170,14 +186,14 @@ button a{
 		margin:0px auto;
 		button{
 			margin-top:0px;
-			background-color:#0E2003;
+			background-color:$dark-button;
 			height:33px;
 			margin-left:10px;
 			color:white;
 			margin-right:0px;
 		}
 		button:hover{
-			background-color:#112704;
+			background-color:$dark-button-hover;
 		}
 	}
 	#sendPane{
@@ -192,14 +208,14 @@ button a{
 		}
 		button{
 			margin-top:10px;
-			background-color:#517C35;
+			background-color:$bright-button;
 			height:33px;
 			margin-left:10px;
 			color:white;
 			margin-right:0px;
 		}
 		button:hover{
-			background-color:#5D913B;
+			background-color:$bright-button-hover;
 		}
 		#sendAddress{
 			width:100%;
@@ -209,10 +225,10 @@ button a{
 			}
 		}
 		button#sendAsset{
-			background-color:#0E2003;
+			background-color:$dark-button;
 		}
 		button#sendAsset:hover{
-			background-color:#112704;
+			background-color:$dark-button-hover;
 		}
 		#sendAmount{
 			margin-top:3px;
@@ -251,13 +267,13 @@ button a{
 			}
 			.label{
 				font-weight:200;
-				color:#7EA63B;
+				color:$thin-text-color;
 				font-size:1.1em;
 			}
 			.amountBig{
 				font-weight:200;
 				font-size:2.4em;
-				color:#7EA63B;
+				color:$thin-text-color;
 				margin:0px 0px 2px 0px;
 			}
 			.fiat{
@@ -270,11 +286,11 @@ button a{
 				top: 100px;
 				left:47%;
 				cursor:pointer;
-				color:#2B3C20;
+				color:$default-button;
 
 			}
 			#refresh:hover{
-				color:#6E8560;
+				color:$default-button-hover;
 			}
 		}
 	}
@@ -288,7 +304,7 @@ button a{
 		.headerSpacer{
 			width:84%;
 			margin:15px 8%;
-			border-top:3px solid #1A2910;
+			border-top:3px solid $secondary-background;
 		}
 	}
 	ul#transactionList{
@@ -299,7 +315,7 @@ button a{
 		li{
 			list-style-type: none;
 			font-weight:200;
-			border-bottom:1px solid #1A2910;
+			border-bottom:1px solid $secondary-background;
 			padding-bottom:10px;
 			margin-bottom:10px;
 			.txid{
@@ -319,23 +335,23 @@ button a{
 				width:44%;
 				margin-right: 4%;
 				text-align:right;
-				color:#7EA63B;
+				color:$thin-text-color;
 			}
 		}
 	}
 }
 .leftSplit{
 	.Pane1{
-		background-color:#2B3C20;
+		background-color:$default-button;
 		cursor:pointer;
 	}
 	.Pane1:hover{
-		background-color:#4C7631;
+		background-color:$bright-button;
 	}
 }
 .sendSplit{
 	.Pane1:hover{
-		background-color:#2B3C20;
+		background-color:$default-button;
 	}
 }
 .confirmSplit{
@@ -344,10 +360,10 @@ button a{
 	}
 }
 .horizontal.Pane1{
-	border-bottom:1.5px solid #1A2910;
+	border-bottom:1.5px solid $secondary-background;
 }
 .vertical.Pane1{
-	border-right:1.5px solid #1A2910;
+	border-right:1.5px solid $secondary-background;
 }
 
 // TODO: tool-tip seems broken
