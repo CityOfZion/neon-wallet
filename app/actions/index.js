@@ -17,6 +17,13 @@ export function logout(){
 
 // wallet events
 
+export function setClaim(amount){
+  return {
+    type: types.SET_CLAIM,
+    amount: amount
+  }
+}
+
 export function newWallet(){
   return {
     type: types.NEW_WALLET,

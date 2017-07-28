@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Claim from "./Claim.js";
 import MdSync from 'react-icons/lib/md/sync';
 import QRCode from 'qrcode';
 import { initiateGetBalance, intervals } from "../components/NetworkSwitch";
@@ -41,6 +42,8 @@ class WalletInfo extends Component {
             <MdSync id="refresh"/>
           </div>
         </div>
+        <div className="spacer"></div>
+        <Claim />
         <div className="spacer"></div>
         <div className="qrCode"><canvas id="qrCanvas" ref={(node) => this.canvas = node}></canvas></div>
       </div>);

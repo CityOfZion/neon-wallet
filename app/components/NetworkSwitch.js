@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setNetwork } from '../actions/index.js';
-import { getBalance, getTransactionHistory, getMarketPriceUSD, ansId } from '../wallet/api.js';
-import { setBalance, setMarketPrice, resetPrice, setTransactionHistory } from '../actions/index.js';
+import { getBalance, getTransactionHistory, getMarketPriceUSD, ansId, getAvailableClaim } from '../wallet/api.js';
+import { setBalance, setMarketPrice, resetPrice, setTransactionHistory, setClaim } from '../actions/index.js';
 
 let intervals = {};
 
@@ -12,6 +12,7 @@ let netSelect;
 
 const initiateGetBalance = (dispatch, net, address) => {
   syncTransactionHistory(dispatch, net, address);
+  syncAvailableClaim(dispatch, net, address);
   return getBalance(net, address).then((resultBalance) => {
     return getMarketPriceUSD(resultBalance.ANS).then((resultPrice) => {
       dispatch(setBalance(resultBalance.ANS, resultBalance.ANC, resultPrice));
@@ -20,6 +21,12 @@ const initiateGetBalance = (dispatch, net, address) => {
     console.log(result);
   });
 };
+
+const syncAvailableClaim = (dispatch, net, address) => {
+  getAvailableClaim(net, address).then((claimAmount) => {
+    dispatch(setClaim(claimAmount / 100000000));
+  });
+}
 
 const syncTransactionHistory = (dispatch, net, address) => {
   getTransactionHistory(net, address).then((transactions) => {

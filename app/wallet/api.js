@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getAccountsFromWIFKey, transferTransaction, signatureData, addContract } from './index.js';
+import { getAccountsFromWIFKey, transferTransaction, signatureData, addContract, claimTransaction } from './index.js';
 
 const apiEndpoint = "http://testnet.antchain.xyz";
 const rpcEndpoint = "http://api.otcgo.cn:20332"; // testnet = 20332
@@ -49,8 +49,29 @@ export const getBlockByIndex = (net, block) => {
   return queryRPC(net, "getblock", [block, 1]);
 }
 
+export const getAvailableClaim = (net, address) => {
+  const network = getNetworkEndpoints(net);
+  return axios.get(network.apiEndpoint + '/get_claim/' + address).then((res) => {
+    return parseInt(res.data.total_claim);
+  });
+}
+
+export const claimAllGAS = (net, fromWif) => {
+  const network = getNetworkEndpoints(net);
+  const account = getAccountsFromWIFKey(fromWif)[0];
+  // TODO: when fully working replace this with mainnet/testnet switch
+  return axios.get(network.apiEndpoint + "/get_claim/" + account.address).then((response) => {
+    const claims = response.data["claims"];
+    const total_claim = response.data["total_claim"];
+    console.log(claims);
+    const txData = claimTransaction(claims, account.publickeyEncoded, account.address, total_claim);
+    const sign = signatureData(txData, account.privatekey);
+    const txRawData = addContract(txData, sign, account.publickeyEncoded);
+    return queryRPC(net, "sendrawtransaction", [txRawData], 2);
+  });
+}
+
 export const getBalance = (net, address) => {
-    console.log("get balance", net);
     const network = getNetworkEndpoints(net);
     return axios.get(network.apiEndpoint + '/balance/' + address)
       .then((res) => {

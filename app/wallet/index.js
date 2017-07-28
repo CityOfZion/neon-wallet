@@ -386,55 +386,60 @@ export const transferTransaction = ($coin, $publicKeyEncoded, $toAddress, $Amoun
 	return ab2hexstring(data);
 };
 
-export const claimTransaction = ($claims, $publicKeyEncoded, $toAddress, $Amount) => {
+export const claimTransaction = (claims, publicKeyEncoded, toAddress, amount) => {
 
-	var signatureScript = createSignatureScript($publicKeyEncoded);
-	//console.log( signatureScript.toString('hex') );
-
+	var signatureScript = createSignatureScript(publicKeyEncoded);
 	var myProgramHash = getHash(signatureScript);
-	//console.log( myProgramHash.toString() );
 
-	////////////////////////////////////////////////////////////////////////
-	// data
-	var data = "02";
+	// Type = ClaimTransaction
+	let data = "02";
 
-	// version
+	// Version is always 0 in protocol for now
 	data = data + "00";
 
-	// claim
-	// TODO: !!! var int
-	len = $claims['claims'].length
-	lenstr = numStoreInMemory(len.toString(16), 2);
-	data = data + lenstr
+	// Transaction-specific attributs: claims
 
-	//console.log("len: ", len);
-	for ( var k=0; k<len; k++ ) {
-		txid = $claims['claims'][k]['txid'];
+	// 1) store number of claims (txids)
+	let len = claims.length;
+	let lenstr = numStoreInMemory(len.toString(16), 2);
+	data = data + lenstr;
+
+  let total_amount = 0;
+
+  // 2) iterate over claim txids
+	for ( let k=0; k<len; k++ ) {
+    // get the txid
+		let txid = claims[k]['txid'];
+    console.log(txid);
+    console.log(claims[k]['index']);
+    // add txid to data
 		data = data + ab2hexstring(reverseArray(hexstring2ab(txid)));
 
-		vout = $claims['claims'][k]['vout'].toString(16);
+		let vout = claims[k]['index'].toString(16);
 		data = data + numStoreInMemory(vout, 4);
 	}
 
-	// attribute
+	// Don't need any attributes
 	data = data + "00";
 
-	// Inputs
+	// Don't need any inputs
 	data = data + "00";
 
-	// Outputs len
+	// One output for where the claim will be sent
 	data = data + "01";
 
-	// Outputs[0] AssetID
-	data = data + ab2hexstring(reverseArray(hexstring2ab($claims['assetid'])))
+	// First add assetId for GAS
+	data = data + ab2hexstring(reverseArray(hexstring2ab("602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7")))
 
-	// Outputs[0] Amount
-	const num1 = parseInt($Amount);
+	// Net add total amount of the claim
+  console.log(total_amount, amount);
+	const num1 = amount; //claims[0].claim;
+  console.log(num1);
 	const num1str = numStoreInMemory(num1.toString(16), 16);
 	data = data + num1str;
 
-	// Outputs[0] ProgramHash
-	data = data + myProgramHash.toString()
+	// Finally add program hash
+	data = data + myProgramHash.toString();
 
 	//console.log(data);
 

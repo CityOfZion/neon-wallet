@@ -49,7 +49,7 @@ const account = (state = {'wif': null, 'address':null, 'loggedIn': false}, actio
     }
 };
 
-const wallet = (state = {'ANS': 0, 'ANC': 0, 'net': 'TestNet', 'transactions': [], 'price': '--'}, action) => {
+const wallet = (state = {'ANS': 0, 'ANC': 0, 'net': 'TestNet', 'transactions': [], 'price': '--', claimAmount: 0}, action) => {
     switch (action.type) {
         case types.SET_BALANCE:
             let ansValue, ancValue;
@@ -66,6 +66,8 @@ const wallet = (state = {'ANS': 0, 'ANC': 0, 'net': 'TestNet', 'transactions': [
             return {...state, 'ANS': ansValue, 'ANC': ancValue, 'price': action.price };
         case types.RESET_PRICE:
             return {...state, 'price': '--'};
+        case types.SET_CLAIM:
+            return {...state, 'claimAmount': action.amount};
         case types.SET_NETWORK:
             return {...state, net:action.net};
         case types.SET_MARKET_PRICE:  //current market price action type
