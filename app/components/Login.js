@@ -4,16 +4,16 @@ import { login, setBalance, resetPrice } from '../actions/index.js';
 import { Link } from 'react-router';
 import CreateWallet from './CreateWallet.js'
 import { getBlockByIndex } from '../wallet/api.js';
-import { getWIFFromHexPrivateKey } from '../wallet/index.js';
+import { getWIFFromHexPrivateKey, getWIFFromPrivateKey } from '../wallet/index.js';
 
 let input_wif;
 
 const onWifChange = (dispatch) => {
   // lookup wif address to check whether it is valid and enable login
   if (input_wif.value.length > 51) {
-    dispatch(login(getWIFFromHexPrivateKey(input_wif.value)));  
+    dispatch(login(getWIFFromPrivateKey(input_wif.value)));  
   } else {
-    dispatch(login(input_wif.value));  
+    dispatch(login(input_wif.value));
   }
 };
 
