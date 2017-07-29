@@ -6,7 +6,7 @@
   "author": "Ethan Fast ejhfast@gmail.com",
   "scripts": {
     "postinstall": "install-app-deps",
-    "start": "npm install && electron .",
+    "start": "electron .",
     "pack": "build --dir",
     "dist": "build"
   },
