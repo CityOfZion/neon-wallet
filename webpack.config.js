@@ -16,7 +16,8 @@ module.exports = {
     output: {
         path: path.join(__dirname, 'dist/'),
         filename: 'bundle.js',
-        publicPath: ''
+        publicPath: '',
+        libraryTarget : 'commonjs2'
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -54,5 +55,11 @@ module.exports = {
             { test: /\.woff(2)?(\?[a-z0-9#=&.]+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
             { test: /\.(ttf|eot|svg)(\?[a-z0-9#=&.]+)?$/, loader: 'file' }
         ]
-    }
+    },
+    // This + targeting commonjs2 is required for electron-store.
+    // See https://github.com/sindresorhus/electron-store/issues/3
+    externals: [
+      'electron-store',
+      'conf'
+    ]
 };
