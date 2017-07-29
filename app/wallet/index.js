@@ -23,10 +23,6 @@ import buffer from 'buffer';
 // TODO: exporting ALL of these, but some of them are probably helpers and don't need to be exported
 // TODO: go through and add at least a basic description of everything these methods are doing
 
-export const getWIFFromHexPrivateKey = (privateKey) => {
-    return WIF.encode(128, new Buffer(privateKey, 'hex'), true)
-};
-
 export const getWIFFromPrivateKey = (privateKey) => {
     const hexKey = ab2hexstring(privateKey);
     return WIF.encode(128, new Buffer(hexKey, 'hex'), true)
