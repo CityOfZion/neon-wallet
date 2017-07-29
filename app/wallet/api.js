@@ -23,12 +23,12 @@ export const getNetworkEndpoints = (net) => {
   if (net === "MainNet"){
     return {
       apiEndpoint: "http://neo.herokuapp.com",
-      rpcEndpoint: "http://api.otcgo.cn:10332"
+      rpcEndpoint: "http://seed2.neo.org:10332"
     }
   } else {
     return {
       apiEndpoint: "http://neo-testnet.herokuapp.com", //"http://testnet.antchain.xyz",
-      rpcEndpoint: "http://api.otcgo.cn:20332" //"http://testnet.rpc.neeeo.org:20332/"
+      rpcEndpoint: "http://seed2.neo.org:20332" //"http://testnet.rpc.neeeo.org:20332/"
     }
   }
 };

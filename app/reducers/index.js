@@ -37,8 +37,12 @@ const generateWallet = (state = {'wif': null, 'address':null}, action) => {
 const account = (state = {'wif': null, 'address':null, 'loggedIn': false}, action) => {
     switch (action.type) {
         case types.LOGIN:
-            const loadAccount = getAccountsFromWIFKey(action.wif)[0];
-            if(loadAccount === -1 || loadAccount === -2){
+            let loadAccount;
+            try {
+              loadAccount = getAccountsFromWIFKey(action.wif)[0];
+            }
+            catch (e){ loadAccount = -1; }
+            if(loadAccount === -1 || loadAccount === -2 || loadAccount === undefined){
               return {...state, wif:action.wif,  loggedIn:false};
             }
             return {...state, wif:action.wif, address:loadAccount.address, loggedIn:true};
