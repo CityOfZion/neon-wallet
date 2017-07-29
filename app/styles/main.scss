@@ -313,7 +313,7 @@ button a{
 	ul#transactionList{
 		margin:0;
 		padding:0;
-		overflow-y: scroll;
+		overflow-y: auto;
 		height:600px;
 		li{
 			list-style-type: none;
@@ -323,7 +323,7 @@ button a{
 			margin-bottom:10px;
 			.txid{
 				position:relative;
-				top:-2px;
+				top:2px;
 				display:inline-block;
 				width:44%;
 				margin-left: 4%;
