@@ -12,7 +12,10 @@ app.on('ready', () => {
     maxHeight: 750,
     minWidth: 1000,
     maxWidth: 1000,
-    icon: path.join(__dirname, 'icons/png/64x64.png')
+    icon: path.join(__dirname, 'icons/png/64x64.png'),
+    webPreferences: {
+      webSecurity: false
+    }
     // maxHeight: 800,
     // maxWidth:300
   });
@@ -108,7 +111,7 @@ app.on('ready', () => {
   let url = require('url').format({
     protocol: 'file',
     slashes: true,
-    pathname: require('path').join(__dirname, '/dist/index.html')
+    pathname: require('path').join(__dirname, '/app/dist/index.html')
   });
   mainWindow.loadURL(url)
 })

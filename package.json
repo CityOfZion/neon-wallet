@@ -1,17 +1,50 @@
 {
-  "name": "neon-wallet",
+  "name": "Neon",
   "version": "0.0.1",
-  "description": "",
-  "main": "main.js",
+  "main": "./main.js",
+  "description": "Light wallet for NEO blockchain",
+  "author": "Ethan Fast ejhfast@gmail.com",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "babel": "babel",
-    "webpack": "webpack",
-    "start": "electron ."
+    "postinstall": "install-app-deps",
+    "start": "npm install && electron .",
+    "pack": "build --dir",
+    "dist": "build"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
+  "build": {
+    "appId": "com.electron.neon",
+    "asar": false,
+    "files": [
+      "./main.js",
+      "app/dist/index.html",
+      "app/dist/bundle.js"
+    ],
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": "squirrel",
+      "icon": "build/icon.ico"
+    }
+  },
   "dependencies": {
     "axios": "^0.16.2",
     "base-x": "^3.0.2",
@@ -52,6 +85,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "css-loader": "^0.23.1",
     "electron": "^1.6.11",
+    "electron-builder": "^19.17.0",
     "electron-packager": "^8.6.0",
     "eslint": "^2.9.0",
     "eslint-loader": "^1.5.0",
