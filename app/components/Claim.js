@@ -11,7 +11,6 @@ const doGasClaim = (dispatch, net, wif) => {
     } else {
       dispatch(sendEvent(false, "Claim failed"))
     }
-    console.log(response);
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
   });
 }

@@ -2,13 +2,22 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { sendAssetTransaction } from '../wallet/api.js';
+import { verifyAddress } from '../wallet/index.js';
 import { sendEvent, clearTransactionEvent, toggleAsset, togglePane } from '../actions/index.js';
 import SplitPane from 'react-split-pane';
 import ReactTooltip from 'react-tooltip'
 
 let sendAddress, sendAmount, confirmButton;
 
-const sendTransaction = (dispatch, net, wif, asset) => {
+const afterSend = (dispatch) => {
+  dispatch(togglePane("confirmPane"));
+  setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+  sendAddress.value = '';
+  sendAmount.value = '';
+  confirmButton.blur();
+}
+
+const sendTransaction = (dispatch, net, wif, asset, neo_balance, gas_balance) => {
   let assetSwap;
   if (asset === "NEO"){
     assetSwap = "AntShares";
@@ -16,18 +25,28 @@ const sendTransaction = (dispatch, net, wif, asset) => {
     assetSwap = "AntCoins";
   }
   dispatch(sendEvent(true, "Processing..."))
-  sendAssetTransaction(net, sendAddress.value, wif, assetSwap, sendAmount.value).then((response) => {
-    if (response.result === undefined){
-      dispatch(sendEvent(false, "Transaction failed!"));
-    } else {
-      dispatch(sendEvent(true, "Transaction complete! Your balance will automatically update when the blockchain has processed it."));
-    }
+  if (verifyAddress(sendAddress.value) !== true){
+    dispatch(sendEvent(false, "The address you entered was not valid. No NEO was sent."));
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
-  }).catch(() => {
-    // TODO: more specific error messages
-    // TODO: is this ever triggering...
+  }
+  else if (asset === "NEO" && parseInt(sendAmount.value) > neo_balance){
+    dispatch(sendEvent(false, "You do not have enough NEO to send. No NEO was sent."));
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
-  });
+  }
+  else if (asset === "GAS" && parseFloat(sendAmount.value) > gas_balance){
+    dispatch(sendEvent(false, "You do not have enough GAS to send. No GAS was sent."));
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+  }
+  else {
+    sendAssetTransaction(net, sendAddress.value, wif, assetSwap, sendAmount.value).then((response) => {
+      if (response.result === undefined){
+        dispatch(sendEvent(false, "Transaction failed!"));
+      } else {
+        dispatch(sendEvent(true, "Transaction complete! Your balance will automatically update when the blockchain has processed it."));
+      }
+      setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+    });
+  }
   dispatch(togglePane("confirmPane"));
   sendAddress.value = '';
   sendAmount.value = '';
@@ -55,7 +74,7 @@ let Send = ({dispatch, wif, status, ans, anc, net, confirmPane, selectedAsset}) 
         </ReactTooltip>
       <button id="doSend" onClick={() => dispatch(togglePane("confirmPane"))}>Send Asset</button>
     </div>
-    <div id="confirmPane" onClick={() => sendTransaction(dispatch, net, wif, selectedAsset)}>
+    <div id="confirmPane" onClick={() => sendTransaction(dispatch, net, wif, selectedAsset, ans, anc)}>
       <button ref={node => {confirmButton = node;}}>Confirm Transaction</button>
     </div>
   </SplitPane>);
