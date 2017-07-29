@@ -89,3 +89,12 @@ export function togglePane(pane){
     pane: pane
   }
 };
+
+//local storage
+
+export function addAccount(wif){
+  return {
+    type: types.ADD_ACCOUNT,
+    wif: wif
+  }
+}

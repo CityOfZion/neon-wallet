@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { newWallet } from '../actions/index.js';
+import { newWallet, addAccount } from '../actions/index.js';
 import { Link } from 'react-router';
 import WalletInfo from './WalletInfo.js';
 import QRCode from 'qrcode';
@@ -8,6 +8,10 @@ import QRCode from 'qrcode';
 const generateWallet = (dispatch) => {
   dispatch(newWallet());
 };
+
+const addWalletToStorage = (dispatch, wif) => {
+  dispatch(addAccount(wif));
+}
 
 class CreateWallet extends Component {
 
@@ -22,6 +26,7 @@ class CreateWallet extends Component {
     QRCode.toCanvas(this.privateCanvas, this.props.wif, { version: 5 }, (err) => {
       if (err) console.log(err)
     });
+    addWalletToStorage(this.props.dispatch, this.props.wif);
   }
 
   render = () =>

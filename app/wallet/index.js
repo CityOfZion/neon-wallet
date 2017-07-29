@@ -629,8 +629,7 @@ export const getAccountsFromWIFKey = ($WIFKey) => {
 //Local Storage methods
 export const getLocalStorageData = () => {
 	return storage.getAllAsync().then((data) => {
-
-		console.log("local data: "+Object.keys(data));
+		console.log(Object.values(data));
 		return data;
 	}).catch(function(e) {
 		console.error(e.stack);
@@ -642,7 +641,6 @@ export const getLocalStorageLength = () => {
 
 	  var counter = Object.keys(data);
 	  var length = counter.length;
-	  console.log("length: "+length);
 	  return length;
 	});
 };
@@ -653,13 +651,10 @@ export const clearLocalStorage = () => {
 	});
 };
 
-export const addAccountToLocalStorage = () => {
+export const addAccountToLocalStorage = (wif) => {
 	return getLocalStorageLength().then((length) => {
-		console.log('count: '+length);
-		let keyValue = length == 1 ? "Main_Account" : "Account_"+length;
-		console.log("key: "+keyValue)
-		storage.setAsync(keyValue, { key: "WIFKey" }).then((response) => {
-			console.log("response: "+response);
+		let keyValue = length == 0 ? "Main_Account" : "Account_"+length;
+		storage.setAsync(keyValue, { key: wif }).then((response) => {
 			return response;
 		}).catch(function(e) {
 		    console.error(e.stack);

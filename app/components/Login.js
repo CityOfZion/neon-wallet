@@ -4,7 +4,7 @@ import { login, setBalance, resetPrice } from '../actions/index.js';
 import { Link } from 'react-router';
 import CreateWallet from './CreateWallet.js'
 import { getBlockByIndex } from '../wallet/api.js';
-import { addAccountToLocalStorage } from '../wallet/index.js'
+import { addAccountToLocalStorage, clearLocalStorage } from '../wallet/index.js'
 
 let input_wif;
 
@@ -23,7 +23,7 @@ let Login = ({ dispatch, loggedIn, wif }) =>
       <div className="loginButtons">
         {loggedIn ? <button><Link to="/dashboard">Login</Link></button> : <button disabled="true">Login</button>}
         <button><Link to="/create">New Wallet</Link></button>
-        <button onClick={()=> addAccountToLocalStorage()}>Test Storage</button>
+        <button onClick={()=> clearLocalStorage()}>Test Storage</button>
       </div>
     </div>
   </div>;
