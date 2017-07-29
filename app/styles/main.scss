@@ -207,6 +207,7 @@ button a{
 			font-size:.9em;
 			height:30px;
 			border:none;
+			color:$thin-text-color;
 		}
 		button{
 			margin-top:10px;
@@ -345,16 +346,20 @@ button a{
 
 .leftSplit{
 	.Pane1{
-		background-color:$secondary-background;
+		background-color:$default-button;
 		cursor:pointer;
 		border-bottom:none;
+		color:$button-text;
 	}
 	.Pane1:hover{
-		background-color:$default-button;
+		background-color:$default-button-hover;
 		color:$button-text;
 	}
 }
 .sendSplit{
+	.Pane1{
+		background-color:$secondary-background;
+	}
 	.Pane1:hover{
 		background-color:$secondary-background;
 	}

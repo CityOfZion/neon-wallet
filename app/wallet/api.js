@@ -51,7 +51,7 @@ export const getBlockByIndex = (net, block) => {
 
 export const getAvailableClaim = (net, address) => {
   const network = getNetworkEndpoints(net);
-  return axios.get(network.apiEndpoint + '/get_claim/' + address).then((res) => {
+  return axios.get(network.apiEndpoint + '/v1/address/claims/' + address).then((res) => {
     return parseInt(res.data.total_claim);
   });
 }
@@ -60,7 +60,7 @@ export const claimAllGAS = (net, fromWif) => {
   const network = getNetworkEndpoints(net);
   const account = getAccountsFromWIFKey(fromWif)[0];
   // TODO: when fully working replace this with mainnet/testnet switch
-  return axios.get(network.apiEndpoint + "/get_claim/" + account.address).then((response) => {
+  return axios.get(network.apiEndpoint + "/v1/address/claims/" + account.address).then((response) => {
     const claims = response.data["claims"];
     const total_claim = response.data["total_claim"];
     console.log(claims);
@@ -73,19 +73,12 @@ export const claimAllGAS = (net, fromWif) => {
 
 export const getBalance = (net, address) => {
     const network = getNetworkEndpoints(net);
-    return axios.get(network.apiEndpoint + '/balance/' + address)
+    return axios.get(network.apiEndpoint + '/v1/address/balance/' + address)
       .then((res) => {
           const ans = res.data.NEO.balance;
           const anc = res.data.GAS.balance;
           return {ANS: ans, ANC: anc, unspent: {ANS: res.data.NEO.unspent, ANC: res.data.GAS.unspent}};
       })
-};
-
-export const getTransactions = (net, address, assetId) => {
-  const network = getNetworkEndpoints(net);
-  return axios.get(network.apiEndpoint + '/api/v1/address/utxo/' + address).then((response) => {
-    return response.data.utxo[assetId];
-  });
 };
 
 /**
@@ -110,7 +103,7 @@ export const getMarketPriceUSD = (amount) => {
 
 export const getTransactionHistory = (net, address) => {
   const network = getNetworkEndpoints(net);
-  return axios.get(network.apiEndpoint + '/balance_history/' + address).then((response) => {
+  return axios.get(network.apiEndpoint + '/v1/address/history/' + address).then((response) => {
     return response.data.history;
   });
 };

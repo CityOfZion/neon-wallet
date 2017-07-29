@@ -41,9 +41,7 @@ class Dashboard extends Component {
     } else {
       statusPaneSize = "0px";
     }
-    // TODO: import this from SASS... (default-button color)
-    const sendStyle = !this.props.sendPane ? {backgroundColor:"#4D933B", color:"#fff"} : {};
-
+    
     return (<div id="dashboard">
         <SplitPane className="statusSplit" split="horizontal" size={statusPaneSize} allowResize={false}>
           <TransactionStatus status={this.props.status} statusMessage={this.props.statusMessage}/>
@@ -56,7 +54,7 @@ class Dashboard extends Component {
             </div>
             <SplitPane split="vertical" size="50%" allowResize={false}>
               <SplitPane className="leftSplit" split="horizontal" size="55px" allowResize={false}>
-                <div id="send" onClick={() => this.props.dispatch(togglePane("sendPane"))} style={sendStyle}>
+                <div id="send" onClick={() => this.props.dispatch(togglePane("sendPane"))}>
                   <FaArrowUpward id="upArrow" /> <span>Send</span>
                 </div>
                 <SplitPane className="sendSplit" split="horizontal" size={sendPaneClosed} allowResize={false}>
