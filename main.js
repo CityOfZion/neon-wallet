@@ -1,4 +1,5 @@
 const electron = require('electron');
+const path = require('path');
 const app = electron.app;
 const Menu = electron.Menu;
 const BrowserWindow = electron.BrowserWindow;
@@ -11,6 +12,7 @@ app.on('ready', () => {
     maxHeight: 750,
     minWidth: 1000,
     maxWidth: 1000,
+    icon: path.join(__dirname, 'icons/png/64x64.png')
     // maxHeight: 800,
     // maxWidth:300
   });
