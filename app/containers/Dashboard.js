@@ -7,6 +7,7 @@ import WalletInfo from '../components/WalletInfo';
 import TransactionHistory from '../components/TransactionHistory';
 import Logout from '../components/Logout';
 import Send from '../components/Send';
+import SettingsButton from '../components/SettingsButton';
 import { togglePane } from '../actions/index.js';
 
 
@@ -52,6 +53,7 @@ class Dashboard extends Component {
               <div id="title">Neon</div>
               <div id="version">Version 0.0.1</div>
               <NetworkSwitch />
+              <SettingsButton />
               <Logout />
             </div>
             <SplitPane split="vertical" size="50%" allowResize={false}>

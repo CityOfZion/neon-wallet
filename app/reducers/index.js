@@ -1,5 +1,7 @@
 import { routerReducer as routing } from 'react-router-redux';
 import { combineReducers } from 'redux';
+import { BLOCKCHAIN_EXPLORERS } from '../utils/constants';
+import electronStore from '../utils/electronStore';
 import { getAccountsFromWIFKey, generatePrivateKey, getWIFFromPrivateKey } from '../wallet/index.js';
 import * as types from '../actions/types';
 
@@ -96,12 +98,37 @@ const dashboard = (state = {sendPane: true, confirmPane: true}, action) => {
   }
 };
 
+
+const SETTINGS_EXPLORER = 'settings.explorer';
+if (!electronStore.has(SETTINGS_EXPLORER)) {
+  const explorerIDs = Object.keys(BLOCKCHAIN_EXPLORERS);
+  const random = Math.max(
+    Math.floor(Math.random() * explorerIDs.length),
+    // In case Math.random() === 1
+    explorerIDs.length - 1,
+  );
+  electronStore.set(SETTINGS_EXPLORER, explorerIDs[random]);
+}
+const settingsDefault = {
+  explorer: BLOCKCHAIN_EXPLORERS[electronStore.get(SETTINGS_EXPLORER)],
+};
+const settings = (state = settingsDefault, action) => {
+  switch (action.type) {
+      case types.SET_BLOCKCHAIN_EXPLORER:
+          electronStore.set(SETTINGS_EXPLORER, action.explorer.id);
+          return {...state, explorer: action.explorer};
+      default:
+          return state;
+  }
+};
+
 const rootReducer = combineReducers({
     account,
     generateWallet,
     wallet,
     transactionState,
-    dashboard
+    dashboard,
+    settings
 });
 
 export default rootReducer;

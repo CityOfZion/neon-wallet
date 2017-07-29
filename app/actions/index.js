@@ -97,3 +97,12 @@ export function togglePane(pane){
     pane: pane
   }
 };
+
+// settings events
+
+export function setBlockchainExplorer(explorer){
+  return {
+    type: types.SET_BLOCKCHAIN_EXPLORER,
+    explorer: explorer,
+  };
+}
