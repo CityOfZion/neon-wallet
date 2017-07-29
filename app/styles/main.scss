@@ -317,6 +317,35 @@ button a{
 		}
 	}
 }
+
+#savedWallets {
+	.row {
+		width: 100%;
+		padding: 15px;
+		margin: 0 auto;
+		background-color: red;
+		ul {
+			 margin: 0 auto;
+    		text-align: left;
+			list-style-type: none;
+			li { 
+				display: inline-block;
+    			vertical-align: top;
+		.walletCard {
+			color:#ccc;
+			background-color:#2B3C20;
+			width: 125px;
+			height: 125px;
+			margin: 10px;
+			padding: 10px;
+		}
+		.walletCard:hover {
+	background-color:#6E8560;
+		}
+	}
+	}
+	}
+}
 .leftSplit{
 	.Pane1{
 		background-color:#2B3C20;

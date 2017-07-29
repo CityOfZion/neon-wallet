@@ -629,7 +629,7 @@ export const getAccountsFromWIFKey = ($WIFKey) => {
 //Local Storage methods
 export const getLocalStorageData = () => {
 	return storage.getAllAsync().then((data) => {
-		console.log(Object.values(data));
+		console.log(data);
 		return data;
 	}).catch(function(e) {
 		console.error(e.stack);

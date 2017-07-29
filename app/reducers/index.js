@@ -97,14 +97,10 @@ const dashboard = (state = {sendPane: true, confirmPane: true}, action) => {
 
 const storage = (state = {accounts: {}}, action) => {
   switch (action.type) {
-    case types.ADD_ACCOUNT:
-      return addAccountToLocalStorage(action.wif).then(() => {
-        return getLocalStorageData().then((data) => {
-          return {...state, accounts: data}
-        })
-      })
+    case types.GET_STORAGE_DATA:
+      return {...state, accounts: action.payload}
     default:
-      return state;
+      return state
   }
 }
 
