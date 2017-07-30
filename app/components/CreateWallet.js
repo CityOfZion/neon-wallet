@@ -53,10 +53,10 @@ class CreateWallet extends Component {
       </div>
       <button><Link to="/">Back to Login</Link></button>
       <ReactTooltip class="solidTip" id="copyPublicKeyTip" place="bottom" type="dark" effect="solid">
-        <span>Copy Private Key</span>
+        <span>Copy Public Key</span>
       </ReactTooltip>
       <ReactTooltip class="solidTip" id="copyPrivateKeyTip" place="bottom" type="dark" effect="solid">
-        <span>Copy Public Key</span>
+        <span>Copy Private Key</span>
       </ReactTooltip>
     </div>;
 
