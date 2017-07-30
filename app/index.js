@@ -26,7 +26,6 @@ function getQueryParams(qs) {
 const createHashHistory = require('history/lib/createHashHistory');
 
 const query = getQueryParams(document.location.search);
-console.log(query);
 
 const store = configureStore();
 // const history = syncHistoryWithStore(browserHistory, store);

@@ -50,8 +50,6 @@ export const getInputData = ($coin, $amount) => {
 		}
 	}
 
-	console.log('coin_ordered', coin_ordered );
-
 	// calc sum
 	var sum = 0;
 	for (let i = 0; i < coin_ordered.length; i++) {
@@ -153,8 +151,6 @@ export const issueTransaction = ($issueAssetID, $issueAmount, $publicKeyEncoded)
 // TODO: we probably don't need to keep this function in the API, people aren't going to be using the wallet to register new assets
 // for now, leaving as reference
 export const registerTransaction = ($assetName, $assetAmount, $publicKeyEncoded) => {
-	console.log( "publicKeyEncoded:", $publicKeyEncoded );
-
 	var ecparams = ecurve.getCurveByName('secp256r1');
 	var curvePt = ecurve.Point.decodeFrom(ecparams,new Buffer($publicKeyEncoded,"hex"));
 	var curvePtX = curvePt.affineX.toBuffer(32);
@@ -162,10 +158,8 @@ export const registerTransaction = ($assetName, $assetAmount, $publicKeyEncoded)
 	var publicKey = buffer.concat([new Buffer([0x04]), curvePtX, curvePtY]);
 
 	var signatureScript = createSignatureScript($publicKeyEncoded);
-	console.log( signatureScript.toString('hex') );
 
 	var myProgramHash = getHash(signatureScript);
-	console.log( myProgramHash.toString() );
 
 	// data
 	var data = "40";
@@ -200,8 +194,6 @@ export const registerTransaction = ($assetName, $assetAmount, $publicKeyEncoded)
 	data = data + "20" + publicKeyXStr + "20" + publicKeyYStr;
 	data = data + myProgramHash.toString();
 	data = data + "000000";
-
-	console.log(data);
 
 	return data;
 };
@@ -410,8 +402,6 @@ export const claimTransaction = (claims, publicKeyEncoded, toAddress, amount) =>
 	for ( let k=0; k<len; k++ ) {
     // get the txid
 		let txid = claims[k]['txid'];
-    console.log(txid);
-    console.log(claims[k]['index']);
     // add txid to data
 		data = data + ab2hexstring(reverseArray(hexstring2ab(txid)));
 
@@ -432,10 +422,7 @@ export const claimTransaction = (claims, publicKeyEncoded, toAddress, amount) =>
 	data = data + ab2hexstring(reverseArray(hexstring2ab("602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7")))
 
 	// Net add total amount of the claim
-  console.log(total_amount, amount);
-	const num1 = amount; //claims[0].claim;
-  console.log(num1);
-	const num1str = numStoreInMemory(num1.toString(16), 16);
+	const num1str = numStoreInMemory(amount.toString(16), 16);
 	data = data + num1str;
 
 	// Finally add program hash

@@ -19,7 +19,7 @@ const initiateGetBalance = (dispatch, net, address) => {
       return true;
     });
   }).catch((result) => {
-    console.log(result);
+    // TODO: is this ever called?
   });
 };
 

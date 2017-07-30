@@ -11,15 +11,8 @@ const logo = require('../images/neon-logo2.png');
 let input_wif;
 
 const onWifChange = (dispatch) => {
-  // lookup wif address to check whether it is valid and enable login
-  // if (input_wif.value.length === 64) {
-  //   const getWif = getWIFFromPrivateKey(input_wif.value);
-  //   console.log(getWif);
-  //   dispatch(login(getWif));
-  // } else {
-    // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
-    dispatch(login(input_wif.value));
-  // }
+  // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
+  dispatch(login(input_wif.value));
 };
 
 let Login = ({ dispatch, loggedIn, wif }) =>

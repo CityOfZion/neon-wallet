@@ -6,7 +6,6 @@ import { sendEvent, clearTransactionEvent } from '../actions/index.js';
 const doGasClaim = (dispatch, net, wif) => {
   dispatch(sendEvent(true, "Processing..."));
   claimAllGAS(net, wif).then((response) => {
-    console.log(response);
     if (response.result === true){
       dispatch(sendEvent(true, "Claim was successful! Your balance will update once the blockchain has processed it."))
     } else {
