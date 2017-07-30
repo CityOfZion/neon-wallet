@@ -654,7 +654,7 @@ export const clearLocalStorage = () => {
 export const addAccountToLocalStorage = (wif) => {
 	return getLocalStorageLength().then((length) => {
 		let keyValue = length == 0 ? "Main_Account" : "Account_"+length;
-		storage.setAsync(keyValue, { key: wif }).then((response) => {
+		storage.setAsync(keyValue, { key: wif, index: length }).then((response) => {
 			return response;
 		}).catch(function(e) {
 		    console.error(e.stack);

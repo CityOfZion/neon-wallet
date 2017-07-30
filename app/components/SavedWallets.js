@@ -8,19 +8,40 @@ import { getAccounts } from '../actions/index.js'
 
 class SavedWallets extends Component {
 
+  constructor(props){
+    super(props)
+    this.state = {
+        wallets: []
+    }
+  }
+
   componentDidMount = () => {
     this.props.dispatch(getAccounts());
   }
 
   componentDidUpdate = () => {
+    let wallets = []
     let accounts = this.props.accounts
-    console.log("accounts: "+accounts);
+    let counter = 0;
+    for (var p in accounts) {
+        if( accounts.hasOwnProperty(p) ) {
+          var formattedName = p.split('_').join(' ')
+          wallets.push(<WalletCard name={formattedName} wif={accounts[p].key} key={p} index={accounts[p].index} />)
+        } 
+      } 
+    if (this.state.wallets.length === 0){
+    this.setState({
+        wallets: wallets
+    })
+}
+    console.log(counter);
   }
 
   render = () => {
       return (<div id="savedWallets">
         <div className="row">Your Saved Wallets
         <ul>
+        {this.state.wallets}
         </ul>
         </div>
       </div>);
