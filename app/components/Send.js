@@ -70,7 +70,7 @@ let Send = ({dispatch, wif, status, ans, anc, net, confirmPane, selectedAsset}) 
         </div>
         <button id="sendAsset" data-tip data-for="assetTip" onClick={() => dispatch(toggleAsset())}>{selectedAsset}</button>
         <ReactTooltip class="solidTip" id="assetTip" place="bottom" type="dark" effect="solid">
-          <span>Toggle NEO/GAS</span>
+          <span>Toggle NEO / GAS</span>
         </ReactTooltip>
       <button id="doSend" onClick={() => dispatch(togglePane("confirmPane"))}>Send Asset</button>
     </div>

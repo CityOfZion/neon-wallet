@@ -45,6 +45,14 @@ button a{
 #newWallet{
 	width:650px;
 	margin:20% auto 0px auto;
+	.copyKey{
+		margin-left:5px;
+		color:#000;
+	}
+	.copyKey:hover{
+		opacity:.7;
+		cursor:pointer;
+	}
 	.disclaimer{
 		margin-bottom:20px;
 		font-size:1.4em;
