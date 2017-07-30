@@ -53,6 +53,15 @@ const account = (state = {'wif': null, 'address':null, 'loggedIn': false}, actio
     }
 };
 
+const metadata = (state = {blockHeight: 0}, action) => {
+  switch (action.type) {
+    case types.SET_HEIGHT:
+      return { blockHeight: action.blockHeight };
+    default:
+      return state;
+  }
+};
+
 const wallet = (state = {'ANS': 0, 'ANC': 0, 'net': 'TestNet', 'transactions': [], 'price': '--', claimAmount: 0}, action) => {
     switch (action.type) {
         case types.SET_BALANCE:
@@ -115,7 +124,8 @@ const rootReducer = combineReducers({
     wallet,
     transactionState,
     dashboard,
-    storage
+    storage,
+    metadata
 });
 
 export default rootReducer;

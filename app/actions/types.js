@@ -22,3 +22,5 @@ export const TOGGLE_SEND_PANE = 'TOGGLE_SEND_PANE';
 //storage state
 export const ADD_ACCOUNT = 'ADD_ACCOUNT';
 export const GET_STORAGE_DATA = 'GET_STORAGE_DATA';
+// metadata
+export const SET_HEIGHT = 'SET_HEIGHT';

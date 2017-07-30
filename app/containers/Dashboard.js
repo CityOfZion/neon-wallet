@@ -9,6 +9,7 @@ import Logout from '../components/Logout';
 import Send from '../components/Send';
 import { togglePane } from '../actions/index.js';
 
+const logo = require('../images/neon-logo2.png');
 
 const TransactionStatus = ({status, statusMessage}) => {
   let message = null;
@@ -41,14 +42,15 @@ class Dashboard extends Component {
     } else {
       statusPaneSize = "0px";
     }
-    
+
     return (<div id="dashboard">
         <SplitPane className="statusSplit" split="horizontal" size={statusPaneSize} allowResize={false}>
           <TransactionStatus status={this.props.status} statusMessage={this.props.statusMessage}/>
           <SplitPane className="navSplit" split="horizontal" size="40px" allowResize={false}>
             <div id="navBar">
-              <div id="title">Neon</div>
-              <div id="version">Version 0.0.1</div>
+              <div id="title"><img src={logo} width="60px"/></div>
+              <div id="version"><span className="grey">Version</span><span className="darker">0.0.1</span></div>
+              <div id="height"><span className="grey">Block</span><span className="darker">{this.props.blockHeight}</span></div>
               <NetworkSwitch />
               <Logout />
             </div>
@@ -75,7 +77,8 @@ const mapStateToProps = (state) => ({
   sendPane: state.dashboard.sendPane,
   confirmPane: state.dashboard.confirmPane,
   status: state.transactionState.success,
-  statusMessage: state.transactionState.message
+  statusMessage: state.transactionState.message,
+  blockHeight: state.metadata.blockHeight
 });
 
 Dashboard = connect(mapStateToProps)(Dashboard);

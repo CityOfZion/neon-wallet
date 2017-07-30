@@ -4,6 +4,10 @@ import { newWallet, addAccount } from '../actions/index.js';
 import { Link } from 'react-router';
 import WalletInfo from './WalletInfo.js';
 import QRCode from 'qrcode';
+import { clipboard } from 'electron';
+import Copy from 'react-icons/lib/md/content-copy';
+import ReactTooltip from 'react-tooltip'
+
 
 const generateWallet = (dispatch) => {
   dispatch(newWallet());
@@ -42,9 +46,23 @@ class CreateWallet extends Component {
         <canvas ref={(node) => this.privateCanvas = node}></canvas>
         <div>Private Key (WIF)</div>
       </div>
-      <div className="keyList"><span className="label">Public Address:</span><span className="key">{this.props.address}</span></div>
-      <div className="keyList"><span className="label">Private Key:</span><span className="key">{this.props.wif}</span></div>
+      <div className="keyList">
+        <span className="label">Public Address:</span>
+        <span className="key">{this.props.address}</span>
+        <span className="copyKey" onClick={() => clipboard.writeText(this.props.address, 'selection')}><Copy data-tip data-for="copyPublicKeyTip" /></span>
+      </div>
+      <div className="keyList">
+        <span className="label">Private Key:</span>
+        <span className="key">{this.props.wif}</span>
+        <span className="copyKey" onClick={() => clipboard.writeText(this.props.wif, 'selection')}><Copy data-tip data-for="copyPrivateKeyTip" /></span>
+      </div>
       <button><Link to="/">Back to Login</Link></button>
+      <ReactTooltip class="solidTip" id="copyPublicKeyTip" place="bottom" type="dark" effect="solid">
+        <span>Copy Public Key</span>
+      </ReactTooltip>
+      <ReactTooltip class="solidTip" id="copyPrivateKeyTip" place="bottom" type="dark" effect="solid">
+        <span>Copy Private Key</span>
+      </ReactTooltip>
     </div>;
 
 }

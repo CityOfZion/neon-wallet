@@ -14,7 +14,6 @@
   "license": "ISC",
   "build": {
     "appId": "com.electron.neon",
-    "asar": false,
     "files": [
       "./main.js",
       "app/dist/index.html",
