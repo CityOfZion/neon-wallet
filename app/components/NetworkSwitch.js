@@ -15,8 +15,8 @@ const initiateGetBalance = (dispatch, net, address) => {
   syncAvailableClaim(dispatch, net, address);
   syncBlockHeight(dispatch, net);
   return getBalance(net, address).then((resultBalance) => {
-    return getMarketPriceUSD(resultBalance.ANS).then((resultPrice) => {
-      dispatch(setBalance(resultBalance.ANS, resultBalance.ANC, resultPrice));
+    return getMarketPriceUSD(resultBalance.NEO).then((resultPrice) => {
+      dispatch(setBalance(resultBalance.NEO, resultBalance.GAS, resultPrice));
       return true;
     });
   }).catch((result) => {

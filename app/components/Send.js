@@ -18,12 +18,6 @@ const afterSend = (dispatch) => {
 }
 
 const sendTransaction = (dispatch, net, wif, asset, neo_balance, gas_balance) => {
-  let assetSwap;
-  if (asset === "NEO"){
-    assetSwap = "AntShares";
-  } else {
-    assetSwap = "AntCoins";
-  }
   dispatch(sendEvent(true, "Processing..."))
   if (verifyAddress(sendAddress.value) !== true){
     dispatch(sendEvent(false, "The address you entered was not valid. No NEO was sent."));
@@ -38,7 +32,7 @@ const sendTransaction = (dispatch, net, wif, asset, neo_balance, gas_balance) =>
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
   }
   else {
-    sendAssetTransaction(net, sendAddress.value, wif, assetSwap, sendAmount.value).then((response) => {
+    sendAssetTransaction(net, sendAddress.value, wif, asset, sendAmount.value).then((response) => {
       if (response.result === undefined){
         dispatch(sendEvent(false, "Transaction failed!"));
       } else {
@@ -53,7 +47,7 @@ const sendTransaction = (dispatch, net, wif, asset, neo_balance, gas_balance) =>
   confirmButton.blur();
 };
 
-let Send = ({dispatch, wif, status, ans, anc, net, confirmPane, selectedAsset}) => {
+let Send = ({dispatch, wif, status, neo, gas, net, confirmPane, selectedAsset}) => {
   let confirmPaneClosed;
   if (confirmPane){
     confirmPaneClosed = "100%";
@@ -74,7 +68,7 @@ let Send = ({dispatch, wif, status, ans, anc, net, confirmPane, selectedAsset}) 
         </ReactTooltip>
       <button id="doSend" onClick={() => dispatch(togglePane("confirmPane"))}>Send Asset</button>
     </div>
-    <div id="confirmPane" onClick={() => sendTransaction(dispatch, net, wif, selectedAsset, ans, anc)}>
+    <div id="confirmPane" onClick={() => sendTransaction(dispatch, net, wif, selectedAsset, neo, gas)}>
       <button ref={node => {confirmButton = node;}}>Confirm Transaction</button>
     </div>
   </SplitPane>);
@@ -83,8 +77,8 @@ let Send = ({dispatch, wif, status, ans, anc, net, confirmPane, selectedAsset}) 
 const mapStateToProps = (state) => ({
   wif: state.account.wif,
   net: state.wallet.net,
-  ans: state.wallet.ANS,
-  anc: state.wallet.ANC,
+  neo: state.wallet.NEO,
+  gas: state.wallet.GAS,
   selectedAsset: state.transactionState.selectedAsset,
   confirmPane: state.dashboard.confirmPane,
 });
