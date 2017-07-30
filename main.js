@@ -1,4 +1,5 @@
 const electron = require('electron');
+const path = require('path');
 const app = electron.app;
 const Menu = electron.Menu;
 const BrowserWindow = electron.BrowserWindow;
@@ -7,6 +8,14 @@ app.on('ready', () => {
   mainWindow = new BrowserWindow({
     height: 750,
     width: 1000,
+    minHeight: 750,
+    maxHeight: 750,
+    minWidth: 1000,
+    maxWidth: 1000,
+    icon: path.join(__dirname, 'icons/png/64x64.png'),
+    webPreferences: {
+      webSecurity: false
+    }
     // maxHeight: 800,
     // maxWidth:300
   });
@@ -96,12 +105,13 @@ app.on('ready', () => {
 
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
+  mainWindow.setMenu(null); // TODO: does this work?
 
   // load the local HTML file
   let url = require('url').format({
     protocol: 'file',
     slashes: true,
-    pathname: require('path').join(__dirname, '/dist/index.html')
+    pathname: require('path').join(__dirname, '/app/dist/index.html')
   });
   mainWindow.loadURL(url)
 })

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setNetwork } from '../actions/index.js';
-import { getBalance, getTransactionHistory, getMarketPriceUSD, ansId } from '../wallet/api.js';
-import { setBalance, setMarketPrice, resetPrice, setTransactionHistory } from '../actions/index.js';
+import { getBalance, getTransactionHistory, getMarketPriceUSD, ansId, getAvailableClaim } from '../wallet/api.js';
+import { setBalance, setMarketPrice, resetPrice, setTransactionHistory, setClaim } from '../actions/index.js';
 
 let intervals = {};
 
@@ -11,8 +11,10 @@ let netSelect;
 // TODO: this is being imported by Balance.js, maybe refactor to helper file
 
 const initiateGetBalance = (dispatch, net, address) => {
+  syncTransactionHistory(dispatch, net, address);
+  syncAvailableClaim(dispatch, net, address);
   return getBalance(net, address).then((resultBalance) => {
-    getMarketPriceUSD(resultBalance.ANS).then((resultPrice) => {
+    return getMarketPriceUSD(resultBalance.ANS).then((resultPrice) => {
       dispatch(setBalance(resultBalance.ANS, resultBalance.ANC, resultPrice));
     });
   }).catch((result) => {
@@ -20,12 +22,27 @@ const initiateGetBalance = (dispatch, net, address) => {
   });
 };
 
+const syncAvailableClaim = (dispatch, net, address) => {
+  getAvailableClaim(net, address).then((claimAmount) => {
+    dispatch(setClaim(claimAmount / 100000000));
+  });
+}
+
 const syncTransactionHistory = (dispatch, net, address) => {
   getTransactionHistory(net, address).then((transactions) => {
-    console.log(transactions);
-    dispatch(setTransactionHistory(transactions));
-    // TODO: no public API yet exists for ALL transation history
-    // so this does nothing for now
+    let txs = [];
+    for (let i = 0; i < transactions.length; i++){
+      if (transactions[i].NEO !== 0){
+        txs = txs.concat([{type: "NEO", amount: transactions[i].NEO, txid: transactions[i].txid, block_index: transactions[i].block_index }]);
+      }
+      if (transactions[i].GAS !== 0){
+        txs = txs.concat([{type: "GAS", amount: transactions[i].GAS, txid: transactions[i].txid, block_index: transactions[i].block_index }]);
+      }
+      if (transactions[i].GAS === 0 && transactions[i].NEO === 0){
+        txs = txs.concat([{type: "NEO", amount: 0, txid: transactions[i].txid, block_index: transactions[i].block_index }]);
+      }
+    }
+    dispatch(setTransactionHistory(txs));
   });
 };
 
@@ -35,7 +52,7 @@ const resetBalanceSync = (dispatch, net, address) => {
   }
   intervals.balance = setInterval(() =>  {
     initiateGetBalance(dispatch, net, address);
-  }, 10000);
+  }, 5000);
 };
 
 const toggleNet = (dispatch, net, address) => {
@@ -48,9 +65,7 @@ const toggleNet = (dispatch, net, address) => {
   dispatch(setNetwork(newNet));
   resetBalanceSync(dispatch, newNet, address);
   if (address !== null){
-    // dispatch(resetPrice());
     initiateGetBalance(dispatch, newNet, address);
-    syncTransactionHistory(dispatch, newNet, address);
   }
 };
 

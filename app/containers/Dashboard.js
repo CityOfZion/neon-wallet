@@ -10,16 +10,15 @@ import Send from '../components/Send';
 import { togglePane } from '../actions/index.js';
 
 
-const TransactionStatus = ({status}) => {
-  console.log("status", status);
+const TransactionStatus = ({status, statusMessage}) => {
   let message = null;
   if (status === true){
     message = (<div className="statusMessage success">
-    Transaction complete! Your balance will automatically update when the blockchain has processed it.
+    {statusMessage}
     </div>);
   }
   else if (status === false){
-    message = <div className="statusMessage fail">Transaction failed</div>;
+    message = <div className="statusMessage fail">{statusMessage}</div>;
   }
   return message;
 };
@@ -42,21 +41,20 @@ class Dashboard extends Component {
     } else {
       statusPaneSize = "0px";
     }
-    const sendStyle = !this.props.sendPane ? {backgroundColor:"#4C7631"} : {};
-
+    
     return (<div id="dashboard">
         <SplitPane className="statusSplit" split="horizontal" size={statusPaneSize} allowResize={false}>
-          <TransactionStatus status={this.props.status}/>
+          <TransactionStatus status={this.props.status} statusMessage={this.props.statusMessage}/>
           <SplitPane className="navSplit" split="horizontal" size="40px" allowResize={false}>
             <div id="navBar">
-              <div id="title">NeoWallet</div>
+              <div id="title">Neon</div>
               <div id="version">Version 0.0.1</div>
               <NetworkSwitch />
               <Logout />
             </div>
             <SplitPane split="vertical" size="50%" allowResize={false}>
               <SplitPane className="leftSplit" split="horizontal" size="55px" allowResize={false}>
-                <div id="send" onClick={() => this.props.dispatch(togglePane("sendPane"))} style={sendStyle}>
+                <div id="send" onClick={() => this.props.dispatch(togglePane("sendPane"))}>
                   <FaArrowUpward id="upArrow" /> <span>Send</span>
                 </div>
                 <SplitPane className="sendSplit" split="horizontal" size={sendPaneClosed} allowResize={false}>
@@ -76,7 +74,8 @@ class Dashboard extends Component {
 const mapStateToProps = (state) => ({
   sendPane: state.dashboard.sendPane,
   confirmPane: state.dashboard.confirmPane,
-  status: state.transactionState.success
+  status: state.transactionState.success,
+  statusMessage: state.transactionState.message
 });
 
 Dashboard = connect(mapStateToProps)(Dashboard);

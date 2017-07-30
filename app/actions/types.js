@@ -4,6 +4,7 @@ export const LOGOUT = 'LOGOUT';
 
 // wallet events
 export const SET_BALANCE = 'SET_BALANCE';
+export const SET_CLAIM = 'SET_CLAIM';
 export const NEW_WALLET = 'NEW_WALLET';
 export const SET_NETWORK = 'SET_NETWORK';
 export const SET_MARKET_PRICE = 'SET_MARKET_PRICE';

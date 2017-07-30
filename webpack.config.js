@@ -14,9 +14,12 @@ module.exports = {
         path.join(__dirname, 'app/index.js')
     ],
     output: {
-        path: path.join(__dirname, 'dist/'),
+        path: path.join(__dirname, 'app/dist/'),
         filename: 'bundle.js',
         publicPath: ''
+    },
+    node: {
+      __dirname: false
     },
     plugins: [
         new HtmlWebpackPlugin({

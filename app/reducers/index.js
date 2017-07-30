@@ -3,13 +3,12 @@ import { combineReducers } from 'redux';
 import { getAccountsFromWIFKey, generatePrivateKey, getWIFFromPrivateKey, addAccountToLocalStorage, getLocalStorageData } from '../wallet/index.js';
 import * as types from '../actions/types';
 
-
-const transactionState = (state = {'success': null, selectedAsset: 'NEO'}, action) => {
+const transactionState = (state = {'success': null, message: null, selectedAsset: 'NEO'}, action) => {
   switch (action.type) {
       case types.SEND_TRANSACTION:
-          return {...state, success:action.success};
+          return {...state, success:action.success, message: action.message};
       case types.CLEAR_TRANSACTION:
-          return {...state, success: null};
+          return {...state, success: null, message: null};
       case types.TOGGLE_ASSET:
           let asset;
           if (state.selectedAsset == "NEO"){
@@ -38,8 +37,12 @@ const generateWallet = (state = {'wif': null, 'address':null}, action) => {
 const account = (state = {'wif': null, 'address':null, 'loggedIn': false}, action) => {
     switch (action.type) {
         case types.LOGIN:
-            const loadAccount = getAccountsFromWIFKey(action.wif)[0];
-            if(loadAccount === -1 || loadAccount === -2){
+            let loadAccount;
+            try {
+              loadAccount = getAccountsFromWIFKey(action.wif)[0];
+            }
+            catch (e){ loadAccount = -1; }
+            if(loadAccount === -1 || loadAccount === -2 || loadAccount === undefined){
               return {...state, wif:action.wif,  loggedIn:false};
             }
             return {...state, wif:action.wif, address:loadAccount.address, loggedIn:true};
@@ -50,7 +53,7 @@ const account = (state = {'wif': null, 'address':null, 'loggedIn': false}, actio
     }
 };
 
-const wallet = (state = {'ANS': 0, 'ANC': 0, 'net': 'TestNet', 'transactions': [], 'price': '--'}, action) => {
+const wallet = (state = {'ANS': 0, 'ANC': 0, 'net': 'TestNet', 'transactions': [], 'price': '--', claimAmount: 0}, action) => {
     switch (action.type) {
         case types.SET_BALANCE:
             let ansValue, ancValue;
@@ -67,6 +70,8 @@ const wallet = (state = {'ANS': 0, 'ANC': 0, 'net': 'TestNet', 'transactions': [
             return {...state, 'ANS': ansValue, 'ANC': ancValue, 'price': action.price };
         case types.RESET_PRICE:
             return {...state, 'price': '--'};
+        case types.SET_CLAIM:
+            return {...state, 'claimAmount': action.amount};
         case types.SET_NETWORK:
             return {...state, net:action.net};
         case types.SET_MARKET_PRICE:  //current market price action type

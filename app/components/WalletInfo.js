@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Claim from "./Claim.js";
 import MdSync from 'react-icons/lib/md/sync';
 import QRCode from 'qrcode';
 import { initiateGetBalance, intervals } from "../components/NetworkSwitch";
@@ -34,13 +35,15 @@ class WalletInfo extends Component {
           </div>
           <div className="split">
             <div className="label">GAS</div>
-            <div className="amountBig">{this.props.anc.toPrecision(5)}</div>
+            <div className="amountBig">{this.props.anc < 0.001 ? 0 : this.props.anc.toPrecision(5)}</div>
           </div>
           <div className="fiat">US {this.props.price}</div>
           <div onClick={() => initiateGetBalance(this.props.dispatch, this.props.net, this.props.address)}>
             <MdSync id="refresh"/>
           </div>
         </div>
+        <div className="spacer"></div>
+        <Claim />
         <div className="spacer"></div>
         <div className="qrCode"><canvas id="qrCanvas" ref={(node) => this.canvas = node}></canvas></div>
       </div>);

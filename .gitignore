@@ -2,3 +2,7 @@ node_modules/*
 dist/
 .idea
 package-lock.json
+env/
+release-builds/*
+app/dist/*
+app/dist

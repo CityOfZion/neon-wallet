@@ -4,17 +4,21 @@ import { login, setBalance, resetPrice, getAccounts } from '../actions/index.js'
 import { Link } from 'react-router';
 import CreateWallet from './CreateWallet.js'
 import { getBlockByIndex } from '../wallet/api.js';
-import { addAccountToLocalStorage, clearLocalStorage } from '../wallet/index.js'
+import { addAccountToLocalStorage, clearLocalStorage, getWIFFromPrivateKey } from '../wallet/index.js'
 import SavedWallets from './SavedWallets.js'
 
 let input_wif;
 
 const onWifChange = (dispatch) => {
   // lookup wif address to check whether it is valid and enable login
-  dispatch(login(input_wif.value));
-  // somewhat hacky way to reset price on every login
-  // dispatch(resetPrice());
-
+  // if (input_wif.value.length === 64) {
+  //   const getWif = getWIFFromPrivateKey(input_wif.value);
+  //   console.log(getWif);
+  //   dispatch(login(getWif));
+  // } else {
+    // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
+    dispatch(login(input_wif.value));
+  // }
 };
 
 let Login = ({ dispatch, loggedIn, wif }) =>
