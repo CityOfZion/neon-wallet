@@ -38,7 +38,7 @@ class SavedWallets extends Component {
 
   render = () => {
       return (<div id="savedWallets">
-        <div className="row">Your Saved Wallets
+        <div className="row">
         <ul>
         {this.state.wallets}
         </ul>

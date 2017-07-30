@@ -349,17 +349,16 @@ button a{
 		width: 100%;
 		padding: 15px;
 		margin: 0 auto;
-		background-color: red;
 		ul {
-			 margin: 0 auto;
+			 margin: 10px auto 10px auto;
     		text-align: left;
 			list-style-type: none;
 			li { 
 				display: inline-block;
     			vertical-align: top;
 		.walletCard {
-			color:#ccc;
-			background-color:#2B3C20;
+			color:$button-text;
+			background-color:$default-button;
 			width: 125px;
 			height: 125px;
 			margin: 10px;
@@ -367,7 +366,7 @@ button a{
 			cursor: pointer;
 		}
 		.walletCard:hover {
-	background-color:#6E8560;
+			background-color:$default-button-hover;
 		}
 	}
 	}

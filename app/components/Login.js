@@ -28,8 +28,7 @@ let Login = ({ dispatch, loggedIn, wif, history }) =>
       <div className="loginButtons">
         {loggedIn ? <button><Link to="/dashboard">Login</Link></button> : <button disabled="true">Login</button>}
         <button><Link to="/create">New Wallet</Link></button>
-        <button onClick={()=> clearLocalStorage()}>Clear Storage</button>
-        <SavedWallets history={history}/>
+        <SavedWallets history={history} />
       </div>
     </div>
   </div>;
