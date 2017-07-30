@@ -29,12 +29,11 @@ class SavedWallets extends Component {
           wallets.push(<WalletCard name={formattedName} wif={accounts[p].key} key={p} index={accounts[p].index} />)
         } 
       } 
-    if (this.state.wallets.length === 0){
-    this.setState({
-        wallets: wallets
-    })
-}
-    console.log(counter);
+    if (this.state.wallets.length != wallets.length){
+        this.setState({
+            wallets: wallets
+        })
+    }
   }
 
   render = () => {
