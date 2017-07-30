@@ -26,7 +26,7 @@ class SavedWallets extends Component {
     for (var p in accounts) {
         if( accounts.hasOwnProperty(p) ) {
           var formattedName = p.split('_').join(' ')
-          wallets.push(<WalletCard name={formattedName} wif={accounts[p].key} key={p} index={accounts[p].index} />)
+          wallets.push(<WalletCard name={formattedName} wif={accounts[p].key} key={p} index={accounts[p].index} history={this.props.history}/>)
         } 
       } 
     if (this.state.wallets.length != wallets.length){

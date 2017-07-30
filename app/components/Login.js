@@ -21,7 +21,7 @@ const onWifChange = (dispatch) => {
   // }
 };
 
-let Login = ({ dispatch, loggedIn, wif }) =>
+let Login = ({ dispatch, loggedIn, wif, history }) =>
   <div id="loginPage">
     <div className="login">
       <input type="text" placeholder="Enter your private key here (WIF)" onChange={() => onWifChange(dispatch)} ref={node => {input_wif = node;}} />
@@ -29,7 +29,7 @@ let Login = ({ dispatch, loggedIn, wif }) =>
         {loggedIn ? <button><Link to="/dashboard">Login</Link></button> : <button disabled="true">Login</button>}
         <button><Link to="/create">New Wallet</Link></button>
         <button onClick={()=> clearLocalStorage()}>Clear Storage</button>
-        <SavedWallets />
+        <SavedWallets history={history}/>
       </div>
     </div>
   </div>;
