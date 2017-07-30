@@ -4,9 +4,17 @@ import Claim from "./Claim.js";
 import MdSync from 'react-icons/lib/md/sync';
 import QRCode from 'qrcode';
 import { initiateGetBalance, intervals } from "../components/NetworkSwitch";
-import { resetPrice } from '../actions/index.js';
+import { resetPrice, sendEvent, clearTransactionEvent } from '../actions/index.js';
 
 // need handlers on these as otherwise the interval is not cleared when switching between accounts
+
+const refreshBalance = (dispatch, net, address) => {
+  dispatch(sendEvent(true, "Refreshing..."));
+  initiateGetBalance(dispatch, net, address).then((response) => {
+    dispatch(sendEvent(true, "Received latest blockchain information."));
+    setTimeout(() => dispatch(clearTransactionEvent()), 1000);
+  });
+};
 
 class WalletInfo extends Component {
 
@@ -38,7 +46,7 @@ class WalletInfo extends Component {
             <div className="amountBig">{this.props.anc < 0.001 ? 0 : this.props.anc.toPrecision(5)}</div>
           </div>
           <div className="fiat">US {this.props.price}</div>
-          <div onClick={() => initiateGetBalance(this.props.dispatch, this.props.net, this.props.address)}>
+          <div onClick={() => refreshBalance(this.props.dispatch, this.props.net, this.props.address)}>
             <MdSync id="refresh"/>
           </div>
         </div>

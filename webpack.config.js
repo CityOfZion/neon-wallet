@@ -55,7 +55,15 @@ module.exports = {
                 loader: 'style!css!sass?modules&localIdentName=[name]---[local]---[hash:base64:5]'
             },
             { test: /\.woff(2)?(\?[a-z0-9#=&.]+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
-            { test: /\.(ttf|eot|svg)(\?[a-z0-9#=&.]+)?$/, loader: 'file' }
+            { test: /\.(ttf|eot|svg)(\?[a-z0-9#=&.]+)?$/, loader: 'file' },
+            {
+               test: /\.(?:png|jpg|svg)$/,
+               loader: 'url-loader',
+               query: {
+                 // Inline images smaller than 10kb as data URIs
+                 limit: 10000
+               }
+            }
         ]
     }
 };

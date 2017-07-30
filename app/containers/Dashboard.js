@@ -9,6 +9,7 @@ import Logout from '../components/Logout';
 import Send from '../components/Send';
 import { togglePane } from '../actions/index.js';
 
+const logo = require('../images/neon-logo2.png');
 
 const TransactionStatus = ({status, statusMessage}) => {
   let message = null;
@@ -41,13 +42,13 @@ class Dashboard extends Component {
     } else {
       statusPaneSize = "0px";
     }
-    
+
     return (<div id="dashboard">
         <SplitPane className="statusSplit" split="horizontal" size={statusPaneSize} allowResize={false}>
           <TransactionStatus status={this.props.status} statusMessage={this.props.statusMessage}/>
           <SplitPane className="navSplit" split="horizontal" size="40px" allowResize={false}>
             <div id="navBar">
-              <div id="title">Neon</div>
+              <div id="title"><img src={logo} width="60px"/></div>
               <div id="version">Version 0.0.1</div>
               <NetworkSwitch />
               <Logout />

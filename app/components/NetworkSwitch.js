@@ -16,6 +16,7 @@ const initiateGetBalance = (dispatch, net, address) => {
   return getBalance(net, address).then((resultBalance) => {
     return getMarketPriceUSD(resultBalance.ANS).then((resultPrice) => {
       dispatch(setBalance(resultBalance.ANS, resultBalance.ANC, resultPrice));
+      return true;
     });
   }).catch((result) => {
     console.log(result);

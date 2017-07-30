@@ -44,7 +44,7 @@ button a{
 
 #newWallet{
 	width:650px;
-	margin:20% auto;
+	margin:20% auto 0px auto;
 	.disclaimer{
 		margin-bottom:20px;
 		font-size:1.4em;
@@ -75,6 +75,11 @@ button a{
 }
 
 #loginPage{
+	.logo{
+		width:628px;
+		margin:10px auto;
+		text-align: left;
+	}
 	input{
 		width:600px;
 		font-size:1.2em;
@@ -84,12 +89,20 @@ button a{
 		background-color:$dark-input-color;
 		color:$default-text;
 	}
-	margin-top:30%;
+	margin-top:25%;
 	text-align:center;
 	.loginButtons{
 		margin:10px auto;
 		width:630px;
 		text-align:left;
+	}
+	#footer{
+		position:absolute;
+		bottom:10px;
+		width:100%;
+		font-weight: 200;
+		color:$thin-text-color;
+		font-size:.9em;
 	}
 }
 
@@ -118,6 +131,10 @@ button a{
 		padding:10px 0px 0px 10px;
 		font-weight:200;
 		color:$thin-text-color;
+		img{
+			position: relative;
+			top:2px;
+		}
 	}
 	#version{
 		position:absolute;

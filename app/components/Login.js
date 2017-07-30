@@ -6,6 +6,8 @@ import CreateWallet from './CreateWallet.js'
 import { getBlockByIndex } from '../wallet/api.js';
 import { getWIFFromPrivateKey } from '../wallet/index.js';
 
+const logo = require('../images/neon-logo2.png');
+
 let input_wif;
 
 const onWifChange = (dispatch) => {
@@ -23,11 +25,13 @@ const onWifChange = (dispatch) => {
 let Login = ({ dispatch, loggedIn, wif }) =>
   <div id="loginPage">
     <div className="login">
+      <div className="logo"><img src={logo} width="60px"/></div>
       <input type="text" placeholder="Enter your private key here (WIF)" onChange={() => onWifChange(dispatch)} ref={node => {input_wif = node;}} />
       <div className="loginButtons">
         {loggedIn ? <button><Link to="/dashboard">Login</Link></button> : <button disabled="true">Login</button>}
         <button><Link to="/create">New Wallet</Link></button>
       </div>
+      <div id="footer">Created by Ethan Fast and COZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A</div>
     </div>
   </div>;
 
