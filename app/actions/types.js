@@ -18,3 +18,6 @@ export const TOGGLE_ASSET = 'TOGGLE_ASSET';
 
 // dashboard state
 export const TOGGLE_SEND_PANE = 'TOGGLE_SEND_PANE';
+
+// metadata
+export const SET_HEIGHT = 'SET_HEIGHT';

@@ -49,7 +49,8 @@ class Dashboard extends Component {
           <SplitPane className="navSplit" split="horizontal" size="40px" allowResize={false}>
             <div id="navBar">
               <div id="title"><img src={logo} width="60px"/></div>
-              <div id="version">Version 0.0.1</div>
+              <div id="version"><span className="grey">Version</span><span className="darker">0.0.1</span></div>
+              <div id="height"><span className="grey">Block</span><span className="darker">{this.props.blockHeight}</span></div>
               <NetworkSwitch />
               <Logout />
             </div>
@@ -76,7 +77,8 @@ const mapStateToProps = (state) => ({
   sendPane: state.dashboard.sendPane,
   confirmPane: state.dashboard.confirmPane,
   status: state.transactionState.success,
-  statusMessage: state.transactionState.message
+  statusMessage: state.transactionState.message,
+  blockHeight: state.metadata.blockHeight
 });
 
 Dashboard = connect(mapStateToProps)(Dashboard);

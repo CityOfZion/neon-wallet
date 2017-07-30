@@ -97,3 +97,12 @@ export function togglePane(pane){
     pane: pane
   }
 };
+
+// metadata
+
+export function setBlockHeight(blockHeight){
+  return {
+    type: types.SET_HEIGHT,
+    blockHeight: blockHeight
+  };
+}

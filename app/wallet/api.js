@@ -30,7 +30,6 @@ export const getAPIEndpoint = (net) => {
 export const getRPCEndpoint = (net) => {
   const apiEndpoint = getAPIEndpoint(net);
   return axios.get(apiEndpoint + '/v1/network/best_node').then((response) => {
-      console.log(response);
       return response.data.node;
   });
 };
@@ -66,7 +65,6 @@ export const claimAllGAS = (net, fromWif) => {
   return axios.get(apiEndpoint + "/v1/address/claims/" + account.address).then((response) => {
     const claims = response.data["claims"];
     const total_claim = response.data["total_claim"];
-    console.log(claims);
     const txData = claimTransaction(claims, account.publickeyEncoded, account.address, total_claim);
     const sign = signatureData(txData, account.privatekey);
     const txRawData = addContract(txData, sign, account.publickeyEncoded);
@@ -111,6 +109,13 @@ export const getTransactionHistory = (net, address) => {
   });
 };
 
+export const getWalletDBHeight = (net) => {
+  const apiEndpoint = getAPIEndpoint(net);
+  return axios.get(apiEndpoint + '/v1/block/height').then((response) => {
+    return parseInt(response.data.block_height);
+  });
+}
+
 export const sendAssetTransaction = (net, toAddress, fromWif, assetType, amount) => {
   let assetId, assetName, assetSymbol;
   if (assetType === "AntShares"){
@@ -124,14 +129,12 @@ export const sendAssetTransaction = (net, toAddress, fromWif, assetType, amount)
   }
   const fromAccount = getAccountsFromWIFKey(fromWif)[0];
   return getBalance(net, fromAccount.address).then((response) => {
-    console.log(response);
     const coinsData = {
       "assetid": assetId,
       "list": response.unspent[assetSymbol],
       "balance": response[assetSymbol],
       "name": assetName
     }
-    console.log(coinsData);
     const txData = transferTransaction(coinsData, fromAccount.publickeyEncoded, toAddress, amount);
     const sign = signatureData(txData, fromAccount.privatekey);
     const txRawData = addContract(txData, sign, fromAccount.publickeyEncoded);

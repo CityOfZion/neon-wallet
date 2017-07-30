@@ -144,6 +144,24 @@ button a{
 			top:2px;
 		}
 	}
+	#height, #version{
+		span.grey{
+			opacity:.6;
+			margin-right:4px;
+		}
+		span.darker{
+			color:$thin-text-color;
+			opacity:.8;
+			cursor:pointer;
+		}
+	}
+	#height{
+		position: absolute;
+		font-size:.8em;
+		right:340px;
+		top:13px;
+		opacity:0.6;
+	}
 	#version{
 		position:absolute;
 		font-size:.8em;
