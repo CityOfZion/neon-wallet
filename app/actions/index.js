@@ -122,6 +122,7 @@ export function getAccounts(){
       dispatch({ type: 'GET_STORAGE_DATA', payload: data})
     })
   }
+}
 // metadata
 
 export function setBlockHeight(blockHeight){
