@@ -17,11 +17,11 @@ Neon wallet currently supports:
   
 ## How does a light wallet work?
 
-Light wallets like Neon and myetherwallet share a remote, centralized version of blockchain data. The benefit of using light wallets is that you don't need to sync the entire blockchain on your local machine. The downside is that you are putting more trust in a single, remote version of the blockchain. No matter what kind of wallet you are using, however, *your private key never leaves your local machine*. Before using any wallet, you should inspect its code (or have someone you trust inspect it) to make sure this is the case.
+Light wallets like Neon and myetherwallet share a remote, centralized version of blockchain data. The benefit of using a light wallet is that you don't need to sync the entire blockchain on your local machine. The downside is that you are putting more trust in a single, remote version of the blockchain. No matter what kind of wallet you are using, however, *your private key should never leave your local machine*. Before typing you private key into any wallet, you should inspect its code (or have someone you trust do so) to make sure this is the case.
 
 ## Alpha release disclaimer
 
-Our team at COZ is currently using this wallet on MainNet and TestNet without issue, but as an alpha release, we advise you to *only use this wallet on TestNet* until the code has been fully audited by the community. If you would like to try the wallet on TestNet, ping unignorant in the COZ slack and we will send you a small amount of TestNet funds.  
+Our team at COZ is currently using this wallet on MainNet and TestNet without issue, but as an alpha release, we advise you to *only use this wallet on TestNet* until the code has been fully audited and tested by the community. If you would like to try the wallet on TestNet, ping unignorant in the COZ slack and we will send you a small amount of TestNet funds.  
 
 ## Download links
 
