@@ -1,6 +1,6 @@
 # Neon Wallet alpha release
 
-Neon wallet is a light wallet that allows you to interact with assets on the Neo blockchain without waiting to sync all chain data locally to your machine.
+Neon wallet is a desktop light wallet that allows you to interact with assets on the Neo blockchain without waiting to sync all chain data locally to your machine.
 
 ![wallet](/wallet.png)
 
@@ -13,6 +13,11 @@ Neon wallet currently supports:
   + Sending NEO and GAS
   + Claiming GAS
   + Easy switching between MainNet and TestNet
+  + OSX, Windows, and Linux platforms
+  
+## How does a light wallet work?
+
+Light wallets like Neon and myetherwallet share a remote, centralized version of blockchain data. The benefit of using light wallets is that you don't need to sync the entire blockchain on your local machine. The downside is that you are putting more trust in a single, remote version of the blockchain. No matter what kind of wallet you are using, however, *your private key never leaves your local machine*. Before using any wallet, you should inspect its code (or have someone you trust inspect it) to make sure this is the case.
 
 ## Alpha release disclaimer
 
