@@ -2,7 +2,7 @@
 
 Neon wallet is a desktop light wallet that allows you to interact with assets on the Neo blockchain without waiting to sync all chain data locally to your machine.
 
-![wallet](/wallet.png)
+![wallet](/wallet.png =250x)
 
 ## Features
 
