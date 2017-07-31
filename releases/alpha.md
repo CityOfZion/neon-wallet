@@ -29,6 +29,10 @@ You can compile the wallet yourself using the instructions in the [readme](../RE
 
 #### Note: For user safety, this build will run on TestNet by default. To switch to MainNet (the real NEO blockchain), toggle the current network by clicking on the network name in the wallet's upper right hand corner.
 
-  + OSX: [Download](/todo)
-  + Windows: [Download](/todo)
-  + Linux: [Download](/todo)
+  + OSX: [Download](http://bit.ly/2tWHZdV)
+  + Windows: [Download](http://bit.ly/2f14Jmo)
+  + Linux: [Download](http://bit.ly/2hgzAvS)
+
+## Contributors
+
+This wallet was created by Ethan Fast with help from others at [COZ](https://github.com/CityOfZion). The app logo and icon were designed by Nathaniel Walpole.
