@@ -6,7 +6,7 @@ Neon Wallet is a desktop light wallet that allows you to interact with assets on
 
 ## Features
 
-Neon wallet currently supports:
+Neon Wallet currently supports:
 
   + Offline generation of new accounts (public/private key pairs)
   + Checking NEO and GAS balance
