@@ -1,4 +1,4 @@
-# NEO Wallet
+# Neon Wallet
 
 ![wallet](/wallet.png)
 
