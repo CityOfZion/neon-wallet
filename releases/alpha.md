@@ -27,7 +27,7 @@ Our team at COZ is currently using this wallet on MainNet and TestNet without is
 
 You can compile the wallet yourself using the instructions in the [readme](../README.md), but we have compiled standalone apps for non-technical users.
 
-### Note: For user safety, this build will by default run on TestNet. To switch to MainNet, click on the network text in the wallet's upper right hand corner.
+### Note: For user safety, this build will by default run on TestNet. To switch to MainNet (the real NEO blockchain), toggle the current network using the network name text in the wallet's upper right hand corner.
 
   + OSX: [Download](/todo)
   + Windows: [Download](/todo)
