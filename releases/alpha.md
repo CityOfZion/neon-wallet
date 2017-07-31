@@ -29,9 +29,9 @@ You can compile the wallet yourself using the instructions in the [readme](../RE
 
 #### Note: For user safety, this build will run on TestNet by default. To switch to MainNet (the real NEO blockchain), toggle the current network by clicking on the network name in the wallet's upper right hand corner.
 
-  + OSX: [Download](http://bit.ly/2tWHZdV)
-  + Windows: [Download](http://bit.ly/2f14Jmo)
-  + Linux: [Download](http://bit.ly/2hgzAvS)
+  + OSX: [Download](http://bit.ly/neon-osx)
+  + Windows: [Download](http://bit.ly/neon-windows)
+  + Linux: [Download](http://bit.ly/neon-linux)
 
 ## Contributors
 
