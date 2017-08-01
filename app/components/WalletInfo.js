@@ -5,6 +5,9 @@ import MdSync from 'react-icons/lib/md/sync';
 import QRCode from 'qrcode';
 import { initiateGetBalance, intervals } from "../components/NetworkSwitch";
 import { resetPrice, sendEvent, clearTransactionEvent } from '../actions/index.js';
+import { clipboard } from 'electron';
+import Copy from 'react-icons/lib/md/content-copy';
+import ReactTooltip from 'react-tooltip'
 
 // need handlers on these as otherwise the interval is not cleared when switching between accounts
 
@@ -34,7 +37,13 @@ class WalletInfo extends Component {
     if (this.props.address !== null){
       return (<div id="accountInfo">
         <div className="label">Your Public Neo Address:</div>
-        <div className="address">{this.props.address}</div>
+        <div className="address">
+          {this.props.address}
+            <span className="copyKey" onClick={() => clipboard.writeText(this.props.address, 'selection')}><Copy data-tip data-for="copyAddressTip" /></span>
+        </div>
+        <ReactTooltip class="solidTip" id="copyAddressTip" place="bottom" type="dark" effect="solid">
+          <span>Copy Public Address</span>
+        </ReactTooltip>
         <div className="spacer"></div>
         <div id="balance">
           <div className="split">

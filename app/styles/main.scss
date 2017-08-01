@@ -292,6 +292,10 @@ button a{
 		margin:20px 0px;
 		width:100%;
 		text-align: center;
+		span.copyKey{
+			margin-left: 3px;
+			cursor:pointer;
+		}
 		.label{
 			font-size:.85em;
 		}

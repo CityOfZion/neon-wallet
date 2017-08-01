@@ -326,7 +326,7 @@ export const transferTransaction = ($coin, $publicKeyEncoded, $toAddress, $Amoun
 		//data.set(hexstring2ab($coin['assetid']), inputLen + 4);
 
 		// output value
-		const num1 = $Amount * 100000000;
+		const num1 = parseInt($Amount * 100000000);
 		const num1str = numStoreInMemory(num1.toString(16), 16);
 		data.set(hexstring2ab(num1str), inputLen + 36);
 
@@ -348,7 +348,7 @@ export const transferTransaction = ($coin, $publicKeyEncoded, $toAddress, $Amoun
 		//data.set(hexstring2ab($coin['assetid']), inputLen + 4);
 
 		// output value
-		const num1 = $Amount * 100000000;
+		const num1 = parseInt($Amount * 100000000);
 		const num1str = numStoreInMemory(num1.toString(16), 16);
 		data.set(hexstring2ab(num1str), inputLen + 36);
 
@@ -363,7 +363,7 @@ export const transferTransaction = ($coin, $publicKeyEncoded, $toAddress, $Amoun
 		//data.set(hexstring2ab($coin['assetid']), inputLen + 64);
 
 		// output value
-		const num2 = inputAmount * 100000000 - num1;
+		const num2 = parseInt(inputAmount * 100000000 - num1);
 		const num2str = numStoreInMemory(num2.toString(16), 16);
 		data.set(hexstring2ab(num2str), inputLen + 96);
 
