@@ -1,6 +1,6 @@
 {
   "name": "Neon",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",
   "author": "Ethan Fast <ejhfast@gmail.com> (https://github.com/Ejhfast)",
