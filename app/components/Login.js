@@ -21,8 +21,8 @@ let Login = ({ dispatch, loggedIn, wif }) =>
       <div className="logo"><img src={logo} width="60px"/></div>
       <input type="text" placeholder="Enter your private key here (WIF)" onChange={() => onWifChange(dispatch)} ref={node => {input_wif = node;}} />
       <div className="loginButtons">
-        {loggedIn ? <button><Link to="/dashboard">Login</Link></button> : <button disabled="true">Login</button>}
-        <button><Link to="/create">New Wallet</Link></button>
+        {loggedIn ? <Link to="/dashboard"><button>Login</button></Link> : <button disabled="true">Login</button>}
+        <Link to="/create"><button>New Wallet</button></Link>
       </div>
       <div id="footer">Created by Ethan Fast and COZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A</div>
     </div>

@@ -40,14 +40,11 @@ const syncTransactionHistory = (dispatch, net, address) => {
   getTransactionHistory(net, address).then((transactions) => {
     let txs = [];
     for (let i = 0; i < transactions.length; i++){
-      if (transactions[i].NEO !== 0){
+      if (transactions[i].neo_sent === true){
         txs = txs.concat([{type: "NEO", amount: transactions[i].NEO, txid: transactions[i].txid, block_index: transactions[i].block_index }]);
       }
-      if (transactions[i].GAS !== 0){
+      if (transactions[i].gas_sent === true){
         txs = txs.concat([{type: "GAS", amount: transactions[i].GAS, txid: transactions[i].txid, block_index: transactions[i].block_index }]);
-      }
-      if (transactions[i].GAS === 0 && transactions[i].NEO === 0){
-        txs = txs.concat([{type: "NEO", amount: 0, txid: transactions[i].txid, block_index: transactions[i].block_index }]);
       }
     }
     dispatch(setTransactionHistory(txs));
