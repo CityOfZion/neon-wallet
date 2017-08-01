@@ -4,20 +4,13 @@ import { getAccountsFromWIFKey, transferTransaction, signatureData, addContract,
 const apiEndpoint = "http://testnet.antchain.xyz";
 const rpcEndpoint = "http://api.otcgo.cn:20332"; // testnet = 20332
 
-const ANS = '\u5c0f\u8681\u80a1';
-const ANC = '\u5c0f\u8681\u5e01';
-
 // hard-code asset ids for ANS and ANC
-export const ansId = "c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b";
-export const ancId = "602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7";
-export const allAssetIds = [ansId, ancId];
+export const ANS_ID = "c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b";
+export const ANC_ID = "602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7";
 
 // hard-code asset names for ANS and ANC
-const ansName = "小蚁股";
-const ancName = "小蚁币";
-
-const getAns = balance => balance.filter((val) => { return val.unit === ANS })[0];
-const getAnc = balance => balance.filter((val) => { return val.unit === ANC })[0];
+const ANS_NAME = "小蚁股";
+const ANC_NAME = "小蚁币";
 
 export const getAPIEndpoint = (net) => {
   if (net === "MainNet"){
@@ -76,28 +69,28 @@ export const getBalance = (net, address) => {
     const apiEndpoint = getAPIEndpoint(net);
     return axios.get(apiEndpoint + '/v1/address/balance/' + address)
       .then((res) => {
-          const ans = res.data.NEO.balance;
-          const anc = res.data.GAS.balance;
-          return {ANS: ans, ANC: anc, unspent: {ANS: res.data.NEO.unspent, ANC: res.data.GAS.unspent}};
+          const neo = res.data.NEO.balance;
+          const gas = res.data.GAS.balance;
+          return {NEO: neo, GAS: gas, unspent: {NEO: res.data.NEO.unspent, GAS: res.data.GAS.unspent}};
       })
 };
 
 /**
  * @function
  * @description
- * Hit the bittrex api getticker to fetch the latest BTC to ANS price
+ * Hit the bittrex api getticker to fetch the latest BTC to NEO price
  * then hit the latest USDT to BTC conversion rate
  *
- * @param {number} amount - The current ANS amount in wallet
- * @return {string} - The converted ANS to USDT fiat amount
+ * @param {number} amount - The current NEO amount in wallet
+ * @return {string} - The converted NEO to USDT fiat amount
  */
 export const getMarketPriceUSD = (amount) => {
-  let lastBTCANS, lastUSDBTC;
+  let lastBTCNEO, lastUSDBTC;
   return axios.get('https://bittrex.com/api/v1.1/public/getticker?market=BTC-ANS').then((response) => {
-      lastBTCANS = response.data.result.Last;
+      lastBTCNEO = response.data.result.Last;
       return axios.get('https://bittrex.com/api/v1.1/public/getticker?market=USDT-BTC').then((response) => {
           lastUSDBTC = response.data.result.Last;
-          return ('$' + (lastBTCANS * lastUSDBTC * amount).toFixed(2).toString());
+          return ('$' + (lastBTCNEO * lastUSDBTC * amount).toFixed(2).toString());
       });
   });
 };
@@ -117,22 +110,20 @@ export const getWalletDBHeight = (net) => {
 }
 
 export const sendAssetTransaction = (net, toAddress, fromWif, assetType, amount) => {
-  let assetId, assetName, assetSymbol;
-  if (assetType === "AntShares"){
-    assetId = ansId;
-    assetName = ansName;
-    assetSymbol = 'ANS';
-  } else if (assetType === "AntCoins") {
-    assetId = ancId;
-    assetName = ancName;
-    assetSymbol = 'ANC';
+  let assetId, assetName;
+  if (assetType === "NEO"){
+    assetId = ANS_ID;
+    assetName = ANS_NAME;
+  } else if (assetType === "GAS") {
+    assetId = ANC_ID;
+    assetName = ANC_NAME;
   }
   const fromAccount = getAccountsFromWIFKey(fromWif)[0];
   return getBalance(net, fromAccount.address).then((response) => {
     const coinsData = {
       "assetid": assetId,
-      "list": response.unspent[assetSymbol],
-      "balance": response[assetSymbol],
+      "list": response.unspent[assetType],
+      "balance": response[assetType],
       "name": assetName
     }
     const txData = transferTransaction(coinsData, fromAccount.publickeyEncoded, toAddress, amount);

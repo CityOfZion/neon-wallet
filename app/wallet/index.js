@@ -389,7 +389,7 @@ export const claimTransaction = (claims, publicKeyEncoded, toAddress, amount) =>
 	// Version is always 0 in protocol for now
 	data = data + "00";
 
-	// Transaction-specific attributs: claims
+	// Transaction-specific attributes: claims
 
 	// 1) store number of claims (txids)
 	let len = claims.length;

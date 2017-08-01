@@ -39,11 +39,11 @@ class WalletInfo extends Component {
         <div id="balance">
           <div className="split">
             <div className="label">NEO</div>
-            <div className="amountBig">{this.props.ans}</div>
+            <div className="amountBig">{this.props.neo}</div>
           </div>
           <div className="split">
             <div className="label">GAS</div>
-            <div className="amountBig">{this.props.anc < 0.001 ? 0 : this.props.anc.toPrecision(5)}</div>
+            <div className="amountBig">{this.props.gas < 0.001 ? 0 : this.props.gas.toPrecision(5)}</div>
           </div>
           <div className="fiat">US {this.props.price}</div>
           <div onClick={() => refreshBalance(this.props.dispatch, this.props.net, this.props.address)}>
@@ -62,8 +62,8 @@ class WalletInfo extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  ans: state.wallet.ANS,
-  anc: state.wallet.ANC,
+  neo: state.wallet.NEO,
+  gas: state.wallet.GAS,
   address: state.account.address,
   net: state.wallet.net,
   price: state.wallet.price
