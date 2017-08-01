@@ -21,9 +21,9 @@ const getAnc = balance => balance.filter((val) => { return val.unit === ANC })[0
 
 export const getAPIEndpoint = (net) => {
   if (net === "MainNet"){
-    return "http://neo.herokuapp.com";
+    return "http://api.wallet.cityofzion.io";
   } else {
-    return "http://neo-testnet.herokuapp.com"; //, //"http://testnet.antchain.xyz",
+    return "http://testnet-api.wallet.cityofzion.io";
   }
 };
 

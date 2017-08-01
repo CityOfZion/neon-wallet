@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",
-  "author": "Ethan Fast ejhfast@gmail.com",
+  "author": "Ethan Fast <ejhfast@gmail.com> (https://github.com/Ejhfast)",
   "scripts": {
     "postinstall": "install-app-deps",
     "start": "electron .",
@@ -40,7 +40,7 @@
       ]
     },
     "win": {
-      "target": "squirrel",
+      "target": "nsis",
       "icon": "build/icon.ico"
     }
   },
