@@ -13,7 +13,7 @@ import { ab2str,
   stringToBytes } from './utils';
 
 var base58 = require('base-x')(BASE58)
-
+import secureRandom from 'secure-random';
 import buffer from 'buffer';
 
 
@@ -454,21 +454,11 @@ export const toAddress = ($ProgramHash) => {
 };
 
 export const generateRandomArray = ($arrayLen) => {
-  var randomArray = new Uint8Array($arrayLen);
-	for (let i = 0; i < $arrayLen; i++) {
-		randomArray[i] = Math.floor(Math.random() * 256);
-	}
-
-	return randomArray;
+  return secureRandom($arrayLen);
 }
 
 export const generatePrivateKey = () => {
-	var privateKey = new Uint8Array(32);
-	for (let i = 0; i < 32; i++) {
-		privateKey[i] = Math.floor(Math.random() * 256);
-	}
-
-	return privateKey;
+	return new secureRandom(32);
 };
 
 export const getPrivateKeyFromWIF = ($wif) => {
