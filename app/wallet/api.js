@@ -97,7 +97,8 @@ export const getMarketPriceUSD = (amount) => {
       lastBTCANS = response.data.result.Last;
       return axios.get('https://bittrex.com/api/v1.1/public/getticker?market=USDT-BTC').then((response) => {
           lastUSDBTC = response.data.result.Last;
-          return ('$' + (lastBTCANS * lastUSDBTC * amount).toFixed(2).toString());
+          const convertedAmount = '$'+(lastBTCANS * lastUSDBTC * amount).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          return convertedAmount;
       });
   });
 };
