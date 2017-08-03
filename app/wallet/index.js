@@ -454,11 +454,11 @@ export const toAddress = ($ProgramHash) => {
 };
 
 export const generateRandomArray = ($arrayLen) => {
-  return secureRandom($arrayLen);
+ 	return secureRandom($arrayLen);
 }
 
 export const generatePrivateKey = () => {
-	return new secureRandom(32);
+	return secureRandom(32);
 };
 
 export const getPrivateKeyFromWIF = ($wif) => {
