@@ -24,9 +24,13 @@ const sendTransaction = (dispatch, net, wif, asset, neo_balance, gas_balance) =>
   } else {
     assetSwap = "AntCoins";
   }
-  dispatch(sendEvent(true, "Processing..."))
+  dispatch(sendEvent(true, "Processing..."));
   if (verifyAddress(sendAddress.value) !== true){
     dispatch(sendEvent(false, "The address you entered was not valid. No NEO was sent."));
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+  }
+  else if (asset === "NEO" && parseFloat(sendAmount.value) !== parseInt(sendAmount.value)){
+    dispatch(sendEvent(false, "You cannot send fractional amounts of Neo."));
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
   }
   else if (asset === "NEO" && parseInt(sendAmount.value) > neo_balance){

@@ -6,3 +6,5 @@ env/
 release-builds/*
 app/dist/*
 app/dist
+build/
+.DS_Store

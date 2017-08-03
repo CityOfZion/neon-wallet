@@ -16,7 +16,7 @@ const Promise = require("bluebird");
 const storage = Promise.promisifyAll(require('electron-json-storage'));
 
 var base58 = require('base-x')(BASE58)
-
+import secureRandom from 'secure-random';
 import buffer from 'buffer';
 
 
@@ -329,7 +329,7 @@ export const transferTransaction = ($coin, $publicKeyEncoded, $toAddress, $Amoun
 		//data.set(hexstring2ab($coin['assetid']), inputLen + 4);
 
 		// output value
-		const num1 = $Amount * 100000000;
+		const num1 = parseInt($Amount * 100000000);
 		const num1str = numStoreInMemory(num1.toString(16), 16);
 		data.set(hexstring2ab(num1str), inputLen + 36);
 
@@ -351,7 +351,7 @@ export const transferTransaction = ($coin, $publicKeyEncoded, $toAddress, $Amoun
 		//data.set(hexstring2ab($coin['assetid']), inputLen + 4);
 
 		// output value
-		const num1 = $Amount * 100000000;
+		const num1 = parseInt($Amount * 100000000);
 		const num1str = numStoreInMemory(num1.toString(16), 16);
 		data.set(hexstring2ab(num1str), inputLen + 36);
 
@@ -366,7 +366,7 @@ export const transferTransaction = ($coin, $publicKeyEncoded, $toAddress, $Amoun
 		//data.set(hexstring2ab($coin['assetid']), inputLen + 64);
 
 		// output value
-		const num2 = inputAmount * 100000000 - num1;
+		const num2 = parseInt(inputAmount * 100000000 - num1);
 		const num2str = numStoreInMemory(num2.toString(16), 16);
 		data.set(hexstring2ab(num2str), inputLen + 96);
 
@@ -457,21 +457,11 @@ export const toAddress = ($ProgramHash) => {
 };
 
 export const generateRandomArray = ($arrayLen) => {
-  var randomArray = new Uint8Array($arrayLen);
-	for (let i = 0; i < $arrayLen; i++) {
-		randomArray[i] = Math.floor(Math.random() * 256);
-	}
-
-	return randomArray;
+ 	return secureRandom($arrayLen);
 }
 
 export const generatePrivateKey = () => {
-	var privateKey = new Uint8Array(32);
-	for (let i = 0; i < 32; i++) {
-		privateKey[i] = Math.floor(Math.random() * 256);
-	}
-
-	return privateKey;
+	return secureRandom(32);
 };
 
 export const getPrivateKeyFromWIF = ($wif) => {
