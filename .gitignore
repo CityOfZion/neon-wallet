@@ -5,5 +5,9 @@ env/
 release-builds/*
 app/dist/*
 app/dist
-build/
 .DS_Store
+.jshintrc
+.npmignore
+.project
+.settings/*
+.gitignore

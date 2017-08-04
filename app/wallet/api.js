@@ -1,23 +1,20 @@
 import axios from 'axios';
 import { getAccountsFromWIFKey, transferTransaction, signatureData, addContract, claimTransaction } from './index.js';
 
-const apiEndpoint = "http://testnet.antchain.xyz";
-const rpcEndpoint = "http://api.otcgo.cn:20332"; // testnet = 20332
+const NEO = '\u5c0f\u8681\u80a1';
+const GAS = '\u5c0f\u8681\u5e01';
 
-const ANS = '\u5c0f\u8681\u80a1';
-const ANC = '\u5c0f\u8681\u5e01';
+// hard-code asset ids for NEO and GAS
+export const neoId = "c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b";
+export const gasId = "602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7";
+export const allAssetIds = [neoId, gasId];
 
-// hard-code asset ids for ANS and ANC
-export const ansId = "c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b";
-export const ancId = "602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7";
-export const allAssetIds = [ansId, ancId];
+// hard-code asset names for NEO and GAS
+const neoName = "小蚁股";
+const gasName = "小蚁币";
 
-// hard-code asset names for ANS and ANC
-const ansName = "小蚁股";
-const ancName = "小蚁币";
-
-const getAns = balance => balance.filter((val) => { return val.unit === ANS })[0];
-const getAnc = balance => balance.filter((val) => { return val.unit === ANC })[0];
+const getNeo = balance => balance.filter((val) => { return val.unit === NEO })[0];
+const getGas = balance => balance.filter((val) => { return val.unit === GAS })[0];
 
 export const getAPIEndpoint = (net) => {
   if (net === "MainNet"){
@@ -61,7 +58,6 @@ export const getAvailableClaim = (net, address) => {
 export const claimAllGAS = (net, fromWif) => {
   const apiEndpoint = getAPIEndpoint(net);
   const account = getAccountsFromWIFKey(fromWif)[0];
-  // TODO: when fully working replace this with mainnet/testnet switch
   return axios.get(apiEndpoint + "/v1/address/claims/" + account.address).then((response) => {
     const claims = response.data["claims"];
     const total_claim = response.data["total_claim"];
@@ -76,9 +72,9 @@ export const getBalance = (net, address) => {
     const apiEndpoint = getAPIEndpoint(net);
     return axios.get(apiEndpoint + '/v1/address/balance/' + address)
       .then((res) => {
-          const ans = res.data.NEO.balance;
-          const anc = res.data.GAS.balance;
-          return {ANS: ans, ANC: anc, unspent: {ANS: res.data.NEO.unspent, ANC: res.data.GAS.unspent}};
+          const neo = res.data.NEO.balance;
+          const gas = res.data.GAS.balance;
+          return {NEO: neo, GAS: gas, unspent: {NEO: res.data.NEO.unspent, GAS: res.data.GAS.unspent}};
       })
 };
 
@@ -118,14 +114,14 @@ export const getWalletDBHeight = (net) => {
 
 export const sendAssetTransaction = (net, toAddress, fromWif, assetType, amount) => {
   let assetId, assetName, assetSymbol;
-  if (assetType === "AntShares"){
-    assetId = ansId;
-    assetName = ansName;
-    assetSymbol = 'ANS';
-  } else if (assetType === "AntCoins") {
-    assetId = ancId;
-    assetName = ancName;
-    assetSymbol = 'ANC';
+  if (assetType === "NEO"){
+    assetId = neoId;
+    assetName = neoName;
+    assetSymbol = 'NEO';
+  } else if (assetType === "GAS") {
+    assetId = gasId;
+    assetName = gasName;
+    assetSymbol = 'GAS';
   }
   const fromAccount = getAccountsFromWIFKey(fromWif)[0];
   return getBalance(net, fromAccount.address).then((response) => {

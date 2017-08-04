@@ -6,7 +6,7 @@ import WalletInfo from './WalletInfo.js';
 import QRCode from 'qrcode';
 import { clipboard } from 'electron';
 import Copy from 'react-icons/lib/md/content-copy';
-import ReactTooltip from 'react-tooltip'
+import ReactTooltip from 'react-tooltip';
 
 
 const generateWallet = (dispatch) => {

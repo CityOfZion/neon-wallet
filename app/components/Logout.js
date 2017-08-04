@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { logout } from '../actions/index.js';
 import { Link } from 'react-router';
 import Power from 'react-icons/lib/md/power-settings-new';
-import ReactTooltip from 'react-tooltip'
+import ReactTooltip from 'react-tooltip';
 
 
 let Logout = ({dispatch}) =>
