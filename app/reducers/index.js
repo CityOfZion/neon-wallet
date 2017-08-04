@@ -62,21 +62,21 @@ const metadata = (state = {blockHeight: 0}, action) => {
   }
 };
 
-const wallet = (state = {'NEO': 0, 'GAS': 0, 'net': 'TestNet', 'transactions': [], 'price': '--', claimAmount: 0}, action) => {
+const wallet = (state = {'ANS': 0, 'ANC': 0, 'net': 'TestNet', 'transactions': [], 'price': '--', claimAmount: 0}, action) => {
     switch (action.type) {
         case types.SET_BALANCE:
-            let neoValue, gasValue;
-            if (action.NEO !== undefined){
-            	neoValue = action.NEO;
+            let ansValue, ancValue;
+            if (action.ANS !== undefined){
+              ansValue = action.ANS;
             } else {
-            	neoValue = 0;
+              ansValue = 0;
             }
-            if (action.GAS !== undefined){
-            	gasValue = action.GAS;
+            if (action.ANC !== undefined){
+              ancValue = action.ANC;
             } else {
-            	gasValue = 0;
+              ancValue = 0;
             }
-            return {...state, 'NEO': neoValue, 'GAS': gasValue, 'price': action.price };
+            return {...state, 'ANS': ansValue, 'ANC': ancValue, 'price': action.price };
         case types.RESET_PRICE:
             return {...state, 'price': '--'};
         case types.SET_CLAIM:
