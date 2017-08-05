@@ -96,9 +96,8 @@ const claimState = (state = {claimRequest: false, claimAmount: 0, claimAvailable
     case types.SET_CLAIM_REQUEST:
         return {...state, 'claimRequest': action.status};
     case types.SET_CLAIM:
-      console.log(action);
         let claimWasUpdated = false;
-        if (action.available > state.claimAvailable){
+        if (action.available > state.claimAvailable && state.claimRequest === true){
           claimWasUpdated = true;
         }
         return {...state, 'claimAmount': (action.available + action.unavailable) / 100000000, 'claimAvailable': action.available, 'claimUnavailable': action.unavailable, claimWasUpdated};
