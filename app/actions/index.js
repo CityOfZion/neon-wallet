@@ -53,14 +53,6 @@ export function resetPrice(){
   }
 }
 
-export function setNetwork(net){
-  const network = net === "MainNet" ? "MainNet" : "TestNet";
-  return {
-    type: types.SET_NETWORK,
-    net: network
-  }
-};
-
 export function setTransactionHistory(transactions){
   return {
     type: types.SET_TRANSACTION_HISTORY,
@@ -114,6 +106,14 @@ export function togglePane(pane){
 };
 
 // metadata
+
+export function setNetwork(net){
+  const network = net === "MainNet" ? "MainNet" : "TestNet";
+  return {
+    type: types.SET_NETWORK,
+    net: network
+  }
+};
 
 export function setBlockHeight(blockHeight){
   return {

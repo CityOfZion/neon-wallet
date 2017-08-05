@@ -88,7 +88,7 @@ class NetworkSwitch extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  net:state.wallet.net,
+  net:state.metadata.net,
   address:state.account.address
 });
 
