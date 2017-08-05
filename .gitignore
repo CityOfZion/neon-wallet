@@ -6,3 +6,9 @@ release-builds/*
 app/dist/*
 app/dist
 .DS_Store
+/.jshintrc
+/.npmignore
+/.project
+/.settings/
+/notes.txt
+/node_modules/
