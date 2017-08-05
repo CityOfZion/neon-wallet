@@ -29,7 +29,7 @@ You can compile the wallet yourself using the instructions in the [readme](../RE
 
 #### Note: For user safety, this build will run on TestNet by default. To switch to MainNet (the real NEO blockchain), toggle the current network by clicking on the network name in the wallet's upper right hand corner. Your public/private key pairs are valid on BOTH MainNet and TestNet
 
-All downloads now on the [release page](https://github.com/CityOfZion/neon-wallet/releases/tag/0.0.2)
+All downloads now on the [release page](https://github.com/CityOfZion/neon-wallet/releases/tag/v0.0.3b)
 
 ## Contributors
 
