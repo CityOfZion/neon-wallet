@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { login, setBalance, resetPrice } from '../actions/index.js';
 import { Link } from 'react-router';
 import CreateWallet from './CreateWallet.js'
-import { getBlockByIndex } from '../wallet/api.js';
 import { getWIFFromPrivateKey } from '../wallet/index.js';
 
 const logo = require('../images/neon-logo2.png');

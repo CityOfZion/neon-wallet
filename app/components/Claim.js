@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { claimAllGAS, sendAssetTransaction } from '../wallet/api.js';
+import { doClaimAllGas, doSendAsset } from '../wallet/api.js';
 import { sendEvent, clearTransactionEvent, setClaimRequest, disableClaim } from '../actions/index.js';
 import ReactTooltip from 'react-tooltip'
 
 const doGasClaim = (dispatch, net, wif, selfAddress, ans) => {
   dispatch(sendEvent(true, "Sending Neo to Yourself..."));
-  sendAssetTransaction(net, selfAddress, wif, "AntShares", ans).then((response) => {
+  doSendAsset(net, selfAddress, wif, "Neo", ans).then((response) => {
     if (response.result === undefined){
       dispatch(sendEvent(false, "Transaction failed!"));
     } else {
@@ -23,7 +23,7 @@ class Claim extends Component {
     console.log(this.props);
     if (this.props.claimRequest === true && this.props.claimWasUpdated == true){
       this.props.dispatch(setClaimRequest(false));
-      claimAllGAS(this.props.net, this.props.wif).then((response) => {
+      doClaimAllGas(this.props.net, this.props.wif).then((response) => {
         if (response.result === true){
           this.props.dispatch(sendEvent(true, "Claim was successful! Your balance will update once the blockchain has processed it."));
           setTimeout(() => this.props.dispatch(disableClaim(false)), 60000);

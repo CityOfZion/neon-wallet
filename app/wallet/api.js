@@ -1,24 +1,12 @@
 import axios from 'axios';
 import { getAccountsFromWIFKey, transferTransaction, signatureData, addContract, claimTransaction } from './index.js';
 
-const apiEndpoint = "http://testnet.antchain.xyz";
-const rpcEndpoint = "http://api.otcgo.cn:20332"; // testnet = 20332
+// hard-code asset ids for NEO and GAS
+export const neoId = "c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b";
+export const gasId = "602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7";
+export const allAssetIds = [neoId, gasId];
 
-const ANS = '\u5c0f\u8681\u80a1';
-const ANC = '\u5c0f\u8681\u5e01';
-
-// hard-code asset ids for ANS and ANC
-export const ansId = "c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b";
-export const ancId = "602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7";
-export const allAssetIds = [ansId, ancId];
-
-// hard-code asset names for ANS and ANC
-const ansName = "小蚁股";
-const ancName = "小蚁币";
-
-const getAns = balance => balance.filter((val) => { return val.unit === ANS })[0];
-const getAnc = balance => balance.filter((val) => { return val.unit === ANC })[0];
-
+// switch between APIs for MainNet and TestNet
 export const getAPIEndpoint = (net) => {
   if (net === "MainNet"){
     return "http://api.wallet.cityofzion.io";
@@ -27,6 +15,7 @@ export const getAPIEndpoint = (net) => {
   }
 };
 
+// return the best performing (highest block + fastest) node RPC
 export const getRPCEndpoint = (net) => {
   const apiEndpoint = getAPIEndpoint(net);
   return axios.get(apiEndpoint + '/v1/network/best_node').then((response) => {
@@ -47,18 +36,16 @@ const queryRPC = (net, method, params, id = 1) => {
   });
 };
 
-export const getBlockByIndex = (net, block) => {
-  return queryRPC(net, "getblock", [block, 1]);
-}
-
-export const getAvailableClaim = (net, address) => {
+// get amounts of available (spent) and unavailable claims
+export const getClaimAmounts = (net, address) => {
   const apiEndpoint = getAPIEndpoint(net);
   return axios.get(apiEndpoint + '/v1/address/claims/' + address).then((res) => {
     return {available: parseInt(res.data.total_claim), unavailable:parseInt(res.data.total_unspent_claim)};
   });
 }
 
-export const claimAllGAS = (net, fromWif) => {
+// do a claim transaction on all available (spent) gas
+export const doClaimAllGas = (net, fromWif) => {
   const apiEndpoint = getAPIEndpoint(net);
   const account = getAccountsFromWIFKey(fromWif)[0];
   // TODO: when fully working replace this with mainnet/testnet switch
@@ -72,13 +59,14 @@ export const claimAllGAS = (net, fromWif) => {
   });
 }
 
+// get Neo and Gas balance for an account
 export const getBalance = (net, address) => {
     const apiEndpoint = getAPIEndpoint(net);
     return axios.get(apiEndpoint + '/v1/address/balance/' + address)
       .then((res) => {
-          const ans = res.data.NEO.balance;
-          const anc = res.data.GAS.balance;
-          return {ANS: ans, ANC: anc, unspent: {ANS: res.data.NEO.unspent, ANC: res.data.GAS.unspent}};
+          const neo = res.data.NEO.balance;
+          const gas = res.data.GAS.balance;
+          return {Neo: neo, Gas: gas, unspent: {Neo: res.data.NEO.unspent, Gas: res.data.GAS.unspent}};
       })
 };
 
@@ -102,6 +90,7 @@ export const getMarketPriceUSD = (amount) => {
   });
 };
 
+// get transaction history for an account
 export const getTransactionHistory = (net, address) => {
   const apiEndpoint = getAPIEndpoint(net);
   return axios.get(apiEndpoint + '/v1/address/history/' + address).then((response) => {
@@ -109,6 +98,7 @@ export const getTransactionHistory = (net, address) => {
   });
 };
 
+// get the current height of the light wallet DB
 export const getWalletDBHeight = (net) => {
   const apiEndpoint = getAPIEndpoint(net);
   return axios.get(apiEndpoint + '/v1/block/height').then((response) => {
@@ -116,24 +106,21 @@ export const getWalletDBHeight = (net) => {
   });
 }
 
-export const sendAssetTransaction = (net, toAddress, fromWif, assetType, amount) => {
+// send an asset to an address
+export const doSendAsset = (net, toAddress, fromWif, assetType, amount) => {
   let assetId, assetName, assetSymbol;
-  if (assetType === "AntShares"){
-    assetId = ansId;
-    assetName = ansName;
-    assetSymbol = 'ANS';
-  } else if (assetType === "AntCoins") {
-    assetId = ancId;
-    assetName = ancName;
-    assetSymbol = 'ANC';
+  if (assetType === "Neo"){
+    assetId = neoId;
+  } else {
+    assetId = gasId;
   }
   const fromAccount = getAccountsFromWIFKey(fromWif)[0];
   return getBalance(net, fromAccount.address).then((response) => {
     const coinsData = {
       "assetid": assetId,
-      "list": response.unspent[assetSymbol],
-      "balance": response[assetSymbol],
-      "name": assetName
+      "list": response.unspent[assetType],
+      "balance": response[assetType],
+      "name": assetType
     }
     const txData = transferTransaction(coinsData, fromAccount.publickeyEncoded, toAddress, amount);
     const sign = signatureData(txData, fromAccount.privatekey);

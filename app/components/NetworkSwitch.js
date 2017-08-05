@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setNetwork } from '../actions/index.js';
-import { getBalance, getTransactionHistory, getMarketPriceUSD, ansId, getAvailableClaim, getWalletDBHeight } from '../wallet/api.js';
+import { getBalance, getTransactionHistory, getMarketPriceUSD, neoId, getClaimAmounts, getWalletDBHeight } from '../wallet/api.js';
 import { setBalance, setMarketPrice, resetPrice, setTransactionHistory, setClaim, setBlockHeight } from '../actions/index.js';
 
 let intervals = {};
@@ -15,8 +15,8 @@ const initiateGetBalance = (dispatch, net, address) => {
   syncAvailableClaim(dispatch, net, address);
   syncBlockHeight(dispatch, net);
   return getBalance(net, address).then((resultBalance) => {
-    return getMarketPriceUSD(resultBalance.ANS).then((resultPrice) => {
-      dispatch(setBalance(resultBalance.ANS, resultBalance.ANC, resultPrice));
+    return getMarketPriceUSD(resultBalance.Neo).then((resultPrice) => {
+      dispatch(setBalance(resultBalance.Neo, resultBalance.Gas, resultPrice));
       return true;
     });
   }).catch((result) => {
@@ -25,7 +25,7 @@ const initiateGetBalance = (dispatch, net, address) => {
 };
 
 const syncAvailableClaim = (dispatch, net, address) => {
-  getAvailableClaim(net, address).then((result) => {
+  getClaimAmounts(net, address).then((result) => {
     //claimAmount / 100000000
     dispatch(setClaim(result.available, result.unavailable));
   });
