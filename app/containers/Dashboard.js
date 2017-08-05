@@ -49,7 +49,7 @@ class Dashboard extends Component {
           <SplitPane className="navSplit" split="horizontal" size="40px" allowResize={false}>
             <div id="navBar">
               <div id="title"><img src={logo} width="60px"/></div>
-              <div id="version"><span className="grey">Version</span><span className="darker">0.0.2</span></div>
+              <div id="version"><span className="grey">Version</span><span className="darker">0.0.3</span></div>
               <div id="height"><span className="grey">Block</span><span className="darker">{this.props.blockHeight}</span></div>
               <NetworkSwitch />
               <Logout />

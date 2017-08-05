@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { syncTransactionHistory } from "../components/NetworkSwitch";
 import { shell } from 'electron';
+import Copy from 'react-icons/lib/md/content-copy';
+import { clipboard } from 'electron';
 
 // TODO: make this a user setting
 const getExplorerLink = (net, txid) => {

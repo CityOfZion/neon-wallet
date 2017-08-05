@@ -28,7 +28,7 @@ class Claim extends Component {
       doClaimAllGas(this.props.net, this.props.wif).then((response) => {
         if (response.result === true){
           this.props.dispatch(sendEvent(true, "Claim was successful! Your balance will update once the blockchain has processed it."));
-          setTimeout(() => this.props.dispatch(disableClaim(false)), 60000);
+          setTimeout(() => this.props.dispatch(disableClaim(false)), 300000);
         } else {
           this.props.dispatch(sendEvent(false, "Claim failed"))
         }

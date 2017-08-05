@@ -57,7 +57,7 @@ const account = (state = {wif: null, address:null, loggedIn: false}, action) => 
 };
 
 // reducer for metadata associated with Neon
-const metadata = (state = {blockHeight: 0, network: 'TestNet'}, action) => {
+const metadata = (state = {blockHeight: 0, network: 'MainNet'}, action) => {
   switch (action.type) {
     case types.SET_HEIGHT:
       return {...state, blockHeight: action.blockHeight };

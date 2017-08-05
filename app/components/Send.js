@@ -13,7 +13,7 @@ let sendAddress, sendAmount, confirmButton;
 const validateForm = (dispatch, neo_balance, gas_balance, asset) => {
   // check for valid address
   if (verifyAddress(sendAddress.value) !== true){
-    dispatch(sendEvent(false, "The address you entered was not valid. No NEO was sent."));
+    dispatch(sendEvent(false, "The address you entered was not valid."));
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
     return false;
   }
@@ -25,12 +25,12 @@ const validateForm = (dispatch, neo_balance, gas_balance, asset) => {
   }
   // check for value greater than account balance
   else if (asset === "NEO" && parseInt(sendAmount.value) > neo_balance){
-    dispatch(sendEvent(false, "You do not have enough NEO to send. No NEO was sent."));
+    dispatch(sendEvent(false, "You do not have enough NEO to send."));
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
     return false;
   }
   else if (asset === "GAS" && parseFloat(sendAmount.value) > gas_balance){
-    dispatch(sendEvent(false, "You do not have enough GAS to send. No GAS was sent."));
+    dispatch(sendEvent(false, "You do not have enough GAS to send."));
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
     return false;
   }
