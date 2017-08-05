@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { sendAssetTransaction } from '../wallet/api.js';
+import { doSendAsset } from '../wallet/api.js';
 import { verifyAddress } from '../wallet/index.js';
 import { sendEvent, clearTransactionEvent, toggleAsset, togglePane } from '../actions/index.js';
 import SplitPane from 'react-split-pane';
@@ -9,55 +9,77 @@ import ReactTooltip from 'react-tooltip'
 
 let sendAddress, sendAmount, confirmButton;
 
-const afterSend = (dispatch) => {
-  dispatch(togglePane("confirmPane"));
-  setTimeout(() => dispatch(clearTransactionEvent()), 5000);
-  sendAddress.value = '';
-  sendAmount.value = '';
-  confirmButton.blur();
-}
-
-const sendTransaction = (dispatch, net, wif, asset, neo_balance, gas_balance) => {
-  let assetSwap;
-  if (asset === "NEO"){
-    assetSwap = "AntShares";
-  } else {
-    assetSwap = "AntCoins";
-  }
-  dispatch(sendEvent(true, "Processing..."));
-  if (verifyAddress(sendAddress.value) !== true){
-    dispatch(sendEvent(false, "The address you entered was not valid. No NEO was sent."));
+// form validators for input fields
+const validateForm = (dispatch, neo_balance, gas_balance, asset) => {
+  // check for valid address
+  try {
+    if (verifyAddress(sendAddress.value) !== true){
+      dispatch(sendEvent(false, "The address you entered was not valid."));
+      setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+      return false;
+    }
+  } catch (e) {
+    dispatch(sendEvent(false, "The address you entered was not valid."));
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+    return false;
   }
-  else if (asset === "NEO" && parseFloat(sendAmount.value) !== parseInt(sendAmount.value)){
+  // check for fractional neo
+  if (asset === "Neo" && parseFloat(sendAmount.value) !== parseInt(sendAmount.value)){
     dispatch(sendEvent(false, "You cannot send fractional amounts of Neo."));
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+    return false;
   }
-  else if (asset === "NEO" && parseInt(sendAmount.value) > neo_balance){
-    dispatch(sendEvent(false, "You do not have enough NEO to send. No NEO was sent."));
+  // check for value greater than account balance
+  else if (asset === "Neo" && parseInt(sendAmount.value) > neo_balance){
+    dispatch(sendEvent(false, "You do not have enough NEO to send."));
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+    return false;
+  }
+  else if (asset === "Gas" && parseFloat(sendAmount.value) > gas_balance){
+    dispatch(sendEvent(false, "You do not have enough GAS to send."));
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+    return false;
+  }
+  // check for negative asset
+  else if (parseFloat(sendAmount.value) < 0){
+    dispatch(sendEvent(false, "You cannot send negative amounts of an asset."));
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
   }
-  else if (asset === "GAS" && parseFloat(sendAmount.value) > gas_balance){
-    dispatch(sendEvent(false, "You do not have enough GAS to send. No GAS was sent."));
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+  return true;
+}
+
+// open confirm pane and validate fields
+const openAndValidate = (dispatch, neo_balance, gas_balance, asset) => {
+  if (validateForm(dispatch, neo_balance, gas_balance, asset) === true){
+    dispatch(togglePane("confirmPane"));
   }
-  else {
-    sendAssetTransaction(net, sendAddress.value, wif, assetSwap, sendAmount.value).then((response) => {
+}
+
+// perform send transaction
+const sendTransaction = (dispatch, net, wif, asset, neo_balance, gas_balance) => {
+  // validate fields again for good measure (might have changed?)
+  if (validateForm(dispatch, neo_balance, gas_balance, asset) === true){
+    dispatch(sendEvent(true, "Processing..."));
+    doSendAsset(net, sendAddress.value, wif, asset, sendAmount.value).then((response) => {
       if (response.result === undefined){
         dispatch(sendEvent(false, "Transaction failed!"));
       } else {
         dispatch(sendEvent(true, "Transaction complete! Your balance will automatically update when the blockchain has processed it."));
       }
       setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+    }).catch((e) => {
+      dispatch(sendEvent(false, "Transaction failed!"));
+      setTimeout(() => dispatch(clearTransactionEvent()), 5000);
     });
   }
+  // close confirm pane and clear fields
   dispatch(togglePane("confirmPane"));
   sendAddress.value = '';
   sendAmount.value = '';
   confirmButton.blur();
 };
 
-let Send = ({dispatch, wif, status, ans, anc, net, confirmPane, selectedAsset}) => {
+let Send = ({dispatch, wif, status, neo, gas, net, confirmPane, selectedAsset}) => {
   let confirmPaneClosed;
   if (confirmPane){
     confirmPaneClosed = "100%";
@@ -76,9 +98,9 @@ let Send = ({dispatch, wif, status, ans, anc, net, confirmPane, selectedAsset}) 
         <ReactTooltip class="solidTip" id="assetTip" place="bottom" type="dark" effect="solid">
           <span>Toggle NEO / GAS</span>
         </ReactTooltip>
-      <button id="doSend" onClick={() => dispatch(togglePane("confirmPane"))}>Send Asset</button>
+      <button id="doSend" onClick={() => openAndValidate(dispatch, neo, gas, selectedAsset)}>Send Asset</button>
     </div>
-    <div id="confirmPane" onClick={() => sendTransaction(dispatch, net, wif, selectedAsset, ans, anc)}>
+    <div id="confirmPane" onClick={() => sendTransaction(dispatch, net, wif, selectedAsset, neo, gas)}>
       <button ref={node => {confirmButton = node;}}>Confirm Transaction</button>
     </div>
   </SplitPane>);
@@ -86,9 +108,9 @@ let Send = ({dispatch, wif, status, ans, anc, net, confirmPane, selectedAsset}) 
 
 const mapStateToProps = (state) => ({
   wif: state.account.wif,
-  net: state.wallet.net,
-  ans: state.wallet.ANS,
-  anc: state.wallet.ANC,
+  net: state.metadata.network,
+  neo: state.wallet.Neo,
+  gas: state.wallet.Gas,
   selectedAsset: state.transactionState.selectedAsset,
   confirmPane: state.dashboard.confirmPane,
 });

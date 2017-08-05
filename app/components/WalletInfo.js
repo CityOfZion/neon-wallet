@@ -9,8 +9,7 @@ import { clipboard } from 'electron';
 import Copy from 'react-icons/lib/md/content-copy';
 import ReactTooltip from 'react-tooltip'
 
-// need handlers on these as otherwise the interval is not cleared when switching between accounts
-
+// force sync with balance data
 const refreshBalance = (dispatch, net, address) => {
   dispatch(sendEvent(true, "Refreshing..."));
   initiateGetBalance(dispatch, net, address).then((response) => {
@@ -26,11 +25,6 @@ class WalletInfo extends Component {
     QRCode.toCanvas(this.canvas, this.props.address, { version: 5 }, (err) => {
       if (err) console.log(err)
     });
-    // intervals.balance = setInterval(() => initiateGetBalance(this.props.dispatch, this.props.net, this.props.address), 1000);
-  }
-
-  componentDidUpdate = () => {
-
   }
 
   render = () => {
@@ -48,11 +42,11 @@ class WalletInfo extends Component {
         <div id="balance">
           <div className="split">
             <div className="label">NEO</div>
-            <div className="amountBig">{this.props.ans}</div>
+            <div className="amountBig">{this.props.neo}</div>
           </div>
           <div className="split">
             <div className="label">GAS</div>
-            <div className="amountBig">{this.props.anc < 0.001 ? 0 : this.props.anc.toPrecision(5)}</div>
+            <div className="amountBig">{this.props.gas < 0.001 ? 0 : this.props.gas.toPrecision(5)}</div>
           </div>
           <div className="fiat">US {this.props.price}</div>
           <div onClick={() => refreshBalance(this.props.dispatch, this.props.net, this.props.address)}>
@@ -71,10 +65,10 @@ class WalletInfo extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  ans: state.wallet.ANS,
-  anc: state.wallet.ANC,
+  neo: state.wallet.Neo,
+  gas: state.wallet.Gas,
   address: state.account.address,
-  net: state.wallet.net,
+  net: state.metadata.network,
   price: state.wallet.price
 });
 

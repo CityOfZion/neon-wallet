@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setNetwork } from '../actions/index.js';
-import { getBalance, getTransactionHistory, getMarketPriceUSD, ansId, getAvailableClaim, getWalletDBHeight } from '../wallet/api.js';
+import { getBalance, getTransactionHistory, getMarketPriceUSD, neoId, getClaimAmounts, getWalletDBHeight } from '../wallet/api.js';
 import { setBalance, setMarketPrice, resetPrice, setTransactionHistory, setClaim, setBlockHeight } from '../actions/index.js';
 
 let intervals = {};
@@ -15,8 +15,8 @@ const initiateGetBalance = (dispatch, net, address) => {
   syncAvailableClaim(dispatch, net, address);
   syncBlockHeight(dispatch, net);
   return getBalance(net, address).then((resultBalance) => {
-    return getMarketPriceUSD(resultBalance.ANS).then((resultPrice) => {
-      dispatch(setBalance(resultBalance.ANS, resultBalance.ANC, resultPrice));
+    return getMarketPriceUSD(resultBalance.Neo).then((resultPrice) => {
+      dispatch(setBalance(resultBalance.Neo, resultBalance.Gas, resultPrice));
       return true;
     });
   }).catch((result) => {
@@ -25,8 +25,9 @@ const initiateGetBalance = (dispatch, net, address) => {
 };
 
 const syncAvailableClaim = (dispatch, net, address) => {
-  getAvailableClaim(net, address).then((claimAmount) => {
-    dispatch(setClaim(claimAmount / 100000000));
+  getClaimAmounts(net, address).then((result) => {
+    //claimAmount / 100000000
+    dispatch(setClaim(result.available, result.unavailable));
   });
 }
 
@@ -52,6 +53,7 @@ const syncTransactionHistory = (dispatch, net, address) => {
 };
 
 const resetBalanceSync = (dispatch, net, address) => {
+  console.log("sync", net);
   if (intervals.balance !== undefined){
     clearInterval(intervals.balance);
   }
@@ -80,15 +82,16 @@ class NetworkSwitch extends Component {
   }
 
   render = () =>
-     <div id="network">
-       <span className="transparent">Running on</span>
-       <span className="netName" onClick={() => toggleNet(this.props.dispatch, this.props.net, this.props.address)}>{this.props.net}</span>
-     </div>;
+    <div id="network">
+      <span className="transparent">Running on</span>
+      <span className="netName" onClick={() => toggleNet(this.props.dispatch, this.props.net, this.props.address)}>{this.props.net}</span>
+    </div>;
+
 }
 
 const mapStateToProps = (state) => ({
-  net:state.wallet.net,
-  address:state.account.address
+  net: state.metadata.network,
+  address: state.account.address
 });
 
 NetworkSwitch = connect(mapStateToProps)(NetworkSwitch);

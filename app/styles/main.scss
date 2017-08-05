@@ -9,6 +9,7 @@ $dark-input-color: #E8F4E5;
 $bright-button: #76B466;
 $bright-button-hover: #8CD678;
 $secondary-background: #E8F4E5;
+$spacer-color: #efefef;
 
 // text
 $default-text: #333;
@@ -40,6 +41,10 @@ button:hover{
 button a{
 	text-decoration: none;
 	color:inherit;
+}
+
+button.disabled{
+	opacity:.6;
 }
 
 #newWallet{
@@ -132,7 +137,7 @@ button a{
 	.spacer{
 		width:84%;
 		margin:0px 8%;
-		border-top:2px solid $secondary-background;
+		border-top:2px solid $spacer-color;
 	}
 	#title{
 		font-size:1em;
@@ -354,7 +359,7 @@ button a{
 		.headerSpacer{
 			width:84%;
 			margin:15px 8%;
-			border-top:3px solid $secondary-background;
+			border-top:3px solid $spacer-color;
 		}
 	}
 	ul#transactionList{
@@ -365,7 +370,7 @@ button a{
 		li{
 			list-style-type: none;
 			font-weight:200;
-			border-bottom:1px solid $secondary-background;
+			border-bottom:1px solid $spacer-color;
 			padding-bottom:10px;
 			margin-bottom:10px;
 			.txid{
@@ -448,7 +453,7 @@ button a{
 	// border-bottom:1.5px solid $secondary-background;
 }
 .vertical.Pane1{
-	border-right:1.5px solid $secondary-background;
+	border-right:1.5px solid $spacer-color;
 }
 
 // TODO: tool-tip seems broken

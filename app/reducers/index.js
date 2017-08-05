@@ -3,7 +3,8 @@ import { combineReducers } from 'redux';
 import { getAccountsFromWIFKey, generatePrivateKey, getWIFFromPrivateKey, addAccountToLocalStorage, getLocalStorageData } from '../wallet/index.js';
 import * as types from '../actions/types';
 
-const transactionState = (state = {'success': null, message: null, selectedAsset: 'NEO'}, action) => {
+// reducer for state used when performing a transaction
+const transactionState = (state = {success: null, message: null, selectedAsset: 'Neo'}, action) => {
   switch (action.type) {
       case types.SEND_TRANSACTION:
           return {...state, success:action.success, message: action.message};
@@ -11,10 +12,10 @@ const transactionState = (state = {'success': null, message: null, selectedAsset
           return {...state, success: null, message: null};
       case types.TOGGLE_ASSET:
           let asset;
-          if (state.selectedAsset == "NEO"){
-            asset = "GAS";
+          if (state.selectedAsset == "Neo"){
+            asset = "Gas";
           } else {
-            asset = "NEO";
+            asset = "Neo";
           }
           return {...state, success: null, selectedAsset: asset};
       default:
@@ -22,7 +23,8 @@ const transactionState = (state = {'success': null, message: null, selectedAsset
   }
 };
 
-const generateWallet = (state = {'wif': null, 'address':null}, action) => {
+// reducer used for state necessary to generating a wallet
+const generateWallet = (state = {wif: null, address:null}, action) => {
     switch (action.type) {
         case types.NEW_WALLET:
             const newPrivateKey = generatePrivateKey();
@@ -34,7 +36,8 @@ const generateWallet = (state = {'wif': null, 'address':null}, action) => {
     }
 };
 
-const account = (state = {'wif': null, 'address':null, 'loggedIn': false}, action) => {
+// reducer that manages account state (account now = private key)
+const account = (state = {wif: null, address:null, loggedIn: false}, action) => {
     switch (action.type) {
         case types.LOGIN:
             let loadAccount;
@@ -53,36 +56,25 @@ const account = (state = {'wif': null, 'address':null, 'loggedIn': false}, actio
     }
 };
 
-const metadata = (state = {blockHeight: 0}, action) => {
+// reducer for metadata associated with Neon
+const metadata = (state = {blockHeight: 0, network: 'MainNet'}, action) => {
   switch (action.type) {
     case types.SET_HEIGHT:
-      return { blockHeight: action.blockHeight };
+      return {...state, blockHeight: action.blockHeight };
+    case types.SET_NETWORK:
+        return {...state, network: action.net};
     default:
       return state;
   }
 };
 
-const wallet = (state = {'ANS': 0, 'ANC': 0, 'net': 'TestNet', 'transactions': [], 'price': '--', claimAmount: 0}, action) => {
+// reducer for wallet account balance
+const wallet = (state = {Neo: 0, Gas: 0, transactions: [], price: '--'}, action) => {
     switch (action.type) {
         case types.SET_BALANCE:
-            let ansValue, ancValue;
-            if (action.ANS !== undefined){
-              ansValue = action.ANS;
-            } else {
-              ansValue = 0;
-            }
-            if (action.ANC !== undefined){
-              ancValue = action.ANC;
-            } else {
-              ancValue = 0;
-            }
-            return {...state, 'ANS': ansValue, 'ANC': ancValue, 'price': action.price };
+            return {...state, 'Neo': action.Neo, 'Gas': action.Gas, 'price': action.price };
         case types.RESET_PRICE:
             return {...state, 'price': '--'};
-        case types.SET_CLAIM:
-            return {...state, 'claimAmount': action.amount};
-        case types.SET_NETWORK:
-            return {...state, net:action.net};
         case types.SET_MARKET_PRICE:  //current market price action type
             let currentPrice;
             if (action.price !== undefined){
@@ -98,6 +90,25 @@ const wallet = (state = {'ANS': 0, 'ANC': 0, 'net': 'TestNet', 'transactions': [
     }
 };
 
+// state for managing claim data
+const claimState = (state = {claimRequest: false, claimAmount: 0, claimAvailable: 0, claimUnavailable: 0, claimWasUpdated: false, disableClaimButton: false}, action) => {
+  switch (action.type) {
+    case types.SET_CLAIM_REQUEST:
+        return {...state, 'claimRequest': action.status};
+    case types.SET_CLAIM:
+        let claimWasUpdated = false;
+        if (action.available > state.claimAvailable && state.claimRequest === true){
+          claimWasUpdated = true;
+        }
+        return {...state, 'claimAmount': (action.available + action.unavailable) / 100000000, 'claimAvailable': action.available, 'claimUnavailable': action.unavailable, claimWasUpdated};
+    case types.DISABLE_CLAIM:
+        return {...state, disableClaimButton: action.status};
+    default:
+        return state;
+  }
+};
+
+// reducer for UI state
 const dashboard = (state = {sendPane: true, confirmPane: true}, action) => {
   switch (action.type) {
       case types.TOGGLE_SEND_PANE:
@@ -125,7 +136,8 @@ const rootReducer = combineReducers({
     transactionState,
     dashboard,
     storage,
-    metadata
+    metadata,
+    claimState
 });
 
 export default rootReducer;

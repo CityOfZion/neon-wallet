@@ -6,6 +6,7 @@ import CreateWallet from './CreateWallet.js'
 import { getBlockByIndex } from '../wallet/api.js';
 import { addAccountToLocalStorage, clearLocalStorage, getWIFFromPrivateKey } from '../wallet/index.js'
 import SavedWallets from './SavedWallets.js'
+const logo = require('../images/neon-logo2.png');
 
 let input_wif;
 

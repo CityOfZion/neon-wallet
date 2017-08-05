@@ -18,24 +18,17 @@ export function logout(){
 
 // wallet events
 
-export function setClaim(amount){
-  return {
-    type: types.SET_CLAIM,
-    amount: amount
-  }
-}
-
 export function newWallet(){
   return {
     type: types.NEW_WALLET,
   }
 }
 
-export function setBalance(ans, anc, price){
+export function setBalance(neo, gas, price){
   return {
     type: types.SET_BALANCE,
-    ANS: ans,
-    ANC: anc,
+    Neo: neo,
+    Gas: gas,
     price: price
   }
 }
@@ -53,18 +46,34 @@ export function resetPrice(){
   }
 }
 
-export function setNetwork(net){
-  const network = net === "MainNet" ? "MainNet" : "TestNet";
-  return {
-    type: types.SET_NETWORK,
-    net: network
-  }
-};
-
 export function setTransactionHistory(transactions){
   return {
     type: types.SET_TRANSACTION_HISTORY,
     transactions
+  }
+};
+
+// claim events
+
+export function setClaim(available, unavailable){
+  return {
+    type: types.SET_CLAIM,
+    available,
+    unavailable
+  }
+}
+
+export function setClaimRequest(status){
+  return {
+    type: types.SET_CLAIM_REQUEST,
+    status
+  }
+};
+
+export function disableClaim(status){
+  return {
+    type: types.DISABLE_CLAIM,
+    status
   }
 };
 
@@ -89,6 +98,7 @@ export function toggleAsset(){
     type: types.TOGGLE_ASSET,
   }
 };
+
 
 // dashboard
 
@@ -124,6 +134,14 @@ export function getAccounts(){
   }
 }
 // metadata
+
+export function setNetwork(net){
+  const network = net === "MainNet" ? "MainNet" : "TestNet";
+  return {
+    type: types.SET_NETWORK,
+    net: network
+  }
+};
 
 export function setBlockHeight(blockHeight){
   return {
