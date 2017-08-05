@@ -12,24 +12,30 @@ let sendAddress, sendAmount, confirmButton;
 // form validators for input fields
 const validateForm = (dispatch, neo_balance, gas_balance, asset) => {
   // check for valid address
-  if (verifyAddress(sendAddress.value) !== true){
+  try {
+    if (verifyAddress(sendAddress.value) !== true){
+      dispatch(sendEvent(false, "The address you entered was not valid."));
+      setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+      return false;
+    }
+  } catch (e) {
     dispatch(sendEvent(false, "The address you entered was not valid."));
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
     return false;
   }
   // check for fractional neo
-  else if (asset === "NEO" && parseFloat(sendAmount.value) !== parseInt(sendAmount.value)){
+  if (asset === "Neo" && parseFloat(sendAmount.value) !== parseInt(sendAmount.value)){
     dispatch(sendEvent(false, "You cannot send fractional amounts of Neo."));
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
     return false;
   }
   // check for value greater than account balance
-  else if (asset === "NEO" && parseInt(sendAmount.value) > neo_balance){
+  else if (asset === "Neo" && parseInt(sendAmount.value) > neo_balance){
     dispatch(sendEvent(false, "You do not have enough NEO to send."));
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
     return false;
   }
-  else if (asset === "GAS" && parseFloat(sendAmount.value) > gas_balance){
+  else if (asset === "Gas" && parseFloat(sendAmount.value) > gas_balance){
     dispatch(sendEvent(false, "You do not have enough GAS to send."));
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
     return false;
@@ -60,6 +66,9 @@ const sendTransaction = (dispatch, net, wif, asset, neo_balance, gas_balance) =>
       } else {
         dispatch(sendEvent(true, "Transaction complete! Your balance will automatically update when the blockchain has processed it."));
       }
+      setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+    }).catch((e) => {
+      dispatch(sendEvent(false, "Transaction failed!"));
       setTimeout(() => dispatch(clearTransactionEvent()), 5000);
     });
   }
