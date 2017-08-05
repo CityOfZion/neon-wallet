@@ -1,6 +1,6 @@
 import { routerReducer as routing } from 'react-router-redux';
 import { combineReducers } from 'redux';
-import { getAccountsFromWIFKey, generatePrivateKey, getWIFFromPrivateKey } from '../wallet/index.js';
+import { getAccountsFromWIFKey, generatePrivateKey, getWIFFromPrivateKey, addAccountToLocalStorage, getLocalStorageData } from '../wallet/index.js';
 import * as types from '../actions/types';
 
 // reducer for state used when performing a transaction
@@ -120,12 +120,22 @@ const dashboard = (state = {sendPane: true, confirmPane: true}, action) => {
   }
 };
 
+const storage = (state = {accounts: {}}, action) => {
+  switch (action.type) {
+    case types.GET_STORAGE_DATA:
+      return {...state, accounts: action.payload}
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
     account,
     generateWallet,
     wallet,
     transactionState,
     dashboard,
+    storage,
     metadata,
     claimState
 });

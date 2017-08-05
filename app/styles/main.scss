@@ -396,6 +396,34 @@ button.disabled{
 	}
 }
 
+#savedWallets {
+	.row {
+		width: 100%;
+		padding: 15px;
+		margin: 0 auto;
+		ul {
+			 margin: 10px auto 10px auto;
+    		text-align: left;
+			list-style-type: none;
+			li { 
+				display: inline-block;
+    			vertical-align: top;
+		.walletCard {
+			color:$button-text;
+			background-color:$default-button;
+			width: 125px;
+			height: 125px;
+			margin: 10px;
+			padding: 10px;
+			cursor: pointer;
+		}
+		.walletCard:hover {
+			background-color:$default-button-hover;
+		}
+	}
+	}
+	}
+}
 .leftSplit{
 	.Pane1{
 		background-color:$default-button;

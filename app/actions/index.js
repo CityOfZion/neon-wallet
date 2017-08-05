@@ -1,4 +1,5 @@
 import * as types from './types';
+import { addAccountToLocalStorage, getLocalStorageData } from '../wallet/index.js'
 
 // account events
 
@@ -108,6 +109,30 @@ export function togglePane(pane){
   }
 };
 
+//local storage
+
+export function addAccount(wif){
+  const request = addAccountToLocalStorage(wif);
+  const getStorage = getLocalStorageData();
+
+  return (dispatch) => {
+    request.then(() => {
+      return getLocalStorageData().then((data) => {
+        dispatch({type: 'GET_STORAGE_DATA', payload: data})
+      })
+    })
+  }
+}
+
+export function getAccounts(){
+  const request = getLocalStorageData();
+
+  return (dispatch) => {
+    request.then((data) => {
+      dispatch({ type: 'GET_STORAGE_DATA', payload: data})
+    })
+  }
+}
 // metadata
 
 export function setNetwork(net){
