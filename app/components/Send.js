@@ -9,39 +9,58 @@ import ReactTooltip from 'react-tooltip'
 
 let sendAddress, sendAmount, confirmButton;
 
-const afterSend = (dispatch) => {
-  dispatch(togglePane("confirmPane"));
-  setTimeout(() => dispatch(clearTransactionEvent()), 5000);
-  sendAddress.value = '';
-  sendAmount.value = '';
-  confirmButton.blur();
+// form validators for input fields
+const validateForm = (dispatch, neo_balance, gas_balance, asset) => {
+  // check for valid address
+  if (verifyAddress(sendAddress.value) !== true){
+    dispatch(sendEvent(false, "The address you entered was not valid. No NEO was sent."));
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+    return false;
+  }
+  // check for fractional neo
+  else if (asset === "NEO" && parseFloat(sendAmount.value) !== parseInt(sendAmount.value)){
+    dispatch(sendEvent(false, "You cannot send fractional amounts of Neo."));
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+    return false;
+  }
+  // check for value greater than account balance
+  else if (asset === "NEO" && parseInt(sendAmount.value) > neo_balance){
+    dispatch(sendEvent(false, "You do not have enough NEO to send. No NEO was sent."));
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+    return false;
+  }
+  else if (asset === "GAS" && parseFloat(sendAmount.value) > gas_balance){
+    dispatch(sendEvent(false, "You do not have enough GAS to send. No GAS was sent."));
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+    return false;
+  }
+  // check for negative asset
+  else if (parseFloat(sendAmount.value) < 0){
+    dispatch(sendEvent(false, "You cannot send negative amounts of an asset."));
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+  }
+  return true;
 }
 
+// open confirm pane and validate fields
+const openAndValidate = (dispatch, neo_balance, gas_balance, asset) => {
+  if (validateForm(dispatch, neo_balance, gas_balance, asset) === true){
+    dispatch(togglePane("confirmPane"));
+  }
+}
+
+// perform send transaction
 const sendTransaction = (dispatch, net, wif, asset, neo_balance, gas_balance) => {
+  // TODO: remove
   let assetSwap;
   if (asset === "NEO"){
     assetSwap = "AntShares";
   } else {
     assetSwap = "AntCoins";
   }
-  dispatch(sendEvent(true, "Processing..."));
-  if (verifyAddress(sendAddress.value) !== true){
-    dispatch(sendEvent(false, "The address you entered was not valid. No NEO was sent."));
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
-  }
-  else if (asset === "NEO" && parseFloat(sendAmount.value) !== parseInt(sendAmount.value)){
-    dispatch(sendEvent(false, "You cannot send fractional amounts of Neo."));
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
-  }
-  else if (asset === "NEO" && parseInt(sendAmount.value) > neo_balance){
-    dispatch(sendEvent(false, "You do not have enough NEO to send. No NEO was sent."));
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
-  }
-  else if (asset === "GAS" && parseFloat(sendAmount.value) > gas_balance){
-    dispatch(sendEvent(false, "You do not have enough GAS to send. No GAS was sent."));
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
-  }
-  else {
+  // validate fields again for good measure (might have changed?)
+  if (validateForm(dispatch, neo_balance, gas_balance, asset) === true){
+    dispatch(sendEvent(true, "Processing..."));
     sendAssetTransaction(net, sendAddress.value, wif, assetSwap, sendAmount.value).then((response) => {
       if (response.result === undefined){
         dispatch(sendEvent(false, "Transaction failed!"));
@@ -51,6 +70,7 @@ const sendTransaction = (dispatch, net, wif, asset, neo_balance, gas_balance) =>
       setTimeout(() => dispatch(clearTransactionEvent()), 5000);
     });
   }
+  // close confirm pane and clear fields
   dispatch(togglePane("confirmPane"));
   sendAddress.value = '';
   sendAmount.value = '';
@@ -76,7 +96,7 @@ let Send = ({dispatch, wif, status, ans, anc, net, confirmPane, selectedAsset}) 
         <ReactTooltip class="solidTip" id="assetTip" place="bottom" type="dark" effect="solid">
           <span>Toggle NEO / GAS</span>
         </ReactTooltip>
-      <button id="doSend" onClick={() => dispatch(togglePane("confirmPane"))}>Send Asset</button>
+      <button id="doSend" onClick={() => openAndValidate(dispatch, ans, anc, selectedAsset)}>Send Asset</button>
     </div>
     <div id="confirmPane" onClick={() => sendTransaction(dispatch, net, wif, selectedAsset, ans, anc)}>
       <button ref={node => {confirmButton = node;}}>Confirm Transaction</button>

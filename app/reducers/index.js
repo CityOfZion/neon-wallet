@@ -62,7 +62,7 @@ const metadata = (state = {blockHeight: 0}, action) => {
   }
 };
 
-const wallet = (state = {'ANS': 0, 'ANC': 0, 'net': 'TestNet', 'transactions': [], 'price': '--', claimAmount: 0}, action) => {
+const wallet = (state = {'ANS': 0, 'ANC': 0, 'net': 'TestNet', 'transactions': [], 'price': '--', claimAmount: 0, claimAvailable: 0, claimUnavailable: 0, claimRequest: false, claimWasUpdated: false, disableClaimButton: false}, action) => {
     switch (action.type) {
         case types.SET_BALANCE:
             let ansValue, ancValue;
@@ -80,7 +80,16 @@ const wallet = (state = {'ANS': 0, 'ANC': 0, 'net': 'TestNet', 'transactions': [
         case types.RESET_PRICE:
             return {...state, 'price': '--'};
         case types.SET_CLAIM:
-            return {...state, 'claimAmount': action.amount};
+          console.log(action);
+            let claimWasUpdated = false;
+            if (action.available > state.claimAvailable){
+              claimWasUpdated = true;
+            }
+            return {...state, 'claimAmount': (action.available + action.unavailable) / 100000000, 'claimAvailable': action.available, 'claimUnavailable': action.unavailable, claimWasUpdated};
+        case types.SET_CLAIM_REQUEST:
+            return {...state, 'claimRequest': action.status};
+        case types.DISABLE_CLAIM:
+            return {...state, disableClaimButton: action.status};
         case types.SET_NETWORK:
             return {...state, net:action.net};
         case types.SET_MARKET_PRICE:  //current market price action type

@@ -25,8 +25,9 @@ const initiateGetBalance = (dispatch, net, address) => {
 };
 
 const syncAvailableClaim = (dispatch, net, address) => {
-  getAvailableClaim(net, address).then((claimAmount) => {
-    dispatch(setClaim(claimAmount / 100000000));
+  getAvailableClaim(net, address).then((result) => {
+    //claimAmount / 100000000
+    dispatch(setClaim(result.available, result.unavailable));
   });
 }
 

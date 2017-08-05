@@ -10,6 +10,9 @@ export const SET_NETWORK = 'SET_NETWORK';
 export const SET_MARKET_PRICE = 'SET_MARKET_PRICE';
 export const RESET_PRICE = 'RESET_PRICE';
 export const SET_TRANSACTION_HISTORY = 'SET_TRANSACTION_HISTORY';
+export const SET_CLAIM_REQUEST = 'SET_CLAIM_REQUEST';
+export const DISABLE_CLAIM = 'DISABLE_CLAIM';
+
 
 // transaction events
 export const SEND_TRANSACTION = 'SEND_TRANSACTION';

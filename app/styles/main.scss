@@ -42,6 +42,10 @@ button a{
 	color:inherit;
 }
 
+button.disabled{
+	opacity:.6;
+}
+
 #newWallet{
 	width:650px;
 	margin:20% auto 0px auto;

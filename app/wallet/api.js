@@ -54,7 +54,7 @@ export const getBlockByIndex = (net, block) => {
 export const getAvailableClaim = (net, address) => {
   const apiEndpoint = getAPIEndpoint(net);
   return axios.get(apiEndpoint + '/v1/address/claims/' + address).then((res) => {
-    return parseInt(res.data.total_claim);
+    return {available: parseInt(res.data.total_claim), unavailable:parseInt(res.data.total_unspent_claim)};
   });
 }
 

@@ -17,10 +17,11 @@ export function logout(){
 
 // wallet events
 
-export function setClaim(amount){
+export function setClaim(available, unavailable){
   return {
     type: types.SET_CLAIM,
-    amount: amount
+    available,
+    unavailable
   }
 }
 
@@ -64,6 +65,20 @@ export function setTransactionHistory(transactions){
   return {
     type: types.SET_TRANSACTION_HISTORY,
     transactions
+  }
+};
+
+export function setClaimRequest(status){
+  return {
+    type: types.SET_CLAIM_REQUEST,
+    status
+  }
+};
+
+export function disableClaim(status){
+  return {
+    type: types.DISABLE_CLAIM,
+    status
   }
 };
 
