@@ -4,6 +4,8 @@ import { doClaimAllGas, doSendAsset } from '../wallet/api.js';
 import { sendEvent, clearTransactionEvent, setClaimRequest, disableClaim } from '../actions/index.js';
 import ReactTooltip from 'react-tooltip'
 
+// To initiate claim, first send all Neo to own address, the set claimRequest state
+// When new claims are available, this will trigger the claim
 const doGasClaim = (dispatch, net, wif, selfAddress, ans) => {
   dispatch(sendEvent(true, "Sending Neo to Yourself..."));
   doSendAsset(net, selfAddress, wif, "Neo", ans).then((response) => {
@@ -20,7 +22,7 @@ const doGasClaim = (dispatch, net, wif, selfAddress, ans) => {
 class Claim extends Component {
 
   componentDidUpdate = () => {
-    console.log(this.props);
+    // if we requested a claim and new claims are available, do claim
     if (this.props.claimRequest === true && this.props.claimWasUpdated == true){
       this.props.dispatch(setClaimRequest(false));
       doClaimAllGas(this.props.net, this.props.wif).then((response) => {
@@ -37,7 +39,7 @@ class Claim extends Component {
 
   render = () => {
     let renderButton;
-    const doClaim = () => doGasClaim(this.props.dispatch, this.props.net, this.props.wif, this.props.address, this.props.ans);
+    const doClaim = () => doGasClaim(this.props.dispatch, this.props.net, this.props.wif, this.props.address, this.props.neo);
     if (this.props.disableClaimButton === false){
       renderButton = <button onClick={doClaim}>Claim {this.props.claimAmount} GAS</button>;
     } else {
@@ -54,14 +56,14 @@ class Claim extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  claimAmount: state.wallet.claimAmount,
-  claimRequest: state.wallet.claimRequest,
-  claimWasUpdated: state.wallet.claimWasUpdated,
-  disableClaimButton: state.wallet.disableClaimButton,
+  claimAmount: state.claimState.claimAmount,
+  claimRequest: state.claimState.claimRequest,
+  claimWasUpdated: state.claimState.claimWasUpdated,
+  disableClaimButton: state.claimState.disableClaimButton,
   wif: state.account.wif,
   address: state.account.address,
-  net: state.wallet.net,
-  ans: state.wallet.ANS
+  net: state.metadata.network,
+  neo: state.wallet.Neo
 });
 
 Claim = connect(mapStateToProps)(Claim);

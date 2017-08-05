@@ -53,6 +53,7 @@ const syncTransactionHistory = (dispatch, net, address) => {
 };
 
 const resetBalanceSync = (dispatch, net, address) => {
+  console.log("sync", net);
   if (intervals.balance !== undefined){
     clearInterval(intervals.balance);
   }
@@ -81,15 +82,16 @@ class NetworkSwitch extends Component {
   }
 
   render = () =>
-     <div id="network">
-       <span className="transparent">Running on</span>
-       <span className="netName" onClick={() => toggleNet(this.props.dispatch, this.props.net, this.props.address)}>{this.props.net}</span>
-     </div>;
+    <div id="network">
+      <span className="transparent">Running on</span>
+      <span className="netName" onClick={() => toggleNet(this.props.dispatch, this.props.net, this.props.address)}>{this.props.net}</span>
+    </div>;
+
 }
 
 const mapStateToProps = (state) => ({
-  net:state.metadata.net,
-  address:state.account.address
+  net: state.metadata.network,
+  address: state.account.address
 });
 
 NetworkSwitch = connect(mapStateToProps)(NetworkSwitch);

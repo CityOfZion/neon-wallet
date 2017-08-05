@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { sendAssetTransaction } from '../wallet/api.js';
+import { doSendAsset } from '../wallet/api.js';
 import { verifyAddress } from '../wallet/index.js';
 import { sendEvent, clearTransactionEvent, toggleAsset, togglePane } from '../actions/index.js';
 import SplitPane from 'react-split-pane';
@@ -51,17 +51,10 @@ const openAndValidate = (dispatch, neo_balance, gas_balance, asset) => {
 
 // perform send transaction
 const sendTransaction = (dispatch, net, wif, asset, neo_balance, gas_balance) => {
-  // TODO: remove
-  let assetSwap;
-  if (asset === "NEO"){
-    assetSwap = "AntShares";
-  } else {
-    assetSwap = "AntCoins";
-  }
   // validate fields again for good measure (might have changed?)
   if (validateForm(dispatch, neo_balance, gas_balance, asset) === true){
     dispatch(sendEvent(true, "Processing..."));
-    sendAssetTransaction(net, sendAddress.value, wif, assetSwap, sendAmount.value).then((response) => {
+    doSendAsset(net, sendAddress.value, wif, asset, sendAmount.value).then((response) => {
       if (response.result === undefined){
         dispatch(sendEvent(false, "Transaction failed!"));
       } else {
@@ -77,7 +70,7 @@ const sendTransaction = (dispatch, net, wif, asset, neo_balance, gas_balance) =>
   confirmButton.blur();
 };
 
-let Send = ({dispatch, wif, status, ans, anc, net, confirmPane, selectedAsset}) => {
+let Send = ({dispatch, wif, status, neo, gas, net, confirmPane, selectedAsset}) => {
   let confirmPaneClosed;
   if (confirmPane){
     confirmPaneClosed = "100%";
@@ -96,9 +89,9 @@ let Send = ({dispatch, wif, status, ans, anc, net, confirmPane, selectedAsset}) 
         <ReactTooltip class="solidTip" id="assetTip" place="bottom" type="dark" effect="solid">
           <span>Toggle NEO / GAS</span>
         </ReactTooltip>
-      <button id="doSend" onClick={() => openAndValidate(dispatch, ans, anc, selectedAsset)}>Send Asset</button>
+      <button id="doSend" onClick={() => openAndValidate(dispatch, neo, gas, selectedAsset)}>Send Asset</button>
     </div>
-    <div id="confirmPane" onClick={() => sendTransaction(dispatch, net, wif, selectedAsset, ans, anc)}>
+    <div id="confirmPane" onClick={() => sendTransaction(dispatch, net, wif, selectedAsset, neo, gas)}>
       <button ref={node => {confirmButton = node;}}>Confirm Transaction</button>
     </div>
   </SplitPane>);
@@ -106,9 +99,9 @@ let Send = ({dispatch, wif, status, ans, anc, net, confirmPane, selectedAsset}) 
 
 const mapStateToProps = (state) => ({
   wif: state.account.wif,
-  net: state.wallet.net,
-  ans: state.wallet.ANS,
-  anc: state.wallet.ANC,
+  net: state.metadata.network,
+  neo: state.wallet.Neo,
+  gas: state.wallet.Gas,
   selectedAsset: state.transactionState.selectedAsset,
   confirmPane: state.dashboard.confirmPane,
 });

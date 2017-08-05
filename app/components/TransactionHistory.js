@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { syncTransactionHistory } from "../components/NetworkSwitch";
 import { shell } from 'electron';
 
+// TODO: make this a user setting
 const getExplorerLink = (net, txid) => {
   let base;
   if (net === "MainNet"){
@@ -13,6 +14,7 @@ const getExplorerLink = (net, txid) => {
   return base + "/tx/hash/" + txid;
 }
 
+// helper to open an external web link
 const openExplorer = (srcLink) => {
   shell.openExternal(srcLink);
 }
@@ -47,7 +49,7 @@ class TransactionHistory extends Component {
 
 const mapStateToProps = (state) => ({
   address: state.account.address,
-  net: state.wallet.net,
+  net: state.metadata.network,
   transactions: state.wallet.transactions
 });
 

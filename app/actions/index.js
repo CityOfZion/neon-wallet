@@ -17,25 +17,17 @@ export function logout(){
 
 // wallet events
 
-export function setClaim(available, unavailable){
-  return {
-    type: types.SET_CLAIM,
-    available,
-    unavailable
-  }
-}
-
 export function newWallet(){
   return {
     type: types.NEW_WALLET,
   }
 }
 
-export function setBalance(ans, anc, price){
+export function setBalance(neo, gas, price){
   return {
     type: types.SET_BALANCE,
-    ANS: ans,
-    ANC: anc,
+    Neo: neo,
+    Gas: gas,
     price: price
   }
 }
@@ -59,6 +51,16 @@ export function setTransactionHistory(transactions){
     transactions
   }
 };
+
+// claim events
+
+export function setClaim(available, unavailable){
+  return {
+    type: types.SET_CLAIM,
+    available,
+    unavailable
+  }
+}
 
 export function setClaimRequest(status){
   return {
@@ -95,6 +97,7 @@ export function toggleAsset(){
     type: types.TOGGLE_ASSET,
   }
 };
+
 
 // dashboard
 
