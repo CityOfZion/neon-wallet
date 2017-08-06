@@ -1,0 +1,89 @@
+{
+	"neo": [
+		{
+			"classes": "cy-neo-node",
+			"data": {
+				"id": "neon-wallet",
+				"name": "neon-wallet",
+				"weight": 1
+			},
+			"group": "nodes"
+		},
+		{
+			"classes": "cy-neo-node",
+			"data": {
+				"id": "Display",
+				"name": "Display",
+				"weight": 1
+			},
+			"group": "nodes"
+		},
+		{
+			"classes": "cy-neo-node",
+			"data": {
+				"id": "User Action",
+				"name": "User Action",
+				"weight": 1
+			},
+			"group": "nodes"
+		},
+		{
+			"classes": "cy-neo-node",
+			"data": {
+				"id": "neon-wallet-db",
+				"name": "neon-wallet-db",
+				"weight": 1
+			},
+			"group": "nodes"
+		},
+		{
+			"classes": "cy-neo-node",
+			"data": {
+				"id": "neo-blockchain",
+				"name": "neo-blockchain",
+				"weight": 1
+			},
+			"group": "nodes"
+		},
+		{
+			"data": {
+				"id": "1",
+				"name": "Get Available Gas, Get Balance, Get Transaction History, Get Block Height",
+				"source": "Display",
+				"target": "neon-wallet-db",
+				"weight": 1
+			},
+			"group": "edges"
+		},
+		{
+			"data": {
+				"id": "2",
+				"name": "Claim All Gas, Send Asset",
+				"source": "User Action",
+				"target": "neo-blockchain",
+				"weight": 1
+			},
+			"group": "edges"
+		},
+		{
+			"data": {
+				"id": "3",
+				"name": "",
+				"source": "neon-wallet",
+				"target": "User Action",
+				"weight": 1
+			},
+			"group": "edges"
+		},
+		{
+			"data": {
+				"id": "4",
+				"name": "",
+				"source": "neon-wallet",
+				"target": "Display",
+				"weight": 1
+			},
+			"group": "edges"
+		}
+	]
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html5>
+<html>
+<meta charset="utf-8" />
+<head>
+<title>Neon Wallet Code Audit and Diagrams</title>
+</head>
+<body>
+	<p>
+	<h1>Neon Wallet Code Audit and Diagrams</h1>
+	On August 6th, an independent code audit was done of neon-wallet and neon-wallet-db version 0.0.3 to look for security issues. The code auditor reported that
+	there are a few minor cosmetic issues, but no security issues.
+	<p>The wallet should be safe to use from a security standpoint.
+	<h1>The Review</h1>
+	<p>What did the code reviewer look for specifically?
+	<p>
+		1) They wanted to see how the private key was being stored and how it was used, to make sure the private key remained on the user's computer.<br> They
+		found that the private key always remains on the user's computer, and is only used to sign transactions. These signed transactions are what leaves the user's
+		computer and are sent drectly to the blockchain.
+	<p>
+		2) They wanted to see what back ends were being used and how, to see if there were any potential vulnerabilities. <br> The neon wallet does use an
+		intermediary database (called neo-wallet-db on github) to cache some of the display data, but it's read-only. All transactions that modify data (Claiming
+		Coins, and Sending Assets) go directly to the NEO blockchain.
+	<p>Since all data modification is done by going directly to the blockchain, and only display data comes from the neo-wallet-db the wallet should be safe to
+		use. The code can't be updated in neon-wallet withount the user pulling a new version.
+	<h2>The neon-wallet-db database</h2>
+	<p>What specifically comes from the neo-wallet-db? Your available GAS, available NEO, and your transaction history for your public address. This data isn't
+		available via the NEO API yet, so they have an intermediate server that collects the data from the blockchain.
+	<h1>Diagrams></h1>
+	<p>The code reviewer also made three diagrams to illustrate how the program works:
+	<p>
+		1) an <a href="diagrams/arch.html">Architecture Diagram</a>, showing that all user initiated transactions (Claim All Gas, Send Asset) go to the Neo
+		Blockchain, and only display data (Get Available Gas, Get Balance, Get Transaction History, Get Block Height) comes from the neo-wallet-db
+	<p>
+		2) a <a href="diagrams/seq.html">Sequence Diagram</a> showing how the Neon Wallet, Neon Wallet DB, and NEO Blockchain interact: The Private Key is only stored
+		in the Neon Wallet, and only used to Sign Transactions.
+	<p>
+		3) an <a href="diagrams/erd.html">Entity Relationship Diagram</a> that shows how all the components of the neon wallet interact with eachother.
+</body>
+</html>

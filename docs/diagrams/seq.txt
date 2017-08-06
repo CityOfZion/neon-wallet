@@ -1,0 +1,26 @@
+Title:Neon Wallet - Claim All Gas, or Send Asset
+participant Neon User
+participant Neon Wallet
+participant Key Storage
+participant Neon Wallet DB
+participant Neo Blockchain
+Neon User->Neon Wallet:Enter Private Key
+Neon Wallet->Key Storage:Store Private Key
+Neon Wallet->Neon Wallet:Create Transaction
+Key Storage-->Neon Wallet:Use Private Key To Sign
+Neon Wallet->Neon Wallet:Sign Transaction
+Neon Wallet-->Key Storage:Stop Using Private Key
+Neon Wallet->Neo Blockchain:Submit Signed Transaction
+Note over Neon Wallet,Neo Blockchain: Blockchain Processes Transaction
+Neo Blockchain->Neon Wallet DB:Neon Wallet DB Process New Block
+Neon Wallet DB->Neon Wallet:NEO Balance Is Updated after Send Asset
+Neon Wallet DB->Neon Wallet:Available GAS Is Updated after Claim All Gas
+Neon Wallet DB->Neon Wallet:Transaction History is Updated
+Neon Wallet DB->Neon Wallet:Wallet DB Height Is Updated
+
+
+# A->B: Normal line
+# B-->C: Dashed line
+# C->>D: Open arrow
+# D-->>A: Dashed open arrow
+

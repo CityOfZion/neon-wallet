@@ -1,0 +1,615 @@
+{"neo": [
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\actions\\index.js",
+      "name": "\\app\\actions\\index.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\actions\\types.js",
+      "name": "\\app\\actions\\types.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\components\\App.js",
+      "name": "\\app\\components\\App.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\components\\Claim.js",
+      "name": "\\app\\components\\Claim.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\components\\CreateWallet.js",
+      "name": "\\app\\components\\CreateWallet.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\components\\Login.js",
+      "name": "\\app\\components\\Login.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\components\\Logout.js",
+      "name": "\\app\\components\\Logout.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\components\\NetworkSwitch.js",
+      "name": "\\app\\components\\NetworkSwitch.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\components\\Send.js",
+      "name": "\\app\\components\\Send.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\components\\TransactionHistory.js",
+      "name": "\\app\\components\\TransactionHistory.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\components\\WalletInfo.js",
+      "name": "\\app\\components\\WalletInfo.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\containers\\Dashboard.js",
+      "name": "\\app\\containers\\Dashboard.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\containers\\DevTools.js",
+      "name": "\\app\\containers\\DevTools.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\containers\\Root.dev.js",
+      "name": "\\app\\containers\\Root.dev.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\containers\\Root.js",
+      "name": "\\app\\containers\\Root.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\containers\\Root.prod.js",
+      "name": "\\app\\containers\\Root.prod.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\index.js",
+      "name": "\\app\\index.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\reducers\\index.js",
+      "name": "\\app\\reducers\\index.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\routes.js",
+      "name": "\\app\\routes.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\store\\configureStore.dev.js",
+      "name": "\\app\\store\\configureStore.dev.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\store\\configureStore.js",
+      "name": "\\app\\store\\configureStore.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\store\\configureStore.prod.js",
+      "name": "\\app\\store\\configureStore.prod.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\wallet\\api.js",
+      "name": "\\app\\wallet\\api.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\wallet\\index.js",
+      "name": "\\app\\wallet\\index.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\app\\wallet\\utils.js",
+      "name": "\\app\\wallet\\utils.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\main.js",
+      "name": "\\main.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "classes": "cy-neo-node",
+    "data": {
+      "id": "\\webpack.config.js",
+      "name": "\\webpack.config.js",
+      "weight": 1
+    },
+    "group": "nodes"
+  },
+  {
+    "data": {
+      "id": "\\app\\components\\App.js-\\app\\components\\NetworkSwitch.js",
+      "name": "NetworkSwitch",
+      "source": "\\app\\components\\App.js",
+      "target": "\\app\\components\\NetworkSwitch.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\components\\Claim.js-\\app\\actions\\index.js",
+      "name": "clearTransactionEvent, sendEvent",
+      "source": "\\app\\components\\Claim.js",
+      "target": "\\app\\actions\\index.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\components\\Claim.js-\\app\\wallet\\api.js",
+      "name": "claimAllGAS",
+      "source": "\\app\\components\\Claim.js",
+      "target": "\\app\\wallet\\api.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\components\\CreateWallet.js-\\app\\actions\\index.js",
+      "name": "newWallet",
+      "source": "\\app\\components\\CreateWallet.js",
+      "target": "\\app\\actions\\index.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\components\\CreateWallet.js-\\app\\components\\WalletInfo.js",
+      "name": "WalletInfo",
+      "source": "\\app\\components\\CreateWallet.js",
+      "target": "\\app\\components\\WalletInfo.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\components\\Login.js-\\app\\actions\\index.js",
+      "name": "login, resetPrice, setBalance",
+      "source": "\\app\\components\\Login.js",
+      "target": "\\app\\actions\\index.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\components\\Login.js-\\app\\components\\CreateWallet.js",
+      "name": "CreateWallet",
+      "source": "\\app\\components\\Login.js",
+      "target": "\\app\\components\\CreateWallet.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\components\\Login.js-\\app\\wallet\\api.js",
+      "name": "getBlockByIndex",
+      "source": "\\app\\components\\Login.js",
+      "target": "\\app\\wallet\\api.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\components\\Login.js-\\app\\wallet\\index.js",
+      "name": "getWIFFromPrivateKey",
+      "source": "\\app\\components\\Login.js",
+      "target": "\\app\\wallet\\index.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\components\\Logout.js-\\app\\actions\\index.js",
+      "name": "logout",
+      "source": "\\app\\components\\Logout.js",
+      "target": "\\app\\actions\\index.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\components\\NetworkSwitch.js-\\app\\actions\\index.js",
+      "name": "resetPrice, setBalance, setBlockHeight, setClaim, setMarketPrice, setTransactionHistory",
+      "source": "\\app\\components\\NetworkSwitch.js",
+      "target": "\\app\\actions\\index.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\components\\NetworkSwitch.js-\\app\\wallet\\api.js",
+      "name": "ansId, getAvailableClaim, getBalance, getMarketPriceUSD, getTransactionHistory, getWalletDBHeight",
+      "source": "\\app\\components\\NetworkSwitch.js",
+      "target": "\\app\\wallet\\api.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\components\\Send.js-\\app\\actions\\index.js",
+      "name": "clearTransactionEvent, sendEvent, toggleAsset, togglePane",
+      "source": "\\app\\components\\Send.js",
+      "target": "\\app\\actions\\index.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\components\\Send.js-\\app\\wallet\\api.js",
+      "name": "sendAssetTransaction",
+      "source": "\\app\\components\\Send.js",
+      "target": "\\app\\wallet\\api.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\components\\Send.js-\\app\\wallet\\index.js",
+      "name": "verifyAddress",
+      "source": "\\app\\components\\Send.js",
+      "target": "\\app\\wallet\\index.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\components\\WalletInfo.js-\\app\\actions\\index.js",
+      "name": "clearTransactionEvent, resetPrice, sendEvent",
+      "source": "\\app\\components\\WalletInfo.js",
+      "target": "\\app\\actions\\index.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\containers\\Dashboard.js-\\app\\actions\\index.js",
+      "name": "togglePane",
+      "source": "\\app\\containers\\Dashboard.js",
+      "target": "\\app\\actions\\index.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\containers\\Dashboard.js-\\app\\components\\Logout.js",
+      "name": "Logout",
+      "source": "\\app\\containers\\Dashboard.js",
+      "target": "\\app\\components\\Logout.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\containers\\Dashboard.js-\\app\\components\\NetworkSwitch.js",
+      "name": "NetworkSwitch",
+      "source": "\\app\\containers\\Dashboard.js",
+      "target": "\\app\\components\\NetworkSwitch.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\containers\\Dashboard.js-\\app\\components\\Send.js",
+      "name": "Send",
+      "source": "\\app\\containers\\Dashboard.js",
+      "target": "\\app\\components\\Send.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\containers\\Dashboard.js-\\app\\components\\TransactionHistory.js",
+      "name": "TransactionHistory",
+      "source": "\\app\\containers\\Dashboard.js",
+      "target": "\\app\\components\\TransactionHistory.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\containers\\Dashboard.js-\\app\\components\\WalletInfo.js",
+      "name": "WalletInfo",
+      "source": "\\app\\containers\\Dashboard.js",
+      "target": "\\app\\components\\WalletInfo.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\containers\\Root.dev.js-\\app\\routes.js",
+      "name": "routes",
+      "source": "\\app\\containers\\Root.dev.js",
+      "target": "\\app\\routes.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\containers\\Root.prod.js-\\app\\routes.js",
+      "name": "routes",
+      "source": "\\app\\containers\\Root.prod.js",
+      "target": "\\app\\routes.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\index.js-\\app\\containers\\Root.js",
+      "name": "Root",
+      "source": "\\app\\index.js",
+      "target": "\\app\\containers\\Root.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\index.js-\\app\\store\\configureStore.js",
+      "name": "configureStore",
+      "source": "\\app\\index.js",
+      "target": "\\app\\store\\configureStore.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\reducers\\index.js-\\app\\wallet\\index.js",
+      "name": "generatePrivateKey, getAccountsFromWIFKey, getWIFFromPrivateKey",
+      "source": "\\app\\reducers\\index.js",
+      "target": "\\app\\wallet\\index.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\routes.js-\\app\\components\\App.js",
+      "name": "App",
+      "source": "\\app\\routes.js",
+      "target": "\\app\\components\\App.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\routes.js-\\app\\components\\CreateWallet.js",
+      "name": "CreateWallet",
+      "source": "\\app\\routes.js",
+      "target": "\\app\\components\\CreateWallet.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\routes.js-\\app\\components\\Login.js",
+      "name": "Login",
+      "source": "\\app\\routes.js",
+      "target": "\\app\\components\\Login.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\routes.js-\\app\\components\\Send.js",
+      "name": "Send",
+      "source": "\\app\\routes.js",
+      "target": "\\app\\components\\Send.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\routes.js-\\app\\containers\\Dashboard.js",
+      "name": "Dashboard",
+      "source": "\\app\\routes.js",
+      "target": "\\app\\containers\\Dashboard.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\store\\configureStore.dev.js-\\app\\containers\\DevTools.js",
+      "name": "DevTools",
+      "source": "\\app\\store\\configureStore.dev.js",
+      "target": "\\app\\containers\\DevTools.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\store\\configureStore.dev.js-\\app\\reducers\\index.js",
+      "name": "rootReducer",
+      "source": "\\app\\store\\configureStore.dev.js",
+      "target": "\\app\\reducers\\index.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\store\\configureStore.prod.js-\\app\\reducers\\index.js",
+      "name": "rootReducer",
+      "source": "\\app\\store\\configureStore.prod.js",
+      "target": "\\app\\reducers\\index.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\wallet\\api.js-\\app\\wallet\\index.js",
+      "name": "addContract, claimTransaction, getAccountsFromWIFKey, signatureData, transferTransaction",
+      "source": "\\app\\wallet\\api.js",
+      "target": "\\app\\wallet\\index.js",
+      "weight": 1
+    },
+    "group": "edges"
+  },
+  {
+    "data": {
+      "id": "\\app\\wallet\\index.js-\\app\\wallet\\utils.js",
+      "name": "ab2hexstring, ab2str, hexstring2ab, numStoreInMemory, reverseArray, str2ab, stringToBytes",
+      "source": "\\app\\wallet\\index.js",
+      "target": "\\app\\wallet\\utils.js",
+      "weight": 1
+    },
+    "group": "edges"
+  }
+]}
