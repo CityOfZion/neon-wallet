@@ -7,7 +7,7 @@ import { initiateGetBalance, intervals } from "../components/NetworkSwitch";
 import { resetPrice, sendEvent, clearTransactionEvent } from '../actions/index.js';
 import { clipboard } from 'electron';
 import Copy from 'react-icons/lib/md/content-copy';
-import ReactTooltip from 'react-tooltip'
+import ReactTooltip from 'react-tooltip';
 
 // force sync with balance data
 const refreshBalance = (dispatch, net, address) => {

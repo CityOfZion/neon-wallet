@@ -9,11 +9,11 @@ import { clipboard } from 'electron';
 const getExplorerLink = (net, txid) => {
   let base;
   if (net === "MainNet"){
-    base = "http://antcha.in";
+    base = "https://neotracker.io";
   } else {
-    base = "http://testnet.antcha.in";
+    base = "https://testnet.neotracker.io";
   }
-  return base + "/tx/hash/" + txid;
+  return base + "/tx/" + txid;
 }
 
 // helper to open an external web link

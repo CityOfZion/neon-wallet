@@ -219,7 +219,7 @@ export const addContract =( $txData, $sign, $publicKeyEncoded ) => {
 	return data;
 };
 
-// verify that an ANS address is valid
+// verify that an NEO address is valid
 export const verifyAddress = ( $toAddress ) => {
 	var ProgramHash = base58.decode($toAddress);
 	var ProgramHexString = CryptoJS.enc.Hex.parse(ab2hexstring(ProgramHash.slice(0, 21)));

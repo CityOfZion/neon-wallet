@@ -6,3 +6,7 @@ release-builds/*
 app/dist/*
 app/dist
 .DS_Store
+.jshintrc
+.npmignore
+.project
+.settings/*
