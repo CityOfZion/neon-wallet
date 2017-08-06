@@ -1,4 +1,4 @@
-import reducer from '../../app/reducers';
+import reducer from '../../app/store/reducers';
 
 describe('root reducer', () => {
   it('should combine all reducers', () => {
@@ -6,10 +6,10 @@ describe('root reducer', () => {
       account: expect.any(Object),
       generateWallet: expect.any(Object),
       wallet: expect.any(Object),
-      transactionState: expect.any(Object),
+      transactions: expect.any(Object),
       dashboard: expect.any(Object),
       metadata: expect.any(Object),
-      claimState: expect.any(Object)
+      claim: expect.any(Object)
     });
   });
 });

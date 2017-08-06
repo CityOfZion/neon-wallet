@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setNetwork } from '../actions/index.js';
 import { getBalance, getTransactionHistory, getMarketPriceUSD, neoId, getClaimAmounts, getWalletDBHeight } from '../wallet/api.js';
-import { setBalance, setMarketPrice, resetPrice, setTransactionHistory, setClaim, setBlockHeight } from '../actions/index.js';
+import { setBalance, setMarketPrice, resetPrice, setTransactionHistory, } from '../modules/wallet';
+import { setBlockHeight, setNetwork } from '../modules/metadata';
+import { setClaim } from '../modules/claim';
 
 let intervals = {};
 

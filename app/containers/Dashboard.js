@@ -7,7 +7,7 @@ import WalletInfo from '../components/WalletInfo';
 import TransactionHistory from '../components/TransactionHistory';
 import Logout from '../components/Logout';
 import Send from '../components/Send';
-import { togglePane } from '../actions/index.js';
+import { togglePane } from '../modules/dashboard';
 
 const logo = require('../images/neon-logo2.png');
 
@@ -76,8 +76,8 @@ class Dashboard extends Component {
 const mapStateToProps = (state) => ({
   sendPane: state.dashboard.sendPane,
   confirmPane: state.dashboard.confirmPane,
-  status: state.transactionState.success,
-  statusMessage: state.transactionState.message,
+  status: state.transactions.success,
+  statusMessage: state.transactions.message,
   blockHeight: state.metadata.blockHeight
 });
 
