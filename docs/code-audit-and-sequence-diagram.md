@@ -27,12 +27,12 @@
 	<h1>Diagrams</h1>
 	<p>The code reviewer also made three diagrams to illustrate how the program works:
 	<p>
-		1) an <a href="diagrams/arch.md">Architecture Diagram</a>, showing that all user initiated transactions (Claim All Gas, Send Asset) go to the Neo
+		1) an <a href="https://coranos.github.io/neo/neon-wallet/arch">Architecture Diagram</a>, showing that all user initiated transactions (Claim All Gas, Send Asset) go to the Neo
 		Blockchain, and only display data (Get Available Gas, Get Balance, Get Transaction History, Get Block Height) comes from the neo-wallet-db
 	<p>
-		2) a <a href="diagrams/seq.md">Sequence Diagram</a> showing how the Neon Wallet, Neon Wallet DB, and NEO Blockchain interact: The Private Key is only stored
+		2) a <a href="https://coranos.github.io/neo/neon-wallet/seq">Sequence Diagram</a> showing how the Neon Wallet, Neon Wallet DB, and NEO Blockchain interact: The Private Key is only stored
 		in the Neon Wallet, and only used to Sign Transactions.
 	<p>
-		3) an <a href="diagrams/erd.md">Entity Relationship Diagram</a> that shows how all the components of the neon wallet interact with eachother.
+		3) an <a href="https://coranos.github.io/neo/neon-wallet/erd">Entity Relationship Diagram</a> that shows how all the components of the neon wallet interact with eachother.
 </body>
 </html>
