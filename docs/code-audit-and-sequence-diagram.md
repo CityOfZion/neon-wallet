@@ -2,7 +2,6 @@
 <html>
 <meta charset="utf-8" />
 <head>
-<title>Neon Wallet Code Audit and Diagrams</title>
 </head>
 <body>
 	<p>
