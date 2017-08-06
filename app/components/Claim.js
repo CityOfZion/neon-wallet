@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { doClaimAllGas, doSendAsset } from '../wallet/api.js';
-import { sendEvent, clearTransactionEvent, setClaimRequest, disableClaim } from '../actions/index.js';
+import { sendEvent, clearTransactionEvent } from '../modules/transactions';
+import { setClaimRequest, disableClaim } from '../modules/claim';
 import ReactTooltip from 'react-tooltip'
 
 // To initiate claim, first send all Neo to own address, the set claimRequest state
@@ -56,10 +57,10 @@ class Claim extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  claimAmount: state.claimState.claimAmount,
-  claimRequest: state.claimState.claimRequest,
-  claimWasUpdated: state.claimState.claimWasUpdated,
-  disableClaimButton: state.claimState.disableClaimButton,
+  claimAmount: state.claim.claimAmount,
+  claimRequest: state.claim.claimRequest,
+  claimWasUpdated: state.claim.claimWasUpdated,
+  disableClaimButton: state.claim.disableClaimButton,
   wif: state.account.wif,
   address: state.account.address,
   net: state.metadata.network,

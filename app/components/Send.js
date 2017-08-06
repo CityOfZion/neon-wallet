@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { doSendAsset } from '../wallet/api.js';
 import { verifyAddress } from '../wallet/index.js';
-import { sendEvent, clearTransactionEvent, toggleAsset, togglePane } from '../actions/index.js';
+import { togglePane } from '../modules/dashboard';
+import { sendEvent, clearTransactionEvent, toggleAsset } from '../modules/transactions';
 import SplitPane from 'react-split-pane';
 import ReactTooltip from 'react-tooltip'
 
@@ -111,7 +112,7 @@ const mapStateToProps = (state) => ({
   net: state.metadata.network,
   neo: state.wallet.Neo,
   gas: state.wallet.Gas,
-  selectedAsset: state.transactionState.selectedAsset,
+  selectedAsset: state.transactions.selectedAsset,
   confirmPane: state.dashboard.confirmPane,
 });
 

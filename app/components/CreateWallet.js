@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { newWallet } from '../actions/index.js';
+import { newWallet } from '../modules/generateWallet';
 import { Link } from 'react-router';
 import WalletInfo from './WalletInfo.js';
 import QRCode from 'qrcode';
