@@ -5,7 +5,7 @@ import { doSendAsset } from '../wallet/api.js';
 import { verifyAddress } from '../wallet/index.js';
 import { sendEvent, clearTransactionEvent, toggleAsset, togglePane } from '../actions/index.js';
 import SplitPane from 'react-split-pane';
-import ReactTooltip from 'react-tooltip'
+import ReactTooltip from 'react-tooltip';
 
 let sendAddress, sendAmount, confirmButton;
 
