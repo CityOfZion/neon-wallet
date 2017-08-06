@@ -24,7 +24,7 @@
 	<h2>The neon-wallet-db database</h2>
 	<p>What specifically comes from the neo-wallet-db? Your available GAS, available NEO, and your transaction history for your public address. This data isn't
 		available via the NEO API yet, so they have an intermediate server that collects the data from the blockchain.
-	<h1>Diagrams></h1>
+	<h1>Diagrams</h1>
 	<p>The code reviewer also made three diagrams to illustrate how the program works:
 	<p>
 		1) an <a href="diagrams/arch.md">Architecture Diagram</a>, showing that all user initiated transactions (Claim All Gas, Send Asset) go to the Neo
