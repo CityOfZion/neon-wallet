@@ -1,0 +1,40 @@
+import React from 'react';
+import configureStore from 'redux-mock-store';
+import { shallow } from 'enzyme';
+
+import Login from '../../app/components/Login';
+
+const setup = (state = { account: {
+  loggedIn: true,
+  wif: undefined
+}}) => {
+  const store = configureStore()(state);
+  const wrapper = shallow(<Login store={store} />);
+
+  return {
+    store,
+    wrapper
+  };
+};
+
+describe('Login', () => {
+  test('renders without crashing', () => {
+    const { wrapper } = setup();
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  test('private key field input onChange dispatches LOGIN action', () => {
+    const { store, wrapper } = setup();
+    let preventDefault = jest.fn();
+    const deeperWrapper = wrapper.shallow();
+
+    const someWif = 'L1xpshXfzF6iQTq42onA5km8qwyzBaNQzPADhfTt2jzzcQSVoP5A'
+    deeperWrapper
+      .find('input')
+      .simulate('change', { target: { value: someWif } });
+
+    expect(store.getActions()).toEqual([
+      { wif: someWif, type: 'LOGIN' }
+    ]);
+  });
+});
