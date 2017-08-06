@@ -7,6 +7,8 @@
   "scripts": {
     "postinstall": "install-app-deps",
     "start": "electron .",
+    "test": "jest",
+    "test-watch": "jest --watch",
     "pack": "build --dir",
     "dist": "build"
   },
