@@ -7,18 +7,16 @@ import { getWIFFromPrivateKey } from '../wallet/index.js';
 
 const logo = require('../images/neon-logo2.png');
 
-let input_wif;
-
-const onWifChange = (dispatch) => {
+const onWifChange = (dispatch, value) => {
   // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
-  dispatch(login(input_wif.value));
+  dispatch(login(value));
 };
 
 let Login = ({ dispatch, loggedIn, wif }) =>
   <div id="loginPage">
     <div className="login">
       <div className="logo"><img src={logo} width="60px"/></div>
-      <input type="text" placeholder="Enter your private key here (WIF)" onChange={() => onWifChange(dispatch)} ref={node => {input_wif = node;}} />
+      <input type="text" placeholder="Enter your private key here (WIF)" onChange={(e) => onWifChange(dispatch, e.target.value)} />
       <div className="loginButtons">
         {loggedIn ? <Link to="/dashboard"><button>Login</button></Link> : <button disabled="true">Login</button>}
         <Link to="/create"><button>New Wallet</button></Link>
