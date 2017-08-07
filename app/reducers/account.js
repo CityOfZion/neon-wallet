@@ -1,5 +1,5 @@
 import * as types from '../actions/types';
-import { getAccountsFromWIFKey } from '../wallet/index.js';
+import { getAccountsFromWIFKey } from 'neon-js';
 
 // reducer that manages account state (account now = private key)
 export default (state = {wif: null, address:null, loggedIn: false}, action) => {
