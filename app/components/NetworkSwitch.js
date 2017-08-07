@@ -16,11 +16,17 @@ const initiateGetBalance = (dispatch, net, address) => {
   syncBlockHeight(dispatch, net);
   return getBalance(net, address).then((resultBalance) => {
     return getMarketPriceUSD(resultBalance.Neo).then((resultPrice) => {
-      dispatch(setBalance(resultBalance.Neo, resultBalance.Gas, resultPrice));
+      if (resultPrice === undefined || resultPrice === null){
+        dispatch(setBalance(resultBalance.Neo, resultBalance.Gas, '--'));
+      } else {
+        dispatch(setBalance(resultBalance.Neo, resultBalance.Gas, resultPrice));
+      }
       return true;
+    }).catch((e) => {
+      dispatch(setBalance(resultBalance.Neo, resultBalance.Gas, '--'));
     });
   }).catch((result) => {
-    // TODO: is this ever called?
+    // If API dies, still display balance
   });
 };
 
@@ -53,7 +59,6 @@ const syncTransactionHistory = (dispatch, net, address) => {
 };
 
 const resetBalanceSync = (dispatch, net, address) => {
-  console.log("sync", net);
   if (intervals.balance !== undefined){
     clearInterval(intervals.balance);
   }

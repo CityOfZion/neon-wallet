@@ -86,18 +86,24 @@
     "electron": "^1.6.11",
     "electron-builder": "^19.17.0",
     "electron-packager": "^8.6.0",
+    "enzyme": "^2.9.1",
+    "enzyme-to-json": "^1.5.1",
     "eslint": "^2.9.0",
     "eslint-loader": "^1.5.0",
     "eslint-plugin-react": "^5.0.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "html-webpack-plugin": "^2.16.1",
+    "jest": "^20.0.4",
     "json-loader": "^0.5.4",
     "node-sass": "^3.7.0",
     "postcss-loader": "^0.9.1",
     "react-addons-test-utils": "^15.0.2",
+    "react-dom": "^15.6.1",
+    "react-test-renderer": "^15.6.1",
     "redux-devtools": "^3.2.0",
     "redux-devtools-dock-monitor": "^1.1.1",
     "redux-devtools-log-monitor": "^1.0.11",
+    "redux-mock-store": "^1.2.3",
     "rimraf": "^2.5.2",
     "sass-loader": "^3.2.0",
     "stats-webpack-plugin": "^0.3.1",
@@ -105,5 +111,15 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js"
+    },
+    "unmockedModulePathPatterns": [
+      "node_modules/react/",
+      "node_modules/enzyme/"
+    ],
+    "snapshotSerializers": ["enzyme-to-json/serializer"]
   }
 }
