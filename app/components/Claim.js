@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { doClaimAllGas, doSendAsset } from '../wallet/api.js';
+import { doClaimAllGas, doSendAsset } from 'neon-js';
 import { sendEvent, clearTransactionEvent, setClaimRequest, disableClaim } from '../actions/index.js';
 import ReactTooltip from 'react-tooltip'
 

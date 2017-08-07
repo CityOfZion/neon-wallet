@@ -1,5 +1,5 @@
 import * as types from '../actions/types';
-import { getAccountsFromWIFKey, generatePrivateKey, getWIFFromPrivateKey } from '../wallet/index.js';
+import { getAccountsFromWIFKey, generatePrivateKey, getWIFFromPrivateKey } from 'neon-js';
 
 // reducer used for state necessary to generating a wallet
 export default (state = {wif: null, address:null}, action) => {
