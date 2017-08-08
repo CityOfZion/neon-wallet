@@ -44,12 +44,13 @@ class WalletInfo extends Component {
           <div className="split">
             <div className="label">NEO</div>
             <div className="amountBig">{this.props.neo}</div>
+            <div className="fiat">US {this.props.prices.Neo}</div>
           </div>
           <div className="split">
             <div className="label">GAS</div>
             <div className="amountBig">{this.props.gas < 0.001 ? 0 : this.props.gas.toPrecision(5)}</div>
+            <div className="fiat">US {this.props.prices.Gas}</div>
           </div>
-          <div className="fiat">US {this.props.price}</div>
           <div onClick={() => refreshBalance(this.props.dispatch, this.props.net, this.props.address)}>
             <MdSync id="refresh"/>
           </div>
@@ -70,7 +71,7 @@ const mapStateToProps = (state) => ({
   gas: state.wallet.Gas,
   address: state.account.address,
   net: state.metadata.network,
-  price: state.wallet.price
+  prices: state.wallet.prices
 });
 
 WalletInfo = connect(mapStateToProps)(WalletInfo);

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getBalance, getTransactionHistory, getMarketPriceUSD, neoId, getClaimAmounts, getWalletDBHeight } from 'neon-js';
+import { getBalance, getTransactionHistory, getMarketPrices, neoId, getClaimAmounts, getWalletDBHeight } from 'neon-js';
 import { setClaim } from '../modules/claim';
 import { setBlockHeight, setNetwork } from '../modules/metadata';
-import { setBalance, setMarketPrice, resetPrice, setTransactionHistory, } from '../modules/wallet';
+import { setBalance, setMarketPrices, setTransactionHistory, } from '../modules/wallet';
 
 let intervals = {};
 
@@ -16,15 +16,11 @@ const initiateGetBalance = (dispatch, net, address) => {
   syncAvailableClaim(dispatch, net, address);
   syncBlockHeight(dispatch, net);
   return getBalance(net, address).then((resultBalance) => {
-    return getMarketPriceUSD(resultBalance.Neo).then((resultPrice) => {
-      if (resultPrice === undefined || resultPrice === null){
-        dispatch(setBalance(resultBalance.Neo, resultBalance.Gas, '--'));
-      } else {
-        dispatch(setBalance(resultBalance.Neo, resultBalance.Gas, resultPrice));
-      }
-      return true;
-    }).catch((e) => {
-      dispatch(setBalance(resultBalance.Neo, resultBalance.Gas, '--'));
+    const amounts = { neo: resultBalance.Neo, gas: resultBalance.Gas };
+    const currency = 'usd';
+    return getMarketPrices(amounts, currency).then((resultPrices) => {
+      console.log(resultPrices);
+      dispatch(setBalance(resultBalance.Neo, resultBalance.Gas, { Neo: resultPrices.Neo, Gas: resultPrices.Gas }));
     });
   }).catch((result) => {
     // If API dies, still display balance
