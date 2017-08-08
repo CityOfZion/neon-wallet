@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { doSendAsset } from '../wallet/api.js';
-import { verifyAddress } from '../wallet/index.js';
+import { doSendAsset, verifyAddress } from 'neon-js';
 import { sendEvent, clearTransactionEvent, toggleAsset, togglePane } from '../actions/index.js';
 import SplitPane from 'react-split-pane';
 import ReactTooltip from 'react-tooltip'
