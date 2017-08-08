@@ -8,6 +8,7 @@ import TransactionHistory from '../components/TransactionHistory';
 import Logout from '../components/Logout';
 import Send from '../components/Send';
 import { togglePane } from '../modules/dashboard';
+import { version } from '../../package.json'
 
 const logo = require('../images/neon-logo2.png');
 
@@ -49,7 +50,7 @@ class Dashboard extends Component {
           <SplitPane className="navSplit" split="horizontal" size="40px" allowResize={false}>
             <div id="navBar">
               <div id="title"><img src={logo} width="60px"/></div>
-              <div id="version"><span className="grey">Version</span><span className="darker">0.0.3</span></div>
+              <div id="version"><span className="grey">Version</span><span className="darker">{version}</span></div>
               <div id="height"><span className="grey">Block</span><span className="darker">{this.props.blockHeight}</span></div>
               <NetworkSwitch />
               <Logout />
