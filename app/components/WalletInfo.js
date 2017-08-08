@@ -33,7 +33,7 @@ class WalletInfo extends Component {
         <div className="label">Your Public Neo Address:</div>
         <div className="address">
           {this.props.address}
-            <span className="copyKey" onClick={() => clipboard.writeText(this.props.address, 'selection')}><Copy data-tip data-for="copyAddressTip" /></span>
+            <span className="copyKey" onClick={() => clipboard.writeText(this.props.address)}><Copy data-tip data-for="copyAddressTip" /></span>
         </div>
         <ReactTooltip class="solidTip" id="copyAddressTip" place="bottom" type="dark" effect="solid">
           <span>Copy Public Address</span>

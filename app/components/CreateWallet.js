@@ -44,12 +44,12 @@ class CreateWallet extends Component {
       <div className="keyList">
         <span className="label">Public Address:</span>
         <span className="key">{this.props.address}</span>
-        <span className="copyKey" onClick={() => clipboard.writeText(this.props.address, 'selection')}><Copy data-tip data-for="copyPublicKeyTip" /></span>
+        <span className="copyKey" onClick={() => clipboard.writeText(this.props.address)}><Copy data-tip data-for="copyPublicKeyTip" /></span>
       </div>
       <div className="keyList">
         <span className="label">Private Key:</span>
         <span className="key">{this.props.wif}</span>
-        <span className="copyKey" onClick={() => clipboard.writeText(this.props.wif, 'selection')}><Copy data-tip data-for="copyPrivateKeyTip" /></span>
+        <span className="copyKey" onClick={() => clipboard.writeText(this.props.wif)}><Copy data-tip data-for="copyPrivateKeyTip" /></span>
       </div>
       <Link to="/"><button>Back to Login</button></Link>
       <ReactTooltip class="solidTip" id="copyPublicKeyTip" place="bottom" type="dark" effect="solid">
