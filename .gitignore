@@ -6,3 +6,4 @@ release-builds/*
 app/dist/*
 app/dist
 .DS_Store
+coverage
