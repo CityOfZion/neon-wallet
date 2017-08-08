@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { logout } from '../actions/index.js';
+import { logout } from '../modules/account';
 import { Link } from 'react-router';
 import Power from 'react-icons/lib/md/power-settings-new';
 import ReactTooltip from 'react-tooltip'

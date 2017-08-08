@@ -4,7 +4,8 @@ import Claim from "./Claim.js";
 import MdSync from 'react-icons/lib/md/sync';
 import QRCode from 'qrcode';
 import { initiateGetBalance, intervals } from "../components/NetworkSwitch";
-import { resetPrice, sendEvent, clearTransactionEvent } from '../actions/index.js';
+import { resetPrice } from '../modules/wallet';
+import { sendEvent, clearTransactionEvent } from '../modules/transactions';
 import { clipboard } from 'electron';
 import Copy from 'react-icons/lib/md/content-copy';
 import ReactTooltip from 'react-tooltip'

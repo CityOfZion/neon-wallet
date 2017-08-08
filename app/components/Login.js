@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { login, setBalance, resetPrice } from '../actions/index.js';
 import { Link } from 'react-router';
+import { login } from '../modules/account';
 import CreateWallet from './CreateWallet.js'
 import { getWIFFromPrivateKey } from 'neon-js';
 
