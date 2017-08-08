@@ -58,6 +58,7 @@
     "fs": "0.0.1-security",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.2",
+    "neon-js": "git+https://github.com/CityOfZion/neon-js.git",
     "qrcode": "^0.8.2",
     "react": "^15.0.2",
     "react-ace": "^5.0.1",
@@ -122,6 +123,8 @@
       "node_modules/react/",
       "node_modules/enzyme/"
     ],
-    "snapshotSerializers": ["enzyme-to-json/serializer"]
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   }
 }

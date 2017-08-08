@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { doClaimAllGas, doSendAsset } from '../wallet/api.js';
-import { sendEvent, clearTransactionEvent } from '../modules/transactions';
 import { setClaimRequest, disableClaim } from '../modules/claim';
+import { sendEvent, clearTransactionEvent } from '../modules/transactions';
+import { doClaimAllGas, doSendAsset } from 'neon-js';
 import ReactTooltip from 'react-tooltip'
 
 // To initiate claim, first send all Neo to own address, the set claimRequest state

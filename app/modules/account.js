@@ -1,4 +1,4 @@
-import { getAccountsFromWIFKey } from '../wallet/index.js';
+import { getAccountsFromWIFKey } from 'neon-js';
 
 // Constants
 const LOGIN = 'LOGIN';

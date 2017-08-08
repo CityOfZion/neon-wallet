@@ -1,4 +1,4 @@
-import { getAccountsFromWIFKey, generatePrivateKey, getWIFFromPrivateKey } from '../wallet/index.js';
+import { getAccountsFromWIFKey, generatePrivateKey, getWIFFromPrivateKey } from 'neon-js';
 
 // Constants
 const NEW_WALLET = 'NEW_WALLET';
