@@ -85,21 +85,17 @@ export const getBalance = (net, address) => {
 /**
  * @function
  * @description
- * Hit the bittrex api getticker to fetch the latest BTC to ANS price
- * then hit the latest USDT to BTC conversion rate
+ * Hit the coinmarketcap api to fetch the latest NEO-USD conversion rate
  *
  * @param {number} amount - The current ANS amount in wallet
- * @return {string} - The converted ANS to USDT fiat amount
+ * @return {string} - The converted NEO to USD fiat amount
  */
 export const getMarketPriceUSD = (amount) => {
-  let lastBTCANS, lastUSDBTC;
-  return axios.get('https://bittrex.com/api/v1.1/public/getticker?market=BTC-ANS').then((response) => {
-      lastBTCANS = response.data.result.Last;
-      return axios.get('https://bittrex.com/api/v1.1/public/getticker?market=USDT-BTC').then((response) => {
-          lastUSDBTC = response.data.result.Last;
-          const convertedAmount = '$'+(lastBTCANS * lastUSDBTC * amount).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-          return convertedAmount;
-      });
+  let priceUSD;
+  return axios.get('https://api.coinmarketcap.com/v1/ticker/NEO/?convert=USD').then((response) => {
+    priceUSD = response.data[0].price_usd;
+    const convertedAmount = '$'+( priceUSD * amount).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return convertedAmount;
   });
 };
 
