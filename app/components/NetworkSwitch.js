@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { setNetwork } from '../actions/index.js';
 import { getBalance, getTransactionHistory, getMarketPriceUSD, neoId, getClaimAmounts, getWalletDBHeight } from 'neon-js';
 import { setBalance, setMarketPrice, resetPrice, setTransactionHistory, setClaim, setBlockHeight } from '../actions/index.js';
+import { loadMarketPrice } from  '../components/Balance';
 
 let intervals = {};
 
@@ -10,24 +11,11 @@ let netSelect;
 
 // TODO: this is being imported by Balance.js, maybe refactor to helper file
 
-const initiateGetBalance = (dispatch, net, address) => {
+const initiateGetBalance = (dispatch, net, address, currencyCode) => {
   syncTransactionHistory(dispatch, net, address);
   syncAvailableClaim(dispatch, net, address);
   syncBlockHeight(dispatch, net);
-  return getBalance(net, address).then((resultBalance) => {
-    return getMarketPriceUSD(resultBalance.Neo).then((resultPrice) => {
-      if (resultPrice === undefined || resultPrice === null){
-        dispatch(setBalance(resultBalance.Neo, resultBalance.Gas, '--'));
-      } else {
-        dispatch(setBalance(resultBalance.Neo, resultBalance.Gas, resultPrice));
-      }
-      return true;
-    }).catch((e) => {
-      dispatch(setBalance(resultBalance.Neo, resultBalance.Gas, '--'));
-    });
-  }).catch((result) => {
-    // If API dies, still display balance
-  });
+  loadMarketPrice(dispatch, net, address, currencyCode);
 };
 
 const syncAvailableClaim = (dispatch, net, address) => {
@@ -63,11 +51,11 @@ const resetBalanceSync = (dispatch, net, address) => {
     clearInterval(intervals.balance);
   }
   intervals.balance = setInterval(() =>  {
-    initiateGetBalance(dispatch, net, address);
+    initiateGetBalance(dispatch, net, address, 'USD');
   }, 5000);
 };
 
-const toggleNet = (dispatch, net, address) => {
+const toggleNet = (dispatch, net, address, currencyCode) => {
   let newNet;
   if (net === "MainNet"){
     newNet = "TestNet";
@@ -77,7 +65,7 @@ const toggleNet = (dispatch, net, address) => {
   dispatch(setNetwork(newNet));
   resetBalanceSync(dispatch, newNet, address);
   if (address !== null){
-    initiateGetBalance(dispatch, newNet, address);
+    initiateGetBalance(dispatch, newNet, address, currencyCode);
   }
 };
 
@@ -89,7 +77,7 @@ class NetworkSwitch extends Component {
   render = () =>
     <div id="network">
       <span className="transparent">Running on</span>
-      <span className="netName" onClick={() => toggleNet(this.props.dispatch, this.props.net, this.props.address)}>{this.props.net}</span>
+      <span className="netName" onClick={() => toggleNet(this.props.dispatch, this.props.net, this.props.address, this.props.currencyCode)}>{this.props.net}</span>
     </div>;
 
 }

@@ -8,11 +8,12 @@ import { resetPrice, sendEvent, clearTransactionEvent } from '../actions/index.j
 import { clipboard } from 'electron';
 import Copy from 'react-icons/lib/md/content-copy';
 import ReactTooltip from 'react-tooltip'
+import {Balance} from '../components/Balance';
 
 // force sync with balance data
-const refreshBalance = (dispatch, net, address) => {
+const refreshBalance = (dispatch, net, address, currencyCode) => {
   dispatch(sendEvent(true, "Refreshing..."));
-  initiateGetBalance(dispatch, net, address).then((response) => {
+  initiateGetBalance(dispatch, net, address, currencyCode).then((response) => {
     dispatch(sendEvent(true, "Received latest blockchain information."));
     setTimeout(() => dispatch(clearTransactionEvent()), 1000);
   });
@@ -21,7 +22,7 @@ const refreshBalance = (dispatch, net, address) => {
 class WalletInfo extends Component {
 
   componentDidMount = () => {
-    initiateGetBalance(this.props.dispatch, this.props.net, this.props.address);
+    initiateGetBalance(this.props.dispatch, this.props.net, this.props.address, this.props.currencyCode);
     QRCode.toCanvas(this.canvas, this.props.address, { version: 5 }, (err) => {
       if (err) console.log(err)
     });
@@ -48,8 +49,8 @@ class WalletInfo extends Component {
             <div className="label">GAS</div>
             <div className="amountBig">{this.props.gas < 0.001 ? 0 : this.props.gas.toPrecision(5)}</div>
           </div>
-          <div className="fiat">US {this.props.price}</div>
-          <div onClick={() => refreshBalance(this.props.dispatch, this.props.net, this.props.address)}>
+          <Balance/>
+          <div onClick={() => refreshBalance(this.props.dispatch, this.props.net, this.props.address, this.props.currencyCode)}>
             <MdSync id="refresh"/>
           </div>
         </div>
