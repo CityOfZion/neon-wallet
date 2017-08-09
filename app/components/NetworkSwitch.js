@@ -19,7 +19,6 @@ const initiateGetBalance = (dispatch, net, address) => {
     const amounts = { neo: resultBalance.Neo, gas: resultBalance.Gas };
     const currency = 'usd';
     return getMarketPrices(amounts, currency).then((resultPrices) => {
-      console.log(resultPrices);
       dispatch(setBalance(resultBalance.Neo, resultBalance.Gas, { Neo: resultPrices.Neo, Gas: resultPrices.Gas }));
     });
   }).catch((result) => {
