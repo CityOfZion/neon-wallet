@@ -197,6 +197,22 @@ button.disabled{
 			cursor:pointer;
 		}
 	}
+
+	#explorerSwitch{
+		font-size:.8em;
+		right:80px;
+		top:13px;
+		span.transparent{
+			opacity:.6;
+			margin-right:4px;
+		}
+		span.explorerName{
+			color:$thin-text-color;
+			opacity:.8;
+			cursor:pointer;
+		}
+	}
+
 	#logout{
 		position:absolute;
 		font-size:1.5em;
