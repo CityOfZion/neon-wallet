@@ -11,14 +11,13 @@ let netSelect;
 
 // TODO: this is being imported by Balance.js, maybe refactor to helper file
 
-const initiateGetBalance = (dispatch, net, address) => {
+const initiateGetBalance = (dispatch, net, address, currencyCode) => {
   syncTransactionHistory(dispatch, net, address);
   syncAvailableClaim(dispatch, net, address);
   syncBlockHeight(dispatch, net);
   return getBalance(net, address).then((resultBalance) => {
     const amounts = { neo: resultBalance.Neo, gas: resultBalance.Gas };
-    const currency = 'usd';
-    return getMarketPrices(amounts, currency).then((resultPrices) => {
+    return getMarketPrices(amounts, currencyCode).then((resultPrices) => {
       dispatch(setBalance(resultBalance.Neo, resultBalance.Gas, { Neo: resultPrices.Neo, Gas: resultPrices.Gas }));
     });
   }).catch((result) => {
@@ -54,16 +53,16 @@ const syncTransactionHistory = (dispatch, net, address) => {
   });
 };
 
-const resetBalanceSync = (dispatch, net, address) => {
+const resetBalanceSync = (dispatch, net, address, currencyCode) => {
   if (intervals.balance !== undefined){
     clearInterval(intervals.balance);
   }
   intervals.balance = setInterval(() =>  {
-    initiateGetBalance(dispatch, net, address);
+    initiateGetBalance(dispatch, net, address, currencyCode);
   }, 5000);
 };
 
-const toggleNet = (dispatch, net, address) => {
+const toggleNet = (dispatch, net, address, currencyCode) => {
   let newNet;
   if (net === "MainNet"){
     newNet = "TestNet";
@@ -71,30 +70,31 @@ const toggleNet = (dispatch, net, address) => {
     newNet = "MainNet";
   }
   dispatch(setNetwork(newNet));
-  resetBalanceSync(dispatch, newNet, address);
+  resetBalanceSync(dispatch, newNet, address, currencyCode);
   if (address !== null){
-    initiateGetBalance(dispatch, newNet, address);
+    initiateGetBalance(dispatch, newNet, address, currencyCode);
   }
 };
 
 class NetworkSwitch extends Component {
   componentDidMount = () => {
-    resetBalanceSync(this.props.dispatch, this.props.net, this.props.address);
+    resetBalanceSync(this.props.dispatch, this.props.net, this.props.address, this.props.currencyCode);
   }
 
   render = () =>
     <div id="network">
       <span className="transparent">Running on</span>
-      <span className="netName" onClick={() => toggleNet(this.props.dispatch, this.props.net, this.props.address)}>{this.props.net}</span>
+      <span className="netName" onClick={() => toggleNet(this.props.dispatch, this.props.net, this.props.address, this.props.currencyCode)}>{this.props.net}</span>
     </div>;
 
 }
 
 const mapStateToProps = (state) => ({
   net: state.metadata.network,
-  address: state.account.address
+  address: state.account.address,
+  currencyCode: state.wallet.currencyCode
 });
 
 NetworkSwitch = connect(mapStateToProps)(NetworkSwitch);
 
-export { NetworkSwitch, initiateGetBalance, syncTransactionHistory, intervals };
+export { NetworkSwitch, initiateGetBalance, syncTransactionHistory, intervals, resetBalanceSync };

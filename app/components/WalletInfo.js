@@ -3,26 +3,43 @@ import { connect } from 'react-redux';
 import Claim from "./Claim.js";
 import MdSync from 'react-icons/lib/md/sync';
 import QRCode from 'qrcode';
-import { initiateGetBalance, intervals } from "../components/NetworkSwitch";
-import { resetPrice } from '../modules/wallet';
+import { resetBalanceSync, initiateGetBalance, intervals } from "../components/NetworkSwitch";
+import { resetPrice, setCurrency } from '../modules/wallet';
 import { sendEvent, clearTransactionEvent } from '../modules/transactions';
 import { clipboard } from 'electron';
 import Copy from 'react-icons/lib/md/content-copy';
 import ReactTooltip from 'react-tooltip'
 
 // force sync with balance data
-const refreshBalance = (dispatch, net, address) => {
+const refreshBalance = (dispatch, net, address, currencyCode) => {
   dispatch(sendEvent(true, "Refreshing..."));
-  initiateGetBalance(dispatch, net, address).then((response) => {
+  initiateGetBalance(dispatch, net, address, currencyCode).then((response) => {
     dispatch(sendEvent(true, "Received latest blockchain information."));
     setTimeout(() => dispatch(clearTransactionEvent()), 1000);
   });
 };
 
+// toggle currency in which prices are displayed
+const toggleCurrency = (dispatch, net, address, currencyCode) => {
+  let nextCurrencyCode = {
+    'usd': 'eur',
+    'eur': 'gbp',
+    'gbp': 'jpy',
+    'jpy': 'cny',
+    'cny': 'usd',
+  };
+  let newCurrencyCode = nextCurrencyCode[currencyCode];
+  dispatch(setCurrency(newCurrencyCode));
+  resetBalanceSync(dispatch, net, address, newCurrencyCode);
+  if (address !== null){
+    initiateGetBalance(dispatch, net, address, newCurrencyCode);
+  }
+};
+
 class WalletInfo extends Component {
 
   componentDidMount = () => {
-    initiateGetBalance(this.props.dispatch, this.props.net, this.props.address);
+    initiateGetBalance(this.props.dispatch, this.props.net, this.props.address, this.props.currencyCode);
     QRCode.toCanvas(this.canvas, this.props.address, { version: 5 }, (err) => {
       if (err) console.log(err)
     });
@@ -44,14 +61,15 @@ class WalletInfo extends Component {
           <div className="split">
             <div className="label">NEO</div>
             <div className="amountBig">{this.props.neo}</div>
-            <div className="fiat">US {this.props.prices.Neo}</div>
+            <div className="fiat" onClick={() => toggleCurrency(this.props.dispatch, this.props.net, this.props.address, this.props.currencyCode)}>{this.props.prices.Neo}</div>
           </div>
           <div className="split">
             <div className="label">GAS</div>
             <div className="amountBig">{this.props.gas < 0.001 ? 0 : this.props.gas.toPrecision(5)}</div>
-            <div className="fiat">US {this.props.prices.Gas}</div>
+            <div className="fiat" onClick={() => toggleCurrency(this.props.dispatch, this.props.net, this.props.address, this.props.currencyCode)}>{this.props.prices.Gas}</div>
           </div>
-          <div onClick={() => refreshBalance(this.props.dispatch, this.props.net, this.props.address)}>
+          <div className="fiat" onClick={() => toggleCurrency(this.props.dispatch, this.props.net, this.props.address, this.props.currencyCode)}>{this.props.currencyCode.toUpperCase()}</div>
+          <div onClick={() => refreshBalance(this.props.dispatch, this.props.net, this.props.address, this.props.currencyCode)}>
             <MdSync id="refresh"/>
           </div>
         </div>
@@ -71,7 +89,8 @@ const mapStateToProps = (state) => ({
   gas: state.wallet.Gas,
   address: state.account.address,
   net: state.metadata.network,
-  prices: state.wallet.prices
+  prices: state.wallet.prices,
+  currencyCode: state.wallet.currencyCode
 });
 
 WalletInfo = connect(mapStateToProps)(WalletInfo);

@@ -3,6 +3,7 @@ const SET_BALANCE = 'SET_BALANCE';
 const SET_MARKET_PRICES = 'SET_MARKET_PRICES';
 const RESET_PRICES = 'RESET_PRICES';
 const SET_TRANSACTION_HISTORY = 'SET_TRANSACTION_HISTORY';
+const SET_CURRENCY = 'SET_CURRENCY';
 
 // Actions
 export function setBalance(neo, gas, prices){
@@ -34,8 +35,15 @@ export function setTransactionHistory(transactions){
   }
 };
 
+export function setCurrency(currencyCode){
+  return {
+    type: SET_CURRENCY,
+    currencyCode
+  }
+};
+
 // reducer for wallet account balance
-export default (state = {Neo: 0, Gas: 0, transactions: [], prices: {Neo: '--', Gas:'--'}}, action) => {
+export default (state = {Neo: 0, Gas: 0, transactions: [], prices: {Neo: '--', Gas:'--'}, currencyCode: 'usd'}, action) => {
   switch (action.type) {
       case SET_BALANCE:
           return {...state, Neo: action.Neo, Gas: action.Gas, prices: action.prices};
@@ -45,6 +53,8 @@ export default (state = {Neo: 0, Gas: 0, transactions: [], prices: {Neo: '--', G
           return {...state, prices: action.prices};
       case SET_TRANSACTION_HISTORY:
           return {...state, transactions: action.transactions};
+      case SET_CURRENCY:
+          return {...state, currencyCode: action.currencyCode};
       default:
           return state;
   }
