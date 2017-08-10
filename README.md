@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/CityOfZion/neon-wallet.svg?style=svg)](https://circleci.com/gh/CityOfZion/neon-wallet)
+
 # Neon Wallet
 
 ![wallet](/wallet.png)
