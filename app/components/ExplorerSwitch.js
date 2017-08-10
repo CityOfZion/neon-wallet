@@ -4,8 +4,6 @@ import { setExplorer } from '../modules/explorer';
 
 class ExplorerSwitch extends Component {
   componentDidMount = () => {
-    console.log("state", this.state);
-    console.log("props", this.props);
     this.toggleExplorer = this.toggleExplorer.bind(this);
   }
   
