@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getBalance, getTransactionHistory, getMarketPriceUSD, neoId, getClaimAmounts, getWalletDBHeight } from 'neon-js';
+import { getBalance, getTransactionHistory, getMarketPrices, neoId, getClaimAmounts, getWalletDBHeight } from 'neon-js';
 import { setClaim } from '../modules/claim';
 import { setBlockHeight, setNetwork } from '../modules/metadata';
-import { setBalance, setMarketPrice, resetPrice, setTransactionHistory, } from '../modules/wallet';
+import { setBalance, setMarketPrices, setTransactionHistory, } from '../modules/wallet';
 
 let intervals = {};
 
@@ -11,20 +11,14 @@ let netSelect;
 
 // TODO: this is being imported by Balance.js, maybe refactor to helper file
 
-const initiateGetBalance = (dispatch, net, address) => {
+const initiateGetBalance = (dispatch, net, address, currencyCode) => {
   syncTransactionHistory(dispatch, net, address);
   syncAvailableClaim(dispatch, net, address);
   syncBlockHeight(dispatch, net);
   return getBalance(net, address).then((resultBalance) => {
-    return getMarketPriceUSD(resultBalance.Neo).then((resultPrice) => {
-      if (resultPrice === undefined || resultPrice === null){
-        dispatch(setBalance(resultBalance.Neo, resultBalance.Gas, '--'));
-      } else {
-        dispatch(setBalance(resultBalance.Neo, resultBalance.Gas, resultPrice));
-      }
-      return true;
-    }).catch((e) => {
-      dispatch(setBalance(resultBalance.Neo, resultBalance.Gas, '--'));
+    const amounts = { neo: resultBalance.Neo, gas: resultBalance.Gas };
+    return getMarketPrices(amounts, currencyCode).then((resultPrices) => {
+      dispatch(setBalance(resultBalance.Neo, resultBalance.Gas, { Neo: resultPrices.Neo, Gas: resultPrices.Gas }));
     });
   }).catch((result) => {
     // If API dies, still display balance
@@ -59,16 +53,16 @@ const syncTransactionHistory = (dispatch, net, address) => {
   });
 };
 
-const resetBalanceSync = (dispatch, net, address) => {
+const resetBalanceSync = (dispatch, net, address, currencyCode) => {
   if (intervals.balance !== undefined){
     clearInterval(intervals.balance);
   }
   intervals.balance = setInterval(() =>  {
-    initiateGetBalance(dispatch, net, address);
+    initiateGetBalance(dispatch, net, address, currencyCode);
   }, 5000);
 };
 
-const toggleNet = (dispatch, net, address) => {
+const toggleNet = (dispatch, net, address, currencyCode) => {
   let newNet;
   if (net === "MainNet"){
     newNet = "TestNet";
@@ -76,30 +70,31 @@ const toggleNet = (dispatch, net, address) => {
     newNet = "MainNet";
   }
   dispatch(setNetwork(newNet));
-  resetBalanceSync(dispatch, newNet, address);
+  resetBalanceSync(dispatch, newNet, address, currencyCode);
   if (address !== null){
-    initiateGetBalance(dispatch, newNet, address);
+    initiateGetBalance(dispatch, newNet, address, currencyCode);
   }
 };
 
 class NetworkSwitch extends Component {
   componentDidMount = () => {
-    resetBalanceSync(this.props.dispatch, this.props.net, this.props.address);
+    resetBalanceSync(this.props.dispatch, this.props.net, this.props.address, this.props.currencyCode);
   }
 
   render = () =>
     <div id="network">
       <span className="transparent">Running on</span>
-      <span className="netName" onClick={() => toggleNet(this.props.dispatch, this.props.net, this.props.address)}>{this.props.net}</span>
+      <span className="netName" onClick={() => toggleNet(this.props.dispatch, this.props.net, this.props.address, this.props.currencyCode)}>{this.props.net}</span>
     </div>;
 
 }
 
 const mapStateToProps = (state) => ({
   net: state.metadata.network,
-  address: state.account.address
+  address: state.account.address,
+  currencyCode: state.wallet.currencyCode
 });
 
 NetworkSwitch = connect(mapStateToProps)(NetworkSwitch);
 
-export { NetworkSwitch, initiateGetBalance, syncTransactionHistory, intervals };
+export { NetworkSwitch, initiateGetBalance, syncTransactionHistory, intervals, resetBalanceSync };
