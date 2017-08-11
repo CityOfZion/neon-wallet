@@ -6,7 +6,7 @@ const LOGOUT = 'LOGOUT';
 const SHOWKEY = 'SHOWKEY';
 
 // Actions
-export function login(wif, showKey){
+export function login(wif){
   return {
     type: LOGIN,
     wif: wif
@@ -42,7 +42,7 @@ export default (state = {wif: null, address:null, loggedIn: false, showKey: fals
     case LOGOUT:
       return {'wif': null, address: null, 'loggedIn': false};
     case SHOWKEY:
-      return {showKey: action.showKey};
+      return {...state, showKey: action.showKey};
     default:
       return state;
   }
