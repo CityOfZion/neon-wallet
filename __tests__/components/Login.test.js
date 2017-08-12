@@ -6,7 +6,8 @@ import Login from '../../app/components/Login';
 
 const setup = (state = { account: {
   loggedIn: true,
-  wif: undefined
+  wif: undefined,
+  showKey: false
 }}) => {
   const store = configureStore()(state);
   const wrapper = shallow(<Login store={store} />);
@@ -35,6 +36,19 @@ describe('Login', () => {
 
     expect(store.getActions()).toEqual([
       { wif: someWif, type: 'LOGIN' }
+    ]);
+  });
+
+  test('clicking show key icon toggles private key visibility', () => {
+    const { store, wrapper } = setup();
+    const deeperWrapper = wrapper.shallow();
+
+    deeperWrapper
+      .find('.viewKey')
+      .simulate('click');
+
+    expect(store.getActions()).toEqual([
+      { showKey: true, type: 'SHOWKEY' }
     ]);
   });
 });
