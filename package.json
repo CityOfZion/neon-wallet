@@ -6,11 +6,11 @@
   "author": "Ethan Fast <ejhfast@gmail.com> (https://github.com/Ejhfast)",
   "scripts": {
     "postinstall": "install-app-deps",
-    "start": "electron .",
+    "start": "webpack && electron .",
     "test": "jest",
     "test-watch": "jest --watch",
-    "pack": "build --dir",
-    "dist": "build"
+    "pack": "webpack && build --dir",
+    "dist": "webpack && build"
   },
   "keywords": [],
   "license": "ISC",
