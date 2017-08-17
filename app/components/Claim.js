@@ -10,7 +10,6 @@ import ReactTooltip from 'react-tooltip'
 const doClaimNotify = (dispatch, net, wif) => {
   doClaimAllGas(net, wif).then((response) => {
     if (response.result === true){
-      console.log(response.result);
       dispatch(sendEvent(true, "Claim was successful! Your balance will update once the blockchain has processed it."));
       setTimeout(() => dispatch(disableClaim(false)), 300000);
     } else {
