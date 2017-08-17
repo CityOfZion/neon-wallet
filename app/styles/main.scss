@@ -47,6 +47,7 @@ button.disabled{
 	opacity:.6;
 }
 
+
 #newWallet{
 	width:650px;
 	margin:20% auto 0px auto;
@@ -62,6 +63,9 @@ button.disabled{
 		margin-bottom:20px;
 		font-size:1.4em;
 		font-weight:200;
+		background-color:#AA3939;
+		color:white;
+		padding:5px;
 	}
 	.addressBox, .privateKeyBox{
 		margin-bottom:20px;

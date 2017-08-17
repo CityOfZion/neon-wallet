@@ -6,8 +6,7 @@ import WalletInfo from './WalletInfo.js';
 import QRCode from 'qrcode';
 import { clipboard } from 'electron';
 import Copy from 'react-icons/lib/md/content-copy';
-import ReactTooltip from 'react-tooltip'
-
+import ReactTooltip from 'react-tooltip';
 
 const generateWallet = (dispatch) => {
   dispatch(newWallet());
@@ -31,7 +30,7 @@ class CreateWallet extends Component {
   render = () =>
     <div id="newWallet">
       <div className="disclaimer">
-        Save the keys below. We will never show you this private key again.
+        Save the keys below in a secure location. Otherwise, you will lose access to any funds in the associated account. This wallet will never show you these keys again!
       </div>
       <div className="addressBox">
         <canvas ref={(node) => this.publicCanvas = node}></canvas>
@@ -52,6 +51,7 @@ class CreateWallet extends Component {
         <span className="copyKey" onClick={() => clipboard.writeText(this.props.wif, 'selection')}><Copy data-tip data-for="copyPrivateKeyTip" /></span>
       </div>
       <Link to="/"><button>Back to Login</button></Link>
+      <button onClick={() => print()}>Print</button>
       <ReactTooltip class="solidTip" id="copyPublicKeyTip" place="bottom" type="dark" effect="solid">
         <span>Copy Public Key</span>
       </ReactTooltip>

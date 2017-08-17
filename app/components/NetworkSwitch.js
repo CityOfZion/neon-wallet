@@ -1,13 +1,33 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getBalance, getTransactionHistory, getMarketPriceUSD, neoId, getClaimAmounts, getWalletDBHeight } from 'neon-js';
+import { getBalance, getTransactionHistory, getMarketPriceUSD, neoId, getClaimAmounts, getWalletDBHeight, getAPIEndpoint } from 'neon-js';
 import { setClaim } from '../modules/claim';
 import { setBlockHeight, setNetwork } from '../modules/metadata';
 import { setBalance, setMarketPrice, resetPrice, setTransactionHistory, } from '../modules/wallet';
+import { version } from '../../package.json'
+import { sendEvent, clearTransactionEvent } from '../modules/transactions';
+import axios from 'axios';
 
 let intervals = {};
 
 let netSelect;
+
+// notify user if version is out of date
+
+const checkVersion = (dispatch, net) => {
+  const apiEndpoint = getAPIEndpoint(net);
+  return axios.get(apiEndpoint + '/v2/version').then((res) => {
+    if (res === undefined || res === null){
+      // something went wrong
+    }
+    else if (res.data.version !== version){
+      dispatch(sendEvent(false, "Your wallet is out of date! Please download version "+version+ " from https://github.com/CityOfZion/neon-wallet/releases"));
+      setTimeout(() => dispatch(clearTransactionEvent()), 15000);
+    }
+  }).catch((e) =>{
+    // something went wrong, but catch to avoid killing interface
+  });
+};
 
 // TODO: this is being imported by Balance.js, maybe refactor to helper file
 
@@ -15,6 +35,7 @@ const initiateGetBalance = (dispatch, net, address) => {
   syncTransactionHistory(dispatch, net, address);
   syncAvailableClaim(dispatch, net, address);
   syncBlockHeight(dispatch, net);
+  checkVersion(dispatch, net);
   return getBalance(net, address).then((resultBalance) => {
     return getMarketPriceUSD(resultBalance.Neo).then((resultPrice) => {
       if (resultPrice === undefined || resultPrice === null){
@@ -25,6 +46,8 @@ const initiateGetBalance = (dispatch, net, address) => {
       return true;
     }).catch((e) => {
       dispatch(setBalance(resultBalance.Neo, resultBalance.Gas, '--'));
+      console.log("something went wrong")
+
     });
   }).catch((result) => {
     // If API dies, still display balance
@@ -32,7 +55,9 @@ const initiateGetBalance = (dispatch, net, address) => {
 };
 
 const syncAvailableClaim = (dispatch, net, address) => {
+  console.log("trying to get claim");
   getClaimAmounts(net, address).then((result) => {
+    console.log(result);
     //claimAmount / 100000000
     dispatch(setClaim(result.available, result.unavailable));
   });
@@ -65,7 +90,7 @@ const resetBalanceSync = (dispatch, net, address) => {
   }
   intervals.balance = setInterval(() =>  {
     initiateGetBalance(dispatch, net, address);
-  }, 5000);
+  }, 30000);
 };
 
 const toggleNet = (dispatch, net, address) => {

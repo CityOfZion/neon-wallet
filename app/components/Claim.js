@@ -5,36 +5,50 @@ import { sendEvent, clearTransactionEvent } from '../modules/transactions';
 import { doClaimAllGas, doSendAsset } from 'neon-js';
 import ReactTooltip from 'react-tooltip'
 
+// wrap claiming with notifications
+
+const doClaimNotify = (dispatch, net, wif) => {
+  doClaimAllGas(net, wif).then((response) => {
+    if (response.result === true){
+      console.log(response.result);
+      dispatch(sendEvent(true, "Claim was successful! Your balance will update once the blockchain has processed it."));
+      setTimeout(() => dispatch(disableClaim(false)), 300000);
+    } else {
+      dispatch(sendEvent(false, "Claim failed"))
+    }
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+  });
+};
+
 // To initiate claim, first send all Neo to own address, the set claimRequest state
 // When new claims are available, this will trigger the claim
 const doGasClaim = (dispatch, net, wif, selfAddress, ans) => {
-  dispatch(sendEvent(true, "Sending Neo to Yourself..."));
-  doSendAsset(net, selfAddress, wif, "Neo", ans).then((response) => {
-    if (response.result === undefined){
-      dispatch(sendEvent(false, "Transaction failed!"));
-    } else {
-      dispatch(sendEvent(true, "Waiting for transaction to clear..."));
-      dispatch(setClaimRequest(true));
-      dispatch(disableClaim(true));
-    }
-  });
-}
+  // if no neo in account, no need to send to self first
+  if (ans === 0) {
+    doClaimNotify(dispatch, net, wif);
+  }
+  else {
+    dispatch(sendEvent(true, "Sending Neo to Yourself..."));
+    doSendAsset(net, selfAddress, wif, "Neo", ans).then((response) => {
+      if (response.result === undefined || response.result === false){
+        dispatch(sendEvent(false, "Transaction failed!"));
+      } else {
+        dispatch(sendEvent(true, "Waiting for transaction to clear..."));
+        dispatch(setClaimRequest(true));
+        dispatch(disableClaim(true));
+      }
+    });
+  }
+};
 
 class Claim extends Component {
 
   componentDidUpdate = () => {
     // if we requested a claim and new claims are available, do claim
+    console.log(this.props);
     if (this.props.claimRequest === true && this.props.claimWasUpdated == true){
       this.props.dispatch(setClaimRequest(false));
-      doClaimAllGas(this.props.net, this.props.wif).then((response) => {
-        if (response.result === true){
-          this.props.dispatch(sendEvent(true, "Claim was successful! Your balance will update once the blockchain has processed it."));
-          setTimeout(() => this.props.dispatch(disableClaim(false)), 300000);
-        } else {
-          this.props.dispatch(sendEvent(false, "Claim failed"))
-        }
-        setTimeout(() => this.props.dispatch(clearTransactionEvent()), 5000);
-      });
+      doClaimNotify(this.props.dispatch, this.props.net, this.props.wif);
     }
   }
 

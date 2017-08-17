@@ -1,6 +1,6 @@
 {
   "name": "Neon",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",
   "author": "Ethan Fast <ejhfast@gmail.com> (https://github.com/Ejhfast)",
@@ -58,7 +58,7 @@
     "fs": "0.0.1-security",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.2",
-    "neon-js": "git+https://github.com/CityOfZion/neon-js.git",
+    "neon-js": "git+https://github.com/CityOfZion/neon-js.git#1.0.1",
     "qrcode": "^0.8.2",
     "react": "^15.0.2",
     "react-ace": "^5.0.1",
