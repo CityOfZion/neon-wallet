@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getBalance, getTransactionHistory, getMarketPriceUSD, neoId, getClaimAmounts, getWalletDBHeight, getAPIEndpoint } from 'neon-js';
+import { getBalance, getTransactionHistory, neoId, getClaimAmounts, getWalletDBHeight, getAPIEndpoint } from 'neon-js';
 import { setClaim } from '../modules/claim';
 import { setBlockHeight, setNetwork } from '../modules/metadata';
 import { setBalance, setMarketPrice, resetPrice, setTransactionHistory, } from '../modules/wallet';
@@ -26,6 +26,15 @@ const checkVersion = (dispatch, net) => {
     }
   }).catch((e) =>{
     // something went wrong, but catch to avoid killing interface
+  });
+};
+
+// putting this back in wallet, does not belong in neon-js
+export const getMarketPriceUSD = (amount) => {
+  return axios.get('https://bittrex.com/api/v1.1/public/getticker?market=USDT-NEO').then((response) => {
+      console.log(response);
+      let lastUSDNEO = Number(response.data.result.Last);
+      return ('$' + (lastUSDNEO * amount).toFixed(2).toString());
   });
 };
 
