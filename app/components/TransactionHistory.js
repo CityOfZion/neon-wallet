@@ -40,7 +40,7 @@ class TransactionHistory extends Component {
           if ((formatAmount > 0 && formatAmount < 0.001) || (formatAmount < 0 && formatAmount > -0.001)){
             formatAmount = 0.0.toPrecision(5);
           }
-          return (<li>
+          return (<li key={t.txid}>
               <div className="txid" onClick={() => openExplorer(getExplorerLink(this.props.net, t.txid))}>
                 {t.txid.substring(0,32)}</div><div className="amount">{formatAmount} {t.type}
               </div></li>);
