@@ -4,16 +4,16 @@ import { syncTransactionHistory } from "../components/NetworkSwitch";
 import { shell } from 'electron';
 import Copy from 'react-icons/lib/md/content-copy';
 import { clipboard } from 'electron';
-
+import ExplorerSwitch from '../components/ExplorerSwitch'
 // TODO: make this a user setting
-const getExplorerLink = (net, txid) => {
+const getExplorerLink = (net, txid, explorer) => {
   let base;
   if (net === "MainNet"){
-    base = "http://antcha.in";
+    base = explorer.mainnet_url;
   } else {
-    base = "http://testnet.antcha.in";
+    base = explorer.testnet_url;
   }
-  return base + "/tx/hash/" + txid;
+  return `${base}${explorer.hash_path}${txid}`;
 }
 
 // helper to open an external web link
@@ -30,6 +30,7 @@ class TransactionHistory extends Component {
   render = () =>
     <div id="transactionInfo">
       <div className="columnHeader">Transaction History</div>
+      <ExplorerSwitch />
       <div className="headerSpacer"></div>
       <ul id="transactionList">
         {this.props.transactions.map((t) => {
@@ -40,8 +41,8 @@ class TransactionHistory extends Component {
           if ((formatAmount > 0 && formatAmount < 0.001) || (formatAmount < 0 && formatAmount > -0.001)){
             formatAmount = 0.0.toPrecision(5);
           }
-          return (<li>
-              <div className="txid" onClick={() => openExplorer(getExplorerLink(this.props.net, t.txid))}>
+          return (<li key={t.txid}>
+              <div className="txid" onClick={() => openExplorer(getExplorerLink(this.props.net, t.txid, this.props.explorer))}>
                 {t.txid.substring(0,32)}</div><div className="amount">{formatAmount} {t.type}
               </div></li>);
         })}
@@ -52,7 +53,8 @@ class TransactionHistory extends Component {
 const mapStateToProps = (state) => ({
   address: state.account.address,
   net: state.metadata.network,
-  transactions: state.wallet.transactions
+  transactions: state.wallet.transactions,
+  explorer: state.explorer.selected
 });
 
 TransactionHistory = connect(mapStateToProps)(TransactionHistory);
