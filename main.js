@@ -4,6 +4,10 @@ const app = electron.app;
 const Menu = electron.Menu;
 const BrowserWindow = electron.BrowserWindow;
 
+app.on('window-all-closed', () => {
+  app.quit()
+})
+
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
     height: 750,
