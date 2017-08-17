@@ -17,6 +17,9 @@ $button-text: #fff;
 $thin-text-color: #000;
 $error-color: #FF3E3E;
 
+// responsive
+$breakpoint: 800px;
+
 body{
 	font-family: 'helvetica neue', 'helvetica', sans-serif;
 	font-size:16px;
@@ -137,6 +140,7 @@ button.disabled{
 // split pane stuff
 #dashboard{
 	.statusMessage{
+		position:fixed;
 		width:100%;
 		text-align:center;
 		font-size:.9em;
@@ -339,16 +343,30 @@ button.disabled{
 				font-weight:200;
 				color:$thin-text-color;
 				font-size:1.1em;
+
+				@media all and (max-width:$breakpoint) {
+					font-size:0.8em;
+				}
 			}
 			.amountBig{
 				font-weight:200;
 				font-size:2.4em;
 				color:$thin-text-color;
 				margin:0px 0px 2px 0px;
+
+				@media all and (max-width:$breakpoint) {
+					font-weight:400;
+					font-size:1.3em;
+				}
 			}
 			.fiat{
 				font-size:1.1em;
 				font-weight:200;
+
+				@media all and (max-width:$breakpoint) {
+					font-size:1em;
+					padding-top:10px;
+				}
 			}
 			#refresh{
 				font-size:2.2em;
@@ -358,7 +376,7 @@ button.disabled{
 				cursor:pointer;
 				color:$default-button;
 
-				@media all and (max-width:900px) {
+				@media all and (max-width:$breakpoint) {
 					font-size: 1.6em;
 					left:46%;
 				}
@@ -398,8 +416,9 @@ button.disabled{
 
 				font-family: 'courier new';
 				font-size: .7em;
+				cursor: pointer;
 
-				@media all and (min-width: 800px) {
+				@media all and (min-width:$breakpoint) {
 
 					position: relative;
 					top: 2px;
@@ -408,7 +427,7 @@ button.disabled{
 					margin-left: 4%;
 					text-align: left;
 					overflow-x: hidden; // scroll;
-					cursor: pointer;
+
 
 				}
 			}
@@ -417,7 +436,7 @@ button.disabled{
 
 				color: $thin-text-color;
 
-				@media all and (min-width: 800px) {
+				@media all and (min-width:$breakpoint) {
 					display: inline-block;
 					width: 40%;
 					margin-right: 4%;
