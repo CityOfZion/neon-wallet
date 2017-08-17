@@ -21,8 +21,9 @@ let Login = ({ dispatch, loggedIn, wif }) =>
         {loggedIn ? <Link to="/dashboard"><button>Login</button></Link> : <button disabled="true">Login</button>}
         <Link to="/create"><button>New Wallet</button></Link>
       </div>
-      <div id="footer">Created by Ethan Fast and COZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A</div>
+
     </div>
+    <div id="footer">Created by Ethan Fast and COZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A</div>
   </div>;
 
 const mapStateToProps = (state) => ({

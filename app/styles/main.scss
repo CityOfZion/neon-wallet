@@ -92,34 +92,45 @@ button.disabled{
 }
 
 #loginPage{
-	.logo{
-		width:628px;
-		margin:10px auto;
-		text-align: left;
+
+	.login {
+
+		width: 70%;
+		max-width: 600px;
+		margin: 0 auto;
+		margin-top:28%;
+
+
+		.logo {
+			margin: 10px auto;
+			text-align: left;
+		}
+		input {
+			width: 93%;
+			font-size: 1.2em;
+			padding: 7px 15px;
+			border: none;
+			font-weight: 200;
+			background-color: $dark-input-color;
+			color: $default-text;
+		}
+
+		.loginButtons {
+			margin: 10px auto;
+			width: 630px;
+			text-align: left;
+		}
+
 	}
-	input{
-		width:600px;
-		font-size:1.2em;
-		padding:7px 15px;
-		border:none;
-		font-weight:200;
-		background-color:$dark-input-color;
-		color:$default-text;
-	}
-	margin-top:25%;
-	text-align:center;
-	.loginButtons{
-		margin:10px auto;
-		width:630px;
-		text-align:left;
-	}
-	#footer{
-		position:absolute;
-		bottom:10px;
-		width:100%;
+
+	#footer {
+		text-align:center;
+		position: absolute;
+		bottom: 10px;
+		width: 100%;
 		font-weight: 200;
-		color:$thin-text-color;
-		font-size:.9em;
+		color: $thin-text-color;
+		font-size: .9em;
 	}
 }
 
@@ -315,7 +326,7 @@ button.disabled{
 			letter-spacing: .07em;
 		}
 		.qrCode{
-			margin-top:20px;
+			margin-top:10px;
 		}
 		#balance{
 			margin:20px 0px;

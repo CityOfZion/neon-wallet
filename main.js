@@ -20,9 +20,9 @@ app.on('ready', () => {
   mainWindow = new BrowserWindow({
     height: 750,
     width: 1000,
-    minHeight: 750,
+    minHeight: 600,
     maxHeight: 750,
-    minWidth: 1000,
+    minWidth: 590,
     maxWidth: 1000,
     icon: path.join(__dirname, 'icons/png/64x64.png'),
     webPreferences: {
