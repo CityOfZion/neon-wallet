@@ -358,6 +358,11 @@ button.disabled{
 				cursor:pointer;
 				color:$default-button;
 
+				@media all and (max-width:900px) {
+					font-size: 1.6em;
+					left:46%;
+				}
+
 			}
 			#refresh:hover{
 				color:$default-button-hover;
@@ -388,25 +393,40 @@ button.disabled{
 			border-bottom:1px solid $spacer-color;
 			padding-bottom:10px;
 			margin-bottom:10px;
-			.txid{
-				position:relative;
-				top:2px;
-				display:inline-block;
-				width:44%;
-				margin-left: 4%;
-				text-align:left;
-				font-family:'courier new';
-				font-size:.7em;
-				overflow-x: hidden; // scroll;
-				cursor: pointer;
+
+			.txid {
+
+				font-family: 'courier new';
+				font-size: .7em;
+
+				@media all and (min-width: 800px) {
+
+					position: relative;
+					top: 2px;
+					display: inline-block;
+					width: 48%;
+					margin-left: 4%;
+					text-align: left;
+					overflow-x: hidden; // scroll;
+					cursor: pointer;
+
+				}
 			}
-			.amount{
-				display:inline-block;
-				width:44%;
-				margin-right: 4%;
-				text-align:right;
-				color:$thin-text-color;
+
+			.amount {
+
+				color: $thin-text-color;
+
+				@media all and (min-width: 800px) {
+					display: inline-block;
+					width: 40%;
+					margin-right: 4%;
+					text-align: right;
+
+
+				}
 			}
+
 		}
 	}
 }
