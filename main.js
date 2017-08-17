@@ -4,6 +4,14 @@ const app = electron.app;
 const Menu = electron.Menu;
 const BrowserWindow = electron.BrowserWindow;
 
+require('electron-context-menu')({
+	prepend: (params, browserWindow) => [{
+		label: 'Rainbow',
+		// Only show it when right-clicking images
+		visible: params.mediaType === 'image'
+	}]
+});
+
 app.on('window-all-closed', () => {
   app.quit()
 })
