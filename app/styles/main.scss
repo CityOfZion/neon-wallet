@@ -260,6 +260,11 @@ button.disabled{
 			margin-left:10px;
 			color:white;
 			margin-right:0px;
+
+			@media all and (max-width:$breakpoint) {
+				margin:6px;
+				width:96%;
+			}
 		}
 		button:hover{
 			background-color:$dark-button-hover;
@@ -283,6 +288,10 @@ button.disabled{
 			margin-left:10px;
 			color:white;
 			margin-right:0px;
+
+			@media all and (max-width:$breakpoint) {
+				margin-left:0px;
+			}
 		}
 		button:hover{
 			background-color:$default-button-hover;
@@ -306,10 +315,38 @@ button.disabled{
 			width:50%;
 			height:30px;
 			margin-right:0px;
-			input{
+
+			@media all and (max-width:$breakpoint) {
+				width:80%;
+			}
+
+
+			input {
 				width:96%;
 				padding:0px 2%;
 			}
+		}
+
+		// wrap "Send Asset" button to next line for smaller window size
+		.ctaButton {
+
+			@media all and (min-width:$breakpoint) {
+				display:inline;
+			}
+
+
+			@media all and (max-width:$breakpoint) {
+				//width:100%;
+			}
+
+			button#doSend {
+				width:30%;
+
+				@media all and (max-width:$breakpoint) {
+					width: 100%;
+				}
+			}
+
 		}
 	}
 	#accountInfo{

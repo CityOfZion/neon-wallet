@@ -32,10 +32,31 @@ class Dashboard extends Component {
     if (this.props.sendPane == true){
       sendPaneClosed = "0%";
     } else {
+
+      // send confirmation prompt
       if (this.props.confirmPane == false){
-        sendPaneClosed = "21%";
-      } else {
-        sendPaneClosed = "15%";
+
+        // add space for the "Send Asset" button to go to the next line if the window is reduced
+        if((window.innerWidth <= 770) || (window.innerHeight <= 680)) {
+            sendPaneClosed = "180px";
+        }
+        else {
+			sendPaneClosed = "21%";
+		}
+
+      }
+
+      // initial opening of send pane
+      else {
+
+        // add space for the "Send Asset" button to go to the next line if the window is reduced
+        if((window.innerWidth <= 770) || (window.innerHeight <= 680)) {
+          sendPaneClosed = "150px";
+        }
+        else {
+			sendPaneClosed = "100px"; //"15%";
+        }
+
       }
     }
     if (this.props.status !== null){
