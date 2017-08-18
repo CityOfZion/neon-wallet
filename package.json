@@ -54,6 +54,7 @@
     "crypto-js": "^3.1.9-1",
     "ecurve": "^1.0.5",
     "electron-context-menu": "^0.9.1",
+    "electron-window-state": "^4.1.1",
     "elliptic": "^6.4.0",
     "file-loader": "^0.9.0",
     "fs": "0.0.1-security",
