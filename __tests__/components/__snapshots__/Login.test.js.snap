@@ -4,7 +4,7 @@ exports[`Login renders without crashing 1`] = `
 <Login
   dispatch={[Function]}
   loggedIn={true}
-  showKey={false}
+  onWifChange={[Function]}
   store={
     Object {
       "clearActions": [Function],
