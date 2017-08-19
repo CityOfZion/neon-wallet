@@ -13,7 +13,7 @@ let sendAddress, sendAmount, confirmButton;
 const validateForm = (dispatch, neo_balance, gas_balance, asset) => {
   // check for valid address
   try {
-    if (verifyAddress(sendAddress.value) !== true){
+    if (verifyAddress(sendAddress.value) !== true || sendAddress.value.charAt(0) !== "A") {
       dispatch(sendEvent(false, "The address you entered was not valid."));
       setTimeout(() => dispatch(clearTransactionEvent()), 5000);
       return false;
@@ -61,9 +61,10 @@ const sendTransaction = (dispatch, net, wif, asset, neo_balance, gas_balance) =>
   if (validateForm(dispatch, neo_balance, gas_balance, asset) === true){
     dispatch(sendEvent(true, "Processing..."));
     doSendAsset(net, sendAddress.value, wif, asset, sendAmount.value).then((response) => {
-      if (response.result === undefined){
+      if (response.result === undefined || response.result === false){
         dispatch(sendEvent(false, "Transaction failed!"));
       } else {
+        console.log(response.result);
         dispatch(sendEvent(true, "Transaction complete! Your balance will automatically update when the blockchain has processed it."));
       }
       setTimeout(() => dispatch(clearTransactionEvent()), 5000);
