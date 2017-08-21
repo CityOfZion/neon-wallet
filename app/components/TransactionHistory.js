@@ -9,11 +9,11 @@ import { clipboard } from 'electron';
 const getExplorerLink = (net, txid) => {
   let base;
   if (net === "MainNet"){
-    base = "http://antcha.in";
+    base = "https://neotracker.io";
   } else {
-    base = "http://testnet.antcha.in";
+    base = "https://testnet.neotracker.io";
   }
-  return base + "/tx/hash/" + txid;
+  return base + "/tx/" + txid;
 }
 
 // helper to open an external web link
@@ -35,7 +35,7 @@ class TransactionHistory extends Component {
         {this.props.transactions.map((t) => {
           const formatGas = (gas) => Math.floor(parseFloat(gas) * 10000) / 10000;
           let formatAmount = t.type === "NEO" ? parseInt(t.amount) : formatGas(t.amount);
-          return (<li>
+          return (<li key={t.txid}>
               <div className="txid" onClick={() => openExplorer(getExplorerLink(this.props.net, t.txid))}>
                 {t.txid.substring(0,32)}</div><div className="amount">{formatAmount} {t.type}
               </div></li>);
