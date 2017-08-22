@@ -35,7 +35,7 @@ button{
 	border:none;
 	cursor:pointer;
 }
-button:hover{
+button:hover:enabled{
 	background-color:$default-button-hover;
 }
 button a{
@@ -43,7 +43,7 @@ button a{
 	color:inherit;
 }
 
-button.disabled{
+button:disabled{
 	opacity:.6;
 }
 
