@@ -97,7 +97,7 @@ button.disabled{
 		margin:10px auto;
 		text-align: left;
 	}
-	input{
+	input[type=text]{
 		width:600px;
 		font-size:1.2em;
 		padding:7px 15px;
@@ -108,7 +108,7 @@ button.disabled{
 	}
 	margin-top:25%;
 	text-align:center;
-	.loginButtons{
+	.loginButtons, .rememberLoginField{
 		margin:10px auto;
 		width:630px;
 		text-align:left;
