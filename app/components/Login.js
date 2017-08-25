@@ -4,12 +4,18 @@ import { Link } from 'react-router';
 import { login } from '../modules/account';
 import CreateWallet from './CreateWallet.js'
 import { getWIFFromPrivateKey } from 'neon-js';
+import { encrypt_wif, decrypt_wif } from '../util/Passphrase.js';
+
 
 const logo = require('../images/neon-logo2.png');
 
 const onWifChange = (dispatch, value) => {
   // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
   dispatch(login(value));
+  console.log(value);
+  var test = encrypt_wif(value, "test123");
+  console.log(test);
+  console.log(decrypt_wif(test, "test123"));
 };
 
 let Login = ({ dispatch, loggedIn, wif }) =>

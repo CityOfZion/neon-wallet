@@ -19,7 +19,7 @@ export function logout(){
 };
 
 // Reducer that manages account state (account now = private key)
-export default (state = {wif: null, address:null, loggedIn: false}, action) => {
+export default (state = {wif: null, address:null, loggedIn: false, redirectUrl: null}, action) => {
   switch (action.type) {
     case LOGIN:
       let loadAccount;

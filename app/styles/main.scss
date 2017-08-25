@@ -47,13 +47,25 @@ button.disabled{
 	opacity:.6;
 }
 
+input{
+	font-size:1.2em;
+	padding:7px 15px;
+	border:none;
+	font-weight:200;
+	background-color:$dark-input-color;
+	color:$default-text;
+}
+
 
 #newWallet{
 	width:650px;
-	margin:20% auto 0px auto;
+	margin:15% auto 0px auto;
 	.copyKey{
 		margin-left:5px;
 		color:#000;
+	}
+	input{
+		width:600px;
 	}
 	.copyKey:hover{
 		opacity:.7;
@@ -67,8 +79,14 @@ button.disabled{
 		color:white;
 		padding:5px;
 	}
+	.info{
+		margin-bottom:20px;
+		font-size:1.4em;
+		font-weight:200;
+	}
 	.addressBox, .privateKeyBox{
 		margin-bottom:20px;
+		margin-top:20px;
 		display:inline-block;
 		width:40%;
 		text-align: center;
@@ -99,17 +117,12 @@ button.disabled{
 	}
 	input{
 		width:600px;
-		font-size:1.2em;
-		padding:7px 15px;
-		border:none;
-		font-weight:200;
-		background-color:$dark-input-color;
-		color:$default-text;
+		margin-bottom: 10px;
 	}
 	margin-top:25%;
 	text-align:center;
 	.loginButtons{
-		margin:10px auto;
+		margin:0px auto;
 		width:630px;
 		text-align:left;
 	}
