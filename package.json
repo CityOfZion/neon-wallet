@@ -59,6 +59,7 @@
     "file-loader": "^0.9.0",
     "fs": "0.0.1-security",
     "isomorphic-fetch": "^2.2.1",
+    "js-scrypt": "^0.2.0",
     "lodash": "^4.17.2",
     "neon-js": "git+https://github.com/CityOfZion/neon-js.git#1.0.1",
     "nep2-js": "https://github.com/CityOfZion/nep2-js.git#0.0.1",

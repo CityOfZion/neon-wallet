@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
-import { login } from '../modules/account';
+import { login, decrypting } from '../modules/account';
 import CreateWallet from './CreateWallet.js'
 import { encrypt_wif, decrypt_wif } from '../util/Passphrase.js';
 
@@ -13,11 +13,13 @@ let passphrase_input;
 const onWifChange = (dispatch, history) => {
   console.log(wif_input, passphrase_input);
   // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
-  console.log("decrypting...");
-  decrypt_wif(wif_input.value, passphrase_input.value).then((wif) => {
-    dispatch(login(wif));
-    history.push('/dashboard');
-  });
+  dispatch(decrypting(true));
+  setTimeout(() => {
+    decrypt_wif(wif_input.value, passphrase_input.value).then((wif) => {
+      dispatch(login(wif));
+      history.push('/dashboard');
+    });
+  }, 500);
 };
 
 class Login2 extends Component {
@@ -34,6 +36,7 @@ class Login2 extends Component {
           <button onClick={(e) => onWifChange(dispatch, this.props.history)}>Login</button>
           <Link to="/create"><button>New Wallet</button></Link>
         </div>
+        {this.props.decrypting === true ? <div className="decrypting">Decrypting keys...</div> : <div></div>}
         <div id="footer">Created by Ethan Fast and COZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A</div>
       </div>
     </div>);
@@ -43,7 +46,8 @@ class Login2 extends Component {
 
 const mapStateToProps = (state) => ({
   loggedIn: state.account.loggedIn,
-  wif: state.account.wif
+  wif: state.account.wif,
+  decrypting: state.account.decrypting
 });
 
 Login2 = connect(mapStateToProps)(Login2);

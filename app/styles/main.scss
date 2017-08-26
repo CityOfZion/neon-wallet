@@ -59,13 +59,18 @@ input{
 
 #newWallet{
 	width:650px;
-	margin:15% auto 0px auto;
+	margin:10% auto 0px auto;
 	.copyKey{
 		margin-left:5px;
 		color:#000;
 	}
 	input{
 		width:600px;
+	}
+	.generating{
+		margin:20px 0px;
+		font-size: 1.4em;
+		font-weight: 200;
 	}
 	.copyKey:hover{
 		opacity:.7;
@@ -119,7 +124,14 @@ input{
 		width:600px;
 		margin-bottom: 10px;
 	}
-	margin-top:25%;
+	.decrypting{
+		width: 630px;
+		margin:20px auto;
+		font-size: 1.4em;
+		font-weight: 200;
+		text-align: left;
+	}
+	margin-top:20%;
 	text-align:center;
 	.loginButtons{
 		margin:0px auto;
