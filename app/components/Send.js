@@ -99,7 +99,7 @@ let Send = ({dispatch, wif, status, neo, gas, net, confirmPane, selectedAsset}) 
         <ReactTooltip class="solidTip" id="assetTip" place="bottom" type="dark" effect="solid">
           <span>Toggle NEO / GAS</span>
         </ReactTooltip>
-      <button id="doSend" onClick={() => openAndValidate(dispatch, neo, gas, selectedAsset)}>Send Asset</button>
+      <div className="ctaButton"><button id="doSend" onClick={() => openAndValidate(dispatch, neo, gas, selectedAsset)}>Send Asset</button></div>
     </div>
     <div id="confirmPane" onClick={() => sendTransaction(dispatch, net, wif, selectedAsset, neo, gas)}>
       <button ref={node => {confirmButton = node;}}>Confirm Transaction</button>

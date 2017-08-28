@@ -17,6 +17,9 @@ $button-text: #fff;
 $thin-text-color: #000;
 $error-color: #FF3E3E;
 
+// responsive
+$breakpoint: 800px;
+
 body{
 	font-family: 'helvetica neue', 'helvetica', sans-serif;
 	font-size:16px;
@@ -24,6 +27,7 @@ body{
 	margin:0px;
 	background-color:$main-background;
 	color:$default-text;
+	overflow-x:hidden;
 }
 
 button{
@@ -92,40 +96,52 @@ button.disabled{
 }
 
 #loginPage{
-	.logo{
-		width:628px;
-		margin:10px auto;
-		text-align: left;
+
+	.login {
+
+		width: 70%;
+		max-width: 600px;
+		margin: 0 auto;
+		margin-top:28%;
+
+
+		.logo {
+			margin: 10px auto;
+			text-align: left;
+		}
+		input {
+			width: 93%;
+			font-size: 1.2em;
+			padding: 7px 15px;
+			border: none;
+			font-weight: 200;
+			background-color: $dark-input-color;
+			color: $default-text;
+		}
+
+		.loginButtons {
+			margin: 10px auto;
+			width: 630px;
+			text-align: left;
+		}
+
 	}
-	input{
-		width:600px;
-		font-size:1.2em;
-		padding:7px 15px;
-		border:none;
-		font-weight:200;
-		background-color:$dark-input-color;
-		color:$default-text;
-	}
-	margin-top:25%;
-	text-align:center;
-	.loginButtons{
-		margin:10px auto;
-		width:630px;
-		text-align:left;
-	}
-	#footer{
-		position:absolute;
-		bottom:10px;
-		width:100%;
+
+	#footer {
+		text-align:center;
+		position: absolute;
+		bottom: 10px;
+		width: 100%;
 		font-weight: 200;
-		color:$thin-text-color;
-		font-size:.9em;
+		color: $thin-text-color;
+		font-size: .9em;
 	}
 }
 
 // split pane stuff
 #dashboard{
 	.statusMessage{
+		position:fixed;
 		width:100%;
 		text-align:center;
 		font-size:.9em;
@@ -245,6 +261,11 @@ button.disabled{
 			margin-left:10px;
 			color:white;
 			margin-right:0px;
+
+			@media all and (max-width:$breakpoint) {
+				margin:6px;
+				width:96%;
+			}
 		}
 		button:hover{
 			background-color:$dark-button-hover;
@@ -268,6 +289,10 @@ button.disabled{
 			margin-left:10px;
 			color:white;
 			margin-right:0px;
+
+			@media all and (max-width:$breakpoint) {
+				margin-left:0px;
+			}
 		}
 		button:hover{
 			background-color:$default-button-hover;
@@ -291,10 +316,38 @@ button.disabled{
 			width:50%;
 			height:30px;
 			margin-right:0px;
-			input{
+
+			@media all and (max-width:$breakpoint) {
+				width:80%;
+			}
+
+
+			input {
 				width:96%;
 				padding:0px 2%;
 			}
+		}
+
+		// wrap "Send Asset" button to next line for smaller window size
+		.ctaButton {
+
+			@media all and (min-width:$breakpoint) {
+				display:inline;
+			}
+
+
+			@media all and (max-width:$breakpoint) {
+				//width:100%;
+			}
+
+			button#doSend {
+				width:30%;
+
+				@media all and (max-width:$breakpoint) {
+					width: 100%;
+				}
+			}
+
 		}
 	}
 	#accountInfo{
@@ -315,7 +368,7 @@ button.disabled{
 			letter-spacing: .07em;
 		}
 		.qrCode{
-			margin-top:20px;
+			margin-top:10px;
 		}
 		#balance{
 			margin:20px 0px;
@@ -328,16 +381,30 @@ button.disabled{
 				font-weight:200;
 				color:$thin-text-color;
 				font-size:1.1em;
+
+				@media all and (max-width:$breakpoint) {
+					font-size:0.8em;
+				}
 			}
 			.amountBig{
 				font-weight:200;
 				font-size:2.4em;
 				color:$thin-text-color;
 				margin:0px 0px 2px 0px;
+
+				@media all and (max-width:$breakpoint) {
+					font-weight:400;
+					font-size:1.3em;
+				}
 			}
 			.fiat{
 				font-size:1.1em;
 				font-weight:200;
+
+				@media all and (max-width:$breakpoint) {
+					font-size:1em;
+					padding-top:10px;
+				}
 			}
 			#refresh{
 				font-size:2.2em;
@@ -346,6 +413,11 @@ button.disabled{
 				left:47%;
 				cursor:pointer;
 				color:$default-button;
+
+				@media all and (max-width:$breakpoint) {
+					font-size: 1.6em;
+					left:46%;
+				}
 
 			}
 			#refresh:hover{
@@ -377,25 +449,41 @@ button.disabled{
 			border-bottom:1px solid $spacer-color;
 			padding-bottom:10px;
 			margin-bottom:10px;
-			.txid{
-				position:relative;
-				top:2px;
-				display:inline-block;
-				width:44%;
-				margin-left: 4%;
-				text-align:left;
-				font-family:'courier new';
-				font-size:.7em;
-				overflow-x: hidden; // scroll;
+
+			.txid {
+
+				font-family: 'courier new';
+				font-size: .7em;
 				cursor: pointer;
+
+				@media all and (min-width:$breakpoint) {
+
+					position: relative;
+					top: 2px;
+					display: inline-block;
+					width: 48%;
+					margin-left: 4%;
+					text-align: left;
+					overflow-x: hidden; // scroll;
+
+
+				}
 			}
-			.amount{
-				display:inline-block;
-				width:44%;
-				margin-right: 4%;
-				text-align:right;
-				color:$thin-text-color;
+
+			.amount {
+
+				color: $thin-text-color;
+
+				@media all and (min-width:$breakpoint) {
+					display: inline-block;
+					width: 40%;
+					margin-right: 4%;
+					text-align: right;
+
+
+				}
 			}
+
 		}
 	}
 }

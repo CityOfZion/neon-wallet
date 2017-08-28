@@ -4,6 +4,8 @@ const app = electron.app;
 const Menu = electron.Menu;
 const BrowserWindow = electron.BrowserWindow;
 
+const windowStateKeeper = require('electron-window-state');
+
 require('electron-context-menu')({
 	prepend: (params, browserWindow) => [{
 		label: 'Rainbow',
@@ -17,13 +19,20 @@ app.on('window-all-closed', () => {
 })
 
 app.on('ready', () => {
+
+  // load previous window size (or fall back to defaults)
+  let mainWindowState = windowStateKeeper({
+    defaultWidth: 1000,
+    defaultHeight: 750
+  });
+
   mainWindow = new BrowserWindow({
-    height: 750,
-    width: 1000,
-    minHeight: 750,
-    maxHeight: 750,
-    minWidth: 1000,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
+    minWidth: 590,
     maxWidth: 1000,
+    minHeight: 600,
+    maxHeight: 750,
     icon: path.join(__dirname, 'icons/png/64x64.png'),
     webPreferences: {
       webSecurity: false
@@ -31,6 +40,9 @@ app.on('ready', () => {
     // maxHeight: 800,
     // maxWidth:300
   });
+
+  // register listener on window so we can update the size
+  mainWindowState.manage(mainWindow);
 
   const template = [
   {
