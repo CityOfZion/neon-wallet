@@ -5,6 +5,7 @@ import { encrypt_wif, decrypt_wif } from '../util/Passphrase.js';
 const NEW_WALLET_KEYS = 'NEW_WALLET_KEYS';
 const NEW_WALLET = 'NEW_WALLET';
 const SET_GENERATING = 'SET_GENERATING';
+const RESET_KEY = 'RESET_KEY';
 
 export function newWalletKeys(passphrase){
   return {
@@ -30,6 +31,12 @@ export function generating(bool){
   }
 };
 
+export function resetKey(){
+  return {
+    type: RESET_KEY,
+  }
+};
+
 // Reducer used for state necessary to generating a wallet
 export default (state = {wif: null, address:null, passphrase: null, encryptedWif: null, generating: false}, action) => {
   switch (action.type) {
@@ -43,6 +50,8 @@ export default (state = {wif: null, address:null, passphrase: null, encryptedWif
       return  {...state, wif: action.wif, address: action.address, passphrase: action.passphrase, encryptedWif: action.encryptedWif, generating: false};
     case SET_GENERATING:
       return {...state, generating: action.state};
+    case RESET_KEY:
+      return {wif: null, address:null, passphrase: null, encryptedWif: null, generating: false};
     default:
       return state;
   }

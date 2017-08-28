@@ -1,70 +1,56 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { newWallet } from '../modules/generateWallet';
+import { newWallet, generating } from '../modules/generateWallet';
 import { Link } from 'react-router';
 import WalletInfo from './WalletInfo.js';
 import QRCode from 'qrcode';
 import { clipboard } from 'electron';
 import Copy from 'react-icons/lib/md/content-copy';
 import ReactTooltip from 'react-tooltip';
+import DisplayWalletKeys from './DisplayWalletKeys';
+import { generateEncryptedWif } from '../util/Passphrase';
 
-const generateWallet = (dispatch) => {
-  dispatch(newWallet());
-};
+
+let passphrase;
+
+const generateNewWallet = (dispatch, passphrase) => {
+  dispatch(generating(true));
+  // TODO: for some reason this blocks, so giving time to processes the earlier
+  // dispatch to display "generating" text, should fix this in future
+  setTimeout(() => {
+    generateEncryptedWif(passphrase).then((result) => {
+      console.log("encWif", result);
+      dispatch(newWallet(result));
+    });
+  }, 500);
+}
 
 class CreateWallet extends Component {
 
-  componentDidMount = () => {
-    generateWallet(this.props.dispatch);
+  render = () => {
+    const passphraseDiv = (<div>
+        <div className="info">
+          Choose a passphrase to encrypt your private key:
+        </div>
+        <input type="text" ref={(node) => passphrase = node} placeholder="enter passphrase here"/>
+        <button onClick={() => generateNewWallet(this.props.dispatch, passphrase.value)} > Generate keys </button>
+      </div>);
+      return (<div id="newWallet">
+        {this.props.wif === null ? passphraseDiv : <div></div>}
+        {this.props.generating === true ? <div className="generating">Generating keys...</div> : <div></div>}
+        {this.props.generating === false && this.props.wif !== null ? <DisplayWalletKeys address={this.props.address} wif={this.props.wif} passphrase={this.props.passphrase} passphraseKey={this.props.encryptedWif} /> : <div></div>}
+      </div>)
   }
 
-  componentDidUpdate = () => {
-    QRCode.toCanvas(this.publicCanvas, this.props.address, { version: 5 }, (err) => {
-      if (err) console.log(err)
-    });
-    QRCode.toCanvas(this.privateCanvas, this.props.wif, { version: 5 }, (err) => {
-      if (err) console.log(err)
-    });
-  }
-
-  render = () =>
-    <div id="newWallet">
-      <div className="disclaimer">
-        Save the keys below in a secure location. Otherwise, you will lose access to any funds in the associated account. This wallet will never show you these keys again!
-      </div>
-      <div className="addressBox">
-        <canvas ref={(node) => this.publicCanvas = node}></canvas>
-        <div>Public Address</div>
-      </div>
-      <div className="privateKeyBox">
-        <canvas ref={(node) => this.privateCanvas = node}></canvas>
-        <div>Private Key (WIF)</div>
-      </div>
-      <div className="keyList">
-        <span className="label">Public Address:</span>
-        <span className="key">{this.props.address}</span>
-        <span className="copyKey" onClick={() => clipboard.writeText(this.props.address)}><Copy data-tip data-for="copyPublicKeyTip" /></span>
-      </div>
-      <div className="keyList">
-        <span className="label">Private Key:</span>
-        <span className="key">{this.props.wif}</span>
-        <span className="copyKey" onClick={() => clipboard.writeText(this.props.wif)}><Copy data-tip data-for="copyPrivateKeyTip" /></span>
-      </div>
-      <Link to="/"><button>Back to Login</button></Link>
-      <button onClick={() => print()}>Print</button>
-      <ReactTooltip class="solidTip" id="copyPublicKeyTip" place="bottom" type="dark" effect="solid">
-        <span>Copy Public Key</span>
-      </ReactTooltip>
-      <ReactTooltip class="solidTip" id="copyPrivateKeyTip" place="bottom" type="dark" effect="solid">
-        <span>Copy Private Key</span>
-      </ReactTooltip>
-    </div>;
 
 }
 
 const mapStateToProps = (state) => ({
   wif: state.generateWallet.wif,
-  address: state.generateWallet.address
+  address: state.generateWallet.address,
+  encryptedWif: state.generateWallet.encryptedWif,
+  passphrase: state.generateWallet.passphrase,
+  generating: state.generateWallet.generating
 });
 
 CreateWallet = connect(mapStateToProps)(CreateWallet);

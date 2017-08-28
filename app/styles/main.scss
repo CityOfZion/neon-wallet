@@ -91,7 +91,6 @@ input{
 	}
 	.addressBox, .privateKeyBox{
 		margin-bottom:20px;
-		margin-top:20px;
 		display:inline-block;
 		width:40%;
 		text-align: center;
@@ -112,6 +111,15 @@ input{
 	button{
 		margin-top:20px;
 	}
+	.saveKey{
+		input{
+			width:300px;
+			margin-right:20px;
+		}
+		button{
+			background-color: $dark-button;
+		}
+	}
 }
 
 #loginPage{
@@ -119,6 +127,15 @@ input{
 		width:628px;
 		margin:10px auto;
 		text-align: left;
+	}
+	.selectBox{
+		label{
+			font-weight: 800px;
+			margin-right: 10px;
+		}
+		width: 630px;
+		text-align: left;
+		margin:0px auto 10px auto;
 	}
 	input{
 		width:600px;
@@ -137,6 +154,9 @@ input{
 		margin:0px auto;
 		width:630px;
 		text-align:left;
+	}
+	.altButton{
+		background-color: $dark-button;
 	}
 	#footer{
 		position:absolute;

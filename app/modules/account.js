@@ -4,6 +4,7 @@ import { getAccountsFromWIFKey } from 'neon-js';
 const LOGIN = 'LOGIN';
 const LOGOUT = 'LOGOUT';
 const SET_DECRYPTING = 'SET_DECRYPTING';
+const SET_KEYS = 'SET_KEYS';
 
 
 // Actions
@@ -27,8 +28,15 @@ export function decrypting(bool){
   }
 };
 
+export function setKeys(keys){
+  return {
+    type: SET_KEYS,
+    keys
+  }
+};
+
 // Reducer that manages account state (account now = private key)
-export default (state = {wif: null, address:null, loggedIn: false, redirectUrl: null, decrypting: false}, action) => {
+export default (state = {wif: null, address:null, loggedIn: false, redirectUrl: null, decrypting: false, accountKeys: []}, action) => {
   switch (action.type) {
     case LOGIN:
       let loadAccount;
@@ -41,9 +49,11 @@ export default (state = {wif: null, address:null, loggedIn: false, redirectUrl: 
       }
       return {...state, wif:action.wif, address:loadAccount.address, loggedIn:true, decrypting: false};
     case LOGOUT:
-      return {'wif': null, address: null, 'loggedIn': false, decrypting: false};
+      return {...state, 'wif': null, address: null, 'loggedIn': false, decrypting: false};
     case SET_DECRYPTING:
       return {...state, decrypting: action.state};
+    case SET_KEYS:
+      return {...state, accountKeys: action.keys};
     default:
       return state;
   }

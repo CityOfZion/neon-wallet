@@ -4,6 +4,23 @@ import QRCode from 'qrcode';
 import { clipboard } from 'electron';
 import Copy from 'react-icons/lib/md/content-copy';
 import ReactTooltip from 'react-tooltip';
+import storage from 'electron-json-storage';
+import { resetKey } from '../modules/generateWallet';
+import { connect } from 'react-redux';
+
+let key_name;
+
+const saveKey = (encWifValue) => {
+  storage.get('keys', (error, data) => {
+    data[key_name.value] = encWifValue
+    console.log("setting keys", data);
+    storage.set('keys', data);
+  });
+};
+
+const resetGeneratedKey = (dispatch) => {
+  dispatch(resetKey())
+};
 
 class DisplayWalletKeys extends Component {
 
@@ -18,6 +35,10 @@ class DisplayWalletKeys extends Component {
 
   render = () =>
     <div>
+      <div className="disclaimer">
+        You must save and backup the keys below. If you lose them, you lose access to your assets.
+        Verify that you can log in to the account before sending anything to the address below!
+      </div>
       <div className="addressBox">
         <canvas ref={(node) => this.publicCanvas = node}></canvas>
         <div>Public Address</div>
@@ -46,7 +67,11 @@ class DisplayWalletKeys extends Component {
         <span className="key">{this.props.wif}</span>
         <span className="copyKey" onClick={() => clipboard.writeText(this.props.wif)}><Copy data-tip data-for="copyPrivateKeyTip" /></span>
       </div>
-      <Link to="/"><button>Back to Login</button></Link>
+      <div className="saveKey">
+          <input type="text" placeholder="Name this key" ref={(node) => key_name = node}></input>
+          <button onClick={() => saveKey(this.props.passphraseKey)}>Save Key</button>
+      </div>
+      <Link onClick={() => resetGeneratedKey(this.props.dispatch)} to="/"><button>Back to Login</button></Link>
       <button onClick={() => print()}>Print</button>
       <ReactTooltip class="solidTip" id="copyPublicKeyTip" place="bottom" type="dark" effect="solid">
         <span>Copy Public Key</span>
@@ -63,5 +88,9 @@ class DisplayWalletKeys extends Component {
     </div>;
 
 }
+
+const mapStateToProps = (state) => ({});
+
+DisplayWalletKeys = connect(mapStateToProps)(DisplayWalletKeys);
 
 export default DisplayWalletKeys;
