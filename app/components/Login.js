@@ -17,6 +17,11 @@ let Login = ({ dispatch, loggedIn, wif }) =>
     <div className="login">
       <div className="logo"><img src={logo} width="60px"/></div>
       <input type="text" placeholder="Enter your private key here (WIF)" onChange={(e) => onWifChange(dispatch, e.target.value)} />
+        {!loggedIn && wif && wif.length > 0 ? (
+          <div>Private Key is not in proper WIF format.</div>
+        ) : (
+          <div></div>
+        )}
       <div className="loginButtons">
         {loggedIn ? <Link to="/dashboard"><button>Login</button></Link> : <button disabled="true">Login</button>}
         <Link to="/create"><button>New Wallet</button></Link>
