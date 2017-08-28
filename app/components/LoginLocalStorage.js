@@ -6,6 +6,8 @@ import CreateWallet from './CreateWallet.js'
 import { encrypt_wif, decrypt_wif } from '../util/Passphrase.js';
 import storage from 'electron-json-storage';
 import _ from 'lodash';
+// TODO: these event messages should be refactored from transactions
+import { sendEvent, clearTransactionEvent } from '../modules/transactions';
 
 const logo = require('../images/neon-logo2.png');
 
@@ -15,11 +17,12 @@ let passphrase_input;
 const onWifChange = (dispatch, history) => {
   // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
   //
-  dispatch(decrypting(true));
+  dispatch(sendEvent(true, "Decrypting encoded key..."));
   setTimeout(() => {
     decrypt_wif(wif_input.value, passphrase_input.value).then((wif) => {
       dispatch(login(wif));
       history.push('/dashboard');
+      dispatch(clearTransactionEvent());
     });
   }, 500);
 };

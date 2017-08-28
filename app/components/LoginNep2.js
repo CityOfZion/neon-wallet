@@ -4,6 +4,9 @@ import { Link, browserHistory } from 'react-router';
 import { login, decrypting } from '../modules/account';
 import CreateWallet from './CreateWallet.js'
 import { encrypt_wif, decrypt_wif } from '../util/Passphrase.js';
+// TODO: these event messages should be refactored from transactions
+import { sendEvent, clearTransactionEvent } from '../modules/transactions';
+
 
 const logo = require('../images/neon-logo2.png');
 
@@ -13,12 +16,13 @@ let passphrase_input;
 const onWifChange = (dispatch, history) => {
   console.log(wif_input, passphrase_input);
   // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
-  dispatch(decrypting(true));
+  dispatch(sendEvent(true, "Decrypting encoded key..."));
   setTimeout(() => {
     const encWifValue = wif_input.value;
     decrypt_wif(encWifValue, passphrase_input.value).then((wif) => {
       dispatch(login(wif));
       history.push('/dashboard');
+      dispatch(clearTransactionEvent());
     });
   }, 500);
 };

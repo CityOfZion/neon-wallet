@@ -56,6 +56,19 @@ input{
 	color:$default-text;
 }
 
+.statusMessage{
+	width:100%;
+	text-align:center;
+	font-size:.9em;
+	padding:5px 0px 3px 0px;
+	color:white;
+}
+.statusMessage.success{
+	background-color:$default-button;
+}
+.statusMessage.fail{
+	background-color:$error-color;
+}
 
 #newWallet{
 	width:650px;
@@ -170,19 +183,6 @@ input{
 
 // split pane stuff
 #dashboard{
-	.statusMessage{
-		width:100%;
-		text-align:center;
-		font-size:.9em;
-		padding:5px 0px 3px 0px;
-		color:white;
-	}
-	.statusMessage.success{
-		background-color:$default-button;
-	}
-	.statusMessage.fail{
-		background-color:$error-color;
-	}
 	.spacer{
 		width:84%;
 		margin:0px 8%;
