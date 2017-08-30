@@ -41,6 +41,18 @@ const hexXor = (str1, str2) => {
   return ab2hexstring(result)
 }
 
+export const encryptWifAccount = (wif, passphrase) => {
+  return encrypt_wif(wif, passphrase).then((encWif) => {
+    const loadAccount = getAccountsFromWIFKey(wif);
+    return {
+      wif: wif,
+      address: loadAccount[0].address,
+      encryptedWif: encWif,
+      passphrase: passphrase
+    };
+  });
+};
+
 export const generateEncryptedWif = (passphrase) => {
   const newPrivateKey = generatePrivateKey();
   const newWif = getWIFFromPrivateKey(newPrivateKey);

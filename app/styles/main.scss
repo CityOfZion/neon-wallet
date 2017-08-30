@@ -86,6 +86,16 @@ input{
 	margin-bottom: 30px;
 }
 
+#footer{
+	position:absolute;
+	bottom:10px;
+	width:100%;
+	font-weight: 200;
+	color:$thin-text-color;
+	font-size:.9em;
+	text-align:center;
+}
+
 #settings{
 	width:$page-width;
 	margin:$top-margin auto $top-margin auto;
@@ -119,7 +129,7 @@ $box-margin: 10px;
 		width: ($page-width / 4) - ((2*$box-padding) + ($box-margin));
 		height: 120px;
 		padding: $box-padding;
-		margin:$box-margin $box-margin $box-margin 0px;
+		margin:0px $box-margin $box-margin 0px;
 		font-size: 1.4em;
 		font-weight:200;
 	}
@@ -140,6 +150,7 @@ $box-margin: 10px;
 	}
 	input{
 		width:95%;
+		margin-bottom:10px;
 	}
 	.generating{
 		margin:20px 0px;
@@ -186,7 +197,7 @@ $box-margin: 10px;
 		}
 	}
 	button{
-		margin-top:20px;
+		margin-top:10px;
 	}
 	.saveKey{
 		margin-bottom: 10px;
@@ -230,15 +241,6 @@ $box-margin: 10px;
 	.loginButtons{
 		text-align:left;
 		margin-top: 10px;
-	}
-	#footer{
-		position:absolute;
-		bottom:10px;
-		width:100%;
-		font-weight: 200;
-		color:$thin-text-color;
-		font-size:.9em;
-		text-align:center;
 	}
 }
 
