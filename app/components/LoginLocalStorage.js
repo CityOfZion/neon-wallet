@@ -42,16 +42,18 @@ class LoginLocalStorage extends Component {
     return (<div id="loginPage">
       <div className="login">
         <div className="logo"><img src={logo} width="60px"/></div>
-        <input type="text" placeholder="Enter your passphrase here" ref={(node) => passphrase_input = node}  />
-        <div className="selectBox">
-          <label>Encrypted key:</label>
-          <select ref={(node) => wif_input = node}>
-            {_.map(this.props.accountKeys, (value, key) => <option value={value}>{key}</option>)}
-          </select>
+        <div className="loginForm">
+          <input type="text" placeholder="Enter your passphrase here" ref={(node) => passphrase_input = node}  />
+          <div className="selectBox">
+            <label>Encrypted key:</label>
+            <select ref={(node) => wif_input = node}>
+              {_.map(this.props.accountKeys, (value, key) => <option value={value}>{key}</option>)}
+            </select>
+          </div>
         </div>
         <div className="loginButtons">
           <button onClick={(e) => onWifChange(dispatch, this.props.history)}>Login</button>
-          <Link to="/"><button className="altButton">Back</button></Link>
+          <Link to="/"><button className="altButton">Home</button></Link>
         </div>
         {this.props.decrypting === true ? <div className="decrypting">Decrypting keys...</div> : <div></div>}
         <div id="footer">Created by Ethan Fast and COZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A</div>

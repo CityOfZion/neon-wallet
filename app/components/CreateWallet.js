@@ -11,6 +11,8 @@ import DisplayWalletKeys from './DisplayWalletKeys';
 import { generateEncryptedWif } from '../util/Passphrase';
 import { sendEvent, clearTransactionEvent } from '../modules/transactions';
 
+const logo = require('../images/neon-logo2.png');
+
 let passphrase;
 
 // TODO: move to neon-js
@@ -48,9 +50,10 @@ class CreateWallet extends Component {
         </div>
         <input type="text" ref={(node) => passphrase = node} placeholder="enter passphrase here"/>
         <button onClick={() => generateNewWallet(this.props.dispatch)} > Generate keys </button>
-        <Link to="/"><button className="altButton">Back</button></Link>
+        <Link to="/"><button className="altButton">Home</button></Link>
       </div>);
       return (<div id="newWallet">
+        <div className="logo"><img src={logo} width="60px"/></div>
         {this.props.wif === null ? passphraseDiv : <div></div>}
         {this.props.generating === true ? <div className="generating">Generating keys...</div> : <div></div>}
         {this.props.generating === false && this.props.wif !== null ? <DisplayWalletKeys address={this.props.address} wif={this.props.wif} passphrase={this.props.passphrase} passphraseKey={this.props.encryptedWif} /> : <div></div>}

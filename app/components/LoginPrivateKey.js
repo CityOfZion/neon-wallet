@@ -40,11 +40,13 @@ const onWifChange = (dispatch, history, wif) => {
 let LoginPrivateKey = ({ dispatch, loggedIn, wif, history }) =>
   <div id="loginPage">
     <div className="login">
-      <div className="logo"><img src={logo} width="60px"/></div>
-      <input type="text" placeholder="Enter your private key here (WIF)" ref={(node) => wif = node}/>
+      <div className="loginForm">
+        <div className="logo"><img src={logo} width="60px"/></div>
+        <input type="text" placeholder="Enter your private key here (WIF)" ref={(node) => wif = node}/>
+      </div>
       <div className="loginButtons">
         <button onClick={(e) => onWifChange(dispatch, history, wif)}>Login</button>
-        <Link to="/"><button className="altButton">Back</button></Link>
+        <Link to="/"><button className="altButton">Home</button></Link>
       </div>
       <div id="footer">Created by Ethan Fast and COZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A</div>
     </div>
