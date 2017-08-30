@@ -23,6 +23,9 @@ const onWifChange = (dispatch, history) => {
       dispatch(login(wif));
       history.push('/dashboard');
       dispatch(clearTransactionEvent());
+    }).catch(() => {
+      dispatch(sendEvent(false, "Wrong passphrase"));
+      setTimeout(() => dispatch(clearTransactionEvent()), 5000);
     });
   }, 500);
 };

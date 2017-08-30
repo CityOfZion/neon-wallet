@@ -5,22 +5,45 @@ import { login } from '../modules/account';
 import CreateWallet from './CreateWallet.js'
 import { getWIFFromPrivateKey } from 'neon-js';
 import { encrypt_wif, decrypt_wif } from '../util/Passphrase.js';
+import { sendEvent, clearTransactionEvent } from '../modules/transactions';
+import { getAccountsFromWIFKey } from 'neon-js';
 
+let wif;
 
 const logo = require('../images/neon-logo2.png');
 
-const onWifChange = (dispatch, value) => {
-  // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
-  dispatch(login(value));
+// TODO: move to neon-js
+const verifyPrivateKey = (wif) => {
+  try {
+    // TODO: better check
+    getAccountsFromWIFKey(wif)[0].address;
+  }
+  catch (e){
+    return false;
+  }
+  return true;
 };
 
-let LoginPrivateKey = ({ dispatch, loggedIn, wif }) =>
+const onWifChange = (dispatch, history, wif) => {
+  const value = wif.value;
+  // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
+  if (verifyPrivateKey(value) === true){
+    dispatch(login(value));
+    history.push('/dashboard');
+  }
+  else {
+    dispatch(sendEvent(false, "That is not a valid private key"));
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+  }
+};
+
+let LoginPrivateKey = ({ dispatch, loggedIn, wif, history }) =>
   <div id="loginPage">
     <div className="login">
       <div className="logo"><img src={logo} width="60px"/></div>
-      <input type="text" placeholder="Enter your private key here (WIF)" onChange={(e) => onWifChange(dispatch, e.target.value)} />
+      <input type="text" placeholder="Enter your private key here (WIF)" ref={(node) => wif = node}/>
       <div className="loginButtons">
-        {loggedIn ? <Link to="/dashboard"><button>Login</button></Link> : <button disabled="true">Login</button>}
+        <button onClick={(e) => onWifChange(dispatch, history, wif)}>Login</button>
         <Link to="/create"><button className="altButton">New Wallet</button></Link>
         <Link to="/"><button className="altButton">Use New Encrypted Key</button></Link>
         <Link to="/loginLocalStorage"><button className="altButton">Use Saved Wallet</button></Link>

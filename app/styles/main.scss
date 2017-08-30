@@ -98,7 +98,7 @@ input{
 		padding:5px;
 	}
 	.info{
-		margin-bottom:20px;
+		margin-bottom: 10px;
 		font-size:1.4em;
 		font-weight:200;
 	}
@@ -115,6 +115,9 @@ input{
 		margin-left:9%;
 	}
 	.keyList{
+		margin-bottom: 20px;
+	}
+	.keyListItem{
 		font-size:.9em;
 		span.label{
 			margin-right:5px;
@@ -122,9 +125,10 @@ input{
 		}
 	}
 	button{
-		margin-top:20px;
+		margin-top:10px;
 	}
 	.saveKey{
+		margin-bottom: 10px;
 		input{
 			width:300px;
 			margin-right:20px;
@@ -170,6 +174,9 @@ input{
 	}
 	.altButton{
 		background-color: $dark-button;
+	}
+	.altButton:hover{
+		opacity:.8;
 	}
 	#footer{
 		position:absolute;

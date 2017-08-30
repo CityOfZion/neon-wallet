@@ -7,14 +7,16 @@ import ReactTooltip from 'react-tooltip';
 import storage from 'electron-json-storage';
 import { resetKey } from '../modules/generateWallet';
 import { connect } from 'react-redux';
+import { sendEvent, clearTransactionEvent } from '../modules/transactions';
 
 let key_name;
 
-const saveKey = (encWifValue) => {
+const saveKey = (dispatch, encWifValue) => {
   storage.get('keys', (error, data) => {
     data[key_name.value] = encWifValue
-    console.log("setting keys", data);
+    dispatch(sendEvent(true, "Saved key as "+key_name.value))
     storage.set('keys', data);
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
   });
 };
 
@@ -48,28 +50,30 @@ class DisplayWalletKeys extends Component {
         <div>Private Key (WIF)</div>
       </div>
       <div className="keyList">
-        <span className="label">Public Address:</span>
-        <span className="key">{this.props.address}</span>
-        <span className="copyKey" onClick={() => clipboard.writeText(this.props.address)}><Copy data-tip data-for="copyPublicKeyTip" /></span>
-      </div>
-      <div className="keyList">
-        <span className="label">Passphrase:</span>
-        <span className="key">{this.props.passphrase}</span>
-        <span className="copyKey" onClick={() => clipboard.writeText(this.props.passphrase)}><Copy data-tip data-for="copyPassphraseTip" /></span>
-      </div>
-      <div className="keyList">
-        <span className="label">Encrypted key:</span>
-        <span className="key">{this.props.passphraseKey}</span>
-        <span className="copyKey" onClick={() => clipboard.writeText(this.props.passphraseKey)}><Copy data-tip data-for="copyPassphraseKeyTip" /></span>
-      </div>
-      <div className="keyList">
-        <span className="label">Private Key:</span>
-        <span className="key">{this.props.wif}</span>
-        <span className="copyKey" onClick={() => clipboard.writeText(this.props.wif)}><Copy data-tip data-for="copyPrivateKeyTip" /></span>
+        <div className="keyListItem">
+          <span className="label">Public Address:</span>
+          <span className="key">{this.props.address}</span>
+          <span className="copyKey" onClick={() => clipboard.writeText(this.props.address)}><Copy data-tip data-for="copyPublicKeyTip" /></span>
+        </div>
+        <div className="keyListItem">
+          <span className="label">Passphrase:</span>
+          <span className="key">{this.props.passphrase}</span>
+          <span className="copyKey" onClick={() => clipboard.writeText(this.props.passphrase)}><Copy data-tip data-for="copyPassphraseTip" /></span>
+        </div>
+        <div className="keyListItem">
+          <span className="label">Encrypted key:</span>
+          <span className="key">{this.props.passphraseKey}</span>
+          <span className="copyKey" onClick={() => clipboard.writeText(this.props.passphraseKey)}><Copy data-tip data-for="copyPassphraseKeyTip" /></span>
+        </div>
+        <div className="keyListItem">
+          <span className="label">Private Key:</span>
+          <span className="key">{this.props.wif}</span>
+          <span className="copyKey" onClick={() => clipboard.writeText(this.props.wif)}><Copy data-tip data-for="copyPrivateKeyTip" /></span>
+        </div>
       </div>
       <div className="saveKey">
           <input type="text" placeholder="Name this key" ref={(node) => key_name = node}></input>
-          <button onClick={() => saveKey(this.props.passphraseKey)}>Save Key</button>
+          <button onClick={() => saveKey(this.props.dispatch, this.props.passphraseKey)}>Save Key</button>
       </div>
       <Link onClick={() => resetGeneratedKey(this.props.dispatch)} to="/"><button>Back to Login</button></Link>
       <button onClick={() => print()}>Print</button>

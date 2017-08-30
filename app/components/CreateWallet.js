@@ -9,20 +9,34 @@ import Copy from 'react-icons/lib/md/content-copy';
 import ReactTooltip from 'react-tooltip';
 import DisplayWalletKeys from './DisplayWalletKeys';
 import { generateEncryptedWif } from '../util/Passphrase';
-
+import { sendEvent, clearTransactionEvent } from '../modules/transactions';
 
 let passphrase;
 
-const generateNewWallet = (dispatch, passphrase) => {
-  dispatch(generating(true));
-  // TODO: for some reason this blocks, so giving time to processes the earlier
-  // dispatch to display "generating" text, should fix this in future
-  setTimeout(() => {
-    generateEncryptedWif(passphrase).then((result) => {
-      console.log("encWif", result);
-      dispatch(newWallet(result));
-    });
-  }, 500);
+// TODO: move to neon-js
+// what is the correct length to check for?
+const validatePassphrase = (passphrase) => {
+  return passphrase.length >= 4;
+};
+
+const generateNewWallet = (dispatch) => {
+  const current_phrase = passphrase.value;
+  if (validatePassphrase(current_phrase)){
+    // TODO: for some reason this blocks, so giving time to processes the earlier
+    // dispatch to display "generating" text, should fix this in future
+    dispatch(sendEvent(true, "Generating encoded key..."));
+    setTimeout(() => {
+      generateEncryptedWif(current_phrase).then((result) => {
+        dispatch(newWallet(result));
+        dispatch(clearTransactionEvent());
+      });
+    }, 500);
+  }
+  else {
+    dispatch(sendEvent(false, "Please choose a longer passphrase"));
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+    passphrase.value = '';
+  }
 }
 
 class CreateWallet extends Component {
@@ -33,7 +47,7 @@ class CreateWallet extends Component {
           Choose a passphrase to encrypt your private key:
         </div>
         <input type="text" ref={(node) => passphrase = node} placeholder="enter passphrase here"/>
-        <button onClick={() => generateNewWallet(this.props.dispatch, passphrase.value)} > Generate keys </button>
+        <button onClick={() => generateNewWallet(this.props.dispatch)} > Generate keys </button>
       </div>);
       return (<div id="newWallet">
         {this.props.wif === null ? passphraseDiv : <div></div>}
@@ -41,7 +55,6 @@ class CreateWallet extends Component {
         {this.props.generating === false && this.props.wif !== null ? <DisplayWalletKeys address={this.props.address} wif={this.props.wif} passphrase={this.props.passphrase} passphraseKey={this.props.encryptedWif} /> : <div></div>}
       </div>)
   }
-
 
 }
 
