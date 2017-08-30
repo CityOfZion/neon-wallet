@@ -75,7 +75,7 @@ class DisplayWalletKeys extends Component {
           <input type="text" placeholder="Name this key" ref={(node) => key_name = node}></input>
           <button onClick={() => saveKey(this.props.dispatch, this.props.passphraseKey)}>Save Key</button>
       </div>
-      <Link onClick={() => resetGeneratedKey(this.props.dispatch)} to="/"><button>Back to Login</button></Link>
+      <Link onClick={() => resetGeneratedKey(this.props.dispatch)} to="/"><button>Back</button></Link>
       <button onClick={() => print()}>Print</button>
       <ReactTooltip class="solidTip" id="copyPublicKeyTip" place="bottom" type="dark" effect="solid">
         <span>Copy Public Key</span>

@@ -48,6 +48,7 @@ class CreateWallet extends Component {
         </div>
         <input type="text" ref={(node) => passphrase = node} placeholder="enter passphrase here"/>
         <button onClick={() => generateNewWallet(this.props.dispatch)} > Generate keys </button>
+        <Link to="/"><button className="altButton">Back</button></Link>
       </div>);
       return (<div id="newWallet">
         {this.props.wif === null ? passphraseDiv : <div></div>}

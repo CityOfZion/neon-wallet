@@ -44,9 +44,7 @@ let LoginPrivateKey = ({ dispatch, loggedIn, wif, history }) =>
       <input type="text" placeholder="Enter your private key here (WIF)" ref={(node) => wif = node}/>
       <div className="loginButtons">
         <button onClick={(e) => onWifChange(dispatch, history, wif)}>Login</button>
-        <Link to="/create"><button className="altButton">New Wallet</button></Link>
-        <Link to="/"><button className="altButton">Use New Encrypted Key</button></Link>
-        <Link to="/loginLocalStorage"><button className="altButton">Use Saved Wallet</button></Link>
+        <Link to="/"><button className="altButton">Back</button></Link>
       </div>
       <div id="footer">Created by Ethan Fast and COZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A</div>
     </div>

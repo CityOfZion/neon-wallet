@@ -70,6 +70,29 @@ input{
 	background-color:$error-color;
 }
 
+#home{
+	width:740px;
+	margin:10% auto 0px auto;
+	a .linkBox{
+		text-decoration: none;
+		color: white;
+	}
+	.linkBox{
+		display:inline-block;
+		float:left;
+		background-color: $bright-button;
+		width: 140px;
+		height: 80px;
+		padding: 40px;
+		margin:10px;
+		font-size: 1.4em;
+		font-weight:200;
+	}
+	.linkBox:hover{
+		opacity: .8;
+	}
+}
+
 #newWallet{
 	width:650px;
 	margin:10% auto 0px auto;
