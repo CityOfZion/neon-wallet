@@ -4,6 +4,7 @@ import App from './components/App';
 import LoginNep2 from './components/LoginNep2';
 import LoginPrivateKey from './components/LoginPrivateKey';
 import Home from './components/Home';
+import Settings from './components/Settings';
 import LoginLocalStorage from './components/LoginLocalStorage';
 import CreateWallet from './components/CreateWallet';
 import Send from './components/Send';
@@ -17,6 +18,6 @@ export default (
 		<Route path="/loginPrivateKey" component={LoginPrivateKey} />
 		<Route path="/loginLocalStorage" component={LoginLocalStorage} />
 		<Route path="/LoginEncrypted" component={LoginNep2} />
-
+		<Route path="/settings" component={Settings} />
 	</Route>
 );

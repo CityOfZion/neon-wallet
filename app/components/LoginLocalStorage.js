@@ -15,8 +15,6 @@ let wif_input;
 let passphrase_input;
 
 const onWifChange = (dispatch, history) => {
-  // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
-  //
   dispatch(sendEvent(true, "Decrypting encoded key..."));
   setTimeout(() => {
     decrypt_wif(wif_input.value, passphrase_input.value).then((wif) => {
@@ -60,7 +58,6 @@ class LoginLocalStorage extends Component {
       </div>
     </div>);
   }
-
 }
 
 const mapStateToProps = (state) => ({

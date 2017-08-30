@@ -70,6 +70,22 @@ input{
 	background-color:$error-color;
 }
 
+#settings{
+	width:740px;
+	margin:10% auto 0px auto;
+	.title{
+		font-size:1.3em;
+		font-weight: 800;
+		margin-bottom: 20px;
+	}
+	.settingsForm{
+		margin-bottom: 20px;
+	}
+	label{
+		margin-right: 10px;
+	}
+}
+
 #home{
 	width:740px;
 	margin:10% auto 0px auto;
