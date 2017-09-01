@@ -37,7 +37,7 @@ class WalletInfo extends Component {
             <span className="copyKey" onClick={() => clipboard.writeText(this.props.address)}><Copy data-tip data-for="copyAddressTip" /></span>
         </div>
         <ReactTooltip class="solidTip" id="copyAddressTip" place="bottom" type="dark" effect="solid">
-          <span>2 Copy Public Address</span>
+          <span>Copy Public Address</span>
         </ReactTooltip>
         <div className="spacer"></div>
         <div id="balance">
