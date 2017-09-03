@@ -30,7 +30,7 @@ class DisplayWalletKeys extends Component {
     QRCode.toCanvas(this.publicCanvas, this.props.address, { version: 5 }, (err) => {
       if (err) console.log(err)
     });
-    QRCode.toCanvas(this.privateCanvas, this.props.wif, { version: 5 }, (err) => {
+    QRCode.toCanvas(this.privateCanvas, this.props.passphraseKey, { version: 5 }, (err) => {
       if (err) console.log(err)
     });
   }
@@ -39,7 +39,8 @@ class DisplayWalletKeys extends Component {
     <div>
       <div className="disclaimer">
         You must save and backup the keys below. If you lose them, you lose access to your assets.
-        Verify that you can log in to the account before sending anything to the address below!
+        You can click "Save Key" to save the encrypted key in local application storage.
+        Verify that you can log in to the account and see the correct public address before sending anything to the address below!
       </div>
       <div className="addressBox">
         <canvas ref={(node) => this.publicCanvas = node}></canvas>
@@ -47,18 +48,19 @@ class DisplayWalletKeys extends Component {
       </div>
       <div className="privateKeyBox">
         <canvas ref={(node) => this.privateCanvas = node}></canvas>
-        <div>Private Key (WIF)</div>
+        <div>Encrypted Private Key</div>
       </div>
       <div className="keyList">
-        <div className="keyListItem">
-          <span className="label">Public Address:</span>
-          <span className="key">{this.props.address}</span>
-          <span className="copyKey" onClick={() => clipboard.writeText(this.props.address)}><Copy data-tip data-for="copyPublicKeyTip" /></span>
-        </div>
         <div className="keyListItem">
           <span className="label">Passphrase:</span>
           <span className="key">{this.props.passphrase}</span>
           <span className="copyKey" onClick={() => clipboard.writeText(this.props.passphrase)}><Copy data-tip data-for="copyPassphraseTip" /></span>
+        </div>
+        <br/>
+        <div className="keyListItem">
+          <span className="label">Public Address:</span>
+          <span className="key">{this.props.address}</span>
+          <span className="copyKey" onClick={() => clipboard.writeText(this.props.address)}><Copy data-tip data-for="copyPublicKeyTip" /></span>
         </div>
         <div className="keyListItem">
           <span className="label">Encrypted key:</span>
