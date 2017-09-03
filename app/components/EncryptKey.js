@@ -37,6 +37,9 @@ const generateNewWallet = (dispatch) => {
       encryptWifAccount(current_wif, current_phrase).then((result) => {
         dispatch(newWallet(result));
         dispatch(clearTransactionEvent());
+      }).catch(() => {
+        dispatch(sendEvent(false, "The private key is not valid"));
+        setTimeout(() => dispatch(clearTransactionEvent()), 5000);
       });
     }, 500);
   }
@@ -44,6 +47,7 @@ const generateNewWallet = (dispatch) => {
     dispatch(sendEvent(false, "Please choose a longer passphrase"));
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
     passphrase.value = '';
+    passphrase2.value = '';
   }
 }
 

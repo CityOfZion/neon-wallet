@@ -43,6 +43,7 @@ const generateNewWallet = (dispatch) => {
     dispatch(sendEvent(false, "Please choose a longer passphrase"));
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
     passphrase.value = '';
+    passphrase2.value = '';
   }
 }
 
