@@ -99,9 +99,9 @@ input{
 #settings{
 	width:$page-width;
 	margin:$top-margin auto $top-margin auto;
-	.title{
-		font-size:1.1em;
-		font-weight: 800;
+	.description{
+		font-size:1.2em;
+		font-weight: 200;
 		margin-bottom: 20px;
 	}
 	.settingsForm{
@@ -109,6 +109,35 @@ input{
 	}
 	label{
 		margin-right: 10px;
+	}
+	.walletItem{
+		width:100%;
+	}
+	.settingsItem{
+		margin-bottom:10px;
+	}
+	.itemTitle{
+		font-weight:800;
+		margin-bottom:5px;
+	}
+	.walletItem{
+		margin-bottom:3px;
+	}
+	.walletName, .walletKey, .deleteWallet{
+		display:inline-block;
+		margin-right:10px;
+	}
+	.walletName{
+		width:20%;
+	}
+	.walletKey{
+		width:50%;
+		font-size:.8em;
+		font-family: 'courier', monospace;
+	}
+	.deleteWallet{
+		width:10%;
+		opacity:.6;
 	}
 }
 

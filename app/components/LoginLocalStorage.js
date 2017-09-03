@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
 import { login, decrypting, setKeys } from '../modules/account';
 import CreateWallet from './CreateWallet.js'
-import { encrypt_wif, decrypt_wif } from '../util/Passphrase.js';
+import { encrypt_wif, decrypt_wif } from 'neon-js';
 import storage from 'electron-json-storage';
 import _ from 'lodash';
 // TODO: these event messages should be refactored from transactions

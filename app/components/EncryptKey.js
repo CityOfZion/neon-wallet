@@ -8,7 +8,7 @@ import { clipboard } from 'electron';
 import Copy from 'react-icons/lib/md/content-copy';
 import ReactTooltip from 'react-tooltip';
 import DisplayWalletKeys from './DisplayWalletKeys';
-import { encryptWifAccount } from '../util/Passphrase';
+import { encryptWifAccount } from 'neon-js';
 import { sendEvent, clearTransactionEvent } from '../modules/transactions';
 
 const logo = require('../images/neon-logo2.png');

@@ -1,5 +1,5 @@
 import { getAccountsFromWIFKey, generatePrivateKey, getWIFFromPrivateKey } from 'neon-js';
-import { encrypt_wif, decrypt_wif } from '../util/Passphrase.js';
+import { encrypt_wif, decrypt_wif } from 'neon-js';
 
 // Constants
 const NEW_WALLET_KEYS = 'NEW_WALLET_KEYS';

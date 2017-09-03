@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import { login } from '../modules/account';
 import CreateWallet from './CreateWallet.js'
 import { getWIFFromPrivateKey } from 'neon-js';
-import { encrypt_wif, decrypt_wif } from '../util/Passphrase.js';
+import { encrypt_wif, decrypt_wif } from 'neon-js';
 import { sendEvent, clearTransactionEvent } from '../modules/transactions';
 import { getAccountsFromWIFKey } from 'neon-js';
 
