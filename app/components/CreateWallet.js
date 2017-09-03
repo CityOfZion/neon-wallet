@@ -13,7 +13,7 @@ import { sendEvent, clearTransactionEvent } from '../modules/transactions';
 
 const logo = require('../images/neon-logo2.png');
 
-let passphrase;
+let passphrase, passphrase2;
 
 // TODO: move to neon-js
 // what is the correct length to check for?
@@ -23,6 +23,11 @@ const validatePassphrase = (passphrase) => {
 
 const generateNewWallet = (dispatch) => {
   const current_phrase = passphrase.value;
+  if (passphrase.value !== passphrase2.value){
+    dispatch(sendEvent(false, "Passphrases do not match"));
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+    return;
+  }
   if (validatePassphrase(current_phrase)){
     // TODO: for some reason this blocks, so giving time to processes the earlier
     // dispatch to display "generating" text, should fix this in future
@@ -48,7 +53,8 @@ class CreateWallet extends Component {
         <div className="info">
           Choose a passphrase to encrypt your private key:
         </div>
-        <input type="text" ref={(node) => passphrase = node} placeholder="enter passphrase here"/>
+        <input type="text" ref={(node) => passphrase = node} placeholder="Enter passphrase here"/>
+        <input type="text" ref={(node) => passphrase2 = node} placeholder="Repeat passphrase here"/>
         <button onClick={() => generateNewWallet(this.props.dispatch)} > Generate keys </button>
         <Link to="/"><button className="altButton">Home</button></Link>
       </div>);

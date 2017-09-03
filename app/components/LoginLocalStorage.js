@@ -43,9 +43,9 @@ class LoginLocalStorage extends Component {
       <div className="login">
         <div className="logo"><img src={logo} width="60px"/></div>
         <div className="loginForm">
-          <input type="text" placeholder="Enter your passphrase here" ref={(node) => passphrase_input = node}  />
+          <input type="password" placeholder="Enter your passphrase here" ref={(node) => passphrase_input = node}  />
           <div className="selectBox">
-            <label>Encrypted key:</label>
+            <label>Wallet:</label>
             <select ref={(node) => wif_input = node}>
               {_.map(this.props.accountKeys, (value, key) => <option value={value}>{key}</option>)}
             </select>

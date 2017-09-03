@@ -39,7 +39,7 @@ class LoginNep2 extends Component {
       <div className="login">
         <div className="logo"><img src={logo} width="60px"/></div>
         <div className="loginForm">
-          <input type="text" placeholder="Enter your passphrase here" ref={(node) => passphrase_input = node}  />
+          <input type="password" placeholder="Enter your passphrase here" ref={(node) => passphrase_input = node}  />
           <input type="text" placeholder="Enter your encrypted key here" ref={(node) => wif_input = node}  />
         </div>
         <div className="loginButtons">
