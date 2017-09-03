@@ -21,7 +21,7 @@ const checkVersion = (dispatch, net) => {
       // something went wrong
     }
     else if (res.data.version !== version){
-      dispatch(sendEvent(false, "Your wallet is out of date! Please download version "+version+ " from https://github.com/CityOfZion/neon-wallet/releases"));
+      dispatch(sendEvent(false, "Your wallet is out of date! Please download version "+res.data.version+ " from https://github.com/CityOfZion/neon-wallet/releases"));
       setTimeout(() => dispatch(clearTransactionEvent()), 15000);
     }
   }).catch((e) =>{

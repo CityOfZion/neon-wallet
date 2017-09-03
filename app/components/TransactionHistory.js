@@ -6,14 +6,23 @@ import Copy from 'react-icons/lib/md/content-copy';
 import { clipboard } from 'electron';
 
 // TODO: make this a user setting
-const getExplorerLink = (net, txid) => {
+const getExplorerLink = (net, explorer, txid) => {
   let base;
-  if (net === "MainNet"){
-    base = "https://neotracker.io";
-  } else {
-    base = "https://testnet.neotracker.io";
+  if (explorer === "Neotracker"){
+    if (net === "MainNet"){
+      base = "https://neotracker.io/tx/";
+    } else {
+      base = "https://testnet.neotracker.io/tx/";
+    }
   }
-  return base + "/tx/" + txid;
+  else {
+    if (net === "MainNet"){
+      base = "http://antcha.in/tx/hash/";
+    } else {
+      base = "http://testnet.antcha.in/tx/hash/";
+    }
+  }
+  return base + txid;
 }
 
 // helper to open an external web link
@@ -41,7 +50,7 @@ class TransactionHistory extends Component {
             formatAmount = 0.0.toPrecision(5);
           }
           return (<li key={t.txid}>
-              <div className="txid" onClick={() => openExplorer(getExplorerLink(this.props.net, t.txid))}>
+              <div className="txid" onClick={() => openExplorer(getExplorerLink(this.props.net, this.props.explorer, t.txid))}>
                 {t.txid.substring(0,32)}</div><div className="amount">{formatAmount} {t.type}
               </div></li>);
         })}
@@ -52,7 +61,8 @@ class TransactionHistory extends Component {
 const mapStateToProps = (state) => ({
   address: state.account.address,
   net: state.metadata.network,
-  transactions: state.wallet.transactions
+  transactions: state.wallet.transactions,
+  explorer: state.metadata.blockExplorer
 });
 
 TransactionHistory = connect(mapStateToProps)(TransactionHistory);
