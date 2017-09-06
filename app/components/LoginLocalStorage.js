@@ -15,6 +15,11 @@ let wif_input;
 let passphrase_input;
 
 const onWifChange = (dispatch, history) => {
+  if (passphrase_input.value.length < 4){
+    dispatch(sendEvent(false, "Passphrase too short"));
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+    return;
+  }
   dispatch(sendEvent(true, "Decrypting encoded key..."));
   setTimeout(() => {
     decrypt_wif(wif_input.value, passphrase_input.value).then((wif) => {
@@ -47,12 +52,13 @@ class LoginLocalStorage extends Component {
           <div className="selectBox">
             <label>Wallet:</label>
             <select ref={(node) => wif_input = node}>
+              <option selected="selected" disabled="disabled">Select a wallet</option>
               {_.map(this.props.accountKeys, (value, key) => <option value={value}>{key}</option>)}
             </select>
           </div>
         </div>
         <div className="loginButtons">
-          <button onClick={(e) => onWifChange(dispatch, this.props.history)}>Login</button>
+          { Object.keys(this.props.accountKeys).length === 0 ? <button className="disabled" disabled="disabled">Login</button> : <button onClick={(e) => onWifChange(dispatch, this.props.history)}>Login</button> }
           <Link to="/"><button className="altButton">Home</button></Link>
         </div>
         {this.props.decrypting === true ? <div className="decrypting">Decrypting keys...</div> : <div></div>}

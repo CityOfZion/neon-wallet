@@ -21,6 +21,13 @@ $error-color: #FF3E3E;
 $page-width: 960px;
 $top-margin: 20px;
 
+@media print{
+	#newWallet {
+		font-size:.8em;
+		width:600px !important;
+	}
+}
+
 body{
 	font-family: 'helvetica neue', 'helvetica', sans-serif;
 	font-size:16px;
@@ -49,6 +56,9 @@ button a{
 
 button.disabled{
 	opacity:.6;
+}
+button.disabled:hover{
+	background-color:$default-button;
 }
 
 input{

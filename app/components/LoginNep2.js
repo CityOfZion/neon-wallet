@@ -14,6 +14,11 @@ let wif_input;
 let passphrase_input;
 
 const onWifChange = (dispatch, history) => {
+  if (passphrase_input.value.length < 4){
+    dispatch(sendEvent(false, "Passphrase too short"));
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+    return;
+  }
   console.log(wif_input, passphrase_input);
   // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
   dispatch(sendEvent(true, "Decrypting encoded key..."));

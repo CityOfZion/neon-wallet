@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { setBlockExplorer } from '../modules/metadata';
 import { setKeys } from '../modules/account';
 import Delete from 'react-icons/lib/md/delete';
+import _ from 'lodash';
 import fs from 'fs';
 
 const {dialog} = require('electron').remote;
@@ -16,7 +17,10 @@ let explorer_select;
 
 const saveKeyRecovery = (keys) => {
   const content = JSON.stringify(keys);
-  dialog.showSaveDialog((fileName) => {
+  dialog.showSaveDialog({filters: [{
+      name: 'JSON',
+      extensions: ['json']
+    }]}, (fileName) => {
     if (fileName === undefined){
         console.log("File failed to save...");
         return;
@@ -45,8 +49,15 @@ const loadKeyRecovery = (dispatch) => {
             return;
         }
         const keys = JSON.parse(data);
-        dispatch(setKeys(keys));
-        storage.set('keys', keys);
+        storage.get('keys', (error, data) => {
+          _.each(keys, (value, key) => {
+            data[key] = value;
+          });
+          dispatch(setKeys(data));
+          storage.set('keys', data);
+        });
+        // dispatch(setKeys(keys));
+        // storage.set('keys', keys);
     });
 });
 }
