@@ -9,10 +9,16 @@ import Logout from '../components/Logout';
 import Send from '../components/Send';
 import { togglePane } from '../modules/dashboard';
 import { version } from '../../package.json'
+import { log } from '../util/Logs';
 
 const logo = require('../images/neon-logo2.png');
 
 class Dashboard extends Component {
+
+  componentDidMount = () => {
+    // only logging public information here
+    log(this.props.net, "LOGIN", this.props.address, {});
+  }
 
   render = () => {
     let sendPaneClosed;
@@ -56,7 +62,9 @@ class Dashboard extends Component {
 const mapStateToProps = (state) => ({
   sendPane: state.dashboard.sendPane,
   confirmPane: state.dashboard.confirmPane,
-  blockHeight: state.metadata.blockHeight
+  blockHeight: state.metadata.blockHeight,
+  net: state.metadata.network,
+  address: state.account.address
 });
 
 Dashboard = connect(mapStateToProps)(Dashboard);

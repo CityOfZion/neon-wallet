@@ -113,7 +113,7 @@ class Settings extends Component {
             {_.map(this.props.wallets, (value, key) => {
               return (<div className="walletList">
                 <div className="walletItem">
-                  <div className="walletName">{key}</div><div className="walletKey">{value}</div><div className="deleteWallet" onClick={() => deleteWallet(this.props.dispatch, key)}><Delete/></div>
+                  <div className="walletName">{key.slice(0,20)}</div><div className="walletKey">{value}</div><div className="deleteWallet" onClick={() => deleteWallet(this.props.dispatch, key)}><Delete/></div>
                 </div>
                 </div>);})
             }
