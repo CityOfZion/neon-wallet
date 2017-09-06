@@ -261,12 +261,27 @@ $box-margin: 10px;
 		text-align: left;
 	}
 	.loginForm{
-		display: inline-block;
+		display: flex;
+        flex-direction: column;
 		width:100%;
 	}
+    .halfField{
+        display: flex;
+        align-items: baseline;
+
+        >input{
+            flex-grow: 1;
+        }
+
+        input:first-child{
+            margin-right: 10px;
+        }
+
+        input:last-child{
+            margin-left: 10px;
+        }
+    }
 	input{
-		width:95%;
-		float:left;
 		margin-bottom: 10px;
 	}
 	.decrypting{
