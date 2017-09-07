@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { setBlockExplorer } from '../modules/metadata';
 import { setKeys } from '../modules/account';
+import { sendEvent, clearTransactionEvent } from '../modules/transactions';
 import Delete from 'react-icons/lib/md/delete';
 import _ from 'lodash';
 import fs from 'fs';
@@ -50,11 +51,16 @@ const loadKeyRecovery = (dispatch) => {
         }
         const keys = JSON.parse(data);
         storage.get('keys', (error, data) => {
-          _.each(keys, (value, key) => {
-            data[key] = value;
-          });
-          dispatch(setKeys(data));
-          storage.set('keys', data);
+          if (error) {
+            dispatch(sendEvent(false, "Loading wallet keys failed"));
+            setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+          } else {
+            _.each(keys, (value, key) => {
+              data[key] = value;
+            });
+            dispatch(setKeys(data));
+            storage.set('keys', data);
+          }
         });
         // dispatch(setKeys(keys));
         // storage.set('keys', keys);
@@ -81,9 +87,14 @@ const updateSettings = (dispatch) => {
 
 const deleteWallet = (dispatch, key) => {
   storage.get('keys', (error, data) => {
-    delete data[key];
-    storage.set('keys', data);
-    dispatch(setKeys(data));
+    if (error) {
+      dispatch(sendEvent(false, "Loading wallet keys failed"));
+      setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+    } else {
+      delete data[key];
+      storage.set('keys', data);
+      dispatch(setKeys(data));
+    }
   });
 }
 
@@ -91,7 +102,12 @@ class Settings extends Component {
 
   componentDidMount = () => {
     storage.get('keys', (error, data) => {
-      this.props.dispatch(setKeys(data));
+      if (error) {
+        dispatch(sendEvent(false, "Loading wallet keys failed"));
+        setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+      } else {
+        this.props.dispatch(setKeys(data));
+      }
     });
     loadSettings(this.props.dispatch);
   }
