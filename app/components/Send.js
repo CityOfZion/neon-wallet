@@ -6,6 +6,7 @@ import { togglePane } from '../modules/dashboard';
 import { sendEvent, clearTransactionEvent, toggleAsset } from '../modules/transactions';
 import SplitPane from 'react-split-pane';
 import ReactTooltip from 'react-tooltip'
+import { log } from '../util/Logs';
 
 let sendAddress, sendAmount, confirmButton;
 
@@ -56,10 +57,11 @@ const openAndValidate = (dispatch, neo_balance, gas_balance, asset) => {
 }
 
 // perform send transaction
-const sendTransaction = (dispatch, net, wif, asset, neo_balance, gas_balance) => {
+const sendTransaction = (dispatch, net, selfAddress, wif, asset, neo_balance, gas_balance) => {
   // validate fields again for good measure (might have changed?)
   if (validateForm(dispatch, neo_balance, gas_balance, asset) === true){
     dispatch(sendEvent(true, "Processing..."));
+    log(net, "SEND", selfAddress, {to: sendAddress.value, asset: asset, amount: sendAmount.value});
     doSendAsset(net, sendAddress.value, wif, asset, sendAmount.value).then((response) => {
       if (response.result === undefined || response.result === false){
         dispatch(sendEvent(false, "Transaction failed!"));
@@ -80,7 +82,7 @@ const sendTransaction = (dispatch, net, wif, asset, neo_balance, gas_balance) =>
   confirmButton.blur();
 };
 
-let Send = ({dispatch, wif, status, neo, gas, net, confirmPane, selectedAsset}) => {
+let Send = ({dispatch, wif, address, status, neo, gas, net, confirmPane, selectedAsset}) => {
   let confirmPaneClosed;
   if (confirmPane){
     confirmPaneClosed = "100%";
@@ -101,7 +103,7 @@ let Send = ({dispatch, wif, status, neo, gas, net, confirmPane, selectedAsset}) 
         </ReactTooltip>
       <button id="doSend" onClick={() => openAndValidate(dispatch, neo, gas, selectedAsset)}>Send Asset</button>
     </div>
-    <div id="confirmPane" onClick={() => sendTransaction(dispatch, net, wif, selectedAsset, neo, gas)}>
+    <div id="confirmPane" onClick={() => sendTransaction(dispatch, net, address, wif, selectedAsset, neo, gas)}>
       <button ref={node => {confirmButton = node;}}>Confirm Transaction</button>
     </div>
   </SplitPane>);
@@ -109,6 +111,7 @@ let Send = ({dispatch, wif, status, neo, gas, net, confirmPane, selectedAsset}) 
 
 const mapStateToProps = (state) => ({
   wif: state.account.wif,
+  address: state.account.address,
   net: state.metadata.network,
   neo: state.wallet.Neo,
   gas: state.wallet.Gas,

@@ -4,10 +4,12 @@ import { setClaimRequest, disableClaim } from '../modules/claim';
 import { sendEvent, clearTransactionEvent } from '../modules/transactions';
 import { doClaimAllGas, doSendAsset } from 'neon-js';
 import ReactTooltip from 'react-tooltip'
+import { log } from '../util/Logs';
 
 // wrap claiming with notifications
 
-const doClaimNotify = (dispatch, net, wif) => {
+const doClaimNotify = (dispatch, net, selfAddress, wif) => {
+  log(net, "CLAIM", selfAddress, {info: "claim all gas"});
   doClaimAllGas(net, wif).then((response) => {
     if (response.result === true){
       dispatch(sendEvent(true, "Claim was successful! Your balance will update once the blockchain has processed it."));
@@ -24,10 +26,11 @@ const doClaimNotify = (dispatch, net, wif) => {
 const doGasClaim = (dispatch, net, wif, selfAddress, ans) => {
   // if no neo in account, no need to send to self first
   if (ans === 0) {
-    doClaimNotify(dispatch, net, wif);
+    doClaimNotify(dispatch, net, selfAddress, wif);
   }
   else {
     dispatch(sendEvent(true, "Sending Neo to Yourself..."));
+    log(net, "SEND", selfAddress, {to: selfAddress, amount: ans, asset: "NEO"});
     doSendAsset(net, selfAddress, wif, "Neo", ans).then((response) => {
       if (response.result === undefined || response.result === false){
         dispatch(sendEvent(false, "Transaction failed!"));
@@ -47,7 +50,7 @@ class Claim extends Component {
     console.log(this.props);
     if (this.props.claimRequest === true && this.props.claimWasUpdated == true){
       this.props.dispatch(setClaimRequest(false));
-      doClaimNotify(this.props.dispatch, this.props.net, this.props.wif);
+      doClaimNotify(this.props.dispatch, this.props.net, this.props.address, this.props.wif);
     }
   }
 

@@ -33,4 +33,4 @@ A gentle reminder, github issues is meant to be used by developers for maintaini
 - I lost my private key, is there anyway to recover?
 - Why is my balance not showing?
 
-should be asked in proper support channels such as the [NEO subreddit](https://neosmarteconomy.slack.com), or the official [NEO slack](https://neosmarteconomy.slack.com). 
+should be asked in proper support channels such as the [NEO subreddit](https://www.reddit.com/r/NEO/), or the official [NEO slack](https://neosmarteconomy.slack.com). 

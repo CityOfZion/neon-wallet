@@ -17,6 +17,17 @@ $button-text: #fff;
 $thin-text-color: #000;
 $error-color: #FF3E3E;
 
+// page layout
+$page-width: 960px;
+$top-margin: 20px;
+
+@media print{
+	#newWallet {
+		font-size:.8em;
+		width:600px !important;
+	}
+}
+
 body{
 	font-family: 'helvetica neue', 'helvetica', sans-serif;
 	font-size:16px;
@@ -46,14 +57,144 @@ button a{
 button.disabled{
 	opacity:.6;
 }
+button.disabled:hover{
+	background-color:$default-button;
+}
 
+input{
+	font-size:1.2em;
+	padding:7px 15px;
+	border:none;
+	font-weight:200;
+	background-color:$dark-input-color;
+	color:$default-text;
+}
+
+.statusMessage{
+	width:100%;
+	text-align:center;
+	font-size:.9em;
+	padding:5px 0px 3px 0px;
+	color:white;
+}
+.statusMessage.success{
+	background-color:$default-button;
+}
+.statusMessage.fail{
+	background-color:$error-color;
+}
+
+.altButton{
+	background-color: $dark-button;
+}
+.altButton:hover{
+	background-color: $dark-button-hover;
+}
+
+.logo{
+	text-align: left;
+	margin-bottom: 30px;
+}
+
+#footer{
+	position:absolute;
+	bottom:10px;
+	width:100%;
+	font-weight: 200;
+	color:$thin-text-color;
+	font-size:.9em;
+	text-align:center;
+}
+
+#settings{
+	width:$page-width;
+	margin:$top-margin auto $top-margin auto;
+	.description{
+		font-size:1.2em;
+		font-weight: 200;
+		margin-bottom: 20px;
+	}
+	.settingsForm{
+		margin-bottom: 20px;
+	}
+	label{
+		margin-right: 10px;
+	}
+	.walletItem{
+		width:100%;
+	}
+	.settingsItem{
+		margin-bottom:10px;
+	}
+	.itemTitle{
+		font-weight:800;
+		margin-bottom:5px;
+	}
+	.walletItem{
+		margin-bottom:3px;
+	}
+	.walletName, .walletKey, .deleteWallet{
+		display:inline-block;
+		margin-right:10px;
+	}
+	.walletName{
+		width:20%;
+	}
+	.walletKey{
+		width:50%;
+		font-size:.8em;
+		font-family: 'courier', monospace;
+	}
+	.deleteWallet{
+		width:10%;
+		opacity:.6;
+	}
+}
+
+$box-padding: 40px;
+$box-margin: 10px;
+
+#home{
+	width:$page-width;
+	margin:$top-margin auto $top-margin auto;
+	a .linkBox{
+		text-decoration: none;
+		color: white;
+	}
+	.linkBox{
+		display:inline-block;
+		float:left;
+		background-color: $bright-button;
+		width: ($page-width / 4) - ((2*$box-padding) + ($box-margin));
+		height: 120px;
+		padding: $box-padding;
+		margin:0px $box-margin $box-margin 0px;
+		font-size: 1.4em;
+		font-weight:200;
+	}
+	.linkBox.alt{
+		background-color: $dark-button;
+	}
+	.linkBox:hover{
+		opacity: .8;
+	}
+}
 
 #newWallet{
-	width:650px;
-	margin:20% auto 0px auto;
+	width:$page-width;
+	margin:$top-margin auto $top-margin auto;
 	.copyKey{
 		margin-left:5px;
 		color:#000;
+	}
+	input{
+		width:95%;
+		margin-bottom:10px;
+	}
+	.generating{
+		margin:20px 0px;
+		font-size: 1.4em;
+		font-weight: 200;
 	}
 	.copyKey:hover{
 		opacity:.7;
@@ -66,6 +207,11 @@ button.disabled{
 		background-color:#AA3939;
 		color:white;
 		padding:5px;
+	}
+	.info{
+		margin-bottom: 10px;
+		font-size:1.4em;
+		font-weight:200;
 	}
 	.addressBox, .privateKeyBox{
 		margin-bottom:20px;
@@ -80,6 +226,9 @@ button.disabled{
 		margin-left:9%;
 	}
 	.keyList{
+		margin-bottom: 20px;
+	}
+	.keyListItem{
 		font-size:.9em;
 		span.label{
 			margin-right:5px;
@@ -87,57 +236,55 @@ button.disabled{
 		}
 	}
 	button{
-		margin-top:20px;
+		margin-top:10px;
+	}
+	.saveKey{
+		margin-bottom: 10px;
+		input{
+			width:300px;
+			margin-right:20px;
+		}
+		button{
+			background-color: $dark-button;
+		}
 	}
 }
 
 #loginPage{
-	.logo{
-		width:628px;
-		margin:10px auto;
+	width:$page-width;
+	margin:$top-margin auto $top-margin auto;
+	.selectBox{
+		label{
+			font-weight: 800px;
+			margin-right: 10px;
+		}
 		text-align: left;
 	}
-	input{
-		width:600px;
-		font-size:1.2em;
-		padding:7px 15px;
-		border:none;
-		font-weight:200;
-		background-color:$dark-input-color;
-		color:$default-text;
-	}
-	margin-top:25%;
-	text-align:center;
-	.loginButtons{
-		margin:10px auto;
-		width:630px;
-		text-align:left;
-	}
-	#footer{
-		position:absolute;
-		bottom:10px;
+	.loginForm{
+		display: inline-block;
 		width:100%;
+	}
+	input{
+		width:95%;
+		float:left;
+		margin-bottom: 10px;
+	}
+	.decrypting{
+		font-size: 1.4em;
 		font-weight: 200;
-		color:$thin-text-color;
-		font-size:.9em;
+		text-align: left;
+	}
+	select{
+		margin-bottom: 10px;
+	}
+	.loginButtons{
+		text-align:left;
+		margin-top: 10px;
 	}
 }
 
 // split pane stuff
 #dashboard{
-	.statusMessage{
-		width:100%;
-		text-align:center;
-		font-size:.9em;
-		padding:5px 0px 3px 0px;
-		color:white;
-	}
-	.statusMessage.success{
-		background-color:$default-button;
-	}
-	.statusMessage.fail{
-		background-color:$error-color;
-	}
 	.spacer{
 		width:84%;
 		margin:0px 8%;
@@ -260,6 +407,7 @@ button.disabled{
 			height:30px;
 			border:none;
 			color:$thin-text-color;
+			background-color: white;
 		}
 		button{
 			margin-top:10px;
