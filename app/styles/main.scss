@@ -157,20 +157,23 @@ $box-margin: 10px;
 #home{
 	width:$page-width;
 	margin:$top-margin auto $top-margin auto;
-	a .linkBox{
+	.menu-wrapper{
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	a {
 		text-decoration: none;
 		color: white;
 	}
 	.linkBox{
-		display:inline-block;
-		float:left;
-		background-color: $bright-button;
+		border-radius: 5px;
+		border: 5px solid $bright-button;
+		background-color: $dark-button;
 		width: ($page-width / 4) - ((2*$box-padding) + ($box-margin));
-		height: 120px;
 		padding: $box-padding;
-		margin:0px $box-margin $box-margin 0px;
+		margin: 0px $box-margin $box-margin 0px;
 		font-size: 1.4em;
-		font-weight:200;
 	}
 	.linkBox.alt{
 		background-color: $dark-button;
