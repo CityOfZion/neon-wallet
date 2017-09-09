@@ -41,7 +41,7 @@ let LoginPrivateKey = ({ dispatch, loggedIn, wif, history }) =>
     <div className="login">
       <div className="loginForm">
         <div className="logo"><img src={logo} width="60px"/></div>
-        <input type="text" placeholder="Enter your private key here (WIF)" ref={(node) => wif = node}/>
+        <input type="password" placeholder="Enter your private key here (WIF)" ref={(node) => wif = node}/>
       </div>
       <div className="loginButtons">
         <button onClick={(e) => onWifChange(dispatch, history, wif)}>Login</button>
