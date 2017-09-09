@@ -167,12 +167,12 @@ $box-margin: 10px;
 		color: white;
 	}
 	.linkBox{
-		border-radius: 5px;
-		border: 5px solid $bright-button;
-		background-color: $dark-button;
-		width: ($page-width / 4) - ((2*$box-padding) + ($box-margin));
+		background-color: $bright-button;
+		width: ($page-width / 3) - ((3*$box-padding) + ($box-margin));
+		height: 60px;
 		padding: $box-padding;
 		margin: 0px $box-margin $box-margin 0px;
+		font-weight: 200;
 		font-size: 1.4em;
 	}
 	.linkBox.alt{
