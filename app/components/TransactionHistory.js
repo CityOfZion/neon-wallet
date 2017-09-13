@@ -42,13 +42,8 @@ class TransactionHistory extends Component {
       <div className="headerSpacer"></div>
       <ul id="transactionList">
         {this.props.transactions.map((t) => {
-          let formatAmount;
-          if (t.type === "NEO"){ formatAmount = parseInt(t.amount); }
-          else{ formatAmount = parseFloat(t.amount).toPrecision(5); }
-          // ignore precision rounding errors for GAS
-          if ((formatAmount > 0 && formatAmount < 0.001) || (formatAmount < 0 && formatAmount > -0.001)){
-            formatAmount = 0.0.toPrecision(5);
-          }
+          const formatGas = (gas) => Math.floor(parseFloat(gas) * 10000) / 10000;
+          let formatAmount = t.type === "NEO" ? parseInt(t.amount) : formatGas(t.amount);
           return (<li key={t.txid}>
               <div className="txid" onClick={() => openExplorer(getExplorerLink(this.props.net, this.props.explorer, t.txid))}>
                 {t.txid.substring(0,32)}</div><div className="amount">{formatAmount} {t.type}
