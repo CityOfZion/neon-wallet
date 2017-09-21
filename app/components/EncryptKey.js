@@ -8,12 +8,12 @@ import { clipboard } from 'electron';
 import Copy from 'react-icons/lib/md/content-copy';
 import ReactTooltip from 'react-tooltip';
 import DisplayWalletKeys from './DisplayWalletKeys';
-import { generateEncryptedWif } from 'neon-js';
+import { encryptWifAccount } from 'neon-js';
 import { sendEvent, clearTransactionEvent } from '../modules/transactions';
 
 const logo = require('../images/neon-logo2.png');
 
-let passphrase, passphrase2;
+let wif_input, passphrase, passphrase2;
 
 // TODO: move to neon-js
 // what is the correct length to check for?
@@ -23,6 +23,7 @@ const validatePassphrase = (passphrase) => {
 
 const generateNewWallet = (dispatch) => {
   const current_phrase = passphrase.value;
+  const current_wif = wif_input.value;
   if (passphrase.value !== passphrase2.value){
     dispatch(sendEvent(false, "Passphrases do not match"));
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
@@ -33,9 +34,12 @@ const generateNewWallet = (dispatch) => {
     // dispatch to display "generating" text, should fix this in future
     dispatch(sendEvent(true, "Generating encoded key..."));
     setTimeout(() => {
-      generateEncryptedWif(current_phrase).then((result) => {
+      encryptWifAccount(current_wif, current_phrase).then((result) => {
         dispatch(newWallet(result));
         dispatch(clearTransactionEvent());
+      }).catch(() => {
+        dispatch(sendEvent(false, "The private key is not valid"));
+        setTimeout(() => dispatch(clearTransactionEvent()), 5000);
       });
     }, 500);
   }
@@ -52,11 +56,12 @@ class CreateWallet extends Component {
   render = () => {
     const passphraseDiv = (<div>
         <div className="info">
-          Choose a passphrase to encrypt your private key:
+          Choose a passphrase to encrypt your existing private key:
         </div>
         <input type="text" ref={(node) => passphrase = node} placeholder="Enter passphrase here"/>
-        <input type="text" ref={(node) => passphrase2 = node} placeholder="Repeat passphrase here"/>
-        <button onClick={() => generateNewWallet(this.props.dispatch)} > Generate keys </button>
+        <input type="text" ref={(node) => passphrase2 = node} placeholder="Enter passphrase again"/>
+        <input type="text" ref={(node) => wif_input = node} placeholder="Enter existing WIF here"/>
+        <button onClick={() => generateNewWallet(this.props.dispatch)} > Generate encrypted key </button>
         <Link to="/"><button className="altButton">Home</button></Link>
       </div>);
       return (<div id="newWallet">

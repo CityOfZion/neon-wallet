@@ -47,12 +47,16 @@ class WalletInfo extends Component {
           </div>
           <div className="split">
             <div className="label">GAS</div>
-            <div className="amountBig">{this.props.gas < 0.001 ? 0 : this.props.gas.toPrecision(5)}</div>
+            <div className="amountBig">{ Math.floor(this.props.gas * 10000) / 10000 }</div>
           </div>
+          <div onClick={() => refreshBalance(this.props.dispatch, this.props.net, this.props.address)} >
+            <MdSync id="refresh" data-tip data-for="refreshBalanceTip"/>
+            <ReactTooltip class="solidTip" id="refreshBalanceTip" place="bottom" type="dark" effect="solid">
+              <span>Refresh account balance</span>
+            </ReactTooltip>
+          </div>
+
           <div className="fiat">US {this.props.price}</div>
-          <div onClick={() => refreshBalance(this.props.dispatch, this.props.net, this.props.address)}>
-            <MdSync id="refresh"/>
-          </div>
         </div>
         <div className="spacer"></div>
         <Claim />

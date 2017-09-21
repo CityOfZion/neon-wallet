@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Login renders without crashing 1`] = `
-<LoginPrivateKey
+exports[`TransactionHistory renders without crashing 1`] = `
+<TransactionHistory
+  address="AWy7RNBVr9vDadRMK9p7i7Z1tL7GrLAxoh"
   dispatch={[Function]}
-  loggedIn={true}
-  onWifChange={[Function]}
+  net="TestNet"
   store={
     Object {
       "clearActions": [Function],
@@ -15,5 +15,6 @@ exports[`Login renders without crashing 1`] = `
       "subscribe": [Function],
     }
   }
+  transactions={Array []}
 />
 `;
