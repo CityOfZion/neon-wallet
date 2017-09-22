@@ -47,8 +47,7 @@ class TransactionHistory extends Component {
         	  	formatAmount = parseInt(t.amount);
         	  }
           else{
-        	  	formatAmount = parseFloat(t.amount).toFixed(5);
-        	  	
+        	  	formatAmount = parseFloat(t.amount).toFixed(7);
           }
           return (<li key={t.txid}>
               <div className="txid" onClick={() => openExplorer(getExplorerLink(this.props.net, this.props.explorer, t.txid))}>

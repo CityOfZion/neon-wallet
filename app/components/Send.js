@@ -60,12 +60,10 @@ const openAndValidate = (dispatch, neo_balance, gas_balance, asset) => {
 
 // perform send transaction
 const sendTransaction = (dispatch, net, selfAddress, wif, asset, neo_balance, gas_balance) => {
-    process.stdout.write( "started sendTransaction \n" );
   // validate fields again for good measure (might have changed?)
   if (validateForm(dispatch, neo_balance, gas_balance, asset) === true){
     dispatch(sendEvent(true, "Processing..."));
     log(net, "SEND", selfAddress, {to: sendAddress.value, asset: asset, amount: sendAmount.value});
-    process.stdout.write( "invoking ledgerNanoS_doSendAsset \n" );
     ledgerNanoS_doSendAsset(net, sendAddress.value, wif, asset, sendAmount.value).then((response) => {
       if (response.result === undefined || response.result === false){
         dispatch(sendEvent(false, "Transaction failed!"));
