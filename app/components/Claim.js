@@ -5,12 +5,13 @@ import { sendEvent, clearTransactionEvent } from '../modules/transactions';
 import { doClaimAllGas, doSendAsset } from 'neon-js';
 import ReactTooltip from 'react-tooltip'
 import { log } from '../util/Logs';
+import { ledgerNanoS_doClaimAllGas, ledgerNanoS_doSendAsset } from '../modules/ledgerNanoS';
 
 // wrap claiming with notifications
 
 const doClaimNotify = (dispatch, net, selfAddress, wif) => {
   log(net, "CLAIM", selfAddress, {info: "claim all gas"});
-  doClaimAllGas(net, wif).then((response) => {
+  ledgerNanoS_doClaimAllGas(net, wif).then((response) => {
     if (response.result === true){
       dispatch(sendEvent(true, "Claim was successful! Your balance will update once the blockchain has processed it."));
       setTimeout(() => dispatch(disableClaim(false)), 300000);
@@ -31,7 +32,7 @@ const doGasClaim = (dispatch, net, wif, selfAddress, ans) => {
   else {
     dispatch(sendEvent(true, "Sending Neo to Yourself..."));
     log(net, "SEND", selfAddress, {to: selfAddress, amount: ans, asset: "NEO"});
-    doSendAsset(net, selfAddress, wif, "Neo", ans).then((response) => {
+    ledgerNanoS_doSendAsset(net, selfAddress, wif, "Neo", ans).then((response) => {
       if (response.result === undefined || response.result === false){
         dispatch(sendEvent(false, "Transaction failed!"));
       } else {

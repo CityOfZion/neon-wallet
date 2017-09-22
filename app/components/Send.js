@@ -1,12 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { doSendAsset, verifyAddress } from 'neon-js';
+// TODO, re-add doSendAsset from 'neon-js';
+import { verifyAddress } from 'neon-js';
 import { togglePane } from '../modules/dashboard';
 import { sendEvent, clearTransactionEvent, toggleAsset } from '../modules/transactions';
 import SplitPane from 'react-split-pane';
 import ReactTooltip from 'react-tooltip'
 import { log } from '../util/Logs';
+import { ledgerNanoS_CreateSignature,ledgerNanoS_doSendAsset } from '../modules/ledgerNanoS';
 
 let sendAddress, sendAmount, confirmButton;
 
@@ -58,11 +60,13 @@ const openAndValidate = (dispatch, neo_balance, gas_balance, asset) => {
 
 // perform send transaction
 const sendTransaction = (dispatch, net, selfAddress, wif, asset, neo_balance, gas_balance) => {
+    process.stdout.write( "started sendTransaction \n" );
   // validate fields again for good measure (might have changed?)
   if (validateForm(dispatch, neo_balance, gas_balance, asset) === true){
     dispatch(sendEvent(true, "Processing..."));
     log(net, "SEND", selfAddress, {to: sendAddress.value, asset: asset, amount: sendAmount.value});
-    doSendAsset(net, sendAddress.value, wif, asset, sendAmount.value).then((response) => {
+    process.stdout.write( "invoking ledgerNanoS_doSendAsset \n" );
+    ledgerNanoS_doSendAsset(net, sendAddress.value, wif, asset, sendAmount.value).then((response) => {
       if (response.result === undefined || response.result === false){
         dispatch(sendEvent(false, "Transaction failed!"));
       } else {

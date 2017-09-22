@@ -42,8 +42,14 @@ class TransactionHistory extends Component {
       <div className="headerSpacer"></div>
       <ul id="transactionList">
         {this.props.transactions.map((t) => {
-          const formatGas = (gas) => Math.floor(parseFloat(gas) * 10000) / 10000;
-          let formatAmount = t.type === "NEO" ? parseInt(t.amount) : formatGas(t.amount);
+          let formatAmount;
+          if (t.type === "NEO"){
+        	  	formatAmount = parseInt(t.amount);
+        	  }
+          else{
+        	  	formatAmount = parseFloat(t.amount).toFixed(5);
+        	  	
+          }
           return (<li key={t.txid}>
               <div className="txid" onClick={() => openExplorer(getExplorerLink(this.props.net, this.props.explorer, t.txid))}>
                 {t.txid.substring(0,32)}</div><div className="amount">{formatAmount} {t.type}

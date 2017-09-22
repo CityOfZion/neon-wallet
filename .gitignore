@@ -3,7 +3,6 @@ dist/
 env/
 .idea
 release-builds/*
-app/dist/*
-app/dist
 .DS_Store
-*.iml
+/node_modules/
+/npm-debug.log

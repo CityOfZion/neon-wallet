@@ -19,7 +19,9 @@ A standalone app will be available soon. For now, you will need to build the wal
 ### Developing and Running
 
 Execute these commands in the project's root directory:
-
+	export DEBUG=express:*
+	export npm_config_runtime=electron
+	export npm_config_build_from_source=true
   - `npm install` Installing node dependencies
   - `webpack` or `webpack --watch` for live reload.
   - `npm start` for running the project

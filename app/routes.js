@@ -3,6 +3,7 @@ import { Route, Router, IndexRoute, browserHistory } from 'react-router';
 import App from './components/App';
 import LoginNep2 from './components/LoginNep2';
 import LoginPrivateKey from './components/LoginPrivateKey';
+import LoginLedgerNanoS from './components/LoginLedgerNanoS';
 import Home from './components/Home';
 import Settings from './components/Settings';
 import LoginLocalStorage from './components/LoginLocalStorage';
@@ -21,5 +22,6 @@ export default (
 		<Route path="/loginLocalStorage" component={LoginLocalStorage} />
 		<Route path="/LoginEncrypted" component={LoginNep2} />
 		<Route path="/settings" component={Settings} />
+		<Route path="/loginLedgerNanoS" component={LoginLedgerNanoS} />
 	</Route>
 );
