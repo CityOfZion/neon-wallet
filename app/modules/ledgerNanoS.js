@@ -275,12 +275,12 @@ const createSignatureAsynch = function( txData ) {
                         let rEnd = rStart + rLen;
                         // process.stdout.write( "Ledger Signature rEnd " + rEnd + "\n" );
 
-                        while ( response.substring( rStart, rStart + 2 ) == "00" ) {
-                            rStart += 2;
+                        while ( ( response.substring( rStart, rStart + 2 ) == "00" ) && ( ( rEnd - rStart ) > 64 ) ) {
+                          rStart += 2;
                         }
 
                         let r = response.substring( rStart, rEnd );
-                        process.stdout.write( "Ledger Signature R [" + rStart + "," + rEnd + "] " + r + "\n" );
+                        process.stdout.write( "Ledger Signature R [" + rStart + "," + rEnd + "]:" + ( rEnd - rStart ) + " " + r + "\n" );
                         let sLenHex = response.substring( rEnd + 2, rEnd + 4 );
                         // process.stdout.write( "Ledger Signature sLenHex " + sLenHex + "\n" );
                         let sLen = parseInt( sLenHex, 16 ) * 2;
@@ -290,12 +290,12 @@ const createSignatureAsynch = function( txData ) {
                         let sEnd = sStart + sLen;
                         // process.stdout.write( "Ledger Signature sEnd " + sEnd + "\n" );
 
-                        while ( response.substring( sStart, sStart + 2 ) == "00" ) {
-                            sStart += 2;
+                        while ( ( response.substring( sStart, sStart + 2 ) == "00" ) && ( ( sEnd - sStart ) > 64 ) ) {
+                          sStart += 2;
                         }
 
                         let s = response.substring( sStart, sEnd );
-                        process.stdout.write( "Ledger Signature S [" + sStart + "," + sEnd + "] " + s + "\n" );
+                        process.stdout.write( "Ledger Signature S [" + sStart + "," + sEnd + "]:" + ( sEnd - sStart ) + " " + s + "\n" );
 
                         let msgHashStart = sEnd + 4;
                         let msgHashEnd = msgHashStart + 64;
