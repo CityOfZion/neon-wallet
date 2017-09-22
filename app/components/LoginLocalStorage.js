@@ -8,6 +8,8 @@ import storage from 'electron-json-storage';
 import _ from 'lodash';
 // TODO: these event messages should be refactored from transactions
 import { sendEvent, clearTransactionEvent } from '../modules/transactions';
+import FaEye from 'react-icons/lib/fa/eye';
+import FaEyeSlash from 'react-icons/lib/fa/eye-slash';
 
 const logo = require('../images/neon-logo2.png');
 
@@ -34,6 +36,15 @@ const onWifChange = (dispatch, history) => {
 };
 
 class LoginLocalStorage extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showKey: false,
+    };
+
+    this.toggleKeyVisibility = this.toggleKeyVisibility.bind(this);
+  }
 
   componentDidMount = () => {
     storage.get('keys', (error, data) => {
@@ -41,14 +52,28 @@ class LoginLocalStorage extends Component {
     });
   }
 
+  toggleKeyVisibility = () => {
+    this.setState(prevState => ({
+      showKey: !prevState.showKey,
+    }));
+  };
+
   render = () => {
     const dispatch = this.props.dispatch;
     const loggedIn = this.props.loggedIn;
+    const { showKey } = this.state;
+
     return (<div id="loginPage">
       <div className="login">
         <div className="logo"><img src={logo} width="60px"/></div>
         <div className="loginForm">
-          <input type="password" placeholder="Enter your passphrase here" ref={(node) => passphrase_input = node}  />
+          <input type={showKey ? 'text' : 'password'} placeholder="Enter your passphrase here" ref={(node) => passphrase_input = node}  />
+
+          {showKey ?
+            <FaEyeSlash className="viewKey" onClick={this.toggleKeyVisibility} /> :
+            <FaEye className="viewKey" onClick={this.toggleKeyVisibility} />
+          }
+
           <div className="selectBox">
             <label>Wallet:</label>
             <select ref={(node) => wif_input = node}>

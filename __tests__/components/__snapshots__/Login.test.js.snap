@@ -15,5 +15,6 @@ exports[`Login renders without crashing 1`] = `
       "subscribe": [Function],
     }
   }
+  verifyPrivateKey={[Function]}
 />
 `;
