@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { NetworkSwitch } from './NetworkSwitch';
 import SplitPane from 'react-split-pane';
 
 // import { Link } from 'react-router';
