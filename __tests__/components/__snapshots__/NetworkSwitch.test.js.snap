@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NetworkSwitch renders without crashing 1`] = `
+<NetworkSwitch
+  address="AWy7RNBVr9vDadRMK9p7i7Z1tL7GrLAxoh"
+  dispatch={[Function]}
+  net="MainNet"
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+/>
+`;

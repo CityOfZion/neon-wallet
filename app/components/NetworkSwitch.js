@@ -136,4 +136,4 @@ const mapStateToProps = (state) => ({
 
 NetworkSwitch = connect(mapStateToProps)(NetworkSwitch);
 
-export { NetworkSwitch, initiateGetBalance, syncTransactionHistory, intervals };
+export { NetworkSwitch, initiateGetBalance, syncTransactionHistory, intervals, resetBalanceSync };
