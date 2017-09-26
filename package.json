@@ -5,8 +5,10 @@
   "description": "Light wallet for NEO blockchain",
   "author": "Ethan Fast <ejhfast@gmail.com> (https://github.com/Ejhfast)",
   "scripts": {
-    "postinstall": "install-app-deps",
+    "postinstall": "electron-builder install-app-deps",
     "start": "electron .",
+    "assets": "webpack",
+    "assets-watch": "webpack --watch",
     "test": "jest",
     "test-watch": "jest --watch",
     "pack": "build --dir",
