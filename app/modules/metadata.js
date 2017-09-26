@@ -1,7 +1,7 @@
 // Constants
-const SET_HEIGHT = 'SET_HEIGHT';
-const SET_NETWORK = 'SET_NETWORK';
-const SET_EXPLORER = 'SET_EXPLORER';
+export const SET_HEIGHT = 'SET_HEIGHT';
+export const SET_NETWORK = 'SET_NETWORK';
+export const SET_EXPLORER = 'SET_EXPLORER';
 
 // Actions
 export function setNetwork(net){

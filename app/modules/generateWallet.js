@@ -2,11 +2,12 @@ import { getAccountsFromWIFKey, generatePrivateKey, getWIFFromPrivateKey } from 
 import { encrypt_wif, decrypt_wif } from 'neon-js';
 
 // Constants
-const NEW_WALLET_KEYS = 'NEW_WALLET_KEYS';
-const NEW_WALLET = 'NEW_WALLET';
-const SET_GENERATING = 'SET_GENERATING';
-const RESET_KEY = 'RESET_KEY';
+export const NEW_WALLET_KEYS = 'NEW_WALLET_KEYS';
+export const NEW_WALLET = 'NEW_WALLET';
+export const SET_GENERATING = 'SET_GENERATING';
+export const RESET_KEY = 'RESET_KEY';
 
+// Actions
 export function newWalletKeys(passphrase){
   return {
     type: NEW_WALLET_KEYS,
