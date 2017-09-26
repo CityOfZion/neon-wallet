@@ -2,7 +2,7 @@
 const SET_BALANCE = 'SET_BALANCE';
 const SET_MARKET_PRICE = 'SET_MARKET_PRICE';
 const RESET_PRICE = 'RESET_PRICE';
-const SET_TRANSACTION_HISTORY = 'SET_TRANSACTION_HISTORY';
+export const SET_TRANSACTION_HISTORY = 'SET_TRANSACTION_HISTORY';
 
 // Actions
 export function setBalance(neo, gas, price){
