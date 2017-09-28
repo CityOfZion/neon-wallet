@@ -7,15 +7,27 @@ import { SEND_TRANSACTION, CLEAR_TRANSACTION } from '../../app/modules/transacti
 import { SET_HEIGHT } from '../../app/modules/metadata';
 import { SET_CLAIM } from '../../app/modules/claim';
 import WalletInfo from '../../app/components/WalletInfo';
+
+// TODO research how to move the axios mock code which is repeated in NetworkSwitch to a helper or config file
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { clipboard } from 'electron';
+import { version } from '../../package.json';
+
+const axiosMock = new MockAdapter(axios);
+axiosMock
+  .onGet('http://testnet-api.wallet.cityofzion.io/v2/version')
+  .reply(200, { version });
+axiosMock
+  .onGet('https://bittrex.com/api/v1.1/public/getticker?market=USDT-NEO')
+  .reply(200, { result: { Last: 24.50 } });
 
 jest.mock('electron', () => ({
   clipboard: {
     writeText: jest.fn(),
   },
 }));
+jest.mock('neon-js');
 
 jest.unmock('qrcode');
 import QRCode from 'qrcode';
@@ -85,14 +97,8 @@ describe('WalletInfo', () => {
 
     expect(clipboard.writeText.mock.calls.length).toBe(0);
     deepWrapper.find('.copyKey').simulate('click');
-    setTimeout(() => {
-      try {
-        expect(clipboard.writeText.mock.calls.length).toBe(1);
-        done();
-      } catch(e) {
-        done.fail(e);
-      }
-    }, 10)
+    expect(clipboard.writeText.mock.calls.length).toBe(1);
+    done();
   });
   test('refreshBalance is getting called on click', (done) => {
     const { wrapper, store } = setup();
@@ -109,26 +115,15 @@ describe('WalletInfo', () => {
     ];
     deepWrapper.find('.refreshBalance').simulate('click');
     setTimeout(() => {
-      try {
-        const actions = store.getActions();
-        // TODO investigate why the actions length fluctuates here and test the length(s)
-        // Also, I got an error once so I suspect it might not always be 6 or 7 but I can't reproduce a different length
-        // console.log('actions.length', actions.length);
-        // expect(actions.length === 6 || actions.length === 7).toEqual(true);
-        actions.forEach(action => {
-          expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
-        });
-        done();
-      } catch(e) {
-        done.fail(e);
-      }
-    }, 1500)
+      const actions = store.getActions();
+      expect(actions.length === 6).toEqual(true);
+      actions.forEach(action => {
+        expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
+      });
+      done();
+    }, 0)
   });
   test('calls the correct number of actions after mounting', (done) => {
-    const mock = new MockAdapter(axios);
-    const data = { result: { Last: 24.50 } };
-    mock.onGet('https://bittrex.com/api/v1.1/public/getticker?market=USDT-NEO').reply(200, data);
-
     const { wrapper, store } = setup(initialState, false);
     const actionTypes = [
       SET_TRANSACTION_HISTORY,
@@ -137,16 +132,12 @@ describe('WalletInfo', () => {
       SET_CLAIM
     ];
     setTimeout(() => {
-      try {
-        const actions = store.getActions();
-        expect(actions.length).toEqual(4);
-        actions.forEach(action => {
-          expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
-        });
-        done();
-      } catch(e) {
-        done.fail(e);
-      }
-    }, 1500);
+      const actions = store.getActions();
+      expect(actions.length).toEqual(4);
+      actions.forEach(action => {
+        expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
+      });
+      done();
+    }, 0);
   });
 });

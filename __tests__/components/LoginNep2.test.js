@@ -4,9 +4,11 @@ import { Provider } from 'react-redux';
 import { shallow, mount } from 'enzyme';
 import { createMemoryHistory } from 'history'
 import LoginNep2 from '../../app/components/LoginNep2';
-
+import { decrypt_wif } from 'neon-js';
 import { SEND_TRANSACTION, CLEAR_TRANSACTION } from '../../app/modules/transactions';
 import { LOGIN } from '../../app/modules/account';
+
+jest.mock('neon-js');
 
 const initialState = {
   account: {
@@ -48,16 +50,12 @@ describe('LoginNep2', () => {
     const keyField = wrapper.find('input[type="text"]');
     const footerField = wrapper.find('#footer');
 
-    try {
-      expect(footerField.text()).toEqual('Created by Ethan Fast and COZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A');
-      expect(passwordField.text()).toEqual('');
-      expect(passwordField.html().includes('Enter your passphrase here')).toEqual(true);
-      expect(keyField.text()).toEqual('');
-      expect(keyField.html().includes('Enter your encrypted key here')).toEqual(true);
-      done();
-    } catch (error) {
-      done.fail(error);
-    }
+    expect(footerField.text()).toEqual('Created by Ethan Fast and COZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A');
+    expect(passwordField.text()).toEqual('');
+    expect(passwordField.html().includes('Enter your passphrase here')).toEqual(true);
+    expect(keyField.text()).toEqual('');
+    expect(keyField.html().includes('Enter your encrypted key here')).toEqual(true);
+    done();
   });
   test('renders correctly when decrypting is true', (done) => {
     const newState = Object.assign({}, initialState, {
@@ -69,30 +67,22 @@ describe('LoginNep2', () => {
     const { wrapper } = setup(newState, false);
     const decryptingText = wrapper.find('.decrypting');
 
-    try {
-      expect(decryptingText.text()).toEqual('Decrypting keys...');
-      done();
-    } catch (error) {
-      done.fail(error);
-    }
+    expect(decryptingText.text()).toEqual('Decrypting keys...');
+    done();
   });
   test('the login button is working correctly with no passphrase', (done) => {
     const { wrapper, store } = setup();
     wrapper.dive().find('.loginButton').simulate('click');
     setTimeout(() => {
-      try {
-        const actions = store.getActions();
-        expect(actions.length).toEqual(1);
-        expect(actions[0]).toEqual({
-          type: SEND_TRANSACTION,
-          success: false,
-          message: 'Passphrase too short'
-        });
-        done();
-      } catch(e) {
-        done.fail(e);
-      }
-    }, 1000)
+      const actions = store.getActions();
+      expect(actions.length).toEqual(1);
+      expect(actions[0]).toEqual({
+        type: SEND_TRANSACTION,
+        success: false,
+        message: 'Passphrase too short'
+      });
+      done();
+    }, 0)
   });
   test('the login button is working correctly with only a passphrase', (done) => {
     const { wrapper, store } = setup(initialState, false);
@@ -102,24 +92,22 @@ describe('LoginNep2', () => {
 
     wrapper.find('.loginButton').simulate('click');
     setTimeout(() => {
-      try {
-        const actions = store.getActions();
-        expect(actions.length).toEqual(2);
-        expect(actions[0]).toEqual({
-          type: SEND_TRANSACTION,
-          success: true,
-          message: 'Decrypting encoded key...'
-        });
-        expect(actions[1]).toEqual({
-          type: SEND_TRANSACTION,
-          success: false,
-          message: 'Wrong passphrase or invalid encrypted key'
-        });
-        done();
-      } catch(e) {
-        done.fail(e);
-      }
-    }, 1000)
+      const actions = store.getActions();
+      expect(actions.length).toEqual(2);
+      expect(actions[0]).toEqual({
+        type: SEND_TRANSACTION,
+        success: true,
+        message: 'Decrypting encoded key...'
+      });
+      expect(actions[1]).toEqual({
+        type: SEND_TRANSACTION,
+        success: false,
+        message: 'Wrong passphrase or invalid encrypted key'
+      });
+      expect(decrypt_wif.mock.calls.length).toBe(1);
+      expect(decrypt_wif.mock.calls[0][0]).toBe('');
+      done();
+    }, 510)
   });
   test('the login button is working correctly with key and passphrase', (done) => {
     const { wrapper, store } = setup(initialState, false);
@@ -134,25 +122,23 @@ describe('LoginNep2', () => {
 
     wrapper.find('.loginButton').simulate('click');
     setTimeout(() => {
-      try {
-        const actions = store.getActions();
-        expect(actions.length).toEqual(3);
-        expect(actions[0]).toEqual({
-          type: SEND_TRANSACTION,
-          success: true,
-          message: 'Decrypting encoded key...'
-        });
-        expect(actions[1]).toEqual({
-          type: LOGIN,
-          wif: 'L4AJ14CNaBWPemRJKC34wyZwbmxg33GETs4Y1F8uK7rRmZ2UHrJn'
-        });
-        expect(actions[2]).toEqual({
-          type: CLEAR_TRANSACTION
-        });
-        done();
-      } catch(e) {
-        done.fail(e);
-      }
-    }, 1000)
+      const actions = store.getActions();
+      expect(actions.length).toEqual(3);
+      expect(decrypt_wif.mock.calls.length).toBe(2);
+      expect(decrypt_wif.mock.calls[1][0]).toBe('6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu');
+      expect(actions[0]).toEqual({
+        type: SEND_TRANSACTION,
+        success: true,
+        message: 'Decrypting encoded key...'
+      });
+      expect(actions[1]).toEqual({
+        type: LOGIN,
+        wif: 'L4AJ14CNaBWPemRJKC34wyZwbmxg33GETs4Y1F8uK7rRmZ2UHrJn'
+      });
+      expect(actions[2]).toEqual({
+        type: CLEAR_TRANSACTION
+      });
+      done();
+    }, 510)
   });
 });
