@@ -26,7 +26,7 @@ const setup = (state = initialState) => {
   };
 };
 
-describe.only('NetworkSwitch', () => {
+describe('NetworkSwitch', () => {
   test('renders without crashing', (done) => {
     const { wrapper } = setup();
     expect(wrapper).toMatchSnapshot();
