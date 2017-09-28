@@ -4,7 +4,8 @@ import Claim from "./Claim.js";
 import MdSync from 'react-icons/lib/md/sync';
 import QRCode from 'qrcode';
 import { initiateGetBalance, intervals } from "../components/NetworkSwitch";
-import { resetPrice, sendEvent, clearTransactionEvent } from '../actions/index.js';
+import { resetPrice } from '../modules/wallet';
+import { sendEvent, clearTransactionEvent } from '../modules/transactions';
 import { clipboard } from 'electron';
 import Copy from 'react-icons/lib/md/content-copy';
 import ReactTooltip from 'react-tooltip'
@@ -33,7 +34,7 @@ class WalletInfo extends Component {
         <div className="label">Your Public Neo Address:</div>
         <div className="address">
           {this.props.address}
-            <span className="copyKey" onClick={() => clipboard.writeText(this.props.address, 'selection')}><Copy data-tip data-for="copyAddressTip" /></span>
+            <span className="copyKey" onClick={() => clipboard.writeText(this.props.address)}><Copy data-tip data-for="copyAddressTip" /></span>
         </div>
         <ReactTooltip class="solidTip" id="copyAddressTip" place="bottom" type="dark" effect="solid">
           <span>Copy Public Address</span>
@@ -42,16 +43,20 @@ class WalletInfo extends Component {
         <div id="balance">
           <div className="split">
             <div className="label">NEO</div>
-            <div className="amountBig">{this.props.neo}</div>
+            <div className="amountBig amountNeo">{this.props.neo}</div>
           </div>
           <div className="split">
             <div className="label">GAS</div>
-            <div className="amountBig">{this.props.gas < 0.001 ? 0 : this.props.gas.toPrecision(5)}</div>
+            <div className="amountBig amountGas">{ Math.floor(this.props.gas * 10000) / 10000 }</div>
           </div>
+          <div className="refreshBalance" onClick={() => refreshBalance(this.props.dispatch, this.props.net, this.props.address)} >
+            <MdSync id="refresh" data-tip data-for="refreshBalanceTip"/>
+            <ReactTooltip class="solidTip" id="refreshBalanceTip" place="bottom" type="dark" effect="solid">
+              <span>Refresh account balance</span>
+            </ReactTooltip>
+          </div>
+
           <div className="fiat">US {this.props.price}</div>
-          <div onClick={() => refreshBalance(this.props.dispatch, this.props.net, this.props.address)}>
-            <MdSync id="refresh"/>
-          </div>
         </div>
         <div className="spacer"></div>
         <Claim />

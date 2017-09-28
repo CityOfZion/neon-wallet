@@ -1,9 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Login renders without crashing 1`] = `
-<LoginPrivateKey
+exports[`WalletInfo renders without crashing 1`] = `
+<WalletInfo
+  address="ANqUrhv99rwCiFTL6N1An9NH5UVkPYxTuw"
   dispatch={[Function]}
-  loggedIn={true}
+  gas={1.0001}
+  neo={10}
+  net="TestNet"
+  price={25.48}
   store={
     Object {
       "clearActions": [Function],
