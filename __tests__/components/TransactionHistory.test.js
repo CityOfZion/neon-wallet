@@ -78,8 +78,6 @@ describe('TransactionHistory', () => {
     const { store, wrapper } = setup(transactionState);
     const deepWrapper = wrapper.dive();
 
-    const columnHeader = deepWrapper.find('.columnHeader');
-
     const transactionList = deepWrapper.find('#transactionList');
     expect(transactionList.children().length).toEqual(2);
     expect(transactionList.childAt(0).find('.txid').text()).toEqual(transactions.wallet.transactions[0].txid);
