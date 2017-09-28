@@ -1,7 +1,7 @@
 // Constants
-const SEND_TRANSACTION = 'SEND_TRANSACTION';
-const CLEAR_TRANSACTION = 'CLEAR_TRANSACTION';
-const TOGGLE_ASSET = 'TOGGLE_ASSET';
+export const SEND_TRANSACTION = 'SEND_TRANSACTION';
+export const CLEAR_TRANSACTION = 'CLEAR_TRANSACTION';
+export const TOGGLE_ASSET = 'TOGGLE_ASSET';
 
 // Actions
 export function sendEvent(success, message){

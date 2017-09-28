@@ -43,13 +43,13 @@ class WalletInfo extends Component {
         <div id="balance">
           <div className="split">
             <div className="label">NEO</div>
-            <div className="amountBig">{this.props.neo}</div>
+            <div className="amountBig amountNeo">{this.props.neo}</div>
           </div>
           <div className="split">
             <div className="label">GAS</div>
-            <div className="amountBig">{ Math.floor(this.props.gas * 10000) / 10000 }</div>
+            <div className="amountBig amountGas">{ Math.floor(this.props.gas * 10000) / 10000 }</div>
           </div>
-          <div onClick={() => refreshBalance(this.props.dispatch, this.props.net, this.props.address)} >
+          <div className="refreshBalance" onClick={() => refreshBalance(this.props.dispatch, this.props.net, this.props.address)} >
             <MdSync id="refresh" data-tip data-for="refreshBalanceTip"/>
             <ReactTooltip class="solidTip" id="refreshBalanceTip" place="bottom" type="dark" effect="solid">
               <span>Refresh account balance</span>

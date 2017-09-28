@@ -1,11 +1,10 @@
 import { getAccountsFromWIFKey } from 'neon-js';
 
 // Constants
-const LOGIN = 'LOGIN';
-const LOGOUT = 'LOGOUT';
-const SET_DECRYPTING = 'SET_DECRYPTING';
-const SET_KEYS = 'SET_KEYS';
-
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
+export const SET_DECRYPTING = 'SET_DECRYPTING';
+export const SET_KEYS = 'SET_KEYS';
 
 // Actions
 export function login(wif){

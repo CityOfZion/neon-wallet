@@ -1,7 +1,9 @@
-const SET_CLAIM = 'SET_CLAIM';
-const SET_CLAIM_REQUEST = 'SET_CLAIM_REQUEST';
-const DISABLE_CLAIM = 'DISABLE_CLAIM';
+// Constants
+export const SET_CLAIM = 'SET_CLAIM';
+export const SET_CLAIM_REQUEST = 'SET_CLAIM_REQUEST';
+export const DISABLE_CLAIM = 'DISABLE_CLAIM';
 
+// Actions
 export function setClaim(available, unavailable){
   return {
     type: SET_CLAIM,
