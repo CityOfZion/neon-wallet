@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getBalance, getTransactionHistory, neoId, getClaimAmounts, getWalletDBHeight, getAPIEndpoint } from 'neon-js';
+import { getBalance, getTransactionHistory, getClaimAmounts, getWalletDBHeight, getAPIEndpoint } from 'neon-js';
 import { setClaim } from '../modules/claim';
 import { setBlockHeight, setNetwork } from '../modules/metadata';
 import { setBalance, setMarketPrice, resetPrice, setTransactionHistory, } from '../modules/wallet';
-import { version } from '../../package.json'
+import { version } from '../../package.json';
 import { sendEvent, clearTransactionEvent } from '../modules/transactions';
 import axios from 'axios';
 
@@ -136,4 +136,4 @@ const mapStateToProps = (state) => ({
 
 NetworkSwitch = connect(mapStateToProps)(NetworkSwitch);
 
-export { NetworkSwitch, initiateGetBalance, syncTransactionHistory, intervals };
+export { NetworkSwitch, initiateGetBalance, syncTransactionHistory, intervals, resetBalanceSync };

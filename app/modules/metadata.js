@@ -1,7 +1,7 @@
 // Constants
-const SET_HEIGHT = 'SET_HEIGHT';
-const SET_NETWORK = 'SET_NETWORK';
-const SET_EXPLORER = 'SET_EXPLORER';
+export const SET_HEIGHT = 'SET_HEIGHT';
+export const SET_NETWORK = 'SET_NETWORK';
+export const SET_EXPLORER = 'SET_EXPLORER';
 
 // Actions
 export function setNetwork(net){
@@ -35,7 +35,7 @@ export default (state = {blockHeight: 0, network: 'MainNet', blockExplorer: 'Neo
       console.log(action.blockExplorer);
       return {...state, blockExplorer: action.blockExplorer };
     case SET_NETWORK:
-        return {...state, network: action.net};
+      return {...state, network: action.net};
     default:
       return state;
   }

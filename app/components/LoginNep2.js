@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
 import { login, decrypting } from '../modules/account';
 import CreateWallet from './CreateWallet.js'
-import { encrypt_wif, decrypt_wif } from 'neon-js';
+import { decrypt_wif } from 'neon-js';
 // TODO: these event messages should be refactored from transactions
 import { sendEvent, clearTransactionEvent } from '../modules/transactions';
 import FaEye from 'react-icons/lib/fa/eye';
@@ -20,7 +20,7 @@ const onWifChange = (dispatch, history) => {
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
     return;
   }
-  console.log(wif_input, passphrase_input);
+  // console.log(wif_input, passphrase_input);
   // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
   dispatch(sendEvent(true, "Decrypting encoded key..."));
   setTimeout(() => {
@@ -70,7 +70,7 @@ class LoginNep2 extends Component {
           <input type="text" placeholder="Enter your encrypted key here" ref={(node) => wif_input = node}  />
         </div>
         <div className="loginButtons">
-          <button onClick={(e) => onWifChange(dispatch, this.props.history)}>Login</button>
+          <button className="loginButton" onClick={(e) => onWifChange(dispatch, this.props.history)}>Login</button>
           <Link to="/"><button className="altButton">Home</button></Link>
         </div>
         {this.props.decrypting === true ? <div className="decrypting">Decrypting keys...</div> : <div></div>}
@@ -82,8 +82,6 @@ class LoginNep2 extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  loggedIn: state.account.loggedIn,
-  wif: state.account.wif,
   decrypting: state.account.decrypting
 });
 

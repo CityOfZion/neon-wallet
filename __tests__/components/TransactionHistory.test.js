@@ -29,7 +29,7 @@ const transactions = {
       },
       {
         type: 'GAS',
-        amount: '0.40000',
+        amount: '0.4',
         txid: '76938980'
       }
     ]
@@ -77,8 +77,6 @@ describe('TransactionHistory', () => {
     const transactionState = Object.assign({}, initialState, transactions);
     const { store, wrapper } = setup(transactionState);
     const deepWrapper = wrapper.dive();
-
-    const columnHeader = deepWrapper.find('.columnHeader');
 
     const transactionList = deepWrapper.find('#transactionList');
     expect(transactionList.children().length).toEqual(2);

@@ -1,5 +1,5 @@
 // Constants
-const TOGGLE_SEND_PANE = 'TOGGLE_SEND_PANE';
+export const TOGGLE_SEND_PANE = 'TOGGLE_SEND_PANE';
 
 // Actions
 export function togglePane(pane){
