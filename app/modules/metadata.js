@@ -15,7 +15,7 @@ export function setNetwork(net){
 export function setBlockHeight(blockHeight){
   return {
     type: SET_HEIGHT,
-    blockHeight: blockHeight
+    blockHeight
   };
 }
 
