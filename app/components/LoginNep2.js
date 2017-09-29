@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
 import { login, decrypting } from '../modules/account';
 import CreateWallet from './CreateWallet.js'
-import { encrypt_wif, decrypt_wif } from 'neon-js';
+import { decrypt_wif } from 'neon-js';
 // TODO: these event messages should be refactored from transactions
 import { sendEvent, clearTransactionEvent } from '../modules/transactions';
 
