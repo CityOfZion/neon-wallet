@@ -13,24 +13,22 @@ A standalone app will be available soon. For now, you will need to build the wal
 ### Required Tools and Dependencies
 
   - Node (This project uses the current LTS node version, which is `v6.11.0`)
-  - `npm install -g webpack` Global Webpack 
-  - `npm install -g jest` Unit testing framework
 
 ### Developing and Running
 
 Execute these commands in the project's root directory:
 
   - `npm install` Installing node dependencies
-  - `webpack` or `webpack --watch` for live reload.
+  - `npm run assets` or `npm run assets-watch` for live reload.
   - `npm start` for running the project
-  - `npm test` or `npm test-watch` for live testing.
+  - `npm test` or `npm run test-watch` for live testing.
 
-### Support 
+### Support
 
-A gentle reminder, github issues is meant to be used by developers for maintaining and improving the codebase, and is not the proper location for support issues. Questions such as 
+A gentle reminder, github issues is meant to be used by developers for maintaining and improving the codebase, and is not the proper location for support issues. Questions such as
 
 - Why can't I log in?
 - I lost my private key, is there anyway to recover?
 - Why is my balance not showing?
 
-should be asked in proper support channels such as the [NEO subreddit](https://www.reddit.com/r/NEO/), or the official [NEO slack](https://neosmarteconomy.slack.com). 
+should be asked in proper support channels such as the [NEO subreddit](https://www.reddit.com/r/NEO/), or the official [NEO slack](https://neosmarteconomy.slack.com).
