@@ -210,7 +210,7 @@ const createSignatureAsynch = function( txData ) {
 
         var messages = [];
 
-        let bufferSize = 254;
+        let bufferSize = 255 * 2;
         let offset = 0;
         while ( offset < txData.length ) {
             let chunk;
@@ -226,7 +226,7 @@ const createSignatureAsynch = function( txData ) {
                 p1 = "00";
             }
 
-            let chunkLength = chunk.length;
+            let chunkLength = chunk.length / 2;
 
             process.stdout.write( "Ledger Signature chunkLength " + chunkLength + "\n" );
 
