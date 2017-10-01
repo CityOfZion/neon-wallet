@@ -51,16 +51,30 @@ const toHashKey = (string) => {
 }
 
 /**
- * @summary Parse the wallet JSON into a restructured object
+ * @summary Try to parse a JSON string
  *
- * @param {String} json - wallet JSON data
- * @returns {Promise} tuple of key object and accounts list
+ * @param {String} json - JSON string
+ * @returns {Promise} object
  */
-const parseWalletJSON = (json) => {
-  const walletObject = JSON.parse(json);
+export const tryParse = (json) => {
+  try {
+    return Promise.resolve(JSON.parse(json));
+  } catch(error) {
+    return Promise.reject(error)
+  }
+}
 
+/**
+ * @summary Restructure the wallet JSON into a more succinct object
+ *
+ * @param {Object} json - wallet JSON data
+ * @returns {Promise} object containing name, accounts, and key fields
+ */
+export const restructureNeoWallet = (walletObject) => {
   let accounts = [];
   let key = {};
+  // 'wallet' seems to be the default
+  let walletName = 'wallet';
 
   for (const listing of walletObject) {
     if (listing.table === 'Account') {
@@ -70,11 +84,18 @@ const parseWalletJSON = (json) => {
       for (const keyField of listing.content) {
         key[keyField.name] = keyField.value;
       }
+
+    } else if (listing.table === 'Wallet') {
+      walletName = listing.content.name;
     }
   }
 
   if (accounts.length > 0 && key) {
-    return Promise.resolve([accounts, key]);
+    return Promise.resolve({
+      name,
+      accounts,
+      key
+    });
 
   } else {
     let errorMessage = [];
@@ -145,22 +166,41 @@ const privateKeyToWIF = (privateKey) => {
   return Base58.encode(data)
 }
 
-const readAndDecrypt = (filepath, password) => {
-  return readFile(filepath).then(parseWalletJSON).then(([ accounts, key ]) => {
-    const { IV, MasterKey } = key
-    const ivBytes = hexToBytes(IV)
-    const encryptedMasterKeyBytes = hexToBytes(MasterKey)
-    const passwordKey = toHashKey(password)
+/**
+ * @summary Decrypt wallet JSON
+ * @function
+ * @public
+ *
+ * @param {Object} wallet - wallet object containing accounts and keys
+ * @returns {String} WIF
+ */
+export const decryptWallet = (password, { accounts, key }) => {
+  const { IV, MasterKey } = key
+  const ivBytes = hexToBytes(IV)
+  const encryptedMasterKeyBytes = hexToBytes(MasterKey)
+  const passwordKey = toHashKey(password)
 
-    const decipher = Crypto.createDecipheriv('aes-256-cbc', passwordKey, ivBytes)
-    let masterKey = new Uint8Array(decipher.update(encryptedMasterKeyBytes))
-    decipher.final()
+  const decipher = Crypto.createDecipheriv('aes-256-cbc', passwordKey, ivBytes)
+  let masterKey = new Uint8Array(decipher.update(encryptedMasterKeyBytes))
+  decipher.final()
 
-    const privateKey = decryptPrivateKey(accounts[0], masterKey, ivBytes)
-    const base58privateKey = privateKeyToWIF(privateKey)
+  const privateKey = decryptPrivateKey(accounts[0], masterKey, ivBytes)
+  const base58privateKey = privateKeyToWIF(privateKey)
 
-    return base58privateKey
-  })
+  return base58privateKey
 }
 
-export default readAndDecrypt;
+/**
+ * @summary Parse JSON and decrypt wallet key
+ * @function
+ * @public
+ *
+ * @param {String}
+ * @param {String}
+ * @returns {String} Base58 private key, or WIF
+ */
+export const readAndDecrypt = (filepath, password) => {
+  return readFile(filepath).then(tryParse).then(restructureNeoWallet).then((wallet) => {
+    return decryptWallet(password, wallet)
+  });
+}

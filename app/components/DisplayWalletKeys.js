@@ -13,7 +13,10 @@ let key_name;
 
 const saveKey = (dispatch, encWifValue) => {
   storage.get('keys', (error, data) => {
-    data[key_name.value] = encWifValue
+    data[key_name.value] = {
+      type: 'neon',
+      privateKey: encWifValue
+    };
     dispatch(sendEvent(true, "Saved key as "+key_name.value))
     storage.set('keys', data);
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
