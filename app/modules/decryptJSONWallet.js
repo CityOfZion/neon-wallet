@@ -74,7 +74,7 @@ export const restructureNeoWallet = (walletObject) => {
   let accounts = [];
   let key = {};
   // 'wallet' seems to be the default
-  let walletName = 'wallet';
+  let name = 'wallet';
 
   for (const listing of walletObject) {
     if (listing.table === 'Account') {
@@ -86,7 +86,7 @@ export const restructureNeoWallet = (walletObject) => {
       }
 
     } else if (listing.table === 'Wallet') {
-      walletName = listing.content.name;
+      name = listing.content.name;
     }
   }
 

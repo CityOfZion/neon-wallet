@@ -6,7 +6,6 @@ import { setKeys } from '../modules/account';
 import Delete from 'react-icons/lib/md/delete';
 import _ from 'lodash';
 import fs from 'fs';
-import _ from 'lodash';
 import { tryParse, restructureNeoWallet } from '../modules/decryptJSONWallet'
 
 const {dialog} = require('electron').remote;
