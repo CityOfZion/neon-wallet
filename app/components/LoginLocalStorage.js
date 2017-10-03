@@ -8,7 +8,7 @@ import storage from 'electron-json-storage';
 import _ from 'lodash';
 // TODO: these event messages should be refactored from transactions
 import { sendEvent, clearTransactionEvent } from '../modules/transactions';
-import { decryptWallet } from '../modules/decryptJSONWallet'
+import { decryptWallet } from '../modules/decryptNeoWallet'
 
 const logo = require('../images/neon-logo2.png');
 

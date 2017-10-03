@@ -197,7 +197,7 @@ export const decryptWallet = (password, { accounts, key }) => {
  *
  * @param {String}
  * @param {String}
- * @returns {String} Base58 private key, or WIF
+ * @returns {Promise} Resolves to base58 private key (WIF)
  */
 export const readAndDecrypt = (filepath, password) => {
   return readFile(filepath).then(tryParse).then(restructureNeoWallet).then((wallet) => {

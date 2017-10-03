@@ -6,7 +6,8 @@ import { setKeys } from '../modules/account';
 import Delete from 'react-icons/lib/md/delete';
 import _ from 'lodash';
 import fs from 'fs';
-import { tryParse, restructureNeoWallet } from '../modules/decryptJSONWallet'
+import { tryParse, restructureNeoWallet } from '../modules/decryptNeoWallet'
+import Bluebird from 'bluebird';
 
 const {dialog} = require('electron').remote;
 
@@ -49,50 +50,51 @@ const loadKeyRecovery = (dispatch) => {
             alert("An error ocurred reading the file :" + err.message);
             return;
         }
-        tryParse(data).then(restructureNeoWallet).then(({ name, ...neoWalletRest }) => {
-          const keys = {
-            [name]: {
-              type: "neo-wallet",
-              ...neoWalletRest
-            }
-          };
-          storage.get("keys", (err, data) => {
-            if (err) {
-              alert(`An error occurred parsing the file: ${err.message}`)
-              return;
-            }
 
-            const mergedWallets = { ...data, ...keys }
-            dispatch(setKeys(mergedWallets))
-            storage.set('keys', mergedWallets)
-          })
-        }).catch((error) => {
-          tryParse(data).then((keys) => {
-            if (_.isNil(keys)) {
-              alert('Invalid wallet format; not JSON.')
-              return;
-            }
+      const tryParseNeoWallet = async () => {
+        const json = await tryParse(data)
+        const { name, ...neoWalletRest } = await restructureNeoWallet(json)
+        console.log('Neo');
+        return {
+          [name]: {
+            type: "neo-wallet",
+            ...neoWalletRest
+          }
+        };
+      };
+      const tryParseNeonWallet = async () => {
+        const json = await tryParse(data);
+        console.log('Neon');
+        // Previous wallet keys were stored as Strings, here we ensure they
+        // are turned into objects with type fields defaulting to 'neon'
+        return _.mapValues(json, (value, key) => {
+          if (_.isString(value)) {
+            return {
+              type: 'neon',
+              privateKey: value
+            };
+          }
 
-            // Previous wallet keys were stored as Strings, here we ensure they
-            // are turned into objects with type fields defaulting to 'neon'
-            keys = _.map(keys, (value, key) => {
-              if (_.isString(value)) {
-                return {
-                  type: 'neon',
-                  privateKey: value
-                };
-              }
-
-              return value;
-            })
-
-            const mergedWallets = { ...data, ...keys }
-            dispatch(setKeys(mergedWallets));
-            storage.set('keys', mergedWallets);
-          })
+          return value;
         })
+      }
+
+      Bluebird.any([ tryParseNeoWallet(), tryParseNeonWallet() ]).then((keys) => {
+        return new Promise((resolve, reject) => {
+          storage.get("keys", (err, oldKeys) => {
+            if (err) reject(err);
+            resolve(oldKeys);
+          })
+        }).then((oldKeys) => {
+          const mergedWallets = { ...oldKeys, ...keys }
+          dispatch(setKeys(mergedWallets));
+          storage.set('keys', mergedWallets);
+        })
+      }).catch((error) => {
+        alert('Invalid wallet formats.');
+      })
     });
-});
+  });
 }
 
 const saveSettings = (settings) => {
@@ -131,9 +133,9 @@ class Settings extends Component {
 
   render = () => {
     const walletElems = _.map(this.props.wallets, (value, walletName) => {
-      let wif = value;
-      if (_.isObject(value)) {
-        wif = '<encrypted key>'
+      let wif = '<encrypted key>';
+      if (value.type === 'neon') {
+        wif = value.privateKey;
       }
       return (
         <div className="walletList">
