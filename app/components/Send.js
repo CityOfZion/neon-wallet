@@ -45,6 +45,7 @@ const validateForm = (dispatch, neo_balance, gas_balance, asset) => {
   else if (parseFloat(sendAmount.value) < 0){
     dispatch(sendEvent(false, "You cannot send negative amounts of an asset."));
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+    return false;
   }
   return true;
 }
