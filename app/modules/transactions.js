@@ -12,7 +12,7 @@ export function sendEvent(success, message){
   }
 };
 
-export function clearTransactionEvent(success){
+export function clearTransactionEvent(){
   return {
     type: CLEAR_TRANSACTION,
   }
