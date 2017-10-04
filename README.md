@@ -13,15 +13,16 @@ A standalone app will be available soon. For now, you will need to build the wal
 ### Required Tools and Dependencies
 
   - Node (This project uses the current LTS node version, which is `v6.11.0`)
+  - Yarn (https://yarnpkg.com/lang/en/docs/install/)
 
 ### Developing and Running
 
 Execute these commands in the project's root directory:
 
-  - `npm install` Installing node dependencies
-  - `npm run assets` or `npm run assets-watch` for live reload.
-  - `npm start` for running the project
-  - `npm test` or `npm run test-watch` for live testing.
+  - `yarn install` Installing node dependencies
+  - `yarn run assets` or `yarn run assets-watch` for live reload.
+  - `yarn start` for running the project
+  - `yarn test` or `yarn run test-watch` for live testing.
 
 ### Support
 
