@@ -50,7 +50,6 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
-    "axios-mock-adapter": "^1.9.0",
     "base-x": "^3.0.2",
     "bigi": "^1.4.2",
     "bs58check": "^2.0.2",
@@ -64,7 +63,6 @@
     "enzyme-adapter-react-15": "^1.0.1",
     "file-loader": "^0.9.0",
     "fs": "0.0.1-security",
-    "history": "^4.7.2",
     "isomorphic-fetch": "^2.2.1",
     "js-scrypt": "^0.2.0",
     "lodash": "^4.17.4",
@@ -89,6 +87,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^6.3.6",
+    "axios-mock-adapter": "^1.9.0",
     "babel-core": "^6.8.0",
     "babel-eslint": "^6.0.4",
     "babel-loader": "^6.2.4",
@@ -106,6 +105,7 @@
     "eslint-loader": "^1.5.0",
     "eslint-plugin-react": "^5.0.1",
     "extract-text-webpack-plugin": "^1.0.1",
+    "history": "^4.7.2",
     "html-webpack-plugin": "^2.16.1",
     "jest": "^20.0.4",
     "json-loader": "^0.5.4",
