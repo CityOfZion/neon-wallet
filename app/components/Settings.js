@@ -6,6 +6,8 @@ import { setKeys } from '../modules/account';
 import Delete from 'react-icons/lib/md/delete';
 import _ from 'lodash';
 import fs from 'fs';
+import { tryParse, restructureNeoWallet } from '../modules/decryptNeoWallet'
+import Bluebird from 'bluebird';
 
 const {dialog} = require('electron').remote;
 
@@ -48,18 +50,51 @@ const loadKeyRecovery = (dispatch) => {
             alert("An error ocurred reading the file :" + err.message);
             return;
         }
-        const keys = JSON.parse(data);
-        storage.get('keys', (error, data) => {
-          _.each(keys, (value, key) => {
-            data[key] = value;
-          });
-          dispatch(setKeys(data));
-          storage.set('keys', data);
-        });
-        // dispatch(setKeys(keys));
-        // storage.set('keys', keys);
+
+      const tryParseNeoWallet = async () => {
+        const json = await tryParse(data)
+        const { name, ...neoWalletRest } = await restructureNeoWallet(json)
+        console.log('Neo');
+        return {
+          [name]: {
+            type: "neo-wallet",
+            ...neoWalletRest
+          }
+        };
+      };
+      const tryParseNeonWallet = async () => {
+        const json = await tryParse(data);
+        console.log('Neon');
+        // Previous wallet keys were stored as Strings, here we ensure they
+        // are turned into objects with type fields defaulting to 'neon'
+        return _.mapValues(json, (value, key) => {
+          if (_.isString(value)) {
+            return {
+              type: 'neon',
+              privateKey: value
+            };
+          }
+
+          return value;
+        })
+      }
+
+      Bluebird.any([ tryParseNeoWallet(), tryParseNeonWallet() ]).then((keys) => {
+        return new Promise((resolve, reject) => {
+          storage.get("keys", (err, oldKeys) => {
+            if (err) reject(err);
+            resolve(oldKeys);
+          })
+        }).then((oldKeys) => {
+          const mergedWallets = { ...oldKeys, ...keys }
+          dispatch(setKeys(mergedWallets));
+          storage.set('keys', mergedWallets);
+        })
+      }).catch((error) => {
+        alert('Invalid wallet formats.');
+      })
     });
-});
+  });
 }
 
 const saveSettings = (settings) => {
@@ -96,8 +131,23 @@ class Settings extends Component {
     loadSettings(this.props.dispatch);
   }
 
-  render = () =>
-    <div id="settings">
+  render = () => {
+    const walletElems = _.map(this.props.wallets, (value, walletName) => {
+      let wif = '<encrypted key>';
+      if (value.type === 'neon') {
+        wif = value.privateKey;
+      }
+      return (
+        <div className="walletList">
+          <div className="walletItem">
+            <div className="walletName">{walletName.slice(0,20)}</div>
+            <div className="walletKey">{wif}</div>
+            <div className="deleteWallet" onClick={() => deleteWallet(this.props.dispatch, walletName)}><Delete/></div>
+          </div>
+        </div>
+      );
+    });
+    return <div id="settings">
       <div className="logo"><img src={logo} width="60px"/></div>
       <div className="description">Manage your Neon wallet keys and settings</div>
       <div className="settingsForm">
@@ -110,19 +160,14 @@ class Settings extends Component {
         </div>
           <div className="settingsItem">
             <div className="itemTitle">Saved Wallet Keys</div>
-            {_.map(this.props.wallets, (value, key) => {
-              return (<div className="walletList">
-                <div className="walletItem">
-                  <div className="walletName">{key.slice(0,20)}</div><div className="walletKey">{value}</div><div className="deleteWallet" onClick={() => deleteWallet(this.props.dispatch, key)}><Delete/></div>
-                </div>
-                </div>);})
-            }
+            { walletElems }
           </div>
           <button onClick={() => saveKeyRecovery(this.props.wallets)}>Export key recovery file</button>
           <button onClick={() => loadKeyRecovery(this.props.dispatch)}>Load key recovery file</button>
         </div>
       <Link to="/"><button className="altButton">Home</button></Link>
     </div>;
+  }
 }
 
 const mapStateToProps = (state) => ({

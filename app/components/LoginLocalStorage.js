@@ -8,6 +8,7 @@ import storage from 'electron-json-storage';
 import _ from 'lodash';
 // TODO: these event messages should be refactored from transactions
 import { sendEvent, clearTransactionEvent } from '../modules/transactions';
+import { decryptWallet } from '../modules/decryptNeoWallet'
 
 const logo = require('../images/neon-logo2.png');
 
@@ -22,12 +23,29 @@ const onWifChange = (dispatch, history) => {
   }
   dispatch(sendEvent(true, "Decrypting encoded key..."));
   setTimeout(() => {
-    decrypt_wif(wif_input.value, passphrase_input.value).then((wif) => {
+    const json = wif_input.value;
+    const password = passphrase_input.value;
+    const wallet = _.attempt(() => JSON.parse(json));
+
+    let promise;
+    if (wallet.type === 'neo-wallet') {
+      promise = Promise.resolve(decryptWallet(password, wallet));
+
+    } else if (wallet.type === 'neon') {
+      promise = decrypt_wif(json, password)
+
+    } else {
+      promise = Promise.reject(`Invalid wallet type: ${JSON.stringify(wallet.type)}`);
+    }
+
+    promise.then((wif) => {
       dispatch(login(wif));
       history.push('/dashboard');
       dispatch(clearTransactionEvent());
-    }).catch(() => {
-      dispatch(sendEvent(false, "Wrong passphrase"));
+    }).catch((error) => {
+      let errorMessage = "Wrong passphrase";
+      if (_.isString(error)) errorMessage = error;
+      dispatch(sendEvent(false, errorMessage));
       setTimeout(() => dispatch(clearTransactionEvent()), 5000);
     });
   }, 500);
@@ -44,6 +62,9 @@ class LoginLocalStorage extends Component {
   render = () => {
     const dispatch = this.props.dispatch;
     const loggedIn = this.props.loggedIn;
+    const accountKeyElems = _.map(this.props.accountKeys, (value, key) => {
+      return <option value={JSON.stringify(value)}>{key}</option>;
+    })
     return (<div id="loginPage">
       <div className="login">
         <div className="logo"><img src={logo} width="60px"/></div>
@@ -53,7 +74,7 @@ class LoginLocalStorage extends Component {
             <label>Wallet:</label>
             <select ref={(node) => wif_input = node}>
               <option selected="selected" disabled="disabled">Select a wallet</option>
-              {_.map(this.props.accountKeys, (value, key) => <option value={value}>{key}</option>)}
+              {accountKeyElems}
             </select>
           </div>
         </div>
