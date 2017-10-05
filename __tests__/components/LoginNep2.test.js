@@ -87,7 +87,7 @@ describe('LoginNep2', () => {
   test('the login button is working correctly with only a passphrase', (done) => {
     const { wrapper, store } = setup(initialState, false);
     const passwordField = wrapper.find('input[type="password"]');
-    passwordField.get(0).value = 'Th!s1$@FakePassphrase';
+    passwordField.instance().value = 'Th!s1$@FakePassphrase';
     passwordField.simulate('change')
 
     wrapper.find('.loginButton').simulate('click');
@@ -113,11 +113,11 @@ describe('LoginNep2', () => {
     const { wrapper, store } = setup(initialState, false);
 
     const passwordField = wrapper.find('input[type="password"]');
-    passwordField.get(0).value = 'Th!s1$@FakePassphrase';
+    passwordField.instance().value = 'Th!s1$@FakePassphrase';
     passwordField.simulate('change')
 
     const keyField = wrapper.find('input[type="text"]');
-    keyField.get(0).value = '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu';
+    keyField.instance().value = '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu';
     keyField.simulate('change')
 
     wrapper.find('.loginButton').simulate('click');
