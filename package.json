@@ -60,12 +60,14 @@
     "electron-json-storage": "^3.0.7",
     "electron-save-file": "^1.0.2",
     "elliptic": "^6.4.0",
+    "enzyme-adapter-react-15": "^1.0.1",
     "file-loader": "^0.9.0",
     "fs": "0.0.1-security",
     "isomorphic-fetch": "^2.2.1",
     "js-scrypt": "^0.2.0",
     "lodash": "^4.17.4",
     "neon-js": "git+https://github.com/CityOfZion/neon-js.git#e1cc32b710cd71e0cf12b3172a0bade3af813c1b",
+    "prop-types": "^15.6.0",
     "qrcode": "^0.8.2",
     "react": "^15.0.2",
     "react-ace": "^5.0.1",
@@ -97,8 +99,8 @@
     "electron": "^1.6.11",
     "electron-builder": "^19.17.0",
     "electron-packager": "^8.6.0",
-    "enzyme": "^2.9.1",
-    "enzyme-to-json": "^1.5.1",
+    "enzyme": "^3.1.0",
+    "enzyme-to-json": "^3.1.1",
     "eslint": "^2.9.0",
     "eslint-loader": "^1.5.0",
     "eslint-plugin-react": "^5.0.1",
@@ -127,12 +129,16 @@
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js"
     },
+    "testPathIgnorePatterns": [
+      "__tests__/setupTests.js"
+    ],
     "unmockedModulePathPatterns": [
       "node_modules/react/",
       "node_modules/enzyme/"
     ],
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
-    ]
+    ],
+    "setupTestFrameworkScriptFile": "<rootDir>/__tests__/setupTests.js"
   }
 }
