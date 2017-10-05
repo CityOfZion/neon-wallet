@@ -102,7 +102,6 @@ describe('WalletInfo', () => {
   });
   test('refreshBalance is getting called on click', (done) => {
     const { wrapper, store } = setup();
-    const state = store.getState();
     const deepWrapper = wrapper.dive();
 
     const actionTypes = [
@@ -116,12 +115,12 @@ describe('WalletInfo', () => {
     deepWrapper.find('.refreshBalance').simulate('click');
     setTimeout(() => {
       const actions = store.getActions();
-      expect(actions.length === 6).toEqual(true);
+      expect(actions.length === 11).toEqual(true);
       actions.forEach(action => {
         expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
       });
       done();
-    }, 0)
+    }, 1050)
   });
   test('calls the correct number of actions after mounting', (done) => {
     const { wrapper, store } = setup(initialState, false);
