@@ -23,6 +23,19 @@ describe('Login', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  test('clicking show key icon toggles private key visibility', () => {
+    const { wrapper } = setup();
+    const deeperWrapper = wrapper.shallow();
+
+    expect(deeperWrapper.state("showKey")).toEqual(false);
+
+    deeperWrapper
+      .find('.viewKey')
+      .simulate('click');
+
+    expect(deeperWrapper.state("showKey")).toEqual(true);
+  });
+
   // test('private key field input onChange dispatches LOGIN action', () => {
   //   const { store, wrapper } = setup();
   //   let preventDefault = jest.fn();
