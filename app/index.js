@@ -1,8 +1,7 @@
 import 'babel-polyfill';
 import React from 'react';
 import { render } from 'react-dom';
-// import { createBrowserHistory } from 'history';
-import { browserHistory } from 'react-router';
+import { browserHistory, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { AppContainer } from 'react-hot-loader';
 import configureStore from './store/configureStore';
@@ -23,17 +22,13 @@ function getQueryParams(qs) {
     return params;
 }
 
-const createHashHistory = require('history/lib/createHashHistory');
-
 const query = getQueryParams(document.location.search);
 
 const store = configureStore();
-// const history = syncHistoryWithStore(browserHistory, store);
-const history = createHashHistory();
 
 render(
     <AppContainer>
-      <Root store={store} history={history} />
+      <Root store={store} history={hashHistory} />
     </AppContainer>,
     document.getElementById('root')
 );
