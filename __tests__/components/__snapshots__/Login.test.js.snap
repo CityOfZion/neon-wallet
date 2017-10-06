@@ -4,6 +4,7 @@ exports[`Login renders without crashing 1`] = `
 <LoginPrivateKey
   dispatch={[Function]}
   loggedIn={true}
+  onWifChange={[Function]}
   store={
     Object {
       "clearActions": [Function],
@@ -14,5 +15,6 @@ exports[`Login renders without crashing 1`] = `
       "subscribe": [Function],
     }
   }
+  verifyPrivateKey={[Function]}
 />
 `;
