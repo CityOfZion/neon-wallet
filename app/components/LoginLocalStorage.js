@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
 import { login, decrypting, setKeys } from '../modules/account';
 import CreateWallet from './CreateWallet.js'
-import { encrypt_wif, decrypt_wif } from 'neon-js';
+import { encryptWIF, decryptWIF } from 'neon-js';
 import storage from 'electron-json-storage';
 import _ from 'lodash';
 // TODO: these event messages should be refactored from transactions
@@ -24,7 +24,7 @@ const onWifChange = (dispatch, history) => {
   }
   dispatch(sendEvent(true, "Decrypting encoded key..."));
   setTimeout(() => {
-    decrypt_wif(wif_input.value, passphrase_input.value).then((wif) => {
+    decryptWIF(wif_input.value, passphrase_input.value).then((wif) => {
       dispatch(login(wif));
       history.push('/dashboard');
       dispatch(clearTransactionEvent());

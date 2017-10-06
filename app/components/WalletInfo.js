@@ -29,6 +29,8 @@ class WalletInfo extends Component {
   }
 
   render = () => {
+    console.log("render")
+    console.log(this.props)
     if (this.props.address !== null){
       return (<div id="accountInfo">
         <div className="label">Your Public Neo Address:</div>

@@ -46,15 +46,16 @@ const initiateGetBalance = (dispatch, net, address) => {
   syncBlockHeight(dispatch, net);
   checkVersion(dispatch, net);
   return getBalance(net, address).then((resultBalance) => {
-    return getMarketPriceUSD(resultBalance.Neo).then((resultPrice) => {
+    console.log("resultBalance", resultBalance)
+    return getMarketPriceUSD(resultBalance.NEO.balance).then((resultPrice) => {
       if (resultPrice === undefined || resultPrice === null){
-        dispatch(setBalance(resultBalance.Neo, resultBalance.Gas, '--'));
+        dispatch(setBalance(resultBalance.NEO.balance, resultBalance.GAS.balance, '--'));
       } else {
-        dispatch(setBalance(resultBalance.Neo, resultBalance.Gas, resultPrice));
+        dispatch(setBalance(resultBalance.NEO.balance, resultBalance.GAS.balance, resultPrice));
       }
       return true;
     }).catch((e) => {
-      dispatch(setBalance(resultBalance.Neo, resultBalance.Gas, '--'));
+      dispatch(setBalance(resultBalance.NEO.balance, resultBalance.GAS.balance, '--'));
       console.log("something went wrong")
 
     });

@@ -5,10 +5,11 @@ import { setKeys } from '../modules/account';
 import Delete from 'react-icons/lib/md/delete';
 import _ from 'lodash';
 import storage from 'electron-json-storage';
+import { initiateGetBalance, intervals, NetworkSwitch } from "../components/NetworkSwitch";
 
 const logo = require('../images/neon-logo2.png');
 
-let saleSelect;
+let saleSelect, neoToSend;
 
 const saveSettings = (settings) => {
   storage.set('settings', settings);
@@ -17,10 +18,7 @@ const saveSettings = (settings) => {
 class TokenSale extends Component {
 
   componentDidMount = () => {
-    storage.get('keys', (error, data) => {
-      this.props.dispatch(setKeys(data));
-    });
-    loadSettings(this.props.dispatch);
+    initiateGetBalance(this.props.dispatch, this.props.net, this.props.address)
   }
 
   render = () =>
@@ -29,6 +27,14 @@ class TokenSale extends Component {
       <div className="description">Participate in Token Sale</div>
       <div className="settingsForm">
         <div className="settingsItem">
+          <div className="itemTitle">Network:</div>
+          <NetworkSwitch />
+        </div>
+        <div className="settingsItem">
+          <div className="itemTitle">NEO Balance:</div>
+          <div>{this.props.neo}</div>
+        </div>
+        <div className="settingsItem">
         <div className="itemTitle">Token Sale</div>
           <select ref={(node) => saleSelect = node}>
             <option>RPX</option>
@@ -36,7 +42,7 @@ class TokenSale extends Component {
         </div>
           <div className="settingsItem">
             <div className="itemTitle">Amount of NEO to Send:</div>
-            <input type="text" value="e.g., 100" ref={(node) => neoToSend = neo}/>
+            <input type="text" value="e.g., 100" ref={(node) => neoToSend = node}/>
           </div>
           <button onClick={() => participateInSale(this.props.wallets)}>Submit for Sale</button>
         </div>
@@ -47,6 +53,8 @@ class TokenSale extends Component {
 const mapStateToProps = (state) => ({
   explorer: state.metadata.blockExplorer,
   wif: state.account.wif,
+  neo: state.wallet.Neo,
+  net: state.metadata.network,
   address: state.account.address,
   wallets: state.account.accountKeys
 });

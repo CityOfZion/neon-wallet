@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { login } from '../modules/account';
 import { getWIFFromPrivateKey } from 'neon-js';
-import { encrypt_wif, decrypt_wif } from 'neon-js';
+import { encryptWIF, decryptWIF } from 'neon-js';
 import { sendEvent, clearTransactionEvent } from '../modules/transactions';
-import { getAccountsFromWIFKey } from 'neon-js';
+import { getAccountFromWIFKey } from 'neon-js';
 import FaEye from 'react-icons/lib/fa/eye';
 import FaEyeSlash from 'react-icons/lib/fa/eye-slash';
 
@@ -87,7 +87,7 @@ const mapActionCreators = (dispatch) => {
     verifyPrivateKey: (wif) => {
       try {
         // TODO: better check
-        getAccountsFromWIFKey(wif)[0].address;
+        getAccountFromWIFKey(wif).address;
       }
       catch (e){
         return false;

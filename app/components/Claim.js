@@ -31,7 +31,7 @@ const doGasClaim = (dispatch, net, wif, selfAddress, ans) => {
   else {
     dispatch(sendEvent(true, "Sending Neo to Yourself..."));
     log(net, "SEND", selfAddress, {to: selfAddress, amount: ans, asset: "NEO"});
-    doSendAsset(net, selfAddress, wif, "Neo", ans).then((response) => {
+    doSendAsset(net, selfAddress, wif, {"NEO": ans}).then((response) => {
       if (response.result === undefined || response.result === false){
         dispatch(sendEvent(false, "Transaction failed!"));
       } else {

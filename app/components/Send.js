@@ -59,11 +59,25 @@ const openAndValidate = (dispatch, neo_balance, gas_balance, asset) => {
 
 // perform send transaction
 const sendTransaction = (dispatch, net, selfAddress, wif, asset, neo_balance, gas_balance) => {
+  let assetName;
+  if (asset === "Neo"){
+    assetName = "NEO"
+  }
+  else if (asset === "Gas"){
+    assetName = "GAS"
+  }
+  else {
+    dispatch(sendEvent(false, "That asset is not Neo or Gas"));
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+    return false;
+  }
   // validate fields again for good measure (might have changed?)
   if (validateForm(dispatch, neo_balance, gas_balance, asset) === true){
+    let sendAsset = {}
+    sendAsset[assetName] = sendAmount.value
     dispatch(sendEvent(true, "Processing..."));
     log(net, "SEND", selfAddress, {to: sendAddress.value, asset: asset, amount: sendAmount.value});
-    doSendAsset(net, sendAddress.value, wif, asset, sendAmount.value).then((response) => {
+    doSendAsset(net, sendAddress.value, wif, sendAsset).then((response) => {
       if (response.result === undefined || response.result === false){
         dispatch(sendEvent(false, "Transaction failed!"));
       } else {

@@ -1,4 +1,4 @@
-import { getAccountsFromWIFKey } from 'neon-js';
+import { getAccountFromWIFKey } from 'neon-js';
 
 // Constants
 export const LOGIN = 'LOGIN';
@@ -40,7 +40,7 @@ export default (state = {wif: null, address:null, loggedIn: false, redirectUrl: 
     case LOGIN:
       let loadAccount;
       try {
-        loadAccount = getAccountsFromWIFKey(action.wif)[0];
+        loadAccount = getAccountFromWIFKey(action.wif);
       }
       catch (e){ loadAccount = -1; }
       if(loadAccount === -1 || loadAccount === -2 || loadAccount === undefined){

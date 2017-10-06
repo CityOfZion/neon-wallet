@@ -1,5 +1,5 @@
 import generateWalletReducer, { newWalletKeys, newWallet, generating, resetKey, NEW_WALLET_KEYS, NEW_WALLET, SET_GENERATING, RESET_KEY } from '../../app/modules/generateWallet';
-import { getAccountsFromWIFKey, generatePrivateKey, getWIFFromPrivateKey } from 'neon-js';
+import { getAccountFromWIFKey, generatePrivateKey, getWIFFromPrivateKey } from 'neon-js';
 
 jest.mock('neon-js');
 

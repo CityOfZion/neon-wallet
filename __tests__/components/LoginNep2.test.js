@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { shallow, mount } from 'enzyme';
 import { createMemoryHistory } from 'history'
 import LoginNep2 from '../../app/components/LoginNep2';
-import { decrypt_wif } from 'neon-js';
+import { decryptWIF } from 'neon-js';
 import { SEND_TRANSACTION, CLEAR_TRANSACTION } from '../../app/modules/transactions';
 import { LOGIN } from '../../app/modules/account';
 
@@ -104,8 +104,8 @@ describe('LoginNep2', () => {
         success: false,
         message: 'Wrong passphrase or invalid encrypted key'
       });
-      expect(decrypt_wif.mock.calls.length).toBe(1);
-      expect(decrypt_wif.mock.calls[0][0]).toBe('');
+      expect(decryptWIF.mock.calls.length).toBe(1);
+      expect(decryptWIF.mock.calls[0][0]).toBe('');
       done();
     }, 510)
   });
@@ -124,8 +124,8 @@ describe('LoginNep2', () => {
     setTimeout(() => {
       const actions = store.getActions();
       expect(actions.length).toEqual(3);
-      expect(decrypt_wif.mock.calls.length).toBe(2);
-      expect(decrypt_wif.mock.calls[1][0]).toBe('6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu');
+      expect(decryptWIF.mock.calls.length).toBe(2);
+      expect(decryptWIF.mock.calls[1][0]).toBe('6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu');
       expect(actions[0]).toEqual({
         type: SEND_TRANSACTION,
         success: true,
