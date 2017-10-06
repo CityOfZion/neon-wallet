@@ -4,7 +4,9 @@
 
 ![wallet](/wallet.png)
 
+<p align="center">
 The aim of this project is to port the current NEO web wallet to electron with a better UI.
+</p>
 
 ## Installation
 
@@ -28,8 +30,8 @@ Execute these commands in the project's root directory:
 
 A gentle reminder, github issues is meant to be used by developers for maintaining and improving the codebase, and is not the proper location for support issues. Questions such as
 
-- Why can't I log in?
-- I lost my private key, is there anyway to recover?
-- Why is my balance not showing?
+- *"Why can't I log in?"*
+- *"I lost my private key, is there anyway to recover it?"*
+- *"Why is my balance not showing?"*
 
-should be asked in proper support channels such as the [NEO subreddit](https://www.reddit.com/r/NEO/), or the official [NEO slack](https://neosmarteconomy.slack.com).
+should be asked in proper support channels such as the [NEO subreddit](https://www.reddit.com/r/NEO/), or the official [NEO slack](https://neosmarteconomy.slack.com). You should also check the list of [frequently asked questions (FAQ)](https://github.com/CityOfZion/awesome-neo/blob/master/resources/faq.md) to see if your question has been answered there already.
