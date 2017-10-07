@@ -4,14 +4,13 @@ import SplitPane from 'react-split-pane';
 
 // import { Link } from 'react-router';
 
-const StatusMessage = ({status, statusMessage}) => {
+const StatusMessage = ({ status, statusMessage }) => {
   let message = null;
-  if (status === true){
+  if (status === true) {
     message = (<div className="statusMessage success">
-    {statusMessage}
+      {statusMessage}
     </div>);
-  }
-  else if (status === false){
+  } else if (status === false) {
     message = <div className="statusMessage fail">{statusMessage}</div>;
   }
   return message;
@@ -19,20 +18,20 @@ const StatusMessage = ({status, statusMessage}) => {
 
 let App = ({ children, status, statusMessage }) => {
   let statusPaneSize;
-  if (status !== null){
-    statusPaneSize = "30px";
+  if (status !== null) {
+    statusPaneSize = '30px';
   } else {
-    statusPaneSize = "0px";
+    statusPaneSize = '0px';
   }
   return (<div id="pageWrapper">
-  <SplitPane className="statusSplit" split="horizontal" size={statusPaneSize} allowResize={false}>
-    <StatusMessage status={status} statusMessage={statusMessage}/>
-    <div>{ children }</div>
-  </SplitPane>
+    <SplitPane className="statusSplit" split="horizontal" size={statusPaneSize} allowResize={false}>
+      <StatusMessage status={status} statusMessage={statusMessage} />
+      <div>{ children }</div>
+    </SplitPane>
   </div>);
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   status: state.transactions.success,
   statusMessage: state.transactions.message,
 });

@@ -47,8 +47,8 @@ class LoginPrivateKey extends React.Component {
     this.props.onWifChange(this.props.dispatch, this.props.verifyPrivateKey, this.props.history, this.state.wif);
   }
 
-  render = () => {
-    let { loggedIn, wif } = this.props;
+  render() {
+    const { loggedIn, wif } = this.props;
     const { showKey } = this.state;
     const logo = require('../images/neon-logo2.png');
 
@@ -56,7 +56,7 @@ class LoginPrivateKey extends React.Component {
       <div id="loginPage">
         <div className="login">
           <div className="loginForm">
-            <div className="logo"><img src={logo} width="60px"/></div>
+            <div className="logo"><img src={logo} width="60px" /></div>
             <input type={showKey ? 'text' : 'password'} placeholder="Enter your private key here (WIF)" onChange={this.handleInputChange} />
 
             {showKey ?
@@ -75,37 +75,33 @@ class LoginPrivateKey extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   loggedIn: state.account.loggedIn,
   wif: state.account.wif,
 });
 
-const mapActionCreators = (dispatch) => {
-  return {
-    dispatch,
-    // TODO: move to neon-js
-    verifyPrivateKey: (wif) => {
-      try {
-        // TODO: better check
-        getAccountFromWIFKey(wif).address;
-      }
-      catch (e){
-        return false;
-      }
-      return true;
-    },
-    onWifChange: (dispatch, verifyPrivateKey, history, wif) => {
-      // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
-      if (verifyPrivateKey(wif) === true){
-        dispatch(login(wif));
-        history.push('/dashboard');
-      }
-      else {
-        dispatch(sendEvent(false, "That is not a valid private key"));
-        setTimeout(() => dispatch(clearTransactionEvent()), 5000);
-      }
+const mapActionCreators = dispatch => ({
+  dispatch,
+  // TODO: move to neon-js
+  verifyPrivateKey: (wif) => {
+    try {
+      // TODO: better check
+      getAccountFromWIFKey(wif).address;
+    } catch (e) {
+      return false;
     }
-  }
-};
+    return true;
+  },
+  onWifChange: (dispatch, verifyPrivateKey, history, wif) => {
+    // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
+    if (verifyPrivateKey(wif) === true) {
+      dispatch(login(wif));
+      history.push('/dashboard');
+    } else {
+      dispatch(sendEvent(false, 'That is not a valid private key'));
+      setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+    }
+  },
+});
 
 export default connect(mapStateToProps, mapActionCreators)(LoginPrivateKey);
