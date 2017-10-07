@@ -48,13 +48,6 @@ const participateInSale = (dispatch, net, wif, totalNeo) => {
     return false;
   }
   Neon.getTokenBalance(net, scriptHashElement.value, account.address).then((balance) => {
-    if(balance > 0){
-      // already have tokens, do not participate in sale
-      dispatch(sendEvent(false, "This address already has tokens, preventing participation."));
-      setTimeout(() => dispatch(clearTransactionEvent()), 5000);
-      return false;
-    }
-    else{
       Neon.doMintTokens(net, wif, parseInt(neoToSend.value), 0).then((response) => {
         if(response.result === true){
           dispatch(sendEvent(true, "Sale participation was successful."));
@@ -67,7 +60,6 @@ const participateInSale = (dispatch, net, wif, totalNeo) => {
           return false;
         }
       })
-    }
   }).catch((e) => {
     dispatch(sendEvent(false, "This script hash cannot mint tokens."));
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
