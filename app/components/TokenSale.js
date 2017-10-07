@@ -17,15 +17,14 @@ let scriptHashElement, neoToSend;
 
 const refreshTokenBalance = (dispatch, net, address, silent = false) => {
   // TODO: add other check
-  if (scriptHashElement.value.length !== 40){
+  if (scriptHashElement.value.slice(0,1) != "0x" && scriptHashElement.value.length !== 42){
     if (!silent){
       dispatch(sendEvent(false, "Not a valid script hash."));
       setTimeout(() => dispatch(clearTransactionEvent()), 5000);
     }
     return false;
   }
-  Neon.getTokenBalance(net, scriptHashElement.value, address).then((balance) => {
-    console.log(balance)
+  Neon.getTokenBalance(net, scriptHashElement.value.slice(2, scriptHashElement.value.length), address).then((balance) => {
     dispatch(updateRpxBalance(balance))
   }).catch((e) => {
     dispatch(updateRpxBalance(0))
@@ -37,18 +36,30 @@ const refreshTokenBalance = (dispatch, net, address, silent = false) => {
 
 const participateInSale = (dispatch, net, wif, totalNeo) => {
   const account = Neon.getAccountFromWIFKey(wif);
-  if (parseFloat(neoToSend.value) !== parseInt(neoToSend.value)){
+  const toMint = parseInt(neoToSend.value);
+  neoToSend.value = "";
+  if (parseFloat(toMint) !== parseInt(toMint)){
     dispatch(sendEvent(false, "You cannot send fractional Neo to a token sale."));
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
     return false;
   }
-  if (parseInt(neoToSend.value) > totalNeo){
+  if (toMint > totalNeo){
     dispatch(sendEvent(false, "You do not have enough Neo to send."));
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
     return false;
   }
-  Neon.getTokenBalance(net, scriptHashElement.value, account.address).then((balance) => {
-      Neon.doMintTokens(net, wif, parseInt(neoToSend.value), 0).then((response) => {
+  let scriptHash;
+  if (scriptHashElement.value.slice(0,1) != "0x" && scriptHashElement.value.length !== 42){
+    dispatch(sendEvent(false, "Not a valid script hash."));
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+    return false;
+  }
+  scriptHash = scriptHashElement.value.slice(2, scriptHashElement.value.length)
+  Neon.getTokenBalance(net, scriptHash, account.address).then((balance) => {
+      dispatch(sendEvent(true, "Processing..."));
+      setTimeout(() => dispatch(clearTransactionEvent()), 5000);
+      Neon.doMintTokens(net, scriptHash, wif, toMint, 0).then((response) => {
+        console.log(response)
         if(response.result === true){
           dispatch(sendEvent(true, "Sale participation was successful."));
           setTimeout(() => dispatch(clearTransactionEvent()), 5000);
@@ -62,6 +73,7 @@ const participateInSale = (dispatch, net, wif, totalNeo) => {
       })
   }).catch((e) => {
     dispatch(sendEvent(false, "This script hash cannot mint tokens."));
+    console.log(e)
     setTimeout(() => dispatch(clearTransactionEvent()), 5000);
     return false;
   });
@@ -73,8 +85,12 @@ const saveSettings = (settings) => {
 
 class TokenSale extends Component {
 
-  componentDidUpdate = () => {
+  componentDidMount = () => {
+    this.props.dispatch(updateRpxBalance(0))
     initiateGetBalance(this.props.dispatch, this.props.net, this.props.address)
+  }
+
+  componentDidUpdate = () => {
     refreshTokenBalance(this.props.dispatch, this.props.net, this.props.address, true)
   }
 
@@ -83,6 +99,12 @@ class TokenSale extends Component {
       <div className="logo"><img src={logo} width="60px"/></div>
       <NetworkSwitch />
       <div className="description">Participate in Token Sale</div>
+      <div className="warning">
+        <b>WARNING:</b> Be very careful with how you participate in a sale! This interface may not work for all sales! Submitting NEO multiple times to a sale may result in lost funds
+        or a delayed refund depending on the policy of the sale. CoZ is not responsible for any mistakes you make participating in
+        a sale. After submitting to a sale, you will need to <b>WAIT SOME TIME</b> for balance of token to refresh. You can click
+        "Refresh Token" after 10s if you still do not see anything. Do not click "Submit" twice. CoZ does not endorse any token sale!
+      </div>
       <div className="settingsForm">
         <div className="settingsItem">
           <div className="itemTitle">NEO Balance:</div>
@@ -93,7 +115,7 @@ class TokenSale extends Component {
           <div>{this.props.rpx}</div>
         </div>
         <div className="settingsItem">
-        <div className="itemTitle">Script Hash</div>
+        <div className="itemTitle">Script Hash:</div>
           <input type="text" className="scriptHash" ref={(node) => scriptHashElement = node}></input>
         </div>
           <div className="settingsItem">

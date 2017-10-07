@@ -20,7 +20,7 @@ const checkVersion = (dispatch, net) => {
     if (res === undefined || res === null){
       // something went wrong
     }
-    else if (res.data.version !== version){
+    else if (res.data.version !== version && res.data.version !== "0.0.5"){
       dispatch(sendEvent(false, "Your wallet is out of date! Please download version "+res.data.version+ " from https://github.com/CityOfZion/neon-wallet/releases"));
       setTimeout(() => dispatch(clearTransactionEvent()), 15000);
     }
@@ -44,7 +44,6 @@ const initiateGetBalance = (dispatch, net, address) => {
   syncTransactionHistory(dispatch, net, address);
   syncAvailableClaim(dispatch, net, address);
   syncBlockHeight(dispatch, net);
-  checkVersion(dispatch, net);
   return getBalance(net, address).then((resultBalance) => {
     console.log("resultBalance", resultBalance)
     return getMarketPriceUSD(resultBalance.NEO.balance).then((resultPrice) => {
@@ -119,6 +118,7 @@ const toggleNet = (dispatch, net, address) => {
 
 class NetworkSwitch extends Component {
   componentDidMount = () => {
+    checkVersion(this.props.dispatch, this.props.net);
     resetBalanceSync(this.props.dispatch, this.props.net, this.props.address);
   }
 
