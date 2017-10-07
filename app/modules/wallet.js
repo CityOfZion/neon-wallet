@@ -38,6 +38,7 @@ export function setTransactionHistory(transactions){
 export default (state = {Neo: 0, Gas: 0, transactions: [], price: '--'}, action) => {
   switch (action.type) {
       case SET_BALANCE:
+      console.log("balance setting...")
           return {...state, 'Neo': action.Neo, 'Gas': action.Gas, 'price': action.price };
       case RESET_PRICE:
           return {...state, 'price': '--'};

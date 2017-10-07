@@ -106,7 +106,7 @@ input{
 	text-align:center;
 }
 
-#settings{
+#settings, #tokenSale{
 	width:$page-width;
 	margin:$top-margin auto $top-margin auto;
 	.description{
@@ -116,6 +116,12 @@ input{
 	}
 	.settingsForm{
 		margin-bottom: 20px;
+	}
+	input.scriptHash{
+		width:500px;
+	}
+	input.neoAmount{
+		width:100px;
 	}
 	label{
 		margin-right: 10px;
@@ -287,6 +293,22 @@ $box-margin: 10px;
 	}
 }
 
+#network{
+	position:absolute;
+	font-size:.8em;
+	right:80px;
+	top:13px;
+	span.transparent{
+		opacity:.6;
+		margin-right:4px;
+	}
+	span.netName{
+		color:$thin-text-color;
+		opacity:.8;
+		cursor:pointer;
+	}
+}
+
 // split pane stuff
 #dashboard{
 	.spacer{
@@ -335,21 +357,6 @@ $box-margin: 10px;
 		button{
 			font-size: 1em;
 			font-weight: 200;
-		}
-	}
-	#network{
-		position:absolute;
-		font-size:.8em;
-		right:80px;
-		top:13px;
-		span.transparent{
-			opacity:.6;
-			margin-right:4px;
-		}
-		span.netName{
-			color:$thin-text-color;
-			opacity:.8;
-			cursor:pointer;
 		}
 	}
 	#logout{
