@@ -9,7 +9,6 @@ import * as Neon from 'neon-js'
 import { initiateGetBalance, intervals, NetworkSwitch } from "../components/NetworkSwitch";
 import { sendEvent, clearTransactionEvent } from '../modules/transactions';
 import { updateRpxBalance } from '../modules/rpx';
-import Buffer from 'Buffer'
 
 const logo = require('../images/neon-logo2.png');
 
