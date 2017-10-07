@@ -14,16 +14,16 @@ import Send from './components/Send';
 import Dashboard from './containers/Dashboard';
 
 export default (
-	<Route path="/" component={App}>
-		<IndexRoute component={Home} />
-		<Route path="/dashboard" component={Dashboard} />
-		<Route path="/create" component={CreateWallet} />
-		<Route path="/encryptKey" component={EncryptKey} />
-		<Route path="/loginPrivateKey" component={LoginPrivateKey} />
-		<Route path="/loginLocalStorage" component={LoginLocalStorage} />
-		<Route path="/LoginEncrypted" component={LoginNep2} />
-		<Route path="/LoginTokenSale" component={LoginTokenSale} />
-		<Route path="/TokenSale" component={TokenSale} />
-		<Route path="/settings" component={Settings} />
-	</Route>
+  <Route path="/" component={App}>
+    <IndexRoute component={Home} />
+    <Route path="/dashboard" component={Dashboard} />
+    <Route path="/create" component={CreateWallet} />
+    <Route path="/encryptKey" component={EncryptKey} />
+    <Route path="/loginPrivateKey" component={LoginPrivateKey} />
+    <Route path="/loginLocalStorage" component={LoginLocalStorage} />
+    <Route path="/LoginEncrypted" component={LoginNep2} />
+    <Route path="/LoginTokenSale" component={LoginTokenSale} />
+    <Route path="/TokenSale" component={TokenSale} />
+    <Route path="/settings" component={Settings} />
+  </Route>
 );
