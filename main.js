@@ -1,15 +1,15 @@
-const {app, shell, Menu, BrowserWindow} = require('electron');
-const path = require('path');
-const url = require('url');
+const {app, shell, Menu, BrowserWindow} = require('electron')
+const path = require('path')
+const url = require('url')
 
-let mainWindow = null;
+let mainWindow = null
 
 app.on('window-all-closed', () => {
   app.quit()
 })
 
 app.on('ready', () => {
-	mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     height: 750,
     width: 1000,
     minHeight: 750,
@@ -17,14 +17,14 @@ app.on('ready', () => {
     icon: path.join(__dirname, 'icons/png/64x64.png'),
     webPreferences: {
       webSecurity: false
-    },
-  });
+    }
+  })
 
-	if (process.platform !== 'darwin') {
-		// Windows/Linxu Menu
-	  mainWindow.setMenu(null);
+  if (process.platform !== 'darwin') {
+    // Windows/Linxu Menu
+	  mainWindow.setMenu(null)
   } else {
-		// Menu is required for MacOS
+    // Menu is required for MacOS
 	  const template = [
       {
   	    label: app.getName(),
@@ -32,9 +32,9 @@ app.on('ready', () => {
   				{role: 'about'},
   				{type: 'separator'},
   	      {role: 'quit'}
-  	    ],
+  	    ]
       },
-			{
+      {
 		    label: 'Edit',
 		    submenu: [
 		      {role: 'undo'},
@@ -60,9 +60,9 @@ app.on('ready', () => {
           {label: 'Slack', click () { shell.openExternal('https://neosmarteconomy.slack.com') }}
         ]
       }
-    ];
-	  const menu = Menu.buildFromTemplate(template);
-		Menu.setApplicationMenu(menu);
+    ]
+	  const menu = Menu.buildFromTemplate(template)
+    Menu.setApplicationMenu(menu)
   }
 
   // load the local HTML file
@@ -70,9 +70,9 @@ app.on('ready', () => {
     protocol: 'file',
     slashes: true,
     pathname: path.join(__dirname, '/app/dist/index.html')
-  }));
+  }))
 
-	mainWindow.on('closed', function () {
-    mainWindow = null;
-  });
+  mainWindow.on('closed', function () {
+    mainWindow = null
+  })
 })
