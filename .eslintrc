@@ -13,7 +13,6 @@
         "Promise": true,
         "setInterval": true,
         "setTimeout": true,
-        "window": true,
-        "WebGLRenderingContext": true
+        "window": true
     }
 }
