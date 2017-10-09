@@ -22,6 +22,7 @@ jobs:
       - restore_cache:
           key: neon-wallet-{{ checksum "yarn.lock" }}
       - run: yarn
+      - run: yarn lint
       - run: yarn dist
       - save_cache:
           key: neon-wallet-{{ checksum "yarn.lock" }}
