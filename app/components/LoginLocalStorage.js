@@ -48,7 +48,12 @@ class LoginLocalStorage extends Component {
 
   componentDidMount = () => {
     storage.get('keys', (error, data) => {
-      this.props.dispatch(setKeys(data));
+      if (error) {
+        this.props.dispatch(sendEvent(false, "Loading wallet keys failed"));
+        setTimeout(() => this.props.dispatch(clearTransactionEvent()), 5000);
+      } else {
+        this.props.dispatch(setKeys(data));
+      }
     });
   }
 
