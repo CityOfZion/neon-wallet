@@ -1,16 +1,15 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { getBalance, getTransactionHistory, getClaimAmounts, getWalletDBHeight, getAPIEndpoint } from 'neon-js'
 import { setClaim } from '../modules/claim'
 import { setBlockHeight, setNetwork } from '../modules/metadata'
-import { setBalance, setMarketPrice, resetPrice, setTransactionHistory } from '../modules/wallet'
+import { setBalance, setTransactionHistory } from '../modules/wallet'
 import { version } from '../../package.json'
 import { sendEvent, clearTransactionEvent } from '../modules/transactions'
 import axios from 'axios'
 
 let intervals = {}
-
-let netSelect
 
 // notify user if version is out of date
 
@@ -81,10 +80,10 @@ const syncTransactionHistory = (dispatch, net, address) => {
     let txs = []
     for (let i = 0; i < transactions.length; i++) {
       if (transactions[i].neo_sent === true) {
-        txs = txs.concat([{type: 'NEO', amount: transactions[i].NEO, txid: transactions[i].txid, block_index: transactions[i].block_index }])
+        txs = txs.concat([{ type: 'NEO', amount: transactions[i].NEO, txid: transactions[i].txid, block_index: transactions[i].block_index }])
       }
       if (transactions[i].gas_sent === true) {
-        txs = txs.concat([{type: 'GAS', amount: transactions[i].GAS, txid: transactions[i].txid, block_index: transactions[i].block_index }])
+        txs = txs.concat([{ type: 'GAS', amount: transactions[i].GAS, txid: transactions[i].txid, block_index: transactions[i].block_index }])
       }
     }
     dispatch(setTransactionHistory(txs))
@@ -114,23 +113,34 @@ const toggleNet = (dispatch, net, address) => {
   }
 }
 
-class NetworkSwitch extends Component {
-  componentDidMount = () => {
-    checkVersion(this.props.dispatch, this.props.net)
-    resetBalanceSync(this.props.dispatch, this.props.net, this.props.address)
+let NetworkSwitch = class NetworkSwitch extends Component {
+  componentDidMount () {
+    const { dispatch, address, net } = this.props
+    checkVersion(dispatch, net)
+    resetBalanceSync(dispatch, net, address)
   }
 
-  render = () =>
-    <div id='network'>
-      <span className='transparent'>Running on</span>
-      <span className='netName' onClick={() => toggleNet(this.props.dispatch, this.props.net, this.props.address)}>{this.props.net}</span>
-    </div>;
+  render () {
+    const { dispatch, address, net } = this.props
+    return (
+      <div id='network'>
+        <span className='transparent'>Running on</span>
+        <span className='netName' onClick={() => toggleNet(dispatch, net, address)}>{net}</span>
+      </div>
+    )
+  }
 }
 
 const mapStateToProps = (state) => ({
   net: state.metadata.network,
   address: state.account.address
 })
+
+NetworkSwitch.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  net: PropTypes.string,
+  address: PropTypes.string
+}
 
 NetworkSwitch = connect(mapStateToProps)(NetworkSwitch)
 
