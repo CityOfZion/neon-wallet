@@ -160,6 +160,15 @@ input{
 $box-padding: 40px;
 $box-margin: 10px;
 
+#tokenSale{
+	.warning{
+		background-color: red;
+		color:white;
+		padding:5px;
+		margin-bottom: 10px;
+	}
+}
+
 #home{
 	width:$page-width;
 	margin:$top-margin auto $top-margin auto;
