@@ -4,6 +4,9 @@
     "plugins": [
         "react"
     ],
+    "env": {
+        "jest": true
+    },
     "globals": {
         "clearInterval": true,
         "clearTimeout": true,

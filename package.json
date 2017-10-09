@@ -14,8 +14,8 @@
     "test-watch": "jest --watch",
     "pack": "build --dir",
     "dist": "build",
-    "lint": "eslint -c .eslintrc ./app --ext .js,.jsx",
-    "lint-fix": "eslint -c .eslintrc ./app --ext .js,.jsx --fix"
+    "lint": "eslint -c .eslintrc ./app --ext .js,.jsx --ignore-pattern dist/",
+    "lint-fix": "eslint -c .eslintrc ./app --ext .js,.jsx --fix --ignore-pattern dist/"
   },
   "keywords": [],
   "license": "ISC",
