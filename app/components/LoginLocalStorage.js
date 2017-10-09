@@ -1,95 +1,90 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link, browserHistory } from 'react-router';
-import { login, decrypting, setKeys } from '../modules/account';
-import CreateWallet from './CreateWallet.js'
-import { encryptWIF, decryptWIF } from 'neon-js';
-import storage from 'electron-json-storage';
-import _ from 'lodash';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { Link } from 'react-router'
+import { login, setKeys } from '../modules/account'
+import { decryptWIF } from 'neon-js'
+import storage from 'electron-json-storage'
+import { map } from 'lodash'
 // TODO: these event messages should be refactored from transactions
-import { sendEvent, clearTransactionEvent } from '../modules/transactions';
-import FaEye from 'react-icons/lib/fa/eye';
-import FaEyeSlash from 'react-icons/lib/fa/eye-slash';
+import { sendEvent, clearTransactionEvent } from '../modules/transactions'
+import FaEye from 'react-icons/lib/fa/eye'
+import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
 
-const logo = require('../images/neon-logo2.png');
+const logo = require('../images/neon-logo2.png')
 
-let wif_input;
-let passphrase_input;
+let wifInput
+let passphraseInput
 
 const onWifChange = (dispatch, history) => {
-  if (passphrase_input.value.length < 4){
-    dispatch(sendEvent(false, "Passphrase too short"));
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
-    return;
+  if (passphraseInput.value.length < 4) {
+    dispatch(sendEvent(false, 'Passphrase too short'))
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+    return
   }
-  dispatch(sendEvent(true, "Decrypting encoded key..."));
+  dispatch(sendEvent(true, 'Decrypting encoded key...'))
   setTimeout(() => {
-    decryptWIF(wif_input.value, passphrase_input.value).then((wif) => {
-      dispatch(login(wif));
-      history.push('/dashboard');
-      dispatch(clearTransactionEvent());
+    decryptWIF(wifInput.value, passphraseInput.value).then((wif) => {
+      dispatch(login(wif))
+      history.push('/dashboard')
+      dispatch(clearTransactionEvent())
     }).catch(() => {
-      dispatch(sendEvent(false, "Wrong passphrase"));
-      setTimeout(() => dispatch(clearTransactionEvent()), 5000);
-    });
-  }, 500);
-};
+      dispatch(sendEvent(false, 'Wrong passphrase'))
+      setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+    })
+  }, 500)
+}
 
-class LoginLocalStorage extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      showKey: false,
-    };
-
-    this.toggleKeyVisibility = this.toggleKeyVisibility.bind(this);
+let LoginLocalStorage = class LoginLocalStorage extends Component {
+  state = {
+    showKey: false
   }
 
-  componentDidMount = () => {
+  componentDidMount () {
+    const { dispatch } = this.props
+    // eslint-disable-next-line
     storage.get('keys', (error, data) => {
-      this.props.dispatch(setKeys(data));
-    });
+      dispatch(setKeys(data))
+    })
   }
 
   toggleKeyVisibility = () => {
     this.setState(prevState => ({
-      showKey: !prevState.showKey,
-    }));
-  };
+      showKey: !prevState.showKey
+    }))
+  }
 
-  render = () => {
-    const dispatch = this.props.dispatch;
-    const loggedIn = this.props.loggedIn;
-    const { showKey } = this.state;
+  render () {
+    const { dispatch, accountKeys, decrypting, history } = this.props
+    const { showKey } = this.state
 
-    return (<div id="loginPage">
-      <div className="login">
-        <div className="logo"><img src={logo} width="60px"/></div>
-        <div className="loginForm">
-          <input type={showKey ? 'text' : 'password'} placeholder="Enter your passphrase here" ref={(node) => passphrase_input = node}  />
+    return (<div id='loginPage'>
+      <div className='login'>
+        <div className='logo'><img src={logo} width='60px' /></div>
+        <div className='loginForm'>
+          <input type={showKey ? 'text' : 'password'} placeholder='Enter your passphrase here' ref={(node) => { passphraseInput = node }} />
 
-          {showKey ?
-            <FaEyeSlash className="viewKey" onClick={this.toggleKeyVisibility} /> :
-            <FaEye className="viewKey" onClick={this.toggleKeyVisibility} />
+          {showKey
+            ? <FaEyeSlash className='viewKey' onClick={this.toggleKeyVisibility} />
+            : <FaEye className='viewKey' onClick={this.toggleKeyVisibility} />
           }
 
-          <div className="selectBox">
+          <div className='selectBox'>
             <label>Wallet:</label>
-            <select ref={(node) => wif_input = node}>
-              <option selected="selected" disabled="disabled">Select a wallet</option>
-              {_.map(this.props.accountKeys, (value, key) => <option value={value}>{key}</option>)}
+            <select ref={(node) => { wifInput = node }}>
+              <option selected='selected' disabled='disabled'>Select a wallet</option>
+              {map(accountKeys, (value, key) => <option value={value}>{key}</option>)}
             </select>
           </div>
         </div>
-        <div className="loginButtons">
-          { Object.keys(this.props.accountKeys).length === 0 ? <button className="disabled" disabled="disabled">Login</button> : <button onClick={(e) => onWifChange(dispatch, this.props.history)}>Login</button> }
-          <Link to="/"><button className="altButton">Home</button></Link>
+        <div className='loginButtons'>
+          { Object.keys(accountKeys).length === 0 ? <button className='disabled' disabled='disabled'>Login</button> : <button onClick={(e) => onWifChange(dispatch, history)}>Login</button> }
+          <Link to='/'><button className='altButton'>Home</button></Link>
         </div>
-        {this.props.decrypting === true ? <div className="decrypting">Decrypting keys...</div> : <div></div>}
-        <div id="footer">Created by Ethan Fast and COZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A</div>
+        {decrypting && <div className='decrypting'>Decrypting keys...</div>}
+        <div id='footer'>Created by Ethan Fast and COZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A</div>
       </div>
-    </div>);
+    </div>)
   }
 }
 
@@ -98,8 +93,15 @@ const mapStateToProps = (state) => ({
   wif: state.account.wif,
   decrypting: state.account.decrypting,
   accountKeys: state.account.accountKeys
-});
+})
 
-LoginLocalStorage = connect(mapStateToProps)(LoginLocalStorage);
+LoginLocalStorage.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  history: PropTypes.object,
+  decrypting: PropTypes.bool,
+  accountKeys: PropTypes.any // TODO: Use correct shape
+}
 
-export default LoginLocalStorage;
+LoginLocalStorage = connect(mapStateToProps)(LoginLocalStorage)
+
+export default LoginLocalStorage

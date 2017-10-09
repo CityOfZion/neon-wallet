@@ -1,4 +1,4 @@
-import reducer from '../../app/store/reducers';
+import reducer from '../../app/store/reducers'
 
 describe('root reducer', () => {
   it('should combine all reducers', () => {
@@ -10,6 +10,6 @@ describe('root reducer', () => {
       dashboard: expect.any(Object),
       metadata: expect.any(Object),
       claim: expect.any(Object)
-    });
-  });
-});
+    })
+  })
+})

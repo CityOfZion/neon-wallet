@@ -1,0 +1,19 @@
+{
+    "parser": "babel-eslint",
+    "extends": ["standard", "standard-react"],
+    "plugins": [
+        "react"
+    ],
+    "globals": {
+        "clearInterval": true,
+        "clearTimeout": true,
+        "console": true,
+        "document": true,
+        "expect": true,
+        "Promise": true,
+        "setInterval": true,
+        "setTimeout": true,
+        "window": true,
+        "WebGLRenderingContext": true
+    }
+}
