@@ -18,6 +18,7 @@ class LoginPrivateKey extends Component {
     this.setState(prevState => ({
       showKey: !prevState.showKey
     }))
+  }
 
   handleInputChange = (e) => {
     const value = e.target.value

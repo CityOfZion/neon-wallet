@@ -136,7 +136,7 @@ const mapStateToProps = (state) => ({
 TokenSale.propTypes = {
   dispatch: PropTypes.func.isRequired,
   address: PropTypes.string,
-  neo: PropTypes.number,
+  neo: PropTypes.string,
   rpx: PropTypes.number,
   net: PropTypes.string,
   wif: PropTypes.string
