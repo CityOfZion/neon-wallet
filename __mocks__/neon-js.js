@@ -3,7 +3,7 @@ const neonjs = jest.genMockFromModule('neon-js')
 const promiseMockGen = (result, error = false) => {
   return jest.fn(() => {
     return new Promise((resolve, reject) => {
-      if (error) reject()
+      if (error) reject(error)
       resolve(result)
     })
   })
@@ -22,7 +22,7 @@ neonjs.doSendAsset = promiseMockGen({ result: true })
 neonjs.getAPIEndpoint = jest.fn(() => 'http://testnet-api.wallet.cityofzion.io')
 neonjs.decryptWIF = jest.fn((wif) => {
   return new Promise((resolve, reject) => {
-    if (!wif) reject()
+    if (!wif) reject(new Error())
     resolve(privateKey)
   })
 })
