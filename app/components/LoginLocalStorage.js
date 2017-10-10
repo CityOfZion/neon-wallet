@@ -16,7 +16,6 @@ const logo = require('../images/neon-logo2.png')
 let wifInput
 let passphraseInput
 
-
 const onWifChange = (dispatch, history) => {
   if (passphraseInput.value.length < 4) {
     dispatch(sendEvent(false, 'Passphrase too short'))
@@ -25,19 +24,19 @@ const onWifChange = (dispatch, history) => {
   }
 
   if (wifInput.value !== 'Select a wallet') {
-    dispatch(sendEvent(true, "Decrypting encoded key..."))
+    dispatch(sendEvent(true, 'Decrypting encoded key...'))
     setTimeout(() => {
       decryptWIF(wifInput.value, passphraseInput.value).then((wif) => {
         dispatch(login(wif))
         history.push('/dashboard')
         dispatch(clearTransactionEvent())
       }).catch(() => {
-        dispatch(sendEvent(false, "Wrong passphrase"))
+        dispatch(sendEvent(false, 'Wrong passphrase'))
         setTimeout(() => dispatch(clearTransactionEvent()), 5000)
       })
     }, 500)
   } else {
-    dispatch(sendEvent(false, "Please select a wallet"))
+    dispatch(sendEvent(false, 'Please select a wallet'))
   }
 }
 
