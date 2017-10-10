@@ -17,6 +17,8 @@ neonjs.getTransactionHistory = promiseMockGen([])
 neonjs.getClaimAmounts = promiseMockGen({ available: 0, unavailable: 0 })
 neonjs.getWalletDBHeight = promiseMockGen(586435)
 neonjs.getBalance = promiseMockGen({ NEO: { balance: 1 }, GAS: { balance: 1 } })
+neonjs.doSendAsset = promiseMockGen({ result: true })
+
 neonjs.getAPIEndpoint = jest.fn(() => 'http://testnet-api.wallet.cityofzion.io')
 neonjs.decryptWIF = jest.fn((wif) => {
   return new Promise((resolve, reject) => {
@@ -27,9 +29,10 @@ neonjs.decryptWIF = jest.fn((wif) => {
 neonjs.getAccountFromWIFKey = jest.fn(() => {
   return { address }
 })
-
 neonjs.generatePrivateKey = jest.fn()
 neonjs.getWIFFromPrivateKey = jest.fn(() => privateKey)
 neonjs.encryptWIF = jest.fn(() => encryptedKey)
+neonjs.verifyAddress = jest.fn(() => true)
+
 
 module.exports = neonjs
