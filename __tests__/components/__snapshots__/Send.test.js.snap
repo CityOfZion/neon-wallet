@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Send renders without crashing 1`] = `
+<Send
+  address="AWy7RNBVr9vDadRMK9p7i7Z1tL7GrLAxoh"
+  confirmPane={true}
+  dispatch={[Function]}
+  gas={1}
+  neo={5}
+  net="TestNet"
+  selectedAsset="Neo"
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+  wif="L4SLRcPgqNMAMwM3nFSxnh36f1v5omjPg3Ewy1tg2PnEon8AcHou"
+/>
+`;

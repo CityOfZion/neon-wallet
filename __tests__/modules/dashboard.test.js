@@ -1,23 +1,23 @@
-import dashboardReducer, { togglePane, TOGGLE_SEND_PANE } from '../../app/modules/dashboard';
+import dashboardReducer, { togglePane, TOGGLE_SEND_PANE } from '../../app/modules/dashboard'
 
 describe('dashboard module tests', () => {
-  const pane = 'confirmPane';
+  const pane = 'confirmPane'
 
   describe('togglepane tests', () => {
     test('togglePane action works', () => {
       const expectedAction = {
         type: TOGGLE_SEND_PANE,
         pane
-      };
-      expect(togglePane(pane)).toEqual(expectedAction);
-    });
+      }
+      expect(togglePane(pane)).toEqual(expectedAction)
+    })
 
     test('togglePane reducer should return the initial state', () => {
       expect(dashboardReducer(undefined, {})).toEqual({
         sendPane: true,
         confirmPane: true
-      });
-    });
+      })
+    })
 
     test('togglePane reducer should handle TOGGLE_SEND_PANE', () => {
       expect(dashboardReducer(undefined, {
@@ -26,7 +26,7 @@ describe('dashboard module tests', () => {
       })).toEqual({
         sendPane: true,
         confirmPane: false
-      });
-    });
-  });
-});
+      })
+    })
+  })
+})
