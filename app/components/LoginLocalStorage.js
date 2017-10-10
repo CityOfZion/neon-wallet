@@ -22,18 +22,31 @@ const onWifChange = (dispatch, history) => {
     setTimeout(() => dispatch(clearTransactionEvent()), 5000)
     return
   }
-  dispatch(sendEvent(true, 'Decrypting encoded key...'))
-  setTimeout(() => {
-    decryptWIF(wifInput.value, passphraseInput.value).then((wif) => {
-      dispatch(login(wif))
-      history.push('/dashboard')
-      dispatch(clearTransactionEvent())
-    }).catch(() => {
-      dispatch(sendEvent(false, 'Wrong passphrase'))
-      setTimeout(() => dispatch(clearTransactionEvent()), 5000)
-    })
-  }, 500)
+  
+  if (wif_input.value !== 'Select a wallet') {
+    dispatch(sendEvent(true, "Decrypting encoded key..."))
+    setTimeout(() => {
+      decryptWIF(wif_input.value, passphrase_input.value).then((wif) => {
+        dispatch(login(wif));
+        history.push('/dashboard')
+        dispatch(clearTransactionEvent())
+      }).catch(() => {
+        dispatch(sendEvent(false, "Wrong passphrase"));
+        setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+      })
+    }, 500)
+  } else {
+    dispatch(sendEvent(false, "Please select a wallet"));
+  }
 }
+
+class LoginLocalStorage extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showKey: false,
+    }
 
 let LoginLocalStorage = class LoginLocalStorage extends Component {
   state = {
