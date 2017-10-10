@@ -15,7 +15,8 @@
     "pack": "build --dir",
     "dist": "build",
     "lint": "eslint -c .eslintrc ./app --ext .js,.jsx --ignore-pattern dist/",
-    "lint-fix": "eslint -c .eslintrc ./app --ext .js,.jsx --fix --ignore-pattern dist/"
+    "lint-fix": "eslint -c .eslintrc ./app --ext .js,.jsx --fix --ignore-pattern dist/",
+    "prepush": "echo 'running lint...' && yarn lint && echo 'running tests...' && yarn test"
   },
   "keywords": [],
   "license": "ISC",
@@ -114,11 +115,12 @@
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-node": "^5.2.0",
     "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1",        
     "eslint-plugin-react": "^7.4.0",
+    "eslint-plugin-standard": "^3.0.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "history": "^4.7.2",
     "html-webpack-plugin": "^2.16.1",
+    "husky": "^0.14.3",
     "jest": "^20.0.4",
     "json-loader": "^0.5.4",
     "node-sass": "^3.7.0",
