@@ -221,24 +221,29 @@ describe('Send', () => {
 
     wrapper.find('#confirmPane').simulate('click')
 
-    jest.runAllTimers()
-    // NOTE: there should be an additional 2 actions here
-    // But I am unable to delay the store.getActions call
-    // in order to wait for the doSendAsset promise to resolve
-    // see Send.js ~line 80 where the issue is occuring.
-    // I tried adding a setTimeout here but couldn't get it to work
-    const actions = store.getActions()
-    expect(actions.length === 2).toEqual(true)
-    expect(actions[0]).toEqual({
-      type: SEND_TRANSACTION,
-      success: true,
-      message: 'Processing...'
-    })
-    expect(actions[1]).toEqual({
-      type: TOGGLE_SEND_PANE,
-      pane: 'confirmPane'
-    })
-    done()
+    Promise.resolve('pause').then(() => {
+      jest.runAllTimers()
+      const actions = store.getActions()
+      expect(actions.length === 4).toEqual(true)
+      expect(actions[0]).toEqual({
+        type: SEND_TRANSACTION,
+        success: true,
+        message: 'Processing...'
+      })
+      expect(actions[1]).toEqual({
+        type: TOGGLE_SEND_PANE,
+        pane: 'confirmPane'
+      })
+      expect(actions[2]).toEqual({
+        type: SEND_TRANSACTION,
+        success: true,
+        message: 'Transaction complete! Your balance will automatically update when the blockchain has processed it.'
+      })
+      expect(actions[3]).toEqual({
+        type: CLEAR_TRANSACTION
+      })
+      done()
+    }).catch(e => done.fail(e))
   })
 
   test('component is rendering correctly', (done) => {
