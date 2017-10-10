@@ -83,7 +83,7 @@ const mapStateToProps = (state) => ({
 WalletInfo.propTypes = {
   dispatch: PropTypes.func.isRequired,
   address: PropTypes.string,
-  neo: PropTypes.string,
+  neo: PropTypes.number,
   net: PropTypes.string,
   gas: PropTypes.number,
   price: PropTypes.number

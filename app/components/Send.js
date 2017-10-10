@@ -102,7 +102,7 @@ let Send = ({ dispatch, wif, address, status, neo, gas, net, confirmPane, select
         <input placeholder='Where to send the asset (address)' ref={node => { sendAddress = node }} />
       </div>
       <div id='sendAmount'>
-        <input id='sendAmount' placeholder='Amount' ref={node => { sendAmount = node }} />
+        <input placeholder='Amount' ref={node => { sendAmount = node }} />
       </div>
       <button id='sendAsset' data-tip data-for='assetTip' onClick={() => dispatch(toggleAsset())}>{selectedAsset}</button>
       <ReactTooltip class='solidTip' id='assetTip' place='bottom' type='dark' effect='solid'>
@@ -130,7 +130,7 @@ Send.propTypes = {
   dispatch: PropTypes.func.isRequired,
   address: PropTypes.string,
   wif: PropTypes.string,
-  neo: PropTypes.string,
+  neo: PropTypes.number,
   net: PropTypes.string,
   gas: PropTypes.number,
   confirmPane: PropTypes.bool,
