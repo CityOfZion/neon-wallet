@@ -90,7 +90,8 @@ const mapActionCreators = (dispatch) => {
     },
     onWifChange: (dispatch, verifyPrivateKey, history, wif) => {
       // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
-      if (verifyPrivateKey(wif) === true) {
+
+      if (wif && verifyPrivateKey(wif) === true) {
         dispatch(login(wif))
         history.push('/dashboard')
       } else {
