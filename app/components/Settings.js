@@ -9,7 +9,7 @@ import { forEach, map } from 'lodash'
 import fs from 'fs'
 import storage from 'electron-json-storage'
 
-const {dialog} = require('electron').remote
+const { dialog } = require('electron').remote
 
 const logo = require('../images/neon-logo2.png')
 
@@ -35,7 +35,7 @@ const saveKeyRecovery = (keys) => {
   })
 }
 
-const loadKeyRecovery = (dispatch) => {
+const loadKeyRecovery = () => {
   dialog.showOpenDialog((fileNames) => {
     // fileNames is an array that contains all the selected
     if (fileNames === undefined) {
@@ -54,7 +54,7 @@ const loadKeyRecovery = (dispatch) => {
         forEach(keys, (value, key) => {
           data[key] = value
         })
-        dispatch(setKeys(data))
+        setKeys(data)
         storage.set('keys', data)
       })
     })
@@ -65,41 +65,40 @@ const saveSettings = (settings) => {
   storage.set('settings', settings)
 }
 
-const loadSettings = (dispatch) => {
+const loadSettings = () => {
   // eslint-disable-next-line
   storage.get('settings', (error, settings) => {
     if (settings.blockExplorer !== null && settings.blockExplorer !== undefined) {
-      dispatch(setBlockExplorer(settings.blockExplorer))
+      setBlockExplorer(settings.blockExplorer)
     }
   })
 }
 
-const updateSettings = (dispatch) => {
+const updateSettings = () => {
   saveSettings({blockExplorer: explorerSelect.value})
-  dispatch(setBlockExplorer(explorerSelect.value))
+  setBlockExplorer(explorerSelect.value)
 }
 
-const deleteWallet = (dispatch, key) => {
+const deleteWallet = (key) => {
   // eslint-disable-next-line
   storage.get('keys', (error, data) => {
     delete data[key]
     storage.set('keys', data)
-    dispatch(setKeys(data))
+    setKeys(data)
   })
 }
 
 let Settings = class Settings extends Component {
   componentDidMount () {
-    const { dispatch } = this.props
     // eslint-disable-next-line
     storage.get('keys', (error, data) => {
-      dispatch(setKeys(data))
+      setKeys(data)
     })
-    loadSettings(dispatch)
+    loadSettings()
   }
 
   render () {
-    const { wallets, explorer, dispatch } = this.props
+    const { wallets, explorer } = this.props
     return (
       <div id='settings'>
         <div className='logo'><img src={logo} width='60px' /></div>
@@ -107,7 +106,7 @@ let Settings = class Settings extends Component {
         <div className='settingsForm'>
           <div className='settingsItem'>
             <div className='itemTitle'>Block Explorer</div>
-            <select value={explorer} ref={(node) => { explorerSelect = node }} onChange={() => updateSettings(dispatch)}>
+            <select value={explorer} ref={(node) => { explorerSelect = node }} onChange={updateSettings}>
               <option>Neotracker</option>
               <option>Antchain</option>
             </select>
@@ -117,14 +116,14 @@ let Settings = class Settings extends Component {
             {map(wallets, (value, key) => {
               return (<div className='walletList'>
                 <div className='walletItem'>
-                  <div className='walletName'>{key.slice(0, 20)}</div><div className='walletKey'>{value}</div><div className='deleteWallet' onClick={() => deleteWallet(dispatch, key)}><Delete /></div>
+                  <div className='walletName'>{key.slice(0, 20)}</div><div className='walletKey'>{value}</div><div className='deleteWallet' onClick={() => deleteWallet(key)}><Delete /></div>
                 </div>
               </div>)
             })
             }
           </div>
           <button onClick={() => saveKeyRecovery(wallets)}>Export key recovery file</button>
-          <button onClick={() => loadKeyRecovery(dispatch)}>Load key recovery file</button>
+          <button onClick={loadKeyRecovery}>Load key recovery file</button>
         </div>
         <Link to='/'><button className='altButton'>Home</button></Link>
       </div>
@@ -137,12 +136,20 @@ const mapStateToProps = (state) => ({
   wallets: state.account.accountKeys
 })
 
+const mapDispatchToProps = (dispatch) => ({
+  setBlockExplorer: (blockExplorer) => {
+    dispatch(setBlockExplorer(blockExplorer))
+  },
+  setKeys: (data) => {
+    dispatch(setKeys(data))
+  }
+})
+
 Settings.propTypes = {
-  dispatch: PropTypes.func.isRequired,
   explorer: PropTypes.string,
   wallets: PropTypes.any // TODO: Use correct shape
 }
 
-Settings = connect(mapStateToProps)(Settings)
+Settings = connect(mapStateToProps, mapDispatchToProps)(Settings)
 
 export default Settings
