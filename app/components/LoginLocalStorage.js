@@ -11,17 +11,6 @@ import { sendEvent, clearTransactionEvent } from '../modules/transactions'
 import FaEye from 'react-icons/lib/fa/eye'
 import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
 
-LoginLocalStorage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  history: PropTypes.object,
-  decrypting: PropTypes.bool,
-  accountKeys: PropTypes.any // TODO: Use correct shape
-}
-
-LoginLocalStorage = connect(mapStateToProps)(LoginLocalStorage)
-
-export default LoginLocalStorage
-
 const logo = require('../images/neon-logo2.png')
 
 let wifInput
@@ -118,3 +107,14 @@ const mapStateToProps = (state) => ({
   decrypting: state.account.decrypting,
   accountKeys: state.account.accountKeys
 })
+
+LoginLocalStorage.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  history: PropTypes.object,
+  decrypting: PropTypes.bool,
+  accountKeys: PropTypes.any // TODO: Use correct shape
+}
+
+LoginLocalStorage = connect(mapStateToProps)(LoginLocalStorage)
+
+export default LoginLocalStorage
