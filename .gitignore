@@ -7,4 +7,3 @@ app/dist/*
 app/dist
 .DS_Store
 *.iml
-coverage/*
