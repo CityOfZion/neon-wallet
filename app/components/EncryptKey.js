@@ -26,24 +26,29 @@ const generateNewWallet = (dispatch) => {
     setTimeout(() => dispatch(clearTransactionEvent()), 5000)
     return
   }
-  if (validatePassphrase(currentPhrase)) {
-    // TODO: for some reason this blocks, so giving time to processes the earlier
-    // dispatch to display "generating" text, should fix this in future
-    dispatch(sendEvent(true, 'Generating encoded key...'))
-    setTimeout(() => {
-      encryptWifAccount(currentWif, currentPhrase).then((result) => {
-        dispatch(newWallet(result))
-        dispatch(clearTransactionEvent())
-      }).catch(() => {
-        dispatch(sendEvent(false, 'The private key is not valid'))
-        setTimeout(() => dispatch(clearTransactionEvent()), 5000)
-      })
-    }, 500)
+  if (currentWif) {
+    if (validatePassphrase(currentPhrase)) {
+      // TODO: for some reason this blocks, so giving time to processes the earlier
+      // dispatch to display "generating" text, should fix this in future
+      dispatch(sendEvent(true, 'Generating encoded key...'))
+      setTimeout(() => {
+        encryptWifAccount(currentWif, currentPhrase).then((result) => {
+          dispatch(newWallet(result))
+          dispatch(clearTransactionEvent())
+        }).catch(() => {
+          dispatch(sendEvent(false, 'The private key is not valid'))
+          setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+        })
+      }, 500)
+    } else {
+      dispatch(sendEvent(false, 'Please choose a longer passphrase'))
+      setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+      passphraseInput.value = ''
+      passphraseInput2.value = ''
+    }
   } else {
-    dispatch(sendEvent(false, 'Please choose a longer passphrase'))
+    dispatch(sendEvent(false, 'That is not a valid private key'))
     setTimeout(() => dispatch(clearTransactionEvent()), 5000)
-    passphraseInput.value = ''
-    passphraseInput2.value = ''
   }
 }
 
