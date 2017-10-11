@@ -1,0 +1,12 @@
+[ignore]
+.*/test/.*
+.*/node_modules/.*/src/.*
+
+[include]
+
+[libs]
+./app/flow-typed/declarations.js
+
+[lints]
+
+[options]

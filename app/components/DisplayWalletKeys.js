@@ -1,5 +1,6 @@
+// @flow
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import { noop } from 'lodash'
 import { Link } from 'react-router'
 import QRCode from 'qrcode'
 import { clipboard } from 'electron'
@@ -10,23 +11,33 @@ import { resetKey } from '../modules/generateWallet'
 import { connect } from 'react-redux'
 import { sendEvent, clearTransactionEvent } from '../modules/transactions'
 
-let keyName
-
-const saveKey = (dispatch, encWifValue) => {
+const saveKey = (dispatch: DispatchType, encWifValue: WIFType, keyNameValue: string) => {
   // eslint-disable-next-line
   storage.get('keys', (error, data) => {
-    data[keyName.value] = encWifValue
-    dispatch(sendEvent(true, 'Saved key as ' + keyName.value))
+    data[keyNameValue] = encWifValue
+    dispatch(sendEvent(true, `Saved key as ${keyNameValue}`))
     storage.set('keys', data)
     setTimeout(() => dispatch(clearTransactionEvent()), 5000)
   })
 }
 
-const resetGeneratedKey = (dispatch) => {
+const resetGeneratedKey = (dispatch: DispatchType) => {
   dispatch(resetKey())
 }
 
-let DisplayWalletKeys = class DisplayWalletKeys extends Component {
+type Props = {
+  dispatch: DispatchType,
+  address: WalletAddressType,
+  wif: WIFType,
+  passphraseKey: string,
+  passphrase: string,
+}
+
+let DisplayWalletKeys = class DisplayWalletKeys extends Component<Props> {
+  publicCanvas: ?HTMLCanvasElement
+  privateCanvas: ?HTMLCanvasElement
+  keyName: ?HTMLInputElement
+
   componentDidMount () {
     const { address, passphraseKey } = this.props
     QRCode.toCanvas(this.publicCanvas, address, { version: 5 }, (err) => {
@@ -39,6 +50,8 @@ let DisplayWalletKeys = class DisplayWalletKeys extends Component {
 
   render () {
     const { passphrase, dispatch, address, passphraseKey, wif } = this.props
+    const keyNameValue = this.keyName && this.keyName.value
+
     return (
       <div>
         <div className='disclaimer'>
@@ -78,8 +91,8 @@ let DisplayWalletKeys = class DisplayWalletKeys extends Component {
           </div>
         </div>
         <div className='saveKey'>
-          <input type='text' placeholder='Name this key' ref={(node) => { keyName = node }} />
-          <button onClick={() => saveKey(dispatch, passphraseKey)}>Save Key</button>
+          <input type='text' placeholder='Name this key' ref={(node) => { this.keyName = node }} />
+          <button onClick={() => keyNameValue ? saveKey(dispatch, passphraseKey, keyNameValue) : noop}>Save Key</button>
         </div>
         <Link onClick={() => resetGeneratedKey(dispatch)} to='/'><button>Back</button></Link>
         <button onClick={() => window.print()}>Print</button>
@@ -103,13 +116,5 @@ let DisplayWalletKeys = class DisplayWalletKeys extends Component {
 const mapStateToProps = (state) => ({})
 
 DisplayWalletKeys = connect(mapStateToProps)(DisplayWalletKeys)
-
-DisplayWalletKeys.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  address: PropTypes.string,
-  wif: PropTypes.string,
-  passphraseKey: PropTypes.string,
-  passphrase: PropTypes.string
-}
 
 export default DisplayWalletKeys

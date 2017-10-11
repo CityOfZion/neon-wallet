@@ -1,15 +1,16 @@
+// @flow
+
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { setClaimRequest, disableClaim } from '../modules/claim'
-import { sendEvent, clearTransactionEvent } from '../modules/transactions'
 import { doClaimAllGas, doSendAsset } from 'neon-js'
 import ReactTooltip from 'react-tooltip'
+import { setClaimRequest, disableClaim } from '../modules/claim'
+import { sendEvent, clearTransactionEvent } from '../modules/transactions'
 import { log } from '../util/Logs'
 
 // wrap claiming with notifications
 
-const doClaimNotify = (dispatch, net, selfAddress, wif) => {
+const doClaimNotify = (dispatch: DispatchType, net: NeoNetworkType, selfAddress: WalletAddressType, wif: WIFType) => {
   log(net, 'CLAIM', selfAddress, {info: 'claim all gas'})
   doClaimAllGas(net, wif).then((response) => {
     if (response.result === true) {
@@ -24,7 +25,7 @@ const doClaimNotify = (dispatch, net, selfAddress, wif) => {
 
 // To initiate claim, first send all Neo to own address, the set claimRequest state
 // When new claims are available, this will trigger the claim
-const doGasClaim = (dispatch, net, wif, selfAddress, ans) => {
+const doGasClaim = (dispatch: DispatchType, net: NeoNetworkType, wif: WIFType, selfAddress: WalletAddressType, ans: number) => {
   // if no neo in account, no need to send to self first
   if (ans === 0) {
     doClaimNotify(dispatch, net, selfAddress, wif)
@@ -43,7 +44,19 @@ const doGasClaim = (dispatch, net, wif, selfAddress, ans) => {
   }
 }
 
-let Claim = class Claim extends Component {
+type Props ={
+  dispatch: DispatchType,
+  address: WalletAddressType,
+  wif: WIFType,
+  neo: NeoAssetType,
+  net: NeoNetworkType,
+  claimRequest: boolean,
+  disableClaimButton: boolean,
+  claimWasUpdated: boolean,
+  claimAmount: number,
+}
+
+let Claim = class Claim extends Component<Props> {
   componentDidUpdate () {
     const { claimRequest, claimWasUpdated, dispatch, net, address, wif } = this.props
     // if we requested a claim and new claims are available, do claim
@@ -85,18 +98,6 @@ const mapStateToProps = (state) => ({
   net: state.metadata.network,
   neo: state.wallet.Neo
 })
-
-Claim.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  address: PropTypes.string,
-  wif: PropTypes.string,
-  neo: PropTypes.string,
-  claimRequest: PropTypes.bool,
-  disableClaimButton: PropTypes.bool,
-  claimWasUpdated: PropTypes.bool,
-  claimAmount: PropTypes.number,
-  net: PropTypes.string
-}
 
 Claim = connect(mapStateToProps)(Claim)
 

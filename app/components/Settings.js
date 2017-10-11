@@ -1,19 +1,17 @@
+// @flow
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
+import { forEach, map, noop } from 'lodash'
+import fs from 'fs'
+import storage from 'electron-json-storage'
 import { setBlockExplorer } from '../modules/metadata'
 import { setKeys } from '../modules/account'
 import Delete from 'react-icons/lib/md/delete'
-import { forEach, map } from 'lodash'
-import fs from 'fs'
-import storage from 'electron-json-storage'
 
-const {dialog} = require('electron').remote
+const { dialog } = require('electron').remote
 
 const logo = require('../images/neon-logo2.png')
-
-let explorerSelect
 
 const saveKeyRecovery = (keys) => {
   const content = JSON.stringify(keys)
@@ -35,7 +33,7 @@ const saveKeyRecovery = (keys) => {
   })
 }
 
-const loadKeyRecovery = (dispatch) => {
+const loadKeyRecovery = (dispatch: DispatchType) => {
   dialog.showOpenDialog((fileNames) => {
     // fileNames is an array that contains all the selected
     if (fileNames === undefined) {
@@ -65,7 +63,7 @@ const saveSettings = (settings) => {
   storage.set('settings', settings)
 }
 
-const loadSettings = (dispatch) => {
+const loadSettings = (dispatch: DispatchType) => {
   // eslint-disable-next-line
   storage.get('settings', (error, settings) => {
     if (settings.blockExplorer !== null && settings.blockExplorer !== undefined) {
@@ -74,12 +72,12 @@ const loadSettings = (dispatch) => {
   })
 }
 
-const updateSettings = (dispatch) => {
-  saveSettings({blockExplorer: explorerSelect.value})
-  dispatch(setBlockExplorer(explorerSelect.value))
+const updateSettings = (dispatch: DispatchType, explorerSelect: NeoExplorerType) => {
+  saveSettings({ blockExplorer: explorerSelect })
+  dispatch(setBlockExplorer(explorerSelect))
 }
 
-const deleteWallet = (dispatch, key) => {
+const deleteWallet = (dispatch: DispatchType, key: string) => {
   // eslint-disable-next-line
   storage.get('keys', (error, data) => {
     delete data[key]
@@ -88,7 +86,15 @@ const deleteWallet = (dispatch, key) => {
   })
 }
 
-let Settings = class Settings extends Component {
+type Props = {
+  dispatch: DispatchType,
+  explorer: string,
+  wallets: any
+}
+
+let Settings = class Settings extends Component<Props> {
+  explorerSelect: ?HTMLSelectElement
+
   componentDidMount () {
     const { dispatch } = this.props
     // eslint-disable-next-line
@@ -107,7 +113,7 @@ let Settings = class Settings extends Component {
         <div className='settingsForm'>
           <div className='settingsItem'>
             <div className='itemTitle'>Block Explorer</div>
-            <select value={explorer} ref={(node) => { explorerSelect = node }} onChange={() => updateSettings(dispatch)}>
+            <select value={explorer} ref={(node) => { this.explorerSelect = node }} onChange={() => this.explorerSelect ? updateSettings(dispatch) : noop}>
               <option>Neotracker</option>
               <option>Antchain</option>
             </select>
@@ -136,12 +142,6 @@ const mapStateToProps = (state) => ({
   explorer: state.metadata.blockExplorer,
   wallets: state.account.accountKeys
 })
-
-Settings.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  explorer: PropTypes.string,
-  wallets: PropTypes.any // TODO: Use correct shape
-}
 
 Settings = connect(mapStateToProps)(Settings)
 

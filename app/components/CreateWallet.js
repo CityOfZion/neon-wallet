@@ -1,23 +1,21 @@
+// @flow
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { newWallet } from '../modules/generateWallet'
-import { Link } from 'react-router'
-import DisplayWalletKeys from './DisplayWalletKeys'
 import { generateEncryptedWif } from 'neon-js'
+import { Link } from 'react-router'
+import { newWallet } from '../modules/generateWallet'
+import DisplayWalletKeys from './DisplayWalletKeys'
 import { sendEvent, clearTransactionEvent } from '../modules/transactions'
+import { validatePassphrase } from '../core/wallet'
 
 const logo = require('../images/neon-logo2.png')
 
-let passphraseInput, passphraseInput2
-
 // TODO: move to neon-js
 // what is the correct length to check for?
-const validatePassphrase = (passphrase) => {
-  return passphrase.length >= 4
-}
 
-const generateNewWallet = (dispatch) => {
+const generateNewWallet = (dispatch: DispatchType, passphraseInput: ?HTMLInputElement, passphraseInput2: ?HTMLInputElement) => {
+  if (!passphraseInput || !passphraseInput2) return null
+
   const currentPhrase = passphraseInput.value
   if (passphraseInput.value !== passphraseInput2.value) {
     dispatch(sendEvent(false, 'Passphrases do not match'))
@@ -42,7 +40,19 @@ const generateNewWallet = (dispatch) => {
   }
 }
 
-let CreateWallet = class CreateWallet extends Component {
+type Props = {
+    dispatch: DispatchType,
+    address: string,
+    generating: boolean,
+    wif: WIFType,
+    encryptedWif: WIFType,
+    passphrase: string,
+}
+
+let CreateWallet = class CreateWallet extends Component<Props> {
+  passphraseInput: ?HTMLInputElement
+  passphraseInput2: ?HTMLInputElement
+
   render () {
     const { dispatch, wif, generating, address, encryptedWif, passphrase } = this.props
 
@@ -51,9 +61,9 @@ let CreateWallet = class CreateWallet extends Component {
         <div className='info'>
           Choose a passphrase to encrypt your private key:
         </div>
-        <input type='text' ref={(node) => { passphraseInput = node }} placeholder='Enter passphrase here' />
-        <input type='text' ref={(node) => { passphraseInput2 = node }} placeholder='Repeat passphrase here' />
-        <button onClick={() => generateNewWallet(dispatch)} > Generate keys </button>
+        <input type='text' ref={(node) => { this.passphraseInput = node }} placeholder='Enter passphrase here' />
+        <input type='text' ref={(node) => { this.passphraseInput2 = node }} placeholder='Repeat passphrase here' />
+        <button onClick={() => generateNewWallet(dispatch, this.passphraseInput, this.passphraseInput2)} > Generate keys </button>
         <Link to='/'><button className='altButton'>Home</button></Link>
       </div>
     )
@@ -70,7 +80,8 @@ let CreateWallet = class CreateWallet extends Component {
             address={address}
             wif={wif}
             passphrase={passphrase}
-            passphraseKey={encryptedWif} />
+            passphraseKey={encryptedWif}
+          />
         }
       </div>
     )
@@ -84,15 +95,6 @@ const mapStateToProps = (state) => ({
   passphrase: state.generateWallet.passphrase,
   generating: state.generateWallet.generating
 })
-
-CreateWallet.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  address: PropTypes.string,
-  generating: PropTypes.bool,
-  wif: PropTypes.string,
-  encryptedWif: PropTypes.string,
-  passphrase: PropTypes.string
-}
 
 CreateWallet = connect(mapStateToProps)(CreateWallet)
 

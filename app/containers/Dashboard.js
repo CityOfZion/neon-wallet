@@ -1,5 +1,5 @@
+// @flow
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import SplitPane from 'react-split-pane'
 import FaArrowUpward from 'react-icons/lib/fa/arrow-circle-up'
@@ -14,7 +14,16 @@ import { log } from '../util/Logs'
 
 const logo = require('../images/neon-logo2.png')
 
-let Dashboard = class Dashboard extends Component {
+type Props = {
+  dispatch: Function,
+  sendPane: boolean,
+  confirmPane: boolean,
+  blockHeight: number,
+  net: string,
+  address: string,
+}
+
+let Dashboard = class Dashboard extends Component<Props> {
   componentDidMount () {
     const { net, address } = this.props
     // only logging public information here
@@ -68,15 +77,6 @@ const mapStateToProps = (state) => ({
   net: state.metadata.network,
   address: state.account.address
 })
-
-Dashboard.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  sendPane: PropTypes.bool,
-  confirmPane: PropTypes.bool,
-  blockHeight: PropTypes.number,
-  net: PropTypes.string,
-  address: PropTypes.string
-}
 
 Dashboard = connect(mapStateToProps)(Dashboard)
 

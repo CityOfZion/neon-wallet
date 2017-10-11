@@ -1,26 +1,27 @@
+// @flow
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { shell } from 'electron'
 import { syncTransactionHistory } from '../components/NetworkSwitch'
+import { NEO_NETWORK, NEO_EXPLORER } from '../core/constants'
 
 // TODO: make this a user setting
-const getExplorerLink = (net, explorer, txid) => {
+const getExplorerLink = (net: NeoNetworkType, explorer: NeoExplorerType, txid: NeoTXId) => {
   let base
-  if (explorer === 'Neotracker') {
-    if (net === 'MainNet') {
+  if (explorer === NEO_EXPLORER.NEO_TRACKER) {
+    if (net === NEO_NETWORK.MAIN) {
       base = 'https://neotracker.io/tx/'
     } else {
       base = 'https://testnet.neotracker.io/tx/'
     }
   } else {
-    if (net === 'MainNet') {
+    if (net === NEO_NETWORK.MAIN) {
       base = 'http://antcha.in/tx/hash/'
     } else {
       base = 'http://testnet.antcha.in/tx/hash/'
     }
   }
-  return base + txid
+  return `${base}${txid}`
 }
 
 // helper to open an external web link
@@ -28,7 +29,15 @@ const openExplorer = (srcLink) => {
   shell.openExternal(srcLink)
 }
 
-let TransactionHistory = class TransactionHistory extends Component {
+type Props = {
+  dispatch: DispatchType,
+  address: WalletAddressType,
+  net: NeoNetworkType,
+  transactions: Object,
+  explorer: NeoExplorerType
+}
+
+let TransactionHistory = class TransactionHistory extends Component<Props> {
   componentDidMount () {
     const { dispatch, net, address } = this.props
     syncTransactionHistory(dispatch, net, address)
@@ -66,15 +75,6 @@ const mapStateToProps = (state) => ({
   transactions: state.wallet.transactions,
   explorer: state.metadata.blockExplorer
 })
-
-TransactionHistory.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  address: PropTypes.string,
-  net: PropTypes.string,
-  transactions: PropTypes.any, // TODO: Use correct shape
-  explorer: PropTypes.string
-
-}
 
 TransactionHistory = connect(mapStateToProps)(TransactionHistory)
 

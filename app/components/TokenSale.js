@@ -1,5 +1,5 @@
+// @flow
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import * as Neon from 'neon-js'
@@ -9,9 +9,8 @@ import { updateRpxBalance } from '../modules/rpx'
 
 const logo = require('../images/neon-logo2.png')
 
-let scriptHashElement, neoToSend
-
-const refreshTokenBalance = (dispatch, net, address, silent = false) => {
+const refreshTokenBalance = (dispatch: Function, net: string, address: string, silent: boolean = false, scriptHashElement: ?HTMLInputElement) => {
+  if (!scriptHashElement) { return null }
   // TODO: add other check
   if (scriptHashElement.value.slice(0, 1) !== '0x' && scriptHashElement.value.length !== 42) {
     if (!silent) {
@@ -30,7 +29,9 @@ const refreshTokenBalance = (dispatch, net, address, silent = false) => {
   })
 }
 
-const participateInSale = (dispatch, net, wif, totalNeo) => {
+const participateInSale = (dispatch: Function, net: string, wif: string, totalNeo: number, neoToSend: ?HTMLInputElement, scriptHashElement: ?HTMLInputElement) => {
+  if (!neoToSend || !scriptHashElement) { return null }
+
   const account = Neon.getAccountFromWIFKey(wif)
   if (parseFloat(neoToSend.value) !== parseInt(neoToSend.value)) {
     dispatch(sendEvent(false, 'You cannot send fractional Neo to a token sale.'))
@@ -75,16 +76,30 @@ const participateInSale = (dispatch, net, wif, totalNeo) => {
   })
 }
 
-let TokenSale = class TokenSale extends Component {
+type Props = {
+  dispatch: DispatchType,
+  address: WalletAddressType,
+  neo: NeoAssetType,
+  rpx: number,
+  net: NeoNetworkType,
+  wif: WIFType
+}
+
+let TokenSale = class TokenSale extends Component<Props> {
+  scriptHashElement: ?HTMLInputElement
+  neoToSend: ?HTMLInputElement
+
   componentDidMount () {
     const { dispatch, net, address } = this.props
     dispatch(updateRpxBalance(0))
     initiateGetBalance(dispatch, net, address)
-    refreshTokenBalance(dispatch, net, address, true)
+    refreshTokenBalance(dispatch, net, address, true, this.scriptHashElement)
   }
 
   render () {
     const { dispatch, neo, rpx, net, wif, address } = this.props
+    const neoToSend = this.neoToSend
+    const scriptHashElement = this.scriptHashElement
     return (
       <div id='tokenSale'>
         <div className='logo'><img src={logo} width='60px' /></div>
@@ -108,14 +123,14 @@ let TokenSale = class TokenSale extends Component {
           </div>
           <div className='settingsItem'>
             <div className='itemTitle'>Script Hash:</div>
-            <input type='text' className='scriptHash' ref={(node) => { scriptHashElement = node }} />
+            <input type='text' className='scriptHash' ref={(node) => { this.scriptHashElement = node }} />
           </div>
           <div className='settingsItem'>
             <div className='itemTitle'>Amount of NEO to Send:</div>
-            <input type='text' className='neoAmount' placeholder='e.g., 100' ref={(node) => { neoToSend = node }} />
+            <input type='text' className='neoAmount' placeholder='e.g., 100' ref={(node) => { this.neoToSend = node }} />
           </div>
-          <button onClick={() => participateInSale(dispatch, net, wif, neo)}>Submit for Sale</button>
-          <button onClick={() => refreshTokenBalance(dispatch, net, address)}>Refresh Token Balance</button>
+          <button onClick={() => participateInSale(dispatch, net, wif, neo, neoToSend, scriptHashElement)}>Submit for Sale</button>
+          <button onClick={() => refreshTokenBalance(dispatch, net, address, false, scriptHashElement)}>Refresh Token Balance</button>
         </div>
         <Link to='/'><button className='altButton'>Home</button></Link>
       </div>
@@ -132,15 +147,6 @@ const mapStateToProps = (state) => ({
   wallets: state.account.accountKeys,
   rpx: state.rpx.RPX
 })
-
-TokenSale.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  address: PropTypes.string,
-  neo: PropTypes.string,
-  rpx: PropTypes.number,
-  net: PropTypes.string,
-  wif: PropTypes.string
-}
 
 TokenSale = connect(mapStateToProps)(TokenSale)
 

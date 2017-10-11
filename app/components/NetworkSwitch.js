@@ -1,19 +1,20 @@
+// @flow
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import axios from 'axios'
 import { getBalance, getTransactionHistory, getClaimAmounts, getWalletDBHeight, getAPIEndpoint } from 'neon-js'
 import { setClaim } from '../modules/claim'
 import { setBlockHeight, setNetwork } from '../modules/metadata'
 import { setBalance, setTransactionHistory } from '../modules/wallet'
 import { version } from '../../package.json'
 import { sendEvent, clearTransactionEvent } from '../modules/transactions'
-import axios from 'axios'
+import { NEO_NETWORK } from '../core/constants'
 
 let intervals = {}
 
 // notify user if version is out of date
 
-const checkVersion = (dispatch, net) => {
+const checkVersion = (dispatch: DispatchType, net: NeoNetworkType) => {
   const apiEndpoint = getAPIEndpoint(net)
   return axios.get(apiEndpoint + '/v2/version').then((res) => {
     if (res === undefined || res === null) {
@@ -28,7 +29,7 @@ const checkVersion = (dispatch, net) => {
 }
 
 // putting this back in wallet, does not belong in neon-js
-export const getMarketPriceUSD = (amount) => {
+export const getMarketPriceUSD = (amount: number) => {
   return axios.get('https://bittrex.com/api/v1.1/public/getticker?market=USDT-NEO').then((response) => {
     console.log(response)
     let lastUSDNEO = Number(response.data.result.Last)
@@ -38,7 +39,7 @@ export const getMarketPriceUSD = (amount) => {
 
 // TODO: this is being imported by Balance.js, maybe refactor to helper file
 
-const initiateGetBalance = (dispatch, net, address) => {
+const initiateGetBalance = (dispatch: DispatchType, net: NeoNetworkType, address: WalletAddressType) => {
   syncTransactionHistory(dispatch, net, address)
   syncAvailableClaim(dispatch, net, address)
   syncBlockHeight(dispatch, net)
@@ -60,7 +61,7 @@ const initiateGetBalance = (dispatch, net, address) => {
   })
 }
 
-const syncAvailableClaim = (dispatch, net, address) => {
+const syncAvailableClaim = (dispatch: DispatchType, net: NeoNetworkType, address: WalletAddressType) => {
   console.log('trying to get claim')
   getClaimAmounts(net, address).then((result) => {
     console.log(result)
@@ -69,13 +70,13 @@ const syncAvailableClaim = (dispatch, net, address) => {
   })
 }
 
-const syncBlockHeight = (dispatch, net) => {
+const syncBlockHeight = (dispatch: DispatchType, net: NeoNetworkType) => {
   getWalletDBHeight(net).then((blockHeight) => {
     dispatch(setBlockHeight(blockHeight))
   })
 }
 
-const syncTransactionHistory = (dispatch, net, address) => {
+const syncTransactionHistory = (dispatch: DispatchType, net: NeoNetworkType, address: WalletAddressType) => {
   getTransactionHistory(net, address).then((transactions) => {
     let txs = []
     for (let i = 0; i < transactions.length; i++) {
@@ -90,7 +91,7 @@ const syncTransactionHistory = (dispatch, net, address) => {
   })
 }
 
-const resetBalanceSync = (dispatch, net, address) => {
+const resetBalanceSync = (dispatch: DispatchType, net: NeoNetworkType, address: WalletAddressType) => {
   if (intervals.balance !== undefined) {
     clearInterval(intervals.balance)
   }
@@ -99,13 +100,8 @@ const resetBalanceSync = (dispatch, net, address) => {
   }, 30000)
 }
 
-const toggleNet = (dispatch, net, address) => {
-  let newNet
-  if (net === 'MainNet') {
-    newNet = 'TestNet'
-  } else {
-    newNet = 'MainNet'
-  }
+const toggleNet = (dispatch: DispatchType, net: NeoNetworkType, address: WalletAddressType) => {
+  const newNet = net === NEO_NETWORK.MAIN ? NEO_NETWORK.TEST : NEO_NETWORK.MAIN
   dispatch(setNetwork(newNet))
   resetBalanceSync(dispatch, newNet, address)
   if (address !== null) {
@@ -113,7 +109,13 @@ const toggleNet = (dispatch, net, address) => {
   }
 }
 
-let NetworkSwitch = class NetworkSwitch extends Component {
+type Props = {
+  dispatch: DispatchType,
+  net: NeoNetworkType,
+  address: WalletAddressType
+}
+
+let NetworkSwitch = class NetworkSwitch extends Component<Props> {
   componentDidMount () {
     const { dispatch, address, net } = this.props
     checkVersion(dispatch, net)
@@ -135,12 +137,6 @@ const mapStateToProps = (state) => ({
   net: state.metadata.network,
   address: state.account.address
 })
-
-NetworkSwitch.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  net: PropTypes.string,
-  address: PropTypes.string
-}
 
 NetworkSwitch = connect(mapStateToProps)(NetworkSwitch)
 

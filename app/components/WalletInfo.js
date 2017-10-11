@@ -1,5 +1,5 @@
+// @flow
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { isNil } from 'lodash'
 import Claim from './Claim.js'
@@ -12,7 +12,7 @@ import Copy from 'react-icons/lib/md/content-copy'
 import ReactTooltip from 'react-tooltip'
 
 // force sync with balance data
-const refreshBalance = (dispatch, net, address) => {
+const refreshBalance = (dispatch: Function, net: NeoNetworkType, address: WalletAddressType) => {
   dispatch(sendEvent(true, 'Refreshing...'))
   initiateGetBalance(dispatch, net, address).then((response) => {
     dispatch(sendEvent(true, 'Received latest blockchain information.'))
@@ -20,7 +20,18 @@ const refreshBalance = (dispatch, net, address) => {
   })
 }
 
-let WalletInfo = class WalletInfo extends Component {
+type Props = {
+  dispatch: Function,
+  address: WalletAddressType,
+  neo: NeoAssetType,
+  net: NeoNetworkType,
+  gas: GasAssetType,
+  price: number
+}
+
+let WalletInfo = class WalletInfo extends Component<Props> {
+  canvas: ?HTMLCanvasElement
+
   componentDidMount () {
     const { dispatch, net, address } = this.props
     initiateGetBalance(dispatch, net, address)
@@ -79,15 +90,6 @@ const mapStateToProps = (state) => ({
   net: state.metadata.network,
   price: state.wallet.price
 })
-
-WalletInfo.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  address: PropTypes.string,
-  neo: PropTypes.number,
-  net: PropTypes.string,
-  gas: PropTypes.number,
-  price: PropTypes.number
-}
 
 WalletInfo = connect(mapStateToProps)(WalletInfo)
 

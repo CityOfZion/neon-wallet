@@ -1,14 +1,28 @@
+// @flow
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
+import { getAccountFromWIFKey } from 'neon-js'
 import { login } from '../modules/account'
 import { sendEvent, clearTransactionEvent } from '../modules/transactions'
-import { getAccountFromWIFKey } from 'neon-js'
 import FaEye from 'react-icons/lib/fa/eye'
 import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
 
-class LoginPrivateKey extends Component {
+const logo = require('../images/neon-logo2.png')
+
+type Props = {
+    dispatch: DispatchType,
+    onWifChange: Function,
+    verifyPrivateKey: Function,
+    history: Object
+}
+
+type State = {
+  showKey: boolean,
+  wif: WIFType,
+}
+
+class LoginPrivateKey extends Component<Props, State> {
   state = {
     showKey: false,
     wif: ''
@@ -37,7 +51,6 @@ class LoginPrivateKey extends Component {
 
   render () {
     const { showKey } = this.state
-    const logo = require('../images/neon-logo2.png')
 
     return (
       <div id='loginPage'>
@@ -60,13 +73,6 @@ class LoginPrivateKey extends Component {
       </div>
     )
   }
-}
-
-LoginPrivateKey.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  onWifChange: PropTypes.func.isRequired,
-  verifyPrivateKey: PropTypes.func.isRequired,
-  history: PropTypes.object
 }
 
 const mapStateToProps = (state) => ({

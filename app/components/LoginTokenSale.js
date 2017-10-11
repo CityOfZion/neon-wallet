@@ -1,10 +1,11 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+// @flow
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { noop } from 'lodash'
 import { Link } from 'react-router'
+import { getAccountFromWIFKey } from 'neon-js'
 import { login } from '../modules/account'
 import { sendEvent, clearTransactionEvent } from '../modules/transactions'
-import { getAccountFromWIFKey } from 'neon-js'
 
 // TODO: it is ridiculous that i just copy/pasted this file. we need some heavy refactoring...
 
@@ -22,11 +23,10 @@ const verifyPrivateKey = (wif) => {
   return true
 }
 
-const onWifChange = (dispatch, history, wif) => {
-  const value = wif.value
+const onWifChange = (dispatch: DispatchType, history: Object, wif: WIFType) => {
   // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
-  if (verifyPrivateKey(value) === true) {
-    dispatch(login(value))
+  if (verifyPrivateKey(wif) === true) {
+    dispatch(login(wif))
     history.push('/tokenSale')
   } else {
     dispatch(sendEvent(false, 'That is not a valid private key'))
@@ -34,33 +34,34 @@ const onWifChange = (dispatch, history, wif) => {
   }
 }
 
-let LoginTokenSale = ({ dispatch, loggedIn, wif, history }) =>
-  <div id='loginPage'>
-    <div className='login'>
-      <div className='loginForm'>
-        <div className='logo'><img src={logo} width='60px' /></div>
-        <input type='text' placeholder='Enter your private key here (WIF)' ref={(node) => { wif = node }} />
-      </div>
-      <div className='loginButtons'>
-        <button onClick={(e) => onWifChange(dispatch, history, wif)}>Login</button>
-        <Link to='/'><button className='altButton'>Home</button></Link>
-      </div>
-      <div id='footer'>Created by Ethan Fast and CoZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A</div>
-    </div>
-  </div>
-
-const mapStateToProps = (state) => ({
-  loggedIn: state.account.loggedIn,
-  wif: state.account.wif
-})
-
-LoginTokenSale.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  loggedIn: PropTypes.bool,
-  wif: PropTypes.string,
-  history: PropTypes.object
+type Props = {
+  dispatch: DispatchType,
+  history: Object
 }
 
-LoginTokenSale = connect(mapStateToProps)(LoginTokenSale)
+let LoginTokenSale = class LoginTokenSale extends Component<Props> {
+  wifInput: ?HTMLInputElement
 
-export default LoginTokenSale
+  render () {
+    const { dispatch, history } = this.props
+    const wif = this.wifInput && this.wifInput.value
+
+    return (
+      <div id='loginPage'>
+        <div className='login'>
+          <div className='loginForm'>
+            <div className='logo'><img src={logo} width='60px' /></div>
+            <input type='text' placeholder='Enter your private key here (WIF)' ref={(node) => { this.wifInput = node }} />
+          </div>
+          <div className='loginButtons'>
+            <button onClick={(e) => wif ? onWifChange(dispatch, history, wif) : noop}>Login</button>
+            <Link to='/'><button className='altButton'>Home</button></Link>
+          </div>
+          <div id='footer'>Created by Ethan Fast and CoZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A</div>
+        </div>
+      </div>
+    )
+  }
+}
+
+export default connect(LoginTokenSale)

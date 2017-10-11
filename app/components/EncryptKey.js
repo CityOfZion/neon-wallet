@@ -1,5 +1,5 @@
+// @flow
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { isNil } from 'lodash'
 import { newWallet } from '../modules/generateWallet'
@@ -7,18 +7,13 @@ import { Link } from 'react-router'
 import DisplayWalletKeys from './DisplayWalletKeys'
 import { encryptWifAccount } from 'neon-js'
 import { sendEvent, clearTransactionEvent } from '../modules/transactions'
+import { validatePassphrase } from '../core/wallet'
 
 const logo = require('../images/neon-logo2.png')
 
-let wifInput, passphraseInput, passphraseInput2
+const generateNewWallet = (dispatch: DispatchType, passphraseInput: ?HTMLInputElement, passphraseInput2: ?HTMLInputElement, wifInput: ?HTMLInputElement) => {
+  if (!passphraseInput || !passphraseInput2 || !wifInput) { return null }
 
-// TODO: move to neon-js
-// what is the correct length to check for?
-const validatePassphrase = (passphrase) => {
-  return passphrase.length >= 4
-}
-
-const generateNewWallet = (dispatch) => {
   const currentPhrase = passphraseInput.value
   const currentWif = wifInput.value
   if (passphraseInput.value !== passphraseInput2.value) {
@@ -47,7 +42,20 @@ const generateNewWallet = (dispatch) => {
   }
 }
 
-let EncryptKey = class EncryptKey extends Component {
+type Props = {
+    dispatch: DispatchType,
+    address: WalletAddressType,
+    generating: boolean,
+    wif: WIFType,
+    encryptedWif: WIFType,
+    passphrase: string
+}
+
+let EncryptKey = class EncryptKey extends Component<Props> {
+  passphraseInput: ?HTMLInputElement
+  passphraseInput2: ?HTMLInputElement
+  wifInput: ?HTMLInputElement
+
   render () {
     const { dispatch, wif, generating, address, encryptedWif, passphrase } = this.props
     const passphraseDiv = (
@@ -55,9 +63,9 @@ let EncryptKey = class EncryptKey extends Component {
         <div className='info'>
           Choose a passphrase to encrypt your existing private key:
         </div>
-        <input type='text' ref={(node) => { passphraseInput = node }} placeholder='Enter passphrase here' />
-        <input type='text' ref={(node) => { passphraseInput2 = node }} placeholder='Enter passphrase again' />
-        <input type='text' ref={(node) => { wifInput = node }} placeholder='Enter existing WIF here' />
+        <input type='text' ref={(node) => { this.passphraseInput = node }} placeholder='Enter passphrase here' />
+        <input type='text' ref={(node) => { this.passphraseInput2 = node }} placeholder='Enter passphrase again' />
+        <input type='text' ref={(node) => { this.wifInput = node }} placeholder='Enter existing WIF here' />
         <button onClick={() => generateNewWallet(dispatch)} > Generate encrypted key </button>
         <Link to='/'><button className='altButton'>Home</button></Link>
       </div>
@@ -87,15 +95,6 @@ const mapStateToProps = (state) => ({
   passphrase: state.generateWallet.passphrase,
   generating: state.generateWallet.generating
 })
-
-EncryptKey.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  address: PropTypes.string,
-  generating: PropTypes.bool,
-  wif: PropTypes.string,
-  encryptedWif: PropTypes.string,
-  passphrase: PropTypes.string
-}
 
 EncryptKey = connect(mapStateToProps)(EncryptKey)
 
