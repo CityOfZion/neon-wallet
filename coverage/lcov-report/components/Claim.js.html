@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for components/Claim.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">All files</a> / <a href="index.html">components</a> Claim.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">91.89% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>34/37</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">85.71% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>12/14</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">80% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>8/10</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">97.06% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>33/34</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { setClaimRequest, disableClaim } from '../modules/claim'
+import { sendEvent, clearTransactionEvent } from '../modules/transactions'
+import { doClaimAllGas, doSendAsset } from 'neon-js'
+import ReactTooltip from 'react-tooltip'
+import { log } from '../util/Logs'
+&nbsp;
+// wrap claiming with notifications
+&nbsp;
+const doClaimNotify = (dispatch, net, selfAddress, wif) =&gt; {
+  log(net, 'CLAIM', selfAddress, {info: 'claim all gas'})
+  doClaimAllGas(net, wif).then((response) =&gt; {
+    if (response.result === true) {
+      dispatch(sendEvent(true, 'Claim was successful! Your balance will update once the blockchain has processed it.'))
+      setTimeout(<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >dispatch(disableClaim(false)),</span> 300000)
+    } else {
+      dispatch(sendEvent(false, 'Claim failed'))
+    }
+    setTimeout(<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >dispatch(clearTransactionEvent()),</span> 5000)
+  })
+}
+&nbsp;
+// To initiate claim, first send all Neo to own address, the set claimRequest state
+// When new claims are available, this will trigger the claim
+const doGasClaim = (dispatch, net, wif, selfAddress, ans) =&gt; {
+  // if no neo in account, no need to send to self first
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (ans === 0) {
+<span class="cstat-no" title="statement not covered" >    doClaimNotify(dispatch, net, selfAddress, wif)</span>
+  } else {
+    dispatch(sendEvent(true, 'Sending Neo to Yourself...'))
+    log(net, 'SEND', selfAddress, {to: selfAddress, amount: ans, asset: 'NEO'})
+    doSendAsset(net, selfAddress, wif, {'NEO': ans}).then((response) =&gt; {
+      if (response.result === undefined || response.result === false) {
+        dispatch(sendEvent(false, 'Transaction failed!'))
+      } else {
+        dispatch(sendEvent(true, 'Waiting for transaction to clear...'))
+        dispatch(setClaimRequest(true))
+        dispatch(disableClaim(true))
+      }
+    })
+  }
+}
+&nbsp;
+let Claim = class Claim extends Component {
+  componentDidUpdate () {
+    const { claimRequest, claimWasUpdated, dispatch, net, address, wif } = this.props
+    // if we requested a claim and new claims are available, do claim
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (claimRequest === true &amp;&amp; claimWasUpdated === true) {
+      dispatch(setClaimRequest(false))
+      doClaimNotify(dispatch, net, address, wif)
+    }
+  }
+&nbsp;
+  doClaim = () =&gt; {
+    const { dispatch, net, wif, address, neo } = this.props
+    doGasClaim(dispatch, net, wif, address, neo)
+  }
+&nbsp;
+  render () {
+    const { claimAmount, disableClaimButton } = this.props
+    let renderButton
+    if (disableClaimButton === false) {
+      renderButton = &lt;button onClick={this.doClaim}&gt;Claim {claimAmount} GAS&lt;/button&gt;
+    } else {
+      renderButton = (&lt;div&gt;
+        &lt;button data-tip data-for='claimTip' className='disabled'&gt;Claim {claimAmount} GAS&lt;/button&gt;
+        &lt;ReactTooltip class='solidTip' id='claimTip' place='bottom' type='dark' effect='solid'&gt;
+          &lt;span&gt;You can claim Gas once every 5 minutes&lt;/span&gt;
+        &lt;/ReactTooltip&gt;
+      &lt;/div&gt;)
+    }
+    return &lt;div id='claim'&gt;{renderButton}&lt;/div&gt;
+  }
+}
+&nbsp;
+const mapStateToProps = (state) =&gt; ({
+  claimAmount: state.claim.claimAmount,
+  claimRequest: state.claim.claimRequest,
+  claimWasUpdated: state.claim.claimWasUpdated,
+  disableClaimButton: state.claim.disableClaimButton,
+  wif: state.account.wif,
+  address: state.account.address,
+  net: state.metadata.network,
+  neo: state.wallet.Neo
+})
+&nbsp;
+Claim.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  address: PropTypes.string,
+  wif: PropTypes.string,
+  neo: PropTypes.string,
+  claimRequest: PropTypes.bool,
+  disableClaimButton: PropTypes.bool,
+  claimWasUpdated: PropTypes.bool,
+  claimAmount: PropTypes.number,
+  net: PropTypes.string
+}
+&nbsp;
+Claim = connect(mapStateToProps)(Claim)
+&nbsp;
+export default Claim
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Oct 10 2017 21:44:22 GMT-0400 (EDT)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>
