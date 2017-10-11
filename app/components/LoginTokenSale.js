@@ -25,7 +25,7 @@ const verifyPrivateKey = (wif) => {
 const onWifChange = (dispatch, history, wif) => {
   const value = wif.value
   // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
-  if (verifyPrivateKey(value) === true) {
+  if (value && verifyPrivateKey(value) === true) {
     dispatch(login(value))
     history.push('/tokenSale')
   } else {
