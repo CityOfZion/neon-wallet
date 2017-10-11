@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for components/Send.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">All files</a> / <a href="index.html">components</a> Send.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">80.77% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>63/78</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">81.25% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>26/32</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">81.82% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>18/22</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">82.35% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>56/68</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { doSendAsset, verifyAddress } from 'neon-js'
+import { togglePane } from '../modules/dashboard'
+import { sendEvent, clearTransactionEvent, toggleAsset } from '../modules/transactions'
+import SplitPane from 'react-split-pane'
+import ReactTooltip from 'react-tooltip'
+import { log } from '../util/Logs'
+&nbsp;
+let sendAddress, sendAmount, confirmButton
+&nbsp;
+// form validators for input fields
+const validateForm = (dispatch, neoBalance, gasBalance, asset) =&gt; {
+  // check for valid address
+  try {
+    if (verifyAddress(sendAddress.value) !== true || sendAddress.value.charAt(0) !== 'A') {
+      dispatch(sendEvent(false, 'The address you entered was not valid.'))
+      setTimeout(() =&gt; dispatch(clearTransactionEvent()), 5000)
+      return false
+    }
+  } catch (e) {
+<span class="cstat-no" title="statement not covered" >    dispatch(sendEvent(false, 'The address you entered was not valid.'))</span>
+<span class="cstat-no" title="statement not covered" >    setTimeout(<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >dispatch(clearTransactionEvent()),</span> 5000)</span>
+<span class="cstat-no" title="statement not covered" >    return false</span>
+  }
+  if (asset === 'Neo' &amp;&amp; parseFloat(sendAmount.value) !== parseInt(sendAmount.value)) { // check for fractional neo
+    dispatch(sendEvent(false, 'You cannot send fractional amounts of Neo.'))
+    setTimeout(() =&gt; dispatch(clearTransactionEvent()), 5000)
+    return false
+  } else if (asset === 'Neo' &amp;&amp; parseInt(sendAmount.value) &gt; neoBalance) { // check for value greater than account balance
+    dispatch(sendEvent(false, 'You do not have enough NEO to send.'))
+    setTimeout(() =&gt; dispatch(clearTransactionEvent()), 5000)
+    return false
+  } else if (asset === 'Gas' &amp;&amp; parseFloat(sendAmount.value) &gt; gasBalance) {
+    dispatch(sendEvent(false, 'You do not have enough GAS to send.'))
+    setTimeout(() =&gt; dispatch(clearTransactionEvent()), 5000)
+    return false
+  } else if (parseFloat(sendAmount.value) &lt; 0) { // check for negative asset
+    dispatch(sendEvent(false, 'You cannot send negative amounts of an asset.'))
+    setTimeout(() =&gt; dispatch(clearTransactionEvent()), 5000)
+    return false
+  }
+  return true
+}
+&nbsp;
+// open confirm pane and validate fields
+const openAndValidate = (dispatch, neoBalance, gasBalance, asset) =&gt; {
+  if (validateForm(dispatch, neoBalance, gasBalance, asset) === true) {
+    dispatch(togglePane('confirmPane'))
+  }
+}
+&nbsp;
+// perform send transaction
+const sendTransaction = (dispatch, net, selfAddress, wif, asset, neoBalance, gasBalance) =&gt; {
+  let assetName
+  <span class="missing-if-branch" title="else path not taken" >E</span>if (asset === 'Neo') {
+    assetName = 'NEO'
+  } else <span class="cstat-no" title="statement not covered" >if (asset === 'Gas') {</span>
+<span class="cstat-no" title="statement not covered" >    assetName = 'GAS'</span>
+  } else {
+<span class="cstat-no" title="statement not covered" >    dispatch(sendEvent(false, 'That asset is not Neo or Gas'))</span>
+<span class="cstat-no" title="statement not covered" >    setTimeout(<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >dispatch(clearTransactionEvent()),</span> 5000)</span>
+<span class="cstat-no" title="statement not covered" >    return false</span>
+  }
+  // validate fields again for good measure (might have changed?)
+  <span class="missing-if-branch" title="else path not taken" >E</span>if (validateForm(dispatch, neoBalance, gasBalance, asset) === true) {
+    let sendAsset = {}
+    sendAsset[assetName] = sendAmount.value
+    dispatch(sendEvent(true, 'Processing...'))
+    log(net, 'SEND', selfAddress, {to: sendAddress.value, asset: asset, amount: sendAmount.value})
+    doSendAsset(net, sendAddress.value, wif, sendAsset).then((response) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (response.result === undefined || response.result === false) {
+<span class="cstat-no" title="statement not covered" >        dispatch(sendEvent(false, 'Transaction failed!'))</span>
+      } else {
+        console.log(response.result)
+        dispatch(sendEvent(true, 'Transaction complete! Your balance will automatically update when the blockchain has processed it.'))
+      }
+      setTimeout(() =&gt; dispatch(clearTransactionEvent()), 5000)
+    }).catch(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; {
+<span class="cstat-no" title="statement not covered" >      dispatch(sendEvent(false, 'Transaction failed!'))</span>
+<span class="cstat-no" title="statement not covered" >      setTimeout(<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >dispatch(clearTransactionEvent()),</span> 5000)</span>
+    })
+  }
+  // close confirm pane and clear fields
+  dispatch(togglePane('confirmPane'))
+  sendAddress.value = ''
+  sendAmount.value = ''
+  confirmButton.blur()
+}
+&nbsp;
+let Send = ({ dispatch, wif, address, status, neo, gas, net, confirmPane, selectedAsset }) =&gt; {
+  let confirmPaneClosed
+  <span class="missing-if-branch" title="else path not taken" >E</span>if (confirmPane) {
+    confirmPaneClosed = '100%'
+  } else {
+<span class="cstat-no" title="statement not covered" >    confirmPaneClosed = '69%'</span>
+  }
+  return (&lt;SplitPane className='confirmSplit' split='horizontal' size={confirmPaneClosed} allowResize={false}&gt;
+    &lt;div id='sendPane'&gt;
+      &lt;div id='sendAddress'&gt;
+        &lt;input placeholder='Where to send the asset (address)' ref={node =&gt; { sendAddress = node }} /&gt;
+      &lt;/div&gt;
+      &lt;div id='sendAmount'&gt;
+        &lt;input placeholder='Amount' ref={node =&gt; { sendAmount = node }} /&gt;
+      &lt;/div&gt;
+      &lt;button id='sendAsset' data-tip data-for='assetTip' onClick={() =&gt; dispatch(toggleAsset())}&gt;{selectedAsset}&lt;/button&gt;
+      &lt;ReactTooltip class='solidTip' id='assetTip' place='bottom' type='dark' effect='solid'&gt;
+        &lt;span&gt;Toggle NEO / GAS&lt;/span&gt;
+      &lt;/ReactTooltip&gt;
+      &lt;button id='doSend' onClick={() =&gt; openAndValidate(dispatch, neo, gas, selectedAsset)}&gt;Send Asset&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div id='confirmPane' onClick={() =&gt; sendTransaction(dispatch, net, address, wif, selectedAsset, neo, gas)}&gt;
+      &lt;button ref={node =&gt; { confirmButton = node }}&gt;Confirm Transaction&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/SplitPane&gt;)
+}
+&nbsp;
+const mapStateToProps = (state) =&gt; ({
+  wif: state.account.wif,
+  address: state.account.address,
+  net: state.metadata.network,
+  neo: state.wallet.Neo,
+  gas: state.wallet.Gas,
+  selectedAsset: state.transactions.selectedAsset,
+  confirmPane: state.dashboard.confirmPane
+})
+&nbsp;
+Send.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  address: PropTypes.string,
+  wif: PropTypes.string,
+  neo: PropTypes.number,
+  net: PropTypes.string,
+  gas: PropTypes.number,
+  confirmPane: PropTypes.bool,
+  selectedAsset: PropTypes.string,
+  status: PropTypes.string
+}
+&nbsp;
+Send = connect(mapStateToProps)(Send)
+&nbsp;
+export default Send
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Oct 11 2017 14:50:21 GMT-0400 (EDT)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>
