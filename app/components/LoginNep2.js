@@ -20,24 +20,19 @@ const onWifChange = (dispatch, history) => {
     setTimeout(() => dispatch(clearTransactionEvent()), 5000)
     return
   }
-  if (wifInput.value) {
-    // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
-    dispatch(sendEvent(true, 'Decrypting encoded key...'))
-    setTimeout(() => {
-      const encWifValue = wifInput.value
-      decryptWIF(encWifValue, passphraseInput.value).then((wif) => {
-        dispatch(login(wif))
-        history.push('/dashboard')
-        dispatch(clearTransactionEvent())
-      }).catch(() => {
-        dispatch(sendEvent(false, 'Wrong passphrase or invalid encrypted key'))
-        setTimeout(() => dispatch(clearTransactionEvent()), 5000)
-      })
-    }, 500)
-  } else {
-    dispatch(sendEvent(false, 'Please provide an encrypted key'))
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
-  }
+  // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
+  dispatch(sendEvent(true, 'Decrypting encoded key...'))
+  setTimeout(() => {
+    const encWifValue = wifInput.value
+    decryptWIF(encWifValue, passphraseInput.value).then((wif) => {
+      dispatch(login(wif))
+      history.push('/dashboard')
+      dispatch(clearTransactionEvent())
+    }).catch(() => {
+      dispatch(sendEvent(false, 'Wrong passphrase or invalid encrypted key'))
+      setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+    })
+  }, 500)
 }
 
 let LoginNep2 = class LoginNep2 extends Component {
