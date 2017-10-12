@@ -18,4 +18,4 @@ let Logout = ({ dispatch }: Props) =>
     </ReactTooltip>
   </div>
 
-export default connect(Logout)
+export default connect()(Logout)

@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react'
-import { noop } from 'lodash'
 import { Link } from 'react-router'
 import QRCode from 'qrcode'
 import { clipboard } from 'electron'
@@ -8,32 +7,17 @@ import Copy from 'react-icons/lib/md/content-copy'
 import ReactTooltip from 'react-tooltip'
 import storage from 'electron-json-storage'
 import { resetKey } from '../modules/generateWallet'
-import { connect } from 'react-redux'
 import { sendEvent, clearTransactionEvent } from '../modules/transactions'
-
-const saveKey = (dispatch: DispatchType, encWifValue: WIFType, keyNameValue: string) => {
-  // eslint-disable-next-line
-  storage.get('keys', (error, data) => {
-    data[keyNameValue] = encWifValue
-    dispatch(sendEvent(true, `Saved key as ${keyNameValue}`))
-    storage.set('keys', data)
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
-  })
-}
-
-const resetGeneratedKey = (dispatch: DispatchType) => {
-  dispatch(resetKey())
-}
 
 type Props = {
   dispatch: DispatchType,
-  address: WalletAddressType,
-  wif: WIFType,
+  address: string,
+  wif: string,
   passphraseKey: string,
   passphrase: string,
 }
 
-let DisplayWalletKeys = class DisplayWalletKeys extends Component<Props> {
+class DisplayWalletKeys extends Component<Props> {
   publicCanvas: ?HTMLCanvasElement
   privateCanvas: ?HTMLCanvasElement
   keyName: ?HTMLInputElement
@@ -48,9 +32,27 @@ let DisplayWalletKeys = class DisplayWalletKeys extends Component<Props> {
     })
   }
 
-  render () {
-    const { passphrase, dispatch, address, passphraseKey, wif } = this.props
+  saveKey = () => {
+    const { dispatch, wif } = this.props
     const keyNameValue = this.keyName && this.keyName.value
+    if (!keyNameValue) { return null }
+
+    // eslint-disable-next-line
+    storage.get('keys', (error, data) => {
+      data[keyNameValue] = wif
+      dispatch(sendEvent(true, `Saved key as ${keyNameValue}`))
+      storage.set('keys', data)
+      setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+    })
+  }
+
+  resetGeneratedKey = () => {
+    const { dispatch } = this.props
+    dispatch(resetKey())
+  }
+
+  render () {
+    const { passphrase, address, passphraseKey, wif } = this.props
 
     return (
       <div>
@@ -92,9 +94,9 @@ let DisplayWalletKeys = class DisplayWalletKeys extends Component<Props> {
         </div>
         <div className='saveKey'>
           <input type='text' placeholder='Name this key' ref={(node) => { this.keyName = node }} />
-          <button onClick={() => keyNameValue ? saveKey(dispatch, passphraseKey, keyNameValue) : noop}>Save Key</button>
+          <button onClick={this.saveKey}>Save Key</button>
         </div>
-        <Link onClick={() => resetGeneratedKey(dispatch)} to='/'><button>Back</button></Link>
+        <Link onClick={this.resetGeneratedKey} to='/'><button>Back</button></Link>
         <button onClick={() => window.print()}>Print</button>
         <ReactTooltip class='solidTip' id='copyPublicKeyTip' place='bottom' type='dark' effect='solid'>
           <span>Copy Public Key</span>
@@ -112,9 +114,5 @@ let DisplayWalletKeys = class DisplayWalletKeys extends Component<Props> {
     )
   }
 }
-
-const mapStateToProps = (state) => ({})
-
-DisplayWalletKeys = connect(mapStateToProps)(DisplayWalletKeys)
 
 export default DisplayWalletKeys

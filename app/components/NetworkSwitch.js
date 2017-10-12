@@ -8,13 +8,13 @@ import { setBlockHeight, setNetwork } from '../modules/metadata'
 import { setBalance, setTransactionHistory } from '../modules/wallet'
 import { version } from '../../package.json'
 import { sendEvent, clearTransactionEvent } from '../modules/transactions'
-import { NEO_NETWORK } from '../core/constants'
+import { NETWORK, ASSETS } from '../core/constants'
 
-let intervals = {}
+export let intervals = {}
 
 // notify user if version is out of date
 
-const checkVersion = (dispatch: DispatchType, net: NeoNetworkType) => {
+const checkVersion = (dispatch: DispatchType, net: NetworkType) => {
   const apiEndpoint = getAPIEndpoint(net)
   return axios.get(apiEndpoint + '/v2/version').then((res) => {
     if (res === undefined || res === null) {
@@ -39,7 +39,7 @@ export const getMarketPriceUSD = (amount: number) => {
 
 // TODO: this is being imported by Balance.js, maybe refactor to helper file
 
-const initiateGetBalance = (dispatch: DispatchType, net: NeoNetworkType, address: WalletAddressType) => {
+export const initiateGetBalance = (dispatch: DispatchType, net: NetworkType, address: string) => {
   syncTransactionHistory(dispatch, net, address)
   syncAvailableClaim(dispatch, net, address)
   syncBlockHeight(dispatch, net)
@@ -61,7 +61,7 @@ const initiateGetBalance = (dispatch: DispatchType, net: NeoNetworkType, address
   })
 }
 
-const syncAvailableClaim = (dispatch: DispatchType, net: NeoNetworkType, address: WalletAddressType) => {
+const syncAvailableClaim = (dispatch: DispatchType, net: NetworkType, address: string) => {
   console.log('trying to get claim')
   getClaimAmounts(net, address).then((result) => {
     console.log(result)
@@ -70,28 +70,28 @@ const syncAvailableClaim = (dispatch: DispatchType, net: NeoNetworkType, address
   })
 }
 
-const syncBlockHeight = (dispatch: DispatchType, net: NeoNetworkType) => {
+const syncBlockHeight = (dispatch: DispatchType, net: NetworkType) => {
   getWalletDBHeight(net).then((blockHeight) => {
     dispatch(setBlockHeight(blockHeight))
   })
 }
 
-const syncTransactionHistory = (dispatch: DispatchType, net: NeoNetworkType, address: WalletAddressType) => {
+export const syncTransactionHistory = (dispatch: DispatchType, net: NetworkType, address: string) => {
   getTransactionHistory(net, address).then((transactions) => {
     let txs = []
     for (let i = 0; i < transactions.length; i++) {
       if (transactions[i].neo_sent === true) {
-        txs = txs.concat([{ type: 'NEO', amount: transactions[i].NEO, txid: transactions[i].txid, block_index: transactions[i].block_index }])
+        txs = txs.concat([{ type: ASSETS.NEO, amount: transactions[i].NEO, txid: transactions[i].txid, block_index: transactions[i].block_index }])
       }
       if (transactions[i].gas_sent === true) {
-        txs = txs.concat([{ type: 'GAS', amount: transactions[i].GAS, txid: transactions[i].txid, block_index: transactions[i].block_index }])
+        txs = txs.concat([{ type: ASSETS.GAS, amount: transactions[i].GAS, txid: transactions[i].txid, block_index: transactions[i].block_index }])
       }
     }
     dispatch(setTransactionHistory(txs))
   })
 }
 
-const resetBalanceSync = (dispatch: DispatchType, net: NeoNetworkType, address: WalletAddressType) => {
+export const resetBalanceSync = (dispatch: DispatchType, net: NetworkType, address: string) => {
   if (intervals.balance !== undefined) {
     clearInterval(intervals.balance)
   }
@@ -100,8 +100,8 @@ const resetBalanceSync = (dispatch: DispatchType, net: NeoNetworkType, address: 
   }, 30000)
 }
 
-const toggleNet = (dispatch: DispatchType, net: NeoNetworkType, address: WalletAddressType) => {
-  const newNet = net === NEO_NETWORK.MAIN ? NEO_NETWORK.TEST : NEO_NETWORK.MAIN
+const toggleNet = (dispatch: DispatchType, net: NetworkType, address: string) => {
+  const newNet = net === NETWORK.MAIN ? NETWORK.TEST : NETWORK.MAIN
   dispatch(setNetwork(newNet))
   resetBalanceSync(dispatch, newNet, address)
   if (address !== null) {
@@ -111,8 +111,8 @@ const toggleNet = (dispatch: DispatchType, net: NeoNetworkType, address: WalletA
 
 type Props = {
   dispatch: DispatchType,
-  net: NeoNetworkType,
-  address: WalletAddressType
+  net: NetworkType,
+  address: string
 }
 
 let NetworkSwitch = class NetworkSwitch extends Component<Props> {
@@ -140,4 +140,4 @@ const mapStateToProps = (state) => ({
 
 NetworkSwitch = connect(mapStateToProps)(NetworkSwitch)
 
-export { NetworkSwitch, initiateGetBalance, syncTransactionHistory, intervals, resetBalanceSync }
+export default NetworkSwitch

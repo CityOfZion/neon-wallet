@@ -10,22 +10,15 @@ import { sendEvent, clearTransactionEvent } from '../modules/transactions'
 import { clipboard } from 'electron'
 import Copy from 'react-icons/lib/md/content-copy'
 import ReactTooltip from 'react-tooltip'
-
-// force sync with balance data
-const refreshBalance = (dispatch: Function, net: NeoNetworkType, address: WalletAddressType) => {
-  dispatch(sendEvent(true, 'Refreshing...'))
-  initiateGetBalance(dispatch, net, address).then((response) => {
-    dispatch(sendEvent(true, 'Received latest blockchain information.'))
-    setTimeout(() => dispatch(clearTransactionEvent()), 1000)
-  })
-}
+import { formatGAS } from '../core/formatters'
+import { ASSETS } from '../core/constants'
 
 type Props = {
   dispatch: Function,
-  address: WalletAddressType,
-  neo: NeoAssetType,
-  net: NeoNetworkType,
-  gas: GasAssetType,
+  address: string,
+  neo: number,
+  net: NetworkType,
+  gas: number,
   price: number
 }
 
@@ -40,8 +33,18 @@ let WalletInfo = class WalletInfo extends Component<Props> {
     })
   }
 
+  // force sync with balance data
+  refreshBalance = () => {
+    const { dispatch, net, address } = this.props
+    dispatch(sendEvent(true, 'Refreshing...'))
+    initiateGetBalance(dispatch, net, address).then((response) => {
+      dispatch(sendEvent(true, 'Received latest blockchain information.'))
+      setTimeout(() => dispatch(clearTransactionEvent()), 1000)
+    })
+  }
+
   render () {
-    const { address, neo, net, gas, dispatch, price } = this.props
+    const { address, neo, gas, price } = this.props
     if (isNil(address)) {
       return null
     }
@@ -58,14 +61,14 @@ let WalletInfo = class WalletInfo extends Component<Props> {
         <div className='spacer' />
         <div id='balance'>
           <div className='split'>
-            <div className='label'>NEO</div>
+            <div className='label'>{ASSETS.NEO}</div>
             <div className='amountBig amountNeo'>{neo}</div>
           </div>
           <div className='split'>
-            <div className='label'>GAS</div>
-            <div className='amountBig amountGas'>{ Math.floor(gas * 10000) / 10000 }</div>
+            <div className='label'>{ASSETS.GAS}</div>
+            <div className='amountBig amountGas'>{formatGAS(gas)}</div>
           </div>
-          <div className='refreshBalance' onClick={() => refreshBalance(dispatch, net, address)} >
+          <div className='refreshBalance' onClick={this.refreshBalance()} >
             <MdSync id='refresh' data-tip data-for='refreshBalanceTip' />
             <ReactTooltip class='solidTip' id='refreshBalanceTip' place='bottom' type='dark' effect='solid'>
               <span>Refresh account balance</span>

@@ -7,8 +7,8 @@ import { login } from '../modules/account'
 import { sendEvent, clearTransactionEvent } from '../modules/transactions'
 import FaEye from 'react-icons/lib/fa/eye'
 import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
-
-const logo = require('../images/neon-logo2.png')
+import Logo from './Logo'
+import Footer from './Footer'
 
 type Props = {
     dispatch: DispatchType,
@@ -19,7 +19,7 @@ type Props = {
 
 type State = {
   showKey: boolean,
-  wif: WIFType,
+  wif: string,
 }
 
 class LoginPrivateKey extends Component<Props, State> {
@@ -56,7 +56,7 @@ class LoginPrivateKey extends Component<Props, State> {
       <div id='loginPage'>
         <div className='login'>
           <div className='loginForm'>
-            <div className='logo'><img src={logo} width='60px' /></div>
+            <Logo />
             <input type={showKey ? 'text' : 'password'} placeholder='Enter your private key here (WIF)' onChange={this.handleInputChange} />
 
             {showKey
@@ -68,7 +68,7 @@ class LoginPrivateKey extends Component<Props, State> {
             <button onClick={this.handleVerify}>Login</button>
             <Link to='/'><button className='altButton'>Home</button></Link>
           </div>
-          <div id='footer'>Created by Ethan Fast and COZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A</div>
+          <Footer />
         </div>
       </div>
     )

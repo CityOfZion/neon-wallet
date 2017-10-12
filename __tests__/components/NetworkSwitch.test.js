@@ -1,10 +1,10 @@
 import React from 'react'
 import configureStore from 'redux-mock-store'
 import { shallow } from 'enzyme'
-import networkReducer, { setNetwork, SET_HEIGHT, SET_NETWORK } from '../../app/modules/metadata'
+import { SET_HEIGHT, SET_NETWORK } from '../../app/modules/metadata'
 import { SET_CLAIM } from '../../app/modules/claim'
 import { SET_BALANCE, SET_TRANSACTION_HISTORY } from '../../app/modules/wallet'
-import { NetworkSwitch, resetBalanceSync } from '../../app/components/NetworkSwitch'
+import NetworkSwitch, { resetBalanceSync } from '../../app/components/NetworkSwitch'
 
 // TODO research how to move the axios mock code which is repeated in NetworkSwitch to a helper or config file
 import axios from 'axios'
@@ -48,7 +48,7 @@ describe('NetworkSwitch', () => {
   })
 
   test('calls resetBalanceSync after rendering', (done) => {
-    const { wrapper, store } = setup()
+    const { store } = setup()
     const state = store.getState()
     expect(store.getActions()[0]).toEqual(resetBalanceSync(store.dispatch, state.metadata.network, state.account.address))
     done()
@@ -64,7 +64,6 @@ describe('NetworkSwitch', () => {
   test('switches to TestNet when clicked', (done) => {
     const { wrapper, store } = setup()
     const state = store.getState()
-    const testNet = 'TestNet'
     const deepWrapper = wrapper.dive()
     expect(deepWrapper.find('.netName').text()).toEqual(state.metadata.network)
     const actionTypes = [

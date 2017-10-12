@@ -1,5 +1,7 @@
 // @flow
 import React from 'react'
+import { isNil } from 'lodash'
+import classNames from 'classnames'
 
 type Props = {
     status: boolean,
@@ -7,18 +9,10 @@ type Props = {
 }
 
 const StatusMessage = ({ status, statusMessage }: Props) => {
-  if (status) {
-    return (
-      <div className='statusMessage success'>
-        {statusMessage}
-      </div>
-    )
-  } else if (!status) {
-    return (
-      <div className='statusMessage fail'>{statusMessage}</div>
-    )
+  if (isNil(status)) {
+    return null
   }
-  return null
+  return <div className={classNames('statusMessage', status ? 'success' : 'fail')}>{statusMessage}</div>
 }
 
 export default StatusMessage

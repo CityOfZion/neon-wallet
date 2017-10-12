@@ -1,19 +1,14 @@
-export const NEO_NETWORK = {
+// @flow
+export const NETWORK = {
   MAIN: 'MainNet',
   TEST: 'TestNet'
 }
 
-export const NEO_EXPLORER = {
+export const EXPLORER = {
   NEO_TRACKER: 'Neotracker'
 }
 
-export const NEO_ASSET = {
-  NEO: {
-    TYPE: 'NEO',
-    NAME: 'Neo'
-  },
-  GAS: {
-    TYPE: 'GAS',
-    NAME: 'Gas'
-  }
+export const ASSETS = {
+  NEO: 'NEO',
+  GAS: 'GAS'
 }
