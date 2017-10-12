@@ -29,10 +29,9 @@ let LoginTokenSale = class LoginTokenSale extends Component<Props> {
   onWifChange = () => {
     const { dispatch, history } = this.props
     const wif = this.wifInput && this.wifInput.value
-    if (!wif) { return null }
 
     // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
-    if (verifyPrivateKey(wif) === true) {
+    if (wif && verifyPrivateKey(wif) === true) {
       dispatch(login(wif))
       history.push('/tokenSale')
     } else {

@@ -20,10 +20,6 @@ type Props = {
   accountKeys: Object,
 }
 
-type State = {
-  showKey: boolean
-}
-
 let LoginLocalStorage = class LoginLocalStorage extends Component<Props, State> {
   wifInput: ?HTMLInputElement
   passphraseInput: ?HTMLInputElement
@@ -53,17 +49,19 @@ let LoginLocalStorage = class LoginLocalStorage extends Component<Props, State> 
       setTimeout(() => dispatch(clearTransactionEvent()), 5000)
       return
     }
-    dispatch(sendEvent(true, 'Decrypting encoded key...'))
-    setTimeout(() => {
-      decryptWIF(wif, passphrase).then((wif) => {
-        dispatch(login(wif))
-        history.push('/dashboard')
-        dispatch(clearTransactionEvent())
-      }).catch(() => {
-        dispatch(sendEvent(false, 'Wrong passphrase'))
-        setTimeout(() => dispatch(clearTransactionEvent()), 5000)
-      })
-    }, 500)
+    if (wif !== 'Select a wallet') {
+      dispatch(sendEvent(true, 'Decrypting encoded key...'))
+      setTimeout(() => {
+        decryptWIF(wif, passphrase).then((wif) => {
+          dispatch(login(wif))
+          history.push('/dashboard')
+          dispatch(clearTransactionEvent())
+        }).catch(() => {
+          dispatch(sendEvent(false, 'Wrong passphrase'))
+          setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+        })
+      }, 500)
+    }
   }
 
   toggleKeyVisibility = () => {
