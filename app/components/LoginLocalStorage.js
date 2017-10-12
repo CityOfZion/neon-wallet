@@ -81,7 +81,7 @@ let LoginLocalStorage = class LoginLocalStorage extends Component {
               {map(accountKeys, (value, key) => <option value={value}>{key}</option>)}
             </select>
           </div>
-          <input type={showKey ? 'text' : 'password'} placeholder='Enter your passphrase here' ref={(node) => { passphraseInput = node }} onKeyPress={this.handleKeyPress}/>
+          <input type={showKey ? 'text' : 'password'} placeholder='Enter your passphrase here' ref={(node) => { passphraseInput = node }} onKeyPress={this.handleKeyPress} />
 
           {showKey
             ? <FaEyeSlash className='viewKey' onClick={this.toggleKeyVisibility} />
