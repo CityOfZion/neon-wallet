@@ -42,7 +42,7 @@ const initialState = {
   },
   wallet: {
     Neo: 10,
-    Gas: 1.0001,
+    Gas: 1.0001000,
     price: 25.48
   },
   claim: {

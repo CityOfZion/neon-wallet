@@ -6,8 +6,8 @@
   "homepage": "https://github.com/CityOfZion/neon-wallet",
   "author": "Ethan Fast <ejhfast@gmail.com> (https://github.com/Ejhfast)",
   "scripts": {
-    "postinstall": "electron-builder install-app-deps",
-    "start": "electron .",
+    "postinstall": "electron-builder install-app-deps && yarn run electron-rebuild",
+    "start": "electron . --enable-logging --remote-debugging-port=9222",
     "assets": "webpack",
     "assets-watch": "webpack --watch",
     "test": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
@@ -16,7 +16,8 @@
     "dist": "build",
     "lint": "eslint -c .eslintrc ./app --ext .js,.jsx --ignore-pattern dist/",
     "lint-fix": "eslint -c .eslintrc ./app --ext .js,.jsx --fix --ignore-pattern dist/",
-    "prepush": "echo 'running lint...' && yarn lint && echo 'running tests...' && yarn test"
+    "prepush": "echo 'running lint...' && yarn lint && echo 'running tests...' && yarn test",
+    "electron-rebuild": "electron-rebuild --force --module_dir . -w node-hid"
   },
   "keywords": [],
   "license": "ISC",
@@ -72,6 +73,7 @@
     "js-scrypt": "^0.2.0",
     "lodash": "^4.17.4",
     "neon-js": "git+https://github.com/CityOfZion/neon-js.git#8a52d07a4eda09afd1b57485deb6973409d0c342",
+    "node-hid": "^0.5.7",
     "prop-types": "^15.6.0",
     "qrcode": "^0.8.2",
     "react": "^15.0.2",
@@ -105,6 +107,7 @@
     "electron": "^1.6.11",
     "electron-builder": "^19.17.0",
     "electron-packager": "^8.6.0",
+    "electron-rebuild": "^1.6.0",
     "enzyme": "^3.1.0",
     "enzyme-to-json": "^3.1.1",
     "eslint": "^4.8.0",

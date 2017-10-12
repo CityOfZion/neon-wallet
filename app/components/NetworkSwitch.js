@@ -61,7 +61,7 @@ const initiateGetBalance = (dispatch, net, address) => {
 }
 
 const syncAvailableClaim = (dispatch, net, address) => {
-  console.log('trying to get claim')
+  console.log('trying to get claim net \"' + net + '\" address \"' + address + '\"')
   getClaimAmounts(net, address).then((result) => {
     console.log(result)
     // claimAmount / 100000000

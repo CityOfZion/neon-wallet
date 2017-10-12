@@ -13,6 +13,10 @@ module.exports = {
     'react-hot-loader/patch',
     path.join(__dirname, 'app/index.js')
   ],
+  externals : {
+    'node-hid' : 'require("node-hid")',
+    'ledger-node-js-api' : 'require("ledger-node-js-api")'
+  },
   output: {
     path: path.join(__dirname, 'app/dist/'),
     filename: 'bundle.js',
