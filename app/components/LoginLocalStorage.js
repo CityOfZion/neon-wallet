@@ -37,6 +37,7 @@ const onWifChange = (dispatch, history) => {
     }, 500)
   } else {
     dispatch(sendEvent(false, 'Please select a wallet'))
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
   }
 }
 
