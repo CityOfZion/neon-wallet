@@ -61,7 +61,7 @@ let LoginLocalStorage = class LoginLocalStorage extends Component {
   }
 
   handleKeyPress = (event) => {
-    if(event.key == 'Enter'){
+    if (event.key === 'Enter') {
       onWifChange(this.props.dispatch, this.props.history)
     }
   }
