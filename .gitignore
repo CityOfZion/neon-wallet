@@ -8,3 +8,4 @@ app/dist
 .DS_Store
 *.iml
 coverage/*
+/node_modules/
