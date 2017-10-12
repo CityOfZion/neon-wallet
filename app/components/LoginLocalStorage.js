@@ -60,6 +60,12 @@ let LoginLocalStorage = class LoginLocalStorage extends Component {
     }))
   }
 
+  handleKeyPress = (event) => {
+    if(event.key == 'Enter'){
+      onWifChange(this.props.dispatch, this.props.history)
+    }
+  }
+
   render () {
     const { dispatch, accountKeys, decrypting, history } = this.props
     const { showKey } = this.state
@@ -68,13 +74,6 @@ let LoginLocalStorage = class LoginLocalStorage extends Component {
       <div className='login'>
         <div className='logo'><img src={logo} width='60px' /></div>
         <div className='loginForm'>
-          <input type={showKey ? 'text' : 'password'} placeholder='Enter your passphrase here' ref={(node) => { passphraseInput = node }} />
-
-          {showKey
-            ? <FaEyeSlash className='viewKey' onClick={this.toggleKeyVisibility} />
-            : <FaEye className='viewKey' onClick={this.toggleKeyVisibility} />
-          }
-
           <div className='selectBox'>
             <label>Wallet:</label>
             <select ref={(node) => { wifInput = node }}>
@@ -82,6 +81,13 @@ let LoginLocalStorage = class LoginLocalStorage extends Component {
               {map(accountKeys, (value, key) => <option value={value}>{key}</option>)}
             </select>
           </div>
+          <input type={showKey ? 'text' : 'password'} placeholder='Enter your passphrase here' ref={(node) => { passphraseInput = node }} onKeyPress={this.handleKeyPress}/>
+
+          {showKey
+            ? <FaEyeSlash className='viewKey' onClick={this.toggleKeyVisibility} />
+            : <FaEye className='viewKey' onClick={this.toggleKeyVisibility} />
+          }
+
         </div>
         <div className='loginButtons'>
           { Object.keys(accountKeys).length === 0 ? <button className='disabled' disabled='disabled'>Login</button> : <button onClick={(e) => onWifChange(dispatch, history)}>Login</button> }
