@@ -52,7 +52,7 @@ let WalletInfo = class WalletInfo extends Component {
           </div>
           <div className='split'>
             <div className='label'>GAS</div>
-            <div className='amountBig amountGas'>{ Math.floor(gas * 10000) / 10000 }</div>
+            <div className='amountBig amountGas'>{this.props.gas < 0.0000001 ? 0 : this.props.gas.toFixed(7)}</div>
           </div>
           <div className='refreshBalance' onClick={() => refreshBalance(dispatch, net, address)} >
             <MdSync id='refresh' data-tip data-for='refreshBalanceTip' />

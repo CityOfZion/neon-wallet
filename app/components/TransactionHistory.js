@@ -42,8 +42,12 @@ let TransactionHistory = class TransactionHistory extends Component {
         <div className='headerSpacer' />
         <ul id='transactionList'>
           {transactions.map((t) => {
-            const formatGas = (gas) => Math.floor(parseFloat(gas) * 10000) / 10000
-            let formatAmount = t.type === 'NEO' ? parseInt(t.amount) : formatGas(t.amount)
+            if (t.type === 'NEO'){
+                formatAmount = parseInt(t.amount)
+              }
+            else{
+                formatAmount = parseFloat(t.amount).toFixed(7)
+            }
             return (
               <li key={t.txid}>
                 <div

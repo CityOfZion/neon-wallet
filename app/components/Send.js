@@ -7,6 +7,7 @@ import { sendEvent, clearTransactionEvent, toggleAsset } from '../modules/transa
 import SplitPane from 'react-split-pane'
 import ReactTooltip from 'react-tooltip'
 import { log } from '../util/Logs'
+import { ledgerNanoS_CreateSignature,ledgerNanoS_doSendAsset } from '../modules/ledgerNanoS'
 
 let sendAddress, sendAmount, confirmButton
 
@@ -69,7 +70,7 @@ const sendTransaction = (dispatch, net, selfAddress, wif, asset, neoBalance, gas
     sendAsset[assetName] = sendAmount.value
     dispatch(sendEvent(true, 'Processing...'))
     log(net, 'SEND', selfAddress, {to: sendAddress.value, asset: asset, amount: sendAmount.value})
-    doSendAsset(net, sendAddress.value, wif, sendAsset).then((response) => {
+    ledgerNanoS_doSendAsset(net, sendAddress.value, wif, sendAsset).then((response) => {
       if (response.result === undefined || response.result === false) {
         dispatch(sendEvent(false, 'Transaction failed!'))
       } else {

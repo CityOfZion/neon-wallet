@@ -3,9 +3,12 @@ dist/
 env/
 .idea
 release-builds/*
-app/dist/*
-app/dist
 .DS_Store
 *.iml
 coverage/*
 /node_modules/
+/npm-debug.log
+/.jshintrc
+/.project
+/.settings/*
+/yarn-error.log
