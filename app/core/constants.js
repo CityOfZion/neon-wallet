@@ -12,3 +12,8 @@ export const ASSETS = {
   NEO: 'NEO',
   GAS: 'GAS'
 }
+
+export const ASSETS_LABELS = {
+  [ASSETS.NEO]: 'Neo',
+  [ASSETS.GAS]: 'Gas'
+}

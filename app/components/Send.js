@@ -7,7 +7,7 @@ import { sendEvent, clearTransactionEvent, toggleAsset } from '../modules/transa
 import SplitPane from 'react-split-pane'
 import ReactTooltip from 'react-tooltip'
 import { log } from '../util/Logs'
-import { ASSETS } from '../core/constants'
+import { ASSETS, ASSETS_LABELS } from '../core/constants'
 
 type Props = {
   dispatch: DispatchType,
@@ -45,15 +45,15 @@ let Send = class Send extends Component<Props> {
       setTimeout(() => dispatch(clearTransactionEvent()), 5000)
       return false
     }
-    if (selectedAsset === 'Neo' && parseFloat(sendAmount) !== parseInt(sendAmount)) { // check for fractional neo
+    if (selectedAsset === ASSETS_LABELS.NEO && parseFloat(sendAmount) !== parseInt(sendAmount)) { // check for fractional neo
       dispatch(sendEvent(false, 'You cannot send fractional amounts of Neo.'))
       setTimeout(() => dispatch(clearTransactionEvent()), 5000)
       return false
-    } else if (selectedAsset === 'Neo' && parseInt(sendAmount) > neoBalance) { // check for value greater than account balance
+    } else if (selectedAsset === ASSETS_LABELS.NEO && parseInt(sendAmount) > neoBalance) { // check for value greater than account balance
       dispatch(sendEvent(false, 'You do not have enough NEO to send.'))
       setTimeout(() => dispatch(clearTransactionEvent()), 5000)
       return false
-    } else if (selectedAsset === 'Gas' && parseFloat(sendAmount) > gasBalance) {
+    } else if (selectedAsset === ASSETS_LABELS.GAS && parseFloat(sendAmount) > gasBalance) {
       dispatch(sendEvent(false, 'You do not have enough GAS to send.'))
       setTimeout(() => dispatch(clearTransactionEvent()), 5000)
       return false
@@ -78,9 +78,9 @@ let Send = class Send extends Component<Props> {
     const { dispatch, net, address, wif, selectedAsset } = this.props
 
     let assetName
-    if (selectedAsset === 'Neo') {
+    if (selectedAsset === ASSETS_LABELS.NEO) {
       assetName = ASSETS.NEO
-    } else if (selectedAsset === 'Gas') {
+    } else if (selectedAsset === ASSETS_LABELS.GAS) {
       assetName = ASSETS.GAS
     } else {
       dispatch(sendEvent(false, 'That asset is not Neo or Gas'))

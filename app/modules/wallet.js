@@ -1,3 +1,5 @@
+import { ASSETS_LABELS } from '../core/constants'
+
 // Constants
 export const SET_BALANCE = 'SET_BALANCE'
 export const SET_MARKET_PRICE = 'SET_MARKET_PRICE'
@@ -38,8 +40,7 @@ export function setTransactionHistory (transactions) {
 export default (state = { Neo: 0, Gas: 0, transactions: [], price: '--' }, action) => {
   switch (action.type) {
     case SET_BALANCE:
-      console.log('balance setting...')
-      return { ...state, 'Neo': action.Neo, 'Gas': action.Gas, 'price': action.price }
+      return { ...state, [ASSETS_LABELS.NEO]: action.Neo, [ASSETS_LABELS.GAS]: action.Gas, 'price': action.price }
     case RESET_PRICE:
       return {...state, 'price': '--'}
     case SET_MARKET_PRICE: // current market price action type

@@ -1,3 +1,4 @@
+import { ASSETS_LABELS } from '../core/constants'
 // Constants
 export const SEND_TRANSACTION = 'SEND_TRANSACTION'
 export const CLEAR_TRANSACTION = 'CLEAR_TRANSACTION'
@@ -25,7 +26,7 @@ export function toggleAsset () {
 }
 
 // Reducer for state used when performing a transaction
-export default (state = { success: null, message: null, selectedAsset: 'Neo' }, action) => {
+export default (state = { success: null, message: null, selectedAsset: ASSETS_LABELS.NEO }, action) => {
   switch (action.type) {
     case SEND_TRANSACTION:
       return {...state, success: action.success, message: action.message}
@@ -33,10 +34,10 @@ export default (state = { success: null, message: null, selectedAsset: 'Neo' }, 
       return {...state, success: null, message: null}
     case TOGGLE_ASSET:
       let asset
-      if (state.selectedAsset === 'Neo') {
-        asset = 'Gas'
+      if (state.selectedAsset === ASSETS_LABELS.NEO) {
+        asset = ASSETS_LABELS.GAS
       } else {
-        asset = 'Neo'
+        asset = ASSETS_LABELS.NEO
       }
       return {...state, success: null, selectedAsset: asset}
     default:
