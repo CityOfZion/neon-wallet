@@ -35,6 +35,12 @@ class LoginPrivateKey extends Component {
     onWifChange(dispatch, verifyPrivateKey, history, wif)
   }
 
+  handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      this.handleVerify()
+    }
+  }
+
   render () {
     const { showKey } = this.state
     const logo = require('../images/neon-logo2.png')
@@ -44,7 +50,7 @@ class LoginPrivateKey extends Component {
         <div className='login'>
           <div className='loginForm'>
             <div className='logo'><img src={logo} width='60px' /></div>
-            <input type={showKey ? 'text' : 'password'} placeholder='Enter your private key here (WIF)' onChange={this.handleInputChange} />
+            <input type={showKey ? 'text' : 'password'} placeholder='Enter your private key here (WIF)' onChange={this.handleInputChange} onKeyDown={this.handleKeyPress} />
 
             {showKey
               ? <FaEyeSlash className='viewKey' onClick={this.toggleKeyVisibility} />

@@ -1,8 +1,9 @@
 import React from 'react'
 import configureStore from 'redux-mock-store'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 
 import Login from '../../app/components/LoginPrivateKey'
+import { sendEvent } from '../../app/modules/transactions'
 
 const setup = (state = { account: {
   loggedIn: true,
@@ -14,6 +15,13 @@ const setup = (state = { account: {
   return {
     store,
     wrapper
+  }
+}
+
+const state = {
+  account: {
+    loggedIn: false,
+    wif: null
   }
 }
 
@@ -34,6 +42,17 @@ describe('Login', () => {
       .simulate('click')
 
     expect(deeperWrapper.state('showKey')).toEqual(true)
+  })
+
+  test('pressing enter on passphrase input field triggers sendEvent', () => {
+    const store = configureStore()(state)
+    const wrapper = mount(<Login store={store} />)
+    const c = wrapper.find('input')
+
+    // console.log('debug:'+c.debug())
+    // console.log('debug2:'+c.html())
+    c.simulate('keyDown', { key: 'Enter' })
+    expect(store.getActions()[0]).toEqual(sendEvent(false, 'That is not a valid private key'))
   })
 
   // test('private key field input onChange dispatches LOGIN action', () => {
