@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { doSendAsset, verifyAddress } from 'neon-js'
+import { verifyAddress } from 'neon-js'
 import { togglePane } from '../modules/dashboard'
 import { sendEvent, clearTransactionEvent, toggleAsset } from '../modules/transactions'
 import SplitPane from 'react-split-pane'
 import ReactTooltip from 'react-tooltip'
 import { log } from '../util/Logs'
-import { ledgerNanoS_CreateSignature,ledgerNanoS_doSendAsset } from '../modules/ledgerNanoS'
+import { ledgerNanoSGetdoSendAsset } from '../modules/ledgerNanoS'
 
 let sendAddress, sendAmount, confirmButton
 
@@ -70,7 +70,7 @@ const sendTransaction = (dispatch, net, selfAddress, wif, asset, neoBalance, gas
     sendAsset[assetName] = sendAmount.value
     dispatch(sendEvent(true, 'Processing...'))
     log(net, 'SEND', selfAddress, {to: sendAddress.value, asset: asset, amount: sendAmount.value})
-    ledgerNanoS_doSendAsset(net, sendAddress.value, wif, sendAsset).then((response) => {
+    ledgerNanoSGetdoSendAsset(net, sendAddress.value, wif, sendAsset).then((response) => {
       if (response.result === undefined || response.result === false) {
         dispatch(sendEvent(false, 'Transaction failed!'))
       } else {

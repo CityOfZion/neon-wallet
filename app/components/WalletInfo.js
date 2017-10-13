@@ -30,7 +30,7 @@ let WalletInfo = class WalletInfo extends Component {
   }
 
   render () {
-    const { address, neo, net, gas, dispatch, price } = this.props
+    const { address, neo, net, dispatch, price } = this.props
     if (isNil(address)) {
       return null
     }

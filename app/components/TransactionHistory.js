@@ -42,11 +42,11 @@ let TransactionHistory = class TransactionHistory extends Component {
         <div className='headerSpacer' />
         <ul id='transactionList'>
           {transactions.map((t) => {
-            if (t.type === 'NEO'){
-                formatAmount = parseInt(t.amount)
-              }
-            else{
-                formatAmount = parseFloat(t.amount).toFixed(7)
+            var formatAmount
+            if (t.type === 'NEO') {
+              formatAmount = parseInt(t.amount)
+            } else {
+              formatAmount = parseFloat(t.amount).toFixed(7)
             }
             return (
               <li key={t.txid}>

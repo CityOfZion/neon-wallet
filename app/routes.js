@@ -25,6 +25,6 @@ export default (
     <Route path='/LoginTokenSale' component={LoginTokenSale} />
     <Route path='/TokenSale' component={TokenSale} />
     <Route path='/settings' component={Settings} />
-    <Route path="/loginLedgerNanoS" component={LoginLedgerNanoS} />
+    <Route path='/loginLedgerNanoS' component={LoginLedgerNanoS} />
   </Route>
 )
