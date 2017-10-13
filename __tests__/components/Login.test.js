@@ -3,6 +3,8 @@ import configureStore from 'redux-mock-store'
 import { shallow, mount } from 'enzyme'
 
 import Login from '../../app/components/LoginPrivateKey'
+import { login } from '../../app/modules/account'
+
 import { sendEvent } from '../../app/modules/transactions'
 
 const setup = (state = { account: {
@@ -53,6 +55,22 @@ describe('Login', () => {
     // console.log('debug2:'+c.html())
     c.simulate('keyDown', { key: 'Enter' })
     expect(store.getActions()[0]).toEqual(sendEvent(false, 'That is not a valid private key'))
+  })
+
+  test('private key field input onChange dispatches LOGIN action', () => {
+    const history = {
+      push: jest.fn()
+    }
+
+    const store = configureStore()(state)
+    const wrapper = mount(<Login store={store} history={history}/>)
+    const c = wrapper.find('.passPhrase')
+
+    c.instance().value = 'L1xpshXfzF6iQTq42onA5km8qwyzBaNQzPADhfTt2jzzcQSVoP5A'
+    c.simulate('change')
+    wrapper.find('.loginButton').simulate('click')
+
+    expect(store.getActions()[0]).toEqual(login('L1xpshXfzF6iQTq42onA5km8qwyzBaNQzPADhfTt2jzzcQSVoP5A'))
   })
 
   // test('private key field input onChange dispatches LOGIN action', () => {

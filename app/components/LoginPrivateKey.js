@@ -50,7 +50,7 @@ class LoginPrivateKey extends Component {
         <div className='login'>
           <div className='loginForm'>
             <div className='logo'><img src={logo} width='60px' /></div>
-            <input type={showKey ? 'text' : 'password'} placeholder='Enter your private key here (WIF)' onChange={this.handleInputChange} onKeyDown={this.handleKeyPress} />
+            <input className='passPhrase' type={showKey ? 'text' : 'password'} placeholder='Enter your private key here (WIF)' onChange={this.handleInputChange} onKeyDown={this.handleKeyPress} />
 
             {showKey
               ? <FaEyeSlash className='viewKey' onClick={this.toggleKeyVisibility} />
@@ -58,7 +58,7 @@ class LoginPrivateKey extends Component {
             }
           </div>
           <div className='loginButtons'>
-            <button onClick={this.handleVerify}>Login</button>
+            <button className='loginButton' onClick={this.handleVerify}>Login</button>
             <Link to='/'><button className='altButton'>Home</button></Link>
           </div>
           <div id='footer'>Created by Ethan Fast and COZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A</div>
