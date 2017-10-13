@@ -36,18 +36,17 @@ class CreateWallet extends Component<Props, State> {
 
     if (!passphrase || !passphrase2) return null
 
-    const currentPhrase = passphrase
     if (passphrase !== passphrase2) {
       dispatch(sendEvent(false, 'Passphrases do not match'))
       setTimeout(() => dispatch(clearTransactionEvent()), 5000)
       return
     }
-    if (validatePassphrase(currentPhrase)) {
+    if (validatePassphrase(passphrase)) {
       // TODO: for some reason this blocks, so giving time to processes the earlier
       // dispatch to display "generating" text, should fix this in future
       dispatch(sendEvent(true, 'Generating encoded key...'))
       setTimeout(() => {
-        generateEncryptedWif(currentPhrase).then((result) => {
+        generateEncryptedWif(passphrase).then((result) => {
           dispatch(newWallet(result))
           dispatch(clearTransactionEvent())
         })
