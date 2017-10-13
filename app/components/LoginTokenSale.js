@@ -28,6 +28,9 @@ type State = {
 }
 
 class LoginTokenSale extends Component<Props, State> {
+  state = {
+    wif: ''
+  }
   onWifChange = () => {
     const { dispatch, history } = this.props
     const { wif } = this.state
