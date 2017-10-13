@@ -1,12 +1,35 @@
-[![CircleCI](https://circleci.com/gh/CityOfZion/neon-wallet.svg?style=svg)](https://circleci.com/gh/CityOfZion/neon-wallet) [![Coverage Status](https://coveralls.io/repos/github/CityOfZion/neon-wallet/badge.svg?branch=master)](https://coveralls.io/github/CityOfZion/neon-wallet?branch=master)
+<p align="center">
+  <img
+    src="http://res.cloudinary.com/vidsy/image/upload/v1503160820/CoZ_Icon_DARKBLUE_200x178px_oq0gxm.png"
+    width="125px;">
+</p>
 
-# Neon Wallet
-
-![wallet](/wallet.png)
+<h1 align="center">Neon Wallet</h1>
 
 <p align="center">
-The aim of this project is to port the current NEO web wallet to electron with a better UI.
+  Electron wallet for the <b>NEO</b> blockchain.
 </p>
+
+<p align="center">
+  <a href="https://circleci.com/gh/CityOfZion/neon-wallet">
+    <img src="https://circleci.com/gh/CityOfZion/neon-wallet.svg?style=svg">
+  </a>
+  <a href='https://coveralls.io/github/CityOfZion/neon-wallet?branch=dev'>
+    <img src='https://coveralls.io/repos/github/CityOfZion/neon-wallet/badge.svg?branch=dev' alt='Coverage Status' />
+  </a>
+</p>
+
+<p align="center">
+  <img src="/wallet.png">
+</p>
+
+## Overview
+
+### What does it currently do
+
+- View Gas and Neo balances
+- Login via Wif and encrypted private keys
+- Send Neo to other addresses
 
 ## Installation
 
