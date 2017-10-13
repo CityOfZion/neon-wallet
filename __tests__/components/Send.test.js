@@ -54,12 +54,6 @@ const setup = (state = initialState, shallowRender = true) => {
   }
 }
 
-const mockTimeouts = (callNum, time) => {
-  jest.runAllTimers(callNum)
-  expect(setTimeout.mock.calls.length).toBe(callNum)
-  expect(setTimeout.mock.calls[callNum - 1][1]).toBe(time)
-}
-
 describe('Send', () => {
   test('renders without crashing', (done) => {
     const { wrapper } = setup()
@@ -79,12 +73,11 @@ describe('Send', () => {
     done()
   })
 
-  test('sendAsset button is getting called correctly for NEO with various fields filled correctly and incorrectly', (done) => {
+  test('sendAsset button is getting called correctly with invalid address', (done) => {
     const { wrapper, store } = setup(initialState, false)
-
     wrapper.find('#doSend').simulate('click')
 
-    mockTimeouts(1, 5000)
+    jest.runAllTimers()
     const actions = store.getActions()
     expect(actions.length === 2).toEqual(true)
     expect(actions[0]).toEqual({
@@ -95,7 +88,11 @@ describe('Send', () => {
     expect(actions[1]).toEqual({
       type: CLEAR_TRANSACTION
     })
-    store.clearActions()
+    done()
+  })
+
+  test('sendAsset button is getting called correctly with fractional NEO', (done) => {
+    const { wrapper, store } = setup(initialState, false)
 
     const addressField = wrapper.find('input[placeholder="Where to send the asset (address)"]')
     addressField.instance().value = initialState.account.address
@@ -103,18 +100,26 @@ describe('Send', () => {
 
     wrapper.find('#doSend').simulate('click')
 
-    mockTimeouts(2, 5000)
-    const actions2 = store.getActions()
-    expect(actions2.length === 2).toEqual(true)
-    expect(actions2[0]).toEqual({
+    jest.runAllTimers()
+    const actions = store.getActions()
+    expect(actions.length === 2).toEqual(true)
+    expect(actions[0]).toEqual({
       type: SEND_TRANSACTION,
       success: false,
       message: 'You cannot send fractional amounts of Neo.'
     })
-    expect(actions2[1]).toEqual({
+    expect(actions[1]).toEqual({
       type: CLEAR_TRANSACTION
     })
-    store.clearActions()
+    done()
+  })
+
+  test('sendAsset button is getting called correctly with not enough NEO', (done) => {
+    const { wrapper, store } = setup(initialState, false)
+
+    const addressField = wrapper.find('input[placeholder="Where to send the asset (address)"]')
+    addressField.instance().value = initialState.account.address
+    addressField.simulate('change')
 
     const neoField = wrapper.find('input[placeholder="Amount"]')
     neoField.instance().value = initialState.wallet.Neo + 1
@@ -122,52 +127,70 @@ describe('Send', () => {
 
     wrapper.find('#doSend').simulate('click')
 
-    mockTimeouts(3, 5000)
-    const actions3 = store.getActions()
-    expect(actions3.length === 2).toEqual(true)
-    expect(actions3[0]).toEqual({
+    jest.runAllTimers()
+    const actions = store.getActions()
+    expect(actions.length === 2).toEqual(true)
+    expect(actions[0]).toEqual({
       type: SEND_TRANSACTION,
       success: false,
       message: 'You do not have enough NEO to send.'
     })
-    expect(actions3[1]).toEqual({
+    expect(actions[1]).toEqual({
       type: CLEAR_TRANSACTION
     })
-    store.clearActions()
+    done()
+  })
 
+  test('sendAsset button is getting called correctly with negative NEO', (done) => {
+    const { wrapper, store } = setup(initialState, false)
+
+    const addressField = wrapper.find('input[placeholder="Where to send the asset (address)"]')
+    addressField.instance().value = initialState.account.address
+    addressField.simulate('change')
+
+    const neoField = wrapper.find('input[placeholder="Amount"]')
     neoField.instance().value = -1
     neoField.simulate('change')
 
     wrapper.find('#doSend').simulate('click')
 
-    mockTimeouts(4, 5000)
-    const actions4 = store.getActions()
-    expect(actions4.length === 2).toEqual(true)
-    expect(actions4[0]).toEqual({
+    jest.runAllTimers()
+    const actions = store.getActions()
+    expect(actions.length === 2).toEqual(true)
+    expect(actions[0]).toEqual({
       type: SEND_TRANSACTION,
       success: false,
       message: 'You cannot send negative amounts of an asset.'
     })
-    expect(actions4[1]).toEqual({
+    expect(actions[1]).toEqual({
       type: CLEAR_TRANSACTION
     })
-    store.clearActions()
+    done()
+  })
 
+  test('sendAsset button is getting called correctly with correct NEO amount', (done) => {
+    const { wrapper, store } = setup(initialState, false)
+
+    const addressField = wrapper.find('input[placeholder="Where to send the asset (address)"]')
+    addressField.instance().value = initialState.account.address
+    addressField.simulate('change')
+
+    const neoField = wrapper.find('input[placeholder="Amount"]')
     neoField.instance().value = initialState.wallet.Neo - 1
     neoField.simulate('change')
 
     wrapper.find('#doSend').simulate('click')
 
-    const actions5 = store.getActions()
-    expect(actions5.length === 1).toEqual(true)
-    expect(actions5[0]).toEqual({
+    const actions = store.getActions()
+    expect(actions.length === 1).toEqual(true)
+    expect(actions[0]).toEqual({
       type: TOGGLE_SEND_PANE,
       pane: 'confirmPane'
     })
     done()
   })
 
-  test('sendAsset button is getting called correctly for GAS with various fields filled correctly and incorrectly', (done) => {
+  test('sendAsset button is getting called correctly for without enough Gas', (done) => {
     const gasState = Object.assign({}, initialState, { transactions: { selectedAsset: 'Gas' } })
     const { wrapper, store } = setup(gasState, false)
 
@@ -181,7 +204,7 @@ describe('Send', () => {
 
     wrapper.find('#doSend').simulate('click')
 
-    mockTimeouts(5, 5000)
+    jest.runAllTimers()
     const actions = store.getActions()
     expect(actions.length === 2).toEqual(true)
     expect(actions[0]).toEqual({
@@ -192,8 +215,18 @@ describe('Send', () => {
     expect(actions[1]).toEqual({
       type: CLEAR_TRANSACTION
     })
-    store.clearActions()
+    done()
+  })
 
+  test('sendAsset button is getting called correctly with correct Gas amount', (done) => {
+    const gasState = Object.assign({}, initialState, { transactions: { selectedAsset: 'Gas' } })
+    const { wrapper, store } = setup(gasState, false)
+
+    const addressField = wrapper.find('input[placeholder="Where to send the asset (address)"]')
+    addressField.instance().value = initialState.account.address
+    addressField.simulate('change')
+
+    const gasField = wrapper.find('input[placeholder="Amount"]')
     gasField.instance().value = initialState.wallet.Gas - 0.5
     gasField.simulate('change')
 
