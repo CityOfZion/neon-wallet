@@ -54,15 +54,22 @@ class LoginLocalStorage extends Component<Props, State> {
     }
     if (wif !== 'Select a wallet') {
       dispatch(sendEvent(true, 'Decrypting encoded key...'))
+      const wrongPassphraseAction = () => {
+        dispatch(sendEvent(false, 'Wrong passphrase'))
+        setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+      }
       setTimeout(() => {
-        decryptWIF(wif, passphrase).then((wif) => {
-          dispatch(login(wif))
-          history.push('/dashboard')
-          dispatch(clearTransactionEvent())
-        }).catch(() => {
-          dispatch(sendEvent(false, 'Wrong passphrase'))
-          setTimeout(() => dispatch(clearTransactionEvent()), 5000)
-        })
+        try {
+          decryptWIF(wif, passphrase).then((wif) => {
+            dispatch(login(wif))
+            history.push('/dashboard')
+            dispatch(clearTransactionEvent())
+          }).catch(() => {
+            wrongPassphraseAction()
+          })
+        } catch (e) {
+          wrongPassphraseAction()
+        }
       }, 500)
     }
   }

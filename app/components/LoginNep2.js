@@ -49,16 +49,23 @@ class LoginNep2 extends Component<Props, State> {
     }
     // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
     dispatch(sendEvent(true, 'Decrypting encoded key...'))
+    const wrongPassphraseAction = () => {
+      dispatch(sendEvent(false, 'Wrong passphrase or invalid encrypted key'))
+      setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+    }
     setTimeout(() => {
       const encWifValue = wif
-      decryptWIF(encWifValue, passphrase).then((wif) => {
-        dispatch(login(wif))
-        history.push('/dashboard')
-        dispatch(clearTransactionEvent())
-      }).catch(() => {
-        dispatch(sendEvent(false, 'Wrong passphrase or invalid encrypted key'))
-        setTimeout(() => dispatch(clearTransactionEvent()), 5000)
-      })
+      try {
+        decryptWIF(encWifValue, passphrase).then((wif) => {
+          dispatch(login(wif))
+          history.push('/dashboard')
+          dispatch(clearTransactionEvent())
+        }).catch(() => {
+          wrongPassphraseAction()
+        })
+      } catch (e) {
+        wrongPassphraseAction()
+      }
     }, 500)
   }
 
