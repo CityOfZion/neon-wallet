@@ -17,7 +17,11 @@ type Props = {
   dispatch: DispatchType,
   history: Object,
   decrypting: boolean,
-  accountKeys: Object,
+  accountKeys: Object
+}
+
+type State = {
+  showKey: boolean
 }
 
 let LoginLocalStorage = class LoginLocalStorage extends Component<Props, State> {
