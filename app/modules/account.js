@@ -1,6 +1,6 @@
-import { getAccountsFromWIFKey, getPublicKeyEncoded, getAccountsFromPublicKey } from 'neon-js'
+import { getAccountFromWIFKey, getPublicKeyEncoded, getAccountFromPublicKey } from 'neon-js'
 
-import { ledgerNanoS_PublicKey } from './ledgerNanoS'
+import { ledgerNanoSGetPublicKey } from './ledgerNanoS'
 
 // Constants
 export const LOGIN = 'LOGIN'
@@ -16,15 +16,15 @@ export function login (wif) {
   }
 }
 
-export function ledgerNanoS_Login () {
-    return {
-        type: LOGIN,
-        ledgerNanoS: true,
-        publicKey: ledgerNanoS_PublicKey
-    }
+export function ledgerNanoSGetLogin () {
+  return {
+    type: LOGIN,
+    ledgerNanoS: true,
+    publicKey: ledgerNanoSGetPublicKey
+  }
 }
 
-export function logout(){
+export function logout () {
   return {
     type: LOGOUT
   }
@@ -50,12 +50,17 @@ export default (state = {wif: null, address: null, loggedIn: false, redirectUrl:
     case LOGIN:
       let loadAccount
       try {
-        if(action.ledgerNanoS) {
-          loadAccount = getAccountsFromPublicKey(getPublicKeyEncoded(action.publicKey))
+        if (action.ledgerNanoS) {
+          loadAccount = getAccountFromPublicKey(getPublicKeyEncoded(action.publicKey))
         } else {
-          loadAccount = getAccountsFromWIFKey(action.wif)
+          loadAccount = getAccountFromWIFKey(action.wif)
         }
-      } catch (e) { loadAccount = -1 }
+      } catch (e) {
+        process.stdout.write('error loadAccount "' + e + '" "' + e.message + '" \n')
+        console.log( e.stack )
+        loadAccount = -1 
+        }
+      process.stdout.write('interim loadAccount "' + loadAccount + '" \n')
       if (loadAccount === -1 || loadAccount === -2 || loadAccount === undefined) {
         return {...state, wif: action.wif, loggedIn: false}
       }

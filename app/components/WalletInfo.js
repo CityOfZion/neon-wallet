@@ -30,7 +30,7 @@ let WalletInfo = class WalletInfo extends Component {
   }
 
   render () {
-    const { address, neo, net, gas, dispatch, price } = this.props
+    const { address, neo, net, dispatch, price } = this.props
     if (isNil(address)) {
       return null
     }
@@ -86,7 +86,7 @@ WalletInfo.propTypes = {
   neo: PropTypes.number,
   net: PropTypes.string,
   gas: PropTypes.number,
-  price: PropTypes.number
+  price: PropTypes.string
 }
 
 WalletInfo = connect(mapStateToProps)(WalletInfo)

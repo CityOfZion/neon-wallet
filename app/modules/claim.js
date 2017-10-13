@@ -37,8 +37,8 @@ export default (state = { claimRequest: false, claimAmount: 0, claimAvailable: 0
       if (action.available > state.claimAvailable && state.claimRequest === true) {
         claimWasUpdated = true
       }
-      console.log("setting claim", state.claimRequest, claimWasUpdated);
-      return {...state, 'claimAmount': ((action.available + action.unavailable) / 100000000).toFixed(7), 'claimAvailable': action.available, 'claimUnavailable': action.unavailable, claimWasUpdated};
+      console.log('setting claim', state.claimRequest, claimWasUpdated)
+      return {...state, 'claimAmount': ((action.available + action.unavailable) / 100000000).toFixed(7), 'claimAvailable': action.available, 'claimUnavailable': action.unavailable, claimWasUpdated}
     case DISABLE_CLAIM:
       return {...state, disableClaimButton: action.status}
     default:

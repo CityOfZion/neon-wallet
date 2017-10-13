@@ -29,7 +29,7 @@ const transactions = {
       },
       {
         type: 'GAS',
-        amount: '0.4',
+        amount: '0.4000',
         txid: '76938980'
       }
     ]
