@@ -68,7 +68,7 @@ class WalletInfo extends Component<Props> {
             <div className='label'>{ASSETS.GAS}</div>
             <div className='amountBig amountGas'>{formatGAS(gas)}</div>
           </div>
-          <div className='refreshBalance' onClick={this.refreshBalance()} >
+          <div className='refreshBalance' onClick={this.refreshBalance} >
             <MdSync id='refresh' data-tip data-for='refreshBalanceTip' />
             <ReactTooltip class='solidTip' id='refreshBalanceTip' place='bottom' type='dark' effect='solid'>
               <span>Refresh account balance</span>
