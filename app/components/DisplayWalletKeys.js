@@ -40,13 +40,13 @@ class DisplayWalletKeys extends Component<Props, State> {
   }
 
   saveKey = () => {
-    const { dispatch, wif } = this.props
+    const { dispatch, passphraseKey } = this.props
     const { keyName } = this.state
     if (!keyName) { return null }
 
     // eslint-disable-next-line
     storage.get('keys', (error, data) => {
-      data[keyName] = wif
+      data[keyName] = passphraseKey
       dispatch(sendEvent(true, `Saved key as ${keyName}`))
       storage.set('keys', data)
       setTimeout(() => dispatch(clearTransactionEvent()), 5000)
