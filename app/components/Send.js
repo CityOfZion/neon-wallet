@@ -20,46 +20,55 @@ type Props = {
   selectedAsset: string,
 }
 
-let Send = class Send extends Component<Props> {
-  sendAddressInput: ?HTMLInputElement
-  sendAmountInput: ?HTMLInputElement
+type State = {
+  sendAmount: string,
+  sendAddress: string,
+}
+
+let Send = class Send extends Component<Props, State> {
+  state = {
+    sendAmount: '',
+    sendAddress: ''
+  }
+
   confirmButton: ?HTMLButtonElement
 
   validateForm () {
     const { dispatch, neo, gas, selectedAsset } = this.props
-    const sendAddress = this.sendAddressInput && this.sendAddressInput.value
-    const sendAmount = this.sendAmountInput && this.sendAmountInput.value
+    const { sendAmount, sendAddress } = this.state
     const neoBalance = neo
     const gasBalance = gas
 
     if (!sendAddress || !sendAmount) { return false }
 
+    const dispatchClearTransactionEvent = () => setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+
     try {
       if (verifyAddress(sendAddress) !== true || sendAddress.charAt(0) !== 'A') {
         dispatch(sendEvent(false, 'The address you entered was not valid.'))
-        setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+        dispatchClearTransactionEvent()
         return false
       }
     } catch (e) {
       dispatch(sendEvent(false, 'The address you entered was not valid.'))
-      setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+      dispatchClearTransactionEvent()
       return false
     }
     if (selectedAsset === ASSETS_LABELS.NEO && parseFloat(sendAmount) !== parseInt(sendAmount)) { // check for fractional neo
       dispatch(sendEvent(false, 'You cannot send fractional amounts of Neo.'))
-      setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+      dispatchClearTransactionEvent()
       return false
     } else if (selectedAsset === ASSETS_LABELS.NEO && parseInt(sendAmount) > neoBalance) { // check for value greater than account balance
       dispatch(sendEvent(false, 'You do not have enough NEO to send.'))
-      setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+      dispatchClearTransactionEvent()
       return false
     } else if (selectedAsset === ASSETS_LABELS.GAS && parseFloat(sendAmount) > gasBalance) {
       dispatch(sendEvent(false, 'You do not have enough GAS to send.'))
-      setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+      dispatchClearTransactionEvent()
       return false
     } else if (parseFloat(sendAmount) < 0) { // check for negative asset
       dispatch(sendEvent(false, 'You cannot send negative amounts of an asset.'))
-      setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+      dispatchClearTransactionEvent()
       return false
     }
     return true
@@ -76,6 +85,7 @@ let Send = class Send extends Component<Props> {
   // perform send transaction
   sendTransaction = () => {
     const { dispatch, net, address, wif, selectedAsset } = this.props
+    const { sendAddress, sendAmount } = this.state
 
     let assetName
     if (selectedAsset === ASSETS_LABELS.NEO) {
@@ -90,8 +100,6 @@ let Send = class Send extends Component<Props> {
     // validate fields again for good measure (might have changed?)
     if (this.validateForm()) {
       const selfAddress = address
-      const sendAddress = this.sendAddressInput && this.sendAddressInput.value
-      const sendAmount = this.sendAmountInput && this.sendAmountInput.value
       let sendAsset = {}
       sendAsset[assetName] = sendAmount
       dispatch(sendEvent(true, 'Processing...'))
@@ -114,12 +122,10 @@ let Send = class Send extends Component<Props> {
   }
 
   resetForm () {
-    if (this.sendAddressInput) {
-      this.sendAddressInput.value = ''
-    }
-    if (this.sendAmountInput) {
-      this.sendAmountInput.value = ''
-    }
+    this.setState({
+      sendAddress: '',
+      sendAmount: ''
+    })
     if (this.confirmButton) {
       this.confirmButton.blur()
     }
@@ -133,10 +139,10 @@ let Send = class Send extends Component<Props> {
       <SplitPane className='confirmSplit' split='horizontal' size={confirmPaneClosed} allowResize={false}>
         <div id='sendPane'>
           <div id='sendAddress'>
-            <input placeholder='Where to send the asset (address)' ref={node => { this.sendAddressInput = node }} />
+            <input placeholder='Where to send the asset (address)' onChange={(e) => this.setState({ sendAddress: e.target.value })} />
           </div>
           <div id='sendAmount'>
-            <input placeholder='Amount' ref={node => { this.sendAmountInput = node }} />
+            <input placeholder='Amount' onChange={(e) => this.setState({ sendAmount: e.target.value })} />
           </div>
           <button id='sendAsset' data-tip data-for='assetTip' onClick={() => dispatch(toggleAsset())}>{selectedAsset}</button>
           <ReactTooltip class='solidTip' id='assetTip' place='bottom' type='dark' effect='solid'>
