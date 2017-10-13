@@ -115,7 +115,7 @@ type Props = {
   address: string
 }
 
-let NetworkSwitch = class NetworkSwitch extends Component<Props> {
+class NetworkSwitch extends Component<Props> {
   componentDidMount () {
     const { dispatch, address, net } = this.props
     checkVersion(dispatch, net)
@@ -138,6 +138,4 @@ const mapStateToProps = (state) => ({
   address: state.account.address
 })
 
-NetworkSwitch = connect(mapStateToProps)(NetworkSwitch)
-
-export default NetworkSwitch
+export default connect(mapStateToProps)(NetworkSwitch)

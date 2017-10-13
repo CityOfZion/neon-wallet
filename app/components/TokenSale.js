@@ -17,9 +17,16 @@ type Props = {
   wif: string
 }
 
-let TokenSale = class TokenSale extends Component<Props> {
-  scriptHashInput: ?HTMLInputElement
-  neoToSendInput: ?HTMLInputElement
+type State = {
+  scriptHash: string,
+  neoToSend: string
+}
+
+class TokenSale extends Component<Props, State> {
+  state = {
+    scriptHash: '',
+    neoToSend: ''
+  }
 
   componentDidMount () {
     const { dispatch, net, address } = this.props
@@ -30,18 +37,17 @@ let TokenSale = class TokenSale extends Component<Props> {
 
   refreshTokenBalance = (silent: boolean = false) => {
     const { dispatch, net, address } = this.props
-    const scriptHashInputValue = this.scriptHashInput && this.scriptHashInput.value
-    if (!scriptHashInputValue) { return null }
+    const { scriptHash } = this.state
 
     // TODO: add other check
-    if (scriptHashInputValue.slice(0, 1) !== '0x' && scriptHashInputValue.length !== 42) {
+    if (scriptHash.slice(0, 1) !== '0x' && scriptHash.length !== 42) {
       if (!silent) {
         dispatch(sendEvent(false, 'Not a valid script hash.'))
         setTimeout(() => dispatch(clearTransactionEvent()), 5000)
       }
       return false
     }
-    Neon.getTokenBalance(net, scriptHashInputValue.slice(2, scriptHashInputValue.length), address).then((balance) => {
+    Neon.getTokenBalance(net, scriptHash.slice(2, scriptHash.length), address).then((balance) => {
       dispatch(updateRpxBalance(balance))
     }).catch((e) => {
       dispatch(updateRpxBalance(0))
@@ -53,37 +59,35 @@ let TokenSale = class TokenSale extends Component<Props> {
 
   participateInSale = () => {
     const { dispatch, net, wif, neo } = this.props
-    const neoToSendInputValue = this.neoToSendInput && this.neoToSendInput.value
-    const scriptHashInputValue = this.scriptHashInput && this.scriptHashInput.value
+    const { neoToSend, scriptHash } = this.state
 
-    if (!neoToSendInputValue || !scriptHashInputValue) { return null }
+    if (!neoToSend || !scriptHash) { return null }
 
     const account = Neon.getAccountFromWIFKey(wif)
-    if (parseFloat(neoToSendInputValue) !== parseInt(neoToSendInputValue)) {
+    if (parseFloat(neoToSend) !== parseInt(neoToSend)) {
       dispatch(sendEvent(false, 'You cannot send fractional Neo to a token sale.'))
       setTimeout(() => dispatch(clearTransactionEvent()), 5000)
       return false
     }
-    const toMint = parseInt(neoToSendInputValue)
-    if (this.neoToSendInput) {
-      this.neoToSendInput.value = ''
-    }
+    const toMint = parseInt(neoToSend)
+    this.setState({
+      neoToSend: ''
+    })
     if (toMint > neo) {
       dispatch(sendEvent(false, 'You do not have enough Neo to send.'))
       setTimeout(() => dispatch(clearTransactionEvent()), 5000)
       return false
     }
-    let scriptHash
-    if (scriptHashInputValue.slice(0, 1) !== '0x' && scriptHashInputValue.length !== 42) {
+    if (scriptHash.slice(0, 1) !== '0x' && scriptHash.length !== 42) {
       dispatch(sendEvent(false, 'Not a valid script hash.'))
       setTimeout(() => dispatch(clearTransactionEvent()), 5000)
       return false
     }
-    scriptHash = scriptHashInputValue.slice(2, scriptHashInputValue.length)
-    Neon.getTokenBalance(net, scriptHash, account.address).then((balance) => {
+    const _scriptHash = scriptHash.slice(2, scriptHash.length)
+    Neon.getTokenBalance(net, _scriptHash, account.address).then((balance) => {
       dispatch(sendEvent(true, 'Processing...'))
       setTimeout(() => dispatch(clearTransactionEvent()), 5000)
-      Neon.doMintTokens(net, scriptHash, wif, toMint, 0).then((response) => {
+      Neon.doMintTokens(net, _scriptHash, wif, toMint, 0).then((response) => {
         dispatch(sendEvent(true, 'Processing...'))
         setTimeout(() => dispatch(clearTransactionEvent()), 5000)
         if (response.result === true) {
@@ -98,7 +102,6 @@ let TokenSale = class TokenSale extends Component<Props> {
       })
     }).catch((e) => {
       dispatch(sendEvent(false, 'This script hash cannot mint tokens.'))
-      console.log(e)
       setTimeout(() => dispatch(clearTransactionEvent()), 5000)
       return false
     })
@@ -106,6 +109,7 @@ let TokenSale = class TokenSale extends Component<Props> {
 
   render () {
     const { neo, rpx } = this.props
+    const { neoToSend, scriptHash } = this.state
 
     return (
       <div id='tokenSale'>
@@ -130,11 +134,22 @@ let TokenSale = class TokenSale extends Component<Props> {
           </div>
           <div className='settingsItem'>
             <div className='itemTitle'>Script Hash:</div>
-            <input type='text' className='scriptHash' ref={(node) => { this.scriptHashInput = node }} />
+            <input
+              type='text'
+              className='scriptHash'
+              value={scriptHash}
+              onChange={(e) => this.setState({ scriptHash: e.target.value })}
+            />
           </div>
           <div className='settingsItem'>
             <div className='itemTitle'>Amount of NEO to Send:</div>
-            <input type='text' className='neoAmount' placeholder='e.g., 100' ref={(node) => { this.neoToSendInput = node }} />
+            <input
+              type='text'
+              className='neoAmount'
+              placeholder='e.g., 100'
+              value={neoToSend}
+              onChange={(e) => this.setState({ neoToSend: e.target.value })}
+            />
           </div>
           <button onClick={(this.participateInSale)}>Submit for Sale</button>
           <button onClick={this.refreshTokenBalance}>Refresh Token Balance</button>
@@ -155,6 +170,4 @@ const mapStateToProps = (state) => ({
   rpx: state.rpx.RPX
 })
 
-TokenSale = connect(mapStateToProps)(TokenSale)
-
-export default TokenSale
+export default connect(mapStateToProps)(TokenSale)

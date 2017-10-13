@@ -18,15 +18,16 @@ type Props = {
 }
 
 type State = {
-  showKey: boolean
+  showKey: boolean,
+  wif: string,
+  passphrase: string
 }
 
-let LoginNep2 = class LoginNep2 extends Component<Props, State> {
-  wifInput: ?HTMLInputElement
-  passphraseInput: ?HTMLInputElement
-
+class LoginNep2 extends Component<Props, State> {
   state = {
-    showKey: false
+    showKey: false,
+    wif: '',
+    passphrase: ''
   }
 
   toggleKeyVisibility = () => {
@@ -37,8 +38,7 @@ let LoginNep2 = class LoginNep2 extends Component<Props, State> {
 
   onWifChange = () => {
     const { dispatch, history } = this.props
-    const passphrase = this.passphraseInput && this.passphraseInput.value
-    const wif = this.wifInput && this.wifInput.value
+    const { wif, passphrase } = this.state
 
     if (!passphrase || !wif) { return null }
 
@@ -64,19 +64,29 @@ let LoginNep2 = class LoginNep2 extends Component<Props, State> {
 
   render () {
     const { decrypting } = this.props
-    const { showKey } = this.state
+    const { showKey, wif, passphrase } = this.state
 
     return (
       <div id='loginPage'>
         <div className='login'>
           <Logo />
           <div className='loginForm'>
-            <input type={showKey ? 'text' : 'password'} placeholder='Enter your passphrase here' ref={(node) => { this.passphraseInput = node }} />
+            <input
+              type={showKey ? 'text' : 'password'}
+              placeholder='Enter your passphrase here'
+              onChange={(e) => this.setState({ passphrase: e.target.value })}
+              value={passphrase}
+            />
             {showKey
               ? <FaEyeSlash className='viewKey' onClick={this.toggleKeyVisibility} />
               : <FaEye className='viewKey' onClick={this.toggleKeyVisibility} />
             }
-            <input type='text' placeholder='Enter your encrypted key here' ref={(node) => { this.wifInput = node }} />
+            <input
+              type='text'
+              placeholder='Enter your encrypted key here'
+              onChange={(e) => this.setState({ wif: e.target.value })}
+              value={wif}
+            />
           </div>
           <div className='loginButtons'>
             <button className='loginButton' onClick={this.onWifChange}>Login</button>
@@ -94,6 +104,4 @@ const mapStateToProps = (state) => ({
   decrypting: state.account.decrypting
 })
 
-LoginNep2 = connect(mapStateToProps)(LoginNep2)
-
-export default LoginNep2
+export default connect(mapStateToProps)(LoginNep2)

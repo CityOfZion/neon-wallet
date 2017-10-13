@@ -21,15 +21,16 @@ type Props = {
 }
 
 type State = {
-  showKey: boolean
+  showKey: boolean,
+  passphrase: string,
+  wif: string,
 }
 
-let LoginLocalStorage = class LoginLocalStorage extends Component<Props, State> {
-  wifInput: ?HTMLInputElement
-  passphraseInput: ?HTMLInputElement
-
+class LoginLocalStorage extends Component<Props, State> {
   state = {
-    showKey: false
+    showKey: false,
+    passphrase: '',
+    wif: ''
   }
 
   componentDidMount () {
@@ -42,9 +43,7 @@ let LoginLocalStorage = class LoginLocalStorage extends Component<Props, State> 
 
   onWifChange = () => {
     const { dispatch, history } = this.props
-
-    const passphrase = this.passphraseInput && this.passphraseInput.value
-    const wif = this.wifInput && this.wifInput.value
+    const { passphrase, wif } = this.state
 
     if (!passphrase || !wif) { return null }
 
@@ -76,13 +75,18 @@ let LoginLocalStorage = class LoginLocalStorage extends Component<Props, State> 
 
   render () {
     const { accountKeys, decrypting } = this.props
-    const { showKey } = this.state
+    const { showKey, passphrase, wif } = this.state
 
     return (<div id='loginPage'>
       <div className='login'>
         <Logo />
         <div className='loginForm'>
-          <input type={showKey ? 'text' : 'password'} placeholder='Enter your passphrase here' ref={(node) => { this.passphraseInput = node }} />
+          <input
+            type={showKey ? 'text' : 'password'}
+            placeholder='Enter your passphrase here'
+            value={passphrase}
+            onChange={(e) => this.setState({ passphrase: e.target.value })}
+          />
 
           {showKey
             ? <FaEyeSlash className='viewKey' onClick={this.toggleKeyVisibility} />
@@ -91,7 +95,7 @@ let LoginLocalStorage = class LoginLocalStorage extends Component<Props, State> 
 
           <div className='selectBox'>
             <label>Wallet:</label>
-            <select defaultValue='' ref={(node) => { this.wifInput = node }}>
+            <select value={wif} onChange={(e) => this.setState({ wif: e.target.value })}>
               <option value='' disabled='disabled'>Select a wallet</option>
               {map(accountKeys, (value, key) => <option value={value} key={`wallet${key}`}>{key}</option>)}
             </select>
@@ -112,11 +116,8 @@ let LoginLocalStorage = class LoginLocalStorage extends Component<Props, State> 
 
 const mapStateToProps = (state) => ({
   loggedIn: state.account.loggedIn,
-  wif: state.account.wif,
   decrypting: state.account.decrypting,
   accountKeys: state.account.accountKeys
 })
 
-LoginLocalStorage = connect(mapStateToProps)(LoginLocalStorage)
-
-export default LoginLocalStorage
+export default connect(mapStateToProps)(LoginLocalStorage)

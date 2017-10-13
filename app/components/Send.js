@@ -25,7 +25,7 @@ type State = {
   sendAddress: string,
 }
 
-let Send = class Send extends Component<Props, State> {
+class Send extends Component<Props, State> {
   state = {
     sendAmount: '',
     sendAddress: ''
@@ -133,16 +133,27 @@ let Send = class Send extends Component<Props, State> {
 
   render () {
     const { dispatch, confirmPane, selectedAsset } = this.props
+    const { sendAddress, sendAmount } = this.state
     const confirmPaneClosed = confirmPane ? '100%' : '69%'
 
     return (
       <SplitPane className='confirmSplit' split='horizontal' size={confirmPaneClosed} allowResize={false}>
         <div id='sendPane'>
           <div id='sendAddress'>
-            <input placeholder='Where to send the asset (address)' onChange={(e) => this.setState({ sendAddress: e.target.value })} />
+            <input
+              type='text'
+              placeholder='Where to send the asset (address)'
+              value={sendAddress}
+              onChange={(e) => this.setState({ sendAddress: e.target.value })}
+            />
           </div>
           <div id='sendAmount'>
-            <input placeholder='Amount' onChange={(e) => this.setState({ sendAmount: e.target.value })} />
+            <input
+              type='text'
+              value={sendAmount}
+              placeholder='Amount'
+              onChange={(e) => this.setState({ sendAmount: e.target.value })}
+            />
           </div>
           <button id='sendAsset' data-tip data-for='assetTip' onClick={() => dispatch(toggleAsset())}>{selectedAsset}</button>
           <ReactTooltip class='solidTip' id='assetTip' place='bottom' type='dark' effect='solid'>
@@ -168,6 +179,4 @@ const mapStateToProps = (state) => ({
   confirmPane: state.dashboard.confirmPane
 })
 
-Send = connect(mapStateToProps)(Send)
-
-export default Send
+export default connect(mapStateToProps)(Send)

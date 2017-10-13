@@ -14,7 +14,7 @@ type Props = {
   explorer: ExplorerType
 }
 
-let TransactionHistory = class TransactionHistory extends Component<Props> {
+class TransactionHistory extends Component<Props> {
   componentDidMount () {
     const { dispatch, net, address } = this.props
     syncTransactionHistory(dispatch, net, address)
@@ -52,6 +52,4 @@ const mapStateToProps = (state) => ({
   explorer: state.metadata.blockExplorer
 })
 
-TransactionHistory = connect(mapStateToProps)(TransactionHistory)
-
-export default TransactionHistory
+export default connect(mapStateToProps)(TransactionHistory)

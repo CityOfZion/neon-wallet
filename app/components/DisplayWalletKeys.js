@@ -17,10 +17,17 @@ type Props = {
   passphrase: string,
 }
 
-class DisplayWalletKeys extends Component<Props> {
+type State = {
+  keyName: string
+}
+
+class DisplayWalletKeys extends Component<Props, State> {
+  state = {
+    keyName: ''
+  }
+
   publicCanvas: ?HTMLCanvasElement
   privateCanvas: ?HTMLCanvasElement
-  keyName: ?HTMLInputElement
 
   componentDidMount () {
     const { address, passphraseKey } = this.props
@@ -34,13 +41,13 @@ class DisplayWalletKeys extends Component<Props> {
 
   saveKey = () => {
     const { dispatch, wif } = this.props
-    const keyNameValue = this.keyName && this.keyName.value
-    if (!keyNameValue) { return null }
+    const { keyName } = this.state
+    if (!keyName) { return null }
 
     // eslint-disable-next-line
     storage.get('keys', (error, data) => {
-      data[keyNameValue] = wif
-      dispatch(sendEvent(true, `Saved key as ${keyNameValue}`))
+      data[keyName] = wif
+      dispatch(sendEvent(true, `Saved key as ${keyName}`))
       storage.set('keys', data)
       setTimeout(() => dispatch(clearTransactionEvent()), 5000)
     })
@@ -53,7 +60,7 @@ class DisplayWalletKeys extends Component<Props> {
 
   render () {
     const { passphrase, address, passphraseKey, wif } = this.props
-
+    const { keyName } = this.state
     return (
       <div>
         <div className='disclaimer'>
@@ -93,7 +100,7 @@ class DisplayWalletKeys extends Component<Props> {
           </div>
         </div>
         <div className='saveKey'>
-          <input type='text' placeholder='Name this key' ref={(node) => { this.keyName = node }} />
+          <input type='text' placeholder='Name this key' value={keyName} onChange={(e) => this.setState({ keyName: e.target.value })} />
           <button onClick={this.saveKey}>Save Key</button>
         </div>
         <Link onClick={this.resetGeneratedKey} to='/'><button>Back</button></Link>

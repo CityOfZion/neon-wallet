@@ -23,12 +23,14 @@ type Props = {
   history: Object
 }
 
-let LoginTokenSale = class LoginTokenSale extends Component<Props> {
-  wifInput: ?HTMLInputElement
+type State = {
+  wif: string
+}
 
+class LoginTokenSale extends Component<Props, State> {
   onWifChange = () => {
     const { dispatch, history } = this.props
-    const wif = this.wifInput && this.wifInput.value
+    const { wif } = this.state
 
     // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
     if (wif && verifyPrivateKey(wif) === true) {
@@ -41,12 +43,18 @@ let LoginTokenSale = class LoginTokenSale extends Component<Props> {
   }
 
   render () {
+    const { wif } = this.state
     return (
       <div id='loginPage'>
         <div className='login'>
           <div className='loginForm'>
             <Logo />
-            <input type='text' placeholder='Enter your private key here (WIF)' ref={(node) => { this.wifInput = node }} />
+            <input
+              type='text'
+              placeholder='Enter your private key here (WIF)'
+              onChange={(e) => this.setState({ wif: e.target.value })}
+              value={wif}
+            />
           </div>
           <div className='loginButtons'>
             <button onClick={this.onWifChange}>Login</button>

@@ -19,17 +19,25 @@ type Props = {
     passphrase: string,
 }
 
-let CreateWallet = class CreateWallet extends Component<Props> {
-  passphraseInput: ?HTMLInputElement
-  passphraseInput2: ?HTMLInputElement
+type State = {
+  passphrase: string,
+  passphrase2: string,
+}
+
+class CreateWallet extends Component<Props, State> {
+  state = {
+    passphrase: '',
+    passphrase2: ''
+  }
 
   generateNewWallet = () => {
     const { dispatch } = this.props
+    const { passphrase, passphrase2 } = this.state
 
-    if (!this.passphraseInput || !this.passphraseInput2) return null
+    if (!passphrase || !passphrase2) return null
 
-    const currentPhrase = this.passphraseInput.value
-    if (this.passphraseInput.value !== this.passphraseInput2.value) {
+    const currentPhrase = passphrase
+    if (passphrase !== passphrase2) {
       dispatch(sendEvent(false, 'Passphrases do not match'))
       setTimeout(() => dispatch(clearTransactionEvent()), 5000)
       return
@@ -52,24 +60,33 @@ let CreateWallet = class CreateWallet extends Component<Props> {
   }
 
   resetPassphrases () {
-    if (this.passphraseInput) {
-      this.passphraseInput.value = ''
-    }
-    if (this.passphraseInput2) {
-      this.passphraseInput2.value = ''
-    }
+    this.setState({
+      passphrase: '',
+      passphrase2: ''
+    })
   }
 
   render () {
-    const { wif, generating, address, encryptedWif, passphrase, dispatch } = this.props
+    const { generating, address, encryptedWif, dispatch } = this.props
+    const { passphrase, passphrase2 } = this.state
 
     const passphraseDiv = (
       <div>
         <div className='info'>
           Choose a passphrase to encrypt your private key:
         </div>
-        <input type='text' ref={(node) => { this.passphraseInput = node }} placeholder='Enter passphrase here' />
-        <input type='text' ref={(node) => { this.passphraseInput2 = node }} placeholder='Repeat passphrase here' />
+        <input
+          type='text'
+          placeholder='Enter passphrase here'
+          value={passphrase}
+          onChange={(e) => this.setState({ passphrase: e.target.value })}
+        />
+        <input
+          type='text'
+          placeholder='Repeat passphrase here'
+          value={passphrase2}
+          onChange={(e) => this.setState({ passphrase2: e.target.value })}
+        />
         <button onClick={this.generateNewWallet} > Generate keys </button>
         <Link to='/'><button className='altButton'>Home</button></Link>
       </div>
@@ -78,13 +95,13 @@ let CreateWallet = class CreateWallet extends Component<Props> {
     return (
       <div id='newWallet'>
         <Logo />
-        {isNil(wif) ? passphraseDiv : <div />}
-        {generating === true && <div className='generating'>Generating keys...</div>}
-        {generating === false && wif !== null &&
+        {isNil(this.props.wif) ? passphraseDiv : <div />}
+        {generating && <div className='generating'>Generating keys...</div>}
+        {!generating && !isNil(this.props.wif) &&
         <DisplayWalletKeys
           address={address}
-          wif={wif}
-          passphrase={passphrase}
+          wif={this.props.wif}
+          passphrase={this.props.passphrase}
           passphraseKey={encryptedWif}
           dispatch={dispatch}
         />
@@ -102,6 +119,4 @@ const mapStateToProps = (state) => ({
   generating: state.generateWallet.generating
 })
 
-CreateWallet = connect(mapStateToProps)(CreateWallet)
-
-export default CreateWallet
+export default connect(mapStateToProps)(CreateWallet)

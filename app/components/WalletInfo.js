@@ -22,7 +22,7 @@ type Props = {
   price: number
 }
 
-let WalletInfo = class WalletInfo extends Component<Props> {
+class WalletInfo extends Component<Props> {
   canvas: ?HTMLCanvasElement
 
   componentDidMount () {
@@ -94,6 +94,4 @@ const mapStateToProps = (state) => ({
   price: state.wallet.price
 })
 
-WalletInfo = connect(mapStateToProps)(WalletInfo)
-
-export default WalletInfo
+export default connect(mapStateToProps)(WalletInfo)

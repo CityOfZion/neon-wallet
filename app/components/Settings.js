@@ -9,6 +9,7 @@ import { setBlockExplorer } from '../modules/metadata'
 import { setKeys } from '../modules/account'
 import Delete from 'react-icons/lib/md/delete'
 import Logo from './Logo'
+import { EXPLORER } from '../core/constants'
 
 const { dialog } = require('electron').remote
 
@@ -18,8 +19,14 @@ type Props = {
   wallets: any
 }
 
-let Settings = class Settings extends Component<Props> {
-  explorerSelectElement: ?HTMLSelectElement
+type State = {
+  explorer: string,
+}
+
+class Settings extends Component<Props, State> {
+  state = {
+    explorer: this.props.explorer
+  }
 
   componentDidMount () {
     const { dispatch } = this.props
@@ -91,11 +98,14 @@ let Settings = class Settings extends Component<Props> {
     })
   }
 
-  updateSettings = () => {
-    if (!this.explorerSelectElement) { return null }
+  updateSettings = (e) => {
     const { dispatch } = this.props
-    this.saveSettings({ blockExplorer: this.explorerSelectElement })
-    dispatch(setBlockExplorer(this.explorerSelectElement))
+    const explorer = e.target.value
+    this.setState({
+      explorer
+    })
+    this.saveSettings({ blockExplorer: explorer })
+    dispatch(setBlockExplorer(explorer))
   }
 
   deleteWallet = (key: string) => {
@@ -109,7 +119,8 @@ let Settings = class Settings extends Component<Props> {
   }
 
   render () {
-    const { wallets, explorer } = this.props
+    const { wallets } = this.props
+    const { explorer } = this.state
     return (
       <div id='settings'>
         <Logo />
@@ -117,9 +128,9 @@ let Settings = class Settings extends Component<Props> {
         <div className='settingsForm'>
           <div className='settingsItem'>
             <div className='itemTitle'>Block Explorer</div>
-            <select defaultValue={explorer} ref={(node) => { this.explorerSelectElement = node }} onChange={this.updateSettings}>
-              <option>Neotracker</option>
-              <option>Antchain</option>
+            <select value={explorer} onChange={this.updateSettings}>
+              <option value={EXPLORER.NEO_TRACKER}>Neotracker</option>
+              <option value={EXPLORER.ANT_CHAIN}>Antchain</option>
             </select>
           </div>
           <div className='settingsItem'>
@@ -149,6 +160,4 @@ const mapStateToProps = (state) => ({
   wallets: state.account.accountKeys
 })
 
-Settings = connect(mapStateToProps)(Settings)
-
-export default Settings
+export default connect(mapStateToProps)(Settings)

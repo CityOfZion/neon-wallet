@@ -5,7 +5,8 @@ export const NETWORK = {
 }
 
 export const EXPLORER = {
-  NEO_TRACKER: 'Neotracker'
+  NEO_TRACKER: 'Neotracker',
+  ANT_CHAIN: 'Antchain'
 }
 
 export const ASSETS = {

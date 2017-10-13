@@ -20,7 +20,7 @@ type Props = {
   claimAmount: number,
 }
 
-let Claim = class Claim extends Component<Props> {
+class Claim extends Component<Props> {
   componentDidUpdate () {
     const { claimRequest, claimWasUpdated, dispatch } = this.props
     // if we requested a claim and new claims are available, do claim
@@ -97,6 +97,4 @@ const mapStateToProps = (state) => ({
   neo: state.wallet.Neo
 })
 
-Claim = connect(mapStateToProps)(Claim)
-
-export default Claim
+export default connect(mapStateToProps)(Claim)

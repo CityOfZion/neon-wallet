@@ -10,7 +10,7 @@ type Props = {
   statusMessage: string
 }
 
-let App = ({ children, status, statusMessage }: Props) => {
+const App = ({ children, status, statusMessage }: Props) => {
   const statusPaneSize = status ? '30px' : 0
   return (
     <div id='pageWrapper'>
@@ -32,6 +32,4 @@ const mapStateToProps = (state) => ({
   statusMessage: state.transactions.message
 })
 
-App = connect(mapStateToProps)(App)
-
-export default App
+export default connect(mapStateToProps)(App)

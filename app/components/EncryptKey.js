@@ -19,18 +19,27 @@ type Props = {
     passphrase: string
 }
 
-let EncryptKey = class EncryptKey extends Component<Props> {
-  passphraseInput: ?HTMLInputElement
-  passphraseInput2: ?HTMLInputElement
-  wifInput: ?HTMLInputElement
+type State = {
+  passphrase: string,
+  passphrase2: string,
+  wif: string,
+}
+
+class EncryptKey extends Component<Props, State> {
+  state = {
+    passphrase: '',
+    passphrase2: '',
+    wif: ''
+  }
 
   generateNewWallet = () => {
     const { dispatch } = this.props
-    if (!this.passphraseInput || !this.passphraseInput2 || !this.wifInput) { return null }
+    const { passphrase, passphrase2, wif } = this.state
+    if (!passphrase || !passphrase2 || !wif) { return null }
 
-    const currentPhrase = this.passphraseInput.value
-    const currentWif = this.wifInput.value
-    if (this.passphraseInput.value !== this.passphraseInput2.value) {
+    const currentPhrase = passphrase
+    const currentWif = wif
+    if (passphrase !== passphrase2) {
       dispatch(sendEvent(false, 'Passphrases do not match'))
       setTimeout(() => dispatch(clearTransactionEvent()), 5000)
       return
@@ -61,24 +70,39 @@ let EncryptKey = class EncryptKey extends Component<Props> {
   }
 
   resetPassphrases () {
-    if (this.passphraseInput) {
-      this.passphraseInput.value = ''
-    }
-    if (this.passphraseInput2) {
-      this.passphraseInput2.value = ''
-    }
+    this.setState({
+      passphrase: '',
+      passphrase2: ''
+    })
   }
 
   render () {
-    const { dispatch, wif, generating, address, encryptedWif, passphrase } = this.props
+    const { dispatch, generating, address, encryptedWif } = this.props
+    const { passphrase, passphrase2, wif } = this.state
+
     const passphraseDiv = (
       <div>
         <div className='info'>
           Choose a passphrase to encrypt your existing private key:
         </div>
-        <input type='text' ref={(node) => { this.passphraseInput = node }} placeholder='Enter passphrase here' />
-        <input type='text' ref={(node) => { this.passphraseInput2 = node }} placeholder='Enter passphrase again' />
-        <input type='text' ref={(node) => { this.wifInput = node }} placeholder='Enter existing WIF here' />
+        <input
+          type='text'
+          value={passphrase}
+          onChange={(e) => this.setState({ passphrase: e.target.value })}
+          placeholder='Enter passphrase here'
+        />
+        <input
+          type='text'
+          value={passphrase2}
+          onChange={(e) => this.setState({ passphrase2: e.target.value })}
+          placeholder='Enter passphrase again'
+        />
+        <input
+          type='text'
+          value={wif}
+          onChange={(e) => this.setState({ wif: e.target.value })}
+          placeholder='Enter existing WIF here'
+        />
         <button onClick={this.generateNewWallet()} > Generate encrypted key </button>
         <Link to='/'><button className='altButton'>Home</button></Link>
       </div>
@@ -86,13 +110,13 @@ let EncryptKey = class EncryptKey extends Component<Props> {
     return (
       <div id='newWallet'>
         <Logo />
-        {isNil(wif) && passphraseDiv}
-        {generating === true ? <div className='generating'>Generating keys...</div> : <div />}
-        {generating === false && wif !== null &&
+        {isNil(this.props.wif) && passphraseDiv}
+        {generating && <div className='generating'>Generating keys...</div>}
+        {!generating && !isNil(this.props.wif) &&
           <DisplayWalletKeys
             address={address}
-            wif={wif}
-            passphrase={passphrase}
+            wif={this.props.wif}
+            passphrase={this.props.passphrase}
             passphraseKey={encryptedWif}
             dispatch={dispatch}
           />
@@ -110,6 +134,4 @@ const mapStateToProps = (state) => ({
   generating: state.generateWallet.generating
 })
 
-EncryptKey = connect(mapStateToProps)(EncryptKey)
-
-export default EncryptKey
+export default connect(mapStateToProps)(EncryptKey)
