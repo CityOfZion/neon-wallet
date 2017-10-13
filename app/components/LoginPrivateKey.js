@@ -2,18 +2,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { getAccountFromWIFKey } from 'neon-js'
 import { login } from '../modules/account'
 import { sendEvent, clearTransactionEvent } from '../modules/transactions'
 import FaEye from 'react-icons/lib/fa/eye'
 import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
 import Logo from './Logo'
 import Footer from './Footer'
+import { verifyPrivateKey } from '../core/wallet'
 
 type Props = {
     dispatch: DispatchType,
     onWifChange: Function,
-    verifyPrivateKey: Function,
     history: Object
 }
 
@@ -43,10 +42,10 @@ class LoginPrivateKey extends Component<Props, State> {
   }
 
   handleVerify = () => {
-    const { onWifChange, dispatch, verifyPrivateKey, history } = this.props
+    const { onWifChange, dispatch, history } = this.props
     const { wif } = this.state
 
-    onWifChange(dispatch, verifyPrivateKey, history, wif)
+    onWifChange(dispatch, history, wif)
   }
 
   render () {
@@ -80,24 +79,11 @@ const mapStateToProps = (state) => ({
   wif: state.account.wif
 })
 
-const mapActionCreators = (dispatch) => {
+const mapActionCreators = (dispatch: DispatchType) => {
   return {
     dispatch,
-    // TODO: move to neon-js
-    verifyPrivateKey: (wif) => {
-      try {
-        // TODO: better check
-        // eslint-disable-next-line
-        getAccountFromWIFKey(wif).address
-      } catch (e) {
-        return false
-      }
-      return true
-    },
-    onWifChange: (dispatch, verifyPrivateKey, history, wif) => {
-      // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
-
-      if (wif && verifyPrivateKey(wif) === true) {
+    onWifChange: (dispatch: DispatchType, history: Object, wif: string) => {
+      if (verifyPrivateKey(wif)) {
         dispatch(login(wif))
         history.push('/dashboard')
       } else {

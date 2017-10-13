@@ -2,21 +2,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { getAccountFromWIFKey } from 'neon-js'
 import { login } from '../modules/account'
 import { sendEvent, clearTransactionEvent } from '../modules/transactions'
 import Logo from './Logo'
 import Footer from './Footer'
-
-const verifyPrivateKey = (wif: string) => {
-  try {
-    // eslint-disable-next-line
-    getAccountFromWIFKey(wif).address
-  } catch (e) {
-    return false
-  }
-  return true
-}
+import { verifyPrivateKey } from '../core/wallet'
 
 type Props = {
   dispatch: DispatchType,
@@ -35,8 +25,7 @@ class LoginTokenSale extends Component<Props, State> {
     const { dispatch, history } = this.props
     const { wif } = this.state
 
-    // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
-    if (wif && verifyPrivateKey(wif) === true) {
+    if (verifyPrivateKey(wif)) {
       dispatch(login(wif))
       history.push('/tokenSale')
     } else {
