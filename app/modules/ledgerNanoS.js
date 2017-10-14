@@ -122,9 +122,12 @@ export const ledgerNanoSGetdoSendAsset = (net, toAddress, fromWif, assetAmounts)
     return getBalance(net, fromAccount.address).then((balances) => {
       process.stdout.write('interim ledgerNanoSGetdoSendAsset getBalance assetAmounts "' + JSON.stringify(assetAmounts) + '" balances "' + JSON.stringify(balances) + '" \n')
 
+      /* eslint-disable */
       const intents = _.map(assetAmounts, (v, k) => {
         return { assetId: ASSETS[k], value: v, scriptHash: toScriptHash }
       })
+      /* eslint-enable */
+
       process.stdout.write('interim ledgerNanoSGetdoSendAsset transferTransaction \n')
 
       const txData = serializeTransaction(create.contract(fromAccount.publicKeyEncoded, balances, intents))
