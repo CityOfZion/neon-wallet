@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   bail: true,
-  devtool: 'source-map',
+  devtool: false,
   target: 'electron',
   entry: [
     'babel-polyfill',
