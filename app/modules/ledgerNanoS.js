@@ -115,6 +115,10 @@ export const ledgerNanoSGetdoSendAsset = (net, toAddress, fromWif, assetAmounts)
     }
     process.stdout.write('interim ledgerNanoSGetdoSendAsset fromAccount "' + JSON.stringify(fromAccount) + '" \n')
 
+    process.stdout.write('interim ledgerNanoSGetdoSendAsset toAddress "' + toAddress + '" \n')
+    
+    process.stdout.write('interim ledgerNanoSGetdoSendAsset getScriptHashFromAddress "' + getScriptHashFromAddress + '" \n')
+
     const toScriptHash = getScriptHashFromAddress(toAddress)
 
     process.stdout.write('interim ledgerNanoSGetdoSendAsset toScriptHash "' + JSON.stringify(toScriptHash) + '" \n')

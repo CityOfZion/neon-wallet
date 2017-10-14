@@ -10,7 +10,7 @@
     "start": "electron . --enable-logging --remote-debugging-port=9222",
     "assets": "webpack",
     "assets-watch": "webpack --watch",
-    "test": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test": "npm rebuild && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test-watch": "jest --watch",
     "pack": "build --dir",
     "dist": "build",

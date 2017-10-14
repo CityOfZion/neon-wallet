@@ -33,6 +33,6 @@ neonjs.generatePrivateKey = jest.fn()
 neonjs.getWIFFromPrivateKey = jest.fn(() => privateKey)
 neonjs.encryptWIF = jest.fn(() => encryptedKey)
 neonjs.verifyAddress = jest.fn(() => true)
-
+neonjs.getScriptHashFromAddress = neonjs.getScriptHashFromAddress
 
 module.exports = neonjs

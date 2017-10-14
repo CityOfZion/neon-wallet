@@ -1,13 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`WalletInfo renders without crashing 1`] = `
-<WalletInfo
-  address="ANqUrhv99rwCiFTL6N1An9NH5UVkPYxTuw"
+exports[`TransactionHistory renders without crashing 1`] = `
+<TransactionHistory
+  address="AWy7RNBVr9vDadRMK9p7i7Z1tL7GrLAxoh"
   dispatch={[Function]}
-  gas="1.0001000"
-  neo={10}
   net="TestNet"
-  price="25.48"
   store={
     Object {
       "clearActions": [Function],
@@ -18,5 +15,6 @@ exports[`WalletInfo renders without crashing 1`] = `
       "subscribe": [Function],
     }
   }
+  transactions={Array []}
 />
 `;
