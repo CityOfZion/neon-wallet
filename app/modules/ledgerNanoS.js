@@ -119,7 +119,7 @@ export const ledgerNanoSGetdoSendAsset = (net, toAddress, fromWif, assetAmounts)
 
     const toScriptHash = getScriptHashFromAddress(toAddress)
 
-    process.stdout.write('interim ledgerNanoSGetdoSendAsset toScriptHash "' + JSON.stringify(toScriptHash) + '" \n')
+    process.stdout.write('interim ledgerNanoSGetdoSendAsset toScriptHash "' + toScriptHash + '" \n')
 
     return getBalance(net, fromAccount.address).then((balances) => {
       process.stdout.write('interim ledgerNanoSGetdoSendAsset getBalance assetAmounts "' + JSON.stringify(assetAmounts) + '" balances "' + JSON.stringify(balances) + '" \n')
