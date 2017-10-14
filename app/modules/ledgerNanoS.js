@@ -1,6 +1,7 @@
 import commNode from './ledger-comm-node'
 
-import { neoId, gasId, getPublicKeyEncoded, getAccountsFromPublicKey, getAccountsFromWIFKey, getBalance, transferTransaction, addContract, queryRPC, signatureData, getAPIEndpoint, claimTransaction } from 'neon-js'
+import { serializeTransaction, create, getScriptHashFromAddress, ASSETS, neoId, gasId, getPublicKeyEncoded, getAccountFromPublicKey, getAccountFromWIFKey, getBalance, addContract, queryRPC, signatureData, getAPIEndpoint } from 'neon-js'
+
 import axios from 'axios'
 
 export var ledgerNanoSGetPublicKey
@@ -101,38 +102,32 @@ const getPublicKeyInfo = function (resolve, reject) {
   process.stdout.write('success getPublicKeyInfo  \n')
 }
 
-export const ledgerNanoSGetdoSendAsset = (net, toAddress, fromWif, assetType, amount) => {
+export const ledgerNanoSGetdoSendAsset = (net, toAddress, fromWif, assetAmounts) => {
   return new Promise(function (resolve, reject) {
     process.stdout.write('started ledgerNanoSGetdoSendAsset \n')
-    let assetId
-    if (assetType === 'Neo') {
-      assetId = neoId
-    } else {
-      assetId = gasId
-    }
-
     var fromAccount
     if (fromWif === undefined) {
       const publicKey = ledgerNanoSGetPublicKey
       const publicKeyEncoded = getPublicKeyEncoded(publicKey)
-      fromAccount = getAccountsFromPublicKey(publicKeyEncoded)[0]
+      fromAccount = getAccountFromPublicKey(publicKeyEncoded)
     } else {
-      fromAccount = getAccountsFromWIFKey(fromWif)[0]
+      fromAccount = getAccountFromWIFKey(fromWif)
     }
     process.stdout.write('interim ledgerNanoSGetdoSendAsset fromAccount "' + JSON.stringify(fromAccount) + '" \n')
+    
+    const toScriptHash = getScriptHashFromAddress(toAddress)
 
-    return getBalance(net, fromAccount.address).then((response) => {
-      process.stdout.write('interim ledgerNanoSGetdoSendAsset getBalance response "' + JSON.stringify(response) + '" \n')
+    process.stdout.write('interim ledgerNanoSGetdoSendAsset toScriptHash "' + JSON.stringify(toScriptHash) + '" \n')
 
-      const coinsData = {
-        'assetid': assetId,
-        'list': response.unspent[assetType],
-        'balance': response[assetType],
-        'name': assetType
-      }
+    return getBalance(net, fromAccount.address).then((balances) => {
+      process.stdout.write('interim ledgerNanoSGetdoSendAsset getBalance assetAmounts "' + JSON.stringify(assetAmounts) + '" balances "' + JSON.stringify(balances) + '" \n')
+
+      const intents = _.map(assetAmounts, (v, k) => {
+        return { assetId: ASSETS[k], value: v, scriptHash: toScriptHash }
+      })
       process.stdout.write('interim ledgerNanoSGetdoSendAsset transferTransaction \n')
-
-      const txData = transferTransaction(coinsData, fromAccount.publickeyEncoded, toAddress, amount)
+      
+      const txData = serializeTransaction(create.contract(fromAccount.publicKeyEncoded, balances, intents))
 
       process.stdout.write('interim ledgerNanoSGetdoSendAsset txData "' + txData + '" \n')
 
@@ -147,26 +142,28 @@ const ledgerNanoSGetsignAndAddContractAndSendTransaction = async function (fromW
   return new Promise(function (resolve, reject) {
     if (fromWif === undefined) {
       createSignatureAsynch(txData).then(function (sign) {
+        process.stdout.write('interim ledgerNanoSGetsignAndAddContractAndSendTransaction sign account "' + JSON.stringify(account) + '" \n')
+        process.stdout.write('interim ledgerNanoSGetsignAndAddContractAndSendTransaction sign account.publicKeyEncoded "' + account.publicKeyEncoded + '" \n')
         process.stdout.write('interim ledgerNanoSGetsignAndAddContractAndSendTransaction sign Ledger "' + sign + '" \n')
-        ledgerNanoSGetaddContractAndSendTransaction(net, txData, sign, account.publickeyEncoded).then(function (response) {
+        ledgerNanoSGetaddContractAndSendTransaction(net, txData, sign, account.publicKeyEncoded).then(function (response) {
           resolve(response)
         })
       })
     } else {
       let sign = signatureData(txData, account.privatekey)
       process.stdout.write('interim ledgerNanoSGetsignAndAddContractAndSendTransaction sign fromWif "' + sign + '" \n')
-      ledgerNanoSGetaddContractAndSendTransaction(net, txData, sign, account.publickeyEncoded).then(function (response) {
+      ledgerNanoSGetaddContractAndSendTransaction(net, txData, sign, account.publicKeyEncoded).then(function (response) {
         resolve(response)
       })
     }
   })
 }
 
-const ledgerNanoSGetaddContractAndSendTransaction = async function (net, txData, sign, publickeyEncoded) {
+const ledgerNanoSGetaddContractAndSendTransaction = async function (net, txData, sign, publicKeyEncoded) {
   return new Promise(function (resolve, reject) {
     process.stdout.write('interim ledgerNanoSGetaddContractAndSendTransaction txData "' + txData + '" \n')
     process.stdout.write('interim ledgerNanoSGetaddContractAndSendTransaction sign "' + sign + '" \n')
-    const txRawData = addContract(txData, sign, publickeyEncoded)
+    const txRawData = addContract(txData, sign, publicKeyEncoded)
     process.stdout.write('interim ledgerNanoSGetaddContractAndSendTransaction txRawData "' + txRawData + '" \n')
     queryRPC(net, 'sendrawtransaction', [txRawData], 4).then(function (response) {
       process.stdout.write('interim ledgerNanoSGetaddContractAndSendTransaction response "' + JSON.stringify(response) + '" \n')
@@ -184,17 +181,16 @@ export const ledgerNanoSGetdoClaimAllGas = (net, fromWif) => {
     if (fromWif === undefined) {
       const publicKey = ledgerNanoSGetPublicKey
       const publicKeyEncoded = getPublicKeyEncoded(publicKey)
-      account = getAccountsFromPublicKey(publicKeyEncoded)[0]
+      account = getAccountFromPublicKey(publicKeyEncoded)
     } else {
-      account = getAccountsFromWIFKey(fromWif)[0]
+      account = getAccountFromWIFKey(fromWif)
     }
 
     // TODO: when fully working replace this with mainnet/testnet switch
     return axios.get(apiEndpoint + '/v2/address/claims/' + account.address).then((response) => {
-      const claims = response.data['claims']
-      const totalClaim = response.data['total_claim']
-      const txData = claimTransaction(claims, account.publickeyEncoded, account.address, totalClaim)
+      const txData = serializeTransaction(create.claim(account.publicKeyEncoded, response.data))
       process.stdout.write('interim ledgerNanoSGetdoSendAsset txData "' + txData + '" \n')
+      process.stdout.write('interim ledgerNanoSGetdoSendAsset account "' + JSON.stringify(account) + '" \n')
 
       ledgerNanoSGetsignAndAddContractAndSendTransaction(fromWif, net, txData, account).then(function (response) {
         resolve(response)
@@ -271,13 +267,13 @@ const createSignatureAsynch = function (txData) {
              */
 
             let rLenHex = response.substring(6, 8)
-            // process.stdout.write( "Ledger Signature rLenHex " + rLenHex + "\n" );
+             process.stdout.write( "Ledger Signature rLenHex " + rLenHex + "\n" );
             let rLen = parseInt(rLenHex, 16) * 2
-            // process.stdout.write( "Ledger Signature rLen " + rLen + "\n" );
+             process.stdout.write( "Ledger Signature rLen " + rLen + "\n" );
             let rStart = 8
-            // process.stdout.write( "Ledger Signature rStart " + rStart + "\n" );
+             process.stdout.write( "Ledger Signature rStart " + rStart + "\n" );
             let rEnd = rStart + rLen
-            // process.stdout.write( "Ledger Signature rEnd " + rEnd + "\n" );
+             process.stdout.write( "Ledger Signature rEnd " + rEnd + "\n" );
 
             while ((response.substring(rStart, rStart + 2) === '00') && ((rEnd - rStart) > 64)) {
               rStart += 2
@@ -286,13 +282,13 @@ const createSignatureAsynch = function (txData) {
             let r = response.substring(rStart, rEnd)
             process.stdout.write('Ledger Signature R [' + rStart + ',' + rEnd + ']:' + (rEnd - rStart) + ' ' + r + '\n')
             let sLenHex = response.substring(rEnd + 2, rEnd + 4)
-            // process.stdout.write( "Ledger Signature sLenHex " + sLenHex + "\n" );
+             process.stdout.write( "Ledger Signature sLenHex " + sLenHex + "\n" );
             let sLen = parseInt(sLenHex, 16) * 2
-            // process.stdout.write( "Ledger Signature sLen " + sLen + "\n" );
+             process.stdout.write( "Ledger Signature sLen " + sLen + "\n" );
             let sStart = rEnd + 4
-            // process.stdout.write( "Ledger Signature sStart " + sStart + "\n" );
+             process.stdout.write( "Ledger Signature sStart " + sStart + "\n" );
             let sEnd = sStart + sLen
-            // process.stdout.write( "Ledger Signature sEnd " + sEnd + "\n" );
+             process.stdout.write( "Ledger Signature sEnd " + sEnd + "\n" );
 
             while ((response.substring(sStart, sStart + 2) === '00') && ((sEnd - sStart) > 64)) {
               sStart += 2
@@ -306,9 +302,18 @@ const createSignatureAsynch = function (txData) {
             let msgHash = response.substring(msgHashStart, msgHashEnd)
             process.stdout.write('Ledger Signature msgHash [' + msgHashStart + ',' + msgHashEnd + '] ' + msgHash + '\n')
 
+            while(r.length < 64) {
+              r = "00" + r;
+            }
+            
+            while(s.length < 64) {
+              s = "00" + s;
+            }
+            
+
             let signature = r + s
             let signatureInfo = 'Signature of Length [' + signature.length + '] : ' + signature
-            process.stdout.write(signatureInfo + '\n')
+            process.stdout.write('r "' + r + '"+s "' + s + '" =' + signatureInfo + '\n')
 
             resolve(signature)
           }

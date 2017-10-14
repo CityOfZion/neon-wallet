@@ -90,7 +90,7 @@ Claim.propTypes = {
   dispatch: PropTypes.func.isRequired,
   address: PropTypes.string,
   wif: PropTypes.string,
-  neo: PropTypes.string,
+  neo: PropTypes.number,
   claimRequest: PropTypes.bool,
   disableClaimButton: PropTypes.bool,
   claimWasUpdated: PropTypes.bool,
