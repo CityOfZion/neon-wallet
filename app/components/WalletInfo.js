@@ -1,5 +1,5 @@
+// @flow
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { isNil } from 'lodash'
 import Claim from './Claim.js'
@@ -10,17 +10,21 @@ import { sendEvent, clearTransactionEvent } from '../modules/transactions'
 import { clipboard } from 'electron'
 import Copy from 'react-icons/lib/md/content-copy'
 import ReactTooltip from 'react-tooltip'
+import { formatGAS } from '../core/formatters'
+import { ASSETS } from '../core/constants'
 
-// force sync with balance data
-const refreshBalance = (dispatch, net, address) => {
-  dispatch(sendEvent(true, 'Refreshing...'))
-  initiateGetBalance(dispatch, net, address).then((response) => {
-    dispatch(sendEvent(true, 'Received latest blockchain information.'))
-    setTimeout(() => dispatch(clearTransactionEvent()), 1000)
-  })
+type Props = {
+  dispatch: Function,
+  address: string,
+  neo: number,
+  net: NetworkType,
+  gas: number,
+  price: number
 }
 
-let WalletInfo = class WalletInfo extends Component {
+class WalletInfo extends Component<Props> {
+  canvas: ?HTMLCanvasElement
+
   componentDidMount () {
     const { dispatch, net, address } = this.props
     initiateGetBalance(dispatch, net, address)
@@ -29,8 +33,18 @@ let WalletInfo = class WalletInfo extends Component {
     })
   }
 
+  // force sync with balance data
+  refreshBalance = () => {
+    const { dispatch, net, address } = this.props
+    dispatch(sendEvent(true, 'Refreshing...'))
+    initiateGetBalance(dispatch, net, address).then((response) => {
+      dispatch(sendEvent(true, 'Received latest blockchain information.'))
+      setTimeout(() => dispatch(clearTransactionEvent()), 1000)
+    })
+  }
+
   render () {
-    const { address, neo, net, gas, dispatch, price } = this.props
+    const { address, neo, gas, price } = this.props
     if (isNil(address)) {
       return null
     }
@@ -47,14 +61,14 @@ let WalletInfo = class WalletInfo extends Component {
         <div className='spacer' />
         <div id='balance'>
           <div className='split'>
-            <div className='label'>NEO</div>
+            <div className='label'>{ASSETS.NEO}</div>
             <div className='amountBig amountNeo'>{neo}</div>
           </div>
           <div className='split'>
-            <div className='label'>GAS</div>
-            <div className='amountBig amountGas'>{ Math.floor(gas * 10000) / 10000 }</div>
+            <div className='label'>{ASSETS.GAS}</div>
+            <div className='amountBig amountGas'>{formatGAS(gas)}</div>
           </div>
-          <div className='refreshBalance' onClick={() => refreshBalance(dispatch, net, address)} >
+          <div className='refreshBalance' onClick={this.refreshBalance} >
             <MdSync id='refresh' data-tip data-for='refreshBalanceTip' />
             <ReactTooltip class='solidTip' id='refreshBalanceTip' place='bottom' type='dark' effect='solid'>
               <span>Refresh account balance</span>
@@ -80,15 +94,4 @@ const mapStateToProps = (state) => ({
   price: state.wallet.price
 })
 
-WalletInfo.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  address: PropTypes.string,
-  neo: PropTypes.number,
-  net: PropTypes.string,
-  gas: PropTypes.number,
-  price: PropTypes.number
-}
-
-WalletInfo = connect(mapStateToProps)(WalletInfo)
-
-export default WalletInfo
+export default connect(mapStateToProps)(WalletInfo)

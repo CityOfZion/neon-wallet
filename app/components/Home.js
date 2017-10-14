@@ -1,11 +1,12 @@
+// @flow
 import React from 'react'
 import { Link } from 'react-router'
-
-const logo = require('../images/neon-logo2.png')
+import Logo from './Logo'
+import Footer from './Footer'
 
 const Home = () =>
   <div id='home'>
-    <div className='logo'><img src={logo} width='60px' /></div>
+    <Logo />
     <Link to='/LoginLocalStorage'><div className='linkBox'>Login using a saved wallet</div></Link>
     <Link to='/LoginEncrypted'><div className='linkBox'>Login using an encrypted key</div></Link>
     <Link to='/LoginPrivateKey'><div className='linkBox'>Login using a private key</div></Link>
@@ -13,8 +14,7 @@ const Home = () =>
     <Link to='/encryptKey'><div className='linkBox alt'>Encrypt an existing key</div></Link>
     <Link to='/settings'><div className='linkBox alt'>Manage Neon settings</div></Link>
     <Link to='/LoginTokenSale'><div className='linkBox alt'>Participate in Token Sale</div></Link>
-
-    <div id='footer'>Created by Ethan Fast and COZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A</div>
+    <Footer />
   </div>
 
 export default Home
