@@ -57,9 +57,9 @@ export default (state = {wif: null, address: null, loggedIn: false, redirectUrl:
         }
       } catch (e) {
         process.stdout.write('error loadAccount "' + e + '" "' + e.message + '" \n')
-        console.log( e.stack )
-        loadAccount = -1 
-        }
+        console.log(e.stack)
+        loadAccount = -1
+      }
       process.stdout.write('interim loadAccount "' + loadAccount + '" \n')
       if (loadAccount === -1 || loadAccount === -2 || loadAccount === undefined) {
         return {...state, wif: action.wif, loggedIn: false}
