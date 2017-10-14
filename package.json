@@ -11,6 +11,7 @@
     "assets": "webpack",
     "assets-watch": "webpack --watch",
     "test": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test:e2e": "ava __e2e__/*.e2e.js --timeout=120s",
     "test-watch": "jest --watch",
     "pack": "build --dir",
     "dist": "build",
@@ -93,6 +94,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^6.3.6",
+    "ava": "^0.22.0",
     "axios-mock-adapter": "^1.9.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.8.0",
@@ -140,6 +142,7 @@
     "redux-mock-store": "^1.2.3",
     "rimraf": "^2.5.2",
     "sass-loader": "^3.2.0",
+    "spectron": "^3.7.2",
     "stats-webpack-plugin": "^0.3.1",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
