@@ -42,8 +42,8 @@ const initialState = {
   },
   wallet: {
     Neo: 10,
-    Gas: 1.0001000,
-    price: 25.48
+    Gas: 1.0001001,
+    price: "25.48"
   },
   claim: {
     claimAmount: 0.5
@@ -87,7 +87,7 @@ describe('WalletInfo', () => {
     expect(fiatField.text()).toEqual(`US ${initialState.wallet.price}`)
     expect(addressField.text().split('<')[0]).toEqual(initialState.account.address)
     expect(neoField.text()).toEqual(`${initialState.wallet.Neo}`)
-    expect(gasField.text()).toEqual(`${Math.floor(initialState.wallet.Gas * 10000) / 10000}`)
+    expect(gasField.text()).toEqual(`${initialState.wallet.Gas}`)
     done()
   })
   test('copy to clipboard is getting called on click', (done) => {

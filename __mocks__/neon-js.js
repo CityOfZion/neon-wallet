@@ -12,6 +12,7 @@ const promiseMockGen = (result, error = false) => {
 const privateKey = 'L4AJ14CNaBWPemRJKC34wyZwbmxg33GETs4Y1F8uK7rRmZ2UHrJn'
 const address = 'AM22coFfbe9N6omgL9ucFBLkeaMNg9TEyL'
 const encryptedKey = '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
+const scriptHash = '3985f0d4325247670442d9ea124351b610c1cd4b'
 
 neonjs.getTransactionHistory = promiseMockGen([])
 neonjs.getClaimAmounts = promiseMockGen({ available: 0, unavailable: 0 })
@@ -33,6 +34,6 @@ neonjs.generatePrivateKey = jest.fn()
 neonjs.getWIFFromPrivateKey = jest.fn(() => privateKey)
 neonjs.encryptWIF = jest.fn(() => encryptedKey)
 neonjs.verifyAddress = jest.fn(() => true)
-
+neonjs.getScriptHashFromAddress = jest.fn(() => scriptHash)
 
 module.exports = neonjs
