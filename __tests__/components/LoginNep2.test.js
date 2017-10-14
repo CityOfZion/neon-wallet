@@ -69,16 +69,16 @@ describe('LoginNep2', () => {
     expect(decryptingText.text()).toEqual('Decrypting keys...')
     done()
   })
-  // test('the login button is working correctly with no passphrase or wif', (done) => {
-  //   const { wrapper, store } = setup()
-  //
-  //   wrapper.dive().find('.loginButton').simulate('click')
-  //   Promise.resolve('pause').then(() => {
-  //     const actions = store.getActions()
-  //     expect(actions.length).toEqual(0)
-  //     done()
-  //   })
-  // })
+  test('the login button is working correctly with no passphrase or wif', (done) => {
+    const { wrapper, store } = setup()
+
+    wrapper.dive().find('.loginButton').simulate('click')
+    Promise.resolve('pause').then(() => {
+      const actions = store.getActions()
+      expect(actions.length).toEqual(0)
+      done()
+    })
+  })
   test('the login button is working correctly with only a short passphrase', (done) => {
     const { wrapper, store } = setup(initialState, false)
     const passwordField = wrapper.find('input[type="password"]')
