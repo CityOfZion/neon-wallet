@@ -32,7 +32,6 @@ export default (state = { blockHeight: 0, network: 'MainNet', blockExplorer: 'Ne
     case SET_HEIGHT:
       return { ...state, blockHeight: action.blockHeight }
     case SET_EXPLORER:
-      console.log(action.blockExplorer)
       return { ...state, blockExplorer: action.blockExplorer }
     case SET_NETWORK:
       return {...state, network: action.net}
