@@ -39,7 +39,7 @@ jobs:
       - checkout
       - restore_cache:
           key: neon-wallet-{{ checksum "yarn.lock" }}
-      - run: yarn test
+      - run: yarn test:coverage
       - run: yarn test:e2e
     store_artifacts:
       - path: artifacts/
