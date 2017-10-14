@@ -16,7 +16,7 @@
     "dist": "build",
     "lint": "eslint -c .eslintrc ./app --ext .js,.jsx --ignore-pattern dist/",
     "lint-fix": "eslint -c .eslintrc ./app --ext .js,.jsx --fix --ignore-pattern dist/",
-    "prepush": "echo 'running lint...' && npm lint && echo 'running tests...' && npm test",
+    "prepush": "echo 'running lint...' && npm run lint && echo 'running tests...' && npm run test",
     "electron-rebuild": "electron-rebuild --force --module_dir . -w node-hid"
   },
   "keywords": [],
