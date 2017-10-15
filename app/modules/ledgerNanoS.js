@@ -80,6 +80,9 @@ const getPublicKeyInfo = function (resolve, reject) {
           ledgerNanoSGetPublicKeyInfo = 'App Found, Public Key Available'
           process.stdout.write('getPublicKey success  "' + ledgerNanoSGetPublicKey + '"\n')
           process.stdout.write('getPublicKeyInfo success  "' + ledgerNanoSGetPublicKeyInfo + '"\n')
+          const toScriptHash = getScriptHashFromAddress(ledgerNanoSGetPublicKey)
+          process.stdout.write('getPublicKeyInfo toScriptHash "' + toScriptHash + '" \n')
+
           resolve(ledgerNanoSGetPublicKeyInfo)
         }).catch(function (reason) {
           comm.device.close()

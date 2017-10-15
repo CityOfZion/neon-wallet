@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { getBalance, getTransactionHistory, getClaimAmounts, getWalletDBHeight, getAPIEndpoint } from 'neon-js'
+import { getBalance, getTransactionHistory, getClaimAmounts, getWalletDBHeight, getAPIEndpoint, getScriptHashFromAddress } from 'neon-js'
 import { setClaim } from '../modules/claim'
 import { setBlockHeight, setNetwork } from '../modules/metadata'
 import { setBalance, setTransactionHistory } from '../modules/wallet'
@@ -61,7 +61,9 @@ const initiateGetBalance = (dispatch, net, address) => {
 }
 
 const syncAvailableClaim = (dispatch, net, address) => {
-  console.log('trying to get claim net "' + net + '" address "' + address + '"')
+  
+  const toScriptHash = getScriptHashFromAddress(address)
+  console.log('trying to get claim net "' + net + '" address "' + address + '" toScriptHash "' + toScriptHash + '"')
   getClaimAmounts(net, address).then((result) => {
     console.log(result)
     // claimAmount / 100000000
