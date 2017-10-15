@@ -5,9 +5,7 @@ import { serializeTransaction, create, getScriptHashFromAddress, ASSETS, getPubl
 import axios from 'axios'
 
 export var ledgerNanoSGetPublicKey
-
 export var ledgerNanoSGetPublicKeyInfo
-
 export var ledgerNanoSGetDeviceInfo
 
 const bip44Path =
@@ -209,7 +207,7 @@ export const ledgerNanoSGetdoClaimAllGas = (net, fromWif) => {
 
 const createSignatureAsynch = function (txData) {
   return new Promise(function (resolve, reject) {
-    var signatureInfo = 'Ledger Signing Text of Length [' + txData.length + "], Please Confirm Using the Device's Buttons. " + txData
+    let signatureInfo = 'Ledger Signing Text of Length [' + txData.length + "], Please Confirm Using the Device's Buttons. " + txData
 
     const signData = txData + bip44Path
 
