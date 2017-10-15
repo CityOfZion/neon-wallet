@@ -42,12 +42,13 @@ A standalone app will be available soon. For now, you will need to build the wal
 
 ### Developing and Running
 
-npm install;webpack;npm start
 Execute these commands in the project's root directory:
-  - `npm install` Installing node dependencies
-  - `webpack`
-  - `npm start` for running the project `npm run start-dev` to run with verbose console logging.
-  - `npm test` for testing.
+
+  - `yarn install` Installing node dependencies
+  - `yarn run assets` or `yarn run assets-watch` for live reload.
+  - `yarn start` for running the project or `yarn start-dev` to run with verbose console logging.
+  - `yarn test` or `yarn run test-watch` for live testing.
+
 ### Support
 
 A gentle reminder, github issues is meant to be used by developers for maintaining and improving the codebase, and is not the proper location for support issues. Questions such as
