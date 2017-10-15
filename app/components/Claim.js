@@ -1,10 +1,10 @@
 // @flow
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { doClaimAllGas, doSendAsset } from 'neon-js'
 import ReactTooltip from 'react-tooltip'
+import { connect } from 'react-redux'
 import { setClaimRequest, disableClaim } from '../modules/claim'
 import { sendEvent, clearTransactionEvent } from '../modules/transactions'
+import { ledgerNanoSGetdoClaimAllGas, ledgerNanoSGetdoSendAsset } from '../modules/ledgerNanoS'
 import { log } from '../util/Logs'
 import { ASSETS } from '../core/constants'
 
@@ -33,7 +33,7 @@ class Claim extends Component<Props> {
   doClaimNotify () {
     const { dispatch, net, address, wif } = this.props
     log(net, 'CLAIM', address, { info: 'claim all gas' })
-    doClaimAllGas(net, wif).then((response) => {
+    ledgerNanoSGetdoClaimAllGas(net, wif).then((response) => {
       if (response.result) {
         dispatch(sendEvent(true, 'Claim was successful! Your balance will update once the blockchain has processed it.'))
         setTimeout(() => dispatch(disableClaim(false)), 300000)
@@ -55,7 +55,7 @@ class Claim extends Component<Props> {
     } else {
       dispatch(sendEvent(true, 'Sending Neo to Yourself...'))
       log(net, 'SEND', address, { to: address, amount: neo, asset: 'NEO' })
-      doSendAsset(net, address, wif, { [ASSETS.NEO]: neo }).then((response) => {
+      ledgerNanoSGetdoSendAsset(net, address, wif, { [ASSETS.NEO]: neo }).then((response) => {
         if (response.result === undefined || response.result === false) {
           dispatch(sendEvent(false, 'Transaction failed!'))
         } else {
