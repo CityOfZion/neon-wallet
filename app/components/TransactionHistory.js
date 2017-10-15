@@ -1,34 +1,20 @@
+// @flow
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { shell } from 'electron'
 import { syncTransactionHistory } from '../components/NetworkSwitch'
+import { ASSETS } from '../core/constants'
+import { openExplorer } from '../core/explorer'
+import { formatGAS, formatNEO } from '../core/formatters'
 
-// TODO: make this a user setting
-const getExplorerLink = (net, explorer, txid) => {
-  let base
-  if (explorer === 'Neotracker') {
-    if (net === 'MainNet') {
-      base = 'https://neotracker.io/tx/'
-    } else {
-      base = 'https://testnet.neotracker.io/tx/'
-    }
-  } else {
-    if (net === 'MainNet') {
-      base = 'http://antcha.in/tx/hash/'
-    } else {
-      base = 'http://testnet.antcha.in/tx/hash/'
-    }
-  }
-  return base + txid
+type Props = {
+  dispatch: DispatchType,
+  address: string,
+  net: NetworkType,
+  transactions: Object,
+  explorer: ExplorerType
 }
 
-// helper to open an external web link
-const openExplorer = (srcLink) => {
-  shell.openExternal(srcLink)
-}
-
-let TransactionHistory = class TransactionHistory extends Component {
+class TransactionHistory extends Component<Props> {
   componentDidMount () {
     const { dispatch, net, address } = this.props
     syncTransactionHistory(dispatch, net, address)
@@ -42,17 +28,12 @@ let TransactionHistory = class TransactionHistory extends Component {
         <div className='headerSpacer' />
         <ul id='transactionList'>
           {transactions.map((t) => {
-            var formatAmount
-            if (t.type === 'NEO') {
-              formatAmount = parseInt(t.amount)
-            } else {
-              formatAmount = parseFloat(t.amount).toFixed(7)
-            }
+            let formatAmount = t.type === ASSETS.NEO ? formatNEO(t.amount) : formatGAS(t.amount)
             return (
               <li key={t.txid}>
                 <div
                   className='txid'
-                  onClick={() => openExplorer(getExplorerLink(net, explorer, t.txid))}>
+                  onClick={() => openExplorer(net, explorer, t.txid)}>
                   {t.txid.substring(0, 32)}
                 </div>
                 <div className='amount'>{formatAmount} {t.type}</div>
@@ -71,15 +52,4 @@ const mapStateToProps = (state) => ({
   explorer: state.metadata.blockExplorer
 })
 
-TransactionHistory.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  address: PropTypes.string,
-  net: PropTypes.string,
-  transactions: PropTypes.any, // TODO: Use correct shape
-  explorer: PropTypes.string
-
-}
-
-TransactionHistory = connect(mapStateToProps)(TransactionHistory)
-
-export default TransactionHistory
+export default connect(mapStateToProps)(TransactionHistory)

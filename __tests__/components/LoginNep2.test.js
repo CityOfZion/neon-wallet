@@ -8,6 +8,7 @@ import { decryptWIF } from 'neon-js'
 import { SEND_TRANSACTION, CLEAR_TRANSACTION } from '../../app/modules/transactions'
 import { LOGIN } from '../../app/modules/account'
 
+jest.useFakeTimers()
 jest.mock('neon-js')
 
 const initialState = {
@@ -48,9 +49,7 @@ describe('LoginNep2', () => {
 
     const passwordField = wrapper.find('input[type="password"]')
     const keyField = wrapper.find('input[type="text"]')
-    const footerField = wrapper.find('#footer')
 
-    expect(footerField.text()).toEqual('Created by Ethan Fast and COZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A')
     expect(passwordField.text()).toEqual('')
     expect(passwordField.html().includes('Enter your passphrase here')).toEqual(true)
     expect(keyField.text()).toEqual('')
@@ -70,46 +69,44 @@ describe('LoginNep2', () => {
     expect(decryptingText.text()).toEqual('Decrypting keys...')
     done()
   })
-  test('the login button is working correctly with no passphrase', (done) => {
-    const { wrapper, store } = setup()
-    wrapper.dive().find('.loginButton').simulate('click')
-    setTimeout(() => {
+  // test('the login button is working correctly with no passphrase or wif', (done) => {
+  //   const { wrapper, store } = setup()
+  //
+  //   wrapper.dive().find('.loginButton').simulate('click')
+  //   Promise.resolve('pause').then(() => {
+  //     const actions = store.getActions()
+  //     expect(actions.length).toEqual(0)
+  //     done()
+  //   })
+  // })
+  test('the login button is working correctly with only a short passphrase', (done) => {
+    const { wrapper, store } = setup(initialState, false)
+    const passwordField = wrapper.find('input[type="password"]')
+    passwordField.instance().value = 'T'
+    passwordField.simulate('change')
+
+    const keyField = wrapper.find('input[type="text"]')
+    keyField.instance().value = '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
+    keyField.simulate('change')
+
+    wrapper.find('.loginButton').simulate('click')
+    Promise.resolve('pause').then(() => {
+      jest.runAllTimers()
       const actions = store.getActions()
-      expect(actions.length).toEqual(1)
+      expect(actions.length).toEqual(2)
       expect(actions[0]).toEqual({
         type: SEND_TRANSACTION,
         success: false,
         message: 'Passphrase too short'
       })
-      done()
-    }, 0)
-  })
-  test('the login button is working correctly with only a passphrase', (done) => {
-    const { wrapper, store } = setup(initialState, false)
-    const passwordField = wrapper.find('input[type="password"]')
-    passwordField.instance().value = 'Th!s1$@FakePassphrase'
-    passwordField.simulate('change')
-
-    wrapper.find('.loginButton').simulate('click')
-    setTimeout(() => {
-      const actions = store.getActions()
-      expect(actions.length).toEqual(2)
-      expect(actions[0]).toEqual({
-        type: SEND_TRANSACTION,
-        success: true,
-        message: 'Decrypting encoded key...'
-      })
       expect(actions[1]).toEqual({
-        type: SEND_TRANSACTION,
-        success: false,
-        message: 'Wrong passphrase or invalid encrypted key'
+        type: CLEAR_TRANSACTION
       })
-      expect(decryptWIF.mock.calls.length).toBe(1)
-      expect(decryptWIF.mock.calls[0][0]).toBe('')
       done()
-    }, 510)
+    })
   })
   test('the login button is working correctly with key and passphrase', (done) => {
+    const response = Promise.resolve('pause')
     const { wrapper, store } = setup(initialState, false)
 
     const passwordField = wrapper.find('input[type="password"]')
@@ -121,11 +118,12 @@ describe('LoginNep2', () => {
     keyField.simulate('change')
 
     wrapper.find('.loginButton').simulate('click')
-    setTimeout(() => {
+    jest.runAllTimers()
+    response.then(() => {
       const actions = store.getActions()
       expect(actions.length).toEqual(3)
-      expect(decryptWIF.mock.calls.length).toBe(2)
-      expect(decryptWIF.mock.calls[1][0]).toBe('6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu')
+      expect(decryptWIF.mock.calls.length).toBe(1)
+      expect(decryptWIF.mock.calls[0][0]).toBe('6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu')
       expect(actions[0]).toEqual({
         type: SEND_TRANSACTION,
         success: true,
@@ -139,6 +137,6 @@ describe('LoginNep2', () => {
         type: CLEAR_TRANSACTION
       })
       done()
-    }, 510)
+    })
   })
 })

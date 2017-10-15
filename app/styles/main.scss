@@ -74,8 +74,10 @@ input{
 	width:100%;
 	text-align:center;
 	font-size:.9em;
-	padding:5px 0px 3px 0px;
 	color:white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 .statusMessage.success{
 	background-color:$default-button;

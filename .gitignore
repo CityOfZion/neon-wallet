@@ -9,8 +9,6 @@ release-builds/*
 coverage/*
 /node_modules/
 /npm-debug.log
-/.jshintrc
-/.project
 /.settings/*
 /yarn-error.log
 /coverage/
