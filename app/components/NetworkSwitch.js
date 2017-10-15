@@ -61,7 +61,6 @@ const initiateGetBalance = (dispatch, net, address) => {
 }
 
 const syncAvailableClaim = (dispatch, net, address) => {
-  
   const toScriptHash = getScriptHashFromAddress(address)
   console.log('trying to get claim net "' + net + '" address "' + address + '" toScriptHash "' + toScriptHash + '"')
   getClaimAmounts(net, address).then((result) => {
