@@ -1,12 +1,35 @@
-[![CircleCI](https://circleci.com/gh/CityOfZion/neon-wallet.svg?style=svg)](https://circleci.com/gh/CityOfZion/neon-wallet) [![Coverage Status](https://coveralls.io/repos/github/CityOfZion/neon-wallet/badge.svg?branch=master)](https://coveralls.io/github/CityOfZion/neon-wallet?branch=master)
+<p align="center">
+  <img
+    src="http://res.cloudinary.com/vidsy/image/upload/v1503160820/CoZ_Icon_DARKBLUE_200x178px_oq0gxm.png"
+    width="125px;">
+</p>
 
-# Neon Wallet
-
-![wallet](/wallet.png)
+<h1 align="center">Neon Wallet</h1>
 
 <p align="center">
-The aim of this project is to port the current NEO web wallet to electron with a better UI.
+  Electron wallet for the <b>NEO</b> blockchain.
 </p>
+
+<p align="center">
+  <a href="https://circleci.com/gh/CityOfZion/neon-wallet">
+    <img src="https://circleci.com/gh/CityOfZion/neon-wallet.svg?style=svg">
+  </a>
+  <a href='https://coveralls.io/github/CityOfZion/neon-wallet?branch=dev'>
+    <img src='https://coveralls.io/repos/github/CityOfZion/neon-wallet/badge.svg?branch=dev' alt='Coverage Status' />
+  </a>
+</p>
+
+<p align="center">
+  <img src="/wallet.png">
+</p>
+
+## Overview
+
+### What does it currently do
+
+- View Gas and Neo balances
+- Login via Wif and encrypted private keys
+- Send Neo to other addresses
 
 ## Installation
 
@@ -19,12 +42,13 @@ A standalone app will be available soon. For now, you will need to build the wal
 
 ### Developing and Running
 
-npm install;webpack;npm start
 Execute these commands in the project's root directory:
-  - `npm install` Installing node dependencies
-  - `webpack`
-  - `npm start` for running the project `npm run start-dev` to run with verbose console logging.
-  - `npm test` for testing.
+
+  - `yarn install` Installing node dependencies
+  - `yarn run assets` or `yarn run assets-watch` for live reload.
+  - `yarn start` for running the project or `yarn start-dev` to run with verbose console logging.
+  - `yarn test` or `yarn run test-watch` for live testing.
+
 ### Support
 
 A gentle reminder, github issues is meant to be used by developers for maintaining and improving the codebase, and is not the proper location for support issues. Questions such as

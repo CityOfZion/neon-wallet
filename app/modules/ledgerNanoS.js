@@ -1,12 +1,23 @@
 import commNode from './ledger-comm-node'
-
-import { serializeTransaction, create, getScriptHashFromAddress, ASSETS, getPublicKeyEncoded, getAccountFromPublicKey, getAccountFromWIFKey, getBalance, addContract, queryRPC, signatureData, getAPIEndpoint } from 'neon-js'
-
 import axios from 'axios'
+import {
+  serializeTransaction,
+  create,
+  getScriptHashFromAddress,
+  ASSETS,
+  getPublicKeyEncoded,
+  getAccountFromPublicKey,
+  getAccountFromWIFKey,
+  getBalance,
+  addContract,
+  queryRPC,
+  signatureData,
+  getAPIEndpoint
+} from 'neon-js'
 
-export var ledgerNanoSGetPublicKey
-export var ledgerNanoSGetPublicKeyInfo
-export var ledgerNanoSGetDeviceInfo
+export let ledgerNanoSGetPublicKey
+export let ledgerNanoSGetPublicKeyInfo
+export let ledgerNanoSGetDeviceInfo
 
 const bip44Path =
   '8000002C' +

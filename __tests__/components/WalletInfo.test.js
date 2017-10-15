@@ -30,7 +30,7 @@ jest.mock('electron', () => ({
 jest.mock('neon-js')
 
 jest.unmock('qrcode')
-import QRCode from 'qrcode'
+import QRCode from 'qrcode' // eslint-disable-line
 QRCode.toCanvas = jest.fn()
 
 const initialState = {
@@ -122,20 +122,20 @@ describe('WalletInfo', () => {
     }, 1050)
   })
   test('calls the correct number of actions after mounting', (done) => {
-    const { wrapper, store } = setup(initialState, false)
+    const response = Promise.resolve('pause')
+    const { store } = setup(initialState, false)
     const actionTypes = [
       SET_TRANSACTION_HISTORY,
       SET_HEIGHT,
-      SET_BALANCE,
       SET_CLAIM
     ]
-    setTimeout(() => {
+    response.then(() => {
       const actions = store.getActions()
-      expect(actions.length).toEqual(4)
+      expect(actions.length).toEqual(3)
       actions.forEach(action => {
         expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
       })
       done()
-    }, 0)
+    })
   })
 })

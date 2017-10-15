@@ -1,19 +1,20 @@
+// @flow
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { getBalance, getTransactionHistory, getClaimAmounts, getWalletDBHeight, getAPIEndpoint, getScriptHashFromAddress } from 'neon-js'
+import axios from 'axios'
+import { getBalance, getTransactionHistory, getClaimAmounts, getWalletDBHeight, getAPIEndpoint } from 'neon-js'
 import { setClaim } from '../modules/claim'
 import { setBlockHeight, setNetwork } from '../modules/metadata'
 import { setBalance, setTransactionHistory } from '../modules/wallet'
 import { version } from '../../package.json'
 import { sendEvent, clearTransactionEvent } from '../modules/transactions'
-import axios from 'axios'
+import { NETWORK, ASSETS } from '../core/constants'
 
-let intervals = {}
+export let intervals = {}
 
 // notify user if version is out of date
 
-const checkVersion = (dispatch, net) => {
+const checkVersion = (dispatch: DispatchType, net: NetworkType) => {
   const apiEndpoint = getAPIEndpoint(net)
   return axios.get(apiEndpoint + '/v2/version').then((res) => {
     if (res === undefined || res === null) {
@@ -28,9 +29,8 @@ const checkVersion = (dispatch, net) => {
 }
 
 // putting this back in wallet, does not belong in neon-js
-export const getMarketPriceUSD = (amount) => {
+export const getMarketPriceUSD = (amount: number) => {
   return axios.get('https://bittrex.com/api/v1.1/public/getticker?market=USDT-NEO').then((response) => {
-    console.log(response)
     let lastUSDNEO = Number(response.data.result.Last)
     return ('$' + (lastUSDNEO * amount).toFixed(2).toString())
   })
@@ -38,12 +38,11 @@ export const getMarketPriceUSD = (amount) => {
 
 // TODO: this is being imported by Balance.js, maybe refactor to helper file
 
-const initiateGetBalance = (dispatch, net, address) => {
+export const initiateGetBalance = (dispatch: DispatchType, net: NetworkType, address: string) => {
   syncTransactionHistory(dispatch, net, address)
   syncAvailableClaim(dispatch, net, address)
   syncBlockHeight(dispatch, net)
   return getBalance(net, address).then((resultBalance) => {
-    console.log('resultBalance', resultBalance)
     return getMarketPriceUSD(resultBalance.NEO.balance).then((resultPrice) => {
       if (resultPrice === undefined || resultPrice === null) {
         dispatch(setBalance(resultBalance.NEO.balance, resultBalance.GAS.balance, '--'))
@@ -53,45 +52,40 @@ const initiateGetBalance = (dispatch, net, address) => {
       return true
     }).catch((e) => {
       dispatch(setBalance(resultBalance.NEO.balance, resultBalance.GAS.balance, '--'))
-      console.log('something went wrong')
     })
   }).catch((result) => {
     // If API dies, still display balance
   })
 }
 
-const syncAvailableClaim = (dispatch, net, address) => {
-  const toScriptHash = getScriptHashFromAddress(address)
-  console.log('trying to get claim net "' + net + '" address "' + address + '" toScriptHash "' + toScriptHash + '"')
+const syncAvailableClaim = (dispatch: DispatchType, net: NetworkType, address: string) => {
   getClaimAmounts(net, address).then((result) => {
-    console.log(result)
-    // claimAmount / 100000000
     dispatch(setClaim(result.available, result.unavailable))
   })
 }
 
-const syncBlockHeight = (dispatch, net) => {
+const syncBlockHeight = (dispatch: DispatchType, net: NetworkType) => {
   getWalletDBHeight(net).then((blockHeight) => {
     dispatch(setBlockHeight(blockHeight))
   })
 }
 
-const syncTransactionHistory = (dispatch, net, address) => {
+export const syncTransactionHistory = (dispatch: DispatchType, net: NetworkType, address: string) => {
   getTransactionHistory(net, address).then((transactions) => {
     let txs = []
     for (let i = 0; i < transactions.length; i++) {
       if (transactions[i].neo_sent === true) {
-        txs = txs.concat([{ type: 'NEO', amount: transactions[i].NEO, txid: transactions[i].txid, block_index: transactions[i].block_index }])
+        txs = txs.concat([{ type: ASSETS.NEO, amount: transactions[i].NEO, txid: transactions[i].txid, block_index: transactions[i].block_index }])
       }
       if (transactions[i].gas_sent === true) {
-        txs = txs.concat([{ type: 'GAS', amount: transactions[i].GAS, txid: transactions[i].txid, block_index: transactions[i].block_index }])
+        txs = txs.concat([{ type: ASSETS.GAS, amount: transactions[i].GAS, txid: transactions[i].txid, block_index: transactions[i].block_index }])
       }
     }
     dispatch(setTransactionHistory(txs))
   })
 }
 
-const resetBalanceSync = (dispatch, net, address) => {
+export const resetBalanceSync = (dispatch: DispatchType, net: NetworkType, address: string) => {
   if (intervals.balance !== undefined) {
     clearInterval(intervals.balance)
   }
@@ -100,13 +94,8 @@ const resetBalanceSync = (dispatch, net, address) => {
   }, 30000)
 }
 
-const toggleNet = (dispatch, net, address) => {
-  let newNet
-  if (net === 'MainNet') {
-    newNet = 'TestNet'
-  } else {
-    newNet = 'MainNet'
-  }
+const toggleNet = (dispatch: DispatchType, net: NetworkType, address: string) => {
+  const newNet = net === NETWORK.MAIN ? NETWORK.TEST : NETWORK.MAIN
   dispatch(setNetwork(newNet))
   resetBalanceSync(dispatch, newNet, address)
   if (address !== null) {
@@ -114,7 +103,13 @@ const toggleNet = (dispatch, net, address) => {
   }
 }
 
-let NetworkSwitch = class NetworkSwitch extends Component {
+type Props = {
+  dispatch: DispatchType,
+  net: NetworkType,
+  address: string
+}
+
+class NetworkSwitch extends Component<Props> {
   componentDidMount () {
     const { dispatch, address, net } = this.props
     checkVersion(dispatch, net)
@@ -137,12 +132,4 @@ const mapStateToProps = (state) => ({
   address: state.account.address
 })
 
-NetworkSwitch.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  net: PropTypes.string,
-  address: PropTypes.string
-}
-
-NetworkSwitch = connect(mapStateToProps)(NetworkSwitch)
-
-export { NetworkSwitch, initiateGetBalance, syncTransactionHistory, intervals, resetBalanceSync }
+export default connect(mapStateToProps)(NetworkSwitch)
