@@ -23,7 +23,7 @@ npm install;webpack;npm start
 Execute these commands in the project's root directory:
   - `npm install` Installing node dependencies
   - `webpack`
-  - `npm start` for running the project
+  - `npm start` for running the project `npm run start-dev` to run with verbose console logging.
   - `npm test` for testing.
 ### Support
 
