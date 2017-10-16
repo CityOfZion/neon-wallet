@@ -23,7 +23,7 @@ jobs:
           key: neon-wallet-{{ checksum "yarn.lock" }}
       - run: yarn
       - run: yarn lint
-      - run: yarn dist
+      - run: yarn assets
       - save_cache:
           key: neon-wallet-{{ checksum "yarn.lock" }}
           paths:
@@ -40,6 +40,8 @@ jobs:
       - restore_cache:
           key: neon-wallet-{{ checksum "yarn.lock" }}
       - run: yarn test:coverage
+      - run: Xvfb &
+      - run: sleep 3 # give xvfb some time to start
       - run: yarn test:e2e
     store_artifacts:
       - path: artifacts/
