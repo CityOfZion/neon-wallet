@@ -2,7 +2,7 @@ import React from 'react'
 import configureStore from 'redux-mock-store'
 import { shallow } from 'enzyme'
 
-import Login from '../../app/components/LoginPrivateKey'
+import Login from '../../app/containers/LoginPrivateKey/LoginPrivateKey'
 
 const setup = (state = { account: {
   loggedIn: true,
@@ -25,15 +25,14 @@ describe('Login', () => {
 
   test('clicking show key icon toggles private key visibility', () => {
     const { wrapper } = setup()
-    const deeperWrapper = wrapper.shallow()
 
-    expect(deeperWrapper.state('showKey')).toEqual(false)
+    expect(wrapper.state('showKey')).toEqual(false)
 
-    deeperWrapper
+    wrapper
       .find('.viewKey')
       .simulate('click')
 
-    expect(deeperWrapper.state('showKey')).toEqual(true)
+    expect(wrapper.state('showKey')).toEqual(true)
   })
 
   // test('private key field input onChange dispatches LOGIN action', () => {
