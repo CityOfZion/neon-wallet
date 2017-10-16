@@ -61,8 +61,8 @@ class LoginPrivateKey extends Component<Props, State> {
       <div id='loginPage'>
         <div className='login'>
           <div className='loginForm'>
-            <div className='logo'><img src={logo} width='60px' /></div>
-            <input className='passPhrase' type={showKey ? 'text' : 'password'} placeholder='Enter your private key here (WIF)' onChange={this.handleInputChange} onKeyDown={this.handleKeyPress} />
+            <Logo />
+            <input type={showKey ? 'text' : 'password'} placeholder='Enter your private key here (WIF)' onChange={this.handleInputChange} onKeyDown={this.handleKeyPress} />
 
             {showKey
               ? <FaEyeSlash className='viewKey' onClick={this.toggleKeyVisibility} />

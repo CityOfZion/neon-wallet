@@ -45,13 +45,24 @@ class LoginLocalStorage extends Component<Props, State> {
     const { dispatch, history } = this.props
     const { passphrase, wif } = this.state
 
-    if (!passphrase || !wif) { return null }
+    if (!passphrase) {
+      dispatch(sendEvent(false, 'Please enter a passphrase'))
+      setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+      return
+    }
+
+    if (!wif || wif === 'Select a wallet') {
+      dispatch(sendEvent(false, 'Please select a wallet'))
+      setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+      return
+    }
 
     if (!validatePassphrase(passphrase)) {
       dispatch(sendEvent(false, 'Passphrase too short'))
       setTimeout(() => dispatch(clearTransactionEvent()), 5000)
       return
     }
+
     if (wif !== 'Select a wallet') {
       dispatch(sendEvent(true, 'Decrypting encoded key...'))
       const wrongPassphraseAction = () => {
@@ -82,7 +93,7 @@ class LoginLocalStorage extends Component<Props, State> {
 
   handleKeyPress = (event) => {
     if (event.key === 'Enter') {
-      onWifChange(this.props.dispatch, this.props.history)
+      this.onWifChange(this.props.dispatch, this.props.history)
     }
   }
 
@@ -93,7 +104,6 @@ class LoginLocalStorage extends Component<Props, State> {
     return (<div id='loginPage'>
       <div className='login'>
         <Logo />
-        <div className='loginForm'>
           <div className='selectBox'>
             <label>Wallet:</label>
             <select value={wif} onChange={(e) => this.setState({ wif: e.target.value })}>
@@ -101,7 +111,14 @@ class LoginLocalStorage extends Component<Props, State> {
               {map(accountKeys, (value, key) => <option value={value} key={`wallet${key}`}>{key}</option>)}
             </select>
           </div>
-          <input className='passPhrase' type={showKey ? 'text' : 'password'} placeholder='Enter your passphrase here' ref={(node) => { passphraseInput = node }} onKeyDown={this.handleKeyPress} />
+          <div className='loginForm'>
+            <input
+              type={showKey ? 'text' : 'password'}
+              placeholder='Enter your passphrase here'
+              value={passphrase}
+              onChange={(e) => this.setState({ passphrase: e.target.value })}
+              onKeyDown={this.handleKeyPress}
+            />
 
           {showKey
             ? <FaEyeSlash className='viewKey' onClick={this.toggleKeyVisibility} />

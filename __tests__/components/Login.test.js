@@ -64,7 +64,7 @@ describe('Login', () => {
 
     const store = configureStore()(state)
     const wrapper = mount(<Login store={store} history={history}/>)
-    const c = wrapper.find('.passPhrase')
+    const c = wrapper.find('input')
 
     c.instance().value = 'L1xpshXfzF6iQTq42onA5km8qwyzBaNQzPADhfTt2jzzcQSVoP5A'
     c.simulate('change')

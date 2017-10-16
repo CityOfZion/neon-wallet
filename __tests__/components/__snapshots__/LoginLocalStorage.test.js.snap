@@ -32,7 +32,6 @@ exports[`LoginLocalStorage should render without crashing 1`] = `
         "subscribe": [Function],
       }
     }
-    wif={null}
   >
     <div
       id="loginPage"
@@ -40,42 +39,49 @@ exports[`LoginLocalStorage should render without crashing 1`] = `
       <div
         className="login"
       >
+        <Logo>
+          <div
+            className="logo"
+          >
+            <img
+              src="test-file-stub"
+              width="60px"
+            />
+          </div>
+        </Logo>
         <div
-          className="logo"
+          className="selectBox"
         >
-          <img
-            src="test-file-stub"
-            width="60px"
-          />
+          <label>
+            Wallet:
+          </label>
+          <select
+            onChange={[Function]}
+            value=""
+          >
+            <option
+              disabled="disabled"
+              value=""
+            >
+              Select a wallet
+            </option>
+            <option
+              key="wallet0"
+              value="test"
+            >
+              0
+            </option>
+          </select>
         </div>
         <div
           className="loginForm"
         >
-          <div
-            className="selectBox"
-          >
-            <label>
-              Wallet:
-            </label>
-            <select>
-              <option
-                disabled="disabled"
-                selected="selected"
-              >
-                Select a wallet
-              </option>
-              <option
-                value="test"
-              >
-                0
-              </option>
-            </select>
-          </div>
           <input
-            className="passPhrase"
+            onChange={[Function]}
             onKeyDown={[Function]}
             placeholder="Enter your passphrase here"
             type="password"
+            value=""
           />
           <FaEye
             className="viewKey"
@@ -135,11 +141,13 @@ exports[`LoginLocalStorage should render without crashing 1`] = `
             </a>
           </Link>
         </div>
-        <div
-          id="footer"
-        >
-          Created by Ethan Fast and COZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A
-        </div>
+        <Footer>
+          <div
+            id="footer"
+          >
+            Created by Ethan Fast and CoZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A
+          </div>
+        </Footer>
       </div>
     </div>
   </LoginLocalStorage>
