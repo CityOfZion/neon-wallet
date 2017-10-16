@@ -1,8 +1,8 @@
 {
     "parser": "babel-eslint",
-    "extends": ["standard", "standard-react"],
     "plugins": [
-        "react"
+        "react",
+        "flowtype"
     ],
     "env": {
         "jest": true
@@ -17,5 +17,6 @@
         "setInterval": true,
         "setTimeout": true,
         "window": true
-    }
+    },
+    "extends": ["standard", "standard-react", "plugin:flowtype/recommended"]
 }

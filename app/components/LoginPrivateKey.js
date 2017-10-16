@@ -1,14 +1,27 @@
+// @flow
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { login } from '../modules/account'
 import { sendEvent, clearTransactionEvent } from '../modules/transactions'
-import { getAccountFromWIFKey } from 'neon-js'
 import FaEye from 'react-icons/lib/fa/eye'
 import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
+import Logo from './Logo'
+import Footer from './Footer'
+import { verifyPrivateKey } from '../core/wallet'
 
-class LoginPrivateKey extends Component {
+type Props = {
+    dispatch: DispatchType,
+    onWifChange: Function,
+    history: Object
+}
+
+type State = {
+  showKey: boolean,
+  wif: string,
+}
+
+class LoginPrivateKey extends Component<Props, State> {
   state = {
     showKey: false,
     wif: ''
@@ -29,10 +42,10 @@ class LoginPrivateKey extends Component {
   }
 
   handleVerify = () => {
-    const { onWifChange, dispatch, verifyPrivateKey, history } = this.props
+    const { onWifChange, dispatch, history } = this.props
     const { wif } = this.state
 
-    onWifChange(dispatch, verifyPrivateKey, history, wif)
+    onWifChange(dispatch, history, wif)
   }
 
   handleKeyPress = (event) => {
@@ -43,7 +56,6 @@ class LoginPrivateKey extends Component {
 
   render () {
     const { showKey } = this.state
-    const logo = require('../images/neon-logo2.png')
 
     return (
       <div id='loginPage'>
@@ -61,18 +73,11 @@ class LoginPrivateKey extends Component {
             <button className='loginButton' onClick={this.handleVerify}>Login</button>
             <Link to='/'><button className='altButton'>Home</button></Link>
           </div>
-          <div id='footer'>Created by Ethan Fast and COZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A</div>
+          <Footer />
         </div>
       </div>
     )
   }
-}
-
-LoginPrivateKey.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  onWifChange: PropTypes.func.isRequired,
-  verifyPrivateKey: PropTypes.func.isRequired,
-  history: PropTypes.object
 }
 
 const mapStateToProps = (state) => ({
@@ -80,24 +85,11 @@ const mapStateToProps = (state) => ({
   wif: state.account.wif
 })
 
-const mapActionCreators = (dispatch) => {
+const mapActionCreators = (dispatch: DispatchType) => {
   return {
     dispatch,
-    // TODO: move to neon-js
-    verifyPrivateKey: (wif) => {
-      try {
-        // TODO: better check
-        // eslint-disable-next-line
-        getAccountFromWIFKey(wif).address
-      } catch (e) {
-        return false
-      }
-      return true
-    },
-    onWifChange: (dispatch, verifyPrivateKey, history, wif) => {
-      // TODO: changed back to only WIF login for now, getting weird errors with private key hex login
-
-      if (wif && verifyPrivateKey(wif) === true) {
+    onWifChange: (dispatch: DispatchType, history: Object, wif: string) => {
+      if (verifyPrivateKey(wif)) {
         dispatch(login(wif))
         history.push('/dashboard')
       } else {
