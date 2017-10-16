@@ -6,6 +6,7 @@ import Login from '../../app/components/LoginPrivateKey'
 import { login } from '../../app/modules/account'
 
 import { sendEvent } from '../../app/modules/transactions'
+import { KEYS } from '../../app/core/constants'
 
 const setup = (state = { account: {
   loggedIn: true,
@@ -53,7 +54,7 @@ describe('Login', () => {
 
     // console.log('debug:'+c.debug())
     // console.log('debug2:'+c.html())
-    c.simulate('keyDown', { key: 'Enter' })
+    c.simulate('keyDown', { key: KEYS.ENTER })
     expect(store.getActions()[0]).toEqual(sendEvent(false, 'That is not a valid private key'))
   })
 

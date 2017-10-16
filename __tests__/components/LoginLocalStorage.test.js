@@ -4,6 +4,7 @@ import { mount } from 'enzyme'
 
 import LoginLocalStorage from '../../app/components/LoginLocalStorage'
 import { sendEvent } from '../../app/modules/transactions'
+import { KEYS } from '../../app/core/constants'
 
 const state = {
   showKey: false,
@@ -28,7 +29,7 @@ describe('LoginLocalStorage', () => {
 
     const c = wrapper.find('input')
     // console.log('debug:'+c.debug())
-    c.simulate('keyDown', { key: 'Enter' })
+    c.simulate('keyDown', { key: KEYS.ENTER })
     // expect(store.getActions()[0]).toEqual(sendEvent(false, 'Passphrase too short'))
     expect(store.getActions()[0]).toEqual(sendEvent(false, 'Please enter a passphrase'))
   })
@@ -39,7 +40,7 @@ describe('LoginLocalStorage', () => {
     const c = wrapper.find('input')
     c.instance().value = 'testing'
     c.simulate('change')
-    c.simulate('keyDown', { key: 'Enter' })
+    c.simulate('keyDown', { key: KEYS.ENTER })
     expect(store.getActions()[0]).toEqual(sendEvent(false, 'Please select a wallet'))
   })
 
@@ -54,7 +55,7 @@ describe('LoginLocalStorage', () => {
   //   const c = wrapper.find('input')
   //   c.instance().value = 'testing'
   //   c.simulate('change')
-  //   c.simulate('keyDown', { key: 'Enter' })
+  //   c.simulate('keyDown', { key: KEYS.ENTER })
   //   expect(store.getActions()[0]).toEqual(sendEvent(true, 'Decrypting encoded key...'))
   // })
 })

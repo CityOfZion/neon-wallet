@@ -18,3 +18,7 @@ export const ASSETS_LABELS = {
   [ASSETS.NEO]: 'Neo',
   [ASSETS.GAS]: 'Gas'
 }
+
+export const KEYS = {
+  ENTER: 'Enter'
+}

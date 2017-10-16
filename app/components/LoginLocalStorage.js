@@ -12,6 +12,8 @@ import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
 import { validatePassphrase } from '../core/wallet'
 import Logo from './Logo'
 import Footer from './Footer'
+import { KEYS } from '../core/constants'
+
 
 type Props = {
   dispatch: DispatchType,
@@ -92,7 +94,7 @@ class LoginLocalStorage extends Component<Props, State> {
   }
 
   handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === KEYS.ENTER) {
       this.onWifChange(this.props.dispatch, this.props.history)
     }
   }

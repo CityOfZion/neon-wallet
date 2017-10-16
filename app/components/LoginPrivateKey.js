@@ -9,6 +9,7 @@ import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
 import Logo from './Logo'
 import Footer from './Footer'
 import { verifyPrivateKey } from '../core/wallet'
+import { KEYS } from '../core/constants'
 
 type Props = {
     dispatch: DispatchType,
@@ -49,7 +50,7 @@ class LoginPrivateKey extends Component<Props, State> {
   }
 
   handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === KEYS.ENTER) {
       this.handleVerify()
     }
   }
