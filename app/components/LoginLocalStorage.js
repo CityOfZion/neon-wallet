@@ -14,7 +14,6 @@ import Logo from './Logo'
 import Footer from './Footer'
 import { KEYS } from '../core/constants'
 
-
 type Props = {
   dispatch: DispatchType,
   history: Object,
@@ -106,21 +105,21 @@ class LoginLocalStorage extends Component<Props, State> {
     return (<div id='loginPage'>
       <div className='login'>
         <Logo />
-          <div className='selectBox'>
-            <label>Wallet:</label>
-            <select value={wif} onChange={(e) => this.setState({ wif: e.target.value })}>
-              <option value='' disabled='disabled'>Select a wallet</option>
-              {map(accountKeys, (value, key) => <option value={value} key={`wallet${key}`}>{key}</option>)}
-            </select>
-          </div>
-          <div className='loginForm'>
-            <input
-              type={showKey ? 'text' : 'password'}
-              placeholder='Enter your passphrase here'
-              value={passphrase}
-              onChange={(e) => this.setState({ passphrase: e.target.value })}
-              onKeyDown={this.handleKeyPress}
-            />
+        <div className='selectBox'>
+          <label>Wallet:</label>
+          <select value={wif} onChange={(e) => this.setState({ wif: e.target.value })}>
+            <option value='' disabled='disabled'>Select a wallet</option>
+            {map(accountKeys, (value, key) => <option value={value} key={`wallet${key}`}>{key}</option>)}
+          </select>
+        </div>
+        <div className='loginForm'>
+          <input
+            type={showKey ? 'text' : 'password'}
+            placeholder='Enter your passphrase here'
+            value={passphrase}
+            onChange={(e) => this.setState({ passphrase: e.target.value })}
+            onKeyDown={this.handleKeyPress}
+          />
 
           {showKey
             ? <FaEyeSlash className='viewKey' onClick={this.toggleKeyVisibility} />
