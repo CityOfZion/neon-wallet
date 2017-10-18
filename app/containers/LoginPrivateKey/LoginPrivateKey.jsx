@@ -30,7 +30,7 @@ export default class LoginPrivateKey extends Component<Props, State> {
     }))
   }
 
-  handleInputChange = (e) => {
+  handleInputChange = (e: SyntheticInputEvent<*>) => {
     const value = e.target.value
 
     this.setState({
