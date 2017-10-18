@@ -30,7 +30,7 @@ export function decrypting (bool: Boolean) {
   }
 }
 
-export function setKeys (keys) {
+export function setKeys (keys: any) {
   return {
     type: SET_KEYS,
     keys
@@ -48,16 +48,17 @@ export const onWifChange = (history: Object, wif: string) => (dispatch: Dispatch
 }
 
 // Reducer that manages account state (account now = private key)
-export default (state = {wif: null, address: null, loggedIn: false, redirectUrl: null, decrypting: false, accountKeys: []}, action) => {
+export default (state: Object = {wif: null, address: null, loggedIn: false, redirectUrl: null, decrypting: false, accountKeys: []}, action: Object) => {
   switch (action.type) {
     case LOGIN:
-      let loadAccount
+      let loadAccount: Object | number
       try {
         loadAccount = getAccountFromWIFKey(action.wif)
       } catch (e) { loadAccount = -1 }
       if (loadAccount === -1 || loadAccount === -2 || loadAccount === undefined) {
         return {...state, wif: action.wif, loggedIn: false}
       }
+      // $FlowFixMe
       return {...state, wif: action.wif, address: loadAccount.address, loggedIn: true, decrypting: false}
     case LOGOUT:
       return {...state, 'wif': null, address: null, 'loggedIn': false, decrypting: false}
