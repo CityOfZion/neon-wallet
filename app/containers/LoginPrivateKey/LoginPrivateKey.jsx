@@ -1,14 +1,12 @@
 // @flow
 import React, { Component } from 'react'
 import { Link } from 'react-router'
-import { login } from '../../modules/account'
 import FaEye from 'react-icons/lib/fa/eye'
 import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
 import Logo from '../../Components/Logo'
 import Footer from '../../Components/Footer'
 
 type Props = {
-    dispatch: DispatchType,
     onWifChange: Function,
     history: Object
 }
