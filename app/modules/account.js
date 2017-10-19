@@ -48,12 +48,7 @@ export const onWifChange = (history: Object, wif: string) => (dispatch: Dispatch
 }
 
 // Reducer that manages account state (account now = private key)
-<<<<<<< HEAD
-export default (state: Object = {wif: null, address: null, loggedIn: false, redirectUrl: null, decrypting: false, accountKeys: []}, action: Object) => {
-=======
-
 export default (state: Object = { wif: null, address: null, loggedIn: false, redirectUrl: null, decrypting: false, accountKeys: [] }, action: Object) => {
->>>>>>> 6ea66d59ec0cdcea15f13a2fcddac2cc0529d062
   switch (action.type) {
     case LOGIN:
       let loadAccount: Object | number

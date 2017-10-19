@@ -6,10 +6,7 @@ import { login } from '../../app/modules/account'
 
 import { sendEvent } from '../../app/modules/transactions'
 import { KEYS } from '../../app/core/constants'
-<<<<<<< HEAD
-=======
 
->>>>>>> 6ea66d59ec0cdcea15f13a2fcddac2cc0529d062
 import Login from '../../app/containers/LoginPrivateKey/LoginPrivateKey'
 
 const setup = (state = { account: {
@@ -48,10 +45,6 @@ describe('Login', () => {
       .simulate('click')
 
     expect(wrapper.state('showKey')).toEqual(true)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 6ea66d59ec0cdcea15f13a2fcddac2cc0529d062
   })
 
   test('pressing enter on passphrase input field triggers sendEvent', () => {
