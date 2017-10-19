@@ -72,11 +72,6 @@ describe('Login', () => {
     wrapper.find('.loginButton').simulate('click')
 
     expect(store.getActions()[0]).toEqual(login('L1xpshXfzF6iQTq42onA5km8qwyzBaNQzPADhfTt2jzzcQSVoP5A'))
-<<<<<<< HEAD
-=======
->>>>>>> 1aef1ab12b01051058d7cc638c8ad2f178ab8d5c
-=======
->>>>>>> 6ea66d59ec0cdcea15f13a2fcddac2cc0529d062
   })
 
   // test('private key field input onChange dispatches LOGIN action', () => {
