@@ -13,7 +13,13 @@ exports[`Login renders without crashing 1`] = `
       <Logo />
       <input
         onChange={[Function]}
+<<<<<<< HEAD
         onKeyDown={[Function]}
+=======
+
+        onKeyDown={[Function]}
+
+>>>>>>> 6ea66d59ec0cdcea15f13a2fcddac2cc0529d062
         placeholder="Enter your private key here (WIF)"
         type="password"
       />

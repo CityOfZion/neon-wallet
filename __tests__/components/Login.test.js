@@ -6,6 +6,10 @@ import { login } from '../../app/modules/account'
 
 import { sendEvent } from '../../app/modules/transactions'
 import { KEYS } from '../../app/core/constants'
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6ea66d59ec0cdcea15f13a2fcddac2cc0529d062
 import Login from '../../app/containers/LoginPrivateKey/LoginPrivateKey'
 
 const setup = (state = { account: {
@@ -45,6 +49,9 @@ describe('Login', () => {
 
     expect(wrapper.state('showKey')).toEqual(true)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 6ea66d59ec0cdcea15f13a2fcddac2cc0529d062
   })
 
   test('pressing enter on passphrase input field triggers sendEvent', () => {
@@ -72,8 +79,11 @@ describe('Login', () => {
     wrapper.find('.loginButton').simulate('click')
 
     expect(store.getActions()[0]).toEqual(login('L1xpshXfzF6iQTq42onA5km8qwyzBaNQzPADhfTt2jzzcQSVoP5A'))
+<<<<<<< HEAD
 =======
 >>>>>>> 1aef1ab12b01051058d7cc638c8ad2f178ab8d5c
+=======
+>>>>>>> 6ea66d59ec0cdcea15f13a2fcddac2cc0529d062
   })
 
   // test('private key field input onChange dispatches LOGIN action', () => {

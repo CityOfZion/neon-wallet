@@ -3,6 +3,10 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 import FaEye from 'react-icons/lib/fa/eye'
 import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6ea66d59ec0cdcea15f13a2fcddac2cc0529d062
 import { KEYS } from '../../core/constants'
 import Logo from '../../components/Logo'
 import Footer from '../../components/Footer'
@@ -49,7 +53,7 @@ export default class LoginPrivateKey extends Component<Props, State> {
       this.handleVerify()
     }
   }
-
+    
   render () {
     const { showKey } = this.state
 
@@ -58,7 +62,10 @@ export default class LoginPrivateKey extends Component<Props, State> {
         <div className='login'>
           <div className='loginForm'>
             <Logo />
+
             <input type={showKey ? 'text' : 'password'} placeholder='Enter your private key here (WIF)' onChange={this.handleInputChange} onKeyDown={this.handleKeyPress} />
+
+            <input type={showKey ? 'text' : 'password'} placeholder='Enter your private key here (WIF)' onChange={this.handleInputChange} />
 
             {showKey
               ? <FaEyeSlash className='viewKey' onClick={this.toggleKeyVisibility} />
@@ -67,6 +74,9 @@ export default class LoginPrivateKey extends Component<Props, State> {
           </div>
           <div className='loginButtons'>
             <button className='loginButton' onClick={this.handleVerify}>Login</button>
+
+            <button onClick={this.handleVerify}>Login</button>
+
             <Link to='/'><button className='altButton'>Home</button></Link>
           </div>
           <Footer />
