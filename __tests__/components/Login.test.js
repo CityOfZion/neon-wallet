@@ -6,6 +6,7 @@ import { login } from '../../app/modules/account'
 
 import { sendEvent } from '../../app/modules/transactions'
 import { KEYS } from '../../app/core/constants'
+
 import Login from '../../app/containers/LoginPrivateKey/LoginPrivateKey'
 
 const setup = (state = { account: {
