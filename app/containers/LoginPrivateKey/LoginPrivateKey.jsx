@@ -3,10 +3,6 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 import FaEye from 'react-icons/lib/fa/eye'
 import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
-<<<<<<< HEAD
-=======
-
->>>>>>> 6ea66d59ec0cdcea15f13a2fcddac2cc0529d062
 import { KEYS } from '../../core/constants'
 import Logo from '../../components/Logo'
 import Footer from '../../components/Footer'
@@ -53,7 +49,7 @@ export default class LoginPrivateKey extends Component<Props, State> {
       this.handleVerify()
     }
   }
-    
+
   render () {
     const { showKey } = this.state
 
