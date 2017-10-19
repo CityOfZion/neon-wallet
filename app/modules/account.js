@@ -1,6 +1,6 @@
 import { getAccountFromWIFKey, getPublicKeyEncoded, getAccountFromPublicKey } from 'neon-js'
 
-import { ledgerNanoSGetPublicKey } from './ledgerNanoS'
+import { ledgerNanoSGetPublicKey, ledgerNanoSCreateSignatureAsynch, ledgerNanoSFromWif } from './ledgerNanoS'
 
 // Constants
 export const LOGIN = 'LOGIN'
@@ -20,6 +20,8 @@ export function ledgerNanoSGetLogin () {
   return {
     type: LOGIN,
     ledgerNanoS: true,
+    signingFunction: ledgerNanoSCreateSignatureAsynch,
+    wif:ledgerNanoSFromWif,
     publicKey: ledgerNanoSGetPublicKey
   }
 }

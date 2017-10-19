@@ -111,14 +111,22 @@ const getPublicKeyInfo = function (resolve, reject) {
   process.stdout.write('success getPublicKeyInfo  \n')
 }
 
-export const ledgerNanoSGetdoSendAsset = (net, toAddress, fromWif, assetAmounts) => {
+const ledgerNanoSSigningFunction = function () {
+}
+
+const ledgerNanoSFromWif = function () {
+  const publicKey = ledgerNanoSGetPublicKey
+  const publicKeyEncoded = getPublicKeyEncoded(publicKey)
+  const fromAccount = getAccountFromPublicKey(publicKeyEncoded)
+  return fromAccount
+}
+
+export const ledgerNanoSGetdoSendAsset = (net, toAddress, fromWif, assetAmounts, signingFunction) => {
   return new Promise(function (resolve, reject) {
     process.stdout.write('started ledgerNanoSGetdoSendAsset \n')
     var fromAccount
-    if (fromWif === undefined) {
-      const publicKey = ledgerNanoSGetPublicKey
-      const publicKeyEncoded = getPublicKeyEncoded(publicKey)
-      fromAccount = getAccountFromPublicKey(publicKeyEncoded)
+    if(fromWif instanceof Function) {
+      fromAccount = fromWif();
     } else {
       fromAccount = getAccountFromWIFKey(fromWif)
     }
@@ -141,79 +149,70 @@ export const ledgerNanoSGetdoSendAsset = (net, toAddress, fromWif, assetAmounts)
 
       process.stdout.write('interim ledgerNanoSGetdoSendAsset transferTransaction \n')
 
-      const txData = serializeTransaction(create.contract(fromAccount.publicKeyEncoded, balances, intents))
-
-      process.stdout.write('interim ledgerNanoSGetdoSendAsset txData "' + txData + '" \n')
-
-      ledgerNanoSGetsignAndAddContractAndSendTransaction(fromWif, net, txData, fromAccount).then(function (response) {
-        resolve(response)
-      })
-    })
-  })
-}
-
-const ledgerNanoSGetsignAndAddContractAndSendTransaction = async function (fromWif, net, txData, account) {
-  return new Promise(function (resolve, reject) {
-    if (fromWif === undefined) {
-      createSignatureAsynch(txData).then(function (sign) {
-        process.stdout.write('interim ledgerNanoSGetsignAndAddContractAndSendTransaction sign account "' + JSON.stringify(account) + '" \n')
-        process.stdout.write('interim ledgerNanoSGetsignAndAddContractAndSendTransaction sign account.publicKeyEncoded "' + account.publicKeyEncoded + '" \n')
-        process.stdout.write('interim ledgerNanoSGetsignAndAddContractAndSendTransaction sign Ledger "' + sign + '" \n')
-        ledgerNanoSGetaddContractAndSendTransaction(net, txData, sign, account.publicKeyEncoded).then(function (response) {
-          resolve(response)
+      if(signingFunction instanceof Function) {
+        const txData = serializeTransaction(create.contract(fromAccount.publicKeyEncoded, balances, intents))
+        process.stdout.write('interim ledgerNanoSGetdoSendAsset txData "' + txData + '" \n')
+        signingFunction(txData).then((sign) => {
+          process.stdout.write('interim ledgerNanoSGetsignAndAddContractAndSendTransaction sign account "' + JSON.stringify(account) + '" \n')
+          process.stdout.write('interim ledgerNanoSGetsignAndAddContractAndSendTransaction sign account.publicKeyEncoded "' + account.publicKeyEncoded + '" \n')
+          process.stdout.write('interim ledgerNanoSGetsignAndAddContractAndSendTransaction sign Ledger "' + sign + '" \n')
+          const txRawData = addContract(txData, sign, fromAccount.publicKeyEncoded)
+          queryRPC(net, 'sendrawtransaction', [txRawData], 4).then((response) => {
+            resolve(response);
+          })
         })
-      })
-    } else {
-      let sign = signatureData(txData, account.privatekey)
-      process.stdout.write('interim ledgerNanoSGetsignAndAddContractAndSendTransaction sign fromWif "' + sign + '" \n')
-      ledgerNanoSGetaddContractAndSendTransaction(net, txData, sign, account.publicKeyEncoded).then(function (response) {
-        resolve(response)
-      })
-    }
-  })
-}
-
-const ledgerNanoSGetaddContractAndSendTransaction = async function (net, txData, sign, publicKeyEncoded) {
-  return new Promise(function (resolve, reject) {
-    process.stdout.write('interim ledgerNanoSGetaddContractAndSendTransaction txData "' + txData + '" \n')
-    process.stdout.write('interim ledgerNanoSGetaddContractAndSendTransaction sign "' + sign + '" \n')
-    const txRawData = addContract(txData, sign, publicKeyEncoded)
-    process.stdout.write('interim ledgerNanoSGetaddContractAndSendTransaction txRawData "' + txRawData + '" \n')
-    queryRPC(net, 'sendrawtransaction', [txRawData], 4).then(function (response) {
-      process.stdout.write('interim ledgerNanoSGetaddContractAndSendTransaction response "' + JSON.stringify(response) + '" \n')
-      resolve(response)
+      } else {
+        const unsignedTx = tx.create.contract(account.publicKeyEncoded, balances, intents)
+        const signedTx = tx.signTransaction(unsignedTx, account.privateKey)
+        const hexTx = tx.serializeTransaction(signedTx)
+        queryRPC(net, 'sendrawtransaction', [hexTx], 4).then((response) => {
+          resolve(response);
+        })
+      }
     })
   })
 }
 
-export const ledgerNanoSGetdoClaimAllGas = (net, fromWif) => {
+export const ledgerNanoSGetdoClaimAllGas = (net, fromWif, signingFunction) => {
   return new Promise(function (resolve, reject) {
     process.stdout.write('started ledgerNanoSGetdoClaimAllGas \n')
     const apiEndpoint = getAPIEndpoint(net)
 
-    var account
-    if (fromWif === undefined) {
-      const publicKey = ledgerNanoSGetPublicKey
-      const publicKeyEncoded = getPublicKeyEncoded(publicKey)
-      account = getAccountFromPublicKey(publicKeyEncoded)
+    var fromAccount
+    if(fromWif instanceof Function) {
+      fromAccount = fromWif();
     } else {
-      account = getAccountFromWIFKey(fromWif)
+      fromAccount = getAccountFromWIFKey(fromWif)
     }
 
     // TODO: when fully working replace this with mainnet/testnet switch
     return axios.get(apiEndpoint + '/v2/address/claims/' + account.address).then((response) => {
-      const txData = serializeTransaction(create.claim(account.publicKeyEncoded, response.data))
-      process.stdout.write('interim ledgerNanoSGetdoSendAsset txData "' + txData + '" \n')
-      process.stdout.write('interim ledgerNanoSGetdoSendAsset account "' + JSON.stringify(account) + '" \n')
-
-      ledgerNanoSGetsignAndAddContractAndSendTransaction(fromWif, net, txData, account).then(function (response) {
-        resolve(response)
-      })
+      if(signingFunction instanceof Function) {
+        const txData = serializeTransaction(create.claim(fromAccount.publicKeyEncoded, balances, intents))
+        process.stdout.write('interim ledgerNanoSGetdoSendAsset txData "' + txData + '" \n')
+        signingFunction(txData).then((sign) => {
+          process.stdout.write('interim ledgerNanoSGetsignAndAddContractAndSendTransaction sign account "' + JSON.stringify(account) + '" \n')
+          process.stdout.write('interim ledgerNanoSGetsignAndAddContractAndSendTransaction sign account.publicKeyEncoded "' + account.publicKeyEncoded + '" \n')
+          process.stdout.write('interim ledgerNanoSGetsignAndAddContractAndSendTransaction sign Ledger "' + sign + '" \n')
+          const txRawData = addContract(txData, sign, fromAccount.publicKeyEncoded)
+          queryRPC(net, 'sendrawtransaction', [txRawData], 4).then((response) => {
+            resolve(response);
+          })
+        })
+      } else {
+        const unsignedTx = create.claim(account.publicKeyEncoded, balances, intents)
+        const signedTx = signTransaction(unsignedTx, account.privateKey)
+        const hexTx = serializeTransaction(signedTx)
+        queryRPC(net, 'sendrawtransaction', [hexTx], 4).then((response) => {
+          resolve(response);
+        })
+      }
     })
   })
 }
 
-const createSignatureAsynch = function (txData) {
+
+export const ledgerNanoSCreateSignatureAsynch = function (txData) {
   return new Promise(function (resolve, reject) {
     let signatureInfo = 'Ledger Signing Text of Length [' + txData.length + "], Please Confirm Using the Device's Buttons. " + txData
 
