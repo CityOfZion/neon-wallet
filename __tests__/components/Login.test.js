@@ -44,6 +44,7 @@ describe('Login', () => {
       .simulate('click')
 
     expect(wrapper.state('showKey')).toEqual(true)
+<<<<<<< HEAD
   })
 
   test('pressing enter on passphrase input field triggers sendEvent', () => {
@@ -71,6 +72,8 @@ describe('Login', () => {
     wrapper.find('.loginButton').simulate('click')
 
     expect(store.getActions()[0]).toEqual(login('L1xpshXfzF6iQTq42onA5km8qwyzBaNQzPADhfTt2jzzcQSVoP5A'))
+=======
+>>>>>>> 1aef1ab12b01051058d7cc638c8ad2f178ab8d5c
   })
 
   // test('private key field input onChange dispatches LOGIN action', () => {
