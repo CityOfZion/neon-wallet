@@ -17,6 +17,8 @@ export function login (wif) {
 }
 
 export function ledgerNanoSGetLogin () {
+  process.stdout.write('ledgerNanoSGetLogin ledgerNanoSCreateSignatureAsynch "' + JSON.stringify(ledgerNanoSCreateSignatureAsynch) + '"\n')
+  process.stdout.write('ledgerNanoSGetLogin ledgerNanoSFromWif "' + JSON.stringify(ledgerNanoSFromWif) + '"\n')
   return {
     type: LOGIN,
     ledgerNanoS: true,
@@ -50,10 +52,12 @@ export function setKeys (keys) {
 export default (state = {wif: null, address: null, loggedIn: false, redirectUrl: null, decrypting: false, accountKeys: []}, action) => {
   switch (action.type) {
     case LOGIN:
+      process.stdout.write('interim action "' + JSON.stringify(action) + '"\n')
+      process.stdout.write('interim action.wif "' + JSON.stringify(action.wif) + '" signingFunction "' + JSON.stringify(action.signingFunction) + '"\n')
       let loadAccount
       try {
-        if (action.ledgerNanoS) {
-          loadAccount = getAccountFromPublicKey(getPublicKeyEncoded(action.publicKey))
+        if(action.wif instanceof Function) {
+          loadAccount = action.wif();
         } else {
           loadAccount = getAccountFromWIFKey(action.wif)
         }
@@ -62,11 +66,11 @@ export default (state = {wif: null, address: null, loggedIn: false, redirectUrl:
         console.log(e.stack)
         loadAccount = -1
       }
-      process.stdout.write('interim loadAccount "' + loadAccount + '" \n')
+      process.stdout.write('interim loadAccount "' + JSON.stringify(loadAccount) + '" \n')
       if (loadAccount === -1 || loadAccount === -2 || loadAccount === undefined) {
         return {...state, wif: action.wif, loggedIn: false}
       }
-      return {...state, wif: action.wif, address: loadAccount.address, loggedIn: true, decrypting: false}
+      return {...state, wif: action.wif, address: loadAccount.address, loggedIn: true, decrypting: false, signingFunction : action.signingFunction}
     case LOGOUT:
       return {...state, 'wif': null, address: null, 'loggedIn': false, decrypting: false}
     case SET_DECRYPTING:

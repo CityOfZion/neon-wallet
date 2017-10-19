@@ -47,7 +47,7 @@ class Claim extends Component<Props> {
   // To initiate claim, first send all Neo to own address, the set claimRequest state
   // When new claims are available, this will trigger the claim
   doGasClaim = () => {
-    const { dispatch, net, wif, address, neo } = this.props
+    const { dispatch, net, wif, address, neo, signingFunction } = this.props
 
     // if no neo in account, no need to send to self first
     if (neo === 0) {
