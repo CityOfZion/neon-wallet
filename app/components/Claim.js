@@ -22,7 +22,8 @@ type Props = {
 
 class Claim extends Component<Props> {
   componentDidUpdate () {
-    const { claimRequest, claimWasUpdated, dispatch } = this.props
+    const { claimRequest, claimWasUpdated, dispatch, wif, signingFunction } = this.props
+    process.stdout.write('Claim componentDidUpdate"' + JSON.stringify(this.props) + '"\n')
     // if we requested a claim and new claims are available, do claim
     if (claimRequest && claimWasUpdated) {
       dispatch(setClaimRequest(false))
@@ -31,7 +32,8 @@ class Claim extends Component<Props> {
   }
 
   doClaimNotify () {
-    const { dispatch, net, address, wif } = this.props
+    process.stdout.write('Claim doClaimNotify"' + JSON.stringify(this.props) + '"\n')
+    const { dispatch, net, address, wif, signingFunction } = this.props
     log(net, 'CLAIM', address, { info: 'claim all gas' })
     ledgerNanoSGetdoClaimAllGas(net, wif, signingFunction).then((response) => {
       if (response.result) {
@@ -47,6 +49,7 @@ class Claim extends Component<Props> {
   // To initiate claim, first send all Neo to own address, the set claimRequest state
   // When new claims are available, this will trigger the claim
   doGasClaim = () => {
+    process.stdout.write('Claim doGasClaim"' + JSON.stringify(this.props) + '"\n')
     const { dispatch, net, wif, address, neo, signingFunction } = this.props
 
     // if no neo in account, no need to send to self first

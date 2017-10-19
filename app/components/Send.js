@@ -85,7 +85,7 @@ class Send extends Component<Props, State> {
 
   // perform send transaction
   sendTransaction = () => {
-    const { dispatch, net, address, wif, selectedAsset } = this.props
+    const { dispatch, net, address, wif, selectedAsset, signingFunction } = this.props
     const { sendAddress, sendAmount } = this.state
 
     let assetName
