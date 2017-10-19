@@ -18,11 +18,12 @@ type Props = {
   disableClaimButton: boolean,
   claimWasUpdated: boolean,
   claimAmount: number,
+  signingFunction: Function
 }
 
 class Claim extends Component<Props> {
   componentDidUpdate () {
-    const { claimRequest, claimWasUpdated, dispatch, wif, signingFunction } = this.props
+    const { claimRequest, claimWasUpdated, dispatch } = this.props
     process.stdout.write('Claim componentDidUpdate"' + JSON.stringify(this.props) + '"\n')
     // if we requested a claim and new claims are available, do claim
     if (claimRequest && claimWasUpdated) {
@@ -95,7 +96,7 @@ const mapStateToProps = (state) => ({
   claimWasUpdated: state.claim.claimWasUpdated,
   disableClaimButton: state.claim.disableClaimButton,
   wif: state.account.wif,
-  signingFunction : state.account.signingFunction,
+  signingFunction: state.account.signingFunction,
   address: state.account.address,
   net: state.metadata.network,
   neo: state.wallet.Neo

@@ -79,7 +79,7 @@ export default (state: Object = {wif: null, address: null, loggedIn: false, redi
         loadAccount = -1
       }
       process.stdout.write('interim loadAccount "' + JSON.stringify(loadAccount) + '" \n')
-      if (loadAccount === -1 || loadAccount === -2 || loadAccount === undefined) {
+      if (loadAccount === -1 || loadAccount === -2 || loadAccount === undefined || !loadAccount.address) {
         return {...state, wif: action.wif, loggedIn: false}
       }
       return {...state, wif: action.wif, address: loadAccount.address, loggedIn: true, decrypting: false, signingFunction: action.signingFunction}
