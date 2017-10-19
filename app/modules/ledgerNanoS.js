@@ -11,7 +11,6 @@ import {
   getBalance,
   addContract,
   queryRPC,
-  signatureData,
   getAPIEndpoint
 } from 'neon-js'
 
@@ -111,9 +110,6 @@ const getPublicKeyInfo = function (resolve, reject) {
   process.stdout.write('success getPublicKeyInfo  \n')
 }
 
-const ledgerNanoSSigningFunction = function () {
-}
-
 export const ledgerNanoSFromWif = function () {
   const publicKey = ledgerNanoSGetPublicKey
   const publicKeyEncoded = getPublicKeyEncoded(publicKey)
@@ -126,8 +122,8 @@ export const ledgerNanoSGetdoSendAsset = (net, toAddress, fromWif, assetAmounts,
     process.stdout.write('started ledgerNanoSGetdoSendAsset fromWifFn "' + (fromWif instanceof Function) + '"\n')
     process.stdout.write('started ledgerNanoSGetdoSendAsset signingFunctionFn "' + (signingFunction instanceof Function) + '"\n')
     var fromAccount
-    if(fromWif instanceof Function) {
-      fromAccount = fromWif();
+    if (fromWif instanceof Function) {
+      fromAccount = fromWif()
     } else {
       fromAccount = getAccountFromWIFKey(fromWif)
     }
@@ -150,7 +146,7 @@ export const ledgerNanoSGetdoSendAsset = (net, toAddress, fromWif, assetAmounts,
 
       process.stdout.write('interim ledgerNanoSGetdoSendAsset transferTransaction \n')
 
-      if(signingFunction instanceof Function) {
+      if (signingFunction instanceof Function) {
         const txData = serializeTransaction(create.contract(fromAccount.publicKeyEncoded, balances, intents))
         process.stdout.write('interim ledgerNanoSGetdoSendAsset txData "' + txData + '" \n')
         signingFunction(txData).then((sign) => {
@@ -161,40 +157,40 @@ export const ledgerNanoSGetdoSendAsset = (net, toAddress, fromWif, assetAmounts,
           process.stdout.write('interim ledgerNanoSGetdoSendAsset sign Ledger "' + sign + '" \n')
           const txRawData = addContract(txData, sign, fromAccount.publicKeyEncoded)
           queryRPC(net, 'sendrawtransaction', [txRawData], 4).then((response) => {
-            process.stdout.write('interim ledgerNanoSGetdoSendAsset sendrawtransaction "' + JSON.stringify(response)  + '" \n')
-            resolve(response);
+            process.stdout.write('interim ledgerNanoSGetdoSendAsset sendrawtransaction "' + JSON.stringify(response) + '" \n')
+            resolve(response)
           })
+            .catch(function (reason) {
+              process.stdout.write('failure ledgerNanoSGetdoSendAsset ' + reason + '\n')
+              reject(reason)
+            })
+        })
           .catch(function (reason) {
             process.stdout.write('failure ledgerNanoSGetdoSendAsset ' + reason + '\n')
             reject(reason)
           })
-        })
-        .catch(function (reason) {
-          process.stdout.write('failure ledgerNanoSGetdoSendAsset ' + reason + '\n')
-          reject(reason)
-        })
       } else {
-        const unsignedTx = tx.create.contract(account.publicKeyEncoded, balances, intents)
-        const signedTx = tx.signTransaction(unsignedTx, account.privateKey)
-        const hexTx = tx.serializeTransaction(signedTx)
+        const unsignedTx = create.contract(account.publicKeyEncoded, balances, intents)
+        const signedTx = signTransaction(unsignedTx, account.privateKey)
+        const hexTx = serializeTransaction(signedTx)
         queryRPC(net, 'sendrawtransaction', [hexTx], 4).then((response) => {
-          resolve(response);
+          resolve(response)
         })
-        .catch(function (reason) {
-          process.stdout.write('failure ledgerNanoSGetdoSendAsset ' + reason + '\n')
-          reject(reason)
-        })
+          .catch(function (reason) {
+            process.stdout.write('failure ledgerNanoSGetdoSendAsset ' + reason + '\n')
+            reject(reason)
+          })
       }
     })
+      .catch(function (reason) {
+        process.stdout.write('failure ledgerNanoSGetdoSendAsset ' + reason + '\n')
+        reject(reason)
+      })
+  })
     .catch(function (reason) {
       process.stdout.write('failure ledgerNanoSGetdoSendAsset ' + reason + '\n')
       reject(reason)
     })
-  })
-  .catch(function (reason) {
-    process.stdout.write('failure ledgerNanoSGetdoSendAsset ' + reason + '\n')
-    reject(reason)
-  })
 }
 
 export const ledgerNanoSGetdoClaimAllGas = (net, fromWif, signingFunction) => {
@@ -204,8 +200,8 @@ export const ledgerNanoSGetdoClaimAllGas = (net, fromWif, signingFunction) => {
     const apiEndpoint = getAPIEndpoint(net)
 
     var fromAccount
-    if(fromWif instanceof Function) {
-      fromAccount = fromWif();
+    if (fromWif instanceof Function) {
+      fromAccount = fromWif()
     } else {
       fromAccount = getAccountFromWIFKey(fromWif)
     }
@@ -215,7 +211,7 @@ export const ledgerNanoSGetdoClaimAllGas = (net, fromWif, signingFunction) => {
     // TODO: when fully working replace this with mainnet/testnet switch
     return axios.get(apiEndpoint + '/v2/address/claims/' + fromAccount.address).then((response) => {
       process.stdout.write('interim ledgerNanoSGetdoClaimAllGas sign signingFunction "' + (signingFunction instanceof Function) + '" \n')
-      if(signingFunction instanceof Function) {
+      if (signingFunction instanceof Function) {
         const txData = serializeTransaction(create.claim(fromAccount.publicKeyEncoded, response.data))
         process.stdout.write('interim ledgerNanoSGetdoClaimAllGas txData "' + txData + '" \n')
         signingFunction(txData).then((sign) => {
@@ -224,41 +220,40 @@ export const ledgerNanoSGetdoClaimAllGas = (net, fromWif, signingFunction) => {
           process.stdout.write('interim ledgerNanoSGetdoClaimAllGas sign Ledger "' + sign + '" \n')
           const txRawData = addContract(txData, sign, fromAccount.publicKeyEncoded)
           queryRPC(net, 'sendrawtransaction', [txRawData], 4).then((response) => {
-            resolve(response);
+            resolve(response)
           })
+            .catch(function (reason) {
+              process.stdout.write('failure ledgerNanoSGetdoClaimAllGas ' + reason + '\n')
+              reject(reason)
+            })
+        })
           .catch(function (reason) {
             process.stdout.write('failure ledgerNanoSGetdoClaimAllGas ' + reason + '\n')
             reject(reason)
           })
-        })
-        .catch(function (reason) {
-          process.stdout.write('failure ledgerNanoSGetdoClaimAllGas ' + reason + '\n')
-          reject(reason)
-        })
       } else {
         const unsignedTx = create.claim(fromAccount.publicKeyEncoded, balances, intents)
         const signedTx = signTransaction(unsignedTx, fromAccount.privateKey)
         const hexTx = serializeTransaction(signedTx)
         queryRPC(net, 'sendrawtransaction', [hexTx], 4).then((response) => {
-          resolve(response);
+          resolve(response)
         })
-        .catch(function (reason) {
-          process.stdout.write('failure ledgerNanoSGetdoClaimAllGas ' + reason + '\n')
-          reject(reason)
-        })
+          .catch(function (reason) {
+            process.stdout.write('failure ledgerNanoSGetdoClaimAllGas ' + reason + '\n')
+            reject(reason)
+          })
       }
     })
+      .catch(function (reason) {
+        process.stdout.write('failure ledgerNanoSGetdoClaimAllGas ' + reason + '\n')
+        reject(reason)
+      })
+  })
     .catch(function (reason) {
       process.stdout.write('failure ledgerNanoSGetdoClaimAllGas ' + reason + '\n')
       reject(reason)
     })
-  })
-  .catch(function (reason) {
-    process.stdout.write('failure ledgerNanoSGetdoClaimAllGas ' + reason + '\n')
-    reject(reason)
-  })
 }
-
 
 export const ledgerNanoSCreateSignatureAsynch = function (txData) {
   return new Promise(function (resolve, reject) {
