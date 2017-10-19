@@ -20,6 +20,8 @@ export function ledgerNanoSGetLogin () {
   return {
     type: LOGIN,
     ledgerNanoS: true,
+    signingFunction: ledgerNanoSCreateSignatureAsynch,
+    wif:ledgerNanoSFromWif,
     publicKey: ledgerNanoSGetPublicKey
   }
 }

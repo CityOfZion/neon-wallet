@@ -106,7 +106,7 @@ class Send extends Component<Props, State> {
       dispatch(sendEvent(true, 'Processing...'))
       log(net, 'SEND', selfAddress, { to: sendAddress, asset: selectedAsset, amount: sendAmount })
 
-      ledgerNanoSGetdoSendAsset(net, sendAddress, wif, sendAsset).then((response) => {
+      ledgerNanoSGetdoSendAsset(net, sendAddress, wif, sendAsset, signingFunction).then((response) => {
         if (response.result === undefined || response.result === false) {
           dispatch(sendEvent(false, 'Transaction failed!'))
         } else {
@@ -174,6 +174,7 @@ class Send extends Component<Props, State> {
 
 const mapStateToProps = (state) => ({
   wif: state.account.wif,
+  signingFunction : state.account.signingFunction,
   address: state.account.address,
   net: state.metadata.network,
   neo: state.wallet.Neo,

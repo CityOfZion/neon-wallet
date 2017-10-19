@@ -33,7 +33,7 @@ class Claim extends Component<Props> {
   doClaimNotify () {
     const { dispatch, net, address, wif } = this.props
     log(net, 'CLAIM', address, { info: 'claim all gas' })
-    ledgerNanoSGetdoClaimAllGas(net, wif).then((response) => {
+    ledgerNanoSGetdoClaimAllGas(net, wif, signingFunction).then((response) => {
       if (response.result) {
         dispatch(sendEvent(true, 'Claim was successful! Your balance will update once the blockchain has processed it.'))
         setTimeout(() => dispatch(disableClaim(false)), 300000)
@@ -55,7 +55,7 @@ class Claim extends Component<Props> {
     } else {
       dispatch(sendEvent(true, 'Sending Neo to Yourself...'))
       log(net, 'SEND', address, { to: address, amount: neo, asset: 'NEO' })
-      ledgerNanoSGetdoSendAsset(net, address, wif, { [ASSETS.NEO]: neo }).then((response) => {
+      ledgerNanoSGetdoSendAsset(net, address, wif, { [ASSETS.NEO]: neo }, signingFunction).then((response) => {
         if (response.result === undefined || response.result === false) {
           dispatch(sendEvent(false, 'Transaction failed!'))
         } else {
@@ -92,6 +92,7 @@ const mapStateToProps = (state) => ({
   claimWasUpdated: state.claim.claimWasUpdated,
   disableClaimButton: state.claim.disableClaimButton,
   wif: state.account.wif,
+  signingFunction : state.account.signingFunction,
   address: state.account.address,
   net: state.metadata.network,
   neo: state.wallet.Neo
