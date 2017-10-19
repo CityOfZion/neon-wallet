@@ -13,12 +13,13 @@ exports[`Login renders without crashing 1`] = `
       <Logo />
       <input
         onChange={[Function]}
-        onKeyDown={[Function]}
         placeholder="Enter your private key here (WIF)"
         type="password"
       />
       <input
+        className="passInput"
         onChange={[Function]}
+        onKeyDown={[Function]}
         placeholder="Enter your private key here (WIF)"
         type="password"
       />
@@ -32,11 +33,6 @@ exports[`Login renders without crashing 1`] = `
     >
       <button
         className="loginButton"
-        onClick={[Function]}
-      >
-        Login
-      </button>
-      <button
         onClick={[Function]}
       >
         Login

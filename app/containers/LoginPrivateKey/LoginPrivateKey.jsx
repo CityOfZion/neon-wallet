@@ -58,10 +58,9 @@ export default class LoginPrivateKey extends Component<Props, State> {
         <div className='login'>
           <div className='loginForm'>
             <Logo />
-
-            <input type={showKey ? 'text' : 'password'} placeholder='Enter your private key here (WIF)' onChange={this.handleInputChange} onKeyDown={this.handleKeyPress} />
-
             <input type={showKey ? 'text' : 'password'} placeholder='Enter your private key here (WIF)' onChange={this.handleInputChange} />
+
+            <input className='passInput' type={showKey ? 'text' : 'password'} placeholder='Enter your private key here (WIF)' onChange={this.handleInputChange} onKeyDown={this.handleKeyPress} />
 
             {showKey
               ? <FaEyeSlash className='viewKey' onClick={this.toggleKeyVisibility} />
@@ -70,9 +69,6 @@ export default class LoginPrivateKey extends Component<Props, State> {
           </div>
           <div className='loginButtons'>
             <button className='loginButton' onClick={this.handleVerify}>Login</button>
-
-            <button onClick={this.handleVerify}>Login</button>
-
             <Link to='/'><button className='altButton'>Home</button></Link>
           </div>
           <Footer />
