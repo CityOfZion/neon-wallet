@@ -92,9 +92,9 @@ class LoginLocalStorage extends Component<Props, State> {
     }))
   }
 
-  handleKeyPress = (event) => {
-    if (event.key === KEYS.ENTER) {
-      this.onWifChange(this.props.dispatch, this.props.history)
+  handleKeyPress = (e: SyntheticInputEvent<*>) => {
+    if (e.key === KEYS.ENTER) {
+      this.onWifChange()
     }
   }
 
