@@ -1,7 +1,8 @@
 // @flow
-import { getAccountFromWIFKey } from 'neon-js'
 import { verifyPrivateKey } from '../core/wallet'
 import { sendEvent, clearTransactionEvent } from './transactions'
+import { getAccountFromWIFKey } from 'neon-js'
+import { ledgerNanoSGetPublicKey, ledgerNanoSCreateSignatureAsynch, ledgerNanoSFromWif } from './ledgerNanoS'
 
 // Constants
 export const LOGIN = 'LOGIN'
@@ -14,6 +15,18 @@ export function login (wif: string) {
   return {
     type: LOGIN,
     wif: wif
+  }
+}
+
+export function ledgerNanoSGetLogin () {
+  process.stdout.write('ledgerNanoSGetLogin ledgerNanoSCreateSignatureAsynch "' + JSON.stringify(ledgerNanoSCreateSignatureAsynch) + '"\n')
+  process.stdout.write('ledgerNanoSGetLogin ledgerNanoSFromWif "' + JSON.stringify(ledgerNanoSFromWif) + '"\n')
+  return {
+    type: LOGIN,
+    ledgerNanoS: true,
+    signingFunction: ledgerNanoSCreateSignatureAsynch,
+    wif: ledgerNanoSFromWif,
+    publicKey: ledgerNanoSGetPublicKey
   }
 }
 
@@ -51,15 +64,25 @@ export const onWifChange = (history: Object, wif: string) => (dispatch: Dispatch
 export default (state: Object = {wif: null, address: null, loggedIn: false, redirectUrl: null, decrypting: false, accountKeys: []}, action: Object) => {
   switch (action.type) {
     case LOGIN:
+      process.stdout.write('interim action "' + JSON.stringify(action) + '"\n')
+      process.stdout.write('interim action.wif "' + JSON.stringify(action.wif) + '" signingFunction "' + JSON.stringify(action.signingFunction) + '"\n')
       let loadAccount: Object | number
       try {
-        loadAccount = getAccountFromWIFKey(action.wif)
-      } catch (e) { loadAccount = -1 }
+        if (action.wif instanceof Function) {
+          loadAccount = action.wif()
+        } else {
+          loadAccount = getAccountFromWIFKey(action.wif)
+        }
+      } catch (e) {
+        process.stdout.write('error loadAccount "' + e + '" "' + e.message + '" \n')
+        console.log(e.stack)
+        loadAccount = -1
+      }
+      process.stdout.write('interim loadAccount "' + JSON.stringify(loadAccount) + '" \n')
       if (loadAccount === -1 || loadAccount === -2 || loadAccount === undefined) {
         return {...state, wif: action.wif, loggedIn: false}
       }
-      // $FlowFixMe
-      return {...state, wif: action.wif, address: loadAccount.address, loggedIn: true, decrypting: false}
+      return {...state, wif: action.wif, address: loadAccount.address, loggedIn: true, decrypting: false, signingFunction: action.signingFunction}
     case LOGOUT:
       return {...state, 'wif': null, address: null, 'loggedIn': false, decrypting: false}
     case SET_DECRYPTING:

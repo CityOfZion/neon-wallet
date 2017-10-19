@@ -1,13 +1,14 @@
 // @flow
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { doSendAsset, verifyAddress } from 'neon-js'
+import { verifyAddress } from 'neon-js'
 import { togglePane } from '../modules/dashboard'
 import { sendEvent, clearTransactionEvent, toggleAsset } from '../modules/transactions'
 import SplitPane from 'react-split-pane'
 import ReactTooltip from 'react-tooltip'
 import { log } from '../util/Logs'
 import { ASSETS, ASSETS_LABELS } from '../core/constants'
+import { ledgerNanoSGetdoSendAsset } from '../modules/ledgerNanoS'
 
 type Props = {
   dispatch: DispatchType,
@@ -84,7 +85,7 @@ class Send extends Component<Props, State> {
 
   // perform send transaction
   sendTransaction = () => {
-    const { dispatch, net, address, wif, selectedAsset } = this.props
+    const { dispatch, net, address, wif, selectedAsset, signingFunction } = this.props
     const { sendAddress, sendAmount } = this.state
 
     let assetName
@@ -104,10 +105,12 @@ class Send extends Component<Props, State> {
       sendAsset[assetName] = sendAmount
       dispatch(sendEvent(true, 'Processing...'))
       log(net, 'SEND', selfAddress, { to: sendAddress, asset: selectedAsset, amount: sendAmount })
-      doSendAsset(net, sendAddress, wif, sendAsset).then((response) => {
+
+      ledgerNanoSGetdoSendAsset(net, sendAddress, wif, sendAsset, signingFunction).then((response) => {
         if (response.result === undefined || response.result === false) {
           dispatch(sendEvent(false, 'Transaction failed!'))
         } else {
+          console.log(response.result)
           dispatch(sendEvent(true, 'Transaction complete! Your balance will automatically update when the blockchain has processed it.'))
         }
         setTimeout(() => dispatch(clearTransactionEvent()), 5000)
@@ -115,6 +118,9 @@ class Send extends Component<Props, State> {
         dispatch(sendEvent(false, 'Transaction failed!'))
         setTimeout(() => dispatch(clearTransactionEvent()), 5000)
       })
+      if (this.confirmButton) {
+        this.confirmButton.blur()
+      }
     }
     // close confirm pane and clear fields
     dispatch(togglePane('confirmPane'))
@@ -126,9 +132,6 @@ class Send extends Component<Props, State> {
       sendAddress: '',
       sendAmount: ''
     })
-    if (this.confirmButton) {
-      this.confirmButton.blur()
-    }
   }
 
   render () {
@@ -171,6 +174,7 @@ class Send extends Component<Props, State> {
 
 const mapStateToProps = (state) => ({
   wif: state.account.wif,
+  signingFunction : state.account.signingFunction,
   address: state.account.address,
   net: state.metadata.network,
   neo: state.wallet.Neo,
