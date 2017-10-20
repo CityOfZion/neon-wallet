@@ -1,33 +1,32 @@
 // @flow
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { isNil } from 'lodash'
-import Claim from './Claim.js'
+import Claim from '../../components/Claim.js'
 import MdSync from 'react-icons/lib/md/sync'
 import QRCode from 'qrcode'
-import { initiateGetBalance } from '../components/NetworkSwitch'
-import { sendEvent, clearTransactionEvent } from '../modules/transactions'
 import { clipboard } from 'electron'
 import Copy from 'react-icons/lib/md/content-copy'
 import ReactTooltip from 'react-tooltip'
-import { formatGAS } from '../core/formatters'
-import { ASSETS } from '../core/constants'
+import { formatGAS } from '../../core/formatters'
+import { ASSETS } from '../../core/constants'
 
 type Props = {
-  dispatch: Function,
   address: string,
   neo: number,
   net: NetworkType,
   gas: number,
-  price: number
+  price: number,
+  initiateGetBalance: Function,
+  sendEvent: Function,
+  clearTransactionEvent: Function
 }
 
-class WalletInfo extends Component<Props> {
+export default class WalletInfo extends Component<Props> {
   canvas: ?HTMLCanvasElement
 
   componentDidMount () {
-    const { dispatch, net, address } = this.props
-    initiateGetBalance(dispatch, net, address)
+    const { initiateGetBalance, net, address } = this.props
+    initiateGetBalance(net, address)
     QRCode.toCanvas(this.canvas, address, { version: 5 }, (err) => {
       if (err) console.log(err)
     })
@@ -35,11 +34,11 @@ class WalletInfo extends Component<Props> {
 
   // force sync with balance data
   refreshBalance = () => {
-    const { dispatch, net, address } = this.props
-    dispatch(sendEvent(true, 'Refreshing...'))
-    initiateGetBalance(dispatch, net, address).then((response) => {
-      dispatch(sendEvent(true, 'Received latest blockchain information.'))
-      setTimeout(() => dispatch(clearTransactionEvent()), 1000)
+    const { sendEvent, initiateGetBalance, clearTransactionEvent, net, address } = this.props
+    sendEvent(true, 'Refreshing...')
+    initiateGetBalance(net, address).then((response) => {
+      sendEvent(true, 'Received latest blockchain information.')
+      setTimeout(() => clearTransactionEvent(), 1000)
     })
   }
 
@@ -85,13 +84,3 @@ class WalletInfo extends Component<Props> {
     )
   }
 }
-
-const mapStateToProps = (state) => ({
-  neo: state.wallet.Neo,
-  gas: state.wallet.Gas,
-  address: state.account.address,
-  net: state.metadata.network,
-  price: state.wallet.price
-})
-
-export default connect(mapStateToProps)(WalletInfo)
