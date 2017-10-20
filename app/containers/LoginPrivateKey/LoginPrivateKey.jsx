@@ -1,17 +1,12 @@
 // @flow
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { login } from '../modules/account'
-import { sendEvent, clearTransactionEvent } from '../modules/transactions'
 import FaEye from 'react-icons/lib/fa/eye'
 import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
-import Logo from './Logo'
-import Footer from './Footer'
-import { verifyPrivateKey } from '../core/wallet'
+import Logo from '../../components/Logo'
+import Footer from '../../components/Footer'
 
 type Props = {
-    dispatch: DispatchType,
     onWifChange: Function,
     history: Object
 }
@@ -21,7 +16,7 @@ type State = {
   wif: string,
 }
 
-class LoginPrivateKey extends Component<Props, State> {
+export default class LoginPrivateKey extends Component<Props, State> {
   state = {
     showKey: false,
     wif: ''
@@ -33,7 +28,7 @@ class LoginPrivateKey extends Component<Props, State> {
     }))
   }
 
-  handleInputChange = (e) => {
+  handleInputChange = (e: SyntheticInputEvent<*>) => {
     const value = e.target.value
 
     this.setState({
@@ -42,10 +37,10 @@ class LoginPrivateKey extends Component<Props, State> {
   }
 
   handleVerify = () => {
-    const { onWifChange, dispatch, history } = this.props
+    const { onWifChange, history } = this.props
     const { wif } = this.state
 
-    onWifChange(dispatch, history, wif)
+    onWifChange(history, wif)
   }
 
   render () {
@@ -73,25 +68,3 @@ class LoginPrivateKey extends Component<Props, State> {
     )
   }
 }
-
-const mapStateToProps = (state) => ({
-  loggedIn: state.account.loggedIn,
-  wif: state.account.wif
-})
-
-const mapActionCreators = (dispatch: DispatchType) => {
-  return {
-    dispatch,
-    onWifChange: (dispatch: DispatchType, history: Object, wif: string) => {
-      if (verifyPrivateKey(wif)) {
-        dispatch(login(wif))
-        history.push('/dashboard')
-      } else {
-        dispatch(sendEvent(false, 'That is not a valid private key'))
-        setTimeout(() => dispatch(clearTransactionEvent()), 5000)
-      }
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapActionCreators)(LoginPrivateKey)

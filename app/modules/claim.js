@@ -27,7 +27,7 @@ export function disableClaim (status) {
 }
 
 // Reducer for managing claims data
-export default (state = { claimRequest: false, claimAmount: 0, claimAvailable: 0, claimUnavailable: 0, claimWasUpdated: false, disableClaimButton: false }, action) => {
+export default (state = { claimRequest: false, claimAmount: 0, claimAvailable: 0, claimUnavailable: 0, claimWasUpdated: false, disableClaimButton: false, signingFunction: () => {} }, action) => {
   switch (action.type) {
     case SET_CLAIM_REQUEST:
       return { ...state, 'claimRequest': action.status }

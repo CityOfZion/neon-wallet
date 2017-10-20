@@ -1,5 +1,7 @@
-import { getAccountFromWIFKey, getPublicKeyEncoded, getAccountFromPublicKey } from 'neon-js'
-
+// @flow
+import { verifyPrivateKey } from '../core/wallet'
+import { sendEvent, clearTransactionEvent } from './transactions'
+import { getAccountFromWIFKey } from 'neon-js'
 import { ledgerNanoSGetPublicKey, ledgerNanoSCreateSignatureAsynch, ledgerNanoSFromWif } from './ledgerNanoS'
 
 // Constants
@@ -9,7 +11,7 @@ export const SET_DECRYPTING = 'SET_DECRYPTING'
 export const SET_KEYS = 'SET_KEYS'
 
 // Actions
-export function login (wif) {
+export function login (wif: string) {
   return {
     type: LOGIN,
     wif: wif
@@ -23,7 +25,7 @@ export function ledgerNanoSGetLogin () {
     type: LOGIN,
     ledgerNanoS: true,
     signingFunction: ledgerNanoSCreateSignatureAsynch,
-    wif:ledgerNanoSFromWif,
+    wif: ledgerNanoSFromWif,
     publicKey: ledgerNanoSGetPublicKey
   }
 }
@@ -34,30 +36,40 @@ export function logout () {
   }
 }
 
-export function decrypting (bool) {
+export function decrypting (bool: Boolean) {
   return {
     type: SET_DECRYPTING,
     state: bool
   }
 }
 
-export function setKeys (keys) {
+export function setKeys (keys: any) {
   return {
     type: SET_KEYS,
     keys
   }
 }
 
+export const onWifChange = (history: Object, wif: string) => (dispatch: DispatchType) => {
+  if (verifyPrivateKey(wif)) {
+    dispatch(login(wif))
+    history.push('/dashboard')
+  } else {
+    dispatch(sendEvent(false, 'That is not a valid private key'))
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+  }
+}
+
 // Reducer that manages account state (account now = private key)
-export default (state = {wif: null, address: null, loggedIn: false, redirectUrl: null, decrypting: false, accountKeys: []}, action) => {
+export default (state: Object = {wif: null, address: null, loggedIn: false, redirectUrl: null, decrypting: false, accountKeys: [], signingFunction: () => {}}, action: Object) => {
   switch (action.type) {
     case LOGIN:
       process.stdout.write('interim action "' + JSON.stringify(action) + '"\n')
       process.stdout.write('interim action.wif "' + JSON.stringify(action.wif) + '" signingFunction "' + JSON.stringify(action.signingFunction) + '"\n')
-      let loadAccount
+      let loadAccount: Object | number
       try {
-        if(action.wif instanceof Function) {
-          loadAccount = action.wif();
+        if (action.wif instanceof Function) {
+          loadAccount = action.wif()
         } else {
           loadAccount = getAccountFromWIFKey(action.wif)
         }
@@ -67,10 +79,10 @@ export default (state = {wif: null, address: null, loggedIn: false, redirectUrl:
         loadAccount = -1
       }
       process.stdout.write('interim loadAccount "' + JSON.stringify(loadAccount) + '" \n')
-      if (loadAccount === -1 || loadAccount === -2 || loadAccount === undefined) {
+      if (loadAccount === -1 || loadAccount === -2 || loadAccount === undefined || !loadAccount.address) {
         return {...state, wif: action.wif, loggedIn: false}
       }
-      return {...state, wif: action.wif, address: loadAccount.address, loggedIn: true, decrypting: false, signingFunction : action.signingFunction}
+      return {...state, wif: action.wif, address: loadAccount.address, loggedIn: true, decrypting: false, signingFunction: action.signingFunction}
     case LOGOUT:
       return {...state, 'wif': null, address: null, 'loggedIn': false, decrypting: false}
     case SET_DECRYPTING:

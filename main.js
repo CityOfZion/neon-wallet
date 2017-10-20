@@ -55,7 +55,7 @@ app.on('ready', () => {
         role: 'help',
         submenu: [
           {label: 'City of Zion', click () { shell.openExternal('https://cityofzion.io/') }},
-          {label: 'GithHub', click () { shell.openExternal('https://github.com/CityOfZion') }},
+          {label: 'GitHub', click () { shell.openExternal('https://github.com/CityOfZion') }},
           {label: 'NEO Reddit', click () { shell.openExternal('https://www.reddit.com/r/NEO/') }},
           {label: 'Slack', click () { shell.openExternal('https://neosmarteconomy.slack.com') }}
         ]
