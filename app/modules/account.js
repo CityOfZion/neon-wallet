@@ -36,7 +36,7 @@ export function logout () {
   }
 }
 
-export function decrypting (bool: Boolean) {
+export function decrypting (bool: boolean) {
   return {
     type: SET_DECRYPTING,
     state: bool

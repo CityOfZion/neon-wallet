@@ -1,4 +1,4 @@
-import walletReducer, { setBalance, setMarketPrice, resetPrice, setTransactionHistory, SET_MARKET_PRICE, SET_BALANCE, RESET_PRICE, SET_TRANSACTION_HISTORY } from '../../app/modules/wallet'
+import walletReducer, { setBalance, resetPrice, setTransactionHistory, SET_BALANCE, RESET_PRICE, SET_TRANSACTION_HISTORY } from '../../app/modules/wallet'
 
 describe('wallet module tests', () => {
   const Neo = 1
@@ -32,25 +32,6 @@ describe('wallet module tests', () => {
         ...initialState,
         Neo,
         Gas,
-        price
-      }
-      expect(walletReducer(undefined, expectedAction)).toEqual(expectedState)
-    })
-  })
-
-  describe('setMarketPrice tests', () => {
-    const expectedAction = {
-      type: SET_MARKET_PRICE,
-      price
-    }
-
-    test('setMarketPrice action works', () => {
-      expect(setMarketPrice(price)).toEqual(expectedAction)
-    })
-
-    test('wallet reducer should handle SET_MARKET_PRICE', () => {
-      const expectedState = {
-        ...initialState,
         price
       }
       expect(walletReducer(undefined, expectedAction)).toEqual(expectedState)

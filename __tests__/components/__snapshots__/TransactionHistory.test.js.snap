@@ -3,7 +3,6 @@
 exports[`TransactionHistory renders without crashing 1`] = `
 <TransactionHistory
   address="AWy7RNBVr9vDadRMK9p7i7Z1tL7GrLAxoh"
-  dispatch={[Function]}
   net="TestNet"
   store={
     Object {
@@ -15,6 +14,7 @@ exports[`TransactionHistory renders without crashing 1`] = `
       "subscribe": [Function],
     }
   }
+  syncTransactionHistory={[Function]}
   transactions={Array []}
 />
 `;

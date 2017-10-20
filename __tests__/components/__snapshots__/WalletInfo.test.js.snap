@@ -3,11 +3,13 @@
 exports[`WalletInfo renders without crashing 1`] = `
 <WalletInfo
   address="ANqUrhv99rwCiFTL6N1An9NH5UVkPYxTuw"
-  dispatch={[Function]}
-  gas={1.0001001}
+  clearTransactionEvent={[Function]}
+  gas={1.0001}
+  initiateGetBalance={[Function]}
   neo={10}
   net="TestNet"
-  price="25.48"
+  price={25.48}
+  sendEvent={[Function]}
   store={
     Object {
       "clearActions": [Function],
