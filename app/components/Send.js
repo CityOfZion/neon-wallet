@@ -19,6 +19,7 @@ type Props = {
   gas: number,
   confirmPane: boolean,
   selectedAsset: string,
+  signingFunction: Function
 }
 
 type State = {
@@ -174,7 +175,7 @@ class Send extends Component<Props, State> {
 
 const mapStateToProps = (state) => ({
   wif: state.account.wif,
-  signingFunction : state.account.signingFunction,
+  signingFunction: state.account.signingFunction,
   address: state.account.address,
   net: state.metadata.network,
   neo: state.wallet.Neo,
