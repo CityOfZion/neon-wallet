@@ -5,6 +5,7 @@ const port = process.env.PORT || 3000
 
 let mainWindow = null
 
+// adapted from https://github.com/chentsulin/electron-react-boilerplate
 const installExtensions = () => {
   const installer = require('electron-devtools-installer')
   const extensions = [

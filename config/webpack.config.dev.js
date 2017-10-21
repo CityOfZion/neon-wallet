@@ -96,6 +96,7 @@ module.exports = {
       }
     ]
   },
+  // adapted from https://github.com/chentsulin/electron-react-boilerplate
   devServer: {
     port,
     publicPath,
