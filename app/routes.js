@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
-import App from './components/App'
+import App from './containers/App'
 import LoginNep2 from './components/LoginNep2'
 import LoginPrivateKey from './containers/LoginPrivateKey'
 import Home from './components/Home'
