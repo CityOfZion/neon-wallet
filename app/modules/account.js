@@ -37,7 +37,7 @@ export function setKeys (keys: any) {
   }
 }
 
-export const onWifChange = (history: Object, wif: string, route: string) => (dispatch: DispatchType) => {
+export const onWifChange = (history: Object, wif: string, route: RouteType) => (dispatch: DispatchType) => {
   if (verifyPrivateKey(wif)) {
     dispatch(login(wif))
     history.push(route)
