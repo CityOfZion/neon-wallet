@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 import FaEye from 'react-icons/lib/fa/eye'
 import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
+import { KEYS } from '../../core/constants'
 import Logo from '../../components/Logo'
 import Footer from '../../components/Footer'
 
@@ -43,6 +44,12 @@ export default class LoginPrivateKey extends Component<Props, State> {
     onWifChange(history, wif)
   }
 
+  handleKeyPress = (e: SyntheticInputEvent<*>) => {
+    if (e.key === KEYS.ENTER) {
+      this.handleVerify()
+    }
+  }
+
   render () {
     const { showKey } = this.state
 
@@ -53,13 +60,15 @@ export default class LoginPrivateKey extends Component<Props, State> {
             <Logo />
             <input type={showKey ? 'text' : 'password'} placeholder='Enter your private key here (WIF)' onChange={this.handleInputChange} />
 
+            <input className='passInput' type={showKey ? 'text' : 'password'} placeholder='Enter your private key here (WIF)' onChange={this.handleInputChange} onKeyDown={this.handleKeyPress} />
+
             {showKey
               ? <FaEyeSlash className='viewKey' onClick={this.toggleKeyVisibility} />
               : <FaEye className='viewKey' onClick={this.toggleKeyVisibility} />
             }
           </div>
           <div className='loginButtons'>
-            <button onClick={this.handleVerify}>Login</button>
+            <button className='loginButton' onClick={this.handleVerify}>Login</button>
             <Link to='/'><button className='altButton'>Home</button></Link>
           </div>
           <Footer />

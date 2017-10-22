@@ -1,47 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Login renders without crashing 1`] = `
-<div
-  id="loginPage"
->
-  <div
-    className="login"
-  >
-    <div
-      className="loginForm"
-    >
-      <Logo />
-      <input
-        onChange={[Function]}
-        placeholder="Enter your private key here (WIF)"
-        type="password"
-      />
-      <FaEye
-        className="viewKey"
-        onClick={[Function]}
-      />
-    </div>
-    <div
-      className="loginButtons"
-    >
-      <button
-        onClick={[Function]}
-      >
-        Login
-      </button>
-      <Link
-        onlyActiveOnIndex={false}
-        style={Object {}}
-        to="/"
-      >
-        <button
-          className="altButton"
-        >
-          Home
-        </button>
-      </Link>
-    </div>
-    <Footer />
-  </div>
-</div>
+<LoginPrivateKey
+  loggedIn={true}
+  onWifChange={[Function]}
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+/>
 `;

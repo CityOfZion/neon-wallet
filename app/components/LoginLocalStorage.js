@@ -12,6 +12,7 @@ import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
 import { validatePassphrase } from '../core/wallet'
 import Logo from './Logo'
 import Footer from './Footer'
+import { KEYS } from '../core/constants'
 
 type Props = {
   dispatch: DispatchType,
@@ -45,13 +46,24 @@ class LoginLocalStorage extends Component<Props, State> {
     const { dispatch, history } = this.props
     const { passphrase, wif } = this.state
 
-    if (!passphrase || !wif) { return null }
+    if (!passphrase) {
+      dispatch(sendEvent(false, 'Please enter a passphrase'))
+      setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+      return
+    }
+
+    if (!wif || wif === 'Select a wallet') {
+      dispatch(sendEvent(false, 'Please select a wallet'))
+      setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+      return
+    }
 
     if (!validatePassphrase(passphrase)) {
       dispatch(sendEvent(false, 'Passphrase too short'))
       setTimeout(() => dispatch(clearTransactionEvent()), 5000)
       return
     }
+
     if (wif !== 'Select a wallet') {
       dispatch(sendEvent(true, 'Decrypting encoded key...'))
       const wrongPassphraseAction = () => {
@@ -80,6 +92,12 @@ class LoginLocalStorage extends Component<Props, State> {
     }))
   }
 
+  handleKeyPress = (e: SyntheticInputEvent<*>) => {
+    if (e.key === KEYS.ENTER) {
+      this.onWifChange()
+    }
+  }
+
   render () {
     const { accountKeys, decrypting } = this.props
     const { showKey, passphrase, wif } = this.state
@@ -87,12 +105,20 @@ class LoginLocalStorage extends Component<Props, State> {
     return (<div id='loginPage'>
       <div className='login'>
         <Logo />
+        <div className='selectBox'>
+          <label>Wallet:</label>
+          <select value={wif} onChange={(e) => this.setState({ wif: e.target.value })}>
+            <option value='' disabled='disabled'>Select a wallet</option>
+            {map(accountKeys, (value, key) => <option value={value} key={`wallet${key}`}>{key}</option>)}
+          </select>
+        </div>
         <div className='loginForm'>
           <input
             type={showKey ? 'text' : 'password'}
             placeholder='Enter your passphrase here'
             value={passphrase}
             onChange={(e) => this.setState({ passphrase: e.target.value })}
+            onKeyDown={this.handleKeyPress}
           />
 
           {showKey
@@ -100,13 +126,6 @@ class LoginLocalStorage extends Component<Props, State> {
             : <FaEye className='viewKey' onClick={this.toggleKeyVisibility} />
           }
 
-          <div className='selectBox'>
-            <label>Wallet:</label>
-            <select value={wif} onChange={(e) => this.setState({ wif: e.target.value })}>
-              <option value='' disabled='disabled'>Select a wallet</option>
-              {map(accountKeys, (value, key) => <option value={value} key={`wallet${key}`}>{key}</option>)}
-            </select>
-          </div>
         </div>
         <div className='loginButtons'>
           { Object.keys(accountKeys).length === 0
