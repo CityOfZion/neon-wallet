@@ -65,10 +65,10 @@ export const loginNep2 = (passphrase: string, wif: string, history: Object) => (
     }
   }, 500)
 }
-export const loginWithPrivateKey = (wif: string, history: Object) => (dispatch: DispatchType) => {
+export const loginWithPrivateKey = (wif: string, history: Object, route?: RouteType) => (dispatch: DispatchType) => {
   if (verifyPrivateKey(wif)) {
     dispatch(login(wif))
-    history.push(ROUTES.DASHBOARD)
+    history.push(route || ROUTES.DASHBOARD)
   } else {
     dispatch(sendEvent(false, 'That is not a valid private key'))
     setTimeout(() => dispatch(clearTransactionEvent()), 5000)
