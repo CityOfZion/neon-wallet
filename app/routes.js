@@ -1,28 +1,29 @@
 import React from 'react'
+import { ROUTES } from '../core/constants'
 import { Route, IndexRoute } from 'react-router'
 import App from './containers/App'
-import LoginNep2 from './components/LoginNep2'
 import LoginPrivateKey from './containers/LoginPrivateKey'
+import TokenSale from './containers/TokenSale'
+import CreateWallet from './containers/CreateWallet'
+import Dashboard from './containers/Dashboard'
+import LoginNep2 from './components/LoginNep2'
 import Home from './components/Home'
 import Settings from './components/Settings'
 import LoginLocalStorage from './components/LoginLocalStorage'
 import LoginTokenSale from './components/LoginTokenSale'
-import TokenSale from './containers/TokenSale'
-import CreateWallet from './components/CreateWallet'
 import EncryptKey from './components/EncryptKey'
-import Dashboard from './containers/Dashboard'
 
 export default (
   <Route path='/' component={App}>
     <IndexRoute component={Home} />
-    <Route path='/dashboard' component={Dashboard} />
-    <Route path='/create' component={CreateWallet} />
-    <Route path='/encryptKey' component={EncryptKey} />
-    <Route path='/loginPrivateKey' component={LoginPrivateKey} />
-    <Route path='/loginLocalStorage' component={LoginLocalStorage} />
-    <Route path='/LoginEncrypted' component={LoginNep2} />
-    <Route path='/LoginTokenSale' component={LoginTokenSale} />
-    <Route path='/TokenSale' component={TokenSale} />
-    <Route path='/settings' component={Settings} />
+    <Route path={ROUTES.DASHBOARD} component={Dashboard} />
+    <Route path={ROUTES.CREATE_WALLET} component={CreateWallet} />
+    <Route path={ROUTES.ENCRYPT_KEY} component={EncryptKey} />
+    <Route path={ROUTES.LOGIN_PRIVATE_KEY} component={LoginPrivateKey} />
+    <Route path={ROUTES.LOGIN_LOCAL_STORAGE} component={LoginLocalStorage} />
+    <Route path={ROUTES.LOGIN_NEP2} component={LoginNep2} />
+    <Route path={ROUTES.LOGIN_TOKEN_SALE} component={LoginTokenSale} />
+    <Route path={ROUTES.TOKEN_SALE} component={TokenSale} />
+    <Route path={ROUTES.SETTINGS} component={Settings} />
   </Route>
 )
