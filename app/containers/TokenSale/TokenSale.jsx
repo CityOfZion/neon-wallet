@@ -4,6 +4,7 @@ import { Link } from 'react-router'
 import * as Neon from 'neon-js'
 import NetworkSwitch from '../NetworkSwitch'
 import Logo from '../../components/Logo'
+import { ROUTES } from '../../core/constants'
 
 type Props = {
   address: string,
@@ -154,7 +155,7 @@ export default class TokenSale extends Component<Props, State> {
           <button onClick={(this.participateInSale)}>Submit for Sale</button>
           <button onClick={this.refreshTokenBalance}>Refresh Token Balance</button>
         </div>
-        <Link to='/'><button className='altButton'>Home</button></Link>
+        <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>
       </div>
     )
   }
