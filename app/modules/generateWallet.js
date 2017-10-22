@@ -1,6 +1,6 @@
 // @flow
 import storage from 'electron-json-storage'
-import { generateEncryptedWif, getAccountFromWIFKey, generatePrivateKey, getWIFFromPrivateKey, encryptWIF } from 'neon-js'
+import { generateEncryptedWif, getAccountFromWIFKey, generatePrivateKey, getWIFFromPrivateKey, encryptWIF, encryptWifAccount } from 'neon-js'
 import { sendEvent, clearTransactionEvent } from './transactions'
 import { validatePassphrase } from '../core/wallet'
 
@@ -53,7 +53,7 @@ export const saveKey = (keyName: string, passphraseKey: string) => (dispatch: Di
   })
 }
 
-export const generateNewWallet = (passphrase: string, passphrase2: string) => (dispatch: DispatchType) => {
+export const generateNewWallet = (passphrase: string, passphrase2: string, wif?: string) => (dispatch: DispatchType) => {
   if (!passphrase || !passphrase2) return false
 
   if (passphrase !== passphrase2) {
@@ -62,14 +62,18 @@ export const generateNewWallet = (passphrase: string, passphrase2: string) => (d
     return null
   }
   if (validatePassphrase(passphrase)) {
-    // TODO: for some reason this blocks, so giving time to processes the earlier
-    // dispatch to display "generating" text, should fix this in future
     dispatch(sendEvent(true, 'Generating encoded key...'))
     setTimeout(() => {
-      generateEncryptedWif(passphrase).then((result) => {
-        dispatch(newWallet(result))
-        dispatch(clearTransactionEvent())
-      })
+      const encryptFn = wif ? encryptWifAccount(wif, passphrase) : generateEncryptedWif(passphrase)
+      try {
+        encryptFn.then((result) => {
+          dispatch(newWallet(result))
+          dispatch(clearTransactionEvent())
+        })
+      } catch (e) {
+        dispatch(sendEvent(false, wif ? 'The private key is not valid' : 'An error occured while trying to generate a new wallet'))
+        setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+      }
     }, 500)
     return true
   } else {

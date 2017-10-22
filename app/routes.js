@@ -9,14 +9,14 @@ import Dashboard from './containers/Dashboard'
 import LoginLocalStorage from './containers/LoginLocalStorage'
 import LoginTokenSale from './containers/LoginTokenSale'
 import LoginNep2 from './containers/LoginNep2'
+import EncryptKey from './containers/EncryptKey'
 
 import Settings from './components/Settings'
-import EncryptKey from './components/EncryptKey'
 
 import Home from './components/Home'
 
 export default (
-  <Route path='/' component={App}>
+  <Route path={ROUTES.HOME} component={App}>
     <IndexRoute component={Home} />
     <Route path={ROUTES.DASHBOARD} component={Dashboard} />
     <Route path={ROUTES.CREATE_WALLET} component={CreateWallet} />
