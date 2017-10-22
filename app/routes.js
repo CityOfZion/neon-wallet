@@ -1,5 +1,5 @@
 import React from 'react'
-import { ROUTES } from '../core/constants'
+import { ROUTES } from './core/constants'
 import { Route, IndexRoute } from 'react-router'
 import App from './containers/App'
 import LoginPrivateKey from './containers/LoginPrivateKey'

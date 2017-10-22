@@ -25,7 +25,7 @@ export const ROUTES = {
   ENCRYPT_KEY: '/encryptKey',
   LOGIN_PRIVATE_KEY: '/loginPrivateKey',
   LOGIN_LOCAL_STORAGE: '/loginLocalStorage',
-  LOGIN_ENCRYPTED: '/LoginEncrypted',
+  LOGIN_NEP2: '/LoginEncrypted',
   LOGIN_TOKEN_SALE: '/LoginTokenSale',
   TOKEN_SALE: '/TokenSale',
   SETTINGS: '/Settings'
