@@ -7,25 +7,12 @@ import {
   create,
   getScriptHashFromAddress,
   ASSETS,
-  getPublicKeyEncoded,
-  getAccountFromPublicKey,
   getAccountFromWIFKey,
   getBalance,
   addContract,
   queryRPC,
   getAPIEndpoint
 } from 'neon-js'
-
-export let ledgerNanoSGetPublicKey
-export let ledgerNanoSGetPublicKeyInfo
-export let ledgerNanoSGetDeviceInfo
-
-export const ledgerNanoSFromWif = function () {
-  const publicKey = ledgerNanoSGetPublicKey
-  const publicKeyEncoded = getPublicKeyEncoded(publicKey)
-  const fromAccount = getAccountFromPublicKey(publicKeyEncoded)
-  return fromAccount
-}
 
 export const ledgerNanoSGetdoSendAsset = (net, toAddress, fromWif, assetAmounts, signingFunction) => {
   return new Promise(function (resolve, reject) {

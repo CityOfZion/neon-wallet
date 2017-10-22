@@ -15,17 +15,15 @@ type Props = {
 
 export default class LoginLedgerNanoS extends Component<Props> {
   async componentDidMount () {
-    const { ledgerNanoSGetInfoAsync } = this.props
     // process.stdout.write('started componentDidMount  \n')
-    const [err] = asyncWrap(ledgerNanoSGetInfoAsync())
-    if (err) console.log('componentDidMount error reason ' + err)
+    await this.props.ledgerNanoSGetInfoAsync()
     // process.stdout.write('success componentDidMount  \n')
   }
 
   onLedgerNanoSChange = () => {
     const { ledgerNanoSGetLogin, hardwarePublicKey, history } = this.props
     if (hardwarePublicKey !== undefined) {
-      ledgerNanoSGetLogin()
+      ledgerNanoSGetLogin(hardwarePublicKey)
       history.push('/dashboard')
     }
   }

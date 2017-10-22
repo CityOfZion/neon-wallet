@@ -1,11 +1,11 @@
 // @flow
 import { verifyPrivateKey } from '../core/wallet'
 import { sendEvent, clearTransactionEvent } from './transactions'
-import { getAccountFromWIFKey } from 'neon-js'
+import { getAccountFromWIFKey, getPublicKeyEncoded, getAccountFromPublicKey } from 'neon-js'
 import commNode from '../ledger/ledger-comm-node'
 import { BIP44_PATH } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
-import { ledgerNanoSGetPublicKey, ledgerNanoSCreateSignatureAsynch, ledgerNanoSFromWif } from '../ledger/ledgerNanoS'
+import { ledgerNanoSCreateSignatureAsynch } from '../ledger/ledgerNanoS'
 
 // Constants
 export const LOGIN = 'LOGIN'
@@ -24,16 +24,22 @@ export function login (wif: string) {
   }
 }
 
-export function ledgerNanoSGetLogin () {
+export function ledgerNanoSGetLogin (publicKey: string) {
   // process.stdout.write('ledgerNanoSGetLogin ledgerNanoSCreateSignatureAsynch "' + JSON.stringify(ledgerNanoSCreateSignatureAsynch) + '"\n')
   // process.stdout.write('ledgerNanoSGetLogin ledgerNanoSFromWif "' + JSON.stringify(ledgerNanoSFromWif) + '"\n')
   return {
     type: LOGIN,
     ledgerNanoS: true,
     signingFunction: ledgerNanoSCreateSignatureAsynch,
-    wif: ledgerNanoSFromWif,
-    address: ledgerNanoSGetPublicKey
+    wif: () => ledgerNanoSFromWif(publicKey),
+    address: publicKey // TODO need to handle public key and address differently?
   }
+}
+
+export const ledgerNanoSFromWif = (publicKey: string) => {
+  const publicKeyEncoded = getPublicKeyEncoded(publicKey)
+  const fromAccount = getAccountFromPublicKey(publicKeyEncoded)
+  return fromAccount
 }
 
 export function logout () {

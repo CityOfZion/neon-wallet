@@ -1,5 +1,6 @@
 // @flow
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import LoginLedgerNanoS from './LoginLedgerNanoS'
 import { ledgerNanoSGetLogin, ledgerNanoSGetInfoAsync } from '../../modules/account'
 
@@ -9,9 +10,11 @@ const mapStateToProps = (state: Object) => ({
   hardwarePublicKeyInfo: state.account.hardwarePublicKeyInfo
 })
 
-const mapDispatchToProps = (dispatch: DispatchType) => ({
-  ledgerNanoSGetInfoAsync: () => dispatch(ledgerNanoSGetInfoAsync()),
-  ledgerNanoSGetLogin: () => dispatch(ledgerNanoSGetLogin())
-})
+const actionCreators = {
+  ledgerNanoSGetInfoAsync,
+  ledgerNanoSGetLogin
+}
+
+const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginLedgerNanoS)
