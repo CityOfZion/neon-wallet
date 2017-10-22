@@ -8,8 +8,8 @@ import CreateWallet from './containers/CreateWallet'
 import Dashboard from './containers/Dashboard'
 import LoginLocalStorage from './containers/LoginLocalStorage'
 import LoginTokenSale from './containers/LoginTokenSale'
+import LoginNep2 from './containers/LoginNep2'
 
-import LoginNep2 from './components/LoginNep2'
 import Settings from './components/Settings'
 import EncryptKey from './components/EncryptKey'
 
