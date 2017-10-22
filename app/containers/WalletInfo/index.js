@@ -1,5 +1,6 @@
 // @flow
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import WalletInfo from './WalletInfo'
 import { initiateGetBalance } from '../../modules/wallet'
 import { sendEvent, clearTransactionEvent } from '../../modules/transactions'
@@ -12,10 +13,12 @@ const mapStateToProps = (state) => ({
   price: state.wallet.price
 })
 
-const mapDispatchToProps = (dispatch: DispatchType) => ({
-  initiateGetBalance: (net, address) => dispatch(initiateGetBalance(net, address)),
-  sendEvent: (bool, message) => dispatch(sendEvent(bool, message)),
-  clearTransactionEvent: () => dispatch(clearTransactionEvent())
-})
+const actionCreators = {
+  initiateGetBalance,
+  sendEvent,
+  clearTransactionEvent
+}
+
+const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletInfo)
