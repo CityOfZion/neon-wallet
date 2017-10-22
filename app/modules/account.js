@@ -37,10 +37,10 @@ export function setKeys (keys: any) {
   }
 }
 
-export const onWifChange = (history: Object, wif: string) => (dispatch: DispatchType) => {
+export const onWifChange = (history: Object, wif: string, route: string) => (dispatch: DispatchType) => {
   if (verifyPrivateKey(wif)) {
     dispatch(login(wif))
-    history.push('/dashboard')
+    history.push(route)
   } else {
     dispatch(sendEvent(false, 'That is not a valid private key'))
     setTimeout(() => dispatch(clearTransactionEvent()), 5000)
