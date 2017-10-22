@@ -1,9 +1,8 @@
 // @flow
 import React, { Component } from 'react'
 import { Link } from 'react-router'
-import classNames from 'classnames'
 import storage from 'electron-json-storage'
-import { map, noop } from 'lodash'
+import { map } from 'lodash'
 import FaEye from 'react-icons/lib/fa/eye'
 import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
 import Logo from '../../components/Logo'
@@ -48,7 +47,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
   render () {
     const { accountKeys, decrypting, history, loginNep2 } = this.props
     const { showKey, passphrase, wif } = this.state
-    const isLoginButtonDisabled = Object.keys(accountKeys).length === 0 || !wif
+    const loginButtonDisabled = Object.keys(accountKeys).length === 0 || wif === '' || passphrase === ''
 
     return (
       <div id='loginPage'>
@@ -78,9 +77,9 @@ export default class LoginLocalStorage extends Component<Props, State> {
           </div>
           <div className='loginButtons'>
             <button
-              className={classNames({'disabled': isLoginButtonDisabled})}
-              onClick={() => isLoginButtonDisabled ? noop : loginNep2(passphrase, wif, history)}
-              disabled={isLoginButtonDisabled}>Login</button>
+              className={loginButtonDisabled && 'disabled'}
+              onClick={() => loginNep2(passphrase, wif, history)}
+              disabled={loginButtonDisabled}>Login</button>
             <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>
           </div>
           {decrypting && <div className='decrypting'>Decrypting keys...</div>}

@@ -31,6 +31,7 @@ export default class LoginPrivateKey extends Component<Props, State> {
   render () {
     const { history, loginWithPrivateKey } = this.props
     const { showKey, wif } = this.state
+    const loginButtonDisabled = wif === ''
 
     return (
       <div id='loginPage'>
@@ -50,7 +51,10 @@ export default class LoginPrivateKey extends Component<Props, State> {
             }
           </div>
           <div className='loginButtons'>
-            <button onClick={() => loginWithPrivateKey(wif, history)}>Login</button>
+            <button
+              onClick={() => loginWithPrivateKey(wif, history)}
+              disabled={loginButtonDisabled}
+              className={loginButtonDisabled && 'disabled'}>Login</button>
             <Link to='/'><button className='altButton'>Home</button></Link>
           </div>
           <Footer />
