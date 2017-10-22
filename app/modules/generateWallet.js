@@ -54,7 +54,7 @@ export const saveKey = (keyName: string, passphraseKey: string) => (dispatch: Di
 }
 
 export const generateNewWallet = (passphrase: string, passphrase2: string) => (dispatch: DispatchType) => {
-  if (!passphrase || !passphrase2) return null
+  if (!passphrase || !passphrase2) return false
 
   if (passphrase !== passphrase2) {
     dispatch(sendEvent(false, 'Passphrases do not match'))
@@ -71,10 +71,11 @@ export const generateNewWallet = (passphrase: string, passphrase2: string) => (d
         dispatch(clearTransactionEvent())
       })
     }, 500)
+    return true
   } else {
     dispatch(sendEvent(false, 'Please choose a longer passphrase'))
     setTimeout(() => clearTransactionEvent(), 5000)
-    return null
+    return false
   }
 }
 
