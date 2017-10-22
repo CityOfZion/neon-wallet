@@ -5,7 +5,6 @@ import LoginPrivateKey from './LoginPrivateKey'
 import { loginWithPrivateKey } from '../../modules/account'
 
 const mapStateToProps = (state: Object) => ({
-  loggedIn: state.account.loggedIn,
   wif: state.account.wif
 })
 
