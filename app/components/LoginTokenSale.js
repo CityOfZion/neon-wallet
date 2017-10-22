@@ -46,6 +46,7 @@ class LoginTokenSale extends Component<Props, State> {
               placeholder='Enter your private key here (WIF)'
               onChange={(e) => this.setState({ wif: e.target.value })}
               value={wif}
+              autoFocus
             />
           </div>
           <div className='loginButtons'>

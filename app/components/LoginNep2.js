@@ -83,6 +83,7 @@ class LoginNep2 extends Component<Props, State> {
               placeholder='Enter your passphrase here'
               onChange={(e) => this.setState({ passphrase: e.target.value })}
               value={passphrase}
+              autoFocus
             />
             {showKey
               ? <FaEyeSlash className='viewKey' onClick={this.toggleKeyVisibility} />

@@ -93,6 +93,7 @@ class LoginLocalStorage extends Component<Props, State> {
             placeholder='Enter your passphrase here'
             value={passphrase}
             onChange={(e) => this.setState({ passphrase: e.target.value })}
+            autoFocus
           />
 
           {showKey
