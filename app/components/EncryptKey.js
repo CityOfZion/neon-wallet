@@ -90,6 +90,7 @@ class EncryptKey extends Component<Props, State> {
           value={passphrase}
           onChange={(e) => this.setState({ passphrase: e.target.value })}
           placeholder='Enter passphrase here'
+          autoFocus
         />
         <input
           type='text'
