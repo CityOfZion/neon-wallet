@@ -4,6 +4,7 @@ import { isNil } from 'lodash'
 import { Link } from 'react-router'
 import DisplayWalletKeys from '../../components/DisplayWalletKeys'
 import Logo from '../../components/Logo'
+import { ROUTES } from '../../core/constants'
 
 type Props = {
     generateNewWallet: Function,
@@ -47,6 +48,7 @@ export default class CreateWallet extends Component<Props, State> {
     const { generating, address, encryptedWif, resetKey, saveKey, wif } = this.props
     const passphraseFromProps = this.props.passphrase
     const { passphrase, passphrase2 } = this.state
+    const disabledButton = passphrase === '' || passphrase2 === ''
 
     const passphraseDiv = (
       <div>
@@ -66,8 +68,8 @@ export default class CreateWallet extends Component<Props, State> {
           value={passphrase2}
           onChange={(e) => this.setState({ passphrase2: e.target.value })}
         />
-        <button onClick={this.generateNewWallet} > Generate keys </button>
-        <Link to='/'><button className='altButton'>Home</button></Link>
+        <button disabled={disabledButton} className={disabledButton && 'disabled'} onClick={this.generateNewWallet}> Generate keys </button>
+        <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>
       </div>
     )
 
