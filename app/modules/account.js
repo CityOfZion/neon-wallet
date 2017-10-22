@@ -1,7 +1,8 @@
 // @flow
-import { getAccountFromWIFKey } from 'neon-js'
-import { verifyPrivateKey } from '../core/wallet'
+import { getAccountFromWIFKey, decryptWIF } from 'neon-js'
+import { verifyPrivateKey, validatePassphrase } from '../core/wallet'
 import { sendEvent, clearTransactionEvent } from './transactions'
+import { ROUTES } from '../core/constants'
 
 // Constants
 export const LOGIN = 'LOGIN'
@@ -37,10 +38,37 @@ export function setKeys (keys: any) {
   }
 }
 
-export const onWifChange = (history: Object, wif: string, route: RouteType) => (dispatch: DispatchType) => {
+export const loginNep2 = (passphrase: string, wif: string, history: Object) => (dispatch: DispatchType) => {
+  if (!passphrase || !wif) { return null }
+
+  if (!validatePassphrase(passphrase)) {
+    dispatch(sendEvent(false, 'Passphrase too short'))
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+    return null
+  }
+  dispatch(sendEvent(true, 'Decrypting encoded key...'))
+  const wrongPassphraseAction = () => {
+    dispatch(sendEvent(false, 'Wrong passphrase'))
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+  }
+  setTimeout(() => {
+    try {
+      decryptWIF(wif, passphrase).then((wif) => {
+        dispatch(login(wif))
+        history.push(ROUTES.DASHBOARD)
+        dispatch(clearTransactionEvent())
+      }).catch(() => {
+        wrongPassphraseAction()
+      })
+    } catch (e) {
+      wrongPassphraseAction()
+    }
+  }, 500)
+}
+export const loginWithPrivateKey = (wif: string, history: Object) => (dispatch: DispatchType) => {
   if (verifyPrivateKey(wif)) {
     dispatch(login(wif))
-    history.push(route)
+    history.push(ROUTES.DASHBOARD)
   } else {
     dispatch(sendEvent(false, 'That is not a valid private key'))
     setTimeout(() => dispatch(clearTransactionEvent()), 5000)

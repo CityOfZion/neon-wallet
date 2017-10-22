@@ -2,7 +2,7 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import LoginPrivateKey from './LoginPrivateKey'
-import { onWifChange } from '../../modules/account'
+import { loginWithPrivateKey } from '../../modules/account'
 
 const mapStateToProps = (state: Object) => ({
   loggedIn: state.account.loggedIn,
@@ -10,7 +10,7 @@ const mapStateToProps = (state: Object) => ({
 })
 
 const actionCreators = {
-  onWifChange
+  loginWithPrivateKey
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)

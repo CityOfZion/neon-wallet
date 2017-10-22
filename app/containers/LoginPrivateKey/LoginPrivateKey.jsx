@@ -5,10 +5,9 @@ import FaEye from 'react-icons/lib/fa/eye'
 import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
 import Logo from '../../components/Logo'
 import Footer from '../../components/Footer'
-import { ROUTES } from '../../core/constants'
 
 type Props = {
-    onWifChange: Function,
+    loginWithPrivateKey: Function,
     history: Object
 }
 
@@ -38,10 +37,10 @@ export default class LoginPrivateKey extends Component<Props, State> {
   }
 
   handleVerify = () => {
-    const { onWifChange, history } = this.props
+    const { loginWithPrivateKey, history } = this.props
     const { wif } = this.state
 
-    onWifChange(history, wif, ROUTES.DASHBOARD)
+    loginWithPrivateKey(wif, history)
   }
 
   render () {

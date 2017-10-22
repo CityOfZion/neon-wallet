@@ -20,6 +20,7 @@ export const ASSETS_LABELS = {
 }
 
 export const ROUTES = {
+  HOME: '/',
   DASHBOARD: '/dashboard',
   CREATE_WALLET: '/create',
   ENCRYPT_KEY: '/encryptKey',

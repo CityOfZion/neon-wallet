@@ -6,12 +6,14 @@ import LoginPrivateKey from './containers/LoginPrivateKey'
 import TokenSale from './containers/TokenSale'
 import CreateWallet from './containers/CreateWallet'
 import Dashboard from './containers/Dashboard'
+import LoginLocalStorage from './containers/LoginLocalStorage'
+
 import LoginNep2 from './components/LoginNep2'
-import Home from './components/Home'
 import Settings from './components/Settings'
-import LoginLocalStorage from './components/LoginLocalStorage'
 import LoginTokenSale from './components/LoginTokenSale'
 import EncryptKey from './components/EncryptKey'
+
+import Home from './components/Home'
 
 export default (
   <Route path='/' component={App}>
