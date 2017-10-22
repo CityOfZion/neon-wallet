@@ -28,14 +28,6 @@ export default class LoginPrivateKey extends Component<Props, State> {
     }))
   }
 
-  handleInputChange = (e: SyntheticInputEvent<*>) => {
-    const value = e.target.value
-
-    this.setState({
-      wif: value
-    })
-  }
-
   render () {
     const { history, loginWithPrivateKey } = this.props
     const { showKey, wif } = this.state
@@ -48,7 +40,7 @@ export default class LoginPrivateKey extends Component<Props, State> {
             <input
               type={showKey ? 'text' : 'password'}
               placeholder='Enter your private key here (WIF)'
-              onChange={this.handleInputChange}
+              onChange={(e) => this.setState({ wif: e.target.value })}
               autoFocus
             />
 
