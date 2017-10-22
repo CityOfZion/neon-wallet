@@ -5,6 +5,7 @@ import FaEye from 'react-icons/lib/fa/eye'
 import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
 import Logo from '../../components/Logo'
 import Footer from '../../components/Footer'
+import { ROUTES } from '../../core/constants'
 
 type Props = {
     onWifChange: Function,
@@ -40,7 +41,7 @@ export default class LoginPrivateKey extends Component<Props, State> {
     const { onWifChange, history } = this.props
     const { wif } = this.state
 
-    onWifChange(history, wif)
+    onWifChange(history, wif, ROUTES.DASHBOARD)
   }
 
   render () {
