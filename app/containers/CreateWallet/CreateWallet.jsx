@@ -58,6 +58,7 @@ export default class CreateWallet extends Component<Props, State> {
           placeholder='Enter passphrase here'
           value={passphrase}
           onChange={(e) => this.setState({ passphrase: e.target.value })}
+          autoFocus
         />
         <input
           type='text'
