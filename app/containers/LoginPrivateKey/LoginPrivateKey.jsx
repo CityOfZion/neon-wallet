@@ -36,15 +36,9 @@ export default class LoginPrivateKey extends Component<Props, State> {
     })
   }
 
-  handleVerify = () => {
-    const { loginWithPrivateKey, history } = this.props
-    const { wif } = this.state
-
-    loginWithPrivateKey(wif, history)
-  }
-
   render () {
-    const { showKey } = this.state
+    const { history, loginWithPrivateKey } = this.props
+    const { showKey, wif } = this.state
 
     return (
       <div id='loginPage'>
@@ -64,7 +58,7 @@ export default class LoginPrivateKey extends Component<Props, State> {
             }
           </div>
           <div className='loginButtons'>
-            <button onClick={this.handleVerify}>Login</button>
+            <button onClick={() => loginWithPrivateKey(wif, history)}>Login</button>
             <Link to='/'><button className='altButton'>Home</button></Link>
           </div>
           <Footer />
