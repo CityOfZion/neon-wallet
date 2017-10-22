@@ -1,8 +1,7 @@
 // @flow
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { newWallet, resetKey } from '../../modules/generateWallet'
-import { sendEvent, clearTransactionEvent } from '../../modules/transactions'
+import { saveKey, resetKey, generateNewWallet } from '../../modules/generateWallet'
 import CreateWallet from './CreateWallet'
 
 const mapStateToProps = (state) => ({
@@ -14,10 +13,9 @@ const mapStateToProps = (state) => ({
 })
 
 const actionCreators = {
-  newWallet,
-  sendEvent,
-  clearTransactionEvent,
-  resetKey
+  saveKey,
+  resetKey,
+  generateNewWallet
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)

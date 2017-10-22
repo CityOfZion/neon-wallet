@@ -1,16 +1,13 @@
 // @flow
 import React, { Component } from 'react'
-import { generateEncryptedWif } from 'neon-js'
 import { isNil } from 'lodash'
 import { Link } from 'react-router'
 import DisplayWalletKeys from '../../components/DisplayWalletKeys'
-import { validatePassphrase } from '../../core/wallet'
 import Logo from '../../components/Logo'
 
 type Props = {
-    newWallet: Function,
-    sendEvent: Function,
-    clearTransactionEvent: Function,
+    generateNewWallet: Function,
+    saveKey: Function,
     resetKey: Function,
     address: string,
     generating: boolean,
@@ -32,28 +29,9 @@ export default class CreateWallet extends Component<Props, State> {
 
   generateNewWallet = () => {
     const { passphrase, passphrase2 } = this.state
-    const { clearTransactionEvent, sendEvent, newWallet } = this.props
-
-    if (!passphrase || !passphrase2) return null
-
-    if (passphrase !== passphrase2) {
-      sendEvent(false, 'Passphrases do not match')
-      setTimeout(() => clearTransactionEvent(), 5000)
-      return
-    }
-    if (validatePassphrase(passphrase)) {
-      // TODO: for some reason this blocks, so giving time to processes the earlier
-      // dispatch to display "generating" text, should fix this in future
-      sendEvent(true, 'Generating encoded key...')
-      setTimeout(() => {
-        generateEncryptedWif(passphrase).then((result) => {
-          newWallet(result)
-          clearTransactionEvent()
-        })
-      }, 500)
-    } else {
-      sendEvent(false, 'Please choose a longer passphrase')
-      setTimeout(() => clearTransactionEvent(), 5000)
+    const { generateNewWallet } = this.props
+    const result = generateNewWallet(passphrase, passphrase2)
+    if (!result) {
       this.resetPassphrases()
     }
   }
@@ -66,7 +44,8 @@ export default class CreateWallet extends Component<Props, State> {
   }
 
   render () {
-    const { generating, address, encryptedWif, resetKey, clearTransactionEvent, sendEvent } = this.props
+    const { generating, address, encryptedWif, resetKey, saveKey, wif } = this.props
+    const passphraseFromProps = this.props.passphrase
     const { passphrase, passphrase2 } = this.state
 
     const passphraseDiv = (
@@ -94,17 +73,16 @@ export default class CreateWallet extends Component<Props, State> {
     return (
       <div id='newWallet'>
         <Logo />
-        {isNil(this.props.wif) ? passphraseDiv : <div />}
+        {isNil(wif) ? passphraseDiv : <div />}
         {generating && <div className='generating'>Generating keys...</div>}
-        {!generating && !isNil(this.props.wif) &&
+        {!generating && !isNil(wif) &&
         <DisplayWalletKeys
           address={address}
-          wif={this.props.wif}
-          passphrase={this.props.passphrase}
+          wif={wif}
+          passphrase={passphraseFromProps}
           passphraseKey={encryptedWif}
           resetKey={resetKey}
-          sendEvent={sendEvent}
-          clearTransactionEvent={clearTransactionEvent}
+          saveKey={saveKey}
         />
         }
       </div>

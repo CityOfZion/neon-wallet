@@ -5,12 +5,10 @@ import QRCode from 'qrcode'
 import { clipboard } from 'electron'
 import Copy from 'react-icons/lib/md/content-copy'
 import ReactTooltip from 'react-tooltip'
-import storage from 'electron-json-storage'
 
 type Props = {
   resetKey: Function,
-  sendEvent: Function,
-  clearTransactionEvent: Function,
+  saveKey: Function,
   address: string,
   wif: string,
   passphraseKey: string,
@@ -39,22 +37,8 @@ class DisplayWalletKeys extends Component<Props, State> {
     })
   }
 
-  saveKey = () => {
-    const { sendEvent, clearTransactionEvent, passphraseKey } = this.props
-    const { keyName } = this.state
-    if (!keyName) { return null }
-
-    // eslint-disable-next-line
-    storage.get('keys', (error, data) => {
-      data[keyName] = passphraseKey
-      sendEvent(true, `Saved key as ${keyName}`)
-      storage.set('keys', data)
-      setTimeout(() => clearTransactionEvent(), 5000)
-    })
-  }
-
   render () {
-    const { passphrase, address, passphraseKey, wif, resetKey } = this.props
+    const { passphrase, address, passphraseKey, wif, resetKey, saveKey } = this.props
     const { keyName } = this.state
     return (
       <div>
@@ -96,7 +80,7 @@ class DisplayWalletKeys extends Component<Props, State> {
         </div>
         <div className='saveKey'>
           <input type='text' placeholder='Name this key' value={keyName} onChange={(e) => this.setState({ keyName: e.target.value })} />
-          <button onClick={this.saveKey}>Save Key</button>
+          <button onClick={() => saveKey(keyName, passphraseKey)}>Save Key</button>
         </div>
         <Link onClick={() => resetKey()} to='/'><button>Back</button></Link>
         <button onClick={() => window.print()}>Print</button>

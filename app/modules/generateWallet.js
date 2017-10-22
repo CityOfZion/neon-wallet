@@ -1,5 +1,8 @@
 // @flow
-import { getAccountFromWIFKey, generatePrivateKey, getWIFFromPrivateKey, encryptWIF } from 'neon-js'
+import storage from 'electron-json-storage'
+import { generateEncryptedWif, getAccountFromWIFKey, generatePrivateKey, getWIFFromPrivateKey, encryptWIF } from 'neon-js'
+import { sendEvent, clearTransactionEvent } from './transactions'
+import { validatePassphrase } from '../core/wallet'
 
 // Constants
 export const NEW_WALLET_KEYS = 'NEW_WALLET_KEYS'
@@ -35,6 +38,43 @@ export function generating (bool: string) {
 export function resetKey () {
   return {
     type: RESET_KEY
+  }
+}
+
+export const saveKey = (keyName: string, passphraseKey: string) => (dispatch: DispatchType) => {
+  if (!keyName) { return null }
+
+  // eslint-disable-next-line
+  storage.get('keys', (error, data) => {
+    data[keyName] = passphraseKey
+    dispatch(sendEvent(true, `Saved key as ${keyName}`))
+    storage.set('keys', data)
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+  })
+}
+
+export const generateNewWallet = (passphrase: string, passphrase2: string) => (dispatch: DispatchType) => {
+  if (!passphrase || !passphrase2) return null
+
+  if (passphrase !== passphrase2) {
+    dispatch(sendEvent(false, 'Passphrases do not match'))
+    setTimeout(() => clearTransactionEvent(), 5000)
+    return null
+  }
+  if (validatePassphrase(passphrase)) {
+    // TODO: for some reason this blocks, so giving time to processes the earlier
+    // dispatch to display "generating" text, should fix this in future
+    dispatch(sendEvent(true, 'Generating encoded key...'))
+    setTimeout(() => {
+      generateEncryptedWif(passphrase).then((result) => {
+        dispatch(newWallet(result))
+        dispatch(clearTransactionEvent())
+      })
+    }, 500)
+  } else {
+    dispatch(sendEvent(false, 'Please choose a longer passphrase'))
+    setTimeout(() => clearTransactionEvent(), 5000)
+    return null
   }
 }
 
