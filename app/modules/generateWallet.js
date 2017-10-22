@@ -1,3 +1,4 @@
+// @flow
 import { getAccountFromWIFKey, generatePrivateKey, getWIFFromPrivateKey, encryptWIF } from 'neon-js'
 
 // Constants
@@ -7,14 +8,14 @@ export const SET_GENERATING = 'SET_GENERATING'
 export const RESET_KEY = 'RESET_KEY'
 
 // Actions
-export function newWalletKeys (passphrase) {
+export function newWalletKeys (passphrase: string) {
   return {
     type: NEW_WALLET_KEYS,
     passphrase
   }
 }
 
-export function newWallet (account) {
+export function newWallet (account: Object) {
   return {
     type: NEW_WALLET,
     wif: account.wif,
@@ -24,7 +25,7 @@ export function newWallet (account) {
   }
 }
 
-export function generating (bool) {
+export function generating (bool: string) {
   return {
     type: SET_GENERATING,
     state: bool
@@ -38,7 +39,7 @@ export function resetKey () {
 }
 
 // Reducer used for state necessary to generating a wallet
-export default (state = { wif: null, address: null, passphrase: null, encryptedWif: null, generating: false }, action) => {
+export default (state: Object = { wif: null, address: null, passphrase: null, encryptedWif: null, generating: false }, action: Object) => {
   switch (action.type) {
     case NEW_WALLET_KEYS:
       const newPrivateKey = generatePrivateKey()

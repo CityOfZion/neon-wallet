@@ -1,17 +1,17 @@
 // @flow
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { generateEncryptedWif } from 'neon-js'
 import { isNil } from 'lodash'
 import { Link } from 'react-router'
-import { newWallet } from '../modules/generateWallet'
-import DisplayWalletKeys from './DisplayWalletKeys'
-import { sendEvent, clearTransactionEvent } from '../modules/transactions'
-import { validatePassphrase } from '../core/wallet'
-import Logo from './Logo'
+import DisplayWalletKeys from '../../components/DisplayWalletKeys'
+import { validatePassphrase } from '../../core/wallet'
+import Logo from '../../components/Logo'
 
 type Props = {
-    dispatch: DispatchType,
+    newWallet: Function,
+    sendEvent: Function,
+    clearTransactionEvent: Function,
+    resetKey: Function,
     address: string,
     generating: boolean,
     wif: string,
@@ -24,36 +24,36 @@ type State = {
   passphrase2: string,
 }
 
-class CreateWallet extends Component<Props, State> {
+export default class CreateWallet extends Component<Props, State> {
   state = {
     passphrase: '',
     passphrase2: ''
   }
 
   generateNewWallet = () => {
-    const { dispatch } = this.props
     const { passphrase, passphrase2 } = this.state
+    const { clearTransactionEvent, sendEvent, newWallet } = this.props
 
     if (!passphrase || !passphrase2) return null
 
     if (passphrase !== passphrase2) {
-      dispatch(sendEvent(false, 'Passphrases do not match'))
-      setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+      sendEvent(false, 'Passphrases do not match')
+      setTimeout(() => clearTransactionEvent(), 5000)
       return
     }
     if (validatePassphrase(passphrase)) {
       // TODO: for some reason this blocks, so giving time to processes the earlier
       // dispatch to display "generating" text, should fix this in future
-      dispatch(sendEvent(true, 'Generating encoded key...'))
+      sendEvent(true, 'Generating encoded key...')
       setTimeout(() => {
         generateEncryptedWif(passphrase).then((result) => {
-          dispatch(newWallet(result))
-          dispatch(clearTransactionEvent())
+          newWallet(result)
+          clearTransactionEvent()
         })
       }, 500)
     } else {
-      dispatch(sendEvent(false, 'Please choose a longer passphrase'))
-      setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+      sendEvent(false, 'Please choose a longer passphrase')
+      setTimeout(() => clearTransactionEvent(), 5000)
       this.resetPassphrases()
     }
   }
@@ -66,7 +66,7 @@ class CreateWallet extends Component<Props, State> {
   }
 
   render () {
-    const { generating, address, encryptedWif, dispatch } = this.props
+    const { generating, address, encryptedWif, resetKey, clearTransactionEvent, sendEvent } = this.props
     const { passphrase, passphrase2 } = this.state
 
     const passphraseDiv = (
@@ -102,20 +102,12 @@ class CreateWallet extends Component<Props, State> {
           wif={this.props.wif}
           passphrase={this.props.passphrase}
           passphraseKey={encryptedWif}
-          dispatch={dispatch}
+          resetKey={resetKey}
+          sendEvent={sendEvent}
+          clearTransactionEvent={clearTransactionEvent}
         />
         }
       </div>
     )
   }
 }
-
-const mapStateToProps = (state) => ({
-  wif: state.generateWallet.wif,
-  address: state.generateWallet.address,
-  encryptedWif: state.generateWallet.encryptedWif,
-  passphrase: state.generateWallet.passphrase,
-  generating: state.generateWallet.generating
-})
-
-export default connect(mapStateToProps)(CreateWallet)

@@ -6,11 +6,11 @@ import { clipboard } from 'electron'
 import Copy from 'react-icons/lib/md/content-copy'
 import ReactTooltip from 'react-tooltip'
 import storage from 'electron-json-storage'
-import { resetKey } from '../modules/generateWallet'
-import { sendEvent, clearTransactionEvent } from '../modules/transactions'
 
 type Props = {
-  dispatch: DispatchType,
+  resetKey: Function,
+  sendEvent: Function,
+  clearTransactionEvent: Function,
   address: string,
   wif: string,
   passphraseKey: string,
@@ -40,26 +40,21 @@ class DisplayWalletKeys extends Component<Props, State> {
   }
 
   saveKey = () => {
-    const { dispatch, passphraseKey } = this.props
+    const { sendEvent, clearTransactionEvent, passphraseKey } = this.props
     const { keyName } = this.state
     if (!keyName) { return null }
 
     // eslint-disable-next-line
     storage.get('keys', (error, data) => {
       data[keyName] = passphraseKey
-      dispatch(sendEvent(true, `Saved key as ${keyName}`))
+      sendEvent(true, `Saved key as ${keyName}`)
       storage.set('keys', data)
-      setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+      setTimeout(() => clearTransactionEvent(), 5000)
     })
   }
 
-  resetGeneratedKey = () => {
-    const { dispatch } = this.props
-    dispatch(resetKey())
-  }
-
   render () {
-    const { passphrase, address, passphraseKey, wif } = this.props
+    const { passphrase, address, passphraseKey, wif, resetKey } = this.props
     const { keyName } = this.state
     return (
       <div>
@@ -103,7 +98,7 @@ class DisplayWalletKeys extends Component<Props, State> {
           <input type='text' placeholder='Name this key' value={keyName} onChange={(e) => this.setState({ keyName: e.target.value })} />
           <button onClick={this.saveKey}>Save Key</button>
         </div>
-        <Link onClick={this.resetGeneratedKey} to='/'><button>Back</button></Link>
+        <Link onClick={() => resetKey()} to='/'><button>Back</button></Link>
         <button onClick={() => window.print()}>Print</button>
         <ReactTooltip class='solidTip' id='copyPublicKeyTip' place='bottom' type='dark' effect='solid'>
           <span>Copy Public Key</span>
