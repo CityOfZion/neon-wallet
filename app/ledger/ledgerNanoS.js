@@ -1,5 +1,6 @@
-import commNode from './ledger-comm-node'
+import commNode from '../ledger/ledger-comm-node'
 import axios from 'axios'
+import { BIP44_PATH } from '../core/constants'
 import {
   signTransaction,
   serializeTransaction,
@@ -19,98 +20,6 @@ export let ledgerNanoSGetPublicKey
 export let ledgerNanoSGetPublicKeyInfo
 export let ledgerNanoSGetDeviceInfo
 
-const bip44Path =
-  '8000002C' +
-  '80000378' +
-  '80000000' +
-  '00000000' +
-  '00000000'
-
-export const ledgerNanoSGetAsynchGetInfo = function () {
-  ledgerNanoSGetDeviceInfo = 'Initialising Device Info'
-  ledgerNanoSGetPublicKeyInfo = 'Initialising App Info'
-
-  process.stdout.write('started ledgerNanoSGetAsynchGetInfo  \n')
-  var promiseLedgerDevice = new Promise(getLedgerDeviceInfo)
-  process.stdout.write('success ledgerNanoSGetAsynchGetInfo  \n')
-
-  var catchFn = function (reason) {
-    process.stdout.write('ledgerNanoSGetAsynchGetInfo error reason ' + reason + '\n')
-  }
-
-  return promiseLedgerDevice.then(function () {
-    var promisePublicKey = new Promise(getPublicKeyInfo)
-    return promisePublicKey
-  }).catch(catchFn)
-}
-
-const getLedgerDeviceInfo = function (resolve, reject) {
-  process.stdout.write('started getLedgerDeviceInfo  \n')
-  ledgerNanoSGetDeviceInfo = 'Looking for USB Devices'
-  commNode.list_async().then(function (result) {
-    if (result.length === 0) {
-      process.stdout.write('getLedgerDeviceInfo "No device found"\n')
-      ledgerNanoSGetDeviceInfo = 'USB Failure : No device found'
-      resolve(ledgerNanoSGetDeviceInfo)
-    } else {
-      commNode.create_async().then(function (comm) {
-        var deviceInfo = comm.device.getDeviceInfo()
-        ledgerNanoSGetDeviceInfo = 'Found USB ' + deviceInfo.manufacturer + ' ' + deviceInfo.product
-        process.stdout.write('getLedgerDeviceInfo success  "' + ledgerNanoSGetDeviceInfo + '"\n')
-        comm.device.close()
-        resolve(ledgerNanoSGetDeviceInfo)
-      })
-        .catch(function (reason) {
-          ledgerNanoSGetDeviceInfo = 'Finding USB Error :' + reason
-          process.stdout.write('getLedgerDeviceInfo error reason "' + reason + '"\n')
-          resolve(ledgerNanoSGetDeviceInfo)
-        })
-    }
-  })
-  process.stdout.write('success getLedgerDeviceInfo  \n')
-}
-
-const getPublicKeyInfo = function (resolve, reject) {
-  process.stdout.write('started getPublicKeyInfo  \n')
-  ledgerNanoSGetPublicKey = undefined
-  ledgerNanoSGetPublicKeyInfo = undefined
-  commNode.list_async().then(function (result) {
-    if (result.length === 0) {
-      process.stdout.write('getPublicKeyInfo "No device found"\n')
-      ledgerNanoSGetPublicKeyInfo = 'App Failure : No device found'
-      resolve(ledgerNanoSGetDeviceInfo)
-    } else {
-      commNode.create_async().then(function (comm) {
-        var message = Buffer.from('8004000000' + bip44Path, 'hex')
-        var validStatus = [0x9000]
-        comm.exchange(message.toString('hex'), validStatus).then(function (response) {
-          comm.device.close()
-          ledgerNanoSGetPublicKey = response.substring(0, 130)
-          ledgerNanoSGetPublicKeyInfo = 'App Found, Public Key Available'
-          process.stdout.write('getPublicKey success  "' + ledgerNanoSGetPublicKey + '"\n')
-          process.stdout.write('getPublicKeyInfo success  "' + ledgerNanoSGetPublicKeyInfo + '"\n')
-          resolve(ledgerNanoSGetPublicKeyInfo)
-        }).catch(function (reason) {
-          comm.device.close()
-          process.stdout.write('getPublicKeyInfo comm.exchange error reason ' + reason + '\n')
-          if (reason === 'Invalid status 28160') {
-            ledgerNanoSGetPublicKeyInfo = 'NEO App does not appear to be open, request for private key returned error 28160.'
-          } else {
-            ledgerNanoSGetPublicKeyInfo = 'Public Key Comm Messaging Error :' + reason
-          }
-          resolve(ledgerNanoSGetPublicKeyInfo)
-        })
-      })
-        .catch(function (reason) {
-          process.stdout.write('getPublicKeyInfo commNode.create_async error reason ' + reason + '\n')
-          ledgerNanoSGetPublicKeyInfo = 'Public Key Comm Init Error :' + reason
-          resolve(ledgerNanoSGetPublicKeyInfo)
-        })
-    }
-  })
-  process.stdout.write('success getPublicKeyInfo  \n')
-}
-
 export const ledgerNanoSFromWif = function () {
   const publicKey = ledgerNanoSGetPublicKey
   const publicKeyEncoded = getPublicKeyEncoded(publicKey)
@@ -120,24 +29,21 @@ export const ledgerNanoSFromWif = function () {
 
 export const ledgerNanoSGetdoSendAsset = (net, toAddress, fromWif, assetAmounts, signingFunction) => {
   return new Promise(function (resolve, reject) {
-    process.stdout.write('started ledgerNanoSGetdoSendAsset fromWifFn "' + (fromWif instanceof Function) + '"\n')
-    process.stdout.write('started ledgerNanoSGetdoSendAsset signingFunctionFn "' + (signingFunction instanceof Function) + '"\n')
+    // process.stdout.write('started ledgerNanoSGetdoSendAsset fromWifFn "' + (fromWif instanceof Function) + '"\n')
+    // process.stdout.write('started ledgerNanoSGetdoSendAsset signingFunctionFn "' + (signingFunction instanceof Function) + '"\n')
     var fromAccount
     if (fromWif instanceof Function) {
       fromAccount = fromWif()
     } else {
       fromAccount = getAccountFromWIFKey(fromWif)
     }
-    process.stdout.write('interim ledgerNanoSGetdoSendAsset fromAccount "' + JSON.stringify(fromAccount) + '" \n')
-
-    process.stdout.write('interim ledgerNanoSGetdoSendAsset toAddress "' + toAddress + '" \n')
-
+    // process.stdout.write('interim ledgerNanoSGetdoSendAsset fromAccount "' + JSON.stringify(fromAccount) + '" \n')
+    // process.stdout.write('interim ledgerNanoSGetdoSendAsset toAddress "' + toAddress + '" \n')
     const toScriptHash = getScriptHashFromAddress(toAddress)
-
-    process.stdout.write('interim ledgerNanoSGetdoSendAsset toScriptHash "' + toScriptHash + '" \n')
+    // process.stdout.write('interim ledgerNanoSGetdoSendAsset toScriptHash "' + toScriptHash + '" \n')
 
     return getBalance(net, fromAccount.address).then((balances) => {
-      process.stdout.write('interim ledgerNanoSGetdoSendAsset getBalance assetAmounts "' + JSON.stringify(assetAmounts) + '" balances "' + JSON.stringify(balances) + '" \n')
+      // process.stdout.write('interim ledgerNanoSGetdoSendAsset getBalance assetAmounts "' + JSON.stringify(assetAmounts) + '" balances "' + JSON.stringify(balances) + '" \n')
 
       /* eslint-disable */
       const intents = _.map(assetAmounts, (v, k) => {
@@ -145,50 +51,49 @@ export const ledgerNanoSGetdoSendAsset = (net, toAddress, fromWif, assetAmounts,
       })
       /* eslint-enable */
 
-      process.stdout.write('interim ledgerNanoSGetdoSendAsset transferTransaction \n')
-
+      // process.stdout.write('interim ledgerNanoSGetdoSendAsset transferTransaction \n')
       if (signingFunction instanceof Function) {
         const txData = serializeTransaction(create.contract(fromAccount.publicKeyEncoded, balances, intents))
-        process.stdout.write('interim ledgerNanoSGetdoSendAsset txData "' + txData + '" \n')
+        // process.stdout.write('interim ledgerNanoSGetdoSendAsset txData "' + txData + '" \n')
         signingFunction(txData).then((sign) => {
-          process.stdout.write('interim ledgerNanoSGetdoSendAsset sign1 "' + JSON.stringify(sign) + '" \n')
-          process.stdout.write('interim ledgerNanoSGetdoSendAsset sign2 "' + JSON.stringify(sign) + '" \n')
-          process.stdout.write('interim ledgerNanoSGetdoSendAsset sign account "' + JSON.stringify(fromAccount) + '" \n')
-          process.stdout.write('interim ledgerNanoSGetdoSendAsset sign account.publicKeyEncoded "' + fromAccount.publicKeyEncoded + '" \n')
-          process.stdout.write('interim ledgerNanoSGetdoSendAsset sign Ledger "' + sign + '" \n')
+          // process.stdout.write('interim ledgerNanoSGetdoSendAsset sign1 "' + JSON.stringify(sign) + '" \n')
+          // process.stdout.write('interim ledgerNanoSGetdoSendAsset sign2 "' + JSON.stringify(sign) + '" \n')
+          // process.stdout.write('interim ledgerNanoSGetdoSendAsset sign account "' + JSON.stringify(fromAccount) + '" \n')
+          // process.stdout.write('interim ledgerNanoSGetdoSendAsset sign account.publicKeyEncoded "' + fromAccount.publicKeyEncoded + '" \n')
+          // process.stdout.write('interim ledgerNanoSGetdoSendAsset sign Ledger "' + sign + '" \n')
           const txRawData = addContract(txData, sign, fromAccount.publicKeyEncoded)
           queryRPC(net, 'sendrawtransaction', [txRawData], 4).then((response) => {
-            process.stdout.write('interim ledgerNanoSGetdoSendAsset sendrawtransaction "' + JSON.stringify(response) + '" \n')
+            // process.stdout.write('interim ledgerNanoSGetdoSendAsset sendrawtransaction "' + JSON.stringify(response) + '" \n')
             resolve(response)
           })
             .catch(function (reason) {
-              process.stdout.write('failure ledgerNanoSGetdoSendAsset ' + reason + '\n')
+              console.log('failure ledgerNanoSGetdoSendAsset ')
               reject(reason)
             })
         })
           .catch(function (reason) {
-            process.stdout.write('failure ledgerNanoSGetdoSendAsset ' + reason + '\n')
+            console.log('failure ledgerNanoSGetdoSendAsset ')
             reject(reason)
           })
       } else {
-        process.stdout.write('interim ledgerNanoSGetdoSendAsset create.contract\n')
+        // process.stdout.write('interim ledgerNanoSGetdoSendAsset create.contract\n')
         const unsignedTx = create.contract(fromAccount.publicKeyEncoded, balances, intents)
-        process.stdout.write('interim ledgerNanoSGetdoSendAsset unsignedTx ' + unsignedTx + '\n')
+        // process.stdout.write('interim ledgerNanoSGetdoSendAsset unsignedTx ' + unsignedTx + '\n')
         const signedTx = signTransaction(unsignedTx, fromAccount.privateKey)
-        process.stdout.write('interim ledgerNanoSGetdoSendAsset signedTx ' + signedTx + '\n')
+        // process.stdout.write('interim ledgerNanoSGetdoSendAsset signedTx ' + signedTx + '\n')
         const hexTx = serializeTransaction(signedTx)
-        process.stdout.write('interim ledgerNanoSGetdoSendAsset hexTx ' + hexTx + '\n')
+        // process.stdout.write('interim ledgerNanoSGetdoSendAsset hexTx ' + hexTx + '\n')
         queryRPC(net, 'sendrawtransaction', [hexTx], 4).then((response) => {
           resolve(response)
         })
           .catch(function (reason) {
-            process.stdout.write('failure ledgerNanoSGetdoSendAsset ' + reason + '\n')
+            console.log('failure ledgerNanoSGetdoSendAsset ' + reason)
             reject(reason)
           })
       }
     })
       .catch(function (reason) {
-        process.stdout.write('failure ledgerNanoSGetdoSendAsset ' + reason + '\n')
+        console.log('failure ledgerNanoSGetdoSendAsset ' + reason)
         reject(reason)
       })
   })
@@ -196,8 +101,8 @@ export const ledgerNanoSGetdoSendAsset = (net, toAddress, fromWif, assetAmounts,
 
 export const ledgerNanoSGetdoClaimAllGas = (net, fromWif, signingFunction) => {
   return new Promise(function (resolve, reject) {
-    process.stdout.write('started ledgerNanoSGetdoClaimAllGas fromWif "' + JSON.stringify(fromWif) + '"\n')
-    process.stdout.write('started ledgerNanoSGetdoClaimAllGas signingFunction "' + JSON.stringify(signingFunction) + '"\n')
+    // process.stdout.write('started ledgerNanoSGetdoClaimAllGas fromWif "' + JSON.stringify(fromWif) + '"\n')
+    // process.stdout.write('started ledgerNanoSGetdoClaimAllGas signingFunction "' + JSON.stringify(signingFunction) + '"\n')
     const apiEndpoint = getAPIEndpoint(net)
 
     var fromAccount
@@ -207,50 +112,50 @@ export const ledgerNanoSGetdoClaimAllGas = (net, fromWif, signingFunction) => {
       fromAccount = getAccountFromWIFKey(fromWif)
     }
 
-    process.stdout.write('interim ledgerNanoSGetdoClaimAllGas sign fromAccount "' + JSON.stringify(fromAccount) + '" \n')
+    // process.stdout.write('interim ledgerNanoSGetdoClaimAllGas sign fromAccount "' + JSON.stringify(fromAccount) + '" \n')
 
     // TODO: when fully working replace this with mainnet/testnet switch
     return axios.get(apiEndpoint + '/v2/address/claims/' + fromAccount.address).then((response) => {
-      process.stdout.write('interim ledgerNanoSGetdoClaimAllGas sign signingFunction "' + (signingFunction instanceof Function) + '" \n')
+      // process.stdout.write('interim ledgerNanoSGetdoClaimAllGas sign signingFunction "' + (signingFunction instanceof Function) + '" \n')
       if (signingFunction instanceof Function) {
         const txData = serializeTransaction(create.claim(fromAccount.publicKeyEncoded, response.data))
-        process.stdout.write('interim ledgerNanoSGetdoClaimAllGas txData "' + txData + '" \n')
+        // process.stdout.write('interim ledgerNanoSGetdoClaimAllGas txData "' + txData + '" \n')
         signingFunction(txData).then((sign) => {
-          process.stdout.write('interim ledgerNanoSGetdoClaimAllGas sign fromAccount "' + JSON.stringify(fromAccount) + '" \n')
-          process.stdout.write('interim ledgerNanoSGetdoClaimAllGas sign fromAccount.publicKeyEncoded "' + fromAccount.publicKeyEncoded + '" \n')
-          process.stdout.write('interim ledgerNanoSGetdoClaimAllGas sign Ledger "' + sign + '" \n')
+          // process.stdout.write('interim ledgerNanoSGetdoClaimAllGas sign fromAccount "' + JSON.stringify(fromAccount) + '" \n')
+          // process.stdout.write('interim ledgerNanoSGetdoClaimAllGas sign fromAccount.publicKeyEncoded "' + fromAccount.publicKeyEncoded + '" \n')
+          // process.stdout.write('interim ledgerNanoSGetdoClaimAllGas sign Ledger "' + sign + '" \n')
           const txRawData = addContract(txData, sign, fromAccount.publicKeyEncoded)
           queryRPC(net, 'sendrawtransaction', [txRawData], 4).then((response) => {
             resolve(response)
           })
             .catch(function (reason) {
-              process.stdout.write('failure ledgerNanoSGetdoClaimAllGas ' + reason + '\n')
+              console.log('failure ledgerNanoSGetdoClaimAllGas ' + reason)
               reject(reason)
             })
         })
           .catch(function (reason) {
-            process.stdout.write('failure ledgerNanoSGetdoClaimAllGas ' + reason + '\n')
+            console.log('failure ledgerNanoSGetdoClaimAllGas ' + reason)
             reject(reason)
           })
       } else {
-        process.stdout.write('interim ledgerNanoSGetdoClaimAllGas create.claim\n')
+        // process.stdout.write('interim ledgerNanoSGetdoClaimAllGas create.claim\n')
         const unsignedTx = create.claim(fromAccount.publicKeyEncoded, response.data)
-        process.stdout.write('interim ledgerNanoSGetdoClaimAllGas unsignedTx ' + unsignedTx + '\n')
+        // process.stdout.write('interim ledgerNanoSGetdoClaimAllGas unsignedTx ' + unsignedTx + '\n')
         const signedTx = signTransaction(unsignedTx, fromAccount.privateKey)
-        process.stdout.write('interim ledgerNanoSGetdoClaimAllGas signedTx ' + signedTx + '\n')
+        // process.stdout.write('interim ledgerNanoSGetdoClaimAllGas signedTx ' + signedTx + '\n')
         const hexTx = serializeTransaction(signedTx)
-        process.stdout.write('interim ledgerNanoSGetdoClaimAllGas hexTx ' + hexTx + '\n')
+        // process.stdout.write('interim ledgerNanoSGetdoClaimAllGas hexTx ' + hexTx + '\n')
         queryRPC(net, 'sendrawtransaction', [hexTx], 4).then((response) => {
           resolve(response)
         })
           .catch(function (reason) {
-            process.stdout.write('failure ledgerNanoSGetdoClaimAllGas ' + reason + '\n')
+            console.log('failure ledgerNanoSGetdoClaimAllGas ' + reason)
             reject(reason)
           })
       }
     })
       .catch(function (reason) {
-        process.stdout.write('failure ledgerNanoSGetdoClaimAllGas ' + reason + '\n')
+        console.log('failure ledgerNanoSGetdoClaimAllGas ' + reason)
         reject(reason)
       })
   })
@@ -260,7 +165,7 @@ export const ledgerNanoSCreateSignatureAsynch = function (txData) {
   return new Promise(function (resolve, reject) {
     let signatureInfo = 'Ledger Signing Text of Length [' + txData.length + "], Please Confirm Using the Device's Buttons. " + txData
 
-    const signData = txData + bip44Path
+    const signData = txData + BIP44_PATH
 
     process.stdout.write(signatureInfo + '\n')
 

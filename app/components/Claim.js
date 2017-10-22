@@ -4,7 +4,7 @@ import ReactTooltip from 'react-tooltip'
 import { connect } from 'react-redux'
 import { setClaimRequest, disableClaim } from '../modules/claim'
 import { sendEvent, clearTransactionEvent } from '../modules/transactions'
-import { ledgerNanoSGetdoClaimAllGas, ledgerNanoSGetdoSendAsset } from '../modules/ledgerNanoS'
+import { ledgerNanoSGetdoClaimAllGas, ledgerNanoSGetdoSendAsset } from '../ledger/ledgerNanoS'
 import { log } from '../util/Logs'
 import { ASSETS } from '../core/constants'
 

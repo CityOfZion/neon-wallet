@@ -8,7 +8,7 @@ import SplitPane from 'react-split-pane'
 import ReactTooltip from 'react-tooltip'
 import { log } from '../util/Logs'
 import { ASSETS, ASSETS_LABELS } from '../core/constants'
-import { ledgerNanoSGetdoSendAsset } from '../modules/ledgerNanoS'
+import { ledgerNanoSGetdoSendAsset } from '../ledger/ledgerNanoS'
 
 type Props = {
   dispatch: DispatchType,
