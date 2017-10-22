@@ -5,6 +5,7 @@ import FaEye from 'react-icons/lib/fa/eye'
 import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
 import Logo from '../../components/Logo'
 import Footer from '../../components/Footer'
+import { ROUTES } from '../../core/constants'
 
 type Props = {
     loginWithPrivateKey: Function,
@@ -55,7 +56,7 @@ export default class LoginPrivateKey extends Component<Props, State> {
               onClick={() => loginWithPrivateKey(wif, history)}
               disabled={loginButtonDisabled}
               className={loginButtonDisabled && 'disabled'}>Login</button>
-            <Link to='/'><button className='altButton'>Home</button></Link>
+            <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>
           </div>
           <Footer />
         </div>
