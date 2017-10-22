@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import Logo from '../../components/Logo'
 import Footer from '../../components/Footer'
@@ -15,7 +14,7 @@ type State = {
   wif: string
 }
 
-class LoginTokenSale extends Component<Props, State> {
+export default class LoginTokenSale extends Component<Props, State> {
   state = {
     wif: ''
   }
@@ -43,7 +42,7 @@ class LoginTokenSale extends Component<Props, State> {
               onClick={() => loginWithPrivateKey(wif, history, ROUTES.TOKEN_SALE)}
               disabled={loginButtonDisabled}
               className={loginButtonDisabled && 'disabled'}>Login</button>
-            <Link to='/'><button className='altButton'>Home</button></Link>
+            <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>
           </div>
           <Footer />
         </div>
@@ -51,5 +50,3 @@ class LoginTokenSale extends Component<Props, State> {
     )
   }
 }
-
-export default connect()(LoginTokenSale)
