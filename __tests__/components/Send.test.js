@@ -265,7 +265,7 @@ describe('Send', () => {
     Promise.resolve('pause').then(() => {
       jest.runAllTimers()
       const actions = store.getActions()
-      expect(actions.length === 4).toEqual(true)
+      expect(actions.length).toEqual(4)
       expect(actions[0]).toEqual({
         type: SEND_TRANSACTION,
         success: true,
