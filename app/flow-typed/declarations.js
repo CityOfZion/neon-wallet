@@ -4,6 +4,7 @@ import { NETWORK, EXPLORER, ROUTES } from '../core/constants'
 
 declare type ActionCreatorType = any
 declare type DispatchType = (actionCreator: ActionCreatorType) => Promise<*>
+declare type GetStateType = () => Object
 
 declare type NetworkType = $Values<typeof NETWORK>
 declare type ExplorerType = $Values<typeof EXPLORER>
