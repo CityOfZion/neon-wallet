@@ -4,14 +4,10 @@ import { bindActionCreators } from 'redux'
 import LoginPrivateKey from './LoginPrivateKey'
 import { loginWithPrivateKey } from '../../modules/account'
 
-const mapStateToProps = (state: Object) => ({
-  wif: state.account.wif
-})
-
 const actionCreators = {
   loginWithPrivateKey
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPrivateKey)
+export default connect(null, mapDispatchToProps)(LoginPrivateKey)
