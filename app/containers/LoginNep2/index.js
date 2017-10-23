@@ -5,7 +5,6 @@ import LoginNep2 from './LoginNep2'
 import { loginNep2 } from '../../modules/account'
 
 const mapStateToProps = (state: Object) => ({
-  decrypting: state.account.decrypting,
   accountKeys: state.account.accountKeys
 })
 

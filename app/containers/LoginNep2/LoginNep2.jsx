@@ -9,8 +9,7 @@ import { ROUTES } from '../../core/constants'
 
 type Props = {
     loginNep2: Function,
-    history: Object,
-    decrypting: boolean
+    history: Object
 }
 
 type State = {
@@ -33,7 +32,7 @@ export default class LoginNep2 extends Component<Props, State> {
   }
 
   render () {
-    const { decrypting, loginNep2, history } = this.props
+    const { loginNep2, history } = this.props
     const { showKey, wif, passphrase } = this.state
     const loginButtonDisabled = wif === '' || passphrase === ''
 
@@ -67,7 +66,6 @@ export default class LoginNep2 extends Component<Props, State> {
               disabled={loginButtonDisabled}>Login</button>
             <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>
           </div>
-          {decrypting && <div className='decrypting'>Decrypting keys...</div>}
           <Footer />
         </div>
       </div>

@@ -5,7 +5,6 @@ import LoginLocalStorage from './LoginLocalStorage'
 import { setKeys, loginNep2 } from '../../modules/account'
 
 const mapStateToProps = (state: Object) => ({
-  decrypting: state.account.decrypting,
   accountKeys: state.account.accountKeys
 })
 

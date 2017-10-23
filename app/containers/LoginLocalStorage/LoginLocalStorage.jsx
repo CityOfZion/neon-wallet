@@ -13,7 +13,6 @@ type Props = {
   setKeys: Function,
   loginNep2: Function,
   history: Object,
-  decrypting: boolean,
   accountKeys: Object
 }
 
@@ -45,7 +44,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
   }
 
   render () {
-    const { accountKeys, decrypting, history, loginNep2 } = this.props
+    const { accountKeys, history, loginNep2 } = this.props
     const { showKey, passphrase, wif } = this.state
     const loginButtonDisabled = Object.keys(accountKeys).length === 0 || wif === '' || passphrase === ''
 
@@ -82,7 +81,6 @@ export default class LoginLocalStorage extends Component<Props, State> {
               disabled={loginButtonDisabled}>Login</button>
             <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>
           </div>
-          {decrypting && <div className='decrypting'>Decrypting keys...</div>}
           <Footer />
         </div>
       </div>
