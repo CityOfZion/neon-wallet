@@ -36,8 +36,7 @@ export function ledgerNanoSGetLogin (publicKey: string) {
 
 export const ledgerNanoSFromWif = (publicKey: string) => {
   const publicKeyEncoded = getPublicKeyEncoded(publicKey)
-  const fromAccount = getAccountFromPublicKey(publicKeyEncoded)
-  return fromAccount
+  return getAccountFromPublicKey(publicKeyEncoded)
 }
 
 export function logout () {
