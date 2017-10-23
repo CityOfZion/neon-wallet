@@ -3,10 +3,10 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 import Logo from '../../components/Logo'
 import Footer from '../../components/Footer'
-import asyncWrap from '../../core/asyncHelper'
 
 type Props = {
   ledgerNanoSGetLogin: Function,
+  ledgerNanoSGetInfoAsync: Function,
   hardwareDeviceInfo: string,
   hardwarePublicKeyInfo: string,
   hardwarePublicKey: string,
@@ -14,7 +14,11 @@ type Props = {
 }
 
 export default class LoginLedgerNanoS extends Component<Props> {
-  async componentDidMount () {
+  componentDidMount () {
+    this._componentDidMount()
+  }
+
+  _componentDidMount = async () => {
     // process.stdout.write('started componentDidMount  \n')
     await this.props.ledgerNanoSGetInfoAsync()
     // process.stdout.write('success componentDidMount  \n')
