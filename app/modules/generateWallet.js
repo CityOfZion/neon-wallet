@@ -60,10 +60,10 @@ export const generateNewWallet = (passphrase: string, passphrase2: string, wif?:
       setTimeout(() => clearTransactionEvent(), 5000)
       reject(new Error(error))
     }
+
     if (passphrase !== passphrase2) {
       rejectNewWallet('Passphrases do not match')
-    }
-    if (validatePassphrase(passphrase)) {
+    } else if (validatePassphrase(passphrase)) {
       dispatch(sendEvent(true, 'Generating encoded key...'))
       setTimeout(() => {
         const encryptFn = wif ? encryptWifAccount(wif, passphrase) : generateEncryptedWif(passphrase)
