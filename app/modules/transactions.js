@@ -1,7 +1,9 @@
 // @flow
 import { ASSETS_LABELS, ASSETS } from '../core/constants'
-import { getTransactionHistory } from 'neon-js'
+import { validateTransactionBeforeSending } from '../core/wallet'
+import { getTransactionHistory, doSendAsset } from 'neon-js'
 import { setTransactionHistory } from '../modules/wallet'
+import { log } from '../util/Logs'
 
 // Constants
 export const SEND_TRANSACTION = 'SEND_TRANSACTION'
@@ -41,6 +43,48 @@ export const syncTransactionHistory = (net: NetworkType, address: string) => (di
       }
     }
     dispatch(setTransactionHistory(txs))
+  })
+}
+
+export const sendTransaction = (sendAddress: string, sendAmount: string) => (dispatch: DispatchType, getState: GetStateType): Promise<*> => {
+  return new Promise((resolve, reject) => {
+    const state = getState()
+    const wif = state.account.wif
+    const address = state.account.address
+    const net = state.metadata.network
+    const neo = state.wallet.Neo
+    const gas = state.wallet.Gas
+    const selectedAsset = state.transactions.selectedAsset
+
+    const rejectTransaction = (error: string) => {
+      dispatch(sendEvent(false, error))
+      setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+      reject(new Error(error))
+    }
+
+    const { error, valid } = validateTransactionBeforeSending(neo, gas, selectedAsset, sendAddress, sendAmount)
+    if (valid) {
+      const selfAddress = address
+      const assetName = selectedAsset === ASSETS_LABELS.NEO ? ASSETS.NEO : ASSETS.GAS
+      let sendAsset = {}
+      sendAsset[assetName] = sendAmount
+
+      dispatch(sendEvent(true, 'Processing...'))
+      log(net, 'SEND', selfAddress, { to: sendAddress, asset: selectedAsset, amount: sendAmount })
+      doSendAsset(net, sendAddress, wif, sendAsset).then((response) => {
+        if (response.result === undefined || response.result === false) {
+          rejectTransaction('Transaction failed!')
+        } else {
+          dispatch(sendEvent(true, 'Transaction complete! Your balance will automatically update when the blockchain has processed it.'))
+        }
+        setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+        resolve()
+      }).catch((e) => {
+        rejectTransaction('Transaction failed!')
+      })
+    } else {
+      rejectTransaction(error)
+    }
   })
 }
 
