@@ -10,9 +10,7 @@ import LoginLocalStorage from './containers/LoginLocalStorage'
 import LoginTokenSale from './containers/LoginTokenSale'
 import LoginNep2 from './containers/LoginNep2'
 import EncryptKey from './containers/EncryptKey'
-
-import Settings from './components/Settings'
-
+import Settings from './containers/Settings'
 import Home from './components/Home'
 
 export default (
