@@ -29,10 +29,8 @@ export function ledgerNanoSGetLogin (publicKey: string) {
   // process.stdout.write('ledgerNanoSGetLogin ledgerNanoSFromWif "' + JSON.stringify(ledgerNanoSFromWif) + '"\n')
   return {
     type: LOGIN,
-    ledgerNanoS: true,
     signingFunction: ledgerNanoSCreateSignatureAsynch,
-    wif: () => ledgerNanoSFromWif(publicKey),
-    address: publicKey // TODO need to handle public key and address differently?
+    wif: () => ledgerNanoSFromWif(publicKey)
   }
 }
 
@@ -159,7 +157,7 @@ export default (state: Object = {wif: null, address: null, loggedIn: false, redi
         console.log(e.stack)
         loadAccount = -1
       }
-      // process.stdout.write('interim loadAccount "' + JSON.stringify(loadAccount) + '" \n')
+      process.stdout.write('interim loadAccount "' + JSON.stringify(loadAccount) + '" \n')
       if (loadAccount === -1 || loadAccount === -2 || loadAccount === undefined || !loadAccount.address) {
         return {...state, wif: action.wif, loggedIn: false}
       }

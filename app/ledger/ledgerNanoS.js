@@ -15,10 +15,10 @@ import {
 } from 'neon-js'
 
 export const ledgerNanoSGetdoSendAsset = (net, toAddress, fromWif, assetAmounts, signingFunction) => {
-  return new Promise(function (resolve, reject) {
+  return new Promise((resolve, reject) => {
     // process.stdout.write('started ledgerNanoSGetdoSendAsset fromWifFn "' + (fromWif instanceof Function) + '"\n')
     // process.stdout.write('started ledgerNanoSGetdoSendAsset signingFunctionFn "' + (signingFunction instanceof Function) + '"\n')
-    var fromAccount
+    let fromAccount
     if (fromWif instanceof Function) {
       fromAccount = fromWif()
     } else {
@@ -52,16 +52,14 @@ export const ledgerNanoSGetdoSendAsset = (net, toAddress, fromWif, assetAmounts,
           queryRPC(net, 'sendrawtransaction', [txRawData], 4).then((response) => {
             // process.stdout.write('interim ledgerNanoSGetdoSendAsset sendrawtransaction "' + JSON.stringify(response) + '" \n')
             resolve(response)
-          })
-            .catch(function (reason) {
-              console.log('failure ledgerNanoSGetdoSendAsset ')
-              reject(reason)
-            })
-        })
-          .catch(function (reason) {
+          }).catch((reason) => {
             console.log('failure ledgerNanoSGetdoSendAsset ')
             reject(reason)
           })
+        }).catch((reason) => {
+          console.log('failure ledgerNanoSGetdoSendAsset ')
+          reject(reason)
+        })
       } else {
         // process.stdout.write('interim ledgerNanoSGetdoSendAsset create.contract\n')
         const unsignedTx = create.contract(fromAccount.publicKeyEncoded, balances, intents)
@@ -72,27 +70,25 @@ export const ledgerNanoSGetdoSendAsset = (net, toAddress, fromWif, assetAmounts,
         // process.stdout.write('interim ledgerNanoSGetdoSendAsset hexTx ' + hexTx + '\n')
         queryRPC(net, 'sendrawtransaction', [hexTx], 4).then((response) => {
           resolve(response)
+        }).catch((reason) => {
+          console.log('failure ledgerNanoSGetdoSendAsset ' + reason)
+          reject(reason)
         })
-          .catch(function (reason) {
-            console.log('failure ledgerNanoSGetdoSendAsset ' + reason)
-            reject(reason)
-          })
       }
+    }).catch((reason) => {
+      console.log('failure ledgerNanoSGetdoSendAsset ' + reason)
+      reject(reason)
     })
-      .catch(function (reason) {
-        console.log('failure ledgerNanoSGetdoSendAsset ' + reason)
-        reject(reason)
-      })
   })
 }
 
 export const ledgerNanoSGetdoClaimAllGas = (net, fromWif, signingFunction) => {
-  return new Promise(function (resolve, reject) {
+  return new Promise((resolve, reject) => {
     // process.stdout.write('started ledgerNanoSGetdoClaimAllGas fromWif "' + JSON.stringify(fromWif) + '"\n')
     // process.stdout.write('started ledgerNanoSGetdoClaimAllGas signingFunction "' + JSON.stringify(signingFunction) + '"\n')
     const apiEndpoint = getAPIEndpoint(net)
 
-    var fromAccount
+    let fromAccount
     if (fromWif instanceof Function) {
       fromAccount = fromWif()
     } else {
@@ -114,16 +110,14 @@ export const ledgerNanoSGetdoClaimAllGas = (net, fromWif, signingFunction) => {
           const txRawData = addContract(txData, sign, fromAccount.publicKeyEncoded)
           queryRPC(net, 'sendrawtransaction', [txRawData], 4).then((response) => {
             resolve(response)
-          })
-            .catch(function (reason) {
-              console.log('failure ledgerNanoSGetdoClaimAllGas ' + reason)
-              reject(reason)
-            })
-        })
-          .catch(function (reason) {
+          }).catch((reason) => {
             console.log('failure ledgerNanoSGetdoClaimAllGas ' + reason)
             reject(reason)
           })
+        }).catch((reason) => {
+          console.log('failure ledgerNanoSGetdoClaimAllGas ' + reason)
+          reject(reason)
+        })
       } else {
         // process.stdout.write('interim ledgerNanoSGetdoClaimAllGas create.claim\n')
         const unsignedTx = create.claim(fromAccount.publicKeyEncoded, response.data)
@@ -134,22 +128,20 @@ export const ledgerNanoSGetdoClaimAllGas = (net, fromWif, signingFunction) => {
         // process.stdout.write('interim ledgerNanoSGetdoClaimAllGas hexTx ' + hexTx + '\n')
         queryRPC(net, 'sendrawtransaction', [hexTx], 4).then((response) => {
           resolve(response)
+        }).catch((reason) => {
+          console.log('failure ledgerNanoSGetdoClaimAllGas ' + reason)
+          reject(reason)
         })
-          .catch(function (reason) {
-            console.log('failure ledgerNanoSGetdoClaimAllGas ' + reason)
-            reject(reason)
-          })
       }
+    }).catch((reason) => {
+      console.log('failure ledgerNanoSGetdoClaimAllGas ' + reason)
+      reject(reason)
     })
-      .catch(function (reason) {
-        console.log('failure ledgerNanoSGetdoClaimAllGas ' + reason)
-        reject(reason)
-      })
   })
 }
 
-export const ledgerNanoSCreateSignatureAsynch = function (txData) {
-  return new Promise(function (resolve, reject) {
+export const ledgerNanoSCreateSignatureAsynch = (txData) => {
+  return new Promise((resolve, reject) => {
     let signatureInfo = 'Ledger Signing Text of Length [' + txData.length + "], Please Confirm Using the Device's Buttons. " + txData
 
     const signData = txData + BIP44_PATH
@@ -191,12 +183,12 @@ export const ledgerNanoSCreateSignatureAsynch = function (txData) {
       offset += chunk.length
     }
 
-    commNode.create_async(0, false).then(function (comm) {
+    commNode.create_async(0, false).then((comm) => {
       for (let ix = 0; ix < messages.length; ix++) {
         let message = messages[ix]
         process.stdout.write('Ledger Message (' + ix + '/' + messages.length + ') ' + message + '\n')
 
-        comm.exchange(message, validStatus).then(function (response) {
+        comm.exchange(message, validStatus).then((response) => {
           process.stdout.write('Ledger Signature Response ' + response + '\n')
           if (response !== '9000') {
             comm.device.close()
@@ -265,19 +257,17 @@ export const ledgerNanoSCreateSignatureAsynch = function (txData) {
 
             resolve(signature)
           }
+        }).catch((reason) => {
+          comm.device.close()
+          signatureInfo = 'An error occured[1]: ' + reason
+          process.stdout.write('Signature Reponse ' + signatureInfo + '\n')
+          reject(signatureInfo)
         })
-          .catch(function (reason) {
-            comm.device.close()
-            signatureInfo = 'An error occured[1]: ' + reason
-            process.stdout.write('Signature Reponse ' + signatureInfo + '\n')
-            reject(signatureInfo)
-          })
       }
+    }).catch((reason) => {
+      signatureInfo = 'An error occured[2]: ' + reason
+      process.stdout.write('Signature Reponse ' + signatureInfo + '\n')
+      reject(signatureInfo)
     })
-      .catch(function (reason) {
-        signatureInfo = 'An error occured[2]: ' + reason
-        process.stdout.write('Signature Reponse ' + signatureInfo + '\n')
-        reject(signatureInfo)
-      })
   })
 }
