@@ -44,21 +44,33 @@ export const syncTransactionHistory = (net: NetworkType, address: string) => (di
   })
 }
 
+const initialState = {
+  success: null,
+  message: null,
+  selectedAsset: ASSETS_LABELS.NEO
+}
+
 // Reducer for state used when performing a transaction
-export default (state: Object = { success: null, message: null, selectedAsset: ASSETS_LABELS.NEO }, action: Object) => {
+export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case SEND_TRANSACTION:
-      return {...state, success: action.success, message: action.message}
-    case CLEAR_TRANSACTION:
-      return {...state, success: null, message: null}
-    case TOGGLE_ASSET:
-      let asset
-      if (state.selectedAsset === ASSETS_LABELS.NEO) {
-        asset = ASSETS_LABELS.GAS
-      } else {
-        asset = ASSETS_LABELS.NEO
+      return {
+        ...state,
+        success: action.success,
+        message: action.message
       }
-      return {...state, success: null, selectedAsset: asset}
+    case CLEAR_TRANSACTION:
+      return {
+        ...state,
+        success: null,
+        message: null
+      }
+    case TOGGLE_ASSET:
+      return {
+        ...state,
+        success: null,
+        selectedAsset: state.selectedAsset === ASSETS_LABELS.NEO ? ASSETS_LABELS.GAS : ASSETS_LABELS.NEO
+      }
     default:
       return state
   }

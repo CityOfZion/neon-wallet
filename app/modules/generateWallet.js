@@ -83,21 +83,29 @@ export const generateNewWallet = (passphrase: string, passphrase2: string, wif?:
   }
 }
 
+const initialState = {
+  wif: null,
+  address: null,
+  passphrase: null,
+  encryptedWif: null,
+  generating: false
+}
+
 // Reducer used for state necessary to generating a wallet
-export default (state: Object = { wif: null, address: null, passphrase: null, encryptedWif: null, generating: false }, action: Object) => {
+export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case NEW_WALLET_KEYS:
       const newPrivateKey = generatePrivateKey()
       const newWif = getWIFFromPrivateKey(newPrivateKey)
       const encryptedWif = encryptWIF(newWif, action.passphrase)
       const loadAccount = getAccountFromWIFKey(newWif)
-      return {...state, wif: newWif, address: loadAccount.address, passphrase: action.passphrase, encryptedWif}
+      return { ...state, wif: newWif, address: loadAccount.address, passphrase: action.passphrase, encryptedWif }
     case NEW_WALLET:
-      return {...state, wif: action.wif, address: action.address, passphrase: action.passphrase, encryptedWif: action.encryptedWif, generating: false}
+      return { ...state, wif: action.wif, address: action.address, passphrase: action.passphrase, encryptedWif: action.encryptedWif, generating: false }
     case SET_GENERATING:
-      return {...state, generating: action.state}
+      return { ...state, generating: action.state }
     case RESET_KEY:
-      return {wif: null, address: null, passphrase: null, encryptedWif: null, generating: false}
+      return { ...initialState }
     default:
       return state
   }

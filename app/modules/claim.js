@@ -72,19 +72,40 @@ export const doGasClaim = (net: NetworkType, wif: string, address: string, neo: 
   }
 }
 
+const initialState = {
+  claimRequest: false,
+  claimAmount: 0,
+  claimAvailable: 0,
+  claimUnavailable: 0,
+  claimWasUpdated: false,
+  disableClaimButton: false
+}
+
 // Reducer for managing claims data
-export default (state: Object = { claimRequest: false, claimAmount: 0, claimAvailable: 0, claimUnavailable: 0, claimWasUpdated: false, disableClaimButton: false }, action: Object) => {
+export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case SET_CLAIM_REQUEST:
-      return {...state, 'claimRequest': action.status}
+      return {
+        ...state,
+        claimRequest: action.status
+      }
     case SET_CLAIM:
       let claimWasUpdated = false
       if (action.available > state.claimAvailable && state.claimRequest === true) {
         claimWasUpdated = true
       }
-      return {...state, 'claimAmount': (action.available + action.unavailable) / 100000000, 'claimAvailable': action.available, 'claimUnavailable': action.unavailable, claimWasUpdated}
+      return {
+        ...state,
+        claimAmount: (action.available + action.unavailable) / 100000000,
+        claimAvailable: action.available,
+        claimUnavailable: action.unavailable,
+        claimWasUpdated
+      }
     case DISABLE_CLAIM:
-      return {...state, disableClaimButton: action.status}
+      return {
+        ...state,
+        disableClaimButton: action.status
+      }
     default:
       return state
   }
