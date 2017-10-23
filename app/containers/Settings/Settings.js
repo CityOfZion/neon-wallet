@@ -1,20 +1,17 @@
 // @flow
 import React, { Component } from 'react'
 import { Link } from 'react-router'
-import { connect } from 'react-redux'
 import { forEach, map } from 'lodash'
 import fs from 'fs'
 import storage from 'electron-json-storage'
-import { setBlockExplorer } from '../modules/metadata'
-import { setKeys } from '../modules/account'
 import Delete from 'react-icons/lib/md/delete'
-import Logo from './Logo'
-import { EXPLORER } from '../core/constants'
-
+import Logo from '../../components/Logo'
+import { ROUTES, EXPLORER } from '../../core/constants'
 const { dialog } = require('electron').remote
 
 type Props = {
-  dispatch: DispatchType,
+  setKeys: Function,
+  setBlockExplorer: Function,
   explorer: string,
   wallets: any
 }
@@ -23,28 +20,28 @@ type State = {
   explorer: string,
 }
 
-class Settings extends Component<Props, State> {
+export default class Settings extends Component<Props, State> {
   state = {
     explorer: this.props.explorer
   }
 
   componentDidMount () {
-    const { dispatch } = this.props
+    const { setKeys } = this.props
     // eslint-disable-next-line
     storage.get('keys', (error, data) => {
-      dispatch(setKeys(data))
+      setKeys(data)
     })
     this.loadSettings()
   }
 
-  saveKeyRecovery = (keys) => {
+  saveKeyRecovery = (keys: Object) => {
     const content = JSON.stringify(keys)
-    dialog.showSaveDialog({filters: [{
-      name: 'JSON',
-      extensions: ['json']
-    }]}, (fileName) => {
+    dialog.showSaveDialog({filters: [
+      {
+        name: 'JSON',
+        extensions: ['json']
+      }]}, (fileName) => {
       if (fileName === undefined) {
-        console.log('File failed to save...')
         return
       }
       // fileName is a string that contains the path and filename created in the save file dialog.
@@ -58,11 +55,10 @@ class Settings extends Component<Props, State> {
   }
 
   loadKeyRecovery = () => {
-    const { dispatch } = this.props
+    const { setKeys } = this.props
     dialog.showOpenDialog((fileNames) => {
     // fileNames is an array that contains all the selected
       if (fileNames === undefined) {
-        console.log('No file selected')
         return
       }
       const filepath = fileNames[0]
@@ -73,48 +69,48 @@ class Settings extends Component<Props, State> {
         }
         const keys = JSON.parse(data)
         // eslint-disable-next-line
-      storage.get('keys', (error, data) => {
+        storage.get('keys', (error, data) => {
           forEach(keys, (value, key) => {
             data[key] = value
           })
-          dispatch(setKeys(data))
+          setKeys(data)
           storage.set('keys', data)
         })
       })
     })
   }
 
-  saveSettings = (settings) => {
+  saveSettings = (settings: Object) => {
     storage.set('settings', settings)
   }
 
   loadSettings = () => {
-    const { dispatch } = this.props
+    const { setBlockExplorer } = this.props
     // eslint-disable-next-line
     storage.get('settings', (error, settings) => {
       if (settings.blockExplorer !== null && settings.blockExplorer !== undefined) {
-        dispatch(setBlockExplorer(settings.blockExplorer))
+        setBlockExplorer(settings.blockExplorer)
       }
     })
   }
 
-  updateSettings = (e) => {
-    const { dispatch } = this.props
+  updateSettings = (e: Object) => {
+    const { setBlockExplorer } = this.props
     const explorer = e.target.value
     this.setState({
       explorer
     })
     this.saveSettings({ blockExplorer: explorer })
-    dispatch(setBlockExplorer(explorer))
+    setBlockExplorer(explorer)
   }
 
   deleteWallet = (key: string) => {
-    const { dispatch } = this.props
+    const { setKeys } = this.props
     // eslint-disable-next-line
     storage.get('keys', (error, data) => {
       delete data[key]
       storage.set('keys', data)
-      dispatch(setKeys(data))
+      setKeys(data)
     })
   }
 
@@ -139,7 +135,9 @@ class Settings extends Component<Props, State> {
               return (
                 <div className='walletList' key={`wallet${key}`}>
                   <div className='walletItem'>
-                    <div className='walletName'>{key.slice(0, 20)}</div><div className='walletKey'>{value}</div><div className='deleteWallet' onClick={() => this.deleteWallet(key)}><Delete /></div>
+                    <div className='walletName'>{key.slice(0, 20)}</div>
+                    <div className='walletKey'>{value}</div>
+                    <div className='deleteWallet' onClick={() => this.deleteWallet(key)}><Delete /></div>
                   </div>
                 </div>
               )
@@ -149,15 +147,8 @@ class Settings extends Component<Props, State> {
           <button onClick={() => this.saveKeyRecovery(wallets)}>Export key recovery file</button>
           <button onClick={this.loadKeyRecovery}>Load key recovery file</button>
         </div>
-        <Link to='/'><button className='altButton'>Home</button></Link>
+        <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>
       </div>
     )
   }
 }
-
-const mapStateToProps = (state) => ({
-  explorer: state.metadata.blockExplorer,
-  wallets: state.account.accountKeys
-})
-
-export default connect(mapStateToProps)(Settings)
