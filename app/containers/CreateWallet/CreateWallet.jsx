@@ -31,13 +31,12 @@ export default class CreateWallet extends Component<Props, State> {
   generateNewWallet = () => {
     const { passphrase, passphrase2 } = this.state
     const { generateNewWallet } = this.props
-    const result = generateNewWallet(passphrase, passphrase2)
-    if (!result) {
-      this.resetPassphrases()
-    }
+    generateNewWallet(passphrase, passphrase2).catch(() => {
+      this.resetFields()
+    })
   }
 
-  resetPassphrases () {
+  resetFields () {
     this.setState({
       passphrase: '',
       passphrase2: ''

@@ -33,10 +33,9 @@ export default class EncryptKey extends Component<Props, State> {
   generateNewWallet = () => {
     const { passphrase, passphrase2, wif } = this.state
     const { generateNewWallet } = this.props
-    const result = generateNewWallet(passphrase, passphrase2, wif)
-    if (!result) {
+    generateNewWallet(passphrase, passphrase2, wif).catch(() => {
       this.resetFields()
-    }
+    })
   }
 
   resetFields () {

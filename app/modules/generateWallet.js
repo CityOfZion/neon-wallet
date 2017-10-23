@@ -53,34 +53,34 @@ export const saveKey = (keyName: string, passphraseKey: string) => (dispatch: Di
   })
 }
 
-export const generateNewWallet = (passphrase: string, passphrase2: string, wif?: string) => (dispatch: DispatchType) => {
-  if (!passphrase || !passphrase2) return false
-
-  if (passphrase !== passphrase2) {
-    dispatch(sendEvent(false, 'Passphrases do not match'))
-    setTimeout(() => clearTransactionEvent(), 5000)
-    return null
-  }
-  if (validatePassphrase(passphrase)) {
-    dispatch(sendEvent(true, 'Generating encoded key...'))
-    setTimeout(() => {
-      const encryptFn = wif ? encryptWifAccount(wif, passphrase) : generateEncryptedWif(passphrase)
-      try {
-        encryptFn.then((result) => {
-          dispatch(newWallet(result))
-          dispatch(clearTransactionEvent())
-        })
-      } catch (e) {
-        dispatch(sendEvent(false, wif ? 'The private key is not valid' : 'An error occured while trying to generate a new wallet'))
-        setTimeout(() => dispatch(clearTransactionEvent()), 5000)
-      }
-    }, 500)
-    return true
-  } else {
-    dispatch(sendEvent(false, 'Please choose a longer passphrase'))
-    setTimeout(() => clearTransactionEvent(), 5000)
-    return false
-  }
+export const generateNewWallet = (passphrase: string, passphrase2: string, wif?: string) => (dispatch: DispatchType): Promise<*> => {
+  return new Promise((resolve, reject) => {
+    const rejectNewWallet = (error) => {
+      dispatch(sendEvent(false, error))
+      setTimeout(() => clearTransactionEvent(), 5000)
+      reject(new Error(error))
+    }
+    if (passphrase !== passphrase2) {
+      rejectNewWallet('Passphrases do not match')
+    }
+    if (validatePassphrase(passphrase)) {
+      dispatch(sendEvent(true, 'Generating encoded key...'))
+      setTimeout(() => {
+        const encryptFn = wif ? encryptWifAccount(wif, passphrase) : generateEncryptedWif(passphrase)
+        try {
+          encryptFn.then((result) => {
+            dispatch(newWallet(result))
+            dispatch(clearTransactionEvent())
+            resolve()
+          })
+        } catch (e) {
+          rejectNewWallet(wif ? 'The private key is not valid' : 'An error occured while trying to generate a new wallet')
+        }
+      }, 500)
+    } else {
+      rejectNewWallet('Please choose a longer passphrase')
+    }
+  })
 }
 
 const initialState = {
