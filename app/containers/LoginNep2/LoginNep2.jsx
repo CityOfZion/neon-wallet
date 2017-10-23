@@ -59,7 +59,7 @@ export default class LoginNep2 extends Component<Props, State> {
           </div>
           <div className='loginButtons'>
             <button
-              className={loginButtonDisabled && 'disabled'}
+              className={`loginButton ${loginButtonDisabled && 'disabled'}`}
               onClick={() => loginNep2(passphrase, wif, history)}
               disabled={loginButtonDisabled}>Login</button>
             <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>

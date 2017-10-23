@@ -1,8 +1,9 @@
 import React from 'react'
 import { cloneDeep } from 'lodash'
 import configureStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
 import { shallow, mount } from 'enzyme'
-import Claim from '../../app/components/Claim'
+import Claim from '../../app/containers/Claim'
 import * as neonjs from 'neon-js'
 import { setClaimRequest, disableClaim } from '../../app/modules/claim'
 import { sendEvent } from '../../app/modules/transactions'
@@ -28,13 +29,13 @@ const state = {
 
 describe('Claim', () => {
   test('should render without crashing', () => {
-    const store = configureStore()(state)
+    const store = configureStore([thunk])(state)
     const wrapper = shallow(<Claim store={store} />)
     expect(wrapper).toMatchSnapshot()
   })
 
   test('should render claim gas button when claim button is not disabled', () => {
-    const store = configureStore()(state)
+    const store = configureStore([thunk])(state)
     const wrapper = shallow(<Claim store={store} />)
     expect(wrapper.dive()).toMatchSnapshot()
   })
@@ -42,13 +43,13 @@ describe('Claim', () => {
   test('should not render claim gas button when claim button is disabled', () => {
     const newState = cloneDeep(state)
     newState.claim.disableClaimButton = true
-    const store = configureStore()(newState)
+    const store = configureStore([thunk])(newState)
     const wrapper = shallow(<Claim store={store} />)
     expect(wrapper.dive()).toMatchSnapshot()
   })
 
   describe('when do gas claim button is clicked', () => {
-    const store = configureStore()(state)
+    const store = configureStore([thunk])(state)
     const wrapper = shallow(<Claim store={store} />)
 
     test('should dispatch transaction failure event', (done) => {
@@ -64,7 +65,7 @@ describe('Claim', () => {
           expect(store.getActions()[0]).toEqual(sendEvent(true, 'Sending Neo to Yourself...'))
           expect(store.getActions()[1]).toEqual(sendEvent(false, 'Transaction failed!'))
         } catch (error) {
-          throw 'TimeoutException'
+          done.fail(error)
         } finally {
           done()
         }
@@ -86,7 +87,7 @@ describe('Claim', () => {
           expect(store.getActions()[2]).toEqual(setClaimRequest(true))
           expect(store.getActions()[3]).toEqual(disableClaim(true))
         } catch (error) {
-          throw 'TimeoutException'
+          done.fail(error)
         } finally {
           done()
         }
@@ -101,7 +102,7 @@ describe('Claim', () => {
     newState.dispatch = jest.fn()
 
     test('should dispatch false claim request and claim successful event', (done) => {
-      const store = configureStore()(newState)
+      const store = configureStore([thunk])(newState)
       const wrapper = mount(<Claim store={store} />)
       neonjs.doClaimAllGas = jest.fn(() => {
         return new Promise((resolve, reject) => {
@@ -115,7 +116,7 @@ describe('Claim', () => {
           expect(store.getActions()[0]).toEqual(setClaimRequest(false))
           expect(store.getActions()[1]).toEqual(sendEvent(true, 'Claim was successful! Your balance will update once the blockchain has processed it.'))
         } catch (error) {
-          throw 'TimeoutException'
+          done.fail(error)
         } finally {
           done()
         }
@@ -123,7 +124,7 @@ describe('Claim', () => {
     })
 
     test('should dispatch false claim request and claim failure event', (done) => {
-      const store = configureStore()(newState)
+      const store = configureStore([thunk])(newState)
       const wrapper = mount(<Claim store={store} />)
       neonjs.doClaimAllGas = jest.fn(() => {
         return new Promise((resolve, reject) => {
@@ -137,7 +138,7 @@ describe('Claim', () => {
           expect(store.getActions()[0]).toEqual(setClaimRequest(false))
           expect(store.getActions()[1]).toEqual(sendEvent(false, 'Claim failed'))
         } catch (error) {
-          throw 'TimeoutException'
+          done.fail(error)
         } finally {
           done()
         }

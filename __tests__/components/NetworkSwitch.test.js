@@ -70,6 +70,7 @@ describe('NetworkSwitch', () => {
     deepWrapper.find('.netName').simulate('click')
     setTimeout(() => {
       const actions = store.getActions()
+      console.log('what are the networkSwitch actions', actions);
       actions.forEach(action => {
         expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
       })

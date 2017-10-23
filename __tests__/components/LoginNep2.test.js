@@ -56,23 +56,11 @@ describe('LoginNep2', () => {
     expect(keyField.html().includes('Enter your encrypted key here')).toEqual(true)
     done()
   })
-  test('renders correctly when decrypting is true', (done) => {
-    const newState = Object.assign({}, initialState, {
-      account: {
-        ...initialState.account,
-        decrypting: true
-      }
-    })
-    const { wrapper } = setup(newState, false)
-    const decryptingText = wrapper.find('.decrypting')
-
-    expect(decryptingText.text()).toEqual('Decrypting keys...')
-    done()
-  })
   test('the login button is working correctly with no passphrase or wif', (done) => {
     const { wrapper, store } = setup()
+    console.log('what is wrapper', wrapper.debug());
 
-    wrapper.dive().find('.loginButton').simulate('click')
+    wrapper.find('.loginButton').simulate('click')
     Promise.resolve('pause').then(() => {
       const actions = store.getActions()
       expect(actions.length).toEqual(0)
