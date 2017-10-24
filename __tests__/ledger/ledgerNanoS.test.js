@@ -43,8 +43,8 @@ const serializedUnsignedTx = '8000000255842a0f096b977d6e6cf74c2387e95fc426e94d85
 
 describe('ledgerNano Async Signature tests', () => {
   test('ledgerNano Async Signature works', async () => {
-    const sign = await ledgerNanoSCreateSignatureAsync(serializedUnsignedTx);
-    console.log('sign repsonse', sign);
+    const sign = await ledgerNanoSCreateSignatureAsync(serializedUnsignedTx)
+    console.log('sign repsonse', sign)
     expect(true).toEqual(true)
   })
 })

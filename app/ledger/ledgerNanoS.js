@@ -39,17 +39,17 @@ export const ledgerNanoSCreateSignatureAsync = (txData) => {
       }
 
       process.stdout.write('Ledger Signature chunkLength hex ' + chunkLengthHex + '\n')
-      console.log('getting called in here');
-      console.log('chunk.length', chunk.length);
-      console.log('signData.length', signData.length);
+      console.log('chunk.length', chunk.length)
+      console.log('signData.length', signData.length)
 
       messages.push('8002' + p1 + '00' + chunkLengthHex + chunk)
       offset += chunk.length
     }
 
-    console.log('what is messages', messages);
+    console.log('what is messages', messages)
     commNode.create_async(0, false).then((comm) => {
-      console.log('what is comm', comm);
+      // NOTE can you please put the proper format for comm into the mock for the test I started
+      console.log('what is comm', comm)
       for (let ix = 0; ix < messages.length; ix++) {
         let message = messages[ix]
         process.stdout.write('Ledger Message (' + ix + '/' + messages.length + ') ' + message + '\n')
