@@ -7,7 +7,7 @@ import Logo from '../../components/Logo'
 import { ROUTES } from '../../core/constants'
 
 type Props = {
-    generateNewWallet: Function,
+    generateWalletFromWif: Function,
     saveKey: Function,
     resetKey: Function,
     address: string,
@@ -30,10 +30,10 @@ export default class EncryptKey extends Component<Props, State> {
     wif: ''
   }
 
-  generateNewWallet = () => {
+  generateWalletFromWif = () => {
     const { passphrase, passphrase2, wif } = this.state
-    const { generateNewWallet } = this.props
-    generateNewWallet(passphrase, passphrase2, wif).catch(() => {
+    const { generateWalletFromWif } = this.props
+    generateWalletFromWif(passphrase, passphrase2, wif).catch(() => {
       this.resetFields()
     })
   }
@@ -77,7 +77,7 @@ export default class EncryptKey extends Component<Props, State> {
           onChange={(e) => this.setState({ wif: e.target.value })}
           placeholder='Enter existing WIF here'
         />
-        <button disabled={disabledButton} className={disabledButton && 'disabled'} onClick={this.generateNewWallet}> Generate encrypted key </button>
+        <button disabled={disabledButton} className={disabledButton && 'disabled'} onClick={this.generateWalletFromWif}> Generate encrypted key </button>
         <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>
       </div>
     )

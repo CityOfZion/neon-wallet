@@ -6,6 +6,8 @@ const MIN_PASSPHRASE_LEN = 4
 
 export const validatePassphrase = (passphrase: string): boolean => passphrase.length >= MIN_PASSPHRASE_LEN
 
+export const checkMatchingPassphrases = (passphrase: string, passphrase2: string) => passphrase !== passphrase2
+
 export const verifyPrivateKey = (wif: string): boolean => {
   if (!wif) {
     return false

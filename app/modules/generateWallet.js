@@ -2,7 +2,7 @@
 import storage from 'electron-json-storage'
 import { generateEncryptedWif, getAccountFromWIFKey, generatePrivateKey, getWIFFromPrivateKey, encryptWIF, encryptWifAccount } from 'neon-js'
 import { sendEvent, clearTransactionEvent } from './transactions'
-import { validatePassphrase } from '../core/wallet'
+import { validatePassphrase, checkMatchingPassphrases } from '../core/wallet'
 
 // Constants
 export const NEW_WALLET_KEYS = 'NEW_WALLET_KEYS'
@@ -53,32 +53,60 @@ export const saveKey = (keyName: string, passphraseKey: string) => (dispatch: Di
   })
 }
 
-export const generateNewWallet = (passphrase: string, passphrase2: string, wif?: string) => (dispatch: DispatchType): Promise<*> => {
+export const generateWalletFromWif = (passphrase: string, passphrase2: string, wif: string) => (dispatch: DispatchType): Promise<*> => {
   return new Promise((resolve, reject) => {
-    const rejectNewWallet = (error) => {
+    const rejectPromise = (error) => {
       dispatch(sendEvent(false, error))
       setTimeout(() => clearTransactionEvent(), 5000)
       reject(new Error(error))
     }
 
-    if (passphrase !== passphrase2) {
-      rejectNewWallet('Passphrases do not match')
+    if (checkMatchingPassphrases(passphrase, passphrase2)) {
+      rejectPromise('Passphrases do not match')
     } else if (validatePassphrase(passphrase)) {
       dispatch(sendEvent(true, 'Generating encoded key...'))
       setTimeout(() => {
-        const encryptFn = wif ? encryptWifAccount(wif, passphrase) : generateEncryptedWif(passphrase)
         try {
-          encryptFn.then((result) => {
+          encryptWifAccount(wif, passphrase).then((result) => {
             dispatch(newWallet(result))
             dispatch(clearTransactionEvent())
             resolve()
           })
         } catch (e) {
-          rejectNewWallet(wif ? 'The private key is not valid' : 'An error occured while trying to generate a new wallet')
+          rejectPromise('The private key is not valid')
         }
       }, 500)
     } else {
-      rejectNewWallet('Please choose a longer passphrase')
+      rejectPromise('Please choose a longer passphrase')
+    }
+  })
+}
+
+export const generateNewWallet = (passphrase: string, passphrase2: string) => (dispatch: DispatchType): Promise<*> => {
+  return new Promise((resolve, reject) => {
+    const rejectPromise = (error) => {
+      dispatch(sendEvent(false, error))
+      setTimeout(() => clearTransactionEvent(), 5000)
+      reject(new Error(error))
+    }
+
+    if (checkMatchingPassphrases(passphrase, passphrase2)) {
+      rejectPromise('Passphrases do not match')
+    } else if (validatePassphrase(passphrase)) {
+      dispatch(sendEvent(true, 'Generating encoded key...'))
+      setTimeout(() => {
+        try {
+          generateEncryptedWif(passphrase).then((result) => {
+            dispatch(newWallet(result))
+            dispatch(clearTransactionEvent())
+            resolve()
+          })
+        } catch (e) {
+          rejectPromise('An error occured while trying to generate a new wallet')
+        }
+      }, 500)
+    } else {
+      rejectPromise('Please choose a longer passphrase')
     }
   })
 }
