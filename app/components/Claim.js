@@ -2,9 +2,9 @@
 import React, { Component } from 'react'
 import ReactTooltip from 'react-tooltip'
 import { connect } from 'react-redux'
+import { doClaimAllGas, hardwareDoClaimAllGas, doSendAsset, hardwareDoSendAsset } from 'neon-js'
 import { setClaimRequest, disableClaim } from '../modules/claim'
 import { sendEvent, clearTransactionEvent } from '../modules/transactions'
-import { ledgerNanoSGetdoClaimAllGas, ledgerNanoSGetdoSendAsset } from '../ledger/ledgerNanoS'
 import { log } from '../util/Logs'
 import { ASSETS } from '../core/constants'
 
@@ -18,7 +18,8 @@ type Props = {
   disableClaimButton: boolean,
   claimWasUpdated: boolean,
   claimAmount: number,
-  signingFunction: Function
+  signingFunction: Function,
+  publicKey: string
 }
 
 class Claim extends Component<Props> {
@@ -34,9 +35,17 @@ class Claim extends Component<Props> {
 
   doClaimNotify () {
     process.stdout.write('Claim doClaimNotify"' + JSON.stringify(this.props) + '"\n')
-    const { dispatch, net, address, wif, signingFunction } = this.props
+    const { dispatch, net, address, wif, signingFunction, publicKey } = this.props
     log(net, 'CLAIM', address, { info: 'claim all gas' })
-    ledgerNanoSGetdoClaimAllGas(net, wif, signingFunction).then((response) => {
+
+    let claimGasFn
+    if (publicKey) {
+      claimGasFn = hardwareDoClaimAllGas.bind(null, net, publicKey, signingFunction)
+    } else {
+      claimGasFn = doClaimAllGas.bind(null, net, wif)
+    }
+
+    claimGasFn().then((response) => {
       if (response.result) {
         dispatch(sendEvent(true, 'Claim was successful! Your balance will update once the blockchain has processed it.'))
         setTimeout(() => dispatch(disableClaim(false)), 300000)
@@ -51,7 +60,7 @@ class Claim extends Component<Props> {
   // When new claims are available, this will trigger the claim
   doGasClaim = () => {
     process.stdout.write('Claim doGasClaim"' + JSON.stringify(this.props) + '"\n')
-    const { dispatch, net, wif, address, neo, signingFunction } = this.props
+    const { dispatch, net, wif, address, neo, signingFunction, publicKey } = this.props
 
     // if no neo in account, no need to send to self first
     if (neo === 0) {
@@ -59,7 +68,15 @@ class Claim extends Component<Props> {
     } else {
       dispatch(sendEvent(true, 'Sending Neo to Yourself...'))
       log(net, 'SEND', address, { to: address, amount: neo, asset: 'NEO' })
-      ledgerNanoSGetdoSendAsset(net, address, wif, { [ASSETS.NEO]: neo }, signingFunction).then((response) => {
+
+      let sendAssetFn
+      if (publicKey) {
+        sendAssetFn = hardwareDoSendAsset.bind(null, net, address, publicKey, { [ASSETS.NEO]: neo }, signingFunction)
+      } else {
+        sendAssetFn = doSendAsset.bind(null, net, address, wif, { [ASSETS.NEO]: neo })
+      }
+
+      sendAssetFn().then((response) => {
         if (response.result === undefined || response.result === false) {
           dispatch(sendEvent(false, 'Transaction failed!'))
         } else {
@@ -99,7 +116,8 @@ const mapStateToProps = (state) => ({
   signingFunction: state.account.signingFunction,
   address: state.account.address,
   net: state.metadata.network,
-  neo: state.wallet.Neo
+  neo: state.wallet.Neo,
+  publicKey: state.account.publicKey
 })
 
 export default connect(mapStateToProps)(Claim)

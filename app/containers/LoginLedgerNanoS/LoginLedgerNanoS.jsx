@@ -9,25 +9,26 @@ type Props = {
   ledgerNanoSGetInfoAsync: Function,
   hardwareDeviceInfo: string,
   hardwarePublicKeyInfo: string,
-  hardwarePublicKey: string,
+  publicKey: string,
   history: Object
 }
 
 export default class LoginLedgerNanoS extends Component<Props> {
   componentDidMount () {
-    this._componentDidMount()
+    this._componentDidMount(this.props.ledgerNanoSGetInfoAsync)
   }
 
-  _componentDidMount = async () => {
+  _componentDidMount = async (getInfoAsync) => {
     // process.stdout.write('started componentDidMount  \n')
-    await this.props.ledgerNanoSGetInfoAsync()
+    await getInfoAsync()
     // process.stdout.write('success componentDidMount  \n')
   }
 
   onLedgerNanoSChange = () => {
-    const { ledgerNanoSGetLogin, hardwarePublicKey, history } = this.props
-    if (hardwarePublicKey !== undefined) {
-      ledgerNanoSGetLogin(hardwarePublicKey)
+    const { ledgerNanoSGetLogin, publicKey, history } = this.props
+    console.log('publicKey', publicKey);
+    if (publicKey) {
+      ledgerNanoSGetLogin()
       history.push('/dashboard')
     }
   }

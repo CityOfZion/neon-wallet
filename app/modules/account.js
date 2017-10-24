@@ -24,19 +24,13 @@ export function login (wif: string) {
   }
 }
 
-export function ledgerNanoSGetLogin (publicKey: string) {
+export function ledgerNanoSGetLogin () {
   // process.stdout.write('ledgerNanoSGetLogin ledgerNanoSCreateSignatureAsynch "' + JSON.stringify(ledgerNanoSCreateSignatureAsynch) + '"\n')
-  // process.stdout.write('ledgerNanoSGetLogin ledgerNanoSFromWif "' + JSON.stringify(ledgerNanoSFromWif) + '"\n')
+  // process.stdout.write('ledgerNanoSGetLogin publicKey "' + JSON.stringify(publicKey) + '"\n')
   return {
     type: LOGIN,
-    signingFunction: ledgerNanoSCreateSignatureAsynch,
-    wif: () => ledgerNanoSFromWif(publicKey)
+    signingFunction: ledgerNanoSCreateSignatureAsynch
   }
-}
-
-export const ledgerNanoSFromWif = (publicKey: string) => {
-  const publicKeyEncoded = getPublicKeyEncoded(publicKey)
-  return getAccountFromPublicKey(publicKeyEncoded)
 }
 
 export function logout () {
@@ -73,10 +67,10 @@ export function hardwarePublicKeyInfo (hardwarePublicKeyInfo: string) {
   }
 }
 
-export function hardwarePublicKey (hardwarePublicKey: string) {
+export function hardwarePublicKey (publicKey: string) {
   return {
     type: HARDWARE_PUBLIC_KEY,
-    hardwarePublicKey
+    publicKey
   }
 }
 
@@ -139,15 +133,16 @@ export const ledgerNanoSGetInfoAsync = () => async (dispatch: DispatchType) => {
 }
 
 // Reducer that manages account state (account now = private key)
-export default (state: Object = {wif: null, address: null, loggedIn: false, redirectUrl: null, decrypting: false, accountKeys: [], signingFunction: () => {}, publicKey: null, hardwareDeviceInfo: null, hardwarePublicKeyInfo: null}, action: Object) => {
+export default (state: Object = {wif: null, address: null, loggedIn: false, redirectUrl: null, decrypting: false, accountKeys: [], signingFunction: null, publicKey: null, hardwareDeviceInfo: null, hardwarePublicKeyInfo: null}, action: Object) => {
   switch (action.type) {
     case LOGIN:
       // process.stdout.write('interim action "' + JSON.stringify(action) + '"\n')
       // process.stdout.write('interim action.wif "' + JSON.stringify(action.wif) + '" signingFunction "' + JSON.stringify(action.signingFunction) + '"\n')
       let loadAccount: Object | number
       try {
-        if (action.wif instanceof Function) {
-          loadAccount = action.wif()
+        if (action.signingFunction) {
+          const publicKeyEncoded = getPublicKeyEncoded(state.publicKey)
+          loadAccount = getAccountFromPublicKey(publicKeyEncoded)
         } else {
           loadAccount = getAccountFromWIFKey(action.wif)
         }
@@ -160,9 +155,10 @@ export default (state: Object = {wif: null, address: null, loggedIn: false, redi
       if (loadAccount === -1 || loadAccount === -2 || loadAccount === undefined || !loadAccount.address) {
         return {...state, wif: action.wif, loggedIn: false}
       }
+      console.log('actions.signingFunction', action.signingFunction, true, null)
       return {...state, wif: action.wif, address: loadAccount.address, loggedIn: true, decrypting: false, signingFunction: action.signingFunction}
     case LOGOUT:
-      return {...state, 'wif': null, address: null, 'loggedIn': false, decrypting: false}
+      return {...state, 'wif': null, address: null, 'loggedIn': false, decrypting: false, signingFunction: null, publicKey: null}
     case SET_DECRYPTING:
       return {...state, decrypting: action.state}
     case SET_KEYS:

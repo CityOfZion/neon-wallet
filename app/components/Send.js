@@ -1,18 +1,18 @@
 // @flow
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { verifyAddress } from 'neon-js'
+import { verifyAddress, doSendAsset, hardwareDoSendAsset } from 'neon-js'
 import { togglePane } from '../modules/dashboard'
 import { sendEvent, clearTransactionEvent, toggleAsset } from '../modules/transactions'
 import SplitPane from 'react-split-pane'
 import ReactTooltip from 'react-tooltip'
 import { log } from '../util/Logs'
 import { ASSETS, ASSETS_LABELS } from '../core/constants'
-import { ledgerNanoSGetdoSendAsset } from '../ledger/ledgerNanoS'
 
 type Props = {
   dispatch: DispatchType,
   address: string,
+  publicKey: string,
   wif: string,
   neo: number,
   net: NetworkType,
@@ -86,7 +86,7 @@ class Send extends Component<Props, State> {
 
   // perform send transaction
   sendTransaction = () => {
-    const { dispatch, net, address, wif, selectedAsset, signingFunction } = this.props
+    const { dispatch, net, address, wif, selectedAsset, signingFunction, publicKey } = this.props
     const { sendAddress, sendAmount } = this.state
 
     let assetName
@@ -107,7 +107,14 @@ class Send extends Component<Props, State> {
       dispatch(sendEvent(true, 'Processing...'))
       log(net, 'SEND', selfAddress, { to: sendAddress, asset: selectedAsset, amount: sendAmount })
 
-      ledgerNanoSGetdoSendAsset(net, sendAddress, wif, sendAsset, signingFunction).then((response) => {
+      let sendAssetFn
+      if (publicKey) {
+        sendAssetFn = hardwareDoSendAsset.bind(null, net, sendAddress, publicKey, sendAsset, signingFunction)
+      } else {
+        sendAssetFn = doSendAsset.bind(null, net, sendAddress, wif, sendAsset)
+      }
+
+      sendAssetFn().then((response) => {
         if (response.result === undefined || response.result === false) {
           dispatch(sendEvent(false, 'Transaction failed!'))
         } else {
@@ -177,6 +184,7 @@ const mapStateToProps = (state) => ({
   wif: state.account.wif,
   signingFunction: state.account.signingFunction,
   address: state.account.address,
+  publicKey: state.account.publicKey,
   net: state.metadata.network,
   neo: state.wallet.Neo,
   gas: state.wallet.Gas,
