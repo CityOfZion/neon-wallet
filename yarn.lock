@@ -2922,9 +2922,9 @@ electron-is-dev@^0.1.1:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/electron-is-dev/-/electron-is-dev-0.1.2.tgz#8a1043e32b3a1da1c3f553dce28ce764246167e3"
 
-electron-json-storage@^3.0.7:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/electron-json-storage/-/electron-json-storage-3.2.0.tgz#c76243ea0d42014aba8db6b2d90958a393c4c9f5"
+electron-json-storage@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/electron-json-storage/-/electron-json-storage-4.0.2.tgz#c0d662ccd01bc6567d6078f17a6842ac74328ce4"
   dependencies:
     async "^2.0.0"
     lodash "^4.0.1"
