@@ -23,11 +23,11 @@ export const ROUTES = {
   HOME: '/',
   DASHBOARD: '/dashboard',
   CREATE_WALLET: '/create',
-  ENCRYPT_KEY: '/encryptKey',
-  LOGIN_PRIVATE_KEY: '/loginPrivateKey',
-  LOGIN_LOCAL_STORAGE: '/loginLocalStorage',
-  LOGIN_NEP2: '/LoginEncrypted',
-  LOGIN_TOKEN_SALE: '/LoginTokenSale',
-  TOKEN_SALE: '/TokenSale',
-  SETTINGS: '/Settings'
+  ENCRYPT_KEY: '/encrypt-key',
+  LOGIN_PRIVATE_KEY: '/login-private-key',
+  LOGIN_LOCAL_STORAGE: '/login-local-storage',
+  LOGIN_NEP2: '/login-encrypted',
+  LOGIN_TOKEN_SALE: '/login-token-sale',
+  TOKEN_SALE: '/token-sale',
+  SETTINGS: '/settings'
 }
