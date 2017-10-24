@@ -18,7 +18,7 @@ export default class LoginLedgerNanoS extends Component<Props> {
     this._componentDidMount(this.props.ledgerNanoSGetInfoAsync)
   }
 
-  _componentDidMount = async (getInfoAsync) => {
+  _componentDidMount = async (getInfoAsync: Function) => {
     // process.stdout.write('started componentDidMount  \n')
     await getInfoAsync()
     // process.stdout.write('success componentDidMount  \n')
@@ -26,7 +26,6 @@ export default class LoginLedgerNanoS extends Component<Props> {
 
   onLedgerNanoSChange = () => {
     const { ledgerNanoSGetLogin, publicKey, history } = this.props
-    console.log('publicKey', publicKey);
     if (publicKey) {
       ledgerNanoSGetLogin()
       history.push('/dashboard')

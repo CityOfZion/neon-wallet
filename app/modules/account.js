@@ -152,7 +152,7 @@ export default (state: Object = {wif: null, address: null, loggedIn: false, redi
         loadAccount = -1
       }
       process.stdout.write('interim loadAccount "' + JSON.stringify(loadAccount) + '" \n')
-      if (loadAccount === -1 || loadAccount === -2 || loadAccount === undefined || !loadAccount.address) {
+      if (typeof loadAccount !== 'object') {
         return {...state, wif: action.wif, loggedIn: false}
       }
       console.log('actions.signingFunction', action.signingFunction, true, null)
