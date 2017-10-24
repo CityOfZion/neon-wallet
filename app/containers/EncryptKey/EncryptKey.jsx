@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { isNil } from 'lodash'
 import { Link } from 'react-router'
 import DisplayWalletKeys from '../../components/DisplayWalletKeys'
-import Logo from '../../components/Logo'
+import Page from '../../components/Page'
 import { ROUTES } from '../../core/constants'
 
 type Props = {
@@ -82,8 +82,7 @@ export default class EncryptKey extends Component<Props, State> {
       </div>
     )
     return (
-      <div id='newWallet'>
-        <Logo />
+      <Page id='newWallet'>
         {isNil(wifFromProps) && passphraseDiv}
         {generating && <div className='generating'>Generating keys...</div>}
         {!generating && !isNil(wifFromProps) &&
@@ -96,7 +95,7 @@ export default class EncryptKey extends Component<Props, State> {
             saveKey={saveKey}
           />
         }
-      </div>
+      </Page>
     )
   }
 }

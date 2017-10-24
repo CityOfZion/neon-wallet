@@ -5,7 +5,7 @@ import { forEach, map } from 'lodash'
 import fs from 'fs'
 import storage from 'electron-json-storage'
 import Delete from 'react-icons/lib/md/delete'
-import Logo from '../../components/Logo'
+import Page from '../../components/Page'
 import { ROUTES, EXPLORER } from '../../core/constants'
 const { dialog } = require('electron').remote
 
@@ -118,8 +118,7 @@ export default class Settings extends Component<Props, State> {
     const { wallets } = this.props
     const { explorer } = this.state
     return (
-      <div id='settings'>
-        <Logo />
+      <Page id='settings'>
         <div className='description'>Manage your Neon wallet keys and settings</div>
         <div className='settingsForm'>
           <div className='settingsItem'>
@@ -148,7 +147,7 @@ export default class Settings extends Component<Props, State> {
           <button onClick={this.loadKeyRecovery}>Load key recovery file</button>
         </div>
         <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>
-      </div>
+      </Page>
     )
   }
 }

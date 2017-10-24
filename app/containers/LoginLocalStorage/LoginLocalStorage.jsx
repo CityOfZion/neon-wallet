@@ -5,8 +5,7 @@ import storage from 'electron-json-storage'
 import { map } from 'lodash'
 import FaEye from 'react-icons/lib/fa/eye'
 import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
-import Logo from '../../components/Logo'
-import Footer from '../../components/Footer'
+import Page from '../../components/Page'
 import { ROUTES } from '../../core/constants'
 
 type Props = {
@@ -49,9 +48,8 @@ export default class LoginLocalStorage extends Component<Props, State> {
     const loginButtonDisabled = Object.keys(accountKeys).length === 0 || wif === '' || passphrase === ''
 
     return (
-      <div id='loginPage'>
+      <Page id='loginPage'>
         <div className='login'>
-          <Logo />
           <div className='loginForm'>
             <input
               type={showKey ? 'text' : 'password'}
@@ -81,9 +79,8 @@ export default class LoginLocalStorage extends Component<Props, State> {
               disabled={loginButtonDisabled}>Login</button>
             <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>
           </div>
-          <Footer />
         </div>
-      </div>
+      </Page>
     )
   }
 }

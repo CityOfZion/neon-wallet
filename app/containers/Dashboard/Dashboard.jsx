@@ -65,6 +65,7 @@ export default class Dashboard extends Component<Props> {
             <TransactionHistory />
           </SplitPane>
         </SplitPane>
-      </div>)
+      </div>
+    )
   }
 }

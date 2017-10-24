@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 import * as Neon from 'neon-js'
 import NetworkSwitch from '../NetworkSwitch'
-import Logo from '../../components/Logo'
+import Page from '../../components/Page'
 import { ROUTES } from '../../core/constants'
 
 type Props = {
@@ -113,8 +113,7 @@ export default class TokenSale extends Component<Props, State> {
     const { neoToSend, scriptHash } = this.state
 
     return (
-      <div id='tokenSale'>
-        <Logo />
+      <Page id='tokenSale'>
         <NetworkSwitch />
         <div className='description'>Participate in Token Sale</div>
         <div className='warning'>
@@ -156,7 +155,7 @@ export default class TokenSale extends Component<Props, State> {
           <button onClick={this.refreshTokenBalance}>Refresh Token Balance</button>
         </div>
         <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>
-      </div>
+      </Page>
     )
   }
 }

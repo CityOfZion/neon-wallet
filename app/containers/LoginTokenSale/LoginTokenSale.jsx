@@ -1,8 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import { Link } from 'react-router'
-import Logo from '../../components/Logo'
-import Footer from '../../components/Footer'
+import Page from '../../components/Page'
 import { ROUTES } from '../../core/constants'
 
 type Props = {
@@ -25,10 +24,9 @@ export default class LoginTokenSale extends Component<Props, State> {
     const loginButtonDisabled = wif === ''
 
     return (
-      <div id='loginPage'>
+      <Page id='loginPage'>
         <div className='login'>
           <div className='loginForm'>
-            <Logo />
             <input
               type='text'
               placeholder='Enter your private key here (WIF)'
@@ -44,9 +42,8 @@ export default class LoginTokenSale extends Component<Props, State> {
               className={loginButtonDisabled && 'disabled'}>Login</button>
             <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>
           </div>
-          <Footer />
         </div>
-      </div>
+      </Page>
     )
   }
 }
