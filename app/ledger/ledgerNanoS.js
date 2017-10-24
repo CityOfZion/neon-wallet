@@ -1,7 +1,7 @@
 import commNode from '../ledger/ledger-comm-node'
 import { BIP44_PATH } from '../core/constants'
 
-export const ledgerNanoSCreateSignatureAsynch = (txData) => {
+export const ledgerNanoSCreateSignatureAsync = (txData) => {
   return new Promise((resolve, reject) => {
     let signatureInfo = 'Ledger Signing Text of Length [' + txData.length + "], Please Confirm Using the Device's Buttons. " + txData
 
@@ -39,12 +39,17 @@ export const ledgerNanoSCreateSignatureAsynch = (txData) => {
       }
 
       process.stdout.write('Ledger Signature chunkLength hex ' + chunkLengthHex + '\n')
+      console.log('getting called in here');
+      console.log('chunk.length', chunk.length);
+      console.log('signData.length', signData.length);
 
       messages.push('8002' + p1 + '00' + chunkLengthHex + chunk)
       offset += chunk.length
     }
 
+    console.log('what is messages', messages);
     commNode.create_async(0, false).then((comm) => {
+      console.log('what is comm', comm);
       for (let ix = 0; ix < messages.length; ix++) {
         let message = messages[ix]
         process.stdout.write('Ledger Message (' + ix + '/' + messages.length + ') ' + message + '\n')

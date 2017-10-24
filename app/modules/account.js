@@ -5,7 +5,7 @@ import { getAccountFromWIFKey, getPublicKeyEncoded, getAccountFromPublicKey } fr
 import commNode from '../ledger/ledger-comm-node'
 import { BIP44_PATH } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
-import { ledgerNanoSCreateSignatureAsynch } from '../ledger/ledgerNanoS'
+import { ledgerNanoSCreateSignatureAsync } from '../ledger/ledgerNanoS'
 
 // Constants
 export const LOGIN = 'LOGIN'
@@ -25,11 +25,11 @@ export function login (wif: string) {
 }
 
 export function ledgerNanoSGetLogin () {
-  // process.stdout.write('ledgerNanoSGetLogin ledgerNanoSCreateSignatureAsynch "' + JSON.stringify(ledgerNanoSCreateSignatureAsynch) + '"\n')
+  // process.stdout.write('ledgerNanoSGetLogin ledgerNanoSCreateSignatureAsync "' + JSON.stringify(ledgerNanoSCreateSignatureAsync) + '"\n')
   // process.stdout.write('ledgerNanoSGetLogin publicKey "' + JSON.stringify(publicKey) + '"\n')
   return {
     type: LOGIN,
-    signingFunction: ledgerNanoSCreateSignatureAsynch
+    signingFunction: ledgerNanoSCreateSignatureAsync
   }
 }
 
