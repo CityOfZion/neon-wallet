@@ -1,9 +1,20 @@
 import commNode from '../ledger/ledger-comm-node'
-import { BIP44_PATH } from '../core/constants'
-import { getPublicKeyEncoded, getAccountFromPublicKey, getScriptHashFromAddress, getBalance, serializeTransaction, create } from 'neon-js'
-import { ASSETS, ASSETS_LABELS } from '../core/constants'
+import { ASSETS, BIP44_PATH } from '../core/constants'
+import { 
+  getPublicKeyEncoded, 
+  getAccountFromPublicKey, 
+  getScriptHashFromAddress,
+  getBalance, 
+  serializeTransaction, 
+  create, 
+  addContract, 
+  queryRPC,
+  getAPIEndpoint,
+  } from 'neon-js'
 
-export const ledgerNanoSCreateSignatureAsync = (txData) => {
+export const CURRENT_VERSION = 0
+
+export const ledgerNanoSCreateSignatureAsync = async (txData) => {
   return new Promise((resolve, reject) => {
     let signatureInfo = 'Ledger Signing Text of Length [' + txData.length + "], Please Confirm Using the Device's Buttons. " + txData
 
@@ -146,6 +157,31 @@ export const hardwareDoSendAsset = (net, sendAddress, publicKey, sendAsset, sign
   })
 }
 
+export const _ledgerNanoSGetdoSendAsset = (net, toAddress, assetAmounts, signingFunction, publicKey) => {
+  const publicKeyEncoded = getPublicKeyEncoded(publicKey)
+  const account = getAccountFromPublicKey(publicKeyEncoded)
+  const toScriptHash = getScriptHashFromAddress(toAddress)
+  return getBalance(net, account.address).then((balances) => {
+    // TODO: maybe have transactions handle this construction?
+    const intents = _.map(assetAmounts, (v, k) => {
+      return { assetId: ASSETS[k], value: v, scriptHash: toScriptHash }
+    })
+    const unsignedTx = ContractTx(account.publicKeyEncoded, balances, intents)
+    return ledgerNanoSCreateSignatureAsync(unsignedTx).then(signedTx => {
+      const hexTx = tx.serializeTransaction(signedTx)
+      return queryRPC(net, 'sendrawtransaction', [hexTx], 4)
+    })
+    .catch(function (reason) {
+      process.stdout.write('failure ledgerNanoSGetdoSendAsset ' + reason + '\n')
+      reject(reason)
+    })
+  })
+  .catch(function (reason) {
+    process.stdout.write('failure ledgerNanoSGetdoSendAsset ' + reason + '\n')
+    reject(reason)
+  })
+ }
+
 export const ledgerNanoSGetdoSendAsset = (net, toAddress, assetAmounts, signingFunction, publicKey) => {
   return new Promise(function (resolve, reject) {
     process.stdout.write('started ledgerNanoSGetdoSendAsset net "' + JSON.stringify(net) + '"\n')
@@ -179,7 +215,7 @@ export const ledgerNanoSGetdoSendAsset = (net, toAddress, assetAmounts, signingF
         process.stdout.write('interim ledgerNanoSGetdoSendAsset create.contract publicKeyEncoded "' + JSON.stringify(fromAccount.publicKeyEncoded) + '"\n')
         process.stdout.write('interim ledgerNanoSGetdoSendAsset create.contract balances "' + JSON.stringify(balances) + '"\n')
         process.stdout.write('interim ledgerNanoSGetdoSendAsset create.contract intents "' + JSON.stringify(intents) + '"\n')
-        const tx = create.contract(fromAccount.publicKeyEncoded, balances, intents)
+        const tx = ContractTx(fromAccount.publicKeyEncoded, balances, intents)
         process.stdout.write('interim ledgerNanoSGetdoSendAsset serializeTransaction \n')
         const txData = serializeTransaction(tx)
         process.stdout.write('interim ledgerNanoSGetdoSendAsset txData "' + txData + '" \n')
@@ -196,6 +232,7 @@ export const ledgerNanoSGetdoSendAsset = (net, toAddress, assetAmounts, signingF
           })
             .catch(function (reason) {
               process.stdout.write('failure ledgerNanoSGetdoSendAsset ' + reason + '\n')
+              process.stdout.write('failure ledgerNanoSGetdoSendAsset ' + reason.stack + '\n')
               reject(reason)
             })
         })
@@ -287,4 +324,70 @@ export const ledgerNanoSGetdoClaimAllGas = (net, fromWif, signingFunction) => {
         reject(reason)
       })
   })
+}
+
+export const ContractTx = (publicKey, balances, intents, override = {}) => {
+  process.stdout.write('ContractTx publicKey ' + JSON.stringify(publicKey) + '\n')
+  const tx = Object.assign({
+    type: 128,
+    version: CURRENT_VERSION,
+    scripts: []
+  }, override)
+  process.stdout.write('ContractTx tx ' + JSON.stringify(tx) + '\n')
+  const attributes = []
+  process.stdout.write('ContractTx attributes ' + JSON.stringify(attributes) + '\n')
+  let { inputs, change } = calculateInputs(publicKey, balances, intents)
+  return Object.assign(tx, { inputs, attributes, outputs: intents.concat(change) }, override)
+ }
+
+const calculateInputs = (publicKey, balances, intents, gasCost = 0) => {
+  process.stdout.write('calculateInputs publicKey ' + JSON.stringify(publicKey) + '\n')
+  // We will work in integers here to be more accurate.
+  // As assets are stored as Fixed8, we just multiple everything by 10e8 and round off to get integers.
+  const requiredAssets = intents.reduce((assets, intent) => {
+    const fixed8Value = Math.round(intent.value * 100000000)
+    assets[intent.assetId] ? assets[intent.assetId] += fixed8Value : assets[intent.assetId] = fixed8Value
+    return assets
+  }, {})
+  
+  process.stdout.write('calculateInputs requiredAssets ' + JSON.stringify(requiredAssets) + '\n')
+  
+  // Add GAS cost in
+  if (gasCost > 0) {
+    const fixed8GasCost = gasCost * 100000000
+    requiredAssets[ASSETS.GAS] ? requiredAssets[ASSETS.GAS] += fixed8GasCost : requiredAssets[ASSETS.GAS] = fixed8GasCost
+  }
+  let change = []
+  const inputs = Object.keys(requiredAssets).map((assetId) => {
+    const requiredAmt = requiredAssets[assetId]
+    const assetBalance = balances[ASSETS[assetId]]
+
+    process.stdout.write('calculateInputs assetId ' + JSON.stringify(assetId) + '\n')
+    process.stdout.write('calculateInputs ASSETS[assetId] ' + JSON.stringify(ASSETS[assetId]) + '\n')
+    process.stdout.write('calculateInputs balances[ASSETS[assetId]] ' + JSON.stringify(balances[ASSETS[assetId]]) + '\n')
+    
+    if (assetBalance.balance * 100000000 < requiredAmt) throw new Error(`Insufficient ${ASSETS[assetId]}! Need ${requiredAmt / 100000000} but only found ${assetBalance.balance}`)
+    // Ascending order sort
+    assetBalance.unspent.sort((a, b) => a.value - b.value)
+    let selectedInputs = 0
+    let selectedAmt = 0
+    // Selected min inputs to satisfy outputs
+    while (selectedAmt < requiredAmt) {
+      selectedInputs += 1
+      selectedAmt += Math.round(assetBalance.unspent[selectedInputs - 1].value * 100000000)
+    }
+    // Construct change output
+    if (selectedAmt > requiredAmt) {
+      change.push({
+        assetId,
+        value: (selectedAmt - requiredAmt) / 100000000,
+        scriptHash: getScriptHashFromPublicKey(publicKey)
+      })
+    }
+    // Format inputs
+    return assetBalance.unspent.slice(0, selectedInputs).map((input) => {
+      return { prevHash: input.txid, prevIndex: input.index }
+    })
+  }).reduce((prev, curr) => prev.concat(curr), [])
+  return { inputs, change }
 }
