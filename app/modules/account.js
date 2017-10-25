@@ -112,12 +112,11 @@ export const ledgerNanoSGetInfoAsync = () => async (dispatch: DispatchType) => {
     if (err) return dispatch(hardwarePublicKeyInfo(`Public Key Comm Init Error: ${err}`))
 
     let message = Buffer.from(`8004000000${BIP44_PATH}`, 'hex')
-    process.stdout.write('getPublicKeyInfo message ' + message + '\n')
     const validStatus = [0x9000]
     let [error, response] = await asyncWrap(comm.exchange(message.toString('hex'), validStatus))
     if (error) {
       comm.device.close() // NOTE: do we need this close here - what about the other errors that do not have it at the moment
-      process.stdout.write('getPublicKeyInfo comm.exchange error reason ' + err + '\n')
+      // process.stdout.write('getPublicKeyInfo comm.exchange error reason ' + err + '\n')
       if (error === 'Invalid status 28160') {
         return dispatch(hardwarePublicKeyInfo('NEO App does not appear to be open, request for private key returned error 28160.'))
       } else {
