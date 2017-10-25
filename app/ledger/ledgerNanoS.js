@@ -1,9 +1,18 @@
 import commNode from '../ledger/ledger-comm-node'
-import { BIP44_PATH } from '../core/constants'
-import { getPublicKeyEncoded, getAccountFromPublicKey, getScriptHashFromAddress, getBalance, serializeTransaction, create } from 'neon-js'
-import { ASSETS, ASSETS_LABELS } from '../core/constants'
+import { ASSETS, BIP44_PATH } from '../core/constants'
+import { 
+  getPublicKeyEncoded, 
+  getAccountFromPublicKey, 
+  getScriptHashFromAddress,
+  getBalance, 
+  serializeTransaction, 
+  create, 
+  addContract, 
+  queryRPC,
+  getAPIEndpoint,
+  } from 'neon-js'
 
-export const ledgerNanoSCreateSignatureAsync = (txData) => {
+export const ledgerNanoSCreateSignatureAsync = async (txData) => {
   return new Promise((resolve, reject) => {
     let signatureInfo = 'Ledger Signing Text of Length [' + txData.length + "], Please Confirm Using the Device's Buttons. " + txData
 
@@ -146,6 +155,31 @@ export const hardwareDoSendAsset = (net, sendAddress, publicKey, sendAsset, sign
   })
 }
 
+export const _ledgerNanoSGetdoSendAsset = (net, toAddress, assetAmounts, signingFunction, publicKey) => {
+  const publicKeyEncoded = getPublicKeyEncoded(publicKey)
+  const account = getAccountFromPublicKey(publicKeyEncoded)
+  const toScriptHash = getScriptHashFromAddress(toAddress)
+  return getBalance(net, account.address).then((balances) => {
+    // TODO: maybe have transactions handle this construction?
+    const intents = _.map(assetAmounts, (v, k) => {
+      return { assetId: ASSETS[k], value: v, scriptHash: toScriptHash }
+    })
+    const unsignedTx = create.contract(account.publicKeyEncoded, balances, intents)
+    return ledgerNanoSCreateSignatureAsync(unsignedTx).then(signedTx => {
+      const hexTx = tx.serializeTransaction(signedTx)
+      return queryRPC(net, 'sendrawtransaction', [hexTx], 4)
+    })
+    .catch(function (reason) {
+      process.stdout.write('failure ledgerNanoSGetdoSendAsset ' + reason + '\n')
+      reject(reason)
+    })
+  })
+  .catch(function (reason) {
+    process.stdout.write('failure ledgerNanoSGetdoSendAsset ' + reason + '\n')
+    reject(reason)
+  })
+ }
+
 export const ledgerNanoSGetdoSendAsset = (net, toAddress, assetAmounts, signingFunction, publicKey) => {
   return new Promise(function (resolve, reject) {
     process.stdout.write('started ledgerNanoSGetdoSendAsset net "' + JSON.stringify(net) + '"\n')
@@ -196,6 +230,7 @@ export const ledgerNanoSGetdoSendAsset = (net, toAddress, assetAmounts, signingF
           })
             .catch(function (reason) {
               process.stdout.write('failure ledgerNanoSGetdoSendAsset ' + reason + '\n')
+              process.stdout.write('failure ledgerNanoSGetdoSendAsset ' + reason.stack + '\n')
               reject(reason)
             })
         })
