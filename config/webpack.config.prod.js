@@ -7,7 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
   bail: true,
   devtool: false,
-  target: 'electron',
+  target: 'electron-main',
   entry: [
     'babel-polyfill',
     path.join(__dirname, '..', 'app/index.js')

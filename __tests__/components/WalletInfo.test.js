@@ -31,7 +31,7 @@ jest.mock('electron', () => ({
 jest.mock('neon-js')
 
 jest.unmock('qrcode')
-import QRCode from 'qrcode' // eslint-disable-line
+import QRCode from 'qrcode/lib/browser' // eslint-disable-line
 QRCode.toCanvas = jest.fn()
 
 const initialState = {

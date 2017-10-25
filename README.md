@@ -44,10 +44,18 @@ A standalone app will be available soon. For now, you will need to build the wal
 
 Execute these commands in the project's root directory:
 
+Setup:
+  - `yarn install` - Installing node dependencies
   - `./node_modules/.bin/electron -v` confirm electron is version 1.7.9
-  - `yarn install` Installing node dependencies
-  - `yarn run assets` or `yarn run assets-watch` for live reload.
-  - `yarn start` for running the project or `yarn start-dev` to run with verbose console logging.
+
+Developing:
+  - `yarn dev` - Live reload
+
+Running (for production):
+  - `yarn assets`
+  - `yarn start`
+
+Testing:
   - `yarn test` or `yarn run test-watch` for live testing.
 
 ### Support
