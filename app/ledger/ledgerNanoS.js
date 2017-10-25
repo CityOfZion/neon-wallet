@@ -1,5 +1,5 @@
 import commNode from '../ledger/ledger-comm-node'
-import { ASSETS, BIP44_PATH } from '../core/constants'
+import { ASSETS as CORE_ASSETS, BIP44_PATH } from '../core/constants'
 import { 
   getPublicKeyEncoded, 
   getAccountFromPublicKey, 
@@ -157,31 +157,6 @@ export const hardwareDoSendAsset = (net, sendAddress, publicKey, sendAsset, sign
   })
 }
 
-export const _ledgerNanoSGetdoSendAsset = (net, toAddress, assetAmounts, signingFunction, publicKey) => {
-  const publicKeyEncoded = getPublicKeyEncoded(publicKey)
-  const account = getAccountFromPublicKey(publicKeyEncoded)
-  const toScriptHash = getScriptHashFromAddress(toAddress)
-  return getBalance(net, account.address).then((balances) => {
-    // TODO: maybe have transactions handle this construction?
-    const intents = _.map(assetAmounts, (v, k) => {
-      return { assetId: ASSETS[k], value: v, scriptHash: toScriptHash }
-    })
-    const unsignedTx = ContractTx(account.publicKeyEncoded, balances, intents)
-    return ledgerNanoSCreateSignatureAsync(unsignedTx).then(signedTx => {
-      const hexTx = tx.serializeTransaction(signedTx)
-      return queryRPC(net, 'sendrawtransaction', [hexTx], 4)
-    })
-    .catch(function (reason) {
-      process.stdout.write('failure ledgerNanoSGetdoSendAsset ' + reason + '\n')
-      reject(reason)
-    })
-  })
-  .catch(function (reason) {
-    process.stdout.write('failure ledgerNanoSGetdoSendAsset ' + reason + '\n')
-    reject(reason)
-  })
- }
-
 export const ledgerNanoSGetdoSendAsset = (net, toAddress, assetAmounts, signingFunction, publicKey) => {
   return new Promise(function (resolve, reject) {
     process.stdout.write('started ledgerNanoSGetdoSendAsset net "' + JSON.stringify(net) + '"\n')
@@ -205,7 +180,7 @@ export const ledgerNanoSGetdoSendAsset = (net, toAddress, assetAmounts, signingF
 
       /* eslint-disable */
       const intents = _.map(assetAmounts, (v, k) => {
-        return { assetId: ASSETS[k], value: v, scriptHash: toScriptHash }
+        return { assetId: CORE_ASSETS[k], value: v, scriptHash: toScriptHash }
       })
       /* eslint-enable */
 
@@ -215,9 +190,15 @@ export const ledgerNanoSGetdoSendAsset = (net, toAddress, assetAmounts, signingF
         process.stdout.write('interim ledgerNanoSGetdoSendAsset create.contract publicKeyEncoded "' + JSON.stringify(fromAccount.publicKeyEncoded) + '"\n')
         process.stdout.write('interim ledgerNanoSGetdoSendAsset create.contract balances "' + JSON.stringify(balances) + '"\n')
         process.stdout.write('interim ledgerNanoSGetdoSendAsset create.contract intents "' + JSON.stringify(intents) + '"\n')
-        const tx = ContractTx(fromAccount.publicKeyEncoded, balances, intents)
-        process.stdout.write('interim ledgerNanoSGetdoSendAsset serializeTransaction \n')
-        const txData = serializeTransaction(tx)
+        
+        process.stdout.write('interim ledgerNanoSGetdoSendAsset create.contract src "' + create.contract + '" \n')
+        process.stdout.write('interim ledgerNanoSGetdoSendAsset create.contract src "' + JSON.stringify(create.contract) + '" \n')
+        process.stdout.write('interim ledgerNanoSGetdoSendAsset calculateInputs src "' + calculateInputs + '" \n')
+        process.stdout.write('interim ledgerNanoSGetdoSendAsset calculateInputs src "' + JSON.stringify(calculateInputs) + '" \n')
+        
+        const unsignedTx = ContractTx(fromAccount.publicKeyEncoded, balances, intents)
+        process.stdout.write('interim ledgerNanoSGetdoSendAsset serializeTransaction unsignedTx "' + JSON.stringify(unsignedTx) + '" \n')
+        const txData = serializeTransaction(unsignedTx)
         process.stdout.write('interim ledgerNanoSGetdoSendAsset txData "' + txData + '" \n')
         signingFunction(txData).then((sign) => {
           process.stdout.write('interim ledgerNanoSGetdoSendAsset sign1 "' + JSON.stringify(sign) + '" \n')
@@ -355,18 +336,18 @@ const calculateInputs = (publicKey, balances, intents, gasCost = 0) => {
   // Add GAS cost in
   if (gasCost > 0) {
     const fixed8GasCost = gasCost * 100000000
-    requiredAssets[ASSETS.GAS] ? requiredAssets[ASSETS.GAS] += fixed8GasCost : requiredAssets[ASSETS.GAS] = fixed8GasCost
+    requiredAssets[CORE_ASSETS.GAS] ? requiredAssets[CORE_ASSETS.GAS] += fixed8GasCost : requiredAssets[CORE_ASSETS.GAS] = fixed8GasCost
   }
   let change = []
   const inputs = Object.keys(requiredAssets).map((assetId) => {
     const requiredAmt = requiredAssets[assetId]
-    const assetBalance = balances[ASSETS[assetId]]
+    const assetBalance = balances[CORE_ASSETS[assetId]]
 
     process.stdout.write('calculateInputs assetId ' + JSON.stringify(assetId) + '\n')
-    process.stdout.write('calculateInputs ASSETS[assetId] ' + JSON.stringify(ASSETS[assetId]) + '\n')
-    process.stdout.write('calculateInputs balances[ASSETS[assetId]] ' + JSON.stringify(balances[ASSETS[assetId]]) + '\n')
+    process.stdout.write('calculateInputs CORE_ASSETS[assetId] ' + JSON.stringify(CORE_ASSETS[assetId]) + '\n')
+    process.stdout.write('calculateInputs balances[CORE_ASSETS[assetId]] ' + JSON.stringify(balances[CORE_ASSETS[assetId]]) + '\n')
     
-    if (assetBalance.balance * 100000000 < requiredAmt) throw new Error(`Insufficient ${ASSETS[assetId]}! Need ${requiredAmt / 100000000} but only found ${assetBalance.balance}`)
+    if (assetBalance.balance * 100000000 < requiredAmt) throw new Error(`Insufficient ${CORE_ASSETS[assetId]}! Need ${requiredAmt / 100000000} but only found ${assetBalance.balance}`)
     // Ascending order sort
     assetBalance.unspent.sort((a, b) => a.value - b.value)
     let selectedInputs = 0
