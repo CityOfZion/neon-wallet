@@ -1,14 +1,14 @@
 // @flow
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { verifyAddress, doSendAsset, hardwareDoSendAsset } from 'neon-js'
+import { verifyAddress, doSendAsset } from 'neon-js'
+import { hardwareDoSendAsset } from '../ledger/ledgerNanoS.js'
 import { togglePane } from '../modules/dashboard'
 import { sendEvent, clearTransactionEvent, toggleAsset } from '../modules/transactions'
 import SplitPane from 'react-split-pane'
 import ReactTooltip from 'react-tooltip'
 import { log } from '../util/Logs'
 import { ASSETS, ASSETS_LABELS } from '../core/constants'
-
 type Props = {
   dispatch: DispatchType,
   address: string,
