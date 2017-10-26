@@ -53,9 +53,11 @@ exports[`Claim should render without crashing 1`] = `
   claimRequest={false}
   claimWasUpdated={false}
   disableClaimButton={false}
-  dispatch={[Function]}
+  doClaimNotify={[Function]}
+  doGasClaim={[Function]}
   neo="neo"
   net="network"
+  setClaimRequest={[Function]}
   store={
     Object {
       "clearActions": [Function],

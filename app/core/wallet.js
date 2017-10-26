@@ -58,11 +58,12 @@ export const validateTransactionBeforeSending = (neoBalance: number, gasBalance:
         valid: false
       }
     }
-    if (parseFloat(sendAmount) < 0) { // check for negative asset
-      return {
-        error: 'You cannot send negative amounts of an asset.',
-        valid: false
-      }
+  }
+
+  if (parseFloat(sendAmount) < 0) { // check for negative asset
+    return {
+      error: 'You cannot send negative amounts of an asset.',
+      valid: false
     }
   }
 

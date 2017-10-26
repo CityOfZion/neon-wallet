@@ -1,9 +1,10 @@
 import React from 'react'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
 import { shallow, mount } from 'enzyme'
 import { createMemoryHistory } from 'history'
-import LoginNep2 from '../../app/containers/LoginNep2/LoginNep2'
+import LoginNep2 from '../../app/containers/LoginNep2'
 import { decryptWIF } from 'neon-js'
 import { SEND_TRANSACTION, CLEAR_TRANSACTION } from '../../app/modules/transactions'
 import { LOGIN } from '../../app/modules/account'
@@ -11,14 +12,8 @@ import { LOGIN } from '../../app/modules/account'
 jest.useFakeTimers()
 jest.mock('neon-js')
 
-const initialState = {
-  account: {
-    decrypting: false
-  }
-}
-
-const setup = (state = initialState, shallowRender = true) => {
-  const store = configureStore()(state)
+const setup = (shallowRender = true) => {
+  const store = configureStore([thunk])({})
 
   let wrapper
   if (shallowRender) {
@@ -45,7 +40,7 @@ describe('LoginNep2', () => {
     done()
   })
   test('renders correctly with initial state', (done) => {
-    const { wrapper } = setup(initialState, false)
+    const { wrapper } = setup(false)
 
     const passwordField = wrapper.find('input[type="password"]')
     const keyField = wrapper.find('input[type="text"]')
@@ -56,23 +51,10 @@ describe('LoginNep2', () => {
     expect(keyField.html().includes('Enter your encrypted key here')).toEqual(true)
     done()
   })
-  test('renders correctly when decrypting is true', (done) => {
-    const newState = Object.assign({}, initialState, {
-      account: {
-        ...initialState.account,
-        decrypting: true
-      }
-    })
-    const { wrapper } = setup(newState, false)
-    const decryptingText = wrapper.find('.decrypting')
-
-    expect(decryptingText.text()).toEqual('Decrypting keys...')
-    done()
-  })
   test('the login button is working correctly with no passphrase or wif', (done) => {
-    const { wrapper, store } = setup()
+    const { wrapper, store } = setup(false)
 
-    wrapper.dive().find('.loginButton').simulate('click')
+    wrapper.find('.loginButton').simulate('click')
     Promise.resolve('pause').then(() => {
       const actions = store.getActions()
       expect(actions.length).toEqual(0)
@@ -80,16 +62,18 @@ describe('LoginNep2', () => {
     })
   })
   test('the login button is working correctly with only a short passphrase', (done) => {
-    const { wrapper, store } = setup(initialState, false)
-    const passwordField = wrapper.find('input[type="password"]')
+    const { wrapper, store } = setup(false)
+
+    const passwordField = wrapper.find('input[placeholder="Enter your passphrase here"]')
     passwordField.instance().value = 'T'
     passwordField.simulate('change')
 
-    const keyField = wrapper.find('input[type="text"]')
+    const keyField = wrapper.find('input[placeholder="Enter your encrypted key here"]')
     keyField.instance().value = '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
     keyField.simulate('change')
 
     wrapper.find('.loginButton').simulate('click')
+
     Promise.resolve('pause').then(() => {
       jest.runAllTimers()
       const actions = store.getActions()
@@ -107,13 +91,13 @@ describe('LoginNep2', () => {
   })
   test('the login button is working correctly with key and passphrase', (done) => {
     const response = Promise.resolve('pause')
-    const { wrapper, store } = setup(initialState, false)
+    const { wrapper, store } = setup(false)
 
-    const passwordField = wrapper.find('input[type="password"]')
+    const passwordField = wrapper.find('input[placeholder="Enter your passphrase here"]')
     passwordField.instance().value = 'Th!s1$@FakePassphrase'
     passwordField.simulate('change')
 
-    const keyField = wrapper.find('input[type="text"]')
+    const keyField = wrapper.find('input[placeholder="Enter your encrypted key here"]')
     keyField.instance().value = '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
     keyField.simulate('change')
 
