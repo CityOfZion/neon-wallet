@@ -6,7 +6,6 @@ import {
   getAccountFromPublicKey,
   getScriptHashFromAddress,
   getScriptHashFromPublicKey,
-  getAccountFromWIFKey,
   getBalance,
   serializeTransaction,
   create,
@@ -155,6 +154,19 @@ export const ledgerNanoSCreateSignatureAsync = async (txData) => {
   })
 }
 
+export const hardwareDoClaimAllGas = (net, publicKey, signingFunction) => {
+  return new Promise(function (resolve, reject) {
+    ledgerNanoSGetdoClaimAllGas(net, publicKey, ledgerNanoSCreateSignatureAsync).then((response) => {
+      resolve(response)
+    })
+      .catch(function (reason) {
+        process.stdout.write('failure hardwareDoClaimAllGas ' + reason + '\n')
+        process.stdout.write('failure hardwareDoClaimAllGas ' + reason.stack + '\n')
+        reject(reason)
+      })
+  })
+}
+
 export const hardwareDoSendAsset = (net, sendAddress, publicKey, sendAsset, signingFunction) => {
   return new Promise(function (resolve, reject) {
     ledgerNanoSGetdoSendAsset(net, sendAddress, sendAsset, ledgerNanoSCreateSignatureAsync, publicKey).then((response) => {
@@ -241,19 +253,14 @@ export const ledgerNanoSGetdoSendAsset = (net, toAddress, assetAmounts, signingF
   })
 }
 
-export const ledgerNanoSGetdoClaimAllGas = (net, fromWif, signingFunction) => {
+export const ledgerNanoSGetdoClaimAllGas = (net, publicKey, signingFunction) => {
   return new Promise(function (resolve, reject) {
-    process.stdout.write('started ledgerNanoSGetdoClaimAllGas fromWif "' + JSON.stringify(fromWif) + '"\n')
     process.stdout.write('started ledgerNanoSGetdoClaimAllGas signingFunction "' + JSON.stringify(signingFunction) + '"\n')
     const apiEndpoint = getAPIEndpoint(net)
-
-    var fromAccount
-    if (fromWif instanceof Function) {
-      fromAccount = fromWif()
-    } else {
-      fromAccount = getAccountFromWIFKey(fromWif)
-    }
-
+    const publicKeyEncoded = getPublicKeyEncoded(publicKey)
+    process.stdout.write('interim ledgerNanoSGetdoClaimAllGas publicKeyEncoded "' + JSON.stringify(publicKeyEncoded) + '" \n')
+    const fromAccount = getAccountFromPublicKey(publicKeyEncoded)
+    process.stdout.write('interim ledgerNanoSGetdoClaimAllGas fromAccount "' + JSON.stringify(fromAccount) + '" \n')
     process.stdout.write('interim ledgerNanoSGetdoClaimAllGas sign fromAccount "' + JSON.stringify(fromAccount) + '" \n')
 
     // TODO: when fully working replace this with mainnet/testnet switch
