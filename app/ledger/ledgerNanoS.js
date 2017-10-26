@@ -1,17 +1,20 @@
+import axios from 'axios'
 import commNode from '../ledger/ledger-comm-node'
-import { ASSETS as CORE_ASSETS, BIP44_PATH } from '../core/constants'
-import { 
-  getPublicKeyEncoded, 
-  getAccountFromPublicKey, 
+import { BIP44_PATH } from '../core/constants'
+import {
+  getPublicKeyEncoded,
+  getAccountFromPublicKey,
   getScriptHashFromAddress,
-  getBalance, 
-  serializeTransaction, 
-  create, 
-  addContract, 
+  getScriptHashFromPublicKey,
+  getAccountFromWIFKey,
+  getBalance,
+  serializeTransaction,
+  create,
+  addContract,
   queryRPC,
   getAPIEndpoint,
-  ASSETS,
-  } from 'neon-js'
+  ASSETS
+} from 'neon-js'
 
 export const CURRENT_VERSION = 0
 
@@ -194,59 +197,41 @@ export const ledgerNanoSGetdoSendAsset = (net, toAddress, assetAmounts, signingF
 
       process.stdout.write('interim ledgerNanoSGetdoSendAsset transferTransaction \n')
 
-      if (signingFunction instanceof Function) {
-        process.stdout.write('interim ledgerNanoSGetdoSendAsset create.contract publicKeyEncoded "' + JSON.stringify(fromAccount.publicKeyEncoded) + '"\n')
-        process.stdout.write('interim ledgerNanoSGetdoSendAsset create.contract balances "' + JSON.stringify(balances) + '"\n')
-        process.stdout.write('interim ledgerNanoSGetdoSendAsset create.contract intents "' + JSON.stringify(intents) + '"\n')
-        
-        process.stdout.write('interim ledgerNanoSGetdoSendAsset create.contract src "' + create.contract + '" \n')
-        process.stdout.write('interim ledgerNanoSGetdoSendAsset create.contract src "' + JSON.stringify(create.contract) + '" \n')
-        process.stdout.write('interim ledgerNanoSGetdoSendAsset calculateInputs src "' + calculateInputs + '" \n')
-        process.stdout.write('interim ledgerNanoSGetdoSendAsset calculateInputs src "' + JSON.stringify(calculateInputs) + '" \n')
-        
-        const unsignedTx = ContractTx(fromAccount.publicKeyEncoded, balances, intents)
-        process.stdout.write('interim ledgerNanoSGetdoSendAsset serializeTransaction unsignedTx "' + JSON.stringify(unsignedTx) + '" \n')
-        const txData = serializeTransaction(unsignedTx)
-        process.stdout.write('interim ledgerNanoSGetdoSendAsset txData "' + txData + '" \n')
-        signingFunction(txData).then((sign) => {
-          process.stdout.write('interim ledgerNanoSGetdoSendAsset sign1 "' + JSON.stringify(sign) + '" \n')
-          process.stdout.write('interim ledgerNanoSGetdoSendAsset sign2 "' + JSON.stringify(sign) + '" \n')
-          process.stdout.write('interim ledgerNanoSGetdoSendAsset sign account "' + JSON.stringify(fromAccount) + '" \n')
-          process.stdout.write('interim ledgerNanoSGetdoSendAsset sign account.publicKeyEncoded "' + fromAccount.publicKeyEncoded + '" \n')
-          process.stdout.write('interim ledgerNanoSGetdoSendAsset sign Ledger "' + sign + '" \n')
-          const txRawData = addContract(txData, sign, fromAccount.publicKeyEncoded)
-          queryRPC(net, 'sendrawtransaction', [txRawData], 4).then((response) => {
-            process.stdout.write('interim ledgerNanoSGetdoSendAsset sendrawtransaction "' + JSON.stringify(response) + '" \n')
-            resolve(response)
-          })
-            .catch(function (reason) {
-              process.stdout.write('failure ledgerNanoSGetdoSendAsset1 ' + reason + '\n')
-              process.stdout.write('failure ledgerNanoSGetdoSendAsset1 ' + reason.stack + '\n')
-              reject(reason)
-            })
-        })
-          .catch(function (reason) {
-            process.stdout.write('failure ledgerNanoSGetdoSendAsset2 ' + reason + '\n')
-            process.stdout.write('failure ledgerNanoSGetdoSendAsset2 ' + reason.stack + '\n')
-            reject(reason)
-          })
-      } else {
-        process.stdout.write('interim ledgerNanoSGetdoSendAsset create.contract\n')
-        const unsignedTx = create.contract(fromAccount.publicKeyEncoded, balances, intents)
-        process.stdout.write('interim ledgerNanoSGetdoSendAsset unsignedTx ' + unsignedTx + '\n')
-        const signedTx = signTransaction(unsignedTx, fromAccount.privateKey)
-        process.stdout.write('interim ledgerNanoSGetdoSendAsset signedTx ' + signedTx + '\n')
-        const hexTx = serializeTransaction(signedTx)
-        process.stdout.write('interim ledgerNanoSGetdoSendAsset hexTx ' + hexTx + '\n')
-        queryRPC(net, 'sendrawtransaction', [hexTx], 4).then((response) => {
+      process.stdout.write('interim ledgerNanoSGetdoSendAsset create.contract publicKeyEncoded "' + JSON.stringify(fromAccount.publicKeyEncoded) + '"\n')
+      process.stdout.write('interim ledgerNanoSGetdoSendAsset create.contract balances "' + JSON.stringify(balances) + '"\n')
+      process.stdout.write('interim ledgerNanoSGetdoSendAsset create.contract intents "' + JSON.stringify(intents) + '"\n')
+
+      process.stdout.write('interim ledgerNanoSGetdoSendAsset create.contract src "' + create.contract + '" \n')
+      process.stdout.write('interim ledgerNanoSGetdoSendAsset create.contract src "' + JSON.stringify(create.contract) + '" \n')
+      process.stdout.write('interim ledgerNanoSGetdoSendAsset calculateInputs src "' + calculateInputs + '" \n')
+      process.stdout.write('interim ledgerNanoSGetdoSendAsset calculateInputs src "' + JSON.stringify(calculateInputs) + '" \n')
+
+      const unsignedTx = ContractTx(fromAccount.publicKeyEncoded, balances, intents)
+      process.stdout.write('interim ledgerNanoSGetdoSendAsset serializeTransaction unsignedTx "' + JSON.stringify(unsignedTx) + '" \n')
+      const txData = serializeTransaction(unsignedTx)
+      process.stdout.write('interim ledgerNanoSGetdoSendAsset txData "' + txData + '" \n')
+      signingFunction(txData).then((sign) => {
+        process.stdout.write('interim ledgerNanoSGetdoSendAsset sign1 "' + JSON.stringify(sign) + '" \n')
+        process.stdout.write('interim ledgerNanoSGetdoSendAsset sign2 "' + JSON.stringify(sign) + '" \n')
+        process.stdout.write('interim ledgerNanoSGetdoSendAsset sign account "' + JSON.stringify(fromAccount) + '" \n')
+        process.stdout.write('interim ledgerNanoSGetdoSendAsset sign account.publicKeyEncoded "' + fromAccount.publicKeyEncoded + '" \n')
+        process.stdout.write('interim ledgerNanoSGetdoSendAsset sign Ledger "' + sign + '" \n')
+        const txRawData = addContract(txData, sign, fromAccount.publicKeyEncoded)
+        queryRPC(net, 'sendrawtransaction', [txRawData], 4).then((response) => {
+          process.stdout.write('interim ledgerNanoSGetdoSendAsset sendrawtransaction "' + JSON.stringify(response) + '" \n')
           resolve(response)
         })
           .catch(function (reason) {
-            process.stdout.write('failure ledgerNanoSGetdoSendAsset3 ' + reason + '\n')
-            process.stdout.write('failure ledgerNanoSGetdoSendAsset3 ' + reason.stack + '\n')
+            process.stdout.write('failure ledgerNanoSGetdoSendAsset1 ' + reason + '\n')
+            process.stdout.write('failure ledgerNanoSGetdoSendAsset1 ' + reason.stack + '\n')
             reject(reason)
           })
-      }
+      })
+        .catch(function (reason) {
+          process.stdout.write('failure ledgerNanoSGetdoSendAsset2 ' + reason + '\n')
+          process.stdout.write('failure ledgerNanoSGetdoSendAsset2 ' + reason.stack + '\n')
+          reject(reason)
+        })
     })
       .catch(function (reason) {
         process.stdout.write('failure ledgerNanoSGetdoSendAsset4 ' + reason + '\n')
@@ -274,42 +259,25 @@ export const ledgerNanoSGetdoClaimAllGas = (net, fromWif, signingFunction) => {
     // TODO: when fully working replace this with mainnet/testnet switch
     return axios.get(apiEndpoint + '/v2/address/claims/' + fromAccount.address).then((response) => {
       process.stdout.write('interim ledgerNanoSGetdoClaimAllGas sign signingFunction "' + (signingFunction instanceof Function) + '" \n')
-      if (signingFunction instanceof Function) {
-        const txData = serializeTransaction(create.claim(fromAccount.publicKeyEncoded, response.data))
-        process.stdout.write('interim ledgerNanoSGetdoClaimAllGas txData "' + txData + '" \n')
-        signingFunction(txData).then((sign) => {
-          process.stdout.write('interim ledgerNanoSGetdoClaimAllGas sign fromAccount "' + JSON.stringify(fromAccount) + '" \n')
-          process.stdout.write('interim ledgerNanoSGetdoClaimAllGas sign fromAccount.publicKeyEncoded "' + fromAccount.publicKeyEncoded + '" \n')
-          process.stdout.write('interim ledgerNanoSGetdoClaimAllGas sign Ledger "' + sign + '" \n')
-          const txRawData = addContract(txData, sign, fromAccount.publicKeyEncoded)
-          queryRPC(net, 'sendrawtransaction', [txRawData], 4).then((response) => {
-            resolve(response)
-          })
-            .catch(function (reason) {
-              process.stdout.write('failure ledgerNanoSGetdoClaimAllGas ' + reason + '\n')
-              reject(reason)
-            })
-        })
-          .catch(function (reason) {
-            process.stdout.write('failure ledgerNanoSGetdoClaimAllGas ' + reason + '\n')
-            reject(reason)
-          })
-      } else {
-        process.stdout.write('interim ledgerNanoSGetdoSendAsset create.claim\n')
-        const unsignedTx = create.claim(fromAccount.publicKeyEncoded, response.data)
-        process.stdout.write('interim ledgerNanoSGetdoSendAsset unsignedTx ' + unsignedTx + '\n')
-        const signedTx = signTransaction(unsignedTx, fromAccount.privateKey)
-        process.stdout.write('interim ledgerNanoSGetdoSendAsset signedTx ' + signedTx + '\n')
-        const hexTx = serializeTransaction(signedTx)
-        process.stdout.write('interim ledgerNanoSGetdoSendAsset hexTx ' + hexTx + '\n')
-        queryRPC(net, 'sendrawtransaction', [hexTx], 4).then((response) => {
+      const txData = serializeTransaction(create.claim(fromAccount.publicKeyEncoded, response.data))
+      process.stdout.write('interim ledgerNanoSGetdoClaimAllGas txData "' + txData + '" \n')
+      signingFunction(txData).then((sign) => {
+        process.stdout.write('interim ledgerNanoSGetdoClaimAllGas sign fromAccount "' + JSON.stringify(fromAccount) + '" \n')
+        process.stdout.write('interim ledgerNanoSGetdoClaimAllGas sign fromAccount.publicKeyEncoded "' + fromAccount.publicKeyEncoded + '" \n')
+        process.stdout.write('interim ledgerNanoSGetdoClaimAllGas sign Ledger "' + sign + '" \n')
+        const txRawData = addContract(txData, sign, fromAccount.publicKeyEncoded)
+        queryRPC(net, 'sendrawtransaction', [txRawData], 4).then((response) => {
           resolve(response)
         })
           .catch(function (reason) {
             process.stdout.write('failure ledgerNanoSGetdoClaimAllGas ' + reason + '\n')
             reject(reason)
           })
-      }
+      })
+        .catch(function (reason) {
+          process.stdout.write('failure ledgerNanoSGetdoClaimAllGas ' + reason + '\n')
+          reject(reason)
+        })
     })
       .catch(function (reason) {
         process.stdout.write('failure ledgerNanoSGetdoClaimAllGas ' + reason + '\n')
@@ -330,7 +298,7 @@ export const ContractTx = (publicKey, balances, intents, override = {}) => {
   process.stdout.write('ContractTx attributes ' + JSON.stringify(attributes) + '\n')
   let { inputs, change } = calculateInputs(publicKey, balances, intents)
   return Object.assign(tx, { inputs, attributes, outputs: intents.concat(change) }, override)
- }
+}
 
 const calculateInputs = (publicKey, balances, intents, gasCost = 0) => {
   process.stdout.write('calculateInputs publicKey ' + JSON.stringify(publicKey) + '\n')
@@ -341,9 +309,9 @@ const calculateInputs = (publicKey, balances, intents, gasCost = 0) => {
     assets[intent.assetId] ? assets[intent.assetId] += fixed8Value : assets[intent.assetId] = fixed8Value
     return assets
   }, {})
-  
+
   process.stdout.write('calculateInputs requiredAssets ' + JSON.stringify(requiredAssets) + '\n')
-  
+
   // Add GAS cost in
   if (gasCost > 0) {
     const fixed8GasCost = gasCost * 100000000
@@ -357,7 +325,7 @@ const calculateInputs = (publicKey, balances, intents, gasCost = 0) => {
     process.stdout.write('calculateInputs assetId ' + JSON.stringify(assetId) + '\n')
     process.stdout.write('calculateInputs ASSETS[assetId] ' + JSON.stringify(ASSETS[assetId]) + '\n')
     process.stdout.write('calculateInputs balances[ASSETS[assetId]] ' + JSON.stringify(balances[ASSETS[assetId]]) + '\n')
-    
+
     if (assetBalance.balance * 100000000 < requiredAmt) throw new Error(`Insufficient ${ASSETS[assetId]}! Need ${requiredAmt / 100000000} but only found ${assetBalance.balance}`)
     // Ascending order sort
     assetBalance.unspent.sort((a, b) => a.value - b.value)
