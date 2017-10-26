@@ -1,57 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LoginNep2 renders without crashing 1`] = `
-<div
-  id="loginPage"
->
-  <div
-    className="login"
-  >
-    <Logo />
-    <div
-      className="loginForm"
-    >
-      <input
-        autoFocus={true}
-        onChange={[Function]}
-        placeholder="Enter your passphrase here"
-        type="password"
-        value=""
-      />
-      <FaEye
-        className="viewKey"
-        onClick={[Function]}
-      />
-      <input
-        onChange={[Function]}
-        placeholder="Enter your encrypted key here"
-        type="text"
-        value=""
-      />
-    </div>
-    <div
-      className="loginButtons"
-    >
-      <button
-        className="loginButton disabled"
-        disabled={true}
-        onClick={[Function]}
-      >
-        Login
-      </button>
-      <Link
-        onlyActiveOnIndex={false}
-        style={Object {}}
-        to="/"
-      >
-        <button
-          className="altButton"
-        >
-          Home
-        </button>
-      </Link>
-    </div>
-    <Footer />
-  </div>
-</div>
+<LoginNep2
+  loginNep2={[Function]}
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+/>
 `;

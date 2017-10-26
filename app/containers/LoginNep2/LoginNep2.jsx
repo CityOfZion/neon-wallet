@@ -7,8 +7,8 @@ import Page from '../../components/Page'
 import { ROUTES } from '../../core/constants'
 
 type Props = {
-    loginNep2: Function,
-    history: Object
+  loginNep2: Function,
+  history: Object
 }
 
 type State = {
@@ -33,7 +33,7 @@ export default class LoginNep2 extends Component<Props, State> {
   render () {
     const { loginNep2, history } = this.props
     const { showKey, wif, passphrase } = this.state
-    const loginButtonDisabled = wif === '' || passphrase === ''
+    const loginButtonDisabled = wif === '' || passphrase === '' ? 'disabled' : ''
 
     return (
       <Page id='loginPage'>
@@ -59,7 +59,7 @@ export default class LoginNep2 extends Component<Props, State> {
           </div>
           <div className='loginButtons'>
             <button
-              className={`loginButton ${loginButtonDisabled && 'disabled'}`}
+              className={`loginButton ${loginButtonDisabled}`}
               onClick={() => loginNep2(passphrase, wif, history)}
               disabled={loginButtonDisabled}>Login</button>
             <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>
