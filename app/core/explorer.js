@@ -2,7 +2,6 @@
 import { openExternal } from './electron'
 import { NETWORK, EXPLORER } from '../core/constants'
 
-// TODO: make this a user setting
 export const getExplorerLink = (net: NetworkType, explorer: ExplorerType, txid: string) => {
   let base
   if (explorer === EXPLORER.NEO_TRACKER) {
@@ -10,6 +9,12 @@ export const getExplorerLink = (net: NetworkType, explorer: ExplorerType, txid: 
       base = 'https://neotracker.io/tx/'
     } else {
       base = 'https://testnet.neotracker.io/tx/'
+    }
+  } else if (explorer === EXPLORER.NEO_SCAN) {
+    if (net === NETWORK.MAIN) {
+      base = 'https://neoscan.io/transaction/'
+    } else {
+      base = 'https://neoscan-testnet.io/transaction/'
     }
   } else {
     if (net === NETWORK.MAIN) {

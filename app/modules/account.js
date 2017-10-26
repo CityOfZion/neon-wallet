@@ -25,8 +25,6 @@ export function login (wif: string) {
 }
 
 export function ledgerNanoSGetLogin () {
-  // process.stdout.write('ledgerNanoSGetLogin ledgerNanoSCreateSignatureAsync "' + JSON.stringify(ledgerNanoSCreateSignatureAsync) + '"\n')
-  // process.stdout.write('ledgerNanoSGetLogin publicKey "' + JSON.stringify(publicKey) + '"\n')
   return {
     type: LOGIN,
     signingFunction: ledgerNanoSCreateSignatureAsync
@@ -86,11 +84,11 @@ export const onWifChange = (history: Object, wif: string) => (dispatch: Dispatch
 
 export const ledgerNanoSGetInfoAsync = () => async (dispatch: DispatchType) => {
   dispatch(hardwareDeviceInfo('Looking for USB Devices'))
-  // process.stdout.write('started ledgerNanoSGetInfoAsync  \n')
+  // console.log('started ledgerNanoSGetInfoAsync')
   let [err, result] = await asyncWrap(commNode.list_async())
   if (err) return dispatch(hardwareDeviceInfo(`Finding USB Error: ${err}`))
   if (result.length === 0) {
-    // process.stdout.write('getLedgerDeviceInfo "No device found"\n')
+    // console.log('getLedgerDeviceInfo "No device found"')
     return dispatch(hardwareDeviceInfo('USB Failure: No device found'))
   } else {
     let [err, comm] = await asyncWrap(commNode.create_async())
@@ -102,7 +100,6 @@ export const ledgerNanoSGetInfoAsync = () => async (dispatch: DispatchType) => {
     dispatch(hardwareDeviceInfo(`Found USB ${deviceInfo.manufacturer} ${deviceInfo.product}`))
   }
   // process.stdout.write('success ledgerNanoSGetInfoAsync  \n')
-  // process.stdout.write('started getPublicKeyInfo  \n')
   [err, result] = await asyncWrap(commNode.list_async())
   if (result.length === 0) {
     // process.stdout.write('getPublicKeyInfo "No device found"\n')

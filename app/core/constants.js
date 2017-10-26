@@ -6,6 +6,7 @@ export const NETWORK = {
 
 export const EXPLORER = {
   NEO_TRACKER: 'Neotracker',
+  NEO_SCAN: 'Neoscan',
   ANT_CHAIN: 'Antchain'
 }
 
