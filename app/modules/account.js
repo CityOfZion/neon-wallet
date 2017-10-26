@@ -32,16 +32,14 @@ export function setKeys (keys: any) {
 }
 
 export const loginNep2 = (passphrase: string, wif: string, history: Object) => (dispatch: DispatchType) => {
-  if (!passphrase || !wif) { return null }
-
   if (!validatePassphrase(passphrase)) {
     dispatch(sendEvent(false, 'Passphrase too short'))
     setTimeout(() => dispatch(clearTransactionEvent()), 5000)
     return null
   }
   dispatch(sendEvent(true, 'Decrypting encoded key...'))
-  const wrongPassphraseAction = () => {
-    dispatch(sendEvent(false, 'Wrong passphrase'))
+  const wrongPassphraseOrEncryptedKeyError = () => {
+    dispatch(sendEvent(false, 'Wrong passphrase or invalid encrypted key'))
     setTimeout(() => dispatch(clearTransactionEvent()), 5000)
   }
   setTimeout(() => {
@@ -51,13 +49,14 @@ export const loginNep2 = (passphrase: string, wif: string, history: Object) => (
         history.push(ROUTES.DASHBOARD)
         dispatch(clearTransactionEvent())
       }).catch(() => {
-        wrongPassphraseAction()
+        wrongPassphraseOrEncryptedKeyError()
       })
     } catch (e) {
-      wrongPassphraseAction()
+      wrongPassphraseOrEncryptedKeyError()
     }
   }, 500)
 }
+
 export const loginWithPrivateKey = (wif: string, history: Object, route?: RouteType) => (dispatch: DispatchType) => {
   if (verifyPrivateKey(wif)) {
     dispatch(login(wif))
