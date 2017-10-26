@@ -35,7 +35,6 @@ export const loginNep2 = (passphrase: string, wif: string, history: Object) => (
   if (!validatePassphrase(passphrase)) {
     dispatch(sendEvent(false, 'Passphrase too short'))
     setTimeout(() => dispatch(clearTransactionEvent()), 5000)
-    return null
   }
   dispatch(sendEvent(true, 'Decrypting encoded key...'))
   const wrongPassphraseOrEncryptedKeyError = () => {
