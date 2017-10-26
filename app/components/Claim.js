@@ -26,8 +26,6 @@ type Props = {
 class Claim extends Component<Props> {
   componentDidUpdate () {
     const { claimRequest, claimWasUpdated, dispatch } = this.props
-    process.stdout.write('Claim componentDidUpdate"' + JSON.stringify(this.props) + '"\n')
-    // if we requested a claim and new claims are available, do claim
     if (claimRequest && claimWasUpdated) {
       dispatch(setClaimRequest(false))
       this.doClaimNotify()
@@ -35,7 +33,6 @@ class Claim extends Component<Props> {
   }
 
   doClaimNotify () {
-    process.stdout.write('Claim doClaimNotify"' + JSON.stringify(this.props) + '"\n')
     const { dispatch, net, address, wif, signingFunction, publicKey } = this.props
     log(net, 'CLAIM', address, { info: 'claim all gas' })
 
@@ -60,7 +57,6 @@ class Claim extends Component<Props> {
   // To initiate claim, first send all Neo to own address, the set claimRequest state
   // When new claims are available, this will trigger the claim
   doGasClaim = () => {
-    process.stdout.write('Claim doGasClaim"' + JSON.stringify(this.props) + '"\n')
     const { dispatch, net, wif, address, neo, signingFunction, publicKey } = this.props
 
     // if no neo in account, no need to send to self first
