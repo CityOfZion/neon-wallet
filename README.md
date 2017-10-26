@@ -44,9 +44,17 @@ A standalone app will be available soon. For now, you will need to build the wal
 
 Execute these commands in the project's root directory:
 
-  - `yarn install` Installing node dependencies
-  - `yarn run assets` or `yarn run assets-watch` for live reload.
-  - `yarn start` for running the project
+Setup:
+  - `yarn install` - Installing node dependencies
+  
+Developing:
+  - `yarn dev` - Live reload
+
+Running (for production):
+  - `yarn assets`
+  - `yarn start`
+
+Testing:
   - `yarn test` or `yarn run test-watch` for live testing.
 
 ### Support
