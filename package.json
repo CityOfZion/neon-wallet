@@ -96,7 +96,6 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
     "secure-random": "^1.1.1",
-    "uglifyjs-webpack-plugin": "^1.0.0-rc.0",
     "wif": "^2.0.6"
   },
   "devDependencies": {
@@ -155,6 +154,7 @@
     "spectron": "^3.7.2",
     "stats-webpack-plugin": "^0.6.1",
     "style-loader": "^0.13.1",
+    "uglifyjs-webpack-plugin": "^1.0.0-rc.0",
     "url-loader": "^0.5.7",
     "webpack": "^3.7.1",
     "webpack-dev-server": "^2.9.1"
