@@ -21,7 +21,7 @@ jobs:
       - checkout
       - restore_cache:
           key: neon-wallet-{{ checksum "yarn.lock" }}
-      - run: sudo apt-get install libusb-1.0-0-dev
+      - run: sudo apt-get install libusb-1.0-0
       - run: yarn
       - run: yarn lint
       - run: yarn flow
