@@ -26,6 +26,7 @@ jobs:
       - run: yarn
       - run: yarn lint
       - run: yarn flow
+      - run: yarn assets
       - run: yarn dist
       - save_cache:
           key: neon-wallet-{{ checksum "yarn.lock" }}
@@ -42,7 +43,7 @@ jobs:
       - checkout
       - restore_cache:
           key: neon-wallet-{{ checksum "yarn.lock" }}
-      - run: yarn test:coverage
+      - run: yarn test
       - run:
           name: Running Xvfb
           command: Xvfb -ac :99 -screen 0 1280x1024x16
