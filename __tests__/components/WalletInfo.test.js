@@ -1,12 +1,13 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import configureStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
 import { mount, shallow } from 'enzyme'
 import { SET_TRANSACTION_HISTORY, SET_BALANCE } from '../../app/modules/wallet'
 import { SEND_TRANSACTION, CLEAR_TRANSACTION } from '../../app/modules/transactions'
 import { SET_HEIGHT } from '../../app/modules/metadata'
 import { SET_CLAIM } from '../../app/modules/claim'
-import WalletInfo from '../../app/components/WalletInfo'
+import WalletInfo from '../../app/containers/WalletInfo'
 
 // TODO research how to move the axios mock code which is repeated in NetworkSwitch to a helper or config file
 import axios from 'axios'
@@ -30,7 +31,7 @@ jest.mock('electron', () => ({
 jest.mock('neon-js')
 
 jest.unmock('qrcode')
-import QRCode from 'qrcode' // eslint-disable-line
+import QRCode from 'qrcode/lib/browser' // eslint-disable-line
 QRCode.toCanvas = jest.fn()
 
 const initialState = {
@@ -51,7 +52,7 @@ const initialState = {
 }
 
 const setup = (state = initialState, shallowRender = true) => {
-  const store = configureStore()(state)
+  const store = configureStore([thunk])(state)
 
   let wrapper
   if (shallowRender) {

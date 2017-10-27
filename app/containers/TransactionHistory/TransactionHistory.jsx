@@ -1,23 +1,21 @@
 // @flow
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { syncTransactionHistory } from '../components/NetworkSwitch'
-import { ASSETS } from '../core/constants'
-import { openExplorer } from '../core/explorer'
-import { formatGAS, formatNEO } from '../core/formatters'
+import { ASSETS } from '../../core/constants'
+import { openExplorer } from '../../core/explorer'
+import { formatGAS, formatNEO } from '../../core/formatters'
 
 type Props = {
-  dispatch: DispatchType,
   address: string,
   net: NetworkType,
   transactions: Object,
-  explorer: ExplorerType
+  explorer: ExplorerType,
+  syncTransactionHistory: Function
 }
 
-class TransactionHistory extends Component<Props> {
+export default class TransactionHistory extends Component<Props> {
   componentDidMount () {
-    const { dispatch, net, address } = this.props
-    syncTransactionHistory(dispatch, net, address)
+    const { net, address, syncTransactionHistory } = this.props
+    syncTransactionHistory(net, address)
   }
 
   render () {
@@ -44,12 +42,3 @@ class TransactionHistory extends Component<Props> {
     )
   }
 }
-
-const mapStateToProps = (state) => ({
-  address: state.account.address,
-  net: state.metadata.network,
-  transactions: state.wallet.transactions,
-  explorer: state.metadata.blockExplorer
-})
-
-export default connect(mapStateToProps)(TransactionHistory)

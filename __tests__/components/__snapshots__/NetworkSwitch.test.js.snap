@@ -3,8 +3,10 @@
 exports[`NetworkSwitch renders without crashing 1`] = `
 <NetworkSwitch
   address="AWy7RNBVr9vDadRMK9p7i7Z1tL7GrLAxoh"
-  dispatch={[Function]}
+  checkVersion={[Function]}
+  initiateGetBalance={[Function]}
   net="MainNet"
+  setNetwork={[Function]}
   store={
     Object {
       "clearActions": [Function],

@@ -3,19 +3,24 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const port = process.env.PORT || 3000
+const publicPath = process.env.START_HOT ? `http://localhost:${port}/dist` : ''
+const { spawn } = require('child_process')
 
 module.exports = {
   devtool: 'cheap-module-inline-source-map',
-  target: 'electron',
+  target: 'electron-renderer',
   entry: [
     'babel-polyfill',
     'react-hot-loader/patch',
+    `webpack-dev-server/client?http://localhost:${port}/`,
+    'webpack/hot/only-dev-server',
     path.join(__dirname, '..', 'app/index.js')
   ],
   output: {
     path: path.join(__dirname, '..', 'app/dist/'),
     filename: 'bundle.js',
-    publicPath: ''
+    publicPath
   },
   resolve: {
     extensions: ['.js', '.jsx']
@@ -90,6 +95,39 @@ module.exports = {
         }
       }
     ]
+  },
+  // adapted from https://github.com/chentsulin/electron-react-boilerplate
+  devServer: {
+    port,
+    publicPath,
+    compress: true,
+    noInfo: true,
+    stats: 'errors-only',
+    inline: true,
+    lazy: false,
+    hot: true,
+    headers: { 'Access-Control-Allow-Origin': '*' },
+    contentBase: path.join(__dirname, '..', 'app/dist/'),
+    watchOptions: {
+      aggregateTimeout: 300,
+      ignored: /node_modules/,
+      poll: 100
+    },
+    historyApiFallback: {
+      verbose: true,
+      disableDotRule: false
+    },
+    before () {
+      if (process.env.START_HOT) {
+        spawn(
+          'npm',
+          ['run', 'start-dev'],
+          { shell: true, env: process.env, stdio: 'inherit' }
+        )
+          .on('close', code => process.exit(code))
+          .on('error', spawnError => console.error(spawnError))
+      }
+    }
   },
   performance: {
     hints: false
