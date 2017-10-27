@@ -21,7 +21,8 @@
     "lint-fix": "eslint -c .eslintrc ./app --ext .js,.jsx --fix --ignore-pattern dist/",
     "prepush": "echo 'running flow...' && yarn flow && echo 'running lint...' && yarn lint && echo 'running tests...' && yarn test",
     "flow": "flow check",
-    "release-master": "./scripts/release-master.sh"
+    "release-master": "./scripts/release-master.sh",
+    "clean": "rm -r app/dist/*"
   },
   "keywords": [],
   "license": "ISC",
@@ -147,11 +148,13 @@
     "redux-devtools-dock-monitor": "^1.1.1",
     "redux-devtools-log-monitor": "^1.0.11",
     "redux-mock-store": "^1.2.3",
+    "resolve-url-loader": "^2.1.1",
     "rimraf": "^2.5.2",
     "sass-loader": "^6.0.6",
     "spectron": "^3.7.2",
     "stats-webpack-plugin": "^0.6.1",
     "style-loader": "^0.13.1",
+    "uglifyjs-webpack-plugin": "^1.0.0-rc.0",
     "url-loader": "^0.5.7",
     "webpack": "^3.7.1",
     "webpack-dev-server": "^2.9.1"
