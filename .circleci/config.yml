@@ -43,9 +43,15 @@ jobs:
       - restore_cache:
           key: neon-wallet-{{ checksum "yarn.lock" }}
       - run: yarn test:coverage
-      - run: Xvfb &
-      - run: sleep 3 # give xvfb some time to start
-      - run: yarn test:e2e
+      - run:
+          name: Running Xvfb
+          command: Xvfb -ac :99 -screen 0 1280x1024x16
+          background: true
+      - run:
+          name: Run Integration Tests
+          command: |
+            export DISPLAY=:99
+            yarn test:e2e
     store_artifacts:
       - path: artifacts/
       - destination: yarnpkg
