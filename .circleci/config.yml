@@ -45,9 +45,12 @@ jobs:
           key: neon-wallet-{{ checksum "yarn.lock" }}
       - run: yarn test
       - run:
+          name: Running Xvfb
+          command: Xvfb -ac :99 -screen 0 1280x1024x16
+          background: true
+      - run:
           name: Run Integration Tests
           command: |
-            Xvfb -ac :99 -screen 0 1280x1024x16
             export DISPLAY=:99
             yarn test:e2e
     store_artifacts:
