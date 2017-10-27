@@ -148,7 +148,7 @@ export default (state: Object = {wif: null, address: null, loggedIn: false, redi
         console.log(e.stack)
         loadAccount = -1
       }
-      process.stdout.write('interim loadAccount "' + JSON.stringify(loadAccount) + '" \n')
+      // process.stdout.write('interim loadAccount "' + JSON.stringify(loadAccount) + '" \n')
       if (typeof loadAccount !== 'object') {
         return {...state, wif: action.wif, loggedIn: false}
       }
