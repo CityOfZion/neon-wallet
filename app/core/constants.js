@@ -19,3 +19,10 @@ export const ASSETS_LABELS = {
   [ASSETS.NEO]: 'Neo',
   [ASSETS.GAS]: 'Gas'
 }
+
+export const BIP44_PATH =
+  '8000002C' +
+  '80000378' +
+  '80000000' +
+  '00000000' +
+  '00000000'

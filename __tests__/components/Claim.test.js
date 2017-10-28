@@ -22,7 +22,7 @@ const state = {
     network: 'network'
   },
   wallet: {
-    Neo: 'neo'
+    Neo: 1
   }
 }
 
