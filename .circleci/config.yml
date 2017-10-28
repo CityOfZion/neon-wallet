@@ -2,7 +2,7 @@ version: 2
 references:
   container_config: &container_config
     docker:
-      - image: electronuserland/electron-builder:latest
+      - image: electronuserland/builder:wine-chrome
         environment:
           TARGET_ARCH: x64
     working_directory: ~/neon-wallet
@@ -45,6 +45,17 @@ jobs:
       - run: sudo apt-get -y update
       - run: sudo apt-get -y install libusb-1.0-0-dev
       - run: yarn test
+      - run:
+          name: Running Xvfb for e2e test
+          command: Xvfb -ac :99 -screen 0 1280x1024x16
+          background: true
+      - run:
+          name: Run e2e tests
+          command: |
+            yarn
+            yarn assets
+            export DISPLAY=:99
+            yarn test:e2e
     store_artifacts:
       - path: artifacts/
       - destination: yarnpkg
