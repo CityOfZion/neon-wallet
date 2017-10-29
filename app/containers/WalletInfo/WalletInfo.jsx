@@ -17,8 +17,9 @@ type Props = {
   gas: number,
   price: number,
   initiateGetBalance: Function,
-  sendEvent: Function,
-  clearTransactionEvent: Function
+  showStickyInfoNotification: Function,
+  showSuccessNotification: Function,
+  showErrorNotification: Function
 }
 
 export default class WalletInfo extends Component<Props> {
@@ -34,11 +35,12 @@ export default class WalletInfo extends Component<Props> {
 
   // force sync with balance data
   refreshBalance = () => {
-    const { sendEvent, initiateGetBalance, clearTransactionEvent, net, address } = this.props
-    sendEvent(true, 'Refreshing...')
+    const { showStickyInfoNotification, showSuccessNotification, showErrorNotification, initiateGetBalance, net, address } = this.props
+    showStickyInfoNotification({ message: 'Refreshing...' })
     initiateGetBalance(net, address).then((response) => {
-      sendEvent(true, 'Received latest blockchain information.')
-      setTimeout(() => clearTransactionEvent(), 1000)
+      showSuccessNotification({ message: 'Received latest blockchain information.', dissmissAfter: 1000 })
+    }).catch(() => {
+      showErrorNotification({ message: 'Failed to retrieve blockchain information' })
     })
   }
 

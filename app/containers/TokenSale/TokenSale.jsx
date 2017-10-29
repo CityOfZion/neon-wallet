@@ -14,8 +14,9 @@ type Props = {
   wif: string,
   initiateGetBalance: Function,
   updateRpxBalance: Function,
-  sendEvent: Function,
-  clearTransactionEvent: Function
+  showErrorNotification: Function,
+  showSuccessNotification: Function,
+  showStickyInfoNotification: Function
 }
 
 type State = {
@@ -37,14 +38,13 @@ export default class TokenSale extends Component<Props, State> {
   }
 
   refreshTokenBalance = (silent: boolean = false) => {
-    const { sendEvent, clearTransactionEvent, updateRpxBalance, net, address } = this.props
+    const { showErrorNotification, updateRpxBalance, net, address } = this.props
     const { scriptHash } = this.state
 
     // TODO: add other check
     if (scriptHash.slice(0, 1) !== '0x' && scriptHash.length !== 42) {
       if (!silent) {
-        sendEvent(false, 'Not a valid script hash.')
-        setTimeout(() => clearTransactionEvent(), 5000)
+        showErrorNotification({ message: 'Not a valid script hash.' })
       }
       return false
     }
@@ -52,22 +52,20 @@ export default class TokenSale extends Component<Props, State> {
       updateRpxBalance(balance)
     }).catch((e) => {
       updateRpxBalance(0)
-      sendEvent(false, 'There is no ability to display tokens at that script hash.')
-      setTimeout(() => clearTransactionEvent(), 5000)
+      showErrorNotification({ message: 'There is no ability to display tokens at that script hash.' })
       return false
     })
   }
 
   participateInSale = () => {
-    const { sendEvent, clearTransactionEvent, net, wif, neo } = this.props
+    const { showErrorNotification, showSuccessNotification, showStickyInfoNotification, net, wif, neo } = this.props
     const { neoToSend, scriptHash } = this.state
 
     if (!neoToSend || !scriptHash) { return null }
 
     const account = Neon.getAccountFromWIFKey(wif)
     if (parseFloat(neoToSend) !== parseInt(neoToSend)) {
-      sendEvent(false, 'You cannot send fractional Neo to a token sale.')
-      setTimeout(() => clearTransactionEvent(), 5000)
+      showErrorNotification({ message: 'You cannot send fractional Neo to a token sale.' })
       return false
     }
     const toMint = parseInt(neoToSend)
@@ -75,35 +73,27 @@ export default class TokenSale extends Component<Props, State> {
       neoToSend: ''
     })
     if (toMint > neo) {
-      sendEvent(false, 'You do not have enough Neo to send.')
-      setTimeout(() => clearTransactionEvent(), 5000)
+      showErrorNotification({ message: 'You do not have enough Neo to send.' })
       return false
     }
     if (scriptHash.slice(0, 1) !== '0x' && scriptHash.length !== 42) {
-      sendEvent(false, 'Not a valid script hash.')
-      setTimeout(() => clearTransactionEvent(), 5000)
+      showErrorNotification({ message: 'Not a valid script hash.' })
       return false
     }
     const _scriptHash = scriptHash.slice(2, scriptHash.length)
+    showStickyInfoNotification({ message: 'Processing...' })
     Neon.getTokenBalance(net, _scriptHash, account.address).then((balance) => {
-      sendEvent(true, 'Processing...')
-      setTimeout(() => clearTransactionEvent(), 5000)
       Neon.doMintTokens(net, _scriptHash, wif, toMint, 0).then((response) => {
-        sendEvent(true, 'Processing...')
-        setTimeout(() => clearTransactionEvent(), 5000)
-        if (response.result === true) {
-          sendEvent(true, 'Sale participation was successful.')
-          setTimeout(() => clearTransactionEvent(), 5000)
+        if (response.result) {
+          showSuccessNotification({ message: 'Sale participation was successful.' })
           return true
         } else {
-          sendEvent(false, 'Sale participation failed.')
-          setTimeout(() => clearTransactionEvent(), 5000)
+          showErrorNotification({ message: 'Sale participation failed.' })
           return false
         }
       })
     }).catch((e) => {
-      sendEvent(false, 'This script hash cannot mint tokens.')
-      setTimeout(() => clearTransactionEvent(), 5000)
+      showErrorNotification({ message: 'This script hash cannot mint tokens.' })
       return false
     })
   }

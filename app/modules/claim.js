@@ -1,8 +1,8 @@
 // @flow
 import { doClaimAllGas, doSendAsset, getClaimAmounts } from 'neon-js'
-import { sendEvent, clearTransactionEvent } from '../modules/transactions'
 import { log } from '../util/Logs'
 import { ASSETS } from '../core/constants'
+import { showErrorNotification, showStickyInfoNotification, showSuccessNotification } from './notification'
 
 // Constants
 export const SET_CLAIM = 'SET_CLAIM'
@@ -42,12 +42,13 @@ export const doClaimNotify = (net: NetworkType, wif: string, address: string) =>
   log(net, 'CLAIM', address, { info: 'claim all gas' })
   doClaimAllGas(net, wif).then((response) => {
     if (response.result) {
-      dispatch(sendEvent(true, 'Claim was successful! Your balance will update once the blockchain has processed it.'))
-      setTimeout(() => dispatch(disableClaim(false)), 300000)
+      dispatch(showSuccessNotification({
+        message: 'Claim was successful! Your balance will update once the blockchain has processed it.',
+        dismissAfter: 300000
+      }))
     } else {
-      dispatch(sendEvent(false, 'Claim failed'))
+      dispatch(showErrorNotification({ message: 'Claim failed' }))
     }
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
   })
 }
 
@@ -58,13 +59,13 @@ export const doGasClaim = (net: NetworkType, wif: string, address: string, neo: 
   if (neo === 0) {
     dispatch(doClaimNotify(net, wif, address))
   } else {
-    dispatch(sendEvent(true, 'Sending Neo to Yourself...'))
+    dispatch(showStickyInfoNotification({ message: 'Sending Neo to Yourself...' }))
     log(net, 'SEND', address, { to: address, amount: neo, asset: 'NEO' })
     doSendAsset(net, address, wif, { [ASSETS.NEO]: neo }).then((response) => {
       if (response.result === undefined || response.result === false) {
-        dispatch(sendEvent(false, 'Transaction failed!'))
+        dispatch(showErrorNotification({ message: 'Transaction failed!' }))
       } else {
-        dispatch(sendEvent(true, 'Waiting for transaction to clear...'))
+        dispatch(showStickyInfoNotification({ message: 'Waiting for transaction to clear...' }))
         dispatch(setClaimRequest(true))
         dispatch(disableClaim(true))
       }

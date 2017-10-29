@@ -4,7 +4,7 @@ import DevTools from '../containers/DevTools'
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 
-export default function configureStore (initialState) {
+function configureStore (initialState) {
   const logger = createLogger({
     collapsed: true
   })
@@ -25,3 +25,6 @@ export default function configureStore (initialState) {
 
   return store
 }
+
+const store = configureStore()
+export default store

@@ -1,10 +1,19 @@
 // @flow
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { clearNotification } from '../../modules/notification'
+import { checkVersion } from '../../modules/metadata'
 import App from './App'
 
 const mapStateToProps = (state: Object) => ({
-  status: state.transactions.success,
-  statusMessage: state.transactions.message
+  notification: state.notification
 })
 
-export default connect(mapStateToProps)(App)
+const actionCreators = {
+  clearNotification,
+  checkVersion
+}
+
+const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

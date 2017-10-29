@@ -20,6 +20,7 @@ type Props = {
   address: string,
   togglePane: Function,
   logout: Function,
+  notification: NotificationType
 }
 
 export default class Dashboard extends Component<Props> {
@@ -30,7 +31,7 @@ export default class Dashboard extends Component<Props> {
   }
 
   render () {
-    const { sendPane, confirmPane, blockHeight, togglePane, logout } = this.props
+    const { sendPane, confirmPane, blockHeight, togglePane, logout, notification } = this.props
     let sendPaneClosed
     if (sendPane === true) {
       sendPaneClosed = '0%'
@@ -44,8 +45,8 @@ export default class Dashboard extends Component<Props> {
 
     return (
       <div id='dashboard'>
-        <SplitPane className='navSplit' split='horizontal' size='40px' allowResize={false}>
-          <div id='navBar'>
+        <SplitPane className='navSplit' split='horizontal' size={notification.isShown ? '80px' : '40px'} allowResize={false}>
+          <div id='navBar' style={{ marginTop: notification.isShown ? '40px' : 0, position: 'relative', width: '100%' }}>
             <div id='title'><img src={logo} width='60px' /></div>
             <div id='version'><span className='grey'>Version</span><span className='darker'>{version}</span></div>
             <div id='height'><span className='grey'>Block</span><span className='darker'>{blockHeight}</span></div>

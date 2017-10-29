@@ -8,14 +8,12 @@ type Props = {
   net: NetworkType,
   address: string,
   setNetwork: Function,
-  checkVersion: Function,
   initiateGetBalance: Function
 }
 
 export default class NetworkSwitch extends Component<Props> {
   componentDidMount () {
-    const { checkVersion, address, net } = this.props
-    checkVersion(net)
+    const { address, net } = this.props
     this.resetBalanceSync(net, address)
   }
 

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import TokenSale from './TokenSale'
 import { initiateGetBalance } from '../../modules/wallet'
-import { sendEvent, clearTransactionEvent } from '../../modules/transactions'
+import { showErrorNotification, showSuccessNotification, showStickyInfoNotification } from '../../modules/notification'
 import { updateRpxBalance } from '../../modules/rpx'
 
 const mapStateToProps = (state) => ({
@@ -18,8 +18,9 @@ const mapStateToProps = (state) => ({
 
 const actionCreators = {
   initiateGetBalance,
-  sendEvent,
-  clearTransactionEvent,
+  showErrorNotification,
+  showSuccessNotification,
+  showStickyInfoNotification,
   updateRpxBalance
 }
 

@@ -1,7 +1,7 @@
 // @flow
 import storage from 'electron-json-storage'
 import { generateEncryptedWif, getAccountFromWIFKey, generatePrivateKey, getWIFFromPrivateKey, encryptWIF, encryptWifAccount } from 'neon-js'
-import { sendEvent, clearTransactionEvent } from './transactions'
+import { showErrorNotification, clearNotification, showStickyInfoNotification, showInfoNotification } from './notification'
 import { validatePassphrase, checkMatchingPassphrases } from '../core/wallet'
 
 // Constants
@@ -47,29 +47,27 @@ export const saveKey = (keyName: string, passphraseKey: string) => (dispatch: Di
   // eslint-disable-next-line
   storage.get('keys', (error, data) => {
     data[keyName] = passphraseKey
-    dispatch(sendEvent(true, `Saved key as ${keyName}`))
+    dispatch(showInfoNotification({ message: `Saved key as ${keyName}` }))
     storage.set('keys', data)
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
   })
 }
 
 export const generateWalletFromWif = (passphrase: string, passphrase2: string, wif: string) => (dispatch: DispatchType): Promise<*> => {
   return new Promise((resolve, reject) => {
     const rejectPromise = (error) => {
-      dispatch(sendEvent(false, error))
-      setTimeout(() => clearTransactionEvent(), 5000)
+      dispatch(showErrorNotification({ message: error }))
       reject(new Error(error))
     }
 
     if (checkMatchingPassphrases(passphrase, passphrase2)) {
       rejectPromise('Passphrases do not match')
     } else if (validatePassphrase(passphrase)) {
-      dispatch(sendEvent(true, 'Generating encoded key...'))
+      dispatch(showStickyInfoNotification({ message: 'Generating encoded key...' }))
       setTimeout(() => {
         try {
           encryptWifAccount(wif, passphrase).then((result) => {
             dispatch(newWallet(result))
-            dispatch(clearTransactionEvent())
+            dispatch(clearNotification())
             resolve()
           })
         } catch (e) {
@@ -85,20 +83,19 @@ export const generateWalletFromWif = (passphrase: string, passphrase2: string, w
 export const generateNewWallet = (passphrase: string, passphrase2: string) => (dispatch: DispatchType): Promise<*> => {
   return new Promise((resolve, reject) => {
     const rejectPromise = (error) => {
-      dispatch(sendEvent(false, error))
-      setTimeout(() => clearTransactionEvent(), 5000)
+      dispatch(showErrorNotification({ message: error }))
       reject(new Error(error))
     }
 
     if (checkMatchingPassphrases(passphrase, passphrase2)) {
       rejectPromise('Passphrases do not match')
     } else if (validatePassphrase(passphrase)) {
-      dispatch(sendEvent(true, 'Generating encoded key...'))
+      dispatch(showStickyInfoNotification({message: 'Generating encoded key...'}))
       setTimeout(() => {
         try {
           generateEncryptedWif(passphrase).then((result) => {
             dispatch(newWallet(result))
-            dispatch(clearTransactionEvent())
+            dispatch(clearNotification())
             resolve()
           })
         } catch (e) {

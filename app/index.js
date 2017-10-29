@@ -2,11 +2,9 @@ import React from 'react'
 import { render } from 'react-dom'
 import { hashHistory } from 'react-router'
 import { AppContainer } from 'react-hot-loader'
-import configureStore from './store/configureStore'
+import store from './store/configureStore'
 import Root from './containers/Root'
 import './styles/main.scss'
-
-const store = configureStore()
 
 render(
   <AppContainer>
@@ -26,5 +24,3 @@ if (module.hot) {
     )
   })
 }
-
-export default store.dispatch

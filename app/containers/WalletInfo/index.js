@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import WalletInfo from './WalletInfo'
 import { initiateGetBalance } from '../../modules/wallet'
-import { sendEvent, clearTransactionEvent } from '../../modules/transactions'
+import { showErrorNotification, showSuccessNotification, showStickyInfoNotification } from '../../modules/notification'
 
 const mapStateToProps = (state) => ({
   neo: state.wallet.Neo,
@@ -15,8 +15,9 @@ const mapStateToProps = (state) => ({
 
 const actionCreators = {
   initiateGetBalance,
-  sendEvent,
-  clearTransactionEvent
+  showErrorNotification,
+  showSuccessNotification,
+  showStickyInfoNotification
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)

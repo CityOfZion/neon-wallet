@@ -38,6 +38,7 @@ export default class LoginNep2 extends Component<Props, State> {
     return (
       <Page id='loginPage'>
         <div className='login'>
+          <p>Login using an encrypted key:</p>
           <div className='loginForm'>
             <input
               type={showKey ? 'text' : 'password'}

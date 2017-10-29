@@ -1,7 +1,7 @@
 // @flow
 import { getAccountFromWIFKey, decryptWIF } from 'neon-js'
 import { verifyPrivateKey, validatePassphrase } from '../core/wallet'
-import { sendEvent, clearTransactionEvent } from './transactions'
+import { showErrorNotification, showInfoNotification, clearNotification } from './notification'
 import { ROUTES } from '../core/constants'
 
 // Constants
@@ -33,20 +33,18 @@ export function setKeys (keys: any) {
 
 export const loginNep2 = (passphrase: string, wif: string, history: Object) => (dispatch: DispatchType) => {
   if (!validatePassphrase(passphrase)) {
-    dispatch(sendEvent(false, 'Passphrase too short'))
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+    dispatch(showErrorNotification({ message: 'Passphrase too short' }))
   }
-  dispatch(sendEvent(true, 'Decrypting encoded key...'))
+  dispatch(showInfoNotification({ message: 'Decrypting encoded key...' }))
   const wrongPassphraseOrEncryptedKeyError = () => {
-    dispatch(sendEvent(false, 'Wrong passphrase or invalid encrypted key'))
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+    dispatch(showErrorNotification({ message: 'Wrong passphrase or invalid encrypted key' }))
   }
   setTimeout(() => {
     try {
       decryptWIF(wif, passphrase).then((wif) => {
         dispatch(login(wif))
         history.push(ROUTES.DASHBOARD)
-        dispatch(clearTransactionEvent())
+        dispatch(clearNotification())
       }).catch(() => {
         wrongPassphraseOrEncryptedKeyError()
       })
@@ -61,8 +59,7 @@ export const loginWithPrivateKey = (wif: string, history: Object, route?: RouteT
     dispatch(login(wif))
     history.push(route || ROUTES.DASHBOARD)
   } else {
-    dispatch(sendEvent(false, 'That is not a valid private key'))
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+    dispatch(showErrorNotification({ message: 'That is not a valid private key' }))
   }
 }
 

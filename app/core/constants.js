@@ -1,4 +1,7 @@
 // @flow
+
+export const NEON_WALLET_RELEASE_LINK = 'https://github.com/CityOfZion/neon-wallet/releases'
+
 export const NETWORK = {
   MAIN: 'MainNet',
   TEST: 'TestNet'
@@ -31,3 +34,17 @@ export const ROUTES = {
   TOKEN_SALE: '/token-sale',
   SETTINGS: '/settings'
 }
+
+export const NOTIFICATION_TYPES = {
+  ERROR: 'ERROR',
+  SUCCESS: 'SUCCESS',
+  INFO: 'INFO',
+  WARNING: 'WARNING'
+}
+
+export const NOTIFICATION_POSITIONS = {
+  TOP: 'TOP',
+  BOTTOM: 'BOTTOM'
+}
+
+export const DEFAULT_NOTIFICATION_TIMEOUT = 5000

@@ -2,7 +2,8 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Send from './Send'
-import { sendTransaction, toggleAsset, sendEvent, clearTransactionEvent } from '../../modules/transactions'
+import { sendTransaction, toggleAsset } from '../../modules/transactions'
+import { showErrorNotification } from '../../modules/notification'
 import { togglePane } from '../../modules/dashboard'
 
 const mapStateToProps = (state) => ({
@@ -16,8 +17,7 @@ const actionCreators = {
   sendTransaction,
   toggleAsset,
   togglePane,
-  sendEvent,
-  clearTransactionEvent
+  showErrorNotification
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
