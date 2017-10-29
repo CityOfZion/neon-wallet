@@ -46,7 +46,8 @@ Execute these commands in the project's root directory:
 
 Setup:
   - `yarn install` - Installing node dependencies
-  
+  - `./node_modules/.bin/electron -v` confirm electron is version 1.7.9
+
 Developing:
   - `yarn dev` - Live reload
 

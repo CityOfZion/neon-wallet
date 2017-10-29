@@ -3,6 +3,8 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   bail: true,
@@ -12,6 +14,10 @@ module.exports = {
     'babel-polyfill',
     path.join(__dirname, '..', 'app/index.js')
   ],
+  externals : {
+    'node-hid' : 'require("node-hid")',
+    'ledger-node-js-api' : 'require("ledger-node-js-api")'
+  },
   output: {
     path: path.join(__dirname, '..', 'app/dist/'),
     filename: 'bundle.js',
@@ -24,6 +30,8 @@ module.exports = {
     __dirname: false
   },
   plugins: [
+    new webpack.optimize.ModuleConcatenationPlugin(),
+    new UglifyJSPlugin(),
     new HtmlWebpackPlugin({
       template: 'app/index.tpl.html',
       inject: true,
@@ -44,7 +52,8 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
-    new webpack.optimize.OccurrenceOrderPlugin()
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new ExtractTextPlugin('style.css')
   ],
   module: {
     rules: [
@@ -64,18 +73,21 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader'
-        ]
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader'
+        })
       },
       {
         test: /\.scss$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader'
-        ]
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader',
+            'resolve-url-loader',
+            'sass-loader'
+          ]
+        })
       },
       {
         test: /\.(png|jpg|gif)$/,
