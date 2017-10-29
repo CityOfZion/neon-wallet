@@ -79,6 +79,7 @@ class LoginNep2 extends Component<Props, State> {
           <Logo />
           <div className='loginForm'>
             <input
+              autoFocus
               type={showKey ? 'text' : 'password'}
               placeholder='Enter your passphrase here'
               onChange={(e) => this.setState({ passphrase: e.target.value })}
