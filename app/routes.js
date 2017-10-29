@@ -4,6 +4,7 @@ import { Route, IndexRoute } from 'react-router'
 import App from './containers/App'
 import LoginPrivateKey from './containers/LoginPrivateKey'
 import TokenSale from './containers/TokenSale'
+import LoginLedgerNanoS from './containers/LoginLedgerNanoS'
 import CreateWallet from './containers/CreateWallet'
 import Dashboard from './containers/Dashboard'
 import LoginLocalStorage from './containers/LoginLocalStorage'
@@ -23,6 +24,7 @@ export default (
     <Route path={ROUTES.LOGIN_LOCAL_STORAGE} component={LoginLocalStorage} />
     <Route path={ROUTES.LOGIN_NEP2} component={LoginNep2} />
     <Route path={ROUTES.LOGIN_TOKEN_SALE} component={LoginTokenSale} />
+    <Route path={ROUTES.LOGIN_LEDGER_NANO_S} component={LoginLedgerNanoS} />
     <Route path={ROUTES.TOKEN_SALE} component={TokenSale} />
     <Route path={ROUTES.SETTINGS} component={Settings} />
   </Route>

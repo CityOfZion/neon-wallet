@@ -125,6 +125,7 @@ export default class Settings extends Component<Props, State> {
             <div className='itemTitle'>Block Explorer</div>
             <select value={explorer} onChange={this.updateSettings}>
               <option value={EXPLORER.NEO_TRACKER}>Neotracker</option>
+              <option value={EXPLORER.NEO_SCAN}>Neoscan</option>
               <option value={EXPLORER.ANT_CHAIN}>Antchain</option>
             </select>
           </div>
