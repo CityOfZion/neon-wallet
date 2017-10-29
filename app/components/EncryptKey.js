@@ -86,6 +86,7 @@ class EncryptKey extends Component<Props, State> {
           Choose a passphrase to encrypt your existing private key:
         </div>
         <input
+          autoFocus
           type='text'
           value={passphrase}
           onChange={(e) => this.setState({ passphrase: e.target.value })}

@@ -12,6 +12,7 @@ exports[`Login renders without crashing 1`] = `
     >
       <Logo />
       <input
+        autoFocus={true}
         onChange={[Function]}
         placeholder="Enter your private key here (WIF)"
         type="password"

@@ -89,6 +89,7 @@ class LoginLocalStorage extends Component<Props, State> {
         <Logo />
         <div className='loginForm'>
           <input
+            autoFocus
             type={showKey ? 'text' : 'password'}
             placeholder='Enter your passphrase here'
             value={passphrase}

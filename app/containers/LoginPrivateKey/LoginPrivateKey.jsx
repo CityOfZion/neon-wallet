@@ -51,7 +51,7 @@ export default class LoginPrivateKey extends Component<Props, State> {
         <div className='login'>
           <div className='loginForm'>
             <Logo />
-            <input type={showKey ? 'text' : 'password'} placeholder='Enter your private key here (WIF)' onChange={this.handleInputChange} />
+            <input autoFocus type={showKey ? 'text' : 'password'} placeholder='Enter your private key here (WIF)' onChange={this.handleInputChange} />
 
             {showKey
               ? <FaEyeSlash className='viewKey' onClick={this.toggleKeyVisibility} />

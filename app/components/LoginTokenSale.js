@@ -42,6 +42,7 @@ class LoginTokenSale extends Component<Props, State> {
           <div className='loginForm'>
             <Logo />
             <input
+              autoFocus
               type='text'
               placeholder='Enter your private key here (WIF)'
               onChange={(e) => this.setState({ wif: e.target.value })}

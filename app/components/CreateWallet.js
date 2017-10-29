@@ -75,6 +75,7 @@ class CreateWallet extends Component<Props, State> {
           Choose a passphrase to encrypt your private key:
         </div>
         <input
+          autoFocus
           type='text'
           placeholder='Enter passphrase here'
           value={passphrase}
