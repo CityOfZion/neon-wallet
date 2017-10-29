@@ -54,7 +54,7 @@ exports[`Claim should render without crashing 1`] = `
   claimWasUpdated={false}
   disableClaimButton={false}
   dispatch={[Function]}
-  neo="neo"
+  neo={1}
   net="network"
   store={
     Object {

@@ -6,6 +6,7 @@
         "flow"
     ],
     "plugins": [
+        "transform-async-to-generator",
         "lodash",
         "react-hot-loader/babel"
     ]
