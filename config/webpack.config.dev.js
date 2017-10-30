@@ -17,9 +17,9 @@ module.exports = {
     'webpack/hot/only-dev-server',
     path.join(__dirname, '..', 'app/index.js')
   ],
-  externals : {
-    'node-hid' : 'require("node-hid")',
-    'ledger-node-js-api' : 'require("ledger-node-js-api")'
+  externals: {
+    'node-hid': 'require("node-hid")',
+    'ledger-node-js-api': 'require("ledger-node-js-api")'
   },
   output: {
     path: path.join(__dirname, '..', 'app/dist/'),
