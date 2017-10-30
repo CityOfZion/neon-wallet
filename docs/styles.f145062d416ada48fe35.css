@@ -1,0 +1,336 @@
+body{
+  font-family: 'helvetica neue', sans-serif;
+  font-size: 16px;
+  margin: 0px;
+}
+#app {
+  display: -webkit-box;
+  display: flex;
+  min-height: 100vh;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+}
+#app-container {
+  -webkit-box-flex: 1;
+          flex: 1;
+}
+h1{
+  font-size:1.2em;
+  font-weight: 800;
+}
+ul{
+  padding:0px;
+  margin:10px 0px;
+}
+ul li{
+  line-height: 1.2em;
+  list-style-type: none;
+}
+ul li a{
+  text-decoration: underline;
+  color:inherit;
+}
+span.key{
+  font-family: courier, monospace;
+  font-size:.9em;
+}
+nav {
+  position: fixed;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+          flex-direction: row;
+  padding: 10px;
+  background-color: #17163f;
+  -webkit-box-flex: 1;
+          flex: 1;
+  width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+nav #nav-items-container {
+  text-transform: uppercase;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+          flex-direction: row;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-flex: .5;
+          flex: .5;
+  justify-content: space-around;
+  font-family: 'Source Sans Pro', sans-serif;
+  color: white;
+  font-weight: 100
+}
+nav #nav-items-container a{
+  text-decoration: none;
+  color: white;
+}
+nav #nav-items-container a:hover{
+  color: #80b451;
+}
+nav #nav-items-container .active-nav-link {
+  color: #80b451;
+}
+nav #logo-container {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-flex: .5;
+          flex: .5;
+}
+nav #logo-container img {
+  height: 30px;
+  cursor: pointer;
+}
+.full-page {
+  height: 100vh;
+}
+section#intro {
+  background: linear-gradient(#16163d, #333377);
+  color: white;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
+}
+section#intro #title {
+  font-size: 65px;
+  font-family: orbitron,sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 8px;
+  text-align: center;
+  font-weight: 500;
+  text-shadow: 0 10px 20px rgba(0,0,0,.19), 0 6px 6px rgba(0,0,0,.23);
+}
+section#intro #description-container {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+          flex-direction: row;
+  -webkit-box-pack: center;
+          justify-content: center;
+}
+section#intro #description-container .description {
+  -webkit-box-flex: .75;
+          flex: .75;
+}
+.description {
+  display: -webkit-box;
+  display: flex;
+
+  font-weight: 100;
+  text-align: center;
+  font-size: 22px;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+div#content{
+  background-color: #333377;
+}
+section#downloads-section {
+  color: white;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
+}
+section#downloads-section a{
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+          justify-content: center;
+}
+section#downloads-section .description{
+  margin-bottom: 35px;
+  font-size: 35px;
+}
+.download-icon {
+  cursor: pointer;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
+  height: 150px;
+  width: 150px;
+  background-color: white;
+  border-radius: 100%;
+  box-shadow: 0 10px 20px rgba(0,0,0,.19), 0 6px 6px rgba(0,0,0,.23);
+}
+section#downloads-section #linux-icon{
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+  list-style: none;
+}
+section#downloads-section #linux-icon .download-icon{
+  cursor: crosshair;
+}
+section#downloads-section #linux-icon li {
+  margin-top: 15px;
+}
+#linux-icon > li > a{
+  color: white;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 100;
+  text-decoration: none;
+}
+#linux-icon > li > a:hover{
+  color: #80b451;
+}
+#linux-icon > li > a:nth-child(2){
+  margin-top: 5px;
+}
+section#downloads-section img {
+  max-width: 50%;
+  object-fit: contain;
+  width: 150px;
+  height: 150px;
+}
+section#downloads-section #icons-container {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+          flex-direction: row;
+  width: 100%;
+  max-width: 950px;
+  justify-content: space-around;
+}
+section#support-section{
+  color: white;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
+}
+section#support-section #icons-container img{
+  object-fit: contain;
+  display: -webkit-box;
+  display: flex;
+  cursor: pointer;
+  border-radius: 100%;
+  box-shadow: 0 10px 20px rgba(0,0,0,.19), 0 6px 6px rgba(0,0,0,.23);
+}
+section#support-section #icons-container{
+  width: 100%;
+  max-width: 950px;
+  display: -webkit-box;
+  display: flex;
+  justify-content: space-around;
+}
+section#support-section #description-container {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+          flex-direction: row;
+  -webkit-box-pack: center;
+          justify-content: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+section#support-section #description-container .description {
+  -webkit-box-flex: .75;
+          flex: .75;
+  max-width: 950px;
+}
+section#donations-section{
+  color: white;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
+  background: linear-gradient(#333377, #18153f);
+}
+section#donations-section .description{
+  margin-bottom: 35px;
+  font-size: 35px;
+}
+section#donations-section #qr-container{
+  color: white;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+          flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+  -webkit-box-align: center;
+          align-items: center;
+}
+section#donations-section #qr-container .qr{
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
+}
+@media (max-width: 750px) {
+  section#donations-section #qr-container {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+            flex-direction: column;
+  }
+}
+section#donations-section #qr-container .label {
+  font-family: orbitron,sans-serif;
+  font-weight: 100;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+#qr-container p {
+  font-family: monospace;
+}
+section#donations-section #qr-container img{
+    object-fit: contain;
+    width: 175px;
+}
+footer {
+  text-align: center;
+  padding: 10px;
+  -webkit-box-flex: 0;
+          flex: none;
+  background-color: #17163f;
+}
+footer img {
+  height: 50px;
+  width: 50px;
+}
+footer p {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: white;
+  margin-bottom: 5px;
+  font-weight: 100;
+}
