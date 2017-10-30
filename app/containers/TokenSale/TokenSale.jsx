@@ -135,6 +135,7 @@ export default class TokenSale extends Component<Props, State> {
           <div className='settingsItem'>
             <div className='itemTitle'>Script Hash:</div>
             <input
+              autoFocus
               type='text'
               className='scriptHash'
               value={scriptHash}
