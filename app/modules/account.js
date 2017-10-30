@@ -152,7 +152,6 @@ const initialState = {
   address: null,
   loggedIn: false,
   redirectUrl: null,
-  decrypting: false,
   accountKeys: [],
   signingFunction: null,
   publicKey: null,
@@ -181,20 +180,48 @@ export default (state: Object = initialState, action: Object) => {
       }
       // process.stdout.write('interim loadAccount "' + JSON.stringify(loadAccount) + '" \n')
       if (typeof loadAccount !== 'object') {
-        return {...state, wif: action.wif, loggedIn: false}
+        return {
+          ...state,
+          wif: action.wif,
+          loggedIn: false
+        }
       }
-      console.log('actions.signingFunction', action.signingFunction, true, null)
-      return {...state, wif: action.wif, address: loadAccount.address, loggedIn: true, decrypting: false, signingFunction: action.signingFunction}
+      return {
+        ...state,
+        wif: action.wif,
+        address: loadAccount.address,
+        loggedIn: true,
+        signingFunction: action.signingFunction
+      }
     case LOGOUT:
-      return {...state, 'wif': null, address: null, 'loggedIn': false, decrypting: false, signingFunction: null, publicKey: null}
+      return {
+        ...state,
+        wif: null,
+        address: null,
+        loggedIn: false,
+        signingFunction: null,
+        publicKey: null
+      }
     case SET_KEYS:
-      return {...state, accountKeys: action.keys}
+      return {
+        ...state,
+        accountKeys: action.keys
+      }
     case HARDWARE_DEVICE_INFO:
-      return {...state, hardwareDeviceInfo: action.hardwareDeviceInfo}
+      return {
+        ...state,
+        hardwareDeviceInfo: action.hardwareDeviceInfo
+      }
     case HARDWARE_PUBLIC_KEY_INFO:
-      return {...state, hardwarePublicKeyInfo: action.hardwarePublicKeyInfo}
+      return {
+        ...state,
+        hardwarePublicKeyInfo: action.hardwarePublicKeyInfo
+      }
     case HARDWARE_PUBLIC_KEY:
-      return {...state, publicKey: action.publicKey}
+      return {
+        ...state,
+        publicKey: action.publicKey
+      }
     default:
       return state
   }

@@ -49,6 +49,8 @@ export default class TokenSale extends Component<Props, State> {
   render () {
     const { neo, rpx, refreshTokenBalance } = this.props
     const { neoToSend, scriptHash } = this.state
+    const refreshTokenBalanceButtonDisabled = !scriptHash
+    const submitSaleButtonDisabled = !neoToSend || !scriptHash
 
     return (
       <Page id='tokenSale'>
@@ -90,8 +92,14 @@ export default class TokenSale extends Component<Props, State> {
               onChange={(e) => this.setState({ neoToSend: e.target.value })}
             />
           </div>
-          <button onClick={this.participateInSale}>Submit for Sale</button>
-          <button onClick={() => refreshTokenBalance(scriptHash)}>Refresh Token Balance</button>
+          <button
+            className={submitSaleButtonDisabled && 'disabled'}
+            onClick={this.participateInSale}
+            disabled={submitSaleButtonDisabled}>Submit for Sale</button>
+          <button
+            className={refreshTokenBalanceButtonDisabled && 'disabled'}
+            onClick={() => refreshTokenBalance(scriptHash)}
+            disabled={refreshTokenBalanceButtonDisabled}>Refresh Token Balance</button>
         </div>
         <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>
       </Page>
