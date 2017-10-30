@@ -48,15 +48,12 @@ exports[`Claim should render claim gas button when claim button is not disabled 
 
 exports[`Claim should render without crashing 1`] = `
 <Claim
-  address="address"
   claimAmount={10}
   claimRequest={false}
   claimWasUpdated={false}
   disableClaimButton={false}
   doClaimNotify={[Function]}
   doGasClaim={[Function]}
-  neo={1}
-  net="network"
   setClaimRequest={[Function]}
   store={
     Object {
@@ -68,6 +65,5 @@ exports[`Claim should render without crashing 1`] = `
       "subscribe": [Function],
     }
   }
-  wif="wif"
 />
 `;
