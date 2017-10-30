@@ -8,11 +8,7 @@ const mapStateToProps = (state: Object) => ({
   claimAmount: state.claim.claimAmount,
   claimRequest: state.claim.claimRequest,
   claimWasUpdated: state.claim.claimWasUpdated,
-  disableClaimButton: state.claim.disableClaimButton,
-  wif: state.account.wif,
-  address: state.account.address,
-  net: state.metadata.network,
-  neo: state.wallet.Neo
+  disableClaimButton: state.claim.disableClaimButton
 })
 
 const actionCreators = {
