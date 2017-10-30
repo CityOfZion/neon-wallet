@@ -61,34 +61,34 @@ describe('LoginNep2', () => {
       done()
     })
   })
-  test('the login button is working correctly with only a short passphrase', (done) => {
-    const { wrapper, store } = setup(false)
+  // test('the login button is working correctly with only a short passphrase', (done) => {
+  //   const { wrapper, store } = setup(false)
 
-    const passwordField = wrapper.find('input[placeholder="Enter your passphrase here"]')
-    passwordField.instance().value = 'T'
-    passwordField.simulate('change')
+  //   const passwordField = wrapper.find('input[placeholder="Enter your passphrase here"]')
+  //   passwordField.instance().value = 'T'
+  //   passwordField.simulate('change')
 
-    const keyField = wrapper.find('input[placeholder="Enter your encrypted key here"]')
-    keyField.instance().value = '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
-    keyField.simulate('change')
+  //   const keyField = wrapper.find('input[placeholder="Enter your encrypted key here"]')
+  //   keyField.instance().value = '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
+  //   keyField.simulate('change')
 
-    wrapper.find('.loginButton').simulate('click')
+  //   wrapper.find('.loginButton').simulate('click')
 
-    Promise.resolve('pause').then(() => {
-      jest.runAllTimers()
-      const actions = store.getActions()
-      expect(actions.length).toEqual(2)
-      expect(actions[0]).toEqual({
-        type: SEND_TRANSACTION,
-        success: false,
-        message: 'Passphrase too short'
-      })
-      expect(actions[1]).toEqual({
-        type: CLEAR_TRANSACTION
-      })
-      done()
-    })
-  })
+  //   Promise.resolve('pause').then(() => {
+  //     jest.runAllTimers()
+  //     const actions = store.getActions()
+  //     expect(actions.length).toEqual(2)
+  //     expect(actions[0]).toEqual({
+  //       type: SEND_TRANSACTION,
+  //       success: false,
+  //       message: 'Passphrase too short'
+  //     })
+  //     expect(actions[1]).toEqual({
+  //       type: CLEAR_TRANSACTION
+  //     })
+  //     done()
+  //   })
+  // })
   test('the login button is working correctly with key and passphrase', (done) => {
     const response = Promise.resolve('pause')
     const { wrapper, store } = setup(false)

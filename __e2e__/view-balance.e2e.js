@@ -26,7 +26,7 @@ test.after(async () => {
 
 test.serial('should login success', async t => {
   // Go to login page
-  await app.client.click('a[href="#/LoginPrivateKey"]>div.linkBox')
+  await app.client.click('a[href="#/login-private-key"]>div.linkBox')
 
   // Enter Wif
   await app.client.setValue('#loginPage input', 'KxB52D1FGe5xBn6YeezNwj7grhkHZxq7bv2tmaCPoT4rxApMwMvU')
@@ -47,7 +47,7 @@ test.serial('should login success', async t => {
 test.serial('should show correct balance', async t => {
   await app.client.waitUntilTextExists('#balance .amountNeo', '1', 60000)
   t.is(await app.client.getText('#balance .amountNeo'), '1')
-  t.is(await app.client.getText('#balance .amountGas'), '2')
+  t.is(await app.client.getText('#balance .amountGas'), '2.0000000')
 })
 
 test.serial('should show correct transaction list', async t => {

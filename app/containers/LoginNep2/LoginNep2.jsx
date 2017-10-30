@@ -5,6 +5,7 @@ import FaEye from 'react-icons/lib/fa/eye'
 import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
 import Page from '../../components/Page'
 import { ROUTES } from '../../core/constants'
+import classNames from 'classnames'
 
 type Props = {
   loginNep2: Function,
@@ -33,7 +34,7 @@ export default class LoginNep2 extends Component<Props, State> {
   render () {
     const { loginNep2, history } = this.props
     const { showKey, wif, passphrase } = this.state
-    const loginButtonDisabled = wif === '' || passphrase === '' ? 'disabled' : ''
+    const loginButtonDisabled = wif === '' || passphrase === ''
 
     return (
       <Page id='loginPage'>
@@ -60,7 +61,7 @@ export default class LoginNep2 extends Component<Props, State> {
           </div>
           <div className='loginButtons'>
             <button
-              className={`loginButton ${loginButtonDisabled}`}
+              className={classNames('loginButton', { disabled: loginButtonDisabled })}
               onClick={() => loginNep2(passphrase, wif, history)}
               disabled={loginButtonDisabled}>Login</button>
             <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>

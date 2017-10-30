@@ -4,6 +4,7 @@ import { validateTransactionBeforeSending } from '../core/wallet'
 import { getTransactionHistory, doSendAsset } from 'neon-js'
 import { setTransactionHistory } from '../modules/wallet'
 import { log } from '../util/Logs'
+import { hardwareDoSendAsset } from '../ledger/ledgerNanoS.js'
 import { showErrorNotification, showStickyInfoNotification, showSuccessNotification } from './notification'
 
 // Constants
@@ -39,6 +40,8 @@ export const sendTransaction = (sendAddress: string, sendAmount: string) => (dis
     const neo = state.wallet.Neo
     const gas = state.wallet.Gas
     const selectedAsset = state.transactions.selectedAsset
+    const signingFunction = state.account.signingFunction
+    const publicKey = state.account.publicKey
 
     const rejectTransaction = (error: string) => {
       dispatch(showErrorNotification({ message: error }))
@@ -54,7 +57,17 @@ export const sendTransaction = (sendAddress: string, sendAmount: string) => (dis
 
       dispatch(showStickyInfoNotification({ message: 'Processing...' }))
       log(net, 'SEND', selfAddress, { to: sendAddress, asset: selectedAsset, amount: sendAmount })
-      doSendAsset(net, sendAddress, wif, sendAsset).then((response) => {
+
+      const isHardwareSend = !!publicKey
+
+      let sendAssetFn
+      if (isHardwareSend) {
+        sendAssetFn = () => hardwareDoSendAsset(net, sendAddress, publicKey, sendAsset, signingFunction)
+      } else {
+        sendAssetFn = () => doSendAsset(net, sendAddress, wif, sendAsset)
+      }
+
+      sendAssetFn().then((response) => {
         if (response.result === undefined || response.result === false) {
           rejectTransaction('Transaction failed!')
         } else {

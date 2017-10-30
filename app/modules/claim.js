@@ -1,5 +1,6 @@
 // @flow
 import { doClaimAllGas, doSendAsset, getClaimAmounts } from 'neon-js'
+import { hardwareDoSendAsset, hardwareDoClaimAllGas } from '../ledger/ledgerNanoS.js'
 import { log } from '../util/Logs'
 import { ASSETS } from '../core/constants'
 import { showErrorNotification, showStickyInfoNotification, showSuccessNotification } from './notification'
@@ -38,9 +39,26 @@ export const syncAvailableClaim = (net: NetworkType, address: string) => (dispat
   })
 }
 
-export const doClaimNotify = (net: NetworkType, wif: string, address: string) => (dispatch: DispatchType) => {
+export const doClaimNotify = () => (dispatch: DispatchType, getState: GetStateType) => {
+  const state = getState()
+  const wif = state.account.wif
+  const address = state.account.address
+  const net = state.metadata.network
+  const signingFunction = state.account.signingFunction
+  const publicKey = state.account.publicKey
+
   log(net, 'CLAIM', address, { info: 'claim all gas' })
-  doClaimAllGas(net, wif).then((response) => {
+
+  const isHardwareClaim = !!publicKey
+
+  let claimGasFn
+  if (isHardwareClaim) {
+    claimGasFn = () => hardwareDoClaimAllGas(net, publicKey, signingFunction)
+  } else {
+    claimGasFn = () => doClaimAllGas(net, wif)
+  }
+
+  claimGasFn().then((response) => {
     if (response.result) {
       dispatch(showSuccessNotification({
         message: 'Claim was successful! Your balance will update once the blockchain has processed it.',
@@ -54,14 +72,32 @@ export const doClaimNotify = (net: NetworkType, wif: string, address: string) =>
 
 // To initiate claim, first send all Neo to own address, the set claimRequest state
 // When new claims are available, this will trigger the claim
-export const doGasClaim = (net: NetworkType, wif: string, address: string, neo: number) => (dispatch: DispatchType) => {
+export const doGasClaim = () => (dispatch: DispatchType, getState: GetStateType) => {
+  const state = getState()
+  const wif = state.account.wif
+  const address = state.account.address
+  const net = state.metadata.network
+  const neo = state.wallet.Neo
+  const signingFunction = state.account.signingFunction
+  const publicKey = state.account.publicKey
+
   // if no neo in account, no need to send to self first
   if (neo === 0) {
-    dispatch(doClaimNotify(net, wif, address))
+    dispatch(doClaimNotify())
   } else {
     dispatch(showStickyInfoNotification({ message: 'Sending Neo to Yourself...' }))
-    log(net, 'SEND', address, { to: address, amount: neo, asset: 'NEO' })
-    doSendAsset(net, address, wif, { [ASSETS.NEO]: neo }).then((response) => {
+    log(net, 'SEND', address, { to: address, amount: neo, asset: ASSETS.NEO })
+
+    const isHardwareClaim = !!publicKey
+
+    let sendAssetFn
+    if (isHardwareClaim) {
+      sendAssetFn = () => hardwareDoSendAsset(net, address, publicKey, { [ASSETS.NEO]: neo }, signingFunction)
+    } else {
+      sendAssetFn = () => doSendAsset(net, address, wif, { [ASSETS.NEO]: neo })
+    }
+
+    sendAssetFn().then((response) => {
       if (response.result === undefined || response.result === false) {
         dispatch(showErrorNotification({ message: 'Transaction failed!' }))
       } else {
@@ -79,17 +115,15 @@ const initialState = {
   claimAvailable: 0,
   claimUnavailable: 0,
   claimWasUpdated: false,
-  disableClaimButton: false
+  disableClaimButton: false,
+  signingFunction: () => ({})
 }
 
 // Reducer for managing claims data
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case SET_CLAIM_REQUEST:
-      return {
-        ...state,
-        claimRequest: action.status
-      }
+      return { ...state, 'claimRequest': action.status }
     case SET_CLAIM:
       let claimWasUpdated = false
       if (action.available > state.claimAvailable && state.claimRequest === true) {
@@ -103,10 +137,7 @@ export default (state: Object = initialState, action: Object) => {
         claimWasUpdated
       }
     case DISABLE_CLAIM:
-      return {
-        ...state,
-        disableClaimButton: action.status
-      }
+      return { ...state, disableClaimButton: action.status }
     default:
       return state
   }
