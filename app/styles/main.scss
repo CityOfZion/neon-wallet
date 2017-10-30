@@ -106,7 +106,7 @@ input{
 	text-align:center;
 }
 
-#settings{
+#settings, #tokenSale{
 	width:$page-width;
 	margin:$top-margin auto $top-margin auto;
 	.description{
@@ -116,6 +116,12 @@ input{
 	}
 	.settingsForm{
 		margin-bottom: 20px;
+	}
+	input.scriptHash{
+		width:500px;
+	}
+	input.neoAmount{
+		width:100px;
 	}
 	label{
 		margin-right: 10px;
@@ -153,6 +159,15 @@ input{
 
 $box-padding: 40px;
 $box-margin: 10px;
+
+#tokenSale{
+	.warning{
+		background-color: red;
+		color:white;
+		padding:5px;
+		margin-bottom: 10px;
+	}
+}
 
 #home{
 	width:$page-width;
@@ -279,7 +294,27 @@ $box-margin: 10px;
 	}
 	.loginButtons{
 		text-align:left;
+	}
+	.viewKey {
+		cursor: pointer;
+		margin-left: -25px;
 		margin-top: 10px;
+	}
+}
+
+#network{
+	position:absolute;
+	font-size:.8em;
+	right:80px;
+	top:13px;
+	span.transparent{
+		opacity:.6;
+		margin-right:4px;
+	}
+	span.netName{
+		color:$thin-text-color;
+		opacity:.8;
+		cursor:pointer;
 	}
 }
 
@@ -331,21 +366,6 @@ $box-margin: 10px;
 		button{
 			font-size: 1em;
 			font-weight: 200;
-		}
-	}
-	#network{
-		position:absolute;
-		font-size:.8em;
-		right:80px;
-		top:13px;
-		span.transparent{
-			opacity:.6;
-			margin-right:4px;
-		}
-		span.netName{
-			color:$thin-text-color;
-			opacity:.8;
-			cursor:pointer;
 		}
 	}
 	#logout{

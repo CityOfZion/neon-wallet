@@ -1,10 +1,12 @@
-[![CircleCI](https://circleci.com/gh/CityOfZion/neon-wallet.svg?style=svg)](https://circleci.com/gh/CityOfZion/neon-wallet)
+[![CircleCI](https://circleci.com/gh/CityOfZion/neon-wallet.svg?style=svg)](https://circleci.com/gh/CityOfZion/neon-wallet) [![Coverage Status](https://coveralls.io/repos/github/CityOfZion/neon-wallet/badge.svg?branch=master)](https://coveralls.io/github/CityOfZion/neon-wallet?branch=master)
 
 # Neon Wallet
 
 ![wallet](/wallet.png)
 
+<p align="center">
 The aim of this project is to port the current NEO web wallet to electron with a better UI.
+</p>
 
 ## Installation
 
@@ -13,24 +15,23 @@ A standalone app will be available soon. For now, you will need to build the wal
 ### Required Tools and Dependencies
 
   - Node (This project uses the current LTS node version, which is `v6.11.0`)
-  - `npm install -g webpack` Global Webpack 
-  - `npm install -g jest` Unit testing framework
+  - Yarn (https://yarnpkg.com/lang/en/docs/install/)
 
 ### Developing and Running
 
 Execute these commands in the project's root directory:
 
-  - `npm install` Installing node dependencies
-  - `webpack` or `webpack --watch` for live reload.
-  - `npm start` for running the project
-  - `npm test` or `npm test-watch` for live testing.
+  - `yarn install` Installing node dependencies
+  - `yarn run assets` or `yarn run assets-watch` for live reload.
+  - `yarn start` for running the project
+  - `yarn test` or `yarn run test-watch` for live testing.
 
-### Support 
+### Support
 
-A gentle reminder, github issues is meant to be used by developers for maintaining and improving the codebase, and is not the proper location for support issues. Questions such as 
+A gentle reminder, github issues is meant to be used by developers for maintaining and improving the codebase, and is not the proper location for support issues. Questions such as
 
-- Why can't I log in?
-- I lost my private key, is there anyway to recover?
-- Why is my balance not showing?
+- *"Why can't I log in?"*
+- *"I lost my private key, is there anyway to recover it?"*
+- *"Why is my balance not showing?"*
 
-should be asked in proper support channels such as the [NEO subreddit](https://www.reddit.com/r/NEO/), or the official [NEO slack](https://neosmarteconomy.slack.com). 
+should be asked in proper support channels such as the [NEO subreddit](https://www.reddit.com/r/NEO/), or the official [NEO slack](https://neosmarteconomy.slack.com). You should also check the list of [frequently asked questions (FAQ)](https://github.com/CityOfZion/awesome-neo/blob/master/resources/faq.md) to see if your question has been answered there already.

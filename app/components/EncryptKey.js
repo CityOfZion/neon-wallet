@@ -1,77 +1,88 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { newWallet, generating } from '../modules/generateWallet';
-import { Link } from 'react-router';
-import WalletInfo from './WalletInfo.js';
-import QRCode from 'qrcode';
-import { clipboard } from 'electron';
-import Copy from 'react-icons/lib/md/content-copy';
-import ReactTooltip from 'react-tooltip';
-import DisplayWalletKeys from './DisplayWalletKeys';
-import { encryptWifAccount } from 'neon-js';
-import { sendEvent, clearTransactionEvent } from '../modules/transactions';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { isNil } from 'lodash'
+import { newWallet } from '../modules/generateWallet'
+import { Link } from 'react-router'
+import DisplayWalletKeys from './DisplayWalletKeys'
+import { encryptWifAccount } from 'neon-js'
+import { sendEvent, clearTransactionEvent } from '../modules/transactions'
 
-const logo = require('../images/neon-logo2.png');
+const logo = require('../images/neon-logo2.png')
 
-let wif_input, passphrase, passphrase2;
+let wifInput, passphraseInput, passphraseInput2
 
 // TODO: move to neon-js
 // what is the correct length to check for?
 const validatePassphrase = (passphrase) => {
-  return passphrase.length >= 4;
-};
+  return passphrase.length >= 4
+}
 
 const generateNewWallet = (dispatch) => {
-  const current_phrase = passphrase.value;
-  const current_wif = wif_input.value;
-  if (passphrase.value !== passphrase2.value){
-    dispatch(sendEvent(false, "Passphrases do not match"));
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
-    return;
+  const currentPhrase = passphraseInput.value
+  const currentWif = wifInput.value
+  if (passphraseInput.value !== passphraseInput2.value) {
+    dispatch(sendEvent(false, 'Passphrases do not match'))
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+    return
   }
-  if (validatePassphrase(current_phrase)){
-    // TODO: for some reason this blocks, so giving time to processes the earlier
-    // dispatch to display "generating" text, should fix this in future
-    dispatch(sendEvent(true, "Generating encoded key..."));
-    setTimeout(() => {
-      encryptWifAccount(current_wif, current_phrase).then((result) => {
-        dispatch(newWallet(result));
-        dispatch(clearTransactionEvent());
-      }).catch(() => {
-        dispatch(sendEvent(false, "The private key is not valid"));
-        setTimeout(() => dispatch(clearTransactionEvent()), 5000);
-      });
-    }, 500);
-  }
-  else {
-    dispatch(sendEvent(false, "Please choose a longer passphrase"));
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000);
-    passphrase.value = '';
-    passphrase2.value = '';
+  if (currentWif) {
+    if (validatePassphrase(currentPhrase)) {
+      // TODO: for some reason this blocks, so giving time to processes the earlier
+      // dispatch to display "generating" text, should fix this in future
+      dispatch(sendEvent(true, 'Generating encoded key...'))
+      setTimeout(() => {
+        encryptWifAccount(currentWif, currentPhrase).then((result) => {
+          dispatch(newWallet(result))
+          dispatch(clearTransactionEvent())
+        }).catch(() => {
+          dispatch(sendEvent(false, 'The private key is not valid'))
+          setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+        })
+      }, 500)
+    } else {
+      dispatch(sendEvent(false, 'Please choose a longer passphrase'))
+      setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+      passphraseInput.value = ''
+      passphraseInput2.value = ''
+    }
+  } else {
+    dispatch(sendEvent(false, 'That is not a valid private key'))
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
   }
 }
 
-class CreateWallet extends Component {
-
-  render = () => {
-    const passphraseDiv = (<div>
-        <div className="info">
+let EncryptKey = class EncryptKey extends Component {
+  render () {
+    const { dispatch, wif, generating, address, encryptedWif, passphrase } = this.props
+    const passphraseDiv = (
+      <div>
+        <div className='info'>
           Choose a passphrase to encrypt your existing private key:
         </div>
-        <input type="text" ref={(node) => passphrase = node} placeholder="Enter passphrase here"/>
-        <input type="text" ref={(node) => passphrase2 = node} placeholder="Enter passphrase again"/>
-        <input type="text" ref={(node) => wif_input = node} placeholder="Enter existing WIF here"/>
-        <button onClick={() => generateNewWallet(this.props.dispatch)} > Generate encrypted key </button>
-        <Link to="/"><button className="altButton">Home</button></Link>
-      </div>);
-      return (<div id="newWallet">
-        <div className="logo"><img src={logo} width="60px"/></div>
-        {this.props.wif === null ? passphraseDiv : <div></div>}
-        {this.props.generating === true ? <div className="generating">Generating keys...</div> : <div></div>}
-        {this.props.generating === false && this.props.wif !== null ? <DisplayWalletKeys address={this.props.address} wif={this.props.wif} passphrase={this.props.passphrase} passphraseKey={this.props.encryptedWif} /> : <div></div>}
-      </div>)
+        <input type='text' ref={(node) => { passphraseInput = node }} placeholder='Enter passphrase here' />
+        <input type='text' ref={(node) => { passphraseInput2 = node }} placeholder='Enter passphrase again' />
+        <input type='text' ref={(node) => { wifInput = node }} placeholder='Enter existing WIF here' />
+        <button onClick={() => generateNewWallet(dispatch)} > Generate encrypted key </button>
+        <Link to='/'><button className='altButton'>Home</button></Link>
+      </div>
+    )
+    return (
+      <div id='newWallet'>
+        <div className='logo'><img src={logo} width='60px' /></div>
+        {isNil(wif) && passphraseDiv}
+        {generating === true ? <div className='generating'>Generating keys...</div> : <div />}
+        {generating === false && wif !== null &&
+          <DisplayWalletKeys
+            address={address}
+            wif={wif}
+            passphrase={passphrase}
+            passphraseKey={encryptedWif}
+          />
+        }
+      </div>
+    )
   }
-
 }
 
 const mapStateToProps = (state) => ({
@@ -80,8 +91,17 @@ const mapStateToProps = (state) => ({
   encryptedWif: state.generateWallet.encryptedWif,
   passphrase: state.generateWallet.passphrase,
   generating: state.generateWallet.generating
-});
+})
 
-CreateWallet = connect(mapStateToProps)(CreateWallet);
+EncryptKey.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  address: PropTypes.string,
+  generating: PropTypes.bool,
+  wif: PropTypes.string,
+  encryptedWif: PropTypes.string,
+  passphrase: PropTypes.string
+}
 
-export default CreateWallet;
+EncryptKey = connect(mapStateToProps)(EncryptKey)
+
+export default EncryptKey
