@@ -6,10 +6,6 @@ type Props = {
   doClaimNotify: Function,
   setClaimRequest: Function,
   doGasClaim: Function,
-  address: string,
-  wif: string,
-  neo: number,
-  net: NetworkType,
   claimRequest: boolean,
   disableClaimButton: boolean,
   claimWasUpdated: boolean,
@@ -18,19 +14,19 @@ type Props = {
 
 export default class Claim extends Component<Props> {
   componentDidUpdate () {
-    const { claimRequest, claimWasUpdated, doClaimNotify, net, wif, address, setClaimRequest } = this.props
+    const { claimRequest, claimWasUpdated, doClaimNotify, setClaimRequest } = this.props
     // if we requested a claim and new claims are available, do claim
     if (claimRequest && claimWasUpdated) {
       setClaimRequest(false)
-      doClaimNotify(net, wif, address)
+      doClaimNotify()
     }
   }
 
   render () {
-    const { claimAmount, disableClaimButton, doGasClaim, net, wif, address, neo } = this.props
+    const { claimAmount, disableClaimButton, doGasClaim } = this.props
     let renderButton
     if (!disableClaimButton) {
-      renderButton = <button onClick={() => doGasClaim(net, wif, address, neo)}>Claim {claimAmount} GAS</button>
+      renderButton = <button onClick={() => doGasClaim()}>Claim {claimAmount} GAS</button>
     } else {
       renderButton = (
         <div>
