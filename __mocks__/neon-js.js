@@ -19,6 +19,7 @@ neonjs.getClaimAmounts = promiseMockGen({ available: 0, unavailable: 0 })
 neonjs.getWalletDBHeight = promiseMockGen(586435)
 neonjs.getBalance = promiseMockGen({ NEO: { balance: 1 }, GAS: { balance: 1 } })
 neonjs.doSendAsset = promiseMockGen({ result: true })
+neonjs.doClaimAllGas = promiseMockGen({ result: true })
 
 neonjs.getAPIEndpoint = jest.fn(() => 'http://testnet-api.wallet.cityofzion.io')
 neonjs.decryptWIF = jest.fn((wif) => {

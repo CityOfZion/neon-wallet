@@ -1,7 +1,9 @@
 // @flow
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import Dashboard from './Dashboard'
 import { togglePane } from '../../modules/dashboard'
+import { logout } from '../../modules/account'
 
 const mapStateToProps = (state: Object) => ({
   sendPane: state.dashboard.sendPane,
@@ -11,8 +13,11 @@ const mapStateToProps = (state: Object) => ({
   address: state.account.address
 })
 
-const mapDispatchToProps = (dispatch: DispatchType) => ({
-  togglePane: (pane) => dispatch(togglePane(pane))
-})
+const actionCreators = {
+  togglePane,
+  logout
+}
+
+const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)

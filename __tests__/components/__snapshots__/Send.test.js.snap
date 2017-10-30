@@ -2,13 +2,13 @@
 
 exports[`Send renders without crashing 1`] = `
 <Send
-  address="AWy7RNBVr9vDadRMK9p7i7Z1tL7GrLAxoh"
+  clearTransactionEvent={[Function]}
   confirmPane={true}
-  dispatch={[Function]}
   gas={1}
   neo={5}
-  net="TestNet"
   selectedAsset="Neo"
+  sendEvent={[Function]}
+  sendTransaction={[Function]}
   store={
     Object {
       "clearActions": [Function],
@@ -19,6 +19,7 @@ exports[`Send renders without crashing 1`] = `
       "subscribe": [Function],
     }
   }
-  wif="L4SLRcPgqNMAMwM3nFSxnh36f1v5omjPg3Ewy1tg2PnEon8AcHou"
+  toggleAsset={[Function]}
+  togglePane={[Function]}
 />
 `;
