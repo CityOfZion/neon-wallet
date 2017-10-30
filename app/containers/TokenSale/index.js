@@ -11,7 +11,6 @@ const mapStateToProps = (state) => ({
   neo: state.wallet.Neo,
   net: state.metadata.network,
   address: state.account.address,
-  wallets: state.account.accountKeys,
   rpx: state.rpx.RPX
 })
 
