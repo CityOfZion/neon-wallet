@@ -3,8 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import TokenSale from './TokenSale'
 import { initiateGetBalance } from '../../modules/wallet'
-import { sendEvent, clearTransactionEvent } from '../../modules/transactions'
-import { updateRpxBalance } from '../../modules/rpx'
+import { updateRpxBalance, refreshTokenBalance, participateInSale } from '../../modules/rpx'
 
 const mapStateToProps = (state) => ({
   explorer: state.metadata.blockExplorer,
@@ -18,9 +17,9 @@ const mapStateToProps = (state) => ({
 
 const actionCreators = {
   initiateGetBalance,
-  sendEvent,
-  clearTransactionEvent,
-  updateRpxBalance
+  updateRpxBalance,
+  participateInSale,
+  refreshTokenBalance
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
