@@ -1,8 +1,7 @@
 // @flow
 import React from 'react'
-import { connect } from 'react-redux'
 import SplitPane from 'react-split-pane'
-import StatusMessage from './StatusMessage'
+import StatusMessage from '../../components/StatusMessage'
 
 type Props = {
   children: React$Node,
@@ -27,9 +26,4 @@ const App = ({ children, status, statusMessage }: Props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  status: state.transactions.success,
-  statusMessage: state.transactions.message
-})
-
-export default connect(mapStateToProps)(App)
+export default App

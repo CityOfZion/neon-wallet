@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import { isNil } from 'lodash'
-import Claim from '../../components/Claim.js'
+import Claim from '../Claim'
 import MdSync from 'react-icons/lib/md/sync'
 import QRCode from 'qrcode/lib/browser'
 import { clipboard } from 'electron'

@@ -1,10 +1,11 @@
 import React from 'react'
 import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
 import configureStore from 'redux-mock-store'
 import { shallow, mount } from 'enzyme'
 import { TOGGLE_SEND_PANE } from '../../app/modules/dashboard'
 import { CLEAR_TRANSACTION, SEND_TRANSACTION, TOGGLE_ASSET } from '../../app/modules/transactions'
-import Send from '../../app/components/Send'
+import Send from '../../app/containers/Send'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
@@ -35,7 +36,7 @@ const initialState = {
 }
 
 const setup = (state = initialState, shallowRender = true) => {
-  const store = configureStore()(state)
+  const store = configureStore([thunk])(state)
 
   let wrapper
   if (shallowRender) {
@@ -91,7 +92,15 @@ describe('Send', () => {
 
     jest.runAllTimers()
     const actions = store.getActions()
-    expect(actions.length === 0).toEqual(true)
+    expect(actions.length === 2).toEqual(true)
+    expect(actions[0]).toEqual({
+      type: SEND_TRANSACTION,
+      success: false,
+      message: 'Please specify an address and amount'
+    })
+    expect(actions[1]).toEqual({
+      type: CLEAR_TRANSACTION
+    })
     done()
   })
 
@@ -148,7 +157,15 @@ describe('Send', () => {
 
     jest.runAllTimers()
     const actions = store.getActions()
-    expect(actions.length === 0).toEqual(true)
+    expect(actions.length === 2).toEqual(true)
+    expect(actions[0]).toEqual({
+      type: SEND_TRANSACTION,
+      success: false,
+      message: 'Please specify an address and amount'
+    })
+    expect(actions[1]).toEqual({
+      type: CLEAR_TRANSACTION
+    })
     done()
   })
 
@@ -265,22 +282,18 @@ describe('Send', () => {
     Promise.resolve('pause').then(() => {
       jest.runAllTimers()
       const actions = store.getActions()
-      expect(actions.length).toEqual(4)
+      expect(actions.length).toEqual(3)
       expect(actions[0]).toEqual({
         type: SEND_TRANSACTION,
         success: true,
         message: 'Processing...'
       })
       expect(actions[1]).toEqual({
-        type: TOGGLE_SEND_PANE,
-        pane: 'confirmPane'
-      })
-      expect(actions[2]).toEqual({
         type: SEND_TRANSACTION,
         success: true,
         message: 'Transaction complete! Your balance will automatically update when the blockchain has processed it.'
       })
-      expect(actions[3]).toEqual({
+      expect(actions[2]).toEqual({
         type: CLEAR_TRANSACTION
       })
       done()

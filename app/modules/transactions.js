@@ -1,7 +1,10 @@
 // @flow
 import { ASSETS_LABELS, ASSETS } from '../core/constants'
-import { getTransactionHistory } from 'neon-js'
+import { validateTransactionBeforeSending } from '../core/wallet'
+import { getTransactionHistory, doSendAsset } from 'neon-js'
 import { setTransactionHistory } from '../modules/wallet'
+import { log } from '../util/Logs'
+import { hardwareDoSendAsset } from '../ledger/ledgerNanoS.js'
 
 // Constants
 export const SEND_TRANSACTION = 'SEND_TRANSACTION'
@@ -44,21 +47,87 @@ export const syncTransactionHistory = (net: NetworkType, address: string) => (di
   })
 }
 
+export const sendTransaction = (sendAddress: string, sendAmount: string) => (dispatch: DispatchType, getState: GetStateType): Promise<*> => {
+  return new Promise((resolve, reject) => {
+    const state = getState()
+    const wif = state.account.wif
+    const address = state.account.address
+    const net = state.metadata.network
+    const neo = state.wallet.Neo
+    const gas = state.wallet.Gas
+    const selectedAsset = state.transactions.selectedAsset
+    const signingFunction = state.account.signingFunction
+    const publicKey = state.account.publicKey
+
+    const rejectTransaction = (error: string) => {
+      dispatch(sendEvent(false, error))
+      setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+      reject(new Error(error))
+    }
+
+    const { error, valid } = validateTransactionBeforeSending(neo, gas, selectedAsset, sendAddress, sendAmount)
+    if (valid) {
+      const selfAddress = address
+      const assetName = selectedAsset === ASSETS_LABELS.NEO ? ASSETS.NEO : ASSETS.GAS
+      let sendAsset = {}
+      sendAsset[assetName] = sendAmount
+
+      dispatch(sendEvent(true, 'Processing...'))
+      log(net, 'SEND', selfAddress, { to: sendAddress, asset: selectedAsset, amount: sendAmount })
+
+      const isHardwareSend = !!publicKey
+
+      let sendAssetFn
+      if (isHardwareSend) {
+        sendAssetFn = () => hardwareDoSendAsset(net, sendAddress, publicKey, sendAsset, signingFunction)
+      } else {
+        sendAssetFn = () => doSendAsset(net, sendAddress, wif, sendAsset)
+      }
+
+      sendAssetFn().then((response) => {
+        if (response.result === undefined || response.result === false) {
+          rejectTransaction('Transaction failed!')
+        } else {
+          dispatch(sendEvent(true, 'Transaction complete! Your balance will automatically update when the blockchain has processed it.'))
+        }
+        setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+        resolve()
+      }).catch((e) => {
+        rejectTransaction('Transaction failed!')
+      })
+    } else {
+      rejectTransaction(error)
+    }
+  })
+}
+
+const initialState = {
+  success: null,
+  message: null,
+  selectedAsset: ASSETS_LABELS.NEO
+}
+
 // Reducer for state used when performing a transaction
-export default (state: Object = { success: null, message: null, selectedAsset: ASSETS_LABELS.NEO }, action: Object) => {
+export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case SEND_TRANSACTION:
-      return {...state, success: action.success, message: action.message}
-    case CLEAR_TRANSACTION:
-      return {...state, success: null, message: null}
-    case TOGGLE_ASSET:
-      let asset
-      if (state.selectedAsset === ASSETS_LABELS.NEO) {
-        asset = ASSETS_LABELS.GAS
-      } else {
-        asset = ASSETS_LABELS.NEO
+      return {
+        ...state,
+        success: action.success,
+        message: action.message
       }
-      return {...state, success: null, selectedAsset: asset}
+    case CLEAR_TRANSACTION:
+      return {
+        ...state,
+        success: null,
+        message: null
+      }
+    case TOGGLE_ASSET:
+      return {
+        ...state,
+        success: null,
+        selectedAsset: state.selectedAsset === ASSETS_LABELS.NEO ? ASSETS_LABELS.GAS : ASSETS_LABELS.NEO
+      }
     default:
       return state
   }

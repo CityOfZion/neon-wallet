@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Login renders without crashing 1`] = `
-<div
+<Page
   id="loginPage"
 >
   <div
@@ -10,7 +10,6 @@ exports[`Login renders without crashing 1`] = `
     <div
       className="loginForm"
     >
-      <Logo />
       <input
         autoFocus={true}
         onChange={[Function]}
@@ -26,6 +25,8 @@ exports[`Login renders without crashing 1`] = `
       className="loginButtons"
     >
       <button
+        className="disabled"
+        disabled={true}
         onClick={[Function]}
       >
         Login
@@ -42,7 +43,6 @@ exports[`Login renders without crashing 1`] = `
         </button>
       </Link>
     </div>
-    <Footer />
   </div>
-</div>
+</Page>
 `;

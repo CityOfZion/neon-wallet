@@ -3,11 +3,11 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 import FaEye from 'react-icons/lib/fa/eye'
 import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
-import Logo from '../../components/Logo'
-import Footer from '../../components/Footer'
+import Page from '../../components/Page'
+import { ROUTES } from '../../core/constants'
 
 type Props = {
-    onWifChange: Function,
+    loginWithPrivateKey: Function,
     history: Object
 }
 
@@ -28,30 +28,21 @@ export default class LoginPrivateKey extends Component<Props, State> {
     }))
   }
 
-  handleInputChange = (e: SyntheticInputEvent<*>) => {
-    const value = e.target.value
-
-    this.setState({
-      wif: value
-    })
-  }
-
-  handleVerify = () => {
-    const { onWifChange, history } = this.props
-    const { wif } = this.state
-
-    onWifChange(history, wif)
-  }
-
   render () {
-    const { showKey } = this.state
+    const { history, loginWithPrivateKey } = this.props
+    const { showKey, wif } = this.state
+    const loginButtonDisabled = wif === ''
 
     return (
-      <div id='loginPage'>
+      <Page id='loginPage'>
         <div className='login'>
           <div className='loginForm'>
-            <Logo />
-            <input autoFocus type={showKey ? 'text' : 'password'} placeholder='Enter your private key here (WIF)' onChange={this.handleInputChange} />
+            <input
+              type={showKey ? 'text' : 'password'}
+              placeholder='Enter your private key here (WIF)'
+              onChange={(e) => this.setState({ wif: e.target.value })}
+              autoFocus
+            />
 
             {showKey
               ? <FaEyeSlash className='viewKey' onClick={this.toggleKeyVisibility} />
@@ -59,12 +50,14 @@ export default class LoginPrivateKey extends Component<Props, State> {
             }
           </div>
           <div className='loginButtons'>
-            <button onClick={this.handleVerify}>Login</button>
-            <Link to='/'><button className='altButton'>Home</button></Link>
+            <button
+              onClick={() => loginWithPrivateKey(wif, history)}
+              disabled={loginButtonDisabled}
+              className={loginButtonDisabled && 'disabled'}>Login</button>
+            <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>
           </div>
-          <Footer />
         </div>
-      </div>
+      </Page>
     )
   }
 }
