@@ -32,9 +32,8 @@ exports[`Login renders without crashing 1`] = `
         Login
       </button>
       <Link
-        onlyActiveOnIndex={false}
-        style={Object {}}
-        to="/"
+        replace={false}
+        to=""
       >
         <button
           className="altButton"

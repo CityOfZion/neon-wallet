@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import { isNil } from 'lodash'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import DisplayWalletKeys from '../../components/DisplayWalletKeys'
 import Page from '../../components/Page'
 import { ROUTES } from '../../core/constants'
