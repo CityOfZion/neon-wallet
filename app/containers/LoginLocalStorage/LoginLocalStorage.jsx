@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import storage from 'electron-json-storage'
 import { map } from 'lodash'
 import FaEye from 'react-icons/lib/fa/eye'

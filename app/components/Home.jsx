@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import Page from './Page'
 import { ROUTES } from '../core/constants'
 
