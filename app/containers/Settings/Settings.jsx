@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import { forEach, map } from 'lodash'
 import fs from 'fs'
 import storage from 'electron-json-storage'

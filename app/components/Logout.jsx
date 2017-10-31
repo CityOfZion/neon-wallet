@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import Power from 'react-icons/lib/md/power-settings-new'
 import ReactTooltip from 'react-tooltip'
 import { ROUTES } from '../core/constants'
