@@ -76,17 +76,14 @@ export default class WalletInfo extends Component<Props> {
           <div className='split'>
             <div className='label'>{ASSETS.NEO}</div>
             <div className='amountBig amountNeo'>{neo}</div>
-            <div className='fiat neoPrice'>1 NEO = US ${neoPrice ? formatFiat(neoPrice) : '--' }</div>
-            <div className='fiat neoWalletValue'>NEO Wallet US ${neoValue}</div>
-
+            <div className='fiat neoWalletValue'>US ${neoValue}</div>
           </div>
           <div className='split'>
             <div className='label'>{ASSETS.GAS}</div>
             <div className='amountBig amountGas'>{formatGAS(gas)}</div>
-            <div className='fiat gasPrice'>1 GAS = US ${gasPrice ? formatFiat(gasPrice) : '--' }</div>
-            <div className='fiat gasWalletValue'>GAS Wallet US ${gasValue}</div>
+            <div className='fiat gasWalletValue'>US ${gasValue}</div>
           </div>
-          <div className='fiat walletTotal'>Wallet US ${totalValue}</div>
+          <div className='fiat walletTotal'>Total US ${totalValue}</div>
           <div className='refreshBalance' onClick={this.refreshBalance} >
             <MdSync id='refresh' data-tip data-for='refreshBalanceTip' />
             <ReactTooltip class='solidTip' id='refreshBalanceTip' place='bottom' type='dark' effect='solid'>

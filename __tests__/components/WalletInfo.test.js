@@ -86,8 +86,6 @@ describe('WalletInfo', () => {
     const { wrapper } = setup(initialState, false)
 
     const addressField = wrapper.find('.address')
-    const neoPrice = wrapper.find('.neoPrice')
-    const gasPrice = wrapper.find('.gasPrice')
     const neoWalletValue = wrapper.find('.neoWalletValue')
     const gasWalletValue = wrapper.find('.gasWalletValue')
     const walletValue = wrapper.find('.walletTotal')
@@ -97,11 +95,9 @@ describe('WalletInfo', () => {
     const neoField = wrapper.find('.amountNeo')
     const gasField = wrapper.find('.amountGas')
 
-    expect(neoPrice.text()).toEqual(`1 NEO = US $${formatFiat(initialState.wallet.neoPrice)}`)
-    expect(gasPrice.text()).toEqual(`1 GAS = US $${formatFiat(initialState.wallet.gasPrice)}`)
-    expect(neoWalletValue.text()).toEqual(`NEO Wallet US $${expectedNeoWalletValue}`)
-    expect(gasWalletValue.text()).toEqual(`GAS Wallet US $${expectedGasWalletValue}`)
-    expect(walletValue.text()).toEqual(`Wallet US $${expectedWalletValue}`)
+    expect(neoWalletValue.text()).toEqual(`US $${expectedNeoWalletValue}`)
+    expect(gasWalletValue.text()).toEqual(`US $${expectedGasWalletValue}`)
+    expect(walletValue.text()).toEqual(`Total US $${expectedWalletValue}`)
     expect(addressField.text().split('<')[0]).toEqual(initialState.account.address)
     expect(neoField.text()).toEqual(`${initialState.wallet.Neo}`)
     expect(gasField.text()).toEqual(`${initialState.wallet.Gas}`)
