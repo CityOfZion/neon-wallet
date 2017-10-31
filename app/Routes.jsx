@@ -17,8 +17,6 @@ import Home from './components/Home'
 export default () => (
   <App>
     <Switch>
-      <Route path={ROUTES.HOME} component={Home} />
-      <Route path={ROUTES.DASHBOARD} component={Home} />
       <Route path={ROUTES.DASHBOARD} component={Dashboard} />
       <Route path={ROUTES.CREATE_WALLET} component={CreateWallet} />
       <Route path={ROUTES.ENCRYPT_KEY} component={EncryptKey} />
@@ -29,6 +27,7 @@ export default () => (
       <Route path={ROUTES.LOGIN_LEDGER_NANO_S} component={LoginLedgerNanoS} />
       <Route path={ROUTES.TOKEN_SALE} component={TokenSale} />
       <Route path={ROUTES.SETTINGS} component={Settings} />
+      <Route path={ROUTES.HOME} component={Home} />
     </Switch>
   </App>
 )
