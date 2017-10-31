@@ -3,7 +3,7 @@ import { Provider } from 'react-redux'
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import { mount, shallow } from 'enzyme'
-import { SET_TRANSACTION_HISTORY, SET_BALANCE } from '../../app/modules/wallet'
+import { SET_TRANSACTION_HISTORY, SET_BALANCE, SET_GAS_PRICE, SET_NEO_PRICE } from '../../app/modules/wallet'
 import { SEND_TRANSACTION, CLEAR_TRANSACTION } from '../../app/modules/transactions'
 import { SET_HEIGHT } from '../../app/modules/metadata'
 import { SET_CLAIM } from '../../app/modules/claim'
@@ -14,14 +14,18 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { clipboard } from 'electron'
 import { version } from '../../package.json'
+import { formatFiat } from '../../app/core/formatters'
 
 const axiosMock = new MockAdapter(axios)
 axiosMock
   .onGet('http://testnet-api.wallet.cityofzion.io/v2/version')
   .reply(200, { version })
 axiosMock
-  .onGet('https://bittrex.com/api/v1.1/public/getticker?market=USDT-NEO')
-  .reply(200, { result: { Last: 24.50 } })
+  .onGet('https://api.coinmarketcap.com/v1/ticker/neo/?convert=USD')
+  .reply(200, [ { price_usd: 24.50 } ])
+axiosMock
+  .onGet('https://api.coinmarketcap.com/v1/ticker/gas/?convert=USD')
+  .reply(200, [ { price_usd: 18.20 } ])
 
 jest.mock('electron', () => ({
   clipboard: {
@@ -44,7 +48,8 @@ const initialState = {
   wallet: {
     Neo: 10,
     Gas: 1.0001001,
-    price: "25.48"
+    neoPrice: 25.48,
+    gasPrice: 18.10
   },
   claim: {
     claimAmount: 0.5
@@ -81,11 +86,22 @@ describe('WalletInfo', () => {
     const { wrapper } = setup(initialState, false)
 
     const addressField = wrapper.find('.address')
-    const fiatField = wrapper.find('.fiat')
+    const neoPrice = wrapper.find('.neoPrice')
+    const gasPrice = wrapper.find('.gasPrice')
+    const neoWalletValue = wrapper.find('.neoWalletValue')
+    const gasWalletValue = wrapper.find('.gasWalletValue')
+    const walletValue = wrapper.find('.walletTotal')
+    const expectedNeoWalletValue = formatFiat(initialState.wallet.neoPrice * initialState.wallet.Neo)
+    const expectedGasWalletValue = formatFiat(initialState.wallet.gasPrice * initialState.wallet.Gas)
+    const expectedWalletValue = formatFiat(initialState.wallet.neoPrice * initialState.wallet.Neo + initialState.wallet.gasPrice * initialState.wallet.Gas)
     const neoField = wrapper.find('.amountNeo')
     const gasField = wrapper.find('.amountGas')
 
-    expect(fiatField.text()).toEqual(`US ${initialState.wallet.price}`)
+    expect(neoPrice.text()).toEqual(`1 NEO = US $${formatFiat(initialState.wallet.neoPrice)}`)
+    expect(gasPrice.text()).toEqual(`1 GAS = US $${formatFiat(initialState.wallet.gasPrice)}`)
+    expect(neoWalletValue.text()).toEqual(`NEO Wallet US $${expectedNeoWalletValue}`)
+    expect(gasWalletValue.text()).toEqual(`GAS Wallet US $${expectedGasWalletValue}`)
+    expect(walletValue.text()).toEqual(`Wallet US $${expectedWalletValue}`)
     expect(addressField.text().split('<')[0]).toEqual(initialState.account.address)
     expect(neoField.text()).toEqual(`${initialState.wallet.Neo}`)
     expect(gasField.text()).toEqual(`${initialState.wallet.Gas}`)
@@ -108,6 +124,8 @@ describe('WalletInfo', () => {
       SEND_TRANSACTION,
       SET_TRANSACTION_HISTORY,
       SET_HEIGHT,
+      SET_NEO_PRICE,
+      SET_GAS_PRICE,
       SET_BALANCE,
       CLEAR_TRANSACTION,
       SET_CLAIM
@@ -115,7 +133,7 @@ describe('WalletInfo', () => {
     deepWrapper.find('.refreshBalance').simulate('click')
     setTimeout(() => {
       const actions = store.getActions()
-      expect(actions.length === 11).toEqual(true)
+      expect(actions.length === 15).toEqual(true)
       actions.forEach(action => {
         expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
       })
@@ -123,20 +141,23 @@ describe('WalletInfo', () => {
     }, 1050)
   })
   test('calls the correct number of actions after mounting', (done) => {
-    const response = Promise.resolve('pause')
     const { store } = setup(initialState, false)
     const actionTypes = [
       SET_TRANSACTION_HISTORY,
       SET_HEIGHT,
-      SET_CLAIM
+      SET_CLAIM,
+      SET_BALANCE,
+      SET_NEO_PRICE,
+      SET_GAS_PRICE
     ]
-    response.then(() => {
+
+    setTimeout(() => {
       const actions = store.getActions()
-      expect(actions.length).toEqual(3)
+      expect(actions.length).toEqual(6)
       actions.forEach(action => {
         expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
       })
       done()
-    })
+    }, 1050)
   })
 })

@@ -8,16 +8,31 @@ import { syncBlockHeight } from './metadata'
 
 // Constants
 export const SET_BALANCE = 'SET_BALANCE'
+export const SET_NEO_PRICE = 'SET_NEO_PRICE'
+export const SET_GAS_PRICE = 'SET_GAS_PRICE'
 export const RESET_PRICE = 'RESET_PRICE'
 export const SET_TRANSACTION_HISTORY = 'SET_TRANSACTION_HISTORY'
 
 // Actions
-export function setBalance (neo: number, gas: number, price: string) {
+export function setBalance (neo: number, gas: number) {
   return {
     type: SET_BALANCE,
     Neo: neo,
-    Gas: gas,
-    price: price
+    Gas: gas
+  }
+}
+
+export function setNeoPrice (neoPrice: number) {
+  return {
+    type: SET_NEO_PRICE,
+    neoPrice: neoPrice
+  }
+}
+
+export function setGasPrice (gasPrice: number) {
+  return {
+    type: SET_GAS_PRICE,
+    gasPrice: gasPrice
   }
 }
 
@@ -34,25 +49,27 @@ export function setTransactionHistory (transactions: Array<Object>) {
   }
 }
 
-function getMarketPriceUSD (amount: number) {
-  return axios.get('https://bittrex.com/api/v1.1/public/getticker?market=USDT-NEO').then((response) => {
-    let lastUSDNEO = Number(response.data.result.Last)
-    return ('$' + (lastUSDNEO * amount).toFixed(2).toString())
+export const getMarketPriceUSD = () => (dispatch: DispatchType) => {
+  return axios.get('https://api.coinmarketcap.com/v1/ticker/neo/?convert=USD').then((response) => {
+    let lastUSDNEO = Number(response.data[0].price_usd)
+    dispatch(setNeoPrice(lastUSDNEO))
+  }).catch((e) => {
+    // If API dies, still display balance
+  })
+}
+
+export const getGasMarketPriceUSD = () => (dispatch: DispatchType) => {
+  return axios.get('https://api.coinmarketcap.com/v1/ticker/gas/?convert=USD').then((response) => {
+    let lastUSDGAS = Number(response.data[0].price_usd)
+    dispatch(setGasPrice(lastUSDGAS))
+  }).catch((e) => {
+    // If API dies, still display balance
   })
 }
 
 export const retrieveBalance = (net: NetworkType, address: string) => (dispatch: DispatchType) => {
   return getBalance(net, address).then((resultBalance) => {
-    return getMarketPriceUSD(resultBalance.NEO.balance).then((resultPrice) => {
-      if (resultPrice === undefined || resultPrice === null) {
-        dispatch(setBalance(resultBalance.NEO.balance, resultBalance.GAS.balance, '--'))
-      } else {
-        dispatch(setBalance(resultBalance.NEO.balance, resultBalance.GAS.balance, resultPrice))
-      }
-      return true
-    }).catch((e) => {
-      dispatch(setBalance(resultBalance.NEO.balance, resultBalance.GAS.balance, '--'))
-    })
+    dispatch(setBalance(resultBalance.NEO.balance, resultBalance.GAS.balance))
   }).catch((result) => {
     // If API dies, still display balance
   })
@@ -62,16 +79,22 @@ export const initiateGetBalance = (net: NetworkType, address: string) => (dispat
   dispatch(syncTransactionHistory(net, address))
   dispatch(syncAvailableClaim(net, address))
   dispatch(syncBlockHeight(net))
+  dispatch(getMarketPriceUSD())
+  dispatch(getGasMarketPriceUSD())
   return dispatch(retrieveBalance(net, address))
 }
 
 // reducer for wallet account balance
-export default (state: Object = { Neo: 0, Gas: 0, transactions: [], price: '--' }, action: Object) => {
+export default (state: Object = { Neo: 0, Gas: 0, transactions: [], neoPrice: 0, gasPrice: 0 }, action: Object) => {
   switch (action.type) {
     case SET_BALANCE:
-      return { ...state, [ASSETS_LABELS.NEO]: action.Neo, [ASSETS_LABELS.GAS]: action.Gas, price: action.price }
+      return { ...state, [ASSETS_LABELS.NEO]: action.Neo, [ASSETS_LABELS.GAS]: action.Gas }
+    case SET_NEO_PRICE:
+      return { ...state, neoPrice: action.neoPrice }
+    case SET_GAS_PRICE:
+      return { ...state, gasPrice: action.gasPrice }
     case RESET_PRICE:
-      return {...state, price: '--'}
+      return {...state, neoPrice: 0, gasPrice: 0}
     case SET_TRANSACTION_HISTORY:
       return {...state, transactions: action.transactions}
     default:
