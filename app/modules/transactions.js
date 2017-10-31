@@ -1,10 +1,9 @@
 // @flow
 import { ASSETS_LABELS, ASSETS } from '../core/constants'
 import { validateTransactionBeforeSending } from '../core/wallet'
-import { getTransactionHistory, doSendAsset } from 'neon-js'
+import { getTransactionHistory, doSendAsset, hardwareDoSendAsset } from 'neon-js'
 import { setTransactionHistory } from '../modules/wallet'
 import { log } from '../util/Logs'
-import { hardwareDoSendAsset } from '../ledger/ledgerNanoS.js'
 
 // Constants
 export const SEND_TRANSACTION = 'SEND_TRANSACTION'
@@ -79,6 +78,7 @@ export const sendTransaction = (sendAddress: string, sendAmount: string) => (dis
 
       let sendAssetFn
       if (isHardwareSend) {
+        dispatch(sendEvent(true, 'Please sign the transaction on your hardware device'))
         sendAssetFn = () => hardwareDoSendAsset(net, sendAddress, publicKey, sendAsset, signingFunction)
       } else {
         sendAssetFn = () => doSendAsset(net, sendAddress, wif, sendAsset)

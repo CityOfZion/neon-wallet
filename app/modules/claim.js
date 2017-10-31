@@ -1,6 +1,5 @@
 // @flow
-import { doClaimAllGas, doSendAsset, getClaimAmounts } from 'neon-js'
-import { hardwareDoSendAsset, hardwareDoClaimAllGas } from '../ledger/ledgerNanoS.js'
+import { doClaimAllGas, doSendAsset, getClaimAmounts, hardwareDoSendAsset, hardwareDoClaimAllGas } from 'neon-js'
 import { sendEvent, clearTransactionEvent } from '../modules/transactions'
 import { log } from '../util/Logs'
 import { ASSETS } from '../core/constants'
@@ -52,6 +51,7 @@ export const doClaimNotify = () => (dispatch: DispatchType, getState: GetStateTy
 
   let claimGasFn
   if (isHardwareClaim) {
+    dispatch(sendEvent(true, 'Sign transaction 2 of 2 to claim Gas on your hardware device (claiming Gas)'))
     claimGasFn = () => hardwareDoClaimAllGas(net, publicKey, signingFunction)
   } else {
     claimGasFn = () => doClaimAllGas(net, wif)
@@ -90,6 +90,7 @@ export const doGasClaim = () => (dispatch: DispatchType, getState: GetStateType)
 
     let sendAssetFn
     if (isHardwareClaim) {
+      dispatch(sendEvent(true, 'Sign transaction 1 of 2 to claim Gas on your hardware device (sending Neo to yourself)'))
       sendAssetFn = () => hardwareDoSendAsset(net, address, publicKey, { [ASSETS.NEO]: neo }, signingFunction)
     } else {
       sendAssetFn = () => doSendAsset(net, address, wif, { [ASSETS.NEO]: neo })
