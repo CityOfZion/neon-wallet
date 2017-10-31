@@ -1,16 +1,15 @@
 // @flow
-import { verifyPrivateKey } from '../core/wallet'
+import { verifyPrivateKey, validatePassphrase } from '../core/wallet'
 import { sendEvent, clearTransactionEvent } from './transactions'
-import { getAccountFromWIFKey, getPublicKeyEncoded, getAccountFromPublicKey } from 'neon-js'
+import { getAccountFromWIFKey, getPublicKeyEncoded, getAccountFromPublicKey, decryptWIF } from 'neon-js'
 import commNode from '../ledger/ledger-comm-node'
-import { BIP44_PATH } from '../core/constants'
+import { BIP44_PATH, ROUTES } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
 import { ledgerNanoSCreateSignatureAsync } from '../ledger/ledgerNanoS'
 
 // Constants
 export const LOGIN = 'LOGIN'
 export const LOGOUT = 'LOGOUT'
-export const SET_DECRYPTING = 'SET_DECRYPTING'
 export const SET_KEYS = 'SET_KEYS'
 export const HARDWARE_DEVICE_INFO = 'HARDWARE_DEVICE_INFO'
 export const HARDWARE_PUBLIC_KEY_INFO = 'HARDWARE_PUBLIC_KEY_INFO'
@@ -37,18 +36,36 @@ export function logout () {
   }
 }
 
-export function decrypting (bool: boolean) {
-  return {
-    type: SET_DECRYPTING,
-    state: bool
-  }
-}
-
 export function setKeys (keys: any) {
   return {
     type: SET_KEYS,
     keys
   }
+}
+
+export const loginNep2 = (passphrase: string, wif: string, history: Object) => (dispatch: DispatchType) => {
+  if (!validatePassphrase(passphrase)) {
+    dispatch(sendEvent(false, 'Passphrase too short'))
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+  }
+  dispatch(sendEvent(true, 'Decrypting encoded key...'))
+  const wrongPassphraseOrEncryptedKeyError = () => {
+    dispatch(sendEvent(false, 'Wrong passphrase or invalid encrypted key'))
+    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+  }
+  setTimeout(() => {
+    try {
+      decryptWIF(wif, passphrase).then((wif) => {
+        dispatch(login(wif))
+        history.push(ROUTES.DASHBOARD)
+        dispatch(clearTransactionEvent())
+      }).catch(() => {
+        wrongPassphraseOrEncryptedKeyError()
+      })
+    } catch (e) {
+      wrongPassphraseOrEncryptedKeyError()
+    }
+  }, 500)
 }
 
 export function hardwareDeviceInfo (hardwareDeviceInfo: string) {
@@ -72,16 +89,17 @@ export function hardwarePublicKey (publicKey: string) {
   }
 }
 
-export const onWifChange = (history: Object, wif: string) => (dispatch: DispatchType) => {
+export const loginWithPrivateKey = (wif: string, history: Object, route?: RouteType) => (dispatch: DispatchType) => {
   if (verifyPrivateKey(wif)) {
     dispatch(login(wif))
-    history.push('/dashboard')
+    history.push(route || ROUTES.DASHBOARD)
   } else {
     dispatch(sendEvent(false, 'That is not a valid private key'))
     setTimeout(() => dispatch(clearTransactionEvent()), 5000)
   }
 }
 
+// Reducer that manages account state (account now = private key)
 export const ledgerNanoSGetInfoAsync = () => async (dispatch: DispatchType) => {
   dispatch(hardwareDeviceInfo('Looking for USB Devices'))
   // console.log('started ledgerNanoSGetInfoAsync')
@@ -129,8 +147,20 @@ export const ledgerNanoSGetInfoAsync = () => async (dispatch: DispatchType) => {
   // process.stdout.write('success getPublicKeyInfo  \n')
 }
 
+const initialState = {
+  wif: null,
+  address: null,
+  loggedIn: false,
+  redirectUrl: null,
+  accountKeys: [],
+  signingFunction: null,
+  publicKey: null,
+  hardwareDeviceInfo: null,
+  hardwarePublicKeyInfo: null
+}
+
 // Reducer that manages account state (account now = private key)
-export default (state: Object = {wif: null, address: null, loggedIn: false, redirectUrl: null, decrypting: false, accountKeys: [], signingFunction: null, publicKey: null, hardwareDeviceInfo: null, hardwarePublicKeyInfo: null}, action: Object) => {
+export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case LOGIN:
       // process.stdout.write('interim action "' + JSON.stringify(action) + '"\n')
@@ -150,22 +180,48 @@ export default (state: Object = {wif: null, address: null, loggedIn: false, redi
       }
       // process.stdout.write('interim loadAccount "' + JSON.stringify(loadAccount) + '" \n')
       if (typeof loadAccount !== 'object') {
-        return {...state, wif: action.wif, loggedIn: false}
+        return {
+          ...state,
+          wif: action.wif,
+          loggedIn: false
+        }
       }
-      console.log('actions.signingFunction', action.signingFunction, true, null)
-      return {...state, wif: action.wif, address: loadAccount.address, loggedIn: true, decrypting: false, signingFunction: action.signingFunction}
+      return {
+        ...state,
+        wif: action.wif,
+        address: loadAccount.address,
+        loggedIn: true,
+        signingFunction: action.signingFunction
+      }
     case LOGOUT:
-      return {...state, 'wif': null, address: null, 'loggedIn': false, decrypting: false, signingFunction: null, publicKey: null}
-    case SET_DECRYPTING:
-      return {...state, decrypting: action.state}
+      return {
+        ...state,
+        wif: null,
+        address: null,
+        loggedIn: false,
+        signingFunction: null,
+        publicKey: null
+      }
     case SET_KEYS:
-      return {...state, accountKeys: action.keys}
+      return {
+        ...state,
+        accountKeys: action.keys
+      }
     case HARDWARE_DEVICE_INFO:
-      return {...state, hardwareDeviceInfo: action.hardwareDeviceInfo}
+      return {
+        ...state,
+        hardwareDeviceInfo: action.hardwareDeviceInfo
+      }
     case HARDWARE_PUBLIC_KEY_INFO:
-      return {...state, hardwarePublicKeyInfo: action.hardwarePublicKeyInfo}
+      return {
+        ...state,
+        hardwarePublicKeyInfo: action.hardwarePublicKeyInfo
+      }
     case HARDWARE_PUBLIC_KEY:
-      return {...state, publicKey: action.publicKey}
+      return {
+        ...state,
+        publicKey: action.publicKey
+      }
     default:
       return state
   }

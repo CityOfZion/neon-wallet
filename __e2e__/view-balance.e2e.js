@@ -26,7 +26,7 @@ test.after(async () => {
 
 test.serial('should login success', async t => {
   // Go to login page
-  await app.client.click('a[href="#/LoginPrivateKey"]>div.linkBox')
+  await app.client.click('a[href="#/login-private-key"]>div.linkBox')
 
   // Enter Wif
   await app.client.setValue('#loginPage input', 'KxB52D1FGe5xBn6YeezNwj7grhkHZxq7bv2tmaCPoT4rxApMwMvU')

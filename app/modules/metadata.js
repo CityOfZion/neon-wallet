@@ -3,14 +3,16 @@ import { getWalletDBHeight, getAPIEndpoint } from 'neon-js'
 import axios from 'axios'
 import { version } from '../../package.json'
 import { sendEvent, clearTransactionEvent } from './transactions'
+import { NETWORK, EXPLORER } from '../core/constants'
+
 // Constants
 export const SET_HEIGHT = 'SET_HEIGHT'
 export const SET_NETWORK = 'SET_NETWORK'
 export const SET_EXPLORER = 'SET_EXPLORER'
 
 // Actions
-export function setNetwork (net: string) {
-  const network = net === 'MainNet' ? 'MainNet' : 'TestNet'
+export function setNetwork (net: NetworkType) {
+  const network = net === NETWORK.MAIN ? NETWORK.MAIN : NETWORK.TEST
   return {
     type: SET_NETWORK,
     net: network
@@ -24,7 +26,7 @@ export function setBlockHeight (blockHeight: number) {
   }
 }
 
-export function setBlockExplorer (blockExplorer: string) {
+export function setBlockExplorer (blockExplorer: ExplorerType) {
   return {
     type: SET_EXPLORER,
     blockExplorer
@@ -51,15 +53,30 @@ export const syncBlockHeight = (net: NetworkType) => (dispatch: DispatchType) =>
   })
 }
 
+const initialState = {
+  blockHeight: 0,
+  network: NETWORK.MAIN,
+  blockExplorer: EXPLORER.NEO_TRACKER
+}
+
 // reducer for metadata associated with Neon
-export default (state: Object = { blockHeight: 0, network: 'MainNet', blockExplorer: 'Neotracker' }, action: Object) => {
+export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case SET_HEIGHT:
-      return { ...state, blockHeight: action.blockHeight }
+      return {
+        ...state,
+        blockHeight: action.blockHeight
+      }
     case SET_EXPLORER:
-      return { ...state, blockExplorer: action.blockExplorer }
+      return {
+        ...state,
+        blockExplorer: action.blockExplorer
+      }
     case SET_NETWORK:
-      return {...state, network: action.net}
+      return {
+        ...state,
+        network: action.net
+      }
     default:
       return state
   }

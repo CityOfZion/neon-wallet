@@ -6,7 +6,7 @@ import NetworkSwitch from '../NetworkSwitch'
 import WalletInfo from '../WalletInfo'
 import TransactionHistory from '../TransactionHistory'
 import Logout from '../../components/Logout'
-import Send from '../../components/Send'
+import Send from '../../containers/Send'
 import { version } from '../../../package.json'
 import { log } from '../../util/Logs'
 
@@ -19,6 +19,7 @@ type Props = {
   net: string,
   address: string,
   togglePane: Function,
+  logout: Function,
 }
 
 export default class Dashboard extends Component<Props> {
@@ -29,7 +30,7 @@ export default class Dashboard extends Component<Props> {
   }
 
   render () {
-    const { sendPane, confirmPane, blockHeight, togglePane } = this.props
+    const { sendPane, confirmPane, blockHeight, togglePane, logout } = this.props
     let sendPaneClosed
     if (sendPane === true) {
       sendPaneClosed = '0%'
@@ -49,7 +50,7 @@ export default class Dashboard extends Component<Props> {
             <div id='version'><span className='grey'>Version</span><span className='darker'>{version}</span></div>
             <div id='height'><span className='grey'>Block</span><span className='darker'>{blockHeight}</span></div>
             <NetworkSwitch />
-            <Logout />
+            <Logout logout={logout} />
           </div>
           <SplitPane split='vertical' size='50%' allowResize={false}>
             <SplitPane className='leftSplit' split='horizontal' size='55px' allowResize={false}>
@@ -64,6 +65,7 @@ export default class Dashboard extends Component<Props> {
             <TransactionHistory />
           </SplitPane>
         </SplitPane>
-      </div>)
+      </div>
+    )
   }
 }

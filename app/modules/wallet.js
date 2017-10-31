@@ -84,19 +84,44 @@ export const initiateGetBalance = (net: NetworkType, address: string) => (dispat
   return dispatch(retrieveBalance(net, address))
 }
 
+const initialState = {
+  Neo: 0,
+  Gas: 0,
+  transactions: [],
+  price: '--'
+}
+
 // reducer for wallet account balance
-export default (state: Object = { Neo: 0, Gas: 0, transactions: [], neoPrice: 0, gasPrice: 0 }, action: Object) => {
+export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case SET_BALANCE:
-      return { ...state, [ASSETS_LABELS.NEO]: action.Neo, [ASSETS_LABELS.GAS]: action.Gas }
+      return {
+        ...state,
+        [ASSETS_LABELS.NEO]: action.Neo,
+        [ASSETS_LABELS.GAS]: action.Gas,
+        price: action.price
+      }
     case SET_NEO_PRICE:
-      return { ...state, neoPrice: action.neoPrice }
+      return {
+        ...state,
+        neoPrice: action.neoPrice
+      }
     case SET_GAS_PRICE:
-      return { ...state, gasPrice: action.gasPrice }
+      return {
+        ...state,
+        gasPrice: action.gasPrice
+      }
     case RESET_PRICE:
-      return {...state, neoPrice: 0, gasPrice: 0}
+      return {
+        ...state,
+        neoPrice: 0,
+        gasPrice: 0
+      }
     case SET_TRANSACTION_HISTORY:
-      return {...state, transactions: action.transactions}
+      return {
+        ...state,
+        transactions: action.transactions
+      }
     default:
       return state
   }
