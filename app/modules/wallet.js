@@ -88,7 +88,8 @@ const initialState = {
   Neo: 0,
   Gas: 0,
   transactions: [],
-  price: '--'
+  neoPrice: 0,
+  gasPrice: 0
 }
 
 // reducer for wallet account balance
@@ -98,8 +99,7 @@ export default (state: Object = initialState, action: Object) => {
       return {
         ...state,
         [ASSETS_LABELS.NEO]: action.Neo,
-        [ASSETS_LABELS.GAS]: action.Gas,
-        price: action.price
+        [ASSETS_LABELS.GAS]: action.Gas
       }
     case SET_NEO_PRICE:
       return {
