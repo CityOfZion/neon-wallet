@@ -1,8 +1,8 @@
 // @flow
 import React from 'react'
 import { Link } from 'react-router'
-import Page from './Page'
-import { ROUTES } from '../core/constants'
+import Page from '../Page'
+import { ROUTES } from '../../core/constants'
 
 const Home = () =>
   <Page id='home'>

@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
-import Logo from './Logo'
-import Footer from './Footer'
+import Logo from '../Logo'
+import Footer from '../Footer'
 
 type Props = {
     children: React$Node,
