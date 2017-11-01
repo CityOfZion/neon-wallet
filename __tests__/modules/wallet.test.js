@@ -1,26 +1,27 @@
-import walletReducer, { setBalance, resetPrice, setTransactionHistory, SET_BALANCE, RESET_PRICE, SET_TRANSACTION_HISTORY } from '../../app/modules/wallet'
+import walletReducer, { setBalance, setNeoPrice, setGasPrice, resetPrice, setTransactionHistory, SET_BALANCE, SET_GAS_PRICE, SET_NEO_PRICE, RESET_PRICE, SET_TRANSACTION_HISTORY } from '../../app/modules/wallet'
 
 describe('wallet module tests', () => {
   const Neo = 1
   const Gas = 1
-  const price = '$10.00'
+  const neoPrice = 28.10
+  const gasPrice = 18.20
   const initialState = {
     Neo: 0,
     Gas: 0,
-    transactions: [],
-    price: '--'
+    neoPrice: 0,
+    gasPrice: 0,
+    transactions: []
   }
 
   describe('setBalance tests', () => {
     const expectedAction = {
       type: SET_BALANCE,
       Neo,
-      Gas,
-      price
+      Gas
     }
 
     test('setBalance action works', () => {
-      expect(setBalance(Neo, Gas, price)).toEqual(expectedAction)
+      expect(setBalance(Neo, Gas)).toEqual(expectedAction)
     })
 
     test('setBalance reducer should return the initial state', () => {
@@ -31,8 +32,53 @@ describe('wallet module tests', () => {
       const expectedState = {
         ...initialState,
         Neo,
-        Gas,
-        price
+        Gas
+      }
+      expect(walletReducer(undefined, expectedAction)).toEqual(expectedState)
+    })
+  })
+
+  describe('setNeoPrice tests', () => {
+    const expectedAction = {
+      type: SET_NEO_PRICE,
+      neoPrice
+    }
+
+    test('setNeoPrice action works', () => {
+      expect(setNeoPrice(neoPrice)).toEqual(expectedAction)
+    })
+
+    test('setNeoPrice reducer should return the initial state', () => {
+      expect(walletReducer(undefined, {})).toEqual(initialState)
+    })
+
+    test('wallet reducer should handle SET_NEO_PRICE', () => {
+      const expectedState = {
+        ...initialState,
+        neoPrice
+      }
+      expect(walletReducer(undefined, expectedAction)).toEqual(expectedState)
+    })
+  })
+
+  describe('setGasPrice tests', () => {
+    const expectedAction = {
+      type: SET_GAS_PRICE,
+      gasPrice
+    }
+
+    test('setGASPrice action works', () => {
+      expect(setGasPrice(gasPrice)).toEqual(expectedAction)
+    })
+
+    test('setGasPrice reducer should return the initial state', () => {
+      expect(walletReducer(undefined, {})).toEqual(initialState)
+    })
+
+    test('wallet reducer should handle SET_GAS_PRICE', () => {
+      const expectedState = {
+        ...initialState,
+        gasPrice
       }
       expect(walletReducer(undefined, expectedAction)).toEqual(expectedState)
     })

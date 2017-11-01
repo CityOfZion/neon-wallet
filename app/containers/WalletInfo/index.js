@@ -10,7 +10,8 @@ const mapStateToProps = (state) => ({
   gas: state.wallet.Gas,
   address: state.account.address,
   net: state.metadata.network,
-  price: state.wallet.price
+  neoPrice: state.wallet.neoPrice,
+  gasPrice: state.wallet.gasPrice
 })
 
 const actionCreators = {
