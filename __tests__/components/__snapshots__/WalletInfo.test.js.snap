@@ -5,10 +5,11 @@ exports[`WalletInfo renders without crashing 1`] = `
   address="ANqUrhv99rwCiFTL6N1An9NH5UVkPYxTuw"
   clearTransactionEvent={[Function]}
   gas={1.0001001}
+  gasPrice={18.1}
   initiateGetBalance={[Function]}
   neo={10}
+  neoPrice={25.48}
   net="TestNet"
-  price="25.48"
   sendEvent={[Function]}
   store={
     Object {
