@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import { NETWORK } from '../../core/constants'
+import styles from './NetworkSwitch.scss'
 
 export let intervals = {}
 
@@ -40,9 +41,9 @@ export default class NetworkSwitch extends Component<Props> {
   render () {
     const { address, net } = this.props
     return (
-      <div id='network'>
-        <span className='transparent'>Running on</span>
-        <span className='netName' onClick={() => this.toggleNet(net, address)}>{net}</span>
+      <div className={styles.container}>
+        <span className={styles.label}>Running on</span>
+        <span className={styles.netName} onClick={() => this.toggleNet(net, address)}>{net}</span>
       </div>
     )
   }

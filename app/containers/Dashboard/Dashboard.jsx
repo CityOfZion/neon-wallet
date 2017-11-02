@@ -9,6 +9,8 @@ import Logout from '../../components/Logout'
 import Send from '../../containers/Send'
 import { version } from '../../../package.json'
 import { log } from '../../util/Logs'
+import { NOTIFICATION_POSITIONS } from '../../core/constants'
+import styles from './Dashboard.scss'
 
 const logo = require('../../images/neon-logo2.png')
 
@@ -42,23 +44,32 @@ export default class Dashboard extends Component<Props> {
         sendPaneClosed = '15%'
       }
     }
+    const shouldPushTop = notification.isShown && notification.position === NOTIFICATION_POSITIONS.TOP
 
     return (
       <div id='dashboard'>
-        <SplitPane className='navSplit' split='horizontal' size={notification.isShown ? '80px' : '40px'} allowResize={false}>
-          <div id='navBar' style={{ marginTop: notification.isShown ? '40px' : 0, position: 'relative', width: '100%' }}>
-            <div id='title'><img src={logo} width='60px' /></div>
-            <div id='version'><span className='grey'>Version</span><span className='darker'>{version}</span></div>
-            <div id='height'><span className='grey'>Block</span><span className='darker'>{blockHeight}</span></div>
+        <SplitPane className={styles.navBarPane} split='horizontal' size={shouldPushTop ? '80px' : '40px'} allowResize={false}>
+          <div className={styles.navBar} style={{ marginTop: shouldPushTop ? '40px' : 0, position: 'relative', width: '100%' }}>
+            <div className={styles.title}>
+              <img src={logo} width='60px' />
+            </div>
+            <div className={styles.version}>
+              <span className={styles.grey}>Version</span>
+              <span className={styles.darker}>{version}</span>
+            </div>
+            <div className={styles.height}>
+              <span className={styles.grey}>Block</span>
+              <span className={styles.darker}>{blockHeight}</span>
+            </div>
             <NetworkSwitch />
             <Logout logout={logout} />
           </div>
           <SplitPane split='vertical' size='50%' allowResize={false}>
             <SplitPane className='leftSplit' split='horizontal' size='55px' allowResize={false}>
-              <div id='send' onClick={() => togglePane('sendPane')}>
-                <FaArrowUpward id='upArrow' /> <span>Send</span>
+              <div className={styles.send} onClick={() => togglePane('sendPane')}>
+                <FaArrowUpward className={styles.upArrow} /> <span>Send</span>
               </div>
-              <SplitPane className='sendSplit' split='horizontal' size={sendPaneClosed} allowResize={false}>
+              <SplitPane className={'sendSplit'} split='horizontal' size={sendPaneClosed} allowResize={false}>
                 <Send />
                 <WalletInfo />
               </SplitPane>

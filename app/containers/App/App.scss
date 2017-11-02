@@ -1,5 +1,7 @@
-.app-content {
-    &.app-content-push {
-        margin-top: 50px;
-    }
+.container {
+    transition: margin ease-in-out 350ms;
+}
+
+.pushTop {
+    margin-top: 50px;
 }
