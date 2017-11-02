@@ -50,6 +50,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
     return (
       <Page id='loginPage'>
         <div className='login'>
+          <p>Login using a saved wallet:</p>
           <div className='loginForm'>
             <input
               type={showKey ? 'text' : 'password'}

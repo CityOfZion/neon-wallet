@@ -36,6 +36,7 @@ export default class LoginPrivateKey extends Component<Props, State> {
     return (
       <Page id='loginPage'>
         <div className='login'>
+          <p>Login using a private key:</p>
           <div className='loginForm'>
             <input
               type={showKey ? 'text' : 'password'}
