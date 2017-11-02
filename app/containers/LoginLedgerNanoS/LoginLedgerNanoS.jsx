@@ -1,8 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import Logo from '../../components/Logo'
-import Footer from '../../components/Footer'
+import Page from '../../components/Page'
 
 type Props = {
   ledgerNanoSGetLogin: Function,
@@ -35,20 +34,19 @@ export default class LoginLedgerNanoS extends Component<Props> {
   render () {
     const { hardwareDeviceInfo, hardwarePublicKeyInfo } = this.props
     return (
-      <div id='loginPage'>
+      <Page id='loginPage'>
         <div className='login'>
+          <p>Login using the Ledger Nano S:</p>
           <div className='loginForm'>
-            <Logo />
+            <div className='loginButtons'>
+              <button onClick={this.onLedgerNanoSChange}>Use Ledger Nano S</button>
+              <Link to='/'><button className='altButton'>Home</button></Link>
+            </div>
+            <div id='ledger_device_info'>{hardwareDeviceInfo}</div>
+            <div id='ledger_app_info'>{hardwarePublicKeyInfo}</div>
           </div>
-          <div className='loginButtons'>
-            <button onClick={this.onLedgerNanoSChange}>Use Ledger Nano S</button>
-            <Link to='/'><button className='altButton'>Home</button></Link>
-          </div>
-          <div id='ledger_device_info'>{hardwareDeviceInfo}</div>
-          <div id='ledger_app_info'>{hardwarePublicKeyInfo}</div>
-          <Footer />
         </div>
-      </div>
+      </Page>
     )
   }
 }
