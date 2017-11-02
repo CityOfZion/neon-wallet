@@ -9,7 +9,7 @@ type NotificationArgsType = {
   title?: string,
   position?: $Values<typeof NOTIFICATION_POSITIONS>,
   width?: string,
-  dismissble?: boolean,
+  dismissible?: boolean,
   dismissAfter?: number,
   html?: boolean,
   onClick?: ?Function
@@ -27,7 +27,7 @@ type NotificationFactoryArgsType = ShowNotificationType & {
 const notificationFactory = (args: NotificationFactoryArgsType) => {
   const {
     dispatch,
-    dismissble,
+    dismissible,
     dismissAfter,
     isShown
   } = args
@@ -37,7 +37,7 @@ const notificationFactory = (args: NotificationFactoryArgsType) => {
     dispatch(clearNotification())
   }
   dispatch(showNotification(omit(args, ['dispatch', 'isShown'])))
-  if (dismissble) {
+  if (dismissible) {
     notificationTimeoutId = setTimeout(() => dispatch(clearNotification()), dismissAfter)
   }
 }
@@ -53,7 +53,7 @@ export function showNotification ({
   type,
   position = NOTIFICATION_POSITIONS.TOP,
   width,
-  dismissble,
+  dismissible,
   dismissAfter,
   html,
   onClick
@@ -66,7 +66,7 @@ export function showNotification ({
       type,
       position,
       width,
-      dismissble,
+      dismissible,
       dismissAfter,
       html,
       onClick
@@ -79,7 +79,7 @@ const getDefaultNotificationArgs = (args: NotificationArgsType, dispatch: Dispat
   return {
     isShown: state.isShown,
     dismissAfter: args.dismissAfter || state.dismissAfter,
-    dismissble: args.dismissble || state.dismissble,
+    dismissible: args.dismissible || state.dismissible,
     dispatch
   }
 }
@@ -99,7 +99,7 @@ export const showSuccessNotification = (args: NotificationArgsType) => (dispatch
 }
 
 export const showStickySuccessNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
-  dispatch(showSuccessNotification({ ...args, dismissble: false }))
+  dispatch(showSuccessNotification({ ...args, dismissible: false }))
 }
 
 export const showErrorNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
@@ -111,7 +111,7 @@ export const showErrorNotification = (args: NotificationArgsType) => (dispatch: 
 }
 
 export const showStickyErrorNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
-  dispatch(showErrorNotification({ ...args, dismissble: false }))
+  dispatch(showErrorNotification({ ...args, dismissible: false }))
 }
 
 export const showWarningNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
@@ -123,7 +123,7 @@ export const showWarningNotification = (args: NotificationArgsType) => (dispatch
 }
 
 export const showStickyWarningNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
-  dispatch(showErrorNotification({ ...args, dismissble: false }))
+  dispatch(showErrorNotification({ ...args, dismissible: false }))
 }
 
 export const showInfoNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
@@ -135,7 +135,7 @@ export const showInfoNotification = (args: NotificationArgsType) => (dispatch: D
 }
 
 export const showStickyInfoNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
-  dispatch(showInfoNotification({ ...args, dismissble: false }))
+  dispatch(showInfoNotification({ ...args, dismissible: false }))
 }
 
 const initialState = {
@@ -143,7 +143,7 @@ const initialState = {
   message: '',
   type: '',
   isShown: false,
-  dismissble: true,
+  dismissible: true,
   dismissAfter: DEFAULT_NOTIFICATION_TIMEOUT,
   position: NOTIFICATION_POSITIONS.TOP,
   width: '100%',

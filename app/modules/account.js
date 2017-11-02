@@ -99,49 +99,48 @@ export const loginWithPrivateKey = (wif: string, history: Object, route?: RouteT
 // Reducer that manages account state (account now = private key)
 export const ledgerNanoSGetInfoAsync = () => async (dispatch: DispatchType) => {
   dispatch(hardwareDeviceInfo('Looking for USB Devices'))
-  // console.log('started ledgerNanoSGetInfoAsync')
   let [err, result] = await asyncWrap(commNode.list_async())
-  if (err) return dispatch(hardwareDeviceInfo(`Finding USB Error: ${err}`))
+  if (err) return dispatch(hardwareDeviceInfo(`Finding USB Error: ${err}. Connect device and try again.`))
   if (result.length === 0) {
-    // console.log('getLedgerDeviceInfo "No device found"')
-    return dispatch(hardwareDeviceInfo('USB Failure: No device found'))
+    dispatch(hardwarePublicKeyInfo(''))
+    return dispatch(hardwareDeviceInfo('USB Failure: No device found. Connect device and try again.'))
   } else {
     let [err, comm] = await asyncWrap(commNode.create_async())
-    if (err) return dispatch(hardwareDeviceInfo(`Finding USB Error: ${err}`))
+    if (err) {
+      dispatch(hardwarePublicKeyInfo(''))
+      return dispatch(hardwareDeviceInfo(`Finding USB Error: ${err}. Connect device and try again.`))
+    }
 
     const deviceInfo = comm.device.getDeviceInfo()
-    // process.stdout.write('getLedgerDeviceInfo success  "' + ledgerNanoSGetDeviceInfo + '"\n')
     comm.device.close()
     dispatch(hardwareDeviceInfo(`Found USB ${deviceInfo.manufacturer} ${deviceInfo.product}`))
   }
-  // process.stdout.write('success ledgerNanoSGetInfoAsync  \n')
   [err, result] = await asyncWrap(commNode.list_async())
   if (result.length === 0) {
-    // process.stdout.write('getPublicKeyInfo "No device found"\n')
-    dispatch(hardwarePublicKeyInfo('App Failure: No device found'))
+    return dispatch(hardwarePublicKeyInfo('Hardware Device Error. Login to NEO App and try again'))
   } else {
     let [err, comm] = await asyncWrap(commNode.create_async())
-    if (err) return dispatch(hardwarePublicKeyInfo(`Public Key Comm Init Error: ${err}`))
+    if (err) {
+      console.log(`Public Key Comm Init Error: ${err}`)
+      return dispatch(hardwarePublicKeyInfo('Hardware Device Error. Login to NEO App and try again'))
+    }
 
     let message = Buffer.from(`8004000000${BIP44_PATH}`, 'hex')
     const validStatus = [0x9000]
     let [error, response] = await asyncWrap(comm.exchange(message.toString('hex'), validStatus))
     if (error) {
       comm.device.close() // NOTE: do we need this close here - what about the other errors that do not have it at the moment
-      // process.stdout.write('getPublicKeyInfo comm.exchange error reason ' + err + '\n')
       if (error === 'Invalid status 28160') {
         return dispatch(hardwarePublicKeyInfo('NEO App does not appear to be open, request for private key returned error 28160.'))
       } else {
-        return dispatch(hardwarePublicKeyInfo(`Public Key Comm Messaging Error: ${error}`))
+        console.log(`Public Key Comm Messaging Error: ${error}`)
+        return dispatch(hardwarePublicKeyInfo('Hardware Device Error. Login to NEO App and try again'))
       }
     }
     comm.device.close()
-    // process.stdout.write('getPublicKey success  "' + ledgerNanoSGetPublicKey + '"\n')
-    // process.stdout.write('getPublicKeyInfo success  "' + ledgerNanoSGetPublicKeyInfo + '"\n')
     dispatch(hardwarePublicKey(response.substring(0, 130)))
-    return dispatch(hardwarePublicKeyInfo('App Found, Public Key Available'))
+    return dispatch(hardwarePublicKeyInfo('Success. NEO App Found on Hardware Device. Click Button Above to Login'))
   }
-  // process.stdout.write('success getPublicKeyInfo  \n')
 }
 
 const initialState = {
@@ -160,8 +159,6 @@ const initialState = {
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case LOGIN:
-      // process.stdout.write('interim action "' + JSON.stringify(action) + '"\n')
-      // process.stdout.write('interim action.wif "' + JSON.stringify(action.wif) + '" signingFunction "' + JSON.stringify(action.signingFunction) + '"\n')
       let loadAccount: Object | number
       try {
         if (action.signingFunction) {
@@ -171,11 +168,9 @@ export default (state: Object = initialState, action: Object) => {
           loadAccount = getAccountFromWIFKey(action.wif)
         }
       } catch (e) {
-        // process.stdout.write('error loadAccount "' + e + '" "' + e.message + '" \n')
         console.log(e.stack)
         loadAccount = -1
       }
-      // process.stdout.write('interim loadAccount "' + JSON.stringify(loadAccount) + '" \n')
       if (typeof loadAccount !== 'object') {
         return {
           ...state,

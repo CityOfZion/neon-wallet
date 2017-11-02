@@ -1,11 +1,10 @@
 // @flow
 import { ASSETS_LABELS, ASSETS } from '../core/constants'
 import { validateTransactionBeforeSending } from '../core/wallet'
-import { getTransactionHistory, doSendAsset } from 'neon-js'
+import { getTransactionHistory, doSendAsset, hardwareDoSendAsset } from 'neon-js'
 import { setTransactionHistory } from '../modules/wallet'
 import { log } from '../util/Logs'
-import { hardwareDoSendAsset } from '../ledger/ledgerNanoS.js'
-import { showErrorNotification, showStickyInfoNotification, showSuccessNotification } from './notification'
+import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notification'
 
 // Constants
 export const TOGGLE_ASSET = 'TOGGLE_ASSET'
@@ -55,13 +54,14 @@ export const sendTransaction = (sendAddress: string, sendAmount: string) => (dis
       let sendAsset = {}
       sendAsset[assetName] = sendAmount
 
-      dispatch(showStickyInfoNotification({ message: 'Processing...' }))
+      dispatch(showInfoNotification({ message: 'Processing...', dismissible: false }))
       log(net, 'SEND', selfAddress, { to: sendAddress, asset: selectedAsset, amount: sendAmount })
 
       const isHardwareSend = !!publicKey
 
       let sendAssetFn
       if (isHardwareSend) {
+        dispatch(showInfoNotification({ message: 'Please sign the transaction on your hardware device', dismissible: false }))
         sendAssetFn = () => hardwareDoSendAsset(net, sendAddress, publicKey, sendAsset, signingFunction)
       } else {
         sendAssetFn = () => doSendAsset(net, sendAddress, wif, sendAsset)

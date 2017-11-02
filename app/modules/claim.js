@@ -1,9 +1,8 @@
 // @flow
-import { doClaimAllGas, doSendAsset, getClaimAmounts } from 'neon-js'
-import { hardwareDoSendAsset, hardwareDoClaimAllGas } from '../ledger/ledgerNanoS.js'
+import { doClaimAllGas, doSendAsset, getClaimAmounts, hardwareDoSendAsset, hardwareDoClaimAllGas } from 'neon-js'
 import { log } from '../util/Logs'
 import { ASSETS } from '../core/constants'
-import { showErrorNotification, showStickyInfoNotification, showSuccessNotification } from './notification'
+import { showErrorNotification, showSuccessNotification, showInfoNotification } from './notification'
 
 // Constants
 export const SET_CLAIM = 'SET_CLAIM'
@@ -53,6 +52,10 @@ export const doClaimNotify = () => (dispatch: DispatchType, getState: GetStateTy
 
   let claimGasFn
   if (isHardwareClaim) {
+    dispatch(showInfoNotification({
+      message: 'Sign transaction 2 of 2 to claim Gas on your hardware device (claiming Gas)',
+      dismissible: false
+    }))
     claimGasFn = () => hardwareDoClaimAllGas(net, publicKey, signingFunction)
   } else {
     claimGasFn = () => doClaimAllGas(net, wif)
@@ -85,13 +88,17 @@ export const doGasClaim = () => (dispatch: DispatchType, getState: GetStateType)
   if (neo === 0) {
     dispatch(doClaimNotify())
   } else {
-    dispatch(showStickyInfoNotification({ message: 'Sending Neo to Yourself...' }))
+    dispatch(showInfoNotification({ message: 'Sending Neo to Yourself...', dismissible: false }))
     log(net, 'SEND', address, { to: address, amount: neo, asset: ASSETS.NEO })
 
     const isHardwareClaim = !!publicKey
 
     let sendAssetFn
     if (isHardwareClaim) {
+      dispatch(showInfoNotification({
+        message: 'Sign transaction 1 of 2 to claim Gas on your hardware device (sending Neo to yourself)',
+        dismissible: false
+      }))
       sendAssetFn = () => hardwareDoSendAsset(net, address, publicKey, { [ASSETS.NEO]: neo }, signingFunction)
     } else {
       sendAssetFn = () => doSendAsset(net, address, wif, { [ASSETS.NEO]: neo })
@@ -101,7 +108,7 @@ export const doGasClaim = () => (dispatch: DispatchType, getState: GetStateType)
       if (response.result === undefined || response.result === false) {
         dispatch(showErrorNotification({ message: 'Transaction failed!' }))
       } else {
-        dispatch(showStickyInfoNotification({ message: 'Waiting for transaction to clear...' }))
+        dispatch(showInfoNotification({ message: 'Waiting for transaction to clear...', dismissible: false }))
         dispatch(setClaimRequest(true))
         dispatch(disableClaim(true))
       }

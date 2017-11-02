@@ -18,9 +18,7 @@ export default class LoginLedgerNanoS extends Component<Props> {
   }
 
   _componentDidMount = async (getInfoAsync: Function) => {
-    // process.stdout.write('started componentDidMount  \n')
     await getInfoAsync()
-    // process.stdout.write('success componentDidMount  \n')
   }
 
   onLedgerNanoSChange = () => {
@@ -32,14 +30,14 @@ export default class LoginLedgerNanoS extends Component<Props> {
   }
 
   render () {
-    const { hardwareDeviceInfo, hardwarePublicKeyInfo } = this.props
+    const { hardwareDeviceInfo, hardwarePublicKeyInfo, publicKey } = this.props
     return (
       <Page id='loginPage'>
         <div className='login'>
           <p>Login using the Ledger Nano S:</p>
           <div className='loginForm'>
             <div className='loginButtons'>
-              <button onClick={this.onLedgerNanoSChange}>Use Ledger Nano S</button>
+              <button className={!publicKey && 'disabled'} onClick={this.onLedgerNanoSChange}>Use Ledger Nano S</button>
               <Link to='/'><button className='altButton'>Home</button></Link>
             </div>
             <div id='ledger_device_info'>{hardwareDeviceInfo}</div>
