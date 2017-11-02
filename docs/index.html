@@ -1,90 +1,107 @@
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Neon Wallet</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<style>
-  body{
-    font-family: 'helvetica neue', sans-serif;
-    font-size: 16px;
-  }
-  div#content{
-    margin:20px auto;
-    width:600px;
-  }
-  div#title{
-    font-size:2em;
-    font-weight:800;
-  }
-  div#description, div#downloads, div#screenshot, div#donations{
-    margin:10px 0px;
-  }
-  div#screenshot img{
-    width: 100%;
-  }
-  h1{
-    font-size:1.2em;
-    font-weight: 800;
-  }
-  ul{
-    padding:0px;
-    margin:10px 0px;
-  }
-  ul li{
-    line-height: 1.2em;
-    list-style-type: none;
-  }
-  ul li a{
-    text-decoration: underline;
-    color:inherit;
-  }
-  span.key{
-    font-family: courier, monospace;
-    font-size:.9em;
-  }
-</style>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Orbitron:400,700|Source+Sans+Pro:300,400" rel="stylesheet">
+<link rel="shortcut icon" href="favicon.ico"><link href="styles.f145062d416ada48fe35.css" rel="stylesheet"><script type="text/javascript" src="index.f145062d416ada48fe35.js"></script></head>
 <body>
-  <div id="content">
-    <div id="title">Neon Wallet</div>
-    <div id="description">
-      The Neon Wallet is a cross-platform light wallet that allows you to interact with the Neo blockchain without
-      syncing your computer.
-    </div>
-    <div id="screenshot">
-      <img src="/neon.png"></img>
-    </div>
-    <div id="downloads">
-      <h1>Downloads</div>
-      <ul>
-        <li>Windows: <a href="https://github.com/CityOfZion/neon-wallet/releases/download/0.0.4/Windows.Neon.Setup.0.0.4.exe">Neon.exe</a></li>
-        <li>Mac: <a href="https://github.com/CityOfZion/neon-wallet/releases/download/0.0.4/Mac.Neon-0.0.4.dmg">Neon.dmg</a></li>
-        <li>Linux: <a href="https://github.com/CityOfZion/neon-wallet/releases/download/0.0.4/Linux.Neon-0.0.4-x86_64.AppImage">Neon.appimage</a> or <a href="https://github.com/CityOfZion/neon-wallet/releases/download/0.0.4/Linux.Neon_0.0.4_amd64.deb">Neon.deb</a></li>
-      </ul>
-      <div id="downloads">
-        <h1>Support</h1>
-        <div id="description">
-          We have active communities that can help with any technical issues below. Please do not contact the software authors or CoZ council members directly.
+  <div id="app">
+    <nav>
+      <div id="logo-container">
+        <a href="https://cityofzion.io/" target="blank">
+          <img src='city_of_zion.svg'/>
+        </a>
+      </div>
+    </nav>
+      <div id="app-container">
+        <section class="full-page" id="intro">
+          <div id="title">Neon Wallet</div>
+          <div id="description-container">
+            <div class="description">
+              An open source cross-platform light wallet for the NEO blockchain available on Linux, Windows and OSX.
+            </div>
+          </div>
+        </section>
+        <div id="content">
+          <section class="full-page" id="downloads-section">
+            <div class="description">
+              Downloads for Linux, OSX and Windows.
+            </div>
+            <div id="icons-container">
+              <div class="download-icon">
+                <a href="https://github.com/CityOfZion/neon-wallet/releases/download/0.0.5/Mac.Neon-0.0.5.dmg">
+                  <img src="apple-logo.png">
+                </a>
+              </div>
+              <div id="linux-icon">
+                <div class="download-icon">
+                  <img src="linux-logo.png">
+                </div>
+                <li>
+                  <a href="https://github.com/CityOfZion/neon-wallet/releases/download/0.0.5/Linux.Neon-0.0.5-x86_64.AppImage">Neon.appimage</a>
+                  <a href="https://github.com/CityOfZion/neon-wallet/releases/download/0.0.5/Linux.Neon_0.0.5_amd64.deb">Neon.deb</a>
+                </li>
+              </div>
+              <div class="download-icon">
+                <a href="https://github.com/CityOfZion/neon-wallet/releases/download/0.0.5/Windows.Neon.Setup.0.0.5.exe">
+                  <img src="windows-logo.png">
+                </a>
+              </div>
+            </div>
+          </section>
+          <section class="full-page" id="support-section">
+            <div id="description-container">
+              <div class="description">
+                We have active communites that can help with any technical issues below. Please do not
+                contact the sotware authors or CoZ council members directly.
+              </div>
+            </div>
+            <div id="icons-container">
+              <a href="https://www.reddit.com/r/NEO/" target="blank">
+                <img src="reddit.png">
+              </a>
+              <a href="https://www.facebook.com/CityOfZionOfficial" target="blank">
+                <img src="facebook.png">
+              </a>
+              <a href="https://join.slack.com/t/neosmarteconomy/shared_invite/MjIyOTc2OTU4NDk3LTE1MDIxNzE2NTctZTE1Mjg5ZWE3Yw" target="blank">
+                <img src="slack.png">
+              </a>
+            </div>
+          </section>
+          <section class="full-page" id="donations-section">
+            <div class="description">
+              Donations are greatly appreciated.
+            </div>
+            <div id="qr-container">
+              <div class="qr">
+                <div class="label">CITY OF ZION</div>
+                <img src="coz-qr.png">
+                <p> AXSoNQEKjmqPBNPg5cNrHyWivfjok3Vj9D </p>
+              </div>
+              <div class="qr">
+                <div class="label">NEON WALLET</div>
+                <img src="wallet-qr.png">
+                <p> Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A </p>
+              </div>
+            </div>
+          </section>
         </div>
-        <ul>
-          <li>Reddit: <a href="https://www.reddit.com/r/NEO/">/r/neo</a></li>
-          <li>Slack: <a href="https://join.slack.com/t/neosmarteconomy/shared_invite/MjIyOTc2OTU4NDk3LTE1MDIxNzE2NTctZTE1Mjg5ZWE3Yw">#neosmarteconomy</a></li>
-        </ul>
       </div>
-      <div id="downloads">
-        <h1>Donations</h1>
-          <ul>
-            <li>Wallet: <span class="key">Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A</span></li>
-            <li>CoZ: <span class="key">AXSoNQEKjmqPBNPg5cNrHyWivfjok3Vj9D</span></li>
-          </ul>
+    <footer>
+      <div>
+        <a href="https://github.com/CityOfZion/neon-wallet" target="blank">
+          <img src="github.png"/>
+        </a>
       </div>
-    </div>
+      <p>
+        © 2017 City of Zion
+      </p>
+    </footer>
   </div>
 </body>
-
-
 </html>
