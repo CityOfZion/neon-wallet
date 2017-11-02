@@ -7,7 +7,7 @@ import QRCode from 'qrcode/lib/browser'
 import { clipboard } from 'electron'
 import Copy from 'react-icons/lib/md/content-copy'
 import ReactTooltip from 'react-tooltip'
-import { formatGAS } from '../../core/formatters'
+import { formatGAS, formatFiat } from '../../core/formatters'
 import { ASSETS } from '../../core/constants'
 
 type Props = {
@@ -15,7 +15,8 @@ type Props = {
   neo: number,
   net: NetworkType,
   gas: number,
-  price: number,
+  neoPrice: number,
+  gasPrice: number,
   initiateGetBalance: Function,
   showStickyInfoNotification: Function,
   showSuccessNotification: Function,
@@ -45,10 +46,23 @@ export default class WalletInfo extends Component<Props> {
   }
 
   render () {
-    const { address, neo, gas, price } = this.props
+    const { address, neo, gas, neoPrice, gasPrice } = this.props
     if (isNil(address)) {
       return null
     }
+
+    let neoValue = '--'
+    let gasValue = '--'
+    let totalValue = '--'
+
+    if (neoPrice && neo) {
+      neoValue = formatFiat(neoPrice * neo)
+      if (gasPrice && gas) {
+        gasValue = formatFiat(gasPrice * gas)
+        totalValue = formatFiat(neoPrice * neo + gasPrice * gas)
+      }
+    }
+
     return (
       <div id='accountInfo'>
         <div className='label'>Your Public Neo Address:</div>
@@ -64,19 +78,20 @@ export default class WalletInfo extends Component<Props> {
           <div className='split'>
             <div className='label'>{ASSETS.NEO}</div>
             <div className='amountBig amountNeo'>{neo}</div>
+            <div className='fiat neoWalletValue'>US ${neoValue}</div>
           </div>
           <div className='split'>
             <div className='label'>{ASSETS.GAS}</div>
             <div className='amountBig amountGas'>{formatGAS(gas)}</div>
+            <div className='fiat gasWalletValue'>US ${gasValue}</div>
           </div>
+          <div className='fiat walletTotal'>Total US ${totalValue}</div>
           <div className='refreshBalance' onClick={this.refreshBalance} >
             <MdSync id='refresh' data-tip data-for='refreshBalanceTip' />
             <ReactTooltip class='solidTip' id='refreshBalanceTip' place='bottom' type='dark' effect='solid'>
               <span>Refresh account balance</span>
             </ReactTooltip>
           </div>
-
-          <div className='fiat'>US {price}</div>
         </div>
         <div className='spacer' />
         <Claim />

@@ -1,22 +1,21 @@
 // @flow
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
-import { Router } from 'react-router'
-import routes from '../routes'
+import Routes from '../Routes'
+import { BrowserRouter } from 'react-router-dom'
 
 type Props = {
   store: Object,
-  history: Object,
 }
 
 export default class Root extends Component<Props> {
   render () {
-    const { store, history } = this.props
+    const { store } = this.props
     return (
       <Provider store={store}>
-        <div>
-          <Router history={history} routes={routes} />
-        </div>
+        <BrowserRouter>
+          <Routes />
+        </BrowserRouter>
       </Provider>
     )
   }

@@ -24,7 +24,7 @@ export const ASSETS_LABELS = {
 }
 
 export const ROUTES = {
-  HOME: '/',
+  HOME: '',
   DASHBOARD: '/dashboard',
   CREATE_WALLET: '/create',
   ENCRYPT_KEY: '/encrypt-key',

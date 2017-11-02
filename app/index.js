@@ -1,6 +1,5 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { hashHistory } from 'react-router'
 import { AppContainer } from 'react-hot-loader'
 import store from './store/configureStore'
 import Root from './containers/Root'
@@ -8,7 +7,7 @@ import './styles/main.scss'
 
 render(
   <AppContainer>
-    <Root store={store} history={hashHistory} />
+    <Root store={store} />
   </AppContainer>,
   document.getElementById('root')
 )
@@ -18,7 +17,7 @@ if (module.hot) {
     const NewRoot = require('./containers/Root').default
     render(
       <AppContainer>
-        <NewRoot store={store} history={hashHistory} />
+        <NewRoot store={store} />
       </AppContainer>,
       document.getElementById('root')
     )

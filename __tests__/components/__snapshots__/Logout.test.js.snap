@@ -8,9 +8,8 @@ exports[`Logout should render without crashing 1`] = `
   onClick={[Function]}
 >
   <Link
-    onlyActiveOnIndex={false}
-    style={Object {}}
-    to="/"
+    replace={false}
+    to=""
   >
     <MdPowerSettingsNew />
   </Link>
