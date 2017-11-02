@@ -7,6 +7,24 @@ const port = process.env.PORT || 3000
 const publicPath = process.env.START_HOT ? `http://localhost:${port}/dist` : ''
 const { spawn } = require('child_process')
 
+const commonLoaders = {
+  css: {
+    loader: 'css-loader',
+    options: {
+      sourceMap: true
+    }
+  },
+  cssModules: {
+    loader: 'css-loader',
+    options: {
+      modules: true,
+      sourceMap: true,
+      importLoaders: 1,
+      localIdentName: '[name]__[local]__[hash:base64:5]'
+    }
+  }
+}
+
 module.exports = {
   devtool: 'cheap-module-inline-source-map',
   target: 'electron-renderer',
@@ -27,7 +45,10 @@ module.exports = {
     publicPath
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+    alias: {
+      styles: path.resolve(__dirname, '../app/styles')
+    }
   },
   node: {
     __dirname: false
@@ -59,17 +80,33 @@ module.exports = {
         loader: 'json-loader'
       },
       {
-        test: /\.css$/,
+        test: /\.global\.css$/,
         use: [
           'style-loader',
-          'css-loader'
+          commonLoaders.css
         ]
       },
       {
-        test: /\.scss$/,
+        test: /^((?!\.global).)*\.css$/,
         use: [
           'style-loader',
-          'css-loader',
+          commonLoaders.cssModules
+        ]
+      },
+      {
+        test: /\.global\.scss$/,
+        use: [
+          'style-loader',
+          commonLoaders.css,
+          'sass-loader'
+        ]
+      },
+      // Add SASS support  - compile all .global.scss files and pipe it to style.css
+      {
+        test: /^((?!\.global).)*\.scss$/,
+        use: [
+          'style-loader',
+          commonLoaders.cssModules,
           'sass-loader'
         ]
       },
