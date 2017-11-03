@@ -23,23 +23,24 @@ button {
     background-color: $default-button;
     border: none;
     cursor: pointer;
-}
 
-button:hover {
-    background-color: $default-button-hover;
-}
+    &:hover {
+        background-color: $default-button-hover;
+    }
 
-button a {
-    text-decoration: none;
-    color: inherit;
-}
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
 
-button.disabled {
-    opacity: .6;
-}
+    &.disabled {
+        opacity: .6;
+        cursor: default;
 
-button.disabled:hover {
-    background-color: $default-button;
+        &:hover {
+            background-color: $default-button;
+        }
+    }
 }
 
 input {
@@ -49,19 +50,6 @@ input {
     font-weight: 200;
     background-color: $dark-input-color;
     color: $default-text;
-}
-
-.altButton {
-    background-color: $dark-button;
-}
-
-.altButton:hover {
-    background-color: $dark-button-hover;
-}
-
-.logo {
-    text-align: left;
-    margin-bottom: 30px;
 }
 
 #settings,
@@ -118,8 +106,6 @@ input {
     }
 }
 
-$box-padding: 40px;
-$box-margin: 10px;
 #tokenSale {
     .warning {
         background-color: red;
@@ -226,66 +212,8 @@ $box-margin: 10px;
     }
 }
 
-#loginPage {
-    width: $page-width;
-    margin: $top-margin auto $top-margin auto;
-    .selectBox {
-        label {
-            font-weight: 800px;
-            margin-right: 10px;
-        }
-        text-align: left;
-    }
-    .loginForm {
-        display: inline-block;
-        width: 100%;
-    }
-    input {
-        width: 95%;
-        float: left;
-        margin-bottom: 10px;
-    }
-    .decrypting {
-        font-size: 1.4em;
-        font-weight: 200;
-        text-align: left;
-    }
-    select {
-        margin-bottom: 10px;
-    }
-    .loginButtons {
-        text-align: left;
-    }
-    .viewKey {
-        cursor: pointer;
-        margin-left: -25px;
-        margin-top: 10px;
-    }
-}
-
 // split pane stuff
 #dashboard {
-    .sendSplit {
-        .Pane1 {
-            background-color: $secondary-background;
-            &:hover {
-                background-color: $secondary-background;
-            }
-        }
-    }
-    
-    .leftSplit {
-        .Pane1 {
-            background-color: $default-button;
-            cursor: pointer;
-            border-bottom: none;
-            color: $button-text;
-            &:hover {
-                background-color: $default-button-hover;
-                color: $button-text;
-            }
-        }
-    }    
     .spacer {
         width: 84%;
         margin: 0px 8%;
@@ -297,24 +225,6 @@ $box-margin: 10px;
             font-size: 1em;
             font-weight: 200;
         }
-    }
-    #logout {
-        position: absolute;
-        font-size: 1.5em;
-        right: 20px;
-        top: 3px;
-        cursor: pointer;
-        color: $default-text; // opacity:.8;
-        a {
-            font-size: inherit;
-            margin: none;
-            padding: none;
-            text-decoration: none;
-            color: inherit;
-        }
-    }
-    #logout:hover {
-        // opacity:.6;
     }
     
     #confirmPane {
@@ -350,10 +260,12 @@ $box-margin: 10px;
             margin-left: 10px;
             color: white;
             margin-right: 0px;
+
+            &:hover {
+                background-color: $default-button-hover;
+            }
         }
-        button:hover {
-            background-color: $default-button-hover;
-        }
+
         #sendAddress {
             width: 100%;
             input {
@@ -470,7 +382,6 @@ $box-margin: 10px;
                 text-align: left;
                 font-family: 'courier new';
                 font-size: .7em;
-                overflow-x: hidden; // scroll;
                 cursor: pointer;
             }
             .amount {
@@ -480,6 +391,27 @@ $box-margin: 10px;
                 text-align: right;
                 color: $thin-text-color;
             }
+        }
+    }
+}
+
+.leftSplit {
+    .Pane1 {
+        background-color: $default-button;
+        cursor: pointer;
+        border-bottom: none;
+        color: $button-text;
+        &:hover {
+            background-color: $default-button-hover;
+            color: $button-text;
+        }
+    }
+}   
+.sendSplit {
+    .Pane1 {
+        background-color: $secondary-background;
+        &:hover {
+            background-color: $secondary-background;
         }
     }
 }
@@ -501,6 +433,6 @@ $box-margin: 10px;
     }
     &.solidTip {
         background-color: rgba(0, 0, 0, 1);
-        z-index: 999;
+        z-index: $z-index-tooltip;
     }
 }
