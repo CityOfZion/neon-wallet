@@ -18,7 +18,7 @@ type Props = {
   neoPrice: number,
   gasPrice: number,
   initiateGetBalance: Function,
-  showStickyInfoNotification: Function,
+  showInfoNotification: Function,
   showSuccessNotification: Function,
   showErrorNotification: Function
 }
@@ -36,8 +36,8 @@ export default class WalletInfo extends Component<Props> {
 
   // force sync with balance data
   refreshBalance = () => {
-    const { showStickyInfoNotification, showSuccessNotification, showErrorNotification, initiateGetBalance, net, address } = this.props
-    showStickyInfoNotification({ message: 'Refreshing...' })
+    const { showInfoNotification, showSuccessNotification, showErrorNotification, initiateGetBalance, net, address } = this.props
+    showInfoNotification({ message: 'Refreshing...', dissmissible: false })
     initiateGetBalance(net, address).then((response) => {
       showSuccessNotification({ message: 'Received latest blockchain information.', dissmissAfter: 1000 })
     }).catch(() => {

@@ -1,15 +1,17 @@
 // @flow
 import React from 'react'
+import type { Children } from 'react'
 import Logo from '../Logo'
 import Footer from '../Footer'
 
 type Props = {
-    children: React$Node,
-    id: string,
+    children: Children,
+    id?: string,
+    className?: string
 }
 
-const Page = ({ id, children }: Props) =>
-  <div id={id}>
+const Page = ({ id, className = '', children }: Props) =>
+  <div id={id} className={className}>
     <Logo />
     {children}
     <Footer />

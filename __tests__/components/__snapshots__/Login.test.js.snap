@@ -21,9 +21,7 @@ exports[`Login renders without crashing 1`] = `
         onClick={[Function]}
       />
     </div>
-    <div
-      className="loginButtons"
-    >
+    <div>
       <button
         className="disabled"
         disabled={true}

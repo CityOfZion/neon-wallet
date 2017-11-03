@@ -15,6 +15,10 @@ type NotificationArgsType = {
   onClick?: ?Function
 }
 
+type HideNotificationType = {
+  animate?: boolean
+}
+
 type ShowNotificationType = NotificationArgsType & {
   type: $Values<typeof NOTIFICATION_TYPES>,
 }
@@ -34,42 +38,31 @@ const notificationFactory = (args: NotificationFactoryArgsType) => {
 
   clearTimeout(notificationTimeoutId)
   if (isShown) {
-    dispatch(clearNotification())
+    dispatch(hideNotification())
   }
   dispatch(showNotification(omit(args, ['dispatch', 'isShown'])))
   if (dismissible) {
-    notificationTimeoutId = setTimeout(() => dispatch(clearNotification()), dismissAfter)
+    notificationTimeoutId = setTimeout(() => dispatch(hideNotification()), dismissAfter)
   }
 }
 
 // Constants
 export const SHOW_NOTIFICATION = 'SHOW_NOTIFICATION'
-export const CLEAR_NOTIFICATION = 'CLEAR_NOTIFICATION'
+export const HIDE_NOTIFICATION = 'HIDE_NOTIFICATION'
 
 // Actions
-export function showNotification ({
-  message,
-  title,
-  type,
-  position = NOTIFICATION_POSITIONS.TOP,
-  width,
-  dismissible,
-  dismissAfter,
-  html,
-  onClick
-}: ShowNotificationType) {
+export function showNotification (args: ShowNotificationType) {
   return {
     type: SHOW_NOTIFICATION,
+    payload: args
+  }
+}
+
+export function hideNotification ({ animate = true }: HideNotificationType) {
+  return {
+    type: HIDE_NOTIFICATION,
     payload: {
-      message,
-      title,
-      type,
-      position,
-      width,
-      dismissible,
-      dismissAfter,
-      html,
-      onClick
+      animate
     }
   }
 }
@@ -81,12 +74,6 @@ const getDefaultNotificationArgs = (args: NotificationArgsType, dispatch: Dispat
     dismissAfter: args.dismissAfter || state.dismissAfter,
     dismissible: args.dismissible || state.dismissible,
     dispatch
-  }
-}
-
-export function clearNotification () {
-  return {
-    type: CLEAR_NOTIFICATION
   }
 }
 
@@ -160,7 +147,17 @@ export default (state: Object = initialState, action: Object) => {
         ...action.payload,
         isShown: true
       }
-    case CLEAR_NOTIFICATION:
+    case HIDE_NOTIFICATION:
+      if (action.payload.animate) {
+        return {
+          ...initialState,
+          message: state.message,
+          title: state.title,
+          position: state.position,
+          width: state.width,
+          isShown: false
+        }
+      }
       return {
         ...initialState
       }

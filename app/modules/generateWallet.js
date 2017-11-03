@@ -1,7 +1,7 @@
 // @flow
 import storage from 'electron-json-storage'
 import { generateEncryptedWif, getAccountFromWIFKey, generatePrivateKey, getWIFFromPrivateKey, encryptWIF, encryptWifAccount } from 'neon-js'
-import { showErrorNotification, clearNotification, showStickyInfoNotification, showInfoNotification } from './notification'
+import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notification'
 import { validatePassphrase, checkMatchingPassphrases } from '../core/wallet'
 
 // Constants
@@ -62,12 +62,12 @@ export const generateWalletFromWif = (passphrase: string, passphrase2: string, w
     if (checkMatchingPassphrases(passphrase, passphrase2)) {
       rejectPromise('Passphrases do not match')
     } else if (validatePassphrase(passphrase)) {
-      dispatch(showStickyInfoNotification({ message: 'Generating encoded key...' }))
+      dispatch(showInfoNotification({ message: 'Generating encoded key...', dismissible: false }))
       setTimeout(() => {
         try {
           encryptWifAccount(wif, passphrase).then((result) => {
             dispatch(newWallet(result))
-            dispatch(clearNotification())
+            dispatch(showSuccessNotification({ message: 'Wallet encrypted successfully' }))
             resolve()
           })
         } catch (e) {
@@ -90,12 +90,12 @@ export const generateNewWallet = (passphrase: string, passphrase2: string) => (d
     if (checkMatchingPassphrases(passphrase, passphrase2)) {
       rejectPromise('Passphrases do not match')
     } else if (validatePassphrase(passphrase)) {
-      dispatch(showStickyInfoNotification({message: 'Generating encoded key...'}))
+      dispatch(showInfoNotification({ message: 'Generating encoded key...', dismissible: false }))
       setTimeout(() => {
         try {
           generateEncryptedWif(passphrase).then((result) => {
             dispatch(newWallet(result))
-            dispatch(clearNotification())
+            dispatch(showSuccessNotification({ message: 'Wallet created successfully' }))
             resolve()
           })
         } catch (e) {
@@ -124,11 +124,27 @@ export default (state: Object = initialState, action: Object) => {
       const newWif = getWIFFromPrivateKey(newPrivateKey)
       const encryptedWif = encryptWIF(newWif, action.passphrase)
       const loadAccount = getAccountFromWIFKey(newWif)
-      return { ...state, wif: newWif, address: loadAccount.address, passphrase: action.passphrase, encryptedWif }
+      return {
+        ...state,
+        wif: newWif,
+        address: loadAccount.address,
+        passphrase: action.passphrase,
+        encryptedWif
+      }
     case NEW_WALLET:
-      return { ...state, wif: action.wif, address: action.address, passphrase: action.passphrase, encryptedWif: action.encryptedWif, generating: false }
+      return {
+        ...state,
+        wif: action.wif,
+        address: action.address,
+        passphrase: action.passphrase,
+        encryptedWif: action.encryptedWif,
+        generating: false
+      }
     case SET_GENERATING:
-      return { ...state, generating: action.state }
+      return {
+        ...state,
+        generating: action.state
+      }
     case RESET_KEY:
       return { ...initialState }
     default:

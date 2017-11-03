@@ -1,7 +1,9 @@
 // @flow
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import Page from '../../components/Page'
+import loginStyles from '../../styles/login.scss'
+import HomeButtonLink from '../../components/HomeButtonLink'
+import { ROUTES } from '../../core/constants'
 
 type Props = {
   ledgerNanoSGetLogin: Function,
@@ -25,24 +27,22 @@ export default class LoginLedgerNanoS extends Component<Props> {
     const { ledgerNanoSGetLogin, publicKey, history } = this.props
     if (publicKey) {
       ledgerNanoSGetLogin()
-      history.push('/dashboard')
+      history.push(ROUTES.DASHBOARD)
     }
   }
 
   render () {
     const { hardwareDeviceInfo, hardwarePublicKeyInfo, publicKey } = this.props
     return (
-      <Page id='loginPage'>
-        <div className='login'>
-          <p>Login using the Ledger Nano S:</p>
-          <div className='loginForm'>
-            <div className='loginButtons'>
-              <button className={!publicKey && 'disabled'} onClick={this.onLedgerNanoSChange}>Use Ledger Nano S</button>
-              <Link to='/'><button className='altButton'>Home</button></Link>
-            </div>
-            <div id='ledger_device_info'>{hardwareDeviceInfo}</div>
-            <div id='ledger_app_info'>{hardwarePublicKeyInfo}</div>
+      <Page id='loginPage' className={loginStyles.loginPage}>
+        <div className={loginStyles.title}>Login using the Ledger Nano S:</div>
+        <div className={loginStyles.loginForm}>
+          <div>
+            <button className={!publicKey && 'disabled'} onClick={this.onLedgerNanoSChange}>Use Ledger Nano S</button>
+            <HomeButtonLink />
           </div>
+          <p>{hardwareDeviceInfo}</p>
+          <p>{hardwarePublicKeyInfo}</p>
         </div>
       </Page>
     )

@@ -5,7 +5,7 @@ import commNode from '../ledger/ledger-comm-node'
 import { BIP44_PATH, ROUTES } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
 import { ledgerNanoSCreateSignatureAsync } from '../ledger/ledgerNanoS'
-import { showErrorNotification, showInfoNotification, clearNotification } from './notification'
+import { showErrorNotification, showInfoNotification, hideNotification } from './notification'
 
 // Constants
 export const LOGIN = 'LOGIN'
@@ -54,9 +54,9 @@ export const loginNep2 = (passphrase: string, wif: string, history: Object) => (
   setTimeout(() => {
     try {
       decryptWIF(wif, passphrase).then((wif) => {
+        dispatch(hideNotification({ animate: false }))
         dispatch(login(wif))
         history.push(ROUTES.DASHBOARD)
-        dispatch(clearNotification())
       }).catch(() => {
         wrongPassphraseOrEncryptedKeyError()
       })

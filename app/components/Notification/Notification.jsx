@@ -7,21 +7,19 @@ import styles from './Notification.scss'
 
 type Props = {
   notification: NotificationType,
-  clearNotification: Function
+  hideNotification: Function
 }
-
 console.log(styles)
-
-const Notification = ({ notification, clearNotification }: Props) => {
-  const { isShown, message, type, width, title, html, onClick = noop } = notification
+const Notification = ({ notification, hideNotification }: Props) => {
+  const { isShown, message, type, width, position, title, html, onClick = noop } = notification
   return (
-    <div className={classNames(styles.notification, styles[type.toLowerCase()], { [styles.shown]: isShown })} style={{ width }} onClick={onClick}>
+    <div className={classNames(styles.notification, styles[type.toLowerCase()], styles[position.toLowerCase()], { [styles.shown]: isShown })} style={{ width }} onClick={onClick}>
       <div className={styles.content}>
         {title && <div className={styles.title}>{title}</div>}
         {html ? <div className={styles.message} dangerouslySetInnerHTML={{ __html: message }} /> : <div className={styles.message}>{message}</div>}
         <div className={styles.close} onClick={(e) => {
           e.stopPropagation()
-          clearNotification()
+          hideNotification()
         }}><Close /></div>
       </div>
     </div>

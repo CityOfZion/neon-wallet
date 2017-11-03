@@ -1,10 +1,9 @@
 // @flow
 import React, { Component } from 'react'
 import { isNil } from 'lodash'
-import { Link } from 'react-router-dom'
 import DisplayWalletKeys from '../../components/DisplayWalletKeys'
 import Page from '../../components/Page'
-import { ROUTES } from '../../core/constants'
+import HomeButtonLink from '../../components/HomeButtonLink'
 
 type Props = {
     generateWalletFromWif: Function,
@@ -78,7 +77,7 @@ export default class EncryptKey extends Component<Props, State> {
           placeholder='Enter existing WIF here'
         />
         <button disabled={disabledButton} className={disabledButton && 'disabled'} onClick={this.generateWalletFromWif}> Generate encrypted key </button>
-        <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>
+        <HomeButtonLink />
       </div>
     )
     return (

@@ -1,10 +1,10 @@
 // @flow
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import FaEye from 'react-icons/lib/fa/eye'
 import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
 import Page from '../../components/Page'
-import { ROUTES } from '../../core/constants'
+import HomeButtonLink from '../../components/HomeButtonLink'
+import loginStyles from '../../styles/login.scss'
 
 type Props = {
     loginWithPrivateKey: Function,
@@ -34,29 +34,27 @@ export default class LoginPrivateKey extends Component<Props, State> {
     const loginButtonDisabled = wif === ''
 
     return (
-      <Page id='loginPage'>
-        <div className='login'>
-          <p>Login using a private key:</p>
-          <div className='loginForm'>
-            <input
-              type={showKey ? 'text' : 'password'}
-              placeholder='Enter your private key here (WIF)'
-              onChange={(e) => this.setState({ wif: e.target.value })}
-              autoFocus
-            />
+      <Page id='loginPage' className={loginStyles.loginPage}>
+        <div className={loginStyles.title}>Login using a private key:</div>
+        <div className={loginStyles.loginForm}>
+          <input
+            type={showKey ? 'text' : 'password'}
+            placeholder='Enter your private key here (WIF)'
+            onChange={(e) => this.setState({ wif: e.target.value })}
+            autoFocus
+          />
 
-            {showKey
-              ? <FaEyeSlash className='viewKey' onClick={this.toggleKeyVisibility} />
-              : <FaEye className='viewKey' onClick={this.toggleKeyVisibility} />
-            }
-          </div>
-          <div className='loginButtons'>
-            <button
-              onClick={() => loginWithPrivateKey(wif, history)}
-              disabled={loginButtonDisabled}
-              className={loginButtonDisabled && 'disabled'}>Login</button>
-            <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>
-          </div>
+          {showKey
+            ? <FaEyeSlash className={loginStyles.viewKey} onClick={this.toggleKeyVisibility} />
+            : <FaEye className={loginStyles.viewKey} onClick={this.toggleKeyVisibility} />
+          }
+        </div>
+        <div>
+          <button
+            onClick={() => loginWithPrivateKey(wif, history)}
+            disabled={loginButtonDisabled}
+            className={loginButtonDisabled && 'disabled'}>Login</button>
+          <HomeButtonLink />
         </div>
       </Page>
     )

@@ -1,0 +1,17 @@
+@import '../../styles/variables';
+
+.logout {
+    position: absolute;
+    font-size: 1.5em;
+    right: 20px;
+    top: 3px;
+    cursor: pointer;
+    color: $default-text;
+    a {
+        font-size: inherit;
+        margin: none;
+        padding: none;
+        text-decoration: none;
+        color: inherit;
+    }
+}

@@ -1,6 +1,6 @@
 // @flow
 import { getTokenBalance, getAccountFromWIFKey, doMintTokens } from 'neon-js'
-import { showErrorNotification, showStickyInfoNotification, showSuccessNotification } from './transactions'
+import { showErrorNotification, showInfoNotification, showSuccessNotification } from './transactions'
 
 // Constants
 export const UPDATE_RPX_BALANCE = 'UPDATE_RPX_BALANCE'
@@ -57,7 +57,7 @@ export const participateInSale = (neoToSend: number, scriptHash: string) => (dis
   }
   const _scriptHash = scriptHash.slice(2, scriptHash.length)
 
-  dispatch(showStickyInfoNotification({ message: 'Processing...' }))
+  dispatch(showInfoNotification({ message: 'Processing...', dismissible: false }))
 
   return getTokenBalance(net, _scriptHash, account.address).then((balance) => {
     doMintTokens(net, _scriptHash, wif, toMint, 0).then((response) => {

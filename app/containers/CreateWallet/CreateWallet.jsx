@@ -1,10 +1,9 @@
 // @flow
 import React, { Component } from 'react'
 import { isNil } from 'lodash'
-import { Link } from 'react-router-dom'
 import DisplayWalletKeys from '../../components/DisplayWalletKeys'
 import Page from '../../components/Page'
-import { ROUTES } from '../../core/constants'
+import HomeButtonLink from '../../components/HomeButtonLink'
 
 type Props = {
     generateNewWallet: Function,
@@ -68,7 +67,7 @@ export default class CreateWallet extends Component<Props, State> {
           onChange={(e) => this.setState({ passphrase2: e.target.value })}
         />
         <button disabled={disabledButton} className={disabledButton && 'disabled'} onClick={this.generateNewWallet}> Generate keys </button>
-        <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>
+        <HomeButtonLink />
       </div>
     )
 

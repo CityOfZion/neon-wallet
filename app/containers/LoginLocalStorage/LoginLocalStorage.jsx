@@ -1,12 +1,13 @@
 // @flow
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import storage from 'electron-json-storage'
 import { map } from 'lodash'
 import FaEye from 'react-icons/lib/fa/eye'
 import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
 import Page from '../../components/Page'
-import { ROUTES } from '../../core/constants'
+import HomeButtonLink from '../../components/HomeButtonLink'
+import styles from './LoginLocalStorage.scss'
+import loginStyles from '../../styles/login.scss'
 
 type Props = {
   setKeys: Function,
@@ -48,38 +49,36 @@ export default class LoginLocalStorage extends Component<Props, State> {
     const loginButtonDisabled = Object.keys(accountKeys).length === 0 || wif === '' || passphrase === ''
 
     return (
-      <Page id='loginPage'>
-        <div className='login'>
-          <p>Login using a saved wallet:</p>
-          <div className='loginForm'>
-            <input
-              type={showKey ? 'text' : 'password'}
-              placeholder='Enter your passphrase here'
-              value={passphrase}
-              onChange={(e) => this.setState({ passphrase: e.target.value })}
-              autoFocus
-            />
+      <Page id='loginPage' className={loginStyles.loginPage}>
+        <div className={loginStyles.title}>Login using a saved wallet:</div>
+        <select
+          className={styles.selectWallet}
+          value={wif}
+          onChange={(e) => this.setState({ wif: e.target.value })}
+        >
+          <option value=''>Select a wallet</option>
+          {map(accountKeys, (value, key) => <option value={value} key={`wallet${key}`}>{key}</option>)}
+        </select>
+        <div className={loginStyles.loginForm}>
+          <input
+            type={showKey ? 'text' : 'password'}
+            placeholder='Enter your passphrase here'
+            value={passphrase}
+            onChange={(e) => this.setState({ passphrase: e.target.value })}
+            autoFocus
+          />
 
-            {showKey
-              ? <FaEyeSlash className='viewKey' onClick={this.toggleKeyVisibility} />
-              : <FaEye className='viewKey' onClick={this.toggleKeyVisibility} />
-            }
-
-            <div className='selectBox'>
-              <label>Wallet:</label>
-              <select value={wif} onChange={(e) => this.setState({ wif: e.target.value })}>
-                <option value=''>Select a wallet</option>
-                {map(accountKeys, (value, key) => <option value={value} key={`wallet${key}`}>{key}</option>)}
-              </select>
-            </div>
-          </div>
-          <div className='loginButtons'>
-            <button
-              className={loginButtonDisabled && 'disabled'}
-              onClick={() => loginNep2(passphrase, wif, history)}
-              disabled={loginButtonDisabled}>Login</button>
-            <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>
-          </div>
+          {showKey
+            ? <FaEyeSlash className={loginStyles.viewKey} onClick={this.toggleKeyVisibility} />
+            : <FaEye className={loginStyles.viewKey} onClick={this.toggleKeyVisibility} />
+          }
+        </div>
+        <div>
+          <button
+            className={loginButtonDisabled && 'disabled'}
+            onClick={() => loginNep2(passphrase, wif, history)}
+            disabled={loginButtonDisabled}>Login</button>
+          <HomeButtonLink />
         </div>
       </Page>
     )

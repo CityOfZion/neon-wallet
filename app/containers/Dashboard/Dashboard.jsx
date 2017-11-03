@@ -69,7 +69,7 @@ export default class Dashboard extends Component<Props> {
               <div className={styles.send} onClick={() => togglePane('sendPane')}>
                 <FaArrowUpward className={styles.upArrow} /> <span>Send</span>
               </div>
-              <SplitPane className={'sendSplit'} split='horizontal' size={sendPaneClosed} allowResize={false}>
+              <SplitPane className='sendSplit' split='horizontal' size={sendPaneClosed} allowResize={false}>
                 <Send />
                 <WalletInfo />
               </SplitPane>

@@ -1,12 +1,12 @@
 // @flow
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import { forEach, map } from 'lodash'
 import fs from 'fs'
 import storage from 'electron-json-storage'
 import Delete from 'react-icons/lib/md/delete'
 import Page from '../../components/Page'
-import { ROUTES, EXPLORER } from '../../core/constants'
+import HomeButtonLink from '../../components/HomeButtonLink'
+import { EXPLORER } from '../../core/constants'
 const { dialog } = require('electron').remote
 
 type Props = {
@@ -147,7 +147,7 @@ export default class Settings extends Component<Props, State> {
           <button onClick={() => this.saveKeyRecovery(wallets)}>Export key recovery file</button>
           <button onClick={this.loadKeyRecovery}>Load key recovery file</button>
         </div>
-        <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>
+        <HomeButtonLink />
       </Page>
     )
   }

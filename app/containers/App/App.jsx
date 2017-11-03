@@ -8,7 +8,7 @@ import styles from './App.scss'
 type Props = {
   children: React$Node,
   notification: NotificationType,
-  clearNotification: Function,
+  hideNotification: Function,
   checkVersion: Function
 }
 
@@ -19,11 +19,11 @@ class App extends Component<Props> {
   }
 
   render () {
-    const { children, notification, clearNotification } = this.props
+    const { children, notification, hideNotification } = this.props
     const shouldPushTop = notification.isShown && notification.position === NOTIFICATION_POSITIONS.TOP
     return (
       <div>
-        <Notification notification={notification} clearNotification={clearNotification} />
+        <Notification notification={notification} hideNotification={hideNotification} />
         <div className={classNames(styles.container, {
           [styles.pushTop]: shouldPushTop
         })}>{children}</div>
