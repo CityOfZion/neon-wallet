@@ -48,7 +48,12 @@ export default class Dashboard extends Component<Props> {
 
     return (
       <div id='dashboard'>
-        <SplitPane className={styles.navBarPane} split='horizontal' size={shouldPushTop ? '80px' : '40px'} allowResize={false}>
+        <SplitPane
+          paneStyle={{ transition: 'height 200ms ease-in-out' }}
+          split='horizontal'
+          size={shouldPushTop ? '80px' : '40px'}
+          allowResize={false}
+        >
           <div className={styles.navBar} style={{ marginTop: shouldPushTop ? '40px' : 0, position: 'relative', width: '100%' }}>
             <div className={styles.title}>
               <img src={logo} width='60px' />
