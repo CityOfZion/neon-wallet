@@ -39,7 +39,7 @@ export default class WalletInfo extends Component<Props> {
     const { showInfoNotification, showSuccessNotification, showErrorNotification, initiateGetBalance, net, address } = this.props
     showInfoNotification({ message: 'Refreshing...', dissmissible: false })
     initiateGetBalance(net, address).then((response) => {
-      showSuccessNotification({ message: 'Received latest blockchain information.', dissmissAfter: 1000 })
+      showSuccessNotification({ message: 'Received latest blockchain information.', dismissAfter: 1000 })
     }).catch(() => {
       showErrorNotification({ message: 'Failed to retrieve blockchain information' })
     })
