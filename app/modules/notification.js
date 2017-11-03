@@ -1,5 +1,5 @@
 // @flow
-import { omit } from 'lodash'
+import { omit, isNil } from 'lodash'
 import { NOTIFICATION_TYPES, NOTIFICATION_POSITIONS, DEFAULT_NOTIFICATION_TIMEOUT } from '../core/constants'
 
 let notificationTimeoutId
@@ -68,7 +68,7 @@ const getDefaultNotificationArgs = (args: NotificationArgsType, dispatch: Dispat
   return {
     isShown: state.isShown,
     dismissAfter: args.dismissAfter || state.dismissAfter,
-    dismissible: !!args.dismissible,
+    dismissible: !isNil(args.dismissible) ? args.dismissible : state.dismissible,
     dispatch
   }
 }
