@@ -54,7 +54,7 @@ export const loginNep2 = (passphrase: string, wif: string, history: Object) => (
   setTimeout(() => {
     try {
       decryptWIF(wif, passphrase).then((wif) => {
-        dispatch(hideNotification({ animate: false }))
+        dispatch(hideNotification(false))
         dispatch(login(wif))
         history.push(ROUTES.DASHBOARD)
       }).catch(() => {

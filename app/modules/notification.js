@@ -15,10 +15,6 @@ type NotificationArgsType = {
   onClick?: ?Function
 }
 
-type HideNotificationType = {
-  animate?: boolean
-}
-
 type ShowNotificationType = NotificationArgsType & {
   type: $Values<typeof NOTIFICATION_TYPES>,
 }
@@ -58,7 +54,7 @@ export function showNotification (args: ShowNotificationType) {
   }
 }
 
-export function hideNotification ({ animate = true }: HideNotificationType) {
+export function hideNotification (animate: boolean = true) {
   return {
     type: HIDE_NOTIFICATION,
     payload: {
@@ -72,7 +68,7 @@ const getDefaultNotificationArgs = (args: NotificationArgsType, dispatch: Dispat
   return {
     isShown: state.isShown,
     dismissAfter: args.dismissAfter || state.dismissAfter,
-    dismissible: args.dismissible || state.dismissible,
+    dismissible: !!args.dismissible,
     dispatch
   }
 }
