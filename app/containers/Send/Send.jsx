@@ -70,6 +70,7 @@ export default class Send extends Component<Props, State> {
         <div id='sendPane'>
           <div id='sendAddress'>
             <input
+              autoFocus
               type='text'
               placeholder='Where to send the asset (address)'
               value={sendAddress}
