@@ -65,7 +65,7 @@ export const doClaimNotify = () => (dispatch: DispatchType, getState: GetStateTy
     if (response.result) {
       dispatch(showSuccessNotification({
         message: 'Claim was successful! Your balance will update once the blockchain has processed it.',
-        dismissAfter: 300000
+        dismissAfter: 30000
       }))
     } else {
       dispatch(showErrorNotification({ message: 'Claim failed' }))
