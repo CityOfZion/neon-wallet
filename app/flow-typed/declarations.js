@@ -19,3 +19,12 @@ declare type NotificationType = {
     html: boolean,
     onClick: ?Function
 }
+declare type TransactionHistoryType = {
+    NEO: number,
+    GAS: number,
+    txid: number,
+    block_index: number,
+    neo_sent: number,
+    neo_gas: number
+  }
+  

@@ -1,4 +1,6 @@
 // @flow
+/* eslint-disable camelcase */
+
 import { ASSETS_LABELS, ASSETS } from '../core/constants'
 import { validateTransactionBeforeSending } from '../core/wallet'
 import { getTransactionHistory, doSendAsset, hardwareDoSendAsset } from 'neon-js'
@@ -15,20 +17,16 @@ export function toggleAsset () {
   }
 }
 
-export const syncTransactionHistory = (net: NetworkType, address: string) => (dispatch: DispatchType) => {
+export const syncTransactionHistory = (net: NetworkType, address: string) => (dispatch: DispatchType) =>
   getTransactionHistory(net, address).then((transactions) => {
-    let txs = []
-    for (let i = 0; i < transactions.length; i++) {
-      if (transactions[i].neo_sent === true) {
-        txs = txs.concat([{ type: ASSETS.NEO, amount: transactions[i].NEO, txid: transactions[i].txid, block_index: transactions[i].block_index }])
-      }
-      if (transactions[i].gas_sent === true) {
-        txs = txs.concat([{ type: ASSETS.GAS, amount: transactions[i].GAS, txid: transactions[i].txid, block_index: transactions[i].block_index }])
-      }
-    }
+    const txs = transactions.map(({ NEO, GAS, txid, block_index, neo_sent, neo_gas }: TransactionHistoryType) => ({
+      type: neo_sent ? ASSETS.NEO : ASSETS.GAS,
+      amount: neo_sent ? NEO : GAS,
+      txid,
+      block_index
+    }))
     dispatch(setTransactionHistory(txs))
   })
-}
 
 export const sendTransaction = (sendAddress: string, sendAmount: string) => (dispatch: DispatchType, getState: GetStateType): Promise<*> => {
   return new Promise((resolve, reject) => {
