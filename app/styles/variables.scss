@@ -19,3 +19,9 @@ $error-color: #FF3E3E;
 // page layout
 $page-width: 960px;
 $top-margin: 20px;
+$box-padding: 40px;
+$box-margin: 10px;
+
+// all z-index definitions should go here - make sure to leave a decent gap between them
+$z-index-tooltip: 1000;
+$z-index-notification: 1100;
