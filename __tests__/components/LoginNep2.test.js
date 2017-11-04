@@ -117,8 +117,7 @@ describe('LoginNep2', () => {
       }
     })
     expect(actions[1]).toEqual({
-      type: HIDE_NOTIFICATION,
-      payload: { animate: true }
+      type: HIDE_NOTIFICATION
     })
     done()
   })

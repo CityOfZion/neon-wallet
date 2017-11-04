@@ -11,15 +11,18 @@ type Props = {
 }
 
 const Notification = ({ notification, hideNotification }: Props) => {
-  const { isShown, message, type, width, position, title, html, onClick = noop } = notification
+  const { isShown, message, type, width, position, title, html, noAnimation, onClick = noop } = notification
   return (
-    <div className={classNames(styles.notification, styles[type.toLowerCase()], styles[position.toLowerCase()], { [styles.shown]: isShown })} style={{ width }} onClick={onClick}>
+    <div className={classNames(styles.notification, styles[type.toLowerCase()], styles[position.toLowerCase()], {
+      [styles.shown]: isShown,
+      [styles.noAnimation]: noAnimation
+    })} style={{ width }} onClick={onClick}>
       <div className={styles.content}>
         {title && <div className={styles.title}>{title}</div>}
         {html ? <div className={styles.message} dangerouslySetInnerHTML={{ __html: message }} /> : <div className={styles.message}>{message}</div>}
         <div className={styles.close} onClick={(e) => {
           e.stopPropagation()
-          hideNotification()
+          hideNotification({ noAnimation })
         }}><Close /></div>
       </div>
     </div>

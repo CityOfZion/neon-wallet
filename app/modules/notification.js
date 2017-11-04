@@ -12,7 +12,12 @@ type NotificationArgsType = {
   dismissible?: boolean,
   dismissAfter?: number,
   html?: boolean,
+  noAnimation?: boolean,
   onClick?: ?Function
+}
+
+type HideNotificationType = {
+  noAnimate?: boolean,
 }
 
 type ShowNotificationType = NotificationArgsType & {
@@ -21,20 +26,17 @@ type ShowNotificationType = NotificationArgsType & {
 
 type NotificationFactoryArgsType = ShowNotificationType & {
   dispatch: DispatchType,
-  isShown: boolean,
 }
 
 const notificationFactory = (args: NotificationFactoryArgsType) => {
   const {
     dispatch,
     dismissible,
-    dismissAfter,
-    isShown
+    dismissAfter
   } = args
 
-  clearTimeout(notificationTimeoutId)
-  if (isShown) {
-    dispatch(hideNotification(false))
+  if (notificationTimeoutId) {
+    clearTimeout(notificationTimeoutId)
   }
   const argsToRemove = ['dispatch', 'isShown', 'dismissible', 'dismissAfter']
   dispatch(showNotification(omit(args, argsToRemove)))
@@ -55,24 +57,18 @@ export function showNotification (args: ShowNotificationType) {
   }
 }
 
-export function hideNotification (animate: boolean = true) {
+export function hideNotification (args?: HideNotificationType) {
   return {
     type: HIDE_NOTIFICATION,
-    payload: {
-      animate
-    }
+    payload: args
   }
 }
 
-const getDefaultNotificationArgs = ({ dismissAfter, dismissible }: NotificationArgsType, dispatch: DispatchType, getState: GetStateType) => {
-  const state = getState().notification
-  return {
-    isShown: !!(state && state.isShown),
-    dismissAfter: isNil(dismissAfter) ? DEFAULT_NOTIFICATION_TIMEOUT : dismissAfter,
-    dismissible: isNil(dismissible) ? true : dismissible,
-    dispatch
-  }
-}
+const getDefaultNotificationArgs = ({ dismissAfter, dismissible }: NotificationArgsType, dispatch: DispatchType, getState: GetStateType) => ({
+  dismissAfter: isNil(dismissAfter) ? DEFAULT_NOTIFICATION_TIMEOUT : dismissAfter,
+  dismissible: isNil(dismissible) ? true : dismissible,
+  dispatch
+})
 
 export const showSuccessNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
   notificationFactory({
@@ -130,30 +126,23 @@ const initialState = {
   isShown: false,
   width: '100%',
   html: false,
-  onClick: null
+  onClick: null,
+  noAnimation: false
 }
 
-// reducer for wallet account balance
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case SHOW_NOTIFICATION:
       return {
-        ...state,
+        ...initialState,
         ...action.payload,
         isShown: true
       }
     case HIDE_NOTIFICATION:
-      if (action.payload.animate) {
-        return {
-          ...initialState,
-          message: state.message,
-          title: state.title,
-          position: state.position,
-          width: state.width
-        }
-      }
       return {
-        ...initialState
+        ...state,
+        ...action.payload,
+        isShown: false
       }
     default:
       return state

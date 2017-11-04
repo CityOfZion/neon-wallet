@@ -16,6 +16,7 @@ declare type NotificationType = {
     width: string,
     position: $Values<typeof NOTIFICATION_POSITIONS>,
     isShown: boolean,
+    noAnimation: boolean,
     html: boolean,
     onClick: ?Function
 }

@@ -102,10 +102,7 @@ describe('Send', () => {
       }
     })
     expect(actions[1]).toEqual({
-      type: HIDE_NOTIFICATION,
-      payload: {
-        animate: true
-      }
+      type: HIDE_NOTIFICATION
     })
     done()
   })
@@ -129,10 +126,7 @@ describe('Send', () => {
       }
     })
     expect(actions[1]).toEqual({
-      type: HIDE_NOTIFICATION,
-      payload: {
-        animate: true
-      }
+      type: HIDE_NOTIFICATION
     })
     done()
   })
@@ -156,10 +150,7 @@ describe('Send', () => {
       }
     })
     expect(actions[1]).toEqual({
-      type: HIDE_NOTIFICATION,
-      payload: {
-        animate: true
-      }
+      type: HIDE_NOTIFICATION
     })
     done()
   })
@@ -182,10 +173,7 @@ describe('Send', () => {
       }
     })
     expect(actions[1]).toEqual({
-      type: HIDE_NOTIFICATION,
-      payload: {
-        animate: true
-      }
+      type: HIDE_NOTIFICATION
     })
     done()
   })
@@ -209,10 +197,7 @@ describe('Send', () => {
       }
     })
     expect(actions[1]).toEqual({
-      type: HIDE_NOTIFICATION,
-      payload: {
-        animate: true
-      }
+      type: HIDE_NOTIFICATION
     })
     done()
   })
@@ -236,10 +221,7 @@ describe('Send', () => {
       }
     })
     expect(actions[1]).toEqual({
-      type: HIDE_NOTIFICATION,
-      payload: {
-        animate: true
-      }
+      type: HIDE_NOTIFICATION
     })
     done()
   })
@@ -281,10 +263,7 @@ describe('Send', () => {
       }
     })
     expect(actions[1]).toEqual({
-      type: HIDE_NOTIFICATION,
-      payload: {
-        animate: true
-      }
+      type: HIDE_NOTIFICATION
     })
     done()
   })
@@ -334,10 +313,7 @@ describe('Send', () => {
         }
       })
       expect(actions[2]).toEqual({
-        type: HIDE_NOTIFICATION,
-        payload: {
-          animate: true
-        }
+        type: HIDE_NOTIFICATION
       })
       done()
     }).catch(e => done.fail(e))

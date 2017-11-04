@@ -127,7 +127,6 @@ const initialState = {
   signingFunction: () => ({})
 }
 
-// Reducer for managing claims data
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case SET_CLAIM_REQUEST:

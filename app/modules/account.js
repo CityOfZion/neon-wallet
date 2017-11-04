@@ -54,7 +54,7 @@ export const loginNep2 = (passphrase: string, wif: string, history: Object) => (
   setTimeout(() => {
     try {
       decryptWIF(wif, passphrase).then((wif) => {
-        dispatch(hideNotification(false))
+        dispatch(hideNotification({ noAnimation: true }))
         dispatch(login(wif))
         history.push(ROUTES.DASHBOARD)
       }).catch(() => {
@@ -155,7 +155,6 @@ const initialState = {
   hardwarePublicKeyInfo: null
 }
 
-// Reducer that manages account state (account now = private key)
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case LOGIN:

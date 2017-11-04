@@ -66,7 +66,7 @@ export const generateWalletFromWif = (passphrase: string, passphrase2: string, w
       setTimeout(() => {
         try {
           encryptWifAccount(wif, passphrase).then((result) => {
-            dispatch(hideNotification(false))
+            dispatch(hideNotification({ noAnimation: true }))
             dispatch(newWallet(result))
             resolve()
           })
@@ -94,7 +94,7 @@ export const generateNewWallet = (passphrase: string, passphrase2: string) => (d
       setTimeout(() => {
         try {
           generateEncryptedWif(passphrase).then((result) => {
-            dispatch(hideNotification(false))
+            dispatch(hideNotification({ noAnimation: true }))
             dispatch(newWallet(result))
             // dispatch(showSuccessNotification({ message: 'Wallet created successfully' }))
             resolve()
@@ -117,7 +117,6 @@ const initialState = {
   generating: false
 }
 
-// Reducer used for state necessary to generating a wallet
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case NEW_WALLET_KEYS:

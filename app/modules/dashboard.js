@@ -16,7 +16,6 @@ const initialState = {
   confirmPane: true
 }
 
-// reducer for UI state
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case TOGGLE_SEND_PANE:
