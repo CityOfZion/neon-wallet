@@ -1,7 +1,7 @@
 // @flow
 import storage from 'electron-json-storage'
 import { generateEncryptedWif, getAccountFromWIFKey, generatePrivateKey, getWIFFromPrivateKey, encryptWIF, encryptWifAccount } from 'neon-js'
-import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notification'
+import { showErrorNotification, showInfoNotification, hideNotification } from './notification'
 import { validatePassphrase, checkMatchingPassphrases } from '../core/wallet'
 
 // Constants
@@ -66,8 +66,8 @@ export const generateWalletFromWif = (passphrase: string, passphrase2: string, w
       setTimeout(() => {
         try {
           encryptWifAccount(wif, passphrase).then((result) => {
+            dispatch(hideNotification(false))
             dispatch(newWallet(result))
-            dispatch(showSuccessNotification({ message: 'Wallet encrypted successfully' }))
             resolve()
           })
         } catch (e) {
@@ -94,8 +94,9 @@ export const generateNewWallet = (passphrase: string, passphrase2: string) => (d
       setTimeout(() => {
         try {
           generateEncryptedWif(passphrase).then((result) => {
+            dispatch(hideNotification(false))
             dispatch(newWallet(result))
-            dispatch(showSuccessNotification({ message: 'Wallet created successfully' }))
+            // dispatch(showSuccessNotification({ message: 'Wallet created successfully' }))
             resolve()
           })
         } catch (e) {
