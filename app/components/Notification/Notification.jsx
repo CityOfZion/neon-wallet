@@ -9,7 +9,7 @@ type Props = {
   notification: NotificationType,
   hideNotification: Function
 }
-console.log(styles)
+
 const Notification = ({ notification, hideNotification }: Props) => {
   const { isShown, message, type, width, position, title, html, onClick = noop } = notification
   return (
