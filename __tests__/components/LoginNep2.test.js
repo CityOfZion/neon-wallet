@@ -7,7 +7,7 @@ import { shallow, mount } from 'enzyme'
 import { createMemoryHistory } from 'history'
 import LoginNep2 from '../../app/containers/LoginNep2'
 import { decryptWIF } from 'neon-js'
-import { SEND_TRANSACTION, CLEAR_TRANSACTION } from '../../app/modules/transactions'
+import { SHOW_NOTIFICATION, HIDE_NOTIFICATION } from '../../app/modules/notification'
 import { LOGIN } from '../../app/modules/account'
 
 jest.useFakeTimers()
@@ -93,7 +93,6 @@ describe('LoginNep2', () => {
   //   })
   // })
   test('the login button is working correctly with key and passphrase', (done) => {
-    const response = Promise.resolve('pause')
     const { wrapper, store } = setup(false)
 
     const passwordField = wrapper.find('input[placeholder="Enter your passphrase here"]')
@@ -106,24 +105,21 @@ describe('LoginNep2', () => {
 
     wrapper.find('.loginButton').simulate('click')
     jest.runAllTimers()
-    response.then(() => {
-      const actions = store.getActions()
-      expect(actions.length).toEqual(3)
-      expect(decryptWIF.mock.calls.length).toBe(1)
-      expect(decryptWIF.mock.calls[0][0]).toBe('6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu')
-      expect(actions[0]).toEqual({
-        type: SEND_TRANSACTION,
-        success: true,
-        message: 'Decrypting encoded key...'
-      })
-      expect(actions[1]).toEqual({
-        type: LOGIN,
-        wif: 'L4AJ14CNaBWPemRJKC34wyZwbmxg33GETs4Y1F8uK7rRmZ2UHrJn'
-      })
-      expect(actions[2]).toEqual({
-        type: CLEAR_TRANSACTION
-      })
-      done()
+    const actions = store.getActions()
+    expect(actions.length).toEqual(2)
+    expect(decryptWIF.mock.calls.length).toBe(1)
+    expect(decryptWIF.mock.calls[0][0]).toBe('6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu')
+    expect(actions[0]).toEqual({
+      type: SHOW_NOTIFICATION,
+      payload: {
+        message: 'Decrypting encoded key...',
+        type: 'INFO'
+      }
     })
+    expect(actions[1]).toEqual({
+      type: HIDE_NOTIFICATION,
+      payload: { animate: true }
+    })
+    done()
   })
 })
