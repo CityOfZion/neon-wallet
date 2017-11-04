@@ -106,12 +106,14 @@ export default class Settings extends Component<Props, State> {
 
   deleteWallet = (key: string) => {
     const { setKeys } = this.props
-    // eslint-disable-next-line
-    storage.get('keys', (error, data) => {
-      delete data[key]
-      storage.set('keys', data)
-      setKeys(data)
-    })
+    if (window.confirm(`Please confirm deleting saved wallet - ${key}`)) {
+      // eslint-disable-next-line
+      storage.get('keys', (error, data) => {
+        delete data[key]
+        storage.set('keys', data)
+        setKeys(data)
+      })
+    }
   }
 
   render () {
