@@ -82,8 +82,6 @@ export const sendTransaction = (sendAddress: string, sendAmount: string) => (dis
 }
 
 const initialState = {
-  success: null,
-  message: null,
   selectedAsset: ASSETS_LABELS.NEO
 }
 
@@ -93,7 +91,6 @@ export default (state: Object = initialState, action: Object) => {
     case TOGGLE_ASSET:
       return {
         ...state,
-        success: null,
         selectedAsset: state.selectedAsset === ASSETS_LABELS.NEO ? ASSETS_LABELS.GAS : ASSETS_LABELS.NEO
       }
     default:

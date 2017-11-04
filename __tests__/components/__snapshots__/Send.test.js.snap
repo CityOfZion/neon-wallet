@@ -2,13 +2,12 @@
 
 exports[`Send renders without crashing 1`] = `
 <Send
-  clearTransactionEvent={[Function]}
   confirmPane={true}
   gas={1}
   neo={5}
   selectedAsset="Neo"
-  sendEvent={[Function]}
   sendTransaction={[Function]}
+  showErrorNotification={[Function]}
   store={
     Object {
       "clearActions": [Function],

@@ -2,9 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Logout from '../../app/components/Logout'
 import { logout } from '../../app/modules/account'
-
-const state = {}
-
+//
 describe('Logout', () => {
   const logout = jest.fn()
   test('should render without crashing', () => {

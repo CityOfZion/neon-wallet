@@ -7,7 +7,7 @@ import { shallow, mount } from 'enzyme'
 import Claim from '../../app/containers/Claim'
 import * as neonjs from 'neon-js'
 import { setClaimRequest, disableClaim } from '../../app/modules/claim'
-import { sendEvent } from '../../app/modules/transactions'
+import { showInfoNotification, showErrorNotification } from '../../app/modules/notification'
 
 const initialState = {
   claim: {
@@ -80,8 +80,8 @@ describe('Claim', () => {
       response.then(() => {
         const actions = store.getActions()
         expect(actions.length).toEqual(2)
-        expect(actions[0]).toEqual(sendEvent(true, 'Sending Neo to Yourself...'))
-        expect(actions[1]).toEqual(sendEvent(false, 'Transaction failed!'))
+        expect(actions[0]).toEqual(showInfoNotification({ message: 'Sending Neo to Yourself...', dismissible: false }))
+        expect(actions[1]).toEqual(showErrorNotification({ message: 'Transaction failed!' }))
         done()
       })
     })
@@ -100,8 +100,8 @@ describe('Claim', () => {
       response.then(() => {
         const actions = store.getActions()
         expect(actions.length).toEqual(4)
-        expect(actions[0]).toEqual(sendEvent(true, 'Sending Neo to Yourself...'))
-        expect(actions[1]).toEqual(sendEvent(true, 'Waiting for transaction to clear...'))
+        expect(actions[0]).toEqual(showInfoNotification({ message: 'Sending Neo to Yourself...', dismissible: false }))
+        expect(actions[1]).toEqual(showInfoNotification({ message: 'Waiting for transaction to clear...', dismissible: false }))
         expect(actions[2]).toEqual(setClaimRequest(true))
         expect(actions[3]).toEqual(disableClaim(true))
         done()
@@ -129,7 +129,7 @@ describe('Claim', () => {
   //       const actions = store.getActions()
   //       expect(actions.length).toEqual(2)
   //       expect(actions[0]).toEqual(setClaimRequest(false))
-  //       expect(actions[1]).toEqual(sendEvent(true, 'Claim was successful! Your balance will update once the blockchain has processed it.'))
+  //       expect(actions[1]).toEqual(showSuccessNotification({ message: 'Claim was successful! Your balance will update once the blockchain has processed it.', dismissAfter: 300000 }}))
   //       done()
   //     })
   //   })
@@ -149,7 +149,7 @@ describe('Claim', () => {
   //       const actions = store.getActions()
   //       expect(actions.length).toEqual(2)
   //       expect(actions[0]).toEqual(setClaimRequest(false))
-  //       expect(actions[1]).toEqual(sendEvent(false, 'Claim failed'))
+  //       expect(actions[1]).toEqual(showErrorNotification({ message: 'Claim failed' }))
   //       done()
   //     })
   //   })

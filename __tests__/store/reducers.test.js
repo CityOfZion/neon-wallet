@@ -9,6 +9,7 @@ describe('root reducer', () => {
       transactions: expect.any(Object),
       dashboard: expect.any(Object),
       metadata: expect.any(Object),
+      notification: expect.any(Object),
       claim: expect.any(Object),
       rpx: expect.any(Object)
     })

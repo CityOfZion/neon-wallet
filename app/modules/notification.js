@@ -36,7 +36,7 @@ const notificationFactory = (args: NotificationFactoryArgsType) => {
   if (isShown) {
     dispatch(hideNotification(false))
   }
-  dispatch(showNotification(omit(args, ['dispatch', 'isShown'])))
+  dispatch(showNotification(omit(args, ['dispatch', 'isShown', !dismissible && 'dismissAfter'])))
   if (dismissible) {
     notificationTimeoutId = setTimeout(() => dispatch(hideNotification()), dismissAfter)
   }
@@ -66,7 +66,7 @@ export function hideNotification (animate: boolean = true) {
 const getDefaultNotificationArgs = ({ dismissAfter, dismissible }: NotificationArgsType, dispatch: DispatchType, getState: GetStateType) => {
   const state = getState().notification
   return {
-    isShown: state.isShown,
+    isShown: !!(state && state.isShown),
     dismissAfter: isNil(dismissAfter) ? DEFAULT_NOTIFICATION_TIMEOUT : dismissAfter,
     dismissible: isNil(dismissible) ? true : dismissible,
     dispatch

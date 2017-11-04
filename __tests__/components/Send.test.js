@@ -4,7 +4,8 @@ import thunk from 'redux-thunk'
 import configureStore from 'redux-mock-store'
 import { shallow, mount } from 'enzyme'
 import { TOGGLE_SEND_PANE } from '../../app/modules/dashboard'
-import { CLEAR_TRANSACTION, SEND_TRANSACTION, TOGGLE_ASSET } from '../../app/modules/transactions'
+import { TOGGLE_ASSET } from '../../app/modules/transactions'
+import { SHOW_NOTIFICATION, HIDE_NOTIFICATION } from '../../app/modules/notification'
 import Send from '../../app/containers/Send'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
@@ -94,12 +95,19 @@ describe('Send', () => {
     const actions = store.getActions()
     expect(actions.length === 2).toEqual(true)
     expect(actions[0]).toEqual({
-      type: SEND_TRANSACTION,
-      success: false,
-      message: 'Please specify an address and amount'
+      type: SHOW_NOTIFICATION,
+      payload: {
+        dismissAfter: 5000,
+        dismissible: true,
+        message: 'Please specify an address and amount',
+        type: 'ERROR'
+      }
     })
     expect(actions[1]).toEqual({
-      type: CLEAR_TRANSACTION
+      type: HIDE_NOTIFICATION,
+      payload: {
+        animate: true
+      }
     })
     done()
   })
@@ -116,12 +124,19 @@ describe('Send', () => {
     const actions = store.getActions()
     expect(actions.length === 2).toEqual(true)
     expect(actions[0]).toEqual({
-      type: SEND_TRANSACTION,
-      success: false,
-      message: 'The address you entered was not valid.'
+      type: SHOW_NOTIFICATION,
+      payload: {
+        dismissAfter: 5000,
+        dismissible: true,
+        message: 'The address you entered was not valid.',
+        type: 'ERROR'
+      }
     })
     expect(actions[1]).toEqual({
-      type: CLEAR_TRANSACTION
+      type: HIDE_NOTIFICATION,
+      payload: {
+        animate: true
+      }
     })
     done()
   })
@@ -138,12 +153,19 @@ describe('Send', () => {
     const actions = store.getActions()
     expect(actions.length === 2).toEqual(true)
     expect(actions[0]).toEqual({
-      type: SEND_TRANSACTION,
-      success: false,
-      message: 'You cannot send fractional amounts of Neo.'
+      type: SHOW_NOTIFICATION,
+      payload: {
+        dismissAfter: 5000,
+        dismissible: true,
+        message: 'You cannot send fractional amounts of Neo.',
+        type: 'ERROR'
+      }
     })
     expect(actions[1]).toEqual({
-      type: CLEAR_TRANSACTION
+      type: HIDE_NOTIFICATION,
+      payload: {
+        animate: true
+      }
     })
     done()
   })
@@ -159,12 +181,19 @@ describe('Send', () => {
     const actions = store.getActions()
     expect(actions.length === 2).toEqual(true)
     expect(actions[0]).toEqual({
-      type: SEND_TRANSACTION,
-      success: false,
-      message: 'Please specify an address and amount'
+      type: SHOW_NOTIFICATION,
+      payload: {
+        dismissAfter: 5000,
+        dismissible: true,
+        message: 'Please specify an address and amount',
+        type: 'ERROR'
+      }
     })
     expect(actions[1]).toEqual({
-      type: CLEAR_TRANSACTION
+      type: HIDE_NOTIFICATION,
+      payload: {
+        animate: true
+      }
     })
     done()
   })
@@ -181,12 +210,19 @@ describe('Send', () => {
     const actions = store.getActions()
     expect(actions.length === 2).toEqual(true)
     expect(actions[0]).toEqual({
-      type: SEND_TRANSACTION,
-      success: false,
-      message: 'You do not have enough NEO to send.'
+      type: SHOW_NOTIFICATION,
+      payload: {
+        dismissAfter: 5000,
+        dismissible: true,
+        message: 'You do not have enough NEO to send.',
+        type: 'ERROR'
+      }
     })
     expect(actions[1]).toEqual({
-      type: CLEAR_TRANSACTION
+      type: HIDE_NOTIFICATION,
+      payload: {
+        animate: true
+      }
     })
     done()
   })
@@ -203,12 +239,19 @@ describe('Send', () => {
     const actions = store.getActions()
     expect(actions.length === 2).toEqual(true)
     expect(actions[0]).toEqual({
-      type: SEND_TRANSACTION,
-      success: false,
-      message: 'You cannot send negative amounts of an asset.'
+      type: SHOW_NOTIFICATION,
+      payload: {
+        dismissAfter: 5000,
+        dismissible: true,
+        message: 'You cannot send negative amounts of an asset.',
+        type: 'ERROR'
+      }
     })
     expect(actions[1]).toEqual({
-      type: CLEAR_TRANSACTION
+      type: HIDE_NOTIFICATION,
+      payload: {
+        animate: true
+      }
     })
     done()
   })
@@ -243,12 +286,19 @@ describe('Send', () => {
     const actions = store.getActions()
     expect(actions.length === 2).toEqual(true)
     expect(actions[0]).toEqual({
-      type: SEND_TRANSACTION,
-      success: false,
-      message: 'You do not have enough GAS to send.'
+      type: SHOW_NOTIFICATION,
+      payload: {
+        dismissAfter: 5000,
+        dismissible: true,
+        message: 'You do not have enough GAS to send.',
+        type: 'ERROR'
+      }
     })
     expect(actions[1]).toEqual({
-      type: CLEAR_TRANSACTION
+      type: HIDE_NOTIFICATION,
+      payload: {
+        animate: true
+      }
     })
     done()
   })
@@ -284,17 +334,27 @@ describe('Send', () => {
       const actions = store.getActions()
       expect(actions.length).toEqual(3)
       expect(actions[0]).toEqual({
-        type: SEND_TRANSACTION,
-        success: true,
-        message: 'Processing...'
+        type: SHOW_NOTIFICATION,
+        payload: {
+          dismissible: false,
+          message: 'Processing...',
+          type: 'INFO'
+        }
       })
       expect(actions[1]).toEqual({
-        type: SEND_TRANSACTION,
-        success: true,
-        message: 'Transaction complete! Your balance will automatically update when the blockchain has processed it.'
+        type: SHOW_NOTIFICATION,
+        payload: {
+          dismissible: true,
+          dismissAfter: 5000,
+          message: 'Transaction complete! Your balance will automatically update when the blockchain has processed it.',
+          type: 'SUCCESS'
+        }
       })
       expect(actions[2]).toEqual({
-        type: CLEAR_TRANSACTION
+        type: HIDE_NOTIFICATION,
+        payload: {
+          animate: true
+        }
       })
       done()
     }).catch(e => done.fail(e))
