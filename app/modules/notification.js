@@ -34,7 +34,7 @@ const notificationFactory = (args: NotificationFactoryArgsType) => {
 
   clearTimeout(notificationTimeoutId)
   if (isShown) {
-    dispatch(hideNotification())
+    dispatch(hideNotification(false))
   }
   dispatch(showNotification(omit(args, ['dispatch', 'isShown'])))
   if (dismissible) {
@@ -124,7 +124,7 @@ export const showStickyInfoNotification = (args: NotificationArgsType) => (dispa
 const initialState = {
   title: '',
   message: '',
-  type: NOTIFICATION_POSITIONS.INFO,
+  type: NOTIFICATION_TYPES.INFO,
   position: NOTIFICATION_POSITIONS.TOP,
   isShown: false,
   width: '100%',
