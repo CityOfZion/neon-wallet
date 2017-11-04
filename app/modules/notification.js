@@ -63,12 +63,12 @@ export function hideNotification (animate: boolean = true) {
   }
 }
 
-const getDefaultNotificationArgs = (args: NotificationArgsType, dispatch: DispatchType, getState: GetStateType) => {
+const getDefaultNotificationArgs = ({ dismissAfter, dismissible }: NotificationArgsType, dispatch: DispatchType, getState: GetStateType) => {
   const state = getState().notification
   return {
     isShown: state.isShown,
-    dismissAfter: args.dismissAfter || state.dismissAfter,
-    dismissible: !isNil(args.dismissible) ? args.dismissible : state.dismissible,
+    dismissAfter: isNil(dismissAfter) ? DEFAULT_NOTIFICATION_TIMEOUT : dismissAfter,
+    dismissible: isNil(dismissible) ? true : dismissible,
     dispatch
   }
 }
@@ -124,11 +124,9 @@ export const showStickyInfoNotification = (args: NotificationArgsType) => (dispa
 const initialState = {
   title: '',
   message: '',
-  type: '',
-  isShown: false,
-  dismissible: true,
-  dismissAfter: DEFAULT_NOTIFICATION_TIMEOUT,
+  type: NOTIFICATION_POSITIONS.INFO,
   position: NOTIFICATION_POSITIONS.TOP,
+  isShown: false,
   width: '100%',
   html: false,
   onClick: null
@@ -150,8 +148,7 @@ export default (state: Object = initialState, action: Object) => {
           message: state.message,
           title: state.title,
           position: state.position,
-          width: state.width,
-          isShown: false
+          width: state.width
         }
       }
       return {
