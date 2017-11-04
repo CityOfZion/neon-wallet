@@ -22,7 +22,10 @@ export default (state: Object = initialState, action: Object) => {
     case TOGGLE_SEND_PANE:
       let newState = {}
       newState[action.pane] = !state[action.pane]
-      return { ...state, ...newState }
+      return {
+        ...state,
+        ...newState
+      }
     default:
       return state
   }
