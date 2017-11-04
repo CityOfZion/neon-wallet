@@ -64,7 +64,6 @@ const initialState = {
   blockExplorer: EXPLORER.NEO_TRACKER
 }
 
-// reducer for metadata associated with Neon
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case SET_HEIGHT:

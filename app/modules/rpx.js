@@ -79,7 +79,6 @@ const initialState = {
   RPX: 0
 }
 
-// reducer for wallet account balance
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case UPDATE_RPX_BALANCE:

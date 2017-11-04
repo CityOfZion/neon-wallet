@@ -85,7 +85,6 @@ const initialState = {
   selectedAsset: ASSETS_LABELS.NEO
 }
 
-// Reducer for state used when performing a transaction
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case TOGGLE_ASSET:
