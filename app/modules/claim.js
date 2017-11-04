@@ -65,9 +65,9 @@ export const doClaimNotify = () => (dispatch: DispatchType, getState: GetStateTy
   claimGasFn().then((response) => {
     if (response.result) {
       dispatch(showSuccessNotification({
-        message: 'Claim was successful! Your balance will update once the blockchain has processed it.',
-        dismissAfter: FIVE_MINUTES_MS
+        message: 'Claim was successful! Your balance will update once the blockchain has processed it.'
       }))
+      setTimeout(() => dispatch(disableClaim(false)), FIVE_MINUTES_MS)
     } else {
       dispatch(showErrorNotification({ message: 'Claim failed' }))
     }
