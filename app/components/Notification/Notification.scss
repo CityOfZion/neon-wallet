@@ -9,6 +9,7 @@
 	box-sizing: border-box;
 	opacity: 0;
 	transition: opacity ease-in-out 150ms;
+	pointer-events: none;
 
 	&.top {
 		top: 0
@@ -21,6 +22,7 @@
 	&.shown {
 		opacity: 1;
 		z-index: $z-index-notification;
+		pointer-events: auto;
 	}
 
 	.content {
