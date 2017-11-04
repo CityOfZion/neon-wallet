@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>ICON_Facebook</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="97.8794643%" y1="2.12053571%" x2="0%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#4598FF" offset="0%"></stop>
+            <stop stop-color="#2A43C1" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="NEON_Site_Desktop" transform="translate(-1005.000000, -754.000000)">
+            <g id="PNL_Footer" transform="translate(0.000000, 695.000000)">
+                <g id="JOIN-US" transform="translate(929.000000, 29.000000)">
+                    <g id="COZ" transform="translate(1.000000, 30.000000)">
+                        <g id="ICON_Facebook" transform="translate(75.000000, 0.000000)">
+                            <circle id="Purple-gradient-circle" fill="url(#linearGradient-1)" cx="13" cy="13" r="13"></circle>
+                            <g id="Icon" transform="translate(6.000000, 7.000000)" fill="#FFFFFF">
+                                <polygon id="Fill-22" points="14 8.5 12.333387 10 9 10 12.333387 7"></polygon>
+                                <polygon id="Fill-24" points="11 5.27358446 9.39132114 3.54716891 11 1.82058669 9.25008447 0.094171151 7.5 1.82058669 5.84536854 0 4 1.82058669 9.25008447 7"></polygon>
+                                <polygon id="Fill-26" points="1.74995776 3 7 8.39996525 3.49991553 12 0 12 3.49991553 8.39996525 0 4.79993049"></polygon>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
