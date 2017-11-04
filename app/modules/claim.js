@@ -3,6 +3,7 @@ import { doClaimAllGas, doSendAsset, getClaimAmounts, hardwareDoSendAsset, hardw
 import { log } from '../util/Logs'
 import { ASSETS } from '../core/constants'
 import { showErrorNotification, showSuccessNotification, showInfoNotification } from './notification'
+import { FIVE_MINUTES_MS } from '../core/time'
 
 // Constants
 export const SET_CLAIM = 'SET_CLAIM'
@@ -65,7 +66,7 @@ export const doClaimNotify = () => (dispatch: DispatchType, getState: GetStateTy
     if (response.result) {
       dispatch(showSuccessNotification({
         message: 'Claim was successful! Your balance will update once the blockchain has processed it.',
-        dismissAfter: 30000
+        dismissAfter: FIVE_MINUTES_MS
       }))
     } else {
       dispatch(showErrorNotification({ message: 'Claim failed' }))

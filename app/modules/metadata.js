@@ -5,6 +5,7 @@ import { version } from '../../package.json'
 import { showWarningNotification } from './notification'
 import { NETWORK, EXPLORER, NEON_WALLET_RELEASE_LINK } from '../core/constants'
 import { openExternal } from '../core/electron'
+import { FIVE_MINUTES_MS } from '../core/time'
 
 // Constants
 export const SET_HEIGHT = 'SET_HEIGHT'
@@ -44,7 +45,7 @@ export const checkVersion = () => (dispatch: DispatchType, getState: GetStateTyp
     if (shouldUpdate) {
       dispatch(showWarningNotification({
         message: `Your wallet is out of date! Please download the latest version from ${NEON_WALLET_RELEASE_LINK}`,
-        dismissAfter: 30000,
+        dismissAfter: FIVE_MINUTES_MS,
         onClick: () => openExternal(NEON_WALLET_RELEASE_LINK)
       }))
     }
