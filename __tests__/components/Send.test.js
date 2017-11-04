@@ -97,8 +97,6 @@ describe('Send', () => {
     expect(actions[0]).toEqual({
       type: SHOW_NOTIFICATION,
       payload: {
-        dismissAfter: 5000,
-        dismissible: true,
         message: 'Please specify an address and amount',
         type: 'ERROR'
       }
@@ -126,8 +124,6 @@ describe('Send', () => {
     expect(actions[0]).toEqual({
       type: SHOW_NOTIFICATION,
       payload: {
-        dismissAfter: 5000,
-        dismissible: true,
         message: 'The address you entered was not valid.',
         type: 'ERROR'
       }
@@ -155,8 +151,6 @@ describe('Send', () => {
     expect(actions[0]).toEqual({
       type: SHOW_NOTIFICATION,
       payload: {
-        dismissAfter: 5000,
-        dismissible: true,
         message: 'You cannot send fractional amounts of Neo.',
         type: 'ERROR'
       }
@@ -183,8 +177,6 @@ describe('Send', () => {
     expect(actions[0]).toEqual({
       type: SHOW_NOTIFICATION,
       payload: {
-        dismissAfter: 5000,
-        dismissible: true,
         message: 'Please specify an address and amount',
         type: 'ERROR'
       }
@@ -212,8 +204,6 @@ describe('Send', () => {
     expect(actions[0]).toEqual({
       type: SHOW_NOTIFICATION,
       payload: {
-        dismissAfter: 5000,
-        dismissible: true,
         message: 'You do not have enough NEO to send.',
         type: 'ERROR'
       }
@@ -241,8 +231,6 @@ describe('Send', () => {
     expect(actions[0]).toEqual({
       type: SHOW_NOTIFICATION,
       payload: {
-        dismissAfter: 5000,
-        dismissible: true,
         message: 'You cannot send negative amounts of an asset.',
         type: 'ERROR'
       }
@@ -288,8 +276,6 @@ describe('Send', () => {
     expect(actions[0]).toEqual({
       type: SHOW_NOTIFICATION,
       payload: {
-        dismissAfter: 5000,
-        dismissible: true,
         message: 'You do not have enough GAS to send.',
         type: 'ERROR'
       }
@@ -336,7 +322,6 @@ describe('Send', () => {
       expect(actions[0]).toEqual({
         type: SHOW_NOTIFICATION,
         payload: {
-          dismissible: false,
           message: 'Processing...',
           type: 'INFO'
         }
@@ -344,8 +329,6 @@ describe('Send', () => {
       expect(actions[1]).toEqual({
         type: SHOW_NOTIFICATION,
         payload: {
-          dismissible: true,
-          dismissAfter: 5000,
           message: 'Transaction complete! Your balance will automatically update when the blockchain has processed it.',
           type: 'SUCCESS'
         }

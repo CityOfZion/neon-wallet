@@ -36,7 +36,8 @@ const notificationFactory = (args: NotificationFactoryArgsType) => {
   if (isShown) {
     dispatch(hideNotification(false))
   }
-  dispatch(showNotification(omit(args, ['dispatch', 'isShown', !dismissible && 'dismissAfter'])))
+  const argsToRemove = ['dispatch', 'isShown', 'dismissible', 'dismissAfter']
+  dispatch(showNotification(omit(args, argsToRemove)))
   if (dismissible) {
     notificationTimeoutId = setTimeout(() => dispatch(hideNotification()), dismissAfter)
   }

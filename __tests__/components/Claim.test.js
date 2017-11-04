@@ -7,7 +7,7 @@ import { shallow, mount } from 'enzyme'
 import Claim from '../../app/containers/Claim'
 import * as neonjs from 'neon-js'
 import { setClaimRequest, disableClaim } from '../../app/modules/claim'
-import { showInfoNotification, showErrorNotification } from '../../app/modules/notification'
+import { showInfoNotification, showErrorNotification, showSuccessNotification } from '../../app/modules/notification'
 
 const initialState = {
   claim: {
@@ -109,49 +109,49 @@ describe('Claim', () => {
     })
   })
 
-  // describe('when claim is requested and updated', () => {
-  //   const newState = cloneDeep(initialState)
-  //   newState.claim.claimRequest = true
-  //   newState.claim.claimWasUpdated = true
-  //   newState.dispatch = jest.fn()
-  //
-  //   test('should dispatch false claim request and claim successful event', (done) => {
-  //     const { wrapper, store } = setup(newState, false)
-  //     const response = Promise.resolve('pause')
-  //     neonjs.doClaimAllGas = jest.fn(() => {
-  //       return new Promise((resolve, reject) => {
-  //         resolve({ result: true })
-  //       })
-  //     })
-  //     wrapper.setProps({ target: '' })
-  //
-  //     response.then(() => {
-  //       const actions = store.getActions()
-  //       expect(actions.length).toEqual(2)
-  //       expect(actions[0]).toEqual(setClaimRequest(false))
-  //       expect(actions[1]).toEqual(showSuccessNotification({ message: 'Claim was successful! Your balance will update once the blockchain has processed it.', dismissAfter: 300000 }}))
-  //       done()
-  //     })
-  //   })
-  //
-  //   test('should dispatch false claim request and claim failure event', (done) => {
-  //     const { wrapper, store } = setup(newState, false)
-  //     const response = Promise.resolve('pause')
-  //     neonjs.doClaimAllGas = jest.fn(() => {
-  //       return new Promise((resolve, reject) => {
-  //         resolve({ result: false })
-  //       })
-  //     })
-  //     wrapper.setProps({ target: '' })
-  //
-  //     response.then(() => {
-  //       jest.runAllTimers()
-  //       const actions = store.getActions()
-  //       expect(actions.length).toEqual(2)
-  //       expect(actions[0]).toEqual(setClaimRequest(false))
-  //       expect(actions[1]).toEqual(showErrorNotification({ message: 'Claim failed' }))
-  //       done()
-  //     })
-  //   })
-  // })
+  describe('when claim is requested and updated', () => {
+    const newState = cloneDeep(initialState)
+    newState.claim.claimRequest = true
+    newState.claim.claimWasUpdated = true
+    newState.dispatch = jest.fn()
+
+    test('should dispatch false claim request and claim successful event', (done) => {
+      const { wrapper, store } = setup(newState, false)
+      const response = Promise.resolve('pause')
+      neonjs.doClaimAllGas = jest.fn(() => {
+        return new Promise((resolve, reject) => {
+          resolve({ result: true })
+        })
+      })
+      wrapper.setProps({ target: '' })
+
+      response.then(() => {
+        const actions = store.getActions()
+        expect(actions.length).toEqual(2)
+        expect(actions[0]).toEqual(setClaimRequest(false))
+        expect(actions[1]).toEqual(showSuccessNotification({ message: 'Claim was successful! Your balance will update once the blockchain has processed it.' }))
+        done()
+      })
+    })
+
+    test('should dispatch false claim request and claim failure event', (done) => {
+      const { wrapper, store } = setup(newState, false)
+      const response = Promise.resolve('pause')
+      neonjs.doClaimAllGas = jest.fn(() => {
+        return new Promise((resolve, reject) => {
+          resolve({ result: false })
+        })
+      })
+      wrapper.setProps({ target: '' })
+
+      response.then(() => {
+        jest.runAllTimers()
+        const actions = store.getActions()
+        expect(actions.length).toEqual(2)
+        expect(actions[0]).toEqual(setClaimRequest(false))
+        expect(actions[1]).toEqual(showErrorNotification({ message: 'Claim failed' }))
+        done()
+      })
+    })
+  })
 })
