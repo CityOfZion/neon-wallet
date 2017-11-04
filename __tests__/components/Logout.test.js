@@ -13,7 +13,7 @@ describe('Logout', () => {
   test('should dispatch logout action when clicked', () => {
     const wrapper = shallow(<Logout logout={logout} />)
     expect(logout.mock.calls.length).toEqual(0)
-    wrapper.find('#logout').simulate('click')
+    wrapper.find('.logout').simulate('click')
     expect(logout.mock.calls.length).toEqual(1)
   })
 })
