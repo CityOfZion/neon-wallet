@@ -131,7 +131,10 @@ const initialState = {
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case SET_CLAIM_REQUEST:
-      return { ...state, 'claimRequest': action.status }
+      return {
+        ...state,
+        claimRequest: action.status
+      }
     case SET_CLAIM:
       let claimWasUpdated = false
       if (action.available > state.claimAvailable && state.claimRequest === true) {
@@ -145,7 +148,10 @@ export default (state: Object = initialState, action: Object) => {
         claimWasUpdated
       }
     case DISABLE_CLAIM:
-      return { ...state, disableClaimButton: action.status }
+      return {
+        ...state,
+        disableClaimButton: action.status
+      }
     default:
       return state
   }
