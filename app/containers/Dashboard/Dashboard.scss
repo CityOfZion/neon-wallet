@@ -3,6 +3,10 @@
     transition: margin ease-in-out 200ms;
 }
 
+.noAnimation {
+    transition: none;
+}
+
 .title {
     font-size: 1em;
     padding: 10px 0px 0px 10px;
