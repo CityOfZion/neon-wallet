@@ -20,12 +20,14 @@ class App extends Component<Props> {
 
   render () {
     const { children, notification, hideNotification } = this.props
-    const shouldPushTop = notification.isShown && notification.position === NOTIFICATION_POSITIONS.TOP
+    const { position, isShown, noAnimation } = notification
+    const shouldPushTop = isShown && position === NOTIFICATION_POSITIONS.TOP
     return (
       <div>
         <Notification notification={notification} hideNotification={hideNotification} />
         <div className={classNames(styles.container, {
-          [styles.pushTop]: shouldPushTop
+          [styles.pushTop]: shouldPushTop,
+          [styles.noAnimation]: noAnimation
         })}>{children}</div>
       </div>
     )
