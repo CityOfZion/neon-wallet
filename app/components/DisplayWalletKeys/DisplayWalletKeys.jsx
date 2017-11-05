@@ -79,7 +79,7 @@ class DisplayWalletKeys extends Component<Props, State> {
           </div>
         </div>
         <div className='saveKey'>
-          <input type='text' placeholder='Name this key' value={keyName} onChange={(e) => this.setState({ keyName: e.target.value })} />
+          <input autoFocus type='text' placeholder='Name this key' value={keyName} onChange={(e) => this.setState({ keyName: e.target.value })} />
           <button onClick={() => saveKey(keyName, passphraseKey)}>Save Key</button>
         </div>
         <Link onClick={() => resetKey()} to='/'><button>Back</button></Link>

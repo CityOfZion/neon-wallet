@@ -2,9 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Logout from '../../app/components/Logout'
 import { logout } from '../../app/modules/account'
-
-const state = {}
-
+//
 describe('Logout', () => {
   const logout = jest.fn()
   test('should render without crashing', () => {
@@ -15,7 +13,7 @@ describe('Logout', () => {
   test('should dispatch logout action when clicked', () => {
     const wrapper = shallow(<Logout logout={logout} />)
     expect(logout.mock.calls.length).toEqual(0)
-    wrapper.find('#logout').simulate('click')
+    wrapper.find('.logout').simulate('click')
     expect(logout.mock.calls.length).toEqual(1)
   })
 })

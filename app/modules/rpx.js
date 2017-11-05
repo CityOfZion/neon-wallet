@@ -1,6 +1,6 @@
 // @flow
 import { getTokenBalance, getAccountFromWIFKey, doMintTokens } from 'neon-js'
-import { sendEvent, clearTransactionEvent } from './transactions'
+import { showErrorNotification, showInfoNotification, showSuccessNotification } from './transactions'
 
 // Constants
 export const UPDATE_RPX_BALANCE = 'UPDATE_RPX_BALANCE'
@@ -21,8 +21,7 @@ export const refreshTokenBalance = (scriptHash: string, silent: boolean = false)
   // TODO: add other check
   if (scriptHash.slice(0, 1) !== '0x' && scriptHash.length !== 42) {
     if (!silent) {
-      dispatch(sendEvent(false, 'Not a valid script hash.'))
-      setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+      dispatch(showErrorNotification({ message: 'Not a valid script hash.' }))
     }
     return false
   }
@@ -30,8 +29,7 @@ export const refreshTokenBalance = (scriptHash: string, silent: boolean = false)
     dispatch(updateRpxBalance(balance))
   }).catch((e) => {
     dispatch(updateRpxBalance(0))
-    dispatch(sendEvent(false, 'There is no ability to display tokens at that script hash.'))
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+    dispatch(showErrorNotification({ message: 'There is no ability to display tokens at that script hash.' }))
     return false
   })
 }
@@ -44,42 +42,35 @@ export const participateInSale = (neoToSend: number, scriptHash: string) => (dis
 
   const account = getAccountFromWIFKey(wif)
   if (parseFloat(neoToSend) !== parseInt(neoToSend)) {
-    dispatch(sendEvent(false, 'You cannot send fractional Neo to a token sale.'))
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+    dispatch(showErrorNotification({ message: 'You cannot send fractional Neo to a token sale.' }))
     return false
   }
   const toMint = parseInt(neoToSend)
 
   if (toMint > neo) {
-    dispatch(sendEvent(false, 'You do not have enough Neo to send.'))
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+    dispatch(showErrorNotification({ message: 'You do not have enough Neo to send.' }))
     return false
   }
   if (scriptHash.slice(0, 1) !== '0x' && scriptHash.length !== 42) {
-    dispatch(sendEvent(false, 'Not a valid script hash.'))
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+    dispatch(showErrorNotification({ message: 'Not a valid script hash.' }))
     return false
   }
   const _scriptHash = scriptHash.slice(2, scriptHash.length)
+
+  dispatch(showInfoNotification({ message: 'Processing...', dismissible: false }))
+
   return getTokenBalance(net, _scriptHash, account.address).then((balance) => {
-    dispatch(sendEvent(true, 'Processing...'))
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
     doMintTokens(net, _scriptHash, wif, toMint, 0).then((response) => {
-      dispatch(sendEvent(true, 'Processing...'))
-      setTimeout(() => dispatch(clearTransactionEvent()), 5000)
       if (response.result === true) {
-        dispatch(sendEvent(true, 'Sale participation was successful.'))
-        setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+        dispatch(showSuccessNotification({ message: 'Sale participation was successful.' }))
         return true
       } else {
-        dispatch(sendEvent(false, 'Sale participation failed.'))
-        setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+        dispatch(showErrorNotification({ message: 'Sale participation failed.' }))
         return false
       }
     })
   }).catch((e) => {
-    dispatch(sendEvent(false, 'This script hash cannot mint tokens.'))
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+    dispatch(showErrorNotification({ message: 'This script hash cannot mint tokens.' }))
     return false
   })
 }
@@ -88,7 +79,6 @@ const initialState = {
   RPX: 0
 }
 
-// reducer for wallet account balance
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case UPDATE_RPX_BALANCE:

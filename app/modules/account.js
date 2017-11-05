@@ -1,11 +1,11 @@
 // @flow
 import { verifyPrivateKey, validatePassphrase } from '../core/wallet'
-import { sendEvent, clearTransactionEvent } from './transactions'
 import { getAccountFromWIFKey, getPublicKeyEncoded, getAccountFromPublicKey, decryptWIF } from 'neon-js'
 import commNode from '../ledger/ledger-comm-node'
 import { BIP44_PATH, ROUTES } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
 import { ledgerNanoSCreateSignatureAsync } from '../ledger/ledgerNanoS'
+import { showErrorNotification, showInfoNotification, hideNotification } from './notification'
 
 // Constants
 export const LOGIN = 'LOGIN'
@@ -45,20 +45,18 @@ export function setKeys (keys: any) {
 
 export const loginNep2 = (passphrase: string, wif: string, history: Object) => (dispatch: DispatchType) => {
   if (!validatePassphrase(passphrase)) {
-    dispatch(sendEvent(false, 'Passphrase too short'))
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+    dispatch(showErrorNotification({ message: 'Passphrase too short' }))
   }
-  dispatch(sendEvent(true, 'Decrypting encoded key...'))
+  dispatch(showInfoNotification({ message: 'Decrypting encoded key...' }))
   const wrongPassphraseOrEncryptedKeyError = () => {
-    dispatch(sendEvent(false, 'Wrong passphrase or invalid encrypted key'))
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+    dispatch(showErrorNotification({ message: 'Wrong passphrase or invalid encrypted key' }))
   }
   setTimeout(() => {
     try {
       decryptWIF(wif, passphrase).then((wif) => {
+        dispatch(hideNotification({ noAnimation: true }))
         dispatch(login(wif))
         history.push(ROUTES.DASHBOARD)
-        dispatch(clearTransactionEvent())
       }).catch(() => {
         wrongPassphraseOrEncryptedKeyError()
       })
@@ -94,8 +92,7 @@ export const loginWithPrivateKey = (wif: string, history: Object, route?: RouteT
     dispatch(login(wif))
     history.push(route || ROUTES.DASHBOARD)
   } else {
-    dispatch(sendEvent(false, 'That is not a valid private key'))
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
+    dispatch(showErrorNotification({ message: 'That is not a valid private key' }))
   }
 }
 
@@ -158,7 +155,6 @@ const initialState = {
   hardwarePublicKeyInfo: null
 }
 
-// Reducer that manages account state (account now = private key)
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case LOGIN:

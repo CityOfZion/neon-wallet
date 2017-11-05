@@ -1,8 +1,10 @@
 // @flow
 import { doClaimAllGas, doSendAsset, getClaimAmounts, hardwareDoSendAsset, hardwareDoClaimAllGas } from 'neon-js'
-import { sendEvent, clearTransactionEvent } from '../modules/transactions'
 import { log } from '../util/Logs'
 import { ASSETS } from '../core/constants'
+import { showErrorNotification, showSuccessNotification, showInfoNotification } from './notification'
+import { FIVE_MINUTES_MS } from '../core/time'
+
 // Constants
 export const SET_CLAIM = 'SET_CLAIM'
 export const SET_CLAIM_REQUEST = 'SET_CLAIM_REQUEST'
@@ -51,7 +53,10 @@ export const doClaimNotify = () => (dispatch: DispatchType, getState: GetStateTy
 
   let claimGasFn
   if (isHardwareClaim) {
-    dispatch(sendEvent(true, 'Sign transaction 2 of 2 to claim Gas on your hardware device (claiming Gas)'))
+    dispatch(showInfoNotification({
+      message: 'Sign transaction 2 of 2 to claim Gas on your hardware device (claiming Gas)',
+      dismissible: false
+    }))
     claimGasFn = () => hardwareDoClaimAllGas(net, publicKey, signingFunction)
   } else {
     claimGasFn = () => doClaimAllGas(net, wif)
@@ -59,12 +64,13 @@ export const doClaimNotify = () => (dispatch: DispatchType, getState: GetStateTy
 
   claimGasFn().then((response) => {
     if (response.result) {
-      dispatch(sendEvent(true, 'Claim was successful! Your balance will update once the blockchain has processed it.'))
-      setTimeout(() => dispatch(disableClaim(false)), 300000)
+      dispatch(showSuccessNotification({
+        message: 'Claim was successful! Your balance will update once the blockchain has processed it.'
+      }))
+      setTimeout(() => dispatch(disableClaim(false)), FIVE_MINUTES_MS)
     } else {
-      dispatch(sendEvent(false, 'Claim failed'))
+      dispatch(showErrorNotification({ message: 'Claim failed' }))
     }
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
   })
 }
 
@@ -83,14 +89,17 @@ export const doGasClaim = () => (dispatch: DispatchType, getState: GetStateType)
   if (neo === 0) {
     dispatch(doClaimNotify())
   } else {
-    dispatch(sendEvent(true, 'Sending Neo to Yourself...'))
+    dispatch(showInfoNotification({ message: 'Sending Neo to Yourself...', dismissible: false }))
     log(net, 'SEND', address, { to: address, amount: neo, asset: ASSETS.NEO })
 
     const isHardwareClaim = !!publicKey
 
     let sendAssetFn
     if (isHardwareClaim) {
-      dispatch(sendEvent(true, 'Sign transaction 1 of 2 to claim Gas on your hardware device (sending Neo to yourself)'))
+      dispatch(showInfoNotification({
+        message: 'Sign transaction 1 of 2 to claim Gas on your hardware device (sending Neo to yourself)',
+        dismissible: false
+      }))
       sendAssetFn = () => hardwareDoSendAsset(net, address, publicKey, { [ASSETS.NEO]: neo }, signingFunction)
     } else {
       sendAssetFn = () => doSendAsset(net, address, wif, { [ASSETS.NEO]: neo })
@@ -98,9 +107,9 @@ export const doGasClaim = () => (dispatch: DispatchType, getState: GetStateType)
 
     sendAssetFn().then((response) => {
       if (response.result === undefined || response.result === false) {
-        dispatch(sendEvent(false, 'Transaction failed!'))
+        dispatch(showErrorNotification({ message: 'Transaction failed!' }))
       } else {
-        dispatch(sendEvent(true, 'Waiting for transaction to clear...'))
+        dispatch(showInfoNotification({ message: 'Waiting for transaction to clear...', dismissible: false }))
         dispatch(setClaimRequest(true))
         dispatch(disableClaim(true))
       }
@@ -118,11 +127,13 @@ const initialState = {
   signingFunction: () => ({})
 }
 
-// Reducer for managing claims data
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case SET_CLAIM_REQUEST:
-      return { ...state, 'claimRequest': action.status }
+      return {
+        ...state,
+        claimRequest: action.status
+      }
     case SET_CLAIM:
       let claimWasUpdated = false
       if (action.available > state.claimAvailable && state.claimRequest === true) {
@@ -136,7 +147,10 @@ export default (state: Object = initialState, action: Object) => {
         claimWasUpdated
       }
     case DISABLE_CLAIM:
-      return { ...state, disableClaimButton: action.status }
+      return {
+        ...state,
+        disableClaimButton: action.status
+      }
     default:
       return state
   }

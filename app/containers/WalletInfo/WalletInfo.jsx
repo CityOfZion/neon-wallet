@@ -9,6 +9,7 @@ import Copy from 'react-icons/lib/md/content-copy'
 import ReactTooltip from 'react-tooltip'
 import { formatGAS, formatFiat } from '../../core/formatters'
 import { ASSETS } from '../../core/constants'
+import { ONE_SECOND_MS } from '../../core/time'
 
 type Props = {
   address: string,
@@ -18,8 +19,9 @@ type Props = {
   neoPrice: number,
   gasPrice: number,
   initiateGetBalance: Function,
-  sendEvent: Function,
-  clearTransactionEvent: Function
+  showInfoNotification: Function,
+  showSuccessNotification: Function,
+  showErrorNotification: Function
 }
 
 export default class WalletInfo extends Component<Props> {
@@ -35,11 +37,12 @@ export default class WalletInfo extends Component<Props> {
 
   // force sync with balance data
   refreshBalance = () => {
-    const { sendEvent, initiateGetBalance, clearTransactionEvent, net, address } = this.props
-    sendEvent(true, 'Refreshing...')
+    const { showInfoNotification, showSuccessNotification, showErrorNotification, initiateGetBalance, net, address } = this.props
+    showInfoNotification({ message: 'Refreshing...', dissmissible: false })
     initiateGetBalance(net, address).then((response) => {
-      sendEvent(true, 'Received latest blockchain information.')
-      setTimeout(() => clearTransactionEvent(), 1000)
+      showSuccessNotification({ message: 'Received latest blockchain information.', dismissAfter: ONE_SECOND_MS })
+    }).catch(() => {
+      showErrorNotification({ message: 'Failed to retrieve blockchain information' })
     })
   }
 

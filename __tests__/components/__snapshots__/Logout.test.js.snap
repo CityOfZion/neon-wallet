@@ -2,6 +2,7 @@
 
 exports[`Logout should render without crashing 1`] = `
 <div
+  className="logout"
   data-for="logoutTip"
   data-tip={true}
   id="logout"

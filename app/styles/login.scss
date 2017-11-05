@@ -1,0 +1,40 @@
+@import './variables';
+.loginPage {
+    width: $page-width;
+    margin: $top-margin auto $top-margin auto;
+
+    .title {
+        font-size: 1.4em;
+        font-weight: 200;
+        margin-bottom: 10px;
+    }
+    .loginForm {
+        display: inline-block;
+        width: 100%;
+        margin-bottom: 10px;
+
+        .selectBox {
+            label {
+                font-weight: 800px;
+                margin-right: 10px;
+            }
+            text-align: left;
+        }
+
+        input {
+            width: 95%;
+            float: left;
+            margin-bottom: 10px;
+        }
+        
+        select {
+            margin-bottom: 10px;
+        }
+        
+        .viewKey {
+            cursor: pointer;
+            margin-left: -25px;
+            margin-top: 10px;
+        }          
+    }      
+}

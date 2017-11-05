@@ -92,7 +92,6 @@ const initialState = {
   gasPrice: 0
 }
 
-// reducer for wallet account balance
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case SET_BALANCE:

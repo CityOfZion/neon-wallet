@@ -6,9 +6,8 @@ import { validateTransactionBeforeSending } from '../../core/wallet'
 
 type Props = {
   togglePane: Function,
-  sendEvent: Function,
+  showErrorNotification: Function,
   sendTransaction: Function,
-  clearTransactionEvent: Function,
   toggleAsset: Function,
   neo: number,
   gas: number,
@@ -31,14 +30,13 @@ export default class Send extends Component<Props, State> {
 
   // open confirm pane and validate fields
   openAndValidate = () => {
-    const { neo, gas, selectedAsset, togglePane, sendEvent, clearTransactionEvent } = this.props
+    const { neo, gas, selectedAsset, togglePane, showErrorNotification } = this.props
     const { sendAddress, sendAmount } = this.state
     const { error, valid } = validateTransactionBeforeSending(neo, gas, selectedAsset, sendAddress, sendAmount)
     if (valid) {
       togglePane('confirmPane')
     } else {
-      sendEvent(false, error)
-      setTimeout(() => clearTransactionEvent(), 5000)
+      showErrorNotification({ message: error })
     }
   }
 
@@ -72,6 +70,7 @@ export default class Send extends Component<Props, State> {
         <div id='sendPane'>
           <div id='sendAddress'>
             <input
+              autoFocus
               type='text'
               placeholder='Where to send the asset (address)'
               value={sendAddress}

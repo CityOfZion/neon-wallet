@@ -1,8 +1,9 @@
 // @flow
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import Page from '../../components/Page'
+import HomeButtonLink from '../../components/HomeButtonLink'
 import { ROUTES } from '../../core/constants'
+import loginStyles from '../../styles/login.scss'
 
 type Props = {
   loginWithPrivateKey: Function,
@@ -24,24 +25,23 @@ export default class LoginTokenSale extends Component<Props, State> {
     const loginButtonDisabled = wif === ''
 
     return (
-      <Page id='loginPage'>
-        <div className='login'>
-          <div className='loginForm'>
-            <input
-              type='text'
-              placeholder='Enter your private key here (WIF)'
-              onChange={(e) => this.setState({ wif: e.target.value })}
-              value={wif}
-              autoFocus
-            />
-          </div>
-          <div className='loginButtons'>
-            <button
-              onClick={() => loginWithPrivateKey(wif, history, ROUTES.TOKEN_SALE)}
-              disabled={loginButtonDisabled}
-              className={loginButtonDisabled && 'disabled'}>Login</button>
-            <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>
-          </div>
+      <Page id='loginPage' className={loginStyles.loginPage}>
+        <div className={loginStyles.title}>Participate in Token Sale:</div>
+        <div className={loginStyles.loginForm}>
+          <input
+            type='text'
+            placeholder='Enter your private key here (WIF)'
+            onChange={(e) => this.setState({ wif: e.target.value })}
+            value={wif}
+            autoFocus
+          />
+        </div>
+        <div>
+          <button
+            onClick={() => loginWithPrivateKey(wif, history, ROUTES.TOKEN_SALE)}
+            disabled={loginButtonDisabled}
+            className={loginButtonDisabled && 'disabled'}>Login</button>
+          <HomeButtonLink />
         </div>
       </Page>
     )

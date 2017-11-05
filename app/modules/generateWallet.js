@@ -1,7 +1,7 @@
 // @flow
 import storage from 'electron-json-storage'
 import { generateEncryptedWif, getAccountFromWIFKey, generatePrivateKey, getWIFFromPrivateKey, encryptWIF, encryptWifAccount } from 'neon-js'
-import { sendEvent, clearTransactionEvent } from './transactions'
+import { showErrorNotification, showInfoNotification, hideNotification } from './notification'
 import { validatePassphrase, checkMatchingPassphrases } from '../core/wallet'
 
 // Constants
@@ -47,29 +47,27 @@ export const saveKey = (keyName: string, passphraseKey: string) => (dispatch: Di
   // eslint-disable-next-line
   storage.get('keys', (error, data) => {
     data[keyName] = passphraseKey
-    dispatch(sendEvent(true, `Saved key as ${keyName}`))
+    dispatch(showInfoNotification({ message: `Saved key as ${keyName}` }))
     storage.set('keys', data)
-    setTimeout(() => dispatch(clearTransactionEvent()), 5000)
   })
 }
 
 export const generateWalletFromWif = (passphrase: string, passphrase2: string, wif: string) => (dispatch: DispatchType): Promise<*> => {
   return new Promise((resolve, reject) => {
     const rejectPromise = (error) => {
-      dispatch(sendEvent(false, error))
-      setTimeout(() => clearTransactionEvent(), 5000)
+      dispatch(showErrorNotification({ message: error }))
       reject(new Error(error))
     }
 
     if (checkMatchingPassphrases(passphrase, passphrase2)) {
       rejectPromise('Passphrases do not match')
     } else if (validatePassphrase(passphrase)) {
-      dispatch(sendEvent(true, 'Generating encoded key...'))
+      dispatch(showInfoNotification({ message: 'Generating encoded key...', dismissible: false }))
       setTimeout(() => {
         try {
           encryptWifAccount(wif, passphrase).then((result) => {
+            dispatch(hideNotification({ noAnimation: true }))
             dispatch(newWallet(result))
-            dispatch(clearTransactionEvent())
             resolve()
           })
         } catch (e) {
@@ -85,20 +83,20 @@ export const generateWalletFromWif = (passphrase: string, passphrase2: string, w
 export const generateNewWallet = (passphrase: string, passphrase2: string) => (dispatch: DispatchType): Promise<*> => {
   return new Promise((resolve, reject) => {
     const rejectPromise = (error) => {
-      dispatch(sendEvent(false, error))
-      setTimeout(() => clearTransactionEvent(), 5000)
+      dispatch(showErrorNotification({ message: error }))
       reject(new Error(error))
     }
 
     if (checkMatchingPassphrases(passphrase, passphrase2)) {
       rejectPromise('Passphrases do not match')
     } else if (validatePassphrase(passphrase)) {
-      dispatch(sendEvent(true, 'Generating encoded key...'))
+      dispatch(showInfoNotification({ message: 'Generating encoded key...', dismissible: false }))
       setTimeout(() => {
         try {
           generateEncryptedWif(passphrase).then((result) => {
+            dispatch(hideNotification({ noAnimation: true }))
             dispatch(newWallet(result))
-            dispatch(clearTransactionEvent())
+            // dispatch(showSuccessNotification({ message: 'Wallet created successfully' }))
             resolve()
           })
         } catch (e) {
@@ -119,7 +117,6 @@ const initialState = {
   generating: false
 }
 
-// Reducer used for state necessary to generating a wallet
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case NEW_WALLET_KEYS:
@@ -127,11 +124,27 @@ export default (state: Object = initialState, action: Object) => {
       const newWif = getWIFFromPrivateKey(newPrivateKey)
       const encryptedWif = encryptWIF(newWif, action.passphrase)
       const loadAccount = getAccountFromWIFKey(newWif)
-      return { ...state, wif: newWif, address: loadAccount.address, passphrase: action.passphrase, encryptedWif }
+      return {
+        ...state,
+        wif: newWif,
+        address: loadAccount.address,
+        passphrase: action.passphrase,
+        encryptedWif
+      }
     case NEW_WALLET:
-      return { ...state, wif: action.wif, address: action.address, passphrase: action.passphrase, encryptedWif: action.encryptedWif, generating: false }
+      return {
+        ...state,
+        wif: action.wif,
+        address: action.address,
+        passphrase: action.passphrase,
+        encryptedWif: action.encryptedWif,
+        generating: false
+      }
     case SET_GENERATING:
-      return { ...state, generating: action.state }
+      return {
+        ...state,
+        generating: action.state
+      }
     case RESET_KEY:
       return { ...initialState }
     default:

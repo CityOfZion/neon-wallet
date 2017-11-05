@@ -1,11 +1,9 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-import configureStore from './store/configureStore'
-import Root from './containers/Root'
-import './styles/main.scss'
-
-const store = configureStore()
+import store from './store/configureStore'
+import Root from './Root'
+import './styles/main.global.scss'
 
 render(
   <AppContainer>
@@ -15,8 +13,8 @@ render(
 )
 
 if (module.hot) {
-  module.hot.accept('./containers/Root', () => {
-    const NewRoot = require('./containers/Root').default
+  module.hot.accept('./Root', () => {
+    const NewRoot = require('./Root').default
     render(
       <AppContainer>
         <NewRoot store={store} />
@@ -25,5 +23,3 @@ if (module.hot) {
     )
   })
 }
-
-export default store.dispatch

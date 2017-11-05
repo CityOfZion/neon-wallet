@@ -1,9 +1,8 @@
 // @flow
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import NetworkSwitch from '../NetworkSwitch'
 import Page from '../../components/Page'
-import { ROUTES } from '../../core/constants'
+import HomeButtonLink from '../../components/HomeButtonLink'
 
 type Props = {
   address: string,
@@ -101,7 +100,7 @@ export default class TokenSale extends Component<Props, State> {
             onClick={() => refreshTokenBalance(scriptHash)}
             disabled={refreshTokenBalanceButtonDisabled}>Refresh Token Balance</button>
         </div>
-        <Link to={ROUTES.HOME}><button className='altButton'>Home</button></Link>
+        <HomeButtonLink />
       </Page>
     )
   }
