@@ -2,46 +2,37 @@
 
 exports[`Login renders without crashing 1`] = `
 <Page
+  className="loginPage"
   id="loginPage"
 >
   <div
-    className="login"
+    className="title"
   >
-    <div
-      className="loginForm"
+    Login using a private key:
+  </div>
+  <div
+    className="loginForm"
+  >
+    <input
+      autoFocus={true}
+      onChange={[Function]}
+      placeholder="Enter your private key here (WIF)"
+      type="password"
+    />
+    <FaEye
+      className="viewKey"
+      onClick={[Function]}
+    />
+  </div>
+  <div>
+    <button
+      className="disabled"
+      disabled={true}
+      onClick={[Function]}
     >
-      <input
-        autoFocus={true}
-        onChange={[Function]}
-        placeholder="Enter your private key here (WIF)"
-        type="password"
-      />
-      <FaEye
-        className="viewKey"
-        onClick={[Function]}
-      />
-    </div>
-    <div
-      className="loginButtons"
-    >
-      <button
-        className="disabled"
-        disabled={true}
-        onClick={[Function]}
-      >
-        Login
-      </button>
-      <Link
-        replace={false}
-        to=""
-      >
-        <button
-          className="altButton"
-        >
-          Home
-        </button>
-      </Link>
-    </div>
+      Login
+    </button>
+    <HomeButtonLink />
   </div>
 </Page>
 `;

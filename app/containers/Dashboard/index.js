@@ -10,7 +10,8 @@ const mapStateToProps = (state: Object) => ({
   confirmPane: state.dashboard.confirmPane,
   blockHeight: state.metadata.blockHeight,
   net: state.metadata.network,
-  address: state.account.address
+  address: state.account.address,
+  notification: state.notification
 })
 
 const actionCreators = {

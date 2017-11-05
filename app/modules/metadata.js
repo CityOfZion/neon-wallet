@@ -2,8 +2,10 @@
 import { getWalletDBHeight, getAPIEndpoint } from 'neon-js'
 import axios from 'axios'
 import { version } from '../../package.json'
-import { sendEvent, clearTransactionEvent } from './transactions'
-import { NETWORK, EXPLORER } from '../core/constants'
+import { showWarningNotification } from './notification'
+import { NETWORK, EXPLORER, NEON_WALLET_RELEASE_LINK } from '../core/constants'
+import { openExternal } from '../core/electron'
+import { FIVE_MINUTES_MS } from '../core/time'
 
 // Constants
 export const SET_HEIGHT = 'SET_HEIGHT'
@@ -33,18 +35,21 @@ export function setBlockExplorer (blockExplorer: ExplorerType) {
   }
 }
 
-export const checkVersion = (net: NetworkType) => (dispatch: DispatchType) => {
+export const checkVersion = () => (dispatch: DispatchType, getState: GetStateType) => {
+  const state = getState().metadata
+  const { net } = state
   const apiEndpoint = getAPIEndpoint(net)
-  return axios.get(apiEndpoint + '/v2/version').then((res) => {
-    if (res === undefined || res === null) {
-      // something went wrong
-    } else if (res.data.version !== version && res.data.version !== '0.0.5') {
-      dispatch(sendEvent(false, 'Your wallet is out of date! Please download version ' + res.data.version + ' from https://github.com/CityOfZion/neon-wallet/releases'))
-      setTimeout(() => dispatch(clearTransactionEvent()), 15000)
+
+  return axios.get(`${apiEndpoint}/v2/version`).then((res) => {
+    const shouldUpdate = res && res.data && res.data.version !== version && res.data.version !== '0.0.5'
+    if (shouldUpdate) {
+      dispatch(showWarningNotification({
+        message: `Your wallet is out of date! Please download the latest version from ${NEON_WALLET_RELEASE_LINK}`,
+        dismissAfter: FIVE_MINUTES_MS,
+        onClick: () => openExternal(NEON_WALLET_RELEASE_LINK)
+      }))
     }
-  }).catch((e) => {
-    // something went wrong, but catch to avoid killing interface
-  })
+  }).catch((e) => {})
 }
 
 export const syncBlockHeight = (net: NetworkType) => (dispatch: DispatchType) => {
@@ -59,7 +64,6 @@ const initialState = {
   blockExplorer: EXPLORER.NEO_TRACKER
 }
 
-// reducer for metadata associated with Neon
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case SET_HEIGHT:

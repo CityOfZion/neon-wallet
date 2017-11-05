@@ -6,6 +6,16 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
+const commonLoaders = {
+  cssModules: {
+    loader: 'css-loader',
+    options: {
+      modules: true,
+      importLoaders: 1
+    }
+  }
+}
+
 module.exports = {
   bail: true,
   devtool: false,
@@ -14,9 +24,9 @@ module.exports = {
     'babel-polyfill',
     path.join(__dirname, '..', 'app/index.js')
   ],
-  externals : {
-    'node-hid' : 'require("node-hid")',
-    'ledger-node-js-api' : 'require("ledger-node-js-api")'
+  externals: {
+    'node-hid': 'require("node-hid")',
+    'ledger-node-js-api': 'require("ledger-node-js-api")'
   },
   output: {
     path: path.join(__dirname, '..', 'app/dist/'),
@@ -72,18 +82,37 @@ module.exports = {
         loader: 'json-loader'
       },
       {
-        test: /\.css$/,
+        test: /\.global\.css$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: 'css-loader'
         })
       },
       {
-        test: /\.scss$/,
+        test: /^((?!\.global).)*\.css$/,
+        use: ExtractTextPlugin.extract({
+          use: [
+            'css-loader',
+            commonLoaders.cssModules
+          ]
+        })
+      },
+      {
+        test: /\.global\.scss$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
             'css-loader',
+            'resolve-url-loader',
+            'sass-loader'
+          ]
+        })
+      },
+      {
+        test: /^((?!\.global).)*\.scss$/,
+        use: ExtractTextPlugin.extract({
+          use: [
+            commonLoaders.cssModules,
             'resolve-url-loader',
             'sass-loader'
           ]

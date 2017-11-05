@@ -1,29 +1,35 @@
 // @flow
-import React from 'react'
-import SplitPane from 'react-split-pane'
-import StatusMessage from '../../components/StatusMessage'
+import React, { Component } from 'react'
+import Notification from '../../components/Notification'
+import classNames from 'classnames'
+import { NOTIFICATION_POSITIONS } from '../../core/constants'
+import styles from './App.scss'
 
 type Props = {
   children: React$Node,
-  status: boolean,
-  statusMessage: string
+  notification: NotificationType,
+  hideNotification: Function,
+  checkVersion: Function
 }
 
-const App = ({ children, status, statusMessage }: Props) => {
-  const statusPaneSize = status ? '30px' : 0
-  return (
-    <div id='pageWrapper'>
-      <SplitPane
-        className='statusSplit'
-        split='horizontal'
-        size={statusPaneSize}
-        allowResize={false}
-      >
-        <StatusMessage status={status} statusMessage={statusMessage} />
-        <div>{children}</div>
-      </SplitPane>
-    </div>
-  )
+class App extends Component<Props> {
+  componentDidMount () {
+    const { checkVersion } = this.props
+    checkVersion()
+  }
+
+  render () {
+    const { children, notification, hideNotification } = this.props
+    const shouldPushTop = notification.isShown && notification.position === NOTIFICATION_POSITIONS.TOP
+    return (
+      <div>
+        <Notification notification={notification} hideNotification={hideNotification} />
+        <div className={classNames(styles.container, {
+          [styles.pushTop]: shouldPushTop
+        })}>{children}</div>
+      </div>
+    )
+  }
 }
 
 export default App

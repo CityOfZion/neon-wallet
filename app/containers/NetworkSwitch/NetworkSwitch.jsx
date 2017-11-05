@@ -1,6 +1,8 @@
 // @flow
 import React, { Component } from 'react'
 import { NETWORK } from '../../core/constants'
+import styles from './NetworkSwitch.scss'
+import classNames from 'classnames'
 
 export let intervals = {}
 
@@ -8,14 +10,12 @@ type Props = {
   net: NetworkType,
   address: string,
   setNetwork: Function,
-  checkVersion: Function,
   initiateGetBalance: Function
 }
 
 export default class NetworkSwitch extends Component<Props> {
   componentDidMount () {
-    const { checkVersion, address, net } = this.props
-    checkVersion(net)
+    const { address, net } = this.props
     this.resetBalanceSync(net, address)
   }
 
@@ -42,9 +42,9 @@ export default class NetworkSwitch extends Component<Props> {
   render () {
     const { address, net } = this.props
     return (
-      <div id='network'>
-        <span className='transparent'>Running on</span>
-        <span className='netName' onClick={() => this.toggleNet(net, address)}>{net}</span>
+      <div id='network' className={styles.container}>
+        <span className={styles.label}>Running on</span>
+        <span className={classNames('netName', styles.netName)} onClick={() => this.toggleNet(net, address)}>{net}</span>
       </div>
     )
   }

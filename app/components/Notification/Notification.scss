@@ -1,0 +1,107 @@
+@import '../../styles/variables';
+
+// Styles adapted from https://github.com/igorprado/react-notification-system
+
+.notification {
+	position: fixed;
+    cursor: pointer;
+	text-align: center;
+	box-sizing: border-box;
+	opacity: 0;
+	pointer-events: none;
+
+	// default animation
+	transition: opacity ease-in-out 150ms;
+
+	&.top {
+		top: 0
+	}
+
+	&.bottom {
+		bottom: 0
+	}
+
+	&.shown {
+		opacity: 1;
+		z-index: $z-index-notification;
+		pointer-events: auto;
+	}
+
+	&.noAnimation {
+		transition: none
+	}
+
+	.content {
+		padding: 10px;
+		box-sizing: border-box;
+		transition: 0.3s ease-in-out;
+		will-change: transform, opacity;
+		border-radius: 2px;
+		font-size: 14px;
+				
+		.title {
+			font-size: 14px;
+			margin-bottom: 5px;
+			font-weight: bold;
+		}
+
+		.close {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			cursor: pointer;
+		}
+	}
+
+	&.success {
+		border-top: 2px solid rgb(94, 164, 0);
+		background-color: rgb(240, 245, 234);
+		color: rgb(75, 88, 58);
+		box-shadow: rgba(94, 164, 0, 0.9) 0 0 1px;
+
+		.content {
+			.title {
+				color: rgb(94, 164, 0);
+			}
+		}
+	}
+
+	&.error {
+		border-top: 2px solid rgb(236, 61, 61);
+		background-color: rgb(244, 233, 233);
+		color: rgb(65, 47, 47);
+		box-shadow: rgba(236, 61, 61, 0.9) 0 0 1px;
+		
+		.content {
+			.title {
+				color: rgb(236, 61, 61);
+			}
+		}
+	}
+
+	&.info {
+		border-top: 2px solid rgb(54, 156, 199);
+		background-color: rgb(232, 240, 244);
+		color: rgb(65, 85, 93);
+		box-shadow: rgba(54, 156, 199, 0.9) 0 0 1px;
+
+		.content {
+			.title {
+				color: rgb(54, 156, 199);
+			}
+		}
+	}
+
+	&.warning {
+		border-top: 2px solid rgb(235, 173, 26);
+		background-color: rgb(249, 246, 240);
+		color: rgb(90, 83, 67);
+		box-shadow: rgba(235, 173, 23, 0.9) 0 0 1px;
+
+		.content {
+			.title {
+				color: rgb(235, 173, 26);
+			}
+		}
+	}	
+}
