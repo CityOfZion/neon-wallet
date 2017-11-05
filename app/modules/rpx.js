@@ -1,6 +1,6 @@
 // @flow
 import { getTokenBalance, getAccountFromWIFKey, doMintTokens } from 'neon-js'
-import { showErrorNotification, showInfoNotification, showSuccessNotification } from './transactions'
+import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notification'
 
 // Constants
 export const UPDATE_RPX_BALANCE = 'UPDATE_RPX_BALANCE'
