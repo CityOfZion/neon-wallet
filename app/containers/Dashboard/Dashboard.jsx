@@ -11,6 +11,7 @@ import { version } from '../../../package.json'
 import { log } from '../../util/Logs'
 import { NOTIFICATION_POSITIONS } from '../../core/constants'
 import styles from './Dashboard.scss'
+import classNames from 'classnames'
 
 const logo = require('../../images/neon-logo2.png')
 
@@ -44,17 +45,18 @@ export default class Dashboard extends Component<Props> {
         sendPaneClosed = '15%'
       }
     }
-    const shouldPushTop = notification.isShown && notification.position === NOTIFICATION_POSITIONS.TOP
+    const { isShown, position, noAnimation } = notification
+    const shouldPushTop = isShown && position === NOTIFICATION_POSITIONS.TOP
 
     return (
       <div id='dashboard'>
         <SplitPane
-          paneStyle={{ transition: 'height 200ms ease-in-out' }}
+          paneStyle={{ transition: noAnimation ? 'none' : 'height 200ms ease-in-out' }}
           split='horizontal'
           size={shouldPushTop ? '80px' : '40px'}
           allowResize={false}
         >
-          <div className={styles.navBar} style={{ marginTop: shouldPushTop ? '40px' : 0, position: 'relative', width: '100%' }}>
+          <div className={classNames(styles.navBar, {[styles.noAnimation]: noAnimation})} style={{ marginTop: shouldPushTop ? '40px' : 0, position: 'relative', width: '100%' }}>
             <div className={styles.title}>
               <img src={logo} width='60px' />
             </div>
