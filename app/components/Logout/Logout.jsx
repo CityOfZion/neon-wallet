@@ -11,7 +11,7 @@ type Props = {
 }
 
 const Logout = ({ logout }: Props) =>
-  <div className={styles.logout} data-tip data-for='logoutTip' onClick={logout}>
+  <div id='logout' className={styles.logout} data-tip data-for='logoutTip' onClick={logout}>
     <Link to={ROUTES.HOME}><Power /></Link>
     <ReactTooltip class='solidTip' id='logoutTip' place='bottom' type='dark' effect='solid'>
       <span>Logout</span>
