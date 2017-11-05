@@ -17,7 +17,7 @@ type NotificationArgsType = {
 }
 
 type HideNotificationType = {
-  noAnimate?: boolean,
+  noAnimation?: boolean,
 }
 
 type ShowNotificationType = NotificationArgsType & {
