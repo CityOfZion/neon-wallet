@@ -32,11 +32,11 @@
     "files": [
       "./main.js",
       "app/dist/index.html",
-      "app/dist/bundle.js"
+      "app/dist/bundle.js",
+      "app/dist/style.css"
     ],
     "dmg": {
-      "contents": [
-        {
+      "contents": [{
           "x": 110,
           "y": 150
         },
@@ -145,7 +145,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^20.0.4",
     "json-loader": "^0.5.7",
-    "node-sass": "^3.7.0",
+    "node-sass": "^4.5.3",
     "postcss-loader": "^2.0.7",
     "react-addons-test-utils": "^15.0.2",
     "react-test-renderer": "^15.6.1",
