@@ -83,7 +83,10 @@ export default class WalletInfo extends Component<Props> {
           </div>
           <div className='split'>
             <div className='label'>{ASSETS.GAS}</div>
-            <div className='amountBig amountGas'>{formatGAS(gas)}</div>
+            <div className='amountBig amountGas' data-tip data-for='gasBalanceTip'>{formatGAS(gas, true)}</div>
+            <ReactTooltip class='solidTip' id='gasBalanceTip' place='bottom' type='dark' effect='solid'>
+              <span>{formatGAS(gas)}</span>
+            </ReactTooltip>
             <div className='fiat gasWalletValue'>US ${gasValue}</div>
           </div>
           <div className='fiat walletTotal'>Total US ${totalValue}</div>
