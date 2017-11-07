@@ -52,9 +52,9 @@ export default class WalletInfo extends Component<Props> {
       return null
     }
 
-    let neoValue = '--'
-    let gasValue = '--'
-    let totalValue = '--'
+    let neoValue = 0
+    let gasValue = 0
+    let totalValue = 0
 
     if (neoPrice && neo) {
       neoValue = formatFiat(neoPrice * neo)
@@ -83,7 +83,10 @@ export default class WalletInfo extends Component<Props> {
           </div>
           <div className='split'>
             <div className='label'>{ASSETS.GAS}</div>
-            <div className='amountBig amountGas'>{formatGAS(gas)}</div>
+            <div className='amountBig amountGas' data-tip data-for='gasBalanceTip'>{formatGAS(gas, true)}</div>
+            <ReactTooltip class='solidTip' id='gasBalanceTip' place='bottom' type='dark' effect='solid' disable={gas === 0}>
+              <span className='amountGasTooltip'>{formatGAS(gas)}</span>
+            </ReactTooltip>
             <div className='fiat gasWalletValue'>US ${gasValue}</div>
           </div>
           <div className='fiat walletTotal'>Total US ${totalValue}</div>

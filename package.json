@@ -1,6 +1,6 @@
 {
   "name": "Neon",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",
   "homepage": "https://github.com/CityOfZion/neon-wallet",
@@ -32,7 +32,8 @@
     "files": [
       "./main.js",
       "app/dist/index.html",
-      "app/dist/bundle.js"
+      "app/dist/bundle.js",
+      "app/dist/style.css"
     ],
     "dmg": {
       "contents": [

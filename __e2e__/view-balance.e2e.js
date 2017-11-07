@@ -47,7 +47,7 @@ test.serial('should login success', async t => {
 test.serial('should show correct balance', async t => {
   await app.client.waitUntilTextExists('#balance .amountNeo', '1', 60000)
   t.is(await app.client.getText('#balance .amountNeo'), '1')
-  t.is(await app.client.getText('#balance .amountGas'), '2.0000000')
+  t.is(await app.client.getText('#balance .amountGas'), '2.0000')
 })
 
 test.serial('should show correct transaction list', async t => {
