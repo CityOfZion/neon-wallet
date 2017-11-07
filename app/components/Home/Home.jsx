@@ -18,7 +18,7 @@ const Home = () =>
       <div className={classNames('linkBox', styles.linkBox)}>Login using a private key</div>
     </Link>
     <Link to={ROUTES.LOGIN_LEDGER_NANO_S}>
-      <div className={classNames('linkBox', styles.linkBox)}>Login using the Ledger Nano S</div>
+      <div className={classNames('linkBox', styles.linkBox)}>Login using a Ledger</div>
     </Link>
     <Link to={ROUTES.CREATE_WALLET}>
       <div className={classNames('linkBox', styles.linkBox, styles.linkBoxAlt)}>Create a new wallet</div>
