@@ -100,6 +100,7 @@ describe('WalletInfo', () => {
     expect(walletValue.text()).toEqual(`Total US $${expectedWalletValue}`)
     expect(addressField.text().split('<')[0]).toEqual(initialState.account.address)
     expect(neoField.text()).toEqual(`${initialState.wallet.Neo}`)
+    // TODO: Test the gas tooltip value, this is testing the display value, truncated to 4 decimals
     expect(gasField.text()).toEqual('1.0001')
     done()
   })
