@@ -85,7 +85,7 @@ export default class WalletInfo extends Component<Props> {
             <div className='label'>{ASSETS.GAS}</div>
             <div className='amountBig amountGas' data-tip data-for='gasBalanceTip'>{formatGAS(gas, true)}</div>
             <ReactTooltip class='solidTip' id='gasBalanceTip' place='bottom' type='dark' effect='solid' disable={gas === 0}>
-              <span>{formatGAS(gas)}</span>
+              <span className='amountGasTooltip'>{formatGAS(gas)}</span>
             </ReactTooltip>
             <div className='fiat gasWalletValue'>US ${gasValue}</div>
           </div>

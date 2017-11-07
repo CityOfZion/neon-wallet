@@ -100,7 +100,7 @@ describe('WalletInfo', () => {
     expect(walletValue.text()).toEqual(`Total US $${expectedWalletValue}`)
     expect(addressField.text().split('<')[0]).toEqual(initialState.account.address)
     expect(neoField.text()).toEqual(`${initialState.wallet.Neo}`)
-    expect(gasField.text()).toEqual(`${initialState.wallet.Gas}`)
+    expect(gasField.text()).toEqual('1.0001')
     done()
   })
   test('copy to clipboard is getting called on click', (done) => {
