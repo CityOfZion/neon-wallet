@@ -52,9 +52,9 @@ export default class WalletInfo extends Component<Props> {
       return null
     }
 
-    let neoValue = '--'
-    let gasValue = '--'
-    let totalValue = '--'
+    let neoValue = 0
+    let gasValue = 0
+    let totalValue = 0
 
     if (neoPrice && neo) {
       neoValue = formatFiat(neoPrice * neo)
