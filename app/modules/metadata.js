@@ -17,21 +17,21 @@ export function setNetwork (net: NetworkType) {
   const network = net === NETWORK.MAIN ? NETWORK.MAIN : NETWORK.TEST
   return {
     type: SET_NETWORK,
-    net: network
+    payload: { network }
   }
 }
 
 export function setBlockHeight (blockHeight: number) {
   return {
     type: SET_HEIGHT,
-    blockHeight
+    payload: { blockHeight }
   }
 }
 
 export function setBlockExplorer (blockExplorer: ExplorerType) {
   return {
     type: SET_EXPLORER,
-    blockExplorer
+    payload: { blockExplorer }
   }
 }
 
@@ -72,19 +72,22 @@ const initialState = {
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case SET_HEIGHT:
+      const { blockHeight } = action.payload
       return {
         ...state,
-        blockHeight: action.blockHeight
+        blockHeight
       }
     case SET_EXPLORER:
+      const { blockExplorer } = action.payload
       return {
         ...state,
-        blockExplorer: action.blockExplorer
+        blockExplorer
       }
     case SET_NETWORK:
+      const { network } = action.payload
       return {
         ...state,
-        network: action.net
+        network
       }
     default:
       return state

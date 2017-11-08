@@ -14,25 +14,27 @@ export const SET_CLAIM_REQUEST = 'SET_CLAIM_REQUEST'
 export const DISABLE_CLAIM = 'DISABLE_CLAIM'
 
 // Actions
-export function setClaim (available: number, unavailable: number) {
+export function setClaim (claimAvailable: number, claimUnavailable: number) {
   return {
     type: SET_CLAIM,
-    available,
-    unavailable
+    payload: {
+      claimAvailable,
+      claimUnavailable
+    }
   }
 }
 
-export function setClaimRequest (status: boolean) {
+export function setClaimRequest (claimRequest: boolean) {
   return {
     type: SET_CLAIM_REQUEST,
-    status
+    payload: { claimRequest }
   }
 }
 
-export function disableClaim (status: boolean) {
+export function disableClaim (disableClaimButton: boolean) {
   return {
     type: DISABLE_CLAIM,
-    status
+    payload: { disableClaimButton }
   }
 }
 
@@ -140,26 +142,29 @@ const initialState = {
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case SET_CLAIM_REQUEST:
+      const { claimRequest } = action.payload
       return {
         ...state,
-        claimRequest: action.status
+        claimRequest
       }
     case SET_CLAIM:
+      const { claimAvailable, claimUnavailable } = action.payload
       let claimWasUpdated = false
-      if (action.available > state.claimAvailable && state.claimRequest === true) {
+      if (claimAvailable > state.claimAvailable && state.claimRequest === true) {
         claimWasUpdated = true
       }
       return {
         ...state,
-        claimAmount: (action.available + action.unavailable) / 100000000,
-        claimAvailable: action.available,
-        claimUnavailable: action.unavailable,
+        claimAmount: (claimAvailable + claimUnavailable) / 100000000,
+        claimAvailable,
+        claimUnavailable,
         claimWasUpdated
       }
     case DISABLE_CLAIM:
+      const { disableClaimButton } = action.payload
       return {
         ...state,
-        disableClaimButton: action.status
+        disableClaimButton
       }
     default:
       return state

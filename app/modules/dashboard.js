@@ -7,7 +7,7 @@ export const TOGGLE_SEND_PANE = 'TOGGLE_SEND_PANE'
 export function togglePane (pane: string) {
   return {
     type: TOGGLE_SEND_PANE,
-    pane
+    payload: { pane }
   }
 }
 
@@ -23,8 +23,9 @@ const initialState = {
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case TOGGLE_SEND_PANE:
+      const { pane } = action.payload
       let newState = {}
-      newState[action.pane] = !state[action.pane]
+      newState[pane] = !state[pane]
       return {
         ...state,
         ...newState

@@ -19,14 +19,14 @@ export const HARDWARE_PUBLIC_KEY = 'HARDWARE_PUBLIC_KEY'
 export function login (wif: string) {
   return {
     type: LOGIN,
-    wif: wif
+    payload: { wif }
   }
 }
 
 export function ledgerNanoSGetLogin () {
   return {
     type: LOGIN,
-    signingFunction: ledgerNanoSCreateSignatureAsync
+    payload: { signingFunction: ledgerNanoSCreateSignatureAsync }
   }
 }
 
@@ -36,10 +36,10 @@ export function logout () {
   }
 }
 
-export function setKeys (keys: any) {
+export function setKeys (accountKeys: any) {
   return {
     type: SET_KEYS,
-    keys
+    payload: { accountKeys }
   }
 }
 
@@ -69,21 +69,21 @@ export const loginNep2 = (passphrase: string, wif: string, history: Object) => (
 export function hardwareDeviceInfo (hardwareDeviceInfo: string) {
   return {
     type: HARDWARE_DEVICE_INFO,
-    hardwareDeviceInfo
+    payload: { hardwareDeviceInfo }
   }
 }
 
 export function hardwarePublicKeyInfo (hardwarePublicKeyInfo: string) {
   return {
     type: HARDWARE_PUBLIC_KEY_INFO,
-    hardwarePublicKeyInfo
+    payload: { hardwarePublicKeyInfo }
   }
 }
 
 export function hardwarePublicKey (publicKey: string) {
   return {
     type: HARDWARE_PUBLIC_KEY,
-    publicKey
+    payload: { publicKey }
   }
 }
 
@@ -169,13 +169,14 @@ const initialState = {
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case LOGIN:
+      const { signingFunction, wif } = action.payload
       let loadAccount: Object | number
       try {
-        if (action.signingFunction) {
+        if (signingFunction) {
           const publicKeyEncoded = getPublicKeyEncoded(state.publicKey)
           loadAccount = getAccountFromPublicKey(publicKeyEncoded)
         } else {
-          loadAccount = getAccountFromWIFKey(action.wif)
+          loadAccount = getAccountFromWIFKey(wif)
         }
       } catch (e) {
         console.log(e.stack)
@@ -184,16 +185,16 @@ export default (state: Object = initialState, action: Object) => {
       if (typeof loadAccount !== 'object') {
         return {
           ...state,
-          wif: action.wif,
+          wif,
           loggedIn: false
         }
       }
       return {
         ...state,
-        wif: action.wif,
+        wif,
         address: loadAccount.address,
         loggedIn: true,
-        signingFunction: action.signingFunction
+        signingFunction
       }
     case LOGOUT:
       return {
@@ -205,24 +206,28 @@ export default (state: Object = initialState, action: Object) => {
         publicKey: null
       }
     case SET_KEYS:
+      const { accountKeys } = action.payload
       return {
         ...state,
-        accountKeys: action.keys
+        accountKeys
       }
     case HARDWARE_DEVICE_INFO:
+      const { hardwareDeviceInfo } = action.payload
       return {
         ...state,
-        hardwareDeviceInfo: action.hardwareDeviceInfo
+        hardwareDeviceInfo
       }
     case HARDWARE_PUBLIC_KEY_INFO:
+      const { hardwarePublicKeyInfo } = action.payload
       return {
         ...state,
-        hardwarePublicKeyInfo: action.hardwarePublicKeyInfo
+        hardwarePublicKeyInfo
       }
     case HARDWARE_PUBLIC_KEY:
+      const { publicKey } = action.payload
       return {
         ...state,
-        publicKey: action.publicKey
+        publicKey
       }
     default:
       return state
