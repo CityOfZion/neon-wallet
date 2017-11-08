@@ -7,7 +7,7 @@ describe('dashboard module tests', () => {
     test('togglePane action works', () => {
       const expectedAction = {
         type: TOGGLE_SEND_PANE,
-        pane
+        payload: { pane }
       }
       expect(togglePane(pane)).toEqual(expectedAction)
     })
@@ -22,7 +22,7 @@ describe('dashboard module tests', () => {
     test('togglePane reducer should handle TOGGLE_SEND_PANE', () => {
       expect(dashboardReducer(undefined, {
         type: TOGGLE_SEND_PANE,
-        pane
+        payload: { pane }
       })).toEqual({
         sendPane: true,
         confirmPane: false

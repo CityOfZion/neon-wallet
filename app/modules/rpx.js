@@ -12,7 +12,7 @@ export const UPDATE_RPX_BALANCE = 'UPDATE_RPX_BALANCE'
 export function updateRpxBalance (balance: number) {
   return {
     type: UPDATE_RPX_BALANCE,
-    RPX: balance
+    payload: { RPX: balance }
   }
 }
 
@@ -88,9 +88,10 @@ const initialState = {
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case UPDATE_RPX_BALANCE:
+      const { RPX } = action.payload
       return {
         ...state,
-        RPX: action.RPX
+        RPX
       }
     default:
       return state
