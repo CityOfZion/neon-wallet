@@ -11,6 +11,10 @@ export function togglePane (pane: string) {
   }
 }
 
+// state getters
+export const getSendPane = (state) => state.dashboard.sendPane
+export const getConfirmPane = (state) => state.dashboard.confirmPane
+
 const initialState = {
   sendPane: true,
   confirmPane: true

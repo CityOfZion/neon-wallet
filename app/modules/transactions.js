@@ -4,9 +4,11 @@
 import { ASSETS_LABELS, ASSETS } from '../core/constants'
 import { validateTransactionBeforeSending } from '../core/wallet'
 import { getTransactionHistory, doSendAsset, hardwareDoSendAsset } from 'neon-js'
-import { setTransactionHistory } from '../modules/wallet'
+import { setTransactionHistory, getNeo, getGas } from './wallet'
 import { log } from '../util/Logs'
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notification'
+import { getWif, getPublicKey, getSigningFunction, getAddress } from './account'
+import { getNetwork } from './metadata'
 
 // Constants
 export const TOGGLE_ASSET = 'TOGGLE_ASSET'
@@ -31,14 +33,14 @@ export const syncTransactionHistory = (net: NetworkType, address: string) => (di
 export const sendTransaction = (sendAddress: string, sendAmount: string) => (dispatch: DispatchType, getState: GetStateType): Promise<*> => {
   return new Promise((resolve, reject) => {
     const state = getState()
-    const wif = state.account.wif
-    const address = state.account.address
-    const net = state.metadata.network
-    const neo = state.wallet.Neo
-    const gas = state.wallet.Gas
-    const selectedAsset = state.transactions.selectedAsset
-    const signingFunction = state.account.signingFunction
-    const publicKey = state.account.publicKey
+    const wif = getWif(state)
+    const address = getAddress(state)
+    const net = getNetwork(state)
+    const neo = getNeo(state)
+    const gas = getGas(state)
+    const selectedAsset = getSelectedAsset(state)
+    const signingFunction = getSigningFunction(state)
+    const publicKey = getPublicKey(state)
 
     const rejectTransaction = (error: string) => {
       dispatch(showErrorNotification({ message: error }))
@@ -80,6 +82,9 @@ export const sendTransaction = (sendAddress: string, sendAmount: string) => (dis
     }
   })
 }
+
+// state getters
+export const getSelectedAsset = (state) => state.transactions.selectedAsset
 
 const initialState = {
   selectedAsset: ASSETS_LABELS.NEO

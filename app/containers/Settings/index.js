@@ -2,12 +2,12 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Settings from './Settings'
-import { setKeys } from '../../modules/account'
-import { setBlockExplorer } from '../../modules/metadata'
+import { setKeys, getAccountKeys } from '../../modules/account'
+import { setBlockExplorer, getBlockExplorer } from '../../modules/metadata'
 
 const mapStateToProps = (state: Object) => ({
-  explorer: state.metadata.blockExplorer,
-  wallets: state.account.accountKeys
+  explorer: getBlockExplorer(state),
+  wallets: getAccountKeys(state)
 })
 
 const actionCreators = {

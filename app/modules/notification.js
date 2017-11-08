@@ -118,6 +118,18 @@ export const showStickyInfoNotification = (args: NotificationArgsType) => (dispa
   dispatch(showInfoNotification({ ...args, dismissible: false }))
 }
 
+// state Getters
+export const getNotification = (state) => state.notification
+export const getTitle = (state) => state.notification.title
+export const getMessage = (state) => state.notification.message
+export const getType = (state) => state.notification.type
+export const getPosition = (state) => state.notification.position
+export const getIsShown = (state) => state.notification.isShown
+export const getWidth = (state) => state.notification.width
+export const getHtml = (state) => state.notification.html
+export const getOnClick = (state) => state.notification.onClick
+export const getNoAnimation = (state) => state.notification.noAnimation
+
 const initialState = {
   title: '',
   message: '',
