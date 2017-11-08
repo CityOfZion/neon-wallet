@@ -2,16 +2,18 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import TokenSale from './TokenSale'
-import { initiateGetBalance } from '../../modules/wallet'
-import { updateRpxBalance, refreshTokenBalance, participateInSale } from '../../modules/rpx'
+import { initiateGetBalance, getNeo } from '../../modules/wallet'
+import { updateRpxBalance, refreshTokenBalance, participateInSale, getRPX } from '../../modules/rpx'
+import { getWif, getAddress } from '../../modules/account'
+import { getBlockExplorer, getNetwork } from '../../modules/metadata'
 
 const mapStateToProps = (state) => ({
-  explorer: state.metadata.blockExplorer,
-  wif: state.account.wif,
-  neo: state.wallet.Neo,
-  net: state.metadata.network,
-  address: state.account.address,
-  rpx: state.rpx.RPX
+  explorer: getBlockExplorer(state),
+  wif: getWif(state),
+  neo: getNeo(state),
+  net: getNetwork(state),
+  address: getAddress(state),
+  rpx: getRPX(state)
 })
 
 const actionCreators = {

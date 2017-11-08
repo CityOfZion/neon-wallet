@@ -109,6 +109,13 @@ export const generateNewWallet = (passphrase: string, passphrase2: string) => (d
   })
 }
 
+// state getters
+export const getWif = (state) => state.generateWallet.wif
+export const getAddress = (state) => state.generateWallet.address
+export const getPassphrase = (state) => state.generateWallet.passphrase
+export const getEncryptedWif = (state) => state.generateWallet.encryptedWif
+export const getGenerating = (state) => state.generateWallet.generating
+
 const initialState = {
   wif: null,
   address: null,
