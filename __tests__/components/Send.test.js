@@ -238,7 +238,9 @@ describe('Send', () => {
     expect(actions.length === 1).toEqual(true)
     expect(actions[0]).toEqual({
       type: TOGGLE_SEND_PANE,
-      pane: 'confirmPane'
+      payload: {
+        pane: 'confirmPane'
+      }
     })
     done()
   })
@@ -281,7 +283,9 @@ describe('Send', () => {
     expect(actions1.length === 1).toEqual(true)
     expect(actions1[0]).toEqual({
       type: TOGGLE_SEND_PANE,
-      pane: 'confirmPane'
+      payload: {
+        pane: 'confirmPane'
+      }
     })
     done()
   })

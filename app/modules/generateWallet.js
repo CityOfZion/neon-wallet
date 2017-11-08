@@ -14,24 +14,26 @@ export const RESET_KEY = 'RESET_KEY'
 export function newWalletKeys (passphrase: string) {
   return {
     type: NEW_WALLET_KEYS,
-    passphrase
+    payload: { passphrase }
   }
 }
 
 export function newWallet (account: Object) {
   return {
     type: NEW_WALLET,
-    wif: account.wif,
-    address: account.address,
-    passphrase: account.passphrase,
-    encryptedWif: account.encryptedWif
+    payload: {
+      wif: account.wif,
+      address: account.address,
+      passphrase: account.passphrase,
+      encryptedWif: account.encryptedWif
+    }
   }
 }
 
-export function generating (bool: string) {
+export function generating (generating: boolean) {
   return {
     type: SET_GENERATING,
-    state: bool
+    payload: { generating }
   }
 }
 
@@ -126,34 +128,41 @@ const initialState = {
 
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
-    case NEW_WALLET_KEYS:
+    case NEW_WALLET_KEYS: {
+      const { passphrase } = action.payload
       const newPrivateKey = generatePrivateKey()
       const newWif = getWIFFromPrivateKey(newPrivateKey)
-      const encryptedWif = encryptWIF(newWif, action.passphrase)
+      const encryptedWif = encryptWIF(newWif, passphrase)
       const loadAccount = getAccountFromWIFKey(newWif)
       return {
         ...state,
         wif: newWif,
         address: loadAccount.address,
-        passphrase: action.passphrase,
+        passphrase,
         encryptedWif
       }
-    case NEW_WALLET:
+    }
+    case NEW_WALLET: {
+      const { passphrase, wif, address, encryptedWif } = action.payload
       return {
         ...state,
-        wif: action.wif,
-        address: action.address,
-        passphrase: action.passphrase,
-        encryptedWif: action.encryptedWif,
+        wif,
+        address,
+        passphrase,
+        encryptedWif,
         generating: false
       }
-    case SET_GENERATING:
+    }
+    case SET_GENERATING: {
+      const { generating } = action.payload
       return {
         ...state,
-        generating: action.state
+        generating
       }
-    case RESET_KEY:
+    }
+    case RESET_KEY: {
       return { ...initialState }
+    }
     default:
       return state
   }

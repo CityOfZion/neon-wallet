@@ -14,25 +14,24 @@ export const RESET_PRICE = 'RESET_PRICE'
 export const SET_TRANSACTION_HISTORY = 'SET_TRANSACTION_HISTORY'
 
 // Actions
-export function setBalance (neo: number, gas: number) {
+export function setBalance (Neo: number, Gas: number) {
   return {
     type: SET_BALANCE,
-    Neo: neo,
-    Gas: gas
+    payload: { Neo, Gas }
   }
 }
 
 export function setNeoPrice (neoPrice: number) {
   return {
     type: SET_NEO_PRICE,
-    neoPrice: neoPrice
+    payload: { neoPrice }
   }
 }
 
 export function setGasPrice (gasPrice: number) {
   return {
     type: SET_GAS_PRICE,
-    gasPrice: gasPrice
+    payload: { gasPrice }
   }
 }
 
@@ -45,7 +44,7 @@ export function resetPrice () {
 export function setTransactionHistory (transactions: Array<Object>) {
   return {
     type: SET_TRANSACTION_HISTORY,
-    transactions
+    payload: { transactions }
   }
 }
 
@@ -102,20 +101,23 @@ const initialState = {
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case SET_BALANCE:
+      const { Neo, Gas } = action.payload
       return {
         ...state,
-        [ASSETS_LABELS.NEO]: action.Neo,
-        [ASSETS_LABELS.GAS]: action.Gas
+        [ASSETS_LABELS.NEO]: Neo,
+        [ASSETS_LABELS.GAS]: Gas
       }
     case SET_NEO_PRICE:
+      const { neoPrice } = action.payload
       return {
         ...state,
-        neoPrice: action.neoPrice
+        neoPrice
       }
     case SET_GAS_PRICE:
+      const { gasPrice } = action.payload
       return {
         ...state,
-        gasPrice: action.gasPrice
+        gasPrice
       }
     case RESET_PRICE:
       return {
@@ -124,9 +126,10 @@ export default (state: Object = initialState, action: Object) => {
         gasPrice: 0
       }
     case SET_TRANSACTION_HISTORY:
+      const { transactions } = action.payload
       return {
         ...state,
-        transactions: action.transactions
+        transactions
       }
     default:
       return state
