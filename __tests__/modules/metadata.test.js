@@ -1,7 +1,7 @@
 import metadataReducer, { setNetwork, setBlockHeight, setBlockExplorer, SET_HEIGHT, SET_NETWORK, SET_EXPLORER } from '../../app/modules/metadata'
 
 describe('metadata module tests', () => {
-  const net = 'TestNet'
+  const network = 'TestNet'
   const blockHeight = 10
   const blockExplorer = 'Neoscan'
 
@@ -14,11 +14,13 @@ describe('metadata module tests', () => {
   describe('setNetwork tests', () => {
     const expectedAction = {
       type: SET_NETWORK,
-      net
+      payload: {
+        network
+      }
     }
 
     test('setNetwork action works', () => {
-      expect(setNetwork(net)).toEqual(expectedAction)
+      expect(setNetwork(network)).toEqual(expectedAction)
     })
 
     test('setNetwork reducer should return the initial state', () => {
@@ -28,7 +30,7 @@ describe('metadata module tests', () => {
     test('metadata reducer should handle SET_NETWORK', () => {
       const expectedState = {
         ...initialState,
-        network: net
+        network
       }
       expect(metadataReducer(undefined, expectedAction)).toEqual(expectedState)
     })
@@ -37,7 +39,9 @@ describe('metadata module tests', () => {
   describe('setBlockHeight tests', () => {
     const expectedAction = {
       type: SET_HEIGHT,
-      blockHeight
+      payload: {
+        blockHeight
+      }
     }
 
     test('setBlockHeight action works', () => {
@@ -56,7 +60,9 @@ describe('metadata module tests', () => {
   describe('setBlockExplorer tests', () => {
     const expectedAction = {
       type: SET_EXPLORER,
-      blockExplorer
+      payload: {
+        blockExplorer
+      }
     }
 
     test('setBlockExplorer action works', () => {

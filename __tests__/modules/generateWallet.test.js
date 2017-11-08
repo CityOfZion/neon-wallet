@@ -24,7 +24,8 @@ describe('generateWallet module tests', () => {
   }
 
   describe('newWallet tests', () => {
-    const expectedAction = Object.assign({}, account, { type: NEW_WALLET })
+    const payload = account
+    const expectedAction = Object.assign({}, { payload }, { type: NEW_WALLET })
 
     test('newWallet action works', () => {
       expect(newWallet(account)).toEqual(expectedAction)
@@ -43,7 +44,9 @@ describe('generateWallet module tests', () => {
   describe('newWalletKeys tests', () => {
     const expectedAction = {
       type: NEW_WALLET_KEYS,
-      passphrase
+      payload: {
+        passphrase
+      }
     }
 
     test('newWalletKeys action works', () => {
@@ -59,7 +62,9 @@ describe('generateWallet module tests', () => {
   describe('generating tests', () => {
     const expectedAction = {
       type: SET_GENERATING,
-      state: true
+      payload: {
+        generating: true
+      }
     }
 
     test('generating action works', () => {

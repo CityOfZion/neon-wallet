@@ -16,8 +16,7 @@ describe('wallet module tests', () => {
   describe('setBalance tests', () => {
     const expectedAction = {
       type: SET_BALANCE,
-      Neo,
-      Gas
+      payload: { Neo, Gas }
     }
 
     test('setBalance action works', () => {
@@ -41,7 +40,7 @@ describe('wallet module tests', () => {
   describe('setNeoPrice tests', () => {
     const expectedAction = {
       type: SET_NEO_PRICE,
-      neoPrice
+      payload: { neoPrice }
     }
 
     test('setNeoPrice action works', () => {
@@ -64,7 +63,7 @@ describe('wallet module tests', () => {
   describe('setGasPrice tests', () => {
     const expectedAction = {
       type: SET_GAS_PRICE,
-      gasPrice
+      payload: { gasPrice }
     }
 
     test('setGASPrice action works', () => {
@@ -102,7 +101,9 @@ describe('wallet module tests', () => {
     const transactions = ['random array', 'of any items', 'for this test']
     const expectedAction = {
       type: SET_TRANSACTION_HISTORY,
-      transactions
+      payload: {
+        transactions
+      }
     }
 
     test('setTransactionHistory action works', () => {
