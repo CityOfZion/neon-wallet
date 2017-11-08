@@ -4,6 +4,9 @@ import { log } from '../util/Logs'
 import { ASSETS } from '../core/constants'
 import { showErrorNotification, showSuccessNotification, showInfoNotification } from './notification'
 import { FIVE_MINUTES_MS } from '../core/time'
+import { getWif, getAddress, getSigningFunction, getPublicKey } from './account'
+import { getNetwork } from './metadata'
+import { getNeo } from './wallet'
 
 // Constants
 export const SET_CLAIM = 'SET_CLAIM'
@@ -41,11 +44,11 @@ export const syncAvailableClaim = (net: NetworkType, address: string) => (dispat
 
 export const doClaimNotify = () => (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
-  const wif = state.account.wif
-  const address = state.account.address
-  const net = state.metadata.network
-  const signingFunction = state.account.signingFunction
-  const publicKey = state.account.publicKey
+  const wif = getWif(state)
+  const address = getAddress(state)
+  const net = getNetwork(state)
+  const signingFunction = getSigningFunction(state)
+  const publicKey = getPublicKey(state)
 
   log(net, 'CLAIM', address, { info: 'claim all gas' })
 
@@ -78,12 +81,12 @@ export const doClaimNotify = () => (dispatch: DispatchType, getState: GetStateTy
 // When new claims are available, this will trigger the claim
 export const doGasClaim = () => (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
-  const wif = state.account.wif
-  const address = state.account.address
-  const net = state.metadata.network
-  const neo = state.wallet.Neo
-  const signingFunction = state.account.signingFunction
-  const publicKey = state.account.publicKey
+  const wif = getWif(state)
+  const address = getAddress(state)
+  const net = getNetwork(state)
+  const neo = getNeo(state)
+  const signingFunction = getSigningFunction(state)
+  const publicKey = getPublicKey(state)
 
   // if no neo in account, no need to send to self first
   if (neo === 0) {
@@ -117,14 +120,21 @@ export const doGasClaim = () => (dispatch: DispatchType, getState: GetStateType)
   }
 }
 
+// State Getters
+export const getClaimRequest = (state) => state.claim.claimRequest
+export const getClaimAmount = (state) => state.claim.claimAmount
+export const getClaimAvailable = (state) => state.claim.claimAvailable
+export const getClaimUnavailable = (state) => state.claim.claimUnavailable
+export const getClaimWasUpdated = (state) => state.claim.claimWasUpdated
+export const getDisableClaimButton = (state) => state.claim.disableClaimButton
+
 const initialState = {
   claimRequest: false,
   claimAmount: 0,
   claimAvailable: 0,
   claimUnavailable: 0,
   claimWasUpdated: false,
-  disableClaimButton: false,
-  signingFunction: () => ({})
+  disableClaimButton: false
 }
 
 export default (state: Object = initialState, action: Object) => {

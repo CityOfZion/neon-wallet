@@ -2,16 +2,18 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Dashboard from './Dashboard'
-import { togglePane } from '../../modules/dashboard'
-import { logout } from '../../modules/account'
+import { togglePane, getSendPane, getConfirmPane } from '../../modules/dashboard'
+import { logout, getAddress } from '../../modules/account'
+import { getBlockHeight, getNetwork } from '../../modules/metadata'
+import { getNotification } from '../../modules/notification'
 
 const mapStateToProps = (state: Object) => ({
-  sendPane: state.dashboard.sendPane,
-  confirmPane: state.dashboard.confirmPane,
-  blockHeight: state.metadata.blockHeight,
-  net: state.metadata.network,
-  address: state.account.address,
-  notification: state.notification
+  sendPane: getSendPane(state),
+  confirmPane: getConfirmPane(state),
+  blockHeight: getBlockHeight(state),
+  net: getNetwork(state),
+  address: getAddress(state),
+  notification: getNotification(state)
 })
 
 const actionCreators = {

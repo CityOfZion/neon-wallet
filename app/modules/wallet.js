@@ -84,6 +84,13 @@ export const initiateGetBalance = (net: NetworkType, address: string) => (dispat
   return dispatch(retrieveBalance(net, address))
 }
 
+// state getters
+export const getNeo = (state) => state.wallet.Neo
+export const getGas = (state) => state.wallet.Gas
+export const getTransactions = (state) => state.wallet.transactions
+export const getNeoPrice = (state) => state.wallet.neoPrice
+export const getGasPrice = (state) => state.wallet.gasPrice
+
 const initialState = {
   Neo: 0,
   Gas: 0,

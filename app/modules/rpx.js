@@ -1,6 +1,9 @@
 // @flow
 import { getTokenBalance, getAccountFromWIFKey, doMintTokens } from 'neon-js'
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notification'
+import { getAddress, getWif } from './account'
+import { getNetwork } from './metadata'
+import { getNeo } from './wallet'
 
 // Constants
 export const UPDATE_RPX_BALANCE = 'UPDATE_RPX_BALANCE'
@@ -15,8 +18,8 @@ export function updateRpxBalance (balance: number) {
 
 export const refreshTokenBalance = (scriptHash: string, silent: boolean = false) => (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
-  const address = state.account.address
-  const net = state.metadata.network
+  const address = getAddress(state)
+  const net = getNetwork(state)
 
   // TODO: add other check
   if (scriptHash.slice(0, 1) !== '0x' && scriptHash.length !== 42) {
@@ -36,9 +39,9 @@ export const refreshTokenBalance = (scriptHash: string, silent: boolean = false)
 
 export const participateInSale = (neoToSend: number, scriptHash: string) => (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
-  const wif = state.account.wif
-  const neo = state.wallet.Neo
-  const net = state.metadata.network
+  const wif = getWif(state)
+  const neo = getNeo(state)
+  const net = getNetwork(state)
 
   const account = getAccountFromWIFKey(wif)
   if (parseFloat(neoToSend) !== parseInt(neoToSend)) {
@@ -74,6 +77,9 @@ export const participateInSale = (neoToSend: number, scriptHash: string) => (dis
     return false
   })
 }
+
+// state getters
+export const getRPX = (state) => state.rpx.RPX
 
 const initialState = {
   RPX: 0

@@ -2,12 +2,13 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import NetworkSwitch from './NetworkSwitch'
-import { setNetwork, checkVersion } from '../../modules/metadata'
+import { setNetwork, checkVersion, getNetwork } from '../../modules/metadata'
 import { initiateGetBalance } from '../../modules/wallet'
+import { getAddress } from '../../modules/account'
 
 const mapStateToProps = (state) => ({
-  net: state.metadata.network,
-  address: state.account.address
+  net: getNetwork(state),
+  address: getAddress(state)
 })
 
 const actionCreators = {
