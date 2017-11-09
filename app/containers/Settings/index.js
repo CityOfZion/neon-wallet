@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import Settings from './Settings'
 import { setKeys, getAccountKeys } from '../../modules/account'
 import { setBlockExplorer, getBlockExplorer } from '../../modules/metadata'
+import { showModal } from '../../modules/modal'
 
 const mapStateToProps = (state: Object) => ({
   explorer: getBlockExplorer(state),
@@ -12,7 +13,8 @@ const mapStateToProps = (state: Object) => ({
 
 const actionCreators = {
   setKeys,
-  setBlockExplorer
+  setBlockExplorer,
+  showModal
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
