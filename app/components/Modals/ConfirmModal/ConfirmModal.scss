@@ -1,0 +1,24 @@
+.textContainer {
+    padding: 20px 0;
+}
+
+.modalFooter {
+    padding-top: 20px;
+    text-align: right;
+}
+
+.actionButton {
+    background-color: red;
+    &:hover {
+        background-color: red;
+    }
+}
+
+.cancelButton {
+    background: none;
+    border: 1px solid #999;
+    color: #000;
+    &:hover { 
+        background: none
+    }
+}

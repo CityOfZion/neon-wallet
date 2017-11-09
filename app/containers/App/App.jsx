@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react'
+import ModalRenderer from '../ModalRenderer'
 import Notification from '../../components/Notification'
 import classNames from 'classnames'
 import { NOTIFICATION_POSITIONS } from '../../core/constants'
@@ -29,6 +30,7 @@ class App extends Component<Props> {
           [styles.pushTop]: shouldPushTop,
           [styles.noAnimation]: noAnimation
         })}>{children}</div>
+        <ModalRenderer />
       </div>
     )
   }

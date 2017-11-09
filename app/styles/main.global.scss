@@ -1,4 +1,5 @@
 @import './variables';
+
 @media print {
     #newWallet {
         font-size: .8em;
@@ -409,5 +410,18 @@ input {
     &.solidTip {
         background-color: rgba(0, 0, 0, 1);
         z-index: $z-index-tooltip;
+    }
+}
+
+.ReactModalPortal {
+    .ReactModal__Overlay {
+        opacity: 0;
+        transition: opacity 200ms ease-in-out;
+        &--after-open {            
+            opacity: 1;
+        }
+        &--before-close {
+            opacity: 0;
+        }
     }
 }
