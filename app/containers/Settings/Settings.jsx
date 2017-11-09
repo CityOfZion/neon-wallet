@@ -6,14 +6,16 @@ import storage from 'electron-json-storage'
 import Delete from 'react-icons/lib/md/delete'
 import Page from '../../components/Page'
 import HomeButtonLink from '../../components/HomeButtonLink'
-import { EXPLORER } from '../../core/constants'
+import { EXPLORER, MODAL_TYPES } from '../../core/constants'
+
 const { dialog } = require('electron').remote
 
 type Props = {
   setKeys: Function,
   setBlockExplorer: Function,
   explorer: string,
-  wallets: any
+  wallets: any,
+  showModal: Function
 }
 
 type State = {
@@ -105,15 +107,19 @@ export default class Settings extends Component<Props, State> {
   }
 
   deleteWallet = (key: string) => {
-    const { setKeys } = this.props
-    if (window.confirm(`Please confirm deleting saved wallet - ${key}`)) {
-      // eslint-disable-next-line
-      storage.get('keys', (error, data) => {
-        delete data[key]
-        storage.set('keys', data)
-        setKeys(data)
-      })
-    }
+    const { setKeys, showModal } = this.props
+    showModal(MODAL_TYPES.CONFIRM, {
+      title: 'Confirm Delete',
+      text: `Please confirm deleting saved wallet - ${key}`,
+      onClick: () => {
+        // eslint-disable-next-line
+        storage.get('keys', (error, data) => {
+          delete data[key]
+          storage.set('keys', data)
+          setKeys(data)
+        })
+      }
+    })
   }
 
   render () {

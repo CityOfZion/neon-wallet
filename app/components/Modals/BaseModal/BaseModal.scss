@@ -1,0 +1,25 @@
+.modalHeader {
+    display: flex;
+    height: 45px;
+    padding: 0px 24px;
+    border-bottom: 1px solid #DAE1E9;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalHeaderTitle {
+    font-size: 18px;
+}
+
+.modalHeaderCloseButton {
+    width: 18px;
+    height: 18px;
+    margin-left: auto;
+    fill: #9BA6B2;
+    cursor: pointer;
+}
+
+.modalBody {
+    padding: 0px 16px;
+}

@@ -56,3 +56,8 @@ export const BIP44_PATH =
   '80000000' +
   '00000000' +
   '00000000'
+
+export const MODAL_TYPES = {
+  SEND_TRANSACTION: 'SEND_TRANSACTION',
+  CONFIRM: 'CONFIRM'
+}
