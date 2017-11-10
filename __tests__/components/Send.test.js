@@ -5,13 +5,10 @@ import configureStore from 'redux-mock-store'
 import { shallow, mount } from 'enzyme'
 import { TOGGLE_SEND_PANE } from '../../app/modules/dashboard'
 import { TOGGLE_ASSET } from '../../app/modules/transactions'
-import { SHOW_NOTIFICATION, HIDE_NOTIFICATION } from '../../app/modules/notification'
+import { SHOW_NOTIFICATION } from '../../app/modules/notification'
 import Send from '../../app/containers/Send'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-
-jest.useFakeTimers()
-jest.mock('neon-js')
 
 const axiosMock = new MockAdapter(axios)
 axiosMock.onAny().reply(200)
@@ -87,145 +84,6 @@ describe('Send', () => {
     done()
   })
 
-  test('sendAsset button is getting called correctly with no address or amount sent', (done) => {
-    const { wrapper, store } = setup(initialState, false)
-    wrapper.find('#doSend').simulate('click')
-
-    jest.runAllTimers()
-    const actions = store.getActions()
-    expect(actions.length === 2).toEqual(true)
-    expect(actions[0]).toEqual({
-      type: SHOW_NOTIFICATION,
-      payload: {
-        message: 'Please specify an address and amount',
-        type: 'ERROR'
-      }
-    })
-    expect(actions[1]).toEqual({
-      type: HIDE_NOTIFICATION
-    })
-    done()
-  })
-
-  test('sendAsset button is getting called correctly with invalid address', (done) => {
-    const { wrapper, store } = setup(initialState, false)
-
-    changeAddress('This-is-an-invalid-address', wrapper)
-    changeAmount(initialState.wallet.Neo, wrapper)
-
-    wrapper.find('#doSend').simulate('click')
-
-    jest.runAllTimers()
-    const actions = store.getActions()
-    expect(actions.length === 2).toEqual(true)
-    expect(actions[0]).toEqual({
-      type: SHOW_NOTIFICATION,
-      payload: {
-        message: 'The address you entered was not valid.',
-        type: 'ERROR'
-      }
-    })
-    expect(actions[1]).toEqual({
-      type: HIDE_NOTIFICATION
-    })
-    done()
-  })
-
-  test('sendAsset button is getting called correctly with fractional NEO', (done) => {
-    const { wrapper, store } = setup(initialState, false)
-
-    changeAddress(initialState.account.address, wrapper)
-    changeAmount(initialState.wallet.Neo + 0.5, wrapper)
-
-    wrapper.find('#doSend').simulate('click')
-
-    jest.runAllTimers()
-    const actions = store.getActions()
-    expect(actions.length === 2).toEqual(true)
-    expect(actions[0]).toEqual({
-      type: SHOW_NOTIFICATION,
-      payload: {
-        message: 'You cannot send fractional amounts of Neo.',
-        type: 'ERROR'
-      }
-    })
-    expect(actions[1]).toEqual({
-      type: HIDE_NOTIFICATION
-    })
-    done()
-  })
-
-  test('sendAsset button is getting called correctly with no NEO amount', (done) => {
-    const { wrapper, store } = setup(initialState, false)
-
-    changeAddress(initialState.account.address, wrapper)
-
-    wrapper.find('#doSend').simulate('click')
-
-    jest.runAllTimers()
-    const actions = store.getActions()
-    expect(actions.length === 2).toEqual(true)
-    expect(actions[0]).toEqual({
-      type: SHOW_NOTIFICATION,
-      payload: {
-        message: 'Please specify an address and amount',
-        type: 'ERROR'
-      }
-    })
-    expect(actions[1]).toEqual({
-      type: HIDE_NOTIFICATION
-    })
-    done()
-  })
-
-  test('sendAsset button is getting called correctly with not enough NEO', (done) => {
-    const { wrapper, store } = setup(initialState, false)
-
-    changeAddress(initialState.account.address, wrapper)
-    changeAmount(initialState.wallet.Neo + 1, wrapper)
-
-    wrapper.find('#doSend').simulate('click')
-
-    jest.runAllTimers()
-    const actions = store.getActions()
-    expect(actions.length === 2).toEqual(true)
-    expect(actions[0]).toEqual({
-      type: SHOW_NOTIFICATION,
-      payload: {
-        message: 'You do not have enough NEO to send.',
-        type: 'ERROR'
-      }
-    })
-    expect(actions[1]).toEqual({
-      type: HIDE_NOTIFICATION
-    })
-    done()
-  })
-
-  test('sendAsset button is getting called correctly with negative NEO', (done) => {
-    const { wrapper, store } = setup(initialState, false)
-
-    changeAddress(initialState.account.address, wrapper)
-    changeAmount(-1, wrapper)
-
-    wrapper.find('#doSend').simulate('click')
-
-    jest.runAllTimers()
-    const actions = store.getActions()
-    expect(actions.length === 2).toEqual(true)
-    expect(actions[0]).toEqual({
-      type: SHOW_NOTIFICATION,
-      payload: {
-        message: 'You cannot send negative amounts of an asset.',
-        type: 'ERROR'
-      }
-    })
-    expect(actions[1]).toEqual({
-      type: HIDE_NOTIFICATION
-    })
-    done()
-  })
-
   test('sendAsset button is getting called correctly with correct NEO amount', (done) => {
     const { wrapper, store } = setup(initialState, false)
 
@@ -241,31 +99,6 @@ describe('Send', () => {
       payload: {
         pane: 'confirmPane'
       }
-    })
-    done()
-  })
-
-  test('sendAsset button is getting called correctly for without enough Gas', (done) => {
-    const gasState = Object.assign({}, initialState, { transactions: { selectedAsset: 'Gas' } })
-    const { wrapper, store } = setup(gasState, false)
-
-    changeAddress(initialState.account.address, wrapper)
-    changeAmount(initialState.wallet.Gas + 1, wrapper)
-
-    wrapper.find('#doSend').simulate('click')
-
-    jest.runAllTimers()
-    const actions = store.getActions()
-    expect(actions.length === 2).toEqual(true)
-    expect(actions[0]).toEqual({
-      type: SHOW_NOTIFICATION,
-      payload: {
-        message: 'You do not have enough GAS to send.',
-        type: 'ERROR'
-      }
-    })
-    expect(actions[1]).toEqual({
-      type: HIDE_NOTIFICATION
     })
     done()
   })
@@ -298,29 +131,33 @@ describe('Send', () => {
 
     wrapper.find('#confirmPane').simulate('click')
 
-    Promise.resolve('pause').then(() => {
-      jest.runAllTimers()
-      const actions = store.getActions()
-      expect(actions.length).toEqual(3)
-      expect(actions[0]).toEqual({
-        type: SHOW_NOTIFICATION,
-        payload: {
-          message: 'Processing...',
-          type: 'INFO'
-        }
-      })
-      expect(actions[1]).toEqual({
-        type: SHOW_NOTIFICATION,
-        payload: {
-          message: 'Transaction complete! Your balance will automatically update when the blockchain has processed it.',
-          type: 'SUCCESS'
-        }
-      })
-      expect(actions[2]).toEqual({
-        type: HIDE_NOTIFICATION
-      })
-      done()
-    }).catch(e => done.fail(e))
+    setTimeout(() => {
+      try {
+        const actions = store.getActions()
+        expect(actions.length).toEqual(3)
+        expect(actions[0]).toEqual({
+          type: SHOW_NOTIFICATION,
+          payload: {
+            message: 'Processing...',
+            type: 'INFO'
+          }
+        })
+        expect(actions[1]).toEqual({
+          type: SHOW_NOTIFICATION,
+          payload: {
+            message: 'Transaction complete! Your balance will automatically update when the blockchain has processed it.',
+            type: 'SUCCESS'
+          }
+        })
+        expect(actions[2]).toEqual({
+          type: TOGGLE_SEND_PANE,
+          payload: { pane: 'confirmPane' }
+        })
+        done()
+      } catch (e) {
+        done.fail(e)
+      }
+    }, 0)
   })
 
   test('component is rendering correctly', (done) => {

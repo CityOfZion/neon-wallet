@@ -71,7 +71,7 @@ const getDefaultNotificationArgs = ({ dismissAfter, dismissible }: NotificationA
 })
 
 export const showSuccessNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
-  notificationFactory({
+  return notificationFactory({
     ...args,
     ...getDefaultNotificationArgs(args, dispatch, getState),
     type: NOTIFICATION_TYPES.SUCCESS
@@ -79,11 +79,11 @@ export const showSuccessNotification = (args: NotificationArgsType) => (dispatch
 }
 
 export const showStickySuccessNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
-  dispatch(showSuccessNotification({ ...args, dismissible: false }))
+  return dispatch(showSuccessNotification({ ...args, dismissible: false }))
 }
 
 export const showErrorNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
-  notificationFactory({
+  return notificationFactory({
     ...args,
     ...getDefaultNotificationArgs(args, dispatch, getState),
     type: NOTIFICATION_TYPES.ERROR
@@ -91,11 +91,11 @@ export const showErrorNotification = (args: NotificationArgsType) => (dispatch: 
 }
 
 export const showStickyErrorNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
-  dispatch(showErrorNotification({ ...args, dismissible: false }))
+  return dispatch(showErrorNotification({ ...args, dismissible: false }))
 }
 
 export const showWarningNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
-  notificationFactory({
+  return notificationFactory({
     ...args,
     ...getDefaultNotificationArgs(args, dispatch, getState),
     type: NOTIFICATION_TYPES.WARNING
@@ -103,11 +103,11 @@ export const showWarningNotification = (args: NotificationArgsType) => (dispatch
 }
 
 export const showStickyWarningNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
-  dispatch(showErrorNotification({ ...args, dismissible: false }))
+  return dispatch(showErrorNotification({ ...args, dismissible: false }))
 }
 
 export const showInfoNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
-  notificationFactory({
+  return notificationFactory({
     ...args,
     ...getDefaultNotificationArgs(args, dispatch, getState),
     type: NOTIFICATION_TYPES.INFO
@@ -115,7 +115,7 @@ export const showInfoNotification = (args: NotificationArgsType) => (dispatch: D
 }
 
 export const showStickyInfoNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
-  dispatch(showInfoNotification({ ...args, dismissible: false }))
+  return dispatch(showInfoNotification({ ...args, dismissible: false }))
 }
 
 // state Getters

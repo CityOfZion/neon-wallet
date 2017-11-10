@@ -66,9 +66,8 @@ describe('Claim', () => {
   })
 
   describe('when do gas claim button is clicked', () => {
-    test('should dispatch transaction failure event', (done) => {
+    test('should dispatch transaction failure event', async (done) => {
       const { wrapper, store } = setup()
-      const response = Promise.resolve('pause')
       neonjs.doSendAsset = jest.fn(() => {
         return new Promise((resolve, reject) => {
           resolve({ result: undefined })
@@ -76,34 +75,30 @@ describe('Claim', () => {
       })
       wrapper.dive().find('#claim button').simulate('click')
 
-      response.then(() => {
-        try {
-          const actions = store.getActions()
-          expect(actions.length).toEqual(2)
-          expect(actions[0]).toEqual({
-            payload: {
-              message: 'Sending Neo to Yourself...',
-              type: 'INFO'
-            },
-            type: 'SHOW_NOTIFICATION'
-          })
-          expect(actions[1]).toEqual({
-            payload: {
-              message: 'Transaction failed!',
-              type: 'ERROR'
-            },
-            type: 'SHOW_NOTIFICATION'
-          })
-          done()
-        } catch (e) {
-          done.fail(e)
-        }
+      await Promise.resolve()
+      await Promise.resolve()
+      await Promise.resolve()
+      const actions = store.getActions()
+      expect(actions.length).toEqual(2)
+      expect(actions[0]).toEqual({
+        payload: {
+          message: 'Sending Neo to Yourself...',
+          type: 'INFO'
+        },
+        type: 'SHOW_NOTIFICATION'
       })
+      expect(actions[1]).toEqual({
+        payload: {
+          message: 'Transaction failed!',
+          type: 'ERROR'
+        },
+        type: 'SHOW_NOTIFICATION'
+      })
+      done()
     })
 
-    test('should dispatch transaction waiting, set claim request and disable claim event', (done) => {
+    test('should dispatch transaction waiting, set claim request and disable claim event', async (done) => {
       const { wrapper, store } = setup()
-      const response = Promise.resolve('pause')
       neonjs.doSendAsset = jest.fn(() => {
         return new Promise((resolve, reject) => {
           resolve({ result: true })
@@ -112,31 +107,28 @@ describe('Claim', () => {
 
       wrapper.dive().find('#claim button').simulate('click')
 
-      response.then(() => {
-        try {
-          const actions = store.getActions()
-          expect(actions.length).toEqual(4)
-          expect(actions[0]).toEqual({
-            payload: {
-              message: 'Sending Neo to Yourself...',
-              type: 'INFO'
-            },
-            type: 'SHOW_NOTIFICATION'
-          })
-          expect(actions[1]).toEqual({
-            payload: {
-              message: 'Waiting for transaction to clear...',
-              type: 'INFO'
-            },
-            type: 'SHOW_NOTIFICATION'
-          })
-          expect(actions[2]).toEqual(setClaimRequest(true))
-          expect(actions[3]).toEqual(disableClaim(true))
-          done()
-        } catch (e) {
-          done.fail(e)
-        }
+      await Promise.resolve()
+      await Promise.resolve()
+      await Promise.resolve()
+      const actions = store.getActions()
+      expect(actions.length).toEqual(4)
+      expect(actions[0]).toEqual({
+        payload: {
+          message: 'Sending Neo to Yourself...',
+          type: 'INFO'
+        },
+        type: 'SHOW_NOTIFICATION'
       })
+      expect(actions[1]).toEqual({
+        payload: {
+          message: 'Waiting for transaction to clear...',
+          type: 'INFO'
+        },
+        type: 'SHOW_NOTIFICATION'
+      })
+      expect(actions[2]).toEqual(setClaimRequest(true))
+      expect(actions[3]).toEqual(disableClaim(true))
+      done()
     })
   })
 })
