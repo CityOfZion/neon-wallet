@@ -71,9 +71,7 @@ describe('NetworkSwitch', () => {
     ]
     deepWrapper.find('.netName').simulate('click')
 
-    await Promise.resolve()
-    await Promise.resolve()
-    await Promise.resolve()
+    await Promise.resolve().then().then().then()
     const actions = store.getActions()
     actions.forEach(action => {
       expect(actionTypes.indexOf(action.type) > -1).toEqual(true)

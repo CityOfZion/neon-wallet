@@ -107,9 +107,7 @@ describe('Claim', () => {
 
       wrapper.dive().find('#claim button').simulate('click')
 
-      await Promise.resolve()
-      await Promise.resolve()
-      await Promise.resolve()
+      await Promise.resolve().then().then().then()
       const actions = store.getActions()
       expect(actions.length).toEqual(4)
       expect(actions[0]).toEqual({
