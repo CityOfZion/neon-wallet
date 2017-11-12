@@ -44,24 +44,21 @@ export function setKeys (accountKeys: any) {
 }
 
 export const loginNep2 = (passphrase: string, wif: string, history: Object) => (dispatch: DispatchType) => {
+  const dispatchError = (message: string) => dispatch(showErrorNotification({ message }))
+
   if (!validatePassphrase(passphrase)) {
-    dispatch(showErrorNotification({ message: 'Passphrase too short' }))
+    return dispatchError('Passphrase too short')
   }
   dispatch(showInfoNotification({ message: 'Decrypting encoded key...' }))
-  const wrongPassphraseOrEncryptedKeyError = () => {
-    dispatch(showErrorNotification({ message: 'Wrong passphrase or invalid encrypted key' }))
-  }
-  setTimeout(() => {
+
+  setTimeout(async () => {
     try {
-      decryptWIF(wif, passphrase).then((wif) => {
-        dispatch(hideNotification({ noAnimation: true }))
-        dispatch(login(wif))
-        history.push(ROUTES.DASHBOARD)
-      }).catch(() => {
-        wrongPassphraseOrEncryptedKeyError()
-      })
+      const [_err, responseWif] = await asyncWrap(decryptWIF(wif, passphrase)) // eslint-disable-line
+      dispatch(hideNotification({ noAnimation: true }))
+      dispatch(login(responseWif))
+      return history.push(ROUTES.DASHBOARD)
     } catch (e) {
-      wrongPassphraseOrEncryptedKeyError()
+      return dispatchError('Wrong passphrase or invalid encrypted key')
     }
   }, 500)
 }
@@ -90,9 +87,9 @@ export function hardwarePublicKey (publicKey: string) {
 export const loginWithPrivateKey = (wif: string, history: Object, route?: RouteType) => (dispatch: DispatchType) => {
   if (verifyPrivateKey(wif)) {
     dispatch(login(wif))
-    history.push(route || ROUTES.DASHBOARD)
+    return history.push(route || ROUTES.DASHBOARD)
   } else {
-    dispatch(showErrorNotification({ message: 'That is not a valid private key' }))
+    return dispatch(showErrorNotification({ message: 'That is not a valid private key' }))
   }
 }
 

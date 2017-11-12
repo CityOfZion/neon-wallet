@@ -11,7 +11,6 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
 jest.useFakeTimers()
-jest.mock('neon-js')
 
 const axiosMock = new MockAdapter(axios)
 axiosMock.onAny().reply(200)
@@ -298,7 +297,7 @@ describe('Send', () => {
 
     wrapper.find('#confirmPane').simulate('click')
 
-    Promise.resolve('pause').then(() => {
+    Promise.resolve('pause').then().then().then(() => {
       jest.runAllTimers()
       const actions = store.getActions()
       expect(actions.length).toEqual(3)

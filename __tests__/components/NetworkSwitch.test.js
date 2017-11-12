@@ -57,7 +57,7 @@ describe('NetworkSwitch', () => {
     done()
   })
 
-  test('switches to TestNet when clicked', (done) => {
+  test('switches to TestNet when clicked', async () => {
     const { wrapper, store } = setup()
     const state = store.getState()
     const deepWrapper = wrapper.dive()
@@ -70,13 +70,12 @@ describe('NetworkSwitch', () => {
       SET_BALANCE
     ]
     deepWrapper.find('.netName').simulate('click')
-    setTimeout(() => {
-      const actions = store.getActions()
-      actions.forEach(action => {
-        expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
-      })
-      expect(actions.length).toEqual(5)
-      done()
-    }, 0)
+
+    await Promise.resolve().then().then().then()
+    const actions = store.getActions()
+    actions.forEach(action => {
+      expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
+    })
+    expect(actions.length).toEqual(5)
   })
 })
