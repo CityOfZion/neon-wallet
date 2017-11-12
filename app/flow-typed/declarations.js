@@ -22,6 +22,7 @@ declare type ExplorerType = $Values<typeof EXPLORER>
 declare type RouteType = $Values<typeof ROUTES>
 
 declare type NotificationType = {
+  id: string,
   type: $Values<typeof NOTIFICATION_TYPES>,
   title: ?string,
   message: string,

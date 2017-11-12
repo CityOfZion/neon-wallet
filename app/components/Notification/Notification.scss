@@ -3,30 +3,12 @@
 // Styles adapted from https://github.com/igorprado/react-notification-system
 
 .notification {
-	position: fixed;
     cursor: pointer;
 	text-align: center;
 	box-sizing: border-box;
-	opacity: 0;
-	pointer-events: none;
-
-	// default animation
-	transition: opacity ease-in-out 150ms;
-
-	&.top {
-		top: 0
-	}
-
-	&.bottom {
-		bottom: 0
-	}
-
-	&.shown {
-		opacity: 1;
-		z-index: $z-index-notification;
-		pointer-events: auto;
-	}
-
+	margin-bottom: 10px;
+	overflow: hidden;
+	
 	&.noAnimation {
 		transition: none
 	}

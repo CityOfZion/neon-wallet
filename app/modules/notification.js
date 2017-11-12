@@ -1,5 +1,5 @@
 // @flow
-import { omit, isNil } from 'lodash'
+import { omit, isNil, reject, uniqueId } from 'lodash'
 import { NOTIFICATION_TYPES, NOTIFICATION_POSITIONS, DEFAULT_NOTIFICATION_TIMEOUT } from '../core/constants'
 
 let notificationTimeoutId
@@ -13,15 +13,13 @@ type NotificationArgsType = {
   dismissAfter?: number,
   html?: boolean,
   noAnimation?: boolean,
-  onClick?: ?Function
-}
-
-type HideNotificationType = {
-  noAnimation?: boolean,
+  onClick?: ?Function,
+  fullScreen?: boolean
 }
 
 type ShowNotificationType = NotificationArgsType & {
   type: $Values<typeof NOTIFICATION_TYPES>,
+  id: string,
 }
 
 type NotificationFactoryArgsType = ShowNotificationType & {
@@ -38,11 +36,12 @@ const notificationFactory = (args: NotificationFactoryArgsType) => {
   if (notificationTimeoutId) {
     clearTimeout(notificationTimeoutId)
   }
-  const argsToRemove = ['dispatch', 'isShown', 'dismissible', 'dismissAfter']
-  dispatch(showNotification(omit(args, argsToRemove)))
+  const id = uniqueId('notification_')
+  const notificationId = dispatch(showNotification({id, ...omit(args, 'dispatch')}))
   if (dismissible) {
-    notificationTimeoutId = setTimeout(() => dispatch(hideNotification()), dismissAfter)
+    notificationTimeoutId = setTimeout(() => dispatch(hideNotification({ id })), dismissAfter)
   }
+  return notificationId
 }
 
 // Constants
@@ -50,30 +49,31 @@ export const SHOW_NOTIFICATION = 'SHOW_NOTIFICATION'
 export const HIDE_NOTIFICATION = 'HIDE_NOTIFICATION'
 
 // Actions
-export function showNotification (args: ShowNotificationType) {
-  return {
+export const showNotification = (args: ShowNotificationType) => (dispatch: DispatchType) => {
+  dispatch({
     type: SHOW_NOTIFICATION,
     payload: args
-  }
+  })
+  return args.id
 }
 
-export function hideNotification (args?: HideNotificationType) {
-  return {
-    type: HIDE_NOTIFICATION,
-    payload: args
-  }
-}
+export const hideNotification = (args: ShowNotificationType) => ({
+  type: HIDE_NOTIFICATION,
+  payload: args
+})
 
-const getDefaultNotificationArgs = ({ dismissAfter, dismissible }: NotificationArgsType, dispatch: DispatchType, getState: GetStateType) => ({
+const getDefaultNotificationArgs = ({ dismissAfter, dismissible, fullScreen }: NotificationArgsType, dispatch: DispatchType, getState: GetStateType) => ({
+  width: fullScreen ? '100%' : '400px',
+  position: NOTIFICATION_POSITIONS.TOP_RIGHT,
   dismissAfter: isNil(dismissAfter) ? DEFAULT_NOTIFICATION_TIMEOUT : dismissAfter,
   dismissible: isNil(dismissible) ? true : dismissible,
   dispatch
 })
 
 export const showSuccessNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
-  notificationFactory({
-    ...args,
+  return notificationFactory({
     ...getDefaultNotificationArgs(args, dispatch, getState),
+    ...args,
     type: NOTIFICATION_TYPES.SUCCESS
   })
 }
@@ -83,79 +83,53 @@ export const showStickySuccessNotification = (args: NotificationArgsType) => (di
 }
 
 export const showErrorNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
-  notificationFactory({
-    ...args,
+  return notificationFactory({
     ...getDefaultNotificationArgs(args, dispatch, getState),
+    ...args,
     type: NOTIFICATION_TYPES.ERROR
   })
 }
 
 export const showStickyErrorNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
-  dispatch(showErrorNotification({ ...args, dismissible: false }))
+  return dispatch(showErrorNotification({ ...args, dismissible: false }))
 }
 
 export const showWarningNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
-  notificationFactory({
-    ...args,
+  return notificationFactory({
     ...getDefaultNotificationArgs(args, dispatch, getState),
+    ...args,
     type: NOTIFICATION_TYPES.WARNING
   })
 }
 
 export const showStickyWarningNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
-  dispatch(showErrorNotification({ ...args, dismissible: false }))
+  return dispatch(showErrorNotification({ ...args, dismissible: false }))
 }
 
 export const showInfoNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
-  notificationFactory({
-    ...args,
+  return notificationFactory({
     ...getDefaultNotificationArgs(args, dispatch, getState),
+    ...args,
     type: NOTIFICATION_TYPES.INFO
   })
 }
 
 export const showStickyInfoNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
-  dispatch(showInfoNotification({ ...args, dismissible: false }))
+  return dispatch(showInfoNotification({ ...args, dismissible: false }))
 }
 
 // state Getters
-export const getNotification = (state) => state.notification
-export const getTitle = (state) => state.notification.title
-export const getMessage = (state) => state.notification.message
-export const getType = (state) => state.notification.type
-export const getPosition = (state) => state.notification.position
-export const getIsShown = (state) => state.notification.isShown
-export const getWidth = (state) => state.notification.width
-export const getHtml = (state) => state.notification.html
-export const getOnClick = (state) => state.notification.onClick
-export const getNoAnimation = (state) => state.notification.noAnimation
+export const getNotifications = (state: Object) => state.notification
 
-const initialState = {
-  title: '',
-  message: '',
-  type: NOTIFICATION_TYPES.INFO,
-  position: NOTIFICATION_POSITIONS.TOP,
-  isShown: false,
-  width: '100%',
-  html: false,
-  onClick: null,
-  noAnimation: false
-}
-
-export default (state: Object = initialState, action: Object) => {
+export default (state: Array<NotificationArgsType> = [], action: Object) => {
   switch (action.type) {
     case SHOW_NOTIFICATION:
-      return {
-        ...initialState,
-        ...action.payload,
-        isShown: true
-      }
-    case HIDE_NOTIFICATION:
-      return {
+      return [
         ...state,
-        ...action.payload,
-        isShown: false
-      }
+        { ...action.payload }
+      ]
+    case HIDE_NOTIFICATION:
+      return reject(state, action.payload)
     default:
       return state
   }

@@ -47,14 +47,17 @@ export const loginNep2 = (passphrase: string, wif: string, history: Object) => (
   if (!validatePassphrase(passphrase)) {
     dispatch(showErrorNotification({ message: 'Passphrase too short' }))
   }
-  dispatch(showInfoNotification({ message: 'Decrypting encoded key...' }))
+  dispatch(hideNotification({ dismissible: true }))
+
+  const infoNotificationId = dispatch(showInfoNotification({ message: 'Decrypting encoded key...', dismissible: false, width: '500px', position: 'TOP' }))
   const wrongPassphraseOrEncryptedKeyError = () => {
-    dispatch(showErrorNotification({ message: 'Wrong passphrase or invalid encrypted key' }))
+    dispatch(hideNotification({ id: infoNotificationId }))
+    dispatch(showErrorNotification({ message: 'Wrong passphrase or invalid encrypted key', width: '500px', position: 'TOP' }))
   }
   setTimeout(() => {
     try {
       decryptWIF(wif, passphrase).then((wif) => {
-        dispatch(hideNotification({ noAnimation: true }))
+        dispatch(hideNotification({ id: infoNotificationId, noAnimation: true }))
         dispatch(login(wif))
         history.push(ROUTES.DASHBOARD)
       }).catch(() => {
