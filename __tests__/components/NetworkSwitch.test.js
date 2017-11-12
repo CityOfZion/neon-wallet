@@ -57,7 +57,7 @@ describe('NetworkSwitch', () => {
     done()
   })
 
-  test('switches to TestNet when clicked', async (done) => {
+  test('switches to TestNet when clicked', async () => {
     const { wrapper, store } = setup()
     const state = store.getState()
     const deepWrapper = wrapper.dive()
@@ -77,6 +77,5 @@ describe('NetworkSwitch', () => {
       expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
     })
     expect(actions.length).toEqual(5)
-    done()
   })
 })

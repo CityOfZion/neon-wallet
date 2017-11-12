@@ -66,7 +66,7 @@ describe('Claim', () => {
   })
 
   describe('when do gas claim button is clicked', () => {
-    test('should dispatch transaction failure event', async (done) => {
+    test('should dispatch transaction failure event', async () => {
       const { wrapper, store } = setup()
       neonjs.doSendAsset = jest.fn(() => {
         return new Promise((resolve, reject) => {
@@ -92,10 +92,9 @@ describe('Claim', () => {
         },
         type: 'SHOW_NOTIFICATION'
       })
-      done()
     })
 
-    test('should dispatch transaction waiting, set claim request and disable claim event', async (done) => {
+    test('should dispatch transaction waiting, set claim request and disable claim event', async () => {
       const { wrapper, store } = setup()
       neonjs.doSendAsset = jest.fn(() => {
         return new Promise((resolve, reject) => {
@@ -124,7 +123,6 @@ describe('Claim', () => {
       })
       expect(actions[2]).toEqual(setClaimRequest(true))
       expect(actions[3]).toEqual(disableClaim(true))
-      done()
     })
   })
 })
