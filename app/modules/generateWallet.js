@@ -3,6 +3,7 @@ import storage from 'electron-json-storage'
 import { generateEncryptedWif, getAccountFromWIFKey, generatePrivateKey, getWIFFromPrivateKey, encryptWIF, encryptWifAccount } from 'neon-js'
 import { showErrorNotification, showInfoNotification, hideNotification } from './notification'
 import { validatePassphrase, checkMatchingPassphrases } from '../core/wallet'
+import asyncWrap from '../core/asyncHelper'
 
 // Constants
 export const NEW_WALLET_KEYS = 'NEW_WALLET_KEYS'
@@ -47,68 +48,54 @@ export const saveKey = (keyName: string, passphraseKey: string) => (dispatch: Di
   if (!keyName) { return null }
 
   // eslint-disable-next-line
-  storage.get('keys', (error, data) => {
+  return storage.get('keys', (error, data) => {
     data[keyName] = passphraseKey
     dispatch(showInfoNotification({ message: `Saved key as ${keyName}` }))
     storage.set('keys', data)
   })
 }
 
-export const generateWalletFromWif = (passphrase: string, passphrase2: string, wif: string) => (dispatch: DispatchType): Promise<*> => {
-  return new Promise((resolve, reject) => {
-    const rejectPromise = (error) => {
-      dispatch(showErrorNotification({ message: error }))
-      reject(new Error(error))
-    }
+export const generateWalletFromWif = (passphrase: string, passphrase2: string, wif: string) => async (dispatch: DispatchType): Promise<*> => {
+  const dispatchError = (message: string) => dispatch(showErrorNotification({ message }))
 
-    if (checkMatchingPassphrases(passphrase, passphrase2)) {
-      rejectPromise('Passphrases do not match')
-    } else if (validatePassphrase(passphrase)) {
-      dispatch(showInfoNotification({ message: 'Generating encoded key...', dismissible: false }))
-      setTimeout(() => {
-        try {
-          encryptWifAccount(wif, passphrase).then((result) => {
-            dispatch(hideNotification({ noAnimation: true }))
-            dispatch(newWallet(result))
-            resolve()
-          })
-        } catch (e) {
-          rejectPromise('The private key is not valid')
-        }
-      }, 500)
-    } else {
-      rejectPromise('Please choose a longer passphrase')
-    }
-  })
+  if (checkMatchingPassphrases(passphrase, passphrase2)) {
+    return dispatchError('Passphrases do not match')
+  } else if (validatePassphrase(passphrase)) {
+    dispatch(showInfoNotification({ message: 'Generating encoded key...', dismissible: false }))
+    setTimeout(async () => {
+      try {
+        const [_err, result] = await asyncWrap(encryptWifAccount(wif, passphrase)) // eslint-disable-line
+        dispatch(hideNotification({ noAnimation: true }))
+        return dispatch(newWallet(result))
+      } catch (e) {
+        return dispatchError('The private key is not valid')
+      }
+    }, 500)
+  } else {
+    return dispatchError('Please choose a longer passphrase')
+  }
 }
 
-export const generateNewWallet = (passphrase: string, passphrase2: string) => (dispatch: DispatchType): Promise<*> => {
-  return new Promise((resolve, reject) => {
-    const rejectPromise = (error) => {
-      dispatch(showErrorNotification({ message: error }))
-      reject(new Error(error))
-    }
+export const generateNewWallet = (passphrase: string, passphrase2: string) => async (dispatch: DispatchType): Promise<*> => {
+  const dispatchError = (message: string) => dispatch(showErrorNotification({ message }))
 
-    if (checkMatchingPassphrases(passphrase, passphrase2)) {
-      rejectPromise('Passphrases do not match')
-    } else if (validatePassphrase(passphrase)) {
-      dispatch(showInfoNotification({ message: 'Generating encoded key...', dismissible: false }))
-      setTimeout(() => {
-        try {
-          generateEncryptedWif(passphrase).then((result) => {
-            dispatch(hideNotification({ noAnimation: true }))
-            dispatch(newWallet(result))
-            // dispatch(showSuccessNotification({ message: 'Wallet created successfully' }))
-            resolve()
-          })
-        } catch (e) {
-          rejectPromise('An error occured while trying to generate a new wallet')
-        }
-      }, 500)
-    } else {
-      rejectPromise('Please choose a longer passphrase')
-    }
-  })
+  if (checkMatchingPassphrases(passphrase, passphrase2)) {
+    return dispatchError('Passphrases do not match')
+  } else if (validatePassphrase(passphrase)) {
+    dispatch(showInfoNotification({ message: 'Generating encoded key...', dismissible: false }))
+    setTimeout(async () => {
+      try {
+        const [_err, result] = await asyncWrap(generateEncryptedWif(passphrase)) //eslint-disable-line
+        dispatch(hideNotification({ noAnimation: true }))
+        return dispatch(newWallet(result))
+        // dispatch(showSuccessNotification({ message: 'Wallet created successfully' }))
+      } catch (e) {
+        return dispatchError('An error occured while trying to generate a new wallet')
+      }
+    }, 500)
+  } else {
+    return dispatchError('Please choose a longer passphrase')
+  }
 }
 
 // state getters
