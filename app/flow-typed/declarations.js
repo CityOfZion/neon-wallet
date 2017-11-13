@@ -4,7 +4,7 @@ import {
   NETWORK,
   EXPLORER,
   ROUTES,
-  NOTIFICATION_TYPES,
+  NOTIFICATION_LEVELS,
   NOTIFICATION_POSITIONS,
   MODAL_TYPES
 } from '../core/constants'
@@ -23,13 +23,10 @@ declare type RouteType = $Values<typeof ROUTES>
 
 declare type NotificationType = {
   id: string,
-  type: $Values<typeof NOTIFICATION_TYPES>,
+  type: $Values<typeof NOTIFICATION_LEVELS>,
   title: ?string,
   message: string,
-  width: string,
   position: $Values<typeof NOTIFICATION_POSITIONS>,
-  isShown: boolean,
-  noAnimation: boolean,
   html: boolean,
   onClick: ?Function
 }

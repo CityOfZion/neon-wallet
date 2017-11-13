@@ -3,9 +3,7 @@ import { getWalletDBHeight, getAPIEndpoint } from 'neon-js'
 import axios from 'axios'
 import { version } from '../../package.json'
 import { showWarningNotification } from './notification'
-import { NETWORK, EXPLORER, NEON_WALLET_RELEASE_LINK } from '../core/constants'
-import { openExternal } from '../core/electron'
-import { FIVE_MINUTES_MS } from '../core/time'
+import { NETWORK, EXPLORER, NEON_WALLET_RELEASE_LINK, NOTIFICATION_POSITIONS } from '../core/constants'
 
 // Constants
 export const SET_HEIGHT = 'SET_HEIGHT'
@@ -41,12 +39,12 @@ export const checkVersion = () => (dispatch: DispatchType, getState: GetStateTyp
   const apiEndpoint = getAPIEndpoint(net)
 
   return axios.get(`${apiEndpoint}/v2/version`).then((res) => {
-    const shouldUpdate = res && res.data && res.data.version !== version && res.data.version !== '0.0.5'
+    const shouldUpdate = res && res.data && res.data.version !== version
     if (shouldUpdate) {
       dispatch(showWarningNotification({
-        message: `Your wallet is out of date! Please download the latest version from ${NEON_WALLET_RELEASE_LINK}`,
-        dismissAfter: FIVE_MINUTES_MS,
-        onClick: () => openExternal(NEON_WALLET_RELEASE_LINK)
+        message: `Your wallet is out of date! Please download the latest version from <a href='${NEON_WALLET_RELEASE_LINK}' target='_blank'>${NEON_WALLET_RELEASE_LINK}</a>`,
+        position: NOTIFICATION_POSITIONS.BOTTOM_CENTER,
+        autoDismiss: 300 // 5 minutes
       }))
     }
   }).catch((e) => {})

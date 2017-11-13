@@ -44,24 +44,24 @@ export function setKeys (accountKeys: any) {
 }
 
 export const loginNep2 = (passphrase: string, wif: string, history: Object) => (dispatch: DispatchType) => {
-  if (!validatePassphrase(passphrase)) {
-    dispatch(showErrorNotification({ message: 'Passphrase too short' }))
-  }
   dispatch(hideNotification({ dismissible: true }))
 
-  const infoNotificationId = dispatch(showInfoNotification({ message: 'Decrypting encoded key...', dismissible: false, width: '500px', position: 'TOP' }))
+  if (!validatePassphrase(passphrase)) {
+    dispatch(showErrorNotification({ message: 'Passphrase too short' }))
+    return
+  }
+
+  const infoNotificationId = dispatch(showInfoNotification({ message: 'Decrypting encoded key...' }))
   const wrongPassphraseOrEncryptedKeyError = () => {
     dispatch(hideNotification({ id: infoNotificationId }))
-    dispatch(showErrorNotification({ message: 'Wrong passphrase or invalid encrypted key', width: '500px', position: 'TOP' }))
+    dispatch(showErrorNotification({ message: 'Wrong passphrase or invalid encrypted key' }))
   }
   setTimeout(() => {
     try {
       decryptWIF(wif, passphrase).then((wif) => {
-        dispatch(hideNotification({ id: infoNotificationId, noAnimation: true }))
+        dispatch(hideNotification({ id: infoNotificationId }))
         dispatch(login(wif))
         history.push(ROUTES.DASHBOARD)
-      }).catch(() => {
-        wrongPassphraseOrEncryptedKeyError()
       })
     } catch (e) {
       wrongPassphraseOrEncryptedKeyError()

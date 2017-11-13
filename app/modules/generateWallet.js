@@ -64,11 +64,11 @@ export const generateWalletFromWif = (passphrase: string, passphrase2: string, w
     if (checkMatchingPassphrases(passphrase, passphrase2)) {
       rejectPromise('Passphrases do not match')
     } else if (validatePassphrase(passphrase)) {
-      dispatch(showInfoNotification({ message: 'Generating encoded key...', dismissible: false }))
+      const infoNotificationId = dispatch(showInfoNotification({ message: 'Generating encoded key...', autoDismiss: 0 }))
       setTimeout(() => {
         try {
           encryptWifAccount(wif, passphrase).then((result) => {
-            dispatch(hideNotification({ noAnimation: true }))
+            dispatch(hideNotification({ id: infoNotificationId }))
             dispatch(newWallet(result))
             resolve()
           })
@@ -92,13 +92,12 @@ export const generateNewWallet = (passphrase: string, passphrase2: string) => (d
     if (checkMatchingPassphrases(passphrase, passphrase2)) {
       rejectPromise('Passphrases do not match')
     } else if (validatePassphrase(passphrase)) {
-      dispatch(showInfoNotification({ message: 'Generating encoded key...', dismissible: false }))
+      const infoNotificationId = dispatch(showInfoNotification({ message: 'Generating encoded key...', autoDismiss: 0 }))
       setTimeout(() => {
         try {
           generateEncryptedWif(passphrase).then((result) => {
-            dispatch(hideNotification({ noAnimation: true }))
+            dispatch(hideNotification({ id: infoNotificationId }))
             dispatch(newWallet(result))
-            // dispatch(showSuccessNotification({ message: 'Wallet created successfully' }))
             resolve()
           })
         } catch (e) {

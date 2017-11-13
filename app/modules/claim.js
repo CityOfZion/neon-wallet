@@ -60,7 +60,7 @@ export const doClaimNotify = () => (dispatch: DispatchType, getState: GetStateTy
   if (isHardwareClaim) {
     dispatch(showInfoNotification({
       message: 'Sign transaction 2 of 2 to claim Gas on your hardware device (claiming Gas)',
-      dismissible: false
+      autoDismiss: 0
     }))
     claimGasFn = () => hardwareDoClaimAllGas(net, publicKey, signingFunction)
   } else {
@@ -94,7 +94,7 @@ export const doGasClaim = () => (dispatch: DispatchType, getState: GetStateType)
   if (neo === 0) {
     dispatch(doClaimNotify())
   } else {
-    dispatch(showInfoNotification({ message: 'Sending Neo to Yourself...', dismissible: false }))
+    dispatch(showInfoNotification({ message: 'Sending Neo to Yourself...', autoDismiss: 0 }))
     log(net, 'SEND', address, { to: address, amount: neo, asset: ASSETS.NEO })
 
     const isHardwareClaim = !!publicKey
@@ -103,7 +103,7 @@ export const doGasClaim = () => (dispatch: DispatchType, getState: GetStateType)
     if (isHardwareClaim) {
       dispatch(showInfoNotification({
         message: 'Sign transaction 1 of 2 to claim Gas on your hardware device (sending Neo to yourself)',
-        dismissible: false
+        autoDismiss: 0
       }))
       sendAssetFn = () => hardwareDoSendAsset(net, address, publicKey, { [ASSETS.NEO]: neo }, signingFunction)
     } else {
@@ -114,7 +114,7 @@ export const doGasClaim = () => (dispatch: DispatchType, getState: GetStateType)
       if (response.result === undefined || response.result === false) {
         dispatch(showErrorNotification({ message: 'Transaction failed!' }))
       } else {
-        dispatch(showInfoNotification({ message: 'Waiting for transaction to clear...', dismissible: false }))
+        dispatch(showInfoNotification({ message: 'Waiting for transaction to clear...', autoDismiss: 0 }))
         dispatch(setClaimRequest(true))
         dispatch(disableClaim(true))
       }

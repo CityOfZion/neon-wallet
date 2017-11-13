@@ -1,48 +1,71 @@
 // @flow
 import React, { Component } from 'react'
-import { groupBy, map } from 'lodash'
-import classNames from 'classnames'
-import Notification from '../../components/Notification'
-import styles from './Notifications.scss'
-import { CSSTransition, TransitionGroup } from 'react-transition-group'
-
-const Fade = ({ children, ...props }) => (
-  <CSSTransition
-    {...props}
-    appear
-    timeout={300}
-    classNames='fade'
-  >
-    {children}
-  </CSSTransition>
-)
+import { isEqual, difference } from 'lodash'
+import ReactNotificationSystem from 'react-notification-system'
 
 type Props = {
   notifications: Array<NotificationType>,
   hideNotification: Function,
 }
 
+const overrideStyles = {
+  Containers: {
+    DefaultStyle: {
+      width: 480
+    },
+    tc: {
+      marginLeft: -240
+    },
+    bc: {
+      marginLeft: -240
+    }
+  }
+}
+
 class Notifications extends Component<Props> {
+  componentWillReceiveProps (nextProps: Props) {
+    // Adapted from https://github.com/gor181/react-notification-system-redux/blob/master/src/notifications.js
+    const { hideNotification } = this.props
+    const { notifications } = nextProps
+    const notificationIds = notifications.map(notification => notification.id)
+
+    if (notifications.length > 0) {
+      const systemNotifications = this.rnsRef.state.notifications || []
+      const systemNotificationsIds = systemNotifications.map(notification => notification.id)
+      // (systemNotifications).forEach(notification => {
+      //   if (notificationIds.indexOf(notification.id) < 0) {
+      //     this.rnsRef.removeNotification(notification.id)
+      //   }
+      // })
+
+      const notificationsToAdd = difference(notificationIds, systemNotificationsIds)
+      const notificationsToRemove = difference(systemNotificationsIds, notificationIds)
+
+      notificationsToRemove.forEach(notificationId =>
+        this.rnsRef.removeNotification(notificationId))
+
+      notificationsToAdd.forEach(notificationId => {
+        this.rnsRef.addNotification({
+          ...notifications.find(notification => notification.id === notificationId),
+          onRemove: () => {
+            hideNotification({ id: notificationId })
+          }
+        })
+      })
+    }
+
+    if (notifications.length === 0) {
+      this.rnsRef.clearNotifications()
+    }
+  }
+
+  shouldComponentUpdate (nextProps: Props) {
+    return !isEqual(this.props.notifications, nextProps.notifications)
+  }
+
   render () {
-    const { notifications, hideNotification } = this.props
-    const groupsNotifications = groupBy(notifications, 'position')
     return (
-      <div>
-        {map(groupsNotifications, (groupNotifications, position) =>
-          <div key={`notification-position-${position}`} className={classNames(styles.container, styles[position.toLowerCase()])}>
-            <TransitionGroup>
-              {groupNotifications.map((notification: NotificationType) =>
-                <Fade key={notification.id} position={position.toLowerCase()}>
-                  <Notification
-                    notification={notification}
-                    hideNotification={() => hideNotification({ id: notification.id })}
-                  />
-                </Fade>
-              )}
-            </TransitionGroup>
-          </div>
-        )}
-      </div>
+      <ReactNotificationSystem ref={(node) => { this.rnsRef = node }} style={overrideStyles} allowHTML />
     )
   }
 }

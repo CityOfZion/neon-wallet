@@ -37,23 +37,22 @@ export const ROUTES = {
   SETTINGS: '/settings'
 }
 
-export const NOTIFICATION_TYPES = {
-  ERROR: 'ERROR',
-  SUCCESS: 'SUCCESS',
-  INFO: 'INFO',
-  WARNING: 'WARNING'
+export const NOTIFICATION_LEVELS = {
+  ERROR: 'error',
+  SUCCESS: 'success',
+  INFO: 'info',
+  WARNING: 'warning'
 }
 
 export const NOTIFICATION_POSITIONS = {
-  TOP: 'TOP',
-  TOP_RIGHT: 'TOP_RIGHT',
-  TOP_LEFT: 'TOP_LEFT',
-  BOTTOM: 'BOTTOM',
-  BOTTOM_RIGHT: 'BOTTOM_RIGHT',
-  BOTTOM_LEFT: 'BOTTOM_LEFT'
+  TOP_CENTER: 'tc',
+  TOP_RIGHT: 'tr',
+  TOP_LEFT: 'tl',
+  BOTTOM_CENTER: 'bc',
+  BOTTOM_RIGHT: 'br',
+  BOTTOM_LEFT: 'bl'
 }
 
-export const DEFAULT_NOTIFICATION_TIMEOUT = 5000
 export const BIP44_PATH =
   '8000002C' +
   '80000378' +

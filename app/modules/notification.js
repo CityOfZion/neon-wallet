@@ -1,24 +1,18 @@
 // @flow
 import { omit, isNil, reject, uniqueId } from 'lodash'
-import { NOTIFICATION_TYPES, NOTIFICATION_POSITIONS, DEFAULT_NOTIFICATION_TIMEOUT } from '../core/constants'
-
-let notificationTimeoutId
+import { NOTIFICATION_LEVELS, NOTIFICATION_POSITIONS } from '../core/constants'
 
 type NotificationArgsType = {
   message: string,
   title?: string,
   position?: $Values<typeof NOTIFICATION_POSITIONS>,
-  width?: string,
   dismissible?: boolean,
-  dismissAfter?: number,
+  autoDismiss?: number,
   html?: boolean,
-  noAnimation?: boolean,
-  onClick?: ?Function,
-  fullScreen?: boolean
 }
 
 type ShowNotificationType = NotificationArgsType & {
-  type: $Values<typeof NOTIFICATION_TYPES>,
+  level: $Values<typeof NOTIFICATION_LEVELS>,
   id: string,
 }
 
@@ -28,19 +22,11 @@ type NotificationFactoryArgsType = ShowNotificationType & {
 
 const notificationFactory = (args: NotificationFactoryArgsType) => {
   const {
-    dispatch,
-    dismissible,
-    dismissAfter
+    dispatch
   } = args
 
-  if (notificationTimeoutId) {
-    clearTimeout(notificationTimeoutId)
-  }
   const id = uniqueId('notification_')
   const notificationId = dispatch(showNotification({id, ...omit(args, 'dispatch')}))
-  if (dismissible) {
-    notificationTimeoutId = setTimeout(() => dispatch(hideNotification({ id })), dismissAfter)
-  }
   return notificationId
 }
 
@@ -62,10 +48,11 @@ export const hideNotification = (args: ShowNotificationType) => ({
   payload: args
 })
 
-const getDefaultNotificationArgs = ({ dismissAfter, dismissible, fullScreen }: NotificationArgsType, dispatch: DispatchType, getState: GetStateType) => ({
-  width: fullScreen ? '100%' : '400px',
-  position: NOTIFICATION_POSITIONS.TOP_RIGHT,
-  dismissAfter: isNil(dismissAfter) ? DEFAULT_NOTIFICATION_TIMEOUT : dismissAfter,
+const FIVE_SECONDS = 5
+
+const getDefaultNotificationArgs = ({ autoDismiss, dismissible, fullScreen }: NotificationArgsType, dispatch: DispatchType, getState: GetStateType) => ({
+  position: NOTIFICATION_POSITIONS.TOP_CENTER,
+  autoDismiss: isNil(autoDismiss) ? FIVE_SECONDS : autoDismiss,
   dismissible: isNil(dismissible) ? true : dismissible,
   dispatch
 })
@@ -74,48 +61,48 @@ export const showSuccessNotification = (args: NotificationArgsType) => (dispatch
   return notificationFactory({
     ...getDefaultNotificationArgs(args, dispatch, getState),
     ...args,
-    type: NOTIFICATION_TYPES.SUCCESS
+    level: NOTIFICATION_LEVELS.SUCCESS
   })
 }
 
 export const showStickySuccessNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
-  dispatch(showSuccessNotification({ ...args, dismissible: false }))
+  dispatch(showSuccessNotification({ ...args, autoDismiss: 0 }))
 }
 
 export const showErrorNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
   return notificationFactory({
     ...getDefaultNotificationArgs(args, dispatch, getState),
     ...args,
-    type: NOTIFICATION_TYPES.ERROR
+    level: NOTIFICATION_LEVELS.ERROR
   })
 }
 
 export const showStickyErrorNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
-  return dispatch(showErrorNotification({ ...args, dismissible: false }))
+  return dispatch(showErrorNotification({ ...args, autoDismiss: 0 }))
 }
 
 export const showWarningNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
   return notificationFactory({
     ...getDefaultNotificationArgs(args, dispatch, getState),
     ...args,
-    type: NOTIFICATION_TYPES.WARNING
+    level: NOTIFICATION_LEVELS.WARNING
   })
 }
 
 export const showStickyWarningNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
-  return dispatch(showErrorNotification({ ...args, dismissible: false }))
+  return dispatch(showErrorNotification({ ...args, autoDismiss: 0 }))
 }
 
 export const showInfoNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
   return notificationFactory({
     ...getDefaultNotificationArgs(args, dispatch, getState),
     ...args,
-    type: NOTIFICATION_TYPES.INFO
+    level: NOTIFICATION_LEVELS.INFO
   })
 }
 
 export const showStickyInfoNotification = (args: NotificationArgsType) => (dispatch: DispatchType, getState: GetStateType) => {
-  return dispatch(showInfoNotification({ ...args, dismissible: false }))
+  return dispatch(showInfoNotification({ ...args, autoDismiss: 0 }))
 }
 
 // state Getters
