@@ -5,7 +5,7 @@ import Dashboard from './Dashboard'
 import { togglePane, getSendPane, getConfirmPane } from '../../modules/dashboard'
 import { logout, getAddress } from '../../modules/account'
 import { getBlockHeight, getNetwork } from '../../modules/metadata'
-import { getNotifications } from '../../modules/notification'
+import { getNotifications } from '../../modules/notifications'
 
 const mapStateToProps = (state: Object) => ({
   sendPane: getSendPane(state),

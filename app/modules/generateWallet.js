@@ -1,7 +1,7 @@
 // @flow
 import storage from 'electron-json-storage'
 import { generateEncryptedWif, getAccountFromWIFKey, generatePrivateKey, getWIFFromPrivateKey, encryptWIF, encryptWifAccount } from 'neon-js'
-import { showErrorNotification, showInfoNotification, hideNotification } from './notification'
+import { showErrorNotification, showInfoNotification, hideNotifications } from './notifications'
 import { validatePassphrase, checkMatchingPassphrases } from '../core/wallet'
 import asyncWrap from '../core/asyncHelper'
 
@@ -56,16 +56,16 @@ export const saveKey = (keyName: string, passphraseKey: string) => (dispatch: Di
 }
 
 export const generateWalletFromWif = (passphrase: string, passphrase2: string, wif: string) => async (dispatch: DispatchType): Promise<*> => {
-  const dispatchError = (message: string) => dispatch(showErrorNotification({ message }))
+  const dispatchError = (message: string) => dispatch(showErrorNotification({ message, soloInGroup: true }))
 
   if (checkMatchingPassphrases(passphrase, passphrase2)) {
     return dispatchError('Passphrases do not match')
   } else if (validatePassphrase(passphrase)) {
-    dispatch(showInfoNotification({ message: 'Generating encoded key...', autoDismiss: 0 }))
+    const infoNotificationId = dispatch(showInfoNotification({ message: 'Generating encoded key...', autoDismiss: 0, soloInGroup: true }))
     setTimeout(async () => {
       try {
         const [_err, result] = await asyncWrap(encryptWifAccount(wif, passphrase)) // eslint-disable-line
-        dispatch(hideNotification({ noAnimation: true }))
+        dispatch(hideNotifications({ id: infoNotificationId }))
         return dispatch(newWallet(result))
       } catch (e) {
         return dispatchError('The private key is not valid')
@@ -77,18 +77,17 @@ export const generateWalletFromWif = (passphrase: string, passphrase2: string, w
 }
 
 export const generateNewWallet = (passphrase: string, passphrase2: string) => async (dispatch: DispatchType): Promise<*> => {
-  const dispatchError = (message: string) => dispatch(showErrorNotification({ message }))
+  const dispatchError = (message: string) => dispatch(showErrorNotification({ message, soloInGroup: true }))
 
   if (checkMatchingPassphrases(passphrase, passphrase2)) {
     return dispatchError('Passphrases do not match')
   } else if (validatePassphrase(passphrase)) {
-    dispatch(showInfoNotification({ message: 'Generating encoded key...', autoDismiss: 0 }))
+    const infoNotificationId = dispatch(showInfoNotification({ message: 'Generating encoded key...', autoDismiss: 0, soloInGroup: true }))
     setTimeout(async () => {
       try {
         const [_err, result] = await asyncWrap(generateEncryptedWif(passphrase)) //eslint-disable-line
-        dispatch(hideNotification({ noAnimation: true }))
+        dispatch(hideNotifications({ id: infoNotificationId }))
         return dispatch(newWallet(result))
-        // dispatch(showSuccessNotification({ message: 'Wallet created successfully' }))
       } catch (e) {
         return dispatchError('An error occured while trying to generate a new wallet')
       }

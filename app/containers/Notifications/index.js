@@ -1,15 +1,15 @@
 // @flow
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { hideNotification, getNotifications } from '../../modules/notification'
-import Notifications from './Notifications'
+import { hideNotifications, getNotifications } from '../../modules/notifications'
+import Notifications from './notifications'
 
 const mapStateToProps = (state: Object) => ({
   notifications: getNotifications(state)
 })
 
 const actionCreators = {
-  hideNotification
+  hideNotifications
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)

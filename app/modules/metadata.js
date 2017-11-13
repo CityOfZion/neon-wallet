@@ -2,7 +2,7 @@
 import { getWalletDBHeight, getAPIEndpoint } from 'neon-js'
 import axios from 'axios'
 import { version } from '../../package.json'
-import { showWarningNotification } from './notification'
+import { showWarningNotification } from './notifications'
 import { NETWORK, EXPLORER, NEON_WALLET_RELEASE_LINK } from '../core/constants'
 import { openExternal } from '../core/electron'
 import { FIVE_MINUTES_MS } from '../core/time'

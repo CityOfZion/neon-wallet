@@ -21,7 +21,6 @@ type Props = {
   showInfoNotification: Function,
   showSuccessNotification: Function,
   showErrorNotification: Function,
-  hideNotification: Function
 }
 
 export default class WalletInfo extends Component<Props> {
@@ -44,15 +43,12 @@ export default class WalletInfo extends Component<Props> {
       initiateGetBalance,
       net,
       address,
-      hideNotification
     } = this.props
-    const infoNotificationId = showInfoNotification({ message: 'Refreshing...' })
+    showInfoNotification({ message: 'Refreshing...', soloInGroup: true })
     initiateGetBalance(net, address).then((response) => {
-      hideNotification({ id: infoNotificationId })
-      showSuccessNotification({ message: 'Received latest blockchain information.' })
+      showSuccessNotification({ message: 'Received latest blockchain information.', soloInGroup: true })
     }).catch(() => {
-      hideNotification({ id: infoNotificationId })
-      showErrorNotification({ message: 'Failed to retrieve blockchain information' })
+      showErrorNotification({ message: 'Failed to retrieve blockchain information', soloInGroup: true })
     })
   }
 

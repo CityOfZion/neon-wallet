@@ -2,7 +2,7 @@
 import { doClaimAllGas, doSendAsset, getClaimAmounts, hardwareDoSendAsset, hardwareDoClaimAllGas } from 'neon-js'
 import { log } from '../util/Logs'
 import { ASSETS } from '../core/constants'
-import { showErrorNotification, showSuccessNotification, showInfoNotification } from './notification'
+import { showErrorNotification, showSuccessNotification, showInfoNotification } from './notifications'
 import { FIVE_MINUTES_MS } from '../core/time'
 import { getWif, getAddress, getSigningFunction, getPublicKey } from './account'
 import { getNetwork } from './metadata'

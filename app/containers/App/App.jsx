@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import type { Children } from 'react'
 import ModalRenderer from '../ModalRenderer'
-import Notifications from '../Notifications'
+import Notifications from '../notifications'
 
 type Props = {
   children: Children,

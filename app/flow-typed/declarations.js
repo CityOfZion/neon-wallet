@@ -23,12 +23,10 @@ declare type RouteType = $Values<typeof ROUTES>
 
 declare type NotificationType = {
   id: string,
-  type: $Values<typeof NOTIFICATION_LEVELS>,
-  title: ?string,
+  level: $Values<typeof NOTIFICATION_LEVELS>,
+  title?: string,
   message: string,
   position: $Values<typeof NOTIFICATION_POSITIONS>,
-  html: boolean,
-  onClick: ?Function
 }
 
 declare type TransactionHistoryType = {

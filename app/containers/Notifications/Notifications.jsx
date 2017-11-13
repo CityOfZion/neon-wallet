@@ -5,7 +5,7 @@ import ReactNotificationSystem from 'react-notification-system'
 
 type Props = {
   notifications: Array<NotificationType>,
-  hideNotification: Function,
+  hideNotifications: Function,
 }
 
 const overrideStyles = {
@@ -25,36 +25,27 @@ const overrideStyles = {
 class Notifications extends Component<Props> {
   componentWillReceiveProps (nextProps: Props) {
     // Adapted from https://github.com/gor181/react-notification-system-redux/blob/master/src/notifications.js
-    const { hideNotification } = this.props
+    const { hideNotifications } = this.props
     const { notifications } = nextProps
     const notificationIds = notifications.map(notification => notification.id)
-
+    
     if (notifications.length > 0) {
       const systemNotifications = this.rnsRef.state.notifications || []
       const systemNotificationsIds = systemNotifications.map(notification => notification.id)
-      // (systemNotifications).forEach(notification => {
-      //   if (notificationIds.indexOf(notification.id) < 0) {
-      //     this.rnsRef.removeNotification(notification.id)
-      //   }
-      // })
-
-      const notificationsToAdd = difference(notificationIds, systemNotificationsIds)
-      const notificationsToRemove = difference(systemNotificationsIds, notificationIds)
-
-      notificationsToRemove.forEach(notificationId =>
+        
+      difference(systemNotificationsIds, notificationIds).forEach(notificationId =>
         this.rnsRef.removeNotification(notificationId))
 
-      notificationsToAdd.forEach(notificationId => {
+      difference(notificationIds, systemNotificationsIds).forEach(notificationId => {
         this.rnsRef.addNotification({
+          uid: notificationId,
           ...notifications.find(notification => notification.id === notificationId),
           onRemove: () => {
-            hideNotification({ id: notificationId })
+            hideNotifications({ id: notificationId })
           }
         })
       })
-    }
-
-    if (notifications.length === 0) {
+    } else if (notifications.length === 0) {
       this.rnsRef.clearNotifications()
     }
   }

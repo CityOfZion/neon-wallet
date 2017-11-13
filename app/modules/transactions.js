@@ -6,10 +6,11 @@ import { validateTransactionBeforeSending } from '../core/wallet'
 import { getTransactionHistory, doSendAsset, hardwareDoSendAsset } from 'neon-js'
 import { setTransactionHistory, getNeo, getGas } from './wallet'
 import { log } from '../util/Logs'
-import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notification'
+import { showErrorNotification, showInfoNotification, showSuccessNotification, hideNotifications } from './notifications'
 import { getWif, getPublicKey, getSigningFunction, getAddress } from './account'
 import { getNetwork } from './metadata'
 import asyncWrap from '../core/asyncHelper'
+import { NOTIFICATION_LEVELS } from '../core/constants'
 
 // Constants
 export const TOGGLE_ASSET = 'TOGGLE_ASSET'
@@ -42,7 +43,7 @@ export const sendTransaction = (sendAddress: string, sendAmount: string) => asyn
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
 
-  const rejectTransaction = (message: string) => dispatch(showErrorNotification({ message }))
+  const rejectTransaction = (message: string) => dispatch(showErrorNotification({ message, soloInGroup: true }))
 
   const { error, valid } = validateTransactionBeforeSending(neo, gas, selectedAsset, sendAddress, sendAmount)
   if (valid) {
