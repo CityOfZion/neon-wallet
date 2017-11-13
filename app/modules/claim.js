@@ -113,7 +113,7 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
     if (err || response.result === undefined || response.result === false) {
       return dispatch(showErrorNotification({ message: 'Transaction failed!' }))
     } else {
-      dispatch(showInfoNotification({ message: 'Waiting for transaction to clear...', dismissible: false }))
+      dispatch(showInfoNotification({ message: 'Waiting for transaction to clear...', autoDismiss: 0 }))
       dispatch(setClaimRequest(true))
       return dispatch(disableClaim(true))
     }

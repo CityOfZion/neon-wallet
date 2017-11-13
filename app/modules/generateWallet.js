@@ -61,7 +61,7 @@ export const generateWalletFromWif = (passphrase: string, passphrase2: string, w
   if (checkMatchingPassphrases(passphrase, passphrase2)) {
     return dispatchError('Passphrases do not match')
   } else if (validatePassphrase(passphrase)) {
-    dispatch(showInfoNotification({ message: 'Generating encoded key...', dismissible: false }))
+    dispatch(showInfoNotification({ message: 'Generating encoded key...', autoDismiss: 0 }))
     setTimeout(async () => {
       try {
         const [_err, result] = await asyncWrap(encryptWifAccount(wif, passphrase)) // eslint-disable-line
@@ -82,7 +82,7 @@ export const generateNewWallet = (passphrase: string, passphrase2: string) => as
   if (checkMatchingPassphrases(passphrase, passphrase2)) {
     return dispatchError('Passphrases do not match')
   } else if (validatePassphrase(passphrase)) {
-    dispatch(showInfoNotification({ message: 'Generating encoded key...', dismissible: false }))
+    dispatch(showInfoNotification({ message: 'Generating encoded key...', autoDismiss: 0 }))
     setTimeout(async () => {
       try {
         const [_err, result] = await asyncWrap(generateEncryptedWif(passphrase)) //eslint-disable-line
