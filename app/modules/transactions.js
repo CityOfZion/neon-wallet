@@ -9,6 +9,7 @@ import { log } from '../util/Logs'
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notification'
 import { getWif, getPublicKey, getSigningFunction, getAddress } from './account'
 import { getNetwork } from './metadata'
+import asyncWrap from '../core/asyncHelper'
 
 // Constants
 export const TOGGLE_ASSET = 'TOGGLE_ASSET'
@@ -19,68 +20,59 @@ export function toggleAsset () {
   }
 }
 
-export const syncTransactionHistory = (net: NetworkType, address: string) => (dispatch: DispatchType) =>
-  getTransactionHistory(net, address).then((transactions) => {
-    const txs = transactions.map(({ NEO, GAS, txid, block_index, neo_sent, neo_gas }: TransactionHistoryType) => ({
-      type: neo_sent ? ASSETS.NEO : ASSETS.GAS,
-      amount: neo_sent ? NEO : GAS,
-      txid,
-      block_index
-    }))
-    dispatch(setTransactionHistory(txs))
-  })
+export const syncTransactionHistory = (net: NetworkType, address: string) => async (dispatch: DispatchType) => {
+  const [_err, transactions] = await asyncWrap(getTransactionHistory(net, address)) // eslint-disable-line
+  const txs = transactions.map(({ NEO, GAS, txid, block_index, neo_sent, neo_gas }: TransactionHistoryType) => ({
+    type: neo_sent ? ASSETS.NEO : ASSETS.GAS,
+    amount: neo_sent ? NEO : GAS,
+    txid,
+    block_index
+  }))
+  return dispatch(setTransactionHistory(txs))
+}
 
-export const sendTransaction = (sendAddress: string, sendAmount: string) => (dispatch: DispatchType, getState: GetStateType): Promise<*> => {
-  return new Promise((resolve, reject) => {
-    const state = getState()
-    const wif = getWif(state)
-    const address = getAddress(state)
-    const net = getNetwork(state)
-    const neo = getNeo(state)
-    const gas = getGas(state)
-    const selectedAsset = getSelectedAsset(state)
-    const signingFunction = getSigningFunction(state)
-    const publicKey = getPublicKey(state)
+export const sendTransaction = (sendAddress: string, sendAmount: string) => async (dispatch: DispatchType, getState: GetStateType): Promise<*> => {
+  const state = getState()
+  const wif = getWif(state)
+  const address = getAddress(state)
+  const net = getNetwork(state)
+  const neo = getNeo(state)
+  const gas = getGas(state)
+  const selectedAsset = getSelectedAsset(state)
+  const signingFunction = getSigningFunction(state)
+  const publicKey = getPublicKey(state)
 
-    const rejectTransaction = (error: string) => {
-      dispatch(showErrorNotification({ message: error }))
-      reject(new Error(error))
-    }
+  const rejectTransaction = (message: string) => dispatch(showErrorNotification({ message }))
 
-    const { error, valid } = validateTransactionBeforeSending(neo, gas, selectedAsset, sendAddress, sendAmount)
-    if (valid) {
-      const selfAddress = address
-      const assetName = selectedAsset === ASSETS_LABELS.NEO ? ASSETS.NEO : ASSETS.GAS
-      let sendAsset = {}
-      sendAsset[assetName] = sendAmount
+  const { error, valid } = validateTransactionBeforeSending(neo, gas, selectedAsset, sendAddress, sendAmount)
+  if (valid) {
+    const selfAddress = address
+    const assetName = selectedAsset === ASSETS_LABELS.NEO ? ASSETS.NEO : ASSETS.GAS
+    let sendAsset = {}
+    sendAsset[assetName] = sendAmount
 
-      dispatch(showInfoNotification({ message: 'Processing...', autoDismiss: 0 }))
-      log(net, 'SEND', selfAddress, { to: sendAddress, asset: selectedAsset, amount: sendAmount })
+    dispatch(showInfoNotification({ message: 'Processing...', dismissible: false }))
+    log(net, 'SEND', selfAddress, { to: sendAddress, asset: selectedAsset, amount: sendAmount })
 
-      const isHardwareSend = !!publicKey
+    const isHardwareSend = !!publicKey
 
-      let sendAssetFn
-      if (isHardwareSend) {
-        dispatch(showInfoNotification({ message: 'Please sign the transaction on your hardware device', autoDismiss: 0 }))
-        sendAssetFn = () => hardwareDoSendAsset(net, sendAddress, publicKey, sendAsset, signingFunction)
-      } else {
-        sendAssetFn = () => doSendAsset(net, sendAddress, wif, sendAsset)
-      }
-
-      sendAssetFn().then((response) => {
-        if (response.result === undefined || response.result === false) {
-          rejectTransaction('Transaction failed!')
-        } else {
-          dispatch(showSuccessNotification({ message: 'Transaction complete! Your balance will automatically update when the blockchain has processed it.' }))
-        }
-        resolve()
-      }).catch((e) => {
-        rejectTransaction('Transaction failed!')
-      })
+    let sendAssetFn
+    if (isHardwareSend) {
+      dispatch(showInfoNotification({ message: 'Please sign the transaction on your hardware device', dismissible: false }))
+      sendAssetFn = () => hardwareDoSendAsset(net, sendAddress, publicKey, sendAsset, signingFunction)
     } else {
-      rejectTransaction(error)
+      sendAssetFn = () => doSendAsset(net, sendAddress, wif, sendAsset)
     }
-  })
+
+    const [err, response] = await asyncWrap(sendAssetFn())
+    if (err || response.result === undefined || response.result === false) {
+      return rejectTransaction('Transaction failed!')
+    } else {
+      return dispatch(showSuccessNotification({ message: 'Transaction complete! Your balance will automatically update when the blockchain has processed it.' }))
+    }
+  } else {
+    return rejectTransaction(error)
+  }
 }
 
 // state getters

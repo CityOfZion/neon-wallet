@@ -5,6 +5,7 @@ import { getBalance } from 'neon-js'
 import { syncTransactionHistory } from './transactions'
 import { syncAvailableClaim } from './claim'
 import { syncBlockHeight } from './metadata'
+import asyncWrap from '../core/asyncHelper'
 
 // Constants
 export const SET_BALANCE = 'SET_BALANCE'
@@ -48,30 +49,24 @@ export function setTransactionHistory (transactions: Array<Object>) {
   }
 }
 
-export const getMarketPriceUSD = () => (dispatch: DispatchType) => {
-  return axios.get('https://api.coinmarketcap.com/v1/ticker/neo/?convert=USD').then((response) => {
-    let lastUSDNEO = Number(response.data[0].price_usd)
-    dispatch(setNeoPrice(lastUSDNEO))
-  }).catch((e) => {
-    // If API dies, still display balance
-  })
+export const getMarketPriceUSD = () => async (dispatch: DispatchType) => {
+  // If API dies, still display balance - ignore _err
+  const [_err, response] = await asyncWrap(axios.get('https://api.coinmarketcap.com/v1/ticker/neo/?convert=USD')) // eslint-disable-line
+  let lastUSDNEO = Number(response.data[0].price_usd)
+  return dispatch(setNeoPrice(lastUSDNEO))
 }
 
-export const getGasMarketPriceUSD = () => (dispatch: DispatchType) => {
-  return axios.get('https://api.coinmarketcap.com/v1/ticker/gas/?convert=USD').then((response) => {
-    let lastUSDGAS = Number(response.data[0].price_usd)
-    dispatch(setGasPrice(lastUSDGAS))
-  }).catch((e) => {
-    // If API dies, still display balance
-  })
+export const getGasMarketPriceUSD = () => async (dispatch: DispatchType) => {
+  // If API dies, still display balance - ignore _err
+  const [_err, response] = await asyncWrap(axios.get('https://api.coinmarketcap.com/v1/ticker/gas/?convert=USD')) // eslint-disable-line
+  let lastUSDGAS = Number(response.data[0].price_usd)
+  return dispatch(setGasPrice(lastUSDGAS))
 }
 
-export const retrieveBalance = (net: NetworkType, address: string) => (dispatch: DispatchType) => {
-  return getBalance(net, address).then((resultBalance) => {
-    dispatch(setBalance(resultBalance.NEO.balance, resultBalance.GAS.balance))
-  }).catch((result) => {
-    // If API dies, still display balance
-  })
+export const retrieveBalance = (net: NetworkType, address: string) => async (dispatch: DispatchType) => {
+  // If API dies, still display balance - ignore _err
+  const [_err, resultBalance] = await asyncWrap(getBalance(net, address)) // eslint-disable-line
+  return dispatch(setBalance(resultBalance.NEO.balance, resultBalance.GAS.balance))
 }
 
 export const initiateGetBalance = (net: NetworkType, address: string) => (dispatch: DispatchType) => {

@@ -7,6 +7,7 @@ import { FIVE_MINUTES_MS } from '../core/time'
 import { getWif, getAddress, getSigningFunction, getPublicKey } from './account'
 import { getNetwork } from './metadata'
 import { getNeo } from './wallet'
+import asyncWrap from '../core/asyncHelper'
 
 // Constants
 export const SET_CLAIM = 'SET_CLAIM'
@@ -38,13 +39,12 @@ export function disableClaim (disableClaimButton: boolean) {
   }
 }
 
-export const syncAvailableClaim = (net: NetworkType, address: string) => (dispatch: DispatchType) => {
-  getClaimAmounts(net, address).then((result) => {
-    return dispatch(setClaim(result.available, result.unavailable))
-  })
+export const syncAvailableClaim = (net: NetworkType, address: string) => async (dispatch: DispatchType) => {
+  const [_err, result] = await asyncWrap(getClaimAmounts(net, address)) // eslint-disable-line
+  return dispatch(setClaim(result.available, result.unavailable))
 }
 
-export const doClaimNotify = () => (dispatch: DispatchType, getState: GetStateType) => {
+export const doClaimNotify = () => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
   const wif = getWif(state)
   const address = getAddress(state)
@@ -67,21 +67,20 @@ export const doClaimNotify = () => (dispatch: DispatchType, getState: GetStateTy
     claimGasFn = () => doClaimAllGas(net, wif)
   }
 
-  claimGasFn().then((response) => {
-    if (response.result) {
-      dispatch(showSuccessNotification({
-        message: 'Claim was successful! Your balance will update once the blockchain has processed it.'
-      }))
-      setTimeout(() => dispatch(disableClaim(false)), FIVE_MINUTES_MS)
-    } else {
-      dispatch(showErrorNotification({ message: 'Claim failed' }))
-    }
-  })
+  const [err, response] = await asyncWrap(claimGasFn())
+  if (!err && response.result) {
+    dispatch(showSuccessNotification({
+      message: 'Claim was successful! Your balance will update once the blockchain has processed it.'
+    }))
+    setTimeout(() => dispatch(disableClaim(false)), FIVE_MINUTES_MS)
+  } else {
+    return dispatch(showErrorNotification({ message: 'Claim failed' }))
+  }
 }
 
 // To initiate claim, first send all Neo to own address, the set claimRequest state
 // When new claims are available, this will trigger the claim
-export const doGasClaim = () => (dispatch: DispatchType, getState: GetStateType) => {
+export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
   const wif = getWif(state)
   const address = getAddress(state)
@@ -92,7 +91,7 @@ export const doGasClaim = () => (dispatch: DispatchType, getState: GetStateType)
 
   // if no neo in account, no need to send to self first
   if (neo === 0) {
-    dispatch(doClaimNotify())
+    return dispatch(doClaimNotify())
   } else {
     dispatch(showInfoNotification({ message: 'Sending Neo to Yourself...', autoDismiss: 0 }))
     log(net, 'SEND', address, { to: address, amount: neo, asset: ASSETS.NEO })
@@ -110,15 +109,14 @@ export const doGasClaim = () => (dispatch: DispatchType, getState: GetStateType)
       sendAssetFn = () => doSendAsset(net, address, wif, { [ASSETS.NEO]: neo })
     }
 
-    sendAssetFn().then((response) => {
-      if (response.result === undefined || response.result === false) {
-        dispatch(showErrorNotification({ message: 'Transaction failed!' }))
-      } else {
-        dispatch(showInfoNotification({ message: 'Waiting for transaction to clear...', autoDismiss: 0 }))
-        dispatch(setClaimRequest(true))
-        dispatch(disableClaim(true))
-      }
-    })
+    const [err, response] = await asyncWrap(sendAssetFn())
+    if (err || response.result === undefined || response.result === false) {
+      return dispatch(showErrorNotification({ message: 'Transaction failed!' }))
+    } else {
+      dispatch(showInfoNotification({ message: 'Waiting for transaction to clear...', dismissible: false }))
+      dispatch(setClaimRequest(true))
+      return dispatch(disableClaim(true))
+    }
   }
 }
 

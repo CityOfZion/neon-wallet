@@ -3,7 +3,10 @@ import { getWalletDBHeight, getAPIEndpoint } from 'neon-js'
 import axios from 'axios'
 import { version } from '../../package.json'
 import { showWarningNotification } from './notification'
-import { NETWORK, EXPLORER, NEON_WALLET_RELEASE_LINK, NOTIFICATION_POSITIONS } from '../core/constants'
+import { NETWORK, EXPLORER, NEON_WALLET_RELEASE_LINK } from '../core/constants'
+import { openExternal } from '../core/electron'
+import { FIVE_MINUTES_MS } from '../core/time'
+import asyncWrap from '../core/asyncHelper'
 
 // Constants
 export const SET_HEIGHT = 'SET_HEIGHT'
@@ -33,27 +36,27 @@ export function setBlockExplorer (blockExplorer: ExplorerType) {
   }
 }
 
-export const checkVersion = () => (dispatch: DispatchType, getState: GetStateType) => {
+export const checkVersion = () => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState().metadata
   const { net } = state
   const apiEndpoint = getAPIEndpoint(net)
 
-  return axios.get(`${apiEndpoint}/v2/version`).then((res) => {
-    const shouldUpdate = res && res.data && res.data.version !== version
-    if (shouldUpdate) {
-      dispatch(showWarningNotification({
-        message: `Your wallet is out of date! Please download the latest version from <a href='${NEON_WALLET_RELEASE_LINK}' target='_blank'>${NEON_WALLET_RELEASE_LINK}</a>`,
-        position: NOTIFICATION_POSITIONS.BOTTOM_CENTER,
-        autoDismiss: 300 // 5 minutes
-      }))
-    }
-  }).catch((e) => {})
+  const [err, res] = await asyncWrap(axios.get(`${apiEndpoint}/v2/version`))
+  const shouldUpdate = res && res.data && res.data.version !== version && res.data.version !== '0.0.5'
+  if (err || shouldUpdate) {
+    const message = err ? `Error checking wallet version! Please make sure you have downloaded the latest version: ${NEON_WALLET_RELEASE_LINK}`
+      : `Your wallet is out of date! Please download the latest version from ${NEON_WALLET_RELEASE_LINK}`
+    return dispatch(showWarningNotification({
+      message,
+      dismissAfter: FIVE_MINUTES_MS,
+      onClick: () => openExternal(NEON_WALLET_RELEASE_LINK)
+    }))
+  }
 }
 
-export const syncBlockHeight = (net: NetworkType) => (dispatch: DispatchType) => {
-  getWalletDBHeight(net).then((blockHeight) => {
-    return dispatch(setBlockHeight(blockHeight))
-  })
+export const syncBlockHeight = (net: NetworkType) => async (dispatch: DispatchType) => {
+  const [_err, blockHeight] = await asyncWrap(getWalletDBHeight(net)) // eslint-disable-line
+  return dispatch(setBlockHeight(blockHeight))
 }
 
 // state getters
