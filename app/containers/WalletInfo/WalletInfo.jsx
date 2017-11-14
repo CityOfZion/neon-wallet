@@ -44,11 +44,11 @@ export default class WalletInfo extends Component<Props> {
       net,
       address
     } = this.props
-    showInfoNotification({ message: 'Refreshing...', soloInGroup: true })
+    showInfoNotification({ message: 'Refreshing...' })
     initiateGetBalance(net, address).then((response) => {
-      showSuccessNotification({ message: 'Received latest blockchain information.', soloInGroup: true })
+      showSuccessNotification({ message: 'Received latest blockchain information.' })
     }).catch(() => {
-      showErrorNotification({ message: 'Failed to retrieve blockchain information', soloInGroup: true })
+      showErrorNotification({ message: 'Failed to retrieve blockchain information' })
     })
   }
 

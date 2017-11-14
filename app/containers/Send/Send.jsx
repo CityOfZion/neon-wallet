@@ -36,7 +36,7 @@ export default class Send extends Component<Props, State> {
     if (valid) {
       togglePane('confirmPane')
     } else {
-      showErrorNotification({ message: error, soloInGroup: true })
+      showErrorNotification({ message: error })
     }
   }
 
