@@ -5,7 +5,7 @@ import ReactNotificationSystem from 'react-notification-system'
 
 type Props = {
   notifications: Array<NotificationType>,
-  hideNotifications: Function,
+  hideNotification: Function,
 }
 
 const overrideStyles = {
@@ -22,10 +22,18 @@ const overrideStyles = {
   }
 }
 
+class abc extends Component {
+  render () {
+    return (<div>hello2</div>)
+  }
+}
+
+const xxx = () => <div>howdy</div>
+
 class Notifications extends Component<Props> {
   componentWillReceiveProps (nextProps: Props) {
     // Adapted from https://github.com/gor181/react-notification-system-redux/blob/master/src/notifications.js
-    const { hideNotifications } = this.props
+    const { hideNotification } = this.props
     const { notifications } = nextProps
     const notificationIds = notifications.map(notification => notification.id)
 
@@ -41,7 +49,7 @@ class Notifications extends Component<Props> {
           uid: notificationId,
           ...notifications.find(notification => notification.id === notificationId),
           onRemove: () => {
-            hideNotifications({ id: notificationId })
+            hideNotification(notificationId)
           }
         })
       })
