@@ -20,7 +20,7 @@ type Props = {
   initiateGetBalance: Function,
   showInfoNotification: Function,
   showSuccessNotification: Function,
-  showErrorNotification: Function,
+  showErrorNotification: Function
 }
 
 export default class WalletInfo extends Component<Props> {
