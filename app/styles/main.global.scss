@@ -425,27 +425,3 @@ input {
         }
     }
 }
-
-.fade-enter, .fade-appear {
-    will-change: opacity, transform;
-    opacity: 0.01;
-    transform: translateY(-100%)
-}
-  
-.fade-enter.fade-enter-active, .fade-appear.fade-appear-active {
-    transition: opacity 300ms ease-in-out;
-    opacity: 1;
-    transform: translateY(0)
-}
-
-.fade-exit {
-    will-change: opacity, transform;
-    opacity: 1;
-}
-
-.fade-exit.fade-exit-active {
-    transition: all 300ms ease-in-out;
-    opacity: 0.01;
-    // height: 0;
-    // border: 0;
-}
