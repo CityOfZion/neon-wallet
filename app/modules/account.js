@@ -55,7 +55,6 @@ export const loginNep2 = (passphrase: string, wif: string, history: Object) => (
   setTimeout(async () => {
     try {
       const [_err, responseWif] = await asyncWrap(decryptWIF(wif, passphrase)) // eslint-disable-line
-      console.log('HEREEEEE!')
       dispatch(hideNotification(infoNotificationId))
       dispatch(login(responseWif))
       return history.push(ROUTES.DASHBOARD)
