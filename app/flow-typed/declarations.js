@@ -27,6 +27,8 @@ declare type NotificationType = {
   title?: string,
   message: string,
   position: $Values<typeof NOTIFICATION_POSITIONS>,
+  dismissible: boolean,
+  autoDismiss: number
 }
 
 declare type TransactionHistoryType = {

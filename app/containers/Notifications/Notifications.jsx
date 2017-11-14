@@ -28,11 +28,11 @@ class Notifications extends Component<Props> {
     const { hideNotifications } = this.props
     const { notifications } = nextProps
     const notificationIds = notifications.map(notification => notification.id)
-    
+
     if (notifications.length > 0) {
       const systemNotifications = this.rnsRef.state.notifications || []
       const systemNotificationsIds = systemNotifications.map(notification => notification.id)
-        
+
       difference(systemNotificationsIds, notificationIds).forEach(notificationId =>
         this.rnsRef.removeNotification(notificationId))
 

@@ -5,7 +5,7 @@ import commNode from '../ledger/ledger-comm-node'
 import { BIP44_PATH, ROUTES } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
 import { ledgerNanoSCreateSignatureAsync } from '../ledger/ledgerNanoS'
-import { showErrorNotification, showInfoNotification, hideNotifications } from './notifications'
+import { showErrorNotification, showInfoNotification, hideNotification } from './notifications'
 
 // Constants
 export const LOGIN = 'LOGIN'
@@ -44,10 +44,9 @@ export function setKeys (accountKeys: any) {
 }
 
 export const loginNep2 = (passphrase: string, wif: string, history: Object) => (dispatch: DispatchType) => {
+  const infoNotificationId = dispatch(showInfoNotification({ message: 'Decrypting encoded key...' }))
 
-  const infoNotificationId = dispatch(showInfoNotification({ message: 'Decrypting encoded key...', soloInGroup: true }))
-
-  const dispatchError = (message: string) => dispatch(showErrorNotification({ message, soloInGroup: true }))
+  const dispatchError = (message: string) => dispatch(showErrorNotification({ message }))
 
   if (!validatePassphrase(passphrase)) {
     return dispatchError('Passphrase too short')
@@ -56,7 +55,7 @@ export const loginNep2 = (passphrase: string, wif: string, history: Object) => (
   setTimeout(async () => {
     try {
       const [_err, responseWif] = await asyncWrap(decryptWIF(wif, passphrase)) // eslint-disable-line
-      dispatch(hideNotifications({ id: infoNotificationId }))
+      dispatch(hideNotification(infoNotificationId))
       dispatch(login(responseWif))
       return history.push(ROUTES.DASHBOARD)
     } catch (e) {

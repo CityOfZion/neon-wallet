@@ -42,7 +42,7 @@ export default class WalletInfo extends Component<Props> {
       showErrorNotification,
       initiateGetBalance,
       net,
-      address,
+      address
     } = this.props
     showInfoNotification({ message: 'Refreshing...', soloInGroup: true })
     initiateGetBalance(net, address).then((response) => {

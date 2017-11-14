@@ -1,7 +1,6 @@
 // @flow
-import { isNil, reject, uniqueId } from 'lodash'
+import { reject, uniqueId } from 'lodash'
 import { NOTIFICATION_LEVELS, NOTIFICATION_POSITIONS } from '../core/constants'
-import { Dispatch } from 'redux';
 
 type NotificationArgsType = {
   message: string,
@@ -9,77 +8,94 @@ type NotificationArgsType = {
   position?: $Values<typeof NOTIFICATION_POSITIONS>,
   dismissible?: boolean,
   autoDismiss?: number,
-  soloInGroup?: boolean
+  autoDismiss?: number,
+  stack?: boolean
 }
 
-type ShowNotificationType = NotificationArgsType & {
-  level: $Values<typeof NOTIFICATION_LEVELS>,
-  id: string
+type NotificationFactoryArgsType = NotificationArgsType & {
+  level: $Values<typeof NOTIFICATION_LEVELS>
+}
+
+type HideNotificationType = NotificationFactoryArgsType & {
+  message?: string
 }
 
 const DEFAULT_POSITION = NOTIFICATION_POSITIONS.TOP_CENTER
+const FIVE_SECONDS = 5
 
-const notificationFactory = (args: NotificationArgsType, level: $Values<typeof NOTIFICATION_LEVELS>, dispatch: DispatchType) => {
-  const position = args.position || DEFAULT_POSITION
-  if (args.soloInGroup) {
-    dispatch(hideNotifications({ position }))
+const notificationFactory = (args: NotificationFactoryArgsType, dispatch: DispatchType) => {
+  const {
+    autoDismiss = FIVE_SECONDS,
+    dismissible = true,
+    stack = false,
+    position = DEFAULT_POSITION
+  } = args
+
+  const shouldHideNonDismissibleNotifications = !stack
+  if (shouldHideNonDismissibleNotifications) {
+    dispatch(hideNotifications({ position, dismissible: true }))
   }
+
   return dispatch(showNotification({
-    ...getDefaultNotificationArgs(args),
-    ...args,
+    id: uniqueId('notification_'),
     position,
-    level
+    dismissible,
+    autoDismiss,
+    ...args
   }))
 }
 
 // Constants
 export const SHOW_NOTIFICATION = 'SHOW_NOTIFICATION'
+export const HIDE_NOTIFICATION = 'HIDE_NOTIFICATION'
 export const HIDE_NOTIFICATIONS = 'HIDE_NOTIFICATIONS'
 
 // Actions
-export const showNotification = (args: ShowNotificationType) => (dispatch: DispatchType) => {
+export const showNotification = (args: NotificationType) => (dispatch: DispatchType) => {
+  const { id } = args
   dispatch({
     type: SHOW_NOTIFICATION,
     payload: args
   })
-  return args.id
+  return id
 }
 
-export const hideNotifications = (args: ShowNotificationType) => ({
+export const hideNotification = (id: string) => ({
+  type: HIDE_NOTIFICATION,
+  payload: {
+    id
+  }
+})
+
+export const hideNotifications = (args: HideNotificationType) => ({
   type: HIDE_NOTIFICATIONS,
   payload: args
 })
 
-const FIVE_SECONDS = 5
-
-const getDefaultNotificationArgs = ({ autoDismiss, dismissible }: NotificationArgsType) => ({
-  id: uniqueId('notification_'),
-  autoDismiss: isNil(autoDismiss) ? FIVE_SECONDS : autoDismiss,
-  dismissible: isNil(dismissible) ? true : dismissible
-})
-
 export const showSuccessNotification = (args: NotificationArgsType) => (dispatch: DispatchType) =>
-  notificationFactory(args, NOTIFICATION_LEVELS.SUCCESS, dispatch)
+  notificationFactory({ ...args, level: NOTIFICATION_LEVELS.SUCCESS }, dispatch)
 
 export const showErrorNotification = (args: NotificationArgsType) => (dispatch: DispatchType) =>
-  notificationFactory(args, NOTIFICATION_LEVELS.ERROR, dispatch)
+  notificationFactory({ ...args, level: NOTIFICATION_LEVELS.ERROR }, dispatch)
 
 export const showWarningNotification = (args: NotificationArgsType) => (dispatch: DispatchType) =>
-  notificationFactory(args, NOTIFICATION_LEVELS.WARNING, dispatch)
+  notificationFactory({ ...args, level: NOTIFICATION_LEVELS.WARNING }, dispatch)
 
 export const showInfoNotification = (args: NotificationArgsType) => (dispatch: DispatchType) =>
-  notificationFactory(args, NOTIFICATION_LEVELS.INFO, dispatch)
+  notificationFactory({ ...args, level: NOTIFICATION_LEVELS.INFO }, dispatch)
 
 // state Getters
 export const getNotifications = (state: Object) => state.notifications
 
-export default (state: Array<NotificationArgsType> = [], action: Object) => {
+export default (state: Array<NotificationType> = [], action: Object) => {
   switch (action.type) {
     case SHOW_NOTIFICATION:
       return [
         ...state,
         { ...action.payload }
       ]
+    case HIDE_NOTIFICATION:
+      return reject(state, { id: action.payload.id })
     case HIDE_NOTIFICATIONS:
       return reject(state, action.payload)
     default:
