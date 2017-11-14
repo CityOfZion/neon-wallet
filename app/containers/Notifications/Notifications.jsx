@@ -22,14 +22,6 @@ const overrideStyles = {
   }
 }
 
-class abc extends Component {
-  render () {
-    return (<div>hello2</div>)
-  }
-}
-
-const xxx = () => <div>howdy</div>
-
 class Notifications extends Component<Props> {
   componentWillReceiveProps (nextProps: Props) {
     // Adapted from https://github.com/gor181/react-notification-system-redux/blob/master/src/notifications.js
