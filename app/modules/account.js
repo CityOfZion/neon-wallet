@@ -44,17 +44,18 @@ export function setKeys (accountKeys: any) {
 }
 
 export const loginNep2 = (passphrase: string, wif: string, history: Object) => (dispatch: DispatchType) => {
-  const infoNotificationId = dispatch(showInfoNotification({ message: 'Decrypting encoded key...' }))
-
   const dispatchError = (message: string) => dispatch(showErrorNotification({ message }))
 
   if (!validatePassphrase(passphrase)) {
     return dispatchError('Passphrase too short')
   }
 
+  const infoNotificationId = dispatch(showInfoNotification({ message: 'Decrypting encoded key...' }))
+
   setTimeout(async () => {
     try {
       const [_err, responseWif] = await asyncWrap(decryptWIF(wif, passphrase)) // eslint-disable-line
+      console.log('HEREEEEE!')
       dispatch(hideNotification(infoNotificationId))
       dispatch(login(responseWif))
       return history.push(ROUTES.DASHBOARD)

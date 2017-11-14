@@ -102,8 +102,7 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
     if (isHardwareClaim) {
       dispatch(showInfoNotification({
         message: 'Sign transaction 1 of 2 to claim Gas on your hardware device (sending Neo to yourself)',
-        autoDismiss: 0,
-        soloInGroup: true
+        autoDismiss: 0
       }))
       sendAssetFn = () => hardwareDoSendAsset(net, address, publicKey, { [ASSETS.NEO]: neo }, signingFunction)
     } else {

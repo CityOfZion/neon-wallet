@@ -14,7 +14,7 @@
     "assets-dev": "cross-env PORT=3000 NODE_ENV=development webpack --config ./config/webpack.config.dev",
     "test": "npm rebuild node-hid && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test:e2e": "ava __e2e__/*.e2e.js --timeout=120s",
-    "test-watch": "jest --watch",
+    "test-watch": "jest --watch --verbose",
     "pack": "build --dir",
     "dist": "build",
     "lint": "eslint -c .eslintrc ./app --ext .js,.jsx --ignore-pattern dist/",

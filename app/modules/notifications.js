@@ -4,6 +4,7 @@ import { NOTIFICATION_LEVELS, NOTIFICATION_POSITIONS } from '../core/constants'
 
 type NotificationArgsType = {
   message: string,
+  id?: string,
   title?: string,
   position?: $Values<typeof NOTIFICATION_POSITIONS>,
   dismissible?: boolean,
@@ -20,7 +21,7 @@ type HideNotificationType = NotificationFactoryArgsType & {
   message?: string
 }
 
-const DEFAULT_POSITION = NOTIFICATION_POSITIONS.TOP_CENTER
+export const DEFAULT_POSITION = NOTIFICATION_POSITIONS.TOP_CENTER
 const FIVE_SECONDS = 5
 
 const notificationFactory = (args: NotificationFactoryArgsType, dispatch: DispatchType) => {
@@ -28,7 +29,8 @@ const notificationFactory = (args: NotificationFactoryArgsType, dispatch: Dispat
     autoDismiss = FIVE_SECONDS,
     dismissible = true,
     stack = false,
-    position = DEFAULT_POSITION
+    position = DEFAULT_POSITION,
+    id = uniqueId('notification_')
   } = args
 
   const shouldHideNonDismissibleNotifications = !stack
@@ -37,7 +39,7 @@ const notificationFactory = (args: NotificationFactoryArgsType, dispatch: Dispat
   }
 
   return dispatch(showNotification({
-    id: uniqueId('notification_'),
+    id,
     position,
     dismissible,
     autoDismiss,
