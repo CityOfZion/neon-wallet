@@ -13,134 +13,132 @@ import notificationsReducer, {
 import { NOTIFICATION_LEVELS, NOTIFICATION_POSITIONS } from '../../app/core/constants'
 
 describe('notifications module tests', () => {
-  describe('showNotification tests', () => {
-    test('showSuccessNotification works', () => {
-      const dispatch = jest.fn()
-      const expectedActions = [
-        [
-          {
-            payload: {
-              dismissible: true,
-              position: NOTIFICATION_POSITIONS.TOP_CENTER
-            },
-            type: HIDE_NOTIFICATIONS
-          }
-        ],
-        [
-          {
-            payload: {
-              autoDismiss: 5,
-              dismissible: true,
-              id: 'successId',
-              level: NOTIFICATION_LEVELS.SUCCESS,
-              message: 'success',
-              position: NOTIFICATION_POSITIONS.TOP_CENTER
-            },
-            type: SHOW_NOTIFICATION
-          }
-        ]
+  test('showSuccessNotification works without stacking', () => {
+    const dispatch = jest.fn()
+    const expectedActions = [
+      [
+        {
+          payload: {
+            dismissible: true,
+            position: NOTIFICATION_POSITIONS.TOP_CENTER
+          },
+          type: HIDE_NOTIFICATIONS
+        }
+      ],
+      [
+        {
+          payload: {
+            autoDismiss: 5,
+            dismissible: true,
+            id: 'successId',
+            level: NOTIFICATION_LEVELS.SUCCESS,
+            message: 'success',
+            position: NOTIFICATION_POSITIONS.TOP_CENTER
+          },
+          type: SHOW_NOTIFICATION
+        }
       ]
+    ]
 
-      showSuccessNotification({ message: 'success', id: 'successId' })(dispatch)
-      expect(dispatch.mock.calls[0]).toEqual(expectedActions[0])
-      expect(dispatch.mock.calls[1]).toEqual(expectedActions[1])
-    })
+    showSuccessNotification({ message: 'success', id: 'successId' })(dispatch)
+    expect(dispatch.mock.calls[0]).toEqual(expectedActions[0])
+    expect(dispatch.mock.calls[1]).toEqual(expectedActions[1])
+  })
 
-    test('showErrorNotification works', () => {
-      const dispatch = jest.fn()
-      const expectedActions = [
-        [
-          {
-            payload: {
-              dismissible: true,
-              position: NOTIFICATION_POSITIONS.TOP_CENTER
-            },
-            type: HIDE_NOTIFICATIONS
-          }
-        ],
-        [
-          {
-            payload: {
-              autoDismiss: 5,
-              dismissible: true,
-              id: 'errorId',
-              level: NOTIFICATION_LEVELS.ERROR,
-              message: 'error',
-              position: NOTIFICATION_POSITIONS.TOP_CENTER
-            },
-            type: SHOW_NOTIFICATION
-          }
-        ]
+  test('showErrorNotification works without stacking', () => {
+    const dispatch = jest.fn()
+    const expectedActions = [
+      [
+        {
+          payload: {
+            dismissible: true,
+            position: NOTIFICATION_POSITIONS.TOP_CENTER
+          },
+          type: HIDE_NOTIFICATIONS
+        }
+      ],
+      [
+        {
+          payload: {
+            autoDismiss: 5,
+            dismissible: true,
+            id: 'errorId',
+            level: NOTIFICATION_LEVELS.ERROR,
+            message: 'error',
+            position: NOTIFICATION_POSITIONS.TOP_CENTER
+          },
+          type: SHOW_NOTIFICATION
+        }
       ]
+    ]
 
-      showErrorNotification({ message: 'error', id: 'errorId' })(dispatch)
-      expect(dispatch.mock.calls[0]).toEqual(expectedActions[0])
-      expect(dispatch.mock.calls[1]).toEqual(expectedActions[1])
-    })
+    showErrorNotification({ message: 'error', id: 'errorId' })(dispatch)
+    expect(dispatch.mock.calls[0]).toEqual(expectedActions[0])
+    expect(dispatch.mock.calls[1]).toEqual(expectedActions[1])
+  })
 
-    test('showInfoNotification works', () => {
-      const dispatch = jest.fn()
-      const expectedActions = [
-        [
-          {
-            payload: {
-              dismissible: true,
-              position: NOTIFICATION_POSITIONS.TOP_CENTER
-            },
-            type: HIDE_NOTIFICATIONS
-          }
-        ],
-        [
-          {
-            payload: {
-              autoDismiss: 5,
-              dismissible: true,
-              id: 'infoId',
-              level: NOTIFICATION_LEVELS.INFO,
-              message: 'info',
-              position: NOTIFICATION_POSITIONS.TOP_CENTER
-            },
-            type: SHOW_NOTIFICATION
-          }
-        ]
+  test('showInfoNotification works without stacking', () => {
+    const dispatch = jest.fn()
+    const expectedActions = [
+      [
+        {
+          payload: {
+            dismissible: true,
+            position: NOTIFICATION_POSITIONS.TOP_CENTER
+          },
+          type: HIDE_NOTIFICATIONS
+        }
+      ],
+      [
+        {
+          payload: {
+            autoDismiss: 5,
+            dismissible: true,
+            id: 'infoId',
+            level: NOTIFICATION_LEVELS.INFO,
+            message: 'info',
+            position: NOTIFICATION_POSITIONS.TOP_CENTER
+          },
+          type: SHOW_NOTIFICATION
+        }
       ]
+    ]
 
-      showInfoNotification({ message: 'info', id: 'infoId' })(dispatch)
-      expect(dispatch.mock.calls[0]).toEqual(expectedActions[0])
-      expect(dispatch.mock.calls[1]).toEqual(expectedActions[1])
-    })
+    showInfoNotification({ message: 'info', id: 'infoId' })(dispatch)
+    expect(dispatch.mock.calls[0]).toEqual(expectedActions[0])
+    expect(dispatch.mock.calls[1]).toEqual(expectedActions[1])
+  })
 
-    test('showWarningNotification works', () => {
-      const dispatch = jest.fn()
-      const expectedActions = [
-        [
-          {
-            payload: {
-              dismissible: true,
-              position: NOTIFICATION_POSITIONS.TOP_CENTER
-            },
-            type: HIDE_NOTIFICATIONS
-          }
-        ],
-        [
-          {
-            payload: {
-              autoDismiss: 5,
-              dismissible: true,
-              id: 'warningId',
-              level: NOTIFICATION_LEVELS.WARNING,
-              message: 'warning',
-              position: NOTIFICATION_POSITIONS.TOP_CENTER
-            },
-            type: SHOW_NOTIFICATION
-          }
-        ]
+  test('showWarningNotification works without stacking', () => {
+    const dispatch = jest.fn()
+    const expectedActions = [
+      [
+        {
+          payload: {
+            dismissible: true,
+            position: NOTIFICATION_POSITIONS.TOP_CENTER
+          },
+          type: HIDE_NOTIFICATIONS
+        }
+      ],
+      [
+        {
+          payload: {
+            autoDismiss: 5,
+            dismissible: true,
+            id: 'warningId',
+            level: NOTIFICATION_LEVELS.WARNING,
+            message: 'warning',
+            position: NOTIFICATION_POSITIONS.TOP_CENTER
+          },
+          type: SHOW_NOTIFICATION
+        }
       ]
+    ]
 
-      showWarningNotification({ message: 'warning', id: 'warningId' })(dispatch)
-      expect(dispatch.mock.calls[0]).toEqual(expectedActions[0])
-      expect(dispatch.mock.calls[1]).toEqual(expectedActions[1])
-    })
+    showWarningNotification({ message: 'warning', id: 'warningId' })(dispatch)
+    expect(dispatch.mock.calls[0]).toEqual(expectedActions[0])
+    expect(dispatch.mock.calls[1]).toEqual(expectedActions[1])
   })
 
   describe('showNotification tests', () => {

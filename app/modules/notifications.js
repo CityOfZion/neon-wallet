@@ -38,13 +38,15 @@ const notificationFactory = (args: NotificationFactoryArgsType, dispatch: Dispat
     dispatch(hideNotifications({ position, dismissible: true }))
   }
 
-  return dispatch(showNotification({
+  dispatch(showNotification({
     id,
     position,
     dismissible,
     autoDismiss,
     ...args
   }))
+
+  return id
 }
 
 // Constants
@@ -53,14 +55,10 @@ export const HIDE_NOTIFICATION = 'HIDE_NOTIFICATION'
 export const HIDE_NOTIFICATIONS = 'HIDE_NOTIFICATIONS'
 
 // Actions
-export const showNotification = (args: NotificationType) => (dispatch: DispatchType) => {
-  const { id } = args
-  dispatch({
-    type: SHOW_NOTIFICATION,
-    payload: args
-  })
-  return id
-}
+export const showNotification = (args: NotificationType) => ({
+  type: SHOW_NOTIFICATION,
+  payload: args
+})
 
 export const hideNotification = (id: string) => ({
   type: HIDE_NOTIFICATION,
