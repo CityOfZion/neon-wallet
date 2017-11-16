@@ -8,39 +8,104 @@ import notificationsReducer, {
   SHOW_NOTIFICATION,
   HIDE_NOTIFICATIONS,
   HIDE_NOTIFICATION,
+  DEFAULT_POSITION,
+  AUTO_DISMISS_TIMEOUT,
   showNotification
 } from '../../app/modules/notifications'
 import { NOTIFICATION_LEVELS, NOTIFICATION_POSITIONS } from '../../app/core/constants'
+
+const hideNonDismissibleAction = {
+  payload: {
+    dismissible: true,
+    position: DEFAULT_POSITION
+  },
+  type: HIDE_NOTIFICATIONS
+}
 
 describe('notifications module tests', () => {
   test('showSuccessNotification works without stacking', () => {
     const dispatch = jest.fn()
     const expectedActions = [
       [
-        {
-          payload: {
-            dismissible: true,
-            position: NOTIFICATION_POSITIONS.TOP_CENTER
-          },
-          type: HIDE_NOTIFICATIONS
-        }
+        hideNonDismissibleAction
       ],
       [
         {
           payload: {
-            autoDismiss: 5,
+            title: 'success',
+            autoDismiss: AUTO_DISMISS_TIMEOUT,
             dismissible: true,
-            id: 'successId',
+            id: 'notification_success_1',
             level: NOTIFICATION_LEVELS.SUCCESS,
             message: 'success',
-            position: NOTIFICATION_POSITIONS.TOP_CENTER
+            position: DEFAULT_POSITION
           },
           type: SHOW_NOTIFICATION
         }
       ]
     ]
 
-    showSuccessNotification({ message: 'success', id: 'successId' })(dispatch)
+    showSuccessNotification({
+      title: 'success',
+      message: 'success',
+      id: 'notification_success_1'
+    })(dispatch)
+
+    expect(dispatch.mock.calls[0]).toEqual(expectedActions[0])
+    expect(dispatch.mock.calls[1]).toEqual(expectedActions[1])
+  })
+
+  test('showSuccessNotification works with stacking', () => {
+    const dispatch = jest.fn()
+    const expectedActions = [
+      [
+        {
+          payload: {
+            title: 'success',
+            autoDismiss: 3,
+            dismissible: true,
+            id: 'notification_success_1',
+            level: NOTIFICATION_LEVELS.SUCCESS,
+            message: 'first success message',
+            position: DEFAULT_POSITION,
+            stack: true
+          },
+          type: SHOW_NOTIFICATION
+        }
+      ],
+      [
+        {
+          payload: {
+            title: 'success',
+            autoDismiss: AUTO_DISMISS_TIMEOUT,
+            dismissible: false,
+            id: 'notification_success_2',
+            level: NOTIFICATION_LEVELS.SUCCESS,
+            message: 'second success message',
+            position: DEFAULT_POSITION,
+            stack: true
+          },
+          type: SHOW_NOTIFICATION
+        }
+      ]
+    ]
+
+    showSuccessNotification({
+      title: 'success',
+      message: 'first success message',
+      id: 'notification_success_1',
+      stack: true,
+      autoDismiss: 3
+    })(dispatch)
+
+    showSuccessNotification({
+      title: 'success',
+      message: 'second success message',
+      id: 'notification_success_2',
+      stack: true,
+      dismissible: false
+    })(dispatch)
+
     expect(dispatch.mock.calls[0]).toEqual(expectedActions[0])
     expect(dispatch.mock.calls[1]).toEqual(expectedActions[1])
   })
@@ -49,30 +114,31 @@ describe('notifications module tests', () => {
     const dispatch = jest.fn()
     const expectedActions = [
       [
-        {
-          payload: {
-            dismissible: true,
-            position: NOTIFICATION_POSITIONS.TOP_CENTER
-          },
-          type: HIDE_NOTIFICATIONS
-        }
+        hideNonDismissibleAction
       ],
       [
         {
           payload: {
-            autoDismiss: 5,
-            dismissible: true,
-            id: 'errorId',
+            title: 'error',
+            autoDismiss: AUTO_DISMISS_TIMEOUT,
+            dismissible: false,
+            id: 'notification_error_1',
             level: NOTIFICATION_LEVELS.ERROR,
             message: 'error',
-            position: NOTIFICATION_POSITIONS.TOP_CENTER
+            position: DEFAULT_POSITION
           },
           type: SHOW_NOTIFICATION
         }
       ]
     ]
 
-    showErrorNotification({ message: 'error', id: 'errorId' })(dispatch)
+    showErrorNotification({
+      title: 'error',
+      message: 'error',
+      id: 'notification_error_1',
+      dismissible: false
+    })(dispatch)
+
     expect(dispatch.mock.calls[0]).toEqual(expectedActions[0])
     expect(dispatch.mock.calls[1]).toEqual(expectedActions[1])
   })
@@ -81,22 +147,17 @@ describe('notifications module tests', () => {
     const dispatch = jest.fn()
     const expectedActions = [
       [
-        {
-          payload: {
-            dismissible: true,
-            position: NOTIFICATION_POSITIONS.TOP_CENTER
-          },
-          type: HIDE_NOTIFICATIONS
-        }
+        hideNonDismissibleAction
       ],
       [
         {
           payload: {
-            autoDismiss: 5,
+            title: 'some info title message',
+            autoDismiss: AUTO_DISMISS_TIMEOUT,
             dismissible: true,
-            id: 'infoId',
+            id: 'notification_info_1',
             level: NOTIFICATION_LEVELS.INFO,
-            message: 'info',
+            message: 'some info message',
             position: NOTIFICATION_POSITIONS.TOP_CENTER
           },
           type: SHOW_NOTIFICATION
@@ -104,7 +165,13 @@ describe('notifications module tests', () => {
       ]
     ]
 
-    showInfoNotification({ message: 'info', id: 'infoId' })(dispatch)
+    showInfoNotification({
+      title: 'some info title message',
+      message: 'some info message',
+      id: 'notification_info_1',
+      position: NOTIFICATION_POSITIONS.TOP_CENTER
+    })(dispatch)
+
     expect(dispatch.mock.calls[0]).toEqual(expectedActions[0])
     expect(dispatch.mock.calls[1]).toEqual(expectedActions[1])
   })
@@ -113,20 +180,15 @@ describe('notifications module tests', () => {
     const dispatch = jest.fn()
     const expectedActions = [
       [
-        {
-          payload: {
-            dismissible: true,
-            position: NOTIFICATION_POSITIONS.TOP_CENTER
-          },
-          type: HIDE_NOTIFICATIONS
-        }
+        hideNonDismissibleAction
       ],
       [
         {
           payload: {
-            autoDismiss: 5,
+            title: 'warning',
+            autoDismiss: AUTO_DISMISS_TIMEOUT,
             dismissible: true,
-            id: 'warningId',
+            id: 'notification_warning_1',
             level: NOTIFICATION_LEVELS.WARNING,
             message: 'warning',
             position: NOTIFICATION_POSITIONS.TOP_CENTER
@@ -136,19 +198,25 @@ describe('notifications module tests', () => {
       ]
     ]
 
-    showWarningNotification({ message: 'warning', id: 'warningId' })(dispatch)
+    showWarningNotification({
+      title: 'warning',
+      message: 'warning',
+      id: 'notification_warning_1',
+      position: NOTIFICATION_POSITIONS.TOP_CENTER
+    })(dispatch)
+
     expect(dispatch.mock.calls[0]).toEqual(expectedActions[0])
     expect(dispatch.mock.calls[1]).toEqual(expectedActions[1])
   })
 
   describe('showNotification tests', () => {
     const notificationArgs = {
-      autoDismiss: 5,
+      autoDismiss: AUTO_DISMISS_TIMEOUT,
       dismissible: true,
-      id: 'successId',
+      id: 'notification_success_1',
       level: NOTIFICATION_LEVELS.SUCCESS,
       message: 'success',
-      position: NOTIFICATION_POSITIONS.TOP_CENTER
+      position: DEFAULT_POSITION
     }
 
     test('showNotification action works', () => {
@@ -210,22 +278,22 @@ describe('notifications module tests', () => {
       const action = {
         type: HIDE_NOTIFICATIONS,
         payload: {
-          position: NOTIFICATION_POSITIONS.TOP_CENTER
+          position: DEFAULT_POSITION
         }
       }
-      expect(hideNotifications({ position: NOTIFICATION_POSITIONS.TOP_CENTER })).toEqual(action)
+      expect(hideNotifications({ position: DEFAULT_POSITION })).toEqual(action)
     })
 
     test('hideNotifications removes correct notification', () => {
       const action = {
         type: HIDE_NOTIFICATIONS,
         payload: {
-          position: NOTIFICATION_POSITIONS.TOP_CENTER
+          position: DEFAULT_POSITION
         }
       }
 
       const initialState = [
-        { message: 'some message', id: 'notification_id_1', position: NOTIFICATION_POSITIONS.TOP_CENTER },
+        { message: 'some message', id: 'notification_id_1', position: DEFAULT_POSITION },
         { message: 'some other message', id: 'notification_id_2', position: NOTIFICATION_POSITIONS.BOTTOM_CENTER }
       ]
 
