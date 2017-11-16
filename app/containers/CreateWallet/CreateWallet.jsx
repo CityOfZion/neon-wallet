@@ -66,7 +66,7 @@ export default class CreateWallet extends Component<Props, State> {
           value={passphrase2}
           onChange={(e) => this.setState({ passphrase2: e.target.value })}
         />
-        <button disabled={disabledButton} className={disabledButton && 'disabled'} onClick={this.generateNewWallet}> Generate keys </button>
+        <button disabled={disabledButton} className={disabledButton ? 'disabled' : ''} onClick={this.generateNewWallet}> Generate keys </button>
         <HomeButtonLink />
       </div>
     )
