@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import WalletInfo from './WalletInfo'
 import { initiateGetBalance, getNeo, getGas, getNeoPrice, getGasPrice } from '../../modules/wallet'
-import { showErrorNotification, showSuccessNotification, showInfoNotification } from '../../modules/notification'
+import { showErrorNotification, showSuccessNotification, showInfoNotification } from '../../modules/notifications'
 import { getAddress } from '../../modules/account'
 import { getNetwork } from '../../modules/metadata'
 

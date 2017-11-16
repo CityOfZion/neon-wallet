@@ -5,7 +5,7 @@ import Dashboard from './Dashboard'
 import { togglePane, getSendPane, getConfirmPane } from '../../modules/dashboard'
 import { logout, getAddress } from '../../modules/account'
 import { getBlockHeight, getNetwork } from '../../modules/metadata'
-import { getNotification } from '../../modules/notification'
+import { getNotifications } from '../../modules/notifications'
 
 const mapStateToProps = (state: Object) => ({
   sendPane: getSendPane(state),
@@ -13,7 +13,7 @@ const mapStateToProps = (state: Object) => ({
   blockHeight: getBlockHeight(state),
   net: getNetwork(state),
   address: getAddress(state),
-  notification: getNotification(state)
+  notification: getNotifications(state)
 })
 
 const actionCreators = {

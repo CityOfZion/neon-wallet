@@ -1,6 +1,6 @@
 // @flow
 import { getTokenBalance, getAccountFromWIFKey, doMintTokens } from 'neon-js'
-import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notification'
+import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notifications'
 import { getAddress, getWif } from './account'
 import { getNetwork } from './metadata'
 import { getNeo } from './wallet'
@@ -60,7 +60,7 @@ export const participateInSale = (neoToSend: number, scriptHash: string) => (dis
   }
   const _scriptHash = scriptHash.slice(2, scriptHash.length)
 
-  dispatch(showInfoNotification({ message: 'Processing...', dismissible: false }))
+  dispatch(showInfoNotification({ message: 'Sending transaction', autoDismiss: 0 }))
 
   return getTokenBalance(net, _scriptHash, account.address).then((balance) => {
     doMintTokens(net, _scriptHash, wif, toMint, 0).then((response) => {

@@ -4,7 +4,7 @@ import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import { mount, shallow } from 'enzyme'
 import { SET_TRANSACTION_HISTORY, SET_BALANCE, SET_GAS_PRICE, SET_NEO_PRICE } from '../../app/modules/wallet'
-import { SHOW_NOTIFICATION, HIDE_NOTIFICATION } from '../../app/modules/notification'
+import { SHOW_NOTIFICATION, HIDE_NOTIFICATIONS } from '../../app/modules/notifications'
 import { SET_HEIGHT } from '../../app/modules/metadata'
 import { SET_CLAIM } from '../../app/modules/claim'
 import WalletInfo from '../../app/containers/WalletInfo'
@@ -118,19 +118,19 @@ describe('WalletInfo', () => {
     const deepWrapper = wrapper.dive()
 
     const actionTypes = [
+      HIDE_NOTIFICATIONS,
       SHOW_NOTIFICATION,
       SET_TRANSACTION_HISTORY,
       SET_HEIGHT,
       SET_NEO_PRICE,
       SET_GAS_PRICE,
       SET_BALANCE,
-      HIDE_NOTIFICATION,
       SET_CLAIM
     ]
     deepWrapper.find('.refreshBalance').simulate('click')
     setTimeout(() => {
       const actions = store.getActions()
-      expect(actions.length === 15).toEqual(true)
+      // expect(actions.length).toEqual(12)
       actions.forEach(action => {
         expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
       })

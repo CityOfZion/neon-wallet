@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Send from './Send'
 import { sendTransaction, toggleAsset, getSelectedAsset } from '../../modules/transactions'
-import { showErrorNotification } from '../../modules/notification'
+import { showErrorNotification } from '../../modules/notifications'
 import { togglePane, getConfirmPane } from '../../modules/dashboard'
 import { getNeo, getGas } from '../../modules/wallet'
 
