@@ -5,7 +5,8 @@ import configureStore from 'redux-mock-store'
 import { shallow, mount } from 'enzyme'
 import { TOGGLE_SEND_PANE } from '../../app/modules/dashboard'
 import { TOGGLE_ASSET } from '../../app/modules/transactions'
-import { SHOW_NOTIFICATION, HIDE_NOTIFICATION } from '../../app/modules/notification'
+import { SHOW_NOTIFICATION, HIDE_NOTIFICATIONS, DEFAULT_POSITION } from '../../app/modules/notifications'
+import { NOTIFICATION_LEVELS } from '../../app/core/constants'
 import Send from '../../app/containers/Send'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
@@ -92,16 +93,20 @@ describe('Send', () => {
 
     jest.runAllTimers()
     const actions = store.getActions()
-    expect(actions.length === 2).toEqual(true)
+    expect(actions.length).toEqual(2)
     expect(actions[0]).toEqual({
-      type: SHOW_NOTIFICATION,
+      type: HIDE_NOTIFICATIONS,
       payload: {
-        message: 'Please specify an address and amount',
-        type: 'ERROR'
+        dismissible: true,
+        position: DEFAULT_POSITION
       }
     })
     expect(actions[1]).toEqual({
-      type: HIDE_NOTIFICATION
+      type: SHOW_NOTIFICATION,
+      payload: expect.objectContaining({
+        message: 'Please specify an address and amount',
+        level: NOTIFICATION_LEVELS.ERROR
+      })
     })
     done()
   })
@@ -116,16 +121,20 @@ describe('Send', () => {
 
     jest.runAllTimers()
     const actions = store.getActions()
-    expect(actions.length === 2).toEqual(true)
+    expect(actions.length).toEqual(2)
     expect(actions[0]).toEqual({
-      type: SHOW_NOTIFICATION,
+      type: HIDE_NOTIFICATIONS,
       payload: {
-        message: 'The address you entered was not valid.',
-        type: 'ERROR'
+        dismissible: true,
+        position: DEFAULT_POSITION
       }
     })
     expect(actions[1]).toEqual({
-      type: HIDE_NOTIFICATION
+      type: SHOW_NOTIFICATION,
+      payload: expect.objectContaining({
+        message: 'The address you entered was not valid.',
+        level: NOTIFICATION_LEVELS.ERROR
+      })
     })
     done()
   })
@@ -140,16 +149,20 @@ describe('Send', () => {
 
     jest.runAllTimers()
     const actions = store.getActions()
-    expect(actions.length === 2).toEqual(true)
+    expect(actions.length).toEqual(2)
     expect(actions[0]).toEqual({
-      type: SHOW_NOTIFICATION,
+      type: HIDE_NOTIFICATIONS,
       payload: {
-        message: 'You cannot send fractional amounts of Neo.',
-        type: 'ERROR'
+        dismissible: true,
+        position: DEFAULT_POSITION
       }
     })
     expect(actions[1]).toEqual({
-      type: HIDE_NOTIFICATION
+      type: SHOW_NOTIFICATION,
+      payload: expect.objectContaining({
+        message: 'You cannot send fractional amounts of Neo.',
+        level: NOTIFICATION_LEVELS.ERROR
+      })
     })
     done()
   })
@@ -163,16 +176,20 @@ describe('Send', () => {
 
     jest.runAllTimers()
     const actions = store.getActions()
-    expect(actions.length === 2).toEqual(true)
+    expect(actions.length).toEqual(2)
     expect(actions[0]).toEqual({
-      type: SHOW_NOTIFICATION,
-      payload: {
-        message: 'Please specify an address and amount',
-        type: 'ERROR'
-      }
+      type: HIDE_NOTIFICATIONS,
+      payload: expect.objectContaining({
+        dismissible: true,
+        position: DEFAULT_POSITION
+      })
     })
     expect(actions[1]).toEqual({
-      type: HIDE_NOTIFICATION
+      type: SHOW_NOTIFICATION,
+      payload: expect.objectContaining({
+        message: 'Please specify an address and amount',
+        level: NOTIFICATION_LEVELS.ERROR
+      })
     })
     done()
   })
@@ -187,16 +204,20 @@ describe('Send', () => {
 
     jest.runAllTimers()
     const actions = store.getActions()
-    expect(actions.length === 2).toEqual(true)
+    expect(actions.length).toEqual(2)
     expect(actions[0]).toEqual({
-      type: SHOW_NOTIFICATION,
+      type: HIDE_NOTIFICATIONS,
       payload: {
-        message: 'You do not have enough NEO to send.',
-        type: 'ERROR'
+        dismissible: true,
+        position: DEFAULT_POSITION
       }
     })
     expect(actions[1]).toEqual({
-      type: HIDE_NOTIFICATION
+      type: SHOW_NOTIFICATION,
+      payload: expect.objectContaining({
+        message: 'You do not have enough NEO to send.',
+        level: NOTIFICATION_LEVELS.ERROR
+      })
     })
     done()
   })
@@ -211,16 +232,20 @@ describe('Send', () => {
 
     jest.runAllTimers()
     const actions = store.getActions()
-    expect(actions.length === 2).toEqual(true)
+    expect(actions.length).toEqual(2)
     expect(actions[0]).toEqual({
-      type: SHOW_NOTIFICATION,
+      type: HIDE_NOTIFICATIONS,
       payload: {
-        message: 'You cannot send negative amounts of an asset.',
-        type: 'ERROR'
+        dismissible: true,
+        position: DEFAULT_POSITION
       }
     })
     expect(actions[1]).toEqual({
-      type: HIDE_NOTIFICATION
+      type: SHOW_NOTIFICATION,
+      payload: expect.objectContaining({
+        message: 'You cannot send negative amounts of an asset.',
+        level: NOTIFICATION_LEVELS.ERROR
+      })
     })
     done()
   })
@@ -234,12 +259,12 @@ describe('Send', () => {
     wrapper.find('#doSend').simulate('click')
 
     const actions = store.getActions()
-    expect(actions.length === 1).toEqual(true)
+    expect(actions.length).toEqual(1)
     expect(actions[0]).toEqual({
       type: TOGGLE_SEND_PANE,
-      payload: {
+      payload: expect.objectContaining({
         pane: 'confirmPane'
-      }
+      })
     })
     done()
   })
@@ -255,16 +280,20 @@ describe('Send', () => {
 
     jest.runAllTimers()
     const actions = store.getActions()
-    expect(actions.length === 2).toEqual(true)
+    expect(actions.length).toEqual(2)
     expect(actions[0]).toEqual({
-      type: SHOW_NOTIFICATION,
+      type: HIDE_NOTIFICATIONS,
       payload: {
-        message: 'You do not have enough GAS to send.',
-        type: 'ERROR'
+        dismissible: true,
+        position: DEFAULT_POSITION
       }
     })
     expect(actions[1]).toEqual({
-      type: HIDE_NOTIFICATION
+      type: SHOW_NOTIFICATION,
+      payload: expect.objectContaining({
+        message: 'You do not have enough GAS to send.',
+        level: NOTIFICATION_LEVELS.ERROR
+      })
     })
     done()
   })
@@ -279,12 +308,12 @@ describe('Send', () => {
     wrapper.find('#doSend').simulate('click')
 
     const actions1 = store.getActions()
-    expect(actions1.length === 1).toEqual(true)
+    expect(actions1.length).toEqual(1)
     expect(actions1[0]).toEqual({
       type: TOGGLE_SEND_PANE,
-      payload: {
+      payload: expect.objectContaining({
         pane: 'confirmPane'
-      }
+      })
     })
     done()
   })
@@ -300,23 +329,34 @@ describe('Send', () => {
     Promise.resolve('pause').then().then().then(() => {
       jest.runAllTimers()
       const actions = store.getActions()
-      expect(actions.length).toEqual(3)
+      expect(actions.length).toEqual(4)
       expect(actions[0]).toEqual({
-        type: SHOW_NOTIFICATION,
+        type: HIDE_NOTIFICATIONS,
         payload: {
-          message: 'Processing...',
-          type: 'INFO'
+          dismissible: true,
+          position: DEFAULT_POSITION
         }
       })
       expect(actions[1]).toEqual({
         type: SHOW_NOTIFICATION,
-        payload: {
-          message: 'Transaction complete! Your balance will automatically update when the blockchain has processed it.',
-          type: 'SUCCESS'
-        }
+        payload: expect.objectContaining({
+          message: 'Sending Transaction...',
+          level: NOTIFICATION_LEVELS.INFO
+        })
       })
       expect(actions[2]).toEqual({
-        type: HIDE_NOTIFICATION
+        type: HIDE_NOTIFICATIONS,
+        payload: {
+          dismissible: true,
+          position: DEFAULT_POSITION
+        }
+      })
+      expect(actions[3]).toEqual({
+        type: SHOW_NOTIFICATION,
+        payload: expect.objectContaining({
+          message: 'Transaction complete! Your balance will automatically update when the blockchain has processed it.',
+          level: NOTIFICATION_LEVELS.SUCCESS
+        })
       })
       done()
     }).catch(e => done.fail(e))

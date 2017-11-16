@@ -53,6 +53,11 @@ input {
     color: $default-text;
 }
 
+.notification-link {
+    text-decoration: none;
+    color: $default-text;
+}
+
 #settings,
 #tokenSale {
     width: $page-width;

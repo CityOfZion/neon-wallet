@@ -7,8 +7,8 @@ import { shallow, mount } from 'enzyme'
 import { createMemoryHistory } from 'history'
 import LoginNep2 from '../../app/containers/LoginNep2'
 import { decryptWIF } from 'neon-js'
-import { SHOW_NOTIFICATION, HIDE_NOTIFICATION } from '../../app/modules/notification'
-import { LOGIN } from '../../app/modules/account'
+import { SHOW_NOTIFICATION, HIDE_NOTIFICATIONS, HIDE_NOTIFICATION, DEFAULT_POSITION } from '../../app/modules/notifications'
+import { NOTIFICATION_LEVELS } from '../../app/core/constants'
 
 jest.useFakeTimers()
 jest.mock('neon-js')
@@ -110,14 +110,18 @@ describe('LoginNep2', () => {
     expect(decryptWIF.mock.calls.length).toBe(1)
     expect(decryptWIF.mock.calls[0][0]).toBe('6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu')
     expect(actions[0]).toEqual({
-      type: SHOW_NOTIFICATION,
+      type: HIDE_NOTIFICATIONS,
       payload: {
-        message: 'Decrypting encoded key...',
-        type: 'INFO'
+        dismissible: true,
+        position: DEFAULT_POSITION
       }
     })
     expect(actions[1]).toEqual({
-      type: HIDE_NOTIFICATION
+      type: SHOW_NOTIFICATION,
+      payload: expect.objectContaining({
+        message: 'Decrypting encoded key...',
+        level: NOTIFICATION_LEVELS.INFO
+      })
     })
     done()
   })
