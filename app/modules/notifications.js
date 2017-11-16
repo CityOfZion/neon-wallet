@@ -22,11 +22,15 @@ type HideNotificationType = NotificationFactoryArgsType & {
 }
 
 export const DEFAULT_POSITION = NOTIFICATION_POSITIONS.TOP_CENTER
-const FIVE_SECONDS = 5
+export const DEFAULT_SUCCESS_TITLE = 'Success'
+export const DEFAULT_INFO_TITLE = 'Processing'
+export const DEFAULT_ERROR_TITLE = 'Error'
+export const DEFAULT_WARNING_TITLE = 'Warning'
+export const AUTO_DISMISS_TIMEOUT = 5
 
 const notificationFactory = (args: NotificationFactoryArgsType, dispatch: DispatchType) => {
   const {
-    autoDismiss = FIVE_SECONDS,
+    autoDismiss = AUTO_DISMISS_TIMEOUT,
     dismissible = true,
     stack = false,
     position = DEFAULT_POSITION,
@@ -73,16 +77,16 @@ export const hideNotifications = (args: HideNotificationType) => ({
 })
 
 export const showSuccessNotification = (args: NotificationArgsType) => (dispatch: DispatchType) =>
-  notificationFactory({ ...args, level: NOTIFICATION_LEVELS.SUCCESS }, dispatch)
+  notificationFactory({ title: DEFAULT_SUCCESS_TITLE, ...args, level: NOTIFICATION_LEVELS.SUCCESS }, dispatch)
 
 export const showErrorNotification = (args: NotificationArgsType) => (dispatch: DispatchType) =>
-  notificationFactory({ ...args, level: NOTIFICATION_LEVELS.ERROR }, dispatch)
+  notificationFactory({ title: DEFAULT_ERROR_TITLE, ...args, level: NOTIFICATION_LEVELS.ERROR }, dispatch)
 
 export const showWarningNotification = (args: NotificationArgsType) => (dispatch: DispatchType) =>
-  notificationFactory({ ...args, level: NOTIFICATION_LEVELS.WARNING }, dispatch)
+  notificationFactory({ title: DEFAULT_WARNING_TITLE, ...args, level: NOTIFICATION_LEVELS.WARNING }, dispatch)
 
 export const showInfoNotification = (args: NotificationArgsType) => (dispatch: DispatchType) =>
-  notificationFactory({ ...args, level: NOTIFICATION_LEVELS.INFO }, dispatch)
+  notificationFactory({ title: DEFAULT_INFO_TITLE, ...args, level: NOTIFICATION_LEVELS.INFO }, dispatch)
 
 // state Getters
 export const getNotifications = (state: Object) => state.notifications
