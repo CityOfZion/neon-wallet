@@ -91,6 +91,7 @@
     "react-hot-loader": "3.1.1",
     "react-icons": "2.2.7",
     "react-modal": "^3.1.2",
+    "react-notification-system": "^0.2.16",
     "react-redux": "5.0.6",
     "react-router-dom": "4.2.2",
     "react-split-pane": "0.1.68",

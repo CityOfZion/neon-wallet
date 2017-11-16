@@ -6,7 +6,7 @@ import { validateTransactionBeforeSending } from '../core/wallet'
 import { getTransactionHistory, doSendAsset, hardwareDoSendAsset } from 'neon-js'
 import { setTransactionHistory, getNeo, getGas } from './wallet'
 import { log } from '../util/Logs'
-import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notification'
+import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notifications'
 import { getWif, getPublicKey, getSigningFunction, getAddress } from './account'
 import { getNetwork } from './metadata'
 import asyncWrap from '../core/asyncHelper'
@@ -51,14 +51,14 @@ export const sendTransaction = (sendAddress: string, sendAmount: string) => asyn
     let sendAsset = {}
     sendAsset[assetName] = sendAmount
 
-    dispatch(showInfoNotification({ message: 'Processing...', dismissible: false }))
+    dispatch(showInfoNotification({ message: 'Sending Transaction...', autoDismiss: 0 }))
     log(net, 'SEND', selfAddress, { to: sendAddress, asset: selectedAsset, amount: sendAmount })
 
     const isHardwareSend = !!publicKey
 
     let sendAssetFn
     if (isHardwareSend) {
-      dispatch(showInfoNotification({ message: 'Please sign the transaction on your hardware device', dismissible: false }))
+      dispatch(showInfoNotification({ message: 'Please sign the transaction on your hardware device', autoDismiss: 0 }))
       sendAssetFn = () => hardwareDoSendAsset(net, sendAddress, publicKey, sendAsset, signingFunction)
     } else {
       sendAssetFn = () => doSendAsset(net, sendAddress, wif, sendAsset)

@@ -7,6 +7,8 @@ import { shallow, mount } from 'enzyme'
 import Claim from '../../app/containers/Claim'
 import * as neonjs from 'neon-js'
 import { setClaimRequest, disableClaim } from '../../app/modules/claim'
+import { SHOW_NOTIFICATION, HIDE_NOTIFICATIONS, DEFAULT_POSITION } from '../../app/modules/notifications'
+import { NOTIFICATION_LEVELS } from '../../app/core/constants'
 
 const initialState = {
   claim: {
@@ -77,20 +79,34 @@ describe('Claim', () => {
 
       await Promise.resolve().then().then().then()
       const actions = store.getActions()
-      expect(actions.length).toEqual(2)
+      expect(actions.length).toEqual(4)
       expect(actions[0]).toEqual({
-        payload: {
-          message: 'Sending Neo to Yourself...',
-          type: 'INFO'
-        },
-        type: 'SHOW_NOTIFICATION'
+        type: HIDE_NOTIFICATIONS,
+        payload: expect.objectContaining({
+          dismissible: true,
+          position: DEFAULT_POSITION
+        })
       })
       expect(actions[1]).toEqual({
-        payload: {
+        type: SHOW_NOTIFICATION,
+        payload: expect.objectContaining({
+          message: 'Sending Neo to Yourself...',
+          level: NOTIFICATION_LEVELS.INFO
+        })
+      })
+      expect(actions[2]).toEqual({
+        type: HIDE_NOTIFICATIONS,
+        payload: expect.objectContaining({
+          dismissible: true,
+          position: DEFAULT_POSITION
+        })
+      })
+      expect(actions[3]).toEqual({
+        type: SHOW_NOTIFICATION,
+        payload: expect.objectContaining({
           message: 'Transaction failed!',
-          type: 'ERROR'
-        },
-        type: 'SHOW_NOTIFICATION'
+          level: NOTIFICATION_LEVELS.ERROR
+        })
       })
     })
 
@@ -106,23 +122,38 @@ describe('Claim', () => {
 
       await Promise.resolve().then().then().then()
       const actions = store.getActions()
-      expect(actions.length).toEqual(4)
+      expect(actions.length).toEqual(6)
       expect(actions[0]).toEqual({
-        payload: {
-          message: 'Sending Neo to Yourself...',
-          type: 'INFO'
-        },
-        type: 'SHOW_NOTIFICATION'
+        type: HIDE_NOTIFICATIONS,
+        payload: expect.objectContaining({
+          dismissible: true,
+          position: DEFAULT_POSITION
+        })
       })
       expect(actions[1]).toEqual({
-        payload: {
-          message: 'Waiting for transaction to clear...',
-          type: 'INFO'
-        },
-        type: 'SHOW_NOTIFICATION'
+        type: SHOW_NOTIFICATION,
+        payload: expect.objectContaining({
+          message: 'Sending Neo to Yourself...',
+          level: NOTIFICATION_LEVELS.INFO
+        })
       })
-      expect(actions[2]).toEqual(setClaimRequest(true))
-      expect(actions[3]).toEqual(disableClaim(true))
+
+      expect(actions[2]).toEqual({
+        type: HIDE_NOTIFICATIONS,
+        payload: expect.objectContaining({
+          dismissible: true,
+          position: DEFAULT_POSITION
+        })
+      })
+      expect(actions[3]).toEqual({
+        type: SHOW_NOTIFICATION,
+        payload: expect.objectContaining({
+          message: 'Waiting for transaction to clear...',
+          level: NOTIFICATION_LEVELS.INFO
+        })
+      })
+      expect(actions[4]).toEqual(setClaimRequest(true))
+      expect(actions[5]).toEqual(disableClaim(true))
     })
   })
 })

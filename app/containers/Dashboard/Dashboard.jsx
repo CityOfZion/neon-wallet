@@ -9,9 +9,7 @@ import Logout from '../../components/Logout'
 import Send from '../../containers/Send'
 import { version } from '../../../package.json'
 import { log } from '../../util/Logs'
-import { NOTIFICATION_POSITIONS } from '../../core/constants'
 import styles from './Dashboard.scss'
-import classNames from 'classnames'
 
 const logo = require('../../images/neon-logo2.png')
 
@@ -23,7 +21,6 @@ type Props = {
   address: string,
   togglePane: Function,
   logout: Function,
-  notification: NotificationType
 }
 
 export default class Dashboard extends Component<Props> {
@@ -34,7 +31,7 @@ export default class Dashboard extends Component<Props> {
   }
 
   render () {
-    const { sendPane, confirmPane, blockHeight, togglePane, logout, notification } = this.props
+    const { sendPane, confirmPane, blockHeight, togglePane, logout } = this.props
     let sendPaneClosed
     if (sendPane === true) {
       sendPaneClosed = '0%'
@@ -45,18 +42,15 @@ export default class Dashboard extends Component<Props> {
         sendPaneClosed = '15%'
       }
     }
-    const { isShown, position, noAnimation } = notification
-    const shouldPushTop = isShown && position === NOTIFICATION_POSITIONS.TOP
 
     return (
       <div id='dashboard'>
         <SplitPane
-          paneStyle={{ transition: noAnimation ? 'none' : 'height 200ms ease-in-out' }}
           split='horizontal'
-          size={shouldPushTop ? '80px' : '40px'}
+          size={'40px'}
           allowResize={false}
         >
-          <div className={classNames(styles.navBar, {[styles.noAnimation]: noAnimation})} style={{ marginTop: shouldPushTop ? '40px' : 0, position: 'relative', width: '100%' }}>
+          <div style={{ marginTop: 0, position: 'relative', width: '100%' }}>
             <div className={styles.title}>
               <img src={logo} width='60px' />
             </div>

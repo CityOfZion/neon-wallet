@@ -4,7 +4,7 @@ import {
   NETWORK,
   EXPLORER,
   ROUTES,
-  NOTIFICATION_TYPES,
+  NOTIFICATION_LEVELS,
   NOTIFICATION_POSITIONS,
   MODAL_TYPES
 } from '../core/constants'
@@ -22,15 +22,13 @@ declare type ExplorerType = $Values<typeof EXPLORER>
 declare type RouteType = $Values<typeof ROUTES>
 
 declare type NotificationType = {
-  type: $Values<typeof NOTIFICATION_TYPES>,
-  title: ?string,
+  id: string,
+  level: $Values<typeof NOTIFICATION_LEVELS>,
+  title?: string,
   message: string,
-  width: string,
   position: $Values<typeof NOTIFICATION_POSITIONS>,
-  isShown: boolean,
-  noAnimation: boolean,
-  html: boolean,
-  onClick: ?Function
+  dismissible: boolean,
+  autoDismiss: number
 }
 
 declare type TransactionHistoryType = {

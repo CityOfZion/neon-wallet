@@ -1,15 +1,11 @@
 // @flow
 import React, { Component } from 'react'
+import type { Children } from 'react'
 import ModalRenderer from '../ModalRenderer'
-import Notification from '../../components/Notification'
-import classNames from 'classnames'
-import { NOTIFICATION_POSITIONS } from '../../core/constants'
-import styles from './App.scss'
+import Notifications from '../Notifications'
 
 type Props = {
-  children: React$Node,
-  notification: NotificationType,
-  hideNotification: Function,
+  children: Children,
   checkVersion: Function
 }
 
@@ -20,16 +16,11 @@ class App extends Component<Props> {
   }
 
   render () {
-    const { children, notification, hideNotification } = this.props
-    const { position, isShown, noAnimation } = notification
-    const shouldPushTop = isShown && position === NOTIFICATION_POSITIONS.TOP
+    const { children } = this.props
     return (
       <div>
-        <Notification notification={notification} hideNotification={hideNotification} />
-        <div className={classNames(styles.container, {
-          [styles.pushTop]: shouldPushTop,
-          [styles.noAnimation]: noAnimation
-        })}>{children}</div>
+        <div>{children}</div>
+        <Notifications />
         <ModalRenderer />
       </div>
     )
