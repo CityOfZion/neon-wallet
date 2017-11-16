@@ -5,7 +5,7 @@ import configureStore from 'redux-mock-store'
 import { shallow, mount } from 'enzyme'
 import { TOGGLE_SEND_PANE } from '../../app/modules/dashboard'
 import { TOGGLE_ASSET } from '../../app/modules/transactions'
-import { SHOW_NOTIFICATION, HIDE_NOTIFICATION, HIDE_NOTIFICATIONS, DEFAULT_POSITION } from '../../app/modules/notifications'
+import { SHOW_NOTIFICATION, HIDE_NOTIFICATIONS, DEFAULT_POSITION } from '../../app/modules/notifications'
 import { NOTIFICATION_LEVELS } from '../../app/core/constants'
 import Send from '../../app/containers/Send'
 import axios from 'axios'
@@ -340,7 +340,7 @@ describe('Send', () => {
       expect(actions[1]).toEqual({
         type: SHOW_NOTIFICATION,
         payload: expect.objectContaining({
-          message: 'Processing...',
+          message: 'Sending Transaction...',
           level: NOTIFICATION_LEVELS.INFO
         })
       })
