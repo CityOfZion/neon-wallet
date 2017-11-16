@@ -8,16 +8,19 @@ type Props = {
   hideNotification: Function,
 }
 
+const defaultWidth = 480
+const marginLeft = -(defaultWidth / 2)
+
 const overrideStyles = {
   Containers: {
     DefaultStyle: {
-      width: 480
+      width: defaultWidth
     },
     tc: {
-      marginLeft: -240
+      marginLeft
     },
     bc: {
-      marginLeft: -240
+      marginLeft
     }
   }
 }
