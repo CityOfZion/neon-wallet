@@ -75,7 +75,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
         </div>
         <div>
           <button
-            className={loginButtonDisabled && 'disabled'}
+            className={loginButtonDisabled ? 'disabled' : ''}
             onClick={() => loginNep2(passphrase, wif, history)}
             disabled={loginButtonDisabled}>Login</button>
           <HomeButtonLink />

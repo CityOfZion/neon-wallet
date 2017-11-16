@@ -40,7 +40,7 @@ export default class LoginTokenSale extends Component<Props, State> {
           <button
             onClick={() => loginWithPrivateKey(wif, history, ROUTES.TOKEN_SALE)}
             disabled={loginButtonDisabled}
-            className={loginButtonDisabled && 'disabled'}>Login</button>
+            className={loginButtonDisabled ? 'disabled' : ''}>Login</button>
           <HomeButtonLink />
         </div>
       </Page>

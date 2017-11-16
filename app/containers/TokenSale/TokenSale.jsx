@@ -92,11 +92,11 @@ export default class TokenSale extends Component<Props, State> {
             />
           </div>
           <button
-            className={submitSaleButtonDisabled && 'disabled'}
+            className={submitSaleButtonDisabled ? 'disabled' : ''}
             onClick={this.participateInSale}
             disabled={submitSaleButtonDisabled}>Submit for Sale</button>
           <button
-            className={refreshTokenBalanceButtonDisabled && 'disabled'}
+            className={refreshTokenBalanceButtonDisabled ? 'disabled' : ''}
             onClick={() => refreshTokenBalance(scriptHash)}
             disabled={refreshTokenBalanceButtonDisabled}>Refresh Token Balance</button>
         </div>

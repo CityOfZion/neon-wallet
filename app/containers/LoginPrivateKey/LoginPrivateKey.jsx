@@ -53,7 +53,7 @@ export default class LoginPrivateKey extends Component<Props, State> {
           <button
             onClick={() => loginWithPrivateKey(wif, history)}
             disabled={loginButtonDisabled}
-            className={loginButtonDisabled && 'disabled'}>Login</button>
+            className={loginButtonDisabled ? 'disabled' : ''}>Login</button>
           <HomeButtonLink />
         </div>
       </Page>
