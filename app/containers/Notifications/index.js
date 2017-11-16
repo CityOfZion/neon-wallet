@@ -2,7 +2,7 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { hideNotification, getNotifications } from '../../modules/notifications'
-import Notifications from './notifications'
+import Notifications from './Notifications'
 
 const mapStateToProps = (state: Object) => ({
   notifications: getNotifications(state)
