@@ -1,7 +1,7 @@
 // @flow
 import storage from 'electron-json-storage'
 import { generateEncryptedWif, getAccountFromWIFKey, generatePrivateKey, getWIFFromPrivateKey, encryptWIF, encryptWifAccount } from 'neon-js'
-import { showErrorNotification, showInfoNotification, hideNotification } from './notifications'
+import { showErrorNotification, showInfoNotification, hideNotification, showSuccessNotification } from './notifications'
 import { validatePassphrase, checkMatchingPassphrases } from '../core/wallet'
 import asyncWrap from '../core/asyncHelper'
 
@@ -50,7 +50,7 @@ export const saveKey = (keyName: string, passphraseKey: string) => (dispatch: Di
   // eslint-disable-next-line
   return storage.get('keys', (error, data) => {
     data[keyName] = passphraseKey
-    dispatch(showInfoNotification({ message: `Saved key as ${keyName}` }))
+    dispatch(showSuccessNotification({ message: `Saved key as ${keyName}` }))
     storage.set('keys', data)
   })
 }

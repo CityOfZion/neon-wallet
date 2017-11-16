@@ -60,7 +60,7 @@ export const participateInSale = (neoToSend: number, scriptHash: string) => (dis
   }
   const _scriptHash = scriptHash.slice(2, scriptHash.length)
 
-  dispatch(showInfoNotification({ message: 'Processing...', autoDismiss: 0 }))
+  dispatch(showInfoNotification({ message: 'Sending transaction', autoDismiss: 0 }))
 
   return getTokenBalance(net, _scriptHash, account.address).then((balance) => {
     doMintTokens(net, _scriptHash, wif, toMint, 0).then((response) => {

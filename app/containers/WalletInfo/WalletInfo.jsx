@@ -44,7 +44,7 @@ export default class WalletInfo extends Component<Props> {
       net,
       address
     } = this.props
-    showInfoNotification({ message: 'Refreshing...' })
+    showInfoNotification({ message: 'Retrieving blockchain information...' })
     initiateGetBalance(net, address).then((response) => {
       showSuccessNotification({ message: 'Received latest blockchain information.' })
     }).catch(() => {

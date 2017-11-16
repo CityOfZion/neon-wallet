@@ -51,7 +51,7 @@ export const sendTransaction = (sendAddress: string, sendAmount: string) => asyn
     let sendAsset = {}
     sendAsset[assetName] = sendAmount
 
-    dispatch(showInfoNotification({ message: 'Processing...', autoDismiss: 0 }))
+    dispatch(showInfoNotification({ message: 'Sending Transaction...', autoDismiss: 0 }))
     log(net, 'SEND', selfAddress, { to: sendAddress, asset: selectedAsset, amount: sendAmount })
 
     const isHardwareSend = !!publicKey
