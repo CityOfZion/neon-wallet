@@ -10,6 +10,7 @@ import { showErrorNotification, showInfoNotification, showSuccessNotification } 
 import { getWif, getPublicKey, getSigningFunction, getAddress } from './account'
 import { getNetwork } from './metadata'
 import asyncWrap from '../core/asyncHelper'
+import { LOGOUT } from './account'
 
 // Constants
 export const TOGGLE_ASSET = 'TOGGLE_ASSET'
@@ -89,6 +90,8 @@ export default (state: Object = initialState, action: Object) => {
         ...state,
         selectedAsset: state.selectedAsset === ASSETS_LABELS.NEO ? ASSETS_LABELS.GAS : ASSETS_LABELS.NEO
       }
+    case LOGOUT:
+      return initialState
     default:
       return state
   }

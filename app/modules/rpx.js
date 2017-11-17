@@ -4,6 +4,7 @@ import { showErrorNotification, showInfoNotification, showSuccessNotification } 
 import { getAddress, getWif } from './account'
 import { getNetwork } from './metadata'
 import { getNeo } from './wallet'
+import { LOGOUT } from './account'
 
 // Constants
 export const UPDATE_RPX_BALANCE = 'UPDATE_RPX_BALANCE'
@@ -93,6 +94,8 @@ export default (state: Object = initialState, action: Object) => {
         ...state,
         RPX
       }
+    case LOGOUT:
+      return initialState
     default:
       return state
   }
