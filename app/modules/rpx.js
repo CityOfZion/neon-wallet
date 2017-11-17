@@ -1,10 +1,9 @@
 // @flow
 import { getTokenBalance, getAccountFromWIFKey, doMintTokens } from 'neon-js'
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notifications'
-import { getAddress, getWif } from './account'
+import { getAddress, getWif, LOGOUT } from './account'
 import { getNetwork } from './metadata'
 import { getNeo } from './wallet'
-import { LOGOUT } from './account'
 
 // Constants
 export const UPDATE_RPX_BALANCE = 'UPDATE_RPX_BALANCE'
