@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import SplitPane from 'react-split-pane'
 import FaArrowUpward from 'react-icons/lib/fa/arrow-circle-up'
 import NetworkSwitch from '../NetworkSwitch'
+import PriceDisplay from '../PriceDisplay'
 import WalletInfo from '../WalletInfo'
 import TransactionHistory from '../TransactionHistory'
 import Logout from '../../components/Logout'
@@ -54,6 +55,7 @@ export default class Dashboard extends Component<Props> {
             <div className={styles.title}>
               <img src={logo} width='60px' />
             </div>
+            <PriceDisplay />
             <div className={styles.version}>
               <span className={styles.grey}>Version</span>
               <span className={styles.darker}>{version}</span>
