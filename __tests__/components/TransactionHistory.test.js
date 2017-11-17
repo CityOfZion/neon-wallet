@@ -18,6 +18,9 @@ const initialState = {
   },
   wallet: {
     transactions: []
+  },
+  transactions: {
+    isLoadingTransactions: false
   }
 }
 

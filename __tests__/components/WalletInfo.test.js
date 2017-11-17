@@ -5,6 +5,7 @@ import thunk from 'redux-thunk'
 import { mount, shallow } from 'enzyme'
 import { SET_TRANSACTION_HISTORY, SET_BALANCE, SET_GAS_PRICE, SET_NEO_PRICE } from '../../app/modules/wallet'
 import { SHOW_NOTIFICATION, HIDE_NOTIFICATIONS } from '../../app/modules/notifications'
+import { LOADING_TRANSACTIONS } from '../../app/modules/transactions'
 import { SET_HEIGHT } from '../../app/modules/metadata'
 import { SET_CLAIM } from '../../app/modules/claim'
 import WalletInfo from '../../app/containers/WalletInfo'
@@ -120,6 +121,7 @@ describe('WalletInfo', () => {
     const actionTypes = [
       HIDE_NOTIFICATIONS,
       SHOW_NOTIFICATION,
+      LOADING_TRANSACTIONS,
       SET_TRANSACTION_HISTORY,
       SET_HEIGHT,
       SET_NEO_PRICE,

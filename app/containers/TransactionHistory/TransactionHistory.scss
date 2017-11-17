@@ -1,0 +1,19 @@
+@import '../../styles/variables';
+
+.transactionInfo {
+    padding: 14px 0px;
+    text-align: center;
+    position: relative;
+    min-height: 600px;
+}
+
+.columnHeader {
+    font-size: 1.2em;
+    font-weight: 200;
+}
+
+.headerSpacer {
+    width: 84%;
+    margin: 15px 8%;
+    border-top: 3px solid $spacer-color;
+}
