@@ -1,8 +1,10 @@
 import React from 'react'
+import { Provider } from 'react-redux'
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import { shallow } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import PriceDisplay from '../../app/containers/PriceDisplay'
+import { formatFiat } from '../../app/core/formatters'
 
 const initialState = {
   wallet: {
@@ -11,9 +13,19 @@ const initialState = {
   }
 }
 
-const setup = (state = initialState) => {
+const setup = (state = initialState, shallowRender = true) => {
   const store = configureStore([thunk])(state)
-  const wrapper = shallow(<PriceDisplay store={store} />)
+
+  let wrapper
+  if (shallowRender) {
+    wrapper = shallow(<PriceDisplay store={store} />)
+  } else {
+    wrapper = mount(
+      <Provider store={store}>
+        <PriceDisplay />
+      </Provider>
+    )
+  }
 
   return {
     store,
@@ -22,9 +34,21 @@ const setup = (state = initialState) => {
 }
 
 describe('PriceDisplay', () => {
-  test('PriceDisplay renders without crashing', (done) => {
+  test('renders without crashing', (done) => {
     const { wrapper } = setup()
     expect(wrapper).toMatchSnapshot()
+    done()
+  })
+  test('correctly renders data from state', (done) => {
+    const { wrapper } = setup(initialState, false)
+
+    const neoPrice = wrapper.find('#neoPrice .price')
+    const gasPrice = wrapper.find('#gasPrice .price')
+    const expectedNeoPrice = formatFiat(initialState.wallet.neoPrice)
+    const expectedGasPrice = formatFiat(initialState.wallet.gasPrice)
+
+    expect(neoPrice.text()).toEqual(`$${expectedNeoPrice}`)
+    expect(gasPrice.text()).toEqual(`$${expectedGasPrice}`)
     done()
   })
 })

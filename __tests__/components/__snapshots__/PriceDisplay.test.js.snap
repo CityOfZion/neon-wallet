@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PriceDisplay PriceDisplay renders without crashing 1`] = `
+exports[`PriceDisplay renders without crashing 1`] = `
 <PriceDisplay
   dispatch={[Function]}
   gasPrice={18.1}

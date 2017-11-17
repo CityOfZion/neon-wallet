@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import { formatFiat } from '../../core/formatters'
 import styles from './PriceDisplay.scss'
+import classNames from 'classnames'
 
 type Props = {
   neoPrice: number,
@@ -27,11 +28,11 @@ export default class PriceDisplay extends Component<Props> {
       <div className={styles.container}>
         <span id='neoPrice' className={styles.neoPriceDisplay}>
           <span className={styles.label}>NEO</span>
-          <span className={styles.price}>${neoDisplayPrice}</span>
+          <span className={classNames('price', styles.price)}>${neoDisplayPrice}</span>
         </span>
-        <span id='gasPrce'>
+        <span id='gasPrice'>
           <span className={styles.label}>GAS</span>
-          <span className={styles.price}>${gasDisplayPrice}</span>
+          <span className={classNames('price', styles.price)}>${gasDisplayPrice}</span>
         </span>
       </div>
     )
