@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react'
+import React from 'react'
 import { formatFiat } from '../../core/formatters'
 import styles from './PriceDisplay.scss'
 import classNames from 'classnames'
