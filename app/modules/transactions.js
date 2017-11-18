@@ -7,7 +7,7 @@ import { getTransactionHistory, doSendAsset, hardwareDoSendAsset } from 'neon-js
 import { setTransactionHistory, getNeo, getGas } from './wallet'
 import { log } from '../util/Logs'
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notifications'
-import { getWif, getPublicKey, getSigningFunction, getAddress } from './account'
+import { getWif, getPublicKey, getSigningFunction, getAddress, LOGOUT } from './account'
 import { getNetwork } from './metadata'
 import asyncWrap from '../core/asyncHelper'
 
@@ -109,6 +109,8 @@ export default (state: Object = initialState, action: Object) => {
         ...state,
         selectedAsset: state.selectedAsset === ASSETS_LABELS.NEO ? ASSETS_LABELS.GAS : ASSETS_LABELS.NEO
       }
+    case LOGOUT:
+      return initialState
     default:
       return state
   }

@@ -4,7 +4,7 @@ import { log } from '../util/Logs'
 import { ASSETS } from '../core/constants'
 import { showErrorNotification, showSuccessNotification, showInfoNotification } from './notifications'
 import { FIVE_MINUTES_MS } from '../core/time'
-import { getWif, getAddress, getSigningFunction, getPublicKey } from './account'
+import { getWif, getAddress, getSigningFunction, getPublicKey, LOGOUT } from './account'
 import { getNetwork } from './metadata'
 import { getNeo } from './wallet'
 import asyncWrap from '../core/asyncHelper'
@@ -164,6 +164,8 @@ export default (state: Object = initialState, action: Object) => {
         ...state,
         disableClaimButton
       }
+    case LOGOUT:
+      return initialState
     default:
       return state
   }

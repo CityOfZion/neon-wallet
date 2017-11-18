@@ -1,7 +1,7 @@
 // @flow
 import { getTokenBalance, getAccountFromWIFKey, doMintTokens } from 'neon-js'
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notifications'
-import { getAddress, getWif } from './account'
+import { getAddress, getWif, LOGOUT } from './account'
 import { getNetwork } from './metadata'
 import { getNeo } from './wallet'
 
@@ -93,6 +93,8 @@ export default (state: Object = initialState, action: Object) => {
         ...state,
         RPX
       }
+    case LOGOUT:
+      return initialState
     default:
       return state
   }
