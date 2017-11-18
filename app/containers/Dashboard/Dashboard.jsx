@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import SplitPane from 'react-split-pane'
 import FaArrowUpward from 'react-icons/lib/fa/arrow-circle-up'
 import NetworkSwitch from '../NetworkSwitch'
+import PriceDisplay from '../../components/PriceDisplay'
 import WalletInfo from '../WalletInfo'
 import TransactionHistory from '../TransactionHistory'
 import Logout from '../../components/Logout'
@@ -19,6 +20,8 @@ type Props = {
   blockHeight: number,
   net: string,
   address: string,
+  neoPrice: number,
+  gasPrice: number,
   togglePane: Function,
   logout: Function,
 }
@@ -31,7 +34,7 @@ export default class Dashboard extends Component<Props> {
   }
 
   render () {
-    const { sendPane, confirmPane, blockHeight, togglePane, logout } = this.props
+    const { sendPane, confirmPane, blockHeight, togglePane, logout, neoPrice, gasPrice } = this.props
     let sendPaneClosed
     if (sendPane === true) {
       sendPaneClosed = '0%'
@@ -54,6 +57,7 @@ export default class Dashboard extends Component<Props> {
             <div className={styles.title}>
               <img src={logo} width='60px' />
             </div>
+            <PriceDisplay neoPrice={neoPrice} gasPrice={gasPrice} />
             <div className={styles.version}>
               <span className={styles.grey}>Version</span>
               <span className={styles.darker}>{version}</span>
