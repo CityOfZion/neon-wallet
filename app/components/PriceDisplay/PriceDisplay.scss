@@ -1,0 +1,24 @@
+@import '../../styles/variables';
+
+.container {
+    position: absolute;
+    font-size: .8em;
+    opacity: 0.6;
+    right: 463px;
+    top: 13px;
+}
+
+.label {
+    opacity: .6;
+    margin-right: 4px;
+}
+
+.price {
+    color: $thin-text-color;
+    opacity: .8;
+    cursor: pointer;
+}
+
+.neoPriceDisplay {
+    padding-right: 38px
+}

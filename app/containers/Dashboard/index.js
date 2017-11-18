@@ -6,6 +6,7 @@ import { togglePane, getSendPane, getConfirmPane } from '../../modules/dashboard
 import { logout, getAddress } from '../../modules/account'
 import { getBlockHeight, getNetwork } from '../../modules/metadata'
 import { getNotifications } from '../../modules/notifications'
+import { getNeoPrice, getGasPrice } from '../../modules/wallet'
 
 const mapStateToProps = (state: Object) => ({
   sendPane: getSendPane(state),
@@ -13,6 +14,8 @@ const mapStateToProps = (state: Object) => ({
   blockHeight: getBlockHeight(state),
   net: getNetwork(state),
   address: getAddress(state),
+  neoPrice: getNeoPrice(state),
+  gasPrice: getGasPrice(state),
   notification: getNotifications(state)
 })
 

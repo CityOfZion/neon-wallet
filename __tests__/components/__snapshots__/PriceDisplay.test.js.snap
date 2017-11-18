@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PriceDisplay renders and shows prices 1`] = `
+<PriceDisplay
+  gasPrice={18.1}
+  neoPrice={25.48}
+>
+  <div
+    className="container"
+  >
+    <span
+      className="neoPriceDisplay"
+      id="neoPrice"
+    >
+      <span
+        className="label"
+      >
+        NEO
+      </span>
+      <span
+        className="price price"
+      >
+        $
+        25.48
+      </span>
+    </span>
+    <span
+      id="gasPrice"
+    >
+      <span
+        className="label"
+      >
+        GAS
+      </span>
+      <span
+        className="price price"
+      >
+        $
+        18.10
+      </span>
+    </span>
+  </div>
+</PriceDisplay>
+`;
