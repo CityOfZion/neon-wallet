@@ -1,4 +1,5 @@
 // @flow
+import { LOGOUT } from './account'
 
 // Constants
 export const TOGGLE_SEND_PANE = 'TOGGLE_SEND_PANE'
@@ -30,6 +31,8 @@ export default (state: Object = initialState, action: Object) => {
         ...state,
         ...newState
       }
+    case LOGOUT:
+      return initialState
     default:
       return state
   }

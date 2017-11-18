@@ -6,6 +6,7 @@ import { syncTransactionHistory } from './transactions'
 import { syncAvailableClaim } from './claim'
 import { syncBlockHeight } from './metadata'
 import asyncWrap from '../core/asyncHelper'
+import { LOGOUT } from './account'
 
 // Constants
 export const SET_BALANCE = 'SET_BALANCE'
@@ -126,6 +127,8 @@ export default (state: Object = initialState, action: Object) => {
         ...state,
         transactions
       }
+    case LOGOUT:
+      return initialState
     default:
       return state
   }
