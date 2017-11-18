@@ -5,6 +5,7 @@ import { shallow } from 'enzyme'
 import { SET_HEIGHT, SET_NETWORK } from '../../app/modules/metadata'
 import { SET_CLAIM } from '../../app/modules/claim'
 import { SET_BALANCE, SET_TRANSACTION_HISTORY } from '../../app/modules/wallet'
+import { LOADING_TRANSACTIONS } from '../../app/modules/transactions'
 import NetworkSwitch from '../../app/containers/NetworkSwitch'
 
 // TODO research how to move the axios mock code which is repeated in NetworkSwitch to a helper or config file
@@ -67,15 +68,16 @@ describe('NetworkSwitch', () => {
       SET_HEIGHT,
       SET_CLAIM,
       SET_TRANSACTION_HISTORY,
-      SET_BALANCE
+      SET_BALANCE,
+      LOADING_TRANSACTIONS
     ]
     deepWrapper.find('.netName').simulate('click')
 
     await Promise.resolve().then().then().then()
     const actions = store.getActions()
+    expect(actions.length).toEqual(7)
     actions.forEach(action => {
       expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
     })
-    expect(actions.length).toEqual(5)
   })
 })

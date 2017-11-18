@@ -13,22 +13,34 @@ import asyncWrap from '../core/asyncHelper'
 
 // Constants
 export const TOGGLE_ASSET = 'TOGGLE_ASSET'
+export const LOADING_TRANSACTIONS = 'LOADING_TRANSACTIONS'
 
-export function toggleAsset () {
-  return {
-    type: TOGGLE_ASSET
+export const toggleAsset = () => ({
+  type: TOGGLE_ASSET
+})
+
+export const setIsLoadingTransaction = (isLoading: boolean) => ({
+  type: LOADING_TRANSACTIONS,
+  payload: {
+    isLoadingTransactions: isLoading
   }
-}
+})
 
 export const syncTransactionHistory = (net: NetworkType, address: string) => async (dispatch: DispatchType) => {
-  const [_err, transactions] = await asyncWrap(getTransactionHistory(net, address)) // eslint-disable-line
-  const txs = transactions.map(({ NEO, GAS, txid, block_index, neo_sent, neo_gas }: TransactionHistoryType) => ({
-    type: neo_sent ? ASSETS.NEO : ASSETS.GAS,
-    amount: neo_sent ? NEO : GAS,
-    txid,
-    block_index
-  }))
-  return dispatch(setTransactionHistory(txs))
+  dispatch(setIsLoadingTransaction(true))
+  const [err, transactions] = await asyncWrap(getTransactionHistory(net, address))
+  if (!err && transactions) {
+    const txs = transactions.map(({ NEO, GAS, txid, block_index, neo_sent, neo_gas }: TransactionHistoryType) => ({
+      type: neo_sent ? ASSETS.NEO : ASSETS.GAS,
+      amount: neo_sent ? NEO : GAS,
+      txid,
+      block_index
+    }))
+    dispatch(setIsLoadingTransaction(false))
+    dispatch(setTransactionHistory(txs))
+  } else {
+    dispatch(setIsLoadingTransaction(false))
+  }
 }
 
 export const sendTransaction = (sendAddress: string, sendAmount: string) => async (dispatch: DispatchType, getState: GetStateType): Promise<*> => {
@@ -77,13 +89,21 @@ export const sendTransaction = (sendAddress: string, sendAmount: string) => asyn
 
 // state getters
 export const getSelectedAsset = (state) => state.transactions.selectedAsset
+export const getIsLoadingTransactions = (state) => state.transactions.isLoadingTransactions
 
 const initialState = {
-  selectedAsset: ASSETS_LABELS.NEO
+  selectedAsset: ASSETS_LABELS.NEO,
+  isLoadingTransactions: false
 }
 
 export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
+    case LOADING_TRANSACTIONS:
+      const { isLoadingTransactions } = action.payload
+      return {
+        ...state,
+        isLoadingTransactions
+      }
     case TOGGLE_ASSET:
       return {
         ...state,

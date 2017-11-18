@@ -1,6 +1,7 @@
 // backgrounds and buttons
 $main-background: #FFF;
-$default-button: #4D933B;
+$primary-color: #4D933B;
+$default-button: $primary-color;
 $default-button-hover: #5EB248;
 $dark-button: #236312;
 $dark-button-hover: #33881C;

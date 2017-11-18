@@ -3,7 +3,8 @@ import transactionReducer, { toggleAsset, TOGGLE_ASSET } from '../../app/modules
 describe('transactions module tests', () => {
   const newAsset = 'Gas'
   const initialState = {
-    selectedAsset: 'Neo'
+    selectedAsset: 'Neo',
+    isLoadingTransactions: false
   }
 
   describe('toggleAsset tests', () => {
