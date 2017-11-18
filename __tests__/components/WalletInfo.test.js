@@ -33,7 +33,7 @@ jest.mock('electron', () => ({
     writeText: jest.fn()
   }
 }))
-jest.mock('neon-js')
+jest.useFakeTimers()
 
 jest.unmock('qrcode')
 import QRCode from 'qrcode/lib/browser' // eslint-disable-line
@@ -105,16 +105,16 @@ describe('WalletInfo', () => {
     expect(gasField.text()).toEqual('1.0001')
     done()
   })
-  test('copy to clipboard is getting called on click', (done) => {
+  test('copy to clipboard is getting called on click', async () => {
     const { wrapper } = setup()
     const deepWrapper = wrapper.dive()
 
     expect(clipboard.writeText.mock.calls.length).toBe(0)
     deepWrapper.find('.copyKey').simulate('click')
+    await Promise.resolve('Pause').then()
     expect(clipboard.writeText.mock.calls.length).toBe(1)
-    done()
   })
-  test('refreshBalance is getting called on click', (done) => {
+  test('refreshBalance is getting called on click', async () => {
     const { wrapper, store } = setup()
     const deepWrapper = wrapper.dive()
 
@@ -130,33 +130,31 @@ describe('WalletInfo', () => {
       SET_CLAIM
     ]
     deepWrapper.find('.refreshBalance').simulate('click')
-    setTimeout(() => {
-      const actions = store.getActions()
-      // expect(actions.length).toEqual(12)
-      actions.forEach(action => {
-        expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
-      })
-      done()
-    }, 1050)
+    jest.runAllTimers()
+    await Promise.resolve('Pause').then().then().then().then()
+    const actions = store.getActions()
+    expect(actions.length).toEqual(16)
+    // expect(actions.length).toEqual(12)
+    actions.forEach(action => {
+      expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
+    })
   })
-  test('calls the correct number of actions after mounting', (done) => {
+  test('calls the correct number of actions after mounting', async () => {
     const { store } = setup(initialState, false)
     const actionTypes = [
       SET_TRANSACTION_HISTORY,
       SET_HEIGHT,
       SET_CLAIM,
       SET_BALANCE,
-      SET_NEO_PRICE,
-      SET_GAS_PRICE
+      LOADING_TRANSACTIONS
     ]
 
-    setTimeout(() => {
-      const actions = store.getActions()
-      expect(actions.length).toEqual(6)
-      actions.forEach(action => {
-        expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
-      })
-      done()
-    }, 1050)
+    jest.runAllTimers()
+    await Promise.resolve('Pause').then().then().then()
+    const actions = store.getActions()
+    expect(actions.length).toEqual(6)
+    actions.forEach(action => {
+      expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
+    })
   })
 })

@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { shallow, mount } from 'enzyme'
 import { setTransactionHistory } from '../../app/modules/wallet'
+import { setIsLoadingTransaction } from '../../app/modules/transactions'
 
 import TransactionHistory from '../../app/containers/TransactionHistory'
 
@@ -68,17 +69,17 @@ describe('TransactionHistory', () => {
     done()
   })
 
-  test('calls syncTransactionHistory after rendering', (done) => {
+  test('calls syncTransactionHistory after rendering', async () => {
     const { store } = setup(initialState, false)
-    const state = store.getState()
-    setTimeout(() => {
-      expect(store.getActions()[0]).toEqual(setTransactionHistory(initialState.wallet.transactions))
-      done()
-    }, 0)
+    await Promise.resolve('Pause').then().then().then()
+    const actions = store.getActions()
+    expect(actions[0]).toEqual(setIsLoadingTransaction(true))
+    expect(actions[1]).toEqual(setIsLoadingTransaction(false))
+    expect(actions[2]).toEqual(setTransactionHistory(initialState.wallet.transactions))
   })
 
   test('correctly renders no transaction history', (done) => {
-    const { store, wrapper } = setup(initialState, false)
+    const { wrapper } = setup(initialState, false)
 
     const columnHeader = wrapper.find('.columnHeader')
     expect(columnHeader.text()).toEqual('Transaction History')
@@ -90,7 +91,7 @@ describe('TransactionHistory', () => {
 
   test('correctly renders with NEO and GAS transaction history', (done) => {
     const transactionState = Object.assign({}, initialState, transactions)
-    const { store, wrapper } = setup(transactionState, false)
+    const { wrapper } = setup(transactionState, false)
 
     const transactionList = wrapper.find('#transactionList')
     expect(transactionList.children().length).toEqual(2)
