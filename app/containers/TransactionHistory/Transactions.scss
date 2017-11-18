@@ -1,0 +1,43 @@
+@import '../../styles/variables';
+
+.noTransactions {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%)
+}
+
+.transactionList {
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    height: 600px;
+}
+
+.row {
+    list-style-type: none;
+    font-weight: 200;
+    border-bottom: 1px solid $spacer-color;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.txid {
+    position: relative;
+    top: 2px;
+    display: inline-block;
+    width: 44%;
+    margin-left: 4%;
+    text-align: left;
+    font-family: 'courier new';
+    font-size: .7em;
+    cursor: pointer;
+}
+
+.amount {
+    display: inline-block;
+    width: 44%;
+    margin-right: 4%;
+    text-align: right;
+    color: $thin-text-color;
+}

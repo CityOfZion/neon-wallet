@@ -1,15 +1,17 @@
 // @flow
 import React, { Component } from 'react'
-import { ASSETS } from '../../core/constants'
-import { openExplorer } from '../../core/explorer'
-import { formatGAS, formatNEO } from '../../core/formatters'
+import Loader from '../../components/Loader'
+import Transactions from './Transactions'
+import styles from './TransactionHistory.scss'
+import classNames from 'classnames'
 
 type Props = {
   address: string,
   net: NetworkType,
   transactions: Object,
   explorer: ExplorerType,
-  syncTransactionHistory: Function
+  syncTransactionHistory: Function,
+  isLoadingTransactions: boolean
 }
 
 export default class TransactionHistory extends Component<Props> {
@@ -19,25 +21,19 @@ export default class TransactionHistory extends Component<Props> {
   }
 
   render () {
-    const { transactions, net, explorer } = this.props
+    const { transactions, net, explorer, isLoadingTransactions } = this.props
     return (
-      <div id='transactionInfo'>
-        <div className='columnHeader'>Transaction History</div>
-        <div className='headerSpacer' />
-        <ul id='transactionList'>
-          {transactions.map((t) => {
-            let formatAmount = t.type === ASSETS.NEO ? formatNEO(t.amount) : formatGAS(t.amount)
-            return (
-              <li key={t.txid}>
-                <div
-                  className='txid'
-                  onClick={() => openExplorer(net, explorer, t.txid)}>
-                  {t.txid.substring(0, 32)}
-                </div>
-                <div className='amount'>{formatAmount} {t.type}</div>
-              </li>)
-          })}
-        </ul>
+      <div id='transactionInfo' className={styles.transactionInfo}>
+        <div className={classNames(styles.columnHeader, 'columnHeader')}>Transaction History</div>
+        <div className={classNames(styles.headerSpacer, 'headerSpacer')} />
+        {isLoadingTransactions
+          ? <Loader />
+          : <Transactions
+            transactions={transactions}
+            net={net}
+            explorer={explorer}
+          />
+        }
       </div>
     )
   }
