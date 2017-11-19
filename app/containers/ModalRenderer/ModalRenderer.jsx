@@ -1,15 +1,20 @@
 // @flow
 import React from 'react'
-
 import { MODAL_TYPES } from '../../core/constants'
 import ConfirmModal from '../../components/Modals/ConfirmModal'
+import ReceiveModal from '../../components/Modals/ReceiveModal'
+import SendModal from '../../components/Modals/SendModal'
 
 const {
-  CONFIRM
+  CONFIRM,
+  RECEIVE,
+  SEND
 } = MODAL_TYPES
 
 const MODAL_COMPONENTS = {
-  [CONFIRM]: ConfirmModal
+  [CONFIRM]: ConfirmModal,
+  [RECEIVE]: ReceiveModal,
+  [SEND]: SendModal
 }
 
 type Props = {

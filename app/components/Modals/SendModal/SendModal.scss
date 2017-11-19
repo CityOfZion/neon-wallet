@@ -1,0 +1,28 @@
+.textContainer {
+}
+
+.canvas {
+    margin: 10px 0;
+    text-align: center;
+}
+
+.row {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    padding: 10px 0;
+}
+
+.sendAmount {
+    display: flex;
+}
+
+.sendAmountSelect {
+    margin-right: 10px;
+}
+
+.sendButton {
+    margin-top: 20px;
+}

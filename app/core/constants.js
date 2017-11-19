@@ -61,6 +61,11 @@ export const BIP44_PATH =
   '00000000'
 
 export const MODAL_TYPES = {
-  SEND_TRANSACTION: 'SEND_TRANSACTION',
+  SEND: 'SEND',
+  RECEIVE: 'RECEIVE',
   CONFIRM: 'CONFIRM'
+}
+
+export const TOKENS = {
+  RPX: 'ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9'
 }

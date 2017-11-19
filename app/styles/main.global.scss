@@ -125,10 +125,6 @@ input {
 #newWallet {
     width: $page-width;
     margin: $top-margin auto $top-margin auto;
-    .copyKey {
-        margin-left: 5px;
-        color: #000;
-    }
     input {
         width: 95%;
         margin-bottom: 10px;
@@ -138,10 +134,7 @@ input {
         font-size: 1.4em;
         font-weight: 200;
     }
-    .copyKey:hover {
-        opacity: .7;
-        cursor: pointer;
-    }
+
     .disclaimer {
         margin-bottom: 20px;
         font-size: 1.4em;
@@ -275,6 +268,7 @@ input {
     #accountInfo {
         margin: 20px 0px;
         width: 100%;
+        position: relative;
         text-align: center;
         span.copyKey {
             margin-left: 3px;
@@ -288,9 +282,6 @@ input {
             margin-bottom: 20px;
             margin-top: 1px;
             letter-spacing: .07em;
-        }
-        .qrCode {
-            margin-top: 20px;
         }
         #balance {
             margin: 20px 0px;
@@ -320,7 +311,7 @@ input {
             #refresh {
                 font-size: 2.2em;
                 position: absolute;
-                top: 100px;
+                top: 0;
                 left: 47%;
                 cursor: pointer;
                 color: $default-button;

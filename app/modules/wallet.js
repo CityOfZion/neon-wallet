@@ -1,19 +1,20 @@
 // @flow
-import { ASSETS_LABELS } from '../core/constants'
+import { ASSETS_LABELS, TOKENS } from '../core/constants'
 import axios from 'axios'
-import { getBalance } from 'neon-js'
+import { getBalance, getTokenBalance } from 'neon-js'
 import { syncTransactionHistory } from './transactions'
 import { syncAvailableClaim } from './claim'
 import { syncBlockHeight } from './metadata'
 import asyncWrap from '../core/asyncHelper'
-import { LOGOUT } from './account'
-
+import { LOGOUT, getAddress } from './account'
+import { getNetwork } from './metadata'
 // Constants
 export const SET_BALANCE = 'SET_BALANCE'
 export const SET_NEO_PRICE = 'SET_NEO_PRICE'
 export const SET_GAS_PRICE = 'SET_GAS_PRICE'
 export const RESET_PRICE = 'RESET_PRICE'
 export const SET_TRANSACTION_HISTORY = 'SET_TRANSACTION_HISTORY'
+export const SET_TOKENS_BALANCE = 'SET_TOKENS_BALANCE'
 
 // Actions
 export function setBalance (Neo: number, Gas: number) {
@@ -79,6 +80,15 @@ export const initiateGetBalance = (net: NetworkType, address: string) => (dispat
   return dispatch(retrieveBalance(net, address))
 }
 
+export const getTokensBalance = () => (dispatch: DispatchType, getState: GetStateType) => {
+  const state = getState()
+  const net = getNetwork(state)
+  const address = getAddress(state)
+  const promises = Object.values(TOKENS).map(token => getTokenBalance(net, token, address))
+  return Promise.all(promises).then((results) => console.log(results))
+  // neonjs.api.getTokenInfo(rpc_node, indexedTokens[i].hash)
+}
+
 // state getters
 export const getNeo = (state) => state.wallet.Neo
 export const getGas = (state) => state.wallet.Gas
@@ -91,7 +101,8 @@ const initialState = {
   Gas: 0,
   transactions: [],
   neoPrice: 0,
-  gasPrice: 0
+  gasPrice: 0,
+  tokens: []
 }
 
 export default (state: Object = initialState, action: Object) => {
@@ -126,6 +137,12 @@ export default (state: Object = initialState, action: Object) => {
       return {
         ...state,
         transactions
+      }
+    case SET_TOKENS_BALANCE:
+      const { tokens } = action.payload
+      return {
+        ...state,
+        tokens
       }
     case LOGOUT:
       return initialState
