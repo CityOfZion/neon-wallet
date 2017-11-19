@@ -2,7 +2,7 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import WalletInfo from './WalletInfo'
-import { initiateGetBalance, getNeo, getGas, getNeoPrice, getGasPrice } from '../../modules/wallet'
+import { initiateGetBalance, getNeo, getGas, getNeoPrice, getGasPrice, getTokensBalance } from '../../modules/wallet'
 import { showErrorNotification, showSuccessNotification, showInfoNotification } from '../../modules/notifications'
 import { getAddress } from '../../modules/account'
 import { getNetwork } from '../../modules/metadata'
@@ -20,7 +20,8 @@ const actionCreators = {
   initiateGetBalance,
   showErrorNotification,
   showSuccessNotification,
-  showInfoNotification
+  showInfoNotification,
+  getTokensBalance
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)

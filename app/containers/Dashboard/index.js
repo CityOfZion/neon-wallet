@@ -7,6 +7,8 @@ import { logout, getAddress } from '../../modules/account'
 import { getBlockHeight, getNetwork } from '../../modules/metadata'
 import { getNotifications } from '../../modules/notifications'
 import { getNeoPrice, getGasPrice } from '../../modules/wallet'
+import { showModal } from '../../modules/modal'
+import { getNeo, getGas } from '../../modules/wallet'
 
 const mapStateToProps = (state: Object) => ({
   sendPane: getSendPane(state),
@@ -16,12 +18,15 @@ const mapStateToProps = (state: Object) => ({
   address: getAddress(state),
   neoPrice: getNeoPrice(state),
   gasPrice: getGasPrice(state),
-  notification: getNotifications(state)
+  notification: getNotifications(state),
+  neo: getNeo(state),
+  gas: getGas(state)
 })
 
 const actionCreators = {
   togglePane,
-  logout
+  logout,
+  showModal
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)

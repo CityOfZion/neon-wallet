@@ -1,11 +1,11 @@
 @import '../../styles/variables';
 
 .logout {
-    position: absolute;
     font-size: 1.5em;
-    right: 20px;
-    top: 3px;
     cursor: pointer;
+    padding-left: 38px;
+    position: relative;
+    top: -10px;    
     color: $default-text;
     a {
         font-size: inherit;
