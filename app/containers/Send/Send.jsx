@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from 'react'
 import SplitPane from 'react-split-pane'
-import ReactTooltip from 'react-tooltip'
 import { validateTransactionBeforeSending } from '../../core/wallet'
 
 type Props = {
@@ -86,9 +85,6 @@ export default class Send extends Component<Props, State> {
             />
           </div>
           <button id='sendAsset' data-tip data-for='assetTip' onClick={() => toggleAsset()}>{selectedAsset}</button>
-          <ReactTooltip class='solidTip' id='assetTip' place='bottom' type='dark' effect='solid'>
-            <span>Toggle NEO / GAS</span>
-          </ReactTooltip>
           <button id='doSend' onClick={this.openAndValidate}>Send Asset</button>
         </div>
         <div id='confirmPane' onClick={this.sendTransaction}>
