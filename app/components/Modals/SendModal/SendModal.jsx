@@ -17,15 +17,15 @@ class SendModal extends Component<Props> {
   state = {
     sendAmount: '',
     sendAddress: '',
-    sendAsset: ''
+    sendToken: 'Neo'
   }
 
   // open confirm pane and validate fields
   openAndValidate = () => {
     const { neo, gas, tokens, showErrorNotification } = this.props
-    const { sendAddress, sendAmount, sendAsset } = this.state
-    const tokenBalance = sendAsset ? obtainTokenBalance(tokens, sendAsset) : 0
-    const { error, valid } = validateTransactionBeforeSending(neo, gas, tokenBalance, sendAsset, sendAddress, sendAmount)
+    const { sendAddress, sendAmount, sendToken } = this.state
+    const tokenBalance = obtainTokenBalance(tokens, sendToken)
+    const { error, valid } = validateTransactionBeforeSending(neo, gas, tokenBalance, sendToken, sendAddress, sendAmount)
     if (valid) {
       console.log('valid transaction')
     } else {
@@ -36,12 +36,15 @@ class SendModal extends Component<Props> {
 
   createTokenOptions = () => {
     const { tokens } = this.props
+    const tokenOptions = []
     if (tokens && tokens.length > 0) {
-      return Object.keys(tokens).map(tokenName => {
-        return (<option key={tokenName} value={tokenName}>{tokenName}</option>)
+      tokens.forEach(token => {
+        const tokenName = Object.keys(token)[0]
+        return tokenOptions.push(<option key={tokenName} value={tokenName}>{tokenName}</option>)
       })
     }
-    return null
+    console.log('here token', tokenOptions);
+    return tokenOptions
   }
 
   render () {
@@ -82,9 +85,12 @@ class SendModal extends Component<Props> {
           <div id='sendAmount' className={styles.row}>
             <label className={styles.label}>Token:</label>
             <div className={styles.sendAmount}>
-              <select className={styles.sendAmountSelect}>
-                <option key='NEO' value='NEO'>NEO</option>
-                <option key='GAS' value='GAS'>GAS</option>
+              <select
+                onChange={(e) => this.setState({ sendToken: e.target.value })}
+                className={styles.sendAmountSelect}
+              >
+                <option key='Neo' value='Neo'>NEO</option>
+                <option key='Gas' value='Gas'>GAS</option>
                 {this.createTokenOptions()}
               </select>
             </div>
