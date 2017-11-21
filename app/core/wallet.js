@@ -16,11 +16,15 @@ export const verifyPrivateKey = (wif: string): boolean => {
   return account !== -1 && account.address
 }
 
-export const obtainTokenBalance = (tokens: Array<Object>, selectedAsset: string) => (
-  tokens &&
-  tokens.length > 0 &&
-  tokens.filter(token => Object.keys(token)[0] === selectedAsset)[0][selectedAsset]) ||
-  0
+export const obtainTokenBalance = (tokens: Array<Object>, selectedAsset: string) => {
+  if (selectedAsset !== ASSETS_LABELS.NEO && selectedAsset !== ASSETS_LABELS.GAS) {
+    return (
+      tokens && tokens.length > 0 &&
+      tokens.filter(token => Object.keys(token)[0] === selectedAsset)[0][selectedAsset]
+    ) || 0
+  }
+  return 0
+}
 
 export const validateTransactionBeforeSending = (neoBalance: number, gasBalance: number, tokenBalance: number, selectedAsset: string, sendAddress: string, sendAmount: string) => {
   if (!sendAddress || !sendAmount) {
@@ -37,7 +41,14 @@ export const validateTransactionBeforeSending = (neoBalance: number, gasBalance:
     }
   }
 
-  if (verifyAddress(sendAddress) !== true || sendAddress.charAt(0) !== 'A') {
+  try {
+    if (verifyAddress(sendAddress) !== true || sendAddress.charAt(0) !== 'A') {
+      return {
+        error: 'The address you entered was not valid.',
+        valid: false
+      }
+    }
+  } catch (e) {
     return {
       error: 'The address you entered was not valid.',
       valid: false
