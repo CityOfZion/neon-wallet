@@ -15,6 +15,7 @@ type Props = {
   gas: number,
   neoPrice: number,
   gasPrice: number,
+  tokens: Array<Object>,
   initiateGetBalance: Function,
   showInfoNotification: Function,
   showSuccessNotification: Function,
@@ -27,6 +28,11 @@ export default class WalletInfo extends Component<Props> {
     const { initiateGetBalance, net, address, getTokensBalance } = this.props
     initiateGetBalance(net, address)
     getTokensBalance()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { net, getTokensBalance } = this.props
+    if (nextProps.net !== net) getTokensBalance()
   }
 
   // force sync with balance data
@@ -45,6 +51,20 @@ export default class WalletInfo extends Component<Props> {
     }).catch(() => {
       showErrorNotification({ message: 'Failed to retrieve blockchain information' })
     })
+  }
+
+  addTokenRows = () => {
+    const { tokens } = this.props
+    if (tokens && tokens.length > 0) {
+      return tokens.map((token) => {
+        const tokenName = Object.keys(token)[0]
+        return (<tr key={tokenName} >
+          <td>{tokenName}</td>
+          <td>{token[tokenName]}</td>
+        </tr>)
+      })
+    }
+    return null
   }
 
   render () {
@@ -92,10 +112,9 @@ export default class WalletInfo extends Component<Props> {
         <div className={styles.tokenBalances}>
           <strong>Token balances:</strong>
           <table>
-            <tr>
-              <td>RPX</td>
-              <td>12000</td>
-            </tr>
+            <tbody>
+              {this.addTokenRows()}
+            </tbody>
           </table>
         </div>
       </div>
