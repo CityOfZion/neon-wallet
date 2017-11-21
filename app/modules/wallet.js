@@ -4,10 +4,10 @@ import axios from 'axios'
 import { getBalance, getTokenBalance } from 'neon-js'
 import { syncTransactionHistory } from './transactions'
 import { syncAvailableClaim } from './claim'
-import { syncBlockHeight } from './metadata'
+import { syncBlockHeight, getNetwork } from './metadata'
 import asyncWrap from '../core/asyncHelper'
 import { LOGOUT, getAddress } from './account'
-import { getNetwork } from './metadata'
+
 // Constants
 export const SET_BALANCE = 'SET_BALANCE'
 export const SET_NEO_PRICE = 'SET_NEO_PRICE'
@@ -51,6 +51,13 @@ export function setTransactionHistory (transactions: Array<Object>) {
   }
 }
 
+export function setTokenBalance (tokens: Array<Object>) {
+  return {
+    type: SET_TOKENS_BALANCE,
+    payload: { tokens }
+  }
+}
+
 export const getMarketPriceUSD = () => async (dispatch: DispatchType) => {
   // If API dies, still display balance - ignore _err
   const [_err, response] = await asyncWrap(axios.get('https://api.coinmarketcap.com/v1/ticker/neo/?convert=USD')) // eslint-disable-line
@@ -80,13 +87,17 @@ export const initiateGetBalance = (net: NetworkType, address: string) => (dispat
   return dispatch(retrieveBalance(net, address))
 }
 
-export const getTokensBalance = () => (dispatch: DispatchType, getState: GetStateType) => {
+export const getTokensBalance = () => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
   const net = getNetwork(state)
   const address = getAddress(state)
-  const promises = Object.values(TOKENS).map(token => getTokenBalance(net, token, address))
-  return Promise.all(promises).then((results) => console.log(results))
-  // neonjs.api.getTokenInfo(rpc_node, indexedTokens[i].hash)
+  const tokenBalances = []
+  for (const [tokenName, scriptHash] of Object.entries(TOKENS)) {
+    let [_err, results] = await asyncWrap(getTokenBalance(net, scriptHash, address)) // eslint-disable-line
+    if (results) tokenBalances.push({[tokenName]: results})
+  }
+  console.log('tokenBalances', tokenBalances);
+  return dispatch(setTokenBalance(tokenBalances))
 }
 
 // state getters
@@ -95,6 +106,7 @@ export const getGas = (state) => state.wallet.Gas
 export const getTransactions = (state) => state.wallet.transactions
 export const getNeoPrice = (state) => state.wallet.neoPrice
 export const getGasPrice = (state) => state.wallet.gasPrice
+export const getTokens = (state) => state.wallet.tokens
 
 const initialState = {
   Neo: 0,

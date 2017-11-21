@@ -53,14 +53,13 @@ class SendModal extends Component<Props> {
             />
           </div>
           <div id='sendAmount' className={styles.row}>
-            <label className={styles.label}>Amount:</label>
+            <label className={styles.label}>Token:</label>
             <div className={styles.sendAmount}>
               <select className={styles.sendAmountSelect}>
                 <option value='NEO'>NEO</option>
                 <option value='GAS'>GAS</option>
                 <option value='RPX'>RPX</option>
               </select>
-              <div>{neo} NEO</div>
             </div>
           </div>
           <button className={styles.sendButton} id='doSend' onClick={this.openAndValidate}>Send Asset</button>
