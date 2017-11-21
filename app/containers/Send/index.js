@@ -5,13 +5,14 @@ import Send from './Send'
 import { sendTransaction, toggleAsset, getSelectedAsset } from '../../modules/transactions'
 import { showErrorNotification } from '../../modules/notifications'
 import { togglePane, getConfirmPane } from '../../modules/dashboard'
-import { getNeo, getGas } from '../../modules/wallet'
+import { getNeo, getGas, getTokens } from '../../modules/wallet'
 
 const mapStateToProps = (state) => ({
   neo: getNeo(state),
   gas: getGas(state),
   selectedAsset: getSelectedAsset(state),
-  confirmPane: getConfirmPane(state)
+  confirmPane: getConfirmPane(state),
+  tokens: getTokens(state)
 })
 
 const actionCreators = {

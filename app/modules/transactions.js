@@ -2,9 +2,9 @@
 /* eslint-disable camelcase */
 
 import { ASSETS_LABELS, ASSETS } from '../core/constants'
-import { validateTransactionBeforeSending } from '../core/wallet'
+import { validateTransactionBeforeSending, obtainTokenBalance } from '../core/wallet'
 import { getTransactionHistory, doSendAsset, hardwareDoSendAsset } from 'neon-js'
-import { setTransactionHistory, getNeo, getGas } from './wallet'
+import { setTransactionHistory, getNeo, getGas, getTokens } from './wallet'
 import { log } from '../util/Logs'
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notifications'
 import { getWif, getPublicKey, getSigningFunction, getAddress, LOGOUT } from './account'
@@ -50,13 +50,15 @@ export const sendTransaction = (sendAddress: string, sendAmount: string) => asyn
   const net = getNetwork(state)
   const neo = getNeo(state)
   const gas = getGas(state)
+  const tokens = getTokens(state)
   const selectedAsset = getSelectedAsset(state)
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
 
   const rejectTransaction = (message: string) => dispatch(showErrorNotification({ message }))
+  const tokenBalance = obtainTokenBalance(tokens, selectedAsset)
 
-  const { error, valid } = validateTransactionBeforeSending(neo, gas, selectedAsset, sendAddress, sendAmount)
+  const { error, valid } = validateTransactionBeforeSending(neo, gas, tokenBalance, selectedAsset, sendAddress, sendAmount)
   if (valid) {
     const selfAddress = address
     const assetName = selectedAsset === ASSETS_LABELS.NEO ? ASSETS.NEO : ASSETS.GAS

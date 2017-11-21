@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import SplitPane from 'react-split-pane'
-import { validateTransactionBeforeSending } from '../../core/wallet'
+import { validateTransactionBeforeSending, obtainTokenBalance } from '../../core/wallet'
 
 type Props = {
   togglePane: Function,
@@ -10,6 +10,7 @@ type Props = {
   toggleAsset: Function,
   neo: number,
   gas: number,
+  tokens: Array<Object>,
   confirmPane: boolean,
   selectedAsset: string,
 }
@@ -29,9 +30,10 @@ export default class Send extends Component<Props, State> {
 
   // open confirm pane and validate fields
   openAndValidate = () => {
-    const { neo, gas, selectedAsset, togglePane, showErrorNotification } = this.props
+    const { neo, gas, tokens, selectedAsset, togglePane, showErrorNotification } = this.props
     const { sendAddress, sendAmount } = this.state
-    const { error, valid } = validateTransactionBeforeSending(neo, gas, selectedAsset, sendAddress, sendAmount)
+    const tokenBalance = obtainTokenBalance(tokens, selectedAsset)
+    const { error, valid } = validateTransactionBeforeSending(neo, gas, tokenBalance, selectedAsset, sendAddress, sendAmount)
     if (valid) {
       togglePane('confirmPane')
     } else {

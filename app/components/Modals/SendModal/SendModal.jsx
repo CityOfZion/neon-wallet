@@ -2,10 +2,13 @@
 import React, { Component } from 'react'
 import BaseModal from '../BaseModal'
 import styles from './SendModal.scss'
+import { obtainTokenBalance, validateTransactionBeforeSending } from '../../../core/wallet'
 
 type Props = {
     neo: number,
     gas: number,
+    tokens: Array<Object>,
+    showErrorNotification: Function,
     hideModal: Function,
 }
 
@@ -17,9 +20,33 @@ class SendModal extends Component<Props> {
     sendAsset: ''
   }
 
-  render () {
-    const { hideModal, neo, gas } = this.props
+  // open confirm pane and validate fields
+  openAndValidate = () => {
+    const { neo, gas, tokens, showErrorNotification } = this.props
     const { sendAddress, sendAmount, sendAsset } = this.state
+    const tokenBalance = sendAsset ? obtainTokenBalance(tokens, sendAsset) : 0
+    const { error, valid } = validateTransactionBeforeSending(neo, gas, tokenBalance, sendAsset, sendAddress, sendAmount)
+    if (valid) {
+      console.log('valid transaction')
+    } else {
+      console.log('invalide transaction');
+      showErrorNotification({ message: error })
+    }
+  }
+
+  createTokenOptions = () => {
+    const { tokens } = this.props
+    if (tokens && tokens.length > 0) {
+      return Object.keys(tokens).map(tokenName => {
+        return (<option key={tokenName} value={tokenName}>{tokenName}</option>)
+      })
+    }
+    return null
+  }
+
+  render () {
+    const { hideModal } = this.props
+    const { sendAddress, sendAmount } = this.state
 
     return (
       <BaseModal
@@ -56,9 +83,9 @@ class SendModal extends Component<Props> {
             <label className={styles.label}>Token:</label>
             <div className={styles.sendAmount}>
               <select className={styles.sendAmountSelect}>
-                <option value='NEO'>NEO</option>
-                <option value='GAS'>GAS</option>
-                <option value='RPX'>RPX</option>
+                <option key='NEO' value='NEO'>NEO</option>
+                <option key='GAS' value='GAS'>GAS</option>
+                {this.createTokenOptions()}
               </select>
             </div>
           </div>

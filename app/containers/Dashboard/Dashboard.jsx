@@ -25,8 +25,10 @@ type Props = {
   togglePane: Function,
   logout: Function,
   showModal: Function,
+  showErrorNotification: Function,
   neo: number,
-  gas: number
+  gas: number,
+  tokens: Array<Object>
 }
 
 export default class Dashboard extends Component<Props> {
@@ -46,7 +48,9 @@ export default class Dashboard extends Component<Props> {
       showModal,
       address,
       neo,
-      gas
+      gas,
+      tokens,
+      showErrorNotification
     } = this.props
 
     return (
@@ -72,7 +76,7 @@ export default class Dashboard extends Component<Props> {
         <div className={styles.content}>
           <div className={styles.contentBox}>
             <div className={styles.walletButtons}>
-              <div className={styles.walletButton} onClick={() => showModal(MODAL_TYPES.SEND, { neo, gas })}>
+              <div className={styles.walletButton} onClick={() => showModal(MODAL_TYPES.SEND, { neo, gas, tokens, showErrorNotification })}>
                 <FaArrowUpward className={styles.walletButtonIcon} /><span className={styles.walletButtonText}>Send</span>
               </div>
               <div className={styles.walletButton} onClick={() => showModal(MODAL_TYPES.RECEIVE, { address })}>
