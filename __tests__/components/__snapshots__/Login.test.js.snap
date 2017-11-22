@@ -13,15 +13,10 @@ exports[`Login renders without crashing 1`] = `
   <div
     className="loginForm"
   >
-    <input
+    <PasswordField
       autoFocus={true}
       onChange={[Function]}
       placeholder="Enter your private key here (WIF)"
-      type="password"
-    />
-    <FaEye
-      className="viewKey"
-      onClick={[Function]}
     />
   </div>
   <div>

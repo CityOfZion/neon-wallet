@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import { isNil } from 'lodash'
+import PasswordField from '../../components/PasswordField'
 import DisplayWalletKeys from '../../components/DisplayWalletKeys'
 import Page from '../../components/Page'
 import HomeButtonLink from '../../components/HomeButtonLink'
@@ -57,21 +58,18 @@ export default class EncryptKey extends Component<Props, State> {
         <div className='info'>
           Choose a passphrase to encrypt your existing private key:
         </div>
-        <input
-          type='text'
+        <PasswordField
           value={passphrase}
           onChange={(e) => this.setState({ passphrase: e.target.value })}
           placeholder='Enter passphrase here'
           autoFocus
         />
-        <input
-          type='text'
+        <PasswordField
           value={passphrase2}
           onChange={(e) => this.setState({ passphrase2: e.target.value })}
           placeholder='Enter passphrase again'
         />
-        <input
-          type='text'
+        <PasswordField
           value={wif}
           onChange={(e) => this.setState({ wif: e.target.value })}
           placeholder='Enter existing WIF here'

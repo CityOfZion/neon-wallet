@@ -1,15 +1,29 @@
 import React from 'react'
 import configureStore from 'redux-mock-store'
-import { shallow } from 'enzyme'
+import { Provider } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
+import { shallow, mount } from 'enzyme'
 
 import Login from '../../app/containers/LoginPrivateKey/LoginPrivateKey'
 
-const setup = (state = { account: {
+const setup = (shallowRender = true, state = { account: {
   loggedIn: true,
   wif: undefined
 }}) => {
   const store = configureStore()(state)
-  const wrapper = shallow(<Login store={store} />)
+
+  let wrapper
+  if (shallowRender) {
+    wrapper = shallow(<Login store={store} />)
+  } else {
+    wrapper = mount(
+      <Provider store={store}>
+        <BrowserRouter>
+          <Login store={store} />
+        </BrowserRouter>
+      </Provider>
+    )
+  }
 
   return {
     store,
@@ -24,15 +38,16 @@ describe('Login', () => {
   })
 
   test('clicking show key icon toggles private key visibility', () => {
-    const { wrapper } = setup()
+    const { wrapper } = setup(false)
 
-    expect(wrapper.state('showKey')).toEqual(false)
+    expect(wrapper.find('input').get(0).props.type).toEqual('password')
 
     wrapper
       .find('.viewKey')
+      .first()
       .simulate('click')
 
-    expect(wrapper.state('showKey')).toEqual(true)
+    expect(wrapper.find('input').get(0).props.type).toEqual('text')
   })
 
   // test('private key field input onChange dispatches LOGIN action', () => {
