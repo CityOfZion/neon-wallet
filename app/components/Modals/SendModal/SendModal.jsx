@@ -1,12 +1,18 @@
 // @flow
 import React, { Component } from 'react'
 import BaseModal from '../BaseModal'
-import styles from './SendModal.scss'
+import SendDisplay from './SendDisplay'
+import ConfirmDisplay from './ConfirmDisplay'
+import { obtainTokenBalance, validateTransactionBeforeSending } from '../../../core/wallet'
 
 type Props = {
     neo: number,
     gas: number,
+    tokens: Array<Object>,
+    showErrorNotification: Function,
     hideModal: Function,
+    togglePane: Function,
+    sendTransaction: Function,
 }
 
 class SendModal extends Component<Props> {
@@ -14,12 +20,51 @@ class SendModal extends Component<Props> {
   state = {
     sendAmount: '',
     sendAddress: '',
-    sendAsset: ''
+    sendToken: 'Neo',
+    display: 'send'
+  }
+
+  // open confirm pane and validate fields
+  openAndValidate = () => {
+    const { neo, gas, tokens, showErrorNotification } = this.props
+    const { sendAddress, sendAmount, sendToken } = this.state
+    const tokenBalance = obtainTokenBalance(tokens, sendToken)
+    const { error, valid } = validateTransactionBeforeSending(neo, gas, tokenBalance, sendToken, sendAddress, sendAmount)
+    if (valid) {
+      this.setState({ display: 'confirm' })
+    } else {
+      showErrorNotification({ message: error })
+    }
+  }
+
+  confirmTransaction = () => {
+    const { sendTransaction } = this.props
+    const { sendAddress, sendAmount, sendToken } = this.state
+    sendTransaction(sendAddress, sendAmount, sendToken).then(() => {
+      this.resetForm()
+    })
+  }
+
+  cancelTransaction = () => {
+    this.resetForm()
+  }
+
+  resetForm = () => {
+    this.setState({
+      sendAmount: '',
+      sendAddress: '',
+      sendToken: 'Neo',
+      display: 'send'
+    })
+  }
+
+  onChangeHandler = (name, e) => {
+    this.setState({ [name]: e.target.value })
   }
 
   render () {
-    const { hideModal, neo, gas } = this.props
-    const { sendAddress, sendAmount, sendAsset } = this.state
+    const { hideModal, tokens } = this.props
+    const { display } = this.state
 
     return (
       <BaseModal
@@ -32,39 +77,17 @@ class SendModal extends Component<Props> {
           }
         }}
       >
-        <div className={styles.textContainer}>
-          <div id='sendAddress' className={styles.row}>
-            <label className={styles.label}>Address:</label>
-            <input
-              autoFocus
-              type='text'
-              placeholder='Where to send the asset (address)'
-              value={sendAddress}
-              onChange={(e) => this.setState({ sendAddress: e.target.value })}
-            />
-          </div>
-          <div id='sendAmount' className={styles.row}>
-            <label className={styles.label}>Amount:</label>
-            <input
-              type='text'
-              value={sendAmount}
-              placeholder='Amount'
-              onChange={(e) => this.setState({ sendAmount: e.target.value })}
-            />
-          </div>
-          <div id='sendAmount' className={styles.row}>
-            <label className={styles.label}>Amount:</label>
-            <div className={styles.sendAmount}>
-              <select className={styles.sendAmountSelect}>
-                <option value='NEO'>NEO</option>
-                <option value='GAS'>GAS</option>
-                <option value='RPX'>RPX</option>
-              </select>
-              <div>{neo} NEO</div>
-            </div>
-          </div>
-          <button className={styles.sendButton} id='doSend' onClick={this.openAndValidate}>Send Asset</button>
-        </div>
+        {display === 'send' ? <SendDisplay
+          openAndValidate={this.openAndValidate}
+          onChangeHandler={this.onChangeHandler}
+          tokens={tokens}
+          {...this.state}
+        />
+          : <ConfirmDisplay
+            confirmTransaction={this.confirmTransaction}
+            cancelTransaction={this.cancelTransaction}
+            {...this.state}
+          />}
       </BaseModal>
     )
   }
