@@ -18,7 +18,7 @@ export const getConfirmPane = (state) => state.dashboard.confirmPane
 
 const initialState = {
   sendPane: true,
-  confirmPane: true
+  confirmPane: false
 }
 
 export default (state: Object = initialState, action: Object) => {
