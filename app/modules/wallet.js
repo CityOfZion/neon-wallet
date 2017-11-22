@@ -96,7 +96,6 @@ export const getTokensBalance = () => async (dispatch: DispatchType, getState: G
     let [_err, results] = await asyncWrap(getTokenBalance(net, scriptHash, address)) // eslint-disable-line
     if (results) tokenBalances.push({[tokenName]: results})
   }
-  console.log('tokenBalances', tokenBalances);
   return dispatch(setTokenBalance(tokenBalances))
 }
 
