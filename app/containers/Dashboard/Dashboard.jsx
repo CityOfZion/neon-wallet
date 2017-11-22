@@ -50,7 +50,8 @@ export default class Dashboard extends Component<Props> {
       neo,
       gas,
       tokens,
-      showErrorNotification
+      showErrorNotification,
+      confirmPane
     } = this.props
 
     return (
@@ -76,7 +77,7 @@ export default class Dashboard extends Component<Props> {
         <div className={styles.content}>
           <div className={styles.contentBox}>
             <div className={styles.walletButtons}>
-              <div className={styles.walletButton} onClick={() => showModal(MODAL_TYPES.SEND, { neo, gas, tokens, showErrorNotification })}>
+              <div className={styles.walletButton} onClick={() => showModal(MODAL_TYPES.SEND, { neo, gas, tokens, showErrorNotification, togglePane, confirmPane })}>
                 <FaArrowUpward className={styles.walletButtonIcon} /><span className={styles.walletButtonText}>Send</span>
               </div>
               <div className={styles.walletButton} onClick={() => showModal(MODAL_TYPES.RECEIVE, { address })}>
