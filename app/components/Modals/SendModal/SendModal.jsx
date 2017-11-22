@@ -12,6 +12,7 @@ type Props = {
     showErrorNotification: Function,
     hideModal: Function,
     togglePane: Function,
+    sendTransaction: Function,
 }
 
 class SendModal extends Component<Props> {
@@ -37,10 +38,18 @@ class SendModal extends Component<Props> {
   }
 
   confirmTransaction = () => {
-
+    const { sendTransaction } = this.props
+    const { sendAddress, sendAmount, sendToken } = this.state
+    sendTransaction(sendAddress, sendAmount, sendToken).then(() => {
+      this.resetForm()
+    })
   }
 
   cancelTransaction = () => {
+    this.resetForm()
+  }
+
+  resetForm = () => {
     this.setState({
       sendAmount: '',
       sendAddress: '',

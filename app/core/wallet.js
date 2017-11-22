@@ -34,7 +34,7 @@ export const validateTransactionBeforeSending = (neoBalance: number, gasBalance:
     }
   }
 
-  if (selectedAsset !== ASSETS_LABELS.NEO && selectedAsset !== ASSETS_LABELS.GAS && Object.keys(TOKENS).indexOf(selectedAsset < 0)) {
+  if (selectedAsset !== ASSETS_LABELS.NEO && selectedAsset !== ASSETS_LABELS.GAS && Object.keys(TOKENS).indexOf(selectedAsset) < 0) {
     return {
       error: 'That asset is not Neo, Gas or NEP-5 Token',
       valid: false

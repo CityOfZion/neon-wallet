@@ -15,8 +15,8 @@ const ConfirmDisplay = ({ sendAddress, sendAmount, sendToken, confirmTransaction
     <p>Please confirm the following transaction:</p>
     <p>You are sending {sendAmount} {sendToken} to:</p>
     <p>{sendAddress}</p>
-    <button onclick={confirmTransaction}>confirm</button>
-    <button onclick={cancelTransaction}>cancel</button>
+    <button onClick={confirmTransaction}>confirm</button>
+    <button onClick={cancelTransaction}>cancel</button>
   </div>)
 }
 

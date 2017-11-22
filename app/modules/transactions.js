@@ -1,9 +1,9 @@
 // @flow
 /* eslint-disable camelcase */
 
-import { ASSETS_LABELS, ASSETS } from '../core/constants'
+import { ASSETS_LABELS, ASSETS, TOKENS } from '../core/constants'
 import { validateTransactionBeforeSending, obtainTokenBalance } from '../core/wallet'
-import { getTransactionHistory, doSendAsset, hardwareDoSendAsset } from 'neon-js'
+import { getTransactionHistory, doSendAsset, hardwareDoSendAsset, doTransferToken } from 'neon-js'
 import { setTransactionHistory, getNeo, getGas, getTokens } from './wallet'
 import { log } from '../util/Logs'
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notifications'
@@ -43,7 +43,7 @@ export const syncTransactionHistory = (net: NetworkType, address: string) => asy
   }
 }
 
-export const sendTransaction = (sendAddress: string, sendAmount: string) => async (dispatch: DispatchType, getState: GetStateType): Promise<*> => {
+export const sendTransaction = (sendAddress: string, sendAmount: string, sendToken: string) => async (dispatch: DispatchType, getState: GetStateType): Promise<*> => {
   const state = getState()
   const wif = getWif(state)
   const address = getAddress(state)
@@ -51,22 +51,21 @@ export const sendTransaction = (sendAddress: string, sendAmount: string) => asyn
   const neo = getNeo(state)
   const gas = getGas(state)
   const tokens = getTokens(state)
-  const selectedAsset = getSelectedAsset(state)
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
 
   const rejectTransaction = (message: string) => dispatch(showErrorNotification({ message }))
-  const tokenBalance = obtainTokenBalance(tokens, selectedAsset)
+  const tokenBalance = obtainTokenBalance(tokens, sendToken)
 
-  const { error, valid } = validateTransactionBeforeSending(neo, gas, tokenBalance, selectedAsset, sendAddress, sendAmount)
+  const { error, valid } = validateTransactionBeforeSending(neo, gas, tokenBalance, sendToken, sendAddress, sendAmount)
   if (valid) {
     const selfAddress = address
-    const assetName = selectedAsset === ASSETS_LABELS.NEO ? ASSETS.NEO : ASSETS.GAS
+    const assetName = sendToken === ASSETS_LABELS.NEO ? ASSETS.NEO : ASSETS.GAS
     let sendAsset = {}
     sendAsset[assetName] = sendAmount
 
     dispatch(showInfoNotification({ message: 'Sending Transaction...', autoDismiss: 0 }))
-    log(net, 'SEND', selfAddress, { to: sendAddress, asset: selectedAsset, amount: sendAmount })
+    log(net, 'SEND', selfAddress, { to: sendAddress, asset: sendToken, amount: sendAmount })
 
     const isHardwareSend = !!publicKey
 
@@ -75,7 +74,12 @@ export const sendTransaction = (sendAddress: string, sendAmount: string) => asyn
       dispatch(showInfoNotification({ message: 'Please sign the transaction on your hardware device', autoDismiss: 0 }))
       sendAssetFn = () => hardwareDoSendAsset(net, sendAddress, publicKey, sendAsset, signingFunction)
     } else {
-      sendAssetFn = () => doSendAsset(net, sendAddress, wif, sendAsset)
+      if (sendToken === ASSETS_LABELS.NEO || sendToken === ASSETS_LABELS.GAS) {
+        sendAssetFn = () => doSendAsset(net, sendAddress, wif, sendAsset)
+      } else {
+        const scriptHash = TOKENS[sendToken]
+        sendAssetFn = () => doTransferToken(net, scriptHash, wif, sendAddress, sendAmount)
+      }
     }
 
     const [err, response] = await asyncWrap(sendAssetFn())
