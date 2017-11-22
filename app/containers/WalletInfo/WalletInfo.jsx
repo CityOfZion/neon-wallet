@@ -27,8 +27,8 @@ export default class WalletInfo extends Component<Props> {
   canvas: ?HTMLCanvasElement
 
   componentDidMount () {
-    const { initiateGetBalance, net, address } = this.props
-    initiateGetBalance(net, address)
+    const { net, address } = this.props
+    this.refreshBalance(net, address)
     QRCode.toCanvas(this.canvas, address, { version: 5 }, (err) => {
       if (err) console.log(err)
     })
