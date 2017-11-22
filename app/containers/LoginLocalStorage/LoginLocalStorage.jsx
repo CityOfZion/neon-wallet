@@ -2,8 +2,7 @@
 import React, { Component } from 'react'
 import storage from 'electron-json-storage'
 import { map } from 'lodash'
-import FaEye from 'react-icons/lib/fa/eye'
-import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
+import PasswordField from '../../components/PasswordField'
 import Page from '../../components/Page'
 import HomeButtonLink from '../../components/HomeButtonLink'
 import styles from './LoginLocalStorage.scss'
@@ -17,14 +16,12 @@ type Props = {
 }
 
 type State = {
-  showKey: boolean,
   passphrase: string,
   wif: string,
 }
 
 export default class LoginLocalStorage extends Component<Props, State> {
   state = {
-    showKey: false,
     passphrase: '',
     wif: ''
   }
@@ -37,20 +34,14 @@ export default class LoginLocalStorage extends Component<Props, State> {
     })
   }
 
-  toggleKeyVisibility = () => {
-    this.setState(prevState => ({
-      showKey: !prevState.showKey
-    }))
-  }
-
   render () {
     const { accountKeys, history, loginNep2 } = this.props
-    const { showKey, passphrase, wif } = this.state
+    const { passphrase, wif } = this.state
     const loginButtonDisabled = Object.keys(accountKeys).length === 0 || wif === '' || passphrase === ''
 
     return (
       <Page id='loginPage' className={loginStyles.loginPage}>
-        <div className={loginStyles.title}>Login using a saved wallet:</div>
+        <div className={loginStyles.title}>Login using a saved wallet!:</div>
         <select
           className={styles.selectWallet}
           value={wif}
@@ -60,18 +51,12 @@ export default class LoginLocalStorage extends Component<Props, State> {
           {map(accountKeys, (value, key) => <option value={value} key={`wallet${key}`}>{key}</option>)}
         </select>
         <div className={loginStyles.loginForm}>
-          <input
-            type={showKey ? 'text' : 'password'}
+          <PasswordField
             placeholder='Enter your passphrase here'
             value={passphrase}
             onChange={(e) => this.setState({ passphrase: e.target.value })}
             autoFocus
           />
-
-          {showKey
-            ? <FaEyeSlash className={loginStyles.viewKey} onClick={this.toggleKeyVisibility} />
-            : <FaEye className={loginStyles.viewKey} onClick={this.toggleKeyVisibility} />
-          }
         </div>
         <div>
           <button
