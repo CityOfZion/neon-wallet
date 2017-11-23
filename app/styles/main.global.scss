@@ -248,33 +248,6 @@ input {
     }
 }
 
-.leftSplit {
-    .Pane1 {
-        background-color: $default-button;
-        cursor: pointer;
-        border-bottom: none;
-        color: $button-text;
-        &:hover {
-            background-color: $default-button-hover;
-            color: $button-text;
-        }
-    }
-}
-.sendSplit {
-    .Pane1 {
-        background-color: $secondary-background;
-        &:hover {
-            background-color: $secondary-background;
-        }
-    }
-}
-
-.confirmSplit {
-    .horizontal.Pane1 {
-        border: none;
-    }
-}
-
 .vertical.Pane1 {
     border-right: 1.5px solid $spacer-color;
 }
