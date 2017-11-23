@@ -38,10 +38,11 @@ class SendModal extends Component<Props> {
   }
 
   confirmTransaction = () => {
-    const { sendTransaction } = this.props
+    const { sendTransaction, hideModal } = this.props
     const { sendAddress, sendAmount, sendToken } = this.state
     sendTransaction(sendAddress, sendAmount, sendToken).then(() => {
       this.resetForm()
+      hideModal()
     })
   }
 

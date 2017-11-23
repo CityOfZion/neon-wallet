@@ -200,71 +200,6 @@ input {
             font-weight: 200;
         }
     }
-    
-    #confirmPane {
-        margin: 0px auto;
-        button {
-            margin-top: 0px;
-            background-color: $dark-button;
-            height: 33px;
-            margin-left: 10px;
-            color: white;
-            margin-right: 0px;
-        }
-        button:hover {
-            background-color: $dark-button-hover;
-        }
-    }
-    #sendPane {
-        position: relative;
-        width: 96%;
-        margin: 8px auto 0px auto;
-        overflow: hidden;
-        input {
-            font-size: .9em;
-            height: 30px;
-            border: none;
-            color: $thin-text-color;
-            background-color: white;
-        }
-        button {
-            margin-top: 10px;
-            background-color: $default-button;
-            height: 33px;
-            margin-left: 10px;
-            color: white;
-            margin-right: 0px;
-
-            &:hover {
-                background-color: $default-button-hover;
-            }
-        }
-
-        #sendAddress {
-            width: 100%;
-            input {
-                width: 96%;
-                padding: 0px 2%;
-            }
-        }
-        button#sendAsset {
-            background-color: $dark-button;
-        }
-        button#sendAsset:hover {
-            background-color: $dark-button-hover;
-        }
-        #sendAmount {
-            margin-top: 3px;
-            display: inline-block;
-            width: 50%;
-            height: 30px;
-            margin-right: 0px;
-            input {
-                width: 96%;
-                padding: 0px 2%;
-            }
-        }
-    }
     #accountInfo {
         margin: 20px 0px;
         width: 100%;
@@ -334,7 +269,7 @@ input {
             color: $button-text;
         }
     }
-}   
+}
 .sendSplit {
     .Pane1 {
         background-color: $secondary-background;
@@ -369,7 +304,7 @@ input {
     .ReactModal__Overlay {
         opacity: 0;
         transition: opacity 200ms ease-in-out;
-        &--after-open {            
+        &--after-open {
             opacity: 1;
         }
         &--before-close {

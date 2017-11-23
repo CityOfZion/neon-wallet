@@ -4,31 +4,16 @@ exports[`Claim should not render claim gas button when claim button is disabled 
 <div
   id="claim"
 >
-  <div>
+  <Tooltip
+    title="You can claim Gas once every 5 minutes"
+  >
     <button
       className="disabled"
-      data-for="claimTip"
-      data-tip={true}
+      disabled={true}
     >
-      Claim 
-      10
-       GAS
+      Claim 10 GAS
     </button>
-    <ReactTooltip
-      class="solidTip"
-      effect="solid"
-      id="claimTip"
-      insecure={true}
-      place="bottom"
-      resizeHide={true}
-      type="dark"
-      wrapper="div"
-    >
-      <span>
-        You can claim Gas once every 5 minutes
-      </span>
-    </ReactTooltip>
-  </div>
+  </Tooltip>
 </div>
 `;
 
@@ -39,9 +24,7 @@ exports[`Claim should render claim gas button when claim button is not disabled 
   <button
     onClick={[Function]}
   >
-    Claim 
-    10
-     GAS
+    Claim 10 GAS
   </button>
 </div>
 `;
