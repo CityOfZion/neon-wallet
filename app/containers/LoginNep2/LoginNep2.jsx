@@ -34,12 +34,14 @@ export default class LoginNep2 extends Component<Props, State> {
           <PasswordField
             placeholder='Enter your passphrase here'
             onChange={(e) => this.setState({ passphrase: e.target.value })}
+            onEnterKey={(t) => loginButtonDisabled || loginNep2(passphrase, wif, history)}
             value={passphrase}
             autoFocus
           />
           <PasswordField
             placeholder='Enter your encrypted key here'
             onChange={(e) => this.setState({ wif: e.target.value })}
+            onEnterKey={(t) => loginButtonDisabled || loginNep2(passphrase, wif, history)}
             value={wif}
           />
         </div>

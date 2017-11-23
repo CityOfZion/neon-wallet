@@ -31,6 +31,7 @@ export default class LoginPrivateKey extends Component<Props, State> {
           <PasswordField
             placeholder='Enter your private key here (WIF)'
             onChange={(e) => this.setState({ wif: e.target.value })}
+            onEnterKey={(t) => loginButtonDisabled || loginWithPrivateKey(wif, history)}
             autoFocus
           />
         </div>

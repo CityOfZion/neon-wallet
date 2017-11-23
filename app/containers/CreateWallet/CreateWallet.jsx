@@ -58,12 +58,14 @@ export default class CreateWallet extends Component<Props, State> {
           placeholder='Enter passphrase here'
           value={passphrase}
           onChange={(e) => this.setState({ passphrase: e.target.value })}
+          onEnterKey={(t) => disabledButton || this.generateNewWallet()}
           autoFocus
         />
         <PasswordField
           placeholder='Repeat passphrase here'
           value={passphrase2}
           onChange={(e) => this.setState({ passphrase2: e.target.value })}
+          onEnterKey={(t) => disabledButton || this.generateNewWallet()}
         />
         <button disabled={disabledButton} className={disabledButton ? 'disabled' : ''} onClick={this.generateNewWallet}> Generate keys </button>
         <HomeButtonLink />

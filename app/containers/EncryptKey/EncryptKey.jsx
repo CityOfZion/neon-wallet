@@ -61,17 +61,20 @@ export default class EncryptKey extends Component<Props, State> {
         <PasswordField
           value={passphrase}
           onChange={(e) => this.setState({ passphrase: e.target.value })}
+          onEnterKey={(t) => disabledButton || this.generateWalletFromWif()}
           placeholder='Enter passphrase here'
           autoFocus
         />
         <PasswordField
           value={passphrase2}
           onChange={(e) => this.setState({ passphrase2: e.target.value })}
+          onEnterKey={(t) => disabledButton || this.generateWalletFromWif()}
           placeholder='Enter passphrase again'
         />
         <PasswordField
           value={wif}
           onChange={(e) => this.setState({ wif: e.target.value })}
+          onEnterKey={(t) => disabledButton || this.generateWalletFromWif()}
           placeholder='Enter existing WIF here'
         />
         <button disabled={disabledButton} className={disabledButton ? 'disabled' : ''} onClick={this.generateWalletFromWif}> Generate encrypted key </button>
