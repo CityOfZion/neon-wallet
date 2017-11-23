@@ -2,10 +2,19 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import WalletInfo from './WalletInfo'
-import { initiateGetBalance, getNeo, getGas, getNeoPrice, getGasPrice, getTokens } from '../../modules/wallet'
 import { showErrorNotification, showSuccessNotification } from '../../modules/notifications'
 import { getAddress } from '../../modules/account'
 import { getNetwork } from '../../modules/metadata'
+import {
+  initiateGetBalance,
+  getNeo,
+  getGas,
+  getNeoPrice,
+  getGasPrice,
+  getTokensBalance,
+  getTokensInfo,
+  retrieveTokensInfo
+} from '../../modules/wallet'
 
 const mapStateToProps = (state) => ({
   neo: getNeo(state),
@@ -14,13 +23,15 @@ const mapStateToProps = (state) => ({
   net: getNetwork(state),
   neoPrice: getNeoPrice(state),
   gasPrice: getGasPrice(state),
-  tokens: getTokens(state)
+  tokensBalance: getTokensBalance(state),
+  tokensInfo: getTokensInfo(state)
 })
 
 const actionCreators = {
   initiateGetBalance,
   showErrorNotification,
-  showSuccessNotification
+  showSuccessNotification,
+  retrieveTokensInfo
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)

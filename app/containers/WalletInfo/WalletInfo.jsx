@@ -8,7 +8,7 @@ import Tooltip from '../../components/Tooltip'
 import { formatGAS, formatFiat } from '../../core/formatters'
 import { ASSETS } from '../../core/constants'
 import styles from './WalletInfo.scss'
-import TokenBalances from './TokenBalances'
+import TokensBalance from './TokensBalance'
 
 type Props = {
   address: string,
@@ -17,16 +17,19 @@ type Props = {
   gas: number,
   neoPrice: number,
   gasPrice: number,
-  tokens: Array<Object>,
+  tokensBalance: Array<Object>,
+  tokensInfo: Array<Object>,
   initiateGetBalance: Function,
   showSuccessNotification: Function,
   showErrorNotification: Function,
+  retrieveTokensInfo: Function
 }
 
 export default class WalletInfo extends Component<Props> {
   componentDidMount () {
-    const { initiateGetBalance, net, address } = this.props
+    const { initiateGetBalance, net, address, retrieveTokensInfo } = this.props
     initiateGetBalance(net, address)
+    retrieveTokensInfo()
   }
 
   // force sync with balance data
@@ -46,7 +49,7 @@ export default class WalletInfo extends Component<Props> {
   }
 
   render () {
-    const { address, neo, gas, neoPrice, gasPrice, tokens } = this.props
+    const { address, neo, gas, neoPrice, gasPrice, tokensBalance, tokensInfo } = this.props
     if (isNil(address)) {
       return null
     }
@@ -87,7 +90,7 @@ export default class WalletInfo extends Component<Props> {
         </div>
         <div className='spacer' />
         <Claim />
-        <TokenBalances tokens={tokens} />
+        <TokensBalance tokensBalance={tokensBalance} tokensInfo={tokensInfo} />
       </div>
     )
   }

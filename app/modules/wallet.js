@@ -1,7 +1,7 @@
 // @flow
 import { ASSETS_LABELS, TOKENS } from '../core/constants'
 import axios from 'axios'
-import { getBalance, getTokenBalance } from 'neon-js'
+import { getBalance, getTokenBalance, getTokenInfo } from 'neon-js'
 import { syncTransactionHistory } from './transactions'
 import { syncAvailableClaim } from './claim'
 import { syncBlockHeight, getNetwork } from './metadata'
@@ -15,6 +15,7 @@ export const SET_GAS_PRICE = 'SET_GAS_PRICE'
 export const RESET_PRICE = 'RESET_PRICE'
 export const SET_TRANSACTION_HISTORY = 'SET_TRANSACTION_HISTORY'
 export const SET_TOKENS_BALANCE = 'SET_TOKENS_BALANCE'
+export const SET_TOKENS_INFO = 'SET_TOKENS_INFO'
 
 // Actions
 export function setBalance (Neo: number, Gas: number) {
@@ -51,10 +52,17 @@ export function setTransactionHistory (transactions: Array<Object>) {
   }
 }
 
-export function setTokenBalance (tokens: Array<Object>) {
+export function setTokensBalance (tokensBalance: Array<Object>) {
   return {
     type: SET_TOKENS_BALANCE,
-    payload: { tokens }
+    payload: { tokensBalance }
+  }
+}
+
+export function setTokensInfo (tokensInfo: Array<Object>) {
+  return {
+    type: SET_TOKENS_INFO,
+    payload: { tokensInfo }
   }
 }
 
@@ -84,20 +92,32 @@ export const initiateGetBalance = (net: NetworkType, address: string) => (dispat
   dispatch(syncBlockHeight(net))
   dispatch(getMarketPriceUSD())
   dispatch(getGasMarketPriceUSD())
-  dispatch(getTokensBalance())
+  dispatch(retrieveTokensBalance())
+  dispatch(retrieveTokensInfo())
   return dispatch(retrieveBalance(net, address))
 }
 
-export const getTokensBalance = () => async (dispatch: DispatchType, getState: GetStateType) => {
+export const retrieveTokensBalance = () => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
   const net = getNetwork(state)
   const address = getAddress(state)
-  const tokenBalances = []
+  const tokensBalance = []
   for (const [tokenName, scriptHash] of Object.entries(TOKENS)) {
     let [_err, results] = await asyncWrap(getTokenBalance(net, scriptHash, address)) // eslint-disable-line
-    if (results) tokenBalances.push({[tokenName]: results})
+    if (results) tokensBalance.push({[tokenName]: results})
   }
-  return dispatch(setTokenBalance(tokenBalances))
+  return dispatch(setTokensBalance(tokensBalance))
+}
+
+export const retrieveTokensInfo = () => async (dispatch: DispatchType, getState: GetStateType) => {
+  const state = getState()
+  const net = getNetwork(state)
+  const tokensInfo = []
+  for (const [tokenName, scriptHash] of Object.entries(TOKENS)) {
+    let [_err, results] = await asyncWrap(getTokenInfo(net, scriptHash)) // eslint-disable-line
+    if (results) tokensInfo.push({[tokenName]: results})
+  }
+  return dispatch(setTokensInfo(tokensInfo))
 }
 
 // state getters
@@ -106,7 +126,8 @@ export const getGas = (state) => state.wallet.Gas
 export const getTransactions = (state) => state.wallet.transactions
 export const getNeoPrice = (state) => state.wallet.neoPrice
 export const getGasPrice = (state) => state.wallet.gasPrice
-export const getTokens = (state) => state.wallet.tokens
+export const getTokensBalance = (state) => state.wallet.tokensBalance
+export const getTokensInfo = (state) => state.wallet.tokensInfo
 
 const initialState = {
   Neo: 0,
@@ -114,7 +135,8 @@ const initialState = {
   transactions: [],
   neoPrice: 0,
   gasPrice: 0,
-  tokens: []
+  tokensBalance: [],
+  tokensInfo: []
 }
 
 export default (state: Object = initialState, action: Object) => {
@@ -151,10 +173,16 @@ export default (state: Object = initialState, action: Object) => {
         transactions
       }
     case SET_TOKENS_BALANCE:
-      const { tokens } = action.payload
+      const { tokensBalance } = action.payload
       return {
         ...state,
-        tokens
+        tokensBalance
+      }
+    case SET_TOKENS_INFO:
+      const { tokensInfo } = action.payload
+      return {
+        ...state,
+        tokensInfo
       }
     case LOGOUT:
       return initialState
