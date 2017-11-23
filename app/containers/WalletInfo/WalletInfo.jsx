@@ -19,35 +19,25 @@ type Props = {
   gasPrice: number,
   tokens: Array<Object>,
   initiateGetBalance: Function,
-  showInfoNotification: Function,
   showSuccessNotification: Function,
   showErrorNotification: Function,
-  getTokensBalance: Function
 }
 
 export default class WalletInfo extends Component<Props> {
   componentDidMount () {
-    const { initiateGetBalance, net, address, getTokensBalance } = this.props
+    const { initiateGetBalance, net, address } = this.props
     initiateGetBalance(net, address)
-    getTokensBalance()
-  }
-
-  componentWillReceiveProps (nextProps: Props) {
-    const { net, getTokensBalance } = this.props
-    if (nextProps.net !== net) getTokensBalance()
   }
 
   // force sync with balance data
   refreshBalance = () => {
     const {
-      showInfoNotification,
       showSuccessNotification,
       showErrorNotification,
       initiateGetBalance,
       net,
       address
     } = this.props
-    showInfoNotification({ message: 'Retrieving blockchain information...' })
     initiateGetBalance(net, address).then((response) => {
       showSuccessNotification({ message: 'Received latest blockchain information.' })
     }).catch(() => {
