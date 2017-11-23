@@ -15,3 +15,13 @@
         border-width: 0 0 2px;
     }
 }
+
+.tokenName {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.tokenNameIcon {
+    padding-right: 5px;
+}

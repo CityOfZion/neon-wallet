@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import styles from './TokenBalances.scss'
+import InfoOutline from 'react-icons/lib/md/info-outline'
 
 type Props = {
   tokens: Array<Object>,
@@ -11,7 +12,7 @@ const addTokenRows = (tokens) => {
     const tokenName = Object.keys(token)[0]
     return (
       <tr key={tokenName} >
-        <td>{tokenName}</td>
+        <td className={styles.tokenName}><InfoOutline className={styles.tokenNameIcon} />{tokenName}</td>
         <td>{token[tokenName]}</td>
       </tr>
     )
