@@ -10,6 +10,7 @@ describe('wallet module tests', () => {
     Gas: 0,
     neoPrice: 0,
     gasPrice: 0,
+    tokens: [],
     transactions: []
   }
 
