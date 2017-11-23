@@ -244,17 +244,6 @@ input {
             .walletTotal {
                 padding-top: 10px;
             }
-            #refresh {
-                font-size: 2.2em;
-                position: absolute;
-                top: 0;
-                left: 47%;
-                cursor: pointer;
-                color: $default-button;
-            }
-            #refresh:hover {
-                color: $default-button-hover;
-            }
         }
     }
 }
