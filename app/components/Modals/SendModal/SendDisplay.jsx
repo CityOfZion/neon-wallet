@@ -58,7 +58,6 @@ const SendDisplay = ({ sendAddress, sendAmount, sendToken, tokens, onChangeHandl
     </div>
     <button className={styles.sendButton} id='doSend' onClick={openAndValidate}>Send Asset</button>
   </div>)
-
 }
 
 export default SendDisplay

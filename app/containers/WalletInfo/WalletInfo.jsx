@@ -30,7 +30,7 @@ export default class WalletInfo extends Component<Props> {
     getTokensBalance()
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     const { net, getTokensBalance } = this.props
     if (nextProps.net !== net) getTokensBalance()
   }
