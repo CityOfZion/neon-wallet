@@ -20,15 +20,15 @@ class PasswordField extends Component<Props, State> {
     showKey: false
   }
 
-  constructor() {
-    super();
-    this._handleKeyPress = this._handleKeyPress.bind(this);
+  constructor () {
+    super()
+    this._handleKeyPress = this._handleKeyPress.bind(this)
   }
 
-  _handleKeyPress(target) {
-    if (target.charCode == 13) {
+  _handleKeyPress (target) {
+    if (target.charCode === 13) {
       if (this.props.onEnterKey) {
-        this.props.onEnterKey(target);
+        this.props.onEnterKey(target)
       }
     }
   }
@@ -41,7 +41,7 @@ class PasswordField extends Component<Props, State> {
 
   render () {
     const { showKey } = this.state
-    const propsToPass = omit(this.props, 'onEnterKey');
+    const propsToPass = omit(this.props, 'onEnterKey')
 
     return (
       <div className={passwordFieldStyles.passwordField}>
