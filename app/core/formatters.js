@@ -9,7 +9,6 @@ export const formatGAS = (gas: number | string, shortDisplay: boolean = false): 
   const decimalLength = shortDisplay ? GAS_DECIMAL_SHORT_DISPLAY_LENGTH : GAS_DECIMAL_LENGTH
   const customTruncatedNumber = truncateNumber(parseFloat(gas), decimalLength).toFixed(decimalLength)
   return numeral(customTruncatedNumber).format('0,0.' + Array(decimalLength + 1).join('0'))
-
 }
 
 export const formatNEO = (neo: number | string): string => numeral(neo).format('0,0')
