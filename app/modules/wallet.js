@@ -84,6 +84,7 @@ export const initiateGetBalance = (net: NetworkType, address: string) => (dispat
   dispatch(syncBlockHeight(net))
   dispatch(getMarketPriceUSD())
   dispatch(getGasMarketPriceUSD())
+  dispatch(getTokensBalance())
   return dispatch(retrieveBalance(net, address))
 }
 
