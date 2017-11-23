@@ -4,6 +4,7 @@ import BaseModal from '../BaseModal'
 import SendDisplay from './SendDisplay'
 import ConfirmDisplay from './ConfirmDisplay'
 import { obtainTokenBalance, validateTransactionBeforeSending } from '../../../core/wallet'
+import { ASSETS_LABELS } from '../../../core/constants'
 
 type Props = {
     neo: number,
@@ -15,13 +16,18 @@ type Props = {
     sendTransaction: Function,
 }
 
+const DISPLAY_MODES = {
+  SEND: 'SEND',
+  CONFIRM: 'CONFIRM'
+}
+
 class SendModal extends Component<Props> {
   canvas: ?HTMLCanvasElement
   state = {
     sendAmount: '',
     sendAddress: '',
-    sendToken: 'Neo',
-    display: 'send'
+    sendToken: ASSETS_LABELS.NEO,
+    display: DISPLAY_MODES.SEND
   }
 
   // open confirm pane and validate fields
@@ -54,13 +60,13 @@ class SendModal extends Component<Props> {
     this.setState({
       sendAmount: '',
       sendAddress: '',
-      sendToken: 'Neo',
-      display: 'send'
+      sendToken: ASSETS_LABELS.NEO,
+      display: DISPLAY_MODES.SEND
     })
   }
 
-  onChangeHandler = (name, e) => {
-    this.setState({ [name]: e.target.value })
+  onChangeHandler = (name: string, value: number) => {
+    this.setState({ [name]: value })
   }
 
   render () {
@@ -73,17 +79,18 @@ class SendModal extends Component<Props> {
         hideModal={hideModal}
         style={{
           content: {
-            width: '420px',
+            width: '430px',
             height: '390px'
           }
         }}
       >
-        {display === 'send' ? <SendDisplay
-          openAndValidate={this.openAndValidate}
-          onChangeHandler={this.onChangeHandler}
-          tokens={tokens}
-          {...this.state}
-        />
+        {display === DISPLAY_MODES.SEND
+          ? <SendDisplay
+            openAndValidate={this.openAndValidate}
+            onChangeHandler={this.onChangeHandler}
+            tokens={tokens}
+            {...this.state}
+          />
           : <ConfirmDisplay
             confirmTransaction={this.confirmTransaction}
             cancelTransaction={this.cancelTransaction}

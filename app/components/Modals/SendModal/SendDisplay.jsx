@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import styles from './SendModal.scss'
+import { ASSETS_LABELS, ASSETS } from '../../../core/constants'
 
 type Props = {
   sendAddress: string,
@@ -11,19 +12,15 @@ type Props = {
   openAndValidate: Function
 }
 
-const SendDisplay = ({ sendAddress, sendAmount, sendToken, tokens, onChangeHandler, openAndValidate }: Props) => {
-  const createTokenOptions = () => {
-    const tokenOptions = []
-    if (tokens && tokens.length > 0) {
-      tokens.forEach(token => {
-        const tokenName = Object.keys(token)[0]
-        return tokenOptions.push(<option key={tokenName} value={tokenName}>{tokenName}</option>)
-      })
-    }
-    return tokenOptions
-  }
-
-  return (<div className={styles.textContainer}>
+const SendDisplay = ({
+  sendAddress,
+  sendAmount,
+  sendToken,
+  tokens,
+  onChangeHandler,
+  openAndValidate
+}: Props) => (
+  <div className={styles.textContainer}>
     <div id='sendAddress' className={styles.row}>
       <label className={styles.label}>Address:</label>
       <input
@@ -31,7 +28,7 @@ const SendDisplay = ({ sendAddress, sendAmount, sendToken, tokens, onChangeHandl
         type='text'
         placeholder='Where to send the asset (address)'
         value={sendAddress}
-        onChange={onChangeHandler.bind(null, 'sendAddress')}
+        onChange={(e) => onChangeHandler('sendAddress', e.target.value)}
       />
     </div>
     <div id='sendAmount' className={styles.row}>
@@ -40,24 +37,27 @@ const SendDisplay = ({ sendAddress, sendAmount, sendToken, tokens, onChangeHandl
         type='text'
         value={sendAmount}
         placeholder='Amount'
-        onChange={onChangeHandler.bind(null, 'sendAmount')}
+        onChange={(e) => onChangeHandler('sendAmount', e.target.value)}
       />
     </div>
     <div id='sendAmount' className={styles.row}>
       <label className={styles.label}>Token:</label>
       <div className={styles.sendAmount}>
         <select
-          onChange={onChangeHandler.bind(null, 'sendToken')}
+          onChange={(e) => onChangeHandler('sendToken', e.target.value)}
           className={styles.sendAmountSelect}
         >
-          <option key='Neo' value='Neo'>NEO</option>
-          <option key='Gas' value='Gas'>GAS</option>
-          {createTokenOptions()}
+          <option value={ASSETS_LABELS.NEO}>{ASSETS.NEO}</option>
+          <option value={ASSETS_LABELS.GAS}>{ASSETS.GAS}</option>
+          {tokens.map(token => {
+            const tokenName = Object.keys(token)[0]
+            return (<option key={tokenName} value={tokenName}>{tokenName}</option>)
+          })}
         </select>
       </div>
     </div>
     <button className={styles.sendButton} id='doSend' onClick={openAndValidate}>Send Asset</button>
-  </div>)
-}
+  </div>
+)
 
 export default SendDisplay
