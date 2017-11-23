@@ -78,7 +78,7 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, sendTok
         sendAssetFn = () => doSendAsset(net, sendAddress, wif, sendAsset)
       } else {
         const scriptHash = TOKENS[sendToken]
-        sendAssetFn = () => doTransferToken(net, scriptHash, wif, sendAddress, sendAmount)
+        sendAssetFn = () => doTransferToken(net, scriptHash, wif, sendAddress, parseFloat(sendAmount))
       }
     }
 
