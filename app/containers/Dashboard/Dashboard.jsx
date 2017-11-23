@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react'
+import classNames from 'classnames'
 import FaArrowUpward from 'react-icons/lib/fa/arrow-circle-up'
 import FaArrowDownward from 'react-icons/lib/fa/arrow-circle-down'
 import NetworkSwitch from '../NetworkSwitch'
@@ -74,10 +75,14 @@ export default class Dashboard extends Component<Props> {
         <div className={styles.content}>
           <div className={styles.contentBox}>
             <div className={styles.walletButtons}>
-              <div className={styles.walletButton} onClick={() => showModal(MODAL_TYPES.SEND, { neo, gas, tokens, showErrorNotification, sendTransaction })}>
+              <div
+                className={classNames(styles.walletButton, styles.sendButton)}
+                onClick={() => showModal(MODAL_TYPES.SEND, { neo, gas, tokens, showErrorNotification, sendTransaction })}>
                 <FaArrowUpward className={styles.walletButtonIcon} /><span className={styles.walletButtonText}>Send</span>
               </div>
-              <div className={styles.walletButton} onClick={() => showModal(MODAL_TYPES.RECEIVE, { address })}>
+              <div
+                className={styles.walletButton}
+                onClick={() => showModal(MODAL_TYPES.RECEIVE, { address })}>
                 <FaArrowDownward className={styles.walletButtonIcon} /><span className={styles.walletButtonText}>Receive</span>
               </div>
             </div>
