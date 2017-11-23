@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react'
+import classNames from 'classnames'
 import { isNil } from 'lodash'
 import Claim from '../Claim'
 import MdSync from 'react-icons/lib/md/sync'
@@ -7,6 +8,7 @@ import Tooltip from '../../components/Tooltip'
 import { formatGAS, formatFiat } from '../../core/formatters'
 import { ASSETS } from '../../core/constants'
 import styles from './WalletInfo.scss'
+import TokenBalances from './TokenBalances'
 
 type Props = {
   address: string,
@@ -30,7 +32,7 @@ export default class WalletInfo extends Component<Props> {
     getTokensBalance()
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps (nextProps: Props) {
     const { net, getTokensBalance } = this.props
     if (nextProps.net !== net) getTokensBalance()
   }
@@ -53,22 +55,8 @@ export default class WalletInfo extends Component<Props> {
     })
   }
 
-  addTokenRows = () => {
-    const { tokens } = this.props
-    if (tokens && tokens.length > 0) {
-      return tokens.map((token) => {
-        const tokenName = Object.keys(token)[0]
-        return (<tr key={tokenName} >
-          <td>{tokenName}</td>
-          <td>{token[tokenName]}</td>
-        </tr>)
-      })
-    }
-    return null
-  }
-
   render () {
-    const { address, neo, gas, neoPrice, gasPrice } = this.props
+    const { address, neo, gas, neoPrice, gasPrice, tokens } = this.props
     if (isNil(address)) {
       return null
     }
@@ -101,22 +89,15 @@ export default class WalletInfo extends Component<Props> {
             <div className='fiat gasWalletValue'>US ${gasValue}</div>
           </div>
           <div className='fiat walletTotal'>Total US ${totalValue}</div>
-          <div className='refreshBalance' onClick={this.refreshBalance}>
+          <div onClick={this.refreshBalance} className={classNames(styles.refreshIconContainer, 'refreshBalance')}>
             <Tooltip title='Refresh account balance'>
-              <MdSync id='refresh' />
+              <MdSync id='refresh' className={styles.refreshIcon} />
             </Tooltip>
           </div>
         </div>
         <div className='spacer' />
         <Claim />
-        <div className={styles.tokenBalances}>
-          <strong>Token balances:</strong>
-          <table>
-            <tbody>
-              {this.addTokenRows()}
-            </tbody>
-          </table>
-        </div>
+        <TokenBalances tokens={tokens} />
       </div>
     )
   }
