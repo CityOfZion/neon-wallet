@@ -64,3 +64,7 @@ export const MODAL_TYPES = {
   SEND_TRANSACTION: 'SEND_TRANSACTION',
   CONFIRM: 'CONFIRM'
 }
+
+export const KEY_CODES = {
+  ENTER: 13
+}

@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 
 import { omit } from 'lodash'
+import { KEY_CODES } from '../../core/constants'
 
 import FaEye from 'react-icons/lib/fa/eye'
 import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
@@ -20,13 +21,8 @@ class PasswordField extends Component<Props, State> {
     showKey: false
   }
 
-  constructor () {
-    super()
-    this._handleKeyPress = this._handleKeyPress.bind(this)
-  }
-
-  _handleKeyPress (target) {
-    if (target.charCode === 13) {
+  handleKeyPress = (target) => {
+    if (target.charCode === KEY_CODES.ENTER) {
       if (this.props.onEnterKey) {
         this.props.onEnterKey(target)
       }
@@ -47,7 +43,7 @@ class PasswordField extends Component<Props, State> {
       <div className={passwordFieldStyles.passwordField}>
         <input
           type={showKey ? 'text' : 'password'}
-          onKeyPress={this._handleKeyPress}
+          onKeyPress={this.handleKeyPress}
           {...propsToPass}
         />
         { showKey
