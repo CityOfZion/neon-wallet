@@ -41,7 +41,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
 
     return (
       <Page id='loginPage' className={loginStyles.loginPage}>
-        <div className={loginStyles.title}>Login using a saved wallet!:</div>
+        <div className={loginStyles.title}>Login using a saved wallet:</div>
         <select
           className={styles.selectWallet}
           value={wif}
