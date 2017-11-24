@@ -41,7 +41,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
 
     return (
       <Page id='loginPage' className={loginStyles.loginPage}>
-        <div className={loginStyles.title}>Login using a saved wallet!:</div>
+        <div className={loginStyles.title}>Login using a saved wallet:</div>
         <select
           className={styles.selectWallet}
           value={wif}
@@ -55,6 +55,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
             placeholder='Enter your passphrase here'
             value={passphrase}
             onChange={(e) => this.setState({ passphrase: e.target.value })}
+            onEnterKey={(t) => loginButtonDisabled || loginNep2(passphrase, wif, history)}
             autoFocus
           />
         </div>

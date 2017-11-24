@@ -16,6 +16,7 @@ exports[`Login renders without crashing 1`] = `
     <PasswordField
       autoFocus={true}
       onChange={[Function]}
+      onEnterKey={[Function]}
       placeholder="Enter your private key here (WIF)"
     />
   </div>
