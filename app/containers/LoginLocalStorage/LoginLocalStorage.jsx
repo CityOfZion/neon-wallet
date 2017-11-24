@@ -42,7 +42,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
     return (
       <Page id='loginPage' className={loginStyles.loginPage}>
         <div className={loginStyles.title}>Login using a saved wallet:</div>
-        <form onSubmit={(e) => { e.preventDefault(); loginNep2(passphrase, wif, history)}}>
+        <form onSubmit={(e) => { e.preventDefault(); loginNep2(passphrase, wif, history) }}>
           <select
             className={styles.selectWallet}
             value={wif}

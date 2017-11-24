@@ -30,7 +30,7 @@ export default class LoginNep2 extends Component<Props, State> {
     return (
       <Page id='loginPage' className={loginStyles.loginPage}>
         <div className={loginStyles.title}>Login using an encrypted key:</div>
-        <form onSubmit={(e) => { e.preventDefault(); loginNep2(passphrase, wif, history)} }>
+        <form onSubmit={(e) => { e.preventDefault(); loginNep2(passphrase, wif, history) }}>
           <div className={loginStyles.loginForm}>
             <PasswordField
               placeholder='Enter your passphrase here'

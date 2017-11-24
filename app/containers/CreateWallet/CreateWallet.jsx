@@ -54,7 +54,7 @@ export default class CreateWallet extends Component<Props, State> {
         <div className='info'>
           Choose a passphrase to encrypt your private key:
         </div>
-        <form onSubmit={(e) => { e.preventDefault(); this.generateNewWallet()}}>
+        <form onSubmit={(e) => { e.preventDefault(); this.generateNewWallet() }}>
           <PasswordField
             placeholder='Enter passphrase here'
             value={passphrase}

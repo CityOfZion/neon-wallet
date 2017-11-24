@@ -27,7 +27,7 @@ export default class LoginPrivateKey extends Component<Props, State> {
     return (
       <Page id='loginPage' className={loginStyles.loginPage}>
         <div className={loginStyles.title}>Login using a private key:</div>
-        <form onSubmit={(e) => { e.preventDefault(); loginWithPrivateKey(wif, history)}}>
+        <form onSubmit={(e) => { e.preventDefault(); loginWithPrivateKey(wif, history) }}>
           <div className={loginStyles.loginForm}>
             <PasswordField
               placeholder='Enter your private key here (WIF)'
