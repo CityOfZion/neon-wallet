@@ -41,30 +41,32 @@ export default class LoginLocalStorage extends Component<Props, State> {
 
     return (
       <Page id='loginPage' className={loginStyles.loginPage}>
-        <div className={loginStyles.title}>Login using a saved wallet!:</div>
-        <select
-          className={styles.selectWallet}
-          value={wif}
-          onChange={(e) => this.setState({ wif: e.target.value })}
-        >
-          <option value=''>Select a wallet</option>
-          {map(accountKeys, (value, key) => <option value={value} key={`wallet${key}`}>{key}</option>)}
-        </select>
-        <div className={loginStyles.loginForm}>
-          <PasswordField
-            placeholder='Enter your passphrase here'
-            value={passphrase}
-            onChange={(e) => this.setState({ passphrase: e.target.value })}
-            autoFocus
-          />
-        </div>
-        <div>
-          <button
-            className={loginButtonDisabled ? 'disabled' : ''}
-            onClick={() => loginNep2(passphrase, wif, history)}
-            disabled={loginButtonDisabled}>Login</button>
-          <HomeButtonLink />
-        </div>
+        <div className={loginStyles.title}>Login using a saved wallet:</div>
+        <form onSubmit={(e) => { e.preventDefault(); loginNep2(passphrase, wif, history)}}>
+          <select
+            className={styles.selectWallet}
+            value={wif}
+            onChange={(e) => this.setState({ wif: e.target.value })}
+          >
+            <option value=''>Select a wallet</option>
+            {map(accountKeys, (value, key) => <option value={value} key={`wallet${key}`}>{key}</option>)}
+          </select>
+          <div className={loginStyles.loginForm}>
+            <PasswordField
+              placeholder='Enter your passphrase here'
+              value={passphrase}
+              onChange={(e) => this.setState({ passphrase: e.target.value })}
+              autoFocus
+            />
+          </div>
+          <div>
+            <button
+              type='submit'
+              className={loginButtonDisabled ? 'disabled' : ''}
+              disabled={loginButtonDisabled}>Login</button>
+            <HomeButtonLink />
+          </div>
+        </form>
       </Page>
     )
   }

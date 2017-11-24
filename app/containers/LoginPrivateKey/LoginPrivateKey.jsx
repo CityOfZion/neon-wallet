@@ -27,20 +27,22 @@ export default class LoginPrivateKey extends Component<Props, State> {
     return (
       <Page id='loginPage' className={loginStyles.loginPage}>
         <div className={loginStyles.title}>Login using a private key:</div>
-        <div className={loginStyles.loginForm}>
-          <PasswordField
-            placeholder='Enter your private key here (WIF)'
-            onChange={(e) => this.setState({ wif: e.target.value })}
-            autoFocus
-          />
-        </div>
-        <div>
-          <button
-            onClick={() => loginWithPrivateKey(wif, history)}
-            disabled={loginButtonDisabled}
-            className={loginButtonDisabled ? 'disabled' : ''}>Login</button>
-          <HomeButtonLink />
-        </div>
+        <form onSubmit={(e) => { e.preventDefault(); loginWithPrivateKey(wif, history)}}>
+          <div className={loginStyles.loginForm}>
+            <PasswordField
+              placeholder='Enter your private key here (WIF)'
+              onChange={(e) => this.setState({ wif: e.target.value })}
+              autoFocus
+            />
+          </div>
+          <div>
+            <button
+              type='submit'
+              disabled={loginButtonDisabled}
+              className={loginButtonDisabled ? 'disabled' : ''}>Login</button>
+            <HomeButtonLink />
+          </div>
+        </form>
       </Page>
     )
   }

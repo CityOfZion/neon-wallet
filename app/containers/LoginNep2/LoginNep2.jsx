@@ -30,26 +30,28 @@ export default class LoginNep2 extends Component<Props, State> {
     return (
       <Page id='loginPage' className={loginStyles.loginPage}>
         <div className={loginStyles.title}>Login using an encrypted key:</div>
-        <div className={loginStyles.loginForm}>
-          <PasswordField
-            placeholder='Enter your passphrase here'
-            onChange={(e) => this.setState({ passphrase: e.target.value })}
-            value={passphrase}
-            autoFocus
-          />
-          <PasswordField
-            placeholder='Enter your encrypted key here'
-            onChange={(e) => this.setState({ wif: e.target.value })}
-            value={wif}
-          />
-        </div>
-        <div>
-          <button
-            className={classNames('loginButton', { disabled: loginButtonDisabled })}
-            onClick={() => loginNep2(passphrase, wif, history)}
-            disabled={loginButtonDisabled}>Login</button>
-          <HomeButtonLink />
-        </div>
+        <form onSubmit={(e) => { e.preventDefault(); loginNep2(passphrase, wif, history)} }>
+          <div className={loginStyles.loginForm}>
+            <PasswordField
+              placeholder='Enter your passphrase here'
+              onChange={(e) => this.setState({ passphrase: e.target.value })}
+              value={passphrase}
+              autoFocus
+            />
+            <PasswordField
+              placeholder='Enter your encrypted key here'
+              onChange={(e) => this.setState({ wif: e.target.value })}
+              value={wif}
+            />
+          </div>
+          <div>
+            <button
+              type='submit'
+              className={classNames('loginButton', { disabled: loginButtonDisabled })}
+              disabled={loginButtonDisabled}>Login</button>
+            <HomeButtonLink />
+          </div>
+        </form>
       </Page>
     )
   }

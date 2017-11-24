@@ -58,24 +58,26 @@ export default class EncryptKey extends Component<Props, State> {
         <div className='info'>
           Choose a passphrase to encrypt your existing private key:
         </div>
-        <PasswordField
-          value={passphrase}
-          onChange={(e) => this.setState({ passphrase: e.target.value })}
-          placeholder='Enter passphrase here'
-          autoFocus
-        />
-        <PasswordField
-          value={passphrase2}
-          onChange={(e) => this.setState({ passphrase2: e.target.value })}
-          placeholder='Enter passphrase again'
-        />
-        <PasswordField
-          value={wif}
-          onChange={(e) => this.setState({ wif: e.target.value })}
-          placeholder='Enter existing WIF here'
-        />
-        <button disabled={disabledButton} className={disabledButton ? 'disabled' : ''} onClick={this.generateWalletFromWif}> Generate encrypted key </button>
-        <HomeButtonLink />
+        <form onSubmit={(e) => { e.preventDefault(); this.generateWalletFromWif() }}>
+          <PasswordField
+            value={passphrase}
+            onChange={(e) => this.setState({ passphrase: e.target.value })}
+            placeholder='Enter passphrase here'
+            autoFocus
+          />
+          <PasswordField
+            value={passphrase2}
+            onChange={(e) => this.setState({ passphrase2: e.target.value })}
+            placeholder='Enter passphrase again'
+          />
+          <PasswordField
+            value={wif}
+            onChange={(e) => this.setState({ wif: e.target.value })}
+            placeholder='Enter existing WIF here'
+          />
+          <button type='submit' disabled={disabledButton} className={disabledButton ? 'disabled' : ''}> Generate encrypted key </button>
+          <HomeButtonLink />
+        </form>
       </div>
     )
     return (
