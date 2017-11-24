@@ -11,6 +11,7 @@ exports[`Logout should render without crashing 1`] = `
     to=""
   >
     <Tooltip
+      position="right"
       title="Logout"
     >
       <MdPowerSettingsNew />
