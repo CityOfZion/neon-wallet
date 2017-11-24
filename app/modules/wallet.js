@@ -109,7 +109,7 @@ export const retrieveTokensBalance = () => async (dispatch: DispatchType, getSta
     let [_err, results] = await asyncWrap(getTokenBalance(net, scriptHash, address)) // eslint-disable-line
     if (results) {
       tokensBalance.push({
-        symbol: symbol,
+        symbol,
         balance: results
       })
     }
