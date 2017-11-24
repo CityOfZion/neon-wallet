@@ -10,24 +10,28 @@ exports[`Login renders without crashing 1`] = `
   >
     Login using a private key:
   </div>
-  <div
-    className="loginForm"
+  <form
+    onSubmit={[Function]}
   >
-    <PasswordField
-      autoFocus={true}
-      onChange={[Function]}
-      placeholder="Enter your private key here (WIF)"
-    />
-  </div>
-  <div>
-    <button
-      className="disabled"
-      disabled={true}
-      onClick={[Function]}
+    <div
+      className="loginForm"
     >
-      Login
-    </button>
-    <HomeButtonLink />
-  </div>
+      <PasswordField
+        autoFocus={true}
+        onChange={[Function]}
+        placeholder="Enter your private key here (WIF)"
+      />
+    </div>
+    <div>
+      <button
+        className="disabled"
+        disabled={true}
+        type="submit"
+      >
+        Login
+      </button>
+      <HomeButtonLink />
+    </div>
+  </form>
 </Page>
 `;

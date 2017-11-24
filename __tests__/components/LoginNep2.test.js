@@ -108,7 +108,7 @@ describe('LoginNep2', () => {
     keyField.instance().value = '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
     keyField.simulate('change')
 
-    wrapper.find('.loginButton').simulate('click')
+    wrapper.find('.loginButton').simulate('submit')
     jest.runAllTimers()
     const actions = store.getActions()
     expect(actions.length).toEqual(2)
