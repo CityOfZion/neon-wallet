@@ -48,8 +48,8 @@ const initialState = {
     network: 'TestNet'
   },
   wallet: {
-    Neo: 10,
-    Gas: 1.0001001,
+    Neo: 100001,
+    Gas: 1.0001601,
     neoPrice: 25.48,
     gasPrice: 18.10
   },
@@ -91,9 +91,10 @@ describe('WalletInfo', () => {
     const neoWalletValue = wrapper.find('.neoWalletValue')
     const gasWalletValue = wrapper.find('.gasWalletValue')
     const walletValue = wrapper.find('.walletTotal')
-    const expectedNeoWalletValue = formatFiat(initialState.wallet.neoPrice * initialState.wallet.Neo)
-    const expectedGasWalletValue = formatFiat(initialState.wallet.gasPrice * initialState.wallet.Gas)
-    const expectedWalletValue = formatFiat(initialState.wallet.neoPrice * initialState.wallet.Neo + initialState.wallet.gasPrice * initialState.wallet.Gas)
+
+    const expectedNeoWalletValue = '2,548,025.48'
+    const expectedGasWalletValue = '18.10'
+    const expectedWalletValue = '2,548,043.58'
     const neoField = wrapper.find('.amountNeo')
     const gasField = wrapper.find('.amountGas')
 
