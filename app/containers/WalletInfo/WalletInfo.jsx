@@ -58,17 +58,9 @@ export default class WalletInfo extends Component<Props> {
       return null
     }
 
-    let neoValue = 0
-    let gasValue = 0
-    let totalValue = 0
-
-    if (neoPrice && neo) {
-      neoValue = formatFiat(neoPrice * neo)
-      if (gasPrice && gas) {
-        gasValue = formatFiat(gasPrice * gas)
-        totalValue = formatFiat(neoPrice * neo + gasPrice * gas)
-      }
-    }
+    let neoValue = neoPrice && neo ? neoPrice * neo : 0
+    let gasValue = gasPrice && gas ? gasPrice * gas : 0
+    let totalValue = neoValue + gasValue
 
     return (
       <div id='accountInfo'>
@@ -85,7 +77,7 @@ export default class WalletInfo extends Component<Props> {
           <div className='split'>
             <div className='label'>{ASSETS.NEO}</div>
             <div className='amountBig amountNeo'>{neo}</div>
-            <div className='fiat neoWalletValue'>US ${neoValue}</div>
+            <div className='fiat neoWalletValue'>US ${formatFiat(neoValue)}</div>
           </div>
           <div className='split'>
             <div className='label'>{ASSETS.GAS}</div>
@@ -93,9 +85,9 @@ export default class WalletInfo extends Component<Props> {
             <ReactTooltip class='solidTip' id='gasBalanceTip' place='bottom' type='dark' effect='solid' disable={gas === 0}>
               <span className='amountGasTooltip'>{formatGAS(gas)}</span>
             </ReactTooltip>
-            <div className='fiat gasWalletValue'>US ${gasValue}</div>
+            <div className='fiat gasWalletValue'>US ${formatFiat(gasValue)}</div>
           </div>
-          <div className='fiat walletTotal'>Total US ${totalValue}</div>
+          <div className='fiat walletTotal'>Total US ${formatFiat(totalValue)}</div>
           <div className='refreshBalance' onClick={this.refreshBalance} >
             <MdSync id='refresh' data-tip data-for='refreshBalanceTip' />
             <ReactTooltip class='solidTip' id='refreshBalanceTip' place='bottom' type='dark' effect='solid'>
