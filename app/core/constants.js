@@ -63,7 +63,8 @@ export const BIP44_PATH =
 export const MODAL_TYPES = {
   SEND: 'SEND',
   RECEIVE: 'RECEIVE',
-  CONFIRM: 'CONFIRM'
+  CONFIRM: 'CONFIRM',
+  TOKEN_INFO: 'TOKEN_INFO'
 }
 
 export const TOKENS = {

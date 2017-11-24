@@ -11,10 +11,10 @@ import {
   getGas,
   getNeoPrice,
   getGasPrice,
-  getTokensBalance,
-  getTokensInfo,
+  getTokens,
   retrieveTokensInfo
 } from '../../modules/wallet'
+import { showModal } from '../../modules/modal'
 
 const mapStateToProps = (state) => ({
   neo: getNeo(state),
@@ -23,15 +23,15 @@ const mapStateToProps = (state) => ({
   net: getNetwork(state),
   neoPrice: getNeoPrice(state),
   gasPrice: getGasPrice(state),
-  tokensBalance: getTokensBalance(state),
-  tokensInfo: getTokensInfo(state)
+  tokens: getTokens(state)
 })
 
 const actionCreators = {
   initiateGetBalance,
   showErrorNotification,
   showSuccessNotification,
-  retrieveTokensInfo
+  retrieveTokensInfo,
+  showModal
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)

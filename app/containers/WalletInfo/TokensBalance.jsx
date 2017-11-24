@@ -2,50 +2,44 @@
 import React from 'react'
 import styles from './TokensBalance.scss'
 import InfoOutline from 'react-icons/lib/md/info-outline'
-import Tooltip from '../../components/Tooltip'
+import { MODAL_TYPES } from '../../core/constants'
+import Table from '../../components/Table'
 
 type Props = {
-  tokensBalance: Array<Object>,
-  tokensInfo: Array<Object>,
+  tokens: Array<TokenType>,
+  showModal: Function
 }
 
-const addTokenRows = (tokensBalance, tokensInfo) => {
-  return tokensBalance.map((token) => {
-    const tokenName = Object.keys(token)[0]
-    const tokenInfo = tokensInfo.find(token => token[tokenName])
-    let tooltip = tokenName
-    if (tokenInfo) {
-      tooltip = (
-        <div style={{ textAlign: 'left' }}>
-          <p>{tokenInfo[tokenName].name}</p>
-          <p>Total Supply: {tokenInfo[tokenName].totalSupply}</p>
-          <p>Decimals: {tokenInfo[tokenName].decimals}</p>
-        </div>
-      )
-    }
+const addTokenRows = (tokens, showModal) => {
+  return tokens.map((token: TokenType) => {
+    const { symbol, balance } = token
     return (
-      <tr key={tokenName}>
-        <td className={styles.tokenName}><Tooltip html={tooltip}><InfoOutline className={styles.tokenNameIcon} />{tokenName}</Tooltip></td>
-        <td>{token[tokenName]}</td>
+      <tr key={symbol}>
+        <td
+          className={styles.symbol}
+          onClick={() => showModal(MODAL_TYPES.TOKEN_INFO, { token })}>
+          <InfoOutline className={styles.symbolIcon} />{symbol}
+        </td>
+        <td>{balance}</td>
       </tr>
     )
   })
 }
 
-const TokensBalance = ({ tokensBalance, tokensInfo }: Props) => (
+const tokens = ({ tokens, showModal }: Props) => (
   <div>
-    {tokensBalance.length > 0 &&
-      <table className={styles.table}>
+    {tokens.length > 0 &&
+      <Table>
         <thead>
           <th>Token</th>
           <th>Balance</th>
         </thead>
         <tbody>
-          {addTokenRows(tokensBalance, tokensInfo)}
+          {addTokenRows(tokens, showModal)}
         </tbody>
-      </table>
+      </Table>
     }
   </div>
 )
 
-export default TokensBalance
+export default tokens

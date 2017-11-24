@@ -49,10 +49,7 @@ const SendDisplay = ({
         >
           <option value={ASSETS_LABELS.NEO}>{ASSETS.NEO}</option>
           <option value={ASSETS_LABELS.GAS}>{ASSETS.GAS}</option>
-          {tokens.map(token => {
-            const tokenName = Object.keys(token)[0]
-            return (<option key={tokenName} value={tokenName}>{tokenName}</option>)
-          })}
+          {tokens.map(({ symbol }) => <option key={symbol} value={symbol}>{symbol}</option>)}
         </select>
       </div>
     </div>

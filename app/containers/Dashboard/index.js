@@ -6,7 +6,7 @@ import { togglePane } from '../../modules/dashboard'
 import { logout, getAddress } from '../../modules/account'
 import { getBlockHeight, getNetwork } from '../../modules/metadata'
 import { getNotifications, showErrorNotification } from '../../modules/notifications'
-import { getNeoPrice, getGasPrice, getNeo, getGas, getTokensBalance } from '../../modules/wallet'
+import { getNeoPrice, getGasPrice, getNeo, getGas, getTokens } from '../../modules/wallet'
 import { showModal } from '../../modules/modal'
 import { sendTransaction } from '../../modules/transactions'
 
@@ -19,7 +19,7 @@ const mapStateToProps = (state: Object) => ({
   notification: getNotifications(state),
   neo: getNeo(state),
   gas: getGas(state),
-  tokensBalance: getTokensBalance(state)
+  tokens: getTokens(state)
 })
 
 const actionCreators = {

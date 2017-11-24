@@ -4,7 +4,7 @@
 import { ASSETS_LABELS, ASSETS, TOKENS } from '../core/constants'
 import { validateTransactionBeforeSending, obtainTokenBalance } from '../core/wallet'
 import { getTransactionHistory, doSendAsset, hardwareDoSendAsset, doTransferToken } from 'neon-js'
-import { setTransactionHistory, getNeo, getGas, getTokensBalance } from './wallet'
+import { setTransactionHistory, getNeo, getGas, getTokens } from './wallet'
 import { log } from '../util/Logs'
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notifications'
 import { getWif, getPublicKey, getSigningFunction, getAddress, LOGOUT } from './account'
@@ -50,12 +50,12 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, sendTok
   const net = getNetwork(state)
   const neo = getNeo(state)
   const gas = getGas(state)
-  const tokensBalance = getTokensBalance(state)
+  const tokens = getTokens(state)
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
 
   const rejectTransaction = (message: string) => dispatch(showErrorNotification({ message }))
-  const tokenBalance = obtainTokenBalance(tokensBalance, sendToken)
+  const tokenBalance = obtainTokenBalance(tokens, sendToken)
 
   const { error, valid } = validateTransactionBeforeSending(neo, gas, tokenBalance, sendToken, sendAddress, sendAmount)
   if (valid) {

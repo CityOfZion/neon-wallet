@@ -1,5 +1,6 @@
 // @flow
 import { ASSETS_LABELS, TOKENS } from '../core/constants'
+import { merge } from 'lodash'
 import axios from 'axios'
 import { getBalance, getTokenBalance, getTokenInfo } from 'neon-js'
 import { syncTransactionHistory } from './transactions'
@@ -7,6 +8,8 @@ import { syncAvailableClaim } from './claim'
 import { syncBlockHeight, getNetwork } from './metadata'
 import asyncWrap from '../core/asyncHelper'
 import { LOGOUT, getAddress } from './account'
+
+const TOKEN_PAIRS = Object.entries(TOKENS)
 
 // Constants
 export const SET_BALANCE = 'SET_BALANCE'
@@ -52,10 +55,10 @@ export function setTransactionHistory (transactions: Array<Object>) {
   }
 }
 
-export function setTokensBalance (tokensBalance: Array<Object>) {
+export function setTokensBalance (tokens: Array<Object>) {
   return {
     type: SET_TOKENS_BALANCE,
-    payload: { tokensBalance }
+    payload: { tokens }
   }
 }
 
@@ -102,10 +105,16 @@ export const retrieveTokensBalance = () => async (dispatch: DispatchType, getSta
   const net = getNetwork(state)
   const address = getAddress(state)
   const tokensBalance = []
-  for (const [tokenName, scriptHash] of Object.entries(TOKENS)) {
+  for (const [symbol, scriptHash] of Object.entries(TOKENS)) {
     let [_err, results] = await asyncWrap(getTokenBalance(net, scriptHash, address)) // eslint-disable-line
-    if (results) tokensBalance.push({[tokenName]: results})
+    if (results) {
+      tokensBalance.push({
+        symbol: symbol,
+        balance: results
+      })
+    }
   }
+
   return dispatch(setTokensBalance(tokensBalance))
 }
 
@@ -113,9 +122,14 @@ export const retrieveTokensInfo = () => async (dispatch: DispatchType, getState:
   const state = getState()
   const net = getNetwork(state)
   const tokensInfo = []
-  for (const [tokenName, scriptHash] of Object.entries(TOKENS)) {
+  for (const [symbol, scriptHash] of TOKEN_PAIRS) {
     let [_err, results] = await asyncWrap(getTokenInfo(net, scriptHash)) // eslint-disable-line
-    if (results) tokensInfo.push({[tokenName]: results})
+    if (results) {
+      tokensInfo.push({
+        symbol,
+        info: results
+      })
+    }
   }
   return dispatch(setTokensInfo(tokensInfo))
 }
@@ -126,8 +140,7 @@ export const getGas = (state) => state.wallet.Gas
 export const getTransactions = (state) => state.wallet.transactions
 export const getNeoPrice = (state) => state.wallet.neoPrice
 export const getGasPrice = (state) => state.wallet.gasPrice
-export const getTokensBalance = (state) => state.wallet.tokensBalance
-export const getTokensInfo = (state) => state.wallet.tokensInfo
+export const getTokens = (state) => state.wallet.tokens
 
 const initialState = {
   Neo: 0,
@@ -135,8 +148,7 @@ const initialState = {
   transactions: [],
   neoPrice: 0,
   gasPrice: 0,
-  tokensBalance: [],
-  tokensInfo: []
+  tokens: []
 }
 
 export default (state: Object = initialState, action: Object) => {
@@ -173,16 +185,16 @@ export default (state: Object = initialState, action: Object) => {
         transactions
       }
     case SET_TOKENS_BALANCE:
-      const { tokensBalance } = action.payload
+      const { tokens } = action.payload
       return {
         ...state,
-        tokensBalance
+        tokens: merge(state.tokens, tokens)
       }
     case SET_TOKENS_INFO:
       const { tokensInfo } = action.payload
       return {
         ...state,
-        tokensInfo
+        tokens: merge(state.tokens, tokensInfo)
       }
     case LOGOUT:
       return initialState

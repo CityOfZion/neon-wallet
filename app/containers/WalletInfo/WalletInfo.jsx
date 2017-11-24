@@ -17,12 +17,12 @@ type Props = {
   gas: number,
   neoPrice: number,
   gasPrice: number,
-  tokensBalance: Array<Object>,
-  tokensInfo: Array<Object>,
+  tokens: Array<Object>,
   initiateGetBalance: Function,
   showSuccessNotification: Function,
   showErrorNotification: Function,
-  retrieveTokensInfo: Function
+  retrieveTokensInfo: Function,
+  showModal: Function
 }
 
 export default class WalletInfo extends Component<Props> {
@@ -49,7 +49,7 @@ export default class WalletInfo extends Component<Props> {
   }
 
   render () {
-    const { address, neo, gas, neoPrice, gasPrice, tokensBalance, tokensInfo } = this.props
+    const { address, neo, gas, neoPrice, gasPrice, tokens, showModal } = this.props
     if (isNil(address)) {
       return null
     }
@@ -90,7 +90,7 @@ export default class WalletInfo extends Component<Props> {
         </div>
         <div className='spacer' />
         <Claim />
-        <TokensBalance tokensBalance={tokensBalance} tokensInfo={tokensInfo} />
+        <TokensBalance tokens={tokens} showModal={showModal} />
       </div>
     )
   }
