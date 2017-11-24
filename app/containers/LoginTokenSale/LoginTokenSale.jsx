@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import Page from '../../components/Page'
 import HomeButtonLink from '../../components/HomeButtonLink'
+import PasswordField from '../../components/PasswordField'
 import { ROUTES } from '../../core/constants'
 import loginStyles from '../../styles/login.scss'
 
@@ -28,8 +29,7 @@ export default class LoginTokenSale extends Component<Props, State> {
       <Page id='loginPage' className={loginStyles.loginPage}>
         <div className={loginStyles.title}>Participate in Token Sale:</div>
         <div className={loginStyles.loginForm}>
-          <input
-            type='text'
+          <PasswordField
             placeholder='Enter your private key here (WIF)'
             onChange={(e) => this.setState({ wif: e.target.value })}
             value={wif}
