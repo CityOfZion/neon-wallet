@@ -29,7 +29,6 @@ export default class WalletInfo extends Component<Props> {
     this.refreshBalance()
   }
 
-  // force sync with balance data
   refreshBalance = () => {
     const {
       showSuccessNotification,
