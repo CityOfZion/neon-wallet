@@ -59,7 +59,7 @@ export const doClaimNotify = () => async (dispatch: DispatchType, getState: GetS
   let claimGasFn
   if (isHardwareClaim) {
     dispatch(showInfoNotification({
-      message: 'Sign transaction 2 of 2 to claim Gas on your hardware device (claiming Gas)',
+      message: 'Sign transaction 2 of 2 to claim GAS on your hardware device (claiming GAS)',
       autoDismiss: 0
     }))
     claimGasFn = () => hardwareDoClaimAllGas(net, publicKey, signingFunction)
@@ -78,7 +78,7 @@ export const doClaimNotify = () => async (dispatch: DispatchType, getState: GetS
   }
 }
 
-// To initiate claim, first send all Neo to own address, the set claimRequest state
+// To initiate claim, first send all NEO to own address, the set claimRequest state
 // When new claims are available, this will trigger the claim
 export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
@@ -93,7 +93,7 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
   if (neo === 0) {
     return dispatch(doClaimNotify())
   } else {
-    dispatch(showInfoNotification({ message: 'Sending Neo to Yourself...', autoDismiss: 0 }))
+    dispatch(showInfoNotification({ message: 'Sending NEO to Yourself...', autoDismiss: 0 }))
     log(net, 'SEND', address, { to: address, amount: neo, asset: ASSETS.NEO })
 
     const isHardwareClaim = !!publicKey
@@ -101,7 +101,7 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
     let sendAssetFn
     if (isHardwareClaim) {
       dispatch(showInfoNotification({
-        message: 'Sign transaction 1 of 2 to claim Gas on your hardware device (sending Neo to yourself)',
+        message: 'Sign transaction 1 of 2 to claim GAS on your hardware device (sending NEO to yourself)',
         autoDismiss: 0
       }))
       sendAssetFn = () => hardwareDoSendAsset(net, address, publicKey, { [ASSETS.NEO]: neo }, signingFunction)

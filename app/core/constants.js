@@ -18,11 +18,6 @@ export const ASSETS = {
   GAS: 'GAS'
 }
 
-export const ASSETS_LABELS = {
-  [ASSETS.NEO]: 'Neo',
-  [ASSETS.GAS]: 'Gas'
-}
-
 export const ROUTES = {
   HOME: '',
   DASHBOARD: '/dashboard',

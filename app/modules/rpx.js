@@ -45,13 +45,13 @@ export const participateInSale = (neoToSend: number, scriptHash: string) => (dis
 
   const account = getAccountFromWIFKey(wif)
   if (parseFloat(neoToSend) !== parseInt(neoToSend)) {
-    dispatch(showErrorNotification({ message: 'You cannot send fractional Neo to a token sale.' }))
+    dispatch(showErrorNotification({ message: 'You cannot send fractional NEO to a token sale.' }))
     return false
   }
   const toMint = parseInt(neoToSend)
 
   if (toMint > neo) {
-    dispatch(showErrorNotification({ message: 'You do not have enough Neo to send.' }))
+    dispatch(showErrorNotification({ message: 'You do not have enough NEO to send.' }))
     return false
   }
   if (scriptHash.slice(0, 1) !== '0x' && scriptHash.length !== 42) {

@@ -64,13 +64,13 @@
      
      c). Communicates error if funds < amount to send
      
-     d). Communicates error if attempt to send fractional Neo
+     d). Communicates error if attempt to send fractional NEO
      
-     e). Send Neo successfully to address
+     e). Send NEO successfully to address
      
-     f). Send Gas and factional Gas successfully to address
+     f). Send GAS and factional GAS successfully to address
      
-     g). Claim Gas on current address
+     g). Claim GAS on current address
      
      h). Block claims for 5mins after claiming once
      

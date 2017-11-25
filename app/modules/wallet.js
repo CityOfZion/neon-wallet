@@ -1,5 +1,5 @@
 // @flow
-import { ASSETS_LABELS, TOKENS } from '../core/constants'
+import { ASSETS, TOKENS } from '../core/constants'
 import { merge } from 'lodash'
 import axios from 'axios'
 import { getBalance, getTokenBalance, getTokenInfo } from 'neon-js'
@@ -21,10 +21,10 @@ export const SET_TOKENS_BALANCE = 'SET_TOKENS_BALANCE'
 export const SET_TOKENS_INFO = 'SET_TOKENS_INFO'
 
 // Actions
-export function setBalance (Neo: number, Gas: number) {
+export function setBalance (NEO: number, GAS: number) {
   return {
     type: SET_BALANCE,
-    payload: { Neo, Gas }
+    payload: { NEO, GAS }
   }
 }
 
@@ -135,16 +135,16 @@ export const retrieveTokensInfo = () => async (dispatch: DispatchType, getState:
 }
 
 // state getters
-export const getNeo = (state) => state.wallet.Neo
-export const getGas = (state) => state.wallet.Gas
+export const getNeo = (state) => state.wallet.NEO
+export const getGas = (state) => state.wallet.GAS
 export const getTransactions = (state) => state.wallet.transactions
 export const getNeoPrice = (state) => state.wallet.neoPrice
 export const getGasPrice = (state) => state.wallet.gasPrice
 export const getTokens = (state) => state.wallet.tokens
 
 const initialState = {
-  Neo: 0,
-  Gas: 0,
+  NEO: 0,
+  GAS: 0,
   transactions: [],
   neoPrice: 0,
   gasPrice: 0,
@@ -157,8 +157,8 @@ export default (state: Object = initialState, action: Object) => {
       const { Neo, Gas } = action.payload
       return {
         ...state,
-        [ASSETS_LABELS.NEO]: Neo,
-        [ASSETS_LABELS.GAS]: Gas
+        NEO: Neo,
+        GAS: Gas
       }
     case SET_NEO_PRICE:
       const { neoPrice } = action.payload

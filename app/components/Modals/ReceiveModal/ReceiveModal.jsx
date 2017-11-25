@@ -32,7 +32,7 @@ class ReceiveModal extends Component<Props> {
         }}
       >
         <div className={styles.textContainer}>
-          <div>Your Public Neo Address:</div>
+          <div>Your Public NEO Address:</div>
           <div className={styles.address}>
             <strong>{address}</strong>
             <CopyToClipboard text={address} tooltip='Copy Public Address' />

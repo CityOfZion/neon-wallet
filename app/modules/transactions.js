@@ -1,7 +1,6 @@
 // @flow
 /* eslint-disable camelcase */
-
-import { ASSETS_LABELS, ASSETS, TOKENS } from '../core/constants'
+import { ASSETS, TOKENS } from '../core/constants'
 import { validateTransactionBeforeSending, obtainTokenBalance } from '../core/wallet'
 import { getTransactionHistory, doSendAsset, hardwareDoSendAsset, doTransferToken } from 'neon-js'
 import { setTransactionHistory, getNeo, getGas, getTokens } from './wallet'
@@ -9,6 +8,7 @@ import { log } from '../util/Logs'
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notifications'
 import { getWif, getPublicKey, getSigningFunction, getAddress, LOGOUT } from './account'
 import { getNetwork } from './metadata'
+import { capitalize } from 'lodash'
 import asyncWrap from '../core/asyncHelper'
 
 // Constants
@@ -55,7 +55,8 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, sendTok
   const { error, valid } = validateTransactionBeforeSending(neo, gas, tokenBalance, sendToken, sendAddress, sendAmount)
   if (valid) {
     const selfAddress = address
-    const assetName = sendToken === ASSETS_LABELS.NEO ? ASSETS.NEO : ASSETS.GAS
+    // We have to capitalize NEO/GAS because neon-wallet-db is using capitalized asset name
+    const assetName = capitalize(sendToken === ASSETS.NEO ? ASSETS.NEO : ASSETS.GAS)
     let sendAsset = {}
     sendAsset[assetName] = sendAmount
 
@@ -69,7 +70,7 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, sendTok
       dispatch(showInfoNotification({ message: 'Please sign the transaction on your hardware device', autoDismiss: 0 }))
       sendAssetFn = () => hardwareDoSendAsset(net, sendAddress, publicKey, sendAsset, signingFunction)
     } else {
-      if (sendToken === ASSETS_LABELS.NEO || sendToken === ASSETS_LABELS.GAS) {
+      if (sendToken === ASSETS.NEO || sendToken === ASSETS.GAS) {
         sendAssetFn = () => doSendAsset(net, sendAddress, wif, sendAsset)
       } else {
         const scriptHash = TOKENS[sendToken]

@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import styles from './SendModal.scss'
-import { ASSETS_LABELS, ASSETS } from '../../../core/constants'
+import { ASSETS } from '../../../core/constants'
 
 type Props = {
   sendAddress: string,
@@ -47,8 +47,8 @@ const SendDisplay = ({
           onChange={(e) => onChangeHandler('sendToken', e.target.value)}
           className={styles.sendAmountSelect}
         >
-          <option value={ASSETS_LABELS.NEO}>{ASSETS.NEO}</option>
-          <option value={ASSETS_LABELS.GAS}>{ASSETS.GAS}</option>
+          <option value={ASSETS.NEO}>{ASSETS.NEO}</option>
+          <option value={ASSETS.GAS}>{ASSETS.GAS}</option>
           {tokens.map(({ symbol }) => <option key={symbol} value={symbol}>{symbol}</option>)}
         </select>
       </div>

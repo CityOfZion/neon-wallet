@@ -4,7 +4,7 @@ import BaseModal from '../BaseModal'
 import SendDisplay from './SendDisplay'
 import ConfirmDisplay from './ConfirmDisplay'
 import { obtainTokenBalance, validateTransactionBeforeSending } from '../../../core/wallet'
-import { ASSETS_LABELS } from '../../../core/constants'
+import { ASSETS } from '../../../core/constants'
 
 type Props = {
     neo: number,
@@ -26,7 +26,7 @@ class SendModal extends Component<Props> {
   state = {
     sendAmount: '',
     sendAddress: '',
-    sendToken: ASSETS_LABELS.NEO,
+    sendToken: ASSETS.NEO,
     display: DISPLAY_MODES.SEND
   }
 
@@ -60,7 +60,7 @@ class SendModal extends Component<Props> {
     this.setState({
       sendAmount: '',
       sendAddress: '',
-      sendToken: ASSETS_LABELS.NEO,
+      sendToken: ASSETS.NEO,
       display: DISPLAY_MODES.SEND
     })
   }

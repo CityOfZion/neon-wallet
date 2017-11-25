@@ -1,5 +1,5 @@
 // @flow
-import { ASSETS_LABELS, TOKENS } from './constants'
+import { ASSETS, TOKENS } from './constants'
 import { getAccountFromWIFKey, verifyAddress } from 'neon-js'
 
 const MIN_PASSPHRASE_LEN = 4
@@ -17,7 +17,7 @@ export const verifyPrivateKey = (wif: string): boolean => {
 }
 
 export const obtainTokenBalance = (tokens: Array<Object>, selectedAsset: string) => {
-  if (selectedAsset !== ASSETS_LABELS.NEO && selectedAsset !== ASSETS_LABELS.GAS) {
+  if (selectedAsset !== ASSETS.NEO && selectedAsset !== ASSETS.GAS) {
     return (
       tokens && tokens.length > 0 &&
       tokens.filter(token => Object.keys(token)[0] === selectedAsset)[0][selectedAsset]
@@ -34,9 +34,9 @@ export const validateTransactionBeforeSending = (neoBalance: number, gasBalance:
     }
   }
 
-  if (selectedAsset !== ASSETS_LABELS.NEO && selectedAsset !== ASSETS_LABELS.GAS && Object.keys(TOKENS).indexOf(selectedAsset) < 0) {
+  if (selectedAsset !== ASSETS.NEO && selectedAsset !== ASSETS.GAS && Object.keys(TOKENS).indexOf(selectedAsset) < 0) {
     return {
-      error: 'That asset is not Neo, Gas or NEP-5 Token',
+      error: 'That asset is not NEO, GAS or NEP-5 Token',
       valid: false
     }
   }
@@ -55,10 +55,10 @@ export const validateTransactionBeforeSending = (neoBalance: number, gasBalance:
     }
   }
 
-  if (selectedAsset === ASSETS_LABELS.NEO) {
+  if (selectedAsset === ASSETS.NEO) {
     if (parseFloat(sendAmount) !== parseInt(sendAmount)) { // check for fractional neo
       return {
-        error: 'You cannot send fractional amounts of Neo.',
+        error: 'You cannot send fractional amounts of NEO.',
         valid: false
       }
     }
@@ -68,7 +68,7 @@ export const validateTransactionBeforeSending = (neoBalance: number, gasBalance:
         valid: false
       }
     }
-  } else if (selectedAsset === ASSETS_LABELS.GAS) {
+  } else if (selectedAsset === ASSETS.GAS) {
     if (parseFloat(sendAmount) > gasBalance) {
       return {
         error: 'You do not have enough GAS to send.',

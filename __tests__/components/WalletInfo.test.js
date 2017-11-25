@@ -48,8 +48,8 @@ const initialState = {
     network: 'TestNet'
   },
   wallet: {
-    Neo: 100001,
-    Gas: 1.0001601,
+    NEO: 100001,
+    GAS: 1.0001601,
     neoPrice: 25.48,
     gasPrice: 18.10
   },
@@ -100,7 +100,7 @@ describe('WalletInfo', () => {
     expect(neoWalletValue.text()).toEqual(`US $${expectedNeoWalletValue}`)
     expect(gasWalletValue.text()).toEqual(`US $${expectedGasWalletValue}`)
     expect(walletValue.text()).toEqual(`Total US $${expectedWalletValue}`)
-    expect(neoField.text()).toEqual(`${initialState.wallet.Neo}`)
+    expect(neoField.text()).toEqual(`${initialState.wallet.NEO}`)
     // TODO: Test the gas tooltip value, this is testing the display value, truncated to 4 decimals
     expect(gasField.text()).toEqual('1.0001')
     done()
