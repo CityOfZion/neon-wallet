@@ -12,12 +12,7 @@ import { getNetwork } from './metadata'
 import asyncWrap from '../core/asyncHelper'
 
 // Constants
-export const TOGGLE_ASSET = 'TOGGLE_ASSET'
 export const LOADING_TRANSACTIONS = 'LOADING_TRANSACTIONS'
-
-export const toggleAsset = () => ({
-  type: TOGGLE_ASSET
-})
 
 export const setIsLoadingTransaction = (isLoading: boolean) => ({
   type: LOADING_TRANSACTIONS,
@@ -94,11 +89,9 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, sendTok
 }
 
 // state getters
-export const getSelectedAsset = (state) => state.transactions.selectedAsset
 export const getIsLoadingTransactions = (state) => state.transactions.isLoadingTransactions
 
 const initialState = {
-  selectedAsset: ASSETS_LABELS.NEO,
   isLoadingTransactions: false
 }
 
@@ -109,11 +102,6 @@ export default (state: Object = initialState, action: Object) => {
       return {
         ...state,
         isLoadingTransactions
-      }
-    case TOGGLE_ASSET:
-      return {
-        ...state,
-        selectedAsset: state.selectedAsset === ASSETS_LABELS.NEO ? ASSETS_LABELS.GAS : ASSETS_LABELS.NEO
       }
     case LOGOUT:
       return initialState
