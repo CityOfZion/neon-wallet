@@ -16,6 +16,8 @@ export const verifyPrivateKey = (wif: string): boolean => {
   return account !== -1 && account.address
 }
 
+export const isToken = (symbol: string) => Object.keys(TOKENS).includes(symbol)
+
 export const obtainTokenBalance = (tokens: Array<Object>, selectedAsset: string) => {
   if (selectedAsset !== ASSETS.NEO && selectedAsset !== ASSETS.GAS) {
     return (
