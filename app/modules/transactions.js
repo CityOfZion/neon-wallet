@@ -38,7 +38,7 @@ export const syncTransactionHistory = (net: NetworkType, address: string) => asy
   }
 }
 
-export const sendTransaction = (sendAddress: string, sendAmount: string, sendToken: string) => async (dispatch: DispatchType, getState: GetStateType): Promise<*> => {
+export const sendTransaction = (sendAddress: string, sendAmount: string, symbol: string) => async (dispatch: DispatchType, getState: GetStateType): Promise<*> => {
   const state = getState()
   const wif = getWif(state)
   const address = getAddress(state)
@@ -50,18 +50,18 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, sendTok
   const publicKey = getPublicKey(state)
 
   const rejectTransaction = (message: string) => dispatch(showErrorNotification({ message }))
-  const tokenBalance = obtainTokenBalance(tokens, sendToken)
+  const tokenBalance = obtainTokenBalance(tokens, symbol)
 
-  const { error, valid } = validateTransactionBeforeSending(neo, gas, tokenBalance, sendToken, sendAddress, sendAmount)
+  const { error, valid } = validateTransactionBeforeSending(neo, gas, tokenBalance, symbol, sendAddress, sendAmount)
   if (valid) {
     const selfAddress = address
     // We have to capitalize NEO/GAS because neon-wallet-db is using capitalized asset name
-    const assetName = capitalize(sendToken === ASSETS.NEO ? ASSETS.NEO : ASSETS.GAS)
+    const assetName = capitalize(symbol === ASSETS.NEO ? ASSETS.NEO : ASSETS.GAS)
     let sendAsset = {}
     sendAsset[assetName] = sendAmount
 
     dispatch(showInfoNotification({ message: 'Sending Transaction...', autoDismiss: 0 }))
-    log(net, 'SEND', selfAddress, { to: sendAddress, asset: sendToken, amount: sendAmount })
+    log(net, 'SEND', selfAddress, { to: sendAddress, asset: symbol, amount: sendAmount })
 
     const isHardwareSend = !!publicKey
 
@@ -70,10 +70,10 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, sendTok
       dispatch(showInfoNotification({ message: 'Please sign the transaction on your hardware device', autoDismiss: 0 }))
       sendAssetFn = () => hardwareDoSendAsset(net, sendAddress, publicKey, sendAsset, signingFunction)
     } else {
-      if (sendToken === ASSETS.NEO || sendToken === ASSETS.GAS) {
+      if (symbol === ASSETS.NEO || symbol === ASSETS.GAS) {
         sendAssetFn = () => doSendAsset(net, sendAddress, wif, sendAsset)
       } else {
-        const scriptHash = TOKENS[sendToken]
+        const scriptHash = TOKENS[symbol]
         sendAssetFn = () => doTransferToken(net, scriptHash, wif, sendAddress, parseFloat(sendAmount))
       }
     }

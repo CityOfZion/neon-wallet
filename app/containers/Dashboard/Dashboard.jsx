@@ -27,7 +27,7 @@ type Props = {
   sendTransaction: Function,
   neo: number,
   gas: number,
-  tokens: Array<Object>
+  tokens: Array<TokenType>
 }
 
 export default class Dashboard extends Component<Props> {

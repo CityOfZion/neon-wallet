@@ -6,8 +6,8 @@ import { ASSETS } from '../../../core/constants'
 type Props = {
   sendAddress: string,
   sendAmount: string,
-  sendToken: string,
-  tokens: Array<Object>,
+  symbol: string,
+  tokens: Array<TokenType>,
   onChangeHandler: Function,
   openAndValidate: Function
 }
@@ -15,7 +15,7 @@ type Props = {
 const SendDisplay = ({
   sendAddress,
   sendAmount,
-  sendToken,
+  symbol,
   tokens,
   onChangeHandler,
   openAndValidate
@@ -44,7 +44,7 @@ const SendDisplay = ({
       <label className={styles.label}>Token:</label>
       <div className={styles.sendAmount}>
         <select
-          onChange={(e) => onChangeHandler('sendToken', e.target.value)}
+          onChange={(e) => onChangeHandler('symbol', e.target.value)}
           className={styles.sendAmountSelect}
         >
           <option value={ASSETS.NEO}>{ASSETS.NEO}</option>

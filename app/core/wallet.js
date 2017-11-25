@@ -18,17 +18,18 @@ export const verifyPrivateKey = (wif: string): boolean => {
 
 export const isToken = (symbol: string) => Object.keys(TOKENS).includes(symbol)
 
-export const obtainTokenBalance = (tokens: Array<Object>, selectedAsset: string) => {
-  if (selectedAsset !== ASSETS.NEO && selectedAsset !== ASSETS.GAS) {
-    return (
-      tokens && tokens.length > 0 &&
-      tokens.filter(token => Object.keys(token)[0] === selectedAsset)[0][selectedAsset]
-    ) || 0
+export const obtainTokenBalance = (tokens: Array<TokenType>, symbol: string) => {
+  if (isToken(symbol)) {
+    const token = tokens.find((token: TokenType) => token.symbol === symbol)
+    if (token) {
+      return token.balance
+    }
+    return 0
   }
   return 0
 }
 
-export const validateTransactionBeforeSending = (neoBalance: number, gasBalance: number, tokenBalance: number, selectedAsset: string, sendAddress: string, sendAmount: string) => {
+export const validateTransactionBeforeSending = (neoBalance: number, gasBalance: number, tokenBalance: number, symbol: string, sendAddress: string, sendAmount: string) => {
   if (!sendAddress || !sendAmount) {
     return {
       error: 'Please specify an address and amount',
@@ -36,7 +37,7 @@ export const validateTransactionBeforeSending = (neoBalance: number, gasBalance:
     }
   }
 
-  if (selectedAsset !== ASSETS.NEO && selectedAsset !== ASSETS.GAS && Object.keys(TOKENS).indexOf(selectedAsset) < 0) {
+  if (symbol !== ASSETS.NEO && symbol !== ASSETS.GAS && !isToken(symbol)) {
     return {
       error: 'That asset is not NEO, GAS or NEP-5 Token',
       valid: false
@@ -57,7 +58,7 @@ export const validateTransactionBeforeSending = (neoBalance: number, gasBalance:
     }
   }
 
-  if (selectedAsset === ASSETS.NEO) {
+  if (symbol === ASSETS.NEO) {
     if (parseFloat(sendAmount) !== parseInt(sendAmount)) { // check for fractional neo
       return {
         error: 'You cannot send fractional amounts of NEO.',
@@ -70,7 +71,7 @@ export const validateTransactionBeforeSending = (neoBalance: number, gasBalance:
         valid: false
       }
     }
-  } else if (selectedAsset === ASSETS.GAS) {
+  } else if (symbol === ASSETS.GAS) {
     if (parseFloat(sendAmount) > gasBalance) {
       return {
         error: 'You do not have enough GAS to send.',
@@ -80,7 +81,7 @@ export const validateTransactionBeforeSending = (neoBalance: number, gasBalance:
   } else {
     if (parseFloat(sendAmount) > tokenBalance) {
       return {
-        error: `You do not have enough ${selectedAsset} to send.`,
+        error: `You do not have enough ${symbol} to send.`,
         valid: false
       }
     }

@@ -9,7 +9,7 @@ import { ASSETS } from '../../../core/constants'
 type Props = {
     neo: number,
     gas: number,
-    tokens: Array<Object>,
+    tokens: Array<TokenType>,
     showErrorNotification: Function,
     hideModal: Function,
     togglePane: Function,
@@ -26,16 +26,16 @@ class SendModal extends Component<Props> {
   state = {
     sendAmount: '',
     sendAddress: '',
-    sendToken: ASSETS.NEO,
+    symbol: ASSETS.NEO,
     display: DISPLAY_MODES.SEND
   }
 
   // open confirm pane and validate fields
   openAndValidate = () => {
     const { neo, gas, tokens, showErrorNotification } = this.props
-    const { sendAddress, sendAmount, sendToken } = this.state
-    const tokenBalance = obtainTokenBalance(tokens, sendToken)
-    const { error, valid } = validateTransactionBeforeSending(neo, gas, tokenBalance, sendToken, sendAddress, sendAmount)
+    const { sendAddress, sendAmount, symbol } = this.state
+    const tokenBalance = obtainTokenBalance(tokens, symbol)
+    const { error, valid } = validateTransactionBeforeSending(neo, gas, tokenBalance, symbol, sendAddress, sendAmount)
     if (valid) {
       this.setState({ display: 'confirm' })
     } else {
@@ -45,8 +45,8 @@ class SendModal extends Component<Props> {
 
   confirmTransaction = () => {
     const { sendTransaction, hideModal } = this.props
-    const { sendAddress, sendAmount, sendToken } = this.state
-    sendTransaction(sendAddress, sendAmount, sendToken).then(() => {
+    const { sendAddress, sendAmount, symbol } = this.state
+    sendTransaction(sendAddress, sendAmount, symbol).then(() => {
       this.resetForm()
       hideModal()
     })
@@ -60,7 +60,7 @@ class SendModal extends Component<Props> {
     this.setState({
       sendAmount: '',
       sendAddress: '',
-      sendToken: ASSETS.NEO,
+      symbol: ASSETS.NEO,
       display: DISPLAY_MODES.SEND
     })
   }

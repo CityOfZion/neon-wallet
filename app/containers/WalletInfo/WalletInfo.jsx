@@ -17,7 +17,7 @@ type Props = {
   gas: number,
   neoPrice: number,
   gasPrice: number,
-  tokens: Array<Object>,
+  tokens: Array<TokenType>,
   initiateGetBalance: Function,
   showSuccessNotification: Function,
   showErrorNotification: Function,
@@ -26,7 +26,8 @@ type Props = {
 
 export default class WalletInfo extends Component<Props> {
   componentDidMount () {
-    this.refreshBalance()
+    const { initiateGetBalance, net, address } = this.props
+    initiateGetBalance(net, address)
   }
 
   refreshBalance = () => {

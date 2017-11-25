@@ -1,5 +1,5 @@
 // @flow
-import { ASSETS, TOKENS } from '../core/constants'
+import { TOKENS } from '../core/constants'
 import { merge } from 'lodash'
 import axios from 'axios'
 import { getBalance, getTokenBalance, getTokenInfo } from 'neon-js'
@@ -28,14 +28,14 @@ export function setBalance (NEO: number, GAS: number) {
   }
 }
 
-export function setNeoPrice (neoPrice: number) {
+export function setNEOPrice (neoPrice: number) {
   return {
     type: SET_NEO_PRICE,
     payload: { neoPrice }
   }
 }
 
-export function setGasPrice (gasPrice: number) {
+export function setGASPrice (gasPrice: number) {
   return {
     type: SET_GAS_PRICE,
     payload: { gasPrice }
@@ -55,7 +55,7 @@ export function setTransactionHistory (transactions: Array<Object>) {
   }
 }
 
-export function setTokensBalance (tokens: Array<Object>) {
+export function setTokensBalance (tokens: Array<TokenType>) {
   return {
     type: SET_TOKENS_BALANCE,
     payload: { tokens }
@@ -73,14 +73,14 @@ export const getMarketPriceUSD = () => async (dispatch: DispatchType) => {
   // If API dies, still display balance - ignore _err
   const [_err, response] = await asyncWrap(axios.get('https://api.coinmarketcap.com/v1/ticker/neo/?convert=USD')) // eslint-disable-line
   let lastUSDNEO = Number(response.data[0].price_usd)
-  return dispatch(setNeoPrice(lastUSDNEO))
+  return dispatch(setNEOPrice(lastUSDNEO))
 }
 
 export const getGasMarketPriceUSD = () => async (dispatch: DispatchType) => {
   // If API dies, still display balance - ignore _err
   const [_err, response] = await asyncWrap(axios.get('https://api.coinmarketcap.com/v1/ticker/gas/?convert=USD')) // eslint-disable-line
   let lastUSDGAS = Number(response.data[0].price_usd)
-  return dispatch(setGasPrice(lastUSDGAS))
+  return dispatch(setGASPrice(lastUSDGAS))
 }
 
 export const retrieveBalance = (net: NetworkType, address: string) => async (dispatch: DispatchType) => {
@@ -148,7 +148,7 @@ const initialState = {
   transactions: [],
   neoPrice: 0,
   gasPrice: 0,
-  tokens: []
+  tokens: Object.keys(TOKENS)
 }
 
 export default (state: Object = initialState, action: Object) => {
