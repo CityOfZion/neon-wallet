@@ -11,8 +11,7 @@ import {
   getGas,
   getNeoPrice,
   getGasPrice,
-  getTokens,
-  retrieveTokensInfo
+  getTokens
 } from '../../modules/wallet'
 import { showModal } from '../../modules/modal'
 
@@ -30,7 +29,6 @@ const actionCreators = {
   initiateGetBalance,
   showErrorNotification,
   showSuccessNotification,
-  retrieveTokensInfo,
   showModal
 }
 

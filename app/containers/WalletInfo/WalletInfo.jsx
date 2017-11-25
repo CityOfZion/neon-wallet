@@ -21,7 +21,6 @@ type Props = {
   initiateGetBalance: Function,
   showSuccessNotification: Function,
   showErrorNotification: Function,
-  retrieveTokensInfo: Function,
   showModal: Function
 }
 
