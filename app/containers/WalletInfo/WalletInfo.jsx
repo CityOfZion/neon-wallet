@@ -27,9 +27,7 @@ type Props = {
 
 export default class WalletInfo extends Component<Props> {
   componentDidMount () {
-    const { initiateGetBalance, net, address, retrieveTokensInfo } = this.props
-    initiateGetBalance(net, address)
-    retrieveTokensInfo()
+    this.refreshBalance()
   }
 
   // force sync with balance data
@@ -54,17 +52,9 @@ export default class WalletInfo extends Component<Props> {
       return null
     }
 
-    let neoValue = 0
-    let gasValue = 0
-    let totalValue = 0
-
-    if (neoPrice && neo) {
-      neoValue = formatFiat(neoPrice * neo)
-      if (gasPrice && gas) {
-        gasValue = formatFiat(gasPrice * gas)
-        totalValue = formatFiat(neoPrice * neo + gasPrice * gas)
-      }
-    }
+    let neoValue = neoPrice && neo ? neoPrice * neo : 0
+    let gasValue = gasPrice && gas ? gasPrice * gas : 0
+    let totalValue = neoValue + gasValue
 
     return (
       <div id='accountInfo'>
@@ -72,16 +62,16 @@ export default class WalletInfo extends Component<Props> {
           <div className='split'>
             <div className='label'>{ASSETS.NEO}</div>
             <div className='amountBig amountNeo'>{neo}</div>
-            <div className='fiat neoWalletValue'>US ${neoValue}</div>
+            <div className='fiat neoWalletValue'>US ${formatFiat(neoValue)}</div>
           </div>
           <div className='split'>
             <div className='label'>{ASSETS.GAS}</div>
             <div className='amountBig amountGas'>
               <Tooltip title={formatGAS(gas)} disabled={gas === 0}>{formatGAS(gas, true)}</Tooltip>
             </div>
-            <div className='fiat gasWalletValue'>US ${gasValue}</div>
+            <div className='fiat gasWalletValue'>US ${formatFiat(gasValue)}</div>
           </div>
-          <div className='fiat walletTotal'>Total US ${totalValue}</div>
+          <div className='fiat walletTotal'>Total US ${formatFiat(totalValue)}</div>
           <div onClick={this.refreshBalance} className={classNames(styles.refreshIconContainer, 'refreshBalance')}>
             <Tooltip title='Refresh account balance'>
               <MdSync id='refresh' className={styles.refreshIcon} />

@@ -9,6 +9,7 @@ import { LOADING_TRANSACTIONS } from '../../app/modules/transactions'
 import { SET_HEIGHT } from '../../app/modules/metadata'
 import { SET_CLAIM } from '../../app/modules/claim'
 import WalletInfo from '../../app/containers/WalletInfo'
+import * as neonjs from 'neon-js'
 
 // TODO research how to move the axios mock code which is repeated in NetworkSwitch to a helper or config file
 import axios from 'axios'
@@ -47,8 +48,8 @@ const initialState = {
     network: 'TestNet'
   },
   wallet: {
-    Neo: 10,
-    Gas: 1.0001001,
+    Neo: 100001,
+    Gas: 1.0001601,
     neoPrice: 25.48,
     gasPrice: 18.10
   },
@@ -89,9 +90,10 @@ describe('WalletInfo', () => {
     const neoWalletValue = wrapper.find('.neoWalletValue')
     const gasWalletValue = wrapper.find('.gasWalletValue')
     const walletValue = wrapper.find('.walletTotal')
-    const expectedNeoWalletValue = formatFiat(initialState.wallet.neoPrice * initialState.wallet.Neo)
-    const expectedGasWalletValue = formatFiat(initialState.wallet.gasPrice * initialState.wallet.Gas)
-    const expectedWalletValue = formatFiat(initialState.wallet.neoPrice * initialState.wallet.Neo + initialState.wallet.gasPrice * initialState.wallet.Gas)
+
+    const expectedNeoWalletValue = '2,548,025.48'
+    const expectedGasWalletValue = '18.10'
+    const expectedWalletValue = '2,548,043.58'
     const neoField = wrapper.find('.amountNeo')
     const gasField = wrapper.find('.amountGas')
 
@@ -122,7 +124,7 @@ describe('WalletInfo', () => {
     jest.runAllTimers()
     await Promise.resolve('Pause').then().then().then().then()
     const actions = store.getActions()
-    expect(actions.length).toEqual(16)
+    expect(actions.length).toEqual(20)
     // expect(actions.length).toEqual(12)
     actions.forEach(action => {
       expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
@@ -131,6 +133,8 @@ describe('WalletInfo', () => {
   test('calls the correct number of actions after mounting', async () => {
     const { store } = setup(initialState, false)
     const actionTypes = [
+      HIDE_NOTIFICATIONS,
+      SHOW_NOTIFICATION,
       SET_TRANSACTION_HISTORY,
       SET_HEIGHT,
       SET_CLAIM,
@@ -141,9 +145,32 @@ describe('WalletInfo', () => {
     jest.runAllTimers()
     await Promise.resolve('Pause').then().then().then()
     const actions = store.getActions()
-    expect(actions.length).toEqual(6)
+    expect(actions.length).toEqual(10)
     actions.forEach(action => {
       expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
     })
+  })
+  test('network error is shown with connectivity error', async () => {
+    neonjs.getBalance = jest.fn(() => {
+      return new Promise((resolve, reject) => {
+        reject(new Error())
+      })
+    })
+    const { wrapper, store } = setup()
+    wrapper.dive()
+
+    jest.runAllTimers()
+    await Promise.resolve('Pause').then().then().then().then()
+
+    const actions = store.getActions()
+    let notifications = []
+    actions.forEach(action => {
+      if (action.type === SHOW_NOTIFICATION) {
+        notifications.push(action)
+      }
+    })
+
+    // let's make sure the last notification show was an error.
+    expect(notifications.pop().payload.level).toEqual('error')
   })
 })

@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import { isNil } from 'lodash'
+import PasswordField from '../../components/PasswordField'
 import DisplayWalletKeys from '../../components/DisplayWalletKeys'
 import Page from '../../components/Page'
 import HomeButtonLink from '../../components/HomeButtonLink'
@@ -53,21 +54,21 @@ export default class CreateWallet extends Component<Props, State> {
         <div className='info'>
           Choose a passphrase to encrypt your private key:
         </div>
-        <input
-          type='text'
-          placeholder='Enter passphrase here'
-          value={passphrase}
-          onChange={(e) => this.setState({ passphrase: e.target.value })}
-          autoFocus
-        />
-        <input
-          type='text'
-          placeholder='Repeat passphrase here'
-          value={passphrase2}
-          onChange={(e) => this.setState({ passphrase2: e.target.value })}
-        />
-        <button disabled={disabledButton} className={disabledButton ? 'disabled' : ''} onClick={this.generateNewWallet}> Generate keys </button>
-        <HomeButtonLink />
+        <form onSubmit={(e) => { e.preventDefault(); this.generateNewWallet() }}>
+          <PasswordField
+            placeholder='Enter passphrase here'
+            value={passphrase}
+            onChange={(e) => this.setState({ passphrase: e.target.value })}
+            autoFocus
+          />
+          <PasswordField
+            placeholder='Repeat passphrase here'
+            value={passphrase2}
+            onChange={(e) => this.setState({ passphrase2: e.target.value })}
+          />
+          <button type='submit' disabled={disabledButton} className={disabledButton ? 'disabled' : ''}> Generate keys </button>
+          <HomeButtonLink />
+        </form>
       </div>
     )
 
