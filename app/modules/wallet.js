@@ -1,12 +1,14 @@
 // @flow
-import { TOKENS } from '../core/constants'
 import axios from 'axios'
 import { getBalance, getTokenBalance, getTokenInfoType } from 'neon-js'
+
 import { syncTransactionHistory } from './transactions'
 import { syncAvailableClaim } from './claim'
 import { syncBlockHeight, getNetwork } from './metadata'
-import asyncWrap from '../core/asyncHelper'
 import { LOGOUT, getAddress } from './account'
+
+import { TOKENS } from '../core/constants'
+import asyncWrap from '../core/asyncHelper'
 
 const TOKEN_PAIRS = Object.entries(TOKENS)
 const INITIAL_TOKENS_BALANCE = Object.keys(TOKENS).map((token) => ({ symbol: token, balance: 0 }))
@@ -192,14 +194,14 @@ export default (state: Object = initialState, action: ReduxAction) => {
         tokens
       }
     case SET_TOKEN_INFO:
-      const { tokenInfo } = action.payload
+      const { symbol, info } = action.payload
       return {
         ...state,
         tokens: {
           ...state.tokens,
-          [tokenInfo.symbol]: {
-            ...state.tokens[tokenInfo.symbol],
-            info: tokenInfo
+          [symbol]: {
+            ...state.tokens[symbol],
+            info
           }
         }
       }
