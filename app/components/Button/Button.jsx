@@ -1,9 +1,11 @@
 // @flow
 import React from 'react'
+import classNames from 'classnames'
+
 import type { Children } from 'react'
 import { noop } from 'lodash'
+
 import styles from './Button.scss'
-import classNames from 'classnames'
 
 type Props = {
     children: Children,

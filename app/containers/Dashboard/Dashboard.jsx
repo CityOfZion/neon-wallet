@@ -1,17 +1,24 @@
 // @flow
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import FaArrowUpward from 'react-icons/lib/fa/arrow-circle-up'
-import FaArrowDownward from 'react-icons/lib/fa/arrow-circle-down'
-import NetworkSwitch from '../NetworkSwitch'
-import PriceDisplay from '../../components/PriceDisplay'
-import WalletInfo from '../WalletInfo'
+
 import TransactionHistory from '../TransactionHistory'
+
+import NetworkSwitch from '../NetworkSwitch'
+import WalletInfo from '../WalletInfo'
+
+import PriceDisplay from '../../components/PriceDisplay'
 import Logout from '../../components/Logout'
+
 import { version } from '../../../package.json'
 import { log } from '../../util/Logs'
-import styles from './Dashboard.scss'
+
 import { MODAL_TYPES } from '../../core/constants'
+
+import FaArrowUpward from 'react-icons/lib/fa/arrow-circle-up'
+import FaArrowDownward from 'react-icons/lib/fa/arrow-circle-down'
+
+import styles from './Dashboard.scss'
 
 const logo = require('../../images/neon-logo2.png')
 

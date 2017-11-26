@@ -1,8 +1,10 @@
 // @flow
 import React, { Component } from 'react'
-import { NETWORK } from '../../core/constants'
-import styles from './NetworkSwitch.scss'
 import classNames from 'classnames'
+
+import { NETWORK } from '../../core/constants'
+
+import styles from './NetworkSwitch.scss'
 
 export let intervals = {}
 

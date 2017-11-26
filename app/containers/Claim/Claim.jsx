@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react'
+
 import Tooltip from '../../components/Tooltip'
 
 type Props = {

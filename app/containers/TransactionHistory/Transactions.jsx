@@ -1,10 +1,12 @@
 // @flow
 import React from 'react'
+import classNames from 'classnames'
+
 import { ASSETS } from '../../core/constants'
 import { openExplorer } from '../../core/explorer'
 import { formatGAS, formatNEO } from '../../core/formatters'
+
 import styles from './Transactions.scss'
-import classNames from 'classnames'
 
 type Props = {
   net: NetworkType,

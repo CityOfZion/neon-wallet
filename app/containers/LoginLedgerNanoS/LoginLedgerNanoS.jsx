@@ -1,9 +1,12 @@
 // @flow
 import React, { Component } from 'react'
+
 import Page from '../../components/Page'
-import loginStyles from '../../styles/login.scss'
 import HomeButtonLink from '../../components/HomeButtonLink'
+
 import { ROUTES } from '../../core/constants'
+
+import loginStyles from '../../styles/login.scss'
 
 type Props = {
   ledgerNanoSGetLogin: Function,

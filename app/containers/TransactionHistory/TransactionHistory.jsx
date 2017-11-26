@@ -1,9 +1,12 @@
 // @flow
 import React, { Component } from 'react'
-import Loader from '../../components/Loader'
-import Transactions from './Transactions'
-import styles from './TransactionHistory.scss'
 import classNames from 'classnames'
+
+import Loader from '../../components/Loader'
+
+import Transactions from './Transactions'
+
+import styles from './TransactionHistory.scss'
 
 type Props = {
   address: string,

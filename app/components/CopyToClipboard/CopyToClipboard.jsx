@@ -1,12 +1,16 @@
 // @flow
 import React, { Component } from 'react'
-import styles from './CopyToClipboard.scss'
-import Tooltip from '../Tooltip'
+import classNames from 'classnames'
 import { clipboard } from 'electron'
+
+import Tooltip from '../Tooltip'
+
 import Copy from 'react-icons/lib/md/content-copy'
 import CheckCircle from 'react-icons/lib/md/check-circle'
-import classNames from 'classnames'
+
 import { ONE_SECOND_MS } from '../../core/time'
+
+import styles from './CopyToClipboard.scss'
 
 type Props = {
     text: string,

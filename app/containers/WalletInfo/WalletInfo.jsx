@@ -2,12 +2,18 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { isNil } from 'lodash'
+
 import Claim from '../Claim'
-import MdSync from 'react-icons/lib/md/sync'
+
 import Tooltip from '../../components/Tooltip'
+
 import { formatGAS, formatFiat } from '../../core/formatters'
 import { ASSETS } from '../../core/constants'
+
+import MdSync from 'react-icons/lib/md/sync'
+
 import styles from './WalletInfo.scss'
+
 import TokensBalance from './TokensBalance'
 
 type Props = {

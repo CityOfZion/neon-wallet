@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import type { Children } from 'react'
+
 import { Tooltip as Tippy } from 'react-tippy'
 
 type Props = {

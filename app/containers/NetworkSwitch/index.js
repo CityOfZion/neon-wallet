@@ -1,10 +1,12 @@
 // @flow
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import NetworkSwitch from './NetworkSwitch'
+
 import { setNetwork, checkVersion, getNetwork } from '../../modules/metadata'
 import { loadWalletData } from '../../modules/wallet'
 import { getAddress } from '../../modules/account'
+
+import NetworkSwitch from './NetworkSwitch'
 
 const mapStateToProps = (state: Object) => ({
   net: getNetwork(state),

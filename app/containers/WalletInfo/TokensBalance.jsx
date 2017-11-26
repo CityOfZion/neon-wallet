@@ -1,9 +1,13 @@
 // @flow
 import React from 'react'
-import styles from './TokensBalance.scss'
-import InfoOutline from 'react-icons/lib/md/info-outline'
-import { MODAL_TYPES } from '../../core/constants'
+
 import Table from '../../components/Table'
+
+import { MODAL_TYPES } from '../../core/constants'
+
+import InfoOutline from 'react-icons/lib/md/info-outline'
+
+import styles from './TokensBalance.scss'
 
 type Props = {
   tokens: Array<TokenType>,

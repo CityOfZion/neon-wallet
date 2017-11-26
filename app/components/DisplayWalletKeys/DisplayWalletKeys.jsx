@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import QRCode from 'qrcode/lib/browser'
+
 import CopyToClipboard from '../CopyToClipboard'
 
 type Props = {

@@ -2,9 +2,11 @@
 import React, { Component } from 'react'
 import storage from 'electron-json-storage'
 import { map } from 'lodash'
+
 import PasswordField from '../../components/PasswordField'
 import Page from '../../components/Page'
 import HomeButtonLink from '../../components/HomeButtonLink'
+
 import styles from './LoginLocalStorage.scss'
 import loginStyles from '../../styles/login.scss'
 

@@ -1,7 +1,7 @@
 // @flow
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import WalletInfo from './WalletInfo'
+
 import { showErrorNotification, showSuccessNotification } from '../../modules/notifications'
 import { getAddress } from '../../modules/account'
 import { getNetwork } from '../../modules/metadata'
@@ -14,6 +14,8 @@ import {
   getTokens
 } from '../../modules/wallet'
 import { showModal } from '../../modules/modal'
+
+import WalletInfo from './WalletInfo'
 
 const mapStateToProps = (state: Object) => ({
   neo: getNEO(state),
