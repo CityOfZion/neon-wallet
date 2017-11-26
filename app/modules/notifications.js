@@ -91,7 +91,7 @@ export const showInfoNotification = (args: NotificationArgsType) => (dispatch: D
 // state Getters
 export const getNotifications = (state: Object) => state.notifications
 
-export default (state: Array<NotificationType> = [], action: Object) => {
+export default (state: Array<NotificationType> = [], action: ReduxAction) => {
   switch (action.type) {
     case SHOW_NOTIFICATION:
       return [

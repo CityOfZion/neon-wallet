@@ -70,7 +70,7 @@ const initialState = {
   blockExplorer: EXPLORER.NEO_TRACKER
 }
 
-export default (state: Object = initialState, action: Object) => {
+export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
     case SET_HEIGHT:
       const { blockHeight } = action.payload

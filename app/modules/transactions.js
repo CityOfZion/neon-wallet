@@ -3,7 +3,7 @@
 import { ASSETS, TOKENS } from '../core/constants'
 import { validateTransactionBeforeSending, obtainTokenBalance } from '../core/wallet'
 import { getTransactionHistory, doSendAsset, hardwareDoSendAsset, doTransferToken } from 'neon-js'
-import { setTransactionHistory, getNeo, getGas, getTokens } from './wallet'
+import { setTransactionHistory, getNEO, getGAS, getTokens } from './wallet'
 import { log } from '../util/Logs'
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notifications'
 import { getWif, getPublicKey, getSigningFunction, getAddress, LOGOUT } from './account'
@@ -43,8 +43,8 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, symbol:
   const wif = getWif(state)
   const address = getAddress(state)
   const net = getNetwork(state)
-  const neo = getNeo(state)
-  const gas = getGas(state)
+  const neo = getNEO(state)
+  const gas = getGAS(state)
   const tokens = getTokens(state)
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
@@ -96,7 +96,7 @@ const initialState = {
   isLoadingTransactions: false
 }
 
-export default (state: Object = initialState, action: Object) => {
+export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
     case LOADING_TRANSACTIONS:
       const { isLoadingTransactions } = action.payload

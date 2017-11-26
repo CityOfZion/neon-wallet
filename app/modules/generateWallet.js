@@ -112,7 +112,7 @@ const initialState = {
   generating: false
 }
 
-export default (state: Object = initialState, action: Object) => {
+export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
     case NEW_WALLET_KEYS: {
       const { passphrase } = action.payload

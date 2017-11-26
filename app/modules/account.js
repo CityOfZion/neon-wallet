@@ -164,7 +164,7 @@ const initialState = {
   hardwarePublicKeyInfo: null
 }
 
-export default (state: Object = initialState, action: Object) => {
+export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
     case LOGIN:
       const { signingFunction, wif } = action.payload

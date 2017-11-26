@@ -3,12 +3,12 @@ import { getTokenBalance, getAccountFromWIFKey, doMintTokens } from 'neon-js'
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notifications'
 import { getWif, LOGOUT } from './account'
 import { getNetwork } from './metadata'
-import { getNeo } from './wallet'
+import { getNEO } from './wallet'
 
 export const participateInSale = (neoToSend: number, scriptHash: string) => (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
   const wif = getWif(state)
-  const neo = getNeo(state)
+  const neo = getNEO(state)
   const net = getNetwork(state)
 
   const account = getAccountFromWIFKey(wif)
@@ -49,7 +49,7 @@ export const participateInSale = (neoToSend: number, scriptHash: string) => (dis
 const initialState = {
 }
 
-export default (state: Object = initialState, action: Object) => {
+export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
     case LOGOUT:
       return initialState

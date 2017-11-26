@@ -27,7 +27,7 @@ const initialState = {
   modalProps: {}
 }
 
-export default (state: Object = initialState, action: Object) => {
+export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
     case SHOW_MODAL:
       const { modalType, modalProps } = action.payload

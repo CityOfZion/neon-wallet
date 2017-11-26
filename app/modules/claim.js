@@ -6,7 +6,7 @@ import { showErrorNotification, showSuccessNotification, showInfoNotification } 
 import { FIVE_MINUTES_MS } from '../core/time'
 import { getWif, getAddress, getSigningFunction, getPublicKey, LOGOUT } from './account'
 import { getNetwork } from './metadata'
-import { getNeo } from './wallet'
+import { getNEO } from './wallet'
 import asyncWrap from '../core/asyncHelper'
 
 // Constants
@@ -85,7 +85,7 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
   const wif = getWif(state)
   const address = getAddress(state)
   const net = getNetwork(state)
-  const neo = getNeo(state)
+  const neo = getNEO(state)
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
 
@@ -137,7 +137,7 @@ const initialState = {
   disableClaimButton: false
 }
 
-export default (state: Object = initialState, action: Object) => {
+export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
     case SET_CLAIM_REQUEST:
       const { claimRequest } = action.payload

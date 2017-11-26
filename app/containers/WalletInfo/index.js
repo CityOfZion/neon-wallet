@@ -7,21 +7,21 @@ import { getAddress } from '../../modules/account'
 import { getNetwork } from '../../modules/metadata'
 import {
   initiateGetBalance,
-  getNeo,
-  getGas,
-  getNeoPrice,
-  getGasPrice,
+  getNEO,
+  getGAS,
+  getNEOPrice,
+  getGASPrice,
   getTokens
 } from '../../modules/wallet'
 import { showModal } from '../../modules/modal'
 
 const mapStateToProps = (state: Object) => ({
-  neo: getNeo(state),
-  gas: getGas(state),
+  neo: getNEO(state),
+  gas: getGAS(state),
   address: getAddress(state),
   net: getNetwork(state),
-  neoPrice: getNeoPrice(state),
-  gasPrice: getGasPrice(state),
+  neoPrice: getNEOPrice(state),
+  gasPrice: getGASPrice(state),
   tokens: getTokens(state)
 })
 

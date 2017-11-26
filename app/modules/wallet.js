@@ -1,6 +1,5 @@
 // @flow
 import { TOKENS } from '../core/constants'
-import { merge } from 'lodash'
 import axios from 'axios'
 import { getBalance, getTokenBalance, getTokenInfo } from 'neon-js'
 import { syncTransactionHistory } from './transactions'
@@ -137,11 +136,11 @@ export const retrieveTokenInfo = (symbol: TokenSymbol) => async (dispatch: Dispa
 }
 
 // state getters
-export const getNeo = (state: Object) => state.wallet.NEO
-export const getGas = (state: Object) => state.wallet.GAS
+export const getNEO = (state: Object) => state.wallet.NEO
+export const getGAS = (state: Object) => state.wallet.GAS
 export const getTransactions = (state: Object) => state.wallet.transactions
-export const getNeoPrice = (state: Object) => state.wallet.neoPrice
-export const getGasPrice = (state: Object) => state.wallet.gasPrice
+export const getNEOPrice = (state: Object) => state.wallet.neoPrice
+export const getGASPrice = (state: Object) => state.wallet.gasPrice
 export const getTokens = (state: Object) => state.wallet.tokens
 
 const initialState = {
@@ -153,7 +152,7 @@ const initialState = {
   tokens: Object.keys(TOKENS).map((token) => ({ symbol: token, balance: 0 }))
 }
 
-export default (state: Object = initialState, action: Object) => {
+export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
     case SET_BALANCE:
       const { Neo, Gas } = action.payload

@@ -6,7 +6,7 @@ import { togglePane } from '../../modules/dashboard'
 import { logout, getAddress } from '../../modules/account'
 import { getBlockHeight, getNetwork } from '../../modules/metadata'
 import { getNotifications, showErrorNotification } from '../../modules/notifications'
-import { getNeoPrice, getGasPrice, getNeo, getGas, getTokens } from '../../modules/wallet'
+import { getNEOPrice, getGASPrice, getNEO, getGAS, getTokens } from '../../modules/wallet'
 import { showModal } from '../../modules/modal'
 import { sendTransaction } from '../../modules/transactions'
 
@@ -14,11 +14,11 @@ const mapStateToProps = (state: Object) => ({
   blockHeight: getBlockHeight(state),
   net: getNetwork(state),
   address: getAddress(state),
-  neoPrice: getNeoPrice(state),
-  gasPrice: getGasPrice(state),
+  neoPrice: getNEOPrice(state),
+  gasPrice: getGASPrice(state),
   notification: getNotifications(state),
-  neo: getNeo(state),
-  gas: getGas(state),
+  neo: getNEO(state),
+  gas: getGAS(state),
   tokens: getTokens(state)
 })
 
