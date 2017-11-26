@@ -1,13 +1,14 @@
+// @Flow
 import { combineReducers } from 'redux'
-import account from '../modules/account'
-import generateWallet from '../modules/generateWallet'
-import transactions from '../modules/transactions'
-import metadata from '../modules/metadata'
-import wallet from '../modules/wallet'
-import claim from '../modules/claim'
-import dashboard from '../modules/dashboard'
-import notifications from '../modules/notifications'
-import modal from '../modules/modal'
+import account from './account'
+import generateWallet from './generateWallet'
+import transactions from './transactions'
+import metadata from './metadata'
+import wallet from './wallet'
+import claim from './claim'
+import dashboard from './dashboard'
+import notifications from './notifications'
+import modal from './modal'
 
 export default combineReducers({
   account,
