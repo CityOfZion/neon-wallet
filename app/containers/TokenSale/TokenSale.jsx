@@ -9,7 +9,7 @@ type Props = {
   neo: number,
   rpx: number,
   net: NetworkType,
-  initiateGetBalance: Function,
+  loadWalletData: Function,
   updateRpxBalance: Function,
   participateInSale: Function,
   refreshTokenBalance: Function
@@ -28,9 +28,9 @@ export default class TokenSale extends Component<Props, State> {
 
   componentDidMount () {
     const { scriptHash } = this.state
-    const { initiateGetBalance, refreshTokenBalance, updateRpxBalance, net, address } = this.props
+    const { loadWalletData, refreshTokenBalance, updateRpxBalance, net, address } = this.props
     updateRpxBalance(0)
-    initiateGetBalance(net, address)
+    loadWalletData(net, address)
     refreshTokenBalance(scriptHash, true)
   }
 

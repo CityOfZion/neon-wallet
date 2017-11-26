@@ -88,14 +88,13 @@ export const retrieveBalance = (net: NetworkType, address: string) => async (dis
   return dispatch(setBalance(resultBalance.NEO.balance, resultBalance.GAS.balance))
 }
 
-export const initiateGetBalance = (net: NetworkType, address: string) => (dispatch: DispatchType) => {
+export const loadWalletData = (net: NetworkType, address: string) => (dispatch: DispatchType) => {
   dispatch(syncTransactionHistory(net, address))
   dispatch(syncAvailableClaim(net, address))
   dispatch(syncBlockHeight(net))
   dispatch(getMarketPriceUSD())
   dispatch(getGasMarketPriceUSD())
   dispatch(retrieveTokensBalance())
-  dispatch(retrieveTokensInfo())
   return dispatch(retrieveBalance(net, address))
 }
 

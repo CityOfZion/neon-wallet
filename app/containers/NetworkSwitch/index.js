@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import NetworkSwitch from './NetworkSwitch'
 import { setNetwork, checkVersion, getNetwork } from '../../modules/metadata'
-import { initiateGetBalance } from '../../modules/wallet'
+import { loadWalletData } from '../../modules/wallet'
 import { getAddress } from '../../modules/account'
 
 const mapStateToProps = (state: Object) => ({
@@ -12,7 +12,7 @@ const mapStateToProps = (state: Object) => ({
 })
 
 const actionCreators = {
-  initiateGetBalance,
+  loadWalletData,
   setNetwork,
   checkVersion
 }

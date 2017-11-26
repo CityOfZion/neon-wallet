@@ -10,7 +10,7 @@ type Props = {
   net: NetworkType,
   address: string,
   setNetwork: Function,
-  initiateGetBalance: Function
+  loadWalletData: Function
 }
 
 export default class NetworkSwitch extends Component<Props> {
@@ -20,22 +20,22 @@ export default class NetworkSwitch extends Component<Props> {
   }
 
   resetBalanceSync = (net: NetworkType, address: string) => {
-    const { initiateGetBalance } = this.props
+    const { loadWalletData } = this.props
     if (intervals.balance !== undefined) {
       clearInterval(intervals.balance)
     }
     intervals.balance = setInterval(() => {
-      initiateGetBalance(net, address)
+      loadWalletData(net, address)
     }, 30000)
   }
 
   toggleNet = (net: NetworkType, address: string) => {
-    const { setNetwork, initiateGetBalance } = this.props
+    const { setNetwork, loadWalletData } = this.props
     const newNet = net === NETWORK.MAIN ? NETWORK.TEST : NETWORK.MAIN
     setNetwork(newNet)
     this.resetBalanceSync(newNet, address)
     if (address !== null) {
-      initiateGetBalance(newNet, address)
+      loadWalletData(newNet, address)
     }
   }
 

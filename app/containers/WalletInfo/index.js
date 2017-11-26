@@ -6,7 +6,7 @@ import { showErrorNotification, showSuccessNotification } from '../../modules/no
 import { getAddress } from '../../modules/account'
 import { getNetwork } from '../../modules/metadata'
 import {
-  initiateGetBalance,
+  loadWalletData,
   getNEO,
   getGAS,
   getNEOPrice,
@@ -26,7 +26,7 @@ const mapStateToProps = (state: Object) => ({
 })
 
 const actionCreators = {
-  initiateGetBalance,
+  loadWalletData,
   showErrorNotification,
   showSuccessNotification,
   showModal

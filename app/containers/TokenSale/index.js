@@ -2,7 +2,7 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import TokenSale from './TokenSale'
-import { initiateGetBalance, getNEO } from '../../modules/wallet'
+import { loadWalletData, getNEO } from '../../modules/wallet'
 import { updateRpxBalance, refreshTokenBalance, participateInSale, getRPX } from '../../modules/rpx'
 import { getWif, getAddress } from '../../modules/account'
 import { getBlockExplorer, getNetwork } from '../../modules/metadata'
@@ -17,7 +17,7 @@ const mapStateToProps = (state: Object) => ({
 })
 
 const actionCreators = {
-  initiateGetBalance,
+  loadWalletData,
   updateRpxBalance,
   participateInSale,
   refreshTokenBalance

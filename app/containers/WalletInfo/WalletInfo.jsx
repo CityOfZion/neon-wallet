@@ -18,7 +18,7 @@ type Props = {
   neoPrice: number,
   gasPrice: number,
   tokens: Array<TokenType>,
-  initiateGetBalance: Function,
+  loadWalletData: Function,
   showSuccessNotification: Function,
   showErrorNotification: Function,
   showModal: Function
@@ -26,19 +26,19 @@ type Props = {
 
 export default class WalletInfo extends Component<Props> {
   componentDidMount () {
-    const { initiateGetBalance, net, address } = this.props
-    initiateGetBalance(net, address)
+    const { loadWalletData, net, address } = this.props
+    loadWalletData(net, address)
   }
 
   refreshBalance = () => {
     const {
       showSuccessNotification,
       showErrorNotification,
-      initiateGetBalance,
+      loadWalletData,
       net,
       address
     } = this.props
-    initiateGetBalance(net, address).then((response) => {
+    loadWalletData(net, address).then((response) => {
       showSuccessNotification({ message: 'Received latest blockchain information.' })
     }).catch(() => {
       showErrorNotification({ message: 'Failed to retrieve blockchain information' })
