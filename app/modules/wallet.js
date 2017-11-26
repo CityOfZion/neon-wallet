@@ -7,7 +7,7 @@ import { syncAvailableClaim } from './claim'
 import { syncBlockHeight, getNetwork } from './metadata'
 import { LOGOUT, getAddress } from './account'
 
-import { TOKENS } from '../core/constants'
+import { TOKENS, TOKENS_TEST, NETWORK } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
 
 const TOKEN_PAIRS = Object.entries(TOKENS)
@@ -107,7 +107,11 @@ export const retrieveTokensBalance = () => async (dispatch: DispatchType, getSta
   const address = getAddress(state)
 
   const tokensBalance = INITIAL_TOKENS_BALANCE
-  for (const [symbol, scriptHash] of TOKEN_PAIRS) {
+  for (let [symbol, scriptHash] of TOKEN_PAIRS) {
+    // override scripthash with test if on test net
+    if (net === NETWORK.TEST && TOKENS_TEST[symbol]) {
+      scriptHash = TOKENS_TEST[symbol]
+    }
     let [_err, results] = await asyncWrap(getTokenBalance(net, scriptHash, address)) // eslint-disable-line
     if (results) {
       tokensBalance.push({
