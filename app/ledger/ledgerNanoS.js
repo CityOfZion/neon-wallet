@@ -1,4 +1,5 @@
-import commNode from '../ledger/ledger-comm-node'
+// @flow
+import commNode from './ledger-comm-node'
 import { BIP44_PATH } from '../core/constants'
 import {
   serializeTransaction,
@@ -8,7 +9,7 @@ import asyncWrap from '../core/asyncHelper'
 
 export const CURRENT_VERSION = 0
 
-export const ledgerNanoSCreateSignatureAsync = async (unsignedTx, publicKeyEncoded) => {
+export const ledgerNanoSCreateSignatureAsync = async (unsignedTx: string, publicKeyEncoded: string) => {
   const txData = serializeTransaction(unsignedTx)
   const signData = txData + BIP44_PATH
   const validStatus = [0x9000]
