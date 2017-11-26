@@ -1,1 +1,1 @@
-export { default } from './TokenInfoModal'
+export { default } from './TokenInfoTypeModal'

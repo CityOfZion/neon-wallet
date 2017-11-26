@@ -50,19 +50,19 @@ declare type TransactionHistoryType = {
 
 declare type ModalType = $Values<typeof MODAL_TYPES>
 
-declare type TokenInfo = {
+declare type TokenInfoType = {
   totalSupply: number,
   decimals: number,
   name: string
 }
 
-declare type TokenSymbol = $Keys<typeof TOKENS>
+declare type TokenSymbolType = $Keys<typeof TOKENS>
 
 declare type TokenType = {
-  symbol: TokenSymbol,
+  symbol: TokenSymbolType,
   balance: number,
 }
 
-declare type TokenTypeWithInfo = TokenSymbol & {
-  info: TokenInfo
+declare type TokenWithInfoType = TokenSymbolType & {
+  info: TokenInfoType
 }

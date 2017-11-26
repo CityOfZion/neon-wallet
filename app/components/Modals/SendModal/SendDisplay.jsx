@@ -6,7 +6,7 @@ import { ASSETS } from '../../../core/constants'
 type Props = {
   sendAddress: string,
   sendAmount: string,
-  symbol: TokenSymbol,
+  symbol: TokenSymbolType,
   tokens: Array<TokenType>,
   onChangeHandler: Function,
   openAndValidate: Function

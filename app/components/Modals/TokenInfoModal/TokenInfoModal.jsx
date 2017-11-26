@@ -2,14 +2,14 @@
 import React from 'react'
 import BaseModal from '../BaseModal'
 import Table from '../../Table'
-import styles from './TokenInfoModal.scss'
+import styles from './TokenInfoTypeModal.scss'
 
 type Props = {
     hideModal: Function,
     token: TokenType
 }
 
-const TokenInfoModal = (props: Props) => {
+const TokenInfoTypeModal = (props: Props) => {
   const { hideModal, token } = props
   const { symbol, balance, info: { name, totalSupply, decimals } } = token
 
@@ -54,4 +54,4 @@ const TokenInfoModal = (props: Props) => {
   )
 }
 
-export default TokenInfoModal
+export default TokenInfoTypeModal

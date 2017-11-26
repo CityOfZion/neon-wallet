@@ -4,7 +4,7 @@ import { MODAL_TYPES } from '../../core/constants'
 import ConfirmModal from '../../components/Modals/ConfirmModal'
 import ReceiveModal from '../../components/Modals/ReceiveModal'
 import SendModal from '../../components/Modals/SendModal'
-import TokenInfoModal from '../../components/Modals/TokenInfoModal'
+import TokenInfoTypeModal from '../../components/Modals/TokenInfoTypeModal'
 
 const {
   CONFIRM,
@@ -17,7 +17,7 @@ const MODAL_COMPONENTS = {
   [CONFIRM]: ConfirmModal,
   [RECEIVE]: ReceiveModal,
   [SEND]: SendModal,
-  [TOKEN_INFO]: TokenInfoModal
+  [TOKEN_INFO]: TokenInfoTypeModal
 }
 
 type Props = {
