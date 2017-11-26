@@ -1,6 +1,4 @@
 // @flow
-import * as Neon from 'neon-js'
-
 export const NEON_WALLET_RELEASE_LINK = 'https://github.com/CityOfZion/neon-wallet/releases'
 
 export const NETWORK = {
@@ -8,7 +6,10 @@ export const NETWORK = {
   TEST: 'TestNet'
 }
 
-export const ASSETS = Neon.ASSETS
+export const ASSETS = {
+  NEO: 'NEO',
+  GAS: 'GAS'
+}
 
 export const EXPLORER = {
   NEO_TRACKER: 'Neotracker',
