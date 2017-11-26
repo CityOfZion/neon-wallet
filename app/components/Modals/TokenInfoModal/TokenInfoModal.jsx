@@ -2,7 +2,8 @@
 import React from 'react'
 import BaseModal from '../BaseModal'
 import Table from '../../Table'
-import styles from './TokenInfoTypeModal.scss'
+
+import styles from './TokenInfoModal.scss'
 
 type Props = {
     hideModal: Function,
