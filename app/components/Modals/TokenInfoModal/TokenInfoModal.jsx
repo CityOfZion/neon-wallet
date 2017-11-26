@@ -14,7 +14,7 @@ type Props = {
     retrieveTokenInfo: Function
 }
 
-const TokenInfoTypeModal = ({ hideModal, token, retrieveTokenInfo }: Props) => (
+const TokenInfoModal = ({ hideModal, token, retrieveTokenInfo }: Props) => (
   <BaseModal
     onAfterOpen={() => retrieveTokenInfo(token.symbol)}
     title='Token Info'
@@ -57,4 +57,4 @@ const TokenInfoTypeModal = ({ hideModal, token, retrieveTokenInfo }: Props) => (
   </BaseModal>
 )
 
-export default TokenInfoTypeModal
+export default TokenInfoModal

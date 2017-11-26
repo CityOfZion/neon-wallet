@@ -27,7 +27,8 @@ type Props = {
   loadWalletData: Function,
   showSuccessNotification: Function,
   showErrorNotification: Function,
-  showModal: Function
+  showModal: Function,
+  retrieveTokenInfo: Function
 }
 
 export default class WalletInfo extends Component<Props> {
@@ -52,7 +53,17 @@ export default class WalletInfo extends Component<Props> {
   }
 
   render () {
-    const { address, neo, gas, neoPrice, gasPrice, tokens, showModal } = this.props
+    const {
+      address,
+      neo,
+      gas,
+      neoPrice,
+      gasPrice,
+      tokens,
+      showModal,
+      retrieveTokenInfo
+    } = this.props
+
     if (isNil(address)) {
       return null
     }
@@ -85,7 +96,7 @@ export default class WalletInfo extends Component<Props> {
         </div>
         <div className='spacer' />
         <Claim />
-        <TokensBalance tokens={tokens} showModal={showModal} />
+        <TokensBalance tokens={tokens} showModal={showModal} retrieveTokenInfo={retrieveTokenInfo} />
       </div>
     )
   }

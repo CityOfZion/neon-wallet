@@ -11,35 +11,34 @@ import styles from './TokensBalance.scss'
 
 type Props = {
   tokens: Array<TokenType>,
-  showModal: Function
+  showModal: Function,
+  retrieveTokenInfo: Function
 }
 
-const addTokenRows = (tokens, showModal) => {
-  return tokens.map((token: TokenType) => {
-    const { symbol, balance } = token
-    return (
-      <tr key={symbol}>
-        <td
-          className={styles.symbol}
-          onClick={() => showModal(MODAL_TYPES.TOKEN_INFO, { token })}>
-          <InfoOutline className={styles.symbolIcon} />{symbol}
-        </td>
-        <td>{balance}</td>
-      </tr>
-    )
-  })
-}
-
-const tokens = ({ tokens, showModal }: Props) => (
+const tokens = ({ tokens, showModal, retrieveTokenInfo }: Props) => (
   <div>
     {tokens.length > 0 &&
       <Table>
         <thead>
-          <th>Token</th>
-          <th>Balance</th>
+          <tr>
+            <th>Token</th>
+            <th>Balance</th>
+          </tr>
         </thead>
         <tbody>
-          {addTokenRows(tokens, showModal)}
+          {tokens.map((token: TokenType) => {
+            const { symbol, balance } = token
+            return (
+              <tr key={symbol}>
+                <td
+                  className={styles.symbol}
+                  onClick={() => showModal(MODAL_TYPES.TOKEN_INFO, { token, retrieveTokenInfo })}>
+                  <InfoOutline className={styles.symbolIcon} />{symbol}
+                </td>
+                <td>{balance}</td>
+              </tr>
+            )
+          })}
         </tbody>
       </Table>
     }

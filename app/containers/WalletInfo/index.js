@@ -11,7 +11,8 @@ import {
   getGAS,
   getNEOPrice,
   getGASPrice,
-  getTokens
+  getTokens,
+  retrieveTokenInfo
 } from '../../modules/wallet'
 import { showModal } from '../../modules/modal'
 
@@ -31,7 +32,8 @@ const actionCreators = {
   loadWalletData,
   showErrorNotification,
   showSuccessNotification,
-  showModal
+  showModal,
+  retrieveTokenInfo
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
