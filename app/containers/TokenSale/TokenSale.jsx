@@ -65,7 +65,7 @@ export default class TokenSale extends Component<Props, State> {
           </div>
           <div className='settingsItem'>
             <div className='itemTitle'>Token Balance:</div>
-            <div></div>
+            <div />
           </div>
           <div className='settingsItem'>
             <div className='itemTitle'>Amount of NEO to Send:</div>

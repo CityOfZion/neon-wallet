@@ -14,7 +14,7 @@ const mapStateToProps = (state: Object) => ({
   wif: getWif(state),
   neo: getNEO(state),
   net: getNetwork(state),
-  address: getAddress(state),
+  address: getAddress(state)
 })
 
 const actionCreators = {
