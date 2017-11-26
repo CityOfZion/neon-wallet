@@ -124,7 +124,7 @@ export const retrieveTokensBalance = () => async (dispatch: DispatchType, getSta
   return dispatch(setTokensBalance(tokensBalance))
 }
 
-export const retrieveTokenInfoType = (symbol: TokenSymbolType) => async (dispatch: DispatchType, getState: GetStateType) => {
+export const retrieveTokenInfo = (symbol: TokenSymbolType) => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
   const net = getNetwork(state)
 
