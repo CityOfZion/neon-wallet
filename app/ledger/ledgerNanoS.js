@@ -1,5 +1,5 @@
 // @flow
-import { serializeTransaction, createSignatureScrip } from 'neon-js'
+import { serializeTransaction, createSignatureScript } from 'neon-js'
 
 import commNode from './ledger-comm-node'
 
