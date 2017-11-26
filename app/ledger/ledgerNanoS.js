@@ -1,10 +1,9 @@
 // @flow
+import { serializeTransaction, createSignatureScrip } from 'neon-js'
+
 import commNode from './ledger-comm-node'
+
 import { BIP44_PATH } from '../core/constants'
-import {
-  serializeTransaction,
-  createSignatureScript
-} from 'neon-js'
 import asyncWrap from '../core/asyncHelper'
 
 export const CURRENT_VERSION = 0
