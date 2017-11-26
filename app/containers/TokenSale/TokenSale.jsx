@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react'
+
 import NetworkSwitch from '../NetworkSwitch'
 import Page from '../../components/Page'
 import HomeButtonLink from '../../components/HomeButtonLink'
@@ -7,10 +8,8 @@ import HomeButtonLink from '../../components/HomeButtonLink'
 type Props = {
   address: string,
   neo: number,
-  rpx: number,
   net: NetworkType,
   loadWalletData: Function,
-  updateRpxBalance: Function,
   participateInSale: Function,
   refreshTokenBalance: Function
 }
@@ -27,11 +26,8 @@ export default class TokenSale extends Component<Props, State> {
   }
 
   componentDidMount () {
-    const { scriptHash } = this.state
-    const { loadWalletData, refreshTokenBalance, updateRpxBalance, net, address } = this.props
-    updateRpxBalance(0)
+    const { loadWalletData, net, address } = this.props
     loadWalletData(net, address)
-    refreshTokenBalance(scriptHash, true)
   }
 
   participateInSale = () => {
@@ -46,7 +42,7 @@ export default class TokenSale extends Component<Props, State> {
   }
 
   render () {
-    const { neo, rpx, refreshTokenBalance } = this.props
+    const { neo, refreshTokenBalance } = this.props
     const { neoToSend, scriptHash } = this.state
     const refreshTokenBalanceButtonDisabled = !scriptHash
     const submitSaleButtonDisabled = !neoToSend || !scriptHash
@@ -69,17 +65,7 @@ export default class TokenSale extends Component<Props, State> {
           </div>
           <div className='settingsItem'>
             <div className='itemTitle'>Token Balance:</div>
-            <div>{rpx}</div>
-          </div>
-          <div className='settingsItem'>
-            <div className='itemTitle'>Script Hash:</div>
-            <input
-              autoFocus
-              type='text'
-              className='scriptHash'
-              value={scriptHash}
-              onChange={(e) => this.setState({ scriptHash: e.target.value })}
-            />
+            <div></div>
           </div>
           <div className='settingsItem'>
             <div className='itemTitle'>Amount of NEO to Send:</div>

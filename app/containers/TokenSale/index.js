@@ -1,11 +1,13 @@
 // @flow
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import TokenSale from './TokenSale'
+
 import { loadWalletData, getNEO } from '../../modules/wallet'
-import { updateRpxBalance, refreshTokenBalance, participateInSale, getRPX } from '../../modules/rpx'
+import { updateRpxBalance, refreshTokenBalance, participateInSale } from '../../modules/sale'
 import { getWif, getAddress } from '../../modules/account'
 import { getBlockExplorer, getNetwork } from '../../modules/metadata'
+
+import TokenSale from './TokenSale'
 
 const mapStateToProps = (state: Object) => ({
   explorer: getBlockExplorer(state),
@@ -13,7 +15,6 @@ const mapStateToProps = (state: Object) => ({
   neo: getNEO(state),
   net: getNetwork(state),
   address: getAddress(state),
-  rpx: getRPX(state)
 })
 
 const actionCreators = {
