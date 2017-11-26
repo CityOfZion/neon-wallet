@@ -1,20 +1,16 @@
 // @flow
+import * as Neon from 'neon-js'
+
 export const NEON_WALLET_RELEASE_LINK = 'https://github.com/CityOfZion/neon-wallet/releases'
 
-export const NETWORK = {
-  MAIN: 'MainNet',
-  TEST: 'TestNet'
-}
+export const NETWORK = Neon.NEO_NETWORK
+
+export const ASSETS = Neon.ASSETS
 
 export const EXPLORER = {
   NEO_TRACKER: 'Neotracker',
   NEO_SCAN: 'Neoscan',
   ANT_CHAIN: 'Antchain'
-}
-
-export const ASSETS = {
-  NEO: 'NEO',
-  GAS: 'GAS'
 }
 
 export const ROUTES = {
@@ -61,6 +57,12 @@ export const MODAL_TYPES = {
   TOKEN_INFO: 'TOKEN_INFO'
 }
 
-export const TOKENS = {
+// TestNet
+export const TOKENS_TEST = {
   RPX: '5b7074e873973a6ed3708862f219a6fbf4d1c411'
+}
+
+// MainNet
+export const TOKENS = {
+  RPX: 'ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9'
 }
