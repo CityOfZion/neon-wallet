@@ -18,7 +18,7 @@ export const SET_GAS_PRICE = 'SET_GAS_PRICE'
 export const RESET_PRICE = 'RESET_PRICE'
 export const SET_TRANSACTION_HISTORY = 'SET_TRANSACTION_HISTORY'
 export const SET_TOKENS_BALANCE = 'SET_TOKENS_BALANCE'
-export const SET_TOKENS_INFO = 'SET_TOKENS_INFO'
+export const SET_TOKEN_INFO = 'SET_TOKEN_INFO'
 
 // Actions
 export function setBalance (NEO: number, GAS: number) {
@@ -64,7 +64,7 @@ export function setTokensBalance (tokens: Array<TokenType>) {
 
 export function setTokensInfo (tokensInfo: Array<Object>) {
   return {
-    type: SET_TOKENS_INFO,
+    type: SET_TOKEN_INFO,
     payload: { tokensInfo }
   }
 }
@@ -118,12 +118,14 @@ export const retrieveTokensBalance = () => async (dispatch: DispatchType, getSta
   return dispatch(setTokensBalance(tokensBalance))
 }
 
-export const retrieveTokensInfo = () => async (dispatch: DispatchType, getState: GetStateType) => {
+export const retrieveTokenInfo = (symbol: TokenSymbol) => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
   const net = getNetwork(state)
   const tokensInfo = []
+
+  let [_err, results] = await asyncWrap(getTokenInfo(net, scriptHash)) // eslint-disable-line
+
   for (const [symbol, scriptHash] of TOKEN_PAIRS) {
-    let [_err, results] = await asyncWrap(getTokenInfo(net, scriptHash)) // eslint-disable-line
     if (results) {
       tokensInfo.push({
         symbol,
@@ -135,12 +137,12 @@ export const retrieveTokensInfo = () => async (dispatch: DispatchType, getState:
 }
 
 // state getters
-export const getNeo = (state) => state.wallet.NEO
-export const getGas = (state) => state.wallet.GAS
-export const getTransactions = (state) => state.wallet.transactions
-export const getNeoPrice = (state) => state.wallet.neoPrice
-export const getGasPrice = (state) => state.wallet.gasPrice
-export const getTokens = (state) => state.wallet.tokens
+export const getNeo = (state: Object) => state.wallet.NEO
+export const getGas = (state: Object) => state.wallet.GAS
+export const getTransactions = (state: Object) => state.wallet.transactions
+export const getNeoPrice = (state: Object) => state.wallet.neoPrice
+export const getGasPrice = (state: Object) => state.wallet.gasPrice
+export const getTokens = (state: Object) => state.wallet.tokens
 
 const initialState = {
   NEO: 0,
@@ -148,7 +150,7 @@ const initialState = {
   transactions: [],
   neoPrice: 0,
   gasPrice: 0,
-  tokens: Object.keys(TOKENS)
+  tokens: Object.keys(TOKENS).map((token) => ({ symbol: token, balance: 0 }))
 }
 
 export default (state: Object = initialState, action: Object) => {
@@ -188,13 +190,19 @@ export default (state: Object = initialState, action: Object) => {
       const { tokens } = action.payload
       return {
         ...state,
-        tokens: merge(state.tokens, tokens)
+        tokens
       }
-    case SET_TOKENS_INFO:
-      const { tokensInfo } = action.payload
+    case SET_TOKEN_INFO:
+      const { tokenInfo } = action.payload
       return {
         ...state,
-        tokens: merge(state.tokens, tokensInfo)
+        tokens: {
+          ...state.tokens,
+          [tokenInfo.symbol]: {
+            ...state.tokens[tokenInfo.symbol],
+            info: tokenInfo
+          }
+        }
       }
     case LOGOUT:
       return initialState

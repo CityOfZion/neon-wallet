@@ -142,15 +142,15 @@ export const ledgerNanoSGetInfoAsync = () => async (dispatch: DispatchType) => {
 }
 
 // State Getters
-export const getWif = (state) => state.account.wif
-export const getAddress = (state) => state.account.address
-export const getLoggedIn = (state) => state.account.loggedIn
-export const getRedirectUrl = (state) => state.account.redirectUrl
-export const getAccountKeys = (state) => state.account.accountKeys
-export const getSigningFunction = (state) => state.account.signingFunction
-export const getPublicKey = (state) => state.account.publicKey
-export const getHardwareDeviceInfo = (state) => state.account.hardwareDeviceInfo
-export const getHardwarePublicKeyInfo = (state) => state.account.hardwarePublicKeyInfo
+export const getWif = (state: Object) => state.account.wif
+export const getAddress = (state: Object) => state.account.address
+export const getLoggedIn = (state: Object) => state.account.loggedIn
+export const getRedirectUrl = (state: Object) => state.account.redirectUrl
+export const getAccountKeys = (state: Object) => state.account.accountKeys
+export const getSigningFunction = (state: Object) => state.account.signingFunction
+export const getPublicKey = (state: Object) => state.account.publicKey
+export const getHardwareDeviceInfo = (state: Object) => state.account.hardwareDeviceInfo
+export const getHardwarePublicKeyInfo = (state: Object) => state.account.hardwarePublicKeyInfo
 
 const initialState = {
   wif: null,

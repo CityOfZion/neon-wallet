@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import ModalRenderer from './ModalRenderer'
 import { getModalType, getModalProps, hideModal } from '../../modules/modal'
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: Object) => ({
   modalType: getModalType(state),
   modalProps: getModalProps(state)
 })

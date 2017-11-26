@@ -16,20 +16,16 @@ export const verifyPrivateKey = (wif: string): boolean => {
   return account !== -1 && account.address
 }
 
-export const isToken = (symbol: string) => Object.keys(TOKENS).includes(symbol)
+export const isToken = (symbol: TokenSymbol) => Object.keys(TOKENS).includes(symbol)
 
-export const obtainTokenBalance = (tokens: Array<TokenType>, symbol: string) => {
-  if (isToken(symbol)) {
-    const token = tokens.find((token: TokenType) => token.symbol === symbol)
-    if (token) {
-      return token.balance
-    }
-    return 0
+export const obtainTokenBalance = (tokens: Array<TokenType>, symbol: TokenSymbol) => {
+  if (!isToken(symbol)) {
+    throw new Error(`${symbol} is not a valid token`)
   }
-  return 0
+  return tokens.find((token: TokenType) => token.symbol === symbol)
 }
 
-export const validateTransactionBeforeSending = (neoBalance: number, gasBalance: number, tokenBalance: number, symbol: string, sendAddress: string, sendAmount: string) => {
+export const validateTransactionBeforeSending = (neoBalance: number, gasBalance: number, tokenBalance: number, symbol: TokenSymbol, sendAddress: string, sendAmount: string) => {
   if (!sendAddress || !sendAmount) {
     return {
       error: 'Please specify an address and amount',

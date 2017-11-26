@@ -6,7 +6,7 @@ import { setNetwork, checkVersion, getNetwork } from '../../modules/metadata'
 import { initiateGetBalance } from '../../modules/wallet'
 import { getAddress } from '../../modules/account'
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: Object) => ({
   net: getNetwork(state),
   address: getAddress(state)
 })

@@ -1,7 +1,7 @@
 // @flow
 
-export const getModalType = (state) => state.modal.modalType
-export const getModalProps = (state) => state.modal.modalProps
+export const getModalType = (state: Object) => state.modal.modalType
+export const getModalProps = (state: Object) => state.modal.modalProps
 
 // Constants
 export const SHOW_MODAL = 'SHOW_MODAL'

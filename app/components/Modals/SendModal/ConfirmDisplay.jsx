@@ -5,7 +5,7 @@ import Button from '../../Button'
 type Props = {
   sendAddress: string,
   sendAmount: string,
-  symbol: string,
+  symbol: TokenSymbol,
   confirmTransaction: Function,
   cancelTransaction: Function
 }

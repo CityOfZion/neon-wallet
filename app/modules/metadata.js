@@ -60,9 +60,9 @@ export const syncBlockHeight = (net: NetworkType) => async (dispatch: DispatchTy
 }
 
 // state getters
-export const getBlockHeight = (state) => state.metadata.blockHeight
-export const getNetwork = (state) => state.metadata.network
-export const getBlockExplorer = (state) => state.metadata.blockExplorer
+export const getBlockHeight = (state: Object) => state.metadata.blockHeight
+export const getNetwork = (state: Object) => state.metadata.network
+export const getBlockExplorer = (state: Object) => state.metadata.blockExplorer
 
 const initialState = {
   blockHeight: 0,

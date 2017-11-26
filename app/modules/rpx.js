@@ -79,7 +79,7 @@ export const participateInSale = (neoToSend: number, scriptHash: string) => (dis
 }
 
 // state getters
-export const getRPX = (state) => state.rpx.RPX
+export const getRPX = (state: Object) => state.rpx.RPX
 
 const initialState = {
   RPX: 0

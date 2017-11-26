@@ -13,7 +13,7 @@ import {
 } from '../../modules/generateWallet'
 import EncryptKey from './EncryptKey'
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: Object) => ({
   wif: getWif(state),
   address: getAddress(state),
   encryptedWif: getEncryptedWif(state),

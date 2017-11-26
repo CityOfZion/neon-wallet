@@ -7,7 +7,7 @@ import { updateRpxBalance, refreshTokenBalance, participateInSale, getRPX } from
 import { getWif, getAddress } from '../../modules/account'
 import { getBlockExplorer, getNetwork } from '../../modules/metadata'
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: Object) => ({
   explorer: getBlockExplorer(state),
   wif: getWif(state),
   neo: getNeo(state),

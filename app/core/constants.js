@@ -1,5 +1,4 @@
 // @flow
-
 export const NEON_WALLET_RELEASE_LINK = 'https://github.com/CityOfZion/neon-wallet/releases'
 
 export const NETWORK = {

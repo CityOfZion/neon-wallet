@@ -15,7 +15,7 @@ import {
 } from '../../modules/wallet'
 import { showModal } from '../../modules/modal'
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: Object) => ({
   neo: getNeo(state),
   gas: getGas(state),
   address: getAddress(state),

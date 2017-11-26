@@ -1,12 +1,13 @@
 // @flow
 
-import { 
+import {
   NETWORK,
   EXPLORER,
   ROUTES,
   NOTIFICATION_LEVELS,
   NOTIFICATION_POSITIONS,
-  MODAL_TYPES
+  MODAL_TYPES,
+  TOKENS
 } from '../core/constants'
 
 declare type ActionCreatorType = any
@@ -42,10 +43,12 @@ declare type TransactionHistoryType = {
 
 declare type ModalType = $Values<typeof MODAL_TYPES>
 
+declare type TokenSymbol = $Keys<typeof TOKENS>
+
 declare type TokenType = {
-  symbol: string,
+  symbol: TokenSymbol,
   balance: number,
-  info: {
+  info?: {
     totalSupply: number,
     decimals: number,
     name: string

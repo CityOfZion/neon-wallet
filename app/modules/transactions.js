@@ -38,7 +38,7 @@ export const syncTransactionHistory = (net: NetworkType, address: string) => asy
   }
 }
 
-export const sendTransaction = (sendAddress: string, sendAmount: string, symbol: string) => async (dispatch: DispatchType, getState: GetStateType): Promise<*> => {
+export const sendTransaction = (sendAddress: string, sendAmount: string, symbol: TokenSymbol) => async (dispatch: DispatchType, getState: GetStateType): Promise<*> => {
   const state = getState()
   const wif = getWif(state)
   const address = getAddress(state)
@@ -90,7 +90,7 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, symbol:
 }
 
 // state getters
-export const getIsLoadingTransactions = (state) => state.transactions.isLoadingTransactions
+export const getIsLoadingTransactions = (state: Object) => state.transactions.isLoadingTransactions
 
 const initialState = {
   isLoadingTransactions: false

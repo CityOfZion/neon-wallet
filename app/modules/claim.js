@@ -121,12 +121,12 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
 }
 
 // State Getters
-export const getClaimRequest = (state) => state.claim.claimRequest
-export const getClaimAmount = (state) => state.claim.claimAmount
-export const getClaimAvailable = (state) => state.claim.claimAvailable
-export const getClaimUnavailable = (state) => state.claim.claimUnavailable
-export const getClaimWasUpdated = (state) => state.claim.claimWasUpdated
-export const getDisableClaimButton = (state) => state.claim.disableClaimButton
+export const getClaimRequest = (state: Object) => state.claim.claimRequest
+export const getClaimAmount = (state: Object) => state.claim.claimAmount
+export const getClaimAvailable = (state: Object) => state.claim.claimAvailable
+export const getClaimUnavailable = (state: Object) => state.claim.claimUnavailable
+export const getClaimWasUpdated = (state: Object) => state.claim.claimWasUpdated
+export const getDisableClaimButton = (state: Object) => state.claim.disableClaimButton
 
 const initialState = {
   claimRequest: false,
