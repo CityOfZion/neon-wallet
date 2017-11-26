@@ -1,5 +1,6 @@
 // @flow
 import { reject, uniqueId } from 'lodash'
+
 import { NOTIFICATION_LEVELS, NOTIFICATION_POSITIONS } from '../core/constants'
 
 type NotificationArgsType = {

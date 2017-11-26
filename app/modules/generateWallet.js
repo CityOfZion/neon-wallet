@@ -1,7 +1,9 @@
 // @flow
 import storage from 'electron-json-storage'
 import { generateEncryptedWif, getAccountFromWIFKey, generatePrivateKey, getWIFFromPrivateKey, encryptWIF, encryptWifAccount } from 'neon-js'
+
 import { showErrorNotification, showInfoNotification, hideNotification, showSuccessNotification } from './notifications'
+
 import { validatePassphrase, checkMatchingPassphrases } from '../core/wallet'
 import asyncWrap from '../core/asyncHelper'
 

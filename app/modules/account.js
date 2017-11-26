@@ -1,11 +1,14 @@
 // @flow
-import { verifyPrivateKey, validatePassphrase } from '../core/wallet'
 import { getAccountFromWIFKey, getPublicKeyEncoded, getAccountFromPublicKey, decryptWIF } from 'neon-js'
+
+import { showErrorNotification, showInfoNotification, hideNotification } from './notifications'
+
 import commNode from '../ledger/ledger-comm-node'
+import { ledgerNanoSCreateSignatureAsync } from '../ledger/ledgerNanoS'
+
+import { verifyPrivateKey, validatePassphrase } from '../core/wallet'
 import { BIP44_PATH, ROUTES } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
-import { ledgerNanoSCreateSignatureAsync } from '../ledger/ledgerNanoS'
-import { showErrorNotification, showInfoNotification, hideNotification } from './notifications'
 
 // Constants
 export const LOGIN = 'LOGIN'

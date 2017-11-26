@@ -1,14 +1,16 @@
 // @flow
 import { doClaimAllGas, doSendAsset, getClaimAmounts, hardwareDoSendAsset, hardwareDoClaimAllGas } from 'neon-js'
-import { log } from '../util/Logs'
-import { ASSETS } from '../core/constants'
+
 import { showErrorNotification, showSuccessNotification, showInfoNotification } from './notifications'
-import { FIVE_MINUTES_MS } from '../core/time'
 import { getWif, getAddress, getSigningFunction, getPublicKey, LOGOUT } from './account'
 import { getNetwork } from './metadata'
 import { getNEO } from './wallet'
-import asyncWrap from '../core/asyncHelper'
 
+import { ASSETS } from '../core/constants'
+import asyncWrap from '../core/asyncHelper'
+import { FIVE_MINUTES_MS } from '../core/time'
+
+import { log } from '../util/Logs'
 // Constants
 export const SET_CLAIM = 'SET_CLAIM'
 export const SET_CLAIM_REQUEST = 'SET_CLAIM_REQUEST'

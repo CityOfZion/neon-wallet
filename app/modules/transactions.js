@@ -1,15 +1,18 @@
 // @flow
 /* eslint-disable camelcase */
-import { ASSETS, TOKENS } from '../core/constants'
-import { validateTransactionBeforeSending, obtainTokenBalance } from '../core/wallet'
+import { capitalize } from 'lodash'
 import { getTransactionHistory, doSendAsset, hardwareDoSendAsset, doTransferToken } from 'neon-js'
+
 import { setTransactionHistory, getNEO, getGAS, getTokens } from './wallet'
-import { log } from '../util/Logs'
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notifications'
 import { getWif, getPublicKey, getSigningFunction, getAddress, LOGOUT } from './account'
 import { getNetwork } from './metadata'
-import { capitalize } from 'lodash'
+
+import { validateTransactionBeforeSending, obtainTokenBalance } from '../core/wallet'
+import { ASSETS, TOKENS } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
+
+import { log } from '../util/Logs'
 
 // Constants
 export const LOADING_TRANSACTIONS = 'LOADING_TRANSACTIONS'

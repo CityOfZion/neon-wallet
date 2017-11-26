@@ -1,10 +1,12 @@
 // @flow
-import { getWalletDBHeight, getAPIEndpoint } from 'neon-js'
 import axios from 'axios'
-import { version } from '../../package.json'
+import { getWalletDBHeight, getAPIEndpoint } from 'neon-js'
+
 import { showWarningNotification } from './notifications'
+
 import { NETWORK, EXPLORER, NEON_WALLET_RELEASE_LINK, NOTIFICATION_POSITIONS } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
+import { version } from '../../package.json'
 
 // Constants
 export const SET_HEIGHT = 'SET_HEIGHT'

@@ -1,5 +1,6 @@
 // @flow
 import { getTokenBalance, getAccountFromWIFKey, doMintTokens } from 'neon-js'
+
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notifications'
 import { getWif, LOGOUT } from './account'
 import { getNetwork } from './metadata'
