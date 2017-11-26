@@ -1,6 +1,5 @@
 // @flow
 import React from 'react'
-import { isNil, noop } from 'lodash'
 
 import { ASSETS } from '../../../core/constants'
 
