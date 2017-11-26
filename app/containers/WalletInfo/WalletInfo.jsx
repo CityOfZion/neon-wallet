@@ -23,7 +23,7 @@ type Props = {
   gas: number,
   neoPrice: number,
   gasPrice: number,
-  tokens: Array<TokenType>,
+  tokens: Object,
   loadWalletData: Function,
   showSuccessNotification: Function,
   showErrorNotification: Function,

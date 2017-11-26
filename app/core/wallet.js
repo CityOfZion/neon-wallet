@@ -18,11 +18,16 @@ export const verifyPrivateKey = (wif: string): boolean => {
 
 export const isToken = (symbol: TokenSymbolType) => Object.keys(TOKENS).includes(symbol)
 
-export const obtainTokenBalance = (tokens: Array<TokenType>, symbol: TokenSymbolType) => {
+export const obtainTokenBalance = (tokens: Object, symbol: TokenSymbolType) => {
   if (!isToken(symbol)) {
     throw new Error(`${symbol} is not a valid token`)
   }
-  return tokens.find((token: TokenType) => token.symbol === symbol)
+  const token = tokens[symbol]
+  if (token) {
+    return token.balance
+  } else {
+    throw new Error(`Could not retrieve balance for ${symbol}`)
+  }
 }
 
 export const validateTransactionBeforeSending = (neoBalance: number, gasBalance: number, tokenBalance: number, symbol: TokenSymbolType, sendAddress: string, sendAmount: string) => {

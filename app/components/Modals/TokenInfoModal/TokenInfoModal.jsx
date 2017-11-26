@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import { noop } from 'lodash'
 
 import BaseModal from '../BaseModal'
 
@@ -16,7 +17,7 @@ type Props = {
 
 const TokenInfoModal = ({ hideModal, token, retrieveTokenInfo }: Props) => (
   <BaseModal
-    onAfterOpen={() => retrieveTokenInfo(token.symbol)}
+    onAfterOpen={() => !token.info ? retrieveTokenInfo(token.symbol) : noop}
     title='Token Info'
     hideModal={hideModal}
     style={{

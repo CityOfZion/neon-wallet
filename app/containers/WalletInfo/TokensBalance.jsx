@@ -10,39 +10,36 @@ import InfoOutline from 'react-icons/lib/md/info-outline'
 import styles from './TokensBalance.scss'
 
 type Props = {
-  tokens: Array<TokenType>,
+  tokens: Object,
   showModal: Function,
   retrieveTokenInfo: Function
 }
 
 const tokens = ({ tokens, showModal, retrieveTokenInfo }: Props) => (
-  <div>
-    {tokens.length > 0 &&
-      <Table>
-        <thead>
-          <tr>
-            <th>Token</th>
-            <th>Balance</th>
+  <Table className={styles.table}>
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Balance</th>
+      </tr>
+    </thead>
+    <tbody>
+      {Object.keys(tokens).map((symbol) => {
+        const token = tokens[symbol]
+        const { balance } = token
+        return (
+          <tr key={symbol}>
+            <td
+              className={styles.symbol}
+              onClick={() => showModal(MODAL_TYPES.TOKEN_INFO, { token, retrieveTokenInfo })}>
+              <InfoOutline className={styles.symbolIcon} />{symbol}
+            </td>
+            <td>{balance}</td>
           </tr>
-        </thead>
-        <tbody>
-          {tokens.map((token: TokenType) => {
-            const { symbol, balance } = token
-            return (
-              <tr key={symbol}>
-                <td
-                  className={styles.symbol}
-                  onClick={() => showModal(MODAL_TYPES.TOKEN_INFO, { token, retrieveTokenInfo })}>
-                  <InfoOutline className={styles.symbolIcon} />{symbol}
-                </td>
-                <td>{balance}</td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </Table>
-    }
-  </div>
+        )
+      })}
+    </tbody>
+  </Table>
 )
 
 export default tokens

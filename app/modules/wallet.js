@@ -1,6 +1,7 @@
 // @flow
 import axios from 'axios'
-import { getBalance, getTokenBalance, getTokenInfoType } from 'neon-js'
+import { getBalance, getTokenBalance, getTokenInfo } from 'neon-js'
+import { merge } from 'lodash'
 
 import { syncTransactionHistory } from './transactions'
 import { syncAvailableClaim } from './claim'
@@ -11,7 +12,14 @@ import { TOKENS, TOKENS_TEST, NETWORK } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
 
 const TOKEN_PAIRS = Object.entries(TOKENS)
-const INITIAL_TOKENS_BALANCE = Object.keys(TOKENS).map((token) => ({ symbol: token, balance: 0 }))
+// const INITIAL_TOKENS_BALANCE = Object.keys(TOKENS).map((token) => ({ symbol: token, balance: 0 }))
+
+export const getScriptHashForNetwork = (net: NetworkType, symbol: TokenSymbolType) => {
+  if (net === NETWORK.TEST && TOKENS_TEST[symbol]) {
+    return TOKENS_TEST[symbol]
+  }
+  return TOKENS[symbol]
+}
 
 // Constants
 export const SET_BALANCE = 'SET_BALANCE'
@@ -19,7 +27,7 @@ export const SET_NEO_PRICE = 'SET_NEO_PRICE'
 export const SET_GAS_PRICE = 'SET_GAS_PRICE'
 export const RESET_PRICES = 'RESET_PRICES'
 export const SET_TRANSACTION_HISTORY = 'SET_TRANSACTION_HISTORY'
-export const SET_TOKENS_BALANCE = 'SET_TOKENS_BALANCE'
+export const SET_TOKENS = 'SET_TOKENS'
 export const SET_TOKEN_INFO = 'SET_TOKEN_INFO'
 
 // Actions
@@ -57,14 +65,14 @@ export function setTransactionHistory (transactions: Array<Object>) {
   }
 }
 
-export function setTokensBalance (tokens: Array<TokenType>) {
+export function setTokens (tokens: Object) {
   return {
-    type: SET_TOKENS_BALANCE,
+    type: SET_TOKENS,
     payload: { tokens }
   }
 }
 
-export function setTokenInfoType (symbol: TokenSymbolType, info: TokenInfoType) {
+export function setTokenInfo (symbol: TokenSymbolType, info: TokenInfoType) {
   return {
     type: SET_TOKEN_INFO,
     payload: { symbol, info }
@@ -106,31 +114,29 @@ export const retrieveTokensBalance = () => async (dispatch: DispatchType, getSta
   const net = getNetwork(state)
   const address = getAddress(state)
 
-  const tokensBalance = INITIAL_TOKENS_BALANCE
-  for (let [symbol, scriptHash] of TOKEN_PAIRS) {
+  const tokens = {}
+  for (let [symbol] of TOKEN_PAIRS) {
+    const scriptHash = getScriptHashForNetwork(net, symbol)
     // override scripthash with test if on test net
-    if (net === NETWORK.TEST && TOKENS_TEST[symbol]) {
-      scriptHash = TOKENS_TEST[symbol]
-    }
     let [_err, results] = await asyncWrap(getTokenBalance(net, scriptHash, address)) // eslint-disable-line
     if (results) {
-      tokensBalance.push({
+      tokens[symbol] = {
         symbol,
-        balance: results
-      })
+        balance: results,
+        scriptHash
+      }
     }
   }
 
-  return dispatch(setTokensBalance(tokensBalance))
+  return dispatch(setTokens(tokens))
 }
 
 export const retrieveTokenInfo = (symbol: TokenSymbolType) => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
   const net = getNetwork(state)
 
-  const scriptHash = TOKENS[symbol]
-  let [_err, results] = await asyncWrap(getTokenInfoType(net, scriptHash)) // eslint-disable-line  
-  return dispatch(setTokenInfoType(symbol, results))
+  let [_err, results] = await asyncWrap(getTokenInfo(net, getScriptHashForNetwork(net, symbol))) // eslint-disable-line  
+  return dispatch(setTokenInfo(symbol, results))
 }
 
 // state getters
@@ -141,6 +147,18 @@ export const getNEOPrice = (state: Object) => state.wallet.prices.NEO
 export const getGASPrice = (state: Object) => state.wallet.prices.GAS
 export const getTokens = (state: Object) => state.wallet.tokens
 
+const getInitialTokenBalance = () => {
+  const tokens = {}
+  Object.keys(TOKENS).forEach(symbol => {
+    tokens[symbol] = {
+      symbol,
+      scriptHash: TOKENS[symbol],
+      balance: 0
+    }
+  })
+  return tokens
+}
+
 const initialState = {
   NEO: 0,
   GAS: 0,
@@ -149,17 +167,17 @@ const initialState = {
     NEO: 0,
     GAS: 0
   },
-  tokens: INITIAL_TOKENS_BALANCE
+  tokens: getInitialTokenBalance()
 }
 
 export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
     case SET_BALANCE:
-      const { Neo, Gas } = action.payload
+      const { NEO, GAS } = action.payload
       return {
         ...state,
-        NEO: Neo,
-        GAS: Gas
+        NEO,
+        GAS
       }
     case SET_NEO_PRICE:
       return {
@@ -191,11 +209,11 @@ export default (state: Object = initialState, action: ReduxAction) => {
         ...state,
         transactions
       }
-    case SET_TOKENS_BALANCE:
+    case SET_TOKENS:
       const { tokens } = action.payload
       return {
         ...state,
-        tokens
+        tokens: merge({}, state.tokens, tokens)
       }
     case SET_TOKEN_INFO:
       const { symbol, info } = action.payload

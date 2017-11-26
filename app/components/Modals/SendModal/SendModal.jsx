@@ -5,25 +5,33 @@ import BaseModal from '../BaseModal'
 import SendDisplay from './SendDisplay'
 import ConfirmDisplay from './ConfirmDisplay'
 
-import { obtainTokenBalance, validateTransactionBeforeSending } from '../../../core/wallet'
+import { obtainTokenBalance, isToken, validateTransactionBeforeSending } from '../../../core/wallet'
 import { ASSETS } from '../../../core/constants'
-
-type Props = {
-    neo: number,
-    gas: number,
-    tokens: Array<TokenType>,
-    showErrorNotification: Function,
-    hideModal: Function,
-    togglePane: Function,
-    sendTransaction: Function,
-}
 
 const DISPLAY_MODES = {
   SEND: 'SEND',
   CONFIRM: 'CONFIRM'
 }
 
-class SendModal extends Component<Props> {
+type Props = {
+    neo: number,
+    gas: number,
+    tokens: Object,
+    showErrorNotification: Function,
+    hideModal: Function,
+    togglePane: Function,
+    sendTransaction: Function,
+}
+
+type State = {
+  sendAmount: ?number,
+  sendAdress: ?string,
+  symbol: string,
+  display: $Values<typeof DISPLAY_MODES>,
+  balance: number
+}
+
+class SendModal extends Component<Props, State> {
   canvas: ?HTMLCanvasElement
   state = {
     sendAmount: '',
@@ -36,10 +44,10 @@ class SendModal extends Component<Props> {
   openAndValidate = () => {
     const { neo, gas, tokens, showErrorNotification } = this.props
     const { sendAddress, sendAmount, symbol } = this.state
-    const tokenBalance = obtainTokenBalance(tokens, symbol)
+    const tokenBalance = isToken(symbol) && obtainTokenBalance(tokens, symbol)
     const { error, valid } = validateTransactionBeforeSending(neo, gas, tokenBalance, symbol, sendAddress, sendAmount)
     if (valid) {
-      this.setState({ display: 'confirm', balance: this.getBalance(neo, gas, tokenBalance) })
+      this.setState({ display: DISPLAY_MODES.CONFIRM })
     } else {
       showErrorNotification({ message: error })
     }
@@ -67,20 +75,29 @@ class SendModal extends Component<Props> {
     })
   }
 
-  getBalance = (neo: number, gas: number, tokenBalance: number) => {
-    const { symbol } = this.states
+  getBalance = (symbol: string) => {
+    const { neo, gas, tokens } = this.props
 
     if (symbol === ASSETS.NEO) {
       return neo
     } else if (symbol === ASSETS.GAS) {
       return gas
     } else {
-      return tokenBalance
+      return obtainTokenBalance(tokens, symbol)
     }
   }
 
-  onChangeHandler = (name: string, value: number) => {
-    this.setState({ [name]: value })
+  onChangeHandler = (name: string, value: string, updateBalance: false) => {
+    let newState = {
+      [name]: value
+    }
+    if (updateBalance) {
+      newState = {
+        ...newState,
+        balance: this.getBalance(value)
+      }
+    }
+    this.setState(newState)
   }
 
   render () {
@@ -93,8 +110,8 @@ class SendModal extends Component<Props> {
         hideModal={hideModal}
         style={{
           content: {
-            width: '430px',
-            height: '390px'
+            width: '460px',
+            height: '410px'
           }
         }}
       >

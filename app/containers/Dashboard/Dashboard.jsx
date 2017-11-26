@@ -34,7 +34,7 @@ type Props = {
   sendTransaction: Function,
   neo: number,
   gas: number,
-  tokens: Array<TokenType>
+  tokens: Object
 }
 
 export default class Dashboard extends Component<Props> {

@@ -3,7 +3,7 @@
 import { capitalize } from 'lodash'
 import { getTransactionHistory, doSendAsset, hardwareDoSendAsset, doTransferToken } from 'neon-js'
 
-import { setTransactionHistory, getNEO, getGAS, getTokens } from './wallet'
+import { setTransactionHistory, getNEO, getGAS, getTokens, getScriptHashForNetwork } from './wallet'
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notifications'
 import { getWif, getPublicKey, getSigningFunction, getAddress, LOGOUT } from './account'
 import { getNetwork } from './metadata'
@@ -76,7 +76,7 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, symbol:
       if (symbol === ASSETS.NEO || symbol === ASSETS.GAS) {
         sendAssetFn = () => doSendAsset(net, sendAddress, wif, sendAsset)
       } else {
-        const scriptHash = TOKENS[symbol]
+        const scriptHash = getScriptHashForNetwork(net, symbol)
         sendAssetFn = () => doTransferToken(net, scriptHash, wif, sendAddress, parseFloat(sendAmount))
       }
     }
