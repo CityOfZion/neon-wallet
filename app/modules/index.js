@@ -1,4 +1,4 @@
-// @Flow
+// @flow
 import { combineReducers } from 'redux'
 import account from './account'
 import generateWallet from './generateWallet'
