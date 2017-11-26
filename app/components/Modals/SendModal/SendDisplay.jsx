@@ -1,7 +1,10 @@
 // @flow
 import React from 'react'
-import styles from './SendModal.scss'
+import { isNil, noop } from 'lodash'
+
 import { ASSETS } from '../../../core/constants'
+
+import styles from './SendModal.scss'
 
 type Props = {
   sendAddress: string,
@@ -9,7 +12,8 @@ type Props = {
   symbol: TokenSymbolType,
   tokens: Array<TokenType>,
   onChangeHandler: Function,
-  openAndValidate: Function
+  openAndValidate: Function,
+  balance: number
 }
 
 const SendDisplay = ({
@@ -18,7 +22,8 @@ const SendDisplay = ({
   symbol,
   tokens,
   onChangeHandler,
-  openAndValidate
+  openAndValidate,
+  balance
 }: Props) => (
   <div className={styles.textContainer}>
     <div id='sendAddress' className={styles.row}>
@@ -34,11 +39,16 @@ const SendDisplay = ({
     <div id='sendAmount' className={styles.row}>
       <label className={styles.label}>Amount:</label>
       <input
-        type='text'
+        type='number'
         value={sendAmount}
         placeholder='Amount'
         onChange={(e) => onChangeHandler('sendAmount', e.target.value)}
       />
+    </div>
+    <div className={styles.row}>
+      {[25, 50, 75, 100].map((percent: number) =>
+        <button onClick={() => onChangeHandler('sendAmount', percent * parseFloat(balance) / 100)}>%{percent}</button>
+      )}
     </div>
     <div id='sendAmount' className={styles.row}>
       <label className={styles.label}>Token:</label>
@@ -50,7 +60,7 @@ const SendDisplay = ({
           <option value={ASSETS.NEO}>{ASSETS.NEO}</option>
           <option value={ASSETS.GAS}>{ASSETS.GAS}</option>
           {tokens.map(({ symbol }) => <option key={symbol} value={symbol}>{symbol}</option>)}
-        </select>
+        </select> ({balance})
       </div>
     </div>
     <button className={styles.sendButton} id='doSend' onClick={openAndValidate}>Send Asset</button>

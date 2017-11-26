@@ -1,8 +1,10 @@
 // @flow
 import React, { Component } from 'react'
+
 import BaseModal from '../BaseModal'
 import SendDisplay from './SendDisplay'
 import ConfirmDisplay from './ConfirmDisplay'
+
 import { obtainTokenBalance, validateTransactionBeforeSending } from '../../../core/wallet'
 import { ASSETS } from '../../../core/constants'
 
@@ -27,17 +29,17 @@ class SendModal extends Component<Props> {
     sendAmount: '',
     sendAddress: '',
     symbol: ASSETS.NEO,
-    display: DISPLAY_MODES.SEND
+    display: DISPLAY_MODES.SEND,
+    balance: this.props.neo
   }
 
-  // open confirm pane and validate fields
   openAndValidate = () => {
     const { neo, gas, tokens, showErrorNotification } = this.props
     const { sendAddress, sendAmount, symbol } = this.state
     const tokenBalance = obtainTokenBalance(tokens, symbol)
     const { error, valid } = validateTransactionBeforeSending(neo, gas, tokenBalance, symbol, sendAddress, sendAmount)
     if (valid) {
-      this.setState({ display: 'confirm' })
+      this.setState({ display: 'confirm', balance: this.getBalance(neo, gas, tokenBalance) })
     } else {
       showErrorNotification({ message: error })
     }
@@ -65,6 +67,18 @@ class SendModal extends Component<Props> {
     })
   }
 
+  getBalance = (neo: number, gas: number, tokenBalance: number) => {
+    const { symbol } = this.states
+
+    if (symbol === ASSETS.NEO) {
+      return neo
+    } else if (symbol === ASSETS.GAS) {
+      return gas
+    } else {
+      return tokenBalance
+    }
+  }
+
   onChangeHandler = (name: string, value: number) => {
     this.setState({ [name]: value })
   }
@@ -87,6 +101,7 @@ class SendModal extends Component<Props> {
         {display === DISPLAY_MODES.SEND
           ? <SendDisplay
             openAndValidate={this.openAndValidate}
+            getBalanceForSymbol={this.getBalanceForSymbol}
             onChangeHandler={this.onChangeHandler}
             tokens={tokens}
             {...this.state}
