@@ -57,7 +57,7 @@ const SendDisplay = ({
         })}
       </div>
       <div id='sendAmount' className={styles.column}>
-        <label className={styles.label}>Symbol:</label>
+        <label className={styles.label}>Asset:</label>
         <div className={styles.sendAmount}>
           <select
             onChange={(e) => onChangeHandler('symbol', e.target.value, true)}

@@ -2,7 +2,7 @@
 import { truncateNumber } from './math'
 import numeral from 'numeral'
 
-const GAS_DECIMAL_LENGTH = 7
+const GAS_DECIMAL_LENGTH = 8
 const GAS_DECIMAL_SHORT_DISPLAY_LENGTH = 4
 
 export const formatGAS = (gas: number | string, shortDisplay: boolean = false): string => {

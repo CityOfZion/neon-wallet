@@ -1,7 +1,11 @@
 @import '../../styles/variables';
 
 .container {
-    padding: 20px;
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    top: 20px;
+    bottom: 0;
 }
 
 .height,
@@ -75,11 +79,16 @@
 }
 
 .content {
-    display: flex
+    display: flex;
+    height: 100%;
 }
 
 .contentBox {
     width: 50%;
+}
+
+.transactionHistory {
+    border-left: 1.5px solid #efefef;
 }
 
 .buttonContainer {

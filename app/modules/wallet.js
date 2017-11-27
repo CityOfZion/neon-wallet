@@ -136,7 +136,8 @@ export const retrieveTokenInfo = (symbol: TokenSymbolType) => async (dispatch: D
   const net = getNetwork(state)
 
   let [_err, results] = await asyncWrap(getTokenInfo(net, getScriptHashForNetwork(net, symbol))) // eslint-disable-line  
-  return dispatch(setTokenInfo(symbol, results))
+  dispatch(setTokenInfo(symbol, results))
+  return results
 }
 
 // state getters
