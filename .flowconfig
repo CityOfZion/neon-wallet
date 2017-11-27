@@ -5,7 +5,7 @@
 [include]
 
 [libs]
-./app/flow-typed/declarations.js
+./flow-typed/declarations.js
 
 [lints]
 
