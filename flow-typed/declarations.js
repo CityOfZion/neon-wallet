@@ -8,7 +8,7 @@ import {
   NOTIFICATION_POSITIONS,
   MODAL_TYPES,
   TOKENS
-} from '../core/constants'
+} from './app/core/constants'
 
 declare type ActionCreatorType = any
 

@@ -32,21 +32,20 @@ export const participateInSale = (neoToSend: number, scriptHash: string) => asyn
 
   dispatch(showInfoNotification({ message: 'Sending transaction', autoDismiss: 0 }))
 
-  const [_error, rpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net)) // eslint-disable-line
-  return api.nep5.getTokenBalance(rpcEndpoint, _scriptHash, account.address).then((balance) => {
-    api.neonDB.doMintTokens(net, _scriptHash, wif, toMint, 0).then((response) => {
-      if (response.result === true) {
-        dispatch(showSuccessNotification({ message: 'Sale participation was successful.' }))
-        return true
-      } else {
-        dispatch(showErrorNotification({ message: 'Sale participation failed.' }))
-        return false
-      }
-    })
-  }).catch((e) => {
+  const [error, rpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net)) // eslint-disable-line
+  const [err, balance] = await asyncWrap(api.nep5.getTokenBalance(rpcEndpoint, _scriptHash, account.address))
+  const [e, response] = await asyncWrap(api.neonDB.doMintTokens(net, _scriptHash, wif, toMint, 0))
+  if (error || err || e) {
     dispatch(showErrorNotification({ message: 'This script hash cannot mint tokens.' }))
     return false
-  })
+  }
+  if (response.result === true) {
+    dispatch(showSuccessNotification({ message: 'Sale participation was successful.' }))
+    return true
+  } else {
+    dispatch(showErrorNotification({ message: 'Sale participation failed.' }))
+    return false
+  }
 }
 
 const initialState = {

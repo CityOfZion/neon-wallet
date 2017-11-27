@@ -95,7 +95,7 @@ export default class Dashboard extends Component<Props> {
             </div>
             <WalletInfo />
           </div>
-          <div className={styles.contentBox}>
+          <div className={classNames(styles.contentBox, styles.transactionHistory)}>
             <TransactionHistory />
           </div>
         </div>

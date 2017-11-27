@@ -138,7 +138,8 @@ export const retrieveTokenInfo = (symbol: TokenSymbolType) => async (dispatch: D
 
   const [_error, rpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net)) // eslint-disable-line
   const [_err, results] = await asyncWrap(api.nep5.getTokenInfo(rpcEndpoint, getScriptHashForNetwork(net, symbol))) // eslint-disable-line
-  return dispatch(setTokenInfo(symbol, results))
+  dispatch(setTokenInfo(symbol, results))
+  return results
 }
 
 // state getters
