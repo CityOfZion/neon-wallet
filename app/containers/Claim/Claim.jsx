@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-
+import { noop } from 'lodash'
 import Tooltip from '../../components/Tooltip'
 
 type Props = {
@@ -24,16 +24,18 @@ export default class Claim extends Component<Props> {
 
   render () {
     const { claimAmount, disableClaimButton, doGasClaim } = this.props
-    const buttonText = `Claim ${claimAmount} GAS`
-
+    const shouldDisableButton = disableClaimButton || claimAmount === 0
     return (
       <div id='claim'>
-        {disableClaimButton
-          ? <Tooltip title='You can claim GAS once every 5 minutes'>
-            <button className='disabled' disabled>{buttonText}</button>
-          </Tooltip>
-          : <button onClick={() => doGasClaim()}>{buttonText}</button>
-        }
+        <Tooltip
+          title='You can claim GAS once every 5 minutes'
+          disabled={!disableClaimButton}
+        >
+          <button
+            disabled={shouldDisableButton}
+            onClick={() => doGasClaim()}
+            className={shouldDisableButton ? 'disabled' : ''}>Claim {claimAmount} GAS</button>
+        </Tooltip>
       </div>
     )
   }
