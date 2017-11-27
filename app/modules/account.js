@@ -1,5 +1,5 @@
 // @flow
-import { getAccountFromWIFKey, getPublicKeyEncoded, getAccountFromPublicKey, decryptWIF } from 'neon-js'
+import Neon, { wallet } from 'neon-js'
 
 import { showErrorNotification, showInfoNotification, hideNotification } from './notifications'
 
@@ -57,7 +57,7 @@ export const loginNep2 = (passphrase: string, wif: string, history: Object) => (
 
   setTimeout(async () => {
     try {
-      const [_err, responseWif] = await asyncWrap(decryptWIF(wif, passphrase)) // eslint-disable-line
+      const [_err, responseWif] = await asyncWrap(wallet.decryptWIF(wif, passphrase)) // eslint-disable-line
       dispatch(hideNotification(infoNotificationId))
       dispatch(login(responseWif))
       return history.push(ROUTES.DASHBOARD)
@@ -174,10 +174,10 @@ export default (state: Object = initialState, action: ReduxAction) => {
       let loadAccount: Object | number
       try {
         if (signingFunction) {
-          const publicKeyEncoded = getPublicKeyEncoded(state.publicKey)
-          loadAccount = getAccountFromPublicKey(publicKeyEncoded)
+          const publicKeyEncoded = wallet.getPublicKeyEncoded(state.publicKey)
+          loadAccount = Neon.create.account(publicKeyEncoded)
         } else {
-          loadAccount = getAccountFromWIFKey(wif)
+          loadAccount = Neon.create.account(wif)
         }
       } catch (e) {
         console.log(e.stack)

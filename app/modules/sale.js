@@ -1,5 +1,5 @@
 // @flow
-import { getTokenBalance, getAccountFromWIFKey, doMintTokens } from 'neon-js'
+import Neon, { api } from 'neon-js'
 
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notifications'
 import { getWif, LOGOUT } from './account'
@@ -12,7 +12,7 @@ export const participateInSale = (neoToSend: number, scriptHash: string) => (dis
   const neo = getNEO(state)
   const net = getNetwork(state)
 
-  const account = getAccountFromWIFKey(wif)
+  const account = Neon.create.account(wif)
   if (parseFloat(neoToSend) !== parseInt(neoToSend)) {
     dispatch(showErrorNotification({ message: 'You cannot send fractional NEO to a token sale.' }))
     return false
@@ -31,8 +31,8 @@ export const participateInSale = (neoToSend: number, scriptHash: string) => (dis
 
   dispatch(showInfoNotification({ message: 'Sending transaction', autoDismiss: 0 }))
 
-  return getTokenBalance(net, _scriptHash, account.address).then((balance) => {
-    doMintTokens(net, _scriptHash, wif, toMint, 0).then((response) => {
+  return api.nep5.getTokenBalance(net, _scriptHash, account.address).then((balance) => {
+    api.neonDB.doMintTokens(net, _scriptHash, wif, toMint, 0).then((response) => {
       if (response.result === true) {
         dispatch(showSuccessNotification({ message: 'Sale participation was successful.' }))
         return true
