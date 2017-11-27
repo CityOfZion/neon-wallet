@@ -9,7 +9,7 @@ import { getWif, getPublicKey, getSigningFunction, getAddress, LOGOUT } from './
 import { getNetwork } from './metadata'
 
 import { validateTransactionBeforeSending, obtainTokenBalance } from '../core/wallet'
-import { ASSETS, TOKENS } from '../core/constants'
+import { ASSETS } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
 
 import { log } from '../util/Logs'
