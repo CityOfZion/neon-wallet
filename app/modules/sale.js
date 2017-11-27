@@ -1,18 +1,19 @@
 // @flow
-import { getTokenBalance, getAccountFromWIFKey, doMintTokens } from 'neon-js'
+import Neon, { api } from 'neon-js'
 
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notifications'
 import { getWif, LOGOUT } from './account'
 import { getNetwork } from './metadata'
 import { getNEO } from './wallet'
+import asyncWrap from '../core/asyncHelper'
 
-export const participateInSale = (neoToSend: number, scriptHash: string) => (dispatch: DispatchType, getState: GetStateType) => {
+export const participateInSale = (neoToSend: number, scriptHash: string) => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
   const wif = getWif(state)
   const neo = getNEO(state)
   const net = getNetwork(state)
 
-  const account = getAccountFromWIFKey(wif)
+  const account = Neon.create.account(wif)
   if (parseFloat(neoToSend) !== parseInt(neoToSend)) {
     dispatch(showErrorNotification({ message: 'You cannot send fractional NEO to a token sale.' }))
     return false
@@ -31,20 +32,20 @@ export const participateInSale = (neoToSend: number, scriptHash: string) => (dis
 
   dispatch(showInfoNotification({ message: 'Sending transaction', autoDismiss: 0 }))
 
-  return getTokenBalance(net, _scriptHash, account.address).then((balance) => {
-    doMintTokens(net, _scriptHash, wif, toMint, 0).then((response) => {
-      if (response.result === true) {
-        dispatch(showSuccessNotification({ message: 'Sale participation was successful.' }))
-        return true
-      } else {
-        dispatch(showErrorNotification({ message: 'Sale participation failed.' }))
-        return false
-      }
-    })
-  }).catch((e) => {
+  const [error, rpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net)) // eslint-disable-line
+  const [err, balance] = await asyncWrap(api.nep5.getTokenBalance(rpcEndpoint, _scriptHash, account.address))
+  const [e, response] = await asyncWrap(api.neonDB.doMintTokens(net, _scriptHash, wif, toMint, 0))
+  if (error || err || e) {
     dispatch(showErrorNotification({ message: 'This script hash cannot mint tokens.' }))
     return false
-  })
+  }
+  if (response.result === true) {
+    dispatch(showSuccessNotification({ message: 'Sale participation was successful.' }))
+    return true
+  } else {
+    dispatch(showErrorNotification({ message: 'Sale participation failed.' }))
+    return false
+  }
 }
 
 const initialState = {

@@ -1,5 +1,5 @@
 // @flow
-import { doClaimAllGas, doSendAsset, getClaimAmounts, hardwareDoSendAsset, hardwareDoClaimAllGas } from 'neon-js'
+import { api } from 'neon-js'
 
 import { showErrorNotification, showSuccessNotification, showInfoNotification } from './notifications'
 import { getWif, getAddress, getSigningFunction, getPublicKey, LOGOUT } from './account'
@@ -42,8 +42,10 @@ export function disableClaim (disableClaimButton: boolean) {
 }
 
 export const syncAvailableClaim = (net: NetworkType, address: string) => async (dispatch: DispatchType) => {
-  const [_err, result] = await asyncWrap(getClaimAmounts(net, address)) // eslint-disable-line
-  return dispatch(setClaim(result.available, result.unavailable))
+  const [_err, result] = await asyncWrap(api.neonDB.getClaims(net, address)) // eslint-disable-line
+  const available = parseInt(result.total_claim)
+  const unavailable = parseInt(result.total_unspent_claim)
+  return dispatch(setClaim(available, unavailable))
 }
 
 export const doClaimNotify = () => async (dispatch: DispatchType, getState: GetStateType) => {
@@ -64,9 +66,9 @@ export const doClaimNotify = () => async (dispatch: DispatchType, getState: GetS
       message: 'Sign transaction 2 of 2 to claim GAS on your hardware device (claiming GAS)',
       autoDismiss: 0
     }))
-    claimGasFn = () => hardwareDoClaimAllGas(net, publicKey, signingFunction)
+    claimGasFn = () => api.neonDB.doClaimAllGas(net, publicKey, signingFunction)
   } else {
-    claimGasFn = () => doClaimAllGas(net, wif)
+    claimGasFn = () => api.neonDB.doClaimAllGas(net, wif, null)
   }
 
   const [err, response] = await asyncWrap(claimGasFn())
@@ -106,9 +108,9 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
         message: 'Sign transaction 1 of 2 to claim GAS on your hardware device (sending NEO to yourself)',
         autoDismiss: 0
       }))
-      sendAssetFn = () => hardwareDoSendAsset(net, address, publicKey, { [ASSETS.NEO]: neo }, signingFunction)
+      sendAssetFn = () => api.neonDB.doSendAsset(net, address, publicKey, { [ASSETS.NEO]: neo }, signingFunction)
     } else {
-      sendAssetFn = () => doSendAsset(net, address, wif, { [ASSETS.NEO]: neo })
+      sendAssetFn = () => api.neonDB.doSendAsset(net, address, wif, { [ASSETS.NEO]: neo }, null)
     }
 
     const [err, response] = await asyncWrap(sendAssetFn())
