@@ -1,14 +1,16 @@
 // @flow
 import { doClaimAllGas, doSendAsset, getClaimAmounts, hardwareDoSendAsset, hardwareDoClaimAllGas } from 'neon-js'
-import { log } from '../util/Logs'
-import { ASSETS } from '../core/constants'
+
 import { showErrorNotification, showSuccessNotification, showInfoNotification } from './notifications'
-import { FIVE_MINUTES_MS } from '../core/time'
 import { getWif, getAddress, getSigningFunction, getPublicKey, LOGOUT } from './account'
 import { getNetwork } from './metadata'
-import { getNeo } from './wallet'
-import asyncWrap from '../core/asyncHelper'
+import { getNEO } from './wallet'
 
+import { ASSETS } from '../core/constants'
+import asyncWrap from '../core/asyncHelper'
+import { FIVE_MINUTES_MS } from '../core/time'
+
+import { log } from '../util/Logs'
 // Constants
 export const SET_CLAIM = 'SET_CLAIM'
 export const SET_CLAIM_REQUEST = 'SET_CLAIM_REQUEST'
@@ -59,7 +61,7 @@ export const doClaimNotify = () => async (dispatch: DispatchType, getState: GetS
   let claimGasFn
   if (isHardwareClaim) {
     dispatch(showInfoNotification({
-      message: 'Sign transaction 2 of 2 to claim Gas on your hardware device (claiming Gas)',
+      message: 'Sign transaction 2 of 2 to claim GAS on your hardware device (claiming GAS)',
       autoDismiss: 0
     }))
     claimGasFn = () => hardwareDoClaimAllGas(net, publicKey, signingFunction)
@@ -78,14 +80,14 @@ export const doClaimNotify = () => async (dispatch: DispatchType, getState: GetS
   }
 }
 
-// To initiate claim, first send all Neo to own address, the set claimRequest state
+// To initiate claim, first send all NEO to own address, the set claimRequest state
 // When new claims are available, this will trigger the claim
 export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
   const wif = getWif(state)
   const address = getAddress(state)
   const net = getNetwork(state)
-  const neo = getNeo(state)
+  const neo = getNEO(state)
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
 
@@ -93,7 +95,7 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
   if (neo === 0) {
     return dispatch(doClaimNotify())
   } else {
-    dispatch(showInfoNotification({ message: 'Sending Neo to Yourself...', autoDismiss: 0 }))
+    dispatch(showInfoNotification({ message: 'Sending NEO to Yourself...', autoDismiss: 0 }))
     log(net, 'SEND', address, { to: address, amount: neo, asset: ASSETS.NEO })
 
     const isHardwareClaim = !!publicKey
@@ -101,7 +103,7 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
     let sendAssetFn
     if (isHardwareClaim) {
       dispatch(showInfoNotification({
-        message: 'Sign transaction 1 of 2 to claim Gas on your hardware device (sending Neo to yourself)',
+        message: 'Sign transaction 1 of 2 to claim GAS on your hardware device (sending NEO to yourself)',
         autoDismiss: 0
       }))
       sendAssetFn = () => hardwareDoSendAsset(net, address, publicKey, { [ASSETS.NEO]: neo }, signingFunction)
@@ -121,12 +123,12 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
 }
 
 // State Getters
-export const getClaimRequest = (state) => state.claim.claimRequest
-export const getClaimAmount = (state) => state.claim.claimAmount
-export const getClaimAvailable = (state) => state.claim.claimAvailable
-export const getClaimUnavailable = (state) => state.claim.claimUnavailable
-export const getClaimWasUpdated = (state) => state.claim.claimWasUpdated
-export const getDisableClaimButton = (state) => state.claim.disableClaimButton
+export const getClaimRequest = (state: Object) => state.claim.claimRequest
+export const getClaimAmount = (state: Object) => state.claim.claimAmount
+export const getClaimAvailable = (state: Object) => state.claim.claimAvailable
+export const getClaimUnavailable = (state: Object) => state.claim.claimUnavailable
+export const getClaimWasUpdated = (state: Object) => state.claim.claimWasUpdated
+export const getDisableClaimButton = (state: Object) => state.claim.disableClaimButton
 
 const initialState = {
   claimRequest: false,
@@ -137,7 +139,7 @@ const initialState = {
   disableClaimButton: false
 }
 
-export default (state: Object = initialState, action: Object) => {
+export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
     case SET_CLAIM_REQUEST:
       const { claimRequest } = action.payload

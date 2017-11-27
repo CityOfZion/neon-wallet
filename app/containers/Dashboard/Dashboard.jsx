@@ -1,16 +1,24 @@
 // @flow
 import React, { Component } from 'react'
-import FaArrowUpward from 'react-icons/lib/fa/arrow-circle-up'
-import FaArrowDownward from 'react-icons/lib/fa/arrow-circle-down'
-import NetworkSwitch from '../NetworkSwitch'
-import PriceDisplay from '../../components/PriceDisplay'
-import WalletInfo from '../WalletInfo'
+import classNames from 'classnames'
+
 import TransactionHistory from '../TransactionHistory'
+
+import NetworkSwitch from '../NetworkSwitch'
+import WalletInfo from '../WalletInfo'
+
+import PriceDisplay from '../../components/PriceDisplay'
 import Logout from '../../components/Logout'
+
 import { version } from '../../../package.json'
 import { log } from '../../util/Logs'
-import styles from './Dashboard.scss'
+
 import { MODAL_TYPES } from '../../core/constants'
+
+import FaArrowUpward from 'react-icons/lib/fa/arrow-circle-up'
+import FaArrowDownward from 'react-icons/lib/fa/arrow-circle-down'
+
+import styles from './Dashboard.scss'
 
 const logo = require('../../images/neon-logo2.png')
 
@@ -26,7 +34,7 @@ type Props = {
   sendTransaction: Function,
   neo: number,
   gas: number,
-  tokens: Array<Object>
+  tokens: Object
 }
 
 export default class Dashboard extends Component<Props> {
@@ -74,10 +82,14 @@ export default class Dashboard extends Component<Props> {
         <div className={styles.content}>
           <div className={styles.contentBox}>
             <div className={styles.walletButtons}>
-              <div className={styles.walletButton} onClick={() => showModal(MODAL_TYPES.SEND, { neo, gas, tokens, showErrorNotification, sendTransaction })}>
+              <div
+                className={classNames(styles.walletButton, styles.sendButton)}
+                onClick={() => showModal(MODAL_TYPES.SEND, { neo, gas, tokens, showErrorNotification, sendTransaction })}>
                 <FaArrowUpward className={styles.walletButtonIcon} /><span className={styles.walletButtonText}>Send</span>
               </div>
-              <div className={styles.walletButton} onClick={() => showModal(MODAL_TYPES.RECEIVE, { address })}>
+              <div
+                className={styles.walletButton}
+                onClick={() => showModal(MODAL_TYPES.RECEIVE, { address })}>
                 <FaArrowDownward className={styles.walletButtonIcon} /><span className={styles.walletButtonText}>Receive</span>
               </div>
             </div>

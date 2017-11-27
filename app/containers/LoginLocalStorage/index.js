@@ -1,8 +1,10 @@
 // @flow
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import LoginLocalStorage from './LoginLocalStorage'
+
 import { setKeys, loginNep2, getAccountKeys } from '../../modules/account'
+
+import LoginLocalStorage from './LoginLocalStorage'
 
 const mapStateToProps = (state: Object) => ({
   accountKeys: getAccountKeys(state)

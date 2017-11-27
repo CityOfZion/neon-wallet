@@ -27,9 +27,9 @@
 
 ### What does it currently do
 
-- View Gas and Neo balances
+- View GAS and NEO balances
 - Login via Wif and encrypted private keys
-- Send Neo to other addresses
+- Send NEO to other addresses
 
 ## Installation
 

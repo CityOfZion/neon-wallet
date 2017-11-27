@@ -1,7 +1,9 @@
 // @flow
 import storage from 'electron-json-storage'
 import { generateEncryptedWif, getAccountFromWIFKey, generatePrivateKey, getWIFFromPrivateKey, encryptWIF, encryptWifAccount } from 'neon-js'
+
 import { showErrorNotification, showInfoNotification, hideNotification, showSuccessNotification } from './notifications'
+
 import { validatePassphrase, checkMatchingPassphrases } from '../core/wallet'
 import asyncWrap from '../core/asyncHelper'
 
@@ -98,11 +100,11 @@ export const generateNewWallet = (passphrase: string, passphrase2: string) => as
 }
 
 // state getters
-export const getWif = (state) => state.generateWallet.wif
-export const getAddress = (state) => state.generateWallet.address
-export const getPassphrase = (state) => state.generateWallet.passphrase
-export const getEncryptedWif = (state) => state.generateWallet.encryptedWif
-export const getGenerating = (state) => state.generateWallet.generating
+export const getWif = (state: Object) => state.generateWallet.wif
+export const getAddress = (state: Object) => state.generateWallet.address
+export const getPassphrase = (state: Object) => state.generateWallet.passphrase
+export const getEncryptedWif = (state: Object) => state.generateWallet.encryptedWif
+export const getGenerating = (state: Object) => state.generateWallet.generating
 
 const initialState = {
   wif: null,
@@ -112,7 +114,7 @@ const initialState = {
   generating: false
 }
 
-export default (state: Object = initialState, action: Object) => {
+export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
     case NEW_WALLET_KEYS: {
       const { passphrase } = action.payload

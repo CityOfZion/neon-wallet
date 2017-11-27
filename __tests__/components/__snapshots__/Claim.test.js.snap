@@ -5,7 +5,7 @@ exports[`Claim should not render claim gas button when claim button is disabled 
   id="claim"
 >
   <Tooltip
-    title="You can claim Gas once every 5 minutes"
+    title="You can claim GAS once every 5 minutes"
   >
     <button
       className="disabled"

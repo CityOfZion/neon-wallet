@@ -3,15 +3,15 @@
 exports[`WalletInfo renders without crashing 1`] = `
 <WalletInfo
   address="ANqUrhv99rwCiFTL6N1An9NH5UVkPYxTuw"
-  gas={1.0001001}
+  gas={1.0001601}
   gasPrice={18.1}
-  getTokensBalance={[Function]}
-  initiateGetBalance={[Function]}
-  neo={10}
+  loadWalletData={[Function]}
+  neo={100001}
   neoPrice={25.48}
   net="TestNet"
+  retrieveTokensInfo={[Function]}
   showErrorNotification={[Function]}
-  showInfoNotification={[Function]}
+  showModal={[Function]}
   showSuccessNotification={[Function]}
   store={
     Object {
