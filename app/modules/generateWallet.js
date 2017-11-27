@@ -1,6 +1,6 @@
 // @flow
 import storage from 'electron-json-storage'
-import { generateEncryptedWif, getAccountFromWIFKey, generatePrivateKey, getWIFFromPrivateKey, encryptWIF, encryptWifAccount } from 'neon-js'
+import Neon, { wallet } from 'neon-js'
 
 import { showErrorNotification, showInfoNotification, hideNotification, showSuccessNotification } from './notifications'
 
@@ -66,7 +66,7 @@ export const generateWalletFromWif = (passphrase: string, passphrase2: string, w
     const infoNotificationId = dispatch(showInfoNotification({ message: 'Generating encoded key...', autoDismiss: 0 }))
     setTimeout(async () => {
       try {
-        const [_err, result] = await asyncWrap(encryptWifAccount(wif, passphrase)) // eslint-disable-line
+        const [_err, result] = await asyncWrap(wallet.encryptWifAccount(wif, passphrase)) // eslint-disable-line
         dispatch(hideNotification(infoNotificationId))
         return dispatch(newWallet(result))
       } catch (e) {
@@ -87,7 +87,7 @@ export const generateNewWallet = (passphrase: string, passphrase2: string) => as
     const infoNotificationId = dispatch(showInfoNotification({ message: 'Generating encoded key...', autoDismiss: 0 }))
     setTimeout(async () => {
       try {
-        const [_err, result] = await asyncWrap(generateEncryptedWif(passphrase)) //eslint-disable-line
+        const [_err, result] = await asyncWrap(wallet.generateEncryptedWif(passphrase)) //eslint-disable-line
         dispatch(hideNotification(infoNotificationId))
         return dispatch(newWallet(result))
       } catch (e) {
@@ -118,10 +118,10 @@ export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
     case NEW_WALLET_KEYS: {
       const { passphrase } = action.payload
-      const newPrivateKey = generatePrivateKey()
-      const newWif = getWIFFromPrivateKey(newPrivateKey)
-      const encryptedWif = encryptWIF(newWif, passphrase)
-      const loadAccount = getAccountFromWIFKey(newWif)
+      const newPrivateKey = wallet.generatePrivateKey()
+      const newWif = wallet.getWIFFromPrivateKey(newPrivateKey)
+      const encryptedWif = wallet.encryptWIF(newWif, passphrase)
+      const loadAccount = Neon.create.account(newWif)
       return {
         ...state,
         wif: newWif,
