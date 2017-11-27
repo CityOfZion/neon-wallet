@@ -1,7 +1,7 @@
 // @flow
 /* eslint-disable camelcase */
 import { capitalize } from 'lodash'
-import { getTransactionHistory, doSendAsset, hardwareDoSendAsset, doTransferToken } from 'neon-js'
+import { api } from 'neon-js'
 
 import { setTransactionHistory, getNEO, getGAS, getTokens, getScriptHashForNetwork } from './wallet'
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notifications'
@@ -26,7 +26,7 @@ export const setIsLoadingTransaction = (isLoading: boolean) => ({
 
 export const syncTransactionHistory = (net: NetworkType, address: string) => async (dispatch: DispatchType) => {
   dispatch(setIsLoadingTransaction(true))
-  const [err, transactions] = await asyncWrap(getTransactionHistory(net, address))
+  const [err, transactions] = await asyncWrap(api.neonDB.getTransactionHistory(net, address))
   if (!err && transactions) {
     const txs = transactions.map(({ NEO, GAS, txid, block_index, neo_sent, neo_gas }: TransactionHistoryType) => ({
       type: neo_sent ? ASSETS.NEO : ASSETS.GAS,
@@ -71,13 +71,13 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, symbol:
     let sendAssetFn
     if (isHardwareSend) {
       dispatch(showInfoNotification({ message: 'Please sign the transaction on your hardware device', autoDismiss: 0 }))
-      sendAssetFn = () => hardwareDoSendAsset(net, sendAddress, publicKey, sendAsset, signingFunction)
+      sendAssetFn = () => api.neonDB.doSendAsset(net, sendAddress, publicKey, sendAsset, signingFunction)
     } else {
       if (symbol === ASSETS.NEO || symbol === ASSETS.GAS) {
-        sendAssetFn = () => doSendAsset(net, sendAddress, wif, sendAsset)
+        sendAssetFn = () => api.neonDB.doSendAsset(net, sendAddress, wif, sendAsset, null)
       } else {
         const scriptHash = getScriptHashForNetwork(net, symbol)
-        sendAssetFn = () => doTransferToken(net, scriptHash, wif, sendAddress, parseFloat(sendAmount))
+        sendAssetFn = () => api.nep5.doTransferToken(net, scriptHash, wif, sendAddress, parseFloat(sendAmount))
       }
     }
 

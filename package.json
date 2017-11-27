@@ -81,7 +81,7 @@
     "isomorphic-fetch": "2.2.1",
     "js-scrypt": "0.2.0",
     "lodash": "4.17.4",
-    "neon-js": "git+https://github.com/dvdschwrtz/neon-js.git#6d4a065e277ccae524d45fd9a5f4662d05fbbfca",
+    "neon-js": "git+https://github.com/cityofzion/neon-js.git#4b2708c37a272919e482d7d4068d30d49f714e4c",
     "node-hid": "0.5.7",
     "numeral": "2.0.6",
     "qrcode": "0.9.0",

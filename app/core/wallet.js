@@ -1,6 +1,6 @@
 // @flow
 import { ASSETS, TOKENS } from './constants'
-import { getAccountFromWIFKey, verifyAddress } from 'neon-js'
+import Neon, { wallet } from 'neon-js'
 
 const MIN_PASSPHRASE_LEN = 4
 
@@ -12,7 +12,7 @@ export const verifyPrivateKey = (wif: string): boolean => {
   if (!wif) {
     return false
   }
-  const account = getAccountFromWIFKey(wif)
+  const account = Neon.create.account(wif)
   return account !== -1 && account.address
 }
 
@@ -46,7 +46,7 @@ export const validateTransactionBeforeSending = (neoBalance: number, gasBalance:
   }
 
   try {
-    if (verifyAddress(sendAddress) !== true || sendAddress.charAt(0) !== 'A') {
+    if (wallet.isAddress(sendAddress) !== true || sendAddress.charAt(0) !== 'A') {
       return {
         error: 'The address you entered was not valid.',
         valid: false

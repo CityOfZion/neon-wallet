@@ -1,6 +1,6 @@
 // @flow
 import axios from 'axios'
-import { getBalance, getTokenBalance, getTokenInfo } from 'neon-js'
+import { api } from 'neon-js'
 import { merge } from 'lodash'
 
 import { syncTransactionHistory } from './transactions'
@@ -95,7 +95,7 @@ export const getGASMarketPriceUSD = () => async (dispatch: DispatchType) => {
 
 export const retrieveBalance = (net: NetworkType, address: string) => async (dispatch: DispatchType) => {
   // If API dies, still display balance - ignore _err
-  const [_err, resultBalance] = await asyncWrap(getBalance(net, address)) // eslint-disable-line
+  const [_err, resultBalance] = await asyncWrap(api.neonDB.getBalance(net, address)) // eslint-disable-line
   return dispatch(setBalance(resultBalance.NEO.balance, resultBalance.GAS.balance))
 }
 
@@ -118,7 +118,8 @@ export const retrieveTokensBalance = () => async (dispatch: DispatchType, getSta
   for (let [symbol] of TOKEN_PAIRS) {
     const scriptHash = getScriptHashForNetwork(net, symbol)
     // override scripthash with test if on test net
-    let [_err, results] = await asyncWrap(getTokenBalance(net, scriptHash, address)) // eslint-disable-line
+    const [_error, rpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net)) // eslint-disable-line
+    const [_err, results] = await asyncWrap(api.nep5.getTokenBalance(rpcEndpoint, scriptHash, address)) // eslint-disable-line
     if (results) {
       tokens[symbol] = {
         symbol,
@@ -135,7 +136,8 @@ export const retrieveTokenInfo = (symbol: TokenSymbolType) => async (dispatch: D
   const state = getState()
   const net = getNetwork(state)
 
-  let [_err, results] = await asyncWrap(getTokenInfo(net, getScriptHashForNetwork(net, symbol))) // eslint-disable-line  
+  const [_error, rpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net)) // eslint-disable-line
+  const [_err, results] = await asyncWrap(api.nep5.getTokenInfo(rpcEndpoint, getScriptHashForNetwork(net, symbol))) // eslint-disable-line
   dispatch(setTokenInfo(symbol, results))
   return results
 }

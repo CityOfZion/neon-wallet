@@ -1,6 +1,6 @@
 // @flow
 import axios from 'axios'
-import { getWalletDBHeight, getAPIEndpoint } from 'neon-js'
+import { api } from 'neon-js'
 
 import { showWarningNotification } from './notifications'
 
@@ -39,7 +39,7 @@ export function setBlockExplorer (blockExplorer: ExplorerType) {
 export const checkVersion = () => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState().metadata
   const { net } = state
-  const apiEndpoint = getAPIEndpoint(net)
+  const apiEndpoint = api.neonDB.getAPIEndpoint(net)
 
   const [err, res] = await asyncWrap(axios.get(`${apiEndpoint}/v2/version`))
   const shouldUpdate = res && res.data && res.data.version !== version
@@ -57,7 +57,7 @@ export const checkVersion = () => async (dispatch: DispatchType, getState: GetSt
 }
 
 export const syncBlockHeight = (net: NetworkType) => async (dispatch: DispatchType) => {
-  const [_err, blockHeight] = await asyncWrap(getWalletDBHeight(net)) // eslint-disable-line
+  const [_err, blockHeight] = await asyncWrap(api.neonDB.getWalletDBHeight(net)) // eslint-disable-line
   return dispatch(setBlockHeight(blockHeight))
 }
 
