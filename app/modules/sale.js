@@ -5,8 +5,9 @@ import { showErrorNotification, showInfoNotification, showSuccessNotification } 
 import { getWif, LOGOUT } from './account'
 import { getNetwork } from './metadata'
 import { getNEO } from './wallet'
+import asyncWrap from '../core/asyncHelper'
 
-export const participateInSale = (neoToSend: number, scriptHash: string) => (dispatch: DispatchType, getState: GetStateType) => {
+export const participateInSale = (neoToSend: number, scriptHash: string) => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
   const wif = getWif(state)
   const neo = getNEO(state)
@@ -31,7 +32,8 @@ export const participateInSale = (neoToSend: number, scriptHash: string) => (dis
 
   dispatch(showInfoNotification({ message: 'Sending transaction', autoDismiss: 0 }))
 
-  return api.nep5.getTokenBalance(net, _scriptHash, account.address).then((balance) => {
+  const [_error, rpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net)) // eslint-disable-line
+  return api.nep5.getTokenBalance(rpcEndpoint, _scriptHash, account.address).then((balance) => {
     api.neonDB.doMintTokens(net, _scriptHash, wif, toMint, 0).then((response) => {
       if (response.result === true) {
         dispatch(showSuccessNotification({ message: 'Sale participation was successful.' }))
