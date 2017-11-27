@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react'
-import { noop } from 'lodash'
 import Tooltip from '../../components/Tooltip'
 
 type Props = {
