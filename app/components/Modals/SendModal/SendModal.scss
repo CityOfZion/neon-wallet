@@ -6,9 +6,26 @@
     text-align: center;
 }
 
-.row {
+.column {
     display: flex;
     flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.percentRow {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.percentButton {
+    width: 100%;
 }
 
 .label {

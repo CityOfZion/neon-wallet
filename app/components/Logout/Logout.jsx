@@ -12,7 +12,7 @@ type Props = {
 
 const Logout = ({ logout }: Props) =>
   <div id='logout' className={styles.logout} onClick={logout}>
-    <Link to={ROUTES.HOME}><Tooltip title='Logout'><Power /></Tooltip></Link>
+    <Link to={ROUTES.HOME}><Tooltip title='Logout' position='right'><Power /></Tooltip></Link>
   </div>
 
 export default Logout

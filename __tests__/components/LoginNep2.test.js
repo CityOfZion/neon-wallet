@@ -45,13 +45,18 @@ describe('LoginNep2', () => {
   test('renders correctly with initial state', (done) => {
     const { wrapper } = setup(false)
 
-    const passwordField = wrapper.find('input[type="password"]')
-    const keyField = wrapper.find('input[type="text"]')
+    const fields = wrapper.find('input[type="password"]')
+    expect(fields.length).toEqual(2)
 
-    expect(passwordField.text()).toEqual('')
-    expect(passwordField.html().includes('Enter your passphrase here')).toEqual(true)
-    expect(keyField.text()).toEqual('')
-    expect(keyField.html().includes('Enter your encrypted key here')).toEqual(true)
+    const passwordField = fields.get(0)
+    const keyField = fields.get(1)
+
+    expect(passwordField.props.value).toEqual('')
+    expect(passwordField.props.placeholder).toEqual('Enter your passphrase here')
+    expect(passwordField.props.type).toEqual('password')
+    expect(keyField.props.value).toEqual('')
+    expect(keyField.props.placeholder).toEqual(('Enter your encrypted key here'))
+    expect(keyField.props.type).toEqual('password')
     done()
   })
   test('the login button is working correctly with no passphrase or wif', (done) => {
@@ -103,7 +108,7 @@ describe('LoginNep2', () => {
     keyField.instance().value = '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
     keyField.simulate('change')
 
-    wrapper.find('.loginButton').simulate('click')
+    wrapper.find('.loginButton').simulate('submit')
     jest.runAllTimers()
     const actions = store.getActions()
     expect(actions.length).toEqual(2)

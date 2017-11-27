@@ -1,12 +1,13 @@
 // @flow
 
-import { 
+import {
   NETWORK,
   EXPLORER,
   ROUTES,
   NOTIFICATION_LEVELS,
   NOTIFICATION_POSITIONS,
-  MODAL_TYPES
+  MODAL_TYPES,
+  TOKENS
 } from '../core/constants'
 
 declare type ActionCreatorType = any
@@ -14,6 +15,13 @@ declare type ActionCreatorType = any
 declare type DispatchType = (actionCreator: ActionCreatorType) => Promise<*>
 
 declare type GetStateType = () => Object
+
+declare type ReduxAction = () => {
+  type: string,
+  payload: Object,
+  meta?: Object,
+  error?: Object
+}
 
 declare type NetworkType = $Values<typeof NETWORK>
 
@@ -41,3 +49,20 @@ declare type TransactionHistoryType = {
 }
 
 declare type ModalType = $Values<typeof MODAL_TYPES>
+
+declare type TokenInfoType = {
+  totalSupply: number,
+  decimals: number,
+  name: string
+}
+
+declare type TokenSymbolType = $Keys<typeof TOKENS>
+
+declare type TokenType = {
+  symbol: TokenSymbolType,
+  balance: number,
+}
+
+declare type TokenWithInfoType = TokenSymbolType & {
+  info: TokenInfoType
+}

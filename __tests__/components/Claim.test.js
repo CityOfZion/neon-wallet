@@ -25,7 +25,7 @@ const initialState = {
     network: 'network'
   },
   wallet: {
-    Neo: 1
+    NEO: 1
   }
 }
 
@@ -90,7 +90,7 @@ describe('Claim', () => {
       expect(actions[1]).toEqual({
         type: SHOW_NOTIFICATION,
         payload: expect.objectContaining({
-          message: 'Sending Neo to Yourself...',
+          message: 'Sending NEO to Yourself...',
           level: NOTIFICATION_LEVELS.INFO
         })
       })
@@ -133,7 +133,7 @@ describe('Claim', () => {
       expect(actions[1]).toEqual({
         type: SHOW_NOTIFICATION,
         payload: expect.objectContaining({
-          message: 'Sending Neo to Yourself...',
+          message: 'Sending NEO to Yourself...',
           level: NOTIFICATION_LEVELS.INFO
         })
       })

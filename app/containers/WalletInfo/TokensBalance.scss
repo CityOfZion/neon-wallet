@@ -1,0 +1,15 @@
+@import '../../styles/variables';
+
+.table {
+    width: 300px;
+}
+
+.symbol {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.symbolIcon {
+    padding-right: 5px;
+}

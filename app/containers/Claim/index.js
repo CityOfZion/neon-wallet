@@ -1,7 +1,7 @@
 // @flow
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import Claim from './Claim'
+
 import {
   setClaimRequest,
   doGasClaim,
@@ -11,6 +11,8 @@ import {
   getClaimWasUpdated,
   getDisableClaimButton
 } from '../../modules/claim'
+
+import Claim from './Claim'
 
 const mapStateToProps = (state: Object) => ({
   claimAmount: getClaimAmount(state),

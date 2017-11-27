@@ -1,6 +1,7 @@
 // @flow
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+
 import {
   saveKey,
   resetKey,
@@ -11,9 +12,10 @@ import {
   getPassphrase,
   getGenerating
 } from '../../modules/generateWallet'
+
 import CreateWallet from './CreateWallet'
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: Object) => ({
   wif: getWif(state),
   address: getAddress(state),
   encryptedWif: getEncryptedWif(state),

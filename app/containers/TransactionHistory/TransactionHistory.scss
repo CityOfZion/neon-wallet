@@ -7,6 +7,7 @@
 }
 
 .columnHeader {
+    position: relative;
     font-size: 1.2em;
     font-weight: 200;
 }
@@ -15,4 +16,10 @@
     width: 84%;
     margin: 15px 8%;
     border-top: 3px solid $spacer-color;
+}
+
+.updateLoader {
+    right: 0;
+    left: auto;
+    top: -5px;
 }

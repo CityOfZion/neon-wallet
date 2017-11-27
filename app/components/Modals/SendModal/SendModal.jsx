@@ -1,37 +1,53 @@
 // @flow
 import React, { Component } from 'react'
+
 import BaseModal from '../BaseModal'
 import SendDisplay from './SendDisplay'
 import ConfirmDisplay from './ConfirmDisplay'
-import { obtainTokenBalance, validateTransactionBeforeSending } from '../../../core/wallet'
+
+import { obtainTokenBalance, isToken, validateTransactionBeforeSending } from '../../../core/wallet'
+import { ASSETS } from '../../../core/constants'
+
+const DISPLAY_MODES = {
+  SEND: 'SEND',
+  CONFIRM: 'CONFIRM'
+}
 
 type Props = {
     neo: number,
     gas: number,
-    tokens: Array<Object>,
+    tokens: Object,
     showErrorNotification: Function,
     hideModal: Function,
     togglePane: Function,
     sendTransaction: Function,
 }
 
-class SendModal extends Component<Props> {
+type State = {
+  sendAmount: ?number,
+  sendAdress: ?string,
+  symbol: string,
+  display: $Values<typeof DISPLAY_MODES>,
+  balance: number
+}
+
+class SendModal extends Component<Props, State> {
   canvas: ?HTMLCanvasElement
   state = {
     sendAmount: '',
     sendAddress: '',
-    sendToken: 'Neo',
-    display: 'send'
+    symbol: ASSETS.NEO,
+    display: DISPLAY_MODES.SEND,
+    balance: this.props.neo
   }
 
-  // open confirm pane and validate fields
   openAndValidate = () => {
     const { neo, gas, tokens, showErrorNotification } = this.props
-    const { sendAddress, sendAmount, sendToken } = this.state
-    const tokenBalance = obtainTokenBalance(tokens, sendToken)
-    const { error, valid } = validateTransactionBeforeSending(neo, gas, tokenBalance, sendToken, sendAddress, sendAmount)
+    const { sendAddress, sendAmount, symbol } = this.state
+    const tokenBalance = isToken(symbol) && obtainTokenBalance(tokens, symbol)
+    const { error, valid } = validateTransactionBeforeSending(neo, gas, tokenBalance, symbol, sendAddress, sendAmount)
     if (valid) {
-      this.setState({ display: 'confirm' })
+      this.setState({ display: DISPLAY_MODES.CONFIRM })
     } else {
       showErrorNotification({ message: error })
     }
@@ -39,8 +55,8 @@ class SendModal extends Component<Props> {
 
   confirmTransaction = () => {
     const { sendTransaction, hideModal } = this.props
-    const { sendAddress, sendAmount, sendToken } = this.state
-    sendTransaction(sendAddress, sendAmount, sendToken).then(() => {
+    const { sendAddress, sendAmount, symbol } = this.state
+    sendTransaction(sendAddress, sendAmount, symbol).then(() => {
       this.resetForm()
       hideModal()
     })
@@ -54,13 +70,34 @@ class SendModal extends Component<Props> {
     this.setState({
       sendAmount: '',
       sendAddress: '',
-      sendToken: 'Neo',
-      display: 'send'
+      symbol: ASSETS.NEO,
+      display: DISPLAY_MODES.SEND
     })
   }
 
-  onChangeHandler = (name, e) => {
-    this.setState({ [name]: e.target.value })
+  getBalance = (symbol: string) => {
+    const { neo, gas, tokens } = this.props
+
+    if (symbol === ASSETS.NEO) {
+      return neo
+    } else if (symbol === ASSETS.GAS) {
+      return gas
+    } else {
+      return obtainTokenBalance(tokens, symbol)
+    }
+  }
+
+  onChangeHandler = (name: string, value: string, updateBalance: false) => {
+    let newState = {
+      [name]: value
+    }
+    if (updateBalance) {
+      newState = {
+        ...newState,
+        balance: this.getBalance(value)
+      }
+    }
+    this.setState(newState)
   }
 
   render () {
@@ -73,17 +110,19 @@ class SendModal extends Component<Props> {
         hideModal={hideModal}
         style={{
           content: {
-            width: '420px',
-            height: '390px'
+            width: '460px',
+            height: '410px'
           }
         }}
       >
-        {display === 'send' ? <SendDisplay
-          openAndValidate={this.openAndValidate}
-          onChangeHandler={this.onChangeHandler}
-          tokens={tokens}
-          {...this.state}
-        />
+        {display === DISPLAY_MODES.SEND
+          ? <SendDisplay
+            openAndValidate={this.openAndValidate}
+            getBalanceForSymbol={this.getBalanceForSymbol}
+            onChangeHandler={this.onChangeHandler}
+            tokens={tokens}
+            {...this.state}
+          />
           : <ConfirmDisplay
             confirmTransaction={this.confirmTransaction}
             cancelTransaction={this.cancelTransaction}
