@@ -22,12 +22,12 @@ class ReceiveModal extends Component<Props> {
             if (err) console.log(err)
           })
         }}
-        title='NEO/GAS Wallet Address'
+        title='NEO Wallet Address'
         hideModal={hideModal}
         style={{
           content: {
             width: '420px',
-            height: '390px'
+            height: '420px'
           }
         }}
       >
@@ -38,8 +38,8 @@ class ReceiveModal extends Component<Props> {
             <CopyToClipboard text={address} tooltip='Copy Public Address' />
           </div>
           <div className={styles.canvas}><canvas ref={(node) => { this.canvas = node }} /></div>
-          <div>Only send NEO/GAS to this address</div>
-          <div>Sending any other digital asset will result in permanent loss.</div>
+          <div>Only send assets, such as NEO and GAS, and tokens, such as RPX, that are compatible with the NEO Blockchain.</div>
+          <div>Sending any other digital asset or token will result in permanent loss.</div>
         </div>
       </BaseModal>
     )
