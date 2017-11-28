@@ -4,7 +4,7 @@ import React from 'react'
 import Table from '../../components/Table'
 
 import { MODAL_TYPES } from '../../core/constants'
-import { formatNumber } from '../../core/formatters'
+import { formatBalance } from '../../core/formatters'
 
 import InfoOutline from 'react-icons/lib/md/info-outline'
 
@@ -35,7 +35,7 @@ const tokens = ({ tokens, showModal, retrieveTokenInfo }: Props) => (
               onClick={() => showModal(MODAL_TYPES.TOKEN_INFO, { token, retrieveTokenInfo })}>
               <InfoOutline className={styles.symbolIcon} />{symbol}
             </td>
-            <td>{info ? formatNumber(balance, info.decimals) : balance}</td>
+            <td>{info ? formatBalance(balance, info.decimals) : balance}</td>
           </tr>
         )
       })}

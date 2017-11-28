@@ -4,7 +4,7 @@ import classNames from 'classnames'
 
 import { ASSETS } from '../../../core/constants'
 import { isToken } from '../../../core/wallet'
-import { formatNumber, formatGAS, formatNEO, truncateGAS, truncateToken } from '../../../core/formatters'
+import { formatBalance, formatGAS, formatNEO, truncateGAS, truncateTokenBalance } from '../../../core/formatters'
 
 import styles from './SendModal.scss'
 
@@ -57,7 +57,7 @@ const SendDisplay = ({
           } else if (symbol === ASSETS.GAS) {
             value = truncateGAS(value)
           } else {
-            value = truncateToken(value, tokens[symbol].info.decimals)
+            value = truncateTokenBalance(value, tokens[symbol].info.decimals)
           }
           return (
             <button
@@ -84,7 +84,7 @@ const SendDisplay = ({
         <label className={styles.label}>Balance:</label>
         {symbol === ASSETS.NEO && formatNEO(balance)}
         {symbol === ASSETS.GAS && formatGAS(balance)}
-        {isToken(symbol) && formatNumber(balance, tokens[symbol].info.decimals)}
+        {isToken(symbol) && formatBalance(balance, tokens[symbol].info.decimals)}
       </div>
       <button className={classNames(styles.sendButton, {'disabled': sendButtonDisabled})} id='doSend' onClick={openAndValidate} disabled={sendButtonDisabled}>Send Asset</button>
     </div>
