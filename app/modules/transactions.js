@@ -8,7 +8,7 @@ import { showErrorNotification, showInfoNotification, showSuccessNotification } 
 import { getWif, getPublicKey, getSigningFunction, getAddress, LOGOUT } from './account'
 import { getNetwork } from './metadata'
 
-import { validateTransactionBeforeSending, obtainTokenBalance } from '../core/wallet'
+import { validateTransactionBeforeSending, obtainTokenBalance, isToken } from '../core/wallet'
 import { ASSETS } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
 
@@ -53,7 +53,7 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, symbol:
   const publicKey = getPublicKey(state)
 
   const rejectTransaction = (message: string) => dispatch(showErrorNotification({ message }))
-  const tokenBalance = obtainTokenBalance(tokens, symbol)
+  const tokenBalance = isToken(symbol) && obtainTokenBalance(tokens, symbol)
 
   const { error, valid } = validateTransactionBeforeSending(neo, gas, tokenBalance, symbol, sendAddress, sendAmount)
   if (valid) {
