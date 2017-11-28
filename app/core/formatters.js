@@ -14,7 +14,7 @@ export const formatNumber = (value: number | string, precision?: number) => {
 
 export const truncateToken = (value: number | string, precision?: number = DEFAULT_DECIMAL_LENGTH) => truncateNumber(parseFloat(value), precision).toFixed(precision)
 
-export const truncateGAS = (gas: number | string, precision?: number = GAS_DECIMAL_LENGTH) => truncateNumber(parseFloat(gas), precision).toFixed(precision)
+export const truncateGAS = (gas: number | string, precision?: number = GAS_DECIMAL_LENGTH) => truncateToken(gas, precision)
 
 export const formatGAS = (gas: number | string, shortDisplay: boolean = false): string => {
   const precision = shortDisplay ? GAS_DECIMAL_SHORT_DISPLAY_LENGTH : GAS_DECIMAL_LENGTH
