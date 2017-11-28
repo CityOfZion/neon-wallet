@@ -3,6 +3,8 @@ import React from 'react'
 import classNames from 'classnames'
 
 import { ASSETS } from '../../../core/constants'
+import { isToken } from '../../../core/wallet'
+import { formatNumber, formatGAS, formatNEO, truncateGAS, truncateToken } from '../../../core/formatters'
 
 import styles from './SendModal.scss'
 
@@ -49,11 +51,20 @@ const SendDisplay = ({
       </div>
       <div className={styles.percentRow}>
         {[25, 50, 75, 100].map((percent: number) => {
-          const value = percent * parseFloat(balance) / 100
-          return (<button
-            key={`percentButton${percent}`}
-            onClick={() => onChangeHandler('sendAmount', symbol === ASSETS.NEO ? Math.ceil(value) : value)}
-            className={styles.percentButton}>{percent}%</button>)
+          let value = percent * parseFloat(balance) / 100
+          if (symbol === ASSETS.NEO) {
+            value = Math.ceil(value)
+          } else if (symbol === ASSETS.GAS) {
+            value = truncateGAS(value)
+          } else {
+            value = truncateToken(value, tokens[symbol].info.decimals)
+          }
+          return (
+            <button
+              key={`percentButton${percent}`}
+              onClick={() => onChangeHandler('sendAmount', symbol === ASSETS.NEO ? Math.ceil(value) : value)}
+              className={styles.percentButton}>{percent}%</button>
+          )
         })}
       </div>
       <div id='sendAmount' className={styles.column}>
@@ -71,7 +82,9 @@ const SendDisplay = ({
       </div>
       <div id='sendAmount' className={styles.column}>
         <label className={styles.label}>Balance:</label>
-        {balance}
+        {symbol === ASSETS.NEO && formatNEO(balance)}
+        {symbol === ASSETS.GAS && formatGAS(balance)}
+        {isToken(symbol) && formatNumber(balance, tokens[symbol].info.decimals)}
       </div>
       <button className={classNames(styles.sendButton, {'disabled': sendButtonDisabled})} id='doSend' onClick={openAndValidate} disabled={sendButtonDisabled}>Send Asset</button>
     </div>
