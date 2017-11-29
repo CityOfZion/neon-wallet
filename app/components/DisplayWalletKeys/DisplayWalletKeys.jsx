@@ -64,17 +64,17 @@ class DisplayWalletKeys extends Component<Props, State> {
           <div className='keyListItem'>
             <span className='label'>Public Address:</span>
             <span className='key'>{address}</span>
-            <CopyToClipboard text={address} tooltip='Copy Public Key' />
+            <CopyToClipboard text={address} tooltip='Copy Public Address' />
           </div>
           <div className='keyListItem'>
             <span className='label'>Encrypted key:</span>
             <span className='key'>{passphraseKey}</span>
-            <CopyToClipboard text={passphraseKey} tooltip='Copy Passphrase Encrypted Key' />
+            <CopyToClipboard text={passphraseKey} tooltip='Copy Encrypted Key' />
           </div>
           <div className='keyListItem'>
             <span className='label'>Private Key:</span>
             <span className='key'>{wif}</span>
-            <CopyToClipboard text={passphraseKey} tooltip='Copy Private Key' />
+            <CopyToClipboard text={wif} tooltip='Copy Private Key' />
           </div>
         </div>
         <div className='saveKey'>
