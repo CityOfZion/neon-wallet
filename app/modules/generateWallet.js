@@ -1,6 +1,6 @@
 // @flow
 import storage from 'electron-json-storage'
-import Neon, { wallet } from 'neon-js'
+import { wallet } from 'neon-js'
 
 import { showErrorNotification, showInfoNotification, hideNotification, showSuccessNotification } from './notifications'
 
@@ -8,18 +8,10 @@ import { validatePassphrase, checkMatchingPassphrases } from '../core/wallet'
 import asyncWrap from '../core/asyncHelper'
 
 // Constants
-export const NEW_WALLET_KEYS = 'NEW_WALLET_KEYS'
 export const NEW_WALLET = 'NEW_WALLET'
-export const SET_GENERATING = 'SET_GENERATING'
 export const RESET_KEY = 'RESET_KEY'
 
 // Actions
-export function newWalletKeys (passphrase: string) {
-  return {
-    type: NEW_WALLET_KEYS,
-    payload: { passphrase }
-  }
-}
 
 export function newWallet (account: Object) {
   return {
@@ -30,13 +22,6 @@ export function newWallet (account: Object) {
       passphrase: account.passphrase,
       encryptedWif: account.encryptedWif
     }
-  }
-}
-
-export function generating (generating: boolean) {
-  return {
-    type: SET_GENERATING,
-    payload: { generating }
   }
 }
 
@@ -104,32 +89,16 @@ export const getWif = (state: Object) => state.generateWallet.wif
 export const getAddress = (state: Object) => state.generateWallet.address
 export const getPassphrase = (state: Object) => state.generateWallet.passphrase
 export const getEncryptedWif = (state: Object) => state.generateWallet.encryptedWif
-export const getGenerating = (state: Object) => state.generateWallet.generating
 
 const initialState = {
   wif: null,
   address: null,
   passphrase: null,
-  encryptedWif: null,
-  generating: false
+  encryptedWif: null
 }
 
 export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
-    case NEW_WALLET_KEYS: {
-      const { passphrase } = action.payload
-      const newPrivateKey = wallet.generatePrivateKey()
-      const newWif = wallet.getWIFFromPrivateKey(newPrivateKey)
-      const encryptedWif = wallet.encryptWIF(newWif, passphrase)
-      const loadAccount = Neon.create.account(newWif)
-      return {
-        ...state,
-        wif: newWif,
-        address: loadAccount.address,
-        passphrase,
-        encryptedWif
-      }
-    }
     case NEW_WALLET: {
       const { passphrase, wif, address, encryptedWif } = action.payload
       return {
@@ -137,15 +106,7 @@ export default (state: Object = initialState, action: ReduxAction) => {
         wif,
         address,
         passphrase,
-        encryptedWif,
-        generating: false
-      }
-    }
-    case SET_GENERATING: {
-      const { generating } = action.payload
-      return {
-        ...state,
-        generating
+        encryptedWif
       }
     }
     case RESET_KEY: {
