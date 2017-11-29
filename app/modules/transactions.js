@@ -1,6 +1,5 @@
 // @flow
 /* eslint-disable camelcase */
-import { capitalize } from 'lodash'
 import { api } from 'neon-js'
 
 import { setTransactionHistory, getNEO, getGAS, getTokens, getScriptHashForNetwork } from './wallet'
@@ -8,7 +7,7 @@ import { showErrorNotification, showInfoNotification, showSuccessNotification } 
 import { getWif, getPublicKey, getSigningFunction, getAddress, LOGOUT } from './account'
 import { getNetwork } from './metadata'
 
-import { validateTransactionBeforeSending, obtainTokenBalance } from '../core/wallet'
+import { validateTransactionBeforeSending, obtainTokenBalance, isToken } from '../core/wallet'
 import { ASSETS } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
 
@@ -53,18 +52,17 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, symbol:
   const publicKey = getPublicKey(state)
 
   const rejectTransaction = (message: string) => dispatch(showErrorNotification({ message }))
-  const tokenBalance = obtainTokenBalance(tokens, symbol)
+  const tokenBalance = isToken(symbol) && obtainTokenBalance(tokens, symbol)
+  const parsedSendAmount = parseFloat(sendAmount)
 
-  const { error, valid } = validateTransactionBeforeSending(neo, gas, tokenBalance, symbol, sendAddress, sendAmount)
+  const { error, valid } = validateTransactionBeforeSending(neo, gas, tokenBalance, symbol, sendAddress, parsedSendAmount)
   if (valid) {
     const selfAddress = address
-    // We have to capitalize NEO/GAS because neon-wallet-db is using capitalized asset name
-    const assetName = capitalize(symbol === ASSETS.NEO ? ASSETS.NEO : ASSETS.GAS)
     let sendAsset = {}
-    sendAsset[assetName] = sendAmount
+    sendAsset[symbol] = parseFloat(parsedSendAmount)
 
     dispatch(showInfoNotification({ message: 'Sending Transaction...', autoDismiss: 0 }))
-    log(net, 'SEND', selfAddress, { to: sendAddress, asset: symbol, amount: sendAmount })
+    log(net, 'SEND', selfAddress, { to: sendAddress, asset: symbol, amount: parsedSendAmount })
 
     const isHardwareSend = !!publicKey
 
@@ -77,7 +75,7 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, symbol:
         sendAssetFn = () => api.neonDB.doSendAsset(net, sendAddress, wif, sendAsset, null)
       } else {
         const scriptHash = getScriptHashForNetwork(net, symbol)
-        sendAssetFn = () => api.nep5.doTransferToken(net, scriptHash, wif, sendAddress, parseFloat(sendAmount))
+        sendAssetFn = () => api.nep5.doTransferToken(net, scriptHash, wif, sendAddress, parsedSendAmount)
       }
     }
 

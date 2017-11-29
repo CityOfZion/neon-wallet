@@ -113,6 +113,7 @@ export const retrieveTokensBalance = () => async (dispatch: DispatchType, getSta
   const state = getState()
   const net = getNetwork(state)
   const address = getAddress(state)
+  const tokensFromState = getTokens(state)
 
   const tokens = {}
   for (let [symbol] of TOKEN_PAIRS) {
@@ -121,6 +122,10 @@ export const retrieveTokensBalance = () => async (dispatch: DispatchType, getSta
     const [_error, rpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net)) // eslint-disable-line
     const [_err, results] = await asyncWrap(api.nep5.getTokenBalance(rpcEndpoint, scriptHash, address)) // eslint-disable-line
     if (results) {
+      let info = tokensFromState[symbol].info
+      if (!info) {
+        await dispatch(retrieveTokenInfo(symbol))
+      }
       tokens[symbol] = {
         symbol,
         balance: results,
