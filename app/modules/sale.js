@@ -33,7 +33,7 @@ export const participateInSale = (neoToSend: number, scriptHash: string) => asyn
   dispatch(showInfoNotification({ message: 'Sending transaction', autoDismiss: 0 }))
 
   const [error, rpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net)) // eslint-disable-line
-  const [err, balance] = await asyncWrap(api.nep5.getTokenBalance(rpcEndpoint, _scriptHash, account.address))
+  const [err, balance] = await asyncWrap(api.nep5.getTokenBalance(rpcEndpoint, _scriptHash, account.address)) // eslint-disable-line
   const [e, response] = await asyncWrap(api.neonDB.doMintTokens(net, _scriptHash, wif, toMint, 0))
   if (error || err || e) {
     dispatch(showErrorNotification({ message: 'This script hash cannot mint tokens.' }))
