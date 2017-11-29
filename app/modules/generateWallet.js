@@ -5,7 +5,6 @@ import { wallet } from 'neon-js'
 import { showErrorNotification, showInfoNotification, hideNotification, showSuccessNotification } from './notifications'
 
 import { validatePassphrase, checkMatchingPassphrases } from '../core/wallet'
-import asyncWrap from '../core/asyncHelper'
 
 // Constants
 export const NEW_WALLET = 'NEW_WALLET'
@@ -17,7 +16,7 @@ export function newWallet (account: Object) {
   return {
     type: NEW_WALLET,
     payload: {
-      wif: account._privateKey,
+      wif: account.wif,
       address: account.address,
       passphrase: account.passphrase,
       encryptedWif: account.encryptedWif
@@ -51,9 +50,16 @@ export const generateWalletFromWif = (passphrase: string, passphrase2: string, w
     const infoNotificationId = dispatch(showInfoNotification({ message: 'Generating encoded key...', autoDismiss: 0 }))
     setTimeout(async () => {
       try {
-        const [_err, result] = await asyncWrap(wallet.encryptWifAccount(wif, passphrase)) // eslint-disable-line
+        const account = new wallet.Account(wif)
+        const { WIF, address } = account
+        const encryptedWif = wallet.encrypt(WIF, passphrase)
         dispatch(hideNotification(infoNotificationId))
-        return dispatch(newWallet(result))
+        return dispatch(newWallet({
+          wif: WIF,
+          address,
+          passphrase,
+          encryptedWif
+        }))
       } catch (e) {
         return dispatchError('The private key is not valid')
       }
@@ -72,9 +78,18 @@ export const generateNewWallet = (passphrase: string, passphrase2: string) => as
     const infoNotificationId = dispatch(showInfoNotification({ message: 'Generating encoded key...', autoDismiss: 0 }))
     setTimeout(async () => {
       try {
-        const [_err, result] = await asyncWrap(wallet.generateEncryptedWif(passphrase)) //eslint-disable-line
+        const newPrivateKey = wallet.generatePrivateKey()
+        const account = new wallet.Account(newPrivateKey)
+        const { WIF, address } = account
+        const encryptedWif = wallet.encrypt(WIF, passphrase)
+
         dispatch(hideNotification(infoNotificationId))
-        return dispatch(newWallet(result))
+        return dispatch(newWallet({
+          wif: WIF,
+          address,
+          passphrase,
+          encryptedWif
+        }))
       } catch (e) {
         return dispatchError('An error occured while trying to generate a new wallet')
       }
