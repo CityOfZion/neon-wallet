@@ -17,7 +17,7 @@ export function newWallet (account: Object) {
   return {
     type: NEW_WALLET,
     payload: {
-      wif: account.wif,
+      wif: account._privateKey,
       address: account.address,
       passphrase: account.passphrase,
       encryptedWif: account.encryptedWif
