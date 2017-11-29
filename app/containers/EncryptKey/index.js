@@ -9,8 +9,7 @@ import {
   getWif,
   getAddress,
   getEncryptedWif,
-  getPassphrase,
-  getGenerating
+  getPassphrase
 } from '../../modules/generateWallet'
 
 import EncryptKey from './EncryptKey'
@@ -19,8 +18,7 @@ const mapStateToProps = (state: Object) => ({
   wif: getWif(state),
   address: getAddress(state),
   encryptedWif: getEncryptedWif(state),
-  passphrase: getPassphrase(state),
-  generating: getGenerating(state)
+  passphrase: getPassphrase(state)
 })
 
 const actionCreators = {

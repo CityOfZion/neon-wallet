@@ -1,4 +1,9 @@
-import generateWalletReducer, { newWalletKeys, newWallet, generating, resetKey, NEW_WALLET_KEYS, NEW_WALLET, SET_GENERATING, RESET_KEY } from '../../app/modules/generateWallet'
+import generateWalletReducer, {
+  newWallet,
+  resetKey,
+  NEW_WALLET,
+  RESET_KEY
+} from '../../app/modules/generateWallet'
 
 describe('generateWallet module tests', () => {
   // TODO when looking into pulling axios mock adapter into helper file to stay DRY
@@ -12,8 +17,7 @@ describe('generateWallet module tests', () => {
     wif: null,
     address: null,
     passphrase: null,
-    encryptedWif: null,
-    generating: false
+    encryptedWif: null
   }
 
   const account = {
@@ -37,42 +41,6 @@ describe('generateWallet module tests', () => {
 
     test('generateWallet reducer should handle NEW_WALLET', () => {
       const expectedState = Object.assign({}, initialState, account)
-      expect(generateWalletReducer(undefined, expectedAction)).toEqual(expectedState)
-    })
-  })
-
-  describe('newWalletKeys tests', () => {
-    const expectedAction = {
-      type: NEW_WALLET_KEYS,
-      payload: {
-        passphrase
-      }
-    }
-
-    test('newWalletKeys action works', () => {
-      expect(newWalletKeys(passphrase)).toEqual(expectedAction)
-    })
-
-    test('generateWallet reducer should handle NEW_WALLET_KEYS', () => {
-      const expectedState = Object.assign({}, initialState, account)
-      expect(generateWalletReducer(undefined, expectedAction)).toEqual(expectedState)
-    })
-  })
-
-  describe('generating tests', () => {
-    const expectedAction = {
-      type: SET_GENERATING,
-      payload: {
-        generating: true
-      }
-    }
-
-    test('generating action works', () => {
-      expect(generating(true)).toEqual(expectedAction)
-    })
-
-    test('generateWallet reducer should handle SET_GENERATING', () => {
-      const expectedState = Object.assign({}, initialState, { generating: true })
       expect(generateWalletReducer(undefined, expectedAction)).toEqual(expectedState)
     })
   })
