@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react'
-import ReactTooltip from 'react-tooltip'
+
+import Tooltip from '../../components/Tooltip'
 
 type Props = {
   doClaimNotify: Function,
@@ -15,7 +16,6 @@ type Props = {
 export default class Claim extends Component<Props> {
   componentDidUpdate () {
     const { claimRequest, claimWasUpdated, doClaimNotify, setClaimRequest } = this.props
-    // if we requested a claim and new claims are available, do claim
     if (claimRequest && claimWasUpdated) {
       setClaimRequest(false)
       doClaimNotify()
@@ -24,19 +24,19 @@ export default class Claim extends Component<Props> {
 
   render () {
     const { claimAmount, disableClaimButton, doGasClaim } = this.props
-    let renderButton
-    if (!disableClaimButton) {
-      renderButton = <button onClick={() => doGasClaim()}>Claim {claimAmount} GAS</button>
-    } else {
-      renderButton = (
-        <div>
-          <button data-tip data-for='claimTip' className='disabled'>Claim {claimAmount} GAS</button>
-          <ReactTooltip class='solidTip' id='claimTip' place='bottom' type='dark' effect='solid'>
-            <span>You can claim Gas once every 5 minutes</span>
-          </ReactTooltip>
-        </div>
-      )
-    }
-    return <div id='claim'>{renderButton}</div>
+    const shouldDisableButton = disableClaimButton || claimAmount === 0
+    return (
+      <div id='claim'>
+        <Tooltip
+          title='You can claim GAS once every 5 minutes'
+          disabled={!disableClaimButton}
+        >
+          <button
+            disabled={shouldDisableButton}
+            onClick={() => doGasClaim()}
+            className={shouldDisableButton ? 'disabled' : ''}>Claim {claimAmount} GAS</button>
+        </Tooltip>
+      </div>
+    )
   }
 }

@@ -1,6 +1,6 @@
 // @flow
-import { ASSETS_LABELS } from './constants'
-import { getAccountFromWIFKey, verifyAddress } from 'neon-js'
+import { ASSETS, TOKENS } from './constants'
+import Neon, { wallet } from 'neon-js'
 
 const MIN_PASSPHRASE_LEN = 4
 
@@ -12,11 +12,25 @@ export const verifyPrivateKey = (wif: string): boolean => {
   if (!wif) {
     return false
   }
-  const account = getAccountFromWIFKey(wif)
+  const account = Neon.create.account(wif)
   return account !== -1 && account.address
 }
 
-export const validateTransactionBeforeSending = (neoBalance: number, gasBalance: number, selectedAsset: string, sendAddress: string, sendAmount: string) => {
+export const isToken = (symbol: TokenSymbolType) => Object.keys(TOKENS).includes(symbol)
+
+export const obtainTokenBalance = (tokens: Object, symbol: TokenSymbolType) => {
+  if (!isToken(symbol)) {
+    throw new Error(`${symbol} is not a valid token`)
+  }
+  const token = tokens[symbol]
+  if (token) {
+    return token.balance
+  } else {
+    throw new Error(`Could not retrieve balance for ${symbol}`)
+  }
+}
+
+export const validateTransactionBeforeSending = (neoBalance: number, gasBalance: number, tokenBalance: number, symbol: TokenSymbolType, sendAddress: string, sendAmount: string) => {
   if (!sendAddress || !sendAmount) {
     return {
       error: 'Please specify an address and amount',
@@ -24,24 +38,31 @@ export const validateTransactionBeforeSending = (neoBalance: number, gasBalance:
     }
   }
 
-  if (selectedAsset !== ASSETS_LABELS.NEO && selectedAsset !== ASSETS_LABELS.GAS) {
+  if (symbol !== ASSETS.NEO && symbol !== ASSETS.GAS && !isToken(symbol)) {
     return {
-      error: 'That asset is not Neo or Gas',
+      error: 'That asset is not NEO, GAS or NEP-5 Token',
       valid: false
     }
   }
 
-  if (verifyAddress(sendAddress) !== true || sendAddress.charAt(0) !== 'A') {
+  try {
+    if (wallet.isAddress(sendAddress) !== true || sendAddress.charAt(0) !== 'A') {
+      return {
+        error: 'The address you entered was not valid.',
+        valid: false
+      }
+    }
+  } catch (e) {
     return {
       error: 'The address you entered was not valid.',
       valid: false
     }
   }
 
-  if (selectedAsset === ASSETS_LABELS.NEO) {
+  if (symbol === ASSETS.NEO) {
     if (parseFloat(sendAmount) !== parseInt(sendAmount)) { // check for fractional neo
       return {
-        error: 'You cannot send fractional amounts of Neo.',
+        error: 'You cannot send fractional amounts of NEO.',
         valid: false
       }
     }
@@ -51,10 +72,17 @@ export const validateTransactionBeforeSending = (neoBalance: number, gasBalance:
         valid: false
       }
     }
-  } else if (selectedAsset === ASSETS_LABELS.GAS) {
+  } else if (symbol === ASSETS.GAS) {
     if (parseFloat(sendAmount) > gasBalance) {
       return {
         error: 'You do not have enough GAS to send.',
+        valid: false
+      }
+    }
+  } else {
+    if (parseFloat(sendAmount) > tokenBalance) {
+      return {
+        error: `You do not have enough ${symbol} to send.`,
         valid: false
       }
     }

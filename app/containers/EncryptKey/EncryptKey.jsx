@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import { isNil } from 'lodash'
+
 import PasswordField from '../../components/PasswordField'
 import DisplayWalletKeys from '../../components/DisplayWalletKeys'
 import Page from '../../components/Page'

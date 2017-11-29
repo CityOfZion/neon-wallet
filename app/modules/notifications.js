@@ -1,5 +1,6 @@
 // @flow
 import { reject, uniqueId } from 'lodash'
+
 import { NOTIFICATION_LEVELS, NOTIFICATION_POSITIONS } from '../core/constants'
 
 type NotificationArgsType = {
@@ -91,7 +92,7 @@ export const showInfoNotification = (args: NotificationArgsType) => (dispatch: D
 // state Getters
 export const getNotifications = (state: Object) => state.notifications
 
-export default (state: Array<NotificationType> = [], action: Object) => {
+export default (state: Array<NotificationType> = [], action: ReduxAction) => {
   switch (action.type) {
     case SHOW_NOTIFICATION:
       return [

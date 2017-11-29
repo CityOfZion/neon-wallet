@@ -2,9 +2,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import QRCode from 'qrcode/lib/browser'
-import { clipboard } from 'electron'
-import Copy from 'react-icons/lib/md/content-copy'
-import ReactTooltip from 'react-tooltip'
+
+import CopyToClipboard from '../CopyToClipboard'
 
 type Props = {
   resetKey: Function,
@@ -59,23 +58,23 @@ class DisplayWalletKeys extends Component<Props, State> {
           <div className='keyListItem'>
             <span className='label'>Passphrase:</span>
             <span className='key'>{passphrase}</span>
-            <span className='copyKey' onClick={() => clipboard.writeText(passphrase)}><Copy data-tip data-for='copyPassphraseTip' /></span>
+            <CopyToClipboard text={passphrase} tooltip='Copy Passphrase' />
           </div>
           <br />
           <div className='keyListItem'>
             <span className='label'>Public Address:</span>
             <span className='key'>{address}</span>
-            <span className='copyKey' onClick={() => clipboard.writeText(address)}><Copy data-tip data-for='copyPublicKeyTip' /></span>
+            <CopyToClipboard text={address} tooltip='Copy Public Address' />
           </div>
           <div className='keyListItem'>
             <span className='label'>Encrypted key:</span>
             <span className='key'>{passphraseKey}</span>
-            <span className='copyKey' onClick={() => clipboard.writeText(passphraseKey)}><Copy data-tip data-for='copyPassphraseKeyTip' /></span>
+            <CopyToClipboard text={passphraseKey} tooltip='Copy Encrypted Key' />
           </div>
           <div className='keyListItem'>
             <span className='label'>Private Key:</span>
             <span className='key'>{wif}</span>
-            <span className='copyKey' onClick={() => clipboard.writeText(wif)}><Copy data-tip data-for='copyPrivateKeyTip' /></span>
+            <CopyToClipboard text={wif} tooltip='Copy Private Key' />
           </div>
         </div>
         <div className='saveKey'>
@@ -84,18 +83,6 @@ class DisplayWalletKeys extends Component<Props, State> {
         </div>
         <Link onClick={() => resetKey()} to='/'><button>Back</button></Link>
         <button onClick={() => window.print()}>Print</button>
-        <ReactTooltip class='solidTip' id='copyPublicKeyTip' place='bottom' type='dark' effect='solid'>
-          <span>Copy Public Key</span>
-        </ReactTooltip>
-        <ReactTooltip class='solidTip' id='copyPrivateKeyTip' place='bottom' type='dark' effect='solid'>
-          <span>Copy Private Key</span>
-        </ReactTooltip>
-        <ReactTooltip class='solidTip' id='copyPassphraseTip' place='bottom' type='dark' effect='solid'>
-          <span>Copy Passphrase</span>
-        </ReactTooltip>
-        <ReactTooltip class='solidTip' id='copyPassphraseKeyTip' place='bottom' type='dark' effect='solid'>
-          <span>Copy Passphrase Encrypted Key</span>
-        </ReactTooltip>
       </div>
     )
   }

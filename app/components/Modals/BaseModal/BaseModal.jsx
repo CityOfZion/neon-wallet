@@ -15,10 +15,11 @@ type Props = {
     style: {
       content: Object,
       overlay: Object
-    }
+    },
+    onAfterOpen?: Function
 }
 
-const BaseModal = ({ hideModal, title, children, width, height, className, style }: Props) => (
+const BaseModal = ({ hideModal, title, children, width, height, className, style, onAfterOpen }: Props) => (
   <ReactModal
     isOpen
     onRequestClose={hideModal}
@@ -40,6 +41,7 @@ const BaseModal = ({ hideModal, title, children, width, height, className, style
       }
     }}
     className={className}
+    onAfterOpen={onAfterOpen}
   >
     <div className={styles.modalHeader}>
       <div className={styles.modalHeaderTitle}>{title}</div>

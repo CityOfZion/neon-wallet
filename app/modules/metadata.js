@@ -1,10 +1,12 @@
 // @flow
-import { getWalletDBHeight, getAPIEndpoint } from 'neon-js'
 import axios from 'axios'
-import { version } from '../../package.json'
+import { api } from 'neon-js'
+
 import { showWarningNotification } from './notifications'
+
 import { NETWORK, EXPLORER, NEON_WALLET_RELEASE_LINK, NOTIFICATION_POSITIONS } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
+import { version } from '../../package.json'
 
 // Constants
 export const SET_HEIGHT = 'SET_HEIGHT'
@@ -37,7 +39,7 @@ export function setBlockExplorer (blockExplorer: ExplorerType) {
 export const checkVersion = () => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState().metadata
   const { net } = state
-  const apiEndpoint = getAPIEndpoint(net)
+  const apiEndpoint = api.neonDB.getAPIEndpoint(net)
 
   const [err, res] = await asyncWrap(axios.get(`${apiEndpoint}/v2/version`))
   const shouldUpdate = res && res.data && res.data.version !== version
@@ -55,14 +57,14 @@ export const checkVersion = () => async (dispatch: DispatchType, getState: GetSt
 }
 
 export const syncBlockHeight = (net: NetworkType) => async (dispatch: DispatchType) => {
-  const [_err, blockHeight] = await asyncWrap(getWalletDBHeight(net)) // eslint-disable-line
+  const [_err, blockHeight] = await asyncWrap(api.neonDB.getWalletDBHeight(net)) // eslint-disable-line
   return dispatch(setBlockHeight(blockHeight))
 }
 
 // state getters
-export const getBlockHeight = (state) => state.metadata.blockHeight
-export const getNetwork = (state) => state.metadata.network
-export const getBlockExplorer = (state) => state.metadata.blockExplorer
+export const getBlockHeight = (state: Object) => state.metadata.blockHeight
+export const getNetwork = (state: Object) => state.metadata.network
+export const getBlockExplorer = (state: Object) => state.metadata.blockExplorer
 
 const initialState = {
   blockHeight: 0,
@@ -70,7 +72,7 @@ const initialState = {
   blockExplorer: EXPLORER.NEO_TRACKER
 }
 
-export default (state: Object = initialState, action: Object) => {
+export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
     case SET_HEIGHT:
       const { blockHeight } = action.payload

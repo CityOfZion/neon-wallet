@@ -1,0 +1,45 @@
+.textContainer {
+}
+
+.canvas {
+    margin: 10px 0;
+    text-align: center;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.percentRow {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.percentButton {
+    width: 100%;
+}
+
+.label {
+    padding: 10px 0;
+}
+
+.sendAmount {
+    display: flex;
+}
+
+.sendAmountSelect {
+    margin-right: 10px;
+}
+
+.sendButton {
+    margin-top: 20px;
+}

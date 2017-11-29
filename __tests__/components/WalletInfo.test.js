@@ -48,8 +48,8 @@ const initialState = {
     network: 'TestNet'
   },
   wallet: {
-    Neo: 100001,
-    Gas: 1.0001601,
+    NEO: 100001,
+    GAS: 1.0001601,
     neoPrice: 25.48,
     gasPrice: 18.10
   },
@@ -87,7 +87,6 @@ describe('WalletInfo', () => {
   test('correctly renders data from state', (done) => {
     const { wrapper } = setup(initialState, false)
 
-    const addressField = wrapper.find('.address')
     const neoWalletValue = wrapper.find('.neoWalletValue')
     const gasWalletValue = wrapper.find('.gasWalletValue')
     const walletValue = wrapper.find('.walletTotal')
@@ -101,20 +100,10 @@ describe('WalletInfo', () => {
     expect(neoWalletValue.text()).toEqual(`US $${expectedNeoWalletValue}`)
     expect(gasWalletValue.text()).toEqual(`US $${expectedGasWalletValue}`)
     expect(walletValue.text()).toEqual(`Total US $${expectedWalletValue}`)
-    expect(addressField.text().split('<')[0]).toEqual(initialState.account.address)
-    expect(neoField.text()).toEqual(`${initialState.wallet.Neo}`)
+    expect(neoField.text()).toEqual(`${initialState.wallet.NEO}`)
     // TODO: Test the gas tooltip value, this is testing the display value, truncated to 4 decimals
     expect(gasField.text()).toEqual('1.0001')
     done()
-  })
-  test('copy to clipboard is getting called on click', async () => {
-    const { wrapper } = setup()
-    const deepWrapper = wrapper.dive()
-
-    expect(clipboard.writeText.mock.calls.length).toBe(0)
-    deepWrapper.find('.copyKey').simulate('click')
-    await Promise.resolve('Pause').then()
-    expect(clipboard.writeText.mock.calls.length).toBe(1)
   })
   test('refreshBalance is getting called on click', async () => {
     const { wrapper, store } = setup()

@@ -1,23 +1,16 @@
 // @flow
 import storage from 'electron-json-storage'
-import { generateEncryptedWif, getAccountFromWIFKey, generatePrivateKey, getWIFFromPrivateKey, encryptWIF, encryptWifAccount } from 'neon-js'
+import { wallet } from 'neon-js'
+
 import { showErrorNotification, showInfoNotification, hideNotification, showSuccessNotification } from './notifications'
+
 import { validatePassphrase, checkMatchingPassphrases } from '../core/wallet'
-import asyncWrap from '../core/asyncHelper'
 
 // Constants
-export const NEW_WALLET_KEYS = 'NEW_WALLET_KEYS'
 export const NEW_WALLET = 'NEW_WALLET'
-export const SET_GENERATING = 'SET_GENERATING'
 export const RESET_KEY = 'RESET_KEY'
 
 // Actions
-export function newWalletKeys (passphrase: string) {
-  return {
-    type: NEW_WALLET_KEYS,
-    payload: { passphrase }
-  }
-}
 
 export function newWallet (account: Object) {
   return {
@@ -28,13 +21,6 @@ export function newWallet (account: Object) {
       passphrase: account.passphrase,
       encryptedWif: account.encryptedWif
     }
-  }
-}
-
-export function generating (generating: boolean) {
-  return {
-    type: SET_GENERATING,
-    payload: { generating }
   }
 }
 
@@ -64,9 +50,16 @@ export const generateWalletFromWif = (passphrase: string, passphrase2: string, w
     const infoNotificationId = dispatch(showInfoNotification({ message: 'Generating encoded key...', autoDismiss: 0 }))
     setTimeout(async () => {
       try {
-        const [_err, result] = await asyncWrap(encryptWifAccount(wif, passphrase)) // eslint-disable-line
+        const account = new wallet.Account(wif)
+        const { WIF, address } = account
+        const encryptedWif = wallet.encrypt(WIF, passphrase)
         dispatch(hideNotification(infoNotificationId))
-        return dispatch(newWallet(result))
+        return dispatch(newWallet({
+          wif: WIF,
+          address,
+          passphrase,
+          encryptedWif
+        }))
       } catch (e) {
         return dispatchError('The private key is not valid')
       }
@@ -85,9 +78,18 @@ export const generateNewWallet = (passphrase: string, passphrase2: string) => as
     const infoNotificationId = dispatch(showInfoNotification({ message: 'Generating encoded key...', autoDismiss: 0 }))
     setTimeout(async () => {
       try {
-        const [_err, result] = await asyncWrap(generateEncryptedWif(passphrase)) //eslint-disable-line
+        const newPrivateKey = wallet.generatePrivateKey()
+        const account = new wallet.Account(newPrivateKey)
+        const { WIF, address } = account
+        const encryptedWif = wallet.encrypt(WIF, passphrase)
+
         dispatch(hideNotification(infoNotificationId))
-        return dispatch(newWallet(result))
+        return dispatch(newWallet({
+          wif: WIF,
+          address,
+          passphrase,
+          encryptedWif
+        }))
       } catch (e) {
         return dispatchError('An error occured while trying to generate a new wallet')
       }
@@ -98,36 +100,20 @@ export const generateNewWallet = (passphrase: string, passphrase2: string) => as
 }
 
 // state getters
-export const getWif = (state) => state.generateWallet.wif
-export const getAddress = (state) => state.generateWallet.address
-export const getPassphrase = (state) => state.generateWallet.passphrase
-export const getEncryptedWif = (state) => state.generateWallet.encryptedWif
-export const getGenerating = (state) => state.generateWallet.generating
+export const getWif = (state: Object) => state.generateWallet.wif
+export const getAddress = (state: Object) => state.generateWallet.address
+export const getPassphrase = (state: Object) => state.generateWallet.passphrase
+export const getEncryptedWif = (state: Object) => state.generateWallet.encryptedWif
 
 const initialState = {
   wif: null,
   address: null,
   passphrase: null,
-  encryptedWif: null,
-  generating: false
+  encryptedWif: null
 }
 
-export default (state: Object = initialState, action: Object) => {
+export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
-    case NEW_WALLET_KEYS: {
-      const { passphrase } = action.payload
-      const newPrivateKey = generatePrivateKey()
-      const newWif = getWIFFromPrivateKey(newPrivateKey)
-      const encryptedWif = encryptWIF(newWif, passphrase)
-      const loadAccount = getAccountFromWIFKey(newWif)
-      return {
-        ...state,
-        wif: newWif,
-        address: loadAccount.address,
-        passphrase,
-        encryptedWif
-      }
-    }
     case NEW_WALLET: {
       const { passphrase, wif, address, encryptedWif } = action.payload
       return {
@@ -135,15 +121,7 @@ export default (state: Object = initialState, action: Object) => {
         wif,
         address,
         passphrase,
-        encryptedWif,
-        generating: false
-      }
-    }
-    case SET_GENERATING: {
-      const { generating } = action.payload
-      return {
-        ...state,
-        generating
+        encryptedWif
       }
     }
     case RESET_KEY: {

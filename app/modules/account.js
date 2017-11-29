@@ -1,11 +1,14 @@
 // @flow
-import { verifyPrivateKey, validatePassphrase } from '../core/wallet'
-import { getAccountFromWIFKey, getPublicKeyEncoded, getAccountFromPublicKey, decryptWIF } from 'neon-js'
+import Neon, { wallet } from 'neon-js'
+
+import { showErrorNotification, showInfoNotification, hideNotification } from './notifications'
+
 import commNode from '../ledger/ledger-comm-node'
+import { ledgerNanoSCreateSignatureAsync } from '../ledger/ledgerNanoS'
+
+import { verifyPrivateKey, validatePassphrase } from '../core/wallet'
 import { BIP44_PATH, ROUTES } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
-import { ledgerNanoSCreateSignatureAsync } from '../ledger/ledgerNanoS'
-import { showErrorNotification, showInfoNotification, hideNotification } from './notifications'
 
 // Constants
 export const LOGIN = 'LOGIN'
@@ -54,7 +57,7 @@ export const loginNep2 = (passphrase: string, wif: string, history: Object) => (
 
   setTimeout(async () => {
     try {
-      const [_err, responseWif] = await asyncWrap(decryptWIF(wif, passphrase)) // eslint-disable-line
+      const [_err, responseWif] = await asyncWrap(wallet.decryptWIF(wif, passphrase)) // eslint-disable-line
       dispatch(hideNotification(infoNotificationId))
       dispatch(login(responseWif))
       return history.push(ROUTES.DASHBOARD)
@@ -142,15 +145,15 @@ export const ledgerNanoSGetInfoAsync = () => async (dispatch: DispatchType) => {
 }
 
 // State Getters
-export const getWif = (state) => state.account.wif
-export const getAddress = (state) => state.account.address
-export const getLoggedIn = (state) => state.account.loggedIn
-export const getRedirectUrl = (state) => state.account.redirectUrl
-export const getAccountKeys = (state) => state.account.accountKeys
-export const getSigningFunction = (state) => state.account.signingFunction
-export const getPublicKey = (state) => state.account.publicKey
-export const getHardwareDeviceInfo = (state) => state.account.hardwareDeviceInfo
-export const getHardwarePublicKeyInfo = (state) => state.account.hardwarePublicKeyInfo
+export const getWif = (state: Object) => state.account.wif
+export const getAddress = (state: Object) => state.account.address
+export const getLoggedIn = (state: Object) => state.account.loggedIn
+export const getRedirectUrl = (state: Object) => state.account.redirectUrl
+export const getAccountKeys = (state: Object) => state.account.accountKeys
+export const getSigningFunction = (state: Object) => state.account.signingFunction
+export const getPublicKey = (state: Object) => state.account.publicKey
+export const getHardwareDeviceInfo = (state: Object) => state.account.hardwareDeviceInfo
+export const getHardwarePublicKeyInfo = (state: Object) => state.account.hardwarePublicKeyInfo
 
 const initialState = {
   wif: null,
@@ -164,17 +167,17 @@ const initialState = {
   hardwarePublicKeyInfo: null
 }
 
-export default (state: Object = initialState, action: Object) => {
+export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
     case LOGIN:
       const { signingFunction, wif } = action.payload
       let loadAccount: Object | number
       try {
         if (signingFunction) {
-          const publicKeyEncoded = getPublicKeyEncoded(state.publicKey)
-          loadAccount = getAccountFromPublicKey(publicKeyEncoded)
+          const publicKeyEncoded = wallet.getPublicKeyEncoded(state.publicKey)
+          loadAccount = Neon.create.account(publicKeyEncoded)
         } else {
-          loadAccount = getAccountFromWIFKey(wif)
+          loadAccount = Neon.create.account(wif)
         }
       } catch (e) {
         console.log(e.stack)
