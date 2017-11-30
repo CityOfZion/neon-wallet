@@ -206,8 +206,9 @@ export default (state: Object = initialState, action: ReduxAction) => {
     case RESET_PRICES:
       return {
         ...state,
-        NEO: 0,
-        GAS: 0
+        prices: {
+          ...initialState.prices
+        }
       }
     case SET_TRANSACTION_HISTORY:
       const { transactions } = action.payload
