@@ -25,7 +25,7 @@ const tokens = ({ tokens, showModal, retrieveTokenInfo }: Props) => (
       </tr>
     </thead>
     <tbody>
-      {Object.keys(tokens).map((symbol) => {
+      {tokens && Object.keys(tokens).map((symbol) => {
         const token = tokens[symbol]
         const { balance, info } = token
         return (
