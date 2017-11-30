@@ -46,25 +46,29 @@ export function setKeys (accountKeys: any) {
   }
 }
 
-export const loginNep2 = (passphrase: string, wif: string, history: Object) => (dispatch: DispatchType) => {
+export const loginNep2 = (passphrase: string, encryptedWIF: string, history: Object) => (dispatch: DispatchType) => {
   const dispatchError = (message: string) => dispatch(showErrorNotification({ message }))
 
   if (!validatePassphraseLength(passphrase)) {
     return dispatchError('Passphrase too short')
   }
 
+  if (!wallet.isNEP2(encryptedWIF)) {
+    return dispatchError('That is not a valid encrypted key')
+  }
+
   const infoNotificationId = dispatch(showInfoNotification({ message: 'Decrypting encoded key...' }))
 
-  setTimeout(async () => {
+  setTimeout(() => {
     try {
-      const [_err, responseWif] = await asyncWrap(wallet.decryptWIF(wif, passphrase)) // eslint-disable-line
+      const wif = wallet.decryptWIF(encryptedWIF, passphrase)
       dispatch(hideNotification(infoNotificationId))
-      dispatch(login(responseWif))
+      dispatch(login(wif))
       return history.push(ROUTES.DASHBOARD)
     } catch (e) {
       return dispatchError('Wrong passphrase or invalid encrypted key')
     }
-  }, 0)
+  }, 500)
 }
 
 export function hardwareDeviceInfo (hardwareDeviceInfo: string) {
