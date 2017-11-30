@@ -12,9 +12,8 @@ type Props = {
     saveKey: Function,
     resetKey: Function,
     address: string,
-    generating: boolean,
     wif: string,
-    encryptedWif: string,
+    encryptedWIF: string,
     passphrase: string,
 }
 
@@ -29,7 +28,8 @@ export default class CreateWallet extends Component<Props, State> {
     passphrase2: ''
   }
 
-  generateNewWallet = () => {
+  createWallet = (e: SyntheticMouseEvent<*>) => {
+    e.preventDefault()
     const { passphrase, passphrase2 } = this.state
     const { generateNewWallet } = this.props
     generateNewWallet(passphrase, passphrase2).catch(() => {
@@ -45,47 +45,44 @@ export default class CreateWallet extends Component<Props, State> {
   }
 
   render () {
-    const { generating, address, encryptedWif, resetKey, saveKey, wif } = this.props
+    const { address, encryptedWIF, resetKey, saveKey, wif } = this.props
     const passphraseFromProps = this.props.passphrase
     const { passphrase, passphrase2 } = this.state
     const disabledButton = passphrase === '' || passphrase2 === ''
 
-    const passphraseDiv = (
-      <div>
-        <div className='info'>
-          Choose a passphrase to encrypt your private key:
-        </div>
-        <form onSubmit={(e) => { e.preventDefault(); this.generateNewWallet() }}>
-          <PasswordField
-            placeholder='Enter passphrase here'
-            value={passphrase}
-            onChange={(e) => this.setState({ passphrase: e.target.value })}
-            autoFocus
-          />
-          <PasswordField
-            placeholder='Repeat passphrase here'
-            value={passphrase2}
-            onChange={(e) => this.setState({ passphrase2: e.target.value })}
-          />
-          <button type='submit' disabled={disabledButton} className={disabledButton ? 'disabled' : ''}> Generate keys </button>
-          <HomeButtonLink />
-        </form>
-      </div>
-    )
-
     return (
       <Page id='newWallet'>
-        {isNil(wif) ? passphraseDiv : <div />}
-        {generating && <div className='generating'>Generating keys...</div>}
-        {!generating && !isNil(wif) &&
-        <DisplayWalletKeys
-          address={address}
-          wif={wif}
-          passphrase={passphraseFromProps}
-          passphraseKey={encryptedWif}
-          resetKey={resetKey}
-          saveKey={saveKey}
-        />
+        {isNil(wif) ? (
+          <div>
+            <div className='info'>
+              Choose a passphrase to encrypt your private key:
+            </div>
+            <form onSubmit={this.createWallet}>
+              <PasswordField
+                placeholder='Enter passphrase here'
+                value={passphrase}
+                onChange={(e) => this.setState({ passphrase: e.target.value })}
+                autoFocus
+              />
+              <PasswordField
+                placeholder='Repeat passphrase here'
+                value={passphrase2}
+                onChange={(e) => this.setState({ passphrase2: e.target.value })}
+              />
+              <button type='submit' disabled={disabledButton} className={disabledButton ? 'disabled' : ''}> Generate keys </button>
+              <HomeButtonLink />
+            </form>
+          </div>
+        )
+          : (
+            <DisplayWalletKeys
+              address={address}
+              wif={wif}
+              passphrase={passphraseFromProps}
+              passphraseKey={encryptedWIF}
+              resetKey={resetKey}
+              saveKey={saveKey}
+            />)
         }
       </Page>
     )

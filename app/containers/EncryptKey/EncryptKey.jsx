@@ -8,13 +8,12 @@ import Page from '../../components/Page'
 import HomeButtonLink from '../../components/HomeButtonLink'
 
 type Props = {
-    generateWalletFromWif: Function,
+    generateNewWallet: Function,
     saveKey: Function,
     resetKey: Function,
     address: string,
-    generating: boolean,
     wif: string,
-    encryptedWif: string,
+    encryptedWIF: string,
     passphrase: string
 }
 
@@ -31,10 +30,11 @@ export default class EncryptKey extends Component<Props, State> {
     wif: ''
   }
 
-  generateWalletFromWif = () => {
+  createWallet = (e: SyntheticMouseEvent<*>) => {
+    e.preventDefault()
     const { passphrase, passphrase2, wif } = this.state
-    const { generateWalletFromWif } = this.props
-    generateWalletFromWif(passphrase, passphrase2, wif).catch(() => {
+    const { generateNewWallet } = this.props
+    generateNewWallet(passphrase, passphrase2, wif).catch(() => {
       this.resetFields()
     })
   }
@@ -48,53 +48,50 @@ export default class EncryptKey extends Component<Props, State> {
   }
 
   render () {
-    const { generating, address, encryptedWif, saveKey, resetKey } = this.props
+    const { address, encryptedWIF, saveKey, resetKey } = this.props
     const passphraseFromProps = this.props.passphrase
     const wifFromProps = this.props.wif
     const { passphrase, passphrase2, wif } = this.state
     const disabledButton = passphrase === '' || passphrase2 === '' || wif === ''
 
-    const passphraseDiv = (
-      <div>
-        <div className='info'>
-          Choose a passphrase to encrypt your existing private key:
-        </div>
-        <form onSubmit={(e) => { e.preventDefault(); this.generateWalletFromWif() }}>
-          <PasswordField
-            value={passphrase}
-            onChange={(e) => this.setState({ passphrase: e.target.value })}
-            placeholder='Enter passphrase here'
-            autoFocus
-          />
-          <PasswordField
-            value={passphrase2}
-            onChange={(e) => this.setState({ passphrase2: e.target.value })}
-            placeholder='Enter passphrase again'
-          />
-          <PasswordField
-            value={wif}
-            onChange={(e) => this.setState({ wif: e.target.value })}
-            placeholder='Enter existing WIF here'
-          />
-          <button type='submit' disabled={disabledButton} className={disabledButton ? 'disabled' : ''}> Generate encrypted key </button>
-          <HomeButtonLink />
-        </form>
-      </div>
-    )
     return (
       <Page id='newWallet'>
-        {isNil(wifFromProps) && passphraseDiv}
-        {generating && <div className='generating'>Generating keys...</div>}
-        {!generating && !isNil(wifFromProps) &&
+        {isNil(wifFromProps) ? (
+          <div>
+            <div className='info'>
+              Choose a passphrase to encrypt your existing private key:
+            </div>
+            <form onSubmit={this.createWallet}>
+              <PasswordField
+                value={passphrase}
+                onChange={(e) => this.setState({ passphrase: e.target.value })}
+                placeholder='Enter passphrase here'
+                autoFocus
+              />
+              <PasswordField
+                value={passphrase2}
+                onChange={(e) => this.setState({ passphrase2: e.target.value })}
+                placeholder='Enter passphrase again'
+              />
+              <PasswordField
+                value={wif}
+                onChange={(e) => this.setState({ wif: e.target.value })}
+                placeholder='Enter existing WIF here'
+              />
+              <button type='submit' disabled={disabledButton} className={disabledButton ? 'disabled' : ''}> Generate encrypted key </button>
+              <HomeButtonLink />
+            </form>
+          </div>
+        ) : (
           <DisplayWalletKeys
             address={address}
             wif={wifFromProps}
             passphrase={passphraseFromProps}
-            passphraseKey={encryptedWif}
+            passphraseKey={encryptedWIF}
             resetKey={resetKey}
             saveKey={saveKey}
           />
-        }
+        )}
       </Page>
     )
   }
