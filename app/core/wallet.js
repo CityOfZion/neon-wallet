@@ -4,9 +4,7 @@ import { wallet } from 'neon-js'
 
 const MIN_PASSPHRASE_LEN = 4
 
-export const validatePassphrase = (passphrase: string): boolean => passphrase.length >= MIN_PASSPHRASE_LEN
-
-export const checkMatchingPassphrases = (passphrase: string, passphrase2: string) => passphrase !== passphrase2
+export const validatePassphraseLength = (passphrase: string): boolean => passphrase.length >= MIN_PASSPHRASE_LEN
 
 export const isToken = (symbol: TokenSymbolType) => Object.keys(TOKENS).includes(symbol)
 
