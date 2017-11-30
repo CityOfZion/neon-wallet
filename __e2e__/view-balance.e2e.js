@@ -24,6 +24,10 @@ test.after(async () => {
   }
 })
 
+function timeout(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 test.serial('should login success', async t => {
   // Go to login page
   await app.client.click('a[href="/login-private-key"]>div.linkBox')
@@ -35,6 +39,7 @@ test.serial('should login success', async t => {
   await app.client.click('#loginPage button')
 
   // Switch to TestNet
+  await timeout(2000)
   const currentNetName = await app.client.getText('#network .netName')
   if (currentNetName === 'MainNet') {
     await app.client.click('#network .netName')
