@@ -80,6 +80,7 @@ const SendDisplay = ({
           </select>
         </div>
       </div>
+      <div>Sending NEP5 tokens requires holding at least 1 drop of GAS</div>
       <div id='sendAmount' className={styles.column}>
         <label className={styles.label}>Balance:</label>
         {symbol === ASSETS.NEO && formatNEO(balance)}

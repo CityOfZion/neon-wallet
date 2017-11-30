@@ -20,10 +20,16 @@ describe('wallet module tests', () => {
     NEO: 0,
     GAS: 0,
     prices: {
-      NEO: neoPrice,
-      GAS: gasPrice
+      NEO: 0,
+      GAS: 0
     },
-    tokens: [],
+    tokens: {
+      RPX: {
+        balance: 0,
+        scriptHash: 'ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9',
+        symbol: 'RPX'
+      }
+    },
     transactions: []
   }
 
@@ -69,7 +75,7 @@ describe('wallet module tests', () => {
       const expectedState = {
         ...initialState,
         prices: {
-          ...initialState.price,
+          ...initialState.prices,
           NEO: neoPrice
         }
       }
@@ -95,7 +101,7 @@ describe('wallet module tests', () => {
       const expectedState = {
         ...initialState,
         prices: {
-          ...initialState.price,
+          ...initialState.prices,
           GAS: gasPrice
         }
       }
