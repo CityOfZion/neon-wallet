@@ -6,7 +6,7 @@ import { showErrorNotification, showInfoNotification, hideNotification } from '.
 import commNode from '../ledger/ledger-comm-node'
 import { ledgerNanoSCreateSignatureAsync } from '../ledger/ledgerNanoS'
 
-import { validatePassphrase } from '../core/wallet'
+import { validatePassphraseLength } from '../core/wallet'
 import { BIP44_PATH, ROUTES } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
 
@@ -49,7 +49,7 @@ export function setKeys (accountKeys: any) {
 export const loginNep2 = (passphrase: string, wif: string, history: Object) => (dispatch: DispatchType) => {
   const dispatchError = (message: string) => dispatch(showErrorNotification({ message }))
 
-  if (!validatePassphrase(passphrase)) {
+  if (!validatePassphraseLength(passphrase)) {
     return dispatchError('Passphrase too short')
   }
 
@@ -64,7 +64,7 @@ export const loginNep2 = (passphrase: string, wif: string, history: Object) => (
     } catch (e) {
       return dispatchError('Wrong passphrase or invalid encrypted key')
     }
-  }, 500)
+  }, 0)
 }
 
 export function hardwareDeviceInfo (hardwareDeviceInfo: string) {
@@ -145,7 +145,7 @@ export const ledgerNanoSGetInfoAsync = () => async (dispatch: DispatchType) => {
 }
 
 // State Getters
-export const getWif = (state: Object) => state.account.wif
+export const getWIF = (state: Object) => state.account.wif
 export const getAddress = (state: Object) => state.account.address
 export const getLoggedIn = (state: Object) => state.account.loggedIn
 export const getRedirectUrl = (state: Object) => state.account.redirectUrl
