@@ -1,6 +1,6 @@
 // @flow
 import { ASSETS, TOKENS } from './constants'
-import Neon, { wallet } from 'neon-js'
+import { wallet } from 'neon-js'
 
 const MIN_PASSPHRASE_LEN = 4
 
@@ -12,7 +12,7 @@ export const verifyPrivateKey = (wif: string): boolean => {
   if (!wif) {
     return false
   }
-  const account = Neon.create.account(wif)
+  const account = new wallet.Account(wif)
   return account !== -1 && account.address
 }
 

@@ -1,5 +1,5 @@
 // @flow
-import Neon, { api } from 'neon-js'
+import { wallet, api } from 'neon-js'
 
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notifications'
 import { getWif, LOGOUT } from './account'
@@ -13,7 +13,7 @@ export const participateInSale = (neoToSend: number, scriptHash: string) => asyn
   const neo = getNEO(state)
   const net = getNetwork(state)
 
-  const account = Neon.create.account(wif)
+  const account = new wallet.Account(wif)
   if (parseFloat(neoToSend) !== parseInt(neoToSend)) {
     dispatch(showErrorNotification({ message: 'You cannot send fractional NEO to a token sale.' }))
     return false

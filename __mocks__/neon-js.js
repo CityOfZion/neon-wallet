@@ -14,28 +14,48 @@ const address = 'AM22coFfbe9N6omgL9ucFBLkeaMNg9TEyL'
 const encryptedKey = '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
 const scriptHash = '4bcdc110b6514312ead9420467475232d4f08539'
 
-neonjs.getTransactionHistory = promiseMockGen([])
-neonjs.getClaimAmounts = promiseMockGen({ available: 0, unavailable: 0 })
-neonjs.getWalletDBHeight = promiseMockGen(586435)
-neonjs.getBalance = promiseMockGen({ NEO: { balance: 1 }, GAS: { balance: 1 } })
-neonjs.doSendAsset = promiseMockGen({ result: true })
-neonjs.doClaimAllGas = promiseMockGen({ result: true })
+neonjs.api = {
+  neonDB: {
+    getClaims: jest.fn(),
+    doClaimAllGas: promiseMockGen({ result: true }),
+    doSendAsset: promiseMockGen({ result: true }),
+    getWalletDBHeight: promiseMockGen(586435),
+    getAPIEndpoint: jest.fn(() => 'http://testnet-api.wallet.cityofzion.io'),
+    getRPCEndpoint: jest.fn(),
+    doMintTokens: jest.fn(),
+    getTransactionHistory: promiseMockGen([]),
+    getBalance: promiseMockGen({ NEO: { balance: 1 }, GAS: { balance: 1 } })
+  },
+  nep5: {
+    getTokenInfo: jest.fn(),
+    getTokenBalance: jest.fn()
+  }
+}
 
-neonjs.getAPIEndpoint = jest.fn(() => 'http://testnet-api.wallet.cityofzion.io')
-neonjs.decryptWIF = jest.fn((wif) => {
-  return new Promise((resolve, reject) => {
-    if (!wif) reject(new Error())
-    resolve(privateKey)
-  })
-})
-neonjs.getAccountFromWIFKey = jest.fn(() => {
-  return { address }
-})
-neonjs.generatePrivateKey = jest.fn()
-neonjs.getWIFFromPrivateKey = jest.fn(() => privateKey)
-neonjs.encryptWIF = jest.fn(() => encryptedKey)
-neonjs.verifyAddress = jest.fn(() => true)
-neonjs.getScriptHashFromAddress = jest.fn(() => scriptHash)
-neonjs.queryRPC = async function () { return true; }
+neonjs.create = {
+  account: {
+    address
+    // privateKey
+    // wif
+  }
+}
+neonjs.tx = {
+  serializeTransaction: jest.fn()
+}
+// TODO - look into why I chose to use encrypt vs encryptWif from new API
+neonjs.wallet = {
+  getPublicKeyEncoded: jest.fn(),
+  decryptWIF: jest.fn((wif) => {
+    return new Promise((resolve, reject) => {
+      if (!wif) reject(new Error())
+      resolve(privateKey)
+    })
+  }),
+  encrypt: jest.fn(() => encryptedKey),
+  generatePrivateKey: jest.fn(() => privateKey),
+  Account: jest.fn(),
+  getVerificationScriptFromPublicKey: jest.fn(() => scriptHash),
+  isAddress: jest.fn(() => true)
+}
 
 module.exports = neonjs
