@@ -41,7 +41,7 @@ test.serial('should login success', async t => {
   }
 
   // Show exact public address
-  t.is(await app.client.getText('#accountInfo .address'), 'ASJQLBnhAs6fSgBv2R7KtRZjC8A9fAmcNW')
+  t.is(await app.client.getText('#network .netName'), 'TestNet')
 })
 
 test.serial('should show correct balance', async t => {
