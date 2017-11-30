@@ -6,7 +6,7 @@ import { togglePane } from '../../modules/dashboard'
 import { logout, getAddress } from '../../modules/account'
 import { getBlockHeight, getNetwork } from '../../modules/metadata'
 import { getNotifications, showErrorNotification } from '../../modules/notifications'
-import { getNEOPrice, getGASPrice, getNEO, getGAS, getTokens } from '../../modules/wallet'
+import { getNEOPrice, getGASPrice, getNEO, getGAS, getTokens, getIsLoaded, loadWalletData } from '../../modules/wallet'
 import { showModal } from '../../modules/modal'
 import { sendTransaction } from '../../modules/transactions'
 
@@ -21,7 +21,8 @@ const mapStateToProps = (state: Object) => ({
   notification: getNotifications(state),
   neo: getNEO(state),
   gas: getGAS(state),
-  tokens: getTokens(state)
+  tokens: getTokens(state),
+  loaded: getIsLoaded(state)
 })
 
 const actionCreators = {
@@ -29,7 +30,8 @@ const actionCreators = {
   logout,
   showModal,
   showErrorNotification,
-  sendTransaction
+  sendTransaction,
+  loadWalletData
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)

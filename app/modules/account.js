@@ -6,7 +6,7 @@ import { showErrorNotification, showInfoNotification, hideNotification } from '.
 import commNode from '../ledger/ledger-comm-node'
 import { ledgerNanoSCreateSignatureAsync } from '../ledger/ledgerNanoS'
 
-import { verifyPrivateKey, validatePassphrase } from '../core/wallet'
+import { validatePassphraseLength } from '../core/wallet'
 import { BIP44_PATH, ROUTES } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
 
@@ -46,20 +46,24 @@ export function setKeys (accountKeys: any) {
   }
 }
 
-export const loginNep2 = (passphrase: string, wif: string, history: Object) => (dispatch: DispatchType) => {
+export const loginNep2 = (passphrase: string, encryptedWIF: string, history: Object) => (dispatch: DispatchType) => {
   const dispatchError = (message: string) => dispatch(showErrorNotification({ message }))
 
-  if (!validatePassphrase(passphrase)) {
+  if (!validatePassphraseLength(passphrase)) {
     return dispatchError('Passphrase too short')
+  }
+
+  if (!wallet.isNEP2(encryptedWIF)) {
+    return dispatchError('That is not a valid encrypted key')
   }
 
   const infoNotificationId = dispatch(showInfoNotification({ message: 'Decrypting encoded key...' }))
 
-  setTimeout(async () => {
+  setTimeout(() => {
     try {
-      const [_err, responseWif] = await asyncWrap(wallet.decryptWIF(wif, passphrase)) // eslint-disable-line
+      const wif = wallet.decryptWIF(encryptedWIF, passphrase)
       dispatch(hideNotification(infoNotificationId))
-      dispatch(login(responseWif))
+      dispatch(login(wif))
       return history.push(ROUTES.DASHBOARD)
     } catch (e) {
       return dispatchError('Wrong passphrase or invalid encrypted key')
@@ -89,7 +93,7 @@ export function hardwarePublicKey (publicKey: string) {
 }
 
 export const loginWithPrivateKey = (wif: string, history: Object, route?: RouteType) => (dispatch: DispatchType) => {
-  if (verifyPrivateKey(wif)) {
+  if (wallet.isWIF(wif)) {
     dispatch(login(wif))
     return history.push(route || ROUTES.DASHBOARD)
   } else {
@@ -145,7 +149,7 @@ export const ledgerNanoSGetInfoAsync = () => async (dispatch: DispatchType) => {
 }
 
 // State Getters
-export const getWif = (state: Object) => state.account.wif
+export const getWIF = (state: Object) => state.account.wif
 export const getAddress = (state: Object) => state.account.address
 export const getLoggedIn = (state: Object) => state.account.loggedIn
 export const getRedirectUrl = (state: Object) => state.account.redirectUrl

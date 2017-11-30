@@ -2,7 +2,7 @@
 import { api } from 'neon-js'
 
 import { showErrorNotification, showSuccessNotification, showInfoNotification } from './notifications'
-import { getWif, getAddress, getSigningFunction, getPublicKey, LOGOUT } from './account'
+import { getWIF, getAddress, getSigningFunction, getPublicKey, LOGOUT } from './account'
 import { getNetwork } from './metadata'
 import { getNEO } from './wallet'
 
@@ -50,7 +50,7 @@ export const syncAvailableClaim = (net: NetworkType, address: string) => async (
 
 export const doClaimNotify = () => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
-  const wif = getWif(state)
+  const wif = getWIF(state)
   const address = getAddress(state)
   const net = getNetwork(state)
   const signingFunction = getSigningFunction(state)
@@ -86,7 +86,7 @@ export const doClaimNotify = () => async (dispatch: DispatchType, getState: GetS
 // When new claims are available, this will trigger the claim
 export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
-  const wif = getWif(state)
+  const wif = getWIF(state)
   const address = getAddress(state)
   const net = getNetwork(state)
   const neo = getNEO(state)

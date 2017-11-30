@@ -29,6 +29,14 @@ export const RESET_PRICES = 'RESET_PRICES'
 export const SET_TRANSACTION_HISTORY = 'SET_TRANSACTION_HISTORY'
 export const SET_TOKENS = 'SET_TOKENS'
 export const SET_TOKEN_INFO = 'SET_TOKEN_INFO'
+export const SET_IS_LOADED = 'SET_IS_LOADED'
+
+export const setIsLoaded = (loaded: boolean) => ({
+  type: SET_IS_LOADED,
+  payload: {
+    loaded
+  }
+})
 
 // Actions
 export function setBalance (NEO: number, GAS: number) {
@@ -96,6 +104,7 @@ export const getGASMarketPriceUSD = () => async (dispatch: DispatchType) => {
 export const retrieveBalance = (net: NetworkType, address: string) => async (dispatch: DispatchType) => {
   // If API dies, still display balance - ignore _err
   const [_err, resultBalance] = await asyncWrap(api.neonDB.getBalance(net, address)) // eslint-disable-line
+  dispatch(setIsLoaded(true))
   return dispatch(setBalance(resultBalance.NEO.balance, resultBalance.GAS.balance))
 }
 
@@ -154,6 +163,7 @@ export const getTransactions = (state: Object) => state.wallet.transactions
 export const getNEOPrice = (state: Object) => state.wallet.prices.NEO
 export const getGASPrice = (state: Object) => state.wallet.prices.GAS
 export const getTokens = (state: Object) => state.wallet.tokens
+export const getIsLoaded = (state: Object) => state.wallet.loaded
 
 const getInitialTokenBalance = () => {
   const tokens = {}
@@ -168,6 +178,7 @@ const getInitialTokenBalance = () => {
 }
 
 const initialState = {
+  loaded: false,
   NEO: 0,
   GAS: 0,
   transactions: [],
@@ -206,8 +217,9 @@ export default (state: Object = initialState, action: ReduxAction) => {
     case RESET_PRICES:
       return {
         ...state,
-        NEO: 0,
-        GAS: 0
+        prices: {
+          ...initialState.prices
+        }
       }
     case SET_TRANSACTION_HISTORY:
       const { transactions } = action.payload
@@ -232,6 +244,12 @@ export default (state: Object = initialState, action: ReduxAction) => {
             info
           }
         }
+      }
+    case SET_IS_LOADED:
+      const { loaded } = action.payload
+      return {
+        ...state,
+        loaded
       }
     case LOGOUT:
       return initialState

@@ -2,14 +2,14 @@
 import { wallet, api } from 'neon-js'
 
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notifications'
-import { getWif, LOGOUT } from './account'
+import { getWIF, LOGOUT } from './account'
 import { getNetwork } from './metadata'
 import { getNEO } from './wallet'
 import asyncWrap from '../core/asyncHelper'
 
 export const participateInSale = (neoToSend: number, scriptHash: string) => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
-  const wif = getWif(state)
+  const wif = getWIF(state)
   const neo = getNEO(state)
   const net = getNetwork(state)
 

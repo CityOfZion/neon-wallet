@@ -4,7 +4,8 @@ import { wallet } from 'neon-js'
 
 import { showErrorNotification, showInfoNotification, hideNotification, showSuccessNotification } from './notifications'
 
-import { validatePassphrase, checkMatchingPassphrases } from '../core/wallet'
+import { validatePassphraseLength } from '../core/wallet'
+import { ROUTES } from '../core/constants'
 
 // Constants
 export const NEW_WALLET = 'NEW_WALLET'
@@ -19,7 +20,7 @@ export function newWallet (account: Object) {
       wif: account.wif,
       address: account.address,
       passphrase: account.passphrase,
-      encryptedWif: account.encryptedWif
+      encryptedWIF: account.encryptedWIF
     }
   }
 }
@@ -41,87 +42,65 @@ export const saveKey = (keyName: string, passphraseKey: string) => (dispatch: Di
   })
 }
 
-export const generateWalletFromWif = (passphrase: string, passphrase2: string, wif: string) => async (dispatch: DispatchType): Promise<*> => {
-  const dispatchError = (message: string) => dispatch(showErrorNotification({ message }))
-
-  if (checkMatchingPassphrases(passphrase, passphrase2)) {
-    return dispatchError('Passphrases do not match')
-  } else if (validatePassphrase(passphrase)) {
-    const infoNotificationId = dispatch(showInfoNotification({ message: 'Generating encoded key...', autoDismiss: 0 }))
-    setTimeout(async () => {
-      try {
-        const account = new wallet.Account(wif)
-        const { WIF, address } = account
-        const encryptedWif = wallet.encrypt(WIF, passphrase)
-        dispatch(hideNotification(infoNotificationId))
-        return dispatch(newWallet({
-          wif: WIF,
-          address,
-          passphrase,
-          encryptedWif
-        }))
-      } catch (e) {
-        return dispatchError('The private key is not valid')
-      }
-    }, 500)
-  } else {
-    return dispatchError('Please choose a longer passphrase')
+export const generateNewWallet = (passphrase: string, passphrase2: string, wif?: string, history: Object) => (dispatch: DispatchType) => {
+  const dispatchError = (message: string) => {
+    dispatch(showErrorNotification({ message }))
+    return false
   }
-}
 
-export const generateNewWallet = (passphrase: string, passphrase2: string) => async (dispatch: DispatchType): Promise<*> => {
-  const dispatchError = (message: string) => dispatch(showErrorNotification({ message }))
-
-  if (checkMatchingPassphrases(passphrase, passphrase2)) {
+  if (passphrase !== passphrase2) {
     return dispatchError('Passphrases do not match')
-  } else if (validatePassphrase(passphrase)) {
+  } else if (!validatePassphraseLength(passphrase)) {
+    return dispatchError('Please choose a longer passphrase')
+  } else if (wif && !wallet.isWIF(wif)) {
+    return dispatchError('The private key is not valid')
+  } else {
     const infoNotificationId = dispatch(showInfoNotification({ message: 'Generating encoded key...', autoDismiss: 0 }))
-    setTimeout(async () => {
+    setTimeout(() => {
       try {
-        const newPrivateKey = wallet.generatePrivateKey()
-        const account = new wallet.Account(newPrivateKey)
+        const account = new wallet.Account(wif || wallet.generatePrivateKey())
         const { WIF, address } = account
-        const encryptedWif = wallet.encrypt(WIF, passphrase)
+        const encryptedWIF = wallet.encrypt(WIF, passphrase)
 
         dispatch(hideNotification(infoNotificationId))
-        return dispatch(newWallet({
+        dispatch(newWallet({
           wif: WIF,
           address,
           passphrase,
-          encryptedWif
+          encryptedWIF
         }))
+        history.push(ROUTES.DISPLAY_WALLET_KEYS)
+        return true
       } catch (e) {
         return dispatchError('An error occured while trying to generate a new wallet')
       }
     }, 500)
-  } else {
-    return dispatchError('Please choose a longer passphrase')
   }
 }
 
 // state getters
-export const getWif = (state: Object) => state.generateWallet.wif
+export const getWIF = (state: Object) => state.generateWallet.wif
 export const getAddress = (state: Object) => state.generateWallet.address
 export const getPassphrase = (state: Object) => state.generateWallet.passphrase
-export const getEncryptedWif = (state: Object) => state.generateWallet.encryptedWif
+export const getEncryptedWIF = (state: Object) => state.generateWallet.encryptedWIF
 
 const initialState = {
   wif: null,
   address: null,
   passphrase: null,
-  encryptedWif: null
+  encryptedWIF: null
 }
 
 export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
     case NEW_WALLET: {
-      const { passphrase, wif, address, encryptedWif } = action.payload
+      const { passphrase, wif, address, encryptedWIF } = action.payload
       return {
         ...state,
         wif,
         address,
         passphrase,
-        encryptedWif
+        encryptedWIF
       }
     }
     case RESET_KEY: {

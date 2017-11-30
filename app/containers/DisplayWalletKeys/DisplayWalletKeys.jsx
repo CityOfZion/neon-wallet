@@ -3,14 +3,15 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import QRCode from 'qrcode/lib/browser'
 
-import CopyToClipboard from '../CopyToClipboard'
+import Page from '../../components/Page'
+import CopyToClipboard from '../../components/CopyToClipboard'
 
 type Props = {
   resetKey: Function,
   saveKey: Function,
   address: string,
   wif: string,
-  passphraseKey: string,
+  encryptedWIF: string,
   passphrase: string,
 }
 
@@ -27,20 +28,20 @@ class DisplayWalletKeys extends Component<Props, State> {
   privateCanvas: ?HTMLCanvasElement
 
   componentDidMount () {
-    const { address, passphraseKey } = this.props
+    const { address, encryptedWIF } = this.props
     QRCode.toCanvas(this.publicCanvas, address, { version: 5 }, (err) => {
       if (err) console.log(err)
     })
-    QRCode.toCanvas(this.privateCanvas, passphraseKey, { version: 5 }, (err) => {
+    QRCode.toCanvas(this.privateCanvas, encryptedWIF, { version: 5 }, (err) => {
       if (err) console.log(err)
     })
   }
 
   render () {
-    const { passphrase, address, passphraseKey, wif, resetKey, saveKey } = this.props
+    const { passphrase, address, encryptedWIF, wif, resetKey, saveKey } = this.props
     const { keyName } = this.state
     return (
-      <div>
+      <Page id='newWallet'>
         <div className='disclaimer'>
           You must save and backup the keys below. If you lose them, you lose access to your assets.
           You can click "Save Key" to save the encrypted key in local application storage.
@@ -68,8 +69,8 @@ class DisplayWalletKeys extends Component<Props, State> {
           </div>
           <div className='keyListItem'>
             <span className='label'>Encrypted key:</span>
-            <span className='key'>{passphraseKey}</span>
-            <CopyToClipboard text={passphraseKey} tooltip='Copy Encrypted Key' />
+            <span className='key'>{encryptedWIF}</span>
+            <CopyToClipboard text={encryptedWIF} tooltip='Copy Encrypted Key' />
           </div>
           <div className='keyListItem'>
             <span className='label'>Private Key:</span>
@@ -79,11 +80,11 @@ class DisplayWalletKeys extends Component<Props, State> {
         </div>
         <div className='saveKey'>
           <input autoFocus type='text' placeholder='Name this key' value={keyName} onChange={(e) => this.setState({ keyName: e.target.value })} />
-          <button onClick={() => saveKey(keyName, passphraseKey)}>Save Key</button>
+          <button onClick={() => saveKey(keyName, encryptedWIF)}>Save Key</button>
         </div>
         <Link onClick={() => resetKey()} to='/'><button>Back</button></Link>
         <button onClick={() => window.print()}>Print</button>
-      </div>
+      </Page>
     )
   }
 }

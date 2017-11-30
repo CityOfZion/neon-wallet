@@ -4,7 +4,7 @@ import { api } from 'neon-js'
 
 import { setTransactionHistory, getNEO, getGAS, getTokens, getScriptHashForNetwork } from './wallet'
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notifications'
-import { getWif, getPublicKey, getSigningFunction, getAddress, LOGOUT } from './account'
+import { getWIF, getPublicKey, getSigningFunction, getAddress, LOGOUT } from './account'
 import { getNetwork } from './metadata'
 
 import { validateTransactionBeforeSending, obtainTokenBalance, isToken } from '../core/wallet'
@@ -42,7 +42,7 @@ export const syncTransactionHistory = (net: NetworkType, address: string) => asy
 
 export const sendTransaction = (sendAddress: string, sendAmount: string, symbol: TokenSymbolType) => async (dispatch: DispatchType, getState: GetStateType): Promise<*> => {
   const state = getState()
-  const wif = getWif(state)
+  const wif = getWIF(state)
   const address = getAddress(state)
   const net = getNetwork(state)
   const neo = getNEO(state)
@@ -75,7 +75,7 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, symbol:
         sendAssetFn = () => api.neonDB.doSendAsset(net, sendAddress, wif, sendAsset, null)
       } else {
         const scriptHash = getScriptHashForNetwork(net, symbol)
-        const decimalAdjustedSendAmount = parsedSendAmount * Math.pow(10,tokens[symbol].info.decimals)
+        const decimalAdjustedSendAmount = parsedSendAmount * 10 ** tokens[symbol].info.decimals
         sendAssetFn = () => api.nep5.doTransferToken(net, scriptHash, wif, sendAddress, decimalAdjustedSendAmount)
       }
     }
