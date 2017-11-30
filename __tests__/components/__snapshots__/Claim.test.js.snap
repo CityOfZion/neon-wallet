@@ -5,13 +5,17 @@ exports[`Claim should not render claim gas button when claim button is disabled 
   id="claim"
 >
   <Tooltip
+    disabled={false}
     title="You can claim GAS once every 5 minutes"
   >
     <button
       className="disabled"
       disabled={true}
+      onClick={[Function]}
     >
-      Claim 10 GAS
+      Claim 
+      10
+       GAS
     </button>
   </Tooltip>
 </div>
@@ -21,11 +25,20 @@ exports[`Claim should render claim gas button when claim button is not disabled 
 <div
   id="claim"
 >
-  <button
-    onClick={[Function]}
+  <Tooltip
+    disabled={true}
+    title="You can claim GAS once every 5 minutes"
   >
-    Claim 10 GAS
-  </button>
+    <button
+      className=""
+      disabled={false}
+      onClick={[Function]}
+    >
+      Claim 
+      10
+       GAS
+    </button>
+  </Tooltip>
 </div>
 `;
 
