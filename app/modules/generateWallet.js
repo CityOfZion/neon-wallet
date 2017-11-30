@@ -5,6 +5,7 @@ import { wallet } from 'neon-js'
 import { showErrorNotification, showInfoNotification, hideNotification, showSuccessNotification } from './notifications'
 
 import { validatePassphraseLength } from '../core/wallet'
+import { ROUTES } from '../core/constants'
 
 // Constants
 export const NEW_WALLET = 'NEW_WALLET'
@@ -41,8 +42,11 @@ export const saveKey = (keyName: string, passphraseKey: string) => (dispatch: Di
   })
 }
 
-export const generateNewWallet = (passphrase: string, passphrase2: string, wif?: string) => (dispatch: DispatchType) => {
-  const dispatchError = (message: string) => dispatch(showErrorNotification({ message }))
+export const generateNewWallet = (passphrase: string, passphrase2: string, wif?: string, history: Object) => (dispatch: DispatchType) => {
+  const dispatchError = (message: string) => {
+    dispatch(showErrorNotification({ message }))
+    return false
+  }
 
   if (passphrase !== passphrase2) {
     return dispatchError('Passphrases do not match')
@@ -59,12 +63,14 @@ export const generateNewWallet = (passphrase: string, passphrase2: string, wif?:
         const encryptedWIF = wallet.encrypt(WIF, passphrase)
 
         dispatch(hideNotification(infoNotificationId))
-        return dispatch(newWallet({
+        dispatch(newWallet({
           wif: WIF,
           address,
           passphrase,
           encryptedWIF
         }))
+        history.push(ROUTES.DISPLAY_WALLET_KEYS)
+        return true
       } catch (e) {
         return dispatchError('An error occured while trying to generate a new wallet')
       }

@@ -5,14 +5,13 @@ import { bindActionCreators } from 'redux'
 import {
   saveKey,
   resetKey,
-  generateNewWallet,
   getWIF,
   getAddress,
   getEncryptedWIF,
   getPassphrase
 } from '../../modules/generateWallet'
 
-import EncryptKey from './EncryptKey'
+import DisplayWalletKeys from './DisplayWalletKeys'
 
 const mapStateToProps = (state: Object) => ({
   wif: getWIF(state),
@@ -23,10 +22,9 @@ const mapStateToProps = (state: Object) => ({
 
 const actionCreators = {
   saveKey,
-  resetKey,
-  generateNewWallet
+  resetKey
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(EncryptKey)
+export default connect(mapStateToProps, mapDispatchToProps)(DisplayWalletKeys)
