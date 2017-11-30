@@ -35,7 +35,7 @@ const transactions = {
       },
       {
         type: 'GAS',
-        amount: '0.4000000',
+        amount: '0.40000000',
         txid: '76938980'
       }
     ]
@@ -82,7 +82,7 @@ describe('TransactionHistory', () => {
     const { wrapper } = setup(initialState, false)
 
     const columnHeader = wrapper.find('.columnHeader')
-    expect(columnHeader.text()).toEqual('Transaction History')
+    expect(columnHeader.text()).toEqual('Transaction History ')
 
     const transactionList = wrapper.find('#transactionList')
     expect(transactionList.children().length).toEqual(0)

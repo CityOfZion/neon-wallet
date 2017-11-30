@@ -53,7 +53,7 @@ neonjs.wallet = {
   }),
   encrypt: jest.fn(() => encryptedKey),
   generatePrivateKey: jest.fn(() => privateKey),
-  Account: jest.fn(),
+  Account: jest.fn(() => { return { address } }),
   getVerificationScriptFromPublicKey: jest.fn(() => scriptHash),
   isAddress: jest.fn(() => true)
 }

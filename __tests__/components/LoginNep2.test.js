@@ -7,7 +7,7 @@ import { shallow, mount } from 'enzyme'
 import { createMemoryHistory } from 'history'
 import LoginNep2 from '../../app/containers/LoginNep2'
 import { decryptWIF } from 'neon-js'
-import { SHOW_NOTIFICATION, HIDE_NOTIFICATIONS, HIDE_NOTIFICATION, DEFAULT_POSITION } from '../../app/modules/notifications'
+import { SHOW_NOTIFICATION, HIDE_NOTIFICATIONS, DEFAULT_POSITION } from '../../app/modules/notifications'
 import { NOTIFICATION_LEVELS } from '../../app/core/constants'
 
 jest.useFakeTimers()
