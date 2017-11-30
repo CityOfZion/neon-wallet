@@ -75,7 +75,7 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, symbol:
         sendAssetFn = () => api.neonDB.doSendAsset(net, sendAddress, wif, sendAsset, null)
       } else {
         const scriptHash = getScriptHashForNetwork(net, symbol)
-        const decimalAdjustedSendAmount = parsedSendAmount * Math.pow(10, tokens[symbol].info.decimals)
+        const decimalAdjustedSendAmount = parsedSendAmount * 10 ** tokens[symbol].info.decimals
         sendAssetFn = () => api.nep5.doTransferToken(net, scriptHash, wif, sendAddress, decimalAdjustedSendAmount)
       }
     }
