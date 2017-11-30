@@ -80,6 +80,17 @@ app.on('ready', () => {
       Menu.setApplicationMenu(menu)
     }
 
+    const inputMenu = Menu.buildFromTemplate([
+      {label : 'Cut', accelerator : 'CmdOrCtrl+X', click() { mainWindow.webContents.cut(); }},
+      {label : 'Copy', accelerator : 'CmdOrCtrl+C', click() { mainWindow.webContents.copy(); }},
+      {label : 'Paste', accelerator : 'CmdOrCtrl+V', click() { mainWindow.webContents.paste(); }},
+      {label : 'Select All', accelerator : 'CmdOrCtrl+A', click() { mainWindow.webContents.selectAll(); }}
+    ]);
+
+    mainWindow.webContents.on('context-menu', (event, params) => {
+      inputMenu.popup(mainWindow);
+    });
+
     if (process.env.START_HOT) {
       mainWindow.loadURL(`http://localhost:${port}/dist`)
     } else {
