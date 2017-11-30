@@ -19,13 +19,13 @@ type Props = {
 
 type State = {
   passphrase: string,
-  wif: string,
+  encryptedWIF: string,
 }
 
 export default class LoginLocalStorage extends Component<Props, State> {
   state = {
     passphrase: '',
-    wif: ''
+    encryptedWIF: ''
   }
 
   componentDidMount () {
@@ -38,17 +38,17 @@ export default class LoginLocalStorage extends Component<Props, State> {
 
   render () {
     const { accountKeys, history, loginNep2 } = this.props
-    const { passphrase, wif } = this.state
-    const loginButtonDisabled = Object.keys(accountKeys).length === 0 || wif === '' || passphrase === ''
+    const { passphrase, encryptedWIF } = this.state
+    const loginButtonDisabled = Object.keys(accountKeys).length === 0 || encryptedWIF === '' || passphrase === ''
 
     return (
       <Page id='loginPage' className={loginStyles.loginPage}>
         <div className={loginStyles.title}>Login using a saved wallet:</div>
-        <form onSubmit={(e) => { e.preventDefault(); loginNep2(passphrase, wif, history) }}>
+        <form onSubmit={(e) => { e.preventDefault(); loginNep2(passphrase, encryptedWIF, history) }}>
           <select
             className={styles.selectWallet}
-            value={wif}
-            onChange={(e) => this.setState({ wif: e.target.value })}
+            value={encryptedWIF}
+            onChange={(e) => this.setState({ encryptedWIF: e.target.value })}
           >
             <option value=''>Select a wallet</option>
             {map(accountKeys, (value, key) => <option value={value} key={`wallet${key}`}>{key}</option>)}

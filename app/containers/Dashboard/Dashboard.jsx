@@ -8,6 +8,7 @@ import NetworkSwitch from '../NetworkSwitch'
 import WalletInfo from '../WalletInfo'
 
 import PriceDisplay from '../../components/PriceDisplay'
+import Loader from '../../components/Loader'
 import Logout from '../../components/Logout'
 
 import { version } from '../../../package.json'
@@ -34,14 +35,17 @@ type Props = {
   sendTransaction: Function,
   neo: number,
   gas: number,
-  tokens: Object
+  tokens: Object,
+  loaded: boolean,
+  loadWalletData: Function
 }
 
 export default class Dashboard extends Component<Props> {
   componentDidMount () {
-    const { net, address } = this.props
+    const { loadWalletData, net, address } = this.props
     // only logging public information here
     log(net, 'LOGIN', address, {})
+    loadWalletData(net, address)
   }
 
   render () {
@@ -56,8 +60,13 @@ export default class Dashboard extends Component<Props> {
       gas,
       tokens,
       showErrorNotification,
-      sendTransaction
+      sendTransaction,
+      loaded
     } = this.props
+
+    if (!loaded) {
+      return <Loader />
+    }
 
     return (
       <div id='dashboard' className={styles.container}>

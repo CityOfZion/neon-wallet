@@ -28,7 +28,8 @@ export const ROUTES = {
   LOGIN_NEP2: '/login-encrypted',
   LOGIN_TOKEN_SALE: '/login-token-sale',
   TOKEN_SALE: '/token-sale',
-  SETTINGS: '/settings'
+  SETTINGS: '/settings',
+  DISPLAY_WALLET_KEYS: '/display-wallet-keys'
 }
 
 export const NOTIFICATION_LEVELS = {

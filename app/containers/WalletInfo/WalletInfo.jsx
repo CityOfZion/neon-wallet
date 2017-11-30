@@ -32,11 +32,6 @@ type Props = {
 }
 
 export default class WalletInfo extends Component<Props> {
-  componentDidMount () {
-    const { loadWalletData, net, address } = this.props
-    loadWalletData(net, address)
-  }
-
   refreshBalance = () => {
     const {
       showSuccessNotification,
