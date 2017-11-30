@@ -1,5 +1,5 @@
 // @flow
-import Neon, { wallet } from 'neon-js'
+import { wallet } from 'neon-js'
 
 import { showErrorNotification, showInfoNotification, hideNotification } from './notifications'
 
@@ -175,9 +175,9 @@ export default (state: Object = initialState, action: ReduxAction) => {
       try {
         if (signingFunction) {
           const publicKeyEncoded = wallet.getPublicKeyEncoded(state.publicKey)
-          loadAccount = Neon.create.account(publicKeyEncoded)
+          loadAccount = new wallet.Account(publicKeyEncoded)
         } else {
-          loadAccount = Neon.create.account(wif)
+          loadAccount = new wallet.Account(wif)
         }
       } catch (e) {
         console.log(e.stack)
