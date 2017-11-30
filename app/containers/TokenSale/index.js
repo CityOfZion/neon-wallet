@@ -4,14 +4,14 @@ import { bindActionCreators } from 'redux'
 
 import { loadWalletData, getNEO } from '../../modules/wallet'
 import { updateRpxBalance, refreshTokenBalance, participateInSale } from '../../modules/sale'
-import { getWif, getAddress } from '../../modules/account'
+import { getWIF, getAddress } from '../../modules/account'
 import { getBlockExplorer, getNetwork } from '../../modules/metadata'
 
 import TokenSale from './TokenSale'
 
 const mapStateToProps = (state: Object) => ({
   explorer: getBlockExplorer(state),
-  wif: getWif(state),
+  wif: getWIF(state),
   neo: getNEO(state),
   net: getNetwork(state),
   address: getAddress(state)

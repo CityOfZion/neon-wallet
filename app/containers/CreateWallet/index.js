@@ -6,18 +6,18 @@ import {
   saveKey,
   resetKey,
   generateNewWallet,
-  getWif,
+  getWIF,
   getAddress,
-  getEncryptedWif,
+  getEncryptedWIF,
   getPassphrase
 } from '../../modules/generateWallet'
 
 import CreateWallet from './CreateWallet'
 
 const mapStateToProps = (state: Object) => ({
-  wif: getWif(state),
+  wif: getWIF(state),
   address: getAddress(state),
-  encryptedWif: getEncryptedWif(state),
+  encryptedWIF: getEncryptedWIF(state),
   passphrase: getPassphrase(state)
 })
 
