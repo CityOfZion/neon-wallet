@@ -6,7 +6,7 @@ import { showErrorNotification, showInfoNotification, hideNotification } from '.
 import commNode from '../ledger/ledger-comm-node'
 import { ledgerNanoSCreateSignatureAsync } from '../ledger/ledgerNanoS'
 
-import { verifyPrivateKey, validatePassphrase } from '../core/wallet'
+import { validatePassphrase } from '../core/wallet'
 import { BIP44_PATH, ROUTES } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
 
@@ -89,7 +89,7 @@ export function hardwarePublicKey (publicKey: string) {
 }
 
 export const loginWithPrivateKey = (wif: string, history: Object, route?: RouteType) => (dispatch: DispatchType) => {
-  if (verifyPrivateKey(wif)) {
+  if (wallet.isWIF(wif)) {
     dispatch(login(wif))
     return history.push(route || ROUTES.DASHBOARD)
   } else {

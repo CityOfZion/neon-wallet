@@ -8,14 +8,6 @@ export const validatePassphrase = (passphrase: string): boolean => passphrase.le
 
 export const checkMatchingPassphrases = (passphrase: string, passphrase2: string) => passphrase !== passphrase2
 
-export const verifyPrivateKey = (wif: string): boolean => {
-  if (!wif) {
-    return false
-  }
-  const account = new wallet.Account(wif)
-  return account !== -1 && account.address
-}
-
 export const isToken = (symbol: TokenSymbolType) => Object.keys(TOKENS).includes(symbol)
 
 export const obtainTokenBalance = (tokens: Object, symbol: TokenSymbolType) => {
