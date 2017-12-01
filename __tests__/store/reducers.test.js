@@ -1,4 +1,4 @@
-import reducer from '../../app/store/reducers'
+import reducer from '../../app/modules'
 
 describe('root reducer', () => {
   it('should combine all reducers', () => {

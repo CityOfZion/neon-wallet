@@ -17,6 +17,7 @@ describe('wallet module tests', () => {
   const neoPrice = 28.10
   const gasPrice = 18.20
   const initialState = {
+    loaded: false,
     NEO: 0,
     GAS: 0,
     prices: {

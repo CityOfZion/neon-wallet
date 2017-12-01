@@ -55,7 +55,8 @@ neonjs.wallet = {
   generatePrivateKey: jest.fn(() => privateKey),
   Account: jest.fn(() => { return { address } }),
   getVerificationScriptFromPublicKey: jest.fn(() => scriptHash),
-  isAddress: jest.fn(() => true)
+  isAddress: jest.fn(() => true),
+  isNEP2: jest.fn(() => true)
 }
 
 module.exports = neonjs
