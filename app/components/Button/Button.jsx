@@ -8,21 +8,19 @@ import { noop } from 'lodash'
 import styles from './Button.scss'
 
 type Props = {
-    children: Children,
-    primary: boolean,
-    cancel: boolean,
-    onClick: () => any,
-    secondary: boolean
+  children: Children,
+  primary: boolean,
+  cancel: boolean,
+  secondary: boolean
 }
 
 const Button = ({
   primary = true,
   secondary = false,
   cancel = false,
-  onClick = noop,
   children
 }: Props) =>
-  <button onClick={onClick}
+  <button onClick={noop}
     className={classNames(styles.button, {
       [styles.primary]: primary,
       [styles.secondary]: secondary,
