@@ -6,7 +6,7 @@ import storage from 'electron-json-storage'
 import Delete from 'react-icons/lib/md/delete'
 import Page from '../../components/Page'
 import HomeButtonLink from '../../components/HomeButtonLink'
-import { EXPLORER, MODAL_TYPES } from '../../core/constants'
+import { EXPLORER, MODAL_TYPES, CURRENCIES } from '../../core/constants'
 
 const { dialog } = require('electron').remote
 
@@ -14,6 +14,8 @@ type Props = {
   setKeys: Function,
   setBlockExplorer: Function,
   explorer: string,
+  setCurrency: Function,
+  currency: string,
   wallets: any,
   showModal: Function
 }
@@ -24,7 +26,8 @@ type State = {
 
 export default class Settings extends Component<Props, State> {
   state = {
-    explorer: this.props.explorer
+    explorer: this.props.explorer,
+    currency: this.props.currency
   }
 
   componentDidMount () {
@@ -81,18 +84,21 @@ export default class Settings extends Component<Props, State> {
     })
   }
 
-  saveSettings = (settings: Object) => {
-    storage.set('settings', settings)
+  componentWillReceiveProps (nextProps) {
+    storage.set('settings', {
+      currency: nextProps.currency,
+      blockExplorer: nextProps.explorer
+    })
   }
 
-  updateSettings = (e: Object) => {
+  updateExplorerSettings = (e: Object) => {
     const { setBlockExplorer } = this.props
-    const explorer = e.target.value
-    this.setState({
-      explorer
-    })
-    this.saveSettings({ blockExplorer: explorer })
-    setBlockExplorer(explorer)
+    setBlockExplorer(e.target.value)
+  }
+
+  updateCurrencySettings = (e: Object) => {
+    const { setCurrency } = this.props
+    setCurrency(e.target.value)
   }
 
   deleteWallet = (key: string) => {
@@ -111,18 +117,35 @@ export default class Settings extends Component<Props, State> {
     })
   }
 
+  getCurrencyOptions () {
+    var options = []
+
+    Object.keys(CURRENCIES).forEach(function (currencyCode) {
+      options.push(<option value={currencyCode} key={currencyCode}>{currencyCode.toUpperCase()}</option>)
+    })
+
+    return options
+  }
+
   render () {
-    const { wallets, explorer } = this.props
+    const { wallets, explorer, currency } = this.props
+
     return (
       <Page id='settings'>
         <div className='description'>Manage your Neon wallet keys and settings</div>
         <div className='settingsForm'>
           <div className='settingsItem'>
             <div className='itemTitle'>Block Explorer</div>
-            <select value={explorer} onChange={this.updateSettings}>
+            <select value={explorer} onChange={this.updateExplorerSettings}>
               <option value={EXPLORER.NEO_TRACKER}>Neotracker</option>
               <option value={EXPLORER.NEO_SCAN}>Neoscan</option>
               <option value={EXPLORER.ANT_CHAIN}>Antchain</option>
+            </select>
+          </div>
+          <div className='settingsItem'>
+            <div className='itemTitle'>Currency</div>
+            <select value={currency} onChange={this.updateCurrencySettings}>
+              {this.getCurrencyOptions()}
             </select>
           </div>
           <div className='settingsItem'>

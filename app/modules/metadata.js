@@ -4,6 +4,7 @@ import axios from 'axios'
 import { version } from '../../package.json'
 import { showWarningNotification } from './notifications'
 import { NETWORK, EXPLORER, NEON_WALLET_RELEASE_LINK, NOTIFICATION_POSITIONS } from '../core/constants'
+import { setCurrency } from './price'
 import asyncWrap from '../core/asyncHelper'
 import storage from 'electron-json-storage'
 
@@ -61,6 +62,10 @@ export const initSettings = () => async (dispatch: DispatchType) => {
     if (settings.blockExplorer !== null && settings.blockExplorer !== undefined) {
       dispatch(setBlockExplorer(settings.blockExplorer))
     }
+
+    if (settings.currency !== null && settings.currency !== undefined) {
+      dispatch(setCurrency(settings.currency))
+    }
   })
 }
 
@@ -70,9 +75,9 @@ export const syncBlockHeight = (net: NetworkType) => async (dispatch: DispatchTy
 }
 
 // state getters
-export const getBlockHeight = (state) => state.metadata.blockHeight
-export const getNetwork = (state) => state.metadata.network
-export const getBlockExplorer = (state) => state.metadata.blockExplorer
+export const getBlockHeight = (state: Object) => state.metadata.blockHeight
+export const getNetwork = (state: Object) => state.metadata.network
+export const getBlockExplorer = (state: Object) => state.metadata.blockExplorer
 
 const initialState = {
   blockHeight: 0,

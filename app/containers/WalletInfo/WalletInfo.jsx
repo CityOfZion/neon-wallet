@@ -8,7 +8,7 @@ import { clipboard } from 'electron'
 import Copy from 'react-icons/lib/md/content-copy'
 import ReactTooltip from 'react-tooltip'
 import { formatGAS, formatFiat } from '../../core/formatters'
-import { ASSETS } from '../../core/constants'
+import { ASSETS, CURRENCIES } from '../../core/constants'
 
 type Props = {
   address: string,
@@ -17,6 +17,7 @@ type Props = {
   gas: number,
   neoPrice: number,
   gasPrice: number,
+  currencyCode: string,
   initiateGetBalance: Function,
   showInfoNotification: Function,
   showSuccessNotification: Function,
@@ -53,7 +54,7 @@ export default class WalletInfo extends Component<Props> {
   }
 
   render () {
-    const { address, neo, gas, neoPrice, gasPrice } = this.props
+    const { address, neo, gas, neoPrice, gasPrice, currencyCode } = this.props
     if (isNil(address)) {
       return null
     }
@@ -61,6 +62,9 @@ export default class WalletInfo extends Component<Props> {
     let neoValue = neoPrice && neo ? neoPrice * neo : 0
     let gasValue = gasPrice && gas ? gasPrice * gas : 0
     let totalValue = neoValue + gasValue
+
+    const displayCurrencyCode = currencyCode.toUpperCase()
+    const currencySymbol = CURRENCIES[currencyCode].symbol
 
     return (
       <div id='accountInfo'>
@@ -77,7 +81,7 @@ export default class WalletInfo extends Component<Props> {
           <div className='split'>
             <div className='label'>{ASSETS.NEO}</div>
             <div className='amountBig amountNeo'>{neo}</div>
-            <div className='fiat neoWalletValue'>US ${formatFiat(neoValue)}</div>
+            <div className='fiat neoWalletValue'>{currencySymbol}{formatFiat(neoValue)} {displayCurrencyCode}</div>
           </div>
           <div className='split'>
             <div className='label'>{ASSETS.GAS}</div>
@@ -85,9 +89,9 @@ export default class WalletInfo extends Component<Props> {
             <ReactTooltip class='solidTip' id='gasBalanceTip' place='bottom' type='dark' effect='solid' disable={gas === 0}>
               <span className='amountGasTooltip'>{formatGAS(gas)}</span>
             </ReactTooltip>
-            <div className='fiat gasWalletValue'>US ${formatFiat(gasValue)}</div>
+            <div className='fiat gasWalletValue'>{currencySymbol}{formatFiat(gasValue)} {displayCurrencyCode}</div>
           </div>
-          <div className='fiat walletTotal'>Total US ${formatFiat(totalValue)}</div>
+          <div className='fiat walletTotal'>Total {currencySymbol}{formatFiat(totalValue)} {displayCurrencyCode}</div>
           <div className='refreshBalance' onClick={this.refreshBalance} >
             <MdSync id='refresh' data-tip data-for='refreshBalanceTip' />
             <ReactTooltip class='solidTip' id='refreshBalanceTip' place='bottom' type='dark' effect='solid'>

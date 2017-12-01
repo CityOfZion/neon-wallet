@@ -22,6 +22,7 @@ type Props = {
   address: string,
   neoPrice: number,
   gasPrice: number,
+  currencyCode: string,
   togglePane: Function,
   logout: Function,
 }
@@ -34,7 +35,7 @@ export default class Dashboard extends Component<Props> {
   }
 
   render () {
-    const { sendPane, confirmPane, blockHeight, togglePane, logout, neoPrice, gasPrice } = this.props
+    const { sendPane, confirmPane, blockHeight, togglePane, logout, neoPrice, gasPrice, currencyCode } = this.props
     let sendPaneClosed
     if (sendPane === true) {
       sendPaneClosed = '0%'
@@ -57,7 +58,7 @@ export default class Dashboard extends Component<Props> {
             <div className={styles.title}>
               <img src={logo} width='60px' />
             </div>
-            <PriceDisplay neoPrice={neoPrice} gasPrice={gasPrice} />
+            <PriceDisplay neoPrice={neoPrice} gasPrice={gasPrice} currencyCode={currencyCode} />
             <div className={styles.version}>
               <span className={styles.grey}>Version</span>
               <span className={styles.darker}>{version}</span>
