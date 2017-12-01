@@ -33,7 +33,6 @@ export default class Settings extends Component<Props, State> {
     storage.get('keys', (error, data) => {
       setKeys(data)
     })
-    this.loadSettings()
   }
 
   saveKeyRecovery = (keys: Object) => {
@@ -86,16 +85,6 @@ export default class Settings extends Component<Props, State> {
     storage.set('settings', settings)
   }
 
-  loadSettings = () => {
-    const { setBlockExplorer } = this.props
-    // eslint-disable-next-line
-    storage.get('settings', (error, settings) => {
-      if (settings.blockExplorer !== null && settings.blockExplorer !== undefined) {
-        setBlockExplorer(settings.blockExplorer)
-      }
-    })
-  }
-
   updateSettings = (e: Object) => {
     const { setBlockExplorer } = this.props
     const explorer = e.target.value
@@ -123,8 +112,7 @@ export default class Settings extends Component<Props, State> {
   }
 
   render () {
-    const { wallets } = this.props
-    const { explorer } = this.state
+    const { wallets, explorer } = this.props
     return (
       <Page id='settings'>
         <div className='description'>Manage your Neon wallet keys and settings</div>

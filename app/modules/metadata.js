@@ -5,6 +5,7 @@ import { version } from '../../package.json'
 import { showWarningNotification } from './notifications'
 import { NETWORK, EXPLORER, NEON_WALLET_RELEASE_LINK, NOTIFICATION_POSITIONS } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
+import storage from 'electron-json-storage'
 
 // Constants
 export const SET_HEIGHT = 'SET_HEIGHT'
@@ -52,6 +53,15 @@ export const checkVersion = () => async (dispatch: DispatchType, getState: GetSt
       position: NOTIFICATION_POSITIONS.BOTTOM_CENTER
     }))
   }
+}
+
+export const initSettings = () => async (dispatch: DispatchType) => {
+  // eslint-disable-next-line
+  storage.get('settings', (error, settings) => {
+    if (settings.blockExplorer !== null && settings.blockExplorer !== undefined) {
+      dispatch(setBlockExplorer(settings.blockExplorer))
+    }
+  })
 }
 
 export const syncBlockHeight = (net: NetworkType) => async (dispatch: DispatchType) => {
