@@ -72,7 +72,7 @@ export const getMarketPriceUSD = () => async (dispatch: DispatchType, getState: 
 
 export const getGasMarketPriceUSD = () => async (dispatch: DispatchType, getState: GetStateType) => {
   // If API dies, still display balance - ignore _err
-  const [_err, price] = await asyncWrap(getPrice('GAS', getCurrency(getState()))) // eslint-disable-line")
+  const [_err, price] = await asyncWrap(getPrice('GAS', getCurrency(getState()))) // eslint-disable-line
   return dispatch(setGASPrice(price))
 }
 
