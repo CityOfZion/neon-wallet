@@ -44,7 +44,7 @@ jobs:
           key: neon-wallet-{{ checksum "yarn.lock" }}
       - run: sudo apt-get -y update
       - run: sudo apt-get -y install libusb-1.0-0-dev
-      - run: yarn test
+      - run: yarn test-ci
       - run:
           name: Running Xvfb for e2e test
           command: Xvfb -ac :99 -screen 0 1280x1024x16
