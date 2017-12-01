@@ -6,13 +6,16 @@ import Notifications from '../Notifications'
 
 type Props = {
   children: Children,
-  checkVersion: Function
+  checkVersion: Function,
+  initSettings: Function
 }
 
 class App extends Component<Props> {
   componentDidMount () {
-    const { checkVersion } = this.props
+    const { checkVersion, initSettings } = this.props
+
     checkVersion()
+    initSettings()
   }
 
   render () {

@@ -4,16 +4,20 @@ import { bindActionCreators } from 'redux'
 import Settings from './Settings'
 import { setKeys, getAccountKeys } from '../../modules/account'
 import { setBlockExplorer, getBlockExplorer } from '../../modules/metadata'
+import { setCurrency, getCurrency } from '../../modules/price'
+
 import { showModal } from '../../modules/modal'
 
 const mapStateToProps = (state: Object) => ({
   explorer: getBlockExplorer(state),
+  currency: getCurrency(state),
   wallets: getAccountKeys(state)
 })
 
 const actionCreators = {
   setKeys,
   setBlockExplorer,
+  setCurrency,
   showModal
 }
 

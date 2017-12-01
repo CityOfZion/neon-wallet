@@ -2,6 +2,7 @@
 
 exports[`PriceDisplay renders and shows prices 1`] = `
 <PriceDisplay
+  currencyCode="usd"
   gasPrice={18.1}
   neoPrice={25.48}
 >

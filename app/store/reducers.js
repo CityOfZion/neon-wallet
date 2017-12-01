@@ -4,6 +4,7 @@ import generateWallet from '../modules/generateWallet'
 import transactions from '../modules/transactions'
 import metadata from '../modules/metadata'
 import wallet from '../modules/wallet'
+import price from '../modules/price'
 import claim from '../modules/claim'
 import dashboard from '../modules/dashboard'
 import rpx from '../modules/rpx'
@@ -14,6 +15,7 @@ export default combineReducers({
   account,
   generateWallet,
   wallet,
+  price,
   transactions,
   dashboard,
   metadata,
