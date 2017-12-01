@@ -16,7 +16,6 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { clipboard } from 'electron'
 import { version } from '../../package.json'
-import { formatFiat } from '../../app/core/formatters'
 
 const axiosMock = new MockAdapter(axios)
 axiosMock
@@ -30,6 +29,11 @@ axiosMock
   .reply(200, [ { price_usd: 18.20 } ])
 
 jest.mock('electron', () => ({
+  app: {
+    getPath: () => {
+      return 'C:\\tmp\\mock_path'
+    }
+  },
   clipboard: {
     writeText: jest.fn()
   }
