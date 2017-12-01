@@ -81,10 +81,7 @@ app.on('ready', () => {
     }
 
     const inputMenu = Menu.buildFromTemplate([
-      {label : 'Cut', accelerator : 'CmdOrCtrl+X', click() { mainWindow.webContents.cut(); }},
-      {label : 'Copy', accelerator : 'CmdOrCtrl+C', click() { mainWindow.webContents.copy(); }},
-      {label : 'Paste', accelerator : 'CmdOrCtrl+V', click() { mainWindow.webContents.paste(); }},
-      {label : 'Select All', accelerator : 'CmdOrCtrl+A', click() { mainWindow.webContents.selectAll(); }}
+      {label : 'Paste', accelerator : 'CmdOrCtrl+V', click() { mainWindow.webContents.paste(); }}
     ]);
 
     mainWindow.webContents.on('context-menu', (event, params) => {
