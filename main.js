@@ -80,6 +80,14 @@ app.on('ready', () => {
       Menu.setApplicationMenu(menu)
     }
 
+    const inputMenu = Menu.buildFromTemplate([
+      {label : 'Paste', accelerator : 'CmdOrCtrl+V', click() { mainWindow.webContents.paste(); }}
+    ]);
+
+    mainWindow.webContents.on('context-menu', (event, params) => {
+      inputMenu.popup(mainWindow);
+    });
+
     if (process.env.START_HOT) {
       mainWindow.loadURL(`http://localhost:${port}/dist`)
     } else {
