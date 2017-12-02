@@ -1,6 +1,5 @@
 // @flow
 import { api } from 'neon-js'
-import { merge } from 'lodash'
 
 import { syncTransactionHistory } from './transactions'
 import { syncAvailableClaim } from './claim'
@@ -28,7 +27,6 @@ export const SET_GAS_PRICE = 'SET_GAS_PRICE'
 export const RESET_PRICES = 'RESET_PRICES'
 export const SET_TRANSACTION_HISTORY = 'SET_TRANSACTION_HISTORY'
 export const SET_TOKENS = 'SET_TOKENS'
-export const SET_TOKEN_INFO = 'SET_TOKEN_INFO'
 export const SET_IS_LOADED = 'SET_IS_LOADED'
 
 export const setIsLoaded = (loaded: boolean) => ({
@@ -57,13 +55,6 @@ export function setTokens (tokens: Object) {
   return {
     type: SET_TOKENS,
     payload: { tokens }
-  }
-}
-
-export function setTokenInfo (symbol: TokenSymbolType, info: TokenInfoType) {
-  return {
-    type: SET_TOKEN_INFO,
-    payload: { symbol, info }
   }
 }
 
@@ -115,16 +106,6 @@ export const retrieveTokensBalance = () => async (dispatch: DispatchType, getSta
   return dispatch(setTokens(tokens))
 }
 
-export const retrieveTokenInfo = (symbol: TokenSymbolType) => async (dispatch: DispatchType, getState: GetStateType) => {
-  const state = getState()
-  const net = getNetwork(state)
-
-  const [_error, rpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net)) // eslint-disable-line
-  const [_err, results] = await asyncWrap(api.nep5.getTokenInfo(rpcEndpoint, getScriptHashForNetwork(net, symbol))) // eslint-disable-line
-  dispatch(setTokenInfo(symbol, results))
-  return results
-}
-
 // state getters
 export const getNEO = (state: Object) => state.wallet.NEO
 export const getGAS = (state: Object) => state.wallet.GAS
@@ -171,19 +152,7 @@ export default (state: Object = initialState, action: ReduxAction) => {
       const { tokens } = action.payload
       return {
         ...state,
-        tokens: merge({}, state.tokens, tokens)
-      }
-    case SET_TOKEN_INFO:
-      const { symbol, info } = action.payload
-      return {
-        ...state,
-        tokens: {
-          ...state.tokens,
-          [symbol]: {
-            ...state.tokens[symbol],
-            info
-          }
-        }
+        tokens
       }
     case SET_IS_LOADED:
       const { loaded } = action.payload
