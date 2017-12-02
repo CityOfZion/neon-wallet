@@ -11,7 +11,7 @@ const formatWithDecimals = (value: number | string, decimals: number) => numeral
 
 export const formatGAS = (value: number | string, shortDisplay: boolean = false): string => {
   const decimals = shortDisplay ? SHORT_DISPLAY_DECIMAL_LENGTH : COIN_DECIMAL_LENGTH
-  const result = formatWithDecimals(value, decimals)
+  const result = formatWithDecimals(truncateNumber(value, decimals), decimals)
   // https://github.com/adamwdraper/Numeral-js/issues/575
   if (result === 'NaN') {
     return toFixedDecimals(value, decimals)
