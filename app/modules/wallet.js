@@ -6,6 +6,7 @@ import { syncAvailableClaim } from './claim'
 import { syncBlockHeight, getNetwork } from './metadata'
 import { LOGOUT, getAddress } from './account'
 import { getMarketPriceUSD, getGasMarketPriceUSD } from './price'
+import { showErrorNotification } from './notifications'
 
 import { TOKENS, TOKENS_TEST, NETWORK } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
@@ -13,7 +14,7 @@ import asyncWrap from '../core/asyncHelper'
 const TOKEN_PAIRS = Object.entries(TOKENS)
 // const INITIAL_TOKENS_BALANCE = Object.keys(TOKENS).map((token) => ({ symbol: token, balance: 0 }))
 
-export const getScriptHashForNetwork = (net: NetworkType, symbol: TokenSymbolType) => {
+export const getScriptHashForNetwork = (net: NetworkType, symbol: SymbolType) => {
   if (net === NETWORK.TEST && TOKENS_TEST[symbol]) {
     return TOKENS_TEST[symbol]
   }
@@ -62,44 +63,52 @@ export const retrieveBalance = (net: NetworkType, address: string) => async (dis
   // If API dies, still display balance - ignore _err
   const [_err, resultBalance] = await asyncWrap(api.neonDB.getBalance(net, address)) // eslint-disable-line
   dispatch(setIsLoaded(true))
-  return dispatch(setBalance(resultBalance.NEO.balance, resultBalance.GAS.balance))
+  if (_err) {
+    return dispatch(showErrorNotification({ message: `Could not retrieve NEO/GAS balance`, stack: true }))
+  } else {
+    return dispatch(setBalance(resultBalance.NEO.balance, resultBalance.GAS.balance))
+  }
 }
 
-export const loadWalletData = (net: NetworkType, address: string) => (dispatch: DispatchType) => {
+export const loadWalletData = (net: NetworkType, address: string, silent: boolean = true) => (dispatch: DispatchType) => {
+  if (!silent) {
+    dispatch(setIsLoaded(false))
+  }
   dispatch(syncTransactionHistory(net, address))
   dispatch(syncAvailableClaim(net, address))
   dispatch(syncBlockHeight(net))
   dispatch(getMarketPriceUSD())
   dispatch(getGasMarketPriceUSD())
-  dispatch(retrieveTokensBalance())
-  return dispatch(retrieveBalance(net, address))
+  return Promise.all([
+    dispatch(retrieveTokensBalance()),
+    dispatch(retrieveBalance(net, address))
+  ])
 }
 
 export const retrieveTokensBalance = () => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
   const net = getNetwork(state)
   const address = getAddress(state)
-  const tokensFromState = getTokens(state)
 
-  const tokens = {}
+  const tokens = getInitialTokenBalance()
   for (let [symbol] of TOKEN_PAIRS) {
     const scriptHash = getScriptHashForNetwork(net, symbol)
     // override scripthash with test if on test net
-    const [_error, rpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net)) // eslint-disable-line
-    const [_err, results] = await asyncWrap(api.nep5.getTokenBalance(rpcEndpoint, scriptHash, address)) // eslint-disable-line
-    if (results) {
-      let info = tokensFromState[symbol].info
-      if (!info) {
-        const [, tokenInfoRpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net))
-        const [, tokenInfoResults] = await asyncWrap(api.nep5.getTokenInfo(tokenInfoRpcEndpoint, getScriptHashForNetwork(net, symbol)))
-        info = tokenInfoResults
-      }
+    const [_error, balanceRpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net)) // eslint-disable-line
+    const [_err, balanceResults] = await asyncWrap(api.nep5.getTokenBalance(balanceRpcEndpoint, scriptHash, address)) // eslint-disable-line
+    // TODO: Figure out why getTokenBalance returns NaN
+    if (balanceResults || isNaN(balanceResults)) {
+      // TODO: NeonJS now supports getting info in 1 call, use it when its on master and remove this code
+      const [, tokenInfoRpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net))
+      const [, tokenInfoResults] = await asyncWrap(api.nep5.getTokenInfo(tokenInfoRpcEndpoint, getScriptHashForNetwork(net, symbol)))
       tokens[symbol] = {
         symbol,
-        balance: results,
+        balance: isNaN(balanceResults) ? 0 : balanceResults,
         scriptHash,
-        info
+        info: tokenInfoResults
       }
+    } else {
+      dispatch(showErrorNotification({ message: `could not retrieve ${symbol} balance`, stack: true }))
     }
   }
 
