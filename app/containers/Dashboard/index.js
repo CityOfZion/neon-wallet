@@ -5,17 +5,13 @@ import { bindActionCreators } from 'redux'
 import { togglePane } from '../../modules/dashboard'
 import { logout, getAddress } from '../../modules/account'
 import { getBlockHeight, getNetwork } from '../../modules/metadata'
-<<<<<<< HEAD
 import { getNotifications, showErrorNotification } from '../../modules/notifications'
-import { getNEOPrice, getGASPrice, getNEO, getGAS, getTokens, getIsLoaded, loadWalletData } from '../../modules/wallet'
+import { getNEO, getGAS, getTokens, getIsLoaded, loadWalletData } from '../../modules/wallet'
 import { showModal } from '../../modules/modal'
 import { sendTransaction } from '../../modules/transactions'
+import { getNEOPrice, getGASPrice, getCurrency } from '../../modules/price'
 
 import Dashboard from './Dashboard'
-=======
-import { getNotifications } from '../../modules/notifications'
-import { getNEOPrice, getGASPrice, getCurrency } from '../../modules/price'
->>>>>>> 10eaa0ee387232fc0cebbc90154292ac9a5a64be
 
 const mapStateToProps = (state: Object) => ({
   blockHeight: getBlockHeight(state),
@@ -28,7 +24,7 @@ const mapStateToProps = (state: Object) => ({
   gas: getGAS(state),
   tokens: getTokens(state),
   loaded: getIsLoaded(state),
-  currencyCode: getCurrency(state),
+  currencyCode: getCurrency(state)
 })
 
 const actionCreators = {
