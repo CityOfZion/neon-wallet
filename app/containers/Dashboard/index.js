@@ -20,8 +20,8 @@ const mapStateToProps = (state: Object) => ({
   neoPrice: getNEOPrice(state),
   gasPrice: getGASPrice(state),
   notification: getNotifications(state),
-  neo: getNEO(state),
-  gas: getGAS(state),
+  NEO: getNEO(state),
+  GAS: getGAS(state),
   tokens: getTokens(state),
   loaded: getIsLoaded(state),
   currencyCode: getCurrency(state)

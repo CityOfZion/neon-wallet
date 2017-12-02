@@ -14,8 +14,8 @@ const DISPLAY_MODES = {
 }
 
 type Props = {
-    neo: number,
-    gas: number,
+    NEO: number,
+    GAS: number,
     tokens: Object,
     showErrorNotification: Function,
     hideModal: Function,
@@ -38,14 +38,14 @@ class SendModal extends Component<Props, State> {
     sendAddress: '',
     symbol: ASSETS.NEO,
     display: DISPLAY_MODES.SEND,
-    balance: this.props.neo
+    balance: this.props.NEO
   }
 
   openAndValidate = () => {
-    const { neo, gas, tokens, showErrorNotification } = this.props
+    const { NEO, GAS, tokens, showErrorNotification } = this.props
     const { sendAddress, sendAmount, symbol } = this.state
     const tokenBalance = isToken(symbol) && obtainTokenBalance(tokens, symbol)
-    const { error, valid } = validateTransactionBeforeSending(neo, gas, tokenBalance, symbol, sendAddress, sendAmount)
+    const { error, valid } = validateTransactionBeforeSending(NEO, GAS, tokenBalance, symbol, sendAddress, sendAmount)
     if (valid) {
       this.setState({ display: DISPLAY_MODES.CONFIRM })
     } else {
@@ -76,12 +76,12 @@ class SendModal extends Component<Props, State> {
   }
 
   getBalance = (symbol: string) => {
-    const { neo, gas, tokens } = this.props
+    const { NEO, GAS, tokens } = this.props
 
     if (symbol === ASSETS.NEO) {
-      return neo
+      return NEO
     } else if (symbol === ASSETS.GAS) {
-      return gas
+      return GAS
     } else {
       return obtainTokenBalance(tokens, symbol)
     }

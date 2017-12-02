@@ -50,7 +50,7 @@ export const validateTransactionBeforeSending = (neoBalance: number, gasBalance:
   }
 
   if (symbol === ASSETS.NEO) {
-    if (parseFloat(sendAmount) !== parseInt(sendAmount)) { // check for fractional neo
+    if (parseFloat(sendAmount) !== parseInt(sendAmount)) { // check for fractional NEO
       return {
         error: 'You cannot send fractional amounts of NEO.',
         valid: false

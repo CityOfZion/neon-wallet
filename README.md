@@ -66,4 +66,4 @@ A gentle reminder, github issues is meant to be used by developers for maintaini
 - *"I lost my private key, is there anyway to recover it?"*
 - *"Why is my balance not showing?"*
 
-should be asked in proper support channels such as the [NEO subreddit](https://www.reddit.com/r/NEO/), or the official [NEO slack](https://neosmarteconomy.slack.com). You should also check the list of [frequently asked questions (FAQ)](https://github.com/CityOfZion/awesome-neo/blob/master/resources/faq.md) to see if your question has been answered there already.
+should be asked in proper support channels such as the [NEO subreddit](https://www.reddit.com/r/NEO/), or the official [NEO slack](https://neosmarteconomy.slack.com). You should also check the list of [frequently asked questions (FAQ)](https://github.com/CityOfZion/awesome-NEO/blob/master/resources/faq.md) to see if your question has been answered there already.

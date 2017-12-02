@@ -18,9 +18,9 @@ import TokensBalance from './TokensBalance'
 
 type Props = {
   address: string,
-  neo: number,
+  NEO: number,
   net: NetworkType,
-  gas: number,
+  GAS: number,
   neoPrice: number,
   gasPrice: number,
   tokens: Object,
@@ -50,8 +50,8 @@ export default class WalletInfo extends Component<Props> {
   render () {
     const {
       address,
-      neo,
-      gas,
+      NEO,
+      GAS,
       neoPrice,
       gasPrice,
       tokens,
@@ -63,8 +63,8 @@ export default class WalletInfo extends Component<Props> {
       return null
     }
 
-    let neoValue = neoPrice && neo ? neoPrice * neo : 0
-    let gasValue = gasPrice && gas ? gasPrice * gas : 0
+    let neoValue = neoPrice && NEO ? neoPrice * NEO : 0
+    let gasValue = gasPrice && GAS ? gasPrice * GAS : 0
     let totalValue = neoValue + gasValue
 
     const displayCurrencyCode = currencyCode.toUpperCase()
@@ -75,13 +75,13 @@ export default class WalletInfo extends Component<Props> {
         <div id='balance'>
           <div className='split'>
             <div className='label'>{ASSETS.NEO}</div>
-            <div className='amountBig amountNeo'>{neo}</div>
+            <div className='amountBig amountNeo'>{NEO}</div>
             <div className='fiat neoWalletValue'>{currencySymbol}{formatFiat(neoValue)} {displayCurrencyCode}</div>
           </div>
           <div className='split'>
             <div className='label'>{ASSETS.GAS}</div>
             <div className='amountBig amountGas'>
-              <Tooltip title={formatGAS(gas)} disabled={gas === 0}>{formatGAS(gas, true)}</Tooltip>
+              <Tooltip title={formatGAS(GAS)} disabled={GAS === 0}>{formatGAS(GAS, true)}</Tooltip>
             </div>
             <div className='fiat gasWalletValue'>{currencySymbol} {formatFiat(gasValue)} {displayCurrencyCode}</div>
           </div>

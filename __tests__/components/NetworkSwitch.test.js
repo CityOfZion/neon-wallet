@@ -17,10 +17,10 @@ axiosMock
   .onGet('http://testnet-api.wallet.cityofzion.io/v2/version')
   .reply(200, { version })
 axiosMock
-  .onGet('https://api.coinmarketcap.com/v1/ticker/neo/', { params: { convert: 'USD' } })
+  .onGet('https://api.coinmarketcap.com/v1/ticker/NEO/', { params: { convert: 'USD' } })
   .reply(200, [ { price_usd: 24.50 } ])
 axiosMock
-  .onGet('https://api.coinmarketcap.com/v1/ticker/gas/', { params: { convert: 'USD' } })
+  .onGet('https://api.coinmarketcap.com/v1/ticker/GAS/', { params: { convert: 'USD' } })
   .reply(200, [ { price_usd: 18.20 } ])
 jest.mock('neon-js')
 

@@ -45,8 +45,8 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, symbol:
   const wif = getWIF(state)
   const address = getAddress(state)
   const net = getNetwork(state)
-  const neo = getNEO(state)
-  const gas = getGAS(state)
+  const NEO = getNEO(state)
+  const GAS = getGAS(state)
   const tokens = getTokens(state)
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
@@ -55,7 +55,7 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, symbol:
   const tokenBalance = isToken(symbol) && obtainTokenBalance(tokens, symbol)
   const parsedSendAmount = parseFloat(sendAmount)
 
-  const { error, valid } = validateTransactionBeforeSending(neo, gas, tokenBalance, symbol, sendAddress, parsedSendAmount)
+  const { error, valid } = validateTransactionBeforeSending(NEO, GAS, tokenBalance, symbol, sendAddress, parsedSendAmount)
   if (valid) {
     const selfAddress = address
     let sendAsset = {}

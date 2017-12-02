@@ -22,10 +22,10 @@ axiosMock
   .onGet('http://testnet-api.wallet.cityofzion.io/v2/version')
   .reply(200, { version })
 axiosMock
-  .onGet('https://api.coinmarketcap.com/v1/ticker/neo/?convert=USD')
+  .onGet('https://api.coinmarketcap.com/v1/ticker/NEO/?convert=USD')
   .reply(200, [ { price_usd: 24.50 } ])
 axiosMock
-  .onGet('https://api.coinmarketcap.com/v1/ticker/gas/?convert=USD')
+  .onGet('https://api.coinmarketcap.com/v1/ticker/GAS/?convert=USD')
   .reply(200, [ { price_usd: 18.20 } ])
 
 jest.mock('electron', () => ({
@@ -53,8 +53,8 @@ const initialState = {
     GAS: 1.0001601
   },
   price: {
-    neo: 25.48,
-    gas: 18.10,
+    NEO: 25.48,
+    GAS: 18.10,
     currency: DEFAULT_CURRENCY_CODE
   },
   claim: {
@@ -105,7 +105,7 @@ describe('WalletInfo', () => {
     expect(gasWalletValue.text()).toEqual(`$${expectedGasWalletValue} USD`)
     expect(walletValue.text()).toEqual(`Total $${expectedWalletValue} USD`)
     expect(neoField.text()).toEqual(`${initialState.wallet.NEO}`)
-    // TODO: Test the gas tooltip value, this is testing the display value, truncated to 4 decimals
+    // TODO: Test the GAS tooltip value, this is testing the display value, truncated to 4 decimals
     expect(gasField.text()).toEqual('1.0001')
     done()
   })
@@ -135,7 +135,7 @@ describe('WalletInfo', () => {
     })
   })
   test('correctly renders data from state with non-default currency', (done) => {
-    const testState = { ...initialState, price: { neo: 1.11, gas: 0.55, currency: 'eur' } }
+    const testState = { ...initialState, price: { NEO: 1.11, GAS: 0.55, currency: 'eur' } }
     const { wrapper } = setup(testState, false)
 
     const neoWalletValue = wrapper.find('.neoWalletValue')

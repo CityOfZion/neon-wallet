@@ -4,8 +4,6 @@ import { api } from 'neon-js'
 import asyncWrap from '../core/asyncHelper'
 import { DEFAULT_CURRENCY_CODE } from '../core/constants'
 
-/* Remove above when we upgrade neon-js and can use their getPrice function */
-
 // Constants
 export const SET_NEO_PRICE = 'SET_NEO_PRICE'
 export const SET_GAS_PRICE = 'SET_GAS_PRICE'

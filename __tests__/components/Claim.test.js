@@ -55,19 +55,19 @@ describe('Claim', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
-  test('should render claim gas button when claim button is not disabled', () => {
+  test('should render claim GAS button when claim button is not disabled', () => {
     const { wrapper } = setup()
     expect(wrapper.dive()).toMatchSnapshot()
   })
 
-  test('should not render claim gas button when claim button is disabled', () => {
+  test('should not render claim GAS button when claim button is disabled', () => {
     const newState = cloneDeep(initialState)
     newState.claim.disableClaimButton = true
     const { wrapper } = setup(newState)
     expect(wrapper.dive()).toMatchSnapshot()
   })
 
-  describe('when do gas claim button is clicked', () => {
+  describe('when do GAS claim button is clicked', () => {
     test('should dispatch transaction failure event', async () => {
       const { wrapper, store } = setup()
       neonjs.doSendAsset = jest.fn(() => {

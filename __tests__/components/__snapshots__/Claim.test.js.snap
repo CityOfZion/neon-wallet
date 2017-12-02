@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Claim should not render claim gas button when claim button is disabled 1`] = `
+exports[`Claim should not render claim GAS button when claim button is disabled 1`] = `
 <div
   id="claim"
 >
@@ -21,7 +21,7 @@ exports[`Claim should not render claim gas button when claim button is disabled 
 </div>
 `;
 
-exports[`Claim should render claim gas button when claim button is not disabled 1`] = `
+exports[`Claim should render claim GAS button when claim button is not disabled 1`] = `
 <div
   id="claim"
 >
