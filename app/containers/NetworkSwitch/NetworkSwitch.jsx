@@ -36,9 +36,7 @@ export default class NetworkSwitch extends Component<Props> {
     const newNet = net === NETWORK.MAIN ? NETWORK.TEST : NETWORK.MAIN
     setNetwork(newNet)
     this.resetBalanceSync(newNet, address)
-    if (address !== null) {
-      loadWalletData(newNet, address)
-    }
+    loadWalletData(newNet, address, false)
   }
 
   render () {
