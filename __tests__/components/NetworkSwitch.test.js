@@ -68,7 +68,7 @@ describe('NetworkSwitch', () => {
 
     await Promise.resolve().then().then().then().then()
     const actions = store.getActions()
-    expect(actions.length).toEqual(7)
+    expect(actions.length).toEqual(8)
     expect(actions[0]).toEqual({
       type: SET_NETWORK,
       payload: {
@@ -76,36 +76,42 @@ describe('NetworkSwitch', () => {
       }
     })
     expect(actions[1]).toEqual({
-      type: LOADING_TRANSACTIONS,
+      type: SET_IS_LOADED,
       payload: {
-        isLoadingTransactions: true
+        loaded: false
       }
     })
     expect(actions[2]).toEqual({
       type: LOADING_TRANSACTIONS,
       payload: {
-        isLoadingTransactions: false
+        isLoadingTransactions: true
       }
     })
     expect(actions[3]).toEqual({
+      type: LOADING_TRANSACTIONS,
+      payload: {
+        isLoadingTransactions: false
+      }
+    })
+    expect(actions[4]).toEqual({
       type: SET_TRANSACTION_HISTORY,
       payload: {
         transactions: []
       }
     })
-    expect(actions[4]).toEqual({
+    expect(actions[5]).toEqual({
       type: SET_HEIGHT,
       payload: {
         blockHeight: 586435
       }
     })
-    expect(actions[5]).toEqual({
+    expect(actions[6]).toEqual({
       type: SET_IS_LOADED,
       payload: {
         loaded: true
       }
     })
-    expect(actions[6]).toEqual({
+    expect(actions[7]).toEqual({
       type: SET_BALANCE,
       payload: {
         NEO: 1,

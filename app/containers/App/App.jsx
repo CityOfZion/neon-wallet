@@ -1,12 +1,11 @@
 // @flow
 import React, { Component } from 'react'
-import type { Children } from 'react'
 
 import ModalRenderer from '../ModalRenderer'
 import Notifications from '../Notifications'
 
 type Props = {
-  children: Children,
+  children: React$Node,
   checkVersion: Function,
   initSettings: Function
 }

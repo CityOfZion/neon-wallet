@@ -4,13 +4,13 @@ import React from 'react'
 import BaseModal from '../BaseModal'
 import Table from '../../Table'
 
-import { formatBalance } from '../../../core/formatters'
+import { formatBalance, formatThousands } from '../../../core/formatters'
 
 import styles from './TokenInfoModal.scss'
 
 type Props = {
     hideModal: Function,
-    token: TokenWithInfoType,
+    token: TokenType,
 }
 
 const TokenInfoModal = ({ hideModal, token }: Props) => (
@@ -37,7 +37,7 @@ const TokenInfoModal = ({ hideModal, token }: Props) => (
           </tr>
           <tr>
             <td>Total Supply:</td>
-            <td>{formatBalance(token.info.totalSupply)}</td>
+            <td>{formatThousands(token.info.totalSupply)}</td>
           </tr>
           <tr>
             <td>Decimals</td>
@@ -45,7 +45,7 @@ const TokenInfoModal = ({ hideModal, token }: Props) => (
           </tr>
           <tr>
             <td>Balance</td>
-            <td>{formatBalance(token.balance, token.info.decimals)}</td>
+            <td>{formatBalance(token.symbol, token.balance)}</td>
           </tr>
         </tbody>
       </Table>
