@@ -2,6 +2,8 @@
 import React from 'react'
 import Button from '../../Button'
 
+import { formatBalance } from '../../../core/formatters'
+
 type Props = {
   sendAddress: string,
   sendAmount: string,
@@ -19,7 +21,7 @@ const ConfirmDisplay = ({
 }: Props) => (
   <div>
     <p>Please confirm the following transaction:</p>
-    <p>You are sending <strong>{sendAmount} {symbol}</strong> to:</p>
+    <p>You are sending <strong>{formatBalance(symbol, sendAmount)} {symbol}</strong> to:</p>
     <p><strong>{sendAddress}</strong></p>
     <div>
       <Button onClick={confirmTransaction}>Confirm</Button>

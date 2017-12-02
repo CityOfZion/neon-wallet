@@ -57,20 +57,12 @@ class SendModal extends Component<Props, State> {
     const { sendTransaction, hideModal } = this.props
     const { sendAddress, sendAmount, symbol } = this.state
     sendTransaction(sendAddress, sendAmount, symbol).then(() => {
-      this.resetForm()
       hideModal()
     })
   }
 
   cancelTransaction = () => {
-    this.resetForm()
-  }
-
-  resetForm = () => {
     this.setState({
-      sendAmount: '',
-      sendAddress: '',
-      symbol: ASSETS.NEO,
       display: DISPLAY_MODES.SEND
     })
   }
@@ -94,6 +86,7 @@ class SendModal extends Component<Props, State> {
     if (updateBalance) {
       newState = {
         ...newState,
+        sendAmount: '',
         balance: this.getBalance(value)
       }
     }

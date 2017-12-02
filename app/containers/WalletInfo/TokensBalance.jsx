@@ -26,7 +26,7 @@ const tokens = ({ tokens, showModal }: Props) => (
     <tbody>
       {tokens && Object.keys(tokens).map((symbol) => {
         const token = tokens[symbol]
-        const { balance, info } = token
+        const { balance } = token
         return (
           <tr key={symbol}>
             <td
@@ -34,7 +34,7 @@ const tokens = ({ tokens, showModal }: Props) => (
               onClick={() => showModal(MODAL_TYPES.TOKEN_INFO, { token })}>
               <InfoOutline className={styles.symbolIcon} />{symbol}
             </td>
-            <td>{info ? formatBalance(balance, info.decimals) : balance}</td>
+            <td>{formatBalance(symbol, balance, true)}</td>
           </tr>
         )
       })}

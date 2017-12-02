@@ -2,9 +2,10 @@
 import React from 'react'
 import classNames from 'classnames'
 
+import NumberInput from '../../NumberInput'
+
 import { ASSETS } from '../../../core/constants'
-import { isToken } from '../../../core/wallet'
-import { formatBalance, formatGAS, formatNEO, truncateGAS, truncateTokenBalance } from '../../../core/formatters'
+import { formatBalance, toFixedDecimals, COIN_DECIMAL_LENGTH } from '../../../core/formatters'
 
 import styles from './SendModal.scss'
 
@@ -42,30 +43,26 @@ const SendDisplay = ({
       </div>
       <div id='sendAmount' className={styles.column}>
         <label className={styles.label}>Amount:</label>
-        <input
-          type='number'
+        <NumberInput
+          options={{
+            numeralDecimalScale: COIN_DECIMAL_LENGTH
+          }}
           value={sendAmount}
           placeholder='Amount'
-          onChange={(e) => onChangeHandler('sendAmount', e.target.value)}
+          onChange={(e) => onChangeHandler('sendAmount', e.target.rawValue)}
         />
       </div>
       <div className={styles.percentRow}>
         {[25, 50, 75, 100].map((percent: number) => {
-          let value = percent * parseFloat(balance) / 100
-          if (symbol === ASSETS.NEO) {
-            value = Math.ceil(value)
-          } else if (symbol === ASSETS.GAS) {
-            value = truncateGAS(value)
-          } else {
-            value = truncateTokenBalance(value, tokens[symbol].info.decimals)
-          }
+          const value = percent * parseFloat(balance) / 100
           return (
             <button
               key={`percentButton${percent}`}
-              onClick={() => onChangeHandler('sendAmount', symbol === ASSETS.NEO ? Math.ceil(value) : value)}
+              onClick={() => onChangeHandler('sendAmount', symbol === ASSETS.NEO ? Math.ceil(value) : toFixedDecimals(value, COIN_DECIMAL_LENGTH))}
               className={styles.percentButton}>{percent}%</button>
           )
-        })}
+        })
+        }
       </div>
       <div id='sendAmount' className={styles.column}>
         <label className={styles.label}>Asset:</label>
@@ -80,14 +77,15 @@ const SendDisplay = ({
           </select>
         </div>
       </div>
-      <div>Sending NEP5 tokens requires holding at least 1 drop of GAS</div>
       <div id='sendAmount' className={styles.column}>
         <label className={styles.label}>Balance:</label>
-        {symbol === ASSETS.NEO && formatNEO(balance)}
-        {symbol === ASSETS.GAS && formatGAS(balance)}
-        {isToken(symbol) && formatBalance(balance, tokens[symbol].info.decimals)}
+        {formatBalance(symbol, balance)}
       </div>
-      <button className={classNames(styles.sendButton, {'disabled': sendButtonDisabled})} id='doSend' onClick={openAndValidate} disabled={sendButtonDisabled}>Send Asset</button>
+      <button
+        className={classNames(styles.sendButton, {'disabled': sendButtonDisabled})}
+        id='doSend'
+        onClick={openAndValidate}
+        disabled={sendButtonDisabled}>Send Asset</button>
     </div>
   )
 }
