@@ -8,15 +8,14 @@ import { SHOW_NOTIFICATION, HIDE_NOTIFICATIONS } from '../../app/modules/notific
 import { LOADING_TRANSACTIONS } from '../../app/modules/transactions'
 import { SET_HEIGHT } from '../../app/modules/metadata'
 import { SET_CLAIM } from '../../app/modules/claim'
+import { DEFAULT_CURRENCY_CODE } from '../../app/core/constants'
 import WalletInfo from '../../app/containers/WalletInfo'
 import * as neonjs from 'neon-js'
 
 // TODO research how to move the axios mock code which is repeated in NetworkSwitch to a helper or config file
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import { clipboard } from 'electron'
 import { version } from '../../package.json'
-import { formatFiat } from '../../app/core/formatters'
 
 const axiosMock = new MockAdapter(axios)
 axiosMock
@@ -30,8 +29,10 @@ axiosMock
   .reply(200, [ { price_usd: 18.20 } ])
 
 jest.mock('electron', () => ({
-  clipboard: {
-    writeText: jest.fn()
+  app: {
+    getPath: () => {
+      return 'C:\\tmp\\mock_path'
+    }
   }
 }))
 jest.useFakeTimers()
@@ -49,9 +50,12 @@ const initialState = {
   },
   wallet: {
     NEO: 100001,
-    GAS: 1.0001601,
-    neoPrice: 25.48,
-    gasPrice: 18.10
+    GAS: 1.0001601
+  },
+  price: {
+    neo: 25.48,
+    gas: 18.10,
+    currency: DEFAULT_CURRENCY_CODE
   },
   claim: {
     claimAmount: 0.5
@@ -97,9 +101,9 @@ describe('WalletInfo', () => {
     const neoField = wrapper.find('.amountNeo')
     const gasField = wrapper.find('.amountGas')
 
-    expect(neoWalletValue.text()).toEqual(`US $${expectedNeoWalletValue}`)
-    expect(gasWalletValue.text()).toEqual(`US $${expectedGasWalletValue}`)
-    expect(walletValue.text()).toEqual(`Total US $${expectedWalletValue}`)
+    expect(neoWalletValue.text()).toEqual(`$${expectedNeoWalletValue} USD`)
+    expect(gasWalletValue.text()).toEqual(`$${expectedGasWalletValue} USD`)
+    expect(walletValue.text()).toEqual(`Total $${expectedWalletValue} USD`)
     expect(neoField.text()).toEqual(`${initialState.wallet.NEO}`)
     // TODO: Test the gas tooltip value, this is testing the display value, truncated to 4 decimals
     expect(gasField.text()).toEqual('1.0001')
@@ -129,6 +133,24 @@ describe('WalletInfo', () => {
     actions.forEach(action => {
       expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
     })
+  })
+  test('correctly renders data from state with non-default currency', (done) => {
+    const testState = { ...initialState, price: { neo: 1.11, gas: 0.55, currency: 'eur' } }
+    const { wrapper } = setup(testState, false)
+
+    const neoWalletValue = wrapper.find('.neoWalletValue')
+    const gasWalletValue = wrapper.find('.gasWalletValue')
+    const walletValue = wrapper.find('.walletTotal')
+
+    const expectedNeoWalletValue = '111,001.11'
+    const expectedGasWalletValue = '0.55'
+    const expectedWalletValue = '111,001.66'
+
+    expect(neoWalletValue.text()).toEqual(`€${expectedNeoWalletValue} EUR`)
+    expect(gasWalletValue.text()).toEqual(`€${expectedGasWalletValue} EUR`)
+    expect(walletValue.text()).toEqual(`Total €${expectedWalletValue} EUR`)
+
+    done()
   })
   test('calls the correct number of actions after mounting', async () => {
     const { store } = setup(initialState, false)

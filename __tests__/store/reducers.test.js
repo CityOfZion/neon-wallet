@@ -1,4 +1,4 @@
-import reducer from '../../app/store/reducers'
+import reducer from '../../app/modules'
 
 describe('root reducer', () => {
   it('should combine all reducers', () => {
@@ -6,6 +6,7 @@ describe('root reducer', () => {
       account: expect.any(Object),
       generateWallet: expect.any(Object),
       wallet: expect.any(Object),
+      price: expect.any(Object),
       transactions: expect.any(Object),
       dashboard: expect.any(Object),
       metadata: expect.any(Object),

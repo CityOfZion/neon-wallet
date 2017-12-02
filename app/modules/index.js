@@ -9,6 +9,7 @@ import claim from './claim'
 import dashboard from './dashboard'
 import notifications from './notifications'
 import modal from './modal'
+import price from './price'
 
 export default combineReducers({
   account,
@@ -19,5 +20,6 @@ export default combineReducers({
   metadata,
   claim,
   notifications,
-  modal
+  modal,
+  price
 })
