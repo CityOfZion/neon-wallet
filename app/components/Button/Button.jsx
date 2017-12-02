@@ -2,25 +2,24 @@
 import React from 'react'
 import classNames from 'classnames'
 
-import type { Children } from 'react'
-import { noop } from 'lodash'
-
 import styles from './Button.scss'
 
 type Props = {
-  children: Children,
+  children: React$Node,
   primary: boolean,
   cancel: boolean,
-  secondary: boolean
+  secondary: boolean,
+  onClick?: () => any
 }
 
 const Button = ({
   primary = true,
   secondary = false,
   cancel = false,
-  children
+  children,
+  onClick
 }: Props) =>
-  <button onClick={noop}
+  <button onClick={onClick}
     className={classNames(styles.button, {
       [styles.primary]: primary,
       [styles.secondary]: secondary,
