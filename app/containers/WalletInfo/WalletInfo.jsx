@@ -8,7 +8,7 @@ import Claim from '../Claim'
 import Tooltip from '../../components/Tooltip'
 
 import { formatGAS, formatFiat } from '../../core/formatters'
-import { ASSETS } from '../../core/constants'
+import { ASSETS, CURRENCIES } from '../../core/constants'
 
 import MdSync from 'react-icons/lib/md/sync'
 
@@ -18,17 +18,17 @@ import TokensBalance from './TokensBalance'
 
 type Props = {
   address: string,
-  neo: number,
+  NEO: number,
   net: NetworkType,
-  gas: number,
+  GAS: number,
   neoPrice: number,
   gasPrice: number,
   tokens: Object,
   loadWalletData: Function,
+  currencyCode: string,
   showSuccessNotification: Function,
   showErrorNotification: Function,
   showModal: Function,
-  retrieveTokenInfo: Function
 }
 
 export default class WalletInfo extends Component<Props> {
@@ -50,39 +50,42 @@ export default class WalletInfo extends Component<Props> {
   render () {
     const {
       address,
-      neo,
-      gas,
+      NEO,
+      GAS,
       neoPrice,
       gasPrice,
       tokens,
       showModal,
-      retrieveTokenInfo
+      currencyCode
     } = this.props
 
     if (isNil(address)) {
       return null
     }
 
-    let neoValue = neoPrice && neo ? neoPrice * neo : 0
-    let gasValue = gasPrice && gas ? gasPrice * gas : 0
+    let neoValue = neoPrice && NEO ? neoPrice * NEO : 0
+    let gasValue = gasPrice && GAS ? gasPrice * GAS : 0
     let totalValue = neoValue + gasValue
+
+    const displayCurrencyCode = currencyCode.toUpperCase()
+    const currencySymbol = CURRENCIES[currencyCode].symbol
 
     return (
       <div id='accountInfo'>
         <div id='balance'>
           <div className='split'>
             <div className='label'>{ASSETS.NEO}</div>
-            <div className='amountBig amountNeo'>{neo}</div>
-            <div className='fiat neoWalletValue'>US ${formatFiat(neoValue)}</div>
+            <div className='amountBig amountNeo'>{NEO}</div>
+            <div className='fiat neoWalletValue'>{currencySymbol}{formatFiat(neoValue)} {displayCurrencyCode}</div>
           </div>
           <div className='split'>
             <div className='label'>{ASSETS.GAS}</div>
             <div className='amountBig amountGas'>
-              <Tooltip title={formatGAS(gas)} disabled={gas === 0}>{formatGAS(gas, true)}</Tooltip>
+              <Tooltip title={formatGAS(GAS)} disabled={GAS === 0}>{formatGAS(GAS, true)}</Tooltip>
             </div>
-            <div className='fiat gasWalletValue'>US ${formatFiat(gasValue)}</div>
+            <div className='fiat gasWalletValue'>{currencySymbol}{formatFiat(gasValue)} {displayCurrencyCode}</div>
           </div>
-          <div className='fiat walletTotal'>Total US ${formatFiat(totalValue)}</div>
+          <div className='fiat walletTotal'>Total {currencySymbol}{formatFiat(totalValue)} {displayCurrencyCode}</div>
           <div onClick={this.refreshBalance} className={classNames(styles.refreshIconContainer, 'refreshBalance')}>
             <Tooltip title='Refresh account balance'>
               <MdSync id='refresh' className={styles.refreshIcon} />
@@ -91,7 +94,7 @@ export default class WalletInfo extends Component<Props> {
         </div>
         <div className='spacer' />
         <Claim />
-        <TokensBalance tokens={tokens} showModal={showModal} retrieveTokenInfo={retrieveTokenInfo} />
+        <TokensBalance tokens={tokens} showModal={showModal} />
       </div>
     )
   }

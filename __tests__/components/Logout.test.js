@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+
 import Logout from '../../app/components/Logout'
 
 describe('Logout', () => {

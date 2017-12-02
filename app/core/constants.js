@@ -71,3 +71,40 @@ export const TOKENS_TEST = {
 export const TOKENS = {
   RPX: 'ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9'
 }
+
+export const DEFAULT_CURRENCY_CODE = 'usd'
+
+export const CURRENCIES = {
+  'aud': { symbol: '$' },
+  'brl': { symbol: 'R$' },
+  'cad': { symbol: '$' },
+  'chf': { symbol: 'Fr.' },
+  'clp': { symbol: '$' },
+  'cny': { symbol: '¥' },
+  'czk': { symbol: 'Kč' },
+  'dkk': { symbol: 'kr. ' },
+  'eur': { symbol: '€' },
+  'gbp': { symbol: '£' },
+  'hkd': { symbol: '$' },
+  'huf': { symbol: 'Ft ' },
+  'idr': { symbol: 'Rp ' },
+  'ils': { symbol: '₪' },
+  'inr': { symbol: '₹' },
+  'jpy': { symbol: '¥' },
+  'krw': { symbol: '₩' },
+  'mxn': { symbol: '$' },
+  'myr': { symbol: 'RM' },
+  'nok': { symbol: 'kr ' },
+  'nzd': { symbol: '$' },
+  'php': { symbol: '₱' },
+  'pkr': { symbol: '₨ ' },
+  'pln': { symbol: 'zł' },
+  'rub': { symbol: '₽' },
+  'sek': { symbol: 'kr ' },
+  'sgd': { symbol: 'S$' },
+  'thb': { symbol: '฿' },
+  'try': { symbol: '₺' },
+  'twd': { symbol: 'NT$' },
+  'usd': { symbol: '$' },
+  'zar': { symbol: 'R ' }
+}

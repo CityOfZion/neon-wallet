@@ -13,10 +13,9 @@ import styles from './TokensBalance.scss'
 type Props = {
   tokens: Object,
   showModal: Function,
-  retrieveTokenInfo: Function
 }
 
-const tokens = ({ tokens, showModal, retrieveTokenInfo }: Props) => (
+const tokens = ({ tokens, showModal }: Props) => (
   <Table className={styles.table}>
     <thead>
       <tr>
@@ -32,7 +31,7 @@ const tokens = ({ tokens, showModal, retrieveTokenInfo }: Props) => (
           <tr key={symbol}>
             <td
               className={styles.symbol}
-              onClick={() => showModal(MODAL_TYPES.TOKEN_INFO, { token, retrieveTokenInfo })}>
+              onClick={() => showModal(MODAL_TYPES.TOKEN_INFO, { token })}>
               <InfoOutline className={styles.symbolIcon} />{symbol}
             </td>
             <td>{info ? formatBalance(balance, info.decimals) : balance}</td>

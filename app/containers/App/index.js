@@ -1,13 +1,14 @@
 // @flow
 import { connect } from 'react-redux'
-
 import { bindActionCreators } from 'redux'
-import { checkVersion } from '../../modules/metadata'
+
+import { checkVersion, initSettings } from '../../modules/metadata'
 
 import App from './App'
 
 const actionCreators = {
-  checkVersion
+  checkVersion,
+  initSettings
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)

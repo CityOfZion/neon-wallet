@@ -10,7 +10,7 @@ import asyncWrap from '../core/asyncHelper'
 export const participateInSale = (neoToSend: number, scriptHash: string) => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
   const wif = getWIF(state)
-  const neo = getNEO(state)
+  const NEO = getNEO(state)
   const net = getNetwork(state)
 
   const account = new wallet.Account(wif)
@@ -20,7 +20,7 @@ export const participateInSale = (neoToSend: number, scriptHash: string) => asyn
   }
   const toMint = parseInt(neoToSend)
 
-  if (toMint > neo) {
+  if (toMint > NEO) {
     dispatch(showErrorNotification({ message: 'You do not have enough NEO to send.' }))
     return false
   }

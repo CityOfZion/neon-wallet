@@ -3,17 +3,20 @@ import React from 'react'
 import classNames from 'classnames'
 
 import { formatFiat } from '../../core/formatters'
+import { CURRENCIES } from '../../core/constants'
 
 import styles from './PriceDisplay.scss'
 
 type Props = {
   neoPrice: number,
-  gasPrice: number
+  gasPrice: number,
+  currencyCode: string
 }
 
-const PriceDisplay = ({ neoPrice, gasPrice }: Props) => {
+const PriceDisplay = ({ neoPrice, gasPrice, currencyCode }: Props) => {
   let neoDisplayPrice = '-'
   let gasDisplayPrice = '-'
+  const currencySymbol = CURRENCIES[currencyCode].symbol
 
   if (neoPrice) {
     neoDisplayPrice = formatFiat(neoPrice)
@@ -27,11 +30,11 @@ const PriceDisplay = ({ neoPrice, gasPrice }: Props) => {
     <div className={styles.container}>
       <span id='neoPrice' className={styles.neoPriceDisplay}>
         <span className={styles.label}>NEO</span>
-        <span className={classNames('price', styles.price)}>${neoDisplayPrice}</span>
+        <span className={classNames('price', styles.price)}>{currencySymbol}{neoDisplayPrice}</span>
       </span>
       <span id='gasPrice'>
         <span className={styles.label}>GAS</span>
-        <span className={classNames('price', styles.price)}>${gasDisplayPrice}</span>
+        <span className={classNames('price', styles.price)}>{currencySymbol}{gasDisplayPrice}</span>
       </span>
     </div>
   )
