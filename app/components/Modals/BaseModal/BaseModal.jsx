@@ -1,13 +1,12 @@
 // @flow
 import React from 'react'
-import type { Children } from 'react'
 import ReactModal from 'react-modal'
 import Close from 'react-icons/lib/md/close'
 import styles from './BaseModal.scss'
 
 type Props = {
     title: string,
-    children: Children,
+    children: React$Node,
     hideModal: Function,
     width?: string,
     height?: string,
