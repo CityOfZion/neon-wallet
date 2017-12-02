@@ -1,12 +1,11 @@
 // @flow
 import React from 'react'
-import type { Children } from 'react'
 
 import { Tooltip as Tippy } from 'react-tippy'
 
 type Props = {
   position: 'top' | 'left' | 'right' | 'bottom',
-  children: Children
+  children: React$Node
 }
 
 const Tooltip = ({ children, position = 'bottom', ...rest }: Props) =>

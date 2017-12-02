@@ -1,11 +1,10 @@
 // @flow
 import React from 'react'
-import type { Children } from 'react'
 import Logo from '../Logo'
 import Footer from '../Footer'
 
 type Props = {
-    children: Children,
+    children: React$Node,
     id?: string,
     className?: string
 }

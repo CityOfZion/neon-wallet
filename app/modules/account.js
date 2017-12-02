@@ -61,7 +61,7 @@ export const loginNep2 = (passphrase: string, encryptedWIF: string, history: Obj
 
   setTimeout(() => {
     try {
-      const wif = wallet.decryptWIF(encryptedWIF, passphrase)
+      const wif = wallet.decrypt(encryptedWIF, passphrase)
       dispatch(hideNotification(infoNotificationId))
       dispatch(login(wif))
       return history.push(ROUTES.DASHBOARD)
