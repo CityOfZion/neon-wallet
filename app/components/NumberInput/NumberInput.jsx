@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import Cleave from 'cleave.js/react';
+import Cleave from 'cleave.js/react'
 
 type Props = {
   placeholder?: string,
