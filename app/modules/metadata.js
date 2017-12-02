@@ -1,11 +1,14 @@
 // @flow
 import axios from 'axios'
 import { api } from 'neon-js'
+import storage from 'electron-json-storage'
 
 import { showWarningNotification } from './notifications'
+import { setCurrency } from './price'
 
 import { NETWORK, EXPLORER, NEON_WALLET_RELEASE_LINK, NOTIFICATION_POSITIONS } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
+
 import { version } from '../../package.json'
 
 // Constants
@@ -54,6 +57,19 @@ export const checkVersion = () => async (dispatch: DispatchType, getState: GetSt
       position: NOTIFICATION_POSITIONS.BOTTOM_CENTER
     }))
   }
+}
+
+export const initSettings = () => async (dispatch: DispatchType) => {
+  // eslint-disable-next-line
+  storage.get('settings', (error, settings) => {
+    if (settings.blockExplorer !== null && settings.blockExplorer !== undefined) {
+      dispatch(setBlockExplorer(settings.blockExplorer))
+    }
+
+    if (settings.currency !== null && settings.currency !== undefined) {
+      dispatch(setCurrency(settings.currency))
+    }
+  })
 }
 
 export const syncBlockHeight = (net: NetworkType) => async (dispatch: DispatchType) => {

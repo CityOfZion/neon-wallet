@@ -3,6 +3,7 @@ import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { shallow, mount } from 'enzyme'
+
 import { setTransactionHistory } from '../../app/modules/wallet'
 import { setIsLoadingTransaction } from '../../app/modules/transactions'
 

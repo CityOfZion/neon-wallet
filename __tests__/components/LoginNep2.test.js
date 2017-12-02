@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import thunk from 'redux-thunk'
 import { shallow, mount } from 'enzyme'
 import { createMemoryHistory } from 'history'
+
 import LoginNep2 from '../../app/containers/LoginNep2'
 import { SHOW_NOTIFICATION, HIDE_NOTIFICATIONS, HIDE_NOTIFICATION, DEFAULT_POSITION } from '../../app/modules/notifications'
 import { LOGIN } from '../../app/modules/account'

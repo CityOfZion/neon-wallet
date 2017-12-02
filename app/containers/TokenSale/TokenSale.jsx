@@ -7,7 +7,7 @@ import HomeButtonLink from '../../components/HomeButtonLink'
 
 type Props = {
   address: string,
-  neo: number,
+  NEO: number,
   net: NetworkType,
   loadWalletData: Function,
   participateInSale: Function,
@@ -42,7 +42,7 @@ export default class TokenSale extends Component<Props, State> {
   }
 
   render () {
-    const { neo, refreshTokenBalance } = this.props
+    const { NEO, refreshTokenBalance } = this.props
     const { neoToSend, scriptHash } = this.state
     const refreshTokenBalanceButtonDisabled = !scriptHash
     const submitSaleButtonDisabled = !neoToSend || !scriptHash
@@ -61,7 +61,7 @@ export default class TokenSale extends Component<Props, State> {
         <div className='settingsForm'>
           <div className='settingsItem'>
             <div className='itemTitle'>NEO Balance:</div>
-            <div>{neo}</div>
+            <div>{NEO}</div>
           </div>
           <div className='settingsItem'>
             <div className='itemTitle'>Token Balance:</div>

@@ -21,8 +21,8 @@ const ConfirmDisplay = ({
     <p>Please confirm the following transaction:</p>
     <p>You are sending <strong>{sendAmount} {symbol}</strong> to:</p>
     <p><strong>{sendAddress}</strong></p>
-    <Button onClick={confirmTransaction}>confirm</Button>
-    <Button cancel onClick={cancelTransaction}>cancel</Button>
+    <Button onClick={confirmTransaction}>Confirm</Button>
+    <Button cancel onClick={cancelTransaction}>Cancel</Button>
   </div>
 )
 

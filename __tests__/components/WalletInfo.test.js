@@ -1,15 +1,18 @@
 import React from 'react'
+import * as neonjs from 'neon-js'
 import { Provider } from 'react-redux'
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import { mount, shallow } from 'enzyme'
+
 import { SET_TRANSACTION_HISTORY, SET_BALANCE, SET_IS_LOADED } from '../../app/modules/wallet'
 import { SHOW_NOTIFICATION, HIDE_NOTIFICATIONS, DEFAULT_POSITION } from '../../app/modules/notifications'
 import { LOADING_TRANSACTIONS } from '../../app/modules/transactions'
 import { SET_HEIGHT } from '../../app/modules/metadata'
-import { NOTIFICATION_LEVELS } from '../../app/core/constants'
+
+import { DEFAULT_CURRENCY_CODE, NOTIFICATION_LEVELS } from '../../app/core/constants'
+
 import WalletInfo from '../../app/containers/WalletInfo'
-import * as neonjs from 'neon-js'
 
 // TODO research how to move the axios mock code which is repeated in NetworkSwitch to a helper or config file
 import axios from 'axios'
@@ -21,15 +24,17 @@ axiosMock
   .onGet('http://testnet-api.wallet.cityofzion.io/v2/version')
   .reply(200, { version })
 axiosMock
-  .onGet('https://api.coinmarketcap.com/v1/ticker/neo/?convert=USD')
+  .onGet('https://api.coinmarketcap.com/v1/ticker/NEO/?convert=USD')
   .reply(200, [ { price_usd: 24.50 } ])
 axiosMock
-  .onGet('https://api.coinmarketcap.com/v1/ticker/gas/?convert=USD')
+  .onGet('https://api.coinmarketcap.com/v1/ticker/GAS/?convert=USD')
   .reply(200, [ { price_usd: 18.20 } ])
 
 jest.mock('electron', () => ({
-  clipboard: {
-    writeText: jest.fn()
+  app: {
+    getPath: () => {
+      return 'C:\\tmp\\mock_path'
+    }
   }
 }))
 jest.useFakeTimers()
@@ -47,11 +52,12 @@ const initialState = {
   },
   wallet: {
     NEO: 100001,
-    GAS: 1.0001601,
-    prices: {
-      NEO: 25.48,
-      GAS: 18.10
-    }
+    GAS: 1.0001601
+  },
+  price: {
+    NEO: 25.48,
+    GAS: 18.10,
+    currency: DEFAULT_CURRENCY_CODE
   },
   claim: {
     claimAmount: 0.5
@@ -97,11 +103,11 @@ describe('WalletInfo', () => {
     const neoField = wrapper.find('.amountNeo')
     const gasField = wrapper.find('.amountGas')
 
-    expect(neoWalletValue.text()).toEqual(`US $${expectedNeoWalletValue}`)
-    expect(gasWalletValue.text()).toEqual(`US $${expectedGasWalletValue}`)
-    expect(walletValue.text()).toEqual(`Total US $${expectedWalletValue}`)
+    expect(neoWalletValue.text()).toEqual(`$${expectedNeoWalletValue} USD`)
+    expect(gasWalletValue.text()).toEqual(`$${expectedGasWalletValue} USD`)
+    expect(walletValue.text()).toEqual(`Total $${expectedWalletValue} USD`)
     expect(neoField.text()).toEqual(`${initialState.wallet.NEO}`)
-    // TODO: Test the gas tooltip value, this is testing the display value, truncated to 4 decimals
+    // TODO: Test the GAS tooltip value, this is testing the display value, truncated to 4 decimals
     expect(gasField.text()).toEqual('1.0001')
     done()
   })
@@ -165,6 +171,24 @@ describe('WalletInfo', () => {
         level: NOTIFICATION_LEVELS.SUCCESS
       })
     })
+  })
+  test('correctly renders data from state with non-default currency', (done) => {
+    const testState = { ...initialState, price: { NEO: 1.11, GAS: 0.55, currency: 'eur' } }
+    const { wrapper } = setup(testState, false)
+
+    const neoWalletValue = wrapper.find('.neoWalletValue')
+    const gasWalletValue = wrapper.find('.gasWalletValue')
+    const walletValue = wrapper.find('.walletTotal')
+
+    const expectedNeoWalletValue = '111,001.11'
+    const expectedGasWalletValue = '0.55'
+    const expectedWalletValue = '111,001.66'
+
+    expect(neoWalletValue.text()).toEqual(`€${expectedNeoWalletValue} EUR`)
+    expect(gasWalletValue.text()).toEqual(`€${expectedGasWalletValue} EUR`)
+    expect(walletValue.text()).toEqual(`Total €${expectedWalletValue} EUR`)
+
+    done()
   })
   test('network error is shown with connectivity error', async () => {
     neonjs.api.neonDB.getBalance = jest.fn(() => {

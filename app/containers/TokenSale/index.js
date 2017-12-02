@@ -12,7 +12,7 @@ import TokenSale from './TokenSale'
 const mapStateToProps = (state: Object) => ({
   explorer: getBlockExplorer(state),
   wif: getWIF(state),
-  neo: getNEO(state),
+  NEO: getNEO(state),
   net: getNetwork(state),
   address: getAddress(state)
 })

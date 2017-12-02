@@ -56,7 +56,7 @@ export const doClaimNotify = () => async (dispatch: DispatchType, getState: GetS
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
 
-  log(net, 'CLAIM', address, { info: 'claim all gas' })
+  log(net, 'CLAIM', address, { info: 'claim all GAS' })
 
   const isHardwareClaim = !!publicKey
 
@@ -89,16 +89,16 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
   const wif = getWIF(state)
   const address = getAddress(state)
   const net = getNetwork(state)
-  const neo = getNEO(state)
+  const NEO = getNEO(state)
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
 
-  // if no neo in account, no need to send to self first
-  if (neo === 0) {
+  // if no NEO in account, no need to send to self first
+  if (NEO === 0) {
     return dispatch(doClaimNotify())
   } else {
     dispatch(showInfoNotification({ message: 'Sending NEO to Yourself...', autoDismiss: 0 }))
-    log(net, 'SEND', address, { to: address, amount: neo, asset: ASSETS.NEO })
+    log(net, 'SEND', address, { to: address, amount: NEO, asset: ASSETS.NEO })
 
     const isHardwareClaim = !!publicKey
 
@@ -108,9 +108,9 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
         message: 'Sign transaction 1 of 2 to claim GAS on your hardware device (sending NEO to yourself)',
         autoDismiss: 0
       }))
-      sendAssetFn = () => api.neonDB.doSendAsset(net, address, publicKey, { [ASSETS.NEO]: neo }, signingFunction)
+      sendAssetFn = () => api.neonDB.doSendAsset(net, address, publicKey, { [ASSETS.NEO]: NEO }, signingFunction)
     } else {
-      sendAssetFn = () => api.neonDB.doSendAsset(net, address, wif, { [ASSETS.NEO]: neo }, null)
+      sendAssetFn = () => api.neonDB.doSendAsset(net, address, wif, { [ASSETS.NEO]: NEO }, null)
     }
 
     const [err, response] = await asyncWrap(sendAssetFn())

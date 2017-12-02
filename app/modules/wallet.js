@@ -1,5 +1,4 @@
 // @flow
-import axios from 'axios'
 import { api } from 'neon-js'
 import { merge } from 'lodash'
 
@@ -7,6 +6,7 @@ import { syncTransactionHistory } from './transactions'
 import { syncAvailableClaim } from './claim'
 import { syncBlockHeight, getNetwork } from './metadata'
 import { LOGOUT, getAddress } from './account'
+import { getMarketPriceUSD, getGasMarketPriceUSD } from './price'
 
 import { TOKENS, TOKENS_TEST, NETWORK } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
@@ -46,26 +46,6 @@ export function setBalance (NEO: number, GAS: number) {
   }
 }
 
-export function setNEOPrice (price: number) {
-  return {
-    type: SET_NEO_PRICE,
-    payload: { price }
-  }
-}
-
-export function setGASPrice (price: number) {
-  return {
-    type: SET_GAS_PRICE,
-    payload: { price }
-  }
-}
-
-export function resetPrices () {
-  return {
-    type: RESET_PRICES
-  }
-}
-
 export function setTransactionHistory (transactions: Array<Object>) {
   return {
     type: SET_TRANSACTION_HISTORY,
@@ -87,20 +67,6 @@ export function setTokenInfo (symbol: TokenSymbolType, info: TokenInfoType) {
   }
 }
 
-export const getNEOMarketPriceUSD = () => async (dispatch: DispatchType) => {
-  // If API dies, still display balance - ignore _err
-  const [_err, response] = await asyncWrap(axios.get('https://api.coinmarketcap.com/v1/ticker/neo/?convert=USD')) // eslint-disable-line
-  let lastUSDNEO = Number(response.data[0].price_usd)
-  return dispatch(setNEOPrice(lastUSDNEO))
-}
-
-export const getGASMarketPriceUSD = () => async (dispatch: DispatchType) => {
-  // If API dies, still display balance - ignore _err
-  const [_err, response] = await asyncWrap(axios.get('https://api.coinmarketcap.com/v1/ticker/gas/?convert=USD')) // eslint-disable-line
-  let lastUSDGAS = Number(response.data[0].price_usd)
-  return dispatch(setGASPrice(lastUSDGAS))
-}
-
 export const retrieveBalance = (net: NetworkType, address: string) => async (dispatch: DispatchType) => {
   // If API dies, still display balance - ignore _err
   const [_err, resultBalance] = await asyncWrap(api.neonDB.getBalance(net, address)) // eslint-disable-line
@@ -112,8 +78,8 @@ export const loadWalletData = (net: NetworkType, address: string) => (dispatch: 
   dispatch(syncTransactionHistory(net, address))
   dispatch(syncAvailableClaim(net, address))
   dispatch(syncBlockHeight(net))
-  dispatch(getNEOMarketPriceUSD())
-  dispatch(getGASMarketPriceUSD())
+  dispatch(getMarketPriceUSD())
+  dispatch(getGasMarketPriceUSD())
   dispatch(retrieveTokensBalance())
   return dispatch(retrieveBalance(net, address))
 }
@@ -133,12 +99,15 @@ export const retrieveTokensBalance = () => async (dispatch: DispatchType, getSta
     if (results) {
       let info = tokensFromState[symbol].info
       if (!info) {
-        await dispatch(retrieveTokenInfo(symbol))
+        const [, tokenInfoRpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net))
+        const [, tokenInfoResults] = await asyncWrap(api.nep5.getTokenInfo(tokenInfoRpcEndpoint, getScriptHashForNetwork(net, symbol)))
+        info = tokenInfoResults
       }
       tokens[symbol] = {
         symbol,
         balance: results,
-        scriptHash
+        scriptHash,
+        info
       }
     }
   }
@@ -160,8 +129,6 @@ export const retrieveTokenInfo = (symbol: TokenSymbolType) => async (dispatch: D
 export const getNEO = (state: Object) => state.wallet.NEO
 export const getGAS = (state: Object) => state.wallet.GAS
 export const getTransactions = (state: Object) => state.wallet.transactions
-export const getNEOPrice = (state: Object) => state.wallet.prices.NEO
-export const getGASPrice = (state: Object) => state.wallet.prices.GAS
 export const getTokens = (state: Object) => state.wallet.tokens
 export const getIsLoaded = (state: Object) => state.wallet.loaded
 
@@ -182,10 +149,6 @@ const initialState = {
   NEO: 0,
   GAS: 0,
   transactions: [],
-  prices: {
-    NEO: 0,
-    GAS: 0
-  },
   tokens: getInitialTokenBalance()
 }
 
@@ -197,29 +160,6 @@ export default (state: Object = initialState, action: ReduxAction) => {
         ...state,
         NEO,
         GAS
-      }
-    case SET_NEO_PRICE:
-      return {
-        ...state,
-        prices: {
-          ...state.prices,
-          NEO: action.payload.price
-        }
-      }
-    case SET_GAS_PRICE:
-      return {
-        ...state,
-        prices: {
-          ...state.prices,
-          GAS: action.payload.price
-        }
-      }
-    case RESET_PRICES:
-      return {
-        ...state,
-        prices: {
-          ...initialState.prices
-        }
       }
     case SET_TRANSACTION_HISTORY:
       const { transactions } = action.payload
