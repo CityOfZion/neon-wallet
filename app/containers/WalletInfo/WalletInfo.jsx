@@ -83,9 +83,9 @@ export default class WalletInfo extends Component<Props> {
             <div className='amountBig amountGas'>
               <Tooltip title={formatGAS(GAS)} disabled={GAS === 0}>{formatGAS(GAS, true)}</Tooltip>
             </div>
-            <div className='fiat gasWalletValue'>{currencySymbol} {formatFiat(gasValue)} {displayCurrencyCode}</div>
+            <div className='fiat gasWalletValue'>{currencySymbol}{formatFiat(gasValue)} {displayCurrencyCode}</div>
           </div>
-          <div className='fiat walletTotal'>Total {currencySymbol} {formatFiat(totalValue)} {displayCurrencyCode}</div>
+          <div className='fiat walletTotal'>Total {currencySymbol}{formatFiat(totalValue)} {displayCurrencyCode}</div>
           <div onClick={this.refreshBalance} className={classNames(styles.refreshIconContainer, 'refreshBalance')}>
             <Tooltip title='Refresh account balance'>
               <MdSync id='refresh' className={styles.refreshIcon} />

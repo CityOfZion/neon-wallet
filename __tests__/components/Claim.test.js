@@ -1,11 +1,12 @@
 import React from 'react'
+import * as neonjs from 'neon-js'
 import { cloneDeep } from 'lodash'
 import { Provider } from 'react-redux'
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import { shallow, mount } from 'enzyme'
+
 import Claim from '../../app/containers/Claim'
-import * as neonjs from 'neon-js'
 import { setClaimRequest, disableClaim } from '../../app/modules/claim'
 import { SHOW_NOTIFICATION, HIDE_NOTIFICATIONS, DEFAULT_POSITION } from '../../app/modules/notifications'
 import { NOTIFICATION_LEVELS } from '../../app/core/constants'
@@ -70,7 +71,7 @@ describe('Claim', () => {
   describe('when do GAS claim button is clicked', () => {
     test('should dispatch transaction failure event', async () => {
       const { wrapper, store } = setup()
-      neonjs.doSendAsset = jest.fn(() => {
+      neonjs.api.neonDB.doSendAsset = jest.fn(() => {
         return new Promise((resolve, reject) => {
           resolve({ result: undefined })
         })
@@ -112,7 +113,7 @@ describe('Claim', () => {
 
     test('should dispatch transaction waiting, set claim request and disable claim event', async () => {
       const { wrapper, store } = setup()
-      neonjs.doSendAsset = jest.fn(() => {
+      neonjs.api.neonDB.doSendAsset = jest.fn(() => {
         return new Promise((resolve, reject) => {
           resolve({ result: true })
         })

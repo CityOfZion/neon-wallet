@@ -9,6 +9,7 @@ describe('wallet module tests', () => {
   const NEO = 1
   const GAS = 1
   const initialState = {
+    loaded: false,
     NEO: 0,
     GAS: 0,
     tokens: {

@@ -2,8 +2,9 @@ import React from 'react'
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import { shallow } from 'enzyme'
+
 import { SET_HEIGHT, SET_NETWORK } from '../../app/modules/metadata'
-import { SET_BALANCE, SET_TRANSACTION_HISTORY } from '../../app/modules/wallet'
+import { SET_BALANCE, SET_TRANSACTION_HISTORY, SET_IS_LOADED } from '../../app/modules/wallet'
 import { LOADING_TRANSACTIONS } from '../../app/modules/transactions'
 import NetworkSwitch from '../../app/containers/NetworkSwitch'
 
@@ -65,9 +66,9 @@ describe('NetworkSwitch', () => {
 
     deepWrapper.find('.netName').simulate('click')
 
-    await Promise.resolve().then().then().then()
+    await Promise.resolve().then().then().then().then()
     const actions = store.getActions()
-    expect(actions.length).toEqual(6)
+    expect(actions.length).toEqual(7)
     expect(actions[0]).toEqual({
       type: SET_NETWORK,
       payload: {
@@ -99,6 +100,12 @@ describe('NetworkSwitch', () => {
       }
     })
     expect(actions[5]).toEqual({
+      type: SET_IS_LOADED,
+      payload: {
+        loaded: true
+      }
+    })
+    expect(actions[6]).toEqual({
       type: SET_BALANCE,
       payload: {
         NEO: 1,
