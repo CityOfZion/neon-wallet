@@ -56,13 +56,10 @@ declare type TokenInfoType = {
   name: string
 }
 
-declare type TokenSymbolType = $Keys<typeof TOKENS>
+declare type SymbolType = $Keys<typeof TOKENS> | 'NEO' | 'GAS'
 
 declare type TokenType = {
-  symbol: TokenSymbolType,
+  symbol: SymbolType,
   balance: number,
-}
-
-declare type TokenWithInfoType = TokenSymbolType & {
   info: TokenInfoType
 }

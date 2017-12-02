@@ -11,7 +11,7 @@ import styles from './SendModal.scss'
 type Props = {
   sendAddress: string,
   sendAmount: string,
-  symbol: TokenSymbolType,
+  symbol: SymbolType,
   tokens: Object,
   onChangeHandler: Function,
   openAndValidate: Function,
