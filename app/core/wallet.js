@@ -6,9 +6,9 @@ const MIN_PASSPHRASE_LEN = 4
 
 export const validatePassphraseLength = (passphrase: string): boolean => passphrase.length >= MIN_PASSPHRASE_LEN
 
-export const isToken = (symbol: TokenSymbolType) => Object.keys(TOKENS).includes(symbol)
+export const isToken = (symbol: SymbolType) => Object.keys(TOKENS).includes(symbol)
 
-export const obtainTokenBalance = (tokens: Object, symbol: TokenSymbolType) => {
+export const obtainTokenBalance = (tokens: Object, symbol: SymbolType) => {
   if (!isToken(symbol)) {
     throw new Error(`${symbol} is not a valid token`)
   }
@@ -20,7 +20,7 @@ export const obtainTokenBalance = (tokens: Object, symbol: TokenSymbolType) => {
   }
 }
 
-export const validateTransactionBeforeSending = (neoBalance: number, gasBalance: number, tokenBalance: number, symbol: TokenSymbolType, sendAddress: string, sendAmount: string) => {
+export const validateTransactionBeforeSending = (neoBalance: number, gasBalance: number, tokenBalance: number, symbol: SymbolType, sendAddress: string, sendAmount: string) => {
   if (!sendAddress || !sendAmount) {
     return {
       error: 'Please specify an address and amount',
