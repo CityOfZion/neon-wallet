@@ -46,6 +46,7 @@ Execute these commands in the project's root directory:
 
 Setup:
   - `yarn install` - Installing node dependencies
+    - If you get any errors related to the node-hid package, please check installation instructions here: https://github.com/node-hid/node-hid#compiling-from-source. On Linux you may need to run `sudo apt install libusb-1.0-0 libusb-1.0-0-dev`, for example.
   - `./node_modules/.bin/electron -v` confirm electron is version 1.7.9
 
 Developing:
