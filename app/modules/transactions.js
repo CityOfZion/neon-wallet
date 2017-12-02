@@ -40,7 +40,7 @@ export const syncTransactionHistory = (net: NetworkType, address: string) => asy
   }
 }
 
-export const sendTransaction = (sendAddress: string, sendAmount: string, symbol: TokenSymbolType) => async (dispatch: DispatchType, getState: GetStateType): Promise<*> => {
+export const sendTransaction = (sendAddress: string, sendAmount: string, symbol: SymbolType) => async (dispatch: DispatchType, getState: GetStateType): Promise<*> => {
   const state = getState()
   const wif = getWIF(state)
   const address = getAddress(state)
