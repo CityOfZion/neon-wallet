@@ -9,6 +9,7 @@ import { getNetwork } from './metadata'
 
 import { validateTransactionBeforeSending, obtainTokenBalance, isToken } from '../core/wallet'
 import { ASSETS } from '../core/constants'
+import { adjustDecimalAmountForTokenTransfer } from '../core/nep5'
 import asyncWrap from '../core/asyncHelper'
 
 import { log } from '../util/Logs'
@@ -66,22 +67,28 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, symbol:
 
     const isHardwareSend = !!publicKey
 
+    // TODO: Consolidate this
     let sendAssetFn
     if (isHardwareSend) {
       dispatch(showInfoNotification({ message: 'Please sign the transaction on your hardware device', autoDismiss: 0 }))
-      sendAssetFn = () => api.neonDB.doSendAsset(net, sendAddress, publicKey, sendAsset, signingFunction)
-    } else {
       if (symbol === ASSETS.NEO || symbol === ASSETS.GAS) {
-        sendAssetFn = () => api.neonDB.doSendAsset(net, sendAddress, wif, sendAsset, null)
+        sendAssetFn = () => api.neonDB.doSendAsset(net, sendAddress, publicKey, sendAsset, signingFunction)
       } else {
         const scriptHash = getScriptHashForNetwork(net, symbol)
-        const decimalAdjustedSendAmount = parsedSendAmount * 10 ** tokens[symbol].info.decimals
-        sendAssetFn = () => api.nep5.doTransferToken(net, scriptHash, wif, sendAddress, decimalAdjustedSendAmount)
+        sendAssetFn = () => api.nep5.doTransferToken(net, scriptHash, publicKey, sendAddress, adjustDecimalAmountForTokenTransfer(parsedSendAmount), 0, signingFunction)
+      }
+    } else {
+      if (symbol === ASSETS.NEO || symbol === ASSETS.GAS) {
+        sendAssetFn = () => api.neonDB.doSendAsset(net, sendAddress, wif, sendAsset)
+      } else {
+        const scriptHash = getScriptHashForNetwork(net, symbol)
+        sendAssetFn = () => api.nep5.doTransferToken(net, scriptHash, wif, sendAddress, adjustDecimalAmountForTokenTransfer(parsedSendAmount))
       }
     }
 
     const [err, response] = await asyncWrap(sendAssetFn())
     if (err || response.result === undefined || response.result === false) {
+      console.log(err)
       return rejectTransaction('Transaction failed!')
     } else {
       return dispatch(showSuccessNotification({ message: 'Transaction complete! Your balance will automatically update when the blockchain has processed it.' }))
