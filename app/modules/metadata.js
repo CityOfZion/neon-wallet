@@ -14,7 +14,7 @@ import { version } from '../../package.json'
 // Constants
 export const SET_HEIGHT = 'SET_HEIGHT'
 export const SET_NETWORK = 'SET_NETWORK'
-export const SET_EXPLORERS = 'SET_EXPLORERS'
+export const SET_EXPLORER = 'SET_EXPLORER'
 
 // Actions
 export function setNetwork (net: NetworkType) {
@@ -34,7 +34,7 @@ export function setBlockHeight (blockHeight: number) {
 
 export function setBlockExplorer (blockExplorer: ExplorerType) {
   return {
-    type: SET_EXPLORERS,
+    type: SET_EXPLORER,
     payload: { blockExplorer }
   }
 }
@@ -96,7 +96,7 @@ export default (state: Object = initialState, action: ReduxAction) => {
         ...state,
         blockHeight
       }
-    case SET_EXPLORERS:
+    case SET_EXPLORER:
       const { blockExplorer } = action.payload
       return {
         ...state,
