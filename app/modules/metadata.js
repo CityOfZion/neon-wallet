@@ -7,9 +7,7 @@ import { showWarningNotification } from './notifications'
 import { setCurrency } from './price'
 
 import { NETWORK, EXPLORER, NEON_WALLET_RELEASE_LINK, NOTIFICATION_POSITIONS } from '../core/constants'
-import { setCurrency } from './price'
 import asyncWrap from '../core/asyncHelper'
-import storage from 'electron-json-storage'
 
 import { version } from '../../package.json'
 
