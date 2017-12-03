@@ -3,8 +3,6 @@
 exports[`Logout should render without crashing 1`] = `
 <div
   className="logout"
-  data-for="logoutTip"
-  data-tip={true}
   id="logout"
   onClick={[Function]}
 >
@@ -12,21 +10,12 @@ exports[`Logout should render without crashing 1`] = `
     replace={false}
     to=""
   >
-    <MdPowerSettingsNew />
+    <Tooltip
+      position="right"
+      title="Logout"
+    >
+      <MdPowerSettingsNew />
+    </Tooltip>
   </Link>
-  <ReactTooltip
-    class="solidTip"
-    effect="solid"
-    id="logoutTip"
-    insecure={true}
-    place="bottom"
-    resizeHide={true}
-    type="dark"
-    wrapper="div"
-  >
-    <span>
-      Logout
-    </span>
-  </ReactTooltip>
 </div>
 `;

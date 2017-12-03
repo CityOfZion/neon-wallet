@@ -1,9 +1,11 @@
 // @flow
 import React from 'react'
-import { formatFiat } from '../../core/formatters'
-import styles from './PriceDisplay.scss'
 import classNames from 'classnames'
+
+import { formatFiat } from '../../core/formatters'
 import { CURRENCIES } from '../../core/constants'
+
+import styles from './PriceDisplay.scss'
 
 type Props = {
   neoPrice: number,

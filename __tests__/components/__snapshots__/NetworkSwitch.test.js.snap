@@ -4,7 +4,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
 <NetworkSwitch
   address="AWy7RNBVr9vDadRMK9p7i7Z1tL7GrLAxoh"
   checkVersion={[Function]}
-  initiateGetBalance={[Function]}
+  loadWalletData={[Function]}
   net="MainNet"
   setNetwork={[Function]}
   store={

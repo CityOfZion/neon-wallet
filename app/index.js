@@ -4,6 +4,7 @@ import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import store from './store/configureStore'
 import Root from './Root'
+import './styles/tippy.compiled.global.css'
 import './styles/main.global.scss'
 
 render(

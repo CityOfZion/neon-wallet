@@ -1,9 +1,11 @@
+
 import React from 'react'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import storage from 'electron-json-storage'
 import configureStore from 'redux-mock-store'
 import { shallow, mount } from 'enzyme'
+
 import App from '../../app/containers/App'
 
 const setup = (state, shallowRender = true) => {

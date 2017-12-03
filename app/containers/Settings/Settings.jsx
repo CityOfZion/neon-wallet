@@ -3,10 +3,12 @@ import React, { Component } from 'react'
 import { forEach, map } from 'lodash'
 import fs from 'fs'
 import storage from 'electron-json-storage'
-import Delete from 'react-icons/lib/md/delete'
+
 import Page from '../../components/Page'
 import HomeButtonLink from '../../components/HomeButtonLink'
 import { EXPLORER, MODAL_TYPES, CURRENCIES } from '../../core/constants'
+
+import Delete from 'react-icons/lib/md/delete'
 
 const { dialog } = require('electron').remote
 
@@ -84,7 +86,7 @@ export default class Settings extends Component<Props, State> {
     })
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps (nextProps: Props) {
     storage.set('settings', {
       currency: nextProps.currency,
       blockExplorer: nextProps.explorer

@@ -1,4 +1,9 @@
-import generateWalletReducer, { newWalletKeys, newWallet, generating, resetKey, NEW_WALLET_KEYS, NEW_WALLET, SET_GENERATING, RESET_KEY } from '../../app/modules/generateWallet'
+import generateWalletReducer, {
+  newWallet,
+  resetKey,
+  NEW_WALLET,
+  RESET_KEY
+} from '../../app/modules/generateWallet'
 
 describe('generateWallet module tests', () => {
   // TODO when looking into pulling axios mock adapter into helper file to stay DRY
@@ -6,21 +11,20 @@ describe('generateWallet module tests', () => {
   const wif = 'L4AJ14CNaBWPemRJKC34wyZwbmxg33GETs4Y1F8uK7rRmZ2UHrJn'
   const address = 'AM22coFfbe9N6omgL9ucFBLkeaMNg9TEyL'
   const passphrase = 'Th!s1$@FakePassphrase'
-  const encryptedWif = '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
+  const encryptedWIF = '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
 
   const initialState = {
     wif: null,
     address: null,
     passphrase: null,
-    encryptedWif: null,
-    generating: false
+    encryptedWIF: null
   }
 
   const account = {
     wif,
     address,
     passphrase,
-    encryptedWif
+    encryptedWIF
   }
 
   describe('newWallet tests', () => {
@@ -37,42 +41,6 @@ describe('generateWallet module tests', () => {
 
     test('generateWallet reducer should handle NEW_WALLET', () => {
       const expectedState = Object.assign({}, initialState, account)
-      expect(generateWalletReducer(undefined, expectedAction)).toEqual(expectedState)
-    })
-  })
-
-  describe('newWalletKeys tests', () => {
-    const expectedAction = {
-      type: NEW_WALLET_KEYS,
-      payload: {
-        passphrase
-      }
-    }
-
-    test('newWalletKeys action works', () => {
-      expect(newWalletKeys(passphrase)).toEqual(expectedAction)
-    })
-
-    test('generateWallet reducer should handle NEW_WALLET_KEYS', () => {
-      const expectedState = Object.assign({}, initialState, account)
-      expect(generateWalletReducer(undefined, expectedAction)).toEqual(expectedState)
-    })
-  })
-
-  describe('generating tests', () => {
-    const expectedAction = {
-      type: SET_GENERATING,
-      payload: {
-        generating: true
-      }
-    }
-
-    test('generating action works', () => {
-      expect(generating(true)).toEqual(expectedAction)
-    })
-
-    test('generateWallet reducer should handle SET_GENERATING', () => {
-      const expectedState = Object.assign({}, initialState, { generating: true })
       expect(generateWalletReducer(undefined, expectedAction)).toEqual(expectedState)
     })
   })

@@ -5,9 +5,10 @@ import { BrowserRouter } from 'react-router-dom'
 import thunk from 'redux-thunk'
 import { shallow, mount } from 'enzyme'
 import { createMemoryHistory } from 'history'
+
 import LoginNep2 from '../../app/containers/LoginNep2'
-import { decryptWIF } from 'neon-js'
 import { SHOW_NOTIFICATION, HIDE_NOTIFICATIONS, HIDE_NOTIFICATION, DEFAULT_POSITION } from '../../app/modules/notifications'
+import { LOGIN } from '../../app/modules/account'
 import { NOTIFICATION_LEVELS } from '../../app/core/constants'
 
 jest.useFakeTimers()
@@ -109,11 +110,10 @@ describe('LoginNep2', () => {
     keyField.simulate('change')
 
     wrapper.find('.loginButton').simulate('submit')
+    Promise.resolve('Pause').then().then()
     jest.runAllTimers()
     const actions = store.getActions()
-    expect(actions.length).toEqual(2)
-    expect(decryptWIF.mock.calls.length).toBe(1)
-    expect(decryptWIF.mock.calls[0][0]).toBe('6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu')
+    expect(actions.length).toEqual(4)
     expect(actions[0]).toEqual({
       type: HIDE_NOTIFICATIONS,
       payload: {
@@ -128,6 +128,13 @@ describe('LoginNep2', () => {
         level: NOTIFICATION_LEVELS.INFO
       })
     })
+    expect(actions[2]).toEqual({
+      type: HIDE_NOTIFICATION,
+      payload: expect.objectContaining({
+        id: 'notification_1'
+      })
+    })
+    expect(actions[3]).toHaveProperty('type', LOGIN)
     done()
   })
 })
