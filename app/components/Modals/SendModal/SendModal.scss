@@ -1,5 +1,4 @@
-.textContainer {
-}
+@import '../../../styles/variables';
 
 .canvas {
     margin: 10px 0;
@@ -42,4 +41,10 @@
 
 .sendButton {
     margin-top: 20px;
+}
+.externalLink {
+    color: $link-color;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
 }

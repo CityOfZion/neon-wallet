@@ -42,7 +42,7 @@ export default class WalletInfo extends Component<Props> {
     } = this.props
     loadWalletData(net, address).then((response) => {
       showSuccessNotification({ message: 'Received latest blockchain information.' })
-    }).catch(() => {
+    }).catch((e) => {
       showErrorNotification({ message: 'Failed to retrieve blockchain information' })
     })
   }
