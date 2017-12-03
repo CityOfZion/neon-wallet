@@ -14,13 +14,15 @@ const DISPLAY_MODES = {
 }
 
 type Props = {
-    NEO: number,
-    GAS: number,
-    tokens: Object,
-    showErrorNotification: Function,
-    hideModal: Function,
-    togglePane: Function,
-    sendTransaction: Function,
+  NEO: number,
+  GAS: number,
+  tokens: Object,
+  showErrorNotification: Function,
+  hideModal: Function,
+  togglePane: Function,
+  sendTransaction: Function,
+  explorer: ExplorerType,
+  net: NetworkType,
 }
 
 type State = {
@@ -94,7 +96,7 @@ class SendModal extends Component<Props, State> {
   }
 
   render () {
-    const { hideModal, tokens } = this.props
+    const { hideModal, tokens, explorer, net } = this.props
     const { display } = this.state
 
     return (
@@ -119,6 +121,8 @@ class SendModal extends Component<Props, State> {
           : <ConfirmDisplay
             confirmTransaction={this.confirmTransaction}
             cancelTransaction={this.cancelTransaction}
+            explorer={explorer}
+            net={net}
             {...this.state}
           />}
       </BaseModal>

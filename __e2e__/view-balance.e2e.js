@@ -39,13 +39,15 @@ test.serial('should login success', async t => {
   await app.client.click('#loginPage button')
 
   // Switch to TestNet
-  await timeout(2000)
+  await timeout(1000)
   const currentNetName = await app.client.getText('#network .netName')
+  console.log('currentNetName', currentNetName);
   if (currentNetName === 'MainNet') {
     await app.client.click('#network .netName')
   }
 
   // Show exact public address
+  await timeout(1000)
   t.is(await app.client.getText('#network .netName'), 'TestNet')
 })
 

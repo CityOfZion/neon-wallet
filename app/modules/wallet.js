@@ -70,7 +70,7 @@ export const retrieveBalance = (net: NetworkType, address: string) => async (dis
   }
 }
 
-export const loadWalletData = (net: NetworkType, address: string, silent: boolean = true) => (dispatch: DispatchType) => {
+export const loadWalletData = (net: NetworkType, address: string, silent: boolean = true) => async (dispatch: DispatchType) => {
   if (!silent) {
     dispatch(setIsLoaded(false))
   }
@@ -79,10 +79,11 @@ export const loadWalletData = (net: NetworkType, address: string, silent: boolea
   dispatch(syncBlockHeight(net))
   dispatch(getMarketPriceUSD())
   dispatch(getGasMarketPriceUSD())
-  return Promise.all([
+  await Promise.all([
     dispatch(retrieveTokensBalance()),
     dispatch(retrieveBalance(net, address))
   ])
+  return true
 }
 
 export const retrieveTokensBalance = () => async (dispatch: DispatchType, getState: GetStateType) => {

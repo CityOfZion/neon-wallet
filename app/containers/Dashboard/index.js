@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 
 import { togglePane } from '../../modules/dashboard'
 import { logout, getAddress } from '../../modules/account'
-import { getBlockHeight, getNetwork } from '../../modules/metadata'
+import { getBlockExplorer, getBlockHeight, getNetwork } from '../../modules/metadata'
 import { getNotifications, showErrorNotification } from '../../modules/notifications'
 import { getNEO, getGAS, getTokens, getIsLoaded, loadWalletData } from '../../modules/wallet'
 import { showModal } from '../../modules/modal'
@@ -24,7 +24,8 @@ const mapStateToProps = (state: Object) => ({
   GAS: getGAS(state),
   tokens: getTokens(state),
   loaded: getIsLoaded(state),
-  currencyCode: getCurrency(state)
+  currencyCode: getCurrency(state),
+  explorer: getBlockExplorer(state)
 })
 
 const actionCreators = {
