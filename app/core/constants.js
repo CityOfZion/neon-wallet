@@ -11,10 +11,11 @@ export const ASSETS = {
   GAS: 'GAS'
 }
 
-export const EXPLORER = {
+export const EXPLORERS = {
   NEO_TRACKER: 'Neotracker',
   NEO_SCAN: 'Neoscan',
-  ANT_CHAIN: 'Antchain'
+  ANT_CHAIN: 'Antchain',
+  NEO_VERSE: 'NEOVerse'
 }
 
 export const ROUTES = {
