@@ -6,6 +6,7 @@ import NumberInput from '../../NumberInput'
 
 import { ASSETS } from '../../../core/constants'
 import { formatBalance, toFixedDecimals, COIN_DECIMAL_LENGTH } from '../../../core/formatters'
+import { isToken } from '../../../core/wallet'
 
 import styles from './SendModal.scss'
 
@@ -75,6 +76,7 @@ const SendDisplay = ({
             <option value={ASSETS.GAS}>{ASSETS.GAS}</option>
             {Object.keys(tokens).map((symbol) => <option key={symbol} value={symbol}>{symbol}</option>)}
           </select>
+          {isToken(symbol) && <span className={styles.tokenInfoMessage}>Sending NEP5 tokens requires holding at least 1 drop of GAS</span>}
         </div>
       </div>
       <div id='sendAmount' className={styles.column}>
