@@ -38,6 +38,18 @@ export const getExplorerTxLink = (net: NetworkType, explorer: ExplorerType, txId
   }
 }
 
+export const getExplorerAddressLink = (net: NetworkType, explorer: ExplorerType, address: string) => {
+  const baseURL = getExplorerBaseURL(net, explorer)
+
+  if (explorer === EXPLORER.NEO_TRACKER) {
+    return `${baseURL}/address/${address}`
+  } else if (explorer === EXPLORER.NEO_SCAN) {
+    return `${baseURL}/address/${address}/1`
+  } else {
+    return `${baseURL}/address/info/${address}`
+  }
+}
+
 export const getExplorerAssetLink = (net: NetworkType, explorer: ExplorerType, assetId: string) => {
   const baseURL = getExplorerBaseURL(net, explorer)
 
@@ -52,6 +64,9 @@ export const getExplorerAssetLink = (net: NetworkType, explorer: ExplorerType, a
 
 export const openExplorerTx = (net: NetworkType, explorer: ExplorerType, txId: string) =>
   openExternal(getExplorerTxLink(net, explorer, txId))
+
+export const openExplorerAddress = (net: NetworkType, explorer: ExplorerType, address: string) =>
+  openExternal(getExplorerAddressLink(net, explorer, address))
 
 export const openExplorerAsset = (net: NetworkType, explorer: ExplorerType, assetId: string) =>
   openExternal(getExplorerTxLink(net, explorer, assetId))

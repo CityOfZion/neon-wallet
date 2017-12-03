@@ -3,13 +3,18 @@ import React from 'react'
 import Button from '../../Button'
 
 import { formatBalance } from '../../../core/formatters'
+import { openExplorerAddress } from '../../../core/explorer'
+
+import styles from './SendModal.scss'
 
 type Props = {
   sendAddress: string,
   sendAmount: string,
   symbol: SymbolType,
   confirmTransaction: Function,
-  cancelTransaction: Function
+  cancelTransaction: Function,
+  explorer: ExplorerType,
+  net: NetworkType,
 }
 
 const ConfirmDisplay = ({
@@ -17,12 +22,16 @@ const ConfirmDisplay = ({
   sendAmount,
   symbol,
   confirmTransaction,
-  cancelTransaction
+  cancelTransaction,
+  explorer,
+  net
 }: Props) => (
   <div>
     <p>Please confirm the following transaction:</p>
     <p>You are sending <strong>{formatBalance(symbol, sendAmount)} {symbol}</strong> to:</p>
-    <p><strong>{sendAddress}</strong></p>
+    <div onClick={() => openExplorerAddress(net, explorer, sendAddress)}>
+      <div className={styles.externalLink}>{sendAddress}</div>
+    </div>
     <div>
       <Button onClick={confirmTransaction}>Confirm</Button>
       <Button cancel onClick={cancelTransaction}>Cancel</Button>

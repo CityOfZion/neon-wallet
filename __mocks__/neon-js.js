@@ -21,14 +21,14 @@ neonjs.api = {
     doSendAsset: promiseMockGen({ result: true }),
     getWalletDBHeight: promiseMockGen(586435),
     getAPIEndpoint: jest.fn(() => 'http://testnet-api.wallet.cityofzion.io'),
-    getRPCEndpoint: jest.fn(),
-    doMintTokens: jest.fn(),
+    getRPCEndpoint: promiseMockGen(''),
+    doMintTokens: promiseMockGen({ result: true }),
     getTransactionHistory: promiseMockGen([]),
     getBalance: promiseMockGen({ NEO: { balance: 1 }, GAS: { balance: 1 } })
   },
   nep5: {
-    getTokenInfo: jest.fn(),
-    getTokenBalance: jest.fn()
+    getTokenInfo: promiseMockGen({ result: true }),
+    getTokenBalance: promiseMockGen(100)
   }
 }
 
@@ -51,6 +51,7 @@ neonjs.wallet = {
       resolve(privateKey)
     })
   }),
+  decrypt: jest.fn(() => privateKey),
   encrypt: jest.fn(() => encryptedKey),
   generatePrivateKey: jest.fn(() => privateKey),
   Account: jest.fn(() => { return { address } }),

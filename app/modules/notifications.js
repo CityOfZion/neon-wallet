@@ -30,6 +30,7 @@ export const DEFAULT_WARNING_TITLE = 'Warning'
 export const AUTO_DISMISS_TIMEOUT = 5
 
 const notificationFactory = (args: NotificationFactoryArgsType, dispatch: DispatchType) => {
+  console.log('never called here??');
   const {
     autoDismiss = AUTO_DISMISS_TIMEOUT,
     dismissible = true,
@@ -43,6 +44,7 @@ const notificationFactory = (args: NotificationFactoryArgsType, dispatch: Dispat
     dispatch(hideNotifications({ position, dismissible: true }))
   }
 
+  console.log('I should be shown');
   dispatch(showNotification({
     id,
     position,
