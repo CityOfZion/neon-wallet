@@ -15,7 +15,6 @@
     flex-direction: row;
 }
 
-
 .percentRow {
     display: flex;
     flex-direction: row;
@@ -25,6 +24,9 @@
 
 .percentButton {
     width: 100%;
+    &:last-child {
+        margin: 0
+    }
 }
 
 .label {
@@ -33,6 +35,7 @@
 
 .sendAmount {
     display: flex;
+    align-items: center;
 }
 
 .sendAmountSelect {
@@ -42,9 +45,14 @@
 .sendButton {
     margin-top: 20px;
 }
+
 .externalLink {
     color: $link-color;
     margin-top: 20px;
     margin-bottom: 20px;
     cursor: pointer;
+}
+
+.tokenInfoMessage {
+    font-size: 13px;
 }
