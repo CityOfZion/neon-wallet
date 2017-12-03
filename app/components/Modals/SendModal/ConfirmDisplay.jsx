@@ -29,9 +29,7 @@ const ConfirmDisplay = ({
   <div>
     <p>Please confirm the following transaction:</p>
     <p>You are sending <strong>{formatBalance(symbol, sendAmount)} {symbol}</strong> to:</p>
-    <div onClick={() => openExplorerAddress(net, explorer, sendAddress)}>
-      <div className={styles.externalLink}>{sendAddress}</div>
-    </div>
+    <div className={styles.externalLink} onClick={() => openExplorerAddress(net, explorer, sendAddress)}>{sendAddress}</div>
     <div>
       <Button onClick={confirmTransaction}>Confirm</Button>
       <Button cancel onClick={cancelTransaction}>Cancel</Button>
