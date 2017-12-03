@@ -1,21 +1,22 @@
 import React from 'react'
+import * as neonjs from 'neon-js'
 import { Provider } from 'react-redux'
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import { mount, shallow } from 'enzyme'
-import { SET_TRANSACTION_HISTORY, SET_BALANCE, SET_GAS_PRICE, SET_NEO_PRICE } from '../../app/modules/wallet'
-import { SHOW_NOTIFICATION, HIDE_NOTIFICATIONS } from '../../app/modules/notifications'
+
+import { SET_TRANSACTION_HISTORY, SET_BALANCE, SET_IS_LOADED } from '../../app/modules/wallet'
+import { SHOW_NOTIFICATION } from '../../app/modules/notifications'
 import { LOADING_TRANSACTIONS } from '../../app/modules/transactions'
 import { SET_HEIGHT } from '../../app/modules/metadata'
-import { SET_CLAIM } from '../../app/modules/claim'
+
 import { DEFAULT_CURRENCY_CODE } from '../../app/core/constants'
+
 import WalletInfo from '../../app/containers/WalletInfo'
-import * as neonjs from 'neon-js'
 
 // TODO research how to move the axios mock code which is repeated in NetworkSwitch to a helper or config file
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import { clipboard } from 'electron'
 import { version } from '../../package.json'
 
 const axiosMock = new MockAdapter(axios)
@@ -23,10 +24,10 @@ axiosMock
   .onGet('http://testnet-api.wallet.cityofzion.io/v2/version')
   .reply(200, { version })
 axiosMock
-  .onGet('https://api.coinmarketcap.com/v1/ticker/neo/?convert=USD')
+  .onGet('https://api.coinmarketcap.com/v1/ticker/NEO/?convert=USD')
   .reply(200, [ { price_usd: 24.50 } ])
 axiosMock
-  .onGet('https://api.coinmarketcap.com/v1/ticker/gas/?convert=USD')
+  .onGet('https://api.coinmarketcap.com/v1/ticker/GAS/?convert=USD')
   .reply(200, [ { price_usd: 18.20 } ])
 
 jest.mock('electron', () => ({
@@ -34,9 +35,6 @@ jest.mock('electron', () => ({
     getPath: () => {
       return 'C:\\tmp\\mock_path'
     }
-  },
-  clipboard: {
-    writeText: jest.fn()
   }
 }))
 jest.useFakeTimers()
@@ -53,12 +51,12 @@ const initialState = {
     network: 'TestNet'
   },
   wallet: {
-    Neo: 100001,
-    Gas: 1.0001601
+    NEO: 100001,
+    GAS: 1.0001601
   },
   price: {
-    neo: 25.48,
-    gas: 18.10,
+    NEO: 25.48,
+    GAS: 18.10,
     currency: DEFAULT_CURRENCY_CODE
   },
   claim: {
@@ -95,7 +93,6 @@ describe('WalletInfo', () => {
   test('correctly renders data from state', (done) => {
     const { wrapper } = setup(initialState, false)
 
-    const addressField = wrapper.find('.address')
     const neoWalletValue = wrapper.find('.neoWalletValue')
     const gasWalletValue = wrapper.find('.gasWalletValue')
     const walletValue = wrapper.find('.walletTotal')
@@ -109,48 +106,77 @@ describe('WalletInfo', () => {
     expect(neoWalletValue.text()).toEqual(`$${expectedNeoWalletValue} USD`)
     expect(gasWalletValue.text()).toEqual(`$${expectedGasWalletValue} USD`)
     expect(walletValue.text()).toEqual(`Total $${expectedWalletValue} USD`)
-    expect(addressField.text().split('<')[0]).toEqual(initialState.account.address)
-    expect(neoField.text()).toEqual(`${initialState.wallet.Neo}`)
-    // TODO: Test the gas tooltip value, this is testing the display value, truncated to 4 decimals
+    expect(neoField.text()).toEqual(`${initialState.wallet.NEO}`)
+    // TODO: Test the GAS tooltip value, this is testing the display value, truncated to 4 decimals
     expect(gasField.text()).toEqual('1.0001')
     done()
-  })
-  test('copy to clipboard is getting called on click', async () => {
-    const { wrapper } = setup()
-    const deepWrapper = wrapper.dive()
-
-    expect(clipboard.writeText.mock.calls.length).toBe(0)
-    deepWrapper.find('.copyKey').simulate('click')
-    await Promise.resolve('Pause').then()
-    expect(clipboard.writeText.mock.calls.length).toBe(1)
   })
   test('refreshBalance is getting called on click', async () => {
     const { wrapper, store } = setup()
     const deepWrapper = wrapper.dive()
 
-    const actionTypes = [
-      HIDE_NOTIFICATIONS,
-      SHOW_NOTIFICATION,
-      LOADING_TRANSACTIONS,
-      SET_TRANSACTION_HISTORY,
-      SET_HEIGHT,
-      SET_NEO_PRICE,
-      SET_GAS_PRICE,
-      SET_BALANCE,
-      SET_CLAIM
-    ]
     deepWrapper.find('.refreshBalance').simulate('click')
+
+    await Promise.resolve('Pause').then().then().then()
     jest.runAllTimers()
-    await Promise.resolve('Pause').then().then().then().then()
     const actions = store.getActions()
-    expect(actions.length).toEqual(20)
-    // expect(actions.length).toEqual(12)
-    actions.forEach(action => {
-      expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
+    expect(actions.length).toEqual(6)
+
+    expect(actions[0]).toEqual({
+      type: LOADING_TRANSACTIONS,
+      payload: {
+        isLoadingTransactions: true
+      }
     })
+    expect(actions[1]).toEqual({
+      type: LOADING_TRANSACTIONS,
+      payload: {
+        isLoadingTransactions: false
+      }
+    })
+    expect(actions[2]).toEqual({
+      type: SET_TRANSACTION_HISTORY,
+      payload: {
+        transactions: []
+      }
+    })
+    expect(actions[3]).toEqual({
+      type: SET_HEIGHT,
+      payload: {
+        blockHeight: 586435
+      }
+    })
+    expect(actions[4]).toEqual({
+      type: SET_IS_LOADED,
+      payload: {
+        loaded: true
+      }
+    })
+    expect(actions[5]).toEqual({
+      type: SET_BALANCE,
+      payload: {
+        NEO: 1,
+        GAS: 1
+      }
+    })
+    // TODO fix this to capture the notifications as well
+    // expect(actions[6]).toEqual({
+    //   type: HIDE_NOTIFICATIONS,
+    //   payload: {
+    //     dismissible: true,
+    //     position: DEFAULT_POSITION
+    //   }
+    // })
+    // expect(actions[7]).toEqual({
+    //   type: SHOW_NOTIFICATION,
+    //   payload: expect.objectContaining({
+    //     message: 'Received latest blockchain information.',
+    //     level: NOTIFICATION_LEVELS.SUCCESS
+    //   })
+    // })
   })
   test('correctly renders data from state with non-default currency', (done) => {
-    const testState = { ...initialState, price: { neo: 1.11, gas: 0.55, currency: 'eur' } }
+    const testState = { ...initialState, price: { NEO: 1.11, GAS: 0.55, currency: 'eur' } }
     const { wrapper } = setup(testState, false)
 
     const neoWalletValue = wrapper.find('.neoWalletValue')
@@ -167,34 +193,14 @@ describe('WalletInfo', () => {
 
     done()
   })
-  test('calls the correct number of actions after mounting', async () => {
-    const { store } = setup(initialState, false)
-    const actionTypes = [
-      HIDE_NOTIFICATIONS,
-      SHOW_NOTIFICATION,
-      SET_TRANSACTION_HISTORY,
-      SET_HEIGHT,
-      SET_CLAIM,
-      SET_BALANCE,
-      LOADING_TRANSACTIONS
-    ]
-
-    jest.runAllTimers()
-    await Promise.resolve('Pause').then().then().then()
-    const actions = store.getActions()
-    expect(actions.length).toEqual(10)
-    actions.forEach(action => {
-      expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
-    })
-  })
   test('network error is shown with connectivity error', async () => {
-    neonjs.getBalance = jest.fn(() => {
+    neonjs.api.neonDB.getBalance = jest.fn(() => {
       return new Promise((resolve, reject) => {
         reject(new Error())
       })
     })
     const { wrapper, store } = setup()
-    wrapper.dive()
+    wrapper.dive().find('.refreshBalance').simulate('click')
 
     jest.runAllTimers()
     await Promise.resolve('Pause').then().then().then().then()

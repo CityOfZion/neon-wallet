@@ -1,11 +1,12 @@
 import React from 'react'
+import * as neonjs from 'neon-js'
 import { cloneDeep } from 'lodash'
 import { Provider } from 'react-redux'
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import { shallow, mount } from 'enzyme'
+
 import Claim from '../../app/containers/Claim'
-import * as neonjs from 'neon-js'
 import { setClaimRequest, disableClaim } from '../../app/modules/claim'
 import { SHOW_NOTIFICATION, HIDE_NOTIFICATIONS, DEFAULT_POSITION } from '../../app/modules/notifications'
 import { NOTIFICATION_LEVELS } from '../../app/core/constants'
@@ -25,7 +26,7 @@ const initialState = {
     network: 'network'
   },
   wallet: {
-    Neo: 1
+    NEO: 1
   }
 }
 
@@ -55,22 +56,22 @@ describe('Claim', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
-  test('should render claim gas button when claim button is not disabled', () => {
+  test('should render claim GAS button when claim button is not disabled', () => {
     const { wrapper } = setup()
     expect(wrapper.dive()).toMatchSnapshot()
   })
 
-  test('should not render claim gas button when claim button is disabled', () => {
+  test('should not render claim GAS button when claim button is disabled', () => {
     const newState = cloneDeep(initialState)
     newState.claim.disableClaimButton = true
     const { wrapper } = setup(newState)
     expect(wrapper.dive()).toMatchSnapshot()
   })
 
-  describe('when do gas claim button is clicked', () => {
+  describe('when do GAS claim button is clicked', () => {
     test('should dispatch transaction failure event', async () => {
       const { wrapper, store } = setup()
-      neonjs.doSendAsset = jest.fn(() => {
+      neonjs.api.neonDB.doSendAsset = jest.fn(() => {
         return new Promise((resolve, reject) => {
           resolve({ result: undefined })
         })
@@ -90,7 +91,7 @@ describe('Claim', () => {
       expect(actions[1]).toEqual({
         type: SHOW_NOTIFICATION,
         payload: expect.objectContaining({
-          message: 'Sending Neo to Yourself...',
+          message: 'Sending NEO to Yourself...',
           level: NOTIFICATION_LEVELS.INFO
         })
       })
@@ -112,7 +113,7 @@ describe('Claim', () => {
 
     test('should dispatch transaction waiting, set claim request and disable claim event', async () => {
       const { wrapper, store } = setup()
-      neonjs.doSendAsset = jest.fn(() => {
+      neonjs.api.neonDB.doSendAsset = jest.fn(() => {
         return new Promise((resolve, reject) => {
           resolve({ result: true })
         })
@@ -133,7 +134,7 @@ describe('Claim', () => {
       expect(actions[1]).toEqual({
         type: SHOW_NOTIFICATION,
         payload: expect.objectContaining({
-          message: 'Sending Neo to Yourself...',
+          message: 'Sending NEO to Yourself...',
           level: NOTIFICATION_LEVELS.INFO
         })
       })

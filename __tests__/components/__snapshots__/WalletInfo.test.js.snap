@@ -2,16 +2,16 @@
 
 exports[`WalletInfo renders without crashing 1`] = `
 <WalletInfo
+  GAS={1.0001601}
+  NEO={100001}
   address="ANqUrhv99rwCiFTL6N1An9NH5UVkPYxTuw"
   currencyCode="usd"
-  gas={1.0001601}
   gasPrice={18.1}
-  initiateGetBalance={[Function]}
-  neo={100001}
+  loadWalletData={[Function]}
   neoPrice={25.48}
   net="TestNet"
   showErrorNotification={[Function]}
-  showInfoNotification={[Function]}
+  showModal={[Function]}
   showSuccessNotification={[Function]}
   store={
     Object {

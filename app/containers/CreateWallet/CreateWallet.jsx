@@ -1,91 +1,86 @@
 // @flow
 import React, { Component } from 'react'
-import { isNil } from 'lodash'
+
 import PasswordField from '../../components/PasswordField'
-import DisplayWalletKeys from '../../components/DisplayWalletKeys'
 import Page from '../../components/Page'
 import HomeButtonLink from '../../components/HomeButtonLink'
 
 type Props = {
+    encryptWIF: boolean,
     generateNewWallet: Function,
-    saveKey: Function,
-    resetKey: Function,
-    address: string,
-    generating: boolean,
-    wif: string,
-    encryptedWif: string,
-    passphrase: string,
+    history: Object
 }
 
 type State = {
   passphrase: string,
   passphrase2: string,
+  wif: string,
 }
 
-export default class CreateWallet extends Component<Props, State> {
+export default class EncryptKey extends Component<Props, State> {
   state = {
     passphrase: '',
-    passphrase2: ''
+    passphrase2: '',
+    wif: ''
   }
 
-  generateNewWallet = () => {
-    const { passphrase, passphrase2 } = this.state
+  createWallet = (e: SyntheticMouseEvent<*>) => {
+    e.preventDefault()
+    const { encryptWIF, history } = this.props
+    const { passphrase, passphrase2, wif } = this.state
     const { generateNewWallet } = this.props
-    generateNewWallet(passphrase, passphrase2).catch(() => {
-      this.resetFields()
-    })
+    if (!generateNewWallet(passphrase, passphrase2, encryptWIF ? wif : null, history)) {
+      // this.resetFields()
+    }
   }
 
   resetFields () {
     this.setState({
       passphrase: '',
-      passphrase2: ''
+      passphrase2: '',
+      wif: ''
     })
   }
 
   render () {
-    const { generating, address, encryptedWif, resetKey, saveKey, wif } = this.props
-    const passphraseFromProps = this.props.passphrase
-    const { passphrase, passphrase2 } = this.state
-    const disabledButton = passphrase === '' || passphrase2 === ''
+    const { encryptWIF } = this.props
+    const { passphrase, passphrase2, wif } = this.state
+    let disabledButton
+    let title
 
-    const passphraseDiv = (
-      <div>
-        <div className='info'>
-          Choose a passphrase to encrypt your private key:
-        </div>
-        <form onSubmit={(e) => { e.preventDefault(); this.generateNewWallet() }}>
-          <PasswordField
-            placeholder='Enter passphrase here'
-            value={passphrase}
-            onChange={(e) => this.setState({ passphrase: e.target.value })}
-            autoFocus
-          />
-          <PasswordField
-            placeholder='Repeat passphrase here'
-            value={passphrase2}
-            onChange={(e) => this.setState({ passphrase2: e.target.value })}
-          />
-          <button type='submit' disabled={disabledButton} className={disabledButton ? 'disabled' : ''}> Generate keys </button>
-          <HomeButtonLink />
-        </form>
-      </div>
-    )
+    if (encryptWIF) {
+      disabledButton = passphrase === '' || passphrase2 === '' || wif === ''
+      title = 'Choose a passphrase to encrypt your existing private key:'
+    } else {
+      disabledButton = passphrase === '' || passphrase2 === ''
+      title = 'Choose a passphrase to encrypt your private key:'
+    }
 
     return (
       <Page id='newWallet'>
-        {isNil(wif) ? passphraseDiv : <div />}
-        {generating && <div className='generating'>Generating keys...</div>}
-        {!generating && !isNil(wif) &&
-        <DisplayWalletKeys
-          address={address}
-          wif={wif}
-          passphrase={passphraseFromProps}
-          passphraseKey={encryptedWif}
-          resetKey={resetKey}
-          saveKey={saveKey}
-        />
-        }
+        <div className='info'>{title}</div>
+        <form onSubmit={this.createWallet}>
+          <PasswordField
+            value={passphrase}
+            onChange={(e) => this.setState({ passphrase: e.target.value })}
+            placeholder='Enter passphrase here'
+            autoFocus
+          />
+          <PasswordField
+            value={passphrase2}
+            onChange={(e) => this.setState({ passphrase2: e.target.value })}
+            placeholder='Enter passphrase again'
+          />
+          {encryptWIF &&
+          <PasswordField
+            value={wif}
+            onChange={(e) => this.setState({ wif: e.target.value })}
+            placeholder='Enter existing WIF here'
+          />
+          }
+          <button type='submit' disabled={disabledButton} className={disabledButton ? 'disabled' : ''}>Generate keys</button>
+          <HomeButtonLink />
+        </form>
       </Page>
     )
   }

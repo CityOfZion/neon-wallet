@@ -1,22 +1,35 @@
-import walletReducer, { setBalance, setTransactionHistory, SET_BALANCE, SET_TRANSACTION_HISTORY } from '../../app/modules/wallet'
+import walletReducer, {
+  setBalance,
+  setTransactionHistory,
+  SET_BALANCE,
+  SET_TRANSACTION_HISTORY
+} from '../../app/modules/wallet'
 
 describe('wallet module tests', () => {
-  const Neo = 1
-  const Gas = 1
+  const NEO = 1
+  const GAS = 1
   const initialState = {
-    Neo: 0,
-    Gas: 0,
+    loaded: false,
+    NEO: 0,
+    GAS: 0,
+    tokens: {
+      RPX: {
+        balance: 0,
+        scriptHash: 'ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9',
+        symbol: 'RPX'
+      }
+    },
     transactions: []
   }
 
   describe('setBalance tests', () => {
     const expectedAction = {
       type: SET_BALANCE,
-      payload: { Neo, Gas }
+      payload: { NEO, GAS }
     }
 
     test('setBalance action works', () => {
-      expect(setBalance(Neo, Gas)).toEqual(expectedAction)
+      expect(setBalance(NEO, GAS)).toEqual(expectedAction)
     })
 
     test('setBalance reducer should return the initial state', () => {
@@ -26,8 +39,8 @@ describe('wallet module tests', () => {
     test('wallet reducer should handle SET_BALANCE', () => {
       const expectedState = {
         ...initialState,
-        Neo,
-        Gas
+        NEO,
+        GAS
       }
       expect(walletReducer(undefined, expectedAction)).toEqual(expectedState)
     })

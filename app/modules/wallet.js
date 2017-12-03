@@ -1,22 +1,47 @@
 // @flow
-import { ASSETS_LABELS } from '../core/constants'
-import { getBalance } from 'neon-js'
+import { api } from 'neon-js'
+
 import { syncTransactionHistory } from './transactions'
 import { syncAvailableClaim } from './claim'
-import { syncBlockHeight } from './metadata'
-import asyncWrap from '../core/asyncHelper'
-import { LOGOUT } from './account'
+import { syncBlockHeight, getNetwork } from './metadata'
+import { LOGOUT, getAddress } from './account'
 import { getMarketPriceUSD, getGasMarketPriceUSD } from './price'
+import { showErrorNotification } from './notifications'
+
+import { TOKENS, TOKENS_TEST, NETWORK } from '../core/constants'
+import asyncWrap from '../core/asyncHelper'
+
+const TOKEN_PAIRS = Object.entries(TOKENS)
+// const INITIAL_TOKENS_BALANCE = Object.keys(TOKENS).map((token) => ({ symbol: token, balance: 0 }))
+
+export const getScriptHashForNetwork = (net: NetworkType, symbol: SymbolType) => {
+  if (net === NETWORK.TEST && TOKENS_TEST[symbol]) {
+    return TOKENS_TEST[symbol]
+  }
+  return TOKENS[symbol]
+}
 
 // Constants
 export const SET_BALANCE = 'SET_BALANCE'
+export const SET_NEO_PRICE = 'SET_NEO_PRICE'
+export const SET_GAS_PRICE = 'SET_GAS_PRICE'
+export const RESET_PRICES = 'RESET_PRICES'
 export const SET_TRANSACTION_HISTORY = 'SET_TRANSACTION_HISTORY'
+export const SET_TOKENS = 'SET_TOKENS'
+export const SET_IS_LOADED = 'SET_IS_LOADED'
+
+export const setIsLoaded = (loaded: boolean) => ({
+  type: SET_IS_LOADED,
+  payload: {
+    loaded
+  }
+})
 
 // Actions
-export function setBalance (Neo: number, Gas: number) {
+export function setBalance (NEO: number, GAS: number) {
   return {
     type: SET_BALANCE,
-    payload: { Neo, Gas }
+    payload: { NEO, GAS }
   }
 }
 
@@ -27,46 +52,123 @@ export function setTransactionHistory (transactions: Array<Object>) {
   }
 }
 
-export const retrieveBalance = (net: NetworkType, address: string) => async (dispatch: DispatchType) => {
-  // If API dies, still display balance - ignore _err
-  const [_err, resultBalance] = await asyncWrap(getBalance(net, address)) // eslint-disable-line
-  return dispatch(setBalance(resultBalance.NEO.balance, resultBalance.GAS.balance))
+export function setTokens (tokens: Object) {
+  return {
+    type: SET_TOKENS,
+    payload: { tokens }
+  }
 }
 
-export const initiateGetBalance = (net: NetworkType, address: string) => (dispatch: DispatchType) => {
+export const retrieveBalance = (net: NetworkType, address: string) => async (dispatch: DispatchType) => {
+  // If API dies, still display balance - ignore _err
+  const [_err, resultBalance] = await asyncWrap(api.neonDB.getBalance(net, address)) // eslint-disable-line
+  dispatch(setIsLoaded(true))
+  if (_err) {
+    return dispatch(showErrorNotification({ message: `Could not retrieve NEO/GAS balance`, stack: true }))
+  } else {
+    return dispatch(setBalance(resultBalance.NEO.balance, resultBalance.GAS.balance))
+  }
+}
+
+export const loadWalletData = (net: NetworkType, address: string, silent: boolean = true) => async (dispatch: DispatchType) => {
+  if (!silent) {
+    dispatch(setIsLoaded(false))
+  }
   dispatch(syncTransactionHistory(net, address))
   dispatch(syncAvailableClaim(net, address))
   dispatch(syncBlockHeight(net))
   dispatch(getMarketPriceUSD())
   dispatch(getGasMarketPriceUSD())
-  return dispatch(retrieveBalance(net, address))
+  await Promise.all([
+    dispatch(retrieveTokensBalance()),
+    dispatch(retrieveBalance(net, address))
+  ])
+  return true
+}
+
+export const retrieveTokensBalance = () => async (dispatch: DispatchType, getState: GetStateType) => {
+  const state = getState()
+  const net = getNetwork(state)
+  const address = getAddress(state)
+
+  const tokens = getInitialTokenBalance()
+  for (let [symbol] of TOKEN_PAIRS) {
+    const scriptHash = getScriptHashForNetwork(net, symbol)
+    // override scripthash with test if on test net
+    const [_error, balanceRpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net)) // eslint-disable-line
+    const [_err, balanceResults] = await asyncWrap(api.nep5.getTokenBalance(balanceRpcEndpoint, scriptHash, address)) // eslint-disable-line
+    // TODO: Figure out why getTokenBalance returns NaN
+    if (balanceResults || isNaN(balanceResults)) {
+      // TODO: NeonJS now supports getting info in 1 call, use it when its on master and remove this code
+      const [, tokenInfoRpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net))
+      const [, tokenInfoResults] = await asyncWrap(api.nep5.getTokenInfo(tokenInfoRpcEndpoint, getScriptHashForNetwork(net, symbol)))
+      tokens[symbol] = {
+        symbol,
+        balance: isNaN(balanceResults) ? 0 : balanceResults,
+        scriptHash,
+        info: tokenInfoResults
+      }
+    } else {
+      dispatch(showErrorNotification({ message: `could not retrieve ${symbol} balance`, stack: true }))
+    }
+  }
+
+  return dispatch(setTokens(tokens))
 }
 
 // state getters
-export const getNeo = (state) => state.wallet.Neo
-export const getGas = (state) => state.wallet.Gas
-export const getTransactions = (state) => state.wallet.transactions
+export const getNEO = (state: Object) => state.wallet.NEO
+export const getGAS = (state: Object) => state.wallet.GAS
+export const getTransactions = (state: Object) => state.wallet.transactions
+export const getTokens = (state: Object) => state.wallet.tokens
+export const getIsLoaded = (state: Object) => state.wallet.loaded
 
-const initialState = {
-  Neo: 0,
-  Gas: 0,
-  transactions: []
+const getInitialTokenBalance = () => {
+  const tokens = {}
+  Object.keys(TOKENS).forEach(symbol => {
+    tokens[symbol] = {
+      symbol,
+      scriptHash: TOKENS[symbol],
+      balance: 0
+    }
+  })
+  return tokens
 }
 
-export default (state: Object = initialState, action: Object) => {
+const initialState = {
+  loaded: false,
+  NEO: 0,
+  GAS: 0,
+  transactions: [],
+  tokens: getInitialTokenBalance()
+}
+
+export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
     case SET_BALANCE:
-      const { Neo, Gas } = action.payload
+      const { NEO, GAS } = action.payload
       return {
         ...state,
-        [ASSETS_LABELS.NEO]: Neo,
-        [ASSETS_LABELS.GAS]: Gas
+        NEO,
+        GAS
       }
     case SET_TRANSACTION_HISTORY:
       const { transactions } = action.payload
       return {
         ...state,
         transactions
+      }
+    case SET_TOKENS:
+      const { tokens } = action.payload
+      return {
+        ...state,
+        tokens
+      }
+    case SET_IS_LOADED:
+      const { loaded } = action.payload
+      return {
+        ...state,
+        loaded
       }
     case LOGOUT:
       return initialState

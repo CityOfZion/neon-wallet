@@ -1,16 +1,15 @@
 // @flow
 import React, { Component } from 'react'
+
 import NetworkSwitch from '../NetworkSwitch'
 import Page from '../../components/Page'
 import HomeButtonLink from '../../components/HomeButtonLink'
 
 type Props = {
   address: string,
-  neo: number,
-  rpx: number,
+  NEO: number,
   net: NetworkType,
-  initiateGetBalance: Function,
-  updateRpxBalance: Function,
+  loadWalletData: Function,
   participateInSale: Function,
   refreshTokenBalance: Function
 }
@@ -27,11 +26,8 @@ export default class TokenSale extends Component<Props, State> {
   }
 
   componentDidMount () {
-    const { scriptHash } = this.state
-    const { initiateGetBalance, refreshTokenBalance, updateRpxBalance, net, address } = this.props
-    updateRpxBalance(0)
-    initiateGetBalance(net, address)
-    refreshTokenBalance(scriptHash, true)
+    const { loadWalletData, net, address } = this.props
+    loadWalletData(net, address)
   }
 
   participateInSale = () => {
@@ -46,7 +42,7 @@ export default class TokenSale extends Component<Props, State> {
   }
 
   render () {
-    const { neo, rpx, refreshTokenBalance } = this.props
+    const { NEO, refreshTokenBalance } = this.props
     const { neoToSend, scriptHash } = this.state
     const refreshTokenBalanceButtonDisabled = !scriptHash
     const submitSaleButtonDisabled = !neoToSend || !scriptHash
@@ -65,21 +61,11 @@ export default class TokenSale extends Component<Props, State> {
         <div className='settingsForm'>
           <div className='settingsItem'>
             <div className='itemTitle'>NEO Balance:</div>
-            <div>{neo}</div>
+            <div>{NEO}</div>
           </div>
           <div className='settingsItem'>
             <div className='itemTitle'>Token Balance:</div>
-            <div>{rpx}</div>
-          </div>
-          <div className='settingsItem'>
-            <div className='itemTitle'>Script Hash:</div>
-            <input
-              autoFocus
-              type='text'
-              className='scriptHash'
-              value={scriptHash}
-              onChange={(e) => this.setState({ scriptHash: e.target.value })}
-            />
+            <div />
           </div>
           <div className='settingsItem'>
             <div className='itemTitle'>Amount of NEO to Send:</div>
