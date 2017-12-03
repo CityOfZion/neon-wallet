@@ -6,7 +6,7 @@ import storage from 'electron-json-storage'
 
 import Page from '../../components/Page'
 import HomeButtonLink from '../../components/HomeButtonLink'
-import { EXPLORER, MODAL_TYPES, CURRENCIES } from '../../core/constants'
+import { EXPLORERS, MODAL_TYPES, CURRENCIES } from '../../core/constants'
 
 import Delete from 'react-icons/lib/md/delete'
 
@@ -139,9 +139,9 @@ export default class Settings extends Component<Props, State> {
           <div className='settingsItem'>
             <div className='itemTitle'>Block Explorer</div>
             <select value={explorer} onChange={this.updateExplorerSettings}>
-              <option value={EXPLORER.NEO_TRACKER}>Neotracker</option>
-              <option value={EXPLORER.NEO_SCAN}>Neoscan</option>
-              <option value={EXPLORER.ANT_CHAIN}>Antchain</option>
+              {Object.keys(EXPLORERS).map((explorer: ExplorerType) =>
+                <option key={explorer} value={EXPLORERS[explorer]}>{EXPLORERS[explorer]}</option>)
+              }
             </select>
           </div>
           <div className='settingsItem'>

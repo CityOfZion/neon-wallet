@@ -1,20 +1,26 @@
 // @flow
 import { openExternal } from './electron'
-import { NETWORK, EXPLORER } from '../core/constants'
+import { NETWORK, EXPLORERS } from '../core/constants'
 
 export const getExplorerBaseURL = (net: NetworkType, explorer: ExplorerType) => {
   let baseURL
-  if (explorer === EXPLORER.NEO_TRACKER) {
+  if (explorer === EXPLORERS.NEO_TRACKER) {
     if (net === NETWORK.MAIN) {
       baseURL = 'https://neotracker.io'
     } else {
       baseURL = 'https://testnet.neotracker.io'
     }
-  } else if (explorer === EXPLORER.NEO_SCAN) {
+  } else if (explorer === EXPLORERS.NEO_SCAN) {
     if (net === NETWORK.MAIN) {
       baseURL = 'https://neoscan.io'
     } else {
       baseURL = 'https://neoscan-testnet.io'
+    }
+  } else if (explorer === EXPLORERS.NEO_VERSE) {
+    if (net === NETWORK.MAIN) {
+      baseURL = 'http://explorer.neoverse.io'
+    } else {
+      baseURL = 'http://testnet.neoverse.io'
     }
   } else {
     if (net === NETWORK.MAIN) {
@@ -29,10 +35,12 @@ export const getExplorerBaseURL = (net: NetworkType, explorer: ExplorerType) => 
 export const getExplorerTxLink = (net: NetworkType, explorer: ExplorerType, txId: string) => {
   const baseURL = getExplorerBaseURL(net, explorer)
 
-  if (explorer === EXPLORER.NEO_TRACKER) {
+  if (explorer === EXPLORERS.NEO_TRACKER) {
     return `${baseURL}/tx/${txId}`
-  } else if (explorer === EXPLORER.NEO_SCAN) {
+  } else if (explorer === EXPLORERS.NEO_SCAN) {
     return `${baseURL}/transaction/${txId}`
+  } else if (explorer === EXPLORERS.NEO_VERSE) {
+    return `${baseURL}/transactions/${txId}`
   } else {
     return `${baseURL}/tx/hash/${txId}`
   }
@@ -41,10 +49,12 @@ export const getExplorerTxLink = (net: NetworkType, explorer: ExplorerType, txId
 export const getExplorerAddressLink = (net: NetworkType, explorer: ExplorerType, address: string) => {
   const baseURL = getExplorerBaseURL(net, explorer)
 
-  if (explorer === EXPLORER.NEO_TRACKER) {
+  if (explorer === EXPLORERS.NEO_TRACKER) {
     return `${baseURL}/address/${address}`
-  } else if (explorer === EXPLORER.NEO_SCAN) {
+  } else if (explorer === EXPLORERS.NEO_SCAN) {
     return `${baseURL}/address/${address}/1`
+  } else if (explorer === EXPLORERS.NEO_VERSE) {
+    return `${baseURL}/addresses/${address}`
   } else {
     return `${baseURL}/address/info/${address}`
   }
@@ -53,10 +63,12 @@ export const getExplorerAddressLink = (net: NetworkType, explorer: ExplorerType,
 export const getExplorerAssetLink = (net: NetworkType, explorer: ExplorerType, assetId: string) => {
   const baseURL = getExplorerBaseURL(net, explorer)
 
-  if (explorer === EXPLORER.NEO_TRACKER) {
+  if (explorer === EXPLORERS.NEO_TRACKER) {
     return `${baseURL}/asset/${assetId}`
-  } else if (explorer === EXPLORER.NEO_SCAN) {
+  } else if (explorer === EXPLORERS.NEO_SCAN) {
     return `${baseURL}/asset/${assetId}`
+  } else if (explorer === EXPLORERS.NEO_VERSE) {
+    return `${baseURL}/assets/${assetId}`
   } else {
     return `${baseURL}/asset/hash/${assetId}`
   }

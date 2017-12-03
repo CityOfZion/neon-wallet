@@ -6,7 +6,7 @@ import storage from 'electron-json-storage'
 import { showWarningNotification } from './notifications'
 import { setCurrency } from './price'
 
-import { NETWORK, EXPLORER, NEON_WALLET_RELEASE_LINK, NOTIFICATION_POSITIONS } from '../core/constants'
+import { NETWORK, EXPLORERS, NEON_WALLET_RELEASE_LINK, NOTIFICATION_POSITIONS } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
 
 import { version } from '../../package.json'
@@ -14,7 +14,7 @@ import { version } from '../../package.json'
 // Constants
 export const SET_HEIGHT = 'SET_HEIGHT'
 export const SET_NETWORK = 'SET_NETWORK'
-export const SET_EXPLORER = 'SET_EXPLORER'
+export const SET_EXPLORERS = 'SET_EXPLORERS'
 
 // Actions
 export function setNetwork (net: NetworkType) {
@@ -34,7 +34,7 @@ export function setBlockHeight (blockHeight: number) {
 
 export function setBlockExplorer (blockExplorer: ExplorerType) {
   return {
-    type: SET_EXPLORER,
+    type: SET_EXPLORERS,
     payload: { blockExplorer }
   }
 }
@@ -85,7 +85,7 @@ export const getBlockExplorer = (state: Object) => state.metadata.blockExplorer
 const initialState = {
   blockHeight: 0,
   network: NETWORK.MAIN,
-  blockExplorer: EXPLORER.NEO_TRACKER
+  blockExplorer: EXPLORERS.NEO_TRACKER
 }
 
 export default (state: Object = initialState, action: ReduxAction) => {
@@ -96,7 +96,7 @@ export default (state: Object = initialState, action: ReduxAction) => {
         ...state,
         blockHeight
       }
-    case SET_EXPLORER:
+    case SET_EXPLORERS:
       const { blockExplorer } = action.payload
       return {
         ...state,
