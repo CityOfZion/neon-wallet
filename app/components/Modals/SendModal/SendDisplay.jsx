@@ -71,6 +71,7 @@ const SendDisplay = ({
           <select
             onChange={(e) => onChangeHandler('symbol', e.target.value, true)}
             className={styles.sendAmountSelect}
+            value={symbol}
           >
             <option value={ASSETS.NEO}>{ASSETS.NEO}</option>
             <option value={ASSETS.GAS}>{ASSETS.GAS}</option>
