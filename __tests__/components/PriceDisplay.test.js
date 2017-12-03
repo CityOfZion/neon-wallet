@@ -4,8 +4,6 @@ import { mount } from 'enzyme'
 import PriceDisplay from '../../app/components/PriceDisplay'
 import { DEFAULT_CURRENCY_CODE } from '../../app/core/constants'
 
-import { DEFAULT_CURRENCY_CODE } from '../../app/core/constants'
-
 describe('PriceDisplay', () => {
   test('renders and shows prices', (done) => {
     // Full mount (not shallow) so the snapshot will contain the prices in the rendered html.
