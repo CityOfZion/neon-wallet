@@ -13,6 +13,7 @@ import { SET_HEIGHT } from '../../app/modules/metadata'
 import { DEFAULT_CURRENCY_CODE } from '../../app/core/constants'
 
 import WalletInfo from '../../app/containers/WalletInfo'
+import * as neonjs from 'neon-js'
 
 // TODO research how to move the axios mock code which is repeated in NetworkSwitch to a helper or config file
 import axios from 'axios'
@@ -201,6 +202,29 @@ describe('WalletInfo', () => {
     })
     const { wrapper, store } = setup()
     wrapper.dive().find('.refreshBalance').simulate('click')
+
+    jest.runAllTimers()
+    await Promise.resolve('Pause').then().then().then().then()
+
+    const actions = store.getActions()
+    let notifications = []
+    actions.forEach(action => {
+      if (action.type === SHOW_NOTIFICATION) {
+        notifications.push(action)
+      }
+    })
+
+    // let's make sure the last notification show was an error.
+    expect(notifications.pop().payload.level).toEqual('error')
+  })
+  test('network error is shown with connectivity error', async () => {
+    neonjs.getBalance = jest.fn(() => {
+      return new Promise((resolve, reject) => {
+        reject(new Error())
+      })
+    })
+    const { wrapper, store } = setup()
+    wrapper.dive()
 
     jest.runAllTimers()
     await Promise.resolve('Pause').then().then().then().then()

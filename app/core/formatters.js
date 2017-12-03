@@ -3,6 +3,7 @@ import { ASSETS } from './constants'
 import numeral from 'numeral'
 
 import { truncateNumber } from './math'
+import numeral from 'numeral'
 
 export const COIN_DECIMAL_LENGTH = 8
 export const SHORT_DISPLAY_DECIMAL_LENGTH = 4
