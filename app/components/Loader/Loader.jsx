@@ -1,7 +1,8 @@
 // @flow
 import React from 'react'
-import styles from './Loader.scss'
 import classNames from 'classnames'
+
+import styles from './Loader.scss'
 
 type Props = {
   className?: string,

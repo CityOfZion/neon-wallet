@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 
 import FaEye from 'react-icons/lib/fa/eye'
 import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
+
 import passwordFieldStyles from './PasswordField.scss'
 
 type State = {

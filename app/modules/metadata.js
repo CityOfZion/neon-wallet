@@ -1,12 +1,17 @@
 // @flow
-import { getWalletDBHeight, getAPIEndpoint } from 'neon-js'
 import axios from 'axios'
-import { version } from '../../package.json'
+import { api } from 'neon-js'
+import storage from 'electron-json-storage'
+
 import { showWarningNotification } from './notifications'
+import { setCurrency } from './price'
+
 import { NETWORK, EXPLORER, NEON_WALLET_RELEASE_LINK, NOTIFICATION_POSITIONS } from '../core/constants'
 import { setCurrency } from './price'
 import asyncWrap from '../core/asyncHelper'
 import storage from 'electron-json-storage'
+
+import { version } from '../../package.json'
 
 // Constants
 export const SET_HEIGHT = 'SET_HEIGHT'
@@ -39,7 +44,7 @@ export function setBlockExplorer (blockExplorer: ExplorerType) {
 export const checkVersion = () => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState().metadata
   const { net } = state
-  const apiEndpoint = getAPIEndpoint(net)
+  const apiEndpoint = api.neonDB.getAPIEndpoint(net)
 
   const [err, res] = await asyncWrap(axios.get(`${apiEndpoint}/v2/version`))
   const shouldUpdate = res && res.data && res.data.version !== version
@@ -70,7 +75,7 @@ export const initSettings = () => async (dispatch: DispatchType) => {
 }
 
 export const syncBlockHeight = (net: NetworkType) => async (dispatch: DispatchType) => {
-  const [_err, blockHeight] = await asyncWrap(getWalletDBHeight(net)) // eslint-disable-line
+  const [_err, blockHeight] = await asyncWrap(api.neonDB.getWalletDBHeight(net)) // eslint-disable-line
   return dispatch(setBlockHeight(blockHeight))
 }
 
@@ -85,7 +90,7 @@ const initialState = {
   blockExplorer: EXPLORER.NEO_TRACKER
 }
 
-export default (state: Object = initialState, action: Object) => {
+export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
     case SET_HEIGHT:
       const { blockHeight } = action.payload

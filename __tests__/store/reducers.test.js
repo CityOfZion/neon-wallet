@@ -1,4 +1,4 @@
-import reducer from '../../app/store/reducers'
+import reducer from '../../app/modules'
 
 describe('root reducer', () => {
   it('should combine all reducers', () => {
@@ -12,7 +12,6 @@ describe('root reducer', () => {
       metadata: expect.any(Object),
       notifications: expect.any(Object),
       claim: expect.any(Object),
-      rpx: expect.any(Object),
       modal: expect.any(Object)
     })
   })

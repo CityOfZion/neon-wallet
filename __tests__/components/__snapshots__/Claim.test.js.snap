@@ -1,48 +1,44 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Claim should not render claim gas button when claim button is disabled 1`] = `
+exports[`Claim should not render claim GAS button when claim button is disabled 1`] = `
 <div
   id="claim"
 >
-  <div>
+  <Tooltip
+    disabled={false}
+    title="You can claim GAS once every 5 minutes"
+  >
     <button
       className="disabled"
-      data-for="claimTip"
-      data-tip={true}
+      disabled={true}
+      onClick={[Function]}
     >
       Claim 
       10
        GAS
     </button>
-    <ReactTooltip
-      class="solidTip"
-      effect="solid"
-      id="claimTip"
-      insecure={true}
-      place="bottom"
-      resizeHide={true}
-      type="dark"
-      wrapper="div"
-    >
-      <span>
-        You can claim Gas once every 5 minutes
-      </span>
-    </ReactTooltip>
-  </div>
+  </Tooltip>
 </div>
 `;
 
-exports[`Claim should render claim gas button when claim button is not disabled 1`] = `
+exports[`Claim should render claim GAS button when claim button is not disabled 1`] = `
 <div
   id="claim"
 >
-  <button
-    onClick={[Function]}
+  <Tooltip
+    disabled={true}
+    title="You can claim GAS once every 5 minutes"
   >
-    Claim 
-    10
-     GAS
-  </button>
+    <button
+      className=""
+      disabled={false}
+      onClick={[Function]}
+    >
+      Claim 
+      10
+       GAS
+    </button>
+  </Tooltip>
 </div>
 `;
 

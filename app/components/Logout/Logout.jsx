@@ -2,7 +2,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Power from 'react-icons/lib/md/power-settings-new'
-import ReactTooltip from 'react-tooltip'
+import Tooltip from '../../components/Tooltip'
 import { ROUTES } from '../../core/constants'
 import styles from './Logout.scss'
 
@@ -11,11 +11,8 @@ type Props = {
 }
 
 const Logout = ({ logout }: Props) =>
-  <div id='logout' className={styles.logout} data-tip data-for='logoutTip' onClick={logout}>
-    <Link to={ROUTES.HOME}><Power /></Link>
-    <ReactTooltip class='solidTip' id='logoutTip' place='bottom' type='dark' effect='solid'>
-      <span>Logout</span>
-    </ReactTooltip>
+  <div id='logout' className={styles.logout} onClick={logout}>
+    <Link to={ROUTES.HOME}><Tooltip title='Logout' position='right'><Power /></Tooltip></Link>
   </div>
 
 export default Logout

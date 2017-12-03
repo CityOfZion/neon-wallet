@@ -1,9 +1,11 @@
 // @flow
 import React, { Component } from 'react'
+import classNames from 'classnames'
+
 import Page from '../../components/Page'
 import HomeButtonLink from '../../components/HomeButtonLink'
 import PasswordField from '../../components/PasswordField'
-import classNames from 'classnames'
+
 import loginStyles from '../../styles/login.scss'
 
 type Props = {
@@ -12,25 +14,25 @@ type Props = {
 }
 
 type State = {
-  wif: string,
+  encryptedWIF: string,
   passphrase: string
 }
 
 export default class LoginNep2 extends Component<Props, State> {
   state = {
-    wif: '',
+    encryptedWIF: '',
     passphrase: ''
   }
 
   render () {
     const { loginNep2, history } = this.props
-    const { wif, passphrase } = this.state
-    const loginButtonDisabled = wif === '' || passphrase === ''
+    const { encryptedWIF, passphrase } = this.state
+    const loginButtonDisabled = encryptedWIF === '' || passphrase === ''
 
     return (
       <Page id='loginPage' className={loginStyles.loginPage}>
         <div className={loginStyles.title}>Login using an encrypted key:</div>
-        <form onSubmit={(e) => { e.preventDefault(); loginNep2(passphrase, wif, history) }}>
+        <form onSubmit={(e) => { e.preventDefault(); loginNep2(passphrase, encryptedWIF, history) }}>
           <div className={loginStyles.loginForm}>
             <PasswordField
               placeholder='Enter your passphrase here'
@@ -40,8 +42,8 @@ export default class LoginNep2 extends Component<Props, State> {
             />
             <PasswordField
               placeholder='Enter your encrypted key here'
-              onChange={(e) => this.setState({ wif: e.target.value })}
-              value={wif}
+              onChange={(e) => this.setState({ encryptedWIF: e.target.value })}
+              value={encryptedWIF}
             />
           </div>
           <div>

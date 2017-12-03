@@ -1,24 +1,24 @@
 import walletReducer, { setNEOPrice, setGASPrice, setCurrency, resetPrice, SET_CURRENCY, SET_GAS_PRICE, SET_NEO_PRICE, RESET_PRICE } from '../../app/modules/price'
 
 describe('wallet module tests', () => {
-  const neo = 28.10
-  const gas = 18.20
+  const NEO = 28.10
+  const GAS = 18.20
   const currency = 'eur'
 
   const initialState = {
-    neo: 0,
-    gas: 0,
+    NEO: 0,
+    GAS: 0,
     currency: 'usd'
   }
 
   describe('setNEOPrice tests', () => {
     const expectedAction = {
       type: SET_NEO_PRICE,
-      payload: { neo }
+      payload: { NEO }
     }
 
     test('setNEOPrice action works', () => {
-      expect(setNEOPrice(neo)).toEqual(expectedAction)
+      expect(setNEOPrice(NEO)).toEqual(expectedAction)
     })
 
     test('setNEOPrice reducer should return the initial state', () => {
@@ -28,7 +28,7 @@ describe('wallet module tests', () => {
     test('wallet reducer should handle SET_NEO_PRICE', () => {
       const expectedState = {
         ...initialState,
-        neo
+        NEO
       }
       expect(walletReducer(undefined, expectedAction)).toEqual(expectedState)
     })
@@ -37,11 +37,11 @@ describe('wallet module tests', () => {
   describe('setGASPrice tests', () => {
     const expectedAction = {
       type: SET_GAS_PRICE,
-      payload: { gas }
+      payload: { GAS }
     }
 
     test('setGASPrice action works', () => {
-      expect(setGASPrice(gas)).toEqual(expectedAction)
+      expect(setGASPrice(GAS)).toEqual(expectedAction)
     })
 
     test('setGASPrice reducer should return the initial state', () => {
@@ -51,7 +51,7 @@ describe('wallet module tests', () => {
     test('wallet reducer should handle SET_GAS_PRICE', () => {
       const expectedState = {
         ...initialState,
-        gas
+        GAS
       }
       expect(walletReducer(undefined, expectedAction)).toEqual(expectedState)
     })

@@ -1,0 +1,14 @@
+.table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 0 auto;
+    th, td {
+        border: 1px solid #dbdbdb;
+        border-width: 0 0 1px;
+        padding: 0.5em 0.75em;
+        vertical-align: top;
+    }
+    th {
+        border-width: 0 0 2px;
+    }
+}

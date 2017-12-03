@@ -2,9 +2,9 @@ import React from 'react'
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import { shallow } from 'enzyme'
+
 import { SET_HEIGHT, SET_NETWORK } from '../../app/modules/metadata'
-import { SET_CLAIM } from '../../app/modules/claim'
-import { SET_BALANCE, SET_TRANSACTION_HISTORY } from '../../app/modules/wallet'
+import { SET_BALANCE, SET_TRANSACTION_HISTORY, SET_IS_LOADED } from '../../app/modules/wallet'
 import { LOADING_TRANSACTIONS } from '../../app/modules/transactions'
 import NetworkSwitch from '../../app/containers/NetworkSwitch'
 
@@ -18,10 +18,10 @@ axiosMock
   .onGet('http://testnet-api.wallet.cityofzion.io/v2/version')
   .reply(200, { version })
 axiosMock
-  .onGet('https://api.coinmarketcap.com/v1/ticker/neo/', { params: { convert: 'USD' } })
+  .onGet('https://api.coinmarketcap.com/v1/ticker/NEO/', { params: { convert: 'USD' } })
   .reply(200, [ { price_usd: 24.50 } ])
 axiosMock
-  .onGet('https://api.coinmarketcap.com/v1/ticker/gas/', { params: { convert: 'USD' } })
+  .onGet('https://api.coinmarketcap.com/v1/ticker/GAS/', { params: { convert: 'USD' } })
   .reply(200, [ { price_usd: 18.20 } ])
 jest.mock('neon-js')
 
@@ -63,21 +63,60 @@ describe('NetworkSwitch', () => {
     const state = store.getState()
     const deepWrapper = wrapper.dive()
     expect(deepWrapper.find('.netName').text()).toEqual(state.metadata.network)
-    const actionTypes = [
-      SET_NETWORK,
-      SET_HEIGHT,
-      SET_CLAIM,
-      SET_TRANSACTION_HISTORY,
-      SET_BALANCE,
-      LOADING_TRANSACTIONS
-    ]
+
     deepWrapper.find('.netName').simulate('click')
 
-    await Promise.resolve().then().then().then()
+    await Promise.resolve().then().then().then().then()
     const actions = store.getActions()
-    expect(actions.length).toEqual(7)
-    actions.forEach(action => {
-      expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
+    expect(actions.length).toEqual(8)
+    expect(actions[0]).toEqual({
+      type: SET_NETWORK,
+      payload: {
+        network: 'TestNet'
+      }
+    })
+    expect(actions[1]).toEqual({
+      type: SET_IS_LOADED,
+      payload: {
+        loaded: false
+      }
+    })
+    expect(actions[2]).toEqual({
+      type: LOADING_TRANSACTIONS,
+      payload: {
+        isLoadingTransactions: true
+      }
+    })
+    expect(actions[3]).toEqual({
+      type: LOADING_TRANSACTIONS,
+      payload: {
+        isLoadingTransactions: false
+      }
+    })
+    expect(actions[4]).toEqual({
+      type: SET_TRANSACTION_HISTORY,
+      payload: {
+        transactions: []
+      }
+    })
+    expect(actions[5]).toEqual({
+      type: SET_HEIGHT,
+      payload: {
+        blockHeight: 586435
+      }
+    })
+    expect(actions[6]).toEqual({
+      type: SET_IS_LOADED,
+      payload: {
+        loaded: true
+      }
+    })
+    expect(actions[7]).toEqual({
+      type: SET_BALANCE,
+      payload: {
+        NEO: 1,
+        GAS: 1
+      }
     })
   })
 })

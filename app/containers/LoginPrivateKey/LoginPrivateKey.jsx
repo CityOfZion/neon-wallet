@@ -1,8 +1,10 @@
 // @flow
 import React, { Component } from 'react'
+
 import PasswordField from '../../components/PasswordField'
 import Page from '../../components/Page'
 import HomeButtonLink from '../../components/HomeButtonLink'
+
 import loginStyles from '../../styles/login.scss'
 
 type Props = {

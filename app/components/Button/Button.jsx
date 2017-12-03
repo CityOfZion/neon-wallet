@@ -1,19 +1,29 @@
 // @flow
 import React from 'react'
-import type { Children } from 'react'
-import styles from './Button.scss'
 import classNames from 'classnames'
 
+import styles from './Button.scss'
+
 type Props = {
-    children: Children,
-    primary: boolean,
-    secondary: boolean
+  children: React$Node,
+  primary: boolean,
+  cancel: boolean,
+  secondary: boolean,
+  onClick?: () => any
 }
 
-const Button = ({ primary, secondary, children }: Props) =>
-  <button className={classNames(styles.button, {
-    [styles.primary]: primary,
-    [styles.secondary]: secondary
-  })}>{children}</button>
+const Button = ({
+  primary = true,
+  secondary = false,
+  cancel = false,
+  children,
+  onClick
+}: Props) =>
+  <button onClick={onClick}
+    className={classNames(styles.button, {
+      [styles.primary]: primary,
+      [styles.secondary]: secondary,
+      [styles.cancel]: cancel
+    })}>{children}</button>
 
 export default Button
