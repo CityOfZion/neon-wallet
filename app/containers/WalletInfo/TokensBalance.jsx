@@ -2,6 +2,7 @@
 import React from 'react'
 
 import Table from '../../components/Table'
+import Tooltip from '../../components/Tooltip'
 
 import { MODAL_TYPES } from '../../core/constants'
 import { formatBalance } from '../../core/formatters'
@@ -27,14 +28,14 @@ const tokens = ({ tokens, showModal }: Props) => (
       {tokens && Object.keys(tokens).map((symbol) => {
         const token = tokens[symbol]
         const { balance } = token
+        const formattedBalance = formatBalance(symbol, balance)
+        const formattedBalanceDisplay = formatBalance(symbol, balance, true)
         return (
           <tr key={symbol}>
-            <td
-              className={styles.symbol}
-              onClick={() => showModal(MODAL_TYPES.TOKEN_INFO, { token })}>
-              <InfoOutline className={styles.symbolIcon} />{symbol}
+            <td onClick={() => showModal(MODAL_TYPES.TOKEN_INFO, { token })}>
+              <span className={styles.symbol}><InfoOutline className={styles.symbolIcon} />{symbol}</span>
             </td>
-            <td>{formatBalance(symbol, balance, true)}</td>
+            <td><Tooltip title={formattedBalance} disable={balance === 0}>{formattedBalanceDisplay}</Tooltip></td>
           </tr>
         )
       })}
