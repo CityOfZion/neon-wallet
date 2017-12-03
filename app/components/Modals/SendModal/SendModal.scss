@@ -24,6 +24,9 @@
 
 .percentButton {
     width: 100%;
+    &:last-child {
+        margin: 0
+    }
 }
 
 .label {
