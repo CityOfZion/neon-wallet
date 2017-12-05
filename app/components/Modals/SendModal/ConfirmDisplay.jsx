@@ -24,7 +24,7 @@ type State = {
   addressCheckedMessage: string
 }
 
-class ConfirmDisplay extends React.Component<Props> {
+class ConfirmDisplay extends React.Component<Props, State> {
   state = {
     addressChecked: false,
     addressCheckedMessage: ''
