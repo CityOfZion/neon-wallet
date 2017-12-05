@@ -2,13 +2,16 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import QRCode from 'qrcode/lib/browser'
+import storage from 'electron-json-storage'
 
 import Page from '../../components/Page'
 import CopyToClipboard from '../../components/CopyToClipboard'
+import { MODAL_TYPES } from '../../core/constants'
 
 type Props = {
   resetKey: Function,
   saveKey: Function,
+  showModal: Function,
   address: string,
   wif: string,
   encryptedWIF: string,
@@ -37,8 +40,36 @@ class DisplayWalletKeys extends Component<Props, State> {
     })
   }
 
+  handleSaveKey = (keyName, encryptedWIF) => {
+    const { showModal, saveKey } = this.props
+
+    // eslint-disable-next-line
+    storage.get('keys', (error, data) => {
+      if (data[keyName]) {
+        const text = (
+          <div>
+            <p>A wallet with this name already exists.</p>
+            <p>Please confirm overwriting saved wallet "{keyName}".</p>
+            <p>Cancel to choose a different name.</p>
+          </div>
+        )
+
+        showModal(MODAL_TYPES.CONFIRM, {
+          title: 'Confirm Overwrite',
+          text: text,
+          onClick: () => {
+            saveKey(keyName, encryptedWIF)
+          },
+          height: '280px'
+        })
+      } else {
+        saveKey(keyName, encryptedWIF)
+      }
+    })
+  }
+
   render () {
-    const { passphrase, address, encryptedWIF, wif, resetKey, saveKey } = this.props
+    const { passphrase, address, encryptedWIF, wif, resetKey } = this.props
     const { keyName } = this.state
     return (
       <Page id='newWallet'>
@@ -80,7 +111,7 @@ class DisplayWalletKeys extends Component<Props, State> {
         </div>
         <div className='saveKey'>
           <input autoFocus type='text' placeholder='Name this key' value={keyName} onChange={(e) => this.setState({ keyName: e.target.value })} />
-          <button onClick={() => saveKey(keyName, encryptedWIF)}>Save Key</button>
+          <button onClick={() => this.handleSaveKey(keyName, encryptedWIF)}>Save Key</button>
         </div>
         <Link onClick={() => resetKey()} to='/'><button>Back</button></Link>
         <button onClick={() => window.print()}>Print</button>

@@ -2,6 +2,8 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+import { showModal } from '../../modules/modal'
+
 import {
   saveKey,
   resetKey,
@@ -22,7 +24,8 @@ const mapStateToProps = (state: Object) => ({
 
 const actionCreators = {
   saveKey,
-  resetKey
+  resetKey,
+  showModal
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
