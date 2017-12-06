@@ -27,15 +27,15 @@ export default class LoginLedgerNanoS extends Component<Props, State> {
 
   componentDidMount () {
     const { ledgerNanoSGetInfoAsync } = this.props
-    const intervalId  = setInterval(async () => {
+    const intervalId = setInterval(async () => {
       await ledgerNanoSGetInfoAsync()
     }, 1000)
     this.setState({ intervalId })
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    const { publicKey, hardwarePublicKeyInfo, hardwareDeviceInfo } = this.props
-    if (nextProps.publicKey != publicKey ||
+  shouldComponentUpdate (nextProps) {
+    const { publicKey, hardwarePublicKeyInfo } = this.props
+    if (nextProps.publicKey !== publicKey ||
         nextProps.hardwarePublicKeyInfo !== hardwarePublicKeyInfo) return true
     return false
   }
