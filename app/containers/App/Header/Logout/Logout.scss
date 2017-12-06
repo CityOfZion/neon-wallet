@@ -1,0 +1,11 @@
+@import '../../../../styles/variables';
+
+.logout {
+    font-size: 1.5em;
+    cursor: pointer;
+    margin-top: -5px;
+    color: $default-text;
+    a {
+        color: inherit;
+    }
+}

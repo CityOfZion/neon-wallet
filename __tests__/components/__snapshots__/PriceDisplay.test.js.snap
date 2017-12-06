@@ -7,38 +7,37 @@ exports[`PriceDisplay renders and shows prices 1`] = `
   neoPrice={25.48}
 >
   <div
-    className="container"
+    className="navBarItem"
+    id="neoPrice"
+    key="neoPriceDisplay"
   >
     <span
-      className="neoPriceDisplay"
-      id="neoPrice"
+      className="navBarItemLabel"
     >
-      <span
-        className="label"
-      >
-        NEO
-      </span>
-      <span
-        className="price price"
-      >
-        $
-        25.48
-      </span>
+      NEO
     </span>
     <span
-      id="gasPrice"
+      className="price"
     >
-      <span
-        className="label"
-      >
-        GAS
-      </span>
-      <span
-        className="price price"
-      >
-        $
-        18.10
-      </span>
+      $
+      25.48
+    </span>
+  </div>
+  <div
+    className="navBarItem"
+    id="gasPrice"
+    key="gasPriceDisplay"
+  >
+    <span
+      className="navBarItemLabel"
+    >
+      GAS
+    </span>
+    <span
+      className="price"
+    >
+      $
+      18.10
     </span>
   </div>
 </PriceDisplay>

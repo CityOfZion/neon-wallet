@@ -35,7 +35,7 @@ const tokens = ({ tokens, showModal }: Props) => (
             <td onClick={() => showModal(MODAL_TYPES.TOKEN_INFO, { token })}>
               <span className={styles.symbol}><InfoOutline className={styles.symbolIcon} />{symbol}</span>
             </td>
-            <td><Tooltip title={formattedBalance} disable={balance === 0}>{formattedBalanceDisplay}</Tooltip></td>
+            <td><Tooltip title={formattedBalance} disabled={balance === 0}>{formattedBalanceDisplay}</Tooltip></td>
           </tr>
         )
       })}

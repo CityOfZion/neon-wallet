@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Login renders without crashing 1`] = `
-<Page
+<div
   className="loginPage"
   id="loginPage"
 >
@@ -33,5 +33,5 @@ exports[`Login renders without crashing 1`] = `
       <HomeButtonLink />
     </div>
   </form>
-</Page>
+</div>
 `;

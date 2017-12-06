@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
-import PriceDisplay from '../../app/components/PriceDisplay'
+import PriceDisplay from '../../app/containers/App/Header/PriceDisplay'
 
 import { DEFAULT_CURRENCY_CODE } from '../../app/core/constants'
 

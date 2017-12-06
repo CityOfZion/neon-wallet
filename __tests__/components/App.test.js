@@ -7,6 +7,23 @@ import { shallow, mount } from 'enzyme'
 
 import App from '../../app/containers/App'
 
+const initialState = {
+  account: {
+  },
+  metadata: {
+    network: 'MainNet'
+  },
+  wallet: {
+    transactions: []
+  },
+  modal: {
+
+  },
+  price: {
+    NEO: 40.5,
+    GAS: 19.8
+  }
+}
 const setup = (state, shallowRender = true) => {
   const store = configureStore([thunk])(state)
 
@@ -30,6 +47,6 @@ describe('App', () => {
       expect(settingsKey).toEqual('settings')
       done()
     })
-    setup({ modal: {} }, false)
+    setup(initialState, false)
   })
 })
