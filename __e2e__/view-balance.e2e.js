@@ -28,7 +28,7 @@ function timeout (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-test.serial('should login success', async t => {
+test.serial('should login successfully and switch networks', async t => {
   // Go to login page
   await app.client.click('a[href="/login-private-key"]>div.linkBox')
 
@@ -38,16 +38,12 @@ test.serial('should login success', async t => {
   // Click on login btn
   await app.client.click('#loginPage button')
 
-  // Switch to TestNet
-  await timeout(1000)
-  const currentNetName = await app.client.getText('#network .networkSelector')
-  if (currentNetName === 'MainNet') {
-    await app.client.click('#network .networkSelector')
-  }
+  // Check that the default network is MainNet
+  t.is(await app.client.getValue('#network .networkSelector'), 'MainNet')
 
-  // Show exact public address
-  await timeout(1000)
-  t.is(await app.client.getText('#network .networkSelector'), 'TestNet')
+  await app.client.$('#network .networkSelector').selectByValue('TestNet')
+
+  t.is(await app.client.getValue('#network .networkSelector'), 'TestNet')
 })
 
 test.serial('should show correct balance', async t => {
@@ -63,7 +59,7 @@ test.serial('should show correct transaction list', async t => {
   t.is(transactions[1], '4bb9b6e0a6ef46c42dd6a1f11326fb0c')
 })
 
-test.serial('should logout success', async t => {
+test.serial('should logout successfully', async t => {
   await app.client.click('#logout')
   t.truthy(await app.client.$('#home'))
 })
