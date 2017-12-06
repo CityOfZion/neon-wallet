@@ -22,6 +22,7 @@ type Props = {
   sendTransaction: Function,
   explorer: ExplorerType,
   net: NetworkType,
+  address: string,
 }
 
 type State = {
@@ -95,7 +96,7 @@ class SendModal extends Component<Props, State> {
   }
 
   render () {
-    const { hideModal, tokens, explorer, net } = this.props
+    const { hideModal, tokens, explorer, net, address } = this.props
     const { display } = this.state
 
     return (
@@ -122,6 +123,7 @@ class SendModal extends Component<Props, State> {
             cancelTransaction={this.cancelTransaction}
             explorer={explorer}
             net={net}
+            address={address}
             {...this.state}
           />}
       </BaseModal>

@@ -71,12 +71,12 @@ export default class Dashboard extends Component<Props> {
             <div className={styles.walletButtons}>
               <div
                 className={classNames(styles.walletButton, styles.sendButton)}
-                onClick={() => showModal(MODAL_TYPES.SEND, { NEO, GAS, tokens, showErrorNotification, sendTransaction, explorer, net })}>
+                onClick={() => showModal(MODAL_TYPES.SEND, { NEO, GAS, tokens, showErrorNotification, sendTransaction, explorer, net, address })}>
                 <FaArrowUpward className={styles.walletButtonIcon} /><span className={styles.walletButtonText}>Send</span>
               </div>
               <div
                 className={styles.walletButton}
-                onClick={() => showModal(MODAL_TYPES.RECEIVE, { address })}>
+                onClick={() => showModal(MODAL_TYPES.RECEIVE, { address, net, explorer })}>
                 <FaArrowDownward className={styles.walletButtonIcon} /><span className={styles.walletButtonText}>Receive</span>
               </div>
             </div>
