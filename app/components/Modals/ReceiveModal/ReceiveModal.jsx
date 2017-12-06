@@ -4,17 +4,20 @@ import BaseModal from '../BaseModal'
 import styles from './ReceiveModal.scss'
 import QRCode from 'qrcode/lib/browser'
 import CopyToClipboard from '../../CopyToClipboard'
+import { openExplorerAddress } from '../../../core/explorer'
 
 type Props = {
     address: string,
     hideModal: Function,
+    net: NetworkType,
+    explorer: ExplorerType,
 }
 
 class ReceiveModal extends Component<Props> {
   canvas: ?HTMLCanvasElement
 
   render () {
-    const { hideModal, address } = this.props
+    const { hideModal, address, net, explorer } = this.props
     return (
       <BaseModal
         onAfterOpen={() => {
@@ -34,7 +37,7 @@ class ReceiveModal extends Component<Props> {
         <div className={styles.textContainer}>
           <div>Your Public NEO Address:</div>
           <div className={styles.address}>
-            <strong>{address}</strong>
+            <strong><div className={styles.externalLink} onClick={() => openExplorerAddress(net, explorer, address)}>{address}</div></strong>
             <CopyToClipboard text={address} tooltip='Copy Public Address' />
           </div>
           <div className={styles.canvas}><canvas ref={(node) => { this.canvas = node }} /></div>

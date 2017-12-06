@@ -18,6 +18,7 @@ type Props = {
   cancelTransaction: Function,
   explorer: ExplorerType,
   net: NetworkType,
+  address: string,
 }
 
 type State = {
@@ -38,7 +39,7 @@ class ConfirmDisplay extends React.Component<Props, State> {
     if (err) {
       message = 'Warning: there was an error verifying the recipient address has activity in its transaction history.'
     } else if (!transactions || !transactions.length) {
-      message = 'Warning: recipient address has no activity in its transaction history. Please be sure the address is correct before sending.'
+      message = 'Warning: recipient address has no activity in its transaction history. Please be sure the address is correct before sending. Note that empty addresses will not appear in blockchain explorers. If it is a new address, please double check that you input the correct address.'
     }
 
     this.setState({
@@ -53,7 +54,7 @@ class ConfirmDisplay extends React.Component<Props, State> {
   }
 
   render () {
-    const { sendAddress, sendAmount, symbol, confirmTransaction, cancelTransaction, explorer, net } = this.props
+    const { sendAddress, sendAmount, symbol, confirmTransaction, cancelTransaction, explorer, net, address } = this.props
     const { addressChecked, addressCheckedMessage } = this.state
 
     if (!addressChecked) {
@@ -62,7 +63,10 @@ class ConfirmDisplay extends React.Component<Props, State> {
       return (
         <div>
           <p>Please confirm the following transaction:</p>
-          <p>You are sending <strong>{formatBalance(symbol, sendAmount)} {symbol}</strong> to:</p>
+          <p>You are sending <strong>{formatBalance(symbol, sendAmount)} {symbol}</strong></p>
+          <p>from:</p>
+          <div className={styles.externalLink} onClick={() => openExplorerAddress(net, explorer, address)}>{address}</div>
+          <p>to:</p>
           <div className={styles.externalLink} onClick={() => openExplorerAddress(net, explorer, sendAddress)}>{sendAddress}</div>
           <div>
             <Button onClick={confirmTransaction}>Confirm</Button>
