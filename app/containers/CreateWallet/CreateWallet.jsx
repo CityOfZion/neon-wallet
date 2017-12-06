@@ -2,7 +2,6 @@
 import React, { Component } from 'react'
 
 import PasswordField from '../../components/PasswordField'
-import Page from '../../components/Page'
 import HomeButtonLink from '../../components/HomeButtonLink'
 
 type Props = {
@@ -57,7 +56,7 @@ export default class EncryptKey extends Component<Props, State> {
     }
 
     return (
-      <Page id='newWallet'>
+      <div id='newWallet'>
         <div className='info'>{title}</div>
         <form onSubmit={this.createWallet}>
           <PasswordField
@@ -81,7 +80,7 @@ export default class EncryptKey extends Component<Props, State> {
           <button type='submit' disabled={disabledButton} className={disabledButton ? 'disabled' : ''}>Generate keys</button>
           <HomeButtonLink />
         </form>
-      </Page>
+      </div>
     )
   }
 }

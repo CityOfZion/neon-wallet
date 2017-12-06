@@ -19,7 +19,6 @@ import TokensBalance from './TokensBalance'
 type Props = {
   address: string,
   NEO: number,
-  net: NetworkType,
   GAS: number,
   neoPrice: number,
   gasPrice: number,
@@ -36,11 +35,9 @@ export default class WalletInfo extends Component<Props> {
     const {
       showSuccessNotification,
       showErrorNotification,
-      loadWalletData,
-      net,
-      address
+      loadWalletData
     } = this.props
-    loadWalletData(net, address).then((response) => {
+    loadWalletData().then((response) => {
       showSuccessNotification({ message: 'Received latest blockchain information.' })
     }).catch((e) => {
       showErrorNotification({ message: 'Failed to retrieve blockchain information' })

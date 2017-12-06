@@ -1,14 +1,10 @@
 // @flow
 import React, { Component } from 'react'
 
-import NetworkSwitch from '../NetworkSwitch'
-import Page from '../../components/Page'
 import HomeButtonLink from '../../components/HomeButtonLink'
 
 type Props = {
-  address: string,
   NEO: number,
-  net: NetworkType,
   loadWalletData: Function,
   participateInSale: Function,
   refreshTokenBalance: Function
@@ -26,8 +22,8 @@ export default class TokenSale extends Component<Props, State> {
   }
 
   componentDidMount () {
-    const { loadWalletData, net, address } = this.props
-    loadWalletData(net, address)
+    const { loadWalletData } = this.props
+    loadWalletData()
   }
 
   participateInSale = () => {
@@ -48,8 +44,7 @@ export default class TokenSale extends Component<Props, State> {
     const submitSaleButtonDisabled = !neoToSend || !scriptHash
 
     return (
-      <Page id='tokenSale'>
-        <NetworkSwitch />
+      <div id='tokenSale'>
         <div className='description'>Participate in Token Sale</div>
         <div className='warning'>
           <b>WARNING:</b> Be very careful with how you participate in a sale! This interface may not work for all sales! Submitting NEO multiple times to a sale may result in lost funds
@@ -87,7 +82,7 @@ export default class TokenSale extends Component<Props, State> {
             disabled={refreshTokenBalanceButtonDisabled}>Refresh Token Balance</button>
         </div>
         <HomeButtonLink />
-      </Page>
+      </div>
     )
   }
 }

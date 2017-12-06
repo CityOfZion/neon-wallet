@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from 'react'
 
-import Page from '../../components/Page'
 import HomeButtonLink from '../../components/HomeButtonLink'
 
 import { ROUTES } from '../../core/constants'
@@ -37,7 +36,7 @@ export default class LoginLedgerNanoS extends Component<Props> {
   render () {
     const { hardwareDeviceInfo, hardwarePublicKeyInfo, publicKey } = this.props
     return (
-      <Page id='loginPage' className={loginStyles.loginPage}>
+      <div id='loginPage' className={loginStyles.loginPage}>
         <div className={loginStyles.title}>Login using the Ledger Nano S:</div>
         <div className={loginStyles.loginForm}>
           <div>
@@ -47,7 +46,7 @@ export default class LoginLedgerNanoS extends Component<Props> {
           <p>{hardwareDeviceInfo}</p>
           <p>{hardwarePublicKeyInfo}</p>
         </div>
-      </Page>
+      </div>
     )
   }
 }

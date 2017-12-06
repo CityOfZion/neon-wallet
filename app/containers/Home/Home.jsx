@@ -1,13 +1,14 @@
 // @flow
 import React from 'react'
-import { Link } from 'react-router-dom'
-import Page from '../Page'
-import { ROUTES } from '../../core/constants'
-import styles from './Home.scss'
 import classNames from 'classnames'
+import { Link } from 'react-router-dom'
+
+import { ROUTES } from '../../core/constants'
+
+import styles from './Home.scss'
 
 const Home = () =>
-  <Page id='home' className={styles.container}>
+  <div id='home'>
     <Link to={ROUTES.LOGIN_LOCAL_STORAGE}>
       <div className={classNames('linkBox', styles.linkBox)}>Login using a saved wallet</div>
     </Link>
@@ -32,6 +33,6 @@ const Home = () =>
     {/* <Link to={ROUTES.LOGIN_TOKEN_SALE}>
       <div className={classNames('linkBox', styles.linkBox, styles.linkBoxAlt)}>Participate in Token Sale</div>
     </Link> */}
-  </Page>
+  </div>
 
 export default Home

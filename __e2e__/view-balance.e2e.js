@@ -24,8 +24,8 @@ test.after(async () => {
   }
 })
 
-function timeout(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+function timeout (ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 test.serial('should login success', async t => {
@@ -40,15 +40,14 @@ test.serial('should login success', async t => {
 
   // Switch to TestNet
   await timeout(1000)
-  const currentNetName = await app.client.getText('#network .netName')
-  console.log('currentNetName', currentNetName);
+  const currentNetName = await app.client.getText('#network .networkSelector')
   if (currentNetName === 'MainNet') {
-    await app.client.click('#network .netName')
+    await app.client.click('#network .networkSelector')
   }
 
   // Show exact public address
   await timeout(1000)
-  t.is(await app.client.getText('#network .netName'), 'TestNet')
+  t.is(await app.client.getText('#network .networkSelector'), 'TestNet')
 })
 
 test.serial('should show correct balance', async t => {

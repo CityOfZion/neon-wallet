@@ -4,7 +4,6 @@ import storage from 'electron-json-storage'
 import { map } from 'lodash'
 
 import PasswordField from '../../components/PasswordField'
-import Page from '../../components/Page'
 import HomeButtonLink from '../../components/HomeButtonLink'
 
 import styles from './LoginLocalStorage.scss'
@@ -42,7 +41,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
     const loginButtonDisabled = Object.keys(accountKeys).length === 0 || encryptedWIF === '' || passphrase === ''
 
     return (
-      <Page id='loginPage' className={loginStyles.loginPage}>
+      <div id='loginPage' className={loginStyles.loginPage}>
         <div className={loginStyles.title}>Login using a saved wallet:</div>
         <form onSubmit={(e) => { e.preventDefault(); loginNep2(passphrase, encryptedWIF, history) }}>
           <select
@@ -69,7 +68,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
             <HomeButtonLink />
           </div>
         </form>
-      </Page>
+      </div>
     )
   }
 }

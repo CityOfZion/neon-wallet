@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import QRCode from 'qrcode/lib/browser'
 
-import Page from '../../components/Page'
 import CopyToClipboard from '../../components/CopyToClipboard'
 
 type Props = {
@@ -41,7 +40,7 @@ class DisplayWalletKeys extends Component<Props, State> {
     const { passphrase, address, encryptedWIF, wif, resetKey, saveKey } = this.props
     const { keyName } = this.state
     return (
-      <Page id='newWallet'>
+      <div id='newWallet'>
         <div className='disclaimer'>
           You must save and backup the keys below. If you lose them, you lose access to your assets.
           You can click "Save Key" to save the encrypted key in local application storage.
@@ -84,7 +83,7 @@ class DisplayWalletKeys extends Component<Props, State> {
         </div>
         <Link onClick={() => resetKey()} to='/'><button>Back</button></Link>
         <button onClick={() => window.print()}>Print</button>
-      </Page>
+      </div>
     )
   }
 }
