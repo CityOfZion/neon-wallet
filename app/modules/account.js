@@ -103,17 +103,26 @@ export const loginWithPrivateKey = (wif: string, history: Object, route?: RouteT
 
 // Reducer that manages account state (account now = private key)
 export const ledgerNanoSGetInfoAsync = () => async (dispatch: DispatchType) => {
+  const dispatchError = (message: string, deviceInfoMsg: boolean = true) => {
+    dispatch(hardwarePublicKey(null))
+    if (deviceInfoMsg) {
+      dispatch(hardwarePublicKeyInfo(null))
+      return dispatch(hardwareDeviceInfo(message))
+    } else {
+      return dispatch(hardwarePublicKeyInfo(message))
+    }
+  }
   dispatch(hardwareDeviceInfo('Looking for USB Devices'))
   let [err, result] = await asyncWrap(commNode.list_async())
-  if (err) return dispatch(hardwareDeviceInfo(`Finding USB Error: ${err}. Connect device and try again.`))
+  if (err) {
+    return dispatchError(`Finding USB Error: ${err}. Connect device and try again.`)
+  }
   if (result.length === 0) {
-    dispatch(hardwarePublicKeyInfo(''))
-    return dispatch(hardwareDeviceInfo('USB Failure: No device found. Connect device and try again.'))
+    return dispatchError('USB Failure: No device found. Connect device and try again.')
   } else {
     let [err, comm] = await asyncWrap(commNode.create_async())
     if (err) {
-      dispatch(hardwarePublicKeyInfo(''))
-      return dispatch(hardwareDeviceInfo(`Finding USB Error: ${err}. Connect device and try again.`))
+      return dispatchError(`Finding USB Error: ${err}. Connect device and try again.`)
     }
 
     const deviceInfo = comm.device.getDeviceInfo()
@@ -122,12 +131,12 @@ export const ledgerNanoSGetInfoAsync = () => async (dispatch: DispatchType) => {
   }
   [err, result] = await asyncWrap(commNode.list_async())
   if (result.length === 0) {
-    return dispatch(hardwarePublicKeyInfo('Hardware Device Error. Login to NEO App and try again'))
+    return dispatchError('Hardware Device Error. Login to NEO App and try again', false)
   } else {
     let [err, comm] = await asyncWrap(commNode.create_async())
     if (err) {
       console.log(`Public Key Comm Init Error: ${err}`)
-      return dispatch(hardwarePublicKeyInfo('Hardware Device Error. Login to NEO App and try again'))
+      return dispatchError('Hardware Device Error. Login to NEO App and try again', false)
     }
 
     let message = Buffer.from(`8004000000${BIP44_PATH}`, 'hex')
@@ -136,10 +145,10 @@ export const ledgerNanoSGetInfoAsync = () => async (dispatch: DispatchType) => {
     if (error) {
       comm.device.close() // NOTE: do we need this close here - what about the other errors that do not have it at the moment
       if (error === 'Invalid status 28160') {
-        return dispatch(hardwarePublicKeyInfo('NEO App does not appear to be open, request for private key returned error 28160.'))
+        return dispatchError('NEO App does not appear to be open, request for private key returned error 28160.', false)
       } else {
         console.log(`Public Key Comm Messaging Error: ${error}`)
-        return dispatch(hardwarePublicKeyInfo('Hardware Device Error. Login to NEO App and try again'))
+        return dispatchError('Hardware Device Error. Login to NEO App and try again', false)
       }
     }
     comm.device.close()
