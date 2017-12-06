@@ -70,7 +70,11 @@ export const retrieveBalance = (net: NetworkType, address: string) => async (dis
   }
 }
 
-export const loadWalletData = (net: NetworkType, address: string, silent: boolean = true) => async (dispatch: DispatchType) => {
+export const loadWalletData = (silent: boolean = true) => async (dispatch: DispatchType, getState: GetStateType) => {
+  const state = getState()
+  const net = getNetwork(state)
+  const address = getAddress(state)
+
   if (!silent) {
     dispatch(setIsLoaded(false))
   }

@@ -19,7 +19,6 @@ type Props = {
   tokens: Object,
   showErrorNotification: Function,
   hideModal: Function,
-  togglePane: Function,
   sendTransaction: Function,
   explorer: ExplorerType,
   net: NetworkType,

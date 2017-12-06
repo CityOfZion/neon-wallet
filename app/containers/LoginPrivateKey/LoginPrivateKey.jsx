@@ -2,7 +2,6 @@
 import React, { Component } from 'react'
 
 import PasswordField from '../../components/PasswordField'
-import Page from '../../components/Page'
 import HomeButtonLink from '../../components/HomeButtonLink'
 
 import loginStyles from '../../styles/login.scss'
@@ -27,7 +26,7 @@ export default class LoginPrivateKey extends Component<Props, State> {
     const loginButtonDisabled = wif === ''
 
     return (
-      <Page id='loginPage' className={loginStyles.loginPage}>
+      <div id='loginPage' className={loginStyles.loginPage}>
         <div className={loginStyles.title}>Login using a private key:</div>
         <form onSubmit={(e) => { e.preventDefault(); loginWithPrivateKey(wif, history) }}>
           <div className={loginStyles.loginForm}>
@@ -45,7 +44,7 @@ export default class LoginPrivateKey extends Component<Props, State> {
             <HomeButtonLink />
           </div>
         </form>
-      </Page>
+      </div>
     )
   }
 }

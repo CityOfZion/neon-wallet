@@ -4,7 +4,6 @@ import { forEach, map } from 'lodash'
 import fs from 'fs'
 import storage from 'electron-json-storage'
 
-import Page from '../../components/Page'
 import HomeButtonLink from '../../components/HomeButtonLink'
 import { EXPLORERS, MODAL_TYPES, CURRENCIES } from '../../core/constants'
 
@@ -133,7 +132,7 @@ export default class Settings extends Component<Props, State> {
     const { wallets, explorer, currency } = this.props
 
     return (
-      <Page id='settings'>
+      <div id='settings'>
         <div className='description'>Manage your Neon wallet keys and settings</div>
         <div className='settingsForm'>
           <div className='settingsItem'>
@@ -169,7 +168,7 @@ export default class Settings extends Component<Props, State> {
           <button onClick={this.loadKeyRecovery}>Load key recovery file</button>
         </div>
         <HomeButtonLink />
-      </Page>
+      </div>
     )
   }
 }

@@ -4,6 +4,11 @@ import React, { Component } from 'react'
 import ModalRenderer from '../ModalRenderer'
 import Notifications from '../Notifications'
 
+import Header from './Header'
+import Footer from './Footer'
+
+import styles from './App.scss'
+
 type Props = {
   children: React$Node,
   checkVersion: Function,
@@ -21,10 +26,12 @@ class App extends Component<Props> {
   render () {
     const { children } = this.props
     return (
-      <div>
-        <div>{children}</div>
+      <div className={styles.container}>
+        <Header />
+        <div className={styles.content}>{children}</div>
         <Notifications />
         <ModalRenderer />
+        <Footer />
       </div>
     )
   }

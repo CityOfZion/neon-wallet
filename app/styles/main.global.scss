@@ -15,6 +15,7 @@ body {
     background-color: $main-background;
     color: $default-text;
     overflow: hidden;
+    :focus { outline: none; }
 }
 
 button {
@@ -52,6 +53,7 @@ input {
     font-weight: 200;
     background-color: $dark-input-color;
     color: $default-text;
+    :focus { outline: none; }
 }
 
 .notification-link {
@@ -61,8 +63,6 @@ input {
 
 #settings,
 #tokenSale {
-    width: $page-width;
-    margin: $top-margin auto $top-margin auto;
     .description {
         font-size: 1.2em;
         font-weight: 200;
@@ -124,8 +124,6 @@ input {
 }
 
 #newWallet {
-    width: $page-width;
-    margin: $top-margin auto $top-margin auto;
     input {
         width: 95%;
         margin-bottom: 10px;

@@ -12,7 +12,7 @@ import LoginTokenSale from './containers/LoginTokenSale'
 import LoginNep2 from './containers/LoginNep2'
 import Settings from './containers/Settings'
 import DisplayWalletKeys from './containers/DisplayWalletKeys'
-import Home from './components/Home'
+import Home from './containers/Home'
 
 export default () => (
   <App>

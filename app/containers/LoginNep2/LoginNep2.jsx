@@ -2,7 +2,6 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 
-import Page from '../../components/Page'
 import HomeButtonLink from '../../components/HomeButtonLink'
 import PasswordField from '../../components/PasswordField'
 
@@ -30,7 +29,7 @@ export default class LoginNep2 extends Component<Props, State> {
     const loginButtonDisabled = encryptedWIF === '' || passphrase === ''
 
     return (
-      <Page id='loginPage' className={loginStyles.loginPage}>
+      <div id='loginPage' className={loginStyles.loginPage}>
         <div className={loginStyles.title}>Login using an encrypted key:</div>
         <form onSubmit={(e) => { e.preventDefault(); loginNep2(passphrase, encryptedWIF, history) }}>
           <div className={loginStyles.loginForm}>
@@ -54,7 +53,7 @@ export default class LoginNep2 extends Component<Props, State> {
             <HomeButtonLink />
           </div>
         </form>
-      </Page>
+      </div>
     )
   }
 }

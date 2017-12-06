@@ -1,48 +1,7 @@
 @import '../../styles/variables';
 
 .container {
-    position: absolute;
-    left: 20px;
-    right: 20px;
-    top: 20px;
-    bottom: 0;
-}
-
-.height,
-.version {
-    .grey {
-        opacity: .6;
-        margin-right: 4px;
-    }
-    .darker {
-        color: $thin-text-color;
-        opacity: .8;
-        cursor: pointer;
-    }
-}
-
-.height {
-    font-size: .8em;
-    opacity: 0.6;
-    padding-right: 38px;
-}
-
-.version {
-    font-size: .8em;
-    opacity: 0.6;
-    padding-right: 38px;
-    padding-left: 38px;
-}
-
-.header {
-    padding-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-content: center;
-}
-
-.headerInfo {
-    display: flex;
+    height: 100%;
 }
 
 .walletButtons {

@@ -1,0 +1,21 @@
+@import '../../styles/variables';
+
+$content-margin: 52px;
+
+.container {
+    width: $page-width;
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    height: calc(100% - #{$content-margin});
+    flex-grow: 1;
+    overflow-y: auto;
+}
