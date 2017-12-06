@@ -16,5 +16,6 @@ $content-margin: 52px;
 
 .content {
     height: calc(100% - #{$content-margin});
-    flex-grow: 1
+    flex-grow: 1;
+    overflow-y: auto;
 }
