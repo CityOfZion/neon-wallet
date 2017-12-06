@@ -15,6 +15,6 @@ $content-margin: 52px;
 }
 
 .content {
-    height: calc(100% - $content-margin);
+    height: calc(100% - #{$content-margin});
     flex-grow: 1
 }
