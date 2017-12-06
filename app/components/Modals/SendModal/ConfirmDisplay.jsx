@@ -6,6 +6,7 @@ import Button from '../../Button'
 import Loader from '../../Loader'
 import { formatBalance } from '../../../core/formatters'
 import { openExplorerAddress } from '../../../core/explorer'
+import asyncWrap from '../../../core/asyncHelper'
 
 import styles from './SendModal.scss'
 
@@ -30,20 +31,19 @@ class ConfirmDisplay extends React.Component<Props, State> {
     addressCheckedMessage: ''
   }
 
-  checkTransactionHistory = (net, address) => {
-    api.neonDB.getTransactionHistory(net, address).then((transactions) => {
-      this.setState({ addressChecked: true })
+  async checkTransactionHistory (net: NetworkType, address: string) {
+    const [err, transactions] = await asyncWrap(api.neonDB.getTransactionHistory(net, address))
 
-      if (!transactions || !transactions.length) {
-        this.setState({
-          addressCheckedMessage: 'Warning: recipient address has no activity in its transaction history. Please be sure the address is correct before sending.'
-        })
-      }
-    }).catch((e) => {
-      this.setState({
-        addressChecked: true,
-        addressCheckedMessage: 'Warning: there was an error verifying the recipient address has activity in its transaction history.'
-      })
+    let message = ''
+    if (err) {
+      message = 'Warning: there was an error verifying the recipient address has activity in its transaction history.'
+    } else if (!transactions || !transactions.length) {
+      message = 'Warning: recipient address has no activity in its transaction history. Please be sure the address is correct before sending.'
+    }
+
+    this.setState({
+      addressChecked: true,
+      addressCheckedMessage: message
     })
   }
 
