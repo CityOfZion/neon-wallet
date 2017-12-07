@@ -67,24 +67,18 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, symbol:
 
     const isHardwareSend = !!publicKey
 
-    // TODO: Consolidate this
+    const asyncSigningFunction = isHardwareSend ? signingFunction : null
+    const publicKeyOrWif = isHardwareSend ? publicKey : wif
+
     let sendAssetFn
-    if (isHardwareSend) {
-      dispatch(showInfoNotification({ message: 'Please sign the transaction on your hardware device', autoDismiss: 0 }))
-      if (symbol === ASSETS.NEO || symbol === ASSETS.GAS) {
-        sendAssetFn = () => api.neonDB.doSendAsset(net, sendAddress, publicKey, sendAsset, signingFunction)
-      } else {
-        const scriptHash = getScriptHashForNetwork(net, symbol)
-        sendAssetFn = () => api.nep5.doTransferToken(net, scriptHash, publicKey, sendAddress, adjustDecimalAmountForTokenTransfer(parsedSendAmount), 0, signingFunction)
-      }
+    if (symbol === ASSETS.NEO || symbol === ASSETS.GAS) {
+      sendAssetFn = () => api.neonDB.doSendAsset(net, sendAddress, publicKeyOrWif, sendAsset, asyncSigningFunction)
     } else {
-      if (symbol === ASSETS.NEO || symbol === ASSETS.GAS) {
-        sendAssetFn = () => api.neonDB.doSendAsset(net, sendAddress, wif, sendAsset)
-      } else {
-        const scriptHash = getScriptHashForNetwork(net, symbol)
-        sendAssetFn = () => api.nep5.doTransferToken(net, scriptHash, wif, sendAddress, adjustDecimalAmountForTokenTransfer(parsedSendAmount))
-      }
+      const scriptHash = getScriptHashForNetwork(net, symbol)
+      sendAssetFn = () => api.nep5.doTransferToken(net, scriptHash, publicKeyOrWif, sendAddress, adjustDecimalAmountForTokenTransfer(parsedSendAmount), 0, asyncSigningFunction)
     }
+
+    if (isHardwareSend) dispatch(showInfoNotification({ message: 'Please sign the transaction on your hardware device', autoDismiss: 0 }))
 
     const [err, response] = await asyncWrap(sendAssetFn())
     if (err || response.result === undefined || response.result === false) {
