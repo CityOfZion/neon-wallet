@@ -117,11 +117,10 @@ describe('WalletInfo', () => {
 
     deepWrapper.find('.refreshBalance').simulate('click')
 
-    await Promise.resolve('Pause').then().then().then().then().then()
+    await Promise.resolve('Pause').then().then().then()
     jest.runAllTimers()
     const actions = store.getActions()
     expect(actions.length).toEqual(5)
-    console.log('what actions', actions);
 
     expect(actions[0]).toEqual({
       type: LOADING_TRANSACTIONS,
