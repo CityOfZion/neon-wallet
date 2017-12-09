@@ -118,16 +118,6 @@ export default class Settings extends Component<Props, State> {
     })
   }
 
-  getCurrencyOptions () {
-    var options = []
-
-    Object.keys(CURRENCIES).forEach(function (currencyCode) {
-      options.push(<option value={currencyCode} key={currencyCode}>{currencyCode.toUpperCase()}</option>)
-    })
-
-    return options
-  }
-
   render () {
     const { wallets, explorer, currency } = this.props
 
@@ -146,7 +136,9 @@ export default class Settings extends Component<Props, State> {
           <div className='settingsItem'>
             <div className='itemTitle'>Currency</div>
             <select value={currency} onChange={this.updateCurrencySettings}>
-              {this.getCurrencyOptions()}
+              {Object.keys(CURRENCIES).map((currencyCode: string) =>
+                <option value={currencyCode} key={currencyCode}>{currencyCode.toUpperCase()}</option>
+              )}
             </select>
           </div>
           <div className='settingsItem'>
