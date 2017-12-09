@@ -4,7 +4,7 @@ import { api } from 'neon-js'
 
 import { setTransactionHistory, getNEO, getGAS, getTokens, getScriptHashForNetwork } from './wallet'
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notifications'
-import { getWIF, getPublicKey, getSigningFunction, getAddress, LOGOUT } from './account'
+import { getWIF, getPublicKey, getSigningFunction, getAddress, LOGOUT, getHardwareLogin } from './account'
 import { getNetwork } from './metadata'
 
 import { validateTransactionBeforeSending, obtainTokenBalance, isToken } from '../core/wallet'
@@ -51,6 +51,7 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, symbol:
   const tokens = getTokens(state)
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
+  const isHardwareSend = getHardwareLogin(state)
 
   const rejectTransaction = (message: string) => dispatch(showErrorNotification({ message }))
   const tokenBalance = isToken(symbol) && obtainTokenBalance(tokens, symbol)
@@ -64,8 +65,6 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, symbol:
 
     dispatch(showInfoNotification({ message: 'Sending Transaction...', autoDismiss: 0 }))
     log(net, 'SEND', selfAddress, { to: sendAddress, asset: symbol, amount: parsedSendAmount })
-
-    const isHardwareSend = !!publicKey
 
     const asyncSigningFunction = isHardwareSend ? signingFunction : null
     const publicKeyOrWif = isHardwareSend ? publicKey : wif
