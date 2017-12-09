@@ -30,7 +30,7 @@ class ReceiveModal extends Component<Props> {
         style={{
           content: {
             width: '420px',
-            height: '420px'
+            height: '460px'
           }
         }}
       >
