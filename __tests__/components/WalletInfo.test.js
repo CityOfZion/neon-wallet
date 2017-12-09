@@ -120,7 +120,7 @@ describe('WalletInfo', () => {
     await Promise.resolve('Pause').then().then().then()
     jest.runAllTimers()
     const actions = store.getActions()
-    expect(actions.length).toEqual(6)
+    expect(actions.length).toEqual(5)
 
     expect(actions[0]).toEqual({
       type: LOADING_TRANSACTIONS,
@@ -147,12 +147,6 @@ describe('WalletInfo', () => {
       }
     })
     expect(actions[4]).toEqual({
-      type: SET_IS_LOADED,
-      payload: {
-        loaded: true
-      }
-    })
-    expect(actions[5]).toEqual({
       type: SET_BALANCE,
       payload: {
         NEO: 1,

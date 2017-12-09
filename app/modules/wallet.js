@@ -62,7 +62,6 @@ export function setTokens (tokens: Object) {
 export const retrieveBalance = (net: NetworkType, address: string) => async (dispatch: DispatchType) => {
   // If API dies, still display balance - ignore _err
   const [_err, resultBalance] = await asyncWrap(api.neonDB.getBalance(net, address)) // eslint-disable-line
-  dispatch(setIsLoaded(true))
   if (_err) {
     return dispatch(showErrorNotification({ message: `Could not retrieve NEO/GAS balance`, stack: true }))
   } else {
@@ -87,6 +86,7 @@ export const loadWalletData = (silent: boolean = true) => async (dispatch: Dispa
     dispatch(retrieveTokensBalance()),
     dispatch(retrieveBalance(net, address))
   ])
+  dispatch(setIsLoaded(true))
   return true
 }
 
