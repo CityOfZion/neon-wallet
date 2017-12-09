@@ -95,7 +95,7 @@ export function hardwarePublicKey (publicKey: string) {
 
 export function hardwareLogin (hardwareLogin: boolean) {
   return {
-    type: HARDWARE_LOGIN
+    type: HARDWARE_LOGIN,
     payload: { hardwareLogin }
   }
 }
@@ -229,7 +229,8 @@ export default (state: Object = initialState, action: ReduxAction) => {
         address: null,
         loggedIn: false,
         signingFunction: null,
-        publicKey: null
+        publicKey: null,
+        hardwareLogin: false
       }
     case SET_KEYS:
       const { accountKeys } = action.payload
