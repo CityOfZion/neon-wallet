@@ -4,7 +4,7 @@ import { api } from 'neon-js'
 
 import { setTransactionHistory, getNEO, getGAS, getTokens, getScriptHashForNetwork } from './wallet'
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notifications'
-import { getWIF, getPublicKey, getSigningFunction, getAddress, LOGOUT } from './account'
+import { getWIF, getPublicKey, getSigningFunction, getAddress, LOGOUT, getHardwareLogin } from './account'
 import { getNetwork } from './metadata'
 
 import { validateTransactionBeforeSending, obtainTokenBalance, isToken } from '../core/wallet'
@@ -51,6 +51,7 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, symbol:
   const tokens = getTokens(state)
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
+  const isHardwareSend = getHardwareLogin(state)
 
   const rejectTransaction = (message: string) => dispatch(showErrorNotification({ message }))
   const tokenBalance = isToken(symbol) && obtainTokenBalance(tokens, symbol)
@@ -65,26 +66,18 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, symbol:
     dispatch(showInfoNotification({ message: 'Sending Transaction...', autoDismiss: 0 }))
     log(net, 'SEND', selfAddress, { to: sendAddress, asset: symbol, amount: parsedSendAmount })
 
-    const isHardwareSend = !!publicKey
+    const asyncSigningFunction = isHardwareSend ? signingFunction : null
+    const publicKeyOrWif = isHardwareSend ? publicKey : wif
 
-    // TODO: Consolidate this
     let sendAssetFn
-    if (isHardwareSend) {
-      dispatch(showInfoNotification({ message: 'Please sign the transaction on your hardware device', autoDismiss: 0 }))
-      if (symbol === ASSETS.NEO || symbol === ASSETS.GAS) {
-        sendAssetFn = () => api.neonDB.doSendAsset(net, sendAddress, publicKey, sendAsset, signingFunction)
-      } else {
-        const scriptHash = getScriptHashForNetwork(net, symbol)
-        sendAssetFn = () => api.nep5.doTransferToken(net, scriptHash, publicKey, sendAddress, adjustDecimalAmountForTokenTransfer(parsedSendAmount), 0, signingFunction)
-      }
+    if (symbol === ASSETS.NEO || symbol === ASSETS.GAS) {
+      sendAssetFn = () => api.neonDB.doSendAsset(net, sendAddress, publicKeyOrWif, sendAsset, asyncSigningFunction)
     } else {
-      if (symbol === ASSETS.NEO || symbol === ASSETS.GAS) {
-        sendAssetFn = () => api.neonDB.doSendAsset(net, sendAddress, wif, sendAsset)
-      } else {
-        const scriptHash = getScriptHashForNetwork(net, symbol)
-        sendAssetFn = () => api.nep5.doTransferToken(net, scriptHash, wif, sendAddress, adjustDecimalAmountForTokenTransfer(parsedSendAmount))
-      }
+      const scriptHash = getScriptHashForNetwork(net, symbol)
+      sendAssetFn = () => api.nep5.doTransferToken(net, scriptHash, publicKeyOrWif, sendAddress, adjustDecimalAmountForTokenTransfer(parsedSendAmount), 0, asyncSigningFunction)
     }
+
+    if (isHardwareSend) dispatch(showInfoNotification({ message: 'Please sign the transaction on your hardware device', autoDismiss: 0 }))
 
     const [err, response] = await asyncWrap(sendAssetFn())
     if (err || response.result === undefined || response.result === false) {
