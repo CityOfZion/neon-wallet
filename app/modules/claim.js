@@ -2,7 +2,7 @@
 import { api } from 'neon-js'
 
 import { showErrorNotification, showSuccessNotification, showInfoNotification } from './notifications'
-import { getWIF, getAddress, getSigningFunction, getPublicKey, LOGOUT } from './account'
+import { getWIF, getAddress, getSigningFunction, getPublicKey, LOGOUT, getHardwareLogin } from './account'
 import { getNetwork } from './metadata'
 import { getNEO } from './wallet'
 
@@ -55,10 +55,9 @@ export const doClaimNotify = () => async (dispatch: DispatchType, getState: GetS
   const net = getNetwork(state)
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
+  const isHardwareClaim = getHardwareLogin(state)
 
   log(net, 'CLAIM', address, { info: 'claim all GAS' })
-
-  const isHardwareClaim = !!publicKey
 
   let claimGasFn
   if (isHardwareClaim) {
@@ -92,6 +91,7 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
   const NEO = getNEO(state)
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
+  const isHardwareClaim = getHardwareLogin(state)
 
   // if no NEO in account, no need to send to self first
   if (NEO === 0) {
@@ -99,8 +99,6 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
   } else {
     dispatch(showInfoNotification({ message: 'Sending NEO to Yourself...', autoDismiss: 0 }))
     log(net, 'SEND', address, { to: address, amount: NEO, asset: ASSETS.NEO })
-
-    const isHardwareClaim = !!publicKey
 
     let sendAssetFn
     if (isHardwareClaim) {
