@@ -100,15 +100,15 @@ export const retrieveTokensBalance = () => async (dispatch: DispatchType, getSta
     const scriptHash = getScriptHashForNetwork(net, symbol)
     // override scripthash with test if on test net
     const [_error, balanceRpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net)) // eslint-disable-line
-    const [_err, balanceResults] = await asyncWrap(api.nep5.getTokenBalance(balanceRpcEndpoint, scriptHash, address)) // eslint-disable-line
-    // TODO: Figure out why getTokenBalance returns NaN
-    if (balanceResults || isNaN(balanceResults)) {
+    const [err, balanceResults] = await asyncWrap(api.nep5.getTokenBalance(balanceRpcEndpoint, scriptHash, address))
+
+    if (!err) {
       // TODO: NeonJS now supports getting info in 1 call, use it when its on master and remove this code
       const [, tokenInfoRpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net))
       const [, tokenInfoResults] = await asyncWrap(api.nep5.getTokenInfo(tokenInfoRpcEndpoint, getScriptHashForNetwork(net, symbol)))
       tokens[symbol] = {
         symbol,
-        balance: isNaN(balanceResults) ? 0 : balanceResults,
+        balance: balanceResults,
         scriptHash,
         info: tokenInfoResults
       }
