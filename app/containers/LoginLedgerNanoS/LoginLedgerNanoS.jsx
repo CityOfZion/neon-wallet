@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 
 import HomeButtonLink from '../../components/HomeButtonLink'
 
-import { ROUTES } from '../../core/constants'
+import { ROUTES, FINDING_LEDGER_NOTICE } from '../../core/constants'
 
 import loginStyles from '../../styles/login.scss'
 
@@ -33,9 +33,10 @@ export default class LoginLedgerNanoS extends Component<Props, State> {
   }
 
   shouldComponentUpdate (nextProps) {
-    const { publicKey, hardwarePublicKeyInfo } = this.props
+    const { publicKey, hardwarePublicKeyInfo, hardwareDeviceInfo } = this.props
     if (nextProps.publicKey !== publicKey ||
-        nextProps.hardwarePublicKeyInfo !== hardwarePublicKeyInfo) return true
+        nextProps.hardwarePublicKeyInfo !== hardwarePublicKeyInfo ||
+        (nextProps.hardwareDeviceInfo === FINDING_LEDGER_NOTICE && hardwareDeviceInfo === null)) return true
     return false
   }
 
