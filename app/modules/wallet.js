@@ -99,18 +99,14 @@ export const retrieveTokensBalance = () => async (dispatch: DispatchType, getSta
   for (let [symbol] of TOKEN_PAIRS) {
     const scriptHash = getScriptHashForNetwork(net, symbol)
     // override scripthash with test if on test net
-    const [_error, balanceRpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net)) // eslint-disable-line
-    const [err, balanceResults] = await asyncWrap(api.nep5.getTokenBalance(balanceRpcEndpoint, scriptHash, address))
+    const [_error, tokenRpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net)) // eslint-disable-line
+    const [err, tokenResults] = await asyncWrap(api.nep5.getToken(tokenRpcEndpoint, scriptHash, address))
 
     if (!err) {
-      // TODO: NeonJS now supports getting info in 1 call, use it when its on master and remove this code
-      const [, tokenInfoRpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net))
-      const [, tokenInfoResults] = await asyncWrap(api.nep5.getTokenInfo(tokenInfoRpcEndpoint, getScriptHashForNetwork(net, symbol)))
       tokens[symbol] = {
-        symbol,
-        balance: balanceResults,
-        scriptHash,
-        info: tokenInfoResults
+        ...tokenResults,
+        balance: tokenResults.balance === null ? 0 : tokenResults.balance,
+        scriptHash
       }
     } else {
       dispatch(showErrorNotification({ message: `could not retrieve ${symbol} balance`, stack: true }))
