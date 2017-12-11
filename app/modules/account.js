@@ -7,7 +7,7 @@ import commNode from '../ledger/ledger-comm-node'
 import { ledgerNanoSCreateSignatureAsync } from '../ledger/ledgerNanoS'
 
 import { validatePassphraseLength } from '../core/wallet'
-import { BIP44_PATH, ROUTES } from '../core/constants'
+import { BIP44_PATH, ROUTES, FINDING_LEDGER_NOTICE } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
 
 // Constants
@@ -121,17 +121,17 @@ export const ledgerNanoSGetInfoAsync = () => async (dispatch: DispatchType) => {
       return dispatch(hardwarePublicKeyInfo(message))
     }
   }
-  dispatch(hardwareDeviceInfo('Looking for USB Devices'))
+  dispatch(hardwareDeviceInfo(FINDING_LEDGER_NOTICE))
   let [err, result] = await asyncWrap(commNode.list_async())
   if (err) {
-    return dispatchError(`Finding USB Error: ${err}. Connect device and try again.`)
+    return dispatchError(`Finding USB Error: ${err}. ${FINDING_LEDGER_NOTICE}`)
   }
   if (result.length === 0) {
-    return dispatchError('USB Failure: No device found. Connect device and try again.')
+    return dispatchError(`USB Failure: No device found. ${FINDING_LEDGER_NOTICE}`)
   } else {
     let [err, comm] = await asyncWrap(commNode.create_async())
     if (err) {
-      return dispatchError(`Finding USB Error: ${err}. Connect device and try again.`)
+      return dispatchError(`Finding USB Error: ${err}. ${FINDING_LEDGER_NOTICE}`)
     }
 
     const deviceInfo = comm.device.getDeviceInfo()
