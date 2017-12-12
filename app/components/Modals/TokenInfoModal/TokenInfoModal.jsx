@@ -33,15 +33,15 @@ const TokenInfoModal = ({ hideModal, token }: Props) => (
           </tr>
           <tr>
             <td>Name:</td>
-            <td>{token.info.name}</td>
+            <td>{token.name}</td>
           </tr>
           <tr>
             <td>Total Supply:</td>
-            <td>{formatThousands(token.info.totalSupply)}</td>
+            <td>{formatThousands(token.totalSupply)}</td>
           </tr>
           <tr>
             <td>Decimals</td>
-            <td>{token.info.decimals}</td>
+            <td>{token.decimals}</td>
           </tr>
           <tr>
             <td>Balance</td>
