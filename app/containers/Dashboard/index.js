@@ -2,7 +2,7 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { logout, getAddress } from '../../modules/account'
+import { logout, getAddress, getHardwareLogin } from '../../modules/account'
 import { getBlockExplorer, getNetwork } from '../../modules/metadata'
 import { getNotifications, showErrorNotification } from '../../modules/notifications'
 import { getNEO, getGAS, getTokens, getIsLoaded, loadWalletData } from '../../modules/wallet'
@@ -19,7 +19,8 @@ const mapStateToProps = (state: Object) => ({
   GAS: getGAS(state),
   tokens: getTokens(state),
   loaded: getIsLoaded(state),
-  explorer: getBlockExplorer(state)
+  explorer: getBlockExplorer(state),
+  hardwareLogin: getHardwareLogin(state)
 })
 
 const actionCreators = {
