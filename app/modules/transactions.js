@@ -4,7 +4,7 @@ import { api } from 'neon-js'
 
 import { setTransactionHistory, getNEO, getGAS, getTokens, getScriptHashForNetwork } from './wallet'
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notifications'
-import { getWIF, getPublicKey, getSigningFunction, getAddress, LOGOUT, getHardwareLogin } from './account'
+import { getWIF, getPublicKey, getSigningFunction, getAddress, LOGOUT, getIsHardwareLogin } from './account'
 import { getNetwork } from './metadata'
 
 import { validateTransactionBeforeSending, obtainTokenBalance, isToken } from '../core/wallet'
@@ -51,7 +51,7 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, symbol:
   const tokens = getTokens(state)
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
-  const isHardwareSend = getHardwareLogin(state)
+  const isHardwareSend = getIsHardwareLogin(state)
 
   const rejectTransaction = (message: string) => dispatch(showErrorNotification({ message }))
   const tokenBalance = isToken(symbol) && obtainTokenBalance(tokens, symbol)
@@ -72,9 +72,11 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, symbol:
     let sendAssetFn
     if (symbol === ASSETS.NEO || symbol === ASSETS.GAS) {
       sendAssetFn = () => api.neonDB.doSendAsset(net, sendAddress, publicKeyOrWif, sendAsset, asyncSigningFunction)
-    } else {
+    } else if (!isHardwareSend) {
       const scriptHash = getScriptHashForNetwork(net, symbol)
       sendAssetFn = () => api.nep5.doTransferToken(net, scriptHash, publicKeyOrWif, sendAddress, adjustDecimalAmountForTokenTransfer(parsedSendAmount), 0, asyncSigningFunction)
+    } else {
+      return rejectTransaction('Ledger support is not yet ready for sending NEP5 tokens')
     }
 
     if (isHardwareSend) dispatch(showInfoNotification({ message: 'Please sign the transaction on your hardware device', autoDismiss: 0 }))

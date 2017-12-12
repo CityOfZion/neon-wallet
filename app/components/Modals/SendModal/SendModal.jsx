@@ -23,6 +23,7 @@ type Props = {
   explorer: ExplorerType,
   net: NetworkType,
   address: string,
+  isHardwareLogin: boolean,
 }
 
 type State = {
@@ -96,7 +97,7 @@ class SendModal extends Component<Props, State> {
   }
 
   render () {
-    const { hideModal, tokens, explorer, net, address } = this.props
+    const { hideModal, tokens, explorer, net, address, isHardwareLogin } = this.props
     const { display } = this.state
 
     return (
@@ -116,6 +117,7 @@ class SendModal extends Component<Props, State> {
             getBalanceForSymbol={this.getBalanceForSymbol}
             onChangeHandler={this.onChangeHandler}
             tokens={tokens}
+            isHardwareLogin={isHardwareLogin}
             {...this.state}
           />
           : <ConfirmDisplay

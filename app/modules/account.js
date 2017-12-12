@@ -93,10 +93,10 @@ export function hardwarePublicKey (publicKey: string) {
   }
 }
 
-export function hardwareLogin (hardwareLogin: boolean) {
+export function isHardwareLogin (isHardwareLogin: boolean) {
   return {
     type: HARDWARE_LOGIN,
-    payload: { hardwareLogin }
+    payload: { isHardwareLogin }
   }
 }
 
@@ -112,7 +112,7 @@ export const loginWithPrivateKey = (wif: string, history: Object, route?: RouteT
 // Reducer that manages account state (account now = private key)
 export const ledgerNanoSGetInfoAsync = () => async (dispatch: DispatchType) => {
   const dispatchError = (message: string, deviceInfoMsg: boolean = true) => {
-    dispatch(hardwareLogin(false))
+    dispatch(isHardwareLogin(false))
     dispatch(hardwarePublicKey(null))
     if (deviceInfoMsg) {
       dispatch(hardwarePublicKeyInfo(null))
@@ -161,7 +161,7 @@ export const ledgerNanoSGetInfoAsync = () => async (dispatch: DispatchType) => {
       }
     }
     comm.device.close()
-    dispatch(hardwareLogin(true))
+    dispatch(isHardwareLogin(true))
     dispatch(hardwarePublicKey(response.substring(0, 130)))
     return dispatch(hardwarePublicKeyInfo('Success. NEO App Found on Hardware Device. Click Button Above to Login'))
   }
@@ -177,7 +177,7 @@ export const getSigningFunction = (state: Object) => state.account.signingFuncti
 export const getPublicKey = (state: Object) => state.account.publicKey
 export const getHardwareDeviceInfo = (state: Object) => state.account.hardwareDeviceInfo
 export const getHardwarePublicKeyInfo = (state: Object) => state.account.hardwarePublicKeyInfo
-export const getHardwareLogin = (state: Object) => state.account.hardwareLogin
+export const getIsHardwareLogin = (state: Object) => state.account.isHardwareLogin
 
 const initialState = {
   wif: null,
@@ -187,7 +187,7 @@ const initialState = {
   accountKeys: [],
   signingFunction: null,
   publicKey: null,
-  hardwareLogin: false,
+  isHardwareLogin: false,
   hardwareDeviceInfo: null,
   hardwarePublicKeyInfo: null
 }
@@ -230,7 +230,7 @@ export default (state: Object = initialState, action: ReduxAction) => {
         loggedIn: false,
         signingFunction: null,
         publicKey: null,
-        hardwareLogin: false
+        isHardwareLogin: false
       }
     case SET_KEYS:
       const { accountKeys } = action.payload
@@ -245,10 +245,10 @@ export default (state: Object = initialState, action: ReduxAction) => {
         hardwareDeviceInfo
       }
     case HARDWARE_LOGIN:
-      const { hardwareLogin } = action.payload
+      const { isHardwareLogin } = action.payload
       return {
         ...state,
-        hardwareLogin
+        isHardwareLogin
       }
     case HARDWARE_PUBLIC_KEY_INFO:
       const { hardwarePublicKeyInfo } = action.payload
