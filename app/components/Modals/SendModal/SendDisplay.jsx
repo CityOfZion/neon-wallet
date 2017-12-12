@@ -18,7 +18,7 @@ type Props = {
   onChangeHandler: Function,
   openAndValidate: Function,
   balance: number,
-  hardwareLogin: boolean
+  isHardwareLogin: boolean
 }
 
 const SendDisplay = ({
@@ -29,9 +29,9 @@ const SendDisplay = ({
   onChangeHandler,
   openAndValidate,
   balance,
-  hardwareLogin
+  isHardwareLogin
 }: Props) => {
-  const disableNEP5Ledger = hardwareLogin && isToken(symbol)
+  const disableNEP5Ledger = isHardwareLogin && isToken(symbol)
   const sendButtonDisabled = !sendAddress || !sendAmount || disableNEP5Ledger
   return (
     <div className={styles.textContainer}>
