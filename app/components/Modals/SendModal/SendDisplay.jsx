@@ -3,6 +3,7 @@ import React from 'react'
 import classNames from 'classnames'
 
 import NumberInput from '../../NumberInput'
+import AddressInput from '../../Inputs/AddressInput'
 
 import { ASSETS } from '../../../core/constants'
 import { formatBalance, toFixedDecimals, COIN_DECIMAL_LENGTH } from '../../../core/formatters'
@@ -37,12 +38,10 @@ const SendDisplay = ({
     <div className={styles.textContainer}>
       <div id='sendAddress' className={styles.column}>
         <label className={styles.label}>Address:</label>
-        <input
-          autoFocus
-          type='text'
+        <AddressInput
           placeholder='Where to send the asset (address)'
           value={sendAddress}
-          onChange={(e) => onChangeHandler('sendAddress', e.target.value)}
+          onChange={(value) => onChangeHandler('sendAddress', value)}
         />
       </div>
       <div id='sendAmount' className={styles.column}>
