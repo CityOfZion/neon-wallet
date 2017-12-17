@@ -44,7 +44,7 @@ export default class AddressInput extends React.Component<Props> {
 
   renderSaveIcon = () => {
     if (this.canSave()) {
-      return <SaveIcon onSave={this.handleSave} />
+      return <SaveIcon id='saveIcon' onSave={this.handleSave} />
     }
   }
 
@@ -56,7 +56,11 @@ export default class AddressInput extends React.Component<Props> {
           <div className={styles.value}>{item.value}</div>
         </div>
         <div className={styles.actions}>
-          <Delete className={styles.deleteIcon} tabIndex={0} onClick={this.handleDelete(item)} />
+          <Delete
+            id={`deleteIcon${item.value}`}
+            className={styles.deleteIcon}
+            tabIndex={0}
+            onClick={this.handleDelete(item)} />
         </div>
       </div>
     )
