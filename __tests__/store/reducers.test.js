@@ -4,6 +4,7 @@ describe('root reducer', () => {
   it('should combine all reducers', () => {
     expect(reducer({}, { type: '@@INIT' })).toEqual({
       account: expect.any(Object),
+      addressBook: expect.any(Object),
       generateWallet: expect.any(Object),
       wallet: expect.any(Object),
       price: expect.any(Object),

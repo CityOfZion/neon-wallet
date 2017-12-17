@@ -106,7 +106,7 @@ class SendModal extends Component<Props, State> {
         hideModal={hideModal}
         style={{
           content: {
-            width: '480px',
+            width: '520px',
             height: '410px'
           }
         }}
