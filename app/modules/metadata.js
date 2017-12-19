@@ -40,8 +40,8 @@ export function setBlockExplorer (blockExplorer: ExplorerType) {
 }
 
 export const checkVersion = () => async (dispatch: DispatchType, getState: GetStateType) => {
-  const state = getState().metadata
-  const { net } = state
+  const state = getState()
+  const net = getNetwork(state)
   const apiEndpoint = api.neonDB.getAPIEndpoint(net)
 
   const [err, res] = await asyncWrap(axios.get(`${apiEndpoint}/v2/version`))
