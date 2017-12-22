@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 
 import Tooltip from '../../components/Tooltip'
+import { formatGAS } from '../../core/formatters'
 
 type Props = {
   doClaimNotify: Function,
@@ -25,6 +26,7 @@ export default class Claim extends Component<Props> {
   render () {
     const { claimAmount, disableClaimButton, doGasClaim } = this.props
     const shouldDisableButton = disableClaimButton || claimAmount === 0
+    const formattedAmount = formatGAS(claimAmount)
     return (
       <div id='claim'>
         <Tooltip
@@ -34,7 +36,7 @@ export default class Claim extends Component<Props> {
           <button
             disabled={shouldDisableButton}
             onClick={() => doGasClaim()}
-            className={shouldDisableButton ? 'disabled' : ''}>Claim {claimAmount} GAS</button>
+            className={shouldDisableButton ? 'disabled' : ''}>Claim {formattedAmount} GAS</button>
         </Tooltip>
       </div>
     )
