@@ -1,18 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Login renders without crashing 1`] = `
-<LoginPrivateKey
-  dispatch={[Function]}
-  loggedIn={true}
-  store={
-    Object {
-      "clearActions": [Function],
-      "dispatch": [Function],
-      "getActions": [Function],
-      "getState": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-    }
-  }
-/>
+<Page
+  className="loginPage"
+  id="loginPage"
+>
+  <div
+    className="title"
+  >
+    Login using a private key:
+  </div>
+  <div
+    className="loginForm"
+  >
+    <input
+      autoFocus={true}
+      onChange={[Function]}
+      placeholder="Enter your private key here (WIF)"
+      type="password"
+    />
+    <FaEye
+      className="viewKey"
+      onClick={[Function]}
+    />
+  </div>
+  <div>
+    <button
+      className="disabled"
+      disabled={true}
+      onClick={[Function]}
+    >
+      Login
+    </button>
+    <HomeButtonLink />
+  </div>
+</Page>
 `;

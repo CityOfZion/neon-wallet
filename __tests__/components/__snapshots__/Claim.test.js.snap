@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Claim should not render claim gas button when claim button is disabled 1`] = `
+<div
+  id="claim"
+>
+  <div>
+    <button
+      className="disabled"
+      data-for="claimTip"
+      data-tip={true}
+    >
+      Claim 
+      10
+       GAS
+    </button>
+    <ReactTooltip
+      class="solidTip"
+      effect="solid"
+      id="claimTip"
+      insecure={true}
+      place="bottom"
+      resizeHide={true}
+      type="dark"
+      wrapper="div"
+    >
+      <span>
+        You can claim Gas once every 5 minutes
+      </span>
+    </ReactTooltip>
+  </div>
+</div>
+`;
+
+exports[`Claim should render claim gas button when claim button is not disabled 1`] = `
+<div
+  id="claim"
+>
+  <button
+    onClick={[Function]}
+  >
+    Claim 
+    10
+     GAS
+  </button>
+</div>
+`;
+
+exports[`Claim should render without crashing 1`] = `
+<Claim
+  claimAmount={10}
+  claimRequest={false}
+  claimWasUpdated={false}
+  disableClaimButton={false}
+  doClaimNotify={[Function]}
+  doGasClaim={[Function]}
+  setClaimRequest={[Function]}
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+/>
+`;

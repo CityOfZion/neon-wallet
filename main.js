@@ -1,129 +1,101 @@
-const electron = require('electron');
-const path = require('path');
-const app = electron.app;
-const Menu = electron.Menu;
-const BrowserWindow = electron.BrowserWindow;
+const { app, shell, Menu, BrowserWindow } = require('electron')
+const path = require('path')
+const url = require('url')
+const port = process.env.PORT || 3000
 
-require('electron-context-menu')({
-	prepend: (params, browserWindow) => [{
-		label: 'Rainbow',
-		// Only show it when right-clicking images
-		visible: params.mediaType === 'image'
-	}]
-});
+let mainWindow = null
+
+// adapted from https://github.com/chentsulin/electron-react-boilerplate
+const installExtensions = () => {
+  const installer = require('electron-devtools-installer')
+  const extensions = [
+    'REACT_DEVELOPER_TOOLS',
+    'REDUX_DEVTOOLS'
+  ]
+
+  return Promise
+    .all(extensions.map(name => installer.default(installer[name])))
+    .catch(console.log)
+}
 
 app.on('window-all-closed', () => {
   app.quit()
 })
 
 app.on('ready', () => {
-  mainWindow = new BrowserWindow({
-    height: 750,
-    width: 1000,
-    minHeight: 750,
-    maxHeight: 750,
-    minWidth: 1000,
-    maxWidth: 1000,
-    icon: path.join(__dirname, 'icons/png/64x64.png'),
-    webPreferences: {
-      webSecurity: false
-    }
-    // maxHeight: 800,
-    // maxWidth:300
-  });
-
-  const template = [
-  {
-    label: 'Edit',
-    submenu: [
-      {role: 'undo'},
-      {role: 'redo'},
-      {type: 'separator'},
-      {role: 'cut'},
-      {role: 'copy'},
-      {role: 'paste'},
-      {role: 'pasteandmatchstyle'},
-      {role: 'delete'},
-      {role: 'selectall'}
-    ]
-  },
-  {
-    label: 'View',
-    submenu: [
-      {role: 'reload'},
-      {role: 'forcereload'},
-      {role: 'toggledevtools'},
-      {type: 'separator'},
-      {role: 'resetzoom'},
-      {role: 'zoomin'},
-      {role: 'zoomout'},
-      {type: 'separator'},
-      {role: 'togglefullscreen'}
-    ]
-  },
-  {
-    role: 'window',
-    submenu: [
-      {role: 'minimize'},
-      {role: 'close'}
-    ]
-  },
-  {
-    role: 'help',
-    submenu: [
-      {
-        label: 'Learn More',
-        click () { require('electron').shell.openExternal('https://electron.atom.io') }
+  const onAppReady = () => {
+    mainWindow = new BrowserWindow({
+      height: 750,
+      width: 1000,
+      minHeight: 750,
+      minWidth: 1000,
+      icon: path.join(__dirname, 'icons/png/64x64.png'),
+      webPreferences: {
+        webSecurity: false
       }
-    ]
-  }];
-
-  if (process.platform === 'darwin') {
-    template.unshift({
-      label: app.getName(),
-      submenu: [
-        {role: 'about'},
-        {type: 'separator'},
-        {role: 'services', submenu: []},
-        {type: 'separator'},
-        {role: 'hide'},
-        {role: 'hideothers'},
-        {role: 'unhide'},
-        {type: 'separator'},
-        {role: 'quit'}
-      ]
     })
 
-    // Edit menu
-    template[1].submenu.push(
-      {type: 'separator'},
-      {
-        label: 'Speech',
-        submenu: [
-          {role: 'startspeaking'},
-          {role: 'stopspeaking'}
-        ]
-      }
-    )
-    // Window menu
-    template[3].submenu = [
-      {role: 'close'},
-      {role: 'minimize'},
-      {role: 'zoom'},
-      {type: 'separator'},
-      {role: 'front'}
-    ]
+    if (process.platform !== 'darwin') {
+    // Windows/Linxu Menu
+	  mainWindow.setMenu(null)
+    } else {
+    // Menu is required for MacOS
+	  const template = [
+        {
+  	    label: app.getName(),
+  	    submenu: [
+  				{role: 'about'},
+  				{type: 'separator'},
+  	      {role: 'quit'}
+  	    ]
+        },
+        {
+		    label: 'Edit',
+		    submenu: [
+		      {role: 'undo'},
+		      {role: 'redo'},
+		      {type: 'separator'},
+		      {role: 'cut'},
+		      {role: 'copy'},
+		      {role: 'paste'}
+		    ]
+		  },
+		  {
+		    label: 'View',
+		    submenu: [
+		      {role: 'toggledevtools'}
+		    ]
+  	  },
+        {
+          role: 'help',
+          submenu: [
+            {label: 'City of Zion', click () { shell.openExternal('https://cityofzion.io/') }},
+            {label: 'GitHub', click () { shell.openExternal('https://github.com/CityOfZion') }},
+            {label: 'NEO Reddit', click () { shell.openExternal('https://www.reddit.com/r/NEO/') }},
+            {label: 'Slack', click () { shell.openExternal('https://neosmarteconomy.slack.com') }}
+          ]
+        }
+      ]
+	  const menu = Menu.buildFromTemplate(template)
+      Menu.setApplicationMenu(menu)
+    }
+
+    if (process.env.START_HOT) {
+      mainWindow.loadURL(`http://localhost:${port}/dist`)
+    } else {
+      mainWindow.loadURL(url.format({
+        protocol: 'file',
+        slashes: true,
+        pathname: path.join(__dirname, '/app/dist/index.html')
+      }))
+    }
+    mainWindow.on('closed', function () {
+      mainWindow = null
+    })
   }
-
-  const menu = Menu.buildFromTemplate(template)
-  Menu.setApplicationMenu(menu)
-  mainWindow.setMenu(null); // TODO: does this work?
-
-  // load the local HTML file
-  let url = require('url').format({
-    protocol: 'file',
-    slashes: true,
-    pathname: require('path').join(__dirname, '/app/dist/index.html')
-  });
-  mainWindow.loadURL(url)
+  if (process.env.NODE_ENV === 'development') {
+    installExtensions().then(() => onAppReady())
+  } else {
+    onAppReady()
+  }
 })

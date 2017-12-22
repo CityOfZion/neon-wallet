@@ -1,10 +1,35 @@
-[![CircleCI](https://circleci.com/gh/CityOfZion/neon-wallet.svg?style=svg)](https://circleci.com/gh/CityOfZion/neon-wallet)
+<p align="center">
+  <img
+    src="http://res.cloudinary.com/vidsy/image/upload/v1503160820/CoZ_Icon_DARKBLUE_200x178px_oq0gxm.png"
+    width="125px;">
+</p>
 
-# Neon Wallet
+<h1 align="center">Neon Wallet</h1>
 
-![wallet](/wallet.png)
+<p align="center">
+  Electron wallet for the <b>NEO</b> blockchain.
+</p>
 
-The aim of this project is to port the current NEO web wallet to electron with a better UI.
+<p align="center">
+  <a href="https://circleci.com/gh/CityOfZion/neon-wallet">
+    <img src="https://circleci.com/gh/CityOfZion/neon-wallet.svg?style=svg">
+  </a>
+  <a href='https://coveralls.io/github/CityOfZion/neon-wallet?branch=dev'>
+    <img src='https://coveralls.io/repos/github/CityOfZion/neon-wallet/badge.svg?branch=dev' alt='Coverage Status' />
+  </a>
+</p>
+
+<p align="center">
+  <img src="/wallet.png">
+</p>
+
+## Overview
+
+### What does it currently do
+
+- View Gas and Neo balances
+- Login via Wif and encrypted private keys
+- Send Neo to other addresses
 
 ## Installation
 
@@ -13,24 +38,32 @@ A standalone app will be available soon. For now, you will need to build the wal
 ### Required Tools and Dependencies
 
   - Node (This project uses the current LTS node version, which is `v6.11.0`)
-  - `npm install -g webpack` Global Webpack 
-  - `npm install -g jest` Unit testing framework
+  - Yarn (https://yarnpkg.com/lang/en/docs/install/)
 
 ### Developing and Running
 
 Execute these commands in the project's root directory:
 
-  - `npm install` Installing node dependencies
-  - `webpack` or `webpack --watch` for live reload.
-  - `npm start` for running the project
-  - `npm test` or `npm test-watch` for live testing.
+Setup:
+  - `yarn install` - Installing node dependencies
+  - `./node_modules/.bin/electron -v` confirm electron is version 1.7.9
 
-### Support 
+Developing:
+  - `yarn dev` - Live reload
 
-A gentle reminder, github issues is meant to be used by developers for maintaining and improving the codebase, and is not the proper location for support issues. Questions such as 
+Running (for production):
+  - `yarn assets`
+  - `yarn start`
 
-- Why can't I log in?
-- I lost my private key, is there anyway to recover?
-- Why is my balance not showing?
+Testing:
+  - `yarn test` or `yarn run test-watch` for live testing.
 
-should be asked in proper support channels such as the [NEO subreddit](https://www.reddit.com/r/NEO/), or the official [NEO slack](https://neosmarteconomy.slack.com). 
+### Support
+
+A gentle reminder, github issues is meant to be used by developers for maintaining and improving the codebase, and is not the proper location for support issues. Questions such as
+
+- *"Why can't I log in?"*
+- *"I lost my private key, is there anyway to recover it?"*
+- *"Why is my balance not showing?"*
+
+should be asked in proper support channels such as the [NEO subreddit](https://www.reddit.com/r/NEO/), or the official [NEO slack](https://neosmarteconomy.slack.com). You should also check the list of [frequently asked questions (FAQ)](https://github.com/CityOfZion/awesome-neo/blob/master/resources/faq.md) to see if your question has been answered there already.

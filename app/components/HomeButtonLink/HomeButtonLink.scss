@@ -1,0 +1,12 @@
+@import '../../styles/variables';
+
+.primary {
+
+}
+
+.secondary {
+    background-color: $dark-button;
+    &:hover {
+        background-color: $dark-button-hover;
+    }
+}

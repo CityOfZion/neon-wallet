@@ -1,0 +1,64 @@
+@import '../../styles/variables';
+.navBar {
+    transition: margin ease-in-out 200ms;
+}
+
+.noAnimation {
+    transition: none;
+}
+
+.title {
+    font-size: 1em;
+    padding: 10px 0px 0px 10px;
+    font-weight: 200;
+    color: $thin-text-color;
+    img {
+        position: relative;
+        top: 2px;
+    }
+}
+
+.height,
+.version {
+    .grey {
+        opacity: .6;
+        margin-right: 4px;
+    }
+    .darker {
+        color: $thin-text-color;
+        opacity: .8;
+        cursor: pointer;
+    }
+}
+
+.height {
+    position: absolute;
+    font-size: .8em;
+    right: 340px;
+    top: 13px;
+    opacity: 0.6;
+}
+
+.version {
+    position: absolute;
+    font-size: .8em;
+    right: 230px;
+    top: 13px;
+    opacity: 0.6;
+}
+
+.send {
+    text-align: center;
+    width: 100%;
+    padding: 16px 0px;
+    font-weight: 200;
+    font-size: 1.2em;
+}
+
+.upArrow {
+    position: relative;
+    font-size: 1.4em;
+    top: -3px;
+    left: -1px;
+}
+

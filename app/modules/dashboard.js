@@ -1,22 +1,31 @@
+// @flow
+
 // Constants
-const TOGGLE_SEND_PANE = 'TOGGLE_SEND_PANE';
+export const TOGGLE_SEND_PANE = 'TOGGLE_SEND_PANE'
 
 // Actions
-export function togglePane(pane){
+export function togglePane (pane: string) {
   return {
     type: TOGGLE_SEND_PANE,
-    pane: pane
+    pane
   }
-};
+}
 
-// reducer for UI state
-export default (state = {sendPane: true, confirmPane: true}, action) => {
+const initialState = {
+  sendPane: true,
+  confirmPane: true
+}
+
+export default (state: Object = initialState, action: Object) => {
   switch (action.type) {
-      case TOGGLE_SEND_PANE:
-          let newState = {};
-          newState[action.pane] = !state[action.pane];
-          return {...state, ...newState };
-      default:
-          return state;
+    case TOGGLE_SEND_PANE:
+      let newState = {}
+      newState[action.pane] = !state[action.pane]
+      return {
+        ...state,
+        ...newState
+      }
+    default:
+      return state
   }
-};
+}

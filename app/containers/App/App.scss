@@ -1,0 +1,11 @@
+.container {
+    transition: margin ease-in-out 200ms;
+}
+
+.noAnimation {
+    transition: none
+}
+
+.pushTop {
+    margin-top: 50px;
+}

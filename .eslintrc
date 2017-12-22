@@ -1,0 +1,22 @@
+{
+    "parser": "babel-eslint",
+    "plugins": [
+        "react",
+        "flowtype"
+    ],
+    "env": {
+        "jest": true
+    },
+    "globals": {
+        "clearInterval": true,
+        "clearTimeout": true,
+        "console": true,
+        "document": true,
+        "expect": true,
+        "Promise": true,
+        "setInterval": true,
+        "setTimeout": true,
+        "window": true
+    },
+    "extends": ["standard", "standard-react", "plugin:flowtype/recommended"]
+}

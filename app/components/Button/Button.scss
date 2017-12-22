@@ -1,0 +1,19 @@
+@import '../../styles/variables';
+
+.button {
+    cursor: pointer;    
+}
+
+.primary {
+    background-color: $default-button;
+    &:hover {
+        background-color: $default-button-hover;
+    }
+}
+
+.secondary {
+    background-color: $dark-button;
+    &:hover {
+        background-color: $dark-button-hover;
+    }
+}

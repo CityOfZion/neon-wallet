@@ -1,3 +1,13 @@
 {
-    "presets": ["react", "es2015", "stage-0"],
+    "presets": [
+        "react",
+        "es2015",
+        "stage-0",
+        "flow"
+    ],
+    "plugins": [
+        "transform-async-to-generator",
+        "lodash",
+        "react-hot-loader/babel"
+    ]
 }

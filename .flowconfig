@@ -1,0 +1,16 @@
+[ignore]
+.*/test/.*
+.*/node_modules/.*/src/.*
+
+[include]
+
+[libs]
+./app/flow-typed/declarations.js
+
+[lints]
+
+[options]
+module.file_ext=.css
+module.name_mapper.extension='css' -> 'empty/object'
+module.file_ext=.scss
+module.name_mapper.extension='scss' -> 'empty/object'
