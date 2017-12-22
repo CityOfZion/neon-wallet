@@ -14,7 +14,7 @@ exports[`Claim should not render claim GAS button when claim button is disabled 
       onClick={[Function]}
     >
       Claim 
-      10
+      10.00000000
        GAS
     </button>
   </Tooltip>
@@ -35,7 +35,7 @@ exports[`Claim should render claim GAS button when claim button is not disabled 
       onClick={[Function]}
     >
       Claim 
-      10
+      10.00000000
        GAS
     </button>
   </Tooltip>
