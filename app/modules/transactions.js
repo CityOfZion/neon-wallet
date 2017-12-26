@@ -72,11 +72,9 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, symbol:
     let sendAssetFn
     if (symbol === ASSETS.NEO || symbol === ASSETS.GAS) {
       sendAssetFn = () => api.neonDB.doSendAsset(net, sendAddress, publicKeyOrWif, sendAsset, asyncSigningFunction)
-    } else if (!isHardwareSend) {
+    } else {
       const scriptHash = getScriptHashForNetwork(net, symbol)
       sendAssetFn = () => api.nep5.doTransferToken(net, scriptHash, publicKeyOrWif, sendAddress, adjustDecimalAmountForTokenTransfer(parsedSendAmount), 0, asyncSigningFunction)
-    } else {
-      return rejectTransaction('Ledger support is not yet ready for sending NEP5 tokens')
     }
 
     if (isHardwareSend) dispatch(showInfoNotification({ message: 'Please sign the transaction on your hardware device', autoDismiss: 0 }))
