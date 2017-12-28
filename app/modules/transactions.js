@@ -1,6 +1,6 @@
 // @flow
 /* eslint-disable camelcase */
-import { api } from 'neon-js'
+import { wallet, api, sc } from 'neon-js'
 
 import { setTransactionHistory, getNEO, getGAS, getTokens, getScriptHashForNetwork } from './wallet'
 import { showErrorNotification, showInfoNotification, showSuccessNotification } from './notifications'
@@ -9,7 +9,7 @@ import { getNetwork } from './metadata'
 
 import { validateTransactionBeforeSending, obtainTokenBalance, isToken } from '../core/wallet'
 import { ASSETS } from '../core/constants'
-import { adjustDecimalAmountForTokenTransfer } from '../core/nep5'
+import { getTransactionInfo } from '../core/transactions'
 import asyncWrap from '../core/asyncHelper'
 
 import { log } from '../util/Logs'
@@ -26,14 +26,29 @@ export const setIsLoadingTransaction = (isLoading: boolean) => ({
 
 export const syncTransactionHistory = (net: NetworkType, address: string) => async (dispatch: DispatchType) => {
   dispatch(setIsLoadingTransaction(true))
-  const [err, transactions] = await asyncWrap(api.neonDB.getTransactionHistory(net, address))
+  let [err, transactions] = await asyncWrap(api.getTransactionHistory(net, address))
   if (!err && transactions) {
-    const txs = transactions.map(({ NEO, GAS, txid, block_index, neo_sent, neo_gas }: TransactionHistoryType) => ({
-      type: neo_sent ? ASSETS.NEO : ASSETS.GAS,
-      amount: neo_sent ? NEO : GAS,
-      txid,
-      block_index
-    }))
+    if (transactions.NEO || transactions.NEO === 0) {
+      transactions = transactions.slice(0, 20)
+      const txs = transactions.map(({ NEO, GAS, txid, block_index, neo_sent, neo_gas }: NeonDBTransactionHistoryType) => ({
+        type: neo_sent ? ASSETS.NEO : ASSETS.GAS,
+        amount: neo_sent ? NEO : GAS,
+        txid,
+        block_index
+      }))
+    else {
+      transactions = transactions.slice(-21).reverse()
+      const txs = transactions.map(({ balance, txid, block_height }: NeoscanTransactionHistoryType, index: number) => {
+        if (index === 0) return null
+        const [type, amount] = getTransactionInfo(balance, transactions[index - 1]['balance'])
+        return {
+          type,
+          amount,
+          txid,
+          block_index: block_height
+        }
+      })
+    }
     dispatch(setIsLoadingTransaction(false))
     dispatch(setTransactionHistory(txs))
   } else {
@@ -60,28 +75,43 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, symbol:
   const { error, valid } = validateTransactionBeforeSending(NEO, GAS, tokenBalance, symbol, sendAddress, parsedSendAmount)
   if (valid) {
     const selfAddress = address
-    let sendAsset = {}
-    sendAsset[symbol] = parseFloat(parsedSendAmount)
 
     dispatch(showInfoNotification({ message: 'Sending Transaction...', autoDismiss: 0 }))
     log(net, 'SEND', selfAddress, { to: sendAddress, asset: symbol, amount: parsedSendAmount })
 
     const asyncSigningFunction = isHardwareSend ? signingFunction : null
-    const publicKeyOrWif = isHardwareSend ? publicKey : wif
+
+    const config = {
+      net,
+      address: selfAddress,
+      privateKey: isHardwareSend ? null : wallet.getPrivateKeyFromWIF(wif),
+      publicKey: isHardwareSend ? publicKey : null,
+      signingFunction: isHardwareSend ? signingFunction : null
+    }
 
     let sendAssetFn
     if (symbol === ASSETS.NEO || symbol === ASSETS.GAS) {
-      sendAssetFn = () => api.neonDB.doSendAsset(net, sendAddress, publicKeyOrWif, sendAsset, asyncSigningFunction)
-    } else if (!isHardwareSend) {
-      const scriptHash = getScriptHashForNetwork(net, symbol)
-      sendAssetFn = () => api.nep5.doTransferToken(net, scriptHash, publicKeyOrWif, sendAddress, adjustDecimalAmountForTokenTransfer(parsedSendAmount), 0, asyncSigningFunction)
+      config.intents = api.makeIntent({ [symbol]: parsedSendAmount }, sendAddress)
+      sendAssetFn = () => api.sendAsset(config)
     } else {
-      return rejectTransaction('Ledger support is not yet ready for sending NEP5 tokens')
+      const fromAddrScriptHash = sc.ContractParam.byteArray(selfAddress, 'address')
+      const toAddrScriptHash = sc.ContractParam.byteArray(sendAddress, 'address')
+      const transferAmount = sc.ContractParam.byteArray(parsedSendAmount, 'fixed8')
+      const scriptHash = getScriptHashForNetwork(net, symbol)
+
+      config.script = {
+        scriptHash,
+        operation: 'transfer',
+        args: sc.ContractParam.array(fromAddrScriptHash, toAddrScriptHash, transferAmount)
+      }
+      config.intents = api.makeIntent({ [ASSETS.GAS]: 0.00000001 }, selfAddress)
+      config.gas = 0
+      sendAssetFn = () => api.doInvoke(config)
     }
 
     if (isHardwareSend) dispatch(showInfoNotification({ message: 'Please sign the transaction on your hardware device', autoDismiss: 0 }))
 
-    const [err, response] = await asyncWrap(sendAssetFn())
+    const [err, { response } ] = await asyncWrap(sendAssetFn())
     if (err || response.result === undefined || response.result === false) {
       console.log(err)
       return rejectTransaction('Transaction failed!')

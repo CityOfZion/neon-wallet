@@ -12,7 +12,6 @@ import { LOGIN } from '../../app/modules/account'
 import { NOTIFICATION_LEVELS } from '../../app/core/constants'
 
 jest.useFakeTimers()
-jest.mock('neon-js')
 
 const setup = (shallowRender = true) => {
   const store = configureStore([thunk])({})

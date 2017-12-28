@@ -33,7 +33,7 @@ class ConfirmDisplay extends React.Component<Props, State> {
   }
 
   async checkTransactionHistory (net: NetworkType, address: string) {
-    const [err, transactions] = await asyncWrap(api.neonDB.getTransactionHistory(net, address))
+    const [err, transactions] = await asyncWrap(api.getTransactionHistory(net, address))
 
     let message = ''
     if (err) {

@@ -23,7 +23,6 @@ axiosMock
 axiosMock
   .onGet('https://api.coinmarketcap.com/v1/ticker/GAS/', { params: { convert: 'USD' } })
   .reply(200, [ { price_usd: 18.20 } ])
-jest.mock('neon-js')
 
 const setup = () => {
   const props = {

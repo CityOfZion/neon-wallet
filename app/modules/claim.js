@@ -1,5 +1,5 @@
 // @flow
-import { api } from 'neon-js'
+import { wallet, api } from 'neon-js'
 
 import { showErrorNotification, showSuccessNotification, showInfoNotification } from './notifications'
 import { getWIF, getAddress, getSigningFunction, getPublicKey, LOGOUT, getIsHardwareLogin } from './account'
@@ -60,7 +60,7 @@ export const doClaimNotify = () => async (dispatch: DispatchType, getState: GetS
   log(net, 'CLAIM', address, { info: 'claim all GAS' })
 
   const config = {
-    net
+    net,
     address
   }
 
@@ -74,11 +74,11 @@ export const doClaimNotify = () => async (dispatch: DispatchType, getState: GetS
     config.publicKey = publicKey
     claimGasFn = () => api.claimGas(config)
   } else {
-    config.privateKey = wif
+    config.privateKey = wallet.getPrivateKeyFromWIF(wif)
     claimGasFn = () => api.claimGas(config)
   }
 
-  const [err, response] = await asyncWrap(claimGasFn())
+  const [err, { response }] = await asyncWrap(claimGasFn())
   if (!err && response.result) {
     dispatch(showSuccessNotification({
       message: 'Claim was successful! Your balance will update once the blockchain has processed it.'
@@ -124,11 +124,11 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
       config.publicKey = publicKey
       sendAssetFn = () => api.sendAsset(config)
     } else {
-      config.privateKey = wif
+      config.privateKey = wallet.getPrivateKeyFromWIF(wif)
       sendAssetFn = () => api.sendAsset(config)
     }
 
-    const [err, response] = await asyncWrap(sendAssetFn())
+    const [err, { response }] = await asyncWrap(sendAssetFn())
     if (err || response.result === undefined || response.result === false) {
       return dispatch(showErrorNotification({ message: 'Transaction failed!' }))
     } else {
