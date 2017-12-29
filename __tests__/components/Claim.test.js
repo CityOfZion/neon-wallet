@@ -71,7 +71,7 @@ describe('Claim', () => {
   describe('when do GAS claim button is clicked', () => {
     test('should dispatch transaction failure event', async () => {
       const { wrapper, store } = setup()
-      neonjs.api.neonDB.doSendAsset = jest.fn(() => {
+      neonjs.api.sendAsset = jest.fn(() => {
         return new Promise((resolve, reject) => {
           resolve({ result: undefined })
         })
@@ -113,7 +113,7 @@ describe('Claim', () => {
 
     test('should dispatch transaction waiting, set claim request and disable claim event', async () => {
       const { wrapper, store } = setup()
-      neonjs.api.neonDB.doSendAsset = jest.fn(() => {
+      neonjs.api.sendAsset = jest.fn(() => {
         return new Promise((resolve, reject) => {
           resolve({ result: true })
         })

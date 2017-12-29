@@ -21,6 +21,9 @@ const encryptedKey = '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu
 const scriptHash = '4bcdc110b6514312ead9420467475232d4f08539'
 
 neonjs.api = {
+  claimGas: promiseMockGen(mockConfigResponse),
+  sendAsset: promiseMockGen(mockConfigResponse),
+  doInvoke: promiseMockGen(mockConfigResponse),
   core: {
     claimGas: promiseMockGen(mockConfigResponse),
     sendAsset: promiseMockGen(mockConfigResponse),
