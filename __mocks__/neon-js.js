@@ -25,7 +25,7 @@ neonjs.api = {
     claimGas: promiseMockGen(mockConfigResponse),
     sendAsset: promiseMockGen(mockConfigResponse),
     doInvoke: promiseMockGen(mockConfigResponse)
-  }
+  },
   neonDB: {
     getClaims: jest.fn(),
     doClaimAllGas: promiseMockGen({ result: true }),
