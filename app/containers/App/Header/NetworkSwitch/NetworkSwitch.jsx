@@ -8,13 +8,15 @@ import headerStyles from '../Header.scss'
 type Props = {
   net: NetworkType,
   setNetwork: Function,
-  loadWalletData: Function
+  loadWalletData: Function,
+  setTransactionHistory: Function,
 }
 
 export default class NetworkSwitch extends Component<Props> {
   chooseNetwork = (e: Object) => {
-    const { setNetwork, loadWalletData } = this.props
+    const { setNetwork, loadWalletData, setTransactionHistory } = this.props
     const newNet = e.target.value
+    setTransactionHistory([])
     setNetwork(newNet)
     loadWalletData(false)
   }

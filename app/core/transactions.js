@@ -6,7 +6,7 @@ export const getTransactionInfo = (currentBalance: Array<HistoryBalanceType>, la
   let amountSent = 0
 
   let currentGas
-  let curerntNeo
+  let currentNeo
   currentBalance.map(({ asset, amount }) => {
     if (ASSETS.NEO === asset) {
       currentNeo = amount

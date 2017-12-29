@@ -28,17 +28,18 @@ export const syncTransactionHistory = (net: NetworkType, address: string) => asy
   dispatch(setIsLoadingTransaction(true))
   let [err, transactions] = await asyncWrap(api.getTransactionHistory(net, address))
   if (!err && transactions) {
+    let txs
     if (transactions.NEO || transactions.NEO === 0) {
       transactions = transactions.slice(0, 20)
-      const txs = transactions.map(({ NEO, GAS, txid, block_index, neo_sent, neo_gas }: NeonDBTransactionHistoryType) => ({
+      txs = transactions.map(({ NEO, GAS, txid, block_index, neo_sent, neo_gas }: NeonDBTransactionHistoryType) => ({
         type: neo_sent ? ASSETS.NEO : ASSETS.GAS,
         amount: neo_sent ? NEO : GAS,
         txid,
         block_index
       }))
-    else {
+    } else {
       transactions = transactions.slice(-21).reverse()
-      const txs = transactions.map(({ balance, txid, block_height }: NeoscanTransactionHistoryType, index: number) => {
+      txs = transactions.map(({ balance, txid, block_height }: NeoscanTransactionHistoryType, index: number) => {
         if (index === 0) return null
         const [type, amount] = getTransactionInfo(balance, transactions[index - 1]['balance'])
         return {
@@ -48,6 +49,7 @@ export const syncTransactionHistory = (net: NetworkType, address: string) => asy
           block_index: block_height
         }
       })
+      txs = txs.slice(1)
     }
     dispatch(setIsLoadingTransaction(false))
     dispatch(setTransactionHistory(txs))
@@ -79,8 +81,6 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, symbol:
     dispatch(showInfoNotification({ message: 'Sending Transaction...', autoDismiss: 0 }))
     log(net, 'SEND', selfAddress, { to: sendAddress, asset: symbol, amount: parsedSendAmount })
 
-    const asyncSigningFunction = isHardwareSend ? signingFunction : null
-
     const config = {
       net,
       address: selfAddress,
@@ -111,7 +111,7 @@ export const sendTransaction = (sendAddress: string, sendAmount: string, symbol:
 
     if (isHardwareSend) dispatch(showInfoNotification({ message: 'Please sign the transaction on your hardware device', autoDismiss: 0 }))
 
-    const [err, { response } ] = await asyncWrap(sendAssetFn())
+    const [err, { response }] = await asyncWrap(sendAssetFn())
     if (err || response.result === undefined || response.result === false) {
       console.log(err)
       return rejectTransaction('Transaction failed!')
