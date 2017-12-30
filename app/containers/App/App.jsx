@@ -4,6 +4,8 @@ import React, { Component } from 'react'
 import ModalRenderer from '../ModalRenderer'
 import Notifications from '../Notifications'
 
+import { upgradeUserWalletNEP6 } from '../../modules/generateWallet'
+
 import Header from './Header'
 import Footer from './Footer'
 
@@ -21,6 +23,7 @@ class App extends Component<Props> {
 
     checkVersion()
     initSettings()
+    upgradeUserWalletNEP6()
   }
 
   render () {

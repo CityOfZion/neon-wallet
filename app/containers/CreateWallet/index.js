@@ -2,12 +2,12 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { generateNewWallet } from '../../modules/generateWallet'
+import { generateNewWalletAccount } from '../../modules/generateWallet'
 
 import CreateWallet from './CreateWallet'
 
 const actionCreators = {
-  generateNewWallet
+  generateNewWalletAccount
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)

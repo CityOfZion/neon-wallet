@@ -1,5 +1,6 @@
 // @flow
 import { wallet } from 'neon-js'
+import storage from 'electron-json-storage'
 
 import { showErrorNotification, showInfoNotification, hideNotification } from './notifications'
 
@@ -13,7 +14,7 @@ import asyncWrap from '../core/asyncHelper'
 // Constants
 export const LOGIN = 'LOGIN'
 export const LOGOUT = 'LOGOUT'
-export const SET_KEYS = 'SET_KEYS'
+export const SET_ACCOUNTS = 'SET_ACCOUNTS'
 export const HARDWARE_DEVICE_INFO = 'HARDWARE_DEVICE_INFO'
 export const HARDWARE_PUBLIC_KEY_INFO = 'HARDWARE_PUBLIC_KEY_INFO'
 export const HARDWARE_PUBLIC_KEY = 'HARDWARE_PUBLIC_KEY'
@@ -40,11 +41,28 @@ export function logout () {
   }
 }
 
-export function setKeys (accountKeys: any) {
+export function setAccounts (accounts: any) {
   return {
-    type: SET_KEYS,
-    payload: { accountKeys }
+    type: SET_ACCOUNTS,
+    payload: { accounts }
   }
+}
+
+export function upgradeNEP6AddAddresses (encryptedWIF: string, wif: string) {
+  // eslint-disable-next-line
+  storage.get('userWallet', (error, data) => {
+    const loggedIntoAccount = new wallet.Account(wif)
+
+    if (data && data.accounts) {
+      data.accounts.map((account, idx) => {
+        if (account.key === encryptedWIF) {
+          data.accounts[idx].address = loggedIntoAccount.address
+        }
+      })
+
+      storage.set('userWallet', data)
+    }
+  })
 }
 
 export const loginNep2 = (passphrase: string, encryptedWIF: string, history: Object) => (dispatch: DispatchType) => {
@@ -63,6 +81,9 @@ export const loginNep2 = (passphrase: string, encryptedWIF: string, history: Obj
   setTimeout(() => {
     try {
       const wif = wallet.decrypt(encryptedWIF, passphrase)
+
+      upgradeNEP6AddAddresses(encryptedWIF, wif)
+
       dispatch(hideNotification(infoNotificationId))
       dispatch(login(wif))
       return history.push(ROUTES.DASHBOARD)
@@ -172,7 +193,7 @@ export const getWIF = (state: Object) => state.account.wif
 export const getAddress = (state: Object) => state.account.address
 export const getLoggedIn = (state: Object) => state.account.loggedIn
 export const getRedirectUrl = (state: Object) => state.account.redirectUrl
-export const getAccountKeys = (state: Object) => state.account.accountKeys
+export const getAccounts = (state: Object) => state.account.accounts
 export const getSigningFunction = (state: Object) => state.account.signingFunction
 export const getPublicKey = (state: Object) => state.account.publicKey
 export const getHardwareDeviceInfo = (state: Object) => state.account.hardwareDeviceInfo
@@ -184,7 +205,7 @@ const initialState = {
   address: null,
   loggedIn: false,
   redirectUrl: null,
-  accountKeys: [],
+  accounts: [],
   signingFunction: null,
   publicKey: null,
   isHardwareLogin: false,
@@ -232,11 +253,11 @@ export default (state: Object = initialState, action: ReduxAction) => {
         publicKey: null,
         isHardwareLogin: false
       }
-    case SET_KEYS:
-      const { accountKeys } = action.payload
+    case SET_ACCOUNTS:
+      const { accounts } = action.payload
       return {
         ...state,
-        accountKeys
+        accounts
       }
     case HARDWARE_DEVICE_INFO:
       const { hardwareDeviceInfo } = action.payload

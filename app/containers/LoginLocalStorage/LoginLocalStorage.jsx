@@ -10,10 +10,10 @@ import styles from './LoginLocalStorage.scss'
 import loginStyles from '../../styles/login.scss'
 
 type Props = {
-  setKeys: Function,
+  setAccounts: Function,
   loginNep2: Function,
   history: Object,
-  accountKeys: Object
+  accounts: Object
 }
 
 type State = {
@@ -28,17 +28,17 @@ export default class LoginLocalStorage extends Component<Props, State> {
   }
 
   componentDidMount () {
-    const { setKeys } = this.props
+    const { setAccounts } = this.props
     // eslint-disable-next-line
-    storage.get('keys', (error, data) => {
-      setKeys(data)
+    storage.get('userWallet', (error, data) => {
+      setAccounts(data.accounts)
     })
   }
 
   render () {
-    const { accountKeys, history, loginNep2 } = this.props
+    const { accounts, history, loginNep2 } = this.props
     const { passphrase, encryptedWIF } = this.state
-    const loginButtonDisabled = Object.keys(accountKeys).length === 0 || encryptedWIF === '' || passphrase === ''
+    const loginButtonDisabled = Object.keys(accounts).length === 0 || encryptedWIF === '' || passphrase === ''
 
     return (
       <div id='loginPage' className={loginStyles.loginPage}>
@@ -50,7 +50,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
             onChange={(e) => this.setState({ encryptedWIF: e.target.value })}
           >
             <option value=''>Select a wallet</option>
-            {map(accountKeys, (value, key) => <option value={value} key={`wallet${key}`}>{key}</option>)}
+            {map(accounts, (account, index) => <option value={account.key} key={`wallet${account.label}`}>{account.label}</option>)}
           </select>
           <div className={loginStyles.loginForm}>
             <PasswordField

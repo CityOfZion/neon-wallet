@@ -43,9 +43,16 @@ const setup = (state, shallowRender = true) => {
 
 describe('App', () => {
   test('app initializes settings', (done) => {
-    storage.get = jest.fn((settingsKey, callback) => {
-      expect(settingsKey).toEqual('settings')
-      done()
+    storage.get = jest.fn((key, callback) => {
+      const receivedKeys = []
+      receivedKeys[key] = true
+
+      storage.get = jest.fn((key, callback) => {
+        receivedKeys[key] = true
+        expect(receivedKeys['settings']).toEqual(true)
+        expect(receivedKeys['userWallet']).toEqual(true)
+        done()
+      })
     })
     setup(initialState, false)
   })

@@ -6,7 +6,7 @@ import HomeButtonLink from '../../components/HomeButtonLink'
 
 type Props = {
     encryptWIF: boolean,
-    generateNewWallet: Function,
+    generateNewWalletAccount: Function,
     history: Object
 }
 
@@ -23,12 +23,12 @@ export default class EncryptKey extends Component<Props, State> {
     wif: ''
   }
 
-  createWallet = (e: SyntheticMouseEvent<*>) => {
+  createWalletAccount = (e: SyntheticMouseEvent<*>) => {
     e.preventDefault()
     const { encryptWIF, history } = this.props
     const { passphrase, passphrase2, wif } = this.state
-    const { generateNewWallet } = this.props
-    if (!generateNewWallet(passphrase, passphrase2, encryptWIF ? wif : null, history)) {
+    const { generateNewWalletAccount } = this.props
+    if (!generateNewWalletAccount(passphrase, passphrase2, encryptWIF ? wif : null, history)) {
       // this.resetFields()
     }
   }
@@ -58,7 +58,7 @@ export default class EncryptKey extends Component<Props, State> {
     return (
       <div id='newWallet'>
         <div className='info'>{title}</div>
-        <form onSubmit={this.createWallet}>
+        <form onSubmit={this.createWalletAccount}>
           <PasswordField
             value={passphrase}
             onChange={(e) => this.setState({ passphrase: e.target.value })}

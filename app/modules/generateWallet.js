@@ -1,21 +1,22 @@
 // @flow
 import storage from 'electron-json-storage'
 import { wallet } from 'neon-js'
+import { isEmpty, each } from 'lodash'
 
 import { showErrorNotification, showInfoNotification, hideNotification, showSuccessNotification } from './notifications'
 
 import { validatePassphraseLength } from '../core/wallet'
-import { ROUTES } from '../core/constants'
+import { ROUTES, DEFAULT_WALLET, DEFAULT_SCRYPT } from '../core/constants'
 
 // Constants
-export const NEW_WALLET = 'NEW_WALLET'
-export const RESET_KEY = 'RESET_KEY'
+export const NEW_WALLET_ACCOUNT = 'NEW_WALLET_ACCOUNT'
+export const RESET_WALLET_ACCOUNT = 'RESET_WALLET_ACCOUNT'
 
 // Actions
 
-export function newWallet (account: Object) {
+export function newWalletAccount (account: Object) {
   return {
-    type: NEW_WALLET,
+    type: NEW_WALLET_ACCOUNT,
     payload: {
       wif: account.wif,
       address: account.address,
@@ -27,22 +28,122 @@ export function newWallet (account: Object) {
 
 export function resetKey () {
   return {
-    type: RESET_KEY
+    type: RESET_WALLET_ACCOUNT
   }
 }
 
-export const saveKey = (keyName: string, passphraseKey: string) => (dispatch: DispatchType) => {
-  if (!keyName) { return null }
+export const saveAccount = (label: string, address: string, key: string) => (dispatch: DispatchType) => {
+  if (!label || !address || !key) { return null }
+
+  const newAccount = {
+    address: address,
+    label: label,
+    isDefault: false,
+    lock: false,
+    key: key,
+    contract: {},
+    extra: null
+  }
 
   // eslint-disable-next-line
-  return storage.get('keys', (error, data) => {
-    data[keyName] = passphraseKey
-    dispatch(showSuccessNotification({ message: `Saved key as ${keyName}` }))
-    storage.set('keys', data)
+  return storage.get('userWallet', (error, data) => {
+    data.accounts.push(newAccount)
+    dispatch(showSuccessNotification({ message: `Saved key as ${label}` }))
+    storage.set('userWallet', data)
   })
 }
 
-export const generateNewWallet = (passphrase: string, passphrase2: string, wif?: string, history: Object) => (dispatch: DispatchType) => {
+export const convertOldWalletAccount = (label: string, key: string, isDefault: boolean) => {
+  return {
+    address: '', // Unfortunately all we have is the encrypted private keys, so no way to get this for now.
+    label: label,
+    isDefault: isDefault, // Make the first account the default
+    lock: false,
+    key: key,
+    contract: {},
+    extra: null
+  }
+}
+
+export const createEmptyWallet = () => {
+  const wallet = Object.assign({}, DEFAULT_WALLET)
+  wallet.scrypt = Object.assign({}, DEFAULT_SCRYPT)
+  return wallet
+}
+
+export const upgradeUserWalletNEP6 = () => {
+  // eslint-disable-next-line
+  return storage.get('userWallet', (error, data) => {
+    if (isEmpty(data)) {
+      // eslint-disable-next-line
+      return storage.get('keys', (error, keyData) => {
+        const wallet = createEmptyWallet()
+
+        if (isEmpty(keyData)) {
+          // create empty nep-6 wallet
+          storage.set('userWallet', wallet)
+        } else {
+          const accounts = []
+          Object.keys(keyData).map((label: string) => {
+            accounts.push(convertOldWalletAccount(label, keyData[label], accounts.length === 0))
+          })
+
+          wallet.accounts = accounts
+
+          storage.set('userWallet', wallet)
+        }
+      })
+    }
+  })
+}
+
+export const walletHasKey = (wallet, key) => {
+  let foundKey = false
+
+  each(wallet.accounts, (account) => {
+    if (account.key === key) {
+      foundKey = true
+      return false // break out of loop
+    }
+  })
+
+  return foundKey
+}
+
+export const recoverWallet = (wallet) => {
+  return new Promise((resolve, reject) => {
+    // eslint-disable-next-line
+    storage.get('userWallet', (error, data) => {
+      let accounts = []
+
+      // If for some reason we have no NEP-6 wallet stored, create a default.
+      if (!data) {
+        data = createEmptyWallet()
+      }
+
+      if (!wallet.accounts) {
+        // Load the old wallet type
+        each(wallet, (key, label) => {
+          const isDefault = accounts.length === 0 && wallet.length === 0
+          accounts.push(convertOldWalletAccount(label, key, isDefault))
+        })
+      } else {
+        accounts = wallet.accounts
+      }
+
+      each(accounts, (account) => {
+        if (!walletHasKey(data, account.key)) {
+          data.accounts.push(account)
+        }
+      })
+
+      storage.set('userWallet', data)
+      resolve(data)
+    })
+  })
+}
+
+export const generateNewWalletAccount = (passphrase: string, passphrase2: string, wif?: string, history: Object) => (dispatch: DispatchType) => {
   const dispatchError = (message: string) => {
     dispatch(showErrorNotification({ message }))
     return false
@@ -63,7 +164,7 @@ export const generateNewWallet = (passphrase: string, passphrase2: string, wif?:
         const encryptedWIF = wallet.encrypt(WIF, passphrase)
 
         dispatch(hideNotification(infoNotificationId))
-        dispatch(newWallet({
+        dispatch(newWalletAccount({
           wif: WIF,
           address,
           passphrase,
@@ -93,7 +194,7 @@ const initialState = {
 
 export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
-    case NEW_WALLET: {
+    case NEW_WALLET_ACCOUNT: {
       const { passphrase, wif, address, encryptedWIF } = action.payload
       return {
         ...state,
@@ -103,7 +204,7 @@ export default (state: Object = initialState, action: ReduxAction) => {
         encryptedWIF
       }
     }
-    case RESET_KEY: {
+    case RESET_WALLET_ACCOUNT: {
       return { ...initialState }
     }
     default:
