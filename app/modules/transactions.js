@@ -28,9 +28,9 @@ export const syncTransactionHistory = (net: NetworkType, address: string) => asy
   dispatch(setIsLoadingTransaction(true))
   let transactions
 
-  let [err, neoscanTxs] = await asyncWrap(api.neoscan.getTransactionHistory(net, address))
-  if (err || !neoscanTxs) {
-    let [error, neonDBTxs] = await asyncWrap(api.neonDB.getTransactionHistory(net, address))
+  let [error, neoscanTxs] = await asyncWrap(api.neoscan.getTransactionHistory(net, address))
+  if (error || !neoscanTxs) {
+    [error, neonDBTxs] = await asyncWrap(api.neonDB.getTransactionHistory(net, address))
     if (neonDBTxs && neonDBTxs.length > 0) transactions = neonDBTxs.slice(0, 20)
   } else {
     neoscanTxs = neoscanTxs.slice(0, 20)
