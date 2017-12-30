@@ -110,7 +110,6 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
   const isHardwareClaim = getIsHardwareLogin(state)
-
   // if no NEO in account, no need to send to self first
   if (NEO === 0) {
     return dispatch(doClaimNotify())

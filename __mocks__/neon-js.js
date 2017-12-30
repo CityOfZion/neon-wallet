@@ -25,6 +25,11 @@ neonjs.api = {
   sendAsset: promiseMockGen(mockConfigResponse),
   doInvoke: promiseMockGen(mockConfigResponse),
   getWalletDBHeight: promiseMockGen({ height: 586435 }),
+  makeIntent: promiseMockGen({
+    assetId: 'NEO',
+    value: 1,
+    scriptHash: '4bcdc110b6514312ead9420467475232d4f08539'
+  }),
   neoscan: {
     getRPCEndpoint: promiseMockGen(''),
     getClaims: jest.fn(),
@@ -85,7 +90,8 @@ neonjs.wallet = {
   Account: jest.fn(() => { return { address } }),
   getVerificationScriptFromPublicKey: jest.fn(() => scriptHash),
   isAddress: jest.fn(() => true),
-  isNEP2: jest.fn(() => true)
+  isNEP2: jest.fn(() => true),
+  getPrivateKeyFromWIF: jest.fn(() => privateKey)
 }
 
 module.exports = neonjs

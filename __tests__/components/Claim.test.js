@@ -73,14 +73,17 @@ describe('Claim', () => {
       const { wrapper, store } = setup()
       neonjs.api.sendAsset = jest.fn(() => {
         return new Promise((resolve, reject) => {
-          resolve({ result: undefined })
+          resolve({
+            response: {
+              result: undefined
+            }
+          })
         })
       })
       wrapper.dive().find('#claim button').simulate('click')
 
       await Promise.resolve().then().then().then()
       const actions = store.getActions()
-      console.log('what are failure actions', actions);
       expect(actions.length).toEqual(4)
       expect(actions[0]).toEqual({
         type: HIDE_NOTIFICATIONS,
@@ -116,7 +119,11 @@ describe('Claim', () => {
       const { wrapper, store } = setup()
       neonjs.api.sendAsset = jest.fn(() => {
         return new Promise((resolve, reject) => {
-          resolve({ result: true })
+          resolve({
+            response: {
+              result: true
+            }
+          })
         })
       })
 
