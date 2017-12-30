@@ -16,6 +16,7 @@ describe('Account module', () => {
           '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu',
           false
         )
+
         testWallet.accounts = [ testAccount ]
         callback(null, testWallet)
       }
