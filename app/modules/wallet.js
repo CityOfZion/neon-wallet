@@ -9,6 +9,7 @@ import { getMarketPriceUSD, getGasMarketPriceUSD } from './price'
 import { showErrorNotification } from './notifications'
 
 import { TOKENS, TOKENS_TEST, NETWORK } from '../core/constants'
+import { parseBalance } from '../core/wallet'
 import asyncWrap from '../core/asyncHelper'
 
 const TOKEN_PAIRS = Object.entries(TOKENS)
@@ -60,9 +61,14 @@ export function setTokens (tokens: Object) {
 }
 
 export const retrieveBalance = (net: NetworkType, address: string) => async (dispatch: DispatchType) => {
-  // If API dies, still display balance - ignore _err
-  const [_err, resultBalance] = await asyncWrap(api.neonDB.getBalance(net, address)) // eslint-disable-line
-  if (_err) {
+  let resultBalance
+  let [err, result] = await asyncWrap(api.neoscan.getBalance(net, address)) // eslint-disable-line
+  if (!err && result) {
+    resultBalance = parseBalance(result)
+  } else {
+    [err, resultBalance] = await asyncWrap(api.neonDB.getBalance(net, address)) // eslint-disable-line
+  }
+  if (err) {
     return dispatch(showErrorNotification({ message: `Could not retrieve NEO/GAS balance`, stack: true }))
   } else {
     return dispatch(setBalance(resultBalance.NEO.balance, resultBalance.GAS.balance))
@@ -99,7 +105,8 @@ export const retrieveTokensBalance = () => async (dispatch: DispatchType, getSta
   for (let [symbol] of TOKEN_PAIRS) {
     const scriptHash = getScriptHashForNetwork(net, symbol)
     // override scripthash with test if on test net
-    const [_error, tokenRpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net)) // eslint-disable-line
+    let [error, tokenRpcEndpoint] = await asyncWrap(api.neoscan.getRPCEndpoint(net)) // eslint-disable-line
+    if (error || !tokenRpcEndpoint) [_error, tokenRpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net))
     const [err, tokenResults] = await asyncWrap(api.nep5.getToken(tokenRpcEndpoint, scriptHash, address))
 
     if (!err) {

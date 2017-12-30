@@ -52,6 +52,8 @@ declare type NeoscanTransactionHistoryType = {
   balance: Array<HistoryBalanceType>,
   txid: number,
   block_height: number,
+  asset_moved: string,
+  amount_moved: number
 }
 
 declare type HistoryBalanceType = {

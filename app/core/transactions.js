@@ -1,35 +1,35 @@
 // @flow
-import { ASSETS } from './constants'
+import { ASSETS, ASSET_HASHES } from './constants'
 
-export const getTransactionInfo = (currentBalance: Array<HistoryBalanceType>, lastBalance: Array<HistoryBalanceType>) => {
-  let type = 'NEO'
-  let amountSent = 0
+export const parseTransactions = (neoscanTxs: Array<NeoscanTransactionHistoryType>) => {
+  return neoscanTxs
+    .map(({ txid, asset_moved, amount_moved, balance, block_height }: <NeoscanTransactionHistoryType>) => {
+      let NEO = 0
+      let GAS = 0
+      let gas_sent = false
+      let neo_sent = false
+      let other_sent = false
 
-  let currentGas
-  let currentNeo
-  currentBalance.map(({ asset, amount }) => {
-    if (ASSETS.NEO === asset) {
-      currentNeo = amount
-    } else {
-      currentGas = amount
-    }
-  })
+      if (ASSET_HASHES[asset_moved] === ASSETS.NEO) {
+        neo_sent = true
+      } else if (ASSET_HASHES[asset_moved] === ASSETS.GAS) {
+        gas_sent = true
+      } else {
+        // TODO handle additional assets for both APIs in the future
+      }
 
-  let lastGas
-  let lastNeo
-  lastBalance.map(({ asset, amount }) => {
-    if (ASSETS.NEO === asset) {
-      lastNeo = amount
-    } else {
-      lastGas = amount
-    }
-  })
+      balance.forEach(({ asset, amount }) => {
+        if (asset === ASSETS.NEO) NEO = amount
+        if (asset === ASSETS.GAS) GAS = amount
+      })
 
-  if (lastNeo && currentNeo && lastNeo !== currentNeo) {
-    amountSent = currentNeo - lastNeo
-  } else if (lastGas && currentGas && lastGas !== currentGas) {
-    type = 'GAS'
-    amountSent = currentGas - lastGas
-  }
-  return [type, amountSent]
+      return {
+        txid,
+        block_index: block_height,
+        GAS,
+        NEO,
+        gas_sent,
+        neo_sent
+      }
+    })
 }

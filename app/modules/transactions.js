@@ -9,7 +9,7 @@ import { getNetwork } from './metadata'
 
 import { validateTransactionBeforeSending, obtainTokenBalance, isToken } from '../core/wallet'
 import { ASSETS } from '../core/constants'
-import { getTransactionInfo } from '../core/transactions'
+import { parseTransactions } from '../core/transactions'
 import asyncWrap from '../core/asyncHelper'
 
 import { log } from '../util/Logs'
@@ -26,31 +26,24 @@ export const setIsLoadingTransaction = (isLoading: boolean) => ({
 
 export const syncTransactionHistory = (net: NetworkType, address: string) => async (dispatch: DispatchType) => {
   dispatch(setIsLoadingTransaction(true))
-  let [err, transactions] = await asyncWrap(api.getTransactionHistory(net, address))
+  let transactions
+
+  let [err, neoscanTxs] = await asyncWrap(api.neoscan.getTransactionHistory(net, address))
+  if (err || !neoscanTxs) {
+    [err, transactions] = await asyncWrap(api.neonDB.getTransactionHistory(net, address))
+    if (transactions) transactions = transactions.slice(0, 20)
+  } else {
+    transactions = transactions.slice(0, 20)
+    transactions = parseTransactions(neoscanTxs)
+  }
+
   if (!err && transactions) {
-    let txs
-    if (transactions.NEO || transactions.NEO === 0) {
-      transactions = transactions.slice(0, 20)
-      txs = transactions.map(({ NEO, GAS, txid, block_index, neo_sent, neo_gas }: NeonDBTransactionHistoryType) => ({
-        type: neo_sent ? ASSETS.NEO : ASSETS.GAS,
-        amount: neo_sent ? NEO : GAS,
-        txid,
-        block_index
-      }))
-    } else {
-      transactions = transactions.slice(-21).reverse()
-      txs = transactions.map(({ balance, txid, block_height }: NeoscanTransactionHistoryType, index: number) => {
-        if (index === 0) return null
-        const [type, amount] = getTransactionInfo(balance, transactions[index - 1]['balance'])
-        return {
-          type,
-          amount,
-          txid,
-          block_index: block_height
-        }
-      })
-      txs = txs.slice(1)
-    }
+    const txs = transactions.map(({ NEO, GAS, txid, block_index, neo_sent, neo_gas }: NeonDBTransactionHistoryType) => ({
+      type: neo_sent ? ASSETS.NEO : ASSETS.GAS,
+      amount: neo_sent ? NEO : GAS,
+      txid,
+      block_index
+    }))
     dispatch(setIsLoadingTransaction(false))
     dispatch(setTransactionHistory(txs))
   } else {

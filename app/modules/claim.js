@@ -43,10 +43,19 @@ export function disableClaim (disableClaimButton: boolean) {
 
 export const syncAvailableClaim = (net: NetworkType, address: string) => async (dispatch: DispatchType) => {
   const config = { net, address }
-  const [_err, result] = await asyncWrap(api.neoscan.getClaims(net, address)) // eslint-disable-line
-  console.log('claim result format', result);
-  const available = parseInt(result.claims.total_claim)
-  const unavailable = parseInt(result.claims.total_unspent_claim)
+  let available
+  let unavailable
+  let [err, result] = await asyncWrap(api.neoscan.getClaims(net, address)) // eslint-disable-line
+  console.log('result format', result);
+  if (err || !result) {
+    [err, result] = await asyncWrap(api.neonDB.getClaims(net, address)) // eslint-disable-line
+    if (err || !result) return
+    available = parseInt(result.total_claim)
+    unavailable = parseInt(result.total_unspent_claim)
+  } else {
+    available = parseInt(result.claimable)
+    unavailable = parseInt(result.unclaimed)
+  }
   return dispatch(setClaim(available, unavailable))
 }
 
