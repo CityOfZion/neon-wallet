@@ -27,6 +27,7 @@ export const setIsLoadingTransaction = (isLoading: boolean) => ({
 export const syncTransactionHistory = (net: NetworkType, address: string) => async (dispatch: DispatchType) => {
   dispatch(setIsLoadingTransaction(true))
   let transactions
+  let neonDBTxs
 
   let [error, neoscanTxs] = await asyncWrap(api.neoscan.getTransactionHistory(net, address))
   if (error || !neoscanTxs) {
