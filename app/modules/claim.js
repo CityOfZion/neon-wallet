@@ -42,7 +42,6 @@ export function disableClaim (disableClaimButton: boolean) {
 }
 
 export const syncAvailableClaim = (net: NetworkType, address: string) => async (dispatch: DispatchType) => {
-  const config = { net, address }
   let available
   let unavailable
   let [err, result] = await asyncWrap(api.neoscan.getClaims(net, address)) // eslint-disable-line

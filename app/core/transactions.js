@@ -9,7 +9,6 @@ export const parseTransactions = (neoscanTxs) => {
       let GAS = 0
       let gas_sent = false
       let neo_sent = false
-      let other_sent = false
 
       if (ASSET_HASHES[asset_moved] === ASSETS.NEO) {
         neo_sent = true

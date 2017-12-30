@@ -106,7 +106,7 @@ export const retrieveTokensBalance = () => async (dispatch: DispatchType, getSta
     const scriptHash = getScriptHashForNetwork(net, symbol)
     // override scripthash with test if on test net
     let [error, tokenRpcEndpoint] = await asyncWrap(api.neoscan.getRPCEndpoint(net)) // eslint-disable-line
-    if (error || !tokenRpcEndpoint) [_error, tokenRpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net))
+    if (error || !tokenRpcEndpoint) [error, tokenRpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net))
     const [err, tokenResults] = await asyncWrap(api.nep5.getToken(tokenRpcEndpoint, scriptHash, address))
 
     if (!err) {
