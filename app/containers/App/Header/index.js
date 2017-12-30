@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import { logout, getAddress, getLoggedIn } from '../../../modules/account'
 import { getBlockHeight, getNetwork, setNetwork } from '../../../modules/metadata'
 import { getNEOPrice, getGASPrice, getCurrency } from '../../../modules/price'
-import { loadWalletData } from '../../../modules/wallet'
+import { loadWalletData, setTransactionHistory } from '../../../modules/wallet'
 
 import Header from './Header'
 
@@ -22,7 +22,8 @@ const mapStateToProps = (state: Object) => ({
 const actionCreators = {
   logout,
   loadWalletData,
-  setNetwork
+  setNetwork,
+  setTransactionHistory
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)

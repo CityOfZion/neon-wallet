@@ -90,3 +90,20 @@ export const validateTransactionBeforeSending = (neoBalance: number, gasBalance:
     valid: true
   }
 }
+
+export const parseBalance = ({ balance }) => {
+  const resultBalance = {
+    [ASSETS.NEO]: {
+      balance: 0
+    },
+    [ASSETS.GAS]: {
+      balance: 0
+    }
+  }
+  balance.forEach(({ asset, amount }) => {
+    if (asset === ASSETS.NEO) resultBalance[ASSETS.NEO].balance = amount
+    if (asset === ASSETS.GAS) resultBalance[ASSETS.GAS].balance = amount
+  })
+
+  return resultBalance
+}

@@ -188,6 +188,11 @@ describe('WalletInfo', () => {
     done()
   })
   test('network error is shown with connectivity error', async () => {
+    neonjs.api.neoscan.getBalance = jest.fn(() => {
+      return new Promise((resolve, reject) => {
+        reject(new Error())
+      })
+    })
     neonjs.api.neonDB.getBalance = jest.fn(() => {
       return new Promise((resolve, reject) => {
         reject(new Error())
@@ -197,7 +202,7 @@ describe('WalletInfo', () => {
     wrapper.dive().find('.refreshBalance').simulate('click')
 
     jest.runAllTimers()
-    await Promise.resolve('Pause').then().then().then().then()
+    await Promise.resolve('Pause').then().then().then().then().then()
 
     const actions = store.getActions()
     let notifications = []

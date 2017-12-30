@@ -24,7 +24,8 @@ type Props = {
   isLoggedIn: boolean,
   net: NetworkType,
   loadWalletData: Function,
-  setNetwork: Function
+  setNetwork: Function,
+  setTransactionHistory: Function
 }
 
 const Header = ({
@@ -36,7 +37,8 @@ const Header = ({
   isLoggedIn,
   net,
   setNetwork,
-  loadWalletData
+  loadWalletData,
+  setTransactionHistory
 }: Props) => (
   <div className={styles.container}>
     <Logo />
@@ -53,6 +55,7 @@ const Header = ({
         net={net}
         setNetwork={setNetwork}
         loadWalletData={loadWalletData}
+        setTransactionHistory={setTransactionHistory}
       />
       <Logout onClick={logout} />
     </div>

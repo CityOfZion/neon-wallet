@@ -18,8 +18,7 @@ type Props = {
   tokens: Object,
   onChangeHandler: Function,
   openAndValidate: Function,
-  balance: number,
-  isHardwareLogin: boolean
+  balance: number
 }
 
 const SendDisplay = ({
@@ -29,11 +28,9 @@ const SendDisplay = ({
   tokens,
   onChangeHandler,
   openAndValidate,
-  balance,
-  isHardwareLogin
+  balance
 }: Props) => {
-  const disableNEP5Ledger = isHardwareLogin && isToken(symbol)
-  const sendButtonDisabled = !sendAddress || !sendAmount || disableNEP5Ledger
+  const sendButtonDisabled = !sendAddress || !sendAmount
   return (
     <div className={styles.textContainer}>
       <div id='sendAddress' className={styles.column}>
@@ -93,7 +90,6 @@ const SendDisplay = ({
         disabled={sendButtonDisabled}>
         Send Asset
       </button>
-      {disableNEP5Ledger && <span className={styles.tokenInfoMessage}>Ledger support is not yet available for NEP5 tokens</span>}
     </div>
   )
 }

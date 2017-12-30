@@ -39,13 +39,26 @@ declare type NotificationType = {
   autoDismiss: number
 }
 
-declare type TransactionHistoryType = {
+declare type NeonDBTransactionHistoryType = {
   NEO: number,
   GAS: number,
   txid: number,
   block_index: number,
   neo_sent: number,
   neo_gas: number
+}
+
+declare type NeoscanTransactionHistoryType = {
+  balance: Array<HistoryBalanceType>,
+  txid: number,
+  block_height: number,
+  asset_moved: string,
+  amount_moved: number
+}
+
+declare type HistoryBalanceType = {
+  assets: string,
+  amount: number
 }
 
 declare type ModalType = $Values<typeof MODAL_TYPES>

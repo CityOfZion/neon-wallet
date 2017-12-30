@@ -9,12 +9,38 @@ const promiseMockGen = (result, error = false) => {
   })
 }
 
+const mockConfigResponse = {
+  response: {
+    result: true,
+  }
+}
+
 const privateKey = 'L4AJ14CNaBWPemRJKC34wyZwbmxg33GETs4Y1F8uK7rRmZ2UHrJn'
 const address = 'AM22coFfbe9N6omgL9ucFBLkeaMNg9TEyL'
 const encryptedKey = '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
 const scriptHash = '4bcdc110b6514312ead9420467475232d4f08539'
 
 neonjs.api = {
+  claimGas: promiseMockGen(mockConfigResponse),
+  sendAsset: promiseMockGen(mockConfigResponse),
+  doInvoke: promiseMockGen(mockConfigResponse),
+  getWalletDBHeight: promiseMockGen({ height: 586435 }),
+  makeIntent: promiseMockGen({
+    assetId: 'NEO',
+    value: 1,
+    scriptHash: '4bcdc110b6514312ead9420467475232d4f08539'
+  }),
+  neoscan: {
+    getRPCEndpoint: promiseMockGen(''),
+    getClaims: jest.fn(),
+    getTransactionHistory: promiseMockGen([]),
+    getBalance: promiseMockGen({
+      balance: [
+        { asset: 'NEO', amount: 1 },
+        { asset: 'GAS', amount: 1 }
+      ]
+    })
+  },
   neonDB: {
     getClaims: jest.fn(),
     doClaimAllGas: promiseMockGen({ result: true }),
@@ -27,6 +53,13 @@ neonjs.api = {
     getBalance: promiseMockGen({ NEO: { balance: 1 }, GAS: { balance: 1 } })
   },
   nep5: {
+    getToken: promiseMockGen({
+      balance: 100,
+      name: "TEST",
+      symbol: "TST",
+      decimals: 8,
+      total: 1000
+    }),
     getTokenInfo: promiseMockGen({ result: true }),
     getTokenBalance: promiseMockGen(100)
   }
@@ -57,7 +90,8 @@ neonjs.wallet = {
   Account: jest.fn(() => { return { address } }),
   getVerificationScriptFromPublicKey: jest.fn(() => scriptHash),
   isAddress: jest.fn(() => true),
-  isNEP2: jest.fn(() => true)
+  isNEP2: jest.fn(() => true),
+  getPrivateKeyFromWIF: jest.fn(() => privateKey)
 }
 
 module.exports = neonjs

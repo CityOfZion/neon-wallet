@@ -73,8 +73,8 @@ export const initSettings = () => async (dispatch: DispatchType) => {
 }
 
 export const syncBlockHeight = (net: NetworkType) => async (dispatch: DispatchType) => {
-  const [_err, blockHeight] = await asyncWrap(api.neonDB.getWalletDBHeight(net)) // eslint-disable-line
-  return dispatch(setBlockHeight(blockHeight))
+  const [err, res] = await asyncWrap(api.getWalletDBHeight(net)) // eslint-disable-line
+  return dispatch(setBlockHeight(res.height))
 }
 
 // state getters
