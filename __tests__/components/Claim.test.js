@@ -80,6 +80,7 @@ describe('Claim', () => {
 
       await Promise.resolve().then().then().then()
       const actions = store.getActions()
+      console.log('what are failure actions', actions);
       expect(actions.length).toEqual(4)
       expect(actions[0]).toEqual({
         type: HIDE_NOTIFICATIONS,

@@ -24,10 +24,17 @@ neonjs.api = {
   claimGas: promiseMockGen(mockConfigResponse),
   sendAsset: promiseMockGen(mockConfigResponse),
   doInvoke: promiseMockGen(mockConfigResponse),
-  core: {
-    claimGas: promiseMockGen(mockConfigResponse),
-    sendAsset: promiseMockGen(mockConfigResponse),
-    doInvoke: promiseMockGen(mockConfigResponse)
+  getWalletDBHeight: promiseMockGen({ height: 586435 }),
+  neoscan: {
+    getRPCEndpoint: promiseMockGen(''),
+    getClaims: jest.fn(),
+    getTransactionHistory: promiseMockGen([]),
+    getBalance: promiseMockGen({
+      balance: [
+        { asset: 'NEO', amount: 1 },
+        { asset: 'GAS', amount: 1 }
+      ]
+    })
   },
   neonDB: {
     getClaims: jest.fn(),
@@ -41,6 +48,13 @@ neonjs.api = {
     getBalance: promiseMockGen({ NEO: { balance: 1 }, GAS: { balance: 1 } })
   },
   nep5: {
+    getToken: promiseMockGen({
+      balance: 100,
+      name: "TEST",
+      symbol: "TST",
+      decimals: 8,
+      total: 1000
+    }),
     getTokenInfo: promiseMockGen({ result: true }),
     getTokenBalance: promiseMockGen(100)
   }

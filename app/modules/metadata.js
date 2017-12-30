@@ -73,7 +73,7 @@ export const initSettings = () => async (dispatch: DispatchType) => {
 }
 
 export const syncBlockHeight = (net: NetworkType) => async (dispatch: DispatchType) => {
-  const [err, res] = await asyncWrap(api.getWalletDBHeight) // eslint-disable-line
+  const [err, res] = await asyncWrap(api.getWalletDBHeight(net)) // eslint-disable-line
   return dispatch(setBlockHeight(res.height))
 }
 

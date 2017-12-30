@@ -30,10 +30,10 @@ export const syncTransactionHistory = (net: NetworkType, address: string) => asy
 
   let [err, neoscanTxs] = await asyncWrap(api.neoscan.getTransactionHistory(net, address))
   if (err || !neoscanTxs) {
-    [err, transactions] = await asyncWrap(api.neonDB.getTransactionHistory(net, address))
-    if (transactions) transactions = transactions.slice(0, 20)
+    [err, neonDBTxs] = await asyncWrap(api.neonDB.getTransactionHistory(net, address))
+    if (neonDBTxs && neonDBTxs.length > 0) transactions = neonDBTxs.slice(0, 20)
   } else {
-    transactions = transactions.slice(0, 20)
+    neoscanTxs = neoscanTxs.slice(0, 20)
     transactions = parseTransactions(neoscanTxs)
   }
 

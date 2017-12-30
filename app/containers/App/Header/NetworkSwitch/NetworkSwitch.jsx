@@ -9,7 +9,7 @@ type Props = {
   net: NetworkType,
   setNetwork: Function,
   loadWalletData: Function,
-  setTransactionHistory: Function,
+  setTransactionHistory: Function
 }
 
 export default class NetworkSwitch extends Component<Props> {

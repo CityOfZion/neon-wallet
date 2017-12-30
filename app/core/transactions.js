@@ -1,9 +1,10 @@
 // @flow
+/* eslint-disable camelcase */
 import { ASSETS, ASSET_HASHES } from './constants'
 
-export const parseTransactions = (neoscanTxs: Array<NeoscanTransactionHistoryType>) => {
+export const parseTransactions = (neoscanTxs) => {
   return neoscanTxs
-    .map(({ txid, asset_moved, amount_moved, balance, block_height }: <NeoscanTransactionHistoryType>) => {
+    .map(({ txid, asset_moved, amount_moved, balance, block_height }) => {
       let NEO = 0
       let GAS = 0
       let gas_sent = false

@@ -28,7 +28,8 @@ const setup = () => {
   const props = {
     net: 'MainNet',
     setNetwork: jest.fn(),
-    loadWalletData: jest.fn()
+    loadWalletData: jest.fn(),
+    setTransactionHistory: jest.fn()
   }
   const wrapper = shallow(<NetworkSwitch {...props} />)
 

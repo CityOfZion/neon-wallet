@@ -46,7 +46,6 @@ export const syncAvailableClaim = (net: NetworkType, address: string) => async (
   let available
   let unavailable
   let [err, result] = await asyncWrap(api.neoscan.getClaims(net, address)) // eslint-disable-line
-  console.log('result format', result);
   if (err || !result) {
     [err, result] = await asyncWrap(api.neonDB.getClaims(net, address)) // eslint-disable-line
     if (err || !result) return
