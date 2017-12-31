@@ -11,7 +11,7 @@ import LoginLocalStorage from './containers/LoginLocalStorage'
 import LoginTokenSale from './containers/LoginTokenSale'
 import LoginNep2 from './containers/LoginNep2'
 import Settings from './containers/Settings'
-import DisplayWalletKeys from './containers/DisplayWalletKeys'
+import DisplayWalletAccounts from './containers/DisplayWalletAccounts'
 import Home from './containers/Home'
 
 export default () => (
@@ -27,7 +27,7 @@ export default () => (
       <Route path={ROUTES.LOGIN_LEDGER_NANO_S} component={LoginLedgerNanoS} />
       <Route path={ROUTES.TOKEN_SALE} component={TokenSale} />
       <Route path={ROUTES.SETTINGS} component={Settings} />
-      <Route path={ROUTES.DISPLAY_WALLET_KEYS} component={DisplayWalletKeys} />
+      <Route path={ROUTES.DISPLAY_WALLET_KEYS} component={DisplayWalletAccounts} />
       <Route path={ROUTES.HOME} component={Home} />
     </Switch>
   </App>

@@ -2,10 +2,8 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { showModal } from '../../modules/modal'
-
 import {
-  saveKey,
+  saveAccount,
   resetKey,
   getWIF,
   getAddress,
@@ -13,7 +11,7 @@ import {
   getPassphrase
 } from '../../modules/generateWallet'
 
-import DisplayWalletKeys from './DisplayWalletKeys'
+import DisplayWalletAccounts from './DisplayWalletAccounts'
 
 const mapStateToProps = (state: Object) => ({
   wif: getWIF(state),
@@ -23,11 +21,10 @@ const mapStateToProps = (state: Object) => ({
 })
 
 const actionCreators = {
-  saveKey,
-  resetKey,
-  showModal
+  saveAccount,
+  resetKey
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(DisplayWalletKeys)
+export default connect(mapStateToProps, mapDispatchToProps)(DisplayWalletAccounts)
