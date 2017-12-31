@@ -45,11 +45,18 @@ export const saveAccount = (label: string, address: string, key: string) => (dis
     extra: null
   }
 
-  // eslint-disable-next-line
-  return storage.get('userWallet', (error, data) => {
+  return storage.get('userWallet', (readError, data) => {
+    if (readError) {
+      dispatch(showErrorNotification({ message: `Error loading wallet: ${readError.message}` }))
+    }
     data.accounts.push(newAccount)
-    dispatch(showSuccessNotification({ message: `Saved key as ${label}` }))
-    storage.set('userWallet', data)
+    storage.set('userWallet', data, (saveError) => {
+      if (saveError) {
+        dispatch(showErrorNotification({ message: `Error saving wallet: ${saveError.message}` }))
+      } else {
+        dispatch(showSuccessNotification({ message: `Saved key as ${label}` }))
+      }
+    })
   })
 }
 
@@ -72,28 +79,43 @@ export const createEmptyWallet = () => {
 }
 
 export const upgradeUserWalletNEP6 = () => {
-  // eslint-disable-next-line
-  return storage.get('userWallet', (error, data) => {
-    if (isEmpty(data)) {
-      // eslint-disable-next-line
-      return storage.get('keys', (error, keyData) => {
-        const wallet = createEmptyWallet()
+  return new Promise((resolve, reject) => {
+    storage.get('userWallet', (readNEP6Error, data) => {
+      if (readNEP6Error) {
+        reject(readNEP6Error)
+      }
 
-        if (isEmpty(keyData)) {
-          // create empty nep-6 wallet
-          storage.set('userWallet', wallet)
-        } else {
-          const accounts = []
-          Object.keys(keyData).map((label: string) => {
-            accounts.push(convertOldWalletAccount(label, keyData[label], accounts.length === 0))
-          })
+      if (isEmpty(data)) {
+        storage.get('keys', (readLegacyError, keyData) => {
+          if (readLegacyError) {
+            reject(readLegacyError)
+          }
+          const wallet = createEmptyWallet()
 
-          wallet.accounts = accounts
+          if (isEmpty(keyData)) {
+            // create empty nep-6 wallet
+            storage.set('userWallet', wallet)
+          } else {
+            const accounts = []
+            Object.keys(keyData).map((label: string) => {
+              accounts.push(convertOldWalletAccount(label, keyData[label], accounts.length === 0))
+            })
 
-          storage.set('userWallet', wallet)
-        }
-      })
-    }
+            wallet.accounts = accounts
+
+            storage.set('userWallet', wallet, (saveError) => {
+              if (saveError) {
+                reject(saveError)
+              } else {
+                resolve()
+              }
+            })
+          }
+        })
+      } else {
+        resolve()
+      }
+    })
   })
 }
 
@@ -112,8 +134,11 @@ export const walletHasKey = (wallet, key) => {
 
 export const recoverWallet = (wallet) => {
   return new Promise((resolve, reject) => {
-    // eslint-disable-next-line
-    storage.get('userWallet', (error, data) => {
+    storage.get('userWallet', (readError, data) => {
+      if (readError) {
+        reject(readError)
+      }
+
       let accounts = []
 
       // If for some reason we have no NEP-6 wallet stored, create a default.
@@ -137,8 +162,13 @@ export const recoverWallet = (wallet) => {
         }
       })
 
-      storage.set('userWallet', data)
-      resolve(data)
+      storage.set('userWallet', data, (saveError) => {
+        if (saveError) {
+          reject(saveError)
+        } else {
+          resolve(data)
+        }
+      })
     })
   })
 }

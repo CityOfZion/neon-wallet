@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 import { setAccounts, getAccounts } from '../../modules/account'
 import { setBlockExplorer, getBlockExplorer } from '../../modules/metadata'
 import { setCurrency, getCurrency } from '../../modules/price'
+import { showErrorNotification, showSuccessNotification } from '../../modules/notifications'
 
 import { showModal } from '../../modules/modal'
 
@@ -20,7 +21,9 @@ const actionCreators = {
   setAccounts,
   setBlockExplorer,
   setCurrency,
-  showModal
+  showModal,
+  showErrorNotification,
+  showSuccessNotification
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
