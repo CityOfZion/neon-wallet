@@ -3,13 +3,14 @@ import storage from 'electron-json-storage'
 import generateWalletReducer, {
   newWalletAccount,
   resetKey,
-  createEmptyWallet,
   convertOldWalletAccount,
   upgradeUserWalletNEP6,
   recoverWallet,
   NEW_WALLET_ACCOUNT,
   RESET_WALLET_ACCOUNT
 } from '../../app/modules/generateWallet'
+
+import { DEFAULT_WALLET } from '../../app/core/constants'
 
 describe('generateWallet module tests', () => {
   // TODO when looking into pulling axios mock adapter into helper file to stay DRY
@@ -35,7 +36,7 @@ describe('generateWallet module tests', () => {
 
   describe('newWallet tests', () => {
     const payload = account
-    const expectedAction = Object.assign({}, { payload }, { type: NEW_WALLET_ACCOUNT })
+    const expectedAction = { payload, type: NEW_WALLET_ACCOUNT }
 
     test('newWallet action works', () => {
       expect(newWalletAccount(account)).toEqual(expectedAction)
@@ -138,7 +139,7 @@ describe('generateWallet module tests', () => {
     test('test recover NEP-6 wallet file', (done) => {
       storage.get = jest.fn((key, callback) => {
         if (key === 'userWallet') {
-          const mockNEP6Wallet = createEmptyWallet()
+          const mockNEP6Wallet = {...DEFAULT_WALLET}
           mockNEP6Wallet.accounts = [
             convertOldWalletAccount(
               'Existing Account',
@@ -165,7 +166,7 @@ describe('generateWallet module tests', () => {
         }
       })
 
-      const mockNEP6WalletRecovery = createEmptyWallet()
+      const mockNEP6WalletRecovery = {...DEFAULT_WALLET}
       mockNEP6WalletRecovery.accounts = [
         convertOldWalletAccount(
           'Recovery Account',
@@ -179,7 +180,7 @@ describe('generateWallet module tests', () => {
     test('test recovery does not add duplicate keys', (done) => {
       storage.get = jest.fn((key, callback) => {
         if (key === 'userWallet') {
-          const mockNEP6Wallet = createEmptyWallet()
+          const mockNEP6Wallet = {...DEFAULT_WALLET}
           mockNEP6Wallet.accounts = [
             convertOldWalletAccount(
               'Existing Account',
@@ -202,7 +203,7 @@ describe('generateWallet module tests', () => {
         }
       })
 
-      const mockNEP6WalletRecovery = createEmptyWallet()
+      const mockNEP6WalletRecovery = {...DEFAULT_WALLET}
       mockNEP6WalletRecovery.accounts = [
         convertOldWalletAccount(
           'Recovery Account',

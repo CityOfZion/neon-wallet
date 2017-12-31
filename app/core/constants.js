@@ -73,17 +73,15 @@ export const TOKENS = {
   RPX: 'ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9'
 }
 
-export const DEFAULT_SCRYPT = {
-  cost: 16384,
-  blockSize: 8,
-  parallel: 8,
-  size: 64
-}
-
 export const DEFAULT_WALLET = {
   name: 'userWallet',
   version: '1.0',
-  scrypt: {},
+  scrypt: {
+    cost: 16384,
+    blockSize: 8,
+    parallel: 8,
+    size: 64
+  },
   accounts: [],
   extra: null
 }

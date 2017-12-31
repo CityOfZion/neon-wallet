@@ -1,12 +1,12 @@
 // @flow
 import storage from 'electron-json-storage'
 import { wallet } from 'neon-js'
-import { isEmpty, each } from 'lodash'
+import { isEmpty } from 'lodash'
 
 import { showErrorNotification, showInfoNotification, hideNotification, showSuccessNotification } from './notifications'
 
 import { validatePassphraseLength } from '../core/wallet'
-import { ROUTES, DEFAULT_WALLET, DEFAULT_SCRYPT } from '../core/constants'
+import { ROUTES, DEFAULT_WALLET } from '../core/constants'
 
 // Constants
 export const NEW_WALLET_ACCOUNT = 'NEW_WALLET_ACCOUNT'
@@ -72,12 +72,6 @@ export const convertOldWalletAccount = (label: string, key: string, isDefault: b
   }
 }
 
-export const createEmptyWallet = () => {
-  const wallet = Object.assign({}, DEFAULT_WALLET)
-  wallet.scrypt = Object.assign({}, DEFAULT_SCRYPT)
-  return wallet
-}
-
 export const upgradeUserWalletNEP6 = () => {
   return new Promise((resolve, reject) => {
     storage.get('userWallet', (readNEP6Error, data) => {
@@ -90,7 +84,7 @@ export const upgradeUserWalletNEP6 = () => {
           if (readLegacyError) {
             reject(readLegacyError)
           }
-          const wallet = createEmptyWallet()
+          const wallet = {...DEFAULT_WALLET}
 
           if (isEmpty(keyData)) {
             // create empty nep-6 wallet
@@ -122,7 +116,7 @@ export const upgradeUserWalletNEP6 = () => {
 export const walletHasKey = (wallet, key) => {
   let foundKey = false
 
-  each(wallet.accounts, (account) => {
+  wallet.accounts.some((account) => {
     if (account.key === key) {
       foundKey = true
       return false // break out of loop
@@ -143,20 +137,24 @@ export const recoverWallet = (wallet) => {
 
       // If for some reason we have no NEP-6 wallet stored, create a default.
       if (!data) {
-        data = createEmptyWallet()
+        data = {...DEFAULT_WALLET}
       }
 
       if (!wallet.accounts) {
         // Load the old wallet type
-        each(wallet, (key, label) => {
+        Object.keys(wallet).map((label: string) => {
           const isDefault = accounts.length === 0 && wallet.length === 0
-          accounts.push(convertOldWalletAccount(label, key, isDefault))
+          accounts.push(convertOldWalletAccount(label, wallet[label], isDefault))
         })
       } else {
         accounts = wallet.accounts
       }
 
-      each(accounts, (account) => {
+      if (!accounts.length) {
+        reject(Error('No accounts found in recovery file.'))
+      }
+
+      accounts.some((account) => {
         if (!walletHasKey(data, account.key)) {
           data.accounts.push(account)
         }

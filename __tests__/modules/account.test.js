@@ -10,7 +10,7 @@ describe('Account module', () => {
   test('login into account with no address adds address to NEP-6 wallet', (done) => {
     storage.get = jest.fn((key, callback) => {
       if (key === 'userWallet') {
-        const testWallet = DEFAULT_WALLET
+        const testWallet = {...DEFAULT_WALLET}
         const testAccount = convertOldWalletAccount(
           'my label',
           '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu',
