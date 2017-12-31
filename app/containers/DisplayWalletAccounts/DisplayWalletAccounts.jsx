@@ -1,9 +1,10 @@
 // @flow
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import QRCode from 'qrcode/lib/browser'
 
+import Button from '../../components/Button'
 import CopyToClipboard from '../../components/CopyToClipboard'
+import { ROUTES } from '../../core/constants'
 
 type Props = {
   resetKey: Function,
@@ -12,6 +13,7 @@ type Props = {
   wif: string,
   encryptedWIF: string,
   passphrase: string,
+  history: Object
 }
 
 type State = {
@@ -37,7 +39,7 @@ class DisplayWalletAccounts extends Component<Props, State> {
   }
 
   render () {
-    const { passphrase, address, encryptedWIF, wif, resetKey, saveAccount } = this.props
+    const { passphrase, address, encryptedWIF, wif, saveAccount } = this.props
     const { keyName } = this.state
     return (
       <div id='newWallet'>
@@ -79,12 +81,22 @@ class DisplayWalletAccounts extends Component<Props, State> {
         </div>
         <div className='saveAccount'>
           <input autoFocus type='text' placeholder='Name this account' value={keyName} onChange={(e) => this.setState({ keyName: e.target.value })} />
-          <button onClick={() => saveAccount(keyName, address, encryptedWIF)}>Save Account</button>
+          <Button onClick={() => saveAccount(keyName, address, encryptedWIF)}>Save Account</Button>
         </div>
-        <Link onClick={() => resetKey()} to='/'><button>Back</button></Link>
-        <button onClick={() => window.print()}>Print</button>
+        <Button onClick={this.handleBack}>Back</Button>
+        <Button onClick={this.handlePrint}>Print</Button>
       </div>
     )
+  }
+
+  handleBack = () => {
+    const { resetKey, history } = this.props
+    resetKey()
+    history.push(ROUTES.HOME)
+  }
+
+  handlePrint = () => {
+    window.print()
   }
 }
 

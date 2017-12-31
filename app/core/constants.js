@@ -15,7 +15,7 @@ export const EXPLORERS = {
   NEO_TRACKER: 'Neotracker',
   NEO_SCAN: 'Neoscan',
   ANT_CHAIN: 'Antchain',
-  NEO_VERSE: 'NEOVerse'
+  NEO_VERSE: 'NEOverse'
 }
 
 export const ROUTES = {

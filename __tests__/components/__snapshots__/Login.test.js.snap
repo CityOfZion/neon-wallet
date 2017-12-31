@@ -23,13 +23,15 @@ exports[`Login renders without crashing 1`] = `
       />
     </div>
     <div>
-      <button
-        className="disabled"
+      <Button
+        cancel={false}
         disabled={true}
+        primary={true}
+        secondary={false}
         type="submit"
       >
         Login
-      </button>
+      </Button>
       <HomeButtonLink />
     </div>
   </form>

@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 
 import HomeButtonLink from '../../components/HomeButtonLink'
+import Button from '../../components/Button'
 
 import { ROUTES, FINDING_LEDGER_NOTICE } from '../../core/constants'
 
@@ -59,7 +60,7 @@ export default class LoginLedgerNanoS extends Component<Props, State> {
         <div className={loginStyles.title}>Login using the Ledger Nano S:</div>
         <div className={loginStyles.loginForm}>
           <div>
-            <button className={!publicKey ? 'disabled' : ''} onClick={this.onLedgerNanoSChange}>Use Ledger Nano S</button>
+            <Button disabled={!publicKey} onClick={this.onLedgerNanoSChange}>Use Ledger Nano S</Button>
             <HomeButtonLink />
           </div>
           <p>{hardwareDeviceInfo}</p>

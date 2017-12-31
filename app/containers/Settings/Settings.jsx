@@ -6,6 +6,7 @@ import storage from 'electron-json-storage'
 
 import { recoverWallet } from '../../modules/generateWallet'
 
+import Button from '../../components/Button'
 import HomeButtonLink from '../../components/HomeButtonLink'
 import { EXPLORERS, MODAL_TYPES, CURRENCIES } from '../../core/constants'
 
@@ -183,8 +184,8 @@ export default class Settings extends Component<Props, State> {
             })
             }
           </div>
-          <button onClick={() => this.saveWalletRecovery()}>Export wallet recovery file</button>
-          <button onClick={this.loadWalletRecovery}>Load wallet recovery file</button>
+          <Button onClick={() => this.saveWalletRecovery()}>Export wallet recovery file</Button>
+          <Button onClick={this.loadWalletRecovery}>Load wallet recovery file</Button>
         </div>
         <HomeButtonLink />
       </div>

@@ -76,7 +76,7 @@ describe('Claim', () => {
           resolve({ result: undefined })
         })
       })
-      wrapper.dive().find('#claim button').simulate('click')
+      wrapper.dive().find('#claim').simulate('click')
 
       await Promise.resolve().then().then().then()
       const actions = store.getActions()
@@ -119,7 +119,7 @@ describe('Claim', () => {
         })
       })
 
-      wrapper.dive().find('#claim button').simulate('click')
+      wrapper.dive().find('#claim').simulate('click')
 
       await Promise.resolve().then().then().then()
       const actions = store.getActions()

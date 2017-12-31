@@ -8,85 +8,51 @@ export const validatePassphraseLength = (passphrase: string): boolean => passphr
 
 export const isToken = (symbol: SymbolType) => Object.keys(TOKENS).includes(symbol)
 
-export const obtainTokenBalance = (tokens: Object, symbol: SymbolType) => {
-  if (!isToken(symbol)) {
-    throw new Error(`${symbol} is not a valid token`)
-  }
-  const token = tokens[symbol]
-  if (token) {
-    return token.balance
-  } else {
-    throw new Error(`Could not retrieve balance for ${symbol}`)
-  }
+export const obtainBalance = (balances: Object, symbol: SymbolType) => {
+  return balances[symbol] || 0
 }
 
-export const validateTransactionBeforeSending = (neoBalance: number, gasBalance: number, tokenBalance: number, symbol: SymbolType, sendAddress: string, sendAmount: string) => {
-  if (!sendAddress || !sendAmount) {
-    return {
-      error: 'Please specify an address and amount',
-      valid: false
-    }
+export const validateTransactionBeforeSending = (balance: number, sendEntry: SendEntryType) => {
+  const { address, amount, symbol } = sendEntry
+
+  if (!address || !amount) {
+    return 'Please specify an address and amount.'
   }
 
   if (symbol !== ASSETS.NEO && symbol !== ASSETS.GAS && !isToken(symbol)) {
-    return {
-      error: 'That asset is not NEO, GAS or NEP-5 Token',
-      valid: false
-    }
+    return 'That asset is not NEO, GAS or NEP-5 Token.'
   }
 
   try {
-    if (wallet.isAddress(sendAddress) !== true || sendAddress.charAt(0) !== 'A') {
-      return {
-        error: 'The address you entered was not valid.',
-        valid: false
-      }
+    if (wallet.isAddress(address) !== true || address.charAt(0) !== 'A') {
+      return 'The address you entered was not valid.'
     }
   } catch (e) {
-    return {
-      error: 'The address you entered was not valid.',
-      valid: false
-    }
+    return 'The address you entered was not valid.'
   }
 
-  if (symbol === ASSETS.NEO) {
-    if (parseFloat(sendAmount) !== parseInt(sendAmount)) { // check for fractional NEO
-      return {
-        error: 'You cannot send fractional amounts of NEO.',
-        valid: false
-      }
-    }
-    if (parseInt(sendAmount) > neoBalance) { // check for value greater than account balance
-      return {
-        error: 'You do not have enough NEO to send.',
-        valid: false
-      }
-    }
-  } else if (symbol === ASSETS.GAS) {
-    if (parseFloat(sendAmount) > gasBalance) {
-      return {
-        error: 'You do not have enough GAS to send.',
-        valid: false
-      }
-    }
-  } else {
-    if (parseFloat(sendAmount) > tokenBalance) {
-      return {
-        error: `You do not have enough ${symbol} to send.`,
-        valid: false
-      }
-    }
+  if (symbol === ASSETS.NEO && parseFloat(amount) !== parseInt(amount)) { // check for fractional NEO
+    return 'You cannot send fractional amounts of NEO.'
   }
 
-  if (parseFloat(sendAmount) < 0) { // check for negative asset
-    return {
-      error: 'You cannot send negative amounts of an asset.',
-      valid: false
-    }
+  if (parseFloat(amount) > balance) {
+    return `You do not have enough ${symbol} to send.`
   }
 
-  return {
-    error: '',
-    valid: true
+  if (parseFloat(amount) < 0) { // check for negative asset
+    return 'You cannot send negative amounts of an asset.'
   }
+
+  return null
+}
+
+export const validateTransactionsBeforeSending = (balances: object, sendEntries: Array<SendEntryType>) => {
+  const getValidationError = (sendEntry) => {
+    const balance = obtainBalance(balances, sendEntry.symbol)
+    return validateTransactionBeforeSending(balance, sendEntry)
+  }
+
+  const errorEntry = sendEntries.find(getValidationError)
+
+  return errorEntry ? getValidationError(errorEntry) : null
 }

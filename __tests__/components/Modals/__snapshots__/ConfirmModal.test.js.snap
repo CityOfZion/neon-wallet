@@ -27,18 +27,25 @@ exports[`ConfirmModal should render without crashing 1`] = `
   <div
     className="modalFooter"
   >
-    <button
+    <Button
+      cancel={false}
       className="actionButton"
+      id="confirm"
       onClick={[Function]}
+      primary={true}
+      secondary={false}
     >
       Confirm
-    </button>
-    <button
-      className="cancelButton"
+    </Button>
+    <Button
+      cancel={true}
+      id="cancel"
       onClick={[Function]}
+      primary={true}
+      secondary={false}
     >
       Cancel
-    </button>
+    </Button>
   </div>
 </BaseModal>
 `;

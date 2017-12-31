@@ -5,7 +5,6 @@
 
   .inputContainer {
     display: flex;
-    align-items: center;
     background: $dark-input-color;
 
     .input {
@@ -26,6 +25,7 @@
     overflow: auto;
     background: white;
     box-shadow: 0px 4px 4px 0px rgba(black, 0.2);
+    z-index: 1;
 
     .dropdownItem {
       padding: 10px 20px;

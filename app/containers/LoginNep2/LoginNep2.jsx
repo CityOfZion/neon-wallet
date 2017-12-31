@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react'
-import classNames from 'classnames'
 
+import Button from '../../components/Button'
 import HomeButtonLink from '../../components/HomeButtonLink'
 import PasswordField from '../../components/PasswordField'
 
@@ -46,10 +46,10 @@ export default class LoginNep2 extends Component<Props, State> {
             />
           </div>
           <div>
-            <button
+            <Button
+              id='loginButton'
               type='submit'
-              className={classNames('loginButton', { disabled: loginButtonDisabled })}
-              disabled={loginButtonDisabled}>Login</button>
+              disabled={loginButtonDisabled}>Login</Button>
             <HomeButtonLink />
           </div>
         </form>

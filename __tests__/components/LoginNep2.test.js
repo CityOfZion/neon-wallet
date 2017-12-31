@@ -63,7 +63,7 @@ describe('LoginNep2', () => {
   test('the login button is working correctly with no passphrase or wif', (done) => {
     const { wrapper, store } = setup(false)
 
-    wrapper.find('.loginButton').simulate('click')
+    wrapper.find('#loginButton').first().simulate('click')
     Promise.resolve('pause').then(() => {
       const actions = store.getActions()
       expect(actions.length).toEqual(0)
@@ -81,7 +81,7 @@ describe('LoginNep2', () => {
   //   keyField.instance().value = '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
   //   keyField.simulate('change')
 
-  //   wrapper.find('.loginButton').simulate('click')
+  //   wrapper.find('#loginButton').simulate('click')
 
   //   Promise.resolve('pause').then(() => {
   //     jest.runAllTimers()
@@ -109,7 +109,7 @@ describe('LoginNep2', () => {
     keyField.instance().value = '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
     keyField.simulate('change')
 
-    wrapper.find('.loginButton').simulate('submit')
+    wrapper.find('#loginButton').first().simulate('submit')
     Promise.resolve('Pause').then().then()
     jest.runAllTimers()
     const actions = store.getActions()

@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 
 import PasswordField from '../../components/PasswordField'
 import HomeButtonLink from '../../components/HomeButtonLink'
+import Button from '../../components/Button'
 
 import loginStyles from '../../styles/login.scss'
 
@@ -37,10 +38,7 @@ export default class LoginPrivateKey extends Component<Props, State> {
             />
           </div>
           <div>
-            <button
-              type='submit'
-              disabled={loginButtonDisabled}
-              className={loginButtonDisabled ? 'disabled' : ''}>Login</button>
+            <Button type='submit' disabled={loginButtonDisabled}>Login</Button>
             <HomeButtonLink />
           </div>
         </form>

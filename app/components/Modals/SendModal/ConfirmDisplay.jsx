@@ -1,82 +1,67 @@
 // @flow
 import React from 'react'
-import { api } from 'neon-js'
 import Button from '../../Button'
 
-import Loader from '../../Loader'
+import Table from '../../Table'
+import { Address } from '../../Blockchain'
 import { formatBalance } from '../../../core/formatters'
-import { openExplorerAddress } from '../../../core/explorer'
-import asyncWrap from '../../../core/asyncHelper'
 
-import styles from './SendModal.scss'
+import styles from './ConfirmDisplay.scss'
 
 type Props = {
-  sendAddress: string,
-  sendAmount: string,
-  symbol: SymbolType,
-  confirmTransaction: Function,
-  cancelTransaction: Function,
-  explorer: ExplorerType,
   net: NetworkType,
+  explorer: ExplorerType,
   address: string,
+  entries: Array<SendEntryType>,
+  message: string,
+  onAddRecipient: Function,
+  onConfirm: Function,
+  onCancel: Function
 }
 
-type State = {
-  addressChecked: boolean,
-  addressCheckedMessage: string
-}
-
-class ConfirmDisplay extends React.Component<Props, State> {
-  state = {
-    addressChecked: false,
-    addressCheckedMessage: ''
-  }
-
-  async checkTransactionHistory (net: NetworkType, address: string) {
-    const [err, transactions] = await asyncWrap(api.neonDB.getTransactionHistory(net, address))
-
-    let message = ''
-    if (err) {
-      message = 'Warning: there was an error verifying the recipient address has activity in its transaction history.'
-    } else if (!transactions || !transactions.length) {
-      message = 'Warning: recipient address has no activity in its transaction history. Please be sure the address is correct before sending. Note that empty addresses will not appear in blockchain explorers. If it is a new address, please double check that you input the correct address.'
-    }
-
-    this.setState({
-      addressChecked: true,
-      addressCheckedMessage: message
-    })
-  }
-
-  componentDidMount () {
-    const { sendAddress, net } = this.props
-    this.checkTransactionHistory(net, sendAddress)
-  }
-
+export default class ConfirmDisplay extends React.Component<Props> {
   render () {
-    const { sendAddress, sendAmount, symbol, confirmTransaction, cancelTransaction, explorer, net, address } = this.props
-    const { addressChecked, addressCheckedMessage } = this.state
+    const { onConfirm, onCancel, explorer, net, entries, address, message } = this.props
 
-    if (!addressChecked) {
-      return (<Loader />)
-    } else {
-      return (
-        <div>
-          <p>Please confirm the following transaction:</p>
-          <p>You are sending <strong>{formatBalance(symbol, sendAmount)} {symbol}</strong></p>
-          <p>from:</p>
-          <div className={styles.externalLink} onClick={() => openExplorerAddress(net, explorer, address)}>{address}</div>
-          <p>to:</p>
-          <div className={styles.externalLink} onClick={() => openExplorerAddress(net, explorer, sendAddress)}>{sendAddress}</div>
-          <div>
-            <Button onClick={confirmTransaction}>Confirm</Button>
-            <Button cancel onClick={cancelTransaction}>Cancel</Button>
+    return (
+      <div className={styles.confirmDisplay}>
+        <div className={styles.table}>
+          <Table>
+            <thead>
+              <tr>
+                <th>Asset</th>
+                <th>Recipient</th>
+              </tr>
+            </thead>
+            <tbody>
+              {entries.map((entry, i) => (
+                <tr key={`entry-${i}`}>
+                  <td>{formatBalance(entry.symbol, entry.amount)} {entry.symbol}</td>
+                  <td><Address net={net} explorer={explorer} address={entry.address} /></td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+
+          <div className={styles.addRecipient}>
+            <a href='#' onClick={this.props.onAddRecipient}>+ Add Recipient</a>
           </div>
-          { addressCheckedMessage && <div className={styles.addressWarning}>{addressCheckedMessage}</div> }
         </div>
-      )
-    }
+
+        <div className={styles.confirm}>
+          By clicking "Send Assets", you agree to transfer the above assets & tokens from{' '}
+          <Address net={net} explorer={explorer} address={address} />.
+        </div>
+
+        {message && (
+          <div className={styles.messages}>{message}</div>
+        )}
+
+        <div className={styles.actions}>
+          <Button cancel onClick={onCancel}>Cancel</Button>
+          <Button onClick={onConfirm}>Send Assets</Button>
+        </div>
+      </div>
+    )
   }
 }
-
-export default ConfirmDisplay

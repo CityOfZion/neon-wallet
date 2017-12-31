@@ -1,0 +1,56 @@
+@import '../../../styles/variables';
+
+.addRecipientDisplay {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+
+    .inputs {
+        flex: 1 0 auto;
+    }
+
+    .messages,
+    .actions {
+        flex: 0 0 auto;
+    }
+}
+
+.inputs {
+    .row {
+        display: flex;
+        flex-direction: row;
+
+        .column {
+            margin-right: 10px;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+
+        .label {
+            display: block;
+            padding: 10px 0;
+        }
+
+        .sendToIcon {
+            align-self: center;
+        }
+
+        .recipient {
+            flex: 1 0 auto;
+        }
+    }
+}
+
+.messages {
+    margin-top: 20px;
+    text-align: right;
+    font-size: 13px;
+    color: $error-color;
+}
+
+.actions {
+    margin-top: 20px;
+    text-align: right;
+}
