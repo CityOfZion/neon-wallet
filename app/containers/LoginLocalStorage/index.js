@@ -2,16 +2,16 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { setKeys, loginNep2, getAccountKeys } from '../../modules/account'
+import { setAccounts, getAccounts, loginNep2 } from '../../modules/account'
 
 import LoginLocalStorage from './LoginLocalStorage'
 
 const mapStateToProps = (state: Object) => ({
-  accountKeys: getAccountKeys(state)
+  accounts: getAccounts(state)
 })
 
 const actionCreators = {
-  setKeys,
+  setAccounts,
   loginNep2
 }
 

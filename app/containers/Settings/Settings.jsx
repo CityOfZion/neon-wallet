@@ -1,8 +1,10 @@
 // @flow
 import React, { Component } from 'react'
-import { forEach, map } from 'lodash'
+import { map, reject } from 'lodash'
 import fs from 'fs'
 import storage from 'electron-json-storage'
+
+import { recoverWallet } from '../../modules/generateWallet'
 
 import HomeButtonLink from '../../components/HomeButtonLink'
 import { EXPLORERS, MODAL_TYPES, CURRENCIES } from '../../core/constants'
@@ -12,13 +14,15 @@ import Delete from 'react-icons/lib/md/delete'
 const { dialog } = require('electron').remote
 
 type Props = {
-  setKeys: Function,
+  setAccounts: Function,
   setBlockExplorer: Function,
   explorer: string,
   setCurrency: Function,
   currency: string,
-  wallets: any,
-  showModal: Function
+  accounts: any,
+  showModal: Function,
+  showSuccessNotification: Function,
+  showErrorNotification: Function
 }
 
 type State = {
@@ -32,55 +36,67 @@ export default class Settings extends Component<Props, State> {
   }
 
   componentDidMount () {
-    const { setKeys } = this.props
+    const { setAccounts } = this.props
+
     // eslint-disable-next-line
-    storage.get('keys', (error, data) => {
-      setKeys(data)
+    storage.get('userWallet', (error, data) => {
+      setAccounts(data.accounts)
     })
   }
 
-  saveKeyRecovery = (keys: Object) => {
-    const content = JSON.stringify(keys)
-    dialog.showSaveDialog({filters: [
-      {
-        name: 'JSON',
-        extensions: ['json']
-      }]}, (fileName) => {
-      if (fileName === undefined) {
+  saveWalletRecovery = () => {
+    const { showSuccessNotification, showErrorNotification } = this.props
+
+    storage.get('userWallet', (errorReading, data) => {
+      if (errorReading) {
+        showErrorNotification({ message: `An error occurred reading wallet file: ${errorReading.message}` })
         return
       }
-      // fileName is a string that contains the path and filename created in the save file dialog.
-      fs.writeFile(fileName, content, (err) => {
-        if (err) {
-          window.alert('An error ocurred creating the file ' + err.message)
+      const content = JSON.stringify(data)
+      dialog.showSaveDialog({filters: [
+        {
+          name: 'JSON',
+          extensions: ['json']
+        }]}, (fileName) => {
+        if (fileName === undefined) {
+          return
         }
-        window.alert('The file has been succesfully saved')
+        // fileName is a string that contains the path and filename created in the save file dialog.
+        fs.writeFile(fileName, content, (errorWriting) => {
+          if (errorWriting) {
+            showErrorNotification({ message: `An error occurred creating the file: ${errorWriting.message}` })
+          } else {
+            showSuccessNotification({ message: 'The file has been succesfully saved' })
+          }
+        })
       })
     })
   }
 
-  loadKeyRecovery = () => {
-    const { setKeys } = this.props
+  loadWalletRecovery = () => {
+    const { showSuccessNotification, showErrorNotification, setAccounts } = this.props
+
     dialog.showOpenDialog((fileNames) => {
-    // fileNames is an array that contains all the selected
+      // fileNames is an array that contains all the selected
       if (fileNames === undefined) {
         return
       }
       const filepath = fileNames[0]
       fs.readFile(filepath, 'utf-8', (err, data) => {
         if (err) {
-          window.alert('An error ocurred reading the file :' + err.message)
+          showErrorNotification({ message: `An error occurred reading the file: ${err.message}` })
           return
         }
-        const keys = JSON.parse(data)
-        // eslint-disable-next-line
-        storage.get('keys', (error, data) => {
-          forEach(keys, (value, key) => {
-            data[key] = value
+        const walletData = JSON.parse(data)
+
+        recoverWallet(walletData)
+          .then((data) => {
+            showSuccessNotification({ message: 'Recovery was successful.' })
+            setAccounts(data.accounts)
           })
-          setKeys(data)
-          storage.set('keys', data)
-        })
+          .catch((e) => {
+            showErrorNotification({ message: `An error occurred recovering wallet: ${e.message}` })
+          })
       })
     })
   }
@@ -102,28 +118,39 @@ export default class Settings extends Component<Props, State> {
     setCurrency(e.target.value)
   }
 
-  deleteWallet = (key: string) => {
-    const { setKeys, showModal } = this.props
+  deleteWalletAccount = (label: string, key: string) => {
+    const { showSuccessNotification, showErrorNotification, setAccounts, showModal } = this.props
+
     showModal(MODAL_TYPES.CONFIRM, {
       title: 'Confirm Delete',
-      text: `Please confirm deleting saved wallet - ${key}`,
+      text: `Please confirm deleting saved wallet - ${label}`,
       onClick: () => {
-        // eslint-disable-next-line
-        storage.get('keys', (error, data) => {
-          delete data[key]
-          storage.set('keys', data)
-          setKeys(data)
+        storage.get('userWallet', (readError, data) => {
+          if (readError) {
+            showErrorNotification({ message: `An error occurred reading previosly stored wallet: ${readError.message}` })
+          }
+
+          data.accounts = reject(data.accounts, { key })
+
+          storage.set('userWallet', data, (saveError) => {
+            if (saveError) {
+              showErrorNotification({ message: `An error occurred updating the wallet: ${saveError.message}` })
+            } else {
+              showSuccessNotification({ message: 'Account deletion was successful.' })
+              setAccounts(data.accounts)
+            }
+          })
         })
       }
     })
   }
 
   render () {
-    const { wallets, explorer, currency } = this.props
+    const { accounts, explorer, currency } = this.props
 
     return (
       <div id='settings'>
-        <div className='description'>Manage your Neon wallet keys and settings</div>
+        <div className='description'>Manage your Neon wallet accounts and settings</div>
         <div className='settingsForm'>
           <div className='settingsItem'>
             <div className='itemTitle'>Block Explorer</div>
@@ -142,22 +169,22 @@ export default class Settings extends Component<Props, State> {
             </select>
           </div>
           <div className='settingsItem'>
-            <div className='itemTitle'>Saved Wallet Keys</div>
-            {map(wallets, (value, key) => {
+            <div className='itemTitle'>Saved Wallet Accounts</div>
+            {map(accounts, (account) => {
               return (
-                <div className='walletList' key={`wallet${key}`}>
+                <div className='walletList' key={`wallet${account.key}`}>
                   <div className='walletItem'>
-                    <div className='walletName'>{key.slice(0, 20)}</div>
-                    <div className='walletKey'>{value}</div>
-                    <div className='deleteWallet' onClick={() => this.deleteWallet(key)}><Delete /></div>
+                    <div className='walletName'>{account.key.slice(0, 20)}</div>
+                    <div className='walletKey'>{account.label}</div>
+                    <div className='deleteWallet' onClick={() => this.deleteWalletAccount(account.label, account.key)}><Delete /></div>
                   </div>
                 </div>
               )
             })
             }
           </div>
-          <button onClick={() => this.saveKeyRecovery(wallets)}>Export key recovery file</button>
-          <button onClick={this.loadKeyRecovery}>Load key recovery file</button>
+          <button onClick={() => this.saveWalletRecovery()}>Export wallet recovery file</button>
+          <button onClick={this.loadWalletRecovery}>Load wallet recovery file</button>
         </div>
         <HomeButtonLink />
       </div>
