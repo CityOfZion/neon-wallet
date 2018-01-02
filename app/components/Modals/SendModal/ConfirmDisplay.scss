@@ -43,6 +43,18 @@
     color: $error-color;
 }
 
+.agree {
+    margin-top: 20px;
+    padding: 8px;
+    border: 1px solid $primary-color;
+    background-color: $secondary-background;
+
+    input,
+    label {
+        vertical-align: middle;
+    }
+}
+
 .actions {
     margin-top: 20px;
     text-align: right;

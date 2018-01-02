@@ -19,9 +19,18 @@ type Props = {
   onCancel: Function
 }
 
-export default class ConfirmDisplay extends React.Component<Props> {
+type State = {
+  agree: boolean
+}
+
+export default class ConfirmDisplay extends React.Component<Props, State> {
+  state = {
+    agree: false
+  }
+
   render () {
     const { onConfirm, onCancel, explorer, net, entries, address, message } = this.props
+    const { agree } = this.state
 
     return (
       <div className={styles.confirmDisplay}>
@@ -48,18 +57,21 @@ export default class ConfirmDisplay extends React.Component<Props> {
           </div>
         </div>
 
-        <div className={styles.confirm}>
-          By clicking "Send Assets", you agree to transfer the above assets & tokens from{' '}
-          <Address net={net} explorer={explorer} address={address} />.
-        </div>
-
         {message && (
           <div className={styles.messages}>{message}</div>
         )}
 
+        <div className={styles.agree}>
+          <input id='agree' type='checkbox' checked={agree} onChange={() => this.setState({ agree: !agree })} />
+          <label htmlFor='agree'>
+            I agree to transfer the above assets & tokens from{' '}
+            <Address net={net} explorer={explorer} address={address} />.
+          </label>
+        </div>
+
         <div className={styles.actions}>
           <Button cancel onClick={onCancel}>Cancel</Button>
-          <Button onClick={onConfirm}>Send Assets</Button>
+          <Button disabled={!agree} onClick={onConfirm}>Send Assets</Button>
         </div>
       </div>
     )
