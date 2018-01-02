@@ -1,10 +1,11 @@
 // @flow
 import React, { Component } from 'react'
+import QRCode from 'qrcode/lib/browser'
+
 import BaseModal from '../BaseModal'
 import styles from './ReceiveModal.scss'
-import QRCode from 'qrcode/lib/browser'
 import CopyToClipboard from '../../CopyToClipboard'
-import { openExplorerAddress } from '../../../core/explorer'
+import { Address } from '../../Blockchain'
 
 type Props = {
     address: string,
@@ -13,7 +14,7 @@ type Props = {
     explorer: ExplorerType,
 }
 
-class ReceiveModal extends Component<Props> {
+export default class ReceiveModal extends Component<Props> {
   canvas: ?HTMLCanvasElement
 
   render () {
@@ -29,7 +30,7 @@ class ReceiveModal extends Component<Props> {
         hideModal={hideModal}
         style={{
           content: {
-            width: '420px',
+            width: '480px',
             height: '460px'
           }
         }}
@@ -37,7 +38,7 @@ class ReceiveModal extends Component<Props> {
         <div className={styles.textContainer}>
           <div>Your Public NEO Address:</div>
           <div className={styles.address}>
-            <strong><div className={styles.externalLink} onClick={() => openExplorerAddress(net, explorer, address)}>{address}</div></strong>
+            <Address className={styles.externalLink} net={net} explorer={explorer} address={address} />
             <CopyToClipboard text={address} tooltip='Copy Public Address' />
           </div>
           <div className={styles.canvas}><canvas ref={(node) => { this.canvas = node }} /></div>
@@ -48,5 +49,3 @@ class ReceiveModal extends Component<Props> {
     )
   }
 }
-
-export default ReceiveModal

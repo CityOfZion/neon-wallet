@@ -5,6 +5,7 @@ import { map } from 'lodash'
 
 import PasswordField from '../../components/PasswordField'
 import HomeButtonLink from '../../components/HomeButtonLink'
+import Button from '../../components/Button'
 
 import styles from './LoginLocalStorage.scss'
 import loginStyles from '../../styles/login.scss'
@@ -61,10 +62,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
             />
           </div>
           <div>
-            <button
-              type='submit'
-              className={loginButtonDisabled ? 'disabled' : ''}
-              disabled={loginButtonDisabled}>Login</button>
+            <Button type='submit' disabled={loginButtonDisabled}>Login</Button>
             <HomeButtonLink />
           </div>
         </form>

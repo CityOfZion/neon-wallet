@@ -31,6 +31,8 @@ const BaseModal = ({ hideModal, title, children, width, height, className, style
         boxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 4px',
         border: 'none',
         borderRadius: '4px',
+        display: 'flex',
+        flexDirection: 'column',
         ...style.content
       },
       overlay: {

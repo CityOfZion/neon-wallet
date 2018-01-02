@@ -32,7 +32,7 @@ describe('ConfirmModal', () => {
   test('should trigger the onCancel function followed by hideModal', () => {
     const wrapper = shallow(<ConfirmModal {...props} />)
 
-    wrapper.dive().find('.cancelButton').simulate('click')
+    wrapper.dive().find('#cancel').simulate('click')
 
     expect(props.onCancel).toHaveBeenCalled()
     expect(props.hideModal).toHaveBeenCalled()
@@ -41,7 +41,7 @@ describe('ConfirmModal', () => {
   test('should trigger the onClick function followed by hideModal', () => {
     const wrapper = shallow(<ConfirmModal {...props} />)
 
-    wrapper.dive().find('.actionButton').simulate('click')
+    wrapper.dive().find('#confirm').simulate('click')
 
     expect(props.onClick).toHaveBeenCalled()
     expect(props.hideModal).toHaveBeenCalled()

@@ -1,6 +1,8 @@
 // @flow
 import React from 'react'
+
 import BaseModal from '../BaseModal'
+import Button from '../../Button'
 import styles from './ConfirmModal.scss'
 
 type Props = {
@@ -28,20 +30,22 @@ const ConfirmModal = ({ hideModal, title, onClick, onCancel, text, width, height
       <strong className={styles.text}>{text}</strong>
     </div>
     <div className={styles.modalFooter}>
-      <button
+      <Button
+        id='confirm'
         className={styles.actionButton}
         onClick={() => {
           onClick()
           hideModal()
-        }}>Confirm</button>
-      <button
-        className={styles.cancelButton}
+        }}>Confirm</Button>
+      <Button
+        id='cancel'
+        cancel
         onClick={() => {
           hideModal()
           if (onCancel) {
             onCancel()
           }
-        }}>Cancel</button>
+        }}>Cancel</Button>
     </div>
   </BaseModal>
 )

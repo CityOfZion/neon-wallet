@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 
 import PasswordField from '../../components/PasswordField'
 import HomeButtonLink from '../../components/HomeButtonLink'
+import Button from '../../components/Button'
 
 type Props = {
     encryptWIF: boolean,
@@ -77,7 +78,7 @@ export default class EncryptKey extends Component<Props, State> {
             placeholder='Enter existing WIF here'
           />
           }
-          <button type='submit' disabled={disabledButton} className={disabledButton ? 'disabled' : ''}>Generate keys</button>
+          <Button type='submit' disabled={disabledButton}>Generate keys</Button>
           <HomeButtonLink />
         </form>
       </div>

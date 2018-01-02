@@ -18,34 +18,6 @@ body {
     :focus { outline: none; }
 }
 
-button {
-    font-size: 1em;
-    padding: 6px 12px;
-    margin-right: 10px;
-    color: $button-text;
-    background-color: $default-button;
-    border: none;
-    cursor: pointer;
-
-    &:hover {
-        background-color: $default-button-hover;
-    }
-
-    a {
-        text-decoration: none;
-        color: inherit;
-    }
-
-    &.disabled {
-        opacity: .6;
-        cursor: default;
-
-        &:hover {
-            background-color: $default-button;
-        }
-    }
-}
-
 input {
     font-size: 1.2em;
     padding: 7px 15px;

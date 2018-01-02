@@ -1,18 +1,12 @@
 @import '../../../styles/variables';
 
-.textContainer {
-    padding: 20px 0;
-}
-
 .canvas {
     margin: 10px 0;
     text-align: center;
 }
 
 .externalLink {
-    color: $link-color;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    cursor: pointer;
     display: inline-block;
+    margin: 20px 0;
+    font-weight: bold;
 }

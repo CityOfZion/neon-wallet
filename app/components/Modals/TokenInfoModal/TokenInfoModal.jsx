@@ -20,7 +20,7 @@ const TokenInfoModal = ({ hideModal, token }: Props) => (
     style={{
       content: {
         width: '350px',
-        height: '250px'
+        height: '300px'
       }
     }}
   >

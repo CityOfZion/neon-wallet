@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 
+import Button from '../../components/Button'
 import HomeButtonLink from '../../components/HomeButtonLink'
 
 type Props = {
@@ -72,14 +73,12 @@ export default class TokenSale extends Component<Props, State> {
               onChange={(e) => this.setState({ neoToSend: e.target.value })}
             />
           </div>
-          <button
-            className={submitSaleButtonDisabled ? 'disabled' : ''}
+          <Button
             onClick={this.participateInSale}
-            disabled={submitSaleButtonDisabled}>Submit for Sale</button>
-          <button
-            className={refreshTokenBalanceButtonDisabled ? 'disabled' : ''}
+            disabled={submitSaleButtonDisabled}>Submit for Sale</Button>
+          <Button
             onClick={() => refreshTokenBalance(scriptHash)}
-            disabled={refreshTokenBalanceButtonDisabled}>Refresh Token Balance</button>
+            disabled={refreshTokenBalanceButtonDisabled}>Refresh Token Balance</Button>
         </div>
         <HomeButtonLink />
       </div>

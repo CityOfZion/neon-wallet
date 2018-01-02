@@ -3,6 +3,7 @@ import React from 'react'
 import { noop, trim } from 'lodash'
 
 import Tooltip from '../../Tooltip'
+import Button from '../../Button'
 import Save from 'react-icons/lib/md/save'
 
 import styles from './SaveIcon.scss'
@@ -53,12 +54,11 @@ export default class AddressInput extends React.Component<Props, State> {
           placeholder='Enter a name for this address'
           value={this.state.name}
           onChange={this.handleChange} />
-        <button
+        <Button
           className={styles.button}
-          type='button'
           onClick={this.handleSave}>
           Save to Address Book
-        </button>
+        </Button>
       </div>
     )
   }
