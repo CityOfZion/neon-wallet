@@ -5,7 +5,7 @@ import { wallet } from 'neon-js'
 import { noop, omit, map, values, trim } from 'lodash'
 
 import SaveIcon from './SaveIcon'
-import SelectInput from '../SelectInput'
+import SelectInput, { DropdownButton } from '../SelectInput'
 
 import styles from './AddressInput.scss'
 
@@ -37,14 +37,17 @@ export default class AddressInput extends React.Component<Props> {
         {...passDownProps}
         className={styles.addressInput}
         items={this.getItems()}
-        renderAfter={this.renderSaveIcon}
-        renderItem={this.renderItem} />
+        renderAfter={this.renderAfter}
+        renderItem={this.renderItem}
+        getItemValue={this.getItemValue} />
     )
   }
 
-  renderSaveIcon = () => {
+  renderAfter = (props) => {
     if (this.canSave()) {
       return <SaveIcon id='saveIcon' onSave={this.handleSave} />
+    } else {
+      return <DropdownButton {...props} />
     }
   }
 
@@ -83,6 +86,10 @@ export default class AddressInput extends React.Component<Props> {
       label: name,
       value: address
     }))
+  }
+
+  getItemValue = (item) => {
+    return item.value
   }
 
   canSave = () => {

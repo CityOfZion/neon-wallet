@@ -12,24 +12,24 @@ import {
 
 declare type ActionCreatorType = any
 
-declare type DispatchType = (actionCreator: ActionCreatorType) => Promise<*>
+declare type DispatchType = (actionCreator: ActionCreatorType) => Promise<*> // eslint-disable-line no-undef
 
-declare type GetStateType = () => Object
+declare type GetStateType = () => Object // eslint-disable-line no-undef
 
-declare type ReduxAction = () => {
+declare type ReduxAction = () => { // eslint-disable-line no-undef
   type: string,
   payload: Object,
   meta?: Object,
   error?: Object
 }
 
-declare type NetworkType = $Values<typeof NETWORK>
+declare type NetworkType = $Values<typeof NETWORK> // eslint-disable-line no-undef
 
-declare type ExplorerType = $Values<typeof EXPLORER>
+declare type ExplorerType = $Values<typeof EXPLORER> // eslint-disable-line no-undef
 
-declare type RouteType = $Values<typeof ROUTES>
+declare type RouteType = $Values<typeof ROUTES> // eslint-disable-line no-undef
 
-declare type NotificationType = {
+declare type NotificationType = { // eslint-disable-line no-undef
   id: string,
   level: $Values<typeof NOTIFICATION_LEVELS>,
   title?: string,
@@ -39,7 +39,7 @@ declare type NotificationType = {
   autoDismiss: number
 }
 
-declare type TransactionHistoryType = {
+declare type TransactionHistoryType = { // eslint-disable-line no-undef
   NEO: number,
   GAS: number,
   txid: number,
@@ -48,7 +48,7 @@ declare type TransactionHistoryType = {
   neo_gas: number
 }
 
-declare type ModalType = $Values<typeof MODAL_TYPES>
+declare type ModalType = $Values<typeof MODAL_TYPES> // eslint-disable-line no-undef
 
 declare type TokenInfoType = {
   totalSupply: number,
@@ -58,8 +58,14 @@ declare type TokenInfoType = {
 
 declare type SymbolType = $Keys<typeof TOKENS> | 'NEO' | 'GAS'
 
-declare type TokenType = {
+declare type TokenType = { // eslint-disable-line no-undef
   symbol: SymbolType,
   balance: number,
   info: TokenInfoType
+}
+
+declare type SendEntryType = { // eslint-disable-line no-undef
+  amount: string,
+  address: string,
+  symbol: SymbolType
 }

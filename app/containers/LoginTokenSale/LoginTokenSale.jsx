@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 
+import Button from '../../components/Button'
 import HomeButtonLink from '../../components/HomeButtonLink'
 import PasswordField from '../../components/PasswordField'
 
@@ -40,10 +41,7 @@ export default class LoginTokenSale extends Component<Props, State> {
             />
           </div>
           <div>
-            <button
-              type='submit'
-              disabled={loginButtonDisabled}
-              className={loginButtonDisabled ? 'disabled' : ''}>Login</button>
+            <Button type='submit' disabled={loginButtonDisabled}>Login</Button>
             <HomeButtonLink />
           </div>
         </form>

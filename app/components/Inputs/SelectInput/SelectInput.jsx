@@ -5,6 +5,7 @@ import { noop, omit, trim } from 'lodash'
 import Sifter from 'sifter'
 
 import Dropdown from './Dropdown'
+import DropdownButton from './DropdownButton'
 import styles from './SelectInput.scss'
 
 type Props = {
@@ -13,6 +14,7 @@ type Props = {
   items?: Array<Object>,
   renderItem?: Function,
   renderAfter?: Function,
+  getItemValue?: Function,
   onFocus?: Function,
   onChange?: Function
 }
@@ -25,13 +27,15 @@ type State = {
 export default class SelectInput extends React.Component<Props, State> {
   static defaultProps = {
     items: [],
+    renderAfter: (props) => <DropdownButton {...props} />,
+    getItemValue: (item) => item,
     onFocus: noop,
     onChange: noop
   }
 
   state = {
     open: false,
-    search: this.props.value || ''
+    search: ''
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -41,7 +45,7 @@ export default class SelectInput extends React.Component<Props, State> {
   }
 
   render = () => {
-    const passDownProps = omit(this.props, 'items', 'renderItem', 'renderAfter')
+    const passDownProps = omit(this.props, 'items', 'renderItem', 'renderAfter', 'getItemValue')
 
     return (
       <Dropdown
@@ -57,7 +61,9 @@ export default class SelectInput extends React.Component<Props, State> {
             onFocus={this.handleFocus}
             onChange={this.handleChange}
           />
-          {this.renderAfter()}
+          <div className={styles.afterInput}>
+            {this.props.renderAfter({ onToggle: this.handleToggle })}
+          </div>
         </div>
       </Dropdown>
     )
@@ -94,40 +100,38 @@ export default class SelectInput extends React.Component<Props, State> {
 
   renderItem = (item, { onSelect }) => {
     return (
-      <div className={styles.dropdownItem} key={item.value} tabIndex={0} onClick={onSelect}>
-        <div className={styles.label}>{item.label}</div>
-        <div className={styles.value}>{item.value}</div>
+      <div className={styles.dropdownItem} key={this.props.getItemValue(item)} tabIndex={0} onClick={onSelect}>
+        {item}
       </div>
     )
   }
 
-  renderAfter = () => {
-    if (this.props.renderAfter) {
-      return (
-        <div className={styles.afterInput}>
-          {this.props.renderAfter()}
-        </div>
-      )
-    }
-  }
-
   handleFocus = (event: Event, ...args: Array<any>) => {
+    event.persist()
     this.props.onFocus(event, ...args)
-    this.setState({ open: true })
+    this.handleOpen()
   }
 
   handleChange = (event: Event, ...args: Array<any>) => {
     this.props.onChange(event.target.value)
   }
 
+  handleOpen = () => {
+    this.handleToggle(true)
+  }
+
   handleClose = () => {
-    this.setState({ open: false })
+    this.handleToggle(false)
+  }
+
+  handleToggle = (open: boolean = !this.state.open) => {
+    this.setState({ open, search: '' })
   }
 
   generateSelectHandler = (item) => {
     return (event) => {
-      this.props.onChange(item.value)
-      this.setState({ open: false })
+      this.props.onChange(this.props.getItemValue(item))
+      this.handleClose()
     }
   }
 

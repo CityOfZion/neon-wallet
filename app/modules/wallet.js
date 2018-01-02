@@ -1,5 +1,6 @@
 // @flow
 import { api } from 'neon-js'
+import { mapValues } from 'lodash'
 
 import { syncTransactionHistory } from './transactions'
 import { syncAvailableClaim } from './claim'
@@ -8,7 +9,7 @@ import { LOGOUT, getAddress } from './account'
 import { getMarketPriceUSD, getGasMarketPriceUSD } from './price'
 import { showErrorNotification } from './notifications'
 
-import { TOKENS, TOKENS_TEST, NETWORK } from '../core/constants'
+import { ASSETS, TOKENS, TOKENS_TEST, NETWORK } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
 
 const TOKEN_PAIRS = Object.entries(TOKENS)
@@ -122,6 +123,12 @@ export const getGAS = (state: Object) => state.wallet.GAS
 export const getTransactions = (state: Object) => state.wallet.transactions
 export const getTokens = (state: Object) => state.wallet.tokens
 export const getIsLoaded = (state: Object) => state.wallet.loaded
+
+export const getBalances = (state: Object) => ({
+  [ASSETS.NEO]: getNEO(state),
+  [ASSETS.GAS]: getGAS(state),
+  ...mapValues(getTokens(state), (token) => token.balance)
+})
 
 const getInitialTokenBalance = () => {
   const tokens = {}

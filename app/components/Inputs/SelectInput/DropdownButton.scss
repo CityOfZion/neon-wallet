@@ -1,0 +1,11 @@
+@import '../../../styles/variables';
+
+.dropdownButton {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 6px;
+  background: $primary-color;
+  color: $button-text;
+  cursor: pointer;
+}

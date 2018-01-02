@@ -1,15 +1,20 @@
 // @flow
 import React, { Component } from 'react'
+import numeral from 'numeral'
+import { mapValues } from 'lodash'
 
 import BaseModal from '../BaseModal'
-import SendDisplay from './SendDisplay'
+import AddRecipientDisplay from './AddRecipientDisplay'
 import ConfirmDisplay from './ConfirmDisplay'
+import withAddressCheck from './withAddressCheck'
 
-import { obtainTokenBalance, isToken, validateTransactionBeforeSending } from '../../../core/wallet'
+import { validateTransactionBeforeSending } from '../../../core/wallet'
 import { ASSETS } from '../../../core/constants'
 
+const ConfirmDisplayContainer = withAddressCheck()(ConfirmDisplay)
+
 const DISPLAY_MODES = {
-  SEND: 'SEND',
+  ADD_RECIPIENT: 'ADD_RECIPIENT',
   CONFIRM: 'CONFIRM'
 }
 
@@ -26,111 +31,111 @@ type Props = {
   isHardwareLogin: boolean,
 }
 
-type State = {
-  sendAmount: ?number,
-  sendAdress: ?string,
-  symbol: string,
-  display: $Values<typeof DISPLAY_MODES>,
-  balance: number
+type BalancesType = {
+  [key: SymbolType]: string
 }
 
-class SendModal extends Component<Props, State> {
+type State = {
+  entries: Array<SendEntryType>,
+  display: $Values<typeof DISPLAY_MODES>,
+  balances: BalancesType
+}
+
+export default class SendModal extends Component<Props, State> {
   canvas: ?HTMLCanvasElement
   state = {
-    sendAmount: '',
-    sendAddress: '',
-    symbol: ASSETS.NEO,
-    display: DISPLAY_MODES.SEND,
-    balance: this.props.NEO
-  }
-
-  openAndValidate = () => {
-    const { NEO, GAS, tokens, showErrorNotification } = this.props
-    const { sendAddress, sendAmount, symbol } = this.state
-    const tokenBalance = isToken(symbol) && obtainTokenBalance(tokens, symbol)
-    const { error, valid } = validateTransactionBeforeSending(NEO, GAS, tokenBalance, symbol, sendAddress, sendAmount)
-    if (valid) {
-      this.setState({ display: DISPLAY_MODES.CONFIRM })
-    } else {
-      showErrorNotification({ message: error })
+    entries: [],
+    display: DISPLAY_MODES.ADD_RECIPIENT,
+    balances: {
+      [ASSETS.NEO]: this.props.NEO,
+      [ASSETS.GAS]: this.props.GAS,
+      ...mapValues(this.props.tokens, (token) => token.balance)
     }
-  }
-
-  confirmTransaction = () => {
-    const { sendTransaction, hideModal } = this.props
-    const { sendAddress, sendAmount, symbol } = this.state
-    sendTransaction(sendAddress, sendAmount, symbol).then(() => {
-      hideModal()
-    })
-  }
-
-  cancelTransaction = () => {
-    this.setState({
-      display: DISPLAY_MODES.SEND
-    })
-  }
-
-  getBalance = (symbol: string) => {
-    const { NEO, GAS, tokens } = this.props
-
-    if (symbol === ASSETS.NEO) {
-      return NEO
-    } else if (symbol === ASSETS.GAS) {
-      return GAS
-    } else {
-      return obtainTokenBalance(tokens, symbol)
-    }
-  }
-
-  onChangeHandler = (name: string, value: string, updateBalance: false) => {
-    let newState = {
-      [name]: value
-    }
-    if (updateBalance) {
-      newState = {
-        ...newState,
-        sendAmount: '',
-        balance: this.getBalance(value)
-      }
-    }
-    this.setState(newState)
   }
 
   render () {
-    const { hideModal, tokens, explorer, net, address, isHardwareLogin } = this.props
-    const { display } = this.state
+    const { hideModal } = this.props
 
     return (
       <BaseModal
         title='Send'
         hideModal={hideModal}
-        style={{
-          content: {
-            width: '520px',
-            height: '410px'
-          }
-        }}
-      >
-        {display === DISPLAY_MODES.SEND
-          ? <SendDisplay
-            openAndValidate={this.openAndValidate}
-            getBalanceForSymbol={this.getBalanceForSymbol}
-            onChangeHandler={this.onChangeHandler}
-            tokens={tokens}
-            isHardwareLogin={isHardwareLogin}
-            {...this.state}
-          />
-          : <ConfirmDisplay
-            confirmTransaction={this.confirmTransaction}
-            cancelTransaction={this.cancelTransaction}
-            explorer={explorer}
-            net={net}
-            address={address}
-            {...this.state}
-          />}
+        style={{ content: { width: '925px', height: '410px' } }}>
+        {this.renderDisplay()}
       </BaseModal>
     )
   }
-}
 
-export default SendModal
+  renderDisplay = () => {
+    const { explorer, net, address, isHardwareLogin } = this.props
+    const { display, balances, entries } = this.state
+
+    if (display === DISPLAY_MODES.ADD_RECIPIENT) {
+      return (
+        <AddRecipientDisplay
+          balances={balances}
+          isHardwareLogin={isHardwareLogin}
+          onCancel={this.handleCancelAddRecipient}
+          onConfirm={this.handleConfirmAddRecipient} />
+      )
+    } else {
+      return (
+        <ConfirmDisplayContainer
+          net={net}
+          explorer={explorer}
+          address={address}
+          entries={entries}
+          onConfirm={this.handleConfirmTransaction}
+          onCancel={this.handleCancelTransaction}
+          onAddRecipient={this.handleAddRecipient}
+          {...this.state} />
+      )
+    }
+  }
+
+  handleAddRecipient = () => {
+    this.setState({ display: DISPLAY_MODES.ADD_RECIPIENT })
+  }
+
+  handleConfirmAddRecipient = (entry) => {
+    const { showErrorNotification } = this.props
+    const { balances } = this.state
+    const error = validateTransactionBeforeSending(balances[entry.symbol], entry)
+
+    if (error) {
+      showErrorNotification({ message: error })
+    } else {
+      const newBalance = numeral(balances[entry.symbol]).subtract(entry.amount)
+
+      this.setState({
+        entries: [...this.state.entries, entry],
+        balances: { ...balances, [entry.symbol]: newBalance.value() },
+        display: DISPLAY_MODES.CONFIRM
+      })
+    }
+  }
+
+  handleCancelAddRecipient = () => {
+    const { entries } = this.state
+
+    if (entries.length === 0) {
+      this.close()
+    } else {
+      this.setState({ display: DISPLAY_MODES.CONFIRM })
+    }
+  }
+
+  handleConfirmTransaction = () => {
+    const { sendTransaction } = this.props
+    const { entries } = this.state
+    sendTransaction(entries).then(this.close)
+  }
+
+  handleCancelTransaction = () => {
+    this.close()
+  }
+
+  close = () => {
+    this.props.hideModal()
+  }
+}

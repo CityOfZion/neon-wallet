@@ -6,16 +6,7 @@ describe('SelectInput', () => {
   const props = {
     className: 'customClassName',
     value: 'some text',
-    items: [{
-      label: 'Foo',
-      value: 'foo'
-    }, {
-      label: 'Bar',
-      value: 'bar'
-    }, {
-      label: 'Has some text',
-      value: 'has-some-text'
-    }],
+    items: ['Foo', 'Bar', 'Has some text'],
     onFocus: jest.fn(),
     onChange: jest.fn()
   }
@@ -41,10 +32,9 @@ describe('SelectInput', () => {
     expect(wrapper.find('.dropdown').exists()).toEqual(true)
   })
 
-  test('should filter the search results based upon the input value', () => {
-    const wrapper = mount(<SelectInput {...props} value='foo' />)
+  test('should not filter the search results on initial open', () => {
+    const wrapper = mount(<SelectInput {...props} value='Foo' />)
     wrapper.find('.input').simulate('focus')
-    expect(wrapper.find('.dropdownItem')).toHaveLength(1)
-    expect(wrapper.find('.dropdownItem').text()).toContain('Foo')
+    expect(wrapper.find('.dropdownItem')).toHaveLength(props.items.length)
   })
 })

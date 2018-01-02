@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 
+import Button from '../../components/Button'
 import Tooltip from '../../components/Tooltip'
 import { formatGAS } from '../../core/formatters'
 
@@ -28,15 +29,14 @@ export default class Claim extends Component<Props> {
     const shouldDisableButton = disableClaimButton || claimAmount === 0
     const formattedAmount = formatGAS(claimAmount)
     return (
-      <div id='claim'>
+      <div>
         <Tooltip
           title='You can claim GAS once every 5 minutes'
           disabled={!disableClaimButton}
         >
-          <button
-            disabled={shouldDisableButton}
-            onClick={() => doGasClaim()}
-            className={shouldDisableButton ? 'disabled' : ''}>Claim {formattedAmount} GAS</button>
+          <Button id='claim' disabled={shouldDisableButton} onClick={() => doGasClaim()}>
+            Claim {formattedAmount} GAS
+          </Button>
         </Tooltip>
       </div>
     )
