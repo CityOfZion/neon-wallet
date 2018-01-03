@@ -42,10 +42,6 @@ export const syncTransactionHistory = (net: NetworkType, address: string) => asy
   }
 }
 
-const containsTokens = (sendEntries: Array<SendEntryType>) => {
-  return sendEntries.some(({ symbol }) => isToken(symbol))
-}
-
 const extractTokens = (sendEntries: Array<SendEntryType>) => {
   return sendEntries.filter(({ symbol }) => isToken(symbol))
 }
