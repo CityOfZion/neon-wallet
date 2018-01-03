@@ -122,10 +122,6 @@ export const sendTransaction = (sendEntries: Array<SendEntryType>) => async (dis
     return rejectTransaction(error)
   }
 
-  if (isHardwareSend && containsTokens(sendEntries)) {
-    return rejectTransaction('Ledger support is not yet ready for sending NEP5 tokens')
-  }
-
   dispatch(showInfoNotification({ message: 'Sending Transaction...', autoDismiss: 0 }))
 
   log(net, 'SEND', fromAddress, sendEntries.map(({ address, amount, symbol }) => ({

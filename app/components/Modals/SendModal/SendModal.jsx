@@ -28,7 +28,6 @@ type Props = {
   explorer: ExplorerType,
   net: NetworkType,
   address: string,
-  isHardwareLogin: boolean,
 }
 
 type BalancesType = {
@@ -67,14 +66,13 @@ export default class SendModal extends Component<Props, State> {
   }
 
   renderDisplay = () => {
-    const { explorer, net, address, isHardwareLogin } = this.props
+    const { explorer, net, address } = this.props
     const { display, balances, entries } = this.state
 
     if (display === DISPLAY_MODES.ADD_RECIPIENT) {
       return (
         <AddRecipientDisplay
           balances={balances}
-          isHardwareLogin={isHardwareLogin}
           onCancel={this.handleCancelAddRecipient}
           onConfirm={this.handleConfirmAddRecipient} />
       )
