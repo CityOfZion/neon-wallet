@@ -27,7 +27,6 @@ type Props = {
   tokens: Object,
   loaded: boolean,
   loadWalletData: Function,
-  explorer: ExplorerType,
   isHardwareLogin: boolean,
 }
 
@@ -57,8 +56,6 @@ export default class Dashboard extends Component<Props> {
       showErrorNotification,
       sendTransaction,
       loaded,
-      explorer,
-      net,
       isHardwareLogin
     } = this.props
 
@@ -73,12 +70,12 @@ export default class Dashboard extends Component<Props> {
             <div className={styles.walletButtons}>
               <div
                 className={classNames(styles.walletButton, styles.sendButton)}
-                onClick={() => showModal(MODAL_TYPES.SEND, { NEO, GAS, tokens, showErrorNotification, sendTransaction, explorer, net, address, isHardwareLogin })}>
+                onClick={() => showModal(MODAL_TYPES.SEND, { NEO, GAS, tokens, showErrorNotification, sendTransaction, address, isHardwareLogin })}>
                 <FaArrowUpward className={styles.walletButtonIcon} /><span className={styles.walletButtonText}>Send</span>
               </div>
               <div
                 className={styles.walletButton}
-                onClick={() => showModal(MODAL_TYPES.RECEIVE, { address, net, explorer })}>
+                onClick={() => showModal(MODAL_TYPES.RECEIVE, { address })}>
                 <FaArrowDownward className={styles.walletButtonIcon} /><span className={styles.walletButtonText}>Receive</span>
               </div>
             </div>

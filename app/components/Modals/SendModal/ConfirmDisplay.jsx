@@ -9,8 +9,6 @@ import { formatBalance } from '../../../core/formatters'
 import styles from './ConfirmDisplay.scss'
 
 type Props = {
-  net: NetworkType,
-  explorer: ExplorerType,
   address: string,
   entries: Array<SendEntryType>,
   message: string,
@@ -29,7 +27,7 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
   }
 
   render () {
-    const { onConfirm, onCancel, explorer, net, entries, address, message } = this.props
+    const { onConfirm, onCancel, entries, address, message } = this.props
     const { agree } = this.state
 
     return (
@@ -46,7 +44,7 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
               {entries.map((entry, i) => (
                 <tr key={`entry-${i}`}>
                   <td>{formatBalance(entry.symbol, entry.amount)} {entry.symbol}</td>
-                  <td><Address net={net} explorer={explorer} address={entry.address} /></td>
+                  <td><Address address={entry.address} /></td>
                 </tr>
               ))}
             </tbody>
@@ -65,7 +63,7 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
           <input id='agree' type='checkbox' checked={agree} onChange={() => this.setState({ agree: !agree })} />
           <label htmlFor='agree'>
             I agree to transfer the above assets & tokens from{' '}
-            <Address net={net} explorer={explorer} address={address} />.
+            <Address address={address} />.
           </label>
         </div>
 
