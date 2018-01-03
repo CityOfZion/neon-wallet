@@ -30,7 +30,7 @@ export default class TransactionHistory extends Component<Props> {
           Transaction History {isLoadingTransactions && <Loader className={styles.updateLoader} />}
         </div>
         <div className={styles.headerSpacer} />
-        <Transactions transactions={transactions} />
+        <Transactions className={styles.transactions} transactions={transactions} />
       </div>
     )
   }

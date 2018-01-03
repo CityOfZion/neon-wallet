@@ -29,11 +29,10 @@ export const syncTransactionHistory = (net: NetworkType, address: string) => asy
   dispatch(setIsLoadingTransaction(true))
   const [err, transactions] = await asyncWrap(api.neonDB.getTransactionHistory(net, address))
   if (!err && transactions) {
-    const txs = transactions.map(({ NEO, GAS, txid, block_index, neo_sent, neo_gas }: TransactionHistoryType) => ({
-      type: neo_sent ? ASSETS.NEO : ASSETS.GAS,
-      amount: neo_sent ? NEO : GAS,
+    const txs = transactions.map(({ NEO, GAS, txid, block_index }: TransactionHistoryType) => ({
       txid,
-      block_index
+      [ASSETS.NEO]: NEO,
+      [ASSETS.GAS]: GAS
     }))
     dispatch(setIsLoadingTransaction(false))
     dispatch(setTransactionHistory(txs))
