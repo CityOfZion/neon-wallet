@@ -25,8 +25,6 @@ type Props = {
   showErrorNotification: Function,
   hideModal: Function,
   sendTransaction: Function,
-  explorer: ExplorerType,
-  net: NetworkType,
   address: string,
 }
 
@@ -66,7 +64,7 @@ export default class SendModal extends Component<Props, State> {
   }
 
   renderDisplay = () => {
-    const { explorer, net, address } = this.props
+    const { address } = this.props
     const { display, balances, entries } = this.state
 
     if (display === DISPLAY_MODES.ADD_RECIPIENT) {
@@ -79,8 +77,6 @@ export default class SendModal extends Component<Props, State> {
     } else {
       return (
         <ConfirmDisplayContainer
-          net={net}
-          explorer={explorer}
           address={address}
           entries={entries}
           onConfirm={this.handleConfirmTransaction}

@@ -81,4 +81,4 @@ export const openExplorerAddress = (net: NetworkType, explorer: ExplorerType, ad
   openExternal(getExplorerAddressLink(net, explorer, address))
 
 export const openExplorerAsset = (net: NetworkType, explorer: ExplorerType, assetId: string) =>
-  openExternal(getExplorerTxLink(net, explorer, assetId))
+  openExternal(getExplorerAssetLink(net, explorer, assetId))
