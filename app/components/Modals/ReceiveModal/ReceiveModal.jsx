@@ -8,17 +8,15 @@ import CopyToClipboard from '../../CopyToClipboard'
 import { Address } from '../../Blockchain'
 
 type Props = {
-    address: string,
-    hideModal: Function,
-    net: NetworkType,
-    explorer: ExplorerType,
+  address: string,
+  hideModal: Function
 }
 
 export default class ReceiveModal extends Component<Props> {
   canvas: ?HTMLCanvasElement
 
   render () {
-    const { hideModal, address, net, explorer } = this.props
+    const { hideModal, address } = this.props
     return (
       <BaseModal
         onAfterOpen={() => {
@@ -38,7 +36,7 @@ export default class ReceiveModal extends Component<Props> {
         <div className={styles.textContainer}>
           <div>Your Public NEO Address:</div>
           <div className={styles.address}>
-            <Address className={styles.externalLink} net={net} explorer={explorer} address={address} />
+            <Address className={styles.externalLink} address={address} />
             <CopyToClipboard text={address} tooltip='Copy Public Address' />
           </div>
           <div className={styles.canvas}><canvas ref={(node) => { this.canvas = node }} /></div>

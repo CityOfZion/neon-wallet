@@ -2,7 +2,7 @@
 import React from 'react'
 import classNames from 'classnames'
 
-import { openExplorerAddress } from '../../core/explorer'
+import { openExplorerAddress } from '../../../core/explorer'
 import styles from './Address.scss'
 
 type Props = {
