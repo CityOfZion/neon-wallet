@@ -42,10 +42,10 @@ declare type NotificationType = { // eslint-disable-line no-undef
 declare type TransactionHistoryType = { // eslint-disable-line no-undef
   NEO: number,
   GAS: number,
-  txid: number,
+  txid: string,
   block_index: number,
-  neo_sent: number,
-  neo_gas: number
+  neo_sent: boolean,
+  gas_sent: boolean
 }
 
 declare type ModalType = $Values<typeof MODAL_TYPES> // eslint-disable-line no-undef
