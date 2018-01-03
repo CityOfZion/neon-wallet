@@ -26,7 +26,6 @@ type Props = {
   hideModal: Function,
   sendTransaction: Function,
   address: string,
-  isHardwareLogin: boolean,
 }
 
 type BalancesType = {
@@ -65,14 +64,13 @@ export default class SendModal extends Component<Props, State> {
   }
 
   renderDisplay = () => {
-    const { address, isHardwareLogin } = this.props
+    const { address } = this.props
     const { display, balances, entries } = this.state
 
     if (display === DISPLAY_MODES.ADD_RECIPIENT) {
       return (
         <AddRecipientDisplay
           balances={balances}
-          isHardwareLogin={isHardwareLogin}
           onCancel={this.handleCancelAddRecipient}
           onConfirm={this.handleConfirmAddRecipient} />
       )

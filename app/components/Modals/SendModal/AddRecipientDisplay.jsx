@@ -15,7 +15,6 @@ import styles from './AddRecipientDisplay.scss'
 
 type Props = {
   balances: Object,
-  isHardwareLogin: boolean,
   onConfirm: Function,
   onCancel: Function
 }
@@ -39,7 +38,6 @@ export default class AddRecipientDisplay extends React.Component<Props, State> {
 
     const balance = balances[symbol]
     const max = formatBalance(symbol, balance)
-    const disableNEP5Ledger = this.disableNEP5Ledger()
 
     return (
       <div className={styles.addRecipientDisplay}>
@@ -80,9 +78,6 @@ export default class AddRecipientDisplay extends React.Component<Props, State> {
           {isToken(symbol) && (
             <div className={styles.tokenInfoMessage}>Sending NEP5 tokens requires holding at least 1 drop of GAS</div>
           )}
-          {disableNEP5Ledger && (
-            <div className={styles.tokenInfoMessage}>Ledger support is not yet available for NEP5 tokens</div>
-          )}
         </div>
         <div className={styles.actions}>
           <Button cancel onClick={onCancel}>
@@ -107,11 +102,7 @@ export default class AddRecipientDisplay extends React.Component<Props, State> {
 
   canConfirm = () => {
     const { address, amount } = this.state
-    return !!address && !!amount && !this.disableNEP5Ledger()
-  }
-
-  disableNEP5Ledger = () => {
-    return this.props.isHardwareLogin && isToken(this.state.symbol)
+    return !!address && !!amount
   }
 
   getSymbols = () => {

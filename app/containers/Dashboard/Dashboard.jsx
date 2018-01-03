@@ -27,7 +27,6 @@ type Props = {
   tokens: Object,
   loaded: boolean,
   loadWalletData: Function,
-  isHardwareLogin: boolean,
 }
 
 const REFRESH_INTERVAL_MS = 30000
@@ -55,8 +54,7 @@ export default class Dashboard extends Component<Props> {
       tokens,
       showErrorNotification,
       sendTransaction,
-      loaded,
-      isHardwareLogin
+      loaded
     } = this.props
 
     if (!loaded) {
@@ -70,7 +68,7 @@ export default class Dashboard extends Component<Props> {
             <div className={styles.walletButtons}>
               <div
                 className={classNames(styles.walletButton, styles.sendButton)}
-                onClick={() => showModal(MODAL_TYPES.SEND, { NEO, GAS, tokens, showErrorNotification, sendTransaction, address, isHardwareLogin })}>
+                onClick={() => showModal(MODAL_TYPES.SEND, { NEO, GAS, tokens, showErrorNotification, sendTransaction, address })}>
                 <FaArrowUpward className={styles.walletButtonIcon} /><span className={styles.walletButtonText}>Send</span>
               </div>
               <div

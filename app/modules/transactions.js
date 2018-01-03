@@ -42,10 +42,6 @@ export const syncTransactionHistory = (net: NetworkType, address: string) => asy
   }
 }
 
-const containsTokens = (sendEntries: Array<SendEntryType>) => {
-  return sendEntries.some(({ symbol }) => isToken(symbol))
-}
-
 const extractTokens = (sendEntries: Array<SendEntryType>) => {
   return sendEntries.filter(({ symbol }) => isToken(symbol))
 }
@@ -120,10 +116,6 @@ export const sendTransaction = (sendEntries: Array<SendEntryType>) => async (dis
 
   if (error) {
     return rejectTransaction(error)
-  }
-
-  if (isHardwareSend && containsTokens(sendEntries)) {
-    return rejectTransaction('Ledger support is not yet ready for sending NEP5 tokens')
   }
 
   dispatch(showInfoNotification({ message: 'Sending Transaction...', autoDismiss: 0 }))
