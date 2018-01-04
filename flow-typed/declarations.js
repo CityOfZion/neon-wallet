@@ -44,8 +44,8 @@ declare type TransactionHistoryType = {
   GAS: number,
   txid: number,
   block_index: number,
-  neo_sent: number,
-  neo_gas: number
+  neo_sent: boolean,
+  neo_gas: boolean
 }
 
 declare type ModalType = $Values<typeof MODAL_TYPES>
