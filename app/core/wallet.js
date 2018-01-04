@@ -46,7 +46,7 @@ export const validateTransactionBeforeSending = (balance: number, sendEntry: Sen
   return null
 }
 
-export const validateTransactionsBeforeSending = (balances: object, sendEntries: Array<SendEntryType>) => {
+export const validateTransactionsBeforeSending = (balances: Object, sendEntries: Array<SendEntryType>) => {
   const getValidationError = (sendEntry) => {
     const balance = obtainBalance(balances, sendEntry.symbol)
     return validateTransactionBeforeSending(balance, sendEntry)

@@ -26,6 +26,8 @@ const overrideStyles = {
 }
 
 class Notifications extends Component<Props> {
+  rnsRef: any
+
   componentWillReceiveProps (nextProps: Props) {
     // Adapted from https://github.com/gor181/react-notification-system-redux/blob/master/src/notifications.js
     const { hideNotification } = this.props
@@ -59,7 +61,11 @@ class Notifications extends Component<Props> {
 
   render () {
     return (
-      <ReactNotificationSystem ref={(node) => { this.rnsRef = node }} style={overrideStyles} allowHTML />
+      <ReactNotificationSystem
+        ref={(node) => { this.rnsRef = node }}
+        style={overrideStyles}
+        allowHTML
+      />
     )
   }
 }

@@ -17,12 +17,12 @@ type Props = {
   history: Object
 }
 type State = {
-  intervalId: number
+  intervalId: any
 }
 
 export default class LoginLedgerNanoS extends Component<Props, State> {
   state = {
-    intervalId: ''
+    intervalId: null
   }
 
   componentDidMount () {
@@ -33,7 +33,7 @@ export default class LoginLedgerNanoS extends Component<Props, State> {
     this.setState({ intervalId })
   }
 
-  shouldComponentUpdate (nextProps) {
+  shouldComponentUpdate (nextProps: Props) {
     const { publicKey, hardwarePublicKeyInfo, hardwareDeviceInfo } = this.props
     if (nextProps.publicKey !== publicKey ||
         nextProps.hardwarePublicKeyInfo !== hardwarePublicKeyInfo ||
@@ -42,7 +42,10 @@ export default class LoginLedgerNanoS extends Component<Props, State> {
   }
 
   componentWillUnmount () {
-    clearInterval(this.state.intervalId)
+    const { intervalId } = this.state
+    if (intervalId) {
+      clearInterval(intervalId)
+    }
   }
 
   onLedgerNanoSChange = () => {

@@ -58,12 +58,18 @@ export default class NumberInput extends React.Component<Props> {
     }
   }
 
-  handleChange = (event) => {
-    this.props.onChange(event.target.rawValue)
+  handleChange = (event: Object) => {
+    const { onChange } = this.props
+    if (onChange) {
+      return onChange(event.target.rawValue)
+    }
   }
 
   handleMaxValue = () => {
-    this.props.onChange(this.props.max)
+    const { onChange, max } = this.props
+    if (onChange) {
+      return onChange(max)
+    }
   }
 
   getOptions = () => {

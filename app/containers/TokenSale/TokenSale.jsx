@@ -6,7 +6,6 @@ import HomeButtonLink from '../../components/HomeButtonLink'
 
 type Props = {
   NEO: number,
-  loadWalletData: Function,
   participateInSale: Function,
   refreshTokenBalance: Function
 }
@@ -20,11 +19,6 @@ export default class TokenSale extends Component<Props, State> {
   state = {
     scriptHash: '',
     neoToSend: ''
-  }
-
-  componentDidMount () {
-    const { loadWalletData } = this.props
-    loadWalletData()
   }
 
   participateInSale = () => {

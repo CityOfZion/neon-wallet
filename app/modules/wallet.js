@@ -13,9 +13,8 @@ import { ASSETS, TOKENS, TOKENS_TEST, NETWORK } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
 
 const TOKEN_PAIRS = Object.entries(TOKENS)
-// const INITIAL_TOKENS_BALANCE = Object.keys(TOKENS).map((token) => ({ symbol: token, balance: 0 }))
 
-export const getScriptHashForNetwork = (net: NetworkType, symbol: SymbolType) => {
+export const getScriptHashForNetwork = (net: NetworkType, symbol: any) => {
   if (net === NETWORK.TEST && TOKENS_TEST[symbol]) {
     return TOKENS_TEST[symbol]
   }

@@ -76,11 +76,15 @@ export default class AddressInput extends React.Component<Props, State> {
     this.setState({ saving: !this.state.saving, name: '' })
   }
 
-  handleChange = (event) => {
+  handleChange = (event: Object) => {
     this.setState({ name: event.target.value })
   }
 
   handleSave = () => {
-    this.props.onSave(trim(this.state.name))
+    const { onSave } = this.props
+    const { name } = this.state
+    if (onSave) {
+      onSave(trim(name))
+    }
   }
 }

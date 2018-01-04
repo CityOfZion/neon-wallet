@@ -9,6 +9,11 @@ import SelectInput, { DropdownButton } from '../SelectInput'
 
 import styles from './AddressInput.scss'
 
+type ItemType = {
+  label: string,
+  value: string
+}
+
 type Props = {
   value: string,
   addresses?: Object,
@@ -26,7 +31,10 @@ export default class AddressInput extends React.Component<Props> {
   }
 
   componentDidMount = () => {
-    this.props.loadAddresses()
+    const { loadAddresses } = this.props
+    if (loadAddresses) {
+      loadAddresses()
+    }
   }
 
   render = () => {
@@ -43,7 +51,7 @@ export default class AddressInput extends React.Component<Props> {
     )
   }
 
-  renderAfter = (props) => {
+  renderAfter = (props: Props) => {
     if (this.canSave()) {
       return <SaveIcon id='saveIcon' onSave={this.handleSave} />
     } else {
@@ -51,7 +59,7 @@ export default class AddressInput extends React.Component<Props> {
     }
   }
 
-  renderItem = (item, { onSelect }) => {
+  renderItem = (item: ItemType, { onSelect }: { onSelect: Function }) => {
     return (
       <div className={styles.addressItem} key={item.label} tabIndex={0} onClick={onSelect}>
         <div className={styles.meta}>
@@ -69,26 +77,36 @@ export default class AddressInput extends React.Component<Props> {
     )
   }
 
-  handleSave = (name) => {
-    this.props.saveAddress(this.props.value, name)
+  handleSave = (name: string) => {
+    const { saveAddress, value } = this.props
+    if (saveAddress) {
+      saveAddress(value, name)
+    }
   }
 
-  handleDelete = (item) => {
-    return (event) => {
+  handleDelete = (item: ItemType) => {
+    return (event: Object) => {
       event.preventDefault()
       event.stopPropagation()
-      this.props.deleteAddress(item.label)
+      const { deleteAddress } = this.props
+      if (deleteAddress) {
+        deleteAddress(item.label)
+      }
     }
   }
 
   getItems = () => {
-    return map(this.props.addresses, (address, name) => ({
+    const { addresses } = this.props
+    if (!addresses) {
+      return []
+    }
+    return map(addresses, (address, name) => ({
       label: name,
       value: address
     }))
   }
 
-  getItemValue = (item) => {
+  getItemValue = (item: ItemType) => {
     return item.value
   }
 

@@ -9,4 +9,4 @@ const mapStateToProps = (state: Object) => ({
   explorer: getBlockExplorer(state)
 })
 
-export default connect(mapStateToProps)(Address)
+export default connect(mapStateToProps, () => ({}))(Address)
