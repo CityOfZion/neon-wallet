@@ -42,10 +42,10 @@ declare type NotificationType = {
 declare type TransactionHistoryType = {
   NEO: number,
   GAS: number,
-  txid: number,
+  txid: string,
   block_index: number,
   neo_sent: boolean,
-  neo_gas: boolean
+  gas_sent: boolean
 }
 
 declare type ModalType = $Values<typeof MODAL_TYPES>
