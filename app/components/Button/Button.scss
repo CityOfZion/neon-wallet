@@ -9,14 +9,14 @@
     background-color: $default-button;
     cursor: pointer;
 
-    + .button {
+    + .button, + a .button {
         margin-left: 10px;
     }
 
     &.primary {
         background-color: $default-button;
         border-color: $default-button;
-        &:hover:not[disabled] {
+        &:hover:not([disabled]) {
             background-color: $default-button-hover;
             border-color: $default-button-hover;
         }
@@ -25,7 +25,7 @@
     &.secondary {
         background-color: $dark-button;
         border-color: $dark-button;
-        &:hover:not[disabled] {
+        &:hover:not([disabled]) {
             background-color: $dark-button-hover;
             border-color: $dark-button-hover;
         }
@@ -35,7 +35,7 @@
         background-color: transparent;
         border-color: #999;
         color: #000;
-        &:hover:not[disabled] {
+        &:hover:not([disabled]) {
             background-color: transparent;
             border-color: #999;
         }
