@@ -17,7 +17,7 @@ type State = {
   }
 }
 
-const withAddressCheck = () => (Component) => {
+const withAddressCheck = () => (Component: React$ElementType) => {
   return class WithAddressCheckComponent extends React.Component<Props, State> {
     state = {
       addressHasActivity: {}

@@ -11,17 +11,17 @@ import styles from './SelectInput.scss'
 type Props = {
   className?: string,
   value?: string,
-  items?: Array<Object>,
-  renderItem?: Function,
-  renderAfter?: Function,
-  getItemValue?: Function,
+  items: Array<Object>,
+  renderItem: Function,
+  renderAfter: Function,
+  getItemValue: Function,
   onFocus?: Function,
   onChange?: Function
 }
 
 type State = {
   open: boolean,
-  searchTerm: string
+  search: string
 }
 
 export default class SelectInput extends React.Component<Props, State> {
@@ -38,7 +38,7 @@ export default class SelectInput extends React.Component<Props, State> {
     search: ''
   }
 
-  componentWillReceiveProps = (nextProps) => {
+  componentWillReceiveProps = (nextProps: Props) => {
     if (nextProps.value !== this.props.value) {
       this.setState({ search: trim(nextProps.value) })
     }
@@ -62,17 +62,17 @@ export default class SelectInput extends React.Component<Props, State> {
             onChange={this.handleChange}
           />
           <div className={styles.afterInput}>
-            {this.props.renderAfter({ onToggle: this.handleToggle })}
+            {this.props.renderAfter && this.props.renderAfter({ onToggle: this.handleToggle })}
           </div>
         </div>
       </Dropdown>
     )
   }
 
-  renderDropdown = ({ className }) => {
+  renderDropdown = ({ className }: { className: string }) => {
     const items = this.getItems()
     const hasItems = items.length > 0
-    const isSearch = this.state.search.length > 0 && this.props.items.length > 0
+    const isSearch = this.state.search.length > 0 && this.props.items && this.props.items.length > 0
 
     if (hasItems) {
       return (
@@ -91,29 +91,36 @@ export default class SelectInput extends React.Component<Props, State> {
     }
   }
 
-  renderItems = (items) => {
+  renderItems = (items: Array<Object>) => {
     return items.map((item) => {
       const renderItem = this.props.renderItem || this.renderItem
       return renderItem(item, { onSelect: this.generateSelectHandler(item) })
     })
   }
 
-  renderItem = (item, { onSelect }) => {
+  renderItem = (item: Object, { onSelect }: { onSelect: Function }) => {
+    const { getItemValue } = this.props
     return (
-      <div className={styles.dropdownItem} key={this.props.getItemValue(item)} tabIndex={0} onClick={onSelect}>
+      <div className={styles.dropdownItem} key={getItemValue(item)} tabIndex={0} onClick={onSelect}>
         {item}
       </div>
     )
   }
 
-  handleFocus = (event: Event, ...args: Array<any>) => {
+  handleFocus = (event: Object, ...args: Array<any>) => {
+    const { onFocus } = this.props
     event.persist()
-    this.props.onFocus(event, ...args)
+    if (onFocus) {
+      onFocus(event, ...args)
+    }
     this.handleOpen()
   }
 
-  handleChange = (event: Event, ...args: Array<any>) => {
-    this.props.onChange(event.target.value)
+  handleChange = (event: Object, ...args: Array<any>) => {
+    const { onChange } = this.props
+    if (onChange) {
+      onChange(event.target.value)
+    }
   }
 
   handleOpen = () => {
@@ -128,9 +135,12 @@ export default class SelectInput extends React.Component<Props, State> {
     this.setState({ open, search: '' })
   }
 
-  generateSelectHandler = (item) => {
-    return (event) => {
-      this.props.onChange(this.props.getItemValue(item))
+  generateSelectHandler = (item: Object) => {
+    return (event: Object) => {
+      const { onChange, getItemValue } = this.props
+      if (onChange) {
+        onChange(getItemValue(item))
+      }
       this.handleClose()
     }
   }

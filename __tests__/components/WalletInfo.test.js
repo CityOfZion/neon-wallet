@@ -108,7 +108,7 @@ describe('WalletInfo', () => {
     expect(walletValue.text()).toEqual(`Total $${expectedWalletValue} USD`)
     expect(neoField.text()).toEqual(`${initialState.wallet.NEO}`)
     // TODO: Test the GAS tooltip value, this is testing the display value, truncated to 4 decimals
-    expect(gasField.text()).toEqual('1.0001')
+    expect(gasField.text()).toEqual('1.0002')
     done()
   })
   test('refreshBalance is getting called on click', async () => {

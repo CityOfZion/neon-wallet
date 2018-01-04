@@ -14,11 +14,13 @@ type NotificationArgsType = {
   stack?: boolean
 }
 
-type NotificationFactoryArgsType = NotificationArgsType & {
+type NotificationFactoryArgsType = {
+  ...NotificationArgsType,
   level: $Values<typeof NOTIFICATION_LEVELS>
 }
 
-type HideNotificationType = NotificationFactoryArgsType & {
+type HideNotificationType = {
+  ...NotificationFactoryArgsType,
   message?: string
 }
 
@@ -29,7 +31,10 @@ export const DEFAULT_ERROR_TITLE = 'Error'
 export const DEFAULT_WARNING_TITLE = 'Warning'
 export const AUTO_DISMISS_TIMEOUT = 5
 
-const notificationFactory = (args: NotificationFactoryArgsType, dispatch: DispatchType) => {
+const notificationFactory = (
+  args: NotificationFactoryArgsType,
+  dispatch: DispatchType
+): string => {
   const {
     autoDismiss = AUTO_DISMISS_TIMEOUT,
     dismissible = true,
@@ -43,13 +48,15 @@ const notificationFactory = (args: NotificationFactoryArgsType, dispatch: Dispat
     dispatch(hideNotifications({ position, dismissible: true }))
   }
 
-  dispatch(showNotification({
-    id,
-    position,
-    dismissible,
-    autoDismiss,
-    ...args
-  }))
+  dispatch(
+    showNotification({
+      id,
+      position,
+      dismissible,
+      autoDismiss,
+      ...args
+    })
+  )
 
   return id
 }
@@ -77,17 +84,45 @@ export const hideNotifications = (args: HideNotificationType) => ({
   payload: args
 })
 
-export const showSuccessNotification = (args: NotificationArgsType) => (dispatch: DispatchType) =>
-  notificationFactory({ title: DEFAULT_SUCCESS_TITLE, ...args, level: NOTIFICATION_LEVELS.SUCCESS }, dispatch)
+export const showSuccessNotification = (args: NotificationArgsType) => (
+  dispatch: DispatchType
+): string =>
+  notificationFactory(
+    {
+      title: DEFAULT_SUCCESS_TITLE,
+      ...args,
+      level: NOTIFICATION_LEVELS.SUCCESS
+    },
+    dispatch
+  )
 
-export const showErrorNotification = (args: NotificationArgsType) => (dispatch: DispatchType) =>
-  notificationFactory({ title: DEFAULT_ERROR_TITLE, ...args, level: NOTIFICATION_LEVELS.ERROR }, dispatch)
+export const showErrorNotification = (args: NotificationArgsType) => (
+  dispatch: DispatchType
+): string =>
+  notificationFactory(
+    { title: DEFAULT_ERROR_TITLE, ...args, level: NOTIFICATION_LEVELS.ERROR },
+    dispatch
+  )
 
-export const showWarningNotification = (args: NotificationArgsType) => (dispatch: DispatchType) =>
-  notificationFactory({ title: DEFAULT_WARNING_TITLE, ...args, level: NOTIFICATION_LEVELS.WARNING }, dispatch)
+export const showWarningNotification = (args: NotificationArgsType) => (
+  dispatch: DispatchType
+): string =>
+  notificationFactory(
+    {
+      title: DEFAULT_WARNING_TITLE,
+      ...args,
+      level: NOTIFICATION_LEVELS.WARNING
+    },
+    dispatch
+  )
 
-export const showInfoNotification = (args: NotificationArgsType) => (dispatch: DispatchType) =>
-  notificationFactory({ title: DEFAULT_INFO_TITLE, ...args, level: NOTIFICATION_LEVELS.INFO }, dispatch)
+export const showInfoNotification = (args: NotificationArgsType) => (
+  dispatch: DispatchType
+): string =>
+  notificationFactory(
+    { title: DEFAULT_INFO_TITLE, ...args, level: NOTIFICATION_LEVELS.INFO },
+    dispatch
+  )
 
 // state Getters
 export const getNotifications = (state: Object) => state.notifications
@@ -95,10 +130,7 @@ export const getNotifications = (state: Object) => state.notifications
 export default (state: Array<NotificationType> = [], action: ReduxAction) => {
   switch (action.type) {
     case SHOW_NOTIFICATION:
-      return [
-        ...state,
-        { ...action.payload }
-      ]
+      return [...state, { ...action.payload }]
     case HIDE_NOTIFICATION:
       return reject(state, { id: action.payload.id })
     case HIDE_NOTIFICATIONS:

@@ -6,6 +6,13 @@ import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
 
 import passwordFieldStyles from './PasswordField.scss'
 
+type Props = {
+  value?: string,
+  onChange?: Function,
+  placeholder?: string,
+  autoFocus?: boolean
+}
+
 type State = {
   showKey: boolean
 }

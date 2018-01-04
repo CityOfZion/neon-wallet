@@ -52,12 +52,12 @@ const extractAssets = (sendEntries: Array<SendEntryType>) => {
 
 const buildIntents = (sendEntries: Array<SendEntryType>) => {
   const assetEntries = extractAssets(sendEntries)
-
-  return flatMap(assetEntries, ({ address, amount, symbol }) => {
-    return api.makeIntent({
+  // $FlowFixMe
+  return flatMap(assetEntries, ({ address, amount, symbol }) =>
+    api.makeIntent({
       [symbol]: symbol === ASSETS.NEO ? parseInt(amount, 10) : parseFloat(amount)
     }, address)
-  })
+  )
 }
 
 const buildIntentsForInvocation = (sendEntries: Array<SendEntryType>, fromAddress: string) => {
@@ -119,7 +119,7 @@ export const sendTransaction = (sendEntries: Array<SendEntryType>) => async (dis
   }
 
   dispatch(showInfoNotification({ message: 'Sending Transaction...', autoDismiss: 0 }))
-
+  // $FlowFixMe
   log(net, 'SEND', fromAddress, sendEntries.map(({ address, amount, symbol }) => ({
     to: address,
     asset: symbol,

@@ -8,7 +8,7 @@ import styles from './AssetInput.scss'
 
 type Props = {
   className?: string,
-  symbols: Array<string>
+  symbols: Array<SymbolType>
 }
 
 export default class AssetInput extends React.Component<Props> {
