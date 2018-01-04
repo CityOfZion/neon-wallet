@@ -30,13 +30,13 @@ const transactions = {
   wallet: {
     transactions: [
       {
-        type: 'NEO',
-        amount: '50',
+        NEO: 50,
+        GAS: 0.00000000,
         txid: '76938979'
       },
       {
-        type: 'GAS',
-        amount: '0.40000000',
+        NEO: 0,
+        GAS: 0.40000000,
         txid: '76938980'
       }
     ]
@@ -82,7 +82,7 @@ describe('TransactionHistory', () => {
   test('correctly renders no transaction history', (done) => {
     const { wrapper } = setup(initialState, false)
 
-    const columnHeader = wrapper.find('.columnHeader')
+    const columnHeader = wrapper.find('#columnHeader')
     expect(columnHeader.text()).toEqual('Transaction History ')
 
     const transactionList = wrapper.find('#transactionList')
@@ -96,10 +96,10 @@ describe('TransactionHistory', () => {
 
     const transactionList = wrapper.find('#transactionList')
     expect(transactionList.children().length).toEqual(2)
-    expect(transactionList.childAt(0).find('.txid').text()).toEqual(transactions.wallet.transactions[0].txid)
-    expect(transactionList.childAt(1).find('.txid').text()).toEqual(transactions.wallet.transactions[1].txid)
-    expect(transactionList.childAt(0).find('.amount').text()).toEqual(`${transactions.wallet.transactions[0].amount} ${transactions.wallet.transactions[0].type}`)
-    expect(transactionList.childAt(1).find('.amount').text()).toEqual(`${transactions.wallet.transactions[1].amount} ${transactions.wallet.transactions[1].type}`)
+    expect(transactionList.childAt(0).find('.txid').first().text()).toEqual(transactions.wallet.transactions[0].txid)
+    expect(transactionList.childAt(1).find('.txid').first().text()).toEqual(transactions.wallet.transactions[1].txid)
+    expect(transactionList.childAt(0).find('.amountNEO').text()).toEqual('50 NEO')
+    expect(transactionList.childAt(1).find('.amountGAS').text()).toEqual('0.40000000 GAS')
     done()
   })
 })
