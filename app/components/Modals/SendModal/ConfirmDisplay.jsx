@@ -51,7 +51,7 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
           </Table>
 
           <div className={styles.addRecipient}>
-            <a href='#' onClick={this.props.onAddRecipient}>+ Add Recipient</a>
+            <a onClick={this.props.onAddRecipient}>+ Add Recipient</a>
           </div>
         </div>
 
