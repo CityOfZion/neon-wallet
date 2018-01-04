@@ -1,35 +1,41 @@
 // @flow
 import { ASSETS } from './constants'
-import numeral from 'numeral'
-
-import { truncateNumber } from './math'
+import { toBigNumber } from './math'
 
 export const COIN_DECIMAL_LENGTH = 8
 export const SHORT_DISPLAY_DECIMAL_LENGTH = 4
 
-const formatWithDecimals = (value: number | string, decimals: number) => numeral(value).format(`0,0.${'0'.repeat(decimals)}`)
+type ValueType = string | number;
 
-export const formatGAS = (value: number | string, shortDisplay: boolean = false): string => {
-  const decimals = shortDisplay ? SHORT_DISPLAY_DECIMAL_LENGTH : COIN_DECIMAL_LENGTH
-  const result = formatWithDecimals(truncateNumber(value, decimals), decimals)
-  // https://github.com/adamwdraper/Numeral-js/issues/575
-  if (result === 'NaN') {
-    return toFixedDecimals(value, decimals)
-  }
-  return result
+export const formatGAS = (
+  value: ValueType,
+  shortDisplay: boolean = false
+): string => {
+  const decimals = shortDisplay
+    ? SHORT_DISPLAY_DECIMAL_LENGTH
+    : COIN_DECIMAL_LENGTH
+  return toBigNumber(value).toFormat(decimals)
 }
 
-export const formatThousands = (value: number | string): string => numeral(value).format('0,0')
+export const formatThousands = (value: ValueType): string =>
+  toBigNumber(value).toFormat(0)
 
-export const formatNEO = (value: number | string): string => formatThousands(value)
+export const formatNEO = (value: ValueType): string =>
+  toBigNumber(value).toFormat(0)
 
-export const formatBalance = (symbol: SymbolType, balance: number, shortDisplay: boolean = false) => {
+export const formatBalance = (
+  symbol: SymbolType,
+  balance: ValueType,
+  shortDisplay: boolean = false
+): string => {
   if (symbol === ASSETS.NEO) {
     return formatNEO(balance)
   }
   return formatGAS(balance, shortDisplay)
 }
 
-export const toFixedDecimals = (value: number | string, decimals: number) => truncateNumber(parseFloat(value), decimals).toFixed(decimals)
+export const toFixedDecimals = (value: ValueType, decimals: number): number =>
+  toBigNumber(value).toFixed(COIN_DECIMAL_LENGTH)
 
-export const formatFiat = (value: number | string): string => numeral(value).format('0,0.00')
+export const formatFiat = (value: ValueType): string =>
+  toBigNumber(value).toFormat(2)
