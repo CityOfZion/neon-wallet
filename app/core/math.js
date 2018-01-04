@@ -7,4 +7,4 @@ export const truncateNumber = (num: number, places: number): number =>
 
 // https://github.com/MikeMcl/bignumber.js/issues/11
 export const toBigNumber = (value: number | string) =>
-  new BigNumber(String(value).replace(',',''))
+  new BigNumber(String(value).replace(/,/g,''))
