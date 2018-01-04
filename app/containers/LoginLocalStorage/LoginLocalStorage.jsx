@@ -2,85 +2,71 @@
 import React, { Component } from 'react'
 import storage from 'electron-json-storage'
 import { map } from 'lodash'
-import FaEye from 'react-icons/lib/fa/eye'
-import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
-import Page from '../../components/Page'
+
+import PasswordField from '../../components/PasswordField'
 import HomeButtonLink from '../../components/HomeButtonLink'
+import Button from '../../components/Button'
+
 import styles from './LoginLocalStorage.scss'
 import loginStyles from '../../styles/login.scss'
 
 type Props = {
-  setKeys: Function,
+  setAccounts: Function,
   loginNep2: Function,
   history: Object,
-  accountKeys: Object
+  accounts: Object
 }
 
 type State = {
-  showKey: boolean,
   passphrase: string,
-  wif: string,
+  encryptedWIF: string,
 }
 
 export default class LoginLocalStorage extends Component<Props, State> {
   state = {
-    showKey: false,
     passphrase: '',
-    wif: ''
+    encryptedWIF: ''
   }
 
   componentDidMount () {
-    const { setKeys } = this.props
+    const { setAccounts } = this.props
     // eslint-disable-next-line
-    storage.get('keys', (error, data) => {
-      setKeys(data)
+    storage.get('userWallet', (error, data) => {
+      setAccounts(data.accounts)
     })
   }
 
-  toggleKeyVisibility = () => {
-    this.setState(prevState => ({
-      showKey: !prevState.showKey
-    }))
-  }
-
   render () {
-    const { accountKeys, history, loginNep2 } = this.props
-    const { showKey, passphrase, wif } = this.state
-    const loginButtonDisabled = Object.keys(accountKeys).length === 0 || wif === '' || passphrase === ''
+    const { accounts, history, loginNep2 } = this.props
+    const { passphrase, encryptedWIF } = this.state
+    const loginButtonDisabled = Object.keys(accounts).length === 0 || encryptedWIF === '' || passphrase === ''
 
     return (
-      <Page id='loginPage' className={loginStyles.loginPage}>
+      <div id='loginPage' className={loginStyles.loginPage}>
         <div className={loginStyles.title}>Login using a saved wallet:</div>
-        <select
-          className={styles.selectWallet}
-          value={wif}
-          onChange={(e) => this.setState({ wif: e.target.value })}
-        >
-          <option value=''>Select a wallet</option>
-          {map(accountKeys, (value, key) => <option value={value} key={`wallet${key}`}>{key}</option>)}
-        </select>
-        <div className={loginStyles.loginForm}>
-          <input
-            type={showKey ? 'text' : 'password'}
-            placeholder='Enter your passphrase here'
-            value={passphrase}
-            onChange={(e) => this.setState({ passphrase: e.target.value })}
-            autoFocus
-          />
-
-          {showKey
-            ? <FaEyeSlash className={loginStyles.viewKey} onClick={this.toggleKeyVisibility} />
-            : <FaEye className={loginStyles.viewKey} onClick={this.toggleKeyVisibility} />
-          }
-        </div>
-        <div>
-          <button
-            className={loginButtonDisabled && 'disabled'}
-            onClick={() => loginNep2(passphrase, wif, history)}
-            disabled={loginButtonDisabled}>Login</button>
-          <HomeButtonLink />
-        </div>
-      </Page>
+        <form onSubmit={(e) => { e.preventDefault(); loginNep2(passphrase, encryptedWIF, history) }}>
+          <select
+            className={styles.selectWallet}
+            value={encryptedWIF}
+            onChange={(e) => this.setState({ encryptedWIF: e.target.value })}
+          >
+            <option value=''>Select a wallet</option>
+            {map(accounts, (account, index) => <option value={account.key} key={`wallet${account.label}`}>{account.label}</option>)}
+          </select>
+          <div className={loginStyles.loginForm}>
+            <PasswordField
+              placeholder='Enter your passphrase here'
+              value={passphrase}
+              onChange={(e) => this.setState({ passphrase: e.target.value })}
+              autoFocus
+            />
+          </div>
+          <div>
+            <Button type='submit' disabled={loginButtonDisabled}>Login</Button>
+            <HomeButtonLink />
+          </div>
+        </form>
+      </div>
     )
   }
 }

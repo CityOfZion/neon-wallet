@@ -1,24 +1,19 @@
 // @flow
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import TokenSale from './TokenSale'
-import { initiateGetBalance } from '../../modules/wallet'
-import { updateRpxBalance, refreshTokenBalance, participateInSale } from '../../modules/rpx'
 
-const mapStateToProps = (state) => ({
-  explorer: state.metadata.blockExplorer,
-  wif: state.account.wif,
-  neo: state.wallet.Neo,
-  net: state.metadata.network,
-  address: state.account.address,
-  rpx: state.rpx.RPX
+import { loadWalletData, getNEO } from '../../modules/wallet'
+import { participateInSale } from '../../modules/sale'
+
+import TokenSale from './TokenSale'
+
+const mapStateToProps = (state: Object) => ({
+  NEO: getNEO(state)
 })
 
 const actionCreators = {
-  initiateGetBalance,
-  updateRpxBalance,
-  participateInSale,
-  refreshTokenBalance
+  loadWalletData,
+  participateInSale
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)

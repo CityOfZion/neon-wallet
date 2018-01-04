@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Address should render without crashing 1`] = `
+<span
+  className="address"
+  onClick={[Function]}
+>
+  AW4FD7bz6PF2QadFKF8qXUT7tNmWgvXZc4
+</span>
+`;

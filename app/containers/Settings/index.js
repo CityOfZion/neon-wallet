@@ -1,18 +1,29 @@
 // @flow
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+
+import { setAccounts, getAccounts } from '../../modules/account'
+import { setBlockExplorer, getBlockExplorer } from '../../modules/metadata'
+import { setCurrency, getCurrency } from '../../modules/price'
+import { showErrorNotification, showSuccessNotification } from '../../modules/notifications'
+
+import { showModal } from '../../modules/modal'
+
 import Settings from './Settings'
-import { setKeys } from '../../modules/account'
-import { setBlockExplorer } from '../../modules/metadata'
 
 const mapStateToProps = (state: Object) => ({
-  explorer: state.metadata.blockExplorer,
-  wallets: state.account.accountKeys
+  explorer: getBlockExplorer(state),
+  currency: getCurrency(state),
+  accounts: getAccounts(state)
 })
 
 const actionCreators = {
-  setKeys,
-  setBlockExplorer
+  setAccounts,
+  setBlockExplorer,
+  setCurrency,
+  showModal,
+  showErrorNotification,
+  showSuccessNotification
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)

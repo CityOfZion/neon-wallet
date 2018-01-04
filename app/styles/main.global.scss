@@ -1,4 +1,5 @@
 @import './variables';
+
 @media print {
     #newWallet {
         font-size: .8em;
@@ -13,34 +14,8 @@ body {
     margin: 0px;
     background-color: $main-background;
     color: $default-text;
-}
-
-button {
-    font-size: 1em;
-    padding: 6px 12px;
-    margin-right: 10px;
-    color: $button-text;
-    background-color: $default-button;
-    border: none;
-    cursor: pointer;
-
-    &:hover {
-        background-color: $default-button-hover;
-    }
-
-    a {
-        text-decoration: none;
-        color: inherit;
-    }
-
-    &.disabled {
-        opacity: .6;
-        cursor: default;
-
-        &:hover {
-            background-color: $default-button;
-        }
-    }
+    overflow: hidden;
+    :focus { outline: none; }
 }
 
 input {
@@ -50,12 +25,16 @@ input {
     font-weight: 200;
     background-color: $dark-input-color;
     color: $default-text;
+    :focus { outline: none; }
+}
+
+.notification-link {
+    text-decoration: none;
+    color: $default-text;
 }
 
 #settings,
 #tokenSale {
-    width: $page-width;
-    margin: $top-margin auto $top-margin auto;
     .description {
         font-size: 1.2em;
         font-weight: 200;
@@ -93,7 +72,7 @@ input {
         margin-right: 10px;
     }
     .walletName {
-        width: 20%;
+        width: 25%;
     }
     .walletKey {
         width: 50%;
@@ -117,25 +96,11 @@ input {
 }
 
 #newWallet {
-    width: $page-width;
-    margin: $top-margin auto $top-margin auto;
-    .copyKey {
-        margin-left: 5px;
-        color: #000;
-    }
     input {
         width: 95%;
         margin-bottom: 10px;
     }
-    .generating {
-        margin: 20px 0px;
-        font-size: 1.4em;
-        font-weight: 200;
-    }
-    .copyKey:hover {
-        opacity: .7;
-        cursor: pointer;
-    }
+
     .disclaimer {
         margin-bottom: 20px;
         font-size: 1.4em;
@@ -175,7 +140,7 @@ input {
     button {
         margin-top: 10px;
     }
-    .saveKey {
+    .saveAccount {
         margin-bottom: 10px;
         input {
             width: 300px;
@@ -201,74 +166,10 @@ input {
             font-weight: 200;
         }
     }
-    
-    #confirmPane {
-        margin: 0px auto;
-        button {
-            margin-top: 0px;
-            background-color: $dark-button;
-            height: 33px;
-            margin-left: 10px;
-            color: white;
-            margin-right: 0px;
-        }
-        button:hover {
-            background-color: $dark-button-hover;
-        }
-    }
-    #sendPane {
-        position: relative;
-        width: 96%;
-        margin: 8px auto 0px auto;
-        overflow: hidden;
-        input {
-            font-size: .9em;
-            height: 30px;
-            border: none;
-            color: $thin-text-color;
-            background-color: white;
-        }
-        button {
-            margin-top: 10px;
-            background-color: $default-button;
-            height: 33px;
-            margin-left: 10px;
-            color: white;
-            margin-right: 0px;
-
-            &:hover {
-                background-color: $default-button-hover;
-            }
-        }
-
-        #sendAddress {
-            width: 100%;
-            input {
-                width: 96%;
-                padding: 0px 2%;
-            }
-        }
-        button#sendAsset {
-            background-color: $dark-button;
-        }
-        button#sendAsset:hover {
-            background-color: $dark-button-hover;
-        }
-        #sendAmount {
-            margin-top: 3px;
-            display: inline-block;
-            width: 50%;
-            height: 30px;
-            margin-right: 0px;
-            input {
-                width: 96%;
-                padding: 0px 2%;
-            }
-        }
-    }
     #accountInfo {
         margin: 20px 0px;
         width: 100%;
+        position: relative;
         text-align: center;
         span.copyKey {
             margin-left: 3px;
@@ -282,9 +183,6 @@ input {
             margin-bottom: 20px;
             margin-top: 1px;
             letter-spacing: .07em;
-        }
-        .qrCode {
-            margin-top: 20px;
         }
         #balance {
             margin: 20px 0px;
@@ -311,89 +209,7 @@ input {
             .walletTotal {
                 padding-top: 10px;
             }
-            #refresh {
-                font-size: 2.2em;
-                position: absolute;
-                top: 100px;
-                left: 47%;
-                cursor: pointer;
-                color: $default-button;
-            }
-            #refresh:hover {
-                color: $default-button-hover;
-            }
         }
-    }
-    #transactionInfo {
-        padding: 14px 0px;
-        text-align: center;
-        .columnHeader {
-            font-size: 1.2em;
-            font-weight: 200;
-        }
-        .headerSpacer {
-            width: 84%;
-            margin: 15px 8%;
-            border-top: 3px solid $spacer-color;
-        }
-    }
-    ul#transactionList {
-        margin: 0;
-        padding: 0;
-        overflow-y: auto;
-        height: 600px;
-        li {
-            list-style-type: none;
-            font-weight: 200;
-            border-bottom: 1px solid $spacer-color;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-            .txid {
-                position: relative;
-                top: 2px;
-                display: inline-block;
-                width: 44%;
-                margin-left: 4%;
-                text-align: left;
-                font-family: 'courier new';
-                font-size: .7em;
-                cursor: pointer;
-            }
-            .amount {
-                display: inline-block;
-                width: 44%;
-                margin-right: 4%;
-                text-align: right;
-                color: $thin-text-color;
-            }
-        }
-    }
-}
-
-.leftSplit {
-    .Pane1 {
-        background-color: $default-button;
-        cursor: pointer;
-        border-bottom: none;
-        color: $button-text;
-        &:hover {
-            background-color: $default-button-hover;
-            color: $button-text;
-        }
-    }
-}   
-.sendSplit {
-    .Pane1 {
-        background-color: $secondary-background;
-        &:hover {
-            background-color: $secondary-background;
-        }
-    }
-}
-
-.confirmSplit {
-    .horizontal.Pane1 {
-        border: none;
     }
 }
 
@@ -409,5 +225,18 @@ input {
     &.solidTip {
         background-color: rgba(0, 0, 0, 1);
         z-index: $z-index-tooltip;
+    }
+}
+
+.ReactModalPortal {
+    .ReactModal__Overlay {
+        opacity: 0;
+        transition: opacity 200ms ease-in-out;
+        &--after-open {
+            opacity: 1;
+        }
+        &--before-close {
+            opacity: 0;
+        }
     }
 }

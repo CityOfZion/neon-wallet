@@ -1,9 +1,12 @@
 // @flow
 import React, { Component } from 'react'
-import Page from '../../components/Page'
-import loginStyles from '../../styles/login.scss'
+
 import HomeButtonLink from '../../components/HomeButtonLink'
-import { ROUTES } from '../../core/constants'
+import Button from '../../components/Button'
+
+import { ROUTES, FINDING_LEDGER_NOTICE } from '../../core/constants'
+
+import loginStyles from '../../styles/login.scss'
 
 type Props = {
   ledgerNanoSGetLogin: Function,
@@ -13,14 +16,36 @@ type Props = {
   publicKey: string,
   history: Object
 }
+type State = {
+  intervalId: any
+}
 
-export default class LoginLedgerNanoS extends Component<Props> {
-  componentDidMount () {
-    this._componentDidMount(this.props.ledgerNanoSGetInfoAsync)
+export default class LoginLedgerNanoS extends Component<Props, State> {
+  state = {
+    intervalId: null
   }
 
-  _componentDidMount = async (getInfoAsync: Function) => {
-    await getInfoAsync()
+  componentDidMount () {
+    const { ledgerNanoSGetInfoAsync } = this.props
+    const intervalId = setInterval(async () => {
+      await ledgerNanoSGetInfoAsync()
+    }, 1000)
+    this.setState({ intervalId })
+  }
+
+  shouldComponentUpdate (nextProps: Props) {
+    const { publicKey, hardwarePublicKeyInfo, hardwareDeviceInfo } = this.props
+    if (nextProps.publicKey !== publicKey ||
+        nextProps.hardwarePublicKeyInfo !== hardwarePublicKeyInfo ||
+        (nextProps.hardwareDeviceInfo === FINDING_LEDGER_NOTICE && hardwareDeviceInfo === null)) return true
+    return false
+  }
+
+  componentWillUnmount () {
+    const { intervalId } = this.state
+    if (intervalId) {
+      clearInterval(intervalId)
+    }
   }
 
   onLedgerNanoSChange = () => {
@@ -34,17 +59,17 @@ export default class LoginLedgerNanoS extends Component<Props> {
   render () {
     const { hardwareDeviceInfo, hardwarePublicKeyInfo, publicKey } = this.props
     return (
-      <Page id='loginPage' className={loginStyles.loginPage}>
+      <div id='loginPage' className={loginStyles.loginPage}>
         <div className={loginStyles.title}>Login using the Ledger Nano S:</div>
         <div className={loginStyles.loginForm}>
           <div>
-            <button className={!publicKey && 'disabled'} onClick={this.onLedgerNanoSChange}>Use Ledger Nano S</button>
+            <Button disabled={!publicKey} onClick={this.onLedgerNanoSChange}>Use Ledger Nano S</Button>
             <HomeButtonLink />
           </div>
           <p>{hardwareDeviceInfo}</p>
           <p>{hardwarePublicKeyInfo}</p>
         </div>
-      </Page>
+      </div>
     )
   }
 }

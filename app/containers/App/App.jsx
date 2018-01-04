@@ -1,34 +1,44 @@
 // @flow
 import React, { Component } from 'react'
-import Notification from '../../components/Notification'
-import classNames from 'classnames'
-import { NOTIFICATION_POSITIONS } from '../../core/constants'
+
+import ModalRenderer from '../ModalRenderer'
+import Notifications from '../Notifications'
+
+import { upgradeUserWalletNEP6 } from '../../modules/generateWallet'
+
+import Header from './Header'
+import Footer from './Footer'
+
 import styles from './App.scss'
 
 type Props = {
   children: React$Node,
-  notification: NotificationType,
-  hideNotification: Function,
-  checkVersion: Function
+  checkVersion: Function,
+  initSettings: Function,
+  showErrorNotification: Function
 }
 
 class App extends Component<Props> {
   componentDidMount () {
-    const { checkVersion } = this.props
+    const { checkVersion, initSettings, showErrorNotification } = this.props
+
     checkVersion()
+    initSettings()
+    upgradeUserWalletNEP6()
+      .catch((e) => {
+        showErrorNotification({ message: `Error upgrading legacy wallet: ${e.message}` })
+      })
   }
 
   render () {
-    const { children, notification, hideNotification } = this.props
-    const { position, isShown, noAnimation } = notification
-    const shouldPushTop = isShown && position === NOTIFICATION_POSITIONS.TOP
+    const { children } = this.props
     return (
-      <div>
-        <Notification notification={notification} hideNotification={hideNotification} />
-        <div className={classNames(styles.container, {
-          [styles.pushTop]: shouldPushTop,
-          [styles.noAnimation]: noAnimation
-        })}>{children}</div>
+      <div className={styles.container}>
+        <Header />
+        <div className={styles.content}>{children}</div>
+        <Notifications />
+        <ModalRenderer />
+        <Footer />
       </div>
     )
   }

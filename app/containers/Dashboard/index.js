@@ -1,22 +1,32 @@
 // @flow
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+
+import { logout, getAddress } from '../../modules/account'
+import { getNetwork } from '../../modules/metadata'
+import { getNotifications, showErrorNotification } from '../../modules/notifications'
+import { getNEO, getGAS, getTokens, getIsLoaded, loadWalletData } from '../../modules/wallet'
+import { showModal } from '../../modules/modal'
+import { sendTransaction } from '../../modules/transactions'
+
 import Dashboard from './Dashboard'
-import { togglePane } from '../../modules/dashboard'
-import { logout } from '../../modules/account'
 
 const mapStateToProps = (state: Object) => ({
-  sendPane: state.dashboard.sendPane,
-  confirmPane: state.dashboard.confirmPane,
-  blockHeight: state.metadata.blockHeight,
-  net: state.metadata.network,
-  address: state.account.address,
-  notification: state.notification
+  net: getNetwork(state),
+  address: getAddress(state),
+  notification: getNotifications(state),
+  NEO: getNEO(state),
+  GAS: getGAS(state),
+  tokens: getTokens(state),
+  loaded: getIsLoaded(state)
 })
 
 const actionCreators = {
-  togglePane,
-  logout
+  logout,
+  showModal,
+  showErrorNotification,
+  sendTransaction,
+  loadWalletData
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)

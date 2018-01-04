@@ -1,16 +1,41 @@
 // @flow
-import { truncateNumber } from './math'
+import { ASSETS } from './constants'
+import { toBigNumber } from './math'
 
-const GAS_DECIMAL_LENGTH = 7
-const GAS_DECIMAL_SHORT_DISPLAY_LENGTH = 4
+export const COIN_DECIMAL_LENGTH = 8
+export const SHORT_DISPLAY_DECIMAL_LENGTH = 4
 
-const FIAT_DECIMAL_LENGTH = 2
+type ValueType = string | number;
 
-export const formatGAS = (gas: number | string, shortDisplay: boolean = false): string => {
-  const decimalLength = shortDisplay ? GAS_DECIMAL_SHORT_DISPLAY_LENGTH : GAS_DECIMAL_LENGTH
-  return truncateNumber(parseFloat(gas), decimalLength).toFixed(decimalLength)
+export const formatGAS = (
+  value: ValueType,
+  shortDisplay: boolean = false
+): string => {
+  const decimals = shortDisplay
+    ? SHORT_DISPLAY_DECIMAL_LENGTH
+    : COIN_DECIMAL_LENGTH
+  return toBigNumber(value).toFormat(decimals)
 }
 
-export const formatNEO = (neo: number | string): number => parseInt(neo, 10)
+export const formatThousands = (value: ValueType): string =>
+  toBigNumber(value).toFormat(0)
 
-export const formatFiat = (value: number | string): string => parseFloat(value).toFixed(FIAT_DECIMAL_LENGTH)
+export const formatNEO = (value: ValueType): string =>
+  toBigNumber(value).toFormat(0)
+
+export const formatBalance = (
+  symbol: SymbolType,
+  balance: ValueType,
+  shortDisplay: boolean = false
+): string => {
+  if (symbol === ASSETS.NEO) {
+    return formatNEO(balance)
+  }
+  return formatGAS(balance, shortDisplay)
+}
+
+export const toFixedDecimals = (value: ValueType, decimals: number): string =>
+  toBigNumber(value).toFixed(COIN_DECIMAL_LENGTH)
+
+export const formatFiat = (value: ValueType): string =>
+  toBigNumber(value).toFormat(2)

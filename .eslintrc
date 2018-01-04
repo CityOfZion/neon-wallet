@@ -1,5 +1,6 @@
 {
     "parser": "babel-eslint",
+    "extends": ["standard", "standard-react", "plugin:flowtype/recommended"],
     "plugins": [
         "react",
         "flowtype"
@@ -18,5 +19,7 @@
         "setTimeout": true,
         "window": true
     },
-    "extends": ["standard", "standard-react", "plugin:flowtype/recommended"]
+    "rules": {
+    "flowtype/define-flow-type": 2
+    }
 }

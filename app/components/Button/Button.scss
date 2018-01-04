@@ -1,19 +1,48 @@
 @import '../../styles/variables';
 
 .button {
-    cursor: pointer;    
-}
-
-.primary {
+    padding: 6px 12px;
+    border-width: 1px;
+    border-style: solid;
+    font-size: 1em;
+    color: $button-text;
     background-color: $default-button;
-    &:hover {
-        background-color: $default-button-hover;
-    }
-}
+    cursor: pointer;
 
-.secondary {
-    background-color: $dark-button;
-    &:hover {
-        background-color: $dark-button-hover;
+    + .button, + a .button {
+        margin-left: 10px;
+    }
+
+    &.primary {
+        background-color: $default-button;
+        border-color: $default-button;
+        &:hover:not([disabled]) {
+            background-color: $default-button-hover;
+            border-color: $default-button-hover;
+        }
+    }
+
+    &.secondary {
+        background-color: $dark-button;
+        border-color: $dark-button;
+        &:hover:not([disabled]) {
+            background-color: $dark-button-hover;
+            border-color: $dark-button-hover;
+        }
+    }
+
+    &.cancel {
+        background-color: transparent;
+        border-color: #999;
+        color: #000;
+        &:hover:not([disabled]) {
+            background-color: transparent;
+            border-color: #999;
+        }
+    }
+
+    &[disabled] {
+        opacity: .6;
+        cursor: default;
     }
 }

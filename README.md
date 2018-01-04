@@ -27,9 +27,9 @@
 
 ### What does it currently do
 
-- View Gas and Neo balances
+- View GAS and NEO balances
 - Login via Wif and encrypted private keys
-- Send Neo to other addresses
+- Send NEO to other addresses
 
 ## Installation
 
@@ -46,6 +46,7 @@ Execute these commands in the project's root directory:
 
 Setup:
   - `yarn install` - Installing node dependencies
+    - If you get any errors related to the node-hid package, please check installation instructions here: https://github.com/node-hid/node-hid#compiling-from-source. On Linux you may need to run `sudo apt install libusb-1.0-0 libusb-1.0-0-dev`, for example.
   - `./node_modules/.bin/electron -v` confirm electron is version 1.7.9
 
 Developing:
@@ -66,4 +67,4 @@ A gentle reminder, github issues is meant to be used by developers for maintaini
 - *"I lost my private key, is there anyway to recover it?"*
 - *"Why is my balance not showing?"*
 
-should be asked in proper support channels such as the [NEO subreddit](https://www.reddit.com/r/NEO/), or the official [NEO slack](https://neosmarteconomy.slack.com). You should also check the list of [frequently asked questions (FAQ)](https://github.com/CityOfZion/awesome-neo/blob/master/resources/faq.md) to see if your question has been answered there already.
+should be asked in proper support channels such as the [NEO subreddit](https://www.reddit.com/r/NEO/), or the official [NEO Discord Channel](https://discord.gg/R8v48YA). You should also check the list of [frequently asked questions (FAQ)](https://github.com/CityOfZion/awesome-NEO/blob/master/resources/faq.md) to see if your question has been answered there already.

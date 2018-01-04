@@ -3,7 +3,9 @@ import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { shallow, mount } from 'enzyme'
+
 import { setTransactionHistory } from '../../app/modules/wallet'
+import { setIsLoadingTransaction } from '../../app/modules/transactions'
 
 import TransactionHistory from '../../app/containers/TransactionHistory'
 
@@ -18,6 +20,9 @@ const initialState = {
   },
   wallet: {
     transactions: []
+  },
+  transactions: {
+    isLoadingTransactions: false
   }
 }
 
@@ -25,13 +30,13 @@ const transactions = {
   wallet: {
     transactions: [
       {
-        type: 'NEO',
-        amount: '50',
+        NEO: 50,
+        GAS: 0.00000000,
         txid: '76938979'
       },
       {
-        type: 'GAS',
-        amount: '0.4000000',
+        NEO: 0,
+        GAS: 0.40000000,
         txid: '76938980'
       }
     ]
@@ -65,20 +70,20 @@ describe('TransactionHistory', () => {
     done()
   })
 
-  test('calls syncTransactionHistory after rendering', (done) => {
+  test('calls syncTransactionHistory after rendering', async () => {
     const { store } = setup(initialState, false)
-    const state = store.getState()
-    setTimeout(() => {
-      expect(store.getActions()[0]).toEqual(setTransactionHistory(initialState.wallet.transactions))
-      done()
-    }, 0)
+    await Promise.resolve('Pause').then().then().then()
+    const actions = store.getActions()
+    expect(actions[0]).toEqual(setIsLoadingTransaction(true))
+    expect(actions[1]).toEqual(setIsLoadingTransaction(false))
+    expect(actions[2]).toEqual(setTransactionHistory(initialState.wallet.transactions))
   })
 
   test('correctly renders no transaction history', (done) => {
-    const { store, wrapper } = setup(initialState, false)
+    const { wrapper } = setup(initialState, false)
 
-    const columnHeader = wrapper.find('.columnHeader')
-    expect(columnHeader.text()).toEqual('Transaction History')
+    const columnHeader = wrapper.find('#columnHeader')
+    expect(columnHeader.text()).toEqual('Transaction History ')
 
     const transactionList = wrapper.find('#transactionList')
     expect(transactionList.children().length).toEqual(0)
@@ -87,14 +92,14 @@ describe('TransactionHistory', () => {
 
   test('correctly renders with NEO and GAS transaction history', (done) => {
     const transactionState = Object.assign({}, initialState, transactions)
-    const { store, wrapper } = setup(transactionState, false)
+    const { wrapper } = setup(transactionState, false)
 
     const transactionList = wrapper.find('#transactionList')
     expect(transactionList.children().length).toEqual(2)
-    expect(transactionList.childAt(0).find('.txid').text()).toEqual(transactions.wallet.transactions[0].txid)
-    expect(transactionList.childAt(1).find('.txid').text()).toEqual(transactions.wallet.transactions[1].txid)
-    expect(transactionList.childAt(0).find('.amount').text()).toEqual(`${transactions.wallet.transactions[0].amount} ${transactions.wallet.transactions[0].type}`)
-    expect(transactionList.childAt(1).find('.amount').text()).toEqual(`${transactions.wallet.transactions[1].amount} ${transactions.wallet.transactions[1].type}`)
+    expect(transactionList.childAt(0).find('.txid').first().text()).toEqual(transactions.wallet.transactions[0].txid)
+    expect(transactionList.childAt(1).find('.txid').first().text()).toEqual(transactions.wallet.transactions[1].txid)
+    expect(transactionList.childAt(0).find('.amountNEO').text()).toEqual('50 NEO')
+    expect(transactionList.childAt(1).find('.amountGAS').text()).toEqual('0.40000000 GAS')
     done()
   })
 })

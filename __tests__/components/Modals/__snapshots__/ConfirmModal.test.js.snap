@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConfirmModal should render without crashing 1`] = `
+<BaseModal
+  height="450px"
+  hideModal={[Function]}
+  style={
+    Object {
+      "content": Object {
+        "height": "175px",
+        "width": "450px",
+      },
+    }
+  }
+  title="test modal"
+  width="450px"
+>
+  <div
+    className="textContainer"
+  >
+    <strong
+      className="text"
+    >
+      text
+    </strong>
+  </div>
+  <div
+    className="modalFooter"
+  >
+    <Button
+      cancel={false}
+      className="actionButton"
+      id="confirm"
+      onClick={[Function]}
+      primary={true}
+      secondary={false}
+    >
+      Confirm
+    </Button>
+    <Button
+      cancel={true}
+      id="cancel"
+      onClick={[Function]}
+      primary={true}
+      secondary={false}
+    >
+      Cancel
+    </Button>
+  </div>
+</BaseModal>
+`;

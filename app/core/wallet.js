@@ -1,74 +1,58 @@
 // @flow
-import { ASSETS_LABELS } from './constants'
-import { getAccountFromWIFKey, verifyAddress } from 'neon-js'
+import { ASSETS, TOKENS } from './constants'
+import { wallet } from 'neon-js'
 
 const MIN_PASSPHRASE_LEN = 4
 
-export const validatePassphrase = (passphrase: string): boolean => passphrase.length >= MIN_PASSPHRASE_LEN
+export const validatePassphraseLength = (passphrase: string): boolean => passphrase.length >= MIN_PASSPHRASE_LEN
 
-export const checkMatchingPassphrases = (passphrase: string, passphrase2: string) => passphrase !== passphrase2
+export const isToken = (symbol: SymbolType) => Object.keys(TOKENS).includes(symbol)
 
-export const verifyPrivateKey = (wif: string): boolean => {
-  if (!wif) {
-    return false
-  }
-  const account = getAccountFromWIFKey(wif)
-  return account !== -1 && account.address
+export const obtainBalance = (balances: Object, symbol: SymbolType) => {
+  return balances[symbol] || 0
 }
 
-export const validateTransactionBeforeSending = (neoBalance: number, gasBalance: number, selectedAsset: string, sendAddress: string, sendAmount: string) => {
-  if (!sendAddress || !sendAmount) {
-    return {
-      error: 'Please specify an address and amount',
-      valid: false
-    }
+export const validateTransactionBeforeSending = (balance: number, sendEntry: SendEntryType) => {
+  const { address, amount, symbol } = sendEntry
+
+  if (!address || !amount) {
+    return 'Please specify an address and amount.'
   }
 
-  if (selectedAsset !== ASSETS_LABELS.NEO && selectedAsset !== ASSETS_LABELS.GAS) {
-    return {
-      error: 'That asset is not Neo or Gas',
-      valid: false
-    }
+  if (symbol !== ASSETS.NEO && symbol !== ASSETS.GAS && !isToken(symbol)) {
+    return 'That asset is not NEO, GAS or NEP-5 Token.'
   }
 
-  if (verifyAddress(sendAddress) !== true || sendAddress.charAt(0) !== 'A') {
-    return {
-      error: 'The address you entered was not valid.',
-      valid: false
+  try {
+    if (wallet.isAddress(address) !== true || address.charAt(0) !== 'A') {
+      return 'The address you entered was not valid.'
     }
+  } catch (e) {
+    return 'The address you entered was not valid.'
   }
 
-  if (selectedAsset === ASSETS_LABELS.NEO) {
-    if (parseFloat(sendAmount) !== parseInt(sendAmount)) { // check for fractional neo
-      return {
-        error: 'You cannot send fractional amounts of Neo.',
-        valid: false
-      }
-    }
-    if (parseInt(sendAmount) > neoBalance) { // check for value greater than account balance
-      return {
-        error: 'You do not have enough NEO to send.',
-        valid: false
-      }
-    }
-  } else if (selectedAsset === ASSETS_LABELS.GAS) {
-    if (parseFloat(sendAmount) > gasBalance) {
-      return {
-        error: 'You do not have enough GAS to send.',
-        valid: false
-      }
-    }
+  if (symbol === ASSETS.NEO && parseFloat(amount) !== parseInt(amount)) { // check for fractional NEO
+    return 'You cannot send fractional amounts of NEO.'
   }
 
-  if (parseFloat(sendAmount) < 0) { // check for negative asset
-    return {
-      error: 'You cannot send negative amounts of an asset.',
-      valid: false
-    }
+  if (parseFloat(amount) > balance) {
+    return `You do not have enough ${symbol} to send.`
   }
 
-  return {
-    error: '',
-    valid: true
+  if (parseFloat(amount) <= 0) { // check for negative/zero asset
+    return 'You cannot send zero or negative amounts of an asset.'
   }
+
+  return null
+}
+
+export const validateTransactionsBeforeSending = (balances: Object, sendEntries: Array<SendEntryType>) => {
+  const getValidationError = (sendEntry) => {
+    const balance = obtainBalance(balances, sendEntry.symbol)
+    return validateTransactionBeforeSending(balance, sendEntry)
+  }
+
+  const errorEntry = sendEntries.find(getValidationError)
+
+  return errorEntry ? getValidationError(errorEntry) : null
 }

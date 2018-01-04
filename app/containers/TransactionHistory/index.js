@@ -1,14 +1,16 @@
 // @flow
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+
+import { syncTransactionHistory, getIsLoadingTransactions } from '../../modules/transactions'
+import { getAddress } from '../../modules/account'
+import { getTransactions } from '../../modules/wallet'
 import TransactionHistory from './TransactionHistory'
-import { syncTransactionHistory } from '../../modules/transactions'
 
 const mapStateToProps = (state: Object) => ({
-  address: state.account.address,
-  net: state.metadata.network,
-  transactions: state.wallet.transactions,
-  explorer: state.metadata.blockExplorer
+  address: getAddress(state),
+  transactions: getTransactions(state),
+  isLoadingTransactions: getIsLoadingTransactions(state)
 })
 
 const actionCreators = {

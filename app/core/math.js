@@ -1,5 +1,10 @@
 // @flow
+import BigNumber from 'bignumber.js'
 
 // https://stackoverflow.com/questions/4912788/truncate-not-round-off-decimal-numbers-in-javascript
 export const truncateNumber = (num: number, places: number): number =>
-  Math.trunc(num * Math.pow(10, places)) / Math.pow(10, places)
+  Math.trunc(num * 10 ** places) / 10 ** places
+
+// https://github.com/MikeMcl/bignumber.js/issues/11
+export const toBigNumber = (value: number | string) =>
+  new BigNumber(String(value))
