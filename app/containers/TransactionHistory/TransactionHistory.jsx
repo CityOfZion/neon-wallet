@@ -10,7 +10,7 @@ import styles from './TransactionHistory.scss'
 type Props = {
   address: string,
   net: NetworkType,
-  transactions: Object,
+  transactions: Array<Object>,
   syncTransactionHistory: Function,
   isLoadingTransactions: boolean
 }
