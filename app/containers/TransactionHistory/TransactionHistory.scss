@@ -1,9 +1,21 @@
 @import '../../styles/variables';
 
 .transactionInfo {
+    display: flex;
+    flex-direction: column;
     text-align: center;
     position: relative;
-    min-height: 590px;
+    height: 100%;
+
+    .columnHeader,
+    .headerSpacer {
+        flex: 0 0 auto;
+    }
+
+    .transactions {
+        flex: 1 1 auto;
+        overflow: scroll;
+    }
 }
 
 .columnHeader {
