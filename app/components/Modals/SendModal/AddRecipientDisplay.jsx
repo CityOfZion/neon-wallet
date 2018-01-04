@@ -91,7 +91,7 @@ export default class AddRecipientDisplay extends React.Component<Props, State> {
     )
   }
 
-  handleChange = (key, value) => {
+  handleChange = (key: string, value: string) => {
     this.setState({ [key]: value })
   }
 

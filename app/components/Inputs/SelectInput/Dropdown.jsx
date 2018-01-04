@@ -6,7 +6,7 @@ import { noop } from 'lodash'
 
 import styles from './Dropdown.scss'
 
-declare type NodeOrNodes = React.Node | Array<React.Node>;
+declare type NodeOrNodes = React$Node | Array<React$Node>
 
 type Props = {
   className: string,

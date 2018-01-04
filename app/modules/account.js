@@ -76,7 +76,7 @@ export const loginNep2 = (passphrase: string, encryptedWIF: string, history: Obj
     return dispatchError('That is not a valid encrypted key')
   }
 
-  const infoNotificationId = dispatch(showInfoNotification({ message: 'Decrypting encoded key...' }))
+  const infoNotificationId: any = dispatch(showInfoNotification({ message: 'Decrypting encoded key...' }))
 
   setTimeout(() => {
     try {
@@ -100,14 +100,14 @@ export function hardwareDeviceInfo (hardwareDeviceInfo: string) {
   }
 }
 
-export function hardwarePublicKeyInfo (hardwarePublicKeyInfo: string) {
+export function hardwarePublicKeyInfo (hardwarePublicKeyInfo: ?string) {
   return {
     type: HARDWARE_PUBLIC_KEY_INFO,
     payload: { hardwarePublicKeyInfo }
   }
 }
 
-export function hardwarePublicKey (publicKey: string) {
+export function hardwarePublicKey (publicKey: ?string) {
   return {
     type: HARDWARE_PUBLIC_KEY,
     payload: { publicKey }

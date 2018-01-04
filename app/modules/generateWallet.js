@@ -72,7 +72,7 @@ export const convertOldWalletAccount = (label: string, key: string, isDefault: b
   }
 }
 
-export const upgradeUserWalletNEP6 = () => {
+export const upgradeUserWalletNEP6 = (): Promise<*> => {
   return new Promise((resolve, reject) => {
     storage.get('userWallet', (readNEP6Error, data) => {
       if (readNEP6Error) {
@@ -113,20 +113,10 @@ export const upgradeUserWalletNEP6 = () => {
   })
 }
 
-export const walletHasKey = (wallet, key) => {
-  let foundKey = false
+export const walletHasKey = (wallet: Object, key: string) =>
+  wallet.accounts.some(account => account.key === key)
 
-  wallet.accounts.some((account) => {
-    if (account.key === key) {
-      foundKey = true
-      return false // break out of loop
-    }
-  })
-
-  return foundKey
-}
-
-export const recoverWallet = (wallet) => {
+export const recoverWallet = (wallet: Object): Promise<*> => {
   return new Promise((resolve, reject) => {
     storage.get('userWallet', (readError, data) => {
       if (readError) {
@@ -184,7 +174,7 @@ export const generateNewWalletAccount = (passphrase: string, passphrase2: string
   } else if (wif && !wallet.isWIF(wif)) {
     return dispatchError('The private key is not valid')
   } else {
-    const infoNotificationId = dispatch(showInfoNotification({ message: 'Generating encoded key...', autoDismiss: 0 }))
+    const infoNotificationId: any = dispatch(showInfoNotification({ message: 'Generating encoded key...', autoDismiss: 0 }))
     setTimeout(() => {
       try {
         const account = new wallet.Account(wif || wallet.generatePrivateKey())

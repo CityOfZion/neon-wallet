@@ -30,7 +30,7 @@ type Props = {
 }
 
 type BalancesType = {
-  [key: SymbolType]: string
+  [key: SymbolType]: any
 }
 
 type State = {
@@ -93,7 +93,7 @@ export default class SendModal extends Component<Props, State> {
     this.setState({ display: DISPLAY_MODES.ADD_RECIPIENT })
   }
 
-  handleConfirmAddRecipient = (entry) => {
+  handleConfirmAddRecipient = (entry: SendEntryType) => {
     const { showErrorNotification } = this.props
     const { balances } = this.state
     const error = validateTransactionBeforeSending(balances[entry.symbol], entry)
