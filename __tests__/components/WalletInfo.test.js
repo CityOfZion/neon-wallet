@@ -52,7 +52,7 @@ const initialState = {
   },
   wallet: {
     NEO: 100001,
-    GAS: 1.0001601
+    GAS: 1000.0001601
   },
   price: {
     NEO: 25.48,
@@ -98,17 +98,17 @@ describe('WalletInfo', () => {
     const walletValue = wrapper.find('.walletTotal')
 
     const expectedNeoWalletValue = '2,548,025.48'
-    const expectedGasWalletValue = '18.10'
-    const expectedWalletValue = '2,548,043.58'
+    const expectedGasWalletValue = '18,100.00'
+    const expectedWalletValue = '2,566,125.48'
     const neoField = wrapper.find('.amountNeo')
     const gasField = wrapper.find('.amountGas')
 
     expect(neoWalletValue.text()).toEqual(`$${expectedNeoWalletValue} USD`)
     expect(gasWalletValue.text()).toEqual(`$${expectedGasWalletValue} USD`)
     expect(walletValue.text()).toEqual(`Total $${expectedWalletValue} USD`)
-    expect(neoField.text()).toEqual(`${initialState.wallet.NEO}`)
+    expect(neoField.text()).toEqual('100,001')
     // TODO: Test the GAS tooltip value, this is testing the display value, truncated to 4 decimals
-    expect(gasField.text()).toEqual('1.0002')
+    expect(gasField.text()).toEqual('1,000.0002')
     done()
   })
   test('refreshBalance is getting called on click', async () => {
@@ -178,8 +178,8 @@ describe('WalletInfo', () => {
     const walletValue = wrapper.find('.walletTotal')
 
     const expectedNeoWalletValue = '111,001.11'
-    const expectedGasWalletValue = '0.55'
-    const expectedWalletValue = '111,001.66'
+    const expectedGasWalletValue = '550.00'
+    const expectedWalletValue = '111,551.11'
 
     expect(neoWalletValue.text()).toEqual(`€${expectedNeoWalletValue} EUR`)
     expect(gasWalletValue.text()).toEqual(`€${expectedGasWalletValue} EUR`)
