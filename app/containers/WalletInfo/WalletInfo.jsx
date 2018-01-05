@@ -7,7 +7,7 @@ import Claim from '../Claim'
 
 import Tooltip from '../../components/Tooltip'
 
-import { formatGAS, formatFiat } from '../../core/formatters'
+import { formatGAS, formatFiat, formatNEO } from '../../core/formatters'
 import { ASSETS, CURRENCIES } from '../../core/constants'
 
 import MdSync from 'react-icons/lib/md/sync'
@@ -72,7 +72,7 @@ export default class WalletInfo extends Component<Props> {
         <div id='balance'>
           <div className='split'>
             <div className='label'>{ASSETS.NEO}</div>
-            <div className='amountBig amountNeo'>{NEO}</div>
+            <div className='amountBig amountNeo'>{formatNEO(NEO)}</div>
             <div className='fiat neoWalletValue'>{currencySymbol}{formatFiat(neoValue)} {displayCurrencyCode}</div>
           </div>
           <div className='split'>
