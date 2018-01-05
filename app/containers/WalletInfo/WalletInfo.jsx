@@ -9,7 +9,7 @@ import Tooltip from '../../components/Tooltip'
 
 import { formatGAS, formatFiat, formatNEO } from '../../core/formatters'
 import { ASSETS, CURRENCIES } from '../../core/constants'
-import { toBigNumber } from '../../core/math'
+import { toNumber } from '../../core/math'
 
 import MdSync from 'react-icons/lib/md/sync'
 
@@ -67,18 +67,9 @@ export default class WalletInfo extends Component<Props> {
       return null
     }
 
-    let neoValue =
-      neoPrice && NEO
-        ? toBigNumber(neoPrice)
-          .multiply(toBigNumber(NEO))
-          .toNumber()
-        : 0
-    let gasValue =
-      gasPrice && GAS
-        ? toBigNumber(gasPrice)
-          .multiply(toBigNumber(GAS))
-          .toNumber()
-        : 0
+    let neoValue = neoPrice && NEO !== '0' ? neoPrice * toNumber(NEO) : 0
+    let gasValue = gasPrice && GAS !== '0' ? gasPrice * toNumber(GAS) : 0
+
     let totalValue = neoValue + gasValue
 
     const displayCurrencyCode = currencyCode.toUpperCase()
