@@ -12,7 +12,7 @@ import { showErrorNotification } from './notifications'
 import { ASSETS, TOKENS, TOKENS_TEST, NETWORK } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
 import { COIN_DECIMAL_LENGTH } from '../core/formatters'
-import { toBigNumber, toNumber } from '../core/math'
+import { toBigNumber } from '../core/math'
 
 const TOKEN_PAIRS = Object.entries(TOKENS)
 
