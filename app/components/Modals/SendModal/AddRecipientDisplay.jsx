@@ -46,7 +46,7 @@ export default class AddRecipientDisplay extends React.Component<Props, State> {
             <div id='sendAmount' className={styles.column}>
               <label className={styles.label}>Amount:</label>
               <NumberInput
-                max={max}
+                max={balance}
                 value={amount}
                 placeholder='Amount'
                 options={{ numeralDecimalScale: COIN_DECIMAL_LENGTH }}
