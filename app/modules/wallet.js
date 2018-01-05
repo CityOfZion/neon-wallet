@@ -67,7 +67,7 @@ export const retrieveBalance = (net: NetworkType, address: string) => async (
   // If API dies, still display balance - ignore _err
   const [_err, resultBalance] = await asyncWrap(
     api.neonDB.getBalance(net, address)
-  ); // eslint-disable-line
+  ) // eslint-disable-line
   if (_err) {
     return dispatch(
       showErrorNotification({
@@ -138,7 +138,7 @@ export const retrieveTokensBalance = () => async (
           tokenResults.balance === null
             ? '0'
             : toBigNumber(tokenResults.balance)
-              .toFixed(COIN_DECIMAL_LENGTH)
+              .round(COIN_DECIMAL_LENGTH)
               .toString(),
         scriptHash
       }

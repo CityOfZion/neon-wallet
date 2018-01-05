@@ -57,7 +57,7 @@ export function disableClaim (disableClaimButton: boolean) {
 export const syncAvailableClaim = (net: NetworkType, address: string) => async (
   dispatch: DispatchType
 ) => {
-  const [_err, result] = await asyncWrap(api.neonDB.getClaims(net, address)); // eslint-disable-line
+  const [_err, result] = await asyncWrap(api.neonDB.getClaims(net, address)) // eslint-disable-line
   const available = parseInt(result.total_claim)
   const unavailable = parseInt(result.total_unspent_claim)
   return dispatch(setClaim(available, unavailable))

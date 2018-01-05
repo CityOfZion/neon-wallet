@@ -43,7 +43,7 @@ jest.mock('electron', () => ({
 jest.useFakeTimers()
 
 jest.unmock('qrcode')
-import QRCode from "qrcode/lib/browser"; // eslint-disable-line
+import QRCode from 'qrcode/lib/browser' // eslint-disable-line
 QRCode.toCanvas = jest.fn()
 
 const initialState = {

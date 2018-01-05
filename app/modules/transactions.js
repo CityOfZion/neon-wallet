@@ -28,6 +28,7 @@ import { ASSETS } from '../core/constants'
 import { adjustDecimalAmountForTokenTransfer } from '../core/nep5'
 import asyncWrap from '../core/asyncHelper'
 import { toNumber } from '../core/math'
+import { toFixedDecimals, COIN_DECIMAL_LENGTH } from '../core/formatters'
 
 import { log } from '../util/Logs'
 
@@ -53,8 +54,8 @@ export const syncTransactionHistory = (
     const txs = transactions.map(
       ({ NEO, GAS, txid, block_index }: TransactionHistoryType) => ({
         txid,
-        [ASSETS.NEO]: NEO,
-        [ASSETS.GAS]: GAS
+        [ASSETS.NEO]: toFixedDecimals(NEO, 0),
+        [ASSETS.GAS]: toBigNumber(GAS).round(COIN_DECIMAL_LENGTH).toString()
       })
     )
     dispatch(setIsLoadingTransaction(false))
