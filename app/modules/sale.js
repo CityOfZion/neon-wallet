@@ -7,6 +7,8 @@ import { getNetwork } from './metadata'
 import { getNEO } from './wallet'
 import asyncWrap from '../core/asyncHelper'
 
+// TODO: Rewrite this function
+
 export const participateInSale = (neoToSend: number, scriptHash: string) => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
   const wif = getWIF(state)
@@ -19,7 +21,7 @@ export const participateInSale = (neoToSend: number, scriptHash: string) => asyn
     return false
   }
   const toMint = parseInt(neoToSend)
-
+  // $FlowFixMe
   if (toMint > NEO) {
     dispatch(showErrorNotification({ message: 'You do not have enough NEO to send.' }))
     return false

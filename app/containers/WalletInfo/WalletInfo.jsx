@@ -9,6 +9,7 @@ import Tooltip from '../../components/Tooltip'
 
 import { formatGAS, formatFiat, formatNEO } from '../../core/formatters'
 import { ASSETS, CURRENCIES } from '../../core/constants'
+import { toBigNumber } from '../../core/math'
 
 import MdSync from 'react-icons/lib/md/sync'
 
@@ -27,8 +28,8 @@ type Props = {
   currencyCode: string,
   showSuccessNotification: Function,
   showErrorNotification: Function,
-  showModal: Function,
-}
+  showModal: Function
+};
 
 export default class WalletInfo extends Component<Props> {
   refreshBalance = () => {
@@ -37,12 +38,18 @@ export default class WalletInfo extends Component<Props> {
       showErrorNotification,
       loadWalletData
     } = this.props
-    loadWalletData().then((response) => {
-      showSuccessNotification({ message: 'Received latest blockchain information.' })
-    }).catch((e) => {
-      showErrorNotification({ message: 'Failed to retrieve blockchain information' })
-    })
-  }
+    loadWalletData()
+      .then(response => {
+        showSuccessNotification({
+          message: 'Received latest blockchain information.'
+        })
+      })
+      .catch(e => {
+        showErrorNotification({
+          message: 'Failed to retrieve blockchain information'
+        })
+      })
+  };
 
   render () {
     const {
@@ -60,8 +67,18 @@ export default class WalletInfo extends Component<Props> {
       return null
     }
 
-    let neoValue = neoPrice && NEO ? neoPrice * NEO : 0
-    let gasValue = gasPrice && GAS ? gasPrice * GAS : 0
+    let neoValue =
+      neoPrice && NEO
+        ? toBigNumber(neoPrice)
+          .multiply(toBigNumber(NEO))
+          .toNumber()
+        : 0
+    let gasValue =
+      gasPrice && GAS
+        ? toBigNumber(gasPrice)
+          .multiply(toBigNumber(GAS))
+          .toNumber()
+        : 0
     let totalValue = neoValue + gasValue
 
     const displayCurrencyCode = currencyCode.toUpperCase()
@@ -73,17 +90,34 @@ export default class WalletInfo extends Component<Props> {
           <div className='split'>
             <div className='label'>{ASSETS.NEO}</div>
             <div className='amountBig amountNeo'>{formatNEO(NEO)}</div>
-            <div className='fiat neoWalletValue'>{currencySymbol}{formatFiat(neoValue)} {displayCurrencyCode}</div>
+            <div className='fiat neoWalletValue'>
+              {currencySymbol}
+              {formatFiat(neoValue)} {displayCurrencyCode}
+            </div>
           </div>
           <div className='split'>
             <div className='label'>{ASSETS.GAS}</div>
             <div className='amountBig amountGas'>
-              <Tooltip title={formatGAS(GAS)} disabled={GAS === 0}>{formatGAS(GAS, true)}</Tooltip>
+              <Tooltip title={formatGAS(GAS)} disabled={GAS === 0}>
+                {formatGAS(GAS, true)}
+              </Tooltip>
             </div>
-            <div className='fiat gasWalletValue'>{currencySymbol}{formatFiat(gasValue)} {displayCurrencyCode}</div>
+            <div className='fiat gasWalletValue'>
+              {currencySymbol}
+              {formatFiat(gasValue)} {displayCurrencyCode}
+            </div>
           </div>
-          <div className='fiat walletTotal'>Total {currencySymbol}{formatFiat(totalValue)} {displayCurrencyCode}</div>
-          <div onClick={this.refreshBalance} className={classNames(styles.refreshIconContainer, 'refreshBalance')}>
+          <div className='fiat walletTotal'>
+            Total {currencySymbol}
+            {formatFiat(totalValue)} {displayCurrencyCode}
+          </div>
+          <div
+            onClick={this.refreshBalance}
+            className={classNames(
+              styles.refreshIconContainer,
+              'refreshBalance'
+            )}
+          >
             <Tooltip title='Refresh account balance'>
               <MdSync id='refresh' className={styles.refreshIcon} />
             </Tooltip>
