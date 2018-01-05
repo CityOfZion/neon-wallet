@@ -18,8 +18,8 @@ import TokensBalance from './TokensBalance'
 
 type Props = {
   address: string,
-  NEO: number,
-  GAS: number,
+  NEO: string,
+  GAS: string,
   neoPrice: number,
   gasPrice: number,
   tokens: Object,

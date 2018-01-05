@@ -5,10 +5,8 @@ import { toBigNumber } from './math'
 export const COIN_DECIMAL_LENGTH = 8
 export const SHORT_DISPLAY_DECIMAL_LENGTH = 4
 
-type ValueType = string | number;
-
 export const formatGAS = (
-  value: ValueType,
+  value: string,
   shortDisplay: boolean = false
 ): string => {
   const decimals = shortDisplay
@@ -17,15 +15,15 @@ export const formatGAS = (
   return toBigNumber(value).toFormat(decimals)
 }
 
-export const formatThousands = (value: ValueType): string =>
+export const formatThousands = (value: string): string =>
   toBigNumber(value).toFormat(0)
 
-export const formatNEO = (value: ValueType): string =>
+export const formatNEO = (value: string): string =>
   toBigNumber(value).toFormat(0)
 
 export const formatBalance = (
   symbol: SymbolType,
-  balance: ValueType,
+  balance: string,
   shortDisplay: boolean = false
 ): string => {
   if (symbol === ASSETS.NEO) {
@@ -34,8 +32,8 @@ export const formatBalance = (
   return formatGAS(balance, shortDisplay)
 }
 
-export const toFixedDecimals = (value: ValueType, decimals: number): string =>
+export const toFixedDecimals = (value: string, decimals: number): string =>
   toBigNumber(value).toFixed(COIN_DECIMAL_LENGTH)
 
-export const formatFiat = (value: ValueType): string =>
+export const formatFiat = (value: string): string =>
   toBigNumber(value).toFormat(2)
