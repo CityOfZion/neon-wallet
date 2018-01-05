@@ -13,6 +13,11 @@ describe('wallet module tests', () => {
     NEO: '0',
     GAS: '0',
     tokens: {
+      QLC: {
+        balance: '0',
+        scriptHash: '0d821bd7b6d53f5c2b40e217c6defc8bbe896cf5',
+        symbol: 'QLC'
+      },
       DBC: {
         balance: '0',
         scriptHash: 'b951ecbbc5fe37a9c280a76cb0ce0014827294cf',
