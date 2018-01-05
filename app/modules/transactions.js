@@ -27,7 +27,7 @@ import { isToken, validateTransactionsBeforeSending } from '../core/wallet'
 import { ASSETS } from '../core/constants'
 import { adjustDecimalAmountForTokenTransfer } from '../core/nep5'
 import asyncWrap from '../core/asyncHelper'
-import { toNumber } from '../core/math'
+import { toNumber, toBigNumber } from '../core/math'
 import { toFixedDecimals, COIN_DECIMAL_LENGTH } from '../core/formatters'
 
 import { log } from '../util/Logs'
