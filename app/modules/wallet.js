@@ -11,6 +11,8 @@ import { showErrorNotification } from './notifications'
 
 import { ASSETS, TOKENS, TOKENS_TEST, NETWORK } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
+import { COIN_DECIMAL_LENGTH } from '../core/formatters'
+import { toBigNumber } from '../core/math'
 
 const TOKEN_PAIRS = Object.entries(TOKENS)
 
@@ -38,7 +40,7 @@ export const setIsLoaded = (loaded: boolean) => ({
 })
 
 // Actions
-export function setBalance (NEO: number, GAS: number) {
+export function setBalance (NEO: string, GAS: string) {
   return {
     type: SET_BALANCE,
     payload: { NEO, GAS }
@@ -59,17 +61,36 @@ export function setTokens (tokens: Object) {
   }
 }
 
-export const retrieveBalance = (net: NetworkType, address: string) => async (dispatch: DispatchType) => {
+export const retrieveBalance = (net: NetworkType, address: string) => async (
+  dispatch: DispatchType
+) => {
   // If API dies, still display balance - ignore _err
-  const [_err, resultBalance] = await asyncWrap(api.neonDB.getBalance(net, address)) // eslint-disable-line
+  const [_err, resultBalance] = await asyncWrap(
+    api.neonDB.getBalance(net, address)
+  ) // eslint-disable-line
   if (_err) {
-    return dispatch(showErrorNotification({ message: `Could not retrieve NEO/GAS balance`, stack: true }))
+    return dispatch(
+      showErrorNotification({
+        message: `Could not retrieve NEO/GAS balance`,
+        stack: true
+      })
+    )
   } else {
-    return dispatch(setBalance(resultBalance.NEO.balance, resultBalance.GAS.balance))
+    return dispatch(
+      setBalance(
+        String(resultBalance.NEO.balance),
+        toBigNumber(resultBalance.GAS.balance)
+          .round(COIN_DECIMAL_LENGTH)
+          .toString()
+      )
+    )
   }
 }
 
-export const loadWalletData = (silent: boolean = true) => async (dispatch: DispatchType, getState: GetStateType) => {
+export const loadWalletData = (silent: boolean = true) => async (
+  dispatch: DispatchType,
+  getState: GetStateType
+) => {
   const state = getState()
   const net = getNetwork(state)
   const address = getAddress(state)
@@ -90,7 +111,10 @@ export const loadWalletData = (silent: boolean = true) => async (dispatch: Dispa
   return true
 }
 
-export const retrieveTokensBalance = () => async (dispatch: DispatchType, getState: GetStateType) => {
+export const retrieveTokensBalance = () => async (
+  dispatch: DispatchType,
+  getState: GetStateType
+) => {
   const state = getState()
   const net = getNetwork(state)
   const address = getAddress(state)
@@ -99,17 +123,32 @@ export const retrieveTokensBalance = () => async (dispatch: DispatchType, getSta
   for (let [symbol] of TOKEN_PAIRS) {
     const scriptHash = getScriptHashForNetwork(net, symbol)
     // override scripthash with test if on test net
-    const [_error, tokenRpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net)) // eslint-disable-line
-    const [err, tokenResults] = await asyncWrap(api.nep5.getToken(tokenRpcEndpoint, scriptHash, address))
+    // eslint-disable-next-line
+    const [_error, tokenRpcEndpoint] = await asyncWrap(
+      api.neonDB.getRPCEndpoint(net)
+    )
+    const [err, tokenResults] = await asyncWrap(
+      api.nep5.getToken(tokenRpcEndpoint, scriptHash, address)
+    )
 
     if (!err) {
       tokens[symbol] = {
         ...tokenResults,
-        balance: tokenResults.balance === null ? 0 : tokenResults.balance,
+        balance:
+          tokenResults.balance === null
+            ? '0'
+            : toBigNumber(tokenResults.balance)
+              .round(COIN_DECIMAL_LENGTH)
+              .toString(),
         scriptHash
       }
     } else {
-      dispatch(showErrorNotification({ message: `could not retrieve ${symbol} balance`, stack: true }))
+      dispatch(
+        showErrorNotification({
+          message: `could not retrieve ${symbol} balance`,
+          stack: true
+        })
+      )
     }
   }
 
@@ -117,8 +156,8 @@ export const retrieveTokensBalance = () => async (dispatch: DispatchType, getSta
 }
 
 // state getters
-export const getNEO = (state: Object) => state.wallet.NEO
-export const getGAS = (state: Object) => state.wallet.GAS
+export const getNEO = (state: Object): string => state.wallet.NEO
+export const getGAS = (state: Object): string => state.wallet.GAS
 export const getTransactions = (state: Object) => state.wallet.transactions
 export const getTokens = (state: Object) => state.wallet.tokens
 export const getIsLoaded = (state: Object) => state.wallet.loaded
@@ -126,7 +165,7 @@ export const getIsLoaded = (state: Object) => state.wallet.loaded
 export const getBalances = (state: Object) => ({
   [ASSETS.NEO]: getNEO(state),
   [ASSETS.GAS]: getGAS(state),
-  ...mapValues(getTokens(state), (token) => token.balance)
+  ...mapValues(getTokens(state), token => token.balance)
 })
 
 const getInitialTokenBalance = () => {
@@ -135,21 +174,29 @@ const getInitialTokenBalance = () => {
     tokens[symbol] = {
       symbol,
       scriptHash: TOKENS[symbol],
-      balance: 0
+      balance: '0'
     }
   })
   return tokens
 }
 
+type State = {
+  loaded: boolean,
+  NEO: string,
+  GAS: string,
+  transactions: Array<TransactionHistoryType>,
+  tokens: Object
+}
+
 const initialState = {
   loaded: false,
-  NEO: 0,
-  GAS: 0,
+  NEO: '0',
+  GAS: '0',
   transactions: [],
   tokens: getInitialTokenBalance()
 }
 
-export default (state: Object = initialState, action: ReduxAction) => {
+export default (state: State = initialState, action: ReduxAction) => {
   switch (action.type) {
     case SET_BALANCE:
       const { NEO, GAS } = action.payload

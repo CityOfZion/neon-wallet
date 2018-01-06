@@ -1,5 +1,6 @@
 // @flow
-import { COIN_DECIMAL_LENGTH, toFixedDecimals } from './formatters'
+import { COIN_DECIMAL_LENGTH } from './formatters'
+import { toBigNumber } from './math'
 
-export const adjustDecimalAmountForTokenTransfer = (value: number | string) =>
-  parseFloat(toFixedDecimals(value, COIN_DECIMAL_LENGTH)) * 10 ** COIN_DECIMAL_LENGTH
+export const adjustDecimalAmountForTokenTransfer = (value: string): string =>
+  toBigNumber(value).times(10 ** COIN_DECIMAL_LENGTH).toNumber()

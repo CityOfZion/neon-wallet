@@ -11,14 +11,14 @@ export const RESET_PRICE = 'RESET_PRICE'
 export const SET_CURRENCY = 'SET_CURRENCY'
 
 // Actions
-export function setNEOPrice (NEO: number) {
+export function setNEOPrice (NEO: string) {
   return {
     type: SET_NEO_PRICE,
     payload: { NEO }
   }
 }
 
-export function setGASPrice (GAS: number) {
+export function setGASPrice (GAS: string) {
   return {
     type: SET_GAS_PRICE,
     payload: { GAS }
