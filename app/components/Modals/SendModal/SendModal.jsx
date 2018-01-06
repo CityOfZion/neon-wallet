@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react'
-import numeral from 'numeral'
 import { mapValues } from 'lodash'
 
 import BaseModal from '../BaseModal'
@@ -10,6 +9,7 @@ import withAddressCheck from './withAddressCheck'
 
 import { validateTransactionBeforeSending } from '../../../core/wallet'
 import { ASSETS } from '../../../core/constants'
+import { toBigNumber } from '../../../core/math'
 
 const ConfirmDisplayContainer = withAddressCheck()(ConfirmDisplay)
 
@@ -19,8 +19,8 @@ const DISPLAY_MODES = {
 }
 
 type Props = {
-  NEO: number,
-  GAS: number,
+  NEO: string,
+  GAS: string,
   tokens: Object,
   showErrorNotification: Function,
   hideModal: Function,
@@ -101,11 +101,11 @@ export default class SendModal extends Component<Props, State> {
     if (error) {
       showErrorNotification({ message: error })
     } else {
-      const newBalance = numeral(balances[entry.symbol]).subtract(entry.amount)
+      const newBalance = toBigNumber(balances[entry.symbol]).minus(entry.amount).toString()
 
       this.setState({
         entries: [...this.state.entries, entry],
-        balances: { ...balances, [entry.symbol]: newBalance.value() },
+        balances: { ...balances, [entry.symbol]: newBalance },
         display: DISPLAY_MODES.CONFIRM
       })
     }

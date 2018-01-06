@@ -5,7 +5,7 @@ import Button from '../../components/Button'
 import HomeButtonLink from '../../components/HomeButtonLink'
 
 type Props = {
-  NEO: number,
+  NEO: string,
   participateInSale: Function,
   refreshTokenBalance: Function
 }

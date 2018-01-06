@@ -5,7 +5,7 @@ import { toBigNumber } from './math'
 export const COIN_DECIMAL_LENGTH = 8
 export const SHORT_DISPLAY_DECIMAL_LENGTH = 4
 
-type ValueType = string | number;
+type ValueType = string | number
 
 export const formatGAS = (
   value: ValueType,

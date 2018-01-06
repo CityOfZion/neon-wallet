@@ -26,7 +26,7 @@ const initialState = {
     network: 'network'
   },
   wallet: {
-    NEO: 1
+    NEO: '1'
   }
 }
 
