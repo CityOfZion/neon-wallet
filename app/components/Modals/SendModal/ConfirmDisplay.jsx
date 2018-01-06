@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import Button from '../../Button'
+import Delete from 'react-icons/lib/md/delete'
 
 import Table from '../../Table'
 import { Address } from '../../Blockchain'
@@ -13,6 +14,7 @@ type Props = {
   entries: Array<SendEntryType>,
   message: string,
   onAddRecipient: Function,
+  onDelete: Function,
   onConfirm: Function,
   onCancel: Function
 }
@@ -38,6 +40,7 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
               <tr>
                 <th>Asset</th>
                 <th>Recipient</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -45,6 +48,9 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
                 <tr key={`entry-${i}`}>
                   <td>{formatBalance(entry.symbol, entry.amount)} {entry.symbol}</td>
                   <td><Address address={entry.address} /></td>
+                  <td>
+                    <Delete className={styles.entryAction} onClick={this.handleDelete(entry)} />
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -73,5 +79,9 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
         </div>
       </div>
     )
+  }
+
+  handleDelete = (entry: SendEntryType) => {
+    return () => this.props.onDelete(entry)
   }
 }

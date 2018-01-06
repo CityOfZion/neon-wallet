@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import { mapValues } from 'lodash'
+import { mapValues, without } from 'lodash'
 
 import BaseModal from '../BaseModal'
 import AddRecipientDisplay from './AddRecipientDisplay'
@@ -84,6 +84,7 @@ export default class SendModal extends Component<Props, State> {
           onConfirm={this.handleConfirmTransaction}
           onCancel={this.handleCancelTransaction}
           onAddRecipient={this.handleAddRecipient}
+          onDelete={this.handleDeleteEntry}
           {...this.state} />
       )
     }
@@ -91,6 +92,19 @@ export default class SendModal extends Component<Props, State> {
 
   handleAddRecipient = () => {
     this.setState({ display: DISPLAY_MODES.ADD_RECIPIENT })
+  }
+
+  handleDeleteEntry = (entry: SendEntryType) => {
+    const { balances } = this.state
+
+    const entries = without(this.state.entries, entry)
+    const newBalance = toBigNumber(balances[entry.symbol]).plus(entry.amount).toString()
+
+    this.setState({
+      entries,
+      balances: { ...balances, [entry.symbol]: newBalance },
+      display: entries.length > 0 ? DISPLAY_MODES.CONFIRM : DISPLAY_MODES.ADD_RECIPIENT
+    })
   }
 
   handleConfirmAddRecipient = (entry: SendEntryType) => {

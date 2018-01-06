@@ -26,12 +26,17 @@
         }
     }
 
+    .entryAction {
+        cursor: pointer;
+    }
+
     .addRecipient {
         margin-top: 10px;
         text-align: right;
 
         a {
             color: $link-color;
+            cursor: pointer;
         }
     }
 }
