@@ -30,13 +30,13 @@ const transactions = {
   wallet: {
     transactions: [
       {
-        NEO: 50,
-        GAS: 0.00000000,
+        NEO: '50',
+        GAS: '0.00000000',
         txid: '76938979'
       },
       {
-        NEO: 0,
-        GAS: 0.40000000,
+        NEO: '0',
+        GAS: '0.40000000',
         txid: '76938980'
       }
     ]

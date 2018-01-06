@@ -5,7 +5,10 @@ import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import { mount, shallow } from 'enzyme'
 
-import { SET_TRANSACTION_HISTORY, SET_BALANCE, SET_IS_LOADED } from '../../app/modules/wallet'
+import {
+  SET_TRANSACTION_HISTORY,
+  SET_BALANCE
+} from '../../app/modules/wallet'
 import { SHOW_NOTIFICATION } from '../../app/modules/notifications'
 import { LOADING_TRANSACTIONS } from '../../app/modules/transactions'
 import { SET_HEIGHT } from '../../app/modules/metadata'
@@ -25,10 +28,10 @@ axiosMock
   .reply(200, { version })
 axiosMock
   .onGet('https://api.coinmarketcap.com/v1/ticker/NEO/?convert=USD')
-  .reply(200, [ { price_usd: 24.50 } ])
+  .reply(200, [{ price_usd: 24.5 }])
 axiosMock
   .onGet('https://api.coinmarketcap.com/v1/ticker/GAS/?convert=USD')
-  .reply(200, [ { price_usd: 18.20 } ])
+  .reply(200, [{ price_usd: 18.2 }])
 
 jest.mock('electron', () => ({
   app: {
@@ -51,12 +54,12 @@ const initialState = {
     network: 'TestNet'
   },
   wallet: {
-    NEO: 100001,
-    GAS: 1000.0001601
+    NEO: '100001',
+    GAS: '1000.0001601'
   },
   price: {
     NEO: 25.48,
-    GAS: 18.10,
+    GAS: 18.1,
     currency: DEFAULT_CURRENCY_CODE
   },
   claim: {
@@ -85,12 +88,12 @@ const setup = (state = initialState, shallowRender = true) => {
 }
 
 describe('WalletInfo', () => {
-  test('renders without crashing', (done) => {
+  test('renders without crashing', done => {
     const { wrapper } = setup()
     expect(wrapper).toMatchSnapshot()
     done()
   })
-  test('correctly renders data from state', (done) => {
+  test('correctly renders data from state', done => {
     const { wrapper } = setup(initialState, false)
 
     const neoWalletValue = wrapper.find('.neoWalletValue')
@@ -117,7 +120,10 @@ describe('WalletInfo', () => {
 
     deepWrapper.find('.refreshBalance').simulate('click')
 
-    await Promise.resolve('Pause').then().then().then()
+    await Promise.resolve('Pause')
+      .then()
+      .then()
+      .then()
     jest.runAllTimers()
     const actions = store.getActions()
     expect(actions.length).toEqual(5)
@@ -149,8 +155,8 @@ describe('WalletInfo', () => {
     expect(actions[4]).toEqual({
       type: SET_BALANCE,
       payload: {
-        NEO: 1,
-        GAS: 1
+        NEO: '1',
+        GAS: '1'
       }
     })
     // TODO fix this to capture the notifications as well
@@ -169,8 +175,11 @@ describe('WalletInfo', () => {
     //   })
     // })
   })
-  test('correctly renders data from state with non-default currency', (done) => {
-    const testState = { ...initialState, price: { NEO: 1.11, GAS: 0.55, currency: 'eur' } }
+  test('correctly renders data from state with non-default currency', done => {
+    const testState = {
+      ...initialState,
+      price: { NEO: 1.11, GAS: 0.55, currency: 'eur' }
+    }
     const { wrapper } = setup(testState, false)
 
     const neoWalletValue = wrapper.find('.neoWalletValue')
@@ -194,10 +203,17 @@ describe('WalletInfo', () => {
       })
     })
     const { wrapper, store } = setup()
-    wrapper.dive().find('.refreshBalance').simulate('click')
+    wrapper
+      .dive()
+      .find('.refreshBalance')
+      .simulate('click')
 
     jest.runAllTimers()
-    await Promise.resolve('Pause').then().then().then().then()
+    await Promise.resolve('Pause')
+      .then()
+      .then()
+      .then()
+      .then()
 
     const actions = store.getActions()
     let notifications = []
