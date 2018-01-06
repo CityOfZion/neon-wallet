@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import { api } from 'neon-js'
-import { uniq, pickBy } from 'lodash'
+import { uniq, pickBy, isEqual } from 'lodash'
 
 import Loader from '../../Loader'
 import asyncWrap from '../../../core/asyncHelper'
@@ -24,7 +24,13 @@ const withAddressCheck = () => (Component: React$ElementType) => {
     }
 
     componentDidMount () {
-      this.getAddresses().forEach(this.checkTransactionHistory)
+      this.checkTransactionHistories()
+    }
+
+    componentWillReceiveProps (nextProps: Props) {
+      if (!isEqual(this.props.entries, nextProps.entries)) {
+        this.setState({ addressHasActivity: {} }, this.checkTransactionHistories)
+      }
     }
 
     render = () => {
@@ -33,6 +39,10 @@ const withAddressCheck = () => (Component: React$ElementType) => {
       } else {
         return <Loader />
       }
+    }
+
+    checkTransactionHistories = () => {
+      this.getAddresses().forEach(this.checkTransactionHistory)
     }
 
     checkTransactionHistory = async (address: string) => {
