@@ -1,21 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`NetworkSwitch renders without crashing 1`] = `
-<NetworkSwitch
-  address="AWy7RNBVr9vDadRMK9p7i7Z1tL7GrLAxoh"
-  checkVersion={[Function]}
-  initiateGetBalance={[Function]}
-  net="MainNet"
-  setNetwork={[Function]}
-  store={
-    Object {
-      "clearActions": [Function],
-      "dispatch": [Function],
-      "getActions": [Function],
-      "getState": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-    }
-  }
-/>
+<div
+  className="navBarItem"
+  id="network"
+>
+  <span
+    className="navBarItemLabel"
+  >
+    Running on
+  </span>
+  <select
+    className="networkSelector"
+    defaultValue="MainNet"
+    onChange={[Function]}
+  >
+    <option
+      value="MainNet"
+    >
+      MainNet
+    </option>
+    <option
+      value="TestNet"
+    >
+      TestNet
+    </option>
+  </select>
+</div>
 `;

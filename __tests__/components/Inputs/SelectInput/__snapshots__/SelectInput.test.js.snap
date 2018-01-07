@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectInput should render without crashing 1`] = `
+<clickOutside(Dropdown)
+  className="selectInput customClassName"
+  onClose={[Function]}
+  open={false}
+  renderDropdown={[Function]}
+>
+  <div
+    className="inputContainer"
+  >
+    <input
+      className="input"
+      onChange={[Function]}
+      onFocus={[Function]}
+      type="text"
+      value="some text"
+    />
+    <div
+      className="afterInput"
+    >
+      <DropdownButton
+        onToggle={[Function]}
+      />
+    </div>
+  </div>
+</clickOutside(Dropdown)>
+`;

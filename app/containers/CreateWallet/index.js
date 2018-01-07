@@ -1,23 +1,15 @@
 // @flow
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { saveKey, resetKey, generateNewWallet } from '../../modules/generateWallet'
+
+import { generateNewWalletAccount } from '../../modules/generateWallet'
+
 import CreateWallet from './CreateWallet'
 
-const mapStateToProps = (state) => ({
-  wif: state.generateWallet.wif,
-  address: state.generateWallet.address,
-  encryptedWif: state.generateWallet.encryptedWif,
-  passphrase: state.generateWallet.passphrase,
-  generating: state.generateWallet.generating
-})
-
 const actionCreators = {
-  saveKey,
-  resetKey,
-  generateNewWallet
+  generateNewWalletAccount
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateWallet)
+export default connect(null, mapDispatchToProps)(CreateWallet)

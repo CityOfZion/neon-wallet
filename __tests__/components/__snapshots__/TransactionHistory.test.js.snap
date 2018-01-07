@@ -3,6 +3,7 @@
 exports[`TransactionHistory renders without crashing 1`] = `
 <TransactionHistory
   address="AWy7RNBVr9vDadRMK9p7i7Z1tL7GrLAxoh"
+  isLoadingTransactions={false}
   net="TestNet"
   store={
     Object {
@@ -12,6 +13,27 @@ exports[`TransactionHistory renders without crashing 1`] = `
       "getState": [Function],
       "replaceReducer": [Function],
       "subscribe": [Function],
+    }
+  }
+  storeSubscription={
+    Subscription {
+      "listeners": Object {
+        "clear": [Function],
+        "get": [Function],
+        "notify": [Function],
+        "subscribe": [Function],
+      },
+      "onStateChange": [Function],
+      "parentSub": undefined,
+      "store": Object {
+        "clearActions": [Function],
+        "dispatch": [Function],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      },
+      "unsubscribe": [Function],
     }
   }
   syncTransactionHistory={[Function]}
