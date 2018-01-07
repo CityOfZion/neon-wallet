@@ -28,7 +28,8 @@
 ### What does it currently do
 
 * Create a wallet
-* Login via WIF (Private Key), Encrypted Private Key (NEP2), Ledger, or a stored wallet account
+* Encrypt a Private Key
+* Login with Ledger, Private Key, Encrypted Private Key or a stored account.
 * Import/Export wallet accounts (NEP6 Standard)
 * View balance
 * View prices for GAS and NEO in multiple currencies
