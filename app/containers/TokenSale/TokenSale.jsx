@@ -1,16 +1,11 @@
 // @flow
 import React, { Component } from 'react'
-import NetworkSwitch from '../NetworkSwitch'
-import Page from '../../components/Page'
+
+import Button from '../../components/Button'
 import HomeButtonLink from '../../components/HomeButtonLink'
 
 type Props = {
-  address: string,
-  neo: number,
-  rpx: number,
-  net: NetworkType,
-  initiateGetBalance: Function,
-  updateRpxBalance: Function,
+  NEO: string,
   participateInSale: Function,
   refreshTokenBalance: Function
 }
@@ -26,14 +21,6 @@ export default class TokenSale extends Component<Props, State> {
     neoToSend: ''
   }
 
-  componentDidMount () {
-    const { scriptHash } = this.state
-    const { initiateGetBalance, refreshTokenBalance, updateRpxBalance, net, address } = this.props
-    updateRpxBalance(0)
-    initiateGetBalance(net, address)
-    refreshTokenBalance(scriptHash, true)
-  }
-
   participateInSale = () => {
     const { participateInSale } = this.props
     const { neoToSend, scriptHash } = this.state
@@ -46,14 +33,13 @@ export default class TokenSale extends Component<Props, State> {
   }
 
   render () {
-    const { neo, rpx, refreshTokenBalance } = this.props
+    const { NEO, refreshTokenBalance } = this.props
     const { neoToSend, scriptHash } = this.state
     const refreshTokenBalanceButtonDisabled = !scriptHash
     const submitSaleButtonDisabled = !neoToSend || !scriptHash
 
     return (
-      <Page id='tokenSale'>
-        <NetworkSwitch />
+      <div id='tokenSale'>
         <div className='description'>Participate in Token Sale</div>
         <div className='warning'>
           <b>WARNING:</b> Be very careful with how you participate in a sale! This interface may not work for all sales! Submitting NEO multiple times to a sale may result in lost funds
@@ -65,21 +51,11 @@ export default class TokenSale extends Component<Props, State> {
         <div className='settingsForm'>
           <div className='settingsItem'>
             <div className='itemTitle'>NEO Balance:</div>
-            <div>{neo}</div>
+            <div>{NEO}</div>
           </div>
           <div className='settingsItem'>
             <div className='itemTitle'>Token Balance:</div>
-            <div>{rpx}</div>
-          </div>
-          <div className='settingsItem'>
-            <div className='itemTitle'>Script Hash:</div>
-            <input
-              autoFocus
-              type='text'
-              className='scriptHash'
-              value={scriptHash}
-              onChange={(e) => this.setState({ scriptHash: e.target.value })}
-            />
+            <div />
           </div>
           <div className='settingsItem'>
             <div className='itemTitle'>Amount of NEO to Send:</div>
@@ -91,17 +67,15 @@ export default class TokenSale extends Component<Props, State> {
               onChange={(e) => this.setState({ neoToSend: e.target.value })}
             />
           </div>
-          <button
-            className={submitSaleButtonDisabled && 'disabled'}
+          <Button
             onClick={this.participateInSale}
-            disabled={submitSaleButtonDisabled}>Submit for Sale</button>
-          <button
-            className={refreshTokenBalanceButtonDisabled && 'disabled'}
+            disabled={submitSaleButtonDisabled}>Submit for Sale</Button>
+          <Button
             onClick={() => refreshTokenBalance(scriptHash)}
-            disabled={refreshTokenBalanceButtonDisabled}>Refresh Token Balance</button>
+            disabled={refreshTokenBalanceButtonDisabled}>Refresh Token Balance</Button>
         </div>
         <HomeButtonLink />
-      </Page>
+      </div>
     )
   }
 }

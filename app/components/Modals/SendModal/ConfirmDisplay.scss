@@ -1,0 +1,67 @@
+@import '../../../styles/variables';
+
+.confirmDisplay {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+
+    .information,
+    .messages,
+    .actions {
+        flex: 0 0 auto;
+    }
+
+    .table {
+        flex: 1 1 auto;
+        overflow: auto;
+    }
+}
+
+.table {
+    table {
+        width: 100%;
+
+        th, td {
+            text-align: center;
+        }
+    }
+
+    .entryAction {
+        cursor: pointer;
+    }
+
+    .addRecipient {
+        margin-top: 10px;
+        text-align: right;
+
+        a {
+            color: $link-color;
+            cursor: pointer;
+        }
+    }
+}
+
+.messages {
+    margin-top: 20px;
+    text-align: right;
+    font-size: 13px;
+    color: $error-color;
+}
+
+.agree {
+    margin-top: 20px;
+    padding: 8px;
+    border: 1px solid $primary-color;
+    background-color: $secondary-background;
+
+    input,
+    label {
+        cursor: pointer;
+        vertical-align: middle;
+    }
+}
+
+.actions {
+    margin-top: 20px;
+    text-align: right;
+}

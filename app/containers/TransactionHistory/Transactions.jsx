@@ -1,0 +1,58 @@
+// @flow
+import React from 'react'
+import classNames from 'classnames'
+
+import Transaction from '../../components/Blockchain/Transaction'
+import { ASSETS } from '../../core/constants'
+import { formatBalance } from '../../core/formatters'
+
+import styles from './Transactions.scss'
+
+type Props = {
+  className?: string,
+  transactions: Array<Object>
+}
+
+export default class Transactions extends React.Component<Props> {
+  render () {
+    const { className, transactions } = this.props
+
+    if (transactions.length === 0) {
+      return <div className={classNames(styles.noTransactions, className)}>No transactions</div>
+    }
+
+    return (
+      <ul id='transactionList' className={classNames(styles.transactionList, className)}>
+        {transactions.map((tx) => (
+          <li key={tx.txid} className={styles.row}>
+            <Transaction className={classNames(styles.txid, 'txid')} txid={tx.txid} />
+            {this.renderAmounts(tx)}
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  renderAmounts (tx: Object) {
+    const forceRenderNEO = tx[ASSETS.NEO] !== 0 || tx[ASSETS.GAS] === 0
+
+    return (
+      <div className={styles.amounts}>
+        {this.renderAmount(tx, ASSETS.NEO, forceRenderNEO)}
+        {this.renderAmount(tx, ASSETS.GAS)}
+      </div>
+    )
+  }
+
+  renderAmount (tx: Object, symbol: SymbolType, forceRender: boolean = false) {
+    const amount = tx[symbol]
+
+    if (forceRender || amount !== 0) {
+      return (
+        <div className={classNames(styles.amount, `amount${symbol}`)}>
+          {formatBalance(symbol, amount)} {symbol}
+        </div>
+      )
+    }
+  }
+}
