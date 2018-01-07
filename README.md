@@ -27,9 +27,16 @@
 
 ### What does it currently do
 
-- View GAS and NEO balances
-- Login via Wif and encrypted private keys
-- Send NEO to other addresses
+* Create a wallet
+* Login via WIF (Private Key), Encrypted Private Key (NEP2), Ledger, or a stored wallet account
+* Import/Export wallet accounts (NEP6 Standard)
+* View balance
+* View prices for GAS and NEO in multiple currencies
+* Send GAS, NEO, and certain NEP5 tokens (RPX, DBC, QLC)
+* Claim GAS
+* Send to multiple recipients
+* Address book
+* Switch networks (Test/Main)
 
 ## Installation
 
@@ -37,34 +44,38 @@ A standalone app will be available soon. For now, you will need to build the wal
 
 ### Required Tools and Dependencies
 
-  - Node (This project uses the current LTS node version, which is `v6.11.0`)
-  - Yarn (https://yarnpkg.com/lang/en/docs/install/)
+* Node (This project uses the current LTS node version, which is `v6.11.0`)
+* Yarn (https://yarnpkg.com/lang/en/docs/install/)
 
 ### Developing and Running
 
 Execute these commands in the project's root directory:
 
 Setup:
-  - `yarn install` - Installing node dependencies
-    - If you get any errors related to the node-hid package, please check installation instructions here: https://github.com/node-hid/node-hid#compiling-from-source. On Linux you may need to run `sudo apt install libusb-1.0-0 libusb-1.0-0-dev`, for example.
-  - `./node_modules/.bin/electron -v` confirm electron is version 1.7.9
+
+* `yarn install` - Installing node dependencies
+  * If you get any errors related to the node-hid package, please check installation instructions here: https://github.com/node-hid/node-hid#compiling-from-source. On Linux you may need to run `sudo apt install libusb-1.0-0 libusb-1.0-0-dev`, for example.
+* `./node_modules/.bin/electron -v` confirm electron is version 1.7.9
 
 Developing:
-  - `yarn dev` - Live reload
+
+* `yarn dev` - Live reload
 
 Running (for production):
-  - `yarn assets`
-  - `yarn start`
+
+* `yarn assets`
+* `yarn start`
 
 Testing:
-  - `yarn test` or `yarn run test-watch` for live testing.
+
+* `yarn test` or `yarn run test-watch` for live testing.
 
 ### Support
 
 A gentle reminder, github issues is meant to be used by developers for maintaining and improving the codebase, and is not the proper location for support issues. Questions such as
 
-- *"Why can't I log in?"*
-- *"I lost my private key, is there anyway to recover it?"*
-- *"Why is my balance not showing?"*
+* _"Why can't I log in?"_
+* _"I lost my private key, is there anyway to recover it?"_
+* _"Why is my balance not showing?"_
 
 should be asked in proper support channels such as the [NEO subreddit](https://www.reddit.com/r/NEO/), or the official [NEO Discord Channel](https://discord.gg/R8v48YA). You should also check the list of [frequently asked questions (FAQ)](https://github.com/CityOfZion/awesome-NEO/blob/master/resources/faq.md) to see if your question has been answered there already.
