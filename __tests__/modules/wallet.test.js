@@ -27,6 +27,11 @@ describe('wallet module tests', () => {
         balance: '0',
         scriptHash: 'ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9',
         symbol: 'RPX'
+      },
+      RHT: {
+        balance: '0',
+        scriptHash: '2328008e6f6c7bd157a342e789389eb034d9cbc4',
+        symbol: 'RHT'
       }
     },
     transactions: []
