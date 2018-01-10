@@ -4,6 +4,7 @@ import classNames from 'classnames'
 
 import Transaction from '../../components/Blockchain/Transaction'
 import { ASSETS } from '../../core/constants'
+import { toBigNumber } from '../../core/math'
 import { formatBalance } from '../../core/formatters'
 
 import styles from './Transactions.scss'
@@ -11,6 +12,10 @@ import styles from './Transactions.scss'
 type Props = {
   className?: string,
   transactions: Array<Object>
+}
+
+const isZero = (amount) => {
+  return toBigNumber(amount).equals(0)
 }
 
 export default class Transactions extends React.Component<Props> {
@@ -34,7 +39,7 @@ export default class Transactions extends React.Component<Props> {
   }
 
   renderAmounts (tx: Object) {
-    const forceRenderNEO = tx[ASSETS.NEO] !== 0 || tx[ASSETS.GAS] === 0
+    const forceRenderNEO = !isZero(tx[ASSETS.NEO]) || isZero(tx[ASSETS.GAS])
 
     return (
       <div className={styles.amounts}>
@@ -47,7 +52,7 @@ export default class Transactions extends React.Component<Props> {
   renderAmount (tx: Object, symbol: SymbolType, forceRender: boolean = false) {
     const amount = tx[symbol]
 
-    if (forceRender || amount !== 0) {
+    if (forceRender || !isZero(amount)) {
       return (
         <div className={classNames(styles.amount, `amount${symbol}`)}>
           {formatBalance(symbol, amount)} {symbol}
