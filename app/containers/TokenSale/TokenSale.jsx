@@ -52,7 +52,7 @@ export default class TokenSale extends Component<Props, State> {
 
   render() {
     const { NEO, GAS, saleBalance } = this.props
-    const { neoToSend, gasToSend, scriptHash, tokenBalance } = this.state
+    const { neoToSend, gasToSend, scriptHash } = this.state
     const submitSaleButtonDisabled =
       (!neoToSend && !gasToSend) ||
       (scriptHash.slice(0, 1) !== '0x' &&

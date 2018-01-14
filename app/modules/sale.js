@@ -74,11 +74,19 @@ export const participateInSale = (
     showInfoNotification({ message: 'Sending transaction', autoDismiss: 0 })
   )
 
+  const scriptHashAddress = wallet.getAddressFromScriptHash(_scriptHash)
+
   const intents = [[NEO, neoToMint], [GAS, gasToMint]]
     .filter(([symbol, amount]) => amount > 0)
-    .map(([symbol, amount]) => {
-      return { assetId: symbol, value: amount, scriptHash: _scriptHash }
-    })
+    .map(([symbol, amount]) =>
+      api.makeIntent({ [symbol]: amount }, scriptHashAddress)
+    )
+
+  // const intents = [[NEO, neoToMint], [GAS, gasToMint]]
+  //   .filter(([symbol, amount]) => amount > 0)
+  //   .map(([symbol, amount]) => {
+  //     return { assetId: symbol, value: amount, scriptHash: _scriptHash }
+  //   })
 
   const script = {
     scriptHash: _scriptHash,
