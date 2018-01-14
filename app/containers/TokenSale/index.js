@@ -3,12 +3,21 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { loadWalletData, getNEO } from '../../modules/wallet'
-import { participateInSale } from '../../modules/sale'
+import {
+  updateRpxBalance,
+  refreshTokenBalance,
+  participateInSale
+} from '../../modules/sale'
+import { getWIF } from '../../modules/account'
+import { getBlockExplorer } from '../../modules/metadata'
 
 import TokenSale from './TokenSale'
 
 const mapStateToProps = (state: Object) => ({
-  NEO: getNEO(state)
+  explorer: getBlockExplorer(state),
+  wif: getWIF(state),
+  NEO: getNEO(state),
+  GAS: getGAS(state)
 })
 
 const actionCreators = {
@@ -16,6 +25,7 @@ const actionCreators = {
   participateInSale
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(actionCreators, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(TokenSale)
