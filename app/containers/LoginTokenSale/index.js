@@ -9,6 +9,7 @@ const actionCreators = {
   loginWithPrivateKey
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(actionCreators, dispatch)
 
 export default connect(null, mapDispatchToProps)(LoginTokenSale)

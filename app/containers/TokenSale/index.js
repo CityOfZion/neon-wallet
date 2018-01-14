@@ -2,27 +2,26 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { loadWalletData, getNEO } from '../../modules/wallet'
+import { loadWalletData, getNEO, getGAS } from '../../modules/wallet'
 import {
-  updateRpxBalance,
-  refreshTokenBalance,
-  participateInSale
+  participateInSale,
+  getSaleBalance,
+  updateSaleBalance
 } from '../../modules/sale'
 import { getWIF } from '../../modules/account'
-import { getBlockExplorer } from '../../modules/metadata'
 
 import TokenSale from './TokenSale'
 
 const mapStateToProps = (state: Object) => ({
-  explorer: getBlockExplorer(state),
-  wif: getWIF(state),
   NEO: getNEO(state),
-  GAS: getGAS(state)
+  GAS: getGAS(state),
+  saleBalance: getSaleBalance(state)
 })
 
 const actionCreators = {
   loadWalletData,
-  participateInSale
+  participateInSale,
+  updateSaleBalance
 }
 
 const mapDispatchToProps = dispatch =>

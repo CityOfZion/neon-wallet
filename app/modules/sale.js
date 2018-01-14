@@ -6,7 +6,7 @@ import {
   showInfoNotification,
   showSuccessNotification
 } from './notifications'
-import { getWIF, LOGOUT } from './account'
+import { getWIF, LOGOUT, getAddress } from './account'
 import { getNetwork } from './metadata'
 import { getNEO, getGAS } from './wallet'
 import { toNumber, toBigNumber } from '../core/math'
@@ -23,7 +23,6 @@ export const participateInSale = (
   const GAS = getGAS(state)
   const net = getNetwork(state)
 
-  const account = new wallet.Account(wif)
   if (neoToSend && parseFloat(neoToSend) !== parseInt(neoToSend)) {
     dispatch(
       showErrorNotification({
@@ -33,10 +32,11 @@ export const participateInSale = (
     return false
   }
 
+  const account = new wallet.Account(wif)
   const neoToMint = toNumber(neoToSend)
   const gasToMint = toNumber(gasToSend)
 
-  if ((neoToMint && isNan(neoToMint)) || (gasToMint && isNan(gasToMint))) {
+  if ((neoToMint && isNaN(neoToMint)) || (gasToMint && isNaN(gasToMint))) {
     dispatch(
       showErrorNotification({ message: 'Please enter valid numbers only' })
     )
@@ -57,29 +57,28 @@ export const participateInSale = (
     return false
   }
 
-  if (scriptHash.slice(0, 1) !== '0x' && scriptHash.length !== 42) {
+  if (
+    scriptHash.slice(0, 1) !== '0x' &&
+    scriptHash.length !== 42 &&
+    scriptHash.length !== 40
+  ) {
     dispatch(showErrorNotification({ message: 'Not a valid script hash.' }))
     return false
   }
-  const _scriptHash = scriptHash.slice(2, scriptHash.length)
+  const _scriptHash =
+    scriptHash.length === 40
+      ? scriptHash
+      : scriptHash.slice(2, scriptHash.length)
 
   dispatch(
     showInfoNotification({ message: 'Sending transaction', autoDismiss: 0 })
   )
 
-  const [error, rpcEndpoint] = await asyncWrap(api.neonDB.getRPCEndpoint(net)) // eslint-disable-line
-  const [err, balance] = await asyncWrap(
-    api.nep5.getTokenBalance(rpcEndpoint, _scriptHash, account.address)
-  ) // eslint-disable-line
-
   const intents = [[NEO, neoToMint], [GAS, gasToMint]]
     .filter(([symbol, amount]) => amount > 0)
-    .map(([symbol, amount]) =>
-      api.makeIntent(
-        { [symbol]: amount },
-        wallet.getAddressFromScriptHash(_scriptHash)
-      )
-    )
+    .map(([symbol, amount]) => {
+      return { assetId: symbol, value: amount, scriptHash: _scriptHash }
+    })
 
   const script = {
     scriptHash: _scriptHash,
@@ -95,10 +94,13 @@ export const participateInSale = (
     gas: 0
   }
 
-  const [e, response] = await asyncWrap(api.doInvoke(config))
-  if (error || err || e) {
+  const [error, response] = await asyncWrap(api.doInvoke(config))
+  if (error) {
     dispatch(
-      showErrorNotification({ message: 'This script hash cannot mint tokens.' })
+      showErrorNotification({
+        message:
+          'Error minting tokens for this scripthash. Is this the correct input?'
+      })
     )
     return false
   }
@@ -114,10 +116,48 @@ export const participateInSale = (
   }
 }
 
-const initialState = {}
+export const SET_SALE_BALANCE = 'SET_SALE_BALANCE'
+
+export function setSaleBalance(saleBalance: string) {
+  return {
+    type: SET_SALE_BALANCE,
+    payload: { saleBalance }
+  }
+}
+
+export const updateSaleBalance = (scriptHash: string) => async (
+  dispatch: DispatchType,
+  getState: GetStateType
+) => {
+  const state = getState()
+  const address = getAddress(state)
+  const net = getNetwork(state)
+
+  const [_error, tokenRpcEndpoint] = await asyncWrap(
+    api.neonDB.getRPCEndpoint(net)
+  )
+  const [_err, tokenResults] = await asyncWrap(
+    api.nep5.getToken(tokenRpcEndpoint, scriptHash, address)
+  )
+  const tokenBalance = tokenResults.balance || 0
+  dispatch(setSaleBalance(tokenBalance))
+}
+
+// state getters
+export const getSaleBalance = (state: Object) => state.sale.saleBalance
+
+const initialState = {
+  saleBalance: 0
+}
 
 export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
+    case SET_SALE_BALANCE:
+      const { saleBalance } = action.payload
+      return {
+        ...state,
+        saleBalance
+      }
     case LOGOUT:
       return initialState
     default:
