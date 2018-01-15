@@ -7,6 +7,7 @@ import { showErrorNotification, showInfoNotification, hideNotification, showSucc
 
 import { validatePassphraseLength } from '../core/wallet'
 import { ROUTES, DEFAULT_WALLET } from '../core/constants'
+import { Account } from '../core/schemas'
 
 // Constants
 export const NEW_WALLET_ACCOUNT = 'NEW_WALLET_ACCOUNT'
@@ -35,15 +36,11 @@ export function resetKey () {
 export const saveAccount = (label: string, address: string, key: string) => (dispatch: DispatchType) => {
   if (!label || !address || !key) { return null }
 
-  const newAccount = {
-    address: address,
-    label: label,
-    isDefault: false,
-    lock: false,
-    key: key,
-    contract: {},
-    extra: null
-  }
+  const newAccount = new Account({
+    address,
+    label,
+    key
+  })
 
   return storage.get('userWallet', (readError, data) => {
     if (readError) {
@@ -61,15 +58,13 @@ export const saveAccount = (label: string, address: string, key: string) => (dis
 }
 
 export const convertOldWalletAccount = (label: string, key: string, isDefault: boolean) => {
-  return {
+  if (!key || typeof key !== 'string') return
+  return new Account({
     address: '', // Unfortunately all we have is the encrypted private keys, so no way to get this for now.
-    label: label,
-    isDefault: isDefault, // Make the first account the default
-    lock: false,
-    key: key,
-    contract: {},
-    extra: null
-  }
+    label,
+    isDefault, // Make the first account the default
+    key
+  })
 }
 
 export const upgradeUserWalletNEP6 = (): Promise<*> => {
@@ -92,7 +87,10 @@ export const upgradeUserWalletNEP6 = (): Promise<*> => {
           } else {
             const accounts = []
             Object.keys(keyData).map((label: string) => {
-              accounts.push(convertOldWalletAccount(label, keyData[label], accounts.length === 0))
+              const newAccount = convertOldWalletAccount(label, keyData[label], accounts.length === 0)
+              if (newAccount) {
+                accounts.push(newAccount)
+              }
             })
 
             wallet.accounts = accounts
@@ -134,7 +132,10 @@ export const recoverWallet = (wallet: Object): Promise<*> => {
         // Load the old wallet type
         Object.keys(wallet).map((label: string) => {
           const isDefault = accounts.length === 0 && wallet.length === 0
-          accounts.push(convertOldWalletAccount(label, wallet[label], isDefault))
+          const newAccount = convertOldWalletAccount(label, wallet[label], isDefault)
+          if (newAccount && newAccount.key) {
+            accounts.push(newAccount)
+          }
         })
       } else {
         accounts = wallet.accounts
@@ -145,7 +146,7 @@ export const recoverWallet = (wallet: Object): Promise<*> => {
       }
 
       accounts.some((account) => {
-        if (!walletHasKey(data, account.key)) {
+        if (account.key && !walletHasKey(data, account.key)) {
           data.accounts.push(account)
         }
       })

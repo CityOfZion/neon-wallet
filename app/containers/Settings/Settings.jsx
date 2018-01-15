@@ -134,7 +134,7 @@ export default class Settings extends Component<Props, State> {
       onClick: () => {
         storage.get('userWallet', (readError, data) => {
           if (readError) {
-            showErrorNotification({ message: `An error occurred reading previosly stored wallet: ${readError.message}` })
+            showErrorNotification({ message: `An error occurred reading previously stored wallet: ${readError.message}` })
           }
 
           data.accounts = reject(data.accounts, { key })
