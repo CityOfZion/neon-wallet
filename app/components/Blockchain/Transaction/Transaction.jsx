@@ -8,7 +8,7 @@ import styles from './Transaction.scss'
 type Props = {
   className?: string,
   txid: string,
-  net: NetworkType,
+  networkId: string,
   explorer: ExplorerType
 }
 
@@ -24,7 +24,7 @@ export default class Transaction extends React.Component<Props> {
   }
 
   handleClick = () => {
-    const { net, explorer, txid } = this.props
-    openExplorerTx(net, explorer, txid)
+    const { networkId, explorer, txid } = this.props
+    openExplorerTx(networkId, explorer, txid)
   }
 }

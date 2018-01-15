@@ -15,7 +15,7 @@ import MdSync from 'react-icons/lib/md/sync'
 
 import styles from './WalletInfo.scss'
 
-import TokensBalance from './TokensBalance'
+import TokenBalances from './TokenBalances'
 
 type Props = {
   address: string,
@@ -23,7 +23,7 @@ type Props = {
   GAS: string,
   neoPrice: number,
   gasPrice: number,
-  tokens: Object,
+  tokenBalances: Array<TokenBalanceType>,
   loadWalletData: Function,
   currencyCode: string,
   showSuccessNotification: Function,
@@ -58,7 +58,7 @@ export default class WalletInfo extends Component<Props> {
       GAS,
       neoPrice,
       gasPrice,
-      tokens,
+      tokenBalances,
       showModal,
       currencyCode
     } = this.props
@@ -116,7 +116,7 @@ export default class WalletInfo extends Component<Props> {
         </div>
         <div className='spacer' />
         <Claim />
-        <TokensBalance tokens={tokens} showModal={showModal} />
+        <TokenBalances tokenBalances={tokenBalances} showModal={showModal} />
       </div>
     )
   }
