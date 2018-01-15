@@ -11,9 +11,10 @@ import { getWIF, LOGOUT, getAddress } from './account'
 import { getNetwork } from './metadata'
 import { getNEO, getGAS } from './wallet'
 
-// import { toNumber, toBigNumber } from '../core/math'
+import { toNumber } from '../core/math'
 import asyncWrap from '../core/asyncHelper'
 import { ASSETS } from '../core/constants'
+import { validateMintTokensInputs } from '../core/sale'
 
 export const participateInSale = (
   neoToSend: number,
@@ -26,48 +27,20 @@ export const participateInSale = (
   const GAS = getGAS(state)
   const net = getNetwork(state)
 
-  if (neoToSend && parseFloat(neoToSend) !== parseInt(neoToSend)) {
-    dispatch(
-      showErrorNotification({
-        message: 'You cannot send fractional NEO to a token sale.'
-      })
-    )
-    return false
-  }
-
   const account = new wallet.Account(wif)
-  const neoToMint = parseInt(neoToSend)
-  const gasToMint = gasToSend
+  const neoToMint = toNumber(neoToSend)
+  const gasToMint = toNumber(gasToSend)
 
-  if ((neoToMint && isNaN(neoToMint)) || (gasToMint && isNaN(gasToMint))) {
-    dispatch(
-      showErrorNotification({ message: 'Please enter valid numbers only' })
-    )
-    return false
-  }
+  const [isValid, message] = validateMintTokensInputs(
+    neoToMint,
+    gasToMint,
+    scriptHash,
+    NEO,
+    GAS
+  )
 
-  if (neoToMint > NEO) {
-    dispatch(
-      showErrorNotification({ message: 'You do not have enough NEO to send.' })
-    )
-    return false
-  }
+  if (!isValid) return dispatch(showErrorNotification({ message }))
 
-  if (gasToMint > GAS) {
-    dispatch(
-      showErrorNotification({ message: 'You do not have enough GAS to send.' })
-    )
-    return false
-  }
-
-  if (
-    scriptHash.slice(0, 1) !== '0x' &&
-    scriptHash.length !== 42 &&
-    scriptHash.length !== 40
-  ) {
-    dispatch(showErrorNotification({ message: 'Not a valid script hash.' }))
-    return false
-  }
   const _scriptHash =
     scriptHash.length === 40
       ? scriptHash
@@ -99,29 +72,17 @@ export const participateInSale = (
     gas: 0
   }
 
-  console.log('config', config)
   const [error, response] = await asyncWrap(api.doInvoke(config))
-  console.log('error response', error)
-  console.log('response', response)
-  if (error) {
-    dispatch(
+  if (error || !response || !response.response || !response.response.result) {
+    return dispatch(
       showErrorNotification({
-        message:
-          'Error minting tokens for this scripthash. Is this the correct input?'
+        message: 'Sale participation failed. Check Script Hash'
       })
     )
-    return false
   }
-  // TODO test this response out
-  if (response.result === true) {
-    dispatch(
-      showSuccessNotification({ message: 'Sale participation was successful.' })
-    )
-    return true
-  } else {
-    dispatch(showErrorNotification({ message: 'Sale participation failed.' }))
-    return false
-  }
+  return dispatch(
+    showSuccessNotification({ message: 'Sale participation was successful.' })
+  )
 }
 
 export const SET_SALE_BALANCE = 'SET_SALE_BALANCE'
