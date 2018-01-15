@@ -112,7 +112,9 @@ export const upgradeUserWalletNEP6 = (): Promise<*> => {
 }
 
 export const walletHasKey = (wallet: Object, key: string) =>
-  wallet.accounts.some(account => account.key === key)
+  wallet.accounts.some(account => {
+    return account.key === key
+  })
 
 export const recoverWallet = (wallet: Object): Promise<*> => {
   return new Promise((resolve, reject) => {
