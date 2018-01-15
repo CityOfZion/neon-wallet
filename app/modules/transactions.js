@@ -21,8 +21,7 @@ import {
   LOGOUT,
   getIsHardwareLogin
 } from './account'
-import { getNetwork } from './metadata'
-
+import { getNetwork } from '../core/deprecated'
 import { isToken, validateTransactionsBeforeSending } from '../core/wallet'
 import { ASSETS } from '../core/constants'
 import { adjustDecimalAmountForTokenTransfer } from '../core/nep5'

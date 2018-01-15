@@ -2,11 +2,7 @@
 import { wallet, api } from 'neon-js'
 import { flatten } from 'lodash'
 
-import {
-  showErrorNotification,
-  showInfoNotification,
-  hideNotification
-} from './notifications'
+import { showErrorNotification, showInfoNotification, hideNotification } from './notifications'
 import {
   getWIF,
   LOGOUT,
@@ -15,9 +11,8 @@ import {
   getSigningFunction,
   getPublicKey
 } from './account'
-import { getNetwork } from './metadata'
 import { getNEO, getGAS } from './wallet'
-
+import { getNetwork } from '../core/deprecated'
 import { toNumber } from '../core/math'
 import asyncWrap from '../core/asyncHelper'
 import { ASSETS } from '../core/constants'
