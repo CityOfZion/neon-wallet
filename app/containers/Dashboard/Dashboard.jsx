@@ -24,7 +24,7 @@ type Props = {
   sendTransaction: Function,
   NEO: string,
   GAS: string,
-  tokens: Object,
+  tokenBalances: Array<TokenBalanceType>,
   loaded: boolean,
   loadWalletData: Function,
 }
@@ -52,7 +52,7 @@ export default class Dashboard extends Component<Props> {
       address,
       NEO,
       GAS,
-      tokens,
+      tokenBalances,
       showErrorNotification,
       sendTransaction,
       loaded
@@ -69,7 +69,7 @@ export default class Dashboard extends Component<Props> {
             <div className={styles.walletButtons}>
               <div
                 className={classNames(styles.walletButton, styles.sendButton)}
-                onClick={() => showModal(MODAL_TYPES.SEND, { NEO, GAS, tokens, showErrorNotification, sendTransaction, net, address })}>
+                onClick={() => showModal(MODAL_TYPES.SEND, { NEO, GAS, tokenBalances, showErrorNotification, sendTransaction, net, address })}>
                 <FaArrowUpward className={styles.walletButtonIcon} /><span className={styles.walletButtonText}>Send</span>
               </div>
               <div

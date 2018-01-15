@@ -4,7 +4,7 @@ import classNames from 'classnames'
 
 import Transaction from '../../components/Blockchain/Transaction'
 import { ASSETS } from '../../core/constants'
-import { toBigNumber } from '../../core/math'
+import { isZero } from '../../core/math'
 import { formatBalance } from '../../core/formatters'
 
 import styles from './Transactions.scss'
@@ -12,10 +12,6 @@ import styles from './Transactions.scss'
 type Props = {
   className?: string,
   transactions: Array<Object>
-}
-
-const isZero = (amount) => {
-  return toBigNumber(amount).equals(0)
 }
 
 export default class Transactions extends React.Component<Props> {

@@ -6,12 +6,25 @@ import configureStore from 'redux-mock-store'
 import { shallow, mount } from 'enzyme'
 
 import App from '../../app/containers/App'
+import { TEST_NETWORK_ID, MAIN_NETWORK_ID } from '../../app/core/constants'
 
 const initialState = {
   account: {
   },
   metadata: {
-    network: 'MainNet'
+    networkId: TEST_NETWORK_ID,
+    networks: [
+      {
+        id: MAIN_NETWORK_ID,
+        label: 'MainNet',
+        network: 'MainNet'
+      },
+      {
+        id: TEST_NETWORK_ID,
+        label: 'TestNet',
+        network: 'TestNet'
+      }
+    ]
   },
   wallet: {
     transactions: []

@@ -15,15 +15,18 @@ import Delete from 'react-icons/lib/md/delete'
 const { dialog } = require('electron').remote
 
 type Props = {
-  setAccounts: Function,
-  setBlockExplorer: Function,
+  setAccounts: (Array<Object>) => any,
+  setBlockExplorer: (string) => any,
   explorer: string,
-  setCurrency: Function,
+  setCurrency: (string) => any,
   currency: string,
   accounts: any,
-  showModal: Function,
-  showSuccessNotification: Function,
-  showErrorNotification: Function
+  showModal: (string, Object) => any,
+  showSuccessNotification: (Object) => any,
+  showErrorNotification: (Object) => any,
+  allTokens: Array<TokenItemType>,
+  setUserGeneratedTokens: () => any,
+  networks: Array<NetworkItemType>,
 }
 
 type State = {
@@ -103,9 +106,12 @@ export default class Settings extends Component<Props, State> {
   }
 
   componentWillReceiveProps (nextProps: Props) {
+    const { currency, explorer, allTokens } = nextProps
+    const userGeneratedTokens = allTokens.filter((token: TokenItemType) => token.isUserGenerated)
     storage.set('settings', {
-      currency: nextProps.currency,
-      blockExplorer: nextProps.explorer
+      currency,
+      blockExplorer: explorer,
+      tokens: userGeneratedTokens
     })
   }
 
@@ -128,7 +134,7 @@ export default class Settings extends Component<Props, State> {
       onClick: () => {
         storage.get('userWallet', (readError, data) => {
           if (readError) {
-            showErrorNotification({ message: `An error occurred reading previosly stored wallet: ${readError.message}` })
+            showErrorNotification({ message: `An error occurred reading previously stored wallet: ${readError.message}` })
           }
 
           data.accounts = reject(data.accounts, { key })
@@ -146,6 +152,22 @@ export default class Settings extends Component<Props, State> {
     })
   }
 
+  openTokenModal = () => {
+    const {
+      setUserGeneratedTokens,
+      allTokens,
+      showModal,
+      networks,
+      showErrorNotification
+    } = this.props
+    showModal(MODAL_TYPES.TOKEN, {
+      tokens: allTokens,
+      networks,
+      setUserGeneratedTokens,
+      showErrorNotification
+    })
+  }
+
   render () {
     const { accounts, explorer, currency } = this.props
 
@@ -153,6 +175,10 @@ export default class Settings extends Component<Props, State> {
       <div id='settings'>
         <div className='description'>Manage your Neon wallet accounts and settings</div>
         <div className='settingsForm'>
+          <div className='settingsItem'>
+            <div className='itemTitle'>Tokens</div>
+            <Button onClick={this.openTokenModal}>Manage Tokens</Button>
+          </div>
           <div className='settingsItem'>
             <div className='itemTitle'>Block Explorer</div>
             <select value={explorer} onChange={this.updateExplorerSettings}>

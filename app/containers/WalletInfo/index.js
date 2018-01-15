@@ -9,7 +9,7 @@ import {
   loadWalletData,
   getNEO,
   getGAS,
-  getTokens
+  getTokenBalances
 } from '../../modules/wallet'
 import { getNEOPrice, getGASPrice, getCurrency } from '../../modules/price'
 import { showModal } from '../../modules/modal'
@@ -23,7 +23,7 @@ const mapStateToProps = (state: Object) => ({
   net: getNetwork(state),
   neoPrice: getNEOPrice(state),
   gasPrice: getGASPrice(state),
-  tokens: getTokens(state),
+  tokenBalances: getTokenBalances(state),
   currencyCode: getCurrency(state)
 })
 
