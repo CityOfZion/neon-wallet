@@ -44,5 +44,6 @@ exports[`WalletInfo renders without crashing 1`] = `
       "unsubscribe": [Function],
     }
   }
+  tokenBalances={Array []}
 />
 `;

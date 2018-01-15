@@ -11,3 +11,6 @@ export const toBigNumber = (value: number | string) =>
 
 export const toNumber = (value: string) =>
   toBigNumber(value).toNumber()
+
+export const isZero = (amount: string | number) =>
+  toBigNumber(amount).equals(0)
