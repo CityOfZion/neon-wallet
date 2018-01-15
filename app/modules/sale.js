@@ -1,5 +1,6 @@
 // @flow
 import { wallet, api } from 'neon-js'
+import { flatten } from 'lodash'
 
 import {
   showErrorNotification,
@@ -9,8 +10,10 @@ import {
 import { getWIF, LOGOUT, getAddress } from './account'
 import { getNetwork } from './metadata'
 import { getNEO, getGAS } from './wallet'
-import { toNumber, toBigNumber } from '../core/math'
+
+// import { toNumber, toBigNumber } from '../core/math'
 import asyncWrap from '../core/asyncHelper'
+import { ASSETS } from '../core/constants'
 
 export const participateInSale = (
   neoToSend: number,
@@ -33,8 +36,8 @@ export const participateInSale = (
   }
 
   const account = new wallet.Account(wif)
-  const neoToMint = toNumber(neoToSend)
-  const gasToMint = toNumber(gasToSend)
+  const neoToMint = parseInt(neoToSend)
+  const gasToMint = gasToSend
 
   if ((neoToMint && isNaN(neoToMint)) || (gasToMint && isNaN(gasToMint))) {
     dispatch(
@@ -76,17 +79,11 @@ export const participateInSale = (
 
   const scriptHashAddress = wallet.getAddressFromScriptHash(_scriptHash)
 
-  const intents = [[NEO, neoToMint], [GAS, gasToMint]]
+  const intents = [[ASSETS.NEO, neoToMint], [ASSETS.GAS, gasToMint]]
     .filter(([symbol, amount]) => amount > 0)
     .map(([symbol, amount]) =>
       api.makeIntent({ [symbol]: amount }, scriptHashAddress)
     )
-
-  // const intents = [[NEO, neoToMint], [GAS, gasToMint]]
-  //   .filter(([symbol, amount]) => amount > 0)
-  //   .map(([symbol, amount]) => {
-  //     return { assetId: symbol, value: amount, scriptHash: _scriptHash }
-  //   })
 
   const script = {
     scriptHash: _scriptHash,
@@ -97,12 +94,15 @@ export const participateInSale = (
     net,
     address: account.address,
     privateKey: account.privateKey,
-    intents,
+    intents: flatten(intents),
     script,
     gas: 0
   }
 
+  console.log('config', config)
   const [error, response] = await asyncWrap(api.doInvoke(config))
+  console.log('error response', error)
+  console.log('response', response)
   if (error) {
     dispatch(
       showErrorNotification({
@@ -147,6 +147,10 @@ export const updateSaleBalance = (scriptHash: string) => async (
   const [_err, tokenResults] = await asyncWrap(
     api.nep5.getToken(tokenRpcEndpoint, scriptHash, address)
   )
+  if (_err || _error)
+    return dispatch(
+      showErrorNotification({ message: 'Update balance failed.' })
+    )
   const tokenBalance = tokenResults.balance || 0
   dispatch(setSaleBalance(tokenBalance))
 }

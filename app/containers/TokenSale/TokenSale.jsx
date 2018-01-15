@@ -23,9 +23,9 @@ type State = {
 
 export default class TokenSale extends Component<Props, State> {
   state = {
-    scriptHash: '',
-    neoToSend: '0',
-    gasToSend: '0'
+    scriptHash: '0b6c1f919e95fe61c17a7612aebfaf4fda3a2214',
+    neoToSend: 1,
+    gasToSend: 1
   }
 
   componentDidMount() {
