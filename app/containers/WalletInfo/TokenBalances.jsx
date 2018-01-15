@@ -18,36 +18,35 @@ type Props = {
 }
 
 const TokenBalances = ({ tokenBalances, showModal }: Props) => (
-  <div>
-    <Table className={styles.table}>
-      <thead>
-        <tr>
-          <th>Token</th>
-          <th>Balance</th>
-        </tr>
-      </thead>
-      <tbody>
-        {tokenBalances.map((token: TokenBalanceType, index: number) => {
-          const { balance, symbol } = token
-          const formattedBalance = formatBalance(symbol, balance)
-          const formattedBalanceDisplay = formatBalance(symbol, balance, true)
-          return (
-            <tr key={`${symbol}${index}`}>
-              <td onClick={() => showModal(MODAL_TYPES.TOKEN_INFO, { token })}>
-                <span className={styles.symbol}><InfoOutline className={styles.symbolIcon} />{symbol}</span>
-              </td>
-              <td>
-                <Tooltip
-                  title={formattedBalance}
-                  disabled={isZero(balance)}>
-                  {formattedBalanceDisplay}
-                </Tooltip>
-              </td>
-            </tr>
-          )
-        })}
-      </tbody>
-    </Table></div>
+  <Table className={styles.table}>
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Balance</th>
+      </tr>
+    </thead>
+    <tbody>
+      {tokenBalances.map((token: TokenBalanceType, index: number) => {
+        const { balance, symbol } = token
+        const formattedBalance = formatBalance(symbol, balance)
+        const formattedBalanceDisplay = formatBalance(symbol, balance, true)
+        return (
+          <tr key={`${symbol}${index}`}>
+            <td onClick={() => showModal(MODAL_TYPES.TOKEN_INFO, { token })}>
+              <span className={styles.symbol}><InfoOutline className={styles.symbolIcon} />{symbol}</span>
+            </td>
+            <td>
+              <Tooltip
+                title={formattedBalance}
+                disabled={isZero(balance)}>
+                {formattedBalanceDisplay}
+              </Tooltip>
+            </td>
+          </tr>
+        )
+      })}
+    </tbody>
+  </Table>
 )
 
 export default TokenBalances
