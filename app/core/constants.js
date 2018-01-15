@@ -60,8 +60,12 @@ export const MODAL_TYPES = {
   SEND: 'SEND',
   RECEIVE: 'RECEIVE',
   CONFIRM: 'CONFIRM',
-  TOKEN_INFO: 'TOKEN_INFO'
+  TOKEN_INFO: 'TOKEN_INFO',
+  TOKEN: 'TOKEN'
 }
+
+export const MAIN_NETWORK_ID = '1'
+export const TEST_NETWORK_ID = '2'
 
 // TestNet
 export const TOKENS_TEST = {

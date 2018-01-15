@@ -1,16 +1,22 @@
 // @flow
-import { ASSETS, TOKENS } from './constants'
+import { ASSETS } from './constants'
 import { wallet } from 'neon-js'
 
 const MIN_PASSPHRASE_LEN = 4
 
 export const validatePassphraseLength = (passphrase: string): boolean => passphrase.length >= MIN_PASSPHRASE_LEN
 
-export const isToken = (symbol: SymbolType) => Object.keys(TOKENS).includes(symbol)
+export const isToken = (symbol: SymbolType) => !([ASSETS.NEO, ASSETS.GAS].includes(symbol))
 
 export const obtainBalance = (balances: Object, symbol: SymbolType) => {
   return balances[symbol] || 0
 }
+
+export const getTokenBalancesMap = (tokenBalances: Array<TokenBalanceType>) =>
+  tokenBalances.reduce((tokenBalance, { symbol, balance }: TokenBalanceType) => {
+    tokenBalance[symbol] = balance
+    return tokenBalance
+  }, {})
 
 export const validateTransactionBeforeSending = (balance: number, sendEntry: SendEntryType) => {
   const { address, amount, symbol } = sendEntry

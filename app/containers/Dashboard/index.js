@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import { logout, getAddress } from '../../modules/account'
 import { getNetwork } from '../../modules/metadata'
 import { getNotifications, showErrorNotification } from '../../modules/notifications'
-import { getNEO, getGAS, getTokens, getIsLoaded, loadWalletData } from '../../modules/wallet'
+import { getNEO, getGAS, getTokenBalances, getIsLoaded, loadWalletData } from '../../modules/wallet'
 import { showModal } from '../../modules/modal'
 import { sendTransaction } from '../../modules/transactions'
 
@@ -17,7 +17,7 @@ const mapStateToProps = (state: Object) => ({
   notification: getNotifications(state),
   NEO: getNEO(state),
   GAS: getGAS(state),
-  tokens: getTokens(state),
+  tokenBalances: getTokenBalances(state),
   loaded: getIsLoaded(state)
 })
 

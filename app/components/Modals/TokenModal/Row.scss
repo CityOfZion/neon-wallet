@@ -1,0 +1,27 @@
+.row {
+    padding-bottom: 5px;
+}
+
+.rowLabel {
+    width: 80px;
+    margin-right: 10px;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid transparent;
+}
+
+.rowURL {
+    width: 390px;
+    margin-right: 10px;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid transparent;
+}
+
+.rowError {
+    border: 1px solid red;
+}
+
+.icon {
+    cursor: pointer;
+}
