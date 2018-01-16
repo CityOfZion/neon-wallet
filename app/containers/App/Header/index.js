@@ -8,14 +8,12 @@ import withNetworkData from '../../../hocs/withNetworkData'
 import networkActions from '../../../actions/networkActions'
 import { type Actions } from '../../../values/api'
 import { logout, getAddress, getLoggedIn } from '../../../modules/account'
-import { getBlockHeight } from '../../../modules/metadata'
 import { getNetworks } from '../../../core/networks'
 import { getNEOPrice, getGASPrice, getCurrency } from '../../../modules/price'
 
 import Header from './Header'
 
 const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
-  blockHeight: getBlockHeight(state),
   address: getAddress(state),
   neoPrice: getNEOPrice(state),
   gasPrice: getGASPrice(state),

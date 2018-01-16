@@ -16,7 +16,6 @@ import logo from '../../../images/neon-logo2.png'
 const Logo = () => <div><img src={logo} width='60px' /></div>
 
 type Props = {
-  blockHeight: number,
   neoPrice: number,
   gasPrice: number,
   currencyCode: string,
@@ -28,7 +27,6 @@ type Props = {
 }
 
 const Header = ({
-  blockHeight,
   logout,
   neoPrice,
   gasPrice,
@@ -47,7 +45,7 @@ const Header = ({
         gasPrice={gasPrice}
         currencyCode={currencyCode}
       />
-      <WalletBlockHeight blockHeight={blockHeight} />
+      <WalletBlockHeight />
       <WalletVersion version={version} />
       <NetworkSwitch
         networkId={networkId}

@@ -11,7 +11,6 @@ import {
 } from '../../app/modules/wallet'
 import { SHOW_NOTIFICATION } from '../../app/modules/notifications'
 import { LOADING_TRANSACTIONS } from '../../app/modules/transactions'
-import { SET_HEIGHT } from '../../app/modules/metadata'
 
 import { DEFAULT_CURRENCY_CODE, MAIN_NETWORK_ID } from '../../app/core/constants'
 import { LOADED } from '../../app/values/state'
@@ -151,12 +150,6 @@ describe('WalletInfo', () => {
       type: SET_TRANSACTION_HISTORY,
       payload: {
         transactions: []
-      }
-    })
-    expect(actions[3]).toEqual({
-      type: SET_HEIGHT,
-      payload: {
-        blockHeight: 586435
       }
     })
     expect(actions[4]).toEqual({

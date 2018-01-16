@@ -1,11 +1,9 @@
-import metadataReducer, { setBlockHeight, setBlockExplorer, SET_HEIGHT, SET_EXPLORER } from '../../app/modules/metadata'
+import metadataReducer, { setBlockExplorer, SET_EXPLORER } from '../../app/modules/metadata'
 
 describe('metadata module tests', () => {
-  const blockHeight = 10
   const blockExplorer = 'Neoscan'
 
   const initialState = {
-    blockHeight: 0,
     blockExplorer: 'Neotracker',
     tokens: [
       {
@@ -52,27 +50,6 @@ describe('metadata module tests', () => {
       }
     ]
   }
-
-  describe('setBlockHeight tests', () => {
-    const expectedAction = {
-      type: SET_HEIGHT,
-      payload: {
-        blockHeight
-      }
-    }
-
-    test('setBlockHeight action works', () => {
-      expect(setBlockHeight(blockHeight)).toEqual(expectedAction)
-    })
-
-    test('metadata reducer should handle SET_HEIGHT', () => {
-      const expectedState = {
-        ...initialState,
-        blockHeight
-      }
-      expect(metadataReducer(undefined, expectedAction)).toEqual(expectedState)
-    })
-  })
 
   describe('setBlockExplorer tests', () => {
     const expectedAction = {

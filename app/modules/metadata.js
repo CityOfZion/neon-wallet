@@ -23,16 +23,10 @@ import asyncWrap from '../core/asyncHelper'
 import { version } from '../../package.json'
 
 // Constants
-export const SET_HEIGHT = 'SET_HEIGHT'
 export const SET_EXPLORER = 'SET_EXPLORER'
 export const SET_USER_GENERATED_TOKENS = 'SET_USER_GENERATED_TOKENS'
 
 // Actions
-export const setBlockHeight = (blockHeight: number) => ({
-  type: SET_HEIGHT,
-  payload: { blockHeight }
-})
-
 export const setBlockExplorer = (blockExplorer: ExplorerType) => async (
   dispatch: DispatchType
 ) => {
@@ -143,15 +137,7 @@ export const initSettings = () => async (dispatch: DispatchType) => {
   })
 }
 
-export const syncBlockHeight = (net: NetworkType) => async (
-  dispatch: DispatchType
-) => {
-  const [_err, blockHeight] = await asyncWrap(api.neonDB.getWalletDBHeight(net)) // eslint-disable-line
-  return dispatch(setBlockHeight(blockHeight))
-}
-
 // state getters
-export const getBlockHeight = (state: Object) => state.metadata.blockHeight
 export const getBlockExplorer = (state: Object) => state.metadata.blockExplorer
 export const getAllTokens = (state: Object) => state.metadata.tokens
 
@@ -192,19 +178,12 @@ const generatePredfinedTokens = (): Array<TokenItemType> => {
 }
 
 const initialState = {
-  blockHeight: 0,
   tokens: generatePredfinedTokens(),
   blockExplorer: EXPLORERS.NEO_TRACKER
 }
 
 export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
-    case SET_HEIGHT:
-      const { blockHeight } = action.payload
-      return {
-        ...state,
-        blockHeight
-      }
     case SET_EXPLORER:
       const { blockExplorer } = action.payload
       return {
