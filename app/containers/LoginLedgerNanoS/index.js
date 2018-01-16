@@ -2,7 +2,13 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { ledgerNanoSGetLogin, ledgerNanoSGetInfoAsync, getPublicKey, getHardwareDeviceInfo, getHardwarePublicKeyInfo } from '../../modules/account'
+import {
+  ledgerNanoSGetLogin,
+  ledgerNanoSGetInfoAsync,
+  getPublicKey,
+  getHardwareDeviceInfo,
+  getHardwarePublicKeyInfo
+} from '../../modules/account'
 
 import LoginLedgerNanoS from './LoginLedgerNanoS'
 
@@ -17,6 +23,7 @@ const actionCreators = {
   ledgerNanoSGetLogin
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(actionCreators, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginLedgerNanoS)

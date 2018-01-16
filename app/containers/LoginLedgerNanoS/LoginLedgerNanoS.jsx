@@ -25,7 +25,7 @@ export default class LoginLedgerNanoS extends Component<Props, State> {
     intervalId: null
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const { ledgerNanoSGetInfoAsync } = this.props
     const intervalId = setInterval(async () => {
       await ledgerNanoSGetInfoAsync()
@@ -33,15 +33,19 @@ export default class LoginLedgerNanoS extends Component<Props, State> {
     this.setState({ intervalId })
   }
 
-  shouldComponentUpdate (nextProps: Props) {
+  shouldComponentUpdate(nextProps: Props) {
     const { publicKey, hardwarePublicKeyInfo, hardwareDeviceInfo } = this.props
-    if (nextProps.publicKey !== publicKey ||
-        nextProps.hardwarePublicKeyInfo !== hardwarePublicKeyInfo ||
-        (nextProps.hardwareDeviceInfo === FINDING_LEDGER_NOTICE && hardwareDeviceInfo === null)) return true
+    if (
+      nextProps.publicKey !== publicKey ||
+      nextProps.hardwarePublicKeyInfo !== hardwarePublicKeyInfo ||
+      (nextProps.hardwareDeviceInfo === FINDING_LEDGER_NOTICE &&
+        hardwareDeviceInfo === null)
+    )
+      return true
     return false
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     const { intervalId } = this.state
     if (intervalId) {
       clearInterval(intervalId)
@@ -56,14 +60,16 @@ export default class LoginLedgerNanoS extends Component<Props, State> {
     }
   }
 
-  render () {
+  render() {
     const { hardwareDeviceInfo, hardwarePublicKeyInfo, publicKey } = this.props
     return (
-      <div id='loginPage' className={loginStyles.loginPage}>
+      <div id="loginPage" className={loginStyles.loginPage}>
         <div className={loginStyles.title}>Login using the Ledger Nano S:</div>
         <div className={loginStyles.loginForm}>
           <div>
-            <Button disabled={!publicKey} onClick={this.onLedgerNanoSChange}>Use Ledger Nano S</Button>
+            <Button disabled={!publicKey} onClick={this.onLedgerNanoSChange}>
+              Use Ledger Nano S
+            </Button>
             <HomeButtonLink />
           </div>
           <p>{hardwareDeviceInfo}</p>
