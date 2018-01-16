@@ -2,6 +2,7 @@
 import React from 'react'
 import { compose, setDisplayName, wrapDisplayName } from 'recompose'
 
+import defaultStrategy from './progressStrategies/defaultStrategy'
 import withProgressProp from './withProgressProp'
 import withoutProps from '../withoutProps'
 import { type Actions } from '../../values/api'
@@ -15,9 +16,19 @@ type Mapping = {
   [key: ProgressState]: Class<React.Component<*>>
 }
 
+type Options = {
+  strategy?: (Array<Object>) => ProgressState,
+  prefix?: string,
+  propName?: string
+}
+
 const PROGRESS_PROP: string = '__progress__'
 
-export default function withProgressComponents (actions: Actions, mapping: Mapping = {}, propName: string = PROGRESS_PROP) {
+export default function withProgressComponents (
+  actions: Actions,
+  mapping: Mapping = {},
+  { strategy = defaultStrategy, prefix = 'api', propName = PROGRESS_PROP }: Options = {}
+) {
   return (Component: Class<React.Component<*>>): Class<React.Component<*>> => {
     class ComponentWithProgressComponents extends React.Component<Props> {
       static displayName = 'ComponentWithProgressComponents'
@@ -30,7 +41,7 @@ export default function withProgressComponents (actions: Actions, mapping: Mappi
     }
 
     return compose(
-      withProgressProp(actions),
+      withProgressProp(actions, { strategy, prefix, propName }),
       setDisplayName(wrapDisplayName(Component, 'withProgressComponents'))
     )(ComponentWithProgressComponents)
   }
