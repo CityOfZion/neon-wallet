@@ -6,29 +6,25 @@ import ReceiveModal from '../../components/Modals/ReceiveModal'
 import SendModal from '../../components/Modals/SendModal'
 import TokenInfoModal from '../../components/Modals/TokenInfoModal'
 import TokenModal from '../../components/Modals/TokenModal'
+import TokenSaleModal from '../../components/Modals/TokenSaleModal'
 
 import { MODAL_TYPES } from '../../core/constants'
 
-const {
-  CONFIRM,
-  RECEIVE,
-  SEND,
-  TOKEN_INFO,
-  TOKEN
-} = MODAL_TYPES
+const { CONFIRM, RECEIVE, SEND, TOKEN_INFO, TOKEN, ICO } = MODAL_TYPES
 
 const MODAL_COMPONENTS = {
   [CONFIRM]: ConfirmModal,
   [RECEIVE]: ReceiveModal,
   [SEND]: SendModal,
   [TOKEN_INFO]: TokenInfoModal,
-  [TOKEN]: TokenModal
+  [TOKEN]: TokenModal,
+  [ICO]: TokenSaleModal
 }
 
 type Props = {
-    modalType?: ModalType,
-    modalProps: Object,
-    hideModal: Function
+  modalType?: ModalType,
+  modalProps: Object,
+  hideModal: Function
 }
 
 const ModalRenderer = (props: Props) => {

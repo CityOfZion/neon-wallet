@@ -1,242 +1,246 @@
 @import './variables';
 
 @media print {
-    #newWallet {
-        font-size: .8em;
-        width: 600px !important;
-    }
+  #newWallet {
+    font-size: 0.8em;
+    width: 600px !important;
+  }
 }
 
 body {
-    font-family: 'helvetica neue', 'helvetica', sans-serif;
-    font-size: 16px;
-    padding: 0px;
-    margin: 0px;
-    background-color: $main-background;
-    color: $default-text;
-    overflow: hidden;
-    :focus { outline: none; }
+  font-family: 'helvetica neue', 'helvetica', sans-serif;
+  font-size: 16px;
+  padding: 0px;
+  margin: 0px;
+  background-color: $main-background;
+  color: $default-text;
+  overflow: hidden;
+  :focus {
+    outline: none;
+  }
 }
 
 input {
-    font-size: 1.2em;
-    padding: 7px 15px;
-    border: none;
-    font-weight: 200;
-    background-color: $dark-input-color;
-    color: $default-text;
-    :focus { outline: none; }
+  font-size: 1.2em;
+  padding: 7px 15px;
+  border: none;
+  font-weight: 200;
+  background-color: $dark-input-color;
+  color: $default-text;
+  :focus {
+    outline: none;
+  }
 }
 
 .notification-link {
-    text-decoration: none;
-    color: $default-text;
+  text-decoration: none;
+  color: $default-text;
 }
 
 #settings,
 #tokenSale {
-    .description {
-        font-size: 1.2em;
-        font-weight: 200;
-        margin-bottom: 20px;
-    }
-    .settingsForm {
-        margin-bottom: 20px;
-    }
-    input.scriptHash {
-        width: 500px;
-    }
-    input.neoAmount {
-        width: 100px;
-    }
-    label {
-        margin-right: 10px;
-    }
-    .walletItem {
-        width: 100%;
-    }
-    .settingsItem {
-        margin-bottom: 10px;
-    }
-    .itemTitle {
-        font-weight: 800;
-        margin-bottom: 5px;
-    }
-    .walletItem {
-        margin-bottom: 3px;
-    }
-    .walletName,
-    .walletKey,
-    .deleteWallet {
-        display: inline-block;
-        margin-right: 10px;
-    }
-    .walletName {
-        width: 25%;
-    }
-    .walletKey {
-        width: 50%;
-        font-size: .8em;
-        font-family: 'courier', monospace;
-    }
-    .deleteWallet {
-        width: 10%;
-        opacity: .6;
-        cursor: pointer;
-    }
+  .description {
+    font-size: 1.2em;
+    font-weight: 200;
+    margin-bottom: 20px;
+  }
+  .settingsForm {
+    margin-bottom: 20px;
+  }
+  input.scriptHash {
+    width: 500px;
+  }
+  input.neoAmount {
+    width: 100px;
+  }
+  label {
+    margin-right: 10px;
+  }
+  .walletItem {
+    width: 100%;
+  }
+  .settingsItem {
+    margin-bottom: 10px;
+  }
+  .itemTitle {
+    font-weight: 800;
+    margin-bottom: 5px;
+  }
+  .walletItem {
+    margin-bottom: 3px;
+  }
+  .walletName,
+  .walletKey,
+  .deleteWallet {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  .walletName {
+    width: 25%;
+  }
+  .walletKey {
+    width: 50%;
+    font-size: 0.8em;
+    font-family: 'courier', monospace;
+  }
+  .deleteWallet {
+    width: 10%;
+    opacity: 0.6;
+    cursor: pointer;
+  }
 }
 
 #tokenSale {
-    .warning {
-        background-color: red;
-        color: white;
-        padding: 5px;
-        margin-bottom: 10px;
-    }
+  .warning {
+    background-color: red;
+    color: white;
+    padding: 5px;
+    margin-bottom: 10px;
+  }
 }
 
 #newWallet {
-    input {
-        width: 95%;
-        margin-bottom: 10px;
-    }
+  input {
+    width: 95%;
+    margin-bottom: 10px;
+  }
 
-    .disclaimer {
-        margin-bottom: 20px;
-        font-size: 1.4em;
-        font-weight: 200;
-        background-color: #AA3939;
-        color: white;
-        padding: 5px;
+  .disclaimer {
+    margin-bottom: 20px;
+    font-size: 1.4em;
+    font-weight: 200;
+    background-color: #aa3939;
+    color: white;
+    padding: 5px;
+  }
+  .info {
+    margin-bottom: 10px;
+    font-size: 1.4em;
+    font-weight: 200;
+  }
+  .addressBox,
+  .privateKeyBox {
+    margin-bottom: 20px;
+    display: inline-block;
+    width: 40%;
+    text-align: center;
+  }
+  .addressBox {
+    margin-right: 9%;
+  }
+  .privateKeyBox {
+    margin-left: 9%;
+  }
+  .keyList {
+    margin-bottom: 20px;
+  }
+  .keyListItem {
+    font-size: 0.9em;
+    span.label {
+      margin-right: 5px;
+      font-weight: 800;
     }
-    .info {
-        margin-bottom: 10px;
-        font-size: 1.4em;
-        font-weight: 200;
-    }
-    .addressBox,
-    .privateKeyBox {
-        margin-bottom: 20px;
-        display: inline-block;
-        width: 40%;
-        text-align: center;
-    }
-    .addressBox {
-        margin-right: 9%;
-    }
-    .privateKeyBox {
-        margin-left: 9%;
-    }
-    .keyList {
-        margin-bottom: 20px;
-    }
-    .keyListItem {
-        font-size: .9em;
-        span.label {
-            margin-right: 5px;
-            font-weight: 800;
-        }
+  }
+  button {
+    margin-top: 10px;
+  }
+  .saveAccount {
+    margin-bottom: 10px;
+    input {
+      width: 300px;
+      margin-right: 20px;
     }
     button {
-        margin-top: 10px;
+      background-color: $dark-button;
     }
-    .saveAccount {
-        margin-bottom: 10px;
-        input {
-            width: 300px;
-            margin-right: 20px;
-        }
-        button {
-            background-color: $dark-button;
-        }
-    }
+  }
 }
 
 // split pane stuff
 #dashboard {
-    .spacer {
-        width: 84%;
-        margin: 0px 8%;
-        border-top: 2px solid $spacer-color;
+  .spacer {
+    width: 84%;
+    margin: 0px 8%;
+    border-top: 2px solid $spacer-color;
+  }
+  #claim {
+    margin: 20px 0px;
+    button {
+      font-size: 1em;
+      font-weight: 200;
     }
-    #claim {
-        margin: 20px 0px;
-        button {
-            font-size: 1em;
-            font-weight: 200;
-        }
+  }
+  #accountInfo {
+    margin: 20px 0px;
+    width: 100%;
+    position: relative;
+    text-align: center;
+    span.copyKey {
+      margin-left: 3px;
+      cursor: pointer;
     }
-    #accountInfo {
-        margin: 20px 0px;
-        width: 100%;
-        position: relative;
-        text-align: center;
-        span.copyKey {
-            margin-left: 3px;
-            cursor: pointer;
-        }
-        .label {
-            font-size: .85em;
-        }
-        .address {
-            font-size: .65em;
-            margin-bottom: 20px;
-            margin-top: 1px;
-            letter-spacing: .07em;
-        }
-        #balance {
-            margin: 20px 0px;
-            .split {
-                display: inline-block;
-                width: 50%;
-                clear: none;
-            }
-            .label {
-                font-weight: 200;
-                color: $thin-text-color;
-                font-size: 1.1em;
-            }
-            .amountBig {
-                font-weight: 200;
-                font-size: 2.4em;
-                color: $thin-text-color;
-                margin: 0px 0px 2px 0px;
-            }
-            .fiat {
-                font-size: 1.1em;
-                font-weight: 200;
-            }
-            .walletTotal {
-                padding-top: 10px;
-            }
-        }
+    .label {
+      font-size: 0.85em;
     }
+    .address {
+      font-size: 0.65em;
+      margin-bottom: 20px;
+      margin-top: 1px;
+      letter-spacing: 0.07em;
+    }
+    #balance {
+      margin: 20px 0px;
+      .split {
+        display: inline-block;
+        width: 50%;
+        clear: none;
+      }
+      .label {
+        font-weight: 200;
+        color: $thin-text-color;
+        font-size: 1.1em;
+      }
+      .amountBig {
+        font-weight: 200;
+        font-size: 2.4em;
+        color: $thin-text-color;
+        margin: 0px 0px 2px 0px;
+      }
+      .fiat {
+        font-size: 1.1em;
+        font-weight: 200;
+      }
+      .walletTotal {
+        padding-top: 10px;
+      }
+    }
+  }
 }
 
 .vertical.Pane1 {
-    border-right: 1.5px solid $spacer-color;
+  border-right: 1.5px solid $spacer-color;
 }
 
 // TODO: tool-tip seems broken
 .__react_component_tooltip {
-    &.show {
-        opacity: 1 !important;
-    }
-    &.solidTip {
-        background-color: rgba(0, 0, 0, 1);
-        z-index: $z-index-tooltip;
-    }
+  &.show {
+    opacity: 1 !important;
+  }
+  &.solidTip {
+    background-color: rgba(0, 0, 0, 1);
+    z-index: $z-index-tooltip;
+  }
 }
 
 .ReactModalPortal {
-    .ReactModal__Overlay {
-        opacity: 0;
-        transition: opacity 200ms ease-in-out;
-        &--after-open {
-            opacity: 1;
-        }
-        &--before-close {
-            opacity: 0;
-        }
+  .ReactModal__Overlay {
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
+    &--after-open {
+      opacity: 1;
     }
+    &--before-close {
+      opacity: 0;
+    }
+  }
 }

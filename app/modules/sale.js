@@ -14,12 +14,17 @@ import { getNEO, getGAS } from './wallet'
 import { toNumber } from '../core/math'
 import asyncWrap from '../core/asyncHelper'
 import { ASSETS } from '../core/constants'
-import { validateMintTokensInputs } from '../core/sale'
+import {
+  validateMintTokensInputs,
+  validateOldMintTokensInputs
+} from '../core/sale'
+import { oldMintTokens } from '../core/oldMintTokens'
 
 export const participateInSale = (
   neoToSend: number,
   gasToSend: number,
-  scriptHash: string
+  scriptHash: string,
+  signingFunction: Function
 ) => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
   const wif = getWIF(state)
@@ -85,52 +90,56 @@ export const participateInSale = (
   )
 }
 
-export const SET_SALE_BALANCE = 'SET_SALE_BALANCE'
-
-export function setSaleBalance(saleBalance: string) {
-  return {
-    type: SET_SALE_BALANCE,
-    payload: { saleBalance }
-  }
-}
-
-export const updateSaleBalance = (scriptHash: string) => async (
-  dispatch: DispatchType,
-  getState: GetStateType
-) => {
+export const oldParticipateInSale = (
+  neoToSend: number,
+  scriptHash: string,
+  signingFunction: Function = null,
+  gasCost: number = 0.000001
+) => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
-  const address = getAddress(state)
+  const wif = getWIF(state)
+  const NEO = getNEO(state)
+  const GAS = getGAS(state)
   const net = getNetwork(state)
 
-  const [_error, tokenRpcEndpoint] = await asyncWrap(
-    api.neonDB.getRPCEndpoint(net)
+  const neoToMint = toNumber(neoToSend)
+  const [isValid, message] = validateOldMintTokensInputs(
+    neoToMint,
+    scriptHash,
+    NEO,
+    GAS
   )
-  const [_err, tokenResults] = await asyncWrap(
-    api.nep5.getToken(tokenRpcEndpoint, scriptHash, address)
+
+  if (!isValid) return dispatch(showErrorNotification({ message }))
+
+  const _scriptHash =
+    scriptHash.length === 40
+      ? scriptHash
+      : scriptHash.slice(2, scriptHash.length)
+
+  dispatch(
+    showInfoNotification({ message: 'Sending transaction', autoDismiss: 0 })
   )
-  if (_err || _error)
+
+  const [error, response] = await asyncWrap(
+    oldMintTokens(net, _scriptHash, wif, neoToMint, gasCost, signingFunction)
+  )
+  if (error || !response || !response.result) {
     return dispatch(
-      showErrorNotification({ message: 'Update balance failed.' })
+      showErrorNotification({
+        message: 'Sale participation failed. Check Script Hash'
+      })
     )
-  const tokenBalance = tokenResults.balance || 0
-  dispatch(setSaleBalance(tokenBalance))
+  }
+  return dispatch(
+    showSuccessNotification({ message: 'Sale participation was successful.' })
+  )
 }
 
-// state getters
-export const getSaleBalance = (state: Object) => state.sale.saleBalance
-
-const initialState = {
-  saleBalance: 0
-}
+const initialState = {}
 
 export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
-    case SET_SALE_BALANCE:
-      const { saleBalance } = action.payload
-      return {
-        ...state,
-        saleBalance
-      }
     case LOGOUT:
       return initialState
     default:
