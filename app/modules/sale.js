@@ -12,7 +12,8 @@ import {
   LOGOUT,
   getAddress,
   getIsHardwareLogin,
-  getSigningFunction
+  getSigningFunction,
+  getPublicKey
 } from './account'
 import { getNetwork } from './metadata'
 import { getNEO, getGAS } from './wallet'
@@ -30,13 +31,15 @@ export const participateInSale = (
   neoToSend: number,
   gasToSend: number,
   scriptHash: string,
-  signingFunction: Function
+  gasCost: string = '0.000001'
 ) => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
   const wif = getWIF(state)
+  const publicKey = getPublicKey(state)
   const NEO = getNEO(state)
   const GAS = getGAS(state)
   const net = getNetwork(state)
+  const address = getAddress(state)
   const isHardwareLogin = getIsHardwareLogin(state)
   const signingFunction = getSigningFunction(state)
 
@@ -87,15 +90,19 @@ export const participateInSale = (
   }
   const config = {
     net,
-    address: account.address,
-    privateKey: account.privateKey,
+    address,
+    privateKey: isHardwareLogin ? null : account.privateKey,
     intents: flatten(intents),
     script,
     gas: 0,
+    publicKey: isHardwareLogin ? publicKey : null,
     signingFunction: isHardwareLogin ? signingFunction : null
   }
 
+  console.log('new verify config', config)
   const [error, response] = await asyncWrap(api.doInvoke(config))
+  console.log('error', error)
+  console.log('response', response)
   if (error || !response || !response.response || !response.response.result) {
     return dispatch(
       showErrorNotification({
@@ -111,13 +118,13 @@ export const participateInSale = (
 export const oldParticipateInSale = (
   neoToSend: number,
   scriptHash: string,
-  signingFunction: Function = null,
   gasCost: number = 0.000001
 ) => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
   const wif = getWIF(state)
   const NEO = getNEO(state)
   const GAS = getGAS(state)
+  const publicKey = getPublicKey(state)
   const net = getNetwork(state)
   const isHardwareLogin = getIsHardwareLogin(state)
   const signingFunction = getSigningFunction(state)
@@ -150,9 +157,19 @@ export const oldParticipateInSale = (
     )
   }
 
+  const wifOrPublicKey = isHardwareLogin ? publicKey : wif
   const [error, response] = await asyncWrap(
-    oldMintTokens(net, _scriptHash, wif, neoToMint, gasCost, signingFunction)
+    oldMintTokens(
+      net,
+      _scriptHash,
+      wifOrPublicKey,
+      neoToMint,
+      0,
+      signingFunction
+    )
   )
+  console.log('error', error)
+  console.log('response', response)
   if (error || !response || !response.result) {
     return dispatch(
       showErrorNotification({

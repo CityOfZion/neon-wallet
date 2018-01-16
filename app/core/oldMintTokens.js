@@ -1,18 +1,21 @@
 // @flow
-import { wallet, api, tx, rpc } from 'neon-js'
-import { ASSET } from './constants'
+import Neon, { wallet, api, rpc } from 'neon-js'
+import { toNumber } from './math'
+
+const neoAssetId =
+  'c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b'
 
 export const oldMintTokens = (
   net: string,
   scriptHash: string,
-  fromWif: string,
+  fromWifOrPublicKey: string,
   neo: number,
   gasCost: number,
   signingFunction
 ): Promise<*> => {
-  const account = new wallet.Account(fromWif)
-  const intents = [{ assetId: ASSET.NEO, value: neo, scriptHash: scriptHash }]
-  const invoke = { operation: 'mintTokens', scriptHash }
+  const account = new wallet.Account(fromWifOrPublicKey) // TODO add public key
+  const intents = [{ assetId: neoAssetId, value: parseInt(neo), scriptHash }]
+  const invoke = { operation: 'mintTokens', scriptHash, args: [] }
   const rpcEndpointPromise = api.neonDB.getRPCEndpoint(net)
   const balancePromise = api.neonDB.getBalance(net, account.address)
   let signedTx
@@ -21,7 +24,7 @@ export const oldMintTokens = (
     .then(values => {
       endpt = values[0]
       let balances = values[1]
-      const unsignedTx = tx.createInvocationTx(
+      const unsignedTx = Neon.create.invocationTx(
         balances,
         intents,
         invoke,
@@ -31,7 +34,7 @@ export const oldMintTokens = (
       if (signingFunction) {
         return signingFunction(unsignedTx, account.publicKey)
       } else {
-        unsignedTx.sign(account.privateKey)
+        return unsignedTx.sign(account.privateKey)
       }
     })
     .then(signedResult => {

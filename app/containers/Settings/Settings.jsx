@@ -129,18 +129,6 @@ export default class Settings extends Component<Props, State> {
     })
   }
 
-  componentWillReceiveProps(nextProps: Props) {
-    const { currency, explorer, allTokens } = nextProps
-    const userGeneratedTokens = allTokens.filter(
-      (token: TokenItemType) => token.isUserGenerated
-    )
-    storage.set('settings', {
-      currency,
-      blockExplorer: explorer,
-      tokens: userGeneratedTokens
-    })
-  }
-
   updateExplorerSettings = (e: Object) => {
     const { setBlockExplorer } = this.props
     setBlockExplorer(e.target.value)

@@ -38,7 +38,8 @@ type State = {
   gasToSend: string,
   balances: Object,
   scriptHashes: Object,
-  symbol: SymbolType
+  symbol: SymbolType,
+  gasCost: string
 }
 
 const REFRESH_INTERVAL_MS = 30000
@@ -50,7 +51,8 @@ export default class TokenSale extends Component<Props, State> {
     gasToSend: '0',
     balances: {},
     scriptHashes: {},
-    symbol: ''
+    symbol: '',
+    gasCost: '0.000001'
   }
 
   componentDidMount() {
@@ -69,6 +71,8 @@ export default class TokenSale extends Component<Props, State> {
   }
 
   componentWillReceiveProps = (nextProps: Props) => {
+    console.log('current props', this.props)
+    console.log('receiving props', nextProps)
     const { tokenBalances } = this.props
     const { symbol } = this.state
     const propsSame = isEqual(tokenBalances, nextProps.tokenBalances)
@@ -91,8 +95,8 @@ export default class TokenSale extends Component<Props, State> {
 
   oldParticipateInSale = () => {
     const { oldParticipateInSale } = this.props
-    const { neoToSend, scriptHashes, symbol, gasToSend } = this.state
-    oldParticipateInSale(neoToSend, scriptHashes[symbol], null, 0.000001)
+    const { neoToSend, scriptHashes, symbol, gasToSend, gasCost } = this.state
+    oldParticipateInSale(neoToSend, scriptHashes[symbol], gasCost)
     return this.setState({
       neoToSend: '0',
       gasToSend: '0'
@@ -101,8 +105,8 @@ export default class TokenSale extends Component<Props, State> {
 
   participateInSale = () => {
     const { participateInSale } = this.props
-    const { neoToSend, gasToSend, scriptHashes, symbol } = this.state
-    participateInSale(neoToSend, gasToSend, scriptHashes[symbol])
+    const { neoToSend, gasToSend, scriptHashes, symbol, gasCost } = this.state
+    participateInSale(neoToSend, gasToSend, scriptHashes[symbol], gasCost)
     return this.setState({
       neoToSend: '0',
       gasToSend: '0'
@@ -181,7 +185,7 @@ export default class TokenSale extends Component<Props, State> {
   )
 
   renderSendInputs = () => {
-    const { useOldMintTokens, neoToSend, gasToSend } = this.state
+    const { useOldMintTokens, neoToSend, gasToSend, gasCost } = this.state
     return (
       <div>
         <div className="settingsItem">
@@ -206,6 +210,21 @@ export default class TokenSale extends Component<Props, State> {
             />
           </div>
         )}
+        <p>
+          include gas to prioritize your transaction. default is 0.000001 (100
+          drops). Max is 0.01.
+        </p>
+        <div className="settingsItem">
+          <div className="itemTitle">Gas Cost to Include:</div>
+          <input
+            type="text"
+            max="0.01"
+            className="gasCost"
+            placeholder="e.g., 0.000004"
+            value={gasCost}
+            onChange={e => this.setState({ gasCost: e.target.value })}
+          />
+        </div>
       </div>
     )
   }
