@@ -7,7 +7,13 @@ import {
   showInfoNotification,
   showSuccessNotification
 } from './notifications'
-import { getWIF, LOGOUT, getAddress } from './account'
+import {
+  getWIF,
+  LOGOUT,
+  getAddress,
+  getIsHardwareLogin,
+  getSigningFunction
+} from './account'
 import { getNetwork } from './metadata'
 import { getNEO, getGAS } from './wallet'
 
@@ -31,6 +37,8 @@ export const participateInSale = (
   const NEO = getNEO(state)
   const GAS = getGAS(state)
   const net = getNetwork(state)
+  const isHardwareLogin = getIsHardwareLogin(state)
+  const signingFunction = getSigningFunction(state)
 
   const account = new wallet.Account(wif)
   const neoToMint = toNumber(neoToSend)
@@ -51,9 +59,18 @@ export const participateInSale = (
       ? scriptHash
       : scriptHash.slice(2, scriptHash.length)
 
-  dispatch(
-    showInfoNotification({ message: 'Sending transaction', autoDismiss: 0 })
-  )
+  if (isHardwareLogin) {
+    dispatch(
+      showInfoNotification({
+        message: 'Please sign the transaction on your hardware device',
+        autoDismiss: 0
+      })
+    )
+  } else {
+    dispatch(
+      showInfoNotification({ message: 'Sending transaction', autoDismiss: 0 })
+    )
+  }
 
   const scriptHashAddress = wallet.getAddressFromScriptHash(_scriptHash)
 
@@ -74,7 +91,8 @@ export const participateInSale = (
     privateKey: account.privateKey,
     intents: flatten(intents),
     script,
-    gas: 0
+    gas: 0,
+    signingFunction: isHardwareLogin ? signingFunction : null
   }
 
   const [error, response] = await asyncWrap(api.doInvoke(config))
@@ -101,6 +119,8 @@ export const oldParticipateInSale = (
   const NEO = getNEO(state)
   const GAS = getGAS(state)
   const net = getNetwork(state)
+  const isHardwareLogin = getIsHardwareLogin(state)
+  const signingFunction = getSigningFunction(state)
 
   const neoToMint = toNumber(neoToSend)
   const [isValid, message] = validateOldMintTokensInputs(
@@ -117,9 +137,18 @@ export const oldParticipateInSale = (
       ? scriptHash
       : scriptHash.slice(2, scriptHash.length)
 
-  dispatch(
-    showInfoNotification({ message: 'Sending transaction', autoDismiss: 0 })
-  )
+  if (isHardwareLogin) {
+    dispatch(
+      showInfoNotification({
+        message: 'Please sign the transaction on your hardware device',
+        autoDismiss: 0
+      })
+    )
+  } else {
+    dispatch(
+      showInfoNotification({ message: 'Sending transaction', autoDismiss: 0 })
+    )
+  }
 
   const [error, response] = await asyncWrap(
     oldMintTokens(net, _scriptHash, wif, neoToMint, gasCost, signingFunction)

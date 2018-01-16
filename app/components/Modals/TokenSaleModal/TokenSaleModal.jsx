@@ -68,7 +68,7 @@ export default class TokenSale extends Component<Props, State> {
     }
   }
 
-  componentWillReceiveProps = nextProps => {
+  componentWillReceiveProps = (nextProps: Props) => {
     const { tokenBalances } = this.props
     const { symbol } = this.state
     const propsSame = isEqual(tokenBalances, nextProps.tokenBalances)
