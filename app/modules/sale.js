@@ -5,22 +5,23 @@ import { showErrorNotification, showInfoNotification, showSuccessNotification } 
 import { getWIF, LOGOUT } from './account'
 import { getNetwork } from './metadata'
 import { getNEO } from './wallet'
+import { toBigNumber, toNumber } from '../core/math'
 import asyncWrap from '../core/asyncHelper'
 
 // TODO: Rewrite this function
 
-export const participateInSale = (neoToSend: number, scriptHash: string) => async (dispatch: DispatchType, getState: GetStateType) => {
+export const participateInSale = (neoToSend: string, scriptHash: string) => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
   const wif = getWIF(state)
   const NEO = getNEO(state)
   const net = getNetwork(state)
 
   const account = new wallet.Account(wif)
-  if (parseFloat(neoToSend) !== parseInt(neoToSend)) {
+  if (!toBigNumber(neoToSend).isInteger()) {
     dispatch(showErrorNotification({ message: 'You cannot send fractional NEO to a token sale.' }))
     return false
   }
-  const toMint = parseInt(neoToSend)
+  const toMint = toNumber(neoToSend)
   // $FlowFixMe
   if (toMint > NEO) {
     dispatch(showErrorNotification({ message: 'You do not have enough NEO to send.' }))
