@@ -13,11 +13,17 @@ export const oldMintTokens = (
   gasCost: number,
   signingFunction
 ): Promise<*> => {
-  const account = new wallet.Account(fromWifOrPublicKey) // TODO add public key
+  const account = new wallet.Account(fromWifOrPublicKey)
   const intents = [{ assetId: neoAssetId, value: parseInt(neo), scriptHash }]
   const invoke = { operation: 'mintTokens', scriptHash, args: [] }
-  const rpcEndpointPromise = api.neonDB.getRPCEndpoint(net)
-  const balancePromise = api.neonDB.getBalance(net, account.address)
+  // NOTE that I am handling this here instead of neon-js becuase this is throwaway code shortly
+  // so do not want to edit neon-js for this
+  const rpcEndpointPromise = api.neoscan
+    .getRPCEndpoint(net)
+    .catch(() => api.neonDB.getRPCEndpoint(net))
+  const balancePromise = api.neoscan
+    .getBalance(net, account.address)
+    .catch(() => api.neonDB.getBalance(net, account.address))
   let signedTx
   let endpt
   return Promise.all([rpcEndpointPromise, balancePromise])
