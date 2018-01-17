@@ -27,17 +27,21 @@ import {
 } from '../core/sale'
 import { oldMintTokens } from '../core/oldMintTokens'
 
+const MESSAGES = {
+  PARTICIPATION_FAILED: 'Sale participation failed, please check your script hash again, and double check that it begins with 0x'
+}
+
 export const participateInSale = (
-  neoToSend: number,
-  gasToSend: number,
+  neoToSend: string,
+  gasToSend: string,
   scriptHash: string,
-  gasCost: string = '0.000001'
+  gasCost: string = '0'
 ) => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
   const wif = getWIF(state)
   const publicKey = getPublicKey(state)
-  const NEO = getNEO(state)
-  const GAS = getGAS(state)
+  const NEO = toNumber(getNEO(state))
+  const GAS = toNumber(getGAS(state))
   const net = getNetwork(state)
   const address = getAddress(state)
   const isHardwareLogin = getIsHardwareLogin(state)
@@ -55,7 +59,10 @@ export const participateInSale = (
     GAS
   )
 
-  if (!isValid) return dispatch(showErrorNotification({ message }))
+  if (!isValid) {
+    dispatch(showErrorNotification({ message }))
+    return false
+  }
 
   const _scriptHash =
     scriptHash.length === 40
@@ -99,31 +106,30 @@ export const participateInSale = (
     signingFunction: isHardwareLogin ? signingFunction : null
   }
 
-  console.log('new verify config', config)
   const [error, response] = await asyncWrap(api.doInvoke(config))
-  console.log('error', error)
-  console.log('response', response)
   if (error || !response || !response.response || !response.response.result) {
-    return dispatch(
+    dispatch(
       showErrorNotification({
-        message: 'Sale participation failed. Check Script Hash'
+        message: MESSAGES.PARTICIPATION_FAILED
       })
     )
+    return false
   }
-  return dispatch(
+  dispatch(
     showSuccessNotification({ message: 'Sale participation was successful.' })
   )
+  return true
 }
 
 export const oldParticipateInSale = (
-  neoToSend: number,
+  neoToSend: string,
   scriptHash: string,
-  gasCost: number = 0.000001
+  gasCost: string = '0'
 ) => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
   const wif = getWIF(state)
-  const NEO = getNEO(state)
-  const GAS = getGAS(state)
+  const NEO = toNumber(getNEO(state))
+  const GAS = toNumber(getGAS(state))
   const publicKey = getPublicKey(state)
   const net = getNetwork(state)
   const isHardwareLogin = getIsHardwareLogin(state)
@@ -137,7 +143,9 @@ export const oldParticipateInSale = (
     GAS
   )
 
-  if (!isValid) return dispatch(showErrorNotification({ message }))
+  if (!isValid) {
+    return dispatch(showErrorNotification({ message }))
+  }
 
   const _scriptHash =
     scriptHash.length === 40
@@ -168,18 +176,18 @@ export const oldParticipateInSale = (
       signingFunction
     )
   )
-  console.log('error', error)
-  console.log('response', response)
   if (error || !response || !response.result) {
-    return dispatch(
+    dispatch(
       showErrorNotification({
-        message: 'Sale participation failed. Check Script Hash'
+        message: MESSAGES.PARTICIPATION_FAILED
       })
     )
+    return false
   }
-  return dispatch(
+  dispatch(
     showSuccessNotification({ message: 'Sale participation was successful.' })
   )
+  return true
 }
 
 const initialState = {}

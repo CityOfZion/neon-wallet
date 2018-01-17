@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import { omit } from 'lodash'
 
 import ConfirmModal from '../../components/Modals/ConfirmModal'
 import ReceiveModal from '../../components/Modals/ReceiveModal'
@@ -24,15 +25,22 @@ const MODAL_COMPONENTS = {
 type Props = {
   modalType?: ModalType,
   modalProps: Object,
-  hideModal: Function
+  hideModal: () => any,
+  showErrorNotification: (Object) => any,
+  showSuccessNotification: (Object) => any,
+  showInfoNotification: (Object) => any,
+  showWarningNotification: (Object) => any,
 }
 
 const ModalRenderer = (props: Props) => {
-  const { modalType, modalProps, hideModal } = props
+  const { modalType, modalProps } = props
 
   if (modalType) {
     const Modal = MODAL_COMPONENTS[modalType]
-    return <Modal {...modalProps} hideModal={hideModal} />
+    return (<Modal
+      {...modalProps}
+      {...omit(props, ['modalType', 'modalProps'])}
+    />)
   }
 
   return null

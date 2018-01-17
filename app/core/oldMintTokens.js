@@ -1,6 +1,5 @@
 // @flow
 import Neon, { wallet, api, rpc } from 'neon-js'
-import { toNumber } from './math'
 
 const neoAssetId =
   'c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b'
@@ -11,7 +10,7 @@ export const oldMintTokens = (
   fromWifOrPublicKey: string,
   neo: number,
   gasCost: number,
-  signingFunction
+  signingFunction: (string, string) => any
 ): Promise<*> => {
   const account = new wallet.Account(fromWifOrPublicKey) // TODO add public key
   const intents = [{ assetId: neoAssetId, value: parseInt(neo), scriptHash }]

@@ -1,10 +1,10 @@
 // @flow
 export const validateMintTokensInputs = (
-  neoToMint: string,
-  gasToMint: string,
+  neoToMint: number,
+  gasToMint: number,
   scriptHash: string,
-  NEO: string,
-  GAS: string
+  NEO: number,
+  GAS: number
 ) => {
   let message
 
@@ -42,14 +42,14 @@ export const validateMintTokensInputs = (
     return [false, message]
   }
 
-  return [true]
+  return [true, '']
 }
 
 export const validateOldMintTokensInputs = (
-  neoToMint: string,
+  neoToMint: number,
   scriptHash: string,
-  NEO: string,
-  GAS: string
+  NEO: number,
+  GAS: number
 ) => {
   let message
 
@@ -82,5 +82,5 @@ export const validateOldMintTokensInputs = (
     return [false, message]
   }
 
-  return [true]
+  return [true, '']
 }

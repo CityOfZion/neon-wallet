@@ -8,7 +8,7 @@ import { ROUTES } from '../../core/constants'
 import styles from './Home.scss'
 
 const Home = () => (
-  <div id="home">
+  <div id='home'>
     <Link to={ROUTES.LOGIN_LOCAL_STORAGE}>
       <div className={classNames('linkBox', styles.linkBox)}>
         Login using a saved wallet

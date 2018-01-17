@@ -58,7 +58,6 @@ declare type NetworkItemType = {
 
 declare type TokenItemType = {
   id: string,
-  symbol: SymbolType,
   scriptHash: string,
   networkId: string,
   isUserGenerated: boolean
@@ -75,6 +74,7 @@ declare type TokenType = {
 declare type TokenBalanceType = {
   symbol: SymbolType,
   balance: string,
+  scriptHash: string,
   totalSupply: number,
   decimals: number,
   name: string

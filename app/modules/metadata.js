@@ -42,13 +42,17 @@ export const setBlockExplorer = (blockExplorer: ExplorerType) => async (
   dispatch: DispatchType
 ) => {
   storage.get('settings', (errorReading, settingsObj) => {
-    if (errorReading)
+    if (errorReading) {
       dispatch(
         showErrorNotification({ message: 'error grabbing data from storage' })
       )
+    }
     storage.set(
       'settings',
-      Object.assign({}, settingsObj, { blockExplorer }),
+      {
+        ...settingsObj,
+        blockExplorer
+      },
       saveError => {
         if (saveError) {
           dispatch(
@@ -70,16 +74,20 @@ export const setUserGeneratedTokens = (tokens: Array<TokenItemType>) => async (
   dispatch: DispatchType
 ) => {
   storage.get('settings', (errorReading, settingsObj) => {
-    if (errorReading)
+    if (errorReading) {
       dispatch(
         showErrorNotification({ message: 'error grabbing data from storage' })
       )
+    }
     const userGeneratedTokens = tokens.filter(
       (token: TokenItemType) => token.isUserGenerated
     )
     storage.set(
       'settings',
-      Object.assign({}, settingsObj, { tokens: userGeneratedTokens }),
+      {
+        ...settingsObj,
+        tokens: userGeneratedTokens
+      },
       saveError => {
         if (saveError) {
           dispatch(
@@ -175,12 +183,10 @@ const generatePredfinedTokens = (): Array<TokenItemType> => {
   let id = 1
 
   const getTokenEntry = (
-    symbol: string,
     scriptHash: string,
     networkId: string
   ) => ({
     id: `${id++}`,
-    symbol,
     scriptHash,
     networkId,
     isUserGenerated: false
@@ -188,12 +194,12 @@ const generatePredfinedTokens = (): Array<TokenItemType> => {
 
   Object.keys(TOKENS).forEach(symbol => {
     const scriptHash = TOKENS[symbol]
-    tokens.push(getTokenEntry(symbol, scriptHash, MAIN_NETWORK_ID))
+    tokens.push(getTokenEntry(scriptHash, MAIN_NETWORK_ID))
   })
 
   Object.keys(TOKENS_TEST).forEach(symbol => {
     const scriptHash = TOKENS_TEST[symbol]
-    tokens.push(getTokenEntry(symbol, scriptHash, TEST_NETWORK_ID))
+    tokens.push(getTokenEntry(scriptHash, TEST_NETWORK_ID))
   })
 
   return tokens

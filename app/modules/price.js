@@ -28,13 +28,17 @@ export const setCurrency = (currency: string) => async (
   dispatch: DispatchType
 ) => {
   storage.get('settings', (errorReading, settingsObj) => {
-    if (errorReading)
+    if (errorReading) {
       dispatch(
         showErrorNotification({ message: 'error grabbing data from storage' })
       )
+    }
     storage.set(
       'settings',
-      Object.assign({}, settingsObj, { currency }),
+      {
+        ...settingsObj,
+        currency
+      },
       saveError => {
         if (saveError) {
           dispatch(
@@ -52,7 +56,7 @@ export const setCurrency = (currency: string) => async (
   })
 }
 
-export function resetPrice() {
+export function resetPrice () {
   return {
     type: RESET_PRICE
   }
@@ -63,9 +67,10 @@ export const getMarketPriceUSD = () => async (
   getState: GetStateType
 ) => {
   // If API dies, still display balance - ignore _err
+  // eslint-disable-next-line
   const [_err, price] = await asyncWrap(
     api.cmc.getPrice('NEO', getCurrency(getState()))
-  ) // eslint-disable-line
+  )
   return dispatch(setNEOPrice(price))
 }
 
@@ -74,9 +79,10 @@ export const getGasMarketPriceUSD = () => async (
   getState: GetStateType
 ) => {
   // If API dies, still display balance - ignore _err
+  // eslint-disable-next-line
   const [_err, price] = await asyncWrap(
     api.cmc.getPrice('GAS', getCurrency(getState()))
-  ) // eslint-disable-line
+  )
   return dispatch(setGASPrice(price))
 }
 

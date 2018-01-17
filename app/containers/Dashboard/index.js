@@ -4,14 +4,10 @@ import { bindActionCreators } from 'redux'
 
 import { logout, getAddress } from '../../modules/account'
 import {
-  getNetwork,
-  getNetworks,
-  getAllTokens,
-  setUserGeneratedTokens
+  getNetwork
 } from '../../modules/metadata'
 import {
-  getNotifications,
-  showErrorNotification
+  getNotifications
 } from '../../modules/notifications'
 import {
   getNEO,
@@ -22,7 +18,6 @@ import {
 } from '../../modules/wallet'
 import { showModal } from '../../modules/modal'
 import { sendTransaction } from '../../modules/transactions'
-import { participateInSale, oldParticipateInSale } from '../../modules/sale'
 
 import Dashboard from './Dashboard'
 
@@ -33,20 +28,14 @@ const mapStateToProps = (state: Object) => ({
   NEO: getNEO(state),
   GAS: getGAS(state),
   tokenBalances: getTokenBalances(state),
-  loaded: getIsLoaded(state),
-  networks: getNetworks(state),
-  allTokens: getAllTokens(state)
+  loaded: getIsLoaded(state)
 })
 
 const actionCreators = {
   logout,
   showModal,
-  showErrorNotification,
   sendTransaction,
-  loadWalletData,
-  participateInSale,
-  oldParticipateInSale,
-  setUserGeneratedTokens
+  loadWalletData
 }
 
 const mapDispatchToProps = dispatch =>
