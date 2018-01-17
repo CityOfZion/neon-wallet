@@ -123,7 +123,7 @@ describe('metadata module tests', () => {
     }
 
     test('setBlockExplorer action works', () => {
-      expect(setBlockExplorer(blockExplorer)).toEqual(expectedAction)
+      expect(setBlockExplorer(blockExplorer)).toEqual(expect.any(Function))
     })
 
     test('metadata reducer should handle SET_EXPLORER', () => {
