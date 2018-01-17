@@ -5,7 +5,7 @@ import { flatten } from 'lodash'
 import {
   showErrorNotification,
   showInfoNotification,
-  showSuccessNotification
+  hideNotification
 } from './notifications'
 import {
   getWIF,
@@ -28,7 +28,7 @@ import {
 import { oldMintTokens } from '../core/oldMintTokens'
 
 const MESSAGES = {
-  PARTICIPATION_FAILED: 'Sale participation failed, please check your script hash again, and double check that it begins with 0x'
+  PARTICIPATION_FAILED: 'Sale participation failed, please check your script hash again.'
 }
 
 export const participateInSale = (
@@ -69,15 +69,17 @@ export const participateInSale = (
       ? scriptHash
       : scriptHash.slice(2, scriptHash.length)
 
+  let notificationId
+
   if (isHardwareLogin) {
-    dispatch(
+    notificationId = dispatch(
       showInfoNotification({
         message: 'Please sign the transaction on your hardware device',
         autoDismiss: 0
       })
     )
   } else {
-    dispatch(
+    notificationId = dispatch(
       showInfoNotification({ message: 'Sending transaction', autoDismiss: 0 })
     )
   }
@@ -115,9 +117,8 @@ export const participateInSale = (
     )
     return false
   }
-  dispatch(
-    showSuccessNotification({ message: 'Sale participation was successful.' })
-  )
+  // $FlowFixMe
+  dispatch(hideNotification(notificationId))
   return true
 }
 
@@ -144,7 +145,8 @@ export const oldParticipateInSale = (
   )
 
   if (!isValid) {
-    return dispatch(showErrorNotification({ message }))
+    dispatch(showErrorNotification({ message }))
+    return false
   }
 
   const _scriptHash =
@@ -152,15 +154,17 @@ export const oldParticipateInSale = (
       ? scriptHash
       : scriptHash.slice(2, scriptHash.length)
 
+  let notificationId: any
+
   if (isHardwareLogin) {
-    dispatch(
+    notificationId = dispatch(
       showInfoNotification({
         message: 'Please sign the transaction on your hardware device',
         autoDismiss: 0
       })
     )
   } else {
-    dispatch(
+    notificationId = dispatch(
       showInfoNotification({ message: 'Sending transaction', autoDismiss: 0 })
     )
   }
@@ -184,9 +188,8 @@ export const oldParticipateInSale = (
     )
     return false
   }
-  dispatch(
-    showSuccessNotification({ message: 'Sale participation was successful.' })
-  )
+  // $FlowFixMe
+  dispatch(hideNotification(notificationId))
   return true
 }
 
