@@ -13,7 +13,8 @@ describe('root reducer', () => {
       metadata: expect.any(Object),
       notifications: expect.any(Object),
       claim: expect.any(Object),
-      modal: expect.any(Object)
+      modal: expect.any(Object),
+      sale: expect.any(Object)
     })
   })
 })

@@ -113,9 +113,10 @@ export const retrieveTokenBalances = () => async (
   const state = getState()
   const net = getNetwork(state)
   const address = getAddress(state)
-
+  console.log('is this the issue??')
   const tokens = getTokensForNetwork(state)
   const tokenBalances = []
+  console.log('retrieving token Balances')
 
   for (const token of tokens) {
     const { scriptHash, symbol } = token

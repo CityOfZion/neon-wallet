@@ -1,8 +1,17 @@
-import walletReducer, { setNEOPrice, setGASPrice, setCurrency, resetPrice, SET_CURRENCY, SET_GAS_PRICE, SET_NEO_PRICE, RESET_PRICE } from '../../app/modules/price'
+import walletReducer, {
+  setNEOPrice,
+  setGASPrice,
+  setCurrency,
+  resetPrice,
+  SET_CURRENCY,
+  SET_GAS_PRICE,
+  SET_NEO_PRICE,
+  RESET_PRICE
+} from '../../app/modules/price'
 
 describe('wallet module tests', () => {
-  const NEO = 28.10
-  const GAS = 18.20
+  const NEO = 28.1
+  const GAS = 18.2
   const currency = 'eur'
 
   const initialState = {
@@ -64,7 +73,7 @@ describe('wallet module tests', () => {
     }
 
     test('setCurrency action works', () => {
-      expect(setCurrency(currency)).toEqual(expectedAction)
+      expect(setCurrency(currency)).toEqual(expect.any(Function))
     })
 
     test('setCurrency reducer should return the initial state', () => {

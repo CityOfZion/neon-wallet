@@ -22,22 +22,37 @@ const encryptedKey =
 const scriptHash = '4bcdc110b6514312ead9420467475232d4f08539'
 
 neonjs.api = {
+  loadBalance: jest.fn((cb, args) => cb()),
   claimGas: promiseMockGen(mockConfigResponse),
   sendAsset: promiseMockGen(mockConfigResponse),
   doInvoke: promiseMockGen(mockConfigResponse),
-  getWalletDBHeight: promiseMockGen({ height: 586435 }),
+  getWalletDBHeightFrom: promiseMockGen(586435),
+  getMaxClaimAmountFrom: promiseMockGen(1.00034953),
+  getRPCEndpointFrom: promiseMockGen(''),
+  getBalanceFrom: promiseMockGen({
+    balance: {
+      assets: {
+        NEO: {
+          balance: 2
+        },
+        GAS: {
+          balance: 1
+        }
+      }
+    }
+  }),
   makeIntent: promiseMockGen({
     assetId: 'NEO',
     value: 1,
     scriptHash: '4bcdc110b6514312ead9420467475232d4f08539'
   }),
-  getBalance: promiseMockGen({
-    balance: [{ asset: 'NEO', amount: 1 }, { asset: 'GAS', amount: 1 }]
-  }),
-  getTransactionHistory: promiseMockGen([]),
+  getTransactionHistoryFrom: promiseMockGen([]),
   neoscan: {
     getRPCEndpoint: promiseMockGen(''),
     getClaims: jest.fn()
+  },
+  cmc: {
+    getPrice: promiseMockGen(24.5)
   },
   neonDB: {
     getClaims: jest.fn(),

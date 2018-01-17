@@ -5,10 +5,21 @@ import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import { mount, shallow } from 'enzyme'
 
-import { SET_TRANSACTION_HISTORY, SET_BALANCE } from '../../app/modules/wallet'
-import { SHOW_NOTIFICATION } from '../../app/modules/notifications'
+import {
+  SET_TRANSACTION_HISTORY,
+  SET_BALANCE,
+  SET_TOKENS_BALANCE,
+  SET_IS_LOADED
+} from '../../app/modules/wallet'
+import {
+  SHOW_NOTIFICATION,
+  HIDE_NOTIFICATIONS
+} from '../../app/modules/notifications'
+import { SET_CLAIM } from '../../app/modules/claim'
 import { LOADING_TRANSACTIONS } from '../../app/modules/transactions'
 import { SET_HEIGHT } from '../../app/modules/metadata'
+import { SET_NEO_PRICE, SET_GAS_PRICE } from '../../app/modules/price'
+import * as metadata from '../../app/modules/metadata'
 
 import {
   DEFAULT_CURRENCY_CODE,
@@ -41,6 +52,7 @@ jest.mock('electron', () => ({
     }
   }
 }))
+
 jest.useFakeTimers()
 
 jest.unmock('qrcode')
@@ -131,6 +143,7 @@ describe('WalletInfo', () => {
   test('refreshBalance is getting called on click', async () => {
     const { wrapper, store } = setup()
     const deepWrapper = wrapper.dive()
+    metadata.getTokensForNetwork = jest.fn(() => [])
 
     deepWrapper.find('.refreshBalance').simulate('click')
 
@@ -138,56 +151,29 @@ describe('WalletInfo', () => {
       .then()
       .then()
       .then()
+      .then()
+      .then()
     jest.runAllTimers()
     const actions = store.getActions()
-    expect(actions.length).toEqual(7)
-
-    expect(actions[0]).toEqual({
-      type: LOADING_TRANSACTIONS,
-      payload: {
-        isLoadingTransactions: true
-      }
+    console.log('what are the store actions', actions)
+    expect(actions.length).toEqual(12)
+    const actionTypes = [
+      LOADING_TRANSACTIONS,
+      SET_TOKENS_BALANCE,
+      LOADING_TRANSACTIONS,
+      SET_TRANSACTION_HISTORY,
+      SET_CLAIM,
+      SET_HEIGHT,
+      SET_NEO_PRICE,
+      SET_GAS_PRICE,
+      SET_BALANCE,
+      SET_IS_LOADED,
+      HIDE_NOTIFICATIONS,
+      SHOW_NOTIFICATION
+    ]
+    actions.forEach(action => {
+      return expect(actionTypes.indexOf(action.type) > -1).toEqual(true)
     })
-    expect(actions[1]).toEqual({
-      type: LOADING_TRANSACTIONS,
-      payload: {
-        isLoadingTransactions: false
-      }
-    })
-    expect(actions[2]).toEqual({
-      type: SET_TRANSACTION_HISTORY,
-      payload: {
-        transactions: []
-      }
-    })
-    expect(actions[3]).toEqual({
-      type: SET_HEIGHT,
-      payload: {
-        blockHeight: 586435
-      }
-    })
-    expect(actions[4]).toEqual({
-      type: SET_BALANCE,
-      payload: {
-        NEO: '1',
-        GAS: '1'
-      }
-    })
-    // TODO fix this to capture the notifications as well
-    // expect(actions[6]).toEqual({
-    //   type: HIDE_NOTIFICATIONS,
-    //   payload: {
-    //     dismissible: true,
-    //     position: DEFAULT_POSITION
-    //   }
-    // })
-    // expect(actions[7]).toEqual({
-    //   type: SHOW_NOTIFICATION,
-    //   payload: expect.objectContaining({
-    //     message: 'Received latest blockchain information.',
-    //     level: NOTIFICATION_LEVELS.SUCCESS
-    //   })
-    // })
   })
   test('correctly renders data from state with non-default currency', done => {
     const testState = {
@@ -211,7 +197,7 @@ describe('WalletInfo', () => {
     done()
   })
   test('network error is shown with connectivity error', async () => {
-    neonjs.api.getBalance = jest.fn(() => {
+    neonjs.api.getBalanceFrom = jest.fn(() => {
       return new Promise((resolve, reject) => {
         reject(new Error())
       })
