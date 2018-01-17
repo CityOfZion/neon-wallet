@@ -32,21 +32,21 @@ export const setIsLoaded = (loaded: boolean) => ({
 })
 
 // Actions
-export function setBalance (NEO: string, GAS: string) {
+export function setBalance(NEO: string, GAS: string) {
   return {
     type: SET_BALANCE,
     payload: { NEO, GAS }
   }
 }
 
-export function setTransactionHistory (transactions: Array<Object>) {
+export function setTransactionHistory(transactions: Array<Object>) {
   return {
     type: SET_TRANSACTION_HISTORY,
     payload: { transactions }
   }
 }
 
-export function setTokenBalances (tokenBalances: Array<TokenBalanceType>) {
+export function setTokenBalances(tokenBalances: Array<TokenBalanceType>) {
   return {
     type: SET_TOKENS_BALANCE,
     payload: { tokenBalances }
@@ -58,8 +58,10 @@ export const retrieveBalance = (net: NetworkType, address: string) => async (
 ) => {
   // If API dies, still display balance - ignore _err
   const [_err, resultBalance] = await asyncWrap(
-    api.neonDB.getBalance(net, address)
+    api.loadBalance(api.getBalanceFrom, { net, address })
   ) // eslint-disable-line
+  console.log('wallet.js _err', _err)
+  console.log('wallet.js resultBalance', resultBalance)
   if (_err) {
     return dispatch(
       showErrorNotification({
@@ -68,10 +70,11 @@ export const retrieveBalance = (net: NetworkType, address: string) => async (
       })
     )
   } else {
+    const { NEO, GAS } = resultBalance.balance.assets
     return dispatch(
       setBalance(
-        String(resultBalance.NEO.balance),
-        toBigNumber(resultBalance.GAS.balance)
+        String(NEO.balance),
+        toBigNumber(GAS.balance)
           .round(COIN_DECIMAL_LENGTH)
           .toString()
       )
@@ -119,20 +122,23 @@ export const retrieveTokenBalances = () => async (
 
     try {
       const [rpcError, tokenRpcEndpoint] = await asyncWrap(
-        api.neonDB.getRPCEndpoint(net)
+        api.loadBalance(api.getRPCEndpointFrom, { net })
       )
+      console.log('wallet.js rpcError', rpcError)
+      console.log('wallet.js tokenRpcEndpoint', tokenRpcEndpoint)
       const [tokenError, tokenResults] = await asyncWrap(
         api.nep5.getToken(tokenRpcEndpoint, scriptHash, address)
       )
+      console.log('wallet.js tokenError', tokenError)
+      console.log('wallet.js tokenResults', tokenResults)
 
       if (!rpcError && !tokenError) {
         tokenBalances.push({
           symbol,
           ...tokenResults,
-          balance:
-            isNil(tokenResults.balance)
-              ? '0'
-              : toBigNumber(tokenResults.balance)
+          balance: isNil(tokenResults.balance)
+            ? '0'
+            : toBigNumber(tokenResults.balance)
                 .round(COIN_DECIMAL_LENGTH)
                 .toString(),
           scriptHash
@@ -142,6 +148,7 @@ export const retrieveTokenBalances = () => async (
       console.error(e)
     }
   }
+  console.log('these are the token balances', tokenBalances)
   return dispatch(setTokenBalances(tokenBalances))
 }
 

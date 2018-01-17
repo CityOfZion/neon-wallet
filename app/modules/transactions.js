@@ -3,10 +3,7 @@
 import { api, sc, u, wallet } from 'neon-js'
 import { flatMap, get } from 'lodash'
 
-import {
-  setTransactionHistory,
-  getBalances
-} from './wallet'
+import { setTransactionHistory, getBalances } from './wallet'
 import {
   showErrorNotification,
   showInfoNotification,
@@ -47,14 +44,18 @@ export const syncTransactionHistory = (
 ) => async (dispatch: DispatchType) => {
   dispatch(setIsLoadingTransaction(true))
   const [err, transactions] = await asyncWrap(
-    api.neonDB.getTransactionHistory(net, address)
+    api.loadBalance(api.getTransactionHistoryFrom, { net, address })
   )
+  console.log('transactions.js err', err)
+  console.log('transactions.js transactions', transactions)
   if (!err && transactions) {
     const txs = transactions.map(
       ({ NEO, GAS, txid, block_index }: TransactionHistoryType) => ({
         txid,
         [ASSETS.NEO]: toFixedDecimals(NEO, 0),
-        [ASSETS.GAS]: toBigNumber(GAS).round(COIN_DECIMAL_LENGTH).toString()
+        [ASSETS.GAS]: toBigNumber(GAS)
+          .round(COIN_DECIMAL_LENGTH)
+          .toString()
       })
     )
     dispatch(setIsLoadingTransaction(false))
@@ -116,7 +117,9 @@ const buildTransferScript = (
 
   tokenEntries.forEach(({ address, amount, symbol }) => {
     const toAcct = new wallet.Account(address)
-    const tokenItem = tokens.find((token: TokenItemType) => token.symbol === symbol)
+    const tokenItem = tokens.find(
+      (token: TokenItemType) => token.symbol === symbol
+    )
     const scriptHash = get(tokenItem, 'scriptHash')
     const args = [
       u.reverseHex(fromAcct.scriptHash),
@@ -131,7 +134,12 @@ const buildTransferScript = (
 }
 
 const makeRequest = (sendEntries: Array<SendEntryType>, config: Object) => {
-  const script = buildTransferScript(config.net, sendEntries, config.address, config.tokens)
+  const script = buildTransferScript(
+    config.net,
+    sendEntries,
+    config.address,
+    config.tokens
+  )
 
   if (script === '') {
     return api.sendAsset({ ...config, intents: buildIntents(sendEntries) })

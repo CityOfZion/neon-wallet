@@ -23,13 +23,16 @@ const withAddressCheck = () => (Component: React$ElementType) => {
       addressHasActivity: {}
     }
 
-    componentDidMount () {
+    componentDidMount() {
       this.checkTransactionHistories()
     }
 
-    componentWillReceiveProps (nextProps: Props) {
+    componentWillReceiveProps(nextProps: Props) {
       if (!isEqual(this.props.entries, nextProps.entries)) {
-        this.setState({ addressHasActivity: {} }, this.checkTransactionHistories)
+        this.setState(
+          { addressHasActivity: {} },
+          this.checkTransactionHistories
+        )
       }
     }
 
@@ -47,28 +50,46 @@ const withAddressCheck = () => (Component: React$ElementType) => {
 
     checkTransactionHistory = async (address: string) => {
       const { net } = this.props
-      const [err, transactions] = await asyncWrap(api.neonDB.getTransactionHistory(net, address))
+      console.log('withAddressCheck.jsx net', net)
+      console.log('withAddressCheck.jsx address', address)
+      const [err, transactions] = await asyncWrap(
+        api.getTransactionHistory({ net, address })
+      )
+      console.log('withAddressCheck.jsx err', err)
+      console.log('withAddressCheck.jsx transactions', transactions)
 
       const hasActivity = !err && !!transactions && transactions.length > 0
 
-      this.setState({ addressHasActivity: { ...this.state.addressHasActivity, [address]: hasActivity } })
+      this.setState({
+        addressHasActivity: {
+          ...this.state.addressHasActivity,
+          [address]: hasActivity
+        }
+      })
     }
 
     allAddressesChecked = () => {
-      return Object.keys(this.state.addressHasActivity).length === this.getAddresses().length
+      return (
+        Object.keys(this.state.addressHasActivity).length ===
+        this.getAddresses().length
+      )
     }
 
     getAddresses = () => {
-      return uniq(this.props.entries.map((entry) => entry.address))
+      return uniq(this.props.entries.map(entry => entry.address))
     }
 
     getMessage = () => {
-      const addresses = Object.keys(pickBy(this.state.addressHasActivity, (hasActivity) => !hasActivity))
+      const addresses = Object.keys(
+        pickBy(this.state.addressHasActivity, hasActivity => !hasActivity)
+      )
 
       if (addresses.length === 0) {
         return null
       } else {
-        return `Warning: the following recipient addresses have no activity in their transaction histories: ${addresses.join(', ')}. Please be sure each address is correct before sending. Note that empty addresses will not appear in blockchain explorers. If an address is empty, please double check that you input the correct address.`
+        return `Warning: the following recipient addresses have no activity in their transaction histories: ${addresses.join(
+          ', '
+        )}. Please be sure each address is correct before sending. Note that empty addresses will not appear in blockchain explorers. If an address is empty, please double check that you input the correct address.`
       }
     }
   }

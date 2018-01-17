@@ -16,18 +16,16 @@ export const oldMintTokens = (
   const account = new wallet.Account(fromWifOrPublicKey)
   const intents = [{ assetId: neoAssetId, value: parseInt(neo), scriptHash }]
   const invoke = { operation: 'mintTokens', scriptHash, args: [] }
-  // NOTE that I am handling this here instead of neon-js becuase this is throwaway code shortly
-  // so do not want to edit neon-js for this
-  const rpcEndpointPromise = api.neoscan
-    .getRPCEndpoint(net)
-    .catch(() => api.neonDB.getRPCEndpoint(net))
-  const balancePromise = api.neoscan
-    .getBalance(net, account.address)
-    .catch(() => api.neonDB.getBalance(net, account.address))
+  const rpcEndpointPromise = api.loadBalance(api.getRPCEndpointFrom, { net })
+  const balancePromise = api.loadBalance(api.getBalanceFrom, {
+    net,
+    address: account.address
+  })
   let signedTx
   let endpt
   return Promise.all([rpcEndpointPromise, balancePromise])
     .then(values => {
+      console.log('oldMintTokens.js values', values)
       endpt = values[0]
       let balances = values[1]
       const unsignedTx = Neon.create.invocationTx(

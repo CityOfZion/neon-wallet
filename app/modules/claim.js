@@ -18,11 +18,11 @@ import { getNetwork } from './metadata'
 import { getNEO } from './wallet'
 
 import { ASSETS } from '../core/constants'
+import { toNumber } from '../core/math'
 import asyncWrap from '../core/asyncHelper'
 import { FIVE_MINUTES_MS } from '../core/time'
 
 import { log } from '../util/Logs'
-import { toNumber } from '../core/math'
 
 // Constants
 export const SET_CLAIM = 'SET_CLAIM'
@@ -30,24 +30,23 @@ export const SET_CLAIM_REQUEST = 'SET_CLAIM_REQUEST'
 export const DISABLE_CLAIM = 'DISABLE_CLAIM'
 
 // Actions
-export function setClaim (claimAvailable: number, claimUnavailable: number) {
+export function setClaim(claimAvailable: number) {
   return {
     type: SET_CLAIM,
     payload: {
-      claimAvailable,
-      claimUnavailable
+      claimAvailable
     }
   }
 }
 
-export function setClaimRequest (claimRequest: boolean) {
+export function setClaimRequest(claimRequest: boolean) {
   return {
     type: SET_CLAIM_REQUEST,
     payload: { claimRequest }
   }
 }
 
-export function disableClaim (disableClaimButton: boolean) {
+export function disableClaim(disableClaimButton: boolean) {
   return {
     type: DISABLE_CLAIM,
     payload: { disableClaimButton }
@@ -57,10 +56,13 @@ export function disableClaim (disableClaimButton: boolean) {
 export const syncAvailableClaim = (net: NetworkType, address: string) => async (
   dispatch: DispatchType
 ) => {
-  const [_err, result] = await asyncWrap(api.neonDB.getClaims(net, address)) // eslint-disable-line
-  const available = parseInt(result.total_claim)
-  const unavailable = parseInt(result.total_unspent_claim)
-  return dispatch(setClaim(available, unavailable))
+  console.log('the error is about to happen')
+  const [_err, result] = await asyncWrap(
+    api.loadBalance(api.getMaxClaimAmountFrom, { net, address })
+  ) // eslint-disable-line
+  console.log('_err', _err)
+  console.log('max claim amount result', result)
+  return dispatch(setClaim(result))
 }
 
 export const doClaimNotify = () => async (
@@ -87,13 +89,17 @@ export const doClaimNotify = () => async (
       })
     )
     claimGasFn = () =>
-      api.neonDB.doClaimAllGas(net, publicKey, signingFunction)
+      api.claimGas({ net, address, publicKey, signingFunction })
   } else {
-    claimGasFn = () => api.neonDB.doClaimAllGas(net, wif, null)
+    claimGasFn = () => api.claimGas({ net, address, privateKey: wif })
   }
 
+  console.log('claim.js claim args', { net, address, privateKey: wif })
+
   const [err, response] = await asyncWrap(claimGasFn())
-  if (!err && response.result) {
+  console.log('claim.js claim err', err)
+  console.log('claim.js claim response', response)
+  if (!err && response.response && response.response.result) {
     dispatch(
       showSuccessNotification({
         message:
@@ -134,6 +140,7 @@ export const doGasClaim = () => async (
     log(net, 'SEND', address, { to: address, amount: NEO, asset: ASSETS.NEO })
 
     let sendAssetFn
+    const intents = api.makeIntent({ [ASSETS.NEO]: toNumber(NEO) }, address)
     if (isHardwareClaim) {
       dispatch(
         showInfoNotification({
@@ -143,23 +150,35 @@ export const doGasClaim = () => async (
         })
       )
       sendAssetFn = () =>
-        api.neonDB.doSendAsset(
+        api.sendAsset({
           net,
           address,
           publicKey,
-          { [ASSETS.NEO]: toNumber(NEO) },
+          intents,
           signingFunction
-        )
+        })
     } else {
       sendAssetFn = () =>
-        api.neonDB.doSendAsset(net, address, wif, { [ASSETS.NEO]: toNumber(NEO) }, null)
+        api.sendAsset({
+          net,
+          address,
+          privateKey: wif,
+          intents
+        })
     }
 
+    console.log('claim.js send args', {
+      net,
+      address,
+      privateKey: wif,
+      intents
+    })
+
     const [err, response] = await asyncWrap(sendAssetFn())
+    console.log('claim.js send err', err)
+    console.log('claim.js send response', response)
     if (err || response.result === undefined || response.result === false) {
-      return dispatch(
-        showErrorNotification({ message: 'Transaction failed!' })
-      )
+      return dispatch(showErrorNotification({ message: 'Transaction failed!' }))
     } else {
       dispatch(
         showInfoNotification({
@@ -177,10 +196,7 @@ export const doGasClaim = () => async (
 export const getClaimRequest = (state: Object) => state.claim.claimRequest
 export const getClaimAmount = (state: Object) => state.claim.claimAmount
 export const getClaimAvailable = (state: Object) => state.claim.claimAvailable
-export const getClaimUnavailable = (state: Object) =>
-  state.claim.claimUnavailable
-export const getClaimWasUpdated = (state: Object) =>
-  state.claim.claimWasUpdated
+export const getClaimWasUpdated = (state: Object) => state.claim.claimWasUpdated
 export const getDisableClaimButton = (state: Object) =>
   state.claim.disableClaimButton
 
@@ -188,7 +204,6 @@ const initialState = {
   claimRequest: false,
   claimAmount: 0,
   claimAvailable: 0,
-  claimUnavailable: 0,
   claimWasUpdated: false,
   disableClaimButton: false
 }
@@ -202,7 +217,7 @@ export default (state: Object = initialState, action: ReduxAction) => {
         claimRequest
       }
     case SET_CLAIM:
-      const { claimAvailable, claimUnavailable } = action.payload
+      const { claimAvailable } = action.payload
       let claimWasUpdated = false
       if (
         claimAvailable > state.claimAvailable &&
@@ -212,9 +227,8 @@ export default (state: Object = initialState, action: ReduxAction) => {
       }
       return {
         ...state,
-        claimAmount: (claimAvailable + claimUnavailable) / 100000000,
+        claimAmount: claimAvailable,
         claimAvailable,
-        claimUnavailable,
         claimWasUpdated
       }
     case DISABLE_CLAIM:

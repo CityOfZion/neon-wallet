@@ -5,15 +5,16 @@ import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import { mount, shallow } from 'enzyme'
 
-import {
-  SET_TRANSACTION_HISTORY,
-  SET_BALANCE
-} from '../../app/modules/wallet'
+import { SET_TRANSACTION_HISTORY, SET_BALANCE } from '../../app/modules/wallet'
 import { SHOW_NOTIFICATION } from '../../app/modules/notifications'
 import { LOADING_TRANSACTIONS } from '../../app/modules/transactions'
 import { SET_HEIGHT } from '../../app/modules/metadata'
 
-import { DEFAULT_CURRENCY_CODE, TEST_NETWORK_ID, MAIN_NETWORK_ID } from '../../app/core/constants'
+import {
+  DEFAULT_CURRENCY_CODE,
+  TEST_NETWORK_ID,
+  MAIN_NETWORK_ID
+} from '../../app/core/constants'
 
 import WalletInfo from '../../app/containers/WalletInfo'
 
@@ -210,7 +211,7 @@ describe('WalletInfo', () => {
     done()
   })
   test('network error is shown with connectivity error', async () => {
-    neonjs.api.neonDB.getBalance = jest.fn(() => {
+    neonjs.api.getBalance = jest.fn(() => {
       return new Promise((resolve, reject) => {
         reject(new Error())
       })

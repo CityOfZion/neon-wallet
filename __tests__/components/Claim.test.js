@@ -8,8 +8,16 @@ import { shallow, mount } from 'enzyme'
 
 import Claim from '../../app/containers/Claim'
 import { setClaimRequest, disableClaim } from '../../app/modules/claim'
-import { SHOW_NOTIFICATION, HIDE_NOTIFICATIONS, DEFAULT_POSITION } from '../../app/modules/notifications'
-import { NOTIFICATION_LEVELS, TEST_NETWORK_ID, MAIN_NETWORK_ID } from '../../app/core/constants'
+import {
+  SHOW_NOTIFICATION,
+  HIDE_NOTIFICATIONS,
+  DEFAULT_POSITION
+} from '../../app/modules/notifications'
+import {
+  NOTIFICATION_LEVELS,
+  TEST_NETWORK_ID,
+  MAIN_NETWORK_ID
+} from '../../app/core/constants'
 
 const initialState = {
   claim: {
@@ -83,14 +91,20 @@ describe('Claim', () => {
   describe('when do GAS claim button is clicked', () => {
     test('should dispatch transaction failure event', async () => {
       const { wrapper, store } = setup()
-      neonjs.api.neonDB.doSendAsset = jest.fn(() => {
+      neonjs.api.sendAsset = jest.fn(() => {
         return new Promise((resolve, reject) => {
           resolve({ result: undefined })
         })
       })
-      wrapper.dive().find('#claim').simulate('click')
+      wrapper
+        .dive()
+        .find('#claim')
+        .simulate('click')
 
-      await Promise.resolve().then().then().then()
+      await Promise.resolve()
+        .then()
+        .then()
+        .then()
       const actions = store.getActions()
       expect(actions.length).toEqual(4)
       expect(actions[0]).toEqual({
@@ -125,15 +139,21 @@ describe('Claim', () => {
 
     test('should dispatch transaction waiting, set claim request and disable claim event', async () => {
       const { wrapper, store } = setup()
-      neonjs.api.neonDB.doSendAsset = jest.fn(() => {
+      neonjs.api.sendAsset = jest.fn(() => {
         return new Promise((resolve, reject) => {
           resolve({ result: true })
         })
       })
 
-      wrapper.dive().find('#claim').simulate('click')
+      wrapper
+        .dive()
+        .find('#claim')
+        .simulate('click')
 
-      await Promise.resolve().then().then().then()
+      await Promise.resolve()
+        .then()
+        .then()
+        .then()
       const actions = store.getActions()
       expect(actions.length).toEqual(6)
       expect(actions[0]).toEqual({
