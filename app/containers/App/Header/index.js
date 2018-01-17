@@ -5,11 +5,12 @@ import { compose } from 'recompose'
 
 import withActions from '../../../hocs/api/withActions'
 import withNetworkData from '../../../hocs/withNetworkData'
+import withCurrencyData from '../../../hocs/withCurrencyData'
 import networkActions from '../../../actions/networkActions'
 import { type Actions } from '../../../values/api'
 import { logout, getAddress, getLoggedIn } from '../../../modules/account'
 import { getNetworks } from '../../../core/networks'
-import { getNEOPrice, getGASPrice, getCurrency } from '../../../modules/price'
+import { getNEOPrice, getGASPrice } from '../../../modules/price'
 
 import Header from './Header'
 
@@ -17,7 +18,6 @@ const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
   address: getAddress(state),
   neoPrice: getNEOPrice(state),
   gasPrice: getGASPrice(state),
-  currencyCode: getCurrency(state),
   isLoggedIn: getLoggedIn(state),
   networks: getNetworks()
 })
@@ -35,5 +35,6 @@ const mapActionsToProps = (actions: Actions, props: Object): Object => ({
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withNetworkData(),
+  withCurrencyData('currencyCode'),
   withActions(networkActions, mapActionsToProps)
 )(Header)

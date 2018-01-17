@@ -11,21 +11,29 @@ import { LOADED } from '../../app/values/state'
 
 const initialState = {
   api: {
+    APP: {
+      batch: true,
+      mapping: ['NETWORK', 'SETTINGS']
+    },
     NETWORK: {
       batch: false,
       state: LOADED,
-      data: MAIN_NETWORK_ID
+      data: MAIN_NETWORK_ID,
+      loadedCount: 1
+    },
+    SETTINGS: {
+      batch: false,
+      state: LOADED,
+      data: {},
+      loadedCount: 1
     }
   },
   account: {
-  },
-  metadata: {
   },
   wallet: {
     transactions: []
   },
   modal: {
-
   },
   price: {
     NEO: 40.5,
@@ -52,15 +60,8 @@ const setup = (state, shallowRender = true) => {
 describe('App', () => {
   test('app initializes settings', (done) => {
     storage.get = jest.fn((key, callback) => {
-      const receivedKeys = []
-      receivedKeys[key] = true
-
-      storage.get = jest.fn((key, callback) => {
-        receivedKeys[key] = true
-        expect(receivedKeys['settings']).toEqual(true)
-        expect(receivedKeys['userWallet']).toEqual(true)
-        done()
-      })
+      expect(key).toEqual('userWallet')
+      done()
     })
     setup(initialState, false)
   })

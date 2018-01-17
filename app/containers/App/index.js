@@ -11,7 +11,7 @@ import appActions from '../../actions/appActions'
 import alreadyLoaded from '../../hocs/api/progressStrategies/alreadyLoadedStrategy'
 import withNetworkData from '../../hocs/withNetworkData'
 import networkActions from '../../actions/networkActions'
-import { checkVersion, initSettings } from '../../modules/metadata'
+import { checkVersion } from '../../modules/metadata'
 import { showErrorNotification } from '../../modules/notifications'
 import { LOADING } from '../../values/state'
 
@@ -20,7 +20,6 @@ import Loading from './Loading'
 
 const actionCreators = {
   checkVersion,
-  initSettings,
   showErrorNotification
 }
 

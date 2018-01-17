@@ -18,6 +18,11 @@ const initialState = {
       batch: false,
       state: LOADED,
       data: MAIN_NETWORK_ID
+    },
+    SETTINGS: {
+      batch: false,
+      state: LOADED,
+      data: {}
     }
   },
   claim: {
