@@ -1,6 +1,8 @@
 // @flow
-import { ASSETS } from './constants'
 import { wallet } from 'neon-js'
+
+import { ASSETS } from './constants'
+import { toBigNumber } from './math'
 
 const MIN_PASSPHRASE_LEN = 4
 
@@ -54,17 +56,15 @@ export const validateTransactionBeforeSending = (
     return 'The address you entered was not valid.'
   }
 
-  if (symbol === ASSETS.NEO && parseFloat(amount) !== parseInt(amount)) {
-    // check for fractional NEO
+  if (symbol === ASSETS.NEO && !toBigNumber(amount).isInteger()) { // check for fractional NEO
     return 'You cannot send fractional amounts of NEO.'
   }
 
-  if (parseFloat(amount) > balance) {
+  if (toBigNumber(amount).gt(balance)) {
     return `You do not have enough ${symbol} to send.`
   }
 
-  if (parseFloat(amount) <= 0) {
-    // check for negative/zero asset
+  if (toBigNumber(amount).lte(0)) { // check for negative/zero asset
     return 'You cannot send zero or negative amounts of an asset.'
   }
 
