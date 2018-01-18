@@ -2,7 +2,6 @@
 import React, { Component } from 'react'
 
 import { COIN_DECIMAL_LENGTH } from '../../../../core/formatters'
-import { isZero } from '../../../../core/math'
 
 import AssetInput from '../../../../components/Inputs/AssetInput'
 import NumberInput from '../../../../components/NumberInput'
