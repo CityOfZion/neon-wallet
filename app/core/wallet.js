@@ -6,21 +6,38 @@ import { toBigNumber } from './math'
 
 const MIN_PASSPHRASE_LEN = 4
 
-export const validatePassphraseLength = (passphrase: string): boolean => passphrase.length >= MIN_PASSPHRASE_LEN
+export const validatePassphraseLength = (passphrase: string): boolean =>
+  passphrase.length >= MIN_PASSPHRASE_LEN
 
-export const isToken = (symbol: SymbolType) => !([ASSETS.NEO, ASSETS.GAS].includes(symbol))
+export const isToken = (symbol: SymbolType) =>
+  ![ASSETS.NEO, ASSETS.GAS].includes(symbol)
 
 export const obtainBalance = (balances: Object, symbol: SymbolType) => {
   return balances[symbol] || 0
 }
 
 export const getTokenBalancesMap = (tokenBalances: Array<TokenBalanceType>) =>
-  tokenBalances.reduce((tokenBalance, { symbol, balance }: TokenBalanceType) => {
-    tokenBalance[symbol] = balance
-    return tokenBalance
-  }, {})
+  tokenBalances.reduce(
+    (tokenBalance, { symbol, balance }: TokenBalanceType) => {
+      tokenBalance[symbol] = balance
+      return tokenBalance
+    },
+    {}
+  )
 
-export const validateTransactionBeforeSending = (balance: number, sendEntry: SendEntryType) => {
+export const getTokenScriptHashMap = (tokenBalances: Array<TokenBalanceType>) =>
+  tokenBalances.reduce(
+    (tokenBalance, { symbol, scriptHash }: TokenBalanceType) => {
+      tokenBalance[symbol] = scriptHash
+      return tokenBalance
+    },
+    {}
+  )
+
+export const validateTransactionBeforeSending = (
+  balance: number,
+  sendEntry: SendEntryType
+) => {
   const { address, amount, symbol } = sendEntry
 
   if (!address || !amount) {
@@ -54,8 +71,11 @@ export const validateTransactionBeforeSending = (balance: number, sendEntry: Sen
   return null
 }
 
-export const validateTransactionsBeforeSending = (balances: Object, sendEntries: Array<SendEntryType>) => {
-  const getValidationError = (sendEntry) => {
+export const validateTransactionsBeforeSending = (
+  balances: Object,
+  sendEntries: Array<SendEntryType>
+) => {
+  const getValidationError = sendEntry => {
     const balance = obtainBalance(balances, sendEntry.symbol)
     return validateTransactionBeforeSending(balance, sendEntry)
   }

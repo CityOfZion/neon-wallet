@@ -115,7 +115,7 @@ export const retrieveTokenBalances = () => async (
   const tokenBalances = []
 
   for (const token of tokens) {
-    const { scriptHash, symbol } = token
+    const { scriptHash } = token
 
     try {
       const [rpcError, tokenRpcEndpoint] = await asyncWrap(
@@ -127,7 +127,6 @@ export const retrieveTokenBalances = () => async (
 
       if (!rpcError && !tokenError) {
         tokenBalances.push({
-          symbol,
           ...tokenResults,
           balance:
             isNil(tokenResults.balance)

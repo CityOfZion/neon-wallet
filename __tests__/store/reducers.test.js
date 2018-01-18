@@ -11,9 +11,10 @@ describe('root reducer', () => {
       transactions: expect.any(Object),
       dashboard: expect.any(Object),
       metadata: expect.any(Object),
-      notifications: expect.any(Object),
+      notifications: expect.any(Array),
       claim: expect.any(Object),
-      modal: expect.any(Object)
+      modal: expect.any(Object),
+      sale: expect.any(Object)
     })
   })
 })
