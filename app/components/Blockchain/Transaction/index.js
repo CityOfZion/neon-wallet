@@ -2,10 +2,10 @@
 import { connect } from 'react-redux'
 
 import Transaction from './Transaction'
-import { getBlockExplorer, getNetwork } from '../../../modules/metadata'
+import { getBlockExplorer, getNetworkId } from '../../../modules/metadata'
 
 const mapStateToProps = (state: Object) => ({
-  net: getNetwork(state),
+  networkId: getNetworkId(state),
   explorer: getBlockExplorer(state)
 })
 
