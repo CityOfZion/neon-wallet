@@ -21,7 +21,6 @@ import { getNetwork } from './metadata'
 
 import { isToken, validateTransactionsBeforeSending } from '../core/wallet'
 import { ASSETS } from '../core/constants'
-import { adjustDecimalAmountForTokenTransfer } from '../core/nep5'
 import asyncWrap from '../core/asyncHelper'
 import { toNumber, toBigNumber } from '../core/math'
 import { toFixedDecimals, COIN_DECIMAL_LENGTH } from '../core/formatters'
@@ -121,7 +120,7 @@ const buildTransferScript = (
     const args = [
       u.reverseHex(fromAcct.scriptHash),
       u.reverseHex(toAcct.scriptHash),
-      sc.ContractParam.byteArray(toNumber(amount), 'fixed8')
+      sc.ContractParam.byteArray(toNumber(amount), 'fixed8', decimals)
     ]
 
     scriptBuilder.emitAppCall(scriptHash, 'transfer', args)
