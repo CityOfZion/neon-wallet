@@ -119,11 +119,11 @@ const buildTransferScript = (
 
   tokenEntries.forEach(({ address, amount, symbol }) => {
     const toAcct = new wallet.Account(address)
-    const scriptHash = tokensBalanceMap[symbol].scriptHash
+    const { scriptHash, decimals } = tokensBalanceMap[symbol]
     const args = [
       u.reverseHex(fromAcct.scriptHash),
       u.reverseHex(toAcct.scriptHash),
-      adjustDecimalAmountForTokenTransfer(amount)
+      adjustDecimalAmountForTokenTransfer(amount, decimals)
     ]
 
     scriptBuilder.emitAppCall(scriptHash, 'transfer', args)
