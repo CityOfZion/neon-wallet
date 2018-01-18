@@ -9,5 +9,8 @@ export const truncateNumber = (num: number, places: number): number =>
 export const toBigNumber = (value: number | string) =>
   new BigNumber(String(value))
 
-export const toNumber = (value: string) =>
+export const toNumber = (value: string | number) =>
   toBigNumber(value).toNumber()
+
+export const isZero = (amount: string | number) =>
+  toBigNumber(amount).equals(0)

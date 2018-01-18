@@ -1,12 +1,8 @@
 import React from 'react'
-import configureStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
 import { shallow } from 'enzyme'
 
-import { SET_HEIGHT, SET_NETWORK } from '../../app/modules/metadata'
-import { SET_BALANCE, SET_TRANSACTION_HISTORY, SET_IS_LOADED } from '../../app/modules/wallet'
-import { LOADING_TRANSACTIONS } from '../../app/modules/transactions'
 import NetworkSwitch from '../../app/containers/App/Header/NetworkSwitch'
+import { MAIN_NETWORK_ID, TEST_NETWORK_ID } from '../../app/core/constants'
 
 // TODO research how to move the axios mock code which is repeated in NetworkSwitch to a helper or config file
 import axios from 'axios'
@@ -27,9 +23,21 @@ jest.mock('neon-js')
 
 const setup = () => {
   const props = {
-    net: 'MainNet',
-    setNetwork: jest.fn(),
-    loadWalletData: jest.fn()
+    networkId: MAIN_NETWORK_ID,
+    setNetworkId: jest.fn(),
+    loadWalletData: jest.fn(),
+    networks: [
+      {
+        id: MAIN_NETWORK_ID,
+        label: 'MainNet',
+        network: 'MainNet'
+      },
+      {
+        id: TEST_NETWORK_ID,
+        label: 'TestNet',
+        network: 'TestNet'
+      }
+    ]
   }
   const wrapper = shallow(<NetworkSwitch {...props} />)
 
@@ -50,7 +58,7 @@ describe('NetworkSwitch', () => {
 
     const networkSelectorElement = wrapper.find('.networkSelector').getElement()
 
-    expect(networkSelectorElement.props.defaultValue).toEqual('MainNet')
+    expect(networkSelectorElement.props.defaultValue).toEqual(MAIN_NETWORK_ID)
   })
 
   test('switches to the correct network when chosen from the dropdown', async () => {
@@ -58,14 +66,14 @@ describe('NetworkSwitch', () => {
 
     const instance = wrapper.instance()
     const networkSelector = wrapper.find('.networkSelector')
-    networkSelector.simulate('change', { target: { value: 'TestNet' } })
+    networkSelector.simulate('change', { target: { value: TEST_NETWORK_ID } })
 
-    expect(instance.props.setNetwork).toHaveBeenCalledWith('TestNet')
+    expect(instance.props.setNetworkId).toHaveBeenCalledWith(TEST_NETWORK_ID)
     expect(instance.props.loadWalletData).toHaveBeenCalled()
 
-    networkSelector.simulate('change', { target: { value: 'MainNet' } })
+    networkSelector.simulate('change', { target: { value: MAIN_NETWORK_ID } })
 
-    expect(instance.props.setNetwork).toHaveBeenCalledWith('MainNet')
+    expect(instance.props.setNetworkId).toHaveBeenCalledWith(MAIN_NETWORK_ID)
     expect(instance.props.loadWalletData).toHaveBeenCalled()
   })
 })
