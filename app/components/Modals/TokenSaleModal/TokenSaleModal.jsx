@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { get, pick } from 'lodash'
 
-import { isZero } from '../../../core/math'
+import { isZero, isNumber } from '../../../core/math'
 import { ASSETS } from '../../../core/constants'
 
 import BaseModal from '../BaseModal'
@@ -26,7 +26,7 @@ type Props = {
   },
   hideModal: () => void,
   showTokensModal: () => void
-};
+}
 
 type State = {
   useVerification: boolean,
@@ -37,21 +37,21 @@ type State = {
   participationSuccessful: boolean,
   gasCost: string,
   loaded: boolean,
-};
+}
 
 export default class TokenSale extends Component<Props, State> {
   // $FlowFixMe
   state = {
     useVerification: false,
     assetBalancesToSend: {
-      NEO: '0',
-      GAS: '0'
+      NEO: '',
+      GAS: ''
     },
     tokenToMint: '',
     participationSuccessful: false,
     loaded: false,
     gasCost: '0' // hard coded for now
-  };
+  }
 
   oldParticipateInSale = () => {
     const { oldParticipateInSale, tokenBalances } = this.props
@@ -69,7 +69,7 @@ export default class TokenSale extends Component<Props, State> {
         }
       )
     }
-  };
+  }
 
   participateInSale = () => {
     const { participateInSale, tokenBalances } = this.props
@@ -78,8 +78,8 @@ export default class TokenSale extends Component<Props, State> {
       const scriptHash = get(tokenBalances[tokenToMint], 'scriptHash')
 
       participateInSale(
-        assetBalancesToSend.NEO,
-        assetBalancesToSend.GAS,
+        assetBalancesToSend.NEO || '0',
+        assetBalancesToSend.GAS || '0',
         scriptHash,
         gasCost
       ).then(success => {
@@ -90,7 +90,27 @@ export default class TokenSale extends Component<Props, State> {
         }
       })
     }
-  };
+  }
+
+  isValidAssetBalances = () => {
+    const { assetBalancesToSend, tokenToMint } = this.state
+    const NEO = assetBalancesToSend.NEO || '0'
+    const GAS = assetBalancesToSend.GAS || '0'
+
+    if (!isNumber(NEO) || !isNumber(GAS)) {
+      return false
+    }
+
+    if (isZero(NEO) && isZero(GAS)) {
+      return false
+    }
+
+    if (!tokenToMint) {
+      return false
+    }
+
+    return true
+  }
 
   render () {
     const {
@@ -105,9 +125,6 @@ export default class TokenSale extends Component<Props, State> {
       assetBalances,
       showTokensModal
     } = this.props
-
-    const shouldDisablePurchaseButton =
-      (isZero(assetBalancesToSend.NEO) && isZero(assetBalancesToSend.GAS)) || !tokenToMint
 
     return (
       <BaseModal
@@ -164,7 +181,7 @@ export default class TokenSale extends Component<Props, State> {
                     ? this.participateInSale
                     : this.oldParticipateInSale
                 }
-                disabled={shouldDisablePurchaseButton}
+                disabled={!this.isValidAssetBalances()}
               >
                 Purchase!
               </Button>

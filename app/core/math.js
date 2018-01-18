@@ -14,3 +14,12 @@ export const toNumber = (value: string | number) =>
 
 export const isZero = (amount: string | number) =>
   toBigNumber(amount).equals(0)
+
+export const isNumber = (value: string | number): boolean => {
+  try {
+    toBigNumber(value)
+    return true
+  } catch (e) {
+    return false
+  }
+}
