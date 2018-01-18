@@ -3,11 +3,7 @@
 import { api, sc, u, wallet } from 'neon-js'
 import { flatMap, keyBy } from 'lodash'
 
-import {
-  setTransactionHistory,
-  getBalances,
-  getTokenBalances
-} from './wallet'
+import { setTransactionHistory, getBalances, getTokenBalances } from './wallet'
 import {
   showErrorNotification,
   showInfoNotification,
@@ -25,7 +21,6 @@ import { getNetwork } from './metadata'
 
 import { isToken, validateTransactionsBeforeSending } from '../core/wallet'
 import { ASSETS } from '../core/constants'
-import { adjustDecimalAmountForTokenTransfer } from '../core/nep5'
 import asyncWrap from '../core/asyncHelper'
 import { toNumber, toBigNumber } from '../core/math'
 import { toFixedDecimals, COIN_DECIMAL_LENGTH } from '../core/formatters'
@@ -55,7 +50,9 @@ export const syncTransactionHistory = (
       ({ NEO, GAS, txid, block_index }: TransactionHistoryType) => ({
         txid,
         [ASSETS.NEO]: toFixedDecimals(NEO, 0),
-        [ASSETS.GAS]: toBigNumber(GAS).round(COIN_DECIMAL_LENGTH).toString()
+        [ASSETS.GAS]: toBigNumber(GAS)
+          .round(COIN_DECIMAL_LENGTH)
+          .toString()
       })
     )
     dispatch(setIsLoadingTransaction(false))
@@ -123,7 +120,7 @@ const buildTransferScript = (
     const args = [
       u.reverseHex(fromAcct.scriptHash),
       u.reverseHex(toAcct.scriptHash),
-      adjustDecimalAmountForTokenTransfer(amount, decimals)
+      sc.ContractParam.byteArray(toNumber(amount), 'fixed8', decimals)
     ]
 
     scriptBuilder.emitAppCall(scriptHash, 'transfer', args)
@@ -133,7 +130,12 @@ const buildTransferScript = (
 }
 
 const makeRequest = (sendEntries: Array<SendEntryType>, config: Object) => {
-  const script = buildTransferScript(config.net, sendEntries, config.address, config.tokensBalanceMap)
+  const script = buildTransferScript(
+    config.net,
+    sendEntries,
+    config.address,
+    config.tokensBalanceMap
+  )
 
   if (script === '') {
     return api.sendAsset({ ...config, intents: buildIntents(sendEntries) })
