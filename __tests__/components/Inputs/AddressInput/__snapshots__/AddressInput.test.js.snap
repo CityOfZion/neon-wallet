@@ -4,6 +4,7 @@ exports[`AddressInput should render without crashing 1`] = `
 <SelectInput
   className="addressInput"
   getItemValue={[Function]}
+  getSearchResults={[Function]}
   items={
     Array [
       Object {
