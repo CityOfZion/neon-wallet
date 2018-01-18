@@ -13,7 +13,7 @@ import { SHOW_NOTIFICATION } from '../../app/modules/notifications'
 import { LOADING_TRANSACTIONS } from '../../app/modules/transactions'
 import { SET_HEIGHT } from '../../app/modules/metadata'
 
-import { DEFAULT_CURRENCY_CODE } from '../../app/core/constants'
+import { DEFAULT_CURRENCY_CODE, TEST_NETWORK_ID, MAIN_NETWORK_ID } from '../../app/core/constants'
 
 import WalletInfo from '../../app/containers/WalletInfo'
 
@@ -51,11 +51,24 @@ const initialState = {
     address: 'ANqUrhv99rwCiFTL6N1An9NH5UVkPYxTuw'
   },
   metadata: {
-    network: 'TestNet'
+    networkId: TEST_NETWORK_ID,
+    networks: [
+      {
+        id: MAIN_NETWORK_ID,
+        label: 'MainNet',
+        network: 'MainNet'
+      },
+      {
+        id: TEST_NETWORK_ID,
+        label: 'TestNet',
+        network: 'TestNet'
+      }
+    ]
   },
   wallet: {
     NEO: '100001',
-    GAS: '1000.0001601'
+    GAS: '1000.0001601',
+    tokenBalances: []
   },
   price: {
     NEO: 25.48,
@@ -126,7 +139,7 @@ describe('WalletInfo', () => {
       .then()
     jest.runAllTimers()
     const actions = store.getActions()
-    expect(actions.length).toEqual(5)
+    expect(actions.length).toEqual(7)
 
     expect(actions[0]).toEqual({
       type: LOADING_TRANSACTIONS,

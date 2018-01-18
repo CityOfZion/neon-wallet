@@ -10,6 +10,24 @@ exports[`WalletInfo renders without crashing 1`] = `
   loadWalletData={[Function]}
   neoPrice={25.48}
   net="TestNet"
+  networkId="2"
+  networks={
+    Array [
+      Object {
+        "id": "1",
+        "label": "MainNet",
+        "network": "MainNet",
+      },
+      Object {
+        "id": "2",
+        "label": "TestNet",
+        "network": "TestNet",
+      },
+    ]
+  }
+  oldParticipateInSale={[Function]}
+  participateInSale={[Function]}
+  setUserGeneratedTokens={[Function]}
   showErrorNotification={[Function]}
   showModal={[Function]}
   showSuccessNotification={[Function]}
@@ -44,5 +62,6 @@ exports[`WalletInfo renders without crashing 1`] = `
       "unsubscribe": [Function],
     }
   }
+  tokenBalances={Array []}
 />
 `;
