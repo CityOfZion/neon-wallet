@@ -1,0 +1,31 @@
+@import '../../../../styles/variables';
+
+.container {
+  padding-bottom: 40px;
+}
+
+.section {
+  border: 1px solid #ff0000;
+  background-color: #ffeaea;
+  font-size: 16px;
+}
+
+.body {
+  padding: 24px;
+}
+
+.explanation {
+  color: #ff0000;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 22px;
+  padding-bottom: 12px;
+}
+
+.option {
+  padding-bottom: 10px;
+  label {
+    cursor: pointer;
+  }
+}
+

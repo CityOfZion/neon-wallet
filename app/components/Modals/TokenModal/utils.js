@@ -1,11 +1,8 @@
 // @flow
-import { uniqueId } from 'lodash'
-
-const TOKEN_ID_PREFIX = '_ug'
+import uuidv4 from 'uuid/v4'
 
 export const getNewTokenItem = (networkId: string) => ({
-  id: uniqueId(TOKEN_ID_PREFIX),
-  symbol: '',
+  id: uuidv4(),
   scriptHash: '',
   networkId,
   isUserGenerated: true
@@ -17,10 +14,7 @@ export const validateTokens = (tokens: Array<TokenItemType>) => {
   let errorItemId = null
 
   tokens.some(({ symbol, scriptHash, id }: TokenItemType) => {
-    if (!symbol) {
-      errorMessage = 'Symbol cannot be left blank'
-      errorType = 'symbol'
-    } else if (!scriptHash) {
+    if (!scriptHash) {
       errorMessage = 'Script hash cannot be left blank'
       errorType = 'scriptHash'
     }

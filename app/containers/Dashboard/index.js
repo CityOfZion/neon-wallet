@@ -3,9 +3,19 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { logout, getAddress } from '../../modules/account'
-import { getNetwork } from '../../modules/metadata'
-import { getNotifications, showErrorNotification } from '../../modules/notifications'
-import { getNEO, getGAS, getTokenBalances, getIsLoaded, loadWalletData } from '../../modules/wallet'
+import {
+  getNetwork
+} from '../../modules/metadata'
+import {
+  getNotifications
+} from '../../modules/notifications'
+import {
+  getNEO,
+  getGAS,
+  getTokenBalances,
+  getIsLoaded,
+  loadWalletData
+} from '../../modules/wallet'
 import { showModal } from '../../modules/modal'
 import { sendTransaction } from '../../modules/transactions'
 
@@ -24,11 +34,11 @@ const mapStateToProps = (state: Object) => ({
 const actionCreators = {
   logout,
   showModal,
-  showErrorNotification,
   sendTransaction,
   loadWalletData
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(actionCreators, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)

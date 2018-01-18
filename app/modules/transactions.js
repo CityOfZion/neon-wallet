@@ -1,11 +1,12 @@
 // @flow
 /* eslint-disable camelcase */
 import { api, sc, u, wallet } from 'neon-js'
-import { flatMap, get } from 'lodash'
+import { flatMap, keyBy } from 'lodash'
 
 import {
   setTransactionHistory,
-  getBalances
+  getBalances,
+  getTokenBalances
 } from './wallet'
 import {
   showErrorNotification,
@@ -20,7 +21,7 @@ import {
   LOGOUT,
   getIsHardwareLogin
 } from './account'
-import { getNetwork, getTokensForNetwork } from './metadata'
+import { getNetwork } from './metadata'
 
 import { isToken, validateTransactionsBeforeSending } from '../core/wallet'
 import { ASSETS } from '../core/constants'
@@ -108,7 +109,9 @@ const buildTransferScript = (
   net: NetworkType,
   sendEntries: Array<SendEntryType>,
   fromAddress: string,
-  tokens: Array<TokenItemType>
+  tokensBalanceMap: {
+    [key: string]: TokenBalanceType
+  }
 ) => {
   const tokenEntries = extractTokens(sendEntries)
   const fromAcct = new wallet.Account(fromAddress)
@@ -116,8 +119,7 @@ const buildTransferScript = (
 
   tokenEntries.forEach(({ address, amount, symbol }) => {
     const toAcct = new wallet.Account(address)
-    const tokenItem = tokens.find((token: TokenItemType) => token.symbol === symbol)
-    const scriptHash = get(tokenItem, 'scriptHash')
+    const scriptHash = tokensBalanceMap[symbol].scriptHash
     const args = [
       u.reverseHex(fromAcct.scriptHash),
       u.reverseHex(toAcct.scriptHash),
@@ -131,7 +133,7 @@ const buildTransferScript = (
 }
 
 const makeRequest = (sendEntries: Array<SendEntryType>, config: Object) => {
-  const script = buildTransferScript(config.net, sendEntries, config.address, config.tokens)
+  const script = buildTransferScript(config.net, sendEntries, config.address, config.tokensBalanceMap)
 
   if (script === '') {
     return api.sendAsset({ ...config, intents: buildIntents(sendEntries) })
@@ -154,7 +156,7 @@ export const sendTransaction = (sendEntries: Array<SendEntryType>) => async (
   const fromAddress = getAddress(state)
   const net = getNetwork(state)
   const balances = getBalances(state)
-  const tokens = getTokensForNetwork(state)
+  const tokensBalanceMap = keyBy(getTokenBalances(state), 'symbol')
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
   const isHardwareSend = getIsHardwareLogin(state)
@@ -196,7 +198,7 @@ export const sendTransaction = (sendEntries: Array<SendEntryType>) => async (
   const [err, config] = await asyncWrap(
     makeRequest(sendEntries, {
       net,
-      tokens,
+      tokensBalanceMap,
       address: fromAddress,
       publicKey,
       privateKey: new wallet.Account(wif).privateKey,
