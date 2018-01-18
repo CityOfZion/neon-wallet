@@ -1,8 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { noop, omit, trim } from 'lodash'
-import Sifter from 'sifter'
+import { noop, omit, trim, includes, lowerCase } from 'lodash'
 
 import Dropdown from './Dropdown'
 import DropdownButton from './DropdownButton'
@@ -11,10 +10,11 @@ import styles from './SelectInput.scss'
 type Props = {
   className?: string,
   value?: string,
-  items: Array<Object>,
+  items: Array<any>,
   renderItem: Function,
   renderAfter: Function,
   getItemValue: Function,
+  getSearchResults: Function,
   onFocus?: Function,
   onChange?: Function
 }
@@ -24,11 +24,20 @@ type State = {
   search: string
 }
 
+const defaultRenderAfter = (props) => <DropdownButton {...props} />
+
+const defaultItemValue = (item) => item
+
+const defaultSearchResults = (items, term) => {
+  return items.filter((item) => includes(lowerCase(item), lowerCase(term)))
+}
+
 export default class SelectInput extends React.Component<Props, State> {
   static defaultProps = {
     items: [],
-    renderAfter: (props) => <DropdownButton {...props} />,
-    getItemValue: (item) => item,
+    renderAfter: defaultRenderAfter,
+    getItemValue: defaultItemValue,
+    getSearchResults: defaultSearchResults,
     onFocus: noop,
     onChange: noop
   }
@@ -45,7 +54,7 @@ export default class SelectInput extends React.Component<Props, State> {
   }
 
   render = () => {
-    const passDownProps = omit(this.props, 'items', 'renderItem', 'renderAfter', 'getItemValue')
+    const passDownProps = omit(this.props, 'items', 'renderItem', 'renderAfter', 'getItemValue', 'getSearchResults')
 
     return (
       <Dropdown
@@ -91,7 +100,7 @@ export default class SelectInput extends React.Component<Props, State> {
     }
   }
 
-  renderItems = (items: Array<Object>) => {
+  renderItems = (items: Array<any>) => {
     return items.map((item) => {
       const renderItem = this.props.renderItem || this.renderItem
       return renderItem(item, { onSelect: this.generateSelectHandler(item) })
@@ -147,11 +156,12 @@ export default class SelectInput extends React.Component<Props, State> {
 
   getItems = () => {
     const { items } = this.props
-    const sifter = new Sifter(items)
-    const result = sifter.search(this.state.search, {
-      fields: ['label', 'value'],
-      sort: [{ field: 'label', direction: 'asc' }]
-    })
-    return result.items.map((resultItem) => items[resultItem.id])
+    const { search } = this.state
+
+    if (search.length === 0) {
+      return items
+    } else {
+      return this.props.getSearchResults(items, search)
+    }
   }
 }
