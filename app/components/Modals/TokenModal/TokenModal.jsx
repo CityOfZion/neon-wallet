@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import { reject } from 'lodash'
+import { reject, noop } from 'lodash'
 
 import { getNewTokenItem, validateTokens } from './utils'
 
@@ -19,10 +19,10 @@ type Props = {
   setUserGeneratedTokens: Function,
   tokens: Array<TokenItemType>,
   showErrorNotification: Object => any,
-  onSave?: () => any
+  onSave: () => any
 }
 
-type InputErrorType = "label" | "url";
+type InputErrorType = 'scriptHash';
 
 type State = {
   tokens: Array<TokenItemType>,
@@ -32,6 +32,10 @@ type State = {
 }
 
 class TokenModal extends Component<Props, State> {
+  static defaultProps = {
+    onSave: noop
+  }
+
   state = {
     tokens: this.props.tokens,
     networkId: this.props.networkId || this.props.networks[0].id,
@@ -72,9 +76,7 @@ class TokenModal extends Component<Props, State> {
       })
     } else {
       setUserGeneratedTokens(tokens)
-      if (onSave) {
-        onSave()
-      }
+      onSave()
       hideModal()
     }
   }
