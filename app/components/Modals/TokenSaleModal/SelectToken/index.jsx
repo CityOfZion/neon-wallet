@@ -2,7 +2,6 @@
 import React, { Component } from 'react'
 
 import { COIN_DECIMAL_LENGTH } from '../../../../core/formatters'
-import { isZero } from '../../../../core/math'
 
 import AssetInput from '../../../../components/Inputs/AssetInput'
 import NumberInput from '../../../../components/NumberInput'
@@ -129,10 +128,10 @@ class SelectToken extends Component<Props, State> {
                   <NumberInput
                     className={styles.numberInput}
                     max={assetBalance}
-                    value={isZero(balanceToSend) ? '' : balanceToSend}
+                    value={balanceToSend}
                     placeholder='Amount'
                     options={{ numeralDecimalScale: COIN_DECIMAL_LENGTH }}
-                    onChange={amount => onChangeAmount(selectedAsset, amount || '0')}
+                    onChange={amount => onChangeAmount(selectedAsset, amount)}
                   />
                 </div>
               </div>
