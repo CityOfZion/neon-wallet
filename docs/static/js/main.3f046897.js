@@ -2741,8 +2741,8 @@ module.exports = __webpack_require__.p + "static/media/screenshot.9d8e98f8.png";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__images_github_png___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__images_github_png__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__images_facebook_png__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__images_facebook_png___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__images_facebook_png__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__images_slack_png__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__images_slack_png___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__images_slack_png__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__images_discord_png__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__images_discord_png___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__images_discord_png__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__images_reddit_png__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__images_reddit_png___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__images_reddit_png__);
 
@@ -2842,7 +2842,7 @@ var Footer = function Footer(_ref2) {
             "a",
             { href: "https://discord.gg/R8v48YA", id: "link", target: "blank" },
             "Discord ",
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { src: __WEBPACK_IMPORTED_MODULE_3__images_slack_png___default.a })
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { src: __WEBPACK_IMPORTED_MODULE_3__images_discord_png___default.a })
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             "a",
@@ -2874,7 +2874,7 @@ module.exports = __webpack_require__.p + "static/media/facebook.0256e180.png";
 /* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "static/media/slack.fe169331.png";
+module.exports = __webpack_require__.p + "static/media/discord.d2b717d7.png";
 
 /***/ }),
 /* 44 */
@@ -4062,4 +4062,4 @@ function unregister() {
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=main.f21fa6ae.js.map
+//# sourceMappingURL=main.3f046897.js.map
