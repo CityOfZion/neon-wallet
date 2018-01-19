@@ -1,10 +1,10 @@
 // @flow
 import React from 'react'
+import { omit } from 'lodash'
 import { compose, setDisplayName, wrapDisplayName } from 'recompose'
 
 import defaultStrategy from './progressStrategies/defaultStrategy'
 import withProgressProp from './withProgressProp'
-import withoutProps from '../withoutProps'
 import { type Actions } from '../../values/api'
 import { type ProgressState } from '../../values/state'
 
@@ -35,8 +35,8 @@ export default function withProgressComponents (
 
       render = () => {
         const MappedComponent = mapping[this.props[propName]] || Component
-        const WrappedComponent = withoutProps(propName)(MappedComponent)
-        return <WrappedComponent {...this.props} />
+        const passDownProps = omit(this.props, propName)
+        return <MappedComponent {...passDownProps} />
       }
     }
 
