@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
 
 import withNetworkData from '../../hocs/withNetworkData'
-import { logout, getAddress } from '../../modules/account'
+import withAccountData from '../../hocs/withAccountData'
 import { getNotifications } from '../../modules/notifications'
 import { getNEO, getGAS, getTokenBalances, getIsLoaded, loadWalletData } from '../../modules/wallet'
 import { showModal } from '../../modules/modal'
@@ -13,7 +13,6 @@ import { sendTransaction } from '../../modules/transactions'
 import Dashboard from './Dashboard'
 
 const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
-  address: getAddress(state),
   notification: getNotifications(state),
   NEO: getNEO(state),
   GAS: getGAS(state),
@@ -22,7 +21,6 @@ const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
 })
 
 const actionCreators = {
-  logout,
   showModal,
   sendTransaction,
   loadWalletData
@@ -33,5 +31,6 @@ const mapDispatchToProps = dispatch =>
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  withNetworkData()
+  withNetworkData(),
+  withAccountData()
 )(Dashboard)
