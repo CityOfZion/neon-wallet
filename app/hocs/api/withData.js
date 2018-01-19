@@ -32,8 +32,8 @@ export default function withData (
   mapper: Function = defaultMapper,
   { prefix = 'api' }: Options = {}
 ): Class<React.Component<*>> {
-  const mapStateToProps: MapStateToProps<*, *, *> = (state: Object): Object => {
-    return mapper(mapDataToProps(state, actions.id, prefix))
+  const mapStateToProps: MapStateToProps<*, *, *> = (state: Object, ownProps: Object): Object => {
+    return mapper(mapDataToProps(state, actions.id, prefix), ownProps)
   }
 
   return (Component: Class<React.Component<*>>) => {
