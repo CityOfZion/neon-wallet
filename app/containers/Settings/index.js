@@ -6,10 +6,10 @@ import { setAccounts, getAccounts } from '../../modules/account'
 import {
   setBlockExplorer,
   getBlockExplorer,
-  getNetworks,
   getAllTokens,
   setUserGeneratedTokens
 } from '../../modules/metadata'
+import { getNetworks } from '../../core/networks'
 import { setCurrency, getCurrency } from '../../modules/price'
 import { showErrorNotification, showSuccessNotification } from '../../modules/notifications'
 
@@ -21,7 +21,7 @@ const mapStateToProps = (state: Object) => ({
   explorer: getBlockExplorer(state),
   currency: getCurrency(state),
   accounts: getAccounts(state),
-  networks: getNetworks(state),
+  networks: getNetworks(),
   allTokens: getAllTokens(state)
 })
 

@@ -1,10 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TransactionHistory renders without crashing 1`] = `
-<TransactionHistory
+<Connect(withData(mapProps(TransactionHistory)))
   address="AWy7RNBVr9vDadRMK9p7i7Z1tL7GrLAxoh"
   isLoadingTransactions={false}
-  net="TestNet"
   store={
     Object {
       "clearActions": [Function],
