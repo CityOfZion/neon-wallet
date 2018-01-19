@@ -20,10 +20,7 @@ type Props = {
   gasPrice: number,
   currencyCode: string,
   isLoggedIn: boolean,
-  networkId: string,
-  networks: Array<NetworkItemType>,
-  logout: () => any,
-  onChangeNetwork: Function
+  logout: () => any
 }
 
 const Header = ({
@@ -31,10 +28,7 @@ const Header = ({
   neoPrice,
   gasPrice,
   currencyCode,
-  isLoggedIn,
-  networkId,
-  networks,
-  onChangeNetwork
+  isLoggedIn
 }: Props) => (
   <div className={styles.container}>
     <Logo />
@@ -47,11 +41,7 @@ const Header = ({
       />
       <WalletBlockHeight />
       <WalletVersion version={version} />
-      <NetworkSwitch
-        networkId={networkId}
-        networks={networks}
-        onChange={onChangeNetwork}
-      />
+      <NetworkSwitch />
       <Logout onClick={logout} />
     </div>
     }

@@ -5,7 +5,6 @@ import { compose } from 'recompose'
 
 import Settings from './Settings'
 import withActions from '../../hocs/api/withActions'
-import withTokensData from '../../hocs/withTokensData'
 import withExplorerData from '../../hocs/withExplorerData'
 import withCurrencyData from '../../hocs/withCurrencyData'
 import { setAccounts, getAccounts } from '../../modules/account'
@@ -36,7 +35,6 @@ const mapActionsToProps = (actions) => ({
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  withTokensData('allTokens'),
   withExplorerData(),
   withCurrencyData(),
   withActions(updateSettingsActions, mapActionsToProps)
