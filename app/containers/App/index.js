@@ -7,6 +7,8 @@ import withData from '../../hocs/api/withData'
 import withFetch from '../../hocs/api/withFetch'
 import withReload from '../../hocs/api/withReload'
 import withProgressComponents from '../../hocs/api/withProgressComponents'
+import withLoginRedirect from '../../hocs/auth/withLoginRedirect'
+import withLogoutRedirect from '../../hocs/auth/withLogoutRedirect'
 import appActions from '../../actions/appActions'
 import alreadyLoaded from '../../hocs/api/progressStrategies/alreadyLoadedStrategy'
 import withNetworkData from '../../hocs/withNetworkData'
@@ -52,5 +54,9 @@ export default compose(
     [FAILED]: Failed
   }, {
     strategy: alreadyLoaded
-  })
+  }),
+
+  // Navigate to the home or dashboard when the user logs in or out.
+  withLoginRedirect,
+  withLogoutRedirect
 )(App)
