@@ -13,10 +13,11 @@ import withNetworkData from '../../hocs/withNetworkData'
 import networkActions from '../../actions/networkActions'
 import { checkVersion } from '../../modules/metadata'
 import { showErrorNotification } from '../../modules/notifications'
-import { LOADING } from '../../values/state'
+import { LOADING, FAILED } from '../../values/state'
 
 import App from './App'
 import Loading from './Loading'
+import Failed from './Failed'
 
 const actionCreators = {
   checkVersion,
@@ -36,7 +37,8 @@ export default compose(
   withFetch(networkActions),
   withNetworkData(),
   withProgressComponents(networkActions, {
-    [LOADING]: Loading
+    [LOADING]: Loading,
+    [FAILED]: Failed
   }, {
     strategy: alreadyLoaded
   }),
@@ -46,7 +48,8 @@ export default compose(
   withData(appActions, mapAppDataToProps),
   withReload(appActions, ['networkId']),
   withProgressComponents(appActions, {
-    [LOADING]: Loading
+    [LOADING]: Loading,
+    [FAILED]: Failed
   }, {
     strategy: alreadyLoaded
   })
