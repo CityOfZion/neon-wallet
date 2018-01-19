@@ -37,56 +37,56 @@ app.on('ready', () => {
 
     if (process.platform !== 'darwin') {
     // Windows/Linxu Menu
-	  mainWindow.setMenu(null)
+      mainWindow.setMenu(null)
     } else {
-    // Menu is required for MacOS
-	  const template = [
+      // Menu is required for MacOS
+      const template = [
         {
-  	    label: app.getName(),
-  	    submenu: [
-  				{role: 'about'},
-  				{type: 'separator'},
-  	      {role: 'quit'}
-  	    ]
+          label: app.getName(),
+          submenu: [
+            { role: 'about' },
+            { type: 'separator' },
+            { role: 'quit' }
+          ]
         },
         {
-		    label: 'Edit',
-		    submenu: [
-		      {role: 'undo'},
-		      {role: 'redo'},
-		      {type: 'separator'},
-		      {role: 'cut'},
-		      {role: 'copy'},
-		      {role: 'paste'}
-		    ]
-		  },
-		  {
-		    label: 'View',
-		    submenu: [
-		      {role: 'toggledevtools'}
-		    ]
-  	  },
+          label: 'Edit',
+          submenu: [
+            { role: 'undo' },
+            { role: 'redo' },
+            { type: 'separator' },
+            { role: 'cut' },
+            { role: 'copy' },
+            { role: 'paste' }
+          ]
+        },
+        {
+          label: 'View',
+          submenu: [
+            {role: 'toggledevtools'}
+          ]
+        },
         {
           role: 'help',
           submenu: [
-            {label: 'City of Zion', click () { shell.openExternal('https://cityofzion.io/') }},
-            {label: 'GitHub', click () { shell.openExternal('https://github.com/CityOfZion') }},
-            {label: 'NEO Reddit', click () { shell.openExternal('https://www.reddit.com/r/NEO/') }},
-            {label: 'Slack', click () { shell.openExternal('https://neosmarteconomy.slack.com') }}
+            { label: 'City of Zion', click () { shell.openExternal('https://cityofzion.io/') } },
+            { label: 'GitHub', click () { shell.openExternal('https://github.com/CityOfZion') } },
+            { label: 'NEO Reddit', click () { shell.openExternal('https://www.reddit.com/r/NEO/') } },
+            { label: 'Slack', click () { shell.openExternal('https://neosmarteconomy.slack.com') } }
           ]
         }
       ]
-	  const menu = Menu.buildFromTemplate(template)
+      const menu = Menu.buildFromTemplate(template)
       Menu.setApplicationMenu(menu)
     }
 
     const inputMenu = Menu.buildFromTemplate([
-      {label : 'Paste', accelerator : 'CmdOrCtrl+V', click() { mainWindow.webContents.paste(); }}
-    ]);
+      { label: 'Paste', accelerator: 'CmdOrCtrl+V', click () { mainWindow.webContents.paste() } }
+    ])
 
     mainWindow.webContents.on('context-menu', (event, params) => {
-      inputMenu.popup(mainWindow);
-    });
+      inputMenu.popup(mainWindow)
+    })
 
     if (process.env.START_HOT) {
       mainWindow.loadURL(`http://localhost:${port}/dist`)
