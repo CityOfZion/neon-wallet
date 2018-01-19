@@ -7,7 +7,7 @@ import styles from './Address.scss'
 
 type Props = {
   className?: string,
-  networkId: string,
+  networkId: NetworkType,
   explorer: ExplorerType,
   address: string
 }

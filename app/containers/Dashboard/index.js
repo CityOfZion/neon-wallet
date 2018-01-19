@@ -1,28 +1,18 @@
 // @flow
-import { connect } from 'react-redux'
+import { connect, type MapStateToProps } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { compose } from 'recompose'
 
+import withNetworkData from '../../hocs/withNetworkData'
 import { logout, getAddress } from '../../modules/account'
-import {
-  getNetwork
-} from '../../modules/metadata'
-import {
-  getNotifications
-} from '../../modules/notifications'
-import {
-  getNEO,
-  getGAS,
-  getTokenBalances,
-  getIsLoaded,
-  loadWalletData
-} from '../../modules/wallet'
+import { getNotifications } from '../../modules/notifications'
+import { getNEO, getGAS, getTokenBalances, getIsLoaded, loadWalletData } from '../../modules/wallet'
 import { showModal } from '../../modules/modal'
 import { sendTransaction } from '../../modules/transactions'
 
 import Dashboard from './Dashboard'
 
-const mapStateToProps = (state: Object) => ({
-  net: getNetwork(state),
+const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
   address: getAddress(state),
   notification: getNotifications(state),
   NEO: getNEO(state),
@@ -41,4 +31,7 @@ const actionCreators = {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(actionCreators, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withNetworkData()
+)(Dashboard)
