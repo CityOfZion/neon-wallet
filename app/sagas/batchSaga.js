@@ -75,6 +75,7 @@ export default function * batchSaga (state: Object, actionState: ActionState): S
       yield put(sagaActions.success())
     }
   } catch (err) {
+    console.error(`${id} batch action failed.`, err)
     yield put(sagaActions.failure(err.message))
   }
 

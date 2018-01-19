@@ -30,6 +30,7 @@ function createSagaActions (meta: ActionMeta): SagaActions {
       const result = yield call(fn, state)
       yield put(actions.success(result))
     } catch (err) {
+      console.error(`${meta.id} request action failed.`, err)
       yield put(actions.failure(err.message))
     }
   }
