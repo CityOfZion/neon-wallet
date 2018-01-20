@@ -13,7 +13,8 @@ import { SHOW_NOTIFICATION } from '../../app/modules/notifications'
 import { LOADING_TRANSACTIONS } from '../../app/modules/transactions'
 import { SET_HEIGHT } from '../../app/modules/metadata'
 
-import { DEFAULT_CURRENCY_CODE, TEST_NETWORK_ID, MAIN_NETWORK_ID } from '../../app/core/constants'
+import { DEFAULT_CURRENCY_CODE, MAIN_NETWORK_ID } from '../../app/core/constants'
+import { LOADED } from '../../app/values/state'
 
 import WalletInfo from '../../app/containers/WalletInfo'
 
@@ -47,23 +48,17 @@ import QRCode from 'qrcode/lib/browser' // eslint-disable-line
 QRCode.toCanvas = jest.fn()
 
 const initialState = {
+  api: {
+    NETWORK: {
+      batch: false,
+      state: LOADED,
+      data: MAIN_NETWORK_ID
+    }
+  },
   account: {
     address: 'ANqUrhv99rwCiFTL6N1An9NH5UVkPYxTuw'
   },
   metadata: {
-    networkId: TEST_NETWORK_ID,
-    networks: [
-      {
-        id: MAIN_NETWORK_ID,
-        label: 'MainNet',
-        network: 'MainNet'
-      },
-      {
-        id: TEST_NETWORK_ID,
-        label: 'TestNet',
-        network: 'TestNet'
-      }
-    ]
   },
   wallet: {
     NEO: '100001',
@@ -128,10 +123,9 @@ describe('WalletInfo', () => {
     done()
   })
   test('refreshBalance is getting called on click', async () => {
-    const { wrapper, store } = setup()
-    const deepWrapper = wrapper.dive()
+    const { wrapper, store } = setup(initialState, false)
 
-    deepWrapper.find('.refreshBalance').simulate('click')
+    wrapper.find('.refreshBalance').simulate('click')
 
     await Promise.resolve('Pause')
       .then()
@@ -215,11 +209,8 @@ describe('WalletInfo', () => {
         reject(new Error())
       })
     })
-    const { wrapper, store } = setup()
-    wrapper
-      .dive()
-      .find('.refreshBalance')
-      .simulate('click')
+    const { wrapper, store } = setup(initialState, false)
+    wrapper.find('.refreshBalance').simulate('click')
 
     jest.runAllTimers()
     await Promise.resolve('Pause')
@@ -229,7 +220,7 @@ describe('WalletInfo', () => {
       .then()
 
     const actions = store.getActions()
-    let notifications = []
+    const notifications = []
     actions.forEach(action => {
       if (action.type === SHOW_NOTIFICATION) {
         notifications.push(action)

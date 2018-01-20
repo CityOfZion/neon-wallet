@@ -8,6 +8,7 @@ import storage from 'electron-json-storage'
 import { showWarningNotification, showErrorNotification } from './notifications'
 import { setCurrency } from './price'
 
+import { getNetwork, getNetworkId } from '../core/deprecated'
 import {
   EXPLORERS,
   NEON_WALLET_RELEASE_LINK,
@@ -23,16 +24,10 @@ import { version } from '../../package.json'
 
 // Constants
 export const SET_HEIGHT = 'SET_HEIGHT'
-export const SET_NETWORK_ID = 'SET_NETWORK_ID'
 export const SET_EXPLORER = 'SET_EXPLORER'
 export const SET_USER_GENERATED_TOKENS = 'SET_USER_GENERATED_TOKENS'
 
 // Actions
-export const setNetworkId = (networkId: string) => ({
-  type: SET_NETWORK_ID,
-  payload: { networkId }
-})
-
 export const setBlockHeight = (blockHeight: number) => ({
   type: SET_HEIGHT,
   payload: { blockHeight }
@@ -156,20 +151,11 @@ export const syncBlockHeight = (net: NetworkType) => async (
 }
 
 // state getters
-export const getNetworkId = (state: Object) => state.metadata.networkId
 export const getBlockHeight = (state: Object) => state.metadata.blockHeight
 export const getBlockExplorer = (state: Object) => state.metadata.blockExplorer
-export const getNetworks = (state: Object) => state.metadata.networks
 export const getAllTokens = (state: Object) => state.metadata.tokens
 
 // computed state getters
-
-export const getNetwork = createSelector(
-  getNetworks,
-  getNetworkId,
-  (networks, selectedNetworkId) =>
-    networks.find(({ id, value }) => id === selectedNetworkId).network
-)
 
 export const getTokensForNetwork = createSelector(
   getAllTokens,
@@ -207,19 +193,6 @@ const generatePredfinedTokens = (): Array<TokenItemType> => {
 
 const initialState = {
   blockHeight: 0,
-  networkId: MAIN_NETWORK_ID,
-  networks: [
-    {
-      id: MAIN_NETWORK_ID,
-      label: 'MainNet',
-      network: 'MainNet'
-    },
-    {
-      id: TEST_NETWORK_ID,
-      label: 'TestNet',
-      network: 'TestNet'
-    }
-  ],
   tokens: generatePredfinedTokens(),
   blockExplorer: EXPLORERS.NEO_TRACKER
 }
@@ -237,12 +210,6 @@ export default (state: Object = initialState, action: ReduxAction) => {
       return {
         ...state,
         blockExplorer
-      }
-    case SET_NETWORK_ID:
-      const { networkId } = action.payload
-      return {
-        ...state,
-        networkId
       }
     case SET_USER_GENERATED_TOKENS:
       const { tokens } = action.payload

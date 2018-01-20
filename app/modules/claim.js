@@ -14,9 +14,9 @@ import {
   LOGOUT,
   getIsHardwareLogin
 } from './account'
-import { getNetwork } from './metadata'
 import { getNEO } from './wallet'
 
+import { getNetwork } from '../core/deprecated'
 import { ASSETS } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
 import { FIVE_MINUTES_MS } from '../core/time'
