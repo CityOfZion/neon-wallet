@@ -3,6 +3,7 @@ import * as neonjs from 'neon-js'
 import { Provider } from 'react-redux'
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
+import { merge } from 'lodash'
 import { mount, shallow } from 'enzyme'
 
 import {
@@ -11,7 +12,6 @@ import {
 } from '../../app/modules/wallet'
 import { SHOW_NOTIFICATION } from '../../app/modules/notifications'
 import { LOADING_TRANSACTIONS } from '../../app/modules/transactions'
-import { SET_HEIGHT } from '../../app/modules/metadata'
 
 import { DEFAULT_CURRENCY_CODE, MAIN_NETWORK_ID } from '../../app/core/constants'
 import { LOADED } from '../../app/values/state'
@@ -53,6 +53,13 @@ const initialState = {
       batch: false,
       state: LOADED,
       data: MAIN_NETWORK_ID
+    },
+    SETTINGS: {
+      batch: false,
+      state: LOADED,
+      data: {
+        currency: DEFAULT_CURRENCY_CODE
+      }
     }
   },
   account: {
@@ -67,8 +74,7 @@ const initialState = {
   },
   price: {
     NEO: 25.48,
-    GAS: 18.1,
-    currency: DEFAULT_CURRENCY_CODE
+    GAS: 18.1
   },
   claim: {
     claimAmount: 0.5
@@ -141,22 +147,16 @@ describe('WalletInfo', () => {
         isLoadingTransactions: true
       }
     })
-    expect(actions[1]).toEqual({
+    expect(actions[2]).toEqual({
       type: LOADING_TRANSACTIONS,
       payload: {
         isLoadingTransactions: false
       }
     })
-    expect(actions[2]).toEqual({
+    expect(actions[3]).toEqual({
       type: SET_TRANSACTION_HISTORY,
       payload: {
         transactions: []
-      }
-    })
-    expect(actions[3]).toEqual({
-      type: SET_HEIGHT,
-      payload: {
-        blockHeight: 586435
       }
     })
     expect(actions[4]).toEqual({
@@ -183,10 +183,10 @@ describe('WalletInfo', () => {
     // })
   })
   test('correctly renders data from state with non-default currency', done => {
-    const testState = {
-      ...initialState,
-      price: { NEO: 1.11, GAS: 0.55, currency: 'eur' }
-    }
+    const testState = merge(initialState, {
+      api: { SETTINGS: { data: { currency: 'eur' } } },
+      price: { NEO: 1.11, GAS: 0.55 }
+    })
     const { wrapper } = setup(testState, false)
 
     const neoWalletValue = wrapper.find('.neoWalletValue')

@@ -4,13 +4,12 @@ import { isNil } from 'lodash'
 
 import { syncTransactionHistory } from './transactions'
 import { syncAvailableClaim } from './claim'
-import { syncBlockHeight, getTokensForNetwork } from './metadata'
 import { LOGOUT, getAddress } from './account'
 import { getMarketPriceUSD, getGasMarketPriceUSD } from './price'
 import { showErrorNotification } from './notifications'
 
 import { ASSETS } from '../core/constants'
-import { getNetwork } from '../core/deprecated'
+import { getNetwork, getTokensForNetwork, syncBlockHeight } from '../core/deprecated'
 import asyncWrap from '../core/asyncHelper'
 import { getTokenBalancesMap } from '../core/wallet'
 import { COIN_DECIMAL_LENGTH } from '../core/formatters'
@@ -93,7 +92,7 @@ export const loadWalletData = (silent: boolean = true) => async (
   }
   dispatch(syncTransactionHistory(net, address))
   dispatch(syncAvailableClaim(net, address))
-  dispatch(syncBlockHeight(net))
+  dispatch(syncBlockHeight(state))
   dispatch(getMarketPriceUSD())
   dispatch(getGasMarketPriceUSD())
   await Promise.all([
