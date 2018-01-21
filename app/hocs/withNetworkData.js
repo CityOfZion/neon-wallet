@@ -1,5 +1,4 @@
 // @flow
-// import { connect, type MapStateToProps } from 'react-redux'
 import { compose, mapProps } from 'recompose'
 
 import withData from './api/withData'

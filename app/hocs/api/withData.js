@@ -5,6 +5,10 @@ import { compose, setDisplayName, wrapDisplayName } from 'recompose'
 
 import { type Data, type Actions, type ActionStateMap } from '../../values/api'
 
+type Options = {
+  prefix: string
+}
+
 const mapRequestDataToProps: Function = (data: Data): any => data
 
 const mapBatchDataToProps: Function = (state: Object, id: string, mapping: ActionStateMap, prefix: string): Object => {
@@ -23,9 +27,13 @@ const mapDataToProps: Function = (state: Object, id: string, prefix: string): Ob
 
 const defaultMapper = mapRequestDataToProps
 
-export default function withData (actions: Actions, mapper: Function = defaultMapper, prefix: string = 'api'): Class<React.Component<*>> {
-  const mapStateToProps: MapStateToProps<*, *, *> = (state: Object): Object => {
-    return mapper(mapDataToProps(state, actions.id, prefix))
+export default function withData (
+  actions: Actions,
+  mapper: Function = defaultMapper,
+  { prefix = 'api' }: Options = {}
+): Class<React.Component<*>> {
+  const mapStateToProps: MapStateToProps<*, *, *> = (state: Object, ownProps: Object): Object => {
+    return mapper(mapDataToProps(state, actions.id, prefix), ownProps)
   }
 
   return (Component: Class<React.Component<*>>) => {

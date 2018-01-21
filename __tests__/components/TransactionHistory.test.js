@@ -16,14 +16,17 @@ const initialState = {
       batch: false,
       state: LOADED,
       data: MAIN_NETWORK_ID
+    },
+    SETTINGS: {
+      batch: false,
+      state: LOADED,
+      data: {}
     }
   },
   account: {
     loggedIn: true,
     wif: 'L4SLRcPgqNMAMwM3nFSxnh36f1v5omjPg3Ewy1tg2PnEon8AcHou',
     address: 'AWy7RNBVr9vDadRMK9p7i7Z1tL7GrLAxoh'
-  },
-  metadata: {
   },
   wallet: {
     transactions: []
