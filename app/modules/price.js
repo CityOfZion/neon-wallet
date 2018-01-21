@@ -1,17 +1,13 @@
 // @flow
 import { api } from 'neon-js'
-import storage from 'electron-json-storage'
-
-import { showErrorNotification } from './notifications'
 
 import asyncWrap from '../core/asyncHelper'
-import { DEFAULT_CURRENCY_CODE } from '../core/constants'
+import { getCurrency } from '../core/deprecated'
 
 // Constants
 export const SET_NEO_PRICE = 'SET_NEO_PRICE'
 export const SET_GAS_PRICE = 'SET_GAS_PRICE'
 export const RESET_PRICE = 'RESET_PRICE'
-export const SET_CURRENCY = 'SET_CURRENCY'
 
 // Actions
 export const setNEOPrice = (NEO: string) => ({
@@ -23,38 +19,6 @@ export const setGASPrice = (GAS: string) => ({
   type: SET_GAS_PRICE,
   payload: { GAS }
 })
-
-export const setCurrency = (currency: string) => async (
-  dispatch: DispatchType
-) => {
-  storage.get('settings', (errorReading, settingsObj) => {
-    if (errorReading) {
-      dispatch(
-        showErrorNotification({ message: 'error grabbing data from storage' })
-      )
-    }
-    storage.set(
-      'settings',
-      {
-        ...settingsObj,
-        currency
-      },
-      saveError => {
-        if (saveError) {
-          dispatch(
-            showErrorNotification({
-              message: 'error saving new currency in storage'
-            })
-          )
-        }
-      }
-    )
-  })
-  return dispatch({
-    type: SET_CURRENCY,
-    payload: { currency }
-  })
-}
 
 export function resetPrice () {
   return {
@@ -89,12 +53,10 @@ export const getGasMarketPriceUSD = () => async (
 // state getters
 export const getNEOPrice = (state: Object) => state.price.NEO
 export const getGASPrice = (state: Object) => state.price.GAS
-export const getCurrency = (state: Object) => state.price.currency
 
 const initialState = {
   NEO: 0,
-  GAS: 0,
-  currency: DEFAULT_CURRENCY_CODE
+  GAS: 0
 }
 
 export default (state: Object = initialState, action: Object) => {
@@ -110,14 +72,6 @@ export default (state: Object = initialState, action: Object) => {
       return {
         ...state,
         GAS
-      }
-    case SET_CURRENCY:
-      const { currency } = action.payload
-      return {
-        ...state,
-        NEO: 0,
-        GAS: 0,
-        currency
       }
     case RESET_PRICE:
       return {
