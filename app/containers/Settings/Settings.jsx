@@ -24,7 +24,6 @@ type Props = {
   showModal: (string, Object) => any,
   showSuccessNotification: Object => any,
   showErrorNotification: Object => any,
-  allTokens: Array<TokenItemType>,
   setUserGeneratedTokens: () => any,
   networks: Array<NetworkItemType>
 }
@@ -184,13 +183,11 @@ export default class Settings extends Component<Props, State> {
   openTokenModal = () => {
     const {
       setUserGeneratedTokens,
-      allTokens,
       showModal,
       networks,
       showErrorNotification
     } = this.props
     showModal(MODAL_TYPES.TOKEN, {
-      tokens: allTokens,
       networks,
       setUserGeneratedTokens,
       showErrorNotification

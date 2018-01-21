@@ -7,6 +7,6 @@ import settingsActions from './settingsActions'
 export const ID = 'APP'
 
 export default createBatchActions(ID, {
-  height: blockHeightActions,
+  blockHeight: blockHeightActions,
   settings: settingsActions
 })
