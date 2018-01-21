@@ -3,6 +3,7 @@ import { compose } from 'recompose'
 
 import withData from '../../hocs/api/withData'
 import withActions from '../../hocs/api/withActions'
+import withFailureNotification from '../../hocs/withFailureNotification'
 import accountsActions from '../../actions/accountsActions'
 import { nep2LoginActions } from '../../actions/accountActions'
 
@@ -18,5 +19,6 @@ const mapActionsToProps = (actions) => ({
 
 export default compose(
   withData(accountsActions, mapAccountsDataToProps),
-  withActions(nep2LoginActions, mapActionsToProps)
+  withActions(nep2LoginActions, mapActionsToProps),
+  withFailureNotification(nep2LoginActions)
 )(LoginLocalStorage)
