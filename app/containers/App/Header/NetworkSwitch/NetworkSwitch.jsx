@@ -1,34 +1,35 @@
 // @flow
 import React, { Component } from 'react'
 
-import { NETWORK } from '../../../../core/constants'
-
-import headerStyles from '../Header.scss'
+import { getNetworks } from '../../../../core/networks'
+import styles from '../Header.scss'
 
 type Props = {
-  net: NetworkType,
-  setNetwork: Function,
-  loadWalletData: Function
+  networkId: string,
+  onChange: Function,
+  networks: Array<NetworkItemType>
 }
 
 export default class NetworkSwitch extends Component<Props> {
-  chooseNetwork = (e: Object) => {
-    const { setNetwork, loadWalletData } = this.props
-    const newNet = e.target.value
-    setNetwork(newNet)
-    loadWalletData(false)
+  static defaultProps = {
+    networks: getNetworks()
   }
 
   render () {
-    const { net } = this.props
+    const { networkId, networks } = this.props
     return (
-      <div id='network' className={headerStyles.navBarItem}>
-        <span className={headerStyles.navBarItemLabel}>Running on</span>
-        <select defaultValue={net} onChange={this.chooseNetwork} className='networkSelector'>
-          <option value={NETWORK.MAIN}>{NETWORK.MAIN}</option>
-          <option value={NETWORK.TEST}>{NETWORK.TEST}</option>
+      <div id='network' className={styles.navBarItem}>
+        <span className={styles.navBarItemLabel}>Running on</span>
+        <select defaultValue={networkId} onChange={this.handleChange} className='networkSelector'>
+          {networks.map(({ label, id }: NetworkItemType) =>
+            <option key={`networkOption${id}`} value={id}>{label}</option>
+          )}
         </select>
       </div>
     )
+  }
+
+  handleChange = (event: Object) => {
+    this.props.onChange(event.target.value)
   }
 }

@@ -1,21 +1,22 @@
 // @flow
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { isNil } from 'lodash'
+import { isNil, keyBy } from 'lodash'
 
 import Claim from '../Claim'
 
 import Tooltip from '../../components/Tooltip'
+import Button from '../../components/Button'
 
 import { formatGAS, formatFiat, formatNEO } from '../../core/formatters'
-import { ASSETS, CURRENCIES } from '../../core/constants'
+import { ASSETS, CURRENCIES, MODAL_TYPES } from '../../core/constants'
 import { toNumber } from '../../core/math'
 
 import MdSync from 'react-icons/lib/md/sync'
 
 import styles from './WalletInfo.scss'
 
-import TokensBalance from './TokensBalance'
+import TokenBalances from './TokenBalances'
 
 type Props = {
   address: string,
@@ -23,13 +24,19 @@ type Props = {
   GAS: string,
   neoPrice: number,
   gasPrice: number,
-  tokens: Object,
+  tokenBalances: Array<TokenBalanceType>,
   loadWalletData: Function,
   currencyCode: string,
   showSuccessNotification: Function,
   showErrorNotification: Function,
-  showModal: Function
-};
+  showModal: Function,
+  oldParticipateInSale: Function,
+  participateInSale: Function,
+  allTokens: Array<TokenItemType>,
+  setUserGeneratedTokens: Function,
+  networks: Array<NetworkItemType>,
+  networkId: string,
+}
 
 export default class WalletInfo extends Component<Props> {
   refreshBalance = () => {
@@ -49,7 +56,7 @@ export default class WalletInfo extends Component<Props> {
           message: 'Failed to retrieve blockchain information'
         })
       })
-  };
+  }
 
   render () {
     const {
@@ -58,9 +65,16 @@ export default class WalletInfo extends Component<Props> {
       GAS,
       neoPrice,
       gasPrice,
-      tokens,
+      tokenBalances,
       showModal,
-      currencyCode
+      currencyCode,
+      participateInSale,
+      oldParticipateInSale,
+      networks,
+      networkId,
+      allTokens,
+      setUserGeneratedTokens,
+      loadWalletData
     } = this.props
 
     if (isNil(address)) {
@@ -116,7 +130,34 @@ export default class WalletInfo extends Component<Props> {
         </div>
         <div className='spacer' />
         <Claim />
-        <TokensBalance tokens={tokens} showModal={showModal} />
+        <TokenBalances tokenBalances={tokenBalances} showModal={showModal} />
+        <div
+          className={(styles.walletButton, styles.icoButton)}
+          onClick={() =>
+            showModal(MODAL_TYPES.ICO, {
+              assetBalances: {
+                [ASSETS.NEO]: NEO,
+                [ASSETS.GAS]: GAS
+              },
+              tokenBalances: keyBy(tokenBalances, 'symbol'),
+              showTokensModal: () => {
+                showModal(MODAL_TYPES.TOKEN, {
+                  tokens: allTokens,
+                  networks,
+                  networkId,
+                  setUserGeneratedTokens,
+                  onSave: () => {
+                    loadWalletData(false)
+                  }
+                })
+              },
+              oldParticipateInSale,
+              participateInSale
+            })
+          }
+        >
+          <Button>Participate in a token sale</Button>
+        </div>
       </div>
     )
   }

@@ -1,6 +1,6 @@
 {
   "name": "Neon",
-  "version": "0.0.9",
+  "version": "0.1.1",
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",
   "homepage": "https://github.com/CityOfZion/neon-wallet",
@@ -77,6 +77,7 @@
     "electron-json-storage": "4.0.2",
     "electron-save-file": "1.0.2",
     "elliptic": "6.4.0",
+    "es6-promisify": "^5.0.0",
     "file-loader": "1.1.5",
     "fs": "0.0.1-security",
     "global": "4.3.2",
@@ -102,11 +103,15 @@
     "react-syntax-highlighter": "5.8.0",
     "react-test-renderer": "16.1.1",
     "react-tippy": "1.2.2",
+    "recompose": "^0.26.0",
     "redux": "3.7.2",
     "redux-logger": "3.0.6",
+    "redux-saga": "^0.16.0",
     "redux-thunk": "2.2.0",
+    "reselect": "^3.0.1",
     "secure-random": "1.1.1",
     "sifter": "0.5.3",
+    "uuid": "^3.2.1",
     "wif": "2.0.6"
   },
   "devDependencies": {

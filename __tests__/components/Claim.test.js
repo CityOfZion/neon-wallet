@@ -9,9 +9,22 @@ import { shallow, mount } from 'enzyme'
 import Claim from '../../app/containers/Claim'
 import { setClaimRequest, disableClaim } from '../../app/modules/claim'
 import { SHOW_NOTIFICATION, HIDE_NOTIFICATIONS, DEFAULT_POSITION } from '../../app/modules/notifications'
-import { NOTIFICATION_LEVELS } from '../../app/core/constants'
+import { NOTIFICATION_LEVELS, MAIN_NETWORK_ID } from '../../app/core/constants'
+import { LOADED } from '../../app/values/state'
 
 const initialState = {
+  api: {
+    NETWORK: {
+      batch: false,
+      state: LOADED,
+      data: MAIN_NETWORK_ID
+    },
+    SETTINGS: {
+      batch: false,
+      state: LOADED,
+      data: {}
+    }
+  },
   claim: {
     claimAmount: 10,
     claimRequest: false,
@@ -21,9 +34,6 @@ const initialState = {
   account: {
     wif: 'wif',
     address: 'address'
-  },
-  metadata: {
-    network: 'network'
   },
   wallet: {
     NEO: '1'

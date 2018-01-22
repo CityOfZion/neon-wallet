@@ -3,6 +3,7 @@ import * as neonjs from 'neon-js'
 import { Provider } from 'react-redux'
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
+import { merge } from 'lodash'
 import { mount, shallow } from 'enzyme'
 
 import {
@@ -11,9 +12,9 @@ import {
 } from '../../app/modules/wallet'
 import { SHOW_NOTIFICATION } from '../../app/modules/notifications'
 import { LOADING_TRANSACTIONS } from '../../app/modules/transactions'
-import { SET_HEIGHT } from '../../app/modules/metadata'
 
-import { DEFAULT_CURRENCY_CODE } from '../../app/core/constants'
+import { DEFAULT_CURRENCY_CODE, MAIN_NETWORK_ID } from '../../app/core/constants'
+import { LOADED } from '../../app/values/state'
 
 import WalletInfo from '../../app/containers/WalletInfo'
 
@@ -47,20 +48,33 @@ import QRCode from 'qrcode/lib/browser' // eslint-disable-line
 QRCode.toCanvas = jest.fn()
 
 const initialState = {
+  api: {
+    NETWORK: {
+      batch: false,
+      state: LOADED,
+      data: MAIN_NETWORK_ID
+    },
+    SETTINGS: {
+      batch: false,
+      state: LOADED,
+      data: {
+        currency: DEFAULT_CURRENCY_CODE
+      }
+    }
+  },
   account: {
     address: 'ANqUrhv99rwCiFTL6N1An9NH5UVkPYxTuw'
   },
   metadata: {
-    network: 'TestNet'
   },
   wallet: {
     NEO: '100001',
-    GAS: '1000.0001601'
+    GAS: '1000.0001601',
+    tokenBalances: []
   },
   price: {
     NEO: 25.48,
-    GAS: 18.1,
-    currency: DEFAULT_CURRENCY_CODE
+    GAS: 18.1
   },
   claim: {
     claimAmount: 0.5
@@ -115,10 +129,9 @@ describe('WalletInfo', () => {
     done()
   })
   test('refreshBalance is getting called on click', async () => {
-    const { wrapper, store } = setup()
-    const deepWrapper = wrapper.dive()
+    const { wrapper, store } = setup(initialState, false)
 
-    deepWrapper.find('.refreshBalance').simulate('click')
+    wrapper.find('.refreshBalance').simulate('click')
 
     await Promise.resolve('Pause')
       .then()
@@ -126,7 +139,7 @@ describe('WalletInfo', () => {
       .then()
     jest.runAllTimers()
     const actions = store.getActions()
-    expect(actions.length).toEqual(5)
+    expect(actions.length).toEqual(7)
 
     expect(actions[0]).toEqual({
       type: LOADING_TRANSACTIONS,
@@ -134,22 +147,16 @@ describe('WalletInfo', () => {
         isLoadingTransactions: true
       }
     })
-    expect(actions[1]).toEqual({
+    expect(actions[2]).toEqual({
       type: LOADING_TRANSACTIONS,
       payload: {
         isLoadingTransactions: false
       }
     })
-    expect(actions[2]).toEqual({
+    expect(actions[3]).toEqual({
       type: SET_TRANSACTION_HISTORY,
       payload: {
         transactions: []
-      }
-    })
-    expect(actions[3]).toEqual({
-      type: SET_HEIGHT,
-      payload: {
-        blockHeight: 586435
       }
     })
     expect(actions[4]).toEqual({
@@ -176,10 +183,10 @@ describe('WalletInfo', () => {
     // })
   })
   test('correctly renders data from state with non-default currency', done => {
-    const testState = {
-      ...initialState,
-      price: { NEO: 1.11, GAS: 0.55, currency: 'eur' }
-    }
+    const testState = merge(initialState, {
+      api: { SETTINGS: { data: { currency: 'eur' } } },
+      price: { NEO: 1.11, GAS: 0.55 }
+    })
     const { wrapper } = setup(testState, false)
 
     const neoWalletValue = wrapper.find('.neoWalletValue')
@@ -202,11 +209,8 @@ describe('WalletInfo', () => {
         reject(new Error())
       })
     })
-    const { wrapper, store } = setup()
-    wrapper
-      .dive()
-      .find('.refreshBalance')
-      .simulate('click')
+    const { wrapper, store } = setup(initialState, false)
+    wrapper.find('.refreshBalance').simulate('click')
 
     jest.runAllTimers()
     await Promise.resolve('Pause')
@@ -216,7 +220,7 @@ describe('WalletInfo', () => {
       .then()
 
     const actions = store.getActions()
-    let notifications = []
+    const notifications = []
     actions.forEach(action => {
       if (action.type === SHOW_NOTIFICATION) {
         notifications.push(action)

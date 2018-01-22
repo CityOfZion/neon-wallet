@@ -1,10 +1,6 @@
 // @flow
-export const NEON_WALLET_RELEASE_LINK = 'https://github.com/CityOfZion/neon-wallet/releases'
-
-export const NETWORK = {
-  MAIN: 'MainNet',
-  TEST: 'TestNet'
-}
+export const NEON_WALLET_RELEASE_LINK =
+  'https://github.com/CityOfZion/neon-wallet/releases'
 
 export const ASSETS = {
   NEO: 'NEO',
@@ -50,18 +46,19 @@ export const NOTIFICATION_POSITIONS = {
 }
 
 export const BIP44_PATH =
-  '8000002C' +
-  '80000378' +
-  '80000000' +
-  '00000000' +
-  '00000000'
+  '8000002C' + '80000378' + '80000000' + '00000000' + '00000000'
 
 export const MODAL_TYPES = {
   SEND: 'SEND',
   RECEIVE: 'RECEIVE',
   CONFIRM: 'CONFIRM',
-  TOKEN_INFO: 'TOKEN_INFO'
+  TOKEN_INFO: 'TOKEN_INFO',
+  TOKEN: 'TOKEN',
+  ICO: 'ICO'
 }
+
+export const MAIN_NETWORK_ID = '1'
+export const TEST_NETWORK_ID = '2'
 
 // TestNet
 export const TOKENS_TEST = {
@@ -94,38 +91,39 @@ export const DEFAULT_WALLET = {
 export const DEFAULT_CURRENCY_CODE = 'usd'
 
 export const CURRENCIES = {
-  'aud': { symbol: '$' },
-  'brl': { symbol: 'R$' },
-  'cad': { symbol: '$' },
-  'chf': { symbol: 'Fr.' },
-  'clp': { symbol: '$' },
-  'cny': { symbol: '¥' },
-  'czk': { symbol: 'Kč' },
-  'dkk': { symbol: 'kr. ' },
-  'eur': { symbol: '€' },
-  'gbp': { symbol: '£' },
-  'hkd': { symbol: '$' },
-  'huf': { symbol: 'Ft ' },
-  'idr': { symbol: 'Rp ' },
-  'ils': { symbol: '₪' },
-  'inr': { symbol: '₹' },
-  'jpy': { symbol: '¥' },
-  'krw': { symbol: '₩' },
-  'mxn': { symbol: '$' },
-  'myr': { symbol: 'RM' },
-  'nok': { symbol: 'kr ' },
-  'nzd': { symbol: '$' },
-  'php': { symbol: '₱' },
-  'pkr': { symbol: '₨ ' },
-  'pln': { symbol: 'zł' },
-  'rub': { symbol: '₽' },
-  'sek': { symbol: 'kr ' },
-  'sgd': { symbol: 'S$' },
-  'thb': { symbol: '฿' },
-  'try': { symbol: '₺' },
-  'twd': { symbol: 'NT$' },
-  'usd': { symbol: '$' },
-  'zar': { symbol: 'R ' }
+  aud: { symbol: '$' },
+  brl: { symbol: 'R$' },
+  cad: { symbol: '$' },
+  chf: { symbol: 'Fr.' },
+  clp: { symbol: '$' },
+  cny: { symbol: '¥' },
+  czk: { symbol: 'Kč' },
+  dkk: { symbol: 'kr. ' },
+  eur: { symbol: '€' },
+  gbp: { symbol: '£' },
+  hkd: { symbol: '$' },
+  huf: { symbol: 'Ft ' },
+  idr: { symbol: 'Rp ' },
+  ils: { symbol: '₪' },
+  inr: { symbol: '₹' },
+  jpy: { symbol: '¥' },
+  krw: { symbol: '₩' },
+  mxn: { symbol: '$' },
+  myr: { symbol: 'RM' },
+  nok: { symbol: 'kr ' },
+  nzd: { symbol: '$' },
+  php: { symbol: '₱' },
+  pkr: { symbol: '₨ ' },
+  pln: { symbol: 'zł' },
+  rub: { symbol: '₽' },
+  sek: { symbol: 'kr ' },
+  sgd: { symbol: 'S$' },
+  thb: { symbol: '฿' },
+  try: { symbol: '₺' },
+  twd: { symbol: 'NT$' },
+  usd: { symbol: '$' },
+  zar: { symbol: 'R ' }
 }
 
-export const FINDING_LEDGER_NOTICE = 'Looking for USB Devices. Please plugin your device and login.'
+export const FINDING_LEDGER_NOTICE =
+  'Looking for USB Devices. Please plugin your device and login.'

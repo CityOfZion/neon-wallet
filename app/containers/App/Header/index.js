@@ -1,30 +1,28 @@
 // @flow
-import { connect } from 'react-redux'
+import { connect, type MapStateToProps } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { compose } from 'recompose'
 
+import withCurrencyData from '../../../hocs/withCurrencyData'
 import { logout, getAddress, getLoggedIn } from '../../../modules/account'
-import { getBlockHeight, getNetwork, setNetwork } from '../../../modules/metadata'
-import { getNEOPrice, getGASPrice, getCurrency } from '../../../modules/price'
-import { loadWalletData } from '../../../modules/wallet'
+import { getNEOPrice, getGASPrice } from '../../../modules/price'
 
 import Header from './Header'
 
-const mapStateToProps = (state: Object) => ({
-  blockHeight: getBlockHeight(state),
+const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
   address: getAddress(state),
   neoPrice: getNEOPrice(state),
   gasPrice: getGASPrice(state),
-  currencyCode: getCurrency(state),
-  isLoggedIn: getLoggedIn(state),
-  net: getNetwork(state)
+  isLoggedIn: getLoggedIn(state)
 })
 
 const actionCreators = {
-  logout,
-  loadWalletData,
-  setNetwork
+  logout
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withCurrencyData('currencyCode')
+)(Header)

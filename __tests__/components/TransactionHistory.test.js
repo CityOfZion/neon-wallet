@@ -4,19 +4,29 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { shallow, mount } from 'enzyme'
 
+import TransactionHistory from '../../app/containers/TransactionHistory'
 import { setTransactionHistory } from '../../app/modules/wallet'
 import { setIsLoadingTransaction } from '../../app/modules/transactions'
-
-import TransactionHistory from '../../app/containers/TransactionHistory'
+import { MAIN_NETWORK_ID } from '../../app/core/constants'
+import { LOADED } from '../../app/values/state'
 
 const initialState = {
+  api: {
+    NETWORK: {
+      batch: false,
+      state: LOADED,
+      data: MAIN_NETWORK_ID
+    },
+    SETTINGS: {
+      batch: false,
+      state: LOADED,
+      data: {}
+    }
+  },
   account: {
     loggedIn: true,
     wif: 'L4SLRcPgqNMAMwM3nFSxnh36f1v5omjPg3Ewy1tg2PnEon8AcHou',
     address: 'AWy7RNBVr9vDadRMK9p7i7Z1tL7GrLAxoh'
-  },
-  metadata: {
-    network: 'TestNet'
   },
   wallet: {
     transactions: []
