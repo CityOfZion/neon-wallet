@@ -33,6 +33,10 @@ export function resetKey () {
   }
 }
 
+// Utils
+export const walletHasKey = (wallet: Object, key: string) =>
+  wallet.accounts.some(account => account.key === key)
+
 export const saveAccount = (label: string, address: string, key: string) => (dispatch: DispatchType) => {
   if (!label || !address || !key) { return null }
 
@@ -46,7 +50,14 @@ export const saveAccount = (label: string, address: string, key: string) => (dis
     if (readError) {
       dispatch(showErrorNotification({ message: `Error loading wallet: ${readError.message}` }))
     }
-    data.accounts.push(newAccount)
+
+    if (!walletHasKey(data, newAccount.key)) {
+      data.accounts.push(newAccount)
+    } else {
+      dispatch(showErrorNotification({ message: `Error saving wallet: '${newAccount.address}' already exists` }))
+      return
+    }
+
     storage.set('userWallet', data, (saveError) => {
       if (saveError) {
         dispatch(showErrorNotification({ message: `Error saving wallet: ${saveError.message}` }))
@@ -111,9 +122,6 @@ export const upgradeUserWalletNEP6 = (): Promise<*> => {
   })
 }
 
-export const walletHasKey = (wallet: Object, key: string) =>
-  wallet.accounts.some(account => account.key === key)
-
 export const recoverWallet = (wallet: Object): Promise<*> => {
   return new Promise((resolve, reject) => {
     storage.get('userWallet', (readError, data) => {
@@ -146,7 +154,7 @@ export const recoverWallet = (wallet: Object): Promise<*> => {
       }
 
       accounts.some((account) => {
-        if (account.key && !walletHasKey(data, account.key)) {
+        if (!walletHasKey(data, account.key)) {
           data.accounts.push(account)
         }
       })
