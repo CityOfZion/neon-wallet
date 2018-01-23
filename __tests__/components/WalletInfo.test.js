@@ -54,6 +54,13 @@ const initialState = {
       state: LOADED,
       data: MAIN_NETWORK_ID
     },
+    ACCOUNT: {
+      batch: false,
+      state: LOADED,
+      data: {
+        address: 'ANqUrhv99rwCiFTL6N1An9NH5UVkPYxTuw'
+      }
+    },
     SETTINGS: {
       batch: false,
       state: LOADED,
@@ -69,11 +76,6 @@ const initialState = {
         GAS: 18.1
       }
     }
-  },
-  account: {
-    address: 'ANqUrhv99rwCiFTL6N1An9NH5UVkPYxTuw'
-  },
-  metadata: {
   },
   wallet: {
     NEO: '100001',

@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react'
-import storage from 'electron-json-storage'
 import { map } from 'lodash'
 
 import PasswordField from '../../components/PasswordField'
@@ -11,9 +10,7 @@ import styles from './LoginLocalStorage.scss'
 import loginStyles from '../../styles/login.scss'
 
 type Props = {
-  setAccounts: Function,
   loginNep2: Function,
-  history: Object,
   accounts: Object
 }
 
@@ -28,30 +25,23 @@ export default class LoginLocalStorage extends Component<Props, State> {
     encryptedWIF: ''
   }
 
-  componentDidMount () {
-    const { setAccounts } = this.props
-    // eslint-disable-next-line
-    storage.get('userWallet', (error, data) => {
-      setAccounts(data.accounts)
-    })
-  }
-
   render () {
-    const { accounts, history, loginNep2 } = this.props
+    const { accounts } = this.props
     const { passphrase, encryptedWIF } = this.state
-    const loginButtonDisabled = Object.keys(accounts).length === 0 || encryptedWIF === '' || passphrase === ''
 
     return (
       <div id='loginPage' className={loginStyles.loginPage}>
         <div className={loginStyles.title}>Login using a saved wallet:</div>
-        <form onSubmit={(e) => { e.preventDefault(); loginNep2(passphrase, encryptedWIF, history) }}>
+        <form onSubmit={this.handleSubmit}>
           <select
             className={styles.selectWallet}
             value={encryptedWIF}
             onChange={(e) => this.setState({ encryptedWIF: e.target.value })}
           >
             <option value=''>Select a wallet</option>
-            {map(accounts, (account, index) => <option value={account.key} key={`wallet${account.label}`}>{account.label}</option>)}
+            {map(accounts, (account, index) => (
+              <option value={account.key} key={`wallet${account.label}`}>{account.label}</option>
+            ))}
           </select>
           <div className={loginStyles.loginForm}>
             <PasswordField
@@ -62,11 +52,23 @@ export default class LoginLocalStorage extends Component<Props, State> {
             />
           </div>
           <div>
-            <Button type='submit' disabled={loginButtonDisabled}>Login</Button>
+            <Button type='submit' disabled={!this.isValid()}>Login</Button>
             <HomeButtonLink />
           </div>
         </form>
       </div>
     )
+  }
+
+  handleSubmit = (event: Object) => {
+    const { loginNep2 } = this.props
+    const { passphrase, encryptedWIF } = this.state
+
+    event.preventDefault()
+    loginNep2(passphrase, encryptedWIF)
+  }
+
+  isValid = () => {
+    return this.state.encryptedWIF !== '' && this.state.passphrase !== ''
   }
 }

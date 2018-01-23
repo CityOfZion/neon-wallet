@@ -10,14 +10,13 @@ import {
   showSuccessNotification
 } from './notifications'
 import {
+  getNetwork,
   getWIF,
   getPublicKey,
   getSigningFunction,
   getAddress,
-  LOGOUT,
   getIsHardwareLogin
-} from './account'
-import { getNetwork } from '../core/deprecated'
+} from '../core/deprecated'
 import { isToken, validateTransactionsBeforeSending } from '../core/wallet'
 import { ASSETS } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
@@ -236,8 +235,6 @@ export default (state: Object = initialState, action: ReduxAction) => {
         ...state,
         isLoadingTransactions
       }
-    case LOGOUT:
-      return initialState
     default:
       return state
   }

@@ -15,10 +15,12 @@ const mapBatchDataToProps: Function = (state: Object, id: string, mapping: Actio
   return mapValues(mapping, (key) => mapDataToProps(state, key, prefix))
 }
 
-const mapDataToProps: Function = (state: Object, id: string, prefix: string): Object => {
+const mapDataToProps: Function = (state: Object, id: string, prefix: string): any => {
   const actionState = get(state, `${prefix}.${id}`)
 
-  if (actionState.batch) {
+  if (!actionState) {
+    return null
+  } else if (actionState.batch) {
     return mapBatchDataToProps(state, id, actionState.mapping, prefix)
   } else {
     return mapRequestDataToProps(actionState.data)

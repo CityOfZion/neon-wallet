@@ -21,15 +21,21 @@ export default function withProgressProp (
 ) {
   const mapProgressToProps = (actionStates: Array<ActionState>) => ({ [propName]: strategy(actionStates) })
 
-  const mapStateToProps: MapStateToProps<*, *, *> = (state: Object): Object => {
+  // TODO: this doesn't account for batch within a batch, need to make this recursive
+  const getActionStates = (state: Object): Array<ActionState> => {
     const actionState = get(state, `${prefix}.${actions.id}`)
 
-    // TODO: this doesn't account for batch within a batch, need to make this recursive
-    const actionStates: Array<ActionState> = actionState.batch
-      ? map(actionState.mapping, (key) => get(state, `${prefix}.${key}`))
-      : castArray(actionState)
+    if (!actionState) {
+      return []
+    } else if (actionState.batch) {
+      return map(actionState.mapping, (key) => get(state, `${prefix}.${key}`))
+    } else {
+      return castArray(actionState)
+    }
+  }
 
-    return mapProgressToProps(actionStates)
+  const mapStateToProps: MapStateToProps<*, *, *> = (state: Object): Object => {
+    return mapProgressToProps(getActionStates(state))
   }
 
   return (Component: Class<React.Component<*>>) => {

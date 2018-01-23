@@ -14,7 +14,7 @@ function alreadyLoaded (actionStates: Array<Object>): boolean {
 export default function alreadyLoadedStrategy (actions: Array<Object>): ProgressState {
   if (anyFailed(actions)) {
     return FAILED
-  } else if (alreadyLoaded(actions)) {
+  } else if (alreadyLoaded(actions) && actions.length > 0) {
     return LOADED
   } else {
     return LOADING

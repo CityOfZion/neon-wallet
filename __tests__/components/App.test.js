@@ -1,5 +1,6 @@
 import React from 'react'
 import { Provider } from 'react-redux'
+import { MemoryRouter } from 'react-router-dom'
 import thunk from 'redux-thunk'
 import storage from 'electron-json-storage'
 import configureStore from 'redux-mock-store'
@@ -54,7 +55,9 @@ const setup = (state, shallowRender = true) => {
   } else {
     wrapper = mount(
       <Provider store={store}>
-        <App />
+        <MemoryRouter>
+          <App />
+        </MemoryRouter>
       </Provider>
     )
   }
