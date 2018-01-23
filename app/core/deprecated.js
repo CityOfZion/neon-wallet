@@ -3,6 +3,7 @@ import { get } from 'lodash'
 
 import blockHeightActions from '../actions/blockHeightActions'
 import pricesActions from '../actions/pricesActions'
+import { ID as ACCOUNT_ID } from '../actions/accountActions'
 import { ID as NETWORK_ID } from '../actions/networkActions'
 import { ID as SETTINGS_ID } from '../actions/settingsActions'
 import { getNetworks } from '../core/networks'
@@ -30,6 +31,26 @@ export const getNetworkById = (networkId: string) => {
   const networks = getNetworks()
   const networkItem = networks.find(({ id, value }) => id === networkId) || networks[0]
   return networkItem.network
+}
+
+export const getAddress = (state: Object) => {
+  return get(state, `${PREFIX}.${ACCOUNT_ID}.data.address`)
+}
+
+export const getWIF = (state: Object) => {
+  return get(state, `${PREFIX}.${ACCOUNT_ID}.data.wif`)
+}
+
+export const getSigningFunction = (state: Object) => {
+  return get(state, `${PREFIX}.${ACCOUNT_ID}.data.signingFunction`)
+}
+
+export const getPublicKey = (state: Object) => {
+  return get(state, `${PREFIX}.${ACCOUNT_ID}.data.publicKey`)
+}
+
+export const getIsHardwareLogin = (state: Object) => {
+  return get(state, `${PREFIX}.${ACCOUNT_ID}.data.isHardwareLogin`)
 }
 
 export const getCurrency = (state: Object) => {

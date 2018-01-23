@@ -1,14 +1,16 @@
 // @flow
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { compose } from 'recompose'
 
 import LoginPrivateKey from './LoginPrivateKey'
-import { loginWithPrivateKey } from '../../modules/account'
+import withActions from '../../hocs/api/withActions'
+import withFailureNotification from '../../hocs/withFailureNotification'
+import { wifLoginActions } from '../../actions/accountActions'
 
-const actionCreators = {
-  loginWithPrivateKey
-}
+const mapActionsToProps = (actions) => ({
+  loginWithPrivateKey: (wif) => actions.request({ wif })
+})
 
-const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
-
-export default connect(null, mapDispatchToProps)(LoginPrivateKey)
+export default compose(
+  withActions(wifLoginActions, mapActionsToProps),
+  withFailureNotification(wifLoginActions)
+)(LoginPrivateKey)

@@ -25,6 +25,7 @@ type Props = {
   GAS: string,
   tokenBalances: Array<TokenBalanceType>,
   loaded: boolean,
+  networkId: string,
   loadWalletData: Function,
 }
 
@@ -42,6 +43,12 @@ export default class Dashboard extends Component<Props> {
 
   componentWillUnmount () {
     clearInterval(walletDataInterval)
+  }
+
+  componentWillReceiveProps (nextProps: Props) {
+    if (this.props.networkId !== nextProps.networkId) {
+      this.props.loadWalletData()
+    }
   }
 
   render () {

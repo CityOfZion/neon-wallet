@@ -7,16 +7,19 @@ import withData from '../../hocs/api/withData'
 import withFetch from '../../hocs/api/withFetch'
 import withReload from '../../hocs/api/withReload'
 import withProgressComponents from '../../hocs/api/withProgressComponents'
+import withLoginRedirect from '../../hocs/auth/withLoginRedirect'
+import withLogoutRedirect from '../../hocs/auth/withLogoutRedirect'
 import appActions from '../../actions/appActions'
 import alreadyLoaded from '../../hocs/api/progressStrategies/alreadyLoadedStrategy'
 import withNetworkData from '../../hocs/withNetworkData'
 import networkActions from '../../actions/networkActions'
 import { checkVersion } from '../../modules/metadata'
 import { showErrorNotification } from '../../modules/notifications'
-import { LOADING } from '../../values/state'
+import { LOADING, FAILED } from '../../values/state'
 
 import App from './App'
 import Loading from './Loading'
+import Failed from './Failed'
 
 const actionCreators = {
   checkVersion,
@@ -36,7 +39,8 @@ export default compose(
   withFetch(networkActions),
   withNetworkData(),
   withProgressComponents(networkActions, {
-    [LOADING]: Loading
+    [LOADING]: Loading,
+    [FAILED]: Failed
   }, {
     strategy: alreadyLoaded
   }),
@@ -46,8 +50,13 @@ export default compose(
   withData(appActions, mapAppDataToProps),
   withReload(appActions, ['networkId']),
   withProgressComponents(appActions, {
-    [LOADING]: Loading
+    [LOADING]: Loading,
+    [FAILED]: Failed
   }, {
     strategy: alreadyLoaded
-  })
+  }),
+
+  // Navigate to the home or dashboard when the user logs in or out.
+  withLoginRedirect,
+  withLogoutRedirect
 )(App)

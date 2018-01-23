@@ -7,9 +7,6 @@ import { shallow, mount } from 'enzyme'
 import { createMemoryHistory } from 'history'
 
 import LoginNep2 from '../../app/containers/LoginNep2'
-import { SHOW_NOTIFICATION, HIDE_NOTIFICATIONS, HIDE_NOTIFICATION, DEFAULT_POSITION } from '../../app/modules/notifications'
-import { LOGIN } from '../../app/modules/account'
-import { NOTIFICATION_LEVELS } from '../../app/core/constants'
 
 jest.useFakeTimers()
 jest.mock('neon-js')
@@ -60,6 +57,7 @@ describe('LoginNep2', () => {
     expect(keyField.props.type).toEqual('password')
     done()
   })
+
   test('the login button is working correctly with no passphrase or wif', (done) => {
     const { wrapper, store } = setup(false)
 
@@ -70,35 +68,8 @@ describe('LoginNep2', () => {
       done()
     })
   })
-  // test('the login button is working correctly with only a short passphrase', (done) => {
-  //   const { wrapper, store } = setup(false)
 
-  //   const passwordField = wrapper.find('input[placeholder="Enter your passphrase here"]')
-  //   passwordField.instance().value = 'T'
-  //   passwordField.simulate('change')
-
-  //   const keyField = wrapper.find('input[placeholder="Enter your encrypted key here"]')
-  //   keyField.instance().value = '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
-  //   keyField.simulate('change')
-
-  //   wrapper.find('#loginButton').simulate('click')
-
-  //   Promise.resolve('pause').then(() => {
-  //     jest.runAllTimers()
-  //     const actions = store.getActions()
-  //     expect(actions.length).toEqual(2)
-  //     expect(actions[0]).toEqual({
-  //       type: SEND_TRANSACTION,
-  //       success: false,
-  //       message: 'Passphrase too short'
-  //     })
-  //     expect(actions[1]).toEqual({
-  //       type: CLEAR_TRANSACTION
-  //     })
-  //     done()
-  //   })
-  // })
-  test('the login button is working correctly with key and passphrase', (done) => {
+  test('the login button is working correctly with key and passphrase', () => {
     const { wrapper, store } = setup(false)
 
     const passwordField = wrapper.find('input[placeholder="Enter your passphrase here"]')
@@ -110,31 +81,9 @@ describe('LoginNep2', () => {
     keyField.simulate('change')
 
     wrapper.find('#loginButton').first().simulate('submit')
-    Promise.resolve('Pause').then().then()
-    jest.runAllTimers()
+
     const actions = store.getActions()
-    expect(actions.length).toEqual(4)
-    expect(actions[0]).toEqual({
-      type: HIDE_NOTIFICATIONS,
-      payload: {
-        dismissible: true,
-        position: DEFAULT_POSITION
-      }
-    })
-    expect(actions[1]).toEqual({
-      type: SHOW_NOTIFICATION,
-      payload: expect.objectContaining({
-        message: 'Decrypting encoded key...',
-        level: NOTIFICATION_LEVELS.INFO
-      })
-    })
-    expect(actions[2]).toEqual({
-      type: HIDE_NOTIFICATION,
-      payload: expect.objectContaining({
-        id: 'notification_1'
-      })
-    })
-    expect(actions[3]).toHaveProperty('type', LOGIN)
-    done()
+    expect(actions.length).toEqual(1)
+    expect(actions[0].type).toEqual('ACCOUNT/REQ/REQUEST')
   })
 })

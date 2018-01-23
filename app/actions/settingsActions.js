@@ -12,6 +12,8 @@ type Settings = {
   tokens?: Array<TokenItemType>
 }
 
+const STORAGE_KEY = 'settings'
+
 const DEFAULT_SETTINGS: Settings = {
   currency: DEFAULT_CURRENCY_CODE,
   blockExplorer: EXPLORERS.NEO_TRACKER,
@@ -20,7 +22,7 @@ const DEFAULT_SETTINGS: Settings = {
 
 const getSettings = async (): Promise<Settings> => ({
   ...DEFAULT_SETTINGS,
-  ...await getStorage('settings')
+  ...await getStorage(STORAGE_KEY)
 })
 
 export const ID = 'SETTINGS'
@@ -28,7 +30,7 @@ export const ID = 'SETTINGS'
 export const updateSettingsActions = createRequestActions(ID, (values: Settings = {}) => async (state: Object): Promise<Settings> => {
   const settings = await getSettings()
   const newSettings = { ...settings, ...values }
-  await setStorage('settings', newSettings)
+  await setStorage(STORAGE_KEY, newSettings)
 
   return newSettings
 })

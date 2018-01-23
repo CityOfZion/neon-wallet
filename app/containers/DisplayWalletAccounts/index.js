@@ -10,7 +10,6 @@ import {
   getEncryptedWIF,
   getPassphrase
 } from '../../modules/generateWallet'
-
 import DisplayWalletAccounts from './DisplayWalletAccounts'
 
 const mapStateToProps = (state: Object) => ({
