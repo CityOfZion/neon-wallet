@@ -2,6 +2,7 @@
 import { get } from 'lodash'
 
 import blockHeightActions from '../actions/blockHeightActions'
+import pricesActions from '../actions/pricesActions'
 import { ID as NETWORK_ID } from '../actions/networkActions'
 import { ID as SETTINGS_ID } from '../actions/settingsActions'
 import { getNetworks } from '../core/networks'
@@ -43,4 +44,8 @@ export const getTokensForNetwork = (state: Object) => {
 
 export const syncBlockHeight = (state: Object) => {
   return blockHeightActions.request({ networkId: getNetworkId(state) })
+}
+
+export const getMarketPrices = (state: Object) => {
+  return pricesActions.request({ currency: getCurrency(state) })
 }

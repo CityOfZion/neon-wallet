@@ -3,6 +3,8 @@ import { connect, type MapStateToProps } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
 
+import pricesActions from '../../actions/pricesActions'
+import withData from '../../hocs/api/withData'
 import withActions from '../../hocs/api/withActions'
 import withNetworkData from '../../hocs/withNetworkData'
 import withCurrencyData from '../../hocs/withCurrencyData'
@@ -11,7 +13,6 @@ import { getNetworks } from '../../core/networks'
 import { showErrorNotification, showSuccessNotification } from '../../modules/notifications'
 import { getAddress } from '../../modules/account'
 import { loadWalletData, getNEO, getGAS, getTokenBalances } from '../../modules/wallet'
-import { getNEOPrice, getGASPrice } from '../../modules/price'
 import { showModal } from '../../modules/modal'
 import { participateInSale, oldParticipateInSale } from '../../modules/sale'
 
@@ -21,10 +22,13 @@ const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
   NEO: getNEO(state),
   GAS: getGAS(state),
   address: getAddress(state),
-  neoPrice: getNEOPrice(state),
-  gasPrice: getGASPrice(state),
   tokenBalances: getTokenBalances(state),
   networks: getNetworks()
+})
+
+const mapPricesDataToProps = ({ NEO, GAS }) => ({
+  neoPrice: NEO,
+  gasPrice: GAS
 })
 
 const actionCreators = {
@@ -44,6 +48,7 @@ const mapActionsToProps = (actions) => ({
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
+  withData(pricesActions, mapPricesDataToProps),
   withNetworkData(),
   withCurrencyData('currencyCode'),
   withActions(updateSettingsActions, mapActionsToProps)
