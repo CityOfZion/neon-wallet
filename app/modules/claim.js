@@ -1,22 +1,20 @@
 // @flow
 import { api } from 'neon-js'
 
+import { getNEO } from './wallet'
 import {
   showErrorNotification,
   showSuccessNotification,
   showInfoNotification
 } from './notifications'
 import {
+  getNetwork,
   getWIF,
   getAddress,
   getSigningFunction,
   getPublicKey,
-  LOGOUT,
   getIsHardwareLogin
-} from './account'
-import { getNEO } from './wallet'
-
-import { getNetwork } from '../core/deprecated'
+} from '../core/deprecated'
 import { ASSETS } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
 import { FIVE_MINUTES_MS } from '../core/time'
@@ -223,8 +221,6 @@ export default (state: Object = initialState, action: ReduxAction) => {
         ...state,
         disableClaimButton
       }
-    case LOGOUT:
-      return initialState
     default:
       return state
   }

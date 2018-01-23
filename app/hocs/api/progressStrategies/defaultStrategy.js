@@ -14,7 +14,7 @@ function allLoaded (actionStates: Array<Object>): boolean {
 export default function defaultStrategy (actions: Array<Object>): ProgressState {
   if (anyFailed(actions)) {
     return FAILED
-  } else if (allLoaded(actions)) {
+  } else if (allLoaded(actions) && actions.length > 0) {
     return LOADED
   } else {
     return LOADING

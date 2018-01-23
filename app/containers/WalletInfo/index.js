@@ -7,11 +7,11 @@ import pricesActions from '../../actions/pricesActions'
 import withData from '../../hocs/api/withData'
 import withActions from '../../hocs/api/withActions'
 import withNetworkData from '../../hocs/withNetworkData'
+import withAccountData from '../../hocs/withAccountData'
 import withCurrencyData from '../../hocs/withCurrencyData'
 import { updateSettingsActions } from '../../actions/settingsActions'
 import { getNetworks } from '../../core/networks'
 import { showErrorNotification, showSuccessNotification } from '../../modules/notifications'
-import { getAddress } from '../../modules/account'
 import { loadWalletData, getNEO, getGAS, getTokenBalances } from '../../modules/wallet'
 import { showModal } from '../../modules/modal'
 import { participateInSale, oldParticipateInSale } from '../../modules/sale'
@@ -21,7 +21,6 @@ import WalletInfo from './WalletInfo'
 const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
   NEO: getNEO(state),
   GAS: getGAS(state),
-  address: getAddress(state),
   tokenBalances: getTokenBalances(state),
   networks: getNetworks()
 })
@@ -50,6 +49,7 @@ export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withData(pricesActions, mapPricesDataToProps),
   withNetworkData(),
+  withAccountData(),
   withCurrencyData('currencyCode'),
   withActions(updateSettingsActions, mapActionsToProps)
 )(WalletInfo)

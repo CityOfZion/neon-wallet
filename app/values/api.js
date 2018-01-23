@@ -17,8 +17,8 @@ export const BATCH_SUCCESS: BatchType = 'BATCH/SUCCESS'
 export const BATCH_FAILURE: BatchType = 'BATCH/FAILURE'
 export const BATCH_RESET: BatchType = 'BATCH/RESET'
 
-export type Data = Object | null
-export type Error = string | null
+export type Data = ?Object
+export type Error = ?string
 export type Payload = any
 
 export type ActionTypeMap = {

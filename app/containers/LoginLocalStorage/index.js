@@ -1,20 +1,24 @@
 // @flow
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { compose } from 'recompose'
 
-import { setAccounts, getAccounts, loginNep2 } from '../../modules/account'
+import withData from '../../hocs/api/withData'
+import withActions from '../../hocs/api/withActions'
+import withFailureNotification from '../../hocs/withFailureNotification'
+import accountsActions from '../../actions/accountsActions'
+import { nep2LoginActions } from '../../actions/accountActions'
 
 import LoginLocalStorage from './LoginLocalStorage'
 
-const mapStateToProps = (state: Object) => ({
-  accounts: getAccounts(state)
+const mapAccountsDataToProps = (accounts) => ({
+  accounts
 })
 
-const actionCreators = {
-  setAccounts,
-  loginNep2
-}
+const mapActionsToProps = (actions) => ({
+  loginNep2: (passphrase, encryptedWIF) => actions.request({ passphrase, encryptedWIF })
+})
 
-const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginLocalStorage)
+export default compose(
+  withData(accountsActions, mapAccountsDataToProps),
+  withActions(nep2LoginActions, mapActionsToProps),
+  withFailureNotification(nep2LoginActions)
+)(LoginLocalStorage)
