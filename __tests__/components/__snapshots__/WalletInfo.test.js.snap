@@ -1,13 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`WalletInfo renders without crashing 1`] = `
-<Connect(withData(mapProps(Connect(withData(Connect(withActions(WalletInfo)))))))
+<Connect(withData(Connect(withData(mapProps(Connect(withData(Connect(withActions(WalletInfo)))))))))
   GAS="1000.0001601"
   NEO="100001"
   address="ANqUrhv99rwCiFTL6N1An9NH5UVkPYxTuw"
-  gasPrice={18.1}
   loadWalletData={[Function]}
-  neoPrice={25.48}
   networks={
     Array [
       Object {
