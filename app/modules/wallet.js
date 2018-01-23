@@ -4,11 +4,10 @@ import { isNil } from 'lodash'
 
 import { syncTransactionHistory } from './transactions'
 import { syncAvailableClaim } from './claim'
-import { LOGOUT, getAddress } from './account'
 import { showErrorNotification } from './notifications'
 
 import { ASSETS } from '../core/constants'
-import { getNetwork, getTokensForNetwork, getMarketPrices, syncBlockHeight } from '../core/deprecated'
+import { getAddress, getNetwork, getTokensForNetwork, getMarketPrices, syncBlockHeight } from '../core/deprecated'
 import asyncWrap from '../core/asyncHelper'
 import { getTokenBalancesMap } from '../core/wallet'
 import { COIN_DECIMAL_LENGTH } from '../core/formatters'
@@ -202,8 +201,6 @@ export default (state: State = initialState, action: ReduxAction) => {
         ...state,
         loaded
       }
-    case LOGOUT:
-      return initialState
     default:
       return state
   }

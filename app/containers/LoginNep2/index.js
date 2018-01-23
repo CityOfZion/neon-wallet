@@ -1,15 +1,16 @@
 // @flow
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-
-import { loginNep2 } from '../../modules/account'
+import { compose } from 'recompose'
 
 import LoginNep2 from './LoginNep2'
+import withActions from '../../hocs/api/withActions'
+import withFailureNotification from '../../hocs/withFailureNotification'
+import { nep2LoginActions } from '../../actions/accountActions'
 
-const actionCreators = {
-  loginNep2
-}
+const mapActionsToProps = (actions) => ({
+  loginNep2: (passphrase, encryptedWIF) => actions.request({ passphrase, encryptedWIF })
+})
 
-const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
-
-export default connect(null, mapDispatchToProps)(LoginNep2)
+export default compose(
+  withActions(nep2LoginActions, mapActionsToProps),
+  withFailureNotification(nep2LoginActions)
+)(LoginNep2)

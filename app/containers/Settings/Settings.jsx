@@ -38,15 +38,6 @@ export default class Settings extends Component<Props, State> {
     currency: this.props.currency
   }
 
-  componentDidMount () {
-    const { setAccounts } = this.props
-
-    // eslint-disable-next-line
-    storage.get('userWallet', (error, data) => {
-      setAccounts(data.accounts)
-    })
-  }
-
   saveWalletRecovery = () => {
     const { showSuccessNotification, showErrorNotification } = this.props
 
