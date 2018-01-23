@@ -5,11 +5,10 @@ import { isNil } from 'lodash'
 import { syncTransactionHistory } from './transactions'
 import { syncAvailableClaim } from './claim'
 import { LOGOUT, getAddress } from './account'
-import { getMarketPriceUSD, getGasMarketPriceUSD } from './price'
 import { showErrorNotification } from './notifications'
 
 import { ASSETS } from '../core/constants'
-import { getNetwork, getTokensForNetwork, syncBlockHeight } from '../core/deprecated'
+import { getNetwork, getTokensForNetwork, getMarketPrices, syncBlockHeight } from '../core/deprecated'
 import asyncWrap from '../core/asyncHelper'
 import { getTokenBalancesMap } from '../core/wallet'
 import { COIN_DECIMAL_LENGTH } from '../core/formatters'
@@ -17,9 +16,6 @@ import { toBigNumber } from '../core/math'
 
 // Constants
 export const SET_BALANCE = 'SET_BALANCE'
-export const SET_NEO_PRICE = 'SET_NEO_PRICE'
-export const SET_GAS_PRICE = 'SET_GAS_PRICE'
-export const RESET_PRICES = 'RESET_PRICES'
 export const SET_TRANSACTION_HISTORY = 'SET_TRANSACTION_HISTORY'
 export const SET_TOKENS_BALANCE = 'SET_TOKENS_BALANCE'
 export const SET_IS_LOADED = 'SET_IS_LOADED'
@@ -93,8 +89,7 @@ export const loadWalletData = (silent: boolean = true) => async (
   dispatch(syncTransactionHistory(net, address))
   dispatch(syncAvailableClaim(net, address))
   dispatch(syncBlockHeight(state))
-  dispatch(getMarketPriceUSD())
-  dispatch(getGasMarketPriceUSD())
+  dispatch(getMarketPrices(state))
   await Promise.all([
     dispatch(retrieveTokenBalances()),
     dispatch(retrieveBalance(net, address))

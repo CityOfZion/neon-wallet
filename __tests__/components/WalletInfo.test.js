@@ -60,6 +60,14 @@ const initialState = {
       data: {
         currency: DEFAULT_CURRENCY_CODE
       }
+    },
+    PRICES: {
+      batch: false,
+      state: LOADED,
+      data: {
+        NEO: 25.48,
+        GAS: 18.1
+      }
     }
   },
   account: {
@@ -71,10 +79,6 @@ const initialState = {
     NEO: '100001',
     GAS: '1000.0001601',
     tokenBalances: []
-  },
-  price: {
-    NEO: 25.48,
-    GAS: 18.1
   },
   claim: {
     claimAmount: 0.5
@@ -107,6 +111,7 @@ describe('WalletInfo', () => {
     expect(wrapper).toMatchSnapshot()
     done()
   })
+
   test('correctly renders data from state', done => {
     const { wrapper } = setup(initialState, false)
 
@@ -128,6 +133,7 @@ describe('WalletInfo', () => {
     expect(gasField.text()).toEqual('1,000.0002')
     done()
   })
+
   test('refreshBalance is getting called on click', async () => {
     const { wrapper, store } = setup(initialState, false)
 
@@ -138,54 +144,24 @@ describe('WalletInfo', () => {
       .then()
       .then()
     jest.runAllTimers()
-    const actions = store.getActions()
-    expect(actions.length).toEqual(7)
 
-    expect(actions[0]).toEqual({
-      type: LOADING_TRANSACTIONS,
-      payload: {
-        isLoadingTransactions: true
-      }
-    })
-    expect(actions[2]).toEqual({
-      type: LOADING_TRANSACTIONS,
-      payload: {
-        isLoadingTransactions: false
-      }
-    })
-    expect(actions[3]).toEqual({
-      type: SET_TRANSACTION_HISTORY,
-      payload: {
-        transactions: []
-      }
-    })
-    expect(actions[4]).toEqual({
+    const action = store.getActions().find((action) => action.type === SET_BALANCE)
+
+    expect(action).toEqual({
       type: SET_BALANCE,
       payload: {
         NEO: '1',
         GAS: '1'
       }
     })
-    // TODO fix this to capture the notifications as well
-    // expect(actions[6]).toEqual({
-    //   type: HIDE_NOTIFICATIONS,
-    //   payload: {
-    //     dismissible: true,
-    //     position: DEFAULT_POSITION
-    //   }
-    // })
-    // expect(actions[7]).toEqual({
-    //   type: SHOW_NOTIFICATION,
-    //   payload: expect.objectContaining({
-    //     message: 'Received latest blockchain information.',
-    //     level: NOTIFICATION_LEVELS.SUCCESS
-    //   })
-    // })
   })
+
   test('correctly renders data from state with non-default currency', done => {
     const testState = merge(initialState, {
-      api: { SETTINGS: { data: { currency: 'eur' } } },
-      price: { NEO: 1.11, GAS: 0.55 }
+      api: {
+        SETTINGS: { data: { currency: 'eur' } },
+        PRICES: { data: { NEO: 1.11, GAS: 0.55 } }
+      }
     })
     const { wrapper } = setup(testState, false)
 
@@ -203,6 +179,7 @@ describe('WalletInfo', () => {
 
     done()
   })
+
   test('network error is shown with connectivity error', async () => {
     neonjs.api.neonDB.getBalance = jest.fn(() => {
       return new Promise((resolve, reject) => {

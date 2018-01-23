@@ -13,12 +13,21 @@ const initialState = {
   api: {
     APP: {
       batch: true,
-      mapping: ['NETWORK', 'SETTINGS']
+      mapping: ['NETWORK', 'PRICES', 'SETTINGS']
     },
     NETWORK: {
       batch: false,
       state: LOADED,
       data: MAIN_NETWORK_ID,
+      loadedCount: 1
+    },
+    PRICES: {
+      batch: false,
+      state: LOADED,
+      data: {
+        NEO: 40.5,
+        GAS: 19.8
+      },
       loadedCount: 1
     },
     SETTINGS: {
@@ -34,10 +43,6 @@ const initialState = {
     transactions: []
   },
   modal: {
-  },
-  price: {
-    NEO: 40.5,
-    GAS: 19.8
   }
 }
 const setup = (state, shallowRender = true) => {
