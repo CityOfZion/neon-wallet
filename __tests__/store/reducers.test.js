@@ -8,7 +8,6 @@ describe('root reducer', () => {
       addressBook: expect.any(Object),
       generateWallet: expect.any(Object),
       wallet: expect.any(Object),
-      price: expect.any(Object),
       transactions: expect.any(Object),
       dashboard: expect.any(Object),
       notifications: expect.any(Object),
