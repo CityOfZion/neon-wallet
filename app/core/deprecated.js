@@ -6,7 +6,7 @@ import pricesActions from '../actions/pricesActions'
 import { ID as ACCOUNT_ID } from '../actions/accountActions'
 import { ID as NETWORK_ID } from '../actions/networkActions'
 import { ID as SETTINGS_ID } from '../actions/settingsActions'
-import { getNetworks } from '../core/networks'
+import { findNetwork } from '../core/networks'
 
 const PREFIX = 'api'
 
@@ -20,17 +20,11 @@ export const getNetworkId = (state: Object) => {
 }
 
 export const getNetwork = (state: Object) => {
-  const selectedNetworkId = getNetworkId(state)
-  const networks = getNetworks()
-  const networkItem = networks.find(({ id, value }) => id === selectedNetworkId) || networks[0]
-
-  return networkItem.network
+  return getNetworkById(getNetworkId(state))
 }
 
 export const getNetworkById = (networkId: string) => {
-  const networks = getNetworks()
-  const networkItem = networks.find(({ id, value }) => id === networkId) || networks[0]
-  return networkItem.network
+  return findNetwork(networkId).network
 }
 
 export const getAddress = (state: Object) => {
