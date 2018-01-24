@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
 
-import withData from '../../hocs/api/withData'
 import withFetch from '../../hocs/api/withFetch'
 import withReload from '../../hocs/api/withReload'
 import withProgressComponents from '../../hocs/api/withProgressComponents'
@@ -28,8 +27,6 @@ const actionCreators = {
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
 
-const mapAppDataToProps = ({ height, settings }) => ({ height, settings })
-
 export default compose(
   // Old way of fetching data, need to refactor this out...
   connect(null, mapDispatchToProps),
@@ -47,7 +44,6 @@ export default compose(
 
   // Fetch application data based upon the selected network.  Reload data when the network changes.
   withFetch(appActions),
-  withData(appActions, mapAppDataToProps),
   withReload(appActions, ['networkId']),
   withProgressComponents(appActions, {
     [LOADING]: Loading,
