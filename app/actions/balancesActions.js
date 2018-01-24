@@ -21,16 +21,18 @@ async function getBalances ({ net, address, tokens }: Props) {
   // token balances
   const promises = tokens.map(async (token) => {
     const { scriptHash } = token
-    const response = await api.nep5.getTokenBalance(endpoint, scriptHash, address)
-    const balance = toBigNumber(response).round(COIN_DECIMAL_LENGTH).toString()
+    const response = await api.nep5.getToken(endpoint, scriptHash, address)
+    const balance = toBigNumber(response.balance || 0).round(response.decimals).toString()
+
     return {
-      [scriptHash]: balance
+      [scriptHash]: { ...response, balance }
     }
   })
 
   // asset balances
-  promises.push((async (address) => {
+  promises.push((async () => {
     const assetBalances = await api.neonDB.getBalance(net, address)
+
     return {
       [ASSETS.NEO]: toBigNumber(assetBalances.NEO.balance).toString(),
       [ASSETS.GAS]: toBigNumber(assetBalances.GAS.balance).round(COIN_DECIMAL_LENGTH).toString()

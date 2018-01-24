@@ -6,12 +6,7 @@ import thunk from 'redux-thunk'
 import { merge } from 'lodash'
 import { mount, shallow } from 'enzyme'
 
-import {
-  SET_TRANSACTION_HISTORY,
-  SET_BALANCE
-} from '../../app/modules/wallet'
 import { SHOW_NOTIFICATION } from '../../app/modules/notifications'
-import { LOADING_TRANSACTIONS } from '../../app/modules/transactions'
 
 import { DEFAULT_CURRENCY_CODE, MAIN_NETWORK_ID } from '../../app/core/constants'
 import { LOADED } from '../../app/values/state'
@@ -28,11 +23,8 @@ axiosMock
   .onGet('http://testnet-api.wallet.cityofzion.io/v2/version')
   .reply(200, { version })
 axiosMock
-  .onGet('https://api.coinmarketcap.com/v1/ticker/NEO/?convert=USD')
-  .reply(200, [{ price_usd: 24.5 }])
-axiosMock
-  .onGet('https://api.coinmarketcap.com/v1/ticker/GAS/?convert=USD')
-  .reply(200, [{ price_usd: 18.2 }])
+  .onGet('https://api.coinmarketcap.com/v1/ticker/?limit=0&convert=USD')
+  .reply(200, [{ symbol: 'NEO', price_usd: 24.5 }, { symbol: 'GAS', price_usd: 18.2 }])
 
 jest.mock('electron', () => ({
   app: {
@@ -65,7 +57,8 @@ const initialState = {
       batch: false,
       state: LOADED,
       data: {
-        currency: DEFAULT_CURRENCY_CODE
+        currency: DEFAULT_CURRENCY_CODE,
+        tokens: []
       }
     },
     PRICES: {
@@ -75,12 +68,15 @@ const initialState = {
         NEO: 25.48,
         GAS: 18.1
       }
+    },
+    BALANCES: {
+      batch: false,
+      state: LOADED,
+      data: {
+        NEO: '100001',
+        GAS: '1000.0001601'
+      }
     }
-  },
-  wallet: {
-    NEO: '100001',
-    GAS: '1000.0001601',
-    tokenBalances: []
   },
   claim: {
     claimAmount: 0.5
@@ -147,10 +143,10 @@ describe('WalletInfo', () => {
       .then()
     jest.runAllTimers()
 
-    const action = store.getActions().find((action) => action.type === SET_BALANCE)
+    const action = store.getActions().find((action) => action.type === 'BALANCE/REQ/REQUEST')
 
     expect(action).toEqual({
-      type: SET_BALANCE,
+      type: 'BALANCE/REQ/REQUEST',
       payload: {
         NEO: '1',
         GAS: '1'

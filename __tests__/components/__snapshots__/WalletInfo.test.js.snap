@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`WalletInfo renders without crashing 1`] = `
-<Connect(withData(Connect(withData(mapProps(Connect(withData(Connect(withData(Connect(withActions(WalletInfo)))))))))))
-  GAS="1000.0001601"
-  NEO="100001"
+<Connect(withData(Connect(withData(Connect(withData(mapProps(Connect(withData(Connect(withData(Connect(withData(mapProps(Connect(withData(Connect(withActions(WalletInfo))))))))))))))))))
   loadWalletData={[Function]}
   networks={
     Array [
@@ -55,6 +53,5 @@ exports[`WalletInfo renders without crashing 1`] = `
       "unsubscribe": [Function],
     }
   }
-  tokenBalances={Array []}
 />
 `;

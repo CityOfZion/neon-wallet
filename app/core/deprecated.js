@@ -1,11 +1,11 @@
 // @flow
-import { get } from 'lodash'
+import { get, omit } from 'lodash'
 
-import blockHeightActions from '../actions/blockHeightActions'
-import pricesActions from '../actions/pricesActions'
 import { ID as ACCOUNT_ID } from '../actions/accountActions'
+import { ID as BALANCES_ID } from '../actions/balancesActions'
 import { ID as NETWORK_ID } from '../actions/networkActions'
 import { ID as SETTINGS_ID } from '../actions/settingsActions'
+import { ASSETS } from '../core/constants'
 import { findNetwork } from '../core/networks'
 
 const PREFIX = 'api'
@@ -57,10 +57,18 @@ export const getTokensForNetwork = (state: Object) => {
   return allTokens.filter(({ networkId }) => networkId === selectedNetworkId)
 }
 
-export const syncBlockHeight = (state: Object) => {
-  return blockHeightActions.request({ networkId: getNetworkId(state) })
+export const getNEO = (state: Object): string => {
+  return getBalances(state)[ASSETS.NEO]
 }
 
-export const getMarketPrices = (state: Object) => {
-  return pricesActions.request({ currency: getCurrency(state) })
+export const getGAS = (state: Object): string => {
+  return getBalances(state)[ASSETS.GAS]
+}
+
+export const getTokenBalances = (state: Object): Object => {
+  return omit(getBalances(state), ASSETS.NEO, ASSETS.GAS)
+}
+
+export const getBalances = (state: Object) => {
+  return get(state, `${PREFIX}.${BALANCES_ID}.data`)
 }

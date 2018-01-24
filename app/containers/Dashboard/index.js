@@ -2,27 +2,33 @@
 import { connect, type MapStateToProps } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
+import { omit } from 'lodash'
 
-import balanceActions from '../../actions/balanceActions'
+import Loader from '../../components/Loader'
+import balancesActions from '../../actions/balancesActions'
 import withData from '../../hocs/api/withData'
 import withFetch from '../../hocs/api/withFetch'
 import withReload from '../../hocs/api/withReload'
+import withProgressComponents from '../../hocs/api/withProgressComponents'
 import withNetworkData from '../../hocs/withNetworkData'
 import withAccountData from '../../hocs/withAccountData'
 import withFilteredTokensData from '../../hocs/withFilteredTokensData'
 import { getNotifications } from '../../modules/notifications'
-import { getNEO, getGAS, getTokenBalances, getIsLoaded, loadWalletData } from '../../modules/wallet'
+import { loadWalletData } from '../../modules/wallet'
 import { showModal } from '../../modules/modal'
 import { sendTransaction } from '../../modules/transactions'
+import { LOADING } from '../../values/state'
 
 import Dashboard from './Dashboard'
 
 const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
-  notification: getNotifications(state),
-  NEO: getNEO(state),
-  GAS: getGAS(state),
-  tokenBalances: getTokenBalances(state),
-  loaded: getIsLoaded(state)
+  notification: getNotifications(state)
+})
+
+const mapBalanceDataToProps = (balances) => ({
+  NEO: balances.NEO,
+  GAS: balances.GAS,
+  tokenBalances: omit(balances, 'NEO', 'GAS')
 })
 
 const actionCreators = {
@@ -39,7 +45,10 @@ export default compose(
   withNetworkData(),
   withAccountData(),
   withFilteredTokensData(),
-  withFetch(balanceActions),
-  withData(balanceActions),
-  withReload(balanceActions, ['networkId'])
+  withFetch(balancesActions),
+  withProgressComponents(balancesActions, {
+    [LOADING]: Loader
+  }),
+  withData(balancesActions, mapBalanceDataToProps),
+  withReload(balancesActions, ['networkId'])
 )(Dashboard)

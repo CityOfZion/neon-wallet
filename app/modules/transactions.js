@@ -3,7 +3,7 @@
 import { api, sc, u, wallet } from 'neon-js'
 import { flatMap, keyBy } from 'lodash'
 
-import { setTransactionHistory, getBalances, getTokenBalances } from './wallet'
+import { setTransactionHistory } from './wallet'
 import {
   showErrorNotification,
   showInfoNotification,
@@ -15,7 +15,9 @@ import {
   getPublicKey,
   getSigningFunction,
   getAddress,
-  getIsHardwareLogin
+  getIsHardwareLogin,
+  getBalances,
+  getTokenBalances
 } from '../core/deprecated'
 import { isToken, validateTransactionsBeforeSending } from '../core/wallet'
 import { ASSETS } from '../core/constants'

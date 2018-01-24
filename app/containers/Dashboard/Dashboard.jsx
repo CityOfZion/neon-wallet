@@ -5,8 +5,6 @@ import classNames from 'classnames'
 import TransactionHistory from '../TransactionHistory'
 import WalletInfo from '../WalletInfo'
 
-import Loader from '../../components/Loader'
-
 import { log } from '../../util/Logs'
 
 import { MODAL_TYPES } from '../../core/constants'
@@ -24,7 +22,6 @@ type Props = {
   NEO: string,
   GAS: string,
   tokenBalances: Array<TokenBalanceType>,
-  loaded: boolean,
   networkId: string,
   loadWalletData: Function,
 }
@@ -59,13 +56,8 @@ export default class Dashboard extends Component<Props> {
       NEO,
       GAS,
       tokenBalances,
-      sendTransaction,
-      loaded
+      sendTransaction
     } = this.props
-
-    if (!loaded) {
-      return <Loader />
-    }
 
     return (
       <div id='dashboard' className={styles.container}>

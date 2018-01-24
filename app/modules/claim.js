@@ -1,7 +1,6 @@
 // @flow
 import { api } from 'neon-js'
 
-import { getNEO } from './wallet'
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -13,7 +12,8 @@ import {
   getAddress,
   getSigningFunction,
   getPublicKey,
-  getIsHardwareLogin
+  getIsHardwareLogin,
+  getNEO
 } from '../core/deprecated'
 import { ASSETS } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
