@@ -1,7 +1,7 @@
 // @flow
 import { get, omit } from 'lodash'
 
-import { ID as ACCOUNT_ID } from '../actions/accountActions'
+import { ID as AUTH_ID } from '../actions/authActions'
 import { ID as BALANCES_ID } from '../actions/balancesActions'
 import { ID as NETWORK_ID } from '../actions/networkActions'
 import { ID as SETTINGS_ID } from '../actions/settingsActions'
@@ -28,23 +28,23 @@ export const getNetworkById = (networkId: string) => {
 }
 
 export const getAddress = (state: Object) => {
-  return get(state, `${PREFIX}.${ACCOUNT_ID}.data.address`)
+  return get(state, `${PREFIX}.${AUTH_ID}.data.address`)
 }
 
 export const getWIF = (state: Object) => {
-  return get(state, `${PREFIX}.${ACCOUNT_ID}.data.wif`)
+  return get(state, `${PREFIX}.${AUTH_ID}.data.wif`)
 }
 
 export const getSigningFunction = (state: Object) => {
-  return get(state, `${PREFIX}.${ACCOUNT_ID}.data.signingFunction`)
+  return get(state, `${PREFIX}.${AUTH_ID}.data.signingFunction`)
 }
 
 export const getPublicKey = (state: Object) => {
-  return get(state, `${PREFIX}.${ACCOUNT_ID}.data.publicKey`)
+  return get(state, `${PREFIX}.${AUTH_ID}.data.publicKey`)
 }
 
 export const getIsHardwareLogin = (state: Object) => {
-  return get(state, `${PREFIX}.${ACCOUNT_ID}.data.isHardwareLogin`)
+  return get(state, `${PREFIX}.${AUTH_ID}.data.isHardwareLogin`)
 }
 
 export const getCurrency = (state: Object) => {

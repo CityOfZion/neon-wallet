@@ -28,7 +28,7 @@ type AccountType = ?{
   isHardwareLogin: boolean
 }
 
-export const ID = 'ACCOUNT'
+export const ID = 'AUTH'
 
 export const wifLoginActions = createRequestActions(ID, ({ wif }: WifLoginProps) => (state: Object): AccountType => {
   const account = new wallet.Account(wif)

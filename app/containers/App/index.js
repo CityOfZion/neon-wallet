@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
 
 import appActions from '../../actions/appActions'
-import accountActions from '../../actions/accountActions'
+import authActions from '../../actions/authActions'
 import balancesActions from '../../actions/balancesActions'
 import networkActions from '../../actions/networkActions'
 import withFetch from '../../hocs/api/withFetch'
@@ -60,6 +60,6 @@ export default compose(
   withLogoutRedirect,
 
   // Remove stale data from store on logout
-  withLogoutReset(accountActions),
+  withLogoutReset(authActions),
   withLogoutReset(balancesActions)
 )(App)

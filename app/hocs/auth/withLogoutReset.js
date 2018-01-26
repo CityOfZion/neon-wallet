@@ -5,7 +5,7 @@ import withData from '../api/withData'
 import withReset from '../api/withReset'
 import withoutProps from '../withoutProps'
 import didLogout from '../helpers/didLogout'
-import accountActions from '../../actions/accountActions'
+import authActions from '../../actions/authActions'
 import { type Actions } from '../../values/api'
 
 type Options = {
@@ -13,14 +13,14 @@ type Options = {
 }
 
 export default function withLogoutReset (actions: Actions, { propName = '__address__' }: Options = {}) {
-  const mapAccountDataToProps = (account) => ({
+  const mapAuthDataToProps = (account) => ({
     [propName]: account && account.address
   })
 
   const shouldReset = (oldProps, newProps) => didLogout(oldProps[propName], newProps[propName])
 
   return compose(
-    withData(accountActions, mapAccountDataToProps),
+    withData(authActions, mapAuthDataToProps),
     withReset(actions, shouldReset),
     withoutProps(propName)
   )

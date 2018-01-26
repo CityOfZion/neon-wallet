@@ -11,7 +11,7 @@ import withFetch from '../../hocs/api/withFetch'
 import withReload from '../../hocs/api/withReload'
 import withProgressComponents from '../../hocs/api/withProgressComponents'
 import withNetworkData from '../../hocs/withNetworkData'
-import withAccountData from '../../hocs/withAccountData'
+import withAuthData from '../../hocs/withAuthData'
 import withFilteredTokensData from '../../hocs/withFilteredTokensData'
 import { getNotifications } from '../../modules/notifications'
 import { loadWalletData } from '../../modules/wallet'
@@ -43,7 +43,7 @@ const mapDispatchToProps = dispatch =>
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withNetworkData(),
-  withAccountData(),
+  withAuthData(),
   withFilteredTokensData(),
   withFetch(balancesActions),
   withProgressComponents(balancesActions, {

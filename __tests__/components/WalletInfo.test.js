@@ -46,7 +46,7 @@ const initialState = {
       state: LOADED,
       data: MAIN_NETWORK_ID
     },
-    ACCOUNT: {
+    AUTH: {
       batch: false,
       state: LOADED,
       data: {

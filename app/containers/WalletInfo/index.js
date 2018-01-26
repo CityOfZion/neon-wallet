@@ -9,7 +9,7 @@ import balancesActions from '../../actions/balancesActions'
 import withData from '../../hocs/api/withData'
 import withActions from '../../hocs/api/withActions'
 import withNetworkData from '../../hocs/withNetworkData'
-import withAccountData from '../../hocs/withAccountData'
+import withAuthData from '../../hocs/withAuthData'
 import withCurrencyData from '../../hocs/withCurrencyData'
 import withFilteredTokensData from '../../hocs/withFilteredTokensData'
 import { updateSettingsActions } from '../../actions/settingsActions'
@@ -56,7 +56,7 @@ export default compose(
   withData(pricesActions, mapPricesDataToProps),
   withData(balancesActions, mapBalanceDataToProps),
   withNetworkData(),
-  withAccountData(),
+  withAuthData(),
   withCurrencyData('currencyCode'),
   withFilteredTokensData(),
   withActions(updateSettingsActions, mapActionsToProps)
