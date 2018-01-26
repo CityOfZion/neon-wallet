@@ -76,10 +76,10 @@ const initialState = {
         NEO: '100001',
         GAS: '1000.0001601'
       }
+    },
+    CLAIMS: {
+      total: '0.5'
     }
-  },
-  claim: {
-    claimAmount: 0.5
   }
 }
 

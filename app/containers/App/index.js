@@ -5,7 +5,7 @@ import { compose } from 'recompose'
 
 import appActions from '../../actions/appActions'
 import authActions from '../../actions/authActions'
-import balancesActions from '../../actions/balancesActions'
+import accountActions from '../../actions/accountActions'
 import networkActions from '../../actions/networkActions'
 import withFetch from '../../hocs/api/withFetch'
 import withReload from '../../hocs/api/withReload'
@@ -61,5 +61,5 @@ export default compose(
 
   // Remove stale data from store on logout
   withLogoutReset(authActions),
-  withLogoutReset(balancesActions)
+  withLogoutReset(accountActions)
 )(App)

@@ -5,7 +5,7 @@ import { compose } from 'recompose'
 import { omit } from 'lodash'
 
 import Loader from '../../components/Loader'
-import balancesActions from '../../actions/balancesActions'
+import accountActions from '../../actions/accountActions'
 import withData from '../../hocs/api/withData'
 import withFetch from '../../hocs/api/withFetch'
 import withReload from '../../hocs/api/withReload'
@@ -13,6 +13,7 @@ import withProgressComponents from '../../hocs/api/withProgressComponents'
 import withNetworkData from '../../hocs/withNetworkData'
 import withAuthData from '../../hocs/withAuthData'
 import withFilteredTokensData from '../../hocs/withFilteredTokensData'
+import alreadyLoaded from '../../hocs/api/progressStrategies/alreadyLoadedStrategy'
 import { getNotifications } from '../../modules/notifications'
 import { loadWalletData } from '../../modules/wallet'
 import { showModal } from '../../modules/modal'
@@ -45,10 +46,12 @@ export default compose(
   withNetworkData(),
   withAuthData(),
   withFilteredTokensData(),
-  withFetch(balancesActions),
-  withProgressComponents(balancesActions, {
+  withFetch(accountActions),
+  withProgressComponents(accountActions, {
     [LOADING]: Loader
+  }, {
+    strategy: alreadyLoaded
   }),
-  withData(balancesActions, mapBalanceDataToProps),
-  withReload(balancesActions, ['networkId'])
+  withData(accountActions, mapBalanceDataToProps),
+  withReload(accountActions, ['networkId'])
 )(Dashboard)
