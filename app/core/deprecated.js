@@ -4,7 +4,6 @@ import { get, omit } from 'lodash'
 import { ID as AUTH_ID } from '../actions/authActions'
 import { ID as BALANCES_ID } from '../actions/balancesActions'
 import { ID as NETWORK_ID } from '../actions/networkActions'
-import { ID as SETTINGS_ID } from '../actions/settingsActions'
 import { ASSETS } from '../core/constants'
 import { findNetwork } from '../core/networks'
 
@@ -45,16 +44,6 @@ export const getPublicKey = (state: Object) => {
 
 export const getIsHardwareLogin = (state: Object) => {
   return get(state, `${PREFIX}.${AUTH_ID}.data.isHardwareLogin`)
-}
-
-export const getCurrency = (state: Object) => {
-  return get(state, `${PREFIX}.${SETTINGS_ID}.data.currency`)
-}
-
-export const getTokensForNetwork = (state: Object) => {
-  const selectedNetworkId = getNetworkId(state)
-  const allTokens = get(state, `${PREFIX}.${SETTINGS_ID}.data.tokens`)
-  return allTokens.filter(({ networkId }) => networkId === selectedNetworkId)
 }
 
 export const getNEO = (state: Object): string => {
