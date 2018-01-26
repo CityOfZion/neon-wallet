@@ -3,15 +3,18 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
 
+import appActions from '../../actions/appActions'
+import accountActions from '../../actions/accountActions'
+import balancesActions from '../../actions/balancesActions'
+import networkActions from '../../actions/networkActions'
 import withFetch from '../../hocs/api/withFetch'
 import withReload from '../../hocs/api/withReload'
 import withProgressComponents from '../../hocs/api/withProgressComponents'
 import withLoginRedirect from '../../hocs/auth/withLoginRedirect'
 import withLogoutRedirect from '../../hocs/auth/withLogoutRedirect'
-import appActions from '../../actions/appActions'
-import alreadyLoaded from '../../hocs/api/progressStrategies/alreadyLoadedStrategy'
+import withLogoutReset from '../../hocs/auth/withLogoutReset'
 import withNetworkData from '../../hocs/withNetworkData'
-import networkActions from '../../actions/networkActions'
+import alreadyLoaded from '../../hocs/api/progressStrategies/alreadyLoadedStrategy'
 import { checkVersion } from '../../modules/metadata'
 import { showErrorNotification } from '../../modules/notifications'
 import { LOADING, FAILED } from '../../values/state'
@@ -54,5 +57,9 @@ export default compose(
 
   // Navigate to the home or dashboard when the user logs in or out.
   withLoginRedirect,
-  withLogoutRedirect
+  withLogoutRedirect,
+
+  // Remove stale data from store on logout
+  withLogoutReset(accountActions),
+  withLogoutReset(balancesActions)
 )(App)
