@@ -40,7 +40,7 @@ const actionCreators = {
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
 
 const mapAccountActionsToProps = (actions, props) => ({
-  loadWalletData: () => actions.request({ net: props.net, address: props.address })
+  loadWalletData: () => actions.request({ net: props.net, address: props.address, tokens: props.tokens })
 })
 
 export default compose(
