@@ -26,9 +26,7 @@ const initialState = {
     }
   },
   claim: {
-    claimAmount: 10,
     claimRequest: false,
-    claimWasUpdated: false,
     disableClaimButton: false
   },
   account: {

@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import Button from '../../components/Button'
 import Tooltip from '../../components/Tooltip'
 import { formatGAS } from '../../core/formatters'
+import { toBigNumber } from '../../core/math'
 
 type Props = {
   doClaimNotify: Function,
@@ -11,14 +12,13 @@ type Props = {
   doGasClaim: Function,
   claimRequest: boolean,
   disableClaimButton: boolean,
-  claimWasUpdated: boolean,
-  claimAmount: number,
+  claimAmount: string,
 }
 
 export default class Claim extends Component<Props> {
-  componentDidUpdate () {
-    const { claimRequest, claimWasUpdated, doClaimNotify, setClaimRequest } = this.props
-    if (claimRequest && claimWasUpdated) {
+  componentDidUpdate (prevProps: Props) {
+    const { claimRequest, doClaimNotify, setClaimRequest } = this.props
+    if (claimRequest && !prevProps.claimRequest) {
       setClaimRequest(false)
       doClaimNotify()
     }
@@ -26,7 +26,7 @@ export default class Claim extends Component<Props> {
 
   render () {
     const { claimAmount, disableClaimButton, doGasClaim } = this.props
-    const shouldDisableButton = disableClaimButton || claimAmount === 0
+    const shouldDisableButton = disableClaimButton || toBigNumber(claimAmount).eq(0)
     const formattedAmount = formatGAS(claimAmount)
     return (
       <div>

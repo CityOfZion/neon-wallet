@@ -1,6 +1,5 @@
 // @flow
 import { syncTransactionHistory } from './transactions'
-import { syncAvailableClaim } from './claim'
 
 import { getAddress, getNetwork } from '../core/deprecated'
 
@@ -24,7 +23,6 @@ export const loadWalletData = () => async (
   const address = getAddress(state)
 
   dispatch(syncTransactionHistory(net, address))
-  dispatch(syncAvailableClaim(net, address))
   return true
 }
 
