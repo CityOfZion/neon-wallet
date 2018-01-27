@@ -34,7 +34,7 @@ export default class Claim extends Component<Props> {
           title='You can claim GAS once every 5 minutes'
           disabled={!disableClaimButton}
         >
-          <Button id='claim' disabled={shouldDisableButton} onClick={() => doGasClaim()}>
+          <Button id='claim' disabled={shouldDisableButton} onClick={doGasClaim}>
             Claim {formattedAmount} GAS
           </Button>
         </Tooltip>

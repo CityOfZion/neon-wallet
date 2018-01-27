@@ -1,17 +1,13 @@
 import React from 'react'
 import * as neonjs from 'neon-js'
-import { Provider } from 'react-redux'
-import configureStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
 import { merge } from 'lodash'
 import { mount, shallow } from 'enzyme'
 
-import { SHOW_NOTIFICATION } from '../../app/modules/notifications'
-
-import { DEFAULT_CURRENCY_CODE, MAIN_NETWORK_ID } from '../../app/core/constants'
-import { LOADED } from '../../app/values/state'
-
+import { createStore, provideStore, provideState } from '../testHelpers'
 import WalletInfo from '../../app/containers/WalletInfo'
+import { SHOW_NOTIFICATION } from '../../app/modules/notifications'
+import { NOTIFICATION_LEVELS, DEFAULT_CURRENCY_CODE, MAIN_NETWORK_ID } from '../../app/core/constants'
+import { LOADED } from '../../app/values/state'
 
 // TODO research how to move the axios mock code which is repeated in NetworkSwitch to a helper or config file
 import axios from 'axios'
@@ -28,9 +24,7 @@ axiosMock
 
 jest.mock('electron', () => ({
   app: {
-    getPath: () => {
-      return 'C:\\tmp\\mock_path'
-    }
+    getPath: () => 'C:\\tmp\\mock_path'
   }
 }))
 jest.useFakeTimers()
@@ -78,40 +72,28 @@ const initialState = {
       }
     },
     CLAIMS: {
-      total: '0.5'
+      batch: false,
+      state: LOADED,
+      data: {
+        total: '0.5'
+      }
     }
-  }
-}
-
-const setup = (state = initialState, shallowRender = true) => {
-  const store = configureStore([thunk])(state)
-
-  let wrapper
-  if (shallowRender) {
-    wrapper = shallow(<WalletInfo store={store} />)
-  } else {
-    wrapper = mount(
-      <Provider store={store}>
-        <WalletInfo />
-      </Provider>
-    )
-  }
-
-  return {
-    store,
-    wrapper
+  },
+  claim: {
+    claimRequest: false,
+    disableClaimButton: false
   }
 }
 
 describe('WalletInfo', () => {
-  test('renders without crashing', done => {
-    const { wrapper } = setup()
+  test('renders without crashing', () => {
+    const store = createStore(initialState)
+    const wrapper = shallow(<WalletInfo store={store} />)
     expect(wrapper).toMatchSnapshot()
-    done()
   })
 
-  test('correctly renders data from state', done => {
-    const { wrapper } = setup(initialState, false)
+  test('correctly renders data from state', () => {
+    const wrapper = mount(provideState(<WalletInfo />, initialState))
 
     const neoWalletValue = wrapper.find('.neoWalletValue')
     const gasWalletValue = wrapper.find('.gasWalletValue')
@@ -129,39 +111,28 @@ describe('WalletInfo', () => {
     expect(neoField.text()).toEqual('100,001')
     // TODO: Test the GAS tooltip value, this is testing the display value, truncated to 4 decimals
     expect(gasField.text()).toEqual('1,000.0002')
-    done()
   })
 
-  test('refreshBalance is getting called on click', async () => {
-    const { wrapper, store } = setup(initialState, false)
+  test('account data refreshes when refresh button is clicked', () => {
+    const store = createStore(initialState)
+    const wrapper = mount(provideStore(<WalletInfo />, store))
 
     wrapper.find('.refreshBalance').simulate('click')
 
-    await Promise.resolve('Pause')
-      .then()
-      .then()
-      .then()
-    jest.runAllTimers()
-
-    const action = store.getActions().find((action) => action.type === 'BALANCE/REQ/REQUEST')
-
-    expect(action).toEqual({
-      type: 'BALANCE/REQ/REQUEST',
-      payload: {
-        NEO: '1',
-        GAS: '1'
-      }
-    })
+    expect(store.getActions()).toContainEqual(expect.objectContaining({
+      type: 'BATCH/REQUEST',
+      meta: expect.objectContaining({ id: 'ACCOUNT' })
+    }))
   })
 
-  test('correctly renders data from state with non-default currency', done => {
+  test('correctly renders data from state with non-default currency', () => {
     const testState = merge(initialState, {
       api: {
         SETTINGS: { data: { currency: 'eur' } },
         PRICES: { data: { NEO: 1.11, GAS: 0.55 } }
       }
     })
-    const { wrapper } = setup(testState, false)
+    const wrapper = mount(provideState(<WalletInfo />, testState))
 
     const neoWalletValue = wrapper.find('.neoWalletValue')
     const gasWalletValue = wrapper.find('.gasWalletValue')
@@ -174,35 +145,5 @@ describe('WalletInfo', () => {
     expect(neoWalletValue.text()).toEqual(`€${expectedNeoWalletValue} EUR`)
     expect(gasWalletValue.text()).toEqual(`€${expectedGasWalletValue} EUR`)
     expect(walletValue.text()).toEqual(`Total €${expectedWalletValue} EUR`)
-
-    done()
-  })
-
-  test('network error is shown with connectivity error', async () => {
-    neonjs.api.neonDB.getBalance = jest.fn(() => {
-      return new Promise((resolve, reject) => {
-        reject(new Error())
-      })
-    })
-    const { wrapper, store } = setup(initialState, false)
-    wrapper.find('.refreshBalance').simulate('click')
-
-    jest.runAllTimers()
-    await Promise.resolve('Pause')
-      .then()
-      .then()
-      .then()
-      .then()
-
-    const actions = store.getActions()
-    const notifications = []
-    actions.forEach(action => {
-      if (action.type === SHOW_NOTIFICATION) {
-        notifications.push(action)
-      }
-    })
-
-    // let's make sure the last notification show was an error.
-    expect(notifications.pop().payload.level).toEqual('error')
   })
 })

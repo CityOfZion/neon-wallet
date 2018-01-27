@@ -5,7 +5,7 @@ import { version } from '../../package.json'
 
 let sessionCount = 0
 
-export const log = (net: NetworkType, type: string, address: string, data: Object) => {
+export const log = (net: NetworkType, type: string, address: string, data: Object = {}) => {
   const apiEndpoint = api.neonDB.getAPIEndpoint(net)
   axios.post(apiEndpoint + '/v2/log', {
     type: type,

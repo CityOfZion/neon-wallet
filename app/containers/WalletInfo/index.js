@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
 import { values, omit } from 'lodash'
 
+import accountActions from '../../actions/accountActions'
 import pricesActions from '../../actions/pricesActions'
 import balancesActions from '../../actions/balancesActions'
 import withData from '../../hocs/api/withData'
@@ -12,10 +13,10 @@ import withNetworkData from '../../hocs/withNetworkData'
 import withAuthData from '../../hocs/withAuthData'
 import withCurrencyData from '../../hocs/withCurrencyData'
 import withFilteredTokensData from '../../hocs/withFilteredTokensData'
+import withSuccessNotification from '../../hocs/withSuccessNotification'
+import withFailureNotification from '../../hocs/withFailureNotification'
 import { updateSettingsActions } from '../../actions/settingsActions'
 import { getNetworks } from '../../core/networks'
-import { showErrorNotification, showSuccessNotification } from '../../modules/notifications'
-import { loadWalletData } from '../../modules/wallet'
 import { showModal } from '../../modules/modal'
 import { participateInSale, oldParticipateInSale } from '../../modules/sale'
 
@@ -37,9 +38,6 @@ const mapPricesDataToProps = ({ NEO, GAS }) => ({
 })
 
 const actionCreators = {
-  loadWalletData,
-  showErrorNotification,
-  showSuccessNotification,
   showModal,
   participateInSale,
   oldParticipateInSale
@@ -47,8 +45,12 @@ const actionCreators = {
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
 
-const mapActionsToProps = (actions) => ({
+const mapSettingsActionsToProps = (actions) => ({
   setUserGeneratedTokens: (tokens) => actions.request({ tokens })
+})
+
+const mapAccountActionsToProps = (actions, props) => ({
+  loadWalletData: () => actions.request({ net: props.net, address: props.address })
 })
 
 export default compose(
@@ -59,5 +61,8 @@ export default compose(
   withAuthData(),
   withCurrencyData('currencyCode'),
   withFilteredTokensData(),
-  withActions(updateSettingsActions, mapActionsToProps)
+  withActions(updateSettingsActions, mapSettingsActionsToProps),
+  withActions(accountActions, mapAccountActionsToProps),
+  withSuccessNotification(accountActions, 'Received latest blockchain information.'),
+  withFailureNotification(accountActions, 'Failed to retrieve blockchain information.')
 )(WalletInfo)
