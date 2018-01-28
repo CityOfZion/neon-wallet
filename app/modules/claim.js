@@ -20,7 +20,8 @@ import asyncWrap from '../core/asyncHelper'
 import { FIVE_MINUTES_MS } from '../core/time'
 
 import { log } from '../util/Logs'
-import { toNumber } from '../core/math'
+import { toBigNumber, toNumber } from '../core/math'
+import { COIN_DECIMAL_LENGTH } from '../core/formatters'
 
 // Constants
 export const SET_CLAIM = 'SET_CLAIM'
@@ -210,7 +211,7 @@ export default (state: Object = initialState, action: ReduxAction) => {
       }
       return {
         ...state,
-        claimAmount: (claimAvailable + claimUnavailable) / 100000000,
+        claimAmount: toBigNumber(claimAvailable + claimUnavailable).div(10 ** COIN_DECIMAL_LENGTH).toNumber(),
         claimAvailable,
         claimUnavailable,
         claimWasUpdated
