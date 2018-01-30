@@ -1,58 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Claim should not render claim GAS button when claim button is disabled 1`] = `
-<div>
-  <Tooltip
-    disabled={false}
-    title="You can claim GAS once every 5 minutes"
-  >
-    <Button
-      cancel={false}
-      disabled={true}
-      id="claim"
-      onClick={[Function]}
-      primary={true}
-      secondary={false}
-    >
-      Claim 
-      10.00000000
-       GAS
-    </Button>
-  </Tooltip>
-</div>
-`;
-
-exports[`Claim should render claim GAS button when claim button is not disabled 1`] = `
-<div>
-  <Tooltip
-    disabled={true}
-    title="You can claim GAS once every 5 minutes"
-  >
-    <Button
-      cancel={false}
-      disabled={false}
-      id="claim"
-      onClick={[Function]}
-      primary={true}
-      secondary={false}
-    >
-      Claim 
-      10.00000000
-       GAS
-    </Button>
-  </Tooltip>
-</div>
-`;
-
-exports[`Claim should render without crashing 1`] = `
-<Claim
-  claimAmount={10}
-  claimRequest={false}
-  claimWasUpdated={false}
-  disableClaimButton={false}
-  doClaimNotify={[Function]}
-  doGasClaim={[Function]}
-  setClaimRequest={[Function]}
+exports[`Claim should render claim GAS button as disabled 1`] = `
+<Provider
   store={
     Object {
       "clearActions": [Function],
@@ -63,26 +12,323 @@ exports[`Claim should render without crashing 1`] = `
       "subscribe": [Function],
     }
   }
-  storeSubscription={
-    Subscription {
-      "listeners": Object {
-        "clear": [Function],
-        "get": [Function],
-        "notify": [Function],
-        "subscribe": [Function],
-      },
-      "onStateChange": [Function],
-      "parentSub": undefined,
-      "store": Object {
-        "clearActions": [Function],
-        "dispatch": [Function],
-        "getActions": [Function],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
-      },
-      "unsubscribe": [Function],
+>
+  <Connect(Connect(withData(Claim)))>
+    <Connect(withData(Claim))
+      claimRequest={false}
+      disableClaimButton={true}
+      doClaimNotify={[Function]}
+      doGasClaim={[Function]}
+      setClaimRequest={[Function]}
+    >
+      <withData(Claim)
+        claimAmount="0.01490723"
+        claimRequest={false}
+        disableClaimButton={true}
+        dispatch={[Function]}
+        doClaimNotify={[Function]}
+        doGasClaim={[Function]}
+        setClaimRequest={[Function]}
+      >
+        <div>
+          <Tooltip
+            disabled={false}
+            title="You can claim GAS once every 5 minutes"
+          >
+            <Tooltip
+              animateFill={true}
+              animation="fade"
+              arrow={true}
+              arrowSize="regular"
+              className=""
+              delay={0}
+              disabled={false}
+              distance={10}
+              duration={375}
+              followCursor={false}
+              hideDelay={0}
+              hideDuration={375}
+              hideOnClick={true}
+              html={null}
+              inertia={false}
+              interactive={false}
+              interactiveBorder={2}
+              multiple={false}
+              offset={0}
+              onHidden={[Function]}
+              onHide={[Function]}
+              onRequestClose={[Function]}
+              onShow={[Function]}
+              onShown={[Function]}
+              popperOptions={Object {}}
+              position="bottom"
+              size="regular"
+              sticky={false}
+              stickyDuration={200}
+              style={Object {}}
+              theme="dark"
+              title="You can claim GAS once every 5 minutes"
+              touchHold={false}
+              trigger="mouseenter focus"
+              unmountHTMLWhenHide={false}
+            >
+              <div
+                className=""
+                style={
+                  Object {
+                    "display": "inline",
+                  }
+                }
+                title="You can claim GAS once every 5 minutes"
+              >
+                <Button
+                  cancel={false}
+                  disabled={true}
+                  id="claim"
+                  onClick={[Function]}
+                  primary={true}
+                  secondary={false}
+                >
+                  <button
+                    className="button primary"
+                    disabled={true}
+                    id="claim"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Claim 
+                    0.01490723
+                     GAS
+                  </button>
+                </Button>
+              </div>
+            </Tooltip>
+          </Tooltip>
+        </div>
+      </withData(Claim)>
+    </Connect(withData(Claim))>
+  </Connect(Connect(withData(Claim)))>
+</Provider>
+`;
+
+exports[`Claim should render claim GAS button as enabled 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
     }
   }
-/>
+>
+  <Connect(Connect(withData(Claim)))>
+    <Connect(withData(Claim))
+      claimRequest={false}
+      disableClaimButton={false}
+      doClaimNotify={[Function]}
+      doGasClaim={[Function]}
+      setClaimRequest={[Function]}
+    >
+      <withData(Claim)
+        claimAmount="0.01490723"
+        claimRequest={false}
+        disableClaimButton={false}
+        dispatch={[Function]}
+        doClaimNotify={[Function]}
+        doGasClaim={[Function]}
+        setClaimRequest={[Function]}
+      >
+        <div>
+          <Tooltip
+            disabled={true}
+            title="You can claim GAS once every 5 minutes"
+          >
+            <Tooltip
+              animateFill={true}
+              animation="fade"
+              arrow={true}
+              arrowSize="regular"
+              className=""
+              delay={0}
+              disabled={true}
+              distance={10}
+              duration={375}
+              followCursor={false}
+              hideDelay={0}
+              hideDuration={375}
+              hideOnClick={true}
+              html={null}
+              inertia={false}
+              interactive={false}
+              interactiveBorder={2}
+              multiple={false}
+              offset={0}
+              onHidden={[Function]}
+              onHide={[Function]}
+              onRequestClose={[Function]}
+              onShow={[Function]}
+              onShown={[Function]}
+              popperOptions={Object {}}
+              position="bottom"
+              size="regular"
+              sticky={false}
+              stickyDuration={200}
+              style={Object {}}
+              theme="dark"
+              title="You can claim GAS once every 5 minutes"
+              touchHold={false}
+              trigger="mouseenter focus"
+              unmountHTMLWhenHide={false}
+            >
+              <div
+                className=""
+                style={
+                  Object {
+                    "display": "inline",
+                  }
+                }
+                title="You can claim GAS once every 5 minutes"
+              >
+                <Button
+                  cancel={false}
+                  disabled={false}
+                  id="claim"
+                  onClick={[Function]}
+                  primary={true}
+                  secondary={false}
+                >
+                  <button
+                    className="button primary"
+                    disabled={false}
+                    id="claim"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Claim 
+                    0.01490723
+                     GAS
+                  </button>
+                </Button>
+              </div>
+            </Tooltip>
+          </Tooltip>
+        </div>
+      </withData(Claim)>
+    </Connect(withData(Claim))>
+  </Connect(Connect(withData(Claim)))>
+</Provider>
+`;
+
+exports[`Claim should render without crashing 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <Connect(Connect(withData(Claim)))>
+    <Connect(withData(Claim))
+      claimRequest={false}
+      disableClaimButton={false}
+      doClaimNotify={[Function]}
+      doGasClaim={[Function]}
+      setClaimRequest={[Function]}
+    >
+      <withData(Claim)
+        claimAmount="0.01490723"
+        claimRequest={false}
+        disableClaimButton={false}
+        dispatch={[Function]}
+        doClaimNotify={[Function]}
+        doGasClaim={[Function]}
+        setClaimRequest={[Function]}
+      >
+        <div>
+          <Tooltip
+            disabled={true}
+            title="You can claim GAS once every 5 minutes"
+          >
+            <Tooltip
+              animateFill={true}
+              animation="fade"
+              arrow={true}
+              arrowSize="regular"
+              className=""
+              delay={0}
+              disabled={true}
+              distance={10}
+              duration={375}
+              followCursor={false}
+              hideDelay={0}
+              hideDuration={375}
+              hideOnClick={true}
+              html={null}
+              inertia={false}
+              interactive={false}
+              interactiveBorder={2}
+              multiple={false}
+              offset={0}
+              onHidden={[Function]}
+              onHide={[Function]}
+              onRequestClose={[Function]}
+              onShow={[Function]}
+              onShown={[Function]}
+              popperOptions={Object {}}
+              position="bottom"
+              size="regular"
+              sticky={false}
+              stickyDuration={200}
+              style={Object {}}
+              theme="dark"
+              title="You can claim GAS once every 5 minutes"
+              touchHold={false}
+              trigger="mouseenter focus"
+              unmountHTMLWhenHide={false}
+            >
+              <div
+                className=""
+                style={
+                  Object {
+                    "display": "inline",
+                  }
+                }
+                title="You can claim GAS once every 5 minutes"
+              >
+                <Button
+                  cancel={false}
+                  disabled={false}
+                  id="claim"
+                  onClick={[Function]}
+                  primary={true}
+                  secondary={false}
+                >
+                  <button
+                    className="button primary"
+                    disabled={false}
+                    id="claim"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Claim 
+                    0.01490723
+                     GAS
+                  </button>
+                </Button>
+              </div>
+            </Tooltip>
+          </Tooltip>
+        </div>
+      </withData(Claim)>
+    </Connect(withData(Claim))>
+  </Connect(Connect(withData(Claim)))>
+</Provider>
 `;

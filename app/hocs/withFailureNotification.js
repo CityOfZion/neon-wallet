@@ -2,7 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
-import { omit } from 'lodash'
+import { omit, isFunction } from 'lodash'
 
 import withError from './api/withError'
 import withProgressProp from './api/withProgressProp'
@@ -16,12 +16,18 @@ type Props = {
   __showErrorNotification__: Function
 }
 
+type Message = string | Function
+
 const ERROR_PROP = '__error__'
 const PROGRESS_PROP = '__progress__'
 const NOTIFICATION_PROP = '__showErrorNotification__'
 
-export default function withFailureNotifications (actions: Actions) {
-  const mapErrorToProps = (error) => ({ [ERROR_PROP]: error })
+const defaultMessage = (error) => error
+
+export default function withFailureNotification (actions: Actions, message: Message = defaultMessage) {
+  const mapErrorToProps = (error: Error) => ({
+    [ERROR_PROP]: isFunction(message) ? message(error) : message
+  })
 
   const mapDisptchToProps = (dispatch, ownProps) => ({
     [NOTIFICATION_PROP]: (...args) => dispatch(showErrorNotification(...args))

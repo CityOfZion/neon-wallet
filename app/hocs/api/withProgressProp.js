@@ -5,7 +5,7 @@ import { compose, setDisplayName, wrapDisplayName } from 'recompose'
 
 import defaultStrategy from './progressStrategies/defaultStrategy'
 import { type Actions, type ActionState } from '../../values/api'
-import { type ProgressState } from '../../values/state'
+import { INITIAL, type ProgressState } from '../../values/state'
 
 const PROGRESS_PROP: string = '__progress__'
 
@@ -28,7 +28,7 @@ export default function withProgressProp (
     if (!actionState) {
       return []
     } else if (actionState.batch) {
-      return map(actionState.mapping, (key) => get(state, `${prefix}.${key}`))
+      return map(actionState.mapping, (key) => get(state, `${prefix}.${key}`, INITIAL))
     } else {
       return castArray(actionState)
     }

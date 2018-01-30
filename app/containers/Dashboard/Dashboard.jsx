@@ -5,8 +5,6 @@ import classNames from 'classnames'
 import TransactionHistory from '../TransactionHistory'
 import WalletInfo from '../WalletInfo'
 
-import Loader from '../../components/Loader'
-
 import { log } from '../../util/Logs'
 
 import { MODAL_TYPES } from '../../core/constants'
@@ -24,25 +22,26 @@ type Props = {
   NEO: string,
   GAS: string,
   tokenBalances: Array<TokenBalanceType>,
-  loaded: boolean,
   networkId: string,
   loadWalletData: Function,
 }
 
 const REFRESH_INTERVAL_MS = 30000
-let walletDataInterval
 
 export default class Dashboard extends Component<Props> {
+  walletDataInterval: ?number
+
   componentDidMount () {
     const { loadWalletData, net, address } = this.props
-    // only logging public information here
-    log(net, 'LOGIN', address, {})
-    loadWalletData()
-    walletDataInterval = setInterval(loadWalletData, REFRESH_INTERVAL_MS)
+
+    log(net, 'LOGIN', address) // only logging public information here
+    this.walletDataInterval = setInterval(loadWalletData, REFRESH_INTERVAL_MS)
   }
 
   componentWillUnmount () {
-    clearInterval(walletDataInterval)
+    if (this.walletDataInterval) {
+      clearInterval(this.walletDataInterval)
+    }
   }
 
   componentWillReceiveProps (nextProps: Props) {
@@ -59,13 +58,8 @@ export default class Dashboard extends Component<Props> {
       NEO,
       GAS,
       tokenBalances,
-      sendTransaction,
-      loaded
+      sendTransaction
     } = this.props
-
-    if (!loaded) {
-      return <Loader />
-    }
 
     return (
       <div id='dashboard' className={styles.container}>
