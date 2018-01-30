@@ -16,3 +16,8 @@ export const getNetworks = () => ([
     network: 'TestNet'
   }
 ])
+
+export const findNetwork = (networkId: string): NetworkItemType => {
+  const networks = getNetworks()
+  return networks.find(({ id }) => id === networkId) || networks[0]
+}

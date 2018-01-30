@@ -1,27 +1,30 @@
 // @flow
-import { connect, type MapStateToProps } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { compose } from 'recompose'
+import { compose, mapProps } from 'recompose'
+import { omit } from 'lodash'
 
-import withNetworkData from '../../hocs/withNetworkData'
-import withAccountData from '../../hocs/withAccountData'
-import { syncTransactionHistory, getIsLoadingTransactions } from '../../modules/transactions'
-import { getTransactions } from '../../modules/wallet'
 import TransactionHistory from './TransactionHistory'
+import transactionHistoryActions from '../../actions/transactionHistoryActions'
+import withFetch from '../../hocs/api/withFetch'
+import withData from '../../hocs/api/withData'
+import withProgressProp from '../../hocs/api/withProgressProp'
+import withNetworkData from '../../hocs/withNetworkData'
+import withAuthData from '../../hocs/withAuthData'
+import { LOADING } from '../../values/state'
 
-const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
-  transactions: getTransactions(state),
-  isLoadingTransactions: getIsLoadingTransactions(state)
+const mapTransactionsDataToProps = (transactions) => ({
+  transactions
 })
 
-const actionCreators = {
-  syncTransactionHistory
-}
-
-const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
+const mapLoadingProp = (props) => ({
+  ...omit(props, 'progress'),
+  loading: props.progress === LOADING
+})
 
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
   withNetworkData(),
-  withAccountData()
+  withAuthData(),
+  withFetch(transactionHistoryActions),
+  withData(transactionHistoryActions, mapTransactionsDataToProps),
+  withProgressProp(transactionHistoryActions, { propName: 'progress' }),
+  mapProps(mapLoadingProp)
 )(TransactionHistory)

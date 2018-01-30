@@ -7,7 +7,7 @@ import withError from '../../hocs/api/withError'
 import withFetch from '../../hocs/api/withFetch'
 import withActions from '../../hocs/api/withActions'
 import ledgerActions from '../../actions/ledgerActions'
-import { ledgerLoginActions } from '../../actions/accountActions'
+import { ledgerLoginActions } from '../../actions/authActions'
 
 const mapLedgerActionsToProps = (actions) => ({
   connect: () => ledgerActions.request()

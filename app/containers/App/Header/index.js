@@ -3,7 +3,7 @@ import { compose } from 'recompose'
 
 import Header from './Header'
 import withData from '../../../hocs/api/withData'
-import withAccountData from '../../../hocs/withAccountData'
+import withAuthData from '../../../hocs/withAuthData'
 import withCurrencyData from '../../../hocs/withCurrencyData'
 import pricesActions from '../../../actions/pricesActions'
 
@@ -14,6 +14,6 @@ const mapPricesDataToProps = ({ NEO, GAS }) => ({
 
 export default compose(
   withData(pricesActions, mapPricesDataToProps),
-  withAccountData(),
+  withAuthData(),
   withCurrencyData('currencyCode')
 )(Header)

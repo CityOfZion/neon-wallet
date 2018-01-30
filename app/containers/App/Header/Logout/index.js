@@ -1,7 +1,7 @@
 // @flow
 import Logout from './Logout'
 import withActions from '../../../../hocs/api/withActions'
-import { logoutActions } from '../../../../actions/accountActions'
+import { logoutActions } from '../../../../actions/authActions'
 
 type Props = {
   logout: Function
