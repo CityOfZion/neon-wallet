@@ -1,13 +1,9 @@
 // @flow
 /* eslint-disable camelcase */
 import { api, sc, u, wallet } from 'neon-js'
-import { flatMap } from 'lodash'
+import { flatMap, keyBy } from 'lodash'
 
-import {
-  setTransactionHistory,
-  getBalances,
-  getScriptHashForNetwork
-} from './wallet'
+import { setTransactionHistory, getBalances, getTokenBalances } from './wallet'
 import {
   showErrorNotification,
   showInfoNotification,
@@ -25,7 +21,6 @@ import { getNetwork } from './metadata'
 
 import { isToken, validateTransactionsBeforeSending } from '../core/wallet'
 import { ASSETS } from '../core/constants'
-import { adjustDecimalAmountForTokenTransfer } from '../core/nep5'
 import asyncWrap from '../core/asyncHelper'
 import { toNumber, toBigNumber } from '../core/math'
 import { toFixedDecimals, COIN_DECIMAL_LENGTH } from '../core/formatters'
@@ -55,7 +50,9 @@ export const syncTransactionHistory = (
       ({ NEO, GAS, txid, block_index }: TransactionHistoryType) => ({
         txid,
         [ASSETS.NEO]: toFixedDecimals(NEO, 0),
-        [ASSETS.GAS]: toBigNumber(GAS).round(COIN_DECIMAL_LENGTH).toString()
+        [ASSETS.GAS]: toBigNumber(GAS)
+          .round(COIN_DECIMAL_LENGTH)
+          .toString()
       })
     )
     dispatch(setIsLoadingTransaction(false))
@@ -108,7 +105,10 @@ const buildIntentsForInvocation = (
 const buildTransferScript = (
   net: NetworkType,
   sendEntries: Array<SendEntryType>,
-  fromAddress: string
+  fromAddress: string,
+  tokensBalanceMap: {
+    [key: string]: TokenBalanceType
+  }
 ) => {
   const tokenEntries = extractTokens(sendEntries)
   const fromAcct = new wallet.Account(fromAddress)
@@ -116,11 +116,11 @@ const buildTransferScript = (
 
   tokenEntries.forEach(({ address, amount, symbol }) => {
     const toAcct = new wallet.Account(address)
-    const scriptHash = getScriptHashForNetwork(net, symbol)
+    const { scriptHash, decimals } = tokensBalanceMap[symbol]
     const args = [
       u.reverseHex(fromAcct.scriptHash),
       u.reverseHex(toAcct.scriptHash),
-      adjustDecimalAmountForTokenTransfer(amount)
+      sc.ContractParam.byteArray(toNumber(amount), 'fixed8', decimals)
     ]
 
     scriptBuilder.emitAppCall(scriptHash, 'transfer', args)
@@ -130,7 +130,12 @@ const buildTransferScript = (
 }
 
 const makeRequest = (sendEntries: Array<SendEntryType>, config: Object) => {
-  const script = buildTransferScript(config.net, sendEntries, config.address)
+  const script = buildTransferScript(
+    config.net,
+    sendEntries,
+    config.address,
+    config.tokensBalanceMap
+  )
 
   if (script === '') {
     return api.sendAsset({ ...config, intents: buildIntents(sendEntries) })
@@ -153,6 +158,7 @@ export const sendTransaction = (sendEntries: Array<SendEntryType>) => async (
   const fromAddress = getAddress(state)
   const net = getNetwork(state)
   const balances = getBalances(state)
+  const tokensBalanceMap = keyBy(getTokenBalances(state), 'symbol')
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
   const isHardwareSend = getIsHardwareLogin(state)
@@ -194,6 +200,7 @@ export const sendTransaction = (sendEntries: Array<SendEntryType>) => async (
   const [err, config] = await asyncWrap(
     makeRequest(sendEntries, {
       net,
+      tokensBalanceMap,
       address: fromAddress,
       publicKey,
       privateKey: new wallet.Account(wif).privateKey,

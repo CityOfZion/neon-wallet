@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import Sifter from 'sifter'
 import Delete from 'react-icons/lib/md/delete'
 import { wallet } from 'neon-js'
 import { noop, omit, map, values, trim } from 'lodash'
@@ -47,7 +48,8 @@ export default class AddressInput extends React.Component<Props> {
         items={this.getItems()}
         renderAfter={this.renderAfter}
         renderItem={this.renderItem}
-        getItemValue={this.getItemValue} />
+        getItemValue={this.getItemValue}
+        getSearchResults={this.getSearchResults} />
     )
   }
 
@@ -95,7 +97,7 @@ export default class AddressInput extends React.Component<Props> {
     }
   }
 
-  getItems = () => {
+  getItems = (): Array<ItemType> => {
     const { addresses } = this.props
     if (!addresses) {
       return []
@@ -106,11 +108,20 @@ export default class AddressInput extends React.Component<Props> {
     }))
   }
 
-  getItemValue = (item: ItemType) => {
+  getItemValue = (item: ItemType): string => {
     return item.value
   }
 
-  canSave = () => {
+  getSearchResults = (items: Array<ItemType>, term: string): Array<ItemType> => {
+    const sifter = new Sifter(items)
+    const result = sifter.search(term, {
+      fields: ['label', 'value'],
+      sort: [{ field: 'label', direction: 'asc' }]
+    })
+    return result.items.map((resultItem) => items[resultItem.id])
+  }
+
+  canSave = (): boolean => {
     const address = this.props.value
     const { addresses } = this.props
 

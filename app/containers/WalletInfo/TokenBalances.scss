@@ -1,0 +1,33 @@
+@import '../../styles/variables';
+
+.table {
+    width: 300px;
+    margin-bottom: 15px;
+    thead {
+        display: block;
+        th {
+            width: 150px;
+            box-sizing: border-box;
+        }
+    }
+    tbody {
+        display: block;
+        height: 245px;
+        overflow-y: auto;        
+        td {
+            width: 150px;
+            box-sizing: border-box;
+        }
+    }    
+}
+
+.symbol {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    justify-content: center;
+}
+
+.symbolIcon {
+    padding-right: 5px;
+}

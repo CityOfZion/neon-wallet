@@ -12,16 +12,18 @@ exports[`NetworkSwitch renders without crashing 1`] = `
   </span>
   <select
     className="networkSelector"
-    defaultValue="MainNet"
+    defaultValue="1"
     onChange={[Function]}
   >
     <option
-      value="MainNet"
+      key="networkOption1"
+      value="1"
     >
       MainNet
     </option>
     <option
-      value="TestNet"
+      key="networkOption2"
+      value="2"
     >
       TestNet
     </option>

@@ -2,12 +2,12 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import Address from '../../../../app/components/Blockchain/Address/Address'
-import { NETWORK, EXPLORERS } from '../../../../app/core/constants'
+import { TEST_NETWORK_ID, EXPLORERS } from '../../../../app/core/constants'
 
 describe('Address', () => {
   const props = {
     address: 'AW4FD7bz6PF2QadFKF8qXUT7tNmWgvXZc4',
-    net: NETWORK.TEST,
+    networkId: TEST_NETWORK_ID,
     explorer: EXPLORERS.NEO_SCAN
   }
 
