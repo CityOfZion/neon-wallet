@@ -177,6 +177,7 @@
       "\\.(css|less|sass|scss)$": "identity-obj-proxy"
     },
     "testPathIgnorePatterns": [
+      "__tests__/testHelpers.js",
       "__tests__/setupTests.js"
     ],
     "unmockedModulePathPatterns": [

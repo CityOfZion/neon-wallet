@@ -5,7 +5,7 @@ import withData from '../../hocs/api/withData'
 import withActions from '../../hocs/api/withActions'
 import withFailureNotification from '../../hocs/withFailureNotification'
 import accountsActions from '../../actions/accountsActions'
-import { nep2LoginActions } from '../../actions/accountActions'
+import { nep2LoginActions } from '../../actions/authActions'
 
 import LoginLocalStorage from './LoginLocalStorage'
 

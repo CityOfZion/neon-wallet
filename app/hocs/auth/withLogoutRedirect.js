@@ -1,9 +1,6 @@
 // @flow
-import { wallet } from 'neon-js'
-
 import withRedirect from './withRedirect'
+import didLogout from '../helpers/didLogout'
 import { ROUTES } from '../../core/constants'
 
-export default withRedirect(ROUTES.HOME, (oldAddress, newAddress) => {
-  return wallet.isAddress(oldAddress) && !newAddress
-})
+export default withRedirect(ROUTES.HOME, didLogout)

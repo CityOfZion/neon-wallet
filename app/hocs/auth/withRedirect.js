@@ -5,7 +5,7 @@ import { compose } from 'recompose'
 import { withRouter } from 'react-router-dom'
 
 import withData from '../api/withData'
-import accountActions from '../../actions/accountActions'
+import authActions from '../../actions/authActions'
 
 type Props = {
   [key: string]: string,
@@ -23,7 +23,7 @@ export default function withRedirect (
   strategy: Function,
   { propName = '__address__' }: Options = {}
 ) {
-  const mapAccountDataToProps = (account) => ({
+  const mapAuthDataToProps = (account) => ({
     [propName]: account && account.address
   })
 
@@ -43,7 +43,7 @@ export default function withRedirect (
 
     return compose(
       withRouter,
-      withData(accountActions, mapAccountDataToProps)
+      withData(authActions, mapAuthDataToProps)
     )(WrappedComponent)
   }
 }

@@ -3,7 +3,6 @@
 import { api, sc, u, wallet } from 'neon-js'
 import { flatMap, keyBy } from 'lodash'
 
-import { setTransactionHistory, getBalances, getTokenBalances } from './wallet'
 import {
   showErrorNotification,
   showInfoNotification,
@@ -15,50 +14,16 @@ import {
   getPublicKey,
   getSigningFunction,
   getAddress,
-  getIsHardwareLogin
+  getIsHardwareLogin,
+  getBalances,
+  getTokenBalances
 } from '../core/deprecated'
 import { isToken, validateTransactionsBeforeSending } from '../core/wallet'
 import { ASSETS } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
-import { toNumber, toBigNumber } from '../core/math'
-import { toFixedDecimals, COIN_DECIMAL_LENGTH } from '../core/formatters'
+import { toNumber } from '../core/math'
 
 import { log } from '../util/Logs'
-
-// Constants
-export const LOADING_TRANSACTIONS = 'LOADING_TRANSACTIONS'
-
-export const setIsLoadingTransaction = (isLoading: boolean) => ({
-  type: LOADING_TRANSACTIONS,
-  payload: {
-    isLoadingTransactions: isLoading
-  }
-})
-
-export const syncTransactionHistory = (
-  net: NetworkType,
-  address: string
-) => async (dispatch: DispatchType) => {
-  dispatch(setIsLoadingTransaction(true))
-  const [err, transactions] = await asyncWrap(
-    api.neonDB.getTransactionHistory(net, address)
-  )
-  if (!err && transactions) {
-    const txs = transactions.map(
-      ({ NEO, GAS, txid, block_index }: TransactionHistoryType) => ({
-        txid,
-        [ASSETS.NEO]: toFixedDecimals(NEO, 0),
-        [ASSETS.GAS]: toBigNumber(GAS)
-          .round(COIN_DECIMAL_LENGTH)
-          .toString()
-      })
-    )
-    dispatch(setIsLoadingTransaction(false))
-    dispatch(setTransactionHistory(txs))
-  } else {
-    dispatch(setIsLoadingTransaction(false))
-  }
-}
 
 const extractTokens = (sendEntries: Array<SendEntryType>) => {
   return sendEntries.filter(({ symbol }) => isToken(symbol))
@@ -216,26 +181,5 @@ export const sendTransaction = (sendEntries: Array<SendEntryType>) => async (
           'Transaction complete! Your balance will automatically update when the blockchain has processed it.'
       })
     )
-  }
-}
-
-// state getters
-export const getIsLoadingTransactions = (state: Object) =>
-  state.transactions.isLoadingTransactions
-
-const initialState = {
-  isLoadingTransactions: false
-}
-
-export default (state: Object = initialState, action: ReduxAction) => {
-  switch (action.type) {
-    case LOADING_TRANSACTIONS:
-      const { isLoadingTransactions } = action.payload
-      return {
-        ...state,
-        isLoadingTransactions
-      }
-    default:
-      return state
   }
 }
