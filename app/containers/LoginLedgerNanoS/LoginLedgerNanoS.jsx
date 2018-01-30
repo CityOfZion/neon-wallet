@@ -35,12 +35,9 @@ export default class LoginLedgerNanoS extends Component<Props, State> {
 
   shouldComponentUpdate (nextProps: Props) {
     const { publicKey, hardwarePublicKeyInfo, hardwareDeviceInfo } = this.props
-    if (
-      nextProps.publicKey !== publicKey ||
-      nextProps.hardwarePublicKeyInfo !== hardwarePublicKeyInfo ||
-      (nextProps.hardwareDeviceInfo === FINDING_LEDGER_NOTICE &&
-        hardwareDeviceInfo === null)
-    ) { return true }
+    if (nextProps.publicKey !== publicKey ||
+        nextProps.hardwarePublicKeyInfo !== hardwarePublicKeyInfo ||
+        (nextProps.hardwareDeviceInfo === FINDING_LEDGER_NOTICE && hardwareDeviceInfo === null)) return true
     return false
   }
 
@@ -66,9 +63,7 @@ export default class LoginLedgerNanoS extends Component<Props, State> {
         <div className={loginStyles.title}>Login using the Ledger Nano S:</div>
         <div className={loginStyles.loginForm}>
           <div>
-            <Button disabled={!publicKey} onClick={this.onLedgerNanoSChange}>
-              Use Ledger Nano S
-            </Button>
+            <Button disabled={!publicKey} onClick={this.onLedgerNanoSChange}>Use Ledger Nano S</Button>
             <HomeButtonLink />
           </div>
           <p>{hardwareDeviceInfo}</p>

@@ -64,7 +64,7 @@ describe('wallet module tests', () => {
     }
 
     test('setCurrency action works', () => {
-      expect(setCurrency(currency)).toEqual(expect.any(Function))
+      expect(setCurrency(currency)).toEqual(expectedAction)
     })
 
     test('setCurrency reducer should return the initial state', () => {

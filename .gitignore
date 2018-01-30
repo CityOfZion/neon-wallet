@@ -13,4 +13,3 @@ coverage/*
 /yarn-error.log
 /coverage/
 /.jshintrc
-.settings

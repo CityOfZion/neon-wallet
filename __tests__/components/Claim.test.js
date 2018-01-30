@@ -9,7 +9,7 @@ import { shallow, mount } from 'enzyme'
 import Claim from '../../app/containers/Claim'
 import { setClaimRequest, disableClaim } from '../../app/modules/claim'
 import { SHOW_NOTIFICATION, HIDE_NOTIFICATIONS, DEFAULT_POSITION } from '../../app/modules/notifications'
-import { NOTIFICATION_LEVELS, TEST_NETWORK_ID, MAIN_NETWORK_ID } from '../../app/core/constants'
+import { NOTIFICATION_LEVELS } from '../../app/core/constants'
 
 const initialState = {
   claim: {
@@ -23,19 +23,7 @@ const initialState = {
     address: 'address'
   },
   metadata: {
-    networkId: TEST_NETWORK_ID,
-    networks: [
-      {
-        id: MAIN_NETWORK_ID,
-        label: 'MainNet',
-        network: 'MainNet'
-      },
-      {
-        id: TEST_NETWORK_ID,
-        label: 'TestNet',
-        network: 'TestNet'
-      }
-    ]
+    network: 'network'
   },
   wallet: {
     NEO: '1'
