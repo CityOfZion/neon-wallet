@@ -3,13 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { setAccounts, getAccounts } from '../../modules/account'
-import {
-  setBlockExplorer,
-  getBlockExplorer,
-  getNetworks,
-  getAllTokens,
-  setUserGeneratedTokens
-} from '../../modules/metadata'
+import { setBlockExplorer, getBlockExplorer } from '../../modules/metadata'
 import { setCurrency, getCurrency } from '../../modules/price'
 import { showErrorNotification, showSuccessNotification } from '../../modules/notifications'
 
@@ -20,9 +14,7 @@ import Settings from './Settings'
 const mapStateToProps = (state: Object) => ({
   explorer: getBlockExplorer(state),
   currency: getCurrency(state),
-  accounts: getAccounts(state),
-  networks: getNetworks(state),
-  allTokens: getAllTokens(state)
+  accounts: getAccounts(state)
 })
 
 const actionCreators = {
@@ -31,8 +23,7 @@ const actionCreators = {
   setCurrency,
   showModal,
   showErrorNotification,
-  showSuccessNotification,
-  setUserGeneratedTokens
+  showSuccessNotification
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)

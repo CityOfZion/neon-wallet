@@ -9,8 +9,6 @@ import { setIsLoadingTransaction } from '../../app/modules/transactions'
 
 import TransactionHistory from '../../app/containers/TransactionHistory'
 
-import { TEST_NETWORK_ID, MAIN_NETWORK_ID } from '../../app/core/constants'
-
 const initialState = {
   account: {
     loggedIn: true,
@@ -18,19 +16,7 @@ const initialState = {
     address: 'AWy7RNBVr9vDadRMK9p7i7Z1tL7GrLAxoh'
   },
   metadata: {
-    networkId: TEST_NETWORK_ID,
-    networks: [
-      {
-        id: MAIN_NETWORK_ID,
-        label: 'MainNet',
-        network: 'MainNet'
-      },
-      {
-        id: TEST_NETWORK_ID,
-        label: 'TestNet',
-        network: 'TestNet'
-      }
-    ]
+    network: 'TestNet'
   },
   wallet: {
     transactions: []

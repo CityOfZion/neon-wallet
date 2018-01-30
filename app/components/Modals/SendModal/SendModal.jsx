@@ -1,13 +1,13 @@
 // @flow
 import React, { Component } from 'react'
-import { without } from 'lodash'
+import { mapValues, without } from 'lodash'
 
 import BaseModal from '../BaseModal'
 import AddRecipientDisplay from './AddRecipientDisplay'
 import ConfirmDisplay from './ConfirmDisplay'
 import withAddressCheck from './withAddressCheck'
 
-import { validateTransactionBeforeSending, getTokenBalancesMap } from '../../../core/wallet'
+import { validateTransactionBeforeSending } from '../../../core/wallet'
 import { ASSETS } from '../../../core/constants'
 import { toBigNumber } from '../../../core/math'
 
@@ -21,7 +21,7 @@ const DISPLAY_MODES = {
 type Props = {
   NEO: string,
   GAS: string,
-  tokenBalances: Array<TokenBalanceType>,
+  tokens: Object,
   showErrorNotification: Function,
   hideModal: Function,
   sendTransaction: Function,
@@ -47,7 +47,7 @@ export default class SendModal extends Component<Props, State> {
     balances: {
       [ASSETS.NEO]: this.props.NEO,
       [ASSETS.GAS]: this.props.GAS,
-      ...getTokenBalancesMap(this.props.tokenBalances)
+      ...mapValues(this.props.tokens, (token) => token.balance)
     }
   }
 
