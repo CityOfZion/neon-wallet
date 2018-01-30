@@ -1,23 +1,21 @@
 // @flow
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { compose } from 'recompose'
 
+import Claim from './Claim'
+import claimsActions from '../../actions/claimsActions'
+import withData from '../../hocs/api/withData'
 import {
   setClaimRequest,
   doGasClaim,
   doClaimNotify,
-  getClaimAmount,
   getClaimRequest,
-  getClaimWasUpdated,
   getDisableClaimButton
 } from '../../modules/claim'
 
-import Claim from './Claim'
-
 const mapStateToProps = (state: Object) => ({
-  claimAmount: getClaimAmount(state),
   claimRequest: getClaimRequest(state),
-  claimWasUpdated: getClaimWasUpdated(state),
   disableClaimButton: getDisableClaimButton(state)
 })
 
@@ -29,4 +27,11 @@ const actionCreators = {
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(Claim)
+const mapClaimsDataToProps = (claims) => ({
+  claimAmount: claims.total
+})
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withData(claimsActions, mapClaimsDataToProps)
+)(Claim)

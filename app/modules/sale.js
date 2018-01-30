@@ -9,9 +9,10 @@ import {
   getAddress,
   getIsHardwareLogin,
   getSigningFunction,
-  getPublicKey
+  getPublicKey,
+  getNEO,
+  getGAS
 } from '../core/deprecated'
-import { getNEO, getGAS } from './wallet'
 import { toNumber } from '../core/math'
 import asyncWrap from '../core/asyncHelper'
 import { ASSETS } from '../core/constants'

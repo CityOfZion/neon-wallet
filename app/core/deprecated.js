@@ -1,12 +1,11 @@
 // @flow
-import { get } from 'lodash'
+import { get, omit } from 'lodash'
 
-import blockHeightActions from '../actions/blockHeightActions'
-import pricesActions from '../actions/pricesActions'
-import { ID as ACCOUNT_ID } from '../actions/accountActions'
+import { ID as AUTH_ID } from '../actions/authActions'
+import { ID as BALANCES_ID } from '../actions/balancesActions'
 import { ID as NETWORK_ID } from '../actions/networkActions'
-import { ID as SETTINGS_ID } from '../actions/settingsActions'
-import { getNetworks } from '../core/networks'
+import { ASSETS } from '../core/constants'
+import { findNetwork } from '../core/networks'
 
 const PREFIX = 'api'
 
@@ -20,53 +19,45 @@ export const getNetworkId = (state: Object) => {
 }
 
 export const getNetwork = (state: Object) => {
-  const selectedNetworkId = getNetworkId(state)
-  const networks = getNetworks()
-  const networkItem = networks.find(({ id, value }) => id === selectedNetworkId) || networks[0]
-
-  return networkItem.network
+  return getNetworkById(getNetworkId(state))
 }
 
 export const getNetworkById = (networkId: string) => {
-  const networks = getNetworks()
-  const networkItem = networks.find(({ id, value }) => id === networkId) || networks[0]
-  return networkItem.network
+  return findNetwork(networkId).network
 }
 
 export const getAddress = (state: Object) => {
-  return get(state, `${PREFIX}.${ACCOUNT_ID}.data.address`)
+  return get(state, `${PREFIX}.${AUTH_ID}.data.address`)
 }
 
 export const getWIF = (state: Object) => {
-  return get(state, `${PREFIX}.${ACCOUNT_ID}.data.wif`)
+  return get(state, `${PREFIX}.${AUTH_ID}.data.wif`)
 }
 
 export const getSigningFunction = (state: Object) => {
-  return get(state, `${PREFIX}.${ACCOUNT_ID}.data.signingFunction`)
+  return get(state, `${PREFIX}.${AUTH_ID}.data.signingFunction`)
 }
 
 export const getPublicKey = (state: Object) => {
-  return get(state, `${PREFIX}.${ACCOUNT_ID}.data.publicKey`)
+  return get(state, `${PREFIX}.${AUTH_ID}.data.publicKey`)
 }
 
 export const getIsHardwareLogin = (state: Object) => {
-  return get(state, `${PREFIX}.${ACCOUNT_ID}.data.isHardwareLogin`)
+  return get(state, `${PREFIX}.${AUTH_ID}.data.isHardwareLogin`)
 }
 
-export const getCurrency = (state: Object) => {
-  return get(state, `${PREFIX}.${SETTINGS_ID}.data.currency`)
+export const getNEO = (state: Object): string => {
+  return getBalances(state)[ASSETS.NEO]
 }
 
-export const getTokensForNetwork = (state: Object) => {
-  const selectedNetworkId = getNetworkId(state)
-  const allTokens = get(state, `${PREFIX}.${SETTINGS_ID}.data.tokens`)
-  return allTokens.filter(({ networkId }) => networkId === selectedNetworkId)
+export const getGAS = (state: Object): string => {
+  return getBalances(state)[ASSETS.GAS]
 }
 
-export const syncBlockHeight = (state: Object) => {
-  return blockHeightActions.request({ networkId: getNetworkId(state) })
+export const getTokenBalances = (state: Object): Object => {
+  return omit(getBalances(state), ASSETS.NEO, ASSETS.GAS)
 }
 
-export const getMarketPrices = (state: Object) => {
-  return pricesActions.request({ currency: getCurrency(state) })
+export const getBalances = (state: Object) => {
+  return get(state, `${PREFIX}.${BALANCES_ID}.data`)
 }

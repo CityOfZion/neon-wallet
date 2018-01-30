@@ -3,16 +3,18 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
 
-import withData from '../../hocs/api/withData'
+import appActions from '../../actions/appActions'
+import authActions from '../../actions/authActions'
+import accountActions from '../../actions/accountActions'
+import networkActions from '../../actions/networkActions'
 import withFetch from '../../hocs/api/withFetch'
 import withReload from '../../hocs/api/withReload'
 import withProgressComponents from '../../hocs/api/withProgressComponents'
 import withLoginRedirect from '../../hocs/auth/withLoginRedirect'
 import withLogoutRedirect from '../../hocs/auth/withLogoutRedirect'
-import appActions from '../../actions/appActions'
-import alreadyLoaded from '../../hocs/api/progressStrategies/alreadyLoadedStrategy'
+import withLogoutReset from '../../hocs/auth/withLogoutReset'
 import withNetworkData from '../../hocs/withNetworkData'
-import networkActions from '../../actions/networkActions'
+import alreadyLoaded from '../../hocs/api/progressStrategies/alreadyLoadedStrategy'
 import { checkVersion } from '../../modules/metadata'
 import { showErrorNotification } from '../../modules/notifications'
 import { LOADING, FAILED } from '../../values/state'
@@ -27,8 +29,6 @@ const actionCreators = {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
-
-const mapAppDataToProps = ({ height, settings }) => ({ height, settings })
 
 export default compose(
   // Old way of fetching data, need to refactor this out...
@@ -47,7 +47,6 @@ export default compose(
 
   // Fetch application data based upon the selected network.  Reload data when the network changes.
   withFetch(appActions),
-  withData(appActions, mapAppDataToProps),
   withReload(appActions, ['networkId']),
   withProgressComponents(appActions, {
     [LOADING]: Loading,
@@ -58,5 +57,9 @@ export default compose(
 
   // Navigate to the home or dashboard when the user logs in or out.
   withLoginRedirect,
-  withLogoutRedirect
+  withLogoutRedirect,
+
+  // Remove stale data from store on logout
+  withLogoutReset(authActions),
+  withLogoutReset(accountActions)
 )(App)
