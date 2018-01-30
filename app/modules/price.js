@@ -1,5 +1,8 @@
 // @flow
 import { api } from 'neon-js'
+import storage from 'electron-json-storage'
+
+import { showErrorNotification } from './notifications'
 
 import asyncWrap from '../core/asyncHelper'
 import { DEFAULT_CURRENCY_CODE } from '../core/constants'
@@ -11,25 +14,46 @@ export const RESET_PRICE = 'RESET_PRICE'
 export const SET_CURRENCY = 'SET_CURRENCY'
 
 // Actions
-export function setNEOPrice (NEO: string) {
-  return {
-    type: SET_NEO_PRICE,
-    payload: { NEO }
-  }
-}
+export const setNEOPrice = (NEO: string) => ({
+  type: SET_NEO_PRICE,
+  payload: { NEO }
+})
 
-export function setGASPrice (GAS: string) {
-  return {
-    type: SET_GAS_PRICE,
-    payload: { GAS }
-  }
-}
+export const setGASPrice = (GAS: string) => ({
+  type: SET_GAS_PRICE,
+  payload: { GAS }
+})
 
-export function setCurrency (currency: string) {
-  return {
+export const setCurrency = (currency: string) => async (
+  dispatch: DispatchType
+) => {
+  storage.get('settings', (errorReading, settingsObj) => {
+    if (errorReading) {
+      dispatch(
+        showErrorNotification({ message: 'error grabbing data from storage' })
+      )
+    }
+    storage.set(
+      'settings',
+      {
+        ...settingsObj,
+        currency
+      },
+      saveError => {
+        if (saveError) {
+          dispatch(
+            showErrorNotification({
+              message: 'error saving new currency in storage'
+            })
+          )
+        }
+      }
+    )
+  })
+  return dispatch({
     type: SET_CURRENCY,
     payload: { currency }
-  }
+  })
 }
 
 export function resetPrice () {
@@ -38,15 +62,27 @@ export function resetPrice () {
   }
 }
 
-export const getMarketPriceUSD = () => async (dispatch: DispatchType, getState: GetStateType) => {
+export const getMarketPriceUSD = () => async (
+  dispatch: DispatchType,
+  getState: GetStateType
+) => {
   // If API dies, still display balance - ignore _err
-  const [_err, price] = await asyncWrap(api.cmc.getPrice('NEO', getCurrency(getState()))) // eslint-disable-line
+  // eslint-disable-next-line
+  const [_err, price] = await asyncWrap(
+    api.cmc.getPrice('NEO', getCurrency(getState()))
+  )
   return dispatch(setNEOPrice(price))
 }
 
-export const getGasMarketPriceUSD = () => async (dispatch: DispatchType, getState: GetStateType) => {
+export const getGasMarketPriceUSD = () => async (
+  dispatch: DispatchType,
+  getState: GetStateType
+) => {
   // If API dies, still display balance - ignore _err
-  const [_err, price] = await asyncWrap(api.cmc.getPrice('GAS', getCurrency(getState()))) // eslint-disable-line
+  // eslint-disable-next-line
+  const [_err, price] = await asyncWrap(
+    api.cmc.getPrice('GAS', getCurrency(getState()))
+  )
   return dispatch(setGASPrice(price))
 }
 

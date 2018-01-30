@@ -7,7 +7,7 @@ import styles from './Address.scss'
 
 type Props = {
   className?: string,
-  net: NetworkType,
+  networkId: string,
   explorer: ExplorerType,
   address: string
 }
@@ -24,7 +24,7 @@ export default class Address extends React.Component<Props> {
   }
 
   handleClick = () => {
-    const { net, explorer, address } = this.props
-    openExplorerAddress(net, explorer, address)
+    const { networkId, explorer, address } = this.props
+    openExplorerAddress(networkId, explorer, address)
   }
 }

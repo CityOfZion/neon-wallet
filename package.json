@@ -1,6 +1,6 @@
 {
   "name": "Neon",
-  "version": "0.0.9",
+  "version": "0.1.1",
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",
   "homepage": "https://github.com/CityOfZion/neon-wallet",
@@ -110,8 +110,10 @@
     "redux": "3.7.2",
     "redux-logger": "3.0.6",
     "redux-thunk": "2.2.0",
+    "reselect": "^3.0.1",
     "secure-random": "1.1.1",
     "sifter": "0.5.3",
+    "uuid": "^3.2.1",
     "wif": "2.0.6"
   },
   "devDependencies": {

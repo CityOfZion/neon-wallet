@@ -1,18 +1,43 @@
 // @flow
-import { ASSETS, TOKENS } from './constants'
 import { wallet } from 'neon-js'
+
+import { ASSETS } from './constants'
+import { toBigNumber } from './math'
 
 const MIN_PASSPHRASE_LEN = 4
 
-export const validatePassphraseLength = (passphrase: string): boolean => passphrase.length >= MIN_PASSPHRASE_LEN
+export const validatePassphraseLength = (passphrase: string): boolean =>
+  passphrase.length >= MIN_PASSPHRASE_LEN
 
-export const isToken = (symbol: SymbolType) => Object.keys(TOKENS).includes(symbol)
+export const isToken = (symbol: SymbolType) =>
+  ![ASSETS.NEO, ASSETS.GAS].includes(symbol)
 
 export const obtainBalance = (balances: Object, symbol: SymbolType) => {
   return balances[symbol] || 0
 }
 
-export const validateTransactionBeforeSending = (balance: number, sendEntry: SendEntryType) => {
+export const getTokenBalancesMap = (tokenBalances: Array<TokenBalanceType>) =>
+  tokenBalances.reduce(
+    (tokenBalance, { symbol, balance }: TokenBalanceType) => {
+      tokenBalance[symbol] = balance
+      return tokenBalance
+    },
+    {}
+  )
+
+export const getTokenScriptHashMap = (tokenBalances: Array<TokenBalanceType>) =>
+  tokenBalances.reduce(
+    (tokenBalance, { symbol, scriptHash }: TokenBalanceType) => {
+      tokenBalance[symbol] = scriptHash
+      return tokenBalance
+    },
+    {}
+  )
+
+export const validateTransactionBeforeSending = (
+  balance: number,
+  sendEntry: SendEntryType
+) => {
   const { address, amount, symbol } = sendEntry
 
   if (!address || !amount) {
@@ -31,23 +56,26 @@ export const validateTransactionBeforeSending = (balance: number, sendEntry: Sen
     return 'The address you entered was not valid.'
   }
 
-  if (symbol === ASSETS.NEO && parseFloat(amount) !== parseInt(amount)) { // check for fractional NEO
+  if (symbol === ASSETS.NEO && !toBigNumber(amount).isInteger()) { // check for fractional NEO
     return 'You cannot send fractional amounts of NEO.'
   }
 
-  if (parseFloat(amount) > balance) {
+  if (toBigNumber(amount).gt(balance)) {
     return `You do not have enough ${symbol} to send.`
   }
 
-  if (parseFloat(amount) <= 0) { // check for negative/zero asset
+  if (toBigNumber(amount).lte(0)) { // check for negative/zero asset
     return 'You cannot send zero or negative amounts of an asset.'
   }
 
   return null
 }
 
-export const validateTransactionsBeforeSending = (balances: Object, sendEntries: Array<SendEntryType>) => {
-  const getValidationError = (sendEntry) => {
+export const validateTransactionsBeforeSending = (
+  balances: Object,
+  sendEntries: Array<SendEntryType>
+) => {
+  const getValidationError = sendEntry => {
     const balance = obtainBalance(balances, sendEntry.symbol)
     return validateTransactionBeforeSending(balance, sendEntry)
   }
