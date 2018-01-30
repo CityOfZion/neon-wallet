@@ -39,11 +39,11 @@ test.serial('should login successfully and switch networks', async t => {
   await app.client.click('#loginPage button')
 
   // Check that the default network is MainNet
-  t.is(await app.client.getValue('#network .networkSelector'), '1')
+  t.is(await app.client.getValue('#network .networkSelector'), 'MainNet')
 
-  await app.client.$('#network .networkSelector').selectByValue('2')
+  await app.client.$('#network .networkSelector').selectByValue('TestNet')
 
-  t.is(await app.client.getValue('#network .networkSelector'), '2')
+  t.is(await app.client.getValue('#network .networkSelector'), 'TestNet')
 })
 
 test.serial('should show correct balance', async t => {
