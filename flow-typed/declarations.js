@@ -1,11 +1,13 @@
 // @flow
 
 import {
+  NETWORK,
   EXPLORER,
   ROUTES,
   NOTIFICATION_LEVELS,
   NOTIFICATION_POSITIONS,
-  MODAL_TYPES
+  MODAL_TYPES,
+  TOKENS
 } from '../app/core/constants'
 
 declare type ActionCreatorType = any
@@ -21,7 +23,7 @@ declare type ReduxAction = () => {
   error?: Object
 }
 
-declare type NetworkType = string
+declare type NetworkType = $Values<typeof NETWORK>
 
 declare type ExplorerType = $Values<typeof EXPLORER>
 
@@ -48,33 +50,11 @@ declare type TransactionHistoryType = {
 
 declare type ModalType = $Values<typeof MODAL_TYPES>
 
-declare type SymbolType = string
-
-declare type NetworkItemType = {
-  id: string,
-  label: string,
-  network: NetworkType
-}
-
-declare type TokenItemType = {
-  id: string,
-  scriptHash: string,
-  networkId: string,
-  isUserGenerated: boolean
-}
+declare type SymbolType = $Keys<typeof TOKENS> | 'NEO' | 'GAS'
 
 declare type TokenType = {
   symbol: SymbolType,
   balance: number,
-  totalSupply: number,
-  decimals: number,
-  name: string
-}
-
-declare type TokenBalanceType = {
-  symbol: SymbolType,
-  balance: string,
-  scriptHash: string,
   totalSupply: number,
   decimals: number,
   name: string

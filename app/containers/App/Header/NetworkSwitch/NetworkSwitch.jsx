@@ -1,32 +1,32 @@
 // @flow
 import React, { Component } from 'react'
 
+import { NETWORK } from '../../../../core/constants'
+
 import headerStyles from '../Header.scss'
 
 type Props = {
-  networkId: string,
-  setNetworkId: (string) => any,
-  loadWalletData: Function,
-  networks: Array<NetworkItemType>
+  net: NetworkType,
+  setNetwork: Function,
+  loadWalletData: Function
 }
 
 export default class NetworkSwitch extends Component<Props> {
   chooseNetwork = (e: Object) => {
-    const { setNetworkId, loadWalletData } = this.props
-    const newNetId = e.target.value
-    setNetworkId(newNetId)
+    const { setNetwork, loadWalletData } = this.props
+    const newNet = e.target.value
+    setNetwork(newNet)
     loadWalletData(false)
   }
 
   render () {
-    const { networkId, networks } = this.props
+    const { net } = this.props
     return (
       <div id='network' className={headerStyles.navBarItem}>
         <span className={headerStyles.navBarItemLabel}>Running on</span>
-        <select defaultValue={networkId} onChange={this.chooseNetwork} className='networkSelector'>
-          {networks.map(({ label, id }: NetworkItemType) =>
-            <option key={`networkOption${id}`} value={id}>{label}</option>
-          )}
+        <select defaultValue={net} onChange={this.chooseNetwork} className='networkSelector'>
+          <option value={NETWORK.MAIN}>{NETWORK.MAIN}</option>
+          <option value={NETWORK.TEST}>{NETWORK.TEST}</option>
         </select>
       </div>
     )

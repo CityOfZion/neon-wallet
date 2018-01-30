@@ -20,10 +20,11 @@ type Props = {
   net: string,
   address: string,
   showModal: Function,
+  showErrorNotification: Function,
   sendTransaction: Function,
   NEO: string,
   GAS: string,
-  tokenBalances: Array<TokenBalanceType>,
+  tokens: Object,
   loaded: boolean,
   loadWalletData: Function,
 }
@@ -51,7 +52,8 @@ export default class Dashboard extends Component<Props> {
       address,
       NEO,
       GAS,
-      tokenBalances,
+      tokens,
+      showErrorNotification,
       sendTransaction,
       loaded
     } = this.props
@@ -67,33 +69,18 @@ export default class Dashboard extends Component<Props> {
             <div className={styles.walletButtons}>
               <div
                 className={classNames(styles.walletButton, styles.sendButton)}
-                onClick={() =>
-                  showModal(MODAL_TYPES.SEND, {
-                    NEO,
-                    GAS,
-                    tokenBalances,
-                    sendTransaction,
-                    net,
-                    address
-                  })
-                }
-              >
-                <FaArrowUpward className={styles.walletButtonIcon} />
-                <span className={styles.walletButtonText}>Send</span>
+                onClick={() => showModal(MODAL_TYPES.SEND, { NEO, GAS, tokens, showErrorNotification, sendTransaction, net, address })}>
+                <FaArrowUpward className={styles.walletButtonIcon} /><span className={styles.walletButtonText}>Send</span>
               </div>
               <div
                 className={styles.walletButton}
-                onClick={() => showModal(MODAL_TYPES.RECEIVE, { address })}
-              >
-                <FaArrowDownward className={styles.walletButtonIcon} />
-                <span className={styles.walletButtonText}>Receive</span>
+                onClick={() => showModal(MODAL_TYPES.RECEIVE, { address })}>
+                <FaArrowDownward className={styles.walletButtonIcon} /><span className={styles.walletButtonText}>Receive</span>
               </div>
             </div>
             <WalletInfo />
           </div>
-          <div
-            className={classNames(styles.contentBox, styles.transactionHistory)}
-          >
+          <div className={classNames(styles.contentBox, styles.transactionHistory)}>
             <TransactionHistory />
           </div>
         </div>

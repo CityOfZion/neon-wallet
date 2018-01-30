@@ -1,7 +1,5 @@
 // @flow
 import React from 'react'
-import classNames from 'classnames'
-
 import Cleave from 'cleave.js/react'
 import { omit, noop } from 'lodash'
 
@@ -17,7 +15,6 @@ const DEFAULT_OPTIONS = {
 
 type Props = {
   max?: number,
-  className?: string,
   onChange?: Function,
   options?: {
     numeralThousandsGroupStyle?: 'thousand' | 'lakh' | 'wan' | 'none',
@@ -37,11 +34,10 @@ export default class NumberInput extends React.Component<Props> {
   }
 
   render = () => {
-    const { className } = this.props
-    const passDownProps = omit(this.props, 'max', 'options', 'onChange', 'className')
+    const passDownProps = omit(this.props, 'max', 'options', 'onChange')
 
     return (
-      <div className={classNames(styles.numberInput, className)}>
+      <div className={styles.numberInput}>
         <Cleave
           {...passDownProps}
           className={styles.cleave}

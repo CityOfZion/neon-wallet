@@ -6,18 +6,17 @@ import Tooltip from '../../components/Tooltip'
 
 import { MODAL_TYPES } from '../../core/constants'
 import { formatBalance } from '../../core/formatters'
-import { isZero } from '../../core/math'
 
 import InfoOutline from 'react-icons/lib/md/info-outline'
 
-import styles from './TokenBalances.scss'
+import styles from './TokensBalance.scss'
 
 type Props = {
-  tokenBalances: Array<TokenBalanceType>,
+  tokens: Object,
   showModal: Function,
 }
 
-const TokenBalances = ({ tokenBalances, showModal }: Props) => (
+const tokens = ({ tokens, showModal }: Props) => (
   <Table className={styles.table}>
     <thead>
       <tr>
@@ -26,22 +25,17 @@ const TokenBalances = ({ tokenBalances, showModal }: Props) => (
       </tr>
     </thead>
     <tbody>
-      {tokenBalances.map((token: TokenBalanceType, index: number) => {
-        const { balance, symbol } = token
+      {tokens && Object.keys(tokens).map((symbol) => {
+        const token = tokens[symbol]
+        const { balance } = token
         const formattedBalance = formatBalance(symbol, balance)
         const formattedBalanceDisplay = formatBalance(symbol, balance, true)
         return (
-          <tr key={`${symbol}${index}`}>
+          <tr key={symbol}>
             <td onClick={() => showModal(MODAL_TYPES.TOKEN_INFO, { token })}>
               <span className={styles.symbol}><InfoOutline className={styles.symbolIcon} />{symbol}</span>
             </td>
-            <td>
-              <Tooltip
-                title={formattedBalance}
-                disabled={isZero(balance)}>
-                {formattedBalanceDisplay}
-              </Tooltip>
-            </td>
+            <td><Tooltip title={formattedBalance} disabled={balance === 0}>{formattedBalanceDisplay}</Tooltip></td>
           </tr>
         )
       })}
@@ -49,4 +43,4 @@ const TokenBalances = ({ tokenBalances, showModal }: Props) => (
   </Table>
 )
 
-export default TokenBalances
+export default tokens

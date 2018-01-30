@@ -11,7 +11,6 @@ import notifications from './notifications'
 import modal from './modal'
 import price from './price'
 import addressBook from './addressBook'
-import sale from './sale'
 
 export default combineReducers({
   account,
@@ -24,6 +23,5 @@ export default combineReducers({
   notifications,
   modal,
   price,
-  addressBook,
-  sale
+  addressBook
 })
