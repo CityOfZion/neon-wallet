@@ -124,6 +124,3 @@ export const CURRENCIES = {
   usd: { symbol: '$' },
   zar: { symbol: 'R ' }
 }
-
-export const FINDING_LEDGER_NOTICE =
-  'Looking for USB Devices. Please plugin your device and login.'

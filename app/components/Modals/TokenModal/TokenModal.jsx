@@ -7,6 +7,7 @@ import { getNewTokenItem, validateTokens } from './utils'
 import BaseModal from '../BaseModal'
 import Button from '../../Button'
 import Row from './Row'
+import NetworkSwitch from '../../../containers/App/Header/NetworkSwitch'
 
 import Add from 'react-icons/lib/md/add'
 
@@ -14,8 +15,7 @@ import styles from './TokenModal.scss'
 
 type Props = {
   hideModal: () => any,
-  networkId?: string,
-  networks: Array<NetworkItemType>,
+  networkId: string,
   setUserGeneratedTokens: Function,
   tokens: Array<TokenItemType>,
   showErrorNotification: Object => any,
@@ -26,7 +26,6 @@ type InputErrorType = 'scriptHash';
 
 type State = {
   tokens: Array<TokenItemType>,
-  networkId: string,
   errorItemId: ?number,
   errorType: ?InputErrorType
 }
@@ -38,7 +37,6 @@ class TokenModal extends Component<Props, State> {
 
   state = {
     tokens: this.props.tokens,
-    networkId: this.props.networkId || this.props.networks[0].id,
     errorItemId: null,
     errorType: null
   }
@@ -52,9 +50,8 @@ class TokenModal extends Component<Props, State> {
   }
 
   addToken = () => {
-    const { tokens, networkId } = this.state
     this.setState({
-      tokens: [...tokens, getNewTokenItem(networkId)]
+      tokens: [...this.state.tokens, getNewTokenItem(this.props.networkId)]
     })
   }
 
@@ -94,15 +91,9 @@ class TokenModal extends Component<Props, State> {
     })
   }
 
-  updateNetworkId = (e: Object) => {
-    this.setState({
-      networkId: e.target.value
-    })
-  }
-
   render () {
-    const { hideModal, networks } = this.props
-    const { tokens, errorItemId, errorType, networkId } = this.state
+    const { hideModal, networkId } = this.props
+    const { tokens, errorItemId, errorType } = this.state
 
     return (
       <BaseModal
@@ -122,13 +113,7 @@ class TokenModal extends Component<Props, State> {
             </Button>
             <div className={styles.switchNetworkContainer}>
               <span className={styles.switchNetworkLabel}>Network:</span>
-              <select defaultValue={networkId} onChange={this.updateNetworkId}>
-                {networks.map(({ label, id }: NetworkItemType) => (
-                  <option key={`networkOption${id}`} value={id}>
-                    {label}
-                  </option>
-                ))}
-              </select>
+              <NetworkSwitch />
             </div>
           </div>
           <form

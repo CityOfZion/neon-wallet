@@ -3,29 +3,32 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
 
-// import withData from '../../hocs/api/withData'
-import withFetch from '../../hocs/api/withFetch'
-// import withReload from '../../hocs/api/withReload'
-import withProgressComponents from '../../hocs/api/withProgressComponents'
-// import appActions from '../../actions/appActions'
-import withNetworkData from '../../hocs/withNetworkData'
+import appActions from '../../actions/appActions'
+import authActions from '../../actions/authActions'
+import accountActions from '../../actions/accountActions'
 import networkActions from '../../actions/networkActions'
-import { checkVersion, initSettings } from '../../modules/metadata'
+import withFetch from '../../hocs/api/withFetch'
+import withReload from '../../hocs/api/withReload'
+import withProgressComponents from '../../hocs/api/withProgressComponents'
+import withLoginRedirect from '../../hocs/auth/withLoginRedirect'
+import withLogoutRedirect from '../../hocs/auth/withLogoutRedirect'
+import withLogoutReset from '../../hocs/auth/withLogoutReset'
+import withNetworkData from '../../hocs/withNetworkData'
+import alreadyLoaded from '../../hocs/api/progressStrategies/alreadyLoadedStrategy'
+import { checkVersion } from '../../modules/metadata'
 import { showErrorNotification } from '../../modules/notifications'
-import { INITIAL, LOADING } from '../../values/state'
+import { LOADING, FAILED } from '../../values/state'
 
 import App from './App'
 import Loading from './Loading'
+import Failed from './Failed'
 
 const actionCreators = {
   checkVersion,
-  initSettings,
   showErrorNotification
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
-
-// const mapAppDataToProps = ({ height, settings }) => ({ height, settings })
 
 export default compose(
   // Old way of fetching data, need to refactor this out...
@@ -36,16 +39,27 @@ export default compose(
   withFetch(networkActions),
   withNetworkData(),
   withProgressComponents(networkActions, {
-    [INITIAL]: Loading, // TODO: refactor such that LOADING and INITIAL are treated the same
-    [LOADING]: Loading
-  })
+    [LOADING]: Loading,
+    [FAILED]: Failed
+  }, {
+    strategy: alreadyLoaded
+  }),
 
-  // // Fetch application data based upon the selected network.  Reload data when the network changes.
-  // withFetch(appActions),
-  // withData(appActions, mapAppDataToProps),
-  // withReload(appActions, ['net']),
-  // withProgressComponents(appActions, {
-  //   [INITIAL]: Loading,
-  //   [LOADING]: Loading
-  // })
+  // Fetch application data based upon the selected network.  Reload data when the network changes.
+  withFetch(appActions),
+  withReload(appActions, ['networkId']),
+  withProgressComponents(appActions, {
+    [LOADING]: Loading,
+    [FAILED]: Failed
+  }, {
+    strategy: alreadyLoaded
+  }),
+
+  // Navigate to the home or dashboard when the user logs in or out.
+  withLoginRedirect,
+  withLogoutRedirect,
+
+  // Remove stale data from store on logout
+  withLogoutReset(authActions),
+  withLogoutReset(accountActions)
 )(App)

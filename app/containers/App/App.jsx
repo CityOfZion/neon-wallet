@@ -14,16 +14,14 @@ import styles from './App.scss'
 type Props = {
   children: React$Node,
   checkVersion: Function,
-  initSettings: Function,
   showErrorNotification: Function
 }
 
 class App extends Component<Props> {
   componentDidMount () {
-    const { checkVersion, initSettings, showErrorNotification } = this.props
+    const { checkVersion, showErrorNotification } = this.props
 
     checkVersion()
-    initSettings()
     upgradeUserWalletNEP6()
       .catch((e) => {
         showErrorNotification({ message: `Error upgrading legacy wallet: ${e.message}` })

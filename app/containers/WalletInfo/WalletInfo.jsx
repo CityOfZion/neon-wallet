@@ -27,8 +27,6 @@ type Props = {
   tokenBalances: Array<TokenBalanceType>,
   loadWalletData: Function,
   currencyCode: string,
-  showSuccessNotification: Function,
-  showErrorNotification: Function,
   showModal: Function,
   oldParticipateInSale: Function,
   participateInSale: Function,
@@ -39,25 +37,6 @@ type Props = {
 }
 
 export default class WalletInfo extends Component<Props> {
-  refreshBalance = () => {
-    const {
-      showSuccessNotification,
-      showErrorNotification,
-      loadWalletData
-    } = this.props
-    loadWalletData()
-      .then(response => {
-        showSuccessNotification({
-          message: 'Received latest blockchain information.'
-        })
-      })
-      .catch(e => {
-        showErrorNotification({
-          message: 'Failed to retrieve blockchain information'
-        })
-      })
-  }
-
   render () {
     const {
       address,
@@ -117,7 +96,7 @@ export default class WalletInfo extends Component<Props> {
             {formatFiat(totalValue)} {displayCurrencyCode}
           </div>
           <div
-            onClick={this.refreshBalance}
+            onClick={loadWalletData}
             className={classNames(
               styles.refreshIconContainer,
               'refreshBalance'
@@ -146,9 +125,7 @@ export default class WalletInfo extends Component<Props> {
                   networks,
                   networkId,
                   setUserGeneratedTokens,
-                  onSave: () => {
-                    loadWalletData(false)
-                  }
+                  onSave: loadWalletData
                 })
               },
               oldParticipateInSale,

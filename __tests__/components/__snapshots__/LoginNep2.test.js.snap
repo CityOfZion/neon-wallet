@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LoginNep2 renders without crashing 1`] = `
-<LoginNep2
+<withActions(Connect(Connect(withError(Connect(withProgressProp(ErrorNotifier))))))
   loginNep2={[Function]}
   store={
     Object {

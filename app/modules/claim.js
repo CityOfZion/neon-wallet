@@ -7,16 +7,14 @@ import {
   showInfoNotification
 } from './notifications'
 import {
+  getNetwork,
   getWIF,
   getAddress,
   getSigningFunction,
   getPublicKey,
-  LOGOUT,
-  getIsHardwareLogin
-} from './account'
-import { getNEO } from './wallet'
-
-import { getNetwork } from '../core/deprecated'
+  getIsHardwareLogin,
+  getNEO
+} from '../core/deprecated'
 import { ASSETS } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
 import { FIVE_MINUTES_MS } from '../core/time'
@@ -25,21 +23,10 @@ import { log } from '../util/Logs'
 import { toNumber } from '../core/math'
 
 // Constants
-export const SET_CLAIM = 'SET_CLAIM'
 export const SET_CLAIM_REQUEST = 'SET_CLAIM_REQUEST'
 export const DISABLE_CLAIM = 'DISABLE_CLAIM'
 
 // Actions
-export function setClaim (claimAvailable: number, claimUnavailable: number) {
-  return {
-    type: SET_CLAIM,
-    payload: {
-      claimAvailable,
-      claimUnavailable
-    }
-  }
-}
-
 export function setClaimRequest (claimRequest: boolean) {
   return {
     type: SET_CLAIM_REQUEST,
@@ -52,15 +39,6 @@ export function disableClaim (disableClaimButton: boolean) {
     type: DISABLE_CLAIM,
     payload: { disableClaimButton }
   }
-}
-
-export const syncAvailableClaim = (net: NetworkType, address: string) => async (
-  dispatch: DispatchType
-) => {
-  const [_err, result] = await asyncWrap(api.neonDB.getClaims(net, address)) // eslint-disable-line
-  const available = parseInt(result.total_claim)
-  const unavailable = parseInt(result.total_unspent_claim)
-  return dispatch(setClaim(available, unavailable))
 }
 
 export const doClaimNotify = () => async (
@@ -175,21 +153,10 @@ export const doGasClaim = () => async (
 
 // State Getters
 export const getClaimRequest = (state: Object) => state.claim.claimRequest
-export const getClaimAmount = (state: Object) => state.claim.claimAmount
-export const getClaimAvailable = (state: Object) => state.claim.claimAvailable
-export const getClaimUnavailable = (state: Object) =>
-  state.claim.claimUnavailable
-export const getClaimWasUpdated = (state: Object) =>
-  state.claim.claimWasUpdated
-export const getDisableClaimButton = (state: Object) =>
-  state.claim.disableClaimButton
+export const getDisableClaimButton = (state: Object) => state.claim.disableClaimButton
 
 const initialState = {
   claimRequest: false,
-  claimAmount: 0,
-  claimAvailable: 0,
-  claimUnavailable: 0,
-  claimWasUpdated: false,
   disableClaimButton: false
 }
 
@@ -201,30 +168,12 @@ export default (state: Object = initialState, action: ReduxAction) => {
         ...state,
         claimRequest
       }
-    case SET_CLAIM:
-      const { claimAvailable, claimUnavailable } = action.payload
-      let claimWasUpdated = false
-      if (
-        claimAvailable > state.claimAvailable &&
-        state.claimRequest === true
-      ) {
-        claimWasUpdated = true
-      }
-      return {
-        ...state,
-        claimAmount: (claimAvailable + claimUnavailable) / 100000000,
-        claimAvailable,
-        claimUnavailable,
-        claimWasUpdated
-      }
     case DISABLE_CLAIM:
       const { disableClaimButton } = action.payload
       return {
         ...state,
         disableClaimButton
       }
-    case LOGOUT:
-      return initialState
     default:
       return state
   }

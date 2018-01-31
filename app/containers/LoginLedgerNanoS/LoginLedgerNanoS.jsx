@@ -3,78 +3,82 @@ import React, { Component } from 'react'
 
 import HomeButtonLink from '../../components/HomeButtonLink'
 import Button from '../../components/Button'
+import styles from '../../styles/login.scss'
 
-import { ROUTES, FINDING_LEDGER_NOTICE } from '../../core/constants'
-
-import loginStyles from '../../styles/login.scss'
+type DeviceInfo = {
+  manufacturer: string,
+  product: string
+}
 
 type Props = {
-  ledgerNanoSGetLogin: Function,
-  ledgerNanoSGetInfoAsync: Function,
-  hardwareDeviceInfo: string,
-  hardwarePublicKeyInfo: string,
-  publicKey: string,
-  history: Object
-}
-type State = {
-  intervalId: any
+  login: Function,
+  connect: Function,
+  deviceInfo: ?DeviceInfo,
+  publicKey: ?string,
+  error: ?string
 }
 
-export default class LoginLedgerNanoS extends Component<Props, State> {
-  state = {
-    intervalId: null
-  }
+const POLL_FREQUENCY = 1000
+
+export default class LoginLedgerNanoS extends Component<Props> {
+  intervalId: ?number
 
   componentDidMount () {
-    const { ledgerNanoSGetInfoAsync } = this.props
-    const intervalId = setInterval(async () => {
-      await ledgerNanoSGetInfoAsync()
-    }, 1000)
-    this.setState({ intervalId })
-  }
-
-  shouldComponentUpdate (nextProps: Props) {
-    const { publicKey, hardwarePublicKeyInfo, hardwareDeviceInfo } = this.props
-    if (
-      nextProps.publicKey !== publicKey ||
-      nextProps.hardwarePublicKeyInfo !== hardwarePublicKeyInfo ||
-      (nextProps.hardwareDeviceInfo === FINDING_LEDGER_NOTICE &&
-        hardwareDeviceInfo === null)
-    ) { return true }
-    return false
+    this.intervalId = setInterval(this.props.connect, POLL_FREQUENCY)
   }
 
   componentWillUnmount () {
-    const { intervalId } = this.state
-    if (intervalId) {
-      clearInterval(intervalId)
-    }
-  }
-
-  onLedgerNanoSChange = () => {
-    const { ledgerNanoSGetLogin, publicKey, history } = this.props
-    if (publicKey) {
-      ledgerNanoSGetLogin()
-      history.push(ROUTES.DASHBOARD)
+    if (this.intervalId) {
+      clearInterval(this.intervalId)
     }
   }
 
   render () {
-    const { hardwareDeviceInfo, hardwarePublicKeyInfo, publicKey } = this.props
     return (
-      <div id='loginPage' className={loginStyles.loginPage}>
-        <div className={loginStyles.title}>Login using the Ledger Nano S:</div>
-        <div className={loginStyles.loginForm}>
+      <div id='loginPage' className={styles.loginPage}>
+        <div className={styles.title}>Login using the Ledger Nano S:</div>
+        <div className={styles.loginForm}>
           <div>
-            <Button disabled={!publicKey} onClick={this.onLedgerNanoSChange}>
+            <Button disabled={!this.canLogin()} onClick={this.props.login}>
               Use Ledger Nano S
             </Button>
             <HomeButtonLink />
           </div>
-          <p>{hardwareDeviceInfo}</p>
-          <p>{hardwarePublicKeyInfo}</p>
+          {this.renderDeviceInfo()}
+          {this.renderStatus()}
+          {this.renderError()}
         </div>
       </div>
     )
+  }
+
+  renderDeviceInfo () {
+    const { deviceInfo } = this.props
+
+    if (deviceInfo) {
+      return <p>Found USB ${deviceInfo.manufacturer} ${deviceInfo.product}</p>
+    } else {
+      return <p>Looking for USB Devices. Please plugin your device and login.</p>
+    }
+  }
+
+  renderStatus () {
+    const { publicKey } = this.props
+
+    if (publicKey) {
+      return <p>Success. NEO app found on hardware device. Click button above to login.</p>
+    }
+  }
+
+  renderError () {
+    const { error } = this.props
+
+    if (error) {
+      return <p>{error}</p>
+    }
+  }
+
+  canLogin () {
+    return !!this.props.publicKey
   }
 }
