@@ -1,6 +1,5 @@
 // @flow
-import { compose, mapProps } from 'recompose'
-import { omit } from 'lodash'
+import { compose, withProps } from 'recompose'
 
 import TransactionHistory from './TransactionHistory'
 import transactionHistoryActions from '../../actions/transactionHistoryActions'
@@ -9,15 +8,17 @@ import withData from '../../hocs/api/withData'
 import withProgressProp from '../../hocs/api/withProgressProp'
 import withNetworkData from '../../hocs/withNetworkData'
 import withAuthData from '../../hocs/withAuthData'
+import withoutProps from '../../hocs/withoutProps'
 import { LOADING } from '../../values/state'
+
+const PROGRESS_PROP = 'progress'
 
 const mapTransactionsDataToProps = (transactions) => ({
   transactions
 })
 
 const mapLoadingProp = (props) => ({
-  ...omit(props, 'progress'),
-  loading: props.progress === LOADING
+  loading: props[PROGRESS_PROP] === LOADING
 })
 
 export default compose(
@@ -25,6 +26,9 @@ export default compose(
   withAuthData(),
   withFetch(transactionHistoryActions),
   withData(transactionHistoryActions, mapTransactionsDataToProps),
-  withProgressProp(transactionHistoryActions, { propName: 'progress' }),
-  mapProps(mapLoadingProp)
+
+  // pass `loading` boolean to component
+  withProgressProp(transactionHistoryActions, { propName: PROGRESS_PROP }),
+  withProps(mapLoadingProp),
+  withoutProps(PROGRESS_PROP)
 )(TransactionHistory)
