@@ -1,5 +1,5 @@
 // @flow
-import { compose, mapProps } from 'recompose'
+import { compose, withProps } from 'recompose'
 
 import withData from './api/withData'
 import networkActions from '../actions/networkActions'
@@ -12,6 +12,6 @@ export default function withNetworkData (key: string = 'networkId') {
     withData(networkActions, mapNetworkDataToProps),
 
     // TODO: refactor this out by updating network state to use new action implementation
-    mapProps((props) => ({ ...props, net: getNetworkById(props.networkId) }))
+    withProps((props) => ({ net: getNetworkById(props.networkId) }))
   )
 }
