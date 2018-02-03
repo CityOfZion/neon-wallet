@@ -1,6 +1,6 @@
 // @flow
 import { wallet } from 'neon-js'
-import { extend } from 'lodash'
+import { map, extend } from 'lodash'
 
 import { ASSETS } from './constants'
 import { toBigNumber } from './math'
@@ -17,12 +17,12 @@ export const obtainBalance = (balances: Object, symbol: SymbolType) => {
   return balances[symbol] || 0
 }
 
-export const getTokenBalancesMap = (tokenBalances: Array<TokenBalanceType>) => {
-  return extend({}, ...tokenBalances.map(({ symbol, balance }) => ({ [symbol]: balance })))
+export const getTokenBalancesMap = (tokenBalances: { [key: string]: TokenBalanceType }) => {
+  return extend({}, ...map(tokenBalances, ({ symbol, balance }) => ({ [symbol]: balance })))
 }
 
 export const validateTransactionBeforeSending = (
-  balance: number,
+  balance: number | string,
   sendEntry: SendEntryType
 ) => {
   const { address, amount, symbol } = sendEntry

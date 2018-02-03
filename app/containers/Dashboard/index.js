@@ -26,7 +26,7 @@ const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
   notification: getNotifications(state)
 })
 
-const mapBalanceDataToProps = (balances) => ({
+const mapAccountDataToProps = ({ balances }) => ({
   NEO: balances.NEO,
   GAS: balances.GAS,
   tokenBalances: omit(balances, 'NEO', 'GAS')
@@ -54,7 +54,7 @@ export default compose(
   }, {
     strategy: alreadyLoaded
   }),
-  withData(accountActions, mapBalanceDataToProps),
+  withData(accountActions, mapAccountDataToProps),
   withReload(accountActions, ['networkId']),
   withActions(accountActions, mapAccountActionsToProps)
 )(Dashboard)
