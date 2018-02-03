@@ -21,11 +21,17 @@ async function getBalances ({ net, address, tokens }: Props) {
   // token balances
   const promises = tokens.map(async (token) => {
     const { scriptHash } = token
-    const response = await api.nep5.getToken(endpoint, scriptHash, address)
-    const balance = toBigNumber(response.balance || 0).round(response.decimals).toString()
 
-    return {
-      [scriptHash]: { ...response, balance }
+    try {
+      const response = await api.nep5.getToken(endpoint, scriptHash, address)
+      const balance = toBigNumber(response.balance || 0).round(response.decimals).toString()
+
+      return {
+        [scriptHash]: { ...response, balance }
+      }
+    } catch (err) {
+      // invalid scriptHash
+      return {}
     }
   })
 
