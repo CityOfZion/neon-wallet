@@ -22,7 +22,7 @@ type SagaActions = {
   failure: Function
 }
 
-function createSagaActions (meta: ActionMeta): SagaActions {
+export function createSagaActions (meta: ActionMeta): SagaActions {
   function * request (state: Object, payload: Payload, actions: SagaActions) {
     const { fn } = payload
 
@@ -56,7 +56,7 @@ function createSagaActions (meta: ActionMeta): SagaActions {
   return { request, success, failure }
 }
 
-function retryAction (id: string): Function {
+export function retryAction (id: string): Function {
   return (actionState: ActionState) => {
     return actionMatcher(ACTION_RETRY, id)(actionState)
   }
