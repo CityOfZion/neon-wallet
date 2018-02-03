@@ -21,7 +21,7 @@ const DISPLAY_MODES = {
 type Props = {
   NEO: string,
   GAS: string,
-  tokenBalances: Array<TokenBalanceType>,
+  tokenBalances: { [key: string]: TokenBalanceType },
   showErrorNotification: Function,
   hideModal: Function,
   sendTransaction: Function,
@@ -30,7 +30,7 @@ type Props = {
 }
 
 type BalancesType = {
-  [key: SymbolType]: any
+  [key: SymbolType]: string
 }
 
 type State = {
