@@ -3,6 +3,8 @@ import React from 'react'
 import classNames from 'classnames'
 import { NavLink } from 'react-router-dom'
 import HomeIcon from 'react-icons/lib/md/home'
+import ArrowUpIcon from 'react-icons/lib/fa/arrow-circle-up'
+import ArrowDownIcon from 'react-icons/lib/fa/arrow-circle-down'
 
 import Logout from './Logout'
 import styles from './Sidebar.scss'
@@ -15,14 +17,18 @@ type Props = {
   className: string,
   neoPrice: number,
   gasPrice: number,
-  currencyCode: string
+  currencyCode: string,
+  showSendModal: Function,
+  showReceiveModal: Function
 }
 
 const Sidebar = ({
   className,
   neoPrice,
   gasPrice,
-  currencyCode
+  currencyCode,
+  showSendModal,
+  showReceiveModal
 }: Props) => (
   <div className={classNames(styles.container, className)}>
     <div className={styles.logo}>
@@ -33,6 +39,18 @@ const Sidebar = ({
       <NavLink exact to={ROUTES.DASHBOARD} className={styles.navItem} activeClassName={styles.active}>
         <HomeIcon />
       </NavLink>
+    </Tooltip>
+
+    <Tooltip title='Send' position='right'>
+      <a className={styles.navItem} onClick={showSendModal}>
+        <ArrowUpIcon />
+      </a>
+    </Tooltip>
+
+    <Tooltip title='Receive' position='right'>
+      <a className={styles.navItem} onClick={showReceiveModal}>
+        <ArrowDownIcon />
+      </a>
     </Tooltip>
 
     <Tooltip title='Logout' position='right'>

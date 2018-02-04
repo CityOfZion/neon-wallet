@@ -2,11 +2,9 @@
 import { connect, type MapStateToProps } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
-import { omit } from 'lodash'
 
 import Loader from '../../components/Loader'
 import accountActions from '../../actions/accountActions'
-import withData from '../../hocs/api/withData'
 import withFetch from '../../hocs/api/withFetch'
 import withReload from '../../hocs/api/withReload'
 import withActions from '../../hocs/api/withActions'
@@ -17,7 +15,6 @@ import withFilteredTokensData from '../../hocs/withFilteredTokensData'
 import alreadyLoaded from '../../hocs/api/progressStrategies/alreadyLoadedStrategy'
 import { getNotifications } from '../../modules/notifications'
 import { showModal } from '../../modules/modal'
-import { sendTransaction } from '../../modules/transactions'
 import { LOADING } from '../../values/state'
 
 import Dashboard from './Dashboard'
@@ -26,15 +23,8 @@ const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
   notification: getNotifications(state)
 })
 
-const mapAccountDataToProps = ({ balances }) => ({
-  NEO: balances.NEO,
-  GAS: balances.GAS,
-  tokenBalances: omit(balances, 'NEO', 'GAS')
-})
-
 const actionCreators = {
-  showModal,
-  sendTransaction
+  showModal
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
@@ -54,7 +44,6 @@ export default compose(
   }, {
     strategy: alreadyLoaded
   }),
-  withData(accountActions, mapAccountDataToProps),
   withReload(accountActions, ['networkId']),
   withActions(accountActions, mapAccountActionsToProps)
 )(Dashboard)
