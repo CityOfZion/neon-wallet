@@ -1,7 +1,9 @@
+// @flow
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
 import App from './containers/App'
+import RedirectHome from './RedirectHome'
 import LoginPrivateKey from './containers/LoginPrivateKey'
 import LoginLedgerNanoS from './containers/LoginLedgerNanoS'
 import CreateWallet from './containers/CreateWallet'
@@ -15,6 +17,7 @@ import { ROUTES } from './core/constants'
 
 export default () => (
   <App>
+    <RedirectHome />
     <Switch>
       <Route exact path={ROUTES.DASHBOARD} component={Dashboard} />
       <Route
@@ -33,7 +36,7 @@ export default () => (
       <Route exact path={ROUTES.LOGIN_LEDGER_NANO_S} component={LoginLedgerNanoS} />
       <Route exact path={ROUTES.SETTINGS} component={Settings} />
       <Route exact path={ROUTES.DISPLAY_WALLET_KEYS} component={DisplayWalletAccounts} />
-      <Route path={ROUTES.HOME} component={Home} />
+      <Route exact path={ROUTES.HOME} component={Home} />
     </Switch>
   </App>
 )

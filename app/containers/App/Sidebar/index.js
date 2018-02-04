@@ -1,6 +1,7 @@
 // @flow
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
+import { withRouter } from 'react-router-dom'
 
 import Sidebar from './Sidebar'
 import pricesActions from '../../../actions/pricesActions'
@@ -20,6 +21,7 @@ const mapDispatchToProps = (dispatch, props) => ({
 })
 
 export default compose(
+  withRouter, // allow `NavLink` components to re-render when the window location changes
   withData(pricesActions, mapPricesDataToProps),
   withCurrencyData('currencyCode'),
   connect(null, mapDispatchToProps)
