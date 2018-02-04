@@ -30,81 +30,79 @@ exports[`Claim should render claim GAS button as disabled 1`] = `
         doGasClaim={[Function]}
         setClaimRequest={[Function]}
       >
-        <div>
+        <Tooltip
+          disabled={false}
+          title="You can claim GAS once every 5 minutes"
+        >
           <Tooltip
+            animateFill={true}
+            animation="fade"
+            arrow={true}
+            arrowSize="regular"
+            className=""
+            delay={0}
             disabled={false}
+            distance={10}
+            duration={375}
+            followCursor={false}
+            hideDelay={0}
+            hideDuration={375}
+            hideOnClick={true}
+            html={null}
+            inertia={false}
+            interactive={false}
+            interactiveBorder={2}
+            multiple={false}
+            offset={0}
+            onHidden={[Function]}
+            onHide={[Function]}
+            onRequestClose={[Function]}
+            onShow={[Function]}
+            onShown={[Function]}
+            popperOptions={Object {}}
+            position="bottom"
+            size="regular"
+            sticky={false}
+            stickyDuration={200}
+            style={Object {}}
+            theme="dark"
             title="You can claim GAS once every 5 minutes"
+            touchHold={false}
+            trigger="mouseenter focus"
+            unmountHTMLWhenHide={false}
           >
-            <Tooltip
-              animateFill={true}
-              animation="fade"
-              arrow={true}
-              arrowSize="regular"
+            <div
               className=""
-              delay={0}
-              disabled={false}
-              distance={10}
-              duration={375}
-              followCursor={false}
-              hideDelay={0}
-              hideDuration={375}
-              hideOnClick={true}
-              html={null}
-              inertia={false}
-              interactive={false}
-              interactiveBorder={2}
-              multiple={false}
-              offset={0}
-              onHidden={[Function]}
-              onHide={[Function]}
-              onRequestClose={[Function]}
-              onShow={[Function]}
-              onShown={[Function]}
-              popperOptions={Object {}}
-              position="bottom"
-              size="regular"
-              sticky={false}
-              stickyDuration={200}
-              style={Object {}}
-              theme="dark"
-              title="You can claim GAS once every 5 minutes"
-              touchHold={false}
-              trigger="mouseenter focus"
-              unmountHTMLWhenHide={false}
-            >
-              <div
-                className=""
-                style={
-                  Object {
-                    "display": "inline",
-                  }
+              style={
+                Object {
+                  "display": "inline",
                 }
-                title="You can claim GAS once every 5 minutes"
+              }
+              title="You can claim GAS once every 5 minutes"
+            >
+              <Button
+                cancel={false}
+                disabled={true}
+                id="claim"
+                onClick={[Function]}
+                primary={true}
+                secondary={false}
               >
-                <Button
-                  cancel={false}
+                <button
+                  className="button primary"
                   disabled={true}
                   id="claim"
                   onClick={[Function]}
-                  primary={true}
-                  secondary={false}
+                  type="button"
                 >
-                  <button
-                    className="button primary"
-                    disabled={true}
-                    id="claim"
-                    onClick={[Function]}
-                    type="button"
-                  >
-                    Claim 
-                    0.01490723
-                     GAS
-                  </button>
-                </Button>
-              </div>
-            </Tooltip>
+                  Claim 
+                  0.01490723
+                   GAS
+                </button>
+              </Button>
+            </div>
           </Tooltip>
-        </div>
+        </Tooltip>
       </withData(Claim)>
     </Connect(withData(Claim))>
   </Connect(Connect(withData(Claim)))>
@@ -141,81 +139,79 @@ exports[`Claim should render claim GAS button as enabled 1`] = `
         doGasClaim={[Function]}
         setClaimRequest={[Function]}
       >
-        <div>
+        <Tooltip
+          disabled={true}
+          title="You can claim GAS once every 5 minutes"
+        >
           <Tooltip
+            animateFill={true}
+            animation="fade"
+            arrow={true}
+            arrowSize="regular"
+            className=""
+            delay={0}
             disabled={true}
+            distance={10}
+            duration={375}
+            followCursor={false}
+            hideDelay={0}
+            hideDuration={375}
+            hideOnClick={true}
+            html={null}
+            inertia={false}
+            interactive={false}
+            interactiveBorder={2}
+            multiple={false}
+            offset={0}
+            onHidden={[Function]}
+            onHide={[Function]}
+            onRequestClose={[Function]}
+            onShow={[Function]}
+            onShown={[Function]}
+            popperOptions={Object {}}
+            position="bottom"
+            size="regular"
+            sticky={false}
+            stickyDuration={200}
+            style={Object {}}
+            theme="dark"
             title="You can claim GAS once every 5 minutes"
+            touchHold={false}
+            trigger="mouseenter focus"
+            unmountHTMLWhenHide={false}
           >
-            <Tooltip
-              animateFill={true}
-              animation="fade"
-              arrow={true}
-              arrowSize="regular"
+            <div
               className=""
-              delay={0}
-              disabled={true}
-              distance={10}
-              duration={375}
-              followCursor={false}
-              hideDelay={0}
-              hideDuration={375}
-              hideOnClick={true}
-              html={null}
-              inertia={false}
-              interactive={false}
-              interactiveBorder={2}
-              multiple={false}
-              offset={0}
-              onHidden={[Function]}
-              onHide={[Function]}
-              onRequestClose={[Function]}
-              onShow={[Function]}
-              onShown={[Function]}
-              popperOptions={Object {}}
-              position="bottom"
-              size="regular"
-              sticky={false}
-              stickyDuration={200}
-              style={Object {}}
-              theme="dark"
-              title="You can claim GAS once every 5 minutes"
-              touchHold={false}
-              trigger="mouseenter focus"
-              unmountHTMLWhenHide={false}
-            >
-              <div
-                className=""
-                style={
-                  Object {
-                    "display": "inline",
-                  }
+              style={
+                Object {
+                  "display": "inline",
                 }
-                title="You can claim GAS once every 5 minutes"
+              }
+              title="You can claim GAS once every 5 minutes"
+            >
+              <Button
+                cancel={false}
+                disabled={false}
+                id="claim"
+                onClick={[Function]}
+                primary={true}
+                secondary={false}
               >
-                <Button
-                  cancel={false}
+                <button
+                  className="button primary"
                   disabled={false}
                   id="claim"
                   onClick={[Function]}
-                  primary={true}
-                  secondary={false}
+                  type="button"
                 >
-                  <button
-                    className="button primary"
-                    disabled={false}
-                    id="claim"
-                    onClick={[Function]}
-                    type="button"
-                  >
-                    Claim 
-                    0.01490723
-                     GAS
-                  </button>
-                </Button>
-              </div>
-            </Tooltip>
+                  Claim 
+                  0.01490723
+                   GAS
+                </button>
+              </Button>
+            </div>
           </Tooltip>
-        </div>
+        </Tooltip>
       </withData(Claim)>
     </Connect(withData(Claim))>
   </Connect(Connect(withData(Claim)))>
@@ -252,81 +248,79 @@ exports[`Claim should render without crashing 1`] = `
         doGasClaim={[Function]}
         setClaimRequest={[Function]}
       >
-        <div>
+        <Tooltip
+          disabled={true}
+          title="You can claim GAS once every 5 minutes"
+        >
           <Tooltip
+            animateFill={true}
+            animation="fade"
+            arrow={true}
+            arrowSize="regular"
+            className=""
+            delay={0}
             disabled={true}
+            distance={10}
+            duration={375}
+            followCursor={false}
+            hideDelay={0}
+            hideDuration={375}
+            hideOnClick={true}
+            html={null}
+            inertia={false}
+            interactive={false}
+            interactiveBorder={2}
+            multiple={false}
+            offset={0}
+            onHidden={[Function]}
+            onHide={[Function]}
+            onRequestClose={[Function]}
+            onShow={[Function]}
+            onShown={[Function]}
+            popperOptions={Object {}}
+            position="bottom"
+            size="regular"
+            sticky={false}
+            stickyDuration={200}
+            style={Object {}}
+            theme="dark"
             title="You can claim GAS once every 5 minutes"
+            touchHold={false}
+            trigger="mouseenter focus"
+            unmountHTMLWhenHide={false}
           >
-            <Tooltip
-              animateFill={true}
-              animation="fade"
-              arrow={true}
-              arrowSize="regular"
+            <div
               className=""
-              delay={0}
-              disabled={true}
-              distance={10}
-              duration={375}
-              followCursor={false}
-              hideDelay={0}
-              hideDuration={375}
-              hideOnClick={true}
-              html={null}
-              inertia={false}
-              interactive={false}
-              interactiveBorder={2}
-              multiple={false}
-              offset={0}
-              onHidden={[Function]}
-              onHide={[Function]}
-              onRequestClose={[Function]}
-              onShow={[Function]}
-              onShown={[Function]}
-              popperOptions={Object {}}
-              position="bottom"
-              size="regular"
-              sticky={false}
-              stickyDuration={200}
-              style={Object {}}
-              theme="dark"
-              title="You can claim GAS once every 5 minutes"
-              touchHold={false}
-              trigger="mouseenter focus"
-              unmountHTMLWhenHide={false}
-            >
-              <div
-                className=""
-                style={
-                  Object {
-                    "display": "inline",
-                  }
+              style={
+                Object {
+                  "display": "inline",
                 }
-                title="You can claim GAS once every 5 minutes"
+              }
+              title="You can claim GAS once every 5 minutes"
+            >
+              <Button
+                cancel={false}
+                disabled={false}
+                id="claim"
+                onClick={[Function]}
+                primary={true}
+                secondary={false}
               >
-                <Button
-                  cancel={false}
+                <button
+                  className="button primary"
                   disabled={false}
                   id="claim"
                   onClick={[Function]}
-                  primary={true}
-                  secondary={false}
+                  type="button"
                 >
-                  <button
-                    className="button primary"
-                    disabled={false}
-                    id="claim"
-                    onClick={[Function]}
-                    type="button"
-                  >
-                    Claim 
-                    0.01490723
-                     GAS
-                  </button>
-                </Button>
-              </div>
-            </Tooltip>
+                  Claim 
+                  0.01490723
+                   GAS
+                </button>
+              </Button>
+            </div>
           </Tooltip>
-        </div>
+        </Tooltip>
       </withData(Claim)>
     </Connect(withData(Claim))>
   </Connect(Connect(withData(Claim)))>

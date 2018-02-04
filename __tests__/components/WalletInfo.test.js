@@ -1,12 +1,10 @@
 import React from 'react'
-import * as neonjs from 'neon-js'
 import { merge } from 'lodash'
 import { mount, shallow } from 'enzyme'
 
 import { createStore, provideStore, provideState } from '../testHelpers'
 import WalletInfo from '../../app/containers/WalletInfo'
-import { SHOW_NOTIFICATION } from '../../app/modules/notifications'
-import { NOTIFICATION_LEVELS, DEFAULT_CURRENCY_CODE, MAIN_NETWORK_ID } from '../../app/core/constants'
+import { DEFAULT_CURRENCY_CODE, MAIN_NETWORK_ID } from '../../app/core/constants'
 import { LOADED } from '../../app/values/state'
 
 // TODO research how to move the axios mock code which is repeated in NetworkSwitch to a helper or config file
@@ -95,15 +93,15 @@ describe('WalletInfo', () => {
   test('correctly renders data from state', () => {
     const wrapper = mount(provideState(<WalletInfo />, initialState))
 
-    const neoWalletValue = wrapper.find('.neoWalletValue')
-    const gasWalletValue = wrapper.find('.gasWalletValue')
-    const walletValue = wrapper.find('.walletTotal')
+    const neoWalletValue = wrapper.find('#neoWalletValue')
+    const gasWalletValue = wrapper.find('#gasWalletValue')
+    const walletValue = wrapper.find('#walletTotal')
 
     const expectedNeoWalletValue = '2,548,025.48'
     const expectedGasWalletValue = '18,100.00'
     const expectedWalletValue = '2,566,125.48'
-    const neoField = wrapper.find('.amountNeo')
-    const gasField = wrapper.find('.amountGas')
+    const neoField = wrapper.find('#amountNeo')
+    const gasField = wrapper.find('#amountGas')
 
     expect(neoWalletValue.text()).toEqual(`$${expectedNeoWalletValue} USD`)
     expect(gasWalletValue.text()).toEqual(`$${expectedGasWalletValue} USD`)
@@ -134,9 +132,9 @@ describe('WalletInfo', () => {
     })
     const wrapper = mount(provideState(<WalletInfo />, testState))
 
-    const neoWalletValue = wrapper.find('.neoWalletValue')
-    const gasWalletValue = wrapper.find('.gasWalletValue')
-    const walletValue = wrapper.find('.walletTotal')
+    const neoWalletValue = wrapper.find('#neoWalletValue')
+    const gasWalletValue = wrapper.find('#gasWalletValue')
+    const walletValue = wrapper.find('#walletTotal')
 
     const expectedNeoWalletValue = '111,001.11'
     const expectedGasWalletValue = '550.00'

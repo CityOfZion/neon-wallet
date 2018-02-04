@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 
 import TransactionHistory from '../TransactionHistory'
-import WalletInfo from '../WalletInfo'
+import AssetBalancesPanel from '../../components/Dashboard/AssetBalancesPanel'
 import { log } from '../../util/Logs'
 
 import styles from './Dashboard.scss'
@@ -40,7 +40,7 @@ export default class Dashboard extends Component<Props> {
       <div id='dashboard' className={styles.container}>
         <div className={styles.content}>
           <div className={styles.contentBox}>
-            <WalletInfo />
+            <AssetBalancesPanel />
           </div>
           <div className={classNames(styles.contentBox, styles.transactionHistory)}>
             <TransactionHistory />

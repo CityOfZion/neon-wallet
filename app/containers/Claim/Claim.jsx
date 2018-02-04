@@ -7,6 +7,7 @@ import { formatGAS } from '../../core/formatters'
 import { toBigNumber } from '../../core/math'
 
 type Props = {
+  className: ?string,
   doClaimNotify: Function,
   setClaimRequest: Function,
   doGasClaim: Function,
@@ -25,20 +26,15 @@ export default class Claim extends Component<Props> {
   }
 
   render () {
-    const { claimAmount, disableClaimButton, doGasClaim } = this.props
+    const { className, claimAmount, disableClaimButton, doGasClaim } = this.props
     const shouldDisableButton = disableClaimButton || toBigNumber(claimAmount).eq(0)
     const formattedAmount = formatGAS(claimAmount)
     return (
-      <div>
-        <Tooltip
-          title='You can claim GAS once every 5 minutes'
-          disabled={!disableClaimButton}
-        >
-          <Button id='claim' disabled={shouldDisableButton} onClick={doGasClaim}>
-            Claim {formattedAmount} GAS
-          </Button>
-        </Tooltip>
-      </div>
+      <Tooltip title='You can claim GAS once every 5 minutes' disabled={!disableClaimButton}>
+        <Button id='claim' className={className} disabled={shouldDisableButton} onClick={doGasClaim}>
+          Claim {formattedAmount} GAS
+        </Button>
+      </Tooltip>
     )
   }
 }
