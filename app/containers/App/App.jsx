@@ -6,13 +6,14 @@ import Notifications from '../Notifications'
 
 import { upgradeUserWalletNEP6 } from '../../modules/generateWallet'
 
-import Header from './Header'
+import Sidebar from './Sidebar'
 import Footer from './Footer'
 
 import styles from './App.scss'
 
 type Props = {
   children: React$Node,
+  address: string,
   checkVersion: Function,
   showErrorNotification: Function
 }
@@ -29,14 +30,19 @@ class App extends Component<Props> {
   }
 
   render () {
-    const { children } = this.props
+    const { children, address } = this.props
+
     return (
       <div className={styles.container}>
-        <Header />
-        <div className={styles.content}>{children}</div>
-        <Notifications />
-        <ModalRenderer />
-        <Footer />
+        {address && (
+          <Sidebar className={styles.sidebar} />
+        )}
+        <div className={styles.wrapper}>
+          <div className={styles.content}>{children}</div>
+          <Notifications />
+          <ModalRenderer />
+          <Footer />
+        </div>
       </div>
     )
   }

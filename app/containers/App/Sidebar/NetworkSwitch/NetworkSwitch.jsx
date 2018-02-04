@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 
 import { getNetworks } from '../../../../core/networks'
-import styles from '../Header.scss'
+import styles from './NetworkSwitch.scss'
 
 type Props = {
   networkId: string,
@@ -18,8 +18,8 @@ export default class NetworkSwitch extends Component<Props> {
   render () {
     const { networkId, networks } = this.props
     return (
-      <div id='network' className={styles.navBarItem}>
-        <span className={styles.navBarItemLabel}>Running on</span>
+      <div id='network' className={styles.networkSwitch}>
+        <span className={styles.label}>Running on</span>
         <select defaultValue={networkId} onChange={this.handleChange} className='networkSelector'>
           {networks.map(({ label, id }: NetworkItemType) =>
             <option key={`networkOption${id}`} value={id}>{label}</option>

@@ -1,9 +1,9 @@
 // @flow
 import { compose } from 'recompose'
+import { withRouter } from 'react-router-dom'
 
-import Header from './Header'
+import Sidebar from './Sidebar'
 import withData from '../../../hocs/api/withData'
-import withAuthData from '../../../hocs/withAuthData'
 import withCurrencyData from '../../../hocs/withCurrencyData'
 import pricesActions from '../../../actions/pricesActions'
 
@@ -13,7 +13,7 @@ const mapPricesDataToProps = ({ NEO, GAS }) => ({
 })
 
 export default compose(
+  withRouter,
   withData(pricesActions, mapPricesDataToProps),
-  withAuthData(),
   withCurrencyData('currencyCode')
-)(Header)
+)(Sidebar)

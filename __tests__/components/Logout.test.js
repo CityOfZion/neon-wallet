@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import Logout from '../../app/containers/App/Header/Logout/Logout'
+import Logout from '../../app/containers/App/Sidebar/Logout/Logout'
 
 describe('Logout', () => {
   const logout = jest.fn()

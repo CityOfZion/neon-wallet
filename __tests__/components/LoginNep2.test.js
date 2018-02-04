@@ -1,7 +1,7 @@
 import React from 'react'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
-import { BrowserRouter } from 'react-router-dom'
+import { MemoryRouter } from 'react-router-dom'
 import thunk from 'redux-thunk'
 import { shallow, mount } from 'enzyme'
 import { createMemoryHistory } from 'history'
@@ -21,9 +21,9 @@ const setup = (shallowRender = true) => {
     const history = createMemoryHistory('/dashboard')
     wrapper = mount(
       <Provider store={store}>
-        <BrowserRouter>
+        <MemoryRouter>
           <LoginNep2 history={history} />
-        </BrowserRouter>
+        </MemoryRouter>
       </Provider>
     )
   }

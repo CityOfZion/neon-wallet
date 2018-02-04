@@ -7,7 +7,7 @@ import { getNewTokenItem, validateTokens } from './utils'
 import BaseModal from '../BaseModal'
 import Button from '../../Button'
 import Row from './Row'
-import NetworkSwitch from '../../../containers/App/Header/NetworkSwitch'
+import NetworkSwitch from '../../../containers/App/Sidebar/NetworkSwitch'
 
 import Add from 'react-icons/lib/md/add'
 

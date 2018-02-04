@@ -1,15 +1,15 @@
 // @flow
 import React from 'react'
 
-import headerStyles from '../Header.scss'
+import styles from './WalletVersion.scss'
 
 type Props = {
   version: number
 }
 
 const WalletVersion = ({ version }: Props) => (
-  <div className={headerStyles.navBarItem}>
-    <span className={headerStyles.navBarItemLabel}>Version</span>
+  <div className={styles.walletVersion}>
+    <span className={styles.label}>Version</span>
     <span>{version}</span>
   </div>
 )
