@@ -7,6 +7,14 @@
   }
 }
 
+html,
+body,
+#root {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+}
+
 body {
   font-family: 'helvetica neue', 'helvetica', sans-serif;
   font-size: 16px;
@@ -152,67 +160,6 @@ input {
     }
     button {
       background-color: $dark-button;
-    }
-  }
-}
-
-// split pane stuff
-#dashboard {
-  .spacer {
-    width: 84%;
-    margin: 0px 8%;
-    border-top: 2px solid $spacer-color;
-  }
-  #claim {
-    margin: 20px 0px;
-    button {
-      font-size: 1em;
-      font-weight: 200;
-    }
-  }
-  #accountInfo {
-    margin: 20px 0px;
-    width: 100%;
-    position: relative;
-    text-align: center;
-    span.copyKey {
-      margin-left: 3px;
-      cursor: pointer;
-    }
-    .label {
-      font-size: 0.85em;
-    }
-    .address {
-      font-size: 0.65em;
-      margin-bottom: 20px;
-      margin-top: 1px;
-      letter-spacing: 0.07em;
-    }
-    #balance {
-      margin: 20px 0px;
-      .split {
-        display: inline-block;
-        width: 50%;
-        clear: none;
-      }
-      .label {
-        font-weight: 200;
-        color: $thin-text-color;
-        font-size: 1.1em;
-      }
-      .amountBig {
-        font-weight: 200;
-        font-size: 2.4em;
-        color: $thin-text-color;
-        margin: 0px 0px 2px 0px;
-      }
-      .fiat {
-        font-size: 1.1em;
-        font-weight: 200;
-      }
-      .walletTotal {
-        padding-top: 10px;
-      }
     }
   }
 }

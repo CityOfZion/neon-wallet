@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import Logout from '../../app/containers/App/Header/Logout/Logout'
+import Logout from '../../app/containers/App/Sidebar/Logout/Logout'
 
 describe('Logout', () => {
   const logout = jest.fn()
@@ -12,7 +12,7 @@ describe('Logout', () => {
   })
 
   test('should dispatch logout action when clicked', () => {
-    const wrapper = shallow(<Logout logout={logout} />)
+    const wrapper = shallow(<Logout id='logout' logout={logout} />)
     expect(logout.mock.calls.length).toEqual(0)
     wrapper.find('#logout').simulate('click')
     expect(logout.mock.calls.length).toEqual(1)

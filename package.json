@@ -111,6 +111,7 @@
     "reselect": "^3.0.1",
     "secure-random": "1.1.1",
     "sifter": "0.5.3",
+    "svg-react-loader": "^0.4.5",
     "uuid": "^3.2.1",
     "wif": "2.0.6"
   },

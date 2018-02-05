@@ -2,11 +2,11 @@
 
 exports[`NetworkSwitch renders without crashing 1`] = `
 <div
-  className="navBarItem"
+  className="networkSwitch"
   id="network"
 >
   <span
-    className="navBarItemLabel"
+    className="label"
   >
     Running on
   </span>

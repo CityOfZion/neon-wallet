@@ -1,0 +1,68 @@
+.assetBalancesPanel {
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .refresh {
+      cursor: pointer;
+
+      &,
+      & path {
+        color: #9599a2;
+        fill: currentColor;
+      }
+    }
+  }
+
+  .assets {
+    margin: 0 24px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+    margin-bottom: 24px;
+
+    .asset {
+      text-align: center;
+
+      .quantity {
+        height: 48px;
+        line-height: 48px;
+        color: #000;
+        font-size: 48px;
+        font-weight: 200;
+        margin-bottom: 24px;
+      }
+
+      .value {
+        color: #969aa0;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .totalValue {
+    padding: 24px;
+    margin: 0 24px 24px;
+    background: #f2f2f2;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  .label {
+    margin-bottom: 8px;
+    color: #969aa0;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .claim {
+    margin: 0 24px;
+
+    .claimButton {
+      width: 100%;
+    }
+  }
+}

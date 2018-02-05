@@ -8,8 +8,7 @@ import PasswordField from '../../components/PasswordField'
 import loginStyles from '../../styles/login.scss'
 
 type Props = {
-  loginNep2: Function,
-  history: Object
+  loginNep2: Function
 }
 
 type State = {
@@ -24,14 +23,14 @@ export default class LoginNep2 extends Component<Props, State> {
   }
 
   render () {
-    const { loginNep2, history } = this.props
+    const { loginNep2 } = this.props
     const { encryptedWIF, passphrase } = this.state
     const loginButtonDisabled = encryptedWIF === '' || passphrase === ''
 
     return (
       <div id='loginPage' className={loginStyles.loginPage}>
         <div className={loginStyles.title}>Login using an encrypted key:</div>
-        <form onSubmit={(e) => { e.preventDefault(); loginNep2(passphrase, encryptedWIF, history) }}>
+        <form onSubmit={(e) => { e.preventDefault(); loginNep2(passphrase, encryptedWIF) }}>
           <div className={loginStyles.loginForm}>
             <PasswordField
               placeholder='Enter your passphrase here'
