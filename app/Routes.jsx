@@ -12,6 +12,7 @@ import LoginLocalStorage from './containers/LoginLocalStorage'
 import LoginNep2 from './containers/LoginNep2'
 import Settings from './containers/Settings'
 import DisplayWalletAccounts from './containers/DisplayWalletAccounts'
+import TransactionHistory from './containers/TransactionHistory'
 import Home from './containers/Home'
 import { ROUTES } from './core/constants'
 
@@ -36,6 +37,7 @@ export default () => (
       <Route exact path={ROUTES.LOGIN_LEDGER_NANO_S} component={LoginLedgerNanoS} />
       <Route exact path={ROUTES.SETTINGS} component={Settings} />
       <Route exact path={ROUTES.DISPLAY_WALLET_KEYS} component={DisplayWalletAccounts} />
+      <Route exact path={ROUTES.TRANSACTION_HISTORY} component={TransactionHistory} />
       <Route exact path={ROUTES.HOME} component={Home} />
     </Switch>
   </App>

@@ -54,6 +54,7 @@ test.serial('should show correct balance', async t => {
 })
 
 test.serial('should show correct transaction list', async t => {
+  await app.client.click('#history')
   await app.client.waitUntilTextExists('#transactionList li:first-child .txid', '57da6b7a1074c8508796549c19fdb2a8', 60000)
   const transactions = await app.client.getText('#transactionList li .txid')
   t.is(transactions[0], '57da6b7a1074c8508796549c19fdb2a8')

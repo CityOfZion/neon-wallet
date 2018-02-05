@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from 'react'
 
-import TransactionHistory from '../TransactionHistory'
 import AssetBalancesPanel from '../../components/Dashboard/AssetBalancesPanel'
 import TokenBalancesPanel from '../../components/Dashboard/TokenBalancesPanel'
 import { log } from '../../util/Logs'
@@ -43,7 +42,7 @@ export default class Dashboard extends Component<Props> {
           <TokenBalancesPanel className={styles.tokensPanel} />
         </div>
         <div className={styles.chartsColumn}>
-          <TransactionHistory />
+          {/* TODO */}
         </div>
       </div>
     )
