@@ -3,7 +3,6 @@
 exports[`Logout should render without crashing 1`] = `
 <div
   className="logout"
-  id="logout"
   onClick={[Function]}
 >
   <test-file-stub />

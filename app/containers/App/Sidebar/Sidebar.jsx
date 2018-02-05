@@ -39,38 +39,38 @@ const Sidebar = ({
       <Logo />
     </div>
 
-    <Tooltip id='dashboard' title='Dashboard' position='right'>
-      <NavLink exact to={ROUTES.DASHBOARD} className={styles.navItem} activeClassName={styles.active}>
+    <Tooltip title='Dashboard' position='right'>
+      <NavLink id='dashboard' exact to={ROUTES.DASHBOARD} className={styles.navItem} activeClassName={styles.active}>
         <HomeIcon />
       </NavLink>
     </Tooltip>
 
-    <Tooltip id='history' title='Transaction History' position='right'>
-      <NavLink exact to={ROUTES.TRANSACTION_HISTORY} className={styles.navItem} activeClassName={styles.active}>
+    <Tooltip title='Transaction History' position='right'>
+      <NavLink id='history' exact to={ROUTES.TRANSACTION_HISTORY} className={styles.navItem} activeClassName={styles.active}>
         <HistoryIcon />
       </NavLink>
     </Tooltip>
 
-    <Tooltip id='send' title='Send' position='right'>
-      <a className={styles.navItem} onClick={showSendModal}>
+    <Tooltip title='Send' position='right'>
+      <a id='send' className={styles.navItem} onClick={showSendModal}>
         <SendIcon />
       </a>
     </Tooltip>
 
-    <Tooltip id='receive' title='Receive' position='right'>
-      <a className={styles.navItem} onClick={showReceiveModal}>
+    <Tooltip title='Receive' position='right'>
+      <a id='receive' className={styles.navItem} onClick={showReceiveModal}>
         <ReceiveIcon />
       </a>
     </Tooltip>
 
-    <Tooltip id='tokenSale' title='Token Sale' position='right'>
-      <a className={styles.navItem} onClick={showTokenSaleModal}>
+    <Tooltip title='Token Sale' position='right'>
+      <a id='tokenSale' className={styles.navItem} onClick={showTokenSaleModal}>
         <TokenSaleIcon />
       </a>
     </Tooltip>
 
-    <Tooltip id='logout' title='Logout' position='right'>
-      <Logout className={styles.navItem} />
+    <Tooltip title='Logout' position='right'>
+      <Logout id='logout' className={styles.navItem} />
     </Tooltip>
   </div>
 )

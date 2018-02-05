@@ -6,12 +6,13 @@ import LogoutIcon from '../../../../assets/navigation/logout.svg'
 import styles from './Logout.scss'
 
 type Props = {
-  className: string,
+  id?: string,
+  className?: string,
   logout: Function
 }
 
-const Logout = ({ className, logout }: Props) => (
-  <div id='logout' className={classNames(styles.logout, className)} onClick={logout}>
+const Logout = ({ id, className, logout }: Props) => (
+  <div id={id} className={classNames(styles.logout, className)} onClick={logout}>
     <LogoutIcon />
   </div>
 )
