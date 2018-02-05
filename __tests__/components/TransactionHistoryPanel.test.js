@@ -5,7 +5,7 @@ import thunk from 'redux-thunk'
 import { shallow, mount } from 'enzyme'
 import { merge } from 'lodash'
 
-import TransactionHistory from '../../app/containers/TransactionHistory'
+import TransactionHistoryPanel from '../../app/components/TransactionHistory/TransactionHistoryPanel'
 import { MAIN_NETWORK_ID, EXPLORERS } from '../../app/core/constants'
 import { LOADED } from '../../app/values/state'
 
@@ -18,11 +18,13 @@ const initialState = {
     NETWORK: {
       batch: false,
       state: LOADED,
+      loadedCount: 1,
       data: MAIN_NETWORK_ID
     },
     SETTINGS: {
       batch: false,
       state: LOADED,
+      loadedCount: 1,
       data: {
         blockExplorer: EXPLORERS.NEO_TRACKER
       }
@@ -30,6 +32,7 @@ const initialState = {
     TRANSACTION_HISTORY: {
       batch: false,
       state: LOADED,
+      loadedCount: 1,
       data: []
     }
   }
@@ -53,11 +56,11 @@ const setup = (state = initialState, shallowRender = true) => {
 
   let wrapper
   if (shallowRender) {
-    wrapper = shallow(<TransactionHistory store={store} />)
+    wrapper = shallow(<TransactionHistoryPanel store={store} />)
   } else {
     wrapper = mount(
       <Provider store={store}>
-        <TransactionHistory />
+        <TransactionHistoryPanel />
       </Provider>
     )
   }
@@ -68,7 +71,7 @@ const setup = (state = initialState, shallowRender = true) => {
   }
 }
 
-describe('TransactionHistory', () => {
+describe('TransactionHistoryPanel', () => {
   test('renders without crashing', () => {
     const { wrapper } = setup()
     expect(wrapper).toMatchSnapshot()
@@ -76,9 +79,6 @@ describe('TransactionHistory', () => {
 
   test('correctly renders no transaction history', () => {
     const { wrapper } = setup(initialState, false)
-
-    const columnHeader = wrapper.find('#columnHeader')
-    expect(columnHeader.text()).toEqual('Transaction History ')
 
     const transactionList = wrapper.find('#transactionList')
     expect(transactionList.children().length).toEqual(0)

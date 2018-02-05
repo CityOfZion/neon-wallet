@@ -2,10 +2,10 @@
 import React from 'react'
 import classNames from 'classnames'
 
-import Transaction from '../../components/Blockchain/Transaction'
-import { ASSETS } from '../../core/constants'
-import { isZero } from '../../core/math'
-import { formatBalance } from '../../core/formatters'
+import Transaction from '../../../components/Blockchain/Transaction'
+import { ASSETS } from '../../../core/constants'
+import { isZero } from '../../../core/math'
+import { formatBalance } from '../../../core/formatters'
 
 import styles from './Transactions.scss'
 
