@@ -6,6 +6,6 @@ exports[`Logout should render without crashing 1`] = `
   id="logout"
   onClick={[Function]}
 >
-  <MdPowerSettingsNew />
+  <test-file-stub />
 </div>
 `;

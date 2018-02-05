@@ -1,12 +1,12 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import SyncIcon from 'react-icons/lib/md/sync'
 
 import Panel from '../../Panel'
 import Tooltip from '../../../components/Tooltip'
 // import { formatGAS } from '../../../core/formatters'
 // import { toBigNumber } from '../../../core/math'
+import RefreshIcon from '../../../assets/icons/refresh.svg'
 import styles from './TokenBalancesPanel.scss'
 
 type Props = {
@@ -36,7 +36,7 @@ export default class TokenBalancesPanel extends React.Component<Props> {
       <div className={styles.header}>
         <span>Token Balances</span>
         <Tooltip title='Refresh'>
-          <SyncIcon id='refresh' className={styles.refresh} onClick={this.props.refresh} />
+          <RefreshIcon id='refresh' className={styles.refresh} onClick={this.props.refresh} />
         </Tooltip>
       </div>
     )

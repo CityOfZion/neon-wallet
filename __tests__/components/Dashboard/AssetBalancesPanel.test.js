@@ -89,7 +89,7 @@ describe('AssetBalancesPanel', () => {
     const store = createStore(initialState)
     const wrapper = mount(provideStore(<AssetBalancesPanel />, store))
 
-    wrapper.find('svg#refresh').simulate('click')
+    wrapper.find('#refresh').simulate('click')
 
     expect(store.getActions()).toContainEqual(expect.objectContaining({
       type: 'BALANCES/REQ/REQUEST',

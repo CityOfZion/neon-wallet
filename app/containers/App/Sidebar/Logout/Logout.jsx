@@ -1,8 +1,8 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import Power from 'react-icons/lib/md/power-settings-new'
 
+import LogoutIcon from '../../../../assets/navigation/logout.svg'
 import styles from './Logout.scss'
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
 
 const Logout = ({ className, logout }: Props) => (
   <div id='logout' className={classNames(styles.logout, className)} onClick={logout}>
-    <Power />
+    <LogoutIcon />
   </div>
 )
 

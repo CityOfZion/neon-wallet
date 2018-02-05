@@ -5,10 +5,13 @@
     justify-content: space-between;
 
     .refresh {
-      width: 24px;
-      height: 24px;
-      color: #9599a2;
       cursor: pointer;
+
+      &,
+      & path {
+        color: #9599a2;
+        fill: currentColor;
+      }
     }
   }
 

@@ -4,4 +4,11 @@
   color: #9599a2;
   font-size: 24px;
   cursor: pointer;
+
+  &,
+  & svg,
+  & svg path {
+    color: #9599a2;
+    fill: currentColor;
+  }
 }

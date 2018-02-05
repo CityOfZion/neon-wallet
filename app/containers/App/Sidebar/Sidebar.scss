@@ -14,6 +14,11 @@ $size: 64px;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 .navItem {
@@ -24,14 +29,25 @@ $size: 64px;
   width: $size;
   height: $size;
   border-left: 2px solid transparent;
-  color: #9599a2;
   font-size: 24px;
   cursor: pointer;
+
+  &,
+  & svg,
+  & svg path {
+    color: #9599a2;
+    fill: currentColor;
+  }
 
   &.active,
   &:hover {
     background: #fff;
     border-image: linear-gradient(to bottom, #ee6d66, #a866ee) 1 100%;
-    color: #394152;
+
+    &,
+    & svg,
+    & svg path {
+      color: #394152;
+    }
   }
 }

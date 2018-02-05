@@ -1,7 +1,6 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import SyncIcon from 'react-icons/lib/md/sync'
 
 import Panel from '../../Panel'
 import Claim from '../../../containers/Claim'
@@ -9,6 +8,7 @@ import Tooltip from '../../../components/Tooltip'
 import { formatGAS, formatFiat, formatNEO } from '../../../core/formatters'
 import { toNumber, toBigNumber } from '../../../core/math'
 import { ASSETS, CURRENCIES } from '../../../core/constants'
+import RefreshIcon from '../../../assets/icons/refresh.svg'
 import styles from './AssetBalancesPanel.scss'
 
 type Props = {
@@ -63,7 +63,7 @@ export default class AssetBalancesPanel extends React.Component<Props> {
       <div className={styles.header}>
         <span>Balances</span>
         <Tooltip title='Refresh'>
-          <SyncIcon id='refresh' className={styles.refresh} onClick={this.props.refresh} />
+          <RefreshIcon id='refresh' className={styles.refresh} onClick={this.props.refresh} />
         </Tooltip>
       </div>
     )
