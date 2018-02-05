@@ -27,7 +27,7 @@ async function getBalances ({ net, address, tokens }: Props) {
       const balance = toBigNumber(response.balance || 0).round(response.decimals).toString()
 
       return {
-        [scriptHash]: { ...response, balance }
+        [scriptHash]: { ...response, scriptHash, balance }
       }
     } catch (err) {
       // invalid scriptHash

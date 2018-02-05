@@ -1,13 +1,10 @@
 // @flow
 import React, { Component } from 'react'
 
+import Sidebar from './Sidebar'
 import ModalRenderer from '../ModalRenderer'
 import Notifications from '../Notifications'
-
 import { upgradeUserWalletNEP6 } from '../../modules/generateWallet'
-
-import Sidebar from './Sidebar'
-import Footer from './Footer'
 
 import styles from './App.scss'
 
@@ -41,7 +38,6 @@ class App extends Component<Props> {
           <div className={styles.content}>{children}</div>
           <Notifications />
           <ModalRenderer />
-          <Footer />
         </div>
       </div>
     )

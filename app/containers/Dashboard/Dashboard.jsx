@@ -1,9 +1,9 @@
 // @flow
 import React, { Component } from 'react'
-import classNames from 'classnames'
 
 import TransactionHistory from '../TransactionHistory'
 import AssetBalancesPanel from '../../components/Dashboard/AssetBalancesPanel'
+import TokenBalancesPanel from '../../components/Dashboard/TokenBalancesPanel'
 import { log } from '../../util/Logs'
 
 import styles from './Dashboard.scss'
@@ -37,14 +37,13 @@ export default class Dashboard extends Component<Props> {
 
   render () {
     return (
-      <div id='dashboard' className={styles.container}>
-        <div className={styles.content}>
-          <div className={styles.contentBox}>
-            <AssetBalancesPanel />
-          </div>
-          <div className={classNames(styles.contentBox, styles.transactionHistory)}>
-            <TransactionHistory />
-          </div>
+      <div id='dashboard' className={styles.dashboard}>
+        <div className={styles.dataColumn}>
+          <AssetBalancesPanel className={styles.assetsPanel} />
+          <TokenBalancesPanel className={styles.tokensPanel} />
+        </div>
+        <div className={styles.chartsColumn}>
+          <TransactionHistory />
         </div>
       </div>
     )

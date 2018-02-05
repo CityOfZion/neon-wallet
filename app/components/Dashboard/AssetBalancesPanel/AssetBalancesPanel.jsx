@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import classNames from 'classnames'
 import SyncIcon from 'react-icons/lib/md/sync'
 
 import Panel from '../../Panel'
@@ -11,6 +12,7 @@ import { ASSETS, CURRENCIES } from '../../../core/constants'
 import styles from './AssetBalancesPanel.scss'
 
 type Props = {
+  className: ?string,
   NEO: string,
   GAS: string,
   neoPrice: number,
@@ -21,10 +23,10 @@ type Props = {
 
 export default class AssetBalancesPanel extends React.Component<Props> {
   render = () => {
-    const { NEO, GAS } = this.props
+    const { NEO, GAS, className } = this.props
 
     return (
-      <Panel className={styles.assetBalancesPanel} renderHeader={this.renderHeader}>
+      <Panel className={classNames(styles.assetBalancesPanel, className)} renderHeader={this.renderHeader}>
         <div id='balance' className={styles.assets}>
           <div className={styles.asset}>
             <div className={styles.label}>{ASSETS.NEO}</div>
@@ -60,7 +62,7 @@ export default class AssetBalancesPanel extends React.Component<Props> {
     return (
       <div className={styles.header}>
         <span>Balances</span>
-        <Tooltip title='Refresh account balance'>
+        <Tooltip title='Refresh'>
           <SyncIcon id='refresh' className={styles.refresh} onClick={this.props.refresh} />
         </Tooltip>
       </div>
