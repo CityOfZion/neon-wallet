@@ -17,7 +17,8 @@ const mapPricesDataToProps = ({ NEO, GAS }) => ({
 
 const mapDispatchToProps = (dispatch, props) => ({
   showSendModal: () => dispatch(showModal(MODAL_TYPES.SEND)),
-  showReceiveModal: () => dispatch(showModal(MODAL_TYPES.RECEIVE))
+  showReceiveModal: () => dispatch(showModal(MODAL_TYPES.RECEIVE)),
+  showTokenSaleModal: () => dispatch(showModal(MODAL_TYPES.ICO))
 })
 
 export default compose(

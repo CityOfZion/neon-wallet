@@ -10,6 +10,7 @@ import HomeIcon from '../../../assets/navigation/home.svg'
 import HistoryIcon from '../../../assets/navigation/history.svg'
 import SendIcon from '../../../assets/navigation/send.svg'
 import ReceiveIcon from '../../../assets/navigation/receive.svg'
+import TokenSaleIcon from '../../../assets/navigation/tokens.svg'
 import { ROUTES } from '../../../core/constants'
 
 import Logo from '../../../assets/logo.svg'
@@ -20,7 +21,8 @@ type Props = {
   gasPrice: number,
   currencyCode: string,
   showSendModal: Function,
-  showReceiveModal: Function
+  showReceiveModal: Function,
+  showTokenSaleModal: Function
 }
 
 const Sidebar = ({
@@ -29,7 +31,8 @@ const Sidebar = ({
   gasPrice,
   currencyCode,
   showSendModal,
-  showReceiveModal
+  showReceiveModal,
+  showTokenSaleModal
 }: Props) => (
   <div className={classNames(styles.container, className)}>
     <div className={styles.logo}>
@@ -57,6 +60,12 @@ const Sidebar = ({
     <Tooltip id='receive' title='Receive' position='right'>
       <a className={styles.navItem} onClick={showReceiveModal}>
         <ReceiveIcon />
+      </a>
+    </Tooltip>
+
+    <Tooltip id='tokenSale' title='Token Sale' position='right'>
+      <a className={styles.navItem} onClick={showTokenSaleModal}>
+        <TokenSaleIcon />
       </a>
     </Tooltip>
 
