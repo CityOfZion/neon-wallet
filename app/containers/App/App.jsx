@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 
 import Sidebar from './Sidebar'
+import Footer from './Footer'
 import ModalRenderer from '../ModalRenderer'
 import Notifications from '../Notifications'
 import { upgradeUserWalletNEP6 } from '../../modules/generateWallet'
@@ -39,6 +40,9 @@ class App extends Component<Props> {
           <Notifications />
           <ModalRenderer />
         </div>
+        {address && (
+          <Footer className={styles.footer} />
+        )}
       </div>
     )
   }
