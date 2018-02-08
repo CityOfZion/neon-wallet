@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import { Provider } from 'react-redux'
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 
 import Routes from '../Routes'
 
@@ -11,9 +11,9 @@ type Props = {
 
 const Root = ({ store }: Props) =>
   <Provider store={store}>
-    <BrowserRouter>
+    <HashRouter>
       <Routes />
-    </BrowserRouter>
+    </HashRouter>
   </Provider>
 
 export default Root

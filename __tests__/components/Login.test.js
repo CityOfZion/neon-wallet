@@ -1,7 +1,7 @@
 import React from 'react'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
-import { BrowserRouter } from 'react-router-dom'
+import { MemoryRouter } from 'react-router-dom'
 import { shallow, mount } from 'enzyme'
 
 import Login from '../../app/containers/LoginPrivateKey/LoginPrivateKey'
@@ -18,9 +18,9 @@ const setup = (shallowRender = true, state = { account: {
   } else {
     wrapper = mount(
       <Provider store={store}>
-        <BrowserRouter>
+        <MemoryRouter>
           <Login store={store} />
-        </BrowserRouter>
+        </MemoryRouter>
       </Provider>
     )
   }

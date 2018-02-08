@@ -21,11 +21,9 @@ type Props = {
   setCurrency: string => any,
   currency: string,
   accounts: any,
-  showModal: (string, Object) => any,
+  showModal: Function,
   showSuccessNotification: Object => any,
-  showErrorNotification: Object => any,
-  setUserGeneratedTokens: () => any,
-  networks: Array<NetworkItemType>
+  showErrorNotification: Object => any
 }
 
 type State = {
@@ -168,17 +166,7 @@ export default class Settings extends Component<Props, State> {
   }
 
   openTokenModal = () => {
-    const {
-      setUserGeneratedTokens,
-      showModal,
-      networks,
-      showErrorNotification
-    } = this.props
-    showModal(MODAL_TYPES.TOKEN, {
-      networks,
-      setUserGeneratedTokens,
-      showErrorNotification
-    })
+    this.props.showModal(MODAL_TYPES.TOKEN)
   }
 
   render () {

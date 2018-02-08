@@ -117,6 +117,11 @@ module.exports = {
         }
       },
       {
+        test: /\.svg$/,
+        use: ['svg-react-loader'],
+        exclude: /node_modules/
+      },
+      {
         test: /\.woff(2)?(\?[a-z0-9#=&.]+)?$/,
         use: {
           loader: 'url-loader',
@@ -127,7 +132,7 @@ module.exports = {
         }
       },
       {
-        test: /\.(ttf|eot|svg)(\?[a-z0-9#=&.]+)?$/,
+        test: /\.(ttf|eot)(\?[a-z0-9#=&.]+)?$/,
         use: {
           loader: 'file-loader'
         }
