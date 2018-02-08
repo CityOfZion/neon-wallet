@@ -1,0 +1,56 @@
+.tokenBalancesPanel {
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .refresh {
+      cursor: pointer;
+
+      &,
+      & path {
+        color: #9599a2;
+        fill: currentColor;
+      }
+    }
+  }
+
+  .tableHeader,
+  .tableData {
+    display: flex;
+    align-items: flex-start;
+    justify-content: stretch;
+    margin-bottom: 16px;
+
+    .symbol {
+      flex: 0 0 auto;
+      width: 70px;
+      margin-right: 16px;
+    }
+
+    .name {
+      flex: 1 1 auto;
+      margin-right: 16px;
+    }
+
+    .balance {
+      flex: 0 0 auto;
+      width: 70px;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .tableHeader {
+    color: #969aa0;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .tableData {
+    color: #282828;
+  }
+}
