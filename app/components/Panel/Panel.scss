@@ -1,0 +1,13 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+
+  .header {
+    flex: 0 0 auto;
+  }
+
+  .content {
+    flex: 1 1 auto;
+    overflow-y: auto;
+  }
+}

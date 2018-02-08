@@ -37,8 +37,8 @@ describe('authActions', () => {
 
       describe('with invalid private key', () => {
         test('throws an error', () => {
-          const request = wifLoginActions.call({ wif: 'invalid' })
-          expect(() => request.payload.fn({})).toThrowError('That is not a valid private key')
+          const call = wifLoginActions.call({ wif: 'invalid' })
+          expect(() => call.payload.fn({})).toThrowError('That is not a valid private key')
         })
       })
     })

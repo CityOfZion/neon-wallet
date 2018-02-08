@@ -1,37 +1,11 @@
-@import '../../styles/variables';
+.transactionHistory {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  height: 100%;
 
-.transactionInfo {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    position: relative;
-    height: 100%;
-
-    .columnHeader,
-    .headerSpacer {
-        flex: 0 0 auto;
-    }
-
-    .transactions {
-        flex: 1 1 auto;
-        overflow-y: auto;
-    }
-}
-
-.columnHeader {
-    position: relative;
-    font-size: 1.2em;
-    font-weight: 200;
-}
-
-.headerSpacer {
-    width: 84%;
-    margin: 15px 8%;
-    border-top: 3px solid $spacer-color;
-}
-
-.updateLoader {
-    right: 0;
-    left: auto;
-    top: -5px;
+  .transactionHistoryPanel {
+    flex: 1 1 auto;
+  }
 }

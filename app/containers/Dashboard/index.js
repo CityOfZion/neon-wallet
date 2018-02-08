@@ -12,7 +12,6 @@ import withAuthData from '../../hocs/withAuthData'
 import withFilteredTokensData from '../../hocs/withFilteredTokensData'
 import { getNotifications } from '../../modules/notifications'
 import { showModal } from '../../modules/modal'
-import { sendTransaction } from '../../modules/transactions'
 
 import Dashboard from './Dashboard'
 
@@ -29,8 +28,7 @@ const mapAccountDataToProps = ({ balances }) => ({
 })
 
 const actionCreators = {
-  showModal,
-  sendTransaction
+  showModal
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
