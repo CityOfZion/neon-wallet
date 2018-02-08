@@ -1,27 +1,15 @@
 // @flow
 import React, { Component } from 'react'
-import classNames from 'classnames'
 
-import TransactionHistory from '../TransactionHistory'
-import WalletInfo from '../WalletInfo'
-
+import AssetBalancesPanel from '../../components/Dashboard/AssetBalancesPanel'
+import TokenBalancesPanel from '../../components/Dashboard/TokenBalancesPanel'
 import { log } from '../../util/Logs'
-
-import { MODAL_TYPES } from '../../core/constants'
-
-import FaArrowUpward from 'react-icons/lib/fa/arrow-circle-up'
-import FaArrowDownward from 'react-icons/lib/fa/arrow-circle-down'
 
 import styles from './Dashboard.scss'
 
 type Props = {
   net: string,
   address: string,
-  showModal: Function,
-  sendTransaction: Function,
-  NEO: string,
-  GAS: string,
-  tokenBalances: Array<TokenBalanceType>,
   loadWalletData: Function,
 }
 
@@ -47,52 +35,14 @@ export default class Dashboard extends Component<Props> {
   }
 
   render () {
-    const {
-      showModal,
-      net,
-      address,
-      NEO,
-      GAS,
-      tokenBalances,
-      sendTransaction
-    } = this.props
-
     return (
-      <div id='dashboard' className={styles.container}>
-        <div className={styles.content}>
-          <div className={styles.contentBox}>
-            <div className={styles.walletButtons}>
-              <div
-                className={classNames(styles.walletButton, styles.sendButton)}
-                onClick={() =>
-                  showModal(MODAL_TYPES.SEND, {
-                    NEO,
-                    GAS,
-                    tokenBalances,
-                    sendTransaction,
-                    net,
-                    address
-                  })
-                }
-              >
-                <FaArrowUpward className={styles.walletButtonIcon} />
-                <span className={styles.walletButtonText}>Send</span>
-              </div>
-              <div
-                className={styles.walletButton}
-                onClick={() => showModal(MODAL_TYPES.RECEIVE, { address })}
-              >
-                <FaArrowDownward className={styles.walletButtonIcon} />
-                <span className={styles.walletButtonText}>Receive</span>
-              </div>
-            </div>
-            <WalletInfo />
-          </div>
-          <div
-            className={classNames(styles.contentBox, styles.transactionHistory)}
-          >
-            <TransactionHistory />
-          </div>
+      <div id='dashboard' className={styles.dashboard}>
+        <div className={styles.dataColumn}>
+          <AssetBalancesPanel className={styles.assetsPanel} />
+          <TokenBalancesPanel className={styles.tokensPanel} />
+        </div>
+        <div className={styles.chartsColumn}>
+          {/* TODO */}
         </div>
       </div>
     )

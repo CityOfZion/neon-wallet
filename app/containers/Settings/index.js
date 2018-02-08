@@ -34,8 +34,7 @@ const mapAccountsActionsToProps = (actions) => ({
 
 const mapSettingsActionsToProps = (actions) => ({
   setCurrency: (currency) => actions.request({ currency }),
-  setBlockExplorer: (blockExplorer) => actions.request({ blockExplorer }),
-  setUserGeneratedTokens: (tokens) => actions.request({ tokens })
+  setBlockExplorer: (blockExplorer) => actions.request({ blockExplorer })
 })
 
 export default compose(

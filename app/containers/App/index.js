@@ -15,6 +15,7 @@ import withLoginRedirect from '../../hocs/auth/withLoginRedirect'
 import withLogoutRedirect from '../../hocs/auth/withLogoutRedirect'
 import withLogoutReset from '../../hocs/auth/withLogoutReset'
 import withCurrencyData from '../../hocs/withCurrencyData'
+import withAuthData from '../../hocs/withAuthData'
 import withNetworkData from '../../hocs/withNetworkData'
 import alreadyLoaded from '../../hocs/api/progressStrategies/alreadyLoadedStrategy'
 import { checkVersion } from '../../modules/metadata'
@@ -39,6 +40,7 @@ export default compose(
   // Fetch the initial network type, and pass it down as a prop.  This must come before other data
   // fetches that depend on knowing the selected network.
   withFetch(networkActions),
+  withAuthData(),
   withNetworkData(),
   withProgressComponents(networkActions, {
     [LOADING]: Loading,

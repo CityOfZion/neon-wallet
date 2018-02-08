@@ -31,7 +31,7 @@ function timeout (ms) {
 test.serial('should login successfully and switch networks', async t => {
   // Go to login page
   await app.client.waitUntilTextExists('.linkBox', 'Login using a private key', 60000)
-  await app.client.click('a[href="/login-private-key"]>div.linkBox')
+  await app.client.click('a[href="#/login-private-key"]>div.linkBox')
 
   // Enter Wif
   await app.client.setValue('#loginPage input', 'KxB52D1FGe5xBn6YeezNwj7grhkHZxq7bv2tmaCPoT4rxApMwMvU')
@@ -41,17 +41,22 @@ test.serial('should login successfully and switch networks', async t => {
 
   // Check that the default network is MainNet
   t.is(await app.client.getValue('#network .networkSelector'), '1')
+
+  // Check that MainNet data has loaded
+  await app.client.waitUntilTextExists('#amountNeo', '0', 60000)
+
   await app.client.$('#network .networkSelector').selectByValue('2')
   t.is(await app.client.getValue('#network .networkSelector'), '2')
 })
 
 test.serial('should show correct balance', async t => {
-  await app.client.waitUntilTextExists('#balance .amountNeo', '1', 60000)
-  t.is(await app.client.getText('#balance .amountNeo'), '1')
-  t.is(await app.client.getText('#balance .amountGas'), '2.0000')
+  await app.client.waitUntilTextExists('#amountNeo', '1', 60000)
+  t.is(await app.client.getText('#amountNeo'), '1')
+  t.is(await app.client.getText('#amountGas'), '2.0000')
 })
 
 test.serial('should show correct transaction list', async t => {
+  await app.client.click('#history')
   await app.client.waitUntilTextExists('#transactionList li:first-child .txid', '57da6b7a1074c8508796549c19fdb2a8', 60000)
   const transactions = await app.client.getText('#transactionList li .txid')
   t.is(transactions[0], '57da6b7a1074c8508796549c19fdb2a8')

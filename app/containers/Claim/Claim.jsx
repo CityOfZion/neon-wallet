@@ -7,6 +7,7 @@ import { formatGAS } from '../../core/formatters'
 import { toBigNumber } from '../../core/math'
 
 type Props = {
+  className: ?string,
   doGasClaim: Function,
   disableClaimButton: boolean,
   claimAmount: string
@@ -16,12 +17,13 @@ export default class Claim extends Component<Props> {
   intervalId: ?number
 
   render () {
+    const { className } = this.props
     const disabled = this.isDisabled()
 
     return (
       <div>
         <Tooltip title='You can claim GAS once every 5 minutes' disabled={!disabled}>
-          <Button id='claim' disabled={disabled} onClick={this.handleClaim}>
+          <Button id='claim' className={className} disabled={disabled} onClick={this.handleClaim}>
             Claim {this.getFormattedAmount()} GAS
           </Button>
         </Tooltip>

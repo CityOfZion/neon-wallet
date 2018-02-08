@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import NetworkSwitch from '../../app/containers/App/Header/NetworkSwitch/NetworkSwitch'
+import NetworkSwitch from '../../app/containers/App/Sidebar/NetworkSwitch/NetworkSwitch'
 import { MAIN_NETWORK_ID, TEST_NETWORK_ID } from '../../app/core/constants'
 
 const setup = () => {

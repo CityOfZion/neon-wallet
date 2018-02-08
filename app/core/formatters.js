@@ -34,9 +34,8 @@ export const formatBalance = (
   return formatGAS(balance, shortDisplay)
 }
 
-export const toFixedDecimals = (value: ValueType, decimals: number): string => {
-  const decimalLength = (decimals || decimals === 0) ? decimals : COIN_DECIMAL_LENGTH
-  return toBigNumber(value).toFixed(decimalLength)
+export const toFixedDecimals = (value: ValueType, decimals: number = COIN_DECIMAL_LENGTH): string => {
+  return toBigNumber(value).toFixed(decimals)
 }
 
 export const formatFiat = (value: ValueType): string =>
