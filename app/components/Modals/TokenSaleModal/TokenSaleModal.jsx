@@ -42,7 +42,7 @@ type State = {
 export default class TokenSale extends Component<Props, State> {
   // $FlowFixMe
   state = {
-    useVerification: false,
+    useVerification: true,
     assetBalancesToSend: {
       NEO: '',
       GAS: ''
