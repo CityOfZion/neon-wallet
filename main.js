@@ -26,7 +26,7 @@ app.on('ready', () => {
   const onAppReady = () => {
     mainWindow = new BrowserWindow({
       height: 750,
-      width: 1000,
+      width: 1280,
       minHeight: 750,
       minWidth: 1000,
       icon: path.join(__dirname, 'icons/png/64x64.png'),
@@ -36,7 +36,7 @@ app.on('ready', () => {
     })
 
     if (process.platform !== 'darwin') {
-    // Windows/Linxu Menu
+      // Windows/Linux Menu
       mainWindow.setMenu(null)
     } else {
       // Menu is required for MacOS
