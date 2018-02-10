@@ -1,5 +1,6 @@
 // @flow
 import { tx, wallet } from 'neon-js'
+import type {Transaction} from 'neon-js'
 
 import commNode from './ledger-comm-node'
 
@@ -8,7 +9,7 @@ import asyncWrap from '../core/asyncHelper'
 
 export const CURRENT_VERSION = 0
 
-export const ledgerNanoSCreateSignatureAsync = async (unsignedTx: string, publicKeyEncoded: string) => {
+export const ledgerNanoSCreateSignatureAsync = async (unsignedTx: Transaction, publicKeyEncoded: string) => {
   const txData = tx.serializeTransaction(unsignedTx)
   const signData = txData + BIP44_PATH
   const validStatus = [0x9000]
@@ -101,10 +102,14 @@ export const ledgerNanoSCreateSignatureAsync = async (unsignedTx: string, public
       }
 
       const signature = r + s
-      const script = wallet.getVerificationScriptFromPublicKey(publicKeyEncoded)
 
-      // txData + '01' (sign num) + '41' (sign struct len) + '40' (sign data len) + signature + '23' (Contract data len) + script
-      return `${txData}014140${signature}23${script}`
+      const script = {
+        invocationScript: '40' + signature,
+        verificationScript: wallet.getVerificationScriptFromPublicKey(publicKeyEncoded)
+      }
+
+      unsignedTx.scripts.push(script)
+      return unsignedTx
     }
   }
 }
