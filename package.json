@@ -62,7 +62,7 @@
     }
   },
   "dependencies": {
-    "neon-js": "git+https://github.com/cityofzion/neon-js.git#2.3.3",
+    "neon-js": "git+https://github.com/cityofzion/neon-js.git#2.3.4",
     "axios": "0.17.0",
     "base-x": "3.0.2",
     "bigi": "1.4.2",
