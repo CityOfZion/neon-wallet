@@ -77,7 +77,8 @@ export const TOKENS = {
   DBC: 'b951ecbbc5fe37a9c280a76cb0ce0014827294cf',
   RPX: 'ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9',
   RHT: '2328008e6f6c7bd157a342e789389eb034d9cbc4',
-  QLC: '0d821bd7b6d53f5c2b40e217c6defc8bbe896cf5'
+  QLC: '0d821bd7b6d53f5c2b40e217c6defc8bbe896cf5',
+  NRV: '2e25d2127e0240c6deaf35394702feb236d4d7fc'
 }
 
 export const DEFAULT_WALLET = {
