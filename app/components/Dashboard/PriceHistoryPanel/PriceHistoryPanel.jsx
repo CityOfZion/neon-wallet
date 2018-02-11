@@ -43,7 +43,7 @@ export default class PriceHistoryPanel extends React.Component<Props> {
 
     return (
       <Panel className={classNames(styles.priceHistoryPanel, className)} renderHeader={this.renderHeader}>
-        <PriceHistoryChart prices={prices} currency={currency} />
+        <PriceHistoryChart prices={prices} currency={currency} formatDate={this.formatDate} />
       </Panel>
     )
   }
@@ -75,5 +75,13 @@ export default class PriceHistoryPanel extends React.Component<Props> {
 
   getDuration = () => {
     return DURATIONS[this.props.duration]
+  }
+
+  formatDate = (date: Date): string => {
+    if (this.props.duration === '1d') {
+      return date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+    } else {
+      return date.toLocaleString('en-US', { month: 'numeric', day: 'numeric' })
+    }
   }
 }

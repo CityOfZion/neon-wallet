@@ -25,13 +25,19 @@ type Props = {
   prices: Array<Price>,
   currency: string,
   timeKey: string,
-  priceKey: string
+  priceKey: string,
+  formatDate(Date): string
+}
+
+const formatDate = (date: Date): string => {
+  return date.toLocaleString('en-US', { month: 'numeric', day: 'numeric' })
 }
 
 export default class PriceHistoryChart extends React.Component<Props> {
   static defaultProps = {
     timeKey: 'time',
-    priceKey: 'close'
+    priceKey: 'close',
+    formatDate
   }
 
   render = (): React$Node => {
@@ -46,21 +52,21 @@ export default class PriceHistoryChart extends React.Component<Props> {
             interval='preserveStartEnd'
             stroke='#9ca0a8'
             tickLine={false}
-            tickFormatter={this.renderDate}
+            tickFormatter={this.formatDate}
             tickMargin={24}
             minTickGap={50} />
           <YAxis
             stroke='#9ca0a8'
             axisLine={false}
             tickLine={false}
-            tickFormatter={this.renderPrice}
+            tickFormatter={this.formatPrice}
             tickMargin={20}
             domain={['auto', 'auto']} />
           <CartesianGrid
             stroke='#e6e6e6' />
           <Tooltip
-            formatter={this.handleFormatValue}
-            labelFormatter={this.handleFormatLabel} />
+            formatter={this.formatValue}
+            labelFormatter={this.formatLabel} />
           <Line
             dataKey={priceKey}
             type='monotone'
@@ -79,7 +85,7 @@ export default class PriceHistoryChart extends React.Component<Props> {
   renderLatestPrice = () => {
     return (
       <text className={styles.current} x='50%' y={0} textAnchor='middle' alignmentBaseline='hanging' fill='#282828'>
-        {this.renderPrice(this.getLatestPrice(), formatFiat)}
+        {this.formatPrice(this.getLatestPrice(), formatFiat)}
       </text>
     )
   }
@@ -106,21 +112,11 @@ export default class PriceHistoryChart extends React.Component<Props> {
     )
   }
 
-  renderDate = (timestamp: number): string => {
-    const date = new Date(timestamp * 1000)
-    return `${date.getMonth() + 1}/${date.getDate()}`
-  }
-
-  renderPrice = (price: number, formatter: Function = formatThousands): string => {
-    const { symbol } = CURRENCIES[this.props.currency]
-    return `${symbol}${formatter(price)}`
-  }
-
-  handleFormatValue = (value: number): string => {
+  formatValue = (value: number): string => {
     return value.toString()
   }
 
-  handleFormatLabel = (timestamp: number): string => {
+  formatLabel = (timestamp: number): string => {
     const date = new Date(timestamp * 1000)
 
     return date.toLocaleString('en-US', {
@@ -131,12 +127,21 @@ export default class PriceHistoryChart extends React.Component<Props> {
     })
   }
 
-  getInitialPrice = () => {
+  formatPrice = (price: number, formatter: Function = formatThousands): string => {
+    const { symbol } = CURRENCIES[this.props.currency]
+    return `${symbol}${formatter(price)}`
+  }
+
+  formatDate = (timestamp: number): string => {
+    return this.props.formatDate(new Date(timestamp * 1000))
+  }
+
+  getInitialPrice = (): number => {
     const { prices, priceKey } = this.props
     return prices[0][priceKey]
   }
 
-  getLatestPrice = () => {
+  getLatestPrice = (): number => {
     const { prices, priceKey } = this.props
     return prices[prices.length - 1][priceKey]
   }
