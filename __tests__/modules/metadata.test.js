@@ -50,17 +50,23 @@ describe('metadata module tests', () => {
       {
         'id': '5',
         'isUserGenerated': false,
-        'networkId': '2',
-        'scriptHash': 'b951ecbbc5fe37a9c280a76cb0ce0014827294cf'
+        'networkId': '1',
+        'scriptHash': '2e25d2127e0240c6deaf35394702feb236d4d7fc'
       },
       {
         'id': '6',
         'isUserGenerated': false,
         'networkId': '2',
-        'scriptHash': '5b7074e873973a6ed3708862f219a6fbf4d1c411'
+        'scriptHash': 'b951ecbbc5fe37a9c280a76cb0ce0014827294cf'
       },
       {
         'id': '7',
+        'isUserGenerated': false,
+        'networkId': '2',
+        'scriptHash': '5b7074e873973a6ed3708862f219a6fbf4d1c411'
+      },
+      {
+        'id': '8',
         'isUserGenerated': false,
         'networkId': '2',
         'scriptHash': '0d821bd7b6d53f5c2b40e217c6defc8bbe896cf5'
