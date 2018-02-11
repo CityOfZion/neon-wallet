@@ -5,4 +5,21 @@
     font-size: 24px;
     font-weight: 600;
   }
+
+  .change {
+    &.increase {
+      fill: #5abf6b;
+    }
+
+    &.decrease {
+      fill: #ee6d66;
+    }
+  }
+
+  .changeText {
+    fill: #fff;
+    line-height: 12px;
+    font-size: 12px;
+    font-weight: 600;
+  }
 }

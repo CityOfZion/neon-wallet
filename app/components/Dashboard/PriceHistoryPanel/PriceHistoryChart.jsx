@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import { ResponsiveContainer, LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts'
 
 import AxisLabel from './AxisLabel'
+import BoundingBox from './BoundingBox'
 import { formatFiat } from '../../../core/formatters'
 import { CURRENCIES } from '../../../core/constants'
 
@@ -68,11 +69,34 @@ export default class PriceHistoryChart extends React.Component<Props> {
             dot={false}
             animationDuration={500}
             animationEasing='ease-out' />
-          <text className={styles.current} x='50%' y={0} textAnchor='middle' alignmentBaseline='hanging' fill='##282828'>
-            {this.renderPrice(this.getLatestPrice())}
-          </text>
+          {this.renderLatestPrice()}
+          {this.renderPriceChange()}
         </LineChart>
       </ResponsiveContainer>
+    )
+  }
+
+  renderLatestPrice = () => {
+    return (
+      <text className={styles.current} x='50%' y={0} textAnchor='middle' alignmentBaseline='hanging' fill='#282828'>
+        {this.renderPrice(this.getLatestPrice())}
+      </text>
+    )
+  }
+
+  renderPriceChange = () => {
+    const change = this.getPriceChange()
+    const classes = classNames(styles.change, {
+      [styles.increase]: change >= 0,
+      [styles.decrease]: change < 0
+    })
+
+    return (
+      <BoundingBox className={classes} roundedX={3} roundedY={3} paddingX={3} paddingY={1}>
+        <text className={styles.changeText} x='50%' y={35} textAnchor='middle' alignmentBaseline='hanging' fill='#282828'>
+          {change >= 0 && '+'}{(change * 100).toFixed(2)}%
+        </text>
+      </BoundingBox>
     )
   }
 
@@ -107,8 +131,17 @@ export default class PriceHistoryChart extends React.Component<Props> {
     })
   }
 
+  getInitialPrice = () => {
+    const { prices, priceKey } = this.props
+    return prices[0][priceKey]
+  }
+
   getLatestPrice = () => {
     const { prices, priceKey } = this.props
     return prices[prices.length - 1][priceKey]
+  }
+
+  getPriceChange = () => {
+    return (this.getLatestPrice() - this.getInitialPrice()) / this.getInitialPrice()
   }
 }
