@@ -5,7 +5,7 @@ import { ResponsiveContainer, LineChart, Line, CartesianGrid, XAxis, YAxis, Tool
 
 import AxisLabel from './AxisLabel'
 import BoundingBox from './BoundingBox'
-import { formatFiat } from '../../../core/formatters'
+import { formatFiat, formatThousands } from '../../../core/formatters'
 import { CURRENCIES } from '../../../core/constants'
 
 import styles from './PriceHistoryChart.scss'
@@ -79,7 +79,7 @@ export default class PriceHistoryChart extends React.Component<Props> {
   renderLatestPrice = () => {
     return (
       <text className={styles.current} x='50%' y={0} textAnchor='middle' alignmentBaseline='hanging' fill='#282828'>
-        {this.renderPrice(this.getLatestPrice())}
+        {this.renderPrice(this.getLatestPrice(), formatFiat)}
       </text>
     )
   }
@@ -111,9 +111,9 @@ export default class PriceHistoryChart extends React.Component<Props> {
     return `${date.getMonth() + 1}/${date.getDate()}`
   }
 
-  renderPrice = (price: number): string => {
+  renderPrice = (price: number, formatter: Function = formatThousands): string => {
     const { symbol } = CURRENCIES[this.props.currency]
-    return `${symbol}${formatFiat(price)}`
+    return `${symbol}${formatter(price)}`
   }
 
   handleFormatValue = (value: number): string => {
