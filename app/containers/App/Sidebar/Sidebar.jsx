@@ -35,43 +35,47 @@ const Sidebar = ({
   showTokenSaleModal
 }: Props) => (
   <div className={classNames(styles.container, className)}>
-    <div className={styles.logo}>
-      <Logo />
+    <div className={styles.group}>
+      <div className={styles.logo}>
+        <Logo />
+      </div>
+
+      <Tooltip title='Dashboard' position='right'>
+        <NavLink id='dashboard' exact to={ROUTES.DASHBOARD} className={styles.navItem} activeClassName={styles.active}>
+          <HomeIcon />
+        </NavLink>
+      </Tooltip>
+
+      <Tooltip title='Transaction History' position='right'>
+        <NavLink id='history' exact to={ROUTES.TRANSACTION_HISTORY} className={styles.navItem} activeClassName={styles.active}>
+          <HistoryIcon />
+        </NavLink>
+      </Tooltip>
+
+      <Tooltip title='Send' position='right'>
+        <a id='send' className={styles.navItem} onClick={showSendModal}>
+          <SendIcon />
+        </a>
+      </Tooltip>
+
+      <Tooltip title='Receive' position='right'>
+        <a id='receive' className={styles.navItem} onClick={showReceiveModal}>
+          <ReceiveIcon />
+        </a>
+      </Tooltip>
+
+      <Tooltip title='Token Sale' position='right'>
+        <a id='tokenSale' className={styles.navItem} onClick={showTokenSaleModal}>
+          <TokenSaleIcon />
+        </a>
+      </Tooltip>
     </div>
 
-    <Tooltip title='Dashboard' position='right'>
-      <NavLink id='dashboard' exact to={ROUTES.DASHBOARD} className={styles.navItem} activeClassName={styles.active}>
-        <HomeIcon />
-      </NavLink>
-    </Tooltip>
-
-    <Tooltip title='Transaction History' position='right'>
-      <NavLink id='history' exact to={ROUTES.TRANSACTION_HISTORY} className={styles.navItem} activeClassName={styles.active}>
-        <HistoryIcon />
-      </NavLink>
-    </Tooltip>
-
-    <Tooltip title='Send' position='right'>
-      <a id='send' className={styles.navItem} onClick={showSendModal}>
-        <SendIcon />
-      </a>
-    </Tooltip>
-
-    <Tooltip title='Receive' position='right'>
-      <a id='receive' className={styles.navItem} onClick={showReceiveModal}>
-        <ReceiveIcon />
-      </a>
-    </Tooltip>
-
-    <Tooltip title='Token Sale' position='right'>
-      <a id='tokenSale' className={styles.navItem} onClick={showTokenSaleModal}>
-        <TokenSaleIcon />
-      </a>
-    </Tooltip>
-
-    <Tooltip title='Logout' position='right'>
-      <Logout id='logout' className={styles.navItem} />
-    </Tooltip>
+    <div className={styles.group}>
+      <Tooltip title='Logout' position='right'>
+        <Logout id='logout' className={styles.navItem} />
+      </Tooltip>
+    </div>
   </div>
 )
 
