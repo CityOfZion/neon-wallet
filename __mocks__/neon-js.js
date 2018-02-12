@@ -16,7 +16,7 @@ const scriptHash = '4bcdc110b6514312ead9420467475232d4f08539'
 
 neonjs.api = {
   neonDB: {
-    getClaims: jest.fn(),
+    getClaims: promiseMockGen({ total_claim: 128045113, total_unspent_claim: 31095672 }),
     doClaimAllGas: promiseMockGen({ result: true }),
     doSendAsset: promiseMockGen({ result: true }),
     getWalletDBHeight: promiseMockGen(586435),
