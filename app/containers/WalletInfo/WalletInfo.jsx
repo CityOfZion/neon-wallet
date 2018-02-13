@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { isNil, keyBy } from 'lodash'
+import { isNil, keyBy, omitBy } from 'lodash'
 
 import Claim from '../Claim'
 
@@ -9,7 +9,7 @@ import Tooltip from '../../components/Tooltip'
 import Button from '../../components/Button'
 
 import { formatGAS, formatFiat, formatNEO } from '../../core/formatters'
-import { ASSETS, CURRENCIES, MODAL_TYPES } from '../../core/constants'
+import { ASSETS, CURRENCIES, MODAL_TYPES, ENDED_ICO_TOKENS } from '../../core/constants'
 import { toNumber } from '../../core/math'
 
 import MdSync from 'react-icons/lib/md/sync'
@@ -139,7 +139,12 @@ export default class WalletInfo extends Component<Props> {
                 [ASSETS.NEO]: NEO,
                 [ASSETS.GAS]: GAS
               },
-              tokenBalances: keyBy(tokenBalances, 'symbol'),
+              tokenBalances: keyBy(
+                tokenBalances.filter(
+                  token => !ENDED_ICO_TOKENS.includes(token.symbol)
+                ),
+                'symbol'
+              ),
               showTokensModal: () => {
                 showModal(MODAL_TYPES.TOKEN, {
                   tokens: allTokens,
