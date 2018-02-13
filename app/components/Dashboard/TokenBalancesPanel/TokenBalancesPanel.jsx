@@ -3,9 +3,7 @@ import React from 'react'
 import classNames from 'classnames'
 
 import Panel from '../../Panel'
-import Tooltip from '../../../components/Tooltip'
-// import { formatGAS } from '../../../core/formatters'
-// import { toBigNumber } from '../../../core/math'
+import Tooltip from '../../Tooltip'
 import RefreshIcon from '../../../assets/icons/refresh.svg'
 import styles from './TokenBalancesPanel.scss'
 
