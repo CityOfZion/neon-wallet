@@ -17,10 +17,13 @@ type Props = {
 const formatAssetBalances = assetBalancesToSend => {
   const balances = []
   Object.keys(assetBalancesToSend).forEach(symbol => {
-    balances.push(`${assetBalancesToSend[symbol]} ${symbol}`)
+    const balance = assetBalancesToSend[symbol]
+    if (balance) {
+      balances.push(`${balance} ${symbol}`)
+    }
   })
 
-  return balances.join(',')
+  return balances.join(', ')
 }
 
 const ParticipationSuccess = ({
