@@ -81,6 +81,8 @@ export const TOKENS = {
   NRV: '2e25d2127e0240c6deaf35394702feb236d4d7fc'
 }
 
+export const ENDED_ICO_TOKENS = ['DBC', 'RPX', 'QLC', 'RHT']
+
 export const DEFAULT_WALLET = {
   name: 'userWallet',
   version: '1.0',
