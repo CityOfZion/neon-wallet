@@ -5,6 +5,7 @@ import { noop } from 'lodash'
 import createRequestActions from '../util/api/createRequestActions'
 import { upgradeNEP6AddAddresses } from '../core/account'
 import { validatePassphraseLength } from '../core/wallet'
+import { ledgerNanoSCreateSignatureAsync } from '../ledger/ledgerNanoS'
 
 type WifLoginProps = {
   wif: string
@@ -53,11 +54,11 @@ export const nep2LoginActions = createRequestActions(ID, ({ passphrase, encrypte
   return { wif, address: account.address, isHardwareLogin: false }
 })
 
-export const ledgerLoginActions = createRequestActions(ID, ({ publicKey, signingFunction }: LedgerLoginProps) => (state: Object): AccountType => {
+export const ledgerLoginActions = createRequestActions(ID, ({ publicKey }: LedgerLoginProps) => (state: Object): AccountType => {
   const publicKeyEncoded = wallet.getPublicKeyEncoded(publicKey)
   const account = new wallet.Account(publicKeyEncoded)
 
-  return { address: account.address, publicKey, signingFunction, isHardwareLogin: true }
+  return { publicKey, address: account.address, signingFunction: ledgerNanoSCreateSignatureAsync, isHardwareLogin: true }
 })
 
 export const logoutActions = createRequestActions(ID, () => (state: Object): AccountType => {
