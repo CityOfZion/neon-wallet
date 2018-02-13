@@ -7,10 +7,10 @@
   height: 100%;
 
   .dataColumn {
+    flex: 0 0 440px;
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    width: 440px;
     margin-right: 24px;
 
     .assetsPanel {
@@ -20,9 +20,16 @@
 
     .tokensPanel {
       flex: 1 1 auto;
+      min-height: 150px;
     }
   }
 
   .chartsColumn {
+    flex: 1 1 auto;
+    min-width: 0;
+
+    // .pricesPanel {
+    //   flex: 0 0 auto;
+    // }
   }
 }

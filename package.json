@@ -103,6 +103,7 @@
     "react-syntax-highlighter": "5.8.0",
     "react-test-renderer": "16.1.1",
     "react-tippy": "1.2.2",
+    "recharts": "^1.0.0-beta.10",
     "recompose": "^0.26.0",
     "redux": "3.7.2",
     "redux-logger": "3.0.6",

@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { noop, omit, trim, includes, lowerCase } from 'lodash'
+import { noop, omit, trim, includes, toLower } from 'lodash'
 
 import Dropdown from './Dropdown'
 import DropdownButton from './DropdownButton'
@@ -29,7 +29,7 @@ const defaultRenderAfter = (props) => <DropdownButton {...props} />
 const defaultItemValue = (item) => item
 
 const defaultSearchResults = (items, term) => {
-  return items.filter((item) => includes(lowerCase(item), lowerCase(term)))
+  return items.filter((item) => includes(toLower(item), toLower(term)))
 }
 
 export default class SelectInput extends React.Component<Props, State> {
