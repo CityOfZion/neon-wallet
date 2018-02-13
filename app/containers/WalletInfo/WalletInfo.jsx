@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { isNil, keyBy, omitBy } from 'lodash'
+import { isNil, keyBy } from 'lodash'
 
 import Claim from '../Claim'
 
