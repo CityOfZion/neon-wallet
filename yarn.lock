@@ -6119,9 +6119,9 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
-"neon-js@git+https://github.com/cityofzion/neon-js.git#2.3.4":
-  version "2.3.4"
-  resolved "git+https://github.com/cityofzion/neon-js.git#aff2a869ed8c3c07bda6b3c227ad5fbdce36e009"
+"neon-js@git+https://github.com/cityofzion/neon-js.git#2.3.5":
+  version "2.3.5"
+  resolved "git+https://github.com/cityofzion/neon-js.git#bfe0aad545e7a7729a80322ebeba95d51d0a3d82"
   dependencies:
     axios "^0.16.2"
     base-x "^3.0.2"
