@@ -1,0 +1,27 @@
+.priceHistoryPanel {
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .asset,
+    .duration {
+      display: flex;
+      align-items: center;
+      color: #969aa0;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      cursor: pointer;
+
+      > * {
+        flex: 0 0 auto;
+      }
+
+      svg,
+      svg path {
+        fill: currentColor;
+      }
+    }
+  }
+}

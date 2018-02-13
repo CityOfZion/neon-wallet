@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 
 import AssetBalancesPanel from '../../components/Dashboard/AssetBalancesPanel'
 import TokenBalancesPanel from '../../components/Dashboard/TokenBalancesPanel'
+import PriceHistoryPanel from '../../components/Dashboard/PriceHistoryPanel'
 import { log } from '../../util/Logs'
 
 import styles from './Dashboard.scss'
@@ -42,7 +43,7 @@ export default class Dashboard extends Component<Props> {
           <TokenBalancesPanel className={styles.tokensPanel} />
         </div>
         <div className={styles.chartsColumn}>
-          {/* TODO */}
+          <PriceHistoryPanel className={styles.pricesPanel} />
         </div>
       </div>
     )
