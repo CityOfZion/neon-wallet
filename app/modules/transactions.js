@@ -15,10 +15,10 @@ import {
   getSigningFunction,
   getAddress,
   getIsHardwareLogin,
-  getBalances,
+  getAssetBalances,
   getTokenBalances
 } from '../core/deprecated'
-import { isToken, validateTransactionsBeforeSending } from '../core/wallet'
+import { isToken, validateTransactionsBeforeSending, getTokenBalancesMap } from '../core/wallet'
 import { ASSETS } from '../core/constants'
 import asyncWrap from '../core/asyncHelper'
 import { toNumber } from '../core/math'
@@ -120,8 +120,9 @@ export const sendTransaction = (sendEntries: Array<SendEntryType>) => async (
   const wif = getWIF(state)
   const fromAddress = getAddress(state)
   const net = getNetwork(state)
-  const balances = getBalances(state)
-  const tokensBalanceMap = keyBy(getTokenBalances(state), 'symbol')
+  const tokenBalances = getTokenBalances(state)
+  const tokensBalanceMap = keyBy(tokenBalances, 'symbol')
+  const balances = { ...getAssetBalances(state), ...getTokenBalancesMap(tokenBalances) }
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
   const isHardwareSend = getIsHardwareLogin(state)
