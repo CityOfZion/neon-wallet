@@ -1,5 +1,5 @@
 // @flow
-import { get, omit } from 'lodash'
+import { get, omit, pick } from 'lodash'
 
 import { ID as AUTH_ID } from '../actions/authActions'
 import { ID as BALANCES_ID } from '../actions/balancesActions'
@@ -56,6 +56,10 @@ export const getGAS = (state: Object): string => {
 
 export const getTokenBalances = (state: Object): Object => {
   return omit(getBalances(state), ASSETS.NEO, ASSETS.GAS)
+}
+
+export const getAssetBalances = (state: Object): Object => {
+  return pick(getBalances(state), ASSETS.NEO, ASSETS.GAS)
 }
 
 export const getBalances = (state: Object) => {
