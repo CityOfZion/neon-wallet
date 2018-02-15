@@ -3,9 +3,16 @@
 $size: 64px;
 
 .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   box-sizing: border-box;
   width: $size;
   background: #f2f2f2;
+
+  .group {
+    flex: 0 0 auto;
+  }
 }
 
 .logo {
