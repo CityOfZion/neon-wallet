@@ -22,7 +22,6 @@ type Props = {
   NEO: string,
   GAS: string,
   tokenBalances: Array<TokenBalanceType>,
-  networkId: string,
   loadWalletData: Function,
 }
 
@@ -32,21 +31,18 @@ export default class Dashboard extends Component<Props> {
   walletDataInterval: ?number
 
   componentDidMount () {
-    const { loadWalletData, net, address } = this.props
-
-    log(net, 'LOGIN', address) // only logging public information here
-    this.walletDataInterval = setInterval(loadWalletData, REFRESH_INTERVAL_MS)
+    log(this.props.net, 'LOGIN', this.props.address) // only logging public information here
+    this.addPolling()
   }
 
   componentWillUnmount () {
-    if (this.walletDataInterval) {
-      clearInterval(this.walletDataInterval)
-    }
+    this.removePolling()
   }
 
   componentWillReceiveProps (nextProps: Props) {
-    if (this.props.networkId !== nextProps.networkId) {
-      this.props.loadWalletData()
+    if (this.props.loadWalletData !== nextProps.loadWalletData) {
+      this.removePolling()
+      this.addPolling()
     }
   }
 
@@ -100,5 +96,15 @@ export default class Dashboard extends Component<Props> {
         </div>
       </div>
     )
+  }
+
+  addPolling = () => {
+    this.walletDataInterval = setInterval(this.props.loadWalletData, REFRESH_INTERVAL_MS)
+  }
+
+  removePolling = () => {
+    if (this.walletDataInterval) {
+      clearInterval(this.walletDataInterval)
+    }
   }
 }
