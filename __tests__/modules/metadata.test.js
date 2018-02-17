@@ -51,7 +51,7 @@ describe('metadata module tests', () => {
         'id': '5',
         'isUserGenerated': false,
         'networkId': '1',
-        'scriptHash': '2e25d2127e0240c6deaf35394702feb236d4d7fc'
+        'scriptHash': 'a721d5893480260bd28ca1f395f2c465d0b5b1c2'
       },
       {
         'id': '6',
