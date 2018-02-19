@@ -10,8 +10,8 @@ type Props = {
 }
 
 export default class Root extends React.Component<Props> {
-  render() {
-    const { store } = this.props;
+  render () {
+    const { store } = this.props
 
     return (
       <Provider store={store}>
