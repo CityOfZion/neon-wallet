@@ -1,10 +1,9 @@
 // @flow
 import { compose, withState } from 'recompose'
+import { withData, withActions } from 'spunky'
 
 import PriceHistoryPanel from './PriceHistoryPanel'
 import priceHistoryActions from '../../../actions/priceHistoryActions'
-import withData from '../../../hocs/api/withData'
-import withActions from '../../../hocs/api/withActions'
 import withCurrencyData from '../../../hocs/withCurrencyData'
 import { ASSETS } from '../../../core/constants'
 

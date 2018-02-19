@@ -1,8 +1,8 @@
 // @flow
 import axios from 'axios'
+import { createActions } from 'spunky'
 import { toUpper } from 'lodash'
 
-import createRequestActions from '../util/api/createRequestActions'
 import { ASSETS, DEFAULT_CURRENCY_CODE } from '../core/constants'
 
 type Duration = '1m' | '1w' | '1d'
@@ -36,7 +36,7 @@ const fetchPriceHistory = (symbol: SymbolType, currency: string, duration: Durat
   }
 }
 
-export default createRequestActions(ID, ({ currency = DEFAULT_CURRENCY_CODE, duration = '1m' }: Props = {}) => async (state: Object) => {
+export default createActions(ID, ({ currency = DEFAULT_CURRENCY_CODE, duration = '1m' }: Props = {}) => async (state: Object) => {
   const [neo, gas] = await Promise.all([
     fetchPriceHistory(ASSETS.NEO, currency, duration),
     fetchPriceHistory(ASSETS.GAS, currency, duration)
