@@ -53,11 +53,11 @@ export default class SendModal extends Component<Props, State> {
 
   render () {
     const { hideModal } = this.props
-
     return (
       <BaseModal
         title='Send'
         hideModal={hideModal}
+        shouldCloseWithEscapeKey={false}
         style={{ content: { width: '925px', height: '410px' } }}>
         {this.renderDisplay()}
       </BaseModal>
