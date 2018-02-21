@@ -15,7 +15,7 @@ render(
 )
 
 if (module.hot) {
-  module.hot.accept('./Root', () => {
+  module.hot.accept('./Root.jsx', () => {
     const NewRoot = require('./Root').default
     render(
       <AppContainer>

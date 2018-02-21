@@ -9,11 +9,16 @@ type Props = {
   store: Object,
 }
 
-const Root = ({ store }: Props) =>
-  <Provider store={store}>
-    <HashRouter>
-      <Routes />
-    </HashRouter>
-  </Provider>
+export default class Root extends React.Component<Props> {
+  render () {
+    const { store } = this.props
 
-export default Root
+    return (
+      <Provider store={store}>
+        <HashRouter>
+          <Routes />
+        </HashRouter>
+      </Provider>
+    )
+  }
+}
