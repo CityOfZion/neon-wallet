@@ -18,7 +18,8 @@ type Props = {
       content: Object,
       overlay: Object
     },
-    onAfterOpen?: Function
+    onAfterOpen?: Function,
+    shouldCloseWithEscapeKey: boolean
 }
 
 const BaseModal = ({
@@ -30,11 +31,12 @@ const BaseModal = ({
   className,
   bodyClassName,
   style,
-  onAfterOpen
+  onAfterOpen,
+  shouldCloseWithEscapeKey
 }: Props) => (
   <ReactModal
     isOpen
-    onRequestClose={hideModal}
+    onRequestClose={() => shouldCloseWithEscapeKey && hideModal()}
     style={{
       content: {
         width,
@@ -71,7 +73,8 @@ BaseModal.defaultProps = {
   style: {
     content: {},
     overlay: {}
-  }
+  },
+  shouldCloseWithEscapeKey: true
 }
 
 export default BaseModal
