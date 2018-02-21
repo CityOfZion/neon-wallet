@@ -18,7 +18,8 @@ type Props = {
       content: Object,
       overlay: Object
     },
-    onAfterOpen?: Function
+    onAfterOpen?: Function,
+    shouldCloseWithEscapeKey: boolean
 }
 
 const BaseModal = ({
