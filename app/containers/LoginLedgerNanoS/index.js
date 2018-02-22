@@ -14,7 +14,7 @@ const mapLedgerActionsToProps = (actions) => ({
 })
 
 const mapAccountActionsToProps = (actions) => ({
-  login: (publicKey, signingFunction) => ledgerLoginActions.request({ publicKey, signingFunction })
+  login: (publicKey) => ledgerLoginActions.request({ publicKey })
 })
 
 const mapLedgerDataToProps = ({ deviceInfo, publicKey }) => ({ deviceInfo, publicKey })

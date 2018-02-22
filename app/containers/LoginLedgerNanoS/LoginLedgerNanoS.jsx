@@ -39,7 +39,7 @@ export default class LoginLedgerNanoS extends Component<Props> {
         <div className={styles.title}>Login using the Ledger Nano S:</div>
         <div className={styles.loginForm}>
           <div>
-            <Button disabled={!this.canLogin()} onClick={this.props.login}>
+            <Button disabled={!this.canLogin()} onClick={this.handleLogin}>
               Use Ledger Nano S
             </Button>
             <HomeButtonLink />
@@ -76,6 +76,10 @@ export default class LoginLedgerNanoS extends Component<Props> {
     if (error) {
       return <p>{error}</p>
     }
+  }
+
+  handleLogin = () => {
+    this.props.login(this.props.publicKey)
   }
 
   canLogin () {
