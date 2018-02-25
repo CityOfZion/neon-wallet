@@ -45,12 +45,6 @@ neonjs.tx = {
 // TODO - look into why I chose to use encrypt vs encryptWif from new API
 neonjs.wallet = {
   getPublicKeyEncoded: jest.fn(),
-  decryptWIF: jest.fn((wif) => {
-    return new Promise((resolve, reject) => {
-      if (!wif) reject(new Error())
-      resolve(privateKey)
-    })
-  }),
   decrypt: jest.fn(() => privateKey),
   encrypt: jest.fn(() => encryptedKey),
   generatePrivateKey: jest.fn(() => privateKey),
