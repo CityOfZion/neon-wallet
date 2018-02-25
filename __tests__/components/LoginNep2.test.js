@@ -9,7 +9,6 @@ import { createMemoryHistory } from 'history'
 import LoginNep2 from '../../app/containers/LoginNep2'
 
 jest.useFakeTimers()
-jest.mock('neon-js')
 
 const setup = (shallowRender = true) => {
   const store = configureStore([thunk])({})
