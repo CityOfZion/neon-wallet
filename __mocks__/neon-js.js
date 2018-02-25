@@ -42,7 +42,10 @@ neonjs.api = {
   nep5: {
     getTokenInfo: promiseMockGen({ result: true }),
     getTokenBalance: promiseMockGen(100)
-  }
+  },
+  makeIntent: () => ({}),
+  sendAsset: promiseMockGen({ response: { result: true } }),
+  claimGas: promiseMockGen({ response: { result: true } })
 }
 
 neonjs.create = {
