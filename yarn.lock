@@ -641,11 +641,11 @@ axios@0.17.0:
     follow-redirects "^1.2.3"
     is-buffer "^1.1.5"
 
-axios@^0.16.2:
-  version "0.16.2"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.16.2.tgz#ba4f92f17167dfbab40983785454b9ac149c3c6d"
+axios@^0.17.1:
+  version "0.17.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.17.1.tgz#2d8e3e5d0bdbd7327f91bc814f5c57660f81824d"
   dependencies:
-    follow-redirects "^1.2.3"
+    follow-redirects "^1.2.5"
     is-buffer "^1.1.5"
 
 axobject-query@^0.1.0:
@@ -3960,6 +3960,12 @@ follow-redirects@^1.2.3:
   dependencies:
     debug "^3.1.0"
 
+follow-redirects@^1.2.5:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.4.1.tgz#d8120f4518190f55aac65bb6fc7b85fcd666d6aa"
+  dependencies:
+    debug "^3.1.0"
+
 for-in@^0.1.3:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/for-in/-/for-in-0.1.8.tgz#d8773908e31256109952b1fdb9b3fa867d2775e1"
@@ -6130,11 +6136,11 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
-"neon-js@git+https://github.com/cityofzion/neon-js.git#3.0.0":
-  version "3.0.0"
-  resolved "git+https://github.com/cityofzion/neon-js.git#9b84360265dacfefe8ebc67af10968a184a7e7a1"
+"neon-js@git+https://github.com/cityofzion/neon-js.git#3.3.1":
+  version "3.3.1"
+  resolved "git+https://github.com/cityofzion/neon-js.git#292f07b39a056b12497192e8af350338a8936e8c"
   dependencies:
-    axios "^0.16.2"
+    axios "^0.17.1"
     bignumber.js "^5.0.0"
     bs58 "^4.0.1"
     bs58check "^2.1.1"
@@ -6143,8 +6149,9 @@ negotiator@0.6.1:
     js-scrypt "^0.2.0"
     loglevel "^1.6.1"
     loglevel-plugin-prefix "^0.7.2"
+    scrypt-js "^2.0.3"
     secure-random "^1.1.1"
-    semver "^5.4.1"
+    semver "^5.5.0"
     wif "^2.0.6"
 
 no-case@^2.2.0:
@@ -8085,6 +8092,10 @@ schema-utils@^0.3.0:
   dependencies:
     ajv "^5.0.0"
 
+scrypt-js@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/scrypt-js/-/scrypt-js-2.0.3.tgz#bb0040be03043da9a012a2cea9fc9f852cfc87d4"
+
 scss-tokenizer@^0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/scss-tokenizer/-/scss-tokenizer-0.2.3.tgz#8eb06db9a9723333824d3f5530641149847ce5d1"
@@ -8119,6 +8130,10 @@ semver-diff@^2.0.0:
 semver@5.3.0, semver@~5.3.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.3.0.tgz#9b2ce5d3de02d17c6012ad326aa6b4d0cf54f94f"
+
+semver@^5.5.0:
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-5.5.0.tgz#dc4bbc7a6ca9d916dee5d43516f0092b58f7b8ab"
 
 send@0.16.1:
   version "0.16.1"
