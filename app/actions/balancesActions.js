@@ -40,8 +40,8 @@ async function getBalances ({ net, address, tokens }: Props) {
     const assetBalances = await api.neonDB.getBalance(net, address)
 
     return {
-      [ASSETS.NEO]: toBigNumber(assetBalances.NEO.balance).toString(),
-      [ASSETS.GAS]: toBigNumber(assetBalances.GAS.balance).round(COIN_DECIMAL_LENGTH).toString()
+      [ASSETS.NEO]: assetBalances.assets.NEO.balance.toString(),
+      [ASSETS.GAS]: assetBalances.assets.GAS.balance.round(COIN_DECIMAL_LENGTH).toString()
     }
   })())
 

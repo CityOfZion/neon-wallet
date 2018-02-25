@@ -32,7 +32,12 @@ neonjs.api = {
     getRPCEndpoint: promiseMockGen(''),
     doMintTokens: promiseMockGen({ result: true }),
     getTransactionHistory: promiseMockGen([]),
-    getBalance: promiseMockGen({ NEO: { balance: 1 }, GAS: { balance: 1 } })
+    getBalance: promiseMockGen({
+      assets: {
+        NEO: { balance: new Fixed8(1) },
+        GAS: { balance: new Fixed8(1) }
+      }
+    })
   },
   nep5: {
     getTokenInfo: promiseMockGen({ result: true }),
