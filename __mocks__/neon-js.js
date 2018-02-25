@@ -1,3 +1,5 @@
+const { Fixed8 } = require('neon-js').u
+
 const neonjs = jest.genMockFromModule('neon-js')
 
 const promiseMockGen = (result, error = false) => {
@@ -16,7 +18,13 @@ const scriptHash = '4bcdc110b6514312ead9420467475232d4f08539'
 
 neonjs.api = {
   neonDB: {
-    getClaims: promiseMockGen({ total_claim: 128045113, total_unspent_claim: 31095672 }),
+    getMaxClaimAmount: promiseMockGen(new Fixed8('1.59140785')),
+    getClaims: promiseMockGen({
+      claims: [
+        { claim: new Fixed8('1.28045113') },
+        { claim: new Fixed8('0.31095672') }
+      ]
+    }),
     doClaimAllGas: promiseMockGen({ result: true }),
     doSendAsset: promiseMockGen({ result: true }),
     getWalletDBHeight: promiseMockGen(586435),
