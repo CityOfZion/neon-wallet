@@ -21,11 +21,7 @@ describe('claimsActions', () => {
 
     test("payload function requests the network's block height", async (done) => {
       const request = claimsActions.request({ net, address })
-      expect(await request.payload.fn({})).toEqual({
-        total: '1.59140785',
-        available: '1.28045113',
-        unavailable: '0.31095672'
-      })
+      expect(await request.payload.fn({})).toEqual({ total: '1.59140785' })
       done()
     })
   })
@@ -47,11 +43,7 @@ describe('claimsActions', () => {
 
     test("payload function retries request for the network's block height", async (done) => {
       const request = claimsActions.retry({ net, address })
-      expect(await request.payload.fn({})).toEqual({
-        total: '1.59140785',
-        available: '1.28045113',
-        unavailable: '0.31095672'
-      })
+      expect(await request.payload.fn({})).toEqual({ total: '1.59140785' })
       done()
     })
   })

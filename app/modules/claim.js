@@ -16,11 +16,9 @@ import {
   getNEO
 } from '../core/deprecated'
 import { ASSETS } from '../core/constants'
-import asyncWrap from '../core/asyncHelper'
 import { FIVE_MINUTES_MS } from '../core/time'
 
 import { log } from '../util/Logs'
-import { toNumber } from '../core/math'
 
 // Constants
 export const SET_CLAIM_REQUEST = 'SET_CLAIM_REQUEST'
@@ -46,40 +44,34 @@ export const doClaimNotify = () => async (
   getState: GetStateType
 ) => {
   const state = getState()
-  const wif = getWIF(state)
   const address = getAddress(state)
   const net = getNetwork(state)
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
+  const privateKey = getWIF(state)
   const isHardwareClaim = getIsHardwareLogin(state)
 
   log(net, 'CLAIM', address, { info: 'claim all GAS' })
 
-  let claimGasFn
   if (isHardwareClaim) {
-    dispatch(
-      showInfoNotification({
-        message:
-          'Sign transaction 2 of 2 to claim GAS on your hardware device (claiming GAS)',
-        autoDismiss: 0
-      })
-    )
-    claimGasFn = () =>
-      api.neonDB.doClaimAllGas(net, publicKey, signingFunction)
-  } else {
-    claimGasFn = () => api.neonDB.doClaimAllGas(net, wif, null)
+    dispatch(showInfoNotification({
+      message: 'Sign transaction 2 of 2 to claim GAS on your hardware device (claiming GAS)',
+      autoDismiss: 0
+    }))
   }
 
-  const [err, response] = await asyncWrap(claimGasFn())
-  if (!err && response.result) {
-    dispatch(
-      showSuccessNotification({
-        message:
-          'Claim was successful! Your balance will update once the blockchain has processed it.'
-      })
-    )
+  try {
+    const { response } = await api.claimGas({ net, address, publicKey, privateKey, signingFunction })
+
+    if (!response.result) {
+      throw new Error('Claim failed')
+    }
+
+    dispatch(showSuccessNotification({
+      message: 'Claim was successful! Your balance will update once the blockchain has processed it.'
+    }))
     setTimeout(() => dispatch(disableClaim(false)), FIVE_MINUTES_MS)
-  } else {
+  } catch (err) {
     return dispatch(showErrorNotification({ message: 'Claim failed' }))
   }
 }
@@ -91,62 +83,53 @@ export const doGasClaim = () => async (
   getState: GetStateType
 ) => {
   const state = getState()
-  const wif = getWIF(state)
   const address = getAddress(state)
   const net = getNetwork(state)
   const NEO = getNEO(state)
-  const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
+  const privateKey = getWIF(state)
+  const signingFunction = getSigningFunction(state)
   const isHardwareClaim = getIsHardwareLogin(state)
 
   // if no NEO in account, no need to send to self first
   if (NEO === '0') {
     return dispatch(doClaimNotify())
   } else {
-    dispatch(
-      showInfoNotification({
-        message: 'Sending NEO to Yourself...',
-        autoDismiss: 0
-      })
-    )
+    dispatch(showInfoNotification({
+      message: 'Sending NEO to Yourself...',
+      autoDismiss: 0
+    }))
     log(net, 'SEND', address, { to: address, amount: NEO, asset: ASSETS.NEO })
 
-    let sendAssetFn
     if (isHardwareClaim) {
-      dispatch(
-        showInfoNotification({
-          message:
-            'Sign transaction 1 of 2 to claim GAS on your hardware device (sending NEO to yourself)',
-          autoDismiss: 0
-        })
-      )
-      sendAssetFn = () =>
-        api.neonDB.doSendAsset(
-          net,
-          address,
-          publicKey,
-          { [ASSETS.NEO]: toNumber(NEO) },
-          signingFunction
-        )
-    } else {
-      sendAssetFn = () =>
-        api.neonDB.doSendAsset(net, address, wif, { [ASSETS.NEO]: toNumber(NEO) }, null)
+      dispatch(showInfoNotification({
+        message: 'Sign transaction 1 of 2 to claim GAS on your hardware device (sending NEO to yourself)',
+        autoDismiss: 0
+      }))
     }
 
-    const [err, response] = await asyncWrap(sendAssetFn())
-    if (err || response.result === undefined || response.result === false) {
-      return dispatch(
-        showErrorNotification({ message: 'Transaction failed!' })
-      )
-    } else {
-      dispatch(
-        showInfoNotification({
-          message: 'Waiting for transaction to clear...',
-          autoDismiss: 0
-        })
-      )
+    try {
+      const { response } = await api.sendAsset({
+        net,
+        address,
+        publicKey,
+        privateKey,
+        signingFunction,
+        intents: api.makeIntent({ [ASSETS.NEO]: NEO }, address)
+      })
+
+      if (!response.result) {
+        throw new Error('Transaction failed!')
+      }
+
+      dispatch(showInfoNotification({
+        message: 'Waiting for transaction to clear...',
+        autoDismiss: 0
+      }))
       dispatch(setClaimRequest(true))
       return dispatch(disableClaim(true))
+    } catch (err) {
+      return dispatch(showErrorNotification({ message: 'Transaction failed!' }))
     }
   }
 }

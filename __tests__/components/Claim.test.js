@@ -44,7 +44,7 @@ const initialState = {
 const simulateSendAsset = (result) => {
   return jest.fn(() => {
     return new Promise((resolve, reject) => {
-      resolve({ result })
+      resolve({ response: { result } })
     })
   })
 }
@@ -73,7 +73,7 @@ describe('Claim', () => {
     test('should dispatch transaction failure event', async (done) => {
       const store = createStore(initialState)
       const wrapper = mount(provideStore(<Claim />, store))
-      neonjs.api.neonDB.doSendAsset = simulateSendAsset(false)
+      neonjs.api.sendAsset = simulateSendAsset(false)
 
       wrapper.find('button#claim').simulate('click')
       jest.runAllTimers()
@@ -94,7 +94,7 @@ describe('Claim', () => {
     test('should dispatch transaction waiting, set claim request, and disable claim events', async (done) => {
       const store = createStore(initialState)
       const wrapper = mount(provideStore(<Claim />, store))
-      neonjs.api.neonDB.doSendAsset = simulateSendAsset(true)
+      neonjs.api.sendAsset = simulateSendAsset(true)
 
       wrapper.find('button#claim').simulate('click')
       jest.runAllTimers()
