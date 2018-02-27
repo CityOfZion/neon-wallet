@@ -39,14 +39,13 @@ type State = {
   loaded: boolean,
 }
 
+const initialBalancesToSend = { [ASSETS.NEO]: '', [ASSETS.GAS]: '' }
+
 export default class TokenSale extends Component<Props, State> {
   // $FlowFixMe
   state = {
     useVerification: true,
-    assetBalancesToSend: {
-      NEO: '',
-      GAS: ''
-    },
+    assetBalancesToSend: initialBalancesToSend,
     tokenToMint: '',
     participationSuccessful: false,
     loaded: false,
@@ -59,7 +58,7 @@ export default class TokenSale extends Component<Props, State> {
     if (tokenToMint) {
       const scriptHash = get(tokenBalances[tokenToMint], 'scriptHash')
 
-      oldParticipateInSale(assetBalancesToSend.NEO, scriptHash, gasCost).then(
+      oldParticipateInSale(assetBalancesToSend[ASSETS.NEO], scriptHash, gasCost).then(
         success => {
           if (success) {
             this.setState({
@@ -153,7 +152,7 @@ export default class TokenSale extends Component<Props, State> {
               onChangeAmount={(symbol: SymbolType, amount: string) =>
                 this.setState({
                   assetBalancesToSend: {
-                    ...assetBalancesToSend,
+                    ...initialBalancesToSend,
                     [symbol]: amount
                   }
                 })
