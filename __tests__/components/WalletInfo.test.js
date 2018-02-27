@@ -1,12 +1,10 @@
 import React from 'react'
-import * as neonjs from 'neon-js'
 import { merge } from 'lodash'
 import { mount, shallow } from 'enzyme'
 
 import { createStore, provideStore, provideState } from '../testHelpers'
 import WalletInfo from '../../app/containers/WalletInfo'
-import { SHOW_NOTIFICATION } from '../../app/modules/notifications'
-import { NOTIFICATION_LEVELS, DEFAULT_CURRENCY_CODE, MAIN_NETWORK_ID } from '../../app/core/constants'
+import { DEFAULT_CURRENCY_CODE, MAIN_NETWORK_ID } from '../../app/core/constants'
 import { LOADED } from '../../app/values/state'
 
 // TODO research how to move the axios mock code which is repeated in NetworkSwitch to a helper or config file

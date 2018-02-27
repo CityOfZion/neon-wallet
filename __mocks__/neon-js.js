@@ -1,3 +1,5 @@
+const { Fixed8 } = require('neon-js').u
+
 const neonjs = jest.genMockFromModule('neon-js')
 
 const promiseMockGen = (result, error = false) => {
@@ -16,7 +18,13 @@ const scriptHash = '4bcdc110b6514312ead9420467475232d4f08539'
 
 neonjs.api = {
   neonDB: {
-    getClaims: promiseMockGen({ total_claim: 128045113, total_unspent_claim: 31095672 }),
+    getMaxClaimAmount: promiseMockGen(new Fixed8('1.59140785')),
+    getClaims: promiseMockGen({
+      claims: [
+        { claim: new Fixed8('1.28045113') },
+        { claim: new Fixed8('0.31095672') }
+      ]
+    }),
     doClaimAllGas: promiseMockGen({ result: true }),
     doSendAsset: promiseMockGen({ result: true }),
     getWalletDBHeight: promiseMockGen(586435),
@@ -24,12 +32,20 @@ neonjs.api = {
     getRPCEndpoint: promiseMockGen(''),
     doMintTokens: promiseMockGen({ result: true }),
     getTransactionHistory: promiseMockGen([]),
-    getBalance: promiseMockGen({ NEO: { balance: 1 }, GAS: { balance: 1 } })
+    getBalance: promiseMockGen({
+      assets: {
+        NEO: { balance: new Fixed8(1) },
+        GAS: { balance: new Fixed8(1) }
+      }
+    })
   },
   nep5: {
     getTokenInfo: promiseMockGen({ result: true }),
     getTokenBalance: promiseMockGen(100)
-  }
+  },
+  makeIntent: () => ({}),
+  sendAsset: promiseMockGen({ response: { result: true } }),
+  claimGas: promiseMockGen({ response: { result: true } })
 }
 
 neonjs.create = {
@@ -45,12 +61,6 @@ neonjs.tx = {
 // TODO - look into why I chose to use encrypt vs encryptWif from new API
 neonjs.wallet = {
   getPublicKeyEncoded: jest.fn(),
-  decryptWIF: jest.fn((wif) => {
-    return new Promise((resolve, reject) => {
-      if (!wif) reject(new Error())
-      resolve(privateKey)
-    })
-  }),
   decrypt: jest.fn(() => privateKey),
   encrypt: jest.fn(() => encryptedKey),
   generatePrivateKey: jest.fn(() => privateKey),
