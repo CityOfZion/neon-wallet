@@ -20,7 +20,6 @@ import {
 } from '../core/deprecated'
 import { isToken, validateTransactionsBeforeSending, getTokenBalancesMap } from '../core/wallet'
 import { ASSETS } from '../core/constants'
-import asyncWrap from '../core/asyncHelper'
 import { toNumber } from '../core/math'
 
 import { log } from '../util/Logs'
@@ -161,8 +160,8 @@ export const sendTransaction = (sendEntries: Array<SendEntryType>) => async (
     )
   }
 
-  const [err, config] = await asyncWrap(
-    makeRequest(sendEntries, {
+  try {
+    const { response } = await makeRequest(sendEntries, {
       net,
       tokensBalanceMap,
       address: fromAddress,
@@ -170,17 +169,15 @@ export const sendTransaction = (sendEntries: Array<SendEntryType>) => async (
       privateKey: new wallet.Account(wif).privateKey,
       signingFunction: isHardwareSend ? signingFunction : null
     })
-  )
 
-  if (err || !config || !config.response || !config.response.result) {
-    console.log(err)
+    if (!response.result) {
+      throw new Error('Transaction failed')
+    }
+
+    return dispatch(showSuccessNotification({
+      message: 'Transaction complete! Your balance will automatically update when the blockchain has processed it.'
+    }))
+  } catch (err) {
     return rejectTransaction('Transaction failed!')
-  } else {
-    return dispatch(
-      showSuccessNotification({
-        message:
-          'Transaction complete! Your balance will automatically update when the blockchain has processed it.'
-      })
-    )
   }
 }
