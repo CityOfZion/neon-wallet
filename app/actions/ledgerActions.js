@@ -1,8 +1,7 @@
 // @flow
 import createBatchActions from '../util/api/createBatchActions'
 import createRequestActions from '../util/api/createRequestActions'
-import getDeviceInfo from '../ledger/getDeviceInfo'
-import getPublicKey from '../ledger/getPublicKey'
+import {getDeviceInfo, getPublicKey} from '../ledger/ledgerNanoS'
 
 const DEVICE_ID = 'LEDGER_DEVICE'
 const PUBLIC_KEY_ID = 'LEDGER_PUBLIC_KEY'
