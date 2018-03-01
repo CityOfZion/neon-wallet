@@ -1,7 +1,6 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { noop } from 'lodash'
 
 import Content from './Content'
 import Header from './Header'
@@ -10,33 +9,32 @@ import styles from './Panel.scss'
 type Props = {
   className: ?string,
   children: React$Node,
-  renderHeader: Function
+  renderHeader: ?Function
 }
 
 export default class Panel extends React.Component<Props> {
   static defaultProps = {
-    renderHeader: noop
+    renderHeader: null
   }
 
   render = () => {
     return (
       <div className={classNames(styles.panel, this.props.className)}>
-        <Header className={styles.header}>
-          {this.renderHeader()}
-        </Header>
-
-        <Content className={styles.content}>
-          {this.renderContent()}
-        </Content>
+        {this.renderHeader()}
+        {this.renderContent()}
       </div>
     )
   }
 
   renderHeader = () => {
-    return this.props.renderHeader()
+    const { renderHeader } = this.props
+
+    if (renderHeader) {
+      return <Header className={styles.header}>{renderHeader()}</Header>
+    }
   }
 
   renderContent = () => {
-    return this.props.children
+    return <Content className={styles.content}>{this.props.children}</Content>
   }
 }

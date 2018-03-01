@@ -1,55 +1,51 @@
 // @flow
-import React, { Component } from 'react'
+import React from 'react'
 import classNames from 'classnames'
 import { clipboard } from 'electron'
 
 import Tooltip from '../Tooltip'
-
-import Copy from 'react-icons/lib/md/content-copy'
-import CheckCircle from 'react-icons/lib/md/check-circle'
-
+import CopyIcon from '../../assets/icons/copy.svg'
+import ConfirmIcon from '../../assets/icons/confirm.svg'
 import { ONE_SECOND_MS } from '../../core/time'
 
 import styles from './CopyToClipboard.scss'
 
 type Props = {
-    text: string,
-    tooltip?: string,
-    className?: string,
-    style?: Object
+  className?: string,
+  text: string,
+  tooltip: string
 }
 
 type State = {
-  copyIconShown: boolean
+  copied: boolean
 }
 
-class CopyToClipboard extends Component<Props, State> {
+class CopyToClipboard extends React.Component<Props, State> {
+  static defaultProps = {
+    tooltip: 'Copy'
+  }
+
   state = {
-    copyIconShown: true
+    copied: false
   }
 
   copyText = (text: string) => {
     clipboard.writeText(text)
-    this.setState({
-      copyIconShown: false
-    })
+    this.setState({ copied: true })
     setTimeout(() => {
-      this.setState({
-        copyIconShown: true
-      })
+      this.setState({ copied: false })
     }, ONE_SECOND_MS)
   }
 
   render () {
-    const { text, tooltip = '', className = '', style } = this.props
-    const { copyIconShown } = this.state
+    const { text, tooltip = '', className = '' } = this.props
+    const { copied } = this.state
+
     return (
-      <span
-        onClick={() => this.copyText(text)}
-        className={classNames(styles.copyKey, className)}
-        style={style}
-      >
-        {tooltip ? <Tooltip title={tooltip}>{copyIconShown ? <Copy /> : <CheckCircle />}</Tooltip> : <Copy />}
+      <span className={classNames(styles.copyToClipboard, className)} onClick={() => this.copyText(text)}>
+        <Tooltip className={styles.tooltip} title={tooltip}>
+          {copied ? <ConfirmIcon /> : <CopyIcon />}
+        </Tooltip>
       </span>)
   }
 }
