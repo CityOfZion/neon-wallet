@@ -4,13 +4,12 @@ import classNames from 'classnames'
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts'
 import { map, times } from 'lodash'
 
+import COLORS from './colors'
 import { toNumber } from '../../../core/math'
 import { formatThousands } from '../../../core/formatters' // formatFiat
 import { CURRENCIES } from '../../../core/constants'
 
 import styles from './PortfolioBreakdownChart.scss'
-
-const COLORS = ['#a866ee', '#edaa66', '#ee6d66', '#66edcd']
 
 type Props = {
   className?: string,
