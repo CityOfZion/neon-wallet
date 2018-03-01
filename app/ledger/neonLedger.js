@@ -1,10 +1,11 @@
 // @flow
-import { tx, wallet } from 'neon-js'
-import type {Transaction} from 'neon-js'
+import { tx, wallet, u } from 'neon-js'
+import type { Transaction } from 'neon-js'
 import LedgerNode from '@ledgerhq/hw-transport-node-hid'
 import asyncWrap from '../core/asyncHelper'
 
-const VALID_STATUS = [0x9000]
+const VALID_STATUS = 0x9000
+const MSG_TOO_BIG = 0x6D08
 
 const BIP44 = (acct = 0) => {
   const acctNumber = acct.toString(16)
@@ -25,9 +26,11 @@ export default class NeonLedger {
 
   /**
    * Initialises by listing devices and trying to find a ledger device connected. Throws an error if no ledgers detected or unable to connect.
-   * @return this
+   * @return {Promise<NeonLedger>}
    */
   static async init () {
+    const supported = await LedgerNode.isSupported()
+    if (!supported) throw new Error(`Your computer does not support the ledger!`)
     const paths = await NeonLedger.list()
     if (paths.length === 0) throw new Error('USB Error: No device found.')
     const ledger = new NeonLedger(paths[0])
@@ -38,25 +41,26 @@ export default class NeonLedger {
     }
   }
 
-  static async list () {
+  static async list (): Promise<string[]> {
     return LedgerNode.list()
   }
 
   /**
    * Opens an connection with the selected ledger.
-   * @return this
+   * @return {Promise<NeonLedger>}this
    */
-  async open () {
+  async open (): Promise<NeonLedger> {
     this.device = await LedgerNode.open(this.path)
     return this
   }
 
   /**
    * Closes the connection between the Ledger and the wallet.
-   * @return this
+   * @return {Promise<void>}}
    */
-  async close () {
-    return this.device.close()
+  close (): Promise<void> {
+    if (this.device) return this.device.close()
+    return Promise.resolve()
   }
 
   /**
@@ -65,8 +69,12 @@ export default class NeonLedger {
    * @return {string} Public Key (Unencoded)
    */
   async getPublicKey (acct: number = 0): Promise<string> {
-    const res = await this.send('80040000', BIP44(acct), VALID_STATUS)
+    const res = await this.send('80040000', BIP44(acct), [VALID_STATUS])
     return res.toString('hex').substring(0, 130)
+  }
+
+  getDeviceInfo () {
+    return this.device.device.getDeviceInfo()
   }
 
   /**
@@ -91,6 +99,7 @@ export default class NeonLedger {
    */
   async getSignature (data: string, acct: number = 0): Promise<string> {
     data += BIP44(acct)
+    if (data.length > 1024 * 2) throw new Error(`An error occurred[${MSG_TOO_BIG}]: Message too big for ledger to sign!`)
     let response = null
     const chunks = data.match(/.{1,510}/g) || []
     if (!chunks.length) throw new Error(`Invalid data provided: ${data}`)
@@ -99,7 +108,7 @@ export default class NeonLedger {
       // $FlowFixMe
       const chunk = chunks[i]
       const params = `8002${p}00`
-      let [err, res] = await asyncWrap(this.send(params, chunk, VALID_STATUS))
+      let [err, res] = await asyncWrap(this.send(params, chunk, [VALID_STATUS]))
       if (err) {
         const errCode = p === '00' ? '0' : '1'
         console.log(`Signature Reponse An error occurred[${errCode}]:`, err)
@@ -115,37 +124,34 @@ export default class NeonLedger {
   }
 }
 
+/**
+ * The signature is returned from the ledger in a DER format
+ * @param {string} response - Signature in DER format
+ */
 const assembleSignature = (response: string): string => {
-  let rLenHex = response.substring(6, 8)
-  let rLen = parseInt(rLenHex, 16) * 2
-  let rStart = 8
-  let rEnd = rStart + rLen
+  let ss = new u.StringStream(response)
+  // The first byte is format. It is usually 0x30 (SEQ) or 0x31 (SET)
+  // The second byte represents the total length of the DER module.
+  ss.read(2)
+  // Now we read each field off
+  // Each field is encoded with a type byte, length byte followed by the data itself
+  ss.read(1) // Read and drop the type
+  const r = ss.readVarBytes()
+  ss.read(1)
+  const s = ss.readVarBytes()
 
-  while ((response.substring(rStart, rStart + 2) === '00') && ((rEnd - rStart) > 64)) {
-    rStart += 2
-  }
+  // We will need to ensure both integers are 32 bytes long
+  const integers = [r, s].map(i => {
+    if (i.length < 64) {
+      i = i.padStart(64, '0')
+    }
+    if (i.length > 64) {
+      i = i.substr(-64)
+    }
+    return i
+  })
 
-  let r = response.substring(rStart, rEnd)
-  let sLenHex = response.substring(rEnd + 2, rEnd + 4)
-  let sLen = parseInt(sLenHex, 16) * 2
-  let sStart = rEnd + 4
-  let sEnd = sStart + sLen
-
-  while ((response.substring(sStart, sStart + 2) === '00') && ((sEnd - sStart) > 64)) {
-    sStart += 2
-  }
-
-  let s = response.substring(sStart, sEnd)
-
-  while (r.length < 64) {
-    r = '00' + r
-  }
-
-  while (s.length < 64) {
-    s = '00' + s
-  }
-
-  return r + s
+  return integers.join('')
 }
 
 export const getPublicKey = async (acct: number = 0): Promise<string> => {
