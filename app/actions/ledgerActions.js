@@ -1,22 +1,12 @@
 // @flow
-import createBatchActions from '../util/api/createBatchActions'
 import createRequestActions from '../util/api/createRequestActions'
-import {getDeviceInfo, getPublicKey} from '../ledger/ledgerNanoS'
-
-const DEVICE_ID = 'LEDGER_DEVICE'
-const PUBLIC_KEY_ID = 'LEDGER_PUBLIC_KEY'
+import { getDeviceInfo, getPublicKey } from '../ledger/ledgerNanoS'
 
 export const ID = 'LEDGER'
 
-const deviceInfoActions = createRequestActions(DEVICE_ID, () => async (state: Object) => {
-  return getDeviceInfo()
-})
+export default createRequestActions(ID, () => async (state: Object) => {
+  const deviceInfo = await getDeviceInfo()
+  const publicKey = await getPublicKey()
 
-const publicKeyActions = createRequestActions(PUBLIC_KEY_ID, () => async (state: Object) => {
-  return getPublicKey()
-})
-
-export default createBatchActions(ID, {
-  deviceInfo: deviceInfoActions,
-  publicKey: publicKeyActions
+  return { publicKey, deviceInfo }
 })

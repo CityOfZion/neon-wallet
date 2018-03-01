@@ -18,6 +18,7 @@ const BIP44 = (acct = 0) => {
 export default class NeonLedger {
   path: string
   device: any
+
   constructor (path: string) {
     this.path = path
   }
@@ -27,8 +28,8 @@ export default class NeonLedger {
    * @return this
    */
   static async init () {
-    const paths = await LedgerNode.list()
-    if (paths.length === 0) throw new Error(`USB Error: No device found.`)
+    const paths = await NeonLedger.list()
+    if (paths.length === 0) throw new Error('USB Error: No device found.')
     const ledger = new NeonLedger(paths[0])
     try {
       return ledger.open()
@@ -40,6 +41,7 @@ export default class NeonLedger {
   static async list () {
     return LedgerNode.list()
   }
+
   /**
    * Opens an connection with the selected ledger.
    * @return this
@@ -151,7 +153,7 @@ export const getPublicKey = async (acct: number = 0): Promise<string> => {
   try {
     return await ledger.getPublicKey(acct)
   } finally {
-    ledger.close()
+    await ledger.close()
   }
 }
 
@@ -160,9 +162,10 @@ export const getDeviceInfo = async () => {
   try {
     return await ledger.device.device.getDeviceInfo()
   } finally {
-    ledger.close()
+    await ledger.close()
   }
 }
+
 /**
  * Signs a transaction with Ledger. Returns the whole transaction string
  * @param {Transaction|string} unsignedTx - hexstring or Transaction object
@@ -180,7 +183,7 @@ export const signWithLedger = async (unsignedTx: Transaction | string, acct: num
     txObj.scripts.push({ invocationScript, verificationScript })
     return tx.serializeTransaction(txObj)
   } finally {
-    ledger.close()
+    await ledger.close()
   }
 }
 
@@ -194,6 +197,6 @@ export const legacySignWithLedger = async (unsignedTx: Transaction | string, pub
     txObj.scripts.push({ invocationScript, verificationScript })
     return tx.serializeTransaction(txObj)
   } finally {
-    ledger.close()
+    await ledger.close()
   }
 }
