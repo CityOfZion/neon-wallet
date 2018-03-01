@@ -1,23 +1,27 @@
 // @flow
 import { compose, withProps } from 'recompose'
 import { withData } from 'spunky'
-import { pick, omit, reduce } from 'lodash'
+import { pickBy, pick, omit, reduce } from 'lodash'
 
 import PortfolioPanel from './PortfolioPanel'
 import pricesActions from '../../../actions/pricesActions'
 import balancesActions from '../../../actions/balancesActions'
 import withCurrencyData from '../../../hocs/withCurrencyData'
 import { getTokenBalancesMap } from '../../../core/wallet'
-import { toNumber } from '../../../core/math'
+import { toNumber, toBigNumber } from '../../../core/math'
 import { ASSETS } from '../../../core/constants'
+
+const removeEmptyBalances = (balances) => {
+  return pickBy(balances, (balance) => toBigNumber(balance).gt(0))
+}
 
 const mapPricesDataToProps = (prices) => ({ prices })
 
 const mapBalancesDataToProps = (balances) => ({
-  balances: {
+  balances: removeEmptyBalances({
     ...pick(balances, ASSETS.NEO, ASSETS.GAS),
     ...getTokenBalancesMap(omit(balances, 'NEO', 'GAS'))
-  }
+  })
 })
 
 const mapTotalPortfolioValueToProps = ({ prices, balances }) => ({
