@@ -1,8 +1,18 @@
-.copyKey {
-    margin-left: 5px;
-    color: #000;
-    &:hover {
-        opacity: .7;
-        cursor: pointer;
-    }        
+.copyToClipboard {
+  margin-left: 5px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: .7;
+  }
+
+  svg {
+    &, & path {
+      fill: #9599a2;
+    }
+  }
+
+  .tooltip {
+    display: inline-block;
+  }
 }
