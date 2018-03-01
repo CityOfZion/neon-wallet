@@ -17,8 +17,12 @@ const mapAccountActionsToProps = (actions) => ({
   login: (publicKey) => ledgerLoginActions.request({ publicKey })
 })
 
-const mapLedgerDataToProps = ({ deviceInfo, publicKey }) => ({ deviceInfo, publicKey })
-const mapLedgerErrorToProps = ({ deviceInfo, publicKey }) => ({ error: deviceInfo || publicKey })
+const mapLedgerDataToProps = (data) => {
+  const { deviceInfo, publicKey } = data || {}
+  return { deviceInfo, publicKey }
+}
+
+const mapLedgerErrorToProps = (error) => ({ error })
 
 export default compose(
   withFetch(ledgerActions),
