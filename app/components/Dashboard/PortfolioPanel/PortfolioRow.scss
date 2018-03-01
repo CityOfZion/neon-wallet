@@ -1,0 +1,39 @@
+.portfolioRow {
+  display: flex;
+  flex-direction: row;
+  margin: 0 0 16px;
+  align-items: center;
+
+  .color,
+  .symbol,
+  .balance,
+  .value,
+  .percent {
+    flex: 1 1 auto;
+    width: 50%;
+    margin-right: 24px;
+    color: #282828;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .color {
+    flex: 0 0 auto;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+  }
+
+  .balance,
+  .value {
+    flex-grow: 2;
+    width: 100%;
+  }
+
+  .percent {
+    color: #969aa0;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+}
