@@ -1,6 +1,6 @@
 // @flow
 import { compose } from 'recompose'
-import { values, omit } from 'lodash'
+import { filter, values, omit } from 'lodash'
 import { withData, withActions } from 'spunky'
 
 import TokenBalancesPanel from './TokenBalancesPanel'
@@ -9,9 +9,18 @@ import withNetworkData from '../../../hocs/withNetworkData'
 import withAuthData from '../../../hocs/withAuthData'
 import withCurrencyData from '../../../hocs/withCurrencyData'
 import withFilteredTokensData from '../../../hocs/withFilteredTokensData'
+import { toBigNumber } from '../../../core/math'
+
+const filterZeroBalanceTokens = (balances) => {
+  return filter(balances, (token) => toBigNumber(token.balance).gt(0))
+}
+
+const getTokenBalances = (balances) => {
+  return values(omit(balances, 'NEO', 'GAS'))
+}
 
 const mapBalanceDataToProps = (balances) => ({
-  balances: values(omit(balances, 'NEO', 'GAS'))
+  balances: filterZeroBalanceTokens(getTokenBalances(balances))
 })
 
 const mapBalancesActionsToProps = (actions, props) => ({
