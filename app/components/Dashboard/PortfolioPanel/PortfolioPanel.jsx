@@ -7,17 +7,22 @@ import PortfolioTable from './PortfolioTable'
 import Panel from '../../Panel'
 import styles from './PortfolioPanel.scss'
 
+type BalanceType = {
+  symbol: SymbolType,
+  balance: string,
+  value: number,
+  percent: number
+}
+
 type Props = {
   className: ?string,
   currency: string,
-  prices: { [key: SymbolType]: number },
-  balances: { [key: SymbolType]: string },
-  total: number
+  balances: { [key: SymbolType]: BalanceType }
 }
 
 export default class PortfolioPanel extends React.Component<Props> {
   render = () => {
-    const { className, prices, balances, currency, total } = this.props
+    const { className, balances, currency } = this.props
 
     return (
       <Panel className={classNames(styles.portfolioPanel, className)} renderHeader={this.renderHeader}>
@@ -29,10 +34,8 @@ export default class PortfolioPanel extends React.Component<Props> {
           />
           <PortfolioTable
             className={styles.table}
-            prices={prices}
             balances={balances}
             currency={currency}
-            total={total}
           />
         </div>
       </Panel>
