@@ -2,7 +2,7 @@ import NeonLedger, { legacySignWithLedger, getPublicKey, getDeviceInfo } from '.
 
 export default NeonLedger
 export const ledgerNanoSCreateSignatureAsync = legacySignWithLedger
-export {getPublicKey, getDeviceInfo}
+export { getPublicKey, getDeviceInfo }
 export const CURRENT_VERSION = 0
 
 // export * from './legacyledgerNanoS.js'
