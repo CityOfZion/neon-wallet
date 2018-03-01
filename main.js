@@ -34,6 +34,9 @@ app.on('ready', () => {
         webSecurity: false
       }
     })
+    if (process.env.NODE_ENV === 'development') {
+      mainWindow.webContents.openDevTools()
+    }
 
     if (process.platform !== 'darwin') {
     // Windows/Linxu Menu
