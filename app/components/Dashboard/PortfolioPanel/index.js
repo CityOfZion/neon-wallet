@@ -1,7 +1,7 @@
 // @flow
 import { compose, withProps } from 'recompose'
 import { withData } from 'spunky'
-import { pickBy, pick, omit, reduce } from 'lodash'
+import { pickBy, pick, omit, reduce, map } from 'lodash'
 
 import PortfolioPanel from './PortfolioPanel'
 import pricesActions from '../../../actions/pricesActions'
@@ -30,9 +30,20 @@ const mapTotalPortfolioValueToProps = ({ prices, balances }) => ({
   }, 0)
 })
 
+const mapPortfolioBalanceProps = ({ prices, balances, total }) => ({
+  balances: map(balances, (tokenBalance, symbol) => {
+    const balance = toNumber(tokenBalance)
+    const value = balance * (prices[symbol] || 0)
+    const percent = value / total
+
+    return { symbol, balance, value, percent }
+  })
+})
+
 export default compose(
   withData(pricesActions, mapPricesDataToProps),
   withData(balancesActions, mapBalancesDataToProps),
   withCurrencyData(),
-  withProps(mapTotalPortfolioValueToProps)
+  withProps(mapTotalPortfolioValueToProps),
+  withProps(mapPortfolioBalanceProps)
 )(PortfolioPanel)
