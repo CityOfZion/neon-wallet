@@ -17,6 +17,7 @@ export const EXPLORERS = {
 export const ROUTES = {
   HOME: '/',
   DASHBOARD: '/dashboard',
+  RECEIVE: '/receive',
   CREATE_WALLET: '/create',
   ENCRYPT_KEY: '/encrypt-key',
   LOGIN_PRIVATE_KEY: '/login-private-key',
@@ -51,7 +52,6 @@ export const BIP44_PATH =
 
 export const MODAL_TYPES = {
   SEND: 'SEND',
-  RECEIVE: 'RECEIVE',
   CONFIRM: 'CONFIRM',
   TOKEN_INFO: 'TOKEN_INFO',
   TOKEN: 'TOKEN',

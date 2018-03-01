@@ -8,6 +8,7 @@ import LoginPrivateKey from './containers/LoginPrivateKey'
 import LoginLedgerNanoS from './containers/LoginLedgerNanoS'
 import CreateWallet from './containers/CreateWallet'
 import Dashboard from './containers/Dashboard'
+import Receive from './containers/Receive'
 import LoginLocalStorage from './containers/LoginLocalStorage'
 import LoginNep2 from './containers/LoginNep2'
 import Settings from './containers/Settings'
@@ -21,6 +22,7 @@ export default () => (
     <RedirectHome />
     <Switch>
       <Route exact path={ROUTES.DASHBOARD} component={Dashboard} />
+      <Route exact path={ROUTES.RECEIVE} component={Receive} />
       <Route
         exact
         path={ROUTES.CREATE_WALLET}
