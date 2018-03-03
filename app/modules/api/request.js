@@ -41,9 +41,9 @@ function reduceRequest (state: State = initialState, actionState: ActionState): 
     case ACTION_REQUEST:
       return { ...state, state: LOADING, rollbackState: state.state }
     case ACTION_SUCCESS:
-      return { ...state, state: LOADED, rollbackState: LOADED, data: actionState.payload, loadedCount: state.loadedCount + 1 }
+      return { ...state, state: LOADED, rollbackState: LOADED, error: null, data: actionState.payload, loadedCount: state.loadedCount + 1 }
     case ACTION_FAILURE:
-      return { ...state, state: FAILED, rollbackState: FAILED, error: actionState.payload }
+      return { ...state, state: FAILED, rollbackState: FAILED, error: actionState.payload, data: null }
     case ACTION_RESET:
       return { ...state, ...initialState }
     case ACTION_CANCEL:
