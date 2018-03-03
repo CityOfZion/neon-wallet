@@ -56,7 +56,7 @@ export default class LoginLedgerNanoS extends Component<Props> {
     const { deviceInfo } = this.props
 
     if (deviceInfo) {
-      return <p>Found USB ${deviceInfo.manufacturer} ${deviceInfo.product}</p>
+      return <p>Found USB {deviceInfo.manufacturer} {deviceInfo.product}</p>
     } else {
       return <p>Looking for USB Devices. Please plugin your device and login.</p>
     }
