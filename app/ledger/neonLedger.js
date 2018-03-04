@@ -125,7 +125,6 @@ export default class NeonLedger {
    */
   async getSignature (data: string, acct: number = 0): Promise<string> {
     data += BIP44(acct)
-    if (data.length > 1024 * 2) throw new Error(`An error occurred[${MSG_TOO_BIG}]: Message too big for ledger to sign!`)
     let response = null
     const chunks = data.match(/.{1,510}/g) || []
     if (!chunks.length) throw new Error(`Invalid data provided: ${data}`)
