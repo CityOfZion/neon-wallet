@@ -6,6 +6,24 @@ import asyncWrap from '../core/asyncHelper'
 
 const VALID_STATUS = 0x9000
 const MSG_TOO_BIG = 0x6D08
+const APP_CLOSED = 0x6e00
+
+/**
+ * Evaluates Transport Error thrown and rewrite the error message to be more user friendly.
+ * @param {Error} err
+ * @return {Error}
+ */
+const evalTransportError = (err) => {
+  switch (err.statusCode) {
+    case APP_CLOSED:
+      err.message = 'Your NEO app is closed! Please login.'
+      break
+    case MSG_TOO_BIG:
+      err.message = 'Your transaction is too big for the ledger to sign!'
+      break
+  }
+  return err
+}
 
 const BIP44 = (acct = 0) => {
   const acctNumber = acct.toString(16)
@@ -34,11 +52,7 @@ export default class NeonLedger {
     const paths = await NeonLedger.list()
     if (paths.length === 0) throw new Error('USB Error: No device found.')
     const ledger = new NeonLedger(paths[0])
-    try {
-      return ledger.open()
-    } catch (err) {
-      throw new Error('USB Error: Login to NEO App and try again.')
-    }
+    return ledger.open()
   }
 
   static async list (): Promise<string[]> {
@@ -50,8 +64,12 @@ export default class NeonLedger {
    * @return {Promise<NeonLedger>}this
    */
   async open (): Promise<NeonLedger> {
-    this.device = await LedgerNode.open(this.path)
-    return this
+    try {
+      this.device = await LedgerNode.open(this.path)
+      return this
+    } catch (err) {
+      throw evalTransportError(err)
+    }
   }
 
   /**
@@ -74,7 +92,11 @@ export default class NeonLedger {
   }
 
   getDeviceInfo () {
-    return this.device.device.getDeviceInfo()
+    try {
+      return this.device.device.getDeviceInfo()
+    } catch (err) {
+      throw evalTransportError(err)
+    }
   }
 
   /**
@@ -88,7 +110,11 @@ export default class NeonLedger {
     if (params.length !== 8) throw new Error(`params requires 4 bytes`)
     // $FlowFixMe
     const [cla, ins, p1, p2] = params.match(/.{1,2}/g).map(i => parseInt(i, 16))
-    return this.device.send(cla, ins, p1, p2, Buffer.from(msg, 'hex'), statusList)
+    try {
+      return await this.device.send(cla, ins, p1, p2, Buffer.from(msg, 'hex'), statusList)
+    } catch (err) {
+      throw evalTransportError(err)
+    }
   }
 
   /**
@@ -99,7 +125,6 @@ export default class NeonLedger {
    */
   async getSignature (data: string, acct: number = 0): Promise<string> {
     data += BIP44(acct)
-    if (data.length > 1024 * 2) throw new Error(`An error occurred[${MSG_TOO_BIG}]: Message too big for ledger to sign!`)
     let response = null
     const chunks = data.match(/.{1,510}/g) || []
     if (!chunks.length) throw new Error(`Invalid data provided: ${data}`)
@@ -109,11 +134,7 @@ export default class NeonLedger {
       const chunk = chunks[i]
       const params = `8002${p}00`
       let [err, res] = await asyncWrap(this.send(params, chunk, [VALID_STATUS]))
-      if (err) {
-        const errCode = p === '00' ? '0' : '1'
-        console.log(`Signature Reponse An error occurred[${errCode}]:`, err)
-        throw new Error(`An error occurred[${errCode}]: ${err}`)
-      }
+      if (err) throw evalTransportError(err)
       response = res
     }
     if (response === 0x9000) {
@@ -166,7 +187,7 @@ export const getPublicKey = async (acct: number = 0): Promise<string> => {
 export const getDeviceInfo = async () => {
   const ledger = await NeonLedger.init()
   try {
-    return await ledger.device.device.getDeviceInfo()
+    return await ledger.getDeviceInfo()
   } finally {
     await ledger.close()
   }
