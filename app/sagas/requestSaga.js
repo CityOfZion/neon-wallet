@@ -1,5 +1,4 @@
 // @flow
-import { get } from 'lodash'
 import { call, put, race, take } from 'redux-saga/effects'
 import { type Saga } from 'redux-saga'
 
@@ -24,10 +23,8 @@ type SagaActions = {
 
 export function createSagaActions (meta: ActionMeta): SagaActions {
   function * request (state: Object, payload: Payload, actions: SagaActions) {
-    const { fn } = payload
-
     try {
-      const result = yield call(fn, state)
+      const result = yield call(payload.fn, state)
       yield put(actions.success(result))
     } catch (err) {
       console.error(`${meta.id} request action failed.`, err)
@@ -57,7 +54,7 @@ export function createSagaActions (meta: ActionMeta): SagaActions {
 }
 
 export default function * requestSaga (state: Object, actionState: ActionState): Saga<boolean> {
-  const id = get(actionState, 'meta.id')
+  const { id } = actionState.meta
   const sagaActions = createSagaActions(actionState.meta)
 
   yield race({
