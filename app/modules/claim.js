@@ -1,6 +1,5 @@
 // @flow
-import { api } from 'neon-js'
-import { rpc } from 'neon-js'
+import { api, rpc } from 'neon-js'
 
 import {
   showErrorNotification,
@@ -25,6 +24,7 @@ import { log } from '../util/Logs'
 export const SET_CLAIM_REQUEST = 'SET_CLAIM_REQUEST'
 export const DISABLE_CLAIM = 'DISABLE_CLAIM'
 export const SET_FINALIZE_CLAIM = 'SET_FINALIZE_CLAIM'
+export const SET_TRANSACTION_ID = 'SET_TRANSACTION_ID'
 
 // Actions
 export function setClaimRequest (claimRequest: boolean) {
@@ -33,14 +33,14 @@ export function setClaimRequest (claimRequest: boolean) {
     payload: { claimRequest }
   }
 }
-export function setTransactionId (txid: string) {
+export function setTransactionId (transactionId: string) {
   return {
-    type: SET_CLAIM_REQUEST,
-    payload: { txid }
+    type: SET_TRANSACTION_ID,
+    payload: { transactionId }
   }
 }
 
-export function setFinalizeCalim (finalizeClaim: boolean) {
+export function setFinalizeClaim (finalizeClaim: boolean) {
   return {
     type: SET_FINALIZE_CLAIM,
     payload: { finalizeClaim }
@@ -76,6 +76,8 @@ export const doClaimNotify = () => async (
   }
 
   try {
+    console.log('claiming now');
+    console.log('net', net, 'address', address, 'publicKey', publicKey, 'privateKey', privateKey, 'signingFunction', signingFunction);
     const { response } = await api.claimGas({ net, address, publicKey, privateKey, signingFunction })
 
     if (!response.result) {
@@ -133,8 +135,6 @@ export const doGasClaim = () => async (
         intents: api.makeIntent({ [ASSETS.NEO]: NEO }, address)
       })
 
-      console.log('txresponse', response);
-
       if (!response.result || !response.txid) {
         throw new Error('Transaction failed!')
       }
@@ -159,13 +159,12 @@ export const checkClaimStatus = () => async (
   const state = getState()
   const net = getNetwork(state)
   const txid = getTransactionId(state)
-  console.log('calling check claim state');
   const endpoint = await api.loadBalance(api.getRPCEndpointFrom, { net })
-  console.log('endpoint', endpoint);
-  const response = await rpc.Query.getRawTransaction(txid, 1).execute(endpoint)
-  console.log('get raw tx response...', response);
-  // dispatch(setTransactionId(''))
-  // dispatch(setTransactionId(''))
+  const response = await rpc.Query.getRawTransaction(txid).execute(endpoint)
+  if (response.result && response.result.blockhash && response.result.confirmations) {
+    dispatch(setTransactionId(''))
+    dispatch(setFinalizeClaim(true))
+  }
 }
 
 // State Getters
@@ -177,11 +176,24 @@ export const getTransactionId = (state: Object) => state.claim.transactionId
 const initialState = {
   claimRequest: false,
   disableClaimButton: false,
-  transactionId: ''
+  transactionId: '',
+  finalizeClaim: false
 }
 
 export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
+    case SET_TRANSACTION_ID:
+      const { transactionId } = action.payload
+      return {
+        ...state,
+        transactionId
+      }
+    case SET_FINALIZE_CLAIM:
+      const { finalizeClaim } = action.payload
+      return {
+        ...state,
+        finalizeClaim
+      }
     case SET_CLAIM_REQUEST:
       const { claimRequest } = action.payload
       return {
