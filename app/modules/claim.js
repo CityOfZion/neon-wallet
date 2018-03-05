@@ -76,8 +76,6 @@ export const doClaimNotify = () => async (
   }
 
   try {
-    console.log('claiming now');
-    console.log('net', net, 'address', address, 'publicKey', publicKey, 'privateKey', privateKey, 'signingFunction', signingFunction);
     const { response } = await api.claimGas({ net, address, publicKey, privateKey, signingFunction })
 
     if (!response.result) {
