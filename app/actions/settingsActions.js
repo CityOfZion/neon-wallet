@@ -1,5 +1,5 @@
 // @flow
-import { pick, keys } from 'lodash'
+import { pick, keys, uniqBy } from 'lodash'
 
 import createRequestActions from '../util/api/createRequestActions'
 import { getStorage, setStorage } from '../core/storage'
@@ -20,10 +20,17 @@ const DEFAULT_SETTINGS: Settings = {
   tokens: getDefaultTokens()
 }
 
-const getSettings = async (): Promise<Settings> => ({
-  ...DEFAULT_SETTINGS,
-  ...await getStorage(STORAGE_KEY)
-})
+const getSettings = async (): Promise<Settings> => {
+  const defaults = DEFAULT_SETTINGS
+  const settings = await getStorage(STORAGE_KEY) || {}
+
+  const tokens = uniqBy([
+    ...defaults.tokens || [],
+    ...settings.tokens || []
+  ], (token) => [token.networkId, token.scriptHash].join('-'))
+
+  return { ...defaults, ...settings, tokens }
+}
 
 export const ID = 'SETTINGS'
 
