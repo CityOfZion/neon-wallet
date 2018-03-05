@@ -15,6 +15,7 @@ exports[`Claim should render claim GAS button as disabled 1`] = `
 >
   <Connect(Connect(withData(Claim)))>
     <Connect(withData(Claim))
+      checkClaimStatus={[Function]}
       claimRequest={false}
       disableClaimButton={true}
       doClaimNotify={[Function]}
@@ -22,6 +23,7 @@ exports[`Claim should render claim GAS button as disabled 1`] = `
       setClaimRequest={[Function]}
     >
       <withData(Claim)
+        checkClaimStatus={[Function]}
         claimAmount="0.01490723"
         claimRequest={false}
         disableClaimButton={true}
@@ -126,6 +128,7 @@ exports[`Claim should render claim GAS button as enabled 1`] = `
 >
   <Connect(Connect(withData(Claim)))>
     <Connect(withData(Claim))
+      checkClaimStatus={[Function]}
       claimRequest={false}
       disableClaimButton={false}
       doClaimNotify={[Function]}
@@ -133,6 +136,7 @@ exports[`Claim should render claim GAS button as enabled 1`] = `
       setClaimRequest={[Function]}
     >
       <withData(Claim)
+        checkClaimStatus={[Function]}
         claimAmount="0.01490723"
         claimRequest={false}
         disableClaimButton={false}
@@ -237,6 +241,7 @@ exports[`Claim should render without crashing 1`] = `
 >
   <Connect(Connect(withData(Claim)))>
     <Connect(withData(Claim))
+      checkClaimStatus={[Function]}
       claimRequest={false}
       disableClaimButton={false}
       doClaimNotify={[Function]}
@@ -244,6 +249,7 @@ exports[`Claim should render without crashing 1`] = `
       setClaimRequest={[Function]}
     >
       <withData(Claim)
+        checkClaimStatus={[Function]}
         claimAmount="0.01490723"
         claimRequest={false}
         disableClaimButton={false}
