@@ -1,5 +1,6 @@
 // @flow
 import { api } from 'neon-js'
+import { rpc } from 'neon-js'
 
 import {
   showErrorNotification,
@@ -23,12 +24,26 @@ import { log } from '../util/Logs'
 // Constants
 export const SET_CLAIM_REQUEST = 'SET_CLAIM_REQUEST'
 export const DISABLE_CLAIM = 'DISABLE_CLAIM'
+export const SET_FINALIZE_CLAIM = 'SET_FINALIZE_CLAIM'
 
 // Actions
 export function setClaimRequest (claimRequest: boolean) {
   return {
     type: SET_CLAIM_REQUEST,
     payload: { claimRequest }
+  }
+}
+export function setTransactionId (txid: string) {
+  return {
+    type: SET_CLAIM_REQUEST,
+    payload: { txid }
+  }
+}
+
+export function setFinalizeCalim (finalizeClaim: boolean) {
+  return {
+    type: SET_FINALIZE_CLAIM,
+    payload: { finalizeClaim }
   }
 }
 
@@ -118,7 +133,9 @@ export const doGasClaim = () => async (
         intents: api.makeIntent({ [ASSETS.NEO]: NEO }, address)
       })
 
-      if (!response.result) {
+      console.log('txresponse', response);
+
+      if (!response.result || !response.txid) {
         throw new Error('Transaction failed!')
       }
 
@@ -126,6 +143,7 @@ export const doGasClaim = () => async (
         message: 'Waiting for transaction to clear...',
         autoDismiss: 0
       }))
+      dispatch(setTransactionId(response.txid))
       dispatch(setClaimRequest(true))
       return dispatch(disableClaim(true))
     } catch (err) {
@@ -134,13 +152,32 @@ export const doGasClaim = () => async (
   }
 }
 
+export const checkClaimStatus = () => async (
+  dispatch: DispatchType,
+  getState: GetStateType
+) => {
+  const state = getState()
+  const net = getNetwork(state)
+  const txid = getTransactionId(state)
+  console.log('calling check claim state');
+  const endpoint = await api.loadBalance(api.getRPCEndpointFrom, { net })
+  console.log('endpoint', endpoint);
+  const response = await rpc.Query.getRawTransaction(txid, 1).execute(endpoint)
+  console.log('get raw tx response...', response);
+  // dispatch(setTransactionId(''))
+  // dispatch(setTransactionId(''))
+}
+
 // State Getters
+export const getFinalizeClaim = (state: Object) => state.claim.finalizeClaim
 export const getClaimRequest = (state: Object) => state.claim.claimRequest
 export const getDisableClaimButton = (state: Object) => state.claim.disableClaimButton
+export const getTransactionId = (state: Object) => state.claim.transactionId
 
 const initialState = {
   claimRequest: false,
-  disableClaimButton: false
+  disableClaimButton: false,
+  transactionId: ''
 }
 
 export default (state: Object = initialState, action: ReduxAction) => {
