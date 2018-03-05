@@ -57,7 +57,8 @@ describe('createBatchActions', () => {
     expect(actions.reset()).toEqual({
       batch: true,
       type: 'BATCH/RESET',
-      meta: { id: BATCH_ID, type: 'BATCH/RESET' }
+      meta: { id: BATCH_ID, type: 'BATCH/RESET' },
+      payload: { requests: { one: reqActions1.reset(), two: reqActions2.reset() } }
     })
   })
 
@@ -65,7 +66,8 @@ describe('createBatchActions', () => {
     expect(actions.cancel()).toEqual({
       batch: true,
       type: 'BATCH/CANCEL',
-      meta: { id: BATCH_ID, type: 'BATCH/CANCEL' }
+      meta: { id: BATCH_ID, type: 'BATCH/CANCEL' },
+      payload: { requests: { one: reqActions1.cancel(), two: reqActions2.cancel() } }
     })
   })
 })

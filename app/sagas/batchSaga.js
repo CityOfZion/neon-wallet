@@ -7,6 +7,7 @@ import { actionMatcher } from '../util/api/matchers'
 import {
   BATCH_SUCCESS,
   BATCH_FAILURE,
+  BATCH_RETRY,
   BATCH_RESET,
   BATCH_CANCEL,
   type Error,
@@ -22,13 +23,18 @@ type SagaActions = {
 }
 
 function createSagaActions (meta: ActionMeta): SagaActions {
-  function * sagaForAction (state: Object, actionState: ActionState) {
+  function * delegateAction (actionState: ActionState) {
     yield put(actionState)
   }
 
-  function * request (state: Object, requests: ActionStateMap) {
-    yield all(map(requests, (actionState) => sagaForAction(state, actionState)))
-    return true
+  function * request (state: Object, requests: ActionStateMap, actions: SagaActions) {
+    try {
+      yield all(map(requests, delegateAction))
+      yield put(actions.success())
+    } catch (err) {
+      console.error(`${meta.id} batch action failed.`, err)
+      yield put(actions.failure(err.message))
+    }
   }
 
   function success (): ActionState {
@@ -61,20 +67,12 @@ export default function * batchSaga (state: Object, actionState: ActionState): S
 
   const sagaActions = createSagaActions(actionState.meta)
 
-  try {
-    const { cancelled } = yield race({
-      responses: call(sagaActions.request, state, payload.requests),
-      cancelled: take(actionMatcher(BATCH_CANCEL, id)),
-      reset: take(actionMatcher(BATCH_RESET, id))
-    })
-
-    if (!cancelled) {
-      yield put(sagaActions.success())
-    }
-  } catch (err) {
-    console.error(`${id} batch action failed.`, err)
-    yield put(sagaActions.failure(err.message))
-  }
+  yield race({
+    request: call(sagaActions.request, state, payload.requests, sagaActions),
+    retry: take(actionMatcher(BATCH_RETRY, id)),
+    cancel: take(actionMatcher(BATCH_CANCEL, id)),
+    reset: take(actionMatcher(BATCH_RESET, id))
+  })
 
   return true
 }
