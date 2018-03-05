@@ -12,5 +12,5 @@ export const ID = 'BLOCK_HEIGHT'
 
 export default createRequestActions(ID, ({ networkId }: Props = {}) => async (state: Object) => {
   const network = getNetworkById(networkId)
-  return api.neonDB.getWalletDBHeight(network)
+  return api.loadBalance(api.getWalletDBHeightFrom, {network})
 })
