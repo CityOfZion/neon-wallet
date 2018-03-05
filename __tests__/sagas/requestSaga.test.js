@@ -1,10 +1,10 @@
 import { call, take } from 'redux-saga/effects'
 import { cloneDeep, each, isFunction, isArray, isObject } from 'lodash'
 
-import requestSaga, { createSagaActions, retryAction } from '../../app/sagas/requestSaga'
+import requestSaga, { createSagaActions } from '../../app/sagas/requestSaga'
 import createRequestActions from '../../app/util/api/createRequestActions'
 import { actionMatcher } from '../../app/util/api/matchers'
-import { ACTION_RESET, ACTION_CANCEL } from '../../app/values/api'
+import { ACTION_RETRY, ACTION_RESET, ACTION_CANCEL } from '../../app/values/api'
 
 // treat functions in an object or array as equivalent in tests
 const matchFunctions = items => {
@@ -60,7 +60,7 @@ describe('requestSaga', () => {
 
   describe('retry action', () => {
     const retryState = step.RACE.retry.TAKE
-    const retry = take(retryAction(ID))
+    const retry = take(actionMatcher(ACTION_RETRY, ID))
 
     it('performs valid actions', () => {
       const validAction = actions.retry('foo')

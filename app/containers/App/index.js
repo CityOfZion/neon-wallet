@@ -5,9 +5,7 @@ import { compose } from 'recompose'
 
 import appActions from '../../actions/appActions'
 import authActions from '../../actions/authActions'
-import balancesActions from '../../actions/balancesActions'
-import claimsActions from '../../actions/claimsActions'
-import transactionHistoryActions from '../../actions/transactionHistoryActions'
+import accountActions from '../../actions/accountActions'
 import networkActions from '../../actions/networkActions'
 import withFetch from '../../hocs/api/withFetch'
 import withReload from '../../hocs/api/withReload'
@@ -63,8 +61,5 @@ export default compose(
 
   // Remove stale data from store on logout
   withLogoutReset(authActions),
-  // TODO: replace these three calls with `withLogoutReset(accountActions)` once batch reset is fixes
-  withLogoutReset(balancesActions),
-  withLogoutReset(claimsActions),
-  withLogoutReset(transactionHistoryActions)
+  withLogoutReset(accountActions)
 )(App)

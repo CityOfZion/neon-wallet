@@ -23,8 +23,8 @@ const actionTypes: ActionTypeMap = {
   RESET: BATCH_RESET
 }
 
-function mapActions (actionsMap: Object, actionName: string, props: Object = {}): RequestMapping {
-  return mapValues(actionsMap, (actions: Actions) => actions[actionName](props))
+function mapActions (actionsMap: Object, actionName: string, ...params: Array<any>): RequestMapping {
+  return mapValues(actionsMap, (actions: Actions) => actions[actionName](...params))
 }
 
 export default function createBatchActions (id: string, actionsMap: Object): Actions {
@@ -45,13 +45,15 @@ export default function createBatchActions (id: string, actionsMap: Object): Act
   const cancel = (): ActionState => ({
     batch: true,
     type: actionTypes.CANCEL,
-    meta: { type: BATCH_CANCEL, id }
+    meta: { type: BATCH_CANCEL, id },
+    payload: { requests: mapActions(actionsMap, 'cancel') }
   })
 
   const reset = (): ActionState => ({
     batch: true,
     type: actionTypes.RESET,
-    meta: { type: BATCH_RESET, id }
+    meta: { type: BATCH_RESET, id },
+    payload: { requests: mapActions(actionsMap, 'reset') }
   })
 
   return { id, request, retry, cancel, reset, actionTypes }
