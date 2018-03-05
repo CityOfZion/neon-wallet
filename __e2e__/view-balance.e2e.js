@@ -30,6 +30,7 @@ function timeout (ms) {
 
 test.serial('should login successfully and switch networks', async t => {
   // Go to login page
+  await app.client.waitUntilTextExists('.linkBox', 'Login using a private key', 60000)
   await app.client.click('a[href="/login-private-key"]>div.linkBox')
 
   // Enter Wif
