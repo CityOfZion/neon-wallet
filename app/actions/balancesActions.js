@@ -40,8 +40,8 @@ async function getBalances ({ net, address, tokens }: Props) {
     const assetBalances = await api.loadBalance(api.getBalanceFrom, { net, address })
 
     return {
-      [ASSETS.NEO]: assetBalances.assets.NEO.balance.toString(),
-      [ASSETS.GAS]: assetBalances.assets.GAS.balance.round(COIN_DECIMAL_LENGTH).toString()
+      [ASSETS.NEO]: assetBalances.balance.assets.NEO.balance.toString(),
+      [ASSETS.GAS]: assetBalances.balance.assets.GAS.balance.round(COIN_DECIMAL_LENGTH).toString()
     }
   })())
 
