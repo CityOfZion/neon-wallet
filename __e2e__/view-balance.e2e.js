@@ -41,9 +41,7 @@ test.serial('should login successfully and switch networks', async t => {
 
   // Check that the default network is MainNet
   t.is(await app.client.getValue('#network .networkSelector'), '1')
-
   await app.client.$('#network .networkSelector').selectByValue('2')
-
   t.is(await app.client.getValue('#network .networkSelector'), '2')
 })
 
