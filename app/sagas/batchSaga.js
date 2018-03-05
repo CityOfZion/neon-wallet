@@ -3,8 +3,6 @@ import { map } from 'lodash'
 import { put, take, race, all, call } from 'redux-saga/effects'
 import { type Saga } from 'redux-saga'
 
-import requestSaga from './requestSaga'
-import { isBatch } from '../util/api/helpers'
 import { actionMatcher } from '../util/api/matchers'
 import {
   BATCH_SUCCESS,
@@ -26,7 +24,6 @@ type SagaActions = {
 function createSagaActions (meta: ActionMeta): SagaActions {
   function * sagaForAction (state: Object, actionState: ActionState) {
     yield put(actionState)
-    yield isBatch(actionState) ? batchSaga(state, actionState) : requestSaga(state, actionState)
   }
 
   function * request (state: Object, requests: ActionStateMap) {

@@ -3,7 +3,6 @@ import { compose, withProps } from 'recompose'
 
 import TransactionHistory from './TransactionHistory'
 import transactionHistoryActions from '../../actions/transactionHistoryActions'
-import withFetch from '../../hocs/api/withFetch'
 import withData from '../../hocs/api/withData'
 import withProgressProp from '../../hocs/api/withProgressProp'
 import withNetworkData from '../../hocs/withNetworkData'
@@ -24,7 +23,6 @@ const mapLoadingProp = (props) => ({
 export default compose(
   withNetworkData(),
   withAuthData(),
-  withFetch(transactionHistoryActions),
   withData(transactionHistoryActions, mapTransactionsDataToProps),
 
   // pass `loading` boolean to component
