@@ -23,12 +23,12 @@ type SagaActions = {
 }
 
 function createSagaActions (meta: ActionMeta): SagaActions {
-  function * sagaForAction (state: Object, actionState: ActionState) {
+  function * delegateAction (actionState: ActionState) {
     yield put(actionState)
   }
 
   function * request (state: Object, requests: ActionStateMap) {
-    yield all(map(requests, (actionState) => sagaForAction(state, actionState)))
+    yield all(map(requests, delegateAction))
     return true
   }
 
