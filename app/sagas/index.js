@@ -5,14 +5,26 @@ import { type Saga } from 'redux-saga'
 import batchSaga from './batchSaga'
 import requestSaga from './requestSaga'
 import { actionTypeMatcher } from '../util/api/matchers'
-import { ACTION_REQUEST, BATCH_REQUEST, type ActionState } from '../values/api'
+import {
+  ACTION_REQUEST,
+  BATCH_REQUEST,
+  BATCH_RETRY,
+  BATCH_RESET,
+  BATCH_CANCEL,
+  type ActionState
+} from '../values/api'
+
+const createMatchers = (actionTypes) => actionTypes.map(actionTypeMatcher)
+
+const batchMatchers = createMatchers([BATCH_REQUEST, BATCH_RETRY, BATCH_RESET, BATCH_CANCEL])
+const requestMatchers = createMatchers([ACTION_REQUEST])
 
 function batchAction (actionState: ActionState) {
-  return actionTypeMatcher(BATCH_REQUEST)(actionState)
+  return batchMatchers.some((matcher) => matcher(actionState))
 }
 
 function requestAction (actionState: ActionState) {
-  return actionTypeMatcher(ACTION_REQUEST)(actionState)
+  return requestMatchers.some((matcher) => matcher(actionState))
 }
 
 export default function * root (): Saga<void> {

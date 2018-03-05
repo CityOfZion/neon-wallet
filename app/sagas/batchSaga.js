@@ -7,6 +7,7 @@ import { actionMatcher } from '../util/api/matchers'
 import {
   BATCH_SUCCESS,
   BATCH_FAILURE,
+  BATCH_RETRY,
   BATCH_RESET,
   BATCH_CANCEL,
   type Error,
@@ -62,13 +63,14 @@ export default function * batchSaga (state: Object, actionState: ActionState): S
   const sagaActions = createSagaActions(actionState.meta)
 
   try {
-    const { cancelled } = yield race({
-      responses: call(sagaActions.request, state, payload.requests),
-      cancelled: take(actionMatcher(BATCH_CANCEL, id)),
+    const { cancel } = yield race({
+      request: call(sagaActions.request, state, payload.requests),
+      retry: take(actionMatcher(BATCH_RETRY, id)),
+      cancel: take(actionMatcher(BATCH_CANCEL, id)),
       reset: take(actionMatcher(BATCH_RESET, id))
     })
 
-    if (!cancelled) {
+    if (!cancel) {
       yield put(sagaActions.success())
     }
   } catch (err) {
