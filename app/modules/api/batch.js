@@ -7,7 +7,7 @@ import {
 } from '../../values/api'
 
 type State = {
-  batch: true,
+  batch: boolean,
   mapping: null
 }
 

@@ -17,6 +17,25 @@ const encryptedKey = '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu
 const scriptHash = '4bcdc110b6514312ead9420467475232d4f08539'
 
 neonjs.api = {
+  loadBalance: jest.fn((apiMethod, config) => apiMethod(config)),
+  getMaxClaimAmount: promiseMockGen(new Fixed8('1.59140785')),
+  getMaxClaimAmountFrom: promiseMockGen(new Fixed8('1.59140785')),
+  getWalletDBHeight: promiseMockGen(586435),
+  getWalletDBHeightFrom: promiseMockGen(586435),
+  getTransactionHistory: promiseMockGen([]),
+  getTransactionHistoryFrom: promiseMockGen([]),
+  getBalance: promiseMockGen({
+    assets: {
+      NEO: { balance: new Fixed8(1) },
+      GAS: { balance: new Fixed8(1) }
+    }
+  }),
+  getBalanceFrom: promiseMockGen({
+    assets: {
+      NEO: { balance: new Fixed8(1) },
+      GAS: { balance: new Fixed8(1) }
+    }
+  }),
   neonDB: {
     getMaxClaimAmount: promiseMockGen(new Fixed8('1.59140785')),
     getClaims: promiseMockGen({
@@ -29,6 +48,7 @@ neonjs.api = {
     doSendAsset: promiseMockGen({ result: true }),
     getWalletDBHeight: promiseMockGen(586435),
     getAPIEndpoint: jest.fn(() => 'http://testnet-api.wallet.cityofzion.io'),
+    getAPIEndpointFrom: jest.fn(() => 'http://testnet-api.wallet.cityofzion.io'),
     getRPCEndpoint: promiseMockGen(''),
     doMintTokens: promiseMockGen({ result: true }),
     getTransactionHistory: promiseMockGen([]),
