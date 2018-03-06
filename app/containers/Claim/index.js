@@ -11,10 +11,13 @@ import {
   doGasClaim,
   doClaimNotify,
   getClaimRequest,
-  getDisableClaimButton
+  getDisableClaimButton,
+  getFinalizeClaim,
+  checkClaimStatus
 } from '../../modules/claim'
 
 const mapStateToProps = (state: Object) => ({
+  finalizeClaim: getFinalizeClaim(state),
   claimRequest: getClaimRequest(state),
   disableClaimButton: getDisableClaimButton(state)
 })
@@ -22,7 +25,8 @@ const mapStateToProps = (state: Object) => ({
 const actionCreators = {
   setClaimRequest,
   doGasClaim,
-  doClaimNotify
+  doClaimNotify,
+  checkClaimStatus
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)

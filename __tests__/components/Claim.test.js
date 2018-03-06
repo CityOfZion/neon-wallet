@@ -44,7 +44,7 @@ const initialState = {
 const simulateSendAsset = (result) => {
   return jest.fn(() => {
     return new Promise((resolve, reject) => {
-      resolve({ response: { result } })
+      resolve({ response: { result, txid: 'random' } })
     })
   })
 }
