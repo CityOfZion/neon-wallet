@@ -10,17 +10,37 @@ type Props = {
   doClaimNotify: Function,
   setClaimRequest: Function,
   doGasClaim: Function,
+  checkClaimStatus: Function,
   claimRequest: boolean,
   disableClaimButton: boolean,
   claimAmount: string,
+  finalizeClaim: boolean
 }
 
+const POLL_FREQUENCY = 5000
+
 export default class Claim extends Component<Props> {
+  intervalId: ?number
+
   componentDidUpdate (prevProps: Props) {
-    const { claimRequest, doClaimNotify, setClaimRequest } = this.props
+    const { claimRequest, doClaimNotify, setClaimRequest, finalizeClaim, checkClaimStatus } = this.props
     if (claimRequest && !prevProps.claimRequest) {
       setClaimRequest(false)
+      this.intervalId = setInterval(checkClaimStatus, POLL_FREQUENCY)
+    }
+    if (finalizeClaim && !prevProps.finalizeClaim) {
       doClaimNotify()
+      this.stopPolling()
+    }
+  }
+
+  componentWillUnmount () {
+    this.stopPolling()
+  }
+
+  stopPolling = () => {
+    if (this.intervalId) {
+      clearInterval(this.intervalId)
     }
   }
 
