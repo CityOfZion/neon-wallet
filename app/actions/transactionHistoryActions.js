@@ -14,7 +14,7 @@ type Props = {
 export const ID = 'TRANSACTION_HISTORY'
 
 export default createRequestActions(ID, ({ net, address }: Props = {}) => async (state: Object) => {
-  const transactions = await api.neonDB.getTransactionHistory(net, address)
+  const transactions = await api.loadBalance(api.getTransactionHistoryFrom, { net, address })
 
   return transactions.map(({ NEO, GAS, txid }: TransactionHistoryType) => ({
     txid,

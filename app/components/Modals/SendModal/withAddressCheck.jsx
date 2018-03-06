@@ -47,7 +47,7 @@ const withAddressCheck = () => (Component: React$ElementType) => {
 
     checkTransactionHistory = async (address: string) => {
       const { net } = this.props
-      const [err, transactions] = await asyncWrap(api.neonDB.getTransactionHistory(net, address))
+      const [err, transactions] = await asyncWrap(api.loadBalance(api.getTransactionHistoryFrom, { net, address }))
 
       const hasActivity = !err && !!transactions && transactions.length > 0
 

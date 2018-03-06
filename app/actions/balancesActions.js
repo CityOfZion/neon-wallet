@@ -16,7 +16,7 @@ type Props = {
 export const ID = 'BALANCES'
 
 async function getBalances ({ net, address, tokens }: Props) {
-  const endpoint = await api.neonDB.getRPCEndpoint(net)
+  const endpoint = await api.loadBalance(api.getRPCEndpointFrom, { net })
 
   // token balances
   const promises = tokens.map(async (token) => {
@@ -37,11 +37,11 @@ async function getBalances ({ net, address, tokens }: Props) {
 
   // asset balances
   promises.push((async () => {
-    const assetBalances = await api.neonDB.getBalance(net, address)
+    const assetBalances = await api.loadBalance(api.getBalanceFrom, { net, address })
 
     return {
-      [ASSETS.NEO]: assetBalances.assets.NEO.balance.toString(),
-      [ASSETS.GAS]: assetBalances.assets.GAS.balance.round(COIN_DECIMAL_LENGTH).toString()
+      [ASSETS.NEO]: assetBalances.balance.assets.NEO.balance.toString(),
+      [ASSETS.GAS]: assetBalances.balance.assets.GAS.balance.round(COIN_DECIMAL_LENGTH).toString()
     }
   })())
 
