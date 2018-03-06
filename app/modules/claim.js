@@ -77,6 +77,7 @@ export const doClaimNotify = () => async (
 
   try {
     const { response } = await api.claimGas({ net, address, publicKey, privateKey, signingFunction })
+    dispatch(setFinalizeClaim(false))
 
     if (!response.result) {
       throw new Error('Claim failed')
