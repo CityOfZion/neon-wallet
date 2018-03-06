@@ -30,13 +30,15 @@ export default class Claim extends Component<Props> {
     }
     if (finalizeClaim && !prevProps.finalizeClaim) {
       doClaimNotify()
-      if (this.intervalId) {
-        clearInterval(this.intervalId)
-      }
+      this.stopPolling()
     }
   }
 
   componentWillUnmount () {
+    this.stopPolling()
+  }
+
+  stopPolling = () => {
     if (this.intervalId) {
       clearInterval(this.intervalId)
     }
