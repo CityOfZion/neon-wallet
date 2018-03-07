@@ -2,7 +2,7 @@
 import { connect, type MapStateToProps } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
-import { values, omit } from 'lodash'
+import { values, omit, filter } from 'lodash'
 
 import accountActions from '../../actions/accountActions'
 import pricesActions from '../../actions/pricesActions'
@@ -26,10 +26,15 @@ const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
   networks: getNetworks()
 })
 
+const getTokenBalances = (balances) => {
+  const tokens = values(omit(balances, 'NEO', 'GAS'))
+  return filter(tokens, (token) => token.balance !== '0')
+}
+
 const mapBalanceDataToProps = (balances) => ({
   NEO: balances.NEO,
   GAS: balances.GAS,
-  tokenBalances: values(omit(balances, 'NEO', 'GAS'))
+  tokenBalances: getTokenBalances(balances)
 })
 
 const mapPricesDataToProps = ({ NEO, GAS }) => ({
