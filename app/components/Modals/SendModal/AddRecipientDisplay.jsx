@@ -2,12 +2,14 @@
 import React from 'react'
 import classNames from 'classnames'
 import ArrowForward from 'react-icons/lib/md/arrow-forward'
+import { pickBy } from 'lodash'
 
 import Button from '../../Button'
 import NumberInput from '../../NumberInput'
 import AddressInput from '../../Inputs/AddressInput'
 import AssetInput from '../../Inputs/AssetInput'
 
+import { ASSETS } from '../../../core/constants'
 import { formatBalance, COIN_DECIMAL_LENGTH } from '../../../core/formatters'
 import { isToken } from '../../../core/wallet'
 
@@ -106,6 +108,8 @@ export default class AddRecipientDisplay extends React.Component<Props, State> {
   }
 
   getSymbols = () => {
-    return Object.keys(this.props.balances)
+    return Object.keys(pickBy(this.props.balances, (balance: string, symbol: string) => {
+      return [ASSETS.NEO, ASSETS.GAS].includes(symbol) || balance !== '0'
+    }))
   }
 }
