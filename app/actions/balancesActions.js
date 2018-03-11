@@ -38,11 +38,13 @@ async function getBalances ({ net, address, tokens }: Props) {
   // asset balances
   promises.push((async () => {
     const assetBalances = await api.loadBalance(api.getBalanceFrom, { net, address })
+    const { assets } = assetBalances.balance
 
-    return {
-      [ASSETS.NEO]: assetBalances.balance.assets.NEO.balance.toString(),
-      [ASSETS.GAS]: assetBalances.balance.assets.GAS.balance.round(COIN_DECIMAL_LENGTH).toString()
-    }
+    // The API doesn't always return NEO or GAS keys if, for example, the address only has one asset
+    const neoBalance = assets.NEO ? assets.NEO.balance.toString() : '0'
+    const gasBalance = assets.GAS ? assets.GAS.balance.round(COIN_DECIMAL_LENGTH).toString() : '0'
+
+    return { [ASSETS.NEO]: neoBalance, [ASSETS.GAS]: gasBalance }
   })())
 
   return extend({}, ...await Promise.all(promises))
