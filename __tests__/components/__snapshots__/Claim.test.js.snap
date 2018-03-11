@@ -15,22 +15,14 @@ exports[`Claim should render claim GAS button as disabled 1`] = `
 >
   <Connect(Connect(withData(Claim)))>
     <Connect(withData(Claim))
-      checkClaimStatus={[Function]}
-      claimRequest={false}
       disableClaimButton={true}
-      doClaimNotify={[Function]}
       doGasClaim={[Function]}
-      setClaimRequest={[Function]}
     >
       <withData(Claim)
-        checkClaimStatus={[Function]}
         claimAmount="0.01490723"
-        claimRequest={false}
         disableClaimButton={true}
         dispatch={[Function]}
-        doClaimNotify={[Function]}
         doGasClaim={[Function]}
-        setClaimRequest={[Function]}
       >
         <div>
           <Tooltip
@@ -128,22 +120,14 @@ exports[`Claim should render claim GAS button as enabled 1`] = `
 >
   <Connect(Connect(withData(Claim)))>
     <Connect(withData(Claim))
-      checkClaimStatus={[Function]}
-      claimRequest={false}
       disableClaimButton={false}
-      doClaimNotify={[Function]}
       doGasClaim={[Function]}
-      setClaimRequest={[Function]}
     >
       <withData(Claim)
-        checkClaimStatus={[Function]}
         claimAmount="0.01490723"
-        claimRequest={false}
         disableClaimButton={false}
         dispatch={[Function]}
-        doClaimNotify={[Function]}
         doGasClaim={[Function]}
-        setClaimRequest={[Function]}
       >
         <div>
           <Tooltip
@@ -241,22 +225,14 @@ exports[`Claim should render without crashing 1`] = `
 >
   <Connect(Connect(withData(Claim)))>
     <Connect(withData(Claim))
-      checkClaimStatus={[Function]}
-      claimRequest={false}
       disableClaimButton={false}
-      doClaimNotify={[Function]}
       doGasClaim={[Function]}
-      setClaimRequest={[Function]}
     >
       <withData(Claim)
-        checkClaimStatus={[Function]}
         claimAmount="0.01490723"
-        claimRequest={false}
         disableClaimButton={false}
         dispatch={[Function]}
-        doClaimNotify={[Function]}
         doGasClaim={[Function]}
-        setClaimRequest={[Function]}
       >
         <div>
           <Tooltip

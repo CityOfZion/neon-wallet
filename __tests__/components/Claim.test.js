@@ -5,7 +5,7 @@ import { mount } from 'enzyme'
 
 import { createStore, provideStore } from '../testHelpers'
 import Claim from '../../app/containers/Claim'
-import { setClaimRequest, disableClaim } from '../../app/modules/claim'
+import { disableClaim } from '../../app/modules/claim'
 import { SHOW_NOTIFICATION } from '../../app/modules/notifications'
 import { NOTIFICATION_LEVELS, MAIN_NETWORK_ID } from '../../app/core/constants'
 import { LOADED } from '../../app/values/state'
@@ -85,13 +85,13 @@ describe('Claim', () => {
         type: SHOW_NOTIFICATION,
         payload: expect.objectContaining({
           level: NOTIFICATION_LEVELS.ERROR,
-          message: 'Transaction failed!'
+          message: 'Calculating claimable GAS failed.'
         })
       }))
       done()
     })
 
-    test('should dispatch transaction waiting, set claim request, and disable claim events', async (done) => {
+    test('should dispatch disable claim event', async (done) => {
       const store = createStore(initialState)
       const wrapper = mount(provideStore(<Claim />, store))
       neonjs.api.sendAsset = simulateSendAsset(true)
@@ -102,7 +102,6 @@ describe('Claim', () => {
 
       const actions = store.getActions()
 
-      expect(actions).toContainEqual(setClaimRequest(true))
       expect(actions).toContainEqual(disableClaim(true))
       done()
     })
