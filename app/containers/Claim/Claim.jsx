@@ -7,58 +7,38 @@ import { formatGAS } from '../../core/formatters'
 import { toBigNumber } from '../../core/math'
 
 type Props = {
-  doClaimNotify: Function,
-  setClaimRequest: Function,
   doGasClaim: Function,
-  checkClaimStatus: Function,
-  claimRequest: boolean,
   disableClaimButton: boolean,
-  claimAmount: string,
-  finalizeClaim: boolean
+  claimAmount: string
 }
-
-const POLL_FREQUENCY = 5000
 
 export default class Claim extends Component<Props> {
   intervalId: ?number
 
-  componentDidUpdate (prevProps: Props) {
-    const { claimRequest, doClaimNotify, setClaimRequest, finalizeClaim, checkClaimStatus } = this.props
-    if (claimRequest && !prevProps.claimRequest) {
-      setClaimRequest(false)
-      this.intervalId = setInterval(checkClaimStatus, POLL_FREQUENCY)
-    }
-    if (finalizeClaim && !prevProps.finalizeClaim) {
-      doClaimNotify()
-      this.stopPolling()
-    }
-  }
-
-  componentWillUnmount () {
-    this.stopPolling()
-  }
-
-  stopPolling = () => {
-    if (this.intervalId) {
-      clearInterval(this.intervalId)
-    }
-  }
-
   render () {
-    const { claimAmount, disableClaimButton, doGasClaim } = this.props
-    const shouldDisableButton = disableClaimButton || toBigNumber(claimAmount).eq(0)
-    const formattedAmount = formatGAS(claimAmount)
+    const disabled = this.isDisabled()
+
     return (
       <div>
-        <Tooltip
-          title='You can claim GAS once every 5 minutes'
-          disabled={!disableClaimButton}
-        >
-          <Button id='claim' disabled={shouldDisableButton} onClick={doGasClaim}>
-            Claim {formattedAmount} GAS
+        <Tooltip title='You can claim GAS once every 5 minutes' disabled={!disabled}>
+          <Button id='claim' disabled={disabled} onClick={this.handleClaim}>
+            Claim {this.getFormattedAmount()} GAS
           </Button>
         </Tooltip>
       </div>
     )
+  }
+
+  handleClaim = () => {
+    this.props.doGasClaim()
+  }
+
+  isDisabled = () => {
+    const { claimAmount, disableClaimButton } = this.props
+    return disableClaimButton || toBigNumber(claimAmount).eq(0)
+  }
+
+  getFormattedAmount = () => {
+    return formatGAS(this.props.claimAmount)
   }
 }
