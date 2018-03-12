@@ -1,29 +1,33 @@
 // @flow
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-
-import {
-  ledgerNanoSGetLogin,
-  ledgerNanoSGetInfoAsync,
-  getPublicKey,
-  getHardwareDeviceInfo,
-  getHardwarePublicKeyInfo
-} from '../../modules/account'
+import { compose } from 'recompose'
 
 import LoginLedgerNanoS from './LoginLedgerNanoS'
+import withData from '../../hocs/api/withData'
+import withError from '../../hocs/api/withError'
+import withFetch from '../../hocs/api/withFetch'
+import withActions from '../../hocs/api/withActions'
+import ledgerActions from '../../actions/ledgerActions'
+import { ledgerLoginActions } from '../../actions/authActions'
 
-const mapStateToProps = (state: Object) => ({
-  publicKey: getPublicKey(state),
-  hardwareDeviceInfo: getHardwareDeviceInfo(state),
-  hardwarePublicKeyInfo: getHardwarePublicKeyInfo(state)
+const mapLedgerActionsToProps = (actions) => ({
+  connect: () => ledgerActions.request()
 })
 
-const actionCreators = {
-  ledgerNanoSGetInfoAsync,
-  ledgerNanoSGetLogin
+const mapAccountActionsToProps = (actions) => ({
+  login: (publicKey) => ledgerLoginActions.request({ publicKey })
+})
+
+const mapLedgerDataToProps = (data) => {
+  const { deviceInfo, publicKey } = data || {}
+  return { deviceInfo, publicKey }
 }
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(actionCreators, dispatch)
+const mapLedgerErrorToProps = (error) => ({ error })
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginLedgerNanoS)
+export default compose(
+  withFetch(ledgerActions),
+  withActions(ledgerActions, mapLedgerActionsToProps),
+  withActions(ledgerLoginActions, mapAccountActionsToProps),
+  withData(ledgerActions, mapLedgerDataToProps),
+  withError(ledgerActions, mapLedgerErrorToProps)
+)(LoginLedgerNanoS)

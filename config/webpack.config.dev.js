@@ -36,8 +36,7 @@ module.exports = {
     path.join(__dirname, '..', 'app/index.js')
   ],
   externals: {
-    'node-hid': 'require("node-hid")',
-    'ledger-node-js-api': 'require("ledger-node-js-api")'
+    'node-hid': 'require("node-hid")'
   },
   output: {
     path: path.join(__dirname, '..', 'app/dist/'),

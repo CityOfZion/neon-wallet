@@ -22,7 +22,7 @@ jobs:
       - restore_cache:
           key: neon-wallet-{{ checksum "yarn.lock" }}
       - run: apt-get -y update
-      - run: apt-get -y install libusb-1.0-0-dev icnsutils graphicsmagick
+      - run: apt-get -y install libusb-1.0-0-dev icnsutils graphicsmagick libudev-dev
       - run: yarn
       - run: yarn lint
       - run: yarn flow
@@ -43,7 +43,7 @@ jobs:
       - restore_cache:
           key: neon-wallet-{{ checksum "yarn.lock" }}
       - run: apt-get -y update
-      - run: apt-get -y install libusb-1.0-0-dev graphicsmagick
+      - run: apt-get -y install libusb-1.0-0-dev graphicsmagick libudev-dev
       - run: yarn test-ci
       - run:
           name: Running Xvfb for e2e test

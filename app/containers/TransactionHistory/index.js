@@ -1,24 +1,32 @@
 // @flow
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { compose, withProps } from 'recompose'
 
-import { syncTransactionHistory, getIsLoadingTransactions } from '../../modules/transactions'
-import { getNetwork } from '../../modules/metadata'
-import { getAddress } from '../../modules/account'
-import { getTransactions } from '../../modules/wallet'
 import TransactionHistory from './TransactionHistory'
+import transactionHistoryActions from '../../actions/transactionHistoryActions'
+import withData from '../../hocs/api/withData'
+import withProgressProp from '../../hocs/api/withProgressProp'
+import withNetworkData from '../../hocs/withNetworkData'
+import withAuthData from '../../hocs/withAuthData'
+import withoutProps from '../../hocs/withoutProps'
+import { LOADING } from '../../values/state'
 
-const mapStateToProps = (state: Object) => ({
-  net: getNetwork(state),
-  address: getAddress(state),
-  transactions: getTransactions(state),
-  isLoadingTransactions: getIsLoadingTransactions(state)
+const PROGRESS_PROP = 'progress'
+
+const mapTransactionsDataToProps = (transactions) => ({
+  transactions
 })
 
-const actionCreators = {
-  syncTransactionHistory
-}
+const mapLoadingProp = (props) => ({
+  loading: props[PROGRESS_PROP] === LOADING
+})
 
-const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
+export default compose(
+  withNetworkData(),
+  withAuthData(),
+  withData(transactionHistoryActions, mapTransactionsDataToProps),
 
-export default connect(mapStateToProps, mapDispatchToProps)(TransactionHistory)
+  // pass `loading` boolean to component
+  withProgressProp(transactionHistoryActions, { propName: PROGRESS_PROP }),
+  withProps(mapLoadingProp),
+  withoutProps(PROGRESS_PROP)
+)(TransactionHistory)

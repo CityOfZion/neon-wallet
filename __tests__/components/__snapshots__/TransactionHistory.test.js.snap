@@ -1,10 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TransactionHistory renders without crashing 1`] = `
-<TransactionHistory
-  address="AWy7RNBVr9vDadRMK9p7i7Z1tL7GrLAxoh"
-  isLoadingTransactions={false}
-  net="TestNet"
+<withData(withProps(Connect(withData(Connect(withData(Connect(withProgressProp(withProps(withoutProps(TransactionHistory))))))))))
+  dispatch={[Function]}
+  networkId="1"
   store={
     Object {
       "clearActions": [Function],
@@ -36,7 +35,5 @@ exports[`TransactionHistory renders without crashing 1`] = `
       "unsubscribe": [Function],
     }
   }
-  syncTransactionHistory={[Function]}
-  transactions={Array []}
 />
 `;

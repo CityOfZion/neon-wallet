@@ -2,11 +2,6 @@
 export const NEON_WALLET_RELEASE_LINK =
   'https://github.com/CityOfZion/neon-wallet/releases'
 
-export const NETWORK = {
-  MAIN: 'MainNet',
-  TEST: 'TestNet'
-}
-
 export const ASSETS = {
   NEO: 'NEO',
   GAS: 'GAS'
@@ -78,7 +73,10 @@ export const TOKENS = {
   RPX: 'ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9',
   RHT: '2328008e6f6c7bd157a342e789389eb034d9cbc4',
   QLC: '0d821bd7b6d53f5c2b40e217c6defc8bbe896cf5',
-  NRVE: 'a721d5893480260bd28ca1f395f2c465d0b5b1c2'
+  NRVE: 'a721d5893480260bd28ca1f395f2c465d0b5b1c2',
+  IAM: '891daf0e1750a1031ebe23030828ad7781d874d6',
+  ONT: 'ceab719b8baa2310f232ee0d277c061704541cfb',
+  THOR: '67a5086bac196b67d5fd20745b0dc9db4d2930ed'
 }
 
 export const ENDED_ICO_TOKENS = ['DBC', 'RPX', 'QLC', 'RHT']
@@ -132,6 +130,3 @@ export const CURRENCIES = {
   usd: { symbol: '$' },
   zar: { symbol: 'R ' }
 }
-
-export const FINDING_LEDGER_NOTICE =
-  'Looking for USB Devices. Please plugin your device and login.'

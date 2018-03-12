@@ -1,12 +1,11 @@
 // @flow
-import { connect } from 'react-redux'
+import { compose } from 'recompose'
 
 import Address from './Address'
-import { getBlockExplorer, getNetworkId } from '../../../modules/metadata'
+import withNetworkData from '../../../hocs/withNetworkData'
+import withExplorerData from '../../../hocs/withExplorerData'
 
-const mapStateToProps = (state: Object) => ({
-  networkId: getNetworkId(state),
-  explorer: getBlockExplorer(state)
-})
-
-export default connect(mapStateToProps, () => ({}))(Address)
+export default compose(
+  withNetworkData(),
+  withExplorerData()
+)(Address)
