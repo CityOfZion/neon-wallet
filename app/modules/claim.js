@@ -92,9 +92,12 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
   dispatch(disableClaim(true))
 
   if (isHardwareClaim) {
-    dispatch(showInfoNotification({ message: 'Please sign transaction on hardware device.' }))
+    dispatch(showInfoNotification({ message: 'Please sign transaction 1 of 2 on hardware device.' }))
+  } else {
+    dispatch(showInfoNotification({ message: 'Calculating claimable GAS...' }))
   }
 
+  // step 1: update available claims
   try {
     await getUpdatedClaimableAmount({ net, address, balance, publicKey, privateKey, signingFunction })
   } catch (err) {
@@ -104,9 +107,12 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
   }
 
   if (isHardwareClaim) {
-    dispatch(showInfoNotification({ message: 'Please sign transaction on hardware device.' }))
+    dispatch(showInfoNotification({ message: 'Please sign transaction 2 of 2 on hardware device.' }))
+  } else {
+    dispatch(showInfoNotification({ message: 'Claiming GAS...' }))
   }
 
+  // step 2: send claim request
   try {
     const { response } = await api.claimGas({ net, address, publicKey, privateKey, signingFunction })
 
