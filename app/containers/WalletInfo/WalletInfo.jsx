@@ -25,6 +25,7 @@ type Props = {
   neoPrice: number,
   gasPrice: number,
   tokenBalances: Array<TokenBalanceType>,
+  tokenBalancesAll: Array<TokenBalanceType>,
   loadWalletData: Function,
   currencyCode: string,
   showModal: Function,
@@ -45,6 +46,7 @@ export default class WalletInfo extends Component<Props> {
       neoPrice,
       gasPrice,
       tokenBalances,
+      tokenBalancesAll,
       showModal,
       currencyCode,
       participateInSale,
@@ -119,7 +121,7 @@ export default class WalletInfo extends Component<Props> {
                 [ASSETS.GAS]: GAS
               },
               tokenBalances: keyBy(
-                tokenBalances.filter(
+                tokenBalancesAll.filter(
                   token => !ENDED_ICO_TOKENS.includes(token.symbol)
                 ),
                 'symbol'
