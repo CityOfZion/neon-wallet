@@ -8,8 +8,7 @@ import Button from '../../components/Button'
 import loginStyles from '../../styles/login.scss'
 
 type Props = {
-    loginWithPrivateKey: Function,
-    history: Object
+  loginWithPrivateKey: Function
 }
 
 type State = {
@@ -22,14 +21,14 @@ export default class LoginPrivateKey extends Component<Props, State> {
   }
 
   render () {
-    const { history, loginWithPrivateKey } = this.props
+    const { loginWithPrivateKey } = this.props
     const { wif } = this.state
     const loginButtonDisabled = wif === ''
 
     return (
       <div id='loginPage' className={loginStyles.loginPage}>
         <div className={loginStyles.title}>Login using a private key:</div>
-        <form onSubmit={(e) => { e.preventDefault(); loginWithPrivateKey(wif, history) }}>
+        <form onSubmit={(e) => { e.preventDefault(); loginWithPrivateKey(wif) }}>
           <div className={loginStyles.loginForm}>
             <PasswordField
               placeholder='Enter your private key here (WIF)'

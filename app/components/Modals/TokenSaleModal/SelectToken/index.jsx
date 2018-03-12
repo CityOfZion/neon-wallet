@@ -119,7 +119,9 @@ class SelectToken extends Component<Props, State> {
                   <AssetInput
                     symbols={Object.keys(assetBalances)}
                     value={selectedAsset}
-                    onChange={asset => this.setState({ selectedAsset: asset })}
+                    onChange={asset => this.setState({ selectedAsset: asset }, () => {
+                      onChangeAmount(asset, '')
+                    })}
                     className={styles.assetInput}
                   />
                 </div>

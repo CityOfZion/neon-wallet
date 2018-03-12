@@ -5,8 +5,6 @@ import classNames from 'classnames'
 import TransactionHistory from '../TransactionHistory'
 import WalletInfo from '../WalletInfo'
 
-import Loader from '../../components/Loader'
-
 import { log } from '../../util/Logs'
 
 import { MODAL_TYPES } from '../../core/constants'
@@ -24,24 +22,28 @@ type Props = {
   NEO: string,
   GAS: string,
   tokenBalances: Array<TokenBalanceType>,
-  loaded: boolean,
   loadWalletData: Function,
 }
 
 const REFRESH_INTERVAL_MS = 30000
-let walletDataInterval
 
 export default class Dashboard extends Component<Props> {
+  walletDataInterval: ?number
+
   componentDidMount () {
-    const { loadWalletData, net, address } = this.props
-    // only logging public information here
-    log(net, 'LOGIN', address, {})
-    loadWalletData()
-    walletDataInterval = setInterval(loadWalletData, REFRESH_INTERVAL_MS)
+    log(this.props.net, 'LOGIN', this.props.address) // only logging public information here
+    this.addPolling()
   }
 
   componentWillUnmount () {
-    clearInterval(walletDataInterval)
+    this.removePolling()
+  }
+
+  componentWillReceiveProps (nextProps: Props) {
+    if (this.props.loadWalletData !== nextProps.loadWalletData) {
+      this.removePolling()
+      this.addPolling()
+    }
   }
 
   render () {
@@ -52,13 +54,8 @@ export default class Dashboard extends Component<Props> {
       NEO,
       GAS,
       tokenBalances,
-      sendTransaction,
-      loaded
+      sendTransaction
     } = this.props
-
-    if (!loaded) {
-      return <Loader />
-    }
 
     return (
       <div id='dashboard' className={styles.container}>
@@ -99,5 +96,15 @@ export default class Dashboard extends Component<Props> {
         </div>
       </div>
     )
+  }
+
+  addPolling = () => {
+    this.walletDataInterval = setInterval(this.props.loadWalletData, REFRESH_INTERVAL_MS)
+  }
+
+  removePolling = () => {
+    if (this.walletDataInterval) {
+      clearInterval(this.walletDataInterval)
+    }
   }
 }

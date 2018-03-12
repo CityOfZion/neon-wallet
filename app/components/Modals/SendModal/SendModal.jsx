@@ -21,7 +21,7 @@ const DISPLAY_MODES = {
 type Props = {
   NEO: string,
   GAS: string,
-  tokenBalances: Array<TokenBalanceType>,
+  tokenBalances: { [key: string]: TokenBalanceType },
   showErrorNotification: Function,
   hideModal: Function,
   sendTransaction: Function,
@@ -30,7 +30,7 @@ type Props = {
 }
 
 type BalancesType = {
-  [key: SymbolType]: any
+  [key: SymbolType]: string
 }
 
 type State = {
@@ -53,11 +53,11 @@ export default class SendModal extends Component<Props, State> {
 
   render () {
     const { hideModal } = this.props
-
     return (
       <BaseModal
         title='Send'
         hideModal={hideModal}
+        shouldCloseWithEscapeKey={false}
         style={{ content: { width: '925px', height: '410px' } }}>
         {this.renderDisplay()}
       </BaseModal>

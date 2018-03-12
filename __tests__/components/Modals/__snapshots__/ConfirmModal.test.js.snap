@@ -4,6 +4,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
 <BaseModal
   height="450px"
   hideModal={[Function]}
+  shouldCloseWithEscapeKey={true}
   style={
     Object {
       "content": Object {

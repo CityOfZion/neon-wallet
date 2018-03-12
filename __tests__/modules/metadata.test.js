@@ -1,143 +1,50 @@
-import metadataReducer, { setNetworkId, setBlockHeight, setBlockExplorer, SET_HEIGHT, SET_NETWORK_ID, SET_EXPLORER } from '../../app/modules/metadata'
-import { MAIN_NETWORK_ID, TEST_NETWORK_ID } from '../../app/core/constants'
+import axios from 'axios'
+import MockAdapter from 'axios-mock-adapter'
+
+import { checkVersion } from '../../app/modules/metadata'
+import * as notifications from '../../app/modules/notifications'
+import { TEST_NETWORK_ID } from '../../app/core/networks'
+import { version } from '../../package.json'
+
+const axiosMock = new MockAdapter(axios)
 
 describe('metadata module tests', () => {
-  const networkId = TEST_NETWORK_ID
-  const blockHeight = 10
-  const blockExplorer = 'Neoscan'
+  describe('checkVersion tests', () => {
+    const dispatch = jest.fn()
+    const getState = () => ({ api: { NETWORK: TEST_NETWORK_ID } })
 
-  const initialState = {
-    blockHeight: 0,
-    networkId: MAIN_NETWORK_ID,
-    blockExplorer: 'Neotracker',
-    networks: [
-      {
-        id: MAIN_NETWORK_ID,
-        label: 'MainNet',
-        network: 'MainNet'
-      },
-      {
-        id: TEST_NETWORK_ID,
-        label: 'TestNet',
-        network: 'TestNet'
-      }
-    ],
-    tokens: [
-      {
-        'id': '1',
-        'isUserGenerated': false,
-        'networkId': '1',
-        'scriptHash': 'b951ecbbc5fe37a9c280a76cb0ce0014827294cf'
-      },
-      {
-        'id': '2',
-        'isUserGenerated': false,
-        'networkId': '1',
-        'scriptHash': 'ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9'
-      },
-      {
-        'id': '3',
-        'isUserGenerated': false,
-        'networkId': '1',
-        'scriptHash': '2328008e6f6c7bd157a342e789389eb034d9cbc4'
-      },
-      {
-        'id': '4',
-        'isUserGenerated': false,
-        'networkId': '1',
-        'scriptHash': '0d821bd7b6d53f5c2b40e217c6defc8bbe896cf5'
-      },
-      {
-        'id': '5',
-        'isUserGenerated': false,
-        'networkId': '1',
-        'scriptHash': 'a721d5893480260bd28ca1f395f2c465d0b5b1c2'
-      },
-      {
-        'id': '6',
-        'isUserGenerated': false,
-        'networkId': '2',
-        'scriptHash': 'b951ecbbc5fe37a9c280a76cb0ce0014827294cf'
-      },
-      {
-        'id': '7',
-        'isUserGenerated': false,
-        'networkId': '2',
-        'scriptHash': '5b7074e873973a6ed3708862f219a6fbf4d1c411'
-      },
-      {
-        'id': '8',
-        'isUserGenerated': false,
-        'networkId': '2',
-        'scriptHash': '0d821bd7b6d53f5c2b40e217c6defc8bbe896cf5'
-      }
-    ]
-  }
-
-  describe('setNetworkId tests', () => {
-    const expectedAction = {
-      type: SET_NETWORK_ID,
-      payload: {
-        networkId
-      }
+    const generateNewerVersion = (version) => {
+      const parts = version.split('.')
+      const last = parts.pop()
+      return [...parts, parseInt(last) + 1].join('.')
     }
 
-    test('setNetworkId action works', () => {
-      expect(setNetworkId(networkId)).toEqual(expectedAction)
+    test('it does not show a warning when the versions match', async (done) => {
+      const spy = jest.spyOn(notifications, 'showWarningNotification')
+
+      axiosMock
+        .onGet('http://testnet-api.wallet.cityofzion.io/v2/version')
+        .reply(200, { version })
+
+      await checkVersion()(dispatch, getState)
+      expect(spy).not.toHaveBeenCalled()
+
+      axiosMock.restore()
+      done()
     })
 
-    test('setNetworkId reducer should return the initial state', () => {
-      expect(metadataReducer(undefined, {})).toEqual(initialState)
-    })
+    test.only("it shows a wraning when the versions don't match", async (done) => {
+      const spy = jest.spyOn(notifications, 'showWarningNotification')
 
-    test('metadata reducer should handle SET_NETWORK_ID', () => {
-      const expectedState = {
-        ...initialState,
-        networkId
-      }
-      expect(metadataReducer(undefined, expectedAction)).toEqual(expectedState)
-    })
-  })
+      axiosMock
+        .onGet('http://testnet-api.wallet.cityofzion.io/v2/version')
+        .reply(200, { version: generateNewerVersion(version) })
 
-  describe('setBlockHeight tests', () => {
-    const expectedAction = {
-      type: SET_HEIGHT,
-      payload: {
-        blockHeight
-      }
-    }
+      await checkVersion()(dispatch, getState)
+      expect(spy).toHaveBeenCalled()
 
-    test('setBlockHeight action works', () => {
-      expect(setBlockHeight(blockHeight)).toEqual(expectedAction)
-    })
-
-    test('metadata reducer should handle SET_HEIGHT', () => {
-      const expectedState = {
-        ...initialState,
-        blockHeight
-      }
-      expect(metadataReducer(undefined, expectedAction)).toEqual(expectedState)
-    })
-  })
-
-  describe('setBlockExplorer tests', () => {
-    const expectedAction = {
-      type: SET_EXPLORER,
-      payload: {
-        blockExplorer
-      }
-    }
-
-    test('setBlockExplorer action works', () => {
-      expect(setBlockExplorer(blockExplorer)).toEqual(expect.any(Function))
-    })
-
-    test('metadata reducer should handle SET_EXPLORER', () => {
-      const expectedState = {
-        ...initialState,
-        blockExplorer
-      }
-      expect(metadataReducer(undefined, expectedAction)).toEqual(expectedState)
+      axiosMock.restore()
+      done()
     })
   })
 })

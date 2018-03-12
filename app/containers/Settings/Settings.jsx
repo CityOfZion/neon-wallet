@@ -24,7 +24,6 @@ type Props = {
   showModal: (string, Object) => any,
   showSuccessNotification: Object => any,
   showErrorNotification: Object => any,
-  allTokens: Array<TokenItemType>,
   setUserGeneratedTokens: () => any,
   networks: Array<NetworkItemType>
 }
@@ -37,15 +36,6 @@ export default class Settings extends Component<Props, State> {
   state = {
     explorer: this.props.explorer,
     currency: this.props.currency
-  }
-
-  componentDidMount () {
-    const { setAccounts } = this.props
-
-    // eslint-disable-next-line
-    storage.get('userWallet', (error, data) => {
-      setAccounts(data.accounts)
-    })
   }
 
   saveWalletRecovery = () => {
@@ -153,11 +143,7 @@ export default class Settings extends Component<Props, State> {
       onClick: () => {
         storage.get('userWallet', (readError, data) => {
           if (readError) {
-            showErrorNotification({
-              message: `An error occurred reading previously stored wallet: ${
-                readError.message
-              }`
-            })
+            showErrorNotification({ message: `An error occurred reading previously stored wallet: ${readError.message}` })
           }
 
           data.accounts = reject(data.accounts, { key })
@@ -184,13 +170,11 @@ export default class Settings extends Component<Props, State> {
   openTokenModal = () => {
     const {
       setUserGeneratedTokens,
-      allTokens,
       showModal,
       networks,
       showErrorNotification
     } = this.props
     showModal(MODAL_TYPES.TOKEN, {
-      tokens: allTokens,
       networks,
       setUserGeneratedTokens,
       showErrorNotification

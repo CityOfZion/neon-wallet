@@ -6,15 +6,10 @@ exports[`Logout should render without crashing 1`] = `
   id="logout"
   onClick={[Function]}
 >
-  <Link
-    replace={false}
-    to=""
+  <Tooltip
+    title="Logout"
   >
-    <Tooltip
-      title="Logout"
-    >
-      <MdPowerSettingsNew />
-    </Tooltip>
-  </Link>
+    <MdPowerSettingsNew />
+  </Tooltip>
 </div>
 `;

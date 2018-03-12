@@ -1,40 +1,49 @@
 import React from 'react'
 import { Provider } from 'react-redux'
+import { MemoryRouter } from 'react-router-dom'
 import thunk from 'redux-thunk'
 import storage from 'electron-json-storage'
 import configureStore from 'redux-mock-store'
 import { shallow, mount } from 'enzyme'
 
 import App from '../../app/containers/App'
-import { TEST_NETWORK_ID, MAIN_NETWORK_ID } from '../../app/core/constants'
+import { MAIN_NETWORK_ID } from '../../app/core/constants'
+import { LOADED } from '../../app/values/state'
 
 const initialState = {
-  account: {
-  },
-  metadata: {
-    networkId: TEST_NETWORK_ID,
-    networks: [
-      {
-        id: MAIN_NETWORK_ID,
-        label: 'MainNet',
-        network: 'MainNet'
+  api: {
+    APP: {
+      batch: true,
+      mapping: ['NETWORK', 'PRICES', 'SETTINGS']
+    },
+    NETWORK: {
+      batch: false,
+      state: LOADED,
+      data: MAIN_NETWORK_ID,
+      loadedCount: 1
+    },
+    PRICES: {
+      batch: false,
+      state: LOADED,
+      data: {
+        NEO: 40.5,
+        GAS: 19.8
       },
-      {
-        id: TEST_NETWORK_ID,
-        label: 'TestNet',
-        network: 'TestNet'
-      }
-    ]
+      loadedCount: 1
+    },
+    SETTINGS: {
+      batch: false,
+      state: LOADED,
+      data: {},
+      loadedCount: 1
+    }
+  },
+  account: {
   },
   wallet: {
     transactions: []
   },
   modal: {
-
-  },
-  price: {
-    NEO: 40.5,
-    GAS: 19.8
   }
 }
 const setup = (state, shallowRender = true) => {
@@ -46,7 +55,9 @@ const setup = (state, shallowRender = true) => {
   } else {
     wrapper = mount(
       <Provider store={store}>
-        <App />
+        <MemoryRouter>
+          <App />
+        </MemoryRouter>
       </Provider>
     )
   }
@@ -57,15 +68,8 @@ const setup = (state, shallowRender = true) => {
 describe('App', () => {
   test('app initializes settings', (done) => {
     storage.get = jest.fn((key, callback) => {
-      const receivedKeys = []
-      receivedKeys[key] = true
-
-      storage.get = jest.fn((key, callback) => {
-        receivedKeys[key] = true
-        expect(receivedKeys['settings']).toEqual(true)
-        expect(receivedKeys['userWallet']).toEqual(true)
-        done()
-      })
+      expect(key).toEqual('userWallet')
+      done()
     })
     setup(initialState, false)
   })
