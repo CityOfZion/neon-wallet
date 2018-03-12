@@ -31,10 +31,15 @@ const getTokenBalances = (balances) => {
   return filter(tokens, (token) => token.balance !== '0')
 }
 
+const getICOTokenBalances = (balances) => {
+  return values(omit(balances, 'NEO', 'GAS'))
+}
+
 const mapBalanceDataToProps = (balances) => ({
   NEO: balances.NEO,
   GAS: balances.GAS,
-  tokenBalances: getTokenBalances(balances)
+  tokenBalances: getTokenBalances(balances),
+  icoTokenBalances: getICOTokenBalances(balances)
 })
 
 const mapPricesDataToProps = ({ NEO, GAS }) => ({
