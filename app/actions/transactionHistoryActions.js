@@ -16,9 +16,9 @@ export const ID = 'TRANSACTION_HISTORY'
 export default createRequestActions(ID, ({ net, address }: Props = {}) => async (state: Object) => {
   const transactions = await api.neonDB.getTransactionHistory(net, address)
 
-  return transactions.map(({ NEO, GAS, txid }: TransactionHistoryType) => ({
+  return transactions.map(({ change, txid }: TransactionHistoryType) => ({
     txid,
-    [ASSETS.NEO]: toFixedDecimals(NEO, 0),
-    [ASSETS.GAS]: toBigNumber(GAS).round(COIN_DECIMAL_LENGTH).toString()
+    [ASSETS.NEO]: toFixedDecimals(change.NEO || 0, 0),
+    [ASSETS.GAS]: toBigNumber(change.GAS || 0).round(COIN_DECIMAL_LENGTH).toString()
   }))
 })
