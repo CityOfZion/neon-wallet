@@ -32,9 +32,13 @@ type AccountType = ?{
 export const ID = 'AUTH'
 
 export const wifLoginActions = createRequestActions(ID, ({ wif }: WifLoginProps) => (state: Object): AccountType => {
+  if (!wallet.isWIF(wif) && !wallet.isPrivateKey(wif)) {
+    throw new Error('That is not a valid private key')
+  }
+
   const account = new wallet.Account(wif)
 
-  return { wif, address: account.address, isHardwareLogin: false }
+  return { wif: account.WIF, address: account.address, isHardwareLogin: false }
 })
 
 export const nep2LoginActions = createRequestActions(ID, ({ passphrase, encryptedWIF }: Nep2LoginProps) => async (state: Object): Promise<AccountType> => {
@@ -51,7 +55,7 @@ export const nep2LoginActions = createRequestActions(ID, ({ passphrase, encrypte
 
   await upgradeNEP6AddAddresses(encryptedWIF, wif)
 
-  return { wif, address: account.address, isHardwareLogin: false }
+  return { wif: account.WIF, address: account.address, isHardwareLogin: false }
 })
 
 export const ledgerLoginActions = createRequestActions(ID, ({ publicKey }: LedgerLoginProps) => (state: Object): AccountType => {
