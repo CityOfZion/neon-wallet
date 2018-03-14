@@ -7,12 +7,14 @@ import appActions from '../../actions/appActions'
 import authActions from '../../actions/authActions'
 import accountActions from '../../actions/accountActions'
 import networkActions from '../../actions/networkActions'
+import pricesActions from '../../actions/pricesActions'
 import withFetch from '../../hocs/api/withFetch'
 import withReload from '../../hocs/api/withReload'
 import withProgressComponents from '../../hocs/api/withProgressComponents'
 import withLoginRedirect from '../../hocs/auth/withLoginRedirect'
 import withLogoutRedirect from '../../hocs/auth/withLogoutRedirect'
 import withLogoutReset from '../../hocs/auth/withLogoutReset'
+import withCurrencyData from '../../hocs/withCurrencyData'
 import withNetworkData from '../../hocs/withNetworkData'
 import alreadyLoaded from '../../hocs/api/progressStrategies/alreadyLoadedStrategy'
 import { checkVersion } from '../../modules/metadata'
@@ -49,6 +51,17 @@ export default compose(
   withFetch(appActions),
   withReload(appActions, ['networkId']),
   withProgressComponents(appActions, {
+    [LOADING]: Loading,
+    [FAILED]: Failed
+  }, {
+    strategy: alreadyLoaded
+  }),
+
+  // Fetch prices data based based upon the selected currency.  Reload data with the currency changes.
+  withCurrencyData(),
+  withFetch(pricesActions),
+  withReload(pricesActions, ['currency']),
+  withProgressComponents(pricesActions, {
     [LOADING]: Loading,
     [FAILED]: Failed
   }, {
