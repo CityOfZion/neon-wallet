@@ -7,17 +7,6 @@ import WalletInfo from '../../app/containers/WalletInfo'
 import { DEFAULT_CURRENCY_CODE, MAIN_NETWORK_ID } from '../../app/core/constants'
 import { LOADED } from '../../app/values/state'
 
-jest.mock('electron', () => ({
-  app: {
-    getPath: () => 'C:\\tmp\\mock_path'
-  }
-}))
-jest.useFakeTimers()
-
-jest.unmock('qrcode')
-import QRCode from 'qrcode/lib/browser' // eslint-disable-line
-QRCode.toCanvas = jest.fn()
-
 const initialState = {
   api: {
     NETWORK: {
