@@ -1,6 +1,6 @@
 // @flow
 import { call, put, race, take } from 'redux-saga/effects'
-import { type Saga } from 'redux-saga'
+import { delay, type Saga } from 'redux-saga'
 
 import { actionMatcher } from '../util/api/matchers'
 import {
@@ -24,6 +24,7 @@ type SagaActions = {
 export function createSagaActions (meta: ActionMeta): SagaActions {
   function * request (state: Object, payload: Payload, actions: SagaActions) {
     try {
+      yield delay(0) // allow request state to propagate
       const result = yield call(payload.fn, state)
       yield put(actions.success(result))
     } catch (err) {

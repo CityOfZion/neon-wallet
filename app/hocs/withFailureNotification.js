@@ -42,7 +42,7 @@ export default function withFailureNotification (actions: Actions, message: Mess
 
     class ErrorNotifier extends React.Component<Props> {
       componentWillReceiveProps (nextProps) {
-        if (hasError(nextProps) && (!hasError(this.props) || progressChangedToError(this.props, nextProps))) {
+        if (hasError(nextProps) && progressChangedToError(this.props, nextProps)) {
           const showErrorNotification = nextProps[NOTIFICATION_PROP]
           showErrorNotification({ message: nextProps[ERROR_PROP] })
         }
