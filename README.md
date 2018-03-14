@@ -33,7 +33,7 @@
 * Import/Export wallet accounts (NEP6 Standard)
 * View balance
 * View prices for GAS and NEO in multiple currencies
-* Send GAS, NEO, and certain NEP5 tokens (RPX, DBC, QLC)
+* Send GAS, NEO and any NEP5 token
 * Claim GAS
 * Send to multiple recipients
 * Address book
