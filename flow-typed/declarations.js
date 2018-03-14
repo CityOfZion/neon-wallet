@@ -7,6 +7,7 @@ import {
   NOTIFICATION_POSITIONS,
   MODAL_TYPES
 } from '../app/core/constants'
+import type {Fixed8} from 'neon-js'
 
 declare type ActionCreatorType = any
 
@@ -38,12 +39,9 @@ declare type NotificationType = {
 }
 
 declare type TransactionHistoryType = {
-  NEO: number,
-  GAS: number,
+  change: { [ assetSymbol: string ]: Fixed8 },
   txid: string,
-  block_index: number,
-  neo_sent: boolean,
-  gas_sent: boolean
+  blockHeight: Fixed8
 }
 
 declare type ModalType = $Values<typeof MODAL_TYPES>
