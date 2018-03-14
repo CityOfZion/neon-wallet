@@ -7,19 +7,6 @@ import WalletInfo from '../../app/containers/WalletInfo'
 import { DEFAULT_CURRENCY_CODE, MAIN_NETWORK_ID } from '../../app/core/constants'
 import { LOADED } from '../../app/values/state'
 
-// TODO research how to move the axios mock code which is repeated in NetworkSwitch to a helper or config file
-import axios from 'axios'
-import MockAdapter from 'axios-mock-adapter'
-import { version } from '../../package.json'
-
-const axiosMock = new MockAdapter(axios)
-axiosMock
-  .onGet('http://testnet-api.wallet.cityofzion.io/v2/version')
-  .reply(200, { version })
-axiosMock
-  .onGet('https://api.coinmarketcap.com/v1/ticker/?limit=0&convert=USD')
-  .reply(200, [{ symbol: 'NEO', price_usd: 24.5 }, { symbol: 'GAS', price_usd: 18.2 }])
-
 jest.mock('electron', () => ({
   app: {
     getPath: () => 'C:\\tmp\\mock_path'
