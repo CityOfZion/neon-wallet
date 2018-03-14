@@ -52,7 +52,9 @@ describe('requestSaga', () => {
 
     it('performs the action', () => {
       const request = call(requestState.fn, storeState, actionState.payload, sagaActions)
-      const response = request.CALL.fn(...request.CALL.args).next().value
+      const fn = request.CALL.fn(...request.CALL.args)
+      fn.next() // account for delay
+      const response = fn.next().value
       const result = response.CALL.fn(...response.CALL.args)
       expect(result).toEqual('my foo baz')
     })
