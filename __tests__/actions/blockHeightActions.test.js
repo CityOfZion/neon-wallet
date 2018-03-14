@@ -1,7 +1,20 @@
+import { api } from 'neon-js'
+
 import blockHeightActions from '../../app/actions/blockHeightActions'
 import { TEST_NETWORK_ID } from '../../app/core/constants'
+import { mockPromiseResolved } from '../testHelpers'
 
 describe('blockHeightActions', () => {
+  beforeEach(() => {
+    jest.spyOn(api.neoscan, 'getWalletDBHeight').mockImplementation(
+      mockPromiseResolved(586435)
+    )
+  })
+
+  afterEach(() => {
+    jest.restoreAllMocks()
+  })
+
   describe('request', () => {
     test('returns an action object', () => {
       expect(blockHeightActions.request({ networkId: TEST_NETWORK_ID })).toEqual({
