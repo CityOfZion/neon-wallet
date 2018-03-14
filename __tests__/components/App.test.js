@@ -14,7 +14,19 @@ const initialState = {
   api: {
     APP: {
       batch: true,
-      mapping: ['NETWORK', 'PRICES', 'SETTINGS']
+      mapping: ['ACCOUNTS', 'BLOCK_HEIGHT', 'SETTINGS']
+    },
+    ACCOUNTS: {
+      batch: false,
+      state: LOADED,
+      data: [],
+      loadedCount: 1
+    },
+    BLOCK_HEIGHT: {
+      batch: false,
+      state: LOADED,
+      data: 2000000,
+      loadedCount: 1
     },
     NETWORK: {
       batch: false,
