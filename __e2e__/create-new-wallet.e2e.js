@@ -45,14 +45,6 @@ test.serial('should create new wallet', async t => {
   t.true(await app.client.isVisible('#newWallet .keyList'))
 })
 
-test.serial('should show wallet public address QR Code', async t => {
-  t.true(await app.client.isVisible('#newWallet .addressBox canvas'))
-})
-
-test.serial('should show wallet encrypted private key QR Code', async t => {
-  t.true(await app.client.isVisible('#newWallet .privateKeyBox canvas'))
-})
-
 test.serial('should show wallet passphrase', async t => {
   t.true(await app.client.isVisible('#newWallet .keyListItem:nth-child(1) .key'))
   const passphraseText = await app.client.getText('#newWallet .keyListItem:nth-child(1) .key');
