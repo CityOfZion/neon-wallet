@@ -37,6 +37,9 @@ export function resetKey () {
 export const walletHasKey = (wallet: Object, key: string) =>
   wallet.accounts.some(account => account.key === key)
 
+export const walletHasLabel = (wallet: Object, label: string) =>
+  wallet.accounts.some(account => account.label === label)
+
 export const saveAccount = (label: string, address: string, key: string) => (dispatch: DispatchType) => {
   if (!label || !address || !key) { return null }
 
@@ -51,11 +54,14 @@ export const saveAccount = (label: string, address: string, key: string) => (dis
       dispatch(showErrorNotification({ message: `Error loading wallet: ${readError.message}` }))
     }
 
-    if (!walletHasKey(data, newAccount.key)) {
-      data.accounts.push(newAccount)
-    } else {
+    if (walletHasKey(data, newAccount.key)) {
       dispatch(showErrorNotification({ message: `Error saving wallet: '${newAccount.address}' already exists` }))
       return
+    } else if (walletHasLabel(data, newAccount.label)) {
+      dispatch(showErrorNotification({ message: `Error saving wallet: Name '${newAccount.label}' already exists` }))
+      return
+    } else {
+      data.accounts.push(newAccount)
     }
 
     storage.set('userWallet', data, (saveError) => {
