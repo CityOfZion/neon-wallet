@@ -1,11 +1,24 @@
 // @flow
 import { wallet } from 'neon-js'
 import { map, extend } from 'lodash'
+import fetch from 'node-fetch'
 
 import { ASSETS } from './constants'
 import { toBigNumber } from './math'
 
 const MIN_PASSPHRASE_LEN = 4
+
+let addressBlacklist: Array<string> | null = null
+export const isInBlacklist = (address: string): Promise<boolean> => {
+  if (addressBlacklist !== null) return Promise.resolve(addressBlacklist.includes(address))
+  return fetch('https://raw.githubusercontent.com/CityOfZion/phishing/master/blockedAddresses.json')
+    .catch(() => false)
+    .then(res => res.json())
+    .then(blacklist => {
+      addressBlacklist = blacklist
+      return blacklist.includes(address)
+    })
+}
 
 export const validatePassphraseLength = (passphrase: string): boolean =>
   passphrase.length >= MIN_PASSPHRASE_LEN
