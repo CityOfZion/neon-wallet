@@ -7,7 +7,7 @@ import { ID as NETWORK_ID } from '../actions/networkActions'
 import { ASSETS } from '../core/constants'
 import { findNetwork } from '../core/networks'
 
-const PREFIX = 'api'
+const PREFIX = 'spunky'
 
 // TODO: Module functions that inspect state such as `doClaimNotify` should be refactored into
 //       higher-order components that expose function props for performing these actions.  Data that

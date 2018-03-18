@@ -1,7 +1,7 @@
 // @flow
 import { pick, keys, uniqBy } from 'lodash'
+import { createActions } from 'spunky'
 
-import createRequestActions from '../util/api/createRequestActions'
 import { getStorage, setStorage } from '../core/storage'
 import { getDefaultTokens } from '../core/nep5'
 import { EXPLORERS, DEFAULT_CURRENCY_CODE } from '../core/constants'
@@ -34,7 +34,7 @@ const getSettings = async (): Promise<Settings> => {
 
 export const ID = 'SETTINGS'
 
-export const updateSettingsActions = createRequestActions(ID, (values: Settings = {}) => async (state: Object): Promise<Settings> => {
+export const updateSettingsActions = createActions(ID, (values: Settings = {}) => async (state: Object): Promise<Settings> => {
   const settings = await getSettings()
   const newSettings = { ...settings, ...values }
   await setStorage(STORAGE_KEY, newSettings)
@@ -42,7 +42,7 @@ export const updateSettingsActions = createRequestActions(ID, (values: Settings 
   return newSettings
 })
 
-export default createRequestActions(ID, () => async (state: Object): Promise<Settings> => {
+export default createActions(ID, () => async (state: Object): Promise<Settings> => {
   const settings = await getSettings()
   return pick(settings, keys(DEFAULT_SETTINGS))
 })

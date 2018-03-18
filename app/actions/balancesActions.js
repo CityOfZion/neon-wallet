@@ -1,8 +1,8 @@
 // @flow
 import { api } from 'neon-js'
 import { extend } from 'lodash'
+import { createActions } from 'spunky'
 
-import createRequestActions from '../util/api/createRequestActions'
 import { toBigNumber } from '../core/math'
 import { ASSETS } from '../core/constants'
 import { COIN_DECIMAL_LENGTH } from '../core/formatters'
@@ -50,6 +50,6 @@ async function getBalances ({ net, address, tokens }: Props) {
   return extend({}, ...await Promise.all(promises))
 }
 
-export default createRequestActions(ID, ({ net, address, tokens }: Props = {}) => async (state: Object) => {
+export default createActions(ID, ({ net, address, tokens }: Props = {}) => async (state: Object) => {
   return getBalances({ net, address, tokens })
 })

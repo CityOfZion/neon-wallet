@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TransactionHistory renders without crashing 1`] = `
-<withData(withProps(Connect(withData(Connect(withData(Connect(withProgressProp(withProps(withoutProps(TransactionHistory))))))))))
+<withData(withProps(Connect(withData(Connect(withData(Connect(withProgress(withProps(withoutProps(TransactionHistory))))))))))
   dispatch={[Function]}
   networkId="1"
   store={
@@ -15,7 +15,7 @@ exports[`TransactionHistory renders without crashing 1`] = `
     }
   }
   storeSubscription={
-    Subscription {
+    t {
       "listeners": Object {
         "clear": [Function],
         "get": [Function],

@@ -1,8 +1,8 @@
 // @flow
 import { wallet } from 'neon-js'
 import { noop } from 'lodash'
+import { createActions } from 'spunky'
 
-import createRequestActions from '../util/api/createRequestActions'
 import { upgradeNEP6AddAddresses } from '../core/account'
 import { validatePassphraseLength } from '../core/wallet'
 import { ledgerNanoSCreateSignatureAsync } from '../ledger/ledgerNanoS'
@@ -31,7 +31,7 @@ type AccountType = ?{
 
 export const ID = 'AUTH'
 
-export const wifLoginActions = createRequestActions(ID, ({ wif }: WifLoginProps) => (state: Object): AccountType => {
+export const wifLoginActions = createActions(ID, ({ wif }: WifLoginProps) => (state: Object): AccountType => {
   if (!wallet.isWIF(wif) && !wallet.isPrivateKey(wif)) {
     throw new Error('That is not a valid private key')
   }
@@ -41,7 +41,7 @@ export const wifLoginActions = createRequestActions(ID, ({ wif }: WifLoginProps)
   return { wif: account.WIF, address: account.address, isHardwareLogin: false }
 })
 
-export const nep2LoginActions = createRequestActions(ID, ({ passphrase, encryptedWIF }: Nep2LoginProps) => async (state: Object): Promise<AccountType> => {
+export const nep2LoginActions = createActions(ID, ({ passphrase, encryptedWIF }: Nep2LoginProps) => async (state: Object): Promise<AccountType> => {
   if (!validatePassphraseLength(passphrase)) {
     throw new Error('Passphrase too short')
   }
@@ -58,17 +58,17 @@ export const nep2LoginActions = createRequestActions(ID, ({ passphrase, encrypte
   return { wif: account.WIF, address: account.address, isHardwareLogin: false }
 })
 
-export const ledgerLoginActions = createRequestActions(ID, ({ publicKey }: LedgerLoginProps) => (state: Object): AccountType => {
+export const ledgerLoginActions = createActions(ID, ({ publicKey }: LedgerLoginProps) => (state: Object): AccountType => {
   const publicKeyEncoded = wallet.getPublicKeyEncoded(publicKey)
   const account = new wallet.Account(publicKeyEncoded)
 
   return { publicKey, address: account.address, signingFunction: ledgerNanoSCreateSignatureAsync, isHardwareLogin: true }
 })
 
-export const logoutActions = createRequestActions(ID, () => (state: Object): AccountType => {
+export const logoutActions = createActions(ID, () => (state: Object): AccountType => {
   return null
 })
 
 // TODO: Better way to expose action data than to make a faux function?  One idea is to change
 //       `withData` to accept the `ID` exported from this file instead of a generated action.
-export default createRequestActions(ID, () => (state: Object) => noop)
+export default createActions(ID, () => (state: Object) => noop)

@@ -3,10 +3,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import { omit, isFunction } from 'lodash'
+import { withProgress, progressValues, type Actions, type ProgressState } from 'spunky'
 
-import withProgressProp from './api/withProgressProp'
-import { type Actions } from '../values/api'
-import { LOADED, type ProgressState } from '../values/state'
 import { showSuccessNotification } from '../modules/notifications'
 
 type Props = {
@@ -18,6 +16,8 @@ type Message = string | Function
 
 const PROGRESS_PROP = '__progress__'
 const NOTIFICATION_PROP = '__showSuccessNotification__'
+
+const { LOADED } = progressValues
 
 export default function withSuccessNotification (actions: Actions, message: Message) {
   const mapDisptchToProps = (dispatch, ownProps) => ({
@@ -45,7 +45,7 @@ export default function withSuccessNotification (actions: Actions, message: Mess
 
     return compose(
       connect(null, mapDisptchToProps),
-      withProgressProp(actions, { propName: PROGRESS_PROP })
+      withProgress(actions, { propName: PROGRESS_PROP })
     )(LoadedNotifier)
   }
 }
