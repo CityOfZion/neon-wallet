@@ -1,11 +1,11 @@
 import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
+import { createLogger } from 'redux-logger'
 import thunk from 'redux-thunk'
 import createSagaMiddleware from 'redux-saga'
-import { createLogger } from 'redux-logger'
+import { saga } from 'spunky'
 
 import rootReducer from '../modules'
-import saga from '../sagas'
 
 function configureStore (initialState = {}) {
   const logger = createLogger({

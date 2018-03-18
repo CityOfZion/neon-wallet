@@ -1,9 +1,9 @@
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import createSagaMiddleware from 'redux-saga'
+import { saga } from 'spunky'
 
 import rootReducer from '../modules'
-import saga from '../sagas'
 
 function configureStore (initialState = {}) {
   const sagaMiddleware = createSagaMiddleware()

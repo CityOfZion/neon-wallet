@@ -1,7 +1,7 @@
 // @flow
 import { compose, withProps } from 'recompose'
+import { withData } from 'spunky'
 
-import withData from './api/withData'
 import networkActions from '../actions/networkActions'
 import { getNetworkById } from '../core/deprecated'
 

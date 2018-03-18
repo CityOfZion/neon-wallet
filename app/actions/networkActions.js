@@ -1,5 +1,6 @@
 // @flow
-import createRequestActions from '../util/api/createRequestActions'
+import { createActions } from 'spunky'
+
 import { MAIN_NETWORK_ID } from '../core/constants'
 
 type Props = {
@@ -8,6 +9,6 @@ type Props = {
 
 export const ID = 'NETWORK'
 
-export default createRequestActions(ID, ({ networkId }: Props = {}) => (state: Object) => {
+export default createActions(ID, ({ networkId }: Props = {}) => (state: Object) => {
   return networkId || MAIN_NETWORK_ID
 })
