@@ -1,5 +1,3 @@
-import { wallet } from 'neon-js'
-
 import { wifLoginActions } from '../../app/actions/authActions'
 
 describe('authActions', () => {
@@ -24,20 +22,6 @@ describe('authActions', () => {
       })
 
       describe('with valid WIF', () => {
-        let wifMock, keyMock, accountMock
-
-        beforeEach(() => {
-          wifMock = jest.spyOn(wallet, 'isWIF').mockImplementation((str) => false)
-          keyMock = jest.spyOn(wallet, 'isPrivateKey').mockImplementation((str) => true)
-          accountMock = jest.spyOn(wallet, 'Account').mockImplementation((str) => ({ WIF: wif, address }))
-        })
-
-        afterEach(() => {
-          wifMock.mockRestore()
-          keyMock.mockRestore()
-          accountMock.mockRestore()
-        })
-
         test('returns authenticated account data', () => {
           const request = wifLoginActions.request({ wif })
           expect(request.payload.fn({})).toEqual({ wif, address, isHardwareLogin: false })
@@ -45,20 +29,6 @@ describe('authActions', () => {
       })
 
       describe('with valid private key', () => {
-        let wifMock, keyMock, accountMock
-
-        beforeEach(() => {
-          wifMock = jest.spyOn(wallet, 'isWIF').mockImplementation((str) => false)
-          keyMock = jest.spyOn(wallet, 'isPrivateKey').mockImplementation((str) => true)
-          accountMock = jest.spyOn(wallet, 'Account').mockImplementation((str) => ({ WIF: wif, address }))
-        })
-
-        afterEach(() => {
-          wifMock.mockRestore()
-          keyMock.mockRestore()
-          accountMock.mockRestore()
-        })
-
         test('returns authenticated account data', () => {
           const request = wifLoginActions.request({ wif: privateKey })
           expect(request.payload.fn({})).toEqual({ wif, address, isHardwareLogin: false })
@@ -66,20 +36,8 @@ describe('authActions', () => {
       })
 
       describe('with invalid private key', () => {
-        let wifMock, keyMock
-
-        beforeEach(() => {
-          wifMock = jest.spyOn(wallet, 'isWIF').mockImplementation((str) => false)
-          keyMock = jest.spyOn(wallet, 'isPrivateKey').mockImplementation((str) => false)
-        })
-
-        afterEach(() => {
-          wifMock.mockRestore()
-          keyMock.mockRestore()
-        })
-
-        test('throws an error', () => {
-          const request = wifLoginActions.request({ wif })
+        test.only('throws an error', () => {
+          const request = wifLoginActions.request({ wif: 'invalid' })
           expect(() => request.payload.fn({})).toThrowError('That is not a valid private key')
         })
       })

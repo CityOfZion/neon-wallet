@@ -1,10 +1,23 @@
+import { api, u } from 'neon-js'
+
 import claimsActions from '../../app/actions/claimsActions'
+import { mockPromiseResolved } from '../testHelpers'
 
 describe('claimsActions', () => {
   const net = 'TestNet'
   const address = 'AW4FD7bz6PF2QadFKF8qXUT7tNmWgvXZc4'
 
-  describe('request', () => {
+  beforeEach(() => {
+    jest.spyOn(api.neoscan, 'getMaxClaimAmount').mockImplementation(
+      mockPromiseResolved(new u.Fixed8('1.59140785'))
+    )
+  })
+
+  afterEach(() => {
+    jest.restoreAllMocks()
+  })
+
+  describe.only('request', () => {
     test('returns an action object', () => {
       expect(claimsActions.request({ net, address })).toEqual({
         batch: false,

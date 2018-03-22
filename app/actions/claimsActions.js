@@ -11,6 +11,6 @@ type Props = {
 export const ID = 'CLAIMS'
 
 export default createRequestActions(ID, ({ net, address }: Props = {}) => async (state: Object): Promise<Object> => {
-  const total = await api.loadBalance(api.getMaxClaimAmountFrom, {net, address})
+  const total = await api.loadBalance(api.getMaxClaimAmountFrom, { net, address })
   return { total: total.toString() }
 })
