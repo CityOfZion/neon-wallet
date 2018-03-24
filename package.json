@@ -88,7 +88,7 @@
     "react-click-outside": "3.0.0",
     "react-data-grid": "2.0.73",
     "react-dom": "16.1.1",
-    "react-hot-loader": "3.1.1",
+    "react-hot-loader": "4.0.0",
     "react-icons": "2.2.7",
     "react-modal": "3.1.2",
     "react-notification-system": "0.2.16",
