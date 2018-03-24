@@ -9,7 +9,8 @@ import { toBigNumber } from './math'
 const MIN_PASSPHRASE_LEN = 4
 
 let addressBlacklist: Array<string> | null = null
-export const isInBlacklist = async (address: string): Promise<boolean> => {
+
+export const isBlacklisted = async (address: string): Promise<boolean> => {
   if (addressBlacklist === null) {
     const { data } = await axios.get('https://raw.githubusercontent.com/CityOfZion/phishing/master/blockedAddresses.json')
     addressBlacklist = data
