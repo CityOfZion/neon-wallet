@@ -17,7 +17,7 @@ describe('claimsActions', () => {
     jest.restoreAllMocks()
   })
 
-  describe.only('request', () => {
+  describe('request', () => {
     test('returns an action object', () => {
       expect(claimsActions.request({ net, address })).toEqual({
         batch: false,
