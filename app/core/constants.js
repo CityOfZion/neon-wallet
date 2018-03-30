@@ -80,7 +80,7 @@ export const TOKENS = {
   CGE: '34579e4614ac1a7bd295372d3de8621770c76cdc'
 }
 
-export const ENDED_ICO_TOKENS = ['DBC', 'RPX', 'QLC', 'RHT']
+export const ENDED_ICO_TOKENS = ['DBC', 'RPX', 'QLC', 'RHT', 'NRVE', 'ONT']
 
 export const DEFAULT_WALLET = {
   name: 'userWallet',
