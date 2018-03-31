@@ -43,7 +43,7 @@ describe('Login', () => {
     expect(wrapper.find('input').get(0).props.type).toEqual('password')
 
     wrapper
-      .find('.viewKey')
+      .find('.icon')
       .first()
       .simulate('click')
 
