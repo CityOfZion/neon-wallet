@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 
-import PasswordField from '../../components/PasswordField'
+import PasswordInput from '../../components/Inputs/PasswordInput'
 import HomeButtonLink from '../../components/HomeButtonLink'
 import Button from '../../components/Button'
 
@@ -60,23 +60,23 @@ export default class EncryptKey extends Component<Props, State> {
       <div id='newWallet'>
         <div className='info'>{title}</div>
         <form onSubmit={this.createWalletAccount}>
-          <PasswordField
+          <PasswordInput
             value={passphrase}
             onChange={(e) => this.setState({ passphrase: e.target.value })}
             placeholder='Enter passphrase here'
             autoFocus
           />
-          <PasswordField
+          <PasswordInput
             value={passphrase2}
             onChange={(e) => this.setState({ passphrase2: e.target.value })}
             placeholder='Enter passphrase again'
           />
           {encryptWIF &&
-          <PasswordField
-            value={wif}
-            onChange={(e) => this.setState({ wif: e.target.value })}
-            placeholder='Enter existing WIF here'
-          />
+            <PasswordInput
+              value={wif}
+              onChange={(e) => this.setState({ wif: e.target.value })}
+              placeholder='Enter existing WIF here'
+            />
           }
           <Button type='submit' disabled={disabledButton}>Generate keys</Button>
           <HomeButtonLink />
