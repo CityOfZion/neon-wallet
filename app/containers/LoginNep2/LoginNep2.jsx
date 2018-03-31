@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 
 import Button from '../../components/Button'
 import HomeButtonLink from '../../components/HomeButtonLink'
-import PasswordField from '../../components/PasswordField'
+import PasswordInput from '../../components/Inputs/PasswordInput'
 
 import loginStyles from '../../styles/login.scss'
 
@@ -32,13 +32,13 @@ export default class LoginNep2 extends Component<Props, State> {
         <div className={loginStyles.title}>Login using an encrypted key:</div>
         <form onSubmit={(e) => { e.preventDefault(); loginNep2(passphrase, encryptedWIF) }}>
           <div className={loginStyles.loginForm}>
-            <PasswordField
+            <PasswordInput
               placeholder='Enter your passphrase here'
               onChange={(e) => this.setState({ passphrase: e.target.value })}
               value={passphrase}
               autoFocus
             />
-            <PasswordField
+            <PasswordInput
               placeholder='Enter your encrypted key here'
               onChange={(e) => this.setState({ encryptedWIF: e.target.value })}
               value={encryptedWIF}
