@@ -11,9 +11,10 @@ type Props = {
 }
 
 const DropdownButton = ({ className, onToggle }: Props) => (
-  <div className={classNames(styles.dropdownButton, className)} onClick={() => onToggle()}>
-    <DropdownIcon className={styles.icon} />
-  </div>
+  <DropdownIcon
+    className={classNames(styles.dropdownButton, className)}
+    onClick={() => onToggle()}
+  />
 )
 
 export default DropdownButton
