@@ -9,21 +9,40 @@ type Props = {
   className: ?string,
   type: string,
   renderBefore: ?Function,
-  renderAfter: ?Function
+  renderAfter: ?Function,
+  onFocus: ?Function,
+  onBlur: ?Function
 }
 
-export default class TextInput extends React.Component<Props> {
+type State = {
+  active: boolean
+}
+
+export default class TextInput extends React.Component<Props, State> {
   static defaultProps = {
     type: 'text'
+  }
+
+  state = {
+    active: false
   }
 
   render () {
     const passDownProps = omit(this.props, 'className', 'renderBefore', 'renderAfter')
 
+    const className = classNames(styles.textInput, this.props.className, {
+      [styles.active]: this.state.active
+    })
+
     return (
-      <div className={classNames(styles.textInput, this.props.className)}>
+      <div className={className}>
         {this.renderBefore()}
-        <input {...passDownProps} className={styles.input} />
+        <input
+          {...passDownProps}
+          className={styles.input}
+          onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
+        />
         {this.renderAfter()}
       </div>
     )
@@ -36,7 +55,7 @@ export default class TextInput extends React.Component<Props> {
 
     return (
       <div className={styles.beforeInput}>
-        {this.props.renderBefore()}
+        {this.props.renderBefore({ active: this.state.active })}
       </div>
     )
   }
@@ -48,8 +67,20 @@ export default class TextInput extends React.Component<Props> {
 
     return (
       <div className={styles.afterInput}>
-        {this.props.renderAfter()}
+        {this.props.renderAfter({ active: this.state.active })}
       </div>
     )
+  }
+
+  handleFocus = (event: Object, ...args: Array<any>) => {
+    this.setState({ active: true })
+    event.persist()
+    this.props.onFocus && this.props.onFocus(event, ...args)
+  }
+
+  handleBlur = (event: Object, ...args: Array<any>) => {
+    this.setState({ active: false })
+    event.persist()
+    this.props.onBlur && this.props.onBlur(event, ...args)
   }
 }
