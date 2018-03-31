@@ -1,10 +1,19 @@
 @import '../../../styles/variables';
 
 .textInput {
+  $text-input-color: #282828;
+  $text-input-background-color: #f2f2f2;
+  $text-input-border-radius: 3px;
+  $text-input-height: 36px;
+  $text-input-font-size: 12px;
+
   display: flex;
   flex-wrap: nowrap;
   align-items: stretch;
-  background: $dark-input-color;
+  height: $text-input-height;
+  border-radius: $text-input-border-radius;
+  background: $text-input-background-color;
+  overflow: hidden;
 
   .beforeInput {
     flex: 0 1 auto;
@@ -14,6 +23,11 @@
     flex: 1 1 auto;
     box-sizing: border-box;
     width: 100%;
+    height: $text-input-height;
+    line-height: $text-input-height;
+    color: $text-input-color;
+    background: $text-input-background-color;
+    font-size: $text-input-font-size;
   }
 
   .afterInput {
