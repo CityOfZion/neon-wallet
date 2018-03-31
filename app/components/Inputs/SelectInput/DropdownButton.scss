@@ -5,10 +5,8 @@
   padding: 0 10px;
   cursor: pointer;
 
-  .icon {
-    &, path {
-      color: #9599a2;
-      fill: #9599a2;
-    }
+  &, path {
+    color: #9599a2;
+    fill: #9599a2;
   }
 }
