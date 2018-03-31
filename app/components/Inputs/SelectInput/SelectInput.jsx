@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import Highlighter from 'react-highlight-words'
 import classNames from 'classnames'
 import { noop, omit, trim, includes, toLower } from 'lodash'
 
@@ -23,6 +24,11 @@ type Props = {
 type State = {
   open: boolean,
   search: string
+}
+
+type RenderItemProps = {
+  search: string,
+  onSelect: Function
 }
 
 const defaultRenderAfter = (props) => <DropdownButton {...props} />
@@ -103,17 +109,25 @@ export default class SelectInput extends React.Component<Props, State> {
   }
 
   renderItems = (items: Array<any>) => {
+    const { search } = this.state
+    const renderItem = this.props.renderItem || this.renderItem
+
     return items.map((item) => {
-      const renderItem = this.props.renderItem || this.renderItem
-      return renderItem(item, { onSelect: this.generateSelectHandler(item) })
+      return renderItem(item, { search, onSelect: this.generateSelectHandler(item) })
     })
   }
 
-  renderItem = (item: Object, { onSelect }: { onSelect: Function }) => {
+  renderItem = (item: Object, { search, onSelect }: RenderItemProps) => {
     const { getItemValue } = this.props
     return (
       <div className={styles.dropdownItem} key={getItemValue(item)} tabIndex={0} onClick={onSelect}>
-        {item}
+        <Highlighter
+          highlightTag='span'
+          highlightClassName={styles.highlight}
+          searchWords={[search]}
+          autoEscape
+          textToHighlight={item}
+        />
       </div>
     )
   }

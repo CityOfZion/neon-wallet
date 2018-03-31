@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import Highlighter from 'react-highlight-words'
 import Sifter from 'sifter'
 import { noop, omit, map } from 'lodash'
 
@@ -46,11 +47,27 @@ export default class AddressInput extends React.Component<Props> {
     )
   }
 
-  renderItem = (item: ItemType, { onSelect }: { onSelect: Function }) => {
+  renderItem = (item: ItemType, { search, onSelect }: { search: string, onSelect: Function }) => {
     return (
       <div className={styles.addressItem} key={item.label} tabIndex={0} onClick={onSelect}>
-        <div className={styles.label}>{item.label}</div>
-        <div className={styles.value}>{item.value}</div>
+        <div className={styles.label}>
+          <Highlighter
+            highlightTag='span'
+            highlightClassName={styles.highlight}
+            searchWords={[search]}
+            autoEscape
+            textToHighlight={item.label}
+          />
+        </div>
+        <div className={styles.value}>
+          <Highlighter
+            highlightTag='span'
+            highlightClassName={styles.highlight}
+            searchWords={[search]}
+            autoEscape
+            textToHighlight={item.value}
+          />
+        </div>
       </div>
     )
   }
