@@ -81,7 +81,7 @@ export const TOKENS = {
   SWH: '78e6d16b914fe15bc16150aeb11d0c2a8e532bdd'
 }
 
-export const ENDED_ICO_TOKENS = ['DBC', 'RPX', 'QLC', 'RHT', 'ONT', 'SWH']
+export const ENDED_ICO_TOKENS = ['DBC', 'RPX', 'QLC', 'RHT', 'ONT', 'SWH', 'NRVE']
 
 export const DEFAULT_WALLET = {
   name: 'userWallet',
