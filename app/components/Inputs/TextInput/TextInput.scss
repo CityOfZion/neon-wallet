@@ -1,0 +1,22 @@
+@import '../../../styles/variables';
+
+.textInput {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  background: $dark-input-color;
+
+  .beforeInput {
+    flex: 0 1 auto;
+  }
+
+  .input {
+    flex: 1 1 auto;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .afterInput {
+    flex: 0 1 auto;
+  }
+}
