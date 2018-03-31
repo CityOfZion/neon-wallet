@@ -5,9 +5,14 @@
   flex-wrap: nowrap;
   align-items: stretch;
   height: $text-input-height;
+  border: 2px solid $text-input-background-color;
   border-radius: $text-input-border-radius;
   background: $text-input-background-color;
   overflow: hidden;
+
+  &.active {
+    @include active-input;
+  }
 
   .cleave {
     flex: 1 1 auto;
