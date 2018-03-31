@@ -6,7 +6,7 @@ import Cleave from 'cleave.js/react'
 import { omit, noop } from 'lodash'
 
 import styles from './NumberInput.scss'
-import Button from '../Button'
+import Button from '../../Button'
 
 const DEFAULT_OPTIONS = {
   numeral: true,
