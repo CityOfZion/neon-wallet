@@ -1,8 +1,8 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import ArrowDropDown from 'react-icons/lib/md/arrow-drop-down'
 
+import DropdownIcon from '../../../assets/icons/dropdown.svg'
 import styles from './DropdownButton.scss'
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
 
 const DropdownButton = ({ className, onToggle }: Props) => (
   <div className={classNames(styles.dropdownButton, className)} onClick={() => onToggle()}>
-    <ArrowDropDown />
+    <DropdownIcon className={styles.icon} />
   </div>
 )
 
