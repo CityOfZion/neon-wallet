@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 
-import PasswordField from '../../components/PasswordField'
+import PasswordInput from '../../components/Inputs/PasswordInput'
 import HomeButtonLink from '../../components/HomeButtonLink'
 import Button from '../../components/Button'
 
@@ -30,7 +30,7 @@ export default class LoginPrivateKey extends Component<Props, State> {
         <div className={loginStyles.title}>Login using a private key:</div>
         <form onSubmit={(e) => { e.preventDefault(); loginWithPrivateKey(wif) }}>
           <div className={loginStyles.loginForm}>
-            <PasswordField
+            <PasswordInput
               placeholder='Enter your private key here (WIF)'
               onChange={(e) => this.setState({ wif: e.target.value })}
               autoFocus
