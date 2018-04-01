@@ -29,7 +29,6 @@ type Props = {
   loadWalletData: Function,
   currencyCode: string,
   showModal: Function,
-  oldParticipateInSale: Function,
   participateInSale: Function,
   allTokens: Array<TokenItemType>,
   setUserGeneratedTokens: Function,
@@ -50,7 +49,6 @@ export default class WalletInfo extends Component<Props> {
       showModal,
       currencyCode,
       participateInSale,
-      oldParticipateInSale,
       networks,
       networkId,
       allTokens,
@@ -135,7 +133,6 @@ export default class WalletInfo extends Component<Props> {
                   onSave: loadWalletData
                 })
               },
-              oldParticipateInSale,
               participateInSale
             })
           }

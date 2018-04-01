@@ -16,7 +16,6 @@ exports[`WalletInfo renders without crashing 1`] = `
       },
     ]
   }
-  oldParticipateInSale={[Function]}
   participateInSale={[Function]}
   showModal={[Function]}
   store={
