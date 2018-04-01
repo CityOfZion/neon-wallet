@@ -1,8 +1,7 @@
 // @flow
 import { compose } from 'recompose'
+import { withData, withActions } from 'spunky'
 
-import withData from '../../hocs/api/withData'
-import withActions from '../../hocs/api/withActions'
 import withFailureNotification from '../../hocs/withFailureNotification'
 import accountsActions from '../../actions/accountsActions'
 import { nep2LoginActions } from '../../actions/authActions'
@@ -14,7 +13,7 @@ const mapAccountsDataToProps = (accounts) => ({
 })
 
 const mapActionsToProps = (actions) => ({
-  loginNep2: (passphrase, encryptedWIF) => actions.request({ passphrase, encryptedWIF })
+  loginNep2: (passphrase, encryptedWIF) => actions.call({ passphrase, encryptedWIF })
 })
 
 export default compose(

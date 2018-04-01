@@ -1,7 +1,7 @@
 // @flow
 import { api } from 'neon-js'
+import { createActions } from 'spunky'
 
-import createRequestActions from '../util/api/createRequestActions'
 import { ASSETS, DEFAULT_CURRENCY_CODE } from '../core/constants'
 
 type Props = {
@@ -11,6 +11,6 @@ type Props = {
 
 export const ID = 'PRICES'
 
-export default createRequestActions(ID, ({ symbols = [ASSETS.NEO, ASSETS.GAS], currency = DEFAULT_CURRENCY_CODE }: Props = {}) => (state: Object) => {
+export default createActions(ID, ({ symbols = [ASSETS.NEO, ASSETS.GAS], currency = DEFAULT_CURRENCY_CODE }: Props = {}) => (state: Object) => {
   return api.cmc.getPrices(symbols, currency)
 })

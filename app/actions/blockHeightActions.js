@@ -1,7 +1,7 @@
 // @flow
 import { api } from 'neon-js'
+import { createActions } from 'spunky'
 
-import createRequestActions from '../util/api/createRequestActions'
 import { getNetworkById } from '../core/deprecated'
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
 
 export const ID = 'BLOCK_HEIGHT'
 
-export default createRequestActions(ID, ({ networkId }: Props = {}) => async (state: Object) => {
+export default createActions(ID, ({ networkId }: Props = {}) => async (state: Object) => {
   const network = getNetworkById(networkId)
   return api.loadBalance(api.getWalletDBHeightFrom, { net: network })
 })

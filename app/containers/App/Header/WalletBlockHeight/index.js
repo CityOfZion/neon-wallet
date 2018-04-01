@@ -1,8 +1,8 @@
 // @flow
 import { compose } from 'recompose'
+import { withData } from 'spunky'
 
 import WalletBlockHeight from './WalletBlockHeight'
-import withData from '../../../../hocs/api/withData'
 import appActions from '../../../../actions/appActions'
 
 const mapAppDataToProps = ({ blockHeight }): Object => ({

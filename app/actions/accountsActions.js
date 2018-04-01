@@ -1,5 +1,6 @@
 // @flow
-import createRequestActions from '../util/api/createRequestActions'
+import { createActions } from 'spunky'
+
 import { getStorage, setStorage } from '../core/storage'
 import { DEFAULT_WALLET } from '../core/constants'
 
@@ -15,7 +16,7 @@ const getWallet = async (): Promise<Object> => {
 
 export const ID = 'ACCOUNTS'
 
-export const updateAccountsActions = createRequestActions(ID, (accounts) => async (state: Object): Promise<Object> => {
+export const updateAccountsActions = createActions(ID, (accounts) => async (state: Object): Promise<Object> => {
   const userWallet = await getWallet()
   const newWallet = { ...userWallet, accounts }
   await setStorage(STORAGE_KEY, newWallet)
@@ -23,7 +24,7 @@ export const updateAccountsActions = createRequestActions(ID, (accounts) => asyn
   return newWallet
 })
 
-export default createRequestActions(ID, ({ networkId }: Props = {}) => async (state: Object): Promise<Object> => {
+export default createActions(ID, ({ networkId }: Props = {}) => async (state: Object): Promise<Object> => {
   const userWallet = await getWallet()
   return userWallet.accounts
 })
