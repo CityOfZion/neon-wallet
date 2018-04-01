@@ -96,60 +96,73 @@ export default class TokenSale extends Component<Props, State> {
   }
 
   render () {
-    const { assetBalancesToSend, tokenToMint, participationSuccessful } = this.state
-    const { hideModal, tokenBalances, assetBalances, showTokensModal } = this.props
-    const disabled = this.isDisabled()
+    const { participationSuccessful } = this.state
 
     return (
       <BaseModal
         title={participationSuccessful ? 'Participation successful' : 'Participate in a token sale'}
-        hideModal={hideModal}
+        hideModal={this.props.hideModal}
         style={{ content: { width: '925px', height: '700px' } }}
       >
-        {participationSuccessful ? (
-          <ParticipationSuccess
-            hideModal={hideModal}
-            token={tokenBalances[tokenToMint]}
-            assetBalancesToSend={assetBalancesToSend}
-          />
-        ) : (
-          <div className={styles.tokenSale}>
-            <SelectToken
-              onChangeToken={(symbol: SymbolType) =>
-                this.setState({ tokenToMint: symbol })
-              }
-              onChangeAmount={(symbol: SymbolType, amount: string) =>
-                this.setState({
-                  assetBalancesToSend: {
-                    ...initialBalancesToSend,
-                    [symbol]: amount
-                  }
-                })
-              }
-              assetBalancesToSend={assetBalancesToSend}
-              tokenBalances={tokenBalances}
-              assetBalances={assetBalances}
-              tokenToMint={tokenToMint}
-              showTokensModal={showTokensModal}
-            />
-
-            <WarningText>
-              {map(WARNINGS, this.renderWarning)}
-            </WarningText>
-
-            <div className={styles.purchaseButton}>
-              <Tooltip title='Please agree to the terms of purchase' position='top' disabled={!disabled}>
-                <Button
-                  onClick={this.participateInSale}
-                  disabled={disabled}
-                >
-                  Purchase!
-                </Button>
-              </Tooltip>
-            </div>
-          </div>
-        )}
+        {participationSuccessful ? this.renderSuccess() : this.renderPurchase()}
       </BaseModal>
+    )
+  }
+
+  renderSuccess = () => {
+    const { hideModal, tokenBalances } = this.props
+    const { assetBalancesToSend, tokenToMint } = this.state
+
+    return (
+      <ParticipationSuccess
+        hideModal={hideModal}
+        token={tokenBalances[tokenToMint]}
+        assetBalancesToSend={assetBalancesToSend}
+      />
+    )
+  }
+
+  renderPurchase = () => {
+    const { assetBalancesToSend, tokenToMint } = this.state
+    const { tokenBalances, assetBalances, showTokensModal } = this.props
+    const disabled = this.isDisabled()
+
+    return (
+      <div className={styles.tokenSale}>
+        <SelectToken
+          onChangeToken={(symbol: SymbolType) =>
+            this.setState({ tokenToMint: symbol })
+          }
+          onChangeAmount={(symbol: SymbolType, amount: string) =>
+            this.setState({
+              assetBalancesToSend: {
+                ...initialBalancesToSend,
+                [symbol]: amount
+              }
+            })
+          }
+          assetBalancesToSend={assetBalancesToSend}
+          tokenBalances={tokenBalances}
+          assetBalances={assetBalances}
+          tokenToMint={tokenToMint}
+          showTokensModal={showTokensModal}
+        />
+
+        <WarningText>
+          {map(WARNINGS, this.renderWarning)}
+        </WarningText>
+
+        <div className={styles.purchaseButton}>
+          <Tooltip title='Please agree to the terms of purchase' position='top' disabled={!disabled}>
+            <Button
+              onClick={this.participateInSale}
+              disabled={disabled}
+            >
+              Purchase!
+            </Button>
+          </Tooltip>
+        </div>
+      </div>
     )
   }
 
