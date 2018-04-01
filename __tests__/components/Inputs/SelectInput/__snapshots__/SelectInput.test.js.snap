@@ -7,23 +7,13 @@ exports[`SelectInput should render without crashing 1`] = `
   open={false}
   renderDropdown={[Function]}
 >
-  <div
-    className="inputContainer"
-  >
-    <input
-      className="input"
-      onChange={[Function]}
-      onFocus={[Function]}
-      type="text"
-      value="some text"
-    />
-    <div
-      className="afterInput"
-    >
-      <DropdownButton
-        onToggle={[Function]}
-      />
-    </div>
-  </div>
+  <TextInput
+    className="input"
+    onChange={[Function]}
+    onFocus={[Function]}
+    renderAfter={[Function]}
+    type="text"
+    value="some text"
+  />
 </clickOutside(Dropdown)>
 `;

@@ -1,8 +1,10 @@
 // @flow
 import React from 'react'
+import Highlighter from 'react-highlight-words'
 import classNames from 'classnames'
 import { noop, omit, trim, includes, toLower } from 'lodash'
 
+import TextInput from '../TextInput'
 import Dropdown from './Dropdown'
 import DropdownButton from './DropdownButton'
 import styles from './SelectInput.scss'
@@ -22,6 +24,11 @@ type Props = {
 type State = {
   open: boolean,
   search: string
+}
+
+type RenderItemProps = {
+  search: string,
+  onSelect: Function
 }
 
 const defaultRenderAfter = (props) => <DropdownButton {...props} />
@@ -54,28 +61,29 @@ export default class SelectInput extends React.Component<Props, State> {
   }
 
   render = () => {
-    const passDownProps = omit(this.props, 'items', 'renderItem', 'renderAfter', 'getItemValue', 'getSearchResults')
+    const passDownProps = omit(this.props, 'className', 'items', 'renderItem', 'getItemValue',
+      'getSearchResults', 'onFocus', 'onChange')
 
     return (
       <Dropdown
         className={classNames(styles.selectInput, this.props.className)}
         open={this.state.open}
         onClose={this.handleClose}
-        renderDropdown={this.renderDropdown}>
-        <div className={styles.inputContainer}>
-          <input
-            {...passDownProps}
-            className={styles.input}
-            type='text'
-            onFocus={this.handleFocus}
-            onChange={this.handleChange}
-          />
-          <div className={styles.afterInput}>
-            {this.props.renderAfter && this.props.renderAfter({ onToggle: this.handleToggle })}
-          </div>
-        </div>
+        renderDropdown={this.renderDropdown}
+      >
+        <TextInput
+          {...passDownProps}
+          className={styles.input}
+          renderAfter={this.renderAfter}
+          onFocus={this.handleFocus}
+          onChange={this.handleChange}
+        />
       </Dropdown>
     )
+  }
+
+  renderAfter = () => {
+    return this.props.renderAfter({ onToggle: this.handleToggle })
   }
 
   renderDropdown = ({ className }: { className: string }) => {
@@ -101,17 +109,25 @@ export default class SelectInput extends React.Component<Props, State> {
   }
 
   renderItems = (items: Array<any>) => {
+    const { search } = this.state
+    const renderItem = this.props.renderItem || this.renderItem
+
     return items.map((item) => {
-      const renderItem = this.props.renderItem || this.renderItem
-      return renderItem(item, { onSelect: this.generateSelectHandler(item) })
+      return renderItem(item, { search, onSelect: this.generateSelectHandler(item) })
     })
   }
 
-  renderItem = (item: Object, { onSelect }: { onSelect: Function }) => {
+  renderItem = (item: Object, { search, onSelect }: RenderItemProps) => {
     const { getItemValue } = this.props
     return (
       <div className={styles.dropdownItem} key={getItemValue(item)} tabIndex={0} onClick={onSelect}>
-        {item}
+        <Highlighter
+          highlightTag='span'
+          highlightClassName={styles.highlight}
+          searchWords={[search]}
+          autoEscape
+          textToHighlight={item}
+        />
       </div>
     )
   }
@@ -125,7 +141,7 @@ export default class SelectInput extends React.Component<Props, State> {
     this.handleOpen()
   }
 
-  handleChange = (event: Object, ...args: Array<any>) => {
+  handleChange = (event: Object) => {
     const { onChange } = this.props
     if (onChange) {
       onChange(event.target.value)

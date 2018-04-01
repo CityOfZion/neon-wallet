@@ -28,3 +28,19 @@ $box-margin: 10px;
 // all z-index definitions should go here - make sure to leave a decent gap between them
 $z-index-tooltip: 1000;
 $z-index-notification: 1100;
+
+// text input
+$text-input-color: #282828;
+$text-input-background-color: #f2f2f2;
+$text-input-border-radius: 4px;
+$text-input-height: 36px;
+$text-input-font-size: 12px;
+
+@mixin active-input {
+  border: 2px solid $text-input-background-color;
+  border: double 2px transparent;
+  background-image: linear-gradient($text-input-background-color, $text-input-background-color),
+                    radial-gradient(circle at top left, #ee6d66, #a866ee);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+}

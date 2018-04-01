@@ -5,7 +5,7 @@ import ArrowForward from 'react-icons/lib/md/arrow-forward'
 import { pickBy } from 'lodash'
 
 import Button from '../../Button'
-import NumberInput from '../../NumberInput'
+import NumberInput from '../../Inputs/NumberInput'
 import AddressInput from '../../Inputs/AddressInput'
 import AssetInput from '../../Inputs/AssetInput'
 
