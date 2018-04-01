@@ -1,9 +1,12 @@
 // @flow
-import React, { Component } from 'react'
+import React from 'react'
+import { progressValues } from 'spunky'
 
 import HomeButtonLink from '../../components/HomeButtonLink'
 import Button from '../../components/Button'
 import styles from '../../styles/login.scss'
+
+const { LOADED, FAILED } = progressValues
 
 type DeviceInfo = {
   manufacturer: string,
@@ -11,6 +14,7 @@ type DeviceInfo = {
 }
 
 type Props = {
+  progress: string,
   login: Function,
   connect: Function,
   deviceInfo: ?DeviceInfo,
@@ -20,7 +24,7 @@ type Props = {
 
 const POLL_FREQUENCY = 1000
 
-export default class LoginLedgerNanoS extends Component<Props> {
+export default class LoginLedgerNanoS extends React.Component<Props> {
   intervalId: ?number
 
   componentDidMount () {
@@ -44,38 +48,29 @@ export default class LoginLedgerNanoS extends Component<Props> {
             </Button>
             <HomeButtonLink />
           </div>
-          {this.renderDeviceInfo()}
           {this.renderStatus()}
-          {this.renderError()}
         </div>
       </div>
     )
   }
 
-  renderDeviceInfo () {
-    const { deviceInfo } = this.props
-
-    if (deviceInfo) {
-      return <p>Found USB {deviceInfo.manufacturer} {deviceInfo.product}</p>
-    } else {
-      return <p>Looking for USB Devices. Please plugin your device and login.</p>
-    }
-  }
-
   renderStatus () {
-    const { publicKey } = this.props
+    const { progress, deviceInfo, error } = this.props
 
-    if (publicKey) {
-      return <p>Success. NEO app found on hardware device. Click button above to login.</p>
+    if (progress === LOADED && deviceInfo) {
+      return (
+        <p>
+          Found USB {deviceInfo.manufacturer} {deviceInfo.product}. NEO app found on hardward{' '}
+          device. Click button above to login.
+        </p>
+      )
     }
-  }
 
-  renderError () {
-    const { error } = this.props
-
-    if (error) {
+    if (progress === FAILED && error) {
       return <p>{error}</p>
     }
+
+    return <p>Looking for USB Devices. Please plugin your device and login.</p>
   }
 
   handleLogin = () => {
@@ -83,6 +78,6 @@ export default class LoginLedgerNanoS extends Component<Props> {
   }
 
   canLogin () {
-    return !!this.props.publicKey
+    return this.props.progress === LOADED
   }
 }
