@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import { get, pick, map, every, times, constant } from 'lodash'
+import { get, map, every, times, constant } from 'lodash'
 
 import { isZero, isNumber } from '../../../core/math'
 import { ASSETS } from '../../../core/constants'
@@ -11,7 +11,6 @@ import Button from '../../Button'
 
 import WarningText from './WarningText'
 import SelectToken from './SelectToken'
-import VerificationOptions from './VerificationOptions'
 import ParticipationSuccess from './ParticipationSuccess'
 
 import styles from './styles.scss'
@@ -25,7 +24,6 @@ const WARNINGS = [
 ]
 
 type Props = {
-  oldParticipateInSale: (string, string, string) => Promise<boolean>,
   participateInSale: (string, string, string, string) => Promise<boolean>,
   tokenBalances: {
     [key: SymbolType]: TokenBalanceType
@@ -38,7 +36,6 @@ type Props = {
 }
 
 type State = {
-  useVerification: boolean,
   assetBalancesToSend: {
     [key: SymbolType]: string
   },
@@ -54,27 +51,12 @@ const initialBalancesToSend = { [ASSETS.NEO]: '', [ASSETS.GAS]: '' }
 export default class TokenSale extends Component<Props, State> {
   // $FlowFixMe
   state = {
-    useVerification: true,
     assetBalancesToSend: initialBalancesToSend,
     tokenToMint: '',
     participationSuccessful: false,
     loaded: false,
     gasCost: '0', // hard coded for now
     agreements: times(WARNINGS.length, constant(false))
-  }
-
-  oldParticipateInSale = async () => {
-    const { oldParticipateInSale, tokenBalances } = this.props
-    const { assetBalancesToSend, tokenToMint, gasCost } = this.state
-
-    if (tokenToMint) {
-      const scriptHash = get(tokenBalances[tokenToMint], 'scriptHash')
-      const success = await oldParticipateInSale(assetBalancesToSend[ASSETS.NEO], scriptHash, gasCost)
-
-      if (success) {
-        this.setState({ participationSuccessful: true })
-      }
-    }
   }
 
   participateInSale = async () => {
@@ -114,7 +96,7 @@ export default class TokenSale extends Component<Props, State> {
   }
 
   render () {
-    const { assetBalancesToSend, useVerification, tokenToMint, participationSuccessful } = this.state
+    const { assetBalancesToSend, tokenToMint, participationSuccessful } = this.state
     const { hideModal, tokenBalances, assetBalances, showTokensModal } = this.props
     const disabled = this.isDisabled()
 
@@ -128,9 +110,7 @@ export default class TokenSale extends Component<Props, State> {
           <ParticipationSuccess
             hideModal={hideModal}
             token={tokenBalances[tokenToMint]}
-            assetBalancesToSend={useVerification
-              ? assetBalancesToSend
-              : pick(assetBalancesToSend, ASSETS.NEO)}
+            assetBalancesToSend={assetBalancesToSend}
           />
         ) : (
           <div className={styles.tokenSale}>
@@ -148,14 +128,9 @@ export default class TokenSale extends Component<Props, State> {
               }
               assetBalancesToSend={assetBalancesToSend}
               tokenBalances={tokenBalances}
-              assetBalances={useVerification ? assetBalances : pick(assetBalances, ASSETS.NEO)}
+              assetBalances={assetBalances}
               tokenToMint={tokenToMint}
               showTokensModal={showTokensModal}
-            />
-
-            <VerificationOptions
-              isVerified={useVerification}
-              onChange={useVerification => this.setState({ useVerification })}
             />
 
             <WarningText>
@@ -165,7 +140,7 @@ export default class TokenSale extends Component<Props, State> {
             <div className={styles.purchaseButton}>
               <Tooltip title='Please agree to the terms of purchase' position='top' disabled={!disabled}>
                 <Button
-                  onClick={useVerification ? this.participateInSale : this.oldParticipateInSale}
+                  onClick={this.participateInSale}
                   disabled={disabled}
                 >
                   Purchase!

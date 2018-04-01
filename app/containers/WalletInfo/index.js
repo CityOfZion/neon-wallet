@@ -17,7 +17,7 @@ import withFailureNotification from '../../hocs/withFailureNotification'
 import { updateSettingsActions } from '../../actions/settingsActions'
 import { getNetworks } from '../../core/networks'
 import { showModal } from '../../modules/modal'
-import { participateInSale, oldParticipateInSale } from '../../modules/sale'
+import { participateInSale } from '../../modules/sale'
 
 import WalletInfo from './WalletInfo'
 
@@ -48,8 +48,7 @@ const mapPricesDataToProps = ({ NEO, GAS }) => ({
 
 const actionCreators = {
   showModal,
-  participateInSale,
-  oldParticipateInSale
+  participateInSale
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
