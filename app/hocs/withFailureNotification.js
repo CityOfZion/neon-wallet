@@ -23,7 +23,7 @@ const { FAILED } = progressValues
 
 const defaultMessage = (error) => error
 
-export default function withFailureNotification (actions: Actions, message: Message = defaultMessage) {
+export default function withFailureNotification (actions: Actions, message: Message = defaultMessage, options: Object = {}) {
   const mapErrorToProps = (error: Error) => ({
     [ERROR_PROP]: isFunction(message) ? message(error) : message
   })
@@ -56,7 +56,7 @@ export default function withFailureNotification (actions: Actions, message: Mess
     return compose(
       connect(null, mapDisptchToProps),
       withError(actions, mapErrorToProps),
-      withProgress(actions, { propName: PROGRESS_PROP })
+      withProgress(actions, { ...options, propName: PROGRESS_PROP })
     )(ErrorNotifier)
   }
 }
