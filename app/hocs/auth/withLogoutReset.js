@@ -1,12 +1,10 @@
 // @flow
 import { compose } from 'recompose'
+import { withData, withReset, type Actions } from 'spunky'
 
-import withData from '../api/withData'
-import withReset from '../api/withReset'
 import withoutProps from '../withoutProps'
 import didLogout from '../helpers/didLogout'
 import authActions from '../../actions/authActions'
-import { type Actions } from '../../values/api'
 
 type Options = {
   propName?: string

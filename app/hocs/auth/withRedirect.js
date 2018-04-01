@@ -3,8 +3,8 @@ import React from 'react'
 import { omit } from 'lodash'
 import { compose } from 'recompose'
 import { withRouter } from 'react-router-dom'
+import { withData } from 'spunky'
 
-import withData from '../api/withData'
 import authActions from '../../actions/authActions'
 
 type Props = {

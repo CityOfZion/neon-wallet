@@ -1,5 +1,6 @@
 // @flow
-import createBatchActions from '../util/api/createBatchActions'
+import { createBatchActions } from 'spunky'
+
 import accountsActions from './accountsActions'
 import blockHeightActions from './blockHeightActions'
 import settingsActions from './settingsActions'

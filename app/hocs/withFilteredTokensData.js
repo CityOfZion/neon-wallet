@@ -1,7 +1,7 @@
 // @flow
 import { compose } from 'recompose'
+import { withData } from 'spunky'
 
-import withData from './api/withData'
 import withNetworkData from './withNetworkData'
 import settingsActions from '../actions/settingsActions'
 

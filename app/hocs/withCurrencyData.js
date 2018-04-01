@@ -1,5 +1,6 @@
 // @flow
-import withData from './api/withData'
+import { withData } from 'spunky'
+
 import settingsActions from '../actions/settingsActions'
 
 export default function withCurrencyData (key: string = 'currency') {

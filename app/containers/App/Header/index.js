@@ -1,8 +1,8 @@
 // @flow
 import { compose } from 'recompose'
+import { withData } from 'spunky'
 
 import Header from './Header'
-import withData from '../../../hocs/api/withData'
 import withAuthData from '../../../hocs/withAuthData'
 import withCurrencyData from '../../../hocs/withCurrencyData'
 import pricesActions from '../../../actions/pricesActions'

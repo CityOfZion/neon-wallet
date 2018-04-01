@@ -1,13 +1,13 @@
 // @flow
 import { compose } from 'recompose'
+import { withActions } from 'spunky'
 
 import LoginPrivateKey from './LoginPrivateKey'
-import withActions from '../../hocs/api/withActions'
 import withFailureNotification from '../../hocs/withFailureNotification'
 import { wifLoginActions } from '../../actions/authActions'
 
 const mapActionsToProps = (actions) => ({
-  loginWithPrivateKey: (wif) => actions.request({ wif })
+  loginWithPrivateKey: (wif) => actions.call({ wif })
 })
 
 export default compose(
