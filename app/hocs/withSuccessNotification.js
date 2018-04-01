@@ -19,7 +19,7 @@ const NOTIFICATION_PROP = '__showSuccessNotification__'
 
 const { LOADED } = progressValues
 
-export default function withSuccessNotification (actions: Actions, message: Message) {
+export default function withSuccessNotification (actions: Actions, message: Message, options: Object = {}) {
   const mapDisptchToProps = (dispatch, ownProps) => ({
     [NOTIFICATION_PROP]: (...args) => dispatch(showSuccessNotification(...args))
   })
@@ -45,7 +45,7 @@ export default function withSuccessNotification (actions: Actions, message: Mess
 
     return compose(
       connect(null, mapDisptchToProps),
-      withProgress(actions, { propName: PROGRESS_PROP })
+      withProgress(actions, { ...options, propName: PROGRESS_PROP })
     )(LoadedNotifier)
   }
 }

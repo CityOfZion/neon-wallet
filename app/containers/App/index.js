@@ -14,6 +14,7 @@ import withLogoutRedirect from '../../hocs/auth/withLogoutRedirect'
 import withLogoutReset from '../../hocs/auth/withLogoutReset'
 import withCurrencyData from '../../hocs/withCurrencyData'
 import withNetworkData from '../../hocs/withNetworkData'
+import everLoadedStrategy from '../../hocs/helpers/everLoadedStrategy'
 import { checkVersion } from '../../modules/metadata'
 import { showErrorNotification } from '../../modules/notifications'
 
@@ -52,7 +53,7 @@ export default compose(
     [LOADING]: Loading,
     [FAILED]: Failed
   }, {
-    strategy: alreadyLoadedStrategy
+    strategy: everLoadedStrategy
   }),
 
   // Fetch prices data based based upon the selected currency.  Reload data with the currency changes.

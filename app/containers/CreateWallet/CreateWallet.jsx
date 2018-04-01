@@ -1,14 +1,14 @@
 // @flow
-import React, { Component } from 'react'
+import React from 'react'
 
 import PasswordField from '../../components/PasswordField'
 import HomeButtonLink from '../../components/HomeButtonLink'
 import Button from '../../components/Button'
 
 type Props = {
-    encryptWIF: boolean,
-    generateNewWalletAccount: Function,
-    history: Object
+  encryptWIF: boolean,
+  generateNewWalletAccount: Function,
+  history: Object
 }
 
 type State = {
@@ -17,7 +17,7 @@ type State = {
   wif: string,
 }
 
-export default class EncryptKey extends Component<Props, State> {
+export default class EncryptKey extends React.Component<Props, State> {
   state = {
     passphrase: '',
     passphrase2: '',
