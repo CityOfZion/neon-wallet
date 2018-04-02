@@ -1,6 +1,6 @@
 // @flow
-import React, { Component } from 'react'
-import { get, map, every, times, constant } from 'lodash'
+import React from 'react'
+import { map, every, times, constant } from 'lodash'
 
 import { isZero, isNumber } from '../../../core/math'
 import { ASSETS } from '../../../core/constants'
@@ -31,15 +31,14 @@ type Props = {
   assetBalances: {
     [key: SymbolType]: string
   },
-  hideModal: () => void,
-  showTokensModal: () => void
+  hideModal: () => void
 }
 
 type State = {
   assetBalancesToSend: {
     [key: SymbolType]: string
   },
-  tokenToMint: SymbolType,
+  scriptHash: string,
   participationSuccessful: boolean,
   gasCost: string,
   loaded: boolean,
@@ -48,11 +47,10 @@ type State = {
 
 const initialBalancesToSend = { [ASSETS.NEO]: '', [ASSETS.GAS]: '' }
 
-export default class TokenSale extends Component<Props, State> {
-  // $FlowFixMe
+export default class TokenSale extends React.Component<Props, State> {
   state = {
     assetBalancesToSend: initialBalancesToSend,
-    tokenToMint: '',
+    scriptHash: '',
     participationSuccessful: false,
     loaded: false,
     gasCost: '0', // hard coded for now
@@ -60,11 +58,10 @@ export default class TokenSale extends Component<Props, State> {
   }
 
   participateInSale = async () => {
-    const { participateInSale, tokenBalances } = this.props
-    const { assetBalancesToSend, tokenToMint, gasCost } = this.state
+    const { participateInSale } = this.props
+    const { assetBalancesToSend, scriptHash, gasCost } = this.state
 
-    if (tokenToMint) {
-      const scriptHash = get(tokenBalances[tokenToMint], 'scriptHash')
+    if (scriptHash) {
       const amountNEO = assetBalancesToSend[ASSETS.NEO] || '0'
       const amountGAS = assetBalancesToSend[ASSETS.GAS] || '0'
       const success = await participateInSale(amountNEO, amountGAS, scriptHash, gasCost)
@@ -75,8 +72,8 @@ export default class TokenSale extends Component<Props, State> {
     }
   }
 
-  isValidAssetBalances = () => {
-    const { assetBalancesToSend, tokenToMint } = this.state
+  isValid = () => {
+    const { assetBalancesToSend } = this.state
     const NEO = assetBalancesToSend.NEO || '0'
     const GAS = assetBalancesToSend.GAS || '0'
 
@@ -88,7 +85,7 @@ export default class TokenSale extends Component<Props, State> {
       return false
     }
 
-    if (!tokenToMint) {
+    if (!every(this.state.agreements)) {
       return false
     }
 
@@ -96,60 +93,62 @@ export default class TokenSale extends Component<Props, State> {
   }
 
   render () {
-    const { assetBalancesToSend, tokenToMint, participationSuccessful } = this.state
-    const { hideModal, tokenBalances, assetBalances, showTokensModal } = this.props
-    const disabled = this.isDisabled()
+    const { participationSuccessful } = this.state
 
     return (
       <BaseModal
         title={participationSuccessful ? 'Participation successful' : 'Participate in a token sale'}
-        hideModal={hideModal}
+        hideModal={this.props.hideModal}
         style={{ content: { width: '925px', height: '700px' } }}
       >
-        {participationSuccessful ? (
-          <ParticipationSuccess
-            hideModal={hideModal}
-            token={tokenBalances[tokenToMint]}
-            assetBalancesToSend={assetBalancesToSend}
-          />
-        ) : (
-          <div className={styles.tokenSale}>
-            <SelectToken
-              onChangeToken={(symbol: SymbolType) =>
-                this.setState({ tokenToMint: symbol })
-              }
-              onChangeAmount={(symbol: SymbolType, amount: string) =>
-                this.setState({
-                  assetBalancesToSend: {
-                    ...initialBalancesToSend,
-                    [symbol]: amount
-                  }
-                })
-              }
-              assetBalancesToSend={assetBalancesToSend}
-              tokenBalances={tokenBalances}
-              assetBalances={assetBalances}
-              tokenToMint={tokenToMint}
-              showTokensModal={showTokensModal}
-            />
-
-            <WarningText>
-              {map(WARNINGS, this.renderWarning)}
-            </WarningText>
-
-            <div className={styles.purchaseButton}>
-              <Tooltip title='Please agree to the terms of purchase' position='top' disabled={!disabled}>
-                <Button
-                  onClick={this.participateInSale}
-                  disabled={disabled}
-                >
-                  Purchase!
-                </Button>
-              </Tooltip>
-            </div>
-          </div>
-        )}
+        {participationSuccessful ? this.renderSuccess() : this.renderPurchase()}
       </BaseModal>
+    )
+  }
+
+  renderSuccess = () => {
+    const { hideModal } = this.props
+    const { assetBalancesToSend, scriptHash } = this.state
+
+    return (
+      <ParticipationSuccess
+        hideModal={hideModal}
+        scriptHash={scriptHash}
+        assetBalancesToSend={assetBalancesToSend}
+      />
+    )
+  }
+
+  renderPurchase = () => {
+    const { assetBalancesToSend, scriptHash } = this.state
+    const { tokenBalances, assetBalances } = this.props
+    const valid = this.isValid()
+
+    return (
+      <div className={styles.tokenSale}>
+        <SelectToken
+          onChangeScriptHash={(scriptHash: string) => this.setState({ scriptHash })}
+          onChangeAmount={(symbol: SymbolType, amount: string) =>
+            this.setState({ assetBalancesToSend: { ...initialBalancesToSend, [symbol]: amount } })
+          }
+          assetBalancesToSend={assetBalancesToSend}
+          tokenBalances={tokenBalances}
+          assetBalances={assetBalances}
+          scriptHash={scriptHash}
+        />
+
+        <WarningText>
+          {map(WARNINGS, this.renderWarning)}
+        </WarningText>
+
+        <div className={styles.purchaseButton}>
+          <Tooltip title='Please agree to the terms of purchase' position='top' disabled={valid}>
+            <Button onClick={this.participateInSale} disabled={!valid}>
+              Purchase!
+            </Button>
+          </Tooltip>
+        </div>
+      </div>
     )
   }
 
@@ -166,10 +165,6 @@ export default class TokenSale extends Component<Props, State> {
         </label>
       </li>
     )
-  }
-
-  isDisabled = () => {
-    return !this.isValidAssetBalances() || !every(this.state.agreements)
   }
 
   handleChangeAgreementCurry = (index: number) => {
