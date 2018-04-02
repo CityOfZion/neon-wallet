@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { isNil, keyBy } from 'lodash'
+import { isNil } from 'lodash'
 
 import Claim from '../Claim'
 
@@ -9,7 +9,7 @@ import Tooltip from '../../components/Tooltip'
 import Button from '../../components/Button'
 
 import { formatGAS, formatFiat, formatNEO } from '../../core/formatters'
-import { ASSETS, CURRENCIES, MODAL_TYPES, ENDED_ICO_TOKENS } from '../../core/constants'
+import { ASSETS, CURRENCIES, MODAL_TYPES } from '../../core/constants'
 import { toNumber } from '../../core/math'
 
 import MdSync from 'react-icons/lib/md/sync'
@@ -24,16 +24,11 @@ type Props = {
   GAS: string,
   neoPrice: number,
   gasPrice: number,
-  icoTokenBalances: Array<TokenBalanceType>,
   tokenBalances: Array<TokenBalanceType>,
   loadWalletData: Function,
   currencyCode: string,
   showModal: Function,
-  participateInSale: Function,
-  allTokens: Array<TokenItemType>,
-  setUserGeneratedTokens: Function,
-  networks: Array<NetworkItemType>,
-  networkId: string,
+  participateInSale: Function
 }
 
 export default class WalletInfo extends Component<Props> {
@@ -45,14 +40,9 @@ export default class WalletInfo extends Component<Props> {
       neoPrice,
       gasPrice,
       tokenBalances,
-      icoTokenBalances,
       showModal,
       currencyCode,
       participateInSale,
-      networks,
-      networkId,
-      allTokens,
-      setUserGeneratedTokens,
       loadWalletData
     } = this.props
 
@@ -114,25 +104,7 @@ export default class WalletInfo extends Component<Props> {
           className={(styles.walletButton, styles.icoButton)}
           onClick={() =>
             showModal(MODAL_TYPES.ICO, {
-              assetBalances: {
-                [ASSETS.NEO]: NEO,
-                [ASSETS.GAS]: GAS
-              },
-              tokenBalances: keyBy(
-                icoTokenBalances.filter(
-                  token => !ENDED_ICO_TOKENS.includes(token.symbol)
-                ),
-                'symbol'
-              ),
-              showTokensModal: () => {
-                showModal(MODAL_TYPES.TOKEN, {
-                  tokens: allTokens,
-                  networks,
-                  networkId,
-                  setUserGeneratedTokens,
-                  onSave: loadWalletData
-                })
-              },
+              assetBalances: { [ASSETS.NEO]: NEO, [ASSETS.GAS]: GAS },
               participateInSale
             })
           }
