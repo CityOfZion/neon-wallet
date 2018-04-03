@@ -11,6 +11,7 @@ import Button from '../../Button'
 
 import WarningText from './WarningText'
 import SelectToken from './SelectToken'
+import ConfirmToken from './ConfirmToken'
 import ParticipationSuccess from './ParticipationSuccess'
 
 import styles from './styles.scss'
@@ -39,36 +40,37 @@ type State = {
     [key: SymbolType]: string
   },
   scriptHash: string,
-  participationSuccessful: boolean,
+  step: number,
   gasCost: string,
-  loaded: boolean,
-  agreements: Array<boolean>
+  agreements: Array<boolean>,
+  processing: boolean
 }
-
-const initialBalancesToSend = { [ASSETS.NEO]: '', [ASSETS.GAS]: '' }
 
 export default class TokenSale extends React.Component<Props, State> {
   state = {
-    assetBalancesToSend: initialBalancesToSend,
+    assetBalancesToSend: {},
     scriptHash: '',
-    participationSuccessful: false,
-    loaded: false,
+    step: 1,
     gasCost: '0', // hard coded for now
-    agreements: times(WARNINGS.length, constant(false))
+    agreements: times(WARNINGS.length, constant(false)),
+    processing: false
   }
 
   participateInSale = async () => {
     const { participateInSale } = this.props
     const { assetBalancesToSend, scriptHash, gasCost } = this.state
 
-    if (scriptHash) {
-      const amountNEO = assetBalancesToSend[ASSETS.NEO] || '0'
-      const amountGAS = assetBalancesToSend[ASSETS.GAS] || '0'
+    const amountNEO = assetBalancesToSend[ASSETS.NEO] || '0'
+    const amountGAS = assetBalancesToSend[ASSETS.GAS] || '0'
+
+    try {
       const success = await participateInSale(amountNEO, amountGAS, scriptHash, gasCost)
 
       if (success) {
-        this.setState({ participationSuccessful: true })
+        this.setState({ step: 3, processing: false })
       }
+    } catch (err) {
+      window.alert(`Error completing purchase, please try again: ${err.message}`)
     }
   }
 
@@ -93,16 +95,42 @@ export default class TokenSale extends React.Component<Props, State> {
   }
 
   render () {
-    const { participationSuccessful } = this.state
+    const { step } = this.state
 
     return (
       <BaseModal
-        title={participationSuccessful ? 'Participation successful' : 'Participate in a token sale'}
+        title={step === 3 ? 'Participation successful' : 'Participate in a token sale'}
         hideModal={this.props.hideModal}
         style={{ content: { width: '925px', height: '700px' } }}
       >
-        {participationSuccessful ? this.renderSuccess() : this.renderPurchase()}
+        {this.renderStep()}
       </BaseModal>
+    )
+  }
+
+  renderStep = () => {
+    switch (this.state.step) {
+      case 1:
+      default:
+        return this.renderPurchase()
+      case 2:
+        return this.renderConfirm()
+      case 3:
+        return this.renderSuccess()
+    }
+  }
+
+  renderConfirm = () => {
+    const { assetBalancesToSend, scriptHash, processing } = this.state
+
+    return (
+      <ConfirmToken
+        scriptHash={scriptHash}
+        assetBalancesToSend={assetBalancesToSend}
+        processing={processing}
+        onConfirm={this.handleConfirm}
+        onCancel={this.handleStep(1)}
+      />
     )
   }
 
@@ -112,9 +140,9 @@ export default class TokenSale extends React.Component<Props, State> {
 
     return (
       <ParticipationSuccess
-        hideModal={hideModal}
         scriptHash={scriptHash}
         assetBalancesToSend={assetBalancesToSend}
+        onClose={hideModal}
       />
     )
   }
@@ -129,7 +157,7 @@ export default class TokenSale extends React.Component<Props, State> {
         <SelectToken
           onChangeScriptHash={(scriptHash: string) => this.setState({ scriptHash })}
           onChangeAmount={(symbol: SymbolType, amount: string) =>
-            this.setState({ assetBalancesToSend: { ...initialBalancesToSend, [symbol]: amount } })
+            this.setState({ assetBalancesToSend: { [symbol]: amount } })
           }
           assetBalancesToSend={assetBalancesToSend}
           tokenBalances={tokenBalances}
@@ -143,8 +171,8 @@ export default class TokenSale extends React.Component<Props, State> {
 
         <div className={styles.purchaseButton}>
           <Tooltip title='Please agree to the terms of purchase' position='top' disabled={valid}>
-            <Button onClick={this.participateInSale} disabled={!valid}>
-              Purchase!
+            <Button onClick={this.handleStep(2)} disabled={!valid}>
+              Continue &raquo;
             </Button>
           </Tooltip>
         </div>
@@ -173,5 +201,15 @@ export default class TokenSale extends React.Component<Props, State> {
       agreements.splice(index, 1, event.target.checked)
       this.setState({ agreements })
     }
+  }
+
+  handleStep = (step: number) => {
+    return () => {
+      this.setState({ step })
+    }
+  }
+
+  handleConfirm = () => {
+    this.setState({ processing: true }, this.participateInSale)
   }
 }
