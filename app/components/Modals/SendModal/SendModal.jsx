@@ -112,7 +112,7 @@ export default class SendModal extends Component<Props, State> {
     const { balances } = this.state
 
     if (await isBlacklisted(entry.address)) {
-      showErrorNotification({ message: 'You have attempted enter a phishing address.' })
+      showErrorNotification({ message: 'You have attempted to enter a phishing address.' })
       return
     }
 
