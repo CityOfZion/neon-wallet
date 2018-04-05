@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.2 (51160) - http://www.bohemiancoding.com/sketch -->
+    <title>Icon/Light/Plus</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Components" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Component-Library" transform="translate(-506.000000, -3054.000000)">
+            <g id="Icon/Add-Dark" transform="translate(504.000000, 3052.000000)">
+                <rect id="Rectangle-6-Copy-8" x="0" y="0" width="24" height="24"></rect>
+                <path d="M11.05,11.05 L11.05,8.1962 C11.05,7.6737 11.4718,7.25 12,7.25 C12.52535,7.25 12.95,7.67655 12.95,8.1962 L12.95,11.05 L15.80475,11.05 C16.32725,11.05 16.75,11.4718 16.75,12 C16.75,12.52535 16.32345,12.95 15.80475,12.95 L12.95,12.95 L12.95,15.80475 C12.95,16.32725 12.52915,16.75 12,16.75 C11.47465,16.75 11.05,16.3244 11.05,15.80475 L11.05,12.95 L8.19525,12.95 C7.67275,12.95 7.25,12.52915 7.25,12 C7.25,11.4756 7.67655,11.05 8.19525,11.05 L11.05,11.05 Z M12,21.5 C6.7541,21.5 2.5,17.24685 2.5,12 C2.5,6.7541 6.7541,2.5 12,2.5 C17.2459,2.5 21.5,6.7541 21.5,12 C21.5,17.24685 17.2459,21.5 12,21.5 Z M12,19.6 C16.1971,19.6 19.6,16.19805 19.6,12 C19.6,7.8029 16.1971,4.4 12,4.4 C7.8029,4.4 4.4,7.8029 4.4,12 C4.4,16.19805 7.8029,19.6 12,19.6 Z" id="Add" fill="#394152" fill-rule="evenodd"></path>
+            </g>
+        </g>
+    </g>
+</svg>

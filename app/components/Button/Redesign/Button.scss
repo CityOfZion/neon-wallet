@@ -1,0 +1,61 @@
+@import '../../../styles/variables';
+
+.buttonRedesign {
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 100;
+  padding: 10px;
+}
+
+.darkButton {
+  background: $primary-button;
+  color: #fff;
+}
+
+.buttonRedesign:hover {
+  background: linear-gradient(to right, #a866ee, #ee6d66);
+}
+
+.buttonRedesign span {
+  padding-right: 25px;
+  margin: auto;
+}
+
+.icon {
+  height: 25px;
+  width: 25px;
+  padding-left: 10px;
+  align-self: flex-start;
+}
+
+.darkButton path {
+  fill: #fff;
+}
+
+.lightButton {
+  border: solid;
+  border-width: 2px;
+  border-color: $primary-button;
+  background: #fff;
+  color: $primary-button;
+}
+
+.lightButton:hover {
+  border: double 2px transparent;
+  background-image: linear-gradient(to right, #ee6d66, #a866ee),
+    radial-gradient(circle at top left, #ee6d66, #a866ee);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  border-color: transparent;
+  border-color: transparent;
+  color: white;
+  path {
+    fill: #fff;
+  }
+}
