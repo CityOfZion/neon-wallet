@@ -6,7 +6,7 @@ import Cleave from 'cleave.js/react'
 import { omit, noop } from 'lodash'
 
 import styles from './NumberInput.scss'
-import Button from '../Button'
+import Button from '../../Button'
 
 const DEFAULT_OPTIONS = {
   numeral: true,
@@ -19,6 +19,8 @@ type Props = {
   max?: number,
   className?: string,
   onChange?: Function,
+  onFocus?: Function,
+  onBlur?: Function,
   options?: {
     numeralThousandsGroupStyle?: 'thousand' | 'lakh' | 'wan' | 'none',
     numeralIntegerScale?: number,
@@ -29,23 +31,36 @@ type Props = {
   }
 }
 
-export default class NumberInput extends React.Component<Props> {
+type State = {
+  active: boolean
+}
+
+export default class NumberInput extends React.Component<Props, State> {
   static defaultProps = {
     max: Infinity,
     onChange: noop,
     options: {}
   }
 
+  state = {
+    active: false
+  }
+
   render = () => {
-    const { className } = this.props
     const passDownProps = omit(this.props, 'max', 'options', 'onChange', 'className')
 
+    const className = classNames(styles.numberInput, this.props.className, {
+      [styles.active]: this.state.active
+    })
+
     return (
-      <div className={classNames(styles.numberInput, className)}>
+      <div className={className}>
         <Cleave
           {...passDownProps}
           className={styles.cleave}
           options={this.getOptions()}
+          onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
           onChange={this.handleChange} />
         {this.renderMaxButton()}
       </div>
@@ -60,6 +75,18 @@ export default class NumberInput extends React.Component<Props> {
         </Button>
       )
     }
+  }
+
+  handleFocus = (event: Object, ...args: Array<any>) => {
+    this.setState({ active: true })
+    event.persist()
+    this.props.onFocus && this.props.onFocus(event, ...args)
+  }
+
+  handleBlur = (event: Object, ...args: Array<any>) => {
+    this.setState({ active: false })
+    event.persist()
+    this.props.onBlur && this.props.onBlur(event, ...args)
   }
 
   handleChange = (event: Object) => {

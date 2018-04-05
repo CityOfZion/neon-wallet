@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import { COIN_DECIMAL_LENGTH } from '../../../../core/formatters'
 
 import AssetInput from '../../../../components/Inputs/AssetInput'
-import NumberInput from '../../../../components/NumberInput'
+import NumberInput from '../../../../components/Inputs/NumberInput'
 import Button from '../../../../components/Button'
 
 import styles from './styles.scss'

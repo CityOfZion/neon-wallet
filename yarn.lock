@@ -4826,6 +4826,10 @@ he@1.1.x:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/he/-/he-1.1.1.tgz#93410fd21b009735151f8868c2f271f3427e23fd"
 
+highlight-words-core@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/highlight-words-core/-/highlight-words-core-1.2.0.tgz#232bec301cbf2a4943d335dc748ce70e9024f3b1"
+
 highlight.js@~9.12.0:
   version "9.12.0"
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.12.0.tgz#e6d9dbe57cbefe60751f02af336195870c90c01e"
@@ -8094,6 +8098,13 @@ react-dom@16.1.1:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.0"
+
+react-highlight-words@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.npmjs.org/react-highlight-words/-/react-highlight-words-0.11.0.tgz#4f3c2039a8fd275f3ab795e59946b0324d8e6bee"
+  dependencies:
+    highlight-words-core "^1.2.0"
+    prop-types "^15.5.8"
 
 react-hot-loader@3.1.1:
   version "3.1.1"

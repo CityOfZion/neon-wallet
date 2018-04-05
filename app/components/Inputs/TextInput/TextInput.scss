@@ -1,0 +1,35 @@
+@import '../../../styles/variables';
+
+.textInput {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  height: $text-input-height;
+  border: 2px solid $text-input-background-color;
+  border-radius: $text-input-border-radius;
+  background: $text-input-background-color;
+  overflow: hidden;
+
+  &.active {
+    @include active-input;
+  }
+
+  .beforeInput {
+    flex: 0 1 auto;
+  }
+
+  .input {
+    flex: 1 1 auto;
+    box-sizing: border-box;
+    width: 100%;
+    height: $text-input-height;
+    line-height: $text-input-height;
+    color: $text-input-color;
+    background: $text-input-background-color;
+    font-size: $text-input-font-size;
+  }
+
+  .afterInput {
+    flex: 0 1 auto;
+  }
+}

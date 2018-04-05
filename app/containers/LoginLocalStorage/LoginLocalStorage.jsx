@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { map } from 'lodash'
 
-import PasswordField from '../../components/PasswordField'
+import PasswordInput from '../../components/Inputs/PasswordInput'
 import HomeButtonLink from '../../components/HomeButtonLink'
 import Button from '../../components/Button'
 
@@ -44,7 +44,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
             ))}
           </select>
           <div className={loginStyles.loginForm}>
-            <PasswordField
+            <PasswordInput
               placeholder='Enter your passphrase here'
               value={passphrase}
               onChange={(e) => this.setState({ passphrase: e.target.value })}

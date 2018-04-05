@@ -88,6 +88,7 @@
     "react-click-outside": "3.0.0",
     "react-data-grid": "2.0.73",
     "react-dom": "16.1.1",
+    "react-highlight-words": "^0.11.0",
     "react-hot-loader": "3.1.1",
     "react-icons": "2.2.7",
     "react-modal": "3.1.2",
