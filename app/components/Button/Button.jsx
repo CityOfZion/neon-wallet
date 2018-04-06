@@ -1,33 +1,45 @@
 // @flow
-import React from 'react'
-import classNames from 'classnames'
+
+import React, { Component } from 'react'
 import { omit } from 'lodash'
 
 import styles from './Button.scss'
 
 type Props = {
-  className: string,
-  primary: boolean,
-  cancel: boolean,
-  secondary: boolean
+  renderIcon: ?Function,
+  text: string,
+  dark: ?boolean,
+  light: ?boolean
 }
 
-export default class Button extends React.Component<Props> {
-  static defaultProps = {
-    primary: true,
-    secondary: false,
-    cancel: false
-  }
-
+class Button extends Component<Props> {
   render = () => {
-    const { primary, secondary, cancel, className } = this.props
-    const passDownProps = omit(this.props, 'primary', 'secondary', 'cancel', 'className')
-    const classes = classNames(styles.button, className, {
-      [styles.primary]: primary,
-      [styles.secondary]: secondary,
-      [styles.cancel]: cancel
-    })
+    const { dark, light, text, renderIcon } = this.props
+    const passDownProps = omit(this.props, 'dark', 'light')
+    const conditionalStyles = {}
+    if (dark) {
+      conditionalStyles.buttonStyle = styles.darkButton
+      conditionalStyles.iconStyle = styles.lightIcon
+    } else if (light) {
+      conditionalStyles.buttonStyle = styles.lightButton
+      conditionalStyles.iconStyle = styles.darkIcon
+    }
+    const { iconStyle, buttonStyle } = conditionalStyles
 
-    return <button type='button' className={classes} {...passDownProps} />
+    return (
+      <button
+        className={`${styles.buttonRedesign} ${buttonStyle}`}
+        {...passDownProps}
+      >
+        {renderIcon ? (
+          <span className={`${styles.icon} ${iconStyle}`}>{renderIcon()}</span>
+        ) : (
+          <div className={styles.icon} />
+        )}
+        <span>{text}</span>
+      </button>
+    )
   }
 }
+
+export default Button
