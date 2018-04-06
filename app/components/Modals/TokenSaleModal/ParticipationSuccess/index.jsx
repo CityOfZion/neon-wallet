@@ -11,7 +11,7 @@ type Props = {
   assetBalancesToSend: {
     [key: SymbolType]: string
   },
-  scriptHash: string
+  token: TokenBalanceType
 }
 
 const formatAssetBalances = assetBalancesToSend => {
@@ -26,7 +26,12 @@ const formatAssetBalances = assetBalancesToSend => {
   return balances.join(', ')
 }
 
-const ParticipationSuccess = ({ hideModal, scriptHash, assetBalancesToSend }: Props) => {
+const ParticipationSuccess = ({
+  hideModal,
+  token,
+  assetBalancesToSend
+}: Props) => {
+  const { scriptHash, name, symbol } = token
   return (
     <div className={styles.container}>
       <div className={styles.iconContainer}>
@@ -39,6 +44,9 @@ const ParticipationSuccess = ({ hideModal, scriptHash, assetBalancesToSend }: Pr
       <div className={styles.confirmation}>
         <div>You sent <strong>{formatAssetBalances(assetBalancesToSend)}</strong></div>
         <div>To: <strong>{scriptHash}</strong></div>
+        <div>
+          For: <strong>{symbol} ({name})</strong>
+        </div>
       </div>
       <div className={styles.buttonContainer}>
         <Button onClick={() => hideModal()}>I'm Finished</Button>
