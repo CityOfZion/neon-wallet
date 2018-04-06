@@ -9,7 +9,7 @@ type Props = {
   renderIcon: ?Function,
   primary: ?boolean,
   secondary: ?boolean,
-  children: React.Node
+  children: React$Node
 }
 
 class Button extends Component<Props> {
