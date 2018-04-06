@@ -25,6 +25,7 @@ exports[`Login renders without crashing 1`] = `
     <div>
       <Button
         disabled={true}
+        primary={true}
         type="submit"
       >
         Login
