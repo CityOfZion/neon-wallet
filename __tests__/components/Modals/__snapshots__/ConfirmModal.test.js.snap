@@ -29,12 +29,10 @@ exports[`ConfirmModal should render without crashing 1`] = `
     className="modalFooter"
   >
     <Button
-      cancel={false}
       className="actionButton"
       id="confirm"
       onClick={[Function]}
       primary={true}
-      secondary={false}
     >
       Confirm
     </Button>
@@ -43,7 +41,6 @@ exports[`ConfirmModal should render without crashing 1`] = `
       id="cancel"
       onClick={[Function]}
       primary={true}
-      secondary={false}
     >
       Cancel
     </Button>

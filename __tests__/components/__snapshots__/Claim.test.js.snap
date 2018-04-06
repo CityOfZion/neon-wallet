@@ -7,12 +7,10 @@ exports[`Claim should render claim GAS button as disabled 1`] = `
     title="You can claim GAS once every 5 minutes"
   >
     <Button
-      cancel={false}
       disabled={true}
       id="claim"
       onClick={[Function]}
       primary={true}
-      secondary={false}
     >
       Claim 
       1.25406935
@@ -29,12 +27,10 @@ exports[`Claim should render claim GAS button as enabled 1`] = `
     title="You can claim GAS once every 5 minutes"
   >
     <Button
-      cancel={false}
       disabled={false}
       id="claim"
       onClick={[Function]}
       primary={true}
-      secondary={false}
     >
       Claim 
       1.25406935
