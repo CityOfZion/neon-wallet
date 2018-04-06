@@ -7,14 +7,18 @@ import styles from './Button.scss'
 
 type Props = {
   renderIcon: ?Function,
-  text: string,
   primary: ?boolean,
-  secondary: ?boolean
+  secondary: ?boolean,
+  children: React.Node
 }
 
 class Button extends Component<Props> {
+  static defaultProps = {
+    primary: true
+  }
+
   render = () => {
-    const { primary, secondary, text, renderIcon } = this.props
+    const { primary, secondary, renderIcon } = this.props
     const passDownProps = omit(this.props, 'primary', 'secondary')
     const conditionalStyles = {}
     if (primary) {
@@ -36,7 +40,7 @@ class Button extends Component<Props> {
         ) : (
           <div className={styles.icon} />
         )}
-        <span>{text}</span>
+        <span>{this.props.children}</span>
       </button>
     )
   }
