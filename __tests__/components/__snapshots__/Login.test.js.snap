@@ -24,10 +24,7 @@ exports[`Login renders without crashing 1`] = `
     </div>
     <div>
       <Button
-        cancel={false}
         disabled={true}
-        primary={true}
-        secondary={false}
         type="submit"
       >
         Login
