@@ -8,19 +8,19 @@ import styles from './Button.scss'
 type Props = {
   renderIcon: ?Function,
   text: string,
-  dark: ?boolean,
-  light: ?boolean
+  primary: ?boolean,
+  secondary: ?boolean
 }
 
 class Button extends Component<Props> {
   render = () => {
-    const { dark, light, text, renderIcon } = this.props
-    const passDownProps = omit(this.props, 'dark', 'light')
+    const { primary, secondary, text, renderIcon } = this.props
+    const passDownProps = omit(this.props, 'primary', 'secondary')
     const conditionalStyles = {}
-    if (dark) {
+    if (primary) {
       conditionalStyles.buttonStyle = styles.darkButton
       conditionalStyles.iconStyle = styles.lightIcon
-    } else if (light) {
+    } else if (secondary) {
       conditionalStyles.buttonStyle = styles.lightButton
       conditionalStyles.iconStyle = styles.darkIcon
     }
