@@ -214,27 +214,29 @@ export default class Settings extends Component<Props, State> {
               ))}
             </select>
           </div>
-          <div className='settingsItem'>
-            <div className='itemTitle'>Saved Wallet Accounts</div>
-            {map(accounts, account => {
-              return (
-                <div className='walletList' key={`wallet${account.key}`}>
-                  <div className='walletItem'>
-                    <div className='walletName'>{account.key.slice(0, 20)}</div>
-                    <div className='walletKey'>{account.label}</div>
-                    <div
-                      className='deleteWallet'
-                      onClick={() =>
-                        this.deleteWalletAccount(account.label, account.key)
-                      }
-                    >
-                      <Delete />
+          {this.props.accounts.length > 0 &&
+            <div className='settingsItem'>
+              <div className='itemTitle'>Saved Wallet Accounts</div>
+              {map(accounts, account => {
+                return (
+                  <div className='walletList' key={`wallet${account.key}`}>
+                    <div className='walletItem'>
+                      <div className='walletName'>{account.key.slice(0, 20)}</div>
+                      <div className='walletKey'>{account.label}</div>
+                      <div
+                        className='deleteWallet'
+                        onClick={() =>
+                          this.deleteWalletAccount(account.label, account.key)
+                        }
+                      >
+                        <Delete />
+                      </div>
                     </div>
                   </div>
-                </div>
-              )
-            })}
-          </div>
+                )
+              })}
+            </div>
+          }
           <Button onClick={() => this.saveWalletRecovery()}>
             Export wallet recovery file
           </Button>
