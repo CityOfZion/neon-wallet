@@ -7,7 +7,7 @@ import AddRecipientDisplay from './AddRecipientDisplay'
 import ConfirmDisplay from './ConfirmDisplay'
 import withAddressCheck from './withAddressCheck'
 
-import { validateTransactionBeforeSending, getTokenBalancesMap } from '../../../core/wallet'
+import { validateTransactionBeforeSending, getTokenBalancesMap, isBlacklisted } from '../../../core/wallet'
 import { ASSETS } from '../../../core/constants'
 import { toBigNumber } from '../../../core/math'
 
@@ -107,22 +107,29 @@ export default class SendModal extends Component<Props, State> {
     })
   }
 
-  handleConfirmAddRecipient = (entry: SendEntryType) => {
+  handleConfirmAddRecipient = async (entry: SendEntryType) => {
     const { showErrorNotification } = this.props
     const { balances } = this.state
+
+    if (await isBlacklisted(entry.address)) {
+      showErrorNotification({ message: 'You have attempted to enter a phishing address.' })
+      return
+    }
+
     const error = validateTransactionBeforeSending(balances[entry.symbol], entry)
 
     if (error) {
       showErrorNotification({ message: error })
-    } else {
-      const newBalance = toBigNumber(balances[entry.symbol]).minus(entry.amount).toString()
-
-      this.setState({
-        entries: [...this.state.entries, entry],
-        balances: { ...balances, [entry.symbol]: newBalance },
-        display: DISPLAY_MODES.CONFIRM
-      })
+      return
     }
+
+    const newBalance = toBigNumber(balances[entry.symbol]).minus(entry.amount).toString()
+
+    this.setState({
+      entries: [...this.state.entries, entry],
+      balances: { ...balances, [entry.symbol]: newBalance },
+      display: DISPLAY_MODES.CONFIRM
+    })
   }
 
   handleCancelAddRecipient = () => {

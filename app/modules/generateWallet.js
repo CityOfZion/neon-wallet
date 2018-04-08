@@ -3,7 +3,7 @@ import storage from 'electron-json-storage'
 import { wallet } from 'neon-js'
 import { isEmpty } from 'lodash'
 
-import { showErrorNotification, showInfoNotification, hideNotification, showSuccessNotification } from './notifications'
+import { showErrorNotification, showInfoNotification, hideNotification } from './notifications'
 
 import { validatePassphraseLength } from '../core/wallet'
 import { ROUTES, DEFAULT_WALLET } from '../core/constants'
@@ -37,36 +37,8 @@ export function resetKey () {
 export const walletHasKey = (wallet: Object, key: string) =>
   wallet.accounts.some(account => account.key === key)
 
-export const saveAccount = (label: string, address: string, key: string) => (dispatch: DispatchType) => {
-  if (!label || !address || !key) { return null }
-
-  const newAccount = new Account({
-    address,
-    label,
-    key
-  })
-
-  return storage.get('userWallet', (readError, data) => {
-    if (readError) {
-      dispatch(showErrorNotification({ message: `Error loading wallet: ${readError.message}` }))
-    }
-
-    if (!walletHasKey(data, newAccount.key)) {
-      data.accounts.push(newAccount)
-    } else {
-      dispatch(showErrorNotification({ message: `Error saving wallet: '${newAccount.address}' already exists` }))
-      return
-    }
-
-    storage.set('userWallet', data, (saveError) => {
-      if (saveError) {
-        dispatch(showErrorNotification({ message: `Error saving wallet: ${saveError.message}` }))
-      } else {
-        dispatch(showSuccessNotification({ message: `Saved key as ${label}` }))
-      }
-    })
-  })
-}
+export const walletHasLabel = (wallet: Object, label: string) =>
+  wallet.accounts.some(account => account.label === label)
 
 export const convertOldWalletAccount = (label: string, key: string, isDefault: boolean) => {
   if (!key || typeof key !== 'string') return

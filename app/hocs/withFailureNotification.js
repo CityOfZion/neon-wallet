@@ -3,11 +3,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import { omit, isFunction } from 'lodash'
+import { withError, withProgress, progressValues, type Actions, type ProgressState } from 'spunky'
 
-import withError from './api/withError'
-import withProgressProp from './api/withProgressProp'
-import { type Actions } from '../values/api'
-import { FAILED, type ProgressState } from '../values/state'
 import { showErrorNotification } from '../modules/notifications'
 
 type Props = {
@@ -22,9 +19,11 @@ const ERROR_PROP = '__error__'
 const PROGRESS_PROP = '__progress__'
 const NOTIFICATION_PROP = '__showErrorNotification__'
 
+const { FAILED } = progressValues
+
 const defaultMessage = (error) => error
 
-export default function withFailureNotification (actions: Actions, message: Message = defaultMessage) {
+export default function withFailureNotification (actions: Actions, message: Message = defaultMessage, options: Object = {}) {
   const mapErrorToProps = (error: Error) => ({
     [ERROR_PROP]: isFunction(message) ? message(error) : message
   })
@@ -57,7 +56,7 @@ export default function withFailureNotification (actions: Actions, message: Mess
     return compose(
       connect(null, mapDisptchToProps),
       withError(actions, mapErrorToProps),
-      withProgressProp(actions, { propName: PROGRESS_PROP })
+      withProgress(actions, { ...options, propName: PROGRESS_PROP })
     )(ErrorNotifier)
   }
 }

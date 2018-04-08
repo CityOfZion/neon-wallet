@@ -4,32 +4,38 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { shallow, mount } from 'enzyme'
 import { merge } from 'lodash'
+import { progressValues } from 'spunky'
 
 import TransactionHistory from '../../app/containers/TransactionHistory'
 import { MAIN_NETWORK_ID, EXPLORERS } from '../../app/core/constants'
-import { LOADED } from '../../app/values/state'
+
+const { LOADED } = progressValues
 
 const initialState = {
-  api: {
+  spunky: {
     AUTH: {
-      address: 'AWy7RNBVr9vDadRMK9p7i7Z1tL7GrLAxoh',
-      wif: 'L4SLRcPgqNMAMwM3nFSxnh36f1v5omjPg3Ewy1tg2PnEon8AcHou'
+      batch: false,
+      progress: LOADED,
+      data: {
+        address: 'AWy7RNBVr9vDadRMK9p7i7Z1tL7GrLAxoh',
+        wif: 'L4SLRcPgqNMAMwM3nFSxnh36f1v5omjPg3Ewy1tg2PnEon8AcHou'
+      }
     },
     NETWORK: {
       batch: false,
-      state: LOADED,
+      progress: LOADED,
       data: MAIN_NETWORK_ID
     },
     SETTINGS: {
       batch: false,
-      state: LOADED,
+      progress: LOADED,
       data: {
         blockExplorer: EXPLORERS.NEO_TRACKER
       }
     },
     TRANSACTION_HISTORY: {
       batch: false,
-      state: LOADED,
+      progress: LOADED,
       data: []
     }
   }
@@ -86,7 +92,7 @@ describe('TransactionHistory', () => {
 
   test('correctly renders with NEO and GAS transaction history', () => {
     const transactionState = merge({}, initialState, {
-      api: { TRANSACTION_HISTORY: { data: transactions } }
+      spunky: { TRANSACTION_HISTORY: { data: transactions } }
     })
     const { wrapper } = setup(transactionState, false)
 

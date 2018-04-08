@@ -1,17 +1,30 @@
+import { api, u } from 'neon-js'
+
 import claimsActions from '../../app/actions/claimsActions'
+import { mockPromiseResolved } from '../testHelpers'
 
 describe('claimsActions', () => {
   const net = 'TestNet'
   const address = 'AW4FD7bz6PF2QadFKF8qXUT7tNmWgvXZc4'
 
-  describe('request', () => {
+  beforeEach(() => {
+    jest.spyOn(api.neoscan, 'getMaxClaimAmount').mockImplementation(
+      mockPromiseResolved(new u.Fixed8('1.59140785'))
+    )
+  })
+
+  afterEach(() => {
+    jest.restoreAllMocks()
+  })
+
+  describe('call', () => {
     test('returns an action object', () => {
-      expect(claimsActions.request({ net, address })).toEqual({
+      expect(claimsActions.call({ net, address })).toEqual({
         batch: false,
-        type: 'CLAIMS/REQ/REQUEST',
+        type: 'CLAIMS/ACTION/CALL',
         meta: {
           id: 'CLAIMS',
-          type: 'REQ/REQUEST'
+          type: 'ACTION/CALL'
         },
         payload: {
           fn: expect.any(Function)
@@ -20,30 +33,8 @@ describe('claimsActions', () => {
     })
 
     test("payload function requests the network's block height", async (done) => {
-      const request = claimsActions.request({ net, address })
-      expect(await request.payload.fn({})).toEqual({ total: '1.59140785' })
-      done()
-    })
-  })
-
-  describe('retry', () => {
-    test('returns an action object', () => {
-      expect(claimsActions.retry({ net, address })).toEqual({
-        batch: false,
-        type: 'CLAIMS/REQ/RETRY',
-        meta: {
-          id: 'CLAIMS',
-          type: 'REQ/RETRY'
-        },
-        payload: {
-          fn: expect.any(Function)
-        }
-      })
-    })
-
-    test("payload function retries request for the network's block height", async (done) => {
-      const request = claimsActions.retry({ net, address })
-      expect(await request.payload.fn({})).toEqual({ total: '1.59140785' })
+      const call = claimsActions.call({ net, address })
+      expect(await call.payload.fn({})).toEqual({ total: '1.59140785' })
       done()
     })
   })
@@ -52,10 +43,10 @@ describe('claimsActions', () => {
     test('returns an action object', () => {
       expect(claimsActions.cancel()).toEqual({
         batch: false,
-        type: 'CLAIMS/REQ/CANCEL',
+        type: 'CLAIMS/ACTION/CANCEL',
         meta: {
           id: 'CLAIMS',
-          type: 'REQ/CANCEL'
+          type: 'ACTION/CANCEL'
         }
       })
     })
@@ -65,10 +56,10 @@ describe('claimsActions', () => {
     test('returns an action object', () => {
       expect(claimsActions.reset()).toEqual({
         batch: false,
-        type: 'CLAIMS/REQ/RESET',
+        type: 'CLAIMS/ACTION/RESET',
         meta: {
           id: 'CLAIMS',
-          type: 'REQ/RESET'
+          type: 'ACTION/RESET'
         }
       })
     })

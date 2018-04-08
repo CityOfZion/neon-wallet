@@ -1,6 +1,7 @@
 // @flow
+import { withActions } from 'spunky'
+
 import Logout from './Logout'
-import withActions from '../../../../hocs/api/withActions'
 import { logoutActions } from '../../../../actions/authActions'
 
 type Props = {
@@ -8,7 +9,7 @@ type Props = {
 }
 
 const mapActionsToProps = (actions): Props => ({
-  logout: () => actions.request()
+  logout: () => actions.call()
 })
 
 export default withActions(logoutActions, mapActionsToProps)(Logout)

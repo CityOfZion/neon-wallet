@@ -18,14 +18,14 @@ type Props = {
 }
 
 class App extends Component<Props> {
-  componentDidMount () {
-    const { checkVersion, showErrorNotification } = this.props
+  async componentDidMount () {
+    this.props.checkVersion()
 
-    checkVersion()
-    upgradeUserWalletNEP6()
-      .catch((e) => {
-        showErrorNotification({ message: `Error upgrading legacy wallet: ${e.message}` })
-      })
+    try {
+      await upgradeUserWalletNEP6()
+    } catch (error) {
+      this.props.showErrorNotification({ message: `Error upgrading legacy wallet: ${error.message}` })
+    }
   }
 
   render () {

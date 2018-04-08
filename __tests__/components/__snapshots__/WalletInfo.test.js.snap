@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`WalletInfo renders without crashing 1`] = `
-<Connect(withData(Connect(withData(Connect(withData(withProps(Connect(withData(Connect(withData(Connect(withData(withProps(Connect(withData(Connect(withActions(Connect(withActions(Connect(Connect(withProgressProp(LoadedNotifier)))))))))))))))))))))))
+<Connect(withData(Connect(withData(Connect(withData(withProps(Connect(withData(Connect(withData(Connect(withData(withProps(Connect(withData(Connect(withActions(Connect(withActions(Connect(Connect(withProgress(LoadedNotifier)))))))))))))))))))))))
   networks={
     Array [
       Object {
@@ -16,7 +16,6 @@ exports[`WalletInfo renders without crashing 1`] = `
       },
     ]
   }
-  oldParticipateInSale={[Function]}
   participateInSale={[Function]}
   showModal={[Function]}
   store={

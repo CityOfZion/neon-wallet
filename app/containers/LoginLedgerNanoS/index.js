@@ -1,20 +1,17 @@
 // @flow
 import { compose } from 'recompose'
+import { withCall, withProgress, withData, withError, withActions, recentlyCompletedStrategy } from 'spunky'
 
 import LoginLedgerNanoS from './LoginLedgerNanoS'
-import withData from '../../hocs/api/withData'
-import withError from '../../hocs/api/withError'
-import withFetch from '../../hocs/api/withFetch'
-import withActions from '../../hocs/api/withActions'
 import ledgerActions from '../../actions/ledgerActions'
 import { ledgerLoginActions } from '../../actions/authActions'
 
 const mapLedgerActionsToProps = (actions) => ({
-  connect: () => ledgerActions.request()
+  connect: () => ledgerActions.call()
 })
 
 const mapAccountActionsToProps = (actions) => ({
-  login: (publicKey) => ledgerLoginActions.request({ publicKey })
+  login: (publicKey) => ledgerLoginActions.call({ publicKey })
 })
 
 const mapLedgerDataToProps = (data) => {
@@ -25,9 +22,12 @@ const mapLedgerDataToProps = (data) => {
 const mapLedgerErrorToProps = (error) => ({ error })
 
 export default compose(
-  withFetch(ledgerActions),
+  withCall(ledgerActions),
   withActions(ledgerActions, mapLedgerActionsToProps),
   withActions(ledgerLoginActions, mapAccountActionsToProps),
+  withProgress(ledgerActions, {
+    strategy: recentlyCompletedStrategy
+  }),
   withData(ledgerActions, mapLedgerDataToProps),
   withError(ledgerActions, mapLedgerErrorToProps)
 )(LoginLedgerNanoS)

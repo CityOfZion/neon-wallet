@@ -1,7 +1,6 @@
 // @flow
 import { api } from 'neon-js'
-
-import createRequestActions from '../util/api/createRequestActions'
+import { createActions } from 'spunky'
 
 type Props = {
   net: string,
@@ -10,7 +9,7 @@ type Props = {
 
 export const ID = 'CLAIMS'
 
-export default createRequestActions(ID, ({ net, address }: Props = {}) => async (state: Object): Promise<Object> => {
-  const total = await api.loadBalance(api.getMaxClaimAmountFrom, {net, address})
+export default createActions(ID, ({ net, address }: Props = {}) => async (state: Object): Promise<Object> => {
+  const total = await api.loadBalance(api.getMaxClaimAmountFrom, { net, address })
   return { total: total.toString() }
 })
