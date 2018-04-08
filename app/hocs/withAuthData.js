@@ -1,7 +1,7 @@
 // @flow
 import { isEmpty, zipObject, mapValues, invert } from 'lodash'
+import { withData } from 'spunky'
 
-import withData from './api/withData'
 import authActions from '../actions/authActions'
 
 type Mapping = {

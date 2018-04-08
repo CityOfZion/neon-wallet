@@ -1,15 +1,28 @@
+import { api } from 'neon-js'
+
 import blockHeightActions from '../../app/actions/blockHeightActions'
 import { TEST_NETWORK_ID } from '../../app/core/constants'
+import { mockPromiseResolved } from '../testHelpers'
 
 describe('blockHeightActions', () => {
-  describe('request', () => {
+  beforeEach(() => {
+    jest.spyOn(api.neoscan, 'getWalletDBHeight').mockImplementation(
+      mockPromiseResolved(586435)
+    )
+  })
+
+  afterEach(() => {
+    jest.restoreAllMocks()
+  })
+
+  describe('call', () => {
     test('returns an action object', () => {
-      expect(blockHeightActions.request({ networkId: TEST_NETWORK_ID })).toEqual({
+      expect(blockHeightActions.call({ networkId: TEST_NETWORK_ID })).toEqual({
         batch: false,
-        type: 'BLOCK_HEIGHT/REQ/REQUEST',
+        type: 'BLOCK_HEIGHT/ACTION/CALL',
         meta: {
           id: 'BLOCK_HEIGHT',
-          type: 'REQ/REQUEST'
+          type: 'ACTION/CALL'
         },
         payload: {
           fn: expect.any(Function)
@@ -18,30 +31,8 @@ describe('blockHeightActions', () => {
     })
 
     test("payload function requests the network's block height", async (done) => {
-      const request = blockHeightActions.request({ networkId: TEST_NETWORK_ID })
-      expect(await request.payload.fn({})).toEqual(586435)
-      done()
-    })
-  })
-
-  describe('retry', () => {
-    test('returns an action object', () => {
-      expect(blockHeightActions.retry({ networkId: TEST_NETWORK_ID })).toEqual({
-        batch: false,
-        type: 'BLOCK_HEIGHT/REQ/RETRY',
-        meta: {
-          id: 'BLOCK_HEIGHT',
-          type: 'REQ/RETRY'
-        },
-        payload: {
-          fn: expect.any(Function)
-        }
-      })
-    })
-
-    test("payload function retries request for the network's block height", async (done) => {
-      const request = blockHeightActions.retry({ networkId: TEST_NETWORK_ID })
-      expect(await request.payload.fn({})).toEqual(586435)
+      const call = blockHeightActions.call({ networkId: TEST_NETWORK_ID })
+      expect(await call.payload.fn({})).toEqual(586435)
       done()
     })
   })
@@ -50,10 +41,10 @@ describe('blockHeightActions', () => {
     test('returns an action object', () => {
       expect(blockHeightActions.cancel()).toEqual({
         batch: false,
-        type: 'BLOCK_HEIGHT/REQ/CANCEL',
+        type: 'BLOCK_HEIGHT/ACTION/CANCEL',
         meta: {
           id: 'BLOCK_HEIGHT',
-          type: 'REQ/CANCEL'
+          type: 'ACTION/CANCEL'
         }
       })
     })
@@ -63,10 +54,10 @@ describe('blockHeightActions', () => {
     test('returns an action object', () => {
       expect(blockHeightActions.reset()).toEqual({
         batch: false,
-        type: 'BLOCK_HEIGHT/REQ/RESET',
+        type: 'BLOCK_HEIGHT/ACTION/RESET',
         meta: {
           id: 'BLOCK_HEIGHT',
-          type: 'REQ/RESET'
+          type: 'ACTION/RESET'
         }
       })
     })

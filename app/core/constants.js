@@ -77,10 +77,11 @@ export const TOKENS = {
   IAM: '891daf0e1750a1031ebe23030828ad7781d874d6',
   ONT: 'ceab719b8baa2310f232ee0d277c061704541cfb',
   THOR: '67a5086bac196b67d5fd20745b0dc9db4d2930ed',
-  CGE: '34579e4614ac1a7bd295372d3de8621770c76cdc'
+  CGE: '34579e4614ac1a7bd295372d3de8621770c76cdc',
+  SWH: '78e6d16b914fe15bc16150aeb11d0c2a8e532bdd'
 }
 
-export const ENDED_ICO_TOKENS = ['DBC', 'RPX', 'QLC', 'RHT']
+export const ENDED_ICO_TOKENS = ['DBC', 'RPX', 'QLC', 'RHT', 'ONT', 'SWH', 'NRVE']
 
 export const DEFAULT_WALLET = {
   name: 'userWallet',

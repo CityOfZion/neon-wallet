@@ -1,8 +1,16 @@
 version: 2
+
 references:
   container_config: &container_config
     docker:
       - image: electronuserland/builder:wine-chrome
+        environment:
+          TARGET_ARCH: x64
+    working_directory: ~/neon-wallet
+
+  win_config: &win_config
+    docker:
+      - image: electronuserland/builder:wine
         environment:
           TARGET_ARCH: x64
     working_directory: ~/neon-wallet
@@ -36,6 +44,7 @@ jobs:
           root: *workspace_root
           paths:
             - dist/*
+
   test:
     <<: *container_config
     steps:
@@ -44,6 +53,7 @@ jobs:
           key: neon-wallet-{{ checksum "yarn.lock" }}
       - run: apt-get -y update
       - run: apt-get -y install libusb-1.0-0-dev graphicsmagick libudev-dev
+      - run: apt-get -y install libxtst6 libxss1 libgtk2.0-0 libnss3 libasound2 libgconf-2-4
       - run: yarn test-ci
       - run:
           name: Running Xvfb for e2e test
@@ -60,11 +70,55 @@ jobs:
       - path: artifacts/
       - destination: yarnpkg
 
+  deploy_win64:
+    <<: *win_config
+    steps:
+      - checkout
+      - restore_cache:
+          key: neon-wallet-{{ checksum "yarn.lock" }}
+      - run: apt-get -y update
+      - run: apt-get -y install libusb-1.0-0-dev icnsutils graphicsmagick libudev-dev
+      - run: apt-get install --no-install-recommends -y gcc-multilib g++-multilib
+      - run: yarn
+      - run: yarn assets
+      - run: yarn build -w --x64
+      - store_artifacts:
+          path: dist
+          destination: build
+
+  deploy_linux:
+    <<: *container_config
+    steps:
+      - checkout
+      - restore_cache:
+          key: neon-wallet-{{ checksum "yarn.lock" }}
+      - run: apt-get -y update
+      - run: apt-get -y install libusb-1.0-0-dev icnsutils graphicsmagick libudev-dev
+      - run: yarn
+      - run: yarn dist
+      - store_artifacts:
+          path: dist
+          destination: build
+
 workflows:
   version: 2
-  build-test-and-deploy:
+  build_test:
     jobs:
       - build
       - test:
           requires:
             - build
+  deploy:
+    jobs:
+      - deploy_win64:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /[0-9]+(\.[0-9]+)+.*/
+      - deploy_linux:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /[0-9]+(\.[0-9]+)+.*/

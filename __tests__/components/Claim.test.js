@@ -1,109 +1,31 @@
 import React from 'react'
-import * as neonjs from 'neon-js'
-import { merge } from 'lodash'
-import { mount } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 
-import { createStore, provideStore } from '../testHelpers'
-import Claim from '../../app/containers/Claim'
-import { disableClaim } from '../../app/modules/claim'
-import { SHOW_NOTIFICATION } from '../../app/modules/notifications'
-import { NOTIFICATION_LEVELS, MAIN_NETWORK_ID } from '../../app/core/constants'
-import { LOADED } from '../../app/values/state'
-
-jest.useFakeTimers()
-
-const initialState = {
-  api: {
-    NETWORK: {
-      batch: false,
-      state: LOADED,
-      data: MAIN_NETWORK_ID
-    },
-    CLAIMS: {
-      batch: false,
-      state: LOADED,
-      data: {
-        total: '0.01490723'
-      }
-    },
-    BALANCES: {
-      batch: false,
-      state: LOADED,
-      data: {
-        NEO: '10',
-        GAS: '10.00000000'
-      }
-    }
-  },
-  claim: {
-    claimRequest: false,
-    disableClaimButton: false
-  }
-}
-
-const simulateSendAsset = (result) => {
-  return jest.fn(() => {
-    return new Promise((resolve, reject) => {
-      resolve({ response: { result, txid: 'random' } })
-    })
-  })
-}
+import Claim from '../../app/containers/Claim/Claim'
 
 describe('Claim', () => {
-  test('should render without crashing', () => {
-    const store = createStore(initialState)
-    const wrapper = mount(provideStore(<Claim />, store))
-    expect(wrapper).toMatchSnapshot()
-  })
+  const props = {
+    doGasClaim: () => {},
+    disableClaimButton: false,
+    claimAmount: '1.25406935'
+  }
 
   test('should render claim GAS button as enabled', () => {
-    const store = createStore(initialState)
-    const wrapper = mount(provideStore(<Claim />, store))
+    const wrapper = shallow(<Claim {...props} />)
     expect(wrapper).toMatchSnapshot()
   })
 
   test('should render claim GAS button as disabled', () => {
-    const state = merge({}, initialState, { claim: { disableClaimButton: true } })
-    const store = createStore(state)
-    const wrapper = mount(provideStore(<Claim />, store))
+    const wrapper = shallow(<Claim {...props} disableClaimButton />)
     expect(wrapper).toMatchSnapshot()
   })
 
-  describe('when claim GAS button is clicked', () => {
-    test('should dispatch transaction failure event', async (done) => {
-      const store = createStore(initialState)
-      const wrapper = mount(provideStore(<Claim />, store))
-      neonjs.api.sendAsset = simulateSendAsset(false)
+  test('should claim GAS when button is clicked', () => {
+    const claimSpy = jest.fn()
+    const wrapper = mount(<Claim {...props} doGasClaim={claimSpy} />)
 
-      wrapper.find('button#claim').simulate('click')
-      jest.runAllTimers()
-      await Promise.resolve().then().then().then()
+    wrapper.find('button#claim').simulate('click')
 
-      const actions = store.getActions()
-
-      expect(actions).toContainEqual(expect.objectContaining({
-        type: SHOW_NOTIFICATION,
-        payload: expect.objectContaining({
-          level: NOTIFICATION_LEVELS.ERROR,
-          message: 'Calculating claimable GAS failed.'
-        })
-      }))
-      done()
-    })
-
-    test('should dispatch disable claim event', async (done) => {
-      const store = createStore(initialState)
-      const wrapper = mount(provideStore(<Claim />, store))
-      neonjs.api.sendAsset = simulateSendAsset(true)
-
-      wrapper.find('button#claim').simulate('click')
-      jest.runAllTimers()
-      await Promise.resolve().then().then().then()
-
-      const actions = store.getActions()
-
-      expect(actions).toContainEqual(disableClaim(true))
-      done()
-    })
+    expect(claimSpy).toHaveBeenCalled()
   })
 })

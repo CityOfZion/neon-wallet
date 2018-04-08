@@ -1,14 +1,14 @@
 // @flow
 import { compose, withProps } from 'recompose'
+import { withData, withProgress, progressValues } from 'spunky'
 
 import TransactionHistory from './TransactionHistory'
 import transactionHistoryActions from '../../actions/transactionHistoryActions'
-import withData from '../../hocs/api/withData'
-import withProgressProp from '../../hocs/api/withProgressProp'
 import withNetworkData from '../../hocs/withNetworkData'
 import withAuthData from '../../hocs/withAuthData'
 import withoutProps from '../../hocs/withoutProps'
-import { LOADING } from '../../values/state'
+
+const { LOADING } = progressValues
 
 const PROGRESS_PROP = 'progress'
 
@@ -26,7 +26,7 @@ export default compose(
   withData(transactionHistoryActions, mapTransactionsDataToProps),
 
   // pass `loading` boolean to component
-  withProgressProp(transactionHistoryActions, { propName: PROGRESS_PROP }),
+  withProgress(transactionHistoryActions, { propName: PROGRESS_PROP }),
   withProps(mapLoadingProp),
   withoutProps(PROGRESS_PROP)
 )(TransactionHistory)

@@ -2,10 +2,9 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
+import { withData, withActions } from 'spunky'
 
 import Settings from './Settings'
-import withData from '../../hocs/api/withData'
-import withActions from '../../hocs/api/withActions'
 import withExplorerData from '../../hocs/withExplorerData'
 import withCurrencyData from '../../hocs/withCurrencyData'
 import accountsActions, { updateAccountsActions } from '../../actions/accountsActions'
@@ -29,13 +28,13 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(actionCreators, disp
 const mapAccountsDataToProps = (accounts) => ({ accounts })
 
 const mapAccountsActionsToProps = (actions) => ({
-  setAccounts: (accounts) => updateAccountsActions.request(accounts)
+  setAccounts: (accounts) => actions.call(accounts)
 })
 
 const mapSettingsActionsToProps = (actions) => ({
-  setCurrency: (currency) => actions.request({ currency }),
-  setBlockExplorer: (blockExplorer) => actions.request({ blockExplorer }),
-  setUserGeneratedTokens: (tokens) => actions.request({ tokens })
+  setCurrency: (currency) => actions.call({ currency }),
+  setBlockExplorer: (blockExplorer) => actions.call({ blockExplorer }),
+  setUserGeneratedTokens: (tokens) => actions.call({ tokens })
 })
 
 export default compose(

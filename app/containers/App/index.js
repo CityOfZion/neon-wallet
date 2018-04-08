@@ -2,28 +2,27 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
+import { withCall, withRecall, withProgressComponents, alreadyLoadedStrategy, progressValues } from 'spunky'
 
 import appActions from '../../actions/appActions'
 import authActions from '../../actions/authActions'
 import accountActions from '../../actions/accountActions'
 import networkActions from '../../actions/networkActions'
 import pricesActions from '../../actions/pricesActions'
-import withFetch from '../../hocs/api/withFetch'
-import withReload from '../../hocs/api/withReload'
-import withProgressComponents from '../../hocs/api/withProgressComponents'
 import withLoginRedirect from '../../hocs/auth/withLoginRedirect'
 import withLogoutRedirect from '../../hocs/auth/withLogoutRedirect'
 import withLogoutReset from '../../hocs/auth/withLogoutReset'
 import withCurrencyData from '../../hocs/withCurrencyData'
 import withNetworkData from '../../hocs/withNetworkData'
-import alreadyLoaded from '../../hocs/api/progressStrategies/alreadyLoadedStrategy'
+import everLoadedStrategy from '../../hocs/helpers/everLoadedStrategy'
 import { checkVersion } from '../../modules/metadata'
 import { showErrorNotification } from '../../modules/notifications'
-import { LOADING, FAILED } from '../../values/state'
 
 import App from './App'
 import Loading from './Loading'
 import Failed from './Failed'
+
+const { LOADING, FAILED } = progressValues
 
 const actionCreators = {
   checkVersion,
@@ -38,34 +37,34 @@ export default compose(
 
   // Fetch the initial network type, and pass it down as a prop.  This must come before other data
   // fetches that depend on knowing the selected network.
-  withFetch(networkActions),
+  withCall(networkActions),
   withNetworkData(),
   withProgressComponents(networkActions, {
     [LOADING]: Loading,
     [FAILED]: Failed
   }, {
-    strategy: alreadyLoaded
+    strategy: alreadyLoadedStrategy
   }),
 
   // Fetch application data based upon the selected network.  Reload data when the network changes.
-  withFetch(appActions),
-  withReload(appActions, ['networkId']),
+  withCall(appActions),
+  withRecall(appActions, ['networkId']),
   withProgressComponents(appActions, {
     [LOADING]: Loading,
     [FAILED]: Failed
   }, {
-    strategy: alreadyLoaded
+    strategy: everLoadedStrategy
   }),
 
   // Fetch prices data based based upon the selected currency.  Reload data with the currency changes.
   withCurrencyData(),
-  withFetch(pricesActions),
-  withReload(pricesActions, ['currency']),
+  withCall(pricesActions),
+  withRecall(pricesActions, ['currency']),
   withProgressComponents(pricesActions, {
     [LOADING]: Loading,
     [FAILED]: Failed
   }, {
-    strategy: alreadyLoaded
+    strategy: alreadyLoadedStrategy
   }),
 
   // Navigate to the home or dashboard when the user logs in or out.

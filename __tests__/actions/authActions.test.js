@@ -1,21 +1,19 @@
-import { wallet } from 'neon-js'
-
 import { wifLoginActions } from '../../app/actions/authActions'
 
 describe('authActions', () => {
   describe('wifLoginActions', () => {
-    describe('request', () => {
+    describe('call', () => {
       const wif = 'KxB52D1FGe5xBn6YeezNwj7grhkHZxq7bv2tmaCPoT4rxApMwMvU'
       const address = 'ASJQLBnhAs6fSgBv2R7KtRZjC8A9fAmcNW'
       const privateKey = '1c7a992d0e68b7b23cb430ba596bd68cecde042410d81e9e95ee19dc1bcd739d'
 
       test('returns an action object', () => {
-        expect(wifLoginActions.request({ wif })).toEqual({
+        expect(wifLoginActions.call({ wif })).toEqual({
           batch: false,
-          type: 'AUTH/REQ/REQUEST',
+          type: 'AUTH/ACTION/CALL',
           meta: {
             id: 'AUTH',
-            type: 'REQ/REQUEST'
+            type: 'ACTION/CALL'
           },
           payload: {
             fn: expect.any(Function)
@@ -24,81 +22,23 @@ describe('authActions', () => {
       })
 
       describe('with valid WIF', () => {
-        let wifMock, keyMock, accountMock
-
-        beforeEach(() => {
-          wifMock = jest.spyOn(wallet, 'isWIF').mockImplementation((str) => false)
-          keyMock = jest.spyOn(wallet, 'isPrivateKey').mockImplementation((str) => true)
-          accountMock = jest.spyOn(wallet, 'Account').mockImplementation((str) => ({ WIF: wif, address }))
-        })
-
-        afterEach(() => {
-          wifMock.mockRestore()
-          keyMock.mockRestore()
-          accountMock.mockRestore()
-        })
-
         test('returns authenticated account data', () => {
-          const request = wifLoginActions.request({ wif })
-          expect(request.payload.fn({})).toEqual({ wif, address, isHardwareLogin: false })
+          const call = wifLoginActions.call({ wif })
+          expect(call.payload.fn({})).toEqual({ wif, address, isHardwareLogin: false })
         })
       })
 
       describe('with valid private key', () => {
-        let wifMock, keyMock, accountMock
-
-        beforeEach(() => {
-          wifMock = jest.spyOn(wallet, 'isWIF').mockImplementation((str) => false)
-          keyMock = jest.spyOn(wallet, 'isPrivateKey').mockImplementation((str) => true)
-          accountMock = jest.spyOn(wallet, 'Account').mockImplementation((str) => ({ WIF: wif, address }))
-        })
-
-        afterEach(() => {
-          wifMock.mockRestore()
-          keyMock.mockRestore()
-          accountMock.mockRestore()
-        })
-
         test('returns authenticated account data', () => {
-          const request = wifLoginActions.request({ wif: privateKey })
-          expect(request.payload.fn({})).toEqual({ wif, address, isHardwareLogin: false })
+          const call = wifLoginActions.call({ wif: privateKey })
+          expect(call.payload.fn({})).toEqual({ wif, address, isHardwareLogin: false })
         })
       })
 
       describe('with invalid private key', () => {
-        let wifMock, keyMock
-
-        beforeEach(() => {
-          wifMock = jest.spyOn(wallet, 'isWIF').mockImplementation((str) => false)
-          keyMock = jest.spyOn(wallet, 'isPrivateKey').mockImplementation((str) => false)
-        })
-
-        afterEach(() => {
-          wifMock.mockRestore()
-          keyMock.mockRestore()
-        })
-
         test('throws an error', () => {
-          const request = wifLoginActions.request({ wif })
+          const request = wifLoginActions.call({ wif: 'invalid' })
           expect(() => request.payload.fn({})).toThrowError('That is not a valid private key')
-        })
-      })
-    })
-
-    describe('retry', () => {
-      const wif = 'KxB52D1FGe5xBn6YeezNwj7grhkHZxq7bv2tmaCPoT4rxApMwMvU'
-
-      test('returns an action object', () => {
-        expect(wifLoginActions.retry({ wif })).toEqual({
-          batch: false,
-          type: 'AUTH/REQ/RETRY',
-          meta: {
-            id: 'AUTH',
-            type: 'REQ/RETRY'
-          },
-          payload: {
-            fn: expect.any(Function)
-          }
         })
       })
     })
@@ -107,10 +47,10 @@ describe('authActions', () => {
       test('returns an action object', () => {
         expect(wifLoginActions.cancel()).toEqual({
           batch: false,
-          type: 'AUTH/REQ/CANCEL',
+          type: 'AUTH/ACTION/CANCEL',
           meta: {
             id: 'AUTH',
-            type: 'REQ/CANCEL'
+            type: 'ACTION/CANCEL'
           }
         })
       })
@@ -120,10 +60,10 @@ describe('authActions', () => {
       test('returns an action object', () => {
         expect(wifLoginActions.reset()).toEqual({
           batch: false,
-          type: 'AUTH/REQ/RESET',
+          type: 'AUTH/ACTION/RESET',
           meta: {
             id: 'AUTH',
-            type: 'REQ/RESET'
+            type: 'ACTION/RESET'
           }
         })
       })
