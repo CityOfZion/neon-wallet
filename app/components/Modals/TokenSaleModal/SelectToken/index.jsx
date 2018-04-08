@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react'
+import React from 'react'
 
 import { COIN_DECIMAL_LENGTH } from '../../../../core/formatters'
 
@@ -30,7 +30,7 @@ type State = {
   selectedAsset: SymbolType
 }
 
-class SelectToken extends Component<Props, State> {
+class SelectToken extends React.Component<Props, State> {
   state = {
     selectedAsset: Object.keys(this.props.assetBalances)[0]
   }
@@ -77,7 +77,7 @@ class SelectToken extends Component<Props, State> {
               <div className={styles.mintBody}>
                 <div>
                   <div className={styles.label}>
-                  Select ICO token to purchase
+                    Select ICO token to purchase
                   </div>
                   <div>
                     <AssetInput
@@ -91,12 +91,11 @@ class SelectToken extends Component<Props, State> {
                 </div>
                 <div>
                   <div className={styles.label}>
-                  Token not in the list?
+                    Token not in the list?
                   </div>
                   <div>
-                    <Button onClick={() => showTokensModal()}
-                      className={styles.purchaseBtn}>
-                    + Add a new token to purchase
+                    <Button onClick={() => showTokensModal()} className={styles.purchaseBtn}>
+                      + Add a new token to purchase
                     </Button>
                   </div>
                 </div>
