@@ -2,7 +2,13 @@ import { Application } from 'spectron'
 import path from 'path'
 import test from 'ava'
 
-let electronPath = path.join(__dirname, '..', 'node_modules', '.bin', 'electron')
+let electronPath = path.join(
+  __dirname,
+  '..',
+  'node_modules',
+  '.bin',
+  'electron'
+)
 if (process.platform === 'win32') {
   electronPath += '.cmd'
 }
@@ -24,7 +30,7 @@ test.after(async () => {
   }
 })
 
-function timeout (ms) {
+function timeout(ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
@@ -46,25 +52,41 @@ test.serial('should create new wallet', async t => {
 })
 
 test.serial('should show wallet passphrase', async t => {
-  t.true(await app.client.isVisible('#newWallet .keyListItem:nth-child(1) .key'))
-  const passphraseText = await app.client.getText('#newWallet .keyListItem:nth-child(1) .key');
+  t.true(
+    await app.client.isVisible('#newWallet .keyListItem:nth-child(1) .key')
+  )
+  const passphraseText = await app.client.getText(
+    '#newWallet .keyListItem:nth-child(1) .key'
+  )
   t.truthy(passphraseText.length)
 })
 
 test.serial('should show wallet public address', async t => {
-  t.true(await app.client.isVisible('#newWallet .keyListItem:nth-child(3) .key'))
-  const publicAddressText = await app.client.getText('#newWallet .keyListItem:nth-child(3) .key');
+  t.true(
+    await app.client.isVisible('#newWallet .keyListItem:nth-child(3) .key')
+  )
+  const publicAddressText = await app.client.getText(
+    '#newWallet .keyListItem:nth-child(3) .key'
+  )
   t.truthy(publicAddressText.length)
 })
 
 test.serial('should show wallet encrypted key', async t => {
-  t.true(await app.client.isVisible('#newWallet .keyListItem:nth-child(4) .key'))
-  const encryptedKeyText = await app.client.getText('#newWallet .keyListItem:nth-child(4) .key');
+  t.true(
+    await app.client.isVisible('#newWallet .keyListItem:nth-child(4) .key')
+  )
+  const encryptedKeyText = await app.client.getText(
+    '#newWallet .keyListItem:nth-child(4) .key'
+  )
   t.truthy(encryptedKeyText.length)
 })
 
 test.serial('should show wallet private key', async t => {
-  t.true(await app.client.isVisible('#newWallet .keyListItem:nth-child(5) .key'))
-  const privateKeyText = await app.client.getText('#newWallet .keyListItem:nth-child(5) .key');
+  t.true(
+    await app.client.isVisible('#newWallet .keyListItem:nth-child(5) .key')
+  )
+  const privateKeyText = await app.client.getText(
+    '#newWallet .keyListItem:nth-child(5) .key'
+  )
   t.truthy(privateKeyText.length)
 })

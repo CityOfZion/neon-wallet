@@ -26,10 +26,10 @@ type Props = {
   modalType?: ModalType,
   modalProps: Object,
   hideModal: () => any,
-  showErrorNotification: (Object) => any,
-  showSuccessNotification: (Object) => any,
-  showInfoNotification: (Object) => any,
-  showWarningNotification: (Object) => any,
+  showErrorNotification: Object => any,
+  showSuccessNotification: Object => any,
+  showInfoNotification: Object => any,
+  showWarningNotification: Object => any
 }
 
 const ModalRenderer = (props: Props) => {
@@ -37,10 +37,9 @@ const ModalRenderer = (props: Props) => {
 
   if (modalType) {
     const Modal = MODAL_COMPONENTS[modalType]
-    return (<Modal
-      {...modalProps}
-      {...omit(props, ['modalType', 'modalProps'])}
-    />)
+    return (
+      <Modal {...modalProps} {...omit(props, ['modalType', 'modalProps'])} />
+    )
   }
 
   return null

@@ -3,7 +3,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import { omit, isFunction } from 'lodash'
-import { withError, withProgress, progressValues, type Actions, type ProgressState } from 'spunky'
+import {
+  withError,
+  withProgress,
+  progressValues,
+  type Actions,
+  type ProgressState
+} from 'spunky'
 
 import { showErrorNotification } from '../modules/notifications'
 
@@ -21,9 +27,13 @@ const NOTIFICATION_PROP = '__showErrorNotification__'
 
 const { FAILED } = progressValues
 
-const defaultMessage = (error) => error
+const defaultMessage = error => error
 
-export default function withFailureNotification (actions: Actions, message: Message = defaultMessage, options: Object = {}) {
+export default function withFailureNotification(
+  actions: Actions,
+  message: Message = defaultMessage,
+  options: Object = {}
+) {
   const mapErrorToProps = (error: Error) => ({
     [ERROR_PROP]: isFunction(message) ? message(error) : message
   })
@@ -36,19 +46,30 @@ export default function withFailureNotification (actions: Actions, message: Mess
     const hasError = (props: Props) => !!props[ERROR_PROP]
 
     const progressChangedToError = (prevProps: Props, nextProps: Props) => {
-      return prevProps[PROGRESS_PROP] !== FAILED && nextProps[PROGRESS_PROP] === FAILED
+      return (
+        prevProps[PROGRESS_PROP] !== FAILED &&
+        nextProps[PROGRESS_PROP] === FAILED
+      )
     }
 
     class ErrorNotifier extends React.Component<Props> {
-      componentWillReceiveProps (nextProps) {
-        if (hasError(nextProps) && progressChangedToError(this.props, nextProps)) {
+      componentWillReceiveProps(nextProps) {
+        if (
+          hasError(nextProps) &&
+          progressChangedToError(this.props, nextProps)
+        ) {
           const showErrorNotification = nextProps[NOTIFICATION_PROP]
           showErrorNotification({ message: nextProps[ERROR_PROP] })
         }
       }
 
-      render () {
-        const passDownProps = omit(this.props, ERROR_PROP, PROGRESS_PROP, NOTIFICATION_PROP)
+      render() {
+        const passDownProps = omit(
+          this.props,
+          ERROR_PROP,
+          PROGRESS_PROP,
+          NOTIFICATION_PROP
+        )
         return <Component {...passDownProps} />
       }
     }

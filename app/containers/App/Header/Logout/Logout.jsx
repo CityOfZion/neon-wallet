@@ -10,8 +10,8 @@ type Props = {
 }
 
 const Logout = ({ logout }: Props) => (
-  <div id='logout' className={styles.logout} onClick={logout}>
-    <Tooltip title='Logout'>
+  <div id="logout" className={styles.logout} onClick={logout}>
+    <Tooltip title="Logout">
       <Power />
     </Tooltip>
   </div>

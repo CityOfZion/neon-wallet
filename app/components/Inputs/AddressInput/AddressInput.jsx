@@ -39,7 +39,13 @@ export default class AddressInput extends React.Component<Props> {
   }
 
   render = () => {
-    const passDownProps = omit(this.props, 'addresses', 'loadAddresses', 'saveAddress', 'deleteAddress')
+    const passDownProps = omit(
+      this.props,
+      'addresses',
+      'loadAddresses',
+      'saveAddress',
+      'deleteAddress'
+    )
 
     return (
       <SelectInput
@@ -49,13 +55,14 @@ export default class AddressInput extends React.Component<Props> {
         renderAfter={this.renderAfter}
         renderItem={this.renderItem}
         getItemValue={this.getItemValue}
-        getSearchResults={this.getSearchResults} />
+        getSearchResults={this.getSearchResults}
+      />
     )
   }
 
   renderAfter = (props: Props) => {
     if (this.canSave()) {
-      return <SaveIcon id='saveIcon' onSave={this.handleSave} />
+      return <SaveIcon id="saveIcon" onSave={this.handleSave} />
     } else {
       return <DropdownButton {...props} />
     }
@@ -63,7 +70,12 @@ export default class AddressInput extends React.Component<Props> {
 
   renderItem = (item: ItemType, { onSelect }: { onSelect: Function }) => {
     return (
-      <div className={styles.addressItem} key={item.label} tabIndex={0} onClick={onSelect}>
+      <div
+        className={styles.addressItem}
+        key={item.label}
+        tabIndex={0}
+        onClick={onSelect}
+      >
         <div className={styles.meta}>
           <div className={styles.label}>{item.label}</div>
           <div className={styles.value}>{item.value}</div>
@@ -73,7 +85,8 @@ export default class AddressInput extends React.Component<Props> {
             id={`deleteIcon${item.value}`}
             className={styles.deleteIcon}
             tabIndex={0}
-            onClick={this.handleDelete(item)} />
+            onClick={this.handleDelete(item)}
+          />
         </div>
       </div>
     )
@@ -112,19 +125,26 @@ export default class AddressInput extends React.Component<Props> {
     return item.value
   }
 
-  getSearchResults = (items: Array<ItemType>, term: string): Array<ItemType> => {
+  getSearchResults = (
+    items: Array<ItemType>,
+    term: string
+  ): Array<ItemType> => {
     const sifter = new Sifter(items)
     const result = sifter.search(term, {
       fields: ['label', 'value'],
       sort: [{ field: 'label', direction: 'asc' }]
     })
-    return result.items.map((resultItem) => items[resultItem.id])
+    return result.items.map(resultItem => items[resultItem.id])
   }
 
   canSave = (): boolean => {
     const address = this.props.value
     const { addresses } = this.props
 
-    return trim(address) !== '' && wallet.isAddress(address) && !values(addresses).includes(address)
+    return (
+      trim(address) !== '' &&
+      wallet.isAddress(address) &&
+      !values(addresses).includes(address)
+    )
   }
 }

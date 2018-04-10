@@ -9,6 +9,6 @@ const mapAppDataToProps = ({ blockHeight }): Object => ({
   blockHeight
 })
 
-export default compose(
-  withData(appActions, mapAppDataToProps)
-)(WalletBlockHeight)
+export default compose(withData(appActions, mapAppDataToProps))(
+  WalletBlockHeight
+)

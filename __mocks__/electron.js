@@ -5,7 +5,7 @@ module.exports = {
     }
   },
   shell: {
-    openExternal: (url) => {
+    openExternal: url => {
       return true
     }
   }

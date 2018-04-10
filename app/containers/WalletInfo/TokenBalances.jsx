@@ -14,7 +14,7 @@ import styles from './TokenBalances.scss'
 
 type Props = {
   tokenBalances: Array<TokenBalanceType>,
-  showModal: Function,
+  showModal: Function
 }
 
 const TokenBalances = ({ tokenBalances, showModal }: Props) => (
@@ -33,12 +33,13 @@ const TokenBalances = ({ tokenBalances, showModal }: Props) => (
         return (
           <tr key={`${symbol}${index}`}>
             <td onClick={() => showModal(MODAL_TYPES.TOKEN_INFO, { token })}>
-              <span className={styles.symbol}><InfoOutline className={styles.symbolIcon} />{symbol}</span>
+              <span className={styles.symbol}>
+                <InfoOutline className={styles.symbolIcon} />
+                {symbol}
+              </span>
             </td>
             <td>
-              <Tooltip
-                title={formattedBalance}
-                disabled={isZero(balance)}>
+              <Tooltip title={formattedBalance} disabled={isZero(balance)}>
                 {formattedBalanceDisplay}
               </Tooltip>
             </td>

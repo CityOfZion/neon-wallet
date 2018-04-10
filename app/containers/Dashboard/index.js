@@ -3,7 +3,15 @@ import { connect, type MapStateToProps } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
 import { omit } from 'lodash'
-import { withCall, withData, withRecall, withActions, withProgressComponents, alreadyLoadedStrategy, progressValues } from 'spunky'
+import {
+  withCall,
+  withData,
+  withRecall,
+  withActions,
+  withProgressComponents,
+  alreadyLoadedStrategy,
+  progressValues
+} from 'spunky'
 
 import Loader from '../../components/Loader'
 import accountActions from '../../actions/accountActions'
@@ -33,10 +41,16 @@ const actionCreators = {
   sendTransaction
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(actionCreators, dispatch)
 
 const mapAccountActionsToProps = (actions, props) => ({
-  loadWalletData: () => actions.call({ net: props.net, address: props.address, tokens: props.tokens })
+  loadWalletData: () =>
+    actions.call({
+      net: props.net,
+      address: props.address,
+      tokens: props.tokens
+    })
 })
 
 export default compose(
@@ -45,11 +59,15 @@ export default compose(
   withAuthData(),
   withFilteredTokensData(),
   withCall(accountActions),
-  withProgressComponents(accountActions, {
-    [LOADING]: Loader
-  }, {
-    strategy: alreadyLoadedStrategy
-  }),
+  withProgressComponents(
+    accountActions,
+    {
+      [LOADING]: Loader
+    },
+    {
+      strategy: alreadyLoadedStrategy
+    }
+  ),
   withData(accountActions, mapAccountDataToProps),
   withRecall(accountActions, ['networkId']),
   withActions(accountActions, mapAccountActionsToProps)

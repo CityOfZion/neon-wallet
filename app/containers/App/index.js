@@ -2,7 +2,13 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
-import { withCall, withRecall, withProgressComponents, alreadyLoadedStrategy, progressValues } from 'spunky'
+import {
+  withCall,
+  withRecall,
+  withProgressComponents,
+  alreadyLoadedStrategy,
+  progressValues
+} from 'spunky'
 
 import appActions from '../../actions/appActions'
 import authActions from '../../actions/authActions'
@@ -29,7 +35,8 @@ const actionCreators = {
   showErrorNotification
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(actionCreators, dispatch)
 
 export default compose(
   // Old way of fetching data, need to refactor this out...
@@ -39,33 +46,45 @@ export default compose(
   // fetches that depend on knowing the selected network.
   withCall(networkActions),
   withNetworkData(),
-  withProgressComponents(networkActions, {
-    [LOADING]: Loading,
-    [FAILED]: Failed
-  }, {
-    strategy: alreadyLoadedStrategy
-  }),
+  withProgressComponents(
+    networkActions,
+    {
+      [LOADING]: Loading,
+      [FAILED]: Failed
+    },
+    {
+      strategy: alreadyLoadedStrategy
+    }
+  ),
 
   // Fetch application data based upon the selected network.  Reload data when the network changes.
   withCall(appActions),
   withRecall(appActions, ['networkId']),
-  withProgressComponents(appActions, {
-    [LOADING]: Loading,
-    [FAILED]: Failed
-  }, {
-    strategy: everLoadedStrategy
-  }),
+  withProgressComponents(
+    appActions,
+    {
+      [LOADING]: Loading,
+      [FAILED]: Failed
+    },
+    {
+      strategy: everLoadedStrategy
+    }
+  ),
 
   // Fetch prices data based based upon the selected currency.  Reload data with the currency changes.
   withCurrencyData(),
   withCall(pricesActions),
   withRecall(pricesActions, ['currency']),
-  withProgressComponents(pricesActions, {
-    [LOADING]: Loading,
-    [FAILED]: Failed
-  }, {
-    strategy: alreadyLoadedStrategy
-  }),
+  withProgressComponents(
+    pricesActions,
+    {
+      [LOADING]: Loading,
+      [FAILED]: Failed
+    },
+    {
+      strategy: alreadyLoadedStrategy
+    }
+  ),
 
   // Navigate to the home or dashboard when the user logs in or out.
   withLoginRedirect,

@@ -23,7 +23,7 @@ type Props = {
     [key: SymbolType]: string
   },
   tokenToMint: SymbolType,
-  showTokensModal: () => any,
+  showTokensModal: () => any
 }
 
 type State = {
@@ -35,7 +35,7 @@ class SelectToken extends React.Component<Props, State> {
     selectedAsset: Object.keys(this.props.assetBalances)[0]
   }
 
-  componentWillReceiveProps (nextProps: Props) {
+  componentWillReceiveProps(nextProps: Props) {
     if (this.props.assetBalances !== nextProps.assetBalances) {
       this.setState({
         selectedAsset: Object.keys(nextProps.assetBalances)[0]
@@ -43,7 +43,7 @@ class SelectToken extends React.Component<Props, State> {
     }
   }
 
-  render () {
+  render() {
     const {
       onChangeToken,
       showTokensModal,
@@ -70,7 +70,9 @@ class SelectToken extends React.Component<Props, State> {
         </div>
         <div className={styles.section}>
           <div className={styles.heading}>
-            <strong>Fill in the details below to participate in a token sale</strong>
+            <strong>
+              Fill in the details below to participate in a token sale
+            </strong>
           </div>
           <div className={styles.content}>
             <div className={styles.mint}>
@@ -81,7 +83,7 @@ class SelectToken extends React.Component<Props, State> {
                   </div>
                   <div>
                     <AssetInput
-                      placeholder='Choose token'
+                      placeholder="Choose token"
                       symbols={Object.keys(tokenBalances)}
                       value={tokenToMint}
                       onChange={symbol => onChangeToken(symbol)}
@@ -90,11 +92,12 @@ class SelectToken extends React.Component<Props, State> {
                   </div>
                 </div>
                 <div>
-                  <div className={styles.label}>
-                    Token not in the list?
-                  </div>
+                  <div className={styles.label}>Token not in the list?</div>
                   <div>
-                    <Button onClick={() => showTokensModal()} className={styles.purchaseBtn}>
+                    <Button
+                      onClick={() => showTokensModal()}
+                      className={styles.purchaseBtn}
+                    >
                       + Add a new token to purchase
                     </Button>
                   </div>
@@ -102,25 +105,33 @@ class SelectToken extends React.Component<Props, State> {
               </div>
 
               <div className={styles.footer}>
-                {token &&
-                <div>
-                  <div><strong>Token Script Hash:</strong> {token.scriptHash}</div>
-                  <div><strong>Token Name:</strong> {token.name}</div>
-                </div>
-                }
+                {token && (
+                  <div>
+                    <div>
+                      <strong>Token Script Hash:</strong> {token.scriptHash}
+                    </div>
+                    <div>
+                      <strong>Token Name:</strong> {token.name}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
             <div className={styles.assets}>
               <div className={styles.assetsBody}>
                 <div>
-                  <div className={styles.label}>What are you purchasing with?</div>
+                  <div className={styles.label}>
+                    What are you purchasing with?
+                  </div>
                   <AssetInput
                     symbols={Object.keys(assetBalances)}
                     value={selectedAsset}
-                    onChange={asset => this.setState({ selectedAsset: asset }, () => {
-                      onChangeAmount(asset, '')
-                    })}
+                    onChange={asset =>
+                      this.setState({ selectedAsset: asset }, () => {
+                        onChangeAmount(asset, '')
+                      })
+                    }
                     className={styles.assetInput}
                   />
                 </div>
@@ -130,7 +141,7 @@ class SelectToken extends React.Component<Props, State> {
                     className={styles.numberInput}
                     max={assetBalance}
                     value={balanceToSend}
-                    placeholder='Amount'
+                    placeholder="Amount"
                     options={{ numeralDecimalScale: COIN_DECIMAL_LENGTH }}
                     onChange={amount => onChangeAmount(selectedAsset, amount)}
                   />

@@ -15,16 +15,16 @@ type Props = {
 export default class ReceiveModal extends Component<Props> {
   canvas: ?HTMLCanvasElement
 
-  render () {
+  render() {
     const { hideModal, address } = this.props
     return (
       <BaseModal
         onAfterOpen={() => {
-          QRCode.toCanvas(this.canvas, address, { version: 5 }, (err) => {
+          QRCode.toCanvas(this.canvas, address, { version: 5 }, err => {
             if (err) console.log(err)
           })
         }}
-        title='NEO Wallet Address'
+        title="NEO Wallet Address"
         hideModal={hideModal}
         style={{
           content: {
@@ -37,11 +37,23 @@ export default class ReceiveModal extends Component<Props> {
           <div>Your Public NEO Address:</div>
           <div className={styles.address}>
             <Address className={styles.externalLink} address={address} />
-            <CopyToClipboard text={address} tooltip='Copy Public Address' />
+            <CopyToClipboard text={address} tooltip="Copy Public Address" />
           </div>
-          <div className={styles.canvas}><canvas ref={(node) => { this.canvas = node }} /></div>
-          <div>Only send assets, such as NEO and GAS, and tokens, such as RPX, that are compatible with the NEO Blockchain.</div>
-          <div>Sending any other digital asset or token will result in permanent loss.</div>
+          <div className={styles.canvas}>
+            <canvas
+              ref={node => {
+                this.canvas = node
+              }}
+            />
+          </div>
+          <div>
+            Only send assets, such as NEO and GAS, and tokens, such as RPX, that
+            are compatible with the NEO Blockchain.
+          </div>
+          <div>
+            Sending any other digital asset or token will result in permanent
+            loss.
+          </div>
         </div>
       </BaseModal>
     )

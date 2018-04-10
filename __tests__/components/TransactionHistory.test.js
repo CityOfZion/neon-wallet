@@ -98,9 +98,31 @@ describe('TransactionHistory', () => {
 
     const transactionList = wrapper.find('#transactionList')
     expect(transactionList.children().length).toEqual(2)
-    expect(transactionList.childAt(0).find('.txid').first().text()).toEqual(transactions[0].txid)
-    expect(transactionList.childAt(1).find('.txid').first().text()).toEqual(transactions[1].txid)
-    expect(transactionList.childAt(0).find('.amountNEO').text()).toEqual('50 NEO')
-    expect(transactionList.childAt(1).find('.amountGAS').text()).toEqual('0.40000000 GAS')
+    expect(
+      transactionList
+        .childAt(0)
+        .find('.txid')
+        .first()
+        .text()
+    ).toEqual(transactions[0].txid)
+    expect(
+      transactionList
+        .childAt(1)
+        .find('.txid')
+        .first()
+        .text()
+    ).toEqual(transactions[1].txid)
+    expect(
+      transactionList
+        .childAt(0)
+        .find('.amountNEO')
+        .text()
+    ).toEqual('50 NEO')
+    expect(
+      transactionList
+        .childAt(1)
+        .find('.amountGAS')
+        .text()
+    ).toEqual('0.40000000 GAS')
   })
 })

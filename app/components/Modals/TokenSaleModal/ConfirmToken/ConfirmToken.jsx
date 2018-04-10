@@ -18,34 +18,43 @@ type Props = {
 }
 
 export default class ConfirmToken extends React.Component<Props> {
-  render () {
+  render() {
     const { token, processing, onConfirm, onCancel } = this.props
 
     return (
       <div className={classNames(styles.confirmToken, this.props.className)}>
-        <div className={styles.heading}>
-          Verify Purchase Details
-        </div>
+        <div className={styles.heading}>Verify Purchase Details</div>
         <div className={styles.details}>
-          <p>Sending <strong>{this.getAmounts()}</strong> to:</p>
           <p>
-            Name: <strong>{token.name}</strong><br />
-            Symbol: <strong>{token.symbol}</strong><br />
-            Total Supply: <strong>{toFixedDecimals(token.totalSupply, token.decimals)}</strong><br />
-            Script Hash: <strong>{token.scriptHash}</strong><br />
+            Sending <strong>{this.getAmounts()}</strong> to:
+          </p>
+          <p>
+            Name: <strong>{token.name}</strong>
+            <br />
+            Symbol: <strong>{token.symbol}</strong>
+            <br />
+            Total Supply:{' '}
+            <strong>
+              {toFixedDecimals(token.totalSupply, token.decimals)}
+            </strong>
+            <br />
+            Script Hash: <strong>{token.scriptHash}</strong>
+            <br />
           </p>
         </div>
 
         <Button onClick={onCancel}>&laquo; Cancel</Button>
-        <Button onClick={onConfirm} disabled={processing}>Confirm Purchase &raquo;</Button>
+        <Button onClick={onConfirm} disabled={processing}>
+          Confirm Purchase &raquo;
+        </Button>
       </div>
     )
   }
 
   getAmounts = () => {
-    const amounts = map(this.props.assetBalancesToSend, (amount, symbol) => (
+    const amounts = map(this.props.assetBalancesToSend, (amount, symbol) =>
       [amount || 0, symbol].join(' ')
-    ))
+    )
 
     return toSentence(amounts)
   }

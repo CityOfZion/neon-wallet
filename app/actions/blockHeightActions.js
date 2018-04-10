@@ -10,7 +10,10 @@ type Props = {
 
 export const ID = 'BLOCK_HEIGHT'
 
-export default createActions(ID, ({ networkId }: Props = {}) => async (state: Object) => {
-  const network = getNetworkById(networkId)
-  return api.loadBalance(api.getWalletDBHeightFrom, { net: network })
-})
+export default createActions(
+  ID,
+  ({ networkId }: Props = {}) => async (state: Object) => {
+    const network = getNetworkById(networkId)
+    return api.loadBalance(api.getWalletDBHeightFrom, { net: network })
+  }
+)

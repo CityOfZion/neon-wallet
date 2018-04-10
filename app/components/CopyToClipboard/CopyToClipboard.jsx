@@ -13,10 +13,10 @@ import { ONE_SECOND_MS } from '../../core/time'
 import styles from './CopyToClipboard.scss'
 
 type Props = {
-    text: string,
-    tooltip?: string,
-    className?: string,
-    style?: Object
+  text: string,
+  tooltip?: string,
+  className?: string,
+  style?: Object
 }
 
 type State = {
@@ -40,7 +40,7 @@ class CopyToClipboard extends Component<Props, State> {
     }, ONE_SECOND_MS)
   }
 
-  render () {
+  render() {
     const { text, tooltip = '', className = '', style } = this.props
     const { copyIconShown } = this.state
     return (
@@ -49,8 +49,15 @@ class CopyToClipboard extends Component<Props, State> {
         className={classNames(styles.copyKey, className)}
         style={style}
       >
-        {tooltip ? <Tooltip title={tooltip}>{copyIconShown ? <Copy /> : <CheckCircle />}</Tooltip> : <Copy />}
-      </span>)
+        {tooltip ? (
+          <Tooltip title={tooltip}>
+            {copyIconShown ? <Copy /> : <CheckCircle />}
+          </Tooltip>
+        ) : (
+          <Copy />
+        )}
+      </span>
+    )
   }
 }
 

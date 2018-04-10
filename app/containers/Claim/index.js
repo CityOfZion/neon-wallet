@@ -12,9 +12,10 @@ const mapStateToProps = (state: Object) => ({
   disableClaimButton: getDisableClaimButton(state)
 })
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ doGasClaim }, dispatch)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ doGasClaim }, dispatch)
 
-const mapClaimsDataToProps = (claims) => ({
+const mapClaimsDataToProps = claims => ({
   claimAmount: claims.total
 })
 

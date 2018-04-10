@@ -3,7 +3,10 @@ import { openExternal } from './electron'
 import { EXPLORERS } from '../core/constants'
 import { isMainNetwork } from '../core/networks'
 
-export const getExplorerBaseURL = (networkId: string, explorer: ExplorerType) => {
+export const getExplorerBaseURL = (
+  networkId: string,
+  explorer: ExplorerType
+) => {
   let baseURL
   if (explorer === EXPLORERS.NEO_TRACKER) {
     if (isMainNetwork(networkId)) {
@@ -33,7 +36,11 @@ export const getExplorerBaseURL = (networkId: string, explorer: ExplorerType) =>
   return baseURL
 }
 
-export const getExplorerTxLink = (networkId: string, explorer: ExplorerType, txId: string) => {
+export const getExplorerTxLink = (
+  networkId: string,
+  explorer: ExplorerType,
+  txId: string
+) => {
   const baseURL = getExplorerBaseURL(networkId, explorer)
 
   if (explorer === EXPLORERS.NEO_TRACKER) {
@@ -47,7 +54,11 @@ export const getExplorerTxLink = (networkId: string, explorer: ExplorerType, txI
   }
 }
 
-export const getExplorerAddressLink = (networkId: string, explorer: ExplorerType, address: string) => {
+export const getExplorerAddressLink = (
+  networkId: string,
+  explorer: ExplorerType,
+  address: string
+) => {
   const baseURL = getExplorerBaseURL(networkId, explorer)
 
   if (explorer === EXPLORERS.NEO_TRACKER) {
@@ -61,7 +72,11 @@ export const getExplorerAddressLink = (networkId: string, explorer: ExplorerType
   }
 }
 
-export const getExplorerAssetLink = (networkId: string, explorer: ExplorerType, assetId: string) => {
+export const getExplorerAssetLink = (
+  networkId: string,
+  explorer: ExplorerType,
+  assetId: string
+) => {
   const baseURL = getExplorerBaseURL(networkId, explorer)
 
   if (explorer === EXPLORERS.NEO_TRACKER) {
@@ -75,11 +90,20 @@ export const getExplorerAssetLink = (networkId: string, explorer: ExplorerType, 
   }
 }
 
-export const openExplorerTx = (networkId: string, explorer: ExplorerType, txId: string) =>
-  openExternal(getExplorerTxLink(networkId, explorer, txId))
+export const openExplorerTx = (
+  networkId: string,
+  explorer: ExplorerType,
+  txId: string
+) => openExternal(getExplorerTxLink(networkId, explorer, txId))
 
-export const openExplorerAddress = (networkId: string, explorer: ExplorerType, address: string) =>
-  openExternal(getExplorerAddressLink(networkId, explorer, address))
+export const openExplorerAddress = (
+  networkId: string,
+  explorer: ExplorerType,
+  address: string
+) => openExternal(getExplorerAddressLink(networkId, explorer, address))
 
-export const openExplorerAsset = (networkId: string, explorer: ExplorerType, assetId: string) =>
-  openExternal(getExplorerAssetLink(networkId, explorer, assetId))
+export const openExplorerAsset = (
+  networkId: string,
+  explorer: ExplorerType,
+  assetId: string
+) => openExternal(getExplorerAssetLink(networkId, explorer, assetId))

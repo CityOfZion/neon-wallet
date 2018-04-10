@@ -13,17 +13,21 @@ type Props = {
 }
 
 export default class TransactionHistory extends Component<Props> {
-  render () {
+  render() {
     const { transactions, loading } = this.props
 
     return (
-      <div id='transactionInfo' className={styles.transactionInfo}>
-        <div id='columnHeader' className={styles.columnHeader}>
-          Transaction History {loading && <Loader className={styles.updateLoader} />}
+      <div id="transactionInfo" className={styles.transactionInfo}>
+        <div id="columnHeader" className={styles.columnHeader}>
+          Transaction History{' '}
+          {loading && <Loader className={styles.updateLoader} />}
         </div>
         <div className={styles.headerSpacer} />
         {!loading && (
-          <Transactions className={styles.transactions} transactions={transactions} />
+          <Transactions
+            className={styles.transactions}
+            transactions={transactions}
+          />
         )}
       </div>
     )

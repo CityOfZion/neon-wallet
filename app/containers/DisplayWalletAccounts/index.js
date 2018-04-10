@@ -23,9 +23,10 @@ const mapStateToProps = (state: Object) => ({
   passphrase: getPassphrase(state)
 })
 
-const mapDispatchToProps = dispatch => bindActionCreators({ resetKey }, dispatch)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ resetKey }, dispatch)
 
-const mapAccountActionsToProps = (actions) => ({
+const mapAccountActionsToProps = actions => ({
   saveAccount: (label, address, key) => actions.call({ label, address, key })
 })
 
@@ -33,5 +34,8 @@ export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withActions(saveAccountActions, mapAccountActionsToProps),
   withSuccessNotification(saveAccountActions, 'Account saved!'),
-  withFailureNotification(saveAccountActions, (message) => `Error saving account: ${message}`)
+  withFailureNotification(
+    saveAccountActions,
+    message => `Error saving account: ${message}`
+  )
 )(DisplayWalletAccounts)

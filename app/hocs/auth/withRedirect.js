@@ -18,32 +18,31 @@ type Options = {
   propName?: string
 }
 
-export default function withRedirect (
+export default function withRedirect(
   route: string,
   strategy: Function,
   { propName = '__address__' }: Options = {}
 ) {
-  const mapAuthDataToProps = (account) => ({
+  const mapAuthDataToProps = account => ({
     [propName]: account && account.address
   })
 
   return (Component: Class<React.Component<*>>) => {
     class WrappedComponent extends React.Component<Props> {
-      componentWillReceiveProps (nextProps) {
+      componentWillReceiveProps(nextProps) {
         if (strategy(this.props[propName], nextProps[propName])) {
           this.props.history.push(route)
         }
       }
 
-      render () {
+      render() {
         const passDownProps = omit(this.props, propName)
         return <Component {...passDownProps} />
       }
     }
 
-    return compose(
-      withRouter,
-      withData(authActions, mapAuthDataToProps)
-    )(WrappedComponent)
+    return compose(withRouter, withData(authActions, mapAuthDataToProps))(
+      WrappedComponent
+    )
   }
 }

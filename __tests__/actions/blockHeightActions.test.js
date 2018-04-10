@@ -6,9 +6,9 @@ import { mockPromiseResolved } from '../testHelpers'
 
 describe('blockHeightActions', () => {
   beforeEach(() => {
-    jest.spyOn(api.neoscan, 'getWalletDBHeight').mockImplementation(
-      mockPromiseResolved(586435)
-    )
+    jest
+      .spyOn(api.neoscan, 'getWalletDBHeight')
+      .mockImplementation(mockPromiseResolved(586435))
   })
 
   afterEach(() => {
@@ -30,7 +30,7 @@ describe('blockHeightActions', () => {
       })
     })
 
-    test("payload function requests the network's block height", async (done) => {
+    test("payload function requests the network's block height", async done => {
       const call = blockHeightActions.call({ networkId: TEST_NETWORK_ID })
       expect(await call.payload.fn({})).toEqual(586435)
       done()

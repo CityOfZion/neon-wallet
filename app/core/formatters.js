@@ -35,7 +35,8 @@ export const formatBalance = (
 }
 
 export const toFixedDecimals = (value: ValueType, decimals: number): string => {
-  const decimalLength = (decimals || decimals === 0) ? decimals : COIN_DECIMAL_LENGTH
+  const decimalLength =
+    decimals || decimals === 0 ? decimals : COIN_DECIMAL_LENGTH
   return toBigNumber(value).toFixed(decimalLength)
 }
 

@@ -15,15 +15,21 @@ export default class NetworkSwitch extends Component<Props> {
     networks: getNetworks()
   }
 
-  render () {
+  render() {
     const { networkId, networks } = this.props
     return (
-      <div id='network' className={styles.navBarItem}>
+      <div id="network" className={styles.navBarItem}>
         <span className={styles.navBarItemLabel}>Running on</span>
-        <select defaultValue={networkId} onChange={this.handleChange} className='networkSelector'>
-          {networks.map(({ label, id }: NetworkItemType) =>
-            <option key={`networkOption${id}`} value={id}>{label}</option>
-          )}
+        <select
+          defaultValue={networkId}
+          onChange={this.handleChange}
+          className="networkSelector"
+        >
+          {networks.map(({ label, id }: NetworkItemType) => (
+            <option key={`networkOption${id}`} value={id}>
+              {label}
+            </option>
+          ))}
         </select>
       </div>
     )

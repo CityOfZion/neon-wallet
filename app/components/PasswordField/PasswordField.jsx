@@ -28,18 +28,22 @@ class PasswordField extends Component<Props, State> {
     }))
   }
 
-  render () {
+  render() {
     const { showKey } = this.state
     return (
       <div className={passwordFieldStyles.passwordField}>
-        <input
-          type={showKey ? 'text' : 'password'}
-          {...this.props}
-        />
-        { showKey
-          ? <FaEyeSlash className={passwordFieldStyles.viewKey} onClick={this.toggleVisibility} />
-          : <FaEye className={passwordFieldStyles.viewKey} onClick={this.toggleVisibility} />
-        }
+        <input type={showKey ? 'text' : 'password'} {...this.props} />
+        {showKey ? (
+          <FaEyeSlash
+            className={passwordFieldStyles.viewKey}
+            onClick={this.toggleVisibility}
+          />
+        ) : (
+          <FaEye
+            className={passwordFieldStyles.viewKey}
+            onClick={this.toggleVisibility}
+          />
+        )}
       </div>
     )
   }

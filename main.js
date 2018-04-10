@@ -8,14 +8,11 @@ let mainWindow = null
 // adapted from https://github.com/chentsulin/electron-react-boilerplate
 const installExtensions = () => {
   const installer = require('electron-devtools-installer')
-  const extensions = [
-    'REACT_DEVELOPER_TOOLS',
-    'REDUX_DEVTOOLS'
-  ]
+  const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS']
 
-  return Promise
-    .all(extensions.map(name => installer.default(installer[name])))
-    .catch(console.log)
+  return Promise.all(
+    extensions.map(name => installer.default(installer[name]))
+  ).catch(console.log)
 }
 
 app.on('window-all-closed', () => {
@@ -39,18 +36,14 @@ app.on('ready', () => {
     }
 
     if (process.platform !== 'darwin') {
-    // Windows/Linxu Menu
+      // Windows/Linxu Menu
       mainWindow.setMenu(null)
     } else {
       // Menu is required for MacOS
       const template = [
         {
           label: app.getName(),
-          submenu: [
-            { role: 'about' },
-            { type: 'separator' },
-            { role: 'quit' }
-          ]
+          submenu: [{ role: 'about' }, { type: 'separator' }, { role: 'quit' }]
         },
         {
           label: 'Edit',
@@ -65,17 +58,35 @@ app.on('ready', () => {
         },
         {
           label: 'View',
-          submenu: [
-            {role: 'toggledevtools'}
-          ]
+          submenu: [{ role: 'toggledevtools' }]
         },
         {
           role: 'help',
           submenu: [
-            { label: 'City of Zion', click () { shell.openExternal('https://cityofzion.io/') } },
-            { label: 'GitHub', click () { shell.openExternal('https://github.com/CityOfZion') } },
-            { label: 'NEO Reddit', click () { shell.openExternal('https://www.reddit.com/r/NEO/') } },
-            { label: 'Slack', click () { shell.openExternal('https://neosmarteconomy.slack.com') } }
+            {
+              label: 'City of Zion',
+              click() {
+                shell.openExternal('https://cityofzion.io/')
+              }
+            },
+            {
+              label: 'GitHub',
+              click() {
+                shell.openExternal('https://github.com/CityOfZion')
+              }
+            },
+            {
+              label: 'NEO Reddit',
+              click() {
+                shell.openExternal('https://www.reddit.com/r/NEO/')
+              }
+            },
+            {
+              label: 'Slack',
+              click() {
+                shell.openExternal('https://neosmarteconomy.slack.com')
+              }
+            }
           ]
         }
       ]
@@ -84,7 +95,13 @@ app.on('ready', () => {
     }
 
     const inputMenu = Menu.buildFromTemplate([
-      { label: 'Paste', accelerator: 'CmdOrCtrl+V', click () { mainWindow.webContents.paste() } }
+      {
+        label: 'Paste',
+        accelerator: 'CmdOrCtrl+V',
+        click() {
+          mainWindow.webContents.paste()
+        }
+      }
     ])
 
     mainWindow.webContents.on('context-menu', (event, params) => {
@@ -94,13 +111,15 @@ app.on('ready', () => {
     if (process.env.START_HOT) {
       mainWindow.loadURL(`http://localhost:${port}/dist`)
     } else {
-      mainWindow.loadURL(url.format({
-        protocol: 'file',
-        slashes: true,
-        pathname: path.join(__dirname, '/app/dist/index.html')
-      }))
+      mainWindow.loadURL(
+        url.format({
+          protocol: 'file',
+          slashes: true,
+          pathname: path.join(__dirname, '/app/dist/index.html')
+        })
+      )
     }
-    mainWindow.on('closed', function () {
+    mainWindow.on('closed', function() {
       mainWindow = null
     })
   }

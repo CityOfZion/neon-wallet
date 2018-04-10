@@ -32,13 +32,18 @@ export default class AddressInput extends React.Component<Props, State> {
       <Tooltip
         className={styles.saveTooltip}
         interactive
-        position='left'
-        trigger='manual'
+        position="left"
+        trigger="manual"
         open={this.state.saving}
         html={this.renderTooltip()}
-        onRequestClose={this.handleToggle}>
-        <Tooltip title='Save to Address Book' position='top'>
-          <Save className={styles.saveIcon} tabIndex={0} onClick={this.handleClickIcon} />
+        onRequestClose={this.handleToggle}
+      >
+        <Tooltip title="Save to Address Book" position="top">
+          <Save
+            className={styles.saveIcon}
+            tabIndex={0}
+            onClick={this.handleClickIcon}
+          />
         </Tooltip>
       </Tooltip>
     )
@@ -50,13 +55,12 @@ export default class AddressInput extends React.Component<Props, State> {
         <label className={styles.label}>Address Name:</label>
         <input
           className={styles.input}
-          type='text'
-          placeholder='Enter a name for this address'
+          type="text"
+          placeholder="Enter a name for this address"
           value={this.state.name}
-          onChange={this.handleChange} />
-        <Button
-          className={styles.button}
-          onClick={this.handleSave}>
+          onChange={this.handleChange}
+        />
+        <Button className={styles.button} onClick={this.handleSave}>
           Save to Address Book
         </Button>
       </div>

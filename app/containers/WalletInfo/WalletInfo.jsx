@@ -9,7 +9,12 @@ import Tooltip from '../../components/Tooltip'
 import Button from '../../components/Button'
 
 import { formatGAS, formatFiat, formatNEO } from '../../core/formatters'
-import { ASSETS, CURRENCIES, MODAL_TYPES, ENDED_ICO_TOKENS } from '../../core/constants'
+import {
+  ASSETS,
+  CURRENCIES,
+  MODAL_TYPES,
+  ENDED_ICO_TOKENS
+} from '../../core/constants'
 import { toNumber } from '../../core/math'
 
 import MdSync from 'react-icons/lib/md/sync'
@@ -33,11 +38,11 @@ type Props = {
   allTokens: Array<TokenItemType>,
   setUserGeneratedTokens: Function,
   networks: Array<NetworkItemType>,
-  networkId: string,
+  networkId: string
 }
 
 export default class WalletInfo extends Component<Props> {
-  render () {
+  render() {
     const {
       address,
       NEO,
@@ -69,29 +74,29 @@ export default class WalletInfo extends Component<Props> {
     const currencySymbol = CURRENCIES[currencyCode].symbol
 
     return (
-      <div id='accountInfo'>
-        <div id='balance'>
-          <div className='split'>
-            <div className='label'>{ASSETS.NEO}</div>
-            <div className='amountBig amountNeo'>{formatNEO(NEO)}</div>
-            <div className='fiat neoWalletValue'>
+      <div id="accountInfo">
+        <div id="balance">
+          <div className="split">
+            <div className="label">{ASSETS.NEO}</div>
+            <div className="amountBig amountNeo">{formatNEO(NEO)}</div>
+            <div className="fiat neoWalletValue">
               {currencySymbol}
               {formatFiat(neoValue)} {displayCurrencyCode}
             </div>
           </div>
-          <div className='split'>
-            <div className='label'>{ASSETS.GAS}</div>
-            <div className='amountBig amountGas'>
+          <div className="split">
+            <div className="label">{ASSETS.GAS}</div>
+            <div className="amountBig amountGas">
               <Tooltip title={formatGAS(GAS)} disabled={GAS === 0}>
                 {formatGAS(GAS, true)}
               </Tooltip>
             </div>
-            <div className='fiat gasWalletValue'>
+            <div className="fiat gasWalletValue">
               {currencySymbol}
               {formatFiat(gasValue)} {displayCurrencyCode}
             </div>
           </div>
-          <div className='fiat walletTotal'>
+          <div className="fiat walletTotal">
             Total {currencySymbol}
             {formatFiat(totalValue)} {displayCurrencyCode}
           </div>
@@ -102,12 +107,12 @@ export default class WalletInfo extends Component<Props> {
               'refreshBalance'
             )}
           >
-            <Tooltip title='Refresh account balance'>
-              <MdSync id='refresh' className={styles.refreshIcon} />
+            <Tooltip title="Refresh account balance">
+              <MdSync id="refresh" className={styles.refreshIcon} />
             </Tooltip>
           </div>
         </div>
-        <div className='spacer' />
+        <div className="spacer" />
         <Claim />
         <TokenBalances tokenBalances={tokenBalances} showModal={showModal} />
         <div

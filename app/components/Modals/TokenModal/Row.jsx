@@ -17,15 +17,15 @@ type Props = {
 }
 
 class Row extends Component<Props> {
-  scriptHashInput: ?HTMLInputElement;
+  scriptHashInput: ?HTMLInputElement
 
-  componentWillReceiveProps (nextProps: Props) {
+  componentWillReceiveProps(nextProps: Props) {
     if (nextProps.isScriptHashInvalid && this.scriptHashInput) {
       this.scriptHashInput.focus()
     }
   }
 
-  render () {
+  render() {
     const {
       token,
       onChangeScriptHash,
@@ -38,10 +38,10 @@ class Row extends Component<Props> {
           className={classNames(styles.rowURL, {
             [styles.rowError]: isScriptHashInvalid
           })}
-          type='text'
+          type="text"
           readOnly={!token.isUserGenerated}
           disabled={!token.isUserGenerated}
-          placeholder='script hash'
+          placeholder="script hash"
           ref={node => {
             this.scriptHashInput = node
           }}
@@ -51,11 +51,11 @@ class Row extends Component<Props> {
           }
         />
         {token.isUserGenerated ? (
-          <Tooltip title='Delete'>
+          <Tooltip title="Delete">
             <Delete onClick={onDelete} className={styles.icon} />
           </Tooltip>
         ) : (
-          <Tooltip title='This token cannot be changed'>
+          <Tooltip title="This token cannot be changed">
             <LockOutline className={styles.icon} />
           </Tooltip>
         )}

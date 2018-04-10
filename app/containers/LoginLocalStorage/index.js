@@ -8,12 +8,13 @@ import { nep2LoginActions } from '../../actions/authActions'
 
 import LoginLocalStorage from './LoginLocalStorage'
 
-const mapAccountsDataToProps = (accounts) => ({
+const mapAccountsDataToProps = accounts => ({
   accounts
 })
 
-const mapActionsToProps = (actions) => ({
-  loginNep2: (passphrase, encryptedWIF) => actions.call({ passphrase, encryptedWIF })
+const mapActionsToProps = actions => ({
+  loginNep2: (passphrase, encryptedWIF) =>
+    actions.call({ passphrase, encryptedWIF })
 })
 
 export default compose(

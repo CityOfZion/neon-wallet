@@ -26,9 +26,7 @@ class Dropdown extends React.Component<Props> {
   render = () => {
     return (
       <div className={classNames(styles.dropdown, this.props.className)}>
-        <div className={styles.anchor}>
-          {this.props.children}
-        </div>
+        <div className={styles.anchor}>{this.props.children}</div>
         {this.renderContent()}
       </div>
     )

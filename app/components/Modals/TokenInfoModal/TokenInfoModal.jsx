@@ -9,13 +9,13 @@ import { formatBalance, formatThousands } from '../../../core/formatters'
 import styles from './TokenInfoModal.scss'
 
 type Props = {
-    hideModal: Function,
-    token: TokenType,
+  hideModal: Function,
+  token: TokenType
 }
 
 const TokenInfoModal = ({ hideModal, token }: Props) => (
   <BaseModal
-    title='Token Info'
+    title="Token Info"
     hideModal={hideModal}
     style={{
       content: {

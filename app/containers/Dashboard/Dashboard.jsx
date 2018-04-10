@@ -22,7 +22,7 @@ type Props = {
   NEO: string,
   GAS: string,
   tokenBalances: Array<TokenBalanceType>,
-  loadWalletData: Function,
+  loadWalletData: Function
 }
 
 const REFRESH_INTERVAL_MS = 30000
@@ -30,23 +30,23 @@ const REFRESH_INTERVAL_MS = 30000
 export default class Dashboard extends Component<Props> {
   walletDataInterval: ?number
 
-  componentDidMount () {
+  componentDidMount() {
     log(this.props.net, 'LOGIN', this.props.address) // only logging public information here
     this.addPolling()
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.removePolling()
   }
 
-  componentWillReceiveProps (nextProps: Props) {
+  componentWillReceiveProps(nextProps: Props) {
     if (this.props.loadWalletData !== nextProps.loadWalletData) {
       this.removePolling()
       this.addPolling()
     }
   }
 
-  render () {
+  render() {
     const {
       showModal,
       net,
@@ -58,7 +58,7 @@ export default class Dashboard extends Component<Props> {
     } = this.props
 
     return (
-      <div id='dashboard' className={styles.container}>
+      <div id="dashboard" className={styles.container}>
         <div className={styles.content}>
           <div className={styles.contentBox}>
             <div className={styles.walletButtons}>
@@ -99,7 +99,10 @@ export default class Dashboard extends Component<Props> {
   }
 
   addPolling = () => {
-    this.walletDataInterval = setInterval(this.props.loadWalletData, REFRESH_INTERVAL_MS)
+    this.walletDataInterval = setInterval(
+      this.props.loadWalletData,
+      REFRESH_INTERVAL_MS
+    )
   }
 
   removePolling = () => {
