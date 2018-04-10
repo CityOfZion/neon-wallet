@@ -5,7 +5,4 @@ import TokenModal from './TokenModal'
 import withNetworkData from '../../../hocs/withNetworkData'
 import withTokensData from '../../../hocs/withTokensData'
 
-export default compose(
-  withNetworkData(),
-  withTokensData()
-)(TokenModal)
+export default compose(withNetworkData(), withTokensData())(TokenModal)

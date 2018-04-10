@@ -9,6 +9,9 @@ type Props = {
 
 export const ID = 'NETWORK'
 
-export default createActions(ID, ({ networkId }: Props = {}) => (state: Object) => {
-  return networkId || MAIN_NETWORK_ID
-})
+export default createActions(
+  ID,
+  ({ networkId }: Props = {}) => (state: Object) => {
+    return networkId || MAIN_NETWORK_ID
+  }
+)

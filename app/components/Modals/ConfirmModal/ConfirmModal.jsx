@@ -6,16 +6,24 @@ import Button from '../../Button'
 import styles from './ConfirmModal.scss'
 
 type Props = {
-    title: string,
-    text: string,
-    onClick: Function,
-    onCancel: Function,
-    hideModal: Function,
-    width: string,
-    height: string,
+  title: string,
+  text: string,
+  onClick: Function,
+  onCancel: Function,
+  hideModal: Function,
+  width: string,
+  height: string
 }
 
-const ConfirmModal = ({ hideModal, title, onClick, onCancel, text, width, height }: Props) => (
+const ConfirmModal = ({
+  hideModal,
+  title,
+  onClick,
+  onCancel,
+  text,
+  width,
+  height
+}: Props) => (
   <BaseModal
     title={title}
     hideModal={hideModal}
@@ -31,21 +39,27 @@ const ConfirmModal = ({ hideModal, title, onClick, onCancel, text, width, height
     </div>
     <div className={styles.modalFooter}>
       <Button
-        id='confirm'
+        id="confirm"
         className={styles.actionButton}
         onClick={() => {
           onClick()
           hideModal()
-        }}>Confirm</Button>
+        }}
+      >
+        Confirm
+      </Button>
       <Button
-        id='cancel'
+        id="cancel"
         cancel
         onClick={() => {
           hideModal()
           if (onCancel) {
             onCancel()
           }
-        }}>Cancel</Button>
+        }}
+      >
+        Cancel
+      </Button>
     </div>
   </BaseModal>
 )

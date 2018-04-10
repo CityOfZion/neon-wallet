@@ -8,7 +8,7 @@ type Props = {
   onCancel: Function
 }
 
-export default function Failed (props: Props) {
+export default function Failed(props: Props) {
   return (
     <div className={styles.failed}>
       <p>Failed to load token data</p>

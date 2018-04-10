@@ -15,13 +15,16 @@ type Props = {
 export default class Claim extends Component<Props> {
   intervalId: ?number
 
-  render () {
+  render() {
     const disabled = this.isDisabled()
 
     return (
       <div>
-        <Tooltip title='You can claim GAS once every 5 minutes' disabled={!disabled}>
-          <Button id='claim' disabled={disabled} onClick={this.handleClaim}>
+        <Tooltip
+          title="You can claim GAS once every 5 minutes"
+          disabled={!disabled}
+        >
+          <Button id="claim" disabled={disabled} onClick={this.handleClaim}>
             Claim {this.getFormattedAmount()} GAS
           </Button>
         </Tooltip>

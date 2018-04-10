@@ -38,7 +38,13 @@ export default class NumberInput extends React.Component<Props> {
 
   render = () => {
     const { className } = this.props
-    const passDownProps = omit(this.props, 'max', 'options', 'onChange', 'className')
+    const passDownProps = omit(
+      this.props,
+      'max',
+      'options',
+      'onChange',
+      'className'
+    )
 
     return (
       <div className={classNames(styles.numberInput, className)}>
@@ -46,7 +52,8 @@ export default class NumberInput extends React.Component<Props> {
           {...passDownProps}
           className={styles.cleave}
           options={this.getOptions()}
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
         {this.renderMaxButton()}
       </div>
     )

@@ -15,18 +15,28 @@ type Props = {
 }
 
 export default class Transactions extends React.Component<Props> {
-  render () {
+  render() {
     const { className, transactions } = this.props
 
     if (transactions.length === 0) {
-      return <div className={classNames(styles.noTransactions, className)}>No transactions</div>
+      return (
+        <div className={classNames(styles.noTransactions, className)}>
+          No transactions
+        </div>
+      )
     }
 
     return (
-      <ul id='transactionList' className={classNames(styles.transactionList, className)}>
-        {transactions.map((tx) => (
+      <ul
+        id="transactionList"
+        className={classNames(styles.transactionList, className)}
+      >
+        {transactions.map(tx => (
           <li key={tx.txid} className={styles.row}>
-            <Transaction className={classNames(styles.txid, 'txid')} txid={tx.txid} />
+            <Transaction
+              className={classNames(styles.txid, 'txid')}
+              txid={tx.txid}
+            />
             {this.renderAmounts(tx)}
           </li>
         ))}
@@ -34,7 +44,7 @@ export default class Transactions extends React.Component<Props> {
     )
   }
 
-  renderAmounts (tx: Object) {
+  renderAmounts(tx: Object) {
     const forceRenderNEO = !isZero(tx[ASSETS.NEO]) || isZero(tx[ASSETS.GAS])
 
     return (
@@ -45,7 +55,7 @@ export default class Transactions extends React.Component<Props> {
     )
   }
 
-  renderAmount (tx: Object, symbol: SymbolType, forceRender: boolean = false) {
+  renderAmount(tx: Object, symbol: SymbolType, forceRender: boolean = false) {
     const amount = tx[symbol]
 
     if (forceRender || !isZero(amount)) {

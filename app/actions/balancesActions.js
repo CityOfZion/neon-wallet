@@ -15,16 +15,18 @@ type Props = {
 
 export const ID = 'BALANCES'
 
-async function getBalances ({ net, address, tokens }: Props) {
+async function getBalances({ net, address, tokens }: Props) {
   const endpoint = await api.loadBalance(api.getRPCEndpointFrom, { net })
 
   // token balances
-  const promises = tokens.map(async (token) => {
+  const promises = tokens.map(async token => {
     const { scriptHash } = token
 
     try {
       const response = await api.nep5.getToken(endpoint, scriptHash, address)
-      const balance = toBigNumber(response.balance || 0).round(response.decimals).toString()
+      const balance = toBigNumber(response.balance || 0)
+        .round(response.decimals)
+        .toString()
 
       return {
         [scriptHash]: { ...response, scriptHash, balance }
@@ -36,20 +38,30 @@ async function getBalances ({ net, address, tokens }: Props) {
   })
 
   // asset balances
-  promises.push((async () => {
-    const assetBalances = await api.loadBalance(api.getBalanceFrom, { net, address })
-    const { assets } = assetBalances.balance
+  promises.push(
+    (async () => {
+      const assetBalances = await api.loadBalance(api.getBalanceFrom, {
+        net,
+        address
+      })
+      const { assets } = assetBalances.balance
 
-    // The API doesn't always return NEO or GAS keys if, for example, the address only has one asset
-    const neoBalance = assets.NEO ? assets.NEO.balance.toString() : '0'
-    const gasBalance = assets.GAS ? assets.GAS.balance.round(COIN_DECIMAL_LENGTH).toString() : '0'
+      // The API doesn't always return NEO or GAS keys if, for example, the address only has one asset
+      const neoBalance = assets.NEO ? assets.NEO.balance.toString() : '0'
+      const gasBalance = assets.GAS
+        ? assets.GAS.balance.round(COIN_DECIMAL_LENGTH).toString()
+        : '0'
 
-    return { [ASSETS.NEO]: neoBalance, [ASSETS.GAS]: gasBalance }
-  })())
+      return { [ASSETS.NEO]: neoBalance, [ASSETS.GAS]: gasBalance }
+    })()
+  )
 
-  return extend({}, ...await Promise.all(promises))
+  return extend({}, ...(await Promise.all(promises)))
 }
 
-export default createActions(ID, ({ net, address, tokens }: Props = {}) => async (state: Object) => {
-  return getBalances({ net, address, tokens })
-})
+export default createActions(
+  ID,
+  ({ net, address, tokens }: Props = {}) => async (state: Object) => {
+    return getBalances({ net, address, tokens })
+  }
+)

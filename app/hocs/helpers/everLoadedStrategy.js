@@ -4,11 +4,11 @@ import { every } from 'lodash'
 
 const { LOADING, LOADED } = progressValues
 
-function everLoaded (actionStates: Array<Object>): boolean {
-  return every(actionStates, (actionState) => actionState.loadedCount > 0)
+function everLoaded(actionStates: Array<Object>): boolean {
+  return every(actionStates, actionState => actionState.loadedCount > 0)
 }
 
-export default function everLoadedStrategy (actions: Array<Object>): Progress {
+export default function everLoadedStrategy(actions: Array<Object>): Progress {
   if (everLoaded(actions)) {
     return LOADED
   } else {

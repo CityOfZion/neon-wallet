@@ -18,7 +18,11 @@ import {
   getAssetBalances,
   getTokenBalances
 } from '../core/deprecated'
-import { isToken, validateTransactionsBeforeSending, getTokenBalancesMap } from '../core/wallet'
+import {
+  isToken,
+  validateTransactionsBeforeSending,
+  getTokenBalancesMap
+} from '../core/wallet'
 import { ASSETS } from '../core/constants'
 import { toNumber } from '../core/math'
 
@@ -121,7 +125,10 @@ export const sendTransaction = (sendEntries: Array<SendEntryType>) => async (
   const net = getNetwork(state)
   const tokenBalances = getTokenBalances(state)
   const tokensBalanceMap = keyBy(tokenBalances, 'symbol')
-  const balances = { ...getAssetBalances(state), ...getTokenBalancesMap(tokenBalances) }
+  const balances = {
+    ...getAssetBalances(state),
+    ...getTokenBalancesMap(tokenBalances)
+  }
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
   const isHardwareSend = getIsHardwareLogin(state)
@@ -174,9 +181,12 @@ export const sendTransaction = (sendEntries: Array<SendEntryType>) => async (
       throw new Error('Transaction failed')
     }
 
-    return dispatch(showSuccessNotification({
-      message: 'Transaction complete! Your balance will automatically update when the blockchain has processed it.'
-    }))
+    return dispatch(
+      showSuccessNotification({
+        message:
+          'Transaction complete! Your balance will automatically update when the blockchain has processed it.'
+      })
+    )
   } catch (err) {
     return rejectTransaction(`Transaction failed: ${err.message}`)
   }

@@ -45,14 +45,15 @@ export default class AddRecipientDisplay extends React.Component<Props, State> {
       <div className={styles.addRecipientDisplay}>
         <div className={styles.inputs}>
           <div className={styles.row}>
-            <div id='sendAmount' className={styles.column}>
+            <div id="sendAmount" className={styles.column}>
               <label className={styles.label}>Amount:</label>
               <NumberInput
                 max={balance}
                 value={amount}
-                placeholder='Amount'
+                placeholder="Amount"
                 options={{ numeralDecimalScale: COIN_DECIMAL_LENGTH }}
-                onChange={(value) => this.handleChange('amount', value)} />
+                onChange={value => this.handleChange('amount', value)}
+              />
               <label className={styles.label}>
                 ({max} {symbol} Available)
               </label>
@@ -62,30 +63,41 @@ export default class AddRecipientDisplay extends React.Component<Props, State> {
               <AssetInput
                 symbols={this.getSymbols()}
                 value={symbol}
-                onChange={(value) => this.handleChange('symbol', value)} />
+                onChange={value => this.handleChange('symbol', value)}
+              />
             </div>
             <div className={classNames(styles.column, styles.sendToIcon)}>
               <ArrowForward />
             </div>
-            <div id='sendAddress' className={classNames(styles.column, styles.recipient)}>
+            <div
+              id="sendAddress"
+              className={classNames(styles.column, styles.recipient)}
+            >
               <label className={styles.label}>Address:</label>
               <AddressInput
-                placeholder='Recipient Address'
+                placeholder="Recipient Address"
                 value={address}
-                onChange={(value) => this.handleChange('address', value)} />
+                onChange={value => this.handleChange('address', value)}
+              />
             </div>
           </div>
         </div>
         <div className={styles.messages}>
           {isToken(symbol) && (
-            <div className={styles.tokenInfoMessage}>Sending NEP5 tokens requires holding at least 1 drop of GAS</div>
+            <div className={styles.tokenInfoMessage}>
+              Sending NEP5 tokens requires holding at least 1 drop of GAS
+            </div>
           )}
         </div>
         <div className={styles.actions}>
           <Button cancel onClick={onCancel}>
             Cancel
           </Button>
-          <Button id='doSend' disabled={!this.canConfirm()} onClick={this.handleConfirm}>
+          <Button
+            id="doSend"
+            disabled={!this.canConfirm()}
+            onClick={this.handleConfirm}
+          >
             Next
           </Button>
         </div>
@@ -108,8 +120,10 @@ export default class AddRecipientDisplay extends React.Component<Props, State> {
   }
 
   getSymbols = () => {
-    return Object.keys(pickBy(this.props.balances, (balance: string, symbol: string) => {
-      return [ASSETS.NEO, ASSETS.GAS].includes(symbol) || balance !== '0'
-    }))
+    return Object.keys(
+      pickBy(this.props.balances, (balance: string, symbol: string) => {
+        return [ASSETS.NEO, ASSETS.GAS].includes(symbol) || balance !== '0'
+      })
+    )
   }
 }

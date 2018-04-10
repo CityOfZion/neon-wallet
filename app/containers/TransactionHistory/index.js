@@ -12,11 +12,11 @@ const { LOADING } = progressValues
 
 const PROGRESS_PROP = 'progress'
 
-const mapTransactionsDataToProps = (transactions) => ({
+const mapTransactionsDataToProps = transactions => ({
   transactions
 })
 
-const mapLoadingProp = (props) => ({
+const mapLoadingProp = props => ({
   loading: props[PROGRESS_PROP] === LOADING
 })
 

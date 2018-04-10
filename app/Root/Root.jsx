@@ -6,14 +6,15 @@ import { BrowserRouter } from 'react-router-dom'
 import Routes from '../Routes'
 
 type Props = {
-  store: Object,
+  store: Object
 }
 
-const Root = ({ store }: Props) =>
+const Root = ({ store }: Props) => (
   <Provider store={store}>
     <BrowserRouter>
       <Routes />
     </BrowserRouter>
   </Provider>
+)
 
 export default Root

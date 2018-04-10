@@ -18,12 +18,22 @@ describe('SelectInput', () => {
 
   test('should render the input correctly', () => {
     const wrapper = shallow(<SelectInput {...props} />)
-    expect(wrapper.dive().find('.input').props().value).toEqual(props.value)
+    expect(
+      wrapper
+        .dive()
+        .find('.input')
+        .props().value
+    ).toEqual(props.value)
   })
 
   test('should not render the dropdown by default', () => {
     const wrapper = shallow(<SelectInput {...props} />)
-    expect(wrapper.dive().find('.dropdown').exists()).toEqual(false)
+    expect(
+      wrapper
+        .dive()
+        .find('.dropdown')
+        .exists()
+    ).toEqual(false)
   })
 
   test('should render the dropdown when the input has focus', () => {
@@ -33,7 +43,7 @@ describe('SelectInput', () => {
   })
 
   test('should not filter the search results on initial open', () => {
-    const wrapper = mount(<SelectInput {...props} value='Foo' />)
+    const wrapper = mount(<SelectInput {...props} value="Foo" />)
     wrapper.find('.input').simulate('focus')
     expect(wrapper.find('.dropdownItem')).toHaveLength(props.items.length)
   })

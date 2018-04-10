@@ -20,10 +20,7 @@ module.exports = {
   bail: true,
   devtool: false,
   target: 'electron-main',
-  entry: [
-    'babel-polyfill',
-    path.join(__dirname, '..', 'app/index.js')
-  ],
+  entry: ['babel-polyfill', path.join(__dirname, '..', 'app/index.js')],
   externals: {
     'node-hid': 'require("node-hid")'
   },
@@ -90,31 +87,20 @@ module.exports = {
       {
         test: /^((?!\.global).)*\.css$/,
         use: ExtractTextPlugin.extract({
-          use: [
-            'css-loader',
-            commonLoaders.cssModules
-          ]
+          use: ['css-loader', commonLoaders.cssModules]
         })
       },
       {
         test: /\.global\.scss$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: [
-            'css-loader',
-            'resolve-url-loader',
-            'sass-loader'
-          ]
+          use: ['css-loader', 'resolve-url-loader', 'sass-loader']
         })
       },
       {
         test: /^((?!\.global).)*\.scss$/,
         use: ExtractTextPlugin.extract({
-          use: [
-            commonLoaders.cssModules,
-            'resolve-url-loader',
-            'sass-loader'
-          ]
+          use: [commonLoaders.cssModules, 'resolve-url-loader', 'sass-loader']
         })
       },
       {

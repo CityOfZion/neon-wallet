@@ -14,10 +14,10 @@ type Mapping = {
 const keys: Array<string> = ['address', 'publicKey', 'wif', 'signingFunction']
 const defaultMapping: Mapping = zipObject(keys, keys)
 
-export default function withAuthData (mapping: Mapping = defaultMapping) {
-  return withData(authActions, (auth) => {
+export default function withAuthData(mapping: Mapping = defaultMapping) {
+  return withData(authActions, auth => {
     if (!isEmpty(auth)) {
-      return mapValues(invert(mapping), (field) => auth[field])
+      return mapValues(invert(mapping), field => auth[field])
     } else {
       return {}
     }

@@ -18,17 +18,19 @@ type Props = {
 }
 
 class App extends Component<Props> {
-  async componentDidMount () {
+  async componentDidMount() {
     this.props.checkVersion()
 
     try {
       await upgradeUserWalletNEP6()
     } catch (error) {
-      this.props.showErrorNotification({ message: `Error upgrading legacy wallet: ${error.message}` })
+      this.props.showErrorNotification({
+        message: `Error upgrading legacy wallet: ${error.message}`
+      })
     }
   }
 
-  render () {
+  render() {
     const { children } = this.props
     return (
       <div className={styles.container}>

@@ -21,13 +21,19 @@ export default class Button extends React.Component<Props> {
 
   render = () => {
     const { primary, secondary, cancel, className } = this.props
-    const passDownProps = omit(this.props, 'primary', 'secondary', 'cancel', 'className')
+    const passDownProps = omit(
+      this.props,
+      'primary',
+      'secondary',
+      'cancel',
+      'className'
+    )
     const classes = classNames(styles.button, className, {
       [styles.primary]: primary,
       [styles.secondary]: secondary,
       [styles.cancel]: cancel
     })
 
-    return <button type='button' className={classes} {...passDownProps} />
+    return <button type="button" className={classes} {...passDownProps} />
   }
 }

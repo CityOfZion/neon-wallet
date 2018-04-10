@@ -10,12 +10,16 @@ type Options = {
   propName?: string
 }
 
-export default function withLogoutReset (actions: Actions, { propName = '__address__' }: Options = {}) {
-  const mapAuthDataToProps = (account) => ({
+export default function withLogoutReset(
+  actions: Actions,
+  { propName = '__address__' }: Options = {}
+) {
+  const mapAuthDataToProps = account => ({
     [propName]: account && account.address
   })
 
-  const shouldReset = (oldProps, newProps) => didLogout(oldProps[propName], newProps[propName])
+  const shouldReset = (oldProps, newProps) =>
+    didLogout(oldProps[propName], newProps[propName])
 
   return compose(
     withData(authActions, mapAuthDataToProps),

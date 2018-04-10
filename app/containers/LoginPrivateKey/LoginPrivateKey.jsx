@@ -12,7 +12,7 @@ type Props = {
 }
 
 type State = {
-  wif: string,
+  wif: string
 }
 
 export default class LoginPrivateKey extends Component<Props, State> {
@@ -20,24 +20,31 @@ export default class LoginPrivateKey extends Component<Props, State> {
     wif: ''
   }
 
-  render () {
+  render() {
     const { loginWithPrivateKey } = this.props
     const { wif } = this.state
     const loginButtonDisabled = wif === ''
 
     return (
-      <div id='loginPage' className={loginStyles.loginPage}>
+      <div id="loginPage" className={loginStyles.loginPage}>
         <div className={loginStyles.title}>Login using a private key:</div>
-        <form onSubmit={(e) => { e.preventDefault(); loginWithPrivateKey(wif) }}>
+        <form
+          onSubmit={e => {
+            e.preventDefault()
+            loginWithPrivateKey(wif)
+          }}
+        >
           <div className={loginStyles.loginForm}>
             <PasswordField
-              placeholder='Enter your private key here (WIF)'
-              onChange={(e) => this.setState({ wif: e.target.value })}
+              placeholder="Enter your private key here (WIF)"
+              onChange={e => this.setState({ wif: e.target.value })}
               autoFocus
             />
           </div>
           <div>
-            <Button type='submit' disabled={loginButtonDisabled}>Login</Button>
+            <Button type="submit" disabled={loginButtonDisabled}>
+              Login
+            </Button>
             <HomeButtonLink />
           </div>
         </form>

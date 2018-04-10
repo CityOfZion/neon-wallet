@@ -14,7 +14,7 @@ type Props = {
 }
 
 export default class ParticipationSuccess extends React.Component<Props> {
-  render () {
+  render() {
     const { onClose, token } = this.props
     const { scriptHash, name, symbol } = token
     return (
@@ -27,9 +27,18 @@ export default class ParticipationSuccess extends React.Component<Props> {
           Your balances may take time to update - please be patient
         </div>
         <div className={styles.confirmation}>
-          <div>You sent <strong>{this.getAmounts()}</strong></div>
-          <div>To: <strong>{scriptHash}</strong></div>
-          <div>For: <strong>{symbol} ({name})</strong></div>
+          <div>
+            You sent <strong>{this.getAmounts()}</strong>
+          </div>
+          <div>
+            To: <strong>{scriptHash}</strong>
+          </div>
+          <div>
+            For:{' '}
+            <strong>
+              {symbol} ({name})
+            </strong>
+          </div>
         </div>
         <div className={styles.buttonContainer}>
           <Button onClick={() => onClose()}>I'm Finished</Button>
@@ -39,9 +48,9 @@ export default class ParticipationSuccess extends React.Component<Props> {
   }
 
   getAmounts = () => {
-    const amounts = map(this.props.assetBalancesToSend, (amount, symbol) => (
+    const amounts = map(this.props.assetBalancesToSend, (amount, symbol) =>
       [amount || 0, symbol].join(' ')
-    ))
+    )
 
     return toSentence(amounts)
   }

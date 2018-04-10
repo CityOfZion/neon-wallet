@@ -52,13 +52,11 @@ const initialState = {
       loadedCount: 1
     }
   },
-  account: {
-  },
+  account: {},
   wallet: {
     transactions: []
   },
-  modal: {
-  }
+  modal: {}
 }
 const setup = (state, shallowRender = true) => {
   const store = configureStore([thunk])(state)
@@ -80,7 +78,7 @@ const setup = (state, shallowRender = true) => {
 }
 
 describe('App', () => {
-  test('app initializes settings', (done) => {
+  test('app initializes settings', done => {
     storage.get = jest.fn((key, callback) => {
       expect(key).toEqual('userWallet')
       done()

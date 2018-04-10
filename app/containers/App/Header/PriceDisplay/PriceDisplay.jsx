@@ -26,13 +26,27 @@ const PriceDisplay = ({ neoPrice, gasPrice, currencyCode }: Props) => {
   }
 
   return [
-    <div key='neoPriceDisplay' id='neoPrice' className={headerStyles.navBarItem}>
+    <div
+      key="neoPriceDisplay"
+      id="neoPrice"
+      className={headerStyles.navBarItem}
+    >
       <span className={headerStyles.navBarItemLabel}>NEO</span>
-      <span className='price'>{currencySymbol}{neoDisplayPrice}</span>
+      <span className="price">
+        {currencySymbol}
+        {neoDisplayPrice}
+      </span>
     </div>,
-    <div key='gasPriceDisplay' id='gasPrice' className={headerStyles.navBarItem}>
+    <div
+      key="gasPriceDisplay"
+      id="gasPrice"
+      className={headerStyles.navBarItem}
+    >
       <span className={headerStyles.navBarItemLabel}>GAS</span>
-      <span className='price'>{currencySymbol}{gasDisplayPrice}</span>
+      <span className="price">
+        {currencySymbol}
+        {gasDisplayPrice}
+      </span>
     </div>
   ]
 }

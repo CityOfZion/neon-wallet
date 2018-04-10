@@ -1,9 +1,18 @@
 {
     "parser": "babel-eslint",
-    "extends": ["standard", "standard-react", "plugin:flowtype/recommended"],
+    "extends": [
+        "standard",
+        "standard-react",
+        "plugin:flowtype/recommended",
+        "prettier",
+        "prettier/flowtype",
+        "prettier/react",
+        "prettier/standard"
+    ],
     "plugins": [
         "react",
-        "flowtype"
+        "flowtype",
+        "prettier"
     ],
     "env": {
         "jest": true
@@ -20,6 +29,7 @@
         "window": true
     },
     "rules": {
-    "flowtype/define-flow-type": 2
+        "prettier/prettier": "error",
+        "flowtype/define-flow-type": 2
     }
 }

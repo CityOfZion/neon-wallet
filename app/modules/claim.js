@@ -41,7 +41,14 @@ const getClaimableAmount = async ({ net, address }) => {
   return calculateClaimableAmount(claims)
 }
 
-const updateClaimableAmount = async ({ net, address, publicKey, privateKey, signingFunction, balance }) => {
+const updateClaimableAmount = async ({
+  net,
+  address,
+  publicKey,
+  privateKey,
+  signingFunction,
+  balance
+}) => {
   const { response } = await api.sendAsset({
     net,
     address,
@@ -58,30 +65,54 @@ const updateClaimableAmount = async ({ net, address, publicKey, privateKey, sign
   return response.result.response
 }
 
-const pollForUpdatedClaimableAmount = async ({ net, address, claimableAmount }) => {
-  return poll(async () => {
-    const updatedClaimableAmount = await getClaimableAmount({ net, address })
+const pollForUpdatedClaimableAmount = async ({
+  net,
+  address,
+  claimableAmount
+}) => {
+  return poll(
+    async () => {
+      const updatedClaimableAmount = await getClaimableAmount({ net, address })
 
-    if (toBigNumber(updatedClaimableAmount).eq(claimableAmount)) {
-      throw new Error('Waiting for updated claims')
-    }
+      if (toBigNumber(updatedClaimableAmount).eq(claimableAmount)) {
+        throw new Error('Waiting for updated claims')
+      }
 
-    return updatedClaimableAmount
-  }, { attempts: POLL_ATTEMPTS, frequency: POLL_FREQUENCY })
+      return updatedClaimableAmount
+    },
+    { attempts: POLL_ATTEMPTS, frequency: POLL_FREQUENCY }
+  )
 }
 
-const getUpdatedClaimableAmount = async ({ net, address, balance, publicKey, privateKey, signingFunction }) => {
+const getUpdatedClaimableAmount = async ({
+  net,
+  address,
+  balance,
+  publicKey,
+  privateKey,
+  signingFunction
+}) => {
   const claimableAmount = await getClaimableAmount({ net, address })
 
   if (toBigNumber(balance).eq(0)) {
     return claimableAmount
   } else {
-    await updateClaimableAmount({ net, address, balance, publicKey, privateKey, signingFunction })
+    await updateClaimableAmount({
+      net,
+      address,
+      balance,
+      publicKey,
+      privateKey,
+      signingFunction
+    })
     return pollForUpdatedClaimableAmount({ net, address, claimableAmount })
   }
 }
 
-export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStateType) => {
+export const doGasClaim = () => async (
+  dispatch: DispatchType,
+  getState: GetStateType
+) => {
   const state = getState()
   const address = getAddress(state)
   const net = getNetwork(state)
@@ -94,22 +125,39 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
   dispatch(disableClaim(true))
 
   if (isHardwareClaim) {
-    dispatch(showInfoNotification({ message: 'Please sign transaction 1 of 2 on hardware device.' }))
+    dispatch(
+      showInfoNotification({
+        message: 'Please sign transaction 1 of 2 on hardware device.'
+      })
+    )
   } else {
     dispatch(showInfoNotification({ message: 'Calculating claimable GAS...' }))
   }
 
   // step 1: update available claims
   try {
-    await getUpdatedClaimableAmount({ net, address, balance, publicKey, privateKey, signingFunction })
+    await getUpdatedClaimableAmount({
+      net,
+      address,
+      balance,
+      publicKey,
+      privateKey,
+      signingFunction
+    })
   } catch (err) {
     dispatch(disableClaim(false))
-    dispatch(showErrorNotification({ message: 'Calculating claimable GAS failed.' }))
+    dispatch(
+      showErrorNotification({ message: 'Calculating claimable GAS failed.' })
+    )
     return
   }
 
   if (isHardwareClaim) {
-    dispatch(showInfoNotification({ message: 'Please sign transaction 2 of 2 on hardware device.' }))
+    dispatch(
+      showInfoNotification({
+        message: 'Please sign transaction 2 of 2 on hardware device.'
+      })
+    )
   } else {
     dispatch(showInfoNotification({ message: 'Claiming GAS...' }))
   }
@@ -117,7 +165,13 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
   // step 2: send claim request
   try {
     api.setApiSwitch(1)
-    const { response } = await api.claimGas({ net, address, publicKey, privateKey, signingFunction })
+    const { response } = await api.claimGas({
+      net,
+      address,
+      publicKey,
+      privateKey,
+      signingFunction
+    })
     api.setApiSwitch(0)
 
     if (!response.result) {
@@ -129,9 +183,12 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
     return
   }
 
-  dispatch(showSuccessNotification({
-    message: 'Claim was successful! Your balance will update once the blockchain has processed it.'
-  }))
+  dispatch(
+    showSuccessNotification({
+      message:
+        'Claim was successful! Your balance will update once the blockchain has processed it.'
+    })
+  )
   setTimeout(() => dispatch(disableClaim(false)), FIVE_MINUTES_MS)
 }
 
@@ -139,7 +196,7 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
 export const DISABLE_CLAIM = 'DISABLE_CLAIM'
 
 // Actions
-export function disableClaim (disableClaimButton: boolean) {
+export function disableClaim(disableClaimButton: boolean) {
   return {
     type: DISABLE_CLAIM,
     payload: { disableClaimButton }
@@ -147,7 +204,8 @@ export function disableClaim (disableClaimButton: boolean) {
 }
 
 // State Getters
-export const getDisableClaimButton = (state: Object) => state.claim.disableClaimButton
+export const getDisableClaimButton = (state: Object) =>
+  state.claim.disableClaimButton
 
 const initialState = {
   disableClaimButton: false

@@ -13,12 +13,17 @@ type Props = {
 
 export const ID = 'TRANSACTION_HISTORY'
 
-export default createActions(ID, ({ net, address }: Props = {}) => async (state: Object) => {
-  const transactions = await api.neonDB.getTransactionHistory(net, address)
+export default createActions(
+  ID,
+  ({ net, address }: Props = {}) => async (state: Object) => {
+    const transactions = await api.neonDB.getTransactionHistory(net, address)
 
-  return transactions.map(({ NEO, GAS, txid }: TransactionHistoryType) => ({
-    txid,
-    [ASSETS.NEO]: toFixedDecimals(NEO, 0),
-    [ASSETS.GAS]: toBigNumber(GAS).round(COIN_DECIMAL_LENGTH).toString()
-  }))
-})
+    return transactions.map(({ NEO, GAS, txid }: TransactionHistoryType) => ({
+      txid,
+      [ASSETS.NEO]: toFixedDecimals(NEO, 0),
+      [ASSETS.GAS]: toBigNumber(GAS)
+        .round(COIN_DECIMAL_LENGTH)
+        .toString()
+    }))
+  }
+)

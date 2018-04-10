@@ -2,7 +2,11 @@
 import { wallet, api } from 'neon-js'
 import { flatten } from 'lodash'
 
-import { showErrorNotification, showInfoNotification, hideNotification } from './notifications'
+import {
+  showErrorNotification,
+  showInfoNotification,
+  hideNotification
+} from './notifications'
 import {
   getNetwork,
   getWIF,
@@ -19,7 +23,8 @@ import { ASSETS } from '../core/constants'
 import { validateMintTokensInputs } from '../core/sale'
 
 const MESSAGES = {
-  PARTICIPATION_FAILED: 'Sale participation failed, please check your script hash again.'
+  PARTICIPATION_FAILED:
+    'Sale participation failed, please check your script hash again.'
 }
 
 export const participateInSale = (
