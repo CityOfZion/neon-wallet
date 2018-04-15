@@ -1,0 +1,61 @@
+.contactsPanel {
+  max-width: 850px;
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .addButton {
+      display: flex;
+      align-items: center;
+      padding: 5px;
+      cursor: pointer;
+
+      .addIcon {
+        margin-right: 15px;
+      }
+    }
+  }
+
+  .contacts {
+    padding: 24px;
+  }
+
+  .contact {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    margin-bottom: 45px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .details {
+      .name {
+        margin-bottom: 10px;
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      .address {
+        color: #939393;
+        font-size: 12px;
+      }
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+
+      .editButton {
+        margin-right: 10px;
+      }
+
+      .deleteButton {
+      }
+    }
+  }
+}
