@@ -18,6 +18,7 @@ export const ROUTES = {
   HOME: '/',
   DASHBOARD: '/dashboard',
   RECEIVE: '/receive',
+  CONTACTS: '/contacts',
   CREATE_WALLET: '/create',
   ENCRYPT_KEY: '/encrypt-key',
   LOGIN_PRIVATE_KEY: '/login-private-key',
