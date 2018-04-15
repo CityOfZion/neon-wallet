@@ -78,7 +78,8 @@ export const TOKENS = {
   ONT: 'ceab719b8baa2310f232ee0d277c061704541cfb',
   THOR: '67a5086bac196b67d5fd20745b0dc9db4d2930ed',
   CGE: '34579e4614ac1a7bd295372d3de8621770c76cdc',
-  SWH: '78e6d16b914fe15bc16150aeb11d0c2a8e532bdd'
+  SWH: '78e6d16b914fe15bc16150aeb11d0c2a8e532bdd',
+  EFX: 'acbc532904b6b51b5ea6d19b803d78af70e7e6f9'
 }
 
 export const ENDED_ICO_TOKENS = ['DBC', 'RPX', 'QLC', 'RHT', 'ONT', 'SWH', 'NRVE']
