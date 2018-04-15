@@ -10,6 +10,7 @@ import HomeIcon from '../../../assets/navigation/home.svg'
 import HistoryIcon from '../../../assets/navigation/history.svg'
 import SendIcon from '../../../assets/navigation/send.svg'
 import ReceiveIcon from '../../../assets/navigation/receive.svg'
+import ContactsIcon from '../../../assets/navigation/contacts.svg'
 import TokenSaleIcon from '../../../assets/navigation/tokens.svg'
 import { ROUTES } from '../../../core/constants'
 
@@ -59,6 +60,12 @@ const Sidebar = ({
       <Tooltip title='Receive' position='right'>
         <NavLink id='receive' exact to={ROUTES.RECEIVE} className={styles.navItem} activeClassName={styles.active}>
           <ReceiveIcon />
+        </NavLink>
+      </Tooltip>
+
+      <Tooltip title='Contacts' position='right'>
+        <NavLink id='contacts' exact to={ROUTES.CONTACTS} className={styles.navItem} activeClassName={styles.active}>
+          <ContactsIcon />
         </NavLink>
       </Tooltip>
 
