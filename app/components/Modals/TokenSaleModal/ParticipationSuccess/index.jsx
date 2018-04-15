@@ -32,7 +32,7 @@ export default class ParticipationSuccess extends React.Component<Props> {
           <div>For: <strong>{symbol} ({name})</strong></div>
         </div>
         <div className={styles.buttonContainer}>
-          <Button onClick={() => onClose()}>I'm Finished</Button>
+          <Button primary onClick={() => onClose()}>I'm Finished</Button>
         </div>
       </div>
     )

@@ -187,7 +187,7 @@ export default class TokenSale extends Component<Props, State> {
 
         <div className={styles.purchaseButton}>
           <Tooltip title='Please agree to the terms of purchase' position='top' disabled={valid}>
-            <Button onClick={this.handleStep(2)} disabled={!valid}>
+            <Button primary onClick={this.handleStep(2)} disabled={!valid}>
               Continue &raquo;
             </Button>
           </Tooltip>

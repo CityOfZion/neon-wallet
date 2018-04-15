@@ -74,8 +74,8 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
         </div>
 
         <div className={styles.actions}>
-          <Button cancel onClick={onCancel}>Cancel</Button>
-          <Button disabled={!agree} onClick={onConfirm}>Send Assets</Button>
+          <Button onClick={onCancel}>Cancel</Button>
+          <Button primary disabled={!agree} onClick={onConfirm}>Send Assets</Button>
         </div>
       </div>
     )
