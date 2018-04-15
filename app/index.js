@@ -2,8 +2,9 @@ import 'raf/polyfill'
 import React from 'react'
 import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
+
 import store from './store/configureStore'
-import Root from './Root'
+import Root from './components/Root'
 import './styles/tippy.compiled.global.css'
 import './styles/main.global.scss'
 
@@ -15,8 +16,8 @@ render(
 )
 
 if (module.hot) {
-  module.hot.accept('./Root.jsx', () => {
-    const NewRoot = require('./Root').default
+  module.hot.accept('./components/Root', () => {
+    const NewRoot = require('./components/Root').default
     render(
       <AppContainer>
         <NewRoot store={store} />
