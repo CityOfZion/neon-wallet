@@ -43,7 +43,7 @@ export default class LoginLedgerNanoS extends React.Component<Props> {
         <div className={styles.title}>Login using the Ledger Nano S:</div>
         <div className={styles.loginForm}>
           <div>
-            <Button disabled={!this.canLogin()} onClick={this.handleLogin}>
+            <Button primary disabled={!this.canLogin()} onClick={this.handleLogin}>
               Use Ledger Nano S
             </Button>
             <HomeButtonLink />

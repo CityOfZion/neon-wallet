@@ -37,7 +37,7 @@ export default class ConfirmToken extends React.Component<Props> {
         </div>
 
         <Button onClick={onCancel}>&laquo; Cancel</Button>
-        <Button onClick={onConfirm} disabled={processing}>Confirm Purchase &raquo;</Button>
+        <Button primary onClick={onConfirm} disabled={processing}>Confirm Purchase &raquo;</Button>
       </div>
     )
   }

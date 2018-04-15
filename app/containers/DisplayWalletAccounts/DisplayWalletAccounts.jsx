@@ -81,7 +81,7 @@ class DisplayWalletAccounts extends Component<Props, State> {
         </div>
         <div className='saveAccount'>
           <input autoFocus type='text' placeholder='Name this account' value={keyName} onChange={(e) => this.setState({ keyName: e.target.value })} />
-          <Button onClick={() => saveAccount(keyName, address, encryptedWIF)}>Save Account</Button>
+          <Button primary onClick={() => saveAccount(keyName, address, encryptedWIF)}>Save Account</Button>
         </div>
         <Button onClick={this.handleBack}>Back</Button>
         <Button onClick={this.handlePrint}>Print</Button>

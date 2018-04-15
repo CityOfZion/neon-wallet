@@ -52,7 +52,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
             />
           </div>
           <div>
-            <Button type='submit' disabled={!this.isValid()}>Login</Button>
+            <Button primary type='submit' disabled={!this.isValid()}>Login</Button>
             <HomeButtonLink />
           </div>
         </form>

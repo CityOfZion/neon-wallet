@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import { noop } from 'lodash'
 
 import BaseModal from '../BaseModal'
 import Button from '../../Button'
@@ -32,6 +33,7 @@ const ConfirmModal = ({ hideModal, title, onClick, onCancel, text, width, height
     <div className={styles.modalFooter}>
       <Button
         id='confirm'
+        primary
         className={styles.actionButton}
         onClick={() => {
           onClick()
@@ -39,12 +41,9 @@ const ConfirmModal = ({ hideModal, title, onClick, onCancel, text, width, height
         }}>Confirm</Button>
       <Button
         id='cancel'
-        cancel
         onClick={() => {
           hideModal()
-          if (onCancel) {
-            onCancel()
-          }
+          onCancel()
         }}>Cancel</Button>
     </div>
   </BaseModal>
@@ -52,7 +51,8 @@ const ConfirmModal = ({ hideModal, title, onClick, onCancel, text, width, height
 
 ConfirmModal.defaultProps = {
   width: '450px',
-  height: '175px'
+  height: '175px',
+  onCancel: noop
 }
 
 export default ConfirmModal

@@ -37,7 +37,7 @@ export default class LoginPrivateKey extends Component<Props, State> {
             />
           </div>
           <div>
-            <Button type='submit' disabled={loginButtonDisabled}>Login</Button>
+            <Button primary type='submit' disabled={loginButtonDisabled}>Login</Button>
             <HomeButtonLink />
           </div>
         </form>

@@ -47,6 +47,7 @@ export default class LoginNep2 extends Component<Props, State> {
           <div>
             <Button
               id='loginButton'
+              primary
               type='submit'
               disabled={loginButtonDisabled}>Login</Button>
             <HomeButtonLink />
