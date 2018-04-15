@@ -78,7 +78,7 @@ export default class EncryptKey extends Component<Props, State> {
               placeholder='Enter existing WIF here'
             />
           }
-          <Button type='submit' disabled={disabledButton}>Generate keys</Button>
+          <Button type='submit' primary disabled={disabledButton}>Generate keys</Button>
           <HomeButtonLink />
         </form>
       </div>

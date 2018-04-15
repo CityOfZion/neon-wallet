@@ -94,9 +94,8 @@ class SelectToken extends Component<Props, State> {
                   Token not in the list?
                   </div>
                   <div>
-                    <Button onClick={() => showTokensModal()}
-                      className={styles.purchaseBtn}>
-                    + Add a new token to purchase
+                    <Button onClick={() => showTokensModal()} className={styles.purchaseBtn}>
+                      + Add a new token to purchase
                     </Button>
                   </div>
                 </div>

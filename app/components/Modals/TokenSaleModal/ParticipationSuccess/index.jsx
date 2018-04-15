@@ -49,7 +49,7 @@ const ParticipationSuccess = ({
         </div>
       </div>
       <div className={styles.buttonContainer}>
-        <Button onClick={() => hideModal()}>I'm Finished</Button>
+        <Button primary onClick={() => hideModal()}>I'm Finished</Button>
       </div>
     </div>
   )

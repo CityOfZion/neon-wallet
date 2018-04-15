@@ -33,14 +33,15 @@ exports[`ConfirmModal should render without crashing 1`] = `
       id="confirm"
       onClick={[Function]}
       primary={true}
+      type="button"
     >
       Confirm
     </Button>
     <Button
-      cancel={true}
       id="cancel"
       onClick={[Function]}
-      primary={true}
+      primary={false}
+      type="button"
     >
       Cancel
     </Button>

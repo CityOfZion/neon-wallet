@@ -108,8 +108,8 @@ class TokenModal extends Component<Props, State> {
       >
         <div className={styles.container}>
           <div className={styles.addToken}>
-            <Button onClick={this.addToken}>
-              <Add /> Add a new token
+            <Button onClick={this.addToken} renderIcon={Add}>
+              Add a new token
             </Button>
             <div className={styles.switchNetworkContainer}>
               <span className={styles.switchNetworkLabel}>Network:</span>
@@ -140,10 +140,8 @@ class TokenModal extends Component<Props, State> {
                 ))}
             </div>
             <div className={styles.modalFooter}>
-              <Button onClick={this.saveAndValidateTokens}>Save</Button>
-              <Button cancel onClick={hideModal}>
-                Cancel
-              </Button>
+              <Button primary onClick={this.saveAndValidateTokens}>Save</Button>
+              <Button onClick={hideModal}>Cancel</Button>
             </div>
           </form>
         </div>

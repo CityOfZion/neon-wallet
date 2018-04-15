@@ -1,48 +1,55 @@
 // @flow
-
-import React, { Component } from 'react'
+import React from 'react'
+import classNames from 'classnames'
 import { omit } from 'lodash'
 
 import styles from './Button.scss'
 
 type Props = {
+  className: ?string,
   renderIcon: ?Function,
   primary: ?boolean,
-  secondary: ?boolean,
+  type: ?string,
   children: React$Node
 }
 
-class Button extends Component<Props> {
+class Button extends React.Component<Props> {
   static defaultProps = {
-    primary: true
+    primary: false,
+    type: 'button'
   }
 
   render = () => {
-    const { primary, secondary, renderIcon } = this.props
-    const passDownProps = omit(this.props, 'primary', 'secondary')
-    const conditionalStyles = {}
-    if (primary) {
-      conditionalStyles.buttonStyle = styles.darkButton
-      conditionalStyles.iconStyle = styles.lightIcon
-    } else if (secondary) {
-      conditionalStyles.buttonStyle = styles.lightButton
-      conditionalStyles.iconStyle = styles.darkIcon
-    }
-    const { iconStyle, buttonStyle } = conditionalStyles
+    const { className, children } = this.props
+    const passDownProps = omit(this.props, 'primary', 'renderIcon')
 
     return (
       <button
-        className={`${styles.buttonRedesign} ${buttonStyle}`}
         {...passDownProps}
+        className={classNames(styles.button, className, this.getButtonStyle())}
       >
-        {renderIcon ? (
-          <span className={`${styles.icon} ${iconStyle}`}>{renderIcon()}</span>
-        ) : (
-          <div className={styles.icon} />
-        )}
-        <span>{this.props.children}</span>
+        {this.renderIcon()}
+        <span>{children}</span>
       </button>
     )
+  }
+
+  renderIcon = () => {
+    const { renderIcon } = this.props
+
+    if (renderIcon) {
+      return <span className={classNames(styles.icon, this.getIconStyle())}>{renderIcon()}</span>
+    } else {
+      return <div className={styles.icon} />
+    }
+  }
+
+  getButtonStyle = () => {
+    return (this.props.primary) ? styles.dark : styles.light
+  }
+
+  getIconStyle = () => {
+    return (this.props.primary) ? styles.light : styles.dark
   }
 }
 

@@ -30,7 +30,7 @@ exports[`Login renders without crashing 1`] = `
       >
         Login
       </Button>
-      <HomeButtonLink />
+      <withRouter(HomeButtonLink) />
     </div>
   </form>
 </div>

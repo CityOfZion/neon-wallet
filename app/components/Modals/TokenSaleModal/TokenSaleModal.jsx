@@ -175,6 +175,7 @@ export default class TokenSale extends Component<Props, State> {
 
             <div className={styles.purchaseButton}>
               <Button
+                primary
                 onClick={
                   useVerification
                     ? this.participateInSale

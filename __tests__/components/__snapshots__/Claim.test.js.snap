@@ -11,6 +11,7 @@ exports[`Claim should render claim GAS button as disabled 1`] = `
       id="claim"
       onClick={[Function]}
       primary={true}
+      type="button"
     >
       Claim 
       1.25406935
@@ -31,6 +32,7 @@ exports[`Claim should render claim GAS button as enabled 1`] = `
       id="claim"
       onClick={[Function]}
       primary={true}
+      type="button"
     >
       Claim 
       1.25406935
