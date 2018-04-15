@@ -2,6 +2,7 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
+import PrivateRoute from './PrivateRoute'
 import App from '../../containers/App'
 import LoginPrivateKey from '../../containers/LoginPrivateKey'
 import LoginLedgerNanoS from '../../containers/LoginLedgerNanoS'
@@ -21,8 +22,8 @@ const CreateWalletEncrypted = (props) => <CreateWallet {...props} encryptWIF />
 export default () => (
   <App>
     <Switch>
-      <Route exact path={ROUTES.DASHBOARD} component={Dashboard} />
-      <Route exact path={ROUTES.RECEIVE} component={Receive} />
+      <PrivateRoute exact path={ROUTES.DASHBOARD} component={Dashboard} />
+      <PrivateRoute exact path={ROUTES.RECEIVE} component={Receive} />
       <Route exact path={ROUTES.CREATE_WALLET} component={CreateWallet} />
       <Route exact path={ROUTES.ENCRYPT_KEY} component={CreateWalletEncrypted} />
       <Route exact path={ROUTES.LOGIN_PRIVATE_KEY} component={LoginPrivateKey} />
@@ -31,7 +32,7 @@ export default () => (
       <Route exact path={ROUTES.LOGIN_LEDGER_NANO_S} component={LoginLedgerNanoS} />
       <Route exact path={ROUTES.SETTINGS} component={Settings} />
       <Route exact path={ROUTES.DISPLAY_WALLET_KEYS} component={DisplayWalletAccounts} />
-      <Route exact path={ROUTES.TRANSACTION_HISTORY} component={TransactionHistory} />
+      <PrivateRoute exact path={ROUTES.TRANSACTION_HISTORY} component={TransactionHistory} />
       <Route exact path={ROUTES.HOME} component={Home} />
       <Redirect to={ROUTES.DASHBOARD} />
     </Switch>
