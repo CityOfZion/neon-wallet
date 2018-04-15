@@ -7,9 +7,10 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 100;
   padding: 10px;
+  white-space: nowrap;
   transition: opacity .2s;
 
   &[disabled] {
@@ -72,6 +73,11 @@
 
     &.light {
       // TODO
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
     }
   }
 }
