@@ -82,10 +82,10 @@ export default class AddRecipientDisplay extends React.Component<Props, State> {
           )}
         </div>
         <div className={styles.actions}>
-          <Button cancel onClick={onCancel}>
+          <Button onClick={onCancel}>
             Cancel
           </Button>
-          <Button id='doSend' disabled={!this.canConfirm()} onClick={this.handleConfirm}>
+          <Button id='doSend' primary disabled={!this.canConfirm()} onClick={this.handleConfirm}>
             Next
           </Button>
         </div>
