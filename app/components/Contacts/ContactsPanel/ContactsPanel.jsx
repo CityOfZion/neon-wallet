@@ -12,7 +12,8 @@ import styles from './ContactsPanel.scss'
 type Props = {
   contacts: {
     [name: string]: string
-  }
+  },
+  deleteContact: Function
 }
 
 export default class ContactsPanel extends React.Component<Props> {
@@ -56,7 +57,7 @@ export default class ContactsPanel extends React.Component<Props> {
           <Button
             className={styles.deleteButton}
             renderIcon={DeleteIcon}
-            onClick={this.handleDelete}
+            onClick={this.handleDelete(name)}
           >
             Delete Contact
           </Button>
@@ -73,7 +74,11 @@ export default class ContactsPanel extends React.Component<Props> {
     // TODO
   }
 
-  handleDelete = () => {
-    // TODO
+  handleDelete = (name: string) => {
+    return () => {
+      if (window.confirm(`Are you sure you want to delete contact "${name}"?`)) {
+        this.props.deleteContact(name)
+      }
+    }
   }
 }
