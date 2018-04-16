@@ -8,7 +8,7 @@ import EditContact from './EditContact'
 import { getAddresses } from '../../modules/addressBook'
 
 const mapNameToProps = (props) => ({
-  name: props.match.params.name
+  name: decodeURIComponent(props.match.params.name)
 })
 
 const mapStateToProps: MapStateToProps<*, *, *> = (state: Object, ownProps: Object) => ({
