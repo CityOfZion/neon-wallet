@@ -64,7 +64,7 @@ const Sidebar = ({
       </Tooltip>
 
       <Tooltip title='Contacts' position='right'>
-        <NavLink id='contacts' exact to={ROUTES.CONTACTS} className={styles.navItem} activeClassName={styles.active}>
+        <NavLink id='contacts' to={ROUTES.CONTACTS} className={styles.navItem} activeClassName={styles.active}>
           <ContactsIcon />
         </NavLink>
       </Tooltip>

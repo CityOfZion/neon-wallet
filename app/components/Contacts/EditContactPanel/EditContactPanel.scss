@@ -1,0 +1,21 @@
+.editContactPanel {
+  max-width: 600px;
+
+  .header {
+    display: flex;
+    align-items: center;
+
+    .back {
+      margin-right: 10px;
+    }
+  }
+
+  form {
+    max-width: 385px;
+    margin: 0 auto;
+
+    .input {
+      margin-bottom: 10px;
+    }
+  }
+}

@@ -10,6 +10,7 @@ import DeleteIcon from '../../../assets/icons/delete.svg'
 import styles from './ContactsPanel.scss'
 
 type Props = {
+  history: Object,
   contacts: {
     [name: string]: string
   },
@@ -50,7 +51,7 @@ export default class ContactsPanel extends React.Component<Props> {
           <Button
             className={styles.editButton}
             renderIcon={EditIcon}
-            onClick={this.handleEdit}
+            onClick={this.handleEdit(name)}
           >
             Edit
           </Button>
@@ -70,8 +71,10 @@ export default class ContactsPanel extends React.Component<Props> {
     // TODO
   }
 
-  handleEdit = () => {
-    // TODO
+  handleEdit = (name: string) => {
+    return () => {
+      this.props.history.push(`/contacts/edit/${name}`)
+    }
   }
 
   handleDelete = (name: string) => {
