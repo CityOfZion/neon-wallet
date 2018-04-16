@@ -19,6 +19,7 @@ export const ROUTES = {
   DASHBOARD: '/dashboard',
   RECEIVE: '/receive',
   CONTACTS: '/contacts',
+  ADD_CONTACT: '/contacts/new',
   EDIT_CONTACT: '/contacts/edit/:name',
   CREATE_WALLET: '/create',
   ENCRYPT_KEY: '/encrypt-key',
