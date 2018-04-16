@@ -8,7 +8,7 @@ import Panel from '../../Panel'
 import ContactForm from '../ContactForm'
 import ArrowIcon from '../../../assets/icons/arrow.svg'
 import { ROUTES } from '../../../core/constants'
-import styles from './EditContactPanel.scss'
+import styles from './AddContactPanel.scss'
 
 type Props = {
   className: ?string,
@@ -17,7 +17,7 @@ type Props = {
   onSave: Function
 }
 
-export default class EditContactPanel extends React.Component<Props> {
+export default class AddContactPanel extends React.Component<Props> {
   static defaultProps = {
     name: '',
     address: '',
@@ -31,7 +31,7 @@ export default class EditContactPanel extends React.Component<Props> {
 
     return (
       <Panel
-        className={classNames(styles.editContactPanel, className)}
+        className={classNames(styles.addContactPanel, className)}
         renderHeader={this.renderHeader}
       >
         <ContactForm name={name} address={address} onSubmit={this.handleSubmit} />
@@ -43,7 +43,7 @@ export default class EditContactPanel extends React.Component<Props> {
     return (
       <span className={styles.header}>
         <Link to={ROUTES.CONTACTS} className={styles.back}><ArrowIcon /></Link>
-        <span>Edit Contact</span>
+        <span>Add Contact</span>
       </span>
     )
   }

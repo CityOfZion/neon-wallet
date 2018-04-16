@@ -40,14 +40,14 @@ export const loadAddresses = () => (dispatch: DispatchType) => {
   })
 }
 
-export const saveAddress = (address: string, name: string) => (dispatch: DispatchType) => {
+export const saveAddress = (name: string, address: string) => (dispatch: DispatchType) => {
   if (isEmpty(name)) {
-    dispatch(showErrorNotification({ message: 'Please enter a name for your contact.' }))
+    dispatch(showErrorNotification({ message: 'Name cannot be empty.' }))
     return null
   }
 
   if (!wallet.isAddress(address)) {
-    dispatch(showErrorNotification({ message: 'The address you entered was not valid.' }))
+    dispatch(showErrorNotification({ message: 'Invalid address.' }))
     return null
   }
 
