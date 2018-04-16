@@ -71,7 +71,7 @@ export default class ContactsPanel extends React.Component<Props> {
 
   handleEdit = (name: string) => {
     return () => {
-      this.props.history.push(`/contacts/edit/${name}`)
+      this.props.history.push(`/contacts/edit/${encodeURIComponent(name)}`)
     }
   }
 
