@@ -11,6 +11,7 @@ import CreateWallet from '../../containers/CreateWallet'
 import Dashboard from '../../containers/Dashboard'
 import Receive from '../../containers/Receive'
 import Contacts from '../../containers/Contacts'
+import EditContact from '../../containers/EditContact'
 import LoginLocalStorage from '../../containers/LoginLocalStorage'
 import LoginNep2 from '../../containers/LoginNep2'
 import Settings from '../../containers/Settings'
@@ -35,6 +36,7 @@ export default () => (
       <PrivateRoute exact path={ROUTES.DASHBOARD} component={Dashboard} />
       <PrivateRoute exact path={ROUTES.RECEIVE} component={Receive} />
       <PrivateRoute exact path={ROUTES.CONTACTS} component={Contacts} />
+      <PrivateRoute exact path={ROUTES.EDIT_CONTACT} component={EditContact} />
       <PrivateRoute exact path={ROUTES.TRANSACTION_HISTORY} component={TransactionHistory} />
       <Redirect to={ROUTES.DASHBOARD} />
     </Switch>
