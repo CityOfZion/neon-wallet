@@ -7,16 +7,16 @@ import { withCall, withRecall, withProgressComponents, alreadyLoadedStrategy, pr
 import appActions from '../../actions/appActions'
 import authActions from '../../actions/authActions'
 import accountActions from '../../actions/accountActions'
+import accountsActions from '../../actions/accountsActions'
+import blockHeightActions from '../../actions/blockHeightActions'
 import contactsActions from '../../actions/contactsActions'
 import networkActions from '../../actions/networkActions'
-import pricesActions from '../../actions/pricesActions'
 import withLoginRedirect from '../../hocs/auth/withLoginRedirect'
 import withLogoutRedirect from '../../hocs/auth/withLogoutRedirect'
 import withLogoutReset from '../../hocs/auth/withLogoutReset'
-import withCurrencyData from '../../hocs/withCurrencyData'
+import withInitialCall from '../../hocs/withInitialCall'
 import withAuthData from '../../hocs/withAuthData'
 import withNetworkData from '../../hocs/withNetworkData'
-import everLoadedStrategy from '../../hocs/helpers/everLoadedStrategy'
 import { checkVersion } from '../../modules/metadata'
 import { showErrorNotification } from '../../modules/notifications'
 
@@ -40,10 +40,21 @@ export default compose(
   // Fetch contacts
   withCall(contactsActions),
 
+  // Provide authenticated state so dashboard knows what layout to use.
+  withAuthData(),
+
+  // Fetch the initial settings.
+  withInitialCall(accountsActions),
+  withProgressComponents(accountsActions, {
+    [LOADING]: Loading,
+    [FAILED]: Failed
+  }, {
+    strategy: alreadyLoadedStrategy
+  }),
+
   // Fetch the initial network type, and pass it down as a prop.  This must come before other data
   // fetches that depend on knowing the selected network.
-  withCall(networkActions),
-  withAuthData(),
+  withInitialCall(networkActions),
   withNetworkData(),
   withProgressComponents(networkActions, {
     [LOADING]: Loading,
@@ -53,25 +64,8 @@ export default compose(
   }),
 
   // Fetch application data based upon the selected network.  Reload data when the network changes.
-  withCall(appActions),
-  withRecall(appActions, ['networkId']),
-  withProgressComponents(appActions, {
-    [LOADING]: Loading,
-    [FAILED]: Failed
-  }, {
-    strategy: everLoadedStrategy
-  }),
-
-  // Fetch prices data based based upon the selected currency.  Reload data with the currency changes.
-  withCurrencyData(),
-  withCall(pricesActions),
-  withRecall(pricesActions, ['currency']),
-  withProgressComponents(pricesActions, {
-    [LOADING]: Loading,
-    [FAILED]: Failed
-  }, {
-    strategy: alreadyLoadedStrategy
-  }),
+  withInitialCall(appActions),
+  withRecall(blockHeightActions, ['networkId']),
 
   // Navigate to the home or dashboard when the user logs in or out.
   withLoginRedirect,

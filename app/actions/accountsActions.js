@@ -6,10 +6,6 @@ import { getStorage, setStorage } from '../core/storage'
 import { DEFAULT_WALLET } from '../core/constants'
 import { Account } from '../core/schemas'
 
-type Props = {
-  networkId: string
-}
-
 const STORAGE_KEY = 'userWallet'
 
 const getWallet = async (): Promise<Object> => {
@@ -67,7 +63,8 @@ export const saveAccountActions = createActions(ID, ({ label, address, key }: Ob
   return wallet.accounts
 })
 
-export default createActions(ID, ({ networkId }: Props = {}) => async (): Promise<Object> => {
+export default createActions(ID, () => async (): Promise<Object> => {
   const wallet = await getWallet()
+  console.log('wallet accounts:', wallet.accounts)
   return wallet.accounts
 })

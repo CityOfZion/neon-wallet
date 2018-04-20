@@ -5,7 +5,7 @@ import { pickBy, pick, omit, reduce, map } from 'lodash'
 
 import PortfolioPanel from './PortfolioPanel'
 import pricesActions from '../../../actions/pricesActions'
-import balancesActions from '../../../actions/balancesActions'
+import withBalancesData from '../../../hocs/withBalancesData'
 import withCurrencyData from '../../../hocs/withCurrencyData'
 import { getTokenBalancesMap } from '../../../core/wallet'
 import { toNumber, toBigNumber } from '../../../core/math'
@@ -42,7 +42,7 @@ const mapPortfolioBalanceProps = ({ prices, balances, total }) => ({
 
 export default compose(
   withData(pricesActions, mapPricesDataToProps),
-  withData(balancesActions, mapBalancesDataToProps),
+  withBalancesData(mapBalancesDataToProps),
   withCurrencyData(),
   withProps(mapTotalPortfolioValueToProps),
   withProps(mapPortfolioBalanceProps)
