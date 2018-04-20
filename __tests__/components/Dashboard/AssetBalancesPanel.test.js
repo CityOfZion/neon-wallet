@@ -15,14 +15,16 @@ const initialState = {
     NETWORK: {
       batch: false,
       progress: LOADED,
-      data: MAIN_NETWORK_ID
+      data: MAIN_NETWORK_ID,
+      loadedCount: 1
     },
     AUTH: {
       batch: false,
       progress: LOADED,
       data: {
         address: 'ANqUrhv99rwCiFTL6N1An9NH5UVkPYxTuw'
-      }
+      },
+      loadedCount: 1
     },
     SETTINGS: {
       batch: false,
@@ -30,7 +32,8 @@ const initialState = {
       data: {
         currency: DEFAULT_CURRENCY_CODE,
         tokens: []
-      }
+      },
+      loadedCount: 1
     },
     PRICES: {
       batch: false,
@@ -38,7 +41,8 @@ const initialState = {
       data: {
         NEO: 25.48,
         GAS: 18.1
-      }
+      },
+      loadedCount: 1
     },
     BALANCES: {
       batch: false,
@@ -46,14 +50,16 @@ const initialState = {
       data: {
         NEO: '100001',
         GAS: '1000.0001601'
-      }
+      },
+      loadedCount: 1
     },
     CLAIMS: {
       batch: false,
       progress: LOADED,
       data: {
         total: '0.5'
-      }
+      },
+      loadedCount: 1
     }
   },
   claim: {
@@ -77,7 +83,7 @@ describe('AssetBalancesPanel', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
-  test('correctly renders data from state', () => {
+  test.only('correctly renders data from state', () => {
     const wrapper = mount(provideState(<AssetBalancesPanel />, initialState))
 
     expect(wrapper.find('#neoWalletValue').text()).toEqual(`$2,548,025.48`)

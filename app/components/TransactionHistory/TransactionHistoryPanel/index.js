@@ -1,6 +1,6 @@
 // @flow
 import { compose } from 'recompose'
-import { withData, withProgressComponents, alreadyLoadedStrategy, progressValues } from 'spunky'
+import { withCall, withData, withProgressComponents, alreadyLoadedStrategy, progressValues } from 'spunky'
 
 import TransactionHistoryPanel from './TransactionHistoryPanel'
 import transactionHistoryActions from '../../../actions/transactionHistoryActions'
@@ -18,6 +18,7 @@ const mapTransactionsDataToProps = (transactions) => ({
 export default compose(
   withNetworkData(),
   withAuthData(),
+  withCall(transactionHistoryActions),
   withData(transactionHistoryActions, mapTransactionsDataToProps),
   withProgressComponents(transactionHistoryActions, {
     [LOADING]: Loading,

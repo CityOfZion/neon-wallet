@@ -2,11 +2,10 @@
 import { compose } from 'recompose'
 import { withData, withActions } from 'spunky'
 
+import LoginLocalStorage from './LoginLocalStorage'
 import withFailureNotification from '../../hocs/withFailureNotification'
 import accountsActions from '../../actions/accountsActions'
 import { nep2LoginActions } from '../../actions/authActions'
-
-import LoginLocalStorage from './LoginLocalStorage'
 
 const mapAccountsDataToProps = (accounts) => ({
   accounts

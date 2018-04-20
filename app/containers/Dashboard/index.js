@@ -2,29 +2,20 @@
 import { connect, type MapStateToProps } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
-import { omit } from 'lodash'
-import { withCall, withData, withRecall, withActions, withProgressComponents, alreadyLoadedStrategy, progressValues } from 'spunky'
+import { withRecall, withActions } from 'spunky'
 
-import Loader from '../../components/Loader'
 import accountActions from '../../actions/accountActions'
-import withNetworkData from '../../hocs/withNetworkData'
 import withAuthData from '../../hocs/withAuthData'
+import withNetworkData from '../../hocs/withNetworkData'
 import withFilteredTokensData from '../../hocs/withFilteredTokensData'
+import withSettingsCall from '../../hocs/withSettingsCall'
 import { getNotifications } from '../../modules/notifications'
 import { showModal } from '../../modules/modal'
 
 import Dashboard from './Dashboard'
 
-const { LOADING } = progressValues
-
 const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
   notification: getNotifications(state)
-})
-
-const mapAccountDataToProps = ({ balances }) => ({
-  NEO: balances.NEO,
-  GAS: balances.GAS,
-  tokenBalances: omit(balances, 'NEO', 'GAS')
 })
 
 const actionCreators = {
@@ -41,14 +32,10 @@ export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withNetworkData(),
   withAuthData(),
+
+  // Expose function for polling & reloading account related data.
+  withSettingsCall(),
   withFilteredTokensData(),
-  withCall(accountActions),
-  withProgressComponents(accountActions, {
-    [LOADING]: Loader
-  }, {
-    strategy: alreadyLoadedStrategy
-  }),
-  withData(accountActions, mapAccountDataToProps),
   withRecall(accountActions, ['networkId']),
   withActions(accountActions, mapAccountActionsToProps)
 )(Dashboard)
