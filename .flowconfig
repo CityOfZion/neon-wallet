@@ -1,6 +1,7 @@
 [ignore]
 .*/test/.*
 .*/node_modules/.*/src/.*
+.*/node_modules/@ledgerhq/hw-transport/lib/Transport.js.flow
 
 [include]
 
