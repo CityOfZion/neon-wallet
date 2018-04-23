@@ -1,14 +1,9 @@
 // @flow
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { withData } from 'spunky'
 
 import Contacts from './Contacts'
-import { loadAddresses, getAddresses } from '../../modules/addressBook'
+import contactsActions from '../../actions/contactsActions'
 
-const mapStateToProps = (state: Object) => ({
-  contacts: getAddresses(state)
-})
+const mapContactsDataToProps = (contacts: Object) => ({ contacts })
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ loadAddresses }, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(Contacts)
+export default withData(contactsActions, mapContactsDataToProps)(Contacts)

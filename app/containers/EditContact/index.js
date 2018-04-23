@@ -1,22 +1,21 @@
 // @flow
-import { compose, withProps, type MapStateToProps } from 'recompose'
-import { connect } from 'react-redux'
+import { compose, withProps } from 'recompose'
+import { withData } from 'spunky'
 import { withRouter } from 'react-router-dom'
 
 import EditContact from './EditContact'
-
-import { getAddresses } from '../../modules/addressBook'
+import contactsActions from '../../actions/contactsActions'
 
 const mapNameToProps = (props) => ({
   name: decodeURIComponent(props.match.params.name)
 })
 
-const mapStateToProps: MapStateToProps<*, *, *> = (state: Object, ownProps: Object) => ({
-  address: getAddresses(state)[ownProps.name]
+const mapContactsDataToProps = (contacts: Object, ownProps: Object) => ({
+  address: contacts[ownProps.name]
 })
 
 export default compose(
   withRouter,
   withProps(mapNameToProps),
-  connect(mapStateToProps)
+  withData(contactsActions, mapContactsDataToProps)
 )(EditContact)
