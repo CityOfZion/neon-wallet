@@ -2,7 +2,7 @@
 import React from 'react'
 import Highlighter from 'react-highlight-words'
 import Sifter from 'sifter'
-import { noop, omit, map } from 'lodash'
+import { omit, map } from 'lodash'
 
 import SelectInput, { DropdownButton } from '../SelectInput'
 
@@ -15,25 +15,16 @@ type ItemType = {
 
 type Props = {
   value: string,
-  addresses?: Object,
-  loadAddresses?: Function
+  contacts?: Object
 }
 
 export default class AddressInput extends React.Component<Props> {
   static defaultProps = {
-    addresses: {},
-    loadAddresses: noop
-  }
-
-  componentDidMount = () => {
-    const { loadAddresses } = this.props
-    if (loadAddresses) {
-      loadAddresses()
-    }
+    contacts: {}
   }
 
   render = () => {
-    const passDownProps = omit(this.props, 'addresses', 'loadAddresses')
+    const passDownProps = omit(this.props, 'contacts')
 
     return (
       <SelectInput
@@ -73,11 +64,11 @@ export default class AddressInput extends React.Component<Props> {
   }
 
   getItems = (): Array<ItemType> => {
-    const { addresses } = this.props
-    if (!addresses) {
+    const { contacts } = this.props
+    if (!contacts) {
       return []
     }
-    return map(addresses, (address, name) => ({
+    return map(contacts, (address, name) => ({
       label: name,
       value: address
     }))
