@@ -7,6 +7,7 @@ import { withCall, withRecall, withProgressComponents, alreadyLoadedStrategy, pr
 import appActions from '../../actions/appActions'
 import authActions from '../../actions/authActions'
 import accountActions from '../../actions/accountActions'
+import contactsActions from '../../actions/contactsActions'
 import networkActions from '../../actions/networkActions'
 import pricesActions from '../../actions/pricesActions'
 import withLoginRedirect from '../../hocs/auth/withLoginRedirect'
@@ -35,6 +36,9 @@ const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispat
 export default compose(
   // Old way of fetching data, need to refactor this out...
   connect(null, mapDispatchToProps),
+
+  // Fetch contacts
+  withCall(contactsActions),
 
   // Fetch the initial network type, and pass it down as a prop.  This must come before other data
   // fetches that depend on knowing the selected network.
