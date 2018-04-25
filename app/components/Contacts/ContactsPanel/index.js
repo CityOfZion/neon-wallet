@@ -1,16 +1,18 @@
 // @flow
 import { compose } from 'recompose'
-import { connect } from 'react-redux'
+import { withActions } from 'spunky'
 import { withRouter } from 'react-router-dom'
 
 import ContactsPanel from './ContactsPanel'
-import { deleteAddress } from '../../../modules/addressBook'
+import { deleteContactActions } from '../../../actions/contactsActions'
+import withFailureNotification from '../../../hocs/withFailureNotification'
 
-const mapDispatchToProps = (dispatch) => ({
-  deleteContact: (...args) => dispatch(deleteAddress(...args))
+const mapContactActionsToProps = (actions) => ({
+  deleteContact: (name) => actions.call({ name })
 })
 
 export default compose(
   withRouter,
-  connect(null, mapDispatchToProps)
+  withActions(deleteContactActions, mapContactActionsToProps),
+  withFailureNotification(deleteContactActions)
 )(ContactsPanel)
