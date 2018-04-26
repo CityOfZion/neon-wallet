@@ -11,6 +11,15 @@ import Login from '../../images/icons/Login.svg'
 import Plus from '../../images/icons/Plus.svg'
 import Wallet from '../../images/icons/Wallet.svg'
 
+type State = {
+  option: string,
+  password: string
+}
+
+type Props = {
+  loginWithPrivateKey: Function
+}
+
 class Home extends Component<Props, State> {
   state = {
     option: 'Private Key',
