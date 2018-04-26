@@ -1,27 +1,17 @@
 // @flow
 import React, { Component } from 'react'
-import classNames from 'classnames'
-import { Link } from 'react-router-dom'
 
-import { ROUTES } from '../../core/constants'
 import Button from '../../components/Button/Button'
-
 import TextInput from '../../components/Inputs/TextInput/TextInput'
-
 import SelectInput from '../../components/Inputs/SelectInput/SelectInput'
-
-import Dropdown from '../../components/Inputs/SelectInput/Dropdown'
-import DropdownButton from '../../components/Inputs/SelectInput/DropdownButton'
-
 import styles from './Home.scss'
 import neonLogo from '../../images/neon-logo-redesign.png'
-
 // Icons
-import Login from '-!babel-loader!svg-react-loader!../../images/icons/Login.svg'
-import Plus from '-!babel-loader!svg-react-loader!../../images/icons/Plus.svg'
-import Wallet from '-!babel-loader!svg-react-loader!../../images/icons/Wallet.svg'
+import Login from '../../images/icons/Login.svg'
+import Plus from '../../images/icons/Plus.svg'
+import Wallet from '../../images/icons/Wallet.svg'
 
-class Home extends Component {
+class Home extends Component<Props, State> {
   state = {
     option: 'Private Key',
     password: ''
