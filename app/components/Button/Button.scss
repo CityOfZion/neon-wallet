@@ -11,7 +11,7 @@
   font-weight: 100;
   padding: 10px;
   white-space: nowrap;
-  transition: opacity .2s;
+  transition: opacity 0.2s;
 
   &[disabled] {
     opacity: 0.25;
@@ -58,7 +58,7 @@
 
   span {
     padding-right: 25px;
-    margin: auto;
+    width: 100%;
   }
 
   .icon {

@@ -1,50 +1,144 @@
 // @flow
-import React from 'react'
+import React, { Component } from 'react'
 import classNames from 'classnames'
 import { Link } from 'react-router-dom'
 
 import { ROUTES } from '../../core/constants'
+import Button from '../../components/Button/Button'
+
+import TextInput from '../../components/Inputs/TextInput/TextInput'
+
+import SelectInput from '../../components/Inputs/SelectInput/SelectInput'
+
+import Dropdown from '../../components/Inputs/SelectInput/Dropdown'
+import DropdownButton from '../../components/Inputs/SelectInput/DropdownButton'
 
 import styles from './Home.scss'
+import neonLogo from '../../images/neon-logo-redesign.png'
 
-const Home = () => (
-  <div id='home'>
-    <Link to={ROUTES.LOGIN_LOCAL_STORAGE}>
-      <div className={classNames('linkBox', styles.linkBox)}>
-        Login using a saved wallet
+// Icons
+import Login from '-!babel-loader!svg-react-loader!../../images/icons/Login.svg'
+import Plus from '-!babel-loader!svg-react-loader!../../images/icons/Plus.svg'
+import Wallet from '-!babel-loader!svg-react-loader!../../images/icons/Wallet.svg'
+
+class Home extends Component {
+  state = {
+    option: 'Private Key',
+    password: ''
+  }
+
+  handleSelect = option => this.setState({ option })
+
+  handleSubmit = () => {
+    const { loginWithPrivateKey } = this.props
+    switch (this.state.option) {
+      case 'Private Key':
+        return loginWithPrivateKey(this.state.password)
+      default:
+        console.log('foo')
+    }
+  }
+
+  render = () => (
+    <div id="home" className={styles.home}>
+      <div className={styles.loginContainer}>
+        <img className={styles.logo} src={neonLogo} />
+        <div className={styles.loginText}>Login</div>
+
+        <div className={styles.inputContainer}>
+          <SelectInput
+            className={styles.input}
+            onChange={value => this.handleSelect(value)}
+            value={this.state.option}
+            items={['Private Key']}
+          />
+
+          <TextInput
+            className={styles.input}
+            onChange={e =>
+              console.log(e.target.value) ||
+              this.setState({ password: e.target.value })
+            }
+            placeholder="Password"
+            type="password"
+          />
+
+          <Button
+            renderIcon={() => <Login />}
+            icon="login"
+            style={{ marginTop: 20 }}
+            onClick={() => this.handleSubmit()}
+          >
+            Login
+          </Button>
+
+          <div className={styles.buttonRow}>
+            <div style={{ flex: 0.45 }}>
+              <Button primary renderIcon={() => <Plus />}>
+                New Wallet
+              </Button>
+            </div>
+            <div style={{ flex: 0.45 }}>
+              <Button primary renderIcon={() => <Wallet />}>
+                Wallet Manager
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
-    </Link>
-    <Link to={ROUTES.LOGIN_NEP2}>
-      <div className={classNames('linkBox', styles.linkBox)}>
-        Login using an encrypted key
-      </div>
-    </Link>
-    <Link to={ROUTES.LOGIN_PRIVATE_KEY}>
-      <div className={classNames('linkBox', styles.linkBox)}>
-        Login using a private key
-      </div>
-    </Link>
-    <Link to={ROUTES.LOGIN_LEDGER_NANO_S}>
-      <div className={classNames('linkBox', styles.linkBox)}>
-        Login using a Ledger
-      </div>
-    </Link>
-    <Link to={ROUTES.CREATE_WALLET}>
-      <div className={classNames('linkBox', styles.linkBox, styles.linkBoxAlt)}>
-        Create a new wallet
-      </div>
-    </Link>
-    <Link to={ROUTES.ENCRYPT_KEY}>
-      <div className={classNames('linkBox', styles.linkBox, styles.linkBoxAlt)}>
-        Encrypt an existing key
-      </div>
-    </Link>
-    <Link to={ROUTES.SETTINGS}>
-      <div className={classNames('linkBox', styles.linkBox, styles.linkBoxAlt)}>
-        Manage Neon settings
-      </div>
-    </Link>
-  </div>
-)
+    </div>
+  )
+}
 
 export default Home
+
+// // @flow
+// import React from 'react'
+// import classNames from 'classnames'
+// import { Link } from 'react-router-dom'
+//
+// import { ROUTES } from '../../core/constants'
+//
+// import styles from './Home.scss'
+//
+// const Home = () => (
+//   <div id='home'>
+//     <Link to={ROUTES.LOGIN_LOCAL_STORAGE}>
+//       <div className={classNames('linkBox', styles.linkBox)}>
+//         Login using a saved wallet
+//       </div>
+//     </Link>
+//     <Link to={ROUTES.LOGIN_NEP2}>
+//       <div className={classNames('linkBox', styles.linkBox)}>
+//         Login using an encrypted key
+//       </div>
+//     </Link>
+//     <Link to={ROUTES.LOGIN_PRIVATE_KEY}>
+//       <div className={classNames('linkBox', styles.linkBox)}>
+//         Login using a private key
+//       </div>
+//     </Link>
+//     <Link to={ROUTES.LOGIN_LEDGER_NANO_S}>
+//       <div className={classNames('linkBox', styles.linkBox)}>
+//         Login using a Ledger
+//       </div>
+//     </Link>
+//     <Link to={ROUTES.CREATE_WALLET}>
+//       <div className={classNames('linkBox', styles.linkBox, styles.linkBoxAlt)}>
+//         Create a new wallet
+//       </div>
+//     </Link>
+//     <Link to={ROUTES.ENCRYPT_KEY}>
+//       <div className={classNames('linkBox', styles.linkBox, styles.linkBoxAlt)}>
+//         Encrypt an existing key
+//       </div>
+//     </Link>
+//     <Link to={ROUTES.SETTINGS}>
+//       <div className={classNames('linkBox', styles.linkBox, styles.linkBoxAlt)}>
+//         Manage Neon settings
+//       </div>
+//     </Link>
+//   </div>
+// )
+//
+// export default Home

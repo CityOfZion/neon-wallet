@@ -20,6 +20,7 @@
         "window": true
     },
     "rules": {
-    "flowtype/define-flow-type": 2
+        "flowtype/define-flow-type": 2,
+        "jsx-quotes": ["error", "prefer-double"]
     }
 }

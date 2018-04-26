@@ -1,22 +1,57 @@
 @import '../../styles/variables';
 
-$padding: 24px;
-
-.linkBox {
-  display: inline-block;
-  background-color: $bright-button;
-  width: (($page-width - $padding) / 4) - ((2 * $box-padding) + $box-margin);
-  height: 120px;
-  padding: $box-padding;
-  margin: 0px $box-margin $box-margin 0px;
-  font-size: 1.4em;
-  font-weight: 200;
-  color: #fff;
-  &:hover {
-    opacity: 0.8;
-  }
+.input {
+  width: 100%;
+  margin: 10px;
 }
 
-.linkBoxAlt {
-  background-color: $dark-button;
+.dropdownRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.loginContainer {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 75vw;
+  height: 75vh;
+  margin: auto;
+  min-height: 650px;
+}
+
+.buttonRow {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 15px;
+  flex: 1;
+}
+
+.home {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+.logo {
+  max-height: 100px;
+  padding-top: 100px;
+  padding-bottom: 80px;
+  max-width: 100px;
+}
+
+.loginText {
+  font-size: 36px;
+  font-weight: 400;
+  margin-bottom: 15px;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  align-items: center;
 }
