@@ -26,6 +26,7 @@ class Home extends Component<Props, State> {
     password: ''
   }
 
+  option: string
   handleSelect = option => this.setState({ option })
 
   handleSubmit = () => {
