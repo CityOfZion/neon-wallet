@@ -39,7 +39,7 @@ app.on('ready', () => {
     }
 
     if (process.platform !== 'darwin') {
-    // Windows/Linxu Menu
+    // Windows/Linux Menu
       mainWindow.setMenu(null)
     } else {
       // Menu is required for MacOS
@@ -109,4 +109,16 @@ app.on('ready', () => {
   } else {
     onAppReady()
   }
+})
+
+app.on('web-contents-created', (event, wc) => {
+  wc.on('before-input-event', (event, input) => {
+    // Windows/Linux hotkeys
+    if (process.platform !== 'darwin') {
+      if (input.key === 'F12') {
+        mainWindow.webContents.openDevTools()
+        event.preventDefault()
+      }
+    }
+  })
 })
