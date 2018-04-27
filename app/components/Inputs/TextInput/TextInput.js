@@ -27,7 +27,7 @@ export default class TextInput extends React.Component<Props, State> {
     active: false
   }
 
-  render() {
+  render () {
     const passDownProps = omit(
       this.props,
       'className',

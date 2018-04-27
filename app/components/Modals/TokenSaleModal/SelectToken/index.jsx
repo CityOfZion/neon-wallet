@@ -81,7 +81,7 @@ class SelectToken extends React.Component<Props, State> {
                   </div>
                   <div>
                     <AssetInput
-                      placeholder='Choose token'
+                      placeholder="Choose token"
                       symbols={Object.keys(tokenBalances)}
                       value={tokenToMint}
                       onChange={symbol => onChangeToken(symbol)}
@@ -130,7 +130,7 @@ class SelectToken extends React.Component<Props, State> {
                     className={styles.numberInput}
                     max={assetBalance}
                     value={balanceToSend}
-                    placeholder='Amount'
+                    placeholder="Amount"
                     options={{ numeralDecimalScale: COIN_DECIMAL_LENGTH }}
                     onChange={amount => onChangeAmount(selectedAsset, amount)}
                   />

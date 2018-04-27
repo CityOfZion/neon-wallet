@@ -27,29 +27,29 @@ export default class AssetBalancesPanel extends React.Component<Props> {
 
     return (
       <Panel className={classNames(styles.assetBalancesPanel, className)} renderHeader={this.renderHeader}>
-        <div id='balance' className={styles.assets}>
+        <div id="balance" className={styles.assets}>
           <div className={styles.asset}>
             <div className={styles.label}>{ASSETS.NEO}</div>
-            <div className={styles.quantity} id='amountNeo'>{formatNEO(NEO)}</div>
-            <div className={styles.value} id='neoWalletValue'>
+            <div className={styles.quantity} id="amountNeo">{formatNEO(NEO)}</div>
+            <div className={styles.value} id="neoWalletValue">
               {this.getFormattedFiatBalance(this.getNEOValue())}
             </div>
           </div>
           <div className={styles.asset}>
             <div className={styles.label}>{ASSETS.GAS}</div>
-            <div className={styles.quantity} id='amountGas'>
+            <div className={styles.quantity} id="amountGas">
               <Tooltip title={formatGAS(GAS)} disabled={toBigNumber(GAS).eq(0)}>
                 {formatGAS(GAS, true)}
               </Tooltip>
             </div>
-            <div className={styles.value} id='gasWalletValue'>
+            <div className={styles.value} id="gasWalletValue">
               {this.getFormattedFiatBalance(this.getGASValue())}
             </div>
           </div>
         </div>
         <div className={styles.totalValue}>
           <div className={styles.label}>Total</div>
-          <div id='walletTotal'>{this.getFormattedFiatBalance(this.getTotalValue())}</div>
+          <div id="walletTotal">{this.getFormattedFiatBalance(this.getTotalValue())}</div>
         </div>
         <div className={styles.claim}>
           <Claim className={styles.claimButton} />
@@ -62,8 +62,8 @@ export default class AssetBalancesPanel extends React.Component<Props> {
     return (
       <div className={styles.header}>
         <span>Balances</span>
-        <Tooltip title='Refresh'>
-          <RefreshIcon id='refresh' className={styles.refresh} onClick={this.props.refresh} />
+        <Tooltip title="Refresh">
+          <RefreshIcon id="refresh" className={styles.refresh} onClick={this.props.refresh} />
         </Tooltip>
       </div>
     )

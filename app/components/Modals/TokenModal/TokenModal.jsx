@@ -97,7 +97,7 @@ class TokenModal extends Component<Props, State> {
 
     return (
       <BaseModal
-        title='Manage Tokens'
+        title="Manage Tokens"
         hideModal={hideModal}
         style={{
           content: {

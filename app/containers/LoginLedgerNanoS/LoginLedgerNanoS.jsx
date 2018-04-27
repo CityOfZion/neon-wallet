@@ -39,7 +39,7 @@ export default class LoginLedgerNanoS extends React.Component<Props> {
 
   render () {
     return (
-      <div id='loginPage' className={styles.loginPage}>
+      <div id="loginPage" className={styles.loginPage}>
         <div className={styles.title}>Login using the Ledger Nano S:</div>
         <div className={styles.loginForm}>
           <div>

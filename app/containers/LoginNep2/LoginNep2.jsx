@@ -28,27 +28,27 @@ export default class LoginNep2 extends Component<Props, State> {
     const loginButtonDisabled = encryptedWIF === '' || passphrase === ''
 
     return (
-      <div id='loginPage' className={loginStyles.loginPage}>
+      <div id="loginPage" className={loginStyles.loginPage}>
         <div className={loginStyles.title}>Login using an encrypted key:</div>
         <form onSubmit={(e) => { e.preventDefault(); loginNep2(passphrase, encryptedWIF) }}>
           <div className={loginStyles.loginForm}>
             <PasswordInput
-              placeholder='Enter your passphrase here'
+              placeholder="Enter your passphrase here"
               onChange={(e) => this.setState({ passphrase: e.target.value })}
               value={passphrase}
               autoFocus
             />
             <PasswordInput
-              placeholder='Enter your encrypted key here'
+              placeholder="Enter your encrypted key here"
               onChange={(e) => this.setState({ encryptedWIF: e.target.value })}
               value={encryptedWIF}
             />
           </div>
           <div>
             <Button
-              id='loginButton'
+              id="loginButton"
               primary
-              type='submit'
+              type="submit"
               disabled={loginButtonDisabled}>Login</Button>
             <HomeButtonLink />
           </div>

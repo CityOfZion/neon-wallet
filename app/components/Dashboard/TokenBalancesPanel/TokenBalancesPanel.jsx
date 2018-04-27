@@ -33,8 +33,8 @@ export default class TokenBalancesPanel extends React.Component<Props> {
     return (
       <div className={styles.header}>
         <span>Token Balances</span>
-        <Tooltip title='Refresh'>
-          <RefreshIcon id='refresh' className={styles.refresh} onClick={this.props.refresh} />
+        <Tooltip title="Refresh">
+          <RefreshIcon id="refresh" className={styles.refresh} onClick={this.props.refresh} />
         </Tooltip>
       </div>
     )

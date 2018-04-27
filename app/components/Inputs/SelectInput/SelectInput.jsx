@@ -122,7 +122,7 @@ export default class SelectInput extends React.Component<Props, State> {
     return (
       <div className={styles.dropdownItem} key={getItemValue(item)} tabIndex={0} onClick={onSelect}>
         <Highlighter
-          highlightTag='span'
+          highlightTag="span"
           highlightClassName={styles.highlight}
           searchWords={[search]}
           autoEscape

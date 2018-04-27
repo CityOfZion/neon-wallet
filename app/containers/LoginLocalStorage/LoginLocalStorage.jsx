@@ -30,7 +30,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
     const { passphrase, encryptedWIF } = this.state
 
     return (
-      <div id='loginPage' className={loginStyles.loginPage}>
+      <div id="loginPage" className={loginStyles.loginPage}>
         <div className={loginStyles.title}>Login using a saved wallet:</div>
         <form onSubmit={this.handleSubmit}>
           <select
@@ -38,21 +38,21 @@ export default class LoginLocalStorage extends Component<Props, State> {
             value={encryptedWIF}
             onChange={(e) => this.setState({ encryptedWIF: e.target.value })}
           >
-            <option value=''>Select a wallet</option>
+            <option value="">Select a wallet</option>
             {map(accounts, (account, index) => (
               <option value={account.key} key={`wallet${account.label}`}>{account.label}</option>
             ))}
           </select>
           <div className={loginStyles.loginForm}>
             <PasswordInput
-              placeholder='Enter your passphrase here'
+              placeholder="Enter your passphrase here"
               value={passphrase}
               onChange={(e) => this.setState({ passphrase: e.target.value })}
               autoFocus
             />
           </div>
           <div>
-            <Button primary type='submit' disabled={!this.isValid()}>Login</Button>
+            <Button primary type="submit" disabled={!this.isValid()}>Login</Button>
             <HomeButtonLink />
           </div>
         </form>
