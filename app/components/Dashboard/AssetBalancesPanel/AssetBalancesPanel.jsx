@@ -18,10 +18,15 @@ type Props = {
   neoPrice: number,
   gasPrice: number,
   currencyCode: string,
+  loading: ?boolean,
   refresh: Function
 }
 
 export default class AssetBalancesPanel extends React.Component<Props> {
+  static defaultProps = {
+    loading: false
+  }
+
   render = () => {
     const { NEO, GAS, className } = this.props
 
@@ -59,11 +64,17 @@ export default class AssetBalancesPanel extends React.Component<Props> {
   }
 
   renderHeader = () => {
+    const { refresh, loading } = this.props
+
     return (
       <div className={styles.header}>
         <span>Balances</span>
         <Tooltip title='Refresh'>
-          <RefreshIcon id='refresh' className={styles.refresh} onClick={this.props.refresh} />
+          <RefreshIcon
+            id='refresh'
+            className={classNames(styles.refresh, { [styles.loading]: loading })}
+            onClick={refresh}
+          />
         </Tooltip>
       </div>
     )

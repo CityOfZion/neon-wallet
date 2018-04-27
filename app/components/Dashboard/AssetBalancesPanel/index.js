@@ -10,6 +10,7 @@ import withNetworkData from '../../../hocs/withNetworkData'
 import withAuthData from '../../../hocs/withAuthData'
 import withCurrencyData from '../../../hocs/withCurrencyData'
 import withFilteredTokensData from '../../../hocs/withFilteredTokensData'
+import withLoadingProp from '../../../hocs/withLoadingProp'
 import withSuccessNotification from '../../../hocs/withSuccessNotification'
 import withFailureNotification from '../../../hocs/withFailureNotification'
 
@@ -38,6 +39,7 @@ export default compose(
   withAuthData(),
   withFilteredTokensData(),
   withActions(balancesActions, mapBalancesActionsToProps),
+  withLoadingProp(balancesActions),
   withSuccessNotification(balancesActions, 'Received latest blockchain information.'),
   withFailureNotification(balancesActions, 'Failed to retrieve blockchain information.')
 )(AssetBalancesPanel)

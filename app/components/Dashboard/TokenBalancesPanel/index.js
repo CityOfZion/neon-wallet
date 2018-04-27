@@ -9,6 +9,7 @@ import withNetworkData from '../../../hocs/withNetworkData'
 import withAuthData from '../../../hocs/withAuthData'
 import withCurrencyData from '../../../hocs/withCurrencyData'
 import withFilteredTokensData from '../../../hocs/withFilteredTokensData'
+import withLoadingProp from '../../../hocs/withLoadingProp'
 import { toBigNumber } from '../../../core/math'
 
 const filterZeroBalanceTokens = (balances) => {
@@ -35,5 +36,6 @@ export default compose(
   withNetworkData(),
   withAuthData(),
   withFilteredTokensData(),
-  withActions(balancesActions, mapBalancesActionsToProps)
+  withActions(balancesActions, mapBalancesActionsToProps),
+  withLoadingProp(balancesActions)
 )(TokenBalancesPanel)
