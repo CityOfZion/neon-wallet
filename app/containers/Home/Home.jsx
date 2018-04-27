@@ -76,12 +76,12 @@ class Home extends Component<Props, State> {
 
           <div className={styles.buttonRow}>
             <div style={{ flex: 0.45 }}>
-              <Button primary renderIcon={() => Plus}>
+              <Button primary renderIcon={() => <Plus />}>
                 New Wallet
               </Button>
             </div>
             <div style={{ flex: 0.45 }}>
-              <Button primary renderIcon={() => Wallet}>
+              <Button primary renderIcon={() => <Wallet />}>
                 Wallet Manager
               </Button>
             </div>
