@@ -50,10 +50,7 @@ class Home extends Component<Props, State> {
             onChange={value => this.handleSelect(value)}
             value={this.state.option}
             items={['Private Key']}
-            renderItem={() => undefined}
-            renderAfter={() => undefined}
-            getItemValue={() => undefined}
-            getSearchResults={() => undefined}
+            getItemValue={() => this.state.option}
           />
 
           <TextInput
