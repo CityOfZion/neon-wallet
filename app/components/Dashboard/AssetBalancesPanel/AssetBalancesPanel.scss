@@ -1,3 +1,5 @@
+@import '../../../styles/animations';
+
 .assetBalancesPanel {
   .header {
     display: flex;
@@ -11,6 +13,10 @@
       & path {
         color: #9599a2;
         fill: currentColor;
+      }
+
+      &.loading {
+        animation: spin 2s linear infinite;
       }
     }
   }

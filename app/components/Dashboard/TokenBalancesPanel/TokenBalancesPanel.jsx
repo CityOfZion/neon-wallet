@@ -10,10 +10,15 @@ import styles from './TokenBalancesPanel.scss'
 type Props = {
   className: ?string,
   balances: Array<TokenBalanceType>,
+  loading: ?boolean,
   refresh: Function
 }
 
 export default class TokenBalancesPanel extends React.Component<Props> {
+  static defaultProps = {
+    loading: false
+  }
+
   render = () => {
     const { className, balances } = this.props
 
@@ -30,11 +35,17 @@ export default class TokenBalancesPanel extends React.Component<Props> {
   }
 
   renderHeader = () => {
+    const { refresh, loading } = this.props
+
     return (
       <div className={styles.header}>
         <span>Token Balances</span>
         <Tooltip title='Refresh'>
-          <RefreshIcon id='refresh' className={styles.refresh} onClick={this.props.refresh} />
+          <RefreshIcon
+            id='refresh'
+            className={classNames(styles.refresh, { [styles.loading]: loading })}
+            onClick={refresh}
+          />
         </Tooltip>
       </div>
     )
