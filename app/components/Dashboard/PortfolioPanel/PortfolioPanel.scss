@@ -1,7 +1,12 @@
 .portfolioPanel {
-  .container {
+  height: 100%;
+  overflow: hidden;
+
+  .content {
     display: flex;
     flex-direction: row;
+    align-items: stretch;
+    height: 100%;
 
     .chart {
       flex: 0 0 auto;
@@ -9,6 +14,8 @@
 
     .table {
       flex: 1 1 auto;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
   }
 }

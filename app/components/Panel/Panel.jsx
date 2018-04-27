@@ -8,6 +8,7 @@ import styles from './Panel.scss'
 
 type Props = {
   className: ?string,
+  contentClassName: ?string,
   children: React$Node,
   renderHeader: ?Function
 }
@@ -35,6 +36,10 @@ export default class Panel extends React.Component<Props> {
   }
 
   renderContent = () => {
-    return <Content className={styles.content}>{this.props.children}</Content>
+    const { contentClassName, children } = this.props
+
+    return (
+      <Content className={classNames(styles.content, contentClassName)}>{children}</Content>
+    )
   }
 }
