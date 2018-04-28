@@ -2,41 +2,42 @@
 import React, { Component } from 'react'
 
 import Button from '../../components/Button/Button'
-import TextInput from '../../components/Inputs/TextInput/TextInput'
 import SelectInput from '../../components/Inputs/SelectInput/SelectInput'
 import styles from './Home.scss'
 import neonLogo from '../../images/neon-logo-redesign.png'
 // Icons
-import Login from '../../images/icons/Login.svg'
 import Plus from '../../images/icons/Plus.svg'
 import Wallet from '../../images/icons/Wallet.svg'
 
+import LoginPrivateKey from '../LoginPrivateKey/index'
+
 type State = {
-  option: string,
-  password: string
+  option: string
 }
 
-type Props = {
-  loginWithPrivateKey: Function
+const LOGIN_OPTIONS = {
+  PRIVATE_KEY: {
+    render: () => <LoginPrivateKey />,
+    displayValue: 'Private Key'
+  }
 }
 
 class Home extends Component<Props, State> {
   state = {
-    option: 'Private Key',
-    password: ''
+    option: LOGIN_OPTIONS.PRIVATE_KEY.displayValue
   }
 
-  handleSelect = (option: string) => this.setState({ option })
+  options = Object.keys(LOGIN_OPTIONS).map(
+    key => LOGIN_OPTIONS[key].displayValue
+  )
 
-  handleSubmit = () => {
-    const { loginWithPrivateKey } = this.props
-    switch (this.state.option) {
-      case 'Private Key':
-        return loginWithPrivateKey(this.state.password)
-      default:
-        return console.warn('handleSubmit() invoked with an invalid option!')
-    }
-  }
+  handleSelect = (displayValue: string) =>
+    this.setState({ option: displayValue })
+
+  returnComponentBasedOnOption = (displayValue: string) =>
+    Object.values(LOGIN_OPTIONS)
+      .find(option => option.displayValue === displayValue)
+      .render()
 
   render = () => (
     <div id="home" className={styles.home}>
@@ -49,27 +50,11 @@ class Home extends Component<Props, State> {
             className={styles.input}
             onChange={value => this.handleSelect(value)}
             value={this.state.option}
-            items={['Private Key']}
+            items={this.options}
             getItemValue={() => this.state.option}
           />
 
-          <TextInput
-            className={styles.input}
-            onChange={(e: Object) =>
-              this.setState({ password: e.target.value })
-            }
-            placeholder="Password"
-            type="password"
-          />
-
-          <Button
-            renderIcon={() => <Login />}
-            icon="login"
-            style={{ marginTop: 20 }}
-            onClick={() => this.handleSubmit()}
-          >
-            Login
-          </Button>
+          {this.returnComponentBasedOnOption(this.state.option)}
 
           <div className={styles.buttonRow}>
             <div style={{ flex: 0.45 }}>

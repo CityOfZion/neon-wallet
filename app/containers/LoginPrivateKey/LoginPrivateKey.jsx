@@ -1,18 +1,16 @@
 // @flow
 import React, { Component } from 'react'
-
-import PasswordInput from '../../components/Inputs/PasswordInput'
-import HomeButtonLink from '../../components/HomeButtonLink'
 import Button from '../../components/Button'
+import Login from '../../images/icons/Login.svg'
+import TextInput from '../../components/Inputs/TextInput/TextInput'
 
-import loginStyles from '../../styles/login.scss'
-
+import styles from './LoginPrivateKey.scss'
 type Props = {
   loginWithPrivateKey: Function
 }
 
 type State = {
-  wif: string,
+  wif: string
 }
 
 export default class LoginPrivateKey extends Component<Props, State> {
@@ -20,26 +18,32 @@ export default class LoginPrivateKey extends Component<Props, State> {
     wif: ''
   }
 
-  render () {
+  render = () => {
+    console.log(this.props)
     const { loginWithPrivateKey } = this.props
     const { wif } = this.state
-    const loginButtonDisabled = wif === ''
 
     return (
-      <div id="loginPage" className={loginStyles.loginPage}>
-        <div className={loginStyles.title}>Login using a private key:</div>
-        <form onSubmit={(e) => { e.preventDefault(); loginWithPrivateKey(wif) }}>
-          <div className={loginStyles.loginForm}>
-            <PasswordInput
-              placeholder="Enter your private key here (WIF)"
-              onChange={(e) => this.setState({ wif: e.target.value })}
-              autoFocus
-            />
-          </div>
-          <div>
-            <Button primary type="submit" disabled={loginButtonDisabled}>Login</Button>
-            <HomeButtonLink />
-          </div>
+      <div className={styles.flexContainer}>
+        <form
+          onSubmit={e => {
+            e.preventDefault()
+            loginWithPrivateKey(wif)
+          }}
+        >
+          <TextInput
+            onChange={(e: Object) => this.setState({ wif: e.target.value })}
+            placeholder="Password"
+            type="password"
+          />
+          <Button
+            renderIcon={() => <Login />}
+            icon="login"
+            style={{ marginTop: 20 }}
+            type="submit"
+          >
+            Login
+          </Button>
         </form>
       </div>
     )
