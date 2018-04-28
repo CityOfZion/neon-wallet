@@ -36,7 +36,7 @@ class Home extends Component<Props, State> {
   handleSelect = (displayValue: string) =>
     this.setState({ option: displayValue })
 
-  returnComponentBasedOnOption = (displayValue: string) => {
+  renderLoginBasedOnOption = (displayValue: string) => {
     const selectedOption = Object.values(LOGIN_OPTIONS).find(
       (option: mixed) => {
         return (
@@ -50,7 +50,7 @@ class Home extends Component<Props, State> {
       return selectedOption.render()
     }
     return console.warn(
-      'returnComponentBasedOnOption() invoked with invalid display value!'
+      'renderLoginBasedOnOption() invoked with invalid display value!'
     )
   }
 
@@ -69,7 +69,7 @@ class Home extends Component<Props, State> {
             getItemValue={() => this.state.option}
           />
 
-          {this.returnComponentBasedOnOption(this.state.option)}
+          {this.renderLoginBasedOnOption(this.state.option)}
 
           <div className={styles.buttonRow}>
             <div style={{ flex: 0.45 }}>
