@@ -91,7 +91,7 @@ describe('AssetBalancesPanel', () => {
     const store = createStore(initialState)
     const wrapper = mount(provideStore(<AssetBalancesPanel />, store))
 
-    wrapper.find('#refresh').simulate('click')
+    wrapper.find('#refresh').hostNodes().simulate('click')
 
     expect(store.getActions()).toContainEqual(expect.objectContaining({
       type: 'BALANCES/ACTION/CALL',
