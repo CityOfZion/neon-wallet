@@ -9,7 +9,7 @@ import neonLogo from '../../images/neon-logo-redesign.png'
 import Plus from '../../images/icons/Plus.svg'
 import Wallet from '../../images/icons/Wallet.svg'
 
-import LoginPrivateKey from '../LoginPrivateKey/index'
+import LoginPrivateKey from '../LoginPrivateKey'
 
 type State = {
   option: string
