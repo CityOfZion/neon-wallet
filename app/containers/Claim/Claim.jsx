@@ -5,6 +5,7 @@ import Button from '../../components/Button'
 import Tooltip from '../../components/Tooltip'
 import { formatGAS } from '../../core/formatters'
 import { toBigNumber } from '../../core/math'
+import ClaimIcon from '../../assets/icons/claim.svg'
 
 type Props = {
   className: ?string,
@@ -23,7 +24,13 @@ export default class Claim extends Component<Props> {
     return (
       <div>
         <Tooltip title='You can claim GAS once every 5 minutes' disabled={!disabled}>
-          <Button id='claim' primary className={className} disabled={disabled} onClick={this.handleClaim}>
+          <Button
+            id='claim'
+            className={className}
+            disabled={disabled}
+            renderIcon={ClaimIcon}
+            onClick={this.handleClaim}
+          >
             Claim {this.getFormattedAmount()} GAS
           </Button>
         </Tooltip>
