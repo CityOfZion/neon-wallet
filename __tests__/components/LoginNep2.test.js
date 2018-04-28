@@ -58,7 +58,7 @@ describe('LoginNep2', () => {
   test('the login button is working correctly with no passphrase or wif', (done) => {
     const { wrapper, store } = setup(false)
 
-    wrapper.find('#loginButton').first().simulate('click')
+    wrapper.find('#loginButton').hostNodes().simulate('click')
     Promise.resolve('pause').then(() => {
       const actions = store.getActions()
       expect(actions.length).toEqual(0)
@@ -77,7 +77,7 @@ describe('LoginNep2', () => {
     keyField.instance().value = '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
     keyField.simulate('change')
 
-    wrapper.find('#loginButton').first().simulate('submit')
+    wrapper.find('#loginButton').hostNodes().simulate('submit')
 
     const actions = store.getActions()
     expect(actions.length).toEqual(1)
