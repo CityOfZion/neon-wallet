@@ -25,19 +25,21 @@ export default class PortfolioPanel extends React.Component<Props> {
     const { className, balances, currency } = this.props
 
     return (
-      <Panel className={classNames(styles.portfolioPanel, className)} renderHeader={this.renderHeader}>
-        <div className={styles.container}>
-          <PortfolioBreakdownChart
-            className={styles.chart}
-            balances={balances}
-            currency={currency}
-          />
-          <PortfolioTable
-            className={styles.table}
-            balances={balances}
-            currency={currency}
-          />
-        </div>
+      <Panel
+        className={classNames(styles.portfolioPanel, className)}
+        contentClassName={styles.content}
+        renderHeader={this.renderHeader}
+      >
+        <PortfolioBreakdownChart
+          className={styles.chart}
+          balances={balances}
+          currency={currency}
+        />
+        <PortfolioTable
+          className={styles.table}
+          balances={balances}
+          currency={currency}
+        />
       </Panel>
     )
   }
