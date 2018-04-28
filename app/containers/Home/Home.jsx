@@ -10,6 +10,7 @@ import Plus from '../../images/icons/Plus.svg'
 import Wallet from '../../images/icons/Wallet.svg'
 
 import LoginPrivateKey from '../LoginPrivateKey'
+import LoginNep2 from '../LoginNep2'
 
 type State = {
   option: string
@@ -21,6 +22,10 @@ const LOGIN_OPTIONS = {
   PRIVATE_KEY: {
     render: () => <LoginPrivateKey />,
     displayValue: 'Private Key'
+  },
+  NEP2: {
+    render: () => <LoginNep2 />,
+    displayValue: 'Encrypted key'
   }
 }
 
@@ -66,21 +71,17 @@ class Home extends Component<Props, State> {
             onChange={value => this.handleSelect(value)}
             value={this.state.option}
             items={this.options}
-            getItemValue={() => this.state.option}
+            getItemValue={item => item}
           />
 
           {this.renderLoginBasedOnOption(this.state.option)}
 
           <div className={styles.buttonRow}>
             <div style={{ flex: 0.45 }}>
-              <Button primary renderIcon={() => <Plus />}>
-                New Wallet
-              </Button>
+              <Button renderIcon={() => <Plus />}>New Wallet</Button>
             </div>
             <div style={{ flex: 0.45 }}>
-              <Button primary renderIcon={() => <Wallet />}>
-                Wallet Manager
-              </Button>
+              <Button renderIcon={() => <Wallet />}>Wallet Manager</Button>
             </div>
           </div>
         </div>

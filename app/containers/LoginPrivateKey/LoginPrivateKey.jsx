@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import Button from '../../components/Button'
 import Login from '../../images/icons/Login.svg'
-import TextInput from '../../components/Inputs/TextInput/TextInput'
+import PasswordInput from '../../components/Inputs/PasswordInput/PasswordInput'
 
 import styles from './LoginPrivateKey.scss'
 type Props = {
@@ -31,16 +31,18 @@ export default class LoginPrivateKey extends Component<Props, State> {
             loginWithPrivateKey(wif)
           }}
         >
-          <TextInput
+          <PasswordInput
+            placeholder="Enter your private key here"
+            value={wif}
             onChange={(e: Object) => this.setState({ wif: e.target.value })}
-            placeholder="Password"
-            type="password"
+            autoFocus
           />
           <Button
             renderIcon={() => <Login />}
             icon="login"
             style={{ marginTop: 20 }}
             type="submit"
+            primary
           >
             Login
           </Button>
