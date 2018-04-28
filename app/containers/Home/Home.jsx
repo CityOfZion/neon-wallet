@@ -15,6 +15,8 @@ type State = {
   option: string
 }
 
+type Props = {}
+
 const LOGIN_OPTIONS = {
   PRIVATE_KEY: {
     render: () => <LoginPrivateKey />,
@@ -28,16 +30,29 @@ class Home extends Component<Props, State> {
   }
 
   options = Object.keys(LOGIN_OPTIONS).map(
-    key => LOGIN_OPTIONS[key].displayValue
+    (key: string) => LOGIN_OPTIONS[key].displayValue
   )
 
   handleSelect = (displayValue: string) =>
     this.setState({ option: displayValue })
 
-  returnComponentBasedOnOption = (displayValue: string) =>
-    Object.values(LOGIN_OPTIONS)
-      .find(option => option.displayValue === displayValue)
-      .render()
+  returnComponentBasedOnOption = (displayValue: string) => {
+    const selectedOption = Object.values(LOGIN_OPTIONS).find(
+      (option: mixed) => {
+        return (
+          option &&
+          typeof option === 'object' &&
+          option.displayValue === displayValue
+        )
+      }
+    )
+    if (selectedOption && typeof selectedOption.render === 'function') {
+      return selectedOption.render()
+    }
+    return console.warn(
+      'returnComponentBasedOnOption() invoked with invalid display value!'
+    )
+  }
 
   render = () => (
     <div id="home" className={styles.home}>
