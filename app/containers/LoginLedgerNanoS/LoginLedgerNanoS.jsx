@@ -2,7 +2,6 @@
 import React from 'react'
 import { progressValues } from 'spunky'
 
-import HomeButtonLink from '../../components/HomeButtonLink'
 import Button from '../../components/Button'
 import styles from '../../styles/login.scss'
 
@@ -27,26 +26,28 @@ const POLL_FREQUENCY = 1000
 export default class LoginLedgerNanoS extends React.Component<Props> {
   intervalId: ?number
 
-  componentDidMount () {
+  componentDidMount() {
     this.intervalId = setInterval(this.props.connect, POLL_FREQUENCY)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     if (this.intervalId) {
       clearInterval(this.intervalId)
     }
   }
 
-  render () {
+  render() {
     return (
-      <div id="loginPage" className={styles.loginPage}>
-        <div className={styles.title}>Login using the Ledger Nano S:</div>
+      <div id="loginPage" className={styles.flexContainer}>
         <div className={styles.loginForm}>
           <div>
-            <Button primary disabled={!this.canLogin()} onClick={this.handleLogin}>
+            <Button
+              primary
+              disabled={!this.canLogin()}
+              onClick={this.handleLogin}
+            >
               Use Ledger Nano S
             </Button>
-            <HomeButtonLink />
           </div>
           {this.renderStatus()}
         </div>
@@ -54,14 +55,14 @@ export default class LoginLedgerNanoS extends React.Component<Props> {
     )
   }
 
-  renderStatus () {
+  renderStatus() {
     const { progress, deviceInfo, error } = this.props
 
     if (progress === LOADED && deviceInfo) {
       return (
         <p>
-          Found USB {deviceInfo.manufacturer} {deviceInfo.product}. NEO app found on hardward{' '}
-          device. Click button above to login.
+          Found USB {deviceInfo.manufacturer} {deviceInfo.product}. NEO app
+          found on hardward device. Click button above to login.
         </p>
       )
     }
@@ -77,7 +78,7 @@ export default class LoginLedgerNanoS extends React.Component<Props> {
     this.props.login(this.props.publicKey)
   }
 
-  canLogin () {
+  canLogin() {
     return this.props.progress === LOADED
   }
 }

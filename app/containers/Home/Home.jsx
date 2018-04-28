@@ -11,6 +11,7 @@ import Wallet from '../../images/icons/Wallet.svg'
 
 import LoginPrivateKey from '../LoginPrivateKey'
 import LoginNep2 from '../LoginNep2'
+import LoginLedgerNanoS from '../LoginLedgerNanoS'
 
 type State = {
   option: string
@@ -26,6 +27,10 @@ const LOGIN_OPTIONS = {
   NEP2: {
     render: () => <LoginNep2 />,
     displayValue: 'Encrypted key'
+  },
+  LEDGER: {
+    render: () => <LoginLedgerNanoS />,
+    displayValue: 'Ledger Nano S'
   }
 }
 

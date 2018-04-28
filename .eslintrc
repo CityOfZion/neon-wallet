@@ -20,6 +20,7 @@
         "window": true
     },
     "rules": {
+        "space-before-function-paren": ["error", "never"],
         "flowtype/define-flow-type": 2,
         "jsx-quotes": ["error", "prefer-double"]
     }
