@@ -37,7 +37,7 @@ class Button extends React.Component<Props> {
   renderIcon = () => {
     const { renderIcon } = this.props
 
-    if (renderIcon && typeof renderIcon === 'function') {
+    if (renderIcon) {
       return (
         <span className={classNames(styles.icon, this.getIconStyle())}>
           {renderIcon()}
