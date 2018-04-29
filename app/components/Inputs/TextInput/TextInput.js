@@ -6,12 +6,12 @@ import { omit } from 'lodash'
 import styles from './TextInput.scss'
 
 type Props = {
-  className: ?string,
+  className?: string,
   type: string,
-  renderBefore: ?Function,
-  renderAfter: ?Function,
-  onFocus: ?Function,
-  onBlur: ?Function
+  renderBefore?: Function,
+  renderAfter?: Function,
+  onFocus?: Function,
+  onBlur?: Function
 }
 
 type State = {
@@ -28,7 +28,12 @@ export default class TextInput extends React.Component<Props, State> {
   }
 
   render () {
-    const passDownProps = omit(this.props, 'className', 'renderBefore', 'renderAfter')
+    const passDownProps = omit(
+      this.props,
+      'className',
+      'renderBefore',
+      'renderAfter'
+    )
 
     const className = classNames(styles.textInput, this.props.className, {
       [styles.active]: this.state.active

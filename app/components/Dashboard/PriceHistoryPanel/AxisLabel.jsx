@@ -18,7 +18,7 @@ export default function AxisLabel ({ axisType, x, y, width, height, stroke, chil
   const rotation = isVertical ? `270 ${cx} ${cy}` : 0
 
   return (
-    <text x={cx} y={cy} transform={`rotate(${rotation})`} textAnchor='middle' stroke={stroke}>
+    <text x={cx} y={cy} transform={`rotate(${rotation})`} textAnchor="middle" stroke={stroke}>
       {children}
     </text>
   )

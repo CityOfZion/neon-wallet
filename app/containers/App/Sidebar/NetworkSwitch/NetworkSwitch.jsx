@@ -18,9 +18,9 @@ export default class NetworkSwitch extends Component<Props> {
   render () {
     const { networkId, networks } = this.props
     return (
-      <div id='network' className={styles.networkSwitch}>
+      <div id="network" className={styles.networkSwitch}>
         <span className={styles.label}>Running on</span>
-        <select defaultValue={networkId} onChange={this.handleChange} className='networkSelector'>
+        <select defaultValue={networkId} onChange={this.handleChange} className="networkSelector">
           {networks.map(({ label, id }: NetworkItemType) =>
             <option key={`networkOption${id}`} value={id}>{label}</option>
           )}

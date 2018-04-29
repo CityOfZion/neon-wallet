@@ -43,15 +43,15 @@ describe('LoginNep2', () => {
     const fields = wrapper.find('input[type="password"]')
     expect(fields.length).toEqual(2)
 
-    const passwordField = fields.get(0)
-    const keyField = fields.get(1)
+    const keyField = fields.get(0)
+    const passwordField = fields.get(1)
 
-    expect(passwordField.props.value).toEqual('')
-    expect(passwordField.props.placeholder).toEqual('Enter your passphrase here')
-    expect(passwordField.props.type).toEqual('password')
     expect(keyField.props.value).toEqual('')
     expect(keyField.props.placeholder).toEqual(('Enter your encrypted key here'))
     expect(keyField.props.type).toEqual('password')
+    expect(passwordField.props.value).toEqual('')
+    expect(passwordField.props.placeholder).toEqual('Enter your passphrase here')
+    expect(passwordField.props.type).toEqual('password')
     done()
   })
 

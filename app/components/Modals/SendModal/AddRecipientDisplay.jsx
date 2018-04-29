@@ -45,12 +45,12 @@ export default class AddRecipientDisplay extends React.Component<Props, State> {
       <div className={styles.addRecipientDisplay}>
         <div className={styles.inputs}>
           <div className={styles.row}>
-            <div id='sendAmount' className={styles.column}>
+            <div id="sendAmount" className={styles.column}>
               <label className={styles.label}>Amount:</label>
               <NumberInput
                 max={balance}
                 value={amount}
-                placeholder='Amount'
+                placeholder="Amount"
                 options={{ numeralDecimalScale: COIN_DECIMAL_LENGTH }}
                 onChange={(value) => this.handleChange('amount', value)} />
               <label className={styles.label}>
@@ -67,10 +67,10 @@ export default class AddRecipientDisplay extends React.Component<Props, State> {
             <div className={classNames(styles.column, styles.sendToIcon)}>
               <ArrowForward />
             </div>
-            <div id='sendAddress' className={classNames(styles.column, styles.recipient)}>
+            <div id="sendAddress" className={classNames(styles.column, styles.recipient)}>
               <label className={styles.label}>Address:</label>
               <AddressInput
-                placeholder='Recipient Address'
+                placeholder="Recipient Address"
                 value={address}
                 onChange={(value) => this.handleChange('address', value)} />
             </div>
@@ -85,7 +85,7 @@ export default class AddRecipientDisplay extends React.Component<Props, State> {
           <Button onClick={onCancel}>
             Cancel
           </Button>
-          <Button id='doSend' primary disabled={!this.canConfirm()} onClick={this.handleConfirm}>
+          <Button id="doSend" primary disabled={!this.canConfirm()} onClick={this.handleConfirm}>
             Next
           </Button>
         </div>

@@ -13,7 +13,7 @@ type Props = {
   className?: string,
   value?: string,
   items: Array<any>,
-  renderItem: Function,
+  renderItem?: Function,
   renderAfter: Function,
   getItemValue: Function,
   getSearchResults: Function,
@@ -31,12 +31,12 @@ type RenderItemProps = {
   onSelect: Function
 }
 
-const defaultRenderAfter = (props) => <DropdownButton {...props} />
+const defaultRenderAfter = props => <DropdownButton {...props} />
 
-const defaultItemValue = (item) => item
+const defaultItemValue = item => item
 
 const defaultSearchResults = (items, term) => {
-  return items.filter((item) => includes(toLower(item), toLower(term)))
+  return items.filter(item => includes(toLower(item), toLower(term)))
 }
 
 export default class SelectInput extends React.Component<Props, State> {
@@ -61,8 +61,16 @@ export default class SelectInput extends React.Component<Props, State> {
   }
 
   render = () => {
-    const passDownProps = omit(this.props, 'className', 'items', 'renderItem', 'getItemValue',
-      'getSearchResults', 'onFocus', 'onChange')
+    const passDownProps = omit(
+      this.props,
+      'className',
+      'items',
+      'renderItem',
+      'getItemValue',
+      'getSearchResults',
+      'onFocus',
+      'onChange'
+    )
 
     return (
       <Dropdown
@@ -89,7 +97,10 @@ export default class SelectInput extends React.Component<Props, State> {
   renderDropdown = ({ className }: { className: string }) => {
     const items = this.getItems()
     const hasItems = items.length > 0
-    const isSearch = this.state.search.length > 0 && this.props.items && this.props.items.length > 0
+    const isSearch =
+      this.state.search.length > 0 &&
+      this.props.items &&
+      this.props.items.length > 0
 
     if (hasItems) {
       return (
@@ -99,7 +110,13 @@ export default class SelectInput extends React.Component<Props, State> {
       )
     } else if (isSearch) {
       return (
-        <div className={classNames(styles.dropdown, styles.noSearchResults, className)}>
+        <div
+          className={classNames(
+            styles.dropdown,
+            styles.noSearchResults,
+            className
+          )}
+        >
           No search results.
         </div>
       )
@@ -112,17 +129,28 @@ export default class SelectInput extends React.Component<Props, State> {
     const { search } = this.state
     const renderItem = this.props.renderItem || this.renderItem
 
-    return items.map((item) => {
-      return renderItem(item, { search, onSelect: this.generateSelectHandler(item) })
+    return items.map(item => {
+      return renderItem(item, {
+        search,
+        onSelect: this.generateSelectHandler(item)
+      })
     })
   }
 
   renderItem = (item: Object, { search, onSelect }: RenderItemProps) => {
     const { getItemValue } = this.props
+    const value = getItemValue(item)
+
     return (
-      <div className={styles.dropdownItem} key={getItemValue(item)} tabIndex={0} onClick={onSelect}>
+      <div
+        className={styles.dropdownItem}
+        key={value}
+        aria-label={value}
+        tabIndex={0}
+        onClick={onSelect}
+      >
         <Highlighter
-          highlightTag='span'
+          highlightTag="span"
           highlightClassName={styles.highlight}
           searchWords={[search]}
           autoEscape

@@ -23,9 +23,9 @@ export default class Claim extends Component<Props> {
 
     return (
       <div>
-        <Tooltip title='You can claim GAS once every 5 minutes' disabled={!disabled}>
+        <Tooltip title="You can claim GAS once every 5 minutes" disabled={!disabled}>
           <Button
-            id='claim'
+            id="claim"
             className={className}
             disabled={disabled}
             renderIcon={ClaimIcon}

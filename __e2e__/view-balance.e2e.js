@@ -30,14 +30,15 @@ function timeout (ms) {
 
 test.serial('should login successfully and switch networks', async t => {
   // Go to login page
-  await app.client.waitUntilTextExists('.linkBox', 'Login using a private key', 60000)
-  await app.client.click('a[href="#/login-private-key"]>div.linkBox')
+  await app.client.waitUntilTextExists('#home', 'Login', 60000)
+  await app.client.click('input[value="Saved wallet"]')
+  await app.client.click('div[aria-label="Private key"]')
 
   // Enter Wif
-  await app.client.setValue('#loginPage input', 'KxB52D1FGe5xBn6YeezNwj7grhkHZxq7bv2tmaCPoT4rxApMwMvU')
+  await app.client.setValue('input[type="password"]', 'KxB52D1FGe5xBn6YeezNwj7grhkHZxq7bv2tmaCPoT4rxApMwMvU')
 
   // Click on login btn
-  await app.client.click('#loginPage button')
+  await app.client.click('#loginButton')
 
   // Check that the default network is MainNet
   t.is(await app.client.getValue('#network .networkSelector'), '1')

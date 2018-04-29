@@ -33,7 +33,7 @@ export default class ReceivePanel extends React.Component<Props> {
         </div>
         <div className={styles.address}>
           <Address className={styles.link} address={address} />
-          <CopyToClipboard className={styles.copy} text={address} tooltip='Copy Public Address' />
+          <CopyToClipboard className={styles.copy} text={address} tooltip="Copy Public Address" />
         </div>
       </Panel>
     )
