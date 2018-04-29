@@ -5,6 +5,6 @@ exports[`Logout should render without crashing 1`] = `
   className="logout"
   onClick={[MockFunction]}
 >
-  <test-file-stub />
+  <Component />
 </div>
 `;
