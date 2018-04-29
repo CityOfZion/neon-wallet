@@ -35,13 +35,13 @@ export default class AssetBalancesPanel extends React.Component<Props> {
         className={classNames(styles.assetBalancesPanel, className)}
         renderHeader={this.renderHeader}
       >
-        <div id='balance' className={styles.assets}>
+        <div id="balance" className={styles.assets}>
           <div className={styles.asset}>
             <div className={styles.label}>{ASSETS.NEO}</div>
-            <div className={styles.quantity} id='amountNeo'>
+            <div className={styles.quantity} id="amountNeo">
               {formatNEO(NEO)}
             </div>
-            <div className={styles.value} id='neoWalletValue'>
+            <div className={styles.value} id="neoWalletValue">
               {this.getFormattedFiatBalance(this.getNEOValue())}
             </div>
           </div>
@@ -59,7 +59,7 @@ export default class AssetBalancesPanel extends React.Component<Props> {
         </div>
         <div className={styles.totalValue}>
           <div className={styles.label}>Total</div>
-          <div id='walletTotal'>
+          <div id="walletTotal">
             {this.getFormattedFiatBalance(this.getTotalValue())}
           </div>
         </div>
@@ -78,7 +78,7 @@ export default class AssetBalancesPanel extends React.Component<Props> {
         <span>Balances</span>
         <Tooltip title="Refresh">
           <RefreshIcon
-            id='refresh'
+            id="refresh"
             className={classNames(styles.refresh, {
               [styles.loading]: loading
             })}
