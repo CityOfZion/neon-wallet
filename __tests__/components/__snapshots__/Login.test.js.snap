@@ -16,9 +16,8 @@ exports[`Login renders without crashing 1`] = `
     />
     <Button
       disabled={true}
-      icon="login"
       primary={true}
-      renderIcon={[Function]}
+      renderIcon="test-file-stub"
       style={
         Object {
           "marginTop": 20,
