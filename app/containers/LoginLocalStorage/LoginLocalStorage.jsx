@@ -25,7 +25,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
     selectedLabel: ''
   }
 
-  render() {
+  render () {
     const { accounts } = this.props
     const { passphrase, selectedLabel } = this.state
     return (
