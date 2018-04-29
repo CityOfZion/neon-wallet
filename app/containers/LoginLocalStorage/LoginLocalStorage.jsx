@@ -30,7 +30,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
     return (
       <div id="loginLocalStorage" className={styles.flexContainer}>
         <form onSubmit={this.handleSubmit}>
-          <div style={{ marginBottom: 10 }}>
+          <div className={styles.inputMargin}>
             <SelectInput
               items={accounts.map(account => account.label)}
               value={selectedLabel}
@@ -47,7 +47,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
               }
             />
           </div>
-          <div style={{ marginBottom: 10 }}>
+          <div className={styles.inputMargin}>
             <PasswordInput
               placeholder="Enter your passphrase here"
               value={passphrase}
@@ -59,7 +59,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
               id="loginButton"
               primary
               type="submit"
-              style={{ marginTop: 20 }}
+              className={styles.loginButtonMargin}
               renderIcon={LoginIcon}
               disabled={!this.isValid()}
             >

@@ -40,7 +40,7 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
           <Button
             primary
             type="submit"
-            style={{ marginTop: 20 }}
+            className={styles.loginButtonMargin}
             renderIcon={LoginIcon}
             disabled={wif.length < 10}
           >

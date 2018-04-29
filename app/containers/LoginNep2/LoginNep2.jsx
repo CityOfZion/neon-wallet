@@ -34,7 +34,7 @@ export default class LoginNep2 extends Component<Props, State> {
             loginNep2(passphrase, encryptedWIF)
           }}
         >
-          <div style={{ marginBottom: 10 }}>
+          <div className={styles.inputMargin}>
             <PasswordInput
               placeholder="Enter your encrypted key here"
               onChange={e => this.setState({ encryptedWIF: e.target.value })}
@@ -51,7 +51,7 @@ export default class LoginNep2 extends Component<Props, State> {
             id="loginButton"
             primary
             type="submit"
-            style={{ marginTop: 20 }}
+            className={styles.loginButtonMargin}
             renderIcon={LoginIcon}
             disabled={loginButtonDisabled}
           >

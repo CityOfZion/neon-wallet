@@ -47,7 +47,7 @@ export default class LoginLedgerNanoS extends React.Component<Props> {
               id="loginButton"
               primary
               type="submit"
-              style={{ marginTop: 20 }}
+              className={styles.loginButtonMargin}
               renderIcon={LoginIcon}
               disabled={!this.canLogin()}
               onClick={this.handleLogin}
@@ -65,7 +65,7 @@ export default class LoginLedgerNanoS extends React.Component<Props> {
 
     if (progress === LOADED && deviceInfo) {
       return (
-        <p style={{ fontWeight: 'lighter', marginTop: 0 }}>
+        <p className={styles.ledgerStatusText}>
           Found USB {deviceInfo.manufacturer} {deviceInfo.product}. NEO app
           found on hardward device. Click button above to login.
         </p>
@@ -73,15 +73,11 @@ export default class LoginLedgerNanoS extends React.Component<Props> {
     }
 
     if (progress === FAILED && error) {
-      return (
-        <p style={{ fontWeight: 'lighter', color: 'red', marginTop: 0 }}>
-          {error}
-        </p>
-      )
+      return <p className={styles.ledgerStatusTextError}>{error}</p>
     }
 
     return (
-      <p style={{ fontWeight: 'lighter', marginTop: 0 }}>
+      <p className={styles.ledgerStatusText}>
         Looking for USB Devices. Please plugin your device and login.
       </p>
     )

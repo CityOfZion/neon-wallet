@@ -4,9 +4,28 @@
   width: 100%;
   margin: 10px;
 
-  &, & input {
+  &,
+  & input {
     cursor: pointer;
   }
+}
+
+.loginButtonMargin {
+  margin-top: 20px;
+}
+
+.inputMargin {
+  margin-bottom: 10px;
+}
+
+.ledgerStatusText {
+  font-weight: lighter;
+  margin-top: 0;
+}
+
+.ledgerStatusTextError {
+  @extend .ledgerStatusText;
+  color: red;
 }
 
 .flexContainer {
