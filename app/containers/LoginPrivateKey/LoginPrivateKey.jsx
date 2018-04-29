@@ -20,7 +20,6 @@ export default class LoginPrivateKey extends Component<Props, State> {
   }
 
   render = () => {
-    console.log(this.props)
     const { loginWithPrivateKey } = this.props
     const { wif } = this.state
 
