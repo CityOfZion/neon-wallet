@@ -15,14 +15,10 @@ exports[`Login renders without crashing 1`] = `
       value=""
     />
     <Button
+      className="loginButtonMargin"
       disabled={true}
       primary={true}
       renderIcon={[Function]}
-      style={
-        Object {
-          "marginTop": 20,
-        }
-      }
       type="submit"
     >
       Login
