@@ -3,6 +3,10 @@
 .input {
   width: 100%;
   margin: 10px;
+
+  &, & input {
+    cursor: pointer;
+  }
 }
 
 .flexContainer {

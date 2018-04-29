@@ -75,6 +75,7 @@ class Home extends Component<Props, State> {
             className={styles.input}
             onChange={value => this.handleSelect(value)}
             value={this.state.option}
+            readOnly
             items={this.options}
             getItemValue={item => item}
           />
