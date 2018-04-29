@@ -22,7 +22,7 @@ export default class LoginNep2 extends Component<Props, State> {
     passphrase: ''
   }
 
-  render() {
+  render () {
     const { loginNep2 } = this.props
     const { encryptedWIF, passphrase } = this.state
     const loginButtonDisabled = encryptedWIF === '' || passphrase === ''
