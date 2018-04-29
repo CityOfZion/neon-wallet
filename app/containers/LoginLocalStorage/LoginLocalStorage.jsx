@@ -23,7 +23,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
     encryptedWIF: ''
   }
 
-  render() {
+  render () {
     const { accounts } = this.props
     const { passphrase, encryptedWIF } = this.state
     const { label } =
