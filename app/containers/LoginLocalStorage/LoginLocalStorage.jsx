@@ -14,7 +14,8 @@ type Props = {
 
 type State = {
   passphrase: string,
-  encryptedWIF: string
+  encryptedWIF: string,
+  selectedLabel: string
 }
 
 export default class LoginLocalStorage extends Component<Props, State> {
@@ -24,7 +25,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
     selectedLabel: ''
   }
 
-  render () {
+  render() {
     const { accounts } = this.props
     const { passphrase, selectedLabel } = this.state
     return (
