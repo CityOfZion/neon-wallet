@@ -8,9 +8,7 @@ import BaseModal from '../BaseModal'
 import Button from '../../Button'
 import Row from './Row'
 import NetworkSwitch from '../../../containers/App/Sidebar/NetworkSwitch'
-
-import Add from 'react-icons/lib/md/add'
-
+import AddIcon from '../../../assets/icons/add.svg'
 import styles from './TokenModal.scss'
 
 type Props = {
@@ -108,7 +106,7 @@ class TokenModal extends Component<Props, State> {
       >
         <div className={styles.container}>
           <div className={styles.addToken}>
-            <Button onClick={this.addToken} renderIcon={Add}>
+            <Button onClick={this.addToken} renderIcon={AddIcon}>
               Add a new token
             </Button>
             <div className={styles.switchNetworkContainer}>

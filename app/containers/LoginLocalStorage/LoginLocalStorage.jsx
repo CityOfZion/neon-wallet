@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import PasswordInput from '../../components/Inputs/PasswordInput'
 import Button from '../../components/Button'
 import SelectInput from '../../components/Inputs/SelectInput/SelectInput'
-import Login from '../../images/icons/Login.svg'
+import LoginIcon from '../../assets/icons/login.svg'
 import styles from '../Home/Home.scss'
 
 type Props = {
@@ -54,7 +54,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
               primary
               type="submit"
               style={{ marginTop: 20 }}
-              renderIcon={() => <Login />}
+              renderIcon={LoginIcon}
               disabled={!this.isValid()}
             >
               Login

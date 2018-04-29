@@ -3,7 +3,7 @@ import React from 'react'
 import { progressValues } from 'spunky'
 
 import Button from '../../components/Button'
-import Login from '../../images/icons/Login.svg'
+import LoginIcon from '../../assets/icons/login.svg'
 import styles from '../Home/Home.scss'
 
 const { LOADED, FAILED } = progressValues
@@ -44,12 +44,11 @@ export default class LoginLedgerNanoS extends React.Component<Props> {
           {this.renderStatus()}
           <div>
             <Button
-              renderIcon={() => <Login />}
-              icon="login"
-              style={{ marginTop: 20 }}
               id="loginButton"
               primary
               type="submit"
+              style={{ marginTop: 20 }}
+              renderIcon={LoginIcon}
               disabled={!this.canLogin()}
               onClick={this.handleLogin}
             >

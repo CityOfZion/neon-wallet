@@ -3,8 +3,7 @@ import React, { Component } from 'react'
 
 import Button from '../../components/Button'
 import PasswordInput from '../../components/Inputs/PasswordInput'
-import Login from '../../images/icons/Login.svg'
-
+import LoginIcon from '../../assets/icons/login.svg'
 import styles from '../Home/Home.scss'
 
 type Props = {
@@ -49,12 +48,11 @@ export default class LoginNep2 extends Component<Props, State> {
             value={encryptedWIF}
           />
           <Button
-            renderIcon={() => <Login />}
-            icon="login"
-            style={{ marginTop: 20 }}
             id="loginButton"
             primary
             type="submit"
+            style={{ marginTop: 20 }}
+            renderIcon={LoginIcon}
             disabled={loginButtonDisabled}
           >
             Login

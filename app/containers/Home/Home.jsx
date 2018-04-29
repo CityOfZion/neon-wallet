@@ -1,16 +1,16 @@
 // @flow
 import React, { Component } from 'react'
 
-import Button from '../../components/Button/Button'
-import SelectInput from '../../components/Inputs/SelectInput/SelectInput'
-import styles from './Home.scss'
-import neonLogo from '../../images/neon-logo-redesign.png'
 import LoginPrivateKey from '../LoginPrivateKey'
 import LoginNep2 from '../LoginNep2'
 import LoginLedgerNanoS from '../LoginLedgerNanoS'
 import LoginLocalStorage from '../LoginLocalStorage'
-import Plus from '../../images/icons/Plus.svg'
-import Wallet from '../../images/icons/Wallet.svg'
+import Button from '../../components/Button'
+import SelectInput from '../../components/Inputs/SelectInput'
+import styles from './Home.scss'
+import neonLogo from '../../images/neon-logo-redesign.png'
+import AddIcon from '../../assets/icons/add.svg'
+import WalletIcon from '../../assets/icons/wallet.svg'
 
 type State = {
   option: string
@@ -84,10 +84,10 @@ class Home extends Component<Props, State> {
 
           <div className={styles.buttonRow}>
             <div style={{ flex: 0.45 }}>
-              <Button renderIcon={() => <Plus />}>New Wallet</Button>
+              <Button renderIcon={AddIcon}>New Wallet</Button>
             </div>
             <div style={{ flex: 0.45 }}>
-              <Button renderIcon={() => <Wallet />}>Wallet Manager</Button>
+              <Button renderIcon={WalletIcon}>Wallet Manager</Button>
             </div>
           </div>
         </div>
