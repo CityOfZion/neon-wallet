@@ -17,12 +17,6 @@ export const getExplorerBaseURL = (networkId: string, explorer: ExplorerType) =>
     } else {
       baseURL = 'https://neoscan-testnet.io'
     }
-  } else if (explorer === EXPLORERS.NEO_VERSE) {
-    if (isMainNetwork(networkId)) {
-      baseURL = 'http://explorer.neoverse.io'
-    } else {
-      baseURL = 'http://testnet.neoverse.io'
-    }
   } else {
     if (isMainNetwork(networkId)) {
       baseURL = 'http://antcha.in'
@@ -40,8 +34,6 @@ export const getExplorerTxLink = (networkId: string, explorer: ExplorerType, txI
     return `${baseURL}/tx/${txId}`
   } else if (explorer === EXPLORERS.NEO_SCAN) {
     return `${baseURL}/transaction/${txId}`
-  } else if (explorer === EXPLORERS.NEO_VERSE) {
-    return `${baseURL}/transactions/${txId}`
   } else {
     return `${baseURL}/tx/hash/${txId}`
   }
