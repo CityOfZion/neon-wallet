@@ -36,6 +36,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
             <SelectInput
               items={options}
               value={encryptedWIF}
+              placeholder="Select account"
               onChange={encryptedWIF => this.setState({ encryptedWIF })}
               getItemValue={item => item}
             />
@@ -45,17 +46,15 @@ export default class LoginLocalStorage extends Component<Props, State> {
               placeholder="Enter your passphrase here"
               value={passphrase}
               onChange={e => this.setState({ passphrase: e.target.value })}
-              autoFocus
             />
           </div>
           <div>
             <Button
-              renderIcon={() => <Login />}
-              icon="login"
-              style={{ marginTop: 20 }}
               id="loginButton"
               primary
               type="submit"
+              style={{ marginTop: 20 }}
+              renderIcon={() => <Login />}
               disabled={!this.isValid()}
             >
               Login
