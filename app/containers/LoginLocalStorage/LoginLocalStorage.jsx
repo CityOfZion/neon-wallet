@@ -1,13 +1,11 @@
 // @flow
 import React, { Component } from 'react'
-import { map } from 'lodash'
 
 import PasswordInput from '../../components/Inputs/PasswordInput'
-import HomeButtonLink from '../../components/HomeButtonLink'
 import Button from '../../components/Button'
-
-import styles from './LoginLocalStorage.scss'
-import loginStyles from '../../styles/login.scss'
+import SelectInput from '../../components/Inputs/SelectInput/SelectInput'
+import Login from '../../images/icons/Login.svg'
+import styles from '../Home/Home.scss'
 
 type Props = {
   loginNep2: Function,
@@ -16,7 +14,7 @@ type Props = {
 
 type State = {
   passphrase: string,
-  encryptedWIF: string,
+  encryptedWIF: string
 }
 
 export default class LoginLocalStorage extends Component<Props, State> {
@@ -25,35 +23,43 @@ export default class LoginLocalStorage extends Component<Props, State> {
     encryptedWIF: ''
   }
 
-  render () {
+  render() {
     const { accounts } = this.props
     const { passphrase, encryptedWIF } = this.state
 
+    const options = accounts.map(account => account.label)
+
     return (
-      <div id="loginPage" className={loginStyles.loginPage}>
-        <div className={loginStyles.title}>Login using a saved wallet:</div>
+      <div id="loginLocalStorage" className={styles.flexContainer}>
         <form onSubmit={this.handleSubmit}>
-          <select
-            className={styles.selectWallet}
-            value={encryptedWIF}
-            onChange={(e) => this.setState({ encryptedWIF: e.target.value })}
-          >
-            <option value="">Select a wallet</option>
-            {map(accounts, (account, index) => (
-              <option value={account.key} key={`wallet${account.label}`}>{account.label}</option>
-            ))}
-          </select>
-          <div className={loginStyles.loginForm}>
+          <div style={{ marginBottom: 10 }}>
+            <SelectInput
+              items={options}
+              value={encryptedWIF}
+              onChange={encryptedWIF => this.setState({ encryptedWIF })}
+              getItemValue={item => item}
+            />
+          </div>
+          <div style={{ marginBottom: 10 }}>
             <PasswordInput
               placeholder="Enter your passphrase here"
               value={passphrase}
-              onChange={(e) => this.setState({ passphrase: e.target.value })}
+              onChange={e => this.setState({ passphrase: e.target.value })}
               autoFocus
             />
           </div>
           <div>
-            <Button primary type="submit" disabled={!this.isValid()}>Login</Button>
-            <HomeButtonLink />
+            <Button
+              renderIcon={() => <Login />}
+              icon="login"
+              style={{ marginTop: 20 }}
+              id="loginButton"
+              primary
+              type="submit"
+              disabled={!this.isValid()}
+            >
+              Login
+            </Button>
           </div>
         </form>
       </div>

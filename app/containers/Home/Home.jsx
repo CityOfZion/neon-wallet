@@ -5,13 +5,12 @@ import Button from '../../components/Button/Button'
 import SelectInput from '../../components/Inputs/SelectInput/SelectInput'
 import styles from './Home.scss'
 import neonLogo from '../../images/neon-logo-redesign.png'
-// Icons
-import Plus from '../../images/icons/Plus.svg'
-import Wallet from '../../images/icons/Wallet.svg'
-
 import LoginPrivateKey from '../LoginPrivateKey'
 import LoginNep2 from '../LoginNep2'
 import LoginLedgerNanoS from '../LoginLedgerNanoS'
+import LoginLocalStorage from '../LoginLocalStorage'
+import Plus from '../../images/icons/Plus.svg'
+import Wallet from '../../images/icons/Wallet.svg'
 
 type State = {
   option: string
@@ -22,37 +21,38 @@ type Props = {}
 const LOGIN_OPTIONS = {
   PRIVATE_KEY: {
     render: () => <LoginPrivateKey />,
-    displayValue: 'Private Key'
+    display: 'Private key'
   },
   NEP2: {
     render: () => <LoginNep2 />,
-    displayValue: 'Encrypted key'
+    display: 'Encrypted key'
   },
   LEDGER: {
     render: () => <LoginLedgerNanoS />,
-    displayValue: 'Ledger Nano S'
+    display: 'Ledger Nano S'
+  },
+  LOCAL_STORAGE: {
+    render: () => <LoginLocalStorage />,
+    display: 'Saved wallet'
   }
 }
 
 class Home extends Component<Props, State> {
   state = {
-    option: LOGIN_OPTIONS.PRIVATE_KEY.displayValue
+    option: LOGIN_OPTIONS.PRIVATE_KEY.display
   }
 
   options = Object.keys(LOGIN_OPTIONS).map(
-    (key: string) => LOGIN_OPTIONS[key].displayValue
+    (key: string) => LOGIN_OPTIONS[key].display
   )
 
-  handleSelect = (displayValue: string) =>
-    this.setState({ option: displayValue })
+  handleSelect = (display: string) => this.setState({ option: display })
 
-  renderLoginBasedOnOption = (displayValue: string) => {
+  renderLoginBasedOnOption = (display: string) => {
     const selectedOption = Object.values(LOGIN_OPTIONS).find(
       (option: mixed) => {
         return (
-          option &&
-          typeof option === 'object' &&
-          option.displayValue === displayValue
+          option && typeof option === 'object' && option.display === display
         )
       }
     )

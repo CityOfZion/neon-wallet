@@ -3,7 +3,8 @@ import React from 'react'
 import { progressValues } from 'spunky'
 
 import Button from '../../components/Button'
-import styles from '../../styles/login.scss'
+import Login from '../../images/icons/Login.svg'
+import styles from '../Home/Home.scss'
 
 const { LOADED, FAILED } = progressValues
 
@@ -38,15 +39,20 @@ export default class LoginLedgerNanoS extends React.Component<Props> {
 
   render() {
     return (
-      <div id="loginPage" className={styles.flexContainer}>
+      <div id="loginLedgerNanoS" className={styles.flexContainer}>
         <div className={styles.loginForm}>
           <div>
             <Button
+              renderIcon={() => <Login />}
+              icon="login"
+              style={{ marginTop: 10 }}
+              id="loginButton"
               primary
+              type="submit"
               disabled={!this.canLogin()}
               onClick={this.handleLogin}
             >
-              Use Ledger Nano S
+              Login
             </Button>
           </div>
           {this.renderStatus()}
@@ -60,7 +66,7 @@ export default class LoginLedgerNanoS extends React.Component<Props> {
 
     if (progress === LOADED && deviceInfo) {
       return (
-        <p>
+        <p style={{ fontWeight: 'lighter' }}>
           Found USB {deviceInfo.manufacturer} {deviceInfo.product}. NEO app
           found on hardward device. Click button above to login.
         </p>
@@ -68,10 +74,14 @@ export default class LoginLedgerNanoS extends React.Component<Props> {
     }
 
     if (progress === FAILED && error) {
-      return <p>{error}</p>
+      return <p style={{ fontWeight: 'lighter', color: 'red' }}>{error}</p>
     }
 
-    return <p>Looking for USB Devices. Please plugin your device and login.</p>
+    return (
+      <p style={{ fontWeight: 'lighter' }}>
+        Looking for USB Devices. Please plugin your device and login.
+      </p>
+    )
   }
 
   handleLogin = () => {

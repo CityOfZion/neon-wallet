@@ -4,7 +4,7 @@ import Button from '../../components/Button'
 import Login from '../../images/icons/Login.svg'
 import PasswordInput from '../../components/Inputs/PasswordInput/PasswordInput'
 
-import loginStyles from '../../styles/login.scss'
+import styles from '../Home/Home.scss'
 
 type Props = {
   loginWithPrivateKey: Function
@@ -25,7 +25,7 @@ export default class LoginPrivateKey extends Component<Props, State> {
     const { wif } = this.state
 
     return (
-      <div className={loginStyles.flexContainer}>
+      <div id="loginPrivateKey" className={styles.flexContainer}>
         <form
           onSubmit={e => {
             e.preventDefault()
