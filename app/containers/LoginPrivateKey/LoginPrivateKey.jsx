@@ -44,6 +44,7 @@ export default class LoginPrivateKey extends Component<Props, State> {
             style={{ marginTop: 20 }}
             type="submit"
             primary
+            disabled={wif.length < 10}
           >
             Login
           </Button>
