@@ -1,13 +1,11 @@
 // @flow
 import React, { Component } from 'react'
-import { map } from 'lodash'
 
 import PasswordInput from '../../components/Inputs/PasswordInput'
-import HomeButtonLink from '../../components/HomeButtonLink'
 import Button from '../../components/Button'
-
-import styles from './LoginLocalStorage.scss'
-import loginStyles from '../../styles/login.scss'
+import SelectInput from '../../components/Inputs/SelectInput/SelectInput'
+import LoginIcon from '../../assets/icons/login.svg'
+import styles from '../Home/Home.scss'
 
 type Props = {
   loginNep2: Function,
@@ -16,7 +14,7 @@ type Props = {
 
 type State = {
   passphrase: string,
-  encryptedWIF: string,
+  encryptedWIF: string
 }
 
 export default class LoginLocalStorage extends Component<Props, State> {
@@ -28,32 +26,41 @@ export default class LoginLocalStorage extends Component<Props, State> {
   render () {
     const { accounts } = this.props
     const { passphrase, encryptedWIF } = this.state
+    const { label } =
+      accounts.find(account => account.key === encryptedWIF) || {}
 
     return (
-      <div id='loginPage' className={loginStyles.loginPage}>
-        <div className={loginStyles.title}>Login using a saved wallet:</div>
+      <div id="loginLocalStorage" className={styles.flexContainer}>
         <form onSubmit={this.handleSubmit}>
-          <select
-            className={styles.selectWallet}
-            value={encryptedWIF}
-            onChange={(e) => this.setState({ encryptedWIF: e.target.value })}
-          >
-            <option value=''>Select a wallet</option>
-            {map(accounts, (account, index) => (
-              <option value={account.key} key={`wallet${account.label}`}>{account.label}</option>
-            ))}
-          </select>
-          <div className={loginStyles.loginForm}>
+          <div className={styles.inputMargin}>
+            <SelectInput
+              items={accounts.map(account => account.label)}
+              value={label || ''}
+              placeholder="Select account"
+              onChange={value => this.setState({ encryptedWIF: value })}
+              getItemValue={value =>
+                accounts.find(account => account.label === value).key
+              }
+            />
+          </div>
+          <div className={styles.inputMargin}>
             <PasswordInput
-              placeholder='Enter your passphrase here'
+              placeholder="Enter your passphrase here"
               value={passphrase}
-              onChange={(e) => this.setState({ passphrase: e.target.value })}
-              autoFocus
+              onChange={e => this.setState({ passphrase: e.target.value })}
             />
           </div>
           <div>
-            <Button primary type='submit' disabled={!this.isValid()}>Login</Button>
-            <HomeButtonLink />
+            <Button
+              id="loginButton"
+              primary
+              type="submit"
+              className={styles.loginButtonMargin}
+              renderIcon={LoginIcon}
+              disabled={!this.isValid()}
+            >
+              Login
+            </Button>
           </div>
         </form>
       </div>

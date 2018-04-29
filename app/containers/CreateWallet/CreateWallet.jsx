@@ -57,28 +57,28 @@ export default class EncryptKey extends React.Component<Props, State> {
     }
 
     return (
-      <div id='newWallet'>
-        <div className='info'>{title}</div>
+      <div id="newWallet">
+        <div className="info">{title}</div>
         <form onSubmit={this.createWalletAccount}>
           <PasswordInput
             value={passphrase}
             onChange={(e) => this.setState({ passphrase: e.target.value })}
-            placeholder='Enter passphrase here'
+            placeholder="Enter passphrase here"
             autoFocus
           />
           <PasswordInput
             value={passphrase2}
             onChange={(e) => this.setState({ passphrase2: e.target.value })}
-            placeholder='Enter passphrase again'
+            placeholder="Enter passphrase again"
           />
           {encryptWIF &&
             <PasswordInput
               value={wif}
               onChange={(e) => this.setState({ wif: e.target.value })}
-              placeholder='Enter existing WIF here'
+              placeholder="Enter existing WIF here"
             />
           }
-          <Button type='submit' primary disabled={disabledButton}>Generate keys</Button>
+          <Button type="submit" primary disabled={disabledButton}>Generate keys</Button>
           <HomeButtonLink />
         </form>
       </div>

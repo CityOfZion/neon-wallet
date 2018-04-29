@@ -19,7 +19,7 @@ export default class Footer extends React.Component<Props> {
           <NetworkSwitch />
         </span>
         <span className={styles.item}>
-          <a href='#' onClick={this.handleSupport}>Community Support</a>
+          <a href="#" onClick={this.handleSupport}>Community Support</a>
         </span>
       </div>
     )

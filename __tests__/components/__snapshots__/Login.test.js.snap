@@ -2,36 +2,28 @@
 
 exports[`Login renders without crashing 1`] = `
 <div
-  className="loginPage"
-  id="loginPage"
+  className="flexContainer"
+  id="loginPrivateKey"
 >
-  <div
-    className="title"
-  >
-    Login using a private key:
-  </div>
   <form
     onSubmit={[Function]}
   >
-    <div
-      className="loginForm"
+    <PasswordInput
+      autoFocus={true}
+      onChange={[Function]}
+      placeholder="Enter your private key here"
+      value=""
+    />
+    <Button
+      className="loginButtonMargin"
+      disabled={true}
+      id="loginButton"
+      primary={true}
+      renderIcon={[Function]}
+      type="submit"
     >
-      <PasswordInput
-        autoFocus={true}
-        onChange={[Function]}
-        placeholder="Enter your private key here (WIF)"
-      />
-    </div>
-    <div>
-      <Button
-        disabled={true}
-        primary={true}
-        type="submit"
-      >
-        Login
-      </Button>
-      <withRouter(HomeButtonLink) />
-    </div>
+      Login
+    </Button>
   </form>
 </div>
 `;

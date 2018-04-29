@@ -34,7 +34,7 @@ export default class ContactsPanel extends React.Component<Props> {
     return (
       <div className={styles.header}>
         <span>Contacts</span>
-        <Link id='add' className={styles.addButton} to={ROUTES.ADD_CONTACT}>
+        <Link id="add" className={styles.addButton} to={ROUTES.ADD_CONTACT}>
           <AddIcon className={styles.addIcon} />
           <span>New Contact</span>
         </Link>

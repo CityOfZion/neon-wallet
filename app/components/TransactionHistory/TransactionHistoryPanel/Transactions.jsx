@@ -23,7 +23,7 @@ export default class Transactions extends React.Component<Props> {
     }
 
     return (
-      <ul id='transactionList' className={classNames(styles.transactionList, className)}>
+      <ul id="transactionList" className={classNames(styles.transactionList, className)}>
         {transactions.map((tx) => (
           <li key={tx.txid} className={styles.row}>
             <Transaction className={classNames(styles.txid, 'txid')} txid={tx.txid} />

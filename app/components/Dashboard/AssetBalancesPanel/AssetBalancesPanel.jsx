@@ -47,12 +47,12 @@ export default class AssetBalancesPanel extends React.Component<Props> {
           </div>
           <div className={styles.asset}>
             <div className={styles.label}>{ASSETS.GAS}</div>
-            <div className={styles.quantity} id='amountGas'>
+            <div className={styles.quantity} id="amountGas">
               <Tooltip title={formatGAS(GAS)} disabled={toBigNumber(GAS).eq(0)}>
                 {formatGAS(GAS, true)}
               </Tooltip>
             </div>
-            <div className={styles.value} id='gasWalletValue'>
+            <div className={styles.value} id="gasWalletValue">
               {this.getFormattedFiatBalance(this.getGASValue())}
             </div>
           </div>
@@ -76,7 +76,7 @@ export default class AssetBalancesPanel extends React.Component<Props> {
     return (
       <div className={styles.header}>
         <span>Balances</span>
-        <Tooltip title='Refresh'>
+        <Tooltip title="Refresh">
           <RefreshIcon
             id='refresh'
             className={classNames(styles.refresh, {
