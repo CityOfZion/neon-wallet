@@ -27,10 +27,6 @@ export default class LoginLocalStorage extends Component<Props, State> {
   render () {
     const { accounts } = this.props
     const { passphrase, selectedLabel } = this.state
-
-    console.log(accounts)
-    console.log('STATEEE', this.state)
-
     return (
       <div id="loginLocalStorage" className={styles.flexContainer}>
         <form onSubmit={this.handleSubmit}>
