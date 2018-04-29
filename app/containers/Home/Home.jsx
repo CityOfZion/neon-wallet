@@ -19,6 +19,10 @@ type State = {
 type Props = {}
 
 const LOGIN_OPTIONS = {
+  LOCAL_STORAGE: {
+    render: () => <LoginLocalStorage />,
+    display: 'Saved wallet'
+  },
   PRIVATE_KEY: {
     render: () => <LoginPrivateKey />,
     display: 'Private key'
@@ -30,16 +34,12 @@ const LOGIN_OPTIONS = {
   LEDGER: {
     render: () => <LoginLedgerNanoS />,
     display: 'Ledger Nano S'
-  },
-  LOCAL_STORAGE: {
-    render: () => <LoginLocalStorage />,
-    display: 'Saved wallet'
   }
 }
 
 class Home extends Component<Props, State> {
   state = {
-    option: LOGIN_OPTIONS.PRIVATE_KEY.display
+    option: LOGIN_OPTIONS.LOCAL_STORAGE.display
   }
 
   options = Object.keys(LOGIN_OPTIONS).map(
