@@ -36,16 +36,16 @@ export default class LoginNep2 extends Component<Props, State> {
         >
           <div style={{ marginBottom: 10 }}>
             <PasswordInput
-              placeholder="Enter your passphrase here"
-              onChange={e => this.setState({ passphrase: e.target.value })}
-              value={passphrase}
-              autoFocus
+              placeholder="Enter your encrypted key here"
+              onChange={e => this.setState({ encryptedWIF: e.target.value })}
+              value={encryptedWIF}
             />
           </div>
           <PasswordInput
-            placeholder="Enter your encrypted key here"
-            onChange={e => this.setState({ encryptedWIF: e.target.value })}
-            value={encryptedWIF}
+            placeholder="Enter your passphrase here"
+            onChange={e => this.setState({ passphrase: e.target.value })}
+            value={passphrase}
+            autoFocus
           />
           <Button
             id="loginButton"
