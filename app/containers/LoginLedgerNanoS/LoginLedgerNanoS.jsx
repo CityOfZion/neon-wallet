@@ -2,9 +2,9 @@
 import React from 'react'
 import { progressValues } from 'spunky'
 
-import HomeButtonLink from '../../components/HomeButtonLink'
 import Button from '../../components/Button'
-import styles from '../../styles/login.scss'
+import LoginIcon from '../../assets/icons/login.svg'
+import styles from '../Home/Home.scss'
 
 const { LOADED, FAILED } = progressValues
 
@@ -39,45 +39,55 @@ export default class LoginLedgerNanoS extends React.Component<Props> {
 
   render () {
     return (
-      <div id='loginPage' className={styles.loginPage}>
-        <div className={styles.title}>Login using the Ledger Nano S:</div>
+      <div id="loginLedgerNanoS" className={styles.flexContainer}>
         <div className={styles.loginForm}>
-          <div>
-            <Button primary disabled={!this.canLogin()} onClick={this.handleLogin}>
-              Use Ledger Nano S
-            </Button>
-            <HomeButtonLink />
-          </div>
           {this.renderStatus()}
+          <div>
+            <Button
+              id="loginButton"
+              primary
+              type="submit"
+              className={styles.loginButtonMargin}
+              renderIcon={LoginIcon}
+              disabled={!this.canLogin()}
+              onClick={this.handleLogin}
+            >
+              Login
+            </Button>
+          </div>
         </div>
       </div>
     )
   }
 
-  renderStatus () {
+  renderStatus = () => {
     const { progress, deviceInfo, error } = this.props
 
     if (progress === LOADED && deviceInfo) {
       return (
-        <p>
-          Found USB {deviceInfo.manufacturer} {deviceInfo.product}. NEO app found on hardward{' '}
-          device. Click button above to login.
+        <p className={styles.ledgerStatusText}>
+          Found USB {deviceInfo.manufacturer} {deviceInfo.product}. NEO app
+          found on hardward device. Click button above to login.
         </p>
       )
     }
 
     if (progress === FAILED && error) {
-      return <p>{error}</p>
+      return <p className={styles.ledgerStatusTextError}>{error}</p>
     }
 
-    return <p>Looking for USB Devices. Please plugin your device and login.</p>
+    return (
+      <p className={styles.ledgerStatusText}>
+        Looking for USB Devices. Please plugin your device and login.
+      </p>
+    )
   }
 
   handleLogin = () => {
     this.props.login(this.props.publicKey)
   }
 
-  canLogin () {
+  canLogin = () => {
     return this.props.progress === LOADED
   }
 }

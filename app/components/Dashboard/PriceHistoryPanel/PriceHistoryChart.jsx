@@ -44,37 +44,37 @@ export default class PriceHistoryChart extends React.Component<Props> {
     const { className, prices, timeKey, priceKey } = this.props
 
     return (
-      <ResponsiveContainer width='100%' height={250} className={classNames(styles.priceHistoryChart, className)}>
+      <ResponsiveContainer width="100%" height={250} className={classNames(styles.priceHistoryChart, className)}>
         <LineChart data={prices} margin={{ top: 14, right: 10, bottom: 10, left: 10 }}>
           <XAxis
             dataKey={timeKey}
-            type='category'
-            interval='preserveStartEnd'
-            stroke='#9ca0a8'
+            type="category"
+            interval="preserveStartEnd"
+            stroke="#9ca0a8"
             tickLine={false}
             tickFormatter={this.formatDate}
             tickMargin={24}
             minTickGap={50} />
           <YAxis
-            stroke='#9ca0a8'
+            stroke="#9ca0a8"
             axisLine={false}
             tickLine={false}
             tickFormatter={this.formatPrice}
             tickMargin={20}
             domain={['auto', 'auto']} />
           <CartesianGrid
-            stroke='#e6e6e6' />
+            stroke="#e6e6e6" />
           <Tooltip
             formatter={this.formatValue}
             labelFormatter={this.formatLabel} />
           <Line
             dataKey={priceKey}
-            type='monotone'
-            stroke='#dc6b87'
+            type="monotone"
+            stroke="#dc6b87"
             strokeWidth={4}
             dot={false}
             animationDuration={500}
-            animationEasing='ease-out' />
+            animationEasing="ease-out" />
           {this.renderLatestPrice()}
           {this.renderPriceChange()}
         </LineChart>
@@ -84,7 +84,7 @@ export default class PriceHistoryChart extends React.Component<Props> {
 
   renderLatestPrice = () => {
     return (
-      <text className={styles.current} x='50%' y={0} textAnchor='middle' alignmentBaseline='hanging' fill='#282828'>
+      <text className={styles.current} x="50%" y={0} textAnchor="middle" alignmentBaseline="hanging" fill="#282828">
         {this.formatPrice(this.getLatestPrice(), formatFiat)}
       </text>
     )
@@ -99,7 +99,7 @@ export default class PriceHistoryChart extends React.Component<Props> {
 
     return (
       <BoundingBox className={classes} roundedX={3} roundedY={3} paddingX={3} paddingY={1}>
-        <text className={styles.changeText} x='50%' y={35} textAnchor='middle' alignmentBaseline='hanging' fill='#282828'>
+        <text className={styles.changeText} x="50%" y={35} textAnchor="middle" alignmentBaseline="hanging" fill="#282828">
           {change >= 0 && '+'}{(change * 100).toFixed(2)}%
         </text>
       </BoundingBox>

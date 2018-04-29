@@ -38,7 +38,7 @@ export default class Dashboard extends Component<Props> {
 
   render () {
     return (
-      <div id='dashboard' className={styles.dashboard}>
+      <div id="dashboard" className={styles.dashboard}>
         <div className={styles.dataColumn}>
           <AssetBalancesPanel className={styles.assetsPanel} />
           <TokenBalancesPanel className={styles.tokensPanel} />
