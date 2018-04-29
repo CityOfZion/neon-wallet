@@ -51,22 +51,6 @@ describe('explorer tests', () => {
       const expectedUrl = 'http://testnet.antcha.in/tx/hash/1234567890abcdef'
       expect(getExplorerTxLink(networkId, explorer, txId)).toEqual(expectedUrl)
     })
-
-    test('NEOVerse mainnet explorer test', () => {
-      const networkId = MAIN_NETWORK_ID
-      const explorer = EXPLORERS.NEO_VERSE
-      const txId = '1234567890abcdef'
-      const expectedUrl = 'http://explorer.neoverse.io/transactions/1234567890abcdef'
-      expect(getExplorerTxLink(networkId, explorer, txId)).toEqual(expectedUrl)
-    })
-
-    test('NEOVerse testnet explorer test', () => {
-      const networkId = TEST_NETWORK_ID
-      const explorer = EXPLORERS.NEO_VERSE
-      const txId = '1234567890abcdef'
-      const expectedUrl = 'http://testnet.neoverse.io/transactions/1234567890abcdef'
-      expect(getExplorerTxLink(networkId, explorer, txId)).toEqual(expectedUrl)
-    })
   })
 
   describe('openExplorerTx tests', () => {
