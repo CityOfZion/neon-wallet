@@ -139,10 +139,13 @@ export default class SelectInput extends React.Component<Props, State> {
 
   renderItem = (item: Object, { search, onSelect }: RenderItemProps) => {
     const { getItemValue } = this.props
+    const value = getItemValue(item)
+
     return (
       <div
         className={styles.dropdownItem}
-        key={getItemValue(item)}
+        key={value}
+        aria-label={value}
         tabIndex={0}
         onClick={onSelect}
       >

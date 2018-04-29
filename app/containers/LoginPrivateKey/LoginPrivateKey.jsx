@@ -38,6 +38,7 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
             autoFocus
           />
           <Button
+            id="loginButton"
             primary
             type="submit"
             className={styles.loginButtonMargin}

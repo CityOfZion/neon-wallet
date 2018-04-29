@@ -17,6 +17,7 @@ exports[`Login renders without crashing 1`] = `
     <Button
       className="loginButtonMargin"
       disabled={true}
+      id="loginButton"
       primary={true}
       renderIcon={[Function]}
       type="submit"
