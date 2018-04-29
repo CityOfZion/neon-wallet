@@ -20,27 +20,24 @@ type State = {
 export default class LoginLocalStorage extends Component<Props, State> {
   state = {
     passphrase: '',
-    encryptedWIF: '',
-    selectedLabel: ''
+    encryptedWIF: ''
   }
 
   render () {
     const { accounts } = this.props
-    const { passphrase, selectedLabel } = this.state
+    const { passphrase, encryptedWIF } = this.state
+    const { label } = accounts.find(account => account.key === encryptedWIF) || {}
+
     return (
       <div id="loginLocalStorage" className={styles.flexContainer}>
         <form onSubmit={this.handleSubmit}>
           <div style={{ marginBottom: 10 }}>
             <SelectInput
               items={accounts.map(account => account.label)}
-              value={selectedLabel}
+              value={label || ''}
               placeholder="Select account"
               onChange={value =>
-                this.setState({
-                  encryptedWIF: value,
-                  selectedLabel: accounts.find(account => account.key === value)
-                    .label
-                })
+                this.setState({ encryptedWIF: value })
               }
               getItemValue={value =>
                 accounts.find(account => account.label === value).key
