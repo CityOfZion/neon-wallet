@@ -12,7 +12,7 @@ const Tooltip = ({ children, position = 'bottom', ...rest }: Props) =>
   <Tippy
     arrow
     position={position}
-    animation='fade'
+    animation="fade"
     {...rest}
   >
     {children}

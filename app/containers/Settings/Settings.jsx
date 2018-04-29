@@ -173,17 +173,17 @@ export default class Settings extends Component<Props, State> {
     const { accounts, explorer, currency } = this.props
 
     return (
-      <div id='settings'>
-        <div className='description'>
+      <div id="settings">
+        <div className="description">
           Manage your Neon wallet accounts and settings
         </div>
-        <div className='settingsForm'>
-          <div className='settingsItem'>
-            <div className='itemTitle'>Tokens</div>
+        <div className="settingsForm">
+          <div className="settingsItem">
+            <div className="itemTitle">Tokens</div>
             <Button onClick={this.openTokenModal}>Manage Tokens</Button>
           </div>
-          <div className='settingsItem'>
-            <div className='itemTitle'>Block Explorer</div>
+          <div className="settingsItem">
+            <div className="itemTitle">Block Explorer</div>
             <select value={explorer} onChange={this.updateExplorerSettings}>
               {Object.keys(EXPLORERS).map((explorer: ExplorerType) => (
                 <option key={explorer} value={EXPLORERS[explorer]}>
@@ -192,8 +192,8 @@ export default class Settings extends Component<Props, State> {
               ))}
             </select>
           </div>
-          <div className='settingsItem'>
-            <div className='itemTitle'>Currency</div>
+          <div className="settingsItem">
+            <div className="itemTitle">Currency</div>
             <select value={currency} onChange={this.updateCurrencySettings}>
               {Object.keys(CURRENCIES).map((currencyCode: string) => (
                 <option value={currencyCode} key={currencyCode}>
@@ -202,16 +202,16 @@ export default class Settings extends Component<Props, State> {
               ))}
             </select>
           </div>
-          <div className='settingsItem'>
-            <div className='itemTitle'>Saved Wallet Accounts</div>
+          <div className="settingsItem">
+            <div className="itemTitle">Saved Wallet Accounts</div>
             {map(accounts, account => {
               return (
-                <div className='walletList' key={`wallet${account.key}`}>
-                  <div className='walletItem'>
-                    <div className='walletName'>{account.key.slice(0, 20)}</div>
-                    <div className='walletKey'>{account.label}</div>
+                <div className="walletList" key={`wallet${account.key}`}>
+                  <div className="walletItem">
+                    <div className="walletName">{account.key.slice(0, 20)}</div>
+                    <div className="walletKey">{account.label}</div>
                     <div
-                      className='deleteWallet'
+                      className="deleteWallet"
                       onClick={() =>
                         this.deleteWalletAccount(account.label, account.key)
                       }

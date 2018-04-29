@@ -43,7 +43,7 @@ export default class AddressInput extends React.Component<Props> {
       <div className={styles.addressItem} key={item.label} tabIndex={0} onClick={onSelect}>
         <div className={styles.label}>
           <Highlighter
-            highlightTag='span'
+            highlightTag="span"
             highlightClassName={styles.highlight}
             searchWords={[search]}
             autoEscape
@@ -52,7 +52,7 @@ export default class AddressInput extends React.Component<Props> {
         </div>
         <div className={styles.value}>
           <Highlighter
-            highlightTag='span'
+            highlightTag="span"
             highlightClassName={styles.highlight}
             searchWords={[search]}
             autoEscape

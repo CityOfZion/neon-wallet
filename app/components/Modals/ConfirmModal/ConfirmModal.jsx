@@ -32,7 +32,7 @@ const ConfirmModal = ({ hideModal, title, onClick, onCancel, text, width, height
     </div>
     <div className={styles.modalFooter}>
       <Button
-        id='confirm'
+        id="confirm"
         primary
         className={styles.actionButton}
         onClick={() => {
@@ -40,7 +40,7 @@ const ConfirmModal = ({ hideModal, title, onClick, onCancel, text, width, height
           hideModal()
         }}>Confirm</Button>
       <Button
-        id='cancel'
+        id="cancel"
         onClick={() => {
           hideModal()
           onCancel()

@@ -1,45 +1,52 @@
 // @flow
-import React, { Component } from 'react'
+import React from 'react'
 
-import PasswordInput from '../../components/Inputs/PasswordInput'
-import HomeButtonLink from '../../components/HomeButtonLink'
 import Button from '../../components/Button'
-
-import loginStyles from '../../styles/login.scss'
+import PasswordInput from '../../components/Inputs/PasswordInput/PasswordInput'
+import LoginIcon from '../../assets/icons/login.svg'
+import styles from '../Home/Home.scss'
 
 type Props = {
   loginWithPrivateKey: Function
 }
 
 type State = {
-  wif: string,
+  wif: string
 }
 
-export default class LoginPrivateKey extends Component<Props, State> {
+export default class LoginPrivateKey extends React.Component<Props, State> {
   state = {
     wif: ''
   }
 
-  render () {
+  render = () => {
     const { loginWithPrivateKey } = this.props
     const { wif } = this.state
-    const loginButtonDisabled = wif === ''
 
     return (
-      <div id='loginPage' className={loginStyles.loginPage}>
-        <div className={loginStyles.title}>Login using a private key:</div>
-        <form onSubmit={(e) => { e.preventDefault(); loginWithPrivateKey(wif) }}>
-          <div className={loginStyles.loginForm}>
-            <PasswordInput
-              placeholder='Enter your private key here (WIF)'
-              onChange={(e) => this.setState({ wif: e.target.value })}
-              autoFocus
-            />
-          </div>
-          <div>
-            <Button primary type='submit' disabled={loginButtonDisabled}>Login</Button>
-            <HomeButtonLink />
-          </div>
+      <div id="loginPrivateKey" className={styles.flexContainer}>
+        <form
+          onSubmit={e => {
+            e.preventDefault()
+            loginWithPrivateKey(wif)
+          }}
+        >
+          <PasswordInput
+            placeholder="Enter your private key here"
+            value={wif}
+            onChange={(e: Object) => this.setState({ wif: e.target.value })}
+            autoFocus
+          />
+          <Button
+            id="loginButton"
+            primary
+            type="submit"
+            className={styles.loginButtonMargin}
+            renderIcon={LoginIcon}
+            disabled={wif.length < 10}
+          >
+            Login
+          </Button>
         </form>
       </div>
     )

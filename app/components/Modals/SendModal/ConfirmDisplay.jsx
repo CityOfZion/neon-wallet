@@ -66,8 +66,8 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
         )}
 
         <div className={styles.agree}>
-          <input id='agree' type='checkbox' checked={agree} onChange={() => this.setState({ agree: !agree })} />
-          <label htmlFor='agree'>
+          <input id="agree" type="checkbox" checked={agree} onChange={() => this.setState({ agree: !agree })} />
+          <label htmlFor="agree">
             I agree to transfer the above assets & tokens from{' '}
             <Address address={address} />.
           </label>

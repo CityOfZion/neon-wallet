@@ -15,7 +15,7 @@ type Props = {
 
 const TokenInfoModal = ({ hideModal, token }: Props) => (
   <BaseModal
-    title='Token Info'
+    title="Token Info"
     hideModal={hideModal}
     style={{
       content: {

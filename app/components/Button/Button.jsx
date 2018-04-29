@@ -6,7 +6,7 @@ import { omit } from 'lodash'
 import styles from './Button.scss'
 
 type Props = {
-  className: ?string,
+  className?: ?string,
   renderIcon: ?Function,
   primary: ?boolean,
   type: ?string,
@@ -38,18 +38,22 @@ class Button extends React.Component<Props> {
     const { renderIcon } = this.props
 
     if (renderIcon) {
-      return <span className={classNames(styles.icon, this.getIconStyle())}>{renderIcon()}</span>
+      return (
+        <span className={classNames(styles.icon, this.getIconStyle())}>
+          {renderIcon()}
+        </span>
+      )
     } else {
       return <div className={styles.icon} />
     }
   }
 
   getButtonStyle = () => {
-    return (this.props.primary) ? styles.dark : styles.light
+    return this.props.primary ? styles.dark : styles.light
   }
 
   getIconStyle = () => {
-    return (this.props.primary) ? styles.light : styles.dark
+    return this.props.primary ? styles.light : styles.dark
   }
 }
 

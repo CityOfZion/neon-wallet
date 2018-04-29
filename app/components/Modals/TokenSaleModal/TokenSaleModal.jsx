@@ -186,7 +186,7 @@ export default class TokenSale extends Component<Props, State> {
         </WarningText>
 
         <div className={styles.purchaseButton}>
-          <Tooltip title='Please agree to the terms of purchase' position='top' disabled={valid}>
+          <Tooltip title="Please agree to the terms of purchase" position="top" disabled={valid}>
             <Button primary onClick={this.handleStep(2)} disabled={!valid}>
               Continue &raquo;
             </Button>
@@ -201,7 +201,7 @@ export default class TokenSale extends Component<Props, State> {
       <li key={index}>
         <label>
           <input
-            type='checkbox'
+            type="checkbox"
             checked={this.state.agreements[index]}
             onChange={this.handleChangeAgreementCurry(index)}
           />
