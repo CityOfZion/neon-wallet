@@ -39,7 +39,7 @@
   flex-direction: row;
 }
 
-.loginContainer {
+.innerHomeContainer {
   background-color: #fff;
   display: flex;
   flex-direction: column;
@@ -59,7 +59,15 @@
   flex: 1;
 }
 
-.home {
+.buttonContainer {
+  flex: 0.45;
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.homeContainer {
   height: 100%;
   width: 100%;
   display: flex;

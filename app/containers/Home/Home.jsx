@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 import LoginPrivateKey from '../LoginPrivateKey'
 import LoginNep2 from '../LoginNep2'
@@ -11,6 +12,7 @@ import styles from './Home.scss'
 import neonLogo from '../../images/neon-logo-redesign.png'
 import AddIcon from '../../assets/icons/add.svg'
 import WalletIcon from '../../assets/icons/wallet.svg'
+import { ROUTES } from '../../core/constants'
 
 type State = {
   option: string
@@ -65,8 +67,8 @@ class Home extends Component<Props, State> {
   }
 
   render = () => (
-    <div id="home" className={styles.home}>
-      <div className={styles.loginContainer}>
+    <div id="home" className={styles.homeContainer}>
+      <div className={styles.innerHomeContainer}>
         <img className={styles.logo} src={neonLogo} />
         <div className={styles.loginText}>Login</div>
 
@@ -83,10 +85,12 @@ class Home extends Component<Props, State> {
           {this.renderLoginBasedOnOption(this.state.option)}
 
           <div className={styles.buttonRow}>
-            <div style={{ flex: 0.45 }}>
-              <Button renderIcon={AddIcon}>New Wallet</Button>
+            <div className={styles.buttonContainer}>
+              <Link to={ROUTES.CREATE_WALLET}>
+                <Button renderIcon={AddIcon}>New Wallet</Button>
+              </Link>
             </div>
-            <div style={{ flex: 0.45 }}>
+            <div className={styles.buttonContainer}>
               <Button renderIcon={WalletIcon}>Wallet Manager</Button>
             </div>
           </div>
@@ -97,3 +101,54 @@ class Home extends Component<Props, State> {
 }
 
 export default Home
+
+// // @flow
+// import React from 'react'
+// import classNames from 'classnames'
+// import { Link } from 'react-router-dom'
+//
+// import { ROUTES } from '../../core/constants'
+//
+// import styles from './Home.scss'
+//
+// const Home = () => (
+//   <div id='home'>
+//     <Link to={ROUTES.LOGIN_LOCAL_STORAGE}>
+//       <div className={classNames('linkBox', styles.linkBox)}>
+//         Login using a saved wallet
+//       </div>
+//     </Link>
+//     <Link to={ROUTES.LOGIN_NEP2}>
+//       <div className={classNames('linkBox', styles.linkBox)}>
+//         Login using an encrypted key
+//       </div>
+//     </Link>
+//     <Link to={ROUTES.LOGIN_PRIVATE_KEY}>
+//       <div className={classNames('linkBox', styles.linkBox)}>
+//         Login using a private key
+//       </div>
+//     </Link>
+//     <Link to={ROUTES.LOGIN_LEDGER_NANO_S}>
+//       <div className={classNames('linkBox', styles.linkBox)}>
+//         Login using a Ledger
+//       </div>
+//     </Link>
+//     <Link to={ROUTES.CREATE_WALLET}>
+//       <div className={classNames('linkBox', styles.linkBox, styles.linkBoxAlt)}>
+//         Create a new wallet
+//       </div>
+//     </Link>
+//     <Link to={ROUTES.ENCRYPT_KEY}>
+//       <div className={classNames('linkBox', styles.linkBox, styles.linkBoxAlt)}>
+//         Encrypt an existing key
+//       </div>
+//     </Link>
+//     <Link to={ROUTES.SETTINGS}>
+//       <div className={classNames('linkBox', styles.linkBox, styles.linkBoxAlt)}>
+//         Manage Neon settings
+//       </div>
+//     </Link>
+//   </div>
+// )
+//
+// export default Home
