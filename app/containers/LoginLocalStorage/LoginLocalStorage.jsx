@@ -14,8 +14,7 @@ type Props = {
 
 type State = {
   passphrase: string,
-  encryptedWIF: string,
-  selectedLabel: string
+  encryptedWIF: string
 }
 
 export default class LoginLocalStorage extends Component<Props, State> {
@@ -24,10 +23,11 @@ export default class LoginLocalStorage extends Component<Props, State> {
     encryptedWIF: ''
   }
 
-  render () {
+  render() {
     const { accounts } = this.props
     const { passphrase, encryptedWIF } = this.state
-    const { label } = accounts.find(account => account.key === encryptedWIF) || {}
+    const { label } =
+      accounts.find(account => account.key === encryptedWIF) || {}
 
     return (
       <div id="loginLocalStorage" className={styles.flexContainer}>
@@ -37,9 +37,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
               items={accounts.map(account => account.label)}
               value={label || ''}
               placeholder="Select account"
-              onChange={value =>
-                this.setState({ encryptedWIF: value })
-              }
+              onChange={value => this.setState({ encryptedWIF: value })}
               getItemValue={value =>
                 accounts.find(account => account.label === value).key
               }
