@@ -2,8 +2,7 @@
 import { api } from 'neon-js'
 import { createActions } from 'spunky'
 
-import { toBigNumber } from '../core/math'
-import { toFixedDecimals, COIN_DECIMAL_LENGTH } from '../core/formatters'
+import { COIN_DECIMAL_LENGTH } from '../core/formatters'
 import { ASSETS } from '../core/constants'
 
 type Props = {
@@ -16,9 +15,13 @@ export const ID = 'TRANSACTION_HISTORY'
 export default createActions(ID, ({ net, address }: Props = {}) => async (state: Object) => {
   const transactions = await api.neonDB.getTransactionHistory(net, address)
 
-  return transactions.map(({ NEO, GAS, txid }: TransactionHistoryType) => ({
-    txid,
-    [ASSETS.NEO]: toFixedDecimals(NEO, 0),
-    [ASSETS.GAS]: toBigNumber(GAS).round(COIN_DECIMAL_LENGTH).toString()
-  }))
+  return transactions.map(({ change, txid }: TransactionHistoryType) => {
+    const { NEO, GAS } = change
+
+    return {
+      txid,
+      [ASSETS.NEO]: NEO.toFixed(0),
+      [ASSETS.GAS]: GAS.round(COIN_DECIMAL_LENGTH).toString()
+    }
+  })
 })
