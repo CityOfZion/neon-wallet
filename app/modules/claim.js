@@ -116,8 +116,10 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
 
   // step 2: send claim request
   try {
+    var {claims} = await api.getClaimsFrom({net, address}, api.neoscan)
+    if (isHardwareClaim) claims = claims.slice(0, 25)
     api.setApiSwitch(0)
-    const { response } = await api.claimGas({ net, address, publicKey, privateKey, signingFunction })
+    const { response } = await api.claimGas({ net, address, claims, publicKey, privateKey, signingFunction })
     api.setApiSwitch(0.5)
 
     if (!response.result) {
@@ -125,7 +127,7 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
     }
   } catch (err) {
     dispatch(disableClaim(false))
-    dispatch(showErrorNotification({ message: 'Claiming GAS failed.' }))
+    dispatch(showErrorNotification({ message: `Claiming GAS failed: ${err}` }))
     return
   }
 
