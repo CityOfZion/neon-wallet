@@ -44,7 +44,7 @@ export default class EncryptKey extends React.Component<Props, State> {
     }
   }
 
-  resetFields() {
+  resetFields () {
     this.setState({
       passphrase: '',
       passphrase2: '',
@@ -52,19 +52,10 @@ export default class EncryptKey extends React.Component<Props, State> {
     })
   }
 
-  render() {
+  render () {
     const { encryptWIF } = this.props
     const { passphrase, passphrase2, wif } = this.state
     let disabledButton
-    let title
-
-    if (encryptWIF) {
-      disabledButton = passphrase === '' || passphrase2 === '' || wif === ''
-      title = 'Choose a passphrase to encrypt your existing private key:'
-    } else {
-      disabledButton = passphrase === '' || passphrase2 === ''
-      title = 'Choose a passphrase to encrypt your private key:'
-    }
 
     return (
       <div id="home" className={styles.homeContainer}>
