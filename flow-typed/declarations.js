@@ -1,5 +1,7 @@
 // @flow
 
+import { type Fixed8 } from 'neon-js'
+
 import {
   EXPLORER,
   ROUTES,
@@ -38,12 +40,12 @@ declare type NotificationType = {
 }
 
 declare type TransactionHistoryType = {
-  NEO: number,
-  GAS: number,
+  change: {
+    NEO: Fixed8,
+    GAS: Fixed8,
+  },
   txid: string,
-  block_index: number,
-  neo_sent: boolean,
-  gas_sent: boolean
+  blockHeight: Fixed8
 }
 
 declare type ModalType = $Values<typeof MODAL_TYPES>

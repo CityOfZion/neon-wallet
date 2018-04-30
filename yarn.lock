@@ -725,11 +725,11 @@ axios@0.17.0:
     follow-redirects "^1.2.3"
     is-buffer "^1.1.5"
 
-axios@^0.17.1:
-  version "0.17.1"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.17.1.tgz#2d8e3e5d0bdbd7327f91bc814f5c57660f81824d"
+axios@^0.18.0:
+  version "0.18.0"
+  resolved "https://registry.npmjs.org/axios/-/axios-0.18.0.tgz#32d53e4851efdc0a11993b6cd000789d70c05102"
   dependencies:
-    follow-redirects "^1.2.5"
+    follow-redirects "^1.3.0"
     is-buffer "^1.1.5"
 
 axobject-query@^0.1.0:
@@ -1559,7 +1559,7 @@ big.js@^3.1.3:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/big.js/-/big.js-3.2.0.tgz#a5fc298b81b9e0dca2e458824784b65c52ba588e"
 
-bignumber.js@5.0.0, bignumber.js@^5.0.0:
+bignumber.js@5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-5.0.0.tgz#fbce63f09776b3000a83185badcde525daf34833"
 
@@ -4230,7 +4230,7 @@ fn-name@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/fn-name/-/fn-name-2.0.1.tgz#5214d7537a4d06a4a301c0cc262feb84188002e7"
 
-follow-redirects@^1.2.3, follow-redirects@^1.2.5:
+follow-redirects@^1.2.3, follow-redirects@^1.3.0:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.4.1.tgz#d8120f4518190f55aac65bb6fc7b85fcd666d6aa"
   dependencies:
@@ -6262,9 +6262,9 @@ log-symbols@^2.1.0:
   dependencies:
     chalk "^2.0.1"
 
-loglevel-plugin-prefix@^0.7.2:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/loglevel-plugin-prefix/-/loglevel-plugin-prefix-0.7.2.tgz#938a5598b149d97b6de44e13547a764135b917b4"
+loglevel-plugin-prefix@^0.8.3:
+  version "0.8.3"
+  resolved "https://registry.npmjs.org/loglevel-plugin-prefix/-/loglevel-plugin-prefix-0.8.3.tgz#3e46ee114f92ead1e1761100209349bda695995b"
 
 loglevel@^1.4.1, loglevel@^1.6.1:
   version "1.6.1"
@@ -6668,19 +6668,19 @@ neo-async@^2.5.0:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.5.1.tgz#acb909e327b1e87ec9ef15f41b8a269512ad41ee"
 
-"neon-js@git+https://github.com/cityofzion/neon-js.git#3.3.3":
-  version "3.3.3"
-  resolved "git+https://github.com/cityofzion/neon-js.git#f962c255ef0790e4d64af3c825f3c2f44a9627f6"
+"neon-js@git+https://github.com/cityofzion/neon-js.git#dev":
+  version "3.6.2"
+  resolved "git+https://github.com/cityofzion/neon-js.git#059c136282d502951190def7a76522bbbe58fb67"
   dependencies:
-    axios "^0.17.1"
-    bignumber.js "^5.0.0"
+    axios "^0.18.0"
+    bignumber.js "5.0.0"
     bs58 "^4.0.1"
     bs58check "^2.1.1"
     crypto-js "^3.1.9-1"
     elliptic "^6.4.0"
     js-scrypt "^0.2.0"
     loglevel "^1.6.1"
-    loglevel-plugin-prefix "^0.7.2"
+    loglevel-plugin-prefix "^0.8.3"
     scrypt-js "^2.0.3"
     secure-random "^1.1.1"
     semver "^5.5.0"
