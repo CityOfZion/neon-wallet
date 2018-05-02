@@ -14,19 +14,19 @@ const initialState = {
   spunky: {
     NETWORK: {
       batch: false,
-      state: LOADED,
+      progress: LOADED,
       data: MAIN_NETWORK_ID
     },
     AUTH: {
       batch: false,
-      state: LOADED,
+      progress: LOADED,
       data: {
         address: 'ANqUrhv99rwCiFTL6N1An9NH5UVkPYxTuw'
       }
     },
     SETTINGS: {
       batch: false,
-      state: LOADED,
+      progress: LOADED,
       data: {
         currency: DEFAULT_CURRENCY_CODE,
         tokens: []
@@ -34,7 +34,7 @@ const initialState = {
     },
     PRICES: {
       batch: false,
-      state: LOADED,
+      progress: LOADED,
       data: {
         NEO: 25.48,
         GAS: 18.1
@@ -42,7 +42,7 @@ const initialState = {
     },
     BALANCES: {
       batch: false,
-      state: LOADED,
+      progress: LOADED,
       data: {
         NEO: '100001',
         GAS: '1000.0001601'
@@ -50,7 +50,7 @@ const initialState = {
     },
     CLAIMS: {
       batch: false,
-      state: LOADED,
+      progress: LOADED,
       data: {
         total: '0.5'
       }
