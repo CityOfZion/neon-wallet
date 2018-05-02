@@ -23,13 +23,13 @@ const initialState = {
     },
     NETWORK: {
       batch: false,
-      state: LOADED,
+      progress: LOADED,
       loadedCount: 1,
       data: MAIN_NETWORK_ID
     },
     SETTINGS: {
       batch: false,
-      state: LOADED,
+      progress: LOADED,
       loadedCount: 1,
       data: {
         blockExplorer: EXPLORERS.NEO_TRACKER
@@ -37,7 +37,7 @@ const initialState = {
     },
     TRANSACTION_HISTORY: {
       batch: false,
-      state: LOADED,
+      progress: LOADED,
       loadedCount: 1,
       data: []
     }
