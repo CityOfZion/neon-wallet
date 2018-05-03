@@ -25,9 +25,9 @@ const POLL_ATTEMPTS = 50
 const POLL_FREQUENCY = 5000
 
 const fetchClaims = async ({ net, address }) => {
-  api.setApiSwitch(1)
-  const response = await api.loadBalance(api.getClaimsFrom, { net, address })
   api.setApiSwitch(0)
+  const response = await api.loadBalance(api.getClaimsFrom, { net, address })
+  api.setApiSwitch(0.5)
   const { claims } = response.claims
   return map(claims, 'claim')
 }
@@ -116,16 +116,18 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
 
   // step 2: send claim request
   try {
-    api.setApiSwitch(1)
-    const { response } = await api.claimGas({ net, address, publicKey, privateKey, signingFunction })
+    var {claims} = await api.getClaimsFrom({net, address}, api.neoscan)
+    if (isHardwareClaim) claims = claims.slice(0, 25)
     api.setApiSwitch(0)
+    const { response } = await api.claimGas({ net, address, claims, publicKey, privateKey, signingFunction })
+    api.setApiSwitch(0.5)
 
     if (!response.result) {
       throw new Error('Claiming GAS failed')
     }
   } catch (err) {
     dispatch(disableClaim(false))
-    dispatch(showErrorNotification({ message: 'Claiming GAS failed.' }))
+    dispatch(showErrorNotification({ message: `Claiming GAS failed: ${err}` }))
     return
   }
 
