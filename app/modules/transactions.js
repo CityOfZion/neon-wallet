@@ -19,7 +19,6 @@ import {
   getTokenBalances
 } from '../core/deprecated'
 import { isToken, validateTransactionsBeforeSending, getTokenBalancesMap } from '../core/wallet'
-import { ASSETS } from '../core/constants'
 import { toNumber } from '../core/math'
 
 import { log } from '../util/Logs'
@@ -43,25 +42,6 @@ const buildIntents = (sendEntries: Array<SendEntryType>) => {
       address
     )
   )
-}
-
-const buildIntentsForInvocation = (
-  sendEntries: Array<SendEntryType>,
-  fromAddress: string
-) => {
-  const intents = buildIntents(sendEntries)
-
-  if (intents.length > 0) {
-    return intents
-  } else {
-    return buildIntents([
-      {
-        address: fromAddress,
-        amount: '0.00000001',
-        symbol: ASSETS.GAS
-      }
-    ])
-  }
 }
 
 const buildTransferScript = (
@@ -104,7 +84,7 @@ const makeRequest = (sendEntries: Array<SendEntryType>, config: Object) => {
   } else {
     return api.doInvoke({
       ...config,
-      intents: buildIntentsForInvocation(sendEntries, config.address),
+      intents: buildIntents(sendEntries),
       script,
       gas: 0
     })
