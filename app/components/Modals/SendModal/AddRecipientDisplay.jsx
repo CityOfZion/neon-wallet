@@ -11,7 +11,6 @@ import AssetInput from '../../Inputs/AssetInput'
 
 import { ASSETS } from '../../../core/constants'
 import { formatBalance, COIN_DECIMAL_LENGTH } from '../../../core/formatters'
-import { isToken } from '../../../core/wallet'
 
 import styles from './AddRecipientDisplay.scss'
 
@@ -75,11 +74,6 @@ export default class AddRecipientDisplay extends React.Component<Props, State> {
                 onChange={(value) => this.handleChange('address', value)} />
             </div>
           </div>
-        </div>
-        <div className={styles.messages}>
-          {isToken(symbol) && (
-            <div className={styles.tokenInfoMessage}>Sending NEP5 tokens requires holding at least 1 drop of GAS</div>
-          )}
         </div>
         <div className={styles.actions}>
           <Button cancel onClick={onCancel}>
