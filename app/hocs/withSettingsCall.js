@@ -1,6 +1,6 @@
 // @flow
 import { compose } from 'recompose'
-import { withProgressComponents, progressValues } from 'spunky'
+import { withProgressComponents, alreadyLoadedStrategy, progressValues } from 'spunky'
 
 import withInitialCall from './withInitialCall'
 import settingsActions from '../actions/settingsActions'
@@ -20,6 +20,8 @@ export default function withSettingsCall ({ Loading = DefaultLoading, Failed = D
     withProgressComponents(settingsActions, {
       [LOADING]: Loading,
       [FAILED]: Failed
+    }, {
+      strategy: alreadyLoadedStrategy
     })
   )
 }
