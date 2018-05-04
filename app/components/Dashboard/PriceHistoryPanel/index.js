@@ -26,8 +26,13 @@ const mapPriceHistoryActionsToProps = (actions, props) => ({
 })
 
 export default compose(
+  // Refetch price history if the selected asset or duration changes
+  withState('asset', 'setAsset', ASSETS.NEO),
+  withState('duration', 'setDuration', '1m'),
+  withActions(priceHistoryActions, mapPriceHistoryActionsToProps),
+
   // Fetch prices data based based upon the selected currency.  Reload data with the currency changes.
-  withCurrencyData('currencyCode'),
+  withCurrencyData('currency'),
   withInitialCall(priceHistoryActions),
   withProgressComponents(priceHistoryActions, {
     [LOADING]: Loader,
@@ -35,10 +40,5 @@ export default compose(
   }, {
     strategy: alreadyLoadedStrategy
   }),
-  withData(priceHistoryActions, mapPricesDataToProps),
-
-  // Refetch price history if the selected asset or duration changes
-  withState('asset', 'setAsset', ASSETS.NEO),
-  withState('duration', 'setDuration', '1m'),
-  withActions(priceHistoryActions, mapPriceHistoryActionsToProps)
+  withData(priceHistoryActions, mapPricesDataToProps)
 )(PriceHistoryPanel)
