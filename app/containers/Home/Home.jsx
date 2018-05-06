@@ -31,7 +31,7 @@ const LOGIN_OPTIONS = {
     render: () => <LoginNep2 />,
     display: 'Encrypted key'
   },
-  LEDGER: {
+  ledger: {
     render: () => <LoginLedgerNanoS />,
     display: 'Ledger Nano S'
   }

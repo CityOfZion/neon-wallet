@@ -24,7 +24,7 @@ const walletHasLabel = (wallet: Object, label: string) => {
   return wallet.accounts.some(account => account.label === label)
 }
 
-export const ID = 'ACCOUNTS'
+export const ID = 'accounts'
 
 export const updateAccountsActions = createActions(ID, (accounts: Array<Object>) => async (): Promise<Array<Object>> => {
   const wallet = await getWallet()
@@ -65,6 +65,5 @@ export const saveAccountActions = createActions(ID, ({ label, address, key }: Ob
 
 export default createActions(ID, () => async (): Promise<Object> => {
   const wallet = await getWallet()
-  console.log('wallet accounts:', wallet.accounts)
   return wallet.accounts
 })
