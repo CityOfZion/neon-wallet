@@ -12,13 +12,13 @@ const { LOADED } = progressValues
 
 const initialState = {
   spunky: {
-    NETWORK: {
+    network: {
       batch: false,
       progress: LOADED,
       data: MAIN_NETWORK_ID,
       loadedCount: 1
     },
-    AUTH: {
+    auth: {
       batch: false,
       progress: LOADED,
       data: {
@@ -26,7 +26,7 @@ const initialState = {
       },
       loadedCount: 1
     },
-    SETTINGS: {
+    settings: {
       batch: false,
       progress: LOADED,
       data: {
@@ -35,7 +35,7 @@ const initialState = {
       },
       loadedCount: 1
     },
-    PRICES: {
+    prices: {
       batch: false,
       progress: LOADED,
       data: {
@@ -44,7 +44,7 @@ const initialState = {
       },
       loadedCount: 1
     },
-    BALANCES: {
+    balances: {
       batch: false,
       progress: LOADED,
       data: {
@@ -53,7 +53,7 @@ const initialState = {
       },
       loadedCount: 1
     },
-    CLAIMS: {
+    claims: {
       batch: false,
       progress: LOADED,
       data: {
@@ -100,16 +100,16 @@ describe('AssetBalancesPanel', () => {
     wrapper.find('#refresh').hostNodes().simulate('click')
 
     expect(store.getActions()).toContainEqual(expect.objectContaining({
-      type: 'BALANCES/ACTION/CALL',
-      meta: expect.objectContaining({ id: 'BALANCES' })
+      type: 'balances/ACTION/CALL',
+      meta: expect.objectContaining({ id: 'balances' })
     }))
   })
 
   test('correctly renders data from state with non-default currency', () => {
     const state = merge(initialState, {
       spunky: {
-        SETTINGS: { data: { currency: 'eur' } },
-        PRICES: { data: { NEO: 1.11, GAS: 0.55 } }
+        settings: { data: { currency: 'eur' } },
+        prices: { data: { NEO: 1.11, GAS: 0.55 } }
       }
     })
     const wrapper = mount(provideState(<AssetBalancesPanel />, state))

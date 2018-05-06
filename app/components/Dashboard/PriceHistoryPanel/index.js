@@ -1,16 +1,12 @@
 // @flow
 import { compose, withState } from 'recompose'
-import { withData, withActions, withProgressComponents, alreadyLoadedStrategy, progressValues } from 'spunky'
+import { withData, withActions } from 'spunky'
 
 import PriceHistoryPanel from './PriceHistoryPanel'
-import Loader from '../../Loader'
-import Failed from '../../../containers/App/Failed'
 import priceHistoryActions from '../../../actions/priceHistoryActions'
 import withCurrencyData from '../../../hocs/withCurrencyData'
-import withInitialCall from '../../../hocs/withInitialCall'
+import withProgressPanel from '../../../hocs/withProgressPanel'
 import { ASSETS } from '../../../core/constants'
-
-const { LOADING, FAILED } = progressValues
 
 type Duration = '1m' | '1w' | '1d'
 
@@ -32,13 +28,7 @@ export default compose(
   withActions(priceHistoryActions, mapPriceHistoryActionsToProps),
 
   // Fetch prices data based based upon the selected currency.  Reload data with the currency changes.
+  withProgressPanel(priceHistoryActions, { title: 'Historic Price' }),
   withCurrencyData('currency'),
-  withInitialCall(priceHistoryActions),
-  withProgressComponents(priceHistoryActions, {
-    [LOADING]: Loader,
-    [FAILED]: Failed
-  }, {
-    strategy: alreadyLoadedStrategy
-  }),
   withData(priceHistoryActions, mapPricesDataToProps)
 )(PriceHistoryPanel)

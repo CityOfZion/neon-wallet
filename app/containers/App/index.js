@@ -2,15 +2,14 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
-import { withCall, withRecall, withProgressComponents, alreadyLoadedStrategy, progressValues } from 'spunky'
+import { createBatchActions, withRecall, withProgressComponents, alreadyLoadedStrategy, progressValues } from 'spunky'
 
-import appActions from '../../actions/appActions'
 import authActions from '../../actions/authActions'
 import accountActions from '../../actions/accountActions'
 import accountsActions from '../../actions/accountsActions'
-import blockHeightActions from '../../actions/blockHeightActions'
 import contactsActions from '../../actions/contactsActions'
 import networkActions from '../../actions/networkActions'
+import settingsActions from '../../actions/settingsActions'
 import withLoginRedirect from '../../hocs/auth/withLoginRedirect'
 import withLogoutRedirect from '../../hocs/auth/withLogoutRedirect'
 import withLogoutReset from '../../hocs/auth/withLogoutReset'
@@ -33,29 +32,23 @@ const actionCreators = {
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
 
+// TODO: move this into its own actions file
+const batchActions = createBatchActions('app', {
+  accounts: accountsActions,
+  settings: settingsActions,
+  contacts: contactsActions
+})
+
 export default compose(
   // Old way of fetching data, need to refactor this out...
   connect(null, mapDispatchToProps),
 
-  // Fetch contacts
-  withCall(contactsActions),
-
   // Provide authenticated state so dashboard knows what layout to use.
   withAuthData(),
-
-  // Fetch the initial settings.
-  withInitialCall(accountsActions),
-  withProgressComponents(accountsActions, {
-    [LOADING]: Loading,
-    [FAILED]: Failed
-  }, {
-    strategy: alreadyLoadedStrategy
-  }),
 
   // Fetch the initial network type, and pass it down as a prop.  This must come before other data
   // fetches that depend on knowing the selected network.
   withInitialCall(networkActions),
-  withNetworkData(),
   withProgressComponents(networkActions, {
     [LOADING]: Loading,
     [FAILED]: Failed
@@ -64,8 +57,15 @@ export default compose(
   }),
 
   // Fetch application data based upon the selected network.  Reload data when the network changes.
-  withInitialCall(appActions),
-  withRecall(blockHeightActions, ['networkId']),
+  withNetworkData(),
+  withInitialCall(batchActions),
+  withRecall(batchActions, ['networkId']),
+  withProgressComponents(batchActions, {
+    [LOADING]: Loading,
+    [FAILED]: Failed
+  }, {
+    strategy: alreadyLoadedStrategy
+  }),
 
   // Navigate to the home or dashboard when the user logs in or out.
   withLoginRedirect,

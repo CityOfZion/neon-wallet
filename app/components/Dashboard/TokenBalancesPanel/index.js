@@ -11,6 +11,7 @@ import withBalancesData from '../../../hocs/withBalancesData'
 import withCurrencyData from '../../../hocs/withCurrencyData'
 import withFilteredTokensData from '../../../hocs/withFilteredTokensData'
 import withLoadingProp from '../../../hocs/withLoadingProp'
+import withProgressPanel from '../../../hocs/withProgressPanel'
 import { toBigNumber } from '../../../core/math'
 
 const filterZeroBalanceTokens = (balances) => {
@@ -30,6 +31,7 @@ const mapBalancesActionsToProps = (actions, props) => ({
 })
 
 export default compose(
+  withProgressPanel(balancesActions, { title: 'Token Balances' }),
   withBalancesData(mapBalanceDataToProps),
   withCurrencyData('currencyCode'),
 

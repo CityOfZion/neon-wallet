@@ -3,7 +3,6 @@ import { compose } from 'recompose'
 import { withData } from 'spunky'
 
 import withNetworkData from './withNetworkData'
-import withSettingsCall from './withSettingsCall'
 import settingsActions from '../actions/settingsActions'
 
 export default function withFilteredTokensData (key: string = 'tokens') {
@@ -13,7 +12,6 @@ export default function withFilteredTokensData (key: string = 'tokens') {
 
   return compose(
     withNetworkData(),
-    withSettingsCall(),
     withData(settingsActions, mapSettingsDataToProps)
   )
 }
