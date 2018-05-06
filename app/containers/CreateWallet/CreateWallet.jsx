@@ -19,7 +19,8 @@ type State = {
   passphrase: string,
   passphrase2: string,
   wif: string,
-  option: string
+  option: string,
+  walletName: string
 }
 
 export default class CreateWallet extends React.Component<Props, State> {

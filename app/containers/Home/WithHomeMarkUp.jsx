@@ -4,7 +4,7 @@ import styles from './Home.scss'
 import neonLogo from '../../images/neon-logo-redesign.png'
 
 type Props = {
-  children: React.Node,
+  children: React$Node,
   renderNavigation?: Function
 }
 
