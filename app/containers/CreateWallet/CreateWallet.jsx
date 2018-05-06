@@ -6,13 +6,11 @@ import PasswordInput from '../../components/Inputs/PasswordInput'
 import TextInput from '../../components/Inputs/TextInput'
 import BackButton from '../../components/BackButton'
 import Button from '../../components/Button'
-import neonLogo from '../../images/neon-logo-redesign.png'
 import AddIcon from '../../assets/icons/add.svg'
 import WithHomeMarkUp from '../Home/WithHomeMarkUp'
 import styles from '../Home/Home.scss'
 
 type Props = {
-  encryptWIF: boolean,
   generateNewWalletAccount: Function,
   history: Object
 }
@@ -35,22 +33,19 @@ export default class CreateWallet extends React.Component<Props, State> {
 
   createWalletAccount = (e: SyntheticMouseEvent<*>, options: Object) => {
     e.preventDefault()
-    const { encryptWIF, history } = this.props
-    const { passphrase, passphrase2, wif, walletName } = this.state
+    const { history } = this.props
+    const { passphrase, passphrase2, wif, walletName, option } = this.state
     const { generateNewWalletAccount } = this.props
-    if (
-      !generateNewWalletAccount(
-        passphrase,
-        passphrase2,
-        encryptWIF ? wif : null,
-        history
-      )
-    ) {
-      // this.resetFields()
-    }
+    generateNewWalletAccount(
+      passphrase,
+      passphrase2,
+      option === 'IMPORT' ? wif : null,
+      history,
+      walletName
+    )
   }
 
-  render() {
+  render = () => {
     const { history } = this.props
     const { passphrase, passphrase2, wif, option, walletName } = this.state
     let disabledButton
@@ -130,7 +125,7 @@ export default class CreateWallet extends React.Component<Props, State> {
   }
 }
 
-const OptionButton = ({ active, children, handleClick }) => {
+const OptionButton = ({ active, children, handleClick }: Object) => {
   return (
     <div
       onClick={handleClick}

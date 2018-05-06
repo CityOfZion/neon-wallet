@@ -9,11 +9,12 @@ import { validatePassphraseLength } from '../core/wallet'
 import { ROUTES, DEFAULT_WALLET } from '../core/constants'
 import { Account } from '../core/schemas'
 
+// Actions
+import {saveAccountActions} from '../actions/accountsActions'
+
 // Constants
 export const NEW_WALLET_ACCOUNT = 'NEW_WALLET_ACCOUNT'
 export const RESET_WALLET_ACCOUNT = 'RESET_WALLET_ACCOUNT'
-
-// Actions
 
 export function newWalletAccount (account: Object) {
   return {
@@ -142,7 +143,7 @@ export const recoverWallet = (wallet: Object): Promise<*> => {
   })
 }
 
-export const generateNewWalletAccount = (passphrase: string, passphrase2: string, wif?: string, history: Object) => (dispatch: DispatchType) => {
+export const generateNewWalletAccount = (passphrase: string, passphrase2: string, wif?: string, history: Object, walletName: string) => (dispatch: DispatchType) => {
   const dispatchError = (message: string) => {
     dispatch(showErrorNotification({ message }))
     return false
@@ -162,6 +163,8 @@ export const generateNewWalletAccount = (passphrase: string, passphrase2: string
         const { WIF, address } = account
         const encryptedWIF = wallet.encrypt(WIF, passphrase)
 
+        dispatch(saveAccountActions.call({label: walletName, address, key: encryptedWIF}))
+
         dispatch(hideNotification(infoNotificationId))
         dispatch(newWalletAccount({
           wif: WIF,
@@ -169,7 +172,7 @@ export const generateNewWalletAccount = (passphrase: string, passphrase2: string
           passphrase,
           encryptedWIF
         }))
-        history.push(ROUTES.DISPLAY_WALLET_KEYS)
+        history.push(ROUTES.HOME)
         return true
       } catch (e) {
         return dispatchError('An error occured while trying to generate a new wallet')
