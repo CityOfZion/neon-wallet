@@ -1,12 +1,15 @@
 // @flow
 import React from 'react'
+import { ROUTES } from '../../core/constants'
 
 import PasswordInput from '../../components/Inputs/PasswordInput'
-import HomeButtonLink from '../../components/HomeButtonLink'
+import TextInput from '../../components/Inputs/TextInput'
+import BackButton from '../../components/BackButton'
 import Button from '../../components/Button'
-import styles from '../Home/Home.scss'
 import neonLogo from '../../images/neon-logo-redesign.png'
 import AddIcon from '../../assets/icons/add.svg'
+import WithHomeMarkUp from '../Home/WithHomeMarkUp'
+import styles from '../Home/Home.scss'
 
 type Props = {
   encryptWIF: boolean,
@@ -17,20 +20,23 @@ type Props = {
 type State = {
   passphrase: string,
   passphrase2: string,
-  wif: string
+  wif: string,
+  option: string
 }
 
-export default class EncryptKey extends React.Component<Props, State> {
+export default class CreateWallet extends React.Component<Props, State> {
   state = {
     passphrase: '',
     passphrase2: '',
-    wif: ''
+    wif: '',
+    walletName: '',
+    option: 'CREATE'
   }
 
-  createWalletAccount = (e: SyntheticMouseEvent<*>) => {
+  createWalletAccount = (e: SyntheticMouseEvent<*>, options: Object) => {
     e.preventDefault()
     const { encryptWIF, history } = this.props
-    const { passphrase, passphrase2, wif } = this.state
+    const { passphrase, passphrase2, wif, walletName } = this.state
     const { generateNewWalletAccount } = this.props
     if (
       !generateNewWalletAccount(
@@ -44,66 +50,93 @@ export default class EncryptKey extends React.Component<Props, State> {
     }
   }
 
-  resetFields () {
-    this.setState({
-      passphrase: '',
-      passphrase2: '',
-      wif: ''
-    })
-  }
-
-  render () {
-    const { encryptWIF } = this.props
-    const { passphrase, passphrase2, wif } = this.state
+  render() {
+    const { history } = this.props
+    const { passphrase, passphrase2, wif, option, walletName } = this.state
     let disabledButton
 
     return (
-      <div id="home" className={styles.homeContainer}>
-        <div className={styles.innerHomeContainer}>
-          <img className={styles.logo} src={neonLogo} />
-          <div className={styles.inputContainer}>
-            <div id="createWallet" className={styles.flexContainer}>
-              <form onSubmit={this.createWalletAccount}>
+      <WithHomeMarkUp
+        renderNavigation={() => (
+          <div className={styles.backButton}>
+            <BackButton routeTo={ROUTES.HOME} history={history} />
+          </div>
+        )}
+      >
+        <div className={styles.inputContainer}>
+          <div className={styles.createWalletOptionRow}>
+            <OptionButton
+              handleClick={() => this.setState({ option: 'CREATE' })}
+              active={option === 'CREATE'}
+            >
+              CREATE NEW
+            </OptionButton>
+
+            <OptionButton
+              handleClick={() => this.setState({ option: 'IMPORT' })}
+              active={option === 'IMPORT'}
+            >
+              IMPORT EXISTING
+            </OptionButton>
+          </div>
+          <div id="createWallet" className={styles.flexContainer}>
+            <form onSubmit={this.createWalletAccount}>
+              {option === 'IMPORT' && (
                 <div className={styles.inputMargin}>
                   <PasswordInput
-                    value={passphrase}
-                    onChange={e =>
-                      this.setState({ passphrase: e.target.value })
-                    }
-                    placeholder="Enter passphrase here"
+                    value={wif}
+                    onChange={e => this.setState({ wif: e.target.value })}
+                    placeholder="Private Key"
                     autoFocus
                   />
                 </div>
-                <div className={styles.inputMargin}>
-                  <PasswordInput
-                    value={passphrase2}
-                    onChange={e =>
-                      this.setState({ passphrase2: e.target.value })
-                    }
-                    placeholder="Enter passphrase again"
-                  />
-                  {encryptWIF && (
-                    <PasswordInput
-                      value={wif}
-                      onChange={e => this.setState({ wif: e.target.value })}
-                      placeholder="Enter existing WIF here"
-                    />
-                  )}
-                </div>
-                <Button
-                  renderIcon={AddIcon}
-                  type="submit"
-                  primary
-                  disabled={disabledButton}
-                >
-                  Create Wallet
-                </Button>
-                <HomeButtonLink />
-              </form>
-            </div>
+              )}
+              <div className={styles.inputMargin}>
+                <TextInput
+                  value={walletName}
+                  onChange={e => this.setState({ walletName: e.target.value })}
+                  placeholder="Wallet Name"
+                  autoFocus
+                />
+              </div>
+              <div className={styles.inputMargin}>
+                <PasswordInput
+                  value={passphrase}
+                  onChange={e => this.setState({ passphrase: e.target.value })}
+                  placeholder="Enter passphrase here"
+                />
+              </div>
+              <div className={styles.inputMargin}>
+                <PasswordInput
+                  value={passphrase2}
+                  onChange={e => this.setState({ passphrase2: e.target.value })}
+                  placeholder="Enter passphrase again"
+                />
+              </div>
+              <Button
+                renderIcon={AddIcon}
+                className={styles.loginButtonMargin}
+                type="submit"
+                primary
+                disabled={disabledButton}
+              >
+                {option === 'IMPORT' ? 'Import Wallet' : 'Create Wallet'}
+              </Button>
+            </form>
           </div>
         </div>
-      </div>
+      </WithHomeMarkUp>
     )
   }
+}
+
+const OptionButton = ({ active, children, handleClick }) => {
+  return (
+    <div
+      onClick={handleClick}
+      className={active ? styles.activeOptionButton : styles.optionButton}
+    >
+      {children}
+    </div>
+  )
 }

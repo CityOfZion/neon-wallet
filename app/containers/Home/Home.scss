@@ -1,5 +1,8 @@
 @import '../../styles/variables';
 
+$navigation-height: 65px;
+$navigation-margin: 20px;
+
 .input {
   width: 100%;
   margin: 10px;
@@ -8,6 +11,13 @@
   & input {
     cursor: pointer;
   }
+}
+
+.backButton {
+  align-self: flex-start;
+  margin: $navigation-margin;
+  max-height: $navigation-height;
+  min-height: $navigation-height;
 }
 
 .loginButtonMargin {
@@ -50,6 +60,32 @@
   min-height: 650px;
 }
 
+.createWalletOptionRow {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.optionButton {
+  cursor: pointer;
+  display: flex;
+  font-weight: 500;
+  justify-content: center;
+  align-items: center;
+  flex: 0.5;
+  padding: 10px;
+  border-radius: $text-input-border-radius;
+  color: #a2a6ad;
+}
+
+.activeOptionButton {
+  @extend .optionButton;
+  background-color: $text-input-background-color;
+  color: $default-text;
+}
+
 .buttonRow {
   display: flex;
   flex-direction: row;
@@ -78,6 +114,11 @@
   padding-top: 100px;
   padding-bottom: 80px;
   max-width: 100px;
+}
+
+.logoWithNegativeMargin {
+  @extend .logo;
+  margin-top: $navigation-height * -1 + ($navigation-margin * 2) * -1;
 }
 
 .loginText {
