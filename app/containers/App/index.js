@@ -15,7 +15,6 @@ import withLogoutRedirect from '../../hocs/auth/withLogoutRedirect'
 import withLogoutReset from '../../hocs/auth/withLogoutReset'
 import withInitialCall from '../../hocs/withInitialCall'
 import withAuthData from '../../hocs/withAuthData'
-import withNetworkData from '../../hocs/withNetworkData'
 import { checkVersion } from '../../modules/metadata'
 import { showErrorNotification } from '../../modules/notifications'
 

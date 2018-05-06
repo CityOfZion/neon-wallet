@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TransactionHistoryPanel renders without crashing 1`] = `
-<withData(withProps(Connect(withData(Connect(withCall(Connect(withData(Connect(withProgress(withProgressComponents(TransactionHistory)))))))))))
+<withProgress(withProgressComponents(Connect(withData(TransactionHistory))))
   dispatch={[Function]}
-  networkId="1"
+  progress="LOADED"
   store={
     Object {
       "clearActions": [Function],
