@@ -2,7 +2,7 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
-import { createBatchActions, withRecall, withProgressComponents, alreadyLoadedStrategy, progressValues } from 'spunky'
+import { createBatchActions, withProgressComponents, alreadyLoadedStrategy, progressValues } from 'spunky'
 
 import authActions from '../../actions/authActions'
 import accountActions from '../../actions/accountActions'
@@ -34,6 +34,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispat
 
 // TODO: move this into its own actions file
 const batchActions = createBatchActions('app', {
+  network: networkActions,
   accounts: accountsActions,
   settings: settingsActions,
   contacts: contactsActions
@@ -48,18 +49,7 @@ export default compose(
 
   // Fetch the initial network type, and pass it down as a prop.  This must come before other data
   // fetches that depend on knowing the selected network.
-  withInitialCall(networkActions),
-  withProgressComponents(networkActions, {
-    [LOADING]: Loading,
-    [FAILED]: Failed
-  }, {
-    strategy: alreadyLoadedStrategy
-  }),
-
-  // Fetch application data based upon the selected network.  Reload data when the network changes.
-  withNetworkData(),
   withInitialCall(batchActions),
-  withRecall(batchActions, ['networkId']),
   withProgressComponents(batchActions, {
     [LOADING]: Loading,
     [FAILED]: Failed
