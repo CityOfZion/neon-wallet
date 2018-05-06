@@ -2,7 +2,7 @@
 import { connect, type MapStateToProps } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
-import { createBatchActions, withRecall, withActions } from 'spunky'
+import { createBatchActions, withReset, withActions } from 'spunky'
 
 import accountActions from '../../actions/accountActions'
 import balancesActions from '../../actions/balancesActions'
@@ -50,6 +50,6 @@ export default compose(
   withCurrencyData('currency'),
   withFilteredTokensData(),
   withInitialCall(batchActions),
-  withRecall(accountActions, ['networkId']),
+  withReset(accountActions, ['networkId']),
   withActions(accountActions, mapAccountActionsToProps)
 )(Dashboard)
