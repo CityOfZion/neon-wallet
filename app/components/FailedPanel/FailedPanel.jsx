@@ -1,10 +1,12 @@
 // @flow
 import React from 'react'
+import classNames from 'classnames'
 
 import Panel from '../Panel'
 import styles from './FailedPanel.scss'
 
 type Props = {
+  className: ?string,
   title: ?string,
   onRetry: ?Function
 }
@@ -18,7 +20,7 @@ export default class LoadingPanel extends React.Component<Props> {
   render () {
     return (
       <Panel
-        className={styles.failedPanel}
+        className={classNames(styles.loadingPanel, this.props.className)}
         contentClassName={styles.content}
         renderHeader={this.renderHeader}
       >
