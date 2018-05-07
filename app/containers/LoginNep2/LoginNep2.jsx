@@ -7,6 +7,7 @@ import LoginIcon from '../../assets/icons/login.svg'
 import styles from '../Home/Home.scss'
 
 type Props = {
+  loading: boolean,
   loginNep2: Function
 }
 
@@ -22,29 +23,25 @@ export default class LoginNep2 extends Component<Props, State> {
   }
 
   render () {
-    const { loginNep2 } = this.props
+    const { loading } = this.props
     const { encryptedWIF, passphrase } = this.state
-    const loginButtonDisabled = encryptedWIF === '' || passphrase === ''
 
     return (
       <div id="loginNep2" className={styles.flexContainer}>
-        <form
-          onSubmit={e => {
-            e.preventDefault()
-            loginNep2(passphrase, encryptedWIF)
-          }}
-        >
+        <form onSubmit={this.handleSubmit}>
           <div className={styles.inputMargin}>
             <PasswordInput
               placeholder="Enter your encrypted key here"
               autoFocus
               value={encryptedWIF}
+              disabled={loading}
               onChange={e => this.setState({ encryptedWIF: e.target.value })}
             />
           </div>
           <PasswordInput
             placeholder="Enter your passphrase here"
             value={passphrase}
+            disabled={loading}
             onChange={e => this.setState({ passphrase: e.target.value })}
           />
           <Button
@@ -53,12 +50,27 @@ export default class LoginNep2 extends Component<Props, State> {
             type="submit"
             className={styles.loginButtonMargin}
             renderIcon={LoginIcon}
-            disabled={loginButtonDisabled}
+            disabled={loading || !this.isValid()}
           >
             Login
           </Button>
         </form>
       </div>
     )
+  }
+
+  handleSubmit = (event: Object) => {
+    const { loading, loginNep2 } = this.props
+    const { passphrase, encryptedWIF } = this.state
+
+    event.preventDefault()
+
+    if (!loading) {
+      loginNep2(passphrase, encryptedWIF)
+    }
+  }
+
+  isValid = () => {
+    return this.state.encryptedWIF !== '' && this.state.passphrase !== ''
   }
 }
