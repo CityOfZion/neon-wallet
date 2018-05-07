@@ -1,9 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TransactionHistoryPanel renders without crashing 1`] = `
-<withProgress(withProgressComponents(Connect(withData(TransactionHistory))))
-  dispatch={[Function]}
-  progress="LOADED"
+<withActions(Connect(withProgress(withProgressComponents(Connect(withData(TransactionHistory))))))
+  onRetry={[Function]}
   store={
     Object {
       "clearActions": [Function],
@@ -12,27 +11,6 @@ exports[`TransactionHistoryPanel renders without crashing 1`] = `
       "getState": [Function],
       "replaceReducer": [Function],
       "subscribe": [Function],
-    }
-  }
-  storeSubscription={
-    t {
-      "listeners": Object {
-        "clear": [Function],
-        "get": [Function],
-        "notify": [Function],
-        "subscribe": [Function],
-      },
-      "onStateChange": [Function],
-      "parentSub": undefined,
-      "store": Object {
-        "clearActions": [Function],
-        "dispatch": [Function],
-        "getActions": [Function],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
-      },
-      "unsubscribe": [Function],
     }
   }
 />
