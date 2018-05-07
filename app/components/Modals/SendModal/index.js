@@ -3,11 +3,10 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
 import { omit } from 'lodash'
-import { withData } from 'spunky'
 
 import SendModal from './SendModal'
-import balancesActions from '../../../actions/balancesActions'
 import withAuthData from '../../../hocs/withAuthData'
+import withBalancesData from '../../../hocs/withBalancesData'
 import withNetworkData from '../../../hocs/withNetworkData'
 import { sendTransaction } from '../../../modules/transactions'
 
@@ -22,6 +21,6 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({ sendTransaction },
 export default compose(
   connect(null, mapDispatchToProps),
   withAuthData(),
-  withNetworkData(),
-  withData(balancesActions, mapBalancesDataToProps)
+  withBalancesData(mapBalancesDataToProps),
+  withNetworkData()
 )(SendModal)

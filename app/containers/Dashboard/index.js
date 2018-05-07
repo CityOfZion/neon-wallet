@@ -2,29 +2,25 @@
 import { connect, type MapStateToProps } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
-import { omit } from 'lodash'
-import { withCall, withData, withRecall, withActions, withProgressComponents, alreadyLoadedStrategy, progressValues } from 'spunky'
+import { createBatchActions, withReset, withActions } from 'spunky'
 
-import Loader from '../../components/Loader'
 import accountActions from '../../actions/accountActions'
-import withNetworkData from '../../hocs/withNetworkData'
+import balancesActions from '../../actions/balancesActions'
+import claimsActions from '../../actions/claimsActions'
+import pricesActions from '../../actions/pricesActions'
+import priceHistoryActions from '../../actions/priceHistoryActions'
+import withInitialCall from '../../hocs/withInitialCall'
 import withAuthData from '../../hocs/withAuthData'
+import withCurrencyData from '../../hocs/withCurrencyData'
+import withNetworkData from '../../hocs/withNetworkData'
 import withFilteredTokensData from '../../hocs/withFilteredTokensData'
 import { getNotifications } from '../../modules/notifications'
 import { showModal } from '../../modules/modal'
 
 import Dashboard from './Dashboard'
 
-const { LOADING } = progressValues
-
 const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
   notification: getNotifications(state)
-})
-
-const mapAccountDataToProps = ({ balances }) => ({
-  NEO: balances.NEO,
-  GAS: balances.GAS,
-  tokenBalances: omit(balances, 'NEO', 'GAS')
 })
 
 const actionCreators = {
@@ -37,18 +33,23 @@ const mapAccountActionsToProps = (actions, props) => ({
   loadWalletData: () => actions.call({ net: props.net, address: props.address, tokens: props.tokens })
 })
 
+// TODO: move this into its own actions file
+const batchActions = createBatchActions('dashboard', {
+  balances: balancesActions,
+  claims: claimsActions,
+  prices: pricesActions,
+  priceHistory: priceHistoryActions
+})
+
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  withNetworkData(),
+
+  // Expose function for polling & reloading account related data.
   withAuthData(),
+  withNetworkData(),
+  withCurrencyData('currency'),
   withFilteredTokensData(),
-  withCall(accountActions),
-  withProgressComponents(accountActions, {
-    [LOADING]: Loader
-  }, {
-    strategy: alreadyLoadedStrategy
-  }),
-  withData(accountActions, mapAccountDataToProps),
-  withRecall(accountActions, ['networkId']),
+  withInitialCall(batchActions),
+  withReset(accountActions, ['networkId']),
   withActions(accountActions, mapAccountActionsToProps)
 )(Dashboard)

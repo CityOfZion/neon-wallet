@@ -12,7 +12,7 @@ type Props = {
   duration: Duration
 }
 
-export const ID = 'PRICE_HISTORY'
+export const ID = 'priceHistory'
 
 const createFetch = (symbol: SymbolType, currency: string, call: string, options: Object) => {
   return axios.get(`https://min-api.cryptocompare.com/data/${call}`, {

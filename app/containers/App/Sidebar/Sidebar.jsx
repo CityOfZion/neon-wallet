@@ -18,18 +18,12 @@ import Logo from '../../../assets/logo.svg'
 
 type Props = {
   className: string,
-  neoPrice: number,
-  gasPrice: number,
-  currencyCode: string,
   showSendModal: Function,
   showTokenSaleModal: Function
 }
 
 const Sidebar = ({
   className,
-  neoPrice,
-  gasPrice,
-  currencyCode,
   showSendModal,
   showTokenSaleModal
 }: Props) => (
