@@ -50,7 +50,7 @@ export const nep2LoginActions = createActions(ID, ({ passphrase, encryptedWIF }:
     throw new Error('That is not a valid encrypted key')
   }
 
-  const wif = wallet.decrypt(encryptedWIF, passphrase)
+  const wif = await wallet.decryptAsync(encryptedWIF, passphrase)
   const account = new wallet.Account(wif)
 
   await upgradeNEP6AddAddresses(encryptedWIF, wif)
