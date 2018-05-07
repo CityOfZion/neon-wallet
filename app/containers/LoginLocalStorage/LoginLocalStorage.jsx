@@ -8,6 +8,7 @@ import LoginIcon from '../../assets/icons/login.svg'
 import styles from '../Home/Home.scss'
 
 type Props = {
+  loading: boolean,
   loginNep2: Function,
   accounts: Object
 }
@@ -24,7 +25,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
   }
 
   render () {
-    const { accounts } = this.props
+    const { loading, accounts } = this.props
     const { passphrase, encryptedWIF } = this.state
     const { label } = accounts.find(account => account.key === encryptedWIF) || {}
 
@@ -36,6 +37,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
               items={accounts.map(account => account.label)}
               value={label || ''}
               placeholder="Select account"
+              disabled={loading}
               onChange={value => this.setState({ encryptedWIF: value })}
               getItemValue={value =>
                 accounts.find(account => account.label === value).key
@@ -46,6 +48,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
             <PasswordInput
               placeholder="Enter your passphrase here"
               value={passphrase}
+              disabled={loading}
               onChange={e => this.setState({ passphrase: e.target.value })}
             />
           </div>
@@ -55,8 +58,8 @@ export default class LoginLocalStorage extends Component<Props, State> {
               primary
               type="submit"
               className={styles.loginButtonMargin}
+              disabled={loading || !this.isValid()}
               renderIcon={LoginIcon}
-              disabled={!this.isValid()}
             >
               Login
             </Button>
@@ -67,11 +70,14 @@ export default class LoginLocalStorage extends Component<Props, State> {
   }
 
   handleSubmit = (event: Object) => {
-    const { loginNep2 } = this.props
+    const { loading, loginNep2 } = this.props
     const { passphrase, encryptedWIF } = this.state
 
     event.preventDefault()
-    loginNep2(passphrase, encryptedWIF)
+
+    if (!loading) {
+      loginNep2(passphrase, encryptedWIF)
+    }
   }
 
   isValid = () => {

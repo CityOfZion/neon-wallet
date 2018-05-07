@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react'
+import React from 'react'
 
 import LoginPrivateKey from '../LoginPrivateKey'
 import LoginNep2 from '../LoginNep2'
@@ -16,7 +16,9 @@ type State = {
   option: string
 }
 
-type Props = {}
+type Props = {
+  loading: boolean
+}
 
 const LOGIN_OPTIONS = {
   LOCAL_STORAGE: {
@@ -37,7 +39,7 @@ const LOGIN_OPTIONS = {
   }
 }
 
-class Home extends Component<Props, State> {
+export default class Home extends React.Component<Props, State> {
   state = {
     option: LOGIN_OPTIONS.LOCAL_STORAGE.display
   }
@@ -64,36 +66,39 @@ class Home extends Component<Props, State> {
     )
   }
 
-  render = () => (
-    <div id="home" className={styles.home}>
-      <div className={styles.loginContainer}>
-        <img className={styles.logo} src={neonLogo} />
-        <div className={styles.loginText}>Login</div>
+  render = () => {
+    const { loading } = this.props
 
-        <div className={styles.inputContainer}>
-          <SelectInput
-            className={styles.input}
-            onChange={value => this.handleSelect(value)}
-            value={this.state.option}
-            readOnly
-            items={this.options}
-            getItemValue={item => item}
-          />
+    return (
+      <div id="home" className={styles.home}>
+        <div className={styles.loginContainer}>
+          <img className={styles.logo} src={neonLogo} />
+          <div className={styles.loginText}>Login</div>
 
-          {this.renderLoginBasedOnOption(this.state.option)}
+          <div className={styles.inputContainer}>
+            <SelectInput
+              className={styles.input}
+              onChange={value => this.handleSelect(value)}
+              value={this.state.option}
+              readOnly
+              disabled={loading}
+              items={this.options}
+              getItemValue={item => item}
+            />
 
-          <div className={styles.buttonRow}>
-            <div style={{ flex: 0.45 }}>
-              <Button renderIcon={AddIcon}>New Wallet</Button>
-            </div>
-            <div style={{ flex: 0.45 }}>
-              <Button renderIcon={WalletIcon}>Wallet Manager</Button>
+            {this.renderLoginBasedOnOption(this.state.option)}
+
+            <div className={styles.buttonRow}>
+              <div style={{ flex: 0.45 }}>
+                <Button disabled={loading} renderIcon={AddIcon}>New Wallet</Button>
+              </div>
+              <div style={{ flex: 0.45 }}>
+                <Button disabled={loading} renderIcon={WalletIcon}>Wallet Manager</Button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
-
-export default Home
