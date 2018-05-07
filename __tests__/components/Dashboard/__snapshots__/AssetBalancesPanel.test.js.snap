@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AssetBalancesPanel renders without crashing 1`] = `
-<withProgress(ConditionalCallComponent)
-  __progress__="LOADED"
+<withData(Connect(withProgress(withProgressComponents(Connect(withData(Connect(withProgress(ConditionalCallComponent))))))))
+  currencyCode="usd"
   dispatch={[Function]}
   store={
     Object {
