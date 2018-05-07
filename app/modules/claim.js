@@ -52,7 +52,7 @@ const updateClaimableAmount = async ({ net, address, publicKey, privateKey, sign
   })
 
   if (!response.result || !response.txid) {
-    throw new Error('Transaction failed!')
+    throw new Error('Rejected by RPC server.')
   }
 
   return response.result.response
@@ -63,7 +63,7 @@ const pollForUpdatedClaimableAmount = async ({ net, address, claimableAmount }) 
     const updatedClaimableAmount = await getClaimableAmount({ net, address })
 
     if (toBigNumber(updatedClaimableAmount).eq(claimableAmount)) {
-      throw new Error('Waiting for updated claims')
+      throw new Error('Waiting for updated claims.')
     }
 
     return updatedClaimableAmount
@@ -104,7 +104,7 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
     await getUpdatedClaimableAmount({ net, address, balance, publicKey, privateKey, signingFunction })
   } catch (err) {
     dispatch(disableClaim(false))
-    dispatch(showErrorNotification({ message: 'Calculating claimable GAS failed.' }))
+    dispatch(showErrorNotification({ message: `Calculating claimable GAS failed: ${err.message}` }))
     return
   }
 
@@ -123,11 +123,11 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
     api.setApiSwitch(0.5)
 
     if (!response.result) {
-      throw new Error('Claiming GAS failed')
+      throw new Error('Rejected by RPC server.')
     }
   } catch (err) {
     dispatch(disableClaim(false))
-    dispatch(showErrorNotification({ message: `Claiming GAS failed: ${err}` }))
+    dispatch(showErrorNotification({ message: `Claiming GAS failed: ${err.message}` }))
     return
   }
 
