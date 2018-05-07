@@ -24,7 +24,7 @@ export default class LoadingPanel extends React.Component<Props> {
         contentClassName={styles.content}
         renderHeader={this.renderHeader}
       >
-        Failed to load.{' '}{this.renderRetry}
+        Failed to load.{' '}{this.renderRetry()}
       </Panel>
     )
   }
