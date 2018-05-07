@@ -26,8 +26,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
   render () {
     const { accounts } = this.props
     const { passphrase, encryptedWIF } = this.state
-    const { label } =
-      accounts.find(account => account.key === encryptedWIF) || {}
+    const { label } = accounts.find(account => account.key === encryptedWIF) || {}
 
     return (
       <div id="loginLocalStorage" className={styles.flexContainer}>

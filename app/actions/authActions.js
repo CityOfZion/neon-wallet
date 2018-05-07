@@ -29,7 +29,7 @@ type AccountType = ?{
   isHardwareLogin: boolean
 }
 
-export const ID = 'AUTH'
+export const ID = 'auth'
 
 export const wifLoginActions = createActions(ID, ({ wif }: WifLoginProps) => (state: Object): AccountType => {
   if (!wallet.isWIF(wif) && !wallet.isPrivateKey(wif)) {

@@ -10,7 +10,7 @@ type Props = {
   address: string
 }
 
-export const ID = 'TRANSACTION_HISTORY'
+export const ID = 'transactionHistory'
 
 export default createActions(ID, ({ net, address }: Props = {}) => async (state: Object) => {
   const transactions = await api.neonDB.getTransactionHistory(net, address)

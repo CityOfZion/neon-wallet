@@ -32,7 +32,7 @@ const getSettings = async (): Promise<Settings> => {
   return { ...defaults, ...settings, tokens }
 }
 
-export const ID = 'SETTINGS'
+export const ID = 'settings'
 
 export const updateSettingsActions = createActions(ID, (values: Settings = {}) => async (state: Object): Promise<Settings> => {
   const settings = await getSettings()
