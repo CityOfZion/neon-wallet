@@ -68,6 +68,7 @@ export const TOKENS_TEST = {
 
 // MainNet
 export const TOKENS = {
+  GDM: 'd1e37547d88bc9607ff9d73116ebd9381c156f79',
   DBC: 'b951ecbbc5fe37a9c280a76cb0ce0014827294cf',
   RPX: 'ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9',
   RHT: '2328008e6f6c7bd157a342e789389eb034d9cbc4',
