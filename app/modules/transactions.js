@@ -22,8 +22,6 @@ import { isToken, validateTransactionsBeforeSending, getTokenBalancesMap } from 
 import { ASSETS } from '../core/constants'
 import { toNumber } from '../core/math'
 
-import { log } from '../util/Logs'
-
 const extractTokens = (sendEntries: Array<SendEntryType>) => {
   return sendEntries.filter(({ symbol }) => isToken(symbol))
 }
@@ -137,18 +135,6 @@ export const sendTransaction = (sendEntries: Array<SendEntryType>) => async (
 
   dispatch(
     showInfoNotification({ message: 'Sending Transaction...', autoDismiss: 0 })
-  )
-
-  log(
-    net,
-    'SEND',
-    fromAddress,
-    // $FlowFixMe
-    sendEntries.map(({ address, amount, symbol }) => ({
-      to: address,
-      asset: symbol,
-      amount: parseFloat(amount)
-    }))
   )
 
   if (isHardwareSend) {

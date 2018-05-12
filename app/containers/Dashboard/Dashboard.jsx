@@ -5,8 +5,6 @@ import classNames from 'classnames'
 import TransactionHistory from '../TransactionHistory'
 import WalletInfo from '../WalletInfo'
 
-import { log } from '../../util/Logs'
-
 import { MODAL_TYPES } from '../../core/constants'
 
 import FaArrowUpward from 'react-icons/lib/fa/arrow-circle-up'
@@ -31,7 +29,6 @@ export default class Dashboard extends Component<Props> {
   walletDataInterval: ?number
 
   componentDidMount () {
-    log(this.props.net, 'LOGIN', this.props.address) // only logging public information here
     this.addPolling()
   }
 
