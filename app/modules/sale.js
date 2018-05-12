@@ -99,7 +99,7 @@ export const participateInSale = (
     signingFunction: isHardwareLogin ? signingFunction : null
   }
 
-  const [error, response] = await asyncWrap(api.doInvoke(config))
+  const [error, response] = await asyncWrap(api.doInvoke(config, api.neoscan))
   if (error || !response || !response.response || !response.response.result) {
     dispatch(
       showErrorNotification({

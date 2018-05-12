@@ -100,14 +100,14 @@ const makeRequest = (sendEntries: Array<SendEntryType>, config: Object) => {
   )
 
   if (script === '') {
-    return api.sendAsset({ ...config, intents: buildIntents(sendEntries) })
+    return api.sendAsset({ ...config, intents: buildIntents(sendEntries) }, api.neoscan)
   } else {
     return api.doInvoke({
       ...config,
       intents: buildIntentsForInvocation(sendEntries, config.address),
       script,
       gas: 0
-    })
+    }, api.neoscan)
   }
 }
 

@@ -47,7 +47,7 @@ const withAddressCheck = () => (Component: React$ElementType) => {
 
     checkTransactionHistory = async (address: string) => {
       const { net } = this.props
-      const [err, transactions] = await asyncWrap(api.loadBalance(api.getTransactionHistoryFrom, { net, address }))
+      const [err, transactions] = await asyncWrap(api.getTransactionHistoryFrom({ net, address }, api.neoscan))
 
       const hasActivity = !err && !!transactions && transactions.length > 0
 
