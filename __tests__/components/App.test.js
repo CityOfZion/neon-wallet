@@ -14,29 +14,29 @@ const { LOADED } = progressValues
 
 const initialState = {
   spunky: {
-    APP: {
+    app: {
       batch: true,
-      mapping: ['ACCOUNTS', 'BLOCK_HEIGHT', 'SETTINGS']
+      mapping: ['accounts', 'blockHeight', 'settings']
     },
-    ACCOUNTS: {
+    accounts: {
       batch: false,
       progress: LOADED,
       data: [],
       loadedCount: 1
     },
-    BLOCK_HEIGHT: {
+    blockHeight: {
       batch: false,
       progress: LOADED,
       data: 2000000,
       loadedCount: 1
     },
-    NETWORK: {
+    network: {
       batch: false,
       progress: LOADED,
       data: MAIN_NETWORK_ID,
       loadedCount: 1
     },
-    PRICES: {
+    prices: {
       batch: false,
       progress: LOADED,
       data: {
@@ -45,7 +45,7 @@ const initialState = {
       },
       loadedCount: 1
     },
-    SETTINGS: {
+    settings: {
       batch: false,
       progress: LOADED,
       data: {},

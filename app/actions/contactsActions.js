@@ -29,7 +29,7 @@ const validateContact = (name: string, address: string) => {
   }
 }
 
-export const ID = 'CONTACTS'
+export const ID = 'contacts'
 
 export const addContactActions = createActions(ID, (
   { name, address }: { name: string, address: string }

@@ -13,7 +13,7 @@ const { LOADED } = progressValues
 
 const initialState = {
   spunky: {
-    AUTH: {
+    auth: {
       batch: false,
       progress: LOADED,
       data: {
@@ -21,23 +21,23 @@ const initialState = {
         wif: 'L4SLRcPgqNMAMwM3nFSxnh36f1v5omjPg3Ewy1tg2PnEon8AcHou'
       }
     },
-    NETWORK: {
+    network: {
       batch: false,
-      state: LOADED,
+      progress: LOADED,
       loadedCount: 1,
       data: MAIN_NETWORK_ID
     },
-    SETTINGS: {
+    settings: {
       batch: false,
-      state: LOADED,
+      progress: LOADED,
       loadedCount: 1,
       data: {
         blockExplorer: EXPLORERS.NEO_TRACKER
       }
     },
-    TRANSACTION_HISTORY: {
+    transactionHistory: {
       batch: false,
-      state: LOADED,
+      progress: LOADED,
       loadedCount: 1,
       data: []
     }
@@ -92,7 +92,7 @@ describe('TransactionHistoryPanel', () => {
 
   test('correctly renders with NEO and GAS transaction history', () => {
     const transactionState = merge({}, initialState, {
-      spunky: { TRANSACTION_HISTORY: { data: transactions } }
+      spunky: { transactionHistory: { data: transactions } }
     })
     const { wrapper } = setup(transactionState, false)
 
