@@ -1,5 +1,3 @@
-@import '../../../styles/variables';
-
 .addRecipientDisplay {
     flex: 1 1 auto;
     display: flex;
@@ -9,7 +7,6 @@
         flex: 1 0 auto;
     }
 
-    .messages,
     .actions {
         flex: 0 0 auto;
     }
@@ -41,13 +38,6 @@
             flex: 1 0 auto;
         }
     }
-}
-
-.messages {
-    margin-top: 20px;
-    text-align: right;
-    font-size: 13px;
-    color: $error-color;
 }
 
 .actions {

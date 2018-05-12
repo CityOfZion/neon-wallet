@@ -110,3 +110,15 @@ app.on('ready', () => {
     onAppReady()
   }
 })
+
+app.on('web-contents-created', (event, wc) => {
+  wc.on('before-input-event', (event, input) => {
+    // Windows/Linux hotkeys
+    if (process.platform !== 'darwin') {
+      if (input.key === 'F12') {
+        mainWindow.webContents.openDevTools()
+        event.preventDefault()
+      }
+    }
+  })
+})

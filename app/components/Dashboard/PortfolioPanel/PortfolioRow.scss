@@ -9,8 +9,7 @@
   .balance,
   .value,
   .percent {
-    flex: 1 1 auto;
-    width: 50%;
+    flex: 1 1 0;
     margin-right: 24px;
     color: #282828;
     overflow: hidden;
@@ -27,7 +26,6 @@
   .balance,
   .value {
     flex-grow: 2;
-    width: 100%;
   }
 
   .percent {

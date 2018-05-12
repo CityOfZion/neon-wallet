@@ -8,7 +8,7 @@ type Props = {
   networkId: string
 }
 
-export const ID = 'BLOCK_HEIGHT'
+export const ID = 'blockHeight'
 
 export default createActions(ID, ({ networkId }: Props = {}) => async (state: Object) => {
   const network = getNetworkById(networkId)

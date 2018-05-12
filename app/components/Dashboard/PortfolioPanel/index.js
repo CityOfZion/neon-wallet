@@ -1,12 +1,14 @@
 // @flow
 import { compose, withProps } from 'recompose'
-import { withData } from 'spunky'
+import { createBatchActions, withData } from 'spunky'
 import { pickBy, pick, omit, reduce, map } from 'lodash'
 
 import PortfolioPanel from './PortfolioPanel'
 import pricesActions from '../../../actions/pricesActions'
-import balancesActions from '../../../actions/balancesActions'
+import settingsActions from '../../../actions/settingsActions'
+import withBalancesData from '../../../hocs/withBalancesData'
 import withCurrencyData from '../../../hocs/withCurrencyData'
+import withProgressPanel from '../../../hocs/withProgressPanel'
 import { getTokenBalancesMap } from '../../../core/wallet'
 import { toNumber, toBigNumber } from '../../../core/math'
 import { ASSETS } from '../../../core/constants'
@@ -40,9 +42,16 @@ const mapPortfolioBalanceProps = ({ prices, balances, total }) => ({
   })
 })
 
+// TODO: move this into its own actions file
+const batchActions = createBatchActions('portfolioPanel', {
+  prices: pricesActions,
+  balances: settingsActions
+})
+
 export default compose(
+  withProgressPanel(batchActions, { title: 'Portfolio' }),
   withData(pricesActions, mapPricesDataToProps),
-  withData(balancesActions, mapBalancesDataToProps),
+  withBalancesData(mapBalancesDataToProps),
   withCurrencyData(),
   withProps(mapTotalPortfolioValueToProps),
   withProps(mapPortfolioBalanceProps)

@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 
 import LoginPrivateKey from '../LoginPrivateKey'
@@ -18,7 +18,9 @@ type State = {
   option: string
 }
 
-type Props = {}
+type Props = {
+  loading: boolean
+}
 
 const LOGIN_OPTIONS = {
   LOCAL_STORAGE: {
@@ -33,13 +35,13 @@ const LOGIN_OPTIONS = {
     render: () => <LoginNep2 />,
     display: 'Encrypted key'
   },
-  LEDGER: {
+  ledger: {
     render: () => <LoginLedgerNanoS />,
     display: 'Ledger Nano S'
   }
 }
 
-export default class Home extends Component<Props, State> {
+export default class Home extends React.Component<Props, State> {
   state = {
     option: LOGIN_OPTIONS.LOCAL_STORAGE.display
   }
@@ -65,32 +67,39 @@ export default class Home extends Component<Props, State> {
       'renderLoginBasedOnOption() invoked with invalid display value!'
     )
   }
+  render = () => {
+    const { loading } = this.props
+    return (
+      <WithHomeMarkUp>
+        <div className={styles.inputContainer}>
+          <SelectInput
+            className={styles.input}
+            onChange={value => this.handleSelect(value)}
+            value={this.state.option}
+            readOnly
+            disabled={loading}
+            items={this.options}
+            getItemValue={item => item}
+          />
 
-  render = () => (
-    <WithHomeMarkUp>
-      <div className={styles.inputContainer}>
-        <SelectInput
-          className={styles.input}
-          onChange={value => this.handleSelect(value)}
-          value={this.state.option}
-          readOnly
-          items={this.options}
-          getItemValue={item => item}
-        />
+          {this.renderLoginBasedOnOption(this.state.option)}
 
-        {this.renderLoginBasedOnOption(this.state.option)}
-
-        <div className={styles.buttonRow}>
-          <div className={styles.buttonContainer}>
-            <Link to={ROUTES.CREATE_WALLET}>
-              <Button renderIcon={AddIcon}>New Wallet</Button>
-            </Link>
-          </div>
-          <div className={styles.buttonContainer}>
-            <Button renderIcon={WalletIcon}>Wallet Manager</Button>
+          <div className={styles.buttonRow}>
+            <div className={styles.buttonContainer}>
+              <Link to={ROUTES.CREATE_WALLET}>
+                <Button disabled={loading} renderIcon={AddIcon}>
+                  New Wallet
+                </Button>
+              </Link>
+            </div>
+            <div className={styles.buttonContainer}>
+              <Button disabled={loading} renderIcon={WalletIcon}>
+                Wallet Manager
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
-    </WithHomeMarkUp>
-  )
+      </WithHomeMarkUp>
+    )
+  }
 }

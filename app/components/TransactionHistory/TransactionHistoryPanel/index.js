@@ -1,28 +1,16 @@
 // @flow
 import { compose } from 'recompose'
-import { withData, withProgressComponents, alreadyLoadedStrategy, progressValues } from 'spunky'
+import { withData } from 'spunky'
 
 import TransactionHistoryPanel from './TransactionHistoryPanel'
 import transactionHistoryActions from '../../../actions/transactionHistoryActions'
-import withNetworkData from '../../../hocs/withNetworkData'
-import withAuthData from '../../../hocs/withAuthData'
-import Loading from '../../../containers/App/Loading'
-import Failed from '../../../containers/App/Failed'
-
-const { LOADING, FAILED } = progressValues
+import withProgressPanel from '../../../hocs/withProgressPanel'
 
 const mapTransactionsDataToProps = (transactions) => ({
   transactions
 })
 
 export default compose(
-  withNetworkData(),
-  withAuthData(),
-  withData(transactionHistoryActions, mapTransactionsDataToProps),
-  withProgressComponents(transactionHistoryActions, {
-    [LOADING]: Loading,
-    [FAILED]: Failed
-  }, {
-    strategy: alreadyLoadedStrategy
-  })
+  withProgressPanel(transactionHistoryActions, { title: 'Transaction History' }),
+  withData(transactionHistoryActions, mapTransactionsDataToProps)
 )(TransactionHistoryPanel)

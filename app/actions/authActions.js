@@ -29,7 +29,7 @@ type AccountType = ?{
   isHardwareLogin: boolean
 }
 
-export const ID = 'AUTH'
+export const ID = 'auth'
 
 export const wifLoginActions = createActions(ID, ({ wif }: WifLoginProps) => (state: Object): AccountType => {
   if (!wallet.isWIF(wif) && !wallet.isPrivateKey(wif)) {
@@ -50,7 +50,7 @@ export const nep2LoginActions = createActions(ID, ({ passphrase, encryptedWIF }:
     throw new Error('That is not a valid encrypted key')
   }
 
-  const wif = wallet.decrypt(encryptedWIF, passphrase)
+  const wif = await wallet.decryptAsync(encryptedWIF, passphrase)
   const account = new wallet.Account(wif)
 
   await upgradeNEP6AddAddresses(encryptedWIF, wif)

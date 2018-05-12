@@ -12,48 +12,54 @@ const { LOADED } = progressValues
 
 const initialState = {
   spunky: {
-    NETWORK: {
+    network: {
       batch: false,
-      state: LOADED,
-      data: MAIN_NETWORK_ID
+      progress: LOADED,
+      data: MAIN_NETWORK_ID,
+      loadedCount: 1
     },
-    AUTH: {
+    auth: {
       batch: false,
-      state: LOADED,
+      progress: LOADED,
       data: {
         address: 'ANqUrhv99rwCiFTL6N1An9NH5UVkPYxTuw'
-      }
+      },
+      loadedCount: 1
     },
-    SETTINGS: {
+    settings: {
       batch: false,
-      state: LOADED,
+      progress: LOADED,
       data: {
         currency: DEFAULT_CURRENCY_CODE,
         tokens: []
-      }
+      },
+      loadedCount: 1
     },
-    PRICES: {
+    prices: {
       batch: false,
-      state: LOADED,
+      progress: LOADED,
       data: {
         NEO: 25.48,
         GAS: 18.1
-      }
+      },
+      loadedCount: 1
     },
-    BALANCES: {
+    balances: {
       batch: false,
-      state: LOADED,
+      progress: LOADED,
       data: {
         NEO: '100001',
         GAS: '1000.0001601'
-      }
+      },
+      loadedCount: 1
     },
-    CLAIMS: {
+    claims: {
       batch: false,
-      state: LOADED,
+      progress: LOADED,
       data: {
         total: '0.5'
-      }
+      },
+      loadedCount: 1
     }
   },
   claim: {
@@ -77,7 +83,7 @@ describe('AssetBalancesPanel', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
-  test('correctly renders data from state', () => {
+  test.only('correctly renders data from state', () => {
     const wrapper = mount(provideState(<AssetBalancesPanel />, initialState))
 
     expect(wrapper.find('#neoWalletValue').text()).toEqual(`$2,548,025.48`)
@@ -94,16 +100,16 @@ describe('AssetBalancesPanel', () => {
     wrapper.find('#refresh').hostNodes().simulate('click')
 
     expect(store.getActions()).toContainEqual(expect.objectContaining({
-      type: 'BALANCES/ACTION/CALL',
-      meta: expect.objectContaining({ id: 'BALANCES' })
+      type: 'balances/ACTION/CALL',
+      meta: expect.objectContaining({ id: 'balances' })
     }))
   })
 
   test('correctly renders data from state with non-default currency', () => {
     const state = merge(initialState, {
       spunky: {
-        SETTINGS: { data: { currency: 'eur' } },
-        PRICES: { data: { NEO: 1.11, GAS: 0.55 } }
+        settings: { data: { currency: 'eur' } },
+        prices: { data: { NEO: 1.11, GAS: 0.55 } }
       }
     })
     const wrapper = mount(provideState(<AssetBalancesPanel />, state))

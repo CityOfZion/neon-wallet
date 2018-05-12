@@ -5,7 +5,7 @@ import balancesActions from './balancesActions'
 import claimsActions from './claimsActions'
 import transactionHistoryActions from './transactionHistoryActions'
 
-export const ID = 'ACCOUNT'
+export const ID = 'account'
 
 export default createBatchActions(ID, {
   balances: balancesActions,

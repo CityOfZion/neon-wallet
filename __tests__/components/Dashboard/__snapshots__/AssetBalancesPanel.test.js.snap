@@ -1,10 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AssetBalancesPanel renders without crashing 1`] = `
-<withData(Connect(withData(Connect(withData(Connect(withData(withProps(Connect(withData(Connect(withData(withProps(Connect(withData(Connect(withActions(Connect(withProgress(withProps(Connect(Connect(withProgress(LoadedNotifier)))))))))))))))))))))))
+<withData(Connect(withProgress(withProgressComponents(Connect(withData(Connect(withProgress(ConditionalCallComponent))))))))
+  currencyCode="usd"
   dispatch={[Function]}
-  gasPrice={18.1}
-  neoPrice={25.48}
   store={
     Object {
       "clearActions": [Function],

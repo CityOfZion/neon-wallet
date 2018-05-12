@@ -21,9 +21,9 @@ describe('claimsActions', () => {
     test('returns an action object', () => {
       expect(claimsActions.call({ net, address })).toEqual({
         batch: false,
-        type: 'CLAIMS/ACTION/CALL',
+        type: 'claims/ACTION/CALL',
         meta: {
-          id: 'CLAIMS',
+          id: 'claims',
           type: 'ACTION/CALL'
         },
         payload: {
@@ -43,9 +43,9 @@ describe('claimsActions', () => {
     test('returns an action object', () => {
       expect(claimsActions.cancel()).toEqual({
         batch: false,
-        type: 'CLAIMS/ACTION/CANCEL',
+        type: 'claims/ACTION/CANCEL',
         meta: {
-          id: 'CLAIMS',
+          id: 'claims',
           type: 'ACTION/CANCEL'
         }
       })
@@ -56,9 +56,9 @@ describe('claimsActions', () => {
     test('returns an action object', () => {
       expect(claimsActions.reset()).toEqual({
         batch: false,
-        type: 'CLAIMS/ACTION/RESET',
+        type: 'claims/ACTION/RESET',
         meta: {
-          id: 'CLAIMS',
+          id: 'claims',
           type: 'ACTION/RESET'
         }
       })

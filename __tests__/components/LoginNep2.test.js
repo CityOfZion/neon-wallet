@@ -81,6 +81,6 @@ describe('LoginNep2', () => {
 
     const actions = store.getActions()
     expect(actions.length).toEqual(1)
-    expect(actions[0].type).toEqual('AUTH/ACTION/CALL')
+    expect(actions[0].type).toEqual('auth/ACTION/CALL')
   })
 })
