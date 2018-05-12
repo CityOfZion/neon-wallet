@@ -12,5 +12,5 @@ export const ID = 'BLOCK_HEIGHT'
 
 export default createActions(ID, ({ networkId }: Props = {}) => async (state: Object) => {
   const network = getNetworkById(networkId)
-  return api.loadBalance(api.getWalletDBHeightFrom, { net: network })
+  return api.getWalletDBHeightFrom({ net: network }, api.neoscan)
 })

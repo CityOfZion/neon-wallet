@@ -13,7 +13,7 @@ type Props = {
 export const ID = 'TRANSACTION_HISTORY'
 
 export default createActions(ID, ({ net, address }: Props = {}) => async (state: Object) => {
-  const transactions = await api.neonDB.getTransactionHistory(net, address)
+  const transactions = await api.getTransactionHistoryFrom({ net, address }, api.neoscan)
 
   return transactions.map(({ change, txid }: TransactionHistoryType) => {
     const { NEO, GAS } = change
