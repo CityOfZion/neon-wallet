@@ -1,4 +1,5 @@
 // @flow
+
 import React from 'react'
 import { ROUTES } from '../../core/constants'
 
@@ -7,7 +8,8 @@ import TextInput from '../../components/Inputs/TextInput'
 import BackButton from '../../components/BackButton'
 import Button from '../../components/Button'
 import AddIcon from '../../assets/icons/add.svg'
-import WithHomeMarkUp from '../Home/WithHomeMarkUp'
+import HomeLayout from '../Home/HomeLayout'
+import OptionButton from './OptionButton'
 import styles from '../Home/Home.scss'
 
 type Props = {
@@ -47,15 +49,14 @@ export default class CreateWallet extends React.Component<Props, State> {
   }
 
   render = () => {
-    const { history } = this.props
     const { passphrase, passphrase2, wif, option, walletName } = this.state
     let disabledButton
 
     return (
-      <WithHomeMarkUp
+      <HomeLayout
         renderNavigation={() => (
           <div className={styles.backButton}>
-            <BackButton routeTo={ROUTES.HOME} history={history} />
+            <BackButton routeTo={ROUTES.HOME} />
           </div>
         )}
       >
@@ -121,18 +122,7 @@ export default class CreateWallet extends React.Component<Props, State> {
             </form>
           </div>
         </div>
-      </WithHomeMarkUp>
+      </HomeLayout>
     )
   }
-}
-
-const OptionButton = ({ active, children, handleClick }: Object) => {
-  return (
-    <div
-      onClick={handleClick}
-      className={active ? styles.activeOptionButton : styles.optionButton}
-    >
-      {children}
-    </div>
-  )
 }
