@@ -10,6 +10,6 @@ type Props = {
 export const ID = 'CLAIMS'
 
 export default createActions(ID, ({ net, address }: Props = {}) => async (state: Object): Promise<Object> => {
-  const total = await api.loadBalance(api.getMaxClaimAmountFrom, { net, address })
+  const total = await api.getMaxClaimAmountFrom({ net, address }, api.neoscan)
   return { total: total.toString() }
 })
