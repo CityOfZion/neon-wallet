@@ -8,7 +8,7 @@ import { Account } from '../core/schemas'
 
 const STORAGE_KEY = 'userWallet'
 
-const getWallet = async (): Promise<Object> => {
+export const getWallet = async (): Promise<Object> => {
   return await getStorage(STORAGE_KEY) || DEFAULT_WALLET
 }
 

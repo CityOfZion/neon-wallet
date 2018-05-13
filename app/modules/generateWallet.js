@@ -14,13 +14,13 @@ import { ROUTES, DEFAULT_WALLET } from '../core/constants'
 import { Account } from '../core/schemas'
 
 // Actions
-import { saveAccountActions } from '../actions/accountsActions'
+import { saveAccountActions, getWallet } from '../actions/accountsActions'
 
 // Constants
 export const NEW_WALLET_ACCOUNT = 'NEW_WALLET_ACCOUNT'
 export const RESET_WALLET_ACCOUNT = 'RESET_WALLET_ACCOUNT'
 
-export function newWalletAccount (account: Object) {
+export function newWalletAccount(account: Object) {
   return {
     type: NEW_WALLET_ACCOUNT,
     payload: {
@@ -33,7 +33,7 @@ export function newWalletAccount (account: Object) {
   }
 }
 
-export function resetKey () {
+export function resetKey() {
   return {
     type: RESET_WALLET_ACCOUNT
   }
@@ -171,7 +171,6 @@ export const generateNewWalletAccount = (
     dispatch(showErrorNotification({ message }))
     return false
   }
-
   if (passphrase !== passphrase2) {
     return dispatchError('Passphrases do not match')
   } else if (!validatePassphraseLength(passphrase)) {
@@ -185,11 +184,16 @@ export const generateNewWalletAccount = (
         autoDismiss: 0
       })
     )
-    setTimeout(() => {
+    setTimeout(async () => {
       try {
         const account = new wallet.Account(wif || wallet.generatePrivateKey())
         const { WIF, address } = account
         const encryptedWIF = wallet.encrypt(WIF, passphrase)
+
+        const storedWallet = await getWallet()
+        if (walletName && walletHasLabel(storedWallet, walletName)) {
+          return dispatchError('A wallet with this name already exists locally')
+        }
 
         dispatch(
           saveAccountActions.call({
@@ -214,6 +218,7 @@ export const generateNewWalletAccount = (
         history.push(ROUTES.DISPLAY_WALLET_KEYS)
         return true
       } catch (e) {
+        console.error(e)
         return dispatchError(
           'An error occured while trying to generate a new wallet'
         )
