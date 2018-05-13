@@ -80,7 +80,8 @@ export const TOKENS = {
   SWH: '78e6d16b914fe15bc16150aeb11d0c2a8e532bdd',
   EFX: 'acbc532904b6b51b5ea6d19b803d78af70e7e6f9',
   MCT: 'a87cc2a513f5d8b4a42432343687c2127c60bc3f',
-  GDM: 'd1e37547d88bc9607ff9d73116ebd9381c156f79'
+  GDM: 'd1e37547d88bc9607ff9d73116ebd9381c156f79',
+  PKC: 'af7c7328eee5a275a3bcaee2bf0cf662b5e739be'
 }
 
 export const ENDED_ICO_TOKENS = ['DBC', 'RPX', 'QLC', 'RHT', 'ONT', 'SWH', 'NRVE', 'EFX', 'THOR', 'CGE', 'MCT']
