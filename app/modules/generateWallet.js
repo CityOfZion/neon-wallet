@@ -20,7 +20,7 @@ import { saveAccountActions, getWallet } from '../actions/accountsActions'
 export const NEW_WALLET_ACCOUNT = 'NEW_WALLET_ACCOUNT'
 export const RESET_WALLET_ACCOUNT = 'RESET_WALLET_ACCOUNT'
 
-export function newWalletAccount(account: Object) {
+export function newWalletAccount (account: Object) {
   return {
     type: NEW_WALLET_ACCOUNT,
     payload: {
@@ -33,7 +33,7 @@ export function newWalletAccount(account: Object) {
   }
 }
 
-export function resetKey() {
+export function resetKey () {
   return {
     type: RESET_WALLET_ACCOUNT
   }

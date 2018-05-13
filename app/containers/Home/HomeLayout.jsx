@@ -6,7 +6,7 @@ import neonLogo from '../../images/neon-logo-redesign.png'
 type Props = {
   children: React$Node,
   renderNavigation?: Function,
-  excludeLogo: boolean
+  excludeLogo?: boolean
 }
 
 export default class HomeLayout extends Component<Props> {
