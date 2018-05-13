@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import styles from '../Home/Home.scss'
+import styles from './OptionButton.scss'
 
 const OptionButton = ({ active, children, handleClick }: Object) => {
   return (

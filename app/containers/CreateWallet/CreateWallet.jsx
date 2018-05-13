@@ -17,11 +17,13 @@ type Props = {
   history: Object
 }
 
+type Option = 'CREATE' | 'IMPORT'
+
 type State = {
   passphrase: string,
   passphrase2: string,
   wif: string,
-  option: string,
+  option: Option,
   walletName: string
 }
 
@@ -50,7 +52,6 @@ export default class CreateWallet extends React.Component<Props, State> {
 
   render = () => {
     const { passphrase, passphrase2, wif, option, walletName } = this.state
-    let disabledButton
 
     return (
       <HomeLayout
@@ -115,7 +116,7 @@ export default class CreateWallet extends React.Component<Props, State> {
                 className={styles.loginButtonMargin}
                 type="submit"
                 primary
-                disabled={disabledButton}
+                disabled={this.isDisabled()}
               >
                 {option === 'IMPORT' ? 'Import Wallet' : 'Create Wallet'}
               </Button>
@@ -124,5 +125,13 @@ export default class CreateWallet extends React.Component<Props, State> {
         </div>
       </HomeLayout>
     )
+  }
+
+  isDisabled = () => {
+    const { option, passphrase, passphrase2, wif, walletName } = this.state
+    const validPassphrase = passphrase === passphrase2 && passphrase.length >= 4
+    if (option === 'CREATE') {
+      return !(validPassphrase && !!walletName)
+    } else return !(validPassphrase && !!walletName && !!wif)
   }
 }
