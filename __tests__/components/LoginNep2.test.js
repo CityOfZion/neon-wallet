@@ -43,22 +43,22 @@ describe('LoginNep2', () => {
     const fields = wrapper.find('input[type="password"]')
     expect(fields.length).toEqual(2)
 
-    const passwordField = fields.get(0)
-    const keyField = fields.get(1)
+    const keyField = fields.get(0)
+    const passwordField = fields.get(1)
 
-    expect(passwordField.props.value).toEqual('')
-    expect(passwordField.props.placeholder).toEqual('Enter your passphrase here')
-    expect(passwordField.props.type).toEqual('password')
     expect(keyField.props.value).toEqual('')
     expect(keyField.props.placeholder).toEqual(('Enter your encrypted key here'))
     expect(keyField.props.type).toEqual('password')
+    expect(passwordField.props.value).toEqual('')
+    expect(passwordField.props.placeholder).toEqual('Enter your passphrase here')
+    expect(passwordField.props.type).toEqual('password')
     done()
   })
 
   test('the login button is working correctly with no passphrase or wif', (done) => {
     const { wrapper, store } = setup(false)
 
-    wrapper.find('#loginButton').first().simulate('click')
+    wrapper.find('#loginButton').hostNodes().simulate('click')
     Promise.resolve('pause').then(() => {
       const actions = store.getActions()
       expect(actions.length).toEqual(0)
@@ -77,7 +77,7 @@ describe('LoginNep2', () => {
     keyField.instance().value = '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
     keyField.simulate('change')
 
-    wrapper.find('#loginButton').first().simulate('submit')
+    wrapper.find('#loginButton').hostNodes().simulate('submit')
 
     const actions = store.getActions()
     expect(actions.length).toEqual(1)

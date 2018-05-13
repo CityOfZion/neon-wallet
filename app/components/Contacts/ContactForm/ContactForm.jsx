@@ -33,20 +33,20 @@ export default class ContactForm extends React.Component<Props> {
       <form className={styles.contactForm} onSubmit={this.handleSubmit}>
         <TextInput
           className={styles.input}
-          placeholder='Contact Name'
+          placeholder="Contact Name"
           value={name}
           onChange={this.handleChangeName}
         />
         <TextInput
           className={styles.input}
-          placeholder='Address'
+          placeholder="Address"
           value={address}
           onChange={this.handleChangeAddress}
         />
         <Button
           className={styles.button}
           primary
-          type='submit'
+          type="submit"
           renderIcon={AddIcon}
         >
           {submitLabel}
