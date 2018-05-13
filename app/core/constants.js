@@ -84,7 +84,9 @@ export const TOKENS = {
   PKC: 'af7c7328eee5a275a3bcaee2bf0cf662b5e739be'
 }
 
-export const ENDED_ICO_TOKENS = ['DBC', 'RPX', 'QLC', 'RHT', 'ONT', 'SWH', 'NRVE', 'EFX', 'THOR', 'CGE', 'MCT']
+export const ENDED_ICO_TOKENS = [
+  'DBC', 'RPX', 'RHT', 'QLC', 'NRVE', 'IAM', 'ONT', 'THOR', 'CGE', 'SWH', 'EFX', 'MCT', 'PKC'
+]
 
 export const DEFAULT_WALLET = {
   name: 'userWallet',
