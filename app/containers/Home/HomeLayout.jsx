@@ -5,22 +5,25 @@ import neonLogo from '../../images/neon-logo-redesign.png'
 
 type Props = {
   children: React$Node,
-  renderNavigation?: Function
+  renderNavigation?: Function,
+  excludeLogo: boolean
 }
 
-export default class WithHomeMarkUp extends Component<Props> {
+export default class HomeLayout extends Component<Props> {
   render = () => {
-    const { children, renderNavigation } = this.props
+    const { children, renderNavigation, excludeLogo } = this.props
     return (
       <div id="home" className={styles.homeContainer}>
         <div className={styles.innerHomeContainer}>
           {renderNavigation && renderNavigation()}
-          <img
-            className={
-              renderNavigation ? styles.logoWithNegativeMargin : styles.logo
-            }
-            src={neonLogo}
-          />
+          {!excludeLogo && (
+            <img
+              className={
+                renderNavigation ? styles.logoWithNegativeMargin : styles.logo
+              }
+              src={neonLogo}
+            />
+          )}
           {children}
         </div>
       </div>

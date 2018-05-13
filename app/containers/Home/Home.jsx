@@ -12,7 +12,7 @@ import styles from './Home.scss'
 import AddIcon from '../../assets/icons/add.svg'
 import WalletIcon from '../../assets/icons/wallet.svg'
 import { ROUTES } from '../../core/constants'
-import WithHomeMarkUp from './WithHomeMarkUp'
+import HomeLayout from './HomeLayout'
 
 type State = {
   option: string
@@ -70,7 +70,7 @@ export default class Home extends React.Component<Props, State> {
   render = () => {
     const { loading } = this.props
     return (
-      <WithHomeMarkUp>
+      <HomeLayout>
         <div className={styles.inputContainer}>
           <SelectInput
             className={styles.input}
@@ -99,7 +99,7 @@ export default class Home extends React.Component<Props, State> {
             </div>
           </div>
         </div>
-      </WithHomeMarkUp>
+      </HomeLayout>
     )
   }
 }

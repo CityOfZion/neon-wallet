@@ -1,0 +1,127 @@
+// @flow
+import React, { Component } from 'react'
+import QRCode from 'qrcode/lib/browser'
+
+import neonLogo from '../../images/neon-logo-redesign.png'
+import TextInput from '../../components/Inputs/TextInput'
+import Button from '../../components/Button'
+import CopyToClipboard from '../../components/CopyToClipboard'
+import { ROUTES } from '../../core/constants'
+import styles from './DisplayWalletAccounts.scss'
+import homeStyles from '../Home/Home.scss'
+
+import HomeLayout from '../Home/HomeLayout'
+import BackButton from '../../components/BackButton'
+
+type Props = {
+  resetKey: Function,
+  saveAccount: Function,
+  walletName: string,
+  address: string,
+  wif: string,
+  encryptedWIF: string,
+  passphrase: string,
+  history: Object
+}
+
+type State = {
+  keyName: string
+}
+
+class DisplayWalletAccounts extends Component<Props, State> {
+  state = {
+    keyName: ''
+  }
+
+  publicCanvas: ?HTMLCanvasElement
+  privateCanvas: ?HTMLCanvasElement
+
+  componentDidMount () {
+    const { address, encryptedWIF } = this.props
+    QRCode.toCanvas(this.publicCanvas, address, { version: 5 }, err => {
+      if (err) console.log(err)
+    })
+    QRCode.toCanvas(this.privateCanvas, encryptedWIF, { version: 5 }, err => {
+      if (err) console.log(err)
+    })
+  }
+
+  render () {
+    const { passphrase, address, encryptedWIF, wif, walletName } = this.props
+    const fields = [
+      { label: 'Passphrase:', value: passphrase },
+      { label: 'Public Address:', value: address },
+      { label: 'Encrypted Key:', value: encryptedWIF },
+      { label: 'Private Key:', value: wif }
+    ]
+    walletName && fields.push({ label: 'Wallet Name:', value: walletName })
+    const { keyName } = this.state
+    return (
+      <HomeLayout
+        excludeLogo
+        renderNavigation={() => (
+          <div className={homeStyles.backButton}>
+            <BackButton routeTo={ROUTES.HOME} />
+          </div>
+        )}
+      >
+        <div id="newWallet" className={styles.newWalletContainer}>
+          <div className={styles.disclaimer}>
+            You must save and backup the keys below.{' '}
+            <b>If you lose them, you lose access to your assets.</b> Verify that
+            you can log in to the account and see the correct public address
+            before sending anything to the address below!
+          </div>
+          <div className={styles.qrContainer}>
+            <div>
+              <canvas
+                ref={node => {
+                  this.publicCanvas = node
+                }}
+              />
+              <div>
+                <b>Public Address</b>
+              </div>
+            </div>
+            <div>
+              <canvas
+                ref={node => {
+                  this.privateCanvas = node
+                }}
+              />
+              <div>
+                <b>Encrypted Private Key</b>
+              </div>
+            </div>
+          </div>
+          <div className={styles.detailsContainer}>
+            {fields.map(item => (
+              <div key={item.label} className={styles.detailRow}>
+                <span className={styles.label}>{item.label}</span>
+                <div className={styles.input}>
+                  <TextInput value={item.value} disabled />
+                </div>
+                <CopyToClipboard text={item.value} tooltip="Copy Passphrase" />
+              </div>
+            ))}
+          </div>
+          <div className={styles.buttonContainer}>
+            <Button onClick={this.handlePrint}>Print</Button>
+          </div>
+        </div>
+      </HomeLayout>
+    )
+  }
+
+  // handleBack = () => {
+  //   const { resetKey, history } = this.props
+  //   resetKey()
+  //   history.push(ROUTES.HOME)
+  // }
+
+  handlePrint = () => {
+    window.print()
+  }
+}
+
+export default DisplayWalletAccounts
