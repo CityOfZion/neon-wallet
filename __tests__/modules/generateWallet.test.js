@@ -19,19 +19,22 @@ describe('generateWallet module tests', () => {
   const address = 'AM22coFfbe9N6omgL9ucFBLkeaMNg9TEyL'
   const passphrase = 'Th!s1$@FakePassphrase'
   const encryptedWIF = '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
+  const walletName = 'testWallet'
 
   const initialState = {
     wif: null,
     address: null,
     passphrase: null,
-    encryptedWIF: null
+    encryptedWIF: null,
+    walletName: null
   }
 
   const account = {
     wif,
     address,
     passphrase,
-    encryptedWIF
+    encryptedWIF,
+    walletName
   }
 
   describe('newWallet tests', () => {

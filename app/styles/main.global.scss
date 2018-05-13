@@ -107,63 +107,6 @@ input {
   }
 }
 
-#newWallet {
-  input {
-    width: 95%;
-    margin-bottom: 10px;
-  }
-
-  .disclaimer {
-    margin-bottom: 20px;
-    font-size: 1.4em;
-    font-weight: 200;
-    background-color: #aa3939;
-    color: white;
-    padding: 5px;
-  }
-  .info {
-    margin-bottom: 10px;
-    font-size: 1.4em;
-    font-weight: 200;
-  }
-  .addressBox,
-  .privateKeyBox {
-    margin-bottom: 20px;
-    display: inline-block;
-    width: 40%;
-    text-align: center;
-  }
-  .addressBox {
-    margin-right: 9%;
-  }
-  .privateKeyBox {
-    margin-left: 9%;
-  }
-  .keyList {
-    margin-bottom: 20px;
-  }
-  .keyListItem {
-    font-size: 0.9em;
-    span.label {
-      margin-right: 5px;
-      font-weight: 800;
-    }
-  }
-  button {
-    margin-top: 10px;
-  }
-  .saveAccount {
-    margin-bottom: 10px;
-    input {
-      width: 300px;
-      margin-right: 20px;
-    }
-    button {
-      background-color: $dark-button;
-    }
-  }
-}
-
 .vertical.Pane1 {
   border-right: 1.5px solid $spacer-color;
 }
