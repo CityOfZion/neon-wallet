@@ -2,7 +2,6 @@
 import React, { Component } from 'react'
 import QRCode from 'qrcode/lib/browser'
 
-import neonLogo from '../../images/neon-logo-redesign.png'
 import TextInput from '../../components/Inputs/TextInput'
 import Button from '../../components/Button'
 import CopyToClipboard from '../../components/CopyToClipboard'
@@ -14,25 +13,14 @@ import HomeLayout from '../Home/HomeLayout'
 import BackButton from '../../components/BackButton'
 
 type Props = {
-  resetKey: Function,
-  saveAccount: Function,
   walletName: string,
   address: string,
   wif: string,
   encryptedWIF: string,
-  passphrase: string,
-  history: Object
+  passphrase: string
 }
 
-type State = {
-  keyName: string
-}
-
-class DisplayWalletAccounts extends Component<Props, State> {
-  state = {
-    keyName: ''
-  }
-
+class DisplayWalletAccounts extends Component<Props> {
   publicCanvas: ?HTMLCanvasElement
   privateCanvas: ?HTMLCanvasElement
 
@@ -55,7 +43,6 @@ class DisplayWalletAccounts extends Component<Props, State> {
       { label: 'Private Key:', value: wif }
     ]
     walletName && fields.push({ label: 'Wallet Name:', value: walletName })
-    const { keyName } = this.state
     return (
       <HomeLayout
         excludeLogo
@@ -112,12 +99,6 @@ class DisplayWalletAccounts extends Component<Props, State> {
       </HomeLayout>
     )
   }
-
-  // handleBack = () => {
-  //   const { resetKey, history } = this.props
-  //   resetKey()
-  //   history.push(ROUTES.HOME)
-  // }
 
   handlePrint = () => {
     window.print()
