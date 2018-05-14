@@ -37,12 +37,12 @@ class DisplayWalletAccounts extends Component<Props> {
   render () {
     const { passphrase, address, encryptedWIF, wif, walletName } = this.props
     const fields = [
-      { label: 'Passphrase:', value: passphrase },
-      { label: 'Public Address:', value: address },
-      { label: 'Encrypted Key:', value: encryptedWIF },
-      { label: 'Private Key:', value: wif }
+      { label: 'Passphrase', value: passphrase },
+      { label: 'Public Address', value: address },
+      { label: 'Encrypted Key', value: encryptedWIF },
+      { label: 'Private Key', value: wif }
     ]
-    walletName && fields.push({ label: 'Wallet Name:', value: walletName })
+    walletName && fields.push({ label: 'Wallet Name', value: walletName })
     return (
       <HomeLayout
         excludeLogo
@@ -84,11 +84,11 @@ class DisplayWalletAccounts extends Component<Props> {
           <div className={styles.detailsContainer}>
             {fields.map(item => (
               <div key={item.label} className={styles.detailRow}>
-                <span className={styles.label}>{item.label}</span>
+                <span className={styles.label}>{item.label}:</span>
                 <div className={styles.input}>
                   <TextInput value={item.value} disabled />
                 </div>
-                <CopyToClipboard text={item.value} tooltip="Copy Passphrase" />
+                <CopyToClipboard text={item.value} tooltip={`Copy ${item.label}`} />
               </div>
             ))}
           </div>
