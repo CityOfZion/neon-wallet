@@ -79,6 +79,7 @@ export const TOKENS = {
   CGE: '34579e4614ac1a7bd295372d3de8621770c76cdc',
   AVA: 'de2ed49b691e76754c20fe619d891b78ef58e537',
   SWH: '78e6d16b914fe15bc16150aeb11d0c2a8e532bdd',
+  SWTH: 'ab38352559b8b203bde5fddfa0b07d8b2525e132',
   EFX: 'acbc532904b6b51b5ea6d19b803d78af70e7e6f9',
   MCT: 'a87cc2a513f5d8b4a42432343687c2127c60bc3f',
   GDM: 'd1e37547d88bc9607ff9d73116ebd9381c156f79',
@@ -86,7 +87,7 @@ export const TOKENS = {
 }
 
 export const ENDED_ICO_TOKENS = [
-  'DBC', 'RPX', 'RHT', 'QLC', 'NRVE', 'IAM', 'ONT', 'THOR', 'CGE', 'AVA', 'SWH', 'EFX', 'MCT', 'PKC'
+  'DBC', 'RPX', 'RHT', 'QLC', 'NRVE', 'IAM', 'ONT', 'THOR', 'CGE', 'AVA', 'SWH', 'SWTH', 'EFX', 'MCT', 'PKC'
 ]
 
 export const DEFAULT_WALLET = {
