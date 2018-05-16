@@ -61,7 +61,7 @@ const pollForUpdatedClaimableAmount = async ({ net, address, claimableAmount }) 
     const updatedClaimableAmount = await getClaimableAmount({ net, address })
 
     if (toBigNumber(updatedClaimableAmount).eq(claimableAmount)) {
-      throw new Error('Waiting for updated claims')
+      throw new Error('Waiting for updated claims took too long.')
     }
 
     return updatedClaimableAmount
@@ -102,7 +102,7 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
     await getUpdatedClaimableAmount({ net, address, balance, publicKey, privateKey, signingFunction })
   } catch (err) {
     dispatch(disableClaim(false))
-    dispatch(showErrorNotification({ message: 'Calculating claimable GAS failed.' }))
+    dispatch(showErrorNotification({ message: `Error calculating claimable GAS: ${err.message}` }))
     return
   }
 
