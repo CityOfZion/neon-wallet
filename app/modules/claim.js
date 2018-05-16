@@ -21,8 +21,8 @@ import { ASSETS } from '../core/constants'
 import { FIVE_MINUTES_MS } from '../core/time'
 import poll from '../util/poll'
 
-const POLL_ATTEMPTS = 50
-const POLL_FREQUENCY = 5000
+const POLL_ATTEMPTS = 30
+const POLL_FREQUENCY = 10000
 
 const fetchClaims = async ({ net, address }) => {
   const response = await api.getClaimsFrom({ net, address }, api.neoscan)
