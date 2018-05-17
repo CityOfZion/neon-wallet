@@ -7,7 +7,6 @@ import storage from 'electron-json-storage'
 import { recoverWallet } from '../../modules/generateWallet'
 
 import Button from '../../components/Button'
-import HomeButtonLink from '../../components/HomeButtonLink'
 import { EXPLORERS, MODAL_TYPES, CURRENCIES } from '../../core/constants'
 
 import Delete from 'react-icons/lib/md/delete'
@@ -230,7 +229,6 @@ export default class Settings extends Component<Props, State> {
             Load wallet recovery file
           </Button>
         </div>
-        <HomeButtonLink />
       </div>
     )
   }
