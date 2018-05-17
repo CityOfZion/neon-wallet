@@ -9224,9 +9224,9 @@ sprintf-js@~1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
 
-spunky@^1.1.2:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/spunky/-/spunky-1.2.1.tgz#6b2bd193a03dfd1c1d12009c4f51ec383cab009a"
+spunky@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.npmjs.org/spunky/-/spunky-1.3.1.tgz#3162d6b8484b0c5c2bed1103ecdbaf3cdacddd10"
   dependencies:
     lodash "^4.17.5"
     react-redux "^5.0.6"
@@ -9888,8 +9888,8 @@ unzip-response@^2.0.1:
   resolved "https://registry.yarnpkg.com/unzip-response/-/unzip-response-2.0.1.tgz#d2f0f737d16b0615e72a6935ed04214572d56f97"
 
 upath@^1.0.0:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/upath/-/upath-1.0.4.tgz#ee2321ba0a786c50973db043a50b7bcba822361d"
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/upath/-/upath-1.0.5.tgz#02cab9ecebe95bbec6d5fc2566325725ab6d1a73"
 
 update-notifier@^2.3.0, update-notifier@^2.5.0:
   version "2.5.0"

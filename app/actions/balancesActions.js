@@ -16,7 +16,7 @@ type Props = {
 export const ID = 'BALANCES'
 
 async function getBalances ({ net, address, tokens }: Props) {
-  const endpoint = await api.loadBalance(api.getRPCEndpointFrom, { net })
+  const endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
 
   // token balances
   const promises = tokens.map(async (token) => {
@@ -37,7 +37,7 @@ async function getBalances ({ net, address, tokens }: Props) {
 
   // asset balances
   promises.push((async () => {
-    const assetBalances = await api.loadBalance(api.getBalanceFrom, { net, address })
+    const assetBalances = await api.getBalanceFrom({ net, address }, api.neoscan)
     const { assets } = assetBalances.balance
 
     // The API doesn't always return NEO or GAS keys if, for example, the address only has one asset
