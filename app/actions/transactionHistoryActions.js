@@ -34,7 +34,7 @@ export default createActions(ID, ({ net, address }: Props = {}) => async (state:
 
   return data.map(({ txid, vin, vouts }) => ({
     txid,
-    [ASSETS.NEO]: sum(vin, address, NEO_ID).minus(sum(vouts, address, NEO_ID)).toFixed(0),
-    [ASSETS.GAS]: sum(vin, address, GAS_ID).minus(sum(vouts, address, GAS_ID)).round(COIN_DECIMAL_LENGTH).toString()
+    [ASSETS.NEO]: sum(vouts, address, NEO_ID).minus(sum(vin, address, NEO_ID)).toFixed(0),
+    [ASSETS.GAS]: sum(vouts, address, GAS_ID).minus(sum(vin, address, GAS_ID)).round(COIN_DECIMAL_LENGTH).toString()
   }))
 })
