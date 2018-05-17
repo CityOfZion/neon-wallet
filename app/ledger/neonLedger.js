@@ -5,15 +5,17 @@ import LedgerNode from '@ledgerhq/hw-transport-node-hid'
 import asyncWrap from '../core/asyncHelper'
 
 const VALID_STATUS = 0x9000
-const MSG_TOO_BIG = 0x6D08
+const MSG_TOO_BIG = 0x6d08
 const APP_CLOSED = 0x6e00
+const TX_DENIED = 0x6985
+const TX_PARSE_ERR = 0x6d07
 
 /**
  * Evaluates Transport Error thrown and rewrite the error message to be more user friendly.
  * @param {Error} err
  * @return {Error}
  */
-const evalTransportError = (err) => {
+const evalTransportError = err => {
   switch (err.statusCode) {
     case APP_CLOSED:
       err.message = 'Your NEO app is closed! Please login.'
@@ -21,22 +23,31 @@ const evalTransportError = (err) => {
     case MSG_TOO_BIG:
       err.message = 'Your transaction is too big for the ledger to sign!'
       break
+    case TX_DENIED:
+      err.message = 'You have denied the transaction on your ledger.'
+      break
+    case TX_PARSE_ERR:
+      err.message = 'Error parsing transaction. Make sure your NEO app version is up to date.'
+      break
   }
   return err
 }
 
 const BIP44 = (acct = 0) => {
   const acctNumber = acct.toString(16)
-  return '8000002C' +
+  return (
+    '8000002C' +
     '80000378' +
     '80000000' +
     '00000000' +
-    '0'.repeat(8 - acctNumber.length) + acctNumber
+    '0'.repeat(8 - acctNumber.length) +
+    acctNumber
+  )
 }
 
 export default class NeonLedger {
-  path: string
-  device: any
+  path: string;
+  device: any;
 
   constructor (path: string) {
     this.path = path
@@ -48,7 +59,7 @@ export default class NeonLedger {
    */
   static async init () {
     const supported = await LedgerNode.isSupported()
-    if (!supported) throw new Error(`Your computer does not support the ledger!`)
+    if (!supported) { throw new Error(`Your computer does not support the ledger!`) }
     const paths = await NeonLedger.list()
     if (paths.length === 0) throw new Error('USB Error: No device found.')
     const ledger = new NeonLedger(paths[0])
@@ -106,12 +117,25 @@ export default class NeonLedger {
    * @param {number[]} statusList - Statuses to return
    * @return {Promise<Buffer>} return value decoded to ASCII string
    */
-  async send (params: string, msg: string, statusList: number[]): Promise<Buffer> {
+  async send (
+    params: string,
+    msg: string,
+    statusList: number[]
+  ): Promise<Buffer> {
     if (params.length !== 8) throw new Error(`params requires 4 bytes`)
     // $FlowFixMe
-    const [cla, ins, p1, p2] = params.match(/.{1,2}/g).map(i => parseInt(i, 16))
+    const [cla, ins, p1, p2] = params
+      .match(/.{1,2}/g)
+      .map(i => parseInt(i, 16))
     try {
-      return await this.device.send(cla, ins, p1, p2, Buffer.from(msg, 'hex'), statusList)
+      return await this.device.send(
+        cla,
+        ins,
+        p1,
+        p2,
+        Buffer.from(msg, 'hex'),
+        statusList
+      )
     } catch (err) {
       throw evalTransportError(err)
     }
@@ -133,7 +157,9 @@ export default class NeonLedger {
       // $FlowFixMe
       const chunk = chunks[i]
       const params = `8002${p}00`
-      let [err, res] = await asyncWrap(this.send(params, chunk, [VALID_STATUS]))
+      let [err, res] = await asyncWrap(
+        this.send(params, chunk, [VALID_STATUS])
+      )
       if (err) throw evalTransportError(err)
       response = res
     }
@@ -199,13 +225,21 @@ export const getDeviceInfo = async () => {
  * @param {number} acct - The account to sign with.
  * @return {string} Transaction as a hexstring.
  */
-export const signWithLedger = async (unsignedTx: Transaction | string, acct: number = 0): Promise<string> => {
+export const signWithLedger = async (
+  unsignedTx: Transaction | string,
+  acct: number = 0
+): Promise<string> => {
   const ledger = await NeonLedger.init()
   try {
-    const data = typeof unsignedTx !== 'string' ? tx.serializeTransaction(unsignedTx, false) : unsignedTx
+    const data =
+      typeof unsignedTx !== 'string'
+        ? tx.serializeTransaction(unsignedTx, false)
+        : unsignedTx
     const publicKey = await ledger.getPublicKey(acct)
-    const invocationScript = '40' + await ledger.getSignature(data, acct)
-    const verificationScript = wallet.getVerificationScriptFromPublicKey(publicKey)
+    const invocationScript = '40' + (await ledger.getSignature(data, acct))
+    const verificationScript = wallet.getVerificationScriptFromPublicKey(
+      publicKey
+    )
     const txObj = tx.deserializeTransaction(data)
     txObj.scripts.push({ invocationScript, verificationScript })
     return tx.serializeTransaction(txObj)
@@ -214,12 +248,21 @@ export const signWithLedger = async (unsignedTx: Transaction | string, acct: num
   }
 }
 
-export const legacySignWithLedger = async (unsignedTx: Transaction | string, publicKeyEncoded: string, acct: number = 0): Promise<string> => {
+export const legacySignWithLedger = async (
+  unsignedTx: Transaction | string,
+  publicKeyEncoded: string,
+  acct: number = 0
+): Promise<string> => {
   const ledger = await NeonLedger.init()
   try {
-    const data = typeof unsignedTx !== 'string' ? tx.serializeTransaction(unsignedTx, false) : unsignedTx
-    const invocationScript = '40' + await ledger.getSignature(data, acct)
-    const verificationScript = wallet.getVerificationScriptFromPublicKey(publicKeyEncoded)
+    const data =
+      typeof unsignedTx !== 'string'
+        ? tx.serializeTransaction(unsignedTx, false)
+        : unsignedTx
+    const invocationScript = '40' + (await ledger.getSignature(data, acct))
+    const verificationScript = wallet.getVerificationScriptFromPublicKey(
+      publicKeyEncoded
+    )
     const txObj = tx.deserializeTransaction(data)
     txObj.scripts.push({ invocationScript, verificationScript })
     return tx.serializeTransaction(txObj)
