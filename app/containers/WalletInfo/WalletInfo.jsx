@@ -10,7 +10,7 @@ import Button from '../../components/Button'
 
 import { formatGAS, formatFiat, formatNEO } from '../../core/formatters'
 import { ASSETS, CURRENCIES, MODAL_TYPES, ENDED_ICO_TOKENS } from '../../core/constants'
-import { toNumber } from '../../core/math'
+import { toBigNumber } from '../../core/math'
 
 import MdSync from 'react-icons/lib/md/sync'
 
@@ -22,8 +22,8 @@ type Props = {
   address: string,
   NEO: string,
   GAS: string,
-  neoPrice: number,
-  gasPrice: number,
+  neoPrice: ?number,
+  gasPrice: ?number,
   icoTokenBalances: Array<TokenBalanceType>,
   tokenBalances: Array<TokenBalanceType>,
   loadWalletData: Function,
@@ -60,10 +60,13 @@ export default class WalletInfo extends Component<Props> {
       return null
     }
 
-    let neoValue = neoPrice && NEO !== '0' ? neoPrice * toNumber(NEO) : 0
-    let gasValue = gasPrice && GAS !== '0' ? gasPrice * toNumber(GAS) : 0
+    const neoValue = neoPrice && NEO !== '0'
+      ? toBigNumber(neoPrice).mul(NEO) : toBigNumber(0)
 
-    let totalValue = neoValue + gasValue
+    const gasValue = gasPrice && GAS !== '0'
+      ? toBigNumber(gasPrice).mul(GAS) : toBigNumber(0)
+
+    const totalValue = neoValue.plus(gasValue).toString()
 
     const displayCurrencyCode = currencyCode.toUpperCase()
     const currencySymbol = CURRENCIES[currencyCode].symbol

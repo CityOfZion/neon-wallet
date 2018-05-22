@@ -17,8 +17,8 @@ const Logo = () => <div><img src={logo} width='60px' /></div>
 
 type Props = {
   address: string,
-  neoPrice: number,
-  gasPrice: number,
+  neoPrice: ?number,
+  gasPrice: ?number,
   currencyCode: string
 }
 

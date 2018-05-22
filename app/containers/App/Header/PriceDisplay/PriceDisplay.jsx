@@ -7,8 +7,8 @@ import { CURRENCIES } from '../../../../core/constants'
 import headerStyles from '../Header.scss'
 
 type Props = {
-  neoPrice: number,
-  gasPrice: number,
+  neoPrice: ?number,
+  gasPrice: ?number,
   currencyCode: string
 }
 

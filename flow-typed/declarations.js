@@ -87,3 +87,7 @@ declare type SendEntryType = {
   address: string,
   symbol: SymbolType
 }
+
+declare type Prices = {
+  [key: string]: number
+}
