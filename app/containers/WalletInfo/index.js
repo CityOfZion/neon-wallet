@@ -41,7 +41,10 @@ const mapBalanceDataToProps = (balances) => ({
   icoTokenBalances: getICOTokenBalances(balances)
 })
 
-const mapPricesDataToProps = (prices: ?Prices) => ({
+const mapPricesDataToProps = (prices: ?Prices): {
+  neoPrice: ?number,
+  gasPrice: ?number
+} => ({
   neoPrice: get(prices, 'NEO'),
   gasPrice: get(prices, 'GAS')
 })

@@ -8,7 +8,10 @@ import withAuthData from '../../../hocs/withAuthData'
 import withCurrencyData from '../../../hocs/withCurrencyData'
 import pricesActions from '../../../actions/pricesActions'
 
-const mapPricesDataToProps = (prices: ?Prices) => ({
+const mapPricesDataToProps = (prices: ?Prices): {
+  neoPrice: ?number,
+  gasPrice: ?number
+} => ({
   neoPrice: get(prices, 'NEO'),
   gasPrice: get(prices, 'GAS')
 })
