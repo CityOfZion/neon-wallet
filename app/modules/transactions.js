@@ -21,8 +21,6 @@ import {
 import { isToken, validateTransactionsBeforeSending, getTokenBalancesMap } from '../core/wallet'
 import { toNumber } from '../core/math'
 
-import { log } from '../util/Logs'
-
 const extractTokens = (sendEntries: Array<SendEntryType>) => {
   return sendEntries.filter(({ symbol }) => isToken(symbol))
 }
@@ -75,14 +73,14 @@ const makeRequest = (sendEntries: Array<SendEntryType>, config: Object) => {
   )
 
   if (script === '') {
-    return api.sendAsset({ ...config, intents: buildIntents(sendEntries) })
+    return api.sendAsset({ ...config, intents: buildIntents(sendEntries) }, api.neoscan)
   } else {
     return api.doInvoke({
       ...config,
       intents: buildIntents(sendEntries),
       script,
       gas: 0
-    })
+    }, api.neoscan)
   }
 }
 
@@ -113,18 +111,6 @@ export const sendTransaction = (sendEntries: Array<SendEntryType>) => async (
     message: 'Sending Transaction...',
     autoDismiss: 0
   }))
-
-  log(
-    net,
-    'SEND',
-    fromAddress,
-    // $FlowFixMe
-    sendEntries.map(({ address, amount, symbol }) => ({
-      to: address,
-      asset: symbol,
-      amount: parseFloat(amount)
-    }))
-  )
 
   if (isHardwareSend) {
     dispatch(showInfoNotification({

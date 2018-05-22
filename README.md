@@ -41,7 +41,7 @@
 
 ## Installation
 
-A standalone app will be available soon. For now, you will need to build the wallet manually.
+Standalone apps can be found [here](https://neonwallet.com/), to build manually see the steps below.
 
 ### Required Tools and Dependencies
 

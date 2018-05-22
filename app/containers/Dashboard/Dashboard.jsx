@@ -5,13 +5,10 @@ import AssetBalancesPanel from '../../components/Dashboard/AssetBalancesPanel'
 import TokenBalancesPanel from '../../components/Dashboard/TokenBalancesPanel'
 import PriceHistoryPanel from '../../components/Dashboard/PriceHistoryPanel'
 import PortfolioPanel from '../../components/Dashboard/PortfolioPanel'
-import { log } from '../../util/Logs'
 
 import styles from './Dashboard.scss'
 
 type Props = {
-  net: string,
-  address: string,
   loadWalletData: Function,
 }
 
@@ -21,7 +18,6 @@ export default class Dashboard extends Component<Props> {
   walletDataInterval: ?number
 
   componentDidMount () {
-    log(this.props.net, 'LOGIN', this.props.address) // only logging public information here
     this.addPolling()
   }
 
