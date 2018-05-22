@@ -84,7 +84,7 @@ export const participateInSale = (
   }
 
   try {
-    const response = await api.doInvoke(config)
+    const response = await api.doInvoke(config, api.neoscan)
 
     if (!response || !response.response || !response.response.result) {
       throw new Error('Rejected by RPC server.')
