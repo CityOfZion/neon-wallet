@@ -7,7 +7,7 @@ import { ASSETS, DEFAULT_CURRENCY_CODE } from '../core/constants'
 type Props = {
   symbols?: Array<string>,
   currency?: string
-};
+}
 
 export const ID = 'PRICES'
 
