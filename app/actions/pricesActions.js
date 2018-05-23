@@ -11,6 +11,12 @@ type Props = {
 
 export const ID = 'PRICES'
 
-export default createActions(ID, ({ symbols = [ASSETS.NEO, ASSETS.GAS], currency = DEFAULT_CURRENCY_CODE }: Props = {}) => (state: Object) => {
-  return api.cmc.getPrices(symbols, currency)
-})
+export default createActions(
+  ID,
+  ({
+    symbols = [ASSETS.NEO, ASSETS.GAS],
+    currency = DEFAULT_CURRENCY_CODE
+  }: Props = {}) => (state: Object): ?Prices => {
+    return api.cmc.getPrices(symbols, currency)
+  }
+)

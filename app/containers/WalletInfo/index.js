@@ -2,7 +2,7 @@
 import { connect, type MapStateToProps } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
-import { values, omit, filter } from 'lodash'
+import { values, omit, filter, get } from 'lodash'
 import { withData, withActions } from 'spunky'
 
 import accountActions from '../../actions/accountActions'
@@ -41,9 +41,12 @@ const mapBalanceDataToProps = (balances) => ({
   icoTokenBalances: getICOTokenBalances(balances)
 })
 
-const mapPricesDataToProps = ({ NEO, GAS }) => ({
-  neoPrice: NEO,
-  gasPrice: GAS
+const mapPricesDataToProps = (prices: ?Prices): {
+  neoPrice: ?number,
+  gasPrice: ?number
+} => ({
+  neoPrice: get(prices, 'NEO'),
+  gasPrice: get(prices, 'GAS')
 })
 
 const actionCreators = {
