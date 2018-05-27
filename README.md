@@ -45,7 +45,7 @@ Standalone apps can be found [here](https://neonwallet.com/), to build manually 
 
 ### Required Tools and Dependencies
 
-* Node (This project uses the current LTS node version, which is `v6.11.0`)
+* Node (This project uses the current LTS node version, which is `v6.13.1`)
 * Yarn (https://yarnpkg.com/lang/en/docs/install/)
 
 ### Developing and Running
@@ -56,7 +56,7 @@ Setup:
 
 * `yarn install` - Installing node dependencies
   * If you get any errors related to the node-hid package, please check installation instructions here: https://github.com/node-hid/node-hid#compiling-from-source. On Linux you may need to run `sudo apt install libusb-1.0-0 libusb-1.0-0-dev`, for example.
-* `./node_modules/.bin/electron -v` confirm electron is version 1.7.9
+* `./node_modules/.bin/electron -v` confirm electron is version 1.7.11
 
 Developing:
 
