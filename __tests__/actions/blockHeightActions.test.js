@@ -1,4 +1,5 @@
 import { api } from 'neon-js'
+import nock from 'nock'
 
 import blockHeightActions from '../../app/actions/blockHeightActions'
 import { TEST_NETWORK_ID } from '../../app/core/constants'
@@ -6,9 +7,13 @@ import { mockPromiseResolved } from '../testHelpers'
 
 describe('blockHeightActions', () => {
   beforeEach(() => {
-    jest.spyOn(api.neoscan, 'getWalletDBHeight').mockImplementation(
-      mockPromiseResolved(586435)
-    )
+    const rpcHost = 'http://seed1.cityofzion.io:8080'
+
+    jest.spyOn(api.neoscan, 'getRPCEndpoint').mockImplementation(mockPromiseResolved(rpcHost))
+
+    nock(rpcHost)
+      .post('/', (body) => body.method === 'getblockcount')
+      .reply(200, { id: 1234, jsonrpc: '2.0', result: 586435 }, { 'Access-Control-Allow-Origin': '*' })
   })
 
   afterEach(() => {
