@@ -47,7 +47,7 @@ describe('LoginNep2', () => {
     const passwordField = fields.get(1)
 
     expect(keyField.props.value).toEqual('')
-    expect(keyField.props.placeholder).toEqual('Enter your encrypted key here')
+    expect(keyField.props.placeholder).toEqual('Encrypted Key')
     expect(keyField.props.type).toEqual('password')
     expect(passwordField.props.value).toEqual('')
     expect(passwordField.props.placeholder).toEqual('Password')
@@ -76,9 +76,7 @@ describe('LoginNep2', () => {
     passwordField.instance().value = 'Th!s1$@FakePassphrase'
     passwordField.simulate('change')
 
-    const keyField = wrapper.find(
-      'input[placeholder="Enter your encrypted key here"]'
-    )
+    const keyField = wrapper.find('input[placeholder="Encrypted Key"]')
     keyField.instance().value =
       '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
     keyField.simulate('change')
