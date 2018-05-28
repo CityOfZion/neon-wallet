@@ -37,7 +37,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
             <SelectInput
               items={accounts.map(account => account.label)}
               value={label || ''}
-              placeholder="Select account"
+              placeholder="Select Account"
               disabled={loading}
               onChange={value => this.setState({ encryptedWIF: value })}
               getItemValue={value =>
