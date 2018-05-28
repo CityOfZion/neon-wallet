@@ -48,7 +48,7 @@ export default class AddContactPanel extends React.Component<Props> {
     return (
       <span className={styles.header}>
         <Link to={ROUTES.CONTACTS} className={styles.back}><ArrowIcon /></Link>
-        <span>Add Contact</span>
+        <span>New Contact</span>
       </span>
     )
   }
