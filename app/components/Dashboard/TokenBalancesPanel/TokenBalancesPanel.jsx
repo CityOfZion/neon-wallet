@@ -23,7 +23,10 @@ export default class TokenBalancesPanel extends React.Component<Props> {
     const { className, balances } = this.props
 
     return (
-      <Panel className={classNames(styles.tokenBalancesPanel, className)} renderHeader={this.renderHeader}>
+      <Panel
+        className={classNames(styles.tokenBalancesPanel, className)}
+        renderHeader={this.renderHeader}
+      >
         <div className={styles.tableHeader}>
           <div className={styles.symbol}>Code</div>
           <div className={styles.name}>Token</div>
@@ -43,8 +46,10 @@ export default class TokenBalancesPanel extends React.Component<Props> {
         <Tooltip title="Refresh">
           <RefreshIcon
             id="refresh"
-            className={classNames(styles.refresh, { [styles.loading]: loading })}
-            onClick={refresh}
+            className={classNames(styles.refresh, {
+              [styles.loading]: loading
+            })}
+            onClick={loading ? null : refresh}
           />
         </Tooltip>
       </div>
