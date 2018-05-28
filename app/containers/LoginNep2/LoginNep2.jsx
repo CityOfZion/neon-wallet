@@ -39,7 +39,7 @@ export default class LoginNep2 extends Component<Props, State> {
             />
           </div>
           <PasswordInput
-            placeholder="Enter your passphrase here"
+            placeholder="Password"
             value={passphrase}
             disabled={loading}
             onChange={e => this.setState({ passphrase: e.target.value })}

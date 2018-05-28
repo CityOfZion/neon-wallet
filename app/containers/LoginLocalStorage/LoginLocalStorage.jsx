@@ -27,7 +27,8 @@ export default class LoginLocalStorage extends Component<Props, State> {
   render () {
     const { loading, accounts } = this.props
     const { passphrase, encryptedWIF } = this.state
-    const { label } = accounts.find(account => account.key === encryptedWIF) || {}
+    const { label } =
+      accounts.find(account => account.key === encryptedWIF) || {}
 
     return (
       <div id="loginLocalStorage" className={styles.flexContainer}>
@@ -46,7 +47,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
           </div>
           <div className={styles.inputMargin}>
             <PasswordInput
-              placeholder="Enter your passphrase here"
+              placeholder="Password"
               value={passphrase}
               disabled={loading}
               onChange={e => this.setState({ passphrase: e.target.value })}

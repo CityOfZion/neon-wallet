@@ -101,14 +101,14 @@ export default class CreateWallet extends React.Component<Props, State> {
                 <PasswordInput
                   value={passphrase}
                   onChange={e => this.setState({ passphrase: e.target.value })}
-                  placeholder="Enter passphrase here"
+                  placeholder="Password"
                 />
               </div>
               <div className={styles.inputMargin}>
                 <PasswordInput
                   value={passphrase2}
                   onChange={e => this.setState({ passphrase2: e.target.value })}
-                  placeholder="Enter passphrase again"
+                  placeholder="Confirm Password"
                 />
               </div>
               <Button
