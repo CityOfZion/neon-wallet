@@ -93,9 +93,11 @@ export default class Home extends React.Component<Props, State> {
               </Link>
             </div>
             <div className={styles.buttonContainer}>
-              <Button disabled={loading} renderIcon={WalletIcon}>
-                Wallet Manager
-              </Button>
+              <Link to={ROUTES.WALLET_MANAGER}>
+                <Button disabled={loading} renderIcon={WalletIcon}>
+                  Wallet Manager
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
