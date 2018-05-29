@@ -8,7 +8,6 @@ import QrCodeScanner from '../../components/QrCodeScanner'
 
 import loginStyles from '../../styles/login.scss'
 
-
 type Props = {
   loginWithPrivateKey: Function
 }
