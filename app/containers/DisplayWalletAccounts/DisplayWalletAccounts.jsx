@@ -88,7 +88,10 @@ class DisplayWalletAccounts extends Component<Props> {
                 <div className={styles.input}>
                   <TextInput value={item.value} disabled />
                 </div>
-                <CopyToClipboard text={item.value} tooltip={`Copy ${item.label}`} />
+                <CopyToClipboard
+                  text={item.value}
+                  tooltip={`Copy ${item.label}`}
+                />
               </div>
             ))}
           </div>
