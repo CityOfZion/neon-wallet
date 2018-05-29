@@ -50,6 +50,11 @@ class QrCodeScanner extends Component<Props, State> {
       </div>
     )
   }
+
+  componentWillUnmount() {
+    const { scanner } = this.state
+    scanner && scanner.stop()
+  }
 }
 
 export default QrCodeScanner
