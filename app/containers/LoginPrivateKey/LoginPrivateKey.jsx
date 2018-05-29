@@ -4,8 +4,10 @@ import React, { Component } from 'react'
 import PasswordField from '../../components/PasswordField'
 import HomeButtonLink from '../../components/HomeButtonLink'
 import Button from '../../components/Button'
+import QrCodeScanner from '../../components/QrCodeScanner'
 
 import loginStyles from '../../styles/login.scss'
+
 
 type Props = {
   loginWithPrivateKey: Function
@@ -39,6 +41,7 @@ export default class LoginPrivateKey extends Component<Props, State> {
           <div>
             <Button type='submit' disabled={loginButtonDisabled}>Login</Button>
             <HomeButtonLink />
+            <QrCodeScanner callback={loginWithPrivateKey}/>
           </div>
         </form>
       </div>

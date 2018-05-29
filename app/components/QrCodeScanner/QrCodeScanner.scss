@@ -1,0 +1,10 @@
+.qrCodeScannerContent {
+  position: relative;
+  float: right;
+
+  video {
+    position: absolute;
+    right: 0;
+    top: 100%;
+  }
+}
