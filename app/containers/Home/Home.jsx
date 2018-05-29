@@ -25,15 +25,15 @@ type Props = {
 const LOGIN_OPTIONS = {
   LOCAL_STORAGE: {
     render: () => <LoginLocalStorage />,
-    display: 'Saved wallet'
+    display: 'Saved Wallet'
   },
   PRIVATE_KEY: {
     render: () => <LoginPrivateKey />,
-    display: 'Private key'
+    display: 'Private Key'
   },
   NEP2: {
     render: () => <LoginNep2 />,
-    display: 'Encrypted key'
+    display: 'Encrypted Key'
   },
   ledger: {
     render: () => <LoginLedgerNanoS />,

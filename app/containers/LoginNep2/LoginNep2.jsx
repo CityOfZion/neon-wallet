@@ -31,7 +31,7 @@ export default class LoginNep2 extends Component<Props, State> {
         <form onSubmit={this.handleSubmit}>
           <div className={styles.inputMargin}>
             <PasswordInput
-              placeholder="Enter your encrypted key here"
+              placeholder="Encrypted Key"
               autoFocus
               value={encryptedWIF}
               disabled={loading}
@@ -39,7 +39,7 @@ export default class LoginNep2 extends Component<Props, State> {
             />
           </div>
           <PasswordInput
-            placeholder="Enter your passphrase here"
+            placeholder="Password"
             value={passphrase}
             disabled={loading}
             onChange={e => this.setState({ passphrase: e.target.value })}
