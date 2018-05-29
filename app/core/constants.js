@@ -25,7 +25,8 @@ export const ROUTES = {
   TOKEN_SALE: '/token-sale',
   TRANSACTION_HISTORY: '/transactions',
   SETTINGS: '/settings',
-  DISPLAY_WALLET_KEYS: '/display-wallet-keys'
+  DISPLAY_WALLET_KEYS: '/display-wallet-keys',
+  WALLET_MANAGER: '/wallet-manager'
 }
 
 export const NOTIFICATION_LEVELS = {
@@ -86,7 +87,21 @@ export const TOKENS = {
 }
 
 export const ENDED_ICO_TOKENS = [
-  'DBC', 'RPX', 'RHT', 'QLC', 'NRVE', 'IAM', 'ONT', 'THOR', 'CGE', 'AVA', 'SWH', 'SWTH', 'EFX', 'MCT', 'PKC'
+  'DBC',
+  'RPX',
+  'RHT',
+  'QLC',
+  'NRVE',
+  'IAM',
+  'ONT',
+  'THOR',
+  'CGE',
+  'AVA',
+  'SWH',
+  'SWTH',
+  'EFX',
+  'MCT',
+  'PKC'
 ]
 
 export const DEFAULT_WALLET = {
