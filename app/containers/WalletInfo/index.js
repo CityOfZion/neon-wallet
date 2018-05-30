@@ -25,18 +25,23 @@ const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
   networks: getNetworks()
 })
 
-const getTokenBalances = (balances) => {
+const getTokenBalances = (balances: Balances): Array<string> => {
   const tokens = values(omit(balances, 'NEO', 'GAS'))
   return filter(tokens, (token) => token.balance !== '0')
 }
 
-const getICOTokenBalances = (balances) => {
+const getICOTokenBalances = (balances: Balances): Array<string> => {
   return values(omit(balances, 'NEO', 'GAS'))
 }
 
-const mapBalanceDataToProps = (balances) => ({
-  NEO: balances.NEO,
-  GAS: balances.GAS,
+const mapBalanceDataToProps = (balances: Balances): {
+  NEO: string,
+  GAS: string,
+  tokenBalances: Array<string>,
+  icoTokenBalances: Array<string>
+} => ({
+  NEO: get(balances, 'NEO', null),
+  GAS: get(balances, 'GAS', null),
   tokenBalances: getTokenBalances(balances),
   icoTokenBalances: getICOTokenBalances(balances)
 })

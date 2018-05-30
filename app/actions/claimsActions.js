@@ -1,4 +1,5 @@
 // @flow
+import { isNil } from 'lodash'
 import { api } from 'neon-js'
 import { createActions } from 'spunky'
 
@@ -11,5 +12,5 @@ export const ID = 'CLAIMS'
 
 export default createActions(ID, ({ net, address }: Props = {}) => async (state: Object): Promise<Object> => {
   const total = await api.getMaxClaimAmountFrom({ net, address }, api.neoscan)
-  return { total: total.toString() }
+  return { total: !isNil(total) ? total.toString() : null }
 })

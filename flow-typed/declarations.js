@@ -40,12 +40,9 @@ declare type NotificationType = {
 }
 
 declare type TransactionHistoryType = {
-  change: {
-    NEO: Fixed8,
-    GAS: Fixed8,
-  },
-  txid: string,
-  blockHeight: Fixed8
+  NEO: string,
+  GAS: string,
+  txid: string
 }
 
 declare type ModalType = $Values<typeof MODAL_TYPES>
@@ -90,4 +87,8 @@ declare type SendEntryType = {
 
 declare type Prices = {
   [key: string]: number
+}
+
+declare type Balances = {
+  [key: string]: string
 }

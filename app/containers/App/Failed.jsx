@@ -5,7 +5,8 @@ import styles from './Failed.scss'
 export default () => {
   return (
     <div className={styles.failed}>
-      Failed to load.
+      <div>Failed to load.</div>
+      <div>Please try to restart the wallet.</div>
     </div>
   )
 }
