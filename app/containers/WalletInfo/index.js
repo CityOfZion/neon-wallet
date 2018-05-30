@@ -34,16 +34,16 @@ const getICOTokenBalances = (balances: Balances): Array<string> => {
   return values(omit(balances, 'NEO', 'GAS'))
 }
 
-const mapBalanceDataToProps = (balances: Balances): {
-  NEO: string,
-  GAS: string,
+const mapBalanceDataToProps = (balances: ?Balances): {
+  NEO: ?string,
+  GAS: ?string,
   tokenBalances: Array<string>,
   icoTokenBalances: Array<string>
 } => ({
   NEO: get(balances, 'NEO', null),
   GAS: get(balances, 'GAS', null),
-  tokenBalances: getTokenBalances(balances),
-  icoTokenBalances: getICOTokenBalances(balances)
+  tokenBalances: balances ? getTokenBalances(balances) : [],
+  icoTokenBalances: balances ? getICOTokenBalances(balances) : []
 })
 
 const mapPricesDataToProps = (prices: ?Prices): {
