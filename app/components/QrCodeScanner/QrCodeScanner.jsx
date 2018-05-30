@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 
 import Button from '../Button'
-import Instascan from 'instascan';
+import Instascan from 'instascan'
 
 import qrCodeScannerStyles from './QrCodeScanner.scss'
 
@@ -12,16 +12,14 @@ type Props = {
 
 class QrCodeScanner extends Component<Props, State> {
   state = {
-    scanner: null,
+    scanner: null
   }
 
-  toggleScanner () {
-    const { scanner } = this.state
-
+  toggleScanner (scanner) {
     if (scanner) {
       scanner.stop()
       this.setState(prevState => ({scanner: null}))
-      return;
+      return
     }
 
     const { callback } = this.props
@@ -45,13 +43,13 @@ class QrCodeScanner extends Component<Props, State> {
     const { scanner } = this.state
     return (
       <div className={qrCodeScannerStyles.qrCodeScannerContent}>
-        <Button onClick={this.toggleScanner.bind(this)}>{scanner ? 'Cancel' : 'Scan'}</Button>
-        <video ref={ref => this.scanPreviewElement = ref}></video>
+        <Button onClick={() => this.toggleScanner(scanner)}>{scanner ? 'Cancel' : 'Scan'}</Button>
+        <video ref={ref => { this.scanPreviewElement = ref }} />
       </div>
     )
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     const { scanner } = this.state
     scanner && scanner.stop()
   }

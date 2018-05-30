@@ -40,7 +40,7 @@ export default class LoginPrivateKey extends Component<Props, State> {
           <div>
             <Button type='submit' disabled={loginButtonDisabled}>Login</Button>
             <HomeButtonLink />
-            <QrCodeScanner callback={loginWithPrivateKey}/>
+            <QrCodeScanner callback={loginWithPrivateKey} />
           </div>
         </form>
       </div>
