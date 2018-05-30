@@ -10,15 +10,23 @@ type Props = {
   callback: Function,
 }
 
+type State = {
+  scanner: Object
+}
+
 class QrCodeScanner extends Component<Props, State> {
+  scanPreviewElement: HTMLVideoElement | null
+
   state = {
-    scanner: null
+    scanner: {}
   }
 
-  toggleScanner (scanner) {
-    if (scanner) {
+  toggleScanner () {
+    const { scanner } = this.state
+
+    if (scanner.stop) {
       scanner.stop()
-      this.setState(prevState => ({scanner: null}))
+      this.setState(prevState => ({scanner: {}}))
       return
     }
 
@@ -43,7 +51,7 @@ class QrCodeScanner extends Component<Props, State> {
     const { scanner } = this.state
     return (
       <div className={qrCodeScannerStyles.qrCodeScannerContent}>
-        <Button onClick={() => this.toggleScanner(scanner)}>{scanner ? 'Cancel' : 'Scan'}</Button>
+        <Button onClick={() => this.toggleScanner()}>{scanner ? 'Cancel' : 'Scan'}</Button>
         <video ref={ref => { this.scanPreviewElement = ref }} />
       </div>
     )
