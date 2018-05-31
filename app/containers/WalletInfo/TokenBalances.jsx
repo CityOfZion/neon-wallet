@@ -40,7 +40,7 @@ const TokenBalances = ({ tokenBalances, showModal }: Props) => (
               <Tooltip
                 title={formattedBalance}
                 disabled={isZero(balance)}>
-                {formattedBalanceDisplay} {deprecated && <span style={{ color: 'red' }}>(deprecated)</span>}
+                {formattedBalanceDisplay} {deprecated && <span className={styles.deprecated}>(deprecated)</span>}
               </Tooltip>
             </td>
           </tr>

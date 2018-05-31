@@ -50,7 +50,7 @@ const TokenInfoModal = ({ hideModal, token }: Props) => (
           </tr>
           {DEPRECATED_TOKENS.includes(token.scriptHash) &&
             <tr>
-              <td colSpan='2' style={{ color: 'red', textAlign: 'center' }}>Deprecated token</td>
+              <td colSpan='2' className={styles.deprecated}>Deprecated token</td>
             </tr>
           }
         </tbody>
