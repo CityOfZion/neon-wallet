@@ -4,62 +4,62 @@ import React, { Component } from 'react'
 import Button from '../Button'
 import Instascan from 'instascan'
 
-import qrCodeScannerStyles from './QrCodeScanner.scss'
+import styles from './QrCodeScanner.scss'
 
 type Props = {
-  callback: Function,
+  callback: (content: string) => any,
 }
 
 type State = {
-  scanner: Object
+  scannerInstance: Object
 }
 
 class QrCodeScanner extends Component<Props, State> {
-  scanPreviewElement: HTMLVideoElement | null
+  scanPreviewElement: ?HTMLVideoElement
 
   state = {
-    scanner: {}
+    scannerInstance: {}
   }
 
   toggleScanner () {
-    const { scanner } = this.state
+    const { scannerInstance } = this.state
 
-    if (scanner.stop) {
-      scanner.stop()
-      this.setState(prevState => ({scanner: {}}))
+    if (scannerInstance.stop) {
+      scannerInstance.stop()
+      this.setState(prevState => ({scannerInstance: {}}))
       return
     }
 
     const { callback } = this.props
-    const scannerInstance = new Instascan.Scanner({ video: this.scanPreviewElement })
-    scannerInstance.addListener('scan', function (content) {
-      scannerInstance.stop()
+    const newScannerInstance = new Instascan.Scanner({ video: this.scanPreviewElement })
+    newScannerInstance.addListener('scan', content => {
+      newScannerInstance.stop()
       callback(content)
     })
-    Instascan.Camera.getCameras().then(function (cameras) {
+    Instascan.Camera.getCameras().then((cameras: Array<Object>) => {
       if (cameras.length > 0) {
-        scannerInstance.start(cameras[0])
+        newScannerInstance.start(cameras[0])
       } else {
         console.error('No cameras found.')
       }
     }).catch(e => console.error(e))
 
-    this.setState(prevState => ({scanner: scannerInstance}))
+    this.setState(prevState => ({scannerInstance: newScannerInstance}))
   }
 
   render () {
-    const { scanner } = this.state
+    const { scannerInstance } = this.state
     return (
-      <div className={qrCodeScannerStyles.qrCodeScannerContent}>
-        <Button onClick={() => this.toggleScanner()}>{scanner ? 'Cancel' : 'Scan'}</Button>
+      <div className={styles.qrCodeScannerContent}>
+        <Button onClick={() => this.toggleScanner()}>{scannerInstance ? 'Cancel' : 'Scan'}</Button>
         <video ref={ref => { this.scanPreviewElement = ref }} />
       </div>
     )
   }
 
   componentWillUnmount () {
-    const { scanner } = this.state
-    scanner && scanner.stop()
+    const { scannerInstance } = this.state
+    scannerInstance && scannerInstance.stop()
   }
 }
 
