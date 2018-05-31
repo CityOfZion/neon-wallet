@@ -84,12 +84,13 @@ export const TOKENS = {
   MCT: 'a87cc2a513f5d8b4a42432343687c2127c60bc3f',
   GDM: 'd1e37547d88bc9607ff9d73116ebd9381c156f79',
   PKC: 'af7c7328eee5a275a3bcaee2bf0cf662b5e739be',
-  SOUL: 'ed07cffad18f1308db51920d99a2af60ac66a7b3'
+  SOUL: 'ed07cffad18f1308db51920d99a2af60ac66a7b3',
+  ASA: 'a58b56b30425d3d1f8902034996fcac4168ef71d'
 }
 
 export const ENDED_ICO_TOKENS = [
   'DBC', 'RPX', 'RHT', 'QLC', 'NRVE', 'IAM', 'ONT', 'THOR', 'CGE', 'AVA', 'SWH', 'SWTH', 'EFX', 'MCT', 'PKC'
-  // 'SOUL'
+  // 'SOUL', 'ASA'
 ]
 
 export const DEFAULT_WALLET = {
