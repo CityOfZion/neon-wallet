@@ -1,7 +1,6 @@
 // @flow
 import { createActions } from 'spunky'
 
-import { getStorage, setStorage } from '../core/storage'
 import { saveAccount, updateAccount, getWallet } from '../core/account'
 
 type Props = {
@@ -16,7 +15,8 @@ export const updateAccountsActions = createActions(ID, (accounts: Array<Object>)
 })
 
 export const saveAccountActions = createActions(ID, ({ label, address, key }: Object) => async (): Promise<Array<Object>> => {
-  return await saveAccount(label, address, key)
+  const accounts = await saveAccount(label, address, key)
+  return accounts
 })
 
 export default createActions(ID, ({ networkId }: Props = {}) => async (): Promise<Object> => {

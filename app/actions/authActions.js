@@ -3,9 +3,8 @@ import { wallet } from 'neon-js'
 import { noop } from 'lodash'
 import { createActions } from 'spunky'
 
-import { upgradeNEP6AddAddresses } from '../core/account'
+import { upgradeNEP6AddAddresses, saveAccount } from '../core/account'
 import { validatePassphraseLength } from '../core/wallet'
-import { saveAccount } from '../core/account'
 import { ledgerNanoSCreateSignatureAsync } from '../ledger/ledgerNanoS'
 
 type WifLoginProps = {
@@ -56,7 +55,7 @@ export const nep2LoginActions = createActions(ID, ({ passphrase, encryptedWIF, l
   const wif = wallet.decrypt(encryptedWIF, passphrase)
   const account = new wallet.Account(wif)
   const { address } = account
-  let accounts;
+  let accounts
   if (label) {
     try {
       accounts = await saveAccount(label, address, encryptedWIF)

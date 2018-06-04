@@ -36,7 +36,7 @@ export default class LoginNep2 extends Component<Props, State> {
       <div id='loginPage' className={loginStyles.loginPage}>
         <div className={loginStyles.title}>Login using an encrypted key:</div>
         <form onSubmit={async (e) => {
-          e.preventDefault();
+          e.preventDefault()
           loginNep2(passphrase, encryptedWIF, save && label, updateAccounts)
         }}>
           <div className={loginStyles.loginForm}>
@@ -51,7 +51,7 @@ export default class LoginNep2 extends Component<Props, State> {
               onChange={(e) => this.setState({ encryptedWIF: e.target.value })}
               value={encryptedWIF}
             />
-            <input type="checkbox" onClick={event => this.setState({save: event.target.checked})} /> Save Account
+            <input type='checkbox' onClick={event => this.setState({save: event.target.checked})} /> Save Account
             {save && <input
               type='text'
               placeholder='Name this account'
