@@ -61,7 +61,7 @@ export const nep2LoginActions = createActions(ID, ({ passphrase, encryptedWIF }:
   return { wif: account.WIF, address: account.address, isHardwareLogin: false }
 })
 
-export const nep2DetailsLoginActions = (passphrase: string,  encryptedWIF: string, history: Object) => (dispatch: DispatchType) => {
+export const nep2DetailsLoginActions = (passphrase: string,  encryptedWIF: string, history: Object) => (dispatch: DispatchType): Promise<*> => {
   return new Promise((resolve, reject) => {
     if (!validatePassphraseLength(passphrase)) {
       reject('Passphrase too short')

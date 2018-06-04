@@ -20,17 +20,23 @@ type Props = {
 
 type State = {
   passphrase: string,
-  errorMsg: string
+  errorMsg: string,
+  pendingLogin: boolean
 }
 
 export default class EncryptedLoginModal extends Component<Props, State> {
+  static defaultProps = {
+    width: '450px',
+    height: '225px'
+  }
+
   state = {
     passphrase: '',
     errorMsg: '',
     pendingLogin: false,
   }
 
-  handleLoginSubmit (e) {
+  handleLoginSubmit (e: Object) {
     e.preventDefault();
     const {onClick, hideModal} = this.props
     const {passphrase} = this.state
@@ -92,9 +98,4 @@ export default class EncryptedLoginModal extends Component<Props, State> {
       </BaseModal>
     )
   }
-}
-
-EncryptedLoginModal.defaultProps = {
-  width: '450px',
-  height: '225px'
 }

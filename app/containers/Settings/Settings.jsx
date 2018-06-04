@@ -27,7 +27,8 @@ type Props = {
   showSuccessNotification: Object => any,
   showErrorNotification: Object => any,
   setUserGeneratedTokens: () => any,
-  networks: Array<NetworkItemType>
+  networks: Array<NetworkItemType>,
+  nep2DetailsLoginActions: (string, string, Object) => any
 }
 
 type State = {

@@ -13,7 +13,8 @@ type Props = {
   wif: string,
   encryptedWIF: string,
   passphrase: string,
-  history: Object
+  history: Object,
+  isSaved?: boolean
 }
 
 type State = {
