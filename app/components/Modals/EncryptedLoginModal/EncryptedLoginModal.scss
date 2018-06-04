@@ -3,13 +3,6 @@
     text-align: right;
 }
 
-.actionButton {
-    background-color: red;
-    &:hover {
-        background-color: red;
-    }
-}
-
 .cancelButton {
     background: none;
     border: 1px solid #999;
@@ -17,4 +10,8 @@
     &:hover {
         background: none
     }
+}
+
+.errorMessage {
+    color: red;
 }

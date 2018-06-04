@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 
 import BaseModal from '../BaseModal'
 import Button from '../../Button'
+import Loader from '../../Loader'
 import styles from './EncryptedLoginModal.scss'
 import PasswordField from '../../PasswordField'
 
@@ -25,26 +26,36 @@ type State = {
 export default class EncryptedLoginModal extends Component<Props, State> {
   state = {
     passphrase: '',
-    errorMsg: ''
+    errorMsg: '',
+    pendingLogin: false,
   }
 
   handleLoginSubmit (e) {
     e.preventDefault();
     const {onClick, hideModal} = this.props
     const {passphrase} = this.state
+    this.setState({ pendingLogin: true })
 
-    onClick(passphrase)
-    .then(hideModal)
-    .catch(err => {
-      this.setState({ errorMsg: err })
-    })
+    // Run on separate thread so that state change can pass through
+    setTimeout(() => {
+      onClick(passphrase)
+      .then(hideModal)
+      .catch(err => {
+        this.setState({
+          errorMsg: err,
+          pendingLogin: false
+        })
+      })
+    }, 100)
   }
 
   render () {
     const { hideModal, title, text, width, height, onClick } = this.props
-    const { errorMsg, passphrase } = this.state
+    const { errorMsg, passphrase, pendingLogin } = this.state
     const loginButtonDisabled = passphrase == ''
     const { handleLoginSubmit } = this
+
+    console.log(pendingLogin);
 
     return (
       <BaseModal
@@ -69,14 +80,16 @@ export default class EncryptedLoginModal extends Component<Props, State> {
             />
             <Button
               type='submit'
-              disabled={loginButtonDisabled}
+              disabled={loginButtonDisabled || pendingLogin}
             >Login</Button>
             <Button
               id='cancel'
               cancel
+              disabled={pendingLogin}
               onClick={hideModal}>Cancel</Button>
           </div>
         </form>
+        {pendingLogin && <Loader />}
         <div className='errorMessage'>{errorMsg}</div>
       </BaseModal>
     )
