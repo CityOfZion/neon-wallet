@@ -21,13 +21,11 @@ import { ASSETS } from '../core/constants'
 import { FIVE_MINUTES_MS } from '../core/time'
 import poll from '../util/poll'
 
-const POLL_ATTEMPTS = 50
-const POLL_FREQUENCY = 5000
+const POLL_ATTEMPTS = 30
+const POLL_FREQUENCY = 10000
 
 const fetchClaims = async ({ net, address }) => {
-  api.setApiSwitch(1)
-  const response = await api.loadBalance(api.getClaimsFrom, { net, address })
-  api.setApiSwitch(0)
+  const response = await api.getClaimsFrom({ net, address }, api.neoscan)
   const { claims } = response.claims
   return map(claims, 'claim')
 }
@@ -49,10 +47,10 @@ const updateClaimableAmount = async ({ net, address, publicKey, privateKey, sign
     privateKey,
     signingFunction,
     intents: api.makeIntent({ [ASSETS.NEO]: toNumber(balance) }, address)
-  })
+  }, api.neoscan)
 
   if (!response.result || !response.txid) {
-    throw new Error('Transaction failed!')
+    throw new Error('Rejected by RPC server.')
   }
 
   return response.result.response
@@ -63,7 +61,7 @@ const pollForUpdatedClaimableAmount = async ({ net, address, claimableAmount }) 
     const updatedClaimableAmount = await getClaimableAmount({ net, address })
 
     if (toBigNumber(updatedClaimableAmount).eq(claimableAmount)) {
-      throw new Error('Waiting for updated claims')
+      throw new Error('Waiting for updated claims took too long.')
     }
 
     return updatedClaimableAmount
@@ -104,7 +102,7 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
     await getUpdatedClaimableAmount({ net, address, balance, publicKey, privateKey, signingFunction })
   } catch (err) {
     dispatch(disableClaim(false))
-    dispatch(showErrorNotification({ message: 'Calculating claimable GAS failed.' }))
+    dispatch(showErrorNotification({ message: `Error calculating claimable GAS: ${err.message}` }))
     return
   }
 
@@ -116,16 +114,16 @@ export const doGasClaim = () => async (dispatch: DispatchType, getState: GetStat
 
   // step 2: send claim request
   try {
-    api.setApiSwitch(1)
-    const { response } = await api.claimGas({ net, address, publicKey, privateKey, signingFunction })
-    api.setApiSwitch(0)
+    var { claims } = await api.getClaimsFrom({net, address}, api.neoscan)
+    if (isHardwareClaim) claims = claims.slice(0, 25)
+    const { response } = await api.claimGas({ net, address, claims, publicKey, privateKey, signingFunction }, api.neoscan)
 
     if (!response.result) {
-      throw new Error('Claiming GAS failed')
+      throw new Error('Rejected by RPC server.')
     }
   } catch (err) {
     dispatch(disableClaim(false))
-    dispatch(showErrorNotification({ message: 'Claiming GAS failed.' }))
+    dispatch(showErrorNotification({ message: `Claiming GAS failed: ${err.message}` }))
     return
   }
 

@@ -19,9 +19,9 @@ describe('blockHeightActions', () => {
     test('returns an action object', () => {
       expect(blockHeightActions.call({ networkId: TEST_NETWORK_ID })).toEqual({
         batch: false,
-        type: 'BLOCK_HEIGHT/ACTION/CALL',
+        type: 'blockHeight/ACTION/CALL',
         meta: {
-          id: 'BLOCK_HEIGHT',
+          id: 'blockHeight',
           type: 'ACTION/CALL'
         },
         payload: {
@@ -41,9 +41,9 @@ describe('blockHeightActions', () => {
     test('returns an action object', () => {
       expect(blockHeightActions.cancel()).toEqual({
         batch: false,
-        type: 'BLOCK_HEIGHT/ACTION/CANCEL',
+        type: 'blockHeight/ACTION/CANCEL',
         meta: {
-          id: 'BLOCK_HEIGHT',
+          id: 'blockHeight',
           type: 'ACTION/CANCEL'
         }
       })
@@ -54,9 +54,9 @@ describe('blockHeightActions', () => {
     test('returns an action object', () => {
       expect(blockHeightActions.reset()).toEqual({
         batch: false,
-        type: 'BLOCK_HEIGHT/ACTION/RESET',
+        type: 'blockHeight/ACTION/RESET',
         meta: {
-          id: 'BLOCK_HEIGHT',
+          id: 'blockHeight',
           type: 'ACTION/RESET'
         }
       })

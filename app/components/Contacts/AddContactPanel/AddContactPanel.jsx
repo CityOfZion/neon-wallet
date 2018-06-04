@@ -34,7 +34,12 @@ export default class AddContactPanel extends React.Component<Props> {
         className={classNames(styles.addContactPanel, className)}
         renderHeader={this.renderHeader}
       >
-        <ContactForm name={name} address={address} onSubmit={this.handleSubmit} />
+        <ContactForm
+          name={name}
+          address={address}
+          submitLabel="Add to Contacts"
+          onSubmit={this.handleSubmit}
+        />
       </Panel>
     )
   }
@@ -43,7 +48,7 @@ export default class AddContactPanel extends React.Component<Props> {
     return (
       <span className={styles.header}>
         <Link to={ROUTES.CONTACTS} className={styles.back}><ArrowIcon /></Link>
-        <span>Add Contact</span>
+        <span>New Contact</span>
       </span>
     )
   }

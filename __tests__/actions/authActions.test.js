@@ -10,9 +10,9 @@ describe('authActions', () => {
       test('returns an action object', () => {
         expect(wifLoginActions.call({ wif })).toEqual({
           batch: false,
-          type: 'AUTH/ACTION/CALL',
+          type: 'auth/ACTION/CALL',
           meta: {
-            id: 'AUTH',
+            id: 'auth',
             type: 'ACTION/CALL'
           },
           payload: {
@@ -47,9 +47,9 @@ describe('authActions', () => {
       test('returns an action object', () => {
         expect(wifLoginActions.cancel()).toEqual({
           batch: false,
-          type: 'AUTH/ACTION/CANCEL',
+          type: 'auth/ACTION/CANCEL',
           meta: {
-            id: 'AUTH',
+            id: 'auth',
             type: 'ACTION/CANCEL'
           }
         })
@@ -60,9 +60,9 @@ describe('authActions', () => {
       test('returns an action object', () => {
         expect(wifLoginActions.reset()).toEqual({
           batch: false,
-          type: 'AUTH/ACTION/RESET',
+          type: 'auth/ACTION/RESET',
           meta: {
-            id: 'AUTH',
+            id: 'auth',
             type: 'ACTION/RESET'
           }
         })

@@ -14,13 +14,8 @@ import {
   getGAS
 } from '../core/deprecated'
 import { toNumber } from '../core/math'
-import asyncWrap from '../core/asyncHelper'
 import { ASSETS } from '../core/constants'
 import { validateMintTokensInputs } from '../core/sale'
-
-const MESSAGES = {
-  PARTICIPATION_FAILED: 'Sale participation failed, please check your script hash again.'
-}
 
 export const participateInSale = (
   neoToSend: string,
@@ -55,27 +50,16 @@ export const participateInSale = (
     return false
   }
 
-  const _scriptHash =
-    scriptHash.length === 40
-      ? scriptHash
-      : scriptHash.slice(2, scriptHash.length)
+  const formattedScriptHash = scriptHash.length === 40
+    ? scriptHash
+    : scriptHash.slice(2, scriptHash.length)
 
-  let notificationId
+  const notificationId = dispatch(showInfoNotification({
+    message: isHardwareLogin ? 'Please sign the transaction on your hardware device' : 'Sending transaction',
+    autoDismiss: 0
+  }))
 
-  if (isHardwareLogin) {
-    notificationId = dispatch(
-      showInfoNotification({
-        message: 'Please sign the transaction on your hardware device',
-        autoDismiss: 0
-      })
-    )
-  } else {
-    notificationId = dispatch(
-      showInfoNotification({ message: 'Sending transaction', autoDismiss: 0 })
-    )
-  }
-
-  const scriptHashAddress = wallet.getAddressFromScriptHash(_scriptHash)
+  const scriptHashAddress = wallet.getAddressFromScriptHash(formattedScriptHash)
 
   const intents = [[ASSETS.NEO, neoToMint], [ASSETS.GAS, gasToMint]]
     .filter(([symbol, amount]) => amount > 0)
@@ -84,7 +68,7 @@ export const participateInSale = (
     )
 
   const script = {
-    scriptHash: _scriptHash,
+    scriptHash: formattedScriptHash,
     operation: 'mintTokens',
     args: []
   }
@@ -99,15 +83,17 @@ export const participateInSale = (
     signingFunction: isHardwareLogin ? signingFunction : null
   }
 
-  const [error, response] = await asyncWrap(api.doInvoke(config))
-  if (error || !response || !response.response || !response.response.result) {
-    dispatch(
-      showErrorNotification({
-        message: MESSAGES.PARTICIPATION_FAILED
-      })
-    )
+  try {
+    const response = await api.doInvoke(config, api.neoscan)
+
+    if (!response || !response.response || !response.response.result) {
+      throw new Error('Rejected by RPC server.')
+    }
+  } catch (err) {
+    dispatch(showErrorNotification({ message: `Sale participation failed: ${err.message}` }))
     return false
   }
+
   // $FlowFixMe
   dispatch(hideNotification(notificationId))
   return true

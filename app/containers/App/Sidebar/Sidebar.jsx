@@ -12,24 +12,19 @@ import SendIcon from '../../../assets/navigation/send.svg'
 import ReceiveIcon from '../../../assets/navigation/receive.svg'
 import ContactsIcon from '../../../assets/navigation/contacts.svg'
 import TokenSaleIcon from '../../../assets/navigation/tokens.svg'
+import SettingsIcon from '../../../assets/navigation/settings.svg'
 import { ROUTES } from '../../../core/constants'
 
 import Logo from '../../../assets/logo.svg'
 
 type Props = {
   className: string,
-  neoPrice: number,
-  gasPrice: number,
-  currencyCode: string,
   showSendModal: Function,
   showTokenSaleModal: Function
 }
 
 const Sidebar = ({
   className,
-  neoPrice,
-  gasPrice,
-  currencyCode,
   showSendModal,
   showTokenSaleModal
 }: Props) => (
@@ -73,6 +68,12 @@ const Sidebar = ({
         <a id="tokenSale" className={styles.navItem} onClick={showTokenSaleModal}>
           <TokenSaleIcon />
         </a>
+      </Tooltip>
+
+      <Tooltip title="Settings" position="right">
+        <NavLink id="settings" to={ROUTES.SETTINGS} className={styles.navItem} activeClassName={styles.active}>
+          <SettingsIcon />
+        </NavLink>
       </Tooltip>
     </div>
 

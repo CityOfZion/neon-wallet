@@ -31,11 +31,16 @@ export default class AssetBalancesPanel extends React.Component<Props> {
     const { NEO, GAS, className } = this.props
 
     return (
-      <Panel className={classNames(styles.assetBalancesPanel, className)} renderHeader={this.renderHeader}>
+      <Panel
+        className={classNames(styles.assetBalancesPanel, className)}
+        renderHeader={this.renderHeader}
+      >
         <div id="balance" className={styles.assets}>
           <div className={styles.asset}>
             <div className={styles.label}>{ASSETS.NEO}</div>
-            <div className={styles.quantity} id="amountNeo">{formatNEO(NEO)}</div>
+            <div className={styles.quantity} id="amountNeo">
+              {formatNEO(NEO)}
+            </div>
             <div className={styles.value} id="neoWalletValue">
               {this.getFormattedFiatBalance(this.getNEOValue())}
             </div>
@@ -54,7 +59,9 @@ export default class AssetBalancesPanel extends React.Component<Props> {
         </div>
         <div className={styles.totalValue}>
           <div className={styles.label}>Total</div>
-          <div id="walletTotal">{this.getFormattedFiatBalance(this.getTotalValue())}</div>
+          <div id="walletTotal">
+            {this.getFormattedFiatBalance(this.getTotalValue())}
+          </div>
         </div>
         <div className={styles.claim}>
           <Claim className={styles.claimButton} />
@@ -64,7 +71,7 @@ export default class AssetBalancesPanel extends React.Component<Props> {
   }
 
   renderHeader = () => {
-    const { refresh, loading } = this.props
+    const { loading, refresh } = this.props
 
     return (
       <div className={styles.header}>
@@ -72,8 +79,10 @@ export default class AssetBalancesPanel extends React.Component<Props> {
         <Tooltip title="Refresh">
           <RefreshIcon
             id="refresh"
-            className={classNames(styles.refresh, { [styles.loading]: loading })}
-            onClick={refresh}
+            className={classNames(styles.refresh, {
+              [styles.loading]: loading
+            })}
+            onClick={loading ? null : refresh}
           />
         </Tooltip>
       </div>

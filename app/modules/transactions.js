@@ -19,10 +19,7 @@ import {
   getTokenBalances
 } from '../core/deprecated'
 import { isToken, validateTransactionsBeforeSending, getTokenBalancesMap } from '../core/wallet'
-import { ASSETS } from '../core/constants'
 import { toNumber } from '../core/math'
-
-import { log } from '../util/Logs'
 
 const extractTokens = (sendEntries: Array<SendEntryType>) => {
   return sendEntries.filter(({ symbol }) => isToken(symbol))
@@ -35,33 +32,9 @@ const extractAssets = (sendEntries: Array<SendEntryType>) => {
 const buildIntents = (sendEntries: Array<SendEntryType>) => {
   const assetEntries = extractAssets(sendEntries)
   // $FlowFixMe
-  return flatMap(assetEntries, ({ address, amount, symbol }) =>
-    api.makeIntent(
-      {
-        [symbol]: toNumber(amount)
-      },
-      address
-    )
-  )
-}
-
-const buildIntentsForInvocation = (
-  sendEntries: Array<SendEntryType>,
-  fromAddress: string
-) => {
-  const intents = buildIntents(sendEntries)
-
-  if (intents.length > 0) {
-    return intents
-  } else {
-    return buildIntents([
-      {
-        address: fromAddress,
-        amount: '0.00000001',
-        symbol: ASSETS.GAS
-      }
-    ])
-  }
+  return flatMap(assetEntries, ({ address, amount, symbol }) => {
+    return api.makeIntent({ [symbol]: toNumber(amount) }, address)
+  })
 }
 
 const buildTransferScript = (
@@ -100,14 +73,14 @@ const makeRequest = (sendEntries: Array<SendEntryType>, config: Object) => {
   )
 
   if (script === '') {
-    return api.sendAsset({ ...config, intents: buildIntents(sendEntries) })
+    return api.sendAsset({ ...config, intents: buildIntents(sendEntries) }, api.neoscan)
   } else {
     return api.doInvoke({
       ...config,
-      intents: buildIntentsForInvocation(sendEntries, config.address),
+      intents: buildIntents(sendEntries),
       script,
       gas: 0
-    })
+    }, api.neoscan)
   }
 }
 
@@ -126,8 +99,7 @@ export const sendTransaction = (sendEntries: Array<SendEntryType>) => async (
   const publicKey = getPublicKey(state)
   const isHardwareSend = getIsHardwareLogin(state)
 
-  const rejectTransaction = (message: string) =>
-    dispatch(showErrorNotification({ message }))
+  const rejectTransaction = (message: string) => dispatch(showErrorNotification({ message }))
 
   const error = validateTransactionsBeforeSending(balances, sendEntries)
 
@@ -135,29 +107,16 @@ export const sendTransaction = (sendEntries: Array<SendEntryType>) => async (
     return rejectTransaction(error)
   }
 
-  dispatch(
-    showInfoNotification({ message: 'Sending Transaction...', autoDismiss: 0 })
-  )
-
-  log(
-    net,
-    'SEND',
-    fromAddress,
-    // $FlowFixMe
-    sendEntries.map(({ address, amount, symbol }) => ({
-      to: address,
-      asset: symbol,
-      amount: parseFloat(amount)
-    }))
-  )
+  dispatch(showInfoNotification({
+    message: 'Sending Transaction...',
+    autoDismiss: 0
+  }))
 
   if (isHardwareSend) {
-    dispatch(
-      showInfoNotification({
-        message: 'Please sign the transaction on your hardware device',
-        autoDismiss: 0
-      })
-    )
+    dispatch(showInfoNotification({
+      message: 'Please sign the transaction on your hardware device',
+      autoDismiss: 0
+    }))
   }
 
   try {
@@ -171,13 +130,13 @@ export const sendTransaction = (sendEntries: Array<SendEntryType>) => async (
     })
 
     if (!response.result) {
-      throw new Error('Transaction failed')
+      throw new Error('Rejected by RPC server.')
     }
-
-    return dispatch(showSuccessNotification({
-      message: 'Transaction complete! Your balance will automatically update when the blockchain has processed it.'
-    }))
   } catch (err) {
     return rejectTransaction(`Transaction failed: ${err.message}`)
   }
+
+  return dispatch(showSuccessNotification({
+    message: 'Transaction complete! Your balance will automatically update when the blockchain has processed it.'
+  }))
 }

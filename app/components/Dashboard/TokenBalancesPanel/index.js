@@ -1,15 +1,17 @@
 // @flow
 import { compose } from 'recompose'
 import { filter, values, omit } from 'lodash'
-import { withData, withActions } from 'spunky'
+import { withActions } from 'spunky'
 
 import TokenBalancesPanel from './TokenBalancesPanel'
 import balancesActions from '../../../actions/balancesActions'
 import withNetworkData from '../../../hocs/withNetworkData'
 import withAuthData from '../../../hocs/withAuthData'
+import withBalancesData from '../../../hocs/withBalancesData'
 import withCurrencyData from '../../../hocs/withCurrencyData'
 import withFilteredTokensData from '../../../hocs/withFilteredTokensData'
 import withLoadingProp from '../../../hocs/withLoadingProp'
+import withProgressPanel from '../../../hocs/withProgressPanel'
 import { toBigNumber } from '../../../core/math'
 
 const filterZeroBalanceTokens = (balances) => {
@@ -29,7 +31,8 @@ const mapBalancesActionsToProps = (actions, props) => ({
 })
 
 export default compose(
-  withData(balancesActions, mapBalanceDataToProps),
+  withProgressPanel(balancesActions, { title: 'Token Balances' }),
+  withBalancesData(mapBalanceDataToProps),
   withCurrencyData('currencyCode'),
 
   // expose data & functionality needed for `refresh` action

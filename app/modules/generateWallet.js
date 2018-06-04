@@ -3,17 +3,22 @@ import storage from 'electron-json-storage'
 import { wallet } from 'neon-js'
 import { isEmpty } from 'lodash'
 
-import { showErrorNotification, showInfoNotification, hideNotification } from './notifications'
+import {
+  showErrorNotification,
+  showInfoNotification,
+  hideNotification
+} from './notifications'
 
 import { validatePassphraseLength } from '../core/wallet'
 import { ROUTES, DEFAULT_WALLET } from '../core/constants'
 import { Account } from '../core/schemas'
 
+// Actions
+import { saveAccountActions, getWallet } from '../actions/accountsActions'
+
 // Constants
 export const NEW_WALLET_ACCOUNT = 'NEW_WALLET_ACCOUNT'
 export const RESET_WALLET_ACCOUNT = 'RESET_WALLET_ACCOUNT'
-
-// Actions
 
 export function newWalletAccount (account: Object) {
   return {
@@ -22,7 +27,8 @@ export function newWalletAccount (account: Object) {
       wif: account.wif,
       address: account.address,
       passphrase: account.passphrase,
-      encryptedWIF: account.encryptedWIF
+      encryptedWIF: account.encryptedWIF,
+      walletName: account.walletName
     }
   }
 }
@@ -40,7 +46,11 @@ export const walletHasKey = (wallet: Object, key: string) =>
 export const walletHasLabel = (wallet: Object, label: string) =>
   wallet.accounts.some(account => account.label === label)
 
-export const convertOldWalletAccount = (label: string, key: string, isDefault: boolean) => {
+export const convertOldWalletAccount = (
+  label: string,
+  key: string,
+  isDefault: boolean
+) => {
   if (!key || typeof key !== 'string') return
   return new Account({
     address: '', // Unfortunately all we have is the encrypted private keys, so no way to get this for now.
@@ -62,7 +72,7 @@ export const upgradeUserWalletNEP6 = (): Promise<*> => {
           if (readLegacyError) {
             reject(readLegacyError)
           }
-          const wallet = {...DEFAULT_WALLET}
+          const wallet = { ...DEFAULT_WALLET }
 
           if (isEmpty(keyData)) {
             // create empty nep-6 wallet
@@ -70,7 +80,11 @@ export const upgradeUserWalletNEP6 = (): Promise<*> => {
           } else {
             const accounts = []
             Object.keys(keyData).map((label: string) => {
-              const newAccount = convertOldWalletAccount(label, keyData[label], accounts.length === 0)
+              const newAccount = convertOldWalletAccount(
+                label,
+                keyData[label],
+                accounts.length === 0
+              )
               if (newAccount) {
                 accounts.push(newAccount)
               }
@@ -78,7 +92,7 @@ export const upgradeUserWalletNEP6 = (): Promise<*> => {
 
             wallet.accounts = accounts
 
-            storage.set('userWallet', wallet, (saveError) => {
+            storage.set('userWallet', wallet, saveError => {
               if (saveError) {
                 reject(saveError)
               } else {
@@ -105,14 +119,18 @@ export const recoverWallet = (wallet: Object): Promise<*> => {
 
       // If for some reason we have no NEP-6 wallet stored, create a default.
       if (!data) {
-        data = {...DEFAULT_WALLET}
+        data = { ...DEFAULT_WALLET }
       }
 
       if (!wallet.accounts) {
         // Load the old wallet type
         Object.keys(wallet).map((label: string) => {
           const isDefault = accounts.length === 0 && wallet.length === 0
-          const newAccount = convertOldWalletAccount(label, wallet[label], isDefault)
+          const newAccount = convertOldWalletAccount(
+            label,
+            wallet[label],
+            isDefault
+          )
           if (newAccount && newAccount.key) {
             accounts.push(newAccount)
           }
@@ -125,13 +143,13 @@ export const recoverWallet = (wallet: Object): Promise<*> => {
         reject(Error('No accounts found in recovery file.'))
       }
 
-      accounts.some((account) => {
+      accounts.some(account => {
         if (!walletHasKey(data, account.key)) {
           data.accounts.push(account)
         }
       })
 
-      storage.set('userWallet', data, (saveError) => {
+      storage.set('userWallet', data, saveError => {
         if (saveError) {
           reject(saveError)
         } else {
@@ -142,12 +160,17 @@ export const recoverWallet = (wallet: Object): Promise<*> => {
   })
 }
 
-export const generateNewWalletAccount = (passphrase: string, passphrase2: string, wif?: string, history: Object) => (dispatch: DispatchType) => {
+export const generateNewWalletAccount = (
+  passphrase: string,
+  passphrase2: string,
+  wif?: string,
+  history: Object,
+  walletName: string
+) => (dispatch: DispatchType) => {
   const dispatchError = (message: string) => {
     dispatch(showErrorNotification({ message }))
     return false
   }
-
   if (passphrase !== passphrase2) {
     return dispatchError('Passphrases do not match')
   } else if (!validatePassphraseLength(passphrase)) {
@@ -155,24 +178,50 @@ export const generateNewWalletAccount = (passphrase: string, passphrase2: string
   } else if (wif && !wallet.isWIF(wif)) {
     return dispatchError('The private key is not valid')
   } else {
-    const infoNotificationId: any = dispatch(showInfoNotification({ message: 'Generating encoded key...', autoDismiss: 0 }))
-    setTimeout(() => {
+    const infoNotificationId: any = dispatch(
+      showInfoNotification({
+        message: 'Generating encoded key...',
+        autoDismiss: 0
+      })
+    )
+    setTimeout(async () => {
       try {
         const account = new wallet.Account(wif || wallet.generatePrivateKey())
         const { WIF, address } = account
         const encryptedWIF = wallet.encrypt(WIF, passphrase)
 
+        const storedWallet = await getWallet()
+        if (walletName && walletHasLabel(storedWallet, walletName)) {
+          return dispatchError('A wallet with this name already exists locally')
+        }
+
+        dispatch(
+          saveAccountActions.call({
+            label: walletName,
+            address,
+            key: encryptedWIF
+          })
+        )
+
         dispatch(hideNotification(infoNotificationId))
-        dispatch(newWalletAccount({
-          wif: WIF,
-          address,
-          passphrase,
-          encryptedWIF
-        }))
+        dispatch(
+          newWalletAccount({
+            wif: WIF,
+            address,
+            passphrase,
+            encryptedWIF,
+            walletName
+          })
+        )
+
+        if (wif) history.push(ROUTES.HOME)
         history.push(ROUTES.DISPLAY_WALLET_KEYS)
         return true
       } catch (e) {
-        return dispatchError('An error occured while trying to generate a new wallet')
+        console.error(e)
+        return dispatchError(
+          'An error occured while trying to generate a new wallet'
+        )
       }
     }, 500)
   }
@@ -182,25 +231,35 @@ export const generateNewWalletAccount = (passphrase: string, passphrase2: string
 export const getWIF = (state: Object) => state.generateWallet.wif
 export const getAddress = (state: Object) => state.generateWallet.address
 export const getPassphrase = (state: Object) => state.generateWallet.passphrase
-export const getEncryptedWIF = (state: Object) => state.generateWallet.encryptedWIF
+export const getWalletName = (state: Object) => state.generateWallet.walletName
+export const getEncryptedWIF = (state: Object) =>
+  state.generateWallet.encryptedWIF
 
 const initialState = {
   wif: null,
   address: null,
   passphrase: null,
-  encryptedWIF: null
+  encryptedWIF: null,
+  walletName: null
 }
 
 export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
     case NEW_WALLET_ACCOUNT: {
-      const { passphrase, wif, address, encryptedWIF } = action.payload
+      const {
+        passphrase,
+        wif,
+        address,
+        encryptedWIF,
+        walletName
+      } = action.payload
       return {
         ...state,
         wif,
         address,
         passphrase,
-        encryptedWIF
+        encryptedWIF,
+        walletName
       }
     }
     case RESET_WALLET_ACCOUNT: {

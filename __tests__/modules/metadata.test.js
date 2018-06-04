@@ -8,7 +8,7 @@ import { version } from '../../package.json'
 describe('metadata module tests', () => {
   describe('checkVersion tests', () => {
     const dispatch = jest.fn()
-    const getState = () => ({ spunky: { NETWORK: { data: TEST_NETWORK_ID } } })
+    const getState = () => ({ spunky: { network: { data: TEST_NETWORK_ID } } })
 
     const generateNewerVersion = (version) => {
       const parts = version.split('.')

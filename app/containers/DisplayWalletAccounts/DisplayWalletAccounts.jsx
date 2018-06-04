@@ -2,97 +2,102 @@
 import React, { Component } from 'react'
 import QRCode from 'qrcode/lib/browser'
 
+import TextInput from '../../components/Inputs/TextInput'
 import Button from '../../components/Button'
 import CopyToClipboard from '../../components/CopyToClipboard'
 import { ROUTES } from '../../core/constants'
+import styles from './DisplayWalletAccounts.scss'
+import homeStyles from '../Home/Home.scss'
+
+import HomeLayout from '../Home/HomeLayout'
+import BackButton from '../../components/BackButton'
 
 type Props = {
-  resetKey: Function,
-  saveAccount: Function,
+  walletName: string,
   address: string,
   wif: string,
   encryptedWIF: string,
-  passphrase: string,
-  history: Object
+  passphrase: string
 }
 
-type State = {
-  keyName: string
-}
-
-class DisplayWalletAccounts extends Component<Props, State> {
-  state = {
-    keyName: ''
-  }
-
+class DisplayWalletAccounts extends Component<Props> {
   publicCanvas: ?HTMLCanvasElement
   privateCanvas: ?HTMLCanvasElement
 
   componentDidMount () {
     const { address, encryptedWIF } = this.props
-    QRCode.toCanvas(this.publicCanvas, address, { version: 5 }, (err) => {
+    QRCode.toCanvas(this.publicCanvas, address, { version: 5 }, err => {
       if (err) console.log(err)
     })
-    QRCode.toCanvas(this.privateCanvas, encryptedWIF, { version: 5 }, (err) => {
+    QRCode.toCanvas(this.privateCanvas, encryptedWIF, { version: 5 }, err => {
       if (err) console.log(err)
     })
   }
 
   render () {
-    const { passphrase, address, encryptedWIF, wif, saveAccount } = this.props
-    const { keyName } = this.state
+    const { passphrase, address, encryptedWIF, wif, walletName } = this.props
+    const fields = [
+      { label: 'Passphrase', value: passphrase },
+      { label: 'Public Address', value: address },
+      { label: 'Encrypted Key', value: encryptedWIF },
+      { label: 'Private Key', value: wif }
+    ]
+    walletName && fields.push({ label: 'Wallet Name', value: walletName })
     return (
-      <div id="newWallet">
-        <div className="disclaimer">
-          You must save and backup the keys below. If you lose them, you lose access to your assets.
-          You can click "Save Key" to save the encrypted key in local application storage.
-          Verify that you can log in to the account and see the correct public address before sending anything to the address below!
-        </div>
-        <div className="addressBox">
-          <canvas ref={(node) => { this.publicCanvas = node }} />
-          <div>Public Address</div>
-        </div>
-        <div className="privateKeyBox">
-          <canvas ref={(node) => { this.privateCanvas = node }} />
-          <div>Encrypted Private Key</div>
-        </div>
-        <div className="keyList">
-          <div className="keyListItem">
-            <span className="label">Passphrase:</span>
-            <span className="key">{passphrase}</span>
-            <CopyToClipboard text={passphrase} tooltip="Copy Passphrase" />
+      <HomeLayout
+        excludeLogo
+        renderNavigation={() => (
+          <div className={homeStyles.backButton}>
+            <BackButton routeTo={ROUTES.HOME} />
           </div>
-          <br />
-          <div className="keyListItem">
-            <span className="label">Public Address:</span>
-            <span className="key">{address}</span>
-            <CopyToClipboard text={address} tooltip="Copy Public Address" />
+        )}
+      >
+        <div id="newWallet" className={styles.newWalletContainer}>
+          <div className={styles.disclaimer}>
+            You must save and backup the keys below.{' '}
+            <b>If you lose them, you lose access to your assets.</b> Verify that
+            you can log in to the account and see the correct public address
+            before sending anything to the address below!
           </div>
-          <div className="keyListItem">
-            <span className="label">Encrypted key:</span>
-            <span className="key">{encryptedWIF}</span>
-            <CopyToClipboard text={encryptedWIF} tooltip="Copy Encrypted Key" />
+          <div className={styles.qrContainer}>
+            <div>
+              <canvas
+                ref={node => {
+                  this.publicCanvas = node
+                }}
+              />
+              <div>
+                <b>Public Address</b>
+              </div>
+            </div>
+            <div>
+              <canvas
+                ref={node => {
+                  this.privateCanvas = node
+                }}
+              />
+              <div>
+                <b>Encrypted Private Key</b>
+              </div>
+            </div>
           </div>
-          <div className="keyListItem">
-            <span className="label">Private Key:</span>
-            <span className="key">{wif}</span>
-            <CopyToClipboard text={wif} tooltip="Copy Private Key" />
+          <div className={styles.detailsContainer}>
+            {fields.map(item => (
+              <div key={item.label} className={styles.detailRow}>
+                <span className={styles.label}>{item.label}:</span>
+                <div className={styles.input}>
+                  <TextInput value={item.value} disabled />
+                </div>
+                <CopyToClipboard text={item.value} tooltip={`Copy ${item.label}`} />
+              </div>
+            ))}
+          </div>
+          <div className={styles.buttonContainer}>
+            <Button onClick={this.handlePrint}>Print</Button>
           </div>
         </div>
-        <div className="saveAccount">
-          <input autoFocus type="text" placeholder="Name this account" value={keyName} onChange={(e) => this.setState({ keyName: e.target.value })} />
-          <Button primary onClick={() => saveAccount(keyName, address, encryptedWIF)}>Save Account</Button>
-        </div>
-        <Button onClick={this.handleBack}>Back</Button>
-        <Button onClick={this.handlePrint}>Print</Button>
-      </div>
+      </HomeLayout>
     )
-  }
-
-  handleBack = () => {
-    const { resetKey, history } = this.props
-    resetKey()
-    history.push(ROUTES.HOME)
   }
 
   handlePrint = () => {

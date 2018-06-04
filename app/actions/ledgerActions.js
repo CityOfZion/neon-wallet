@@ -3,7 +3,7 @@ import { createActions } from 'spunky'
 
 import { getDeviceInfo, getPublicKey } from '../ledger/ledgerNanoS'
 
-export const ID = 'LEDGER'
+export const ID = 'ledger'
 
 export default createActions(ID, () => async (state: Object) => {
   const deviceInfo = await getDeviceInfo()

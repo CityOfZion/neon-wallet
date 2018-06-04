@@ -1,5 +1,6 @@
 // @flow
-import React, { Component } from 'react'
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 import LoginPrivateKey from '../LoginPrivateKey'
 import LoginNep2 from '../LoginNep2'
@@ -8,15 +9,18 @@ import LoginLocalStorage from '../LoginLocalStorage'
 import Button from '../../components/Button'
 import SelectInput from '../../components/Inputs/SelectInput'
 import styles from './Home.scss'
-import neonLogo from '../../images/neon-logo-redesign.png'
 import AddIcon from '../../assets/icons/add.svg'
 import WalletIcon from '../../assets/icons/wallet.svg'
+import { ROUTES } from '../../core/constants'
+import HomeLayout from './HomeLayout'
 
 type State = {
   option: string
 }
 
-type Props = {}
+type Props = {
+  loading: boolean
+}
 
 const LOGIN_OPTIONS = {
   LOCAL_STORAGE: {
@@ -31,13 +35,13 @@ const LOGIN_OPTIONS = {
     render: () => <LoginNep2 />,
     display: 'Encrypted key'
   },
-  LEDGER: {
+  ledger: {
     render: () => <LoginLedgerNanoS />,
     display: 'Ledger Nano S'
   }
 }
 
-class Home extends Component<Props, State> {
+export default class Home extends React.Component<Props, State> {
   state = {
     option: LOGIN_OPTIONS.LOCAL_STORAGE.display
   }
@@ -63,19 +67,17 @@ class Home extends Component<Props, State> {
       'renderLoginBasedOnOption() invoked with invalid display value!'
     )
   }
-
-  render = () => (
-    <div id="home" className={styles.home}>
-      <div className={styles.loginContainer}>
-        <img className={styles.logo} src={neonLogo} />
-        <div className={styles.loginText}>Login</div>
-
+  render = () => {
+    const { loading } = this.props
+    return (
+      <HomeLayout>
         <div className={styles.inputContainer}>
           <SelectInput
             className={styles.input}
             onChange={value => this.handleSelect(value)}
             value={this.state.option}
             readOnly
+            disabled={loading}
             items={this.options}
             getItemValue={item => item}
           />
@@ -83,17 +85,21 @@ class Home extends Component<Props, State> {
           {this.renderLoginBasedOnOption(this.state.option)}
 
           <div className={styles.buttonRow}>
-            <div style={{ flex: 0.45 }}>
-              <Button renderIcon={AddIcon}>New Wallet</Button>
+            <div className={styles.buttonContainer}>
+              <Link to={ROUTES.CREATE_WALLET}>
+                <Button disabled={loading} renderIcon={AddIcon}>
+                  New Wallet
+                </Button>
+              </Link>
             </div>
-            <div style={{ flex: 0.45 }}>
-              <Button renderIcon={WalletIcon}>Wallet Manager</Button>
+            <div className={styles.buttonContainer}>
+              <Button disabled={loading} renderIcon={WalletIcon}>
+                Wallet Manager
+              </Button>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  )
+      </HomeLayout>
+    )
+  }
 }
-
-export default Home

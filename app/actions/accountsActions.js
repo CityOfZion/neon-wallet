@@ -6,13 +6,9 @@ import { getStorage, setStorage } from '../core/storage'
 import { DEFAULT_WALLET } from '../core/constants'
 import { Account } from '../core/schemas'
 
-type Props = {
-  networkId: string
-}
-
 const STORAGE_KEY = 'userWallet'
 
-const getWallet = async (): Promise<Object> => {
+export const getWallet = async (): Promise<Object> => {
   return await getStorage(STORAGE_KEY) || DEFAULT_WALLET
 }
 
@@ -28,7 +24,7 @@ const walletHasLabel = (wallet: Object, label: string) => {
   return wallet.accounts.some(account => account.label === label)
 }
 
-export const ID = 'ACCOUNTS'
+export const ID = 'accounts'
 
 export const updateAccountsActions = createActions(ID, (accounts: Array<Object>) => async (): Promise<Array<Object>> => {
   const wallet = await getWallet()
@@ -67,7 +63,7 @@ export const saveAccountActions = createActions(ID, ({ label, address, key }: Ob
   return wallet.accounts
 })
 
-export default createActions(ID, ({ networkId }: Props = {}) => async (): Promise<Object> => {
+export default createActions(ID, () => async (): Promise<Object> => {
   const wallet = await getWallet()
   return wallet.accounts
 })

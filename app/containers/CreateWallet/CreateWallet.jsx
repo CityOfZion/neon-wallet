@@ -1,87 +1,137 @@
 // @flow
+
 import React from 'react'
+import { ROUTES } from '../../core/constants'
 
 import PasswordInput from '../../components/Inputs/PasswordInput'
-import HomeButtonLink from '../../components/HomeButtonLink'
+import TextInput from '../../components/Inputs/TextInput'
+import BackButton from '../../components/BackButton'
 import Button from '../../components/Button'
+import AddIcon from '../../assets/icons/add.svg'
+import HomeLayout from '../Home/HomeLayout'
+import OptionButton from './OptionButton'
+import styles from '../Home/Home.scss'
 
 type Props = {
-  encryptWIF: boolean,
   generateNewWalletAccount: Function,
   history: Object
 }
+
+type Option = 'CREATE' | 'IMPORT'
 
 type State = {
   passphrase: string,
   passphrase2: string,
   wif: string,
+  option: Option,
+  walletName: string
 }
 
-export default class EncryptKey extends React.Component<Props, State> {
+export default class CreateWallet extends React.Component<Props, State> {
   state = {
     passphrase: '',
     passphrase2: '',
-    wif: ''
+    wif: '',
+    walletName: '',
+    option: 'CREATE'
   }
 
-  createWalletAccount = (e: SyntheticMouseEvent<*>) => {
+  createWalletAccount = (e: SyntheticMouseEvent<*>, options: Object) => {
     e.preventDefault()
-    const { encryptWIF, history } = this.props
-    const { passphrase, passphrase2, wif } = this.state
+    const { history } = this.props
+    const { passphrase, passphrase2, wif, walletName, option } = this.state
     const { generateNewWalletAccount } = this.props
-    if (!generateNewWalletAccount(passphrase, passphrase2, encryptWIF ? wif : null, history)) {
-      // this.resetFields()
-    }
+    generateNewWalletAccount(
+      passphrase,
+      passphrase2,
+      option === 'IMPORT' ? wif : null,
+      history,
+      walletName
+    )
   }
 
-  resetFields () {
-    this.setState({
-      passphrase: '',
-      passphrase2: '',
-      wif: ''
-    })
-  }
-
-  render () {
-    const { encryptWIF } = this.props
-    const { passphrase, passphrase2, wif } = this.state
-    let disabledButton
-    let title
-
-    if (encryptWIF) {
-      disabledButton = passphrase === '' || passphrase2 === '' || wif === ''
-      title = 'Choose a passphrase to encrypt your existing private key:'
-    } else {
-      disabledButton = passphrase === '' || passphrase2 === ''
-      title = 'Choose a passphrase to encrypt your private key:'
-    }
+  render = () => {
+    const { passphrase, passphrase2, wif, option, walletName } = this.state
 
     return (
-      <div id="newWallet">
-        <div className="info">{title}</div>
-        <form onSubmit={this.createWalletAccount}>
-          <PasswordInput
-            value={passphrase}
-            onChange={(e) => this.setState({ passphrase: e.target.value })}
-            placeholder="Enter passphrase here"
-            autoFocus
-          />
-          <PasswordInput
-            value={passphrase2}
-            onChange={(e) => this.setState({ passphrase2: e.target.value })}
-            placeholder="Enter passphrase again"
-          />
-          {encryptWIF &&
-            <PasswordInput
-              value={wif}
-              onChange={(e) => this.setState({ wif: e.target.value })}
-              placeholder="Enter existing WIF here"
-            />
-          }
-          <Button type="submit" primary disabled={disabledButton}>Generate keys</Button>
-          <HomeButtonLink />
-        </form>
-      </div>
+      <HomeLayout
+        renderNavigation={() => (
+          <div className={styles.backButton}>
+            <BackButton routeTo={ROUTES.HOME} />
+          </div>
+        )}
+      >
+        <div className={styles.inputContainer}>
+          <div className={styles.createWalletOptionRow}>
+            <OptionButton
+              handleClick={() => this.setState({ option: 'CREATE' })}
+              active={option === 'CREATE'}
+            >
+              CREATE NEW
+            </OptionButton>
+
+            <OptionButton
+              handleClick={() => this.setState({ option: 'IMPORT' })}
+              active={option === 'IMPORT'}
+            >
+              IMPORT EXISTING
+            </OptionButton>
+          </div>
+          <div id="createWallet" className={styles.flexContainer}>
+            <form onSubmit={this.createWalletAccount}>
+              {option === 'IMPORT' && (
+                <div className={styles.inputMargin}>
+                  <PasswordInput
+                    value={wif}
+                    onChange={e => this.setState({ wif: e.target.value })}
+                    placeholder="Private Key"
+                    autoFocus
+                  />
+                </div>
+              )}
+              <div className={styles.inputMargin}>
+                <TextInput
+                  value={walletName}
+                  onChange={e => this.setState({ walletName: e.target.value })}
+                  placeholder="Wallet Name"
+                  autoFocus
+                />
+              </div>
+              <div className={styles.inputMargin}>
+                <PasswordInput
+                  value={passphrase}
+                  onChange={e => this.setState({ passphrase: e.target.value })}
+                  placeholder="Enter passphrase here"
+                />
+              </div>
+              <div className={styles.inputMargin}>
+                <PasswordInput
+                  value={passphrase2}
+                  onChange={e => this.setState({ passphrase2: e.target.value })}
+                  placeholder="Enter passphrase again"
+                />
+              </div>
+              <Button
+                renderIcon={AddIcon}
+                className={styles.loginButtonMargin}
+                type="submit"
+                primary
+                disabled={this.isDisabled()}
+              >
+                {option === 'IMPORT' ? 'Import Wallet' : 'Create Wallet'}
+              </Button>
+            </form>
+          </div>
+        </div>
+      </HomeLayout>
     )
+  }
+
+  isDisabled = () => {
+    const { option, passphrase, passphrase2, wif, walletName } = this.state
+    const validPassphrase = passphrase === passphrase2 && passphrase.length >= 4
+    if (option === 'CREATE') {
+      return !(validPassphrase && !!walletName)
+    } else return !(validPassphrase && !!walletName && !!wif)
   }
 }

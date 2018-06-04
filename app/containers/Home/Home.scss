@@ -1,5 +1,8 @@
 @import '../../styles/variables';
 
+$navigation-height: 65px;
+$navigation-margin: 20px;
+
 .input {
   width: 100%;
   margin: 10px;
@@ -8,6 +11,13 @@
   & input {
     cursor: pointer;
   }
+}
+
+.backButton {
+  align-self: flex-start;
+  margin: $navigation-margin;
+  max-height: $navigation-height;
+  min-height: $navigation-height;
 }
 
 .loginButtonMargin {
@@ -39,7 +49,7 @@
   flex-direction: row;
 }
 
-.loginContainer {
+.innerHomeContainer {
   background-color: #fff;
   display: flex;
   flex-direction: column;
@@ -47,7 +57,16 @@
   width: 75vw;
   height: 75vh;
   margin: auto;
-  min-height: 650px;
+  min-height: 750px;
+  min-width: 750px;
+}
+
+.createWalletOptionRow {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .buttonRow {
@@ -59,7 +78,15 @@
   flex: 1;
 }
 
-.home {
+.buttonContainer {
+  flex: 0.45;
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.homeContainer {
   height: 100%;
   width: 100%;
   display: flex;
@@ -68,8 +95,13 @@
 .logo {
   max-height: 100px;
   padding-top: 100px;
-  padding-bottom: 80px;
+  padding-bottom: 140px;
   max-width: 100px;
+}
+
+.logoWithNegativeMargin {
+  @extend .logo;
+  margin-top: $navigation-height * -1 + ($navigation-margin * 2) * -1;
 }
 
 .loginText {

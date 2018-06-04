@@ -28,7 +28,7 @@ function getPrices (currency) {
   })
 }
 
-export const ID = 'PRICES'
+export const ID = 'prices'
 
 export default createActions(ID, ({ currency = DEFAULT_CURRENCY_CODE }: Props = {}) => (state: Object) => {
   return getPrices(currency)
