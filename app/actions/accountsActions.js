@@ -5,7 +5,6 @@ import { isEmpty } from 'lodash'
 import { getStorage, setStorage } from '../core/storage'
 import { DEFAULT_WALLET } from '../core/constants'
 import { Account } from '../core/schemas'
-import { showErrorNotification } from '../modules/notifications'
 
 const STORAGE_KEY = 'userWallet'
 
