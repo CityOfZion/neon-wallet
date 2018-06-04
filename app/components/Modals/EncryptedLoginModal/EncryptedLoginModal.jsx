@@ -10,8 +10,6 @@ import PasswordField from '../../PasswordField'
 type Props = {
   title: string,
   text: string,
-  label: string,
-  encryptedWIF: string,
   hideModal: Function,
   width: string,
   height: string,
@@ -33,11 +31,15 @@ export default class EncryptedLoginModal extends Component<Props, State> {
   state = {
     passphrase: '',
     errorMsg: '',
-    pendingLogin: false,
+    pendingLogin: false
+  }
+
+  componentWillMount() {
+    this.handleLoginSubmit = this.handleLoginSubmit.bind(this)
   }
 
   handleLoginSubmit (e: Object) {
-    e.preventDefault();
+    e.preventDefault()
     const {onClick, hideModal} = this.props
     const {passphrase} = this.state
     this.setState({ pendingLogin: true })
@@ -45,20 +47,20 @@ export default class EncryptedLoginModal extends Component<Props, State> {
     // Run on separate thread so that state change can pass through
     setTimeout(() => {
       onClick(passphrase)
-      .then(hideModal)
-      .catch(err => {
-        this.setState({
-          errorMsg: err,
-          pendingLogin: false
+        .then(hideModal)
+        .catch(err => {
+          this.setState({
+            errorMsg: err && err.message,
+            pendingLogin: false
+          })
         })
-      })
     }, 100)
   }
 
   render () {
-    const { hideModal, title, text, width, height, onClick } = this.props
+    const { hideModal, title, text, width, height } = this.props
     const { errorMsg, passphrase, pendingLogin } = this.state
-    const loginButtonDisabled = passphrase == ''
+    const loginButtonDisabled = passphrase === ''
     const { handleLoginSubmit } = this
 
     return (
@@ -75,7 +77,7 @@ export default class EncryptedLoginModal extends Component<Props, State> {
         <div className={styles.textContainer}>
           <strong className={styles.text}>{text}</strong>
         </div>
-        <form onSubmit={handleLoginSubmit.bind(this)}>
+        <form onSubmit={handleLoginSubmit}>
           <div className={styles.modalFooter}>
             <PasswordField
               placeholder='Enter your passphrase here'

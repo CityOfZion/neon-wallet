@@ -146,7 +146,7 @@ export default class Settings extends Component<Props, State> {
       encryptedWIF: account.key,
       onClick: (passphrase) => {
         return nep2DetailsLoginActions(passphrase, account.key, history)
-      },
+      }
     })
   }
 

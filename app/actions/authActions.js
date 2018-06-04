@@ -61,14 +61,14 @@ export const nep2LoginActions = createActions(ID, ({ passphrase, encryptedWIF }:
   return { wif: account.WIF, address: account.address, isHardwareLogin: false }
 })
 
-export const nep2DetailsLoginActions = (passphrase: string,  encryptedWIF: string, history: Object) => (dispatch: DispatchType): Promise<*> => {
+export const nep2DetailsLoginActions = (passphrase: string, encryptedWIF: string, history: Object) => (dispatch: DispatchType): Promise<*> => {
   return new Promise((resolve, reject) => {
     if (!validatePassphraseLength(passphrase)) {
-      reject('Passphrase too short')
+      reject(new Error('Passphrase too short'))
     }
 
     if (!wallet.isNEP2(encryptedWIF)) {
-      reject('That is not a valid encrypted key')
+      reject(new Error('That is not a valid encrypted key'))
     }
 
     try {
@@ -85,7 +85,7 @@ export const nep2DetailsLoginActions = (passphrase: string,  encryptedWIF: strin
       history.push(ROUTES.DISPLAY_WALLET_KEYS)
       resolve()
     } catch (error) {
-      reject(error.message)
+      reject(error)
     }
   })
 }

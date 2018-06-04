@@ -21,7 +21,7 @@ const MODAL_COMPONENTS = {
   [TOKEN_INFO]: TokenInfoModal,
   [TOKEN]: TokenModal,
   [ICO]: TokenSaleModal,
-  [ENCRYPTED_LOGIN]: EncryptedLoginModal,
+  [ENCRYPTED_LOGIN]: EncryptedLoginModal
 }
 
 type Props = {
