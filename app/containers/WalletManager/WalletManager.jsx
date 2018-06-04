@@ -1,19 +1,69 @@
 // @flow
 
 import React from 'react'
+import storage from 'electron-json-storage'
+import { reject } from 'lodash'
 
-import { ROUTES } from '../../core/constants'
+import { ROUTES, MODAL_TYPES } from '../../core/constants'
+import Wallet from './Wallet.jsx'
 import styles from './WalletManager.scss'
 import BackButton from '../../components/BackButton'
 import Button from '../../components/Button'
 import Import from '../../assets/icons/import.svg'
 import Export from '../../assets/icons/export.svg'
-import Delete from '../../assets/icons/delete.svg'
-import Edit from '../../assets/icons/edit.svg'
 
-type Props = {}
+type Props = {
+  accounts: any,
+  showSuccessNotification: Function,
+  showErrorNotification: Function,
+  setAccounts: (Array<Object>) => any,
+  showModal: Function
+}
 
 export default class WalletManager extends React.Component<Props> {
+  deleteWalletAccount = (label: string, key: string) => {
+    const {
+      showSuccessNotification,
+      showErrorNotification,
+      setAccounts,
+      showModal
+    } = this.props
+
+    showModal(MODAL_TYPES.CONFIRM, {
+      title: 'Confirm Delete',
+      text: `Please confirm deleting saved wallet - ${label}`,
+      onClick: () => {
+        storage.get('userWallet', (readError, data) => {
+          if (readError) {
+            showErrorNotification({
+              message: `An error occurred reading previously stored wallet: ${
+                readError.message
+              }`
+            })
+            return
+          }
+
+          data.accounts = reject(data.accounts, { key })
+
+          storage.set('userWallet', data, saveError => {
+            if (saveError) {
+              showErrorNotification({
+                message: `An error occurred updating the wallet: ${
+                  saveError.message
+                }`
+              })
+            } else {
+              showSuccessNotification({
+                message: 'Account deletion was successful.'
+              })
+              setAccounts(data.accounts)
+            }
+          })
+        })
+      }
+    })
+  }
+
   render = () => {
     const { accounts } = this.props
     return (
@@ -25,7 +75,14 @@ export default class WalletManager extends React.Component<Props> {
           </div>
         </div>
         <div className={styles.walletList}>
-          {accounts.map(account => <Account {...account} />)}
+          {accounts.map(account => (
+            <Wallet
+              {...account}
+              handleDelete={() =>
+                this.deleteWalletAccount(account.label, account.key)
+              }
+            />
+          ))}
         </div>
 
         <div className={styles.buttonRow}>
@@ -40,21 +97,3 @@ export default class WalletManager extends React.Component<Props> {
     )
   }
 }
-
-const Account = props =>
-  console.log(props) || (
-    <div className={styles.accountInfoRow}>
-      <div className={styles.accountInfo}>
-        <div className={styles.accountLabel}> {props.label}</div>
-        <div className={styles.address}>{props.address}</div>
-      </div>
-      <div className={styles.accountButtons}>
-        <div className={styles.editAccountButton}>
-          <Button renderIcon={Edit} />
-        </div>
-        <div className={styles.deleteAccountButton}>
-          <Button renderIcon={Delete}>Delete Wallet</Button>
-        </div>
-      </div>
-    </div>
-  )

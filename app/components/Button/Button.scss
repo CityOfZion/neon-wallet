@@ -61,6 +61,11 @@
   }
 
   .icon {
+    svg {
+      height: 25px;
+      width: 25px;
+    }
+
     height: 25px;
     width: 25px;
     align-self: flex-start;
