@@ -55,8 +55,6 @@ export default class EncryptedLoginModal extends Component<Props, State> {
     const loginButtonDisabled = passphrase == ''
     const { handleLoginSubmit } = this
 
-    console.log(pendingLogin);
-
     return (
       <BaseModal
         title={title}
@@ -90,7 +88,7 @@ export default class EncryptedLoginModal extends Component<Props, State> {
           </div>
         </form>
         {pendingLogin && <Loader />}
-        <div className='errorMessage'>{errorMsg}</div>
+        <div className={styles.errorMessage}>{errorMsg}</div>
       </BaseModal>
     )
   }
