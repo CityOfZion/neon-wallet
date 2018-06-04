@@ -169,7 +169,9 @@ export default class WalletManager extends React.Component<Props> {
 
         <div className={styles.buttonRow}>
           <div className={styles.buttonContainer}>
-            <Button renderIcon={Import}>Import Wallets</Button>
+            <Button onClick={this.loadWalletRecovery} renderIcon={Import}>
+              Import Wallets
+            </Button>
           </div>
           <div className={styles.buttonContainer}>
             <Button onClick={this.saveWalletRecovery} renderIcon={Export}>

@@ -13,7 +13,6 @@ import {
   showSuccessNotification
 } from '../../modules/notifications'
 import { showModal } from '../../modules/modal'
-// import { nep2LoginActions } from '../../actions/authActions'
 
 import WalletManager from './WalletManager.jsx'
 
@@ -27,11 +26,10 @@ const actionCreators = {
   showSuccessNotification
 }
 
-const mapAccountsActionsToProps = actions =>
-  console.log(actions) || {
-    setAccounts: accounts => actions.call(accounts),
-    saveAccount: ({ label, address }) => actions.call({ label, address })
-  }
+const mapAccountsActionsToProps = actions => ({
+  setAccounts: accounts => actions.call(accounts),
+  saveAccount: ({ label, address }) => actions.call({ label, address })
+})
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(actionCreators, dispatch)

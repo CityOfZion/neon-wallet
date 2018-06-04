@@ -40,9 +40,11 @@ export const updateAccountsActions = createActions(
 export const updateLabelActions = createActions(
   ID,
   ({ label, address }: Object) => async () => {
-    console.warn('Updating label!', { label, address })
     const wallet = await getWallet()
-
+    if (!label || !address) {
+      console.warn('updateLabelActions() invoked with invalid arguments')
+      return wallet.accounts
+    }
     if (walletHasLabel(wallet, label)) {
       // TODO: pop notification!
       console.warn('A wallet with this name already exists locally')
