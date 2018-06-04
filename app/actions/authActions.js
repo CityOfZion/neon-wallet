@@ -20,7 +20,7 @@ type LedgerLoginProps = {
 type Nep2LoginProps = {
   passphrase: string,
   encryptedWIF: string,
-  label: string,
+  label?: string,
   callback?: Function
 }
 
@@ -62,7 +62,7 @@ export const nep2LoginActions = createActions(ID, ({ passphrase, encryptedWIF, l
       accounts = await saveAccount(label, address, encryptedWIF)
       // Execute on next thread
       setTimeout(() => {
-        callback(accounts)
+        callback && callback(accounts)
       }, 100)
     } catch (error) {
       if (error.message !== `Address '${address}' already exists.`) {
