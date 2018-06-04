@@ -8,7 +8,8 @@ import PasswordField from '../../components/PasswordField'
 import loginStyles from '../../styles/login.scss'
 
 type Props = {
-  loginNep2: Function
+  loginNep2: Function,
+  updateAccounts: Function
 }
 
 type State = {

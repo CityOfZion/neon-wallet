@@ -2,6 +2,7 @@
 import { wallet } from 'neon-js'
 import { isEmpty } from 'lodash'
 
+import { DEFAULT_WALLET } from './constants'
 import { getStorage, setStorage } from './storage'
 import { Account } from './schemas'
 
@@ -53,7 +54,7 @@ export async function updateAccount (accounts: Array<Object>) {
   return accounts
 }
 
-export async function saveAccount (label, address, key) {
+export async function saveAccount (label: string, address: string, key: string) {
   if (isEmpty(label)) {
     throw new Error('A valid name is required.')
   }
