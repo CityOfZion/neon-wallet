@@ -2,7 +2,6 @@
 import { createActions } from 'spunky'
 
 import { getStorage, setStorage } from '../core/storage'
-import { DEFAULT_WALLET } from '../core/constants'
 import { saveAccount, updateAccount, getWallet } from '../core/account'
 
 type Props = {
