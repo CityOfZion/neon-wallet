@@ -13,14 +13,16 @@ import {
   getWIF,
   getAddress,
   getEncryptedWIF,
-  getPassphrase
+  getPassphrase,
+  isSaved
 } from '../../modules/generateWallet'
 
 const mapStateToProps = (state: Object) => ({
   wif: getWIF(state),
   address: getAddress(state),
   encryptedWIF: getEncryptedWIF(state),
-  passphrase: getPassphrase(state)
+  passphrase: getPassphrase(state),
+  isSaved: isSaved(state)
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({ resetKey }, dispatch)
