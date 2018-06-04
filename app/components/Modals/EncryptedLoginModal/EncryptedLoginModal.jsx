@@ -43,7 +43,7 @@ export default class EncryptedLoginModal extends Component<Props, State> {
   render () {
     const { hideModal, title, text, width, height, onClick } = this.props
     const { errorMsg, passphrase } = this.state
-    const loginButtonDisabled = passphrase === ''
+    const loginButtonDisabled = passphrase == ''
     const { handleLoginSubmit } = this
 
     return (
@@ -60,21 +60,23 @@ export default class EncryptedLoginModal extends Component<Props, State> {
         <div className={styles.textContainer}>
           <strong className={styles.text}>{text}</strong>
         </div>
-        <div className={styles.modalFooter}>
-          <PasswordField
-            placeholder='Enter your passphrase here'
-            onChange={(e) => this.setState({ passphrase: e.target.value })}
-            autoFocus
-          />
-          <Button
-            disabled={loginButtonDisabled}
-            onClick={handleLoginSubmit.bind(this)}
-          >Login</Button>
-          <Button
-            id='cancel'
-            cancel
-            onClick={hideModal}>Cancel</Button>
-        </div>
+        <form onSubmit={handleLoginSubmit.bind(this)}>
+          <div className={styles.modalFooter}>
+            <PasswordField
+              placeholder='Enter your passphrase here'
+              onChange={(e) => this.setState({ passphrase: e.target.value })}
+              autoFocus
+            />
+            <Button
+              type='submit'
+              disabled={loginButtonDisabled}
+            >Login</Button>
+            <Button
+              id='cancel'
+              cancel
+              onClick={hideModal}>Cancel</Button>
+          </div>
+        </form>
         <div className='errorMessage'>{errorMsg}</div>
       </BaseModal>
     )
