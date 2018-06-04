@@ -125,18 +125,15 @@ input {
     font-size: 1.4em;
     font-weight: 200;
   }
+  .qrcode-container {
+    display: flex;
+  }
   .addressBox,
+  .encryptedKeyBox,
   .privateKeyBox {
     margin-bottom: 20px;
-    display: inline-block;
-    width: 40%;
+    flex: 1;
     text-align: center;
-  }
-  .addressBox {
-    margin-right: 9%;
-  }
-  .privateKeyBox {
-    margin-left: 9%;
   }
   .keyList {
     margin-bottom: 20px;

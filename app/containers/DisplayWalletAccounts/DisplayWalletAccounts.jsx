@@ -26,14 +26,18 @@ class DisplayWalletAccounts extends Component<Props, State> {
   }
 
   publicCanvas: ?HTMLCanvasElement
+  encryptedCanvas: ?HTMLCanvasElement
   privateCanvas: ?HTMLCanvasElement
 
   componentDidMount () {
-    const { address, encryptedWIF } = this.props
+    const { address, encryptedWIF, wif } = this.props
     QRCode.toCanvas(this.publicCanvas, address, { version: 5 }, (err) => {
       if (err) console.log(err)
     })
-    QRCode.toCanvas(this.privateCanvas, encryptedWIF, { version: 5 }, (err) => {
+    QRCode.toCanvas(this.encryptedCanvas, encryptedWIF, { version: 5 }, (err) => {
+      if (err) console.log(err)
+    })
+    QRCode.toCanvas(this.privateCanvas, wif, { version: 5 }, (err) => {
       if (err) console.log(err)
     })
   }
@@ -48,13 +52,19 @@ class DisplayWalletAccounts extends Component<Props, State> {
           You can click "Save Key" to save the encrypted key in local application storage.
           Verify that you can log in to the account and see the correct public address before sending anything to the address below!
         </div>
-        <div className='addressBox'>
-          <canvas ref={(node) => { this.publicCanvas = node }} />
-          <div>Public Address</div>
-        </div>
-        <div className='privateKeyBox'>
-          <canvas ref={(node) => { this.privateCanvas = node }} />
-          <div>Encrypted Private Key</div>
+        <div className='qrcode-container'>
+          <div className='addressBox'>
+            <canvas ref={(node) => { this.publicCanvas = node }} />
+            <div>Public Address</div>
+          </div>
+          <div className='encryptedKeyBox'>
+            <canvas ref={(node) => { this.encryptedCanvas = node }} />
+            <div>Encrypted Key</div>
+          </div>
+          <div className='privateKeyBox'>
+            <canvas ref={(node) => { this.privateCanvas = node }} />
+            <div>Private Key</div>
+          </div>
         </div>
         <div className='keyList'>
           <div className='keyListItem'>
