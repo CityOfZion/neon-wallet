@@ -34,6 +34,8 @@ export default class EncryptedLoginModal extends Component<Props, State> {
     pendingLogin: false
   }
 
+  handleLoginSubmit: Function
+
   componentWillMount () {
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this)
   }
