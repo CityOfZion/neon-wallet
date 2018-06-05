@@ -14,6 +14,9 @@ import withLoadingProp from '../../../hocs/withLoadingProp'
 import withProgressPanel from '../../../hocs/withProgressPanel'
 import withSuccessNotification from '../../../hocs/withSuccessNotification'
 import withFailureNotification from '../../../hocs/withFailureNotification'
+import withNetworkData from '../../../hocs/withNetworkData'
+import withAuthData from '../../../hocs/withAuthData'
+import withFilteredTokensData from '../../../hocs/withFilteredTokensData'
 
 const mapBalanceDataToProps = (balances) => ({
   NEO: balances.NEO,
@@ -42,6 +45,9 @@ export default compose(
 
   // Fetch price & balance data based based upon the selected currency.
   // Reload data with the currency changes.
+  withNetworkData(),
+  withAuthData(),
+  withFilteredTokensData(),
   withProgressPanel(batchActions, { title: 'Balances' }),
   withPricesData(mapPricesDataToProps),
   withBalancesData(mapBalanceDataToProps),
