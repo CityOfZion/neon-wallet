@@ -39,7 +39,7 @@ export const updateAccountsActions = createActions(
 
 export const updateLabelActions = createActions(
   ID,
-  ({ label, address }: Object) => async () => {
+  ({ label, address }: { label: string, address: string }) => async () => {
     const wallet = await getWallet()
     if (!label || !address) {
       console.warn('updateLabelActions() invoked with invalid arguments')
@@ -50,20 +50,30 @@ export const updateLabelActions = createActions(
       console.warn('A wallet with this name already exists locally')
       return wallet.accounts
     }
-
     const accountToUpdate = wallet.accounts.find(
       account => account.address === address
     )
+    if (!accountToUpdate) {
+      console.warn('There is no account to update!')
+      return wallet.accounts
+    }
     accountToUpdate.label = label
     await setWallet(wallet)
-
     return wallet.accounts
   }
 )
 
 export const saveAccountActions = createActions(
   ID,
-  ({ label, address, key }: Object) => async () => {
+  ({
+    label,
+    address,
+    key
+  }: {
+    label: string,
+    address: string,
+    key: string
+  }) => async () => {
     if (isEmpty(label)) {
       throw new Error('A valid name is required.')
     }

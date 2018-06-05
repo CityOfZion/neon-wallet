@@ -1,31 +1,33 @@
 // @flow
 
-import React from 'react'
-import storage from 'electron-json-storage'
+import React, { Component } from 'react'
 import { reject } from 'lodash'
 import fs from 'fs'
 
+import { getStorage, setStorage } from '../../core/storage'
 import { ROUTES, MODAL_TYPES } from '../../core/constants'
 import Wallet from './Wallet.jsx'
-import styles from './WalletManager.scss'
 import BackButton from '../../components/BackButton'
 import Button from '../../components/Button'
+import { recoverWallet } from '../../modules/generateWallet'
+
 import Import from '../../assets/icons/import.svg'
 import Export from '../../assets/icons/export.svg'
-import { recoverWallet } from '../../modules/generateWallet'
+
+import styles from './WalletManager.scss'
 
 const { dialog } = require('electron').remote
 
 type Props = {
-  accounts: any,
-  saveAccount: Function,
-  showSuccessNotification: Function,
-  showErrorNotification: Function,
+  accounts: Array<Object>,
+  saveAccount: ({ label: string, address: string }) => any,
+  showSuccessNotification: Object => any,
+  showErrorNotification: Object => any,
   setAccounts: (Array<Object>) => any,
-  showModal: Function
+  showModal: (modalType: string, modalProps: Object) => any
 }
 
-export default class WalletManager extends React.Component<Props> {
+class WalletManager extends Component<Props> {
   deleteWalletAccount = (label: string, key: string) => {
     const {
       showSuccessNotification,
@@ -37,50 +39,42 @@ export default class WalletManager extends React.Component<Props> {
     showModal(MODAL_TYPES.CONFIRM, {
       title: 'Confirm Delete',
       text: `Please confirm deleting saved wallet - ${label}`,
-      onClick: () => {
-        storage.get('userWallet', (readError, data) => {
-          if (readError) {
+      onClick: async () => {
+        const data = await getStorage('userWallet').catch(readError =>
+          showErrorNotification({
+            message: `An error occurred reading previously stored wallet: ${
+              readError.message
+            }`
+          })
+        )
+        if (data) {
+          data.accounts = reject(data.accounts, { key })
+          await setStorage('userWallet', data).catch(saveError =>
             showErrorNotification({
-              message: `An error occurred reading previously stored wallet: ${
-                readError.message
+              message: `An error occurred updating the wallet: ${
+                saveError.message
               }`
             })
-            return
-          }
-
-          data.accounts = reject(data.accounts, { key })
-
-          storage.set('userWallet', data, saveError => {
-            if (saveError) {
-              showErrorNotification({
-                message: `An error occurred updating the wallet: ${
-                  saveError.message
-                }`
-              })
-            } else {
-              showSuccessNotification({
-                message: 'Account deletion was successful.'
-              })
-              setAccounts(data.accounts)
-            }
+          )
+          showSuccessNotification({
+            message: 'Account deletion was successful.'
           })
-        })
+          setAccounts(data.accounts)
+        }
       }
     })
   }
 
-  saveWalletRecovery = () => {
+  saveWalletRecovery = async () => {
     const { showSuccessNotification, showErrorNotification } = this.props
-
-    storage.get('userWallet', (errorReading, data) => {
-      if (errorReading) {
-        showErrorNotification({
-          message: `An error occurred reading wallet file: ${
-            errorReading.message
-          }`
-        })
-        return
-      }
+    const data = await getStorage('userWallet').catch(readError =>
+      showErrorNotification({
+        message: `An error occurred reading previously stored wallet: ${
+          readError.message
+        }`
+      })
+    )
+    if (data) {
       const content = JSON.stringify(data)
       dialog.showSaveDialog(
         {
@@ -106,7 +100,7 @@ export default class WalletManager extends React.Component<Props> {
           })
         }
       )
-    })
+    }
   }
 
   loadWalletRecovery = () => {
@@ -145,7 +139,7 @@ export default class WalletManager extends React.Component<Props> {
     })
   }
 
-  render = () => {
+  render () {
     const { accounts, saveAccount } = this.props
     return (
       <div className={styles.walletManager}>
@@ -183,3 +177,5 @@ export default class WalletManager extends React.Component<Props> {
     )
   }
 }
+
+export default WalletManager
