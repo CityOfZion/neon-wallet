@@ -80,7 +80,7 @@
     "history": "4.7.2",
     "isomorphic-fetch": "2.2.1",
     "lodash": "4.17.4",
-    "neo-qrcode": "^0.0.1",
+    "neo-qrcode": "~0.0.2",
     "neon-js": "git+https://github.com/cityofzion/neon-js.git#3.7.0",
     "nock": "^9.2.3",
     "qrcode": "0.9.0",

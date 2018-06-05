@@ -1,7 +1,6 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-// import QRCode from 'qrcode/lib/browser'
 import NeoQR from 'neo-qrcode'
 
 import Panel from '../../Panel'
