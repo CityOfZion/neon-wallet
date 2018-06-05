@@ -34,11 +34,9 @@ const mapAccountsActionsToProps = actions => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(actionCreators, dispatch)
 
-const mapStateToProps = (state: Object) => ({})
-
 export default compose(
   connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps
   ),
   withData(accountsActions, mapAccountsDataToProps),
