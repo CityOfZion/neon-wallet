@@ -37,7 +37,10 @@ const mapDispatchToProps = dispatch =>
 const mapStateToProps = (state: Object) => ({})
 
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
   withData(accountsActions, mapAccountsDataToProps),
   withActions(updateAccountsActions, mapAccountsActionsToProps),
   withActions(updateLabelActions, mapAccountsActionsToProps)

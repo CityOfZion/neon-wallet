@@ -1,33 +1,35 @@
 // @flow
 
-import React from 'react'
+import React, { Component } from 'react'
 
 import TextInput from '../../components/Inputs/TextInput'
 import Button from '../../components/Button'
+
 import Delete from '../../assets/icons/delete.svg'
 import Edit from '../../assets/icons/edit.svg'
 import Confirm from '../../assets/icons/confirm.svg'
 import Close from '../../assets/icons/close.svg'
+
 import styles from './WalletManager.scss'
 
 type Props = {
-  handleDelete: Function,
-  handleSave: Function,
-  label: String,
-  address: String
+  handleDelete: (e: SyntheticEvent<*>) => any,
+  handleSave: ({ label: string, address: string }) => any,
+  label: string,
+  address: string
 }
 
 type State = {
   editing: boolean,
-  newLabel: String
+  newLabel: string
 }
 
-export default class WalletManager extends React.Component<Props, State> {
+class WalletManager extends Component<Props, State> {
   state = {
     editing: false,
     newLabel: this.props.label
   }
-  render = () => {
+  render () {
     const { label, address, handleDelete } = this.props
     return (
       <div className={styles.accountInfoRow}>
@@ -38,7 +40,7 @@ export default class WalletManager extends React.Component<Props, State> {
               value={this.state.newLabel}
             />
           ) : (
-            <div className={styles.accountLabel}> {label} </div>
+            <div className={styles.accountLabel}>{label}</div>
           )}
           <div className={styles.address}>{address}</div>
         </div>
@@ -75,3 +77,5 @@ export default class WalletManager extends React.Component<Props, State> {
     )
   }
 }
+
+export default WalletManager
