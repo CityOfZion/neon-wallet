@@ -1,7 +1,7 @@
 // @flow
 import { compose } from 'recompose'
 import { values, omit } from 'lodash'
-import { createBatchActions, withActions } from 'spunky'
+import { createBatchActions, withActions, withData } from 'spunky'
 
 import AssetBalancesPanel from './AssetBalancesPanel'
 import balancesActions from '../../../actions/balancesActions'
@@ -14,6 +14,8 @@ import withLoadingProp from '../../../hocs/withLoadingProp'
 import withProgressPanel from '../../../hocs/withProgressPanel'
 import withSuccessNotification from '../../../hocs/withSuccessNotification'
 import withFailureNotification from '../../../hocs/withFailureNotification'
+import priceHistoryActions from '../../../actions/priceHistoryActions'
+import { ASSETS } from '../../../core/constants'
 
 const mapBalanceDataToProps = (balances) => ({
   NEO: balances.NEO,
@@ -25,6 +27,18 @@ const mapPricesDataToProps = ({ NEO, GAS }) => ({
   neoPrice: NEO,
   gasPrice: GAS
 })
+
+const mapPriceChangeDataToProps = (prices, props) => {
+  const oldNeo = prices[ASSETS.NEO][prices[ASSETS.NEO].length - 2].close
+  const newNeo = prices[ASSETS.NEO][prices[ASSETS.NEO].length - 1].close
+  const oldGas = prices[ASSETS.GAS][prices[ASSETS.GAS].length - 2].close
+  const newGas = prices[ASSETS.GAS][prices[ASSETS.GAS].length - 1].close
+
+  return {
+    neoPriceChange: (newNeo - oldNeo) / oldNeo,
+    gasPriceChange: (newGas - oldGas) / oldGas
+  }
+}
 
 const mapBalancesActionsToProps = (actions, props) => ({
   refresh: () => actions.call({ net: props.net, address: props.address, tokens: props.tokens })
@@ -45,6 +59,7 @@ export default compose(
   withProgressPanel(batchActions, { title: 'Balances' }),
   withPricesData(mapPricesDataToProps),
   withBalancesData(mapBalanceDataToProps),
+  withData(priceHistoryActions, mapPriceChangeDataToProps),
 
   // Expose data & functionality needed for `refresh` action.
   withActions(balancesActions, mapBalancesActionsToProps),

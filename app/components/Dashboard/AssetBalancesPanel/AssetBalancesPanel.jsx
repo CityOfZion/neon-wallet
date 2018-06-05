@@ -17,6 +17,8 @@ type Props = {
   GAS: string,
   neoPrice: number,
   gasPrice: number,
+  neoPriceChange: number,
+  gasPriceChange: number,
   currencyCode: string,
   loading: ?boolean,
   refresh: Function
@@ -41,9 +43,12 @@ export default class AssetBalancesPanel extends React.Component<Props> {
             <div className={styles.quantity} id="amountNeo">
               {formatNEO(NEO)}
             </div>
-            <div className={styles.value} id="neoWalletValue">
+            <span className={styles.value} id="neoWalletValue">
               {this.getFormattedFiatBalance(this.getNEOValue())}
-            </div>
+            </span>
+            <span className={classNames(styles.change, styles[this.getNEOPriceChangeDirection()])} id="priceChangeNeo">
+              {this.getNEOFormattedPriceChange()}
+            </span>
           </div>
           <div className={styles.asset}>
             <div className={styles.label}>{ASSETS.GAS}</div>
@@ -52,9 +57,12 @@ export default class AssetBalancesPanel extends React.Component<Props> {
                 {formatGAS(GAS, true)}
               </Tooltip>
             </div>
-            <div className={styles.value} id="gasWalletValue">
+            <span className={styles.value} id="gasWalletValue">
               {this.getFormattedFiatBalance(this.getGASValue())}
-            </div>
+            </span>
+            <span className={classNames(styles.change, styles[this.getGASPriceChangeDirection()])} id="priceChangeGas">
+              {this.getGASFormattedPriceChange()}
+            </span>
           </div>
         </div>
         <div className={styles.totalValue}>
@@ -99,9 +107,33 @@ export default class AssetBalancesPanel extends React.Component<Props> {
     return neoPrice && NEO !== '0' ? neoPrice * toNumber(NEO) : 0
   }
 
+  getNEOFormattedPriceChange = (): string => {
+    return (this.props.neoPriceChange >= 0 ? '+' : '') + (this.props.neoPriceChange * 100).toFixed(2) + '%'
+  }
+
+  getNEOPriceChangeDirection = (): string => {
+    if (this.props.neoPriceChange < 0) {
+      return 'decrease'
+    } else {
+      return 'increase'
+    }
+  }
+
   getGASValue = (): number => {
     const { GAS, gasPrice } = this.props
     return gasPrice && GAS !== '0' ? gasPrice * toNumber(GAS) : 0
+  }
+
+  getGASFormattedPriceChange = (): string => {
+    return (this.props.gasPriceChange >= 0 ? '+' : '') + (this.props.gasPriceChange * 100).toFixed(2) + '%'
+  }
+
+  getGASPriceChangeDirection = (): string => {
+    if (this.props.gasPriceChange < 0) {
+      return 'decrease'
+    } else {
+      return 'increase'
+    }
   }
 
   getTotalValue = (): number => {
