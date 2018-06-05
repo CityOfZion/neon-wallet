@@ -17,7 +17,7 @@ const mapPricesDataToProps = (prices, props) => ({
 const mapPriceHistoryActionsToProps = (actions, props) => ({
   setDuration: (duration: Duration) => {
     props.setDuration(duration)
-    actions.call({ duration, currency: props.currency })
+    return actions.call({ duration, currency: props.currency })
   }
 })
 
