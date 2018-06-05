@@ -60,6 +60,8 @@ export default class WalletInfo extends Component<Props> {
       return null
     }
 
+    const invalidPrice = isNil(neoPrice) || isNil(gasPrice)
+
     const neoValue = neoPrice && NEO && NEO !== '0'
       ? toBigNumber(neoPrice).mul(NEO) : toBigNumber(0)
 
@@ -79,7 +81,7 @@ export default class WalletInfo extends Component<Props> {
             <div className='amountBig amountNeo'>{NEO ? formatNEO(NEO) : '-'}</div>
             <div className='fiat neoWalletValue'>
               {currencySymbol}
-              {formatFiat(neoValue)} {displayCurrencyCode}
+              {invalidPrice ? '-' : <span>{formatFiat(neoValue)} {displayCurrencyCode}</span>}
             </div>
           </div>
           <div className='split'>
@@ -93,12 +95,12 @@ export default class WalletInfo extends Component<Props> {
             </div>
             <div className='fiat gasWalletValue'>
               {currencySymbol}
-              {formatFiat(gasValue)} {displayCurrencyCode}
+              {invalidPrice ? '-' : <span>{formatFiat(gasValue)} {displayCurrencyCode}</span>}
             </div>
           </div>
           <div className='fiat walletTotal'>
             Total {currencySymbol}
-            {formatFiat(totalValue)} {displayCurrencyCode}
+            {invalidPrice ? '-' : <span>{formatFiat(totalValue)} {displayCurrencyCode}</span>}
           </div>
           <div
             onClick={loadWalletData}

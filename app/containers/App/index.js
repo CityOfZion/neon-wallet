@@ -61,8 +61,7 @@ export default compose(
   withCall(pricesActions),
   withRecall(pricesActions, ['currency']),
   withProgressComponents(pricesActions, {
-    [LOADING]: Loading,
-    [FAILED]: Failed
+    [LOADING]: Loading
   }, {
     strategy: alreadyLoadedStrategy
   }),
