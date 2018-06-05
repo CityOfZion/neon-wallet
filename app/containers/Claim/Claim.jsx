@@ -28,7 +28,7 @@ export default class Claim extends Component<Props> {
           title={
             validClaimAmount
               ? 'You can claim GAS once every 5 minutes'
-              : 'There are problems with the network right now. Claimng GAS has been disabled until these issues have been resolved.'
+              : 'There are problems with the network right now. GAS Claiming has been disabled until these issues have been resolved.'
           }
           disabled={!disabled}
         >
