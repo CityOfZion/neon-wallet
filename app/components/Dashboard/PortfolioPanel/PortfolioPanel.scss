@@ -7,9 +7,11 @@
     flex-direction: row;
     align-items: stretch;
     height: 100%;
+    padding-left: 0;
 
     .chart {
       flex: 0 0 auto;
+      margin-top: -25px;
     }
 
     .table {
