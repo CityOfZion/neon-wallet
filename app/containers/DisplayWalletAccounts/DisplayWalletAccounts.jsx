@@ -22,14 +22,18 @@ type Props = {
 
 class DisplayWalletAccounts extends Component<Props> {
   publicCanvas: ?HTMLCanvasElement
+  encryptedCanvas: ?HTMLCanvasElement
   privateCanvas: ?HTMLCanvasElement
 
   componentDidMount () {
-    const { address, encryptedWIF } = this.props
-    QRCode.toCanvas(this.publicCanvas, address, { version: 5 }, err => {
+    const { address, encryptedWIF, wif } = this.props
+    QRCode.toCanvas(this.publicCanvas, address, { version: 5 }, (err) => {
       if (err) console.log(err)
     })
-    QRCode.toCanvas(this.privateCanvas, encryptedWIF, { version: 5 }, err => {
+    QRCode.toCanvas(this.encryptedCanvas, encryptedWIF, { version: 5 }, (err) => {
+      if (err) console.log(err)
+    })
+    QRCode.toCanvas(this.privateCanvas, wif, { version: 5 }, (err) => {
       if (err) console.log(err)
     })
   }
@@ -60,7 +64,7 @@ class DisplayWalletAccounts extends Component<Props> {
             before sending anything to the address below!
           </div>
           <div className={styles.qrContainer}>
-            <div>
+            <div className={styles.qrItem}>
               <canvas
                 ref={node => {
                   this.publicCanvas = node
@@ -70,14 +74,24 @@ class DisplayWalletAccounts extends Component<Props> {
                 <b>Public Address</b>
               </div>
             </div>
-            <div>
+            <div className={styles.qrItem}>
+              <canvas
+                ref={node => {
+                  this.encryptedCanvas = node
+                }}
+              />
+              <div>
+                <b>Encrypted Key</b>
+              </div>
+            </div>
+            <div className={styles.qrItem}>
               <canvas
                 ref={node => {
                   this.privateCanvas = node
                 }}
               />
               <div>
-                <b>Encrypted Private Key</b>
+                <b>Private Key</b>
               </div>
             </div>
           </div>

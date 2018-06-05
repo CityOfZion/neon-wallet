@@ -61,12 +61,12 @@
 
 .qrContainer {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  flex: 1;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 35px;
   min-width: 475px;
-  width: 60%;
+  width: 75%;
+
+  .qrItem {
+    flex: 1;
+  }
 }
