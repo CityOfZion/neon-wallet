@@ -29,8 +29,8 @@ export default class PortfolioBreakdownChart extends React.Component<Props> {
     const data = this.getData()
 
     return (
-      <ResponsiveContainer width={220} className={classNames(styles.priceHistoryChart, className)}>
-        <PieChart width={220} height={180}>
+      <ResponsiveContainer width={200} className={classNames(styles.priceHistoryChart, className)}>
+        <PieChart width={200} height={180}>
           <Pie data={data} dataKey="value" nameKey="symbol" innerRadius={40} outerRadius={75}>
             {times(data.length, (index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} stroke={COLORS[index]} />
