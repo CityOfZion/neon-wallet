@@ -8,8 +8,8 @@ exports[`ConfirmModal should render without crashing 1`] = `
   style={
     Object {
       "content": Object {
-        "height": "175px",
-        "width": "450px",
+        "height": "250px",
+        "width": "500px",
       },
     }
   }
