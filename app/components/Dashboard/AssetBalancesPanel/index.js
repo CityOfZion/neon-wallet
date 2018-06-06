@@ -7,6 +7,7 @@ import AssetBalancesPanel from './AssetBalancesPanel'
 import balancesActions from '../../../actions/balancesActions'
 import claimsActions from '../../../actions/claimsActions'
 import pricesActions from '../../../actions/pricesActions'
+import priceHistoryActions from '../../../actions/priceHistoryActions'
 import withBalancesData from '../../../hocs/withBalancesData'
 import withCurrencyData from '../../../hocs/withCurrencyData'
 import withPricesData from '../../../hocs/withPricesData'
@@ -14,7 +15,9 @@ import withLoadingProp from '../../../hocs/withLoadingProp'
 import withProgressPanel from '../../../hocs/withProgressPanel'
 import withSuccessNotification from '../../../hocs/withSuccessNotification'
 import withFailureNotification from '../../../hocs/withFailureNotification'
-import priceHistoryActions from '../../../actions/priceHistoryActions'
+import withNetworkData from '../../../hocs/withNetworkData'
+import withAuthData from '../../../hocs/withAuthData'
+import withFilteredTokensData from '../../../hocs/withFilteredTokensData'
 import { ASSETS } from '../../../core/constants'
 
 const mapBalanceDataToProps = (balances) => ({
@@ -56,6 +59,9 @@ export default compose(
 
   // Fetch price & balance data based based upon the selected currency.
   // Reload data with the currency changes.
+  withNetworkData(),
+  withAuthData(),
+  withFilteredTokensData(),
   withProgressPanel(batchActions, { title: 'Balances' }),
   withPricesData(mapPricesDataToProps),
   withBalancesData(mapBalanceDataToProps),
