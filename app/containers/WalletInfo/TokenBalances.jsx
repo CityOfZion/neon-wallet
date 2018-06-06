@@ -4,7 +4,7 @@ import React from 'react'
 import Table from '../../components/Table'
 import Tooltip from '../../components/Tooltip'
 
-import { MODAL_TYPES } from '../../core/constants'
+import { MODAL_TYPES, DEPRECATED_TOKENS } from '../../core/constants'
 import { formatBalance } from '../../core/formatters'
 import { isZero } from '../../core/math'
 
@@ -27,9 +27,10 @@ const TokenBalances = ({ tokenBalances, showModal }: Props) => (
     </thead>
     <tbody>
       {tokenBalances.map((token: TokenBalanceType, index: number) => {
-        const { balance, symbol } = token
+        const { balance, symbol, scriptHash } = token
         const formattedBalance = formatBalance(symbol, balance)
         const formattedBalanceDisplay = formatBalance(symbol, balance, true)
+        const deprecated = DEPRECATED_TOKENS.includes(scriptHash)
         return (
           <tr key={`${symbol}${index}`}>
             <td onClick={() => showModal(MODAL_TYPES.TOKEN_INFO, { token })}>
@@ -39,7 +40,7 @@ const TokenBalances = ({ tokenBalances, showModal }: Props) => (
               <Tooltip
                 title={formattedBalance}
                 disabled={isZero(balance)}>
-                {formattedBalanceDisplay}
+                {formattedBalanceDisplay} {deprecated && <span className={styles.deprecated}>(deprecated)</span>}
               </Tooltip>
             </td>
           </tr>

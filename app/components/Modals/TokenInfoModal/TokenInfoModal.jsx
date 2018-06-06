@@ -4,6 +4,7 @@ import React from 'react'
 import BaseModal from '../BaseModal'
 import Table from '../../Table'
 
+import { DEPRECATED_TOKENS } from '../../../core/constants'
 import { formatBalance, formatThousands } from '../../../core/formatters'
 
 import styles from './TokenInfoModal.scss'
@@ -47,6 +48,11 @@ const TokenInfoModal = ({ hideModal, token }: Props) => (
             <td>Balance</td>
             <td>{formatBalance(token.symbol, token.balance)}</td>
           </tr>
+          {DEPRECATED_TOKENS.includes(token.scriptHash) &&
+            <tr>
+              <td colSpan='2' className={styles.deprecated}>Deprecated token</td>
+            </tr>
+          }
         </tbody>
       </Table>
     </div>

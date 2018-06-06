@@ -68,6 +68,7 @@ declare type TokenItemType = {
 declare type TokenType = {
   symbol: SymbolType,
   balance: number,
+  scriptHash: string,
   totalSupply: number,
   decimals: number,
   name: string
