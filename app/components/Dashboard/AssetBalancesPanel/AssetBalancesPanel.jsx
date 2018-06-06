@@ -10,6 +10,9 @@ import { toNumber, toBigNumber } from '../../../core/math'
 import { ASSETS, CURRENCIES } from '../../../core/constants'
 import RefreshIcon from '../../../assets/icons/refresh.svg'
 import styles from './AssetBalancesPanel.scss'
+import { BigNumber } from 'bignumber.js'
+
+type PriceDirection = 'increase' | 'decrease'
 
 type Props = {
   className: ?string,
@@ -17,6 +20,8 @@ type Props = {
   GAS: string,
   neoPrice: number,
   gasPrice: number,
+  neoPriceChange: BigNumber,
+  gasPriceChange: BigNumber,
   currencyCode: string,
   loading: ?boolean,
   refresh: Function
@@ -41,9 +46,12 @@ export default class AssetBalancesPanel extends React.Component<Props> {
             <div className={styles.quantity} id="amountNeo">
               {formatNEO(NEO)}
             </div>
-            <div className={styles.value} id="neoWalletValue">
+            <span className={styles.value} id="neoWalletValue">
               {this.getFormattedFiatBalance(this.getNEOValue())}
-            </div>
+            </span>
+            <span className={classNames(styles.change, styles[this.getNEOPriceChangeDirection()])} id="priceChangeNeo">
+              {this.getNEOFormattedPriceChange()}
+            </span>
           </div>
           <div className={styles.asset}>
             <div className={styles.label}>{ASSETS.GAS}</div>
@@ -52,9 +60,12 @@ export default class AssetBalancesPanel extends React.Component<Props> {
                 {formatGAS(GAS, true)}
               </Tooltip>
             </div>
-            <div className={styles.value} id="gasWalletValue">
+            <span className={styles.value} id="gasWalletValue">
               {this.getFormattedFiatBalance(this.getGASValue())}
-            </div>
+            </span>
+            <span className={classNames(styles.change, styles[this.getGASPriceChangeDirection()])} id="priceChangeGas">
+              {this.getGASFormattedPriceChange()}
+            </span>
           </div>
         </div>
         <div className={styles.totalValue}>
@@ -94,14 +105,38 @@ export default class AssetBalancesPanel extends React.Component<Props> {
     return `${symbol}${formatFiat(value)}`
   }
 
+  getFormattedPriceChange = (priceChange: BigNumber): string => {
+    return (priceChange.isNegative() ? '' : '+') + priceChange.times(100).toFixed(2).toString() + '%'
+  }
+
+  getPriceChangeDirection = (priceChange: BigNumber): PriceDirection => {
+    return priceChange.isNegative() ? 'decrease' : 'increase'
+  }
+
   getNEOValue = (): number => {
     const { NEO, neoPrice } = this.props
     return neoPrice && NEO !== '0' ? neoPrice * toNumber(NEO) : 0
   }
 
+  getNEOFormattedPriceChange = (): string => {
+    return this.getFormattedPriceChange(this.props.neoPriceChange)
+  }
+
+  getNEOPriceChangeDirection = (): PriceDirection => {
+    return this.getPriceChangeDirection(this.props.neoPriceChange)
+  }
+
   getGASValue = (): number => {
     const { GAS, gasPrice } = this.props
     return gasPrice && GAS !== '0' ? gasPrice * toNumber(GAS) : 0
+  }
+
+  getGASFormattedPriceChange = (): string => {
+    return this.getFormattedPriceChange(this.props.gasPriceChange)
+  }
+
+  getGASPriceChangeDirection = (): PriceDirection => {
+    return this.getPriceChangeDirection(this.props.gasPriceChange)
   }
 
   getTotalValue = (): number => {

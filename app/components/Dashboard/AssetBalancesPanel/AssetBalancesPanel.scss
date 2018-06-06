@@ -44,6 +44,22 @@
         color: #969aa0;
         font-size: 14px;
       }
+
+      .change {
+        margin-left: 10px;
+        color: white;
+        font-weight: bold;
+        border-radius: 3px;
+        padding: 1px 4px;
+
+        &.increase {
+          background-color: #5abf6b;
+        }
+ 
+        &.decrease {
+          background-color: #ee6d66;
+        }
+      }
     }
   }
 

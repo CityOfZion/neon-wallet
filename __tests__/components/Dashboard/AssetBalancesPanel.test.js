@@ -6,7 +6,7 @@ import { progressValues } from 'spunky'
 
 import { createStore, provideStore, provideState } from '../../testHelpers'
 import AssetBalancesPanel from '../../../app/components/Dashboard/AssetBalancesPanel'
-import { DEFAULT_CURRENCY_CODE, MAIN_NETWORK_ID } from '../../../app/core/constants'
+import { DEFAULT_CURRENCY_CODE, MAIN_NETWORK_ID, ASSETS } from '../../../app/core/constants'
 
 const { LOADED } = progressValues
 
@@ -41,6 +41,23 @@ const initialState = {
       data: {
         NEO: 25.48,
         GAS: 18.1
+      },
+      loadedCount: 1
+    },
+    priceHistory: {
+      batch: false,
+      progress: LOADED,
+      data: {
+        [ASSETS.NEO]: new Array(29).fill({}).concat({
+          close: 5
+        }, {
+          close: 10
+        }),
+        [ASSETS.GAS]: new Array(29).fill({}).concat({
+          close: 10
+        }, {
+          close: 5
+        })
       },
       loadedCount: 1
     },
@@ -91,6 +108,8 @@ describe('AssetBalancesPanel', () => {
     expect(wrapper.find('#walletTotal').text()).toEqual(`$2,566,125.48`)
     expect(wrapper.find('#amountNeo').text()).toEqual('100,001')
     expect(wrapper.find('#amountGas').text()).toEqual('1,000.0002')
+    expect(wrapper.find('#priceChangeNeo').text()).toEqual('+100.00%')
+    expect(wrapper.find('#priceChangeGas').text()).toEqual('-50.00%')
   })
 
   test('account data refreshes when refresh button is clicked', () => {
