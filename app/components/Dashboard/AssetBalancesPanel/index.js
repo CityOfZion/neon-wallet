@@ -19,6 +19,7 @@ import withNetworkData from '../../../hocs/withNetworkData'
 import withAuthData from '../../../hocs/withAuthData'
 import withFilteredTokensData from '../../../hocs/withFilteredTokensData'
 import { ASSETS } from '../../../core/constants'
+import { toBigNumber } from '../../../core/math'
 
 const mapBalanceDataToProps = (balances) => ({
   NEO: balances.NEO,
@@ -32,14 +33,14 @@ const mapPricesDataToProps = ({ NEO, GAS }) => ({
 })
 
 const mapPriceChangeDataToProps = (prices, props) => {
-  const oldNeo = prices[ASSETS.NEO][prices[ASSETS.NEO].length - 2].close
-  const newNeo = prices[ASSETS.NEO][prices[ASSETS.NEO].length - 1].close
-  const oldGas = prices[ASSETS.GAS][prices[ASSETS.GAS].length - 2].close
-  const newGas = prices[ASSETS.GAS][prices[ASSETS.GAS].length - 1].close
+  const oldNeo = toBigNumber(prices[ASSETS.NEO][prices[ASSETS.NEO].length - 2].close)
+  const newNeo = toBigNumber(prices[ASSETS.NEO][prices[ASSETS.NEO].length - 1].close)
+  const oldGas = toBigNumber(prices[ASSETS.GAS][prices[ASSETS.GAS].length - 2].close)
+  const newGas = toBigNumber(prices[ASSETS.GAS][prices[ASSETS.GAS].length - 1].close)
 
   return {
-    neoPriceChange: (newNeo - oldNeo) / oldNeo,
-    gasPriceChange: (newGas - oldGas) / oldGas
+    neoPriceChange: newNeo.sub(oldNeo).dividedBy(oldNeo),
+    gasPriceChange: newGas.sub(oldGas).dividedBy(oldGas)
   }
 }
 

@@ -10,6 +10,9 @@ import { toNumber, toBigNumber } from '../../../core/math'
 import { ASSETS, CURRENCIES } from '../../../core/constants'
 import RefreshIcon from '../../../assets/icons/refresh.svg'
 import styles from './AssetBalancesPanel.scss'
+import { BigNumber } from 'bignumber.js'
+
+type PriceDirection = 'increase' | 'decrease'
 
 type Props = {
   className: ?string,
@@ -102,21 +105,25 @@ export default class AssetBalancesPanel extends React.Component<Props> {
     return `${symbol}${formatFiat(value)}`
   }
 
+  getFormattedPriceChange = (priceChange: BigNumber): string => {
+    return (priceChange.isNegative() ? '' : '+') + priceChange.times(100).toFixed(2).toString() + '%'
+  }
+
+  getPriceChangeDirection = (priceChange: BigNumber): PriceDirection => {
+    return priceChange.isNegative() ? 'decrease' : 'increase'
+  }
+
   getNEOValue = (): number => {
     const { NEO, neoPrice } = this.props
     return neoPrice && NEO !== '0' ? neoPrice * toNumber(NEO) : 0
   }
 
   getNEOFormattedPriceChange = (): string => {
-    return (this.props.neoPriceChange >= 0 ? '+' : '') + (this.props.neoPriceChange * 100).toFixed(2) + '%'
+    return this.getFormattedPriceChange(this.props.neoPriceChange)
   }
 
-  getNEOPriceChangeDirection = (): string => {
-    if (this.props.neoPriceChange < 0) {
-      return 'decrease'
-    } else {
-      return 'increase'
-    }
+  getNEOPriceChangeDirection = (): PriceDirection => {
+    return this.getPriceChangeDirection(this.props.neoPriceChange)
   }
 
   getGASValue = (): number => {
@@ -125,15 +132,11 @@ export default class AssetBalancesPanel extends React.Component<Props> {
   }
 
   getGASFormattedPriceChange = (): string => {
-    return (this.props.gasPriceChange >= 0 ? '+' : '') + (this.props.gasPriceChange * 100).toFixed(2) + '%'
+    return this.getFormattedPriceChange(this.props.gasPriceChange)
   }
 
-  getGASPriceChangeDirection = (): string => {
-    if (this.props.gasPriceChange < 0) {
-      return 'decrease'
-    } else {
-      return 'increase'
-    }
+  getGASPriceChangeDirection = (): PriceDirection => {
+    return this.getPriceChangeDirection(this.props.gasPriceChange)
   }
 
   getTotalValue = (): number => {
