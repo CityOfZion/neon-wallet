@@ -109,6 +109,7 @@
     "sifter": "0.5.3",
     "spunky": "^1.3.1",
     "svg-react-loader": "^0.4.5",
+    "typeface-montserrat": "^0.0.54",
     "uuid": "^3.2.1"
   },
   "devDependencies": {
