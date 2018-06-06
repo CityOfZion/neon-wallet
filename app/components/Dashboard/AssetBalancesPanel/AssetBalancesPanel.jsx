@@ -20,8 +20,8 @@ type Props = {
   GAS: string,
   neoPrice: number,
   gasPrice: number,
-  neoPriceChange: number,
-  gasPriceChange: number,
+  neoPriceChange: BigNumber,
+  gasPriceChange: BigNumber,
   currencyCode: string,
   loading: ?boolean,
   refresh: Function
