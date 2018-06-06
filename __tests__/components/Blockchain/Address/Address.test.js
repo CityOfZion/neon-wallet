@@ -12,7 +12,14 @@ describe('Address', () => {
   }
 
   test('should render without crashing', () => {
-    const wrapper = shallow(<Address {...props} />)
+    const wrapper = shallow(<Address { ...props } />)
     expect(wrapper).toMatchSnapshot()
   })
+
+  test('should handle the click event', () => {
+    const spy = jest.spyOn(Address.prototype, 'handleClick')
+    const wrapper = shallow(<Address { ...props } />)
+    wrapper.simulate('click')
+    expect(spy).toHaveBeenCalled();
+  });
 })
