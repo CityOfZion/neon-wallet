@@ -13,6 +13,7 @@ import AddContact from '../../containers/AddContact'
 import EditContact from '../../containers/EditContact'
 import Settings from '../../containers/Settings'
 import TransactionHistory from '../../containers/TransactionHistory'
+import WalletManager from '../../containers/WalletManager'
 import DisplayWalletAccounts from '../../containers/DisplayWalletAccounts'
 import { ROUTES } from '../../core/constants'
 
@@ -27,6 +28,7 @@ export default () => (
         component={DisplayWalletAccounts}
       />
       <Route exact path={ROUTES.SETTINGS} component={Settings} />
+      <Route exact path={ROUTES.WALLET_MANAGER} component={WalletManager} />
       <PrivateRoute exact path={ROUTES.DASHBOARD} component={Dashboard} />
       <PrivateRoute exact path={ROUTES.RECEIVE} component={Receive} />
       <PrivateRoute exact path={ROUTES.CONTACTS} component={Contacts} />

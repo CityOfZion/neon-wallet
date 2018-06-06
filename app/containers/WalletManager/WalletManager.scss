@@ -1,0 +1,86 @@
+.walletManager {
+  padding: 20px 150px;
+}
+
+.panelHeaderContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #f2f2f2;
+  color: #515151;
+  height: 80px;
+  width: 100%;
+}
+
+.walletList {
+  background: #fff;
+  min-height: 300px;
+  height: 55vh;
+  overflow-y: scroll;
+}
+
+.navRow {
+  display: flex;
+  align-items: center;
+  width: 200px;
+  margin-left: 10px;
+  justify-content: space-around;
+}
+
+.buttonRow {
+  margin-top: 50px;
+  height: 100px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.buttonContainer {
+  width: 40%;
+  max-width: 300px;
+}
+
+.accountInfoRow {
+  padding: 20px;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.accountInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.accountLabel {
+  color: #515151;
+}
+
+.address {
+  color: #ccc;
+  font-size: 12px;
+}
+
+.accountButtons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-left: 25px;
+  justify-content: flex-end;
+}
+
+.editAccountButton {
+  width: 50px;
+  margin-right: 50px;
+}
+.deleteAccountButton {
+  width: 150px;
+}
+
+.editLabelButtonRow {
+  display: flex;
+  width: 100px;
+  margin-right: 50px;
+  flex-direction: row;
+}
