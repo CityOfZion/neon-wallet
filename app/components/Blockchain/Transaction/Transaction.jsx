@@ -13,17 +13,25 @@ type Props = {
 }
 
 export default class Transaction extends React.Component<Props> {
-  render = () => {
+  handleClick: Function
+
+  constructor (props: Props) {
+    super(props)
+
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  render () {
     const { txid, className } = this.props
 
     return (
       <span className={classNames(styles.transaction, className)} onClick={this.handleClick}>
-        {txid.substring(0, 32)}
+        { txid.substring(0, 32) }
       </span>
     )
   }
 
-  handleClick = () => {
+  handleClick () {
     const { networkId, explorer, txid } = this.props
     openExplorerTx(networkId, explorer, txid)
   }
