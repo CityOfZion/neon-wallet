@@ -27,6 +27,7 @@ type Props = {
   duration: Duration,
   currency: string,
   prices: Array<Price>,
+  staticPrice: number,
   setAsset: Function,
   setDuration: Function
 }
@@ -39,11 +40,11 @@ const DURATIONS: { [key: Duration]: string } = {
 
 export default class PriceHistoryPanel extends React.Component<Props> {
   render = () => {
-    const { className, prices, currency } = this.props
+    const { className, prices, currency, staticPrice } = this.props
 
     return (
       <Panel className={classNames(styles.priceHistoryPanel, className)} renderHeader={this.renderHeader}>
-        <PriceHistoryChart prices={prices} currency={currency} formatDate={this.formatDate} />
+        <PriceHistoryChart prices={prices} currency={currency} staticPrice={staticPrice} formatDate={this.formatDate} />
       </Panel>
     )
   }
