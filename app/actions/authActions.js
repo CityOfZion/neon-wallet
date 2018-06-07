@@ -60,7 +60,7 @@ export const nep2LoginActions = createActions(ID, ({ passphrase, encryptedWIF, l
     try {
       accounts = await saveAccount(label, address, encryptedWIF)
       // Execute on next thread
-      const timeoutInstance = await setTimeout(() => {
+      await setTimeout(() => {
         callback && callback(accounts)
       }, 100)
     } catch (error) {
