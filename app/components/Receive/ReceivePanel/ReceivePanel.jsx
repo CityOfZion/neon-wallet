@@ -39,7 +39,7 @@ export default class ReceivePanel extends React.Component<Props, State> {
     return (
       <Panel className={classNames(styles.receivePanel, className)} renderHeader={this.renderHeader}>
         <div className={styles.qrcode}>
-          <img ref={(el: HTMLImageElement) => { this.image = el }} />
+          <img ref={(el: ?HTMLImageElement) => { this.image = el }} />
         </div>
         <div>
           <div className={styles.address}>
