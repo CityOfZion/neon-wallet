@@ -33,14 +33,15 @@ export default class LoginPrivateKey extends Component<Props, State> {
           <div className={loginStyles.loginForm}>
             <PasswordField
               placeholder='Enter your private key here (WIF)'
+              value={wif}
               onChange={(e) => this.setState({ wif: e.target.value })}
               autoFocus
             />
           </div>
-          <div>
+          <div className={loginStyles.buttonContainer}>
             <Button type='submit' disabled={loginButtonDisabled}>Login</Button>
             <HomeButtonLink />
-            <QrCodeScanner callback={loginWithPrivateKey} />
+            <QrCodeScanner callback={content => this.setState({ wif: content })} />
           </div>
         </form>
       </div>

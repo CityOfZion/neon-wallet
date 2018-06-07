@@ -39,6 +39,7 @@ class QrCodeScanner extends Component<Props, State> {
     const newScannerInstance = new Instascan.Scanner({ video: this.scanPreviewElement })
     newScannerInstance.addListener('scan', content => {
       newScannerInstance.stop()
+      this.setState(prevState => ({scannerInstance: null}))
       callback(content)
     })
     Instascan.Camera.getCameras().then((cameras: Array<Object>) => {
@@ -56,7 +57,7 @@ class QrCodeScanner extends Component<Props, State> {
     const { scannerInstance } = this.state
     return (
       <div className={styles.qrCodeScannerContent}>
-        <Button onClick={() => this.toggleScanner()}>{!scannerInstance ? 'Scan' : 'Cancel'}</Button>
+        <Button onClick={() => this.toggleScanner()}>{!scannerInstance ? 'Scan QR Code' : 'Cancel'}</Button>
         <video ref={ref => { this.scanPreviewElement = ref }} />
       </div>
     )
