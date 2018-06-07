@@ -95,10 +95,10 @@ export default class EncryptedLoginModal extends Component<Props, State> {
               cancel
               disabled={pendingLogin}
               onClick={hideModal}>Cancel</Button>
+            <div className={styles.errorMessage}>{errorMsg}</div>
           </div>
         </form>
         {pendingLogin && <Loader />}
-        <div className={styles.errorMessage}>{errorMsg}</div>
       </BaseModal>
     )
   }
