@@ -48,16 +48,16 @@ const initialState = {
       batch: false,
       progress: LOADED,
       data: {
-        [ASSETS.NEO]: new Array(29).fill({}).concat({
+        [ASSETS.NEO]: [{
           close: 5
-        }, {
+        }, ...new Array(29).fill({}), {
           close: 10
-        }),
-        [ASSETS.GAS]: new Array(29).fill({}).concat({
+        }],
+        [ASSETS.GAS]: [{
           close: 10
-        }, {
+        }, ...new Array(29).fill({}), {
           close: 5
-        })
+        }]
       },
       loadedCount: 1
     },
