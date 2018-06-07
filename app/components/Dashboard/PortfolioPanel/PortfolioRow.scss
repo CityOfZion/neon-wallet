@@ -23,6 +23,10 @@
     border-radius: 50%;
   }
 
+  .symbol {
+    flex-grow: 1.67;
+  }
+
   .balance,
   .value {
     flex-grow: 2;
