@@ -8,7 +8,7 @@ import AssetInput from '../../Inputs/AssetInput'
 import NumberInput from '../../Inputs/NumberInput'
 import CopyToClipboard from '../../CopyToClipboard'
 import { Address } from '../../Blockchain'
-import { TOKENS } from '../../../core/constants'
+import { ASSETS, TOKENS } from '../../../core/constants'
 import { COIN_DECIMAL_LENGTH } from '../../../core/formatters'
 
 import styles from './ReceivePanel.scss'
@@ -34,12 +34,12 @@ export default class ReceivePanel extends React.Component<Props, State> {
   render () {
     const { className, address } = this.props
     const { asset, amount } = this.state
-    const symbols = ['-', 'NEO', 'GAS', ...Object.keys(TOKENS)]
+    const symbols = ['-', ASSETS.NEO, ASSETS.GAS, ...Object.keys(TOKENS)]
 
     return (
       <Panel className={classNames(styles.receivePanel, className)} renderHeader={this.renderHeader}>
         <div className={styles.qrcode}>
-          <img ref={this.registerRef} />
+          <img ref={(el: HTMLImageElement) => { this.image = el }} />
         </div>
         <div>
           <div className={styles.address}>
@@ -69,11 +69,6 @@ export default class ReceivePanel extends React.Component<Props, State> {
     return <span>Your Public NEO Address</span>
   }
 
-  // $FlowFixMe
-  registerRef = (el: HTMLImageElement) => {
-    this.image = el
-  }
-
   componentDidMount () {
     const { address } = this.props
     const { asset, amount } = this.state
@@ -89,7 +84,7 @@ export default class ReceivePanel extends React.Component<Props, State> {
 
     if (assetChanged || amountChanged) {
       let convertedAsset
-      if (asset === 'NEO' || asset === 'GAS') {
+      if (asset === ASSETS.NEO || asset === ASSETS.GAS) {
         convertedAsset = asset
       } else if (asset) {
         convertedAsset = TOKENS[asset]
@@ -107,11 +102,5 @@ export default class ReceivePanel extends React.Component<Props, State> {
           this.image.src = imgData
         }
       })
-  }
-
-  getSymbols = () => {
-    // return Object.keys(pickBy(this.props.balances, (balance: string, symbol: string) => {
-    //   return [ASSETS.NEO, ASSETS.GAS].includes(symbol) || balance !== '0'
-    // }))
   }
 }
