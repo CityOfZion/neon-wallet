@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import Button from '../../components/Button'
 import HomeButtonLink from '../../components/HomeButtonLink'
 import PasswordField from '../../components/PasswordField'
+import { showSuccessNotification } from '../../modules/notifications'
 
 import loginStyles from '../../styles/login.scss'
 
@@ -28,7 +29,7 @@ export default class LoginNep2 extends Component<Props, State> {
   }
 
   render () {
-    const { loginNep2, updateAccounts } = this.props
+    const { loginNep2, updateAccounts, dispatch } = this.props
     const { encryptedWIF, passphrase, label, save } = this.state
     const loginButtonDisabled = encryptedWIF === '' || passphrase === '' || (save && !label)
 
@@ -37,7 +38,10 @@ export default class LoginNep2 extends Component<Props, State> {
         <div className={loginStyles.title}>Login using an encrypted key:</div>
         <form onSubmit={async (e) => {
           e.preventDefault()
-          loginNep2(passphrase, encryptedWIF, save && label, updateAccounts)
+          loginNep2(passphrase, encryptedWIF, save && label, accounts => {
+            dispatch(showSuccessNotification({ message: 'Account saved!' }))
+            updateAccounts(accounts)
+          })
         }}>
           <div className={loginStyles.loginForm}>
             <PasswordField
