@@ -1,4 +1,5 @@
 // @flow
+import { get } from 'lodash'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
@@ -14,8 +15,8 @@ const mapStateToProps = (state: Object) => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({ doGasClaim }, dispatch)
 
-const mapClaimsDataToProps = (claims) => ({
-  claimAmount: claims.total
+const mapClaimsDataToProps = (claims: { total: ?string }): { claimAmount: ?string} => ({
+  claimAmount: get(claims, 'total', null)
 })
 
 export default compose(

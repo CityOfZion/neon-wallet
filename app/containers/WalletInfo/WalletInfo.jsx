@@ -20,8 +20,8 @@ import TokenBalances from './TokenBalances'
 
 type Props = {
   address: string,
-  NEO: string,
-  GAS: string,
+  NEO: ?string,
+  GAS: ?string,
   neoPrice: ?number,
   gasPrice: ?number,
   icoTokenBalances: Array<TokenBalanceType>,
@@ -60,10 +60,12 @@ export default class WalletInfo extends Component<Props> {
       return null
     }
 
-    const neoValue = neoPrice && NEO !== '0'
+    const invalidPrice = isNil(neoPrice) || isNil(gasPrice)
+
+    const neoValue = neoPrice && NEO && NEO !== '0'
       ? toBigNumber(neoPrice).mul(NEO) : toBigNumber(0)
 
-    const gasValue = gasPrice && GAS !== '0'
+    const gasValue = gasPrice && GAS && GAS !== '0'
       ? toBigNumber(gasPrice).mul(GAS) : toBigNumber(0)
 
     const totalValue = neoValue.plus(gasValue).toString()
@@ -76,27 +78,29 @@ export default class WalletInfo extends Component<Props> {
         <div id='balance'>
           <div className='split'>
             <div className='label'>{ASSETS.NEO}</div>
-            <div className='amountBig amountNeo'>{formatNEO(NEO)}</div>
+            <div className='amountBig amountNeo'>{NEO ? formatNEO(NEO) : '-'}</div>
             <div className='fiat neoWalletValue'>
               {currencySymbol}
-              {formatFiat(neoValue)} {displayCurrencyCode}
+              {invalidPrice ? '-' : <span>{formatFiat(neoValue)} {displayCurrencyCode}</span>}
             </div>
           </div>
           <div className='split'>
             <div className='label'>{ASSETS.GAS}</div>
             <div className='amountBig amountGas'>
-              <Tooltip title={formatGAS(GAS)} disabled={GAS === 0}>
-                {formatGAS(GAS, true)}
-              </Tooltip>
+              {GAS
+                ? <Tooltip title={formatGAS(GAS)} disabled={GAS === 0}>
+                  {formatGAS(GAS, true)}
+                </Tooltip> : '-'
+              }
             </div>
             <div className='fiat gasWalletValue'>
               {currencySymbol}
-              {formatFiat(gasValue)} {displayCurrencyCode}
+              {invalidPrice ? '-' : <span>{formatFiat(gasValue)} {displayCurrencyCode}</span>}
             </div>
           </div>
           <div className='fiat walletTotal'>
             Total {currencySymbol}
-            {formatFiat(totalValue)} {displayCurrencyCode}
+            {invalidPrice ? '-' : <span>{formatFiat(totalValue)} {displayCurrencyCode}</span>}
           </div>
           <div
             onClick={loadWalletData}
