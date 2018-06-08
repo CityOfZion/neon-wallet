@@ -89,7 +89,7 @@ export default class EncryptedLoginModal extends Component<Props, State> {
             <Button
               type='submit'
               disabled={loginButtonDisabled || pendingLogin}
-            >Login</Button>
+            >Authenticate</Button>
             <Button
               id='cancel'
               cancel
