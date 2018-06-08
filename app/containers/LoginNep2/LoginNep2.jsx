@@ -10,7 +10,8 @@ import loginStyles from '../../styles/login.scss'
 
 type Props = {
   loginNep2: Function,
-  updateAccounts: Function
+  updateAccounts: Function,
+  dispatch: Function
 }
 
 type State = {
