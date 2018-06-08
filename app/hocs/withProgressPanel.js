@@ -11,7 +11,6 @@ const mapActionsToProps = (action, props) => ({
 })
 
 export default function withProgressPanel (actions, { title, strategy = recentlyCompletedStrategy, ...options } = {}) {
-  console.log(actions, options, title)
   const Loading = withProps({ title })(LoadingPanel)
   const Failed = withProps((props) => ({ title, onRetry: props.onRetry }))(FailedPanel)
 
