@@ -36,9 +36,7 @@ exports[`Login renders without crashing 1`] = `
         Login
       </Button>
       <HomeButtonLink />
-      <QrCodeScanner
-        callback={[Function]}
-      />
+      <QrCodeScanner />
     </div>
   </form>
 </div>
