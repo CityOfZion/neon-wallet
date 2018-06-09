@@ -81,6 +81,9 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
               </label>
             </div>
           </div>
+          <div className={styles.addSmallestFee}>
+            <a onClick={() => onUpdatePriorityFee('0.00000001')}>+ Add smallest fee possible</a>
+          </div>
         </div>
 
         {message && (

@@ -131,7 +131,7 @@ export const sendTransaction = (sendEntries: Array<SendEntryType>, priorityFee: 
       tokensBalanceMap,
       address: fromAddress,
       publicKey,
-      fee: Number(priorityFee),
+      fees: Number(priorityFee),
       privateKey: new wallet.Account(wif).privateKey,
       signingFunction: isHardwareSend ? signingFunction : null
     })

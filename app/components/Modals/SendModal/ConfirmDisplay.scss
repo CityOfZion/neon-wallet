@@ -57,6 +57,17 @@
     }
 }
 
+.addSmallestFee {
+    margin-top: -5px;
+    margin-bottom: 10px;
+
+    a {
+        color: $link-color;
+        cursor: pointer;
+    }
+}
+
+
 .actions {
     margin-top: 20px;
     text-align: right;
