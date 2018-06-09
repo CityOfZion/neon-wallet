@@ -77,11 +77,13 @@ const makeRequest = (sendEntries: Array<SendEntryType>, config: Object) => {
     config.tokensBalanceMap
   )
 
-  const priorityFees = sendEntries.reduce((accum, currentValue) => {
+  const fees = sendEntries.reduce((accum, currentValue) => {
     const priorityFeeAsNumber = Number(currentValue.priorityFee)
     const total = priorityFeeAsNumber + accum
     return total
   }, 0)
+
+  console.log(fees)
 
   if (script === '') {
     return api.sendAsset({ ...config, intents: buildIntents(sendEntries) }, api.neoscan)
@@ -90,7 +92,8 @@ const makeRequest = (sendEntries: Array<SendEntryType>, config: Object) => {
       ...config,
       intents: buildIntents(sendEntries),
       script,
-      gas: priorityFees
+      gas: 0,
+      fees
     }, api.neoscan)
   }
 }
