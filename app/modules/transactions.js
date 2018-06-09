@@ -70,16 +70,12 @@ const buildTransferScript = (
 }
 
 const makeRequest = (sendEntries: Array<SendEntryType>, config: Object) => {
-  console.log({config})
   const script = buildTransferScript(
     config.net,
     sendEntries,
     config.address,
     config.tokensBalanceMap
   )
-
-  console.log({script})
-
   if (script === '') {
     return api.sendAsset({ ...config, intents: buildIntents(sendEntries) }, api.neoscan)
   } else {
