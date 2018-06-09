@@ -10,11 +10,6 @@
     .actions {
         flex: 0 0 auto;
     }
-
-    .table {
-        flex: 1 1 auto;
-        overflow: auto;
-    }
 }
 
 .table {
@@ -30,14 +25,15 @@
         cursor: pointer;
     }
 
-    .addRecipient {
-        margin-top: 10px;
-        text-align: right;
+}
 
-        a {
-            color: $link-color;
-            cursor: pointer;
-        }
+.addRecipient {
+    margin-top: 10px;
+    text-align: right;
+
+    a {
+        color: $link-color;
+        cursor: pointer;
     }
 }
 
@@ -64,4 +60,5 @@
 .actions {
     margin-top: 20px;
     text-align: right;
+    margin-bottom: 20px;
 }

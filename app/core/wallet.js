@@ -34,10 +34,9 @@ export const getTokenBalancesMap = (tokenBalances: { [key: string]: TokenBalance
 
 export const validateTransactionBeforeSending = (
   balance: number | string,
-  sendEntry: SendEntryType,
-  gasBalance: string
+  sendEntry: SendEntryType
 ) => {
-  const { address, amount, symbol, priorityFee } = sendEntry
+  const { address, amount, symbol } = sendEntry
 
   if (!address || !amount) {
     return 'Please specify an address and amount.'
@@ -63,10 +62,6 @@ export const validateTransactionBeforeSending = (
     return `You do not have enough ${symbol} to send.`
   }
 
-  if (priorityFee && toBigNumber(priorityFee).gt(gasBalance)) {
-    return `You do not have enough GAS to prioritize this transaction.`
-  }
-
   if (toBigNumber(amount).lte(0)) { // check for negative/zero asset
     return 'You cannot send zero or negative amounts of an asset.'
   }
@@ -80,7 +75,7 @@ export const validateTransactionsBeforeSending = (
 ) => {
   const getValidationError = sendEntry => {
     const balance = obtainBalance(balances, sendEntry.symbol)
-    return validateTransactionBeforeSending(balance, sendEntry, balances['GAS'])
+    return validateTransactionBeforeSending(balance, sendEntry)
   }
 
   const errorEntry = sendEntries.find(getValidationError)

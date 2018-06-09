@@ -3,33 +3,39 @@ import React from 'react'
 import Button from '../../Button'
 import Delete from 'react-icons/lib/md/delete'
 
+import NumberInput from '../../NumberInput'
 import Table from '../../Table'
 import { Address } from '../../Blockchain'
-import { formatBalance } from '../../../core/formatters'
+import { formatBalance, COIN_DECIMAL_LENGTH } from '../../../core/formatters'
 
 import styles from './ConfirmDisplay.scss'
+import addRecipientDisplayStyles from './AddRecipientDisplay.scss'
 
 type Props = {
   address: string,
+  balances: Object,
   entries: Array<SendEntryType>,
   message: string,
   onAddRecipient: Function,
   onDelete: Function,
   onConfirm: Function,
-  onCancel: Function
+  onCancel: Function,
+  priorityFee: string,
+  onUpdatePriorityFee: Function
 }
 
 type State = {
-  agree: boolean
+  agree: boolean,
 }
 
 export default class ConfirmDisplay extends React.Component<Props, State> {
   state = {
-    agree: false
+    agree: false,
+    priorityFee: ''
   }
 
   render () {
-    const { onConfirm, onCancel, entries, address, message } = this.props
+    const { onConfirm, onCancel, entries, address, message, balances, priorityFee, onUpdatePriorityFee } = this.props
     const { agree } = this.state
 
     return (
@@ -39,7 +45,6 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
             <thead>
               <tr>
                 <th>Asset</th>
-                <th>Priority Fee</th>
                 <th>Recipient</th>
                 <th>Actions</th>
               </tr>
@@ -48,7 +53,6 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
               {entries.map((entry, i) => (
                 <tr key={`entry-${i}`}>
                   <td>{formatBalance(entry.symbol, entry.amount)} {entry.symbol}</td>
-                  <td>{Number(entry.priorityFee)} GAS</td>
                   <td><Address address={entry.address} /></td>
                   <td>
                     <Delete className={styles.entryAction} onClick={this.handleDelete(entry)} />
@@ -57,9 +61,25 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
               ))}
             </tbody>
           </Table>
+        </div>
 
-          <div className={styles.addRecipient}>
-            <a onClick={this.props.onAddRecipient}>+ Add Recipient</a>
+        <div className={styles.addRecipient}>
+          <a onClick={this.props.onAddRecipient}>+ Add Recipient</a>
+        </div>
+
+        <div className={addRecipientDisplayStyles.inputs}>
+          <div className={addRecipientDisplayStyles.row}>
+            <div id='sendAmount' className={addRecipientDisplayStyles.column}>
+              <label className={addRecipientDisplayStyles.label}>Priority Fee:</label>
+              <NumberInput
+                value={priorityFee}
+                placeholder='Priority Fee'
+                options={{ numeralDecimalScale: COIN_DECIMAL_LENGTH }}
+                onChange={onUpdatePriorityFee} />
+              <label className={addRecipientDisplayStyles.label}>
+                ({balances['GAS']} GAS Available)
+              </label>
+            </div>
           </div>
         </div>
 

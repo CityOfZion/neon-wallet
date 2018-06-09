@@ -70,6 +70,7 @@ const buildTransferScript = (
 }
 
 const makeRequest = (sendEntries: Array<SendEntryType>, config: Object) => {
+  console.log({config})
   const script = buildTransferScript(
     config.net,
     sendEntries,
@@ -77,13 +78,7 @@ const makeRequest = (sendEntries: Array<SendEntryType>, config: Object) => {
     config.tokensBalanceMap
   )
 
-  const fees = sendEntries.reduce((accum, currentValue) => {
-    const priorityFeeAsNumber = Number(currentValue.priorityFee)
-    const total = priorityFeeAsNumber + accum
-    return total
-  }, 0)
-
-  console.log(fees)
+  console.log({script})
 
   if (script === '') {
     return api.sendAsset({ ...config, intents: buildIntents(sendEntries) }, api.neoscan)
@@ -92,13 +87,12 @@ const makeRequest = (sendEntries: Array<SendEntryType>, config: Object) => {
       ...config,
       intents: buildIntents(sendEntries),
       script,
-      gas: 0,
-      fees
+      gas: 0
     }, api.neoscan)
   }
 }
 
-export const sendTransaction = (sendEntries: Array<SendEntryType>) => async (
+export const sendTransaction = (sendEntries: Array<SendEntryType>, priorityFee: string) => async (
   dispatch: DispatchType,
   getState: GetStateType
 ): Promise<*> => {
@@ -141,6 +135,7 @@ export const sendTransaction = (sendEntries: Array<SendEntryType>) => async (
       tokensBalanceMap,
       address: fromAddress,
       publicKey,
+      fee: Number(priorityFee),
       privateKey: new wallet.Account(wif).privateKey,
       signingFunction: isHardwareSend ? signingFunction : null
     })

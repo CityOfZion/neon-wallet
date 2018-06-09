@@ -23,21 +23,19 @@ type Props = {
 type State = {
   address: string,
   amount: string,
-  symbol: SymbolType,
-  priorityFee: string
+  symbol: SymbolType
 }
 
 export default class AddRecipientDisplay extends React.Component<Props, State> {
   state = {
     address: '',
     amount: '',
-    symbol: Object.keys(this.props.balances)[0],
-    priorityFee: ''
+    symbol: Object.keys(this.props.balances)[0]
   }
 
   render = () => {
     const { balances, onCancel } = this.props
-    const { address, amount, priorityFee, symbol } = this.state
+    const { address, amount, symbol } = this.state
 
     const balance = balances[symbol]
     const max = formatBalance(symbol, balance)
@@ -76,19 +74,6 @@ export default class AddRecipientDisplay extends React.Component<Props, State> {
                 onChange={(value) => this.handleChange('address', value)} />
             </div>
           </div>
-          <div className={styles.row}>
-            <div id='sendAmount' className={styles.column}>
-              <label className={styles.label}>Priority Fee:</label>
-              <NumberInput
-                value={priorityFee}
-                placeholder='Priority Fee'
-                options={{ numeralDecimalScale: COIN_DECIMAL_LENGTH }}
-                onChange={(value) => this.handleChange('priorityFee', value)} />
-              <label className={styles.label}>
-                ({balances['GAS']} GAS Available)
-              </label>
-            </div>
-          </div>
         </div>
         <div className={styles.actions}>
           <Button cancel onClick={onCancel}>
@@ -107,8 +92,8 @@ export default class AddRecipientDisplay extends React.Component<Props, State> {
   }
 
   handleConfirm = () => {
-    const { address, amount, symbol, priorityFee } = this.state
-    this.props.onConfirm({ address, amount, symbol, priorityFee }, this.props.balances['GAS'])
+    const { address, amount, symbol } = this.state
+    this.props.onConfirm({ address, amount, symbol })
   }
 
   canConfirm = () => {
