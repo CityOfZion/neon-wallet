@@ -48,7 +48,7 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
               {entries.map((entry, i) => (
                 <tr key={`entry-${i}`}>
                   <td>{formatBalance(entry.symbol, entry.amount)} {entry.symbol}</td>
-                  <td>{entry.priorityFee} GAS</td>
+                  <td>{Number(entry.priorityFee)} GAS</td>
                   <td><Address address={entry.address} /></td>
                   <td>
                     <Delete className={styles.entryAction} onClick={this.handleDelete(entry)} />

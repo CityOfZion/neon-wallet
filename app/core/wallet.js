@@ -63,7 +63,7 @@ export const validateTransactionBeforeSending = (
     return `You do not have enough ${symbol} to send.`
   }
 
-  if (toBigNumber(priorityFee).gt(gasBalance)) {
+  if (priorityFee && toBigNumber(priorityFee).gt(gasBalance)) {
     return `You do not have enough GAS to prioritize this transaction.`
   }
 
