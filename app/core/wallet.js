@@ -36,7 +36,7 @@ export const validateTransactionBeforeSending = (
   balance: number | string,
   sendEntry: SendEntryType
 ) => {
-  const { address, amount, symbol } = sendEntry
+  const { address, amount, symbol, priorityFee, gasAmount } = sendEntry
 
   if (!address || !amount) {
     return 'Please specify an address and amount.'
@@ -60,6 +60,10 @@ export const validateTransactionBeforeSending = (
 
   if (toBigNumber(amount).gt(balance)) {
     return `You do not have enough ${symbol} to send.`
+  }
+
+  if (toBigNumber(priorityFee).gt(gasAmount)) {
+    return `You do not have enough GAS to prioritize this transaction.`
   }
 
   if (toBigNumber(amount).lte(0)) { // check for negative/zero asset

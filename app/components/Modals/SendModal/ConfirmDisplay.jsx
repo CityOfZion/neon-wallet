@@ -28,7 +28,8 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
     agree: false
   }
 
-  render () {
+  render() {
+    console.log({ state: this.state, props: this.props })
     const { onConfirm, onCancel, entries, address, message } = this.props
     const { agree } = this.state
 
@@ -39,6 +40,7 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
             <thead>
               <tr>
                 <th>Asset</th>
+                <th>Priority Fee</th>
                 <th>Recipient</th>
                 <th>Actions</th>
               </tr>
@@ -47,6 +49,7 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
               {entries.map((entry, i) => (
                 <tr key={`entry-${i}`}>
                   <td>{formatBalance(entry.symbol, entry.amount)} {entry.symbol}</td>
+                  <td>{entry.priorityFee} GAS</td>
                   <td><Address address={entry.address} /></td>
                   <td>
                     <Delete className={styles.entryAction} onClick={this.handleDelete(entry)} />
@@ -68,7 +71,7 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
         <div className={styles.agree}>
           <input id='agree' type='checkbox' checked={agree} onChange={() => this.setState({ agree: !agree })} />
           <label htmlFor='agree'>
-            I agree to transfer the above assets & tokens from{' '}
+            I agree to transfer the above assets & tokens from{' '} with a priority fee of
             <Address address={address} />.
           </label>
         </div>
