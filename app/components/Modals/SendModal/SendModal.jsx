@@ -107,7 +107,7 @@ export default class SendModal extends Component<Props, State> {
     })
   }
 
-  handleConfirmAddRecipient = async (entry: SendEntryType) => {
+  handleConfirmAddRecipient = async (entry: SendEntryType, gasBalance: string) => {
     const { showErrorNotification } = this.props
     const { balances } = this.state
 
@@ -116,7 +116,7 @@ export default class SendModal extends Component<Props, State> {
       return
     }
 
-    const error = validateTransactionBeforeSending(balances[entry.symbol], entry)
+    const error = validateTransactionBeforeSending(balances[entry.symbol], entry, gasBalance)
 
     if (error) {
       showErrorNotification({ message: error })

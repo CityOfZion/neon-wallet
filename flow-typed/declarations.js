@@ -83,7 +83,8 @@ declare type TokenBalanceType = {
 declare type SendEntryType = {
   amount: string,
   address: string,
-  symbol: SymbolType
+  symbol: SymbolType,
+  priorityFee: string
 }
 
 declare type Prices = {

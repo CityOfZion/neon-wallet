@@ -77,8 +77,9 @@ const makeRequest = (sendEntries: Array<SendEntryType>, config: Object) => {
     config.tokensBalanceMap
   )
 
-  const priorityFees = sendEntries.reduce((currentValue, accum) => {
-    const total = currentValue += accum
+  const priorityFees = sendEntries.reduce((accum, currentValue) => {
+    const priorityFeeAsNumber = Number(currentValue.priorityFee)
+    const total = priorityFeeAsNumber + accum
     return total
   }, 0)
 

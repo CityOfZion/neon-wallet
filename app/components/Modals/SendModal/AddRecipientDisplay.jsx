@@ -23,7 +23,8 @@ type Props = {
 type State = {
   address: string,
   amount: string,
-  symbol: SymbolType
+  symbol: SymbolType,
+  priorityFee: string
 }
 
 export default class AddRecipientDisplay extends React.Component<Props, State> {
@@ -107,7 +108,7 @@ export default class AddRecipientDisplay extends React.Component<Props, State> {
 
   handleConfirm = () => {
     const { address, amount, symbol, priorityFee } = this.state
-    this.props.onConfirm({ address, amount, symbol, priorityFee, gasAmount: this.props.balances['GAS'] })
+    this.props.onConfirm({ address, amount, symbol, priorityFee }, this.props.balances['GAS'])
   }
 
   canConfirm = () => {

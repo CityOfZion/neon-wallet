@@ -28,8 +28,7 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
     agree: false
   }
 
-  render() {
-    console.log({ state: this.state, props: this.props })
+  render () {
     const { onConfirm, onCancel, entries, address, message } = this.props
     const { agree } = this.state
 
@@ -71,7 +70,7 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
         <div className={styles.agree}>
           <input id='agree' type='checkbox' checked={agree} onChange={() => this.setState({ agree: !agree })} />
           <label htmlFor='agree'>
-            I agree to transfer the above assets & tokens from{' '} with a priority fee of
+            I agree to transfer the above assets & tokens from{' '}
             <Address address={address} />.
           </label>
         </div>
