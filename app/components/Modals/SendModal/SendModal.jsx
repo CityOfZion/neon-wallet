@@ -36,7 +36,8 @@ type BalancesType = {
 type State = {
   entries: Array<SendEntryType>,
   display: $Values<typeof DISPLAY_MODES>,
-  balances: BalancesType
+  balances: BalancesType,
+  priorityFee: string
 }
 
 export default class SendModal extends Component<Props, State> {
@@ -44,6 +45,7 @@ export default class SendModal extends Component<Props, State> {
   state = {
     entries: [],
     display: DISPLAY_MODES.ADD_RECIPIENT,
+    priorityFee: '',
     balances: {
       [ASSETS.NEO]: this.props.NEO,
       [ASSETS.GAS]: this.props.GAS,
@@ -53,12 +55,13 @@ export default class SendModal extends Component<Props, State> {
 
   render () {
     const { hideModal } = this.props
+    const { display } = this.state
     return (
       <BaseModal
         title="Send"
         hideModal={hideModal}
         shouldCloseWithEscapeKey={false}
-        style={{ content: { width: '925px', height: '410px' } }}>
+        style={{ content: { width: '925px', height: display === DISPLAY_MODES.ADD_RECIPIENT ? '350px' : '450px' } }}>
         {this.renderDisplay()}
       </BaseModal>
     )
@@ -85,10 +88,13 @@ export default class SendModal extends Component<Props, State> {
           onCancel={this.handleCancelTransaction}
           onAddRecipient={this.handleAddRecipient}
           onDelete={this.handleDeleteEntry}
+          onUpdatePriorityFee={this.handleUpdatePriorityFee}
           {...this.state} />
       )
     }
   }
+
+  handleUpdatePriorityFee = (priorityFee: string) => this.setState({priorityFee})
 
   handleAddRecipient = () => {
     this.setState({ display: DISPLAY_MODES.ADD_RECIPIENT })
@@ -143,9 +149,14 @@ export default class SendModal extends Component<Props, State> {
   }
 
   handleConfirmTransaction = () => {
-    const { sendTransaction } = this.props
-    const { entries } = this.state
-    sendTransaction(entries).then(this.close)
+    const { showErrorNotification, sendTransaction } = this.props
+    const { priorityFee, balances, entries } = this.state
+
+    if (priorityFee && toBigNumber(priorityFee).gt(balances.GAS)) {
+      showErrorNotification({ message: 'You do not have enough GAS to prioritize this transaction.' })
+      return
+    }
+    sendTransaction(entries, priorityFee).then(this.close)
   }
 
   handleCancelTransaction = () => {
