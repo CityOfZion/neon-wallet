@@ -1,10 +1,10 @@
 // @flow
 import { compose, withState } from 'recompose'
-import { withData, withActions, createBatchActions } from 'spunky'
+import { withData, withActions } from 'spunky'
 
 import PriceHistoryPanel from './PriceHistoryPanel'
+import priceHistoryPanelActions from '../../../actions/priceHistoryPanelActions'
 import priceHistoryActions from '../../../actions/priceHistoryActions'
-import pricesActions from '../../../actions/pricesActions'
 import withCurrencyData from '../../../hocs/withCurrencyData'
 import withProgressPanel from '../../../hocs/withProgressPanel'
 import withPricesData from '../../../hocs/withPricesData'
@@ -27,11 +27,6 @@ const mapPriceHistoryActionsToProps = (actions, props) => ({
   }
 })
 
-const batchActions = createBatchActions('priceHistoryPanel', {
-  prices: priceHistoryActions,
-  staticPrices: pricesActions
-})
-
 export default compose(
   // Refetch price history if the selected asset or duration changes
   withState('asset', 'setAsset', ASSETS.NEO),
@@ -39,7 +34,7 @@ export default compose(
   withActions(priceHistoryActions, mapPriceHistoryActionsToProps),
 
   // Fetch prices data based based upon the selected currency.  Reload data with the currency changes.
-  withProgressPanel(batchActions, { title: 'Historic Price' }),
+  withProgressPanel(priceHistoryPanelActions, { title: 'Historic Price' }),
   withCurrencyData('currency'),
   withPricesData(mapPriceDataToProps),
   withData(priceHistoryActions, mapPriceHistoryDataToProps)
