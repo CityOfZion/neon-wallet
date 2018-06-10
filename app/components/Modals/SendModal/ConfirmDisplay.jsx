@@ -69,11 +69,11 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
 
         <div className={addRecipientDisplayStyles.inputs}>
           <div className={addRecipientDisplayStyles.row}>
-            <div id='sendAmount' className={addRecipientDisplayStyles.column}>
+            <div id="sendAmount" className={addRecipientDisplayStyles.column}>
               <label className={addRecipientDisplayStyles.label}>Priority Fee:</label>
               <NumberInput
                 value={priorityFee}
-                placeholder='Priority Fee'
+                placeholder="Priority Fee"
                 options={{ numeralDecimalScale: COIN_DECIMAL_LENGTH }}
                 onChange={onUpdatePriorityFee} />
               <label className={addRecipientDisplayStyles.label}>
