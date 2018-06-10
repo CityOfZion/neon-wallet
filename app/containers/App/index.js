@@ -2,14 +2,11 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
-import { createBatchActions, withProgressComponents, alreadyLoadedStrategy, progressValues } from 'spunky'
+import { withProgressComponents, alreadyLoadedStrategy, progressValues } from 'spunky'
 
+import appActions from '../../actions/appActions'
 import authActions from '../../actions/authActions'
 import accountActions from '../../actions/accountActions'
-import accountsActions from '../../actions/accountsActions'
-import contactsActions from '../../actions/contactsActions'
-import networkActions from '../../actions/networkActions'
-import settingsActions from '../../actions/settingsActions'
 import withLoginRedirect from '../../hocs/auth/withLoginRedirect'
 import withLogoutRedirect from '../../hocs/auth/withLogoutRedirect'
 import withLogoutReset from '../../hocs/auth/withLogoutReset'
@@ -31,14 +28,6 @@ const actionCreators = {
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
 
-// TODO: move this into its own actions file
-const batchActions = createBatchActions('app', {
-  network: networkActions,
-  accounts: accountsActions,
-  settings: settingsActions,
-  contacts: contactsActions
-})
-
 export default compose(
   // Old way of fetching data, need to refactor this out...
   connect(null, mapDispatchToProps),
@@ -48,8 +37,8 @@ export default compose(
 
   // Fetch the initial network type, and pass it down as a prop.  This must come before other data
   // fetches that depend on knowing the selected network.
-  withInitialCall(batchActions),
-  withProgressComponents(batchActions, {
+  withInitialCall(appActions),
+  withProgressComponents(appActions, {
     [LOADING]: Loading,
     [FAILED]: Failed
   }, {

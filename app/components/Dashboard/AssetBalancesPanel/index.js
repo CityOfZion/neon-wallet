@@ -1,12 +1,11 @@
 // @flow
 import { compose } from 'recompose'
 import { values, omit } from 'lodash'
-import { createBatchActions, withActions, withData } from 'spunky'
+import { withActions, withData } from 'spunky'
 
 import AssetBalancesPanel from './AssetBalancesPanel'
+import assetBalancesPanelActions from '../../../actions/assetBalancesPanelActions'
 import balancesActions from '../../../actions/balancesActions'
-import claimsActions from '../../../actions/claimsActions'
-import pricesActions from '../../../actions/pricesActions'
 import priceHistoryActions from '../../../actions/priceHistoryActions'
 import withBalancesData from '../../../hocs/withBalancesData'
 import withCurrencyData from '../../../hocs/withCurrencyData'
@@ -48,13 +47,6 @@ const mapBalancesActionsToProps = (actions, props) => ({
   refresh: () => actions.call({ net: props.net, address: props.address, tokens: props.tokens })
 })
 
-// TODO: move this into its own actions file
-const batchActions = createBatchActions('assetBalancesPanel', {
-  prices: pricesActions,
-  claims: claimsActions,
-  balances: balancesActions
-})
-
 export default compose(
   withCurrencyData('currencyCode'),
 
@@ -63,7 +55,7 @@ export default compose(
   withNetworkData(),
   withAuthData(),
   withFilteredTokensData(),
-  withProgressPanel(batchActions, { title: 'Balances' }),
+  withProgressPanel(assetBalancesPanelActions, { title: 'Balances' }),
   withPricesData(mapPricesDataToProps),
   withBalancesData(mapBalanceDataToProps),
   withData(priceHistoryActions, mapPriceChangeDataToProps),
