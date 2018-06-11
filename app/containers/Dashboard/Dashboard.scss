@@ -53,6 +53,7 @@
 
 .transactionHistory {
   border-left: 1.5px solid #efefef;
+  position: relative;
 }
 
 .buttonContainer {
@@ -61,4 +62,12 @@
   padding: 16px 0px;
   font-weight: 200;
   font-size: 1.2em;
+}
+
+.sendDisabled {
+  opacity: 0.5;
+  cursor: default;
+  &:hover {
+    background-color: $default-button;
+  }
 }

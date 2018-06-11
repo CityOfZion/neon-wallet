@@ -1,14 +1,20 @@
 // @flow
 import { compose } from 'recompose'
-import { withData } from 'spunky'
+import { withCall, withData, withRecall } from 'spunky'
 
 import WalletBlockHeight from './WalletBlockHeight'
-import appActions from '../../../../actions/appActions'
+import withNetworkData from '../../../../hocs/withNetworkData'
+import blockHeightActions from '../../../../actions/blockHeightActions'
 
-const mapAppDataToProps = ({ blockHeight }): Object => ({
+const mapBlockHeightDataToProps = (blockHeight: ?number): {
+  blockHeight: ?number
+} => ({
   blockHeight
 })
 
 export default compose(
-  withData(appActions, mapAppDataToProps)
+  withNetworkData(),
+  withCall(blockHeightActions),
+  withData(blockHeightActions, mapBlockHeightDataToProps),
+  withRecall(blockHeightActions, ['networkId'])
 )(WalletBlockHeight)

@@ -8,7 +8,7 @@ import Transactions from './Transactions'
 import styles from './TransactionHistory.scss'
 
 type Props = {
-  transactions: Array<Object>,
+  transactions: Array<TransactionHistoryType>,
   loading: boolean
 }
 

@@ -13,12 +13,12 @@
     tbody {
         display: block;
         height: 245px;
-        overflow-y: auto;        
+        overflow-y: auto;
         td {
             width: 150px;
             box-sizing: border-box;
         }
-    }    
+    }
 }
 
 .symbol {
@@ -30,4 +30,9 @@
 
 .symbolIcon {
     padding-right: 5px;
+}
+
+.deprecated {
+    color: red;
+    text-align: center;
 }

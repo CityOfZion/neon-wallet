@@ -14,9 +14,7 @@ exports[`Claim should render claim GAS button as disabled 1`] = `
       primary={true}
       secondary={false}
     >
-      Claim 
-      1.25406935
-       GAS
+      Claim 1.25406935 GAS
     </Button>
   </Tooltip>
 </div>
@@ -36,9 +34,7 @@ exports[`Claim should render claim GAS button as enabled 1`] = `
       primary={true}
       secondary={false}
     >
-      Claim 
-      1.25406935
-       GAS
+      Claim 1.25406935 GAS
     </Button>
   </Tooltip>
 </div>

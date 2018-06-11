@@ -1,9 +1,8 @@
 // @flow
-import React from 'react'
 import { connect, type MapStateToProps } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
-import { omit } from 'lodash'
+import { omit, get } from 'lodash'
 import { withCall, withData, withRecall, withActions, withProgressComponents, alreadyLoadedStrategy, progressValues } from 'spunky'
 
 import Loader from '../../components/Loader'
@@ -17,18 +16,24 @@ import { sendTransaction } from '../../modules/transactions'
 
 import Dashboard from './Dashboard'
 
-const { LOADING, FAILED } = progressValues
-
-const Failed = <div>Failed to load.</div>
+const { LOADING } = progressValues
 
 const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
   notification: getNotifications(state)
 })
 
-const mapAccountDataToProps = ({ balances }) => ({
-  NEO: balances.NEO,
-  GAS: balances.GAS,
-  tokenBalances: omit(balances, 'NEO', 'GAS')
+const mapAccountDataToProps = ({
+  balances
+}: { balances: Balances }): {
+  NEO: string,
+  GAS: string,
+  tokenBalances: ?{
+    [key: string]: string
+  }
+} => ({
+  NEO: get(balances, 'NEO', null),
+  GAS: get(balances, 'GAS', null),
+  tokenBalances: balances ? omit(balances, 'NEO', 'GAS') : {}
 })
 
 const actionCreators = {
@@ -49,8 +54,7 @@ export default compose(
   withFilteredTokensData(),
   withCall(accountActions),
   withProgressComponents(accountActions, {
-    [LOADING]: Loader,
-    [FAILED]: Failed
+    [LOADING]: Loader
   }, {
     strategy: alreadyLoadedStrategy
   }),

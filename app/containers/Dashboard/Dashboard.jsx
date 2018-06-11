@@ -1,11 +1,14 @@
 // @flow
 import React, { Component } from 'react'
+import { isNil, noop } from 'lodash'
 import classNames from 'classnames'
 
 import TransactionHistory from '../TransactionHistory'
 import WalletInfo from '../WalletInfo'
 
 import { MODAL_TYPES } from '../../core/constants'
+
+import Tooltip from '../../components/Tooltip'
 
 import FaArrowUpward from 'react-icons/lib/fa/arrow-circle-up'
 import FaArrowDownward from 'react-icons/lib/fa/arrow-circle-down'
@@ -54,15 +57,19 @@ export default class Dashboard extends Component<Props> {
       sendTransaction
     } = this.props
 
+    // if we get a null for NEO or GAS that means the nodes must be down
+    const sendDisabled = isNil(NEO) || isNil(GAS)
+
     return (
       <div id='dashboard' className={styles.container}>
         <div className={styles.content}>
           <div className={styles.contentBox}>
             <div className={styles.walletButtons}>
+
               <div
-                className={classNames(styles.walletButton, styles.sendButton)}
-                onClick={() =>
-                  showModal(MODAL_TYPES.SEND, {
+                className={classNames(styles.walletButton, styles.sendButton, { [styles.sendDisabled]: sendDisabled })}
+                onClick={() => sendDisabled ? noop
+                  : showModal(MODAL_TYPES.SEND, {
                     NEO,
                     GAS,
                     tokenBalances,
@@ -72,8 +79,12 @@ export default class Dashboard extends Component<Props> {
                   })
                 }
               >
-                <FaArrowUpward className={styles.walletButtonIcon} />
-                <span className={styles.walletButtonText}>Send</span>
+                <Tooltip
+                  title='There are problems with the network right now. Sending tokens has been disabled until these issues have been resolved.'
+                  disabled={!sendDisabled}>
+                  <FaArrowUpward className={styles.walletButtonIcon} />
+                  <span className={styles.walletButtonText}>Send</span>
+                </Tooltip>
               </div>
               <div
                 className={styles.walletButton}

@@ -1,5 +1,5 @@
 // @flow
-import { api } from 'neon-js'
+import { api, rpc } from 'neon-js'
 import { createActions } from 'spunky'
 
 import { getNetworkById } from '../core/deprecated'
@@ -11,6 +11,8 @@ type Props = {
 export const ID = 'BLOCK_HEIGHT'
 
 export default createActions(ID, ({ networkId }: Props = {}) => async (state: Object) => {
-  const network = getNetworkById(networkId)
-  return api.getWalletDBHeightFrom({ net: network }, api.neoscan)
+  const net = getNetworkById(networkId)
+  const endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
+  const client = new rpc.RPCClient(endpoint)
+  return client.getBlockCount()
 })

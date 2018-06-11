@@ -32,7 +32,7 @@ describe('claimsActions', () => {
       })
     })
 
-    test("payload function requests the network's block height", async (done) => {
+    test('payload function requests max claim amount', async (done) => {
       const call = claimsActions.call({ net, address })
       expect(await call.payload.fn({})).toEqual({ total: '1.59140785' })
       done()

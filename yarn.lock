@@ -6737,9 +6737,9 @@ neo-async@^2.5.0:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.5.1.tgz#acb909e327b1e87ec9ef15f41b8a269512ad41ee"
 
-"neon-js@git+https://github.com/cityofzion/neon-js.git#3.7.0":
-  version "3.7.0"
-  resolved "git+https://github.com/cityofzion/neon-js.git#4b155ddf131d25208ffcc26571507509c24cf0ed"
+"neon-js@git+https://github.com/cityofzion/neon-js.git#3.7.3":
+  version "3.7.3"
+  resolved "git+https://github.com/cityofzion/neon-js.git#7aab57de5fe88f134dc6020e5d12f26aa46e21b4"
   dependencies:
     axios "^0.18.0"
     bignumber.js "5.0.0"

@@ -11,7 +11,7 @@ import styles from './Transactions.scss'
 
 type Props = {
   className?: string,
-  transactions: Array<Object>
+  transactions: Array<TransactionHistoryType>
 }
 
 export default class Transactions extends React.Component<Props> {
@@ -34,7 +34,7 @@ export default class Transactions extends React.Component<Props> {
     )
   }
 
-  renderAmounts (tx: Object) {
+  renderAmounts (tx: TransactionHistoryType) {
     const forceRenderNEO = !isZero(tx[ASSETS.NEO]) || isZero(tx[ASSETS.GAS])
 
     return (
@@ -45,7 +45,7 @@ export default class Transactions extends React.Component<Props> {
     )
   }
 
-  renderAmount (tx: Object, symbol: SymbolType, forceRender: boolean = false) {
+  renderAmount (tx: TransactionHistoryType, symbol: SymbolType, forceRender: boolean = false) {
     const amount = tx[symbol]
 
     if (forceRender || !isZero(amount)) {
