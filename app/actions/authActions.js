@@ -3,7 +3,7 @@ import { wallet } from 'neon-js'
 import { noop } from 'lodash'
 import { createActions } from 'spunky'
 
-import { upgradeNEP6AddAddresses } from '../core/account'
+import { upgradeNEP6AddAddresses, saveAccount } from '../core/account'
 import { validatePassphraseLength } from '../core/wallet'
 import { ledgerNanoSCreateSignatureAsync } from '../ledger/ledgerNanoS'
 
@@ -18,7 +18,9 @@ type LedgerLoginProps = {
 
 type Nep2LoginProps = {
   passphrase: string,
-  encryptedWIF: string
+  encryptedWIF: string,
+  label?: string,
+  callback?: Function
 }
 
 type AccountType = ?{
@@ -41,7 +43,7 @@ export const wifLoginActions = createActions(ID, ({ wif }: WifLoginProps) => (st
   return { wif: account.WIF, address: account.address, isHardwareLogin: false }
 })
 
-export const nep2LoginActions = createActions(ID, ({ passphrase, encryptedWIF }: Nep2LoginProps) => async (state: Object): Promise<AccountType> => {
+export const nep2LoginActions = createActions(ID, ({ passphrase, encryptedWIF, label, callback }: Nep2LoginProps) => async (state: Object): Promise<AccountType> => {
   if (!validatePassphraseLength(passphrase)) {
     throw new Error('Passphrase too short')
   }
@@ -52,10 +54,25 @@ export const nep2LoginActions = createActions(ID, ({ passphrase, encryptedWIF }:
 
   const wif = wallet.decrypt(encryptedWIF, passphrase)
   const account = new wallet.Account(wif)
+  const { address } = account
+  let accounts
+  if (label) {
+    try {
+      accounts = await saveAccount(label, address, encryptedWIF)
+      // Execute on next thread
+      await setTimeout(() => {
+        callback && callback(accounts)
+      }, 100)
+    } catch (error) {
+      if (error.message !== `Address '${address}' already exists.`) {
+        throw error
+      }
+    }
+  }
 
   await upgradeNEP6AddAddresses(encryptedWIF, wif)
 
-  return { wif: account.WIF, address: account.address, isHardwareLogin: false }
+  return { wif: account.WIF, address, isHardwareLogin: false }
 })
 
 export const ledgerLoginActions = createActions(ID, ({ publicKey }: LedgerLoginProps) => (state: Object): AccountType => {
