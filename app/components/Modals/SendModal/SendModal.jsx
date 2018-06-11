@@ -152,7 +152,7 @@ export default class SendModal extends Component<Props, State> {
     const { showErrorNotification, sendTransaction } = this.props
     const { priorityFee, balances, entries } = this.state
 
-    if (priorityFee && toBigNumber(priorityFee).gt(balances.GAS)) {
+    if (priorityFee && toBigNumber(priorityFee).gt(balances[ASSETS.GAS])) {
       showErrorNotification({ message: 'You do not have enough GAS to prioritize this transaction.' })
       return
     }

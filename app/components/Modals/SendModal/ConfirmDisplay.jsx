@@ -6,14 +6,19 @@ import Delete from 'react-icons/lib/md/delete'
 import NumberInput from '../../NumberInput'
 import Table from '../../Table'
 import { Address } from '../../Blockchain'
+import { ASSETS } from '../../../core/constants'
 import { formatBalance, COIN_DECIMAL_LENGTH } from '../../../core/formatters'
 
 import styles from './ConfirmDisplay.scss'
 import addRecipientDisplayStyles from './AddRecipientDisplay.scss'
 
+type BalancesType = {
+  [key: SymbolType]: string
+}
+
 type Props = {
   address: string,
-  balances: Object,
+  balances: BalancesType,
   entries: Array<SendEntryType>,
   message: string,
   onAddRecipient: Function,
@@ -77,7 +82,7 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
                 options={{ numeralDecimalScale: COIN_DECIMAL_LENGTH }}
                 onChange={onUpdatePriorityFee} />
               <label className={addRecipientDisplayStyles.label}>
-                ({balances['GAS']} GAS Available)
+                ({balances[ASSETS.GAS]} GAS Available)
               </label>
             </div>
           </div>
