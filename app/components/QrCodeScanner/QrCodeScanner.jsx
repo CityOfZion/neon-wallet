@@ -58,7 +58,9 @@ class QrCodeScanner extends Component<Props, State> {
     return (
       <div className={styles.qrCodeScannerContent}>
         <Button onClick={() => this.toggleScanner()}>{!scannerInstance ? 'Scan QR Code' : 'Cancel'}</Button>
-        <video ref={ref => { this.scanPreviewElement = ref }} />
+        <div className={styles.qrcodeScannerPreviewContainer}>
+          <video ref={ref => { this.scanPreviewElement = ref }} />
+        </div>
       </div>
     )
   }
