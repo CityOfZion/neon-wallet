@@ -95,7 +95,7 @@ export default class ReceivePanel extends React.Component<Props, State> {
   }
 
   updateQRCode (options: Object) {
-    const qrCode = new NeoQR(options, 250)
+    const qrCode = new NeoQR({nep9Data: options, width: 250})
     qrCode.toDataURL()
       .then(imgData => {
         if (this.image) {
