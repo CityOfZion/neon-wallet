@@ -8,10 +8,11 @@ import SendModal from '../../components/Modals/SendModal'
 import TokenInfoModal from '../../components/Modals/TokenInfoModal'
 import TokenModal from '../../components/Modals/TokenModal'
 import TokenSaleModal from '../../components/Modals/TokenSaleModal'
+import EncryptedLoginModal from '../../components/Modals/EncryptedLoginModal'
 
 import { MODAL_TYPES } from '../../core/constants'
 
-const { CONFIRM, RECEIVE, SEND, TOKEN_INFO, TOKEN, ICO } = MODAL_TYPES
+const { CONFIRM, RECEIVE, SEND, TOKEN_INFO, TOKEN, ICO, ENCRYPTED_LOGIN } = MODAL_TYPES
 
 const MODAL_COMPONENTS = {
   [CONFIRM]: ConfirmModal,
@@ -19,7 +20,8 @@ const MODAL_COMPONENTS = {
   [SEND]: SendModal,
   [TOKEN_INFO]: TokenInfoModal,
   [TOKEN]: TokenModal,
-  [ICO]: TokenSaleModal
+  [ICO]: TokenSaleModal,
+  [ENCRYPTED_LOGIN]: EncryptedLoginModal
 }
 
 type Props = {

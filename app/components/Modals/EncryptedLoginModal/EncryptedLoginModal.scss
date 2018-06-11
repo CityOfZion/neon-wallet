@@ -1,0 +1,19 @@
+.modalFooter {
+    padding-top: 20px;
+    text-align: right;
+}
+
+.cancelButton {
+    background: none;
+    border: 1px solid #999;
+    color: #000;
+    &:hover {
+        background: none
+    }
+}
+
+.errorMessage {
+    color: red;
+    float: left;
+    padding-top: 7px;
+}

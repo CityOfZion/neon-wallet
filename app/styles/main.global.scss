@@ -71,6 +71,7 @@ input {
   }
   .walletName,
   .walletKey,
+  .walletCredentials,
   .deleteWallet {
     display: inline-block;
     margin-right: 10px;
@@ -83,10 +84,16 @@ input {
     font-size: 0.8em;
     font-family: 'courier', monospace;
   }
+  .walletCredentials,
   .deleteWallet {
-    width: 10%;
     opacity: 0.6;
     cursor: pointer;
+  }
+  .deleteWallet {
+    width: 10%;
+  }
+  .walletCredentials {
+    width: 5%;
   }
 }
 
@@ -100,10 +107,6 @@ input {
 }
 
 #newWallet {
-  input {
-    width: 95%;
-    margin-bottom: 10px;
-  }
 
   .disclaimer {
     margin-bottom: 20px;
