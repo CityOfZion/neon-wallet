@@ -13,17 +13,25 @@ type Props = {
 }
 
 export default class Address extends React.Component<Props> {
-  render = () => {
+  handleClick: Function
+
+  constructor (props: Props) {
+    super(props)
+
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  render () {
     const { address, className } = this.props
 
     return (
       <span className={classNames(styles.address, className)} onClick={this.handleClick}>
-        {address}
+        { address }
       </span>
     )
   }
 
-  handleClick = () => {
+  handleClick () {
     const { networkId, explorer, address } = this.props
     openExplorerAddress(networkId, explorer, address)
   }

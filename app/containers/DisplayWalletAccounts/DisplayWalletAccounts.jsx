@@ -13,7 +13,8 @@ type Props = {
   wif: string,
   encryptedWIF: string,
   passphrase: string,
-  history: Object
+  history: Object,
+  isSaved?: boolean
 }
 
 type State = {
@@ -43,7 +44,7 @@ class DisplayWalletAccounts extends Component<Props, State> {
   }
 
   render () {
-    const { passphrase, address, encryptedWIF, wif, saveAccount } = this.props
+    const { passphrase, address, encryptedWIF, wif, saveAccount, isSaved } = this.props
     const { keyName } = this.state
     return (
       <div id='newWallet'>
@@ -89,10 +90,14 @@ class DisplayWalletAccounts extends Component<Props, State> {
             <CopyToClipboard text={wif} tooltip='Copy Private Key' />
           </div>
         </div>
-        <div className='saveAccount'>
-          <input autoFocus type='text' placeholder='Name this account' value={keyName} onChange={(e) => this.setState({ keyName: e.target.value })} />
-          <Button onClick={() => saveAccount(keyName, address, encryptedWIF)}>Save Account</Button>
-        </div>
+        {(() => {
+          return !isSaved && (
+            <div className='saveAccount'>
+              <input autoFocus type='text' placeholder='Name this account' value={keyName} onChange={(e) => this.setState({ keyName: e.target.value })} />
+              <Button onClick={() => saveAccount(keyName, address, encryptedWIF)}>Save Account</Button>
+            </div>
+          )
+        })()}
         <Button onClick={this.handleBack}>Back</Button>
         <Button onClick={this.handlePrint}>Print</Button>
       </div>

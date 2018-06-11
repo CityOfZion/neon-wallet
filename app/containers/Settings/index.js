@@ -9,6 +9,7 @@ import withExplorerData from '../../hocs/withExplorerData'
 import withCurrencyData from '../../hocs/withCurrencyData'
 import accountsActions, { updateAccountsActions } from '../../actions/accountsActions'
 import { updateSettingsActions } from '../../actions/settingsActions'
+import { nep2DetailsLoginActions } from '../../actions/authActions'
 import { getNetworks } from '../../core/networks'
 import { showErrorNotification, showSuccessNotification } from '../../modules/notifications'
 import { showModal } from '../../modules/modal'
@@ -20,7 +21,8 @@ const mapStateToProps = (state: Object) => ({
 const actionCreators = {
   showModal,
   showErrorNotification,
-  showSuccessNotification
+  showSuccessNotification,
+  nep2DetailsLoginActions
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(actionCreators, dispatch)

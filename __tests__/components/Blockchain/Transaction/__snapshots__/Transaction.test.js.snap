@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Transaction should render without crashing 1`] = `
+<span
+  className="transaction"
+  onClick={[Function]}
+>
+  b1b4be0852c402d6d2609c2026b70070
+</span>
+`;

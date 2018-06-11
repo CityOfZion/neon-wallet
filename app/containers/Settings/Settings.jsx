@@ -11,10 +11,12 @@ import HomeButtonLink from '../../components/HomeButtonLink'
 import { EXPLORERS, MODAL_TYPES, CURRENCIES } from '../../core/constants'
 
 import Delete from 'react-icons/lib/md/delete'
+import Lock from 'react-icons/lib/fa/lock'
 
 const { dialog } = require('electron').remote
 
 type Props = {
+  history: Object,
   setAccounts: (Array<Object>) => any,
   setBlockExplorer: string => any,
   explorer: string,
@@ -25,7 +27,8 @@ type Props = {
   showSuccessNotification: Object => any,
   showErrorNotification: Object => any,
   setUserGeneratedTokens: () => any,
-  networks: Array<NetworkItemType>
+  networks: Array<NetworkItemType>,
+  nep2DetailsLoginActions: (string, string, Object) => any
 }
 
 type State = {
@@ -129,6 +132,24 @@ export default class Settings extends Component<Props, State> {
     setCurrency(e.target.value)
   }
 
+  walletAccountDetailsLogin = (account: Object) => {
+    const {
+      showModal,
+      history,
+      nep2DetailsLoginActions
+    } = this.props
+
+    showModal(MODAL_TYPES.ENCRYPTED_LOGIN, {
+      title: 'Authenticate',
+      text: `Please enter your passphrase to continue`,
+      label: account.label,
+      encryptedWIF: account.key,
+      onClick: (passphrase) => {
+        return nep2DetailsLoginActions(passphrase, account.key, history)
+      }
+    })
+  }
+
   deleteWalletAccount = (label: string, key: string) => {
     const {
       showSuccessNotification,
@@ -222,6 +243,14 @@ export default class Settings extends Component<Props, State> {
                   <div className='walletItem'>
                     <div className='walletName'>{account.key.slice(0, 20)}</div>
                     <div className='walletKey'>{account.label}</div>
+                    <div
+                      className='walletCredentials'
+                      onClick={() =>
+                        this.walletAccountDetailsLogin(account)
+                      }
+                    >
+                      <Lock />
+                    </div>
                     <div
                       className='deleteWallet'
                       onClick={() =>
