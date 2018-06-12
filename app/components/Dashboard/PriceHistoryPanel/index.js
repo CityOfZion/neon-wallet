@@ -3,15 +3,21 @@ import { compose, withState } from 'recompose'
 import { withData, withActions } from 'spunky'
 
 import PriceHistoryPanel from './PriceHistoryPanel'
+import priceHistoryPanelActions from '../../../actions/priceHistoryPanelActions'
 import priceHistoryActions from '../../../actions/priceHistoryActions'
 import withCurrencyData from '../../../hocs/withCurrencyData'
 import withProgressPanel from '../../../hocs/withProgressPanel'
+import withPricesData from '../../../hocs/withPricesData'
 import { ASSETS } from '../../../core/constants'
 
 type Duration = '1m' | '1w' | '1d'
 
-const mapPricesDataToProps = (prices, props) => ({
+const mapPriceHistoryDataToProps = (prices, props) => ({
   prices: prices[props.asset]
+})
+
+const mapPriceDataToProps = (staticPrices, props) => ({
+  staticPrice: staticPrices[props.asset]
 })
 
 const mapPriceHistoryActionsToProps = (actions, props) => ({
@@ -28,7 +34,8 @@ export default compose(
   withActions(priceHistoryActions, mapPriceHistoryActionsToProps),
 
   // Fetch prices data based based upon the selected currency.  Reload data with the currency changes.
-  withProgressPanel(priceHistoryActions, { title: 'Historic Price' }),
+  withProgressPanel(priceHistoryPanelActions, { title: 'Historic Price' }),
   withCurrencyData('currency'),
-  withData(priceHistoryActions, mapPricesDataToProps)
+  withPricesData(mapPriceDataToProps),
+  withData(priceHistoryActions, mapPriceHistoryDataToProps)
 )(PriceHistoryPanel)

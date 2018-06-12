@@ -26,6 +26,7 @@ type Props = {
   currency: string,
   timeKey: string,
   priceKey: string,
+  staticPrice: number,
   formatDate(Date): string
 }
 
@@ -83,9 +84,10 @@ export default class PriceHistoryChart extends React.Component<Props> {
   }
 
   renderLatestPrice = () => {
+    const { staticPrice } = this.props
     return (
       <text className={styles.current} x="50%" y={0} textAnchor="middle" alignmentBaseline="hanging" fill="#282828">
-        {this.formatPrice(this.getLatestPrice(), formatFiat)}
+        {this.formatPrice(staticPrice, formatFiat)}
       </text>
     )
   }
