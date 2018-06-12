@@ -2,13 +2,10 @@
 import { connect, type MapStateToProps } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
-import { createBatchActions, withReset, withActions } from 'spunky'
+import { withReset, withActions } from 'spunky'
 
+import dashboardActions from '../../actions/dashboardActions'
 import accountActions from '../../actions/accountActions'
-import balancesActions from '../../actions/balancesActions'
-import claimsActions from '../../actions/claimsActions'
-import pricesActions from '../../actions/pricesActions'
-import priceHistoryActions from '../../actions/priceHistoryActions'
 import withInitialCall from '../../hocs/withInitialCall'
 import withAuthData from '../../hocs/withAuthData'
 import withCurrencyData from '../../hocs/withCurrencyData'
@@ -33,14 +30,6 @@ const mapAccountActionsToProps = (actions, props) => ({
   loadWalletData: () => actions.call({ net: props.net, address: props.address, tokens: props.tokens })
 })
 
-// TODO: move this into its own actions file
-const batchActions = createBatchActions('dashboard', {
-  balances: balancesActions,
-  claims: claimsActions,
-  prices: pricesActions,
-  priceHistory: priceHistoryActions
-})
-
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
 
@@ -49,7 +38,7 @@ export default compose(
   withNetworkData(),
   withCurrencyData('currency'),
   withFilteredTokensData(),
-  withInitialCall(batchActions),
+  withInitialCall(dashboardActions),
   withReset(accountActions, ['networkId']),
   withActions(accountActions, mapAccountActionsToProps)
 )(Dashboard)
