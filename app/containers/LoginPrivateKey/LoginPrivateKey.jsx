@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import PasswordField from '../../components/PasswordField'
 import HomeButtonLink from '../../components/HomeButtonLink'
 import Button from '../../components/Button'
+import QrCodeScanner from '../../components/QrCodeScanner'
 
 import loginStyles from '../../styles/login.scss'
 
@@ -32,13 +33,15 @@ export default class LoginPrivateKey extends Component<Props, State> {
           <div className={loginStyles.loginForm}>
             <PasswordField
               placeholder='Enter your private key here (WIF)'
+              value={wif}
               onChange={(e) => this.setState({ wif: e.target.value })}
               autoFocus
             />
           </div>
-          <div>
+          <div className={loginStyles.buttonContainer}>
             <Button type='submit' disabled={loginButtonDisabled}>Login</Button>
             <HomeButtonLink />
+            <QrCodeScanner callback={loginWithPrivateKey} />
           </div>
         </form>
       </div>

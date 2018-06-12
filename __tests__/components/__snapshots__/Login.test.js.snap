@@ -20,9 +20,12 @@ exports[`Login renders without crashing 1`] = `
         autoFocus={true}
         onChange={[Function]}
         placeholder="Enter your private key here (WIF)"
+        value=""
       />
     </div>
-    <div>
+    <div
+      className="buttonContainer"
+    >
       <Button
         cancel={false}
         disabled={true}
@@ -33,6 +36,7 @@ exports[`Login renders without crashing 1`] = `
         Login
       </Button>
       <HomeButtonLink />
+      <QrCodeScanner />
     </div>
   </form>
 </div>
