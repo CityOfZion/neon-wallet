@@ -106,8 +106,8 @@ export default class SendModal extends Component<Props, State> {
     const { display, priorityFeeCollapsed } = this.state
     if (display === DISPLAY_MODES.ADD_RECIPIENT) {
       return '350px'
-    } else if (priorityFeeCollapsed) return '420px'
-    return '500px'
+    } else if (priorityFeeCollapsed) return '350px'
+    return '485px'
   }
 
   handleDeleteEntry = (entry: SendEntryType) => {
