@@ -9,5 +9,20 @@
         "transform-async-to-generator",
         "lodash",
         "react-hot-loader/babel"
-    ]
+    ],
+    "env": {
+        "test": {
+            "plugins": [
+                "transform-async-to-generator",
+                "lodash",
+                "transform-es2015-modules-commonjs"
+            ],
+            "presets": [
+                "react",
+                ["env", { "modules": "commonjs" }],
+                "stage-0",
+                "flow"
+            ]
+        }
+    }
 }
