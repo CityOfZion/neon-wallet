@@ -37,7 +37,8 @@ type State = {
   entries: Array<SendEntryType>,
   display: $Values<typeof DISPLAY_MODES>,
   balances: BalancesType,
-  priorityFee: string
+  priorityFee: string,
+  priorityFeeCollapsed: boolean
 }
 
 export default class SendModal extends Component<Props, State> {
@@ -45,7 +46,8 @@ export default class SendModal extends Component<Props, State> {
   state = {
     entries: [],
     display: DISPLAY_MODES.ADD_RECIPIENT,
-    priorityFee: '',
+    priorityFee: '0.00000000',
+    priorityFeeCollapsed: true,
     balances: {
       [ASSETS.NEO]: this.props.NEO,
       [ASSETS.GAS]: this.props.GAS,
@@ -55,13 +57,12 @@ export default class SendModal extends Component<Props, State> {
 
   render () {
     const { hideModal } = this.props
-    const { display } = this.state
     return (
       <BaseModal
         title='Send'
         hideModal={hideModal}
         shouldCloseWithEscapeKey={false}
-        style={{ content: { width: '925px', height: display === DISPLAY_MODES.ADD_RECIPIENT ? '350px' : '450px' } }}>
+        style={{ content: { width: '925px', height: this.determineModalHeight() } }}>
         {this.renderDisplay()}
       </BaseModal>
     )
@@ -89,15 +90,24 @@ export default class SendModal extends Component<Props, State> {
           onAddRecipient={this.handleAddRecipient}
           onDelete={this.handleDeleteEntry}
           onUpdatePriorityFee={this.handleUpdatePriorityFee}
+          toggleCollapsedFeeInfo={this.handleToggleCollapsedFeeInfo}
           {...this.state} />
       )
     }
   }
 
-  handleUpdatePriorityFee = (priorityFee: string) => this.setState({priorityFee})
+  handleUpdatePriorityFee = (priorityFee: string) => this.setState({ priorityFee })
 
   handleAddRecipient = () => {
     this.setState({ display: DISPLAY_MODES.ADD_RECIPIENT })
+  }
+
+  determineModalHeight = () => {
+    const { display, priorityFeeCollapsed } = this.state
+    if (display === DISPLAY_MODES.ADD_RECIPIENT) {
+      return '350px'
+    } else if (priorityFeeCollapsed) return '420px'
+    return '500px'
   }
 
   handleDeleteEntry = (entry: SendEntryType) => {
@@ -161,6 +171,16 @@ export default class SendModal extends Component<Props, State> {
 
   handleCancelTransaction = () => {
     this.close()
+  }
+
+  handleToggleCollapsedFeeInfo = () => {
+    return this.setState(
+      state => {
+        return ({
+          priorityFeeCollapsed: !state.priorityFeeCollapsed
+        })
+      }
+    )
   }
 
   close = () => {

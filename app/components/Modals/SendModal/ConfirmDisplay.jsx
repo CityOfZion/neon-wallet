@@ -26,22 +26,25 @@ type Props = {
   onConfirm: Function,
   onCancel: Function,
   priorityFee: string,
-  onUpdatePriorityFee: Function
+  onUpdatePriorityFee: Function,
+  toggleCollapsedFeeInfo: Function
 }
 
 type State = {
   agree: boolean,
+  priorityFeeVisible: boolean
 }
 
 export default class ConfirmDisplay extends React.Component<Props, State> {
   state = {
     agree: false,
-    priorityFee: ''
+    priorityFee: '',
+    priorityFeeVisible: false
   }
 
   render () {
     const { onConfirm, onCancel, entries, address, message, balances, priorityFee, onUpdatePriorityFee } = this.props
-    const { agree } = this.state
+    const { agree, priorityFeeVisible } = this.state
 
     return (
       <div className={styles.confirmDisplay}>
@@ -72,24 +75,32 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
           <a onClick={this.props.onAddRecipient}>+ Add Recipient</a>
         </div>
 
-        <div className={addRecipientDisplayStyles.inputs}>
-          <div className={addRecipientDisplayStyles.row}>
-            <div id='sendAmount' className={addRecipientDisplayStyles.column}>
-              <label className={addRecipientDisplayStyles.label}>Priority Fee:</label>
-              <NumberInput
-                value={priorityFee}
-                placeholder='Priority Fee'
-                options={{ numeralDecimalScale: COIN_DECIMAL_LENGTH }}
-                onChange={onUpdatePriorityFee} />
-              <label className={addRecipientDisplayStyles.label}>
-                ({balances[ASSETS.GAS]} GAS Available)
-              </label>
+        <div className={styles.priorityFeeActions}>
+          <Button cancel={priorityFeeVisible} onClick={() => this.handleTogglePriorityFeeDetails()}>
+            {priorityFeeVisible ? 'Remove Priority Fee' : 'Add Priority Fee'}
+          </Button>
+        </div>
+
+        {priorityFeeVisible && (
+          <div className={addRecipientDisplayStyles.inputs}>
+            <div className={addRecipientDisplayStyles.row}>
+              <div id='sendAmount' className={addRecipientDisplayStyles.column}>
+                <label className={addRecipientDisplayStyles.label}>Priority Fee:</label>
+                <NumberInput
+                  value={priorityFee}
+                  placeholder='Priority Fee'
+                  options={{ numeralDecimalScale: COIN_DECIMAL_LENGTH }}
+                  onChange={onUpdatePriorityFee} />
+                <label className={addRecipientDisplayStyles.label}>
+                  ({balances[ASSETS.GAS]} GAS Available)
+                </label>
+              </div>
+            </div>
+            <div className={styles.addSmallestFee}>
+              <a onClick={() => onUpdatePriorityFee('0.00000001')}>+ Add smallest fee possible</a>
             </div>
           </div>
-          <div className={styles.addSmallestFee}>
-            <a onClick={() => onUpdatePriorityFee('0.00000001')}>+ Add smallest fee possible</a>
-          </div>
-        </div>
+        )}
 
         {message && (
           <div className={styles.messages}>{message}</div>
@@ -110,6 +121,22 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
       </div>
     )
   }
+
+  handleTogglePriorityFeeDetails = () => {
+    this.props.toggleCollapsedFeeInfo()
+    if (!this.state.priorityFeeVisible) {
+      this.props.onUpdatePriorityFee('0.00000000')
+    }
+    return this.setState(
+      state => {
+        return ({
+          priorityFeeVisible: !state.priorityFeeVisible
+        })
+      }
+    )
+  }
+
+  handleAddPriorityFeeInfo = () => this.setState({ priorityFeeVisible: true })
 
   handleDelete = (entry: SendEntryType) => {
     return () => this.props.onDelete(entry)
