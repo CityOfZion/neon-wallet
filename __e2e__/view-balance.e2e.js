@@ -31,8 +31,8 @@ function timeout (ms) {
 test.serial('should login successfully and switch networks', async t => {
   // Go to login page
   await app.client.waitUntilTextExists('#home', 'Login', 60000)
-  await app.client.click('input[value="Saved wallet"]')
-  await app.client.click('div[aria-label="Private key"]')
+  await app.client.click('input[value="Saved Wallet"]')
+  await app.client.click('div[aria-label="Private Key"]')
 
   // Enter Wif
   await app.client.setValue('input[type="password"]', 'KxB52D1FGe5xBn6YeezNwj7grhkHZxq7bv2tmaCPoT4rxApMwMvU')
@@ -58,10 +58,10 @@ test.serial('should show correct balance', async t => {
 
 test.serial('should show correct transaction list', async t => {
   await app.client.click('#history')
-  await app.client.waitUntilTextExists('#transactionList li:first-child .txid', '57da6b7a1074c8508796549c19fdb2a8', 60000)
+  await app.client.waitUntilTextExists('#transactionList li:nth-child(2) .txid', '57da6b7a1074c8508796549c19fdb2a8', 60000)
   const transactions = await app.client.getText('#transactionList li .txid')
-  t.is(transactions[0], '57da6b7a1074c8508796549c19fdb2a8')
-  t.is(transactions[1], '4bb9b6e0a6ef46c42dd6a1f11326fb0c')
+  t.is(transactions[0], '4bb9b6e0a6ef46c42dd6a1f11326fb0c')
+  t.is(transactions[1], '57da6b7a1074c8508796549c19fdb2a8')
 })
 
 test.serial('should logout successfully', async t => {
