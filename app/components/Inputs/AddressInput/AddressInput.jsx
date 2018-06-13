@@ -24,7 +24,11 @@ export default class AddressInput extends React.Component<Props> {
   }
 
   render = () => {
-    const passDownProps = omit(this.props, 'contacts')
+    const passDownProps = omit(
+      this.props,
+      'contacts',
+      'dispatch'
+    )
 
     return (
       <SelectInput
