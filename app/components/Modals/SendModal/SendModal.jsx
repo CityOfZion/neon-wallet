@@ -31,11 +31,11 @@ type Props = {
   sendTransaction: Function,
   net: string,
   address: string
-};
+}
 
 type BalancesType = {
   [key: SymbolType]: string
-};
+}
 
 type State = {
   entries: Array<SendEntryType>,
@@ -43,10 +43,10 @@ type State = {
   balances: BalancesType,
   priorityFee: string,
   priorityFeeCollapsed: boolean
-};
+}
 
 export default class SendModal extends Component<Props, State> {
-  canvas: ?HTMLCanvasElement;
+  canvas: ?HTMLCanvasElement
   state = {
     entries: [],
     display: DISPLAY_MODES.ADD_RECIPIENT,
@@ -57,7 +57,7 @@ export default class SendModal extends Component<Props, State> {
       [ASSETS.GAS]: this.props.GAS,
       ...getTokenBalancesMap(this.props.tokenBalances)
     }
-  };
+  }
 
   render () {
     const { hideModal } = this.props
@@ -103,14 +103,14 @@ export default class SendModal extends Component<Props, State> {
         />
       )
     }
-  };
+  }
 
   handleUpdatePriorityFee = (priorityFee: string) =>
-    this.setState({ priorityFee });
+    this.setState({ priorityFee })
 
   handleAddRecipient = () => {
     this.setState({ display: DISPLAY_MODES.ADD_RECIPIENT })
-  };
+  }
 
   determineModalHeight = () => {
     const { display, priorityFeeCollapsed } = this.state
@@ -118,7 +118,7 @@ export default class SendModal extends Component<Props, State> {
       return SEND_MODAL_SIZES.ADD_RECIPIENT
     }
     return SEND_MODAL_SIZES.EXPANDED_PRIORITY_FEE
-  };
+  }
 
   handleDeleteEntry = (entry: SendEntryType) => {
     const { balances } = this.state
@@ -134,7 +134,7 @@ export default class SendModal extends Component<Props, State> {
       display:
         entries.length > 0 ? DISPLAY_MODES.CONFIRM : DISPLAY_MODES.ADD_RECIPIENT
     })
-  };
+  }
 
   handleConfirmAddRecipient = async (entry: SendEntryType) => {
     const { showErrorNotification } = this.props
@@ -166,7 +166,7 @@ export default class SendModal extends Component<Props, State> {
       balances: { ...balances, [entry.symbol]: newBalance },
       display: DISPLAY_MODES.CONFIRM
     })
-  };
+  }
 
   handleCancelAddRecipient = () => {
     const { entries } = this.state
@@ -176,7 +176,7 @@ export default class SendModal extends Component<Props, State> {
     } else {
       this.setState({ display: DISPLAY_MODES.CONFIRM })
     }
-  };
+  }
 
   handleConfirmTransaction = () => {
     const { showErrorNotification, sendTransaction } = this.props
@@ -189,11 +189,11 @@ export default class SendModal extends Component<Props, State> {
       return
     }
     sendTransaction(entries, priorityFee).then(this.close)
-  };
+  }
 
   handleCancelTransaction = () => {
     this.close()
-  };
+  }
 
   handleToggleCollapsedFeeInfo = () => {
     return this.setState(state => {
@@ -201,9 +201,9 @@ export default class SendModal extends Component<Props, State> {
         priorityFeeCollapsed: !state.priorityFeeCollapsed
       }
     })
-  };
+  }
 
   close = () => {
     this.props.hideModal()
-  };
+  }
 }
