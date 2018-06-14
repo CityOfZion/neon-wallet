@@ -7,8 +7,12 @@ import AddRecipientDisplay from './AddRecipientDisplay'
 import ConfirmDisplay from './ConfirmDisplay'
 import withAddressCheck from './withAddressCheck'
 
-import { validateTransactionBeforeSending, getTokenBalancesMap, isBlacklisted } from '../../../core/wallet'
-import { ASSETS } from '../../../core/constants'
+import {
+  validateTransactionBeforeSending,
+  getTokenBalancesMap,
+  isBlacklisted
+} from '../../../core/wallet'
+import { ASSETS, SEND_MODAL_SIZES } from '../../../core/constants'
 import { toBigNumber } from '../../../core/math'
 
 const ConfirmDisplayContainer = withAddressCheck()(ConfirmDisplay)
@@ -26,12 +30,12 @@ type Props = {
   hideModal: Function,
   sendTransaction: Function,
   net: string,
-  address: string,
-}
+  address: string
+};
 
 type BalancesType = {
   [key: SymbolType]: string
-}
+};
 
 type State = {
   entries: Array<SendEntryType>,
@@ -39,10 +43,10 @@ type State = {
   balances: BalancesType,
   priorityFee: string,
   priorityFeeCollapsed: boolean
-}
+};
 
 export default class SendModal extends Component<Props, State> {
-  canvas: ?HTMLCanvasElement
+  canvas: ?HTMLCanvasElement;
   state = {
     entries: [],
     display: DISPLAY_MODES.ADD_RECIPIENT,
@@ -53,7 +57,7 @@ export default class SendModal extends Component<Props, State> {
       [ASSETS.GAS]: this.props.GAS,
       ...getTokenBalancesMap(this.props.tokenBalances)
     }
-  }
+  };
 
   render () {
     const { hideModal } = this.props
@@ -62,7 +66,10 @@ export default class SendModal extends Component<Props, State> {
         title='Send'
         hideModal={hideModal}
         shouldCloseWithEscapeKey={false}
-        style={{ content: { width: '925px', height: this.determineModalHeight() } }}>
+        style={{
+          content: { width: '925px', height: this.determineModalHeight() }
+        }}
+      >
         {this.renderDisplay()}
       </BaseModal>
     )
@@ -77,7 +84,8 @@ export default class SendModal extends Component<Props, State> {
         <AddRecipientDisplay
           balances={balances}
           onCancel={this.handleCancelAddRecipient}
-          onConfirm={this.handleConfirmAddRecipient} />
+          onConfirm={this.handleConfirmAddRecipient}
+        />
       )
     } else {
       return (
@@ -91,62 +99,74 @@ export default class SendModal extends Component<Props, State> {
           onDelete={this.handleDeleteEntry}
           onUpdatePriorityFee={this.handleUpdatePriorityFee}
           toggleCollapsedFeeInfo={this.handleToggleCollapsedFeeInfo}
-          {...this.state} />
+          {...this.state}
+        />
       )
     }
-  }
+  };
 
-  handleUpdatePriorityFee = (priorityFee: string) => this.setState({ priorityFee })
+  handleUpdatePriorityFee = (priorityFee: string) =>
+    this.setState({ priorityFee });
 
   handleAddRecipient = () => {
     this.setState({ display: DISPLAY_MODES.ADD_RECIPIENT })
-  }
+  };
 
   determineModalHeight = () => {
     const { display, priorityFeeCollapsed } = this.state
-    if (display === DISPLAY_MODES.ADD_RECIPIENT) {
-      return '350px'
-    } else if (priorityFeeCollapsed) return '350px'
-    return '485px'
-  }
+    if (display === DISPLAY_MODES.ADD_RECIPIENT || priorityFeeCollapsed) {
+      return SEND_MODAL_SIZES.ADD_RECIPIENT
+    }
+    return SEND_MODAL_SIZES.EXPANDED_PRIORITY_FEE
+  };
 
   handleDeleteEntry = (entry: SendEntryType) => {
     const { balances } = this.state
 
     const entries = without(this.state.entries, entry)
-    const newBalance = toBigNumber(balances[entry.symbol]).plus(entry.amount).toString()
+    const newBalance = toBigNumber(balances[entry.symbol])
+      .plus(entry.amount)
+      .toString()
 
     this.setState({
       entries,
       balances: { ...balances, [entry.symbol]: newBalance },
-      display: entries.length > 0 ? DISPLAY_MODES.CONFIRM : DISPLAY_MODES.ADD_RECIPIENT
+      display:
+        entries.length > 0 ? DISPLAY_MODES.CONFIRM : DISPLAY_MODES.ADD_RECIPIENT
     })
-  }
+  };
 
   handleConfirmAddRecipient = async (entry: SendEntryType) => {
     const { showErrorNotification } = this.props
     const { balances } = this.state
 
     if (await isBlacklisted(entry.address)) {
-      showErrorNotification({ message: 'You have attempted to enter a phishing address.' })
+      showErrorNotification({
+        message: 'You have attempted to enter a phishing address.'
+      })
       return
     }
 
-    const error = validateTransactionBeforeSending(balances[entry.symbol], entry)
+    const error = validateTransactionBeforeSending(
+      balances[entry.symbol],
+      entry
+    )
 
     if (error) {
       showErrorNotification({ message: error })
       return
     }
 
-    const newBalance = toBigNumber(balances[entry.symbol]).minus(entry.amount).toString()
+    const newBalance = toBigNumber(balances[entry.symbol])
+      .minus(entry.amount)
+      .toString()
 
     this.setState({
       entries: [...this.state.entries, entry],
       balances: { ...balances, [entry.symbol]: newBalance },
       display: DISPLAY_MODES.CONFIRM
     })
-  }
+  };
 
   handleCancelAddRecipient = () => {
     const { entries } = this.state
@@ -156,34 +176,34 @@ export default class SendModal extends Component<Props, State> {
     } else {
       this.setState({ display: DISPLAY_MODES.CONFIRM })
     }
-  }
+  };
 
   handleConfirmTransaction = () => {
     const { showErrorNotification, sendTransaction } = this.props
     const { priorityFee, balances, entries } = this.state
 
     if (priorityFee && toBigNumber(priorityFee).gt(balances[ASSETS.GAS])) {
-      showErrorNotification({ message: 'You do not have enough GAS to prioritize this transaction.' })
+      showErrorNotification({
+        message: 'You do not have enough GAS to prioritize this transaction.'
+      })
       return
     }
     sendTransaction(entries, priorityFee).then(this.close)
-  }
+  };
 
   handleCancelTransaction = () => {
     this.close()
-  }
+  };
 
   handleToggleCollapsedFeeInfo = () => {
-    return this.setState(
-      state => {
-        return ({
-          priorityFeeCollapsed: !state.priorityFeeCollapsed
-        })
+    return this.setState(state => {
+      return {
+        priorityFeeCollapsed: !state.priorityFeeCollapsed
       }
-    )
-  }
+    })
+  };
 
   close = () => {
     this.props.hideModal()
-  }
+  };
 }
