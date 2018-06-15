@@ -27,24 +27,34 @@ type Props = {
   onCancel: Function,
   priorityFee: string,
   onUpdatePriorityFee: Function,
-  toggleCollapsedFeeInfo: Function
+  onToggleFeeInfo: Function,
+  priorityFeeCollapsed: boolean
 }
 
 type State = {
   agree: boolean,
-  priorityFeeVisible: boolean
+
 }
 
 export default class ConfirmDisplay extends React.Component<Props, State> {
   state = {
-    agree: false,
-    priorityFee: '',
-    priorityFeeVisible: false
+    agree: false
   }
 
   render () {
-    const { onConfirm, onCancel, entries, address, message, balances, priorityFee, onUpdatePriorityFee } = this.props
-    const { agree, priorityFeeVisible } = this.state
+    const {
+      onConfirm,
+      onCancel,
+      entries,
+      address,
+      message,
+      balances,
+      priorityFee,
+      onUpdatePriorityFee,
+      onToggleFeeInfo,
+      priorityFeeCollapsed
+    } = this.props
+    const { agree } = this.state
 
     return (
       <div className={styles.confirmDisplay}>
@@ -76,12 +86,12 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
         </div>
 
         <div className={styles.priorityFeeActions}>
-          <Button cancel={priorityFeeVisible} onClick={() => this.handleTogglePriorityFeeDetails()}>
-            {priorityFeeVisible ? 'Remove Priority Fee' : 'Add Priority Fee'}
+          <Button cancel={!priorityFeeCollapsed} onClick={onToggleFeeInfo}>
+            {!priorityFeeCollapsed ? 'Remove Priority Fee' : 'Add Priority Fee'}
           </Button>
         </div>
 
-        {priorityFeeVisible && (
+        {!priorityFeeCollapsed && (
           <div className={addRecipientDisplayStyles.inputs}>
             <div className={addRecipientDisplayStyles.row}>
               <div id='sendAmount' className={addRecipientDisplayStyles.column}>
@@ -121,22 +131,6 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
       </div>
     )
   }
-
-  handleTogglePriorityFeeDetails = () => {
-    this.props.toggleCollapsedFeeInfo()
-    if (!this.state.priorityFeeVisible) {
-      this.props.onUpdatePriorityFee('0.00000000')
-    }
-    return this.setState(
-      state => {
-        return ({
-          priorityFeeVisible: !state.priorityFeeVisible
-        })
-      }
-    )
-  }
-
-  handleAddPriorityFeeInfo = () => this.setState({ priorityFeeVisible: true })
 
   handleDelete = (entry: SendEntryType) => {
     return () => this.props.onDelete(entry)

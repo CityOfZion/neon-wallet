@@ -98,15 +98,12 @@ export default class SendModal extends Component<Props, State> {
           onAddRecipient={this.handleAddRecipient}
           onDelete={this.handleDeleteEntry}
           onUpdatePriorityFee={this.handleUpdatePriorityFee}
-          toggleCollapsedFeeInfo={this.handleToggleCollapsedFeeInfo}
+          onToggleFeeInfo={this.onToggleFeeInfo}
           {...this.state}
         />
       )
     }
   }
-
-  handleUpdatePriorityFee = (priorityFee: string) =>
-    this.setState({ priorityFee })
 
   handleAddRecipient = () => {
     this.setState({ display: DISPLAY_MODES.ADD_RECIPIENT })
@@ -195,12 +192,20 @@ export default class SendModal extends Component<Props, State> {
     this.close()
   }
 
-  handleToggleCollapsedFeeInfo = () => {
+  onToggleFeeInfo = () => {
     return this.setState(state => {
       return {
         priorityFeeCollapsed: !state.priorityFeeCollapsed
       }
+    }, () => {
+      if (this.state.priorityFeeCollapsed) {
+        return this.setState({priorityFee: '0.00000000'})
+      }
     })
+  }
+
+  handleUpdatePriorityFee = (priorityFee: string) => {
+    return this.setState({ priorityFee })
   }
 
   close = () => {
