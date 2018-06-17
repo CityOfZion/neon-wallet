@@ -7,6 +7,11 @@ export const ASSETS = {
   GAS: 'GAS'
 }
 
+export const SEND_MODAL_SIZES = {
+  ADD_RECIPIENT: '350px',
+  EXPANDED_PRIORITY_FEE: '485px'
+}
+
 export const EXPLORERS = {
   NEO_TRACKER: 'Neotracker',
   NEO_SCAN: 'Neoscan',
@@ -90,7 +95,21 @@ export const TOKENS = {
 }
 
 export const ENDED_ICO_TOKENS = [
-  'DBC', 'RPX', 'RHT', 'QLC', 'NRVE', 'IAM', 'ONT', 'THOR', 'CGE', 'AVA', 'SWH', 'SWTH', 'EFX', 'MCT', 'PKC'
+  'DBC',
+  'RPX',
+  'RHT',
+  'QLC',
+  'NRVE',
+  'IAM',
+  'ONT',
+  'THOR',
+  'CGE',
+  'AVA',
+  'SWH',
+  'SWTH',
+  'EFX',
+  'MCT',
+  'PKC'
   // 'SOUL', 'ASA'
 ]
 
