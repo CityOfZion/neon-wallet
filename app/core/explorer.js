@@ -9,7 +9,7 @@ export const buildExplorerLink = (
   structure: string,
   suffix: string
 ) => {
-  if (Object.prototype.hasOwnProperty.call(explorerConfig, explorer)) {
+  if (explorerConfig.hasOwnProperty(explorer)) {
     const explorerInfo = explorerConfig[explorer]
 
     return getExplorerBaseURL(networkId, explorer) + explorerInfo[structure] + suffix
@@ -19,7 +19,7 @@ export const buildExplorerLink = (
 }
 
 export const getExplorerBaseURL = (networkId: string, explorer: ExplorerType) => {
-  if (Object.prototype.hasOwnProperty.call(explorerConfig, explorer)) {
+  if (explorerConfig.hasOwnProperty(explorer)) {
     const selectedExplorer = explorerConfig[explorer]
 
     return isMainNetwork(networkId)
