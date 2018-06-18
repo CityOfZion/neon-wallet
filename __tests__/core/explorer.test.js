@@ -20,6 +20,17 @@ describe('explorer tests', () => {
   })
 
   describe('getExplorerTxLink tests', () => {
+    test('Invalid explorer', () => {
+      const networkId = MAIN_NETWORK_ID
+      const structure = 'addressLinkStructure'
+      const suffix = '1234567890abcdef'
+      const expectedUrl = 'https://neotracker.io/address/1234567890abcdef'
+
+      expect(() => {
+        buildExplorerLink(networkId, 'broken explorer', structure, suffix)
+      }).toThrow();
+    })
+
     test('NeoTracker mainnet explorer test', () => {
       const networkId = MAIN_NETWORK_ID
       const explorer = EXPLORERS.NEO_TRACKER

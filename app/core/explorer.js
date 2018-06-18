@@ -15,7 +15,7 @@ export const buildExplorerLink = (
     return getExplorerBaseURL(networkId, explorer) + explorerInfo[structure] + suffix
   }
 
-  return ''
+  throw new Error(`${explorer} is not a valid explorer type. Valid explorer types are: ${Object.keys(explorerConfig).join(', ')}`)
 }
 
 export const getExplorerBaseURL = (networkId: string, explorer: ExplorerType) => {
