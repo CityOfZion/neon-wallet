@@ -34,6 +34,11 @@ app.on('ready', () => {
         webSecurity: false
       }
     })
+
+    mainWindow.webContents.on('will-navigate', ev => {
+      ev.preventDefault()
+    })
+
     if (process.env.NODE_ENV === 'development') {
       mainWindow.webContents.openDevTools()
     }
