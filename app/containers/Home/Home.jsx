@@ -54,11 +54,8 @@ export default class Home extends React.Component<Props, State> {
 
   renderLoginBasedOnOption = (display: string) => {
     const selectedOption = Object.values(LOGIN_OPTIONS).find(
-      (option: mixed) => {
-        return (
-          option && typeof option === 'object' && option.display === display
-        )
-      }
+      (option: mixed) =>
+        option && typeof option === 'object' && option.display === display
     )
     if (selectedOption && typeof selectedOption.render === 'function') {
       return selectedOption.render()
@@ -67,6 +64,7 @@ export default class Home extends React.Component<Props, State> {
       'renderLoginBasedOnOption() invoked with invalid display value!'
     )
   }
+
   render = () => {
     const { loading } = this.props
     return (

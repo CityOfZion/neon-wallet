@@ -132,6 +132,7 @@ export default class CreateWallet extends React.Component<Props, State> {
     const validPassphrase = passphrase === passphrase2 && passphrase.length >= 4
     if (option === 'CREATE') {
       return !(validPassphrase && !!walletName)
-    } else return !(validPassphrase && !!walletName && !!wif)
+    }
+    return !(validPassphrase && !!walletName && !!wif)
   }
 }

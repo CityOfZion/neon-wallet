@@ -16,7 +16,7 @@ export default class LoadingPanel extends React.Component<Props> {
     title: 'Loading'
   }
 
-  render () {
+  render() {
     return (
       <Panel
         className={classNames(styles.loadingPanel, this.props.className)}
@@ -28,7 +28,5 @@ export default class LoadingPanel extends React.Component<Props> {
     )
   }
 
-  renderHeader = () => {
-    return <span>{this.props.title}</span>
-  }
+  renderHeader = () => <span>{this.props.title}</span>
 }

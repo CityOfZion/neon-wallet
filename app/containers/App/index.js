@@ -2,7 +2,11 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
-import { withProgressComponents, alreadyLoadedStrategy, progressValues } from 'spunky'
+import {
+  withProgressComponents,
+  alreadyLoadedStrategy,
+  progressValues
+} from 'spunky'
 
 import appActions from '../../actions/appActions'
 import authActions from '../../actions/authActions'
@@ -26,11 +30,15 @@ const actionCreators = {
   showErrorNotification
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(actionCreators, dispatch)
 
 export default compose(
   // Old way of fetching data, need to refactor this out...
-  connect(null, mapDispatchToProps),
+  connect(
+    null,
+    mapDispatchToProps
+  ),
 
   // Provide authenticated state so dashboard knows what layout to use.
   withAuthData(),
@@ -38,12 +46,16 @@ export default compose(
   // Fetch the initial network type, and pass it down as a prop.  This must come before other data
   // fetches that depend on knowing the selected network.
   withInitialCall(appActions),
-  withProgressComponents(appActions, {
-    [LOADING]: Loading,
-    [FAILED]: Failed
-  }, {
-    strategy: alreadyLoadedStrategy
-  }),
+  withProgressComponents(
+    appActions,
+    {
+      [LOADING]: Loading,
+      [FAILED]: Failed
+    },
+    {
+      strategy: alreadyLoadedStrategy
+    }
+  ),
 
   // Navigate to the home or dashboard when the user logs in or out.
   withLoginRedirect,

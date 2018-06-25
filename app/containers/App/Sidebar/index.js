@@ -14,5 +14,8 @@ const mapDispatchToProps = (dispatch, props) => ({
 
 export default compose(
   withRouter, // allow `NavLink` components to re-render when the window location changes
-  connect(null, mapDispatchToProps)
+  connect(
+    null,
+    mapDispatchToProps
+  )
 )(Sidebar)

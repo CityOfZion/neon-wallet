@@ -47,7 +47,13 @@ export default class NumberInput extends React.Component<Props, State> {
   }
 
   render = () => {
-    const passDownProps = omit(this.props, 'max', 'options', 'onChange', 'className')
+    const passDownProps = omit(
+      this.props,
+      'max',
+      'options',
+      'onChange',
+      'className'
+    )
 
     const className = classNames(styles.numberInput, this.props.className, {
       [styles.active]: this.state.active
@@ -61,7 +67,8 @@ export default class NumberInput extends React.Component<Props, State> {
           options={this.getOptions()}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
         {this.renderMaxButton()}
       </div>
     )
@@ -80,13 +87,17 @@ export default class NumberInput extends React.Component<Props, State> {
   handleFocus = (event: Object, ...args: Array<any>) => {
     this.setState({ active: true })
     event.persist()
-    this.props.onFocus && this.props.onFocus(event, ...args)
+    if (this.props.onFocus) {
+      this.props.onFocus(event, ...args)
+    }
   }
 
   handleBlur = (event: Object, ...args: Array<any>) => {
     this.setState({ active: false })
     event.persist()
-    this.props.onBlur && this.props.onBlur(event, ...args)
+    if (this.props.onBlur) {
+      this.props.onBlur(event, ...args)
+    }
   }
 
   handleChange = (event: Object) => {
@@ -103,7 +114,5 @@ export default class NumberInput extends React.Component<Props, State> {
     }
   }
 
-  getOptions = () => {
-    return { ...DEFAULT_OPTIONS, ...this.props.options }
-  }
+  getOptions = () => ({ ...DEFAULT_OPTIONS, ...this.props.options })
 }

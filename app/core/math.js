@@ -12,8 +12,7 @@ export const toBigNumber = (value: number | string) =>
 export const toNumber = (value: string | number) =>
   toBigNumber(value).toNumber()
 
-export const isZero = (amount: string | number) =>
-  toBigNumber(amount).equals(0)
+export const isZero = (amount: string | number) => toBigNumber(amount).equals(0)
 
 export const isNumber = (value: string | number): boolean => {
   try {

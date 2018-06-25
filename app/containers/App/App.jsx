@@ -17,32 +17,30 @@ type Props = {
 }
 
 class App extends Component<Props> {
-  async componentDidMount () {
+  async componentDidMount() {
     this.props.checkVersion()
 
     try {
       await upgradeUserWalletNEP6()
     } catch (error) {
-      this.props.showErrorNotification({ message: `Error upgrading legacy wallet: ${error.message}` })
+      this.props.showErrorNotification({
+        message: `Error upgrading legacy wallet: ${error.message}`
+      })
     }
   }
 
-  render () {
+  render() {
     const { children, address } = this.props
 
     return (
       <div className={styles.container}>
-        {address && (
-          <Sidebar className={styles.sidebar} />
-        )}
+        {address && <Sidebar className={styles.sidebar} />}
         <div className={styles.wrapper}>
           <div className={styles.content}>{children}</div>
           <Notifications />
           <ModalRenderer />
         </div>
-        {address && (
-          <Footer className={styles.footer} />
-        )}
+        {address && <Footer className={styles.footer} />}
       </div>
     )
   }

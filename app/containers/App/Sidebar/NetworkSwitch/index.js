@@ -7,7 +7,7 @@ import networkActions from '../../../../actions/networkActions'
 import withNetworkData from '../../../../hocs/withNetworkData'
 
 const mapActionsToProps = (actions: Actions, props: Object): Object => ({
-  onChange: (networkId) => actions.call({ networkId })
+  onChange: networkId => actions.call({ networkId })
 })
 
 export default compose(

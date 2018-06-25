@@ -11,13 +11,10 @@ type Contacts = {
 
 const STORAGE_KEY = 'addressBook'
 
-const getContacts = async (): Promise<Contacts> => {
-  return getStorage(STORAGE_KEY)
-}
+const getContacts = async (): Promise<Contacts> => getStorage(STORAGE_KEY)
 
-const setContacts = async (contacts: Contacts): Promise<any> => {
-  return setStorage(STORAGE_KEY, contacts)
-}
+const setContacts = async (contacts: Contacts): Promise<any> =>
+  setStorage(STORAGE_KEY, contacts)
 
 const validateContact = (name: string, address: string) => {
   if (isEmpty(name)) {
@@ -31,61 +28,74 @@ const validateContact = (name: string, address: string) => {
 
 export const ID = 'contacts'
 
-export const addContactActions = createActions(ID, (
-  { name, address }: { name: string, address: string }
-) => async (state: Object): Promise<Contacts> => {
-  validateContact(name, address)
+export const addContactActions = createActions(
+  ID,
+  ({ name, address }: { name: string, address: string }) => async (): Promise<
+    Contacts
+  > => {
+    validateContact(name, address)
 
-  const contacts = await getContacts()
+    const contacts = await getContacts()
 
-  if (has(contacts, name)) {
-    throw new Error(`Contact "${name}" already exists.`)
+    if (has(contacts, name)) {
+      throw new Error(`Contact "${name}" already exists.`)
+    }
+
+    const newContacts = { ...contacts, [name]: address }
+    await setContacts(newContacts)
+
+    return newContacts
   }
+)
 
-  const newContacts = { ...contacts, [name]: address }
-  await setContacts(newContacts)
+export const updateContactActions = createActions(
+  ID,
+  ({
+    oldName,
+    newName,
+    newAddress
+  }: {
+    oldName: string,
+    newName: string,
+    newAddress: string
+  }) => async (): Promise<Contacts> => {
+    validateContact(newName, newAddress)
 
-  return newContacts
-})
+    const contacts = await getContacts()
+    const names = keys(contacts)
+    const addresses = values(contacts)
+    const index = indexOf(names, oldName)
 
-export const updateContactActions = createActions(ID, (
-  { oldName, newName, newAddress }: { oldName: string, newName: string, newAddress: string }
-) => async (state: Object): Promise<Contacts> => {
-  validateContact(newName, newAddress)
+    if (index === -1) {
+      throw new Error(`Contact "${oldName}" does not exist.`)
+    }
 
-  const contacts = await getContacts()
-  const names = keys(contacts)
-  const addresses = values(contacts)
-  const index = indexOf(names, oldName)
+    const newContacts = zipObject(
+      [...names.slice(0, index), newName, ...names.slice(index + 1)],
+      [...addresses.slice(0, index), newAddress, ...addresses.slice(index + 1)]
+    )
+    await setContacts(newContacts)
 
-  if (index === -1) {
-    throw new Error(`Contact "${oldName}" does not exist.`)
+    return newContacts
   }
+)
 
-  const newContacts = zipObject(
-    [...names.slice(0, index), newName, ...names.slice(index + 1)],
-    [...addresses.slice(0, index), newAddress, ...addresses.slice(index + 1)]
-  )
-  await setContacts(newContacts)
+export const deleteContactActions = createActions(
+  ID,
+  ({ name }: { name: string }) => async (): Promise<Contacts> => {
+    const contacts = await getContacts()
 
-  return newContacts
-})
+    if (!has(contacts, name)) {
+      throw new Error(`Contact "${name}" does not exist.`)
+    }
 
-export const deleteContactActions = createActions(ID, (
-  { name }: { name: string }
-) => async (state: Object): Promise<Contacts> => {
-  const contacts = await getContacts()
+    const newContacts = omit(contacts, name)
+    await setContacts(newContacts)
 
-  if (!has(contacts, name)) {
-    throw new Error(`Contact "${name}" does not exist.`)
+    return newContacts
   }
+)
 
-  const newContacts = omit(contacts, name)
-  await setContacts(newContacts)
-
-  return newContacts
-})
-
-export default createActions(ID, () => async (state: Object): Promise<Contacts> => {
-  return getContacts()
-})
+export default createActions(ID, () => async (): Promise<Contacts> =>
+  getContacts()
+)

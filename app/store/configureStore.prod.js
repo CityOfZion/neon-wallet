@@ -5,13 +5,10 @@ import { saga } from 'spunky'
 
 import rootReducer from '../modules'
 
-function configureStore (initialState = {}) {
+function configureStore(initialState = {}) {
   const sagaMiddleware = createSagaMiddleware()
 
-  const middlewares = [
-    sagaMiddleware,
-    thunk
-  ]
+  const middlewares = [sagaMiddleware, thunk]
 
   const store = createStore(
     rootReducer,

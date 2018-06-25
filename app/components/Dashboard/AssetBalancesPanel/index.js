@@ -20,7 +20,7 @@ import withFilteredTokensData from '../../../hocs/withFilteredTokensData'
 import { ASSETS } from '../../../core/constants'
 import { toBigNumber } from '../../../core/math'
 
-const mapBalanceDataToProps = (balances) => ({
+const mapBalanceDataToProps = balances => ({
   NEO: balances.NEO,
   GAS: balances.GAS,
   tokenBalances: values(omit(balances, 'NEO', 'GAS'))
@@ -33,9 +33,13 @@ const mapPricesDataToProps = ({ NEO, GAS }) => ({
 
 const mapPriceChangeDataToProps = (prices, props) => {
   const oldNeo = toBigNumber(prices[ASSETS.NEO][0].close)
-  const newNeo = toBigNumber(prices[ASSETS.NEO][prices[ASSETS.NEO].length - 1].close)
+  const newNeo = toBigNumber(
+    prices[ASSETS.NEO][prices[ASSETS.NEO].length - 1].close
+  )
   const oldGas = toBigNumber(prices[ASSETS.GAS][0].close)
-  const newGas = toBigNumber(prices[ASSETS.GAS][prices[ASSETS.GAS].length - 1].close)
+  const newGas = toBigNumber(
+    prices[ASSETS.GAS][prices[ASSETS.GAS].length - 1].close
+  )
 
   return {
     neoPriceChange: newNeo.sub(oldNeo).dividedBy(oldNeo),
@@ -44,7 +48,12 @@ const mapPriceChangeDataToProps = (prices, props) => {
 }
 
 const mapBalancesActionsToProps = (actions, props) => ({
-  refresh: () => actions.call({ net: props.net, address: props.address, tokens: props.tokens })
+  refresh: () =>
+    actions.call({
+      net: props.net,
+      address: props.address,
+      tokens: props.tokens
+    })
 })
 
 export default compose(
@@ -63,6 +72,12 @@ export default compose(
   // Expose data & functionality needed for `refresh` action.
   withActions(balancesActions, mapBalancesActionsToProps),
   withLoadingProp(balancesActions),
-  withSuccessNotification(balancesActions, 'Received latest blockchain information.'),
-  withFailureNotification(balancesActions, 'Failed to retrieve blockchain information.')
+  withSuccessNotification(
+    balancesActions,
+    'Received latest blockchain information.'
+  ),
+  withFailureNotification(
+    balancesActions,
+    'Failed to retrieve blockchain information.'
+  )
 )(AssetBalancesPanel)

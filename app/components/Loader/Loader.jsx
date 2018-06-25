@@ -5,10 +5,10 @@ import classNames from 'classnames'
 import styles from './Loader.scss'
 
 type Props = {
-  className?: string,
+  className?: string
 }
 
-export default function Loader ({ className }: Props) {
+export default function Loader({ className }: Props) {
   return (
     <div className={classNames(styles.loader, className)}>
       <div />

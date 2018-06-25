@@ -3,7 +3,7 @@ import React from 'react'
 import Check from 'react-icons/lib/fa/check'
 import { map } from 'lodash'
 
-import Button from '../../../../components/Button'
+import Button from '../../../Button'
 import toSentence from '../../../../util/toSentence'
 import styles from './styles.scss'
 
@@ -14,7 +14,7 @@ type Props = {
 }
 
 export default class ParticipationSuccess extends React.Component<Props> {
-  render () {
+  render() {
     const { onClose, token } = this.props
     const { scriptHash, name, symbol } = token
     return (
@@ -27,21 +27,32 @@ export default class ParticipationSuccess extends React.Component<Props> {
           Your balances may take time to update - please be patient
         </div>
         <div className={styles.confirmation}>
-          <div>You sent <strong>{this.getAmounts()}</strong></div>
-          <div>To: <strong>{scriptHash}</strong></div>
-          <div>For: <strong>{symbol} ({name})</strong></div>
+          <div>
+            You sent <strong>{this.getAmounts()}</strong>
+          </div>
+          <div>
+            To: <strong>{scriptHash}</strong>
+          </div>
+          <div>
+            For:{' '}
+            <strong>
+              {symbol} ({name})
+            </strong>
+          </div>
         </div>
         <div className={styles.buttonContainer}>
-          <Button primary onClick={() => onClose()}>I'm Finished</Button>
+          <Button primary onClick={() => onClose()}>
+            I'm Finished
+          </Button>
         </div>
       </div>
     )
   }
 
   getAmounts = () => {
-    const amounts = map(this.props.assetBalancesToSend, (amount, symbol) => (
+    const amounts = map(this.props.assetBalancesToSend, (amount, symbol) =>
       [amount || 0, symbol].join(' ')
-    ))
+    )
 
     return toSentence(amounts)
   }

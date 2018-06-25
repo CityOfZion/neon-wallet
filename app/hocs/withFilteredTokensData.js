@@ -5,9 +5,11 @@ import { withData } from 'spunky'
 import withNetworkData from './withNetworkData'
 import settingsActions from '../actions/settingsActions'
 
-export default function withFilteredTokensData (key: string = 'tokens') {
+export default function withFilteredTokensData(key: string = 'tokens') {
   const mapSettingsDataToProps = (settings, props: Object) => ({
-    [key]: settings.tokens.filter(({ networkId }) => networkId === props.networkId)
+    [key]: settings.tokens.filter(
+      ({ networkId }) => networkId === props.networkId
+    )
   })
 
   return compose(

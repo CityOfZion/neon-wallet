@@ -3,7 +3,7 @@ import React from 'react'
 import Loader from '../../components/Loader'
 import styles from './Loading.scss'
 
-export default function Loading () {
+export default function Loading() {
   return (
     <div className={styles.loading}>
       <Loader />

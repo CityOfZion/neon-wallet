@@ -1,4 +1,8 @@
-import NeonLedger, { legacySignWithLedger, getPublicKey, getDeviceInfo } from './neonLedger'
+import NeonLedger, {
+  legacySignWithLedger,
+  getPublicKey,
+  getDeviceInfo
+} from './neonLedger'
 
 export default NeonLedger
 export const ledgerNanoSCreateSignatureAsync = legacySignWithLedger

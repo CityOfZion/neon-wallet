@@ -24,14 +24,23 @@ const actionCreators = {
   showModal
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(actionCreators, dispatch)
 
 const mapAccountActionsToProps = (actions, props) => ({
-  loadWalletData: () => actions.call({ net: props.net, address: props.address, tokens: props.tokens })
+  loadWalletData: () =>
+    actions.call({
+      net: props.net,
+      address: props.address,
+      tokens: props.tokens
+    })
 })
 
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
 
   // Expose function for polling & reloading account related data.
   withAuthData(),

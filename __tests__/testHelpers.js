@@ -14,10 +14,16 @@ export const provideStore = (node, store) => {
   return <Provider store={store}>{node}</Provider>
 }
 
-export const mockPromiseResolved = (result) => jest.fn(() => {
-  return new Promise((resolve, reject) => { resolve(result) })
-})
+export const mockPromiseResolved = result =>
+  jest.fn(() => {
+    return new Promise((resolve, reject) => {
+      resolve(result)
+    })
+  })
 
-export const mockPromiseRejected = (message = 'test error') => jest.fn(() => {
-  return new Promise((resolve, reject) => { reject(new Error(message)) })
-})
+export const mockPromiseRejected = (message = 'test error') =>
+  jest.fn(() => {
+    return new Promise((resolve, reject) => {
+      reject(new Error(message))
+    })
+  })

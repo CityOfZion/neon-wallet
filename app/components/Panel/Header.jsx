@@ -9,6 +9,10 @@ type Props = {
   children: React$Node
 }
 
-export default function Header (props: Props) {
-  return <div className={classNames(styles.header, props.className)}>{props.children}</div>
+export default function Header(props: Props) {
+  return (
+    <div className={classNames(styles.header, props.className)}>
+      {props.children}
+    </div>
+  )
 }

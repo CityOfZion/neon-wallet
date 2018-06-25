@@ -7,10 +7,15 @@ import { withData, withActions } from 'spunky'
 import Settings from './Settings'
 import withExplorerData from '../../hocs/withExplorerData'
 import withCurrencyData from '../../hocs/withCurrencyData'
-import accountsActions, { updateAccountsActions } from '../../actions/accountsActions'
+import accountsActions, {
+  updateAccountsActions
+} from '../../actions/accountsActions'
 import { updateSettingsActions } from '../../actions/settingsActions'
 import { getNetworks } from '../../core/networks'
-import { showErrorNotification, showSuccessNotification } from '../../modules/notifications'
+import {
+  showErrorNotification,
+  showSuccessNotification
+} from '../../modules/notifications'
 import { showModal } from '../../modules/modal'
 
 const mapStateToProps = (state: Object) => ({
@@ -23,21 +28,25 @@ const actionCreators = {
   showSuccessNotification
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators(actionCreators, dispatch)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(actionCreators, dispatch)
 
-const mapAccountsDataToProps = (accounts) => ({ accounts })
+const mapAccountsDataToProps = accounts => ({ accounts })
 
-const mapAccountsActionsToProps = (actions) => ({
-  setAccounts: (accounts) => actions.call(accounts)
+const mapAccountsActionsToProps = actions => ({
+  setAccounts: accounts => actions.call(accounts)
 })
 
-const mapSettingsActionsToProps = (actions) => ({
-  setCurrency: (currency) => actions.call({ currency }),
-  setBlockExplorer: (blockExplorer) => actions.call({ blockExplorer })
+const mapSettingsActionsToProps = actions => ({
+  setCurrency: currency => actions.call({ currency }),
+  setBlockExplorer: blockExplorer => actions.call({ blockExplorer })
 })
 
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
   withData(accountsActions, mapAccountsDataToProps),
   withExplorerData(),
   withCurrencyData(),

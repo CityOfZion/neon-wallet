@@ -42,7 +42,8 @@ export default class AssetInput extends React.Component<Props, State> {
         items={this.props.symbols}
         onChange={this.handleChange}
         onFocus={this.handleFocus}
-        onBlur={this.handleBlur} />
+        onBlur={this.handleBlur}
+      />
     )
   }
 

@@ -43,18 +43,13 @@ class Button extends React.Component<Props> {
           {renderIcon()}
         </span>
       )
-    } else {
-      return <div className={styles.icon} />
     }
+    return <div className={styles.icon} />
   }
 
-  getButtonStyle = () => {
-    return this.props.primary ? styles.dark : styles.light
-  }
+  getButtonStyle = () => (this.props.primary ? styles.dark : styles.light)
 
-  getIconStyle = () => {
-    return this.props.primary ? styles.light : styles.dark
-  }
+  getIconStyle = () => (this.props.primary ? styles.light : styles.dark)
 }
 
 export default Button

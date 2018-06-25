@@ -51,7 +51,8 @@ export default class AddRecipientDisplay extends React.Component<Props, State> {
                 value={amount}
                 placeholder="Amount"
                 options={{ numeralDecimalScale: COIN_DECIMAL_LENGTH }}
-                onChange={(value) => this.handleChange('amount', value)} />
+                onChange={value => this.handleChange('amount', value)}
+              />
               <label className={styles.label}>
                 ({max} {symbol} Available)
               </label>
@@ -61,25 +62,33 @@ export default class AddRecipientDisplay extends React.Component<Props, State> {
               <AssetInput
                 symbols={this.getSymbols()}
                 value={symbol}
-                onChange={(value) => this.handleChange('symbol', value)} />
+                onChange={value => this.handleChange('symbol', value)}
+              />
             </div>
             <div className={classNames(styles.column, styles.sendToIcon)}>
               <ArrowForward />
             </div>
-            <div id="sendAddress" className={classNames(styles.column, styles.recipient)}>
+            <div
+              id="sendAddress"
+              className={classNames(styles.column, styles.recipient)}
+            >
               <label className={styles.label}>Address:</label>
               <AddressInput
                 placeholder="Recipient Address"
                 value={address}
-                onChange={(value) => this.handleChange('address', value)} />
+                onChange={value => this.handleChange('address', value)}
+              />
             </div>
           </div>
         </div>
         <div className={styles.actions}>
-          <Button onClick={onCancel}>
-            Cancel
-          </Button>
-          <Button id="doSend" primary disabled={!this.canConfirm()} onClick={this.handleConfirm}>
+          <Button onClick={onCancel}>Cancel</Button>
+          <Button
+            id="doSend"
+            primary
+            disabled={!this.canConfirm()}
+            onClick={this.handleConfirm}
+          >
             Next
           </Button>
         </div>
@@ -101,9 +110,12 @@ export default class AddRecipientDisplay extends React.Component<Props, State> {
     return !!address && !!amount
   }
 
-  getSymbols = () => {
-    return Object.keys(pickBy(this.props.balances, (balance: string, symbol: string) => {
-      return [ASSETS.NEO, ASSETS.GAS].includes(symbol) || balance !== '0'
-    }))
-  }
+  getSymbols = () =>
+    Object.keys(
+      pickBy(
+        this.props.balances,
+        (balance: string, symbol: string) =>
+          [ASSETS.NEO, ASSETS.GAS].includes(symbol) || balance !== '0'
+      )
+    )
 }

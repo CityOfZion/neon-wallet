@@ -9,7 +9,7 @@ import PortfolioPanel from '../../components/Dashboard/PortfolioPanel'
 import styles from './Dashboard.scss'
 
 type Props = {
-  loadWalletData: Function,
+  loadWalletData: Function
 }
 
 const REFRESH_INTERVAL_MS = 30000
@@ -17,22 +17,22 @@ const REFRESH_INTERVAL_MS = 30000
 export default class Dashboard extends Component<Props> {
   walletDataInterval: ?number
 
-  componentDidMount () {
+  componentDidMount() {
     this.addPolling()
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.removePolling()
   }
 
-  componentWillReceiveProps (nextProps: Props) {
+  componentWillReceiveProps(nextProps: Props) {
     if (this.props.loadWalletData !== nextProps.loadWalletData) {
       this.removePolling()
       this.addPolling()
     }
   }
 
-  render () {
+  render() {
     return (
       <div id="dashboard" className={styles.dashboard}>
         <div className={styles.dataColumn}>
@@ -48,7 +48,10 @@ export default class Dashboard extends Component<Props> {
   }
 
   addPolling = () => {
-    this.walletDataInterval = setInterval(this.props.loadWalletData, REFRESH_INTERVAL_MS)
+    this.walletDataInterval = setInterval(
+      this.props.loadWalletData,
+      REFRESH_INTERVAL_MS
+    )
   }
 
   removePolling = () => {

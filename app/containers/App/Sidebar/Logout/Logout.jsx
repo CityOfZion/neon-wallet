@@ -12,7 +12,11 @@ type Props = {
 }
 
 const Logout = ({ id, className, logout }: Props) => (
-  <div id={id} className={classNames(styles.logout, className)} onClick={logout}>
+  <div
+    id={id}
+    className={classNames(styles.logout, className)}
+    onClick={logout}
+  >
     <LogoutIcon />
   </div>
 )
