@@ -20,7 +20,7 @@
     "dist": "yarn assets && yarn build",
     "lint": "eslint -c .eslintrc ./app --ext .js,.jsx --ignore-pattern dist/",
     "lint-fix": "eslint -c .eslintrc ./app --ext .js,.jsx --fix --ignore-pattern dist/",
-    // "prepush": "echo 'running flow...' && yarn flow && echo 'running lint...' && yarn lint && echo 'running tests...' && yarn test",
+    "prepush-disabled": "echo 'running flow...' && yarn flow && echo 'running lint...' && yarn lint && echo 'running tests...' && yarn test",
     "electron-rebuild": "electron-rebuild --force --module_dir . -w node-hid",
     "flow": "flow check",
     "release-master": "./scripts/release-master.sh",
