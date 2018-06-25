@@ -1,8 +1,7 @@
-// @flow
 const webpack = require('webpack')
 const path = require('path')
 
-module.exports = (storybookBaseConfig: $FlowFixMe) => {
+module.exports = storybookBaseConfig => {
   storybookBaseConfig.module.rules.push({
     test: /\.scss$/,
     loaders: [
