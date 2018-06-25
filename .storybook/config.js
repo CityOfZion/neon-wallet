@@ -1,4 +1,3 @@
-// @flow
 import { configure } from '@storybook/react'
 import { storiesOf, addDecorator } from '@storybook/react'
 import { withKnobs } from '@storybook/addon-knobs'
