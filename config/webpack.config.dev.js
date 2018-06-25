@@ -1,11 +1,12 @@
-'use strict'
-
+// @flow
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+
 const port = process.env.PORT || 3000
 const publicPath = process.env.START_HOT ? `http://localhost:${port}/dist` : ''
 const { spawn } = require('child_process')
+const paths = require('./paths')
 
 const commonLoaders = {
   css: {
@@ -44,9 +45,7 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx'],
-    alias: {
-      styles: path.resolve(__dirname, '../app/styles')
-    }
+    alias: paths.alias
   },
   node: {
     __dirname: false

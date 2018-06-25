@@ -1,10 +1,9 @@
-'use strict'
-
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const paths = require('./paths')
 
 const commonLoaders = {
   cssModules: {
@@ -30,7 +29,8 @@ module.exports = {
     publicPath: ''
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+    alias: paths.alias
   },
   node: {
     __dirname: false
