@@ -25,7 +25,8 @@
     "flow": "flow check",
     "release-master": "./scripts/release-master.sh",
     "format": "prettier --write '**/*.{js,jsx,.scss,.css}'",
-    "clean": "rm -r app/dist/*"
+    "clean": "rm -r app/dist/*",
+    "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "keywords": [],
   "license": "ISC",
@@ -113,6 +114,10 @@
     "uuid": "^3.2.1"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "3.4.8",
+    "@storybook/addon-knobs": "3.4.8",
+    "@storybook/addon-links": "3.4.8",
+    "@storybook/react": "3.4.8",
     "autoprefixer": "7.1.6",
     "ava": "0.23.0",
     "babel-cli": "6.26.0",
