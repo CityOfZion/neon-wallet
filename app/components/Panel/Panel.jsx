@@ -18,14 +18,12 @@ export default class Panel extends React.Component<Props> {
     renderHeader: null
   }
 
-  render = () => {
-    return (
-      <div className={classNames(styles.panel, this.props.className)}>
-        {this.renderHeader()}
-        {this.renderContent()}
-      </div>
-    )
-  }
+  render = () => (
+    <div className={classNames(styles.panel, this.props.className)}>
+      {this.renderHeader()}
+      {this.renderContent()}
+    </div>
+  )
 
   renderHeader = () => {
     const { renderHeader } = this.props
@@ -39,7 +37,9 @@ export default class Panel extends React.Component<Props> {
     const { contentClassName, children } = this.props
 
     return (
-      <Content className={classNames(styles.content, contentClassName)}>{children}</Content>
+      <Content className={classNames(styles.content, contentClassName)}>
+        {children}
+      </Content>
     )
   }
 }

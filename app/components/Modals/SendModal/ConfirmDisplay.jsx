@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
-import Button from '../../Button'
 import Delete from 'react-icons/lib/md/delete'
+import Button from '../../Button'
 
 import Table from '../../Table'
 import { Address } from '../../Blockchain'
@@ -28,7 +28,7 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
     agree: false
   }
 
-  render () {
+  render() {
     const { onConfirm, onCancel, entries, address, message } = this.props
     const { agree } = this.state
 
@@ -46,10 +46,17 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
             <tbody>
               {entries.map((entry, i) => (
                 <tr key={`entry-${i}`}>
-                  <td>{formatBalance(entry.symbol, entry.amount)} {entry.symbol}</td>
-                  <td><Address address={entry.address} /></td>
                   <td>
-                    <Delete className={styles.entryAction} onClick={this.handleDelete(entry)} />
+                    {formatBalance(entry.symbol, entry.amount)} {entry.symbol}
+                  </td>
+                  <td>
+                    <Address address={entry.address} />
+                  </td>
+                  <td>
+                    <Delete
+                      className={styles.entryAction}
+                      onClick={this.handleDelete(entry)}
+                    />
                   </td>
                 </tr>
               ))}
@@ -61,12 +68,15 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
           </div>
         </div>
 
-        {message && (
-          <div className={styles.messages}>{message}</div>
-        )}
+        {message && <div className={styles.messages}>{message}</div>}
 
         <div className={styles.agree}>
-          <input id="agree" type="checkbox" checked={agree} onChange={() => this.setState({ agree: !agree })} />
+          <input
+            id="agree"
+            type="checkbox"
+            checked={agree}
+            onChange={() => this.setState({ agree: !agree })}
+          />
           <label htmlFor="agree">
             I agree to transfer the above assets & tokens from{' '}
             <Address address={address} />.
@@ -75,13 +85,13 @@ export default class ConfirmDisplay extends React.Component<Props, State> {
 
         <div className={styles.actions}>
           <Button onClick={onCancel}>Cancel</Button>
-          <Button primary disabled={!agree} onClick={onConfirm}>Send Assets</Button>
+          <Button primary disabled={!agree} onClick={onConfirm}>
+            Send Assets
+          </Button>
         </div>
       </div>
     )
   }
 
-  handleDelete = (entry: SendEntryType) => {
-    return () => this.props.onDelete(entry)
-  }
+  handleDelete = (entry: SendEntryType) => () => this.props.onDelete(entry)
 }

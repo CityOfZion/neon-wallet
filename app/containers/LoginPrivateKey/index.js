@@ -6,8 +6,8 @@ import LoginPrivateKey from './LoginPrivateKey'
 import withFailureNotification from '../../hocs/withFailureNotification'
 import { wifLoginActions } from '../../actions/authActions'
 
-const mapActionsToProps = (actions) => ({
-  loginWithPrivateKey: (wif) => actions.call({ wif })
+const mapActionsToProps = actions => ({
+  loginWithPrivateKey: wif => actions.call({ wif })
 })
 
 export default compose(

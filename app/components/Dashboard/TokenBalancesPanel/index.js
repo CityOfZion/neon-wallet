@@ -14,20 +14,22 @@ import withLoadingProp from '../../../hocs/withLoadingProp'
 import withProgressPanel from '../../../hocs/withProgressPanel'
 import { toBigNumber } from '../../../core/math'
 
-const filterZeroBalanceTokens = (balances) => {
-  return filter(balances, (token) => toBigNumber(token.balance).gt(0))
-}
+const filterZeroBalanceTokens = balances =>
+  filter(balances, token => toBigNumber(token.balance).gt(0))
 
-const getTokenBalances = (balances) => {
-  return values(omit(balances, 'NEO', 'GAS'))
-}
+const getTokenBalances = balances => values(omit(balances, 'NEO', 'GAS'))
 
-const mapBalanceDataToProps = (balances) => ({
+const mapBalanceDataToProps = balances => ({
   balances: filterZeroBalanceTokens(getTokenBalances(balances))
 })
 
 const mapBalancesActionsToProps = (actions, props) => ({
-  refresh: () => actions.call({ net: props.net, address: props.address, tokens: props.tokens })
+  refresh: () =>
+    actions.call({
+      net: props.net,
+      address: props.address,
+      tokens: props.tokens
+    })
 })
 
 export default compose(

@@ -29,7 +29,8 @@ class WalletManager extends Component<Props, State> {
     editing: false,
     newLabel: this.props.label
   }
-  render () {
+
+  render() {
     const { label, address, handleDelete } = this.props
     return (
       <div className={styles.accountInfoRow}>

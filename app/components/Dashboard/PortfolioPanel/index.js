@@ -13,13 +13,12 @@ import { getTokenBalancesMap } from '../../../core/wallet'
 import { toNumber, toBigNumber } from '../../../core/math'
 import { ASSETS } from '../../../core/constants'
 
-const removeEmptyBalances = (balances) => {
-  return pickBy(balances, (balance) => toBigNumber(balance).gt(0))
-}
+const removeEmptyBalances = balances =>
+  pickBy(balances, balance => toBigNumber(balance).gt(0))
 
-const mapPricesDataToProps = (prices) => ({ prices })
+const mapPricesDataToProps = prices => ({ prices })
 
-const mapBalancesDataToProps = (balances) => ({
+const mapBalancesDataToProps = balances => ({
   balances: removeEmptyBalances({
     ...pick(balances, ASSETS.NEO, ASSETS.GAS),
     ...getTokenBalancesMap(omit(balances, 'NEO', 'GAS'))
@@ -27,9 +26,12 @@ const mapBalancesDataToProps = (balances) => ({
 })
 
 const mapTotalPortfolioValueToProps = ({ prices, balances }) => ({
-  total: reduce(balances, (result, balance, symbol) => {
-    return result + toNumber(balance) * (prices[symbol] || 0)
-  }, 0)
+  total: reduce(
+    balances,
+    (result, balance, symbol) =>
+      result + toNumber(balance) * (prices[symbol] || 0),
+    0
+  )
 })
 
 const mapPortfolioBalanceProps = ({ prices, balances, total }) => ({

@@ -4,16 +4,17 @@ import { map, uniq, find } from 'lodash'
 
 const { INITIAL, LOADING, LOADED, FAILED } = progressValues
 
-function getProgress (actionState: Object) {
+function getProgress(actionState: Object) {
   return actionState.progress || INITIAL
 }
 
-export default function pureStrategy (actionStates: Array<Object>): Progress {
+export default function pureStrategy(actionStates: Array<Object>): Progress {
   const currentProgresses = uniq(map(actionStates, getProgress))
 
-  const prioritizedProgress = find([INITIAL, FAILED, LOADING, LOADED], (progress) => {
-    return currentProgresses.includes(progress)
-  })
+  const prioritizedProgress = find(
+    [INITIAL, FAILED, LOADING, LOADED],
+    progress => currentProgresses.includes(progress)
+  )
 
   return prioritizedProgress || INITIAL
 }

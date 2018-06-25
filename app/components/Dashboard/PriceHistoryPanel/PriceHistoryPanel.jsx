@@ -43,46 +43,56 @@ export default class PriceHistoryPanel extends React.Component<Props> {
     const { className, prices, currency, staticPrice } = this.props
 
     return (
-      <Panel className={classNames(styles.priceHistoryPanel, className)} renderHeader={this.renderHeader}>
-        <PriceHistoryChart prices={prices} currency={currency} staticPrice={staticPrice} formatDate={this.formatDate} />
+      <Panel
+        className={classNames(styles.priceHistoryPanel, className)}
+        renderHeader={this.renderHeader}
+      >
+        <PriceHistoryChart
+          prices={prices}
+          currency={currency}
+          staticPrice={staticPrice}
+          formatDate={this.formatDate}
+        />
       </Panel>
     )
   }
 
-  renderHeader = () => {
-    return (
-      <div className={styles.header}>
-        <span className={styles.asset} onClick={this.handleChangeAsset}>
-          {this.props.asset}
-          <DropdownIcon className={styles.icon} />
-        </span>
-        <span className={styles.duration} onClick={this.handleChangeDuration}>
-          {this.getDuration()}
-          <DropdownIcon className={styles.icon} />
-        </span>
-      </div>
-    )
-  }
+  renderHeader = () => (
+    <div className={styles.header}>
+      <span className={styles.asset} onClick={this.handleChangeAsset}>
+        {this.props.asset}
+        <DropdownIcon className={styles.icon} />
+      </span>
+      <span className={styles.duration} onClick={this.handleChangeDuration}>
+        {this.getDuration()}
+        <DropdownIcon className={styles.icon} />
+      </span>
+    </div>
+  )
 
   handleChangeAsset = () => {
-    this.props.setAsset(this.props.asset === ASSETS.NEO ? ASSETS.GAS : ASSETS.NEO)
+    this.props.setAsset(
+      this.props.asset === ASSETS.NEO ? ASSETS.GAS : ASSETS.NEO
+    )
   }
 
   handleChangeDuration = () => {
     const durations = keys(DURATIONS)
-    const index = (durations.indexOf(this.props.duration) + 1) % durations.length
+    const index =
+      (durations.indexOf(this.props.duration) + 1) % durations.length
     this.props.setDuration(durations[index])
   }
 
-  getDuration = () => {
-    return DURATIONS[this.props.duration]
-  }
+  getDuration = () => DURATIONS[this.props.duration]
 
   formatDate = (date: Date): string => {
     if (this.props.duration === '1d') {
-      return date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-    } else {
-      return date.toLocaleString('en-US', { month: 'numeric', day: 'numeric' })
+      return date.toLocaleString('en-US', {
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+      })
     }
+    return date.toLocaleString('en-US', { month: 'numeric', day: 'numeric' })
   }
 }

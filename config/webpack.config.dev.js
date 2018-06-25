@@ -80,33 +80,19 @@ module.exports = {
       },
       {
         test: /\.global\.css$/,
-        use: [
-          'style-loader',
-          commonLoaders.css
-        ]
+        use: ['style-loader', commonLoaders.css]
       },
       {
         test: /^((?!\.global).)*\.css$/,
-        use: [
-          'style-loader',
-          commonLoaders.cssModules
-        ]
+        use: ['style-loader', commonLoaders.cssModules]
       },
       {
         test: /\.global\.scss$/,
-        use: [
-          'style-loader',
-          commonLoaders.css,
-          'sass-loader'
-        ]
+        use: ['style-loader', commonLoaders.css, 'sass-loader']
       },
       {
         test: /^((?!\.global).)*\.scss$/,
-        use: [
-          'style-loader',
-          commonLoaders.cssModules,
-          'sass-loader'
-        ]
+        use: ['style-loader', commonLoaders.cssModules, 'sass-loader']
       },
       {
         test: /\.(png|jpg|gif)$/,
@@ -161,13 +147,13 @@ module.exports = {
       verbose: true,
       disableDotRule: false
     },
-    before () {
+    before() {
       if (process.env.START_HOT) {
-        spawn(
-          'npm',
-          ['run', 'start-dev'],
-          { shell: true, env: process.env, stdio: 'inherit' }
-        )
+        spawn('npm', ['run', 'start-dev'], {
+          shell: true,
+          env: process.env,
+          stdio: 'inherit'
+        })
           .on('close', code => process.exit(code))
           .on('error', spawnError => console.error(spawnError))
       }

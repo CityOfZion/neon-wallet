@@ -23,16 +23,12 @@ class Dropdown extends React.Component<Props> {
     renderDropdown: noop
   }
 
-  render = () => {
-    return (
-      <div className={classNames(styles.dropdown, this.props.className)}>
-        <div className={styles.anchor}>
-          {this.props.children}
-        </div>
-        {this.renderContent()}
-      </div>
-    )
-  }
+  render = () => (
+    <div className={classNames(styles.dropdown, this.props.className)}>
+      <div className={styles.anchor}>{this.props.children}</div>
+      {this.renderContent()}
+    </div>
+  )
 
   renderContent = () => {
     if (this.props.open) {

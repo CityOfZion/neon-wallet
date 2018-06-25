@@ -48,13 +48,11 @@ const initialState = {
       loadedCount: 1
     }
   },
-  account: {
-  },
+  account: {},
   wallet: {
     transactions: []
   },
-  modal: {
-  }
+  modal: {}
 }
 
 describe('App', () => {

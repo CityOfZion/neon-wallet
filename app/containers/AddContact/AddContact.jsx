@@ -12,7 +12,7 @@ type Props = {
 }
 
 export default class AddContact extends React.Component<Props> {
-  render () {
+  render() {
     return (
       <div className={styles.addContact}>
         <AddContactPanel
@@ -24,7 +24,5 @@ export default class AddContact extends React.Component<Props> {
     )
   }
 
-  handleSave = () => {
-    return this.props.history.push(ROUTES.CONTACTS)
-  }
+  handleSave = () => this.props.history.push(ROUTES.CONTACTS)
 }

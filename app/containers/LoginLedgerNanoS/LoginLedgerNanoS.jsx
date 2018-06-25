@@ -27,17 +27,17 @@ const POLL_FREQUENCY = 1000
 export default class LoginLedgerNanoS extends React.Component<Props> {
   intervalId: ?number
 
-  componentDidMount () {
+  componentDidMount() {
     this.intervalId = setInterval(this.props.connect, POLL_FREQUENCY)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     if (this.intervalId) {
       clearInterval(this.intervalId)
     }
   }
 
-  render () {
+  render() {
     return (
       <div id="loginLedgerNanoS" className={styles.flexContainer}>
         <div className={styles.loginForm}>
@@ -87,7 +87,5 @@ export default class LoginLedgerNanoS extends React.Component<Props> {
     this.props.login(this.props.publicKey)
   }
 
-  canLogin = () => {
-    return this.props.progress === LOADED
-  }
+  canLogin = () => this.props.progress === LOADED
 }

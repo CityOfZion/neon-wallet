@@ -22,23 +22,25 @@ type Props = {
 
 class DisplayWalletAccounts extends Component<Props> {
   publicCanvas: ?HTMLCanvasElement
+
   encryptedCanvas: ?HTMLCanvasElement
+
   privateCanvas: ?HTMLCanvasElement
 
-  componentDidMount () {
+  componentDidMount() {
     const { address, encryptedWIF, wif } = this.props
-    QRCode.toCanvas(this.publicCanvas, address, { version: 5 }, (err) => {
+    QRCode.toCanvas(this.publicCanvas, address, { version: 5 }, err => {
       if (err) console.log(err)
     })
-    QRCode.toCanvas(this.encryptedCanvas, encryptedWIF, { version: 5 }, (err) => {
+    QRCode.toCanvas(this.encryptedCanvas, encryptedWIF, { version: 5 }, err => {
       if (err) console.log(err)
     })
-    QRCode.toCanvas(this.privateCanvas, wif, { version: 5 }, (err) => {
+    QRCode.toCanvas(this.privateCanvas, wif, { version: 5 }, err => {
       if (err) console.log(err)
     })
   }
 
-  render () {
+  render() {
     const { passphrase, address, encryptedWIF, wif, walletName } = this.props
     const fields = [
       { label: 'Passphrase', value: passphrase },

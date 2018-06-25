@@ -4,12 +4,11 @@ import { map, reject } from 'lodash'
 import fs from 'fs'
 import storage from 'electron-json-storage'
 
+import Delete from 'react-icons/lib/md/delete'
 import { recoverWallet } from '../../modules/generateWallet'
 
 import Button from '../../components/Button'
 import { EXPLORERS, MODAL_TYPES, CURRENCIES } from '../../core/constants'
-
-import Delete from 'react-icons/lib/md/delete'
 
 const { dialog } = require('electron').remote
 
@@ -40,25 +39,38 @@ export default class Settings extends Component<Props, State> {
 
     storage.get('userWallet', (errorReading, data) => {
       if (errorReading) {
-        showErrorNotification({ message: `An error occurred reading wallet file: ${errorReading.message}` })
+        showErrorNotification({
+          message: `An error occurred reading wallet file: ${
+            errorReading.message
+          }`
+        })
         return
       }
       const content = JSON.stringify(data)
-      dialog.showSaveDialog({
-        filters: [{ name: 'JSON', extensions: ['json'] }]
-      }, (fileName) => {
-        if (fileName === undefined) {
-          return
-        }
-        // fileName is a string that contains the path and filename created in the save file dialog.
-        fs.writeFile(fileName, content, (errorWriting) => {
-          if (errorWriting) {
-            showErrorNotification({ message: `An error occurred creating the file: ${errorWriting.message}` })
-          } else {
-            showSuccessNotification({ message: 'The file has been succesfully saved' })
+      dialog.showSaveDialog(
+        {
+          filters: [{ name: 'JSON', extensions: ['json'] }]
+        },
+        fileName => {
+          if (fileName === undefined) {
+            return
           }
-        })
-      })
+          // fileName is a string that contains the path and filename created in the save file dialog.
+          fs.writeFile(fileName, content, errorWriting => {
+            if (errorWriting) {
+              showErrorNotification({
+                message: `An error occurred creating the file: ${
+                  errorWriting.message
+                }`
+              })
+            } else {
+              showSuccessNotification({
+                message: 'The file has been succesfully saved'
+              })
+            }
+          })
+        }
+      )
     })
   }
 
@@ -77,18 +89,22 @@ export default class Settings extends Component<Props, State> {
       const filepath = fileNames[0]
       fs.readFile(filepath, 'utf-8', (err, data) => {
         if (err) {
-          showErrorNotification({ message: `An error occurred reading the file: ${err.message}` })
+          showErrorNotification({
+            message: `An error occurred reading the file: ${err.message}`
+          })
           return
         }
         const walletData = JSON.parse(data)
 
         recoverWallet(walletData)
-          .then((data) => {
+          .then(data => {
             showSuccessNotification({ message: 'Recovery was successful.' })
             setAccounts(data.accounts)
           })
-          .catch((err) => {
-            showErrorNotification({ message: `An error occurred recovering wallet: ${err.message}` })
+          .catch(err => {
+            showErrorNotification({
+              message: `An error occurred recovering wallet: ${err.message}`
+            })
           })
       })
     })
@@ -118,7 +134,11 @@ export default class Settings extends Component<Props, State> {
       onClick: () => {
         storage.get('userWallet', (readError, data) => {
           if (readError) {
-            showErrorNotification({ message: `An error occurred reading previously stored wallet: ${readError.message}` })
+            showErrorNotification({
+              message: `An error occurred reading previously stored wallet: ${
+                readError.message
+              }`
+            })
             return
           }
 
@@ -126,9 +146,15 @@ export default class Settings extends Component<Props, State> {
 
           storage.set('userWallet', data, saveError => {
             if (saveError) {
-              showErrorNotification({ message: `An error occurred updating the wallet: ${saveError.message}` })
+              showErrorNotification({
+                message: `An error occurred updating the wallet: ${
+                  saveError.message
+                }`
+              })
             } else {
-              showSuccessNotification({ message: 'Account deletion was successful.' })
+              showSuccessNotification({
+                message: 'Account deletion was successful.'
+              })
               setAccounts(data.accounts)
             }
           })
@@ -141,7 +167,7 @@ export default class Settings extends Component<Props, State> {
     this.props.showModal(MODAL_TYPES.TOKEN)
   }
 
-  render () {
+  render() {
     const { accounts, explorer, currency } = this.props
 
     return (
@@ -176,14 +202,16 @@ export default class Settings extends Component<Props, State> {
           </div>
           <div className="settingsItem">
             <div className="itemTitle">Saved Wallet Accounts</div>
-            {map(accounts, (account) => (
+            {map(accounts, account => (
               <div className="walletList" key={`wallet${account.key}`}>
                 <div className="walletItem">
                   <div className="walletName">{account.key.slice(0, 20)}</div>
                   <div className="walletKey">{account.label}</div>
                   <div
                     className="deleteWallet"
-                    onClick={() => this.deleteWalletAccount(account.label, account.key)}
+                    onClick={() =>
+                      this.deleteWalletAccount(account.label, account.key)
+                    }
                   >
                     <Delete />
                   </div>

@@ -1,10 +1,12 @@
 // @flow
 import { MAIN_NETWORK_ID, TEST_NETWORK_ID } from './constants'
 
-export const isMainNetwork = (networkId: string) => networkId === MAIN_NETWORK_ID
-export const isTestNetwork = (networkId: string) => networkId === TEST_NETWORK_ID
+export const isMainNetwork = (networkId: string) =>
+  networkId === MAIN_NETWORK_ID
+export const isTestNetwork = (networkId: string) =>
+  networkId === TEST_NETWORK_ID
 
-export const getNetworks = () => ([
+export const getNetworks = () => [
   {
     id: MAIN_NETWORK_ID,
     label: 'MainNet',
@@ -15,7 +17,7 @@ export const getNetworks = () => ([
     label: 'TestNet',
     network: 'TestNet'
   }
-])
+]
 
 export const findNetwork = (networkId: string): NetworkItemType => {
   const networks = getNetworks()

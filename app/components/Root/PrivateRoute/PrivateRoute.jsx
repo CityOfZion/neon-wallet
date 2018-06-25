@@ -13,9 +13,9 @@ type Props = {
 export default class PrivateRoute extends React.Component<Props> {
   static defaultProps = {
     authenticated: false
-  };
+  }
 
-  render () {
+  render() {
     return (
       <Route
         {...omit(this.props, 'authenticated', 'component')}
@@ -28,8 +28,7 @@ export default class PrivateRoute extends React.Component<Props> {
     if (this.props.authenticated) {
       const Component = this.props.component
       return <Component {...props} />
-    } else {
-      return <Redirect to={ROUTES.HOME} />
     }
+    return <Redirect to={ROUTES.HOME} />
   }
 }

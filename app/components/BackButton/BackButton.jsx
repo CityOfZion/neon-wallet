@@ -1,8 +1,8 @@
 // @flow
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Arrow from '../../assets/icons/arrow.svg'
 import styles from '../Button/Button.scss'
-import { Link } from 'react-router-dom'
 
 type Props = {
   className: ?string,

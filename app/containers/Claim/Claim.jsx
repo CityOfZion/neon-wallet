@@ -17,13 +17,16 @@ type Props = {
 export default class Claim extends Component<Props> {
   intervalId: ?number
 
-  render () {
+  render() {
     const { className } = this.props
     const disabled = this.isDisabled()
 
     return (
       <div>
-        <Tooltip title="You can claim GAS once every 5 minutes" disabled={!disabled}>
+        <Tooltip
+          title="You can claim GAS once every 5 minutes"
+          disabled={!disabled}
+        >
           <Button
             id="claim"
             className={className}
@@ -47,7 +50,5 @@ export default class Claim extends Component<Props> {
     return disableClaimButton || toBigNumber(claimAmount).eq(0)
   }
 
-  getFormattedAmount = () => {
-    return formatGAS(this.props.claimAmount)
-  }
+  getFormattedAmount = () => formatGAS(this.props.claimAmount)
 }

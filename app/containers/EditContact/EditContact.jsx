@@ -18,7 +18,7 @@ export default class EditContact extends React.Component<Props> {
     }
   }
 
-  render () {
+  render() {
     return (
       <div className={styles.editContact}>
         <EditContactPanel
@@ -30,7 +30,5 @@ export default class EditContact extends React.Component<Props> {
     )
   }
 
-  handleSave = () => {
-    return this.props.history.push(ROUTES.CONTACTS)
-  }
+  handleSave = () => this.props.history.push(ROUTES.CONTACTS)
 }

@@ -139,7 +139,7 @@ class WalletManager extends Component<Props> {
     })
   }
 
-  render () {
+  render() {
     const { accounts, saveAccount } = this.props
     return (
       <div className={styles.walletManager}>

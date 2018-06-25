@@ -12,10 +12,13 @@ type Options = {
   [key: string]: mixed
 }
 
-export default function withLoadingProp (actions: Actions, { propName = LOADING_PROP, ...options }: Options = {}) {
+export default function withLoadingProp(
+  actions: Actions,
+  { propName = LOADING_PROP, ...options }: Options = {}
+) {
   return compose(
     withProgress(actions, { propName: PROGRESS_PROP, ...options }),
-    withProps((props) => ({
+    withProps(props => ({
       [LOADING_PROP]: props[PROGRESS_PROP] === LOADING
     }))
   )

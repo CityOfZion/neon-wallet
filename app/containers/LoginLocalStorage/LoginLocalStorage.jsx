@@ -24,7 +24,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
     encryptedWIF: ''
   }
 
-  render () {
+  render() {
     const { loading, accounts } = this.props
     const { passphrase, encryptedWIF } = this.state
     const { label } =
@@ -81,7 +81,5 @@ export default class LoginLocalStorage extends Component<Props, State> {
     }
   }
 
-  isValid = () => {
-    return this.state.encryptedWIF !== '' && this.state.passphrase !== ''
-  }
+  isValid = () => this.state.encryptedWIF !== '' && this.state.passphrase !== ''
 }
