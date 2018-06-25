@@ -23,11 +23,7 @@ type Props = {
   showTokenSaleModal: Function
 }
 
-const Sidebar = ({
-  className,
-  showSendModal,
-  showTokenSaleModal
-}: Props) => (
+const Sidebar = ({ className, showSendModal, showTokenSaleModal }: Props) => (
   <div className={classNames(styles.container, className)}>
     <div className={styles.group}>
       <div className={styles.logo}>
@@ -35,13 +31,25 @@ const Sidebar = ({
       </div>
 
       <Tooltip title="Dashboard" position="right">
-        <NavLink id="dashboard" exact to={ROUTES.DASHBOARD} className={styles.navItem} activeClassName={styles.active}>
+        <NavLink
+          id="dashboard"
+          exact
+          to={ROUTES.DASHBOARD}
+          className={styles.navItem}
+          activeClassName={styles.active}
+        >
           <HomeIcon />
         </NavLink>
       </Tooltip>
 
       <Tooltip title="Transaction History" position="right">
-        <NavLink id="history" exact to={ROUTES.TRANSACTION_HISTORY} className={styles.navItem} activeClassName={styles.active}>
+        <NavLink
+          id="history"
+          exact
+          to={ROUTES.TRANSACTION_HISTORY}
+          className={styles.navItem}
+          activeClassName={styles.active}
+        >
           <HistoryIcon />
         </NavLink>
       </Tooltip>
@@ -53,25 +61,45 @@ const Sidebar = ({
       </Tooltip>
 
       <Tooltip title="Receive" position="right">
-        <NavLink id="receive" exact to={ROUTES.RECEIVE} className={styles.navItem} activeClassName={styles.active}>
+        <NavLink
+          id="receive"
+          exact
+          to={ROUTES.RECEIVE}
+          className={styles.navItem}
+          activeClassName={styles.active}
+        >
           <ReceiveIcon />
         </NavLink>
       </Tooltip>
 
       <Tooltip title="Contacts" position="right">
-        <NavLink id="contacts" to={ROUTES.CONTACTS} className={styles.navItem} activeClassName={styles.active}>
+        <NavLink
+          id="contacts"
+          to={ROUTES.CONTACTS}
+          className={styles.navItem}
+          activeClassName={styles.active}
+        >
           <ContactsIcon />
         </NavLink>
       </Tooltip>
 
       <Tooltip title="Token Sale" position="right">
-        <a id="tokenSale" className={styles.navItem} onClick={showTokenSaleModal}>
+        <a
+          id="tokenSale"
+          className={styles.navItem}
+          onClick={showTokenSaleModal}
+        >
           <TokenSaleIcon />
         </a>
       </Tooltip>
 
       <Tooltip title="Settings" position="right">
-        <NavLink id="settings" to={ROUTES.SETTINGS} className={styles.navItem} activeClassName={styles.active}>
+        <NavLink
+          id="settings"
+          to={ROUTES.SETTINGS}
+          className={styles.navItem}
+          activeClassName={styles.active}
+        >
           <SettingsIcon />
         </NavLink>
       </Tooltip>

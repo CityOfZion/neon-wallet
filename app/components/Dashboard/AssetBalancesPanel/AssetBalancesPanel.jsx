@@ -2,15 +2,15 @@
 import React from 'react'
 import classNames from 'classnames'
 
+import { BigNumber } from 'bignumber.js'
 import Panel from '../../Panel'
 import Claim from '../../../containers/Claim'
-import Tooltip from '../../../components/Tooltip'
+import Tooltip from '../../Tooltip'
 import { formatGAS, formatFiat, formatNEO } from '../../../core/formatters'
 import { toNumber, toBigNumber } from '../../../core/math'
 import { ASSETS, CURRENCIES } from '../../../core/constants'
 import RefreshIcon from '../../../assets/icons/refresh.svg'
 import styles from './AssetBalancesPanel.scss'
-import { BigNumber } from 'bignumber.js'
 
 type PriceDirection = 'increase' | 'decrease'
 
@@ -49,7 +49,13 @@ export default class AssetBalancesPanel extends React.Component<Props> {
             <span className={styles.value} id="neoWalletValue">
               {this.getFormattedFiatBalance(this.getNEOValue())}
             </span>
-            <span className={classNames(styles.change, styles[this.getNEOPriceChangeDirection()])} id="priceChangeNeo">
+            <span
+              className={classNames(
+                styles.change,
+                styles[this.getNEOPriceChangeDirection()]
+              )}
+              id="priceChangeNeo"
+            >
               {this.getNEOFormattedPriceChange()}
             </span>
           </div>
@@ -63,7 +69,13 @@ export default class AssetBalancesPanel extends React.Component<Props> {
             <span className={styles.value} id="gasWalletValue">
               {this.getFormattedFiatBalance(this.getGASValue())}
             </span>
-            <span className={classNames(styles.change, styles[this.getGASPriceChangeDirection()])} id="priceChangeGas">
+            <span
+              className={classNames(
+                styles.change,
+                styles[this.getGASPriceChangeDirection()]
+              )}
+              id="priceChangeGas"
+            >
               {this.getGASFormattedPriceChange()}
             </span>
           </div>
@@ -105,41 +117,37 @@ export default class AssetBalancesPanel extends React.Component<Props> {
     return `${symbol}${formatFiat(value)}`
   }
 
-  getFormattedPriceChange = (priceChange: BigNumber): string => {
-    return (priceChange.isNegative() ? '' : '+') + priceChange.times(100).toFixed(2).toString() + '%'
-  }
+  getFormattedPriceChange = (priceChange: BigNumber): string =>
+    `${(priceChange.isNegative() ? '' : '+') +
+      priceChange
+        .times(100)
+        .toFixed(2)
+        .toString()}%`
 
-  getPriceChangeDirection = (priceChange: BigNumber): PriceDirection => {
-    return priceChange.isNegative() ? 'decrease' : 'increase'
-  }
+  getPriceChangeDirection = (priceChange: BigNumber): PriceDirection =>
+    priceChange.isNegative() ? 'decrease' : 'increase'
 
   getNEOValue = (): number => {
     const { NEO, neoPrice } = this.props
     return neoPrice && NEO !== '0' ? neoPrice * toNumber(NEO) : 0
   }
 
-  getNEOFormattedPriceChange = (): string => {
-    return this.getFormattedPriceChange(this.props.neoPriceChange)
-  }
+  getNEOFormattedPriceChange = (): string =>
+    this.getFormattedPriceChange(this.props.neoPriceChange)
 
-  getNEOPriceChangeDirection = (): PriceDirection => {
-    return this.getPriceChangeDirection(this.props.neoPriceChange)
-  }
+  getNEOPriceChangeDirection = (): PriceDirection =>
+    this.getPriceChangeDirection(this.props.neoPriceChange)
 
   getGASValue = (): number => {
     const { GAS, gasPrice } = this.props
     return gasPrice && GAS !== '0' ? gasPrice * toNumber(GAS) : 0
   }
 
-  getGASFormattedPriceChange = (): string => {
-    return this.getFormattedPriceChange(this.props.gasPriceChange)
-  }
+  getGASFormattedPriceChange = (): string =>
+    this.getFormattedPriceChange(this.props.gasPriceChange)
 
-  getGASPriceChangeDirection = (): PriceDirection => {
-    return this.getPriceChangeDirection(this.props.gasPriceChange)
-  }
+  getGASPriceChangeDirection = (): PriceDirection =>
+    this.getPriceChangeDirection(this.props.gasPriceChange)
 
-  getTotalValue = (): number => {
-    return this.getNEOValue() + this.getGASValue()
-  }
+  getTotalValue = (): number => this.getNEOValue() + this.getGASValue()
 }

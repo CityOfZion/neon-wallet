@@ -12,18 +12,27 @@ import withNetworkData from '../../../hocs/withNetworkData'
 import withTokensData from '../../../hocs/withTokensData'
 import { showErrorNotification } from '../../../modules/notifications'
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ showErrorNotification }, dispatch)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ showErrorNotification }, dispatch)
 
-const mapSettingsActionsToProps = (actions) => ({
-  setUserGeneratedTokens: (tokens) => actions.call({ tokens })
+const mapSettingsActionsToProps = actions => ({
+  setUserGeneratedTokens: tokens => actions.call({ tokens })
 })
 
 const mapAccountActionsToProps = (actions, props) => ({
-  onSave: () => actions.call({ net: props.net, address: props.address, tokens: props.tokens })
+  onSave: () =>
+    actions.call({
+      net: props.net,
+      address: props.address,
+      tokens: props.tokens
+    })
 })
 
 export default compose(
-  connect(null, mapDispatchToProps),
+  connect(
+    null,
+    mapDispatchToProps
+  ),
   withNetworkData(),
   withAuthData(),
   withTokensData(),

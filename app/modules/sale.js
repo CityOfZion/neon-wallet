@@ -2,7 +2,11 @@
 import { wallet, api } from 'neon-js'
 import { flatten } from 'lodash'
 
-import { showErrorNotification, showInfoNotification, hideNotification } from './notifications'
+import {
+  showErrorNotification,
+  showInfoNotification,
+  hideNotification
+} from './notifications'
 import {
   getNetwork,
   getWIF,
@@ -50,14 +54,19 @@ export const participateInSale = (
     return false
   }
 
-  const formattedScriptHash = scriptHash.length === 40
-    ? scriptHash
-    : scriptHash.slice(2, scriptHash.length)
+  const formattedScriptHash =
+    scriptHash.length === 40
+      ? scriptHash
+      : scriptHash.slice(2, scriptHash.length)
 
-  const notificationId = dispatch(showInfoNotification({
-    message: isHardwareLogin ? 'Please sign the transaction on your hardware device' : 'Sending transaction',
-    autoDismiss: 0
-  }))
+  const notificationId = dispatch(
+    showInfoNotification({
+      message: isHardwareLogin
+        ? 'Please sign the transaction on your hardware device'
+        : 'Sending transaction',
+      autoDismiss: 0
+    })
+  )
 
   const scriptHashAddress = wallet.getAddressFromScriptHash(formattedScriptHash)
 
@@ -90,7 +99,11 @@ export const participateInSale = (
       throw new Error('Rejected by RPC server.')
     }
   } catch (err) {
-    dispatch(showErrorNotification({ message: `Sale participation failed: ${err.message}` }))
+    dispatch(
+      showErrorNotification({
+        message: `Sale participation failed: ${err.message}`
+      })
+    )
     return false
   }
 

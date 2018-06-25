@@ -17,25 +17,27 @@ export default class LoadingPanel extends React.Component<Props> {
     onRetry: null
   }
 
-  render () {
+  render() {
     return (
       <Panel
         className={classNames(styles.loadingPanel, this.props.className)}
         contentClassName={styles.content}
         renderHeader={this.renderHeader}
       >
-        Failed to load.{' '}{this.renderRetry()}
+        Failed to load. {this.renderRetry()}
       </Panel>
     )
   }
 
-  renderHeader = () => {
-    return <span>{this.props.title}</span>
-  }
+  renderHeader = () => <span>{this.props.title}</span>
 
   renderRetry = () => {
     if (this.props.onRetry) {
-      return <a href="#" onClick={this.handleRetry}>Retry?</a>
+      return (
+        <a href="#" onClick={this.handleRetry}>
+          Retry?
+        </a>
+      )
     }
   }
 

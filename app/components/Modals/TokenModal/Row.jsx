@@ -2,10 +2,9 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 
-import Tooltip from '../../Tooltip'
-
 import Delete from 'react-icons/lib/md/delete'
 import LockOutline from 'react-icons/lib/md/lock-outline'
+import Tooltip from '../../Tooltip'
 
 import styles from './Row.scss'
 
@@ -17,15 +16,15 @@ type Props = {
 }
 
 class Row extends Component<Props> {
-  scriptHashInput: ?HTMLInputElement;
+  scriptHashInput: ?HTMLInputElement
 
-  componentWillReceiveProps (nextProps: Props) {
+  componentWillReceiveProps(nextProps: Props) {
     if (nextProps.isScriptHashInvalid && this.scriptHashInput) {
       this.scriptHashInput.focus()
     }
   }
 
-  render () {
+  render() {
     const {
       token,
       onChangeScriptHash,

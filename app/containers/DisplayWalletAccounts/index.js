@@ -33,7 +33,10 @@ const mapAccountActionsToProps = actions => ({
 })
 
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
   withActions(saveAccountActions, mapAccountActionsToProps),
   withSuccessNotification(saveAccountActions, 'Account saved!'),
   withFailureNotification(

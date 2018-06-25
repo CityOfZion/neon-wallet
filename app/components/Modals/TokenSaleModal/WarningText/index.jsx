@@ -11,13 +11,13 @@ const WarningText = (props: Props) => (
   <div className={styles.container}>
     <div className={styles.section}>
       <div className={styles.heading}>
-        <strong>IMPORTANT: You must agree to the following before continuing</strong>
+        <strong>
+          IMPORTANT: You must agree to the following before continuing
+        </strong>
       </div>
       <div className={styles.sectionBody}>
         <div className={styles.bullets}>
-          <ol>
-            {props.children}
-          </ol>
+          <ol>{props.children}</ol>
         </div>
       </div>
     </div>

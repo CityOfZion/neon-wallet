@@ -7,7 +7,11 @@ import AddRecipientDisplay from './AddRecipientDisplay'
 import ConfirmDisplay from './ConfirmDisplay'
 import withAddressCheck from './withAddressCheck'
 
-import { validateTransactionBeforeSending, getTokenBalancesMap, isBlacklisted } from '../../../core/wallet'
+import {
+  validateTransactionBeforeSending,
+  getTokenBalancesMap,
+  isBlacklisted
+} from '../../../core/wallet'
 import { ASSETS } from '../../../core/constants'
 import { toBigNumber } from '../../../core/math'
 
@@ -26,7 +30,7 @@ type Props = {
   hideModal: Function,
   sendTransaction: Function,
   net: string,
-  address: string,
+  address: string
 }
 
 type BalancesType = {
@@ -41,6 +45,7 @@ type State = {
 
 export default class SendModal extends Component<Props, State> {
   canvas: ?HTMLCanvasElement
+
   state = {
     entries: [],
     display: DISPLAY_MODES.ADD_RECIPIENT,
@@ -51,14 +56,15 @@ export default class SendModal extends Component<Props, State> {
     }
   }
 
-  render () {
+  render() {
     const { hideModal } = this.props
     return (
       <BaseModal
         title="Send"
         hideModal={hideModal}
         shouldCloseWithEscapeKey={false}
-        style={{ content: { width: '925px', height: '410px' } }}>
+        style={{ content: { width: '925px', height: '410px' } }}
+      >
         {this.renderDisplay()}
       </BaseModal>
     )
@@ -73,21 +79,22 @@ export default class SendModal extends Component<Props, State> {
         <AddRecipientDisplay
           balances={balances}
           onCancel={this.handleCancelAddRecipient}
-          onConfirm={this.handleConfirmAddRecipient} />
-      )
-    } else {
-      return (
-        <ConfirmDisplayContainer
-          net={net}
-          address={address}
-          entries={entries}
-          onConfirm={this.handleConfirmTransaction}
-          onCancel={this.handleCancelTransaction}
-          onAddRecipient={this.handleAddRecipient}
-          onDelete={this.handleDeleteEntry}
-          {...this.state} />
+          onConfirm={this.handleConfirmAddRecipient}
+        />
       )
     }
+    return (
+      <ConfirmDisplayContainer
+        net={net}
+        address={address}
+        entries={entries}
+        onConfirm={this.handleConfirmTransaction}
+        onCancel={this.handleCancelTransaction}
+        onAddRecipient={this.handleAddRecipient}
+        onDelete={this.handleDeleteEntry}
+        {...this.state}
+      />
+    )
   }
 
   handleAddRecipient = () => {
@@ -98,12 +105,15 @@ export default class SendModal extends Component<Props, State> {
     const { balances } = this.state
 
     const entries = without(this.state.entries, entry)
-    const newBalance = toBigNumber(balances[entry.symbol]).plus(entry.amount).toString()
+    const newBalance = toBigNumber(balances[entry.symbol])
+      .plus(entry.amount)
+      .toString()
 
     this.setState({
       entries,
       balances: { ...balances, [entry.symbol]: newBalance },
-      display: entries.length > 0 ? DISPLAY_MODES.CONFIRM : DISPLAY_MODES.ADD_RECIPIENT
+      display:
+        entries.length > 0 ? DISPLAY_MODES.CONFIRM : DISPLAY_MODES.ADD_RECIPIENT
     })
   }
 
@@ -112,18 +122,25 @@ export default class SendModal extends Component<Props, State> {
     const { balances } = this.state
 
     if (await isBlacklisted(entry.address)) {
-      showErrorNotification({ message: 'You have attempted to enter a phishing address.' })
+      showErrorNotification({
+        message: 'You have attempted to enter a phishing address.'
+      })
       return
     }
 
-    const error = validateTransactionBeforeSending(balances[entry.symbol], entry)
+    const error = validateTransactionBeforeSending(
+      balances[entry.symbol],
+      entry
+    )
 
     if (error) {
       showErrorNotification({ message: error })
       return
     }
 
-    const newBalance = toBigNumber(balances[entry.symbol]).minus(entry.amount).toString()
+    const newBalance = toBigNumber(balances[entry.symbol])
+      .minus(entry.amount)
+      .toString()
 
     this.setState({
       entries: [...this.state.entries, entry],

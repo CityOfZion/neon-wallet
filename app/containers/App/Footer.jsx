@@ -12,14 +12,16 @@ type Props = {
 }
 
 export default class Footer extends React.Component<Props> {
-  render () {
+  render() {
     return (
       <div className={classNames(styles.footer, this.props.className)}>
         <span className={styles.item}>
           <NetworkSwitch />
         </span>
         <span className={styles.item}>
-          <a href="#" onClick={this.handleSupport}>Community Support</a>
+          <a href="#" onClick={this.handleSupport}>
+            Community Support
+          </a>
         </span>
       </div>
     )

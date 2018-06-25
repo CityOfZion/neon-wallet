@@ -8,21 +8,18 @@ import { Account } from '../core/schemas'
 
 const STORAGE_KEY = 'userWallet'
 
-export const getWallet = async (): Promise<Object> => {
-  return (await getStorage(STORAGE_KEY)) || DEFAULT_WALLET
-}
+export const getWallet = async (): Promise<Object> =>
+  (await getStorage(STORAGE_KEY)) || DEFAULT_WALLET
 
 const setWallet = async (wallet: Object) => {
   setStorage(STORAGE_KEY, wallet)
 }
 
-const walletHasKey = (wallet: Object, key: string) => {
-  return wallet.accounts.some(account => account.key === key)
-}
+const walletHasKey = (wallet: Object, key: string) =>
+  wallet.accounts.some(account => account.key === key)
 
-const walletHasLabel = (wallet: Object, label: string) => {
-  return wallet.accounts.some(account => account.label === label)
-}
+const walletHasLabel = (wallet: Object, label: string) =>
+  wallet.accounts.some(account => account.label === label)
 
 export const ID = 'accounts'
 

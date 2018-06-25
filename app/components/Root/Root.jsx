@@ -6,11 +6,11 @@ import { HashRouter } from 'react-router-dom'
 import Routes from './Routes'
 
 type Props = {
-  store: Object,
+  store: Object
 }
 
 export default class Root extends React.Component<Props> {
-  render () {
+  render() {
     const { store } = this.props
 
     return (

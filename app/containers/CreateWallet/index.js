@@ -10,6 +10,10 @@ const actionCreators = {
   generateNewWalletAccount
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(actionCreators, dispatch)
 
-export default connect(null, mapDispatchToProps)(CreateWallet)
+export default connect(
+  null,
+  mapDispatchToProps
+)(CreateWallet)

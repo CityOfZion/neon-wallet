@@ -8,15 +8,13 @@ export const SHOW_MODAL = 'SHOW_MODAL'
 export const HIDE_MODAL = 'HIDE_MODAL'
 
 // Actions
-export const showModal = (modalType: ModalType, modalProps: Object = {}) => {
-  return {
-    type: SHOW_MODAL,
-    payload: {
-      modalType,
-      modalProps
-    }
+export const showModal = (modalType: ModalType, modalProps: Object = {}) => ({
+  type: SHOW_MODAL,
+  payload: {
+    modalType,
+    modalProps
   }
-}
+})
 
 export const hideModal = () => ({
   type: HIDE_MODAL

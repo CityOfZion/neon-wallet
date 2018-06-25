@@ -17,7 +17,10 @@ export default class Transaction extends React.Component<Props> {
     const { txid, className } = this.props
 
     return (
-      <span className={classNames(styles.transaction, className)} onClick={this.handleClick}>
+      <span
+        className={classNames(styles.transaction, className)}
+        onClick={this.handleClick}
+      >
         {txid.substring(0, 32)}
       </span>
     )

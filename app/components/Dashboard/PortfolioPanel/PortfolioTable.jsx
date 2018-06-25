@@ -28,7 +28,7 @@ export default class PortfolioTable extends React.Component<Props> {
 
     return (
       <div className={classNames(styles.portfolioTable, className)}>
-        {times(data.length, (index) => (
+        {times(data.length, index => (
           <PortfolioRow
             {...data[index]}
             key={data[index].symbol}

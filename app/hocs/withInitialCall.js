@@ -1,7 +1,13 @@
 // @flow
 import React from 'react'
 import { string } from 'prop-types'
-import { withCall, withProgress, progressValues, type Actions, type Progress } from 'spunky'
+import {
+  withCall,
+  withProgress,
+  progressValues,
+  type Actions,
+  type Progress
+} from 'spunky'
 import { omit } from 'lodash'
 
 import pureStrategy from './helpers/pureStrategy'
@@ -12,17 +18,21 @@ const PROGRESS_PROP = '__progress__'
 
 type Options = {
   propName: string,
-  strategy: (Array<Object>) => Progress,
+  strategy: (Array<Object>) => Progress
 }
 
-function defaultMapPropsToAction (props) {
+function defaultMapPropsToAction(props) {
   return props
 }
 
 const withInitialCall = (
   actions: Actions,
   mapPropsToAction: Function = defaultMapPropsToAction,
-  { propName = PROGRESS_PROP, strategy = pureStrategy, ...options }: Options = {}
+  {
+    propName = PROGRESS_PROP,
+    strategy = pureStrategy,
+    ...options
+  }: Options = {}
 ) => (Component: Class<React.Component<*>>): Class<React.Component<*>> => {
   type Props = {
     [propName: string]: string
@@ -33,37 +43,41 @@ const withInitialCall = (
       [propName]: string.isRequired
     }
 
-    componentWillMount () {
+    componentWillMount() {
       // $FlowFixMe
       this.Component = this.createComponent(this.props)
     }
 
-    componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps(nextProps) {
       const progress = this.props[propName]
       const nextProgress = nextProps[propName]
 
-      if (progress !== nextProgress && (progress === INITIAL || nextProgress === INITIAL)) {
+      if (
+        progress !== nextProgress &&
+        (progress === INITIAL || nextProgress === INITIAL)
+      ) {
         // $FlowFixMe
         this.Component = this.createComponent(nextProps)
       }
     }
 
-    render () {
+    render() {
       // $FlowFixMe
       const { Component } = this
       return <Component {...omit(this.props, propName)} />
     }
 
-    createComponent = (props) => {
+    createComponent = props => {
       if (props[propName] === INITIAL) {
         return withCall(actions, mapPropsToAction)(Component)
-      } else {
-        return Component
       }
+      return Component
     }
   }
 
-  return withProgress(actions, { propName, strategy, ...options })(ConditionalCallComponent)
+  return withProgress(actions, { propName, strategy, ...options })(
+    ConditionalCallComponent
+  )
 }
 
 export default withInitialCall

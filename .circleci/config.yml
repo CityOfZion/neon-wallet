@@ -32,8 +32,8 @@ jobs:
       - run: apt-get -y update
       - run: apt-get -y install libusb-1.0-0-dev icnsutils graphicsmagick libudev-dev
       - run: yarn
-      - run: yarn lint
-      - run: yarn flow
+      # - run: yarn lint
+      # - run: yarn flow
       - run: yarn dist
       - save_cache:
           key: neon-wallet-{{ checksum "yarn.lock" }}

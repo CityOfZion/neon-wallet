@@ -12,5 +12,8 @@ const { LOADED } = progressValues
 export default compose(
   withRouter,
   withProgress(authActions, { propName: 'progress' }),
-  mapProps((props) => ({ ...omit(props, 'progress'), authenticated: props.progress === LOADED }))
+  mapProps(props => ({
+    ...omit(props, 'progress'),
+    authenticated: props.progress === LOADED
+  }))
 )(PrivateRoute)

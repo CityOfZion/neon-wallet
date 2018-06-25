@@ -7,19 +7,19 @@ import Close from 'react-icons/lib/md/close'
 import styles from './BaseModal.scss'
 
 type Props = {
-    title: string,
-    children: React$Node,
-    hideModal: Function,
-    width?: string,
-    height?: string,
-    className?: string,
-    bodyClassName?: string,
-    style: {
-      content: Object,
-      overlay: Object
-    },
-    onAfterOpen?: Function,
-    shouldCloseWithEscapeKey: boolean
+  title: string,
+  children: React$Node,
+  hideModal: Function,
+  width?: string,
+  height?: string,
+  className?: string,
+  bodyClassName?: string,
+  style: {
+    content: Object,
+    overlay: Object
+  },
+  onAfterOpen?: Function,
+  shouldCloseWithEscapeKey: boolean
 }
 
 const BaseModal = ({
@@ -61,9 +61,13 @@ const BaseModal = ({
   >
     <div className={styles.modalHeader}>
       <div className={styles.modalHeaderTitle}>{title}</div>
-      <div className={styles.modalHeaderCloseButton} onClick={hideModal}><Close /></div>
+      <div className={styles.modalHeaderCloseButton} onClick={hideModal}>
+        <Close />
+      </div>
     </div>
-    <div className={classNames(styles.modalBody, bodyClassName)}>{children}</div>
+    <div className={classNames(styles.modalBody, bodyClassName)}>
+      {children}
+    </div>
   </ReactModal>
 )
 

@@ -17,7 +17,10 @@ export default class Address extends React.Component<Props> {
     const { address, className } = this.props
 
     return (
-      <span className={classNames(styles.address, className)} onClick={this.handleClick}>
+      <span
+        className={classNames(styles.address, className)}
+        onClick={this.handleClick}
+      >
         {address}
       </span>
     )

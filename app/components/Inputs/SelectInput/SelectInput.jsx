@@ -35,9 +35,8 @@ const defaultRenderAfter = props => <DropdownButton {...props} />
 
 const defaultItemValue = item => item
 
-const defaultSearchResults = (items, term) => {
-  return items.filter(item => includes(toLower(item), toLower(term)))
-}
+const defaultSearchResults = (items, term) =>
+  items.filter(item => includes(toLower(item), toLower(term)))
 
 export default class SelectInput extends React.Component<Props, State> {
   static defaultProps = {
@@ -90,9 +89,7 @@ export default class SelectInput extends React.Component<Props, State> {
     )
   }
 
-  renderAfter = () => {
-    return this.props.renderAfter({ onToggle: this.handleToggle })
-  }
+  renderAfter = () => this.props.renderAfter({ onToggle: this.handleToggle })
 
   renderDropdown = ({ className }: { className: string }) => {
     const items = this.getItems()
@@ -108,7 +105,8 @@ export default class SelectInput extends React.Component<Props, State> {
           {this.renderItems(items)}
         </div>
       )
-    } else if (isSearch) {
+    }
+    if (isSearch) {
       return (
         <div
           className={classNames(
@@ -120,21 +118,20 @@ export default class SelectInput extends React.Component<Props, State> {
           No search results.
         </div>
       )
-    } else {
-      return null
     }
+    return null
   }
 
   renderItems = (items: Array<any>) => {
     const { search } = this.state
     const renderItem = this.props.renderItem || this.renderItem
 
-    return items.map(item => {
-      return renderItem(item, {
+    return items.map(item =>
+      renderItem(item, {
         search,
         onSelect: this.generateSelectHandler(item)
       })
-    })
+    )
   }
 
   renderItem = (item: Object, { search, onSelect }: RenderItemProps) => {
@@ -188,14 +185,12 @@ export default class SelectInput extends React.Component<Props, State> {
     this.setState({ open, search: '' })
   }
 
-  generateSelectHandler = (item: Object) => {
-    return (event: Object) => {
-      const { onChange, getItemValue } = this.props
-      if (onChange) {
-        onChange(getItemValue(item))
-      }
-      this.handleClose()
+  generateSelectHandler = (item: Object) => (event: Object) => {
+    const { onChange, getItemValue } = this.props
+    if (onChange) {
+      onChange(getItemValue(item))
     }
+    this.handleClose()
   }
 
   getItems = () => {
@@ -204,8 +199,7 @@ export default class SelectInput extends React.Component<Props, State> {
 
     if (search.length === 0) {
       return items
-    } else {
-      return this.props.getSearchResults(items, search)
     }
+    return this.props.getSearchResults(items, search)
   }
 }

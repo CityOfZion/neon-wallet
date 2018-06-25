@@ -26,7 +26,7 @@ export default class AddContactPanel extends React.Component<Props> {
     onSave: noop
   }
 
-  render () {
+  render() {
     const { className, name, address } = this.props
 
     return (
@@ -44,14 +44,14 @@ export default class AddContactPanel extends React.Component<Props> {
     )
   }
 
-  renderHeader = () => {
-    return (
-      <span className={styles.header}>
-        <Link to={ROUTES.CONTACTS} className={styles.back}><ArrowIcon /></Link>
-        <span>New Contact</span>
-      </span>
-    )
-  }
+  renderHeader = () => (
+    <span className={styles.header}>
+      <Link to={ROUTES.CONTACTS} className={styles.back}>
+        <ArrowIcon />
+      </Link>
+      <span>New Contact</span>
+    </span>
+  )
 
   handleSubmit = (name: string, address: string) => {
     this.props.onSave(name, address)

@@ -27,29 +27,27 @@ const evalTransportError = err => {
       err.message = 'You have denied the transaction on your ledger.'
       break
     case TX_PARSE_ERR:
-      err.message = 'Error parsing transaction. Make sure your NEO app version is up to date.'
+      err.message =
+        'Error parsing transaction. Make sure your NEO app version is up to date.'
       break
+    default:
   }
   return err
 }
 
 const BIP44 = (acct = 0) => {
   const acctNumber = acct.toString(16)
-  return (
-    '8000002C' +
-    '80000378' +
-    '80000000' +
-    '00000000' +
-    '0'.repeat(8 - acctNumber.length) +
-    acctNumber
-  )
+  return `${'8000002C' + '80000378' + '80000000' + '00000000'}${'0'.repeat(
+    8 - acctNumber.length
+  )}${acctNumber}`
 }
 
 export default class NeonLedger {
-  path: string;
-  device: any;
+  path: string
 
-  constructor (path: string) {
+  device: any
+
+  constructor(path: string) {
     this.path = path
   }
 
@@ -57,16 +55,18 @@ export default class NeonLedger {
    * Initialises by listing devices and trying to find a ledger device connected. Throws an error if no ledgers detected or unable to connect.
    * @return {Promise<NeonLedger>}
    */
-  static async init () {
+  static async init() {
     const supported = await LedgerNode.isSupported()
-    if (!supported) { throw new Error(`Your computer does not support the ledger!`) }
+    if (!supported) {
+      throw new Error('Your computer does not support the ledger!')
+    }
     const paths = await NeonLedger.list()
     if (paths.length === 0) throw new Error('USB Error: No device found.')
     const ledger = new NeonLedger(paths[0])
     return ledger.open()
   }
 
-  static async list (): Promise<string[]> {
+  static async list(): Promise<string[]> {
     return LedgerNode.list()
   }
 
@@ -74,7 +74,7 @@ export default class NeonLedger {
    * Opens an connection with the selected ledger.
    * @return {Promise<NeonLedger>}this
    */
-  async open (): Promise<NeonLedger> {
+  async open(): Promise<NeonLedger> {
     try {
       this.device = await LedgerNode.open(this.path)
       return this
@@ -87,7 +87,7 @@ export default class NeonLedger {
    * Closes the connection between the Ledger and the wallet.
    * @return {Promise<void>}}
    */
-  close (): Promise<void> {
+  close(): Promise<void> {
     if (this.device) return this.device.close()
     return Promise.resolve()
   }
@@ -97,12 +97,12 @@ export default class NeonLedger {
    * @param {number} [acct] - Account that you want to retrieve the public key from.
    * @return {string} Public Key (Unencoded)
    */
-  async getPublicKey (acct: number = 0): Promise<string> {
+  async getPublicKey(acct: number = 0): Promise<string> {
     const res = await this.send('80040000', BIP44(acct), [VALID_STATUS])
     return res.toString('hex').substring(0, 130)
   }
 
-  getDeviceInfo () {
+  getDeviceInfo() {
     try {
       return this.device.device.getDeviceInfo()
     } catch (err) {
@@ -117,16 +117,14 @@ export default class NeonLedger {
    * @param {number[]} statusList - Statuses to return
    * @return {Promise<Buffer>} return value decoded to ASCII string
    */
-  async send (
+  async send(
     params: string,
     msg: string,
     statusList: number[]
   ): Promise<Buffer> {
-    if (params.length !== 8) throw new Error(`params requires 4 bytes`)
+    if (params.length !== 8) throw new Error('params requires 4 bytes')
     // $FlowFixMe
-    const [cla, ins, p1, p2] = params
-      .match(/.{1,2}/g)
-      .map(i => parseInt(i, 16))
+    const [cla, ins, p1, p2] = params.match(/.{1,2}/g).map(i => parseInt(i, 16))
     try {
       return await this.device.send(
         cla,
@@ -147,7 +145,7 @@ export default class NeonLedger {
    * @param {number} [acct]
    * @return {Promise<string>}
    */
-  async getSignature (data: string, acct: number = 0): Promise<string> {
+  async getSignature(data: string, acct: number = 0): Promise<string> {
     data += BIP44(acct)
     let response = null
     const chunks = data.match(/.{1,510}/g) || []
@@ -157,14 +155,14 @@ export default class NeonLedger {
       // $FlowFixMe
       const chunk = chunks[i]
       const params = `8002${p}00`
-      let [err, res] = await asyncWrap(
+      const [err, res] = await asyncWrap(
         this.send(params, chunk, [VALID_STATUS])
       )
       if (err) throw evalTransportError(err)
       response = res
     }
     if (response === 0x9000) {
-      throw new Error(`No more data but Ledger did not return signature!`)
+      throw new Error('No more data but Ledger did not return signature!')
     }
     // $FlowFixMe
     return assembleSignature(response.toString('hex'))
@@ -176,7 +174,7 @@ export default class NeonLedger {
  * @param {string} response - Signature in DER format
  */
 const assembleSignature = (response: string): string => {
-  let ss = new u.StringStream(response)
+  const ss = new u.StringStream(response)
   // The first byte is format. It is usually 0x30 (SEQ) or 0x31 (SET)
   // The second byte represents the total length of the DER module.
   ss.read(2)
@@ -236,7 +234,7 @@ export const signWithLedger = async (
         ? tx.serializeTransaction(unsignedTx, false)
         : unsignedTx
     const publicKey = await ledger.getPublicKey(acct)
-    const invocationScript = '40' + (await ledger.getSignature(data, acct))
+    const invocationScript = `40${await ledger.getSignature(data, acct)}`
     const verificationScript = wallet.getVerificationScriptFromPublicKey(
       publicKey
     )
@@ -259,7 +257,7 @@ export const legacySignWithLedger = async (
       typeof unsignedTx !== 'string'
         ? tx.serializeTransaction(unsignedTx, false)
         : unsignedTx
-    const invocationScript = '40' + (await ledger.getSignature(data, acct))
+    const invocationScript = `40${await ledger.getSignature(data, acct)}`
     const verificationScript = wallet.getVerificationScriptFromPublicKey(
       publicKeyEncoded
     )

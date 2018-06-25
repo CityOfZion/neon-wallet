@@ -48,15 +48,15 @@ export default class BoundingBox extends React.Component<Props, State> {
     position: null
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.updateBoundingBox()
   }
 
-  componentDidUpdate (prevProps: Props) {
+  componentDidUpdate(prevProps: Props) {
     this.updateBoundingBox()
   }
 
-  render () {
+  render() {
     return (
       <g ref={this.registerRef('group')} className={styles.boundingBoxGroup}>
         {this.renderBoundingBox()}
@@ -65,7 +65,7 @@ export default class BoundingBox extends React.Component<Props, State> {
     )
   }
 
-  renderBoundingBox () {
+  renderBoundingBox() {
     const { position } = this.state
     const { roundedX, roundedY } = this.props
 
@@ -79,15 +79,17 @@ export default class BoundingBox extends React.Component<Props, State> {
           x={position.x}
           y={position.y}
           width={position.width}
-          height={position.height} />
+          height={position.height}
+        />
       )
     }
   }
 
-  registerRef = (name: string) => {
+  registerRef = (name: string) =>
     // $FlowFixMe
-    return (el: Node) => { this[name] = el }
-  }
+    (el: Node) => {
+      this[name] = el
+    }
 
   updateBoundingBox = () => {
     const position = this.calculateBoundingBox()
@@ -105,28 +107,31 @@ export default class BoundingBox extends React.Component<Props, State> {
     const getBoundingBox = (el: SVGLocatable): SVGRect => el.getBBox()
 
     // $FlowFixMe
-    const position = nodes.reduce((result: SVGRect, current: SVGLocatable): SVGRect => {
-      if (current === this.box) return result
+    const position = nodes.reduce(
+      (result: SVGRect, current: SVGLocatable): SVGRect => {
+        if (current === this.box) return result
 
-      const box = getBoundingBox(current)
-      const newX = Math.min(result.x, box.x)
-      const newY = Math.min(result.y, box.y)
+        const box = getBoundingBox(current)
+        const newX = Math.min(result.x, box.x)
+        const newY = Math.min(result.y, box.y)
 
-      return {
-        x: newX,
-        y: newY,
-        width: newX + Math.max(result.x + result.width, box.x + box.width),
-        height: newY + Math.max(result.y + result.height, box.y + box.height)
-      }
-    }, getBoundingBox(nodes.pop()))
+        return {
+          x: newX,
+          y: newY,
+          width: newX + Math.max(result.x + result.width, box.x + box.width),
+          height: newY + Math.max(result.y + result.height, box.y + box.height)
+        }
+      },
+      getBoundingBox(nodes.pop())
+    )
 
     const { paddingX, paddingY } = this.props
 
     return {
       x: position.x - paddingX,
       y: position.y - paddingY,
-      width: position.width + (paddingX * 2),
-      height: position.height + (paddingY * 2)
+      width: position.width + paddingX * 2,
+      height: position.height + paddingY * 2
     }
   }
 }

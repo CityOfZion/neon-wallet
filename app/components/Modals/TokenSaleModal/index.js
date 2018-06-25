@@ -17,7 +17,7 @@ const mapDispatchToProps = (dispatch, props) => ({
   showTokensModal: () => dispatch(showModal(MODAL_TYPES.TOKEN))
 })
 
-const mapBalancesDataToProps = (balances) => ({
+const mapBalancesDataToProps = balances => ({
   assetBalances: pick(balances, 'NEO', 'GAS'),
   tokenBalances: keyBy(values(omit(balances, 'NEO', 'GAS')), 'symbol')
 })
@@ -26,5 +26,8 @@ export default compose(
   withAuthData(),
   withNetworkData(),
   withData(balancesActions, mapBalancesDataToProps),
-  connect(null, mapDispatchToProps)
+  connect(
+    null,
+    mapDispatchToProps
+  )
 )(TokenSaleModal)

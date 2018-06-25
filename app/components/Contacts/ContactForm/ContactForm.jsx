@@ -26,7 +26,7 @@ export default class ContactForm extends React.Component<Props> {
     onSubmit: noop
   }
 
-  render () {
+  render() {
     const { submitLabel, name, address } = this.props
 
     return (

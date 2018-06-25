@@ -6,10 +6,15 @@ import { shallow, mount } from 'enzyme'
 
 import Login from '../../app/containers/LoginPrivateKey/LoginPrivateKey'
 
-const setup = (shallowRender = true, state = { account: {
-  loggedIn: true,
-  wif: undefined
-}}) => {
+const setup = (
+  shallowRender = true,
+  state = {
+    account: {
+      loggedIn: true,
+      wif: undefined
+    }
+  }
+) => {
   const store = configureStore()(state)
 
   let wrapper

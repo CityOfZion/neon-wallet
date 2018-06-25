@@ -5,7 +5,7 @@ import { getDeviceInfo, getPublicKey } from '../ledger/ledgerNanoS'
 
 export const ID = 'ledger'
 
-export default createActions(ID, () => async (state: Object) => {
+export default createActions(ID, () => async () => {
   const deviceInfo = await getDeviceInfo()
   const publicKey = await getPublicKey()
 

@@ -9,12 +9,13 @@ import withLoadingProp from '../../hocs/withLoadingProp'
 import withFailureNotification from '../../hocs/withFailureNotification'
 import pureStrategy from '../../hocs/helpers/pureStrategy'
 
-const mapAccountsDataToProps = (accounts) => ({
+const mapAccountsDataToProps = accounts => ({
   accounts
 })
 
-const mapActionsToProps = (actions) => ({
-  loginNep2: (passphrase, encryptedWIF) => actions.call({ passphrase, encryptedWIF })
+const mapActionsToProps = actions => ({
+  loginNep2: (passphrase, encryptedWIF) =>
+    actions.call({ passphrase, encryptedWIF })
 })
 
 export default compose(

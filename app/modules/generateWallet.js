@@ -20,7 +20,7 @@ import { saveAccountActions, getWallet } from '../actions/accountsActions'
 export const NEW_WALLET_ACCOUNT = 'NEW_WALLET_ACCOUNT'
 export const RESET_WALLET_ACCOUNT = 'RESET_WALLET_ACCOUNT'
 
-export function newWalletAccount (account: Object) {
+export function newWalletAccount(account: Object) {
   return {
     type: NEW_WALLET_ACCOUNT,
     payload: {
@@ -33,7 +33,7 @@ export function newWalletAccount (account: Object) {
   }
 }
 
-export function resetKey () {
+export function resetKey() {
   return {
     type: RESET_WALLET_ACCOUNT
   }
@@ -60,8 +60,8 @@ export const convertOldWalletAccount = (
   })
 }
 
-export const upgradeUserWalletNEP6 = (): Promise<*> => {
-  return new Promise((resolve, reject) => {
+export const upgradeUserWalletNEP6 = (): Promise<*> =>
+  new Promise((resolve, reject) => {
     storage.get('userWallet', (readNEP6Error, data) => {
       if (readNEP6Error) {
         reject(readNEP6Error)
@@ -106,10 +106,9 @@ export const upgradeUserWalletNEP6 = (): Promise<*> => {
       }
     })
   })
-}
 
-export const recoverWallet = (wallet: Object): Promise<*> => {
-  return new Promise((resolve, reject) => {
+export const recoverWallet = (wallet: Object): Promise<*> =>
+  new Promise((resolve, reject) => {
     storage.get('userWallet', (readError, data) => {
       if (readError) {
         reject(readError)
@@ -158,7 +157,6 @@ export const recoverWallet = (wallet: Object): Promise<*> => {
       })
     })
   })
-}
 
 export const generateNewWalletAccount = (
   passphrase: string,
@@ -173,58 +171,59 @@ export const generateNewWalletAccount = (
   }
   if (passphrase !== passphrase2) {
     return dispatchError('Passphrases do not match')
-  } else if (!validatePassphraseLength(passphrase)) {
-    return dispatchError('Please choose a longer passphrase')
-  } else if (wif && !wallet.isWIF(wif)) {
-    return dispatchError('The private key is not valid')
-  } else {
-    const infoNotificationId: any = dispatch(
-      showInfoNotification({
-        message: 'Generating encoded key...',
-        autoDismiss: 0
-      })
-    )
-    setTimeout(async () => {
-      try {
-        const account = new wallet.Account(wif || wallet.generatePrivateKey())
-        const { WIF, address } = account
-        const encryptedWIF = wallet.encrypt(WIF, passphrase)
-
-        const storedWallet = await getWallet()
-        if (walletName && walletHasLabel(storedWallet, walletName)) {
-          return dispatchError('A wallet with this name already exists locally')
-        }
-
-        dispatch(
-          saveAccountActions.call({
-            label: walletName,
-            address,
-            key: encryptedWIF
-          })
-        )
-
-        dispatch(hideNotification(infoNotificationId))
-        dispatch(
-          newWalletAccount({
-            wif: WIF,
-            address,
-            passphrase,
-            encryptedWIF,
-            walletName
-          })
-        )
-
-        if (wif) history.push(ROUTES.HOME)
-        history.push(ROUTES.DISPLAY_WALLET_KEYS)
-        return true
-      } catch (e) {
-        console.error(e)
-        return dispatchError(
-          'An error occured while trying to generate a new wallet'
-        )
-      }
-    }, 500)
   }
+  if (!validatePassphraseLength(passphrase)) {
+    return dispatchError('Please choose a longer passphrase')
+  }
+  if (wif && !wallet.isWIF(wif)) {
+    return dispatchError('The private key is not valid')
+  }
+  const infoNotificationId: any = dispatch(
+    showInfoNotification({
+      message: 'Generating encoded key...',
+      autoDismiss: 0
+    })
+  )
+  setTimeout(async () => {
+    try {
+      const account = new wallet.Account(wif || wallet.generatePrivateKey())
+      const { WIF, address } = account
+      const encryptedWIF = wallet.encrypt(WIF, passphrase)
+
+      const storedWallet = await getWallet()
+      if (walletName && walletHasLabel(storedWallet, walletName)) {
+        return dispatchError('A wallet with this name already exists locally')
+      }
+
+      dispatch(
+        saveAccountActions.call({
+          label: walletName,
+          address,
+          key: encryptedWIF
+        })
+      )
+
+      dispatch(hideNotification(infoNotificationId))
+      dispatch(
+        newWalletAccount({
+          wif: WIF,
+          address,
+          passphrase,
+          encryptedWIF,
+          walletName
+        })
+      )
+
+      if (wif) history.push(ROUTES.HOME)
+      history.push(ROUTES.DISPLAY_WALLET_KEYS)
+      return true
+    } catch (e) {
+      console.error(e)
+      return dispatchError(
+        'An error occured while trying to generate a new wallet'
+      )
+    }
+  }, 500)
 }
 
 // state getters
