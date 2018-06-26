@@ -55,10 +55,8 @@ $navigation-margin: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 75vw;
-  height: 75vh;
   margin: auto;
-  min-height: 750px;
+  // min-height: 750px;
   min-width: 750px;
   // justify-content: center;
 }
@@ -77,6 +75,7 @@ $navigation-margin: 20px;
   width: 100%;
   justify-content: space-around;
   margin-top: 15px;
+  margin-bottom: 15px;
   flex: 1;
 }
 
