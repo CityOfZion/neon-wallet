@@ -56,9 +56,8 @@ $navigation-margin: 20px;
   flex-direction: column;
   align-items: center;
   margin: auto;
-  // min-height: 750px;
+  min-height: 650px;
   min-width: 750px;
-  // justify-content: center;
 }
 
 .createWalletOptionRow {
@@ -75,7 +74,7 @@ $navigation-margin: 20px;
   width: 100%;
   justify-content: space-around;
   margin-top: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
   flex: 1;
 }
 
@@ -159,11 +158,6 @@ $navigation-margin: 20px;
 .logo {
   max-height: 100px;
   max-width: 100px;
-}
-
-.logoWithNegativeMargin {
-  @extend .logo;
-  margin-top: $navigation-height * -1 + ($navigation-margin * 2) * -1;
 }
 
 .loginText {

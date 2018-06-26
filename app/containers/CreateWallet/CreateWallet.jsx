@@ -55,6 +55,7 @@ export default class CreateWallet extends React.Component<Props, State> {
 
     return (
       <HomeLayout
+        excludeLogoText
         renderNavigation={() => (
           <div className={styles.backButton}>
             <BackButton routeTo={ROUTES.HOME} />
