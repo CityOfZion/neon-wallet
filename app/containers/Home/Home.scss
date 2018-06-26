@@ -21,7 +21,7 @@ $navigation-margin: 20px;
 }
 
 .loginButtonMargin {
-  margin-top: 20px;
+  margin-top: auto;
 }
 
 .inputMargin {
@@ -42,6 +42,7 @@ $navigation-margin: 20px;
   display: flex;
   width: 100%;
   flex-direction: column;
+  height: 100%;
 }
 
 .dropdownRow {
@@ -59,6 +60,7 @@ $navigation-margin: 20px;
   margin: auto;
   min-height: 750px;
   min-width: 750px;
+  // justify-content: center;
 }
 
 .createWalletOptionRow {
@@ -73,14 +75,13 @@ $navigation-margin: 20px;
   display: flex;
   flex-direction: row;
   width: 100%;
-  justify-content: space-between;
+  justify-content: space-around;
   margin-top: 15px;
   flex: 1;
 }
 
 .buttonContainer {
-  flex: 0.45;
-
+  flex: 0.4;
   a {
     text-decoration: none;
   }
@@ -92,10 +93,72 @@ $navigation-margin: 20px;
   display: flex;
 }
 
+.logoContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 75px 20px 25px 20px;
+
+  h1 {
+    font-weight: 500;
+    font-size: 50px;
+    margin: 0 0 0 20px;
+  }
+}
+
+.homeTabs {
+  width: 100%;
+
+  form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .homeTabPanel {
+    height: 100%;
+  }
+
+  ul {
+    text-decoration: none;
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 60px;
+
+    li {
+      display: flex;
+      margin: auto;
+      font-size: 12px;
+      color: #ced0d4;
+      cursor: pointer;
+      padding-bottom: 10px;
+      width: 100%;
+      border-bottom: solid #ced0d4 1px;
+      justify-content: center;
+    }
+
+    li[aria-selected='true'] {
+      font-weight: bold;
+      color: $default-text;
+      border-bottom: solid $default-text 1px;
+    }
+  }
+}
+
+.loginContentContainer {
+  height: 200px;
+}
+
+.loginHeader {
+  font-weight: 300;
+  font-size: 40px;
+  display: flex;
+  margin-bottom: 40px;
+}
+
 .logo {
   max-height: 100px;
-  padding-top: 100px;
-  padding-bottom: 140px;
   max-width: 100px;
 }
 

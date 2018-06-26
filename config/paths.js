@@ -1,7 +1,6 @@
-// @flow
 const path = require('path')
 
-const resolveApp = (subPath: string) =>
+const resolveApp = (subPath) =>
   path.resolve(__dirname, '../app/', subPath)
 
 module.exports = {

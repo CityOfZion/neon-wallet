@@ -40,22 +40,20 @@ export default class LoginLedgerNanoS extends React.Component<Props> {
   render() {
     return (
       <div id="loginLedgerNanoS" className={styles.flexContainer}>
-        <div className={styles.loginForm}>
+        <form>
           {this.renderStatus()}
-          <div>
-            <Button
-              id="loginButton"
-              primary
-              type="submit"
-              className={styles.loginButtonMargin}
-              renderIcon={LoginIcon}
-              disabled={!this.canLogin()}
-              onClick={this.handleLogin}
-            >
-              Login
-            </Button>
-          </div>
-        </div>
+          <Button
+            id="loginButton"
+            primary
+            type="submit"
+            className={styles.loginButtonMargin}
+            renderIcon={LoginIcon}
+            disabled={!this.canLogin()}
+            onClick={this.handleLogin}
+          >
+            Login
+          </Button>
+        </form>
       </div>
     )
   }
