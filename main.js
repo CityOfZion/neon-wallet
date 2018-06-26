@@ -1,6 +1,7 @@
 const { app, shell, Menu, BrowserWindow } = require('electron')
 const path = require('path')
 const url = require('url')
+
 const port = process.env.PORT || 3000
 
 let mainWindow = null
@@ -12,7 +13,7 @@ const installExtensions = () => {
 
   return Promise.all(
     extensions.map(name => installer.default(installer[name]))
-  ).catch(console.log)
+  ).catch(console.error)
 }
 
 app.on('window-all-closed', () => {
@@ -32,6 +33,7 @@ app.on('ready', () => {
       }
     })
 
+    // https://discuss.atom.io/t/prevent-window-navigation-when-dropping-a-link/24365
     mainWindow.webContents.on('will-navigate', ev => {
       ev.preventDefault()
     })
@@ -109,7 +111,7 @@ app.on('ready', () => {
       }
     ])
 
-    mainWindow.webContents.on('context-menu', (event, params) => {
+    mainWindow.webContents.on('context-menu', () => {
       inputMenu.popup(mainWindow)
     })
 
@@ -124,7 +126,7 @@ app.on('ready', () => {
         })
       )
     }
-    mainWindow.on('closed', function () {
+    mainWindow.on('closed', () => {
       mainWindow = null
     })
   }
