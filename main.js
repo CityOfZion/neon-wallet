@@ -31,6 +31,11 @@ app.on('ready', () => {
         webSecurity: false
       }
     })
+
+    mainWindow.webContents.on('will-navigate', ev => {
+      ev.preventDefault()
+    })
+
     if (process.env.NODE_ENV === 'development') {
       mainWindow.webContents.openDevTools()
     }
@@ -119,7 +124,7 @@ app.on('ready', () => {
         })
       )
     }
-    mainWindow.on('closed', function() {
+    mainWindow.on('closed', function () {
       mainWindow = null
     })
   }
