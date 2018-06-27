@@ -67,7 +67,7 @@ const initialState = {
 describe('WalletInfo', () => {
   test('renders without crashing', () => {
     const store = createStore(initialState)
-    const wrapper = shallow(<WalletInfo hstore={store} />)
+    const wrapper = shallow(<WalletInfo store={store} />)
     expect(wrapper).toMatchSnapshot()
   })
 
