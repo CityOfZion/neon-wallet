@@ -24,6 +24,7 @@ type Props = {
   GAS: string,
   tokenBalances: Array<TokenBalanceType>,
   loadWalletData: Function,
+  handlePassBlockHeight: Number => void
 }
 
 const REFRESH_INTERVAL_MS = 30000
@@ -54,7 +55,8 @@ export default class Dashboard extends Component<Props> {
       NEO,
       GAS,
       tokenBalances,
-      sendTransaction
+      sendTransaction,
+      handlePassBlockHeight
     } = this.props
 
     // if we get a null for NEO or GAS that means the nodes must be down
@@ -65,23 +67,27 @@ export default class Dashboard extends Component<Props> {
         <div className={styles.content}>
           <div className={styles.contentBox}>
             <div className={styles.walletButtons}>
-
               <div
-                className={classNames(styles.walletButton, styles.sendButton, { [styles.sendDisabled]: sendDisabled })}
-                onClick={() => sendDisabled ? noop
-                  : showModal(MODAL_TYPES.SEND, {
-                    NEO,
-                    GAS,
-                    tokenBalances,
-                    sendTransaction,
-                    net,
-                    address
-                  })
+                className={classNames(styles.walletButton, styles.sendButton, {
+                  [styles.sendDisabled]: sendDisabled
+                })}
+                onClick={() =>
+                  sendDisabled
+                    ? noop
+                    : showModal(MODAL_TYPES.SEND, {
+                      NEO,
+                      GAS,
+                      tokenBalances,
+                      sendTransaction,
+                      net,
+                      address
+                    })
                 }
               >
                 <Tooltip
                   title='There are problems with the network right now. Sending tokens has been disabled until these issues have been resolved.'
-                  disabled={!sendDisabled}>
+                  disabled={!sendDisabled}
+                >
                   <FaArrowUpward className={styles.walletButtonIcon} />
                   <span className={styles.walletButtonText}>Send</span>
                 </Tooltip>
@@ -94,7 +100,7 @@ export default class Dashboard extends Component<Props> {
                 <span className={styles.walletButtonText}>Receive</span>
               </div>
             </div>
-            <WalletInfo />
+            <WalletInfo handlePassBlockHeight={handlePassBlockHeight} />
           </div>
           <div
             className={classNames(styles.contentBox, styles.transactionHistory)}
@@ -107,7 +113,10 @@ export default class Dashboard extends Component<Props> {
   }
 
   addPolling = () => {
-    this.walletDataInterval = setInterval(this.props.loadWalletData, REFRESH_INTERVAL_MS)
+    this.walletDataInterval = setInterval(
+      this.props.loadWalletData,
+      REFRESH_INTERVAL_MS
+    )
   }
 
   removePolling = () => {

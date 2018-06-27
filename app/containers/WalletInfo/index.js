@@ -27,14 +27,17 @@ const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
 
 const getTokenBalances = (balances: Balances): Array<string> => {
   const tokens = values(omit(balances, 'NEO', 'GAS'))
-  return filter(tokens, (token) => token.balance !== '0')
+  return filter(tokens, token => token.balance !== '0')
 }
 
 const getICOTokenBalances = (balances: Balances): Array<string> => {
   return values(omit(balances, 'NEO', 'GAS'))
 }
 
-const mapBalanceDataToProps = (balances: ?Balances): {
+const mapBalanceDataToProps = ({
+  balances,
+  blockHeight
+}): {
   NEO: ?string,
   GAS: ?string,
   tokenBalances: Array<string>,
@@ -43,10 +46,13 @@ const mapBalanceDataToProps = (balances: ?Balances): {
   NEO: get(balances, 'NEO', null),
   GAS: get(balances, 'GAS', null),
   tokenBalances: balances ? getTokenBalances(balances) : [],
-  icoTokenBalances: balances ? getICOTokenBalances(balances) : []
+  icoTokenBalances: balances ? getICOTokenBalances(balances) : [],
+  blockHeight
 })
 
-const mapPricesDataToProps = (prices: ?Prices): {
+const mapPricesDataToProps = (
+  prices: ?Prices
+): {
   neoPrice: ?number,
   gasPrice: ?number
 } => ({
@@ -59,18 +65,27 @@ const actionCreators = {
   participateInSale
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(actionCreators, dispatch)
 
-const mapSettingsActionsToProps = (actions) => ({
-  setUserGeneratedTokens: (tokens) => actions.call({ tokens })
+const mapSettingsActionsToProps = actions => ({
+  setUserGeneratedTokens: tokens => actions.call({ tokens })
 })
 
 const mapAccountActionsToProps = (actions, props) => ({
-  loadWalletData: () => actions.call({ net: props.net, address: props.address, tokens: props.tokens })
+  loadWalletData: () =>
+    actions.call({
+      net: props.net,
+      address: props.address,
+      tokens: props.tokens
+    })
 })
 
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
   withData(pricesActions, mapPricesDataToProps),
   withData(balancesActions, mapBalanceDataToProps),
   withNetworkData(),
@@ -79,6 +94,12 @@ export default compose(
   withFilteredTokensData(),
   withActions(updateSettingsActions, mapSettingsActionsToProps),
   withActions(accountActions, mapAccountActionsToProps),
-  withSuccessNotification(accountActions, 'Received latest blockchain information.'),
-  withFailureNotification(accountActions, 'Failed to retrieve blockchain information.')
+  withSuccessNotification(
+    accountActions,
+    'Received latest blockchain information.'
+  ),
+  withFailureNotification(
+    accountActions,
+    'Failed to retrieve blockchain information.'
+  )
 )(WalletInfo)

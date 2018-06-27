@@ -13,36 +13,42 @@ import styles from './Header.scss'
 
 import logo from '../../../images/neon-logo2.png'
 
-const Logo = () => <div><img src={logo} width='60px' /></div>
+const Logo = () => (
+  <div>
+    <img src={logo} width='60px' />
+  </div>
+)
 
 type Props = {
   address: string,
   neoPrice: ?number,
   gasPrice: ?number,
-  currencyCode: string
+  currencyCode: string,
+  blockHeight: number
 }
 
 const Header = ({
   address,
   neoPrice,
   gasPrice,
-  currencyCode
+  currencyCode,
+  blockHeight
 }: Props) => (
   <div className={styles.container}>
     <Logo />
-    {address &&
-    <div className={styles.navBar}>
-      <PriceDisplay
-        neoPrice={neoPrice}
-        gasPrice={gasPrice}
-        currencyCode={currencyCode}
-      />
-      <WalletBlockHeight />
-      <WalletVersion version={version} />
-      <NetworkSwitch />
-      <Logout />
-    </div>
-    }
+    {address && (
+      <div className={styles.navBar}>
+        <PriceDisplay
+          neoPrice={neoPrice}
+          gasPrice={gasPrice}
+          currencyCode={currencyCode}
+        />
+        <WalletBlockHeight blockHeight={blockHeight} />
+        <WalletVersion version={version} />
+        <NetworkSwitch />
+        <Logout />
+      </div>
+    )}
   </div>
 )
 
