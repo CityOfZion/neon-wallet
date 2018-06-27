@@ -44,6 +44,10 @@ type Props = {
 }
 
 export default class WalletInfo extends Component<Props> {
+  static defaultProps = {
+    handlePassBlockHeight: () => undefined
+  }
+
   render () {
     const {
       address,
