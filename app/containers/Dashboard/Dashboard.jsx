@@ -61,9 +61,6 @@ export default class Dashboard extends Component<Props> {
 
     // if we get a null for NEO or GAS that means the nodes must be down
     const sendDisabled = isNil(NEO) || isNil(GAS)
-    console.log({ sendDisabled })
-
-    console.log(this.props)
 
     return (
       <div id='dashboard' className={styles.container}>
