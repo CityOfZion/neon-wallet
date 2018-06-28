@@ -11,7 +11,7 @@ type Props = {
   net: string,
   address: string,
   tokens: Array<TokenItemType>
-};
+}
 
 export const ID = 'BALANCES'
 
@@ -58,6 +58,11 @@ async function getBalances ({ net, address, tokens }: Props) {
       return { [ASSETS.NEO]: neoBalance, [ASSETS.GAS]: gasBalance }
     })()
   )
+
+  console.warn({
+    balances: extend({}, ...(await Promise.all(promises))),
+    blockHeight
+  })
 
   return {
     balances: extend({}, ...(await Promise.all(promises))),

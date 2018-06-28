@@ -25,30 +25,30 @@ const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
   networks: getNetworks()
 })
 
-const getTokenBalances = (balances: Balances): Array<string> => {
-  const tokens = values(omit(balances, 'NEO', 'GAS'))
-  return filter(tokens, token => token.balance !== '0')
-}
+// const getTokenBalances = (balances: Balances): Array<string> => {
+//   const tokens = values(omit(balances, 'NEO', 'GAS'))
+//   return filter(tokens, token => token.balance !== '0')
+// }
 
-const getICOTokenBalances = (balances: Balances): Array<string> => {
-  return values(omit(balances, 'NEO', 'GAS'))
-}
+// const getICOTokenBalances = (balances: Balances): Array<string> => {
+//   return values(omit(balances, 'NEO', 'GAS'))
+// }
 
-const mapBalanceDataToProps = ({
-  balances,
-  blockHeight
-}): {
-  NEO: ?string,
-  GAS: ?string,
-  tokenBalances: Array<string>,
-  icoTokenBalances: Array<string>
-} => ({
-  NEO: get(balances, 'NEO', null),
-  GAS: get(balances, 'GAS', null),
-  tokenBalances: balances ? getTokenBalances(balances) : [],
-  icoTokenBalances: balances ? getICOTokenBalances(balances) : [],
-  blockHeight
-})
+// const mapBalanceDataToProps = ({
+//   balances,
+//   blockHeight
+// }): {
+//   NEO: ?string,
+//   GAS: ?string,
+//   tokenBalances: Array<string>,
+//   icoTokenBalances: Array<string>
+// } => ({
+//   NEO: get(balances, 'NEO', null),
+//   GAS: get(balances, 'GAS', null),
+//   tokenBalances: balances ? getTokenBalances(balances) : [],
+//   icoTokenBalances: balances ? getICOTokenBalances(balances) : [],
+//   blockHeight
+// })
 
 const mapPricesDataToProps = (
   prices: ?Prices
@@ -87,7 +87,7 @@ export default compose(
     mapDispatchToProps
   ),
   withData(pricesActions, mapPricesDataToProps),
-  withData(balancesActions, mapBalanceDataToProps),
+  // withData(balancesActions, mapBalanceDataToProps),
   withNetworkData(),
   withAuthData(),
   withCurrencyData('currencyCode'),

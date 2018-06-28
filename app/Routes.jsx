@@ -26,6 +26,7 @@ export default class Routes extends Component<Props> {
               <Dashboard
                 handlePassBlockHeight={blockHeight => {
                   if (blockHeight !== this.state.blockHeight) {
+                    console.log('setting block height')
                     return this.setState({ blockHeight })
                   }
                 }}
