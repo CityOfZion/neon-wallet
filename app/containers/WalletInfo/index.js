@@ -2,12 +2,11 @@
 import { connect, type MapStateToProps } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
-import { values, omit, filter, get } from 'lodash'
+import { get } from 'lodash'
 import { withData, withActions } from 'spunky'
 
 import accountActions from '../../actions/accountActions'
 import pricesActions from '../../actions/pricesActions'
-import balancesActions from '../../actions/balancesActions'
 import withNetworkData from '../../hocs/withNetworkData'
 import withAuthData from '../../hocs/withAuthData'
 import withCurrencyData from '../../hocs/withCurrencyData'
@@ -24,31 +23,6 @@ import WalletInfo from './WalletInfo'
 const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
   networks: getNetworks()
 })
-
-// const getTokenBalances = (balances: Balances): Array<string> => {
-//   const tokens = values(omit(balances, 'NEO', 'GAS'))
-//   return filter(tokens, token => token.balance !== '0')
-// }
-
-// const getICOTokenBalances = (balances: Balances): Array<string> => {
-//   return values(omit(balances, 'NEO', 'GAS'))
-// }
-
-// const mapBalanceDataToProps = ({
-//   balances,
-//   blockHeight
-// }): {
-//   NEO: ?string,
-//   GAS: ?string,
-//   tokenBalances: Array<string>,
-//   icoTokenBalances: Array<string>
-// } => ({
-//   NEO: get(balances, 'NEO', null),
-//   GAS: get(balances, 'GAS', null),
-//   tokenBalances: balances ? getTokenBalances(balances) : [],
-//   icoTokenBalances: balances ? getICOTokenBalances(balances) : [],
-//   blockHeight
-// })
 
 const mapPricesDataToProps = (
   prices: ?Prices
@@ -87,7 +61,6 @@ export default compose(
     mapDispatchToProps
   ),
   withData(pricesActions, mapPricesDataToProps),
-  // withData(balancesActions, mapBalanceDataToProps),
   withNetworkData(),
   withAuthData(),
   withCurrencyData('currencyCode'),
