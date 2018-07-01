@@ -52,6 +52,8 @@ class DisplayWalletAccounts extends Component<Props> {
     return (
       <HomeLayout
         excludeLogo
+        excludeLogoText
+        excludeHeaderText
         renderNavigation={() => (
           <div className={homeStyles.backButton}>
             <BackButton routeTo={ROUTES.HOME} />
@@ -112,7 +114,9 @@ class DisplayWalletAccounts extends Component<Props> {
             ))}
           </div>
           <div className={styles.buttonContainer}>
-            <Button onClick={this.handlePrint}>Print</Button>
+            <Button primary onClick={this.handlePrint}>
+              Print
+            </Button>
           </div>
         </div>
       </HomeLayout>

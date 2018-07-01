@@ -21,6 +21,7 @@ export const ROUTES = {
   ADD_CONTACT: '/contacts/new',
   EDIT_CONTACT: '/contacts/edit/:name',
   CREATE_WALLET: '/create',
+  IMPORT_WALLET: '/import',
   ENCRYPT_KEY: '/encrypt-key',
   TOKEN_SALE: '/token-sale',
   TRANSACTION_HISTORY: '/transactions',
