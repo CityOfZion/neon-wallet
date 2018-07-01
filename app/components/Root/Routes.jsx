@@ -21,7 +21,16 @@ export default () => (
   <App>
     <Switch>
       <Route exact path={ROUTES.HOME} component={Home} />
-      <Route exact path={ROUTES.CREATE_WALLET} component={CreateWallet} />
+      <Route
+        exact
+        path={ROUTES.CREATE_WALLET}
+        render={() => <CreateWallet option="CREATE" />}
+      />
+      <Route
+        exact
+        path={ROUTES.IMPORT_WALLET}
+        render={() => <CreateWallet option="IMPORT" />}
+      />
       <Route
         exact
         path={ROUTES.DISPLAY_WALLET_KEYS}
