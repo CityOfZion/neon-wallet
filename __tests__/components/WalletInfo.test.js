@@ -5,10 +5,7 @@ import { progressValues } from 'spunky'
 
 import { createStore, provideStore, provideState } from '../testHelpers'
 import WalletInfo from '../../app/containers/WalletInfo'
-import {
-  DEFAULT_CURRENCY_CODE,
-  MAIN_NETWORK_ID
-} from '../../app/core/constants'
+import { DEFAULT_CURRENCY_CODE, MAIN_NETWORK_ID } from '../../app/core/constants'
 
 const { LOADED } = progressValues
 
@@ -98,12 +95,10 @@ describe('WalletInfo', () => {
 
     wrapper.find('.refreshBalance').simulate('click')
 
-    expect(store.getActions()).toContainEqual(
-      expect.objectContaining({
-        type: 'BATCH/CALL',
-        meta: expect.objectContaining({ id: 'ACCOUNT' })
-      })
-    )
+    expect(store.getActions()).toContainEqual(expect.objectContaining({
+      type: 'BATCH/CALL',
+      meta: expect.objectContaining({ id: 'ACCOUNT' })
+    }))
   })
 
   test('correctly renders data from state with non-default currency', () => {
