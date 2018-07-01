@@ -10,7 +10,7 @@ import LoginLocalStorage from '../LoginLocalStorage'
 import Button from '../../components/Button'
 import styles from './Home.scss'
 import AddIcon from '../../assets/icons/add.svg'
-import WalletIcon from '../../assets/icons/wallet.svg'
+import ImportIcon from '../../assets/icons/import.svg'
 import { ROUTES } from '../../core/constants'
 import HomeLayout from './HomeLayout'
 
@@ -83,9 +83,9 @@ export default class Home extends React.Component<Props, State> {
               </Link>
             </div>
             <div className={styles.buttonContainer}>
-              <Link to={ROUTES.WALLET_MANAGER}>
-                <Button disabled={loading} renderIcon={WalletIcon}>
-                  Wallet Manager
+              <Link to={ROUTES.IMPORT_WALLET}>
+                <Button disabled={loading} renderIcon={ImportIcon}>
+                  Import Wallet
                 </Button>
               </Link>
             </div>

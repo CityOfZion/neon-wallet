@@ -9,21 +9,20 @@ import BackButton from '../../components/BackButton'
 import Button from '../../components/Button'
 import AddIcon from '../../assets/icons/add.svg'
 import HomeLayout from '../Home/HomeLayout'
-import OptionButton from './OptionButton'
 import styles from '../Home/Home.scss'
+
+type Option = 'CREATE' | 'IMPORT'
 
 type Props = {
   generateNewWalletAccount: Function,
-  history: Object
+  history: Object,
+  option: Option
 }
-
-type Option = 'CREATE' | 'IMPORT'
 
 type State = {
   passphrase: string,
   passphrase2: string,
   wif: string,
-  option: Option,
   walletName: string
 }
 
@@ -32,14 +31,13 @@ export default class CreateWallet extends React.Component<Props, State> {
     passphrase: '',
     passphrase2: '',
     wif: '',
-    walletName: '',
-    option: 'CREATE'
+    walletName: ''
   }
 
-  createWalletAccount = (e: SyntheticMouseEvent<*>, options: Object) => {
+  createWalletAccount = (e: SyntheticMouseEvent<*>) => {
     e.preventDefault()
-    const { history } = this.props
-    const { passphrase, passphrase2, wif, walletName, option } = this.state
+    const { history, option } = this.props
+    const { passphrase, passphrase2, wif, walletName } = this.state
     const { generateNewWalletAccount } = this.props
     generateNewWalletAccount(
       passphrase,
@@ -51,11 +49,16 @@ export default class CreateWallet extends React.Component<Props, State> {
   }
 
   render = () => {
-    const { passphrase, passphrase2, wif, option, walletName } = this.state
+    const { passphrase, passphrase2, wif, walletName } = this.state
+    const { option } = this.props
 
     return (
       <HomeLayout
+        headerText={
+          option === 'CREATE' ? 'Create a new wallet' : 'Import wallet'
+        }
         excludeLogoText
+        headerTextUnderline
         renderNavigation={() => (
           <div className={styles.backButton}>
             <BackButton routeTo={ROUTES.HOME} />
@@ -63,21 +66,6 @@ export default class CreateWallet extends React.Component<Props, State> {
         )}
       >
         <div className={styles.inputContainer}>
-          <div className={styles.createWalletOptionRow}>
-            <OptionButton
-              handleClick={() => this.setState({ option: 'CREATE' })}
-              active={option === 'CREATE'}
-            >
-              CREATE NEW
-            </OptionButton>
-
-            <OptionButton
-              handleClick={() => this.setState({ option: 'IMPORT' })}
-              active={option === 'IMPORT'}
-            >
-              IMPORT EXISTING
-            </OptionButton>
-          </div>
           <div id="createWallet" className={styles.flexContainer}>
             <form onSubmit={this.createWalletAccount}>
               {option === 'IMPORT' && (
@@ -129,7 +117,8 @@ export default class CreateWallet extends React.Component<Props, State> {
   }
 
   isDisabled = () => {
-    const { option, passphrase, passphrase2, wif, walletName } = this.state
+    const { passphrase, passphrase2, wif, walletName } = this.state
+    const { option } = this.props
     const validPassphrase = passphrase === passphrase2 && passphrase.length >= 4
     if (option === 'CREATE') {
       return !(validPassphrase && !!walletName)
