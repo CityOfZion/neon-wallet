@@ -99,6 +99,7 @@
     "react-router-dom": "4.2.2",
     "react-split-pane": "0.1.68",
     "react-syntax-highlighter": "5.8.0",
+    "react-tabs": "2.2.2",
     "react-test-renderer": "16.1.1",
     "react-tippy": "1.2.2",
     "recharts": "^1.0.0-beta.10",
