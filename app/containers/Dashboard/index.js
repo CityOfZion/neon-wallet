@@ -41,7 +41,7 @@ const getICOTokenBalances = (balances: Balances): Array<string> => {
 }
 
 const mapBalanceDataToProps = ({
-  balances,
+  balances
 }): {
   NEO: ?string,
   GAS: ?string,

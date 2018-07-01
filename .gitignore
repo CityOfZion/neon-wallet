@@ -14,4 +14,3 @@ coverage/*
 /coverage/
 /.jshintrc
 .settings
-.prettierrc

@@ -1,9 +1,9 @@
 // @flow
-import { compose } from 'recompose';
-import { withData } from 'spunky';
+import { compose } from 'recompose'
+import { withData } from 'spunky'
 
-import WalletBlockHeight from './WalletBlockHeight';
-import balancesActions from '../../../../actions/balancesActions';
+import WalletBlockHeight from './WalletBlockHeight'
+import balancesActions from '../../../../actions/balancesActions'
 
 const mapBlockHeightDataToProps = (
   data

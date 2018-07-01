@@ -1,19 +1,19 @@
 // @flow
-import React, { Component } from "react";
-import { isNil, noop } from "lodash";
-import classNames from "classnames";
+import React, { Component } from 'react'
+import { isNil, noop } from 'lodash'
+import classNames from 'classnames'
 
-import TransactionHistory from "../TransactionHistory";
-import WalletInfo from "../WalletInfo";
+import TransactionHistory from '../TransactionHistory'
+import WalletInfo from '../WalletInfo'
 
-import { MODAL_TYPES } from "../../core/constants";
+import { MODAL_TYPES } from '../../core/constants'
 
-import Tooltip from "../../components/Tooltip";
+import Tooltip from '../../components/Tooltip'
 
-import FaArrowUpward from "react-icons/lib/fa/arrow-circle-up";
-import FaArrowDownward from "react-icons/lib/fa/arrow-circle-down";
+import FaArrowUpward from 'react-icons/lib/fa/arrow-circle-up'
+import FaArrowDownward from 'react-icons/lib/fa/arrow-circle-down'
 
-import styles from "./Dashboard.scss";
+import styles from './Dashboard.scss'
 
 type Props = {
   net: string,
@@ -26,27 +26,27 @@ type Props = {
   loadWalletData: Function
 };
 
-const REFRESH_INTERVAL_MS = 30000;
+const REFRESH_INTERVAL_MS = 30000
 
 export default class Dashboard extends Component<Props> {
   walletDataInterval: ?number;
 
-  componentDidMount() {
-    this.addPolling();
+  componentDidMount () {
+    this.addPolling()
   }
 
-  componentWillUnmount() {
-    this.removePolling();
+  componentWillUnmount () {
+    this.removePolling()
   }
 
-  componentWillReceiveProps(nextProps: Props) {
+  componentWillReceiveProps (nextProps: Props) {
     if (this.props.loadWalletData !== nextProps.loadWalletData) {
-      this.removePolling();
-      this.addPolling();
+      this.removePolling()
+      this.addPolling()
     }
   }
 
-  render() {
+  render () {
     const {
       showModal,
       net,
@@ -55,13 +55,13 @@ export default class Dashboard extends Component<Props> {
       GAS,
       tokenBalances,
       sendTransaction
-    } = this.props;
+    } = this.props
 
     // if we get a null for NEO or GAS that means the nodes must be down
-    const sendDisabled = isNil(NEO) || isNil(GAS);
+    const sendDisabled = isNil(NEO) || isNil(GAS)
 
     return (
-      <div id="dashboard" className={styles.container}>
+      <div id='dashboard' className={styles.container}>
         <div className={styles.content}>
           <div className={styles.contentBox}>
             <div className={styles.walletButtons}>
@@ -73,17 +73,17 @@ export default class Dashboard extends Component<Props> {
                   sendDisabled
                     ? noop
                     : showModal(MODAL_TYPES.SEND, {
-                        NEO,
-                        GAS,
-                        tokenBalances,
-                        sendTransaction,
-                        net,
-                        address
-                      })
+                      NEO,
+                      GAS,
+                      tokenBalances,
+                      sendTransaction,
+                      net,
+                      address
+                    })
                 }
               >
                 <Tooltip
-                  title="There are problems with the network right now. Sending tokens has been disabled until these issues have been resolved."
+                  title='There are problems with the network right now. Sending tokens has been disabled until these issues have been resolved.'
                   disabled={!sendDisabled}
                 >
                   <FaArrowUpward className={styles.walletButtonIcon} />
@@ -107,19 +107,19 @@ export default class Dashboard extends Component<Props> {
           </div>
         </div>
       </div>
-    );
+    )
   }
 
   addPolling = () => {
     this.walletDataInterval = setInterval(
       this.props.loadWalletData,
       REFRESH_INTERVAL_MS
-    );
+    )
   };
 
   removePolling = () => {
     if (this.walletDataInterval) {
-      clearInterval(this.walletDataInterval);
+      clearInterval(this.walletDataInterval)
     }
   };
 }
