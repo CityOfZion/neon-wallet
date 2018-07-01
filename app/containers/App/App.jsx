@@ -14,8 +14,7 @@ import styles from './App.scss'
 type Props = {
   children: React$Node,
   checkVersion: Function,
-  showErrorNotification: Function,
-  blockHeight: number
+  showErrorNotification: Function
 }
 
 class App extends Component<Props> {
@@ -25,17 +24,15 @@ class App extends Component<Props> {
     try {
       await upgradeUserWalletNEP6()
     } catch (error) {
-      this.props.showErrorNotification({
-        message: `Error upgrading legacy wallet: ${error.message}`
-      })
+      this.props.showErrorNotification({ message: `Error upgrading legacy wallet: ${error.message}` })
     }
   }
 
   render () {
-    const { children, blockHeight } = this.props
+    const { children } = this.props
     return (
       <div className={styles.container}>
-        <Header blockHeight={blockHeight} />
+        <Header />
         <div className={styles.content}>{children}</div>
         <Notifications />
         <ModalRenderer />
