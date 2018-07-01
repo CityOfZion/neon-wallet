@@ -53,18 +53,17 @@ export default class LoginLocalStorage extends Component<Props, State> {
               onChange={e => this.setState({ passphrase: e.target.value })}
             />
           </div>
-          <div>
-            <Button
-              id="loginButton"
-              primary
-              type="submit"
-              className={styles.loginButtonMargin}
-              disabled={loading || !this.isValid()}
-              renderIcon={LoginIcon}
-            >
-              Login
-            </Button>
-          </div>
+
+          <Button
+            id="loginButton"
+            primary
+            type="submit"
+            className={styles.loginButtonMargin}
+            disabled={loading || !this.isValid()}
+            renderIcon={LoginIcon}
+          >
+            Login
+          </Button>
         </form>
       </div>
     )
