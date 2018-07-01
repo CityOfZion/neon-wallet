@@ -42,7 +42,6 @@ const getICOTokenBalances = (balances: Balances): Array<string> => {
 
 const mapBalanceDataToProps = ({
   balances,
-  blockHeight
 }): {
   NEO: ?string,
   GAS: ?string,
@@ -52,8 +51,7 @@ const mapBalanceDataToProps = ({
   NEO: get(balances, 'NEO', null),
   GAS: get(balances, 'GAS', null),
   tokenBalances: balances ? getTokenBalances(balances) : [],
-  icoTokenBalances: balances ? getICOTokenBalances(balances) : [],
-  blockHeight
+  icoTokenBalances: balances ? getICOTokenBalances(balances) : []
 })
 
 const actionCreators = {

@@ -59,11 +59,6 @@ async function getBalances ({ net, address, tokens }: Props) {
     })()
   )
 
-  console.warn({
-    balances: extend({}, ...(await Promise.all(promises))),
-    blockHeight
-  })
-
   return {
     balances: extend({}, ...(await Promise.all(promises))),
     blockHeight
