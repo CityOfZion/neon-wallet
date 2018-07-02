@@ -1,5 +1,7 @@
 // @flow
 import React, { Component } from 'react'
+import classNames from 'classnames'
+
 import styles from './Home.scss'
 import neonLogo from '../../images/neon-logo-redesign.png'
 
@@ -36,14 +38,17 @@ export default class HomeLayout extends Component<Props> {
         <div className={styles.innerHomeContainer}>
           {renderNavigation && renderNavigation()}
           {!excludeLogo && (
-            <div className={styles.logoContainer}>
-              <img
-                className={
-                  renderNavigation ? styles.logoWithNegativeMargin : styles.logo
-                }
-                src={neonLogo}
-                alt=""
-              />
+            <div
+              className={
+                renderNavigation
+                  ? classNames(
+                      styles.logoWithNegativeMargin,
+                      styles.logoContainer
+                    )
+                  : styles.logoContainer
+              }
+            >
+              <img className={styles.logo} src={neonLogo} alt="" />
               {!excludeLogoText && <h1> NEON </h1>}
             </div>
           )}
