@@ -84,6 +84,15 @@ export default class VotingModal extends Component<Props, State> {
     votes: {}
   }
 
+  showInfoModal: Function
+  hideInfoModal: Function
+  handleNodeSelected: Function
+  handleCastVote: Function
+  showConfirmationModal: Function
+  hideConfirmationModal: Function
+  handleVoteSubmit: Function
+  hasVotes: Function
+
   componentWillMount () {
     this.showInfoModal = this.showInfoModal.bind(this);
     this.hideInfoModal = this.hideInfoModal.bind(this);
@@ -98,7 +107,6 @@ export default class VotingModal extends Component<Props, State> {
 
   render () {
     const { hideModal } = this.props
-    const { errorMsg, passphrase, pendingLogin } = this.state
 
     return (
       <BaseModal
@@ -165,9 +173,9 @@ export default class VotingModal extends Component<Props, State> {
     return Object.keys(votes).reduce((result, key) => result || !!votes[key], false)
   }
 
-  handleNodeSelected(index) {
+  handleNodeSelected(index: number) {
     const {votes} = this.state;
-    this.setState({votes: {...votes, [index]: !votes[index]}})
+    this.setState({votes: {...votes, [index.toString()]: !votes[index.toString()]}})
   }
 
   showInfoModal() {
@@ -219,12 +227,12 @@ export default class VotingModal extends Component<Props, State> {
           }
         }}
       >
-        {textStrings.CONFIRMATION_MESSAGE.replace('<number_of_votes>', votesAvailable)}
+        {textStrings.CONFIRMATION_MESSAGE.replace('<number_of_votes>', votesAvailable.toString())}
         <ul className={styles.addressList}>
           {Object.keys(votes).reduce((elements, key, index) => {
             if (votes[key]) {
               elements.push(
-                <li key={index}>{placehoderData[key].address}</li>
+                <li key={index}>{placehoderData[Number(key)].address}</li>
               )
             }
             return elements
