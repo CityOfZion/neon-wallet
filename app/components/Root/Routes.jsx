@@ -24,12 +24,12 @@ export default () => (
       <Route
         exact
         path={ROUTES.CREATE_WALLET}
-        render={() => <CreateWallet option="CREATE" />}
+        render={props => <CreateWallet option="CREATE" {...props} />}
       />
       <Route
         exact
         path={ROUTES.IMPORT_WALLET}
-        render={() => <CreateWallet option="IMPORT" />}
+        render={props => <CreateWallet option="IMPORT" {...props} />}
       />
       <Route
         exact
