@@ -8,10 +8,7 @@ import classNames from 'classnames'
 
 type Props = {
   hideModal: Function,
-  showSuccessNotification: Function,
-  dispatch: Function
-  // onClick: Function
-  // votesAvailable: number
+  showSuccessNotification: Function
 }
 
 type State = {
@@ -71,13 +68,12 @@ const placehoderData = [
   {
     address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ',
     votes: 101010101
-  },
-];
+  }
+]
 
-const votesAvailable = 123;
+const votesAvailable = 123
 
 export default class VotingModal extends Component<Props, State> {
-
   state = {
     infoShowing: false,
     confirmationShowing: false,
@@ -94,16 +90,15 @@ export default class VotingModal extends Component<Props, State> {
   hasVotes: Function
 
   componentWillMount () {
-    this.showInfoModal = this.showInfoModal.bind(this);
-    this.hideInfoModal = this.hideInfoModal.bind(this);
-    this.handleNodeSelected = this.handleNodeSelected.bind(this);
-    this.handleCastVote = this.handleCastVote.bind(this);
-    this.showConfirmationModal = this.showConfirmationModal.bind(this);
-    this.hideConfirmationModal = this.hideConfirmationModal.bind(this);
-    this.handleVoteSubmit = this.handleVoteSubmit.bind(this);
-    this.hasVotes = this.hasVotes.bind(this);
+    this.showInfoModal = this.showInfoModal.bind(this)
+    this.hideInfoModal = this.hideInfoModal.bind(this)
+    this.handleNodeSelected = this.handleNodeSelected.bind(this)
+    this.handleCastVote = this.handleCastVote.bind(this)
+    this.showConfirmationModal = this.showConfirmationModal.bind(this)
+    this.hideConfirmationModal = this.hideConfirmationModal.bind(this)
+    this.handleVoteSubmit = this.handleVoteSubmit.bind(this)
+    this.hasVotes = this.hasVotes.bind(this)
   }
-
 
   render () {
     const { hideModal } = this.props
@@ -115,7 +110,7 @@ export default class VotingModal extends Component<Props, State> {
         style={{
           content: {
             width: '925px',
-            height: '700px',
+            height: '700px'
           }
         }}
       >
@@ -147,9 +142,9 @@ export default class VotingModal extends Component<Props, State> {
     )
   }
 
-  renderNodeList() {
+  renderNodeList () {
     return placehoderData.map((data, index) => {
-      const {address, votes} = data;
+      const {address, votes} = data
       return (
         <div key={index} className={styles.row}>
           <div className={styles.leftCol}>
@@ -164,37 +159,37 @@ export default class VotingModal extends Component<Props, State> {
     })
   }
 
-  handleCastVote() {
+  handleCastVote () {
     this.hasVotes() && this.showConfirmationModal()
   }
 
-  hasVotes() {
-    const {votes} = this.state;
+  hasVotes () {
+    const {votes} = this.state
     return Object.keys(votes).reduce((result, key) => result || !!votes[key], false)
   }
 
-  handleNodeSelected(index: number) {
-    const {votes} = this.state;
+  handleNodeSelected (index: number) {
+    const {votes} = this.state
     this.setState({votes: {...votes, [index.toString()]: !votes[index.toString()]}})
   }
 
-  showInfoModal() {
+  showInfoModal () {
     this.setState({infoShowing: true})
   }
 
-  hideInfoModal() {
+  hideInfoModal () {
     this.setState({infoShowing: false})
   }
 
-  showConfirmationModal() {
+  showConfirmationModal () {
     this.setState({confirmationShowing: true})
   }
 
-  hideConfirmationModal() {
+  hideConfirmationModal () {
     this.setState({confirmationShowing: false})
   }
 
-  renderInformationModal() {
+  renderInformationModal () {
     const { infoShowing } = this.state
 
     return infoShowing && (
@@ -204,7 +199,7 @@ export default class VotingModal extends Component<Props, State> {
         style={{
           content: {
             width: '43rem',
-            height: '15rem',
+            height: '15rem'
           }
         }}
       >
@@ -213,7 +208,7 @@ export default class VotingModal extends Component<Props, State> {
     )
   }
 
-  renderVoteConfirmationModal() {
+  renderVoteConfirmationModal () {
     const { confirmationShowing, votes } = this.state
 
     return confirmationShowing && (
@@ -223,7 +218,7 @@ export default class VotingModal extends Component<Props, State> {
         style={{
           content: {
             width: '43rem',
-            height: '25rem',
+            height: '25rem'
           }
         }}
       >
@@ -243,8 +238,8 @@ export default class VotingModal extends Component<Props, State> {
     )
   }
 
-  handleVoteSubmit() {
-    const { hideModal, dispatch, showSuccessNotification } = this.props
+  handleVoteSubmit () {
+    const { hideModal, showSuccessNotification } = this.props
     showSuccessNotification({ message: textStrings.VOTE_SUCCESS })
     hideModal()
   }
