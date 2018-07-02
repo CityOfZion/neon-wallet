@@ -1,0 +1,77 @@
+@import '../../../styles/variables';
+
+.modalContainer {
+  background-color: $secondary-background;
+  flex: 1;
+  margin: 1rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.infoButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 1rem;
+  border-radius: 2rem;
+  height: 2rem;
+  width: 2rem;
+}
+
+.contentContainer {
+  height: 27rem;
+  width: 40rem;
+  background: white;
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+}
+
+.contentHeader {
+  background: green;
+  color: white;
+  text-align: center;
+  padding: 0.5rem 0;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.contentBody {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .row {
+    display: flex;
+    width: 100%;
+    text-align: center;
+    margin: 0.5rem 0;
+
+    .leftCol {
+      flex: 2;
+    }
+
+    .rightCol {
+      flex: 1;
+    }
+  }
+
+  .title {
+    font-weight: 500;
+  }
+
+  .checkBox {
+    margin-right: 0.75rem;
+  }
+}
+
+.submitButton {
+  padding: 0.5rem 4rem;
+}
+
+.addressList {
+  list-style-type: square;
+}

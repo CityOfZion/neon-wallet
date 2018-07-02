@@ -149,33 +149,43 @@ export default class WalletInfo extends Component<Props> {
         <Claim />
         <TokenBalances tokenBalances={tokenBalances} showModal={showModal} />
         <div
-          className={(styles.walletButton, styles.icoButton)}
-          onClick={() =>
-            showModal(MODAL_TYPES.ICO, {
-              assetBalances: {
-                [ASSETS.NEO]: NEO,
-                [ASSETS.GAS]: GAS
-              },
-              tokenBalances: keyBy(
-                icoTokenBalances.filter(
-                  token => !ENDED_ICO_TOKENS.includes(token.symbol)
-                ),
-                'symbol'
-              ),
-              showTokensModal: () => {
-                showModal(MODAL_TYPES.TOKEN, {
-                  tokens: allTokens,
-                  networks,
-                  networkId,
-                  setUserGeneratedTokens,
-                  onSave: loadWalletData
-                })
-              },
-              participateInSale
-            })
-          }
+          className={styles.actionButtonsContainer}
         >
-          <Button>Participate in a token sale</Button>
+          <Button
+            onClick={() =>
+              showModal(MODAL_TYPES.ICO, {
+                assetBalances: {
+                  [ASSETS.NEO]: NEO,
+                  [ASSETS.GAS]: GAS
+                },
+                tokenBalances: keyBy(
+                  icoTokenBalances.filter(
+                    token => !ENDED_ICO_TOKENS.includes(token.symbol)
+                  ),
+                  'symbol'
+                ),
+                showTokensModal: () => {
+                  showModal(MODAL_TYPES.TOKEN, {
+                    tokens: allTokens,
+                    networks,
+                    networkId,
+                    setUserGeneratedTokens,
+                    onSave: loadWalletData
+                  })
+                },
+                participateInSale
+              })
+            }
+          >
+            Participate in a token sale
+          </Button>
+          <Button
+            onClick={() => {
+              showModal(MODAL_TYPES.VOTE, {})
+            }}
+          >
+            Vote for consensus node
+          </Button>
         </div>
       </div>
     )

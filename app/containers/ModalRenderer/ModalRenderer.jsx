@@ -9,10 +9,11 @@ import TokenInfoModal from '../../components/Modals/TokenInfoModal'
 import TokenModal from '../../components/Modals/TokenModal'
 import TokenSaleModal from '../../components/Modals/TokenSaleModal'
 import EncryptedLoginModal from '../../components/Modals/EncryptedLoginModal'
+import VotingModal from '../../components/Modals/VotingModal'
 
 import { MODAL_TYPES } from '../../core/constants'
 
-const { CONFIRM, RECEIVE, SEND, TOKEN_INFO, TOKEN, ICO, ENCRYPTED_LOGIN } = MODAL_TYPES
+const { CONFIRM, RECEIVE, SEND, TOKEN_INFO, TOKEN, ICO, ENCRYPTED_LOGIN, VOTE } = MODAL_TYPES
 
 const MODAL_COMPONENTS = {
   [CONFIRM]: ConfirmModal,
@@ -21,7 +22,8 @@ const MODAL_COMPONENTS = {
   [TOKEN_INFO]: TokenInfoModal,
   [TOKEN]: TokenModal,
   [ICO]: TokenSaleModal,
-  [ENCRYPTED_LOGIN]: EncryptedLoginModal
+  [ENCRYPTED_LOGIN]: EncryptedLoginModal,
+  [VOTE]: VotingModal
 }
 
 type Props = {
