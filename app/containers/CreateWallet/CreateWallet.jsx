@@ -57,7 +57,6 @@ export default class CreateWallet extends React.Component<Props, State> {
         headerText={
           option === 'CREATE' ? 'Create a new wallet' : 'Import a wallet'
         }
-        // excludeLogoText
         headerTextUnderline
         renderNavigation={() => (
           <div className={styles.backButton}>
