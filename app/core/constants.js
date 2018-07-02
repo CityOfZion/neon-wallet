@@ -92,6 +92,7 @@ export const TOKENS = {
   PKC: 'af7c7328eee5a275a3bcaee2bf0cf662b5e739be',
   SOUL: 'ed07cffad18f1308db51920d99a2af60ac66a7b3',
   ASA: 'a58b56b30425d3d1f8902034996fcac4168ef71d',
+  SPOT: '0a91cdc3c5ff89983c79e3c72e1ccd9e5beaa5d5',
   PEGUSD: 'ce150fa3ded336886871664e827f16fb70c45ceb'
 }
 
@@ -112,7 +113,7 @@ export const ENDED_ICO_TOKENS = [
   'MCT',
   'PKC',
   'PEGUSD'
-  // 'SOUL', 'ASA'
+  // 'SOUL', 'ASA', 'SPOT'
 ]
 
 export const DEPRECATED_TOKENS = [
