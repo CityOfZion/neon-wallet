@@ -18,7 +18,7 @@ export const getNetworks = (): Array<NetworkItemType> => ([
   {
     id: COZ_TEST_NETWORK_ID,
     label: 'CoZ TestNet',
-    network: 'https://coz.neoscan-testnet.io/api/main_net'
+    network: 'CozNet'
   }
 ])
 
