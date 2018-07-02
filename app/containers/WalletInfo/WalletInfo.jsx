@@ -9,7 +9,12 @@ import Tooltip from '../../components/Tooltip'
 import Button from '../../components/Button'
 
 import { formatGAS, formatFiat, formatNEO } from '../../core/formatters'
-import { ASSETS, CURRENCIES, MODAL_TYPES, ENDED_ICO_TOKENS } from '../../core/constants'
+import {
+  ASSETS,
+  CURRENCIES,
+  MODAL_TYPES,
+  ENDED_ICO_TOKENS
+} from '../../core/constants'
 import { toBigNumber } from '../../core/math'
 
 import MdSync from 'react-icons/lib/md/sync'
@@ -34,7 +39,7 @@ type Props = {
   setUserGeneratedTokens: Function,
   networks: Array<NetworkItemType>,
   networkId: string,
-}
+};
 
 export default class WalletInfo extends Component<Props> {
   render () {
@@ -62,11 +67,15 @@ export default class WalletInfo extends Component<Props> {
 
     const invalidPrice = isNil(neoPrice) || isNil(gasPrice)
 
-    const neoValue = neoPrice && NEO && NEO !== '0'
-      ? toBigNumber(neoPrice).mul(NEO) : toBigNumber(0)
+    const neoValue =
+      neoPrice && NEO && NEO !== '0'
+        ? toBigNumber(neoPrice).mul(NEO)
+        : toBigNumber(0)
 
-    const gasValue = gasPrice && GAS && GAS !== '0'
-      ? toBigNumber(gasPrice).mul(GAS) : toBigNumber(0)
+    const gasValue =
+      gasPrice && GAS && GAS !== '0'
+        ? toBigNumber(gasPrice).mul(GAS)
+        : toBigNumber(0)
 
     const totalValue = neoValue.plus(gasValue).toString()
 
@@ -78,29 +87,51 @@ export default class WalletInfo extends Component<Props> {
         <div id='balance'>
           <div className='split'>
             <div className='label'>{ASSETS.NEO}</div>
-            <div className='amountBig amountNeo'>{NEO ? formatNEO(NEO) : '-'}</div>
+            <div className='amountBig amountNeo'>
+              {NEO ? formatNEO(NEO) : '-'}
+            </div>
             <div className='fiat neoWalletValue'>
               {currencySymbol}
-              {invalidPrice ? '-' : <span>{formatFiat(neoValue)} {displayCurrencyCode}</span>}
+              {invalidPrice ? (
+                '-'
+              ) : (
+                <span>
+                  {formatFiat(neoValue)} {displayCurrencyCode}
+                </span>
+              )}
             </div>
           </div>
           <div className='split'>
             <div className='label'>{ASSETS.GAS}</div>
             <div className='amountBig amountGas'>
-              {GAS
-                ? <Tooltip title={formatGAS(GAS)} disabled={GAS === 0}>
+              {GAS ? (
+                <Tooltip title={formatGAS(GAS)} disabled={GAS === 0}>
                   {formatGAS(GAS, true)}
-                </Tooltip> : '-'
-              }
+                </Tooltip>
+              ) : (
+                '-'
+              )}
             </div>
             <div className='fiat gasWalletValue'>
               {currencySymbol}
-              {invalidPrice ? '-' : <span>{formatFiat(gasValue)} {displayCurrencyCode}</span>}
+              {invalidPrice ? (
+                '-'
+              ) : (
+                <span>
+                  {formatFiat(gasValue)} {displayCurrencyCode}
+                </span>
+              )}
             </div>
           </div>
           <div className='fiat walletTotal'>
             Total {currencySymbol}
-            {invalidPrice ? '-' : <span>{formatFiat(totalValue)} {displayCurrencyCode}</span>}
+            {invalidPrice ? (
+              '-'
+            ) : (
+              <span>
+                {formatFiat(totalValue)} {displayCurrencyCode}
+              </span>
+            )}
           </div>
           <div
             onClick={loadWalletData}

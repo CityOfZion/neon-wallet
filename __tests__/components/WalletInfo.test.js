@@ -9,6 +9,14 @@ import { DEFAULT_CURRENCY_CODE, MAIN_NETWORK_ID } from '../../app/core/constants
 
 const { LOADED } = progressValues
 
+
+const walletInfoProps = {
+  icoTokenBalances: [],
+  tokenBalances: [],
+  NEO: '100001',
+  GAS: '1000.0001601'
+}
+
 const initialState = {
   spunky: {
     NETWORK: {
@@ -43,8 +51,10 @@ const initialState = {
       batch: false,
       progress: LOADED,
       data: {
-        NEO: '100001',
-        GAS: '1000.0001601'
+        balances: {
+          NEO: walletInfoProps.NEO,
+          GAS: walletInfoProps.GAS
+        }
       }
     },
     CLAIMS: {
@@ -62,14 +72,8 @@ const initialState = {
 }
 
 describe('WalletInfo', () => {
-  test('renders without crashing', () => {
-    const store = createStore(initialState)
-    const wrapper = shallow(<WalletInfo store={store} />)
-    expect(wrapper).toMatchSnapshot()
-  })
-
   test('correctly renders data from state', () => {
-    const wrapper = mount(provideState(<WalletInfo />, initialState))
+    const wrapper = mount(provideState(<WalletInfo {...walletInfoProps} />, initialState))
 
     const neoWalletValue = wrapper.find('.neoWalletValue')
     const gasWalletValue = wrapper.find('.gasWalletValue')
@@ -91,7 +95,7 @@ describe('WalletInfo', () => {
 
   test('account data refreshes when refresh button is clicked', () => {
     const store = createStore(initialState)
-    const wrapper = mount(provideStore(<WalletInfo />, store))
+    const wrapper = mount(provideStore(<WalletInfo {...walletInfoProps} />, store))
 
     wrapper.find('.refreshBalance').simulate('click')
 
@@ -108,7 +112,7 @@ describe('WalletInfo', () => {
         PRICES: { data: { NEO: 1.11, GAS: 0.55 } }
       }
     })
-    const wrapper = mount(provideState(<WalletInfo />, testState))
+    const wrapper = mount(provideState(<WalletInfo {...walletInfoProps} />, testState))
 
     const neoWalletValue = wrapper.find('.neoWalletValue')
     const gasWalletValue = wrapper.find('.gasWalletValue')

@@ -10,9 +10,12 @@ type Props = {
 
 export const ID = 'BLOCK_HEIGHT'
 
-export default createActions(ID, ({ networkId }: Props = {}) => async (state: Object) => {
-  const net = getNetworkById(networkId)
-  const endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
-  const client = new rpc.RPCClient(endpoint)
-  return client.getBlockCount()
-})
+export default createActions(
+  ID,
+  ({ networkId }: Props = {}) => async (state: Object) => {
+    const net = getNetworkById(networkId)
+    const endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
+    const client = new rpc.RPCClient(endpoint)
+    return client.getBlockCount()
+  }
+)
