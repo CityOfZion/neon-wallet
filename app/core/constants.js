@@ -64,6 +64,7 @@ export const MODAL_TYPES = {
 
 export const MAIN_NETWORK_ID = '1'
 export const TEST_NETWORK_ID = '2'
+export const COZ_TEST_NETWORK_ID = '3'
 
 // TestNet
 export const TOKENS_TEST = {
