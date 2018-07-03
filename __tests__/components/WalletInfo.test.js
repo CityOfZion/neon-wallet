@@ -47,7 +47,7 @@ const initialState = {
         GAS: 18.1
       }
     },
-    BALANCES: {
+    DASHBOARD: {
       batch: false,
       progress: LOADED,
       data: {

@@ -15,7 +15,7 @@ import {
 
 import Loader from '../../components/Loader'
 import accountActions from '../../actions/accountActions'
-import balancesActions from '../../actions/balancesActions'
+import dashboardActions from '../../actions/dashboardActions'
 import withNetworkData from '../../hocs/withNetworkData'
 import withAuthData from '../../hocs/withAuthData'
 import withFilteredTokensData from '../../hocs/withFilteredTokensData'
@@ -40,19 +40,23 @@ const getICOTokenBalances = (balances: Balances): Array<string> => {
   return values(omit(balances, 'NEO', 'GAS'))
 }
 
-const mapBalanceDataToProps = ({
-  balances
+const mapDashboardDataToProps = (dashboardData: {
+  balances: Balances,
+  blockHeight: number
 }): {
   NEO: ?string,
   GAS: ?string,
   tokenBalances: Array<string>,
   icoTokenBalances: Array<string>
-} => ({
-  NEO: get(balances, 'NEO', null),
-  GAS: get(balances, 'GAS', null),
-  tokenBalances: balances ? getTokenBalances(balances) : [],
-  icoTokenBalances: balances ? getICOTokenBalances(balances) : []
-})
+} => {
+  const balances = get(dashboardData, 'balances')
+  return {
+    NEO: get(balances, 'NEO', null),
+    GAS: get(balances, 'GAS', null),
+    tokenBalances: balances ? getTokenBalances(balances) : [],
+    icoTokenBalances: balances ? getICOTokenBalances(balances) : []
+  }
+}
 
 const actionCreators = {
   showModal,
@@ -89,7 +93,7 @@ export default compose(
       strategy: alreadyLoadedStrategy
     }
   ),
-  withData(balancesActions, mapBalanceDataToProps),
+  withData(dashboardActions, mapDashboardDataToProps),
   withRecall(accountActions, ['networkId']),
   withActions(accountActions, mapAccountActionsToProps)
 )(Dashboard)
