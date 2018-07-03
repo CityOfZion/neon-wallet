@@ -3,7 +3,7 @@ import { compose } from 'recompose'
 import { withData } from 'spunky'
 
 import WalletBlockHeight from './WalletBlockHeight'
-import balancesActions from '../../../../actions/balancesActions'
+import balancesAndBlockHeightActions from '../../../../actions/balancesAndBlockHeightActions'
 
 const mapBlockHeightDataToProps = (
   data
@@ -14,6 +14,6 @@ const mapBlockHeightDataToProps = (
     blockHeight: data.blockHeight
   }
 
-export default compose(withData(balancesActions, mapBlockHeightDataToProps))(
+export default compose(withData(balancesAndBlockHeightActions, mapBlockHeightDataToProps))(
   WalletBlockHeight
 )

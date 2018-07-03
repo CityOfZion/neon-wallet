@@ -47,7 +47,7 @@ const initialState = {
         GAS: 18.1
       }
     },
-    BALANCES: {
+    BALANCES_AND_BLOCKHEIGHT: {
       batch: false,
       progress: LOADED,
       data: {

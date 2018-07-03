@@ -2,7 +2,7 @@
 import { get, omit, pick } from 'lodash'
 
 import { ID as AUTH_ID } from '../actions/authActions'
-import { ID as BALANCES_ID } from '../actions/balancesActions'
+import { ID as BALANCES_AND_BLOCKHEIGHT_ID } from '../actions/balancesAndBlockHeightActions'
 import { ID as NETWORK_ID } from '../actions/networkActions'
 import { ASSETS } from '../core/constants'
 import { findNetwork } from '../core/networks'
@@ -63,5 +63,5 @@ export const getAssetBalances = (state: Object): Object => {
 }
 
 export const getBalances = (state: Object) => {
-  return get(state, `${PREFIX}.${BALANCES_ID}.data`)
+  return get(state, `${PREFIX}.${BALANCES_AND_BLOCKHEIGHT_ID}.data.balances`)
 }

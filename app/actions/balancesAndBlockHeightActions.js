@@ -13,7 +13,7 @@ type Props = {
   tokens: Array<TokenItemType>
 }
 
-export const ID = 'BALANCES'
+export const ID = 'BALANCES_AND_BLOCKHEIGHT'
 
 async function getBalances ({ net, address, tokens }: Props) {
   const endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
