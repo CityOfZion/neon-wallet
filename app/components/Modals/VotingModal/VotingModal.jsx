@@ -7,32 +7,17 @@ import styles from './styles.scss'
 import classNames from 'classnames'
 
 type Props = {
-  hideModal: Function,
-  showSuccessNotification: Function
-}
+  hideModal: () => any,
+  showSuccessNotification: (message: string) => any
+};
 
 type State = {
   infoShowing: boolean,
   confirmationShowing: boolean,
   votes: Object
-}
+};
 
-const textStrings = {
-  TITLE: 'Vote for consensus node',
-  TOP_10_CANDIDATES: 'Top 10 candidates',
-  CANDIDATES: 'Candidates',
-  NUMBER_OF_VOTES: 'Number of votes',
-  CAST_VOTE: 'Cast vote',
-  EXPLANATION_TITLE: 'How does voting work?',
-  VOTING_EXPLANATION: 'Each NEO node can vote for the candidtates. The number of NEON in the current voting account will be automatically calculated as the number of the candidate\'s votes. When voting for multiple candidates, each candidate gets the votes equal to the NEO number of the current voting account. For example, if there are 100 NEO in the current account and the three candidates are voted for from this account, each candidate receives 100 votes. If NEO in the account is spent after the vote, the candidates\' votes will simultaneously be decreased to the current NEO balance',
-  PUBLIC_ADDRESS: 'Public address of candidate',
-  CONFIRMATION_TITLE: 'Confirm votes',
-  CONFIRMATION_MESSAGE: 'You will be casting <number_of_votes> votes, for each of the following candidates:',
-  SUBMIT: 'Submit',
-  VOTE_SUCCESS: 'Vote successfully submitted!'
-}
-
-const placehoderData = [
+const mockData = [
   {
     address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ',
     votes: 111111111
@@ -78,16 +63,16 @@ export default class VotingModal extends Component<Props, State> {
     infoShowing: false,
     confirmationShowing: false,
     votes: {}
-  }
+  };
 
-  showInfoModal: Function
-  hideInfoModal: Function
-  handleNodeSelected: Function
-  handleCastVote: Function
-  showConfirmationModal: Function
-  hideConfirmationModal: Function
-  handleVoteSubmit: Function
-  hasVotes: Function
+  showInfoModal: Function;
+  hideInfoModal: Function;
+  handleNodeSelected: Function;
+  handleCastVote: Function;
+  showConfirmationModal: Function;
+  hideConfirmationModal: Function;
+  handleVoteSubmit: Function;
+  hasVotes: Function;
 
   componentWillMount () {
     this.showInfoModal = this.showInfoModal.bind(this)
@@ -105,7 +90,7 @@ export default class VotingModal extends Component<Props, State> {
 
     return (
       <BaseModal
-        title={textStrings.TITLE}
+        title={'Vote for consensus node'}
         hideModal={hideModal}
         style={{
           content: {
@@ -115,16 +100,18 @@ export default class VotingModal extends Component<Props, State> {
         }}
       >
         <div className={styles.modalContainer}>
-          <Button className={styles.infoButton} onClick={this.showInfoModal}>?</Button>
+          <Button className={styles.infoButton} onClick={this.showInfoModal}>
+            ?
+          </Button>
           <div className={styles.contentContainer}>
-            <div className={styles.contentHeader}>{textStrings.TOP_10_CANDIDATES}</div>
+            <div className={styles.contentHeader}>{'Top 10 candidates'}</div>
             <div className={styles.contentBody}>
               <div className={styles.row}>
                 <div className={classNames(styles.leftCol, styles.title)}>
-                  {textStrings.CANDIDATES}
+                  Candidates
                 </div>
                 <div className={classNames(styles.rightCol, styles.title)}>
-                  {textStrings.NUMBER_OF_VOTES}
+                  Number of votes
                 </div>
               </div>
               {this.renderNodeList()}
@@ -134,7 +121,9 @@ export default class VotingModal extends Component<Props, State> {
             className={styles.submitButton}
             onClick={this.handleCastVote}
             disabled={!this.hasVotes()}
-          >{textStrings.CAST_VOTE}</Button>
+          >
+            Cast vote
+          </Button>
         </div>
         {this.renderInformationModal()}
         {this.renderVoteConfirmationModal()}
@@ -142,21 +131,31 @@ export default class VotingModal extends Component<Props, State> {
     )
   }
 
-  renderNodeList () {
-    return placehoderData.map((data, index) => {
-      const {address, votes} = data
-      return (
-        <div key={index} className={styles.row}>
-          <div className={styles.leftCol}>
-            <input className={styles.checkBox} type='checkbox' onClick={() => this.handleNodeSelected(index)} />
-            <a href=''>{address}</a>
+  renderNodeList (): Array<React$Node> {
+    return mockData.map(
+      (
+        data: {
+          address: string,
+          votes: number
+        },
+        index: number
+      ): React$Node => {
+        const { address, votes } = data
+        return (
+          <div key={index} className={styles.row}>
+            <div className={styles.leftCol}>
+              <input
+                className={styles.checkBox}
+                type='checkbox'
+                onClick={() => this.handleNodeSelected(index)}
+              />
+              <a href=''>{address}</a>
+            </div>
+            <div className={styles.rightCol}>{votes}</div>
           </div>
-          <div className={styles.rightCol}>
-            {votes}
-          </div>
-        </div>
-      )
-    })
+        )
+      }
+    )
   }
 
   handleCastVote () {
@@ -164,83 +163,92 @@ export default class VotingModal extends Component<Props, State> {
   }
 
   hasVotes () {
-    const {votes} = this.state
-    return Object.keys(votes).reduce((result, key) => result || !!votes[key], false)
+    const { votes } = this.state
+    return Object.keys(votes).reduce(
+      (result, key) => result || !!votes[key],
+      false
+    )
   }
 
   handleNodeSelected (index: number) {
-    const {votes} = this.state
-    this.setState({votes: {...votes, [index.toString()]: !votes[index.toString()]}})
+    const { votes } = this.state
+    this.setState({
+      votes: { ...votes, [index.toString()]: !votes[index.toString()] }
+    })
   }
 
   showInfoModal () {
-    this.setState({infoShowing: true})
+    this.setState({ infoShowing: true })
   }
 
   hideInfoModal () {
-    this.setState({infoShowing: false})
+    this.setState({ infoShowing: false })
   }
 
   showConfirmationModal () {
-    this.setState({confirmationShowing: true})
+    this.setState({ confirmationShowing: true })
   }
 
   hideConfirmationModal () {
-    this.setState({confirmationShowing: false})
+    this.setState({ confirmationShowing: false })
   }
 
   renderInformationModal () {
     const { infoShowing } = this.state
 
-    return infoShowing && (
-      <BaseModal
-        title={textStrings.EXPLANATION_TITLE}
-        hideModal={this.hideInfoModal}
-        style={{
-          content: {
-            width: '43rem',
-            height: '15rem'
-          }
-        }}
-      >
-        {textStrings.VOTING_EXPLANATION}
-      </BaseModal>
+    return (
+      infoShowing && (
+        <BaseModal
+          title='How does voting work?'
+          hideModal={this.hideInfoModal}
+          style={{
+            content: {
+              width: '43rem',
+              height: '15rem'
+            }
+          }}
+        >
+          Each NEO node can vote for the candidtates. The number of NEON in the current voting account will be automatically calculated as the number of the candidate's votes. When voting for multiple candidates, each candidate gets the votes equal to the NEO number of the current voting account. For example, if there are 100 NEO in the current account and the three candidates are voted for from this account, each candidate receives 100 votes. If NEO in the account is spent after the vote, the candidates' votes will simultaneously be decreased to the current NEO balance
+        </BaseModal>
+      )
     )
   }
 
   renderVoteConfirmationModal () {
     const { confirmationShowing, votes } = this.state
 
-    return confirmationShowing && (
-      <BaseModal
-        title={textStrings.CONFIRMATION_TITLE}
-        hideModal={this.hideConfirmationModal}
-        style={{
-          content: {
-            width: '43rem',
-            height: '25rem'
-          }
-        }}
-      >
-        {textStrings.CONFIRMATION_MESSAGE.replace('<number_of_votes>', votesAvailable.toString())}
-        <ul className={styles.addressList}>
-          {Object.keys(votes).reduce((elements, key, index) => {
-            if (votes[key]) {
-              elements.push(
-                <li key={index}>{placehoderData[Number(key)].address}</li>
-              )
+    return (
+      confirmationShowing && (
+        <BaseModal
+          title='Confirm votes'
+          hideModal={this.hideConfirmationModal}
+          style={{
+            content: {
+              width: '43rem',
+              height: '25rem'
             }
-            return elements
-          }, [])}
-        </ul>
-        <Button onClick={this.handleVoteSubmit}>{textStrings.SUBMIT}</Button>
-      </BaseModal>
+          }}
+        >
+          {`You will be casting ${votesAvailable.toString()} votes, for each of the following candidates:`}
+          <ul className={styles.addressList}>
+            {Object.keys(votes).reduce((elements, key, index) => {
+              if (votes[key]) {
+                elements.push(
+                  <li key={index}>{mockData[Number(key)].address}</li>
+                )
+              }
+              return elements
+            }, [])}
+          </ul>
+          <Button onClick={this.handleVoteSubmit}>Submit</Button>
+        </BaseModal>
+      )
     )
   }
 
   handleVoteSubmit () {
     const { hideModal, showSuccessNotification } = this.props
-    showSuccessNotification({ message: textStrings.VOTE_SUCCESS })
+    showSuccessNotification('Vote successfully submitted!')
     hideModal()
   }
 }
