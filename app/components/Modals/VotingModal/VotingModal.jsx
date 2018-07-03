@@ -19,39 +19,39 @@ type State = {
 
 const mockData = [
   {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ',
+    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ1',
     votes: 111111111
   },
   {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ',
+    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ2',
     votes: 222222222
   },
   {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ',
+    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ3',
     votes: 333333333
   },
   {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ',
+    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ4',
     votes: 444444444
   },
   {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ',
+    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ5',
     votes: 555555555
   },
   {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ',
+    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ6',
     votes: 666666666
   },
   {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ',
+    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ7',
     votes: 777777777
   },
   {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ',
+    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ8',
     votes: 888888888
   },
   {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ',
+    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ9',
     votes: 101010101
   }
 ]
@@ -144,7 +144,7 @@ export default class VotingModal extends Component<Props, State> {
       ): React$Node => {
         const { address, votes } = data
         return (
-          <div key={index} className={styles.row}>
+          <div key={address} className={styles.row}>
             <div className={styles.leftCol}>
               <input
                 className={styles.checkBox}
