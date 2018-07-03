@@ -15,7 +15,7 @@ import {
 
 import Loader from '../../components/Loader'
 import accountActions from '../../actions/accountActions'
-import balancesAndBlockHeightActions from '../../actions/balancesAndBlockHeightActions'
+import dashboardActions from '../../actions/dashboardActions'
 import withNetworkData from '../../hocs/withNetworkData'
 import withAuthData from '../../hocs/withAuthData'
 import withFilteredTokensData from '../../hocs/withFilteredTokensData'
@@ -89,7 +89,7 @@ export default compose(
       strategy: alreadyLoadedStrategy
     }
   ),
-  withData(balancesAndBlockHeightActions, mapBalanceDataToProps),
+  withData(dashboardActions, mapBalanceDataToProps),
   withRecall(accountActions, ['networkId']),
   withActions(accountActions, mapAccountActionsToProps)
 )(Dashboard)

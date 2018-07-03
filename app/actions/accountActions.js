@@ -1,14 +1,14 @@
 // @flow
 import { createBatchActions } from 'spunky'
 
-import balancesAndBlockHeightActions from './balancesAndBlockHeightActions'
+import dashboardActions from './dashboardActions'
 import claimsActions from './claimsActions'
 import transactionHistoryActions from './transactionHistoryActions'
 
 export const ID = 'ACCOUNT'
 
 export default createBatchActions(ID, {
-  balances: balancesAndBlockHeightActions,
+  balances: dashboardActions,
   claims: claimsActions,
   transactions: transactionHistoryActions
 })
