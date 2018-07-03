@@ -27,7 +27,8 @@ export const ROUTES = {
   TRANSACTION_HISTORY: '/transactions',
   SETTINGS: '/settings',
   DISPLAY_WALLET_KEYS: '/display-wallet-keys',
-  WALLET_MANAGER: '/wallet-manager'
+  WALLET_MANAGER: '/wallet-manager',
+  SEND: '/send'
 }
 
 export const NOTIFICATION_LEVELS = {

@@ -54,6 +54,18 @@ const Sidebar = ({ className, showSendModal, showTokenSaleModal }: Props) => (
         </NavLink>
       </Tooltip>
 
+      <Tooltip title="Send Development" position="right">
+        <NavLink
+          id="send"
+          exact
+          to={ROUTES.SEND}
+          className={styles.navItem}
+          activeClassName={styles.active}
+        >
+          <SendIcon />
+        </NavLink>
+      </Tooltip>
+
       <Tooltip title="Send" position="right">
         <a id="send" className={styles.navItem} onClick={showSendModal}>
           <SendIcon />
