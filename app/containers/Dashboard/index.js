@@ -40,7 +40,7 @@ const getICOTokenBalances = (balances: Balances): Array<string> => {
   return values(omit(balances, 'NEO', 'GAS'))
 }
 
-const mapDashboardDataToProps = (dashboardData: { 
+const mapDashboardDataToProps = (dashboardData: {
   balances: Balances,
   blockHeight: number
 }): {

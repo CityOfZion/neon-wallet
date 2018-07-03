@@ -1,5 +1,5 @@
 // @flow
-import { api, rpc, RPCClient } from 'neon-js'
+import { api, rpc } from 'neon-js'
 import { extend } from 'lodash'
 import { createActions } from 'spunky'
 
@@ -16,7 +16,6 @@ type Props = {
 export const ID = 'DASHBOARD'
 
 async function getBalances (endpoint: string, { net, address, tokens }: Props) {
-  
   // token balances
   const promises = tokens.map(async token => {
     const { scriptHash } = token
@@ -63,7 +62,6 @@ export default createActions(
   ({ net, address, tokens }: Props = {}) => async (state: Object) => {
     const endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
     const client = new rpc.RPCClient(endpoint)
-    
     let balances = null
     let blockHeight = null
 
@@ -71,7 +69,7 @@ export default createActions(
       balances = await getBalances(endpoint, { net, address, tokens })
     } catch (err) {
       console.error(err)
-    }    
+    }
 
     try {
       blockHeight = await client.getBlockCount()
