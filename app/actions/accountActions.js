@@ -8,7 +8,7 @@ import transactionHistoryActions from './transactionHistoryActions'
 export const ID = 'ACCOUNT'
 
 export default createBatchActions(ID, {
-  balances: dashboardActions,
+  dashboard: dashboardActions,
   claims: claimsActions,
   transactions: transactionHistoryActions
 })
