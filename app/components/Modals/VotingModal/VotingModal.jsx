@@ -59,22 +59,15 @@ const mockData = [
 const votesAvailable = 123
 
 export default class VotingModal extends Component<Props, State> {
-  state = {
-    infoShowing: false,
-    confirmationShowing: false,
-    votes: {}
-  };
+  constructor () {
+    super()
 
-  showInfoModal: Function;
-  hideInfoModal: Function;
-  handleNodeSelected: Function;
-  handleCastVote: Function;
-  showConfirmationModal: Function;
-  hideConfirmationModal: Function;
-  handleVoteSubmit: Function;
-  hasVotes: Function;
+    this.state = {
+      infoShowing: false,
+      confirmationShowing: false,
+      votes: {}
+    }
 
-  componentWillMount () {
     this.showInfoModal = this.showInfoModal.bind(this)
     this.hideInfoModal = this.hideInfoModal.bind(this)
     this.handleNodeSelected = this.handleNodeSelected.bind(this)
@@ -84,6 +77,15 @@ export default class VotingModal extends Component<Props, State> {
     this.handleVoteSubmit = this.handleVoteSubmit.bind(this)
     this.hasVotes = this.hasVotes.bind(this)
   }
+
+  showInfoModal: Function;
+  hideInfoModal: Function;
+  handleNodeSelected: Function;
+  handleCastVote: Function;
+  showConfirmationModal: Function;
+  hideConfirmationModal: Function;
+  handleVoteSubmit: Function;
+  hasVotes: Function;
 
   render () {
     const { hideModal } = this.props
