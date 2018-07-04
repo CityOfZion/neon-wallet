@@ -1,0 +1,37 @@
+.sendPanelHeader {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+
+    .sendPanelHeaderInfo,
+    .sendPanelRecipients {
+        color: #515151;
+    }
+
+    .sendPanelRecipients {
+        margin-left: 15px;
+    }
+
+    .sendPanelHeaderButtons {
+        display: flex;
+    }
+
+    .sendPanelHeaderButton {
+        border: none;
+        background: transparent;
+        padding: 8px;
+        display: flex;
+        margin-right: 10px;
+        align-items: center;
+        font-size: 1rem;
+        align-items: center;
+        .sendPanelHeaderButtonIcon {
+            color: #515151;
+            margin-right: 10px;
+        }
+        &:last-child {
+            padding-right: 0;
+            margin-right: 0;
+        }
+    }
+}
