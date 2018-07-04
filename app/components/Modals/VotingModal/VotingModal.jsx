@@ -9,11 +9,10 @@ import { shell } from 'electron'
 
 type Props = {
   hideModal: () => any,
-  showSuccessNotification: (message: string) => any
+  showSuccessNotification: ({message: string}) => any
 }
 
 type State = {
-  infoShowing: boolean,
   isConfirming: boolean,
   votes: Object
 }
