@@ -44,6 +44,6 @@ export const updateSettingsActions = createActions(ID, (values: Settings = {}) =
 
 export default createActions(ID, () => async (state: Object): Promise<Settings> => {
   const settings = await getSettings()
-  const picked =  await pick(settings, keys(await DEFAULT_SETTINGS()))
+  const picked = await pick(settings, keys(await DEFAULT_SETTINGS()))
   return picked
 })

@@ -17,7 +17,8 @@
         "Promise": true,
         "setInterval": true,
         "setTimeout": true,
-        "window": true
+        "window": true,
+        "fetch": true
     },
     "rules": {
     "flowtype/define-flow-type": 2
