@@ -1,0 +1,28 @@
+.selectBox {
+  -webkit-appearance: none;
+  height: 35px;
+  width: 100%;
+  border: none;
+  background-color: #f1f1f1;
+  color: #585858;
+  background-image: url('../../../assets/icons/arrow.svg');
+  background-repeat: no-repeat;
+  background-position: 95% 50%;
+  border-radius: 3px;
+  background-size: 15px;
+  padding: 0 10px;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.selectBoxLabelStyles {
+  margin-top: 8px;
+}
+
+.selectBoxLabel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: #585858;
+  font-size: 0.9rem;
+}
