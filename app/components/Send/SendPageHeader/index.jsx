@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import SelectInput from '../../Inputs/SelectInput'
+import SelectBox from '../../Inputs/SelectBox'
 import RefreshIcon from '../../../assets/icons/refresh.svg'
 
 import styles from './SendPageHeader.scss'
@@ -10,11 +10,9 @@ class SendPageHeader extends Component {
     return (
       <section className={styles.sendPageHeader}>
         <h1 className={styles.sendPageHeading}>Send Assets</h1>
-        <SelectInput
-          className={styles.sendPageHeaderSelect}
-          textFieldClassName={styles.sendPageHeaderSelectTextBox}
-          items={['Secondary Account']}
-          value="Main Funds Account"
+        <SelectBox
+          options={['Main Account Wallet', 'Secondary Account Wallet']}
+          onChangeHandler={() => {}}
         />
         <button className={styles.sendPageHeaderRefreshButton} type="button">
           <RefreshIcon className={styles.sendPageHeaderRefreshIcon} />Refresh
