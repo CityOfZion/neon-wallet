@@ -13,6 +13,7 @@ type Props = {
 }
 
 const PriceDisplay = ({ neoPrice, gasPrice, currencyCode }: Props) => {
+  console.log({CURRENCIES, currencyCode})
   let neoDisplayPrice = '-'
   let gasDisplayPrice = '-'
   const currencySymbol = CURRENCIES[currencyCode].symbol
