@@ -104,7 +104,6 @@ const mockAddressVotesData = {
   'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ9': 15
 }
 
-
 const votesAvailable = 123
 
 export default class VotingModal extends Component<Props, State> {
@@ -170,7 +169,7 @@ export default class VotingModal extends Component<Props, State> {
     )
   }
 
-  renderContentBody() {
+  renderContentBody () {
     return (
       <div className={styles.contentBody}>
         <div className={styles.titleRow}>
@@ -204,7 +203,7 @@ export default class VotingModal extends Component<Props, State> {
       >
         Cancel
       </Button>
-    );
+    )
   }
 
   renderNodeList (): Array<React$Node> {
