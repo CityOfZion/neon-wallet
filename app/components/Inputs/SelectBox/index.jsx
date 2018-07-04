@@ -6,11 +6,16 @@ import style from './SelectBox.scss'
 
 type Props = {
   className?: string,
-  options: Array<any>,
+  options: Array<OptionsObject>,
   name?: string,
   id?: string,
   label?: string,
   onChangeHandler: Function
+}
+
+type OptionsObject = {
+  value: number,
+  label: string
 }
 
 const SelectBox = ({
