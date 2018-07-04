@@ -11,6 +11,10 @@
         margin: 0;
     }
 
+    h3 {
+        transform: translateY(1px);
+    }
+
     .assetTitle,
     .assetAmounts {
         margin-right: 7px;
@@ -27,9 +31,11 @@
 
     .assetAmountsSecondary {
         text-align: right;
+        color: #8a8383
     }
 
     .remainingAssetValue {
         text-align: left;
+        color: #8a8383;
     }
 }
