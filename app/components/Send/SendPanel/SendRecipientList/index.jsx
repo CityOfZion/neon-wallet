@@ -8,24 +8,23 @@ import SendRecipientListItem from './SendRecipientListItem'
 import styles from './SendRecipientList.scss'
 
 type Props = {
-  sendRowDetails: object
+  sendRowDetails: array,
+  removeRow: Function
 }
 
-const SendRecipientList = ({ sendRowDetails }: Props) => {
+const SendRecipientList = ({ sendRowDetails, removeRow }: Props) => {
   const renderRows = () =>
-    Object.keys(sendRowDetails).map(rowId => {
-      const row = sendRowDetails[rowId]
-      return (
-        <SendRecipientListItem
-          key={rowId}
-          asset={row.asset}
-          amount={row.amount}
-          address={row.address}
-          note={row.note}
-          id={rowId}
-        />
-      )
-    })
+    sendRowDetails.map((row, index) => (
+      <SendRecipientListItem
+        key={index * Math.random()}
+        asset={row.asset}
+        amount={row.amount}
+        address={row.address}
+        note={row.note}
+        id={index}
+        removeRow={removeRow}
+      />
+    ))
 
   return (
     <section className={styles.sendRecipientListContainer}>

@@ -15,12 +15,20 @@ type Props = {
   amount: numbers,
   address: string,
   note: string,
-  id: string
+  id: string,
+  removeRow: Function
 }
 
-const SendRecipientListItem = ({ id, address, amount, note, asset }: Props) => (
+const SendRecipientListItem = ({
+  id,
+  address,
+  amount,
+  note,
+  asset,
+  removeRow
+}: Props) => (
   <li className={styles.sendRecipientListItem}>
-    <div className={styles.rowNumber}>{`0${id}`}</div>
+    <div className={styles.rowNumber}>{`0${id + 1}`}</div>
     <div className={styles.asset}>
       <SelectInput value={asset} />
     </div>
@@ -34,7 +42,11 @@ const SendRecipientListItem = ({ id, address, amount, note, asset }: Props) => (
       <TextInput placeholder="Add a note" value={note} />
     </div>
     <div className={styles.delete}>
-      <button type="button" className={styles.deleteButton}>
+      <button
+        type="button"
+        className={styles.deleteButton}
+        onClick={() => removeRow(id)}
+      >
         <TrashCanIcon />
       </button>
     </div>
