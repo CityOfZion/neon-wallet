@@ -18,22 +18,9 @@ export default createActions(
     const endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
     const client = new rpc.RPCClient(endpoint)
 
-    let validators = null
-    let votes = null
-
-    try {
-      validators = await client.getValidators()
-      const accountState = await client.getAccountState(address)
-      if (accountState) {
-        votes = accountState.votes
-      }
-    } catch (err) {
-      console.log(err)
-    }
-
     return {
-      validators,
-      votes
+      validators: await client.getValidators(),
+      votes: await client.getAccountState(address)
     }
   }
 )
