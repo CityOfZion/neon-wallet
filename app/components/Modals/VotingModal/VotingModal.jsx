@@ -10,7 +10,7 @@ import { shell } from 'electron'
 type Props = {
   hideModal: () => any,
   showSuccessNotification: ({message: string}) => any,
-  votes: Array<any>,
+  // votes: Array<any>,
   validators: Array<{active: boolean, publickey: string, votes: string}>,
 }
 
@@ -59,7 +59,7 @@ export default class VotingModal extends Component<Props, State> {
   hasVotes: Function
 
   render () {
-    const { hideModal, validators } = this.props
+    const { hideModal } = this.props
     const { isConfirming } = this.state
 
     return (
