@@ -13,14 +13,9 @@ type Props = {
   tokens: Array<TokenItemType>
 }
 
-export const ID = 'BALANCES'
+export const ID = 'DASHBOARD'
 
-async function getBalances ({ net, address, tokens }: Props) {
-  const endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
-
-  const client = new rpc.RPCClient(endpoint)
-  const blockHeight = await client.getBlockCount()
-
+async function getBalances (endpoint: string, { net, address, tokens }: Props) {
   // token balances
   const promises = tokens.map(async token => {
     const { scriptHash } = token
@@ -59,15 +54,32 @@ async function getBalances ({ net, address, tokens }: Props) {
     })()
   )
 
-  return {
-    balances: extend({}, ...(await Promise.all(promises))),
-    blockHeight
-  }
+  return extend({}, ...(await Promise.all(promises)))
 }
 
 export default createActions(
   ID,
   ({ net, address, tokens }: Props = {}) => async (state: Object) => {
-    return getBalances({ net, address, tokens })
+    const endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
+    const client = new rpc.RPCClient(endpoint)
+    let balances = null
+    let blockHeight = null
+
+    try {
+      balances = await getBalances(endpoint, { net, address, tokens })
+    } catch (err) {
+      console.error(err)
+    }
+
+    try {
+      blockHeight = await client.getBlockCount()
+    } catch (err) {
+      console.error(err)
+    }
+
+    return {
+      balances,
+      blockHeight
+    }
   }
 )

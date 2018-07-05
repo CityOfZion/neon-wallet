@@ -49,11 +49,11 @@ declare type ModalType = $Values<typeof MODAL_TYPES>
 
 declare type SymbolType = string
 
-declare type NetworkItemType = {
+declare type NetworkItemType = {|
   id: string,
   label: string,
   network: NetworkType
-}
+|}
 
 declare type TokenItemType = {
   id: string,
@@ -93,3 +93,13 @@ declare type Prices = {
 declare type Balances = {
   [key: string]: string
 }
+
+declare type VoteValidator = {|
+  publickey: string,
+  votes: string,
+  active: boolean
+|}
+
+declare type VoteValidators = Array<VoteValidator>
+
+declare type AccountVotes = Array<string>
