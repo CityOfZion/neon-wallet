@@ -6,7 +6,7 @@ import { COIN_DECIMAL_LENGTH } from './formatters'
 import { TOKENS, TOKENS_TEST, MAIN_NETWORK_ID, TEST_NETWORK_ID } from './constants'
 
 let fetchedTokens
-let requestToGithubSuccessful = false
+let requestToFetchTokens = false
 
 export const adjustDecimalAmountForTokenTransfer = (value: string): string =>
   toBigNumber(value).times(10 ** COIN_DECIMAL_LENGTH).round().toNumber()
@@ -33,11 +33,11 @@ export const getDefaultTokens = async (): Promise<Array<TokenItemType>> => {
       fetchedTokens = TOKENS
     })
     if (!response) fetchedTokens = TOKENS
-    requestToGithubSuccessful = true
+    requestToFetchTokens = true
     fetchedTokens = await response.json()
   }
 
-  if (!requestToGithubSuccessful) {
+  if (!requestToFetchTokens) {
     tokens.push(...map(TOKENS, (scriptHash, symbol) => getTokenEntry(symbol, scriptHash, MAIN_NETWORK_ID)))
   } else {
     tokens.push(...map(fetchedTokens, (tokenData) => getTokenEntry(tokenData.symbol, tokenData.networks['1'].hash, MAIN_NETWORK_ID)))
