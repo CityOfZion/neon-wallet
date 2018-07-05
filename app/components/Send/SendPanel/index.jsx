@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react'
 
 import AddIcon from '../../../assets/icons/add.svg'
@@ -7,7 +9,11 @@ import SendRecipientList from './SendRecipientList'
 
 import styles from './SendPanel.scss'
 
-class SendPanel extends Component {
+type Props = {
+  sendRowDetails: object
+}
+
+class SendPanel extends Component<Props> {
   renderHeader = () => (
     <section className={styles.sendPanelHeader}>
       <div className={styles.sendPanelHeaderInfo}>
@@ -29,7 +35,7 @@ class SendPanel extends Component {
   render() {
     return (
       <Panel renderHeader={this.renderHeader}>
-        <SendRecipientList />
+        <SendRecipientList sendRowDetails={this.props.sendRowDetails} />
       </Panel>
     )
   }
