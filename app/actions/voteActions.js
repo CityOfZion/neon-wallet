@@ -19,16 +19,11 @@ export default createActions(
     const client = new rpc.RPCClient(endpoint)
 
     const validators = await client.getValidators()
-    let votes = []
-
     const accountState = await client.getAccountState(address)
-    if (accountState) {
-      votes = accountState.votes
-    }
 
     return {
       validators,
-      votes
+      votes: accountState.votes
     }
   }
 )
