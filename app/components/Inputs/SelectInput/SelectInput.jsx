@@ -12,6 +12,7 @@ import styles from './SelectInput.scss'
 type Props = {
   className?: string,
   value?: string,
+  placeholder?: string,
   items: Array<any>,
   renderItem?: Function,
   renderAfter: Function,

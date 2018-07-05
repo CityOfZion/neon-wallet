@@ -8,6 +8,7 @@ import styles from './TextInput.scss'
 type Props = {
   className?: string,
   type: string,
+  placeholder: string,
   renderBefore?: Function,
   renderAfter?: Function,
   onFocus?: Function,
