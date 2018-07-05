@@ -29,18 +29,18 @@ export const getDefaultTokens = async (): Promise<Array<TokenItemType>> => {
   // Prevent duplicate requests here
   if (!fetchedTokens) {
     fetch('https://raw.githubusercontent.com/CityOfZion/neo-tokens/master/tokenList.json')
-    .then(async response => {
-      if (response) {
-        requestToFetchTokensSuccessful = true
-        fetchedTokens = await response.json()
-      } else {
+      .then(async response => {
+        if (response) {
+          requestToFetchTokensSuccessful = true
+          fetchedTokens = await response.json()
+        } else {
+          fetchedTokens = TOKENS
+        }
+      })
+      .catch(e => {
+        console.error(e)
         fetchedTokens = TOKENS
-      }
-    })
-    .catch(e => {
-      console.error(e)
-      fetchedTokens = TOKENS
-    })
+      })
   }
 
   if (!requestToFetchTokensSuccessful) {
