@@ -12,7 +12,8 @@ import styles from './SendPanel.scss'
 type Props = {
   sendRowDetails: array,
   addRow: Function,
-  removeRow: Function
+  removeRow: Function,
+  updateRowField: Function
 }
 
 class SendPanel extends Component<Props> {
@@ -20,7 +21,9 @@ class SendPanel extends Component<Props> {
     <section className={styles.sendPanelHeader}>
       <div className={styles.sendPanelHeaderInfo}>
         Select Assets{' '}
-        <span className={styles.sendPanelRecipients}>0 of 5 recipients</span>
+        <span className={styles.sendPanelRecipients}>
+          {this.props.sendRowDetails.length} of 5 recipients
+        </span>
       </div>
       <div className={styles.sendPanelHeaderButtons}>
         <button type="button" className={styles.sendPanelHeaderButton}>
@@ -44,6 +47,7 @@ class SendPanel extends Component<Props> {
         <SendRecipientList
           sendRowDetails={this.props.sendRowDetails}
           removeRow={this.props.removeRow}
+          updateRowField={this.props.updateRowField}
         />
       </Panel>
     )

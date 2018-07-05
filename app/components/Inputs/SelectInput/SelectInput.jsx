@@ -19,7 +19,8 @@ type Props = {
   getItemValue: Function,
   getSearchResults: Function,
   onFocus?: Function,
-  onChange?: Function
+  onChange?: Function,
+  customChangeEvent?: boolean
 }
 
 type State = {
@@ -69,7 +70,8 @@ export default class SelectInput extends React.Component<Props, State> {
       'getItemValue',
       'getSearchResults',
       'onFocus',
-      'onChange'
+      'onChange',
+      'customChangeEvent'
     )
 
     return (
@@ -84,7 +86,11 @@ export default class SelectInput extends React.Component<Props, State> {
           className={styles.input}
           renderAfter={this.renderAfter}
           onFocus={this.handleFocus}
-          onChange={this.handleChange}
+          onChange={
+            this.props.customChangeEvent
+              ? this.props.onChange
+              : this.handleChange
+          }
         />
       </Dropdown>
     )

@@ -9,20 +9,26 @@ import styles from './SendRecipientList.scss'
 
 type Props = {
   sendRowDetails: array,
-  removeRow: Function
+  removeRow: Function,
+  updateRowField: Function
 }
 
-const SendRecipientList = ({ sendRowDetails, removeRow }: Props) => {
+const SendRecipientList = ({
+  sendRowDetails,
+  removeRow,
+  updateRowField
+}: Props) => {
   const renderRows = () =>
     sendRowDetails.map((row, index) => (
       <SendRecipientListItem
-        key={index * Math.random()}
+        key={row.id}
         asset={row.asset}
         amount={row.amount}
         address={row.address}
         note={row.note}
-        id={index}
+        index={index}
         removeRow={removeRow}
+        updateRowField={updateRowField}
       />
     ))
 

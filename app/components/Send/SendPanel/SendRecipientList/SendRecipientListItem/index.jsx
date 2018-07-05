@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react'
+import React, { Component } from 'react'
 
 import SelectInput from '../../../../Inputs/SelectInput'
 import NumberInput from '../../../../Inputs/NumberInput'
@@ -15,42 +15,84 @@ type Props = {
   amount: numbers,
   address: string,
   note: string,
-  id: string,
-  removeRow: Function
+  index: string,
+  removeRow: Function,
+  updateRowField: Function
 }
 
-const SendRecipientListItem = ({
-  id,
-  address,
-  amount,
-  note,
-  asset,
-  removeRow
-}: Props) => (
-  <li className={styles.sendRecipientListItem}>
-    <div className={styles.rowNumber}>{`0${id + 1}`}</div>
-    <div className={styles.asset}>
-      <SelectInput value={asset} />
-    </div>
-    <div className={styles.amount}>
-      <NumberInput max={20} value={amount} />
-    </div>
-    <div className={styles.address}>
-      <SelectInput placeholder="Add wallet or select contact" value={address} />
-    </div>
-    <div className={styles.reference}>
-      <TextInput placeholder="Add a note" value={note} />
-    </div>
-    <div className={styles.delete}>
-      <button
-        type="button"
-        className={styles.deleteButton}
-        onClick={() => removeRow(id)}
-      >
-        <TrashCanIcon />
-      </button>
-    </div>
-  </li>
-)
+class SendRecipientListItem extends Component<Props> {
+  handleFieldChange = e => {
+    const { index, updateRowField } = this.props
+    const { name, value } = e.target
+
+    updateRowField(index, name, value)
+  }
+
+  handleMaxClick = e => {
+    const { index, updateRowField } = this.props
+
+    updateRowField(index, 'amount', 20) // temporary hardcoded max
+  }
+
+  handleDeleteRow = () => {
+    const { index, removeRow } = this.props
+
+    removeRow(index)
+  }
+
+  render() {
+    const { index, address, amount, note, asset, removeRow } = this.props
+
+    return (
+      <li className={styles.sendRecipientListItem}>
+        <div className={styles.rowNumber}>{`0${index + 1}`}</div>
+        <div className={styles.asset}>
+          <SelectInput
+            value={asset}
+            name="asset"
+            onChange={this.handleFieldChange}
+            customChangeEvent
+          />
+        </div>
+        <div className={styles.amount}>
+          <NumberInput
+            max={20}
+            value={amount}
+            name="amount"
+            onChange={this.handleFieldChange}
+            customChangeEvent
+            handleMaxClick={this.handleMaxClick}
+          />
+        </div>
+        <div className={styles.address}>
+          <SelectInput
+            placeholder="Add wallet or select contact"
+            value={address}
+            name="address"
+            onChange={this.handleFieldChange}
+            customChangeEvent
+          />
+        </div>
+        <div className={styles.reference}>
+          <TextInput
+            placeholder="Add a note"
+            value={note}
+            name="note"
+            onChange={this.handleFieldChange}
+          />
+        </div>
+        <div className={styles.delete}>
+          <button
+            type="button"
+            className={styles.deleteButton}
+            onClick={this.handleDeleteRow}
+          >
+            <TrashCanIcon />
+          </button>
+        </div>
+      </li>
+    )
+  }
+}
 
 export default SendRecipientListItem
