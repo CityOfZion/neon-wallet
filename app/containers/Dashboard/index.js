@@ -16,6 +16,7 @@ import {
 import Loader from '../../components/Loader'
 import accountActions from '../../actions/accountActions'
 import dashboardActions from '../../actions/dashboardActions'
+import voteActions from '../../actions/voteActions'
 import withNetworkData from '../../hocs/withNetworkData'
 import withAuthData from '../../hocs/withAuthData'
 import withFilteredTokensData from '../../hocs/withFilteredTokensData'
@@ -83,6 +84,7 @@ export default compose(
   withNetworkData(),
   withAuthData(),
   withFilteredTokensData(),
+  withCall(voteActions),
   withCall(accountActions),
   withProgressComponents(
     accountActions,
