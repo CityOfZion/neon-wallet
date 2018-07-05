@@ -41,7 +41,7 @@ class SendRecipientListItem extends Component<Props> {
   }
 
   render() {
-    const { index, address, amount, note, asset, removeRow } = this.props
+    const { index, address, amount, note, asset } = this.props
 
     return (
       <li className={styles.sendRecipientListItem}>
