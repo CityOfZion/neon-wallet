@@ -202,7 +202,7 @@ export default class VotingModal extends Component<Props, State> {
           {Object.keys(votes).reduce((elements, key, index) => {
             if (votes[key]) {
               elements.push(
-                <li key={index}>{mockTotalVotesData[Number(key)].address}</li>
+                <li key={index}>{this.props.validators[Number(key)].publickey}</li>
               )
             }
             return elements
