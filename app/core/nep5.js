@@ -1,5 +1,6 @@
 // @flow
 import { map } from 'lodash'
+import axios from 'axios'
 
 import { toBigNumber } from './math'
 import { COIN_DECIMAL_LENGTH } from './formatters'
@@ -28,17 +29,14 @@ export const getDefaultTokens = async (): Promise<Array<TokenItemType>> => {
 
   // Prevent duplicate requests here
   if (!fetchedTokens) {
-    fetch('https://raw.githubusercontent.com/CityOfZion/neo-tokens/master/tokenList.json')
-      .then(async response => {
-        if (response) {
-          requestToFetchTokensSuccessful = true
-          fetchedTokens = await response.json()
-        } else {
-          fetchedTokens = TOKENS
-        }
+    axios.get('https://raw.githubusercontent.com/CityOfZion/neo-tokens/master/tokenList.json')
+      .then(response => {
+        requestToFetchTokensSuccessful = true
+        fetchedTokens = response
       })
-      .catch(e => {
-        console.error(e)
+      .catch(error => {
+        // handle error
+        console.log(error);
         fetchedTokens = TOKENS
       })
   }
