@@ -77,7 +77,11 @@ export default class NumberInput extends React.Component<Props, State> {
   renderMaxButton = () => {
     if (this.props.max !== Infinity) {
       return (
-        <Button className={styles.maxButton} onClick={this.handleMaxValue}>
+        <Button
+          className={styles.maxButton}
+          onClick={this.handleMaxValue}
+          displayButtonIcon={false}
+        >
           MAX
         </Button>
       )
