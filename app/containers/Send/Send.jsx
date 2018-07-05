@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import { uniqueId } from 'lodash'
 
 import SendPageHeader from '../../components/Send/SendPageHeader'
 import SendAmountsPanel from '../../components/Send/SendAmountsPanel'
@@ -13,33 +14,50 @@ export default class Send extends React.Component {
         asset: 'NEO',
         amount: 0,
         address: '',
-        note: ''
-      },
-      {
-        asset: 'RPX',
-        amount: 1000,
-        address: '',
-        note: ''
+        note: '',
+        id: uniqueId()
       }
     ]
   }
 
   removeRow = index => {
-    const newState = [...this.state.sendRowDetails]
+    this.setState(prevState => {
+      const newState = [...prevState.sendRowDetails]
 
-    newState.splice(index, 1)
+      newState.splice(index, 1)
 
-    this.setState({ sendRowDetails: newState })
+      return { sendRowDetails: newState }
+    })
   }
 
   addRow = () => {
-    const newState = [...this.state.sendRowDetails]
+    this.setState(prevState => {
+      const newState = [...prevState.sendRowDetails]
 
-    if (newState.length < 5) {
-      newState.push({ asset: 'NEO', amount: 0, address: '', note: '' })
+      if (newState.length < 5) {
+        newState.push({
+          asset: 'NEO',
+          amount: 0,
+          address: '',
+          note: '',
+          id: uniqueId()
+        })
 
-      this.setState({ sendRowDetails: newState })
-    }
+        return { sendRowDetails: newState }
+      }
+    })
+  }
+
+  updateRowField = (index, field, value) => {
+    this.setState(prevState => {
+      const newState = [...prevState.sendRowDetails]
+
+      const objectToModify = newState[index]
+
+      objectToModify[field] = value
+
+      return { sendRowDetails: newState }
+    })
   }
 
   render() {
@@ -53,6 +71,7 @@ export default class Send extends React.Component {
           sendRowDetails={sendRowDetails}
           addRow={this.addRow}
           removeRow={this.removeRow}
+          updateRowField={this.updateRowField}
         />
       </section>
     )
