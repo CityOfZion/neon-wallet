@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import AddIcon from '../../../assets/icons/add.svg'
 import GridIcon from '../../../assets/icons/grid.svg'
 import Panel from '../../Panel'
+import SendRecipientList from './SendRecipientList'
 
 import styles from './SendPanel.scss'
 
@@ -28,7 +29,7 @@ class SendPanel extends Component {
   render() {
     return (
       <Panel renderHeader={this.renderHeader}>
-        <div>This is the send panel</div>
+        <SendRecipientList />
       </Panel>
     )
   }
