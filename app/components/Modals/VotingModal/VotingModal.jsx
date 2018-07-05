@@ -9,92 +9,15 @@ import { shell } from 'electron'
 
 type Props = {
   hideModal: () => any,
-  showSuccessNotification: ({message: string}) => any
+  showSuccessNotification: ({message: string}) => any,
+  votes: Array<any>,
+  validators: Array<{active: boolean, publickey: string, votes: string}>,
 }
 
 type State = {
   isConfirming: boolean,
   votes: Object
 }
-
-const mockTotalVotesData = [
-  {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ1',
-    votes: 111111111
-  },
-  {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ2',
-    votes: 222222222
-  },
-  {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ3',
-    votes: 333333333
-  },
-  {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ4',
-    votes: 444444444
-  },
-  {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ5',
-    votes: 555555555
-  },
-  {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ6',
-    votes: 666666666
-  },
-  {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ7',
-    votes: 777777777
-  },
-  {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ8',
-    votes: 888888888
-  },
-  {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ9',
-    votes: 999999999
-  },
-  {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ10',
-    votes: 101010101
-  },
-  {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ12',
-    votes: 121212121
-  },
-  {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ13',
-    votes: 131313131
-  },
-  {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ14',
-    votes: 141414141
-  },
-  {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ15',
-    votes: 151515151
-  },
-  {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ16',
-    votes: 161616161
-  },
-  {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ17',
-    votes: 171717171
-  },
-  {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ18',
-    votes: 181818181
-  },
-  {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ19',
-    votes: 191919191
-  },
-  {
-    address: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ20',
-    votes: 202020202
-  }
-]
 
 const mockAddressVotesData = {
   'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ1': 15,
@@ -123,6 +46,11 @@ export default class VotingModal extends Component<Props, State> {
     this.hasVotes = this.hasVotes.bind(this)
   }
 
+  static defaultProps = {
+    validators: [],
+    votes: []
+  }
+
   handleNodeSelected: Function
   handleCastVote: Function
   showConfirmation: Function
@@ -131,7 +59,7 @@ export default class VotingModal extends Component<Props, State> {
   hasVotes: Function
 
   render () {
-    const { hideModal } = this.props
+    const { hideModal, validators } = this.props
     const { isConfirming } = this.state
 
     return (
@@ -207,25 +135,27 @@ export default class VotingModal extends Component<Props, State> {
   }
 
   renderNodeList (): Array<React$Node> {
-    return mockTotalVotesData.map(
+    return this.props.validators.map(
       (
         data: {
-          address: string,
-          votes: number
+          publickey: string,
+          votes: string,
+          active: boolean
         },
         index: number
       ): React$Node => {
-        const { address, votes } = data
-        const myVotes = mockAddressVotesData[address] || 0
+        const { publickey, votes, active } = data
+        const myVotes = mockAddressVotesData[publickey] || 0
         return (
-          <div key={address} className={styles.row}>
+          <div key={publickey} className={styles.row}>
             <div className={styles.leftCol}>
               <input
                 className={styles.checkBox}
                 type='checkbox'
+                disabled={!active}
                 onClick={() => this.handleNodeSelected(index)}
               />
-              <a href=''>{address}</a>
+              <span className={styles.publickey}>{publickey}</span>
             </div>
             <div className={styles.rightCol}>{votes}</div>
             <div className={styles.rightCol}>{myVotes}</div>

@@ -10,7 +10,7 @@ import withAuthData from '../../../hocs/withAuthData'
 const mapVoteDataToProps = (voteData: Object): {
   votes: number,
   validators: any
-} => ({
+} => voteData && ({
   votes: voteData.votes,
   validators: voteData.validators
 })
