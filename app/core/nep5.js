@@ -36,7 +36,7 @@ export const getDefaultTokens = async (): Promise<Array<TokenItemType>> => {
       })
       .catch(error => {
         // handle error
-        console.log(error);
+        console.log(error)
         fetchedTokens = TOKENS
       })
   }
