@@ -10,7 +10,9 @@ import SendRecipientList from './SendRecipientList'
 import styles from './SendPanel.scss'
 
 type Props = {
-  sendRowDetails: object
+  sendRowDetails: array,
+  addRow: Function,
+  removeRow: Function
 }
 
 class SendPanel extends Component<Props> {
@@ -25,7 +27,11 @@ class SendPanel extends Component<Props> {
           <GridIcon className={styles.sendPanelHeaderButtonIcon} /> Enter QR
           Code
         </button>
-        <button type="button" className={styles.sendPanelHeaderButton}>
+        <button
+          type="button"
+          className={styles.sendPanelHeaderButton}
+          onClick={this.props.addRow}
+        >
           <AddIcon className={styles.sendPanelHeaderButtonIcon} /> Add Recipient
         </button>
       </div>
@@ -35,7 +41,10 @@ class SendPanel extends Component<Props> {
   render() {
     return (
       <Panel renderHeader={this.renderHeader}>
-        <SendRecipientList sendRowDetails={this.props.sendRowDetails} />
+        <SendRecipientList
+          sendRowDetails={this.props.sendRowDetails}
+          removeRow={this.props.removeRow}
+        />
       </Panel>
     )
   }
