@@ -1,5 +1,5 @@
 // @flow
-import { api } from 'neon-js'
+import { api, wallet } from 'neon-js'
 
 import {
   showErrorNotification,
@@ -8,7 +8,7 @@ import {
 } from './notifications'
 import {
   getNetwork,
-  getAddress
+  getWIF
 } from '../core/deprecated'
 
 export const setupVote = (candidateKeys: CandidateKeys = []) => async (
@@ -20,7 +20,7 @@ export const setupVote = (candidateKeys: CandidateKeys = []) => async (
   }
 
   const state = getState()
-  const address = getAddress(state)
+  const wif = getWIF(state)
   const net = getNetwork(state)
 
   dispatch(
@@ -30,13 +30,15 @@ export const setupVote = (candidateKeys: CandidateKeys = []) => async (
   try {
     const response = await api.setupVote({
       net,
-      account: address,
+      account: new wallet.Account(wif),
       candidateKeys
     })
-    if (response) {
+    if (response.result) {
       return dispatch(showSuccessNotification({
         message: 'Your vote was recorded by the network.'
       }))
+    } else {
+      throw new Error('The vote transaction went through but failed')
     }
   } catch (err) {
     console.error(err)
