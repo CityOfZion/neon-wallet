@@ -102,4 +102,4 @@ declare type VoteValidator = {|
 
 declare type VoteValidators = Array<VoteValidator>
 
-declare type AccountVotes = Array<string>
+declare type CandidateKeys = Array<string>
