@@ -23,7 +23,6 @@ export const checkVersion = () => async (dispatch: DispatchType, getState: GetSt
 
   try {
     const response = await axios.get(CURRENT_RELEASE_URL)
-    console.log(response)
     const shouldUpdate = response && response.data && compareVersions(version, response.data.tag_name) === -1
 
     if (shouldUpdate) {
