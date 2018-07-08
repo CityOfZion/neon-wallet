@@ -15,6 +15,7 @@ type Props = {
   amount: numbers,
   address: string,
   note: string,
+  max: number,
   index: string,
   sendableAssets: array,
   removeRow: Function,
@@ -24,15 +25,20 @@ type Props = {
 class SendRecipientListItem extends Component<Props> {
   handleFieldChange = e => {
     const { index, updateRowField } = this.props
-    const { name, value } = e.currentTarget
 
+    const isAssetString = typeof e === 'string' && e.length === 3
+    if (isAssetString) {
+      return updateRowField(index, 'asset', e)
+    }
+
+    const { name, value } = e.target
     updateRowField(index, name, value)
   }
 
   handleMaxClick = e => {
-    const { index, updateRowField } = this.props
+    const { index, updateRowField, max } = this.props
 
-    updateRowField(index, 'amount', 20) // temporary hardcoded max
+    updateRowField(index, 'amount', max)
   }
 
   handleDeleteRow = () => {
