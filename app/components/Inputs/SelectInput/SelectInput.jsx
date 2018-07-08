@@ -113,19 +113,19 @@ export default class SelectInput extends React.Component<Props, State> {
         </div>
       )
     }
-    if (isSearch) {
-      return (
-        <div
-          className={classNames(
-            styles.dropdown,
-            styles.noSearchResults,
-            className
-          )}
-        >
-          No search results.
-        </div>
-      )
-    }
+    // if (isSearch) {
+    //   return (
+    //     <div
+    //       className={classNames(
+    //         styles.dropdown,
+    //         styles.noSearchResults,
+    //         className
+    //       )}
+    //     >
+    //       No search results.
+    //     </div>
+    //   )
+    // }
     return null
   }
 
