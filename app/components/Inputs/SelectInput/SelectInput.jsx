@@ -101,10 +101,6 @@ export default class SelectInput extends React.Component<Props, State> {
   renderDropdown = ({ className }: { className: string }) => {
     const items = this.getItems()
     const hasItems = items.length > 0
-    const isSearch =
-      this.state.search.length > 0 &&
-      this.props.items &&
-      this.props.items.length > 0
 
     if (hasItems) {
       return (
@@ -113,19 +109,6 @@ export default class SelectInput extends React.Component<Props, State> {
         </div>
       )
     }
-    // if (isSearch) {
-    //   return (
-    //     <div
-    //       className={classNames(
-    //         styles.dropdown,
-    //         styles.noSearchResults,
-    //         className
-    //       )}
-    //     >
-    //       No search results.
-    //     </div>
-    //   )
-    // }
     return null
   }
 
