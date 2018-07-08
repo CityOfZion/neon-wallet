@@ -14,6 +14,7 @@ export default class Send extends React.Component {
     super(props)
 
     this.state = {
+      showConfirmSend: false,
       sendRowDetails: [
         {
           asset: 'NEO',
@@ -21,7 +22,6 @@ export default class Send extends React.Component {
           address: '',
           note: '',
           max: this.getMaxValue('NEO'),
-
           id: uniqueId(),
           errors: {}
         }
@@ -87,58 +87,59 @@ export default class Send extends React.Component {
   handleSubmit = () => {
     const rows = [...this.state.sendRowDetails]
 
-    rows.forEach((row, index) => {
-      this.validateRow(row, index)
-    })
+    const isValid = rows
+      .map((row, index) => this.validateRow(row, index))
+      .every(result => result === true)
 
-    const isValid = this.checkErrors()
+    console.log(isValid)
 
     if (isValid) {
-      console.log('valid')
-      // Set state to show next step
+      this.setState({ showConfirmSend: true })
     }
   }
 
-  checkErrors() {
-    let errors = []
-    const rows = [...this.state.sendRowDetails]
-
-    rows.forEach(row => {
-      errors = [errors, ...Object.keys(row.errors)]
-    })
-
-    return !errors.length
-  }
-
   validateRow = (row, index) => {
-    this.validateAmount(row.amount, row.max, row.asset, index)
-    this.validateAddress(row.address, index)
+    const validAmount = this.validateAmount(
+      row.amount,
+      row.max,
+      row.asset,
+      index
+    )
+    const validAddress = this.validateAddress(row.address, index)
+
+    return validAmount && validAddress
   }
 
   validateAmount = (amount, max, asset, index) => {
     const { errors } = this.state.sendRowDetails[index]
 
-    if (typeof Number(amount) !== 'number') {
+    const amountNum = Number(amount)
+
+    if (typeof amountNum !== 'number') {
       errors.amount = 'Amount must be a number.'
     }
 
-    if (asset === 'NEO' && !toBigNumber(Number(amount)).isInteger()) {
+    if (asset === 'NEO' && !toBigNumber(amountNum).isInteger()) {
       errors.amount = 'You cannot send fractional amounts of NEO.'
     }
 
-    if (Number(amount) < 0) {
+    if (amountNum < 0) {
       errors.amount = `You cannot send negative amounts of ${asset}.`
     }
 
-    if (Number(amount) === 0) {
+    if (amountNum === 0) {
       errors.amount = `Can not send 0 ${asset}.`
     }
 
-    if (Number(amount) > max) {
+    if (amountNum > max) {
       errors.amount = `You do not have enough balance to send ${amount} ${asset}`
     }
 
-    this.updateRowField(index, 'errors', errors)
+    if (errors.amount) {
+      this.updateRowField(index, 'errors', errors)
+      return false
+    }
+    return true
   }
 
   validateAddress = (address, index) => {
@@ -147,7 +148,9 @@ export default class Send extends React.Component {
       errors.address = 'You need to specify a valid NEO Address.'
 
       this.updateRowField(index, 'errors', errors)
+      return false
     }
+    return true
   }
 
   clearErrors = (index, field) => {
@@ -163,7 +166,7 @@ export default class Send extends React.Component {
   }
 
   render() {
-    const { sendRowDetails } = this.state
+    const { sendRowDetails, showConfirmSend } = this.state
     const { sendableAssets, contacts } = this.props
 
     return (
@@ -179,6 +182,7 @@ export default class Send extends React.Component {
           contacts={contacts}
           clearErrors={this.clearErrors}
           handleSubmit={this.handleSubmit}
+          showConfirmSend={showConfirmSend}
         />
       </section>
     )
