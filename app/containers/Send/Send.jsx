@@ -8,16 +8,21 @@ import SendPanel from '../../components/Send/SendPanel'
 // import styles from './Send.scss'
 
 export default class Send extends React.Component {
-  state = {
-    sendRowDetails: [
-      {
-        asset: 'NEO',
-        amount: 0,
-        address: '',
-        note: '',
-        id: uniqueId()
-      }
-    ]
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      sendRowDetails: [
+        {
+          asset: 'NEO',
+          amount: 0,
+          address: '',
+          note: '',
+          max: Number(this.props.sendableAssets.NEO.balance) || 0,
+          id: uniqueId()
+        }
+      ]
+    }
   }
 
   removeRow = index => {
@@ -40,6 +45,7 @@ export default class Send extends React.Component {
           amount: 0,
           address: '',
           note: '',
+          max: Number(this.props.sendableAssets.NEO.balance) || 0,
           id: uniqueId()
         })
 
@@ -56,12 +62,17 @@ export default class Send extends React.Component {
 
       objectToModify[field] = value
 
+      if (field === 'asset') {
+        objectToModify.max = this.props.sendableAssets[field].balance
+      }
+
       return { sendRowDetails: newState }
     })
   }
 
   render() {
     const { sendRowDetails } = this.state
+    const { sendableAssets } = this.props
 
     return (
       <section>
@@ -69,6 +80,7 @@ export default class Send extends React.Component {
         <SendAmountsPanel />
         <SendPanel
           sendRowDetails={sendRowDetails}
+          sendableAssets={sendableAssets}
           addRow={this.addRow}
           removeRow={this.removeRow}
           updateRowField={this.updateRowField}

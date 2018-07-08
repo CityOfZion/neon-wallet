@@ -9,6 +9,7 @@ import styles from './SendRecipientList.scss'
 
 type Props = {
   sendRowDetails: array,
+  sendableAssets: array,
   removeRow: Function,
   updateRowField: Function
 }
@@ -16,7 +17,8 @@ type Props = {
 const SendRecipientList = ({
   sendRowDetails,
   removeRow,
-  updateRowField
+  updateRowField,
+  sendableAssets
 }: Props) => {
   const renderRows = () =>
     sendRowDetails.map((row, index) => (
@@ -29,6 +31,7 @@ const SendRecipientList = ({
         index={index}
         removeRow={removeRow}
         updateRowField={updateRowField}
+        sendableAssets={sendableAssets}
       />
     ))
 
