@@ -19,25 +19,36 @@ type Props = {
   index: string,
   sendableAssets: Object,
   contacts: Object,
+  clearErrors: Function,
   removeRow: Function,
   updateRowField: Function
 }
 
 class SendRecipientListItem extends Component<Props> {
   handleFieldChange = e => {
-    const { index, updateRowField, contacts, sendableAssets } = this.props
+    const {
+      index,
+      updateRowField,
+      contacts,
+      sendableAssets,
+      clearErrors
+    } = this.props
 
     const isAssetString = Object.keys(sendableAssets).find(asset => asset === e)
     if (isAssetString) return updateRowField(index, 'asset', e)
 
     const isContactString = Object.keys(contacts).find(contact => contact === e)
-    if (isContactString) return updateRowField(index, 'address', contacts[e])
+    if (isContactString) {
+      updateRowField(index, 'address', contacts[e])
+      clearErrors(index, 'address')
+    }
 
     const { name, value } = e.target
-    updateRowField(index, name, value)
+    clearErrors(index, name)
+    return updateRowField(index, name, value)
   }
 
-  handleMaxClick = e => {
+  handleMaxClick = () => {
     const { index, updateRowField, max } = this.props
 
     updateRowField(index, 'amount', max)
@@ -56,7 +67,7 @@ class SendRecipientListItem extends Component<Props> {
     Object.keys(this.props.contacts).map(contact => contact)
 
   render() {
-    const { index, address, amount, note, asset } = this.props
+    const { index, address, amount, note, asset, errors } = this.props
 
     return (
       <li className={styles.sendRecipientListItem}>
@@ -79,6 +90,7 @@ class SendRecipientListItem extends Component<Props> {
             onChange={this.handleFieldChange}
             customChangeEvent
             handleMaxClick={this.handleMaxClick}
+            error={errors.amount}
           />
         </div>
         <div className={styles.address}>
@@ -89,6 +101,7 @@ class SendRecipientListItem extends Component<Props> {
             onChange={this.handleFieldChange}
             items={this.createContactList()}
             customChangeEvent
+            error={errors.address}
           />
         </div>
         <div className={styles.reference}>

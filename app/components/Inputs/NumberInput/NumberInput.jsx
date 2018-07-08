@@ -5,6 +5,8 @@ import classNames from 'classnames'
 import Cleave from 'cleave.js/react'
 import { omit, noop } from 'lodash'
 
+import ErrorIcon from '../../../assets/icons/errorRed.svg'
+
 import styles from './NumberInput.scss'
 import Button from '../../Button'
 
@@ -22,6 +24,7 @@ type Props = {
   onFocus?: Function,
   onBlur?: Function,
   handleMaxClick: Function,
+  error?: string,
   customChangeEvent?: boolean,
   options?: {
     numeralThousandsGroupStyle?: 'thousand' | 'lakh' | 'wan' | 'none',
@@ -61,8 +64,11 @@ export default class NumberInput extends React.Component<Props, State> {
     )
 
     const className = classNames(styles.numberInput, this.props.className, {
-      [styles.active]: this.state.active
+      [styles.active]: this.state.active,
+      [styles.error]: !!this.props.error
     })
+
+    const { error } = this.props
 
     return (
       <div className={className}>
@@ -78,7 +84,9 @@ export default class NumberInput extends React.Component<Props, State> {
               : this.handleChange
           }
         />
-        {this.renderMaxButton()}
+        {error && <ErrorIcon className={styles.errorIcon} />}
+        {error && <div className={styles.errorMessage}>{error}</div>}
+        {!error && this.renderMaxButton()}
       </div>
     )
   }
