@@ -1,6 +1,8 @@
 // @flow
 import React from 'react'
 import { uniqueId } from 'lodash'
+import { wallet } from 'neon-js'
+import { toBigNumber } from '../../core/math'
 
 import SendPageHeader from '../../components/Send/SendPageHeader'
 import SendAmountsPanel from '../../components/Send/SendAmountsPanel'
@@ -19,7 +21,9 @@ export default class Send extends React.Component {
           address: '',
           note: '',
           max: this.getMaxValue('NEO'),
-          id: uniqueId()
+
+          id: uniqueId(),
+          errors: {}
         }
       ]
     }
@@ -55,7 +59,8 @@ export default class Send extends React.Component {
           address: '',
           note: '',
           max: this.getMaxValue('NEO'),
-          id: uniqueId()
+          id: uniqueId(),
+          errors: {}
         })
 
         return { sendRowDetails: newState }
@@ -79,6 +84,84 @@ export default class Send extends React.Component {
     })
   }
 
+  handleSubmit = () => {
+    const rows = [...this.state.sendRowDetails]
+
+    rows.forEach((row, index) => {
+      this.validateRow(row, index)
+    })
+
+    const isValid = this.checkErrors()
+
+    if (isValid) {
+      console.log('valid')
+      // Set state to show next step
+    }
+  }
+
+  checkErrors() {
+    let errors = []
+    const rows = [...this.state.sendRowDetails]
+
+    rows.forEach(row => {
+      errors = [errors, ...Object.keys(row.errors)]
+    })
+
+    return !errors.length
+  }
+
+  validateRow = (row, index) => {
+    this.validateAmount(row.amount, row.max, row.asset, index)
+    this.validateAddress(row.address, index)
+  }
+
+  validateAmount = (amount, max, asset, index) => {
+    const { errors } = this.state.sendRowDetails[index]
+
+    if (typeof Number(amount) !== 'number') {
+      errors.amount = 'Amount must be a number.'
+    }
+
+    if (asset === 'NEO' && !toBigNumber(Number(amount)).isInteger()) {
+      errors.amount = 'You cannot send fractional amounts of NEO.'
+    }
+
+    if (Number(amount) < 0) {
+      errors.amount = `You cannot send negative amounts of ${asset}.`
+    }
+
+    if (Number(amount) === 0) {
+      errors.amount = `Can not send 0 ${asset}.`
+    }
+
+    if (Number(amount) > max) {
+      errors.amount = `You do not have enough balance to send ${amount} ${asset}`
+    }
+
+    this.updateRowField(index, 'errors', errors)
+  }
+
+  validateAddress = (address, index) => {
+    if (!wallet.isAddress(address)) {
+      const { errors } = this.state.sendRowDetails[index]
+      errors.address = 'You need to specify a valid NEO Address.'
+
+      this.updateRowField(index, 'errors', errors)
+    }
+  }
+
+  clearErrors = (index, field) => {
+    this.setState(prevState => {
+      const newState = [...prevState.sendRowDetails]
+
+      const objectToClear = newState[index]
+
+      if (objectToClear.errors[field]) {
+        objectToClear.errors[field] = null
+      }
+    })
+  }
+
   render() {
     const { sendRowDetails } = this.state
     const { sendableAssets, contacts } = this.props
@@ -94,6 +177,8 @@ export default class Send extends React.Component {
           removeRow={this.removeRow}
           updateRowField={this.updateRowField}
           contacts={contacts}
+          clearErrors={this.clearErrors}
+          handleSubmit={this.handleSubmit}
         />
       </section>
     )

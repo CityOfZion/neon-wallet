@@ -7,6 +7,8 @@ import { noop, omit, trim, includes, toLower } from 'lodash'
 import TextInput from '../TextInput'
 import Dropdown from './Dropdown'
 import DropdownButton from './DropdownButton'
+import ErrorIcon from '../../../assets/icons/errorRed.svg'
+
 import styles from './SelectInput.scss'
 
 type Props = {
@@ -14,6 +16,7 @@ type Props = {
   value?: string,
   placeholder?: string,
   items: Array<any>,
+  error?: string,
   renderItem?: Function,
   renderAfter: Function,
   getItemValue: Function,
@@ -74,9 +77,15 @@ export default class SelectInput extends React.Component<Props, State> {
       'customChangeEvent'
     )
 
+    const { error } = this.props
+
+    const className = classNames(styles.selectInput, this.props.className, {
+      [styles.error]: !!error
+    })
+
     return (
       <Dropdown
-        className={classNames(styles.selectInput, this.props.className)}
+        className={className}
         open={this.state.open}
         onClose={this.handleClose}
         renderDropdown={this.renderDropdown}
@@ -84,7 +93,7 @@ export default class SelectInput extends React.Component<Props, State> {
         <TextInput
           {...passDownProps}
           className={styles.input}
-          renderAfter={this.renderAfter}
+          renderAfter={!error && this.renderAfter}
           onFocus={this.handleFocus}
           onChange={
             this.props.customChangeEvent
@@ -92,6 +101,8 @@ export default class SelectInput extends React.Component<Props, State> {
               : this.handleChange
           }
         />
+        {error && <ErrorIcon className={styles.errorIcon} />}
+        {error && <div className={styles.errorMessage}>{error}</div>}
       </Dropdown>
     )
   }
