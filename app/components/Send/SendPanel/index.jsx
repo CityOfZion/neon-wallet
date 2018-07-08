@@ -11,6 +11,7 @@ import styles from './SendPanel.scss'
 
 type Props = {
   sendRowDetails: array,
+  sendableAssets: array,
   addRow: Function,
   removeRow: Function,
   updateRowField: Function
@@ -46,6 +47,7 @@ class SendPanel extends Component<Props> {
       <Panel renderHeader={this.renderHeader}>
         <SendRecipientList
           sendRowDetails={this.props.sendRowDetails}
+          sendableAssets={this.props.sendableAssets}
           removeRow={this.props.removeRow}
           updateRowField={this.props.updateRowField}
         />

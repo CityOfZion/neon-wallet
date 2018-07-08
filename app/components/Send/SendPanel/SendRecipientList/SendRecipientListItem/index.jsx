@@ -16,6 +16,7 @@ type Props = {
   address: string,
   note: string,
   index: string,
+  sendableAssets: array,
   removeRow: Function,
   updateRowField: Function
 }
@@ -23,7 +24,7 @@ type Props = {
 class SendRecipientListItem extends Component<Props> {
   handleFieldChange = e => {
     const { index, updateRowField } = this.props
-    const { name, value } = e.target
+    const { name, value } = e.currentTarget
 
     updateRowField(index, name, value)
   }
@@ -40,6 +41,9 @@ class SendRecipientListItem extends Component<Props> {
     removeRow(index)
   }
 
+  createAssetList = () =>
+    Object.keys(this.props.sendableAssets).map(asset => asset)
+
   render() {
     const { index, address, amount, note, asset } = this.props
 
@@ -51,7 +55,9 @@ class SendRecipientListItem extends Component<Props> {
             value={asset}
             name="asset"
             onChange={this.handleFieldChange}
+            items={this.createAssetList()}
             customChangeEvent
+            disabled
           />
         </div>
         <div className={styles.amount}>
