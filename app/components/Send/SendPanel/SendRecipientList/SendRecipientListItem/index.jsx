@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 import SelectInput from '../../../../Inputs/SelectInput'
 import NumberInput from '../../../../Inputs/NumberInput'
 import TextInput from '../../../../Inputs/TextInput'
+import DisplayInput from '../../../DisplayInput'
 
 import TrashCanIcon from '../../../../../assets/icons/delete.svg'
 
@@ -17,7 +18,9 @@ type Props = {
   note: string,
   max: number,
   index: string,
+  errors: Object,
   sendableAssets: Object,
+  showConfirmSend: boolean,
   contacts: Object,
   clearErrors: Function,
   removeRow: Function,
@@ -40,7 +43,7 @@ class SendRecipientListItem extends Component<Props> {
     const isContactString = Object.keys(contacts).find(contact => contact === e)
     if (isContactString) {
       updateRowField(index, 'address', contacts[e])
-      clearErrors(index, 'address')
+      return clearErrors(index, 'address')
     }
 
     const { name, value } = e.target
@@ -67,56 +70,81 @@ class SendRecipientListItem extends Component<Props> {
     Object.keys(this.props.contacts).map(contact => contact)
 
   render() {
-    const { index, address, amount, note, asset, errors } = this.props
+    const {
+      index,
+      address,
+      amount,
+      note,
+      asset,
+      errors,
+      showConfirmSend
+    } = this.props
+
+    const selectInput = showConfirmSend ? (
+      <DisplayInput value={asset} />
+    ) : (
+      <SelectInput
+        value={asset}
+        name="asset"
+        onChange={this.handleFieldChange}
+        items={this.createAssetList()}
+        customChangeEvent
+        disabled
+      />
+    )
+
+    const numberInput = showConfirmSend ? (
+      <DisplayInput value={amount} />
+    ) : (
+      <NumberInput
+        max={20}
+        value={amount}
+        name="amount"
+        onChange={this.handleFieldChange}
+        customChangeEvent
+        handleMaxClick={this.handleMaxClick}
+        error={errors.amount}
+      />
+    )
+
+    const addressInput = showConfirmSend ? (
+      <DisplayInput value={address} />
+    ) : (
+      <SelectInput
+        placeholder="Add wallet or select contact"
+        value={address}
+        name="address"
+        onChange={this.handleFieldChange}
+        items={this.createContactList()}
+        customChangeEvent
+        error={errors.address}
+      />
+    )
+
+    const noteInput = showConfirmSend ? (
+      <DisplayInput value={note} />
+    ) : (
+      <TextInput
+        placeholder="Add a note"
+        value={note}
+        name="note"
+        onChange={this.handleFieldChange}
+      />
+    )
 
     return (
       <li className={styles.sendRecipientListItem}>
         <div className={styles.rowNumber}>{`0${index + 1}`}</div>
-        <div className={styles.asset}>
-          <SelectInput
-            value={asset}
-            name="asset"
-            onChange={this.handleFieldChange}
-            items={this.createAssetList()}
-            customChangeEvent
-            disabled
-          />
-        </div>
-        <div className={styles.amount}>
-          <NumberInput
-            max={20}
-            value={amount}
-            name="amount"
-            onChange={this.handleFieldChange}
-            customChangeEvent
-            handleMaxClick={this.handleMaxClick}
-            error={errors.amount}
-          />
-        </div>
-        <div className={styles.address}>
-          <SelectInput
-            placeholder="Add wallet or select contact"
-            value={address}
-            name="address"
-            onChange={this.handleFieldChange}
-            items={this.createContactList()}
-            customChangeEvent
-            error={errors.address}
-          />
-        </div>
-        <div className={styles.reference}>
-          <TextInput
-            placeholder="Add a note"
-            value={note}
-            name="note"
-            onChange={this.handleFieldChange}
-          />
-        </div>
+        <div className={styles.asset}>{selectInput}</div>
+        <div className={styles.amount}>{numberInput}</div>
+        <div className={styles.address}>{addressInput}</div>
+        <div className={styles.reference}>{noteInput}</div>
         <div className={styles.delete}>
           <button
             type="button"
             className={styles.deleteButton}
             onClick={this.handleDeleteRow}
+            disabled={showConfirmSend}
           >
             <TrashCanIcon />
           </button>

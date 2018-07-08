@@ -16,6 +16,7 @@ type Props = {
   sendRowDetails: Array,
   sendableAssets: Object,
   contacts: Object,
+  showConfirmSend: boolean,
   handleSubmit: Function,
   clearErrors: Function,
   addRow: Function,
@@ -56,7 +57,8 @@ class SendPanel extends Component<Props> {
       removeRow,
       contacts,
       clearErrors,
-      handleSubmit
+      handleSubmit,
+      showConfirmSend
     } = this.props
     return (
       <Panel renderHeader={this.renderHeader}>
@@ -68,6 +70,7 @@ class SendPanel extends Component<Props> {
             updateRowField={updateRowField}
             contacts={contacts}
             clearErrors={clearErrors}
+            showConfirmSend={showConfirmSend}
           />
           <Button
             primary

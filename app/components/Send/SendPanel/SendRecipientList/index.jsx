@@ -11,6 +11,7 @@ type Props = {
   sendRowDetails: Array,
   sendableAssets: Object,
   contacts: Object,
+  showConfirmSend: boolean,
   clearErrors: Function,
   removeRow: Function,
   updateRowField: Function
@@ -22,7 +23,8 @@ const SendRecipientList = ({
   updateRowField,
   sendableAssets,
   contacts,
-  clearErrors
+  clearErrors,
+  showConfirmSend
 }: Props) => {
   const renderRows = () =>
     sendRowDetails.map((row, index) => (
@@ -30,6 +32,7 @@ const SendRecipientList = ({
         key={row.id}
         {...row}
         index={index}
+        showConfirmSend={showConfirmSend}
         removeRow={removeRow}
         updateRowField={updateRowField}
         sendableAssets={sendableAssets}
