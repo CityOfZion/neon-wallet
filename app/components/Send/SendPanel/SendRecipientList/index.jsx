@@ -28,6 +28,7 @@ const SendRecipientList = ({
         amount={row.amount}
         address={row.address}
         note={row.note}
+        max={row.max}
         index={index}
         removeRow={removeRow}
         updateRowField={updateRowField}

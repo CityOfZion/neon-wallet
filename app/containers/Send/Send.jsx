@@ -18,11 +18,20 @@ export default class Send extends React.Component {
           amount: 0,
           address: '',
           note: '',
-          max: Number(this.props.sendableAssets.NEO.balance) || 0,
+          max: this.getMaxValue('NEO'),
           id: uniqueId()
         }
       ]
     }
+  }
+
+  getMaxValue = assetSymbol => {
+    const { sendableAssets } = this.props
+
+    const asset = sendableAssets[assetSymbol]
+
+    if (asset) return asset.balance
+    return 0
   }
 
   removeRow = index => {
@@ -45,7 +54,7 @@ export default class Send extends React.Component {
           amount: 0,
           address: '',
           note: '',
-          max: Number(this.props.sendableAssets.NEO.balance) || 0,
+          max: this.getMaxValue('NEO'),
           id: uniqueId()
         })
 
@@ -63,7 +72,7 @@ export default class Send extends React.Component {
       objectToModify[field] = value
 
       if (field === 'asset') {
-        objectToModify.max = this.props.sendableAssets[field].balance
+        objectToModify.max = this.props.sendableAssets[value].balance
       }
 
       return { sendRowDetails: newState }
