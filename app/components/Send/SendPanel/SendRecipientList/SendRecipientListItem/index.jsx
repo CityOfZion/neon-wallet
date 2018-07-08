@@ -17,19 +17,21 @@ type Props = {
   note: string,
   max: number,
   index: string,
-  sendableAssets: array,
+  sendableAssets: Object,
+  contacts: Object,
   removeRow: Function,
   updateRowField: Function
 }
 
 class SendRecipientListItem extends Component<Props> {
   handleFieldChange = e => {
-    const { index, updateRowField } = this.props
+    const { index, updateRowField, contacts, sendableAssets } = this.props
 
-    const isAssetString = typeof e === 'string' && e.length === 3
-    if (isAssetString) {
-      return updateRowField(index, 'asset', e)
-    }
+    const isAssetString = Object.keys(sendableAssets).find(asset => asset === e)
+    if (isAssetString) return updateRowField(index, 'asset', e)
+
+    const isContactString = Object.keys(contacts).find(contact => contact === e)
+    if (isContactString) return updateRowField(index, 'address', contacts[e])
 
     const { name, value } = e.target
     updateRowField(index, name, value)
@@ -49,6 +51,9 @@ class SendRecipientListItem extends Component<Props> {
 
   createAssetList = () =>
     Object.keys(this.props.sendableAssets).map(asset => asset)
+
+  createContactList = () =>
+    Object.keys(this.props.contacts).map(contact => contact)
 
   render() {
     const { index, address, amount, note, asset } = this.props
@@ -82,6 +87,7 @@ class SendRecipientListItem extends Component<Props> {
             value={address}
             name="address"
             onChange={this.handleFieldChange}
+            items={this.createContactList()}
             customChangeEvent
           />
         </div>

@@ -10,8 +10,9 @@ import SendRecipientList from './SendRecipientList'
 import styles from './SendPanel.scss'
 
 type Props = {
-  sendRowDetails: array,
-  sendableAssets: array,
+  sendRowDetails: Array,
+  sendableAssets: Object,
+  contacts: Object,
   addRow: Function,
   removeRow: Function,
   updateRowField: Function
@@ -43,13 +44,21 @@ class SendPanel extends Component<Props> {
   )
 
   render() {
+    const {
+      sendRowDetails,
+      sendableAssets,
+      updateRowField,
+      removeRow,
+      contacts
+    } = this.props
     return (
       <Panel renderHeader={this.renderHeader}>
         <SendRecipientList
-          sendRowDetails={this.props.sendRowDetails}
-          sendableAssets={this.props.sendableAssets}
-          removeRow={this.props.removeRow}
-          updateRowField={this.props.updateRowField}
+          sendRowDetails={sendRowDetails}
+          sendableAssets={sendableAssets}
+          removeRow={removeRow}
+          updateRowField={updateRowField}
+          contacts={contacts}
         />
       </Panel>
     )
