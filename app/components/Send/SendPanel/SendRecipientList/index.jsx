@@ -8,8 +8,9 @@ import SendRecipientListItem from './SendRecipientListItem'
 import styles from './SendRecipientList.scss'
 
 type Props = {
-  sendRowDetails: array,
-  sendableAssets: array,
+  sendRowDetails: Array,
+  sendableAssets: Object,
+  contacts: Object,
   removeRow: Function,
   updateRowField: Function
 }
@@ -18,7 +19,8 @@ const SendRecipientList = ({
   sendRowDetails,
   removeRow,
   updateRowField,
-  sendableAssets
+  sendableAssets,
+  contacts
 }: Props) => {
   const renderRows = () =>
     sendRowDetails.map((row, index) => (
@@ -33,6 +35,7 @@ const SendRecipientList = ({
         removeRow={removeRow}
         updateRowField={updateRowField}
         sendableAssets={sendableAssets}
+        contacts={contacts}
       />
     ))
 

@@ -1,5 +1,6 @@
 import { compose } from 'recompose'
-import { filter, values, omit } from 'lodash'
+import { values, omit } from 'lodash'
+import { withData } from 'spunky'
 import Send from './Send'
 
 import withNetworkData from '../../hocs/withNetworkData'
@@ -7,6 +8,7 @@ import withAuthData from '../../hocs/withAuthData'
 import withBalancesData from '../../hocs/withBalancesData'
 import withCurrencyData from '../../hocs/withCurrencyData'
 import withFilteredTokensData from '../../hocs/withFilteredTokensData'
+import contactsActions from '../../actions/contactsActions'
 
 const filterSendableAssets = balances => {
   const sendableAssets = {}
@@ -30,6 +32,8 @@ const filterSendableAssets = balances => {
   return sendableAssets
 }
 
+const mapContactsDataToProps = (contacts: Object) => ({ contacts })
+
 const mapBalanceDataToProps = balances => ({
   NEO: balances.NEO,
   GAS: balances.GAS,
@@ -40,6 +44,7 @@ const mapBalanceDataToProps = balances => ({
 export default compose(
   withBalancesData(mapBalanceDataToProps),
   withCurrencyData('currencyCode'),
+  withData(contactsActions, mapContactsDataToProps),
   withNetworkData(),
   withAuthData(),
   withFilteredTokensData()

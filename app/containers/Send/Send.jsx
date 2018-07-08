@@ -81,7 +81,7 @@ export default class Send extends React.Component {
 
   render() {
     const { sendRowDetails } = this.state
-    const { sendableAssets } = this.props
+    const { sendableAssets, contacts } = this.props
 
     return (
       <section>
@@ -93,6 +93,7 @@ export default class Send extends React.Component {
           addRow={this.addRow}
           removeRow={this.removeRow}
           updateRowField={this.updateRowField}
+          contacts={contacts}
         />
       </section>
     )
