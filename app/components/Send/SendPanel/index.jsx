@@ -6,6 +6,7 @@ import Panel from '../../Panel'
 import SendRecipientList from './SendRecipientList'
 import SendPanelHeader from './SendPanelHeader'
 import Button from '../../Button/Button'
+import ConfirmSend from './ConfirmSend'
 
 import SendIcon from '../../../assets/icons/send.svg'
 
@@ -17,10 +18,12 @@ type Props = {
   contacts: Object,
   showConfirmSend: boolean,
   handleSubmit: () => any,
+  handleSend: () => any,
   clearErrors: (index: number, field: string) => any,
   addRow: () => any,
   removeRow: (index: number) => any,
-  updateRowField: (index: number, field: string, value: any) => any
+  updateRowField: (index: number, field: string, value: any) => any,
+  handleEditRecipientsClick: () => any
 }
 
 const SendPanel = ({
@@ -32,7 +35,9 @@ const SendPanel = ({
   contacts,
   clearErrors,
   handleSubmit,
-  showConfirmSend
+  handleSend,
+  showConfirmSend,
+  handleEditRecipientsClick
 }: Props) => (
   <Panel
     renderHeader={() => (
@@ -43,7 +48,7 @@ const SendPanel = ({
       />
     )}
   >
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={showConfirmSend ? handleSend : handleSubmit}>
       <SendRecipientList
         sendRowDetails={sendRowDetails}
         sendableAssets={sendableAssets}
@@ -53,14 +58,19 @@ const SendPanel = ({
         clearErrors={clearErrors}
         showConfirmSend={showConfirmSend}
       />
-      <Button
-        primary
-        className={styles.sendFormButton}
-        renderIcon={() => <SendIcon />}
-        type="submit"
-      >
-        Send Assets
-      </Button>
+      {!showConfirmSend && (
+        <Button
+          primary
+          className={styles.sendFormButton}
+          renderIcon={() => <SendIcon />}
+          type="submit"
+        >
+          Send Assets
+        </Button>
+      )}
+      {showConfirmSend && (
+        <ConfirmSend handleEditRecipientsClick={handleEditRecipientsClick} />
+      )}
     </form>
   </Panel>
 )

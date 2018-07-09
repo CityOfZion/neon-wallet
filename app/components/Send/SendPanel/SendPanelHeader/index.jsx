@@ -8,7 +8,7 @@ import styles from '../SendPanel.scss'
 
 type Props = {
   sendRowDetails: Array,
-  addRow: Function,
+  addRow: () => any,
   showConfirmSend: boolean
 }
 
@@ -16,30 +16,39 @@ const SendPanelHeader = ({
   sendRowDetails,
   addRow,
   showConfirmSend
-}: Props) => (
-  <section className={styles.sendPanelHeader}>
-    <div className={styles.sendPanelHeaderInfo}>
-      Select Assets{' '}
-      <span className={styles.sendPanelRecipients}>
-        {sendRowDetails.length} of 5 recipients
-      </span>
-    </div>
-    {!showConfirmSend && (
-      <div className={styles.sendPanelHeaderButtons}>
-        <button type="button" className={styles.sendPanelHeaderButton}>
-          <GridIcon className={styles.sendPanelHeaderButtonIcon} /> Enter QR
-          Code
-        </button>
-        <button
-          type="button"
-          className={styles.sendPanelHeaderButton}
-          onClick={addRow}
-        >
-          <AddIcon className={styles.sendPanelHeaderButtonIcon} /> Add Recipient
-        </button>
+}: Props) => {
+  let headerTitle = 'Select Assets'
+  let headerSubtitle = `${sendRowDetails.length} of 5 Recipients`
+
+  if (showConfirmSend) {
+    headerTitle = 'Confirmation'
+    headerSubtitle = `${sendRowDetails.length} Recipients`
+  }
+
+  return (
+    <section className={styles.sendPanelHeader}>
+      <div className={styles.sendPanelHeaderInfo}>
+        {headerTitle}{' '}
+        <span className={styles.sendPanelRecipients}>{headerSubtitle}</span>
       </div>
-    )}
-  </section>
-)
+      {!showConfirmSend && (
+        <div className={styles.sendPanelHeaderButtons}>
+          <button type="button" className={styles.sendPanelHeaderButton}>
+            <GridIcon className={styles.sendPanelHeaderButtonIcon} /> Enter QR
+            Code
+          </button>
+          <button
+            type="button"
+            className={styles.sendPanelHeaderButton}
+            onClick={addRow}
+          >
+            <AddIcon className={styles.sendPanelHeaderButtonIcon} /> Add
+            Recipient
+          </button>
+        </div>
+      )}
+    </section>
+  )
+}
 
 export default SendPanelHeader
