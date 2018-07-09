@@ -1,8 +1,8 @@
 // @flow
-import { connect, type MapStateToProps } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { compose } from 'recompose'
-import { omit, get, filter, values } from 'lodash'
+import { connect, type MapStateToProps } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { compose } from 'recompose';
+import { omit, get, filter, values } from 'lodash';
 import {
   withCall,
   withData,
@@ -11,19 +11,19 @@ import {
   withProgressComponents,
   alreadyLoadedStrategy,
   progressValues
-} from 'spunky'
+} from 'spunky';
 
-import Loader from '../../components/Loader'
-import accountActions from '../../actions/accountActions'
-import dashboardActions from '../../actions/dashboardActions'
-import withNetworkData from '../../hocs/withNetworkData'
-import withAuthData from '../../hocs/withAuthData'
-import withFilteredTokensData from '../../hocs/withFilteredTokensData'
-import { getNotifications } from '../../modules/notifications'
-import { showModal } from '../../modules/modal'
-import { sendTransaction } from '../../modules/transactions'
+import Loader from '../../components/Loader';
+import accountActions from '../../actions/accountActions';
+import dashboardActions from '../../actions/dashboardActions';
+import withNetworkData from '../../hocs/withNetworkData';
+import withAuthData from '../../hocs/withAuthData';
+import withFilteredTokensData from '../../hocs/withFilteredTokensData';
+import { getNotifications } from '../../modules/notifications';
+import { showModal } from '../../modules/modal';
+import { sendTransaction } from '../../modules/transactions';
 
-import Dashboard from './Dashboard'
+import Dashboard from './Dashboard';
 
 const { LOADING } = progressValues
 
@@ -34,11 +34,11 @@ const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
 const getTokenBalances = (balances: Balances): Array<string> => {
   const tokens = values(omit(balances, 'NEO', 'GAS'))
   return filter(tokens, token => token.balance !== '0')
-}
+};
 
 const getICOTokenBalances = (balances: Balances): Array<string> => {
   return values(omit(balances, 'NEO', 'GAS'))
-}
+};
 
 const mapDashboardDataToProps = (dashboardData: {
   balances: Balances,
@@ -56,7 +56,7 @@ const mapDashboardDataToProps = (dashboardData: {
     tokenBalances: balances ? getTokenBalances(balances) : [],
     icoTokenBalances: balances ? getICOTokenBalances(balances) : []
   }
-}
+};
 
 const actionCreators = {
   showModal,

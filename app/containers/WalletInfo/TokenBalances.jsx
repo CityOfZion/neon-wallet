@@ -14,8 +14,8 @@ import styles from './TokenBalances.scss'
 
 type Props = {
   tokenBalances: Array<TokenBalanceType>,
-  showModal: Function,
-}
+  showModal: Function
+};
 
 const TokenBalances = ({ tokenBalances, showModal }: Props) => (
   <Table className={styles.table}>
@@ -26,7 +26,7 @@ const TokenBalances = ({ tokenBalances, showModal }: Props) => (
       </tr>
     </thead>
     <tbody>
-      {tokenBalances.map((token: TokenBalanceType, index: number) => {
+      {tokenBalances.length && tokenBalances.map((token: TokenBalanceType, index: number) => {
         const { balance, symbol, scriptHash } = token
         const formattedBalance = formatBalance(symbol, balance)
         const formattedBalanceDisplay = formatBalance(symbol, balance, true)
@@ -34,13 +34,17 @@ const TokenBalances = ({ tokenBalances, showModal }: Props) => (
         return (
           <tr key={`${symbol}${index}`}>
             <td onClick={() => showModal(MODAL_TYPES.TOKEN_INFO, { token })}>
-              <span className={styles.symbol}><InfoOutline className={styles.symbolIcon} />{symbol}</span>
+              <span className={styles.symbol}>
+                <InfoOutline className={styles.symbolIcon} />
+                {symbol}
+              </span>
             </td>
             <td>
-              <Tooltip
-                title={formattedBalance}
-                disabled={isZero(balance)}>
-                {formattedBalanceDisplay} {deprecated && <span className={styles.deprecated}>(deprecated)</span>}
+              <Tooltip title={formattedBalance} disabled={isZero(balance)}>
+                {formattedBalanceDisplay}{' '}
+                {deprecated && (
+                  <span className={styles.deprecated}>(deprecated)</span>
+                )}
               </Tooltip>
             </td>
           </tr>
@@ -49,5 +53,9 @@ const TokenBalances = ({ tokenBalances, showModal }: Props) => (
     </tbody>
   </Table>
 )
+
+TokenBalances.defaultProps = {
+  tokenBalances: []
+}
 
 export default TokenBalances
