@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react'
+import React from 'react'
 
 import Panel from '../../Panel'
 import SendRecipientList from './SendRecipientList'
@@ -23,50 +23,46 @@ type Props = {
   updateRowField: (index: number, field: string, value: any) => any
 }
 
-class SendPanel extends Component<Props> {
-  render() {
-    const {
-      sendRowDetails,
-      sendableAssets,
-      updateRowField,
-      addRow,
-      removeRow,
-      contacts,
-      clearErrors,
-      handleSubmit,
-      showConfirmSend
-    } = this.props
-    return (
-      <Panel
-        renderHeader={() => (
-          <SendPanelHeader
-            sendRowDetails={sendRowDetails}
-            addRow={addRow}
-            showConfirmSend={showConfirmSend}
-          />
-        )}
+const SendPanel = ({
+  sendRowDetails,
+  sendableAssets,
+  updateRowField,
+  addRow,
+  removeRow,
+  contacts,
+  clearErrors,
+  handleSubmit,
+  showConfirmSend
+}: Props) => (
+  <Panel
+    renderHeader={() => (
+      <SendPanelHeader
+        sendRowDetails={sendRowDetails}
+        addRow={addRow}
+        showConfirmSend={showConfirmSend}
+      />
+    )}
+  >
+    <form onSubmit={handleSubmit}>
+      <SendRecipientList
+        sendRowDetails={sendRowDetails}
+        sendableAssets={sendableAssets}
+        removeRow={removeRow}
+        updateRowField={updateRowField}
+        contacts={contacts}
+        clearErrors={clearErrors}
+        showConfirmSend={showConfirmSend}
+      />
+      <Button
+        primary
+        className={styles.sendFormButton}
+        renderIcon={() => <SendIcon />}
+        type="submit"
       >
-        <form onSubmit={handleSubmit}>
-          <SendRecipientList
-            sendRowDetails={sendRowDetails}
-            sendableAssets={sendableAssets}
-            removeRow={removeRow}
-            updateRowField={updateRowField}
-            contacts={contacts}
-            clearErrors={clearErrors}
-            showConfirmSend={showConfirmSend}
-          />
-          <Button
-            primary
-            className={styles.sendFormButton}
-            renderIcon={() => <SendIcon />}
-            type="submit"
-          >
-            Send Assets
-          </Button>
-        </form>
-      </Panel>
-    )
-  }
-}
+        Send Assets
+      </Button>
+    </form>
+  </Panel>
+)
+
 export default SendPanel
