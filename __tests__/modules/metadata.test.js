@@ -32,7 +32,8 @@ describe('metadata module tests', () => {
       done()
     })
 
-    test('it shows a warning when the versions dont match', async done => {
+    // prettier-ignore
+    test('it shows a warning when the versions don\'t match', async done => {
       const spy = jest.spyOn(notifications, 'showWarningNotification')
 
       nock('https://api.github.com/repos/CityOfZion/neon-wallet')
