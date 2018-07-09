@@ -22,3 +22,8 @@ export const isNumber = (value: string | number): boolean => {
     return false
   }
 }
+
+export const multiplyNumber = (x: string | number, y: string | number) => {
+  const num = new toBigNumber(x)
+  return num.mul(y)
+}

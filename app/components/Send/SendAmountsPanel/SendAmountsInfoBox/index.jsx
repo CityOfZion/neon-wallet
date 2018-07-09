@@ -3,6 +3,8 @@ import React from 'react'
 
 import styles from './SendAmountsInfoBox.scss'
 
+import { multiplyNumber } from '../../../../core/math'
+
 type Props = {
   assetName: string,
   assetPrice: number,
@@ -29,7 +31,7 @@ const SendAmountsInfoBox = ({
     <div className={styles.assetValue}>
       <p className={styles.totalAssetValue}>
         {fiatCurrencySymbol}
-        {assetPrice * totalAmount}
+        {multiplyNumber(assetPrice, totalAmount).c[0]}
       </p>
       <p className={styles.remainingAssetValue}>
         {fiatCurrencySymbol}
