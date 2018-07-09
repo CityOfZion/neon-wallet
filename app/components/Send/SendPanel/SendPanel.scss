@@ -37,9 +37,24 @@
             margin-right: 0;
         }
     }
+
+    .confirmButtonsContainer {
+        display: flex;
+        justify-content: center;
+    }
 }
 
 .sendFormButton {
     width: 200px;
     margin: 50px auto 10px auto;
+}
+
+.confirmButtonsContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.confirmSendButtons {
+    margin: 0 15px;
+    width: 200px;
 }

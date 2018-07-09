@@ -7,7 +7,6 @@ import { toBigNumber } from '../../core/math'
 import SendPageHeader from '../../components/Send/SendPageHeader'
 import SendAmountsPanel from '../../components/Send/SendAmountsPanel'
 import SendPanel from '../../components/Send/SendPanel'
-// import styles from './Send.scss'
 
 export default class Send extends React.Component {
   constructor(props) {
@@ -98,6 +97,10 @@ export default class Send extends React.Component {
     }
   }
 
+  handleSend = () => console.log('sending')
+
+  handleEditRecipientsClick = () => this.setState({ showConfirmSend: false })
+
   validateRow = (row, index) => {
     const validAmount = this.validateAmount(
       row.amount,
@@ -183,6 +186,8 @@ export default class Send extends React.Component {
           clearErrors={this.clearErrors}
           handleSubmit={this.handleSubmit}
           showConfirmSend={showConfirmSend}
+          handleEditRecipientsClick={this.handleEditRecipientsClick}
+          handleSend={this.handleSend}
         />
       </section>
     )
