@@ -17,10 +17,10 @@ type Props = {
   contacts: Object,
   showConfirmSend: boolean,
   handleSubmit: () => any,
-  clearErrors: (index, field) => any,
+  clearErrors: (index: number, field: string) => any,
   addRow: () => any,
-  removeRow: index => any,
-  updateRowField: (index, field, value) => any
+  removeRow: (index: number) => any,
+  updateRowField: (index: number, field: string, value: any) => any
 }
 
 class SendPanel extends Component<Props> {
