@@ -21,7 +21,6 @@
   }
 
   .errorIcon {
-    color: #EE6D66;
     position: absolute;
     right: 8px;
     top: 10px;
@@ -29,7 +28,7 @@
 
   .errorMessage {
     background-color: $error-color;
-    color: #fff;
+    color: $white;
     position: absolute;
     top: 39px;
     left: -2px;

@@ -1,3 +1,5 @@
+@import '../../../../styles/variables';
+
 .sendRecipientListContainer {
     width: 85%;
     margin: 0 45px 0 auto;
@@ -29,7 +31,7 @@
         position: absolute;
         left: -45px;
         height: 100%;
-        color: #515151;
+        color:$dark-grey;
         font-size: 1.3rem;
         font-weight: lighter;
         transform: translateY(13px);
