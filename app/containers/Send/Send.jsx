@@ -14,6 +14,7 @@ export default class Send extends React.Component {
 
     this.state = {
       showConfirmSend: false,
+      sendSuccess: true,
       sendRowDetails: [
         {
           asset: 'NEO',
@@ -195,7 +196,7 @@ export default class Send extends React.Component {
   }
 
   render() {
-    const { sendRowDetails, showConfirmSend } = this.state
+    const { sendRowDetails, showConfirmSend, sendSuccess } = this.state
     const { sendableAssets, contacts } = this.props
 
     return (
@@ -212,6 +213,7 @@ export default class Send extends React.Component {
           clearErrors={this.clearErrors}
           handleSubmit={this.handleSubmit}
           showConfirmSend={showConfirmSend}
+          sendSuccess={sendSuccess}
           handleEditRecipientsClick={this.handleEditRecipientsClick}
           handleSend={this.handleSend}
         />
