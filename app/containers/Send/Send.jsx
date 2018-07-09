@@ -57,7 +57,7 @@ export default class Send extends React.Component {
           amount: 0,
           address: '',
           note: '',
-          max: this.getMaxValue('NEO'),
+          max: this.calculateMaxValue('NEO'),
           id: uniqueId(),
           errors: {}
         })
@@ -76,11 +76,37 @@ export default class Send extends React.Component {
       objectToModify[field] = value
 
       if (field === 'asset') {
-        objectToModify.max = this.props.sendableAssets[value].balance
+        const maxValue = this.calculateMaxValue(objectToModify.asset)
+        objectToModify.max = maxValue
+      }
+
+      if (field === 'amount') {
+        const maxValue =
+          this.calculateMaxValue(objectToModify.asset) + Number(value)
+        objectToModify.max = maxValue
       }
 
       return { sendRowDetails: newState }
     })
+  }
+
+  calculateMaxValue = asset => {
+    const rows = [...this.state.sendRowDetails]
+    const { sendableAssets } = this.props
+
+    const existingAmounts = rows
+      .filter(row => row.asset === asset)
+      .map(row => row.amount)
+      .reduce(
+        (accumulator, currentValue) =>
+          Number(accumulator) + Number(currentValue),
+        0
+      )
+
+    if (sendableAssets[asset]) {
+      return this.props.sendableAssets[asset].balance - existingAmounts
+    }
+    return 0
   }
 
   handleSubmit = () => {
