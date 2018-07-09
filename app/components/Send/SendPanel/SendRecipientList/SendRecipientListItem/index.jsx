@@ -13,7 +13,7 @@ import styles from '../SendRecipientList.scss'
 
 type Props = {
   asset: string,
-  amount: numbers,
+  amount: number,
   address: string,
   note: string,
   max: number,
@@ -22,9 +22,9 @@ type Props = {
   sendableAssets: Object,
   showConfirmSend: boolean,
   contacts: Object,
-  clearErrors: Function,
-  removeRow: Function,
-  updateRowField: Function
+  clearErrors: (index, field) => any,
+  removeRow: index => any,
+  updateRowField: (index, field, value) => any
 }
 
 class SendRecipientListItem extends Component<Props> {
@@ -97,7 +97,6 @@ class SendRecipientListItem extends Component<Props> {
       <DisplayInput value={amount} />
     ) : (
       <NumberInput
-        max={20}
         value={amount}
         name="amount"
         onChange={this.handleFieldChange}
@@ -132,6 +131,17 @@ class SendRecipientListItem extends Component<Props> {
       />
     )
 
+    const trashCanButton = showConfirmSend ? null : (
+      <button
+        type="button"
+        className={styles.deleteButton}
+        onClick={this.handleDeleteRow}
+        disabled={showConfirmSend}
+      >
+        <TrashCanIcon />
+      </button>
+    )
+
     return (
       <li className={styles.sendRecipientListItem}>
         <div className={styles.rowNumber}>{`0${index + 1}`}</div>
@@ -139,16 +149,7 @@ class SendRecipientListItem extends Component<Props> {
         <div className={styles.amount}>{numberInput}</div>
         <div className={styles.address}>{addressInput}</div>
         <div className={styles.reference}>{noteInput}</div>
-        <div className={styles.delete}>
-          <button
-            type="button"
-            className={styles.deleteButton}
-            onClick={this.handleDeleteRow}
-            disabled={showConfirmSend}
-          >
-            <TrashCanIcon />
-          </button>
-        </div>
+        <div className={styles.delete}>{trashCanButton}</div>
       </li>
     )
   }

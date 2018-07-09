@@ -12,9 +12,9 @@ type Props = {
   sendableAssets: Object,
   contacts: Object,
   showConfirmSend: boolean,
-  clearErrors: Function,
-  removeRow: Function,
-  updateRowField: Function
+  clearErrors: (index, field) => any,
+  removeRow: index => any,
+  updateRowField: (index, field, value) => any
 }
 
 const SendRecipientList = ({

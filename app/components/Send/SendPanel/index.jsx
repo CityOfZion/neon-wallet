@@ -2,10 +2,9 @@
 
 import React, { Component } from 'react'
 
-import AddIcon from '../../../assets/icons/add.svg'
-import GridIcon from '../../../assets/icons/grid.svg'
 import Panel from '../../Panel'
 import SendRecipientList from './SendRecipientList'
+import SendPanelHeader from './SendPanelHeader'
 import Button from '../../Button/Button'
 
 import SendIcon from '../../../assets/icons/send.svg'
@@ -17,43 +16,20 @@ type Props = {
   sendableAssets: Object,
   contacts: Object,
   showConfirmSend: boolean,
-  handleSubmit: Function,
-  clearErrors: Function,
-  addRow: Function,
-  removeRow: Function,
-  updateRowField: Function
+  handleSubmit: () => any,
+  clearErrors: (index, field) => any,
+  addRow: () => any,
+  removeRow: index => any,
+  updateRowField: (index, field, value) => any
 }
 
 class SendPanel extends Component<Props> {
-  renderHeader = () => (
-    <section className={styles.sendPanelHeader}>
-      <div className={styles.sendPanelHeaderInfo}>
-        Select Assets{' '}
-        <span className={styles.sendPanelRecipients}>
-          {this.props.sendRowDetails.length} of 5 recipients
-        </span>
-      </div>
-      <div className={styles.sendPanelHeaderButtons}>
-        <button type="button" className={styles.sendPanelHeaderButton}>
-          <GridIcon className={styles.sendPanelHeaderButtonIcon} /> Enter QR
-          Code
-        </button>
-        <button
-          type="button"
-          className={styles.sendPanelHeaderButton}
-          onClick={this.props.addRow}
-        >
-          <AddIcon className={styles.sendPanelHeaderButtonIcon} /> Add Recipient
-        </button>
-      </div>
-    </section>
-  )
-
   render() {
     const {
       sendRowDetails,
       sendableAssets,
       updateRowField,
+      addRow,
       removeRow,
       contacts,
       clearErrors,
@@ -61,7 +37,15 @@ class SendPanel extends Component<Props> {
       showConfirmSend
     } = this.props
     return (
-      <Panel renderHeader={this.renderHeader}>
+      <Panel
+        renderHeader={() => (
+          <SendPanelHeader
+            sendRowDetails={sendRowDetails}
+            addRow={addRow}
+            showConfirmSend={showConfirmSend}
+          />
+        )}
+      >
         <form onSubmit={handleSubmit}>
           <SendRecipientList
             sendRowDetails={sendRowDetails}
