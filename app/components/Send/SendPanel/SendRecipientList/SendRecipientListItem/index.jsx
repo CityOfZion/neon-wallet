@@ -77,6 +77,7 @@ class SendRecipientListItem extends Component<Props> {
       note,
       asset,
       errors,
+      max,
       showConfirmSend
     } = this.props
 
@@ -98,6 +99,7 @@ class SendRecipientListItem extends Component<Props> {
     ) : (
       <NumberInput
         value={amount}
+        max={max}
         name="amount"
         onChange={this.handleFieldChange}
         customChangeEvent

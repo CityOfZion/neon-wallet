@@ -1,7 +1,9 @@
+@import '../../../styles/variables';
+
 .sendAmountsPanel {
     display: flex;
     padding: 20px;
     margin: 20px 0;
-    background-color: #f2f2f2;
-    color: #515151;
+    background-color: $light-grey;
+    color: $dark-grey;
 }

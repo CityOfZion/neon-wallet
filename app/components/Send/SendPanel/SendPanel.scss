@@ -1,3 +1,5 @@
+@import '../../../styles/variables';
+
 .sendPanelHeader {
     display: flex;
     justify-content: space-between; 
@@ -5,7 +7,7 @@
 
     .sendPanelHeaderInfo,
     .sendPanelRecipients {
-        color: #515151;
+        color: $dark-grey;
     }
 
     .sendPanelRecipients {
@@ -27,7 +29,7 @@
         align-items: center;
         cursor: pointer;
         .sendPanelHeaderButtonIcon {
-            color: #515151;
+            color: $dark-grey;
             margin-right: 10px;
         }
         &:last-child {
