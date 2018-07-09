@@ -220,7 +220,7 @@ export const generateNewWalletAccount = (
     } catch (e) {
       console.error(e)
       return dispatchError(
-        'An error occured while trying to generate a new wallet'
+        `An error occured while trying to ${wif ? 'import' : 'generate'} a new wallet`
       )
     }
   }, 500)
