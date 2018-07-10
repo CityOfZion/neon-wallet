@@ -1,6 +1,6 @@
 import React from 'react'
 
-import CheckMarkIcon from '../../../assets/icons/confirm.svg'
+import CheckMarkIcon from '../../../../assets/icons/confirm.svg'
 
 import styles from './SendSuccess.scss'
 
