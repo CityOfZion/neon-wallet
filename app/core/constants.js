@@ -90,7 +90,6 @@ export const TOKENS = {
   EFX: 'acbc532904b6b51b5ea6d19b803d78af70e7e6f9',
   MCT: 'a87cc2a513f5d8b4a42432343687c2127c60bc3f',
   GDM: 'd1e37547d88bc9607ff9d73116ebd9381c156f79',
-<<<<<<< HEAD
   PKC: 'af7c7328eee5a275a3bcaee2bf0cf662b5e739be',
   SOUL: 'ed07cffad18f1308db51920d99a2af60ac66a7b3',
   ASA: 'a58b56b30425d3d1f8902034996fcac4168ef71d',
@@ -126,13 +125,6 @@ export const DEPRECATED_TOKENS = [
   // '442e7964f6486005235e87e082f56cd52aa663b8', // Ontology
   // '2e25d2127e0240c6deaf35394702feb236d4d7fc' // Narrative
   // '6d36b38af912ca107f55a5daedc650054f7e4f75' // Aphelion
-=======
-  PKC: 'af7c7328eee5a275a3bcaee2bf0cf662b5e739be'
-}
-
-export const ENDED_ICO_TOKENS = [
-  'DBC', 'RPX', 'RHT', 'QLC', 'NRVE', 'IAM', 'ONT', 'THOR', 'CGE', 'AVA', 'SWH', 'SWTH', 'EFX', 'MCT', 'PKC'
->>>>>>> master
 ]
 
 export const DEFAULT_WALLET = {
