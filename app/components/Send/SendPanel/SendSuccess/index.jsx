@@ -1,6 +1,7 @@
 import React from 'react'
 
 import CheckMarkIcon from '../../../../assets/icons/confirm.svg'
+import SendSuccessTransaction from './SendSuccessTransaction'
 
 import styles from './SendSuccess.scss'
 
@@ -18,7 +19,27 @@ const SendSuccess = () => (
       </div>
     </div>
     <div className={styles.sendSuccessBody}>
-      <h2>Asset Recipients</h2>
+      <h2 className={styles.sendSuccessBodyHeaderText}>Asset Recipients</h2>
+      <ul className={styles.sendSuccessBodyList}>
+        <SendSuccessTransaction
+          amount="20"
+          asset="NEO"
+          address="AMZZrsaZpyrAhkJGk9EeVVvpkNVkP1ewpz"
+          note="For my friend"
+        />
+        <SendSuccessTransaction
+          amount="1.51232"
+          asset="GAS"
+          address="AMZZrsaZpyrAhkJGk9EeVVvpkNVkP1ewpz"
+          note="For my friend"
+        />
+        <SendSuccessTransaction
+          amount="323322"
+          asset="DBC"
+          address="AMZZrsaZpyrAhkJGk9EeVVvpkNVkP1ewpz"
+          note="For my friend"
+        />
+      </ul>
     </div>
   </section>
 )

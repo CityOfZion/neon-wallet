@@ -43,6 +43,7 @@ const SendPanel = ({
   handleEditRecipientsClick
 }: Props) => (
   <Panel
+    contentClassName={sendSuccess ? styles.sendSuccessContent : null}
     renderHeader={() => (
       <SendPanelHeader
         sendRowDetails={sendRowDetails}
@@ -63,16 +64,17 @@ const SendPanel = ({
           showConfirmSend={showConfirmSend}
         />
       )}
-      {!showConfirmSend && (
-        <Button
-          primary
-          className={styles.sendFormButton}
-          renderIcon={() => <SendIcon />}
-          type="submit"
-        >
-          Send Assets
-        </Button>
-      )}
+      {!showConfirmSend &&
+        !sendSuccess && (
+          <Button
+            primary
+            className={styles.sendFormButton}
+            renderIcon={() => <SendIcon />}
+            type="submit"
+          >
+            Send Assets
+          </Button>
+        )}
       {showConfirmSend && (
         <ConfirmSend handleEditRecipientsClick={handleEditRecipientsClick} />
       )}

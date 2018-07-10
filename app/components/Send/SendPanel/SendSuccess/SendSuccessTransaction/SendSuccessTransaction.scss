@@ -1,0 +1,57 @@
+@import '../../../../../styles/variables';
+
+.sendSuccessTransaction {
+    display: flex;
+    background-color: $light-grey;
+    color: $medium-grey;
+    padding: 8px 30px;
+    justify-content: space-around;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.sendIconContainer,
+.assetContainer {
+    width: 5%;
+}
+
+.amountContainer {
+    width: 10%;
+}
+
+.amount {
+    color: $dark-grey;
+    font-weight: bold;
+}
+
+.addressContainer {
+    width: 40%;
+    display: flex;
+    align-items: center;
+}
+
+.address {
+    margin-right: 8px;
+}
+
+.noteContainer {
+    width: 20%; 
+}
+
+.buttonContainer {
+    width: 20%;
+    display: flex;
+}
+
+.sendSuccessButton {
+    border: none; 
+    background: transparent;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    cursor: pointer;
+    
+    svg {
+        margin-right: 5px;
+    }
+}
