@@ -24,8 +24,6 @@ const mapLoadingProp = (props) => ({
   loading: props[PROGRESS_PROP] === LOADING
 })
 
-const Failed = <div>Failed to load.</div>
-
 export default compose(
   withNetworkData(),
   withAuthData(),
