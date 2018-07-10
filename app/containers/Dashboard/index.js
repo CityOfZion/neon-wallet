@@ -44,11 +44,11 @@ const mapDashboardDataToProps = (dashboardData: {
   balances: Balances,
   blockHeight: number
 }): {
-  NEO: ?string,
-  GAS: ?string,
-  tokenBalances: Array<string>,
-  icoTokenBalances: Array<string>
-} => {
+    NEO: ?string,
+    GAS: ?string,
+    tokenBalances: Array<string>,
+    icoTokenBalances: Array<string>
+  } => {
   const balances = get(dashboardData, 'balances')
   return {
     NEO: get(balances, 'NEO', null),
