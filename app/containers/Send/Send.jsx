@@ -20,6 +20,7 @@ export default class Send extends React.Component {
     this.state = {
       showConfirmSend: false,
       sendSuccess: false,
+      txid: '',
       sendRowDetails: [
         {
           asset: 'NEO',
@@ -162,8 +163,7 @@ export default class Send extends React.Component {
 
     sendTransaction(entries)
       .then(result => {
-        console.log(result)
-        this.setState({ sendSuccess: true })
+        this.setState({ sendSuccess: true, txid: result.txid })
       })
       .catch(() => console.log('something went wrong'))
   }
@@ -239,7 +239,7 @@ export default class Send extends React.Component {
   }
 
   render() {
-    const { sendRowDetails, showConfirmSend, sendSuccess } = this.state
+    const { sendRowDetails, showConfirmSend, sendSuccess, txid } = this.state
     const { sendableAssets, contacts } = this.props
 
     return (
@@ -260,6 +260,7 @@ export default class Send extends React.Component {
           handleEditRecipientsClick={this.handleEditRecipientsClick}
           handleSend={this.handleSend}
           resetViews={this.resetViews}
+          txid={txid}
         />
       </section>
     )
