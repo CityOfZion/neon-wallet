@@ -7,7 +7,7 @@ import PasswordInput from '../../components/Inputs/PasswordInput'
 import TextInput from '../../components/Inputs/TextInput'
 import BackButton from '../../components/BackButton'
 import Button from '../../components/Button'
-import AddIcon from '../../assets/icons/add.svg'
+import AddIcon from '../../assets/icons/confirm-2.svg'
 import HomeLayout from '../Home/HomeLayout'
 import styles from '../Home/Home.scss'
 
