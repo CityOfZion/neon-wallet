@@ -9,20 +9,57 @@ import styles from '../SendPanel.scss'
 type Props = {
   sendRowDetails: Array,
   addRow: () => any,
-  showConfirmSend: boolean
+  resetViews: () => any,
+  showConfirmSend: boolean,
+  sendSuccess: boolean
 }
 
 const SendPanelHeader = ({
   sendRowDetails,
   addRow,
-  showConfirmSend
+  showConfirmSend,
+  resetViews,
+  sendSuccess
 }: Props) => {
   let headerTitle = 'Select Assets'
   let headerSubtitle = `${sendRowDetails.length} of 5 Recipients`
+  let buttons = (
+    <div className={styles.sendPanelHeaderButtons}>
+      <button type="button" className={styles.sendPanelHeaderButton}>
+        <GridIcon className={styles.sendPanelHeaderButtonIcon} /> Enter QR Code
+      </button>
+      <button
+        type="button"
+        className={styles.sendPanelHeaderButton}
+        onClick={addRow}
+      >
+        <AddIcon className={styles.sendPanelHeaderButtonIcon} /> Add Recipient
+      </button>
+    </div>
+  )
 
   if (showConfirmSend) {
     headerTitle = 'Confirmation'
     headerSubtitle = `${sendRowDetails.length} Recipients`
+    buttons = null
+  }
+
+  if (sendSuccess) {
+    headerTitle = 'Complete!'
+    headerSubtitle = `${sendRowDetails.length} asset types sent to 
+    ${sendRowDetails.length} recipients from Main Funds Wallet`
+    buttons = (
+      <div className={styles.sendPanelHeaderButtons}>
+        <button
+          type="button"
+          className={styles.sendPanelHeaderButton}
+          onClick={resetViews}
+        >
+          <AddIcon className={styles.sendPanelHeaderButtonIcon} /> Send More
+          Assets
+        </button>
+      </div>
+    )
   }
 
   return (
@@ -31,22 +68,7 @@ const SendPanelHeader = ({
         {headerTitle}{' '}
         <span className={styles.sendPanelRecipients}>{headerSubtitle}</span>
       </div>
-      {!showConfirmSend && (
-        <div className={styles.sendPanelHeaderButtons}>
-          <button type="button" className={styles.sendPanelHeaderButton}>
-            <GridIcon className={styles.sendPanelHeaderButtonIcon} /> Enter QR
-            Code
-          </button>
-          <button
-            type="button"
-            className={styles.sendPanelHeaderButton}
-            onClick={addRow}
-          >
-            <AddIcon className={styles.sendPanelHeaderButtonIcon} /> Add
-            Recipient
-          </button>
-        </div>
-      )}
+      {buttons}
     </section>
   )
 }
