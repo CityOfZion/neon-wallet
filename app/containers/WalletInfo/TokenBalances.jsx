@@ -26,7 +26,7 @@ const TokenBalances = ({ tokenBalances, showModal }: Props) => (
       </tr>
     </thead>
     <tbody>
-      {tokenBalances.length && tokenBalances.map((token: TokenBalanceType, index: number) => {
+      {!!tokenBalances.length && tokenBalances.map((token: TokenBalanceType, index: number) => {
         const { balance, symbol, scriptHash } = token
         const formattedBalance = formatBalance(symbol, balance)
         const formattedBalanceDisplay = formatBalance(symbol, balance, true)
