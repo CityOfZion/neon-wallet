@@ -186,7 +186,10 @@ export const getEncryptedWIF = (state: Object) => state.generateWallet.encrypted
 export const isSaved = (state: Object) => {
   const savedAddresses = state.spunky.ACCOUNTS.data
   const address = state.generateWallet.address
-  return Boolean(savedAddresses.find(addressData => addressData.address === address))
+  if (savedAddresses) {
+    return Boolean(savedAddresses.find(addressData => addressData.address === address))
+  }
+  return false
 }
 
 const initialState = {
