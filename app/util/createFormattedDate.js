@@ -24,7 +24,13 @@ export const createFormattedDate = () => {
     'December'
   ]
 
+  const prefix = 0
+  const hours = date.getHours()
+  const minutes = date.getMinutes()
+
   return `${days[date.getDay()]} ${date.getDate()} ${
     months[date.getMonth()]
-  }  ${date.getHours()}:${date.getMinutes()}`
+  }  ${hours < 9 ? `${prefix}${hours}` : hours}:${
+    minutes < 9 ? `${prefix}${minutes}` : minutes
+  }`
 }
