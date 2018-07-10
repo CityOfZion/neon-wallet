@@ -28,19 +28,25 @@ export default class LoginLocalStorage extends Component<Props, State> {
     const { loading, accounts } = this.props
     const { passphrase, encryptedWIF } = this.state
     const { label } =
-      accounts.find(account => account.key === encryptedWIF) || {}
+      (Array.isArray(accounts) &&
+        accounts.find(account => account.key === encryptedWIF)) ||
+      {}
 
     return (
       <div id="loginLocalStorage" className={styles.flexContainer}>
         <form onSubmit={this.handleSubmit}>
           <div className={styles.inputMargin}>
             <SelectInput
-              items={accounts.map(account => account.label)}
+              items={
+                Array.isArray(accounts) &&
+                accounts.map(account => account.label)
+              }
               value={label || ''}
               placeholder="Select Account"
               disabled={loading}
               onChange={value => this.setState({ encryptedWIF: value })}
               getItemValue={value =>
+                Array.isArray(accounts) &&
                 accounts.find(account => account.label === value).key
               }
             />
