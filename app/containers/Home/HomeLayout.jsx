@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 
 import styles from './Home.scss'
-import neonLogo from '../../images/neon-logo-redesign.png'
+import logo from '../../assets/images/logo.png'
 
 type Props = {
   children: React$Node,
@@ -48,7 +48,7 @@ export default class HomeLayout extends Component<Props> {
                   : styles.logoContainer
               }
             >
-              <img className={styles.logo} src={neonLogo} alt="" />
+              <img className={styles.logo} src={logo} alt="" />
               {!excludeLogoText && <h1> NEON </h1>}
             </div>
           )}
