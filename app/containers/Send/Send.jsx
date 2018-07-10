@@ -2,7 +2,12 @@
 import React from 'react'
 import { uniqueId } from 'lodash'
 import { wallet } from 'neon-js'
-import { toBigNumber } from '../../core/math'
+import { toNumber, toBigNumber } from '../../core/math'
+
+import {
+  validateTransactionBeforeSending,
+  isBlacklisted
+} from '../../core/wallet'
 
 import SendPageHeader from '../../components/Send/SendPageHeader'
 import SendAmountsPanel from '../../components/Send/SendAmountsPanel'
@@ -111,7 +116,7 @@ export default class Send extends React.Component {
   }
 
   resetViews = () => {
-    this.setState(prevState => {
+    this.setState(() => {
       const newState = []
 
       newState.push({
@@ -139,14 +144,39 @@ export default class Send extends React.Component {
       .map((row, index) => this.validateRow(row, index))
       .every(result => result === true)
 
-    console.log(isValid)
-
     if (isValid) {
       this.setState({ showConfirmSend: true })
     }
   }
 
-  handleSend = () => this.setState({ sendSuccess: true })
+  handleSend = () => {
+    const { sendTransaction, sendableAssets } = this.props
+    const { sendRowDetails } = this.state
+
+    const entries = sendRowDetails.map(row => ({
+      address: row.address,
+      amount: toNumber(row.amount),
+      symbol: row.asset,
+      note: row.note
+    }))
+
+    const validTransactions = entries
+      .map(entry =>
+        validateTransactionBeforeSending(
+          toNumber(sendableAssets[entry.symbol].balance),
+          entry
+        )
+      )
+      .every(transaction => transaction === null)
+
+    if (validTransactions) {
+      sendTransaction(entries)
+        .then(() => this.setState({ sendSuccess: true }))
+        .catch(() => console.log('something went wrong'))
+    } else {
+      // Handle invalid transactions
+    }
+  }
 
   handleEditRecipientsClick = () => this.setState({ showConfirmSend: false })
 
@@ -202,6 +232,7 @@ export default class Send extends React.Component {
       this.updateRowField(index, 'errors', errors)
       return false
     }
+
     return true
   }
 
