@@ -14,7 +14,7 @@ export default class Send extends React.Component {
 
     this.state = {
       showConfirmSend: false,
-      sendSuccess: true,
+      sendSuccess: false,
       sendRowDetails: [
         {
           asset: 'NEO',
@@ -110,6 +110,28 @@ export default class Send extends React.Component {
     return 0
   }
 
+  resetViews = () => {
+    this.setState(prevState => {
+      const newState = []
+
+      newState.push({
+        asset: 'NEO',
+        amount: 0,
+        address: '',
+        note: '',
+        max: this.calculateMaxValue('NEO'),
+        id: uniqueId(),
+        errors: {}
+      })
+
+      return {
+        showConfirmSend: false,
+        sendSuccess: false,
+        sendRowDetails: newState
+      }
+    })
+  }
+
   handleSubmit = () => {
     const rows = [...this.state.sendRowDetails]
 
@@ -124,7 +146,7 @@ export default class Send extends React.Component {
     }
   }
 
-  handleSend = () => console.log('sending')
+  handleSend = () => this.setState({ sendSuccess: true })
 
   handleEditRecipientsClick = () => this.setState({ showConfirmSend: false })
 
@@ -216,6 +238,7 @@ export default class Send extends React.Component {
           sendSuccess={sendSuccess}
           handleEditRecipientsClick={this.handleEditRecipientsClick}
           handleSend={this.handleSend}
+          resetViews={this.resetViews}
         />
       </section>
     )

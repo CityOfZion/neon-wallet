@@ -19,6 +19,7 @@ type Props = {
   contacts: Object,
   showConfirmSend: boolean,
   sendSuccess: boolean,
+  resetViews: () => any,
   handleSubmit: () => any,
   handleSend: () => any,
   clearErrors: (index: number, field: string) => any,
@@ -40,20 +41,34 @@ const SendPanel = ({
   handleSend,
   showConfirmSend,
   sendSuccess,
+  resetViews,
   handleEditRecipientsClick
-}: Props) => (
-  <Panel
-    contentClassName={sendSuccess ? styles.sendSuccessContent : null}
-    renderHeader={() => (
-      <SendPanelHeader
+}: Props) => {
+  let content = (
+    <form onSubmit={handleSubmit}>
+      <SendRecipientList
         sendRowDetails={sendRowDetails}
-        addRow={addRow}
+        sendableAssets={sendableAssets}
+        removeRow={removeRow}
+        updateRowField={updateRowField}
+        contacts={contacts}
+        clearErrors={clearErrors}
         showConfirmSend={showConfirmSend}
       />
-    )}
-  >
-    <form onSubmit={showConfirmSend ? handleSend : handleSubmit}>
-      {!sendSuccess && (
+      <Button
+        primary
+        className={styles.sendFormButton}
+        renderIcon={() => <SendIcon />}
+        type="submit"
+      >
+        Send Assets
+      </Button>
+    </form>
+  )
+
+  if (showConfirmSend) {
+    content = (
+      <form onSubmit={handleSend}>
         <SendRecipientList
           sendRowDetails={sendRowDetails}
           sendableAssets={sendableAssets}
@@ -63,24 +78,31 @@ const SendPanel = ({
           clearErrors={clearErrors}
           showConfirmSend={showConfirmSend}
         />
-      )}
-      {!showConfirmSend &&
-        !sendSuccess && (
-          <Button
-            primary
-            className={styles.sendFormButton}
-            renderIcon={() => <SendIcon />}
-            type="submit"
-          >
-            Send Assets
-          </Button>
-        )}
-      {showConfirmSend && (
         <ConfirmSend handleEditRecipientsClick={handleEditRecipientsClick} />
+      </form>
+    )
+  }
+
+  if (sendSuccess) {
+    content = <SendSuccess />
+  }
+
+  return (
+    <Panel
+      contentClassName={sendSuccess ? styles.sendSuccessContent : null}
+      renderHeader={() => (
+        <SendPanelHeader
+          sendRowDetails={sendRowDetails}
+          addRow={addRow}
+          showConfirmSend={showConfirmSend}
+          sendSuccess={sendSuccess}
+          resetViews={resetViews}
+        />
       )}
-      {sendSuccess && <SendSuccess />}
-    </form>
-  </Panel>
-)
+    >
+      {content}
+    </Panel>
+  )
+}
 
 export default SendPanel
