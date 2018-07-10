@@ -1,5 +1,4 @@
 // @flow
-import React from 'react'
 import { compose, withProps } from 'recompose'
 import { withData, withProgress, withProgressComponents, alreadyLoadedStrategy, progressValues } from 'spunky'
 
