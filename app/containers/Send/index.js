@@ -25,7 +25,7 @@ const filterSendableAssets = balances => {
   }
 
   if (Number(balances.GAS > 0)) {
-    sendableAssets.GAS = { symbol: 'GAS', balance: balances.NEO }
+    sendableAssets.GAS = { symbol: 'GAS', balance: balances.GAS }
   }
 
   values(omit(balances, 'NEO', 'GAS'))
