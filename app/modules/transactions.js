@@ -147,14 +147,16 @@ export const sendTransaction = (sendEntries: Array<SendEntryType>) => async (
     if (!response.result) {
       throw new Error('Rejected by RPC server.')
     }
+
+    dispatch(
+      showSuccessNotification({
+        message:
+          'Transaction complete! Your balance will automatically update when the blockchain has processed it.'
+      })
+    )
+
+    return response
   } catch (err) {
     return rejectTransaction(`Transaction failed: ${err.message}`)
   }
-
-  return dispatch(
-    showSuccessNotification({
-      message:
-        'Transaction complete! Your balance will automatically update when the blockchain has processed it.'
-    })
-  )
 }

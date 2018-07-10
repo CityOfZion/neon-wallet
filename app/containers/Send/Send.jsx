@@ -160,22 +160,12 @@ export default class Send extends React.Component {
       note: row.note
     }))
 
-    const validTransactions = entries
-      .map(entry =>
-        validateTransactionBeforeSending(
-          toNumber(sendableAssets[entry.symbol].balance),
-          entry
-        )
-      )
-      .every(transaction => transaction === null)
-
-    if (validTransactions) {
-      sendTransaction(entries)
-        .then(() => this.setState({ sendSuccess: true }))
-        .catch(() => console.log('something went wrong'))
-    } else {
-      // Handle invalid transactions
-    }
+    sendTransaction(entries)
+      .then(result => {
+        console.log(result)
+        this.setState({ sendSuccess: true })
+      })
+      .catch(() => console.log('something went wrong'))
   }
 
   handleEditRecipientsClick = () => this.setState({ showConfirmSend: false })
