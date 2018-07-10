@@ -19,6 +19,7 @@ type Props = {
   contacts: Object,
   showConfirmSend: boolean,
   sendSuccess: boolean,
+  txid: string,
   resetViews: () => any,
   handleSubmit: () => any,
   handleSend: () => any,
@@ -42,6 +43,7 @@ const SendPanel = ({
   showConfirmSend,
   sendSuccess,
   resetViews,
+  txid,
   handleEditRecipientsClick
 }: Props) => {
   let content = (
@@ -84,7 +86,7 @@ const SendPanel = ({
   }
 
   if (sendSuccess) {
-    content = <SendSuccess />
+    content = <SendSuccess txid={txid} sendRowDetails={sendRowDetails} />
   }
 
   return (
