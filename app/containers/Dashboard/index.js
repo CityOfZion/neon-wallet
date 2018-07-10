@@ -1,5 +1,4 @@
 // @flow
-import React from 'react'
 import { connect, type MapStateToProps } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
@@ -26,9 +25,7 @@ import { sendTransaction } from '../../modules/transactions'
 
 import Dashboard from './Dashboard'
 
-const { LOADING, FAILED } = progressValues
-
-const Failed = <div>Failed to load.</div>
+const { LOADING } = progressValues
 
 const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
   notification: getNotifications(state)
@@ -87,7 +84,6 @@ export default compose(
   withAuthData(),
   withFilteredTokensData(),
   withCall(accountActions),
-<<<<<<< HEAD
   withProgressComponents(
     accountActions,
     {
@@ -98,15 +94,6 @@ export default compose(
     }
   ),
   withData(dashboardActions, mapDashboardDataToProps),
-=======
-  withProgressComponents(accountActions, {
-    [LOADING]: Loader,
-    [FAILED]: Failed
-  }, {
-    strategy: alreadyLoadedStrategy
-  }),
-  withData(accountActions, mapAccountDataToProps),
->>>>>>> master
   withRecall(accountActions, ['networkId']),
   withActions(accountActions, mapAccountActionsToProps)
 )(Dashboard)
