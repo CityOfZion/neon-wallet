@@ -4,10 +4,7 @@ import { uniqueId } from 'lodash'
 import { wallet } from 'neon-js'
 import { toNumber, toBigNumber } from '../../core/math'
 
-import {
-  validateTransactionBeforeSending,
-  isBlacklisted
-} from '../../core/wallet'
+import { isBlacklisted } from '../../core/wallet'
 
 import SendPageHeader from '../../components/Send/SendPageHeader'
 import SendAmountsPanel from '../../components/Send/SendAmountsPanel'
@@ -48,8 +45,9 @@ export default class Send extends React.Component {
     this.setState(prevState => {
       const newState = [...prevState.sendRowDetails]
 
-      newState.splice(index, 1)
-
+      if (newState.length > 1) {
+        newState.splice(index, 1)
+      }
       return { sendRowDetails: newState }
     })
   }
@@ -105,13 +103,14 @@ export default class Send extends React.Component {
       .filter(row => row.asset === asset)
       .map(row => row.amount)
       .reduce(
-        (accumulator, currentValue) =>
-          Number(accumulator) + Number(currentValue),
-        0
+        (accumulator, currentValue) => accumulator.plus(currentValue || 0),
+        toBigNumber(0)
       )
 
     if (sendableAssets[asset]) {
-      return this.props.sendableAssets[asset].balance - existingAmounts
+      return toBigNumber(this.props.sendableAssets[asset].balance)
+        .minus(existingAmounts)
+        .toNumber()
     }
     return 0
   }
@@ -151,7 +150,7 @@ export default class Send extends React.Component {
   }
 
   handleSend = () => {
-    const { sendTransaction, sendableAssets } = this.props
+    const { sendTransaction } = this.props
     const { sendRowDetails } = this.state
 
     const entries = sendRowDetails.map(row => ({
