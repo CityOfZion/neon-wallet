@@ -11,5 +11,9 @@ export const ID = 'CLAIMS'
 
 export default createActions(ID, ({ net, address }: Props = {}) => async (state: Object): Promise<Object> => {
   const total = await api.getMaxClaimAmountFrom({ net, address }, api.neoscan)
+<<<<<<< HEAD
   return { total: total instanceof u.Fixed8 ? total.toString() : null }
+=======
+  return { total: total.toString() }
+>>>>>>> master
 })

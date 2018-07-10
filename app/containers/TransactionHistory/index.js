@@ -1,4 +1,5 @@
 // @flow
+import React from 'react'
 import { compose, withProps } from 'recompose'
 import { withData, withProgress, withProgressComponents, alreadyLoadedStrategy, progressValues } from 'spunky'
 
@@ -22,6 +23,8 @@ const mapTransactionsDataToProps = (transactions: Array<TransactionHistoryType>)
 const mapLoadingProp = (props) => ({
   loading: props[PROGRESS_PROP] === LOADING
 })
+
+const Failed = <div>Failed to load.</div>
 
 export default compose(
   withNetworkData(),
