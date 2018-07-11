@@ -32,7 +32,7 @@ const STORAGE_KEY = 'settings'
 const DEFAULT_SETTINGS: Settings = {
   currency: DEFAULT_CURRENCY_CODE,
   blockExplorer: EXPLORERS.NEO_TRACKER,
-  theme: themes[0],
+  theme: themes.Light,
   tokens: getDefaultTokens()
 }
 
