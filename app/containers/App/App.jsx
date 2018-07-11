@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react'
-import { compose } from 'recompose'
 
 import Sidebar from './Sidebar'
 import Footer from './Footer'
@@ -49,4 +48,4 @@ class App extends Component<Props> {
   }
 }
 
-export default compose(withThemeData())(App)
+export default withThemeData()(App)
