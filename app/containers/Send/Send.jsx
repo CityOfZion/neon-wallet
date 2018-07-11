@@ -81,6 +81,7 @@ export default class Send extends React.Component {
       objectToModify[field] = value
 
       if (field === 'asset') {
+        objectToModify.amount = 0
         const maxValue = this.calculateMaxValue(objectToModify.asset)
         objectToModify.max = maxValue
       }
