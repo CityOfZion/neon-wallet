@@ -10,7 +10,7 @@ import withThemeData from '../../hocs/withThemeData'
 import { upgradeUserWalletNEP6 } from '../../modules/generateWallet'
 
 import styles from './App.scss'
-import themes from '../../themes';
+import themes from '../../themes'
 
 type Props = {
   children: React$Node,
@@ -49,6 +49,4 @@ class App extends Component<Props> {
   }
 }
 
-export default compose(
-  withThemeData()
-)(App)
+export default compose(withThemeData())(App)
