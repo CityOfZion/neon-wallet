@@ -189,21 +189,21 @@ export default class Settings extends Component<Props, State> {
             <Button onClick={this.openTokenModal}>Manage Tokens</Button>
           </div>
           <div className="settingsItem">
-            <div className="itemTitle">Block Explorer</div>
-            <select value={explorer} onChange={this.updateExplorerSettings}>
-              {Object.keys(EXPLORERS).map((explorer: ExplorerType) => (
-                <option key={explorer} value={EXPLORERS[explorer]}>
-                  {EXPLORERS[explorer]}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="settingsItem">
             <div className="itemTitle">Theme</div>
             <select value={theme} onChange={this.updateThemeSettings}>
               {Object.keys(themes).map((themeName: string) => (
                 <option value={themeName} key={themeName}>
                   {themeName}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="settingsItem">
+            <div className="itemTitle">Block Explorer</div>
+            <select value={explorer} onChange={this.updateExplorerSettings}>
+              {Object.keys(EXPLORERS).map((explorer: ExplorerType) => (
+                <option key={explorer} value={EXPLORERS[explorer]}>
+                  {EXPLORERS[explorer]}
                 </option>
               ))}
             </select>
