@@ -17,7 +17,8 @@ import {
 } from '../core/nep5'
 import {
   EXPLORERS,
-  DEFAULT_CURRENCY_CODE
+  DEFAULT_CURRENCY_CODE,
+  DEFAULT_THEME
 } from '../core/constants'
 import themes from '../themes';
 
@@ -32,7 +33,7 @@ const STORAGE_KEY = 'settings'
 const DEFAULT_SETTINGS: Settings = {
   currency: DEFAULT_CURRENCY_CODE,
   blockExplorer: EXPLORERS.NEO_TRACKER,
-  theme: themes.Light,
+  theme: DEFAULT_THEME,
   tokens: getDefaultTokens()
 }
 
