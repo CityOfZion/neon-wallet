@@ -1,13 +1,16 @@
 // @flow
 import React, { Component } from 'react'
+import { compose } from 'recompose'
 
 import Sidebar from './Sidebar'
 import Footer from './Footer'
 import ModalRenderer from '../ModalRenderer'
 import Notifications from '../Notifications'
+import withThemeData from '../../hocs/withThemeData'
 import { upgradeUserWalletNEP6 } from '../../modules/generateWallet'
 
 import styles from './App.scss'
+import themes from '../../themes';
 
 type Props = {
   children: React$Node,
@@ -30,10 +33,10 @@ class App extends Component<Props> {
   }
 
   render() {
-    const { children, address } = this.props
+    const { children, address, theme } = this.props
 
     return (
-      <div className={styles.container}>
+      <div style={themes[theme]} className={styles.container}>
         {address && <Sidebar className={styles.sidebar} />}
         <div className={styles.wrapper}>
           <div className={styles.content}>{children}</div>
@@ -46,4 +49,6 @@ class App extends Component<Props> {
   }
 }
 
-export default App
+export default compose(
+  withThemeData()
+)(App)
