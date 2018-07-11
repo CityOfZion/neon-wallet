@@ -43,7 +43,9 @@ export default class Settings extends Component<Props, State> {
     storage.get('userWallet', (errorReading, data) => {
       if (errorReading) {
         showErrorNotification({
-          message: `An error occurred reading wallet file: ${errorReading.message}`
+          message: `An error occurred reading wallet file: ${
+            errorReading.message
+          }`
         })
         return
       }
@@ -60,7 +62,9 @@ export default class Settings extends Component<Props, State> {
           fs.writeFile(fileName, content, errorWriting => {
             if (errorWriting) {
               showErrorNotification({
-                message: `An error occurred creating the file: ${errorWriting.message}`
+                message: `An error occurred creating the file: ${
+                  errorWriting.message
+                }`
               })
             } else {
               showSuccessNotification({
@@ -74,7 +78,11 @@ export default class Settings extends Component<Props, State> {
   }
 
   loadWalletRecovery = () => {
-    const { showSuccessNotification, showErrorNotification, setAccounts } = this.props
+    const {
+      showSuccessNotification,
+      showErrorNotification,
+      setAccounts
+    } = this.props
 
     dialog.showOpenDialog(fileNames => {
       // fileNames is an array that contains all the selected
@@ -121,7 +129,12 @@ export default class Settings extends Component<Props, State> {
   }
 
   deleteWalletAccount = (label: string, key: string) => {
-    const { showSuccessNotification, showErrorNotification, setAccounts, showModal } = this.props
+    const {
+      showSuccessNotification,
+      showErrorNotification,
+      setAccounts,
+      showModal
+    } = this.props
 
     showModal(MODAL_TYPES.CONFIRM, {
       title: 'Confirm Delete',
@@ -130,7 +143,9 @@ export default class Settings extends Component<Props, State> {
         storage.get('userWallet', (readError, data) => {
           if (readError) {
             showErrorNotification({
-              message: `An error occurred reading previously stored wallet: ${readError.message}`
+              message: `An error occurred reading previously stored wallet: ${
+                readError.message
+              }`
             })
             return
           }
@@ -140,7 +155,9 @@ export default class Settings extends Component<Props, State> {
           storage.set('userWallet', data, saveError => {
             if (saveError) {
               showErrorNotification({
-                message: `An error occurred updating the wallet: ${saveError.message}`
+                message: `An error occurred updating the wallet: ${
+                  saveError.message
+                }`
               })
             } else {
               showSuccessNotification({
@@ -163,7 +180,9 @@ export default class Settings extends Component<Props, State> {
 
     return (
       <div id="settings">
-        <div className="description">Manage your Neon wallet accounts and settings</div>
+        <div className="description">
+          Manage your Neon wallet accounts and settings
+        </div>
         <div className="settingsForm">
           <div className="settingsItem">
             <div className="itemTitle">Tokens</div>
@@ -206,15 +225,24 @@ export default class Settings extends Component<Props, State> {
                 <div className="walletItem">
                   <div className="walletName">{account.key.slice(0, 20)}</div>
                   <div className="walletKey">{account.label}</div>
-                  <div className="deleteWallet" onClick={() => this.deleteWalletAccount(account.label, account.key)}>
+                  <div
+                    className="deleteWallet"
+                    onClick={() =>
+                      this.deleteWalletAccount(account.label, account.key)
+                    }
+                  >
                     <Delete />
                   </div>
                 </div>
               </div>
             ))}
           </div>
-          <Button onClick={() => this.saveWalletRecovery()}>Export wallet recovery file</Button>
-          <Button onClick={this.loadWalletRecovery}>Load wallet recovery file</Button>
+          <Button onClick={() => this.saveWalletRecovery()}>
+            Export wallet recovery file
+          </Button>
+          <Button onClick={this.loadWalletRecovery}>
+            Load wallet recovery file
+          </Button>
         </div>
       </div>
     )
