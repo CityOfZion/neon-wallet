@@ -5,9 +5,9 @@ import {
 
 import settingsActions from '../actions/settingsActions'
 
-export default function withThemeData(key: string = 'theme') {
+export default function withThemeData() {
   const mapSettingsDataToProps = settings => ({
-    [key]: settings.theme
+    theme: settings.theme
   })
   return withData(settingsActions, mapSettingsDataToProps)
 }
