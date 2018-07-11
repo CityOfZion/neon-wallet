@@ -1,4 +1,4 @@
 export default {
-  '--main-background': '#FFF',
+  '--main-background': '#e6e6e6',
   // more light colors here
 }
