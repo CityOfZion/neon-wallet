@@ -30,7 +30,7 @@ export const createFormattedDate = () => {
 
   return `${days[date.getDay()]} ${date.getDate()} ${
     months[date.getMonth()]
-  }  ${hours < 9 ? `${prefix}${hours}` : hours}:${
-    minutes < 9 ? `${prefix}${minutes}` : minutes
+  }  ${hours < 10 ? `${prefix}${hours}` : hours}:${
+    minutes < 10 ? `${prefix}${minutes}` : minutes
   }`
 }
