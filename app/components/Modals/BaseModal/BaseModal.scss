@@ -1,24 +1,42 @@
+@import '../../../styles/variables.scss';
+
 .modalHeader {
-    flex: 0 0 auto;
     display: flex;
-    height: 45px;
-    padding: 0px 24px;
-    border-bottom: 1px solid #DAE1E9;
-    position: relative;
     justify-content: center;
-    align-items: center;
+    height: 45px;
+    position: relative;
+    padding: 8px 0;
+    background-color: $light-grey;
 }
 
 .modalHeaderTitle {
-    font-size: 18px;
+    display: flex;
+    color: $medium-grey;
+    align-items: center;
+    font-size: 20px;
+
+    svg {
+        width: 30px;
+        height: 30px;
+        margin-right: 5px;
+    }
 }
 
 .modalHeaderCloseButton {
     width: 18px;
     height: 18px;
-    margin-left: auto;
+    position: absolute;
+    right: 30px;
+    top: 18%;
     fill: #9BA6B2;
     cursor: pointer;
+    background: transparent;
+    border: none;
+
+    svg {
+        width: 10px;
+        height: 10px;
+    }
 }
 
 .modalBody {

@@ -4,6 +4,8 @@ import classNames from 'classnames'
 import ReactModal from 'react-modal'
 import Close from 'react-icons/lib/md/close'
 
+import Logo from '../../../assets/logo.svg'
+
 import styles from './BaseModal.scss'
 
 type Props = {
@@ -14,6 +16,7 @@ type Props = {
   height?: string,
   className?: string,
   bodyClassName?: string,
+  isOpen?: boolean,
   style: {
     content: Object,
     overlay: Object
@@ -32,6 +35,7 @@ const BaseModal = ({
   bodyClassName,
   style,
   onAfterOpen,
+  isOpen,
   shouldCloseWithEscapeKey
 }: Props) => (
   <ReactModal
@@ -60,10 +64,16 @@ const BaseModal = ({
     onAfterOpen={onAfterOpen}
   >
     <div className={styles.modalHeader}>
-      <div className={styles.modalHeaderTitle}>{title}</div>
-      <div className={styles.modalHeaderCloseButton} onClick={hideModal}>
-        <Close />
+      <div className={styles.modalHeaderTitle}>
+        <Logo /> NEON
       </div>
+      <button
+        type="button"
+        className={styles.modalHeaderCloseButton}
+        onClick={hideModal}
+      >
+        <Close />
+      </button>
     </div>
     <div className={classNames(styles.modalBody, bodyClassName)}>
       {children}
@@ -78,7 +88,8 @@ BaseModal.defaultProps = {
     content: {},
     overlay: {}
   },
-  shouldCloseWithEscapeKey: true
+  shouldCloseWithEscapeKey: true,
+  isOpen: true
 }
 
 export default BaseModal
