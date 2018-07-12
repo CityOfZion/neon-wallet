@@ -2,6 +2,8 @@
 
 import React from 'react'
 
+import AddContactModal from '../../../../Modals/AddContactModal'
+
 import SendIcon from '../../../../../assets/navigation/send.svg'
 import CopyIcon from '../../../../../assets/icons/copy.svg'
 import AddContactIcon from '../../../../../assets/icons/contacts-add.svg'
@@ -46,6 +48,7 @@ const SendSuccessTransaction = ({
     <div className={styles.buttonContainer}>
       <button type="button" className={styles.sendSuccessButton}>
         <AddContactIcon />Add
+        <AddContactModal address={address} isOpen />
       </button>
       <button type="button" className={styles.sendSuccessButton}>
         <InfoIcon />View

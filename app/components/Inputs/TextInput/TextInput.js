@@ -9,6 +9,7 @@ type Props = {
   className?: string,
   type: string,
   placeholder: string,
+  id: string,
   renderBefore?: Function,
   renderAfter?: Function,
   onFocus?: Function,

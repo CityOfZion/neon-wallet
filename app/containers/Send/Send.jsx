@@ -50,7 +50,7 @@ export default class Send extends React.Component {
     if (showConfirmSend || sendSuccess) {
       assets = assets.filter(asset =>
         sendRowDetails
-          .reduce((startingVal, row) => startingVal.concat(row.asset), [])
+          .reduce((accumulator, row) => accumulator.concat(row.asset), [])
           .includes(asset)
       )
     }
