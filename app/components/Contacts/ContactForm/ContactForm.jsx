@@ -42,7 +42,7 @@ export default class ContactForm extends React.Component<Props> {
     }
 
     return (
-      <secion>
+      <section>
         <h1 className={styles.contactFormHeader}>
           <AddIcon /> {heading}
         </h1>
@@ -82,7 +82,7 @@ export default class ContactForm extends React.Component<Props> {
             {submitLabel}
           </Button>
         </form>
-      </secion>
+      </section>
     )
   }
 
