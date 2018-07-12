@@ -16,7 +16,7 @@ type Props = {
   height?: string,
   className?: string,
   bodyClassName?: string,
-  isOpen?: boolean,
+  showModal?: boolean,
   style: {
     content: Object,
     overlay: Object
@@ -27,7 +27,6 @@ type Props = {
 
 const BaseModal = ({
   hideModal,
-  title,
   children,
   width,
   height,
@@ -35,11 +34,11 @@ const BaseModal = ({
   bodyClassName,
   style,
   onAfterOpen,
-  isOpen,
+  showModal,
   shouldCloseWithEscapeKey
 }: Props) => (
   <ReactModal
-    isOpen
+    isOpen={showModal}
     onRequestClose={() => shouldCloseWithEscapeKey && hideModal()}
     style={{
       content: {
@@ -89,7 +88,7 @@ BaseModal.defaultProps = {
     overlay: {}
   },
   shouldCloseWithEscapeKey: true,
-  isOpen: true
+  showModal: true
 }
 
 export default BaseModal
