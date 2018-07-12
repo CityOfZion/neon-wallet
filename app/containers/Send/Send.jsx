@@ -43,8 +43,19 @@ export default class Send extends React.Component {
 
   createSendAmountsData = () => {
     const { sendableAssets, prices } = this.props
+    const { showConfirmSend, sendSuccess, sendRowDetails } = this.state
 
-    const sendAmountsData = Object.keys(sendableAssets).map(asset => {
+    let assets = Object.keys(sendableAssets)
+
+    if (showConfirmSend || sendSuccess) {
+      assets = assets.filter(asset =>
+        sendRowDetails
+          .reduce((startingVal, row) => startingVal.concat(row.asset), [])
+          .includes(asset)
+      )
+    }
+
+    return assets.map(asset => {
       const { balance } = sendableAssets[asset]
       const currentBalance = toBigNumber(balance)
         .minus(this.calculateRowAmounts(asset))
@@ -63,8 +74,6 @@ export default class Send extends React.Component {
         remainingBalanceWorth
       }
     })
-
-    return sendAmountsData
   }
 
   removeRow = index => {

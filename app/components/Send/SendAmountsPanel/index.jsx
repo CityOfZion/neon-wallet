@@ -14,6 +14,7 @@ const SendAmountsPanel = ({ sendAmountsData }) => (
   <section className={styles.sendAmountsPanel}>
     {sendAmountsData.map(dataset => (
       <SendAmountsInfoBox
+        key={dataset.symbol}
         assetName={dataset.symbol}
         assetPrice={dataset.price}
         totalAmount={dataset.totalBalance}
