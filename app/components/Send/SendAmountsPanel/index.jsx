@@ -1,53 +1,28 @@
+// @flow
+
 import React from 'react'
 
 import SendAmountsInfoBox from './SendAmountsInfoBox'
 
 import styles from './SendAmountsPanel.scss'
 
-const SendAmountsPanel = () => (
+type Props = {
+  sendAmountsData: Array
+}
+
+const SendAmountsPanel = ({ sendAmountsData }) => (
   <section className={styles.sendAmountsPanel}>
-    <SendAmountsInfoBox
-      assetName="NEO"
-      assetPrice={42}
-      totalAmount={100}
-      remainingAmount={100}
-      fiatCurrencySymbol="$"
-    />
-    <SendAmountsInfoBox
-      assetName="RPX"
-      assetPrice={5}
-      totalAmount={5123}
-      remainingAmount={5123}
-      fiatCurrencySymbol="$"
-    />
-    <SendAmountsInfoBox
-      assetName="NEO"
-      assetPrice={42}
-      totalAmount={100}
-      remainingAmount={100}
-      fiatCurrencySymbol="$"
-    />
-    <SendAmountsInfoBox
-      assetName="RPX"
-      assetPrice={5}
-      totalAmount={5123}
-      remainingAmount={5123}
-      fiatCurrencySymbol="$"
-    />
-    <SendAmountsInfoBox
-      assetName="NEO"
-      assetPrice={42}
-      totalAmount={100}
-      remainingAmount={100}
-      fiatCurrencySymbol="$"
-    />
-    <SendAmountsInfoBox
-      assetName="RPX"
-      assetPrice={5}
-      totalAmount={5123}
-      remainingAmount={5123}
-      fiatCurrencySymbol="$"
-    />
+    {sendAmountsData.map(dataset => (
+      <SendAmountsInfoBox
+        assetName={dataset.symbol}
+        assetPrice={dataset.price}
+        totalAmount={dataset.totalBalance}
+        remainingAmount={dataset.currentBalance}
+        totalBalanceWorth={dataset.totalBalanceWorth}
+        remainingBalanceWorth={dataset.remainingBalanceWorth}
+        fiatCurrencySymbol="$"
+      />
+    ))}
   </section>
 )
 

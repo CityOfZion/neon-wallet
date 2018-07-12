@@ -2,7 +2,7 @@
 import React from 'react'
 import { uniqueId } from 'lodash'
 import { wallet } from 'neon-js'
-import { toNumber, toBigNumber } from '../../core/math'
+import { toNumber, toBigNumber, multiplyNumber } from '../../core/math'
 
 import { isBlacklisted } from '../../core/wallet'
 
@@ -39,6 +39,32 @@ export default class Send extends React.Component {
 
     if (asset) return asset.balance
     return 0
+  }
+
+  createSendAmountsData = () => {
+    const { sendableAssets, prices } = this.props
+
+    const sendAmountsData = Object.keys(sendableAssets).map(asset => {
+      const { balance } = sendableAssets[asset]
+      const currentBalance = toBigNumber(balance)
+        .minus(this.calculateRowAmounts(asset))
+        .toNumber()
+      const price = prices[asset]
+
+      const totalBalanceWorth = multiplyNumber(balance, price)
+      const remainingBalanceWorth = multiplyNumber(currentBalance, price)
+
+      return {
+        symbol: asset,
+        totalBalance: balance,
+        price,
+        currentBalance,
+        totalBalanceWorth,
+        remainingBalanceWorth
+      }
+    })
+
+    return sendAmountsData
   }
 
   removeRow = index => {
@@ -97,23 +123,28 @@ export default class Send extends React.Component {
   }
 
   calculateMaxValue = asset => {
-    const rows = [...this.state.sendRowDetails]
     const { sendableAssets } = this.props
 
-    const existingAmounts = rows
+    const existingAmounts = this.calculateRowAmounts(asset)
+
+    if (sendableAssets[asset]) {
+      return toBigNumber(sendableAssets[asset].balance)
+        .minus(existingAmounts)
+        .toNumber()
+    }
+    return 0
+  }
+
+  calculateRowAmounts = asset => {
+    const rows = [...this.state.sendRowDetails]
+
+    return rows
       .filter(row => row.asset === asset)
       .map(row => row.amount)
       .reduce(
         (accumulator, currentValue) => accumulator.plus(currentValue || 0),
         toBigNumber(0)
       )
-
-    if (sendableAssets[asset]) {
-      return toBigNumber(this.props.sendableAssets[asset].balance)
-        .minus(existingAmounts)
-        .toNumber()
-    }
-    return 0
   }
 
   resetViews = () => {
@@ -245,7 +276,7 @@ export default class Send extends React.Component {
     return (
       <section>
         <SendPageHeader />
-        <SendAmountsPanel />
+        <SendAmountsPanel sendAmountsData={this.createSendAmountsData()} />
         <SendPanel
           sendRowDetails={sendRowDetails}
           sendableAssets={sendableAssets}
