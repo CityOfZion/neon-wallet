@@ -20,6 +20,34 @@ const SendAmountsPanel = () => (
       remainingAmount={5123}
       fiatCurrencySymbol="$"
     />
+    <SendAmountsInfoBox
+      assetName="NEO"
+      assetPrice={42}
+      totalAmount={100}
+      remainingAmount={100}
+      fiatCurrencySymbol="$"
+    />
+    <SendAmountsInfoBox
+      assetName="RPX"
+      assetPrice={5}
+      totalAmount={5123}
+      remainingAmount={5123}
+      fiatCurrencySymbol="$"
+    />
+    <SendAmountsInfoBox
+      assetName="NEO"
+      assetPrice={42}
+      totalAmount={100}
+      remainingAmount={100}
+      fiatCurrencySymbol="$"
+    />
+    <SendAmountsInfoBox
+      assetName="RPX"
+      assetPrice={5}
+      totalAmount={5123}
+      remainingAmount={5123}
+      fiatCurrencySymbol="$"
+    />
   </section>
 )
 

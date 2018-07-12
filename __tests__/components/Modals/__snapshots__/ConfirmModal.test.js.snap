@@ -30,6 +30,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
   >
     <Button
       className="actionButton"
+      displayButtonIcon={true}
       id="confirm"
       onClick={[Function]}
       primary={true}
@@ -38,6 +39,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
       Confirm
     </Button>
     <Button
+      displayButtonIcon={true}
       id="cancel"
       onClick={[Function]}
       primary={false}
