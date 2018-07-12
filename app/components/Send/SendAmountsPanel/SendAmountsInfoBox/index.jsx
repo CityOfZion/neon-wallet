@@ -10,6 +10,8 @@ type Props = {
   assetPrice: number,
   totalAmount: number,
   remainingAmount: number,
+  totalBalanceWorth: number,
+  remainingBalanceWorth: number,
   fiatCurrencySymbol: string
 }
 
@@ -17,6 +19,8 @@ const SendAmountsInfoBox = ({
   assetName,
   assetPrice,
   totalAmount,
+  totalBalanceWorth,
+  remainingBalanceWorth,
   remainingAmount,
   fiatCurrencySymbol
 }: Props) => (
@@ -31,11 +35,11 @@ const SendAmountsInfoBox = ({
     <div className={styles.assetValue}>
       <p className={styles.totalAssetValue}>
         {fiatCurrencySymbol}
-        {multiplyNumber(assetPrice, totalAmount).c[0]}
+        {totalBalanceWorth}
       </p>
       <p className={styles.remainingAssetValue}>
         {fiatCurrencySymbol}
-        {assetPrice * remainingAmount}
+        {remainingBalanceWorth}
       </p>
     </div>
   </div>

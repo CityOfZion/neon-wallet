@@ -8,6 +8,7 @@ import Send from './Send'
 
 import { sendTransaction } from '../../modules/transactions'
 
+import withPricesData from '../../hocs/withPricesData'
 import withNetworkData from '../../hocs/withNetworkData'
 import withAuthData from '../../hocs/withAuthData'
 import withBalancesData from '../../hocs/withBalancesData'
@@ -40,6 +41,10 @@ const filterSendableAssets = balances => {
   return sendableAssets
 }
 
+const mapPricesDataToProps = prices => ({
+  prices
+})
+
 const mapContactsDataToProps = (contacts: Object) => ({ contacts })
 
 const mapBalanceDataToProps = balances => ({
@@ -57,6 +62,7 @@ export default compose(
   withBalancesData(mapBalanceDataToProps),
   withCurrencyData('currencyCode'),
   withData(contactsActions, mapContactsDataToProps),
+  withPricesData(mapPricesDataToProps),
   withNetworkData(),
   withAuthData(),
   withFilteredTokensData()
