@@ -5,6 +5,7 @@
   align-items: stretch;
   justify-content: flex-start;
   height: 100%;
+  flex-direction: column;
 
   .dataColumn {
     flex: 0 0 440px;
@@ -24,6 +25,11 @@
     }
   }
 
+  .panelContainer {
+    display: flex;
+    height: 100%;
+  }
+
   .chartsColumn {
     flex: 1 1 auto;
     display: flex;
@@ -38,6 +44,44 @@
 
     .portfolioPanel {
       flex: 1 1 auto;
+    }
+  }
+
+  .dashBoardHeader {
+    display: flex;
+    justify-content: flex-end;
+    display: flex;
+    align-items: center;
+    margin-top: -10px;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    .manageButton {
+      margin-right: 15px;
+    }
+
+    .refresh {
+      cursor: pointer;
+
+      // &,
+      // & path {
+      //   color: #9599a2;
+      //   fill: currentColor;
+      // }
+
+      &.loading {
+        animation: spin 2s linear infinite;
+      }
+    }
+
+    .headerButtonContainer {
+      display: flex !important;
+      cursor: pointer;
+      align-items: center;
+
+      span {
+        margin-right: 10px;
+      }
     }
   }
 }

@@ -1,10 +1,14 @@
 // @flow
 import React, { Component } from 'react'
 
+import classNames from 'classnames'
 import AssetBalancesPanel from '../../components/Dashboard/AssetBalancesPanel'
 import TokenBalancesPanel from '../../components/Dashboard/TokenBalancesPanel'
 import PriceHistoryPanel from '../../components/Dashboard/PriceHistoryPanel'
 import PortfolioPanel from '../../components/Dashboard/PortfolioPanel'
+import Tooltip from '../../components/Tooltip'
+import Wallet from '../../assets/icons/wallet.svg'
+import RefreshIcon from '../../assets/icons/refresh.svg'
 
 import styles from './Dashboard.scss'
 
@@ -33,15 +37,45 @@ export default class Dashboard extends Component<Props> {
   }
 
   render() {
+    // const { loading, refresh } = this.props
     return (
       <div id="dashboard" className={styles.dashboard}>
-        <div className={styles.dataColumn}>
-          <AssetBalancesPanel className={styles.assetsPanel} />
-          <TokenBalancesPanel className={styles.tokensPanel} />
+        <div className={styles.dashBoardHeader}>
+          <Tooltip
+            className={classNames(
+              styles.headerButtonContainer,
+              styles.manageButton
+            )}
+            title="Manage Wallets"
+          >
+            <span> Manage Walletss </span>
+            <Wallet
+              id="manage-wallets"
+              // className={classNames(styles.refresh, {
+              //   [styles.loading]: loading
+              // })}
+              onClick={() => console.log('foo')}
+            />
+          </Tooltip>
+          {/* <Tooltip title="Refresh" className={styles.headerButtonContainer}>
+            <span> Refresh </span>
+            <RefreshIcon
+              id="refresh"
+              // className={styles.refresh}
+              className={classNames(styles.refresh)}
+              onClick={() => console.log('foo')}
+            />
+          </Tooltip> */}
         </div>
-        <div className={styles.chartsColumn}>
-          <PriceHistoryPanel className={styles.pricesPanel} />
-          <PortfolioPanel className={styles.portfolioPanel} />
+        <div className={styles.panelContainer}>
+          <div className={styles.dataColumn}>
+            <AssetBalancesPanel className={styles.assetsPanel} />
+            <TokenBalancesPanel className={styles.tokensPanel} />
+          </div>
+          <div className={styles.chartsColumn}>
+            <PriceHistoryPanel className={styles.pricesPanel} />
+            <PortfolioPanel className={styles.portfolioPanel} />
+          </div>
         </div>
       </div>
     )
