@@ -2,6 +2,8 @@
 import React from 'react'
 import { noop } from 'lodash'
 
+import { wallet } from 'neon-js'
+
 import Button from '../../Button'
 import TextInput from '../../Inputs/TextInput'
 import DialogueBox from '../../DialogueBox'
@@ -12,15 +14,21 @@ import styles from './ContactForm.scss'
 
 type Props = {
   submitLabel: string,
-  name: string,
-  address: string,
+  formName: string,
+  formAddress: string,
   mode?: string,
   setName: Function,
+  newAddress?: boolean,
   setAddress: Function,
   onSubmit: Function
 }
 
 export default class ContactForm extends React.Component<Props> {
+  state = {
+    nameError: '',
+    addressError: ''
+  }
+
   static defaultProps = {
     submitLabel: 'Save Contact',
     name: '',
@@ -31,7 +39,8 @@ export default class ContactForm extends React.Component<Props> {
   }
 
   render() {
-    const { submitLabel, name, address, mode } = this.props
+    const { submitLabel, formName, mode, formAddress } = this.props
+    const { nameError, addressError } = this.state
 
     let heading = 'Add A Contact'
     let subHeading = 'Insert Contact Details'
@@ -53,20 +62,24 @@ export default class ContactForm extends React.Component<Props> {
           </label>
           <TextInput
             id="contactName"
+            name="name"
             className={styles.input}
             placeholder="Enter Contact Name..."
-            value={name}
+            value={formName}
             onChange={this.handleChangeName}
+            error={nameError}
           />
           <label htmlFor="contactAdress" className={styles.contactFormLabel}>
             Wallet Address
           </label>
           <TextInput
             id="contactAddress"
+            name="address"
             className={styles.input}
             placeholder="Enter Wallet Address..."
-            value={address}
+            value={formAddress}
             onChange={this.handleChangeAddress}
+            error={addressError}
           />
           <DialogueBox
             icon={<WarningIcon />}
@@ -86,18 +99,108 @@ export default class ContactForm extends React.Component<Props> {
     )
   }
 
+  componentWillMount() {
+    const { newAddress, setAddress, address } = this.props
+
+    this.setState({ ownAddress: address })
+
+    if (newAddress) {
+      setAddress('')
+    }
+  }
+
+  validate = (name, address) => {
+    const validName = this.validateName(name)
+    const validAddress = this.validateAddress(address)
+
+    return validName && validAddress
+  }
+
+  validateName = name => {
+    const { contacts, mode } = this.props
+    let error
+
+    if (name.length === 0) {
+      error = "Name can't be null."
+    }
+
+    if (name.length > 100) {
+      error = 'Name is too long.'
+    }
+
+    if (mode !== 'edit') {
+      const nameExists = Object.keys(contacts).filter(contactName => contactName === name)
+
+      if (nameExists.length > 0) {
+        error = 'You already have an account saved with that name.'
+      }
+    }
+
+    if (error) {
+      this.setState({ nameError: error })
+      return false
+    }
+    return true
+  }
+
+  validateAddress = address => {
+    const { ownAddress } = this.state
+    const { mode, contacts, formAddress } = this.props
+    let error
+
+    if (!wallet.isAddress(address)) {
+      error = 'Address is not valid.'
+    }
+
+    if (address === ownAddress) {
+      error = 'Can not add your own account as a contact.'
+    }
+
+    if (mode !== 'edit') {
+      const addressExists = Object.keys(contacts)
+        .map(acc => contacts[acc])
+        .filter(adr => adr === formAddress)
+
+      if (addressExists.length > 0) {
+        error = 'You already have a contact with that address.'
+      }
+    }
+
+    if (error) {
+      this.setState({ addressError: error })
+      return false
+    }
+    return true
+  }
+
+  clearErrors = name => {
+    if (name === 'name') {
+      return this.setState({ nameError: '' })
+    }
+
+    if (name === 'address') {
+      return this.setState({ addressError: '' })
+    }
+  }
+
   handleChangeName = (event: Object) => {
+    this.clearErrors(event.target.name)
     this.props.setName(event.target.value)
   }
 
   handleChangeAddress = (event: Object) => {
+    this.clearErrors(event.target.name)
     this.props.setAddress(event.target.value)
   }
 
   handleSubmit = (event: Object) => {
-    const { onSubmit, name, address } = this.props
-
     event.preventDefault()
-    onSubmit(name, address)
+    const { onSubmit, formName, formAddress } = this.props
+
+    const validInput = this.validate(formName, formAddress)
+
+    if (validInput) {
+      onSubmit(formName, formAddress)
+    }
   }
 }

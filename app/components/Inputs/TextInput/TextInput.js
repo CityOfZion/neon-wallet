@@ -3,12 +3,15 @@ import React from 'react'
 import classNames from 'classnames'
 import { omit } from 'lodash'
 
+import ErrorIcon from '../../../assets/icons/errorRed.svg'
+
 import styles from './TextInput.scss'
 
 type Props = {
   className?: string,
   type: string,
   placeholder: string,
+  error?: string,
   id: string,
   renderBefore?: Function,
   renderAfter?: Function,
@@ -37,8 +40,11 @@ export default class TextInput extends React.Component<Props, State> {
       'renderAfter'
     )
 
+    const { error } = this.props
+
     const className = classNames(styles.textInput, this.props.className, {
-      [styles.active]: this.state.active
+      [styles.active]: this.state.active,
+      [styles.error]: !!error
     })
 
     return (
@@ -50,6 +56,8 @@ export default class TextInput extends React.Component<Props, State> {
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
         />
+        {error && <ErrorIcon className={styles.errorIcon} />}
+        {error && <div className={styles.errorMessage}>{error}</div>}
         {this.renderAfter()}
       </div>
     )
