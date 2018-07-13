@@ -55,7 +55,8 @@ export const MODAL_TYPES = {
   CONFIRM: 'CONFIRM',
   TOKEN_INFO: 'TOKEN_INFO',
   TOKEN: 'TOKEN',
-  ICO: 'ICO'
+  ICO: 'ICO',
+  ADD_CONTACT: 'ADD_CONTACT'
 }
 
 export const MAIN_NETWORK_ID = '1'
