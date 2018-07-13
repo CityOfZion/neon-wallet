@@ -9,7 +9,6 @@ import Logo from '../../../assets/logo.svg'
 import styles from './BaseModal.scss'
 
 type Props = {
-  title: string,
   children: React$Node,
   hideModal: Function,
   width?: string,
