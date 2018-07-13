@@ -99,7 +99,7 @@ export default class AssetBalancesPanel extends React.Component<Props> {
     return (
       <div className={styles.header}>
         <span>Balances</span>
-        <Tooltip title="Refresh">
+        {/* <Tooltip title="Refresh">
           <RefreshIcon
             id="refresh"
             className={classNames(styles.refresh, {
@@ -107,7 +107,7 @@ export default class AssetBalancesPanel extends React.Component<Props> {
             })}
             onClick={loading ? null : refresh}
           />
-        </Tooltip>
+        </Tooltip> */}
       </div>
     )
   }
