@@ -8,6 +8,7 @@ import SendPanelHeader from './SendPanelHeader'
 import Button from '../../Button/Button'
 import ConfirmSend from './ConfirmSend'
 import SendSuccess from './SendSuccess'
+import SendError from './SendError'
 
 import SendIcon from '../../../assets/icons/send.svg'
 
@@ -19,6 +20,7 @@ type Props = {
   contacts: Object,
   showConfirmSend: boolean,
   sendSuccess: boolean,
+  sendError: boolean,
   txid: string,
   resetViews: () => any,
   handleSubmit: () => any,
@@ -42,6 +44,7 @@ const SendPanel = ({
   handleSend,
   showConfirmSend,
   sendSuccess,
+  sendError,
   resetViews,
   txid,
   handleEditRecipientsClick
@@ -87,6 +90,10 @@ const SendPanel = ({
 
   if (sendSuccess) {
     content = <SendSuccess txid={txid} sendRowDetails={sendRowDetails} />
+  }
+
+  if (sendError) {
+    content = <SendError />
   }
 
   return (
