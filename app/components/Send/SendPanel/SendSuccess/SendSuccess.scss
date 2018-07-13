@@ -1,5 +1,7 @@
+@import '../../../../styles/variables';
+
 .sendSuccessHeader {
-        padding: 60px 30px;
+    padding: 60px 30px;
     align-items: center;
     display: flex;
     justify-content: center;
@@ -24,7 +26,7 @@
 }
 
 .sendSuccessDateText {
-    color: #585858;
+    color: lighten($dark-grey, 5%);
 }
 
 .sendSuccessBody {

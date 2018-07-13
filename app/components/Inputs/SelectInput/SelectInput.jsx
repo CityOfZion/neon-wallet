@@ -7,7 +7,6 @@ import { noop, omit, trim, includes, toLower } from 'lodash'
 import TextInput from '../TextInput'
 import Dropdown from './Dropdown'
 import DropdownButton from './DropdownButton'
-import ErrorIcon from '../../../assets/icons/errorRed.svg'
 
 import styles from './SelectInput.scss'
 
@@ -16,7 +15,7 @@ type Props = {
   value?: string,
   placeholder?: string,
   items: Array<any>,
-  error?: string,
+  error: string,
   renderItem?: Function,
   renderAfter: Function,
   getItemValue: Function,
@@ -79,9 +78,7 @@ export default class SelectInput extends React.Component<Props, State> {
 
     const { error } = this.props
 
-    const className = classNames(styles.selectInput, this.props.className, {
-      [styles.error]: !!error
-    })
+    const className = classNames(styles.selectInput, this.props.className)
 
     return (
       <Dropdown
@@ -101,8 +98,6 @@ export default class SelectInput extends React.Component<Props, State> {
               : this.handleChange
           }
         />
-        {error && <ErrorIcon className={styles.errorIcon} />}
-        {error && <div className={styles.errorMessage}>{error}</div>}
       </Dropdown>
     )
   }
