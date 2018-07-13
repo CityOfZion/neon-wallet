@@ -24,7 +24,7 @@ class AddContactModal extends Component<Props> {
     return (
       <BaseModal hideModal={hideModal} height="700px">
         <ContactForm
-          address={address}
+          formAddress={address}
           submitLabel="Add to contacts"
           onSubmit={this.handleSubmit}
         />

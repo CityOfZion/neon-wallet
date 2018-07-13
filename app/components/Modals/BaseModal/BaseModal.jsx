@@ -68,7 +68,6 @@ const BaseModal = ({
         type="button"
         className={styles.modalHeaderCloseButton}
         onClick={() => {
-          console.log('clicked')
           hideModal()
         }}
       >
