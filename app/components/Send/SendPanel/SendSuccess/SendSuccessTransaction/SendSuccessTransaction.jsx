@@ -15,18 +15,17 @@ type Props = {
   asset: string,
   amount: string,
   address: string,
+  showAddContactModal: () => null,
+  hideModal: () => null,
   note: string,
   txId: string
 }
 
 class SendSuccessTransaction extends Component<Props> {
-  state = {
-    showModal: false
+  displayModal = () => {
+    const { showAddContactModal, address } = this.props
+    showAddContactModal({ address })
   }
-
-  displayModal = () => this.setState({ showModal: true })
-
-  closeModal = () => this.setState({ showModal: false })
 
   render() {
     const { asset, amount, address, note } = this.props
@@ -57,11 +56,6 @@ class SendSuccessTransaction extends Component<Props> {
             onClick={this.displayModal}
           >
             <AddContactIcon />Add
-            <AddContactModal
-              address={address}
-              showModal={this.state.showModal}
-              hideModal={this.closeModal}
-            />
           </button>
           <button type="button" className={styles.sendSuccessButton}>
             <InfoIcon />View

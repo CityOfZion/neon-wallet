@@ -16,7 +16,6 @@ type Props = {
   height?: string,
   className?: string,
   bodyClassName?: string,
-  showModal?: boolean,
   style: {
     content: Object,
     overlay: Object
@@ -34,11 +33,10 @@ const BaseModal = ({
   bodyClassName,
   style,
   onAfterOpen,
-  showModal,
   shouldCloseWithEscapeKey
 }: Props) => (
   <ReactModal
-    isOpen={showModal}
+    isOpen
     onRequestClose={() => shouldCloseWithEscapeKey && hideModal()}
     style={{
       content: {
@@ -69,7 +67,10 @@ const BaseModal = ({
       <button
         type="button"
         className={styles.modalHeaderCloseButton}
-        onClick={hideModal}
+        onClick={() => {
+          console.log('clicked')
+          hideModal()
+        }}
       >
         <Close />
       </button>
@@ -87,8 +88,7 @@ BaseModal.defaultProps = {
     content: {},
     overlay: {}
   },
-  shouldCloseWithEscapeKey: true,
-  showModal: true
+  shouldCloseWithEscapeKey: true
 }
 
 export default BaseModal

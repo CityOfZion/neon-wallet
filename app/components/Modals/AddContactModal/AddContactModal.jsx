@@ -6,10 +6,8 @@ import ContactForm from '../../Contacts/ContactForm'
 
 type Props = {
   address: string,
-  showModal: boolean,
   hideModal: () => null,
-  onSave: (name: string, address: string) => any,
-  hideModal: () => null
+  onSave: (name: string, address: string) => any
 }
 
 class AddContactModal extends Component<Props> {
@@ -21,10 +19,10 @@ class AddContactModal extends Component<Props> {
   }
 
   render() {
-    const { address, showModal, hideModal } = this.props
+    const { address, hideModal } = this.props
 
     return (
-      <BaseModal showModal={showModal} hideModal={hideModal} height="700px">
+      <BaseModal hideModal={hideModal} height="700px">
         <ContactForm
           address={address}
           submitLabel="Add to contacts"
