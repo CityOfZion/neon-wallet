@@ -258,11 +258,19 @@ export default class Send extends React.Component {
     return true
   }
 
-  validateAddress = (address, index) => {
-    if (!wallet.isAddress(address)) {
-      const { errors } = this.state.sendRowDetails[index]
-      errors.address = 'You need to specify a valid NEO Address.'
+  validateAddress = (formAddress, index) => {
+    const { address } = this.props
+    const { errors } = this.state.sendRowDetails[index]
 
+    if (!wallet.isAddress(formAddress)) {
+      errors.address = 'You need to specify a valid NEO Address.'
+    }
+
+    if (formAddress === address) {
+      errors.address = "You can't send to your own address."
+    }
+
+    if (errors.address) {
       this.updateRowField(index, 'errors', errors)
       return false
     }
@@ -295,11 +303,12 @@ export default class Send extends React.Component {
       txid
     } = this.state
     const { sendableAssets, contacts } = this.props
-
+    const noSendableAssets = Object.keys(sendableAssets).length === 0
+   
     return (
       <section>
         <SendPageHeader />
-        <SendAmountsPanel sendAmountsData={this.createSendAmountsData()} />
+        {!noSendableAssets && <SendAmountsPanel sendAmountsData={this.createSendAmountsData()} />}
         <SendPanel
           sendRowDetails={sendRowDetails}
           sendableAssets={sendableAssets}
@@ -307,6 +316,7 @@ export default class Send extends React.Component {
           sendSuccess={sendSuccess}
           sendError={sendError}
           sendErrorMessage={sendErrorMessage}
+          noSendableAssets={noSendableAssets}
           contacts={contacts}
           txid={txid}
           addRow={this.addRow}

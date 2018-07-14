@@ -70,5 +70,11 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
+
+        svg {
+            height: 24px;
+            width: 24px;
+            min-width: 24px;
+        }
     }
 }

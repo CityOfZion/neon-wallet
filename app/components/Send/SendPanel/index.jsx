@@ -9,6 +9,7 @@ import Button from '../../Button/Button'
 import ConfirmSend from './ConfirmSend'
 import SendSuccess from './SendSuccess'
 import SendError from './SendError'
+import ZeroAssets from './ZeroAssets'
 
 import SendIcon from '../../../assets/icons/send.svg'
 
@@ -22,6 +23,7 @@ type Props = {
   sendSuccess: boolean,
   sendErrorMessage: string,
   sendError: boolean,
+  noSendableAssets: boolean,
   txid: string,
   resetViewsAfterError: () => any,
   resetViews: () => any,
@@ -50,6 +52,7 @@ const SendPanel = ({
   sendErrorMessage,
   resetViewsAfterError,
   resetViews,
+  noSendableAssets,
   txid,
   handleEditRecipientsClick
 }: Props) => {
@@ -105,6 +108,10 @@ const SendPanel = ({
     )
   }
 
+  if (noSendableAssets) {
+    content = <ZeroAssets />
+  }
+
   return (
     <Panel
       contentClassName={sendSuccess ? styles.sendSuccessContent : null}
@@ -116,8 +123,10 @@ const SendPanel = ({
           sendSuccess={sendSuccess}
           sendError={sendError}
           resetViews={resetViews}
+          noSendableAssets={noSendableAssets}
         />
       )}
+      className={styles.sendSuccessPanel}
     >
       {content}
     </Panel>
