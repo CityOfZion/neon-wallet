@@ -11,7 +11,8 @@ type Props = {
   addRow: () => any,
   resetViews: () => any,
   showConfirmSend: boolean,
-  sendSuccess: boolean
+  sendSuccess: boolean,
+  sendError: boolean
 }
 
 const SendPanelHeader = ({
@@ -19,6 +20,7 @@ const SendPanelHeader = ({
   addRow,
   showConfirmSend,
   resetViews,
+  sendError,
   sendSuccess
 }: Props) => {
   let headerTitle = 'Select Assets'
@@ -60,6 +62,12 @@ const SendPanelHeader = ({
         </button>
       </div>
     )
+  }
+
+  if (sendError) {
+    headerTitle = 'Error!'
+    headerSubtitle = null
+    buttons = null
   }
 
   return (
