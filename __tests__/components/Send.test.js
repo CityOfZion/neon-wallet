@@ -4,6 +4,7 @@ import { mount } from 'enzyme'
 
 import Send from '../../app/containers/Send/Send'
 import ZeroAssets from '../../app/components/Send/SendPanel/ZeroAssets'
+import SendRecipientListItem from '../../app/components/Send/SendPanel/SendRecipientList/SendRecipientListItem'
 
 const setup = props =>
   mount(
@@ -36,7 +37,7 @@ describe('Send', () => {
     })
 
     wrapper.find('.sendPanelHeaderButton').simulate('click')
-
     expect(wrapper.instance().state.sendRowDetails.length).toBe(2)
+    expect(wrapper.find(SendRecipientListItem).children().length).toBe(2)
   })
 })
