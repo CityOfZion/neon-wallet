@@ -27,3 +27,8 @@ export const multiplyNumber = (x: string | number, y: string | number) =>
   toBigNumber(x)
     .mul(y)
     .toNumber()
+
+export const minusNumber = (x: string | number, y: string | number) =>
+  toBigNumber(x)
+    .minus(y)
+    .toNumber()

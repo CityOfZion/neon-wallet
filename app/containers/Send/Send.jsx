@@ -2,7 +2,12 @@
 import React from 'react'
 import { uniqueId } from 'lodash'
 import { wallet } from 'neon-js'
-import { toNumber, toBigNumber, multiplyNumber } from '../../core/math'
+import {
+  toNumber,
+  toBigNumber,
+  multiplyNumber,
+  minusNumber
+} from '../../core/math'
 
 import { isBlacklisted } from '../../core/wallet'
 
@@ -29,7 +34,7 @@ export default class Send extends React.Component {
       const newState = [...prevState.sendRowDetails]
 
       newState.push(this.generateRow())
-      
+
       return { sendRowDetails: newState }
     })
   }
@@ -70,9 +75,10 @@ export default class Send extends React.Component {
 
     return assets.map(asset => {
       const { balance } = sendableAssets[asset]
-      const currentBalance = toBigNumber(balance)
-        .minus(this.calculateRowAmounts(asset))
-        .toNumber()
+      const currentBalance = minusNumber(
+        balance,
+        this.calculateRowAmounts(asset)
+      )
       const price = prices[asset]
 
       const totalBalanceWorth = multiplyNumber(balance, price)
@@ -89,7 +95,7 @@ export default class Send extends React.Component {
     })
   }
 
-  removeRow = index => {
+  removeRow = (index: number) => {
     this.setState(prevState => {
       const newState = [...prevState.sendRowDetails]
 
@@ -112,7 +118,7 @@ export default class Send extends React.Component {
     })
   }
 
-  updateRowField = (index, field, value) => {
+  updateRowField = (index: number, field: string, value: string) => {
     this.setState(prevState => {
       const newState = [...prevState.sendRowDetails]
 
@@ -136,20 +142,18 @@ export default class Send extends React.Component {
     })
   }
 
-  calculateMaxValue = asset => {
+  calculateMaxValue = (asset: string) => {
     const { sendableAssets } = this.props
 
     const existingAmounts = this.calculateRowAmounts(asset)
 
     if (sendableAssets[asset]) {
-      return toBigNumber(sendableAssets[asset].balance)
-        .minus(existingAmounts)
-        .toNumber()
+      return minusNumber(sendableAssets[asset].balance, existingAmounts)
     }
     return 0
   }
 
-  calculateRowAmounts = asset => {
+  calculateRowAmounts = (asset: string) => {
     const rows = [...this.state.sendRowDetails]
 
     if (rows.length > 0) {
@@ -212,7 +216,7 @@ export default class Send extends React.Component {
 
   handleEditRecipientsClick = () => this.setState({ showConfirmSend: false })
 
-  validateRow = (row, index) => {
+  validateRow = (row: object, index: number) => {
     const validAmount = this.validateAmount(
       row.amount,
       row.max,
@@ -224,7 +228,7 @@ export default class Send extends React.Component {
     return validAmount && validAddress
   }
 
-  validateAmount = (amount, max, asset, index) => {
+  validateAmount = (amount: number, max: number, asset: string, index: number) => {
     const { errors } = this.state.sendRowDetails[index]
 
     const amountNum = Number(amount)
@@ -256,7 +260,7 @@ export default class Send extends React.Component {
     return true
   }
 
-  validateAddress = (formAddress, index) => {
+  validateAddress = async (formAddress: string, index: number) => {
     const { address } = this.props
     const { errors } = this.state.sendRowDetails[index]
 
@@ -268,6 +272,12 @@ export default class Send extends React.Component {
       errors.address = "You can't send to your own address."
     }
 
+    const blackListedAddress = await isBlacklisted(formAddress)
+
+    if (blackListedAddress) {
+      errors.address = 'Address is blacklisted. This is a known phishing address.'
+    }
+
     if (errors.address) {
       this.updateRowField(index, 'errors', errors)
       return false
@@ -276,7 +286,7 @@ export default class Send extends React.Component {
     return true
   }
 
-  clearErrors = (index, field) => {
+  clearErrors = (index: number, field: string) => {
     this.setState(prevState => {
       const newState = [...prevState.sendRowDetails]
 
