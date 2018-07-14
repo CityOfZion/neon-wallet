@@ -20,27 +20,38 @@ export default class Send extends React.Component {
       sendError: false,
       sendErrorMessage: '',
       txid: '',
-      sendRowDetails: [
-        {
-          asset: 'NEO',
-          amount: 0,
-          address: '',
-          note: '',
-          max: this.getMaxValue('NEO'),
-          id: uniqueId(),
-          errors: {}
-        }
-      ]
+      sendRowDetails: []
     }
   }
 
-  getMaxValue = assetSymbol => {
+  componentDidMount() {
+    this.setState(prevState => {
+      const newState = [...prevState.sendRowDetails]
+
+      newState.push(this.generateRow())
+      
+      return { sendRowDetails: newState }
+    })
+  }
+
+  generateRow = () => {
     const { sendableAssets } = this.props
+    const sendableAssetNames = Object.keys(sendableAssets)
+    const firstSendableAssetName = sendableAssetNames[0]
 
-    const asset = sendableAssets[assetSymbol]
+    if (sendableAssetNames.length > 0) {
+      return {
+        asset: firstSendableAssetName,
+        amount: 0,
+        address: '',
+        note: '',
+        max: this.calculateMaxValue(firstSendableAssetName),
+        id: uniqueId(),
+        errors: {}
+      }
+    }
 
-    if (asset) return asset.balance
-    return 0
+    return null
   }
 
   createSendAmountsData = () => {
@@ -94,15 +105,7 @@ export default class Send extends React.Component {
       const newState = [...prevState.sendRowDetails]
 
       if (newState.length < 5) {
-        newState.push({
-          asset: 'NEO',
-          amount: 0,
-          address: '',
-          note: '',
-          max: this.calculateMaxValue('NEO'),
-          id: uniqueId(),
-          errors: {}
-        })
+        newState.push(this.generateRow())
 
         return { sendRowDetails: newState }
       }
@@ -149,28 +152,23 @@ export default class Send extends React.Component {
   calculateRowAmounts = asset => {
     const rows = [...this.state.sendRowDetails]
 
-    return rows
-      .filter(row => row.asset === asset)
-      .map(row => row.amount)
-      .reduce(
-        (accumulator, currentValue) => accumulator.plus(currentValue || 0),
-        toBigNumber(0)
-      )
+    if (rows.length > 0) {
+      return rows
+        .filter(row => row.asset === asset)
+        .map(row => row.amount)
+        .reduce(
+          (accumulator, currentValue) => accumulator.plus(currentValue || 0),
+          toBigNumber(0)
+        )
+    }
+    return 0
   }
 
   resetViews = () => {
     this.setState(() => {
       const newState = []
 
-      newState.push({
-        asset: 'NEO',
-        amount: 0,
-        address: '',
-        note: '',
-        max: this.calculateMaxValue('NEO'),
-        id: uniqueId(),
-        errors: {}
-      })
+      newState.push(this.generateRow())
 
       return {
         showConfirmSend: false,
@@ -304,11 +302,13 @@ export default class Send extends React.Component {
     } = this.state
     const { sendableAssets, contacts } = this.props
     const noSendableAssets = Object.keys(sendableAssets).length === 0
-   
+
     return (
       <section>
         <SendPageHeader />
-        {!noSendableAssets && <SendAmountsPanel sendAmountsData={this.createSendAmountsData()} />}
+        {!noSendableAssets && (
+          <SendAmountsPanel sendAmountsData={this.createSendAmountsData()} />
+        )}
         <SendPanel
           sendRowDetails={sendRowDetails}
           sendableAssets={sendableAssets}
