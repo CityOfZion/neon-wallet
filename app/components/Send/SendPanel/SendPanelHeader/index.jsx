@@ -2,7 +2,6 @@
 import React from 'react'
 
 import AddIcon from '../../../../assets/icons/add.svg'
-import GridIcon from '../../../../assets/icons/grid.svg'
 
 import styles from '../SendPanel.scss'
 
@@ -12,7 +11,8 @@ type Props = {
   resetViews: () => any,
   showConfirmSend: boolean,
   sendSuccess: boolean,
-  sendError: boolean
+  sendError: boolean,
+  noSendableAssets: boolean
 }
 
 const SendPanelHeader = ({
@@ -21,15 +21,13 @@ const SendPanelHeader = ({
   showConfirmSend,
   resetViews,
   sendError,
-  sendSuccess
+  sendSuccess,
+  noSendableAssets
 }: Props) => {
   let headerTitle = 'Select Assets'
   let headerSubtitle = `${sendRowDetails.length} of 5 Recipients`
   let buttons = (
     <div className={styles.sendPanelHeaderButtons}>
-      <button type="button" className={styles.sendPanelHeaderButton}>
-        <GridIcon className={styles.sendPanelHeaderButtonIcon} /> Enter QR Code
-      </button>
       <button
         type="button"
         className={styles.sendPanelHeaderButton}
@@ -49,7 +47,7 @@ const SendPanelHeader = ({
   if (sendSuccess) {
     headerTitle = 'Complete!'
     headerSubtitle = `${sendRowDetails.length} asset types sent to 
-    ${sendRowDetails.length} recipients from Main Funds Wallet`
+    ${sendRowDetails.length} recipients.`
     buttons = (
       <div className={styles.sendPanelHeaderButtons}>
         <button
@@ -66,6 +64,12 @@ const SendPanelHeader = ({
 
   if (sendError) {
     headerTitle = 'Error!'
+    headerSubtitle = null
+    buttons = null
+  }
+
+  if (noSendableAssets) {
+    headerTitle = 'No available assets to send.'
     headerSubtitle = null
     buttons = null
   }
