@@ -20,8 +20,10 @@ type Props = {
   contacts: Object,
   showConfirmSend: boolean,
   sendSuccess: boolean,
+  sendErrorMessage: string,
   sendError: boolean,
   txid: string,
+  resetViewsAfterError: () => any,
   resetViews: () => any,
   handleSubmit: () => any,
   handleSend: () => any,
@@ -45,6 +47,8 @@ const SendPanel = ({
   showConfirmSend,
   sendSuccess,
   sendError,
+  sendErrorMessage,
+  resetViewsAfterError,
   resetViews,
   txid,
   handleEditRecipientsClick
@@ -93,7 +97,12 @@ const SendPanel = ({
   }
 
   if (sendError) {
-    content = <SendError />
+    content = (
+      <SendError
+        resetViewsAfterError={resetViewsAfterError}
+        sendErrorMessage={sendErrorMessage}
+      />
+    )
   }
 
   return (
@@ -105,6 +114,7 @@ const SendPanel = ({
           addRow={addRow}
           showConfirmSend={showConfirmSend}
           sendSuccess={sendSuccess}
+          sendError={sendError}
           resetViews={resetViews}
         />
       )}

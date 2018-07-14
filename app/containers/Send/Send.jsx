@@ -18,6 +18,7 @@ export default class Send extends React.Component {
       showConfirmSend: false,
       sendSuccess: false,
       sendError: false,
+      sendErrorMessage: '',
       txid: '',
       sendRowDetails: [
         {
@@ -207,8 +208,7 @@ export default class Send extends React.Component {
         this.setState({ sendSuccess: true, txid: result.txid })
       })
       .catch(error => {
-        this.setState({ sendError: true })
-        console.log(error)
+        this.setState({ sendError: true, sendErrorMessage: error.message })
       })
   }
 
@@ -282,12 +282,16 @@ export default class Send extends React.Component {
     })
   }
 
+  resetViewsAfterError = () =>
+    this.setState({ sendError: false, sendErrorMessage: '' })
+
   render() {
     const {
       sendRowDetails,
       showConfirmSend,
       sendSuccess,
       sendError,
+      sendErrorMessage,
       txid
     } = this.state
     const { sendableAssets, contacts } = this.props
@@ -299,19 +303,21 @@ export default class Send extends React.Component {
         <SendPanel
           sendRowDetails={sendRowDetails}
           sendableAssets={sendableAssets}
-          addRow={this.addRow}
-          removeRow={this.removeRow}
-          updateRowField={this.updateRowField}
-          contacts={contacts}
-          clearErrors={this.clearErrors}
-          handleSubmit={this.handleSubmit}
           showConfirmSend={showConfirmSend}
           sendSuccess={sendSuccess}
           sendError={sendError}
+          sendErrorMessage={sendErrorMessage}
+          contacts={contacts}
+          txid={txid}
+          addRow={this.addRow}
+          removeRow={this.removeRow}
+          updateRowField={this.updateRowField}
+          clearErrors={this.clearErrors}
+          handleSubmit={this.handleSubmit}
+          resetViewsAfterError={this.resetViewsAfterError}
           handleEditRecipientsClick={this.handleEditRecipientsClick}
           handleSend={this.handleSend}
           resetViews={this.resetViews}
-          txid={txid}
         />
       </section>
     )
