@@ -25,8 +25,8 @@ app.on('ready', () => {
     mainWindow = new BrowserWindow({
       height: 750,
       width: 1280,
-      minHeight: 750,
-      minWidth: 1000,
+      minHeight: 850,
+      minWidth: 1200,
       icon: path.join(__dirname, 'icons/png/64x64.png'),
       webPreferences: {
         webSecurity: false
