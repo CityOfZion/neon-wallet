@@ -37,7 +37,7 @@ const LOGIN_OPTIONS = {
   },
   ledger: {
     render: () => <LoginLedgerNanoS />,
-    display: 'Ledger Nano S'
+    display: 'Ledger'
   }
 }
 
