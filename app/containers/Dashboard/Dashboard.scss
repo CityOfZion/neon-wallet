@@ -13,6 +13,7 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    justify-content: center;
     margin-right: 24px;
 
     .assetsPanel {
@@ -35,15 +36,17 @@
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: stretch;
     min-width: 0;
 
     .pricesPanel {
-      flex: 0 0 auto;
+      //flex: 0 0 auto;
+      height: 100%;
     }
 
     .portfolioPanel {
-      flex: 1 1 auto;
+      height: 400px;
       margin-bottom: 24px;
     }
   }

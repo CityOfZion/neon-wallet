@@ -23,7 +23,7 @@ app.on('window-all-closed', () => {
 app.on('ready', () => {
   const onAppReady = () => {
     mainWindow = new BrowserWindow({
-      height: 750,
+      height: 850,
       width: 1280,
       minHeight: 850,
       minWidth: 1200,

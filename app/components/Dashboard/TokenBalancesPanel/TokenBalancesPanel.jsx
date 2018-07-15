@@ -21,16 +21,15 @@ export default class TokenBalancesPanel extends React.Component<Props> {
 
   render = () => {
     const { className, balances } = this.props
-
     return (
       <Panel
         className={classNames(styles.tokenBalancesPanel, className)}
         renderHeader={this.renderHeader}
       >
         <div className={styles.tableHeader}>
-          <div className={styles.symbol}>Code</div>
+          <div className={styles.symbol}>Ticker</div>
           <div className={styles.name}>Token</div>
-          <div className={styles.balance}>Balance</div>
+          <div className={styles.balance}>Holdings</div>
         </div>
         {balances.map(this.renderToken)}
       </Panel>
@@ -46,7 +45,7 @@ export default class TokenBalancesPanel extends React.Component<Props> {
   renderToken = (token: TokenBalanceType) => (
     <div key={token.scriptHash} className={styles.tableData}>
       <div className={styles.symbol}>{token.symbol}</div>
-      <div className={styles.name}>{token.name}</div>
+      <div className={styles.tokenName}>{token.name}</div>
       <div className={styles.balance}>{token.balance}</div>
     </div>
   )

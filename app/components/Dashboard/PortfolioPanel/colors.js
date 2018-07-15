@@ -1,1 +1,1 @@
-export default ['#a866ee', '#edaa66', '#ee6d66', '#66edcd']
+export default ['#6AD8FF', '#66ED87', '#EE6D66', '#FFCF48']
