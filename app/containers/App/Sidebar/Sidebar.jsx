@@ -15,7 +15,7 @@ import TokenSaleIcon from '../../../assets/navigation/tokens.svg'
 import SettingsIcon from '../../../assets/navigation/settings.svg'
 import { ROUTES } from '../../../core/constants'
 
-// import Logo from '../../../assets/logo.svg'
+import Logo from '../../../assets/images/logo.png'
 
 type Props = {
   className: string,
@@ -27,7 +27,7 @@ const Sidebar = ({ className, showSendModal, showTokenSaleModal }: Props) => (
   <div className={classNames(styles.container, className)}>
     <div className={styles.group}>
       <div className={styles.logo}>
-        {/* <Logo /> */}
+        <img src={Logo} alt="neon-logo" />
       </div>
 
       <Tooltip title="Dashboard" position="right">

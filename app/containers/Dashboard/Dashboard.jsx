@@ -48,7 +48,7 @@ export default class Dashboard extends Component<Props> {
             )}
             title="Manage Wallets"
           >
-            <span> Manage Walletss </span>
+            <span> Manage Wallets </span>
             <Wallet
               id="manage-wallets"
               // className={classNames(styles.refresh, {
@@ -57,7 +57,7 @@ export default class Dashboard extends Component<Props> {
               onClick={() => console.log('foo')}
             />
           </Tooltip>
-          {/* <Tooltip title="Refresh" className={styles.headerButtonContainer}>
+          <Tooltip title="Refresh" className={styles.headerButtonContainer}>
             <span> Refresh </span>
             <RefreshIcon
               id="refresh"
@@ -65,12 +65,12 @@ export default class Dashboard extends Component<Props> {
               className={classNames(styles.refresh)}
               onClick={() => console.log('foo')}
             />
-          </Tooltip> */}
+          </Tooltip>
         </div>
         <div className={styles.panelContainer}>
           <div className={styles.dataColumn}>
-            <AssetBalancesPanel className={styles.assetsPanel} />
             <TokenBalancesPanel className={styles.tokensPanel} />
+            <AssetBalancesPanel className={styles.assetsPanel} />
           </div>
           <div className={styles.chartsColumn}>
             <PriceHistoryPanel className={styles.pricesPanel} />

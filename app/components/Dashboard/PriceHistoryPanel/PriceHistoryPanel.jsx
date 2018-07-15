@@ -59,6 +59,7 @@ export default class PriceHistoryPanel extends React.Component<Props> {
 
   renderHeader = () => (
     <div className={styles.header}>
+      <span>Market Data</span>
       <span className={styles.asset} onClick={this.handleChangeAsset}>
         {this.props.asset}
         <DropdownIcon className={styles.icon} />
