@@ -24,7 +24,7 @@ type Props = {
 export default class PortfolioTable extends React.Component<Props> {
   render = (): React$Node => {
     const { className, currency } = this.props
-    const data = values(this.props.balances)
+    const data = values(this.props.balances).slice(0, 4)
 
     return (
       <div className={classNames(styles.portfolioTable, className)}>

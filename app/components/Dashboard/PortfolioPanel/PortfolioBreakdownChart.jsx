@@ -26,7 +26,9 @@ type Props = {
 export default class PortfolioBreakdownChart extends React.Component<Props> {
   render = (): React$Node => {
     const { className } = this.props
-    const data = this.getData()
+    const data = this.getData().slice(1, 5)
+
+    console.log(data.length)
 
     return (
       <ResponsiveContainer
