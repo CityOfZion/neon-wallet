@@ -188,7 +188,7 @@ export default class Send extends React.Component {
     const isValid = rows
       .map((row, index) => this.validateRow(row, index))
       .every(result => result === true)
-
+    
     if (isValid) {
       this.setState({ showConfirmSend: true })
     }
@@ -224,7 +224,7 @@ export default class Send extends React.Component {
       index
     )
     const validAddress = this.validateAddress(row.address, index)
-
+    console.log('row', validAmount, validAddress)
     return validAmount && validAddress
   }
 
@@ -250,7 +250,7 @@ export default class Send extends React.Component {
     }
 
     if (amountNum > max) {
-      errors.amount = `You do not have enough balance to send ${amount} ${asset}`
+      errors.amount = `You do not have enough balance to send ${amount} ${asset}.`
     }
 
     if (errors.amount) {
@@ -260,23 +260,23 @@ export default class Send extends React.Component {
     return true
   }
 
-  validateAddress = async (formAddress: string, index: number) => {
+  validateAddress = (formAddress: string, index: number) => {
     const { address } = this.props
     const { errors } = this.state.sendRowDetails[index]
 
     if (!wallet.isAddress(formAddress)) {
-      errors.address = 'You need to specify a valid NEO Address.'
+      errors.address = 'You need to specify a valid NEO address.'
     }
 
     if (formAddress === address) {
       errors.address = "You can't send to your own address."
     }
 
-    const blackListedAddress = await isBlacklisted(formAddress)
+    // const blackListedAddress = await isBlacklisted(formAddress)
 
-    if (blackListedAddress) {
-      errors.address = 'Address is blacklisted. This is a known phishing address.'
-    }
+    // if (blackListedAddress) {
+    //   errors.address = 'Address is blacklisted. This is a known phishing address.'
+    // }
 
     if (errors.address) {
       this.updateRowField(index, 'errors', errors)
