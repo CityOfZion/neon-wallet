@@ -15,7 +15,8 @@ import RefreshIcon from '../../assets/icons/refresh.svg'
 import styles from './Dashboard.scss'
 
 type Props = {
-  loadWalletData: Function
+  loadWalletData: Function,
+  loading: boolean
 }
 
 const REFRESH_INTERVAL_MS = 30000
@@ -39,10 +40,10 @@ export default class Dashboard extends Component<Props> {
   }
 
   render() {
-    // const { loading, refresh } = this.props
+    const { loadWalletData, loading } = this.props
     return (
       <div id="dashboard" className={styles.dashboard}>
-        <div className={styles.dashBoardHeader}>
+        <div className={styles.dashboardHeader}>
           <Tooltip
             className={classNames(
               styles.headerButtonContainer,
@@ -50,30 +51,19 @@ export default class Dashboard extends Component<Props> {
             )}
             title="Manage Wallets"
           >
-            <NavLink
-              id="wallet-manager"
-              exact
-              to={ROUTES.WALLET_MANAGER}
-              // className={styles.navItem}
-              // activeClassName={styles.active}
-            >
+            <NavLink id="wallet-manager" exact to={ROUTES.WALLET_MANAGER}>
               <span> Manage Wallets </span>
-              <Wallet
-                id="manage-wallets"
-                // className={classNames(styles.refresh, {
-                //   [styles.loading]: loading
-                // })}
-                onClick={() => console.log('foo')}
-              />
+              <Wallet id="manage-wallets" />
             </NavLink>
           </Tooltip>
           <Tooltip title="Refresh" className={styles.headerButtonContainer}>
-            <span> Refresh </span>
+            <span onClick={loading ? null : loadWalletData}> Refresh </span>
             <RefreshIcon
               id="refresh"
-              // className={styles.refresh}
-              className={classNames(styles.refresh)}
-              onClick={() => console.log('foo')}
+              className={classNames(styles.refresh, {
+                [styles.loading]: loading
+              })}
+              onClick={loading ? null : loadWalletData}
             />
           </Tooltip>
         </div>

@@ -1,4 +1,5 @@
 @import '../../styles/variables';
+@import '../../styles/animations';
 
 .dashboard {
   display: flex;
@@ -47,7 +48,7 @@
     }
   }
 
-  .dashBoardHeader {
+  .dashboardHeader {
     display: flex;
     justify-content: flex-end;
     display: flex;
@@ -67,24 +68,24 @@
       display: flex;
     }
 
-    .refresh {
-      cursor: pointer;
-
-      // &,
-      // & path {
-      //   color: #9599a2;
-      //   fill: currentColor;
-      // }
-
-      &.loading {
-        animation: spin 2s linear infinite;
-      }
-    }
-
     .headerButtonContainer {
       display: flex !important;
       cursor: pointer;
       align-items: center;
+
+      .refresh {
+        cursor: pointer;
+
+        // &,
+        // & path {
+        //   color: #9599a2;
+        //   fill: currentColor;
+        // }
+      }
+
+      .loading {
+        animation: spin 2s linear infinite;
+      }
 
       span {
         margin-right: 10px;

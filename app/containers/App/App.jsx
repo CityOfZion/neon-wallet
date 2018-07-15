@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 
+import { ROUTES } from '../../core/constants'
 import Sidebar from './Sidebar'
 import Footer from './Footer'
 import ModalRenderer from '../ModalRenderer'
@@ -13,8 +14,17 @@ type Props = {
   children: React$Node,
   address: string,
   checkVersion: Function,
-  showErrorNotification: Function
+  showErrorNotification: Function,
+  location: Object
 }
+
+const routesWithSideBar = [
+  ROUTES.DASHBOARD,
+  ROUTES.TRANSACTION_HISTORY,
+  ROUTES.RECEIVE,
+  ROUTES.CONTACTS,
+  ROUTES.SETTINGS
+]
 
 class App extends Component<Props> {
   async componentDidMount() {
@@ -30,11 +40,14 @@ class App extends Component<Props> {
   }
 
   render() {
-    const { children, address } = this.props
+    const { children, address, location } = this.props
 
     return (
       <div className={styles.container}>
-        {address && <Sidebar className={styles.sidebar} />}
+        {address &&
+          routesWithSideBar.includes(location.pathname) && (
+            <Sidebar className={styles.sidebar} />
+          )}
         <div className={styles.wrapper}>
           <div className={styles.content}>{children}</div>
           <Notifications />
