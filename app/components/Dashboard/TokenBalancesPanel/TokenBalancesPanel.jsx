@@ -37,24 +37,11 @@ export default class TokenBalancesPanel extends React.Component<Props> {
     )
   }
 
-  renderHeader = () => {
-    const { refresh, loading } = this.props
-
-    return (
-      <div className={styles.header}>
-        <span>Token Balances</span>
-        <Tooltip title="Refresh">
-          <RefreshIcon
-            id="refresh"
-            className={classNames(styles.refresh, {
-              [styles.loading]: loading
-            })}
-            onClick={loading ? null : refresh}
-          />
-        </Tooltip>
-      </div>
-    )
-  }
+  renderHeader = () => (
+    <div className={styles.header}>
+      <span>Token Balances</span>
+    </div>
+  )
 
   renderToken = (token: TokenBalanceType) => (
     <div key={token.scriptHash} className={styles.tableData}>
