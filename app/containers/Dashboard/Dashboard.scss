@@ -39,11 +39,11 @@
 
     .pricesPanel {
       flex: 0 0 auto;
-      margin-bottom: 24px;
     }
 
     .portfolioPanel {
       flex: 1 1 auto;
+      margin-bottom: 24px;
     }
   }
 
@@ -57,7 +57,14 @@
     margin-bottom: 10px;
 
     .manageButton {
-      margin-right: 15px;
+      margin-right: 25px;
+    }
+
+    a {
+      text-decoration: none;
+      color: black;
+      align-items: center;
+      display: flex;
     }
 
     .refresh {

@@ -1,7 +1,9 @@
 // @flow
 import React, { Component } from 'react'
-
 import classNames from 'classnames'
+import { NavLink } from 'react-router-dom'
+
+import { ROUTES } from '../../core/constants'
 import AssetBalancesPanel from '../../components/Dashboard/AssetBalancesPanel'
 import TokenBalancesPanel from '../../components/Dashboard/TokenBalancesPanel'
 import PriceHistoryPanel from '../../components/Dashboard/PriceHistoryPanel'
@@ -48,14 +50,22 @@ export default class Dashboard extends Component<Props> {
             )}
             title="Manage Wallets"
           >
-            <span> Manage Wallets </span>
-            <Wallet
-              id="manage-wallets"
-              // className={classNames(styles.refresh, {
-              //   [styles.loading]: loading
-              // })}
-              onClick={() => console.log('foo')}
-            />
+            <NavLink
+              id="wallet-manager"
+              exact
+              to={ROUTES.WALLET_MANAGER}
+              // className={styles.navItem}
+              // activeClassName={styles.active}
+            >
+              <span> Manage Wallets </span>
+              <Wallet
+                id="manage-wallets"
+                // className={classNames(styles.refresh, {
+                //   [styles.loading]: loading
+                // })}
+                onClick={() => console.log('foo')}
+              />
+            </NavLink>
           </Tooltip>
           <Tooltip title="Refresh" className={styles.headerButtonContainer}>
             <span> Refresh </span>
@@ -73,8 +83,8 @@ export default class Dashboard extends Component<Props> {
             <AssetBalancesPanel className={styles.assetsPanel} />
           </div>
           <div className={styles.chartsColumn}>
-            <PriceHistoryPanel className={styles.pricesPanel} />
             <PortfolioPanel className={styles.portfolioPanel} />
+            <PriceHistoryPanel className={styles.pricesPanel} />
           </div>
         </div>
       </div>
