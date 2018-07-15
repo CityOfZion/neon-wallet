@@ -143,7 +143,7 @@ $navigation-margin: 20px;
     li[aria-selected='true'] {
       font-weight: bold;
       color: $default-text;
-      border-bottom: solid $default-text 1px;
+      border-bottom: solid $default-text 2px;
     }
   }
 }
