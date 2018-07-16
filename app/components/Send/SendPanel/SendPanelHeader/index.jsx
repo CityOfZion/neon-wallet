@@ -3,6 +3,8 @@ import React from 'react'
 
 import AddIcon from '../../../../assets/icons/add.svg'
 
+import { pluralize } from '../../../../util/pluralize'
+
 import styles from '../SendPanel.scss'
 
 type Props = {
@@ -24,8 +26,10 @@ const SendPanelHeader = ({
   sendSuccess,
   noSendableAssets
 }: Props) => {
+  const numberOfItems = sendRowDetails.length
+
   let headerTitle = 'Select Assets'
-  let headerSubtitle = `${sendRowDetails.length} of 5 Recipients`
+  let headerSubtitle = `${numberOfItems} of 5 Recipients`
   let buttons = (
     <div className={styles.sendPanelHeaderButtons}>
       <button
@@ -40,14 +44,17 @@ const SendPanelHeader = ({
 
   if (showConfirmSend) {
     headerTitle = 'Confirmation'
-    headerSubtitle = `${sendRowDetails.length} Recipients`
+    headerSubtitle = `${numberOfItems} ${pluralize('Recipient', numberOfItems)}`
     buttons = null
   }
 
   if (sendSuccess) {
     headerTitle = 'Complete!'
-    headerSubtitle = `${sendRowDetails.length} asset types sent to 
-    ${sendRowDetails.length} recipients.`
+    headerSubtitle = `${numberOfItems} asset ${pluralize(
+      'type',
+      numberOfItems
+    )} sent to 
+    ${numberOfItems} ${pluralize('recipient', numberOfItems)}.`
     buttons = (
       <div className={styles.sendPanelHeaderButtons}>
         <button

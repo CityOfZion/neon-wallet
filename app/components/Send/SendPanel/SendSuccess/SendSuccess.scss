@@ -26,8 +26,9 @@
     margin: 0;
 }
 
-.sendSuccessDateText {
+.sendSuccessParagraphText {
     color: lighten($dark-grey, 5%);
+    margin-bottom: 0;
 }
 
 .sendSuccessBody {
@@ -37,7 +38,7 @@
 .sendSuccessBodyHeaderText {
     font-size: .8rem;
     text-transform: uppercase;
-        padding: 0 30px;
+    padding: 0 30px;
 }
 
 .sendSuccessBodyList {

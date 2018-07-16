@@ -11,6 +11,8 @@ import SendSuccess from './SendSuccess'
 import SendError from './SendError'
 import ZeroAssets from './ZeroAssets'
 
+import { pluralize } from '../../../util/pluralize'
+
 import SendIcon from '../../../assets/icons/send.svg'
 
 import styles from './SendPanel.scss'
@@ -73,7 +75,7 @@ const SendPanel = ({
         renderIcon={() => <SendIcon />}
         type="submit"
       >
-        Send Assets
+        Send {pluralize('Asset', sendRowDetails.length)}
       </Button>
     </form>
   )
