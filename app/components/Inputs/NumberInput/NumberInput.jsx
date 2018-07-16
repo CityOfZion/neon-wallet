@@ -101,7 +101,6 @@ export default class NumberInput extends React.Component<Props, State> {
               ? this.props.handleMaxClick
               : this.handleMaxValue
           }
-          displayButtonIcon={false}
         >
           MAX
         </Button>
