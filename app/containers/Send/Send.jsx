@@ -302,10 +302,11 @@ export default class Send extends React.Component<Props> {
       const newState = [...prevState.sendRowDetails]
 
       const objectToClear = newState[index]
-
       if (objectToClear.errors[field]) {
         objectToClear.errors[field] = null
       }
+
+      return newState
     })
   }
 

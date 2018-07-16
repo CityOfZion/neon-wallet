@@ -63,6 +63,13 @@ class SendRecipientListItem extends Component<Props> {
     removeRow(index)
   }
 
+  clearErrorsOnFocus = e => {
+    const { name } = e.target
+    const { clearErrors, index } = this.props
+
+    clearErrors(index, name)
+  }
+
   createAssetList = () =>
     Object.keys(this.props.sendableAssets).map(asset => asset)
 
@@ -90,6 +97,7 @@ class SendRecipientListItem extends Component<Props> {
         onChange={this.handleFieldChange}
         items={this.createAssetList()}
         customChangeEvent
+        onFocus={this.clearErrorsOnFocus}
         disabled
       />
     )
@@ -104,6 +112,7 @@ class SendRecipientListItem extends Component<Props> {
         onChange={this.handleFieldChange}
         customChangeEvent
         handleMaxClick={this.handleMaxClick}
+        onFocus={this.clearErrorsOnFocus}
         error={errors.amount}
       />
     )
@@ -118,6 +127,7 @@ class SendRecipientListItem extends Component<Props> {
         onChange={this.handleFieldChange}
         items={this.createContactList()}
         customChangeEvent
+        onFocus={this.clearErrorsOnFocus}
         error={errors.address}
       />
     )
