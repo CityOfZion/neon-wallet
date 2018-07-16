@@ -1,1 +1,1 @@
-export const pluralize = (word, items) => (items.length > 1 ? `${word}s` : word)
+export const pluralize = (word, items) => (items > 1 ? `${word}s` : word)
