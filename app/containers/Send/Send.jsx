@@ -9,7 +9,7 @@ import {
   minusNumber
 } from '../../core/math'
 
-import { isBlacklisted } from '../../core/wallet'
+import blacklist from '../../util/blacklist'
 
 import SendPageHeader from '../../components/Send/SendPageHeader'
 import SendAmountsPanel from '../../components/Send/SendAmountsPanel'
@@ -189,6 +189,7 @@ export default class Send extends React.Component {
       .map((row, index) => this.validateRow(row, index))
       .every(result => result === true)
     
+      
     if (isValid) {
       this.setState({ showConfirmSend: true })
     }
@@ -224,7 +225,7 @@ export default class Send extends React.Component {
       index
     )
     const validAddress = this.validateAddress(row.address, index)
-    console.log('row', validAmount, validAddress)
+
     return validAmount && validAddress
   }
 
@@ -271,12 +272,11 @@ export default class Send extends React.Component {
     if (formAddress === address) {
       errors.address = "You can't send to your own address."
     }
-
-    // const blackListedAddress = await isBlacklisted(formAddress)
-
-    // if (blackListedAddress) {
-    //   errors.address = 'Address is blacklisted. This is a known phishing address.'
-    // }
+    console.log(blacklist)
+    const blackListedAddress = blacklist.includes(formAddress)
+    if (blackListedAddress) {
+      errors.address = 'Address is blacklisted. This is a known phishing address.'
+    }
 
     if (errors.address) {
       this.updateRowField(index, 'errors', errors)
