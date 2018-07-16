@@ -1,6 +1,8 @@
 // @flow
 import { compose } from 'recompose'
-import { filter, values, omit, cloneDeep } from 'lodash'
+
+// $FlowFixMe
+import { filter, cloneDeep } from 'lodash'
 import { withActions, withData } from 'spunky'
 
 import TokenBalancesPanel from './TokenBalancesPanel'
@@ -19,8 +21,6 @@ const mapPricesDataToProps = prices => ({ prices })
 
 const filterZeroBalanceTokens = balances =>
   filter(balances, token => toBigNumber(token.balance).gt(0))
-
-// const getTokenBalances = balances => values(omit(balances, 'NEO', 'GAS'))
 
 const mapBalanceDataToProps = balances => {
   const mutatedBalances = cloneDeep(balances)

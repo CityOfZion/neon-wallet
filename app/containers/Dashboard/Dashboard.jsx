@@ -41,7 +41,6 @@ export default class Dashboard extends Component<Props> {
 
   render() {
     const { loadWalletData, loading } = this.props
-    console.log(loading)
     return (
       <div id="dashboard" className={styles.dashboard}>
         <div className={styles.dashboardHeader}>

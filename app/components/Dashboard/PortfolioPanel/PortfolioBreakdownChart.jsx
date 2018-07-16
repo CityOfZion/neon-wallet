@@ -56,12 +56,6 @@ export default class PortfolioBreakdownChart extends React.Component<Props> {
               />
             ))}
             <Label
-              // content={() => (
-              //   <div className={styles.totalValue}>
-              //     {this.getTotalValueWithPrice()}
-              //   </div>
-              // )}
-              // label={{ fontSize: 14 }}
               fontSize={22}
               value={this.getTotalValueWithPrice()}
               position="center"

@@ -25,7 +25,6 @@ export default class PortfolioTable extends React.Component<Props> {
   render = (): React$Node => {
     const { className, currency } = this.props
     const data = values(this.props.balances)
-    const sortedData = data.sort((a, b) => a.value < b.value)
 
     return (
       <div className={classNames(styles.portfolioTable, className)}>

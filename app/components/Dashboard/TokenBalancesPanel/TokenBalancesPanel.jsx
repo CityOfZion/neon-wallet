@@ -3,8 +3,6 @@ import React from 'react'
 import classNames from 'classnames'
 
 import Panel from '../../Panel'
-import Tooltip from '../../Tooltip'
-import RefreshIcon from '../../../assets/icons/refresh.svg'
 import styles from './TokenBalancesPanel.scss'
 import { toFixedDecimals } from '../../../core/formatters'
 import { CURRENCIES } from '../../../core/constants'
@@ -12,8 +10,8 @@ import { CURRENCIES } from '../../../core/constants'
 type Props = {
   className: ?string,
   balances: Array<TokenBalanceType>,
-  loading: ?boolean,
-  refresh: Function
+  prices: Object,
+  currencyCode: string
 }
 
 export default class TokenBalancesPanel extends React.Component<Props> {
@@ -23,7 +21,6 @@ export default class TokenBalancesPanel extends React.Component<Props> {
 
   render = () => {
     const { className, balances } = this.props
-    console.log(this.props)
     return (
       <Panel
         className={classNames(styles.tokenBalancesPanel, className)}
@@ -41,18 +38,10 @@ export default class TokenBalancesPanel extends React.Component<Props> {
   }
 
   formatPrice = (ticker: string): string => {
-    console.log(ticker)
     const { prices, currencyCode } = this.props
     const { symbol } = CURRENCIES[currencyCode]
-
-    console.log(symbol)
-
     const currPriceOfToken = prices[ticker]
-
     if (!currPriceOfToken) return 'N/A'
-
-    console.log(currPriceOfToken)
-    // prices.find(price)
     return `${symbol}${toFixedDecimals(currPriceOfToken, 2)}`
   }
 
