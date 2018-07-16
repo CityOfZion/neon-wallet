@@ -8,6 +8,7 @@ import SendIcon from '../../../../../assets/navigation/send.svg'
 import CopyIcon from '../../../../../assets/icons/copy.svg'
 import AddContactIcon from '../../../../../assets/icons/contacts-add.svg'
 import InfoIcon from '../../../../../assets/icons/info.svg'
+import CopyToClipboard from '../../../../CopyToClipboard'
 
 import styles from './SendSuccessTransaction.scss'
 
@@ -42,9 +43,10 @@ class SendSuccessTransaction extends Component<Props> {
         </div>
         <div className={styles.addressContainer}>
           <p className={styles.address}>{address}</p>
-          <button type="button" className={styles.sendSuccessButton}>
-            <CopyIcon />
-          </button>
+          <CopyToClipboard
+            className={styles.sendSuccessButton}
+            text={address}
+          />
         </div>
         <div className={styles.noteContainer}>
           <p>{note}</p>
