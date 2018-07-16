@@ -15,7 +15,13 @@ import SendPageHeader from '../../components/Send/SendPageHeader'
 import SendAmountsPanel from '../../components/Send/SendAmountsPanel'
 import SendPanel from '../../components/Send/SendPanel'
 
-export default class Send extends React.Component {
+type Props = {
+  sendableAssets: Object,
+  prices: Object,
+  sendTransaction: (Array<SendEntryType>) => Object
+}
+
+export default class Send extends React.Component<Props> {
   constructor(props) {
     super(props)
 
@@ -188,8 +194,7 @@ export default class Send extends React.Component {
     const isValid = rows
       .map((row, index) => this.validateRow(row, index))
       .every(result => result === true)
-    
-      
+
     if (isValid) {
       this.setState({ showConfirmSend: true })
     }
@@ -229,7 +234,12 @@ export default class Send extends React.Component {
     return validAmount && validAddress
   }
 
-  validateAmount = (amount: number, max: number, asset: string, index: number) => {
+  validateAmount = (
+    amount: number,
+    max: number,
+    asset: string,
+    index: number
+  ) => {
     const { errors } = this.state.sendRowDetails[index]
 
     const amountNum = Number(amount)
@@ -272,10 +282,11 @@ export default class Send extends React.Component {
     if (formAddress === address) {
       errors.address = "You can't send to your own address."
     }
-    console.log(blacklist)
+
     const blackListedAddress = blacklist.includes(formAddress)
     if (blackListedAddress) {
-      errors.address = 'Address is blacklisted. This is a known phishing address.'
+      errors.address =
+        'Address is blacklisted. This is a known phishing address.'
     }
 
     if (errors.address) {
