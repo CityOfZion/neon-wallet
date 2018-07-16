@@ -1,25 +1,23 @@
 // @flow
-
 import React, { Component } from 'react'
 
-import AddContactModal from '../../../../Modals/AddContactModal'
-
 import SendIcon from '../../../../../assets/navigation/send.svg'
-import CopyIcon from '../../../../../assets/icons/copy.svg'
 import AddContactIcon from '../../../../../assets/icons/contacts-add.svg'
 import InfoIcon from '../../../../../assets/icons/info.svg'
 import CopyToClipboard from '../../../../CopyToClipboard'
 
 import styles from './SendSuccessTransaction.scss'
 
+const { shell } = require('electron')
+
 type Props = {
   asset: string,
   amount: string,
   address: string,
   showAddContactModal: () => null,
-  hideModal: () => null,
   note: string,
-  txId: string
+  network: string,
+  txid: string
 }
 
 class SendSuccessTransaction extends Component<Props> {
@@ -27,6 +25,20 @@ class SendSuccessTransaction extends Component<Props> {
     const { showAddContactModal, address } = this.props
     showAddContactModal({ address })
   }
+
+  createNeoscanUrl = () => {
+    const { net, txid } = this.props
+
+    if (net === 'TestNet') {
+      return `https://neoscan-testnet.io/transaction/${txid}`
+    }
+    return `https://neoscan.io/transaction/${txid}`
+  }
+
+  handleViewClick = () => shell.openExternal(this.createNeoscanUrl())
+
+  handleNoteLength = note =>
+    note.length > 20 ? `${note.substr(0, 19)}...` : note
 
   render() {
     const { asset, amount, address, note } = this.props
@@ -36,7 +48,7 @@ class SendSuccessTransaction extends Component<Props> {
           <SendIcon />
         </div>
         <div className={styles.assetContainer}>
-          <p>{asset}</p>
+          <p className={styles.asset}>{asset}</p>
         </div>
         <div className={styles.amountContainer}>
           <p className={styles.amount}>{amount}</p>
@@ -49,7 +61,7 @@ class SendSuccessTransaction extends Component<Props> {
           />
         </div>
         <div className={styles.noteContainer}>
-          <p>{note}</p>
+          <p className={styles.note}>{this.handleNoteLength(note)}</p>
         </div>
         <div className={styles.buttonContainer}>
           <button
@@ -59,7 +71,12 @@ class SendSuccessTransaction extends Component<Props> {
           >
             <AddContactIcon />Add
           </button>
-          <button type="button" className={styles.sendSuccessButton}>
+
+          <button
+            type="button"
+            className={styles.sendSuccessButton}
+            onClick={this.handleViewClick}
+          >
             <InfoIcon />View
           </button>
         </div>

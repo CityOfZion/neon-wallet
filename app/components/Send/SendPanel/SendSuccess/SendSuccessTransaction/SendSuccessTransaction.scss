@@ -34,6 +34,11 @@
     width: 20%; 
 }
 
+.amount,
+.note {
+    text-align: center;
+}
+
 .buttonContainer {
     width: 20%;
     display: flex;
@@ -50,5 +55,11 @@
     
     svg {
         margin-right: 5px;
+    }
+}
+
+@media (max-width: 950px) {
+    .noteContainer {
+        display: none;
     }
 }

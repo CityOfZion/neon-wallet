@@ -1,5 +1,7 @@
+import { compose } from 'recompose'
 import { connect } from 'react-redux'
 import SendSuccessTransaction from './SendSuccessTransaction'
+import withNetworkData from '../../../../../hocs/withNetworkData'
 
 import { showModal } from '../../../../../modules/modal'
 import { MODAL_TYPES } from '../../../../../core/constants'
@@ -9,7 +11,10 @@ const mapDispatchToProps = dispatch => ({
     dispatch(showModal(MODAL_TYPES.ADD_CONTACT, props))
 })
 
-export default connect(
-  null,
-  mapDispatchToProps
+export default compose(
+  connect(
+    null,
+    mapDispatchToProps
+  ),
+  withNetworkData()
 )(SendSuccessTransaction)
