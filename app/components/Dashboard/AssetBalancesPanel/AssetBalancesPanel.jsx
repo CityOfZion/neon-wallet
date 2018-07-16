@@ -38,6 +38,7 @@ export default class AssetBalancesPanel extends React.Component<Props> {
     return (
       <Panel
         className={classNames(styles.assetBalancesPanel, className)}
+        contentClassName={styles.centeredContent}
         renderHeader={this.renderHeader}
       >
         <div id="balance" className={styles.assets}>
