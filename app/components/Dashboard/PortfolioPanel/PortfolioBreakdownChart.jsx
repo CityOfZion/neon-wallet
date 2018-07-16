@@ -9,10 +9,11 @@ import {
   Tooltip,
   Label
 } from 'recharts'
+// $FlowFixMe
 import { map, times } from 'lodash'
 
 import COLORS from './colors'
-import { formatThousands } from '../../../core/formatters' // formatFiat
+import { formatThousands } from '../../../core/formatters'
 import { CURRENCIES } from '../../../core/constants'
 
 import styles from './PortfolioBreakdownChart.scss'
@@ -82,7 +83,7 @@ export default class PortfolioBreakdownChart extends React.Component<Props> {
 
   getData = () =>
     map(this.props.balances, ({ value }, symbol) => ({ symbol, value })).sort(
-      (a, b) => a.value < b.value
+      (a: Object, b: Object) => a.value - b.value
     )
 
   formatValue = (value: number): string =>
