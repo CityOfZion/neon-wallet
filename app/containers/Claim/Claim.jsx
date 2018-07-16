@@ -31,6 +31,7 @@ export default class Claim extends Component<Props> {
             id="claim"
             className={className}
             disabled={disabled}
+            primary
             renderIcon={ClaimIcon}
             onClick={this.handleClaim}
           >

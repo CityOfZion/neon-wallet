@@ -23,6 +23,7 @@ type Props = {
 export default class PortfolioPanel extends React.Component<Props> {
   render = () => {
     const { className, balances, currency } = this.props
+    // if (balances && balances.length) {
     return (
       <Panel
         className={classNames(styles.portfolioPanel, className)}
@@ -41,6 +42,8 @@ export default class PortfolioPanel extends React.Component<Props> {
         />
       </Panel>
     )
+    // /}
+    // return null
   }
 
   renderHeader = () => <div className={styles.header}>Portfolio</div>

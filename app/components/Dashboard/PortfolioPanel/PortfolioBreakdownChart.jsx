@@ -1,7 +1,14 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts'
+import {
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Label
+} from 'recharts'
 import { map, times } from 'lodash'
 
 import COLORS from './colors'
@@ -26,9 +33,7 @@ type Props = {
 export default class PortfolioBreakdownChart extends React.Component<Props> {
   render = (): React$Node => {
     const { className } = this.props
-    const data = this.getData().slice(1, 5)
-
-    console.log(data.length)
+    const data = this.getData().slice(0, 5)
 
     return (
       <ResponsiveContainer
@@ -40,8 +45,8 @@ export default class PortfolioBreakdownChart extends React.Component<Props> {
             data={data}
             dataKey="value"
             nameKey="symbol"
-            innerRadius={40}
-            outerRadius={75}
+            innerRadius={70}
+            outerRadius={78}
           >
             {times(data.length, index => (
               <Cell
@@ -50,6 +55,17 @@ export default class PortfolioBreakdownChart extends React.Component<Props> {
                 stroke={COLORS[index]}
               />
             ))}
+            <Label
+              // content={() => (
+              //   <div className={styles.totalValue}>
+              //     {this.getTotalValueWithPrice()}
+              //   </div>
+              // )}
+              // label={{ fontSize: 14 }}
+              fontSize={22}
+              value={this.getTotalValueWithPrice()}
+              position="center"
+            />
           </Pie>
           <Tooltip formatter={this.formatValue} />
         </PieChart>
@@ -57,8 +73,23 @@ export default class PortfolioBreakdownChart extends React.Component<Props> {
     )
   }
 
+  getTotalValueWithPrice = () => {
+    const balanceInfo = map(this.props.balances, ({ value }, symbol) => ({
+      symbol,
+      value
+    }))
+
+    const total = balanceInfo.reduce(
+      (accum, current) => accum + current.value,
+      0
+    )
+    return this.formatPrice(total, formatThousands)
+  }
+
   getData = () =>
-    map(this.props.balances, ({ value }, symbol) => ({ symbol, value }))
+    map(this.props.balances, ({ value }, symbol) => ({ symbol, value })).sort(
+      (a, b) => a.value < b.value
+    )
 
   formatValue = (value: number): string =>
     `$${formatThousands(value.toString())}`

@@ -54,7 +54,7 @@ export default class PriceHistoryChart extends React.Component<Props> {
     return (
       <ResponsiveContainer
         width="100%"
-        height={395}
+        height={375}
         className={classNames(styles.priceHistoryChart, className)}
       >
         <LineChart
