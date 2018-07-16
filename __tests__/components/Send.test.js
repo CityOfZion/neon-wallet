@@ -15,7 +15,6 @@ const setup = props =>
       sendableAssets={{ NEO: { balance: 5, symbol: 'NEO' } }}
       prices={{ NEO: 38 }}
       contacts={{ NeoFriend: 'AMKxqiSSLR89wLVEk5CoGRjKHRrmrR8bDr' }}
-      fetch={() => {}}
     />
   )
 
