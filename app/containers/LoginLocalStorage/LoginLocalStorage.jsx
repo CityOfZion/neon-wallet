@@ -66,7 +66,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
             type="submit"
             className={styles.loginButtonMargin}
             disabled={loading || !this.isValid()}
-            renderIcon={LoginIcon}
+            renderIcon={() => <LoginIcon />}
           >
             Login
           </Button>

@@ -10,32 +10,25 @@ type Props = {
   renderIcon: ?Function,
   primary: ?boolean,
   type: ?string,
-  displayButtonIcon?: boolean,
   children: React$Node
 }
 
 class Button extends React.Component<Props> {
   static defaultProps = {
     primary: false,
-    type: 'button',
-    displayButtonIcon: true
+    type: 'button'
   }
 
   render = () => {
-    const { className, children, displayButtonIcon } = this.props
-    const passDownProps = omit(
-      this.props,
-      'primary',
-      'renderIcon',
-      'displayButtonIcon'
-    )
+    const { className, children } = this.props
+    const passDownProps = omit(this.props, 'primary', 'renderIcon')
 
     return (
       <button
         {...passDownProps}
         className={classNames(styles.button, className, this.getButtonStyle())}
       >
-        {displayButtonIcon && this.renderIcon()}
+        {this.renderIcon()}
         <span>{children}</span>
       </button>
     )
@@ -51,7 +44,7 @@ class Button extends React.Component<Props> {
         </span>
       )
     }
-    return <div className={styles.icon} />
+    return null
   }
 
   getButtonStyle = () => (this.props.primary ? styles.dark : styles.light)
