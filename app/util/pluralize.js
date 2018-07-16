@@ -1,1 +1,3 @@
-export const pluralize = (word, items) => (items > 1 ? `${word}s` : word)
+// @flow
+export const pluralize = (word: string, items: number) =>
+  items > 1 ? `${word}s` : word
