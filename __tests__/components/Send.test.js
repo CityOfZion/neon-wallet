@@ -2,6 +2,8 @@ import React from 'react'
 
 import { mount } from 'enzyme'
 
+import * as transactionMethods from '../../app/modules/transactions'
+
 import Send from '../../app/containers/Send/Send'
 import ZeroAssets from '../../app/components/Send/SendPanel/ZeroAssets'
 import SendRecipientListItem from '../../app/components/Send/SendPanel/SendRecipientList/SendRecipientListItem'
@@ -13,6 +15,7 @@ const setup = props =>
       sendableAssets={{ NEO: { balance: 5, symbol: 'NEO' } }}
       prices={{ NEO: 38 }}
       contacts={{ NeoFriend: 'AMKxqiSSLR89wLVEk5CoGRjKHRrmrR8bDr' }}
+      fetch={() => {}}
     />
   )
 
@@ -143,23 +146,21 @@ describe('Send', () => {
     expect(errors.amount).toBe(undefined)
   })
 
-  //   test('It does not allow blacklisted addresses', () => {
-  //     const wrapper = setup()
+    test('It does not allow blacklisted addresses', () => {
+      const wrapper = setup()
 
-  //     const asset = createAsset('GAS', 1)
-  //     asset.amount = 1.523
-  //     asset.address = 'ARU4Sw9yyqgfjxfqF1TNwWHHFvLbAVdTj1'
-  //     wrapper.setState({ sendRowDetails: [asset] })
-  //     wrapper.find('form').simulate('submit')
+      const asset = createAsset('GAS', 1)
+      asset.amount = 1.523
+      asset.address = 'ARU4Sw9yyqgfjxfqF1TNwWHHFvLbAVdTj1'
+      wrapper.setState({ sendRowDetails: [asset] })
+      wrapper.find('form').simulate('submit')
 
-  //     jest.runAllTimers()
+      const errors = wrapper.instance().state.sendRowDetails[0].errors
 
-  //     const errors = wrapper.instance().state.sendRowDetails[0].errors
-
-  //     expect(errors.address).toBe(
-  //     'Address is blacklisted. This is a known phishing address.'
-  //     )
-  //   })
+      expect(errors.address).toBe(
+      'Address is blacklisted. This is a known phishing address.'
+      )
+    })
 
   test('It correctly sets max value', () => {
     const wrapper = setup()
@@ -185,10 +186,32 @@ describe('Send', () => {
     asset.amount = 1
     asset.address = 'AMKxqiSSLR89wLVEk5CoGRjKHRrmrR8bDr'
     wrapper.setState({ sendRowDetails: [asset] })
-    console.log(wrapper.find('form'))
     wrapper.find('form').simulate('submit')
-    console.log(wrapper.instance().state)
-    console.log(wrapper.instance().state.sendRowDetails[0].errors)
+
     expect(wrapper.instance().state.showConfirmSend).toBe(true)
+  })
+
+  test('It calls sendTransaction when you click confirm and send', () => {
+    const wrapper = setup({ sendTransaction: jest.fn(() => Promise.resolve()) })
+
+    const asset = createAsset('NEO', 1)
+    asset.amount = 1
+    asset.address = 'AMKxqiSSLR89wLVEk5CoGRjKHRrmrR8bDr'
+    wrapper.setState({ sendRowDetails: [asset] })
+
+    wrapper.find('form').simulate('submit')
+    wrapper.find('form').simulate('submit')
+
+    const sendTransaction = wrapper.instance().props.sendTransaction
+
+    expect(sendTransaction).toHaveBeenCalledTimes(1)
+    expect(sendTransaction).toHaveBeenCalledWith([
+      {
+        address: 'AMKxqiSSLR89wLVEk5CoGRjKHRrmrR8bDr',
+        amount: 1,
+        note: '',
+        symbol: 'NEO'
+      }
+    ])
   })
 })
