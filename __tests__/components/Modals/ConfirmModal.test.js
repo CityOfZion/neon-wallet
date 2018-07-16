@@ -17,17 +17,6 @@ describe('ConfirmModal', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
-  test('should render the title correctly', () => {
-    const wrapper = shallow(<ConfirmModal {...props} />)
-
-    expect(
-      wrapper
-        .dive()
-        .find('.modalHeaderTitle')
-        .text()
-    ).toEqual(props.title)
-  })
-
   test('should render the text correctly', () => {
     const wrapper = shallow(<ConfirmModal {...props} />)
 
