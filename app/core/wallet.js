@@ -6,6 +6,8 @@ import axios from 'axios'
 import { ASSETS } from './constants'
 import { toBigNumber } from './math'
 
+import blacklist from '../util/blacklist'
+
 const MIN_PASSPHRASE_LEN = 4
 
 let addressBlacklist: Array<string> | null = null
@@ -15,7 +17,11 @@ export const isBlacklisted = async (address: string): Promise<boolean> => {
     const { data } = await axios.get(
       'https://raw.githubusercontent.com/CityOfZion/phishing/master/blockedAddresses.json'
     )
-    addressBlacklist = data
+    if (data) {
+      addressBlacklist = data
+    } else {
+      addressBlacklist = blacklist
+    }
   }
   return addressBlacklist.includes(address)
 }
