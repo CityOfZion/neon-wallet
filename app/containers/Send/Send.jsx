@@ -9,6 +9,8 @@ import {
   minusNumber
 } from '../../core/math'
 
+import { isBlacklisted } from '../../core/wallet'
+
 import blacklist from '../../util/blacklist'
 
 import SendPageHeader from '../../components/Send/SendPageHeader'
@@ -191,14 +193,16 @@ export default class Send extends React.Component<Props> {
 
   handleSubmit = () => {
     const rows = [...this.state.sendRowDetails]
+    
+    const promises = rows.map((row, index) => this.validateRow(row, index))
+    
+    Promise.all(promises).then(values => {
+      const isValid = values.every(result => result === true)
 
-    const isValid = rows
-      .map((row, index) => this.validateRow(row, index))
-      .every(result => result === true)
-
-    if (isValid) {
-      this.setState({ showConfirmSend: true })
-    }
+      if (isValid) {
+        this.setState({ showConfirmSend: true })
+      }
+    })
   }
 
   handleSend = () => {
@@ -223,14 +227,16 @@ export default class Send extends React.Component<Props> {
 
   handleEditRecipientsClick = () => this.setState({ showConfirmSend: false })
 
-  validateRow = (row: object, index: number) => {
+  validateRow = async (row: object, index: number) => {
     const validAmount = this.validateAmount(
       row.amount,
       row.max,
       row.asset,
       index
     )
-    const validAddress = this.validateAddress(row.address, index)
+    const validAddress = await this.validateAddress(row.address, index)
+
+    console.log(validAmount, validAddress)
 
     return validAmount && validAddress
   }
@@ -272,7 +278,7 @@ export default class Send extends React.Component<Props> {
     return true
   }
 
-  validateAddress = (formAddress: string, index: number) => {
+  validateAddress = async (formAddress: string, index: number) => {
     const { address } = this.props
     const { errors } = this.state.sendRowDetails[index]
 
@@ -284,7 +290,7 @@ export default class Send extends React.Component<Props> {
       errors.address = "You can't send to your own address."
     }
 
-    const blackListedAddress = blacklist.includes(formAddress)
+    const blackListedAddress = await isBlacklisted(formAddress)
     if (blackListedAddress) {
       errors.address =
         'Address is blacklisted. This is a known phishing address.'
