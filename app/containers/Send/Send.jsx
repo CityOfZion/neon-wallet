@@ -18,7 +18,8 @@ import SendPanel from '../../components/Send/SendPanel'
 type Props = {
   sendableAssets: Object,
   prices: Object,
-  sendTransaction: (Array<SendEntryType>) => Object
+  sendTransaction: (Array<SendEntryType>) => Object,
+  contacts: Object
 }
 
 export default class Send extends React.Component<Props> {
@@ -71,34 +72,36 @@ export default class Send extends React.Component<Props> {
 
     let assets = Object.keys(sendableAssets)
 
-    if (showConfirmSend || sendSuccess) {
-      assets = assets.filter(asset =>
-        sendRowDetails
-          .reduce((accumulator, row) => accumulator.concat(row.asset), [])
-          .includes(asset)
-      )
-    }
-
-    return assets.map(asset => {
-      const { balance } = sendableAssets[asset]
-      const currentBalance = minusNumber(
-        balance,
-        this.calculateRowAmounts(asset)
-      )
-      const price = prices[asset]
-
-      const totalBalanceWorth = multiplyNumber(balance, price)
-      const remainingBalanceWorth = multiplyNumber(currentBalance, price)
-
-      return {
-        symbol: asset,
-        totalBalance: balance,
-        price,
-        currentBalance,
-        totalBalanceWorth,
-        remainingBalanceWorth
+    if (sendableAssets.length > 0) {
+      if (showConfirmSend || sendSuccess) {
+        assets = assets.filter(asset =>
+          sendRowDetails
+            .reduce((accumulator, row) => accumulator.concat(row.asset), [])
+            .includes(asset)
+        )
       }
-    })
+
+      return assets.map(asset => {
+        const { balance } = sendableAssets[asset]
+        const currentBalance = minusNumber(
+          balance,
+          this.calculateRowAmounts(asset)
+        )
+        const price = prices[asset]
+
+        const totalBalanceWorth = price ? multiplyNumber(balance, price) : 0
+        const remainingBalanceWorth = price ? multiplyNumber(currentBalance, price) : 0
+
+        return {
+          symbol: asset,
+          totalBalance: balance,
+          price,
+          currentBalance,
+          totalBalanceWorth,
+          remainingBalanceWorth
+        }
+      })
+    }
   }
 
   removeRow = (index: number) => {
