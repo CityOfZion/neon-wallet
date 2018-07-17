@@ -9,6 +9,7 @@ import { recoverWallet } from '../../modules/generateWallet'
 
 import Button from '../../components/Button'
 import { EXPLORERS, MODAL_TYPES, CURRENCIES } from '../../core/constants'
+import themes from '../../themes'
 
 const { dialog } = require('electron').remote
 
@@ -18,6 +19,8 @@ type Props = {
   explorer: string,
   setCurrency: string => any,
   currency: string,
+  setTheme: string => any,
+  theme: string,
   accounts: any,
   showModal: Function,
   showSuccessNotification: Object => any,
@@ -120,6 +123,11 @@ export default class Settings extends Component<Props, State> {
     setCurrency(e.target.value)
   }
 
+  updateThemeSettings = (e: Object) => {
+    const { setTheme } = this.props
+    setTheme(e.target.value)
+  }
+
   deleteWalletAccount = (label: string, key: string) => {
     const {
       showSuccessNotification,
@@ -168,7 +176,7 @@ export default class Settings extends Component<Props, State> {
   }
 
   render() {
-    const { accounts, explorer, currency } = this.props
+    const { accounts, explorer, currency, theme } = this.props
 
     return (
       <div id="settings">
@@ -179,6 +187,16 @@ export default class Settings extends Component<Props, State> {
           <div className="settingsItem">
             <div className="itemTitle">Tokens</div>
             <Button onClick={this.openTokenModal}>Manage Tokens</Button>
+          </div>
+          <div className="settingsItem">
+            <div className="itemTitle">Theme</div>
+            <select value={theme} onChange={this.updateThemeSettings}>
+              {Object.keys(themes).map((themeName: string) => (
+                <option value={themeName} key={themeName}>
+                  {themeName}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="settingsItem">
             <div className="itemTitle">Block Explorer</div>

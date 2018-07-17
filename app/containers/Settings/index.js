@@ -1,22 +1,38 @@
 // @flow
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { compose } from 'recompose'
-import { withData, withActions } from 'spunky'
+import {
+  connect
+} from 'react-redux'
+import {
+  bindActionCreators
+} from 'redux'
+import {
+  compose
+} from 'recompose'
+import {
+  withData,
+  withActions
+} from 'spunky'
 
 import Settings from './Settings'
 import withExplorerData from '../../hocs/withExplorerData'
 import withCurrencyData from '../../hocs/withCurrencyData'
+import withThemeData from '../../hocs/withThemeData'
 import accountsActions, {
   updateAccountsActions
 } from '../../actions/accountsActions'
-import { updateSettingsActions } from '../../actions/settingsActions'
-import { getNetworks } from '../../core/networks'
+import {
+  updateSettingsActions
+} from '../../actions/settingsActions'
+import {
+  getNetworks
+} from '../../core/networks'
 import {
   showErrorNotification,
   showSuccessNotification
 } from '../../modules/notifications'
-import { showModal } from '../../modules/modal'
+import {
+  showModal
+} from '../../modules/modal'
 
 const mapStateToProps = (state: Object) => ({
   networks: getNetworks()
@@ -31,15 +47,24 @@ const actionCreators = {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(actionCreators, dispatch)
 
-const mapAccountsDataToProps = accounts => ({ accounts })
+const mapAccountsDataToProps = accounts => ({
+  accounts
+})
 
 const mapAccountsActionsToProps = actions => ({
   setAccounts: accounts => actions.call(accounts)
 })
 
 const mapSettingsActionsToProps = actions => ({
-  setCurrency: currency => actions.call({ currency }),
-  setBlockExplorer: blockExplorer => actions.call({ blockExplorer })
+  setCurrency: currency => actions.call({
+    currency
+  }),
+  setBlockExplorer: blockExplorer => actions.call({
+    blockExplorer
+  }),
+  setTheme: theme => actions.call({
+    theme
+  })
 })
 
 export default compose(
@@ -50,6 +75,7 @@ export default compose(
   withData(accountsActions, mapAccountsDataToProps),
   withExplorerData(),
   withCurrencyData(),
+  withThemeData(),
   withActions(updateAccountsActions, mapAccountsActionsToProps),
   withActions(updateSettingsActions, mapSettingsActionsToProps)
 )(Settings)

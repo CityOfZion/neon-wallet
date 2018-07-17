@@ -21,7 +21,7 @@ body {
   font-size: 16px;
   padding: 0px;
   margin: 0px;
-  background-color: $main-background;
+  background-color: var(--main-background);
   color: $default-text;
   overflow: hidden;
   :focus {
