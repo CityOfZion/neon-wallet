@@ -82,7 +82,7 @@ export default class Send extends React.Component<Props> {
       )
     }
 
-    return assets.map(asset => {
+    return assets.filter(asset => prices[asset]).map(asset => {
       const { balance } = sendableAssets[asset]
       const currentBalance = minusNumber(
         balance,
@@ -90,8 +90,8 @@ export default class Send extends React.Component<Props> {
       )
       const price = prices[asset]
 
-      const totalBalanceWorth = price ? multiplyNumber(balance, price) : 0
-      const remainingBalanceWorth = price ? multiplyNumber(currentBalance, price) : 0
+      const totalBalanceWorth = multiplyNumber(balance, price)
+      const remainingBalanceWorth = multiplyNumber(currentBalance, price)
 
       return {
         symbol: asset,
@@ -195,7 +195,7 @@ export default class Send extends React.Component<Props> {
     const rows = [...this.state.sendRowDetails]
     
     const promises = rows.map((row, index) => this.validateRow(row, index))
-    
+
     Promise.all(promises).then(values => {
       const isValid = values.every(result => result === true)
 
@@ -235,8 +235,6 @@ export default class Send extends React.Component<Props> {
       index
     )
     const validAddress = await this.validateAddress(row.address, index)
-
-    console.log(validAmount, validAddress)
 
     return validAmount && validAddress
   }
