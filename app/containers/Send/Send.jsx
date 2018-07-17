@@ -82,7 +82,7 @@ export default class Send extends React.Component<Props> {
       )
     }
 
-    return assets.filter(asset => prices[asset]).map(asset => {
+    return assets.filter(asset => !!prices[asset]).map(asset => {
       const { balance } = sendableAssets[asset]
       const currentBalance = minusNumber(
         balance,
