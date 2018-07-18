@@ -38,10 +38,14 @@ type Props = {
   formatDate(Date): string
 }
 
+type State = {
+  windowHeight: number
+}
+
 const formatDate = (date: Date): string =>
   date.toLocaleString('en-US', { month: 'numeric', day: 'numeric' })
 
-export default class PriceHistoryChart extends React.Component<Props> {
+export default class PriceHistoryChart extends React.Component<Props, State> {
   static defaultProps = {
     timeKey: 'time',
     priceKey: 'close',
@@ -53,8 +57,7 @@ export default class PriceHistoryChart extends React.Component<Props> {
 
     return (
       <ResponsiveContainer
-        width="100%"
-        height={375}
+        width="97.5%"
         className={classNames(styles.priceHistoryChart, className)}
       >
         <LineChart

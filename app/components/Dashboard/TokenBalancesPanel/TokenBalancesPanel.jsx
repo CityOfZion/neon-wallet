@@ -4,7 +4,11 @@ import classNames from 'classnames'
 
 import Panel from '../../Panel'
 import styles from './TokenBalancesPanel.scss'
-import { toFixedDecimals } from '../../../core/formatters'
+import {
+  toFixedDecimals,
+  formatToRoundedShortNumber
+} from '../../../core/formatters'
+
 import { CURRENCIES } from '../../../core/constants'
 
 type Props = {
@@ -56,7 +60,9 @@ export default class TokenBalancesPanel extends React.Component<Props> {
       <div className={styles.tickerName}>{token.symbol}</div>
       <div className={styles.tokenName}>{token.name}</div>
       <div className={styles.price}>{this.formatPrice(token.symbol)}</div>
-      <div className={styles.balanceValue}>{token.balance}</div>
+      <div className={styles.balanceValue}>
+        {formatToRoundedShortNumber(Number(token.balance))}
+      </div>
     </div>
   )
 }

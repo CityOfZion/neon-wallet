@@ -9,7 +9,7 @@
   flex-direction: column;
 
   .dataColumn {
-    flex: 0 0 460px;
+    flex: 2;
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -22,7 +22,7 @@
     }
 
     .tokensPanel {
-      height: 400px;
+      height: 450px;
       margin-bottom: 24px;
     }
   }
@@ -33,7 +33,7 @@
   }
 
   .chartsColumn {
-    flex: 1 1 auto;
+    flex: 3;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -46,7 +46,7 @@
     }
 
     .portfolioPanel {
-      height: 400px;
+      height: 450px;
       margin-bottom: 24px;
     }
   }
