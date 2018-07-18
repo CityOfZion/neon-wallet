@@ -34,7 +34,8 @@ const mapTotalPortfolioValueToProps = ({ prices, balances }) => ({
   )
 })
 
-const mapPortfolioBalanceProps = ({ prices, balances, total }) => ({
+// sort balances by highest value and return only top 5
+const mapSortedPortfolioBalanceProps = ({ prices, balances, total }) => ({
   balances: map(balances, (tokenBalance, symbol) => {
     const balance = toNumber(tokenBalance)
     const value = balance * (prices[symbol] || 0)
@@ -42,6 +43,8 @@ const mapPortfolioBalanceProps = ({ prices, balances, total }) => ({
 
     return { symbol, balance, value, percent }
   })
+    .sort((a: Object, b: Object) => b.value - a.value)
+    .slice(0, 5)
 })
 
 export default compose(
@@ -50,5 +53,5 @@ export default compose(
   withBalancesData(mapBalancesDataToProps),
   withCurrencyData(),
   withProps(mapTotalPortfolioValueToProps),
-  withProps(mapPortfolioBalanceProps)
+  withProps(mapSortedPortfolioBalanceProps)
 )(PortfolioPanel)

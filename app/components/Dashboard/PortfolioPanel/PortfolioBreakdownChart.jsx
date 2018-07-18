@@ -34,7 +34,7 @@ type Props = {
 export default class PortfolioBreakdownChart extends React.Component<Props> {
   render = (): React$Node => {
     const { className } = this.props
-    const data = this.getData().slice(0, 5)
+    const data = this.getData()
 
     return (
       <ResponsiveContainer
@@ -82,9 +82,7 @@ export default class PortfolioBreakdownChart extends React.Component<Props> {
   }
 
   getData = () =>
-    map(this.props.balances, ({ value }, symbol) => ({ symbol, value })).sort(
-      (a: Object, b: Object) => a.value - b.value
-    )
+    map(this.props.balances, ({ value }, symbol) => ({ symbol, value }))
 
   formatValue = (value: number): string =>
     `$${formatThousands(value.toString())}`
