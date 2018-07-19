@@ -1,7 +1,7 @@
 .portfolioRow {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 10px 10px 10px 40px;
   align-items: center;
   width: 100%;
@@ -11,13 +11,12 @@
   .balance,
   .value,
   .percent {
-    flex: 1 1 0;
-    margin-right: 24px;
     font-size: 14px;
     font-weight: 100;
     color: #394152;
     overflow: hidden;
     text-overflow: ellipsis;
+    width: 20%;
   }
 
   .color {
@@ -25,15 +24,6 @@
     width: 15px;
     height: 15px;
     border-radius: 50%;
-  }
-
-  .symbol {
-    flex-grow: 1.67;
-  }
-
-  .balance,
-  .value {
-    flex-grow: 2;
   }
 
   .percent {
