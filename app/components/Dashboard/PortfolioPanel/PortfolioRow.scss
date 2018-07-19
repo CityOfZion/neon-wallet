@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding: 10px 10px 10px 40px;
   align-items: center;
   width: 100%;
 
@@ -12,7 +13,9 @@
   .percent {
     flex: 1 1 0;
     margin-right: 24px;
-    color: #282828;
+    font-size: 14px;
+    font-weight: 100;
+    color: #394152;
     overflow: hidden;
     text-overflow: ellipsis;
   }
@@ -39,4 +42,8 @@
     font-weight: 600;
     text-transform: uppercase;
   }
+}
+
+.oddColor {
+  background-color: #f2f2f2;
 }

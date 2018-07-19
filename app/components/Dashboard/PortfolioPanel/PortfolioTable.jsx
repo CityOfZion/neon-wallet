@@ -32,6 +32,7 @@ export default class PortfolioTable extends React.Component<Props> {
           <PortfolioRow
             {...data[index]}
             key={data[index].symbol}
+            index={index}
             color={COLORS[index % COLORS.length]}
             currency={currency}
           />
