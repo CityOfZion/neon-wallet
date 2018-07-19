@@ -14,9 +14,18 @@
     }
 
     .table {
-      flex: 1 1 auto;
+      /* flex: 1 1 auto; */
       overflow-x: hidden;
+      /* display: flex; */
       overflow-y: hidden;
+      /* margin-bottom: auto; */
+      height: 100%;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      /* justify-content: space-between; */
     }
   }
 }

@@ -1,8 +1,9 @@
 .portfolioRow {
   display: flex;
   flex-direction: row;
-  margin: 0 0 16px;
+  justify-content: space-between;
   align-items: center;
+  width: 100%;
 
   .color,
   .symbol,

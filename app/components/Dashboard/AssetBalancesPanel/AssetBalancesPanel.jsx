@@ -41,6 +41,12 @@ export default class AssetBalancesPanel extends React.Component<Props> {
         contentClassName={styles.centeredContent}
         renderHeader={this.renderHeader}
       >
+        <div className={styles.totalValue}>
+          <div className={styles.label}>Total</div>
+          <div id="walletTotal">
+            {this.getFormattedFiatBalance(this.getTotalValue())}
+          </div>
+        </div>
         <div id="balance" className={styles.assets}>
           <div className={styles.asset}>
             <div className={styles.label}>{ASSETS.NEO}</div>
@@ -79,12 +85,6 @@ export default class AssetBalancesPanel extends React.Component<Props> {
             >
               {this.getGASFormattedPriceChange()}
             </span>
-          </div>
-        </div>
-        <div className={styles.totalValue}>
-          <div className={styles.label}>Total</div>
-          <div id="walletTotal">
-            {this.getFormattedFiatBalance(this.getTotalValue())}
           </div>
         </div>
         <div className={styles.claim}>
