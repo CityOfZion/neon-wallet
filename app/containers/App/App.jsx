@@ -6,16 +6,19 @@ import Sidebar from './Sidebar'
 import Footer from './Footer'
 import ModalRenderer from '../ModalRenderer'
 import Notifications from '../Notifications'
+import withThemeData from '../../hocs/withThemeData'
 import { upgradeUserWalletNEP6 } from '../../modules/generateWallet'
 
 import styles from './App.scss'
+import themes from '../../themes'
 
 type Props = {
   children: React$Node,
   address: string,
   checkVersion: Function,
   showErrorNotification: Function,
-  location: Object
+  location: Object,
+  theme: string
 }
 
 const routesWithSideBar = [
@@ -40,10 +43,10 @@ class App extends Component<Props> {
   }
 
   render() {
-    const { children, address, location } = this.props
+    const { children, address, theme, location } = this.props
 
     return (
-      <div className={styles.container}>
+      <div style={themes[theme]} className={styles.container}>
         {address &&
           routesWithSideBar.includes(location.pathname) && (
             <Sidebar className={styles.sidebar} />
@@ -59,4 +62,4 @@ class App extends Component<Props> {
   }
 }
 
-export default App
+export default withThemeData()(App)
