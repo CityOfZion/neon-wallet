@@ -41,7 +41,6 @@
     min-width: 0;
 
     .pricesPanel {
-      //flex: 0 0 auto;
       height: 100%;
     }
 
@@ -78,12 +77,6 @@
 
       .refresh {
         cursor: pointer;
-
-        // &,
-        // & path {
-        //   color: #9599a2;
-        //   fill: currentColor;
-        // }
       }
 
       .loading {
