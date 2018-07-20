@@ -1,0 +1,32 @@
+.sendError {
+    .sendSerrorHeader {
+        padding: 40px 30px;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+
+        svg {
+            height: 150px;
+            width: 150px;
+            min-width: 150px;
+            margin-right: 25px;
+        }
+
+        .sendErrorHeaderTitle {
+            text-transform: uppercase;
+            font-weight: 300;
+            font-size: 2em;
+            margin: 0;
+        }
+    }
+
+    .sendErrorButton {
+        width: 200px;
+        margin: 0 auto;
+    }
+
+    .sendErrorDialogueBox {
+        margin: 0 auto 20px auto;
+    }
+}
+
