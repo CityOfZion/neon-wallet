@@ -45,7 +45,6 @@ const SendSuccess = ({ sendRowDetails, txid }: Props) => {
               amount={row.amount}
               asset={row.asset}
               address={row.address}
-              note={row.note}
               txid={txid}
             />
           ))}

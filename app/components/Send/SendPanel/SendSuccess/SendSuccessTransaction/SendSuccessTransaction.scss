@@ -12,11 +12,11 @@
 
 .sendIconContainer,
 .assetContainer {
-    width: 5%;
+    width: 10%;
 }
 
 .amountContainer {
-    width: 10%;
+    width: 15%;
 }
 
 .amount {
@@ -25,18 +25,9 @@
 }
 
 .addressContainer {
-    width: 40%;
+    width: 50%;
     display: flex;
     align-items: center;
-}
-
-.noteContainer {
-    width: 20%; 
-}
-
-.amount,
-.note {
-    text-align: center;
 }
 
 .buttonContainer {
@@ -55,11 +46,5 @@
     
     svg {
         margin-right: 5px;
-    }
-}
-
-@media (max-width: 950px) {
-    .noteContainer {
-        display: none;
     }
 }

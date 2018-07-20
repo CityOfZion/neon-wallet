@@ -15,8 +15,7 @@ type Props = {
   amount: string,
   address: string,
   showAddContactModal: () => null,
-  note: string,
-  network: string,
+  net: string,
   txid: string
 }
 
@@ -37,11 +36,8 @@ class SendSuccessTransaction extends Component<Props> {
 
   handleViewClick = () => shell.openExternal(this.createNeoscanUrl())
 
-  handleNoteLength = note =>
-    note.length > 20 ? `${note.substr(0, 19)}...` : note
-
   render() {
-    const { asset, amount, address, note } = this.props
+    const { asset, amount, address } = this.props
     return (
       <li className={styles.sendSuccessTransaction}>
         <div className={styles.sendIconContainer}>
@@ -59,9 +55,6 @@ class SendSuccessTransaction extends Component<Props> {
             className={styles.sendSuccessButton}
             text={address}
           />
-        </div>
-        <div className={styles.noteContainer}>
-          <p className={styles.note}>{this.handleNoteLength(note)}</p>
         </div>
         <div className={styles.buttonContainer}>
           <button

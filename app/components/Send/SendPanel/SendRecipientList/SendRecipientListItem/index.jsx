@@ -15,7 +15,6 @@ type Props = {
   asset: string,
   amount: number,
   address: string,
-  note: string,
   max: number,
   index: string,
   errors: Object,
@@ -132,17 +131,6 @@ class SendRecipientListItem extends Component<Props> {
       />
     )
 
-    const noteInput = showConfirmSend ? (
-      <DisplayInput value={note} />
-    ) : (
-      <TextInput
-        placeholder="Add a note"
-        value={note}
-        name="note"
-        onChange={this.handleFieldChange}
-      />
-    )
-
     const trashCanButton = showConfirmSend ? null : (
       <button
         type="button"
@@ -160,7 +148,6 @@ class SendRecipientListItem extends Component<Props> {
         <div className={styles.asset}>{selectInput}</div>
         <div className={styles.amount}>{numberInput}</div>
         <div className={styles.address}>{addressInput}</div>
-        <div className={styles.reference}>{noteInput}</div>
         <div className={styles.delete}>{trashCanButton}</div>
       </li>
     )

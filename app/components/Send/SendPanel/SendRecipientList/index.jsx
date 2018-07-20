@@ -59,14 +59,6 @@ const SendRecipientList = ({
         >
           Recipient Address
         </h3>
-        <h3
-          className={classNames(
-            styles.sendRecipientListHeader,
-            styles.reference
-          )}
-        >
-          Reference
-        </h3>
         <div className={styles.delete} />
       </div>
       <ul className={styles.sendRecipientList}>{renderRows()}</ul>
