@@ -18,7 +18,8 @@
     flex-direction: column;
     box-sizing: border-box;
     height: 100%;
-    padding: 20px;
+    padding: 24px 24px 48px;
+    overflow: scroll;
 
     .content {
       flex: 1 1 auto;

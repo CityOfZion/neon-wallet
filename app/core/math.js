@@ -22,3 +22,13 @@ export const isNumber = (value: string | number): boolean => {
     return false
   }
 }
+
+export const multiplyNumber = (x: string | number, y: string | number) =>
+  toBigNumber(x)
+    .mul(y)
+    .toNumber()
+
+export const minusNumber = (x: string | number, y: string | number) =>
+  toBigNumber(x)
+    .minus(y)
+    .toNumber()
