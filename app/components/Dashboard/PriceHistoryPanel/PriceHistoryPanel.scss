@@ -1,4 +1,6 @@
 .priceHistoryPanel {
+  display: flex;
+
   .header {
     display: flex;
     align-items: center;
@@ -24,4 +26,9 @@
       }
     }
   }
+}
+
+.flexContainer {
+  display: flex;
+  overflow-y: hidden !important;
 }

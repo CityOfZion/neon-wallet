@@ -1,12 +1,12 @@
 @import '../../../styles/variables';
 
 .sendAmountsPanel {
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-    overflow-x: scroll;
-    margin: 20px 0;
-    max-width: 100%;
-    background-color: $light-grey;
-    color: $dark-grey;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  overflow-x: scroll;
+  margin: 20px 0;
+  max-width: 100%;
+  background-color: $light-grey;
+  color: $dark-grey;
 }

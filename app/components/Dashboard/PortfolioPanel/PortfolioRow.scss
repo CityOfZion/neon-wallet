@@ -1,35 +1,29 @@
 .portfolioRow {
   display: flex;
   flex-direction: row;
-  margin: 0 0 16px;
+  justify-content: space-around;
+  padding: 10px 10px 10px 40px;
   align-items: center;
+  width: 100%;
 
   .color,
   .symbol,
   .balance,
   .value,
   .percent {
-    flex: 1 1 0;
-    margin-right: 24px;
-    color: #282828;
+    font-size: 14px;
+    font-weight: 100;
+    color: #394152;
     overflow: hidden;
     text-overflow: ellipsis;
+    width: 20%;
   }
 
   .color {
     flex: 0 0 auto;
-    width: 24px;
-    height: 24px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
-  }
-
-  .symbol {
-    flex-grow: 1.67;
-  }
-
-  .balance,
-  .value {
-    flex-grow: 2;
   }
 
   .percent {
@@ -38,4 +32,8 @@
     font-weight: 600;
     text-transform: uppercase;
   }
+}
+
+.oddColor {
+  background-color: #f2f2f2;
 }

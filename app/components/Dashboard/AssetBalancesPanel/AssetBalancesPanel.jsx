@@ -38,8 +38,15 @@ export default class AssetBalancesPanel extends React.Component<Props> {
     return (
       <Panel
         className={classNames(styles.assetBalancesPanel, className)}
+        contentClassName={styles.centeredContent}
         renderHeader={this.renderHeader}
       >
+        <div className={styles.totalValue}>
+          <div className={styles.label}>Total</div>
+          <div id="walletTotal">
+            {this.getFormattedFiatBalance(this.getTotalValue())}
+          </div>
+        </div>
         <div id="balance" className={styles.assets}>
           <div className={styles.asset}>
             <div className={styles.label}>{ASSETS.NEO}</div>
@@ -80,12 +87,6 @@ export default class AssetBalancesPanel extends React.Component<Props> {
             </span>
           </div>
         </div>
-        <div className={styles.totalValue}>
-          <div className={styles.label}>Total</div>
-          <div id="walletTotal">
-            {this.getFormattedFiatBalance(this.getTotalValue())}
-          </div>
-        </div>
         <div className={styles.claim}>
           <Claim className={styles.claimButton} />
         </div>
@@ -93,24 +94,11 @@ export default class AssetBalancesPanel extends React.Component<Props> {
     )
   }
 
-  renderHeader = () => {
-    const { loading, refresh } = this.props
-
-    return (
-      <div className={styles.header}>
-        <span>Balances</span>
-        <Tooltip title="Refresh">
-          <RefreshIcon
-            id="refresh"
-            className={classNames(styles.refresh, {
-              [styles.loading]: loading
-            })}
-            onClick={loading ? null : refresh}
-          />
-        </Tooltip>
-      </div>
-    )
-  }
+  renderHeader = () => (
+    <div className={styles.header}>
+      <span>Holdings</span>
+    </div>
+  )
 
   getFormattedFiatBalance = (value: number): string => {
     const { symbol } = CURRENCIES[this.props.currencyCode]

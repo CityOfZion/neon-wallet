@@ -6,12 +6,12 @@ import ContactForm from '../../Contacts/ContactForm'
 type Props = {
   address: string,
   hideModal: () => null,
-  triggerSuccessNotification: (text: string) => undefined,
+  triggerSuccessNotification: (text: string) => void,
   onSave: (name: string, address: string) => any
 }
 
 class AddContactModal extends Component<Props> {
-  handleSubmit = (name, address) => {
+  handleSubmit = (name: string, address: string) => {
     const { onSave, hideModal, triggerSuccessNotification } = this.props
 
     onSave(name, address)

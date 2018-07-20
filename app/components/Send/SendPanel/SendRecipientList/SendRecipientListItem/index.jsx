@@ -15,7 +15,7 @@ type Props = {
   amount: number,
   address: string,
   max: number,
-  index: string,
+  index: number,
   errors: Object,
   sendableAssets: Object,
   showConfirmSend: boolean,
@@ -26,7 +26,7 @@ type Props = {
 }
 
 class SendRecipientListItem extends Component<Props> {
-  handleFieldChange = e => {
+  handleFieldChange = (e: Object) => {
     const {
       index,
       updateRowField,
@@ -61,25 +61,22 @@ class SendRecipientListItem extends Component<Props> {
     removeRow(index)
   }
 
-  clearErrorsOnFocus = e => {
+  clearErrorsOnFocus = (e: Object) => {
     const { name } = e.target
     const { clearErrors, index } = this.props
 
     clearErrors(index, name)
   }
 
-  createAssetList = () =>
-    Object.keys(this.props.sendableAssets).map(asset => asset)
+  createAssetList = (): Array<string> => Object.keys(this.props.sendableAssets)
 
-  createContactList = () =>
-    Object.keys(this.props.contacts).map(contact => contact)
+  createContactList = (): Array<string> => Object.keys(this.props.contacts)
 
   render() {
     const {
       index,
       address,
       amount,
-      note,
       asset,
       errors,
       max,

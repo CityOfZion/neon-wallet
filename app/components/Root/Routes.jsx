@@ -38,7 +38,11 @@ export default () => (
         component={DisplayWalletAccounts}
       />
       <Route exact path={ROUTES.SETTINGS} component={Settings} />
-      <Route exact path={ROUTES.WALLET_MANAGER} component={WalletManager} />
+      <PrivateRoute
+        exact
+        path={ROUTES.WALLET_MANAGER}
+        component={WalletManager}
+      />
       <PrivateRoute exact path={ROUTES.DASHBOARD} component={Dashboard} />
       <PrivateRoute exact path={ROUTES.RECEIVE} component={Receive} />
       <PrivateRoute exact path={ROUTES.CONTACTS} component={Contacts} />

@@ -8,7 +8,7 @@ import { CURRENCIES } from '../../../core/constants'
 import styles from './SendAmountsPanel.scss'
 
 type Props = {
-  sendAmountsData: Array,
+  sendAmountsData: Array<*>,
   currencyCode: string
 }
 

@@ -38,8 +38,9 @@ export default class LoginLocalStorage extends Component<Props, State> {
           <div className={styles.inputMargin}>
             <SelectInput
               items={
-                Array.isArray(accounts) &&
-                accounts.map(account => account.label)
+                Array.isArray(accounts)
+                  ? accounts.map(account => account.label)
+                  : []
               }
               value={label || ''}
               placeholder="Select Wallet"

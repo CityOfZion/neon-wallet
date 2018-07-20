@@ -1,15 +1,22 @@
 // @flow
 import React, { Component } from 'react'
+import classNames from 'classnames'
+import { NavLink } from 'react-router-dom'
 
+import { ROUTES } from '../../core/constants'
 import AssetBalancesPanel from '../../components/Dashboard/AssetBalancesPanel'
 import TokenBalancesPanel from '../../components/Dashboard/TokenBalancesPanel'
 import PriceHistoryPanel from '../../components/Dashboard/PriceHistoryPanel'
 import PortfolioPanel from '../../components/Dashboard/PortfolioPanel'
+import Tooltip from '../../components/Tooltip'
+import Wallet from '../../assets/icons/wallet.svg'
+import RefreshIcon from '../../assets/icons/refresh.svg'
 
 import styles from './Dashboard.scss'
 
 type Props = {
-  loadWalletData: Function
+  loadWalletData: Function,
+  loading: boolean
 }
 
 const REFRESH_INTERVAL_MS = 30000
@@ -33,15 +40,42 @@ export default class Dashboard extends Component<Props> {
   }
 
   render() {
+    const { loadWalletData, loading } = this.props
     return (
       <div id="dashboard" className={styles.dashboard}>
-        <div className={styles.dataColumn}>
-          <AssetBalancesPanel className={styles.assetsPanel} />
-          <TokenBalancesPanel className={styles.tokensPanel} />
+        <div className={styles.dashboardHeader}>
+          <Tooltip
+            className={classNames(
+              styles.headerButtonContainer,
+              styles.manageButton
+            )}
+            title="Manage Wallets"
+          >
+            <NavLink id="wallet-manager" exact to={ROUTES.WALLET_MANAGER}>
+              <span> Manage Wallets </span>
+              <Wallet id="manage-wallets" />
+            </NavLink>
+          </Tooltip>
+          <Tooltip title="Refresh" className={styles.headerButtonContainer}>
+            <span onClick={loading ? null : loadWalletData}> Refresh </span>
+            <RefreshIcon
+              id="refresh"
+              className={classNames(styles.refresh, {
+                [styles.loading]: loading
+              })}
+              onClick={loading ? null : loadWalletData}
+            />
+          </Tooltip>
         </div>
-        <div className={styles.chartsColumn}>
-          <PriceHistoryPanel className={styles.pricesPanel} />
-          <PortfolioPanel className={styles.portfolioPanel} />
+        <div className={styles.panelContainer}>
+          <div className={styles.dataColumn}>
+            <TokenBalancesPanel className={styles.tokensPanel} />
+            <AssetBalancesPanel className={styles.assetsPanel} />
+          </div>
+          <div className={styles.chartsColumn}>
+            <PortfolioPanel className={styles.portfolioPanel} />
+            <PriceHistoryPanel className={styles.pricesPanel} />
+          </div>
         </div>
       </div>
     )

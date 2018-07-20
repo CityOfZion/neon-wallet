@@ -1,12 +1,12 @@
 // @flow
-import React, { ReactElement } from 'react'
+import React from 'react'
 
 import classNames from 'classnames'
 
 import styles from './DialogueBox.scss'
 
 type Props = {
-  icon: ReactElement,
+  icon: React$Node,
   className?: string,
   text: string
 }

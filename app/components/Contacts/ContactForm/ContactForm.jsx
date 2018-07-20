@@ -27,11 +27,12 @@ type Props = {
 
 type State = {
   nameError: string,
-  addressError: string
+  addressError: string,
+  ownAddress: string
 }
 
 export default class ContactForm extends React.Component<Props, State> {
-  constructor(props) {
+  constructor(props: Props) {
     super(props)
 
     this.state = {
@@ -195,12 +196,12 @@ export default class ContactForm extends React.Component<Props, State> {
     }
   }
 
-  handleChangeName = (event: SyntheticMouseEvent<*>) => {
+  handleChangeName = (event: Object) => {
     this.clearErrors(event.target.name)
     this.props.setName(event.target.value)
   }
 
-  handleChangeAddress = (event: SyntheticMouseEvent<*>) => {
+  handleChangeAddress = (event: Object) => {
     this.clearErrors(event.target.name)
     this.props.setAddress(event.target.value)
   }

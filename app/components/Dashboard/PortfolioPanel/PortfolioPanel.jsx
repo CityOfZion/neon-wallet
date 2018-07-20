@@ -23,7 +23,6 @@ type Props = {
 export default class PortfolioPanel extends React.Component<Props> {
   render = () => {
     const { className, balances, currency } = this.props
-
     return (
       <Panel
         className={classNames(styles.portfolioPanel, className)}

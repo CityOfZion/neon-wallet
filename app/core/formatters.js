@@ -17,6 +17,13 @@ export const formatGAS = (
   return toBigNumber(value).toFormat(decimals)
 }
 
+export const formatToRoundedShortNumber = (value: number): string => {
+  if (Number.isInteger(value)) return value.toString()
+  return toBigNumber(value)
+    .toFormat(SHORT_DISPLAY_DECIMAL_LENGTH)
+    .toString()
+}
+
 export const formatThousands = (value: ValueType): string =>
   toBigNumber(value).toFormat(0)
 

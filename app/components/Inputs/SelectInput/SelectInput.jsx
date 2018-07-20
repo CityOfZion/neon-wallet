@@ -15,14 +15,15 @@ type Props = {
   value?: string,
   placeholder?: string,
   items: Array<any>,
-  error: string,
+  error?: string,
   renderItem?: Function,
   renderAfter: Function,
   getItemValue: Function,
   getSearchResults: Function,
   onFocus?: Function,
   onChange?: Function,
-  customChangeEvent?: boolean
+  customChangeEvent?: boolean,
+  onToggle?: Function
 }
 
 type State = {
@@ -35,11 +36,11 @@ type RenderItemProps = {
   onSelect: Function
 }
 
-const defaultRenderAfter = props => <DropdownButton {...props} />
+const defaultRenderAfter = (props: Props) => <DropdownButton {...props} />
 
-const defaultItemValue = item => item
+const defaultItemValue = (item: string) => item
 
-const defaultSearchResults = (items, term) =>
+const defaultSearchResults = (items: Array<*>, term: string) =>
   items.filter(item => includes(toLower(item), toLower(term)))
 
 export default class SelectInput extends React.Component<Props, State> {
@@ -122,12 +123,12 @@ export default class SelectInput extends React.Component<Props, State> {
     const { search } = this.state
     const renderItem = this.props.renderItem || this.renderItem
 
-    return items.map(item =>
+    return (items.map(item =>
       renderItem(item, {
         search,
         onSelect: this.generateSelectHandler(item)
       })
-    )
+    ): Array<React$Node>)
   }
 
   renderItem = (item: Object, { search, onSelect }: RenderItemProps) => {

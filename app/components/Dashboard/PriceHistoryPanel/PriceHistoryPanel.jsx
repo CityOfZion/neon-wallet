@@ -44,7 +44,12 @@ export default class PriceHistoryPanel extends React.Component<Props> {
 
     return (
       <Panel
-        className={classNames(styles.priceHistoryPanel, className)}
+        className={classNames(
+          styles.priceHistoryPanel,
+
+          className
+        )}
+        contentClassName={styles.flexContainer}
         renderHeader={this.renderHeader}
       >
         <PriceHistoryChart
@@ -59,6 +64,7 @@ export default class PriceHistoryPanel extends React.Component<Props> {
 
   renderHeader = () => (
     <div className={styles.header}>
+      <span>Market Data</span>
       <span className={styles.asset} onClick={this.handleChangeAsset}>
         {this.props.asset}
         <DropdownIcon className={styles.icon} />
