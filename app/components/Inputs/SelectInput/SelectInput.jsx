@@ -7,18 +7,22 @@ import { noop, omit, trim, includes, toLower } from 'lodash'
 import TextInput from '../TextInput'
 import Dropdown from './Dropdown'
 import DropdownButton from './DropdownButton'
+
 import styles from './SelectInput.scss'
 
 type Props = {
   className?: string,
   value?: string,
+  placeholder?: string,
   items: Array<any>,
+  error: string,
   renderItem?: Function,
   renderAfter: Function,
   getItemValue: Function,
   getSearchResults: Function,
   onFocus?: Function,
-  onChange?: Function
+  onChange?: Function,
+  customChangeEvent?: boolean
 }
 
 type State = {
@@ -68,12 +72,17 @@ export default class SelectInput extends React.Component<Props, State> {
       'getItemValue',
       'getSearchResults',
       'onFocus',
-      'onChange'
+      'onChange',
+      'customChangeEvent'
     )
+
+    const { error } = this.props
+
+    const className = classNames(styles.selectInput, this.props.className)
 
     return (
       <Dropdown
-        className={classNames(styles.selectInput, this.props.className)}
+        className={className}
         open={this.state.open}
         onClose={this.handleClose}
         renderDropdown={this.renderDropdown}
@@ -81,9 +90,13 @@ export default class SelectInput extends React.Component<Props, State> {
         <TextInput
           {...passDownProps}
           className={styles.input}
-          renderAfter={this.renderAfter}
+          renderAfter={!error && this.renderAfter}
           onFocus={this.handleFocus}
-          onChange={this.handleChange}
+          onChange={
+            this.props.customChangeEvent
+              ? this.props.onChange
+              : this.handleChange
+          }
         />
       </Dropdown>
     )
@@ -94,28 +107,11 @@ export default class SelectInput extends React.Component<Props, State> {
   renderDropdown = ({ className }: { className: string }) => {
     const items = this.getItems()
     const hasItems = items.length > 0
-    const isSearch =
-      this.state.search.length > 0 &&
-      this.props.items &&
-      this.props.items.length > 0
 
     if (hasItems) {
       return (
         <div className={classNames(styles.dropdown, className)}>
           {this.renderItems(items)}
-        </div>
-      )
-    }
-    if (isSearch) {
-      return (
-        <div
-          className={classNames(
-            styles.dropdown,
-            styles.noSearchResults,
-            className
-          )}
-        >
-          No search results.
         </div>
       )
     }

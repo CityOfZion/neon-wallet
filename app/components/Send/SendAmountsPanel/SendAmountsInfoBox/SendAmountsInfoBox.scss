@@ -1,0 +1,43 @@
+@import '../../../../styles/variables';
+
+.sendAmountsInfoBox {
+    display: flex;
+    margin-right: 20px;
+
+    &:last-child {
+        margin-right: 0;
+    }
+
+    h3, p {
+        font-weight: normal;
+        margin: 0;
+    }
+
+    h3 {
+        transform: translateY(1px);
+    }
+
+    .assetTitle,
+    .assetAmounts {
+        margin-right: 7px;
+    }
+
+    .assetAmountsPrimary {
+        font-weight: bold;
+    }
+
+    .assetAmountsPrimary,
+    .totalAssetValue {
+        font-size: 1.3rem;
+    }
+
+    .assetAmountsSecondary {
+        text-align: right;
+        color: $medium-grey
+    }
+
+    .remainingAssetValue {
+        text-align: left;
+        color: $medium-grey;
+    }
+}

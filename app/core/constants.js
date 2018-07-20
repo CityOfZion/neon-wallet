@@ -27,7 +27,8 @@ export const ROUTES = {
   TRANSACTION_HISTORY: '/transactions',
   SETTINGS: '/settings',
   DISPLAY_WALLET_KEYS: '/display-wallet-keys',
-  WALLET_MANAGER: '/wallet-manager'
+  WALLET_MANAGER: '/wallet-manager',
+  SEND: '/send'
 }
 
 export const NOTIFICATION_LEVELS = {
@@ -54,7 +55,8 @@ export const MODAL_TYPES = {
   CONFIRM: 'CONFIRM',
   TOKEN_INFO: 'TOKEN_INFO',
   TOKEN: 'TOKEN',
-  ICO: 'ICO'
+  ICO: 'ICO',
+  ADD_CONTACT: 'ADD_CONTACT'
 }
 
 export const MAIN_NETWORK_ID = '1'
