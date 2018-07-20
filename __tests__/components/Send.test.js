@@ -145,21 +145,37 @@ describe('Send', () => {
     expect(errors.amount).toBe(undefined)
   })
 
-    test('It does not allow blacklisted addresses', () => {
-      const wrapper = setup()
+  test('It does not allow blacklisted addresses', () => {
+    const wrapper = setup()
 
-      const asset = createAsset('GAS', 1)
-      asset.amount = 1.523
-      asset.address = 'ARU4Sw9yyqgfjxfqF1TNwWHHFvLbAVdTj1'
-      wrapper.setState({ sendRowDetails: [asset] })
-      wrapper.find('form').simulate('submit')
+    const asset = createAsset('GAS', 1)
+    asset.amount = 1.523
+    asset.address = 'ARU4Sw9yyqgfjxfqF1TNwWHHFvLbAVdTj1'
+    wrapper.setState({ sendRowDetails: [asset] })
+    wrapper.find('form').simulate('submit')
 
-      const errors = wrapper.instance().state.sendRowDetails[0].errors
+    const errors = wrapper.instance().state.sendRowDetails[0].errors
 
-      expect(errors.address).toBe(
+    expect(errors.address).toBe(
       'Address is blacklisted. This is a known phishing address.'
-      )
-    })
+    )
+  })
+
+  test('It does not allow you to send to your own address', () => {
+    const wrapper = setup({ address: 'AMKxqiSSLR89wLVEk5CoGRjKHRrmrR8bDr' })
+
+    const asset = createAsset('GAS', 1)
+    asset.amount = 1.523
+    asset.address = 'AMKxqiSSLR89wLVEk5CoGRjKHRrmrR8bDr'
+    wrapper.setState({ sendRowDetails: [asset] })
+    wrapper.find('form').simulate('submit')
+
+    const errors = wrapper.instance().state.sendRowDetails[0].errors
+
+    expect(errors.address).toBe(
+      "You can't send to your own address."
+    )
+  })
 
   test('It correctly sets max value', () => {
     const wrapper = setup()

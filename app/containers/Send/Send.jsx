@@ -22,7 +22,16 @@ type Props = {
   contacts: Object
 }
 
-export default class Send extends React.Component<Props> {
+type State = {
+  showConfirmSend: boolean,
+  sendSuccess: boolean,
+  sendError: boolean,
+  sendErrorMessage: string,
+  txid: string,
+  sendRowDetails: Array
+}
+
+export default class Send extends React.Component<Props, State> {
   constructor(props) {
     super(props)
 

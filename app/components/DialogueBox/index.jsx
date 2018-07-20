@@ -1,5 +1,4 @@
 // @flow
-
 import React, { ReactElement } from 'react'
 
 import classNames from 'classnames'

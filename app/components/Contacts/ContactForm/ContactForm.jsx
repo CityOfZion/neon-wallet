@@ -25,10 +25,20 @@ type Props = {
   onSubmit: Function
 }
 
-export default class ContactForm extends React.Component<Props> {
-  state = {
-    nameError: '',
-    addressError: ''
+type State = {
+  nameError: string,
+  addressError: string
+}
+
+export default class ContactForm extends React.Component<Props, State> {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      nameError: '',
+      addressError: '',
+      ownAddress: this.props.address
+    }
   }
 
   static defaultProps = {
@@ -102,23 +112,21 @@ export default class ContactForm extends React.Component<Props> {
   }
 
   componentWillMount() {
-    const { newAddress, setAddress, address } = this.props
-
-    this.setState({ ownAddress: address })
+    const { newAddress, setAddress } = this.props
 
     if (newAddress) {
       setAddress('')
     }
   }
 
-  validate = (name, address) => {
+  validate = (name: string, address: string) => {
     const validName = this.validateName(name)
     const validAddress = this.validateAddress(address)
 
     return validName && validAddress
   }
 
-  validateName = name => {
+  validateName = (name: string) => {
     const { contacts, mode } = this.props
     let error
 
@@ -131,7 +139,9 @@ export default class ContactForm extends React.Component<Props> {
     }
 
     if (mode !== 'edit') {
-      const nameExists = Object.keys(contacts).filter(contactName => contactName === name)
+      const nameExists = Object.keys(contacts).filter(
+        (contactName: string) => contactName === name
+      )
 
       if (nameExists.length > 0) {
         error = 'You already have an account saved with that name.'
@@ -145,7 +155,7 @@ export default class ContactForm extends React.Component<Props> {
     return true
   }
 
-  validateAddress = address => {
+  validateAddress = (address: string) => {
     const { ownAddress } = this.state
     const { mode, contacts, formAddress } = this.props
     let error
@@ -175,7 +185,7 @@ export default class ContactForm extends React.Component<Props> {
     return true
   }
 
-  clearErrors = name => {
+  clearErrors = (name: string) => {
     if (name === 'name') {
       return this.setState({ nameError: '' })
     }
@@ -185,12 +195,12 @@ export default class ContactForm extends React.Component<Props> {
     }
   }
 
-  handleChangeName = (event: Object) => {
+  handleChangeName = (event: SyntheticMouseEvent<*>) => {
     this.clearErrors(event.target.name)
     this.props.setName(event.target.value)
   }
 
-  handleChangeAddress = (event: Object) => {
+  handleChangeAddress = (event: SyntheticMouseEvent<*>) => {
     this.clearErrors(event.target.name)
     this.props.setAddress(event.target.value)
   }
