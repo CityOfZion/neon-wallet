@@ -14,6 +14,7 @@ import { isBlacklisted } from '../../core/wallet'
 import SendPageHeader from '../../components/Send/SendPageHeader'
 import SendAmountsPanel from '../../components/Send/SendAmountsPanel'
 import SendPanel from '../../components/Send/SendPanel'
+import styles from './Send.scss'
 
 type Props = {
   sendableAssets: Object,
@@ -21,6 +22,7 @@ type Props = {
   sendTransaction: (Array<SendEntryType>) => Object,
   contacts: Object,
   currencyCode: string,
+  address: string
 }
 
 type State = {
@@ -29,19 +31,20 @@ type State = {
   sendError: boolean,
   sendErrorMessage: string,
   txid: string,
-  sendRowDetails: Array
+  sendRowDetails: Array<Object>,
+  address: string
 }
 
 export default class Send extends React.Component<Props, State> {
-  constructor(props) {
+  constructor(props: Props) {
     super(props)
-
     this.state = {
       showConfirmSend: false,
       sendSuccess: false,
       sendError: false,
       sendErrorMessage: '',
       txid: '',
+      address: '',
       sendRowDetails: []
     }
   }
@@ -71,8 +74,7 @@ export default class Send extends React.Component<Props, State> {
         errors: {}
       }
     }
-
-    return null
+    return {}
   }
 
   createSendAmountsData = () => {
@@ -84,31 +86,37 @@ export default class Send extends React.Component<Props, State> {
     if (showConfirmSend || sendSuccess) {
       assets = (assets.filter((asset: string) =>
         sendRowDetails
-          .reduce((accumulator: Array, row: Object) => accumulator.concat(row.asset), [])
+          .reduce(
+            (accumulator: Array<*>, row: Object) =>
+              accumulator.concat(row.asset),
+            []
+          )
           .includes(asset)
       ): Array<*>)
     }
 
-    return (assets.filter((asset: string) => !!prices[asset]).map((asset: string) => {
-      const { balance } = sendableAssets[asset]
-      const currentBalance = minusNumber(
-        balance,
-        this.calculateRowAmounts(asset)
-      )
-      const price = prices[asset]
+    return (assets
+      .filter((asset: string) => !!prices[asset])
+      .map((asset: string) => {
+        const { balance } = sendableAssets[asset]
+        const currentBalance = minusNumber(
+          balance,
+          this.calculateRowAmounts(asset)
+        )
+        const price = prices[asset]
 
-      const totalBalanceWorth = multiplyNumber(balance, price)
-      const remainingBalanceWorth = multiplyNumber(currentBalance, price)
+        const totalBalanceWorth = multiplyNumber(balance, price)
+        const remainingBalanceWorth = multiplyNumber(currentBalance, price)
 
-      return {
-        symbol: asset,
-        totalBalance: balance,
-        price,
-        currentBalance,
-        totalBalanceWorth,
-        remainingBalanceWorth
-      }
-    }): Array<*>) 
+        return {
+          symbol: asset,
+          totalBalance: balance,
+          price,
+          currentBalance,
+          totalBalanceWorth,
+          remainingBalanceWorth
+        }
+      }): Array<*>)
   }
 
   removeRow = (index: number) => {
@@ -177,9 +185,10 @@ export default class Send extends React.Component<Props, State> {
         .filter((row: Object) => row.asset === asset)
         .map((row: Object) => row.amount)
         .reduce(
-          (accumulator: number, currentValue: number | undefined) => accumulator.plus(currentValue || 0),
+          (accumulator: Object, currentValue: number | void) =>
+            accumulator.plus(currentValue || 0),
           toBigNumber(0)
-      ): Array<*>)
+        ): Array<*>)
     }
     return 0
   }
@@ -200,7 +209,9 @@ export default class Send extends React.Component<Props, State> {
 
   handleSubmit = () => {
     const rows = [...this.state.sendRowDetails]
-    const promises = rows.map((row: Object, index: number) => this.validateRow(row, index))
+    const promises = rows.map((row: Object, index: number) =>
+      this.validateRow(row, index)
+    )
 
     Promise.all(promises).then(values => {
       const isValid = values.every((result: boolean) => result)
@@ -218,7 +229,7 @@ export default class Send extends React.Component<Props, State> {
     const entries = sendRowDetails.map((row: Object) => ({
       address: row.address,
       amount: toNumber(row.amount),
-      symbol: row.asset,
+      symbol: row.asset
     }))
 
     sendTransaction(entries)
@@ -232,7 +243,7 @@ export default class Send extends React.Component<Props, State> {
 
   handleEditRecipientsClick = () => this.setState({ showConfirmSend: false })
 
-  validateRow = async (row: object, index: number) => {
+  validateRow = async (row: Object, index: number) => {
     const validAmount = this.validateAmount(
       row.amount,
       row.max,
@@ -336,10 +347,13 @@ export default class Send extends React.Component<Props, State> {
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 
     return (
-      <section>
+      <section className={styles.sendContainer}>
         <SendPageHeader />
         {!noSendableAssets && (
-          <SendAmountsPanel sendAmountsData={this.createSendAmountsData()} currencyCode={currencyCode} />
+          <SendAmountsPanel
+            sendAmountsData={this.createSendAmountsData()}
+            currencyCode={currencyCode}
+          />
         )}
         <SendPanel
           sendRowDetails={sendRowDetails}

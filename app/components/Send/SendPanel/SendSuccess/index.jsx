@@ -1,5 +1,4 @@
 // @flow
-
 import React from 'react'
 
 import CheckMarkIcon from '../../../../assets/icons/confirm.svg'
@@ -11,7 +10,7 @@ import { createFormattedDate } from '../../../../util/createFormattedDate'
 import styles from './SendSuccess.scss'
 
 type Props = {
-  sendRowDetails: Array,
+  sendRowDetails: Array<*>,
   txid: string
 }
 

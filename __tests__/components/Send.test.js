@@ -204,8 +204,9 @@ describe('Send', () => {
     wrapper.setState({ sendRowDetails: [asset] })
     wrapper.find('form').simulate('submit')
 
-    setTimeout(() =>
-      expect(wrapper.instance().state.showConfirmSend).toBe(true), 0
+    setTimeout(
+      () => expect(wrapper.instance().state.showConfirmSend).toBe(true),
+      0
     )
   })
 
@@ -233,6 +234,5 @@ describe('Send', () => {
         }
       ])
     }, 0)
-    
   })
 })

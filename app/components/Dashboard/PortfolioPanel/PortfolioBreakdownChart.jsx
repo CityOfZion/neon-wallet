@@ -1,11 +1,19 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts'
+import {
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Label
+} from 'recharts'
+// $FlowFixMe
 import { map, times } from 'lodash'
 
 import COLORS from './colors'
-import { formatThousands } from '../../../core/formatters' // formatFiat
+import { formatThousands } from '../../../core/formatters'
 import { CURRENCIES } from '../../../core/constants'
 
 import styles from './PortfolioBreakdownChart.scss'
@@ -38,8 +46,8 @@ export default class PortfolioBreakdownChart extends React.Component<Props> {
             data={data}
             dataKey="value"
             nameKey="symbol"
-            innerRadius={40}
-            outerRadius={75}
+            innerRadius={70}
+            outerRadius={78}
           >
             {times(data.length, index => (
               <Cell
@@ -48,11 +56,30 @@ export default class PortfolioBreakdownChart extends React.Component<Props> {
                 stroke={COLORS[index]}
               />
             ))}
+            <Label
+              fontSize={22}
+              value={this.getTotalValueWithPrice()}
+              position="center"
+              id="totalWalletValue"
+            />
           </Pie>
           <Tooltip formatter={this.formatValue} />
         </PieChart>
       </ResponsiveContainer>
     )
+  }
+
+  getTotalValueWithPrice = () => {
+    const balanceInfo = map(this.props.balances, ({ value }, symbol) => ({
+      symbol,
+      value
+    }))
+
+    const total = balanceInfo.reduce(
+      (accum, current) => accum + current.value,
+      0
+    )
+    return this.formatPrice(total, formatThousands)
   }
 
   getData = () =>

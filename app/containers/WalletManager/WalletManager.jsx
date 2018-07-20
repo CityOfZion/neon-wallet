@@ -145,7 +145,7 @@ class WalletManager extends Component<Props> {
       <div className={styles.walletManager}>
         <div className={styles.panelHeaderContainer}>
           <div className={styles.navRow}>
-            <BackButton routeTo={ROUTES.HOME} />
+            <BackButton routeTo={ROUTES.DASHBOARD} />
             Wallet Manager
           </div>
         </div>

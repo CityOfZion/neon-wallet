@@ -1,43 +1,91 @@
 @import '../../styles/variables';
+@import '../../styles/animations';
 
 .dashboard {
   display: flex;
   align-items: stretch;
   justify-content: flex-start;
   height: 100%;
+  flex-direction: column;
 
   .dataColumn {
-    flex: 0 0 440px;
+    flex: 2;
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    justify-content: center;
     margin-right: 24px;
 
     .assetsPanel {
-      flex: 0 0 auto;
-      margin-bottom: 24px;
+      // flex: 0 0 auto;
+      height: 100%;
     }
 
     .tokensPanel {
-      flex: 1 1 auto;
-      min-height: 150px;
+      height: 450px;
+      margin-bottom: 24px;
     }
   }
 
+  .panelContainer {
+    display: flex;
+    height: 100%;
+  }
+
   .chartsColumn {
-    flex: 1 1 auto;
+    flex: 3;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: stretch;
     min-width: 0;
 
     .pricesPanel {
-      flex: 0 0 auto;
-      margin-bottom: 24px;
+      height: 100%;
     }
 
     .portfolioPanel {
-      flex: 1 1 auto;
+      height: 450px;
+      margin-bottom: 24px;
+    }
+  }
+
+  .dashboardHeader {
+    display: flex;
+    justify-content: flex-end;
+    display: flex;
+    align-items: center;
+    margin-top: -10px;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    .manageButton {
+      margin-right: 25px;
+    }
+
+    a {
+      text-decoration: none;
+      color: black;
+      align-items: center;
+      display: flex;
+    }
+
+    .headerButtonContainer {
+      display: flex !important;
+      cursor: pointer;
+      align-items: center;
+
+      .refresh {
+        cursor: pointer;
+      }
+
+      .loading {
+        animation: spin 2s linear infinite;
+      }
+
+      span {
+        margin-right: 10px;
+      }
     }
   }
 }

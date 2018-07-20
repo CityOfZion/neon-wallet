@@ -8,7 +8,7 @@ import SendRecipientListItem from './SendRecipientListItem'
 import styles from './SendRecipientList.scss'
 
 type Props = {
-  sendRowDetails: Array,
+  sendRowDetails: Array<*>,
   sendableAssets: Object,
   contacts: Object,
   showConfirmSend: boolean,

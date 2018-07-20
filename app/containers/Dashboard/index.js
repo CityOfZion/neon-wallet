@@ -13,6 +13,10 @@ import withNetworkData from '../../hocs/withNetworkData'
 import withFilteredTokensData from '../../hocs/withFilteredTokensData'
 import { getNotifications } from '../../modules/notifications'
 import { showModal } from '../../modules/modal'
+import withLoadingProp from '../../hocs/withLoadingProp'
+import withSuccessNotification from '../../hocs/withSuccessNotification'
+import withFailureNotification from '../../hocs/withFailureNotification'
+import balancesActions from '../../actions/balancesActions'
 
 import Dashboard from './Dashboard'
 
@@ -49,5 +53,6 @@ export default compose(
   withFilteredTokensData(),
   withInitialCall(dashboardActions),
   withReset(accountActions, ['networkId']),
-  withActions(accountActions, mapAccountActionsToProps)
+  withActions(accountActions, mapAccountActionsToProps),
+  withLoadingProp(balancesActions)
 )(Dashboard)

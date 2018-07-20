@@ -17,7 +17,7 @@ import SendIcon from '../../../assets/icons/send.svg'
 import styles from './SendPanel.scss'
 
 type Props = {
-  sendRowDetails: Array,
+  sendRowDetails: Array<*>,
   sendableAssets: Object,
   contacts: Object,
   showConfirmSend: boolean,

@@ -14,7 +14,7 @@ type Props = {
   asset: string,
   amount: string,
   address: string,
-  showAddContactModal: () => null,
+  showAddContactModal: ({ address: string }) => null,
   net: string,
   txid: string
 }

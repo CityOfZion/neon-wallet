@@ -8,7 +8,7 @@ import { pluralize } from '../../../../util/pluralize'
 import styles from '../SendPanel.scss'
 
 type Props = {
-  sendRowDetails: Array,
+  sendRowDetails: Array<*>,
   addRow: () => any,
   resetViews: () => any,
   showConfirmSend: boolean,

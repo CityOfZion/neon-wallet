@@ -22,9 +22,9 @@ $size: 64px;
   justify-content: center;
   align-items: center;
 
-  svg {
-    width: 24px;
-    height: 24px;
+  img {
+    width: 30px;
+    height: 30px;
   }
 }
 
@@ -49,7 +49,7 @@ $size: 64px;
   &.active,
   &:hover {
     background: #fff;
-    border-image: linear-gradient(to bottom, #ee6d66, #a866ee) 1 100%;
+    border-image: linear-gradient(to bottom, #66eb8e, #6bdaf6) 1 100%;
 
     &,
     & svg,
