@@ -60,6 +60,7 @@ export default class PortfolioBreakdownChart extends React.Component<Props> {
               fontSize={22}
               value={this.getTotalValueWithPrice()}
               position="center"
+              id="totalWalletValue"
             />
           </Pie>
           <Tooltip formatter={this.formatValue} />
