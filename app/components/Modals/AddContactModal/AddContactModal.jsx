@@ -1,5 +1,4 @@
 // @flow
-
 import React, { Component } from 'react'
 import BaseModal from '../BaseModal'
 import ContactForm from '../../Contacts/ContactForm'
