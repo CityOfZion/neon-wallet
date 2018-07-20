@@ -7,8 +7,7 @@ import { multiplyNumber } from '../../../../core/math'
 
 type Props = {
   assetName: string,
-  assetPrice: number,
-  totalAmount: number,
+  totalAmount: string,
   remainingAmount: number,
   totalBalanceWorth: number,
   remainingBalanceWorth: number,
@@ -17,7 +16,6 @@ type Props = {
 
 const SendAmountsInfoBox = ({
   assetName,
-  assetPrice,
   totalAmount,
   totalBalanceWorth,
   remainingBalanceWorth,
@@ -29,19 +27,17 @@ const SendAmountsInfoBox = ({
       <h3>{assetName}</h3>
     </div>
     <div className={styles.assetAmounts}>
-      <p className={styles.assetAmountsPrimary}>{totalAmount.toFixed(2)}</p>
-      <p className={styles.assetAmountsSecondary}>
-        {remainingAmount.toFixed(2)}
-      </p>
+      <p className={styles.assetAmountsPrimary}>{totalAmount}</p>
+      <p className={styles.assetAmountsSecondary}>{remainingAmount}</p>
     </div>
     <div className={styles.assetValue}>
       <p className={styles.totalAssetValue}>
         {fiatCurrencySymbol}
-        {totalBalanceWorth}
+        {totalBalanceWorth.toFixed(2)}
       </p>
       <p className={styles.remainingAssetValue}>
         {fiatCurrencySymbol}
-        {remainingBalanceWorth}
+        {remainingBalanceWorth.toFixed(2)}
       </p>
     </div>
   </div>
