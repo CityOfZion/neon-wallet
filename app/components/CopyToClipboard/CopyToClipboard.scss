@@ -1,6 +1,8 @@
 .copyToClipboard {
   margin-left: 5px;
   cursor: pointer;
+  border: none;
+  background: transparent;
 
   &:hover {
     opacity: .7;

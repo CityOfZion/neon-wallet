@@ -1,0 +1,48 @@
+@import '../../../../styles/variables';
+
+.sendSuccessHeader {
+    padding: 60px 30px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.sendSuccessHeaderIcon {
+    height: 150px;
+    width: 150px;
+    min-width: 150px;
+    margin-right: 25px;
+}
+
+.sendSuccessHeaderInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.sendSuccessHeaderInfoText {
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 2em;
+    margin: 0;
+}
+
+.sendSuccessParagraphText {
+    color: lighten($dark-grey, 5%);
+    margin-bottom: 0;
+}
+
+.sendSuccessBody {
+    margin: 0 0 30px 0;
+}
+
+.sendSuccessBodyHeaderText {
+    font-size: .8rem;
+    text-transform: uppercase;
+    padding: 0 30px;
+}
+
+.sendSuccessBodyList {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}

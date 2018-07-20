@@ -1,0 +1,72 @@
+@import '../../../styles/variables';
+
+.sendPanelHeader {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+
+    .sendPanelHeaderInfo {
+        display: flex;
+    }
+
+    .sendPanelHeaderInfo,
+    .sendPanelRecipients {
+        color: $dark-grey;
+    }
+
+    .sendPanelRecipients {
+        margin-left: 15px;
+    }
+
+    .sendPanelHeaderButtons {
+        display: flex;
+    }
+
+    .sendPanelHeaderButton {
+        border: none;
+        background: transparent;
+        padding: 8px;
+        display: flex;
+        margin-right: 10px;
+        align-items: center;
+        font-size: 1rem;
+        align-items: center;
+        cursor: pointer;
+        .sendPanelHeaderButtonIcon {
+            color: $dark-grey;
+            margin-right: 10px;
+        }
+        &:last-child {
+            padding-right: 0;
+            margin-right: 0;
+        }
+    }
+
+    .confirmButtonsContainer {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.sendFormButton {
+    width: 200px;
+    margin: 50px auto 10px auto;
+}
+
+.confirmButtonsContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.confirmSendButtons {
+    margin: 0 15px;
+    width: 200px;
+}
+
+.sendSuccessContent {
+    padding: 0
+}
+
+.sendSuccessPanel {
+    margin-top: 25px;
+}
