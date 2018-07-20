@@ -1,3 +1,4 @@
+// @flow
 import { compose } from 'recompose'
 import { values, omit } from 'lodash'
 import { withData } from 'spunky'
@@ -16,10 +17,10 @@ import withCurrencyData from '../../hocs/withCurrencyData'
 import withFilteredTokensData from '../../hocs/withFilteredTokensData'
 import contactsActions from '../../actions/contactsActions'
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch: Function) =>
   bindActionCreators({ sendTransaction }, dispatch)
 
-const filterSendableAssets = balances => {
+const filterSendableAssets = (balances: Object) => {
   const sendableAssets = {}
   if (Number(balances.NEO > 0)) {
     sendableAssets.NEO = { symbol: 'NEO', balance: balances.NEO }
@@ -41,13 +42,13 @@ const filterSendableAssets = balances => {
   return sendableAssets
 }
 
-const mapPricesDataToProps = prices => ({
+const mapPricesDataToProps = (prices: Object) => ({
   prices
 })
 
 const mapContactsDataToProps = (contacts: Object) => ({ contacts })
 
-const mapBalanceDataToProps = balances => ({
+const mapBalanceDataToProps = (balances: Object) => ({
   NEO: balances.NEO,
   GAS: balances.GAS,
   tokenBalances: values(omit(balances, 'NEO', 'GAS')),
