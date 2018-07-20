@@ -19,11 +19,10 @@ import Logo from '../../../assets/logo.svg'
 
 type Props = {
   className: string,
-  showSendModal: Function,
   showTokenSaleModal: Function
 }
 
-const Sidebar = ({ className, showSendModal, showTokenSaleModal }: Props) => (
+const Sidebar = ({ className, showTokenSaleModal }: Props) => (
   <div className={classNames(styles.container, className)}>
     <div className={styles.group}>
       <div className={styles.logo}>
@@ -54,7 +53,7 @@ const Sidebar = ({ className, showSendModal, showTokenSaleModal }: Props) => (
         </NavLink>
       </Tooltip>
 
-      <Tooltip title="Send Development" position="right">
+      <Tooltip title="Send" position="right">
         <NavLink
           id="send"
           exact
@@ -64,12 +63,6 @@ const Sidebar = ({ className, showSendModal, showTokenSaleModal }: Props) => (
         >
           <SendIcon />
         </NavLink>
-      </Tooltip>
-
-      <Tooltip title="Send" position="right">
-        <a id="send" className={styles.navItem} onClick={showSendModal}>
-          <SendIcon />
-        </a>
       </Tooltip>
 
       <Tooltip title="Receive" position="right">

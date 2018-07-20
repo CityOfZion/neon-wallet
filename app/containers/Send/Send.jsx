@@ -19,7 +19,8 @@ type Props = {
   sendableAssets: Object,
   prices: Object,
   sendTransaction: (Array<SendEntryType>) => Object,
-  contacts: Object
+  contacts: Object,
+  currencyCode: string,
 }
 
 type State = {
@@ -46,7 +47,7 @@ export default class Send extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    this.setState(prevState => {
+    this.setState((prevState: Object) => {
       const newState = [...prevState.sendRowDetails]
 
       newState.push(this.generateRow())
@@ -81,14 +82,14 @@ export default class Send extends React.Component<Props, State> {
     let assets = Object.keys(sendableAssets)
 
     if (showConfirmSend || sendSuccess) {
-      assets = assets.filter(asset =>
+      assets = (assets.filter((asset: string) =>
         sendRowDetails
-          .reduce((accumulator, row) => accumulator.concat(row.asset), [])
+          .reduce((accumulator: Array, row: Object) => accumulator.concat(row.asset), [])
           .includes(asset)
-      )
+      ): Array<*>)
     }
 
-    return assets.filter(asset => !!prices[asset]).map(asset => {
+    return (assets.filter((asset: string) => !!prices[asset]).map((asset: string) => {
       const { balance } = sendableAssets[asset]
       const currentBalance = minusNumber(
         balance,
@@ -107,11 +108,11 @@ export default class Send extends React.Component<Props, State> {
         totalBalanceWorth,
         remainingBalanceWorth
       }
-    })
+    }): Array<*>) 
   }
 
   removeRow = (index: number) => {
-    this.setState(prevState => {
+    this.setState((prevState: Object) => {
       const newState = [...prevState.sendRowDetails]
 
       if (newState.length > 1) {
@@ -122,7 +123,7 @@ export default class Send extends React.Component<Props, State> {
   }
 
   addRow = () => {
-    this.setState(prevState => {
+    this.setState((prevState: Object) => {
       const newState = [...prevState.sendRowDetails]
 
       if (newState.length < 5) {
@@ -134,7 +135,7 @@ export default class Send extends React.Component<Props, State> {
   }
 
   updateRowField = (index: number, field: string, value: string) => {
-    this.setState(prevState => {
+    this.setState((prevState: Object) => {
       const newState = [...prevState.sendRowDetails]
 
       const objectToModify = newState[index]
@@ -172,13 +173,13 @@ export default class Send extends React.Component<Props, State> {
     const rows = [...this.state.sendRowDetails]
 
     if (rows.length > 0) {
-      return rows
-        .filter(row => row.asset === asset)
-        .map(row => row.amount)
+      return (rows
+        .filter((row: Object) => row.asset === asset)
+        .map((row: Object) => row.amount)
         .reduce(
-          (accumulator, currentValue) => accumulator.plus(currentValue || 0),
+          (accumulator: number, currentValue: number | undefined) => accumulator.plus(currentValue || 0),
           toBigNumber(0)
-        )
+      ): Array<*>)
     }
     return 0
   }
@@ -199,10 +200,10 @@ export default class Send extends React.Component<Props, State> {
 
   handleSubmit = () => {
     const rows = [...this.state.sendRowDetails]
-    const promises = rows.map((row, index) => this.validateRow(row, index))
+    const promises = rows.map((row: Object, index: number) => this.validateRow(row, index))
 
     Promise.all(promises).then(values => {
-      const isValid = values.every(result => result === true)
+      const isValid = values.every((result: boolean) => result)
 
       if (isValid) {
         this.setState({ showConfirmSend: true })
@@ -214,17 +215,17 @@ export default class Send extends React.Component<Props, State> {
     const { sendTransaction } = this.props
     const { sendRowDetails } = this.state
 
-    const entries = sendRowDetails.map(row => ({
+    const entries = sendRowDetails.map((row: Object) => ({
       address: row.address,
       amount: toNumber(row.amount),
       symbol: row.asset,
     }))
 
     sendTransaction(entries)
-      .then(result => {
+      .then((result: Object) => {
         this.setState({ sendSuccess: true, txid: result.txid })
       })
-      .catch(error => {
+      .catch((error: Object) => {
         this.setState({ sendError: true, sendErrorMessage: error.message })
       })
   }
@@ -307,7 +308,7 @@ export default class Send extends React.Component<Props, State> {
   }
 
   clearErrors = (index: number, field: string) => {
-    this.setState(prevState => {
+    this.setState((prevState: Object) => {
       const newState = [...prevState.sendRowDetails]
 
       const objectToClear = newState[index]
@@ -331,14 +332,14 @@ export default class Send extends React.Component<Props, State> {
       sendErrorMessage,
       txid
     } = this.state
-    const { sendableAssets, contacts } = this.props
+    const { sendableAssets, contacts, currencyCode } = this.props
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 
     return (
       <section>
         <SendPageHeader />
         {!noSendableAssets && (
-          <SendAmountsPanel sendAmountsData={this.createSendAmountsData()} />
+          <SendAmountsPanel sendAmountsData={this.createSendAmountsData()} currencyCode={currencyCode} />
         )}
         <SendPanel
           sendRowDetails={sendRowDetails}
