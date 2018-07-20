@@ -39,7 +39,9 @@ app.on('ready', () => {
     })
 
     if (process.env.NODE_ENV === 'development') {
-      mainWindow.webContents.openDevTools()
+      mainWindow.webContents.once('dom-ready', () => {
+        mainWindow.webContents.openDevTools()
+      })
     }
 
     if (process.platform !== 'darwin') {

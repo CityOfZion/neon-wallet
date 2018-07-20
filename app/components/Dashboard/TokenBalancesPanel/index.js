@@ -33,14 +33,15 @@ const mapBalancesActionsToProps = (actions, props) => ({
 })
 
 export default compose(
-  withProgressPanel(balancesActions, { title: 'Token Balances' }),
-  withBalancesData(mapBalanceDataToProps),
   withCurrencyData('currencyCode'),
-
-  // expose data & functionality needed for `refresh` action
+  
   withNetworkData(),
   withAuthData(),
   withFilteredTokensData(),
+  withProgressPanel(balancesActions, { title: 'Token Balances' }),
+  withBalancesData(mapBalanceDataToProps),
+
+  // expose data & functionality needed for `refresh` action
   withActions(balancesActions, mapBalancesActionsToProps),
   withLoadingProp(balancesActions)
 )(TokenBalancesPanel)
