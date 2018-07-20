@@ -11,8 +11,6 @@ import {
 
 import { isBlacklisted } from '../../core/wallet'
 
-import blacklist from '../../util/blacklist'
-
 import SendPageHeader from '../../components/Send/SendPageHeader'
 import SendAmountsPanel from '../../components/Send/SendAmountsPanel'
 import SendPanel from '../../components/Send/SendPanel'
@@ -58,7 +56,6 @@ export default class Send extends React.Component<Props> {
         asset: firstSendableAssetName,
         amount: 0,
         address: '',
-        note: '',
         max: this.calculateMaxValue(firstSendableAssetName),
         id: uniqueId(),
         errors: {}
@@ -193,7 +190,6 @@ export default class Send extends React.Component<Props> {
 
   handleSubmit = () => {
     const rows = [...this.state.sendRowDetails]
-    
     const promises = rows.map((row, index) => this.validateRow(row, index))
 
     Promise.all(promises).then(values => {
@@ -213,7 +209,6 @@ export default class Send extends React.Component<Props> {
       address: row.address,
       amount: toNumber(row.amount),
       symbol: row.asset,
-      note: row.note
     }))
 
     sendTransaction(entries)
