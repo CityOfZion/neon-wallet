@@ -3,14 +3,16 @@
 import React from 'react'
 
 import SendAmountsInfoBox from './SendAmountsInfoBox'
+import { CURRENCIES } from '../../../core/constants'
 
 import styles from './SendAmountsPanel.scss'
 
 type Props = {
-  sendAmountsData: Array
+  sendAmountsData: Array,
+  currencyCode: string
 }
 
-const SendAmountsPanel = ({ sendAmountsData }) => (
+const SendAmountsPanel = ({ sendAmountsData, currencyCode }: Props) => (
   <section className={styles.sendAmountsPanel}>
     {sendAmountsData.map(dataset => (
       <SendAmountsInfoBox
@@ -21,7 +23,7 @@ const SendAmountsPanel = ({ sendAmountsData }) => (
         remainingAmount={dataset.currentBalance}
         totalBalanceWorth={dataset.totalBalanceWorth}
         remainingBalanceWorth={dataset.remainingBalanceWorth}
-        fiatCurrencySymbol="$"
+        fiatCurrencySymbol={CURRENCIES[currencyCode].symbol}
       />
     ))}
   </section>

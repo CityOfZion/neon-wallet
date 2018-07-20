@@ -3,7 +3,6 @@ import React from 'react'
 import { omit } from 'lodash'
 
 import ConfirmModal from '../../components/Modals/ConfirmModal'
-import SendModal from '../../components/Modals/SendModal'
 import TokenInfoModal from '../../components/Modals/TokenInfoModal'
 import TokenModal from '../../components/Modals/TokenModal'
 import TokenSaleModal from '../../components/Modals/TokenSaleModal'
@@ -15,7 +14,6 @@ const { CONFIRM, SEND, TOKEN_INFO, TOKEN, ICO, ADD_CONTACT } = MODAL_TYPES
 
 const MODAL_COMPONENTS = {
   [CONFIRM]: ConfirmModal,
-  [SEND]: SendModal,
   [TOKEN_INFO]: TokenInfoModal,
   [TOKEN]: TokenModal,
   [ICO]: TokenSaleModal,
