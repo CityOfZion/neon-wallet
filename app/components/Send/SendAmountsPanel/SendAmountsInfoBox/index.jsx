@@ -29,8 +29,10 @@ const SendAmountsInfoBox = ({
       <h3>{assetName}</h3>
     </div>
     <div className={styles.assetAmounts}>
-      <p className={styles.assetAmountsPrimary}>{totalAmount}</p>
-      <p className={styles.assetAmountsSecondary}>{remainingAmount}</p>
+      <p className={styles.assetAmountsPrimary}>{totalAmount.toFixed(2)}</p>
+      <p className={styles.assetAmountsSecondary}>
+        {remainingAmount.toFixed(2)}
+      </p>
     </div>
     <div className={styles.assetValue}>
       <p className={styles.totalAssetValue}>
