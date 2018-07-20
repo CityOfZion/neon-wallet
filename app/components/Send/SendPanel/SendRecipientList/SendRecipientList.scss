@@ -1,0 +1,75 @@
+@import '../../../../styles/variables';
+
+.sendRecipientListContainer {
+    width: 85%;
+    margin: 0 45px 0 auto;
+
+    .sendRecipientListHeaders {
+        display: flex;
+        margin-bottom: 10px;
+    }
+
+    .sendRecipientListHeader {
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        color: #515151;
+    }
+
+    .sendRecipientList {
+        list-style-type: none;
+        margin: 0;
+        padding: 0; 
+    }
+
+    .sendRecipientListItem {
+        display: flex;
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .rowNumber {
+        position: absolute;
+        left: -45px;
+        height: 100%;
+        color:$dark-grey;
+        font-size: 1.3rem;
+        font-weight: lighter;
+        transform: translateY(13px);
+    }
+
+    .asset {
+        width: 20%;
+        margin-right: 8px;
+    }
+
+    .amount {
+        width: 20%;
+        margin-right: 8px;
+    }
+
+    .address {
+        width: 60%;
+        margin-right: 8px;
+    }
+
+    .delete {
+        width: 5%;
+    }
+
+    .deleteButton {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        svg {
+            height: 24px;
+            width: 24px;
+            min-width: 24px;
+        }
+    }
+}

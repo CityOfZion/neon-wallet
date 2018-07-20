@@ -1,3 +1,5 @@
+@import '../../../styles/variables';
+
 .contactsPanel {
   max-width: 850px;
 
@@ -10,7 +12,7 @@
       display: flex;
       align-items: center;
       padding: 5px;
-      color: #515151;
+      color: $dark-grey;
       text-decoration: none;
       cursor: pointer;
 

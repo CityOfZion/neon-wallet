@@ -24,7 +24,14 @@ declare type ReduxAction = () => {
 
 declare type NetworkType = string
 
-declare type ExplorerType = $Values<typeof EXPLORER>
+
+declare type ExplorerType = $Values<Explorer>
+
+declare type Explorer = {
+  NEO_TRACKER: string,
+  NEO_SCAN: string,
+  ANT_CHAIN: string
+}
 
 declare type RouteType = $Values<typeof ROUTES>
 

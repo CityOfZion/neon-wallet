@@ -14,11 +14,12 @@ $third-background: #e6f2ff;
 // redesign
 $primary-button: #8d98ae;
 
+
 // text
 $default-text: #333;
 $button-text: #fff;
 $thin-text-color: #000;
-$error-color: #ff3e3e;
+$error-color: #EE6D66;
 $link-color: #3063c9;
 
 // page layout
@@ -26,6 +27,12 @@ $page-width: 960px;
 $top-margin: 20px;
 $box-padding: 40px;
 $box-margin: 10px;
+
+// colors
+$white: #fff;
+$dark-grey: #515151;
+$light-grey: #f2f2f2;
+$medium-grey: #8a8383;
 
 // all z-index definitions should go here - make sure to leave a decent gap between them
 $z-index-tooltip: 1000;

@@ -26,7 +26,8 @@ const routesWithSideBar = [
   ROUTES.TRANSACTION_HISTORY,
   ROUTES.RECEIVE,
   ROUTES.CONTACTS,
-  ROUTES.SETTINGS
+  ROUTES.SETTINGS,
+  ROUTES.SEND
 ]
 
 class App extends Component<Props> {
