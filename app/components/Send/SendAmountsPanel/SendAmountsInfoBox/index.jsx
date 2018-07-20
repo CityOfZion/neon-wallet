@@ -3,8 +3,6 @@ import React from 'react'
 
 import styles from './SendAmountsInfoBox.scss'
 
-import { multiplyNumber } from '../../../../core/math'
-
 type Props = {
   assetName: string,
   totalAmount: string,
