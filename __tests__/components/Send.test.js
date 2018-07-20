@@ -15,6 +15,7 @@ const setup = props =>
       sendableAssets={{ NEO: { balance: 5, symbol: 'NEO' } }}
       prices={{ NEO: 38 }}
       contacts={{ NeoFriend: 'AMKxqiSSLR89wLVEk5CoGRjKHRrmrR8bDr' }}
+      currencyCode="usd"
     />
   )
 
@@ -154,11 +155,13 @@ describe('Send', () => {
     wrapper.setState({ sendRowDetails: [asset] })
     wrapper.find('form').simulate('submit')
 
-    const errors = wrapper.instance().state.sendRowDetails[0].errors
+    setTimeout(() => {
+      const errors = wrapper.instance().state.sendRowDetails[0].errors
 
-    expect(errors.address).toBe(
-      'Address is blacklisted. This is a known phishing address.'
-    )
+      expect(errors.address).toBe(
+        'Address is blacklisted. This is a known phishing address.'
+      )
+    }, 0)
   })
 
   test('It does not allow you to send to your own address', () => {
@@ -172,9 +175,7 @@ describe('Send', () => {
 
     const errors = wrapper.instance().state.sendRowDetails[0].errors
 
-    expect(errors.address).toBe(
-      "You can't send to your own address."
-    )
+    expect(errors.address).toBe("You can't send to your own address.")
   })
 
   test('It correctly sets max value', () => {
@@ -203,7 +204,9 @@ describe('Send', () => {
     wrapper.setState({ sendRowDetails: [asset] })
     wrapper.find('form').simulate('submit')
 
-    expect(wrapper.instance().state.showConfirmSend).toBe(true)
+    setTimeout(() =>
+      expect(wrapper.instance().state.showConfirmSend).toBe(true), 0
+    )
   })
 
   test('It calls sendTransaction when you click confirm and send', () => {
@@ -219,14 +222,17 @@ describe('Send', () => {
 
     const sendTransaction = wrapper.instance().props.sendTransaction
 
-    expect(sendTransaction).toHaveBeenCalledTimes(1)
-    expect(sendTransaction).toHaveBeenCalledWith([
-      {
-        address: 'AMKxqiSSLR89wLVEk5CoGRjKHRrmrR8bDr',
-        amount: 1,
-        note: '',
-        symbol: 'NEO'
-      }
-    ])
+    setTimeout(() => {
+      expect(sendTransaction).toHaveBeenCalledTimes(1)
+      expect(sendTransaction).toHaveBeenCalledWith([
+        {
+          address: 'AMKxqiSSLR89wLVEk5CoGRjKHRrmrR8bDr',
+          amount: 1,
+          note: '',
+          symbol: 'NEO'
+        }
+      ])
+    }, 0)
+    
   })
 })
