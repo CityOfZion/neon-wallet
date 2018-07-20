@@ -177,18 +177,18 @@ export default class Send extends React.Component<Props, State> {
     return 0
   }
 
-  calculateRowAmounts = (asset: string): number => {
+  calculateRowAmounts = (asset: string) => {
     const rows = [...this.state.sendRowDetails]
 
     if (rows.length > 0) {
-      return rows
-        .filter((row: Object): boolean => row.asset === asset)
-        .map((row: Object): number => row.amount)
+      return (rows
+        .filter((row: Object) => row.asset === asset)
+        .map((row: Object) => row.amount)
         .reduce(
-          (accumulator, currentValue: number | void) =>
-            (accumulator += currentValue || 0),
+          (accumulator: Object, currentValue: number | void) =>
+            accumulator.plus(currentValue || 0),
           toBigNumber(0)
-        )
+        ): Array<*>)
     }
     return 0
   }
