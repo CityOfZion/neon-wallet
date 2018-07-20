@@ -91,70 +91,75 @@ const makeRequest = (sendEntries: Array<SendEntryType>, config: Object) => {
   )
 }
 
-export const sendTransaction = (sendEntries: Array<SendEntryType>) => async (
+export const sendTransaction = (sendEntries: Array<SendEntryType>) => (
   dispatch: DispatchType,
   getState: GetStateType
-): Promise<*> => {
-  const state = getState()
-  const wif = getWIF(state)
-  const fromAddress = getAddress(state)
-  const net = getNetwork(state)
-  const tokenBalances = getTokenBalances(state)
-  const tokensBalanceMap = keyBy(tokenBalances, 'symbol')
-  const balances = {
-    ...getAssetBalances(state),
-    ...getTokenBalancesMap(tokenBalances)
-  }
-  const signingFunction = getSigningFunction(state)
-  const publicKey = getPublicKey(state)
-  const isHardwareSend = getIsHardwareLogin(state)
+): Promise<*> =>
+  new Promise(async (resolve, reject) => {
+    const state = getState()
+    const wif = getWIF(state)
+    const fromAddress = getAddress(state)
+    const net = getNetwork(state)
+    const tokenBalances = getTokenBalances(state)
+    const tokensBalanceMap = keyBy(tokenBalances, 'symbol')
+    const balances = {
+      ...getAssetBalances(state),
+      ...getTokenBalancesMap(tokenBalances)
+    }
+    const signingFunction = getSigningFunction(state)
+    const publicKey = getPublicKey(state)
+    const isHardwareSend = getIsHardwareLogin(state)
 
-  const rejectTransaction = (message: string) =>
-    dispatch(showErrorNotification({ message }))
+    const rejectTransaction = (message: string) =>
+      dispatch(showErrorNotification({ message }))
 
-  const error = validateTransactionsBeforeSending(balances, sendEntries)
+    const error = validateTransactionsBeforeSending(balances, sendEntries)
 
-  if (error) {
-    return rejectTransaction(error)
-  }
+    if (error) {
+      rejectTransaction(error)
+      return reject(error)
+    }
 
-  dispatch(
-    showInfoNotification({
-      message: 'Sending Transaction...',
-      autoDismiss: 0
-    })
-  )
-
-  if (isHardwareSend) {
     dispatch(
       showInfoNotification({
-        message: 'Please sign the transaction on your hardware device',
+        message: 'Sending Transaction...',
         autoDismiss: 0
       })
     )
-  }
 
-  try {
-    const { response } = await makeRequest(sendEntries, {
-      net,
-      tokensBalanceMap,
-      address: fromAddress,
-      publicKey,
-      privateKey: new wallet.Account(wif).privateKey,
-      signingFunction: isHardwareSend ? signingFunction : null
-    })
-
-    if (!response.result) {
-      throw new Error('Rejected by RPC server.')
+    if (isHardwareSend) {
+      dispatch(
+        showInfoNotification({
+          message: 'Please sign the transaction on your hardware device',
+          autoDismiss: 0
+        })
+      )
     }
-  } catch (err) {
-    return rejectTransaction(`Transaction failed: ${err.message}`)
-  }
 
-  return dispatch(
-    showSuccessNotification({
-      message:
-        'Transaction complete! Your balance will automatically update when the blockchain has processed it.'
-    })
-  )
-}
+    try {
+      const { response } = await makeRequest(sendEntries, {
+        net,
+        tokensBalanceMap,
+        address: fromAddress,
+        publicKey,
+        privateKey: new wallet.Account(wif).privateKey,
+        signingFunction: isHardwareSend ? signingFunction : null
+      })
+
+      if (!response.result) {
+        throw new Error('Rejected by RPC server.')
+      }
+
+      dispatch(
+        showSuccessNotification({
+          message:
+            'Transaction complete! Your balance will automatically update when the blockchain has processed it.'
+        })
+      )
+
+      return resolve(response)
+    } catch (err) {
+      rejectTransaction(`Transaction failed: ${err.message}`)
+      return reject(err)
+    }
+  })
