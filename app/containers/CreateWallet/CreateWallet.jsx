@@ -9,7 +9,7 @@ import BackButton from '../../components/BackButton'
 import Button from '../../components/Button'
 import ConfirmIcon from '../../assets/icons/confirm-2.svg'
 import AddIcon from '../../assets/icons/add.svg'
-import HomeLayout from '../Home/HomeLayout'
+import ViewLayout from '../../components/ViewLayout'
 import styles from '../Home/Home.scss'
 
 type Option = 'CREATE' | 'IMPORT'
@@ -54,16 +54,13 @@ export default class CreateWallet extends React.Component<Props, State> {
     const { option } = this.props
 
     return (
-      <HomeLayout
-        headerText={
-          option === 'CREATE' ? 'Create a new wallet' : 'Import a wallet'
+      <ViewLayout
+        headerText={option === 'CREATE' ? 'Create New Wallet' : 'Import Wallet'}
+        renderHeaderIcon={() =>
+          option === 'IMPORT' ? <ConfirmIcon /> : <AddIcon />
         }
         headerTextUnderline
-        renderNavigation={() => (
-          <div className={styles.backButton}>
-            <BackButton routeTo={ROUTES.HOME} />
-          </div>
-        )}
+        renderBackButton={() => <BackButton routeTo={ROUTES.HOME} />}
       >
         <div className={styles.inputContainer}>
           <div id="createWallet" className={styles.flexContainer}>
@@ -112,7 +109,7 @@ export default class CreateWallet extends React.Component<Props, State> {
             </form>
           </div>
         </div>
-      </HomeLayout>
+      </ViewLayout>
     )
   }
 
