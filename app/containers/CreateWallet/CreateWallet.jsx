@@ -65,41 +65,33 @@ export default class CreateWallet extends React.Component<Props, State> {
           <div id="createWallet" className={styles.flexContainer}>
             <form onSubmit={this.createWalletAccount}>
               {option === 'IMPORT' && (
-                <div className={styles.inputMargin}>
-                  <PasswordInput
-                    value={wif}
-                    label="Private Key"
-                    onChange={e => this.setState({ wif: e.target.value })}
-                    placeholder="Private Key"
-                    autoFocus
-                  />
-                </div>
-              )}
-              <div className={styles.inputMargin}>
-                <TextInput
-                  value={walletName}
-                  label="Wallet Name"
-                  onChange={e => this.setState({ walletName: e.target.value })}
-                  placeholder="Wallet Name"
+                <PasswordInput
+                  value={wif}
+                  label="Private Key"
+                  onChange={e => this.setState({ wif: e.target.value })}
+                  placeholder="Private Key"
                   autoFocus
                 />
-              </div>
-              <div className={styles.inputMargin}>
-                <PasswordInput
-                  label="Passphrase"
-                  value={passphrase}
-                  onChange={e => this.setState({ passphrase: e.target.value })}
-                  placeholder="Password"
-                />
-              </div>
-              <div className={styles.inputMargin}>
-                <PasswordInput
-                  label="Confirm Passphrase"
-                  value={passphrase2}
-                  onChange={e => this.setState({ passphrase2: e.target.value })}
-                  placeholder="Confirm Password"
-                />
-              </div>
+              )}
+              <TextInput
+                value={walletName}
+                label="Wallet Name"
+                onChange={e => this.setState({ walletName: e.target.value })}
+                placeholder="Wallet Name"
+                autoFocus
+              />
+              <PasswordInput
+                label="Passphrase"
+                value={passphrase}
+                onChange={e => this.setState({ passphrase: e.target.value })}
+                placeholder="Password"
+              />
+              <PasswordInput
+                label="Confirm Passphrase"
+                value={passphrase2}
+                onChange={e => this.setState({ passphrase2: e.target.value })}
+                placeholder="Confirm Password"
+              />
               <div className={styles.loginButtonMargin}>
                 <Button
                   renderIcon={option === 'IMPORT' ? ConfirmIcon : AddIcon}
