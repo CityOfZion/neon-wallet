@@ -31,6 +31,8 @@ export default class Panel extends React.Component<Props> {
     if (renderHeader) {
       return <Header className={styles.header}>{renderHeader()}</Header>
     }
+
+    return null
   }
 
   renderContent = () => {

@@ -25,7 +25,6 @@
 
     .headerIcon {
       margin-right: 15px;
-      color: #66ed87;
 
       svg {
         display: block;
@@ -35,7 +34,7 @@
         margin: auto;
 
         path {
-          fill: #66ed87;
+          fill: var(--view-layout-header-icon-color);
         }
       }
     }
@@ -54,18 +53,23 @@
     display: flex;
     background-color: #f2f2f2;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     width: 100%;
 
+    > span {
+      display: flex;
+      flex: 1 0 0;
+    }
+
     .backButton {
-      position: absolute;
-      left: 330px;
+      margin-left: 30px;
     }
 
     img {
       padding: 15px;
       height: 40px;
       display: flex;
+      margin-left: -54px;
       margin: auto;
     }
   }

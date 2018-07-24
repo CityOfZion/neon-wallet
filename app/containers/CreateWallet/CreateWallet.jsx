@@ -9,7 +9,7 @@ import BackButton from '../../components/BackButton'
 import Button from '../../components/Button'
 import ConfirmIcon from '../../assets/icons/confirm-2.svg'
 import AddIcon from '../../assets/icons/add.svg'
-import ViewLayout from '../../components/ViewLayout'
+import FullHeightPanel from '../../components/Panel/FullHeightPanel'
 import styles from './CreateWallet.scss'
 
 type Option = 'CREATE' | 'IMPORT'
@@ -54,7 +54,7 @@ export default class CreateWallet extends React.Component<Props, State> {
     const { option } = this.props
 
     return (
-      <ViewLayout
+      <FullHeightPanel
         headerText={option === 'CREATE' ? 'Create New Wallet' : 'Import Wallet'}
         renderHeaderIcon={() =>
           option === 'IMPORT' ? <ConfirmIcon /> : <AddIcon />
@@ -113,7 +113,7 @@ export default class CreateWallet extends React.Component<Props, State> {
             </form>
           </div>
         </div>
-      </ViewLayout>
+      </FullHeightPanel>
     )
   }
 
