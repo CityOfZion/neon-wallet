@@ -1,62 +1,75 @@
 @import '../../../styles/variables';
 
-.textInput {
+.textInputContainer {
   display: flex;
-  flex-wrap: nowrap;
-  align-items: stretch;
-  height: $text-input-height;
-  border: 2px solid $text-input-background-color;
-  border-radius: $text-input-border-radius;
-  background: $text-input-background-color;
-  position: relative;
+  flex-direction: column;
 
-  &.active {
-    @include active-input;
+  label {
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #5c677f;
+    margin-bottom: 10px;
   }
 
-   &.error {
-    border: 2px solid $error-color;
-    border-top-right-radius: 3px;
-    border-top-left-radius: 3px;
-  }
+  .textInput {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    height: $text-input-height;
+    border: 2px solid $text-input-background-color;
+    border-radius: $text-input-border-radius;
+    background: $text-input-background-color;
+    position: relative;
+
+    &.active {
+      @include active-input;
+    }
+
+    &.error {
+      border: 2px solid $error-color;
+      border-top-right-radius: 3px;
+      border-top-left-radius: 3px;
+    }
 
     .errorIcon {
-    color: #EE6D66;
-    position: absolute;
-    right: 8px;
-    top: 10px;
-  }
+      color: #ee6d66;
+      position: absolute;
+      right: 8px;
+      top: 10px;
+    }
 
-  .errorMessage {
-    background-color: $error-color;
-    color: #fff;
-    position: absolute;
-    top: 39px;
-    left: -2px;
-    width: 100%;
-    font-size: 0.7rem;
-    padding: 5px 2px;
-    border-radius: 3px;
-    z-index: 9999;
-    text-align: center;
-  }
+    .errorMessage {
+      background-color: $error-color;
+      color: #fff;
+      position: absolute;
+      top: 39px;
+      left: -2px;
+      width: 100%;
+      font-size: 0.7rem;
+      padding: 5px 2px;
+      border-radius: 3px;
+      z-index: 9999;
+      text-align: center;
+    }
 
-  .beforeInput {
-    flex: 0 1 auto;
-  }
+    .beforeInput {
+      flex: 0 1 auto;
+    }
 
-  .input {
-    flex: 1 1 auto;
-    box-sizing: border-box;
-    width: 100%;
-    height: $text-input-height;
-    line-height: $text-input-height;
-    color: $text-input-color;
-    background: $text-input-background-color;
-    font-size: $text-input-font-size;
-  }
+    .input {
+      flex: 1 1 auto;
+      box-sizing: border-box;
+      width: 100%;
+      height: $text-input-height;
+      line-height: $text-input-height;
+      color: $text-input-color;
+      background: $text-input-background-color;
+      font-size: $text-input-font-size;
+    }
 
-  .afterInput {
-    flex: 0 1 auto;
+    .afterInput {
+      flex: 0 1 auto;
+    }
   }
 }

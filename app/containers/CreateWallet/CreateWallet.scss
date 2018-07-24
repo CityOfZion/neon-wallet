@@ -1,0 +1,28 @@
+.inputMargin {
+  margin-bottom: 20px;
+}
+
+.flexContainer {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  height: 100%;
+  flex: 1;
+  width: 500px;
+}
+
+.inputContainer {
+  height: 100%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  flex: 1;
+}
+
+.loginButtonMargin {
+  margin-top: auto;
+  margin-bottom: 40px;
+}

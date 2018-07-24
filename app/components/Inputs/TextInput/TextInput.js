@@ -16,7 +16,8 @@ type Props = {
   renderBefore?: Function,
   renderAfter?: Function,
   onFocus?: Function,
-  onBlur?: Function
+  onBlur?: Function,
+  label: string
 }
 
 type State = {
@@ -40,7 +41,7 @@ export default class TextInput extends React.Component<Props, State> {
       'renderAfter'
     )
 
-    const { error } = this.props
+    const { error, label } = this.props
 
     const className = classNames(styles.textInput, this.props.className, {
       [styles.active]: this.state.active,
@@ -48,17 +49,20 @@ export default class TextInput extends React.Component<Props, State> {
     })
 
     return (
-      <div className={className}>
-        {this.renderBefore()}
-        <input
-          {...passDownProps}
-          className={styles.input}
-          onFocus={this.handleFocus}
-          onBlur={this.handleBlur}
-        />
-        {error && <ErrorIcon className={styles.errorIcon} />}
-        {error && <div className={styles.errorMessage}>{error}</div>}
-        {this.renderAfter()}
+      <div className={styles.textInputContainer}>
+        {label && <label className={styles.label}> {label} </label>}
+        <div className={className}>
+          {this.renderBefore()}
+          <input
+            {...passDownProps}
+            className={styles.input}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
+          />
+          {error && <ErrorIcon className={styles.errorIcon} />}
+          {error && <div className={styles.errorMessage}>{error}</div>}
+          {this.renderAfter()}
+        </div>
       </div>
     )
   }
