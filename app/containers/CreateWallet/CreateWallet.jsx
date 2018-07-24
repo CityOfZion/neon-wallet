@@ -10,7 +10,7 @@ import Button from '../../components/Button'
 import ConfirmIcon from '../../assets/icons/confirm-2.svg'
 import AddIcon from '../../assets/icons/add.svg'
 import ViewLayout from '../../components/ViewLayout'
-import styles from '../Home/Home.scss'
+import styles from './CreateWallet.scss'
 
 type Option = 'CREATE' | 'IMPORT'
 
@@ -69,6 +69,7 @@ export default class CreateWallet extends React.Component<Props, State> {
                 <div className={styles.inputMargin}>
                   <PasswordInput
                     value={wif}
+                    label="Private Key"
                     onChange={e => this.setState({ wif: e.target.value })}
                     placeholder="Private Key"
                     autoFocus
@@ -78,6 +79,7 @@ export default class CreateWallet extends React.Component<Props, State> {
               <div className={styles.inputMargin}>
                 <TextInput
                   value={walletName}
+                  label="Wallet Name"
                   onChange={e => this.setState({ walletName: e.target.value })}
                   placeholder="Wallet Name"
                   autoFocus
@@ -85,6 +87,7 @@ export default class CreateWallet extends React.Component<Props, State> {
               </div>
               <div className={styles.inputMargin}>
                 <PasswordInput
+                  label="Passphrase"
                   value={passphrase}
                   onChange={e => this.setState({ passphrase: e.target.value })}
                   placeholder="Password"
@@ -92,20 +95,22 @@ export default class CreateWallet extends React.Component<Props, State> {
               </div>
               <div className={styles.inputMargin}>
                 <PasswordInput
+                  label="Confirm Passphrase"
                   value={passphrase2}
                   onChange={e => this.setState({ passphrase2: e.target.value })}
                   placeholder="Confirm Password"
                 />
               </div>
-              <Button
-                renderIcon={option === 'IMPORT' ? ConfirmIcon : AddIcon}
-                className={styles.loginButtonMargin}
-                type="submit"
-                primary
-                disabled={this.isDisabled()}
-              >
-                {option === 'IMPORT' ? 'Import Wallet' : 'Create Wallet'}
-              </Button>
+              <div className={styles.loginButtonMargin}>
+                <Button
+                  renderIcon={option === 'IMPORT' ? ConfirmIcon : AddIcon}
+                  type="submit"
+                  primary
+                  disabled={this.isDisabled()}
+                >
+                  {option === 'IMPORT' ? 'Import Wallet' : 'Create Wallet'}
+                </Button>
+              </div>
             </form>
           </div>
         </div>

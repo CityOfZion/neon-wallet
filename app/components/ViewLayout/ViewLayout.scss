@@ -6,27 +6,24 @@
   margin: auto;
   min-height: 100%;
   width: 680px;
-  // justify-content: center;
 
   .childrenContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
     flex: 1;
+    height: 100%;
   }
 
   .header {
     font-size: 30px;
     font-weight: 100;
     margin-top: 50px;
+    color: #5c677f;
     display: flex;
     align-items: center;
 
     .headerIcon {
-      // width: 50px;
-      // height: 50px;
-      // display: flex;
-      // align-items: center;
       margin-right: 15px;
       color: #66ed87;
 
@@ -34,6 +31,7 @@
         display: block;
         width: 50px;
         height: 50px;
+        padding: 10px;
         margin: auto;
 
         path {
@@ -45,9 +43,11 @@
 
   .instructions {
     border-bottom: solid thin rgba(0, 0, 0, 0.15);
+    margin-bottom: 40px;
     margin-top: 40px;
     padding-bottom: 5px;
     width: 500px;
+    color: #5c677f;
   }
 
   .navigation {
