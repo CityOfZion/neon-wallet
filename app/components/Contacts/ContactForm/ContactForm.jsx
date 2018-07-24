@@ -8,7 +8,6 @@ import Button from '../../Button'
 import TextInput from '../../Inputs/TextInput'
 import DialogueBox from '../../DialogueBox'
 import AddContactIcon from '../../../assets/icons/contacts-add.svg'
-import AddIcon from '../../../assets/icons/add.svg'
 import WarningIcon from '../../../assets/icons/warning.svg'
 import styles from './ContactForm.scss'
 
@@ -55,38 +54,31 @@ export default class ContactForm extends React.Component<Props, State> {
     const { submitLabel, formName, mode, formAddress } = this.props
     const { nameError, addressError } = this.state
 
-    let heading = 'Add A Contact'
-    let subHeading = 'Insert Contact Details'
+    // let heading = 'Add A Contact'
+    // let subHeading = 'Insert Contact Details'
 
-    if (mode === 'edit') {
-      heading = 'Edit A Contact'
-      subHeading = 'Modify Contact Details'
-    }
+    // if (mode === 'edit') {
+    //   this.props.handleEditMode()
+    //   heading = 'Edit A Contact'
+    //   subHeading = 'Modify Contact Details'
+    // }
 
     return (
       <section>
-        <h1 className={styles.contactFormHeader}>
-          <AddIcon /> {heading}
-        </h1>
         <form className={styles.contactForm} onSubmit={this.handleSubmit}>
-          <h2 className={styles.contactFormSubheader}>{subHeading}</h2>
-          <label htmlFor="contactName" className={styles.contactFormLabel}>
-            Name
-          </label>
           <TextInput
             id="contactName"
             name="name"
+            label="Name"
             className={styles.input}
             placeholder="Enter Contact Name..."
             value={formName}
             onChange={this.handleChangeName}
             error={nameError}
           />
-          <label htmlFor="contactAdress" className={styles.contactFormLabel}>
-            Wallet Address
-          </label>
           <TextInput
             id="contactAddress"
+            label="Wallet Address"
             name="address"
             className={styles.input}
             placeholder="Enter Wallet Address..."
@@ -94,19 +86,21 @@ export default class ContactForm extends React.Component<Props, State> {
             onChange={this.handleChangeAddress}
             error={addressError}
           />
-          <DialogueBox
-            icon={<WarningIcon />}
-            text="Please review and ensure that you have entered the address correctly to avoid loss of funds"
-            className={styles.conactFormDialogue}
-          />
-          <Button
-            className={styles.button}
-            primary
-            type="submit"
-            renderIcon={AddContactIcon}
-          >
-            {submitLabel}
-          </Button>
+          <div className={styles.dialogueAndButtonContainer}>
+            <DialogueBox
+              icon={<WarningIcon />}
+              text="Please review and ensure that you have entered the address correctly to avoid loss of funds"
+              className={styles.conactFormDialogue}
+            />
+            <Button
+              className={styles.submitButton}
+              primary
+              type="submit"
+              renderIcon={AddContactIcon}
+            >
+              {submitLabel}
+            </Button>
+          </div>
         </form>
       </section>
     )
@@ -132,7 +126,7 @@ export default class ContactForm extends React.Component<Props, State> {
     let error
 
     if (name.length === 0) {
-      error = "Name can't be null."
+      error = 'Name can\'t be null.'
     }
 
     if (name.length > 100) {

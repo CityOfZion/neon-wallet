@@ -4,10 +4,13 @@ import { Link } from 'react-router-dom'
 import classNames from 'classnames'
 import { noop } from 'lodash'
 
-import Panel from '../../Panel'
+import FullHeightPanel from '../../Panel/FullHeightPanel'
 import ContactForm from '../ContactForm'
 import ArrowIcon from '../../../assets/icons/arrow.svg'
 import { ROUTES } from '../../../core/constants'
+import AddIcon from '../../../assets/icons/add.svg'
+import BackButton from '../../BackButton'
+
 import styles from './AddContactPanel.scss'
 
 type Props = {
@@ -29,10 +32,19 @@ export default class AddContactPanel extends React.Component<Props> {
   render() {
     const { className, name, address } = this.props
 
+    // headerText={option === 'CREATE' ? 'Create New Wallet' : 'Import Wallet'}
+    // renderHeaderIcon={() =>
+    //   option === 'IMPORT' ? <AddIcon /> : <AddIcon />
+    // }
+    // renderBackButton={() => <BackButton routeTo={ROUTES.HOME} />}
+
     return (
-      <Panel
+      <FullHeightPanel
         className={classNames(styles.addContactPanel, className)}
-        renderHeader={this.renderHeader}
+        renderHeaderIcon={() => <AddIcon />}
+        renderBackButton={() => <BackButton routeTo={ROUTES.CONTACTS} />}
+        headerText="Add A Contact"
+        instructions="Insert Contact Details"
       >
         <ContactForm
           formName={name}
@@ -41,18 +53,18 @@ export default class AddContactPanel extends React.Component<Props> {
           submitLabel="Add to Contacts"
           onSubmit={this.handleSubmit}
         />
-      </Panel>
+      </FullHeightPanel>
     )
   }
 
-  renderHeader = () => (
-    <span className={styles.header}>
-      <Link to={ROUTES.CONTACTS} className={styles.back}>
-        <ArrowIcon />
-      </Link>
-      <span>New Contact</span>
-    </span>
-  )
+  // renderHeader = () => (
+  //   <span className={styles.header}>
+  //     <Link to={ROUTES.CONTACTS} className={styles.back}>
+  //       <ArrowIcon />
+  //     </Link>
+  //     <span>New Contact</span>
+  //   </span>
+  // )
 
   handleSubmit = (name: string, address: string) => {
     this.props.onSave(name, address)
