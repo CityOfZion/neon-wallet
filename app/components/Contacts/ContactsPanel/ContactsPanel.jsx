@@ -9,6 +9,7 @@ import AddIcon from '../../../assets/icons/contacts-add.svg'
 import EditIcon from '../../../assets/icons/edit.svg'
 import DeleteIcon from '../../../assets/icons/delete.svg'
 import { ROUTES } from '../../../core/constants'
+
 import styles from './ContactsPanel.scss'
 
 type Props = {

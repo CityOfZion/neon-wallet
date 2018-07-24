@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react'
+import classNames from 'classnames'
 
 import greyLogo from '../../../assets/images/grey-logo.png'
 
@@ -13,7 +14,8 @@ type Props = {
   instructions: string,
   renderHeaderIcon: Function,
   iconColor: string,
-  renderCloseButton: Function
+  renderCloseButton: Function,
+  className: string
 }
 
 export default class ViewLayout extends Component<Props> {
@@ -31,11 +33,12 @@ export default class ViewLayout extends Component<Props> {
       shouldRenderHeader,
       instructions,
       iconColor,
-      renderCloseButton
+      renderCloseButton,
+      className
     } = this.props
 
     return (
-      <div className={styles.layoutContainer}>
+      <div className={classNames(styles.layoutContainer, className)}>
         <div className={styles.contentContainer}>
           <div className={styles.navigation}>
             <span>
