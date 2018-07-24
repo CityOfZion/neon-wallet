@@ -59,7 +59,6 @@ export default class CreateWallet extends React.Component<Props, State> {
         renderHeaderIcon={() =>
           option === 'IMPORT' ? <ConfirmIcon /> : <AddIcon />
         }
-        headerTextUnderline
         renderBackButton={() => <BackButton routeTo={ROUTES.HOME} />}
       >
         <div className={styles.inputContainer}>
