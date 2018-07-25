@@ -21,13 +21,15 @@ describe('generateWallet module tests', () => {
   const encryptedWIF =
     '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
   const walletName = 'testWallet'
+  const isImport = true
 
   const initialState = {
     wif: null,
     address: null,
     passphrase: null,
     encryptedWIF: null,
-    walletName: null
+    walletName: null,
+    isImport: null
   }
 
   const account = {
@@ -35,7 +37,8 @@ describe('generateWallet module tests', () => {
     address,
     passphrase,
     encryptedWIF,
-    walletName
+    walletName,
+    isImport
   }
 
   describe('newWallet tests', () => {
@@ -43,7 +46,7 @@ describe('generateWallet module tests', () => {
     const expectedAction = { payload, type: NEW_WALLET_ACCOUNT }
 
     test('newWallet action works', () => {
-      expect(newWalletAccount(account)).toEqual(expectedAction)
+      expect(newWalletAccount({ account, isImport })).toEqual(expectedAction)
     })
 
     test('newWallet reducer should return the initial state', () => {
