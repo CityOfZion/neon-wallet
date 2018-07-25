@@ -8,12 +8,13 @@ import styles from './DialogueBox.scss'
 type Props = {
   icon: React$Node,
   className?: string,
-  text: string
+  text?: string,
+  renderText?: () => React$Node
 }
 
-const DialogueBox = ({ icon, text, className }: Props) => (
+const DialogueBox = ({ icon, text, renderText, className }: Props) => (
   <section className={classNames(styles.dialogueBox, className)}>
-    {icon} {text}
+    {icon} {renderText && renderText()} {text}
   </section>
 )
 

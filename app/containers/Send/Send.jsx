@@ -188,7 +188,7 @@ export default class Send extends React.Component<Props, State> {
           (accumulator: Object, currentValue: number | void) =>
             accumulator.plus(currentValue || 0),
           toBigNumber(0)
-        ): Array<*>)
+        ): number)
     }
     return 0
   }
@@ -301,7 +301,7 @@ export default class Send extends React.Component<Props, State> {
     }
 
     if (formAddress === address) {
-      errors.address = "You can't send to your own address."
+      errors.address = 'You can\'t send to your own address.'
     }
 
     const blackListedAddress = await isBlacklisted(formAddress)

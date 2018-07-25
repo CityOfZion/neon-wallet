@@ -1,23 +1,25 @@
 // @flow
 import React, { Component } from 'react'
-import QRCode from 'qrcode/lib/browser'
+import classNames from 'classnames'
 
 import TextInput from '../../components/Inputs/TextInput'
 import Button from '../../components/Button'
 import CopyToClipboard from '../../components/CopyToClipboard'
 import { ROUTES } from '../../core/constants'
 import styles from './DisplayWalletAccounts.scss'
-import homeStyles from '../Home/Home.scss'
-
-import HomeLayout from '../Home/HomeLayout'
-import BackButton from '../../components/BackButton'
+import FullHeightPanel from '../../components/Panel/FullHeightPanel'
+import CloseButton from '../../components/CloseButton'
+import AddIcon from '../../assets/icons/add.svg'
+import CheckIcon from '../../assets/icons/check.svg'
+import DialogueBox from '../../components/DialogueBox'
+import WarningIcon from '../../assets/icons/warning.svg'
 
 type Props = {
   walletName: string,
   address: string,
   wif: string,
-  encryptedWIF: string,
-  passphrase: string
+  passphrase: string,
+  isImport: Boolean
 }
 
 class DisplayWalletAccounts extends Component<Props> {
@@ -27,99 +29,61 @@ class DisplayWalletAccounts extends Component<Props> {
 
   privateCanvas: ?HTMLCanvasElement
 
-  componentDidMount() {
-    const { address, encryptedWIF, wif } = this.props
-    QRCode.toCanvas(this.publicCanvas, address, { version: 5 }, err => {
-      if (err) console.log(err)
-    })
-    QRCode.toCanvas(this.encryptedCanvas, encryptedWIF, { version: 5 }, err => {
-      if (err) console.log(err)
-    })
-    QRCode.toCanvas(this.privateCanvas, wif, { version: 5 }, err => {
-      if (err) console.log(err)
-    })
-  }
-
   render() {
-    const { passphrase, address, encryptedWIF, wif, walletName } = this.props
+    const { passphrase, address, wif, walletName, isImport } = this.props
     const fields = [
       { label: 'Passphrase', value: passphrase },
       { label: 'Public Address', value: address },
-      { label: 'Encrypted Key', value: encryptedWIF },
       { label: 'Private Key', value: wif }
     ]
-    walletName && fields.push({ label: 'Wallet Name', value: walletName })
+    if (walletName) {
+      fields.push({ label: 'Wallet Name', value: walletName })
+    }
     return (
-      <HomeLayout
-        excludeLogo
-        excludeLogoText
-        excludeHeaderText
-        renderNavigation={() => (
-          <div className={homeStyles.backButton}>
-            <BackButton routeTo={ROUTES.HOME} />
-          </div>
-        )}
+      <FullHeightPanel
+        headerText={isImport ? 'Wallet Imported!' : 'Wallet Created!'}
+        instructions={false}
+        headerContainerClassName={styles.negativeHeaderIconMargin}
+        renderHeaderIcon={() => <CheckIcon />}
+        renderCloseButton={() => <CloseButton routeTo={ROUTES.HOME} />}
+        iconColor="#F7BC33"
       >
         <div id="newWallet" className={styles.newWalletContainer}>
-          <div className={styles.disclaimer}>
-            You must save and backup the keys below.{' '}
-            <b>If you lose them, you lose access to your assets.</b> Verify that
-            you can log in to the account and see the correct public address
-            before sending anything to the address below!
-          </div>
-          <div className={styles.qrContainer}>
-            <div className={styles.qrItem}>
-              <canvas
-                ref={node => {
-                  this.publicCanvas = node
-                }}
-              />
+          <DialogueBox
+            icon={<WarningIcon />}
+            renderText={() => (
               <div>
-                <b>Public Address</b>
+                <b>Save these details!</b> If you lose these credentials, you
+                lose access to your assets.
               </div>
-            </div>
-            <div className={styles.qrItem}>
-              <canvas
-                ref={node => {
-                  this.encryptedCanvas = node
-                }}
-              />
-              <div>
-                <b>Encrypted Key</b>
-              </div>
-            </div>
-            <div className={styles.qrItem}>
-              <canvas
-                ref={node => {
-                  this.privateCanvas = node
-                }}
-              />
-              <div>
-                <b>Private Key</b>
-              </div>
-            </div>
-          </div>
+            )}
+            className={styles.displayWalletAccountsDialogue}
+          />
           <div className={styles.detailsContainer}>
             {fields.map(item => (
               <div key={item.label} className={styles.detailRow}>
-                <span className={styles.label}>{item.label}:</span>
-                <div className={styles.input}>
-                  <TextInput value={item.value} disabled />
+                <div
+                  className={classNames(styles.input, {
+                    [styles.reducedInputFontSize]: item.label === 'Private Key'
+                  })}
+                >
+                  <TextInput label={item.label} value={item.value} disabled />
                 </div>
                 <CopyToClipboard
+                  className={styles.clipboardCopy}
                   text={item.value}
                   tooltip={`Copy ${item.label}`}
                 />
               </div>
             ))}
-          </div>
-          <div className={styles.buttonContainer}>
-            <Button primary onClick={this.handlePrint}>
-              Print
-            </Button>
+            <div className={styles.buttonContainer}>
+              <Button renderIcon={AddIcon} primary onClick={this.handlePrint}>
+                Print
+              </Button>
+            </div>
           </div>
         </div>
-      </HomeLayout>
+      </FullHeightPanel>
     )
   }
 
