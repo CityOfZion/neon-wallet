@@ -1,21 +1,21 @@
-  @import '../../../styles/variables.scss';
-  
-  .contactFormHeader {
-    color: $dark-grey;
-    font-weight: 300;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+@import '../../../styles/variables.scss';
 
-    svg {
-      width: 40px;
-      height: 40px;
-      margin-right: 10px;
-    }
+.contactFormHeader {
+  color: $dark-grey;
+  font-weight: 300;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
   }
+}
 
 .contactForm {
-  max-width: 385px;
+  max-width: 500px;
   margin: 0 auto;
 
   .input {
@@ -41,10 +41,16 @@
 
   .conactFormDialogue {
     width: 100%;
+    // margin-top: auto;
 
     svg {
       width: 40px;
       height: 40px;
     }
+  }
+
+  .dialogueAndButtonContainer {
+    margin-top: auto;
+    margin-bottom: 50px;
   }
 }
