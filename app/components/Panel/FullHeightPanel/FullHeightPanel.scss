@@ -1,0 +1,81 @@
+.contentContainer {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  min-height: 100%;
+  width: 680px;
+
+  .childrenContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    height: 100%;
+  }
+
+  .header {
+    font-size: 30px;
+    font-weight: 100;
+    margin-top: 50px;
+    color: #5c677f;
+    display: flex;
+    align-items: center;
+
+    .headerIcon {
+      margin-right: 15px;
+
+      svg {
+        display: block;
+        width: 50px;
+        height: 50px;
+        padding: 10px;
+        margin: auto;
+
+        path {
+          fill: var(--view-layout-header-icon-color);
+        }
+      }
+    }
+  }
+
+  .instructions {
+    border-bottom: solid thin rgba(0, 0, 0, 0.15);
+    margin-bottom: 40px;
+    margin-top: 40px;
+    padding-bottom: 5px;
+    width: 500px;
+    color: #5c677f;
+  }
+
+  .navigation {
+    display: flex;
+    background-color: #f2f2f2;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    > span {
+      display: flex;
+      flex: 1 0 0;
+    }
+
+    .backButton {
+      margin-left: 30px;
+    }
+
+    img {
+      padding: 15px;
+      height: 40px;
+      display: flex;
+      margin-left: -54px;
+      margin: auto;
+    }
+  }
+}
+.layoutContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
