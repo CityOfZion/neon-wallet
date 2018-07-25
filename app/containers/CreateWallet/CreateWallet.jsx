@@ -7,7 +7,7 @@ import PasswordInput from '../../components/Inputs/PasswordInput'
 import TextInput from '../../components/Inputs/TextInput'
 import BackButton from '../../components/BackButton'
 import Button from '../../components/Button'
-import ConfirmIcon from '../../assets/icons/confirm-2.svg'
+import CheckIcon from '../../assets/icons/check.svg'
 import AddIcon from '../../assets/icons/add.svg'
 import FullHeightPanel from '../../components/Panel/FullHeightPanel'
 import styles from './CreateWallet.scss'
@@ -57,7 +57,7 @@ export default class CreateWallet extends React.Component<Props, State> {
       <FullHeightPanel
         headerText={option === 'CREATE' ? 'Create New Wallet' : 'Import Wallet'}
         renderHeaderIcon={() =>
-          option === 'IMPORT' ? <ConfirmIcon /> : <AddIcon />
+          option === 'IMPORT' ? <CheckIcon /> : <AddIcon />
         }
         renderBackButton={() => <BackButton routeTo={ROUTES.HOME} />}
       >
@@ -94,7 +94,7 @@ export default class CreateWallet extends React.Component<Props, State> {
               />
               <div className={styles.loginButtonMargin}>
                 <Button
-                  renderIcon={option === 'IMPORT' ? ConfirmIcon : AddIcon}
+                  renderIcon={option === 'IMPORT' ? CheckIcon : AddIcon}
                   type="submit"
                   primary
                   disabled={this.isDisabled()}

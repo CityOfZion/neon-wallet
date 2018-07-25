@@ -11,6 +11,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  flex: 1;
 }
 
 .input {
@@ -18,10 +19,15 @@
   width: 60%;
 }
 
+.negativeHeaderIconMargin {
+  margin-top: 0px !important;
+}
+
 .newWalletContainer {
   display: flex;
   align-items: center;
   flex-direction: column;
+  flex: 1;
 }
 
 .label {
@@ -41,7 +47,7 @@
   width: 60%;
   margin: auto;
   margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .disclaimer {
@@ -64,5 +70,14 @@
 
   .qrItem {
     flex: 1;
+  }
+}
+
+.displayWalletAccountsDialogue {
+  margin: 20px auto;
+  svg {
+    path {
+      fill: #ff967e;
+    }
   }
 }
