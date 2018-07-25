@@ -44,7 +44,7 @@
 }
 
 .buttonContainer {
-  width: 60%;
+  width: 100%;
   margin: auto;
   margin-top: 10px;
   margin-bottom: 25px;
@@ -58,6 +58,26 @@
   padding: 0 20px;
   text-align: center;
   margin-top: -50px;
+}
+
+.reducedInputFontSize {
+  input {
+    font-size: 12px !important;
+  }
+}
+
+.clipboardCopy {
+  margin-left: -35px;
+  height: 100%;
+  z-index: 1;
+  margin-right: 0px;
+  background-color: #f2f2f2;
+
+  svg {
+    path {
+      // fill: #66ed87;
+    }
+  }
 }
 
 .qrContainer {

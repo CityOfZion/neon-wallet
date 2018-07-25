@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react'
+import classNames from 'classnames'
 
 import TextInput from '../../components/Inputs/TextInput'
 import Button from '../../components/Button'
@@ -61,20 +62,25 @@ class DisplayWalletAccounts extends Component<Props> {
           <div className={styles.detailsContainer}>
             {fields.map(item => (
               <div key={item.label} className={styles.detailRow}>
-                <div className={styles.input}>
+                <div
+                  className={classNames(styles.input, {
+                    [styles.reducedInputFontSize]: item.label === 'Private Key'
+                  })}
+                >
                   <TextInput label={item.label} value={item.value} disabled />
                 </div>
                 <CopyToClipboard
+                  className={styles.clipboardCopy}
                   text={item.value}
                   tooltip={`Copy ${item.label}`}
                 />
               </div>
             ))}
-          </div>
-          <div className={styles.buttonContainer}>
-            <Button renderIcon={AddIcon} primary onClick={this.handlePrint}>
-              Print
-            </Button>
+            <div className={styles.buttonContainer}>
+              <Button renderIcon={AddIcon} primary onClick={this.handlePrint}>
+                Print
+              </Button>
+            </div>
           </div>
         </div>
       </FullHeightPanel>
