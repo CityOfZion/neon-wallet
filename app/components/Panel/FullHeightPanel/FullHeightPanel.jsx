@@ -15,7 +15,8 @@ type Props = {
   renderHeaderIcon: Function,
   iconColor: string,
   renderCloseButton: Function,
-  className: string
+  className: string,
+  headerContainerClassName: string
 }
 
 export default class ViewLayout extends Component<Props> {
@@ -34,7 +35,8 @@ export default class ViewLayout extends Component<Props> {
       instructions,
       iconColor,
       renderCloseButton,
-      className
+      className,
+      headerContainerClassName
     } = this.props
 
     return (
@@ -56,7 +58,9 @@ export default class ViewLayout extends Component<Props> {
             </span>
           </div>
           {shouldRenderHeader && (
-            <div className={styles.header}>
+            <div
+              className={classNames(styles.header, headerContainerClassName)}
+            >
               <div
                 style={{ '--view-layout-header-icon-color': iconColor }}
                 className={styles.headerIcon}
