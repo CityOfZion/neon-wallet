@@ -247,8 +247,7 @@ export const getPassphrase = (state: Object) => state.generateWallet.passphrase
 export const getWalletName = (state: Object) => state.generateWallet.walletName
 export const getEncryptedWIF = (state: Object) =>
   state.generateWallet.encryptedWIF
-export const getIsImport = (state: Object) =>
-  console.warn({ state }) || state.generateWallet.isImport
+export const getIsImport = (state: Object) => state.generateWallet.isImport
 
 const initialState = {
   wif: null,
