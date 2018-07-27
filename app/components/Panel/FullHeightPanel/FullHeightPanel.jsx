@@ -10,6 +10,7 @@ type Props = {
   children: React$Node,
   renderBackButton?: Function,
   shouldRenderHeader: Boolean,
+  shouldRenderInstructions: Boolean,
   headerText: string,
   instructions: string,
   renderHeaderIcon: Function,
@@ -23,6 +24,7 @@ export default class ViewLayout extends Component<Props> {
   static defaultProps = {
     shouldRenderHeader: true,
     instructions: 'Enter Details',
+    shouldRenderInstructions: true,
     iconColor: '#66ed87'
   }
 
@@ -33,6 +35,7 @@ export default class ViewLayout extends Component<Props> {
       headerText,
       shouldRenderHeader,
       instructions,
+      shouldRenderInstructions,
       iconColor,
       renderCloseButton,
       className,
@@ -70,9 +73,10 @@ export default class ViewLayout extends Component<Props> {
               {headerText}
             </div>
           )}
-          {instructions && (
-            <div className={styles.instructions}> {instructions} </div>
-          )}
+          {shouldRenderInstructions &&
+            instructions && (
+              <div className={styles.instructions}> {instructions} </div>
+            )}
           <div className={styles.childrenContainer}>{children}</div>
         </div>
       </div>

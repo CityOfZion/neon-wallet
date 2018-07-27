@@ -7,10 +7,10 @@ import fs from 'fs'
 import { getStorage, setStorage } from '../../core/storage'
 import { ROUTES, MODAL_TYPES } from '../../core/constants'
 import Wallet from './Wallet.jsx'
-import BackButton from '../../components/BackButton'
+import CloseButton from '../../components/CloseButton'
 import Button from '../../components/Button'
 import { recoverWallet } from '../../modules/generateWallet'
-
+import FullHeightPanel from '../../components/Panel/FullHeightPanel'
 import Import from '../../assets/icons/import.svg'
 import Export from '../../assets/icons/export.svg'
 
@@ -140,42 +140,57 @@ class WalletManager extends Component<Props> {
   }
 
   render() {
-    const { accounts, saveAccount } = this.props
     return (
-      <div className={styles.walletManager}>
-        <div className={styles.panelHeaderContainer}>
-          <div className={styles.navRow}>
-            <BackButton routeTo={ROUTES.DASHBOARD} />
-            Wallet Manager
-          </div>
-        </div>
-        <div className={styles.walletList}>
-          {accounts.map(account => (
-            <Wallet
-              {...account}
-              handleDelete={() =>
-                this.deleteWalletAccount(account.label, account.key)
-              }
-              handleSave={saveAccount}
-            />
-          ))}
-        </div>
-
-        <div className={styles.buttonRow}>
-          <div className={styles.buttonContainer}>
-            <Button onClick={this.loadWalletRecovery} renderIcon={Import}>
-              Import Wallets
-            </Button>
-          </div>
-          <div className={styles.buttonContainer}>
-            <Button onClick={this.saveWalletRecovery} renderIcon={Export}>
-              Export Wallets
-            </Button>
-          </div>
-        </div>
-      </div>
+      <FullHeightPanel
+        // headerText={option === 'CREATE' ? 'Create New Wallet' : 'Import Wallet'}
+        // renderHeaderIcon={() =>
+        //   option === 'IMPORT' ? <CheckIcon /> : <AddIcon />
+        // }
+        shouldRenderInstructions={false}
+        renderCloseButton={() => <CloseButton routeTo={ROUTES.DASHBOARD} />}
+      >
+        <div />
+      </FullHeightPanel>
     )
   }
+
+  // render() {
+  //   const { accounts, saveAccount } = this.props
+  //   return (
+  //     <div className={styles.walletManager}>
+  //       <div className={styles.panelHeaderContainer}>
+  //         <div className={styles.navRow}>
+  //           <BackButton routeTo={ROUTES.DASHBOARD} />
+  //           Wallet Manager
+  //         </div>
+  //       </div>
+  //       <div className={styles.walletList}>
+  //         {accounts.map(account => (
+  //           <Wallet
+  //             {...account}
+  //             handleDelete={() =>
+  //               this.deleteWalletAccount(account.label, account.key)
+  //             }
+  //             handleSave={saveAccount}
+  //           />
+  //         ))}
+  //       </div>
+
+  //       <div className={styles.buttonRow}>
+  //         <div className={styles.buttonContainer}>
+  //           <Button onClick={this.loadWalletRecovery} renderIcon={Import}>
+  //             Import Wallets
+  //           </Button>
+  //         </div>
+  //         <div className={styles.buttonContainer}>
+  //           <Button onClick={this.saveWalletRecovery} renderIcon={Export}>
+  //             Export Wallets
+  //           </Button>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   )
+  // }
 }
 
 export default WalletManager
