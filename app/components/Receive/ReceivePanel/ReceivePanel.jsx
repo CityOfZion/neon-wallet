@@ -31,13 +31,16 @@ export default class ReceivePanel extends React.Component<Props, State> {
     amount: 0
   }
 
-  render () {
+  render() {
     const { className, address } = this.props
     const { asset, amount } = this.state
     const symbols = ['-', ASSETS.NEO, ASSETS.GAS, ...Object.keys(TOKENS)]
 
     return (
-      <Panel className={classNames(styles.receivePanel, className)} renderHeader={this.renderHeader}>
+      <Panel
+        className={classNames(styles.receivePanel, className)}
+        renderHeader={this.renderHeader}
+      >
         <div className={styles.qrcode}>
           <img ref={(el: ?HTMLImageElement) => { this.image = el }} />
         </div>
@@ -65,9 +68,7 @@ export default class ReceivePanel extends React.Component<Props, State> {
     )
   }
 
-  renderHeader = () => {
-    return <span>Your Public NEO Address</span>
-  }
+  renderHeader = () => <span>Your Public NEO Address</span>
 
   componentDidMount () {
     const { address } = this.props

@@ -1,5 +1,9 @@
 import { getExplorerTxLink, openExplorerTx } from '../../app/core/explorer'
-import { MAIN_NETWORK_ID, TEST_NETWORK_ID, EXPLORERS } from '../../app/core/constants'
+import {
+  MAIN_NETWORK_ID,
+  TEST_NETWORK_ID,
+  EXPLORERS
+} from '../../app/core/constants'
 import { shell } from 'electron'
 
 describe('explorer tests', () => {
@@ -32,7 +36,8 @@ describe('explorer tests', () => {
       const networkId = TEST_NETWORK_ID
       const explorer = EXPLORERS.NEO_SCAN
       const txId = '1234567890abcdef'
-      const expectedUrl = 'https://neoscan-testnet.io/transaction/1234567890abcdef'
+      const expectedUrl =
+        'https://neoscan-testnet.io/transaction/1234567890abcdef'
       expect(getExplorerTxLink(networkId, explorer, txId)).toEqual(expectedUrl)
     })
 

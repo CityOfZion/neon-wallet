@@ -1,14 +1,12 @@
 // @flow
 import React from 'react'
-import { Link } from 'react-router-dom'
-import classNames from 'classnames'
 import { noop } from 'lodash'
 
-import Panel from '../../Panel'
+import FullHeightPanel from '../../Panel/FullHeightPanel'
 import ContactForm from '../ContactForm'
-import ArrowIcon from '../../../assets/icons/arrow.svg'
 import { ROUTES } from '../../../core/constants'
-import styles from './AddContactPanel.scss'
+import AddIcon from '../../../assets/icons/add.svg'
+import BackButton from '../../BackButton'
 
 type Props = {
   className: ?string,
@@ -26,30 +24,25 @@ export default class AddContactPanel extends React.Component<Props> {
     onSave: noop
   }
 
-  render () {
+  render() {
     const { className, name, address } = this.props
 
     return (
-      <Panel
-        className={classNames(styles.addContactPanel, className)}
-        renderHeader={this.renderHeader}
+      <FullHeightPanel
+        className={className}
+        renderHeaderIcon={() => <AddIcon />}
+        renderBackButton={() => <BackButton routeTo={ROUTES.CONTACTS} />}
+        headerText="Add A Contact"
+        instructions="Insert Contact Details"
       >
         <ContactForm
-          name={name}
-          address={address}
+          formName={name}
+          newAddress
+          formAddress={address}
           submitLabel="Add to Contacts"
           onSubmit={this.handleSubmit}
         />
-      </Panel>
-    )
-  }
-
-  renderHeader = () => {
-    return (
-      <span className={styles.header}>
-        <Link to={ROUTES.CONTACTS} className={styles.back}><ArrowIcon /></Link>
-        <span>New Contact</span>
-      </span>
+      </FullHeightPanel>
     )
   }
 

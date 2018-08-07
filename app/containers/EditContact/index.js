@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom'
 import EditContact from './EditContact'
 import contactsActions from '../../actions/contactsActions'
 
-const mapNameToProps = (props) => ({
+const mapNameToProps = props => ({
   name: decodeURIComponent(props.match.params.name)
 })
 

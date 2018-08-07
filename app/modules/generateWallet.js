@@ -20,7 +20,13 @@ import { saveAccountActions, getWallet } from '../actions/accountsActions'
 export const NEW_WALLET_ACCOUNT = 'NEW_WALLET_ACCOUNT'
 export const RESET_WALLET_ACCOUNT = 'RESET_WALLET_ACCOUNT'
 
-export function newWalletAccount (account: Object) {
+export function newWalletAccount({
+  account,
+  isImport
+}: {
+  account: Object,
+  isImport: boolean
+}) {
   return {
     type: NEW_WALLET_ACCOUNT,
     payload: {
@@ -28,12 +34,13 @@ export function newWalletAccount (account: Object) {
       address: account.address,
       passphrase: account.passphrase,
       encryptedWIF: account.encryptedWIF,
-      walletName: account.walletName
+      walletName: account.walletName,
+      isImport
     }
   }
 }
 
-export function resetKey () {
+export function resetKey() {
   return {
     type: RESET_WALLET_ACCOUNT
   }
@@ -60,8 +67,8 @@ export const convertOldWalletAccount = (
   })
 }
 
-export const upgradeUserWalletNEP6 = (): Promise<*> => {
-  return new Promise((resolve, reject) => {
+export const upgradeUserWalletNEP6 = (): Promise<*> =>
+  new Promise((resolve, reject) => {
     storage.get('userWallet', (readNEP6Error, data) => {
       if (readNEP6Error) {
         reject(readNEP6Error)
@@ -106,10 +113,9 @@ export const upgradeUserWalletNEP6 = (): Promise<*> => {
       }
     })
   })
-}
 
-export const recoverWallet = (wallet: Object): Promise<*> => {
-  return new Promise((resolve, reject) => {
+export const recoverWallet = (wallet: Object): Promise<*> =>
+  new Promise((resolve, reject) => {
     storage.get('userWallet', (readError, data) => {
       if (readError) {
         reject(readError)
@@ -158,7 +164,6 @@ export const recoverWallet = (wallet: Object): Promise<*> => {
       })
     })
   })
-}
 
 export const generateNewWalletAccount = (
   passphrase: string,
@@ -167,64 +172,72 @@ export const generateNewWalletAccount = (
   history: Object,
   walletName: string
 ) => (dispatch: DispatchType) => {
+  const isImport = !!wif
   const dispatchError = (message: string) => {
     dispatch(showErrorNotification({ message }))
     return false
   }
   if (passphrase !== passphrase2) {
     return dispatchError('Passphrases do not match')
-  } else if (!validatePassphraseLength(passphrase)) {
+  }
+  if (!validatePassphraseLength(passphrase)) {
     return dispatchError('Please choose a longer passphrase')
-  } else if (wif && !wallet.isWIF(wif)) {
+  }
+  if (wif && !wallet.isWIF(wif)) {
     return dispatchError('The private key is not valid')
-  } else {
-    const infoNotificationId: any = dispatch(
-      showInfoNotification({
-        message: 'Generating encoded key...',
-        autoDismiss: 0
-      })
-    )
-    setTimeout(async () => {
-      try {
-        const account = new wallet.Account(wif || wallet.generatePrivateKey())
-        const { WIF, address } = account
-        const encryptedWIF = wallet.encrypt(WIF, passphrase)
+  }
+  const infoNotificationId: any = dispatch(
+    showInfoNotification({
+      message: 'Generating encoded key...',
+      autoDismiss: 0
+    })
+  )
+  setTimeout(async () => {
+    try {
+      const account = new wallet.Account(wif || wallet.generatePrivateKey())
+      const { WIF, address } = account
+      const encryptedWIF = wallet.encrypt(WIF, passphrase)
 
-        const storedWallet = await getWallet()
-        if (walletName && walletHasLabel(storedWallet, walletName)) {
-          return dispatchError('A wallet with this name already exists locally')
-        }
+      const storedWallet = await getWallet()
+      if (walletName && walletHasLabel(storedWallet, walletName)) {
+        return dispatchError('A wallet with this name already exists locally')
+      }
 
-        dispatch(
-          saveAccountActions.call({
-            label: walletName,
-            address,
-            key: encryptedWIF
-          })
-        )
+      dispatch(
+        saveAccountActions.call({
+          isImport,
+          label: walletName,
+          address,
+          key: encryptedWIF
+        })
+      )
 
-        dispatch(hideNotification(infoNotificationId))
-        dispatch(
-          newWalletAccount({
+      dispatch(hideNotification(infoNotificationId))
+      dispatch(
+        newWalletAccount({
+          account: {
             wif: WIF,
             address,
             passphrase,
             encryptedWIF,
             walletName
-          })
-        )
+          },
+          isImport
+        })
+      )
 
-        if (wif) history.push(ROUTES.HOME)
-        history.push(ROUTES.DISPLAY_WALLET_KEYS)
-        return true
-      } catch (e) {
-        console.error(e)
-        return dispatchError(
-          'An error occured while trying to generate a new wallet'
-        )
-      }
-    }, 500)
-  }
+      if (wif) history.push(ROUTES.HOME)
+      history.push(ROUTES.DISPLAY_WALLET_KEYS)
+      return true
+    } catch (e) {
+      console.error(e)
+      return dispatchError(
+        `An error occured while trying to ${
+          isImport ? 'import' : 'generate'
+        } a new wallet`
+      )
+    }
+  }, 500)
 }
 
 // state getters
@@ -234,13 +247,15 @@ export const getPassphrase = (state: Object) => state.generateWallet.passphrase
 export const getWalletName = (state: Object) => state.generateWallet.walletName
 export const getEncryptedWIF = (state: Object) =>
   state.generateWallet.encryptedWIF
+export const getIsImport = (state: Object) => state.generateWallet.isImport
 
 const initialState = {
   wif: null,
   address: null,
   passphrase: null,
   encryptedWIF: null,
-  walletName: null
+  walletName: null,
+  isImport: null
 }
 
 export default (state: Object = initialState, action: ReduxAction) => {
@@ -251,7 +266,8 @@ export default (state: Object = initialState, action: ReduxAction) => {
         wif,
         address,
         encryptedWIF,
-        walletName
+        walletName,
+        isImport
       } = action.payload
       return {
         ...state,
@@ -259,7 +275,8 @@ export default (state: Object = initialState, action: ReduxAction) => {
         address,
         passphrase,
         encryptedWIF,
-        walletName
+        walletName,
+        isImport
       }
     }
     case RESET_WALLET_ACCOUNT: {

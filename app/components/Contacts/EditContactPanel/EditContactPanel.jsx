@@ -26,7 +26,7 @@ export default class EditContactPanel extends React.Component<Props> {
     onSave: noop
   }
 
-  render () {
+  render() {
     const { className, name, address } = this.props
 
     return (
@@ -34,19 +34,24 @@ export default class EditContactPanel extends React.Component<Props> {
         className={classNames(styles.editContactPanel, className)}
         renderHeader={this.renderHeader}
       >
-        <ContactForm name={name} address={address} onSubmit={this.handleSubmit} />
+        <ContactForm
+          formName={name}
+          mode="edit"
+          formAddress={address}
+          onSubmit={this.handleSubmit}
+        />
       </Panel>
     )
   }
 
-  renderHeader = () => {
-    return (
-      <span className={styles.header}>
-        <Link to={ROUTES.CONTACTS} className={styles.back}><ArrowIcon /></Link>
-        <span>Edit Contact</span>
-      </span>
-    )
-  }
+  renderHeader = () => (
+    <span className={styles.header}>
+      <Link to={ROUTES.CONTACTS} className={styles.back}>
+        <ArrowIcon />
+      </Link>
+      <span>Edit Contact</span>
+    </span>
+  )
 
   handleSubmit = (name: string, address: string) => {
     this.props.onSave(name, address)

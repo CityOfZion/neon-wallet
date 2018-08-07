@@ -13,17 +13,21 @@ type Props = {
 }
 
 export default class TransactionHistory extends React.Component<Props> {
-  render () {
+  render() {
     const { className, transactions } = this.props
 
     return (
-      <Panel className={classNames(styles.transactionHistoryPanel, className)} renderHeader={this.renderHeader}>
-        <Transactions className={styles.transactions} transactions={transactions} />
+      <Panel
+        className={classNames(styles.transactionHistoryPanel, className)}
+        renderHeader={this.renderHeader}
+      >
+        <Transactions
+          className={styles.transactions}
+          transactions={transactions}
+        />
       </Panel>
     )
   }
 
-  renderHeader = () => {
-    return <span>Transaction History</span>
-  }
+  renderHeader = () => <span>Transaction History</span>
 }

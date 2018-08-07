@@ -4,7 +4,10 @@ type Options = {
   conjunction: string
 }
 
-const toSentence = (array: Array<any>, { punctuation = ',', conjunction = 'and' }: Options = {}) => {
+const toSentence = (
+  array: Array<any>,
+  { punctuation = ',', conjunction = 'and' }: Options = {}
+) => {
   if (array.length <= 2) {
     return array.join(` ${conjunction} `)
   }

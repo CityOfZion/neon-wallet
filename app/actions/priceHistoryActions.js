@@ -14,17 +14,25 @@ type Props = {
 
 export const ID = 'priceHistory'
 
-const createFetch = (symbol: SymbolType, currency: string, call: string, options: Object) => {
-  return axios.get(`https://min-api.cryptocompare.com/data/${call}`, {
+const createFetch = (
+  symbol: SymbolType,
+  currency: string,
+  call: string,
+  options: Object
+) =>
+  axios.get(`https://min-api.cryptocompare.com/data/${call}`, {
     params: {
       ...options,
       fsym: toUpper(symbol),
       tsym: toUpper(currency)
     }
   })
-}
 
-const fetchPriceHistory = (symbol: SymbolType, currency: string, duration: Duration): Promise<Object> => {
+const fetchPriceHistory = (
+  symbol: SymbolType,
+  currency: string,
+  duration: Duration
+): Promise<Object> => {
   switch (duration) {
     case '1d':
       return createFetch(symbol, currency, 'histohour', { limit: 24 })
@@ -36,14 +44,20 @@ const fetchPriceHistory = (symbol: SymbolType, currency: string, duration: Durat
   }
 }
 
-export default createActions(ID, ({ currency = DEFAULT_CURRENCY_CODE, duration = '1m' }: Props = {}) => async (state: Object) => {
-  const [neo, gas] = await Promise.all([
-    fetchPriceHistory(ASSETS.NEO, currency, duration),
-    fetchPriceHistory(ASSETS.GAS, currency, duration)
-  ])
+export default createActions(
+  ID,
+  ({
+    currency = DEFAULT_CURRENCY_CODE,
+    duration = '1m'
+  }: Props = {}) => async () => {
+    const [neo, gas] = await Promise.all([
+      fetchPriceHistory(ASSETS.NEO, currency, duration),
+      fetchPriceHistory(ASSETS.GAS, currency, duration)
+    ])
 
-  return {
-    [ASSETS.NEO]: neo.data.Data,
-    [ASSETS.GAS]: gas.data.Data
+    return {
+      [ASSETS.NEO]: neo.data.Data,
+      [ASSETS.GAS]: gas.data.Data
+    }
   }
-})
+)

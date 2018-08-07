@@ -11,7 +11,7 @@ type Props = {
 }
 
 export default class Contacts extends React.Component<Props> {
-  render () {
+  render() {
     return (
       <div className={styles.contacts}>
         <ContactsPanel contacts={this.props.contacts} />

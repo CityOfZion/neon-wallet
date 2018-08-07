@@ -9,7 +9,7 @@
   align-items: center;
   font-size: 14px;
   font-weight: 100;
-  padding: 10px;
+  padding: 12px;
   white-space: nowrap;
   transition: opacity 0.2s;
 
@@ -21,8 +21,8 @@
     cursor: pointer;
 
     &:hover {
-      background-image: linear-gradient(to right, #ee6d66, #a866ee),
-        radial-gradient(circle at top left, #ee6d66, #a866ee);
+      background-image: linear-gradient(to right, #66eb8e, #6bdaf6),
+        radial-gradient(circle at top left, #66eb8e, #6bdaf6);
     }
   }
 
@@ -38,7 +38,7 @@
   &.light {
     border: solid;
     border-width: 2px;
-    border-color: $primary-button;
+    border-color: transparent;
     background: #fff;
     color: $primary-button;
 
@@ -61,6 +61,11 @@
   }
 
   .icon {
+    svg {
+      height: 25px;
+      width: 25px;
+    }
+
     height: 25px;
     width: 25px;
     align-self: flex-start;
@@ -71,11 +76,6 @@
 
     &.light {
       // TODO
-    }
-
-    svg {
-      width: 100%;
-      height: 100%;
     }
   }
 }

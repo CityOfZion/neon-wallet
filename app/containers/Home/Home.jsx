@@ -1,21 +1,21 @@
 // @flow
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 
 import LoginPrivateKey from '../LoginPrivateKey'
 import LoginNep2 from '../LoginNep2'
 import LoginLedgerNanoS from '../LoginLedgerNanoS'
 import LoginLocalStorage from '../LoginLocalStorage'
 import Button from '../../components/Button'
-import SelectInput from '../../components/Inputs/SelectInput'
 import styles from './Home.scss'
 import AddIcon from '../../assets/icons/add.svg'
-import WalletIcon from '../../assets/icons/wallet.svg'
+import ImportIcon from '../../assets/icons/import.svg'
 import { ROUTES } from '../../core/constants'
 import HomeLayout from './HomeLayout'
 
 type State = {
-  option: string
+  tabIndex: number
 }
 
 type Props = {
@@ -37,65 +37,57 @@ const LOGIN_OPTIONS = {
   },
   ledger: {
     render: () => <LoginLedgerNanoS />,
-    display: 'Ledger Nano S'
+    display: 'Ledger'
   }
 }
 
 export default class Home extends React.Component<Props, State> {
   state = {
-    option: LOGIN_OPTIONS.LOCAL_STORAGE.display
+    tabIndex: 0
   }
 
-  options = Object.keys(LOGIN_OPTIONS).map(
-    (key: string) => LOGIN_OPTIONS[key].display
-  )
+  options = Object.keys(LOGIN_OPTIONS).map((key: string) => LOGIN_OPTIONS[key])
 
-  handleSelect = (display: string) => this.setState({ option: display })
-
-  renderLoginBasedOnOption = (display: string) => {
-    const selectedOption = Object.values(LOGIN_OPTIONS).find(
-      (option: mixed) => {
-        return (
-          option && typeof option === 'object' && option.display === display
-        )
-      }
-    )
-    if (selectedOption && typeof selectedOption.render === 'function') {
-      return selectedOption.render()
-    }
-    return console.warn(
-      'renderLoginBasedOnOption() invoked with invalid display value!'
-    )
-  }
   render = () => {
     const { loading } = this.props
     return (
       <HomeLayout>
         <div className={styles.inputContainer}>
-          <SelectInput
-            className={styles.input}
-            onChange={value => this.handleSelect(value)}
-            value={this.state.option}
-            readOnly
-            disabled={loading}
-            items={this.options}
-            getItemValue={item => item}
-          />
-
-          {this.renderLoginBasedOnOption(this.state.option)}
-
+          <Tabs
+            selectedIndex={this.state.tabIndex}
+            onSelect={tabIndex => this.setState({ tabIndex })}
+            className={styles.homeTabs}
+          >
+            <TabList>
+              {this.options.map(option => (
+                <Tab key={option.display}>{option.display.toUpperCase()}</Tab>
+              ))}
+            </TabList>
+            <div className={styles.loginContentContainer}>
+              {this.options.map(option => (
+                <TabPanel
+                  key={option.display}
+                  selectedClassName={styles.homeTabPanel}
+                >
+                  {option.render()}
+                </TabPanel>
+              ))}
+            </div>
+          </Tabs>
           <div className={styles.buttonRow}>
             <div className={styles.buttonContainer}>
               <Link to={ROUTES.CREATE_WALLET}>
                 <Button disabled={loading} renderIcon={AddIcon}>
-                  New Wallet
+                  Create Wallet
                 </Button>
               </Link>
             </div>
             <div className={styles.buttonContainer}>
-              <Button disabled={loading} renderIcon={WalletIcon}>
-                Wallet Manager
-              </Button>
+              <Link to={ROUTES.IMPORT_WALLET}>
+                <Button disabled={loading} renderIcon={ImportIcon}>
+                  Import Wallet
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

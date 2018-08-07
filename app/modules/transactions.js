@@ -18,23 +18,25 @@ import {
   getAssetBalances,
   getTokenBalances
 } from '../core/deprecated'
-import { isToken, validateTransactionsBeforeSending, getTokenBalancesMap } from '../core/wallet'
+import {
+  isToken,
+  validateTransactionsBeforeSending,
+  getTokenBalancesMap
+} from '../core/wallet'
 import { toNumber } from '../core/math'
 
-const extractTokens = (sendEntries: Array<SendEntryType>) => {
-  return sendEntries.filter(({ symbol }) => isToken(symbol))
-}
+const extractTokens = (sendEntries: Array<SendEntryType>) =>
+  sendEntries.filter(({ symbol }) => isToken(symbol))
 
-const extractAssets = (sendEntries: Array<SendEntryType>) => {
-  return sendEntries.filter(({ symbol }) => !isToken(symbol))
-}
+const extractAssets = (sendEntries: Array<SendEntryType>) =>
+  sendEntries.filter(({ symbol }) => !isToken(symbol))
 
 const buildIntents = (sendEntries: Array<SendEntryType>) => {
   const assetEntries = extractAssets(sendEntries)
   // $FlowFixMe
-  return flatMap(assetEntries, ({ address, amount, symbol }) => {
-    return api.makeIntent({ [symbol]: toNumber(amount) }, address)
-  })
+  return flatMap(assetEntries, ({ address, amount, symbol }) =>
+    api.makeIntent({ [symbol]: toNumber(amount) }, address)
+  )
 }
 
 const buildTransferScript = (
@@ -73,70 +75,91 @@ const makeRequest = (sendEntries: Array<SendEntryType>, config: Object) => {
   )
 
   if (script === '') {
-    return api.sendAsset({ ...config, intents: buildIntents(sendEntries) }, api.neoscan)
-  } else {
-    return api.doInvoke({
+    return api.sendAsset(
+      { ...config, intents: buildIntents(sendEntries) },
+      api.neoscan
+    )
+  }
+  return api.doInvoke(
+    {
       ...config,
       intents: buildIntents(sendEntries),
       script,
       gas: 0
-    }, api.neoscan)
-  }
+    },
+    api.neoscan
+  )
 }
 
-export const sendTransaction = (sendEntries: Array<SendEntryType>) => async (
+export const sendTransaction = (sendEntries: Array<SendEntryType>) => (
   dispatch: DispatchType,
   getState: GetStateType
-): Promise<*> => {
-  const state = getState()
-  const wif = getWIF(state)
-  const fromAddress = getAddress(state)
-  const net = getNetwork(state)
-  const tokenBalances = getTokenBalances(state)
-  const tokensBalanceMap = keyBy(tokenBalances, 'symbol')
-  const balances = { ...getAssetBalances(state), ...getTokenBalancesMap(tokenBalances) }
-  const signingFunction = getSigningFunction(state)
-  const publicKey = getPublicKey(state)
-  const isHardwareSend = getIsHardwareLogin(state)
-
-  const rejectTransaction = (message: string) => dispatch(showErrorNotification({ message }))
-
-  const error = validateTransactionsBeforeSending(balances, sendEntries)
-
-  if (error) {
-    return rejectTransaction(error)
-  }
-
-  dispatch(showInfoNotification({
-    message: 'Sending Transaction...',
-    autoDismiss: 0
-  }))
-
-  if (isHardwareSend) {
-    dispatch(showInfoNotification({
-      message: 'Please sign the transaction on your hardware device',
-      autoDismiss: 0
-    }))
-  }
-
-  try {
-    const { response } = await makeRequest(sendEntries, {
-      net,
-      tokensBalanceMap,
-      address: fromAddress,
-      publicKey,
-      privateKey: new wallet.Account(wif).privateKey,
-      signingFunction: isHardwareSend ? signingFunction : null
-    })
-
-    if (!response.result) {
-      throw new Error('Rejected by RPC server.')
+): Promise<*> =>
+  new Promise(async (resolve, reject) => {
+    const state = getState()
+    const wif = getWIF(state)
+    const fromAddress = getAddress(state)
+    const net = getNetwork(state)
+    const tokenBalances = getTokenBalances(state)
+    const tokensBalanceMap = keyBy(tokenBalances, 'symbol')
+    const balances = {
+      ...getAssetBalances(state),
+      ...getTokenBalancesMap(tokenBalances)
     }
-  } catch (err) {
-    return rejectTransaction(`Transaction failed: ${err.message}`)
-  }
+    const signingFunction = getSigningFunction(state)
+    const publicKey = getPublicKey(state)
+    const isHardwareSend = getIsHardwareLogin(state)
 
-  return dispatch(showSuccessNotification({
-    message: 'Transaction complete! Your balance will automatically update when the blockchain has processed it.'
-  }))
-}
+    const rejectTransaction = (message: string) =>
+      dispatch(showErrorNotification({ message }))
+
+    const error = validateTransactionsBeforeSending(balances, sendEntries)
+
+    if (error) {
+      rejectTransaction(error)
+      return reject(error)
+    }
+
+    dispatch(
+      showInfoNotification({
+        message: 'Sending Transaction...',
+        autoDismiss: 0
+      })
+    )
+
+    if (isHardwareSend) {
+      dispatch(
+        showInfoNotification({
+          message: 'Please sign the transaction on your hardware device',
+          autoDismiss: 0
+        })
+      )
+    }
+
+    try {
+      const { response } = await makeRequest(sendEntries, {
+        net,
+        tokensBalanceMap,
+        address: fromAddress,
+        publicKey,
+        privateKey: new wallet.Account(wif).privateKey,
+        signingFunction: isHardwareSend ? signingFunction : null
+      })
+
+      if (!response.result) {
+        throw new Error('Rejected by RPC server.')
+      }
+
+      dispatch(
+        showSuccessNotification({
+          message:
+            'Transaction complete! Your balance will automatically update when the blockchain has processed it.'
+        })
+      )
+
+      return resolve(response)
+    } catch (err) {
+      rejectTransaction(`Transaction failed: ${err.message}`)
+      return reject(err)
+    }
+  })

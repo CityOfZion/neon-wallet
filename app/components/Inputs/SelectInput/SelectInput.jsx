@@ -7,18 +7,23 @@ import { noop, omit, trim, includes, toLower } from 'lodash'
 import TextInput from '../TextInput'
 import Dropdown from './Dropdown'
 import DropdownButton from './DropdownButton'
+
 import styles from './SelectInput.scss'
 
 type Props = {
   className?: string,
   value?: string,
+  placeholder?: string,
   items: Array<any>,
+  error?: string,
   renderItem?: Function,
   renderAfter: Function,
   getItemValue: Function,
   getSearchResults: Function,
   onFocus?: Function,
-  onChange?: Function
+  onChange?: Function,
+  customChangeEvent?: boolean,
+  onToggle?: Function
 }
 
 type State = {
@@ -31,13 +36,12 @@ type RenderItemProps = {
   onSelect: Function
 }
 
-const defaultRenderAfter = props => <DropdownButton {...props} />
+const defaultRenderAfter = (props: Props) => <DropdownButton {...props} />
 
-const defaultItemValue = item => item
+const defaultItemValue = (item: string) => item
 
-const defaultSearchResults = (items, term) => {
-  return items.filter(item => includes(toLower(item), toLower(term)))
-}
+const defaultSearchResults = (items: Array<*>, term: string) =>
+  items.filter(item => includes(toLower(item), toLower(term)))
 
 export default class SelectInput extends React.Component<Props, State> {
   static defaultProps = {
@@ -69,12 +73,17 @@ export default class SelectInput extends React.Component<Props, State> {
       'getItemValue',
       'getSearchResults',
       'onFocus',
-      'onChange'
+      'onChange',
+      'customChangeEvent'
     )
+
+    const { error } = this.props
+
+    const className = classNames(styles.selectInput, this.props.className)
 
     return (
       <Dropdown
-        className={classNames(styles.selectInput, this.props.className)}
+        className={className}
         open={this.state.open}
         onClose={this.handleClose}
         renderDropdown={this.renderDropdown}
@@ -82,25 +91,23 @@ export default class SelectInput extends React.Component<Props, State> {
         <TextInput
           {...passDownProps}
           className={styles.input}
-          renderAfter={this.renderAfter}
+          renderAfter={!error && this.renderAfter}
           onFocus={this.handleFocus}
-          onChange={this.handleChange}
+          onChange={
+            this.props.customChangeEvent
+              ? this.props.onChange
+              : this.handleChange
+          }
         />
       </Dropdown>
     )
   }
 
-  renderAfter = () => {
-    return this.props.renderAfter({ onToggle: this.handleToggle })
-  }
+  renderAfter = () => this.props.renderAfter({ onToggle: this.handleToggle })
 
   renderDropdown = ({ className }: { className: string }) => {
     const items = this.getItems()
     const hasItems = items.length > 0
-    const isSearch =
-      this.state.search.length > 0 &&
-      this.props.items &&
-      this.props.items.length > 0
 
     if (hasItems) {
       return (
@@ -108,33 +115,20 @@ export default class SelectInput extends React.Component<Props, State> {
           {this.renderItems(items)}
         </div>
       )
-    } else if (isSearch) {
-      return (
-        <div
-          className={classNames(
-            styles.dropdown,
-            styles.noSearchResults,
-            className
-          )}
-        >
-          No search results.
-        </div>
-      )
-    } else {
-      return null
     }
+    return null
   }
 
   renderItems = (items: Array<any>) => {
     const { search } = this.state
     const renderItem = this.props.renderItem || this.renderItem
 
-    return items.map(item => {
-      return renderItem(item, {
+    return (items.map(item =>
+      renderItem(item, {
         search,
         onSelect: this.generateSelectHandler(item)
       })
-    })
+    ): Array<React$Node>)
   }
 
   renderItem = (item: Object, { search, onSelect }: RenderItemProps) => {
@@ -188,14 +182,12 @@ export default class SelectInput extends React.Component<Props, State> {
     this.setState({ open, search: '' })
   }
 
-  generateSelectHandler = (item: Object) => {
-    return (event: Object) => {
-      const { onChange, getItemValue } = this.props
-      if (onChange) {
-        onChange(getItemValue(item))
-      }
-      this.handleClose()
+  generateSelectHandler = (item: Object) => (event: Object) => {
+    const { onChange, getItemValue } = this.props
+    if (onChange) {
+      onChange(getItemValue(item))
     }
+    this.handleClose()
   }
 
   getItems = () => {
@@ -204,8 +196,7 @@ export default class SelectInput extends React.Component<Props, State> {
 
     if (search.length === 0) {
       return items
-    } else {
-      return this.props.getSearchResults(items, search)
     }
+    return this.props.getSearchResults(items, search)
   }
 }

@@ -7,8 +7,8 @@ import ContactsPanel from './ContactsPanel'
 import { deleteContactActions } from '../../../actions/contactsActions'
 import withFailureNotification from '../../../hocs/withFailureNotification'
 
-const mapContactActionsToProps = (actions) => ({
-  deleteContact: (name) => actions.call({ name })
+const mapContactActionsToProps = actions => ({
+  deleteContact: name => actions.call({ name })
 })
 
 export default compose(

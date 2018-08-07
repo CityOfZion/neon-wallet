@@ -1,29 +1,47 @@
 // @flow
 import React, { Component } from 'react'
+import classNames from 'classnames'
+
 import styles from './Home.scss'
-import neonLogo from '../../images/neon-logo-redesign.png'
+import logo from '../../assets/images/logo.png'
 
 type Props = {
   children: React$Node,
   renderNavigation?: Function,
-  excludeLogo?: boolean
+  excludeLogoText?: boolean,
+  headerText: string
 }
 
 export default class HomeLayout extends Component<Props> {
+  static defaultProps = {
+    headerText: 'Login'
+  }
+
   render = () => {
-    const { children, renderNavigation, excludeLogo } = this.props
+    const {
+      children,
+      renderNavigation,
+      excludeLogoText,
+      headerText
+    } = this.props
     return (
       <div id="home" className={styles.homeContainer}>
         <div className={styles.innerHomeContainer}>
           {renderNavigation && renderNavigation()}
-          {!excludeLogo && (
-            <img
-              className={
-                renderNavigation ? styles.logoWithNegativeMargin : styles.logo
-              }
-              src={neonLogo}
-            />
-          )}
+          <div
+            className={
+              renderNavigation
+                ? classNames(
+                    styles.logoWithNegativeMargin,
+                    styles.logoContainer
+                  )
+                : styles.logoContainer
+            }
+          >
+            <img className={styles.logo} src={logo} alt="" />
+            {!excludeLogoText && <h1> NEON </h1>}
+          </div>
+          <div className={styles.loginHeader}>{headerText}</div>
           {children}
         </div>
       </div>

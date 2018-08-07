@@ -4,7 +4,7 @@ import TransactionHistoryPanel from '../../components/TransactionHistory/Transac
 
 import styles from './TransactionHistory.scss'
 
-export default function TransactionHistory () {
+export default function TransactionHistory() {
   return (
     <div className={styles.transactionHistory}>
       <TransactionHistoryPanel className={styles.transactionHistoryPanel} />

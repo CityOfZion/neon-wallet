@@ -24,7 +24,7 @@ export default class PasswordInput extends React.Component<Props, State> {
     showPassword: false
   }
 
-  render () {
+  render() {
     return (
       <TextInput
         className={classNames(styles.passwordInput, this.props.className)}

@@ -8,8 +8,9 @@ import withFailureNotification from '../../hocs/withFailureNotification'
 import pureStrategy from '../../hocs/helpers/pureStrategy'
 import { nep2LoginActions } from '../../actions/authActions'
 
-const mapActionsToProps = (actions) => ({
-  loginNep2: (passphrase, encryptedWIF) => actions.call({ passphrase, encryptedWIF })
+const mapActionsToProps = actions => ({
+  loginNep2: (passphrase, encryptedWIF) =>
+    actions.call({ passphrase, encryptedWIF })
 })
 
 export default compose(

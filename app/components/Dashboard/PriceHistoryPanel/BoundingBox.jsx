@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
+// $FlowFixMe
 import { isEqual } from 'lodash'
 
 import styles from './BoundingBox.scss'
@@ -48,16 +49,17 @@ export default class BoundingBox extends React.Component<Props, State> {
     position: null
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.updateBoundingBox()
   }
 
-  componentDidUpdate (prevProps: Props) {
+  componentDidUpdate() {
     this.updateBoundingBox()
   }
 
-  render () {
+  render() {
     return (
+      // $FlowFixMe
       <g ref={this.registerRef('group')} className={styles.boundingBoxGroup}>
         {this.renderBoundingBox()}
         {this.props.children}
@@ -65,13 +67,14 @@ export default class BoundingBox extends React.Component<Props, State> {
     )
   }
 
-  renderBoundingBox () {
+  renderBoundingBox() {
     const { position } = this.state
     const { roundedX, roundedY } = this.props
 
     if (position) {
       return (
         <rect
+          // $FlowFixMe
           ref={this.registerRef('box')}
           className={classNames(styles.boundingBox, this.props.className)}
           rx={roundedX}
@@ -79,14 +82,16 @@ export default class BoundingBox extends React.Component<Props, State> {
           x={position.x}
           y={position.y}
           width={position.width}
-          height={position.height} />
+          height={position.height}
+        />
       )
     }
+    return null
   }
 
-  registerRef = (name: string) => {
+  registerRef = (name: string) => (el: Node) => {
     // $FlowFixMe
-    return (el: Node) => { this[name] = el }
+    this[name] = el
   }
 
   updateBoundingBox = () => {
@@ -99,34 +104,39 @@ export default class BoundingBox extends React.Component<Props, State> {
 
   calculateBoundingBox = (): ?SVGRect => {
     const nodes = this.group ? [...this.group.childNodes] : []
-    if (nodes.length === 0) return
+    if (nodes.length === 0) return undefined
 
     // $FlowFixMe
     const getBoundingBox = (el: SVGLocatable): SVGRect => el.getBBox()
 
     // $FlowFixMe
-    const position = nodes.reduce((result: SVGRect, current: SVGLocatable): SVGRect => {
-      if (current === this.box) return result
+    const position = nodes.reduce(
+      // $FlowFixMe
+      (result: SVGRect, current: SVGLocatable): SVGRect => {
+        // $FlowFixMe
+        if (current === this.box) return result
 
-      const box = getBoundingBox(current)
-      const newX = Math.min(result.x, box.x)
-      const newY = Math.min(result.y, box.y)
+        const box = getBoundingBox(current)
+        const newX = Math.min(result.x, box.x)
+        const newY = Math.min(result.y, box.y)
 
-      return {
-        x: newX,
-        y: newY,
-        width: newX + Math.max(result.x + result.width, box.x + box.width),
-        height: newY + Math.max(result.y + result.height, box.y + box.height)
-      }
-    }, getBoundingBox(nodes.pop()))
+        return {
+          x: newX,
+          y: newY,
+          width: newX + Math.max(result.x + result.width, box.x + box.width),
+          height: newY + Math.max(result.y + result.height, box.y + box.height)
+        }
+      },
+      getBoundingBox(nodes.pop())
+    )
 
     const { paddingX, paddingY } = this.props
 
     return {
       x: position.x - paddingX,
       y: position.y - paddingY,
-      width: position.width + (paddingX * 2),
-      height: position.height + (paddingY * 2)
+      width: position.width + paddingX * 2,
+      height: position.height + paddingY * 2
     }
   }
 }

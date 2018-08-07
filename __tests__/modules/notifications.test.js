@@ -12,7 +12,10 @@ import notificationsReducer, {
   AUTO_DISMISS_TIMEOUT,
   showNotification
 } from '../../app/modules/notifications'
-import { NOTIFICATION_LEVELS, NOTIFICATION_POSITIONS } from '../../app/core/constants'
+import {
+  NOTIFICATION_LEVELS,
+  NOTIFICATION_POSITIONS
+} from '../../app/core/constants'
 
 const hideNonDismissibleAction = {
   payload: {
@@ -26,9 +29,7 @@ describe('notifications module tests', () => {
   test('showSuccessNotification works without stacking', () => {
     const dispatch = jest.fn()
     const expectedActions = [
-      [
-        hideNonDismissibleAction
-      ],
+      [hideNonDismissibleAction],
       [
         {
           payload: {
@@ -113,9 +114,7 @@ describe('notifications module tests', () => {
   test('showErrorNotification works without stacking', () => {
     const dispatch = jest.fn()
     const expectedActions = [
-      [
-        hideNonDismissibleAction
-      ],
+      [hideNonDismissibleAction],
       [
         {
           payload: {
@@ -146,9 +145,7 @@ describe('notifications module tests', () => {
   test('showInfoNotification works without stacking', () => {
     const dispatch = jest.fn()
     const expectedActions = [
-      [
-        hideNonDismissibleAction
-      ],
+      [hideNonDismissibleAction],
       [
         {
           payload: {
@@ -179,9 +176,7 @@ describe('notifications module tests', () => {
   test('showWarningNotification works without stacking', () => {
     const dispatch = jest.fn()
     const expectedActions = [
-      [
-        hideNonDismissibleAction
-      ],
+      [hideNonDismissibleAction],
       [
         {
           payload: {
@@ -234,9 +229,7 @@ describe('notifications module tests', () => {
       }
       const initialState = []
 
-      const expectedState = [
-        notificationArgs
-      ]
+      const expectedState = [notificationArgs]
 
       expect(notificationsReducer(initialState, action)).toEqual(expectedState)
     })
@@ -293,12 +286,24 @@ describe('notifications module tests', () => {
       }
 
       const initialState = [
-        { message: 'some message', id: 'notification_id_1', position: DEFAULT_POSITION },
-        { message: 'some other message', id: 'notification_id_2', position: NOTIFICATION_POSITIONS.BOTTOM_CENTER }
+        {
+          message: 'some message',
+          id: 'notification_id_1',
+          position: DEFAULT_POSITION
+        },
+        {
+          message: 'some other message',
+          id: 'notification_id_2',
+          position: NOTIFICATION_POSITIONS.BOTTOM_CENTER
+        }
       ]
 
       const expectedState = [
-        { message: 'some other message', id: 'notification_id_2', position: NOTIFICATION_POSITIONS.BOTTOM_CENTER }
+        {
+          message: 'some other message',
+          id: 'notification_id_2',
+          position: NOTIFICATION_POSITIONS.BOTTOM_CENTER
+        }
       ]
 
       expect(notificationsReducer(initialState, action)).toEqual(expectedState)

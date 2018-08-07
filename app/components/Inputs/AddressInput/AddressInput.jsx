@@ -24,7 +24,7 @@ export default class AddressInput extends React.Component<Props> {
   }
 
   render = () => {
-    const passDownProps = omit(this.props, 'contacts')
+    const passDownProps = omit(this.props, 'contacts', 'dispatch')
 
     return (
       <SelectInput
@@ -34,34 +34,41 @@ export default class AddressInput extends React.Component<Props> {
         renderAfter={DropdownButton}
         renderItem={this.renderItem}
         getItemValue={this.getItemValue}
-        getSearchResults={this.getSearchResults} />
+        getSearchResults={this.getSearchResults}
+      />
     )
   }
 
-  renderItem = (item: ItemType, { search, onSelect }: { search: string, onSelect: Function }) => {
-    return (
-      <div className={styles.addressItem} key={item.label} tabIndex={0} onClick={onSelect}>
-        <div className={styles.label}>
-          <Highlighter
-            highlightTag="span"
-            highlightClassName={styles.highlight}
-            searchWords={[search]}
-            autoEscape
-            textToHighlight={item.label}
-          />
-        </div>
-        <div className={styles.value}>
-          <Highlighter
-            highlightTag="span"
-            highlightClassName={styles.highlight}
-            searchWords={[search]}
-            autoEscape
-            textToHighlight={item.value}
-          />
-        </div>
+  renderItem = (
+    item: ItemType,
+    { search, onSelect }: { search: string, onSelect: Function }
+  ) => (
+    <div
+      className={styles.addressItem}
+      key={item.label}
+      tabIndex={0}
+      onClick={onSelect}
+    >
+      <div className={styles.label}>
+        <Highlighter
+          highlightTag="span"
+          highlightClassName={styles.highlight}
+          searchWords={[search]}
+          autoEscape
+          textToHighlight={item.label}
+        />
       </div>
-    )
-  }
+      <div className={styles.value}>
+        <Highlighter
+          highlightTag="span"
+          highlightClassName={styles.highlight}
+          searchWords={[search]}
+          autoEscape
+          textToHighlight={item.value}
+        />
+      </div>
+    </div>
+  )
 
   getItems = (): Array<ItemType> => {
     const { contacts } = this.props
@@ -74,16 +81,17 @@ export default class AddressInput extends React.Component<Props> {
     }))
   }
 
-  getItemValue = (item: ItemType): string => {
-    return item.value
-  }
+  getItemValue = (item: ItemType): string => item.value
 
-  getSearchResults = (items: Array<ItemType>, term: string): Array<ItemType> => {
+  getSearchResults = (
+    items: Array<ItemType>,
+    term: string
+  ): Array<ItemType> => {
     const sifter = new Sifter(items)
     const result = sifter.search(term, {
       fields: ['label', 'value'],
       sort: [{ field: 'label', direction: 'asc' }]
     })
-    return result.items.map((resultItem) => items[resultItem.id])
+    return result.items.map(resultItem => items[resultItem.id])
   }
 }

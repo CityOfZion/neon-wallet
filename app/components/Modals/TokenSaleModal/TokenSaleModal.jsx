@@ -21,7 +21,7 @@ const WARNINGS = [
   'I understand that some sales may only accept NEO or GAS, and I have verified which is accepted.',
   'I understand that if I send NEO or GAS to a token sale that has already ended, I will lose my NEO/GAS and will not be refunded.',
   'I understand that I should only click the ‘Purchase!’ button once.',
-  'I understand that City of Zion (CoZ) is not responsible for my usage of this feature, and I have consulted this software\'s licenses.'
+  "I understand that City of Zion (CoZ) is not responsible for my usage of this feature, and I have consulted this software's licenses."
 ]
 
 type Props = {
@@ -71,7 +71,12 @@ export default class TokenSale extends Component<Props, State> {
     const amountNEO = assetBalancesToSend[ASSETS.NEO] || '0'
     const amountGAS = assetBalancesToSend[ASSETS.GAS] || '0'
 
-    const success = await participateInSale(amountNEO, amountGAS, scriptHash, gasCost)
+    const success = await participateInSale(
+      amountNEO,
+      amountGAS,
+      scriptHash,
+      gasCost
+    )
 
     if (success) {
       this.setState({ step: 3, processing: false })
@@ -104,13 +109,17 @@ export default class TokenSale extends Component<Props, State> {
     return true
   }
 
-  render () {
+  render() {
     const { hideModal } = this.props
     const { step } = this.state
 
     return (
       <BaseModal
-        title={step === 3 ? 'Participation successful' : 'Participate in a token sale'}
+        title={
+          step === 3
+            ? 'Participation successful'
+            : 'Participate in a token sale'
+        }
         hideModal={hideModal}
         style={{ content: { width: '925px', height: '700px' } }}
       >
@@ -171,9 +180,9 @@ export default class TokenSale extends Component<Props, State> {
           onChangeToken={(symbol: SymbolType) =>
             this.setState({ tokenToMint: symbol })
           }
-          onChangeAmount={(symbol: SymbolType, amount: string) => (
+          onChangeAmount={(symbol: SymbolType, amount: string) =>
             this.setState({ assetBalancesToSend: { [symbol]: amount } })
-          )}
+          }
           assetBalancesToSend={assetBalancesToSend}
           tokenBalances={tokenBalances}
           assetBalances={assetBalances}
@@ -181,12 +190,14 @@ export default class TokenSale extends Component<Props, State> {
           showTokensModal={showTokensModal}
         />
 
-        <WarningText>
-          {map(WARNINGS, this.renderWarning)}
-        </WarningText>
+        <WarningText>{map(WARNINGS, this.renderWarning)}</WarningText>
 
         <div className={styles.purchaseButton}>
-          <Tooltip title="Please agree to the terms of purchase" position="top" disabled={valid}>
+          <Tooltip
+            title="Please agree to the terms of purchase"
+            position="top"
+            disabled={valid}
+          >
             <Button primary onClick={this.handleStep(2)} disabled={!valid}>
               Continue &raquo;
             </Button>
@@ -196,33 +207,27 @@ export default class TokenSale extends Component<Props, State> {
     )
   }
 
-  renderWarning = (message: string, index: number) => {
-    return (
-      <li key={index}>
-        <label>
-          <input
-            type="checkbox"
-            checked={this.state.agreements[index]}
-            onChange={this.handleChangeAgreementCurry(index)}
-          />
-          {message}
-        </label>
-      </li>
-    )
+  renderWarning = (message: string, index: number) => (
+    <li key={index}>
+      <label>
+        <input
+          type="checkbox"
+          checked={this.state.agreements[index]}
+          onChange={this.handleChangeAgreementCurry(index)}
+        />
+        {message}
+      </label>
+    </li>
+  )
+
+  handleChangeAgreementCurry = (index: number) => (event: Object) => {
+    const agreements = [...this.state.agreements]
+    agreements.splice(index, 1, event.target.checked)
+    this.setState({ agreements })
   }
 
-  handleChangeAgreementCurry = (index: number) => {
-    return (event: Object) => {
-      const agreements = [...this.state.agreements]
-      agreements.splice(index, 1, event.target.checked)
-      this.setState({ agreements })
-    }
-  }
-
-  handleStep = (step: number) => {
-    return () => {
-      this.setState({ step })
-    }
+  handleStep = (step: number) => () => {
+    this.setState({ step })
   }
 
   handleConfirm = () => {

@@ -17,22 +17,24 @@ describe('ConfirmModal', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
-  test('should render the title correctly', () => {
-    const wrapper = shallow(<ConfirmModal {...props} />)
-
-    expect(wrapper.dive().find('.modalHeaderTitle').text()).toEqual(props.title)
-  })
-
   test('should render the text correctly', () => {
     const wrapper = shallow(<ConfirmModal {...props} />)
 
-    expect(wrapper.dive().find('.text').text()).toEqual(props.text)
+    expect(
+      wrapper
+        .dive()
+        .find('.text')
+        .text()
+    ).toEqual(props.text)
   })
 
   test('should trigger the onCancel function followed by hideModal', () => {
     const wrapper = shallow(<ConfirmModal {...props} />)
 
-    wrapper.dive().find('#cancel').simulate('click')
+    wrapper
+      .dive()
+      .find('#cancel')
+      .simulate('click')
 
     expect(props.onCancel).toHaveBeenCalled()
     expect(props.hideModal).toHaveBeenCalled()
@@ -41,7 +43,10 @@ describe('ConfirmModal', () => {
   test('should trigger the onClick function followed by hideModal', () => {
     const wrapper = shallow(<ConfirmModal {...props} />)
 
-    wrapper.dive().find('#confirm').simulate('click')
+    wrapper
+      .dive()
+      .find('#confirm')
+      .simulate('click')
 
     expect(props.onClick).toHaveBeenCalled()
     expect(props.hideModal).toHaveBeenCalled()

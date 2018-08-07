@@ -1,11 +1,6 @@
 // @flow
 export const Account = (account: Object) => {
-  const {
-    address,
-    label,
-    isDefault,
-    key
-  } = account
+  const { address, label, isDefault, key } = account
 
   return {
     address,

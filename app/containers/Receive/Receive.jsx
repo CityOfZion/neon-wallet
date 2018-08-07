@@ -13,7 +13,7 @@ type Props = {
 export default class Dashboard extends React.Component<Props> {
   walletDataInterval: ?number
 
-  render () {
+  render() {
     const { address } = this.props
 
     return (

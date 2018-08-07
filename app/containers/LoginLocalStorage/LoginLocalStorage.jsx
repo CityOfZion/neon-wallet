@@ -24,23 +24,30 @@ export default class LoginLocalStorage extends Component<Props, State> {
     encryptedWIF: ''
   }
 
-  render () {
+  render() {
     const { loading, accounts } = this.props
     const { passphrase, encryptedWIF } = this.state
     const { label } =
-      accounts.find(account => account.key === encryptedWIF) || {}
+      (Array.isArray(accounts) &&
+        accounts.find(account => account.key === encryptedWIF)) ||
+      {}
 
     return (
       <div id="loginLocalStorage" className={styles.flexContainer}>
         <form onSubmit={this.handleSubmit}>
           <div className={styles.inputMargin}>
             <SelectInput
-              items={accounts.map(account => account.label)}
+              items={
+                Array.isArray(accounts)
+                  ? accounts.map(account => account.label)
+                  : []
+              }
               value={label || ''}
-              placeholder="Select Account"
+              placeholder="Select Wallet"
               disabled={loading}
               onChange={value => this.setState({ encryptedWIF: value })}
               getItemValue={value =>
+                Array.isArray(accounts) &&
                 accounts.find(account => account.label === value).key
               }
             />
@@ -53,18 +60,17 @@ export default class LoginLocalStorage extends Component<Props, State> {
               onChange={e => this.setState({ passphrase: e.target.value })}
             />
           </div>
-          <div>
-            <Button
-              id="loginButton"
-              primary
-              type="submit"
-              className={styles.loginButtonMargin}
-              disabled={loading || !this.isValid()}
-              renderIcon={LoginIcon}
-            >
-              Login
-            </Button>
-          </div>
+
+          <Button
+            id="loginButton"
+            primary
+            type="submit"
+            className={styles.loginButtonMargin}
+            disabled={loading || !this.isValid()}
+            renderIcon={() => <LoginIcon />}
+          >
+            Login
+          </Button>
         </form>
       </div>
     )
@@ -81,7 +87,5 @@ export default class LoginLocalStorage extends Component<Props, State> {
     }
   }
 
-  isValid = () => {
-    return this.state.encryptedWIF !== '' && this.state.passphrase !== ''
-  }
+  isValid = () => this.state.encryptedWIF !== '' && this.state.passphrase !== ''
 }

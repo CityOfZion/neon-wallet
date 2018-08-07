@@ -4,27 +4,27 @@ import classNames from 'classnames'
 import ReactModal from 'react-modal'
 import Close from 'react-icons/lib/md/close'
 
+import Logo from '../../../assets/icons/neonLogoGrey.svg'
+
 import styles from './BaseModal.scss'
 
 type Props = {
-    title: string,
-    children: React$Node,
-    hideModal: Function,
-    width?: string,
-    height?: string,
-    className?: string,
-    bodyClassName?: string,
-    style: {
-      content: Object,
-      overlay: Object
-    },
-    onAfterOpen?: Function,
-    shouldCloseWithEscapeKey: boolean
+  children: React$Node,
+  hideModal: Function,
+  width?: string,
+  height?: string,
+  className?: string,
+  bodyClassName?: string,
+  style: {
+    content: Object,
+    overlay: Object
+  },
+  onAfterOpen?: Function,
+  shouldCloseWithEscapeKey: boolean
 }
 
 const BaseModal = ({
   hideModal,
-  title,
   children,
   width,
   height,
@@ -60,10 +60,22 @@ const BaseModal = ({
     onAfterOpen={onAfterOpen}
   >
     <div className={styles.modalHeader}>
-      <div className={styles.modalHeaderTitle}>{title}</div>
-      <div className={styles.modalHeaderCloseButton} onClick={hideModal}><Close /></div>
+      <div className={styles.modalHeaderTitle}>
+        <Logo /> NEON
+      </div>
+      <button
+        type="button"
+        className={styles.modalHeaderCloseButton}
+        onClick={() => {
+          hideModal()
+        }}
+      >
+        <Close />
+      </button>
     </div>
-    <div className={classNames(styles.modalBody, bodyClassName)}>{children}</div>
+    <div className={classNames(styles.modalBody, bodyClassName)}>
+      {children}
+    </div>
   </ReactModal>
 )
 

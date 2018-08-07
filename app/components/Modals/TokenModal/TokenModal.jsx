@@ -20,7 +20,7 @@ type Props = {
   onSave: () => any
 }
 
-type InputErrorType = 'scriptHash';
+type InputErrorType = 'scriptHash'
 
 type State = {
   tokens: Array<TokenItemType>,
@@ -89,7 +89,7 @@ class TokenModal extends Component<Props, State> {
     })
   }
 
-  render () {
+  render() {
     const { hideModal, networkId } = this.props
     const { tokens, errorItemId, errorType } = this.state
 
@@ -138,7 +138,9 @@ class TokenModal extends Component<Props, State> {
                 ))}
             </div>
             <div className={styles.modalFooter}>
-              <Button primary onClick={this.saveAndValidateTokens}>Save</Button>
+              <Button primary onClick={this.saveAndValidateTokens}>
+                Save
+              </Button>
               <Button onClick={hideModal}>Cancel</Button>
             </div>
           </form>

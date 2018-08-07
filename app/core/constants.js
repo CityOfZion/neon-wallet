@@ -21,11 +21,14 @@ export const ROUTES = {
   ADD_CONTACT: '/contacts/new',
   EDIT_CONTACT: '/contacts/edit/:name',
   CREATE_WALLET: '/create',
+  IMPORT_WALLET: '/import',
   ENCRYPT_KEY: '/encrypt-key',
   TOKEN_SALE: '/token-sale',
   TRANSACTION_HISTORY: '/transactions',
   SETTINGS: '/settings',
-  DISPLAY_WALLET_KEYS: '/display-wallet-keys'
+  DISPLAY_WALLET_KEYS: '/display-wallet-keys',
+  WALLET_MANAGER: '/wallet-manager',
+  SEND: '/send'
 }
 
 export const NOTIFICATION_LEVELS = {
@@ -52,7 +55,8 @@ export const MODAL_TYPES = {
   CONFIRM: 'CONFIRM',
   TOKEN_INFO: 'TOKEN_INFO',
   TOKEN: 'TOKEN',
-  ICO: 'ICO'
+  ICO: 'ICO',
+  ADD_CONTACT: 'ADD_CONTACT'
 }
 
 export const MAIN_NETWORK_ID = '1'
@@ -86,7 +90,21 @@ export const TOKENS = {
 }
 
 export const ENDED_ICO_TOKENS = [
-  'DBC', 'RPX', 'RHT', 'QLC', 'NRVE', 'IAM', 'ONT', 'THOR', 'CGE', 'AVA', 'SWH', 'SWTH', 'EFX', 'MCT', 'PKC'
+  'DBC',
+  'RPX',
+  'RHT',
+  'QLC',
+  'NRVE',
+  'IAM',
+  'ONT',
+  'THOR',
+  'CGE',
+  'AVA',
+  'SWH',
+  'SWTH',
+  'EFX',
+  'MCT',
+  'PKC'
 ]
 
 export const DEFAULT_WALLET = {
@@ -103,6 +121,8 @@ export const DEFAULT_WALLET = {
 }
 
 export const DEFAULT_CURRENCY_CODE = 'usd'
+
+export const DEFAULT_THEME = 'Light'
 
 export const CURRENCIES = {
   aud: { symbol: '$' },

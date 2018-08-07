@@ -1,5 +1,4 @@
 // backgrounds and buttons
-$main-background: #fff;
 $primary-color: #4d933b;
 $default-button: $primary-color;
 $default-button-hover: #5eb248;
@@ -13,13 +12,14 @@ $spacer-color: #efefef;
 $third-background: #e6f2ff;
 
 // redesign
-$primary-button: #394152;
+$primary-button: #8d98ae;
+
 
 // text
 $default-text: #333;
 $button-text: #fff;
 $thin-text-color: #000;
-$error-color: #ff3e3e;
+$error-color: #EE6D66;
 $link-color: #3063c9;
 
 // page layout
@@ -27,6 +27,12 @@ $page-width: 960px;
 $top-margin: 20px;
 $box-padding: 40px;
 $box-margin: 10px;
+
+// colors
+$white: #fff;
+$dark-grey: #515151;
+$light-grey: #f2f2f2;
+$medium-grey: #8a8383;
 
 // all z-index definitions should go here - make sure to leave a decent gap between them
 $z-index-tooltip: 1000;
@@ -36,14 +42,17 @@ $z-index-notification: 1100;
 $text-input-color: #282828;
 $text-input-background-color: #f2f2f2;
 $text-input-border-radius: 4px;
-$text-input-height: 36px;
-$text-input-font-size: 12px;
+$text-input-height: 42px;
+$text-input-font-size: 14px;
 
 @mixin active-input {
   border: 2px solid $text-input-background-color;
   border: double 2px transparent;
-  background-image: linear-gradient($text-input-background-color, $text-input-background-color),
-                    radial-gradient(circle at top left, #ee6d66, #a866ee);
+  background-image: linear-gradient(
+      $text-input-background-color,
+      $text-input-background-color
+    ),
+    radial-gradient(circle at top left, #66eb8e, #6bdaf6);
   background-origin: border-box;
   background-clip: content-box, border-box;
 }

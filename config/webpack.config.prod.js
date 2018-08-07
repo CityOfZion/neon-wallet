@@ -1,10 +1,9 @@
-'use strict'
-
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const paths = require('./paths')
 
 const commonLoaders = {
   cssModules: {
@@ -20,10 +19,7 @@ module.exports = {
   bail: true,
   devtool: false,
   target: 'electron-main',
-  entry: [
-    'babel-polyfill',
-    path.join(__dirname, '..', 'app/index.js')
-  ],
+  entry: ['babel-polyfill', path.join(__dirname, '..', 'app/index.js')],
   externals: {
     'node-hid': 'require("node-hid")'
   },
@@ -33,7 +29,8 @@ module.exports = {
     publicPath: ''
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+    alias: paths.alias
   },
   node: {
     __dirname: false
@@ -90,31 +87,20 @@ module.exports = {
       {
         test: /^((?!\.global).)*\.css$/,
         use: ExtractTextPlugin.extract({
-          use: [
-            'css-loader',
-            commonLoaders.cssModules
-          ]
+          use: ['css-loader', commonLoaders.cssModules]
         })
       },
       {
         test: /\.global\.scss$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: [
-            'css-loader',
-            'resolve-url-loader',
-            'sass-loader'
-          ]
+          use: ['css-loader', 'resolve-url-loader', 'sass-loader']
         })
       },
       {
         test: /^((?!\.global).)*\.scss$/,
         use: ExtractTextPlugin.extract({
-          use: [
-            commonLoaders.cssModules,
-            'resolve-url-loader',
-            'sass-loader'
-          ]
+          use: [commonLoaders.cssModules, 'resolve-url-loader', 'sass-loader']
         })
       },
       {

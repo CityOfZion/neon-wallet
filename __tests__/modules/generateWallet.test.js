@@ -18,15 +18,18 @@ describe('generateWallet module tests', () => {
   const wif = 'L4AJ14CNaBWPemRJKC34wyZwbmxg33GETs4Y1F8uK7rRmZ2UHrJn'
   const address = 'AM22coFfbe9N6omgL9ucFBLkeaMNg9TEyL'
   const passphrase = 'Th!s1$@FakePassphrase'
-  const encryptedWIF = '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
+  const encryptedWIF =
+    '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
   const walletName = 'testWallet'
+  const isImport = true
 
   const initialState = {
     wif: null,
     address: null,
     passphrase: null,
     encryptedWIF: null,
-    walletName: null
+    walletName: null,
+    isImport: null
   }
 
   const account = {
@@ -34,7 +37,8 @@ describe('generateWallet module tests', () => {
     address,
     passphrase,
     encryptedWIF,
-    walletName
+    walletName,
+    isImport
   }
 
   describe('newWallet tests', () => {
@@ -42,7 +46,7 @@ describe('generateWallet module tests', () => {
     const expectedAction = { payload, type: NEW_WALLET_ACCOUNT }
 
     test('newWallet action works', () => {
-      expect(newWalletAccount(account)).toEqual(expectedAction)
+      expect(newWalletAccount({ account, isImport })).toEqual(expectedAction)
     })
 
     test('newWallet reducer should return the initial state', () => {
@@ -51,7 +55,9 @@ describe('generateWallet module tests', () => {
 
     test('generateWallet reducer should handle NEW_WALLET_ACCOUNT', () => {
       const expectedState = Object.assign({}, initialState, account)
-      expect(generateWalletReducer(undefined, expectedAction)).toEqual(expectedState)
+      expect(generateWalletReducer(undefined, expectedAction)).toEqual(
+        expectedState
+      )
     })
   })
 
@@ -63,14 +69,16 @@ describe('generateWallet module tests', () => {
     })
 
     test('generateWallet reducer should handle RESET_WALLET_ACCOUNT', () => {
-      expect(generateWalletReducer(undefined, expectedAction)).toEqual(initialState)
+      expect(generateWalletReducer(undefined, expectedAction)).toEqual(
+        initialState
+      )
     })
   })
 
   describe('test upgrade keys file', () => {
     jest.useFakeTimers()
 
-    test('test upgrade empty keys file', (done) => {
+    test('test upgrade empty keys file', done => {
       storage.get = jest.fn((key, callback) => {
         callback(null, null)
       })
@@ -87,12 +95,14 @@ describe('generateWallet module tests', () => {
       jest.runAllTimers()
     })
 
-    test('test update keys file with accounts in it', (done) => {
+    test('test update keys file with accounts in it', done => {
       storage.get = jest.fn((key, callback) => {
         if (key === 'keys') {
           const mockKeys = {
-            'Key 1': '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu',
-            'Key 2': '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCW2'
+            'Key 1':
+              '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu',
+            'Key 2':
+              '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCW2'
           }
           callback(null, mockKeys)
         } else {
@@ -105,9 +115,13 @@ describe('generateWallet module tests', () => {
           expect(wallet.version).toEqual('1.0')
           expect(wallet.accounts.length).toEqual(2)
           expect(wallet.accounts[0].label).toEqual('Key 1')
-          expect(wallet.accounts[0].key).toEqual('6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu')
+          expect(wallet.accounts[0].key).toEqual(
+            '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
+          )
           expect(wallet.accounts[1].label).toEqual('Key 2')
-          expect(wallet.accounts[1].key).toEqual('6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCW2')
+          expect(wallet.accounts[1].key).toEqual(
+            '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCW2'
+          )
           done()
         }
       })
@@ -118,7 +132,7 @@ describe('generateWallet module tests', () => {
   })
 
   describe('test recovery functionality', () => {
-    test('test recover old keys file', (done) => {
+    test('test recover old keys file', done => {
       const mockKeys = {
         'Key 1': '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu',
         'Key 2': '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCW2'
@@ -129,9 +143,13 @@ describe('generateWallet module tests', () => {
           expect(wallet.version).toEqual('1.0')
           expect(wallet.accounts.length).toEqual(2)
           expect(wallet.accounts[0].label).toEqual('Key 1')
-          expect(wallet.accounts[0].key).toEqual('6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu')
+          expect(wallet.accounts[0].key).toEqual(
+            '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
+          )
           expect(wallet.accounts[1].label).toEqual('Key 2')
-          expect(wallet.accounts[1].key).toEqual('6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCW2')
+          expect(wallet.accounts[1].key).toEqual(
+            '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCW2'
+          )
           done()
         }
       })
@@ -139,10 +157,10 @@ describe('generateWallet module tests', () => {
       recoverWallet(mockKeys)
     })
 
-    test('test recover NEP-6 wallet file', (done) => {
+    test('test recover NEP-6 wallet file', done => {
       storage.get = jest.fn((key, callback) => {
         if (key === 'userWallet') {
-          const mockNEP6Wallet = {...DEFAULT_WALLET}
+          const mockNEP6Wallet = { ...DEFAULT_WALLET }
           mockNEP6Wallet.accounts = [
             convertOldWalletAccount(
               'Existing Account',
@@ -162,14 +180,18 @@ describe('generateWallet module tests', () => {
           expect(wallet.version).toEqual('1.0')
           expect(wallet.accounts.length).toEqual(2)
           expect(wallet.accounts[0].label).toEqual('Existing Account')
-          expect(wallet.accounts[0].key).toEqual('6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu')
+          expect(wallet.accounts[0].key).toEqual(
+            '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCWu'
+          )
           expect(wallet.accounts[1].label).toEqual('Recovery Account')
-          expect(wallet.accounts[1].key).toEqual('6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCW2')
+          expect(wallet.accounts[1].key).toEqual(
+            '6PYUGtvXiT5TBetgWf77QyAFidQj61V8FJeFBFtYttmsSxcbmP4vCFRCW2'
+          )
           done()
         }
       })
 
-      const mockNEP6WalletRecovery = {...DEFAULT_WALLET}
+      const mockNEP6WalletRecovery = { ...DEFAULT_WALLET }
       mockNEP6WalletRecovery.accounts = [
         convertOldWalletAccount(
           'Recovery Account',
@@ -180,10 +202,10 @@ describe('generateWallet module tests', () => {
 
       recoverWallet(mockNEP6WalletRecovery)
     })
-    test('test recovery does not add duplicate keys', (done) => {
+    test('test recovery does not add duplicate keys', done => {
       storage.get = jest.fn((key, callback) => {
         if (key === 'userWallet') {
-          const mockNEP6Wallet = {...DEFAULT_WALLET}
+          const mockNEP6Wallet = { ...DEFAULT_WALLET }
           mockNEP6Wallet.accounts = [
             convertOldWalletAccount(
               'Existing Account',
@@ -206,7 +228,7 @@ describe('generateWallet module tests', () => {
         }
       })
 
-      const mockNEP6WalletRecovery = {...DEFAULT_WALLET}
+      const mockNEP6WalletRecovery = { ...DEFAULT_WALLET }
       mockNEP6WalletRecovery.accounts = [
         convertOldWalletAccount(
           'Recovery Account',

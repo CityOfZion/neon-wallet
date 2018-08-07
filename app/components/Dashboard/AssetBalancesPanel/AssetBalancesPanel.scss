@@ -1,6 +1,13 @@
 @import '../../../styles/animations';
 
 .assetBalancesPanel {
+  .centeredContent {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 0;
+  }
+
   .header {
     display: flex;
     align-items: center;
@@ -44,23 +51,41 @@
         color: #969aa0;
         font-size: 14px;
       }
+
+      .change {
+        margin-left: 10px;
+        color: white;
+        font-weight: bold;
+        border-radius: 3px;
+        padding: 1px 4px;
+
+        &.increase {
+          background-color: #5abf6b;
+        }
+
+        &.decrease {
+          background-color: #ee6d66;
+        }
+      }
     }
   }
 
   .totalValue {
     padding: 24px;
-    margin: 0 24px 24px;
-    background: #f2f2f2;
-    text-align: center;
+    display: flex;
+    background: rgba(230, 230, 230, 0.28);
+    justify-content: space-between;
+    align-items: center;
     font-size: 24px;
     font-weight: 500;
   }
 
   .label {
     margin-bottom: 8px;
+    opacity: 1;
     color: #969aa0;
-    font-size: 12px;
-    font-weight: 600;
+    font-size: 24px;
+    font-weight: 100;
     text-transform: uppercase;
   }
 
@@ -69,6 +94,7 @@
 
     .claimButton {
       width: 100%;
+      margin-bottom: 40px;
     }
   }
 }

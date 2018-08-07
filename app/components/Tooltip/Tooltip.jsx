@@ -8,14 +8,10 @@ type Props = {
   children: React$Node
 }
 
-const Tooltip = ({ children, position = 'bottom', ...rest }: Props) =>
-  <Tippy
-    arrow
-    position={position}
-    animation="fade"
-    {...rest}
-  >
+const Tooltip = ({ children, position = 'bottom', ...rest }: Props) => (
+  <Tippy arrow position={position} animation="fade" {...rest}>
     {children}
   </Tippy>
+)
 
 export default Tooltip

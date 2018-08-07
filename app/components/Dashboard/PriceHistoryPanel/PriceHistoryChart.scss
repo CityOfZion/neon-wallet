@@ -1,5 +1,8 @@
 .priceHistoryChart {
   font-size: 12px;
+  display: flex;
+  align-self: center;
+  min-height: 375px;
 
   .current {
     font-size: 24px;

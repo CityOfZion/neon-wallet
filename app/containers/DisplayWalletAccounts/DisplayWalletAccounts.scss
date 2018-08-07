@@ -11,6 +11,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  flex: 1;
 }
 
 .input {
@@ -18,14 +19,19 @@
   width: 60%;
 }
 
+.negativeHeaderIconMargin {
+  margin-top: 0px !important;
+}
+
 .newWalletContainer {
   display: flex;
   align-items: center;
   flex-direction: column;
+  flex: 1;
 }
 
 .label {
-  width: 120px;
+  width: 140px;
   font-weight: 800;
   font-size: 14px;
 }
@@ -38,12 +44,10 @@
 }
 
 .buttonContainer {
-  width: 60%;
+  width: 100%;
   margin: auto;
   margin-top: 10px;
-  .buttonMargin {
-    margin-bottom: 10px;
-  }
+  margin-bottom: 25px;
 }
 
 .disclaimer {
@@ -51,22 +55,49 @@
   font-size: 1em;
   font-weight: 200;
   color: #aa3939;
-  // color: white;
-  padding: 5px;
+  padding: 0 20px;
   text-align: center;
-  min-width: 665px;
-  width: 60%;
   margin-top: -50px;
+}
+
+.reducedInputFontSize {
+  input {
+    font-size: 12px !important;
+  }
+}
+
+.clipboardCopy {
+  margin-left: -35px;
+  height: 100%;
+  z-index: 1;
+  margin-right: 0px;
+  background-color: #f2f2f2;
+
+  svg {
+    path {
+      // fill: #66ed87;
+    }
+  }
 }
 
 .qrContainer {
   display: flex;
-  flex-direction: row;
   justify-content: space-around;
-  align-items: center;
-  flex: 1;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 35px;
   min-width: 475px;
-  width: 60%;
+  width: 75%;
+
+  .qrItem {
+    flex: 1;
+  }
+}
+
+.displayWalletAccountsDialogue {
+  margin: 20px 0 -20px;
+  svg {
+    path {
+      fill: #ff967e;
+    }
+  }
 }

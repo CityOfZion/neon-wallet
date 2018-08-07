@@ -5,6 +5,8 @@ import classNames from 'classnames'
 import Cleave from 'cleave.js/react'
 import { omit, noop } from 'lodash'
 
+import ErrorIcon from '../../../assets/icons/errorRed.svg'
+
 import styles from './NumberInput.scss'
 import Button from '../../Button'
 
@@ -21,6 +23,9 @@ type Props = {
   onChange?: Function,
   onFocus?: Function,
   onBlur?: Function,
+  handleMaxClick: Function,
+  error?: string,
+  customChangeEvent?: boolean,
   options?: {
     numeralThousandsGroupStyle?: 'thousand' | 'lakh' | 'wan' | 'none',
     numeralIntegerScale?: number,
@@ -39,7 +44,8 @@ export default class NumberInput extends React.Component<Props, State> {
   static defaultProps = {
     max: Infinity,
     onChange: noop,
-    options: {}
+    options: {},
+    customChangeEvent: false
   }
 
   state = {
@@ -47,11 +53,22 @@ export default class NumberInput extends React.Component<Props, State> {
   }
 
   render = () => {
-    const passDownProps = omit(this.props, 'max', 'options', 'onChange', 'className')
+    const passDownProps = omit(
+      this.props,
+      'max',
+      'options',
+      'onChange',
+      'className',
+      'customChangeEvent',
+      'handleMaxClick'
+    )
 
     const className = classNames(styles.numberInput, this.props.className, {
-      [styles.active]: this.state.active
+      [styles.active]: this.state.active,
+      [styles.error]: !!this.props.error
     })
+
+    const { error } = this.props
 
     return (
       <div className={className}>
@@ -61,8 +78,15 @@ export default class NumberInput extends React.Component<Props, State> {
           options={this.getOptions()}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
-          onChange={this.handleChange} />
-        {this.renderMaxButton()}
+          onChange={
+            this.props.customChangeEvent
+              ? this.props.onChange
+              : this.handleChange
+          }
+        />
+        {error && <ErrorIcon className={styles.errorIcon} />}
+        {error && <div className={styles.errorMessage}>{error}</div>}
+        {!error && this.renderMaxButton()}
       </div>
     )
   }
@@ -70,7 +94,14 @@ export default class NumberInput extends React.Component<Props, State> {
   renderMaxButton = () => {
     if (this.props.max !== Infinity) {
       return (
-        <Button className={styles.maxButton} onClick={this.handleMaxValue}>
+        <Button
+          className={styles.maxButton}
+          onClick={
+            this.props.handleMaxClick
+              ? this.props.handleMaxClick
+              : this.handleMaxValue
+          }
+        >
           MAX
         </Button>
       )
@@ -80,13 +111,17 @@ export default class NumberInput extends React.Component<Props, State> {
   handleFocus = (event: Object, ...args: Array<any>) => {
     this.setState({ active: true })
     event.persist()
-    this.props.onFocus && this.props.onFocus(event, ...args)
+    if (this.props.onFocus) {
+      this.props.onFocus(event, ...args)
+    }
   }
 
   handleBlur = (event: Object, ...args: Array<any>) => {
     this.setState({ active: false })
     event.persist()
-    this.props.onBlur && this.props.onBlur(event, ...args)
+    if (this.props.onBlur) {
+      this.props.onBlur(event, ...args)
+    }
   }
 
   handleChange = (event: Object) => {
@@ -98,12 +133,11 @@ export default class NumberInput extends React.Component<Props, State> {
 
   handleMaxValue = () => {
     const { onChange, max } = this.props
+
     if (onChange) {
       return onChange(max)
     }
   }
 
-  getOptions = () => {
-    return { ...DEFAULT_OPTIONS, ...this.props.options }
-  }
+  getOptions = () => ({ ...DEFAULT_OPTIONS, ...this.props.options })
 }

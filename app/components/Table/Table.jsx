@@ -5,11 +5,12 @@ import classNames from 'classnames'
 import styles from './Table.scss'
 
 type Props = {
-    children: React$Node,
-    className?: string
+  children: React$Node,
+  className?: string
 }
 
-const Table = ({ children, className = '' }: Props) =>
+const Table = ({ children, className = '' }: Props) => (
   <table className={classNames(styles.table, className)}>{children}</table>
+)
 
 export default Table
