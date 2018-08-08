@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import SendAmountsPanel from '../../components/Send/SendAmountsPanel'
 import TokenSaleHeader from '../../components/TokenSale/TokenSaleHeader'
-import Panel from '../../components/Panel'
+import TokenSalePanel from '../../components/TokenSale/TokenSalePanel'
 
 class TokenSale extends Component {
   render() {
@@ -21,7 +21,7 @@ class TokenSale extends Component {
             }
           ]}
         />
-        <Panel renderHeader={() => <h1>Token Sale</h1>} />
+        <TokenSalePanel />
       </section>
     )
   }
