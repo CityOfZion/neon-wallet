@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import SendAmountsPanel from '../../components/Send/SendAmountsPanel'
+import TokenSaleHeader from '../../components/TokenSale/TokenSaleHeader'
 import Panel from '../../components/Panel'
 
 class TokenSale extends Component {
   render() {
     return (
       <section>
+        <TokenSaleHeader />
         <SendAmountsPanel
           currencyCode="usd"
           sendAmountsData={[
