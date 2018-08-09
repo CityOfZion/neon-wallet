@@ -5,6 +5,7 @@ import fs from 'fs'
 import storage from 'electron-json-storage'
 
 import Delete from 'react-icons/lib/md/delete'
+import NetworkSwitch from '../App/Sidebar/NetworkSwitch'
 import { recoverWallet } from '../../modules/generateWallet'
 
 import Button from '../../components/Button'
@@ -218,6 +219,11 @@ export default class Settings extends Component<Props, State> {
               ))}
             </select>
           </div>
+          <div className="settingsItem">
+            <div className="itemTitle">Network</div>
+            <NetworkSwitch />
+          </div>
+
           <div className="settingsItem">
             <div className="itemTitle">Saved Wallet Accounts</div>
             {map(accounts, account => (

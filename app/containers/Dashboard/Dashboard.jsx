@@ -10,6 +10,7 @@ import PriceHistoryPanel from '../../components/Dashboard/PriceHistoryPanel'
 import PortfolioPanel from '../../components/Dashboard/PortfolioPanel'
 import Tooltip from '../../components/Tooltip'
 import Wallet from '../../assets/icons/wallet.svg'
+import NetworkSwitch from '../App/Sidebar/NetworkSwitch'
 import RefreshIcon from '../../assets/icons/refresh.svg'
 
 import styles from './Dashboard.scss'
@@ -44,6 +45,7 @@ export default class Dashboard extends Component<Props> {
     return (
       <div id="dashboard" className={styles.dashboard}>
         <div className={styles.dashboardHeader}>
+          <NetworkSwitch className={styles.dashboardNetworkSwitch} />
           <Tooltip
             className={classNames(
               styles.headerButtonContainer,

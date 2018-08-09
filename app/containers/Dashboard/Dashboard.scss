@@ -8,6 +8,11 @@
   height: 100%;
   flex-direction: column;
 
+  .dashboardNetworkSwitch {
+    position: absolute; 
+    left: 90px;
+  }
+
   .dataColumn {
     flex: 2;
     display: flex;
