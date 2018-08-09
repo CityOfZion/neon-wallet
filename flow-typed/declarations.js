@@ -93,3 +93,13 @@ declare type Prices = {
 declare type Balances = {
   [key: string]: string
 }
+
+declare type VoteValidator = {|
+  publickey: string,
+  votes: string,
+  active: boolean
+|}
+
+declare type VoteValidators = Array<VoteValidator>
+
+declare type CandidateKeys = Array<string>
