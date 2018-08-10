@@ -5,7 +5,7 @@ import { ROUTES } from '../../core/constants'
 
 import PasswordInput from '../../components/Inputs/PasswordInput'
 import TextInput from '../../components/Inputs/TextInput'
-import BackButton from '../../components/BackButton'
+import CloseButton from '../../components/CloseButton'
 import Button from '../../components/Button'
 import CheckIcon from '../../assets/icons/check.svg'
 import AddIcon from '../../assets/icons/add.svg'
@@ -59,7 +59,7 @@ export default class CreateWallet extends React.Component<Props, State> {
         renderHeaderIcon={() =>
           option === 'IMPORT' ? <CheckIcon /> : <AddIcon />
         }
-        renderBackButton={() => <BackButton routeTo={ROUTES.HOME} />}
+        renderCloseButton={() => <CloseButton routeTo={ROUTES.HOME} />}
       >
         <div className={styles.inputContainer}>
           <div id="createWallet" className={styles.flexContainer}>
