@@ -1,6 +1,6 @@
-import { Application } from 'spectron';
-import path from 'path';
-import test from 'ava';
+import { Application } from 'spectron'
+import path from 'path'
+import test from 'ava'
 
 let electronPath = path.join(
   __dirname,
@@ -10,7 +10,7 @@ let electronPath = path.join(
   'electron'
 )
 if (process.platform === 'win32') {
-  electronPath += '.cmd';
+  electronPath += '.cmd'
 }
 const appPath = path.join(__dirname, '..')
 
@@ -29,10 +29,6 @@ test.after(async () => {
     await app.stop()
   }
 })
-
-function timeout (ms) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
 
 test.serial('should login successfully and switch networks', async t => {
   // Go to login page
