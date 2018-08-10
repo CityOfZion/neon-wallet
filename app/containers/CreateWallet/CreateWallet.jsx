@@ -57,7 +57,15 @@ export default class CreateWallet extends React.Component<Props, State> {
       <FullHeightPanel
         headerText={option === 'CREATE' ? 'Create New Wallet' : 'Import Wallet'}
         renderHeaderIcon={() =>
-          option === 'IMPORT' ? <CheckIcon /> : <AddIcon />
+          option === 'IMPORT' ? (
+            <div className={styles.iconDisplay}>
+              <CheckIcon />
+            </div>
+          ) : (
+            <div className={styles.iconDisplay}>
+              <AddIcon />
+            </div>
+          )
         }
         renderCloseButton={() => <CloseButton routeTo={ROUTES.HOME} />}
       >
