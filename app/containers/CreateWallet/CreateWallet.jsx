@@ -7,6 +7,7 @@ import PasswordInput from '../../components/Inputs/PasswordInput'
 import TextInput from '../../components/Inputs/TextInput'
 import CloseButton from '../../components/CloseButton'
 import Button from '../../components/Button'
+import ImportIcon from '../../assets/icons/import.svg'
 import CheckIcon from '../../assets/icons/check.svg'
 import AddIcon from '../../assets/icons/add.svg'
 import FullHeightPanel from '../../components/Panel/FullHeightPanel'
@@ -59,7 +60,7 @@ export default class CreateWallet extends React.Component<Props, State> {
         renderHeaderIcon={() =>
           option === 'IMPORT' ? (
             <div className={styles.iconDisplay}>
-              <CheckIcon />
+              <ImportIcon />
             </div>
           ) : (
             <div className={styles.iconDisplay}>
