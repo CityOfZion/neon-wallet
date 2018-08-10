@@ -78,7 +78,7 @@ export default class CreateWallet extends React.Component<Props, State> {
                 label="Wallet Name"
                 onChange={e => this.setState({ walletName: e.target.value })}
                 placeholder="Wallet Name"
-                autoFocus
+                autoFocus={option !== 'IMPORT'}
               />
               <PasswordInput
                 label="Passphrase"
