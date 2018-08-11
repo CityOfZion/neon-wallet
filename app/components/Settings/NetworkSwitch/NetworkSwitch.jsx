@@ -1,7 +1,9 @@
 // @flow
 import React, { Component } from 'react'
+import classNames from 'classnames'
 
 import { getNetworks } from '../../../core/networks'
+import SelectInput from '../../../components/Inputs/SelectInput/SelectInput'
 import styles from './NetworkSwitch.scss'
 
 type Props = {
@@ -17,25 +19,34 @@ export default class NetworkSwitch extends Component<Props> {
 
   render() {
     const { networkId, networks } = this.props
+    const { label } =
+      (Array.isArray(networks) &&
+        networks.find(network => network.id === networkId)) ||
+      {}
+
     return (
       <div id="network" className={styles.networkSwitch}>
         <span className={styles.label}>Running on</span>
-        <select
-          defaultValue={networkId}
+        <SelectInput
+          className="NetworkSelector"
+          items={
+            Array.isArray(networks)
+              ? networks.map(network => network.label)
+              : []
+          }
+          value={label || ''}
+          placeholder=""
           onChange={this.handleChange}
-          className="networkSelector"
-        >
-          {networks.map(({ label, id }: NetworkItemType) => (
-            <option key={`networkOption${id}`} value={id}>
-              {label}
-            </option>
-          ))}
-        </select>
+          getItemValue={value =>
+            Array.isArray(networks) &&
+            networks.find(network => network.label === value).id
+          }
+        />
       </div>
     )
   }
 
-  handleChange = (event: Object) => {
-    this.props.onChange(event.target.value)
+  handleChange = (value: string) => {
+    this.props.onChange(value)
   }
 }
