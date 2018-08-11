@@ -1,6 +1,6 @@
 @import '../../../styles/variables';
 
-.sendPageHeader {
+.underlinedHeader {
   display: flex;
   padding: 8px 0;
   border-bottom: 1px solid darken($light-grey, 15%);
@@ -9,22 +9,22 @@
   margin-top: -24px;
 }
 
-.sendPageHeading {
+.underlinedHeading {
   font-size: 1rem;
 }
 
-.sendPageHeaderSelect {
+.underlinedHeaderSelect {
   background: none;
   max-width: 200px;
 }
 
-.sendPageHeaderSelectTextBox {
+.underlinedHeaderSelectTextBox {
   background: none;
   border: none;
   color: #000;
 }
 
-.sendPageHeaderRefreshButton {
+.underlinedHeaderRefreshButton {
   display: flex;
   border: none;
   align-items: center;
@@ -32,6 +32,6 @@
   font-size: 1rem;
 }
 
-.sendPageHeaderRefreshIcon {
+.underlinedHeaderRefreshIcon {
   margin-right: 5px;
 }
