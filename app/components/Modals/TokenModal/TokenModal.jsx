@@ -7,7 +7,7 @@ import { getNewTokenItem, validateTokens } from './utils'
 import BaseModal from '../BaseModal'
 import Button from '../../Button'
 import Row from './Row'
-import NetworkSwitch from '../../../containers/App/Sidebar/NetworkSwitch'
+import NetworkSwitch from '../../../components/Settings/NetworkSwitch'
 import AddIcon from '../../../assets/icons/add.svg'
 import styles from './TokenModal.scss'
 

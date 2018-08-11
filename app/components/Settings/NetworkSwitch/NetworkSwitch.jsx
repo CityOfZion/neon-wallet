@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 
-import { getNetworks } from '../../../../core/networks'
+import { getNetworks } from '../../../core/networks'
 import styles from './NetworkSwitch.scss'
 
 type Props = {
