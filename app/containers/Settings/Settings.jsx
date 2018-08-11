@@ -8,8 +8,11 @@ import Delete from 'react-icons/lib/md/delete'
 import { recoverWallet } from '../../modules/generateWallet'
 
 import Button from '../../components/Button'
+import UnderlinedHeader from '../../components/Headers/UnderlinedHeader'
+import NetworkSwitch from '../../containers/App/Sidebar/NetworkSwitch'
 import { EXPLORERS, MODAL_TYPES, CURRENCIES } from '../../core/constants'
 import themes from '../../themes'
+import styles from './Settings.scss'
 
 const { dialog } = require('electron').remote
 
@@ -179,72 +182,78 @@ export default class Settings extends Component<Props, State> {
     const { accounts, explorer, currency, theme } = this.props
 
     return (
-      <div id="settings">
-        <div className="description">
-          Manage your Neon wallet accounts and settings
-        </div>
-        <div className="settingsForm">
-          <div className="settingsItem">
-            <div className="itemTitle">Tokens</div>
-            <Button onClick={this.openTokenModal}>Manage Tokens</Button>
+      <section className={styles.settingsContainer}>
+        <UnderlinedHeader text="Settings">
+          <NetworkSwitch />
+          <div>Add token</div>
+        </UnderlinedHeader>
+        <div id="settings">
+          <div className="description">
+            Manage your Neon wallet accounts and settings
           </div>
-          <div className="settingsItem">
-            <div className="itemTitle">Theme</div>
-            <select value={theme} onChange={this.updateThemeSettings}>
-              {Object.keys(themes).map((themeName: string) => (
-                <option value={themeName} key={themeName}>
-                  {themeName}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="settingsItem">
-            <div className="itemTitle">Block Explorer</div>
-            <select value={explorer} onChange={this.updateExplorerSettings}>
-              {Object.keys(EXPLORERS).map((explorer: ExplorerType) => (
-                <option key={explorer} value={EXPLORERS[explorer]}>
-                  {EXPLORERS[explorer]}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="settingsItem">
-            <div className="itemTitle">Currency</div>
-            <select value={currency} onChange={this.updateCurrencySettings}>
-              {Object.keys(CURRENCIES).map((currencyCode: string) => (
-                <option value={currencyCode} key={currencyCode}>
-                  {currencyCode.toUpperCase()}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="settingsItem">
-            <div className="itemTitle">Saved Wallet Accounts</div>
-            {map(accounts, account => (
-              <div className="walletList" key={`wallet${account.key}`}>
-                <div className="walletItem">
-                  <div className="walletName">{account.key.slice(0, 20)}</div>
-                  <div className="walletKey">{account.label}</div>
-                  <div
-                    className="deleteWallet"
-                    onClick={() =>
-                      this.deleteWalletAccount(account.label, account.key)
-                    }
-                  >
-                    <Delete />
+          <div className="settingsForm">
+            <div className="settingsItem">
+              <div className="itemTitle">Tokens</div>
+              <Button onClick={this.openTokenModal}>Manage Tokens</Button>
+            </div>
+            <div className="settingsItem">
+              <div className="itemTitle">Theme</div>
+              <select value={theme} onChange={this.updateThemeSettings}>
+                {Object.keys(themes).map((themeName: string) => (
+                  <option value={themeName} key={themeName}>
+                    {themeName}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="settingsItem">
+              <div className="itemTitle">Block Explorer</div>
+              <select value={explorer} onChange={this.updateExplorerSettings}>
+                {Object.keys(EXPLORERS).map((explorer: ExplorerType) => (
+                  <option key={explorer} value={EXPLORERS[explorer]}>
+                    {EXPLORERS[explorer]}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="settingsItem">
+              <div className="itemTitle">Currency</div>
+              <select value={currency} onChange={this.updateCurrencySettings}>
+                {Object.keys(CURRENCIES).map((currencyCode: string) => (
+                  <option value={currencyCode} key={currencyCode}>
+                    {currencyCode.toUpperCase()}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="settingsItem">
+              <div className="itemTitle">Saved Wallet Accounts</div>
+              {map(accounts, account => (
+                <div className="walletList" key={`wallet${account.key}`}>
+                  <div className="walletItem">
+                    <div className="walletName">{account.key.slice(0, 20)}</div>
+                    <div className="walletKey">{account.label}</div>
+                    <div
+                      className="deleteWallet"
+                      onClick={() =>
+                        this.deleteWalletAccount(account.label, account.key)
+                      }
+                    >
+                      <Delete />
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <Button onClick={this.saveWalletRecovery}>
+              Export wallet recovery file
+            </Button>
+            <Button onClick={this.loadWalletRecovery}>
+              Load wallet recovery file
+            </Button>
           </div>
-          <Button onClick={() => this.saveWalletRecovery()}>
-            Export wallet recovery file
-          </Button>
-          <Button onClick={this.loadWalletRecovery}>
-            Load wallet recovery file
-          </Button>
         </div>
-      </div>
+      </section>
     )
   }
 }
