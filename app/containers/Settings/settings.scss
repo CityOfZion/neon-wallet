@@ -1,3 +1,9 @@
 .settingsContainer {
   padding: 0 24px;
 }
+
+$panel-top-margin: 25px;
+
+.settingsPanel {
+    margin-top: $panel-top-margin;
+}
