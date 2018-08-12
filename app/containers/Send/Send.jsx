@@ -22,7 +22,9 @@ type Props = {
   sendTransaction: (Array<SendEntryType>) => Object,
   contacts: Object,
   currencyCode: string,
-  address: string
+  address: string,
+  loading: boolean,
+  loadWalletData: Function
 }
 
 type State = {
@@ -343,12 +345,18 @@ export default class Send extends React.Component<Props, State> {
       sendErrorMessage,
       txid
     } = this.state
-    const { sendableAssets, contacts, currencyCode } = this.props
+    const {
+      sendableAssets,
+      contacts,
+      currencyCode,
+      loading,
+      loadWalletData
+    } = this.props
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 
     return (
       <section className={styles.sendContainer}>
-        <SendPageHeader />
+        <SendPageHeader loading={loading} loadWalletData={loadWalletData} />
         {!noSendableAssets && (
           <SendAmountsPanel
             sendAmountsData={this.createSendAmountsData()}
