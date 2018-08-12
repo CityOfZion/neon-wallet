@@ -11,7 +11,7 @@ type Props = {
   updateCurrencySettings: ?Function
 }
 
-const CurrencySwitch = ({ className, childClassName, currencies, currency, updateCurrencySettings }: Props) => (
+const CurrencySelect = ({ className, childClassName, currencies, currency, updateCurrencySettings }: Props) => (
     <div className={className}>
       <span className={childClassName}>CURRENCY</span>
       <SelectInput
@@ -23,4 +23,4 @@ const CurrencySwitch = ({ className, childClassName, currencies, currency, updat
     </div>
 )
 
-export default CurrencySwitch
+export default CurrencySelect

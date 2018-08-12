@@ -11,7 +11,7 @@ type Props = {
   updateThemeSettings: ?Function
 }
 
-const ThemeSwitch = ({ className, childClassName, themes, theme, updateThemeSettings }: Props) => (
+const ThemeSelect = ({ className, childClassName, themes, theme, updateThemeSettings }: Props) => (
     <div className={className}>
       <span className={childClassName}>THEME</span>
       <SelectInput
@@ -22,4 +22,4 @@ const ThemeSwitch = ({ className, childClassName, themes, theme, updateThemeSett
     </div>
 )
 
-export default ThemeSwitch
+export default ThemeSelect
