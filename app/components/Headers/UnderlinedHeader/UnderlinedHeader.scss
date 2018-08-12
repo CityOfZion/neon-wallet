@@ -1,5 +1,4 @@
 @import '../../../styles/variables';
-@import '../../../styles/animations';
 
 .underlinedHeader {
   display: flex;
@@ -12,45 +11,4 @@
 
 .underlinedHeading {
   font-size: 1rem;
-}
-
-.underlinedHeaderSelect {
-  background: none;
-  max-width: 200px;
-}
-
-.underlinedHeaderSelectTextBox {
-  background: none;
-  border: none;
-  color: #000;
-}
-
-.underlinedHeaderRefreshButton {
-  display: flex;
-  border: none;
-  align-items: center;
-  background: transparent;
-  font-size: 1rem;
-}
-
-.underlinedHeaderRefreshIcon {
-  margin-right: 5px;
-}
-
-.headerButtonContainer {
-  display: flex !important;
-  cursor: pointer;
-  align-items: center;
-
-  .refresh {
-    cursor: pointer;
-  }
-
-  .loading {
-    animation: spin 2s linear infinite;
-  }
-
-  span {
-    margin-right: 10px;
-  }
 }
