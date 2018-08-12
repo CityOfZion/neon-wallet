@@ -33,7 +33,8 @@ class SendRecipientListItem extends Component<Props> {
       updateRowField,
       contacts,
       sendableAssets,
-      clearErrors
+      clearErrors,
+      max
     } = this.props
 
     const isAssetString = Object.keys(sendableAssets).find(asset => asset === e)
@@ -45,27 +46,26 @@ class SendRecipientListItem extends Component<Props> {
       return clearErrors(index, 'address')
     }
 
-    const { name, value } = e.target
+    const { name } = e.target
+    let { value } = e.target
+    if (value > max) value = max
     clearErrors(index, name)
     return updateRowField(index, name, value)
   }
 
   handleMaxClick = () => {
     const { index, updateRowField, max } = this.props
-
     updateRowField(index, 'amount', max)
   }
 
   handleDeleteRow = () => {
     const { index, removeRow } = this.props
-
     removeRow(index)
   }
 
   clearErrorsOnFocus = (e: Object) => {
     const { name } = e.target
     const { clearErrors, index } = this.props
-
     clearErrors(index, name)
   }
 
