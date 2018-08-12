@@ -15,7 +15,7 @@ import TokenSaleIcon from '../../../assets/navigation/tokens.svg'
 import SettingsIcon from '../../../assets/navigation/settings.svg'
 import { ROUTES } from '../../../core/constants'
 
-import Logo from '../../../assets/images/logo.png'
+import LogoWithoutText from '../../../assets/images/logo-without-text.png'
 
 type Props = {
   className: string,
@@ -26,7 +26,7 @@ const Sidebar = ({ className, showTokenSaleModal }: Props) => (
   <div className={classNames(styles.container, className)}>
     <div className={styles.group}>
       <div className={styles.logo}>
-        <img src={Logo} alt="neon-logo" />
+        <img src={LogoWithoutText} alt="neon-logo" />
       </div>
 
       <Tooltip title="Dashboard" position="right">
@@ -38,6 +38,7 @@ const Sidebar = ({ className, showTokenSaleModal }: Props) => (
           activeClassName={styles.active}
         >
           <HomeIcon />
+          <div> Wallet </div>
         </NavLink>
       </Tooltip>
 
@@ -50,6 +51,7 @@ const Sidebar = ({ className, showTokenSaleModal }: Props) => (
           activeClassName={styles.active}
         >
           <HistoryIcon />
+          <div> Activity </div>
         </NavLink>
       </Tooltip>
 
@@ -62,6 +64,7 @@ const Sidebar = ({ className, showTokenSaleModal }: Props) => (
           activeClassName={styles.active}
         >
           <SendIcon />
+          <div> Send </div>
         </NavLink>
       </Tooltip>
 
@@ -74,6 +77,7 @@ const Sidebar = ({ className, showTokenSaleModal }: Props) => (
           activeClassName={styles.active}
         >
           <ReceiveIcon />
+          <div> Receive </div>
         </NavLink>
       </Tooltip>
 
@@ -85,6 +89,7 @@ const Sidebar = ({ className, showTokenSaleModal }: Props) => (
           activeClassName={styles.active}
         >
           <ContactsIcon />
+          <div> Contacts </div>
         </NavLink>
       </Tooltip>
 
@@ -95,6 +100,7 @@ const Sidebar = ({ className, showTokenSaleModal }: Props) => (
           onClick={showTokenSaleModal}
         >
           <TokenSaleIcon />
+          <div> Token Sale </div>
         </a>
       </Tooltip>
 
@@ -106,13 +112,19 @@ const Sidebar = ({ className, showTokenSaleModal }: Props) => (
           activeClassName={styles.active}
         >
           <SettingsIcon />
+          <div> Settings </div>
         </NavLink>
       </Tooltip>
     </div>
 
     <div className={styles.group}>
-      <Tooltip title="Logout" position="right">
-        <Logout id="logout" className={styles.navItem} />
+      <Tooltip
+        className={classNames(styles.logoutToolTipGroup, styles.navItem)}
+        title="Logout"
+        position="right"
+      >
+        <Logout id="logout" />
+        <div className={styles.logoutText}> Logout </div>
       </Tooltip>
     </div>
   </div>
