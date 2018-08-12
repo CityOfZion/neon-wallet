@@ -32,6 +32,7 @@ const SendRecipientList = ({
         key={row.id}
         {...row}
         index={index}
+        numberOfRecipients={sendRowDetails.length}
         showConfirmSend={showConfirmSend}
         removeRow={removeRow}
         updateRowField={updateRowField}

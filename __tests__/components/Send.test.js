@@ -78,12 +78,9 @@ describe('Send', () => {
     expect(wrapper.find(SendRecipientListItem).children().length).toBe(5)
   })
 
-  test("It doesn't delete the first row", () => {
+  test('There is no trash icon when only one row is present', () => {
     const wrapper = setup()
-
-    wrapper.find('.deleteButton').simulate('click')
-
-    expect(wrapper.instance().state.sendRowDetails.length).toBe(1)
+    expect(wrapper.find('.deleteButton')).toHaveLength(0)
   })
 
   test('It validates and sets error in state when you submit empty inputs', () => {
@@ -175,7 +172,7 @@ describe('Send', () => {
 
     const errors = wrapper.instance().state.sendRowDetails[0].errors
 
-    expect(errors.address).toBe("You can't send to your own address.")
+    expect(errors.address).toBe('You can\'t send to your own address.')
   })
 
   test('It correctly sets max value', () => {

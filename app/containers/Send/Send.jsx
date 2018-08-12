@@ -11,7 +11,7 @@ import {
 
 import { isBlacklisted } from '../../core/wallet'
 
-import UnderlinedHeader from '../../components/Headers/UnderlinedHeader'
+import SendPageHeader from '../../components/Send/SendPageHeader'
 import SendAmountsPanel from '../../components/Send/SendAmountsPanel'
 import SendPanel from '../../components/Send/SendPanel'
 import styles from './Send.scss'
@@ -22,7 +22,9 @@ type Props = {
   sendTransaction: (Array<SendEntryType>) => Object,
   contacts: Object,
   currencyCode: string,
-  address: string
+  address: string,
+  loading: boolean,
+  loadWalletData: Function
 }
 
 type State = {
@@ -32,7 +34,7 @@ type State = {
   sendErrorMessage: string,
   txid: string,
   sendRowDetails: Array<Object>,
-  address: string
+  address?: string
 }
 
 export default class Send extends React.Component<Props, State> {
@@ -44,7 +46,6 @@ export default class Send extends React.Component<Props, State> {
       sendError: false,
       sendErrorMessage: '',
       txid: '',
-      address: '',
       sendRowDetails: []
     }
   }
@@ -301,7 +302,8 @@ export default class Send extends React.Component<Props, State> {
     }
 
     if (formAddress === address) {
-      errors.address = 'You can\'t send to your own address.'
+      // eslint-disable-next-line quotes
+      errors.address = "You can't send to your own address."
     }
 
     const blackListedAddress = await isBlacklisted(formAddress)
@@ -343,12 +345,18 @@ export default class Send extends React.Component<Props, State> {
       sendErrorMessage,
       txid
     } = this.state
-    const { sendableAssets, contacts, currencyCode } = this.props
+    const {
+      sendableAssets,
+      contacts,
+      currencyCode,
+      loading,
+      loadWalletData
+    } = this.props
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 
     return (
       <section className={styles.sendContainer}>
-        <UnderlinedHeader text="Send Assets"/>
+        <SendPageHeader loading={loading} loadWalletData={loadWalletData} />
         {!noSendableAssets && (
           <SendAmountsPanel
             sendAmountsData={this.createSendAmountsData()}
