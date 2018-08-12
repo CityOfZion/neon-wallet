@@ -12,6 +12,7 @@ import Panel from '../../components/Panel'
 import UnderlinedHeader from '../../components/Headers/UnderlinedHeader'
 import NetworkSwitch from '../../components/Settings/NetworkSwitch'
 import ThemeSwitch from '../../components/Settings/ThemeSwitch'
+import CurrencySwitch from '../../components/Settings/CurrencySwitch'
 import {EXPLORERS, MODAL_TYPES, CURRENCIES} from '../../core/constants'
 import themes from '../../themes'
 import styles from './Settings.scss'
@@ -109,7 +110,7 @@ export default class Settings extends Component<Props, State> {
 
   updateCurrencySettings = (e : Object) => {
     const {setCurrency} = this.props
-    setCurrency(e.target.value)
+    setCurrency(e)
   }
 
   updateThemeSettings = (e : Object) => {
@@ -162,15 +163,20 @@ export default class Settings extends Component<Props, State> {
       </UnderlinedHeader>
       <Panel className={styles.settingsPanel} renderHeader={this.renderHeader}>
         <section className={styles.settingsItemsContainer}>
-
           <ThemeSwitch
-              className={styles.settingsItem}
-              childClassName={styles.settingsItemLabel}
-              themes={themes}
-              theme={theme}
-              updateThemeSettings={this.updateThemeSettings}
+            className={styles.settingsItem}
+            childClassName={styles.settingsItemLabel}
+            themes={themes}
+            theme={theme}
+            updateThemeSettings={this.updateThemeSettings}
           />
-          
+          <CurrencySwitch
+            className={styles.settingsItem}
+            childClassName={styles.settingsItemLabel}
+            currencies={CURRENCIES}
+            currency={currency}
+            updateCurrencySettings={this.updateCurrencySettings}
+          />
         </section>
       </Panel>
     </section>)

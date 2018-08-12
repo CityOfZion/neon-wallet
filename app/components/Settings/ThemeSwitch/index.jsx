@@ -1,9 +1,6 @@
 // @flow
 import React from 'react'
 
-import classNames from 'classnames'
-
-import styles from './ThemeSwitch.scss'
 import SelectInput from '../../Inputs/SelectInput'
 
 type Props = {

@@ -29,15 +29,16 @@ $add-icon-size: 24px;
 .settingsItemsContainer {
   max-width: 500px;
   margin: 20px auto;
-  border-bottom: 1px solid #ADB3BF;
 
   .settingsItem {
     display:flex;
     align-items:center;
+    border-bottom: 1px solid #f2f2f2;
+    padding-top: 10px;
 
     .settingsItemLabel {
       flex:1;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
   }
 }
