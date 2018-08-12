@@ -13,6 +13,7 @@ import { recoverWallet } from '../../modules/generateWallet'
 import FullHeightPanel from '../../components/Panel/FullHeightPanel'
 import Import from '../../assets/icons/import.svg'
 import Export from '../../assets/icons/export.svg'
+import WalletIcon from '../../assets/icons/wallet.svg'
 
 import styles from './WalletManager.scss'
 
@@ -140,6 +141,7 @@ class WalletManager extends Component<Props> {
   }
 
   render() {
+    const { accounts, saveAccount } = this.props
     return (
       <FullHeightPanel
         // headerText={option === 'CREATE' ? 'Create New Wallet' : 'Import Wallet'}
@@ -147,9 +149,44 @@ class WalletManager extends Component<Props> {
         //   option === 'IMPORT' ? <CheckIcon /> : <AddIcon />
         // }
         shouldRenderInstructions={false}
+        shouldRenderHeader={false}
         renderCloseButton={() => <CloseButton routeTo={ROUTES.DASHBOARD} />}
       >
-        <div />
+        <div className={styles.contentContainer}>
+          <div className={styles.walletManagerDetails}>
+            <div className={styles.iconAndHeader}>
+              <div className={styles.walletIcon}>
+                <WalletIcon id="manage-wallets" />
+              </div>
+              <h2>Manage Wallets</h2>
+            </div>
+            <div className={styles.buttonRow}>
+              {/* <div className={styles.buttonRow}>
+              <div className={styles.buttonContainer}> */}
+              <Button onClick={this.loadWalletRecovery} renderIcon={Import}>
+                Import
+              </Button>
+              {/* </div>
+              <div className={styles.buttonContainer}> */}
+              <Button onClick={this.saveWalletRecovery} renderIcon={Export}>
+                Export
+              </Button>
+              {/* </div>
+            </div> */}
+            </div>
+          </div>
+          <div className={styles.walletList}>
+            {accounts.map(account => (
+              <Wallet
+                {...account}
+                handleDelete={() =>
+                  this.deleteWalletAccount(account.label, account.key)
+                }
+                handleSave={saveAccount}
+              />
+            ))}
+          </div>
+        </div>
       </FullHeightPanel>
     )
   }
@@ -164,30 +201,30 @@ class WalletManager extends Component<Props> {
   //           Wallet Manager
   //         </div>
   //       </div>
-  //       <div className={styles.walletList}>
-  //         {accounts.map(account => (
-  //           <Wallet
-  //             {...account}
-  //             handleDelete={() =>
-  //               this.deleteWalletAccount(account.label, account.key)
-  //             }
-  //             handleSave={saveAccount}
-  //           />
-  //         ))}
-  //       </div>
+  // <div className={styles.walletList}>
+  //   {accounts.map(account => (
+  //     <Wallet
+  //       {...account}
+  //       handleDelete={() =>
+  //         this.deleteWalletAccount(account.label, account.key)
+  //       }
+  //       handleSave={saveAccount}
+  //     />
+  //   ))}
+  // </div>
 
-  //       <div className={styles.buttonRow}>
-  //         <div className={styles.buttonContainer}>
-  //           <Button onClick={this.loadWalletRecovery} renderIcon={Import}>
-  //             Import Wallets
-  //           </Button>
-  //         </div>
-  //         <div className={styles.buttonContainer}>
-  //           <Button onClick={this.saveWalletRecovery} renderIcon={Export}>
-  //             Export Wallets
-  //           </Button>
-  //         </div>
-  //       </div>
+  // <div className={styles.buttonRow}>
+  //   <div className={styles.buttonContainer}>
+  //     <Button onClick={this.loadWalletRecovery} renderIcon={Import}>
+  //       Import Wallets
+  //     </Button>
+  //   </div>
+  //   <div className={styles.buttonContainer}>
+  //     <Button onClick={this.saveWalletRecovery} renderIcon={Export}>
+  //       Export Wallets
+  //     </Button>
+  //   </div>
+  // </div>
   //     </div>
   //   )
   // }

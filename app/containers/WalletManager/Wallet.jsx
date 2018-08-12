@@ -19,60 +19,27 @@ type Props = {
   address: string
 }
 
-type State = {
-  editing: boolean,
-  newLabel: string
-}
+// type State = {
+//   editing: boolean,
+//   newLabel: string
+// }
 
 class WalletManager extends Component<Props, State> {
-  state = {
-    editing: false,
-    newLabel: this.props.label
-  }
+  // state = {
+  //   editing: false,
+  //   newLabel: this.props.label
+  // }
 
   render() {
     const { label, address, handleDelete } = this.props
     return (
-      <div className={styles.accountInfoRow}>
-        <div className={styles.accountInfo}>
-          {this.state.editing ? (
-            <TextInput
-              onChange={e => this.setState({ newLabel: e.target.value })}
-              value={this.state.newLabel}
-            />
-          ) : (
-            <div className={styles.accountLabel}>{label}</div>
-          )}
-          <div className={styles.address}>{address}</div>
-        </div>
-        <div className={styles.accountButtons}>
-          {this.state.editing ? (
-            <div className={styles.editLabelButtonRow}>
-              <Button
-                onClick={() => {
-                  this.props.handleSave({ label: this.state.newLabel, address })
-                  this.setState({ editing: false })
-                }}
-                renderIcon={Confirm}
-              />
-              <Button
-                onClick={() => this.setState({ editing: false })}
-                renderIcon={Close}
-              />
-            </div>
-          ) : (
-            <div className={styles.editAccountButton}>
-              <Button
-                onClick={() => this.setState({ editing: true })}
-                renderIcon={Edit}
-              />
-            </div>
-          )}
-          <div className={styles.deleteAccountButton}>
-            <Button renderIcon={Delete} onClick={handleDelete}>
-              Delete Wallet
-            </Button>
-          </div>
+      <div className={styles.walletInfoRow}>
+        <div className={styles.accountLabel}>{label}</div>
+        <div className={styles.address}>{address}</div>
+        <div className={styles.editAccountButton}>
+          <Button renderIcon={Edit} onClick={handleDelete}>
+            Edit
+          </Button>
         </div>
       </div>
     )
