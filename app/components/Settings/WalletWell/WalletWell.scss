@@ -1,0 +1,25 @@
+.walletWell {
+  background:#F2F2F2;
+  border-radius:4px;
+  margin:20px 0;
+
+  h4 {
+    padding:10px;
+    text-align: center;
+    border-bottom: 1px solid white;
+    margin:0;
+  }
+
+  .walletWellButtonsContainer {
+    display:flex;
+
+    .walletWellButton {
+      background:#F2F2F2;
+
+      &:hover {
+        background: initial;
+      }
+
+    }
+  }
+}

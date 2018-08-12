@@ -14,6 +14,7 @@ import NetworkSwitch from '../../components/Settings/NetworkSwitch'
 import ThemeSelect from '../../components/Settings/ThemeSelect'
 import BlockExplorerSelect from '../../components/Settings/BlockExplorerSelect'
 import CurrencySelect from '../../components/Settings/CurrencySelect'
+import WalletWell from '../../components/Settings/WalletWell'
 import {EXPLORERS, MODAL_TYPES, CURRENCIES} from '../../core/constants'
 import themes from '../../themes'
 import styles from './Settings.scss'
@@ -184,6 +185,11 @@ export default class Settings extends Component<Props, State> {
             explorers={EXPLORERS}
             explorer={explorer}
             updateExplorerSettings={this.updateExplorerSettings}
+          />
+        <WalletWell
+            title="WALLET RECOVERY"
+            loadWalletRecovery={this.loadWalletRecovery}
+            saveWalletRecovery={this.saveWalletRecovery}
           />
         </section>
       </Panel>
