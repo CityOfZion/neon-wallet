@@ -20,6 +20,7 @@ type Props = {
   sendableAssets: Object,
   showConfirmSend: boolean,
   contacts: Object,
+  numberOfRecipients: number,
   clearErrors: (index: number, field: string) => any,
   removeRow: (index: number) => any,
   updateRowField: (index: number, field: string, value: any) => any
@@ -80,7 +81,8 @@ class SendRecipientListItem extends Component<Props> {
       asset,
       errors,
       max,
-      showConfirmSend
+      showConfirmSend,
+      numberOfRecipients
     } = this.props
 
     const selectInput = showConfirmSend ? (
@@ -144,7 +146,9 @@ class SendRecipientListItem extends Component<Props> {
         <div className={styles.asset}>{selectInput}</div>
         <div className={styles.amount}>{numberInput}</div>
         <div className={styles.address}>{addressInput}</div>
-        <div className={styles.delete}>{trashCanButton}</div>
+        <div className={styles.delete}>
+          {numberOfRecipients > 1 && trashCanButton}
+        </div>
       </li>
     )
   }
