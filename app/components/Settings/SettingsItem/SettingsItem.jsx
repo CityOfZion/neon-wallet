@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react'
-import classNames from 'classnames'
 
 import styles from './SettingsItem.scss'
 

@@ -1,9 +1,8 @@
 // @flow
 import React, { Component } from 'react'
-import classNames from 'classnames'
 
 import { getNetworks } from '../../../core/networks'
-import SelectInput from '../../../components/Inputs/SelectInput/SelectInput'
+import SelectInput from '../../Inputs/SelectInput/SelectInput'
 import styles from './NetworkSwitch.scss'
 
 type Props = {

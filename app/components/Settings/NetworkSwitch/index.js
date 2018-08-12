@@ -6,7 +6,7 @@ import NetworkSwitch from './NetworkSwitch'
 import networkActions from '../../../actions/networkActions'
 import withNetworkData from '../../../hocs/withNetworkData'
 
-const mapActionsToProps = (actions: Actions, props: Object): Object => ({
+const mapActionsToProps = (actions: Actions): Object => ({
   onChange: networkId => actions.call({ networkId })
 })
 

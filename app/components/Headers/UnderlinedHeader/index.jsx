@@ -12,11 +12,18 @@ type Props = {
   children: React$Node
 }
 
-const UnderlinedHeader = ({ className, childClassName, text, children }: Props) => (
-    <section className={classNames(styles.underlinedHeader, className)}>
-      <h1 className={classNames(styles.underlinedHeading, childClassName)}>{text}</h1>
-      {children}
-    </section>
+const UnderlinedHeader = ({
+  className,
+  childClassName,
+  text,
+  children
+}: Props) => (
+  <section className={classNames(styles.underlinedHeader, className)}>
+    <h1 className={classNames(styles.underlinedHeading, childClassName)}>
+      {text}
+    </h1>
+    {children}
+  </section>
 )
 
 export default UnderlinedHeader
