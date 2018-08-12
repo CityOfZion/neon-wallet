@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import SelectInput from '../../Inputs/SelectInput'
 import Button from '../../Button'
 
-import styles from './WalletWell.scss'
+import styles from './WalletRecovery.scss'
 
 import ImportIcon from '../../../assets/icons/import.svg'
 import ExportIcon from '../../../assets/icons/export.svg'
@@ -18,7 +18,7 @@ type Props = {
   loadWalletRecovery: Function
 }
 
-const WalletWell = ({ className, childClassName, title, saveWalletRecovery, loadWalletRecovery }: Props) => (
+const WalletRecovery = ({ className, childClassName, title, saveWalletRecovery, loadWalletRecovery }: Props) => (
     <div className={classNames(styles.walletWell, className)}>
       <h4 className={childClassName}>{title}</h4>
       <div className={styles.walletWellButtonsContainer}>
@@ -38,4 +38,4 @@ const WalletWell = ({ className, childClassName, title, saveWalletRecovery, load
     </div>
 )
 
-export default WalletWell
+export default WalletRecovery

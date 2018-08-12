@@ -13,7 +13,7 @@ import SelectInput from '../../components/Inputs/SelectInput'
 import UnderlinedHeader from '../../components/Headers/UnderlinedHeader'
 import NetworkSwitch from '../../components/Settings/NetworkSwitch'
 import SettingsItem from '../../components/Settings/SettingsItem'
-import WalletWell from '../../components/Settings/WalletWell'
+import WalletRecovery from '../../components/Settings/WalletRecovery'
 import {EXPLORERS, MODAL_TYPES, CURRENCIES} from '../../core/constants'
 import themes from '../../themes'
 import styles from './Settings.scss'
@@ -189,7 +189,7 @@ export default class Settings extends Component<Props, State> {
               onChange={this.updateExplorerSettings}
             />
           </SettingsItem>
-          <WalletWell
+          <WalletRecovery
               title="WALLET RECOVERY"
               loadWalletRecovery={this.loadWalletRecovery}
               saveWalletRecovery={this.saveWalletRecovery}
