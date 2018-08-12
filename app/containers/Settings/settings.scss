@@ -7,3 +7,21 @@ $panel-top-margin: 25px;
 .settingsPanel {
     margin-top: $panel-top-margin;
 }
+
+$add-icon-size: 24px;
+
+.headerButtonContainer {
+  display: flex !important;
+  cursor: pointer;
+  align-items: center;
+
+  .add {
+    svg {
+      width:$add-icon-size;
+      height:$add-icon-size;
+    }
+    width:$add-icon-size;
+    height:$add-icon-size;
+    margin-right: 10px;
+  }
+}

@@ -14,6 +14,8 @@ import NetworkSwitch from '../../components/Settings/NetworkSwitch'
 import {EXPLORERS, MODAL_TYPES, CURRENCIES} from '../../core/constants'
 import themes from '../../themes'
 import styles from './Settings.scss'
+import Tooltip from '../../components/Tooltip'
+import AddIcon from '../../assets/icons/add.svg'
 
 const {dialog} = require('electron').remote
 
@@ -152,7 +154,10 @@ export default class Settings extends Component<Props, State> {
     return (<section className={styles.settingsContainer}>
       <UnderlinedHeader text="Settings">
         <NetworkSwitch/>
-        <div>Add token</div>
+        <Tooltip title="Add Token" className={styles.headerButtonContainer}>
+          <AddIcon className={styles.add}/>
+          <span>Add Token</span>
+        </Tooltip>
       </UnderlinedHeader>
       <Panel className={styles.settingsPanel} renderHeader={this.renderHeader}></Panel>
     </section>)
