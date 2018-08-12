@@ -12,6 +12,7 @@ import Panel from '../../components/Panel'
 import UnderlinedHeader from '../../components/Headers/UnderlinedHeader'
 import NetworkSwitch from '../../components/Settings/NetworkSwitch'
 import ThemeSelect from '../../components/Settings/ThemeSelect'
+import BlockExplorerSelect from '../../components/Settings/BlockExplorerSelect'
 import CurrencySelect from '../../components/Settings/CurrencySelect'
 import {EXPLORERS, MODAL_TYPES, CURRENCIES} from '../../core/constants'
 import themes from '../../themes'
@@ -105,7 +106,7 @@ export default class Settings extends Component<Props, State> {
 
   updateExplorerSettings = (e : Object) => {
     const {setBlockExplorer} = this.props
-    setBlockExplorer(e.target.value)
+    setBlockExplorer(e)
   }
 
   updateCurrencySettings = (e : Object) => {
@@ -176,6 +177,13 @@ export default class Settings extends Component<Props, State> {
             currencies={CURRENCIES}
             currency={currency}
             updateCurrencySettings={this.updateCurrencySettings}
+          />
+        <BlockExplorerSelect
+            className={styles.settingsItem}
+            childClassName={styles.settingsItemLabel}
+            explorers={EXPLORERS}
+            explorer={explorer}
+            updateExplorerSettings={this.updateExplorerSettings}
           />
         </section>
       </Panel>
