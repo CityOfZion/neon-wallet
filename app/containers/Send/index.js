@@ -31,22 +31,24 @@ const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
 
 const filterSendableAssets = (balances: Object) => {
   const sendableAssets = {}
-  if (Number(balances.NEO > 0)) {
-    sendableAssets.NEO = { symbol: 'NEO', balance: balances.NEO }
-  }
+  if (balances) {
+    if (Number(balances.NEO > 0)) {
+      sendableAssets.NEO = { symbol: 'NEO', balance: balances.NEO }
+    }
 
-  if (Number(balances.GAS > 0)) {
-    sendableAssets.GAS = { symbol: 'GAS', balance: balances.GAS }
-  }
+    if (Number(balances.GAS > 0)) {
+      sendableAssets.GAS = { symbol: 'GAS', balance: balances.GAS }
+    }
 
-  values(omit(balances, 'NEO', 'GAS'))
-    .filter(token => token.balance > 0)
-    .forEach(token => {
-      sendableAssets[token.symbol] = {
-        symbol: token.symbol,
-        balance: token.balance
-      }
-    })
+    values(omit(balances, 'NEO', 'GAS'))
+      .filter(token => token.balance > 0)
+      .forEach(token => {
+        sendableAssets[token.symbol] = {
+          symbol: token.symbol,
+          balance: token.balance
+        }
+      })
+  }
 
   return sendableAssets
 }
@@ -58,8 +60,8 @@ const mapPricesDataToProps = (prices: Object) => ({
 const mapContactsDataToProps = (contacts: Object) => ({ contacts })
 
 const mapBalanceDataToProps = (balances: Object) => ({
-  NEO: balances.NEO,
-  GAS: balances.GAS,
+  NEO: balances ? balances.NEO : 0,
+  GAS: balances ? balances.GAS : 0,
   tokenBalances: values(omit(balances, 'NEO', 'GAS')),
   sendableAssets: filterSendableAssets(balances)
 })
