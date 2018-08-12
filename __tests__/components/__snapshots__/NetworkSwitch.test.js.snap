@@ -8,25 +8,23 @@ exports[`NetworkSwitch renders without crashing 1`] = `
   <span
     className="label"
   >
-    Running on
+    Network
   </span>
-  <select
-    className="networkSelector"
-    defaultValue="1"
+  <SelectInput
+    className="networkSelector networkSelector"
+    getItemValue={[Function]}
+    getSearchResults={[Function]}
+    items={
+      Array [
+        "MainNet",
+        "TestNet",
+      ]
+    }
     onChange={[Function]}
-  >
-    <option
-      key="networkOption1"
-      value="1"
-    >
-      MainNet
-    </option>
-    <option
-      key="networkOption2"
-      value="2"
-    >
-      TestNet
-    </option>
-  </select>
+    onFocus={[Function]}
+    placeholder=""
+    renderAfter={[Function]}
+    value="MainNet"
+  />
 </div>
 `;
