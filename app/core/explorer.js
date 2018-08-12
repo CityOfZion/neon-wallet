@@ -30,7 +30,7 @@ export const getExplorerBaseURL = (networkId: string, explorer: ExplorerType) =>
 
 export const getExplorerTxLink = (networkId: string, explorer: ExplorerType, txId: string) => buildExplorerLink(networkId, explorer, 'trxLinkStructure', txId)
 
-export const getExplorerAddressLink = (networkId: string, explorer: ExplorerType, address: string) => buildExplorerLink(networkId, explorer, 'addressStructure', address)
+export const getExplorerAddressLink = (networkId: string, explorer: ExplorerType, address: string) => buildExplorerLink(networkId, explorer, 'addressLinkStructure', address)
 
 export const getExplorerAssetLink = (networkId: string, explorer: ExplorerType, assetId: string) => buildExplorerLink(networkId, explorer, 'assetLinkStructure', assetId)
 
