@@ -32,7 +32,7 @@ type State = {
   sendErrorMessage: string,
   txid: string,
   sendRowDetails: Array<Object>,
-  address: string
+  address?: string
 }
 
 export default class Send extends React.Component<Props, State> {
@@ -44,7 +44,6 @@ export default class Send extends React.Component<Props, State> {
       sendError: false,
       sendErrorMessage: '',
       txid: '',
-      address: '',
       sendRowDetails: []
     }
   }
@@ -301,7 +300,8 @@ export default class Send extends React.Component<Props, State> {
     }
 
     if (formAddress === address) {
-      errors.address = 'You can\'t send to your own address.'
+      // eslint-disable-next-line quotes
+      errors.address = "You can't send to your own address."
     }
 
     const blackListedAddress = await isBlacklisted(formAddress)
