@@ -14,14 +14,14 @@ type Settings = {
 
 const STORAGE_KEY = 'settings'
 
-const DEFAULT_SETTINGS: Settings = {
+const DEFAULT_SETTINGS: () => Promise<Settings> = async () => ({
   currency: DEFAULT_CURRENCY_CODE,
   blockExplorer: EXPLORERS.NEO_TRACKER,
-  tokens: getDefaultTokens()
-}
+  tokens: await getDefaultTokens()
+})
 
 const getSettings = async (): Promise<Settings> => {
-  const defaults = DEFAULT_SETTINGS
+  const defaults = await DEFAULT_SETTINGS()
   const settings = await getStorage(STORAGE_KEY) || {}
 
   const tokens = uniqBy([
@@ -44,5 +44,6 @@ export const updateSettingsActions = createActions(ID, (values: Settings = {}) =
 
 export default createActions(ID, () => async (state: Object): Promise<Settings> => {
   const settings = await getSettings()
-  return pick(settings, keys(DEFAULT_SETTINGS))
+  const picked = await pick(settings, keys(await DEFAULT_SETTINGS()))
+  return picked
 })
