@@ -1,47 +1,44 @@
 @import '../../../styles/variables.scss';
 
 .modalHeader {
-    display: flex;
-    justify-content: center;
-    height: 45px;
-    position: relative;
-    padding: 8px 0;
-    background-color: $light-grey;
+  display: flex;
+  justify-content: center;
+  height: 45px;
+  position: relative;
+  padding: 8px 0;
+  background-color: $light-grey;
 }
 
 .modalHeaderTitle {
-    display: flex;
-    color: $medium-grey;
-    align-items: center;
-    font-size: 20px;
+  display: flex;
+  align-items: center;
 
-    svg {
-        width: 30px;
-        height: 30px;
-        margin-right: 5px;
-    }
+  img {
+    width: 100px;
+    // height: 30px;
+  }
 }
 
 .modalHeaderCloseButton {
-    width: 60px;
-    height: 100%;
-    position: absolute;
-    right: 0;
-    top: 0;
-    cursor: pointer;
-    background: transparent;
-    border: none;
+  width: 60px;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+  background: transparent;
+  border: none;
 
-    svg {
-        width: 25px;
-        height: 25px;
-    }
+  svg {
+    width: 25px;
+    height: 25px;
+  }
 }
 
 .modalBody {
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: column;
-    padding: 24px;
-    overflow-y: auto;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  overflow-y: auto;
 }

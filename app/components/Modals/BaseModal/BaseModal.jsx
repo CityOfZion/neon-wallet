@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import ReactModal from 'react-modal'
 import Close from 'react-icons/lib/md/close'
 
-import Logo from '../../../assets/icons/neonLogoGrey.svg'
+import Logo from '../../../assets/images/grey-logo.png'
 
 import styles from './BaseModal.scss'
 
@@ -61,7 +61,7 @@ const BaseModal = ({
   >
     <div className={styles.modalHeader}>
       <div className={styles.modalHeaderTitle}>
-        <Logo /> NEON
+        <img src={Logo} alt="grey-neon-logo" />
       </div>
       <button
         type="button"
