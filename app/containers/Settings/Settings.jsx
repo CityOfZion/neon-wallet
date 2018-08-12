@@ -9,11 +9,10 @@ import {recoverWallet} from '../../modules/generateWallet'
 
 import Button from '../../components/Button'
 import Panel from '../../components/Panel'
+import SelectInput from '../../components/Inputs/SelectInput'
 import UnderlinedHeader from '../../components/Headers/UnderlinedHeader'
 import NetworkSwitch from '../../components/Settings/NetworkSwitch'
-import ThemeSelect from '../../components/Settings/ThemeSelect'
-import BlockExplorerSelect from '../../components/Settings/BlockExplorerSelect'
-import CurrencySelect from '../../components/Settings/CurrencySelect'
+import SettingsItem from '../../components/Settings/SettingsItem'
 import WalletWell from '../../components/Settings/WalletWell'
 import {EXPLORERS, MODAL_TYPES, CURRENCIES} from '../../core/constants'
 import themes from '../../themes'
@@ -165,31 +164,35 @@ export default class Settings extends Component<Props, State> {
       </UnderlinedHeader>
       <Panel className={styles.settingsPanel} renderHeader={this.renderHeader}>
         <section className={styles.settingsItemsContainer}>
-          <ThemeSelect
-            className={styles.settingsItem}
-            childClassName={styles.settingsItemLabel}
-            themes={themes}
-            theme={theme}
-            updateThemeSettings={this.updateThemeSettings}
-          />
-          <CurrencySelect
-            className={styles.settingsItem}
-            childClassName={styles.settingsItemLabel}
-            currencies={CURRENCIES}
-            currency={currency}
-            updateCurrencySettings={this.updateCurrencySettings}
-          />
-        <BlockExplorerSelect
-            className={styles.settingsItem}
-            childClassName={styles.settingsItemLabel}
-            explorers={EXPLORERS}
-            explorer={explorer}
-            updateExplorerSettings={this.updateExplorerSettings}
-          />
-        <WalletWell
-            title="WALLET RECOVERY"
-            loadWalletRecovery={this.loadWalletRecovery}
-            saveWalletRecovery={this.saveWalletRecovery}
+          <SettingsItem
+            title="THEME">
+            <SelectInput
+              items={Object.keys(themes)}
+              value={theme}
+              onChange={this.updateThemeSettings}
+            />
+          </SettingsItem>
+          <SettingsItem
+            title="CURRENCY">
+            <SelectInput
+              items={Object.keys(CURRENCIES).map(value => value.toUpperCase())}
+              value={currency.toUpperCase()}
+              onChange={this.updateCurrencySettings}
+              getItemValue={value => value.toLowerCase()}
+            />
+          </SettingsItem>
+          <SettingsItem
+            title="BLOCK EXPLORER">
+            <SelectInput
+              items={Object.keys(EXPLORERS).map(value => EXPLORERS[value])}
+              value={explorer}
+              onChange={this.updateExplorerSettings}
+            />
+          </SettingsItem>
+          <WalletWell
+              title="WALLET RECOVERY"
+              loadWalletRecovery={this.loadWalletRecovery}
+              saveWalletRecovery={this.saveWalletRecovery}
           />
         </section>
       </Panel>
