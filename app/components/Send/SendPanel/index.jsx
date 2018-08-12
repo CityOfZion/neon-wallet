@@ -15,6 +15,7 @@ import { pluralize } from '../../../util/pluralize'
 import SendIcon from '../../../assets/icons/send.svg'
 
 import styles from './SendPanel.scss'
+import { truncateNumber } from '../../../core/math'
 
 type Props = {
   sendRowDetails: Array<*>,
@@ -57,6 +58,22 @@ const SendPanel = ({
   txid,
   handleEditRecipientsClick
 }: Props) => {
+  function shouldDisableSendButton(sendRowDetails) {
+    let disabled = false
+    sendRowDetails.some(detail => {
+      if (!detail.address) {
+        disabled = true
+        return true
+      }
+      if (!detail.amount) {
+        disabled = true
+        return true
+      }
+      return false
+    })
+    return disabled
+  }
+
   let content = (
     <form onSubmit={handleSubmit}>
       <SendRecipientList
@@ -73,6 +90,7 @@ const SendPanel = ({
         className={styles.sendFormButton}
         renderIcon={() => <SendIcon />}
         type="submit"
+        disabled={shouldDisableSendButton(sendRowDetails)}
       >
         Send {pluralize('Asset', sendRowDetails.length)}
       </Button>

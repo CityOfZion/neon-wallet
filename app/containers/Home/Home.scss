@@ -56,8 +56,8 @@ $navigation-margin: 20px;
   flex-direction: column;
   align-items: center;
   margin: auto;
-  min-height: 650px;
-  width: 680px;
+  min-height: 550px;
+  width: 600px;
 }
 
 .buttonRow {
@@ -145,22 +145,15 @@ $navigation-margin: 20px;
 }
 
 .loginHeader {
-  font-weight: 300;
-  font-size: 40px;
-  width: 500px;
-  display: flex;
+  font-family: Gotham-Light;
+  font-size: 30px;
   margin-bottom: 40px;
-  justify-content: center;
+  text-align: center;
+  line-height: 32px;
 }
 
 .logo {
-  max-height: 74px;
-  max-width: 75px;
-}
-
-.loginText {
-  font-size: 36px;
-  font-weight: 400;
+  width: 172px;
   margin-bottom: 15px;
 }
 
