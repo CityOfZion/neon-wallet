@@ -25,3 +25,19 @@ $add-icon-size: 24px;
     margin-right: 10px;
   }
 }
+
+.settingsItemsContainer {
+  max-width: 500px;
+  margin: 20px auto;
+  border-bottom: 1px solid #ADB3BF;
+
+  .settingsItem {
+    display:flex;
+    align-items:center;
+
+    .settingsItemLabel {
+      flex:1;
+      margin-bottom: 20px;
+    }
+  }
+}

@@ -11,6 +11,7 @@ import Button from '../../components/Button'
 import Panel from '../../components/Panel'
 import UnderlinedHeader from '../../components/Headers/UnderlinedHeader'
 import NetworkSwitch from '../../components/Settings/NetworkSwitch'
+import ThemeSwitch from '../../components/Settings/ThemeSwitch'
 import {EXPLORERS, MODAL_TYPES, CURRENCIES} from '../../core/constants'
 import themes from '../../themes'
 import styles from './Settings.scss'
@@ -113,7 +114,7 @@ export default class Settings extends Component<Props, State> {
 
   updateThemeSettings = (e : Object) => {
     const {setTheme} = this.props
-    setTheme(e.target.value)
+    setTheme(e)
   }
 
   deleteWalletAccount = (label : string, key : string) => {
@@ -159,7 +160,19 @@ export default class Settings extends Component<Props, State> {
           <span>Add Token</span>
         </Tooltip>
       </UnderlinedHeader>
-      <Panel className={styles.settingsPanel} renderHeader={this.renderHeader}></Panel>
+      <Panel className={styles.settingsPanel} renderHeader={this.renderHeader}>
+        <section className={styles.settingsItemsContainer}>
+
+          <ThemeSwitch
+              className={styles.settingsItem}
+              childClassName={styles.settingsItemLabel}
+              themes={themes}
+              theme={theme}
+              updateThemeSettings={this.updateThemeSettings}
+          />
+          
+        </section>
+      </Panel>
     </section>)
   }
 
