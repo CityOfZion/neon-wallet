@@ -11,7 +11,7 @@ import UnderlinedHeader from '../../components/Headers/UnderlinedHeader'
 import NetworkSwitch from '../../components/Settings/NetworkSwitch'
 import SettingsItem from '../../components/Settings/SettingsItem'
 import SettingsLink from '../../components/Settings/SettingsLink'
-import WalletRecovery from '../../components/Settings/WalletRecovery'
+import WalletRecoveryPanel from '../../components/Settings/WalletRecoveryPanel'
 import {
   EXPLORERS,
   MODAL_TYPES,
@@ -233,7 +233,7 @@ export default class Settings extends Component<Props, State> {
               />
             </SettingsItem>
             <SettingsLink route="" title="ENCRYPT A KEY" />
-            <WalletRecovery
+            <WalletRecoveryPanel
               title="WALLET RECOVERY"
               loadWalletRecovery={this.loadWalletRecovery}
               saveWalletRecovery={this.saveWalletRecovery}
