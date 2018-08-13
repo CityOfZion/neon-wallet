@@ -238,6 +238,9 @@ export default class Settings extends Component<Props, State> {
               loadWalletRecovery={this.loadWalletRecovery}
               saveWalletRecovery={this.saveWalletRecovery}
             />
+            <div className={styles.settingsDonations}>
+              Created by CoZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A
+            </div>
           </section>
         </Panel>
       </section>
