@@ -13,8 +13,14 @@ $panel-top-margin: 25px;
     .settingsPanelHeaderItem {
       flex: auto;
 
+      &:first-child {
+        color: #282828;
+      }
+
       &:last-child {
         text-align: right;
+        color: #8d98ae;
+        font-size: 14px;
       }
     }
   }
@@ -32,6 +38,7 @@ $add-icon-size: 24px;
       width: $add-icon-size;
       height: $add-icon-size;
     }
+
     width: $add-icon-size;
     height: $add-icon-size;
     margin-right: 10px;
