@@ -24,19 +24,21 @@ const WalletRecoveryPanel = ({
   saveWalletRecovery,
   loadWalletRecovery
 }: Props) => (
-  <div className={classNames(styles.walletWell, className)}>
-    <h4 className={childClassName}>{title}</h4>
-    <div className={styles.walletWellButtonsContainer}>
+  <div className={classNames(styles.walletPanel, className)}>
+    <span className={classNames(styles.walletPanelTitle, childClassName)}>
+      {title}
+    </span>
+    <div className={styles.walletPanelButtonsContainer}>
       <Button
         renderIcon={ImportIcon}
-        className={styles.walletWellButton}
+        className={styles.walletPanelButton}
         onClick={loadWalletRecovery}
       >
         Import File
       </Button>
       <Button
         renderIcon={ExportIcon}
-        className={styles.walletWellButton}
+        className={styles.walletPanelButton}
         onClick={saveWalletRecovery}
       >
         Export File
