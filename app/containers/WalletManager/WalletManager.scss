@@ -19,8 +19,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 605px;
-    min-height: 80px;
+    width: 620px;
+    min-height: 60px;
     align-self: flex-start;
     padding: 30px;
     border-bottom: solid 0.5px #8d98ae;
@@ -32,6 +32,7 @@
     }
 
     .walletIcon {
+      display: flex;
       margin-right: 10px;
 
       svg {
