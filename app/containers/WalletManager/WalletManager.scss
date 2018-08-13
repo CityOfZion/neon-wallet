@@ -7,8 +7,12 @@
   overflow-y: auto;
 
   button {
-    width: 116px;
-    height: 49px;
+    width: 125px;
+    //height: 49px;
+  }
+
+  a {
+    text-decoration: none;
   }
 
   .walletManagerDetails {

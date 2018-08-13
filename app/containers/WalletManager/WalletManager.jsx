@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import { reject } from 'lodash'
 import fs from 'fs'
 
+import { NavLink } from 'react-router-dom'
 import { getStorage, setStorage } from '../../core/storage'
 import { ROUTES, MODAL_TYPES } from '../../core/constants'
 import Wallet from './Wallet.jsx'
@@ -12,7 +13,7 @@ import Button from '../../components/Button'
 import { recoverWallet } from '../../modules/generateWallet'
 import FullHeightPanel from '../../components/Panel/FullHeightPanel'
 import Import from '../../assets/icons/import.svg'
-import Export from '../../assets/icons/export.svg'
+import Add from '../../assets/icons/add.svg'
 import WalletIcon from '../../assets/icons/wallet.svg'
 
 import styles from './WalletManager.scss'
@@ -163,14 +164,22 @@ class WalletManager extends Component<Props> {
             <div className={styles.buttonRow}>
               {/* <div className={styles.buttonRow}>
               <div className={styles.buttonContainer}> */}
-              <Button onClick={this.loadWalletRecovery} renderIcon={Import}>
-                Import
-              </Button>
+              <NavLink
+                id="history"
+                exact
+                to={ROUTES.IMPORT_WALLET_AUTHENTICATED}
+              >
+                <Button renderIcon={Import}>Import</Button>
+              </NavLink>
               {/* </div>
               <div className={styles.buttonContainer}> */}
-              <Button onClick={this.saveWalletRecovery} renderIcon={Export}>
-                Export
-              </Button>
+              <NavLink
+                id="history"
+                exact
+                to={ROUTES.CREATE_WALLET_AUTHENTICATED}
+              >
+                <Button renderIcon={Add}>Create</Button>
+              </NavLink>
               {/* </div>
             </div> */}
             </div>

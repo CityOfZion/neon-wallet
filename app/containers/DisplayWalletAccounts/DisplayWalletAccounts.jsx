@@ -9,6 +9,7 @@ import { ROUTES } from '../../core/constants'
 import styles from './DisplayWalletAccounts.scss'
 import FullHeightPanel from '../../components/Panel/FullHeightPanel'
 import CloseButton from '../../components/CloseButton'
+import BackButton from '../../components/BackButton'
 import AddIcon from '../../assets/icons/add.svg'
 import CheckIcon from '../../assets/icons/check.svg'
 import DialogueBox from '../../components/DialogueBox'
@@ -19,7 +20,8 @@ type Props = {
   address: string,
   wif: string,
   passphrase: string,
-  isImport: Boolean
+  isImport: boolean,
+  authenticated: boolean
 }
 
 class DisplayWalletAccounts extends Component<Props> {
@@ -30,7 +32,14 @@ class DisplayWalletAccounts extends Component<Props> {
   privateCanvas: ?HTMLCanvasElement
 
   render() {
-    const { passphrase, address, wif, walletName, isImport } = this.props
+    const {
+      passphrase,
+      address,
+      wif,
+      walletName,
+      isImport,
+      authenticated
+    } = this.props
     const fields = [
       { label: 'Passphrase', value: passphrase },
       { label: 'Private Key', value: wif },
@@ -39,13 +48,26 @@ class DisplayWalletAccounts extends Component<Props> {
     if (walletName) {
       fields.unshift({ label: 'Wallet Name', value: walletName })
     }
+    const conditionalPanelProps = {}
+    if (authenticated) {
+      conditionalPanelProps.renderBackButton = () => (
+        <BackButton routeTo={ROUTES.WALLET_MANAGER} />
+      )
+      conditionalPanelProps.renderCloseButton = () => (
+        <CloseButton routeTo={ROUTES.DASHBOARD} />
+      )
+    } else {
+      conditionalPanelProps.renderCloseButton = () => (
+        <CloseButton routeTo={ROUTES.HOME} />
+      )
+    }
     return (
       <FullHeightPanel
         headerText={isImport ? 'Wallet Imported!' : 'Wallet Created!'}
         instructions={false}
         headerContainerClassName={styles.headerIconMargin}
         renderHeaderIcon={() => <CheckIcon />}
-        renderCloseButton={() => <CloseButton routeTo={ROUTES.HOME} />}
+        {...conditionalPanelProps}
         iconColor="#F7BC33"
       >
         <div id="newWallet" className={styles.newWalletContainer}>

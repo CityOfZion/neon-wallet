@@ -29,14 +29,35 @@ export default () => (
       />
       <Route
         exact
+        path={ROUTES.CREATE_WALLET_AUTHENTICATED}
+        render={props => (
+          <CreateWallet option="CREATE" authenticated {...props} />
+        )}
+      />
+      <Route
+        exact
         path={ROUTES.IMPORT_WALLET}
         render={props => <CreateWallet option="IMPORT" {...props} />}
+      />
+      <Route
+        exact
+        path={ROUTES.IMPORT_WALLET_AUTHENTICATED}
+        render={props => (
+          <CreateWallet option="IMPORT" authenticated {...props} />
+        )}
       />
       <Route
         exact
         path={ROUTES.DISPLAY_WALLET_KEYS}
         component={DisplayWalletAccounts}
       />
+
+      <Route
+        exact
+        path={ROUTES.DISPLAY_WALLET_KEYS_AUTHENTICATED}
+        render={props => <DisplayWalletAccounts {...props} authenticated />}
+      />
+
       <Route exact path={ROUTES.SETTINGS} component={Settings} />
       <PrivateRoute
         exact

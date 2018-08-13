@@ -27,6 +27,7 @@
 
     .headerIcon {
       margin-right: 5px;
+      display: flex;
 
       svg {
         width: 40px;
@@ -56,7 +57,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    min-height: 63.39px;
+    min-height: 70px;
 
     > span {
       display: flex;
