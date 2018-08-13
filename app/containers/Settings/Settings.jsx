@@ -10,8 +10,14 @@ import SelectInput from '../../components/Inputs/SelectInput'
 import UnderlinedHeader from '../../components/Headers/UnderlinedHeader'
 import NetworkSwitch from '../../components/Settings/NetworkSwitch'
 import SettingsItem from '../../components/Settings/SettingsItem'
+import SettingsLink from '../../components/Settings/SettingsLink'
 import WalletRecovery from '../../components/Settings/WalletRecovery'
-import { EXPLORERS, MODAL_TYPES, CURRENCIES } from '../../core/constants'
+import {
+  EXPLORERS,
+  MODAL_TYPES,
+  CURRENCIES,
+  ROUTES
+} from '../../core/constants'
 import themes from '../../themes'
 import styles from './Settings.scss'
 import Tooltip from '../../components/Tooltip'
@@ -226,6 +232,7 @@ export default class Settings extends Component<Props, State> {
                 onChange={this.updateExplorerSettings}
               />
             </SettingsItem>
+            <SettingsLink route="" title="ENCRYPT A KEY" />
             <WalletRecovery
               title="WALLET RECOVERY"
               loadWalletRecovery={this.loadWalletRecovery}
