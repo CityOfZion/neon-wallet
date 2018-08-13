@@ -238,8 +238,13 @@ export default class Settings extends Component<Props, State> {
   }
 
   renderHeader = () => (
-    <div>
-      <span>Manage your neon wallet</span>
+    <div className={styles.settingsPanelHeader}>
+      <div className={styles.settingsPanelHeaderItem}>
+        Manage your neon wallet
+      </div>
+      <div className={styles.settingsPanelHeaderItem}>
+        Community Support: https://discordapp.com/invite/R8v48YA
+      </div>
     </div>
   )
 }

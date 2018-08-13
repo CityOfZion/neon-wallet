@@ -5,7 +5,19 @@
 $panel-top-margin: 25px;
 
 .settingsPanel {
-    margin-top: $panel-top-margin;
+  margin-top: $panel-top-margin;
+
+  .settingsPanelHeader {
+    display: flex;
+
+    .settingsPanelHeaderItem {
+      flex: auto;
+
+      &:last-child {
+        text-align: right;
+      }
+    }
+  }
 }
 
 $add-icon-size: 24px;
@@ -17,11 +29,11 @@ $add-icon-size: 24px;
 
   .add {
     svg {
-      width:$add-icon-size;
-      height:$add-icon-size;
+      width: $add-icon-size;
+      height: $add-icon-size;
     }
-    width:$add-icon-size;
-    height:$add-icon-size;
+    width: $add-icon-size;
+    height: $add-icon-size;
     margin-right: 10px;
   }
 }
@@ -29,16 +41,4 @@ $add-icon-size: 24px;
 .settingsItemsContainer {
   max-width: 500px;
   margin: 20px auto;
-
-  .settingsItem {
-    display:flex;
-    align-items:center;
-    border-bottom: 1px solid #f2f2f2;
-    padding-top: 10px;
-
-    .settingsItemLabel {
-      flex:1;
-      margin-bottom: 10px;
-    }
-  }
 }
