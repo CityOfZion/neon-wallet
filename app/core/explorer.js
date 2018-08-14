@@ -1,7 +1,7 @@
 // @flow
 import { openExternal } from './electron'
 import explorerConfig from './explorerConfig'
-import { isMainNetwork } from './networks'
+import { MAIN_NETWORK_ID, TEST_NETWORK_ID, COZ_TEST_NETWORK_ID } from './constants'
 
 export const buildExplorerLink = (
   networkId: string,
@@ -11,7 +11,8 @@ export const buildExplorerLink = (
 ) => {
   if (explorerConfig.hasOwnProperty(explorer)) {
     const explorerInfo = explorerConfig[explorer]
-
+    // hack because only neoscan supports coznet
+    if (networkId === COZ_TEST_NETWORK_ID) return getExplorerBaseURL(networkId, explorer) + 'transaction/' + suffix
     return getExplorerBaseURL(networkId, explorer) + explorerInfo[structure] + suffix
   }
 
@@ -21,10 +22,16 @@ export const buildExplorerLink = (
 export const getExplorerBaseURL = (networkId: string, explorer: ExplorerType) => {
   if (explorerConfig.hasOwnProperty(explorer)) {
     const selectedExplorer = explorerConfig[explorer]
-
-    return isMainNetwork(networkId)
-      ? selectedExplorer.mainNetwork
-      : selectedExplorer.testNetwork
+    switch (networkId) {
+      case MAIN_NETWORK_ID:
+        return selectedExplorer.mainNetwork
+      case TEST_NETWORK_ID:
+        return selectedExplorer.testNetwork
+      case COZ_TEST_NETWORK_ID:
+        return selectedExplorer.cozNetwork
+      default:
+        return selectedExplorer.mainNetwork
+    }
   }
 }
 
