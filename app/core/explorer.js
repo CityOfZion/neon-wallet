@@ -1,7 +1,8 @@
 // @flow
 import { openExternal } from './electron'
 import explorerConfig from './explorerConfig'
-import { MAIN_NETWORK_ID, TEST_NETWORK_ID, COZ_TEST_NETWORK_ID } from './constants'
+import { MAIN_NETWORK_ID, TEST_NETWORK_ID, COZ_TEST_NETWORK_ID, EXPLORERS } from './constants'
+const { NEO_SCAN } = EXPLORERS
 
 export const buildExplorerLink = (
   networkId: string,
@@ -33,6 +34,7 @@ export const getExplorerBaseURL = (networkId: string, explorer: ExplorerType) =>
         return selectedExplorer.mainNetwork
     }
   }
+  return explorerConfig[NEO_SCAN]
 }
 
 export const getExplorerTxLink = (networkId: string, explorer: ExplorerType, txId: string) => buildExplorerLink(networkId, explorer, 'trxLinkStructure', txId)
