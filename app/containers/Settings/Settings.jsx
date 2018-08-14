@@ -232,7 +232,7 @@ export default class Settings extends Component<Props, State> {
                 onChange={this.updateExplorerSettings}
               />
             </SettingsItem>
-            <SettingsLink route="" title="ENCRYPT A KEY" />
+            <SettingsLink to={ROUTES.ENCRYPT} title="ENCRYPT A KEY" />
             <WalletRecoveryPanel
               title="WALLET RECOVERY"
               loadWalletRecovery={this.loadWalletRecovery}

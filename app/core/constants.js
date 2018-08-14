@@ -22,13 +22,13 @@ export const ROUTES = {
   EDIT_CONTACT: '/contacts/edit/:name',
   CREATE_WALLET: '/create',
   IMPORT_WALLET: '/import',
-  ENCRYPT_KEY: '/encrypt-key',
   TOKEN_SALE: '/token-sale',
   TRANSACTION_HISTORY: '/transactions',
   SETTINGS: '/settings',
   DISPLAY_WALLET_KEYS: '/display-wallet-keys',
   WALLET_MANAGER: '/wallet-manager',
-  SEND: '/send'
+  SEND: '/send',
+  ENCRYPT: '/encrypt-private-key'
 }
 
 export const NOTIFICATION_LEVELS = {
