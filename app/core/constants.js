@@ -94,7 +94,8 @@ export const TOKENS = {
   SOUL: 'ed07cffad18f1308db51920d99a2af60ac66a7b3',
   ASA: 'a58b56b30425d3d1f8902034996fcac4168ef71d',
   SPOT: '0a91cdc3c5ff89983c79e3c72e1ccd9e5beaa5d5',
-  PEGUSD: 'ce150fa3ded336886871664e827f16fb70c45ceb'
+  PEGUSD: 'ce150fa3ded336886871664e827f16fb70c45ceb',
+  GUARD: '591f92493cd6dd003470e41376f79a515abc707f'
 }
 
 export const ENDED_ICO_TOKENS = [
