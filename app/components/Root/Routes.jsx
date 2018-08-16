@@ -14,6 +14,7 @@ import EditContact from '../../containers/EditContact'
 import Settings from '../../containers/Settings'
 import TransactionHistory from '../../containers/TransactionHistory'
 import WalletManager from '../../containers/WalletManager'
+import EditWallet from '../../containers/EditWallet'
 import DisplayWalletAccounts from '../../containers/DisplayWalletAccounts'
 import Send from '../../containers/Send'
 import { ROUTES } from '../../core/constants'
@@ -27,7 +28,7 @@ export default () => (
         path={ROUTES.CREATE_WALLET}
         render={props => <CreateWallet option="CREATE" {...props} />}
       />
-      <Route
+      <PrivateRoute
         exact
         path={ROUTES.CREATE_WALLET_AUTHENTICATED}
         render={props => (
@@ -39,7 +40,7 @@ export default () => (
         path={ROUTES.IMPORT_WALLET}
         render={props => <CreateWallet option="IMPORT" {...props} />}
       />
-      <Route
+      <PrivateRoute
         exact
         path={ROUTES.IMPORT_WALLET_AUTHENTICATED}
         render={props => (
@@ -51,19 +52,18 @@ export default () => (
         path={ROUTES.DISPLAY_WALLET_KEYS}
         component={DisplayWalletAccounts}
       />
-
-      <Route
+      <PrivateRoute
         exact
         path={ROUTES.DISPLAY_WALLET_KEYS_AUTHENTICATED}
         render={props => <DisplayWalletAccounts {...props} authenticated />}
       />
-
       <Route exact path={ROUTES.SETTINGS} component={Settings} />
       <PrivateRoute
         exact
         path={ROUTES.WALLET_MANAGER}
         component={WalletManager}
       />
+      <PrivateRoute exact path={ROUTES.EDIT_WALLET} component={EditWallet} />
       <PrivateRoute exact path={ROUTES.DASHBOARD} component={Dashboard} />
       <PrivateRoute exact path={ROUTES.RECEIVE} component={Receive} />
       <PrivateRoute exact path={ROUTES.CONTACTS} component={Contacts} />

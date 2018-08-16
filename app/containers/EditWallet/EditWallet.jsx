@@ -4,19 +4,19 @@ import React, { Component } from 'react'
 import { reject } from 'lodash'
 import fs from 'fs'
 
-import { NavLink } from 'react-router-dom'
 import { getStorage, setStorage } from '../../core/storage'
 import { ROUTES, MODAL_TYPES } from '../../core/constants'
-import Wallet from './Wallet.jsx'
+
 import CloseButton from '../../components/CloseButton'
+import BackButton from '../../components/BackButton'
 import Button from '../../components/Button'
-import { recoverWallet } from '../../modules/generateWallet'
+
 import FullHeightPanel from '../../components/Panel/FullHeightPanel'
 import Import from '../../assets/icons/import.svg'
 import Add from '../../assets/icons/add.svg'
 import WalletIcon from '../../assets/icons/wallet.svg'
 
-import styles from './WalletManager.scss'
+import styles from './EditWallet.scss'
 
 const { dialog } = require('electron').remote
 
@@ -29,7 +29,7 @@ type Props = {
   showModal: (modalType: string, modalProps: Object) => any
 }
 
-class WalletManager extends Component<Props> {
+class EditWallet extends Component<Props> {
   deleteWalletAccount = (label: string, key: string) => {
     const {
       showSuccessNotification,
@@ -74,47 +74,12 @@ class WalletManager extends Component<Props> {
         shouldRenderInstructions={false}
         shouldRenderHeader={false}
         renderCloseButton={() => <CloseButton routeTo={ROUTES.DASHBOARD} />}
+        renderBackButton={() => <BackButton routeTo={ROUTES.WALLET_MANAGER} />}
       >
-        <div className={styles.contentContainer}>
-          <div className={styles.walletManagerDetails}>
-            <div className={styles.iconAndHeader}>
-              <div className={styles.walletIcon}>
-                <WalletIcon id="manage-wallets" />
-              </div>
-              <h2>Manage Wallets</h2>
-            </div>
-            <div className={styles.buttonRow}>
-              <NavLink
-                id="import-wallet-authenticated-link"
-                exact
-                to={ROUTES.IMPORT_WALLET_AUTHENTICATED}
-              >
-                <Button renderIcon={Import}>Import</Button>
-              </NavLink>
-              <NavLink
-                id="create-wallet-authenticated-link"
-                exact
-                to={ROUTES.CREATE_WALLET_AUTHENTICATED}
-              >
-                <Button renderIcon={Add}>Create</Button>
-              </NavLink>
-            </div>
-          </div>
-          <div className={styles.walletList}>
-            {accounts.map(account => (
-              <Wallet
-                {...account}
-                handleDelete={() =>
-                  this.deleteWalletAccount(account.label, account.key)
-                }
-                handleSave={saveAccount}
-              />
-            ))}
-          </div>
-        </div>
+        <div> hello neon</div>
       </FullHeightPanel>
     )
   }
 }
 
-export default WalletManager
+export default EditWallet

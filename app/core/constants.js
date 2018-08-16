@@ -31,6 +31,7 @@ export const ROUTES = {
   DISPLAY_WALLET_KEYS: '/display-wallet-keys',
   DISPLAY_WALLET_KEYS_AUTHENTICATED: '/display-wallet-keys-authenticated',
   WALLET_MANAGER: '/wallet-manager',
+  EDIT_WALLET: '/edit-walet',
   SEND: '/send'
 }
 

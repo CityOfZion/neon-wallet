@@ -1,9 +1,11 @@
 // @flow
 
 import React, { Component } from 'react'
+import { NavLink } from 'react-router-dom'
 
 import TextInput from '../../components/Inputs/TextInput'
 import Button from '../../components/Button'
+import { ROUTES } from '../../core/constants'
 
 import Delete from '../../assets/icons/delete.svg'
 import Edit from '../../assets/icons/edit.svg'
@@ -19,17 +21,7 @@ type Props = {
   address: string
 }
 
-// type State = {
-//   editing: boolean,
-//   newLabel: string
-// }
-
 class WalletManager extends Component<Props, State> {
-  // state = {
-  //   editing: false,
-  //   newLabel: this.props.label
-  // }
-
   render() {
     const { label, address, handleDelete } = this.props
     return (
@@ -37,9 +29,13 @@ class WalletManager extends Component<Props, State> {
         <div className={styles.accountLabel}>{label}</div>
         <div className={styles.address}>{address}</div>
         <div className={styles.editAccountButton}>
-          <Button renderIcon={Edit} onClick={handleDelete}>
-            Edit
-          </Button>
+          <NavLink
+            id="import-wallet-authenticated-link"
+            exact
+            to={ROUTES.EDIT_WALLET}
+          >
+            <Button renderIcon={Edit}>Edit</Button>
+          </NavLink>
         </div>
       </div>
     )
