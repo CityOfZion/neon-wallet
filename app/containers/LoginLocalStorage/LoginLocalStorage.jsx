@@ -39,9 +39,12 @@ export default class LoginLocalStorage extends Component<Props, State> {
             onChange={(e) => this.setState({ encryptedWIF: e.target.value })}
           >
             <option value=''>Select a wallet</option>
-            {map(accounts, (account, index) => (
-              <option value={account.key} key={`wallet${account.label}`}>{account.label}</option>
-            ))}
+            {reduce(accounts, (accum, account, index) => {
+              if (account.key) {
+                accum.push(<option value={account.key} key={`wallet${account.label}`}>{account.label}</option>);
+              }
+              return acum;
+            }, [])}
           </select>
           <div className={loginStyles.loginForm}>
             <PasswordField
