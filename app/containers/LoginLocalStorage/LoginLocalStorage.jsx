@@ -40,9 +40,9 @@ export default class LoginLocalStorage extends Component<Props, State> {
             <option value=''>Select a wallet</option>
             {accounts && accounts.reduce((accum, account, index) => {
               if (account.key) {
-                accum.push(<option value={account.key} key={`wallet${account.label}`}>{account.label}</option>);
+                accum.push(<option value={account.key} key={`wallet${account.label}`}>{account.label}</option>)
               }
-              return accum;
+              return accum
             }, [])}
           </select>
           <div className={loginStyles.loginForm}>
