@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react'
-import { map } from 'lodash'
 
 import PasswordField from '../../components/PasswordField'
 import HomeButtonLink from '../../components/HomeButtonLink'
@@ -39,11 +38,11 @@ export default class LoginLocalStorage extends Component<Props, State> {
             onChange={(e) => this.setState({ encryptedWIF: e.target.value })}
           >
             <option value=''>Select a wallet</option>
-            {reduce(accounts, (accum, account, index) => {
+            {accounts && accounts.reduce((accum, account, index) => {
               if (account.key) {
                 accum.push(<option value={account.key} key={`wallet${account.label}`}>{account.label}</option>);
               }
-              return acum;
+              return accum;
             }, [])}
           </select>
           <div className={loginStyles.loginForm}>
