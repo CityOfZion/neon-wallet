@@ -64,7 +64,7 @@ class DisplayWalletAccounts extends Component<Props> {
     return (
       <FullHeightPanel
         headerText={isImport ? 'Wallet Imported!' : 'Wallet Created!'}
-        instructions={false}
+        renderInstructions={false}
         headerContainerClassName={styles.headerIconMargin}
         renderHeaderIcon={() => <CheckIcon />}
         {...conditionalPanelProps}

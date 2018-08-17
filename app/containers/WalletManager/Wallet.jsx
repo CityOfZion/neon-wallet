@@ -32,7 +32,7 @@ class WalletManager extends Component<Props, State> {
           <NavLink
             id="import-wallet-authenticated-link"
             exact
-            to={ROUTES.EDIT_WALLET}
+            to={`edit-wallet/${address}/${label}`}
           >
             <Button renderIcon={Edit}>Edit</Button>
           </NavLink>

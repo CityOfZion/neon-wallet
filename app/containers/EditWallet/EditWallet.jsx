@@ -9,34 +9,104 @@ import { ROUTES, MODAL_TYPES } from '../../core/constants'
 
 import CloseButton from '../../components/CloseButton'
 import BackButton from '../../components/BackButton'
-import Button from '../../components/Button'
-
+import TextInput from '../../components/Inputs/TextInput'
 import FullHeightPanel from '../../components/Panel/FullHeightPanel'
-import Import from '../../assets/icons/import.svg'
-import Add from '../../assets/icons/add.svg'
-import WalletIcon from '../../assets/icons/wallet.svg'
+import EditIcon from '../../assets/icons/edit.svg'
+import Close from '../../assets/icons/close.svg'
+import CheckIcon from '../../assets/icons/check.svg'
+import Button from '../../components/Button'
 
 import styles from './EditWallet.scss'
 
-const { dialog } = require('electron').remote
-
 type Props = {
-  accounts: Array<Object>,
+  // accounts: Array<Object>,
   saveAccount: ({ label: string, address: string }) => any,
   showSuccessNotification: Object => any,
   showErrorNotification: Object => any,
   setAccounts: (Array<Object>) => any,
-  showModal: (modalType: string, modalProps: Object) => any
+  showModal: (modalType: string, modalProps: Object) => any,
+  match: Object
 }
 
-class EditWallet extends Component<Props> {
-  deleteWalletAccount = (label: string, key: string) => {
+type State = {
+  walletName: string
+}
+
+class EditWallet extends Component<Props, State> {
+  state = {
+    walletName: this.props.match.params.label
+  }
+
+  render() {
+    const { saveAccount } = this.props
+    const { label, key } = this.props.match.params
+    const { walletName } = this.state
+    return (
+      <FullHeightPanel
+        headerText="Edit Wallet"
+        renderInstructions={() => (
+          <div className={styles.editWalletInstructions}>
+            <div>Modify Details</div>
+            <span onClick={this.deleteWalletAccount}>
+              <Close /> Remove Wallet
+            </span>
+          </div>
+        )}
+        renderHeaderIcon={() => <EditIcon />}
+        renderCloseButton={() => <CloseButton routeTo={ROUTES.DASHBOARD} />}
+        renderBackButton={() => <BackButton routeTo={ROUTES.WALLET_MANAGER} />}
+      >
+        <div className={styles.inputContainer}>
+          <TextInput
+            value={walletName}
+            label="Wallet Name"
+            onChange={e => this.setState({ walletName: e.target.value })}
+            placeholder="Wallet Name"
+            // autoFocus={option !== 'IMPORT'}
+          />
+          <TextInput
+            value={key}
+            label="Wallet Address"
+            disabled
+            // onChange={e => this.setState({ walletName: e.target.value })}
+            // placeholder="Wallet Name"
+            // autoFocus={option !== 'IMPORT'}
+          />
+        </div>
+        <Button
+          renderIcon={() => <CheckIcon />}
+          className={styles.buttonMargin}
+          type="submit"
+          primary
+          onClick={() =>
+            saveAccount({ label: this.state.walletName, address: key })
+          }
+          disabled={this.isDisabled()}
+        >
+          Save Changes
+        </Button>
+      </FullHeightPanel>
+    )
+  }
+
+  isDisabled = () => {
+    const { label } = this.props.match.params
+    const { walletName } = this.state
+    if (walletName.length && walletName !== label) {
+      return false
+    }
+    return true
+  }
+
+  deleteWalletAccount = () => {
     const {
       showSuccessNotification,
       showErrorNotification,
       setAccounts,
       showModal
     } = this.props
+
+    const { label, key } = this.props.match.params
 
     showModal(MODAL_TYPES.CONFIRM, {
       title: 'Confirm Delete',
@@ -65,20 +135,6 @@ class EditWallet extends Component<Props> {
         }
       }
     })
-  }
-
-  render() {
-    const { accounts, saveAccount } = this.props
-    return (
-      <FullHeightPanel
-        shouldRenderInstructions={false}
-        shouldRenderHeader={false}
-        renderCloseButton={() => <CloseButton routeTo={ROUTES.DASHBOARD} />}
-        renderBackButton={() => <BackButton routeTo={ROUTES.WALLET_MANAGER} />}
-      >
-        <div> hello neon</div>
-      </FullHeightPanel>
-    )
   }
 }
 

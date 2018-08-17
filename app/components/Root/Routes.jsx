@@ -28,7 +28,7 @@ export default () => (
         path={ROUTES.CREATE_WALLET}
         render={props => <CreateWallet option="CREATE" {...props} />}
       />
-      <PrivateRoute
+      <Route
         exact
         path={ROUTES.CREATE_WALLET_AUTHENTICATED}
         render={props => (
@@ -40,7 +40,7 @@ export default () => (
         path={ROUTES.IMPORT_WALLET}
         render={props => <CreateWallet option="IMPORT" {...props} />}
       />
-      <PrivateRoute
+      <Route
         exact
         path={ROUTES.IMPORT_WALLET_AUTHENTICATED}
         render={props => (
@@ -52,7 +52,7 @@ export default () => (
         path={ROUTES.DISPLAY_WALLET_KEYS}
         component={DisplayWalletAccounts}
       />
-      <PrivateRoute
+      <Route
         exact
         path={ROUTES.DISPLAY_WALLET_KEYS_AUTHENTICATED}
         render={props => <DisplayWalletAccounts {...props} authenticated />}

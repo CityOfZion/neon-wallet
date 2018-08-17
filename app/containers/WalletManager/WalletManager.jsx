@@ -71,7 +71,7 @@ class WalletManager extends Component<Props> {
     const { accounts, saveAccount } = this.props
     return (
       <FullHeightPanel
-        shouldRenderInstructions={false}
+        renderInstructions={false}
         shouldRenderHeader={false}
         renderCloseButton={() => <CloseButton routeTo={ROUTES.DASHBOARD} />}
       >
