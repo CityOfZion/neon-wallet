@@ -149,8 +149,13 @@ export const recoverWallet = (wallet: Object): Promise<*> =>
         reject(Error('No accounts found in recovery file.'))
       }
 
+<<<<<<< HEAD
       accounts.some(account => {
         if (!walletHasKey(data, account.key)) {
+=======
+      accounts.some((account) => {
+        if (account.key && !walletHasKey(data, account.key)) {
+>>>>>>> be3d2cb... squashed release 0.2.7 into one commit
           data.accounts.push(account)
         }
       })
@@ -244,10 +249,22 @@ export const generateNewWalletAccount = (
 export const getWIF = (state: Object) => state.generateWallet.wif
 export const getAddress = (state: Object) => state.generateWallet.address
 export const getPassphrase = (state: Object) => state.generateWallet.passphrase
+<<<<<<< HEAD
 export const getWalletName = (state: Object) => state.generateWallet.walletName
 export const getEncryptedWIF = (state: Object) =>
   state.generateWallet.encryptedWIF
 export const getIsImport = (state: Object) => state.generateWallet.isImport
+=======
+export const getEncryptedWIF = (state: Object) => state.generateWallet.encryptedWIF
+export const isSaved = (state: Object) => {
+  const savedAddresses = state.spunky.ACCOUNTS.data
+  const address = state.generateWallet.address
+  if (savedAddresses) {
+    return Boolean(savedAddresses.find(addressData => addressData.address === address))
+  }
+  return false
+}
+>>>>>>> be3d2cb... squashed release 0.2.7 into one commit
 
 const initialState = {
   wif: null,
