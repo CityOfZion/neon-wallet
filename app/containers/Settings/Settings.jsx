@@ -218,7 +218,6 @@ export default class Settings extends Component<Props, State> {
               ))}
             </select>
           </div>
-<<<<<<< HEAD
           <div className="settingsItem">
             <div className="itemTitle">Saved Wallet Accounts</div>
             {map(accounts, account => (
@@ -233,32 +232,6 @@ export default class Settings extends Component<Props, State> {
                     }
                   >
                     <Delete />
-=======
-          <div className='settingsItem'>
-            <div className='itemTitle'>Saved Wallet Accounts</div>
-            {map(accounts, account => {
-              return (
-                <div className='walletList' key={`wallet${account.key}`}>
-                  <div className='walletItem'>
-                    <div className='walletName'>{account.key && account.key.slice(0, 20)}</div>
-                    <div className='walletKey'>{account.label}</div>
-                    <div
-                      className='walletCredentials'
-                      onClick={() =>
-                        this.walletAccountDetailsLogin(account)
-                      }
-                    >
-                      <Lock />
-                    </div>
-                    <div
-                      className='deleteWallet'
-                      onClick={() =>
-                        this.deleteWalletAccount(account.label, account.key)
-                      }
-                    >
-                      <Delete />
-                    </div>
->>>>>>> be3d2cb... squashed release 0.2.7 into one commit
                   </div>
                 </div>
               </div>
