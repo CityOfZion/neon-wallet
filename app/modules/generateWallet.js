@@ -126,7 +126,7 @@ export const recoverWallet = (wallet: Object): Promise<*> => {
       }
 
       accounts.some((account) => {
-        if (!walletHasKey(data, account.key)) {
+        if (account.key && !walletHasKey(data, account.key)) {
           data.accounts.push(account)
         }
       })

@@ -241,7 +241,7 @@ export default class Settings extends Component<Props, State> {
               return (
                 <div className='walletList' key={`wallet${account.key}`}>
                   <div className='walletItem'>
-                    <div className='walletName'>{account.key.slice(0, 20)}</div>
+                    <div className='walletName'>{account.key && account.key.slice(0, 20)}</div>
                     <div className='walletKey'>{account.label}</div>
                     <div
                       className='walletCredentials'
