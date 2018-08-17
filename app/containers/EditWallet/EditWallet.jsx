@@ -19,7 +19,6 @@ import Button from '../../components/Button'
 import styles from './EditWallet.scss'
 
 type Props = {
-  // accounts: Array<Object>,
   saveAccount: ({ label: string, address: string }) => any,
   showSuccessNotification: Object => any,
   showErrorNotification: Object => any,
@@ -39,7 +38,7 @@ class EditWallet extends Component<Props, State> {
 
   render() {
     const { saveAccount } = this.props
-    const { label, key } = this.props.match.params
+    const { key } = this.props.match.params
     const { walletName } = this.state
     return (
       <FullHeightPanel
@@ -62,16 +61,8 @@ class EditWallet extends Component<Props, State> {
             label="Wallet Name"
             onChange={e => this.setState({ walletName: e.target.value })}
             placeholder="Wallet Name"
-            // autoFocus={option !== 'IMPORT'}
           />
-          <TextInput
-            value={key}
-            label="Wallet Address"
-            disabled
-            // onChange={e => this.setState({ walletName: e.target.value })}
-            // placeholder="Wallet Name"
-            // autoFocus={option !== 'IMPORT'}
-          />
+          <TextInput value={key} label="Wallet Address" disabled />
         </div>
         <Button
           renderIcon={() => <CheckIcon />}
