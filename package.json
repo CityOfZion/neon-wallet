@@ -64,7 +64,7 @@
     }
   },
   "dependencies": {
-    "@ledgerhq/hw-transport-node-hid": "^4.2.0",
+    "@ledgerhq/hw-transport-node-hid": "4.7.6",
     "axios": "0.17.0",
     "bignumber.js": "5.0.0",
     "buffer": "5.0.8",
@@ -101,7 +101,7 @@
     "react-split-pane": "0.1.68",
     "react-syntax-highlighter": "5.8.0",
     "react-tabs": "^2.2.2",
-    "react-test-renderer": "16.4.2",
+    "react-test-renderer": "16.1.1",
     "react-tippy": "1.2.2",
     "recharts": "^1.0.0-beta.10",
     "recompose": "^0.26.0",
@@ -125,6 +125,7 @@
     "babel-cli": "6.26.0",
     "babel-core": "6.26.0",
     "babel-eslint": "8.1.2",
+    "babel-jest": "^23.4.2",
     "babel-loader": "7.1.2",
     "babel-plugin-lodash": "3.2.11",
     "babel-plugin-module-resolver": "3.1.1",
@@ -198,6 +199,7 @@
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ],
-    "setupTestFrameworkScriptFile": "<rootDir>/__tests__/setupTests.js"
+    "setupTestFrameworkScriptFile": "<rootDir>/__tests__/setupTests.js",
+    "testURL": "http://localhost"
   }
 }
