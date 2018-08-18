@@ -6,11 +6,12 @@ import withNetworkData from './withNetworkData'
 import settingsActions from '../actions/settingsActions'
 
 export default function withFilteredTokensData(key: string = 'tokens') {
-  const mapSettingsDataToProps = (settings, props: Object) => ({
-    [key]: settings.tokens.filter(
-      ({ networkId }) => networkId === props.networkId
-    )
-  })
+  const mapSettingsDataToProps = (settings, props: Object) =>
+    console.log('asdsadasdasd', { settings }) || {
+      [key]: settings.tokens.filter(
+        ({ networkId }) => networkId === props.networkId
+      )
+    }
 
   return compose(
     withNetworkData(),

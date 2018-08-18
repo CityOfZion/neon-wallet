@@ -30,6 +30,7 @@ export default class TokenBalancesPanel extends React.Component<Props> {
         className={classNames(styles.tokenBalancesPanel, className)}
         renderHeader={this.renderHeader}
       >
+      <div className={styles.tokenBalancesPanelContent}>
         <div className={styles.tableHeader}>
           <div className={styles.symbol}>Ticker</div>
           <div className={styles.name}>Token</div>
@@ -37,6 +38,7 @@ export default class TokenBalancesPanel extends React.Component<Props> {
           <div className={styles.balance}>Holdings</div>
         </div>
         {balances.map(this.renderToken)}
+        </div>
       </Panel>
     )
   }
@@ -44,7 +46,8 @@ export default class TokenBalancesPanel extends React.Component<Props> {
   formatPrice = (ticker: string): string => {
     const { prices, currencyCode } = this.props
     const { symbol } = CURRENCIES[currencyCode]
-    const currPriceOfToken = prices[ticker]
+    let currPriceOfToken
+    if (prices) currPriceOfToken = prices[ticker]
     if (!currPriceOfToken) return 'N/A'
     return `${symbol}${toFixedDecimals(currPriceOfToken, 2)}`
   }
@@ -57,7 +60,14 @@ export default class TokenBalancesPanel extends React.Component<Props> {
 
   renderToken = (token: TokenBalanceType) => (
     <div key={token.scriptHash} className={styles.tableData}>
-      <div className={styles.tickerName}>{token.symbol}</div>
+      <div className={styles.tickerName}>
+        {token.symbol}{' '}
+        {token.image && (
+          <div className={styles.tokenImageContainer}>
+            <img className={styles.tokenImage} src={token.image} alt="" />
+          </div>
+        )}
+      </div>
       <div className={styles.tokenName}>{token.name}</div>
       <div className={styles.price}>{this.formatPrice(token.symbol)}</div>
       <div className={styles.balanceValue}>

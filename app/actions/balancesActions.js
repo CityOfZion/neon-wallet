@@ -16,10 +16,12 @@ type Props = {
 export const ID = 'balances'
 
 async function getBalances({ net, address, tokens }: Props) {
+  console.log(222222, { tokens })
   const endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
 
   // token balances
   const promises = tokens.map(async token => {
+    console.log(token)
     const { scriptHash } = token
 
     try {
@@ -29,7 +31,7 @@ async function getBalances({ net, address, tokens }: Props) {
         .toString()
 
       return {
-        [scriptHash]: { ...response, scriptHash, balance }
+        [scriptHash]: { ...response, scriptHash, balance, image: token.image }
       }
     } catch (err) {
       // invalid scriptHash
@@ -62,5 +64,6 @@ async function getBalances({ net, address, tokens }: Props) {
 export default createActions(
   ID,
   ({ net, address, tokens }: Props = {}) => async (state: Object) =>
+    console.log({ net, address, tokens }) ||
     getBalances({ net, address, tokens })
 )

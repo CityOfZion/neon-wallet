@@ -16,11 +16,28 @@ import withLoadingProp from '../../../hocs/withLoadingProp'
 import withProgressPanel from '../../../hocs/withProgressPanel'
 import { toBigNumber } from '../../../core/math'
 import pricesActions from '../../../actions/pricesActions'
+import neoLogo from '../../../assets/images/neo-logo.png'
 
 const mapPricesDataToProps = prices => ({ prices })
 
 const filterZeroBalanceTokens = balances =>
   filter(balances, token => toBigNumber(token.balance).gt(0))
+
+  // const sortedByImage = () => {
+  //   return (a,b) => {
+  //    if (a['image'] > b['image']) return 1;
+  //    if (a['image'] < b['image']) return -1;
+  //    return 0
+  //   } }
+
+const sortedByImage = (a, b) => {
+  if (a.image) {
+    return -1
+  } else if (!a.image) {
+    return 1
+  }
+  return 0
+}
 
 const mapBalanceDataToProps = balances => {
   const mutatedBalances = cloneDeep(balances)
@@ -30,12 +47,13 @@ const mapBalanceDataToProps = balances => {
         scriptHash: key,
         symbol: key,
         balance: mutatedBalances[key],
-        name: key
+        name: key,
+        image: neoLogo
       }
     }
   })
   return {
-    balances: filterZeroBalanceTokens(mutatedBalances)
+    balances: filterZeroBalanceTokens(mutatedBalances).sort(sortedByImage)
   }
 }
 

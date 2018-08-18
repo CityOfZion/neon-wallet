@@ -1,6 +1,13 @@
 @import '../../../styles/animations';
 
 .tokenBalancesPanel {
+
+  .tokenBalancesPanelContent {
+    margin: auto;
+    max-width: 600px;
+  }
+
+
   .header {
     display: flex;
     align-items: center;
@@ -21,29 +28,41 @@
     }
   }
 
+  .tableData {
+    min-height: 35px;
+  }
+
   .tableHeader,
   .tableData {
     display: flex;
     align-items: flex-start;
     justify-content: stretch;
     margin-bottom: 16px;
+    // max-width: 500px;
 
     .symbol {
       flex: 0 0 auto;
-      width: 70px;
-      margin-right: 16px;
+      width: 50px;
+      margin-right: 40px;
     }
 
     .tickerName {
       @extend .symbol;
       color: #ccd0d9;
       font-weight: 300;
+      flex-direction: column;
+      display: flex;
+      padding-left: 2.5px;
+      // align-items: center;
     }
 
     .name {
       flex: 1 1 auto;
       margin-right: 16px;
-      width: 108px;
+      min-width: 165px;
+      width: 25%;
+
+
       font-weight: bold;
     }
 
@@ -56,11 +75,13 @@
     .tokenName {
       font-size: 14px;
       flex: 1 1 auto;
-      margin-right: 2px;
+      margin-right: 24px;
       font-weight: 500;
       color: #5c677f;
-      width: 145px;
-      max-width: 145px;
+      min-width: 165px;
+      width: 25%;
+
+      //max-width: 165px;
     }
 
     .balance {
@@ -95,4 +116,21 @@
     color: #282828;
     align-items: center;
   }
+
+  .tokenImageContainer {
+   // margin-top: 10px;
+    //     svg {
+    //   width: 100%;
+    // }
+  }
+
+  .tokenImage {
+    max-height: 35px;
+    max-width: 35px;
+        width: 100%;
+        margin-top: 5px;
+}
+
+
+  
 }
