@@ -72,7 +72,5 @@ export const getDefaultTokens = async (): Promise<Array<TokenItemType>> => {
     )
   )
 
-  console.log({ tokens })
-
   return tokens
 }
