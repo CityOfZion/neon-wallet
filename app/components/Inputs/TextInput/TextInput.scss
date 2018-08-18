@@ -57,20 +57,20 @@
     .beforeInput {
       flex: 0 1 auto;
     }
-
-    .input {
-      flex: 1 1 auto;
-      box-sizing: border-box;
-      width: 100%;
-      height: $text-input-height;
-      line-height: $text-input-height;
-      color: $text-input-color;
-      background: $text-input-background-color;
-      font-size: $text-input-font-size;
-    }
-
-    .afterInput {
-      flex: 0 1 auto;
-    }
   }
+}
+
+.input {
+  flex: 1 1 auto;
+  box-sizing: border-box;
+  width: 100%;
+  height: $text-input-height;
+  line-height: $text-input-height;
+  color: $text-input-color;
+  background: $text-input-background-color;
+  font-size: $text-input-font-size;
+}
+
+.afterInput {
+  flex: 0 1 auto;
 }

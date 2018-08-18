@@ -9,8 +9,25 @@
   flex-direction: column;
 
   .dashboardNetworkSwitch {
-    position: absolute; 
+    position:absolute;
     left: 90px;
+    top: 15px;
+  }
+
+  .dashboardNetworkSwitchTextInput {
+    background: $main-background;
+    border: none;
+    width: 80px;
+  }
+
+  .dashboardNetworkSwitchTextInputContainer {
+    background-color: $main-background;
+    border: none;
+  }
+
+  .dashboardNetworkSwitchActive {
+    border:none;
+    background-color: $main-background;
   }
 
   .dataColumn {

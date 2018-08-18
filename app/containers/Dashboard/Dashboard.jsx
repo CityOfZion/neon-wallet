@@ -45,7 +45,14 @@ export default class Dashboard extends Component<Props> {
     return (
       <div id="dashboard" className={styles.dashboard}>
         <div className={styles.dashboardHeader}>
-          <NetworkSwitch className={styles.dashboardNetworkSwitch} />
+          <NetworkSwitch
+            className={styles.dashboardNetworkSwitch}
+            networkSwitchTextInputContainer={
+              styles.dashboardNetworkSwitchTextInputContainer
+            }
+            networkSwitchTextInput={styles.dashboardNetworkSwitchTextInput}
+            activeStyles={styles.dashboardNetworkSwitchActive}
+          />
           <Tooltip
             className={classNames(
               styles.headerButtonContainer,
