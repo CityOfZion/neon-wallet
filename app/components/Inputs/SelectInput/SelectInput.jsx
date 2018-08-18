@@ -79,7 +79,7 @@ export default class SelectInput extends React.Component<Props, State> {
       'textInputContainerClassName'
     )
 
-    const { error, textInputContainerClassName, activeStyles } = this.props
+    const { error, textInputContainerClassName } = this.props
 
     const className = classNames(styles.selectInput, this.props.className)
 
@@ -92,7 +92,7 @@ export default class SelectInput extends React.Component<Props, State> {
       >
         <TextInput
           {...passDownProps}
-          className={`${styles.input} ${textInputContainerClassName}`}
+          className={`${styles.input} ${textInputContainerClassName || ''}`}
           renderAfter={!error && this.renderAfter}
           onFocus={this.handleFocus}
           onChange={

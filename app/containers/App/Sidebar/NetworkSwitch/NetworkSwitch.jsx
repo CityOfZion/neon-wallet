@@ -53,8 +53,9 @@ export default class NetworkSwitch extends Component<Props> {
   getNetworkLabel = () => {
     const { networkId, networks } = this.props
     const currentNetwork = networks.find(network => network.id === networkId)
-
-    return currentNetwork.label
+    if (currentNetwork) {
+      return currentNetwork.label
+    }
   }
 
   renderItem = (item: Object) => (
