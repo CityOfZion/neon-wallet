@@ -1,12 +1,12 @@
 // flow
 import React, { Component } from 'react'
 
-import CheckMarkIcon from '../../../assets/icons/check.svg'
-
 import styles from './CheckBox.scss'
 
 type Props = {
-  onChange: Function
+  onChange: () => void,
+  icon: React$Node,
+  className?: string
 }
 
 type State = {
@@ -28,15 +28,17 @@ class CheckBox extends Component<Props, State> {
 
   render() {
     const { checked } = this.state
+    const { icon, className } = this.props
+
     return (
       <button
         aria-checked={checked}
         onClick={this.toggleCheckBox}
         type="button"
         role="checkbox"
-        className={styles.checkBox}
+        className={`${styles.checkBox} ${className}`}
       >
-        {checked && <CheckMarkIcon />}
+        {checked && icon}
       </button>
     )
   }
