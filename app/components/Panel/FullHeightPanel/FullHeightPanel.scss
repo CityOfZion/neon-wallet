@@ -4,7 +4,8 @@
   flex-direction: column;
   align-items: center;
   margin: auto;
-  min-height: 100%;
+  max-height: 780px;
+  min-height: 780px;
   width: 680px;
 
   .childrenContainer {
@@ -20,16 +21,15 @@
     font-weight: 100;
     margin-top: 50px;
     color: #5c677f;
+    line-height: 32px;
     display: flex;
     align-items: center;
 
     .headerIcon {
-      margin-right: 15px;
+      margin-right: 5px;
 
       svg {
-        width: 50px;
-        height: 50px;
-        padding: 10px;
+        width: 40px;
         margin: auto;
         overflow: visible;
 
@@ -46,6 +46,7 @@
     margin-top: 40px;
     padding-bottom: 5px;
     width: 500px;
+    font-size: 14px;
     color: #5c677f;
   }
 

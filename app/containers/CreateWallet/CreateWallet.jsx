@@ -5,8 +5,9 @@ import { ROUTES } from '../../core/constants'
 
 import PasswordInput from '../../components/Inputs/PasswordInput'
 import TextInput from '../../components/Inputs/TextInput'
-import BackButton from '../../components/BackButton'
+import CloseButton from '../../components/CloseButton'
 import Button from '../../components/Button'
+import ImportIcon from '../../assets/icons/import.svg'
 import CheckIcon from '../../assets/icons/check.svg'
 import AddIcon from '../../assets/icons/add.svg'
 import FullHeightPanel from '../../components/Panel/FullHeightPanel'
@@ -57,9 +58,17 @@ export default class CreateWallet extends React.Component<Props, State> {
       <FullHeightPanel
         headerText={option === 'CREATE' ? 'Create New Wallet' : 'Import Wallet'}
         renderHeaderIcon={() =>
-          option === 'IMPORT' ? <CheckIcon /> : <AddIcon />
+          option === 'IMPORT' ? (
+            <div className={styles.iconDisplay}>
+              <ImportIcon />
+            </div>
+          ) : (
+            <div className={styles.iconDisplay}>
+              <AddIcon />
+            </div>
+          )
         }
-        renderBackButton={() => <BackButton routeTo={ROUTES.HOME} />}
+        renderCloseButton={() => <CloseButton routeTo={ROUTES.HOME} />}
       >
         <div className={styles.inputContainer}>
           <div id="createWallet" className={styles.flexContainer}>
@@ -78,7 +87,7 @@ export default class CreateWallet extends React.Component<Props, State> {
                 label="Wallet Name"
                 onChange={e => this.setState({ walletName: e.target.value })}
                 placeholder="Wallet Name"
-                autoFocus
+                autoFocus={option !== 'IMPORT'}
               />
               <PasswordInput
                 label="Passphrase"

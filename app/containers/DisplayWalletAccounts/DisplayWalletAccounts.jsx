@@ -33,17 +33,17 @@ class DisplayWalletAccounts extends Component<Props> {
     const { passphrase, address, wif, walletName, isImport } = this.props
     const fields = [
       { label: 'Passphrase', value: passphrase },
-      { label: 'Public Address', value: address },
-      { label: 'Private Key', value: wif }
+      { label: 'Private Key', value: wif },
+      { label: 'Public Address', value: address }
     ]
     if (walletName) {
-      fields.push({ label: 'Wallet Name', value: walletName })
+      fields.unshift({ label: 'Wallet Name', value: walletName })
     }
     return (
       <FullHeightPanel
         headerText={isImport ? 'Wallet Imported!' : 'Wallet Created!'}
         instructions={false}
-        headerContainerClassName={styles.negativeHeaderIconMargin}
+        headerContainerClassName={styles.headerIconMargin}
         renderHeaderIcon={() => <CheckIcon />}
         renderCloseButton={() => <CloseButton routeTo={ROUTES.HOME} />}
         iconColor="#F7BC33"
@@ -52,9 +52,11 @@ class DisplayWalletAccounts extends Component<Props> {
           <DialogueBox
             icon={<WarningIcon />}
             renderText={() => (
-              <div>
-                <b>Save these details!</b> If you lose these credentials, you
-                lose access to your assets.
+              <div className={styles.saveDetails}>
+                <div>
+                  <b>Save these details!</b> If you lose these credentials,{' '}
+                </div>
+                <div>you lose access to your assets.</div>
               </div>
             )}
             className={styles.displayWalletAccountsDialogue}

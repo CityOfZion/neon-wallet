@@ -24,7 +24,6 @@ declare type ReduxAction = () => {
 
 declare type NetworkType = string
 
-
 declare type ExplorerType = $Values<Explorer>
 
 declare type Explorer = {
@@ -68,7 +67,8 @@ declare type TokenItemType = {
   id: string,
   scriptHash: string,
   networkId: string,
-  isUserGenerated: boolean
+  isUserGenerated: boolean,
+  image: string
 }
 
 declare type TokenType = {
@@ -81,6 +81,7 @@ declare type TokenType = {
 
 declare type TokenBalanceType = {
   symbol: SymbolType,
+  image: string,
   balance: string,
   scriptHash: string,
   totalSupply: number,

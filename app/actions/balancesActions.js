@@ -29,7 +29,7 @@ async function getBalances({ net, address, tokens }: Props) {
         .toString()
 
       return {
-        [scriptHash]: { ...response, scriptHash, balance }
+        [scriptHash]: { ...response, scriptHash, balance, image: token.image }
       }
     } catch (err) {
       // invalid scriptHash
