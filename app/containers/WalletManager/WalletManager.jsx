@@ -25,7 +25,8 @@ type Props = {
 
 class WalletManager extends Component<Props> {
   render() {
-    const { accounts } = this.props
+    let { accounts } = this.props
+    if (!accounts) accounts = []
     return (
       <FullHeightPanel
         renderInstructions={false}
@@ -58,7 +59,15 @@ class WalletManager extends Component<Props> {
             </div>
           </div>
           <div className={styles.walletList}>
-            {accounts.map(account => <Wallet {...account} />)}
+            {accounts &&
+              !!accounts.length &&
+              accounts.map(account => <Wallet {...account} />)}
+
+            {!accounts.length && (
+              <div className={styles.noWalletInfo}>
+                It looks like you have no wallet information saved locally...{' '}
+              </div>
+            )}
           </div>
         </div>
       </FullHeightPanel>

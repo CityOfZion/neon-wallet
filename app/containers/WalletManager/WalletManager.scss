@@ -79,12 +79,7 @@
       white-space: nowrap;
     }
 
-    // button {
-    //   width: 100px;
-    // }
-
     .address {
-      /* eSQH6q2QMspSDu9eQ3kT: */
       font-family: Gotham-Book;
       font-size: 12px;
       width: 300px;
@@ -93,89 +88,10 @@
   }
 }
 
-// .walletManager {
-//   padding: 20px 150px;
-// }
-
-// .panelHeaderContainer {
-//   display: flex;
-//   flex-direction: row;
-//   align-items: center;
-//   background: $light-grey;
-//   color: $dark-grey;
-//   height: 80px;
-//   width: 100%;
-// }
-
-// .walletList {
-//   background: $white;
-//   min-height: 300px;
-//   height: 55vh;
-//   overflow-y: scroll;
-// }
-
-// .navRow {
-//   display: flex;
-//   align-items: center;
-//   width: 200px;
-//   margin-left: 10px;
-//   justify-content: space-around;
-// }
-
-// .buttonRow {
-//   margin-top: 50px;
-//   height: 100px;
-//   background: $white;
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-around;
-// }
-
-// .buttonContainer {
-//   width: 40%;
-//   max-width: 300px;
-// }
-
-// .accountInfoRow {
-//   padding: 20px;
-//   align-items: center;
-//   display: flex;
-//   flex-direction: row;
-// }
-
-// .accountInfo {
-//   display: flex;
-//   flex-direction: column;
-// }
-
-// .accountLabel {
-//   color: $dark-grey;
-// }
-
-// .address {
-//   color: #ccc;
-//   font-size: 12px;
-// }
-
-// .accountButtons {
-//   display: flex;
-//   flex-direction: row;
-//   width: 100%;
-//   margin-left: 25px;
-//   justify-content: flex-end;
-// }
-
-// .editAccountButton {
-//   width: 50px;
-//   margin-right: 50px;
-// }
-// .deleteAccountButton {
-//   width: 150px;
-// }
-
-// .editLabelButtonRow {
-//   display: flex;
-//   width: 100px;
-//   margin-right: 50px;
-//   flex-direction: row;
-// }
+.noWalletInfo {
+  width: 100%;
+  text-align: center;
+  margin-top: 60px;
+  font-style: italic;
+  opacity: 0.8;
+}
