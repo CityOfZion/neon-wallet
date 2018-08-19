@@ -9,7 +9,7 @@
   flex-direction: column;
 
   .dashboardNetworkSwitch {
-    position:absolute;
+    position: absolute;
     left: 90px;
     top: 15px;
   }
@@ -17,7 +17,7 @@
   .dashboardNetworkSwitchTextInput {
     background: $main-background;
     border: none;
-    width: 80px;
+    width: 100px;
   }
 
   .dashboardNetworkSwitchTextInputContainer {
@@ -26,7 +26,7 @@
   }
 
   .dashboardNetworkSwitchActive {
-    border:none;
+    border: none;
     background-color: $main-background;
   }
 
