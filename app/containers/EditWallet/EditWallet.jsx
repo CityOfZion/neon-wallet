@@ -1,8 +1,6 @@
 // @flow
-
 import React, { Component } from 'react'
 import { reject } from 'lodash'
-import fs from 'fs'
 
 import { getStorage, setStorage } from '../../core/storage'
 import { ROUTES, MODAL_TYPES } from '../../core/constants'

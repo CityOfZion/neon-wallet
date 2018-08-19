@@ -1,24 +1,18 @@
 // @flow
 
 import React, { Component } from 'react'
-import { reject } from 'lodash'
-import fs from 'fs'
 
 import { NavLink } from 'react-router-dom'
-import { getStorage, setStorage } from '../../core/storage'
-import { ROUTES, MODAL_TYPES } from '../../core/constants'
-import Wallet from './Wallet.jsx'
+import { ROUTES } from '../../core/constants'
+import Wallet from './Wallet'
 import CloseButton from '../../components/CloseButton'
 import Button from '../../components/Button'
-import { recoverWallet } from '../../modules/generateWallet'
 import FullHeightPanel from '../../components/Panel/FullHeightPanel'
 import Import from '../../assets/icons/import.svg'
 import Add from '../../assets/icons/add.svg'
 import WalletIcon from '../../assets/icons/wallet.svg'
 
 import styles from './WalletManager.scss'
-
-const { dialog } = require('electron').remote
 
 type Props = {
   accounts: Array<Object>,
@@ -30,45 +24,8 @@ type Props = {
 }
 
 class WalletManager extends Component<Props> {
-  deleteWalletAccount = (label: string, key: string) => {
-    const {
-      showSuccessNotification,
-      showErrorNotification,
-      setAccounts,
-      showModal
-    } = this.props
-
-    showModal(MODAL_TYPES.CONFIRM, {
-      title: 'Confirm Delete',
-      text: `Please confirm deleting saved wallet - ${label}`,
-      onClick: async () => {
-        const data = await getStorage('userWallet').catch(readError =>
-          showErrorNotification({
-            message: `An error occurred reading previously stored wallet: ${
-              readError.message
-            }`
-          })
-        )
-        if (data) {
-          data.accounts = reject(data.accounts, { key })
-          await setStorage('userWallet', data).catch(saveError =>
-            showErrorNotification({
-              message: `An error occurred updating the wallet: ${
-                saveError.message
-              }`
-            })
-          )
-          showSuccessNotification({
-            message: 'Account deletion was successful.'
-          })
-          setAccounts(data.accounts)
-        }
-      }
-    })
-  }
-
   render() {
-    const { accounts, saveAccount } = this.props
+    const { accounts } = this.props
     return (
       <FullHeightPanel
         renderInstructions={false}
@@ -101,15 +58,7 @@ class WalletManager extends Component<Props> {
             </div>
           </div>
           <div className={styles.walletList}>
-            {accounts.map(account => (
-              <Wallet
-                {...account}
-                handleDelete={() =>
-                  this.deleteWalletAccount(account.label, account.key)
-                }
-                handleSave={saveAccount}
-              />
-            ))}
+            {accounts.map(account => <Wallet {...account} />)}
           </div>
         </div>
       </FullHeightPanel>

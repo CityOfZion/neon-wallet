@@ -2,7 +2,7 @@
 import { createActions } from 'spunky'
 import { walletHasLabel, getWallet, setWallet } from './accountsActions'
 
-export const ID = 'wallet-label'
+export const ID = 'walletLabel'
 
 export const updateLabelActions = createActions(
   ID,
@@ -25,7 +25,11 @@ export const updateLabelActions = createActions(
     }
     accountToUpdate.label = label
     await setWallet(wallet)
-    // showSuccessNotification({ message: 'sdfsdfsdfsdfjsdofijsdfoij' })
     return wallet.accounts
   }
 )
+
+export default createActions(ID, () => async (): Promise<Object> => {
+  const wallet = await getWallet()
+  return wallet.accounts
+})

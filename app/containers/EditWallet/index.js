@@ -8,16 +8,15 @@ import accountsActions, {
   updateAccountsActions
 } from '../../actions/accountsActions'
 
-import { updateLabelActions } from '../../actions/walletLabelActions'
-// import { getNotifications } from '../../modules/notifications'
+import walletLabelActions, {
+  updateLabelActions
+} from '../../actions/walletLabelActions'
 import {
   showErrorNotification,
   showSuccessNotification
 } from '../../modules/notifications'
-import withLoadingProp from '../../hocs/withLoadingProp'
 import withSuccessNotification from '../../hocs/withSuccessNotification'
 import withFailureNotification from '../../hocs/withFailureNotification'
-import pureStrategy from '../../hocs/helpers/pureStrategy'
 import withAuthData from '../../hocs/withAuthData'
 
 import { showModal } from '../../modules/modal'
@@ -52,13 +51,9 @@ export default compose(
   ),
   withAuthData(),
   withData(accountsActions, mapAccountsDataToProps),
+  withData(walletLabelActions, mapAccountsDataToProps),
   withActions(updateAccountsActions, mapSaveAccountsActionsToProps),
   withActions(updateLabelActions, mapSaveAccountActionsToProps),
-  // withLoadingProp(updateLabelActions, { strategy: pureStrategy }),
-  // updateAccountsActions(
-  //   updateLabelActions,
-  //   'Succesfully updated wallet name.'
-  // ),
   withFailureNotification(updateLabelActions),
   withSuccessNotification(
     updateLabelActions,
