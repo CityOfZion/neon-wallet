@@ -18,6 +18,7 @@ import withLoadingProp from '../../hocs/withLoadingProp'
 import withSuccessNotification from '../../hocs/withSuccessNotification'
 import withFailureNotification from '../../hocs/withFailureNotification'
 import pureStrategy from '../../hocs/helpers/pureStrategy'
+import withAuthData from '../../hocs/withAuthData'
 
 import { showModal } from '../../modules/modal'
 
@@ -49,6 +50,7 @@ export default compose(
     null,
     mapDispatchToProps
   ),
+  withAuthData(),
   withData(accountsActions, mapAccountsDataToProps),
   withActions(updateAccountsActions, mapSaveAccountsActionsToProps),
   withActions(updateLabelActions, mapSaveAccountActionsToProps),

@@ -2,10 +2,6 @@
 import { createActions } from 'spunky'
 import { isEmpty } from 'lodash'
 
-import {
-  showErrorNotification,
-  showSuccessNotification
-} from '../modules/notifications'
 import { getStorage, setStorage } from '../core/storage'
 import { DEFAULT_WALLET } from '../core/constants'
 import { Account } from '../core/schemas'
@@ -30,7 +26,6 @@ export const ID = 'accounts'
 export const updateAccountsActions = createActions(
   ID,
   (accounts: Array<Object>) => async (): Promise<Array<Object>> => {
-    console.log('updateAccountsActions() (deleting wallet)')
     const wallet = await getWallet()
     const newWallet = { ...wallet, accounts }
     await setStorage(STORAGE_KEY, newWallet)

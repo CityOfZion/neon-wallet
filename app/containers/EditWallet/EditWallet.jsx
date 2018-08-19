@@ -24,7 +24,9 @@ type Props = {
   showErrorNotification: Object => any,
   setAccounts: (Array<Object>) => any,
   showModal: (modalType: string, modalProps: Object) => any,
-  match: Object
+  match: Object,
+  address: string,
+  history: Object
 }
 
 type State = {
@@ -37,18 +39,21 @@ class EditWallet extends Component<Props, State> {
   }
 
   render() {
-    const { saveAccount } = this.props
+    const { saveAccount, address } = this.props
     const { key } = this.props.match.params
     const { walletName } = this.state
+    const isCurrentAddress = address === key
     return (
       <FullHeightPanel
         headerText="Edit Wallet"
         renderInstructions={() => (
           <div className={styles.editWalletInstructions}>
             <div>Modify Details</div>
-            <span onClick={this.deleteWalletAccount}>
-              <Close /> Remove Wallet
-            </span>
+            {!isCurrentAddress && (
+              <span onClick={this.deleteWalletAccount}>
+                <Close /> Remove Wallet
+              </span>
+            )}
           </div>
         )}
         renderHeaderIcon={() => <EditIcon />}
@@ -94,7 +99,8 @@ class EditWallet extends Component<Props, State> {
       showSuccessNotification,
       showErrorNotification,
       setAccounts,
-      showModal
+      showModal,
+      history
     } = this.props
 
     const { label, key } = this.props.match.params
@@ -103,7 +109,6 @@ class EditWallet extends Component<Props, State> {
       title: 'Confirm Delete',
       text: `Please confirm deleting saved wallet - ${label}`,
       onClick: async () => {
-        console.log('handling delete')
         const data = await getStorage('userWallet').catch(readError =>
           showErrorNotification({
             message: `An error occurred reading previously stored wallet: ${
@@ -112,9 +117,7 @@ class EditWallet extends Component<Props, State> {
           })
         )
         if (data) {
-          console.log('found wallet data')
-          console.log('BEFORE', { accounts: data.accounts })
-          data.accounts = reject(data.accounts, { key })
+          data.accounts = reject(data.accounts, { address: key })
           await setStorage('userWallet', data).catch(saveError =>
             showErrorNotification({
               message: `An error occurred updating the wallet: ${
@@ -122,12 +125,11 @@ class EditWallet extends Component<Props, State> {
               }`
             })
           )
-          console.log('AFTER', { accounts: data.accounts })
           showSuccessNotification({
             message: 'Account deletion was successful.'
           })
-          console.log('setting accounts')
           setAccounts(data.accounts)
+          history.goBack()
         }
       }
     })
