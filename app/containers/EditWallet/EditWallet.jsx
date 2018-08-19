@@ -103,6 +103,7 @@ class EditWallet extends Component<Props, State> {
       title: 'Confirm Delete',
       text: `Please confirm deleting saved wallet - ${label}`,
       onClick: async () => {
+        console.log('handling delete')
         const data = await getStorage('userWallet').catch(readError =>
           showErrorNotification({
             message: `An error occurred reading previously stored wallet: ${
@@ -111,6 +112,8 @@ class EditWallet extends Component<Props, State> {
           })
         )
         if (data) {
+          console.log('found wallet data')
+          console.log('BEFORE', { accounts: data.accounts })
           data.accounts = reject(data.accounts, { key })
           await setStorage('userWallet', data).catch(saveError =>
             showErrorNotification({
@@ -119,9 +122,11 @@ class EditWallet extends Component<Props, State> {
               }`
             })
           )
+          console.log('AFTER', { accounts: data.accounts })
           showSuccessNotification({
             message: 'Account deletion was successful.'
           })
+          console.log('setting accounts')
           setAccounts(data.accounts)
         }
       }

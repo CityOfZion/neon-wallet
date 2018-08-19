@@ -57,17 +57,20 @@ export default class TokenBalancesPanel extends React.Component<Props> {
     b: TokenBalanceType
   ): number => {
     const { prices } = this.props
-    let aValue = 0
-    if (prices[a.symbol]) {
-      aValue = prices[a.symbol] * Number(a.balance)
-    }
-    let bValue = 0
-    if (prices[b.symbol]) {
-      bValue = prices[b.symbol] * Number(b.balance)
-    }
+    if (prices) {
+      let aValue = 0
+      if (prices[a.symbol]) {
+        aValue = prices[a.symbol] * Number(a.balance)
+      }
+      let bValue = 0
+      if (prices[b.symbol]) {
+        bValue = prices[b.symbol] * Number(b.balance)
+      }
 
-    if (aValue > bValue) return -1
-    if (aValue < bValue) return 1
+      if (aValue > bValue) return -1
+      if (aValue < bValue) return 1
+      return 0
+    }
     return 0
   }
 

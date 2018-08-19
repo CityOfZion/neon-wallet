@@ -49,8 +49,8 @@ export default compose(
   withProgressComponents(
     appActions,
     {
-      [LOADING]: Loading,
-      [FAILED]: Failed
+      [LOADING]: Loading
+      // [FAILED]: Failed
     },
     {
       strategy: alreadyLoadedStrategy

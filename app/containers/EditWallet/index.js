@@ -5,16 +5,23 @@ import { compose } from 'recompose'
 import { withData, withActions } from 'spunky'
 
 import accountsActions, {
-  updateAccountsActions,
-  updateLabelActions
+  updateAccountsActions
 } from '../../actions/accountsActions'
+
+import { updateLabelActions } from '../../actions/walletLabelActions'
+// import { getNotifications } from '../../modules/notifications'
 import {
   showErrorNotification,
   showSuccessNotification
 } from '../../modules/notifications'
+import withLoadingProp from '../../hocs/withLoadingProp'
+import withSuccessNotification from '../../hocs/withSuccessNotification'
+import withFailureNotification from '../../hocs/withFailureNotification'
+import pureStrategy from '../../hocs/helpers/pureStrategy'
+
 import { showModal } from '../../modules/modal'
 
-import EditWallet from './EditWallet.jsx'
+import EditWallet from './EditWallet'
 
 const mapAccountsDataToProps = accounts => ({
   accounts
@@ -26,9 +33,12 @@ const actionCreators = {
   showSuccessNotification
 }
 
-const mapAccountsActionsToProps = actions => ({
-  setAccounts: accounts => actions.call(accounts),
+const mapSaveAccountActionsToProps = actions => ({
   saveAccount: ({ label, address }) => actions.call({ label, address })
+})
+
+const mapSaveAccountsActionsToProps = actions => ({
+  setAccounts: accounts => actions.call(accounts)
 })
 
 const mapDispatchToProps = dispatch =>
@@ -40,6 +50,16 @@ export default compose(
     mapDispatchToProps
   ),
   withData(accountsActions, mapAccountsDataToProps),
-  withActions(updateAccountsActions, mapAccountsActionsToProps),
-  withActions(updateLabelActions, mapAccountsActionsToProps)
+  withActions(updateAccountsActions, mapSaveAccountsActionsToProps),
+  withActions(updateLabelActions, mapSaveAccountActionsToProps),
+  // withLoadingProp(updateLabelActions, { strategy: pureStrategy }),
+  // updateAccountsActions(
+  //   updateLabelActions,
+  //   'Succesfully updated wallet name.'
+  // ),
+  withFailureNotification(updateLabelActions),
+  withSuccessNotification(
+    updateLabelActions,
+    'Succesfully updated wallet name.'
+  )
 )(EditWallet)

@@ -2,6 +2,10 @@
 import { createActions } from 'spunky'
 import { isEmpty } from 'lodash'
 
+import {
+  showErrorNotification,
+  showSuccessNotification
+} from '../modules/notifications'
 import { getStorage, setStorage } from '../core/storage'
 import { DEFAULT_WALLET } from '../core/constants'
 import { Account } from '../core/schemas'
@@ -11,14 +15,14 @@ const STORAGE_KEY = 'userWallet'
 export const getWallet = async (): Promise<Object> =>
   (await getStorage(STORAGE_KEY)) || DEFAULT_WALLET
 
-const setWallet = async (wallet: Object) => {
+export const setWallet = async (wallet: Object) => {
   setStorage(STORAGE_KEY, wallet)
 }
 
-const walletHasKey = (wallet: Object, key: string) =>
+export const walletHasKey = (wallet: Object, key: string) =>
   wallet.accounts.some(account => account.key === key)
 
-const walletHasLabel = (wallet: Object, label: string) =>
+export const walletHasLabel = (wallet: Object, label: string) =>
   wallet.accounts.some(account => account.label === label)
 
 export const ID = 'accounts'
@@ -26,37 +30,12 @@ export const ID = 'accounts'
 export const updateAccountsActions = createActions(
   ID,
   (accounts: Array<Object>) => async (): Promise<Array<Object>> => {
+    console.log('updateAccountsActions() (deleting wallet)')
     const wallet = await getWallet()
     const newWallet = { ...wallet, accounts }
     await setStorage(STORAGE_KEY, newWallet)
 
     return accounts
-  }
-)
-
-export const updateLabelActions = createActions(
-  ID,
-  ({ label, address }: { label: string, address: string }) => async () => {
-    const wallet = await getWallet()
-    if (!label || !address) {
-      console.warn('updateLabelActions() invoked with invalid arguments')
-      return wallet.accounts
-    }
-    if (walletHasLabel(wallet, label)) {
-      // TODO: pop notification!
-      console.warn('A wallet with this name already exists locally')
-      return wallet.accounts
-    }
-    const accountToUpdate = wallet.accounts.find(
-      account => account.address === address
-    )
-    if (!accountToUpdate) {
-      console.warn('There is no account to update!')
-      return wallet.accounts
-    }
-    accountToUpdate.label = label
-    await setWallet(wallet)
-    return wallet.accounts
   }
 )
 
