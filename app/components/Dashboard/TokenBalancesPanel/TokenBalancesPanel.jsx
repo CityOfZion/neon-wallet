@@ -49,7 +49,7 @@ export default class TokenBalancesPanel extends React.Component<Props> {
     let currPriceOfToken
     if (prices) currPriceOfToken = prices[ticker]
     if (!currPriceOfToken) return 'N/A'
-    return `${symbol}${toFixedDecimals(currPriceOfToken, 2)}`
+    return `${symbol}${toFixedDecimals(currPriceOfToken, 4)}`
   }
 
   renderHeader = () => (
@@ -61,12 +61,12 @@ export default class TokenBalancesPanel extends React.Component<Props> {
   renderToken = (token: TokenBalanceType) => (
     <div key={token.scriptHash} className={styles.tableData}>
       <div className={styles.tickerName}>
-        {token.symbol}{' '}
         {token.image && (
           <div className={styles.tokenImageContainer}>
             <img className={styles.tokenImage} src={token.image} alt="" />
           </div>
         )}
+        {token.symbol}
       </div>
       <div className={styles.tokenName}>{token.name}</div>
       <div className={styles.price}>{this.formatPrice(token.symbol)}</div>
