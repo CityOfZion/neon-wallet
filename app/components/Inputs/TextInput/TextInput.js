@@ -10,6 +10,8 @@ import styles from './TextInput.scss'
 type Props = {
   className?: string,
   type: string,
+  textInputClassName?: string,
+  activeStyles?: string,
   placeholder: string,
   error?: string,
   id: string,
@@ -37,14 +39,16 @@ export default class TextInput extends React.Component<Props, State> {
     const passDownProps = omit(
       this.props,
       'className',
+      'textInputClassName',
+      'activeStyles',
       'renderBefore',
       'renderAfter'
     )
 
-    const { error, label } = this.props
+    const { error, label, textInputClassName, activeStyles } = this.props
 
     const className = classNames(styles.textInput, this.props.className, {
-      [styles.active]: this.state.active,
+      [activeStyles || styles.active]: this.state.active,
       [styles.error]: !!error
     })
 
@@ -55,7 +59,7 @@ export default class TextInput extends React.Component<Props, State> {
           {this.renderBefore()}
           <input
             {...passDownProps}
-            className={styles.input}
+            className={`${styles.input} ${textInputClassName || ''}`}
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
           />
