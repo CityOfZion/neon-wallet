@@ -1,0 +1,33 @@
+.tokenSaleSelectionContainer {
+    display: flex;
+    justify-content: space-between;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.tokenSaleSelectTokenContainer,
+.tokenSaleContributionSelectToken,
+.tokenSaleContributionAmount {
+    display: flex;
+    flex-direction: column;
+}
+
+.tokenSaleSelectTokenContainer,
+.tokenSaleContributionSelectToken {
+    max-width: 120px;
+}
+
+.tokenSaleContributionSelectToken {
+    margin-right: 15px;
+}
+
+.tokenSaleContributionContainer {
+    margin-left: auto;
+    display: flex;
+}
+
+.tokenSaleSelectionHeader {
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 0.8rem;
+}
