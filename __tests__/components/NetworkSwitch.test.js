@@ -1,7 +1,10 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 
 import NetworkSwitch from '../../app/containers/App/Sidebar/NetworkSwitch/NetworkSwitch'
+import TextInput from '../../app/components/Inputs/TextInput'
+import SelectInput from '../../app/components/Inputs/SelectInput'
+import DropdownButton from '../../app/components/Inputs/SelectInput/DropdownButton'
 import { MAIN_NETWORK_ID, TEST_NETWORK_ID } from '../../app/core/constants'
 
 const setup = () => {
@@ -21,7 +24,7 @@ const setup = () => {
     ],
     onChange: jest.fn()
   }
-  const wrapper = shallow(<NetworkSwitch {...props} />)
+  const wrapper = mount(<NetworkSwitch {...props} />)
 
   return {
     wrapper
@@ -36,20 +39,23 @@ describe('NetworkSwitch', () => {
 
   test('correctly renders MainNet initially', () => {
     const { wrapper } = setup()
-    const networkSelectorElement = wrapper.find('.networkSelector').getElement()
+    const networkInput = wrapper.find(TextInput).instance()
 
-    expect(networkSelectorElement.props.defaultValue).toEqual(MAIN_NETWORK_ID)
+    expect(networkInput.props.value).toEqual('MainNet')
   })
 
   test('switches to the correct network when chosen from the dropdown', () => {
     const { wrapper } = setup()
-    const instance = wrapper.instance()
-    const networkSelector = wrapper.find('.networkSelector')
+    const networkSelector = wrapper.find(SelectInput).instance()
 
-    networkSelector.simulate('change', { target: { value: TEST_NETWORK_ID } })
-    expect(instance.props.onChange).toHaveBeenCalledWith(TEST_NETWORK_ID)
+    networkSelector.setState({ open: true })
 
-    networkSelector.simulate('change', { target: { value: MAIN_NETWORK_ID } })
-    expect(instance.props.onChange).toHaveBeenCalledWith(MAIN_NETWORK_ID)
+    wrapper.update()
+    const dropDownButton = wrapper.find('.dropdownItem')
+    dropDownButton.simulate('click')
+
+    expect(wrapper.instance().props.onChange).toHaveBeenCalledWith(
+      TEST_NETWORK_ID
+    )
   })
 })

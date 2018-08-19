@@ -13,6 +13,7 @@ import styles from './SelectInput.scss'
 type Props = {
   className?: string,
   value?: string,
+  textInputContainerClassName?: string,
   placeholder?: string,
   items: Array<any>,
   error?: string,
@@ -74,10 +75,11 @@ export default class SelectInput extends React.Component<Props, State> {
       'getSearchResults',
       'onFocus',
       'onChange',
-      'customChangeEvent'
+      'customChangeEvent',
+      'textInputContainerClassName'
     )
 
-    const { error } = this.props
+    const { error, textInputContainerClassName } = this.props
 
     const className = classNames(styles.selectInput, this.props.className)
 
@@ -90,7 +92,7 @@ export default class SelectInput extends React.Component<Props, State> {
       >
         <TextInput
           {...passDownProps}
-          className={styles.input}
+          className={`${styles.input} ${textInputContainerClassName || ''}`}
           renderAfter={!error && this.renderAfter}
           onFocus={this.handleFocus}
           onChange={
