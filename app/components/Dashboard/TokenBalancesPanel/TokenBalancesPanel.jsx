@@ -37,7 +37,7 @@ export default class TokenBalancesPanel extends React.Component<Props> {
             <div className={styles.priceLabel}>Price</div>
             <div className={styles.balance}>Holdings</div>
           </div>
-          {balances.map(this.renderToken)}
+          {balances.sort(this.sortByValueInPortfolio).map(this.renderToken)}
         </div>
       </Panel>
     )
@@ -52,6 +52,25 @@ export default class TokenBalancesPanel extends React.Component<Props> {
     return `${symbol}${toFixedDecimals(currPriceOfToken, 4)}`
   }
 
+  sortByValueInPortfolio = (
+    a: TokenBalanceType,
+    b: TokenBalanceType
+  ): number => {
+    const { prices } = this.props
+    let aValue = 0
+    if (prices[a.symbol]) {
+      aValue = prices[a.symbol] * Number(a.balance)
+    }
+    let bValue = 0
+    if (prices[b.symbol]) {
+      bValue = prices[b.symbol] * Number(b.balance)
+    }
+
+    if (aValue > bValue) return -1
+    if (aValue < bValue) return 1
+    return 0
+  }
+
   renderHeader = () => (
     <div className={styles.header}>
       <span>Token Balances</span>
@@ -61,7 +80,7 @@ export default class TokenBalancesPanel extends React.Component<Props> {
   renderToken = (token: TokenBalanceType) => (
     <div key={token.scriptHash} className={styles.tableData}>
       <div className={styles.tickerName}>
-        {token.image && (
+        {!!token.image && (
           <div className={styles.tokenImageContainer}>
             <img className={styles.tokenImage} src={token.image} alt="" />
           </div>

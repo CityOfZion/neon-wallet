@@ -23,17 +23,11 @@ const mapPricesDataToProps = prices => ({ prices })
 const filterZeroBalanceTokens = balances =>
   filter(balances, token => toBigNumber(token.balance).gt(0))
 
-  // const sortedByImage = () => {
-  //   return (a,b) => {
-  //    if (a['image'] > b['image']) return 1;
-  //    if (a['image'] < b['image']) return -1;
-  //    return 0
-  //   } }
-
-const sortedByImage = (a, b) => {
+const sortedByImage = a => {
   if (a.image) {
     return -1
-  } else if (!a.image) {
+  }
+  if (!a.image) {
     return 1
   }
   return 0
