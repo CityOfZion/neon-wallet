@@ -50,12 +50,9 @@ describe('NetworkSwitch', () => {
 
     networkSelector.setState({ open: true })
 
+    wrapper.update()
     const dropDownButton = wrapper.find('.dropdownItem')
-
-    console.log(wrapper.html())
-    console.log(wrapper.debug())
-    console.log(dropDownButton)
-    // console.log(dropDownButton)
+    dropDownButton.simulate('click')
 
     expect(wrapper.instance().props.onChange).toHaveBeenCalledWith(
       TEST_NETWORK_ID
