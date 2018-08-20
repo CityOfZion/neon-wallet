@@ -33,7 +33,7 @@ export default class AddContactPanel extends React.Component<Props> {
         renderHeaderIcon={() => <AddIcon />}
         renderBackButton={() => <BackButton routeTo={ROUTES.CONTACTS} />}
         headerText="Add A Contact"
-        instructions="Insert Contact Details"
+        renderInstructions={() => <div>"Insert Contact Details"</div>}
       >
         <ContactForm
           formName={name}

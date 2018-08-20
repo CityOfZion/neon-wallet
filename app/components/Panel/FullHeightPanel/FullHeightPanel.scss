@@ -27,9 +27,11 @@
 
     .headerIcon {
       margin-right: 5px;
+      display: flex;
 
       svg {
         width: 40px;
+        min-height: 40px;
         margin: auto;
         overflow: visible;
 
@@ -48,6 +50,7 @@
     width: 500px;
     font-size: 14px;
     color: #5c677f;
+    font-family: Gotham-Book;
   }
 
   .navigation {
@@ -56,6 +59,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    min-height: 70px;
 
     > span {
       display: flex;
