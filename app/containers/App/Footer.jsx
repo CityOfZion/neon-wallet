@@ -3,7 +3,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { shell } from 'electron'
 
-import NetworkSwitch from '../../components/Settings/NetworkSwitch'
+import NetworkSwitch from './Sidebar/NetworkSwitch'
 
 import styles from './Footer.scss'
 

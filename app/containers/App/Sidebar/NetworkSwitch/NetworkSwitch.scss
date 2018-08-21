@@ -1,0 +1,26 @@
+@import '../../../../styles/variables';
+
+.networkSwitch {
+  color: #666;
+  font-size: 0.8em;
+
+  .label {
+    margin-right: 4px;
+    color: #999;
+  }
+
+  .dropdownItem {
+    padding: 10px 20px;
+    color: $black;
+    font-size: 14px;
+    cursor: pointer;
+
+    &:hover {
+      background: #e6e6e6;
+    }
+
+    .highlight {
+      font-weight: 600;
+    }
+  }
+}

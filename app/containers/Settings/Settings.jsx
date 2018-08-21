@@ -3,12 +3,12 @@ import React, { Component } from 'react'
 import fs from 'fs'
 import storage from 'electron-json-storage'
 
+import NetworkSwitch from '../App/Sidebar/NetworkSwitch'
 import { recoverWallet } from '../../modules/generateWallet'
 
 import Panel from '../../components/Panel'
 import SelectInput from '../../components/Inputs/SelectInput'
 import UnderlinedHeader from '../../components/Headers/UnderlinedHeader'
-import NetworkSwitch from '../../components/Settings/NetworkSwitch'
 import SettingsItem from '../../components/Settings/SettingsItem'
 import SettingsLink from '../../components/Settings/SettingsLink'
 import WalletRecoveryPanel from '../../components/Settings/WalletRecoveryPanel'
@@ -33,6 +33,7 @@ type Props = {
   currency: string,
   setTheme: string => any,
   theme: string,
+  accounts: any,
   showModal: Function,
   showSuccessNotification: Object => any,
   showErrorNotification: Object => any
@@ -166,7 +167,7 @@ export default class Settings extends Component<Props, State> {
             return
           }
 
-          data.accounts = reject(data.accounts, { key })
+          var accountsData = reject(data.accounts, { key })
 
           storage.set('userWallet', data, saveError => {
             if (saveError) {
@@ -179,7 +180,7 @@ export default class Settings extends Component<Props, State> {
               showSuccessNotification({
                 message: 'Account deletion was successful.'
               })
-              setAccounts(data.accounts)
+              setAccounts(accountsData)
             }
           })
         })

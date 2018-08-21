@@ -1,44 +1,32 @@
 // @flow
-import {
-  pick,
-  keys,
-  uniqBy
-} from 'lodash'
-import {
-  createActions
-} from 'spunky'
+import { pick, keys, uniqBy } from 'lodash'
+import { createActions } from 'spunky'
 
-import {
-  getStorage,
-  setStorage
-} from '../core/storage'
-import {
-  getDefaultTokens
-} from '../core/nep5'
+import { getStorage, setStorage } from '../core/storage'
+import { getDefaultTokens } from '../core/nep5'
 import {
   EXPLORERS,
   DEFAULT_CURRENCY_CODE,
   DEFAULT_THEME
 } from '../core/constants'
-import themes from '../themes';
 
 type Settings = {
-  currency ? : string,
-  blockExplorer ? : string,
-  tokens ? : Array < TokenItemType >
+  currency?: string,
+  blockExplorer?: string,
+  tokens?: Array<TokenItemType>
 }
 
 const STORAGE_KEY = 'settings'
 
-const DEFAULT_SETTINGS: Settings = {
+const DEFAULT_SETTINGS: () => Promise<Settings> = async () => ({
   currency: DEFAULT_CURRENCY_CODE,
   blockExplorer: EXPLORERS.NEO_TRACKER,
-  theme: DEFAULT_THEME,
-  tokens: getDefaultTokens()
-}
+  tokens: await getDefaultTokens(),
+  theme: DEFAULT_THEME
+})
 
-const getSettings = async (): Promise < Settings > => {
-  const defaults = DEFAULT_SETTINGS
+const getSettings = async (): Promise<Settings> => {
+  const defaults = await DEFAULT_SETTINGS()
   const settings = (await getStorage(STORAGE_KEY)) || {}
 
   const tokens = uniqBy(
@@ -46,7 +34,8 @@ const getSettings = async (): Promise < Settings > => {
     token => [token.networkId, token.scriptHash].join('-')
   )
 
-  return { ...defaults,
+  return {
+    ...defaults,
     ...settings,
     tokens
   }
@@ -56,9 +45,10 @@ export const ID = 'settings'
 
 export const updateSettingsActions = createActions(
   ID,
-  (values: Settings = {}) => async (): Promise < Settings > => {
+  (values: Settings = {}) => async (): Promise<Settings> => {
     const settings = await getSettings()
-    const newSettings = { ...settings,
+    const newSettings = {
+      ...settings,
       ...values
     }
     await setStorage(STORAGE_KEY, newSettings)
@@ -67,7 +57,8 @@ export const updateSettingsActions = createActions(
   }
 )
 
-export default createActions(ID, () => async (): Promise < Settings > => {
+export default createActions(ID, () => async (): Promise<Settings> => {
   const settings = await getSettings()
-  return pick(settings, keys(DEFAULT_SETTINGS))
+  const picked = await pick(settings, keys(await DEFAULT_SETTINGS()))
+  return picked
 })

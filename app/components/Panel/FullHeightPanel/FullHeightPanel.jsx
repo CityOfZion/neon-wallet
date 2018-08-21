@@ -8,13 +8,13 @@ import styles from './FullHeightPanel.scss'
 
 type Props = {
   children: React$Node,
-  renderBackButton?: Function,
+  renderBackButton?: () => React$Node,
+  renderCloseButton?: () => React$Node,
+  renderInstructions: () => React$Node,
+  renderHeaderIcon: () => React$Node,
   shouldRenderHeader: Boolean,
   headerText: string,
-  instructions: string,
-  renderHeaderIcon: Function,
   iconColor: string,
-  renderCloseButton: Function,
   className: string,
   headerContainerClassName: string
 }
@@ -22,68 +22,82 @@ type Props = {
 export default class ViewLayout extends Component<Props> {
   static defaultProps = {
     shouldRenderHeader: true,
-    instructions: 'Enter Details',
+    renderInstructions: () => <div> Enter Details </div>,
     iconColor: '#5ABF6B'
   }
 
   render() {
-    const {
-      children,
-      renderBackButton,
-      headerText,
-      shouldRenderHeader,
-      instructions,
-      iconColor,
-      renderCloseButton,
-      className,
-      headerContainerClassName
-    } = this.props
+    const { children, className } = this.props
 
     return (
       <div className={classNames(styles.layoutContainer, className)}>
         <div className={styles.contentContainer}>
           <div className={styles.navigation}>
-            <span>
-              {renderBackButton && (
-                <div className={styles.backButton}> {renderBackButton()} </div>
-              )}
-            </span>
+            <span>{this.renderBackButton()}</span>
             <span>
               <img src={greyLogo} alt="logo" />
             </span>
-            <span>
-              {renderCloseButton && (
-                <div className={styles.closeButton}>{renderCloseButton()}</div>
-              )}
-            </span>
+            <span>{this.renderCloseButton()}</span>
           </div>
-          {shouldRenderHeader && (
-            <div
-              className={classNames(styles.header, headerContainerClassName)}
-            >
-              <div
-                style={{ '--view-layout-header-icon-color': iconColor }}
-                className={styles.headerIcon}
-              >
-                {this.renderHeaderIcon()}
-              </div>
-              {headerText}
-            </div>
-          )}
-          {instructions && (
-            <div className={styles.instructions}> {instructions} </div>
-          )}
+          {this.renderHeader()}
+          {this.renderInstructions()}
           <div className={styles.childrenContainer}>{children}</div>
         </div>
       </div>
     )
   }
 
+  renderCloseButton = () => {
+    const { renderCloseButton } = this.props
+    return (
+      renderCloseButton && (
+        <div className={styles.closeButton}>{renderCloseButton()}</div>
+      )
+    )
+  }
+
+  renderBackButton = () => {
+    const { renderBackButton } = this.props
+    return (
+      renderBackButton && (
+        <div className={styles.backButton}> {renderBackButton()} </div>
+      )
+    )
+  }
+
+  renderHeader = () => {
+    const {
+      shouldRenderHeader,
+      headerContainerClassName,
+      iconColor,
+      headerText
+    } = this.props
+    return (
+      shouldRenderHeader && (
+        <div className={classNames(styles.header, headerContainerClassName)}>
+          <div
+            style={{ '--view-layout-header-icon-color': iconColor }}
+            className={styles.headerIcon}
+          >
+            {this.renderHeaderIcon()}
+          </div>
+          {headerText}
+        </div>
+      )
+    )
+  }
+
+  renderInstructions = () => {
+    const { renderInstructions } = this.props
+    return (
+      renderInstructions && (
+        <div className={styles.instructions}> {renderInstructions()} </div>
+      )
+    )
+  }
+
   renderHeaderIcon = () => {
     const { renderHeaderIcon } = this.props
-    if (renderHeaderIcon) {
-      return renderHeaderIcon()
-    }
-    return null
+    return renderHeaderIcon && renderHeaderIcon()
   }
 }

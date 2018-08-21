@@ -8,7 +8,7 @@ exports[`SelectInput should render without crashing 1`] = `
   renderDropdown={[Function]}
 >
   <TextInput
-    className="input"
+    className="input "
     onChange={[Function]}
     onFocus={[Function]}
     renderAfter={[Function]}
