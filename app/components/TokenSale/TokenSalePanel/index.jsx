@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 // @flow
+=======
+>>>>>>> f2528034fb8bfe44b0b9dbc5fd4d95831f1065ad
 import React from 'react'
 
 import Panel from '../../Panel'
