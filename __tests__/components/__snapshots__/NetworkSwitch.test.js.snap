@@ -1,32 +1,115 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`NetworkSwitch renders without crashing 1`] = `
-<div
-  className="networkSwitch"
-  id="network"
+<NetworkSwitch
+  networkId="1"
+  networks={
+    Array [
+      Object {
+        "id": "1",
+        "label": "MainNet",
+        "network": "MainNet",
+      },
+      Object {
+        "id": "2",
+        "label": "TestNet",
+        "network": "TestNet",
+      },
+    ]
+  }
+  onChange={[MockFunction]}
 >
-  <span
-    className="label"
+  <div
+    className="networkSwitch"
+    id="network"
   >
-    Running on
-  </span>
-  <select
-    className="networkSelector"
-    defaultValue="1"
-    onChange={[Function]}
-  >
-    <option
-      key="networkOption1"
-      value="1"
+    <SelectInput
+      customChangeEvent={true}
+      getItemValue={[Function]}
+      getSearchResults={[Function]}
+      items={
+        Array [
+          Object {
+            "id": "2",
+            "label": "TestNet",
+            "network": "TestNet",
+          },
+        ]
+      }
+      onChange={[Function]}
+      onFocus={[Function]}
+      readOnly={true}
+      renderAfter={[Function]}
+      renderItem={[Function]}
+      value="MainNet"
     >
-      MainNet
-    </option>
-    <option
-      key="networkOption2"
-      value="2"
-    >
-      TestNet
-    </option>
-  </select>
-</div>
+      <clickOutside(Dropdown)
+        className="selectInput"
+        onClose={[Function]}
+        open={false}
+        renderDropdown={[Function]}
+      >
+        <Dropdown
+          className="selectInput"
+          onClose={[Function]}
+          open={false}
+          renderDropdown={[Function]}
+        >
+          <div
+            className="dropdown selectInput"
+          >
+            <div
+              className="anchor"
+            >
+              <TextInput
+                className="input "
+                onChange={[Function]}
+                onFocus={[Function]}
+                readOnly={true}
+                renderAfter={[Function]}
+                type="text"
+                value="MainNet"
+              >
+                <div
+                  className="textInputContainer"
+                >
+                  <div
+                    className="textInput input "
+                  >
+                    <input
+                      className="input "
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onFocus={[Function]}
+                      readOnly={true}
+                      type="text"
+                      value="MainNet"
+                    />
+                    <div
+                      className="afterInput"
+                    >
+                      <DropdownButton
+                        onToggle={[Function]}
+                      >
+                        <Component
+                          className="dropdownButton"
+                          onClick={[Function]}
+                        >
+                          <svg
+                            className="dropdownButton"
+                            onClick={[Function]}
+                          />
+                        </Component>
+                      </DropdownButton>
+                    </div>
+                  </div>
+                </div>
+              </TextInput>
+            </div>
+          </div>
+        </Dropdown>
+      </clickOutside(Dropdown)>
+    </SelectInput>
+  </div>
+</NetworkSwitch>
 `;

@@ -19,8 +19,8 @@
   width: 60%;
 }
 
-.negativeHeaderIconMargin {
-  margin-top: 0px !important;
+.headerIconMargin {
+  margin-top: 20px !important;
 }
 
 .newWalletContainer {
@@ -68,6 +68,7 @@
 
 .clipboardCopy {
   margin-left: -35px;
+  margin-top: 5px;
   height: 100%;
   z-index: 1;
   margin-right: 0px;
@@ -95,6 +96,10 @@
 
 .displayWalletAccountsDialogue {
   margin: 20px 0 -20px;
+
+  .saveDetails {
+    font-weight: 300;
+  }
   svg {
     path {
       fill: #ff967e;

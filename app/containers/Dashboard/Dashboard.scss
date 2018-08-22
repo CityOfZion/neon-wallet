@@ -8,6 +8,28 @@
   height: 100%;
   flex-direction: column;
 
+  .dashboardNetworkSwitch {
+    position: absolute;
+    left: 90px;
+    top: 15px;
+  }
+
+  .dashboardNetworkSwitchTextInput {
+    background: $main-background;
+    border: none;
+    width: 100px;
+  }
+
+  .dashboardNetworkSwitchTextInputContainer {
+    background-color: $main-background;
+    border: none;
+  }
+
+  .dashboardNetworkSwitchActive {
+    border: none;
+    background-color: $main-background;
+  }
+
   .dataColumn {
     flex: 2;
     display: flex;
@@ -19,16 +41,21 @@
     .assetsPanel {
       // flex: 0 0 auto;
       height: 100%;
+      max-height: 500px;
+      min-height: 442.97px;
+      margin-top: auto;
     }
 
     .tokensPanel {
-      height: 450px;
+      height: 100%;
+      margin-bottom: 24px;
       margin-bottom: 24px;
     }
   }
 
   .panelContainer {
     display: flex;
+    max-width: 99%;
     height: 100%;
   }
 
