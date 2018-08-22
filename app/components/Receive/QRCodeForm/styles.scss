@@ -1,0 +1,45 @@
+.receivePanel {
+  flex: 1;
+
+  .qrcode {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 4px;
+    margin: -20px -24px 24px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .address {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    padding: 0 24px;
+    margin: 0 60px 24px;
+    background: #f2f2f2;
+    border-radius: 4px;
+    font-size: 14px;
+
+    .link {
+      flex: 0 0 auto;
+      color: #282828;
+    }
+
+    .copy {
+      flex: 0 0 auto;
+    }
+  }
+
+  .amountContainer {
+    margin: 0 60px;
+
+    .asset {
+      position: fixed;
+    }
+
+    .amount {
+      margin-left: 148px;
+    }
+  }
+}

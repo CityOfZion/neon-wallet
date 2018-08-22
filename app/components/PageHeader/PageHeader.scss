@@ -1,0 +1,33 @@
+@import '../../styles/variables';
+@import '../../styles/animations';
+
+.pageHeader {
+  display: flex;
+  padding: 8px 0;
+  border-bottom: 1px solid darken($light-grey, 15%);
+  justify-content: space-between;
+  align-items: center;
+  margin-top: -24px;
+}
+
+.pageHeading {
+  font-size: 1rem;
+}
+
+.headerButtonContainer {
+  display: flex !important;
+  cursor: pointer;
+  align-items: center;
+
+  .refresh {
+    cursor: pointer;
+  }
+
+  .loading {
+    animation: spin 2s linear infinite;
+  }
+
+  span {
+    margin-right: 10px;
+  }
+}

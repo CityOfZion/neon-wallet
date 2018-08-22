@@ -2,21 +2,22 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 
-import Tooltip from '../../Tooltip'
-import RefreshIcon from '../../../assets/icons/refresh.svg'
-import styles from './SendPageHeader.scss'
+import Tooltip from '../Tooltip'
+import RefreshIcon from '../../assets/icons/refresh.svg'
+import styles from './PageHeader.scss'
 
 type Props = {
   loadWalletData: Function,
-  loading: boolean
+  loading: boolean,
+  title: string,
 }
 
-export default class SendPageHeader extends Component<Props> {
+export default class PageHeader extends Component<Props> {
   render() {
-    const { loading, loadWalletData } = this.props
+    const { loading, loadWalletData, title } = this.props
     return (
-      <section className={styles.sendPageHeader}>
-        <h1 className={styles.sendPageHeading}>Send Assets</h1>
+      <section className={styles.pageHeader}>
+        <h1 className={styles.pageHeading}>{title}</h1>
         <Tooltip title="Refresh" className={styles.headerButtonContainer}>
           <span onClick={loading ? null : loadWalletData}> Refresh </span>
           <RefreshIcon

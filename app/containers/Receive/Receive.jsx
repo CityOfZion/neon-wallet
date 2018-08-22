@@ -1,26 +1,55 @@
 // @flow
 import React from 'react'
 
+import PageHeader from '../../components/PageHeader'
+import AmountsPanel from '../../components/AmountsPanel'
 import ReceivePanel from '../../components/Receive/ReceivePanel'
-import WarningPanel from '../../components/Receive/WarningPanel'
 
 import styles from './Receive.scss'
 
 type Props = {
-  address: string
+  sendableAssets: Object,
+  currencyCode: string,
+  address: string,
+  loading: boolean,
+  loadWalletData: Function
 }
 
-export default class Dashboard extends React.Component<Props> {
-  walletDataInterval: ?number
+type State = {
+
+}
+
+export default class Receive extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props)
+    this.state = {}
+  }
 
   render() {
-    const { address } = this.props
+    const {
+      sendableAssets,
+      currencyCode,
+      loading,
+      loadWalletData,
+      address
+    } = this.props
+    const noSendableAssets = Object.keys(sendableAssets).length === 0
 
     return (
-      <div className={styles.receive}>
+      <section className={styles.sendContainer}>
+        <PageHeader
+          title='Receive Assets'
+          loading={loading}
+          loadWalletData={loadWalletData}
+        />
+        {!noSendableAssets && (
+          <AmountsPanel
+            amountsData={this.createSendAmountsData()}
+            currencyCode={currencyCode}
+          />
+        )}
         <ReceivePanel className={styles.panel} address={address} />
-        <WarningPanel className={styles.panel} />
-      </div>
+      </section>
     )
   }
 }

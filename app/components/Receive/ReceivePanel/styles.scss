@@ -1,0 +1,80 @@
+@import '../../../styles/variables';
+
+.receivePanel {
+  display: flex;
+}
+
+.receivePanelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .sendPanelHeaderInfo {
+    display: flex;
+  }
+
+  .sendPanelHeaderInfo,
+  .sendPanelRecipients {
+    color: $dark-grey;
+  }
+
+  .sendPanelRecipients {
+    margin-left: 15px;
+  }
+
+  .sendPanelHeaderButtons {
+    display: flex;
+  }
+
+  .sendPanelHeaderButton {
+    border: none;
+    background: transparent;
+    padding: 8px;
+    display: flex;
+    margin-right: 10px;
+    align-items: center;
+    font-size: 1rem;
+    align-items: center;
+    cursor: pointer;
+    .sendPanelHeaderButtonIcon {
+      color: $dark-grey;
+      margin-right: 10px;
+    }
+    svg {
+      width: 24px;
+    }
+    &:last-child {
+      padding-right: 0;
+      margin-right: 0;
+    }
+  }
+
+  .confirmButtonsContainer {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.sendFormButton {
+  width: 200px;
+  margin: 10px auto 50px auto;
+  min-height: 49px;
+}
+
+.confirmButtonsContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.confirmSendButtons {
+  margin: 0 15px;
+  width: 200px;
+}
+
+.sendSuccessContent {
+  padding: 0;
+}
+
+.sendSuccessPanel {
+  margin-top: 25px;
+}

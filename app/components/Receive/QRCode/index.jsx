@@ -23,7 +23,7 @@ type State = {
   amount: ?number
 }
 
-export default class ReceivePanel extends React.Component<Props, State> {
+export default class QRCodeForm extends React.Component<Props, State> {
   image: ?HTMLImageElement
 
   state = {

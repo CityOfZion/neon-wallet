@@ -11,8 +11,8 @@ import {
 
 import { isBlacklisted } from '../../core/wallet'
 
-import SendPageHeader from '../../components/Send/SendPageHeader'
-import SendAmountsPanel from '../../components/Send/SendAmountsPanel'
+import PageHeader from '../../components/PageHeader'
+import AmountsPanel from '../../components/AmountsPanel'
 import SendPanel from '../../components/Send/SendPanel'
 import styles from './Send.scss'
 
@@ -356,10 +356,14 @@ export default class Send extends React.Component<Props, State> {
 
     return (
       <section className={styles.sendContainer}>
-        <SendPageHeader loading={loading} loadWalletData={loadWalletData} />
+        <PageHeader
+          title='Send Assets'
+          loading={loading}
+          loadWalletData={loadWalletData}
+        />
         {!noSendableAssets && (
-          <SendAmountsPanel
-            sendAmountsData={this.createSendAmountsData()}
+          <AmountsPanel
+            amountsData={this.createSendAmountsData()}
             currencyCode={currencyCode}
           />
         )}
