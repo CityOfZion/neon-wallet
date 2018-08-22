@@ -12,12 +12,7 @@ import UnderlinedHeader from '../../components/Headers/UnderlinedHeader'
 import SettingsItem from '../../components/Settings/SettingsItem'
 import SettingsLink from '../../components/Settings/SettingsLink'
 import WalletRecoveryPanel from '../../components/Settings/WalletRecoveryPanel'
-import {
-  EXPLORERS,
-  MODAL_TYPES,
-  CURRENCIES,
-  ROUTES
-} from '../../core/constants'
+import { EXPLORERS, CURRENCIES, ROUTES } from '../../core/constants'
 import themes from '../../themes'
 import styles from './Settings.scss'
 import Tooltip from '../../components/Tooltip'
@@ -143,53 +138,6 @@ export default class Settings extends Component<Props, State> {
   updateThemeSettings = (e: Object) => {
     const { setTheme } = this.props
     setTheme(e)
-  }
-
-  deleteWalletAccount = (label: string, key: string) => {
-    const {
-      showSuccessNotification,
-      showErrorNotification,
-      setAccounts,
-      showModal
-    } = this.props
-
-    showModal(MODAL_TYPES.CONFIRM, {
-      title: 'Confirm Delete',
-      text: `Please confirm deleting saved wallet - ${label}`,
-      onClick: () => {
-        storage.get('userWallet', (readError, data) => {
-          if (readError) {
-            showErrorNotification({
-              message: `An error occurred reading previously stored wallet: ${
-                readError.message
-              }`
-            })
-            return
-          }
-
-          var accountsData = reject(data.accounts, { key })
-
-          storage.set('userWallet', data, saveError => {
-            if (saveError) {
-              showErrorNotification({
-                message: `An error occurred updating the wallet: ${
-                  saveError.message
-                }`
-              })
-            } else {
-              showSuccessNotification({
-                message: 'Account deletion was successful.'
-              })
-              setAccounts(accountsData)
-            }
-          })
-        })
-      }
-    })
-  }
-
-  openTokenModal = () => {
-    this.props.showModal(MODAL_TYPES.TOKEN)
   }
 
   render() {
