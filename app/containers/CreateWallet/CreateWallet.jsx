@@ -6,6 +6,7 @@ import { ROUTES } from '../../core/constants'
 import PasswordInput from '../../components/Inputs/PasswordInput'
 import TextInput from '../../components/Inputs/TextInput'
 import CloseButton from '../../components/CloseButton'
+import BackButton from '../../components/BackButton'
 import Button from '../../components/Button'
 import ImportIcon from '../../assets/icons/import.svg'
 import CheckIcon from '../../assets/icons/check.svg'
@@ -18,7 +19,8 @@ type Option = 'CREATE' | 'IMPORT'
 type Props = {
   generateNewWalletAccount: Function,
   history: Object,
-  option: Option
+  option: Option,
+  authenticated: boolean
 }
 
 type State = {
@@ -40,19 +42,33 @@ export default class CreateWallet extends React.Component<Props, State> {
     e.preventDefault()
     const { history, option } = this.props
     const { passphrase, passphrase2, wif, walletName } = this.state
-    const { generateNewWalletAccount } = this.props
+    const { generateNewWalletAccount, authenticated } = this.props
     generateNewWalletAccount(
       passphrase,
       passphrase2,
       option === 'IMPORT' ? wif : null,
       history,
-      walletName
+      walletName,
+      authenticated
     )
   }
 
   render = () => {
     const { passphrase, passphrase2, wif, walletName } = this.state
-    const { option } = this.props
+    const { option, authenticated } = this.props
+    const conditionalPanelProps = {}
+    if (authenticated) {
+      conditionalPanelProps.renderBackButton = () => (
+        <BackButton routeTo={ROUTES.WALLET_MANAGER} />
+      )
+      conditionalPanelProps.renderCloseButton = () => (
+        <CloseButton routeTo={ROUTES.DASHBOARD} />
+      )
+    } else {
+      conditionalPanelProps.renderCloseButton = () => (
+        <CloseButton routeTo={ROUTES.HOME} />
+      )
+    }
 
     return (
       <FullHeightPanel
@@ -68,7 +84,7 @@ export default class CreateWallet extends React.Component<Props, State> {
             </div>
           )
         }
-        renderCloseButton={() => <CloseButton routeTo={ROUTES.HOME} />}
+        {...conditionalPanelProps}
       >
         <div className={styles.inputContainer}>
           <div id="createWallet" className={styles.flexContainer}>

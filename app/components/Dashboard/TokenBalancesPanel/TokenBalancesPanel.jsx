@@ -49,7 +49,10 @@ export default class TokenBalancesPanel extends React.Component<Props> {
     let currPriceOfToken
     if (prices) currPriceOfToken = prices[ticker]
     if (!currPriceOfToken) return 'N/A'
-    return `${symbol}${toFixedDecimals(currPriceOfToken, 4)}`
+    if (currPriceOfToken < 1.0) {
+      return `${symbol}${toFixedDecimals(currPriceOfToken, 4)}`
+    }
+    return `${symbol}${toFixedDecimals(currPriceOfToken, 2)}`
   }
 
   sortByValueInPortfolio = (
@@ -57,17 +60,20 @@ export default class TokenBalancesPanel extends React.Component<Props> {
     b: TokenBalanceType
   ): number => {
     const { prices } = this.props
-    let aValue = 0
-    if (prices[a.symbol]) {
-      aValue = prices[a.symbol] * Number(a.balance)
-    }
-    let bValue = 0
-    if (prices[b.symbol]) {
-      bValue = prices[b.symbol] * Number(b.balance)
-    }
+    if (prices) {
+      let aValue = 0
+      if (prices[a.symbol]) {
+        aValue = prices[a.symbol] * Number(a.balance)
+      }
+      let bValue = 0
+      if (prices[b.symbol]) {
+        bValue = prices[b.symbol] * Number(b.balance)
+      }
 
-    if (aValue > bValue) return -1
-    if (aValue < bValue) return 1
+      if (aValue > bValue) return -1
+      if (aValue < bValue) return 1
+      return 0
+    }
     return 0
   }
 
@@ -77,8 +83,13 @@ export default class TokenBalancesPanel extends React.Component<Props> {
     </div>
   )
 
-  renderToken = (token: TokenBalanceType) => (
-    <div key={token.scriptHash} className={styles.tableData}>
+  renderToken = (token: TokenBalanceType, i: number) => (
+    <div
+      key={token.scriptHash}
+      className={classNames(styles.tableData, {
+        [styles.oddNumberedRow]: i % 2 === 0
+      })}
+    >
       <div className={styles.tickerName}>
         {!!token.image && (
           <div className={styles.tokenImageContainer}>

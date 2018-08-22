@@ -23,13 +23,17 @@ export const ROUTES = {
   ADD_CONTACT: '/contacts/new',
   EDIT_CONTACT: '/contacts/edit/:name',
   CREATE_WALLET: '/create',
+  CREATE_WALLET_AUTHENTICATED: '/create-authenticated',
   IMPORT_WALLET: '/import',
+  IMPORT_WALLET_AUTHENTICATED: '/import-authenticated',
   ENCRYPT_KEY: '/encrypt-key',
   TOKEN_SALE: '/token-sale',
   TRANSACTION_HISTORY: '/transactions',
   SETTINGS: '/settings',
   DISPLAY_WALLET_KEYS: '/display-wallet-keys',
+  DISPLAY_WALLET_KEYS_AUTHENTICATED: '/display-wallet-keys-authenticated',
   WALLET_MANAGER: '/wallet-manager',
+  EDIT_WALLET: '/edit-wallet/:key/:label',
   SEND: '/send'
 }
 
