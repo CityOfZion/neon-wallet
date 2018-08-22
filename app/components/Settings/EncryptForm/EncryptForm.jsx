@@ -13,12 +13,10 @@ type Props = {
   formPrivateKey: string,
   formPassphrase: string,
   formConfirmPassphrase: string,
-  onSubmit: Function,
-  address: string
+  onSubmit: Function
 }
 
 type State = {
-  // TODO add in errors
   privateKeyError: string,
   passphraseError: string,
   confirmPassphraseError: string
@@ -96,14 +94,67 @@ export default class EncryptForm extends React.Component<Props, State> {
     )
   }
 
-  handleChangePrivateKey = (event: Object) => {
-    // this.clearErrors(event.target.name)
-    // this.props.setName(event.target.value)
+  validatePrivateKey = (privateKey: string) => {
+    // TODO validate private key
+    // const error = 'The private key is invalid.'
+    // this.setState({ privateKeyError: error })
+    return true
   }
 
-  handleChangePassphrase = (event: Object) => {}
+  validatePassphrase = (passphrase: string, confirmPassphrase: string) => {
+    if (passphrase !== confirmPassphrase) {
+      this.setState({ passphraseError: 'Passphrases do not match' })
+    }
+    return true
+    // TODO check length
+  }
 
-  handleChangeConfirmPassphrase = (event: Object) => {}
+  validate = (
+    privateKey: string,
+    passphrase: string,
+    confirmPassphrase: string
+  ) => {
+    const validPrivateKey = this.validatePrivateKey(privateKey)
+    const validatePassphrase = this.validatePassphrase(
+      passphrase,
+      confirmPassphrase
+    )
 
-  handleSubmit = (event: Object) => {}
+    return validPrivateKey && validatePassphrase
+  }
+
+  clearErrors = (name: string) => {
+    if (name === 'passphrase' || name === 'confirmPassphrase') {
+      this.setState({ passphraseError: '' })
+      this.setState({ confirmPassphraseError: '' })
+    } else if (name === 'privateKey') {
+      this.setState({ privateKeyError: '' })
+    }
+  }
+
+  handleChangePrivateKey = (event: Object) => {
+    this.setState({ privateKey: event.target.value })
+    this.clearErrors(event.target.name)
+  }
+
+  handleChangePassphrase = (event: Object) => {
+    this.setState({ passphrase: event.target.value })
+    this.clearErrors(event.target.name)
+  }
+
+  handleChangeConfirmPassphrase = (event: Object) => {
+    this.setState({ confirmPassphrase: event.target.value })
+    this.clearErrors(event.target.name)
+  }
+
+  handleSubmit = (event: Object) => {
+    event.preventDefault()
+    const { onSubmit } = this.props
+    const { privateKey, passphrase, confirmPassphrase } = this.state
+
+    const validInput = this.validate(privateKey, passphrase, confirmPassphrase)
+    if (validInput) {
+      onSubmit(privateKey, passphrase, confirmPassphrase)
+    }
+  }
 }

@@ -12,7 +12,7 @@ import styles from './EncryptPanel.scss'
 
 export default class EncryptPanel extends React.Component<Props> {
   static defaultProps = {
-    onSave: noop
+    handleSubmit: noop
   }
 
   render() {
@@ -32,7 +32,7 @@ export default class EncryptPanel extends React.Component<Props> {
       >
         <EncryptForm
           submitLabel="Generate Encrypted Key"
-          onSubmit={this.handleSubmit}
+          onSubmit={this.onSubmit}
         />
       </FullHeightPanel>
     )
@@ -46,4 +46,14 @@ export default class EncryptPanel extends React.Component<Props> {
       <ImportIcon />
     </div>
   )
+
+  onSubmit = (
+    privateKey: string,
+    passphrase: string,
+    confirmPassphrase: string
+  ) => {
+    const { handleSubmit } = this.props
+    // TODO handle response
+    handleSubmit(privateKey, passphrase, confirmPassphrase)
+  }
 }
