@@ -35,8 +35,9 @@ export default class EditContactPanel extends React.Component<Props> {
         renderHeader={this.renderHeader}
       >
         <ContactForm
-          name={name}
-          address={address}
+          formName={name}
+          mode="edit"
+          formAddress={address}
           onSubmit={this.handleSubmit}
         />
       </Panel>

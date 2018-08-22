@@ -3,15 +3,23 @@ import React from 'react'
 import classNames from 'classnames'
 import { omit } from 'lodash'
 
+import ErrorIcon from '../../../assets/icons/errorRed.svg'
+
 import styles from './TextInput.scss'
 
 type Props = {
   className?: string,
   type: string,
+  textInputClassName?: string,
+  activeStyles?: string,
+  placeholder: string,
+  error?: string,
+  id: string,
   renderBefore?: Function,
   renderAfter?: Function,
   onFocus?: Function,
-  onBlur?: Function
+  onBlur?: Function,
+  label: string
 }
 
 type State = {
@@ -31,24 +39,34 @@ export default class TextInput extends React.Component<Props, State> {
     const passDownProps = omit(
       this.props,
       'className',
+      'textInputClassName',
+      'activeStyles',
       'renderBefore',
       'renderAfter'
     )
 
+    const { error, label, textInputClassName, activeStyles } = this.props
+
     const className = classNames(styles.textInput, this.props.className, {
-      [styles.active]: this.state.active
+      [activeStyles || styles.active]: this.state.active,
+      [styles.error]: !!error
     })
 
     return (
-      <div className={className}>
-        {this.renderBefore()}
-        <input
-          {...passDownProps}
-          className={styles.input}
-          onFocus={this.handleFocus}
-          onBlur={this.handleBlur}
-        />
-        {this.renderAfter()}
+      <div className={styles.textInputContainer}>
+        {label && <label className={styles.label}> {label} </label>}
+        <div className={className}>
+          {this.renderBefore()}
+          <input
+            {...passDownProps}
+            className={`${styles.input} ${textInputClassName || ''}`}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
+          />
+          {error && <ErrorIcon className={styles.errorIcon} />}
+          {error && <div className={styles.errorMessage}>{error}</div>}
+          {this.renderAfter()}
+        </div>
       </div>
     )
   }

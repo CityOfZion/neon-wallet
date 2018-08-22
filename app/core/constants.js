@@ -1,4 +1,6 @@
 // @flow
+import tokenList from './tokenList.json'
+
 export const NEON_WALLET_RELEASE_LINK =
   'https://github.com/CityOfZion/neon-wallet/releases'
 
@@ -21,13 +23,18 @@ export const ROUTES = {
   ADD_CONTACT: '/contacts/new',
   EDIT_CONTACT: '/contacts/edit/:name',
   CREATE_WALLET: '/create',
+  CREATE_WALLET_AUTHENTICATED: '/create-authenticated',
   IMPORT_WALLET: '/import',
+  IMPORT_WALLET_AUTHENTICATED: '/import-authenticated',
   ENCRYPT_KEY: '/encrypt-key',
   TOKEN_SALE: '/token-sale',
   TRANSACTION_HISTORY: '/transactions',
   SETTINGS: '/settings',
   DISPLAY_WALLET_KEYS: '/display-wallet-keys',
-  WALLET_MANAGER: '/wallet-manager'
+  DISPLAY_WALLET_KEYS_AUTHENTICATED: '/display-wallet-keys-authenticated',
+  WALLET_MANAGER: '/wallet-manager',
+  EDIT_WALLET: '/edit-wallet/:key/:label',
+  SEND: '/send'
 }
 
 export const NOTIFICATION_LEVELS = {
@@ -54,7 +61,8 @@ export const MODAL_TYPES = {
   CONFIRM: 'CONFIRM',
   TOKEN_INFO: 'TOKEN_INFO',
   TOKEN: 'TOKEN',
-  ICO: 'ICO'
+  ICO: 'ICO',
+  ADD_CONTACT: 'ADD_CONTACT'
 }
 
 export const MAIN_NETWORK_ID = '1'
@@ -68,24 +76,7 @@ export const TOKENS_TEST = {
 }
 
 // MainNet
-export const TOKENS = {
-  DBC: 'b951ecbbc5fe37a9c280a76cb0ce0014827294cf',
-  RPX: 'ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9',
-  RHT: '2328008e6f6c7bd157a342e789389eb034d9cbc4',
-  QLC: '0d821bd7b6d53f5c2b40e217c6defc8bbe896cf5',
-  NRVE: 'a721d5893480260bd28ca1f395f2c465d0b5b1c2',
-  IAM: '891daf0e1750a1031ebe23030828ad7781d874d6',
-  ONT: 'ceab719b8baa2310f232ee0d277c061704541cfb',
-  THOR: '67a5086bac196b67d5fd20745b0dc9db4d2930ed',
-  CGE: '34579e4614ac1a7bd295372d3de8621770c76cdc',
-  AVA: 'de2ed49b691e76754c20fe619d891b78ef58e537',
-  SWH: '78e6d16b914fe15bc16150aeb11d0c2a8e532bdd',
-  SWTH: 'ab38352559b8b203bde5fddfa0b07d8b2525e132',
-  EFX: 'acbc532904b6b51b5ea6d19b803d78af70e7e6f9',
-  MCT: 'a87cc2a513f5d8b4a42432343687c2127c60bc3f',
-  GDM: 'd1e37547d88bc9607ff9d73116ebd9381c156f79',
-  PKC: 'af7c7328eee5a275a3bcaee2bf0cf662b5e739be'
-}
+export const TOKENS = tokenList
 
 export const ENDED_ICO_TOKENS = [
   'DBC',
@@ -119,6 +110,8 @@ export const DEFAULT_WALLET = {
 }
 
 export const DEFAULT_CURRENCY_CODE = 'usd'
+
+export const DEFAULT_THEME = 'Light'
 
 export const CURRENCIES = {
   aud: { symbol: '$' },

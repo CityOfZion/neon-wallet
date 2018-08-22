@@ -23,10 +23,10 @@ app.on('window-all-closed', () => {
 app.on('ready', () => {
   const onAppReady = () => {
     mainWindow = new BrowserWindow({
-      height: 750,
+      height: 850,
       width: 1280,
-      minHeight: 750,
-      minWidth: 1000,
+      minHeight: 850,
+      minWidth: 1200,
       icon: path.join(__dirname, 'icons/png/64x64.png'),
       webPreferences: {
         webSecurity: false
@@ -39,7 +39,9 @@ app.on('ready', () => {
     })
 
     if (process.env.NODE_ENV === 'development') {
-      mainWindow.webContents.openDevTools()
+      mainWindow.webContents.once('dom-ready', () => {
+        mainWindow.webContents.openDevTools()
+      })
     }
 
     if (process.platform !== 'darwin') {

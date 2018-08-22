@@ -12,6 +12,21 @@ $size: 64px;
 
   .group {
     flex: 0 0 auto;
+
+    .logoutToolTipGroup {
+      display: flex !important;
+      flex-direction: column;
+      align-items: center;
+      width: $size;
+      height: $size;
+    }
+
+    .logoutText {
+      font-family: Gotham-Book;
+      font-size: 10px;
+      margin-top: 5px;
+      color: #9599a2;
+    }
   }
 }
 
@@ -22,9 +37,9 @@ $size: 64px;
   justify-content: center;
   align-items: center;
 
-  svg {
-    width: 24px;
-    height: 24px;
+  img {
+    width: 28px;
+    height: 28px;
   }
 }
 
@@ -37,7 +52,16 @@ $size: 64px;
   height: $size;
   border-left: 2px solid transparent;
   font-size: 24px;
+  display: flex;
+  flex-direction: column;
   cursor: pointer;
+  text-decoration: none;
+
+  div {
+    font-family: Gotham-Book;
+    font-size: 10px;
+    margin-top: 5px;
+  }
 
   &,
   & svg,
@@ -49,7 +73,7 @@ $size: 64px;
   &.active,
   &:hover {
     background: #fff;
-    border-image: linear-gradient(to bottom, #ee6d66, #a866ee) 1 100%;
+    border-image: linear-gradient(to bottom, #66eb8e, #6bdaf6) 1 100%;
 
     &,
     & svg,

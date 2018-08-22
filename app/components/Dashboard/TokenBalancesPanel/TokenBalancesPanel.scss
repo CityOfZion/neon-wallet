@@ -1,6 +1,11 @@
 @import '../../../styles/animations';
 
 .tokenBalancesPanel {
+  .tokenBalancesPanelContent {
+    // margin: auto;
+    // max-width: 600px;
+  }
+
   .header {
     display: flex;
     align-items: center;
@@ -21,22 +26,65 @@
     }
   }
 
+  .tableData {
+    min-height: 60px;
+    border-bottom: solid thin #f2f2f2;
+    padding: 7.5px 0px 7.5px 0px;
+  }
+
+  .tableHeader {
+    margin-bottom: 16px;
+  }
+
   .tableHeader,
   .tableData {
     display: flex;
     align-items: flex-start;
     justify-content: stretch;
-    margin-bottom: 16px;
+    margin-left: -24px;
+    margin-right: -24px;
+    padding-left: 24px;
+    padding-right: 24px;
 
     .symbol {
       flex: 0 0 auto;
-      width: 70px;
-      margin-right: 16px;
+      width: 50px;
+      margin-right: 45px;
+    }
+
+    .tickerName {
+      @extend .symbol;
+      width: 35px;
+      margin-right: 60px;
+      color: #ccd0d9;
+      font-weight: 300;
+      flex-direction: column;
+      display: flex;
+      padding-left: 2.5px;
     }
 
     .name {
       flex: 1 1 auto;
+      min-width: 175px;
+      margin-right: 10px;
+      width: 25%;
+      font-weight: bold;
+    }
+
+    .priceLabel {
+      flex: 1 1 auto;
       margin-right: 16px;
+      font-weight: bold;
+    }
+
+    .tokenName {
+      font-size: 13px;
+      flex: 1 1 auto;
+      margin-right: 20px;
+      font-weight: 400;
+      color: #5c677f;
+      min-width: 165px;
+      width: 25%;
     }
 
     .balance {
@@ -44,9 +92,20 @@
       width: 70px;
     }
 
+    .balanceValue {
+      @extend .balance;
+      font-weight: 300;
+    }
+
     &:last-child {
       margin-bottom: 0;
     }
+  }
+
+  .price {
+    flex: 1 1 auto;
+    margin-right: 16px;
+    font-weight: 300;
   }
 
   .tableHeader {
@@ -58,5 +117,21 @@
 
   .tableData {
     color: #282828;
+    align-items: center;
   }
+
+  .tokenImageContainer {
+    text-align: center;
+  }
+
+  .tokenImage {
+    max-height: 25px;
+    max-width: 25px;
+    width: 100%;
+    margin-bottom: 2.5px;
+  }
+}
+
+.oddNumberedRow {
+  background: rgba(230, 230, 230, 0.1);
 }

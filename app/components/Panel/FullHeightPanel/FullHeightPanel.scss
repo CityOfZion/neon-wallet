@@ -1,0 +1,91 @@
+.contentContainer {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  max-height: 780px;
+  min-height: 780px;
+  width: 680px;
+
+  .childrenContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    height: 100%;
+  }
+
+  .header {
+    font-size: 30px;
+    font-weight: 100;
+    margin-top: 50px;
+    color: #5c677f;
+    line-height: 32px;
+    display: flex;
+    align-items: center;
+
+    .headerIcon {
+      margin-right: 5px;
+      display: flex;
+
+      svg {
+        width: 40px;
+        min-height: 40px;
+        margin: auto;
+        overflow: visible;
+
+        path {
+          fill: var(--view-layout-header-icon-color);
+        }
+      }
+    }
+  }
+
+  .instructions {
+    border-bottom: solid thin rgba(0, 0, 0, 0.15);
+    margin-bottom: 40px;
+    margin-top: 40px;
+    padding-bottom: 5px;
+    width: 500px;
+    font-size: 14px;
+    color: #5c677f;
+    font-family: Gotham-Book;
+  }
+
+  .navigation {
+    display: flex;
+    background-color: #f2f2f2;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 70px;
+
+    > span {
+      display: flex;
+      flex: 1 0 0;
+    }
+
+    .backButton {
+      margin-left: 30px;
+    }
+
+    .closeButton {
+      margin-left: auto;
+      margin-right: 30px;
+    }
+
+    img {
+      padding: 15px;
+      height: 40px;
+      display: flex;
+      margin-left: -54px;
+      margin: auto;
+    }
+  }
+}
+.layoutContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}

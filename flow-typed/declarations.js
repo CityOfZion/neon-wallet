@@ -3,7 +3,6 @@
 import { type Fixed8 } from 'neon-js'
 
 import {
-  EXPLORER,
   ROUTES,
   NOTIFICATION_LEVELS,
   NOTIFICATION_POSITIONS,
@@ -25,7 +24,13 @@ declare type ReduxAction = () => {
 
 declare type NetworkType = string
 
-declare type ExplorerType = $Values<typeof EXPLORER>
+declare type ExplorerType = $Values<Explorer>
+
+declare type Explorer = {
+  NEO_TRACKER: string,
+  NEO_SCAN: string,
+  ANT_CHAIN: string
+}
 
 declare type RouteType = $Values<typeof ROUTES>
 
@@ -42,7 +47,7 @@ declare type NotificationType = {
 declare type TransactionHistoryType = {
   change: {
     NEO: Fixed8,
-    GAS: Fixed8,
+    GAS: Fixed8
   },
   txid: string,
   blockHeight: Fixed8
@@ -62,7 +67,8 @@ declare type TokenItemType = {
   id: string,
   scriptHash: string,
   networkId: string,
-  isUserGenerated: boolean
+  isUserGenerated: boolean,
+  image: string
 }
 
 declare type TokenType = {
@@ -75,6 +81,7 @@ declare type TokenType = {
 
 declare type TokenBalanceType = {
   symbol: SymbolType,
+  image: string,
   balance: string,
   scriptHash: string,
   totalSupply: number,

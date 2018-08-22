@@ -1,86 +1,97 @@
-.walletManager {
-  padding: 20px 150px;
-}
+@import '../../styles/variables';
 
-.panelHeaderContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  background: #f2f2f2;
-  color: #515151;
-  height: 80px;
-  width: 100%;
-}
-
-.walletList {
-  background: #fff;
-  min-height: 300px;
-  height: 55vh;
-  overflow-y: scroll;
-}
-
-.navRow {
-  display: flex;
-  align-items: center;
-  width: 200px;
-  margin-left: 10px;
-  justify-content: space-around;
-}
-
-.buttonRow {
-  margin-top: 50px;
-  height: 100px;
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-
-.buttonContainer {
-  width: 40%;
-  max-width: 300px;
-}
-
-.accountInfoRow {
-  padding: 20px;
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-}
-
-.accountInfo {
+.contentContainer {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  overflow-y: auto;
+
+  button {
+    width: 125px;
+    //height: 49px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .walletManagerDetails {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 605px;
+    min-height: 60px;
+    align-self: flex-start;
+    padding: 30px;
+    border-bottom: solid 0.5px #8d98ae;
+
+    .iconAndHeader,
+    .buttonRow {
+      display: flex;
+      align-items: center;
+    }
+
+    .walletIcon {
+      display: flex;
+      margin-right: 10px;
+
+      svg {
+        width: 40px;
+        height: 40px;
+        margin: auto;
+        overflow: visible;
+
+        path {
+          fill: #5abf6b;
+        }
+      }
+    }
+
+    h2 {
+      /* Manage Wallets: */
+      font-family: Gotham-Light;
+      font-weight: 100;
+      font-size: 30px;
+      line-height: 32px;
+    }
+  }
+
+  .walletList {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    align-self: center;
+
+    .walletInfoRow {
+      display: flex;
+      min-height: 60px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 15px;
+      border-bottom: solid 0.5px rgba(93, 103, 127, 0.5);
+    }
+
+    .accountLabel {
+      font-size: 14px;
+      text-overflow: ellipsis;
+      width: 115px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .address {
+      font-family: Gotham-Book;
+      font-size: 12px;
+      width: 300px;
+      color: #8d98ae;
+    }
+  }
 }
 
-.accountLabel {
-  color: #515151;
-}
-
-.address {
-  color: #ccc;
-  font-size: 12px;
-}
-
-.accountButtons {
-  display: flex;
-  flex-direction: row;
+.noWalletInfo {
   width: 100%;
-  margin-left: 25px;
-  justify-content: flex-end;
-}
-
-.editAccountButton {
-  width: 50px;
-  margin-right: 50px;
-}
-.deleteAccountButton {
-  width: 150px;
-}
-
-.editLabelButtonRow {
-  display: flex;
-  width: 100px;
-  margin-right: 50px;
-  flex-direction: row;
+  text-align: center;
+  margin-top: 60px;
+  font-style: italic;
+  opacity: 0.8;
 }

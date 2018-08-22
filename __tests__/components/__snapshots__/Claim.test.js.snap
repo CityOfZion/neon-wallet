@@ -10,7 +10,7 @@ exports[`Claim should render claim GAS button as disabled 1`] = `
       disabled={true}
       id="claim"
       onClick={[Function]}
-      primary={false}
+      primary={true}
       renderIcon={[Function]}
       type="button"
     >
@@ -32,7 +32,7 @@ exports[`Claim should render claim GAS button as enabled 1`] = `
       disabled={false}
       id="claim"
       onClick={[Function]}
-      primary={false}
+      primary={true}
       renderIcon={[Function]}
       type="button"
     >

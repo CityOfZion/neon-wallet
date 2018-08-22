@@ -44,7 +44,7 @@ class Button extends React.Component<Props> {
         </span>
       )
     }
-    return <div className={styles.icon} />
+    return null
   }
 
   getButtonStyle = () => (this.props.primary ? styles.dark : styles.light)

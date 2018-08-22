@@ -20,7 +20,13 @@ import { saveAccountActions, getWallet } from '../actions/accountsActions'
 export const NEW_WALLET_ACCOUNT = 'NEW_WALLET_ACCOUNT'
 export const RESET_WALLET_ACCOUNT = 'RESET_WALLET_ACCOUNT'
 
-export function newWalletAccount(account: Object) {
+export function newWalletAccount({
+  account,
+  isImport
+}: {
+  account: Object,
+  isImport: boolean
+}) {
   return {
     type: NEW_WALLET_ACCOUNT,
     payload: {
@@ -28,7 +34,8 @@ export function newWalletAccount(account: Object) {
       address: account.address,
       passphrase: account.passphrase,
       encryptedWIF: account.encryptedWIF,
-      walletName: account.walletName
+      walletName: account.walletName,
+      isImport
     }
   }
 }
@@ -143,7 +150,7 @@ export const recoverWallet = (wallet: Object): Promise<*> =>
       }
 
       accounts.some(account => {
-        if (!walletHasKey(data, account.key)) {
+        if (account.key && !walletHasKey(data, account.key)) {
           data.accounts.push(account)
         }
       })
@@ -163,8 +170,10 @@ export const generateNewWalletAccount = (
   passphrase2: string,
   wif?: string,
   history: Object,
-  walletName: string
+  walletName: string,
+  authenticated: boolean = false
 ) => (dispatch: DispatchType) => {
+  const isImport = !!wif
   const dispatchError = (message: string) => {
     dispatch(showErrorNotification({ message }))
     return false
@@ -197,6 +206,7 @@ export const generateNewWalletAccount = (
 
       dispatch(
         saveAccountActions.call({
+          isImport,
           label: walletName,
           address,
           key: encryptedWIF
@@ -206,21 +216,27 @@ export const generateNewWalletAccount = (
       dispatch(hideNotification(infoNotificationId))
       dispatch(
         newWalletAccount({
-          wif: WIF,
-          address,
-          passphrase,
-          encryptedWIF,
-          walletName
+          account: {
+            wif: WIF,
+            address,
+            passphrase,
+            encryptedWIF,
+            walletName
+          },
+          isImport
         })
       )
 
       if (wif) history.push(ROUTES.HOME)
-      history.push(ROUTES.DISPLAY_WALLET_KEYS)
+      if (authenticated) history.push(ROUTES.DISPLAY_WALLET_KEYS_AUTHENTICATED)
+      else history.push(ROUTES.DISPLAY_WALLET_KEYS)
       return true
     } catch (e) {
       console.error(e)
       return dispatchError(
-        'An error occured while trying to generate a new wallet'
+        `An error occured while trying to ${
+          isImport ? 'import' : 'generate'
+        } a new wallet`
       )
     }
   }, 500)
@@ -233,13 +249,15 @@ export const getPassphrase = (state: Object) => state.generateWallet.passphrase
 export const getWalletName = (state: Object) => state.generateWallet.walletName
 export const getEncryptedWIF = (state: Object) =>
   state.generateWallet.encryptedWIF
+export const getIsImport = (state: Object) => state.generateWallet.isImport
 
 const initialState = {
   wif: null,
   address: null,
   passphrase: null,
   encryptedWIF: null,
-  walletName: null
+  walletName: null,
+  isImport: null
 }
 
 export default (state: Object = initialState, action: ReduxAction) => {
@@ -250,7 +268,8 @@ export default (state: Object = initialState, action: ReduxAction) => {
         wif,
         address,
         encryptedWIF,
-        walletName
+        walletName,
+        isImport
       } = action.payload
       return {
         ...state,
@@ -258,7 +277,8 @@ export default (state: Object = initialState, action: ReduxAction) => {
         address,
         passphrase,
         encryptedWIF,
-        walletName
+        walletName,
+        isImport
       }
     }
     case RESET_WALLET_ACCOUNT: {

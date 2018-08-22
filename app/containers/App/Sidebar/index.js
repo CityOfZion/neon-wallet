@@ -8,7 +8,6 @@ import { showModal } from '../../../modules/modal'
 import { MODAL_TYPES } from '../../../core/constants'
 
 const mapDispatchToProps = (dispatch, props) => ({
-  showSendModal: () => dispatch(showModal(MODAL_TYPES.SEND)),
   showTokenSaleModal: () => dispatch(showModal(MODAL_TYPES.ICO))
 })
 
