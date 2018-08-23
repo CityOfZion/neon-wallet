@@ -1,8 +1,7 @@
 // @flow
 import React from 'react'
+import { noop } from 'lodash'
 import classNames from 'classnames'
-import { wallet } from 'neon-js'
-import { validatePassphraseLength } from '../../../core/wallet'
 
 import { ROUTES } from '../../../core/constants'
 import FullHeightPanel from '../../Panel/FullHeightPanel'
@@ -16,6 +15,7 @@ type State = {
 }
 
 type Props = {
+  handleSubmit: Function,
   className: string,
   title: string
 }
@@ -27,6 +27,10 @@ export default class EncryptPanel extends React.Component<Props, State> {
     this.state = {
       encryptedkey: ''
     }
+  }
+
+  static defaultProps = {
+    handleSubmit: noop
   }
 
   render() {
@@ -70,24 +74,8 @@ export default class EncryptPanel extends React.Component<Props, State> {
     passphrase: string,
     confirmPassphrase: string
   ) => {
-    const result = this.encryptPrivateKey(
-      privateKey,
-      passphrase,
-      confirmPassphrase
-    )
+    const { handleSubmit } = this.props
+    const result = handleSubmit(privateKey, passphrase, confirmPassphrase)
     this.setState({ encryptedkey: result })
-  }
-
-  encryptPrivateKey = (privateKey, passphrase, confirmPassphrase) => {
-    if (passphrase !== confirmPassphrase) {
-      throw new Error('Passphrases do not match')
-    }
-    if (!validatePassphraseLength(passphrase)) {
-      throw new Error('Please choose a longer passphrase')
-    }
-    if (privateKey && !wallet.isWIF(privateKey)) {
-      throw new Error('The private key is not valid')
-    }
-    return wallet.encrypt(privateKey, passphrase)
   }
 }
