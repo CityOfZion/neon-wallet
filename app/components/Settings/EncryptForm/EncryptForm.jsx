@@ -1,12 +1,14 @@
 // @flow
 import React from 'react'
 import { noop } from 'lodash'
+import { wallet } from 'neon-js'
 
 import Button from '../../Button'
 import TextInput from '../../Inputs/TextInput'
 import PasswordInput from '../../Inputs/PasswordInput'
 import AddIcon from '../../../assets/icons/add.svg'
 import styles from './EncryptForm.scss'
+import { validatePassphraseLength } from '../../../core/wallet'
 
 type Props = {
   submitLabel: string,
@@ -95,18 +97,23 @@ export default class EncryptForm extends React.Component<Props, State> {
   }
 
   validatePrivateKey = (privateKey: string) => {
-    // TODO validate private key
-    // const error = 'The private key is invalid.'
-    // this.setState({ privateKeyError: error })
+    if (privateKey && !wallet.isWIF(privateKey)) {
+      this.setState({ privateKeyError: 'The private key is not valid' })
+      return false
+    }
     return true
   }
 
   validatePassphrase = (passphrase: string, confirmPassphrase: string) => {
     if (passphrase !== confirmPassphrase) {
       this.setState({ passphraseError: 'Passphrases do not match' })
+      return false
+    }
+    if (!validatePassphraseLength(passphrase)) {
+      this.setState({ passphraseError: 'Please choose a longer passphrase' })
+      return false
     }
     return true
-    // TODO check length
   }
 
   validate = (
