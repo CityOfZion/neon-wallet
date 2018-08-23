@@ -19,11 +19,11 @@ const ReceivePanel = ({
 }: Props) => {
   return (
     <Panel
-      contentClassName={styles.receivePanel}
+      className={styles.receivePanel}
       renderHeader={() => (
         <ReceivePanelHeader address={address} />
       )}
-      className={styles.sendSuccessPanel}
+      contentClassName={styles.receivePanelContent}
     >
       <ReceiveExplanation />
       <QRCodeForm address={address} />

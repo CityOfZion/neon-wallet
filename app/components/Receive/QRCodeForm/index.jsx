@@ -4,10 +4,13 @@ import classNames from 'classnames'
 
 import AssetInput from '../../Inputs/AssetInput'
 import NumberInput from '../../Inputs/NumberInput'
+import TextInput from '../../Inputs/TextInput'
+import Button from '../../Button/Button'
 import CopyToClipboard from '../../CopyToClipboard'
 import { Address } from '../../Blockchain'
 import { ASSETS, TOKENS } from '../../../core/constants'
 import { COIN_DECIMAL_LENGTH } from '../../../core/formatters'
+import GridIcon from '../../../assets/icons/grid.svg'
 
 import styles from './styles.scss'
 
@@ -18,7 +21,8 @@ type Props = {
 
 type State = {
   asset: ?string,
-  amount: ?number
+  amount: ?number,
+  note: ?string
 }
 
 export default class QRCodeForm extends React.Component<Props, State> {
@@ -26,12 +30,13 @@ export default class QRCodeForm extends React.Component<Props, State> {
 
   state = {
     asset: null,
-    amount: 0
+    amount: 0,
+    note: null
   }
 
   render() {
     const { className, address } = this.props
-    const { asset, amount } = this.state
+    const { asset, amount, note } = this.state
     const symbols = ['-', ASSETS.NEO, ASSETS.GAS, ...Object.keys(TOKENS)]
 
     return (
@@ -39,31 +44,53 @@ export default class QRCodeForm extends React.Component<Props, State> {
         className={classNames(styles.receivePanel, className)}
       >
         <div className={styles.header}>
-          <div className={styles.icon}>
-
-          </div>
+          <GridIcon className={styles.icon}/>
           <div className={styles.title}>
             Create a bespoke QR Code
           </div>
         </div>
-        <form>
+        <form className={styles.form}>
           <div className={styles.amountContainer}>
-            <AssetInput
-              symbols={symbols}
-              value={asset}
-              className={styles.asset}
-              onChange={value => this.setState({asset: value})}
+            <div className={styles.asset}>
+              <div className={styles.inputDescription}>ASSET</div>
+              <AssetInput
+                symbols={symbols}
+                value={asset}
+                onChange={value => this.setState({ asset: value })}
+              />
+            </div>
+            <div className={styles.amount}>
+              <div className={styles.inputDescription}>AMOUNT</div>
+              <NumberInput
+                value={amount}
+                placeholder="Amount"
+                options={{ numeralDecimalScale: COIN_DECIMAL_LENGTH }}
+                onChange={value => this.setState({ amount: value })}
+              />
+            </div>
+          </div>
+          <div className={styles.rowContainer}>
+            <div className={styles.inputDescription}>DEPOSIT INTO THIS WALLET</div>
+            <div className={styles.address}>
+              <Address className={styles.link} address={address} />
+            </div>
+          </div>
+          <div className={styles.rowContainer}>
+            <div className={styles.inputDescription}>REFERENCE</div>
+            <TextInput
+              value={note}
+              placeholder="Add a note..."
+              onChange={e => this.setState({ note: e.target.value })}
             />
-            <NumberInput
-              value={amount}
-              placeholder="Amount"
-              className={styles.amount}
-              options={{ numeralDecimalScale: COIN_DECIMAL_LENGTH }}
-              onChange={value => this.setState({amount: value})} />
           </div>
-          <div className={styles.address}>
-            <Address className={styles.link} address={address} />
-          </div>
+          <Button
+            primary
+            className={styles.submitButton}
+            renderIcon={() => <GridIcon />}
+            type="submit"
+          >
+            Generate Code
+          </Button>
         </form>
       </div>
     )

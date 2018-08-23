@@ -1,6 +1,8 @@
 // @flow
 import React from 'react'
 
+import CopyToClipboard from '../../CopyToClipboard'
+
 import styles from './styles.scss'
 
 type Props = {
@@ -12,9 +14,18 @@ const ReceivePanelHeader = ({
 }: Props) => {
 
   return (
-    <section className={styles.sendPanelHeader}>
-      <div className={styles.sendPanelHeaderInfo}>
+    <section className={styles.receivePanelHeader}>
+      <div className={styles.receivePanelHeaderInfo}>
         Select Deposit Method
+      </div>
+      <div className={styles.walletAddressContainer}>
+        <div className={styles.description}>
+          Wallet Address
+        </div>
+        <div className={styles.address}>
+          {address}
+        </div>
+        <CopyToClipboard text={address} />
       </div>
     </section>
   )

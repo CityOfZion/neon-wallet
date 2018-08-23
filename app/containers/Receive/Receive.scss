@@ -1,9 +1,3 @@
-.receive {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  .panel:not(:last-child) {
-    margin-bottom: 24px;
-  }
+.receiveContainer {
+  padding: 0 24px;
 }

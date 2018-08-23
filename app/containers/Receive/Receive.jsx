@@ -5,6 +5,13 @@ import PageHeader from '../../components/PageHeader'
 import AmountsPanel from '../../components/AmountsPanel'
 import ReceivePanel from '../../components/Receive/ReceivePanel'
 
+import {
+  toNumber,
+  toBigNumber,
+  multiplyNumber,
+  minusNumber
+} from '../../core/math'
+
 import styles from './Receive.scss'
 
 type Props = {
@@ -36,7 +43,7 @@ export default class Receive extends React.Component<Props, State> {
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 
     return (
-      <section className={styles.sendContainer}>
+      <section className={styles.receiveContainer}>
         <PageHeader
           title='Receive Assets'
           loading={loading}
@@ -48,8 +55,47 @@ export default class Receive extends React.Component<Props, State> {
             currencyCode={currencyCode}
           />
         )}
-        <ReceivePanel className={styles.panel} address={address} />
+        <ReceivePanel address={address} />
       </section>
     )
+  }
+
+  createSendAmountsData() {
+    const { sendableAssets, prices } = this.props
+    const { showConfirmSend, sendSuccess, sendRowDetails } = this.state
+
+    let assets = Object.keys(sendableAssets)
+
+    if (showConfirmSend || sendSuccess) {
+      assets = (assets.filter((asset: string) =>
+        sendRowDetails
+          .reduce(
+            (accumulator: Array<*>, row: Object) =>
+              accumulator.concat(row.asset),
+            []
+          )
+          .includes(asset)
+      ): Array<*>)
+    }
+
+    return (assets
+      .filter((asset: string) => !!prices[asset])
+      .map((asset: string) => {
+        const { balance } = sendableAssets[asset]
+        const currentBalance = balance
+        const price = prices[asset]
+
+        const totalBalanceWorth = multiplyNumber(balance, price)
+        const remainingBalanceWorth = multiplyNumber(currentBalance, price)
+
+        return {
+          symbol: asset,
+          totalBalance: balance,
+          price,
+          currentBalance,
+          totalBalanceWorth,
+          remainingBalanceWorth
+        }
+      }): Array<*>)
   }
 }

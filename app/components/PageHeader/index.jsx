@@ -19,7 +19,6 @@ export default class PageHeader extends Component<Props> {
       <section className={styles.pageHeader}>
         <h1 className={styles.pageHeading}>{title}</h1>
         <Tooltip title="Refresh" className={styles.headerButtonContainer}>
-          <span onClick={loading ? null : loadWalletData}> Refresh </span>
           <RefreshIcon
             id="refresh"
             className={classNames(styles.refresh, {
@@ -27,6 +26,7 @@ export default class PageHeader extends Component<Props> {
             })}
             onClick={loading ? null : loadWalletData}
           />
+          <span onClick={loading ? null : loadWalletData}> Refresh </span>
         </Tooltip>
       </section>
     )
