@@ -1,11 +1,4 @@
-const {
-  app,
-  shell,
-  Menu,
-  BrowserWindow,
-  globalShortcut,
-  remote
-} = require('electron')
+const { app, shell, Menu, BrowserWindow, globalShortcut } = require('electron')
 const path = require('path')
 const url = require('url')
 
