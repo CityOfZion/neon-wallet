@@ -13,6 +13,7 @@ import AddIcon from '../../assets/icons/add.svg'
 import ImportIcon from '../../assets/icons/import.svg'
 import { ROUTES } from '../../core/constants'
 import HomeLayout from './HomeLayout'
+import pack from '../../../package.json'
 
 type State = {
   tabIndex: number
@@ -90,6 +91,7 @@ export default class Home extends React.Component<Props, State> {
               </Link>
             </div>
           </div>
+          <div className={styles.versionNumber}>{`v${pack.version}`}</div>
         </div>
       </HomeLayout>
     )
