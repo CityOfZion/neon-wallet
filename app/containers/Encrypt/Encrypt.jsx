@@ -25,4 +25,10 @@ export default class Encrypt extends React.Component<Props> {
       </div>
     )
   }
+
+  renderIcon = () => (
+    <div>
+      <LockIcon />
+    </div>
+  )
 }

@@ -1,4 +1,10 @@
-.encrypt {
+.nodeSelectPanel {
   display: flex;
   justify-content: center;
+
+  .instructions {
+    width: 100%;
+    border-bottom: none;
+    text-align: center;
+  }
 }
