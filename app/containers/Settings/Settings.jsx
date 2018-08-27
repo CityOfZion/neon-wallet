@@ -182,6 +182,7 @@ export default class Settings extends Component<Props, State> {
               />
             </SettingsItem>
             <SettingsLink to={ROUTES.ENCRYPT} title="ENCRYPT A KEY" />
+            <SettingsLink to={ROUTES.NODE_SELECT} title="NODE SELECTON" />
             <WalletRecoveryPanel
               title="WALLET RECOVERY"
               loadWalletRecovery={this.loadWalletRecovery}
