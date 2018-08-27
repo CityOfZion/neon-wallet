@@ -21,7 +21,8 @@ type Props = {
 type State = {
   privateKeyError: string,
   passphraseError: string,
-  confirmPassphraseError: string
+  confirmPassphraseError: string,
+  isDisabled: boolean
 }
 
 export default class EncryptForm extends React.Component<Props, State> {
@@ -31,7 +32,8 @@ export default class EncryptForm extends React.Component<Props, State> {
     this.state = {
       privateKeyError: '',
       passphraseError: '',
-      confirmPassphraseError: ''
+      confirmPassphraseError: '',
+      isDisabled: true
     }
   }
 
@@ -50,7 +52,8 @@ export default class EncryptForm extends React.Component<Props, State> {
     const {
       privateKeyError,
       passphraseError,
-      confirmPassphraseError
+      confirmPassphraseError,
+      isDisabled
     } = this.state
 
     return (
@@ -88,6 +91,7 @@ export default class EncryptForm extends React.Component<Props, State> {
             primary
             type="submit"
             renderIcon={AddIcon}
+            disabled={isDisabled}
           >
             {submitLabel}
           </Button>
@@ -139,19 +143,29 @@ export default class EncryptForm extends React.Component<Props, State> {
     }
   }
 
+  setButtonIsDisabled = () => {
+    const { privateKey, passphrase, confirmPassphrase } = this.state
+    this.setState({
+      isDisabled: !privateKey || !passphrase || !confirmPassphrase
+    })
+  }
+
   handleChangePrivateKey = (event: Object) => {
     this.setState({ privateKey: event.target.value })
     this.clearErrors(event.target.name)
+    this.setButtonIsDisabled()
   }
 
   handleChangePassphrase = (event: Object) => {
     this.setState({ passphrase: event.target.value })
     this.clearErrors(event.target.name)
+    this.setButtonIsDisabled()
   }
 
   handleChangeConfirmPassphrase = (event: Object) => {
     this.setState({ confirmPassphrase: event.target.value })
     this.clearErrors(event.target.name)
+    this.setButtonIsDisabled()
   }
 
   handleSubmit = (event: Object) => {
@@ -161,7 +175,9 @@ export default class EncryptForm extends React.Component<Props, State> {
 
     const validInput = this.validate(privateKey, passphrase, confirmPassphrase)
     if (validInput) {
+      this.setState({ isDisabled: true })
       onSubmit(privateKey, passphrase, confirmPassphrase)
+      this.setState({ isDisabled: false })
     }
   }
 }
