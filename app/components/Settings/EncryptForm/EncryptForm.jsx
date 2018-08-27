@@ -1,20 +1,20 @@
 // @flow
 import React from 'react'
 import { noop } from 'lodash'
-import { wallet } from 'neon-js'
 
 import Button from '../../Button'
 import TextInput from '../../Inputs/TextInput'
 import PasswordInput from '../../Inputs/PasswordInput'
 import AddIcon from '../../../assets/icons/add.svg'
 import styles from './EncryptForm.scss'
-import { validatePassphraseLength } from '../../../core/wallet'
 
 type Props = {
   submitLabel: string,
   formPrivateKey: string,
   formPassphrase: string,
   formConfirmPassphrase: string,
+  validatePassphraseLength: Function,
+  isWIF: Function,
   onSubmit: Function
 }
 
@@ -39,7 +39,9 @@ export default class EncryptForm extends React.Component<Props, State> {
 
   static defaultProps = {
     submitLabel: 'Generate Encrypted key',
-    onSubmit: noop
+    onSubmit: noop,
+    isWIF: noop,
+    validatePassphraseLength: noop
   }
 
   render() {
@@ -62,7 +64,7 @@ export default class EncryptForm extends React.Component<Props, State> {
           <TextInput
             id="privateKey"
             name="privateKey"
-            label="Enter the private key you want to encrypt"
+            label="1) Enter the private key you want to encrypt"
             placeholder="Enter key"
             value={formPrivateKey}
             onChange={this.handleChangePrivateKey}
@@ -71,7 +73,7 @@ export default class EncryptForm extends React.Component<Props, State> {
           <PasswordInput
             id="passphrase"
             name="passphrase"
-            label="Create a passphrase"
+            label="2) Create a passphrase"
             placeholder="Enter Passphrase"
             value={formPassphrase}
             onChange={this.handleChangePassphrase}
@@ -80,7 +82,7 @@ export default class EncryptForm extends React.Component<Props, State> {
           <PasswordInput
             id="confirmPassphrase"
             name="confirmPassphrase"
-            label="Confim your passphrase"
+            label="3) Confim your passphrase"
             placeholder="Confirm Passphrase"
             value={formConfirmPassphrase}
             onChange={this.handleChangeConfirmPassphrase}
@@ -101,7 +103,8 @@ export default class EncryptForm extends React.Component<Props, State> {
   }
 
   validatePrivateKey = (privateKey: string) => {
-    if (privateKey && !wallet.isWIF(privateKey)) {
+    const { isWIF } = this.props
+    if (privateKey && !isWIF(privateKey)) {
       this.setState({ privateKeyError: 'The private key is not valid' })
       return false
     }
@@ -109,6 +112,7 @@ export default class EncryptForm extends React.Component<Props, State> {
   }
 
   validatePassphrase = (passphrase: string, confirmPassphrase: string) => {
+    const { validatePassphraseLength } = this.props
     if (passphrase !== confirmPassphrase) {
       this.setState({ passphraseError: 'Passphrases do not match' })
       return false

@@ -34,7 +34,8 @@ export const ROUTES = {
   WALLET_MANAGER: '/wallet-manager',
   EDIT_WALLET: '/edit-wallet/:key/:label',
   SEND: '/send',
-  ENCRYPT: '/encrypt-private-key'
+  ENCRYPT: '/encrypt-private-key',
+  NODE_SELECT: '/node-select'
 }
 
 export const NOTIFICATION_LEVELS = {

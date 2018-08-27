@@ -18,4 +18,10 @@ const encryptPrivateKey = (privateKey, passphrase, confirmPassphrase) => {
   return wallet.encrypt(privateKey, passphrase)
 }
 
-export default compose(withProps({ encryptPrivateKey }))(Encrypt)
+export default compose(
+  withProps({
+    encryptPrivateKey,
+    isWif: wallet.isWIF,
+    validatePassphraseLength
+  })
+)(Encrypt)
