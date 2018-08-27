@@ -1,0 +1,30 @@
+$success-icon-size: 140px;
+
+.successMessage {
+  display: flex;
+  align-items: center;
+
+  .iconContainer {
+    display: flex;
+    padding-right: 30px;
+
+    svg {
+      width: $success-icon-size;
+      height: $success-icon-size;
+
+      path {
+        fill: #6ad8ff;
+        stroke-width: 1px;
+        stroke: white;
+      }
+    }
+  }
+}
+
+.text {
+  display: flex;
+  color: #5c677f;
+  font-weight: 200;
+  text-transform: uppercase;
+  font-size: 29px;
+}

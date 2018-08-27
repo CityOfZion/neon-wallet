@@ -6,12 +6,14 @@ import classNames from 'classnames'
 import { ROUTES } from '../../../core/constants'
 import FullHeightPanel from '../../Panel/FullHeightPanel'
 import EncryptForm from '../EncryptForm'
-import ImportIcon from '../../../assets/icons/import.svg'
+import EncryptSuccess from '../EncryptSuccess'
+import LockIcon from '../../../assets/icons/lock.svg'
 import CloseButton from '../../CloseButton'
 import styles from './EncryptPanel.scss'
 
 type State = {
-  encryptedkey: string
+  encryptedkey: string,
+  privateKey: string
 }
 
 type Props = {
@@ -25,7 +27,8 @@ export default class EncryptPanel extends React.Component<Props, State> {
     super(props)
 
     this.state = {
-      encryptedkey: ''
+      encryptedkey: '',
+      privateKey: ''
     }
   }
 
@@ -35,37 +38,55 @@ export default class EncryptPanel extends React.Component<Props, State> {
 
   render() {
     const { className } = this.props
-    const { encryptedkey } = this.state
 
-    if (!this.state.encryptedkey) {
-      return (
-        <FullHeightPanel
-          className={classNames(styles.encryptPanel, className)}
-          contentClassName={styles.content}
-          renderHeader={this.renderHeader}
-          headerText="Encrypt a key"
-          renderCloseButton={() => <CloseButton routeTo={ROUTES.SETTINGS} />}
-          renderHeaderIcon={this.renderIcon}
-          renderInstructions={() => (
-            <div>Choose a passphrase to encrypt an existing key</div>
-          )}
-        >
-          <EncryptForm
-            submitLabel="Generate Encrypted Key"
-            onSubmit={this.onSubmit}
-          />
-        </FullHeightPanel>
-      )
-    }
-    return <div>{encryptedkey}</div>
+    return (
+      <FullHeightPanel
+        className={classNames(styles.encryptPanel, className)}
+        renderHeader={this.renderHeader}
+        headerText="Encrypt a key"
+        renderCloseButton={() => <CloseButton routeTo={ROUTES.SETTINGS} />}
+        renderHeaderIcon={this.renderIcon}
+        renderInstructions={this.renderInstructions}
+      >
+        {this.renderPanelContent()}
+      </FullHeightPanel>
+    )
   }
 
   renderHeader = () => <span>{this.props.title}</span>
 
-  // TODO change to correct icon
+  renderInstructions = () => {
+    const { privateKey } = this.state
+    const { encryptedkey } = this.state
+    if (!encryptedkey) {
+      return <div>Choose a passphrase to encrypt an existing key</div>
+    }
+    return <div className={styles.privateKeyInstruction}>{privateKey}</div>
+  }
+
+  renderPanelContent = () => {
+    const { encryptedkey } = this.state
+    if (!encryptedkey) {
+      return (
+        <EncryptForm
+          submitLabel="Generate Encrypted Key"
+          onSubmit={this.onSubmit}
+        />
+      )
+    }
+    return (
+      <EncryptSuccess encryptedKey={encryptedkey} handleReset={this.reset} />
+    )
+  }
+
+  reset = () => {
+    this.setState({ encryptedkey: '' })
+    this.setState({ privateKey: '' })
+  }
+
   renderIcon = () => (
     <div>
-      <ImportIcon />
+      <LockIcon />
     </div>
   )
 
@@ -77,5 +98,6 @@ export default class EncryptPanel extends React.Component<Props, State> {
     const { handleSubmit } = this.props
     const result = handleSubmit(privateKey, passphrase, confirmPassphrase)
     this.setState({ encryptedkey: result })
+    this.setState({ privateKey })
   }
 }
