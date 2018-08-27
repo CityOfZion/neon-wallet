@@ -1,4 +1,11 @@
-const { app, shell, Menu, BrowserWindow } = require('electron')
+const {
+  app,
+  shell,
+  Menu,
+  BrowserWindow,
+  globalShortcut,
+  remote
+} = require('electron')
 const path = require('path')
 const url = require('url')
 
@@ -132,6 +139,12 @@ app.on('ready', () => {
       mainWindow = null
     })
   }
+
+  // register any shortcuts here
+  globalShortcut.register('CommandOrControl+M', () => {
+    mainWindow.minimize()
+  })
+
   if (process.env.NODE_ENV === 'development') {
     installExtensions().then(() => onAppReady())
   } else {
@@ -149,4 +162,9 @@ app.on('web-contents-created', (event, wc) => {
       }
     }
   })
+})
+
+app.on('will-quit', () => {
+  // Unregister all shortcuts.
+  globalShortcut.unregisterAll()
 })

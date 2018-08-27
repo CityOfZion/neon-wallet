@@ -75,7 +75,6 @@ export const saveAccountActions = createActions(
 )
 
 export default createActions(ID, () => async (): Promise<Object> => {
-  console.log('GETTING WALLET')
   const wallet = await getWallet()
   return wallet.accounts
 })
