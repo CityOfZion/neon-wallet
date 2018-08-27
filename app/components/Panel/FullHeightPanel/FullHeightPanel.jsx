@@ -16,7 +16,8 @@ type Props = {
   headerText: string,
   iconColor: string,
   className: string,
-  headerContainerClassName: string
+  headerContainerClassName: string,
+  instructionsClassName: string
 }
 
 export default class ViewLayout extends Component<Props> {
@@ -88,10 +89,13 @@ export default class ViewLayout extends Component<Props> {
   }
 
   renderInstructions = () => {
-    const { renderInstructions } = this.props
+    const { renderInstructions, instructionsClassName } = this.props
     return (
       renderInstructions && (
-        <div className={styles.instructions}> {renderInstructions()} </div>
+        <div className={classNames(styles.instructions, instructionsClassName)}>
+          {' '}
+          {renderInstructions()}{' '}
+        </div>
       )
     )
   }
