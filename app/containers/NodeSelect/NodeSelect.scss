@@ -7,4 +7,70 @@
     border-bottom: none;
     text-align: center;
   }
+
+  .tableContainer {
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    width: 680px;
+    flex: 1;
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #f2f2f2;
+      display: flex;
+      padding: 15px 25px;
+
+      .sortContainer {
+        display: flex;
+
+        .label,
+        .sort {
+          font-weight: 500;
+          font-size: 14px;
+        }
+
+        .label {
+          display: flex;
+          align-items: center;
+          padding-right: 12px;
+        }
+
+        .sort {
+          display: flex;
+          align-items: center;
+          color: #969aa0;
+          cursor: pointer;
+
+          svg,
+          svg path {
+            fill: currentColor;
+          }
+        }
+      }
+
+      .count,
+      .automaticSelect {
+        font-size: 14px;
+        color: #5c677f;
+        font-family: Gotham-Book;
+      }
+
+      .automaticSelect {
+        display: flex;
+        align-items: center;
+        color: #969aa0;
+
+        .icon {
+          margin-right: 8px;
+        }
+
+        svg path {
+          fill: #66ed87;
+        }
+      }
+    }
+  }
 }
