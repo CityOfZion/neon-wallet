@@ -1,5 +1,6 @@
 // @flow
 import tokenList from './tokenList.json'
+import nodes from './nodes.json'
 
 export const NEON_WALLET_RELEASE_LINK =
   'https://github.com/CityOfZion/neon-wallet/releases'
@@ -148,3 +149,5 @@ export const CURRENCIES = {
   usd: { symbol: '$' },
   zar: { symbol: 'R ' }
 }
+
+export const NODES = nodes
