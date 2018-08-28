@@ -2,7 +2,7 @@
 import React from 'react'
 import { keys } from 'lodash'
 
-import { ROUTES } from '../../core/constants'
+import { ROUTES, NODES } from '../../core/constants'
 import FullHeightPanel from '../../components/Panel/FullHeightPanel'
 import NodeSelectIcon from '../../assets/icons/node-select.svg'
 import CloseButton from '../../components/CloseButton'
@@ -51,9 +51,51 @@ export default class NodeSelect extends React.Component<Props, State> {
               <span>Select automatically</span>
             </div>
           </div>
+          {this.renderNodeList()}
         </section>
       </FullHeightPanel>
     )
+  }
+
+  getLatencyClass = latency => {
+    if (latency < 250) {
+      return styles.good
+    }
+    if (latency < 750) {
+      return styles.ok
+    }
+    return styles.fair
+  }
+
+  // FIXME temp random latency generator
+  getRandomLatency = () => {
+    const min = 1
+    const max = 1000
+    const rand = min + Math.random() * (max - min)
+    return Math.round(rand)
+  }
+
+  // FIXME remove index as key - unreliable
+  renderNodeList = () => {
+    const listItems = NODES.map((node, index) => {
+      const latency = this.getRandomLatency()
+      const url = node.protocol ? `${node.protocol}://${node.url}` : node.url
+      return (
+        <div key={index} className={styles.row}>
+          <div className={styles.latency}>
+            <div className={this.getLatencyClass(latency)} />
+            <span>{latency}ms</span>
+          </div>
+          <div className={styles.blockHeight}>Block Height: {latency}</div>
+          <div className={styles.url}>{url}</div>
+          <div className={styles.select}>
+            <ConfirmIcon className={styles.icon} />
+            <span>Select</span>
+          </div>
+        </div>
+      )
+    })
+    return <div className={styles.content}>{listItems}</div>
   }
 
   renderIcon = () => (
