@@ -1,4 +1,4 @@
-const { app, shell, Menu, BrowserWindow } = require('electron')
+const { app, shell, Menu, BrowserWindow, globalShortcut } = require('electron') // eslint-disable-line import/no-extraneous-dependencies
 const path = require('path')
 const url = require('url')
 
@@ -8,7 +8,7 @@ let mainWindow = null
 
 // adapted from https://github.com/chentsulin/electron-react-boilerplate
 const installExtensions = () => {
-  const installer = require('electron-devtools-installer')
+  const installer = require('electron-devtools-installer') // eslint-disable-line import/no-extraneous-dependencies
   const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS']
 
   return Promise.all(
@@ -132,6 +132,12 @@ app.on('ready', () => {
       mainWindow = null
     })
   }
+
+  // register any shortcuts here
+  globalShortcut.register('CommandOrControl+M', () => {
+    mainWindow.minimize()
+  })
+
   if (process.env.NODE_ENV === 'development') {
     installExtensions().then(() => onAppReady())
   } else {
@@ -149,4 +155,9 @@ app.on('web-contents-created', (event, wc) => {
       }
     }
   })
+})
+
+app.on('will-quit', () => {
+  // Unregister all shortcuts.
+  globalShortcut.unregisterAll()
 })
