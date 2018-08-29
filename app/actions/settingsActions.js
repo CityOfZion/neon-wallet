@@ -5,6 +5,7 @@ import { createActions } from 'spunky'
 import { getStorage, setStorage } from '../core/storage'
 import { getDefaultTokens } from '../core/nep5'
 import { EXPLORERS, DEFAULT_CURRENCY_CODE } from '../core/constants'
+import pack from '../../package.json'
 
 type Settings = {
   currency?: string,
@@ -24,12 +25,20 @@ const getSettings = async (): Promise<Settings> => {
   const defaults = await DEFAULT_SETTINGS()
   const settings = await getStorage(STORAGE_KEY) || {}
 
+  // indicates that this user is running 0.2.8 or less
+  // and we override the saved settings with EXPLORERS.NEO_SCAN
+  // until user updtates settings themselves
+  if (!settings.version) {
+    settings.blockExplorer = EXPLORERS.NEO_SCAN
+  }
+
+  const version = pack.version
   const tokens = uniqBy([
     ...defaults.tokens || [],
     ...settings.tokens || []
   ], (token) => [token.networkId, token.scriptHash].join('-'))
 
-  return { ...defaults, ...settings, tokens }
+  return { ...defaults, ...settings, tokens, version }
 }
 
 export const ID = 'SETTINGS'
@@ -38,7 +47,6 @@ export const updateSettingsActions = createActions(ID, (values: Settings = {}) =
   const settings = await getSettings()
   const newSettings = { ...settings, ...values }
   await setStorage(STORAGE_KEY, newSettings)
-
   return newSettings
 })
 
