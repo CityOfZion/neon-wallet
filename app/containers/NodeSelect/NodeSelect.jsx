@@ -2,7 +2,7 @@
 import React from 'react'
 import { keys } from 'lodash'
 
-import { ROUTES, NODES } from '../../core/constants'
+import { ROUTES } from '../../core/constants'
 import FullHeightPanel from '../../components/Panel/FullHeightPanel'
 import NodeSelectIcon from '../../assets/icons/node-select.svg'
 import CloseButton from '../../components/CloseButton'
@@ -12,10 +12,20 @@ import styles from './NodeSelect.scss'
 
 type Sort = 'highToLow' | 'lowToHigh'
 
+type Node = {
+  protocal: string,
+  url: string,
+  location: string,
+  port: string,
+  locale: string,
+  type: string
+}
+
 type Props = {
   setSort: Function,
   sort: string,
-  nodesShown: int
+  nodesShown: int,
+  nodes: Node[]
 }
 
 const SORT_BY_LATENCY: { [key: Sort]: string } = {
@@ -77,25 +87,31 @@ export default class NodeSelect extends React.Component<Props, State> {
 
   // FIXME remove index as key - unreliable
   renderNodeList = () => {
-    const listItems = NODES.map((node, index) => {
-      const latency = this.getRandomLatency()
-      const url = node.protocol ? `${node.protocol}://${node.url}` : node.url
-      return (
-        <div key={index} className={styles.row}>
-          <div className={styles.latency}>
-            <div className={this.getLatencyClass(latency)} />
-            <span>{latency}ms</span>
+    const { nodes } = this.props
+    if (nodes) {
+      const listItems = nodes.map((node, index) => {
+        const latency = this.getRandomLatency()
+        const url = node.protocol ? `${node.protocol}://${node.url}` : node.url
+        return (
+          <div key={index} className={styles.row}>
+            <div className={styles.latency}>
+              <div className={this.getLatencyClass(latency)} />
+              <span>{latency}ms</span>
+            </div>
+            <div className={styles.blockHeight}>
+              Block Height: {node.blockCount}
+            </div>
+            <div className={styles.url}>{url}</div>
+            <div className={styles.select}>
+              <ConfirmIcon className={styles.icon} />
+              <span>Select</span>
+            </div>
           </div>
-          <div className={styles.blockHeight}>Block Height: {latency}</div>
-          <div className={styles.url}>{url}</div>
-          <div className={styles.select}>
-            <ConfirmIcon className={styles.icon} />
-            <span>Select</span>
-          </div>
-        </div>
-      )
-    })
-    return <div className={styles.content}>{listItems}</div>
+        )
+      })
+      return <div className={styles.content}>{listItems}</div>
+    }
+    return <span>Loading</span>
   }
 
   renderIcon = () => (
