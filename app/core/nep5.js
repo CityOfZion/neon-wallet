@@ -10,7 +10,6 @@ import {
   MAIN_NETWORK_ID,
   TEST_NETWORK_ID
 } from './constants'
-import { isEmpty } from 'rxjs/operators';
 
 let fetchedTokens
 
