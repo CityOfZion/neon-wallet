@@ -25,7 +25,7 @@ const getSettings = async (): Promise<Settings> => {
   const defaults = await DEFAULT_SETTINGS()
   const settings = await getStorage(STORAGE_KEY) || {}
 
-  // indicates that this user is running 0.2.8 or less
+  // indicates that this user is running 0.2.7 or less
   // and we override the saved settings with EXPLORERS.NEO_SCAN
   // until user updtates settings themselves
   if (!settings.version) {
