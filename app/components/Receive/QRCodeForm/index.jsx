@@ -16,7 +16,8 @@ import styles from './styles.scss'
 
 type Props = {
   className: ?string,
-  address: string
+  address: string,
+  onSubmit: Function,
 }
 
 type State = {
@@ -35,7 +36,7 @@ export default class QRCodeForm extends React.Component<Props, State> {
   }
 
   render() {
-    const { className, address } = this.props
+    const { className, address, onSubmit } = this.props
     const { asset, amount, note } = this.state
     const symbols = ['-', ASSETS.NEO, ASSETS.GAS, ...Object.keys(TOKENS)]
 
@@ -49,7 +50,7 @@ export default class QRCodeForm extends React.Component<Props, State> {
             Create a bespoke QR Code
           </div>
         </div>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={onSubmit}>
           <div className={styles.amountContainer}>
             <div className={styles.asset}>
               <div className={styles.inputDescription}>ASSET</div>

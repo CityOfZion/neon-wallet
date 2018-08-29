@@ -11,11 +11,13 @@ import styles from './styles.scss'
 type Props = {
   sendableAssets: Object,
   address: string,
+  onSubmit: Function
 }
 
 const ReceivePanel = ({
   sendableAssets,
-  address
+  address,
+  onSubmit
 }: Props) => {
   return (
     <Panel
@@ -26,7 +28,10 @@ const ReceivePanel = ({
       contentClassName={styles.receivePanelContent}
     >
       <ReceiveExplanation />
-      <QRCodeForm address={address} />
+      <QRCodeForm
+        address={address}
+        onSubmit={onSubmit}
+      />
     </Panel>
   )
 }

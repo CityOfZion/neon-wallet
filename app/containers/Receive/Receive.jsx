@@ -19,7 +19,8 @@ type Props = {
   currencyCode: string,
   address: string,
   loading: boolean,
-  loadWalletData: Function
+  loadWalletData: Function,
+  showReceiveModal: Function
 }
 
 type State = {
@@ -38,7 +39,8 @@ export default class Receive extends React.Component<Props, State> {
       currencyCode,
       loading,
       loadWalletData,
-      address
+      address,
+      showReceiveModal
     } = this.props
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 
@@ -55,7 +57,10 @@ export default class Receive extends React.Component<Props, State> {
             currencyCode={currencyCode}
           />
         )}
-        <ReceivePanel address={address} />
+        <ReceivePanel
+          address={address}
+          onSubmit={showReceiveModal}
+        />
       </section>
     )
   }
