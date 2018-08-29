@@ -10,6 +10,7 @@ import {
   MAIN_NETWORK_ID,
   TEST_NETWORK_ID
 } from './constants'
+import { isEmpty } from 'rxjs/operators';
 
 let fetchedTokens
 
@@ -45,8 +46,10 @@ export const getDefaultTokens = async (): Promise<Array<TokenItemType>> => {
         // if request to gh fails use hardcoded list
         fetchedTokens = TOKENS
       })
-    if (response && response.data) {
+    if (response && response.data && !isEmpty(response.data)) {
       fetchedTokens = response.data
+    } else {
+      fetchedTokens = TOKENS
     }
   }
 

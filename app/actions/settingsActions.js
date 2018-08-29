@@ -16,7 +16,7 @@ const STORAGE_KEY = 'settings'
 
 const DEFAULT_SETTINGS: () => Promise<Settings> = async () => ({
   currency: DEFAULT_CURRENCY_CODE,
-  blockExplorer: EXPLORERS.NEO_TRACKER,
+  blockExplorer: EXPLORERS.NEO_SCAN,
   tokens: await getDefaultTokens()
 })
 
