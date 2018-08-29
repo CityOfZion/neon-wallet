@@ -27,7 +27,6 @@ const TokenBalances = ({ tokenBalances, showModal }: Props) => (
     </thead>
     <tbody>
       {tokenBalances.map((token: TokenBalanceType, index: number) => {
-        console.log('TOKEN BALANCES', token)
         const { balance, symbol, scriptHash } = token
         const formattedBalance = formatBalance(symbol, balance)
         const formattedBalanceDisplay = formatBalance(symbol, balance, true)

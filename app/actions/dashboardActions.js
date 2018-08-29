@@ -20,7 +20,6 @@ async function getBalances (endpoint: string, { net, address, tokens }: Props) {
 
   const parsedTokenBalances = Object.keys(tokenBalances).map(tokenKey => {
     const foundToken = tokens.find(token => token.symbol === tokenKey)
-    console.log({foundToken})
     if (foundToken && tokenBalances[tokenKey]) {
       return {
         [foundToken.scriptHash]: {...foundToken, balance: tokenBalances[tokenKey]}

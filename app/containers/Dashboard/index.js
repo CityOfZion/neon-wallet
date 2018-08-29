@@ -49,7 +49,6 @@ const mapDashboardDataToProps = (dashboardData: {
   tokenBalances: Array<string>,
   icoTokenBalances: Array<string>
 } => {
-  console.log({dashboardData})
   const balances = get(dashboardData, 'balances')
   return {
     NEO: get(balances, 'NEO', null),
