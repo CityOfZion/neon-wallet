@@ -22,12 +22,13 @@ export const adjustDecimalAmountForTokenTransfer = (value: string): string =>
 const getTokenEntry = ((): Function => {
   let id = 1
 
-  return (symbol: string, scriptHash: string, networkId: string) => ({
+  return (symbol: string, scriptHash: string, networkId: string, networkData: Object) => ({
     id: `${id++}`,
     symbol,
     scriptHash,
     networkId,
-    isUserGenerated: false
+    isUserGenerated: false,
+    ...networkData
   })
 })()
 
@@ -58,7 +59,7 @@ export const getDefaultTokens = async (): Promise<Array<TokenItemType>> => {
         tokenData.symbol,
         tokenData.networks['1'].hash,
         MAIN_NETWORK_ID,
-        tokenData.image
+        tokenData.networks['1']
       )
     )
   )
