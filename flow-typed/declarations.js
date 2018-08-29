@@ -59,7 +59,8 @@ declare type TokenItemType = {
   id: string,
   scriptHash: string,
   networkId: string,
-  isUserGenerated: boolean
+  isUserGenerated: boolean,
+  symbol: string
 }
 
 declare type TokenType = {
