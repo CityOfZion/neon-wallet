@@ -28,7 +28,8 @@ const getTokenEntry = ((): Function => {
     scriptHash,
     networkId,
     isUserGenerated: false,
-    ...networkData
+    totalSupply: networkData.totalSupply,
+    decimals: networkData.decimals
   })
 })()
 

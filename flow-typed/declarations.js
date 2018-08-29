@@ -60,7 +60,9 @@ declare type TokenItemType = {
   scriptHash: string,
   networkId: string,
   isUserGenerated: boolean,
-  symbol: string
+  symbol?: string,
+  totalSupply?: number,
+  decimals?: number
 }
 
 declare type TokenType = {
