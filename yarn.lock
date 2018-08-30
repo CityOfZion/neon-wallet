@@ -8994,7 +8994,7 @@ rx-lite@*, rx-lite@^4.0.8:
 
 rxjs@^6.2.2:
   version "6.2.2"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.2.2.tgz#f733027ca43e3bec6b994473be4ab98ad43ced87"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.2.2.tgz#eb75fa3c186ff5289907d06483a77884586e1cf9"
   dependencies:
     symbol-observable "1.0.1"
 
