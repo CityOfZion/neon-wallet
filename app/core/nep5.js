@@ -22,7 +22,7 @@ export const adjustDecimalAmountForTokenTransfer = (value: string): string =>
 const getTokenEntry = ((): Function => {
   let id = 1
 
-  return (symbol: string, scriptHash: string, networkId: string, networkData: Object) => ({
+  return (symbol: string, scriptHash: string, networkId: string, networkData: Object = {}) => ({
     id: `${id++}`,
     symbol,
     scriptHash,
