@@ -23,21 +23,21 @@ type Props = {
 type State = {
   asset: ?string,
   amount: ?number,
-  note: ?string
+  description: ?string
 }
 
 export default class QRCodeForm extends React.Component<Props, State> {
   image: ?HTMLImageElement
 
   state = {
-    asset: null,
-    amount: 0,
-    note: null
+    asset: undefined,
+    amount: undefined,
+    description: undefined
   }
 
   render() {
     const { className, address, onSubmit } = this.props
-    const { asset, amount, note } = this.state
+    const { asset, amount, description } = this.state
     const symbols = ['-', ASSETS.NEO, ASSETS.GAS, ...Object.keys(TOKENS)]
 
     return (
@@ -50,7 +50,15 @@ export default class QRCodeForm extends React.Component<Props, State> {
             Create a bespoke QR Code
           </div>
         </div>
-        <form className={styles.form} onSubmit={onSubmit}>
+        <form
+          className={styles.form}
+          onSubmit={() => onSubmit({
+            address,
+            asset: (TOKENS[asset] && TOKENS[asset].networks['1'].hash) || (asset === '-' ? undefined : asset),
+            amount,
+            description,
+          })}
+        >
           <div className={styles.amountContainer}>
             <div className={styles.asset}>
               <div className={styles.inputDescription}>ASSET</div>
@@ -79,9 +87,9 @@ export default class QRCodeForm extends React.Component<Props, State> {
           <div className={styles.rowContainer}>
             <div className={styles.inputDescription}>REFERENCE</div>
             <TextInput
-              value={note}
+              value={description}
               placeholder="Add a note..."
-              onChange={e => this.setState({ note: e.target.value })}
+              onChange={e => this.setState({ description: e.target.value })}
             />
           </div>
           <Button

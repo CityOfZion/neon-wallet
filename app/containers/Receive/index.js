@@ -18,6 +18,7 @@ import withCurrencyData from '../../hocs/withCurrencyData'
 import withFilteredTokensData from '../../hocs/withFilteredTokensData'
 import contactsActions from '../../actions/contactsActions'
 import accountActions from '../../actions/accountActions'
+import accountsActions from '../../actions/accountsActions'
 import withLoadingProp from '../../hocs/withLoadingProp'
 import balancesActions from '../../actions/balancesActions'
 import withSuccessNotification from '../../hocs/withSuccessNotification'
@@ -82,6 +83,10 @@ const mapAccountActionsToProps = (actions, props) => ({
     })
 })
 
+const mapAccountsDataToProps = accounts => ({
+  accounts
+})
+
 export default compose(
   connect(
     mapStateToProps,
@@ -94,6 +99,7 @@ export default compose(
   withNetworkData(),
   withAuthData(),
   withActions(accountActions, mapAccountActionsToProps),
+  withData(accountsActions, mapAccountsDataToProps),
   withFilteredTokensData(),
   withLoadingProp(balancesActions),
   withSuccessNotification(

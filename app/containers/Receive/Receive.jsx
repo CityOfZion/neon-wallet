@@ -16,21 +16,25 @@ import styles from './Receive.scss'
 
 type Props = {
   sendableAssets: Object,
-  currencyCode: string,
-  address: string,
+  currencyCode: String,
+  address: String,
+  accounts: Array,
   loading: boolean,
   loadWalletData: Function,
   showReceiveModal: Function
 }
 
 type State = {
-
+  walletName: string,
 }
 
 export default class Receive extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
-    this.state = {}
+    const walletName = props.accounts.reduce((accum, account) => (
+      account.address === props.address ? account.label : accum
+    ), null)
+    this.state = { walletName }
   }
 
   render() {
@@ -42,6 +46,7 @@ export default class Receive extends React.Component<Props, State> {
       address,
       showReceiveModal
     } = this.props
+    const { walletName } = this.state
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 
     return (
@@ -59,7 +64,7 @@ export default class Receive extends React.Component<Props, State> {
         )}
         <ReceivePanel
           address={address}
-          onSubmit={showReceiveModal}
+          onSubmit={props => showReceiveModal({...props, walletName })}
         />
       </section>
     )

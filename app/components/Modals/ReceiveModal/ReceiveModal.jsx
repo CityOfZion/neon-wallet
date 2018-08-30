@@ -1,42 +1,144 @@
 // @flow
 import React from 'react'
-import { noop } from 'lodash'
+import NeoQR from 'neo-qrcode'
 
 import BaseModal from '../BaseModal'
 import Button from '../../Button'
 import styles from './style.scss'
 import GridIcon from '../../../assets/icons/grid.svg'
+import CopyToClipboard from '../../CopyToClipboard'
+import { ASSETS, TOKENS } from '../../../core/constants'
 
 type Props = {
   hideModal: Function,
-  walletName: string,
+  walletName: String,
+  address: String,
+  asset: String,
+  amount: String,
+  description: String,
 }
 
-const ReceiveModal = ({
-  hideModal,
-  walletName,
-}: Props) => (
-  <BaseModal
-    title='Your QR Code'
-    hideModal={hideModal}
-    style={{ content: { width: '700px', height: '750px' } }}
+type State = {
+  imgUri: String,
+}
 
-  >
-    <div className={styles.header}>
-      <GridIcon className={styles.icon}/>
-      <div className={styles.title}>
-        {'Your QR Code'}
-      </div>
-    </div>
-    <div className={styles.subHeader}>
-      <div className={styles.title}>
-        {'Receive assets'}
-      </div>
-      <div className={styles.walletName}>
-        {walletName}
-      </div>
-    </div>
-  </BaseModal>
-)
+export default class ReceiveModal extends React.Component<Props, State> {
 
-export default ReceiveModal
+  image: ?HTMLImageElement
+
+  state = {
+    imgUri: '',
+  }
+
+  componentDidMount () {
+    const {
+      hideModal,
+      walletName,
+      address,
+      asset,
+      amount,
+      description,
+    } = this.props
+
+    const qrCode = new NeoQR({
+      nep9Data: {
+        address,
+        asset,
+        amount,
+        description,
+      },
+    })
+
+    qrCode.toDataURL()
+      .then(imgData => {
+        if (this.image) {
+          this.image.src = imgData
+        }
+      })
+
+    this.setState({ imgUri: qrCode.uri.replace('neo:', '') })
+  }
+
+  render () {
+    const {
+      hideModal,
+      walletName,
+      address,
+      asset,
+      amount,
+      description,
+    } = this.props
+
+    const { imgUri } = this.state
+
+    const assetSymbol = ASSETS[asset] ? asset : Object.values(TOKENS).reduce((accum, token) => {
+      return token.networks['1'].hash === asset ? token.symbol : accum
+    }, asset)
+
+    return (
+      <BaseModal
+        title='Your QR Code'
+        hideModal={hideModal}
+        style={{ content: { width: '775px', height: '830px' } }}
+
+      >
+        <div className={styles.contentContainer}>
+          <div className={styles.header}>
+            <GridIcon className={styles.icon}/>
+            <div className={styles.title}>
+              {'Your QR Code'}
+            </div>
+          </div>
+
+          <div className={styles.subHeader}>
+            <div className={styles.title}>
+              {'Receive assets'}
+            </div>
+            <div className={styles.walletName}>
+              {walletName}
+            </div>
+          </div>
+
+          <div className={styles.section}>
+            <div className={styles.sectionTitle}>
+              {'PAYMENT REQUEST DETAILS'}
+            </div>
+            <div className={styles.sectionContent}>
+              <div className={styles.assetAmount}>
+                {(amount ? `${amount} ` : '') + (assetSymbol || '')}
+              </div>
+              <div className={styles.address}>
+                {address}
+              </div>
+              <div className={styles.description}>
+                {description || '(No Reference)'}
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.section}>
+            <div className={styles.sectionTitle}>
+              {'YOUR QR CODE'}
+            </div>
+            <div className={styles.qrcode}>
+              <img ref={(el: ?HTMLImageElement) => { this.image = el }} />
+            </div>
+          </div>
+
+          <div className={styles.urlSection}>
+            <div className={styles.sectionTitle}>
+              {'IMAGE URL'}
+            </div>
+            <div className={styles.sectionContent}>
+              <div className={styles.imgUri}>
+                <div>{'https://nep9.o3.network/'}</div>
+                <div>{imgUri}</div>
+              </div>
+              <CopyToClipboard text={`https://nep9.o3.network/${imgUri}`} />
+            </div>
+          </div>
+        </div>
+      </BaseModal>
+    )
+  }
+}
