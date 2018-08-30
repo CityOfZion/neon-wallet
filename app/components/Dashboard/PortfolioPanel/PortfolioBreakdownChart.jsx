@@ -63,7 +63,6 @@ export default class PortfolioBreakdownChart extends React.Component<Props> {
               id="totalWalletValue"
             />
           </Pie>
-          <Tooltip formatter={this.formatValue} />
         </PieChart>
       </ResponsiveContainer>
     )
@@ -84,9 +83,6 @@ export default class PortfolioBreakdownChart extends React.Component<Props> {
 
   getData = () =>
     map(this.props.balances, ({ value }, symbol) => ({ symbol, value }))
-
-  formatValue = (value: number): string =>
-    `$${formatThousands(value.toString())}`
 
   formatPrice = (
     price: number,
