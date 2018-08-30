@@ -85,6 +85,43 @@ const SendPanel = ({
         clearErrors={clearErrors}
         showConfirmSend={showConfirmSend}
       />
+      <div className={styles.priorityExplanationText}>
+        Prioritize your transfer with a fee?
+      </div>
+
+      <div className={styles.priorityFeeButtonContainer}>
+        <Button
+          primary
+          className={styles.sendFormButton}
+          renderIcon={() => <SendIcon />}
+          type="submit"
+          disabled={shouldDisableSendButton(sendRowDetails)}
+        >
+          <div>
+            <div>Fast</div>
+            <div>0.00000001 GAS </div>
+          </div>
+        </Button>
+        <Button
+          primary
+          className={styles.sendFormButton}
+          renderIcon={() => <SendIcon />}
+          type="submit"
+          disabled={shouldDisableSendButton(sendRowDetails)}
+        >
+          Faster
+        </Button>
+        <Button
+          primary
+          className={styles.sendFormButton}
+          renderIcon={() => <SendIcon />}
+          type="submit"
+          disabled={shouldDisableSendButton(sendRowDetails)}
+        >
+          Fastest
+        </Button>
+      </div>
+
       <Button
         primary
         className={styles.sendFormButton}
@@ -92,7 +129,7 @@ const SendPanel = ({
         type="submit"
         disabled={shouldDisableSendButton(sendRowDetails)}
       >
-        Send {pluralize('Asset', sendRowDetails.length)}
+        Send {pluralize('Asset', sendRowDetails.length)} Without Fee
       </Button>
     </form>
   )

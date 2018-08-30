@@ -52,7 +52,7 @@
 }
 
 .sendFormButton {
-  width: 200px;
+  width: 450px;
   margin: 10px auto 50px auto;
   min-height: 49px;
 }
@@ -73,4 +73,21 @@
 
 .sendSuccessPanel {
   margin-top: 25px;
+}
+
+.priorityExplanationText {
+  text-transform: uppercase;
+  font-size: 14px;
+  text-align: center;
+}
+
+.priorityFeeButtonContainer {
+  display: flex;
+  // width: 200px;
+  justify-content: center;
+  //margin: auto;
+  button {
+    width: 150px;
+    margin: 0;
+  }
 }
