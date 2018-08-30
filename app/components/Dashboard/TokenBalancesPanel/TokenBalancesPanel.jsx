@@ -28,17 +28,11 @@ export default class TokenBalancesPanel extends React.Component<Props> {
     return (
       <Panel
         className={classNames(styles.tokenBalancesPanel, className)}
+        contentClassName={styles.tokenBalancesPanelContent}
+        headerClassName={styles.headerStyle}
         renderHeader={this.renderHeader}
       >
-        <div className={styles.tokenBalancesPanelContent}>
-          <div className={styles.tableHeader}>
-            <div className={styles.symbol}>Ticker</div>
-            <div className={styles.name}>Token</div>
-            <div className={styles.priceLabel}>Price</div>
-            <div className={styles.balance}>Holdings</div>
-          </div>
-          {balances.sort(this.sortByValueInPortfolio).map(this.renderToken)}
-        </div>
+        {balances.sort(this.sortByValueInPortfolio).map(this.renderToken)}
       </Panel>
     )
   }
@@ -78,8 +72,18 @@ export default class TokenBalancesPanel extends React.Component<Props> {
   }
 
   renderHeader = () => (
-    <div className={styles.header}>
-      <span>Token Balances</span>
+    <div>
+      <div className={styles.header}>
+        <span>Token Balances</span>
+      </div>
+      <div className={styles.tokenBalancesPanelContent}>
+        <div className={styles.tableHeader}>
+          <div className={styles.symbol}>Ticker</div>
+          <div className={styles.name}>Token</div>
+          <div className={styles.priceLabel}>Price</div>
+          <div className={styles.balance}>Holdings</div>
+        </div>
+      </div>
     </div>
   )
 
