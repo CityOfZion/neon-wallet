@@ -8,25 +8,30 @@ const getBlockCount = async node =>
     let url = node.protocol ? `${node.protocol}://${node.url}` : node.url
     url = node.port ? `${url}:${node.port}` : url
 
-    rpc.Query.getBlockCount()
-      .execute(url)
-      .then(blockCount => {
-        resolve({
-          url,
-          blockCount: blockCount.result
-        })
+    const client = new rpc.RPCClient(url)
+    client
+      .ping()
+      .then(latency => {
+        if (client.lastSeenHeight !== 0) {
+          resolve({
+            url,
+            blockCount: client.lastSeenHeight,
+            latency
+          })
+        }
       })
+      .catch({})
   })
 
 const ID = 'nodes'
 
-const raceN = (n, promises) => {
-  const resolved = []
-  return new Promise(res =>
+const raceNodePromises = (total, promises) => {
+  const responses = []
+  return new Promise(resolve =>
     promises.forEach(promise =>
-      promise.then(x => {
-        resolved.push(x)
-        if (resolved.length === n) res(resolved)
+      promise.then(result => {
+        responses.push(result)
+        if (responses.length === total) resolve(responses)
       })
     )
   )
@@ -36,8 +41,7 @@ export default createActions(
   ID,
   ({ nodes = NODES, totalDisplayed = 15 }: Props = {}) => async () => {
     const promises = nodes.map(node => getBlockCount(node))
-
-    const r = await raceN(totalDisplayed, promises)
-    return r
+    const result = await raceNodePromises(totalDisplayed, promises)
+    return result
   }
 )

@@ -77,30 +77,19 @@ export default class NodeSelect extends React.Component<Props, State> {
     return styles.fair
   }
 
-  // FIXME temp random latency generator
-  getRandomLatency = () => {
-    const min = 1
-    const max = 1000
-    const rand = min + Math.random() * (max - min)
-    return Math.round(rand)
-  }
-
   // FIXME remove index as key - unreliable
   renderNodeList = () => {
     const { nodes } = this.props
     if (nodes) {
       const listItems = nodes.map((node, index) => {
-        const latency = this.getRandomLatency()
-        const url = node.protocol ? `${node.protocol}://${node.url}` : node.url
+        const { latency, blockCount, url } = node
         return (
           <div key={index} className={styles.row}>
             <div className={styles.latency}>
               <div className={this.getLatencyClass(latency)} />
               <span>{latency}ms</span>
             </div>
-            <div className={styles.blockHeight}>
-              Block Height: {node.blockCount}
-            </div>
+            <div className={styles.blockHeight}>Block Height: {blockCount}</div>
             <div className={styles.url}>{url}</div>
             <div className={styles.select}>
               <ConfirmIcon className={styles.icon} />
@@ -136,9 +125,6 @@ export default class NodeSelect extends React.Component<Props, State> {
 
   getSort = () => {
     const { sort } = this.props
-    if (!sort) {
-      return ''
-    }
     return SORT_BY_LATENCY[sort]
   }
 }
