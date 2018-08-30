@@ -5,9 +5,10 @@ import { withData, withCall } from 'spunky'
 import NodeSelect from './NodeSelect'
 import nodeDataActions from '../../actions/nodeDataActions'
 
-const mapNodesDataToProps = (nodes: Object) => ({
-  nodes
-})
+const mapNodesDataToProps = (nodes: Object) => {
+  debugger
+  return { nodes }
+}
 
 export default compose(
   withState('sort', 'setSort', 'highToLow'),
