@@ -3,14 +3,16 @@ import { api, u } from 'neon-js'
 import claimsActions from '../../app/actions/claimsActions'
 import { mockPromiseResolved } from '../testHelpers'
 
+const apiClone = Object.assign({}, api.neoscan)
+
 describe('claimsActions', () => {
   const net = 'TestNet'
   const address = 'AW4FD7bz6PF2QadFKF8qXUT7tNmWgvXZc4'
 
   beforeEach(() => {
-    jest
-      .spyOn(api.neoscan, 'getMaxClaimAmount')
-      .mockImplementation(mockPromiseResolved(new u.Fixed8('1.59140785')))
+    jest.spyOn(apiClone, 'getMaxClaimAmount').mockImplementation(
+      mockPromiseResolved(new u.Fixed8('1.59140785'))
+    )
   })
 
   afterEach(() => {
