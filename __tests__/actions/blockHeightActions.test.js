@@ -1,13 +1,17 @@
+/* eslint-disable */
+
 import { api } from 'neon-js'
 
 import blockHeightActions from '../../app/actions/blockHeightActions'
 import { TEST_NETWORK_ID } from '../../app/core/constants'
 import { mockPromiseResolved } from '../testHelpers'
 
+const apiClone = Object.assign({}, api.neoscan)
+
 describe('blockHeightActions', () => {
   beforeEach(() => {
     jest
-      .spyOn(api.neoscan, 'getWalletDBHeight')
+      .spyOn(apiClone, 'getWalletDBHeight')
       .mockImplementation(mockPromiseResolved(586435))
   })
 
