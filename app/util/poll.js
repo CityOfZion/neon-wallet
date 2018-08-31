@@ -8,6 +8,7 @@ export default function poll(
   { attempts = DEFAULT_ATTEMPTS, frequency = DEFAULT_FREQUENCY } = {}
 ) {
   return request().catch(function retry(err) {
+    // eslint-disable-next-line
     if (attempts-- > 0) {
       return delay(frequency)
         .then(request)

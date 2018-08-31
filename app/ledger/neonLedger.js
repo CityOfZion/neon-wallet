@@ -1,8 +1,11 @@
 // @flow
 import { tx, wallet, u } from 'neon-js'
+import { cloneDeep } from 'lodash'
 import type { Transaction } from 'neon-js'
+
 import LedgerNode from '@ledgerhq/hw-transport-node-hid'
 import asyncWrap from '../core/asyncHelper'
+import { BIP44_PATH } from '../core/constants'
 
 const VALID_STATUS = 0x9000
 const MSG_TOO_BIG = 0x6d08
@@ -15,7 +18,8 @@ const TX_PARSE_ERR = 0x6d07
  * @param {Error} err
  * @return {Error}
  */
-const evalTransportError = err => {
+const evalTransportError = error => {
+  const err = cloneDeep(error)
   switch (err.statusCode) {
     case APP_CLOSED:
       err.message = 'Your NEO app is closed! Please login.'
@@ -37,9 +41,7 @@ const evalTransportError = err => {
 
 const BIP44 = (acct = 0) => {
   const acctNumber = acct.toString(16)
-  return `${'8000002C' + '80000378' + '80000000' + '00000000'}${'0'.repeat(
-    8 - acctNumber.length
-  )}${acctNumber}`
+  return `${BIP44_PATH}${'0'.repeat(8 - acctNumber.length)}${acctNumber}`
 }
 
 export default class NeonLedger {
@@ -146,15 +148,17 @@ export default class NeonLedger {
    * @return {Promise<string>}
    */
   async getSignature(data: string, acct: number = 0): Promise<string> {
-    data += BIP44(acct)
+    data += BIP44(acct) // eslint-disable-line
     let response = null
     const chunks = data.match(/.{1,510}/g) || []
     if (!chunks.length) throw new Error(`Invalid data provided: ${data}`)
+    // eslint-disable-next-line
     for (let i = 0; i < chunks.length; i++) {
       const p = i === chunks.length - 1 ? '80' : '00'
       // $FlowFixMe
       const chunk = chunks[i]
       const params = `8002${p}00`
+      // eslint-disable-next-line
       const [err, res] = await asyncWrap(
         this.send(params, chunk, [VALID_STATUS])
       )
@@ -165,7 +169,7 @@ export default class NeonLedger {
       throw new Error('No more data but Ledger did not return signature!')
     }
     // $FlowFixMe
-    return assembleSignature(response.toString('hex'))
+    return assembleSignature(response.toString('hex')) //eslint-disable-line
   }
 }
 
@@ -188,9 +192,11 @@ const assembleSignature = (response: string): string => {
   // We will need to ensure both integers are 32 bytes long
   const integers = [r, s].map(i => {
     if (i.length < 64) {
+      // eslint-disable-next-line
       i = i.padStart(64, '0')
     }
     if (i.length > 64) {
+      // eslint-disable-next-line
       i = i.substr(-64)
     }
     return i

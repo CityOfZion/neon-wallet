@@ -1,4 +1,3 @@
-
 // @flow
 import { createBatchActions } from 'spunky'
 

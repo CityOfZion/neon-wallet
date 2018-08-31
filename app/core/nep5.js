@@ -29,9 +29,14 @@ const getTokenEntry = ((): Function => {
     image: string,
     totalSupply: number,
     decimals: number
-  ) => {
-  return (symbol: string, scriptHash: string, networkId: string, image: string, networkData: Object = {}) => ({
-    id: `${id++}`,
+  ) => (
+    symbol: string,
+    scriptHash: string,
+    networkId: string,
+    image: string,
+    networkData: Object = {}
+  ) => ({
+    id: `${id++}`, // eslint-disable-line
     symbol,
     scriptHash,
     networkId,
@@ -39,7 +44,8 @@ const getTokenEntry = ((): Function => {
     image,
     totalSupply: networkData.totalSupply,
     decimals: networkData.decimals
-  })}})()
+  })
+})()
 
 export const getDefaultTokens = async (): Promise<Array<TokenItemType>> => {
   const tokens = []

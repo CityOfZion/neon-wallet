@@ -37,11 +37,11 @@ const getSettings = async (): Promise<Settings> => {
     settings.blockExplorer = EXPLORERS.NEO_SCAN
   }
 
-  const version = pack.version
-  const tokens = uniqBy([
-    ...defaults.tokens || [],
-    ...settings.tokens || []
-  ], (token) => [token.networkId, token.scriptHash].join('-'))
+  const { version } = pack
+  const tokens = uniqBy(
+    [...(defaults.tokens || []), ...(settings.tokens || [])],
+    token => [token.networkId, token.scriptHash].join('-')
+  )
 
   return { ...defaults, ...settings, tokens, version }
 }
