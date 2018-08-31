@@ -71,7 +71,7 @@ declare type TokenItemType = {
   symbol?: string,
   totalSupply?: number,
   decimals?: number,
-  image: string | void
+  image?: ?string
 }
 
 declare type TokenType = {
