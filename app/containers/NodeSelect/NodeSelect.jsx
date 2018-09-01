@@ -9,12 +9,9 @@ import ConfirmIcon from '../../assets/icons/confirm.svg'
 import styles from './NodeSelect.scss'
 
 type Node = {
-  protocal: string,
+  latency: string,
   url: string,
-  location: string,
-  port: string,
-  locale: string,
-  type: string
+  blockCount: int
 }
 
 type Props = {
