@@ -1,16 +1,12 @@
 // @flow
 import React from 'react'
-import { keys } from 'lodash'
 
 import { ROUTES } from '../../core/constants'
 import FullHeightPanel from '../../components/Panel/FullHeightPanel'
 import NodeSelectIcon from '../../assets/icons/node-select.svg'
 import CloseButton from '../../components/CloseButton'
-import DropdownIcon from '../../assets/icons/dropdown.svg'
 import ConfirmIcon from '../../assets/icons/confirm.svg'
 import styles from './NodeSelect.scss'
-
-type Sort = 'highToLow' | 'lowToHigh'
 
 type Node = {
   protocal: string,
