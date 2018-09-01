@@ -1,6 +1,6 @@
 {
   "name": "Neon",
-  "version": "0.2.8",
+  "version": "0.2.7",
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",
   "homepage": "https://github.com/CityOfZion/neon-wallet",
@@ -167,7 +167,7 @@
     "html-webpack-plugin": "2.30.1",
     "husky": "0.14.3",
     "identity-obj-proxy": "3.0.0",
-    "jest": "23.5.0",
+    "jest": "22.4.2",
     "json-loader": "0.5.7",
     "node-sass": "4.6.0",
     "prettier": "1.13.5",
