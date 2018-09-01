@@ -1,11 +1,14 @@
 // @flow
 import React from 'react'
+import classNames from 'classnames'
 
 import { ROUTES } from '../../core/constants'
 import FullHeightPanel from '../../components/Panel/FullHeightPanel'
 import NodeSelectIcon from '../../assets/icons/node-select.svg'
 import CloseButton from '../../components/CloseButton'
 import ConfirmIcon from '../../assets/icons/confirm.svg'
+import RefreshIcon from '../../assets/icons/refresh.svg'
+import Tooltip from '../../components/Tooltip'
 import styles from './NodeSelect.scss'
 
 type Node = {
@@ -15,12 +18,14 @@ type Node = {
 }
 
 type Props = {
-  nodes: Node[]
+  nodes: Node[],
+  loading: Boolean,
+  loadNodesData: Function
 }
 
 export default class NodeSelect extends React.Component<Props, State> {
   render() {
-    const { nodes } = this.props
+    const { nodes, loading, loadNodesData } = this.props
     const count = nodes ? nodes.length : 0
     return (
       <FullHeightPanel
@@ -33,11 +38,25 @@ export default class NodeSelect extends React.Component<Props, State> {
       >
         <section className={styles.tableContainer}>
           <div className={styles.header}>
+            <Tooltip title="Refresh" className={styles.refresh}>
+              <span onClick={loading ? null : loadNodesData}> Refresh </span>
+              <RefreshIcon
+                id="refresh"
+                onClick={loading ? null : this.getNodes}
+                className={classNames(styles.icon, {
+                  [styles.loading]: loading
+                })}
+              />
+            </Tooltip>
+
             <div className={styles.count}>Top {count} nodes listed</div>
-            <div className={styles.automaticSelect}>
+            <Tooltip
+              title="Select automatically"
+              className={styles.automaticSelect}
+            >
               <ConfirmIcon className={styles.icon} />
               <span>Select automatically</span>
-            </div>
+            </Tooltip>
           </div>
           {this.renderNodeList()}
         </section>

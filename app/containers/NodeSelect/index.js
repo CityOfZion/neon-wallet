@@ -3,6 +3,7 @@ import { compose, withState } from 'recompose'
 import {
   withData,
   withCall,
+  withActions,
   alreadyLoadedStrategy,
   progressValues,
   withProgressComponents
@@ -13,6 +14,8 @@ import nodeDataActions from '../../actions/nodeDataActions'
 import Loading from '../App/Loading'
 
 const { LOADING } = progressValues
+
+const count = 15
 
 const sortByBlockCountThenLatency = (a, b) => {
   if (a.blockCount < b.blockCount) {
@@ -35,10 +38,15 @@ const mapNodesDataToProps = (nodes: Object) => ({
   nodes: nodes.sort(sortByBlockCountThenLatency)
 })
 
+const mapNodesActionsToProps = actions => ({
+  loadNodesData: () => actions.call()
+})
+
 export default compose(
   withState('sort', 'setSort', 'highToLow'),
-  withState('nodesShown', 'setNodesShown', 15),
+  withState('nodesShown', 'setNodesShown', count),
   withCall(nodeDataActions),
+  withActions(nodeDataActions, mapNodesActionsToProps),
   withProgressComponents(
     nodeDataActions,
     {

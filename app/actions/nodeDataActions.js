@@ -23,8 +23,6 @@ const getBlockCount = async node =>
       .catch({})
   })
 
-const ID = 'nodes'
-
 const raceNodePromises = (total, promises) => {
   const responses = []
   return new Promise(resolve =>
@@ -36,6 +34,8 @@ const raceNodePromises = (total, promises) => {
     )
   )
 }
+
+const ID = 'nodes'
 
 export default createActions(
   ID,
