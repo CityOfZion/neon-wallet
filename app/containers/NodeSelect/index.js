@@ -9,6 +9,8 @@ import {
   withProgressComponents
 } from 'spunky'
 
+import withLoadingProp from '../../hocs/withLoadingProp'
+
 import NodeSelect from './NodeSelect'
 import nodeDataActions from '../../actions/nodeDataActions'
 import Loading from '../App/Loading'
@@ -56,5 +58,6 @@ export default compose(
       strategy: alreadyLoadedStrategy
     }
   ),
-  withData(nodeDataActions, mapNodesDataToProps)
+  withData(nodeDataActions, mapNodesDataToProps),
+  withLoadingProp(nodeDataActions)
 )(NodeSelect)
