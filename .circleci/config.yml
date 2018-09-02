@@ -15,8 +15,7 @@ references:
           TARGET_ARCH: x64
     working_directory: ~/neon-wallet
 
-  workspace_root: &workspace_root
-    ~/neon-wallet
+  workspace_root: &workspace_root ~/neon-wallet
 
   attach_workspace: &attach_workspace
     attach_workspace:
@@ -31,9 +30,10 @@ jobs:
           key: neon-wallet-{{ checksum "yarn.lock" }}
       - run: apt-get -y update
       - run: apt-get -y install libusb-1.0-0-dev icnsutils graphicsmagick libudev-dev
-      - run: yarn
-      # - run: yarn lint
-      # - run: yarn flow
+      - run: yarn config delete proxy
+      - run: yarn install --network-timeout 1000000
+      - run: yarn lint
+      - run: yarn flow
       - run: yarn dist
       - save_cache:
           key: neon-wallet-{{ checksum "yarn.lock" }}
@@ -55,17 +55,17 @@ jobs:
       - run: apt-get -y install libusb-1.0-0-dev graphicsmagick libudev-dev
       - run: apt-get -y install libxtst6 libxss1 libgtk2.0-0 libnss3 libasound2 libgconf-2-4
       - run: yarn test-ci
-#      - run:
-#          name: Running Xvfb for e2e test
-#          command: Xvfb -ac :99 -screen 0 1280x1024x16
-#          background: true
-#      - run:
-#          name: Run e2e tests
-#          command: |
-#            yarn
-#            yarn assets
-#            export DISPLAY=:99
-#            yarn test:e2e
+    #      - run:
+    #          name: Running Xvfb for e2e test
+    #          command: Xvfb -ac :99 -screen 0 1280x1024x16
+    #          background: true
+    #      - run:
+    #          name: Run e2e tests
+    #          command: |
+    #            yarn
+    #            yarn assets
+    #            export DISPLAY=:99
+    #            yarn test:e2e
     store_artifacts:
       - path: artifacts/
       - destination: yarnpkg

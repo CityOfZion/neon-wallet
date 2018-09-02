@@ -16,6 +16,7 @@ export default class SendPageHeader extends Component<Props> {
     const { loading, loadWalletData } = this.props
     return (
       <section className={styles.sendPageHeader}>
+        {/* eslint-disable-next-line */}
         <h1 className={styles.sendPageHeading}>Send Assets</h1>
         <Tooltip title="Refresh" className={styles.headerButtonContainer}>
           <span onClick={loading ? null : loadWalletData}> Refresh </span>

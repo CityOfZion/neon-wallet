@@ -142,7 +142,6 @@ export default class SelectInput extends React.Component<Props, State> {
         className={styles.dropdownItem}
         key={value}
         aria-label={value}
-        tabIndex={0}
         onClick={onSelect}
       >
         <Highlighter

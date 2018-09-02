@@ -43,12 +43,7 @@ export default class AddressInput extends React.Component<Props> {
     item: ItemType,
     { search, onSelect }: { search: string, onSelect: Function }
   ) => (
-    <div
-      className={styles.addressItem}
-      key={item.label}
-      tabIndex={0}
-      onClick={onSelect}
-    >
+    <div className={styles.addressItem} key={item.label} onClick={onSelect}>
       <div className={styles.label}>
         <Highlighter
           highlightTag="span"
