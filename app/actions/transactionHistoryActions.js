@@ -29,23 +29,20 @@ function sum(txns, address, asset) {
 
 export const ID = 'transactionHistory'
 
-export default createActions(
-  ID,
-  ({ net, address }: Props = {}) => async (state: Object) => {
-    const endpoint = api.neoscan.getAPIEndpoint(net)
-    const { data } = await axios.get(
-      `${endpoint}/v1/get_last_transactions_by_address/${address}`
-    )
+export default createActions(ID, ({ net, address }: Props = {}) => async () => {
+  const endpoint = api.neoscan.getAPIEndpoint(net)
+  const { data } = await axios.get(
+    `${endpoint}/v1/get_last_transactions_by_address/${address}`
+  )
 
-    return data.map(({ txid, vin, vouts }) => ({
-      txid,
-      [ASSETS.NEO]: sum(vouts, address, NEO_ID)
-        .minus(sum(vin, address, NEO_ID))
-        .toFixed(0),
-      [ASSETS.GAS]: sum(vouts, address, GAS_ID)
-        .minus(sum(vin, address, GAS_ID))
-        .round(COIN_DECIMAL_LENGTH)
-        .toString()
-    }))
-  }
-)
+  return data.map(({ txid, vin, vouts }) => ({
+    txid,
+    [ASSETS.NEO]: sum(vouts, address, NEO_ID)
+      .minus(sum(vin, address, NEO_ID))
+      .toFixed(0),
+    [ASSETS.GAS]: sum(vouts, address, GAS_ID)
+      .minus(sum(vin, address, GAS_ID))
+      .round(COIN_DECIMAL_LENGTH)
+      .toString()
+  }))
+})

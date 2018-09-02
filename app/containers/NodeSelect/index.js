@@ -1,5 +1,5 @@
 // @flow
-import { compose, withState } from 'recompose'
+import { compose, withProps } from 'recompose'
 import {
   withData,
   withCall,
@@ -12,7 +12,8 @@ import {
 import withLoadingProp from '../../hocs/withLoadingProp'
 
 import NodeSelect from './NodeSelect'
-import nodeDataActions from '../../actions/nodeDataActions'
+import nodeNetworkActions from '../../actions/nodeNetworkActions'
+import nodeStorageActions from '../../actions/nodeStorageActions'
 import Loading from '../App/Loading'
 
 const { LOADING } = progressValues
@@ -33,24 +34,43 @@ const sortByBlockCountThenLatency = (a, b) => {
   if (a.latency > b.latency) {
     return 1
   }
+
+  if (a.url < b.url) {
+    return -1
+  }
+  if (a.url > b.url) {
+    return 1
+  }
   return 0
 }
 
-const mapNodesDataToProps = (nodes: Object) => ({
-  nodes: nodes.sort(sortByBlockCountThenLatency)
+const mapNodesShownToProps = () => ({
+  nodesShown: count
+})
+
+const mapNodesDataToProps = nodes => ({
+  nodes: nodes ? nodes.sort(sortByBlockCountThenLatency) : []
+})
+
+const mapSelectedNodeDataToProps = url => ({
+  selectedNode: url
 })
 
 const mapNodesActionsToProps = actions => ({
   loadNodesData: () => actions.call()
 })
 
+const mapSaveNodeActionsToProps = actions => ({
+  saveSelectedNode: url => actions.call(url)
+})
+
 export default compose(
-  withState('sort', 'setSort', 'highToLow'),
-  withState('nodesShown', 'setNodesShown', count),
-  withCall(nodeDataActions),
-  withActions(nodeDataActions, mapNodesActionsToProps),
+  withProps(mapNodesShownToProps),
+  withCall(nodeNetworkActions),
+  withActions(nodeNetworkActions, mapNodesActionsToProps),
+  withActions(nodeStorageActions, mapSaveNodeActionsToProps),
   withProgressComponents(
-    nodeDataActions,
+    nodeNetworkActions,
     {
       [LOADING]: Loading
     },
@@ -58,6 +78,7 @@ export default compose(
       strategy: alreadyLoadedStrategy
     }
   ),
-  withData(nodeDataActions, mapNodesDataToProps),
-  withLoadingProp(nodeDataActions)
+  withData(nodeNetworkActions, mapNodesDataToProps),
+  withData(nodeStorageActions, mapSelectedNodeDataToProps),
+  withLoadingProp(nodeNetworkActions)
 )(NodeSelect)

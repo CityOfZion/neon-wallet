@@ -3,6 +3,8 @@ import { rpc } from 'neon-js'
 import { createActions } from 'spunky'
 import { NODES } from '../core/constants'
 
+const ID = 'nodeNetwork'
+
 const getBlockCount = async node =>
   new Promise(resolve => {
     let url = node.protocol ? `${node.protocol}://${node.url}` : node.url
@@ -34,8 +36,6 @@ const raceNodePromises = (total, promises) => {
     )
   )
 }
-
-const ID = 'nodes'
 
 export default createActions(
   ID,

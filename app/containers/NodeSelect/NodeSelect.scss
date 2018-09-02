@@ -1,6 +1,7 @@
 @import '../../styles/animations';
 
 $latency-status-size: 9px;
+$icon-size: 24px;
 
 .nodeSelectPanel {
   display: flex;
@@ -41,10 +42,6 @@ $latency-status-size: 9px;
         display: flex !important;
         align-items: center;
         color: #969aa0;
-
-        .icon {
-          margin: 0px 8px;
-        }
       }
 
       .automaticSelect {
@@ -59,6 +56,12 @@ $latency-status-size: 9px;
           cursor: pointer;
         }
       }
+    }
+
+    .icon {
+      margin: 0px 8px;
+      width: $icon-size;
+      height: $icon-size;
     }
 
     .content {

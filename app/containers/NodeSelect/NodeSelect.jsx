@@ -8,6 +8,7 @@ import NodeSelectIcon from '../../assets/icons/node-select.svg'
 import CloseButton from '../../components/CloseButton'
 import ConfirmIcon from '../../assets/icons/confirm.svg'
 import RefreshIcon from '../../assets/icons/refresh.svg'
+import AddIcon from '../../assets/icons/add.svg'
 import Tooltip from '../../components/Tooltip'
 import styles from './NodeSelect.scss'
 
@@ -19,14 +20,16 @@ type Node = {
 
 type Props = {
   nodes: Node[],
+  nodesShown: int,
   loading: Boolean,
-  loadNodesData: Function
+  loadNodesData: Function,
+  saveSelectedNode: Function,
+  selectedNode: string
 }
 
 export default class NodeSelect extends React.Component<Props, State> {
   render() {
-    const { nodes, loading, loadNodesData } = this.props
-    const count = nodes ? nodes.length : 0
+    const { loading, loadNodesData, nodesShown } = this.props
     return (
       <FullHeightPanel
         className={styles.nodeSelectPanel}
@@ -49,19 +52,39 @@ export default class NodeSelect extends React.Component<Props, State> {
               />
             </Tooltip>
 
-            <div className={styles.count}>Top {count} nodes listed</div>
-            <Tooltip
-              title="Select automatically"
-              className={styles.automaticSelect}
-            >
-              <ConfirmIcon className={styles.icon} />
-              <span>Select automatically</span>
-            </Tooltip>
+            <div className={styles.count}>Top {nodesShown} nodes listed</div>
+
+            {this.renderAutomaticSelect()}
           </div>
           {this.renderNodeList()}
         </section>
       </FullHeightPanel>
     )
+  }
+
+  renderAutomaticSelect = () => {
+    const { selectedNode } = this.props
+    let icon
+
+    if (selectedNode) {
+      icon = (
+        <AddIcon className={styles.icon} onClick={() => this.handleSelect()} />
+      )
+    } else {
+      icon = <ConfirmIcon className={styles.icon} />
+    }
+
+    return (
+      <Tooltip title="Select automatically" className={styles.automaticSelect}>
+        {icon}
+        <span onClick={() => this.handleSelect('')}>Select automatically</span>
+      </Tooltip>
+    )
+  }
+
+  handleSelect = url => {
+    const { saveSelectedNode } = this.props
+    saveSelectedNode(url)
   }
 
   getLatencyClass = latency => {
@@ -74,12 +97,19 @@ export default class NodeSelect extends React.Component<Props, State> {
     return styles.fair
   }
 
-  // FIXME remove index as key - unreliable
   renderNodeList = () => {
-    const { nodes } = this.props
+    const { nodes, selectedNode } = this.props
     if (nodes) {
       const listItems = nodes.map((node, index) => {
         const { latency, blockCount, url } = node
+
+        let icon
+        if (selectedNode === url) {
+          icon = <ConfirmIcon className={styles.icon} />
+        } else {
+          icon = <AddIcon className={styles.icon} />
+        }
+
         return (
           <div key={index} className={styles.row}>
             <div className={styles.latency}>
@@ -88,8 +118,11 @@ export default class NodeSelect extends React.Component<Props, State> {
             </div>
             <div className={styles.blockHeight}>Block Height: {blockCount}</div>
             <div className={styles.url}>{url}</div>
-            <div className={styles.select}>
-              <ConfirmIcon className={styles.icon} />
+            <div
+              className={styles.select}
+              onClick={() => this.handleSelect(url)}
+            >
+              {icon}
               <span>Select</span>
             </div>
           </div>
