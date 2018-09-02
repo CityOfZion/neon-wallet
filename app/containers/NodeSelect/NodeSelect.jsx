@@ -45,7 +45,7 @@ export default class NodeSelect extends React.Component<Props, State> {
               <span onClick={loading ? null : loadNodesData}> Refresh </span>
               <RefreshIcon
                 id="refresh"
-                onClick={loading ? null : this.getNodes}
+                onClick={loading ? null : loadNodesData}
                 className={classNames(styles.icon, {
                   [styles.loading]: loading
                 })}

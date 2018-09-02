@@ -25,8 +25,8 @@ $icon-size: 24px;
       align-items: center;
       justify-content: space-between;
       background-color: #f2f2f2;
-      display: flex;
       padding: 25px;
+      min-height: 12px;
 
       .refresh,
       .count,
@@ -39,6 +39,7 @@ $icon-size: 24px;
 
       .refresh,
       .automaticSelect {
+        cursor: pointer;
         display: flex !important;
         align-items: center;
         color: #969aa0;
@@ -53,7 +54,6 @@ $icon-size: 24px;
       .refresh {
         .loading {
           animation: spin 2s linear infinite;
-          cursor: pointer;
         }
       }
     }
@@ -80,14 +80,14 @@ $icon-size: 24px;
         }
 
         > div {
-          display: flex;
           align-items: center;
           padding: 0 15px;
-          flex-grow: 0;
+          line-height: 24px;
         }
 
         .latency {
           flex-basis: 15%;
+          display: flex;
 
           div {
             width: $latency-status-size;
@@ -109,12 +109,15 @@ $icon-size: 24px;
         }
 
         .blockHeight {
-          flex-basis: 30%;
+          flex-basis: 35%;
         }
 
         .url {
-          flex-basis: 45%;
+          flex-basis: 40%;
           color: #969aa0;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
 
         .select {
