@@ -210,6 +210,20 @@
     },
     "image": "https://rawgit.com/CityOfZion/neo-tokens/master/assets/svg/mct.svg"
   },
+  "NEX": {
+    "symbol": "NEX",
+    "companyName": "Neon Exchange",
+    "type": "NEP5",
+    "networks": {
+      "1": {
+        "name": "NEX Token",
+        "hash": "3a4acd3647086e7c44398aac0349802e6a171129",
+        "decimals": 8,
+        "totalSupply": 50000000
+      }
+    },
+    "image": "https://rawgit.com/CityOfZion/neo-tokens/master/assets/svg/nex.svg"
+  },
   "SDT": {
     "symbol": "SDT",
     "companyName": "Special Drawing Token",
