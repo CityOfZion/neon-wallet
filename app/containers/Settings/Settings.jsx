@@ -28,8 +28,6 @@ type Props = {
   currency: string,
   setTheme: string => any,
   theme: string,
-  accounts: any,
-  showModal: Function,
   showSuccessNotification: Object => any,
   showErrorNotification: Object => any
 }
@@ -39,11 +37,6 @@ type State = {
 }
 
 export default class Settings extends Component<Props, State> {
-  state = {
-    explorer: this.props.explorer,
-    currency: this.props.currency
-  }
-
   saveWalletRecovery = () => {
     const { showSuccessNotification, showErrorNotification } = this.props
 
@@ -146,7 +139,15 @@ export default class Settings extends Component<Props, State> {
     return (
       <section className={styles.settingsContainer}>
         <UnderlinedHeader text="Settings">
-          <NetworkSwitch />
+          Network:
+          <NetworkSwitch
+            className={styles.networkSwitch}
+            networkSwitchTextInputContainer={
+              styles.networkSwitchTextInputContainer
+            }
+            networkSwitchTextInput={styles.notetworkSwitchTextInput}
+            activeStyles={styles.networkSwitchActive}
+          />
           <Tooltip title="Add Token" className={styles.headerButtonContainer}>
             <AddIcon className={styles.add} />
             <span>Add Token</span>
