@@ -11,6 +11,7 @@ import CheckMarkIcon from '../../../assets/icons/check.svg'
 
 import styles from './TokenSalePanel.scss'
 
+import { TOKEN_SALE_CONFIRM } from '../../../core/constants'
 
 type Props = {
   setStep: () => void
@@ -27,7 +28,7 @@ const TokenSalePanel = ({ setStep }: Props) => (
       />
       <TokenSaleConditions />
       <Button
-        onClick={() => setStep('confirm')}
+        onClick={() => setStep(TOKEN_SALE_CONFIRM)}
         primary
         renderIcon={CheckMarkIcon}
         className={styles.tokenSaleButton}

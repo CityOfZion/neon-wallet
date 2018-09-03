@@ -1,0 +1,34 @@
+@import '../../../styles/variables';
+
+.tokenSaleSuccess {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.tokenSaleConfirmPanelHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tokenSaleSuccessContainer {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.tokenSaleSuccessHeading {
+    display: flex;
+    align-items: center;
+    justify-content:center;
+}
+
+.tokenSaleSuccessImage {
+    width: 100px;
+    margin: 0 auto;
+}
+
+.tokenSaleSuccessSpacer {
+    width: 100%;
+    height: 2px;
+    background-color: $medium-grey;
+}
