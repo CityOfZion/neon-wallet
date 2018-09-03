@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 
 import Panel from '../../Panel'
@@ -10,7 +11,12 @@ import CheckMarkIcon from '../../../assets/icons/check.svg'
 
 import styles from './TokenSalePanel.scss'
 
-const TokenSalePanel = () => (
+
+type Props = {
+  setStep: () => void
+}
+
+const TokenSalePanel = ({ setStep }: Props) => (
   <Panel renderHeader={() => <p>Participate in Token Sale</p>}>
     <div className={styles.tokenSalePanelContainer}>
       <TokenSaleSelection />
@@ -21,6 +27,7 @@ const TokenSalePanel = () => (
       />
       <TokenSaleConditions />
       <Button
+        onClick={() => setStep('confirm')}
         primary
         renderIcon={CheckMarkIcon}
         className={styles.tokenSaleButton}

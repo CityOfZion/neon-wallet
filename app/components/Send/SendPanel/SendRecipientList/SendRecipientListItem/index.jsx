@@ -20,6 +20,7 @@ type Props = {
   sendableAssets: Object,
   showConfirmSend: boolean,
   contacts: Object,
+  numberOfRecipients: number,
   clearErrors: (index: number, field: string) => any,
   removeRow: (index: number) => any,
   updateRowField: (index: number, field: string, value: any) => any
@@ -32,7 +33,8 @@ class SendRecipientListItem extends Component<Props> {
       updateRowField,
       contacts,
       sendableAssets,
-      clearErrors
+      clearErrors,
+      max
     } = this.props
 
     const isAssetString = Object.keys(sendableAssets).find(asset => asset === e)
@@ -44,27 +46,26 @@ class SendRecipientListItem extends Component<Props> {
       return clearErrors(index, 'address')
     }
 
-    const { name, value } = e.target
+    const { name } = e.target
+    let { value } = e.target
+    if (value > max) value = max
     clearErrors(index, name)
     return updateRowField(index, name, value)
   }
 
   handleMaxClick = () => {
     const { index, updateRowField, max } = this.props
-
     updateRowField(index, 'amount', max)
   }
 
   handleDeleteRow = () => {
     const { index, removeRow } = this.props
-
     removeRow(index)
   }
 
   clearErrorsOnFocus = (e: Object) => {
     const { name } = e.target
     const { clearErrors, index } = this.props
-
     clearErrors(index, name)
   }
 
@@ -80,7 +81,8 @@ class SendRecipientListItem extends Component<Props> {
       asset,
       errors,
       max,
-      showConfirmSend
+      showConfirmSend,
+      numberOfRecipients
     } = this.props
 
     const selectInput = showConfirmSend ? (
@@ -109,6 +111,7 @@ class SendRecipientListItem extends Component<Props> {
         handleMaxClick={this.handleMaxClick}
         onFocus={this.clearErrorsOnFocus}
         error={errors.amount}
+        options={{ numeralDecimalScale: 10 }}
       />
     )
 
@@ -144,7 +147,9 @@ class SendRecipientListItem extends Component<Props> {
         <div className={styles.asset}>{selectInput}</div>
         <div className={styles.amount}>{numberInput}</div>
         <div className={styles.address}>{addressInput}</div>
-        <div className={styles.delete}>{trashCanButton}</div>
+        <div className={styles.delete}>
+          {numberOfRecipients > 1 && trashCanButton}
+        </div>
       </li>
     )
   }

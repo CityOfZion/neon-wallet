@@ -150,7 +150,7 @@ export const recoverWallet = (wallet: Object): Promise<*> =>
       }
 
       accounts.some(account => {
-        if (!walletHasKey(data, account.key)) {
+        if (account.key && !walletHasKey(data, account.key)) {
           data.accounts.push(account)
         }
       })
@@ -170,7 +170,8 @@ export const generateNewWalletAccount = (
   passphrase2: string,
   wif?: string,
   history: Object,
-  walletName: string
+  walletName: string,
+  authenticated: boolean = false
 ) => (dispatch: DispatchType) => {
   const isImport = !!wif
   const dispatchError = (message: string) => {
@@ -227,7 +228,8 @@ export const generateNewWalletAccount = (
       )
 
       if (wif) history.push(ROUTES.HOME)
-      history.push(ROUTES.DISPLAY_WALLET_KEYS)
+      if (authenticated) history.push(ROUTES.DISPLAY_WALLET_KEYS_AUTHENTICATED)
+      else history.push(ROUTES.DISPLAY_WALLET_KEYS)
       return true
     } catch (e) {
       console.error(e)
