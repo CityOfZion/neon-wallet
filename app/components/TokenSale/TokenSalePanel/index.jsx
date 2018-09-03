@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 // @flow
+=======
+<<<<<<< HEAD
+// @flow
+=======
+>>>>>>> f2528034fb8bfe44b0b9dbc5fd4d95831f1065ad
+>>>>>>> d79a17bafb9b724d97aac16c4f669575a5c67812
 import React from 'react'
 
 import Panel from '../../Panel'
@@ -11,8 +18,11 @@ import CheckMarkIcon from '../../../assets/icons/check.svg'
 
 import styles from './TokenSalePanel.scss'
 
+<<<<<<< HEAD
 import { TOKEN_SALE_CONFIRM } from '../../../core/constants'
 
+=======
+>>>>>>> d79a17bafb9b724d97aac16c4f669575a5c67812
 type Props = {
   setStep: () => void
 }
@@ -28,7 +38,11 @@ const TokenSalePanel = ({ setStep }: Props) => (
       />
       <TokenSaleConditions />
       <Button
+<<<<<<< HEAD
         onClick={() => setStep(TOKEN_SALE_CONFIRM)}
+=======
+        onClick={() => setStep('confirm')}
+>>>>>>> d79a17bafb9b724d97aac16c4f669575a5c67812
         primary
         renderIcon={CheckMarkIcon}
         className={styles.tokenSaleButton}
