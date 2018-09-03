@@ -3,6 +3,7 @@ import { api } from 'neon-js'
 import { extend } from 'lodash'
 import { createActions } from 'spunky'
 
+import { getNode } from './nodeStorageActions'
 import { toBigNumber } from '../core/math'
 import { ASSETS } from '../core/constants'
 import { COIN_DECIMAL_LENGTH } from '../core/formatters'
@@ -16,7 +17,10 @@ type Props = {
 export const ID = 'balances'
 
 async function getBalances({ net, address, tokens }: Props) {
-  const endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
+  let endpoint = await getNode()
+  if (!endpoint) {
+    endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
+  }
 
   // token balances
   const promises = tokens.map(async token => {

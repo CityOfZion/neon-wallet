@@ -6,7 +6,7 @@ import { getStorage, setStorage } from '../core/storage'
 const ID = 'nodeStorage'
 const STORAGE_KEY = 'selectedNode'
 
-const getNode = async (): Promise<string> => getStorage(STORAGE_KEY)
+export const getNode = async (): Promise<string> => getStorage(STORAGE_KEY)
 
 const setNode = async (node: string): Promise<string> =>
   setStorage(STORAGE_KEY, node)
