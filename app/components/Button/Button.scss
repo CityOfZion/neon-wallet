@@ -1,5 +1,11 @@
 @import '../../styles/variables';
 
+.active {
+  background-image: linear-gradient(to right, #66eb8e, #6bdaf6),
+    radial-gradient(circle at top left, #66eb8e, #6bdaf6) !important;
+  color: #fff !important;
+}
+
 .button {
   border: none;
   border-radius: 4px;

@@ -3,6 +3,7 @@ import React from 'react'
 
 import Panel from '../../Panel'
 import SendRecipientList from './SendRecipientList'
+import PriorityFee from './PriorityFee'
 import SendPanelHeader from './SendPanelHeader'
 import Button from '../../Button/Button'
 import ConfirmSend from './ConfirmSend'
@@ -13,6 +14,7 @@ import ZeroAssets from './ZeroAssets'
 import { pluralize } from '../../../util/pluralize'
 
 import SendIcon from '../../../assets/icons/send.svg'
+import LightningIcon from '../../../assets/icons/lightning.svg'
 
 import styles from './SendPanel.scss'
 import { truncateNumber } from '../../../core/math'
@@ -27,6 +29,8 @@ type Props = {
   sendError: boolean,
   noSendableAssets: boolean,
   txid: string,
+  fees: number,
+  handleAddPriorityFee: () => any,
   resetViewsAfterError: () => any,
   resetViews: () => any,
   handleSubmit: () => any,
@@ -56,7 +60,9 @@ const SendPanel = ({
   resetViews,
   noSendableAssets,
   txid,
-  handleEditRecipientsClick
+  handleEditRecipientsClick,
+  handleAddPriorityFee,
+  fees
 }: Props) => {
   function shouldDisableSendButton(sendRowDetails) {
     let disabled = false
@@ -85,41 +91,13 @@ const SendPanel = ({
         clearErrors={clearErrors}
         showConfirmSend={showConfirmSend}
       />
-      <div className={styles.priorityExplanationText}>
-        Prioritize your transfer with a fee?
-      </div>
 
-      <div className={styles.priorityFeeButtonContainer}>
-        <Button
-          primary
-          className={styles.sendFormButton}
-          renderIcon={() => <SendIcon />}
-          type="submit"
+      <div className={styles.priorityFeeContainer}>
+        <PriorityFee
+          handleAddPriorityFee={handleAddPriorityFee}
+          fees={fees}
           disabled={shouldDisableSendButton(sendRowDetails)}
-        >
-          <div>
-            <div>Fast</div>
-            <div>0.00000001 GAS </div>
-          </div>
-        </Button>
-        <Button
-          primary
-          className={styles.sendFormButton}
-          renderIcon={() => <SendIcon />}
-          type="submit"
-          disabled={shouldDisableSendButton(sendRowDetails)}
-        >
-          Faster
-        </Button>
-        <Button
-          primary
-          className={styles.sendFormButton}
-          renderIcon={() => <SendIcon />}
-          type="submit"
-          disabled={shouldDisableSendButton(sendRowDetails)}
-        >
-          Fastest
-        </Button>
+        />
       </div>
 
       <Button
@@ -129,7 +107,8 @@ const SendPanel = ({
         type="submit"
         disabled={shouldDisableSendButton(sendRowDetails)}
       >
-        Send {pluralize('Asset', sendRowDetails.length)} Without Fee
+        Send {pluralize('Asset', sendRowDetails.length)}{' '}
+        {fees ? 'With Fee' : 'Without Fee'}
       </Button>
     </form>
   )

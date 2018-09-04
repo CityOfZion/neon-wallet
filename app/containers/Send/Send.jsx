@@ -33,6 +33,7 @@ type State = {
   sendError: boolean,
   sendErrorMessage: string,
   txid: string,
+  fees: number,
   sendRowDetails: Array<Object>,
   address?: string
 }
@@ -46,7 +47,8 @@ export default class Send extends React.Component<Props, State> {
       sendError: false,
       sendErrorMessage: '',
       txid: '',
-      sendRowDetails: []
+      sendRowDetails: [],
+      fees: 0
     }
   }
 
@@ -244,6 +246,8 @@ export default class Send extends React.Component<Props, State> {
 
   handleEditRecipientsClick = () => this.setState({ showConfirmSend: false })
 
+  handleAddPriorityFee = (fees: number) => this.setState({ fees })
+
   validateRow = async (row: Object, index: number) => {
     const validAmount = this.validateAmount(
       row.amount,
@@ -301,10 +305,10 @@ export default class Send extends React.Component<Props, State> {
       errors.address = 'You need to specify a valid NEO address.'
     }
 
-    if (formAddress === address) {
-      // eslint-disable-next-line quotes
-      errors.address = "You can't send to your own address."
-    }
+    // if (formAddress === address) {
+    //   // eslint-disable-next-line quotes
+    //   errors.address = "You can't send to your own address."
+    // }
 
     const blackListedAddress = await isBlacklisted(formAddress)
     if (blackListedAddress) {
@@ -343,7 +347,8 @@ export default class Send extends React.Component<Props, State> {
       sendSuccess,
       sendError,
       sendErrorMessage,
-      txid
+      txid,
+      fees
     } = this.state
     const {
       sendableAssets,
@@ -378,6 +383,8 @@ export default class Send extends React.Component<Props, State> {
           updateRowField={this.updateRowField}
           clearErrors={this.clearErrors}
           handleSubmit={this.handleSubmit}
+          handleAddPriorityFee={this.handleAddPriorityFee}
+          fees={fees}
           resetViewsAfterError={this.resetViewsAfterError}
           handleEditRecipientsClick={this.handleEditRecipientsClick}
           handleSend={this.handleSend}
