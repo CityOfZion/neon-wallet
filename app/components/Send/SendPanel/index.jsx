@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import { get } from 'lodash'
 
 import Panel from '../../Panel'
 import SendRecipientList from './SendRecipientList'
@@ -94,7 +95,7 @@ const SendPanel = ({
 
       <div className={styles.priorityFeeContainer}>
         <PriorityFee
-          availableGas={Number(sendableAssets.GAS.balance)}
+          availableGas={Number(get(sendableAssets, 'GAS.balance', 0))}
           handleAddPriorityFee={handleAddPriorityFee}
           fees={fees}
           disabled={shouldDisableSendButton(sendRowDetails)}
