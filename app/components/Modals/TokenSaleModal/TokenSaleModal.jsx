@@ -21,7 +21,7 @@ const WARNINGS = [
   'I understand that some sales may only accept NEO or GAS, and I have verified which is accepted.',
   'I understand that if I send NEO or GAS to a token sale that has already ended, I will lose my NEO/GAS and will not be refunded.',
   'I understand that I should only click the ‘Purchase!’ button once.',
-  "I understand that City of Zion (CoZ) is not responsible for my usage of this feature, and I have consulted this software's licenses."
+  "I understand that City of Zion (CoZ) is not responsible for my usage of this feature, and I have consulted this software's licenses." // eslint-disable-line
 ]
 
 type Props = {
@@ -52,7 +52,6 @@ export default class TokenSale extends Component<Props, State> {
   state = {
     assetBalancesToSend: {},
     tokenToMint: '',
-    participationSuccessful: false,
     step: 1,
     gasCost: '0', // hard coded for now
     agreements: times(WARNINGS.length, constant(false)),
@@ -221,7 +220,7 @@ export default class TokenSale extends Component<Props, State> {
   )
 
   handleChangeAgreementCurry = (index: number) => (event: Object) => {
-    const agreements = [...this.state.agreements]
+    const agreements = [...this.state.agreements] // eslint-disable-line
     agreements.splice(index, 1, event.target.checked)
     this.setState({ agreements })
   }

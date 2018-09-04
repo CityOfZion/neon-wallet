@@ -1,17 +1,8 @@
 // @flow
-import {
-  connect
-} from 'react-redux'
-import {
-  bindActionCreators
-} from 'redux'
-import {
-  compose
-} from 'recompose'
-import {
-  withData,
-  withActions
-} from 'spunky'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { compose } from 'recompose'
+import { withData, withActions } from 'spunky'
 
 import Settings from './Settings'
 import withExplorerData from '../../hocs/withExplorerData'
@@ -20,19 +11,13 @@ import withThemeData from '../../hocs/withThemeData'
 import accountsActions, {
   updateAccountsActions
 } from '../../actions/accountsActions'
-import {
-  updateSettingsActions
-} from '../../actions/settingsActions'
-import {
-  getNetworks
-} from '../../core/networks'
+import { updateSettingsActions } from '../../actions/settingsActions'
+import { getNetworks } from '../../core/networks'
 import {
   showErrorNotification,
   showSuccessNotification
 } from '../../modules/notifications'
-import {
-  showModal
-} from '../../modules/modal'
+import { showModal } from '../../modules/modal'
 
 const mapStateToProps = (state: Object) => ({
   networks: getNetworks()
@@ -56,15 +41,18 @@ const mapAccountsActionsToProps = actions => ({
 })
 
 const mapSettingsActionsToProps = actions => ({
-  setCurrency: currency => actions.call({
-    currency
-  }),
-  setBlockExplorer: blockExplorer => actions.call({
-    blockExplorer
-  }),
-  setTheme: theme => actions.call({
-    theme
-  })
+  setCurrency: currency =>
+    actions.call({
+      currency
+    }),
+  setBlockExplorer: blockExplorer =>
+    actions.call({
+      blockExplorer
+    }),
+  setTheme: theme =>
+    actions.call({
+      theme
+    })
 })
 
 export default compose(
