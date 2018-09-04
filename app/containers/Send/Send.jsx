@@ -19,7 +19,10 @@ import styles from './Send.scss'
 type Props = {
   sendableAssets: Object,
   prices: Object,
-  sendTransaction: (Array<SendEntryType>) => Object,
+  sendTransaction: ({
+    sendEntries: Array<SendEntryType>,
+    fees: number
+  }) => Object,
   contacts: Object,
   currencyCode: string,
   address: string,
@@ -205,7 +208,8 @@ export default class Send extends React.Component<Props, State> {
       return {
         showConfirmSend: false,
         sendSuccess: false,
-        sendRowDetails: newState
+        sendRowDetails: newState,
+        fees: 0
       }
     })
   }
@@ -227,7 +231,7 @@ export default class Send extends React.Component<Props, State> {
 
   handleSend = () => {
     const { sendTransaction } = this.props
-    const { sendRowDetails } = this.state
+    const { sendRowDetails, fees } = this.state
 
     const entries = sendRowDetails.map((row: Object) => ({
       address: row.address,
@@ -235,7 +239,7 @@ export default class Send extends React.Component<Props, State> {
       symbol: row.asset
     }))
 
-    sendTransaction(entries)
+    sendTransaction({ sendEntries: entries, fees })
       .then((result: Object) => {
         this.setState({ sendSuccess: true, txid: result.txid })
       })

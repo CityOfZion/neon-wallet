@@ -9,6 +9,7 @@ import styles from './PriorityFee.scss'
 type Props = {
   disabled: boolean,
   fees: number,
+  availableGas: number,
   handleAddPriorityFee: number => any
 }
 
@@ -32,7 +33,7 @@ const FEE_OPTIONS = [
 
 export default class PriorityFee extends React.Component<Props> {
   render() {
-    const { disabled, handleAddPriorityFee, fees } = this.props
+    const { disabled, handleAddPriorityFee, fees, availableGas } = this.props
     return (
       <div>
         <div className={styles.priorityExplanationText}>
@@ -45,7 +46,11 @@ export default class PriorityFee extends React.Component<Props> {
               className={styles.sendFormButton}
               renderIcon={() => <LightningIcon />}
               active={fees === option.fee ? true : undefined}
-              disabled={disabled}
+              disabled={this.shouldDisableFeeButton(
+                disabled,
+                availableGas,
+                option.fee
+              )}
               onClick={() => handleAddPriorityFee(option.fee)}
             >
               <div>
@@ -59,5 +64,15 @@ export default class PriorityFee extends React.Component<Props> {
         </div>
       </div>
     )
+  }
+
+  shouldDisableFeeButton = (
+    disabled: boolean,
+    availableGas: number,
+    feeAmount: number
+  ) => {
+    if (disabled) return true
+    if (availableGas < feeAmount) return true
+    return false
   }
 }

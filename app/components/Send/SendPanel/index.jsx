@@ -94,6 +94,7 @@ const SendPanel = ({
 
       <div className={styles.priorityFeeContainer}>
         <PriorityFee
+          availableGas={Number(sendableAssets.GAS.balance)}
           handleAddPriorityFee={handleAddPriorityFee}
           fees={fees}
           disabled={shouldDisableSendButton(sendRowDetails)}
