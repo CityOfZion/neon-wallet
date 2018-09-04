@@ -17,7 +17,6 @@ type Props = {
 class Button extends React.Component<Props> {
   static defaultProps = {
     primary: false,
-    active: false,
     type: 'button'
   }
 
