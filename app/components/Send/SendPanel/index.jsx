@@ -30,7 +30,7 @@ type Props = {
   noSendableAssets: boolean,
   txid: string,
   fees: number,
-  handleAddPriorityFee: () => any,
+  handleAddPriorityFee: number => any,
   resetViewsAfterError: () => any,
   resetViews: () => any,
   handleSubmit: () => any,
