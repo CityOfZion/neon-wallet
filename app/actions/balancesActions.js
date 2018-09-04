@@ -15,6 +15,7 @@ type Props = {
 export const ID = 'balances'
 
 async function getBalances({ net, address, tokens }: Props) {
+  console.log(tokens)
   const endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
   // token balances
   const tokenBalances = await api.nep5.getTokenBalances(
@@ -27,6 +28,7 @@ async function getBalances({ net, address, tokens }: Props) {
     .map(tokenKey => {
       const foundToken = tokens.find(token => token.symbol === tokenKey)
       if (foundToken && tokenBalances[tokenKey]) {
+        console.log(foundToken)
         return {
           [foundToken.scriptHash]: {
             ...foundToken,
