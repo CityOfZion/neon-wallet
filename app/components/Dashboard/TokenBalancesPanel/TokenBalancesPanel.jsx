@@ -87,7 +87,7 @@ export default class TokenBalancesPanel extends React.Component<Props> {
     </div>
   )
 
-  renderToken = (token: TokenBalanceType, i: number) => console.log(token) || (
+  renderToken = (token: TokenBalanceType, i: number) => (
     <div
       key={token.scriptHash}
       className={classNames(styles.tableData, {
