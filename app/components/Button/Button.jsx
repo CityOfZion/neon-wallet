@@ -9,7 +9,7 @@ type Props = {
   className?: ?string,
   renderIcon: ?Function,
   primary: ?boolean,
-  active: ?boolean,
+  active?: boolean,
   type: ?string,
   children: React$Node
 }
