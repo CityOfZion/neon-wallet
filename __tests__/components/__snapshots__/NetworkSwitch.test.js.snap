@@ -24,6 +24,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
     id="network"
   >
     <SelectInput
+      activeStyles="networkSwitchActive"
       customChangeEvent={true}
       getItemValue={[Function]}
       getSearchResults={[Function]}
@@ -41,6 +42,8 @@ exports[`NetworkSwitch renders without crashing 1`] = `
       readOnly={true}
       renderAfter={[Function]}
       renderItem={[Function]}
+      textInputClassName="networkSwitchTextInput"
+      textInputContainerClassName="networkSwitchTextInputContainer"
       value="MainNet"
     >
       <clickOutside(Dropdown)
@@ -62,11 +65,13 @@ exports[`NetworkSwitch renders without crashing 1`] = `
               className="anchor"
             >
               <TextInput
-                className="input "
+                activeStyles="networkSwitchActive"
+                className="input networkSwitchTextInputContainer"
                 onChange={[Function]}
                 onFocus={[Function]}
                 readOnly={true}
                 renderAfter={[Function]}
+                textInputClassName="networkSwitchTextInput"
                 type="text"
                 value="MainNet"
               >
@@ -74,10 +79,10 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                   className="textInputContainer"
                 >
                   <div
-                    className="textInput input "
+                    className="textInput input networkSwitchTextInputContainer"
                   >
                     <input
-                      className="input "
+                      className="input networkSwitchTextInput"
                       onBlur={[Function]}
                       onChange={[Function]}
                       onFocus={[Function]}
