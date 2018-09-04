@@ -139,15 +139,10 @@ export default class Settings extends Component<Props, State> {
     return (
       <section className={styles.settingsContainer}>
         <UnderlinedHeader text="Settings">
-          Network:
-          <NetworkSwitch
-            className={styles.networkSwitch}
-            networkSwitchTextInputContainer={
-              styles.networkSwitchTextInputContainer
-            }
-            networkSwitchTextInput={styles.notetworkSwitchTextInput}
-            activeStyles={styles.networkSwitchActive}
-          />
+          <div className={styles.networkSwitchContainer}>
+            <span>Network:</span>
+            <NetworkSwitch className={styles.networkSwitch} />
+          </div>
           <Tooltip title="Add Token" className={styles.headerButtonContainer}>
             <AddIcon className={styles.add} />
             <span>Add Token</span>
