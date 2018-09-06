@@ -25,13 +25,14 @@ import withSuccessNotification from '../../hocs/withSuccessNotification'
 import withFailureNotification from '../../hocs/withFailureNotification'
 import { MODAL_TYPES } from '../../core/constants'
 
-
 const mapDispatchToProps = (dispatch: Function) =>
-  bindActionCreators({
-    sendTransaction,
-    showReceiveModal: props =>
-      dispatch(showModal(MODAL_TYPES.RECEIVE, props))
-  }, dispatch)
+  bindActionCreators(
+    {
+      sendTransaction,
+      showReceiveModal: props => dispatch(showModal(MODAL_TYPES.RECEIVE, props))
+    },
+    dispatch
+  )
 
 const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
   notification: getNotifications(state)

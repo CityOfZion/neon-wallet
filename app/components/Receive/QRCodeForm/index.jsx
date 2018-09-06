@@ -17,7 +17,7 @@ import styles from './styles.scss'
 type Props = {
   className?: string,
   address: string,
-  onSubmit: Function,
+  onSubmit: Function
 }
 
 type State = {
@@ -41,23 +41,23 @@ export default class QRCodeForm extends React.Component<Props, State> {
     const symbols = ['-', ASSETS.NEO, ASSETS.GAS, ...Object.keys(TOKENS)]
 
     return (
-      <div
-        className={classNames(styles.receivePanel, className)}
-      >
+      <div className={classNames(styles.receivePanel, className)}>
         <div className={styles.header}>
-          <GridIcon className={styles.icon}/>
-          <div className={styles.title}>
-            Create a bespoke QR Code
-          </div>
+          <GridIcon className={styles.icon} />
+          <div className={styles.title}>Create a bespoke QR Code</div>
         </div>
         <form
           className={styles.form}
-          onSubmit={() => onSubmit({
-            address,
-            asset: (TOKENS[asset] && TOKENS[asset].networks['1'].hash) || (asset === '-' ? undefined : asset),
-            amount,
-            description,
-          })}
+          onSubmit={() =>
+            onSubmit({
+              address,
+              asset:
+                (TOKENS[asset] && TOKENS[asset].networks['1'].hash) ||
+                (asset === '-' ? undefined : asset),
+              amount,
+              description
+            })
+          }
         >
           <div className={styles.amountContainer}>
             <div className={styles.asset}>
@@ -79,7 +79,9 @@ export default class QRCodeForm extends React.Component<Props, State> {
             </div>
           </div>
           <div className={styles.rowContainer}>
-            <div className={styles.inputDescription}>DEPOSIT INTO THIS WALLET</div>
+            <div className={styles.inputDescription}>
+              DEPOSIT INTO THIS WALLET
+            </div>
             <div className={styles.address}>
               <Address className={styles.link} address={address} />
             </div>

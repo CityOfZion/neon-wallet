@@ -13,25 +13,15 @@ type Props = {
   onSubmit: Function
 }
 
-const ReceivePanel = ({
-  address,
-  onSubmit
-}: Props) => {
-  return (
-    <Panel
-      className={styles.receivePanel}
-      renderHeader={() => (
-        <ReceivePanelHeader address={address} />
-      )}
-      contentClassName={styles.receivePanelContent}
-    >
-      <ReceiveExplanation />
-      <QRCodeForm
-        address={address}
-        onSubmit={onSubmit}
-      />
-    </Panel>
-  )
-}
+const ReceivePanel = ({ address, onSubmit }: Props) => (
+  <Panel
+    className={styles.receivePanel}
+    renderHeader={() => <ReceivePanelHeader address={address} />}
+    contentClassName={styles.receivePanelContent}
+  >
+    <ReceiveExplanation />
+    <QRCodeForm address={address} onSubmit={onSubmit} />
+  </Panel>
+)
 
 export default ReceivePanel

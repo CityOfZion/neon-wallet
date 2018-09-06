@@ -26,15 +26,17 @@ type Props = {
 }
 
 type State = {
-  walletName: ?string,
+  walletName: ?string
 }
 
 export default class Receive extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
-    const walletName: ?string = props.accounts.reduce((accum, account) => (
-      account.address === props.address ? account.label : accum
-    ), null)
+    const walletName: ?string = props.accounts.reduce(
+      (accum, account) =>
+        props.address === account.address ? account.label : accum,
+      null
+    )
     this.state = { walletName }
   }
 
@@ -53,7 +55,7 @@ export default class Receive extends React.Component<Props, State> {
     return (
       <section className={styles.receiveContainer}>
         <PageHeader
-          title='Receive Assets'
+          title="Receive Assets"
           loading={loading}
           loadWalletData={loadWalletData}
         />
@@ -65,7 +67,7 @@ export default class Receive extends React.Component<Props, State> {
         )}
         <ReceivePanel
           address={address}
-          onSubmit={props => showReceiveModal({...props, walletName })}
+          onSubmit={props => showReceiveModal({ ...props, walletName })}
         />
       </section>
     )
@@ -74,7 +76,7 @@ export default class Receive extends React.Component<Props, State> {
   createSendAmountsData() {
     const { sendableAssets, prices } = this.props
 
-    let assets = Object.keys(sendableAssets)
+    const assets = Object.keys(sendableAssets)
 
     return (assets
       .filter((asset: string) => !!prices[asset])

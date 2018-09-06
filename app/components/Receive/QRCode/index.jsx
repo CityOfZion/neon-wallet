@@ -42,26 +42,36 @@ export default class QRCodeForm extends React.Component<Props, State> {
         renderHeader={this.renderHeader}
       >
         <div className={styles.qrcode}>
-          <img ref={(el: ?HTMLImageElement) => { this.image = el }} />
+          <img
+            ref={(el: ?HTMLImageElement) => {
+              this.image = el
+            }}
+            alt=""
+          />
         </div>
         <div>
           <div className={styles.address}>
             <Address className={styles.link} address={address} />
-            <CopyToClipboard className={styles.copy} text={address} tooltip="Copy Public Address" />
+            <CopyToClipboard
+              className={styles.copy}
+              text={address}
+              tooltip="Copy Public Address"
+            />
           </div>
           <div className={styles.amountContainer}>
             <AssetInput
               symbols={symbols}
               value={asset}
               className={styles.asset}
-              onChange={value => this.setState({asset: value})}
+              onChange={value => this.setState({ asset: value })}
             />
             <NumberInput
               value={amount}
               placeholder="Amount"
               className={styles.amount}
               options={{ numeralDecimalScale: COIN_DECIMAL_LENGTH }}
-              onChange={value => this.setState({amount: value})} />
+              onChange={value => this.setState({ amount: value })}
+            />
           </div>
         </div>
       </Panel>
@@ -70,13 +80,13 @@ export default class QRCodeForm extends React.Component<Props, State> {
 
   renderHeader = () => <span>Your Public NEO Address</span>
 
-  componentDidMount () {
+  componentDidMount() {
     const { address } = this.props
     const { asset, amount } = this.state
-    this.updateQRCode({address, asset, amount})
+    this.updateQRCode({ address, asset, amount })
   }
 
-  componentDidUpdate (prevProps: Props, prevState: State) {
+  componentDidUpdate(prevProps: Props, prevState: State) {
     const { address } = this.props
     const { asset, amount } = this.state
 
@@ -91,17 +101,16 @@ export default class QRCodeForm extends React.Component<Props, State> {
         convertedAsset = TOKENS[asset]
       }
 
-      this.updateQRCode({address, asset: convertedAsset, amount})
+      this.updateQRCode({ address, asset: convertedAsset, amount })
     }
   }
 
-  updateQRCode (options: Object) {
-    const qrCode = new NeoQR({nep9Data: options, width: 250})
-    qrCode.toDataURL()
-      .then(imgData => {
-        if (this.image) {
-          this.image.src = imgData
-        }
-      })
+  updateQRCode(options: Object) {
+    const qrCode = new NeoQR({ nep9Data: options, width: 250 })
+    qrCode.toDataURL().then(imgData => {
+      if (this.image) {
+        this.image.src = imgData
+      }
+    })
   }
 }

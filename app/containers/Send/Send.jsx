@@ -357,7 +357,7 @@ export default class Send extends React.Component<Props, State> {
     return (
       <section className={styles.sendContainer}>
         <PageHeader
-          title='Send Assets'
+          title="Send Assets"
           loading={loading}
           loadWalletData={loadWalletData}
         />

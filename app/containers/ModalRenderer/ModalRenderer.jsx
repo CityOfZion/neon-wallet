@@ -11,7 +11,15 @@ import ReceiveModal from '../../components/Modals/ReceiveModal'
 
 import { MODAL_TYPES } from '../../core/constants'
 
-const { CONFIRM, SEND, TOKEN_INFO, TOKEN, ICO, ADD_CONTACT, RECEIVE } = MODAL_TYPES
+const {
+  CONFIRM,
+  SEND,
+  TOKEN_INFO,
+  TOKEN,
+  ICO,
+  ADD_CONTACT,
+  RECEIVE
+} = MODAL_TYPES
 
 const MODAL_COMPONENTS = {
   [CONFIRM]: ConfirmModal,

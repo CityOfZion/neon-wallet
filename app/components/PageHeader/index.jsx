@@ -9,7 +9,7 @@ import styles from './PageHeader.scss'
 type Props = {
   loadWalletData: Function,
   loading: boolean,
-  title: string,
+  title: string
 }
 
 export default class PageHeader extends Component<Props> {
