@@ -9,13 +9,11 @@ import QRCodeForm from '../QRCodeForm'
 import styles from './styles.scss'
 
 type Props = {
-  sendableAssets: Object,
   address: string,
   onSubmit: Function
 }
 
 const ReceivePanel = ({
-  sendableAssets,
   address,
   onSubmit
 }: Props) => {

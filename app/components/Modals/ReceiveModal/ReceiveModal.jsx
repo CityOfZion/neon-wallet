@@ -11,15 +11,15 @@ import { ASSETS, TOKENS } from '../../../core/constants'
 
 type Props = {
   hideModal: Function,
-  walletName: String,
-  address: String,
-  asset: String,
-  amount: String,
-  description: String,
+  walletName: string,
+  address: string,
+  asset: string,
+  amount: string,
+  description: string,
 }
 
 type State = {
-  imgUri: String,
+  imgUri: string,
 }
 
 export default class ReceiveModal extends React.Component<Props, State> {
@@ -71,7 +71,10 @@ export default class ReceiveModal extends React.Component<Props, State> {
 
     const { imgUri } = this.state
 
-    const assetSymbol = ASSETS[asset] ? asset : Object.values(TOKENS).reduce((accum, token) => {
+    const tokensList: Array<any> = Object.values(TOKENS)
+
+    const assetSymbol = ASSETS[asset] ? asset :
+    tokensList.reduce((accum, token) => {
       return token.networks['1'].hash === asset ? token.symbol : accum
     }, asset)
 

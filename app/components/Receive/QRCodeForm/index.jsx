@@ -15,7 +15,7 @@ import GridIcon from '../../../assets/icons/grid.svg'
 import styles from './styles.scss'
 
 type Props = {
-  className: ?string,
+  className?: string,
   address: string,
   onSubmit: Function,
 }
