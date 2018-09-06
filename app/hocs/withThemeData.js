@@ -1,7 +1,5 @@
 // @flow
-import {
-  withData
-} from 'spunky'
+import { withData } from 'spunky'
 
 import settingsActions from '../actions/settingsActions'
 

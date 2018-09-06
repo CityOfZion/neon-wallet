@@ -54,15 +54,6 @@ export default class ContactForm extends React.Component<Props, State> {
     const { submitLabel, formName, mode, formAddress } = this.props
     const { nameError, addressError } = this.state
 
-    // let heading = 'Add A Contact'
-    // let subHeading = 'Insert Contact Details'
-
-    // if (mode === 'edit') {
-    //   this.props.handleEditMode()
-    //   heading = 'Edit A Contact'
-    //   subHeading = 'Modify Contact Details'
-    // }
-
     return (
       <section>
         <form className={styles.contactForm} onSubmit={this.handleSubmit}>
@@ -126,7 +117,7 @@ export default class ContactForm extends React.Component<Props, State> {
     let error
 
     if (name.length === 0) {
-      error = 'Name can\'t be null.'
+      error = "Name can't be null."
     }
 
     if (name.length > 100) {

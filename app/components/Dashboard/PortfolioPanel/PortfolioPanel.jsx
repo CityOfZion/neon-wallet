@@ -43,5 +43,7 @@ export default class PortfolioPanel extends React.Component<Props> {
     )
   }
 
-  renderHeader = () => <div className={styles.header}>Portfolio</div>
+  renderHeader = () => (
+    <div className={styles.header}>Total Portfolio Value</div>
+  )
 }

@@ -1,15 +1,19 @@
 @import '../../../styles/animations';
 
-.tokenBalancesPanel {
-  .tokenBalancesPanelContent {
-    // margin: auto;
-    // max-width: 600px;
-  }
+.headerStyle {
+  height: auto !important;
+}
 
+.tokenBalancesPanelContent {
+  padding: 0px 24px !important;
+}
+
+.tokenBalancesPanel {
   .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    height: 50px;
 
     .refresh {
       cursor: pointer;
@@ -29,11 +33,21 @@
   .tableData {
     min-height: 60px;
     border-bottom: solid thin #f2f2f2;
-    padding: 7.5px 0px 7.5px 0px;
+    padding: 5px 0px 5px 0px;
+    margin-left: -24px;
+    margin-right: -24px;
+    padding-left: 24px;
+    padding-right: 15px;
   }
 
   .tableHeader {
     margin-bottom: 16px;
+    padding-left: 24px;
+    padding-right: 24px;
+    margin-left: -48px;
+    margin-right: -48px;
+    height: 30px;
+    align-items: center !important;
   }
 
   .tableHeader,
@@ -41,10 +55,6 @@
     display: flex;
     align-items: flex-start;
     justify-content: stretch;
-    margin-left: -24px;
-    margin-right: -24px;
-    padding-left: 24px;
-    padding-right: 24px;
 
     .symbol {
       flex: 0 0 auto;
@@ -73,7 +83,7 @@
 
     .priceLabel {
       flex: 1 1 auto;
-      margin-right: 16px;
+      //margin-right: 16px;
       font-weight: bold;
     }
 
@@ -89,12 +99,14 @@
 
     .balance {
       flex: 0 0 auto;
-      width: 70px;
+      // width: 70px;
     }
 
     .balanceValue {
-      @extend .balance;
+      flex: 0 0 auto;
+      width: 70px;
       font-weight: 300;
+      text-align: right;
     }
 
     &:last-child {
@@ -128,7 +140,6 @@
     max-height: 25px;
     max-width: 25px;
     width: 100%;
-    margin-bottom: 2.5px;
   }
 }
 

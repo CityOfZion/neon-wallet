@@ -83,8 +83,9 @@
     display: flex;
     align-items: center;
     margin-top: -10px;
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 10px 10px 15px;
+    margin-bottom: 20px;
+    border-bottom: solid thin #5c677f;
 
     .manageButton {
       margin-right: 25px;

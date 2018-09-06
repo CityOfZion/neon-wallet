@@ -18,7 +18,8 @@ export const checkVersion = () => async (
   dispatch: DispatchType,
   getState: GetStateType
 ) => {
-  const showError = message => dispatch(
+  const showError = message =>
+    dispatch(
       showWarningNotification({
         message,
         autoDismiss: 0,

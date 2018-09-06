@@ -1,5 +1,5 @@
 // @flow
-import { map } from 'lodash'
+import { map, isEmpty } from 'lodash'
 import axios from 'axios'
 
 import { toBigNumber } from './math'
@@ -21,19 +21,20 @@ export const adjustDecimalAmountForTokenTransfer = (value: string): string =>
 
 const getTokenEntry = ((): Function => {
   let id = 1
-
   return (
     symbol: string,
     scriptHash: string,
     networkId: string,
-    image: string
+    image: string,
+    name: string
   ) => ({
-    id: `${id++}`,
+    id: `${id++}`, // eslint-disable-line no-plusplus
     symbol,
     scriptHash,
     networkId,
     isUserGenerated: false,
-    image
+    image,
+    name
   })
 })()
 
@@ -51,8 +52,10 @@ export const getDefaultTokens = async (): Promise<Array<TokenItemType>> => {
         // if request to gh fails use hardcoded list
         fetchedTokens = TOKENS
       })
-    if (response && response.data) {
+    if (response && response.data && !isEmpty(response.data)) {
       fetchedTokens = response.data
+    } else {
+      fetchedTokens = TOKENS
     }
   }
 
@@ -62,7 +65,8 @@ export const getDefaultTokens = async (): Promise<Array<TokenItemType>> => {
         tokenData.symbol,
         tokenData.networks['1'].hash,
         MAIN_NETWORK_ID,
-        tokenData.image
+        tokenData.image,
+        tokenData.networks['1'].name
       )
     )
   )

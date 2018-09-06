@@ -17,6 +17,7 @@ export default class PageHeader extends Component<Props> {
     const { loading, loadWalletData, title } = this.props
     return (
       <section className={styles.pageHeader}>
+        {/* eslint-disable-next-line */}
         <h1 className={styles.pageHeading}>{title}</h1>
         <Tooltip title="Refresh" className={styles.headerButtonContainer}>
           <RefreshIcon

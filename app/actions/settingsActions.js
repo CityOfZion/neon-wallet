@@ -9,6 +9,7 @@ import {
   DEFAULT_CURRENCY_CODE,
   DEFAULT_THEME
 } from '../core/constants'
+import pack from '../../package.json'
 
 type Settings = {
   currency?: string,
@@ -20,25 +21,29 @@ const STORAGE_KEY = 'settings'
 
 const DEFAULT_SETTINGS: () => Promise<Settings> = async () => ({
   currency: DEFAULT_CURRENCY_CODE,
-  blockExplorer: EXPLORERS.NEO_TRACKER,
-  tokens: await getDefaultTokens(),
-  theme: DEFAULT_THEME
+  theme: DEFAULT_THEME,
+  blockExplorer: EXPLORERS.NEO_SCAN,
+  tokens: await getDefaultTokens()
 })
 
 const getSettings = async (): Promise<Settings> => {
   const defaults = await DEFAULT_SETTINGS()
   const settings = (await getStorage(STORAGE_KEY)) || {}
 
+  // indicates that this user is running 0.2.7 or less
+  // and we override the saved settings with EXPLORERS.NEO_SCAN
+  // until user updtates settings themselves
+  if (!settings.version) {
+    settings.blockExplorer = EXPLORERS.NEO_SCAN
+  }
+
+  const { version } = pack
   const tokens = uniqBy(
     [...(defaults.tokens || []), ...(settings.tokens || [])],
     token => [token.networkId, token.scriptHash].join('-')
   )
 
-  return {
-    ...defaults,
-    ...settings,
-    tokens
-  }
+  return { ...defaults, ...settings, tokens, version }
 }
 
 export const ID = 'settings'
