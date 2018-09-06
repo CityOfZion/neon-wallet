@@ -309,11 +309,6 @@ export default class Send extends React.Component<Props, State> {
       errors.address = 'You need to specify a valid NEO address.'
     }
 
-    // if (formAddress === address) {
-    //   // eslint-disable-next-line quotes
-    //   errors.address = "You can't send to your own address."
-    // }
-
     const blackListedAddress = await isBlacklisted(formAddress)
     if (blackListedAddress) {
       errors.address =
