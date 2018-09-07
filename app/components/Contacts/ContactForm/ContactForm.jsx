@@ -117,7 +117,7 @@ export default class ContactForm extends React.Component<Props, State> {
     let error
 
     if (name.length === 0) {
-      error = 'Name can\'t be null.'
+      error = "Name can't be null." // eslint-disable-line
     }
 
     if (name.length > 100) {
