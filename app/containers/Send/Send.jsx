@@ -25,8 +25,7 @@ type Props = {
   contacts: Object,
   currencyCode: string,
   address: string,
-  loading: boolean,
-  loadWalletData: Function
+  shouldRenderHeaderBar: boolean
 }
 
 type State = {
@@ -52,6 +51,10 @@ export default class Send extends React.Component<Props, State> {
       sendRowDetails: [],
       fees: 0
     }
+  }
+
+  static defaultProps = {
+    shouldRenderHeaderBar: true
   }
 
   componentDidMount() {
@@ -352,15 +355,15 @@ export default class Send extends React.Component<Props, State> {
       sendableAssets,
       contacts,
       currencyCode,
-      loading,
-      loadWalletData
+      shouldRenderHeaderBar
     } = this.props
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 
     return (
       <section className={styles.sendContainer}>
-        {/* <SendPageHeader loading={loading} loadWalletData={loadWalletData} /> */}
-        <HeaderBar label="Send Assets" shouldRenderRefresh />
+        {shouldRenderHeaderBar && (
+          <HeaderBar label="Send Assets" shouldRenderRefresh />
+        )}
         {!noSendableAssets && (
           <SendAmountsPanel
             sendAmountsData={this.createSendAmountsData()}
