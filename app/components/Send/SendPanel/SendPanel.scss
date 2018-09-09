@@ -73,13 +73,6 @@
   button {
     width: 200px;
   }
-
-  // .confirmContainer {
-  //   display: flex;
-  //   flex-direction: column;
-  //   justify-content: center;
-  //   align-items: center;
-  // }
 }
 
 .confirmationFees {
@@ -144,9 +137,7 @@
 
 .priorityFeeButtonContainer {
   display: flex;
-  // width: 200px;
   justify-content: center;
-  //margin: auto;
 
   .feeCost {
     font-size: 11px;
@@ -175,7 +166,6 @@
     flex: 1.5;
   }
   button {
-    //width: 150px;
     margin: 0;
     border: solid thin #8d98ae !important;
   }
