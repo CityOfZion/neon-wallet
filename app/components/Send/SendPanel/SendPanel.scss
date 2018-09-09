@@ -64,6 +64,10 @@
   }
 }
 
+.enterQrHeaderButton {
+  @extend .sendPanelHeaderButton;
+}
+
 .confirmButtonsContainer {
   display: flex;
   justify-content: center;

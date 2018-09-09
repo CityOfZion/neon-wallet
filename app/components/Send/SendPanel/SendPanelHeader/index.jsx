@@ -38,7 +38,7 @@ const SendPanelHeader = ({
     <div className={styles.sendPanelHeaderButtons}>
       <button
         type="button"
-        className={styles.sendPanelHeaderButton}
+        className={styles.enterQrHeaderButton}
         onClick={addRow}
       >
         <GridIcon className={styles.sendPanelHeaderButtonIcon} /> Enter QR Code
@@ -56,7 +56,7 @@ const SendPanelHeader = ({
   if (showConfirmSend) {
     headerTitle = 'Confirmation'
     headerSubtitle = `${numberOfItems} ${pluralize('Recipient', numberOfItems)}`
-    buttons = null
+    buttons = <div className={styles.sendPanelHeaderButtons} />
   }
 
   if (sendSuccess) {
@@ -78,8 +78,6 @@ const SendPanelHeader = ({
         </button>
       </div>
     )
-  } else {
-    buttons = <div className={styles.sendPanelHeaderButtons} />
   }
 
   if (sendError) {
