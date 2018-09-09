@@ -2,7 +2,6 @@
 import React from 'react'
 import { uniqueId } from 'lodash'
 import { wallet } from 'neon-js'
-import { Head } from 'glamorous'
 import {
   toNumber,
   toBigNumber,
@@ -11,7 +10,6 @@ import {
 } from '../../core/math'
 
 import { isBlacklisted } from '../../core/wallet'
-import SendPageHeader from '../../components/Send/SendPageHeader'
 import SendAmountsPanel from '../../components/Send/SendAmountsPanel'
 import SendPanel from '../../components/Send/SendPanel'
 import HeaderBar from '../../components/HeaderBar'
