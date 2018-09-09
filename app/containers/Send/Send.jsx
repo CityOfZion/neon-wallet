@@ -2,6 +2,7 @@
 import React from 'react'
 import { uniqueId } from 'lodash'
 import { wallet } from 'neon-js'
+import { Head } from 'glamorous'
 import {
   toNumber,
   toBigNumber,
@@ -10,10 +11,10 @@ import {
 } from '../../core/math'
 
 import { isBlacklisted } from '../../core/wallet'
-
 import SendPageHeader from '../../components/Send/SendPageHeader'
 import SendAmountsPanel from '../../components/Send/SendAmountsPanel'
 import SendPanel from '../../components/Send/SendPanel'
+import HeaderBar from '../../components/HeaderBar'
 import styles from './Send.scss'
 
 type Props = {
@@ -360,7 +361,8 @@ export default class Send extends React.Component<Props, State> {
 
     return (
       <section className={styles.sendContainer}>
-        <SendPageHeader loading={loading} loadWalletData={loadWalletData} />
+        {/* <SendPageHeader loading={loading} loadWalletData={loadWalletData} /> */}
+        <HeaderBar label="Send Assets" shouldRenderRefresh />
         {!noSendableAssets && (
           <SendAmountsPanel
             sendAmountsData={this.createSendAmountsData()}
