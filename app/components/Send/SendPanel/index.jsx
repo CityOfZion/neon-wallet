@@ -127,7 +127,10 @@ const SendPanel = ({
           clearErrors={clearErrors}
           showConfirmSend={showConfirmSend}
         />
-        <ConfirmSend handleEditRecipientsClick={handleEditRecipientsClick} />
+        <ConfirmSend
+          handleEditRecipientsClick={handleEditRecipientsClick}
+          fees={fees}
+        />
       </form>
     )
   }
@@ -161,6 +164,7 @@ const SendPanel = ({
           sendError={sendError}
           resetViews={resetViews}
           noSendableAssets={noSendableAssets}
+          hasNetworkFees={!!fees}
         />
       )}
       className={styles.sendSuccessPanel}
