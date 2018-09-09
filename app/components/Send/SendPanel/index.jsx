@@ -1,8 +1,10 @@
 // @flow
 import React from 'react'
+import { get } from 'lodash'
 
 import Panel from '../../Panel'
 import SendRecipientList from './SendRecipientList'
+import PriorityFee from './PriorityFee'
 import SendPanelHeader from './SendPanelHeader'
 import Button from '../../Button/Button'
 import ConfirmSend from './ConfirmSend'
@@ -13,6 +15,7 @@ import ZeroAssets from './ZeroAssets'
 import { pluralize } from '../../../util/pluralize'
 
 import SendIcon from '../../../assets/icons/send.svg'
+import LightningIcon from '../../../assets/icons/lightning.svg'
 
 import styles from './SendPanel.scss'
 import { truncateNumber } from '../../../core/math'
@@ -27,6 +30,8 @@ type Props = {
   sendError: boolean,
   noSendableAssets: boolean,
   txid: string,
+  fees: number,
+  handleAddPriorityFee: number => any,
   resetViewsAfterError: () => any,
   resetViews: () => any,
   handleSubmit: () => any,
@@ -56,7 +61,9 @@ const SendPanel = ({
   resetViews,
   noSendableAssets,
   txid,
-  handleEditRecipientsClick
+  handleEditRecipientsClick,
+  handleAddPriorityFee,
+  fees
 }: Props) => {
   function shouldDisableSendButton(sendRowDetails) {
     let disabled = false
@@ -85,6 +92,16 @@ const SendPanel = ({
         clearErrors={clearErrors}
         showConfirmSend={showConfirmSend}
       />
+
+      <div className={styles.priorityFeeContainer}>
+        <PriorityFee
+          availableGas={Number(get(sendableAssets, 'GAS.balance', 0))}
+          handleAddPriorityFee={handleAddPriorityFee}
+          fees={fees}
+          disabled={shouldDisableSendButton(sendRowDetails)}
+        />
+      </div>
+
       <Button
         primary
         className={styles.sendFormButton}
@@ -92,7 +109,8 @@ const SendPanel = ({
         type="submit"
         disabled={shouldDisableSendButton(sendRowDetails)}
       >
-        Send {pluralize('Asset', sendRowDetails.length)}
+        Send {pluralize('Asset', sendRowDetails.length)}{' '}
+        {fees ? 'With Fee' : 'Without Fee'}
       </Button>
     </form>
   )
@@ -109,7 +127,10 @@ const SendPanel = ({
           clearErrors={clearErrors}
           showConfirmSend={showConfirmSend}
         />
-        <ConfirmSend handleEditRecipientsClick={handleEditRecipientsClick} />
+        <ConfirmSend
+          handleEditRecipientsClick={handleEditRecipientsClick}
+          fees={fees}
+        />
       </form>
     )
   }
@@ -143,6 +164,7 @@ const SendPanel = ({
           sendError={sendError}
           resetViews={resetViews}
           noSendableAssets={noSendableAssets}
+          hasNetworkFees={!!fees}
         />
       )}
       className={styles.sendSuccessPanel}

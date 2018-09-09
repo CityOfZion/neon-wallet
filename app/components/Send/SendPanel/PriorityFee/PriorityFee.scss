@@ -1,0 +1,52 @@
+.priorityExplanationText {
+  text-transform: uppercase;
+  font-size: 14px;
+  text-align: left;
+  opacity: 0.5;
+  font-family: Gotham-Bold;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.priorityFeeContainer {
+  display: flex;
+  flex-direction: column;
+  width: 450px;
+  margin: auto;
+}
+
+.priorityFeeButtonContainer {
+  display: flex;
+  justify-content: center;
+
+  .feeCost {
+    font-size: 11px;
+    font-weight: 100 !important;
+  }
+
+  .speed {
+    font-weight: 400;
+  }
+
+  button:first-child {
+    border-radius: 4px 0 0 4px;
+    border-right: none !important;
+    display: flex;
+    flex: 2.25;
+  }
+  button:nth-child(2) {
+    border-radius: 0;
+    border-right: none !important;
+    display: flex;
+    flex: 2;
+  }
+  button:nth-child(3) {
+    border-radius: 0 4px 4px 0;
+    display: flex;
+    flex: 1.5;
+  }
+  button {
+    margin: 0;
+    border: solid thin #8d98ae !important;
+  }
+}

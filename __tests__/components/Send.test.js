@@ -161,7 +161,7 @@ describe('Send', () => {
     }, 0)
   })
 
-  test('It does not allow you to send to your own address', () => {
+  test('It does allow you to send to your own address', () => {
     const wrapper = setup({ address: 'AMKxqiSSLR89wLVEk5CoGRjKHRrmrR8bDr' })
 
     const asset = createAsset('GAS', 1)
@@ -172,7 +172,7 @@ describe('Send', () => {
 
     const errors = wrapper.instance().state.sendRowDetails[0].errors
 
-    expect(errors.address).toBe('You can\'t send to your own address.')
+    expect(errors.address).toBe(undefined)
   })
 
   test('It correctly sets max value', () => {
