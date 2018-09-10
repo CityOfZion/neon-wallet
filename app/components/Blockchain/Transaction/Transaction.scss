@@ -1,6 +1,27 @@
 @import '../../../styles/variables';
 
 .transaction {
-    color: $link-color;
-    cursor: pointer;
+  color: $link-color;
+  cursor: pointer;
+}
+
+.transactionContainer {
+  display: flex;
+  align-items: center;
+}
+
+.amounts {
+  align-items: center;
+  display: flex;
+}
+
+.txTypeIconContainer {
+  width: 50px;
+  .claimIconContainer {
+    svg {
+      path {
+        fill: #ffcf48;
+      }
+    }
+  }
 }

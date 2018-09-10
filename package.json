@@ -83,6 +83,7 @@
     "history": "4.7.2",
     "isomorphic-fetch": "2.2.1",
     "lodash": "4.17.4",
+    "moment": "^2.22.2",
     "neon-js": "git+https://github.com/cityofzion/neon-js.git#3.11.0",
     "nock": "^9.2.3",
     "prop-types": "^15.6.2",

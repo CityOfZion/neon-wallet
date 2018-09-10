@@ -7,6 +7,7 @@ import { filter, reduce } from 'lodash'
 import { COIN_DECIMAL_LENGTH } from '../core/formatters'
 import { ASSETS } from '../core/constants'
 import { toBigNumber } from '../core/math'
+import { getDefaultTokens } from '../core/nep5'
 
 export const NEO_ID =
   'c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b'
@@ -32,12 +33,14 @@ export const ID = 'transactionHistory'
 export default createActions(
   ID,
   ({ net, address }: Props = {}) => async (state: Object) => {
+    const tokens = await getDefaultTokens()
+
     const endpoint = api.neoscan.getAPIEndpoint(net)
     const { data } = await axios.get(
       `${endpoint}/v1/get_last_transactions_by_address/${address}`
     )
 
-    return data.map(({ txid, vin, vouts }) => ({
+    return data.map(({ txid, vin, vouts, type, time }) => ({
       txid,
       [ASSETS.NEO]: sum(vouts, address, NEO_ID)
         .minus(sum(vin, address, NEO_ID))
@@ -45,7 +48,9 @@ export default createActions(
       [ASSETS.GAS]: sum(vouts, address, GAS_ID)
         .minus(sum(vin, address, GAS_ID))
         .round(COIN_DECIMAL_LENGTH)
-        .toString()
+        .toString(),
+      type,
+      time
     }))
   }
 )

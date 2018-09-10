@@ -110,7 +110,7 @@ class SendRecipientListItem extends Component<Props> {
         customChangeEvent
         handleMaxClick={this.handleMaxClick}
         onFocus={this.clearErrorsOnFocus}
-        error={errors.amount}
+        error={errors && errors.amount}
         options={{ numeralDecimalScale: 10 }}
       />
     )

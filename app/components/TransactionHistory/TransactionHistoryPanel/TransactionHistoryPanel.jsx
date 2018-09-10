@@ -17,10 +17,7 @@ export default class TransactionHistory extends React.Component<Props> {
     const { className, transactions } = this.props
 
     return (
-      <Panel
-        className={classNames(styles.transactionHistoryPanel, className)}
-        renderHeader={this.renderHeader}
-      >
+      <Panel className={classNames(styles.transactionHistoryPanel, className)}>
         <Transactions
           className={styles.transactions}
           transactions={transactions}
@@ -28,6 +25,4 @@ export default class TransactionHistory extends React.Component<Props> {
       </Panel>
     )
   }
-
-  renderHeader = () => <span>Transaction History</span>
 }
