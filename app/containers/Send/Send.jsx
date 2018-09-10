@@ -10,10 +10,9 @@ import {
 } from '../../core/math'
 
 import { isBlacklisted } from '../../core/wallet'
-
-import SendPageHeader from '../../components/Send/SendPageHeader'
 import SendAmountsPanel from '../../components/Send/SendAmountsPanel'
 import SendPanel from '../../components/Send/SendPanel'
+import HeaderBar from '../../components/HeaderBar'
 import styles from './Send.scss'
 
 type Props = {
@@ -26,8 +25,7 @@ type Props = {
   contacts: Object,
   currencyCode: string,
   address: string,
-  loading: boolean,
-  loadWalletData: Function
+  shouldRenderHeaderBar: boolean
 }
 
 type State = {
@@ -53,6 +51,10 @@ export default class Send extends React.Component<Props, State> {
       sendRowDetails: [],
       fees: 0
     }
+  }
+
+  static defaultProps = {
+    shouldRenderHeaderBar: true
   }
 
   componentDidMount() {
@@ -353,14 +355,15 @@ export default class Send extends React.Component<Props, State> {
       sendableAssets,
       contacts,
       currencyCode,
-      loading,
-      loadWalletData
+      shouldRenderHeaderBar
     } = this.props
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 
     return (
       <section className={styles.sendContainer}>
-        <SendPageHeader loading={loading} loadWalletData={loadWalletData} />
+        {shouldRenderHeaderBar && (
+          <HeaderBar label="Send Assets" shouldRenderRefresh />
+        )}
         {!noSendableAssets && (
           <SendAmountsPanel
             sendAmountsData={this.createSendAmountsData()}

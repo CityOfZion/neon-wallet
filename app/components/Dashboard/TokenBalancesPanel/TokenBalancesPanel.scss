@@ -31,9 +31,9 @@
   }
 
   .tableData {
-    min-height: 60px;
+    min-height: 35px;
     border-bottom: solid thin #f2f2f2;
-    padding: 5px 0px 5px 0px;
+    padding: 5px 0px 2px 2px;
     margin-left: -24px;
     margin-right: -24px;
     padding-left: 24px;
@@ -59,18 +59,20 @@
     .symbol {
       flex: 0 0 auto;
       width: 50px;
-      margin-right: 45px;
+      margin-right: 25px;
     }
 
     .tickerName {
       @extend .symbol;
       width: 35px;
-      margin-right: 60px;
+      margin-right: 40px;
       color: #ccd0d9;
       font-weight: 300;
       flex-direction: column;
       display: flex;
       padding-left: 2.5px;
+      font-size: 12px;
+      text-align: center;
     }
 
     .name {
@@ -83,7 +85,6 @@
 
     .priceLabel {
       flex: 1 1 auto;
-      //margin-right: 16px;
       font-weight: bold;
     }
 
@@ -99,14 +100,12 @@
 
     .balance {
       flex: 0 0 auto;
-      // width: 70px;
     }
 
     .balanceValue {
       flex: 0 0 auto;
       width: 70px;
       font-weight: 300;
-      text-align: right;
     }
 
     &:last-child {

@@ -7,6 +7,8 @@ import { ROUTES } from '../../core/constants'
 import AssetBalancesPanel from '../../components/Dashboard/AssetBalancesPanel'
 import TokenBalancesPanel from '../../components/Dashboard/TokenBalancesPanel'
 import PriceHistoryPanel from '../../components/Dashboard/PriceHistoryPanel'
+
+import HeaderBar from '../../components/HeaderBar'
 import PortfolioPanel from '../../components/Dashboard/PortfolioPanel'
 import Tooltip from '../../components/Tooltip'
 import Wallet from '../../assets/icons/wallet.svg'
@@ -44,7 +46,37 @@ export default class Dashboard extends Component<Props> {
     const { loadWalletData, loading } = this.props
     return (
       <div id="dashboard" className={styles.dashboard}>
-        <div className={styles.dashboardHeader}>
+        <HeaderBar
+          renderLeftContent={() => (
+            <NetworkSwitch
+              className={styles.dashboardNetworkSwitch}
+              networkSwitchTextInputContainer={
+                styles.dashboardNetworkSwitchTextInputContainer
+              }
+              networkSwitchTextInput={styles.dashboardNetworkSwitchTextInput}
+              activeStyles={styles.dashboardNetworkSwitchActive}
+            />
+          )}
+          renderRightContent={() => (
+            <div className={classNames(styles.dashboardHeaderButonContainer)}>
+              <NavLink id="wallet-manager" exact to={ROUTES.WALLET_MANAGER}>
+                <span> Manage Wallets </span>
+                <Wallet id="manage-wallets" />
+              </NavLink>
+              <div className={styles.refreshButton}>
+                <span onClick={loading ? null : loadWalletData}> Refresh </span>
+                <RefreshIcon
+                  id="refresh"
+                  className={classNames(styles.refresh, {
+                    [styles.loading]: loading
+                  })}
+                  onClick={loading ? null : loadWalletData}
+                />
+              </div>
+            </div>
+          )}
+        />
+        {/* <div className={styles.dashboardHeader}>
           <NetworkSwitch
             className={styles.dashboardNetworkSwitch}
             networkSwitchTextInputContainer={
@@ -75,7 +107,7 @@ export default class Dashboard extends Component<Props> {
               onClick={loading ? null : loadWalletData}
             />
           </Tooltip>
-        </div>
+        </div> */}
         <div className={styles.panelContainer}>
           <div className={styles.dataColumn}>
             <TokenBalancesPanel className={styles.tokensPanel} />

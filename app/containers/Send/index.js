@@ -66,15 +66,6 @@ const mapBalanceDataToProps = (balances: Object) => ({
   sendableAssets: filterSendableAssets(balances)
 })
 
-const mapAccountActionsToProps = (actions, props) => ({
-  loadWalletData: () =>
-    actions.call({
-      net: props.net,
-      address: props.address,
-      tokens: props.tokenBalances
-    })
-})
-
 export default compose(
   connect(
     mapStateToProps,
@@ -86,7 +77,6 @@ export default compose(
   withPricesData(mapPricesDataToProps),
   withNetworkData(),
   withAuthData(),
-  withActions(accountActions, mapAccountActionsToProps),
   withFilteredTokensData(),
   withLoadingProp(balancesActions),
   withSuccessNotification(

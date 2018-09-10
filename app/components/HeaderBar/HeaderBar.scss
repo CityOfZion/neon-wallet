@@ -1,0 +1,45 @@
+@import '../../styles/variables';
+@import '../../styles/animations';
+
+.headerBar {
+  display: flex;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  margin-top: -10px;
+  padding: 12px;
+  margin-bottom: 25px;
+  height: 25px;
+  border-bottom: solid thin #5c677f;
+
+  h3 {
+    font-family: Gotham-Medium;
+    font-size: 14px;
+    line-height: 32px;
+    margin: 0;
+    text-align: left;
+    font-weight: 300;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+    align-items: center;
+    display: flex;
+  }
+
+  .refreshButton {
+    display: flex;
+    align-items: center;
+    align-self: flex-end;
+    cursor: pointer;
+
+    span {
+      margin-right: 10px;
+    }
+  }
+
+  .loading {
+    animation: spin 2s linear infinite;
+  }
+}
