@@ -25,7 +25,7 @@ export default class Transaction extends React.Component<Props> {
     return (
       <div className={styles.transactionContainer}>
         <div className={styles.txTypeIconContainer}>
-          {this.renderTxTypeIcon(type)}
+          {this.renderTxTypeIcon(type, tx)}
         </div>
         <div className={styles.txDateContainer}>
           {moment.unix(time).format('MM/DD/YYYY')}
@@ -58,7 +58,7 @@ export default class Transaction extends React.Component<Props> {
     )
   }
 
-  renderTxTypeIcon = (type: string) => {
+  renderTxTypeIcon = (type: string, tx: Object) => {
     switch (type) {
       case 'ClaimTransaction':
         return (
