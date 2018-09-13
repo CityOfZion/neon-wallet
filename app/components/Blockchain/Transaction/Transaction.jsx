@@ -30,6 +30,9 @@ export default class Transaction extends React.Component<Props> {
         <div className={styles.txDateContainer}>
           {moment.unix(time).format('MM/DD/YYYY')}
         </div>
+        <div className={styles.txLabelContainer}>
+          {this.renderTxTypeLabel(type, tx)}
+        </div>
         <span
           className={classNames(styles.transaction, className)}
           onClick={this.handleClick}
@@ -52,7 +55,7 @@ export default class Transaction extends React.Component<Props> {
 
     return (
       <div className={styles.amounts}>
-        {this.renderAmount(tx, ASSETS.NEO, forceRenderNEO)}
+        {this.renderAmount(tx, ASSETS.NEO, forceRenderNEO)}{' '}
         {this.renderAmount(tx, ASSETS.GAS)}
       </div>
     )
@@ -68,6 +71,25 @@ export default class Transaction extends React.Component<Props> {
         )
       case 'ContractTransaction':
         return null
+      case 'InvocationTransaction':
+        return null
+      default:
+        return null
+    }
+  }
+
+  renderTxTypeLabel = (type: string, tx: Object) => {
+    switch (type) {
+      case 'ClaimTransaction':
+        return <span> GAS Claim </span>
+      case 'ContractTransaction':
+        return <span> Transaction </span>
+      case 'InvocationTransaction':
+        return (
+          <span className={styles.invocationTransaction}>
+            Invocation Transaction
+          </span>
+        )
       default:
         return null
     }

@@ -28,11 +28,29 @@ function sum(txns, address, asset) {
   return reduce(matchingTxns, (sum, txn) => sum.plus(txn.value), toBigNumber(0))
 }
 
+// function calculateSummary(vouts, vin, address) {
+//   const summary = {
+//     out: [],
+//     in: [],
+//   }
+
+//   const matchingTxns = []
+
+//   vouts.forEach(tx => {
+//     const token = tokens.find(token => token.scriptHash === tx.asset)
+//     matchingTxns.push(...vouts.filter(txn => txn.asset === token.scriptHash && txn.address_hash === address))
+//   })
+
+//   reduce(matchingTxns, (sum, txn) => sum.plus(txn.value), toBigNumber(0))
+
+// }
+
 export const ID = 'transactionHistory'
 
 export default createActions(
   ID,
   ({ net, address }: Props = {}) => async (state: Object) => {
+    // $FlowFixMe
     const tokens = await getDefaultTokens()
 
     const endpoint = api.neoscan.getAPIEndpoint(net)
@@ -40,17 +58,63 @@ export default createActions(
       `${endpoint}/v1/get_last_transactions_by_address/${address}`
     )
 
-    return data.map(({ txid, vin, vouts, type, time }) => ({
-      txid,
-      [ASSETS.NEO]: sum(vouts, address, NEO_ID)
-        .minus(sum(vin, address, NEO_ID))
-        .toFixed(0),
-      [ASSETS.GAS]: sum(vouts, address, GAS_ID)
-        .minus(sum(vin, address, GAS_ID))
-        .round(COIN_DECIMAL_LENGTH)
-        .toString(),
-      type,
-      time
-    }))
+    return data.map(({ txid, vin, vouts, type, time }) => {
+      const summary = {
+        [ASSETS.NEO]: {
+          out: sum(vouts, address, NEO_ID).toFixed(),
+          in: vin.length ? sum(vin, address, NEO_ID).toFixed() : 0,
+          total: sum(vouts, address, NEO_ID)
+            .minus(sum(vin, address, NEO_ID))
+            .toFixed(0)
+        },
+        [ASSETS.GAS]: {
+          out: sum(vouts, address, GAS_ID)
+            .round(COIN_DECIMAL_LENGTH)
+            .toString(),
+          in: sum(vin, address, GAS_ID)
+            .round(COIN_DECIMAL_LENGTH)
+            .toString(),
+          total: sum(vouts, address, GAS_ID)
+            .minus(sum(vin, address, GAS_ID))
+            .round(COIN_DECIMAL_LENGTH)
+            .toString()
+        }
+      }
+
+      tokens.forEach(token => {
+        const ins = sum(vouts, address, token.scriptHash)
+          .round(COIN_DECIMAL_LENGTH)
+          .toString()
+        const out = sum(vin, address, token.scriptHash)
+          .round(COIN_DECIMAL_LENGTH)
+          .toString()
+        const total = sum(vouts, address, token.scriptHash)
+          .minus(sum(vin, address, token.scriptHash))
+          .round(COIN_DECIMAL_LENGTH)
+          .toString()
+
+        if (total !== '0') {
+          summary[token.symbol] = {
+            out,
+            in: ins,
+            total
+          }
+        }
+      })
+
+      return {
+        txid,
+        summary,
+        [ASSETS.NEO]: sum(vouts, address, NEO_ID)
+          .minus(sum(vin, address, NEO_ID))
+          .toFixed(0),
+        [ASSETS.GAS]: sum(vouts, address, GAS_ID)
+          .minus(sum(vin, address, GAS_ID))
+          .round(COIN_DECIMAL_LENGTH)
+          .toString(),
+        type,
+        time
+      }
+    })
   }
 )

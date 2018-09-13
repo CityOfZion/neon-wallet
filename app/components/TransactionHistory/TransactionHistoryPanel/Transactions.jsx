@@ -31,22 +31,16 @@ export default class Transactions extends React.Component<Props> {
         id="transactionList"
         className={classNames(styles.transactionList, className)}
       >
-        {transactions.map(
-          (tx, i) =>
-            console.log(tx) || (
-              <li
-                key={tx.txid}
-                className={classNames(styles.row, {
-                  [styles.oddNumberedRow]: i % 2 === 0
-                })}
-              >
-                <Transaction
-                  className={classNames(styles.txid, 'txid')}
-                  tx={tx}
-                />
-              </li>
-            )
-        )}
+        {transactions.map((tx, i) => (
+          <li
+            key={tx.txid}
+            className={classNames(styles.row, {
+              [styles.oddNumberedRow]: i % 2 === 0
+            })}
+          >
+            <Transaction className={classNames(styles.txid, 'txid')} tx={tx} />
+          </li>
+        ))}
       </ul>
     )
   }
