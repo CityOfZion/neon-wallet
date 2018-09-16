@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // @flow
 
 import React from 'react'
@@ -39,18 +38,6 @@ const TokenSaleConfirm = ({ setStep }: Props) => (
         Continue
       </Button>
     </div>
-=======
-import React from 'react'
-
-import Panel from '../../Panel'
-import Logo from '../../../assets/icons/neonLogoGrey.svg'
-
-import styles from './TokenSaleConfirm.scss'
-
-const TokenSaleConfirm = () => (
-  <Panel className={styles.tokenSaleConfirmPanel} renderHeader={() => <Logo />}>
-    hello
->>>>>>> d79a17bafb9b724d97aac16c4f669575a5c67812
   </Panel>
 )
 

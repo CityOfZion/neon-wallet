@@ -101,6 +101,7 @@ const Sidebar = ({ className, showTokenSaleModal }: Props) => (
           activeClassName={styles.active}
         >
           <TokenSaleIcon />
+          <div> Token Sale </div>
         </NavLink>
       </Tooltip>
 
