@@ -17,6 +17,7 @@ import WalletManager from '../../containers/WalletManager'
 import EditWallet from '../../containers/EditWallet'
 import DisplayWalletAccounts from '../../containers/DisplayWalletAccounts'
 import Send from '../../containers/Send'
+import TokenSale from '../../containers/TokenSale'
 import { ROUTES } from '../../core/constants'
 
 export default () => (
@@ -70,6 +71,7 @@ export default () => (
       <PrivateRoute exact path={ROUTES.ADD_CONTACT} component={AddContact} />
       <PrivateRoute exact path={ROUTES.EDIT_CONTACT} component={EditContact} />
       <PrivateRoute exact path={ROUTES.SEND} component={Send} />
+      <PrivateRoute exact path={ROUTES.TOKEN_SALE} component={TokenSale} />
       <PrivateRoute
         exact
         path={ROUTES.TRANSACTION_HISTORY}
