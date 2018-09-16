@@ -14,10 +14,10 @@ type State = {
 }
 
 class CheckBox extends Component<Props, State> {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-      checked: false
+      checked: this.props.checked
     }
   }
 

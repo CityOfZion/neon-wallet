@@ -14,21 +14,44 @@ import styles from './TokenSalePanel.scss'
 import { TOKEN_SALE_CONFIRM } from '../../../core/constants'
 
 type Props = {
-  setStep: () => void
+  setStep: () => void,
+  assetBalances: object
 }
 
-const TokenSalePanel = ({ setStep }: Props) => (
+const TokenSalePanel = ({
+  setStep,
+  assetBalances,
+  getAssetsToPurchaseWith,
+  assetToPurchaseWith,
+  assetToPurchase,
+  amountToPurchaseFor,
+  getPurchaseableAssets,
+  conditions,
+  disabledButton,
+  acceptedConditions,
+  updateField,
+  updateConditions
+}: Props) => (
   <Panel renderHeader={() => <p>Participate in Token Sale</p>}>
     <div className={styles.tokenSalePanelContainer}>
-      <TokenSaleSelection />
+      <TokenSaleSelection
+        assetBalances={assetBalances}
+        getAssetsToPurchaseWith={getAssetsToPurchaseWith}
+        assetToPurchaseWith={assetToPurchaseWith}
+        assetToPurchase={assetToPurchase}
+        amountToPurchaseFor={amountToPurchaseFor}
+        updateField={updateField}
+        getPurchaseableAssets={getPurchaseableAssets}
+      />
       <DialogueBox
         icon={<WarningIcon />}
         text="Please read and acknowledge these statements to continue"
         className={styles.tokenSalePanelDialogueBox}
       />
-      <TokenSaleConditions />
+      <TokenSaleConditions conditions={conditions} updateConditions={updateConditions} acceptedConditions={acceptedConditions}/>
       <Button
         onClick={() => setStep(TOKEN_SALE_CONFIRM)}
+        disabled={disabledButton}
         primary
         renderIcon={CheckMarkIcon}
         className={styles.tokenSaleButton}

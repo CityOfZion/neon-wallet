@@ -10,11 +10,12 @@ type Props = {
   text: string
 }
 
-const TokenSaleCondition = ({ text }: Props) => (
+const TokenSaleCondition = ({ text, onClick, updateConditions, checked }: Props) => (
   <div className={styles.tokenSaleCondition}>
     <p className={styles.tokenSaleConditionText}>{text}</p>
     <CheckBox
-      onChange={() => console.log('changed')}
+      onChange={() => updateConditions(text)}
+      checked={checked}
       icon={
         <QuestionMarkIcon className={styles.tokenSaleConditionCheckBoxIcon} />
       }
