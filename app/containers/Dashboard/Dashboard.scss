@@ -16,17 +16,18 @@
 
   .dashboardNetworkSwitchTextInput {
     background: $main-background;
-    border: none;
+    border: transparent;
     width: 100px;
   }
 
   .dashboardNetworkSwitchTextInputContainer {
     background-color: $main-background;
-    border: none;
+    border: transparent;
+    margin-top: 4px;
   }
 
   .dashboardNetworkSwitchActive {
-    border: none;
+    border: transparent;
     background-color: $main-background;
   }
 
@@ -39,10 +40,9 @@
     margin-right: 24px;
 
     .assetsPanel {
-      // flex: 0 0 auto;
       height: 100%;
-      max-height: 500px;
-      min-height: 442.97px;
+      max-height: 450px;
+      min-height: 390px;
       margin-top: auto;
     }
 
@@ -77,42 +77,69 @@
     }
   }
 
-  .dashboardHeader {
-    display: flex;
-    justify-content: flex-end;
-    display: flex;
+  .dashboardHeaderButonContainer {
+    width: 300px;
+    display: flex !important;
     align-items: center;
-    margin-top: -10px;
-    padding: 10px;
-    margin-bottom: 10px;
+    justify-content: space-between;
+    margin-left: auto;
 
-    .manageButton {
-      margin-right: 25px;
+    span {
+      margin-right: 10px;
     }
 
-    a {
-      text-decoration: none;
-      color: black;
-      align-items: center;
-      display: flex;
-    }
-
-    .headerButtonContainer {
-      display: flex !important;
+    .refresh {
       cursor: pointer;
+    }
+
+    .refreshButton {
+      display: flex;
       align-items: center;
+      cursor: pointer;
+    }
 
-      .refresh {
-        cursor: pointer;
-      }
-
-      .loading {
-        animation: spin 2s linear infinite;
-      }
-
-      span {
-        margin-right: 10px;
-      }
+    .loading {
+      animation: spin 2s linear infinite;
     }
   }
+
+  // .dashboardHeader {
+  //   display: flex;
+  //   justify-content: flex-end;
+  //   display: flex;
+  //   align-items: center;
+  //   margin-top: -10px;
+  //   padding: 10px 10px 15px;
+  //   margin-bottom: 20px;
+  //   border-bottom: solid thin #5c677f;
+
+  //   .manageButton {
+  //     margin-right: 25px;
+  //   }
+
+  //   a {
+  //     text-decoration: none;
+  //     color: black;
+  //     align-items: center;
+  //     display: flex;
+  //   }
+
+  //   .headerButtonContainer {
+  //     display: flex !important;
+  //     cursor: pointer;
+  //     align-items: center;
+
+  //     .refresh {
+  //       cursor: pointer;
+  //     }
+
+  //     .loading {
+  //       animation: spin 2s linear infinite;
+  //     }
+
+  //     span {
+  //       margin-right: 10px;
+  //     }
+  //   }
+  // }
 }

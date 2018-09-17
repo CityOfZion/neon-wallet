@@ -98,12 +98,12 @@ export default class TextInput extends React.Component<Props, State> {
   handleFocus = (event: Object, ...args: Array<any>) => {
     this.setState({ active: true })
     event.persist()
-    this.props.onFocus && this.props.onFocus(event, ...args)
+    return this.props.onFocus && this.props.onFocus(event, ...args)
   }
 
   handleBlur = (event: Object, ...args: Array<any>) => {
     this.setState({ active: false })
     event.persist()
-    this.props.onBlur && this.props.onBlur(event, ...args)
+    return this.props.onBlur && this.props.onBlur(event, ...args)
   }
 }

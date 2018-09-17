@@ -3,6 +3,7 @@ import React from 'react'
 
 import DialogueBox from '../../../DialogueBox'
 import Button from '../../../Button/Button'
+import { formatGAS } from '../../../../core/formatters'
 
 import WarningIcon from '../../../../assets/icons/warning.svg'
 import CheckMarkIcon from '../../../../assets/icons/confirm.svg'
@@ -11,10 +12,11 @@ import ErrorIcon from '../../../../assets/icons/error.svg'
 import styles from '../SendPanel.scss'
 
 type Props = {
-  handleEditRecipientsClick: () => any
+  handleEditRecipientsClick: () => any,
+  fees: number
 }
 
-const ConfirmSend = ({ handleEditRecipientsClick }: Props) => (
+const ConfirmSend = ({ handleEditRecipientsClick, fees }: Props) => (
   <section>
     <DialogueBox
       icon={<WarningIcon />}
@@ -28,15 +30,23 @@ const ConfirmSend = ({ handleEditRecipientsClick }: Props) => (
       >
         Edit Recipients
       </Button>
-      <Button
-        primary
-        className={styles.confirmSendButtons}
-        renderIcon={() => <CheckMarkIcon />}
-        type="submit"
-      >
-        Confirm & Send
-      </Button>
+
+      <div className={styles.confirmContainer}>
+        <Button
+          primary
+          className={styles.confirmSendButtons}
+          renderIcon={() => <CheckMarkIcon />}
+          type="submit"
+        >
+          Confirm & Send
+        </Button>
+      </div>
     </div>
+    {fees && (
+      <div className={styles.confirmationFees}>
+        <p>Fee: {formatGAS(fees)} GAS</p>
+      </div>
+    )}
   </section>
 )
 

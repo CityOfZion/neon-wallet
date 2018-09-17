@@ -10,21 +10,22 @@ import {
 } from '../../core/math'
 
 import { isBlacklisted } from '../../core/wallet'
-
-import SendPageHeader from '../../components/Send/SendPageHeader'
 import SendAmountsPanel from '../../components/Send/SendAmountsPanel'
 import SendPanel from '../../components/Send/SendPanel'
+import HeaderBar from '../../components/HeaderBar'
 import styles from './Send.scss'
 
 type Props = {
   sendableAssets: Object,
   prices: Object,
-  sendTransaction: (Array<SendEntryType>) => Object,
+  sendTransaction: ({
+    sendEntries: Array<SendEntryType>,
+    fees: number
+  }) => Object,
   contacts: Object,
   currencyCode: string,
   address: string,
-  loading: boolean,
-  loadWalletData: Function
+  shouldRenderHeaderBar: boolean
 }
 
 type State = {
@@ -33,6 +34,7 @@ type State = {
   sendError: boolean,
   sendErrorMessage: string,
   txid: string,
+  fees: number,
   sendRowDetails: Array<Object>,
   address?: string
 }
@@ -46,8 +48,13 @@ export default class Send extends React.Component<Props, State> {
       sendError: false,
       sendErrorMessage: '',
       txid: '',
-      sendRowDetails: []
+      sendRowDetails: [],
+      fees: 0
     }
+  }
+
+  static defaultProps = {
+    shouldRenderHeaderBar: true
   }
 
   componentDidMount() {
@@ -203,7 +210,8 @@ export default class Send extends React.Component<Props, State> {
       return {
         showConfirmSend: false,
         sendSuccess: false,
-        sendRowDetails: newState
+        sendRowDetails: newState,
+        fees: 0
       }
     })
   }
@@ -225,7 +233,7 @@ export default class Send extends React.Component<Props, State> {
 
   handleSend = () => {
     const { sendTransaction } = this.props
-    const { sendRowDetails } = this.state
+    const { sendRowDetails, fees } = this.state
 
     const entries = sendRowDetails.map((row: Object) => ({
       address: row.address,
@@ -233,7 +241,7 @@ export default class Send extends React.Component<Props, State> {
       symbol: row.asset
     }))
 
-    sendTransaction(entries)
+    sendTransaction({ sendEntries: entries, fees })
       .then((result: Object) => {
         this.setState({ sendSuccess: true, txid: result.txid })
       })
@@ -243,6 +251,8 @@ export default class Send extends React.Component<Props, State> {
   }
 
   handleEditRecipientsClick = () => this.setState({ showConfirmSend: false })
+
+  handleAddPriorityFee = (fees: number) => this.setState({ fees })
 
   validateRow = async (row: Object, index: number) => {
     const validAmount = this.validateAmount(
@@ -301,11 +311,6 @@ export default class Send extends React.Component<Props, State> {
       errors.address = 'You need to specify a valid NEO address.'
     }
 
-    if (formAddress === address) {
-      // eslint-disable-next-line quotes
-      errors.address = "You can't send to your own address."
-    }
-
     const blackListedAddress = await isBlacklisted(formAddress)
     if (blackListedAddress) {
       errors.address =
@@ -343,20 +348,22 @@ export default class Send extends React.Component<Props, State> {
       sendSuccess,
       sendError,
       sendErrorMessage,
-      txid
+      txid,
+      fees
     } = this.state
     const {
       sendableAssets,
       contacts,
       currencyCode,
-      loading,
-      loadWalletData
+      shouldRenderHeaderBar
     } = this.props
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 
     return (
       <section className={styles.sendContainer}>
-        <SendPageHeader loading={loading} loadWalletData={loadWalletData} />
+        {shouldRenderHeaderBar && (
+          <HeaderBar label="Send Assets" shouldRenderRefresh />
+        )}
         {!noSendableAssets && (
           <SendAmountsPanel
             sendAmountsData={this.createSendAmountsData()}
@@ -378,6 +385,8 @@ export default class Send extends React.Component<Props, State> {
           updateRowField={this.updateRowField}
           clearErrors={this.clearErrors}
           handleSubmit={this.handleSubmit}
+          handleAddPriorityFee={this.handleAddPriorityFee}
+          fees={fees}
           resetViewsAfterError={this.resetViewsAfterError}
           handleEditRecipientsClick={this.handleEditRecipientsClick}
           handleSend={this.handleSend}

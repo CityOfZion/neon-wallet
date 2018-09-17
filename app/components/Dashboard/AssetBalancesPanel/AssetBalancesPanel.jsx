@@ -22,9 +22,7 @@ type Props = {
   gasPrice: number,
   neoPriceChange: BigNumber,
   gasPriceChange: BigNumber,
-  currencyCode: string,
-  loading: ?boolean,
-  refresh: Function
+  currencyCode: string
 }
 
 export default class AssetBalancesPanel extends React.Component<Props> {

@@ -33,11 +33,6 @@ type State = {
 }
 
 export default class Settings extends Component<Props, State> {
-  state = {
-    explorer: this.props.explorer,
-    currency: this.props.currency
-  }
-
   saveWalletRecovery = () => {
     const { showSuccessNotification, showErrorNotification } = this.props
 
@@ -151,6 +146,7 @@ export default class Settings extends Component<Props, State> {
             return
           }
 
+          // eslint-disable-next-line
           data.accounts = reject(data.accounts, { key })
 
           storage.set('userWallet', data, saveError => {

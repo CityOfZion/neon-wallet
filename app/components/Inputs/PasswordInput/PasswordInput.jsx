@@ -44,6 +44,7 @@ export default class PasswordInput extends React.Component<Props, State> {
   }
 
   handleToggleVisibility = () => {
-    this.setState({ showPassword: !this.state.showPassword })
+    // TODO: fix me! (Use callback in setState when referencing the previous state)
+    this.setState({ showPassword: !this.state.showPassword }) // eslint-disable-line
   }
 }

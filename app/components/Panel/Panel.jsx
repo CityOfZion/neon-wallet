@@ -9,6 +9,7 @@ import styles from './Panel.scss'
 type Props = {
   className: ?string,
   contentClassName: ?string,
+  headerClassName: ?string,
   children: React$Node,
   renderHeader: ?Function
 }
@@ -26,10 +27,14 @@ export default class Panel extends React.Component<Props> {
   )
 
   renderHeader = () => {
-    const { renderHeader } = this.props
+    const { renderHeader, headerClassName } = this.props
 
     if (renderHeader) {
-      return <Header className={styles.header}>{renderHeader()}</Header>
+      return (
+        <Header className={classNames(styles.header, headerClassName)}>
+          {renderHeader()}
+        </Header>
+      )
     }
 
     return null
