@@ -1,6 +1,7 @@
 // flow
 import React, { Component } from 'react'
 
+import classNames from 'classnames'
 import styles from './CheckBox.scss'
 
 type Props = {
@@ -29,6 +30,10 @@ class CheckBox extends Component<Props, State> {
   render() {
     const { checked } = this.state
     const { icon, className } = this.props
+
+    const classes = classNames(`${styles.checkBox} ${className}`, {
+      [styles.checkBoxActive]: checked
+    })
 
     return (
       <button

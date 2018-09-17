@@ -10,13 +10,15 @@ import withAuthData from '../../hocs/withAuthData'
 import withNetworkData from '../../hocs/withNetworkData'
 import { participateInSale } from '../../modules/sale'
 
+import { getICOTokens } from '../../util/getICOTokens'
+
 const mapDispatchToProps = dispatch => ({
   participateInSale: (...args) => dispatch(participateInSale(...args))
 })
 
 const mapBalancesDataToProps = balances => ({
   assetBalances: pick(balances, 'NEO', 'GAS'),
-  tokenBalances: keyBy(values(omit(balances, 'NEO', 'GAS')), 'symbol')
+  tokenBalances: getICOTokens()
 })
 
 export default compose(

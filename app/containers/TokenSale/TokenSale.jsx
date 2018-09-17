@@ -29,7 +29,7 @@ class TokenSale extends Component {
       step: TOKEN_SALE_PURCHASE,
       assetToPurchaseWith: Object.keys(this.props.assetBalances)[0],
       amountToPurchaseFor: 0,
-      assetToPurchase: Object.keys(this.props.tokenBalances)[0],
+      assetToPurchase: this.props.tokenBalances[0].token,
       conditions: [...conditions],
       acceptedConditions: [],
       errorMessage: ''
@@ -45,11 +45,12 @@ class TokenSale extends Component {
 
   getPurchaseableAssets = () => {
     const { tokenBalances } = this.props
-    return Object.keys(tokenBalances)
+    return tokenBalances.map(item => item.token)
   }
 
   updateField = item => {
     const { name, value } = item
+
     this.setState({ [name]: value })
   }
 
