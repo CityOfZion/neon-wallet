@@ -3,7 +3,7 @@
 import React from 'react'
 
 import Panel from '../../Panel'
-import TokenSaleConfirmDetails from './TokenSaleConfirmDetails'
+import TokenSaleConfirmDetails from './TokenSaleConfirmDetails/TokenSaleConfirmDetails'
 import Button from '../../Button'
 import TokenSaleIcon from '../../../assets/navigation/tokens.svg'
 

@@ -2,8 +2,8 @@
 import React from 'react'
 
 import Panel from '../../Panel'
-import TokenSaleSelection from './TokenSaleSelection'
-import TokenSaleConditions from './TokenSaleConditions'
+import TokenSaleSelection from './TokenSalePanel'
+import TokenSaleConditions from './TokenSaleConditions/TokenSaleConditions'
 import DialogueBox from '../../DialogueBox'
 import Button from '../../Button'
 import WarningIcon from '../../../assets/icons/warning.svg'
@@ -48,7 +48,11 @@ const TokenSalePanel = ({
         text="Please read and acknowledge these statements to continue"
         className={styles.tokenSalePanelDialogueBox}
       />
-      <TokenSaleConditions conditions={conditions} updateConditions={updateConditions} acceptedConditions={acceptedConditions}/>
+      <TokenSaleConditions
+        conditions={conditions}
+        updateConditions={updateConditions}
+        acceptedConditions={acceptedConditions}
+      />
       <Button
         onClick={() => setStep(TOKEN_SALE_CONFIRM)}
         disabled={disabledButton}

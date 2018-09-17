@@ -3,10 +3,10 @@ import React, { Component } from 'react'
 import { isZero, isNumber } from '../../core/math'
 
 import SendAmountsPanel from '../../components/Send/SendAmountsPanel'
-import TokenSaleHeader from '../../components/TokenSale/TokenSaleHeader'
-import TokenSalePanel from '../../components/TokenSale/TokenSalePanel'
-import TokenSaleConfirm from '../../components/TokenSale/TokenSaleConfirm'
-import TokenSaleSuccess from '../../components/TokenSale/TokenSaleSuccess'
+import HeaderBar from '../../components/HeaderBar/HeaderBar'
+import TokenSalePanel from '../../components/TokenSale/TokenSalePanel/TokenSaleSelection/TokenSaleSelection'
+import TokenSaleConfirm from '../../components/TokenSale/TokenSaleConfirm/TokenSaleConfirm'
+import TokenSaleSuccess from '../../components/TokenSale/TokenSaleSuccess/TokenSaleSuccess'
 
 import {
   TOKEN_SALE_PURCHASE,
@@ -50,18 +50,23 @@ class TokenSale extends Component {
 
   updateField = item => {
     const { name, value } = item
-    // if (!name && !value) this.setState({ amountToPurchaseFor: item })
     this.setState({ [name]: value })
   }
 
-  updateConditions = (condition) => {
-    const { acceptedConditions } = this.state;
-    const conditionAccepted = acceptedConditions.find(element => element === condition)
+  updateConditions = condition => {
+    const { acceptedConditions } = this.state
+    const conditionAccepted = acceptedConditions.find(
+      element => element === condition
+    )
 
     if (conditionAccepted) {
-      this.setState({ acceptedConditions: [...acceptedConditions].filter(item => item !== condition )})
+      this.setState({
+        acceptedConditions: [...acceptedConditions].filter(
+          item => item !== condition
+        )
+      })
     } else {
-      this.setState({ acceptedConditions: [...acceptedConditions, condition ]})
+      this.setState({ acceptedConditions: [...acceptedConditions, condition] })
     }
   }
 
@@ -93,7 +98,7 @@ class TokenSale extends Component {
     return (
       <section>
         {' '}
-        <TokenSaleHeader />
+        <HeaderBar shouldRenderRefresh label="Token Sale" />
         <SendAmountsPanel
           currencyCode="usd"
           sendAmountsData={[
