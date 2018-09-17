@@ -4,7 +4,7 @@ import { isZero, isNumber } from '../../core/math'
 
 import SendAmountsPanel from '../../components/Send/SendAmountsPanel'
 import HeaderBar from '../../components/HeaderBar/HeaderBar'
-import TokenSalePanel from '../../components/TokenSale/TokenSalePanel/TokenSaleSelection/TokenSaleSelection'
+import TokenSalePanel from '../../components/TokenSale/TokenSalePanel/TokenSalePanel'
 import TokenSaleConfirm from '../../components/TokenSale/TokenSaleConfirm/TokenSaleConfirm'
 import TokenSaleSuccess from '../../components/TokenSale/TokenSaleSuccess/TokenSaleSuccess'
 

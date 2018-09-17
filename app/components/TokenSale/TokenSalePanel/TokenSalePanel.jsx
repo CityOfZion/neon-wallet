@@ -2,7 +2,7 @@
 import React from 'react'
 
 import Panel from '../../Panel'
-import TokenSaleSelection from './TokenSalePanel'
+import TokenSaleSelection from './TokenSaleSelection/TokenSaleSelection'
 import TokenSaleConditions from './TokenSaleConditions/TokenSaleConditions'
 import DialogueBox from '../../DialogueBox'
 import Button from '../../Button'

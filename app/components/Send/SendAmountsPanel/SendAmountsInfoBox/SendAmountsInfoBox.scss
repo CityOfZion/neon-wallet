@@ -17,12 +17,12 @@
   }
 
   .assetAmountsPrimary {
-    font-family: Gotham-Medium;
+    font-family: $gotham-medium-font-family;
     font-size: 20px;
   }
 
   h3 {
-    font-family: Gotham-Light;
+    font-family: $gotham-light-font-family;
     font-size: 20px;
   }
 
@@ -45,20 +45,20 @@
   }
 
   .totalAssetValue {
-    font-family: Gotham-Book;
+    font-family: $gotham-book-font-family;
     font-size: 20px;
     margin-top: 1px;
   }
 
   .assetAmountsSecondary {
     color: $medium-grey;
-    font-family: Gotham-Medium;
+    font-family: $gotham-medium-font-family;
     font-size: 14px;
     margin-top: 5px;
   }
 
   .remainingAssetValue {
-    font-family: Gotham-Book;
+    font-family: $gotham-book-font-family;
     font-size: 14px;
     margin-top: 5px;
     color: $medium-grey;
