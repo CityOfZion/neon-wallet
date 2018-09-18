@@ -1,7 +1,7 @@
 @import '../../../styles/variables';
 
-.transaction {
-  color: #82e092;
+.txidLink {
+  color: $link-color;
   font-size: 13px;
   cursor: pointer;
 }

@@ -16,7 +16,6 @@ type Props = {
 
 export default class TransactionHistory extends React.Component<Props> {
   render() {
-    window.scrollTo(0, 0)
     const { className, transactions } = this.props
     return (
       <Panel

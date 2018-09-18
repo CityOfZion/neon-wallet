@@ -36,7 +36,7 @@ export default class Transaction extends React.Component<Props> {
         <div className={styles.txAmountContainer}>{amount}</div>
         <div className={styles.txToContainer}>{to}</div>
         <span
-          className={classNames(styles.transaction, className)}
+          className={classNames(styles.txidLink, className)}
           onClick={this.handleClick}
         >
           {txid.substring(0, 32)}
