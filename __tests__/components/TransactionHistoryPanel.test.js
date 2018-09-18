@@ -46,14 +46,28 @@ const initialState = {
 
 const transactions = [
   {
-    NEO: '50',
-    GAS: '0.00000000',
-    txid: '76938979'
+    to: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ',
+    from: 'claim',
+    txid: '6ab0391ee237c7b2516f13d47f09a30844da64fefefc006877b40542d34a705b',
+    time: 1537278057,
+    amount: '0.11988459',
+    asset: { symbol: 'GAS' },
+    label: 'Gas Claim',
+    iconType: 'CLAIM',
+    id: '_ymelbt8mb'
   },
   {
-    NEO: '0',
-    GAS: '0.40000000',
-    txid: '76938980'
+    to: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ',
+    from: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ',
+    txid: '1ec4446bac87fca59abff2ccf96283547a5ebec64b7c1aba7a31fb91b93c9b63',
+    time: 1537234593,
+    amount: '0',
+    asset: {
+      symbol: 'MCT'
+    },
+    label: 'MCT',
+    iconType: 'RECEIVE',
+    id: '_r3mihxg36'
   }
 ]
 
@@ -98,31 +112,63 @@ describe('TransactionHistoryPanel', () => {
 
     const transactionList = wrapper.find('#transactionList')
     expect(transactionList.children().length).toEqual(2)
+
     expect(
       transactionList
         .childAt(0)
-        .find('.txid')
+        .find('.txidLink')
         .hostNodes()
         .text()
-    ).toEqual(transactions[0].txid)
+    ).toEqual(transactions[0].txid.substring(0, 32))
+
     expect(
       transactionList
         .childAt(1)
-        .find('.txid')
+        .find('.txidLink')
         .hostNodes()
         .text()
-    ).toEqual(transactions[1].txid)
+    ).toEqual(transactions[1].txid.substring(0, 32))
+
     expect(
       transactionList
         .childAt(0)
-        .find('.amountNEO')
+        .find('.txAmountContainer')
         .text()
-    ).toEqual('50 NEO')
+    ).toEqual('0.11988459')
+
     expect(
       transactionList
         .childAt(1)
-        .find('.amountGAS')
+        .find('.txAmountContainer')
         .text()
-    ).toEqual('0.40000000 GAS')
+    ).toEqual('0')
+
+    expect(
+      transactionList
+        .childAt(1)
+        .find('.txLabelContainer')
+        .text()
+    ).toEqual('MCT')
+
+    expect(
+      transactionList
+        .childAt(0)
+        .find('.txLabelContainer')
+        .text()
+    ).toEqual('Gas Claim')
+
+    expect(
+      transactionList
+        .childAt(0)
+        .find('.txToContainer')
+        .text()
+    ).toEqual(transactions[0].to)
+
+    expect(
+      transactionList
+        .childAt(1)
+        .find('.txToContainer')
+        .text()
+    ).toEqual(transactions[1].to)
   })
 })

@@ -1,48 +1,46 @@
 @import '../../../styles/variables';
 
 .noTransactions {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .transactionList {
-    margin: 0;
-    padding: 0;
-    margin: 20px;
+  margin: 0;
+  padding: 0;
+  margin: -24px;
 }
 
 .row {
+  display: flex;
+  list-style-type: none;
+  font-weight: 200;
+  padding: 10px 20px;
+  height: 50px;
+
+  .txid {
+    flex: 0 0 auto;
+    align-items: center;
     display: flex;
-    align-items: stretch;
-    list-style-type: none;
-    font-weight: 200;
-    border-bottom: 1px solid $spacer-color;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-
-    .txid {
-        flex: 0 0 auto;
-    }
-
-    .amounts {
-        margin-right: 10px;
-        flex: 1 1 auto;
-        white-space: nowrap;
-    }
+  }
 }
 
 .txid {
-    text-align: left;
-    font-family: 'courier new';
-    font-size: .7em;
+  text-align: left;
+  font-family: 'courier new';
+  font-size: 0.7em;
 }
 
 .amounts {
-    .amount {
-        display: block;
-        text-align: right;
-        color: $thin-text-color;
-    }
+  .amount {
+    display: block;
+    text-align: right;
+    color: $thin-text-color;
+  }
+}
+
+.oddNumberedRow {
+  background-color: #f2f2f2;
 }

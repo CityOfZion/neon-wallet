@@ -31,39 +31,17 @@ export default class Transactions extends React.Component<Props> {
         id="transactionList"
         className={classNames(styles.transactionList, className)}
       >
-        {transactions.map(tx => (
-          <li key={tx.txid} className={styles.row}>
-            <Transaction
-              className={classNames(styles.txid, 'txid')}
-              txid={tx.txid}
-            />
-            {this.renderAmounts(tx)}
+        {transactions.map((tx, i) => (
+          <li
+            key={tx.id}
+            className={classNames(styles.row, {
+              [styles.oddNumberedRow]: i % 2 === 0
+            })}
+          >
+            <Transaction className={classNames(styles.txid, 'txid')} tx={tx} />
           </li>
         ))}
       </ul>
     )
-  }
-
-  renderAmounts(tx: Object) {
-    const forceRenderNEO = !isZero(tx[ASSETS.NEO]) || isZero(tx[ASSETS.GAS])
-
-    return (
-      <div className={styles.amounts}>
-        {this.renderAmount(tx, ASSETS.NEO, forceRenderNEO)}
-        {this.renderAmount(tx, ASSETS.GAS)}
-      </div>
-    )
-  }
-
-  renderAmount(tx: Object, symbol: SymbolType, forceRender: boolean = false) {
-    const amount = tx[symbol]
-
-    if (forceRender || !isZero(amount)) {
-      return (
-        <div className={classNames(styles.amount, `amount${symbol}`)}>
-          {formatBalance(symbol, amount)} {symbol}
-        </div>
-      )
-    }
   }
 }

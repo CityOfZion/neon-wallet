@@ -1,4 +1,5 @@
 // @flow
+/* eslint-disable */
 
 import { type Fixed8 } from 'neon-js'
 
