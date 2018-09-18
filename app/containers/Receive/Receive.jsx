@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 
-import PageHeader from '../../components/PageHeader'
+import HeaderBar from '../../components/HeaderBar'
 import AmountsPanel from '../../components/AmountsPanel'
 import ReceivePanel from '../../components/Receive/ReceivePanel'
 
@@ -54,11 +54,7 @@ export default class Receive extends React.Component<Props, State> {
 
     return (
       <section className={styles.receiveContainer}>
-        <PageHeader
-          title="Receive Assets"
-          loading={loading}
-          loadWalletData={loadWalletData}
-        />
+        <HeaderBar label="Receive Assets" shouldRenderRefresh />
         {!noSendableAssets && (
           <AmountsPanel
             amountsData={this.createSendAmountsData()}
