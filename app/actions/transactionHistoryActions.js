@@ -16,105 +16,95 @@ export const GAS_ID =
 
 type Props = {
   net: string,
-  address: string
+  address: string,
+  shouldIncrementPagination: boolean
 }
 
-function sum(txns, address, asset) {
-  const matchingTxns = filter(
-    txns,
-    txn => txn.asset === asset && txn.address_hash === address
-  )
+function parseAbstractData(data, currentUserAddress, tokens) {
+  const parsedIconType = abstract => {
+    if (
+      abstract.address_to === currentUserAddress &&
+      abstract.address_from !== 'claim'
+    )
+      return 'RECEIVE'
+    if (abstract.address_from === 'claim') return 'CLAIM'
+    return 'SEND'
+  }
 
-  return reduce(matchingTxns, (sum, txn) => sum.plus(txn.value), toBigNumber(0))
+  const parsedAsset = abstract => {
+    const token = tokens.find(token => token.scriptHash === abstract.asset)
+    if (token) return token
+    if (abstract.asset === NEO_ID) {
+      return {
+        symbol: 'NEO'
+      }
+    }
+    if (abstract.asset === GAS_ID) {
+      return {
+        symbol: 'GAS'
+      }
+    }
+    return {}
+  }
+
+  return data.map(abstract => {
+    const asset = parsedAsset(abstract)
+    const iconType = parsedIconType(abstract)
+    const summary = {
+      to: abstract.address_to === 'fees' ? 'NETWORK FEES' : abstract.address_to,
+      from: abstract.address_from,
+      txid: abstract.txid,
+      time: abstract.time,
+      amount: abstract.amount,
+      asset,
+      label: iconType === 'CLAIM' ? 'Gas Claim' : asset.symbol,
+      iconType,
+      id: `_${Math.random()
+        .toString(36)
+        .substr(2, 9)}`
+    }
+
+    return summary
+  })
 }
-
-// function calculateSummary(vouts, vin, address) {
-//   const summary = {
-//     out: [],
-//     in: [],
-//   }
-
-//   const matchingTxns = []
-
-//   vouts.forEach(tx => {
-//     const token = tokens.find(token => token.scriptHash === tx.asset)
-//     matchingTxns.push(...vouts.filter(txn => txn.asset === token.scriptHash && txn.address_hash === address))
-//   })
-
-//   reduce(matchingTxns, (sum, txn) => sum.plus(txn.value), toBigNumber(0))
-
-// }
 
 export const ID = 'transactionHistory'
 
+// hold entries in memory for infinite scroll
+let entries = []
+let page = 1
+
 export default createActions(
   ID,
-  ({ net, address }: Props = {}) => async (state: Object) => {
+  ({ net, address, shouldIncrementPagination = false }: Props = {}) => async (
+    state: Object
+  ) => {
     // $FlowFixMe
     const tokens = await getDefaultTokens()
-
     const endpoint = api.neoscan.getAPIEndpoint(net)
-    const { data } = await axios.get(
-      `${endpoint}/v1/get_last_transactions_by_address/${address}`
+    let { data } = await axios.get(
+      `${endpoint}/v1/get_address_abstracts/${address}/${
+        shouldIncrementPagination ? page : 1
+      }`
     )
 
-    return data.map(({ txid, vin, vouts, type, time }) => {
-      const summary = {
-        [ASSETS.NEO]: {
-          out: sum(vouts, address, NEO_ID).toFixed(),
-          in: vin.length ? sum(vin, address, NEO_ID).toFixed() : 0,
-          total: sum(vouts, address, NEO_ID)
-            .minus(sum(vin, address, NEO_ID))
-            .toFixed(0)
-        },
-        [ASSETS.GAS]: {
-          out: sum(vouts, address, GAS_ID)
-            .round(COIN_DECIMAL_LENGTH)
-            .toString(),
-          in: sum(vin, address, GAS_ID)
-            .round(COIN_DECIMAL_LENGTH)
-            .toString(),
-          total: sum(vouts, address, GAS_ID)
-            .minus(sum(vin, address, GAS_ID))
-            .round(COIN_DECIMAL_LENGTH)
-            .toString()
-        }
-      }
+    // error state
+    if (data.page_number > data.total_pages) {
+      const response = await axios.get(
+        `${endpoint}/v1/get_address_abstracts/${address}/${1}`
+      )
+      page = 1
+      data = response.data
+    }
 
-      tokens.forEach(token => {
-        const ins = sum(vouts, address, token.scriptHash)
-          .round(COIN_DECIMAL_LENGTH)
-          .toString()
-        const out = sum(vin, address, token.scriptHash)
-          .round(COIN_DECIMAL_LENGTH)
-          .toString()
-        const total = sum(vouts, address, token.scriptHash)
-          .minus(sum(vin, address, token.scriptHash))
-          .round(COIN_DECIMAL_LENGTH)
-          .toString()
-
-        if (total !== '0') {
-          summary[token.symbol] = {
-            out,
-            in: ins,
-            total
-          }
-        }
-      })
-
-      return {
-        txid,
-        summary,
-        [ASSETS.NEO]: sum(vouts, address, NEO_ID)
-          .minus(sum(vin, address, NEO_ID))
-          .toFixed(0),
-        [ASSETS.GAS]: sum(vouts, address, GAS_ID)
-          .minus(sum(vin, address, GAS_ID))
-          .round(COIN_DECIMAL_LENGTH)
-          .toString(),
-        type,
-        time
-      }
-    })
+    const parsedEntries = parseAbstractData(data.entries, address, tokens)
+    if (shouldIncrementPagination) {
+      if (page === 1) entries = []
+      page += 1
+      entries.push(...parsedEntries)
+      return entries
+    }
+    entries = [...parsedEntries]
+    return entries
   }
 )

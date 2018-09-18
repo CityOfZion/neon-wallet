@@ -9,6 +9,8 @@ import { ASSETS } from '../../../core/constants'
 import { isZero } from '../../../core/math'
 import { formatBalance } from '../../../core/formatters'
 import ClaimIcon from '../../../assets/icons/claim.svg'
+import SendIcon from '../../../assets/icons/send-tx.svg'
+import ReceiveIcon from '../../../assets/icons/receive-tx.svg'
 
 type Props = {
   className?: string,
@@ -20,26 +22,25 @@ type Props = {
 export default class Transaction extends React.Component<Props> {
   render = () => {
     const { tx, className } = this.props
-    const { txid, type, time } = tx
+    const { txid, iconType, time, label, amount, to } = tx
 
     return (
       <div className={styles.transactionContainer}>
         <div className={styles.txTypeIconContainer}>
-          {this.renderTxTypeIcon(type, tx)}
+          {this.renderTxTypeIcon(iconType)}
         </div>
         <div className={styles.txDateContainer}>
-          {moment.unix(time).format('MM/DD/YYYY')}
+          {moment.unix(time).format('MM/DD/YYYY | HH:MM:ss')}
         </div>
-        <div className={styles.txLabelContainer}>
-          {this.renderTxTypeLabel(type, tx)}
-        </div>
+        <div className={styles.txLabelContainer}>{label}</div>
+        <div className={styles.txAmountContainer}>{amount}</div>
+        <div className={styles.txToContainer}>{to}</div>
         <span
           className={classNames(styles.transaction, className)}
           onClick={this.handleClick}
         >
           {txid.substring(0, 32)}
         </span>
-        {this.renderAmounts(tx)}
       </div>
     )
   }
@@ -50,60 +51,31 @@ export default class Transaction extends React.Component<Props> {
     openExplorerTx(networkId, explorer, txid)
   }
 
-  renderAmounts(tx: Object) {
-    const forceRenderNEO = !isZero(tx[ASSETS.NEO]) || isZero(tx[ASSETS.GAS])
-
-    return (
-      <div className={styles.amounts}>
-        {this.renderAmount(tx, ASSETS.NEO, forceRenderNEO)}{' '}
-        {this.renderAmount(tx, ASSETS.GAS)}
-      </div>
-    )
-  }
-
-  renderTxTypeIcon = (type: string, tx: Object) => {
+  renderTxTypeIcon = (type: string) => {
     switch (type) {
-      case 'ClaimTransaction':
+      case 'CLAIM':
         return (
           <div className={styles.claimIconContainer}>
             <ClaimIcon />
           </div>
         )
-      case 'ContractTransaction':
-        return null
-      case 'InvocationTransaction':
-        return null
-      default:
-        return null
-    }
-  }
-
-  renderTxTypeLabel = (type: string, tx: Object) => {
-    switch (type) {
-      case 'ClaimTransaction':
-        return <span> GAS Claim </span>
-      case 'ContractTransaction':
-        return <span> Transaction </span>
-      case 'InvocationTransaction':
+      case 'SEND':
         return (
-          <span className={styles.invocationTransaction}>
-            Invocation Transaction
-          </span>
+          <div className={styles.sendIconContainer}>
+            <SendIcon />
+          </div>
+        )
+      case 'RECEIVE':
+        return (
+          <div className={styles.receiveIconContainer}>
+            <ReceiveIcon />
+          </div>
         )
       default:
+        console.warn('renderTxTypeIcon() invoked with an invalid argument!', {
+          type
+        })
         return null
-    }
-  }
-
-  renderAmount(tx: Object, symbol: SymbolType, forceRender: boolean = false) {
-    const amount = tx[symbol]
-
-    if (forceRender || !isZero(amount)) {
-      return (
-        <div className={classNames(styles.amount, `amount${symbol}`)}>
-          {formatBalance(symbol, amount)} {symbol}
-        </div>
-      )
     }
   }
 }

@@ -33,7 +33,7 @@ export default class Transactions extends React.Component<Props> {
       >
         {transactions.map((tx, i) => (
           <li
-            key={tx.txid}
+            key={tx.id}
             className={classNames(styles.row, {
               [styles.oddNumberedRow]: i % 2 === 0
             })}

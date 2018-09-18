@@ -19,6 +19,7 @@
     box-sizing: border-box;
     height: 100%;
     padding: 24px;
+    overflow: auto;
 
     .content {
       flex: 1 1 auto;
