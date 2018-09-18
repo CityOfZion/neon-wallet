@@ -91,11 +91,16 @@ const makeRequest = (sendEntries: Array<SendEntryType>, config: Object) => {
   )
 }
 
-export const sendTransaction = (sendEntries: Array<SendEntryType>) => (
-  dispatch: DispatchType,
-  getState: GetStateType
-): Promise<*> =>
+export const sendTransaction = ({
+  sendEntries,
+  fees
+}: {
+  sendEntries: Array<SendEntryType>,
+  fees: number
+}) => (dispatch: DispatchType, getState: GetStateType): Promise<*> =>
   new Promise(async (resolve, reject) => {
+    console.log({ sendEntries, fees })
+
     const state = getState()
     const wif = getWIF(state)
     const fromAddress = getAddress(state)
@@ -143,7 +148,8 @@ export const sendTransaction = (sendEntries: Array<SendEntryType>) => (
         address: fromAddress,
         publicKey,
         privateKey: new wallet.Account(wif).privateKey,
-        signingFunction: isHardwareSend ? signingFunction : null
+        signingFunction: isHardwareSend ? signingFunction : null,
+        fees
       })
 
       if (!response.result) {
