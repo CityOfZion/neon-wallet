@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import ReactDOM from 'react-dom'
 import classNames from 'classnames'
 
 import Transactions from './Transactions'
@@ -15,6 +16,7 @@ type Props = {
 
 export default class TransactionHistory extends React.Component<Props> {
   render() {
+    window.scrollTo(0, 0)
     const { className, transactions } = this.props
     return (
       <Panel
@@ -29,11 +31,11 @@ export default class TransactionHistory extends React.Component<Props> {
     )
   }
 
-  handleScroll = e => {
-    const { handleFetchAddtionalTxData, transactions } = this.props
+  handleScroll = (e: SyntheticInputEvent<EventTarget>) => {
+    const { handleFetchAddtionalTxData } = this.props
     const bottom =
       e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight
-    if (bottom && transactions.length % 15 === 0) {
+    if (bottom) {
       handleFetchAddtionalTxData()
     }
   }

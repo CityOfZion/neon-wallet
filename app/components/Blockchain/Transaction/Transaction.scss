@@ -1,7 +1,8 @@
 @import '../../../styles/variables';
 
 .transaction {
-  color: $link-color;
+  color: #82e092;
+  font-size: 13px;
   cursor: pointer;
 }
 
@@ -9,10 +10,14 @@
   width: 150px;
   text-align: center;
   font-size: 13px;
+  font-family: Gotham-Book;
 }
 
 .txLabelContainer {
+  font-family: Gotham-Book;
+  font-size: 14px;
   text-align: center;
+  width: 75px;
 }
 
 .txAmountContainer {

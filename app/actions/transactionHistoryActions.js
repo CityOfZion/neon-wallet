@@ -70,32 +70,31 @@ function parseAbstractData(data, currentUserAddress, tokens) {
 
 export const ID = 'transactionHistory'
 
+// TODO: Refactor to use immutable data types!
 // hold entries in memory for infinite scroll
 let entries = []
 let page = 1
-
+let totalPages
 export default createActions(
   ID,
   ({ net, address, shouldIncrementPagination = false }: Props = {}) => async (
     state: Object
   ) => {
+    // If refresh action dispatched reset pagination
+    // to grab the most recent abstracts
+    if (!shouldIncrementPagination) {
+      page = 1
+    }
+
     // $FlowFixMe
     const tokens = await getDefaultTokens()
     const endpoint = api.neoscan.getAPIEndpoint(net)
-    let { data } = await axios.get(
+    const { data } = await axios.get(
       `${endpoint}/v1/get_address_abstracts/${address}/${
         shouldIncrementPagination ? page : 1
       }`
     )
-
-    // error state
-    if (data.page_number > data.total_pages) {
-      const response = await axios.get(
-        `${endpoint}/v1/get_address_abstracts/${address}/${1}`
-      )
-      page = 1
-      data = response.data
-    }
+    totalPages = data.total_pages
 
     const parsedEntries = parseAbstractData(data.entries, address, tokens)
     if (shouldIncrementPagination) {
