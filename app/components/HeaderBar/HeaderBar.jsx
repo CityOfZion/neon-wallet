@@ -31,19 +31,6 @@ export default class HeaderBar extends React.PureComponent<Props> {
       loading
     } = this.props
 
-    const Refresh = () => (
-      <div className={styles.refreshButton}>
-        <span onClick={loading ? null : loadWalletData}> Refresh </span>
-        <RefreshIcon
-          id="refresh"
-          className={classNames(styles.refresh, {
-            [styles.loading]: loading
-          })}
-          onClick={loading ? null : loadWalletData}
-        />
-      </div>
-    )
-
     return (
       <div className={styles.headerBar}>
         {label ? <h3> {label}</h3> : renderLeftContent()}
