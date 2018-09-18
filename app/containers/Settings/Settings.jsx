@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import fs from 'fs'
 import storage from 'electron-json-storage'
+import { reject } from 'lodash'
 
 import NetworkSwitch from '../App/Sidebar/NetworkSwitch'
 import { recoverWallet } from '../../modules/generateWallet'
@@ -12,7 +13,12 @@ import UnderlinedHeader from '../../components/Headers/UnderlinedHeader'
 import SettingsItem from '../../components/Settings/SettingsItem'
 import SettingsLink from '../../components/Settings/SettingsLink'
 import WalletRecoveryPanel from '../../components/Settings/WalletRecoveryPanel'
-import { EXPLORERS, CURRENCIES, ROUTES } from '../../core/constants'
+import {
+  EXPLORERS,
+  CURRENCIES,
+  ROUTES,
+  MODAL_TYPES
+} from '../../core/constants'
 import themes from '../../themes'
 import styles from './Settings.scss'
 import Tooltip from '../../components/Tooltip'
@@ -29,7 +35,8 @@ type Props = {
   setTheme: string => any,
   theme: string,
   showSuccessNotification: Object => any,
-  showErrorNotification: Object => any
+  showErrorNotification: Object => any,
+  showModal: Function
 }
 
 type State = {
@@ -120,17 +127,65 @@ export default class Settings extends Component<Props, State> {
 
   updateExplorerSettings = (e: Object) => {
     const { setBlockExplorer } = this.props
-    setBlockExplorer(e)
+    setBlockExplorer(String(e))
   }
 
   updateCurrencySettings = (e: Object) => {
     const { setCurrency } = this.props
-    setCurrency(e)
+    setCurrency(String(e))
   }
 
   updateThemeSettings = (e: Object) => {
     const { setTheme } = this.props
-    setTheme(e)
+    setTheme(String(e))
+  }
+
+  deleteWalletAccount = (label: string, key: string) => {
+    const {
+      showSuccessNotification,
+      showErrorNotification,
+      setAccounts,
+      showModal
+    } = this.props
+
+    showModal(MODAL_TYPES.CONFIRM, {
+      title: 'Confirm Delete',
+      text: `Please confirm deleting saved wallet - ${label}`,
+      onClick: () => {
+        storage.get('userWallet', (readError, data) => {
+          if (readError) {
+            showErrorNotification({
+              message: `An error occurred reading previously stored wallet: ${
+                readError.message
+              }`
+            })
+            return
+          }
+
+          // eslint-disable-next-line
+          data.accounts = reject(data.accounts, { key })
+
+          storage.set('userWallet', data, saveError => {
+            if (saveError) {
+              showErrorNotification({
+                message: `An error occurred updating the wallet: ${
+                  saveError.message
+                }`
+              })
+            } else {
+              showSuccessNotification({
+                message: 'Account deletion was successful.'
+              })
+              setAccounts(data.accounts)
+            }
+          })
+        })
+      }
+    })
+  }
+
+  openTokenModal = () => {
+    this.props.showModal(MODAL_TYPES.TOKEN)
   }
 
   render() {

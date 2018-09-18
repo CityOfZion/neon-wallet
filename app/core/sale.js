@@ -13,12 +13,16 @@ export const validateMintTokensInputs = (
     return [false, message]
   }
 
+  // eslint-disable-next-line radix
   if (neoToMint && parseFloat(neoToMint) !== parseInt(neoToMint)) {
     message = 'You cannot send fractional NEO to a token sale.'
     return [false, message]
   }
 
-  if ((neoToMint && isNaN(neoToMint)) || (gasToMint && isNaN(gasToMint))) {
+  if (
+    (neoToMint && Number.isNaN(neoToMint)) ||
+    (gasToMint && Number.isNaN(gasToMint))
+  ) {
     message = 'Please enter valid numbers only'
     return [false, message]
   }

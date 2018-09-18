@@ -48,8 +48,9 @@ class TokenModal extends Component<Props, State> {
   }
 
   addToken = () => {
+    // TODO: fix me! (Use callback in setState when referencing the previous state)
     this.setState({
-      tokens: [...this.state.tokens, getNewTokenItem(this.props.networkId)]
+      tokens: [...this.state.tokens, getNewTokenItem(this.props.networkId)] // eslint-disable-line
     })
   }
 

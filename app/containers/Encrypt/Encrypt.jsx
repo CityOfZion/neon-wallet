@@ -3,6 +3,7 @@ import React from 'react'
 import { noop } from 'lodash'
 
 import EncryptPanel from '../../components/Settings/EncryptPanel'
+import LockIcon from '../../assets/icons/lock.svg'
 import styles from './Encrypt.scss'
 
 type Props = {

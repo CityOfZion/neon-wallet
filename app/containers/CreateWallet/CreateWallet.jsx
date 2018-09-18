@@ -88,7 +88,10 @@ export default class CreateWallet extends React.Component<Props, State> {
       >
         <div className={styles.inputContainer}>
           <div id="createWallet" className={styles.flexContainer}>
-            <form onSubmit={this.createWalletAccount}>
+            <form
+              className={styles.createWalletForm}
+              onSubmit={this.createWalletAccount}
+            >
               {option === 'IMPORT' && (
                 <PasswordInput
                   value={wif}

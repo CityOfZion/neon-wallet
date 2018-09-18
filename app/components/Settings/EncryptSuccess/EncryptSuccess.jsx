@@ -13,7 +13,7 @@ type Props = {
   handleReset: Function
 }
 
-export default class EncryptSuccess extends React.Component<Props, State> {
+export default class EncryptSuccess extends React.Component<Props> {
   static defaultProps = {
     handleReset: noop
   }

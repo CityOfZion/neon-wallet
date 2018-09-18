@@ -15,19 +15,19 @@ import styles from './NodeSelectPanel.scss'
 type Node = {
   latency: string,
   url: string,
-  blockCount: int
+  blockCount: number
 }
 
 type Props = {
   nodes: Node[],
-  nodesShown: int,
+  nodesShown: number,
   loading: Boolean,
   loadNodesData: Function,
   saveSelectedNode: Function,
   selectedNode: string
 }
 
-export default class NodeSelect extends React.Component<Props, State> {
+export default class NodeSelect extends React.Component<Props> {
   render() {
     const { loading, loadNodesData, nodesShown } = this.props
     return (
@@ -67,7 +67,10 @@ export default class NodeSelect extends React.Component<Props, State> {
 
     if (selectedNode) {
       icon = (
-        <AddIcon className={styles.icon} onClick={() => this.handleSelect()} />
+        <AddIcon
+          className={styles.icon}
+          onClick={() => this.handleSelect('')}
+        />
       )
     } else {
       icon = <ConfirmIcon className={styles.icon} />
@@ -81,12 +84,12 @@ export default class NodeSelect extends React.Component<Props, State> {
     )
   }
 
-  handleSelect = url => {
+  handleSelect = (url: string) => {
     const { saveSelectedNode } = this.props
     saveSelectedNode(url)
   }
 
-  getLatencyClass = latency => {
+  getLatencyClass = (latency: number) => {
     if (latency < 250) {
       return styles.good
     }
@@ -112,7 +115,7 @@ export default class NodeSelect extends React.Component<Props, State> {
         return (
           <div key={index} className={styles.row}>
             <div className={styles.latency}>
-              <div className={this.getLatencyClass(latency)} />
+              <div className={this.getLatencyClass(parseInt(latency, 10))} />
               <span>{latency}ms</span>
             </div>
             <div className={styles.blockHeight}>Block Height: {blockCount}</div>

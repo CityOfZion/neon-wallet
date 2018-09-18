@@ -39,7 +39,7 @@ const raceNodePromises = (total, promises) => {
 
 export default createActions(
   ID,
-  ({ nodes = NODES, totalDisplayed = 15 }: Props = {}) => async () => {
+  ({ nodes = NODES, totalDisplayed = 15 }) => async () => {
     const promises = nodes.map(node => getBlockCount(node))
     const result = await raceNodePromises(totalDisplayed, promises)
     return result

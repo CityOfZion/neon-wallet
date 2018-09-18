@@ -13,7 +13,7 @@ export const validateTokens = (tokens: Array<TokenItemType>) => {
   let errorType = null
   let errorItemId = null
 
-  tokens.some(({ symbol, scriptHash, id }: TokenItemType) => {
+  tokens.some(({ scriptHash, id }: TokenItemType) => {
     if (!scriptHash) {
       errorMessage = 'Script hash cannot be left blank'
       errorType = 'scriptHash'
@@ -23,6 +23,7 @@ export const validateTokens = (tokens: Array<TokenItemType>) => {
       errorItemId = id
       return true
     }
+    return false
   })
 
   return {

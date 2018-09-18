@@ -22,21 +22,13 @@ type State = {
   privateKeyError: string,
   passphraseError: string,
   confirmPassphraseError: string,
-  isDisabled: boolean
+  isDisabled: boolean,
+  privateKey: string,
+  passphrase: string,
+  confirmPassphrase: string
 }
 
 export default class EncryptForm extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props)
-
-    this.state = {
-      privateKeyError: '',
-      passphraseError: '',
-      confirmPassphraseError: '',
-      isDisabled: true
-    }
-  }
-
   static defaultProps = {
     submitLabel: 'Generate Encrypted key',
     onSubmit: noop,

@@ -24,12 +24,34 @@ type HideNotificationType = {
   message?: string
 }
 
+// Constants
+export const SHOW_NOTIFICATION = 'SHOW_NOTIFICATION'
+export const HIDE_NOTIFICATION = 'HIDE_NOTIFICATION'
+export const HIDE_NOTIFICATIONS = 'HIDE_NOTIFICATIONS'
 export const DEFAULT_POSITION = NOTIFICATION_POSITIONS.TOP_CENTER
 export const DEFAULT_SUCCESS_TITLE = 'Success'
 export const DEFAULT_INFO_TITLE = 'Processing'
 export const DEFAULT_ERROR_TITLE = 'Error'
 export const DEFAULT_WARNING_TITLE = 'Warning'
 export const AUTO_DISMISS_TIMEOUT = 5
+
+// Actions
+export const showNotification = (args: NotificationType) => ({
+  type: SHOW_NOTIFICATION,
+  payload: args
+})
+
+export const hideNotification = (id: string) => ({
+  type: HIDE_NOTIFICATION,
+  payload: {
+    id
+  }
+})
+
+export const hideNotifications = (args: HideNotificationType) => ({
+  type: HIDE_NOTIFICATIONS,
+  payload: args
+})
 
 const notificationFactory = (
   args: NotificationFactoryArgsType,
@@ -60,29 +82,6 @@ const notificationFactory = (
 
   return id
 }
-
-// Constants
-export const SHOW_NOTIFICATION = 'SHOW_NOTIFICATION'
-export const HIDE_NOTIFICATION = 'HIDE_NOTIFICATION'
-export const HIDE_NOTIFICATIONS = 'HIDE_NOTIFICATIONS'
-
-// Actions
-export const showNotification = (args: NotificationType) => ({
-  type: SHOW_NOTIFICATION,
-  payload: args
-})
-
-export const hideNotification = (id: string) => ({
-  type: HIDE_NOTIFICATION,
-  payload: {
-    id
-  }
-})
-
-export const hideNotifications = (args: HideNotificationType) => ({
-  type: HIDE_NOTIFICATIONS,
-  payload: args
-})
 
 export const showSuccessNotification = (args: NotificationArgsType) => (
   dispatch: DispatchType

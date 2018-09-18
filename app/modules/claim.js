@@ -21,8 +21,18 @@ import { ASSETS } from '../core/constants'
 import { FIVE_MINUTES_MS } from '../core/time'
 import poll from '../util/poll'
 
+// Constants
+export const DISABLE_CLAIM = 'DISABLE_CLAIM'
 const POLL_ATTEMPTS = 30
 const POLL_FREQUENCY = 10000
+
+// Actions
+export function disableClaim(disableClaimButton: boolean) {
+  return {
+    type: DISABLE_CLAIM,
+    payload: { disableClaimButton }
+  }
+}
 
 const fetchClaims = async ({ net, address }) => {
   const response = await api.getClaimsFrom({ net, address }, api.neoscan)
@@ -191,17 +201,6 @@ export const doGasClaim = () => async (
   setTimeout(() => dispatch(disableClaim(false)), FIVE_MINUTES_MS)
 }
 
-// Constants
-export const DISABLE_CLAIM = 'DISABLE_CLAIM'
-
-// Actions
-export function disableClaim(disableClaimButton: boolean) {
-  return {
-    type: DISABLE_CLAIM,
-    payload: { disableClaimButton }
-  }
-}
-
 // State Getters
 export const getDisableClaimButton = (state: Object) =>
   state.claim.disableClaimButton
@@ -212,6 +211,7 @@ const initialState = {
 
 export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
+    // eslint-disable-next-line
     case DISABLE_CLAIM:
       const { disableClaimButton } = action.payload
       return {

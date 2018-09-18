@@ -2,6 +2,8 @@
 import React from 'react'
 
 import AddIcon from '../../../../assets/icons/add.svg'
+import GridIcon from '../../../../assets/icons/grid.svg'
+import LightningIcon from '../../../../assets/icons/lightning.svg'
 
 import { pluralize } from '../../../../util/pluralize'
 
@@ -14,7 +16,8 @@ type Props = {
   showConfirmSend: boolean,
   sendSuccess: boolean,
   sendError: boolean,
-  noSendableAssets: boolean
+  noSendableAssets: boolean,
+  hasNetworkFees: boolean
 }
 
 const SendPanelHeader = ({
@@ -24,7 +27,8 @@ const SendPanelHeader = ({
   resetViews,
   sendError,
   sendSuccess,
-  noSendableAssets
+  noSendableAssets,
+  hasNetworkFees = false
 }: Props) => {
   const numberOfItems = sendRowDetails.length
 
@@ -32,6 +36,13 @@ const SendPanelHeader = ({
   let headerSubtitle = `${numberOfItems} of 5 Recipients`
   let buttons = (
     <div className={styles.sendPanelHeaderButtons}>
+      <button
+        type="button"
+        className={styles.enterQrHeaderButton}
+        onClick={addRow}
+      >
+        <GridIcon className={styles.sendPanelHeaderButtonIcon} /> Enter QR Code
+      </button>
       <button
         type="button"
         className={styles.sendPanelHeaderButton}
@@ -45,7 +56,7 @@ const SendPanelHeader = ({
   if (showConfirmSend) {
     headerTitle = 'Confirmation'
     headerSubtitle = `${numberOfItems} ${pluralize('Recipient', numberOfItems)}`
-    buttons = null
+    buttons = <div className={styles.sendPanelHeaderButtons} />
   }
 
   if (sendSuccess) {
@@ -87,6 +98,11 @@ const SendPanelHeader = ({
         {headerTitle}{' '}
         <span className={styles.sendPanelRecipients}>{headerSubtitle}</span>
       </div>
+      {hasNetworkFees && (
+        <div className={styles.priorityTrasferHeaderTextContainer}>
+          <LightningIcon /> Priority Transfer
+        </div>
+      )}
       {buttons}
     </section>
   )

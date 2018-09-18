@@ -23,6 +23,8 @@ export default class ReceivePanel extends React.Component<Props> {
     })
   }
 
+  componentWillUnmount() {}
+
   render() {
     const { className, address } = this.props
 

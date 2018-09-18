@@ -86,6 +86,7 @@ export const upgradeUserWalletNEP6 = (): Promise<*> =>
             storage.set('userWallet', wallet)
           } else {
             const accounts = []
+            // eslint-disable-next-line
             Object.keys(keyData).map((label: string) => {
               const newAccount = convertOldWalletAccount(
                 label,
@@ -121,15 +122,16 @@ export const recoverWallet = (wallet: Object): Promise<*> =>
         reject(readError)
       }
 
-      let accounts = []
+      let accounts: Array<any> = []
 
       // If for some reason we have no NEP-6 wallet stored, create a default.
       if (!data) {
-        data = { ...DEFAULT_WALLET }
+        data = { ...DEFAULT_WALLET } // eslint-disable-line no-param-reassign
       }
 
       if (!wallet.accounts) {
         // Load the old wallet type
+        // eslint-disable-next-line
         Object.keys(wallet).map((label: string) => {
           const isDefault = accounts.length === 0 && wallet.length === 0
           const newAccount = convertOldWalletAccount(
@@ -142,13 +144,14 @@ export const recoverWallet = (wallet: Object): Promise<*> =>
           }
         })
       } else {
-        accounts = wallet.accounts
+        accounts = wallet.accounts // eslint-disable-line
       }
 
       if (!accounts.length) {
         reject(Error('No accounts found in recovery file.'))
       }
 
+      // eslint-disable-next-line
       accounts.some(account => {
         if (account.key && !walletHasKey(data, account.key)) {
           data.accounts.push(account)
