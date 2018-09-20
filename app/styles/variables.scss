@@ -15,7 +15,6 @@ $main-background: #e6e6e6;
 // redesign
 $primary-button: #8d98ae;
 
-
 // text
 $default-text: #333;
 $button-text: #fff;
@@ -35,6 +34,7 @@ $dark-grey: #515151;
 $light-grey: #f2f2f2;
 $medium-grey: #8a8383;
 $black: #000;
+$warning-red: #FF967E;
 
 // all z-index definitions should go here - make sure to leave a decent gap between them
 $z-index-tooltip: 1000;
@@ -42,10 +42,19 @@ $z-index-notification: 1100;
 
 // text input
 $text-input-color: #282828;
-$text-input-background-color: #f2f2f2;
+$text-input-background-color: #f2f2f2;  
 $text-input-border-radius: 4px;
 $text-input-height: 42px;
 $text-input-font-size: 14px;
+
+// font family
+$gotham-font-family: 'Gotham', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+$gotham-book-font-family: 'Gotham Book', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+$gotham-light-font-family: 'Gotham-Light', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+$gotham-medium-font-family: 'Gotham-Medium', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+
+
+
 
 @mixin active-input {
   border: 2px solid $text-input-background-color;

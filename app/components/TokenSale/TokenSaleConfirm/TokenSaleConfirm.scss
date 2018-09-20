@@ -1,0 +1,38 @@
+@import '../../../styles/variables';
+
+
+.tokenSaleConfirmDetails {
+    display: flex;
+    flex-direction: column;
+}
+
+.tokenSaleConfirmPanel {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.tokenSaleConfirmPanelHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tokenSaleConfirmPanelHeaderLogo {
+    height: 30px;
+    width: 30px;
+    margin-right: 5px;
+}
+
+.tokenSaleConfirmContainer {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.tokenSaleConfirmButton {
+    margin: 25px 0;
+}
+
+.tokenSaleConfirmImage {
+    width: 100px;
+    margin: 0 auto;
+}

@@ -145,7 +145,11 @@ $navigation-margin: 20px;
 }
 
 .loginHeader {
-  font-family: Gotham-Light;
+  font-weight: 300;
+  font-size: 40px;
+  width: 500px;
+  display: flex;
+  font-family: $gotham-light-font-family;
   font-size: 30px;
   margin-bottom: 40px;
   text-align: center;

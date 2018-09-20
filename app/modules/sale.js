@@ -51,7 +51,7 @@ export const participateInSale = (
 
   if (!isValid) {
     dispatch(showErrorNotification({ message }))
-    return false
+    throw new Error(`Invalid parameters: ${message}`)
   }
 
   const formattedScriptHash =

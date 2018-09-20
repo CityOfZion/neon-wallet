@@ -1,7 +1,6 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { omit } from 'lodash'
 
 import RefreshIcon from '../../assets/icons/refresh.svg'
 

@@ -12,7 +12,6 @@ $size: 64px;
 
   .group {
     flex: 0 0 auto;
-
     .logoutToolTipGroup {
       display: flex !important;
       flex-direction: column;
@@ -22,7 +21,7 @@ $size: 64px;
     }
 
     .logoutText {
-      font-family: Gotham-Book;
+      font-family: $gotham-book-font-family;
       font-size: 10px;
       margin-top: 5px;
       color: #9599a2;
@@ -58,7 +57,7 @@ $size: 64px;
   text-decoration: none;
 
   div {
-    font-family: Gotham-Book;
+    font-family: $gotham-book-font-family;
     font-size: 10px;
     margin-top: 5px;
   }
