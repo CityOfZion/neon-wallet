@@ -11,15 +11,13 @@ import CheckMarkIcon from '../../../assets/icons/check.svg'
 
 import styles from './TokenSalePanel.scss'
 
-import { TOKEN_SALE_CONFIRM } from '../../../core/constants'
-
 type Props = {
   setStep: () => void,
   assetBalances: object
 }
 
 const TokenSalePanel = ({
-  setStep,
+  onClickHandler,
   assetBalances,
   getAssetsToPurchaseWith,
   assetToPurchaseWith,
@@ -30,7 +28,8 @@ const TokenSalePanel = ({
   disabledButton,
   acceptedConditions,
   updateField,
-  updateConditions
+  updateConditions,
+  errorMessage
 }: Props) => (
   <Panel renderHeader={() => <p>Participate in Token Sale</p>}>
     <div className={styles.tokenSalePanelContainer}>
@@ -42,6 +41,7 @@ const TokenSalePanel = ({
         amountToPurchaseFor={amountToPurchaseFor}
         updateField={updateField}
         getPurchaseableAssets={getPurchaseableAssets}
+        errorMessage={errorMessage}
       />
       <DialogueBox
         icon={<WarningIcon />}
@@ -54,7 +54,7 @@ const TokenSalePanel = ({
         acceptedConditions={acceptedConditions}
       />
       <Button
-        onClick={() => setStep(TOKEN_SALE_CONFIRM)}
+        onClick={onClickHandler}
         disabled={disabledButton}
         primary
         renderIcon={CheckMarkIcon}

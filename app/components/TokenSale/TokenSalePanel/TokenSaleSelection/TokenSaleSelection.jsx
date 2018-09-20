@@ -17,7 +17,8 @@ const TokenSaleSelection = ({
   assetToPurchase,
   amountToPurchaseFor,
   getPurchaseableAssets,
-  updateField
+  updateField,
+  errorMessage
 }: Props) => {
   const maxBalance = assetBalances[assetToPurchaseWith]
 
@@ -60,6 +61,8 @@ const TokenSaleSelection = ({
             max={maxBalance}
             value={amountToPurchaseFor}
             name="amountToPurchaseFor"
+            error={errorMessage}
+            className={styles.tokenSaleContributionNumberInput}
             onChange={e =>
               updateField({ name: e.target.name, value: e.target.value })
             }

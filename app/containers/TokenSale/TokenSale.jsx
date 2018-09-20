@@ -76,13 +76,45 @@ class TokenSale extends Component {
 
     if (!isNumber(amountToPurchaseFor)) {
       this.setState({ errorMessage: 'Amount must be a number.' })
+      return false
     }
 
     if (isZero(amountToPurchaseFor)) {
       this.setState({ errorMessage: 'Amount must be greater than 0.' })
+      return false
     }
 
     return true
+  }
+
+  handlePurchase = () => {
+    this.setState({ errorMessage: '' }, () => {
+      const validFields = this.isValid()
+
+      if (validFields) this.setStep(TOKEN_SALE_CONFIRM)
+    })
+  }
+
+  handleConfirm = () => {
+    console.log('Hi')
+  }
+
+  handleSuccess = () => {
+    console.log('success')
+  }
+
+  getOnClickHandler = () => {
+    const { step } = this.state
+    switch (step) {
+      case TOKEN_SALE_PURCHASE:
+        return this.handlePurchase
+      case TOKEN_SALE_CONFIRM:
+        return this.handleConfirm
+      case TOKEN_SALE_SUCCESS:
+        return this.handleSuccess
+      default:
+        return this.handlePurchase
+    }
   }
 
   renderPurchase = () => {
@@ -91,7 +123,8 @@ class TokenSale extends Component {
       assetToPurchase,
       amountToPurchaseFor,
       acceptedConditions,
-      conditions
+      conditions,
+      errorMessage
     } = this.state
 
     const { assetBalances } = this.props
@@ -114,7 +147,7 @@ class TokenSale extends Component {
           ]}
         />
         <TokenSalePanel
-          setStep={this.setStep}
+          onClickHandler={this.getOnClickHandler()}
           getAssetsToPurchaseWith={this.getAssetsToPurchaseWith}
           assetBalances={assetBalances}
           assetToPurchaseWith={assetToPurchaseWith}
@@ -126,6 +159,7 @@ class TokenSale extends Component {
           conditions={conditions}
           updateConditions={this.updateConditions}
           acceptedConditions={acceptedConditions}
+          errorMessage={errorMessage}
         />
       </section>
     )
