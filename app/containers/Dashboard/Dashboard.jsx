@@ -10,7 +10,6 @@ import PriceHistoryPanel from '../../components/Dashboard/PriceHistoryPanel'
 
 import HeaderBar from '../../components/HeaderBar'
 import PortfolioPanel from '../../components/Dashboard/PortfolioPanel'
-import Tooltip from '../../components/Tooltip'
 import Wallet from '../../assets/icons/wallet.svg'
 import NetworkSwitch from '../App/Sidebar/NetworkSwitch'
 import RefreshIcon from '../../assets/icons/refresh.svg'
@@ -76,38 +75,6 @@ export default class Dashboard extends Component<Props> {
             </div>
           )}
         />
-        {/* <div className={styles.dashboardHeader}>
-          <NetworkSwitch
-            className={styles.dashboardNetworkSwitch}
-            networkSwitchTextInputContainer={
-              styles.dashboardNetworkSwitchTextInputContainer
-            }
-            networkSwitchTextInput={styles.dashboardNetworkSwitchTextInput}
-            activeStyles={styles.dashboardNetworkSwitchActive}
-          />
-          <Tooltip
-            className={classNames(
-              styles.headerButtonContainer,
-              styles.manageButton
-            )}
-            title="Manage Wallets"
-          >
-            <NavLink id="wallet-manager" exact to={ROUTES.WALLET_MANAGER}>
-              <span> Manage Wallets </span>
-              <Wallet id="manage-wallets" />
-            </NavLink>
-          </Tooltip>
-          <Tooltip title="Refresh" className={styles.headerButtonContainer}>
-            <span onClick={loading ? null : loadWalletData}> Refresh </span>
-            <RefreshIcon
-              id="refresh"
-              className={classNames(styles.refresh, {
-                [styles.loading]: loading
-              })}
-              onClick={loading ? null : loadWalletData}
-            />
-          </Tooltip>
-        </div> */}
         <div className={styles.panelContainer}>
           <div className={styles.dataColumn}>
             <TokenBalancesPanel className={styles.tokensPanel} />

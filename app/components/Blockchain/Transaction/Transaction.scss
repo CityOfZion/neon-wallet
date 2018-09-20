@@ -1,6 +1,79 @@
 @import '../../../styles/variables';
 
-.transaction {
-    color: $link-color;
-    cursor: pointer;
+.txidLink {
+  color: $link-color;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.txDateContainer {
+  width: 150px;
+  text-align: center;
+  font-size: 13px;
+  font-family: Gotham-Book;
+}
+
+.txLabelContainer {
+  font-family: Gotham-Book;
+  font-size: 14px;
+  text-align: center;
+  width: 75px;
+}
+
+.txAmountContainer {
+  width: 115px;
+  text-align: center;
+  font-weight: 400;
+}
+
+.txToContainer {
+  width: 285px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.transactionContainer {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.invocationTransaction {
+  font-size: 13px;
+}
+
+.amounts {
+  align-items: center;
+  display: flex;
+  width: 255px;
+  justify-content: center;
+}
+
+.txTypeIconContainer {
+  width: 50px;
+  .claimIconContainer {
+    svg {
+      path {
+        fill: #ffcf48;
+      }
+    }
+  }
+
+  .sendIconContainer {
+    svg {
+      path {
+        fill: #ff967e;
+      }
+    }
+  }
+
+  .receiveIconContainer {
+    svg {
+      path {
+        fill: #82e092;
+      }
+    }
+  }
 }

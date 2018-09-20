@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TransactionHistoryPanel renders without crashing 1`] = `
-<withActions(Connect(withProgress(withProgressComponents(Connect(withData(TransactionHistory))))))
+<withActions(Connect(withProgress(withProgressComponents(Connect(withData(Connect(withData(withProps(Connect(withActions(Connect(withProgress(withProps(Connect(withData(TransactionHistory))))))))))))))))
   onRetry={[Function]}
   store={
     Object {

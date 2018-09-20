@@ -54,6 +54,7 @@ const buildTransferScript = (
   tokenEntries.forEach(({ address, amount, symbol }) => {
     const toAcct = new wallet.Account(address)
     const { scriptHash, decimals } = tokensBalanceMap[symbol]
+    console.log({ scriptHash, decimals })
     const args = [
       u.reverseHex(fromAcct.scriptHash),
       u.reverseHex(toAcct.scriptHash),

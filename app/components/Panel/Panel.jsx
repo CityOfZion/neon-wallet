@@ -11,7 +11,8 @@ type Props = {
   contentClassName: ?string,
   headerClassName: ?string,
   children: React$Node,
-  renderHeader: ?Function
+  renderHeader: ?Function,
+  onScroll?: Function
 }
 
 export default class Panel extends React.Component<Props> {
@@ -20,7 +21,10 @@ export default class Panel extends React.Component<Props> {
   }
 
   render = () => (
-    <div className={classNames(styles.panel, this.props.className)}>
+    <div
+      onScroll={this.props.onScroll}
+      className={classNames(styles.panel, this.props.className)}
+    >
       {this.renderHeader()}
       {this.renderContent()}
     </div>
