@@ -1,17 +1,19 @@
 import React, { Component } from 'react'
 
-import { isZero, isNumber } from '../../core/math'
+import { isZero, isNumber, toBigNumber } from '../../core/math'
 
 import SendAmountsPanel from '../../components/Send/SendAmountsPanel'
 import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import TokenSalePanel from '../../components/TokenSale/TokenSalePanel/TokenSalePanel'
 import TokenSaleConfirm from '../../components/TokenSale/TokenSaleConfirm/TokenSaleConfirm'
 import TokenSaleSuccess from '../../components/TokenSale/TokenSaleSuccess/TokenSaleSuccess'
+import Loader from '../../components/Loader'
 
 import {
   TOKEN_SALE_PURCHASE,
   TOKEN_SALE_CONFIRM,
-  TOKEN_SALE_SUCCESS
+  TOKEN_SALE_SUCCESS,
+  TOKEN_SALE_FAILURE
 } from '../../core/constants'
 
 const conditions = [
@@ -29,8 +31,10 @@ class TokenSale extends Component {
       step: TOKEN_SALE_PURCHASE,
       assetToPurchaseWith: Object.keys(this.props.assetBalances)[0],
       amountToPurchaseFor: 0,
-      assetToPurchase: this.props.tokenBalances[0].token,
+      assetToPurchase: this.props.tokenBalances ? this.props.tokenBalances[0].token : 'NEO',
       conditions: [...conditions],
+      loading: false,
+      gasFee: '0',
       acceptedConditions: [],
       errorMessage: ''
     }
@@ -40,7 +44,11 @@ class TokenSale extends Component {
 
   getAssetsToPurchaseWith = () => {
     const { assetBalances } = this.props
+    if (assetBalances && assetBalances.length > 0) {
     return Object.keys(assetBalances)
+    } 
+      return ['NEO', 'GAS']
+    
   }
 
   getPurchaseableAssets = () => {
@@ -72,7 +80,8 @@ class TokenSale extends Component {
   }
 
   isValid = () => {
-    const { amountToPurchaseFor } = this.state
+    const { amountToPurchaseFor, assetToPurchaseWith } = this.state
+    const { assetBalances } = this.props
 
     if (!isNumber(amountToPurchaseFor)) {
       this.setState({ errorMessage: 'Amount must be a number.' })
@@ -81,6 +90,24 @@ class TokenSale extends Component {
 
     if (isZero(amountToPurchaseFor)) {
       this.setState({ errorMessage: 'Amount must be greater than 0.' })
+      return false
+    }
+
+    if (
+      assetToPurchaseWith === 'NEO' &&
+      !toBigNumber(amountToPurchaseFor).isInteger()
+    ) {
+      this.setState({
+        errorMessage: `You can't send fractional amounts of NEO`
+      })
+      return false
+    }
+
+    const assetBalance = toBigNumber(assetBalances[assetToPurchaseWith])
+    if (toBigNumber(amountToPurchaseFor).greaterThan(assetBalance)) {
+      this.setState({
+        errorMessage: `You don't have enough ${assetToPurchaseWith}.`
+      })
       return false
     }
 
@@ -96,7 +123,47 @@ class TokenSale extends Component {
   }
 
   handleConfirm = () => {
-    console.log('Hi')
+    const { participateInSale, tokenBalances } = this.props
+    const {
+      assetToPurchase,
+      assetToPurchaseWith,
+      amountToPurchaseFor,
+      gasFee
+    } = this.state
+
+    this.setState({ loading: true }, async () => {
+      const neoToSend =
+        assetToPurchaseWith === 'NEO' ? amountToPurchaseFor : '0'
+      const gasToSend =
+        assetToPurchaseWith === 'GAS' ? amountToPurchaseFor : '0'
+      const token = tokenBalances.find(
+        tokenObj => tokenObj.token === assetToPurchase
+      )
+      const scriptHash = token.scriptHash
+      console.log(
+        assetToPurchase,
+        assetToPurchaseWith,
+        amountToPurchaseFor,
+        gasFee,
+        neoToSend,
+        gasToSend,
+        scriptHash
+      )
+
+      try {
+        const success = await participateInSale(
+          neoToSend,
+          gasToSend,
+          scriptHash,
+          gasFee
+        )
+
+        if (success) this.setState({ step: TOKEN_SALE_SUCCESS, loading: false })
+      } catch (err) {
+        console.log(err)
+        this.setState({ step: TOKEN_SALE_FAILURE, loading: false })
+      }
+    })
   }
 
   handleSuccess = () => {
@@ -165,21 +232,41 @@ class TokenSale extends Component {
     )
   }
 
-  renderConfirm = () => <TokenSaleConfirm setStep={this.setStep} />
+  renderConfirm = () => {
+    const { tokenBalances } = this.props
+    const {
+      assetToPurchaseWith,
+      assetToPurchase,
+      amountToPurchaseFor
+    } = this.state
+
+    const tokenInfo = tokenBalances.find(
+      tokenObj => tokenObj.token === assetToPurchase
+    )
+    return (
+      <TokenSaleConfirm
+        onClickHandler={this.getOnClickHandler()}
+        tokenInfo={tokenInfo}
+        assetToPurchaseWith={assetToPurchaseWith}
+        amountToPurchaseFor={amountToPurchaseFor}
+      />
+    )
+  }
 
   renderSuccess = () => <TokenSaleSuccess />
 
   render() {
-    const { step } = this.state
+    const { step, loading } = this.state
     const displayTokenSalePurchase = step === TOKEN_SALE_PURCHASE
     const displayTokenSaleConfirm = step === TOKEN_SALE_CONFIRM
     const displayTokenSaleSuccess = step === TOKEN_SALE_SUCCESS
 
     return (
       <section>
-        {displayTokenSalePurchase && this.renderPurchase()}
-        {displayTokenSaleConfirm && this.renderConfirm()}
-        {displayTokenSaleSuccess && this.renderSuccess()}
+        {loading && <Loader />}
+        {!loading && displayTokenSalePurchase && this.renderPurchase()}
+        {!loading && displayTokenSaleConfirm && this.renderConfirm()}
+        {!loading && displayTokenSaleSuccess && this.renderSuccess()}
       </section>
     )
   }

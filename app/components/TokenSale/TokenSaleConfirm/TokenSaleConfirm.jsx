@@ -10,13 +10,16 @@ import TokenSaleIcon from '../../../assets/navigation/tokens.svg'
 import styles from './TokenSaleConfirm.scss'
 import Logo from '../../../assets/images/grey-logo.png'
 
-import { TOKEN_SALE_SUCCESS } from '../../../core/constants'
-
 type Props = {
-  setStep: () => void
+  onClickHandler: () => void
 }
 
-const TokenSaleConfirm = ({ setStep }: Props) => (
+const TokenSaleConfirm = ({
+  onClickHandler,
+  assetToPurchaseWith,
+  tokenInfo,
+  amountToPurchaseFor
+}: Props) => (
   <Panel
     className={styles.tokenSaleConfirmPanel}
     renderHeader={() => (
@@ -28,9 +31,13 @@ const TokenSaleConfirm = ({ setStep }: Props) => (
     )}
   >
     <div className={styles.tokenSaleConfirmContainer}>
-      <TokenSaleConfirmDetails />
+      <TokenSaleConfirmDetails
+        tokenInfo={tokenInfo}
+        assetToPurchaseWith={assetToPurchaseWith}
+        amountToPurchaseFor={amountToPurchaseFor}
+      />
       <Button
-        onClick={() => setStep(TOKEN_SALE_SUCCESS)}
+        onClick={onClickHandler}
         primary
         renderIcon={TokenSaleIcon}
         className={styles.tokenSaleConfirmButton}
