@@ -71,8 +71,12 @@ $icon-size: 24px;
       padding: 20px 10px;
       font-size: 14px;
 
-      &:nth-child(odd) {
+      &.odd {
         background-color: rgba(230, 230, 230, 0.28);
+      }
+
+      &.selected {
+        background-color: rgba(90, 191, 107, 0.22);
       }
 
       > div {

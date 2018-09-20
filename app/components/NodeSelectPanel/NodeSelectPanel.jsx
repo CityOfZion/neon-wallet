@@ -106,14 +106,21 @@ export default class NodeSelect extends React.Component<Props> {
         const { latency, blockCount, url } = node
 
         let icon
+        let rowClass
         if (selectedNode === url) {
           icon = <ConfirmIcon className={styles.icon} />
+          rowClass = styles.selected
         } else {
           icon = <AddIcon className={styles.icon} />
         }
 
         return (
-          <div key={index} className={styles.row}>
+          <div
+            key={index}
+            className={classNames(styles.row, rowClass, {
+              [styles.odd]: index % 2 !== 0
+            })}
+          >
             <div className={styles.latency}>
               <div className={this.getLatencyClass(parseInt(latency, 10))} />
               <span>{latency}ms</span>
