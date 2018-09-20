@@ -57,7 +57,7 @@ const mapSelectedNodeDataToProps = url => ({
 })
 
 const mapNodesActionsToProps = actions => ({
-  loadNodesData: () => actions.call()
+  loadNodesData: () => actions.call(count)
 })
 
 const mapSaveNodeActionsToProps = actions => ({

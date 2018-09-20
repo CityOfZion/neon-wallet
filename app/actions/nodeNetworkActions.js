@@ -37,11 +37,8 @@ const raceNodePromises = (total, promises) => {
   )
 }
 
-export default createActions(
-  ID,
-  ({ nodes = NODES, totalDisplayed = 15 }) => async () => {
-    const promises = nodes.map(node => getBlockCount(node))
-    const result = await raceNodePromises(totalDisplayed, promises)
-    return result
-  }
-)
+export default createActions(ID, ({ totalDisplayed = 15 }) => async () => {
+  const promises = NODES.map(node => getBlockCount(node))
+  const result = await raceNodePromises(totalDisplayed, promises)
+  return result
+})
