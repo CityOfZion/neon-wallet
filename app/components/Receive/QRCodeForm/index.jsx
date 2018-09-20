@@ -38,7 +38,7 @@ export default class QRCodeForm extends React.Component<Props, State> {
   render() {
     const { className, address, onSubmit } = this.props
     const { asset, amount, description } = this.state
-    const symbols = ['-', ASSETS.NEO, ASSETS.GAS, ...Object.keys(TOKENS)]
+    const symbols = [ASSETS.NEO, ASSETS.GAS, ...Object.keys(TOKENS)]
 
     return (
       <div className={classNames(styles.receivePanel, className)}>
@@ -53,7 +53,7 @@ export default class QRCodeForm extends React.Component<Props, State> {
               address,
               asset:
                 (TOKENS[asset] && TOKENS[asset].networks['1'].hash) ||
-                (asset === '-' ? undefined : asset),
+                asset,
               amount,
               description
             })

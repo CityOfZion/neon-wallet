@@ -6,9 +6,7 @@ import InfoIcon from '../../../assets/icons/info.svg'
 
 import styles from './styles.scss'
 
-type Props = {}
-
-export default function ReceiveExplanation(props: Props) {
+export default function ReceiveExplanation() {
   return (
     <div className={styles.receiveExplanation}>
       <div className={styles.header}>
