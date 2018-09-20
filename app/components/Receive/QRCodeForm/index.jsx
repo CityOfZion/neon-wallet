@@ -52,8 +52,7 @@ export default class QRCodeForm extends React.Component<Props, State> {
             onSubmit({
               address,
               asset:
-                (TOKENS[asset] && TOKENS[asset].networks['1'].hash) ||
-                asset,
+                (TOKENS[asset] && TOKENS[asset].networks['1'].hash) || asset,
               amount,
               description
             })
