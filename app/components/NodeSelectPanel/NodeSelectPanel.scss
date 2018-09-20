@@ -39,6 +39,10 @@ $icon-size: 24px;
       display: flex !important;
       align-items: center;
       color: #969aa0;
+
+      &.selected {
+        cursor: default;
+      }
     }
 
     .automaticSelect {

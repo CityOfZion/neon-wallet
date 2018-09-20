@@ -64,7 +64,6 @@ export default class NodeSelect extends React.Component<Props> {
   renderAutomaticSelect = () => {
     const { selectedNode } = this.props
     let icon
-
     if (selectedNode) {
       icon = (
         <AddIcon
@@ -77,7 +76,12 @@ export default class NodeSelect extends React.Component<Props> {
     }
 
     return (
-      <Tooltip title="Select automatically" className={styles.automaticSelect}>
+      <Tooltip
+        title="Select automatically"
+        className={classNames(styles.automaticSelect, {
+          [styles.selected]: !selectedNode
+        })}
+      >
         {icon}
         <span onClick={() => this.handleSelect('')}>Select automatically</span>
       </Tooltip>
