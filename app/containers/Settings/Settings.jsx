@@ -4,9 +4,7 @@ import fs from 'fs'
 import storage from 'electron-json-storage'
 import { reject } from 'lodash'
 
-import NetworkSwitch from '../App/Sidebar/NetworkSwitch'
 import { recoverWallet } from '../../modules/generateWallet'
-
 import Panel from '../../components/Panel'
 import SelectInput from '../../components/Inputs/SelectInput'
 import HeaderBar from '../../components/HeaderBar'
