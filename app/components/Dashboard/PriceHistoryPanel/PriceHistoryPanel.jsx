@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { keys } from 'lodash'
+import { keys } from 'lodash-es'
 
 import PriceHistoryChart from './PriceHistoryChart'
 import Panel from '../../Panel'

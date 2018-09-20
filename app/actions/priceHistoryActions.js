@@ -1,7 +1,7 @@
 // @flow
 import axios from 'axios'
 import { createActions } from 'spunky'
-import { toUpper } from 'lodash'
+import { toUpper } from 'lodash-es'
 
 import { ASSETS, DEFAULT_CURRENCY_CODE } from '../core/constants'
 

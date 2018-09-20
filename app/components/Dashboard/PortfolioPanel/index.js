@@ -1,7 +1,7 @@
 // @flow
 import { compose, withProps } from 'recompose'
 import { withData } from 'spunky'
-import { pickBy, pick, omit, reduce, map } from 'lodash'
+import { pickBy, pick, omit, reduce, map } from 'lodash-es'
 
 import PortfolioPanel from './PortfolioPanel'
 import portfolioPanelActions from '../../../actions/portfolioPanelActions'
@@ -9,12 +9,9 @@ import pricesActions from '../../../actions/pricesActions'
 import withBalancesData from '../../../hocs/withBalancesData'
 import withCurrencyData from '../../../hocs/withCurrencyData'
 import withProgressPanel from '../../../hocs/withProgressPanel'
-import withLoadingProp from '../../../hocs/withLoadingProp'
 import { getTokenBalancesMap } from '../../../core/wallet'
 import { toNumber, toBigNumber } from '../../../core/math'
 import { ASSETS } from '../../../core/constants'
-
-import assetBalancesPanelActions from '../../../actions/assetBalancesPanelActions'
 
 const removeEmptyBalances = balances =>
   pickBy(balances, balance => toBigNumber(balance).gt(0))
@@ -51,7 +48,7 @@ const mapSortedPortfolioBalanceProps = ({ prices, balances, total }) => ({
 })
 
 export default compose(
-  withProgressPanel(assetBalancesPanelActions, { title: 'Portfolio' }),
+  withProgressPanel(portfolioPanelActions, { title: 'Portfolio' }),
   withData(pricesActions, mapPricesDataToProps),
   withBalancesData(mapBalancesDataToProps),
   withCurrencyData(),

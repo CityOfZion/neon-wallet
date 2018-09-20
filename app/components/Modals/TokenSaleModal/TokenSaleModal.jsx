@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import { get, map, every, times, constant } from 'lodash'
+import { get, map, every, times, constant } from 'lodash-es'
 
 import { isZero, isNumber } from '../../../core/math'
 import { ASSETS } from '../../../core/constants'

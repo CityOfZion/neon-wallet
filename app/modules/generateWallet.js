@@ -1,7 +1,7 @@
 // @flow
 import storage from 'electron-json-storage'
 import { wallet } from 'neon-js'
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 
 import {
   showErrorNotification,

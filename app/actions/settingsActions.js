@@ -1,5 +1,5 @@
 // @flow
-import { pick, keys, uniqBy } from 'lodash'
+import { pick, keys, uniqBy } from 'lodash-es'
 import { createActions } from 'spunky'
 
 import { getStorage, setStorage } from '../core/storage'

@@ -1,5 +1,5 @@
 // @flow
-import { map, isEmpty } from 'lodash'
+import { map, isEmpty } from 'lodash-es'
 import axios from 'axios'
 
 import { toBigNumber } from './math'

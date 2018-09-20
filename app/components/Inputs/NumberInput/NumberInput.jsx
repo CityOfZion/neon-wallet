@@ -3,7 +3,7 @@ import React from 'react'
 import classNames from 'classnames'
 
 import Cleave from 'cleave.js/react'
-import { omit, noop } from 'lodash'
+import { omit, noop } from 'lodash-es'
 
 import ErrorIcon from '../../../assets/icons/errorRed.svg'
 

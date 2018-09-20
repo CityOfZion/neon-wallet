@@ -8,7 +8,7 @@ import {
   type Actions,
   type Progress
 } from 'spunky'
-import { omit } from 'lodash'
+import { omit } from 'lodash-es'
 
 import pureStrategy from './helpers/pureStrategy'
 

@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import { noop } from 'lodash'
+import { noop } from 'lodash-es'
 
 import { wallet } from 'neon-js'
 

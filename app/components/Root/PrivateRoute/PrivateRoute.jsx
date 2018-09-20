@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
-import { omit } from 'lodash'
+import { omit } from 'lodash-es'
 
 import { ROUTES } from '../../../core/constants'
 

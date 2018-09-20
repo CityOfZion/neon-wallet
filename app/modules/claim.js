@@ -1,6 +1,6 @@
 // @flow
 import { api, type Claims } from 'neon-js'
-import { map, reduce } from 'lodash'
+import { map, reduce } from 'lodash-es'
 
 import {
   showErrorNotification,

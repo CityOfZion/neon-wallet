@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { values, times } from 'lodash'
+import { values, times } from 'lodash-es'
 
 import COLORS from './colors'
 import PortfolioRow from './PortfolioRow'

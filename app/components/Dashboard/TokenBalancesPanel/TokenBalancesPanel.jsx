@@ -4,7 +4,6 @@ import classNames from 'classnames'
 
 import TextInput from '../../Inputs/TextInput'
 import CopyToClipboard from '../../CopyToClipboard'
-import { Address } from '../../Blockchain'
 import Panel from '../../Panel'
 import styles from './TokenBalancesPanel.scss'
 import {

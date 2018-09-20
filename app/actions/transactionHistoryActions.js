@@ -2,11 +2,7 @@
 import axios from 'axios'
 import { api } from 'neon-js'
 import { createActions } from 'spunky'
-import { filter, reduce } from 'lodash'
 
-import { COIN_DECIMAL_LENGTH } from '../core/formatters'
-import { ASSETS } from '../core/constants'
-import { toBigNumber } from '../core/math'
 import { getDefaultTokens } from '../core/nep5'
 
 export const NEO_ID =

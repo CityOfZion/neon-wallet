@@ -1,5 +1,5 @@
 // @flow
-import { isEmpty, zipObject, mapValues, invert } from 'lodash'
+import { isEmpty, zipObject, mapValues, invert } from 'lodash-es'
 import { withData } from 'spunky'
 
 import authActions from '../actions/authActions'

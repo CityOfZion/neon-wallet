@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { map } from 'lodash'
+import { map } from 'lodash-es'
 
 import Button from '../../../Button'
 import { toFixedDecimals } from '../../../../core/formatters'

@@ -47,6 +47,7 @@ export default class Home extends React.Component<Props, State> {
     tabIndex: 0
   }
 
+  // $FlowFixMe
   options = Object.keys(LOGIN_OPTIONS).map((key: string) => LOGIN_OPTIONS[key])
 
   render = () => {

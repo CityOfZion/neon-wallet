@@ -2,7 +2,7 @@
 import React from 'react'
 import classNames from 'classnames'
 // $FlowFixMe
-import { isEqual } from 'lodash'
+import { isEqual } from 'lodash-es'
 
 import styles from './BoundingBox.scss'
 

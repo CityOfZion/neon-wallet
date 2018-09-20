@@ -1,7 +1,7 @@
 // @flow
 /* eslint-disable camelcase */
 import { api, sc, u, wallet } from 'neon-js'
-import { flatMap, keyBy } from 'lodash'
+import { flatMap, keyBy } from 'lodash-es'
 
 import {
   showErrorNotification,

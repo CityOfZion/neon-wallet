@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { map } from 'lodash'
+import { map } from 'lodash-es'
 
 import Panel from '../../Panel'
 import Button from '../../Button'

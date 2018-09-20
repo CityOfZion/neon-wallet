@@ -2,7 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
-import { omit, isFunction } from 'lodash'
+import { omit, isFunction } from 'lodash-es'
 import {
   withProgress,
   progressValues,

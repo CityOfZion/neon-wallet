@@ -2,7 +2,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import withClickOutside from 'react-click-outside'
-import { noop } from 'lodash'
+import { noop } from 'lodash-es'
 
 import styles from './Dropdown.scss'
 
