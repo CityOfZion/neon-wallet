@@ -24,7 +24,7 @@ import styles from './Settings.scss'
 import Tooltip from '../../components/Tooltip'
 import AddIcon from '../../assets/icons/add.svg'
 
-const { dialog } = require('electron').remote
+const { dialog, shell } = require('electron').remote
 
 type Props = {
   setAccounts: (Array<Object>) => any,
@@ -42,6 +42,8 @@ type Props = {
 type State = {
   explorer: string
 }
+
+const discordInviteLink = 'https://discordapp.com/invite/R8v48YA'
 
 export default class Settings extends Component<Props, State> {
   saveWalletRecovery = () => {
@@ -249,13 +251,16 @@ export default class Settings extends Component<Props, State> {
     </Tooltip>
   )
 
+  openDiscordLink = () => shell.openExternal(discordInviteLink)
+
   renderHeader = () => (
     <div className={styles.settingsPanelHeader}>
       <div className={styles.settingsPanelHeaderItem}>
         Manage your neon wallet
       </div>
       <div className={styles.settingsPanelHeaderItem}>
-        Community Support: https://discordapp.com/invite/R8v48YA
+        Community Support:{' '}
+        <a onClick={this.openDiscordLink}>{discordInviteLink}</a>
       </div>
     </div>
   )

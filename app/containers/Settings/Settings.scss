@@ -33,6 +33,12 @@ $panel-top-margin: 25px;
           text-align: right;
           color: #8d98ae;
           font-size: 14px;
+          a {
+            cursor: pointer;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
         }
       }
     }
