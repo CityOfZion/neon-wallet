@@ -15,10 +15,8 @@ import ZeroAssets from './ZeroAssets'
 import { pluralize } from '../../../util/pluralize'
 
 import SendIcon from '../../../assets/icons/send.svg'
-import LightningIcon from '../../../assets/icons/lightning.svg'
 
 import styles from './SendPanel.scss'
-import { truncateNumber } from '../../../core/math'
 
 type Props = {
   sendRowDetails: Array<*>,

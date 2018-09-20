@@ -31,10 +31,10 @@ class TokenSale extends Component {
       step: TOKEN_SALE_PURCHASE,
       assetToPurchaseWith: Object.keys(this.props.assetBalances)[0],
       amountToPurchaseFor: 0,
-      assetToPurchase: this.props.tokenBalances ? this.props.tokenBalances[0].token : 'NEO',
+      assetToPurchase: this.props.tokenBalances[0].token,
       conditions: [...conditions],
       loading: false,
-      gasFee: '0',
+      gasFee: 0,
       acceptedConditions: [],
       errorMessage: ''
     }
@@ -98,7 +98,7 @@ class TokenSale extends Component {
       !toBigNumber(amountToPurchaseFor).isInteger()
     ) {
       this.setState({
-        errorMessage: `You can't send fractional amounts of NEO`
+        errorMessage: "You can't send fractional amounts of NEO"
       })
       return false
     }
@@ -113,6 +113,8 @@ class TokenSale extends Component {
 
     return true
   }
+
+  handleAddPriorityFee = (gasFee: number) => this.setState({ gasFee })
 
   handlePurchase = () => {
     this.setState({ errorMessage: '' }, () => {
@@ -140,15 +142,7 @@ class TokenSale extends Component {
         tokenObj => tokenObj.token === assetToPurchase
       )
       const scriptHash = token.scriptHash
-      console.log(
-        assetToPurchase,
-        assetToPurchaseWith,
-        amountToPurchaseFor,
-        gasFee,
-        neoToSend,
-        gasToSend,
-        scriptHash
-      )
+
 
       try {
         const success = await participateInSale(
@@ -160,15 +154,14 @@ class TokenSale extends Component {
 
         if (success) this.setState({ step: TOKEN_SALE_SUCCESS, loading: false })
       } catch (err) {
-        console.log(err)
         this.setState({ step: TOKEN_SALE_FAILURE, loading: false })
       }
     })
   }
 
-  handleSuccess = () => {
-    console.log('success')
-  }
+  handleSuccess = () => this.setStep(TOKEN_SALE_PURCHASE)
+
+  handleFailure = () => console.log('Try again')
 
   getOnClickHandler = () => {
     const { step } = this.state
@@ -179,6 +172,8 @@ class TokenSale extends Component {
         return this.handleConfirm
       case TOKEN_SALE_SUCCESS:
         return this.handleSuccess
+      case TOKEN_SALE_FAILURE:
+        return this.handleFailure
       default:
         return this.handlePurchase
     }
@@ -191,11 +186,13 @@ class TokenSale extends Component {
       amountToPurchaseFor,
       acceptedConditions,
       conditions,
-      errorMessage
+      errorMessage,
+      gasFee
     } = this.state
 
     const { assetBalances } = this.props
     const disabledButton = !(acceptedConditions.length === conditions.length)
+    const availableGas = assetBalances['GAS']
     return (
       <section>
         {' '}
@@ -227,6 +224,9 @@ class TokenSale extends Component {
           updateConditions={this.updateConditions}
           acceptedConditions={acceptedConditions}
           errorMessage={errorMessage}
+          handleAddPriorityFee={this.handleAddPriorityFee}
+          gasFee={gasFee}
+          availableGas={availableGas}
         />
       </section>
     )
@@ -260,6 +260,7 @@ class TokenSale extends Component {
     const displayTokenSalePurchase = step === TOKEN_SALE_PURCHASE
     const displayTokenSaleConfirm = step === TOKEN_SALE_CONFIRM
     const displayTokenSaleSuccess = step === TOKEN_SALE_SUCCESS
+    const displayTokenSaleFailure = step === TOKEN_SALE_FAILURE
 
     return (
       <section>
@@ -267,6 +268,7 @@ class TokenSale extends Component {
         {!loading && displayTokenSalePurchase && this.renderPurchase()}
         {!loading && displayTokenSaleConfirm && this.renderConfirm()}
         {!loading && displayTokenSaleSuccess && this.renderSuccess()}
+        {!loading && displayTokenSaleFailure && <div>Error</div>}
       </section>
     )
   }

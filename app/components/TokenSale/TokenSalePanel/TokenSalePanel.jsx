@@ -6,6 +6,7 @@ import TokenSaleSelection from './TokenSaleSelection/TokenSaleSelection'
 import TokenSaleConditions from './TokenSaleConditions/TokenSaleConditions'
 import DialogueBox from '../../DialogueBox'
 import Button from '../../Button'
+import PriorityFee from '../../Send/SendPanel/PriorityFee'
 import WarningIcon from '../../../assets/icons/warning.svg'
 import CheckMarkIcon from '../../../assets/icons/check.svg'
 
@@ -29,7 +30,10 @@ const TokenSalePanel = ({
   acceptedConditions,
   updateField,
   updateConditions,
-  errorMessage
+  errorMessage,
+  availableGas,
+  gasFee,
+  handleAddPriorityFee
 }: Props) => (
   <Panel renderHeader={() => <p>Participate in Token Sale</p>}>
     <div className={styles.tokenSalePanelContainer}>
@@ -52,6 +56,12 @@ const TokenSalePanel = ({
         conditions={conditions}
         updateConditions={updateConditions}
         acceptedConditions={acceptedConditions}
+      />
+      <PriorityFee
+        availableGas={Number(availableGas)}
+        handleAddPriorityFee={handleAddPriorityFee}
+        fees={gasFee}
+        disabled={false}
       />
       <Button
         onClick={onClickHandler}
