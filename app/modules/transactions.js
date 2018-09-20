@@ -54,7 +54,6 @@ const buildTransferScript = (
   tokenEntries.forEach(({ address, amount, symbol }) => {
     const toAcct = new wallet.Account(address)
     const { scriptHash, decimals } = tokensBalanceMap[symbol]
-    console.log({ scriptHash, decimals })
     const args = [
       u.reverseHex(fromAcct.scriptHash),
       u.reverseHex(toAcct.scriptHash),
@@ -100,8 +99,6 @@ export const sendTransaction = ({
   fees: number
 }) => (dispatch: DispatchType, getState: GetStateType): Promise<*> =>
   new Promise(async (resolve, reject) => {
-    console.log({ sendEntries, fees })
-
     const state = getState()
     const wif = getWIF(state)
     const fromAddress = getAddress(state)

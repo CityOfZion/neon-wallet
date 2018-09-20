@@ -5,7 +5,6 @@ import styles from './LogoWithStrikethrough.scss'
 
 export default class LogoWithStrikethrough extends React.Component {
   render() {
-    console.log('foosdfsdf')
     return (
       <div className={styles.logoWithStrikethroughContainer}>
         <div className={styles.strikethrough} />
