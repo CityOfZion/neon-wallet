@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import fs from 'fs'
 import storage from 'electron-json-storage'
 import { reject } from 'lodash'
+import { Link } from 'react-router-dom'
 
 import { recoverWallet } from '../../modules/generateWallet'
 import Panel from '../../components/Panel'
@@ -42,6 +43,7 @@ type State = {
 }
 
 const discordInviteLink = 'https://discordapp.com/invite/R8v48YA'
+const CozKey = 'Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A'
 
 export default class Settings extends Component<Props, State> {
   saveWalletRecovery = () => {
@@ -233,14 +235,18 @@ export default class Settings extends Component<Props, State> {
               loadWalletRecovery={this.loadWalletRecovery}
               saveWalletRecovery={this.saveWalletRecovery}
             />
-            <div className={styles.settingsDonations}>
-              Created by CoZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A
-            </div>
+            {this.renderDontions()}
           </section>
         </Panel>
       </section>
     )
   }
+
+  renderDontions = () => (
+    <Link to={`/send/${CozKey}`} className={styles.settingsDonations}>
+      Created by CoZ. Donations: {CozKey}
+    </Link>
+  )
 
   renderHeaderBarRightContent = () => (
     <Tooltip title="Add Token" className={styles.headerButtonContainer}>

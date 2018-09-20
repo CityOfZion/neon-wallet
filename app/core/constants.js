@@ -34,7 +34,8 @@ export const ROUTES = {
   DISPLAY_WALLET_KEYS_AUTHENTICATED: '/display-wallet-keys-authenticated',
   WALLET_MANAGER: '/wallet-manager',
   EDIT_WALLET: '/edit-wallet/:key/:label',
-  SEND: '/send',
+  SEND: '/send/',
+  SEND_ADDRESS: '/send/:address',
   ENCRYPT: '/encrypt-private-key',
   NODE_SELECT: '/node-select'
 }
