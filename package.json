@@ -201,6 +201,9 @@
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ],
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/(?!lodash-es)"
+    ],    
     "setupTestFrameworkScriptFile": "<rootDir>/__tests__/setupTests.js",
     "testURL": "http://localhost"
   }
