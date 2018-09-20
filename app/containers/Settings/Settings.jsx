@@ -9,7 +9,7 @@ import { recoverWallet } from '../../modules/generateWallet'
 
 import Panel from '../../components/Panel'
 import SelectInput from '../../components/Inputs/SelectInput'
-import UnderlinedHeader from '../../components/Headers/UnderlinedHeader'
+import HeaderBar from '../../components/HeaderBar'
 import SettingsItem from '../../components/Settings/SettingsItem'
 import SettingsLink from '../../components/Settings/SettingsLink'
 import WalletRecoveryPanel from '../../components/Settings/WalletRecoveryPanel'
@@ -193,16 +193,10 @@ export default class Settings extends Component<Props, State> {
 
     return (
       <section className={styles.settingsContainer}>
-        <UnderlinedHeader text="Settings">
-          <div className={styles.networkSwitchContainer}>
-            <span>Network:</span>
-            <NetworkSwitch className={styles.networkSwitch} />
-          </div>
-          <Tooltip title="Add Token" className={styles.headerButtonContainer}>
-            <AddIcon className={styles.add} />
-            <span>Add Token</span>
-          </Tooltip>
-        </UnderlinedHeader>
+        <HeaderBar
+          label="Settings"
+          renderRightContent={this.renderHeaderBarRightContent}
+        />
         <Panel
           className={styles.settingsPanel}
           renderHeader={this.renderHeader}
@@ -247,6 +241,13 @@ export default class Settings extends Component<Props, State> {
       </section>
     )
   }
+
+  renderHeaderBarRightContent = () => (
+    <Tooltip title="Add Token" className={styles.headerButtonContainer}>
+      <AddIcon className={styles.add} />
+      <span>Add Token</span>
+    </Tooltip>
+  )
 
   renderHeader = () => (
     <div className={styles.settingsPanelHeader}>
