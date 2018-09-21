@@ -1,0 +1,78 @@
+@import '../../../styles/variables';
+
+.contentContainer {
+  padding: 0 125px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+  margin-top: 30px;
+
+  .icon {
+    width: 36px;
+    height: 36px;
+    margin-right: 24px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+}
+
+.subHeader {
+  display: flex;
+  padding-bottom: 6px;
+  border-bottom: black solid 1px;
+  margin-bottom: 20px;
+
+  .title {
+    flex: 1;
+  }
+}
+
+.urlSection,
+.section {
+  margin-bottom: 16px;
+
+  .sectionTitle {
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .qrcode,
+  .sectionContent {
+    border-radius: 4px;
+    line-height: 24px;
+  }
+
+  .sectionContent {
+    padding: 16px;
+    background-color: $light-grey;
+  }
+
+  .qrcode {
+    display: flex;
+    justify-content: center;
+    height: 200px;
+  }
+
+  .imgUri {
+    width: 330px;
+    word-wrap: break-word;
+    margin-right: 70px;
+  }
+
+  .assetAmount {
+    font-weight: 500;
+  }
+}
+
+.urlSection {
+  .sectionContent {
+    display: flex;
+  }
+}

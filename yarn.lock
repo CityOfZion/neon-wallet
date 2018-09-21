@@ -1091,9 +1091,9 @@ axios@0.17.0:
     follow-redirects "^1.2.3"
     is-buffer "^1.1.5"
 
-axios@^0.18.0:
+axios@0.18.0, axios@^0.18.0:
   version "0.18.0"
-  resolved "http://registry.npmjs.org/axios/-/axios-0.18.0.tgz#32d53e4851efdc0a11993b6cd000789d70c05102"
+  resolved "https://registry.npmjs.org/axios/-/axios-0.18.0.tgz#32d53e4851efdc0a11993b6cd000789d70c05102"
   dependencies:
     follow-redirects "^1.3.0"
     is-buffer "^1.1.5"
@@ -7957,6 +7957,12 @@ negotiator@0.6.1:
 neo-async@^2.5.0:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.5.2.tgz#489105ce7bc54e709d736b195f82135048c50fcc"
+
+neo-qrcode@0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/neo-qrcode/-/neo-qrcode-0.0.8.tgz#abd1e476e788795ee3192b7dcb5ae66329388e4c"
+  dependencies:
+    axios "0.18.0"
 
 "neon-js@git+https://github.com/cityofzion/neon-js.git#3.11.0":
   version "3.11.0"
