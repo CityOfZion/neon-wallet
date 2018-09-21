@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import Check from 'react-icons/lib/fa/check'
-import { map } from 'lodash'
+import { map } from 'lodash-es'
 
 import Button from '../../../Button'
 import toSentence from '../../../../util/toSentence'

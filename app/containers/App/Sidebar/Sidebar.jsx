@@ -29,103 +29,85 @@ const Sidebar = ({ className, showTokenSaleModal }: Props) => (
         <img src={LogoWithoutText} alt="neon-logo" />
       </div>
 
-      <Tooltip title="Dashboard" position="right">
-        <NavLink
-          id="dashboard"
-          exact
-          to={ROUTES.DASHBOARD}
-          className={styles.navItem}
-          activeClassName={styles.active}
-        >
-          <HomeIcon />
-          <div> Wallet </div>
-        </NavLink>
-      </Tooltip>
+      <NavLink
+        id="dashboard"
+        exact
+        to={ROUTES.DASHBOARD}
+        className={styles.navItem}
+        activeClassName={styles.active}
+      >
+        <HomeIcon />
+        <div> Wallet </div>
+      </NavLink>
 
-      <Tooltip title="Transaction History" position="right">
-        <NavLink
-          id="history"
-          exact
-          to={ROUTES.TRANSACTION_HISTORY}
-          className={styles.navItem}
-          activeClassName={styles.active}
-        >
-          <HistoryIcon />
-          <div> Activity </div>
-        </NavLink>
-      </Tooltip>
+      <NavLink
+        id="history"
+        exact
+        to={ROUTES.TRANSACTION_HISTORY}
+        className={styles.navItem}
+        activeClassName={styles.active}
+      >
+        <HistoryIcon />
+        <div> Activity </div>
+      </NavLink>
 
-      <Tooltip title="Send" position="right">
-        <NavLink
-          id="send"
-          exact
-          to={ROUTES.SEND}
-          className={styles.navItem}
-          activeClassName={styles.active}
-        >
-          <SendIcon />
-          <div> Send </div>
-        </NavLink>
-      </Tooltip>
+      <NavLink
+        id="send"
+        exact
+        to={ROUTES.SEND}
+        className={styles.navItem}
+        activeClassName={styles.active}
+      >
+        <SendIcon />
+        <div> Send </div>
+      </NavLink>
 
-      <Tooltip title="Receive" position="right">
-        <NavLink
-          id="receive"
-          exact
-          to={ROUTES.RECEIVE}
-          className={styles.navItem}
-          activeClassName={styles.active}
-        >
-          <ReceiveIcon />
-          <div> Receive </div>
-        </NavLink>
-      </Tooltip>
+      <NavLink
+        id="receive"
+        exact
+        to={ROUTES.RECEIVE}
+        className={styles.navItem}
+        activeClassName={styles.active}
+      >
+        <ReceiveIcon />
+        <div> Receive </div>
+      </NavLink>
 
-      <Tooltip title="Contacts" position="right">
-        <NavLink
-          id="contacts"
-          to={ROUTES.CONTACTS}
-          className={styles.navItem}
-          activeClassName={styles.active}
-        >
-          <ContactsIcon />
-          <div> Contacts </div>
-        </NavLink>
-      </Tooltip>
+      <NavLink
+        id="contacts"
+        to={ROUTES.CONTACTS}
+        className={styles.navItem}
+        activeClassName={styles.active}
+      >
+        <ContactsIcon />
+        <div> Contacts </div>
+      </NavLink>
 
-      <Tooltip title="Token Sale" position="right">
-        <a
-          id="tokenSale"
-          className={styles.navItem}
-          onClick={showTokenSaleModal}
-        >
-          <TokenSaleIcon />
-          <div> Token Sale </div>
-        </a>
-      </Tooltip>
+      <a id="tokenSale" className={styles.navItem} onClick={showTokenSaleModal}>
+        <TokenSaleIcon />
+        <div> Token Sale </div>
+      </a>
 
-      <Tooltip title="Settings" position="right">
-        <NavLink
-          id="settings"
-          to={ROUTES.SETTINGS}
-          className={styles.navItem}
-          activeClassName={styles.active}
-        >
-          <SettingsIcon />
-          <div> Settings </div>
-        </NavLink>
-      </Tooltip>
+      <NavLink
+        id="settings"
+        to={ROUTES.SETTINGS}
+        className={styles.navItem}
+        activeClassName={styles.active}
+      >
+        <SettingsIcon />
+        <div> Settings </div>
+      </NavLink>
     </div>
 
-    <div className={styles.group}>
-      <Tooltip
-        className={classNames(styles.logoutToolTipGroup, styles.navItem)}
-        title="Logout"
-        position="right"
-      >
-        <Logout id="logout" />
-        <div className={styles.logoutText}> Logout </div>
-      </Tooltip>
+    <div
+      className={classNames(
+        styles.group,
+        styles.logoutToolTipGroup,
+        styles.navItem
+      )}
+    >
+      <Logout id="logout" />
+      <div className={styles.logoutText}> Logout </div>
     </div>
   </div>
 )

@@ -90,6 +90,7 @@ export default class Dashboard extends Component<Props> {
   }
 
   addPolling = () => {
+    // $FlowFixMe
     this.walletDataInterval = setInterval(
       this.props.loadWalletData,
       REFRESH_INTERVAL_MS
@@ -97,7 +98,9 @@ export default class Dashboard extends Component<Props> {
   }
 
   removePolling = () => {
+    // $FlowFixMe
     if (this.walletDataInterval) {
+      // $FlowFixMe
       clearInterval(this.walletDataInterval)
     }
   }

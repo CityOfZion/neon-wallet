@@ -1,6 +1,6 @@
 // @flow
 import { compose } from 'recompose'
-import { values, omit } from 'lodash'
+import { values, omit } from 'lodash-es'
 import { withActions, withData } from 'spunky'
 
 import AssetBalancesPanel from './AssetBalancesPanel'

@@ -2,11 +2,7 @@
 import axios from 'axios'
 import { api } from 'neon-js'
 import { createActions } from 'spunky'
-import { filter, reduce } from 'lodash'
 
-import { COIN_DECIMAL_LENGTH } from '../core/formatters'
-import { ASSETS } from '../core/constants'
-import { toBigNumber } from '../core/math'
 import { getDefaultTokens } from '../core/nep5'
 
 export const NEO_ID =
@@ -90,16 +86,14 @@ export default createActions(
     const tokens = await getDefaultTokens()
     const endpoint = api.neoscan.getAPIEndpoint(net)
     const { data } = await axios.get(
-      `${endpoint}/v1/get_address_abstracts/${address}/${
-        shouldIncrementPagination ? page : 1
-      }`
+      `${endpoint}/v1/get_address_abstracts/${address}/${page}`
     )
     totalPages = data.total_pages
 
     const parsedEntries = parseAbstractData(data.entries, address, tokens)
+    page += 1
     if (shouldIncrementPagination) {
       if (page === 1) entries = []
-      page += 1
       entries.push(...parsedEntries)
       return entries
     }

@@ -1,6 +1,6 @@
 // @flow
 import { wallet, api } from 'neon-js'
-import { flatten } from 'lodash'
+import { flatten } from 'lodash-es'
 
 import {
   showErrorNotification,

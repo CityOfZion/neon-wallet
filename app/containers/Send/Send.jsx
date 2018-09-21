@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import { uniqueId } from 'lodash'
+import { uniqueId } from 'lodash-es'
 import { wallet } from 'neon-js'
 import {
   toNumber,
@@ -356,7 +356,8 @@ export default class Send extends React.Component<Props, State> {
       sendableAssets,
       contacts,
       currencyCode,
-      shouldRenderHeaderBar
+      shouldRenderHeaderBar,
+      address
     } = this.props
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 
@@ -388,6 +389,7 @@ export default class Send extends React.Component<Props, State> {
           handleSubmit={this.handleSubmit}
           handleAddPriorityFee={this.handleAddPriorityFee}
           fees={fees}
+          address={address}
           resetViewsAfterError={this.resetViewsAfterError}
           handleEditRecipientsClick={this.handleEditRecipientsClick}
           handleSend={this.handleSend}

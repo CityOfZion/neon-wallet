@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import { isEqual, difference } from 'lodash'
+import { isEqual, difference } from 'lodash-es'
 import ReactNotificationSystem from 'react-notification-system'
 
 type Props = {

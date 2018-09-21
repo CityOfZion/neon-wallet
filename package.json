@@ -78,11 +78,12 @@
     "electron-save-file": "1.0.2",
     "es6-promisify": "^5.0.0",
     "file-loader": "1.1.5",
+    "flow-typed": "^2.5.1",
     "fs": "^0.0.1-security",
     "global": "4.3.2",
     "history": "4.7.2",
     "isomorphic-fetch": "2.2.1",
-    "lodash": "4.17.4",
+    "lodash-es": "^4.17.11",
     "neo-qrcode": "0.0.8",
     "moment": "^2.22.2",
     "neon-js": "git+https://github.com/cityofzion/neon-js.git#3.11.0",
@@ -164,8 +165,7 @@
     "eslint-plugin-promise": "3.6.0",
     "eslint-plugin-react": "7.9.1",
     "extract-text-webpack-plugin": "3.0.2",
-    "flow": "^0.2.3",
-    "flow-bin": "0.58.0",
+    "flow-bin": "0.80.0",
     "html-webpack-plugin": "2.30.1",
     "husky": "0.14.3",
     "identity-obj-proxy": "3.0.0",
@@ -202,6 +202,9 @@
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ],
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/(?!lodash-es)"
+    ],    
     "setupTestFrameworkScriptFile": "<rootDir>/__tests__/setupTests.js",
     "testURL": "http://localhost"
   }

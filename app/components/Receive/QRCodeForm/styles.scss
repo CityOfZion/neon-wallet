@@ -1,10 +1,12 @@
 .receivePanel {
   flex: 1;
   padding: 42px;
+  max-width: 700px;
+  margin: auto;
 
   .form {
     height: 385px;
-    margin: 0 120px;
+    margin: 0 60px;
   }
 
   .header {

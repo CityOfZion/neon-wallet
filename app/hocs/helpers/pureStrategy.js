@@ -1,6 +1,6 @@
 // @flow
 import { progressValues, type Progress } from 'spunky'
-import { map, uniq, find } from 'lodash'
+import { map, uniq, find } from 'lodash-es'
 
 const { INITIAL, LOADING, LOADED, FAILED } = progressValues
 

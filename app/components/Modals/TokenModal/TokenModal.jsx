@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import { reject, noop } from 'lodash'
+import { reject, noop } from 'lodash-es'
 
 import { getNewTokenItem, validateTokens } from './utils'
 

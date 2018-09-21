@@ -1,17 +1,41 @@
+@import '../../../../styles/variables';
+
 .zeroAssets {
+  display: flex;
+  padding: 20px;
+  align-items: center;
+  width: 500px;
+  margin: auto;
+
+  p {
+    text-align: center;
+  }
+
+  a {
+    text-decoration: none;
+    color: $link-color;
+  }
+
+  .address {
     display: flex;
-    padding: 40px 30px;
     align-items: center;
+    margin-top: 30px;
+    justify-content: center;
 
-    svg {
-        height: 150px;
-        width: 150px;
-        min-width: 150px;
+    button {
+      margin-bottom: 15px;
+      margin-left: -40px;
+      z-index: 100;
     }
 
-    .zeroAssetsHeaderText {
-        font-weight: 300;
-        font-size: 2em;
-        margin: 0;
+    input {
+      min-width: 450px;
     }
+  }
+
+  .zeroAssetsHeaderText {
+    font-weight: 300;
+    font-size: 2em;
+    margin: 0;
+  }
 }

@@ -2,7 +2,7 @@
 import { compose, mapProps } from 'recompose'
 import { withRouter } from 'react-router-dom'
 import { withProgress, progressValues } from 'spunky'
-import { omit } from 'lodash'
+import { omit } from 'lodash-es'
 
 import PrivateRoute from './PrivateRoute'
 import authActions from '../../../actions/authActions'

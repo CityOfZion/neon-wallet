@@ -1,7 +1,7 @@
 // @flow
 import { createActions } from 'spunky'
 import { wallet } from 'neon-js'
-import { has, isEmpty, keys, values, indexOf, zipObject, omit } from 'lodash'
+import { has, isEmpty, keys, values, indexOf, zipObject, omit } from 'lodash-es'
 
 import { getStorage, setStorage } from '../core/storage'
 

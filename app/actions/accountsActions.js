@@ -1,6 +1,6 @@
 // @flow
 import { createActions } from 'spunky'
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 
 import { getStorage, setStorage } from '../core/storage'
 import { DEFAULT_WALLET } from '../core/constants'

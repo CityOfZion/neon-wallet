@@ -1,5 +1,5 @@
 // @flow
-import { get, omit, pick } from 'lodash'
+import { get, omit, pick } from 'lodash-es'
 
 import { ID as AUTH_ID } from '../actions/authActions'
 import { ID as BALANCES_ID } from '../actions/balancesActions'

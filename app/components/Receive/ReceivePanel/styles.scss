@@ -1,12 +1,13 @@
 @import '../../../styles/variables';
 
 .receivePanel {
-  margin-top: 25px;
+  max-height: 545px;
 }
 
 .receivePanelContent {
   display: flex;
   padding: 0;
+  overflow: hidden !important;
 }
 
 .receivePanelHeader {

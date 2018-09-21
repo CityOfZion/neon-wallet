@@ -8,6 +8,11 @@
   padding: 0px 24px !important;
 }
 
+.emptyBalanceContent {
+  display: flex;
+  align-items: center;
+}
+
 .tokenBalancesPanel {
   .header {
     display: flex;
@@ -144,4 +149,59 @@
 
 .oddNumberedRow {
   background-color: #f2f2f2;
+}
+
+.emptyBalanceContainer {
+  margin-bottom: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  max-width: 400px;
+
+  .address {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    justify-content: center;
+
+    button {
+      margin-bottom: 15px;
+      margin-left: -40px;
+      z-index: 100;
+    }
+
+    input {
+      min-width: 360px;
+    }
+  }
+
+  .headerContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: center;
+
+    svg {
+      height: 36px;
+      width: 36px;
+      margin-right: 15px;
+    }
+  }
+
+  h1 {
+    margin-top: 0;
+    /* Nothing to see here!: */
+    font-family: Gotham-Light;
+    font-weight: 100;
+    font-size: 30px;
+    color: #8d98ae;
+    line-height: 32px;
+    margin-bottom: 0;
+  }
+
+  p {
+    text-align: center;
+    font-size: 14px;
+  }
 }
