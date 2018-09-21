@@ -2,20 +2,20 @@
 
 import React from 'react'
 
-import SendAmountsInfoBox from './SendAmountsInfoBox'
-import { CURRENCIES } from '../../../core/constants'
+import AmountsInfoBox from './AmountsInfoBox'
+import { CURRENCIES } from '../../core/constants'
 
-import styles from './SendAmountsPanel.scss'
+import styles from './AmountsPanel.scss'
 
 type Props = {
-  sendAmountsData: Array<*>,
+  amountsData: Array<*>,
   currencyCode: string
 }
 
-const SendAmountsPanel = ({ sendAmountsData, currencyCode }: Props) => (
-  <section className={styles.sendAmountsPanel}>
-    {sendAmountsData.map(dataset => (
-      <SendAmountsInfoBox
+const AmountsPanel = ({ amountsData, currencyCode }: Props) => (
+  <section className={styles.amountsPanel}>
+    {amountsData.map(dataset => (
+      <AmountsInfoBox
         key={dataset.symbol}
         assetName={dataset.symbol}
         assetPrice={dataset.price}
@@ -29,4 +29,4 @@ const SendAmountsPanel = ({ sendAmountsData, currencyCode }: Props) => (
   </section>
 )
 
-export default SendAmountsPanel
+export default AmountsPanel

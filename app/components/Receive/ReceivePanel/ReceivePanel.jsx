@@ -7,7 +7,7 @@ import Panel from '../../Panel'
 import CopyToClipboard from '../../CopyToClipboard'
 import { Address } from '../../Blockchain'
 
-import styles from './ReceivePanel.scss'
+import styles from './styles.scss'
 
 type Props = {
   className: ?string,
