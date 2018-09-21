@@ -3,6 +3,7 @@ import React from 'react'
 import classNames from 'classnames'
 
 import Transaction from '../../Blockchain/Transaction'
+import LogoWithStrikethrough from '../../LogoWithStrikethrough'
 import { ASSETS } from '../../../core/constants'
 import { isZero } from '../../../core/math'
 import { formatBalance } from '../../../core/formatters'
@@ -21,7 +22,7 @@ export default class Transactions extends React.Component<Props> {
     if (transactions.length === 0) {
       return (
         <div className={classNames(styles.noTransactions, className)}>
-          No transactions
+          <LogoWithStrikethrough />
         </div>
       )
     }

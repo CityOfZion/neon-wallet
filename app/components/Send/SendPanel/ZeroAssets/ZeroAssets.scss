@@ -8,7 +8,7 @@
 
 .zeroAssets {
   display: flex;
-  padding: 40px 30px;
+  padding: 20px;
   align-items: center;
   width: 500px;
   margin: auto;
@@ -31,7 +31,7 @@
   .address {
     display: flex;
     align-items: center;
-    margin-top: 15px;
+    margin-top: 30px;
     justify-content: center;
 
     button {
@@ -41,7 +41,7 @@
     }
 
     input {
-      min-width: 360px;
+      min-width: 450px;
     }
   }
 

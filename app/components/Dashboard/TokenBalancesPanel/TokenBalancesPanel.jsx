@@ -127,7 +127,7 @@ export default class TokenBalancesPanel extends React.Component<Props> {
     <div
       key={token.scriptHash}
       className={classNames(styles.tableData, {
-        [styles.oddNumberedRow]: i % 2 === 0
+        [styles.oddNumberedRow]: i % 2 !== 0
       })}
     >
       <div className={styles.tickerName}>

@@ -7,6 +7,7 @@ import { ROUTES } from '../../../../core/constants'
 import NothingIcon from '../../../../assets/icons/nothing.svg'
 import TextInput from '../../../Inputs/TextInput'
 import CopyToClipboard from '../../../CopyToClipboard'
+import LogoWithStrikethrough from '../../../LogoWithStrikethrough'
 import styles from './ZeroAssets.scss'
 
 const ZeroAssets = ({ address }: { address: string }) => (
@@ -37,6 +38,8 @@ const ZeroAssets = ({ address }: { address: string }) => (
           tooltip="Copy Public Address"
         />
       </div>
+
+      <LogoWithStrikethrough />
     </div>
   </section>
 )
