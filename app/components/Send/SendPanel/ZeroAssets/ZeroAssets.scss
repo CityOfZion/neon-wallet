@@ -1,11 +1,5 @@
 @import '../../../../styles/variables';
 
-// .txidLink {
-//   color: $link-color;
-//   font-size: 13px;
-//   cursor: pointer;
-// }
-
 .zeroAssets {
   display: flex;
   padding: 20px;
@@ -21,12 +15,6 @@
     text-decoration: none;
     color: $link-color;
   }
-
-  // svg {
-  //   height: 150px;
-  //   width: 150px;
-  //   min-width: 150px;
-  // }
 
   .address {
     display: flex;
