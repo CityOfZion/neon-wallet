@@ -27,7 +27,8 @@ const routesWithSideBar = [
   ROUTES.RECEIVE,
   ROUTES.CONTACTS,
   ROUTES.SETTINGS,
-  ROUTES.SEND
+  ROUTES.SEND,
+  ROUTES.TOKEN_SALE
 ]
 
 class App extends Component<Props> {
