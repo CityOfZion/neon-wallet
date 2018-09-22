@@ -83,6 +83,18 @@ const Sidebar = ({ className, showTokenSaleModal }: Props) => (
         <div> Contacts </div>
       </NavLink>
 
+      <Tooltip title="Token Sale Dev" position="right">
+        <NavLink
+          id="tokensale"
+          to={ROUTES.TOKEN_SALE}
+          className={styles.navItem}
+          activeClassName={styles.active}
+        >
+          <TokenSaleIcon />
+          <div> Token Sale </div>
+        </NavLink>
+      </Tooltip>
+
       <a id="tokenSale" className={styles.navItem} onClick={showTokenSaleModal}>
         <TokenSaleIcon />
         <div> Token Sale </div>
