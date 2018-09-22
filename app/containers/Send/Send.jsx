@@ -27,7 +27,7 @@ type Props = {
   currencyCode: string,
   address: string,
   shouldRenderHeaderBar: boolean,
-  match: Object
+  location: Object
 }
 
 type State = {
@@ -67,8 +67,8 @@ export default class Send extends React.Component<Props, State> {
 
       return { sendRowDetails: newState }
     })
-    if (this.props.match) {
-      const { address } = this.props.match.params
+    if (this.props.location && this.props.location.state) {
+      const { address } = this.props.location.state
       if (address) {
         this.updateRowField(0, 'address', address)
       }
