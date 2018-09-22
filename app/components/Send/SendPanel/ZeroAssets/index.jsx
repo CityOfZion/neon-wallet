@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { ROUTES } from '../../../../core/constants'
 import TextInput from '../../../Inputs/TextInput'
@@ -15,9 +15,9 @@ const ZeroAssets = ({ address }: { address: string }) => (
       <p>
         You’ll need to <b>transfer compatible NEP-5 assets</b> to this wallet
         using{' '}
-        <NavLink id="wallet-manager" exact to={ROUTES.RECEIVE}>
+        <Link id="receive-link" to={ROUTES.RECEIVE}>
           <span> Receive </span>
-        </NavLink>{' '}
+        </Link>{' '}
         or your public address:
       </p>
       <div className={styles.address}>

@@ -5,6 +5,9 @@ import nodes from './nodes.json'
 export const NEON_WALLET_RELEASE_LINK =
   'https://github.com/CityOfZion/neon-wallet/releases'
 
+export const DISCORD_INVITE_LINK = 'https://discordapp.com/invite/R8v48YA'
+export const COZ_DONATIONS_ADDRESS = 'Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A'
+
 export const ASSETS = {
   NEO: 'NEO',
   GAS: 'GAS'

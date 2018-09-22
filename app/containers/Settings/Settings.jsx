@@ -16,7 +16,9 @@ import {
   EXPLORERS,
   CURRENCIES,
   ROUTES,
-  MODAL_TYPES
+  MODAL_TYPES,
+  COZ_DONATIONS_ADDRESS,
+  DISCORD_INVITE_LINK
 } from '../../core/constants'
 import themes from '../../themes'
 import styles from './Settings.scss'
@@ -41,9 +43,6 @@ type Props = {
 type State = {
   explorer: string
 }
-
-const discordInviteLink = 'https://discordapp.com/invite/R8v48YA'
-const CozKey = 'Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A'
 
 export default class Settings extends Component<Props, State> {
   saveWalletRecovery = () => {
@@ -242,11 +241,18 @@ export default class Settings extends Component<Props, State> {
     )
   }
 
-  renderDontions = () => (
-    <Link to={`/send/${CozKey}`} className={styles.settingsDonations}>
-      Created by CoZ. Donations: {CozKey}
-    </Link>
-  )
+  renderDontions = () =>
+    console.log(`${ROUTES.SEND}${COZ_DONATIONS_ADDRESS}`) || (
+      <Link
+        to={{
+          pathname: ROUTES.SEND,
+          state: { address: COZ_DONATIONS_ADDRESS }
+        }}
+        className={styles.settingsDonations}
+      >
+        Created by CoZ. Donations: {COZ_DONATIONS_ADDRESS}
+      </Link>
+    )
 
   renderHeaderBarRightContent = () => (
     <Tooltip title="Add Token" className={styles.headerButtonContainer}>
@@ -255,7 +261,7 @@ export default class Settings extends Component<Props, State> {
     </Tooltip>
   )
 
-  openDiscordLink = () => shell.openExternal(discordInviteLink)
+  openDiscordLink = () => shell.openExternal(DISCORD_INVITE_LINK)
 
   renderHeader = () => (
     <div className={styles.settingsPanelHeader}>
@@ -264,7 +270,7 @@ export default class Settings extends Component<Props, State> {
       </div>
       <div className={styles.settingsPanelHeaderItem}>
         Community Support:{' '}
-        <a onClick={this.openDiscordLink}>{discordInviteLink}</a>
+        <a onClick={this.openDiscordLink}>{DISCORD_INVITE_LINK}</a>
       </div>
     </div>
   )
