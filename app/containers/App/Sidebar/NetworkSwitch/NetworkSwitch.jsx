@@ -10,9 +10,6 @@ type Props = {
   networkId: string,
   onChange: Function,
   className: string,
-  networkSwitchTextInputContainer?: string,
-  networkSwitchTextInput?: string,
-  activeStyles?: string,
   networks: Array<NetworkItemType>
 }
 
@@ -22,14 +19,7 @@ export default class NetworkSwitch extends Component<Props> {
   }
 
   render() {
-    const {
-      networkId,
-      networks,
-      className,
-      networkSwitchTextInputContainer,
-      networkSwitchTextInput,
-      activeStyles
-    } = this.props
+    const { networkId, networks, className } = this.props
 
     const items = networks.filter(network => network.id !== networkId)
 
@@ -39,9 +29,9 @@ export default class NetworkSwitch extends Component<Props> {
           items={items}
           onChange={this.handleChange}
           renderItem={this.renderItem}
-          activeStyles={activeStyles}
-          textInputContainerClassName={networkSwitchTextInputContainer}
-          textInputClassName={networkSwitchTextInput}
+          activeStyles={styles.networkSwitchActive}
+          textInputContainerClassName={styles.networkSwitchTextInputContainer}
+          textInputClassName={styles.networkSwitchTextInput}
           value={this.getNetworkLabel()}
           readOnly
           customChangeEvent
@@ -56,6 +46,7 @@ export default class NetworkSwitch extends Component<Props> {
     if (currentNetwork) {
       return currentNetwork.label
     }
+    return ''
   }
 
   renderItem = (item: Object) => (

@@ -3,16 +3,28 @@ import React, { Component } from 'react'
 import { map, reject } from 'lodash-es'
 import fs from 'fs'
 import storage from 'electron-json-storage'
+import { reject } from 'lodash'
+import { Link } from 'react-router-dom'
 
-import Delete from 'react-icons/lib/md/delete'
-import NetworkSwitch from '../App/Sidebar/NetworkSwitch'
 import { recoverWallet } from '../../modules/generateWallet'
-
-import Button from '../../components/Button'
-import { EXPLORERS, MODAL_TYPES, CURRENCIES } from '../../core/constants'
+import Panel from '../../components/Panel'
+import SelectInput from '../../components/Inputs/SelectInput'
+import HeaderBar from '../../components/HeaderBar'
+import SettingsItem from '../../components/Settings/SettingsItem'
+import SettingsLink from '../../components/Settings/SettingsLink'
+import WalletRecoveryPanel from '../../components/Settings/WalletRecoveryPanel'
+import {
+  EXPLORERS,
+  CURRENCIES,
+  ROUTES,
+  MODAL_TYPES
+} from '../../core/constants'
 import themes from '../../themes'
+import styles from './Settings.scss'
+import Tooltip from '../../components/Tooltip'
+import AddIcon from '../../assets/icons/add.svg'
 
-const { dialog } = require('electron').remote
+const { dialog, shell } = require('electron').remote
 
 type Props = {
   setAccounts: (Array<Object>) => any,
@@ -22,15 +34,17 @@ type Props = {
   currency: string,
   setTheme: string => any,
   theme: string,
-  accounts: any,
-  showModal: Function,
   showSuccessNotification: Object => any,
-  showErrorNotification: Object => any
+  showErrorNotification: Object => any,
+  showModal: Function
 }
 
 type State = {
   explorer: string
 }
+
+const discordInviteLink = 'https://discordapp.com/invite/R8v48YA'
+const CozKey = 'Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A'
 
 export default class Settings extends Component<Props, State> {
   saveWalletRecovery = () => {
@@ -48,7 +62,12 @@ export default class Settings extends Component<Props, State> {
       const content = JSON.stringify(data)
       dialog.showSaveDialog(
         {
-          filters: [{ name: 'JSON', extensions: ['json'] }]
+          filters: [
+            {
+              name: 'JSON',
+              extensions: ['json']
+            }
+          ]
         },
         fileName => {
           if (fileName === undefined) {
@@ -111,17 +130,17 @@ export default class Settings extends Component<Props, State> {
 
   updateExplorerSettings = (e: Object) => {
     const { setBlockExplorer } = this.props
-    setBlockExplorer(e.target.value)
+    setBlockExplorer(String(e))
   }
 
   updateCurrencySettings = (e: Object) => {
     const { setCurrency } = this.props
-    setCurrency(e.target.value)
+    setCurrency(String(e))
   }
 
   updateThemeSettings = (e: Object) => {
     const { setTheme } = this.props
-    setTheme(e.target.value)
+    setTheme(String(e))
   }
 
   deleteWalletAccount = (label: string, key: string) => {
@@ -173,80 +192,81 @@ export default class Settings extends Component<Props, State> {
   }
 
   render() {
-    const { accounts, explorer, currency, theme } = this.props
+    const { explorer, currency, theme } = this.props
 
     return (
-      <div id="settings">
-        <div className="description">
-          Manage your Neon wallet accounts and settings
-        </div>
-        <div className="settingsForm">
-          <div className="settingsItem">
-            <div className="itemTitle">Tokens</div>
-            <Button onClick={this.openTokenModal}>Manage Tokens</Button>
-          </div>
-          <div className="settingsItem">
-            <div className="itemTitle">Theme</div>
-            <select value={theme} onChange={this.updateThemeSettings}>
-              {Object.keys(themes).map((themeName: string) => (
-                <option value={themeName} key={themeName}>
-                  {themeName}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="settingsItem">
-            <div className="itemTitle">Block Explorer</div>
-            <select value={explorer} onChange={this.updateExplorerSettings}>
-              {Object.keys(EXPLORERS).map((explorer: ExplorerType) => (
-                <option key={explorer} value={EXPLORERS[explorer]}>
-                  {EXPLORERS[explorer]}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="settingsItem">
-            <div className="itemTitle">Currency</div>
-            <select value={currency} onChange={this.updateCurrencySettings}>
-              {Object.keys(CURRENCIES).map((currencyCode: string) => (
-                <option value={currencyCode} key={currencyCode}>
-                  {currencyCode.toUpperCase()}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="settingsItem">
-            <div className="itemTitle">Network</div>
-            <NetworkSwitch />
-          </div>
-
-          <div className="settingsItem">
-            <div className="itemTitle">Saved Wallet Accounts</div>
-            {map(accounts, account => (
-              <div className="walletList" key={`wallet${account.key}`}>
-                <div className="walletItem">
-                  <div className="walletName">{account.key.slice(0, 20)}</div>
-                  <div className="walletKey">{account.label}</div>
-                  <div
-                    className="deleteWallet"
-                    onClick={() =>
-                      this.deleteWalletAccount(account.label, account.key)
-                    }
-                  >
-                    <Delete />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <Button onClick={() => this.saveWalletRecovery()}>
-            Export wallet recovery file
-          </Button>
-          <Button onClick={this.loadWalletRecovery}>
-            Load wallet recovery file
-          </Button>
-        </div>
-      </div>
+      <section className={styles.settingsContainer}>
+        <HeaderBar
+          label="Settings"
+          renderRightContent={this.renderHeaderBarRightContent}
+        />
+        <Panel
+          className={styles.settingsPanel}
+          renderHeader={this.renderHeader}
+        >
+          <section className={styles.settingsItemsContainer}>
+            <SettingsItem title="THEME">
+              <SelectInput
+                items={Object.keys(themes)}
+                value={theme}
+                onChange={this.updateThemeSettings}
+              />
+            </SettingsItem>
+            <SettingsItem title="CURRENCY">
+              <SelectInput
+                items={Object.keys(CURRENCIES).map(value =>
+                  value.toUpperCase()
+                )}
+                value={currency.toUpperCase()}
+                onChange={this.updateCurrencySettings}
+                getItemValue={value => value.toLowerCase()}
+              />
+            </SettingsItem>
+            <SettingsItem title="BLOCK EXPLORER">
+              <SelectInput
+                items={Object.keys(EXPLORERS).map(value => EXPLORERS[value])}
+                value={explorer}
+                onChange={this.updateExplorerSettings}
+              />
+            </SettingsItem>
+            <SettingsLink to={ROUTES.ENCRYPT} title="ENCRYPT A KEY" />
+            <SettingsLink to={ROUTES.NODE_SELECT} title="NODE SELECTON" />
+            <WalletRecoveryPanel
+              title="WALLET RECOVERY"
+              loadWalletRecovery={this.loadWalletRecovery}
+              saveWalletRecovery={this.saveWalletRecovery}
+            />
+            {this.renderDontions()}
+          </section>
+        </Panel>
+      </section>
     )
   }
+
+  renderDontions = () => (
+    <Link to={`/send/${CozKey}`} className={styles.settingsDonations}>
+      Created by CoZ. Donations: {CozKey}
+    </Link>
+  )
+
+  renderHeaderBarRightContent = () => (
+    <Tooltip title="Add Token" className={styles.headerButtonContainer}>
+      <AddIcon className={styles.add} />
+      <span>Add Token</span>
+    </Tooltip>
+  )
+
+  openDiscordLink = () => shell.openExternal(discordInviteLink)
+
+  renderHeader = () => (
+    <div className={styles.settingsPanelHeader}>
+      <div className={styles.settingsPanelHeaderItem}>
+        Manage your neon wallet
+      </div>
+      <div className={styles.settingsPanelHeaderItem}>
+        Community Support:{' '}
+        <a onClick={this.openDiscordLink}>{discordInviteLink}</a>
+      </div>
+    </div>
+  )
 }

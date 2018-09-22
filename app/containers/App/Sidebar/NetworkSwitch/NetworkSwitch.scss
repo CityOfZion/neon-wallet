@@ -5,6 +5,26 @@
   font-size: 0.8em;
   border-radius: 0px;
 
+  .networkSwitchTextInput {
+    background: transparent;
+    border: none;
+    width: 100px;
+  }
+
+  .networkSwitchTextInputWrapper {
+    margin-bottom: 0;
+  }
+
+  .networkSwitchTextInputContainer {
+    background-color: transparent;
+    border: none;
+  }
+
+  .networkSwitchActive {
+    background-color: transparent;
+    border: none;
+  }
+
   .label {
     margin-right: 4px;
     color: #999;

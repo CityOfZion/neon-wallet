@@ -26,7 +26,8 @@ type Props = {
   contacts: Object,
   currencyCode: string,
   address: string,
-  shouldRenderHeaderBar: boolean
+  shouldRenderHeaderBar: boolean,
+  match: Object
 }
 
 type State = {
@@ -66,6 +67,12 @@ export default class Send extends React.Component<Props, State> {
 
       return { sendRowDetails: newState }
     })
+    if (this.props.match) {
+      const { address } = this.props.match.params
+      if (address) {
+        this.updateRowField(0, 'address', address)
+      }
+    }
   }
 
   generateRow = () => {
@@ -169,6 +176,10 @@ export default class Send extends React.Component<Props, State> {
         const maxValue =
           this.calculateMaxValue(objectToModify.asset) + Number(value)
         objectToModify.max = maxValue
+      }
+
+      if (field === 'address') {
+        objectToModify.address = value
       }
 
       return { sendRowDetails: newState }

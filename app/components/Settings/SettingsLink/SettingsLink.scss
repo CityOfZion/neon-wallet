@@ -1,0 +1,19 @@
+$settings-link-color: #66ed87;
+
+.settingsLink {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #f2f2f2;
+  padding: 25px 0;
+  text-decoration: none;
+  color: $settings-link-color;
+
+  .settingsLinkLabel {
+    flex: 1;
+    font-size: 12px;
+  }
+
+  .settingsLinkIcon {
+    transform: rotate(-90deg);
+  }
+}
