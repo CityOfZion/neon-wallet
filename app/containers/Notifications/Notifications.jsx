@@ -2,6 +2,10 @@
 import React, { Component } from 'react'
 import { isEqual, difference } from 'lodash'
 import ReactNotificationSystem from 'react-notification-system'
+import style from './Notification.scss'
+
+import WarningIcon from '../../assets/icons/warning.svg'
+import CheckIcon from '../../assets/icons/check.svg'
 
 type Props = {
   notifications: Array<NotificationType>,
@@ -21,6 +25,44 @@ const overrideStyles = {
     },
     bc: {
       marginLeft
+    }
+  },
+
+  NotificationItem: {
+    DefaultStyle: {
+      borderTop: 'none',
+      height: '60px',
+      marginTop: 0,
+      display: 'flex',
+      alignItems: 'center',
+      paddingLeft: '60px',
+      color: '#FFF'
+    },
+
+    success: {
+      backgroundColor: '#5ABF6B'
+    },
+    error: {
+      backgroundColor: '#EE6D66'
+    }
+  },
+
+  Title: {
+    DefaultStyle: {
+      display: 'none'
+    }
+  },
+
+  Dismiss: {
+    DefaultStyle: {
+      top: '22.5px',
+      right: '25px',
+      height: '22px',
+      width: '22px',
+      fontSize: '22px',
+      fontWeight: 500,
+      backgroundColor: 'none',
+      opacity: '0.75'
     }
   }
 }
@@ -47,6 +89,11 @@ class Notifications extends Component<Props> {
       difference(notificationIds, systemNotificationsIds).forEach(
         notificationId => {
           this.rnsRef.addNotification({
+            children: (
+              <div className={style.icon}>
+                <WarningIcon />
+              </div>
+            ),
             uid: notificationId,
             ...notifications.find(
               notification => notification.id === notificationId

@@ -1,0 +1,15 @@
+.icon {
+  position: absolute;
+  left: 25px;
+  top: 20px;
+}
+
+.icon svg {
+  width: 22px;
+  height: 22px
+}
+
+.icon svg path{
+  fill: white;
+  opacity: 0.75;
+}
