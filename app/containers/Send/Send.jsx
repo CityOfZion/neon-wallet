@@ -354,7 +354,6 @@ export default class Send extends React.Component<Props, State> {
     this.setState({ sendError: false, sendErrorMessage: '' })
 
   render() {
-    console.log(this.props)
     const {
       sendRowDetails,
       showConfirmSend,

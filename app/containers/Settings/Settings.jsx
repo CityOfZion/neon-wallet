@@ -242,7 +242,6 @@ export default class Settings extends Component<Props, State> {
   }
 
   renderDontions = () =>
-    console.log(`${ROUTES.SEND}${COZ_DONATIONS_ADDRESS}`) || (
       <Link
         to={{
           pathname: ROUTES.SEND,
