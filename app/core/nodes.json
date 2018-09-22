@@ -84,22 +84,6 @@
     "type": "RPC"
   },
   {
-    "service": "pyrest",
-    "type": "REST",
-    "url": "https://pyrest1.redpulse.com/v1/",
-    "address": "35.158.246.146",
-    "location": "Frankfurt",
-    "locale": "de"
-  },
-  {
-    "service": "pyrest",
-    "type": "REST",
-    "url": "https://pyrest2.redpulse.com/v1/",
-    "address": "52.76.36.115",
-    "location": "Singapore",
-    "locale": "sg"
-  },
-  {
     "protocol": "https",
     "url": "seed1.neo.org",
     "location": "China",
@@ -535,53 +519,5 @@
     "locale": "hk",
     "port": "10332",
     "type": "RPC"
-  },
-  {
-    "service": "neoNotification",
-    "url": "http://notifications1.neeeo.org/v1/notifications/block/",
-    "location": "United States",
-    "address": "18.191.192.189",
-    "locale": "us",
-    "type": "REST"
-  },
-  {
-    "service": "neoNotification",
-    "url": "http://notifications2.neeeo.org/v1/notifications/block/",
-    "location": "United States",
-    "address": "18.191.192.189",
-    "locale": "us",
-    "type": "REST"
-  },
-  {
-    "service": "neoNotification",
-    "url": "http://notifications3.neeeo.org/v1/notifications/block/",
-    "location": "United States",
-    "address": "18.191.192.189",
-    "locale": "us",
-    "type": "REST"
-  },
-  {
-    "service": "neoNotification",
-    "url": "http://notifications4.neeeo.org/v1/notifications/block/",
-    "location": "United States",
-    "address": "18.191.192.189",
-    "locale": "us",
-    "type": "REST"
-  },
-  {
-    "service": "neoNotification",
-    "url": "https://n1.cityofzion.io/v1/notifications/block/",
-    "location": "Switzerland",
-    "address": "89.145.165.85",
-    "locale": "ch",
-    "type": "REST"
-  },
-  {
-    "service": "neoNotification",
-    "url": "https://n2.cityofzion.io/v1/notifications/block/",
-    "location": "Austria",
-    "address": "185.150.10.88",
-    "locale": "at",
-    "type": "REST"
   }
 ]
