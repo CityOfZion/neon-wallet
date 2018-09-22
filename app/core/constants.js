@@ -148,3 +148,8 @@ export const CURRENCIES = {
   usd: { symbol: '$' },
   zar: { symbol: 'R ' }
 }
+
+export const TOKEN_SALE_PURCHASE = 'token_sale_purchase'
+export const TOKEN_SALE_CONFIRM = 'token_sale_confirm'
+export const TOKEN_SALE_SUCCESS = 'token_sale_success'
+export const TOKEN_SALE_FAILURE = 'token_sale_failure'
