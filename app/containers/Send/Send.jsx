@@ -66,10 +66,11 @@ export default class Send extends React.Component<Props, State> {
 
       return { sendRowDetails: newState }
     })
-
-    const { address } = this.props.match.params
-    if (address) {
-      this.updateRowField(0, 'address', address)
+    if (this.props.match) {
+      const { address } = this.props.match.params
+      if (address) {
+        this.updateRowField(0, 'address', address)
+      }
     }
   }
 
