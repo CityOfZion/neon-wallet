@@ -43,14 +43,11 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps
   ),
-
-  // Expose function for polling & reloading account related data.
+  withLoadingProp(balancesActions),
   withAuthData(),
   withNetworkData(),
   withCurrencyData('currency'),
   withFilteredTokensData(),
-  withInitialCall(dashboardActions),
   withReset(accountActions, ['networkId']),
-  withActions(accountActions, mapAccountActionsToProps),
-  withLoadingProp(balancesActions)
+  withActions(accountActions, mapAccountActionsToProps)
 )(HeaderBar)

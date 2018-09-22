@@ -1,6 +1,6 @@
 // @flow
 import { compose } from 'recompose'
-import { values, omit } from 'lodash'
+import { values, omit } from 'lodash-es'
 import { withData, withActions } from 'spunky'
 import { connect, type MapStateToProps } from 'react-redux'
 import { bindActionCreators } from 'redux'

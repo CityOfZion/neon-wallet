@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react'
+import { map, reject } from 'lodash-es'
 import fs from 'fs'
 import storage from 'electron-json-storage'
 import { reject } from 'lodash'

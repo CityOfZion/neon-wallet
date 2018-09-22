@@ -2,7 +2,7 @@
 import { compose } from 'recompose'
 
 // $FlowFixMe
-import { filter, cloneDeep } from 'lodash'
+import { filter, cloneDeep } from 'lodash-es'
 import { withActions, withData } from 'spunky'
 
 import TokenBalancesPanel from './TokenBalancesPanel'

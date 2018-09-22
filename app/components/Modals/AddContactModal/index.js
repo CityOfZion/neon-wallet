@@ -1,7 +1,7 @@
 // @flow
 import { compose } from 'recompose'
 import { withActions } from 'spunky'
-import { trim } from 'lodash'
+import { trim } from 'lodash-es'
 import { connect } from 'react-redux'
 
 import { showSuccessNotification } from '../../../modules/notifications'

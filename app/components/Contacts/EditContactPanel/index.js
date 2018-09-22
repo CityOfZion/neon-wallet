@@ -1,7 +1,7 @@
 // @flow
 import { compose, withProps } from 'recompose'
 import { withActions, progressValues } from 'spunky'
-import { trim } from 'lodash'
+import { trim } from 'lodash-es'
 
 import EditContactPanel from './EditContactPanel'
 import { updateContactActions } from '../../../actions/contactsActions'

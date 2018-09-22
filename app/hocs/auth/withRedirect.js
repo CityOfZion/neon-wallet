@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import { omit } from 'lodash'
+import { omit } from 'lodash-es'
 import { compose } from 'recompose'
 import { withRouter } from 'react-router-dom'
 import { withData } from 'spunky'

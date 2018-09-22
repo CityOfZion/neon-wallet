@@ -9,7 +9,7 @@
   margin-top: -10px;
   padding: 12px;
   margin-bottom: 25px;
-  height: 25px;
+  min-height: 25px;
   border-bottom: solid thin #5c677f;
 
   h3 {
@@ -31,7 +31,6 @@
   .refreshButton {
     display: flex;
     align-items: center;
-    align-self: flex-end;
     cursor: pointer;
 
     span {
@@ -40,6 +39,6 @@
   }
 
   .loading {
-    animation: spin 2s linear infinite;
+    animation: spin 1.5s linear infinite;
   }
 }

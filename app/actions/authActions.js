@@ -1,6 +1,6 @@
 // @flow
 import { wallet } from 'neon-js'
-import { noop } from 'lodash'
+import { noop } from 'lodash-es'
 import { createActions } from 'spunky'
 
 import { upgradeNEP6AddAddresses } from '../core/account'

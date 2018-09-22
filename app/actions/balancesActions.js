@@ -1,6 +1,6 @@
 // @flow
 import { api } from 'neon-js'
-import { extend, isEmpty } from 'lodash'
+import { extend, isEmpty } from 'lodash-es'
 import { createActions } from 'spunky'
 
 import { getNode } from './nodeStorageActions'

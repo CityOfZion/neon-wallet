@@ -10,7 +10,7 @@ import {
   Label
 } from 'recharts'
 // $FlowFixMe
-import { map, times } from 'lodash'
+import { map, times } from 'lodash-es'
 
 import COLORS from './colors'
 import { formatThousands } from '../../../core/formatters'

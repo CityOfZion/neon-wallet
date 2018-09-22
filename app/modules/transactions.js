@@ -1,7 +1,7 @@
 // @flow
 /* eslint-disable camelcase */
 import { api, sc, u, wallet } from 'neon-js'
-import { flatMap, keyBy } from 'lodash'
+import { flatMap, keyBy } from 'lodash-es'
 
 import {
   showErrorNotification,
@@ -99,8 +99,6 @@ export const sendTransaction = ({
   fees: number
 }) => (dispatch: DispatchType, getState: GetStateType): Promise<*> =>
   new Promise(async (resolve, reject) => {
-    console.log({ sendEntries, fees })
-
     const state = getState()
     const wif = getWIF(state)
     const fromAddress = getAddress(state)

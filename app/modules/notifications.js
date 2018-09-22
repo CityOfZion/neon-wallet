@@ -1,5 +1,5 @@
 // @flow
-import { reject, uniqueId } from 'lodash'
+import { reject, uniqueId } from 'lodash-es'
 
 import { NOTIFICATION_LEVELS, NOTIFICATION_POSITIONS } from '../core/constants'
 

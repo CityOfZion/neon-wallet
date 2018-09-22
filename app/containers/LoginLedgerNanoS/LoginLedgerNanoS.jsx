@@ -28,11 +28,13 @@ export default class LoginLedgerNanoS extends React.Component<Props> {
   intervalId: ?number
 
   componentDidMount() {
+    // $FlowFixMe
     this.intervalId = setInterval(this.props.connect, POLL_FREQUENCY)
   }
 
   componentWillUnmount() {
     if (this.intervalId) {
+      // $FlowFixMe
       clearInterval(this.intervalId)
     }
   }

@@ -1,7 +1,7 @@
 // @flow
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
-import { pick, omit, values, keyBy } from 'lodash'
+import { pick, omit, values, keyBy } from 'lodash-es'
 import { withData } from 'spunky'
 
 import TokenSaleModal from './TokenSaleModal'

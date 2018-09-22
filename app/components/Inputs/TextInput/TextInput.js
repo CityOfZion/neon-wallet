@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { omit } from 'lodash'
+import { omit } from 'lodash-es'
 
 import ErrorIcon from '../../../assets/icons/errorRed.svg'
 

@@ -1,6 +1,6 @@
 // @flow
 import { tx, wallet, u } from 'neon-js'
-import { cloneDeep } from 'lodash'
+import { cloneDeep } from 'lodash-es'
 import type { Transaction } from 'neon-js'
 
 import LedgerNode from '@ledgerhq/hw-transport-node-hid'

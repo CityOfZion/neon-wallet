@@ -2,7 +2,7 @@
 import React from 'react'
 import { compose } from 'recompose'
 import { withData, withError, withProgress, type Actions } from 'spunky'
-import { omit, castArray } from 'lodash'
+import { omit, castArray } from 'lodash-es'
 
 const DATA_PROP: string = '__data__'
 const ERROR_PROP: string = '__error__'

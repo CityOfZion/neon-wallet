@@ -1,37 +1,41 @@
 @import '../../../styles/variables';
 
 .transactionInfo {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    position: relative;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  position: relative;
+  height: 100%;
 
-    .columnHeader,
-    .headerSpacer {
-        flex: 0 0 auto;
-    }
+  .columnHeader,
+  .headerSpacer {
+    flex: 0 0 auto;
+  }
 
-    .transactions {
-        flex: 1 1 auto;
-        overflow-y: auto;
-    }
+  .transactions {
+    flex: 1 1 auto;
+    overflow-y: auto;
+  }
 }
 
 .columnHeader {
-    position: relative;
-    font-size: 1.2em;
-    font-weight: 200;
+  position: relative;
+  font-size: 1.2em;
+  font-weight: 200;
 }
 
 .headerSpacer {
-    width: 84%;
-    margin: 15px 8%;
-    border-top: 3px solid $spacer-color;
+  width: 84%;
+  margin: 15px 8%;
+  border-top: 3px solid $spacer-color;
 }
 
 .updateLoader {
-    right: 0;
-    left: auto;
-    top: -5px;
+  right: 0;
+  left: auto;
+  top: -5px;
+}
+
+.oddNumberedRow {
+  background: rgba(230, 230, 230, 0.1);
 }

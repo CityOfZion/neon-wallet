@@ -10,6 +10,7 @@ import { formatGAS, formatFiat, formatNEO } from '../../../core/formatters'
 import { toNumber, toBigNumber } from '../../../core/math'
 import { ASSETS, CURRENCIES } from '../../../core/constants'
 import RefreshIcon from '../../../assets/icons/refresh.svg'
+import LogoWithStrikethrough from '../../LogoWithStrikethrough'
 import styles from './AssetBalancesPanel.scss'
 
 type PriceDirection = 'increase' | 'decrease'
@@ -33,6 +34,8 @@ export default class AssetBalancesPanel extends React.Component<Props> {
   render = () => {
     const { NEO, GAS, className } = this.props
 
+    const hasAssets = NEO !== '0' && GAS !== '0'
+
     return (
       <Panel
         className={classNames(styles.assetBalancesPanel, className)}
@@ -45,46 +48,56 @@ export default class AssetBalancesPanel extends React.Component<Props> {
             {this.getFormattedFiatBalance(this.getTotalValue())}
           </div>
         </div>
-        <div id="balance" className={styles.assets}>
-          <div className={styles.asset}>
-            <div className={styles.label}>{ASSETS.NEO}</div>
-            <div className={styles.quantity} id="amountNeo">
-              {formatNEO(NEO)}
+
+        {hasAssets ? (
+          <div id="balance" className={styles.assets}>
+            <div className={styles.asset}>
+              <div className={styles.label}>{ASSETS.NEO}</div>
+              <div className={styles.quantity} id="amountNeo">
+                {formatNEO(NEO)}
+              </div>
+              <span className={styles.value} id="neoWalletValue">
+                {this.getFormattedFiatBalance(this.getNEOValue())}
+              </span>
+              <span
+                className={classNames(
+                  styles.change,
+                  styles[this.getNEOPriceChangeDirection()]
+                )}
+                id="priceChangeNeo"
+              >
+                {this.getNEOFormattedPriceChange()}
+              </span>
             </div>
-            <span className={styles.value} id="neoWalletValue">
-              {this.getFormattedFiatBalance(this.getNEOValue())}
-            </span>
-            <span
-              className={classNames(
-                styles.change,
-                styles[this.getNEOPriceChangeDirection()]
-              )}
-              id="priceChangeNeo"
-            >
-              {this.getNEOFormattedPriceChange()}
-            </span>
-          </div>
-          <div className={styles.asset}>
-            <div className={styles.label}>{ASSETS.GAS}</div>
-            <div className={styles.quantity} id="amountGas">
-              <Tooltip title={formatGAS(GAS)} disabled={toBigNumber(GAS).eq(0)}>
-                {formatGAS(GAS, true)}
-              </Tooltip>
+            <div className={styles.asset}>
+              <div className={styles.label}>{ASSETS.GAS}</div>
+              <div className={styles.quantity} id="amountGas">
+                <Tooltip
+                  title={formatGAS(GAS)}
+                  disabled={toBigNumber(GAS).eq(0)}
+                >
+                  {formatGAS(GAS, true)}
+                </Tooltip>
+              </div>
+              <span className={styles.value} id="gasWalletValue">
+                {this.getFormattedFiatBalance(this.getGASValue())}
+              </span>
+              <span
+                className={classNames(
+                  styles.change,
+                  styles[this.getGASPriceChangeDirection()]
+                )}
+                id="priceChangeGas"
+              >
+                {this.getGASFormattedPriceChange()}
+              </span>
             </div>
-            <span className={styles.value} id="gasWalletValue">
-              {this.getFormattedFiatBalance(this.getGASValue())}
-            </span>
-            <span
-              className={classNames(
-                styles.change,
-                styles[this.getGASPriceChangeDirection()]
-              )}
-              id="priceChangeGas"
-            >
-              {this.getGASFormattedPriceChange()}
-            </span>
           </div>
-        </div>
+        ) : (
+          <div className={styles.emptyBalanceContainer}>
+            <LogoWithStrikethrough />
+          </div>
+        )}
         <div className={styles.claim}>
           <Claim className={styles.claimButton} />
         </div>

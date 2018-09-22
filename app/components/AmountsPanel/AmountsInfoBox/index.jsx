@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 
-import styles from './SendAmountsInfoBox.scss'
+import styles from './AmountsInfoBox.scss'
 
 type Props = {
   assetName: string,
@@ -12,7 +12,7 @@ type Props = {
   fiatCurrencySymbol: string
 }
 
-const SendAmountsInfoBox = ({
+const AmountsInfoBox = ({
   assetName,
   totalAmount,
   totalBalanceWorth,
@@ -20,7 +20,7 @@ const SendAmountsInfoBox = ({
   remainingAmount,
   fiatCurrencySymbol
 }: Props) => (
-  <div className={styles.sendAmountsInfoBox}>
+  <div className={styles.amountsInfoBox}>
     <div className={styles.assetTitle}>
       <h3>{assetName}</h3>
     </div>
@@ -41,4 +41,4 @@ const SendAmountsInfoBox = ({
   </div>
 )
 
-export default SendAmountsInfoBox
+export default AmountsInfoBox

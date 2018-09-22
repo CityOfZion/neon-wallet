@@ -87,7 +87,7 @@ const SendPanelHeader = ({
   }
 
   if (noSendableAssets) {
-    headerTitle = 'No available assets to send.'
+    headerTitle = 'No available assets to send'
     headerSubtitle = null
     buttons = null
   }
