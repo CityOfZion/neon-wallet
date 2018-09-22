@@ -241,17 +241,17 @@ export default class Settings extends Component<Props, State> {
     )
   }
 
-  renderDontions = () =>
-      <Link
-        to={{
-          pathname: ROUTES.SEND,
-          state: { address: COZ_DONATIONS_ADDRESS }
-        }}
-        className={styles.settingsDonations}
-      >
-        Created by CoZ. Donations: {COZ_DONATIONS_ADDRESS}
-      </Link>
-    )
+  renderDontions = () => (
+    <Link
+      to={{
+        pathname: ROUTES.SEND,
+        state: { address: COZ_DONATIONS_ADDRESS }
+      }}
+      className={styles.settingsDonations}
+    >
+      Created by CoZ. Donations: {COZ_DONATIONS_ADDRESS}
+    </Link>
+  )
 
   renderHeaderBarRightContent = () => (
     <Tooltip title="Add Token" className={styles.headerButtonContainer}>
