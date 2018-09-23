@@ -19,7 +19,7 @@ import {
 } from '../../modules/notifications'
 import { showModal } from '../../modules/modal'
 
-const mapStateToProps = (state: Object) => ({
+const mapStateToProps = () => ({
   networks: getNetworks()
 })
 

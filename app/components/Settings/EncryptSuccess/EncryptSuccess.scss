@@ -1,0 +1,55 @@
+$encrypt-icon-size: 24px;
+
+.encryptSuccess {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  max-width: 500px;
+  flex: 1;
+
+  .successMessage {
+    padding-bottom: 50px;
+  }
+
+  .label {
+    margin-bottom: 8px;
+    color: #969aa0;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .encryptedKeyContainer {
+    border-bottom: solid thin rgba(0, 0, 0, 0.15);
+    padding-bottom: 30px;
+  }
+
+  .encryptedKey {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    padding: 0 24px 0 0;
+    background: #f2f2f2;
+    border-radius: 4px;
+
+    input {
+      font-size: 14px;
+      background: transparent;
+    }
+
+    .copy {
+      flex: 0 0 auto;
+    }
+  }
+
+  .encryptResetButton {
+    margin-top: auto;
+    margin-bottom: 50px;
+
+    svg {
+      width: $encrypt-icon-size;
+      height: $encrypt-icon-size;
+    }
+  }
+}

@@ -1,0 +1,33 @@
+.walletPanel {
+  background: #f2f2f2;
+  border-radius: 4px;
+  margin: 20px 0;
+
+  .walletPanelTitle {
+    display: flex;
+    padding: 20px;
+    font-size: 12px;
+    justify-content: center;
+    border-bottom: 1px solid white;
+    margin: 0;
+  }
+
+  .walletPanelButtonsContainer {
+    display: flex;
+    padding: 0 80px;
+
+    .walletPanelButton {
+      background: #f2f2f2;
+      &:not([disabled]) {
+        &:hover {
+          background: initial;
+          color: #282828;
+
+          path {
+            fill: #282828;
+          }
+        }
+      }
+    }
+  }
+}
