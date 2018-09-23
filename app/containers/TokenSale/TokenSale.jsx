@@ -39,7 +39,7 @@ class TokenSale extends Component {
       step: TOKEN_SALE_PURCHASE,
       assetToPurchaseWith: Object.keys(this.props.assetBalances)[0],
       amountToPurchaseFor: 0,
-      assetToPurchase: this.props.tokenBalances[0].token,
+      assetToPurchase: this.props.icoTokens[0].token,
       conditions: [...conditions],
       loading: false,
       gasFee: 0,
@@ -92,8 +92,17 @@ class TokenSale extends Component {
   }
 
   getPurchaseableAssets = () => {
-    const { tokenBalances } = this.props
-    return tokenBalances.map(item => item.token)
+    const { icoTokens } = this.props
+    return icoTokens.map(item => item.token)
+  }
+
+  getTokenToPurchaseInformation = () => {
+    const { icoTokens } = this.props;
+    const { assetToPurchase } = this.state;
+    
+    return icoTokens.find(
+      tokenObj => tokenObj.token === assetToPurchase
+    )
   }
 
   updateField = item => {
@@ -165,9 +174,8 @@ class TokenSale extends Component {
   }
 
   handleConfirm = () => {
-    const { participateInSale, tokenBalances } = this.props
+    const { participateInSale } = this.props
     const {
-      assetToPurchase,
       assetToPurchaseWith,
       amountToPurchaseFor,
       gasFee
@@ -178,9 +186,8 @@ class TokenSale extends Component {
         assetToPurchaseWith === 'NEO' ? amountToPurchaseFor : '0'
       const gasToSend =
         assetToPurchaseWith === 'GAS' ? amountToPurchaseFor : '0'
-      const token = tokenBalances.find(
-        tokenObj => tokenObj.token === assetToPurchase
-      )
+
+      const token = this.getTokenToPurchaseInformation()
       const { scriptHash } = token
 
       try {
@@ -260,16 +267,13 @@ class TokenSale extends Component {
   }
 
   renderConfirm = () => {
-    const { tokenBalances } = this.props
     const {
       assetToPurchaseWith,
-      assetToPurchase,
       amountToPurchaseFor
     } = this.state
 
-    const tokenInfo = tokenBalances.find(
-      tokenObj => tokenObj.token === assetToPurchase
-    )
+    const tokenInfo = this.getTokenToPurchaseInformation();
+
     return (
       <TokenSaleConfirm
         onClickHandler={this.getOnClickHandler()}
@@ -280,9 +284,11 @@ class TokenSale extends Component {
     )
   }
 
-  renderSuccess = () => (
-    <TokenSaleSuccess onClickHandler={this.getOnClickHandler()} />
-  )
+  renderSuccess = () => {
+    const tokenInformation = this.getTokenToPurchaseInformation();
+
+    return <TokenSaleSuccess onClickHandler={this.getOnClickHandler()} token={tokenInformation.token}/>
+  }
 
   renderFailure = () => {
     const { tokenSaleError } = this.state
@@ -309,7 +315,7 @@ class TokenSale extends Component {
       <Fragment>
         <HeaderBar shouldRenderRefresh label="Token Sale" />
         <ZeroAssets address={address} />
-        </Fragment>
+      </Fragment>
       )
     }
 

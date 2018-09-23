@@ -23,7 +23,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapBalancesDataToProps = balances => ({
   assetBalances: pick(balances, 'NEO', 'GAS'),
-  tokenBalances: getICOTokens()
+  icoTokens: getICOTokens()
 })
 
 export default compose(
