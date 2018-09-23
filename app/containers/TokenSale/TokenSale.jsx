@@ -1,9 +1,16 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 
-import { isZero, isNumber, toBigNumber, minusNumber, multiplyNumber } from '../../core/math'
+import {
+  isZero,
+  isNumber,
+  toBigNumber,
+  minusNumber,
+  multiplyNumber
+} from '../../core/math'
 
-import AmountsPanel from '../../components/AmountsPanel';
+import AmountsPanel from '../../components/AmountsPanel'
 import HeaderBar from '../../components/HeaderBar/HeaderBar'
+import ZeroAssets from '../../components/ZeroAssets/ZeroAssets'
 import TokenSalePanel from '../../components/TokenSale/TokenSalePanel/TokenSalePanel'
 import TokenSaleConfirm from '../../components/TokenSale/TokenSaleConfirm/TokenSaleConfirm'
 import TokenSaleSuccess from '../../components/TokenSale/TokenSaleSuccess/TokenSaleSuccess'
@@ -44,9 +51,13 @@ class TokenSale extends Component {
   }
 
   componentDidMount() {
-    const amountsData = this.createAmountsData();
+    const { assetBalances } = this.props
+    const amountsData = this.createAmountsData()
+    const hasAssets = Object.keys(assetBalances).some(asset =>
+      toBigNumber(assetBalances[asset]).greaterThan(0)
+    )
 
-    this.setState({ amountsData })
+    this.setState({ amountsData, hasAssets })
   }
 
   setStep = step => this.setState({ step })
@@ -55,14 +66,14 @@ class TokenSale extends Component {
     const { assetBalances } = this.props
     if (assetBalances && assetBalances.length > 0) {
       return Object.keys(assetBalances)
-    } 
+    }
     return ['NEO', 'GAS']
   }
 
   createAmountsData = () => {
     const { prices, assetBalances } = this.props
-    const {  amountToPurchaseFor } = this.state
-    return Object.keys(assetBalances).map((token) => {
+    const { amountToPurchaseFor } = this.state
+    return Object.keys(assetBalances).map(token => {
       const price = prices[token]
       const balance = assetBalances[token]
       const currentBalance = minusNumber(balance, amountToPurchaseFor)
@@ -78,8 +89,7 @@ class TokenSale extends Component {
 
       return amountsObject
     })
-
-    }
+  }
 
   getPurchaseableAssets = () => {
     const { tokenBalances } = this.props
@@ -128,7 +138,7 @@ class TokenSale extends Component {
       !toBigNumber(amountToPurchaseFor).isInteger()
     ) {
       this.setState({
-        inputErrorMessage: 'You can\'t send fractional amounts of NEO'
+        inputErrorMessage: "You can't send fractional amounts of NEO"
       })
       return false
     }
@@ -171,8 +181,7 @@ class TokenSale extends Component {
       const token = tokenBalances.find(
         tokenObj => tokenObj.token === assetToPurchase
       )
-      const { scriptHash } = token 
-
+      const { scriptHash } = token
 
       try {
         const success = await participateInSale(
@@ -184,7 +193,11 @@ class TokenSale extends Component {
 
         if (success) this.setState({ step: TOKEN_SALE_SUCCESS, loading: false })
       } catch (err) {
-        this.setState({ step: TOKEN_SALE_FAILURE, loading: false, tokenSaleError: err })
+        this.setState({
+          step: TOKEN_SALE_FAILURE,
+          loading: false,
+          tokenSaleError: err
+        })
       }
     })
   }
@@ -219,15 +232,11 @@ class TokenSale extends Component {
 
     const { assetBalances } = this.props
     const disabledButton = !(acceptedConditions.length === conditions.length)
-    const availableGas = assetBalances['GAS']
+    const availableGas = assetBalances.GAS
     return (
       <section>
         {' '}
-        <HeaderBar shouldRenderRefresh label="Token Sale" />
-        <AmountsPanel
-          currencyCode="usd"
-          amountsData={amountsData}
-        />
+        <AmountsPanel currencyCode="usd" amountsData={amountsData} />
         <TokenSalePanel
           onClickHandler={this.getOnClickHandler()}
           getAssetsToPurchaseWith={this.getAssetsToPurchaseWith}
@@ -271,22 +280,42 @@ class TokenSale extends Component {
     )
   }
 
-  renderSuccess = () => <TokenSaleSuccess onClickHandler={this.getOnClickHandler()}/>
+  renderSuccess = () => (
+    <TokenSaleSuccess onClickHandler={this.getOnClickHandler()} />
+  )
 
-  renderFailure = () => { 
-    const { tokenSaleError } = this.state;
-    return <TokenSaleError error={tokenSaleError} retryHandler={this.handlePurchase} backHandler={this.getOnClickHandler()}/>
+  renderFailure = () => {
+    const { tokenSaleError } = this.state
+    return (
+      <TokenSaleError
+        error={tokenSaleError}
+        retryHandler={this.handlePurchase}
+        backHandler={this.getOnClickHandler()}
+      />
+    )
   }
 
   render() {
-    const { step, loading } = this.state
+    const { step, loading, hasAssets } = this.state
+    const { address } = this.props
+
     const displayTokenSalePurchase = step === TOKEN_SALE_PURCHASE
     const displayTokenSaleConfirm = step === TOKEN_SALE_CONFIRM
     const displayTokenSaleSuccess = step === TOKEN_SALE_SUCCESS
     const displayTokenSaleFailure = step === TOKEN_SALE_FAILURE
 
+    if (!hasAssets) {
+      return (
+      <Fragment>
+        <HeaderBar shouldRenderRefresh label="Token Sale" />
+        <ZeroAssets address={address} />
+        </Fragment>
+      )
+    }
+
     return (
       <section>
+        <HeaderBar shouldRenderRefresh label="Token Sale" />
         {loading && <Loader />}
         {!loading && displayTokenSalePurchase && this.renderPurchase()}
         {!loading && displayTokenSaleConfirm && this.renderConfirm()}

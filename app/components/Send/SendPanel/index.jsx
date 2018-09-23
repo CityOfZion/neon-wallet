@@ -10,7 +10,7 @@ import Button from '../../Button/Button'
 import ConfirmSend from './ConfirmSend'
 import SendSuccess from './SendSuccess'
 import SendError from './SendError'
-import ZeroAssets from './ZeroAssets'
+import ZeroAssets from '../../ZeroAssets/ZeroAssets'
 import { pluralize } from '../../../util/pluralize'
 import SendIcon from '../../../assets/icons/send.svg'
 
@@ -79,6 +79,23 @@ const SendPanel = ({
     return disabled
   }
 
+  if (noSendableAssets) {
+    return (
+      <ZeroAssets address={address}>
+        <Button
+          primary
+          className={styles.sendFormButton}
+          renderIcon={() => <SendIcon />}
+          type="submit"
+          disabled={shouldDisableSendButton(sendRowDetails)}
+        >
+          Send {pluralize('Asset', sendRowDetails.length)}{' '}
+          {fees ? 'With Fee' : 'Without Fee'}
+        </Button>
+      </ZeroAssets>
+    )
+  }
+
   let content = (
     <form onSubmit={handleSubmit}>
       <SendRecipientList
@@ -143,24 +160,6 @@ const SendPanel = ({
         resetViewsAfterError={resetViewsAfterError}
         sendErrorMessage={sendErrorMessage}
       />
-    )
-  }
-
-  if (noSendableAssets) {
-    content = (
-      <React.Fragment>
-        <ZeroAssets address={address} />
-        <Button
-          primary
-          className={styles.sendFormButton}
-          renderIcon={() => <SendIcon />}
-          type="submit"
-          disabled={shouldDisableSendButton(sendRowDetails)}
-        >
-          Send {pluralize('Asset', sendRowDetails.length)}{' '}
-          {fees ? 'With Fee' : 'Without Fee'}
-        </Button>
-      </React.Fragment>
     )
   }
 
