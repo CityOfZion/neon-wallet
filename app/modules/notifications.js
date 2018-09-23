@@ -110,7 +110,8 @@ export const showWarningNotification = (args: NotificationArgsType) => (
     {
       title: DEFAULT_WARNING_TITLE,
       ...args,
-      level: NOTIFICATION_LEVELS.WARNING
+      level: NOTIFICATION_LEVELS.WARNING,
+      position: DEFAULT_POSITION
     },
     dispatch
   )
