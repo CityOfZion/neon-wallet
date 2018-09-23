@@ -1,14 +1,11 @@
 import React from 'react'
 import Select from 'react-select'
 
-import styles from './StyledReactSelect.scss'
-
 const customStyles = {
   option: (styles, { data, isDisabled, isFocused, isSelected }) => ({
     ...styles,
     '&:active': {
-      backgroundColor: '#8d98ae',
-      color: 'white'
+      backgroundColor: '#e6e6e6'
     }
   }),
   noOptionsMessage: styles => ({

@@ -174,7 +174,21 @@ input {
   }
 
   .react-select__option--is-selected {
-    background: $primary-button;
+    background: $main-background;
+    color: $default-text;
+  }
+
+  .react-select__menu-list {
+    box-sizing: border-box;
+    width: 100%;
+    max-height: 180px;
+    overflow: auto;
+    background: #f2f2f2;
+    border: 2px solid #323242;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    margin-top: -8px;
+    z-index: 1;
   }
 
   .react-select__control--is-focused {
