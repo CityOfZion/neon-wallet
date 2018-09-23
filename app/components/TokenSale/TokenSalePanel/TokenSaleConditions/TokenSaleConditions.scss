@@ -1,0 +1,10 @@
+@import '../../../../styles/variables';
+
+.tokenSaleConditions {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    margin-bottom: 30px;
+    border-radius: 3px;
+    background-color: $light-grey;
+}

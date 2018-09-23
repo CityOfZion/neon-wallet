@@ -1,0 +1,27 @@
+@import '../../../styles/variables';
+
+.tokenSaleErrorPanel {
+    max-width: 600px;
+    margin: 0 auto;
+    padding-bottom: 25px;
+}
+
+.tokenSaleErrorPanelHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tokenSaleErrorContainer {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.tokenSaleErrorButton {
+    margin: 25px 0;
+}
+
+.tokenSaleErrorImage {
+    width: 100px;
+    margin: 0 auto;
+}
