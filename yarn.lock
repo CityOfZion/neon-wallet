@@ -8068,7 +8068,7 @@ neo-async@^2.5.0:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.5.2.tgz#489105ce7bc54e709d736b195f82135048c50fcc"
 
-neo-qrcode@0.0.8:
+neo-qrcode@^0.0.8:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/neo-qrcode/-/neo-qrcode-0.0.8.tgz#abd1e476e788795ee3192b7dcb5ae66329388e4c"
   dependencies:
