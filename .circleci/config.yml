@@ -26,12 +26,12 @@ jobs:
     <<: *container_config
     steps:
       - checkout
-      # - restore_cache:
-      #     key: neon-wallet-{{ checksum "yarn.lock" }}
+      - restore_cache:
+          key: neon-wallet-{{ checksum "yarn.lock" }}
       - run: apt-get -y update
       - run: apt-get -y install libusb-1.0-0-dev icnsutils graphicsmagick libudev-dev
       - run: yarn config delete proxy
-      - run: yarn install --network-timeout 1000000
+      - run: yarn install --network-timeout 1000000 --network-concurrency 1
       - run: yarn lint
       - run: yarn flow
       - run: yarn dist
