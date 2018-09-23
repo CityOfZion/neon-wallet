@@ -1,0 +1,133 @@
+@import '../../../styles/variables';
+
+.reactSelectContainer {
+  .react-select__value-container {
+    background-color: purple;
+  }
+
+  .react-select__control {
+    background-color: purple;
+  }
+}
+
+// .selectInput {
+//   position: relative;
+
+//   .dropdown {
+//     box-sizing: border-box;
+//     width: 100%;
+//     max-height: 180px;
+//     overflow: auto;
+//     background: #f2f2f2;
+//     border: 2px solid #323242;
+//     border-top: none;
+//     border-radius: 0 0 4px 4px;
+//     margin-top: -20px;
+//     z-index: 1;
+
+//     .dropdownItem {
+//       padding: 10px 20px;
+//       color: #000;
+//       font-size: 14px;
+//       cursor: pointer;
+
+//       &:hover {
+//         background: #e6e6e6;
+//       }
+
+//       .highlight {
+//         font-weight: 600;
+//       }
+//     }
+
+//     &.noSearchResults {
+//       padding: 10px 20px;
+//       color: #9e9e9e;
+//       text-align: center;
+//       font-size: 14px;
+//       font-style: italic;
+//     }
+//   }
+
+//   .selectInputTransparent {
+//     background: transparent;
+//   }
+// }
+
+// @import '../../../styles/variables';
+
+// .textInputContainer {
+//   display: flex;
+//   flex-direction: column;
+//   margin-bottom: 20px;
+
+//   label {
+//     font-weight: bold;
+//     font-size: 12px;
+//     text-transform: uppercase;
+//     opacity: 0.5;
+//     color: #5c677f;
+//     margin-bottom: 10px;
+//   }
+
+//   .textInput {
+//     display: flex;
+//     flex-wrap: nowrap;
+//     align-items: stretch;
+//     height: $text-input-height;
+//     border: 2px solid $text-input-background-color;
+//     border-radius: $text-input-border-radius;
+//     background: $text-input-background-color;
+//     position: relative;
+
+//     &.active {
+//       @include active-input;
+//     }
+
+//     &.error {
+//       border: 2px solid $error-color;
+//       border-top-right-radius: 3px;
+//       border-top-left-radius: 3px;
+//     }
+
+//     .errorIcon {
+//       color: #ee6d66;
+//       position: absolute;
+//       right: 8px;
+//       top: 10px;
+//     }
+
+//     .errorMessage {
+//       background-color: $error-color;
+//       color: #fff;
+//       position: absolute;
+//       top: 39px;
+//       left: -2px;
+//       width: 100%;
+//       font-size: 0.7rem;
+//       padding: 5px 2px;
+//       border-radius: 3px;
+//       z-index: 9999;
+//       text-align: center;
+//     }
+
+//     .beforeInput {
+//       flex: 0 1 auto;
+//     }
+//   }
+// }
+
+// .input {
+//   flex: 1 1 auto;
+//   box-sizing: border-box;
+//   width: 100%;
+//   height: $text-input-height;
+//   line-height: $text-input-height;
+//   color: $text-input-color;
+//   background: $text-input-background-color;
+//   font-size: $text-input-font-size;
+// }
+
+// .afterInput {
+//   flex: 0 1 auto;
+// }

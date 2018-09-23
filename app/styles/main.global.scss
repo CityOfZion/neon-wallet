@@ -135,3 +135,55 @@ input {
     }
   }
 }
+
+// react-select overrides
+// TODO: work out a solution that does not expose these globally
+.react-select-container {
+  width: 100%;
+
+  .react-select__placeholder {
+    color: rgba(106, 106, 106, 1);
+  }
+
+  .react-select__value-container {
+    box-sizing: border-box;
+    width: 100%;
+    height: $text-input-height;
+    padding: 7px 15px;
+    line-height: $text-input-height;
+    color: $text-input-color;
+    border: 2px transparent;
+    background: $text-input-background-color;
+    font-size: $text-input-font-size;
+    border-radius: $text-input-border-radius;
+  }
+
+  .react-select__control {
+    color: $text-input-color;
+    background: $text-input-background-color;
+    border: transparent;
+    border-radius: $text-input-border-radius;
+    height: 46px;
+    &.hover {
+      border: transparent;
+    }
+  }
+
+  .react-select__option--is-focused {
+    background: $light-grey;
+  }
+
+  .react-select__option--is-selected {
+    background: $primary-button;
+  }
+
+  .react-select__control--is-focused {
+    @include active-input;
+    border-color: transparent !important;
+    box-shadow: none;
+
+    .react-select__value-container {
+      padding: 7px 13px;
+    }
+  }
+}

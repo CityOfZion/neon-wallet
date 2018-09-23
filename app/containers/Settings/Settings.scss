@@ -77,4 +77,9 @@ $panel-top-margin: 25px;
     max-width: 500px;
     margin: 20px auto;
   }
+
+  .settingsSelectContainer {
+    display: flex;
+    flex: 1;
+  }
 }
