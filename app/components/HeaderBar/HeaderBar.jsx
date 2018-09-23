@@ -12,8 +12,8 @@ type Props = {
   shouldRenderRefresh: boolean,
   renderLeftContent?: () => any,
   renderRightContent?: () => any,
-  loadWalletData: Function,
-  loading: boolean
+  loadWalletData?: Function,
+  loading?: boolean
 }
 
 export default class HeaderBar extends React.PureComponent<Props> {
@@ -25,8 +25,8 @@ export default class HeaderBar extends React.PureComponent<Props> {
     const {
       label,
       shouldRenderRefresh = false,
-      renderLeftContent,
-      renderRightContent,
+      renderLeftContent = () => null,
+      renderRightContent = () => null,
       loadWalletData,
       loading
     } = this.props

@@ -27,7 +27,7 @@ const TokenSaleConditions = ({
           text={condition}
           key={uniqueKey()}
           updateConditions={updateConditions}
-          checked={checked}
+          checked={!!checked}
         />
       )
     })}

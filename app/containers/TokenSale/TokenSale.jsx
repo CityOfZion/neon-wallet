@@ -42,7 +42,7 @@ type Props = {
     gasToSend: string,
     scriptHash: string,
     gasCost: string
-  ) => Promise
+  ) => Promise<any>
 }
 
 type State = {
@@ -95,6 +95,7 @@ class TokenSale extends Component<Props, State> {
   getAssetsToPurchaseWith = () => {
     const { assetBalances } = this.props
     if (assetBalances && assetBalances.length > 0) {
+      // $FlowFixMe
       return Object.keys(assetBalances)
     }
     return ['NEO', 'GAS']
@@ -103,6 +104,7 @@ class TokenSale extends Component<Props, State> {
   createAmountsData = () => {
     const { prices, assetBalances } = this.props
     const { amountToPurchaseFor } = this.state
+    // $FlowFixMe
     return Object.keys(assetBalances).map((token: string) => {
       const price = prices[token]
       const balance = assetBalances[token]
@@ -212,6 +214,8 @@ class TokenSale extends Component<Props, State> {
         assetToPurchaseWith === 'GAS' ? amountToPurchaseFor : '0'
 
       const token = this.getTokenToPurchaseInformation()
+
+      // $FlowFixMe
       const { scriptHash } = token
 
       try {

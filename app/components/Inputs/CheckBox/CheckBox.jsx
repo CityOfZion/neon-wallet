@@ -31,7 +31,7 @@ class CheckBox extends Component<Props, State> {
   render() {
     const { checked } = this.state
     const { icon, className } = this.props
-    const classes = classNames(`${styles.checkBox} ${className}`, {
+    const classes = classNames(styles.checkBox, className, {
       [styles.checkBoxActive]: checked
     })
     return (
@@ -40,7 +40,7 @@ class CheckBox extends Component<Props, State> {
         onClick={this.toggleCheckBox}
         type="button"
         role="checkbox"
-        className={`${styles.checkBox} ${className} ${classes}`}
+        className={classes}
       >
         {checked && icon}
       </button>
