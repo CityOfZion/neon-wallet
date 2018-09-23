@@ -1,12 +1,6 @@
 import React from 'react'
-import thunk from 'redux-thunk'
-import { Provider } from 'react-redux'
 import { mount } from 'enzyme'
-import configureStore from 'redux-mock-store'
-import { progressValues } from 'spunky'
 
-import * as transactionMethods from '../../app/modules/transactions'
-import { MAIN_NETWORK_ID } from '../../app/core/constants'
 import Send from '../../app/containers/Send/Send'
 import ZeroAssets from '../../app/components/Send/SendPanel/ZeroAssets'
 import SendRecipientListItem from '../../app/components/Send/SendPanel/SendRecipientList/SendRecipientListItem'
