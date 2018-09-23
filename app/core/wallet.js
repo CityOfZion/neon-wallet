@@ -1,6 +1,6 @@
 // @flow
 import { wallet } from 'neon-js'
-import { map, extend } from 'lodash'
+import { map, extend } from 'lodash-es'
 import axios from 'axios'
 
 import { ASSETS } from './constants'

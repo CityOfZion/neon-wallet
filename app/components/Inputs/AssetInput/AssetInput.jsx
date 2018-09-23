@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { omit, noop } from 'lodash'
+import { omit, noop } from 'lodash-es'
 
 import SelectInput from '../SelectInput'
 import styles from './AssetInput.scss'

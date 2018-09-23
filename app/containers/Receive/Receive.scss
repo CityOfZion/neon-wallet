@@ -1,9 +1,4 @@
-.receive {
+.receiveContainer {
   display: flex;
   flex-direction: column;
-  align-items: center;
-
-  .panel:not(:last-child) {
-    margin-bottom: 24px;
-  }
 }

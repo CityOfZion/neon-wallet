@@ -1,0 +1,146 @@
+@import '../../styles/animations';
+
+$latency-status-size: 9px;
+$icon-size: 24px;
+
+.instructions {
+  width: 100%;
+  border-bottom: none;
+  text-align: center;
+}
+
+.tableContainer {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  width: 680px;
+  flex: 1;
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f2f2f2;
+    padding: 25px;
+    min-height: 12px;
+
+    .refresh,
+    .count,
+    .automaticSelect {
+      font-size: 14px;
+      line-height: 14px;
+      color: #5c677f;
+      font-family: Gotham-Book;
+    }
+
+    .refresh,
+    .automaticSelect {
+      cursor: pointer;
+      display: flex !important;
+      align-items: center;
+      color: #969aa0;
+
+      &.selected {
+        cursor: default;
+      }
+    }
+
+    .automaticSelect {
+      svg path {
+        fill: #66ed87;
+      }
+    }
+
+    .refresh {
+      .loading {
+        animation: spin 2s linear infinite;
+      }
+    }
+  }
+
+  .icon {
+    margin: 0px 8px;
+    width: $icon-size;
+    height: $icon-size;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+
+    .row {
+      display: flex;
+      min-height: min-content;
+      padding: 20px 10px;
+      font-size: 14px;
+
+      &.odd {
+        background-color: rgba(230, 230, 230, 0.28);
+      }
+
+      &.selected {
+        background-color: rgba(90, 191, 107, 0.22);
+      }
+
+      > div {
+        align-items: center;
+        padding: 0 15px;
+        line-height: 24px;
+      }
+
+      .latency {
+        flex-basis: 15%;
+        display: flex;
+
+        div {
+          width: $latency-status-size;
+          height: $latency-status-size;
+          margin-right: 10px;
+          font-weight: 500;
+          border-radius: 50%;
+
+          &.good {
+            background-color: #7ed321;
+          }
+          &.ok {
+            background-color: #f7bc33;
+          }
+          &.fair {
+            background-color: #ee6d66;
+          }
+        }
+      }
+
+      .blockHeight {
+        flex-basis: 35%;
+      }
+
+      .url {
+        flex-basis: 40%;
+        color: #969aa0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 12px;
+      }
+
+      .select {
+        flex-basis: 20%;
+        display: flex;
+        align-items: center;
+        color: #969aa0;
+        cursor: pointer;
+
+        .icon {
+          margin-right: 8px;
+        }
+
+        svg,
+        svg path {
+          fill: #66ed87;
+        }
+      }
+    }
+  }
+}

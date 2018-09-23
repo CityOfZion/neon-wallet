@@ -1,0 +1,71 @@
+.receivePanel {
+  flex: 1;
+  padding: 42px;
+  max-width: 700px;
+  margin: auto;
+
+  .form {
+    height: 385px;
+    margin: 0 60px;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  .icon {
+    width: 36px;
+    height: 36px;
+    margin-right: 24px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .inputDescription {
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .amountContainer {
+    display: flex;
+
+    .asset {
+    }
+
+    .amount {
+      flex: 1;
+      margin-left: 24px;
+    }
+  }
+
+  .submitButton {
+    margin-top: 24px;
+  }
+
+  .address {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    padding: 0 24px;
+    background: #f2f2f2;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-bottom: 20px;
+
+    .link {
+      flex: 0 0 auto;
+      color: #282828;
+    }
+
+    .copy {
+      flex: 0 0 auto;
+    }
+  }
+}

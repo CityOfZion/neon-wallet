@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import { uniqueId } from 'lodash'
+import { uniqueId } from 'lodash-es'
 import { wallet } from 'neon-js'
 import {
   toNumber,
@@ -10,7 +10,8 @@ import {
 } from '../../core/math'
 
 import { isBlacklisted } from '../../core/wallet'
-import SendAmountsPanel from '../../components/Send/SendAmountsPanel'
+
+import AmountsPanel from '../../components/AmountsPanel'
 import SendPanel from '../../components/Send/SendPanel'
 import HeaderBar from '../../components/HeaderBar'
 import styles from './Send.scss'
@@ -25,7 +26,8 @@ type Props = {
   contacts: Object,
   currencyCode: string,
   address: string,
-  shouldRenderHeaderBar: boolean
+  shouldRenderHeaderBar: boolean,
+  location: Object
 }
 
 type State = {
@@ -65,6 +67,12 @@ export default class Send extends React.Component<Props, State> {
 
       return { sendRowDetails: newState }
     })
+    if (this.props.location && this.props.location.state) {
+      const { address } = this.props.location.state
+      if (address) {
+        this.updateRowField(0, 'address', address)
+      }
+    }
   }
 
   generateRow = () => {
@@ -168,6 +176,10 @@ export default class Send extends React.Component<Props, State> {
         const maxValue =
           this.calculateMaxValue(objectToModify.asset) + Number(value)
         objectToModify.max = maxValue
+      }
+
+      if (field === 'address') {
+        objectToModify.address = value
       }
 
       return { sendRowDetails: newState }
@@ -355,7 +367,8 @@ export default class Send extends React.Component<Props, State> {
       sendableAssets,
       contacts,
       currencyCode,
-      shouldRenderHeaderBar
+      shouldRenderHeaderBar,
+      address
     } = this.props
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 
@@ -365,8 +378,8 @@ export default class Send extends React.Component<Props, State> {
           <HeaderBar label="Send Assets" shouldRenderRefresh />
         )}
         {!noSendableAssets && (
-          <SendAmountsPanel
-            sendAmountsData={this.createSendAmountsData()}
+          <AmountsPanel
+            amountsData={this.createSendAmountsData()}
             currencyCode={currencyCode}
           />
         )}
@@ -387,6 +400,7 @@ export default class Send extends React.Component<Props, State> {
           handleSubmit={this.handleSubmit}
           handleAddPriorityFee={this.handleAddPriorityFee}
           fees={fees}
+          address={address}
           resetViewsAfterError={this.resetViewsAfterError}
           handleEditRecipientsClick={this.handleEditRecipientsClick}
           handleSend={this.handleSend}

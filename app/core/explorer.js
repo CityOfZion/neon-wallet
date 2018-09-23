@@ -57,6 +57,7 @@ export const getExplorerAddressLink = (
   if (explorer === EXPLORERS.NEO_SCAN) {
     return `${baseURL}/address/${address}/1`
   }
+  // $FlowFixMe
   if (explorer === EXPLORERS.NEO_VERSE) {
     return `${baseURL}/addresses/${address}`
   }
@@ -76,6 +77,7 @@ export const getExplorerAssetLink = (
   if (explorer === EXPLORERS.NEO_SCAN) {
     return `${baseURL}/asset/${assetId}`
   }
+  // $FlowFixMe
   if (explorer === EXPLORERS.NEO_VERSE) {
     return `${baseURL}/assets/${assetId}`
   }

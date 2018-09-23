@@ -1,7 +1,7 @@
 // @flow
 import { compose, withProps } from 'recompose'
 import { withData } from 'spunky'
-import { pickBy, pick, omit, reduce, map } from 'lodash'
+import { pickBy, pick, omit, reduce, map } from 'lodash-es'
 
 import PortfolioPanel from './PortfolioPanel'
 import portfolioPanelActions from '../../../actions/portfolioPanelActions'

@@ -2,20 +2,23 @@
 import React from 'react'
 import classNames from 'classnames'
 
+import TextInput from '../../Inputs/TextInput'
+import CopyToClipboard from '../../CopyToClipboard'
 import Panel from '../../Panel'
 import styles from './TokenBalancesPanel.scss'
 import {
   toFixedDecimals,
   formatToRoundedShortNumber
 } from '../../../core/formatters'
-
+import Nothing from '../../../assets/icons/nothing.svg'
 import { CURRENCIES } from '../../../core/constants'
 
 type Props = {
   className: ?string,
   balances: Array<TokenBalanceType>,
   prices: Object,
-  currencyCode: string
+  currencyCode: string,
+  address: string
 }
 
 export default class TokenBalancesPanel extends React.Component<Props> {
@@ -28,12 +31,40 @@ export default class TokenBalancesPanel extends React.Component<Props> {
     return (
       <Panel
         className={classNames(styles.tokenBalancesPanel, className)}
-        contentClassName={styles.tokenBalancesPanelContent}
+        contentClassName={classNames(styles.tokenBalancesPanelContent, {
+          [styles.emptyBalanceContent]: !balances.length
+        })}
         headerClassName={styles.headerStyle}
         renderHeader={this.renderHeader}
       >
-        {balances.sort(this.sortByValueInPortfolio).map(this.renderToken)}
+        {balances.length
+          ? balances.sort(this.sortByValueInPortfolio).map(this.renderToken)
+          : this.renderEmptyBalanceInfo()}
       </Panel>
+    )
+  }
+
+  renderEmptyBalanceInfo = () => {
+    const { address } = this.props
+    return (
+      <div className={styles.emptyBalanceContainer}>
+        <div className={styles.headerContainer}>
+          <Nothing /> <h1> Nothing to see here! </h1>
+        </div>
+        <p>
+          You’ll need to <b>transfer compatible NEP-5 assets</b> to this wallet
+          using ‘Receive’ or your public address:
+        </p>
+        <div className={styles.address}>
+          <TextInput value={address} disabled />
+          {/* <Address className={styles.link} address={address} /> */}
+          <CopyToClipboard
+            className={styles.copy}
+            text={address}
+            tooltip="Copy Public Address"
+          />
+        </div>
+      </div>
     )
   }
 
@@ -71,27 +102,32 @@ export default class TokenBalancesPanel extends React.Component<Props> {
     return 0
   }
 
-  renderHeader = () => (
-    <div>
-      <div className={styles.header}>
-        <span>Token Balances</span>
-      </div>
-      <div className={styles.tokenBalancesPanelContent}>
-        <div className={styles.tableHeader}>
-          <div className={styles.symbol}>Ticker</div>
-          <div className={styles.name}>Token</div>
-          <div className={styles.priceLabel}>Price</div>
-          <div className={styles.balance}>Holdings</div>
+  renderHeader = () => {
+    const { balances } = this.props
+    return (
+      <div>
+        <div className={styles.header}>
+          <span>Token Balances</span>
         </div>
+        {!!balances.length && (
+          <div className={styles.tokenBalancesPanelContent}>
+            <div className={styles.tableHeader}>
+              <div className={styles.symbol}>Ticker</div>
+              <div className={styles.name}>Token</div>
+              <div className={styles.priceLabel}>Price</div>
+              <div className={styles.balance}>Holdings</div>
+            </div>
+          </div>
+        )}
       </div>
-    </div>
-  )
+    )
+  }
 
   renderToken = (token: TokenBalanceType, i: number) => (
     <div
       key={token.scriptHash}
       className={classNames(styles.tableData, {
-        [styles.oddNumberedRow]: i % 2 === 0
+        [styles.oddNumberedRow]: i % 2 !== 0
       })}
     >
       <div className={styles.tickerName}>

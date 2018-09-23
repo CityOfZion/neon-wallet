@@ -1,8 +1,9 @@
 // @flow
 import { api } from 'neon-js'
-import { extend, isEmpty } from 'lodash'
+import { extend, isEmpty } from 'lodash-es'
 import { createActions } from 'spunky'
 
+import { getNode } from './nodeStorageActions'
 import { ASSETS } from '../core/constants'
 import { COIN_DECIMAL_LENGTH } from '../core/formatters'
 
@@ -15,7 +16,10 @@ type Props = {
 export const ID = 'balances'
 
 async function getBalances({ net, address, tokens }: Props) {
-  const endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
+  let endpoint = await getNode()
+  if (!endpoint) {
+    endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
+  }
   // token balances
   const tokenBalances = await api.nep5.getTokenBalances(
     endpoint,

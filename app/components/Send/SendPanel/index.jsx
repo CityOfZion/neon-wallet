@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import { get } from 'lodash'
+import { get } from 'lodash-es'
 
 import Panel from '../../Panel'
 import SendRecipientList from './SendRecipientList'
@@ -11,14 +11,10 @@ import ConfirmSend from './ConfirmSend'
 import SendSuccess from './SendSuccess'
 import SendError from './SendError'
 import ZeroAssets from './ZeroAssets'
-
 import { pluralize } from '../../../util/pluralize'
-
 import SendIcon from '../../../assets/icons/send.svg'
-import LightningIcon from '../../../assets/icons/lightning.svg'
 
 import styles from './SendPanel.scss'
-import { truncateNumber } from '../../../core/math'
 
 type Props = {
   sendRowDetails: Array<*>,
@@ -32,6 +28,7 @@ type Props = {
   txid: string,
   fees: number,
   handleAddPriorityFee: number => any,
+  address: string,
   resetViewsAfterError: () => any,
   resetViews: () => any,
   handleSubmit: () => any,
@@ -63,7 +60,8 @@ const SendPanel = ({
   txid,
   handleEditRecipientsClick,
   handleAddPriorityFee,
-  fees
+  fees,
+  address
 }: Props) => {
   function shouldDisableSendButton(sendRowDetails) {
     let disabled = false
@@ -149,7 +147,21 @@ const SendPanel = ({
   }
 
   if (noSendableAssets) {
-    content = <ZeroAssets />
+    content = (
+      <React.Fragment>
+        <ZeroAssets address={address} />
+        <Button
+          primary
+          className={styles.sendFormButton}
+          renderIcon={() => <SendIcon />}
+          type="submit"
+          disabled={shouldDisableSendButton(sendRowDetails)}
+        >
+          Send {pluralize('Asset', sendRowDetails.length)}{' '}
+          {fees ? 'With Fee' : 'Without Fee'}
+        </Button>
+      </React.Fragment>
+    )
   }
 
   return (

@@ -1,0 +1,36 @@
+@import '../../../styles/variables';
+
+.receivePanel {
+  max-height: 545px;
+}
+
+.receivePanelContent {
+  display: flex;
+  padding: 0;
+  overflow: hidden !important;
+}
+
+.receivePanelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .receivePanelHeaderInfo {
+    display: flex;
+    color: $dark-grey;
+  }
+}
+
+.walletAddressContainer {
+  display: flex;
+  align-items: center;
+
+  .description {
+    margin-right: 16px;
+    color: $medium-grey;
+  }
+
+  .address {
+    font-weight: 500;
+  }
+}

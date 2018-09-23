@@ -1,8 +1,12 @@
 // @flow
 import tokenList from './tokenList.json'
+import nodes from './nodes.json'
 
 export const NEON_WALLET_RELEASE_LINK =
   'https://github.com/CityOfZion/neon-wallet/releases'
+
+export const DISCORD_INVITE_LINK = 'https://discordapp.com/invite/R8v48YA'
+export const COZ_DONATIONS_ADDRESS = 'Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A'
 
 export const ASSETS = {
   NEO: 'NEO',
@@ -26,7 +30,6 @@ export const ROUTES = {
   CREATE_WALLET_AUTHENTICATED: '/create-authenticated',
   IMPORT_WALLET: '/import',
   IMPORT_WALLET_AUTHENTICATED: '/import-authenticated',
-  ENCRYPT_KEY: '/encrypt-key',
   TOKEN_SALE: '/token-sale',
   TRANSACTION_HISTORY: '/transactions',
   SETTINGS: '/settings',
@@ -34,7 +37,10 @@ export const ROUTES = {
   DISPLAY_WALLET_KEYS_AUTHENTICATED: '/display-wallet-keys-authenticated',
   WALLET_MANAGER: '/wallet-manager',
   EDIT_WALLET: '/edit-wallet/:key/:label',
-  SEND: '/send'
+  SEND: '/send/',
+  SEND_ADDRESS: '/send/:address',
+  ENCRYPT: '/encrypt-private-key',
+  NODE_SELECT: '/node-select'
 }
 
 export const NOTIFICATION_LEVELS = {
@@ -62,7 +68,8 @@ export const MODAL_TYPES = {
   TOKEN_INFO: 'TOKEN_INFO',
   TOKEN: 'TOKEN',
   ICO: 'ICO',
-  ADD_CONTACT: 'ADD_CONTACT'
+  ADD_CONTACT: 'ADD_CONTACT',
+  RECEIVE: 'RECEIVE'
 }
 
 export const MAIN_NETWORK_ID = '1'
@@ -147,3 +154,5 @@ export const CURRENCIES = {
   usd: { symbol: '$' },
   zar: { symbol: 'R ' }
 }
+
+export const NODES = nodes

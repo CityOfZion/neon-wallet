@@ -1,5 +1,6 @@
 // flow-typed signature: a8f530bf7bd4adfd4d341940ae3f907a
 // flow-typed version: 917c84794d/axios_v0.17.x/flow_>=v0.25.x
+/* eslint-disable */
 
 declare module 'axios' {
   declare interface ProxyConfig {
@@ -19,7 +20,7 @@ declare module 'axios' {
   }
   declare interface CancelToken {
     constructor(executor: (cancel: Canceler) => void): CancelToken;
-    static source(): CancelTokenSource;
+    // static source(): CancelTokenSource;
     promise: Promise<Cancel>;
     reason?: Cancel;
     throwIfRequested(): void;
@@ -84,7 +85,7 @@ declare module 'axios' {
   declare type AxiosPromise<T> = Promise<AxiosXHR<T>>;
   declare class Axios {
     constructor<T>(config?: AxiosXHRConfigBase<T>): void;
-    $call: <T>(config: AxiosXHRConfig<T> | string, config?: AxiosXHRConfig<T>) => AxiosPromise<T>;
+    [[call]]: <T>(config: AxiosXHRConfig<T> | string, config?: AxiosXHRConfig<T>) => AxiosPromise<T>;
     request<T>(config: AxiosXHRConfig<T>): AxiosPromise<T>;
     delete<T>(url: string, config?: AxiosXHRConfigBase<T>): AxiosPromise<T>;
     get<T>(url: string, config?: AxiosXHRConfigBase<T>): AxiosPromise<T>;

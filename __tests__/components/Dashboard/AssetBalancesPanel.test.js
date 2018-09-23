@@ -1,6 +1,6 @@
 import React from 'react'
 import nock from 'nock'
-import { merge } from 'lodash'
+import { merge } from 'lodash-es'
 import { mount, shallow } from 'enzyme'
 import { progressValues } from 'spunky'
 
@@ -118,9 +118,9 @@ describe('AssetBalancesPanel', () => {
   test.only('correctly renders data from state', () => {
     const wrapper = mount(provideState(<AssetBalancesPanel />, initialState))
 
-    expect(wrapper.find('#neoWalletValue').text()).toEqual(`$2,548,025.48`)
-    expect(wrapper.find('#gasWalletValue').text()).toEqual(`$18,100.00`)
-    expect(wrapper.find('#walletTotal').text()).toEqual(`$2,566,125.48`)
+    expect(wrapper.find('#neoWalletValue').text()).toEqual('$2,548,025.48')
+    expect(wrapper.find('#gasWalletValue').text()).toEqual('$18,100.00')
+    expect(wrapper.find('#walletTotal').text()).toEqual('$2,566,125.48')
     expect(wrapper.find('#amountNeo').text()).toEqual('100,001')
     expect(wrapper.find('#amountGas').text()).toEqual('1,000.0002')
     expect(wrapper.find('#priceChangeNeo').text()).toEqual('+100.00%')
@@ -153,8 +153,8 @@ describe('AssetBalancesPanel', () => {
     })
     const wrapper = mount(provideState(<AssetBalancesPanel />, state))
 
-    expect(wrapper.find('#neoWalletValue').text()).toEqual(`€111,001.11`)
-    expect(wrapper.find('#gasWalletValue').text()).toEqual(`€550.00`)
-    expect(wrapper.find('#walletTotal').text()).toEqual(`€111,551.11`)
+    expect(wrapper.find('#neoWalletValue').text()).toEqual('€111,001.11')
+    expect(wrapper.find('#gasWalletValue').text()).toEqual('€550.00')
+    expect(wrapper.find('#walletTotal').text()).toEqual('€111,551.11')
   })
 })

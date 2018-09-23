@@ -1,6 +1,6 @@
 import React from 'react'
 import nock from 'nock'
-import { merge } from 'lodash'
+import { merge } from 'lodash-es'
 import { mount, shallow } from 'enzyme'
 import { progressValues } from 'spunky'
 import { expect } from 'chai'

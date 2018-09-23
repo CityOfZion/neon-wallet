@@ -3,7 +3,7 @@ import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { shallow, mount } from 'enzyme'
-import { merge } from 'lodash'
+import { merge } from 'lodash-es'
 import { progressValues } from 'spunky'
 
 import TransactionHistoryPanel from '../../app/components/TransactionHistory/TransactionHistoryPanel'
