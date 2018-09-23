@@ -119,7 +119,7 @@ describe('notifications module tests', () => {
         {
           payload: {
             title: 'error',
-            autoDismiss: AUTO_DISMISS_TIMEOUT,
+            autoDismiss: 0,
             dismissible: false,
             id: 'notification_error_1',
             level: NOTIFICATION_LEVELS.ERROR,
