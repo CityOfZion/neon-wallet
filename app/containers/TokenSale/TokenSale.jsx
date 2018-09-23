@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 
 import { isZero, isNumber, toBigNumber, minusNumber, multiplyNumber } from '../../core/math'
 
-import SendAmountsPanel from '../../components/Send/SendAmountsPanel'
+import AmountsPanel from '../../components/AmountsPanel';
 import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import TokenSalePanel from '../../components/TokenSale/TokenSalePanel/TokenSalePanel'
 import TokenSaleConfirm from '../../components/TokenSale/TokenSaleConfirm/TokenSaleConfirm'
 import TokenSaleSuccess from '../../components/TokenSale/TokenSaleSuccess/TokenSaleSuccess'
+import TokenSaleError from '../../components/TokenSale/TokenSaleError/TokenSaleError'
 import Loader from '../../components/Loader'
 
 import {
@@ -36,7 +37,8 @@ class TokenSale extends Component {
       loading: false,
       gasFee: 0,
       acceptedConditions: [],
-      errorMessage: '',
+      inputErrorMessage: '',
+      tokenSaleError: null,
       amountsData: []
     }
   }
@@ -52,15 +54,15 @@ class TokenSale extends Component {
   getAssetsToPurchaseWith = () => {
     const { assetBalances } = this.props
     if (assetBalances && assetBalances.length > 0) {
-    return Object.keys(assetBalances)
+      return Object.keys(assetBalances)
     } 
-      return ['NEO', 'GAS']
+    return ['NEO', 'GAS']
   }
 
   createAmountsData = () => {
     const { prices, assetBalances } = this.props
-    const { assetToPurchase, amountToPurchaseFor } = this.state
-    return Object.keys(assetBalances).map((token, index) => {
+    const {  amountToPurchaseFor } = this.state
+    return Object.keys(assetBalances).map((token) => {
       const price = prices[token]
       const balance = assetBalances[token]
       const currentBalance = minusNumber(balance, amountToPurchaseFor)
@@ -112,12 +114,12 @@ class TokenSale extends Component {
     const { assetBalances } = this.props
 
     if (!isNumber(amountToPurchaseFor)) {
-      this.setState({ errorMessage: 'Amount must be a number.' })
+      this.setState({ inputErrorMessage: 'Amount must be a number.' })
       return false
     }
 
     if (isZero(amountToPurchaseFor)) {
-      this.setState({ errorMessage: 'Amount must be greater than 0.' })
+      this.setState({ inputErrorMessage: 'Amount must be greater than 0.' })
       return false
     }
 
@@ -126,7 +128,7 @@ class TokenSale extends Component {
       !toBigNumber(amountToPurchaseFor).isInteger()
     ) {
       this.setState({
-        errorMessage: "You can't send fractional amounts of NEO"
+        inputErrorMessage: 'You can\'t send fractional amounts of NEO'
       })
       return false
     }
@@ -134,7 +136,7 @@ class TokenSale extends Component {
     const assetBalance = toBigNumber(assetBalances[assetToPurchaseWith])
     if (toBigNumber(amountToPurchaseFor).greaterThan(assetBalance)) {
       this.setState({
-        errorMessage: `You don't have enough ${assetToPurchaseWith}.`
+        inputErrorMessage: `You don't have enough ${assetToPurchaseWith}.`
       })
       return false
     }
@@ -145,7 +147,7 @@ class TokenSale extends Component {
   handleAddPriorityFee = (gasFee: number) => this.setState({ gasFee })
 
   handlePurchase = () => {
-    this.setState({ errorMessage: '' }, () => {
+    this.setState({ inputErrorMessage: '' }, () => {
       const validFields = this.isValid()
 
       if (validFields) this.setStep(TOKEN_SALE_CONFIRM)
@@ -182,14 +184,10 @@ class TokenSale extends Component {
 
         if (success) this.setState({ step: TOKEN_SALE_SUCCESS, loading: false })
       } catch (err) {
-        this.setState({ step: TOKEN_SALE_FAILURE, loading: false })
+        this.setState({ step: TOKEN_SALE_FAILURE, loading: false, tokenSaleError: err })
       }
     })
   }
-
-  handleSuccess = () => this.setStep(TOKEN_SALE_PURCHASE)
-
-  handleFailure = () => console.log('Try again')
 
   getOnClickHandler = () => {
     const { step } = this.state
@@ -199,9 +197,9 @@ class TokenSale extends Component {
       case TOKEN_SALE_CONFIRM:
         return this.handleConfirm
       case TOKEN_SALE_SUCCESS:
-        return this.handleSuccess
+        return () => this.setStep(TOKEN_SALE_PURCHASE)
       case TOKEN_SALE_FAILURE:
-        return this.handleFailure
+        return () => this.setStep(TOKEN_SALE_PURCHASE)
       default:
         return this.handlePurchase
     }
@@ -214,7 +212,7 @@ class TokenSale extends Component {
       amountToPurchaseFor,
       acceptedConditions,
       conditions,
-      errorMessage,
+      inputErrorMessage,
       gasFee,
       amountsData
     } = this.state
@@ -226,9 +224,9 @@ class TokenSale extends Component {
       <section>
         {' '}
         <HeaderBar shouldRenderRefresh label="Token Sale" />
-        <SendAmountsPanel
+        <AmountsPanel
           currencyCode="usd"
-          sendAmountsData={amountsData}
+          amountsData={amountsData}
         />
         <TokenSalePanel
           onClickHandler={this.getOnClickHandler()}
@@ -243,7 +241,7 @@ class TokenSale extends Component {
           conditions={conditions}
           updateConditions={this.updateConditions}
           acceptedConditions={acceptedConditions}
-          errorMessage={errorMessage}
+          inputErrorMessage={inputErrorMessage}
           handleAddPriorityFee={this.handleAddPriorityFee}
           gasFee={gasFee}
           availableGas={availableGas}
@@ -273,7 +271,12 @@ class TokenSale extends Component {
     )
   }
 
-  renderSuccess = () => <TokenSaleSuccess />
+  renderSuccess = () => <TokenSaleSuccess onClickHandler={this.getOnClickHandler()}/>
+
+  renderFailure = () => { 
+    const { tokenSaleError } = this.state;
+    return <TokenSaleError error={tokenSaleError} retryHandler={this.handlePurchase} backHandler={this.getOnClickHandler()}/>
+  }
 
   render() {
     const { step, loading } = this.state
@@ -288,7 +291,7 @@ class TokenSale extends Component {
         {!loading && displayTokenSalePurchase && this.renderPurchase()}
         {!loading && displayTokenSaleConfirm && this.renderConfirm()}
         {!loading && displayTokenSaleSuccess && this.renderSuccess()}
-        {!loading && displayTokenSaleFailure && <div>Error</div>}
+        {!loading && displayTokenSaleFailure && this.renderFailure()}
       </section>
     )
   }

@@ -30,7 +30,7 @@ const TokenSalePanel = ({
   acceptedConditions,
   updateField,
   updateConditions,
-  errorMessage,
+  inputErrorMessage,
   availableGas,
   gasFee,
   handleAddPriorityFee
@@ -45,7 +45,7 @@ const TokenSalePanel = ({
         amountToPurchaseFor={amountToPurchaseFor}
         updateField={updateField}
         getPurchaseableAssets={getPurchaseableAssets}
-        errorMessage={errorMessage}
+        inputErrorMessage={inputErrorMessage}
       />
       <DialogueBox
         icon={<WarningIcon />}

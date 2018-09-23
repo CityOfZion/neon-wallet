@@ -1,0 +1,38 @@
+@import '../../../../styles/variables';
+
+.tokenSaleErrorDetails {
+    margin: 30px 0;
+}
+
+.tokenSaleErrorDetailsHeading {
+    font-size: 0.8rem;
+    margin-top: 25px;
+    font-weight: 200;
+    text-transform: uppercase;
+    color: $medium-grey;
+}
+
+.tokenSaleErrorDetailsContainer {
+    padding: 20px 30px;
+    background-color: $light-grey;
+    border-radius: 3px;
+}
+
+.tokenSaleErrorDetailsSecondaryHeading {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.tokenSaleErrorDetailsMainHeading {
+    display: flex;
+    align-items: center;
+    font-size: 1.8rem;
+    margin-bottom: 40px;
+    justify-content: center;
+}
+
+.tokenSaleErrorDetailsIcon {
+    height: 40px;
+    width: 40px;
+    margin-right: 8px;
+}

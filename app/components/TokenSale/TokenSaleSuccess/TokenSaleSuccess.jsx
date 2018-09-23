@@ -9,7 +9,7 @@ import ConfirmCircle from '../../../assets/icons/confirm-circle.svg'
 import Logo from '../../../assets/images/grey-logo.png'
 import styles from './TokenSaleSuccess.scss'
 
-const TokenSaleSuccess = () => (
+const TokenSaleSuccess = ({ onClickHandler }) => (
   <Panel
     className={styles.tokenSaleSuccess}
     renderHeader={() => (
@@ -37,7 +37,7 @@ const TokenSaleSuccess = () => (
         </div>
       </div>
       <Button
-        onClick={() => console.log('ok then')}
+        onClick={onClickHandler}
         primary
         renderIcon={TokenSaleIcon}
         className={styles.tokenSaleSuccessButton}
