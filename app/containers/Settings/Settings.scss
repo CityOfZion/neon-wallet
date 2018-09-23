@@ -1,8 +1,6 @@
 $panel-top-margin: 25px;
 
 .settingsContainer {
-  padding: 0 24px;
-
   .networkSwitchContainer {
     display: flex;
     justify-content: center;
@@ -50,6 +48,7 @@ $panel-top-margin: 25px;
       text-align: center;
       justify-content: center;
       display: flex;
+      text-decoration: none;
     }
   }
 
