@@ -9,6 +9,7 @@ import Dropdown from './Dropdown'
 import DropdownButton from './DropdownButton'
 
 import styles from './SelectInput.scss'
+import uniqueKey from '../../../util/uniqueKey'
 
 type Props = {
   className?: string,
@@ -141,7 +142,7 @@ export default class SelectInput extends React.Component<Props, State> {
     return (
       <div
         className={styles.dropdownItem}
-        key={value}
+        key={uniqueKey()}
         aria-label={value}
         onClick={onSelect}
       >

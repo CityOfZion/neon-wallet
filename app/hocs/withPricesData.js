@@ -6,7 +6,7 @@ import withCurrencyData from './withCurrencyData'
 import withInitialCall from './withInitialCall'
 import pricesActions from '../actions/pricesActions'
 
-export default function withPricesData(mapPricesDataToProps: Function) {
+export default function withPricesData(mapPricesDataToProps: Function | void) {
   return compose(
     withCurrencyData('currencyCode'),
     withInitialCall(pricesActions),

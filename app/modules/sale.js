@@ -51,7 +51,7 @@ export const participateInSale = (
 
   if (!isValid) {
     dispatch(showErrorNotification({ message }))
-    return false
+    throw new Error(`Invalid parameters: ${message}`)
   }
 
   const formattedScriptHash =
@@ -104,7 +104,7 @@ export const participateInSale = (
         message: `Sale participation failed: ${err.message}`
       })
     )
-    return false
+    throw new Error(`${err.message}`)
   }
 
   // $FlowFixMe

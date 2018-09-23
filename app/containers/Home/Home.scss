@@ -28,6 +28,10 @@ $navigation-margin: 20px;
   margin-bottom: -10px;
 }
 
+.selectMargin {
+  margin-bottom: 10px;
+}
+
 .ledgerStatusText {
   font-weight: lighter;
   margin-top: 0;
@@ -146,7 +150,10 @@ $navigation-margin: 20px;
 
 .loginHeader {
   font-family: Gotham-Light;
-  font-size: 30px;
+  font-weight: 300;
+  font-size: 40px;
+  width: 500px;
+  display: flex;
   margin-bottom: 40px;
   text-align: center;
   line-height: 32px;

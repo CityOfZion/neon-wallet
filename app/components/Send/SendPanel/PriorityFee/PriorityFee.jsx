@@ -37,7 +37,7 @@ export default class PriorityFee extends React.Component<Props> {
     return (
       <div>
         <div className={styles.priorityExplanationText}>
-          Prioritize your transfer with a fee?
+          Prioritize your transaction with a fee?
         </div>
         <div className={styles.priorityFeeButtonContainer}>
           {FEE_OPTIONS.map(option => (

@@ -1,9 +1,11 @@
 // @flow
 import React, { Component } from 'react'
+import { cloneDeep } from 'lodash-es'
 
 import PasswordInput from '../../components/Inputs/PasswordInput'
 import Button from '../../components/Button'
-import SelectInput from '../../components/Inputs/SelectInput/SelectInput'
+import StyledReactSelect from '../../components/Inputs/StyledReactSelect/StyledReactSelect'
+
 import LoginIcon from '../../assets/icons/login.svg'
 import styles from '../Home/Home.scss'
 
@@ -15,41 +17,36 @@ type Props = {
 
 type State = {
   passphrase: string,
-  encryptedWIF: string
+  selectedAccount: Object | null,
+  mappedAccounts: Array<Object>
 }
 
 export default class LoginLocalStorage extends Component<Props, State> {
   state = {
     passphrase: '',
-    encryptedWIF: ''
+    selectedAccount: null,
+    mappedAccounts:
+      this.props.accounts.length &&
+      this.props.accounts.map(account => {
+        const clonedAccount = cloneDeep(account)
+        clonedAccount.value = account.label
+        return clonedAccount
+      })
   }
 
   render() {
     const { loading, accounts } = this.props
-    const { passphrase, encryptedWIF } = this.state
-    const { label } =
-      (Array.isArray(accounts) &&
-        accounts.find(account => account.key === encryptedWIF)) ||
-      {}
+    const { passphrase, selectedAccount, mappedAccounts } = this.state
 
     return (
       <div id="loginLocalStorage" className={styles.flexContainer}>
         <form onSubmit={this.handleSubmit}>
-          <div className={styles.inputMargin}>
-            <SelectInput
-              items={
-                Array.isArray(accounts)
-                  ? accounts.map(account => account.label)
-                  : []
-              }
-              value={label || ''}
-              placeholder="Select Wallet"
-              disabled={loading}
-              onChange={value => this.setState({ encryptedWIF: value })}
-              getItemValue={value =>
-                Array.isArray(accounts) &&
-                accounts.find(account => account.label === value).key
-              }
+          <div className={styles.selectMargin}>
+            <StyledReactSelect
+              disabled={!accounts.length}
+              value={selectedAccount}
+              onChange={this.handleChange}
+              options={mappedAccounts}
             />
           </div>
           <div className={styles.inputMargin}>
@@ -76,16 +73,25 @@ export default class LoginLocalStorage extends Component<Props, State> {
     )
   }
 
+  handleChange = (selectedAccount: Object) => {
+    this.setState({ selectedAccount })
+  }
+
   handleSubmit = (event: Object) => {
-    const { loading, loginNep2 } = this.props
-    const { passphrase, encryptedWIF } = this.state
+    const { loading, loginNep2, accounts } = this.props
+    const { passphrase, selectedAccount } = this.state
+    if (selectedAccount) {
+      const accountInStorage = accounts.find(
+        account => account.label === selectedAccount.value
+      )
 
-    event.preventDefault()
+      event.preventDefault()
 
-    if (!loading) {
-      loginNep2(passphrase, encryptedWIF)
+      if (!loading) {
+        loginNep2(passphrase, accountInStorage.key)
+      }
     }
   }
 
-  isValid = () => this.state.encryptedWIF !== '' && this.state.passphrase !== ''
+  isValid = () => !!this.state.selectedAccount && this.state.passphrase !== ''
 }

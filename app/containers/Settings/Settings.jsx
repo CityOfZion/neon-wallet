@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 import { recoverWallet } from '../../modules/generateWallet'
 import Panel from '../../components/Panel'
 import SelectInput from '../../components/Inputs/SelectInput'
+import StyledReactSelect from '../../components/Inputs/StyledReactSelect/StyledReactSelect'
 import HeaderBar from '../../components/HeaderBar'
 import SettingsItem from '../../components/Settings/SettingsItem'
 import SettingsLink from '../../components/Settings/SettingsLink'
@@ -40,11 +41,33 @@ type Props = {
   showModal: Function
 }
 
+type SelectOption = {
+  value: string,
+  label: string
+}
+
 type State = {
-  explorer: string
+  selectedCurrency: SelectOption,
+  selectedTheme: SelectOption,
+  selectedExplorer: SelectOption
 }
 
 export default class Settings extends Component<Props, State> {
+  state = {
+    selectedCurrency: {
+      value: this.props.currency,
+      label: this.props.currency.toUpperCase()
+    },
+    selectedTheme: {
+      value: this.props.theme,
+      label: this.props.theme
+    },
+    selectedExplorer: {
+      value: this.props.explorer,
+      label: EXPLORERS[this.props.explorer]
+    }
+  }
+
   saveWalletRecovery = () => {
     const { showSuccessNotification, showErrorNotification } = this.props
 
@@ -126,63 +149,21 @@ export default class Settings extends Component<Props, State> {
     })
   }
 
-  updateExplorerSettings = (e: Object) => {
+  updateExplorerSettings = (option: SelectOption) => {
+    this.setState({ selectedExplorer: option })
     const { setBlockExplorer } = this.props
-    setBlockExplorer(String(e))
+    setBlockExplorer(option.value)
   }
 
-  updateCurrencySettings = (e: Object) => {
+  updateCurrencySettings = (option: SelectOption) => {
+    this.setState({ selectedCurrency: option })
     const { setCurrency } = this.props
-    setCurrency(String(e))
+    setCurrency(option.value)
   }
 
-  updateThemeSettings = (e: Object) => {
+  updateThemeSettings = (option: SelectOption) => {
     const { setTheme } = this.props
-    setTheme(String(e))
-  }
-
-  deleteWalletAccount = (label: string, key: string) => {
-    const {
-      showSuccessNotification,
-      showErrorNotification,
-      setAccounts,
-      showModal
-    } = this.props
-
-    showModal(MODAL_TYPES.CONFIRM, {
-      title: 'Confirm Delete',
-      text: `Please confirm deleting saved wallet - ${label}`,
-      onClick: () => {
-        storage.get('userWallet', (readError, data) => {
-          if (readError) {
-            showErrorNotification({
-              message: `An error occurred reading previously stored wallet: ${
-                readError.message
-              }`
-            })
-            return
-          }
-
-          // eslint-disable-next-line
-          data.accounts = reject(data.accounts, { key })
-
-          storage.set('userWallet', data, saveError => {
-            if (saveError) {
-              showErrorNotification({
-                message: `An error occurred updating the wallet: ${
-                  saveError.message
-                }`
-              })
-            } else {
-              showSuccessNotification({
-                message: 'Account deletion was successful.'
-              })
-              setAccounts(data.accounts)
-            }
-          })
-        })
-      }
-    })
+    setTheme(option.value)
   }
 
   openTokenModal = () => {
@@ -190,7 +171,15 @@ export default class Settings extends Component<Props, State> {
   }
 
   render() {
-    const { explorer, currency, theme } = this.props
+    const { selectedCurrency, selectedExplorer } = this.state
+    const parsedCurrencyOptions = Object.keys(CURRENCIES).map(key => ({
+      value: key,
+      label: key.toUpperCase()
+    }))
+    const parsedExplorerOptions = Object.keys(EXPLORERS).map(key => ({
+      value: key,
+      label: EXPLORERS[key]
+    }))
 
     return (
       <section className={styles.settingsContainer}>
@@ -204,28 +193,30 @@ export default class Settings extends Component<Props, State> {
         >
           <section className={styles.settingsItemsContainer}>
             <SettingsItem title="THEME">
-              <SelectInput
-                items={Object.keys(themes)}
-                value={theme}
-                onChange={this.updateThemeSettings}
-              />
+              <div className={styles.settingsSelectContainer}>
+                <StyledReactSelect
+                  isDisabled
+                  value={this.state.selectedTheme}
+                />
+              </div>
             </SettingsItem>
             <SettingsItem title="CURRENCY">
-              <SelectInput
-                items={Object.keys(CURRENCIES).map(value =>
-                  value.toUpperCase()
-                )}
-                value={currency.toUpperCase()}
-                onChange={this.updateCurrencySettings}
-                getItemValue={value => value.toLowerCase()}
-              />
+              <div className={styles.settingsSelectContainer}>
+                <StyledReactSelect
+                  options={parsedCurrencyOptions}
+                  value={this.state.selectedCurrency}
+                  onChange={this.updateCurrencySettings}
+                />
+              </div>
             </SettingsItem>
             <SettingsItem title="BLOCK EXPLORER">
-              <SelectInput
-                items={Object.keys(EXPLORERS).map(value => EXPLORERS[value])}
-                value={explorer}
-                onChange={this.updateExplorerSettings}
-              />
+              <div className={styles.settingsSelectContainer}>
+                <StyledReactSelect
+                  options={parsedExplorerOptions}
+                  value={this.state.selectedExplorer}
+                  onChange={this.updateExplorerSettings}
+                />
+              </div>
             </SettingsItem>
             <SettingsLink to={ROUTES.ENCRYPT} title="ENCRYPT A KEY" />
             <SettingsLink to={ROUTES.NODE_SELECT} title="NODE SELECTON" />
