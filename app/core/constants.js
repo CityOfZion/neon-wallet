@@ -14,8 +14,8 @@ export const ASSETS = {
 }
 
 export const EXPLORERS = {
-  NEO_TRACKER: 'Neotracker',
   NEO_SCAN: 'Neoscan',
+  NEO_TRACKER: 'Neotracker',
   ANT_CHAIN: 'Antchain'
 }
 
