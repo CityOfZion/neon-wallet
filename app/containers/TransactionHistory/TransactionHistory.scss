@@ -1,6 +1,7 @@
 .transactionHistory {
   display: flex;
   flex-direction: column;
+  height: 100%;
 
   .transactionHistoryPanel {
     flex: 1 1 auto;
