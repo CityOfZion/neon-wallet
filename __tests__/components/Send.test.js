@@ -2,7 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 
 import Send from '../../app/containers/Send/Send'
-import ZeroAssets from '../../app/components/Send/SendPanel/ZeroAssets'
+import ZeroAssets from '../../app/components/ZeroAssets/ZeroAssets'
 import SendRecipientListItem from '../../app/components/Send/SendPanel/SendRecipientList/SendRecipientListItem'
 
 const setup = props =>

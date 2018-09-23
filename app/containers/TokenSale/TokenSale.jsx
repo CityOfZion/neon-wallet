@@ -1,4 +1,4 @@
-// @flow 
+// @flow
 import React, { Component, Fragment } from 'react'
 
 import {
@@ -37,7 +37,12 @@ type Props = {
   icoTokens: Array<Object>,
   prices: Object,
   address: string,
-  participateInSale: (neoToSend: string, gasToSend: string, scriptHash: string, gasCost: string ) => Promise,
+  participateInSale: (
+    neoToSend: string,
+    gasToSend: string,
+    scriptHash: string,
+    gasCost: string
+  ) => Promise
 }
 
 type State = {
@@ -122,12 +127,10 @@ class TokenSale extends Component<Props, State> {
   }
 
   getTokenToPurchaseInformation = () => {
-    const { icoTokens } = this.props;
-    const { assetToPurchase } = this.state;
-    
-    return icoTokens.find(
-      tokenObj => tokenObj.token === assetToPurchase
-    )
+    const { icoTokens } = this.props
+    const { assetToPurchase } = this.state
+
+    return icoTokens.find(tokenObj => tokenObj.token === assetToPurchase)
   }
 
   updateField = (item: { name: string, value: string | number }) => {
@@ -200,11 +203,7 @@ class TokenSale extends Component<Props, State> {
 
   handleConfirm = () => {
     const { participateInSale } = this.props
-    const {
-      assetToPurchaseWith,
-      amountToPurchaseFor,
-      gasFee
-    } = this.state
+    const { assetToPurchaseWith, amountToPurchaseFor, gasFee } = this.state
 
     this.setState({ loading: true }, async () => {
       const neoToSend =
@@ -217,10 +216,10 @@ class TokenSale extends Component<Props, State> {
 
       try {
         const success = await participateInSale(
-          neoToSend,
-          gasToSend,
-          scriptHash,
-          gasFee
+          String(neoToSend),
+          String(gasToSend),
+          String(scriptHash),
+          String(gasFee)
         )
 
         if (success) this.setState({ step: TOKEN_SALE_SUCCESS, loading: false })
@@ -292,13 +291,10 @@ class TokenSale extends Component<Props, State> {
   }
 
   renderConfirm = () => {
-    const {
-      assetToPurchaseWith,
-      amountToPurchaseFor
-    } = this.state
+    const { assetToPurchaseWith, amountToPurchaseFor } = this.state
 
-    const tokenInformation = this.getTokenToPurchaseInformation();
-    if (!tokenInformation) return;
+    const tokenInformation = this.getTokenToPurchaseInformation()
+    if (!tokenInformation) return null
 
     return (
       <TokenSaleConfirm
@@ -311,9 +307,14 @@ class TokenSale extends Component<Props, State> {
   }
 
   renderSuccess = () => {
-    const tokenInformation = this.getTokenToPurchaseInformation();  
-    if (!tokenInformation) return;
-    return <TokenSaleSuccess onClickHandler={this.getOnClickHandler()} token={tokenInformation.token}/>
+    const tokenInformation = this.getTokenToPurchaseInformation()
+    if (!tokenInformation) return null
+    return (
+      <TokenSaleSuccess
+        onClickHandler={this.getOnClickHandler()}
+        token={tokenInformation.token}
+      />
+    )
   }
 
   renderFailure = () => {
@@ -338,10 +339,10 @@ class TokenSale extends Component<Props, State> {
 
     if (!hasAssets) {
       return (
-      <Fragment>
-        <HeaderBar shouldRenderRefresh label="Token Sale" />
-        <ZeroAssets address={address} />
-      </Fragment>
+        <Fragment>
+          <HeaderBar shouldRenderRefresh label="Token Sale" />
+          <ZeroAssets address={address} />
+        </Fragment>
       )
     }
 
