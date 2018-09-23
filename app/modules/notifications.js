@@ -99,7 +99,12 @@ export const showErrorNotification = (args: NotificationArgsType) => (
   dispatch: DispatchType
 ): string =>
   notificationFactory(
-    { title: DEFAULT_ERROR_TITLE, ...args, level: NOTIFICATION_LEVELS.ERROR },
+    {
+      title: DEFAULT_ERROR_TITLE,
+      ...args,
+      level: NOTIFICATION_LEVELS.ERROR,
+      autoDismiss: 0
+    },
     dispatch
   )
 
@@ -110,7 +115,8 @@ export const showWarningNotification = (args: NotificationArgsType) => (
     {
       title: DEFAULT_WARNING_TITLE,
       ...args,
-      level: NOTIFICATION_LEVELS.WARNING
+      level: NOTIFICATION_LEVELS.WARNING,
+      position: DEFAULT_POSITION
     },
     dispatch
   )

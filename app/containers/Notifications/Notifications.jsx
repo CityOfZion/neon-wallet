@@ -2,27 +2,15 @@
 import React, { Component } from 'react'
 import { isEqual, difference } from 'lodash-es'
 import ReactNotificationSystem from 'react-notification-system'
+import style from './Notification.scss'
+import overrideStyles from './overrideStyles'
+
+import WarningIcon from '../../assets/icons/warning.svg'
+import CheckIcon from '../../assets/icons/check.svg'
 
 type Props = {
   notifications: Array<NotificationType>,
   hideNotification: Function
-}
-
-const defaultWidth = 480
-const marginLeft = -(defaultWidth / 2)
-
-const overrideStyles = {
-  Containers: {
-    DefaultStyle: {
-      width: defaultWidth
-    },
-    tc: {
-      marginLeft
-    },
-    bc: {
-      marginLeft
-    }
-  }
 }
 
 class Notifications extends Component<Props> {
@@ -47,6 +35,15 @@ class Notifications extends Component<Props> {
       difference(notificationIds, systemNotificationsIds).forEach(
         notificationId => {
           this.rnsRef.addNotification({
+            children: (
+              <div className={style.icon}>
+                {notifications[0].level === 'success' ? (
+                  <CheckIcon />
+                ) : (
+                  <WarningIcon className={style.warning} />
+                )}
+              </div>
+            ),
             uid: notificationId,
             ...notifications.find(
               notification => notification.id === notificationId
