@@ -7,7 +7,14 @@ import NumberInput from '../../../Inputs/NumberInput'
 import styles from './TokenSaleSelection.scss'
 
 type Props = {
-  assetBalances: object
+  assetBalances: Object,
+  getAssetsToPurchaseWith: () => Array<string>,
+  assetToPurchaseWith: string,
+  assetToPurchase: string,
+  amountToPurchaseFor: number,
+  getPurchaseableAssets: () => Array<string>,
+  updateField: ({ name: string, value: string | number }) => void,
+  inputErrorMessage: string
 }
 
 const TokenSaleSelection = ({

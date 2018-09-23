@@ -11,7 +11,10 @@ import styles from './TokenSaleConfirm.scss'
 import Logo from '../../../assets/images/grey-logo.png'
 
 type Props = {
-  onClickHandler: () => void
+  onClickHandler: () => void,
+  assetToPurchaseWith: string,
+  tokenInfo: Object,
+  amountToPurchaseFor: number
 }
 
 const TokenSaleConfirm = ({

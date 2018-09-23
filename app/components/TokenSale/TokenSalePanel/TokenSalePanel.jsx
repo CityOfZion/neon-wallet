@@ -13,8 +13,22 @@ import CheckMarkIcon from '../../../assets/icons/check.svg'
 import styles from './TokenSalePanel.scss'
 
 type Props = {
-  setStep: () => void,
-  assetBalances: object
+  onClickHandler: () => void,
+  assetBalances: Object,
+  getAssetsToPurchaseWith: () => Array<string>,
+  assetToPurchaseWith: string,
+  assetToPurchase: string,
+  amountToPurchaseFor: number,
+  getPurchaseableAssets: () => Array<string>,
+  conditions: Array<string>,
+  disabledButton: boolean,
+  acceptedConditions: Array<string>,
+  updateField: ({ name: string, value: string | number }) => void,
+  updateConditions: (condition: string) => void,
+  inputErrorMessage: string,
+  availableGas: number,
+  gasFee: number,
+  handleAddPriorityFee: (gasFee: number) => void
 }
 
 const TokenSalePanel = ({

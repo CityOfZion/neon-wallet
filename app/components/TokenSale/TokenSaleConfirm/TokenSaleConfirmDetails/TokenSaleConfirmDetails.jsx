@@ -1,14 +1,21 @@
+// @flow
 import React from 'react'
 
 import styles from './TokenSaleConfirmDetails.scss'
 
 import CheckMarkSVG from '../../../../assets/icons/checkGreen.svg'
 
+type Props = {
+  tokenInfo: Object,
+  assetToPurchaseWith: string,
+  amountToPurchaseFor: number
+}
+
 const TokenSaleConfirmDetails = ({
   tokenInfo,
   assetToPurchaseWith,
   amountToPurchaseFor
-}) => (
+}: Props) => (
   <div className={styles.tokenSaleConfirmDetails}>
     <h1 className={styles.tokenSaleConfirmDetailsMainHeading}>
       <CheckMarkSVG className={styles.tokenSaleConfirmDetailsCheckMarkSVG} />Confirm

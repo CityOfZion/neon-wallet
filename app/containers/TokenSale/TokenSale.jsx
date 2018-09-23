@@ -1,3 +1,4 @@
+// @flow 
 import React, { Component, Fragment } from 'react'
 
 import {
@@ -31,8 +32,31 @@ const conditions = [
   'I understand that some sales may only accept NEO or GAS, and I have verified which is accepted. Ok then.'
 ]
 
-class TokenSale extends Component {
-  constructor(props) {
+type Props = {
+  assetBalances: Object,
+  icoTokens: Array<Object>,
+  prices: Object,
+  address: string,
+  participateInSale: (neoToSend: string, gasToSend: string, scriptHash: string, gasCost: string ) => Promise,
+}
+
+type State = {
+  step: string,
+  assetToPurchaseWith: string,
+  amountToPurchaseFor: number,
+  assetToPurchase: string,
+  conditions: Array<string>,
+  loading: boolean,
+  gasFee: number,
+  acceptedConditions: Array<string>,
+  inputErrorMessage: string,
+  tokenSaleError: Object,
+  hasAssets: boolean,
+  amountsData: Array<Object>
+}
+
+class TokenSale extends Component<Props, State> {
+  constructor(props: Props) {
     super(props)
 
     this.state = {
@@ -45,7 +69,8 @@ class TokenSale extends Component {
       gasFee: 0,
       acceptedConditions: [],
       inputErrorMessage: '',
-      tokenSaleError: null,
+      hasAssets: false,
+      tokenSaleError: {},
       amountsData: []
     }
   }
@@ -60,7 +85,7 @@ class TokenSale extends Component {
     this.setState({ amountsData, hasAssets })
   }
 
-  setStep = step => this.setState({ step })
+  setStep = (step: string) => this.setState({ step })
 
   getAssetsToPurchaseWith = () => {
     const { assetBalances } = this.props
@@ -73,7 +98,7 @@ class TokenSale extends Component {
   createAmountsData = () => {
     const { prices, assetBalances } = this.props
     const { amountToPurchaseFor } = this.state
-    return Object.keys(assetBalances).map(token => {
+    return Object.keys(assetBalances).map((token: string) => {
       const price = prices[token]
       const balance = assetBalances[token]
       const currentBalance = minusNumber(balance, amountToPurchaseFor)
@@ -105,22 +130,22 @@ class TokenSale extends Component {
     )
   }
 
-  updateField = item => {
+  updateField = (item: { name: string, value: string | number }) => {
     const { name, value } = item
 
     this.setState({ [name]: value })
   }
 
-  updateConditions = condition => {
+  updateConditions = (condition: string) => {
     const { acceptedConditions } = this.state
     const conditionAccepted = acceptedConditions.find(
-      element => element === condition
+      (element: string) => element === condition
     )
 
     if (conditionAccepted) {
       this.setState({
         acceptedConditions: [...acceptedConditions].filter(
-          item => item !== condition
+          (item: string) => item !== condition
         )
       })
     } else {
@@ -272,12 +297,13 @@ class TokenSale extends Component {
       amountToPurchaseFor
     } = this.state
 
-    const tokenInfo = this.getTokenToPurchaseInformation();
+    const tokenInformation = this.getTokenToPurchaseInformation();
+    if (!tokenInformation) return;
 
     return (
       <TokenSaleConfirm
         onClickHandler={this.getOnClickHandler()}
-        tokenInfo={tokenInfo}
+        tokenInfo={tokenInformation}
         assetToPurchaseWith={assetToPurchaseWith}
         amountToPurchaseFor={amountToPurchaseFor}
       />
@@ -285,8 +311,8 @@ class TokenSale extends Component {
   }
 
   renderSuccess = () => {
-    const tokenInformation = this.getTokenToPurchaseInformation();
-
+    const tokenInformation = this.getTokenToPurchaseInformation();  
+    if (!tokenInformation) return;
     return <TokenSaleSuccess onClickHandler={this.getOnClickHandler()} token={tokenInformation.token}/>
   }
 

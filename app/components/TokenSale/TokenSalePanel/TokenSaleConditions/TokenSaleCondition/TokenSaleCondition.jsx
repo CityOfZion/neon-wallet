@@ -7,7 +7,9 @@ import QuestionMarkIcon from '../../../../../assets/icons/question.svg'
 import styles from './TokenSaleCondition.scss'
 
 type Props = {
-  text: string
+  text: string,
+  checked: boolean,
+  updateConditions: (condition: string) => void
 }
 
 const TokenSaleCondition = ({ text, updateConditions, checked }: Props) => (

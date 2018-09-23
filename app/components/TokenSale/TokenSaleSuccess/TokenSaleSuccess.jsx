@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react'
 
 import Panel from '../../Panel'
@@ -10,7 +12,12 @@ import { createFormattedDate } from '../../../util/createFormattedDate'
 import Logo from '../../../assets/images/grey-logo.png'
 import styles from './TokenSaleSuccess.scss'
 
-const TokenSaleSuccess = ({ onClickHandler, token }) => (
+type Props = {
+  onClickHandler: () => void,
+  token: string
+}
+
+const TokenSaleSuccess = ({ onClickHandler, token }: Props) => (
   <Panel
     className={styles.tokenSaleSuccess}
     renderHeader={() => (
@@ -34,7 +41,6 @@ const TokenSaleSuccess = ({ onClickHandler, token }) => (
           </h2>
           <p className={styles.tokenSaleSuccessInnerTextParagraph}>
             {createFormattedDate()}
-            {/* Tuesday 12 June 2019 21:30 */}
           </p>
         </div>
       </div>

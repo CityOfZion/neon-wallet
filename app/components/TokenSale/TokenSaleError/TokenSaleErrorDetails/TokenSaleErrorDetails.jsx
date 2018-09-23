@@ -1,10 +1,15 @@
+// @flow
 import React from 'react'
 
 import styles from './TokenSaleErrorDetails.scss'
 
 import ErrorIcon from '../../../../assets/icons/error.svg'
 
-const TokenSaleErrorDetails = ({ error }) => (
+type Props = {
+  error: Object
+}
+
+const TokenSaleErrorDetails = ({ error }: Props) => (
   <div className={styles.tokenSaleErrorDetails}>
     <h1 className={styles.tokenSaleErrorDetailsMainHeading}>
       <ErrorIcon className={styles.tokenSaleErrorDetailsIcon} />Something went

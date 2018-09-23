@@ -13,7 +13,9 @@ import styles from './TokenSaleError.scss'
 import Logo from '../../../assets/images/grey-logo.png'
 
 type Props = {
-  onClickHandler: () => void
+  retryHandler: () => void,
+  backHandler: () => void,
+  error: Object
 }
 
 const TokenSaleError = ({ retryHandler, backHandler, error }: Props) => (
@@ -33,11 +35,7 @@ const TokenSaleError = ({ retryHandler, backHandler, error }: Props) => (
       >
         Try Again
       </Button>
-      <Button
-        primary={false}
-        onClick={backHandler}
-        renderIcon={BackArrow}
-      >
+      <Button primary={false} onClick={backHandler} renderIcon={BackArrow}>
         Go Back
       </Button>
     </div>

@@ -104,7 +104,7 @@ export const participateInSale = (
         message: `Sale participation failed: ${err.message}`
       })
     )
-    return false
+    throw new Error(`${err.message}`)
   }
 
   // $FlowFixMe
