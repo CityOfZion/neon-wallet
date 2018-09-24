@@ -17,13 +17,14 @@ import TokenSaleConfirm from '../../components/TokenSale/TokenSaleConfirm/TokenS
 import TokenSaleSuccess from '../../components/TokenSale/TokenSaleSuccess/TokenSaleSuccess'
 import TokenSaleError from '../../components/TokenSale/TokenSaleError/TokenSaleError'
 import Loader from '../../components/Loader'
-
 import {
   TOKEN_SALE_PURCHASE,
   TOKEN_SALE_CONFIRM,
   TOKEN_SALE_SUCCESS,
   TOKEN_SALE_FAILURE
 } from '../../core/constants'
+
+import styles from './TokenSale.scss'
 
 const conditions = [
   'I understand that submitting NEO or GAS multiple times may result in a loss of funds or a delayed refund depending on the policy of the ICO company',
@@ -177,7 +178,7 @@ class TokenSale extends Component<Props, State> {
       !toBigNumber(amountToPurchaseFor).isInteger()
     ) {
       this.setState({
-        inputErrorMessage: "You can't send fractional amounts of NEO"
+        inputErrorMessage: "You can't send fractional amounts of NEO" // eslint-disable-line
       })
       return false
     }
@@ -269,7 +270,7 @@ class TokenSale extends Component<Props, State> {
     const disabledButton = !(acceptedConditions.length === conditions.length)
     const availableGas = assetBalances.GAS
     return (
-      <section>
+      <section className={styles.purchaseSection}>
         {' '}
         <AmountsPanel currencyCode="usd" amountsData={amountsData} />
         <TokenSalePanel
@@ -351,13 +352,15 @@ class TokenSale extends Component<Props, State> {
     }
 
     return (
-      <section>
+      <section className={styles.tokenSaleContainer}>
         <HeaderBar shouldRenderRefresh label="Token Sale" />
-        {loading && <Loader />}
-        {!loading && displayTokenSalePurchase && this.renderPurchase()}
-        {!loading && displayTokenSaleConfirm && this.renderConfirm()}
-        {!loading && displayTokenSaleSuccess && this.renderSuccess()}
-        {!loading && displayTokenSaleFailure && this.renderFailure()}
+        <div className={styles.tokenSaleContentContainer}>
+          {loading && <Loader />}
+          {!loading && displayTokenSalePurchase && this.renderPurchase()}
+          {!loading && displayTokenSaleConfirm && this.renderConfirm()}
+          {!loading && displayTokenSaleSuccess && this.renderSuccess()}
+          {!loading && displayTokenSaleFailure && this.renderFailure()}
+        </div>
       </section>
     )
   }

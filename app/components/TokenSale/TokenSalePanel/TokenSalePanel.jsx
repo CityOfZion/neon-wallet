@@ -49,7 +49,10 @@ const TokenSalePanel = ({
   gasFee,
   handleAddPriorityFee
 }: Props) => (
-  <Panel renderHeader={() => <p>Participate in Token Sale</p>}>
+  <Panel
+    className={styles.tokenSalePanel}
+    renderHeader={() => <p>Participate in Token Sale</p>}
+  >
     <div className={styles.tokenSalePanelContainer}>
       <TokenSaleSelection
         assetBalances={assetBalances}
