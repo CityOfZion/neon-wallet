@@ -1,14 +1,24 @@
 // @flow
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { compose, withProps } from 'recompose'
 import { withActions, progressValues } from 'spunky'
 import { trim } from 'lodash-es'
 
 import EditContactPanel from './EditContactPanel'
-import { updateContactActions } from '../../../actions/contactsActions'
+import {
+  updateContactActions,
+  deleteContactActions
+} from '../../../actions/contactsActions'
 import withProgressChange from '../../../hocs/withProgressChange'
 import withFailureNotification from '../../../hocs/withFailureNotification'
+import { showModal } from '../../../modules/modal'
 
 const { LOADED } = progressValues
+
+const actionCreators = {
+  showModal
+}
 
 const mapContactActionsToProps = (actions, props) => ({
   onSave: (name, address) =>
@@ -19,7 +29,18 @@ const mapContactActionsToProps = (actions, props) => ({
     })
 })
 
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(actionCreators, dispatch)
+
+const mapDeleteContactActionsToProps = actions => ({
+  deleteContact: name => actions.call({ name })
+})
+
 export default compose(
+  connect(
+    null,
+    mapDispatchToProps
+  ),
   withProps(({ name }) => ({ oldName: name })),
   withProgressChange(
     updateContactActions,
@@ -27,5 +48,7 @@ export default compose(
     (state, props) => props.onSave && props.onSave()
   ),
   withActions(updateContactActions, mapContactActionsToProps),
+  withActions(deleteContactActions, mapDeleteContactActionsToProps),
+  withFailureNotification(deleteContactActions),
   withFailureNotification(updateContactActions)
 )(EditContactPanel)
