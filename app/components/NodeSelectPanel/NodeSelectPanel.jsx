@@ -35,9 +35,13 @@ export default class NodeSelect extends React.Component<Props> {
         headerText="Node Selection"
         renderCloseButton={() => <CloseButton routeTo={ROUTES.SETTINGS} />}
         renderHeaderIcon={this.renderIcon}
-        renderInstructions={this.renderInstructions}
+        renderInstructions={false}
         instructionsClassName={styles.instructions}
       >
+        <div className={styles.instructions}>
+          If you’re experiencing performance issues, try selecting a custom node
+          below
+        </div>
         <section className={styles.tableContainer}>
           <div className={styles.header}>
             <Tooltip title="Refresh" className={styles.refresh}>
@@ -149,13 +153,6 @@ export default class NodeSelect extends React.Component<Props> {
   renderIcon = () => (
     <div>
       <NodeSelectIcon />
-    </div>
-  )
-
-  renderInstructions = () => (
-    <div>
-      If you’re experiencing performance issues, try selecting a custom node
-      below
     </div>
   )
 }

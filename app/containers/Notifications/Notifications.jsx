@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react'
+import classNames from 'classnames'
 import { isEqual, difference } from 'lodash-es'
 import ReactNotificationSystem from 'react-notification-system'
 import style from './Notification.scss'
@@ -21,6 +22,8 @@ class Notifications extends Component<Props> {
     const { hideNotification } = this.props
     const { notifications } = nextProps
 
+    console.log(notifications)
+
     if (notifications.length > 0) {
       const systemNotifications = this.rnsRef.state.notifications || []
       const systemNotificationsIds = systemNotifications.map(
@@ -36,12 +39,30 @@ class Notifications extends Component<Props> {
         notificationId => {
           this.rnsRef.addNotification({
             children: (
-              <div className={style.icon}>
-                {notifications[0].level === 'success' ? (
-                  <CheckIcon />
-                ) : (
-                  <WarningIcon className={style.warning} />
+              <div
+                className={classNames(
+                  style.icon,
+                  'notification-hidden',
+                  'notification-visible'
                 )}
+              >
+                <div
+                  className={classNames(
+                    {
+                      [style.warnIcon]: notifications[0].level === 'warning'
+                    },
+                    { [style.errorIcon]: notifications[0].level === 'error' },
+                    {
+                      [style.successIcon]: notifications[0].level === 'success'
+                    }
+                  )}
+                >
+                  {notifications[0].level === 'success' ? (
+                    <CheckIcon />
+                  ) : (
+                    <WarningIcon />
+                  )}
+                </div>
               </div>
             ),
             uid: notificationId,

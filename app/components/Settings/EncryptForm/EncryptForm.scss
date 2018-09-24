@@ -2,8 +2,16 @@
   width: 500px;
   margin: 0 auto;
 
+  form {
+    align-self: flex-start;
+  }
+
   .submitButton {
     margin-top: auto;
     margin-bottom: 50px;
   }
+}
+
+.formContainer {
+  margin-bottom: auto;
 }
