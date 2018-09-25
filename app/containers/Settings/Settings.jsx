@@ -64,7 +64,7 @@ export default class Settings extends Component<Props, State> {
     },
     selectedExplorer: {
       value: this.props.explorer,
-      label: EXPLORERS[this.props.explorer]
+      label: EXPLORERS[this.props.explorer] || EXPLORERS.NEO_SCAN
     }
   }
 
@@ -152,7 +152,7 @@ export default class Settings extends Component<Props, State> {
   updateExplorerSettings = (option: SelectOption) => {
     this.setState({ selectedExplorer: option })
     const { setBlockExplorer } = this.props
-    setBlockExplorer(option.value)
+    setBlockExplorer(option.label)
   }
 
   updateCurrencySettings = (option: SelectOption) => {
