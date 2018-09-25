@@ -14,6 +14,11 @@ $icon-size: 24px;
   text-align: center;
 }
 
+.refreshDisabled {
+  opacity: 0.3;
+  cursor: default !important;
+}
+
 .tableContainer {
   display: flex;
   flex-direction: column;
