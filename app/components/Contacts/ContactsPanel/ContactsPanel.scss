@@ -4,6 +4,15 @@
   width: 100%;
   height: 100%;
 
+  .name {
+    width: 180px;
+    text-overflow: ellipsis;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
   .header {
     display: flex;
     align-items: center;
@@ -11,7 +20,7 @@
   }
 
   .contacts {
-    padding: 12px;
+    // padding: 12px;
   }
 
   .contact {
@@ -19,7 +28,12 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: nowrap;
-    margin-bottom: 45px;
+    padding: 12px 24px;
+
+    button {
+      background-color: transparent;
+    }
+    // margin-bottom: 45px;
 
     &:last-child {
       margin-bottom: 0;
@@ -28,6 +42,7 @@
     .address {
       display: flex;
       align-items: center;
+      width: 420px;
     }
 
     .actions {
@@ -35,17 +50,17 @@
       align-items: center;
 
       .editButton {
-        width: 110px;
+        width: 100px;
         margin-right: 10px;
       }
 
       .infoButton {
-        width: 160px;
+        width: 150px;
         margin-right: 10px;
       }
 
       .sendButton {
-        width: 160px;
+        width: 150px;
       }
 
       .deleteButton {
@@ -53,6 +68,10 @@
       }
     }
   }
+}
+
+.contactPanelContent {
+  padding: 0 !important;
 }
 
 .addButton {
@@ -76,10 +95,18 @@
   }
 }
 
+.oddNumberedRow {
+  background: rgba(230, 230, 230, 0.1);
+}
+
 .emptyContactsContainer {
   position: absolute;
   width: 50%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.headerSelect {
+  width: 150px;
 }
