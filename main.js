@@ -1,4 +1,11 @@
-const { app, shell, Menu, BrowserWindow, globalShortcut } = require('electron') // eslint-disable-line import/no-extraneous-dependencies
+const {
+  app,
+  shell,
+  Menu,
+  BrowserWindow,
+  globalShortcut,
+  session
+} = require('electron') // eslint-disable-line import/no-extraneous-dependencies
 const path = require('path')
 const url = require('url')
 
@@ -21,6 +28,10 @@ app.on('window-all-closed', () => {
 })
 
 app.on('ready', () => {
+  // https://github.com/electron/electron/blob/master/docs/tutorial/security.md#csp-http-header
+  session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+    callback({ responseHeaders: "default-src 'none'" }) // eslint-disable-line
+  })
   const onAppReady = () => {
     mainWindow = new BrowserWindow({
       height: 850,
@@ -29,7 +40,8 @@ app.on('ready', () => {
       minWidth: 1200,
       icon: path.join(__dirname, 'icons/png/64x64.png'),
       webPreferences: {
-        webSecurity: false
+        allowRunningInsecureContent: false,
+        webSecurity: true
       }
     })
 
