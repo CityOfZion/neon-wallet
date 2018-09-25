@@ -11,6 +11,7 @@ import HistoryIcon from '../../../assets/navigation/history.svg'
 import SendIcon from '../../../assets/navigation/send.svg'
 import ReceiveIcon from '../../../assets/navigation/receive.svg'
 import ContactsIcon from '../../../assets/navigation/contacts.svg'
+import VotingIcon from '../../../assets/navigation/bars.svg'
 import TokenSaleIcon from '../../../assets/navigation/tokens.svg'
 import SettingsIcon from '../../../assets/navigation/settings.svg'
 import { ROUTES } from '../../../core/constants'
@@ -83,16 +84,21 @@ const Sidebar = ({ className, showTokenSaleModal }: Props) => (
         <div> Contacts </div>
       </NavLink>
 
-      <Tooltip title="Token Sale" position="right">
-        <NavLink
-          id="tokensale"
-          to={ROUTES.TOKEN_SALE}
-          className={styles.navItem}
-          activeClassName={styles.active}
-        >
-          <TokenSaleIcon />
-          <div> Token Sale </div>
-        </NavLink>
+      <NavLink
+        id="tokensale"
+        to={ROUTES.TOKEN_SALE}
+        className={styles.navItem}
+        activeClassName={styles.active}
+      >
+        <TokenSaleIcon />
+        <div> Token Sale </div>
+      </NavLink>
+
+      <Tooltip title="Coming Soon" position="right">
+        <div id="voting" className={styles.disabledNavIem}>
+          <VotingIcon />
+          <div> Voting </div>
+        </div>
       </Tooltip>
 
       <NavLink

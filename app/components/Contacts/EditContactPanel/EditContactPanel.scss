@@ -10,3 +10,28 @@
     }
   }
 }
+
+.formContainer {
+  margin-bottom: auto;
+}
+
+.editContactInstructions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  span {
+    font-family: Gotham-Medium;
+    font-size: 14px;
+    color: #ff967e;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    svg {
+      path {
+        fill: #ff967e;
+      }
+    }
+  }
+}

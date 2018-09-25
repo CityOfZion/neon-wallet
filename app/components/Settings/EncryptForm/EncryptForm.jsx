@@ -65,7 +65,7 @@ export default class EncryptForm extends React.Component<Props, State> {
     } = this.state
 
     return (
-      <section>
+      <section className={styles.formContainer}>
         <form className={styles.encryptForm} onSubmit={this.handleSubmit}>
           <TextInput
             id="privateKey"

@@ -1,14 +1,18 @@
 // @flow
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { map } from 'lodash-es'
+import { map, isEmpty } from 'lodash-es'
 
+import HeaderBar from '../../HeaderBar'
 import Panel from '../../Panel'
 import Button from '../../Button'
-import AddIcon from '../../../assets/icons/contacts-add.svg'
+import AddIcon from '../../../assets/icons/add.svg'
+import InfoIcon from '../../../assets/icons/info.svg'
 import EditIcon from '../../../assets/icons/edit.svg'
-import DeleteIcon from '../../../assets/icons/delete.svg'
+import SendIcon from '../../../assets/icons/send.svg'
 import { ROUTES } from '../../../core/constants'
+import CopyToClipboard from '../../CopyToClipboard'
+import LogoWithStrikethrough from '../../LogoWithStrikethrough'
 
 import styles from './ContactsPanel.scss'
 
@@ -23,29 +27,52 @@ type Props = {
 export default class ContactsPanel extends React.Component<Props> {
   render() {
     return (
-      <Panel className={styles.contactsPanel} renderHeader={this.renderHeader}>
-        <div className={styles.contacts}>
-          {map(this.props.contacts, this.renderContact)}
-        </div>
-      </Panel>
+      <React.Fragment>
+        <HeaderBar
+          label="Manage Contacts"
+          shouldRenderRefresh={false}
+          renderRightContent={() => (
+            <Link id="add" className={styles.addButton} to={ROUTES.ADD_CONTACT}>
+              <AddIcon className={styles.addIcon} />
+              <span>New Contact</span>
+            </Link>
+          )}
+        />
+        <Panel
+          className={styles.contactsPanel}
+          renderHeader={this.renderHeader}
+        >
+          {!isEmpty(this.props.contacts) && (
+            <div className={styles.contacts}>
+              {map(this.props.contacts, this.renderContact)}
+            </div>
+          )}
+          {isEmpty(this.props.contacts) && (
+            <div className={styles.emptyContactsContainer}>
+              <LogoWithStrikethrough />
+            </div>
+          )}
+        </Panel>
+      </React.Fragment>
     )
   }
 
   renderHeader = () => (
     <div className={styles.header}>
       <span>Contacts</span>
-      <Link id="add" className={styles.addButton} to={ROUTES.ADD_CONTACT}>
-        <AddIcon className={styles.addIcon} />
-        <span>New Contact</span>
-      </Link>
     </div>
   )
 
   renderContact = (address: string, name: string) => (
     <div key={name} className={styles.contact}>
-      <div className={styles.details}>
-        <div className={styles.name}>{name}</div>
-        <div className={styles.address}>{address}</div>
+      <div className={styles.name}>{name}</div>
+      <div className={styles.address}>
+        {address}{' '}
+        <CopyToClipboard
+          className={styles.copy}
+          text={address}
+          tooltip="Copy Public Address"
+        />
       </div>
       <div className={styles.actions}>
         <Button
@@ -56,11 +83,18 @@ export default class ContactsPanel extends React.Component<Props> {
           Edit
         </Button>
         <Button
-          className={styles.deleteButton}
-          renderIcon={DeleteIcon}
-          onClick={this.handleDelete(name)}
+          className={styles.infoButton}
+          renderIcon={InfoIcon}
+          onClick={this.handleEdit(name)}
         >
-          Delete Contact
+          View Activity
+        </Button>
+        <Button
+          className={styles.sendButton}
+          renderIcon={SendIcon}
+          onClick={this.handleEdit(name)}
+        >
+          Send Assets
         </Button>
       </div>
     </div>

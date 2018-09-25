@@ -151,12 +151,15 @@ $navigation-margin: 20px;
 .loginHeader {
   font-family: Gotham-Light;
   font-weight: 300;
-  font-size: 40px;
   width: 500px;
   display: flex;
   margin-bottom: 40px;
   text-align: center;
+  justify-content: center;
   line-height: 32px;
+  font-family: Gotham-Light;
+  font-size: 30px;
+  color: #394152;
 }
 
 .logo {

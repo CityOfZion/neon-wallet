@@ -18,7 +18,7 @@ const overrideStyles = {
   NotificationItem: {
     DefaultStyle: {
       borderTop: 'none',
-      height: '60px',
+      height: '70px',
       marginTop: 0,
       display: 'flex',
       alignItems: 'center',
@@ -27,7 +27,8 @@ const overrideStyles = {
     },
 
     success: {
-      backgroundColor: '#5ABF6B'
+      backgroundColor: '#2E463D',
+      color: '#66ED87'
     },
     error: {
       backgroundColor: '#EE6D66'
@@ -45,12 +46,12 @@ const overrideStyles = {
 
   Dismiss: {
     DefaultStyle: {
-      top: '24px',
+      top: '27px',
       right: '25px',
       height: '22px',
       width: '22px',
       fontSize: '25px',
-      fontWeight: 500,
+      fontWeight: 200,
       backgroundColor: 'none',
       opacity: '0.75'
     }

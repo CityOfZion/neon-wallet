@@ -40,7 +40,8 @@ export const ROUTES = {
   SEND: '/send/',
   SEND_ADDRESS: '/send/:address',
   ENCRYPT: '/encrypt-private-key',
-  NODE_SELECT: '/node-select'
+  NODE_SELECT: '/node-select',
+  VOTING: '/voting'
 }
 
 export const NOTIFICATION_LEVELS = {

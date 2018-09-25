@@ -1,0 +1,14 @@
+.tokenSaleContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .tokenSaleContentContainer {
+    height: 100%;
+    .purchaseSection {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

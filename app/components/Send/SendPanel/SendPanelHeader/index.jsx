@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 
+import Tooltip from '../../../Tooltip'
 import AddIcon from '../../../../assets/icons/add.svg'
 import GridIcon from '../../../../assets/icons/grid.svg'
 import LightningIcon from '../../../../assets/icons/lightning.svg'
@@ -36,13 +37,21 @@ const SendPanelHeader = ({
   let headerSubtitle = `${numberOfItems} of 5 Recipients`
   let buttons = (
     <div className={styles.sendPanelHeaderButtons}>
-      <button
-        type="button"
-        className={styles.enterQrHeaderButton}
-        onClick={addRow}
+      <Tooltip
+        className={styles.disabledFeature}
+        title="Coming Soon"
+        position="right"
       >
-        <GridIcon className={styles.sendPanelHeaderButtonIcon} /> Enter QR Code
-      </button>
+        <button
+          type="button"
+          disabled
+          className={styles.enterQrHeaderButton}
+          onClick={addRow}
+        >
+          <GridIcon className={styles.sendPanelHeaderButtonIcon} /> Enter QR
+          Code
+        </button>
+      </Tooltip>
       <button
         type="button"
         className={styles.sendPanelHeaderButton}

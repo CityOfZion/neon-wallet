@@ -1,29 +1,17 @@
 @import '../../../styles/variables';
 
 .contactsPanel {
-  max-width: 850px;
+  width: 100%;
+  height: 100%;
 
   .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    .addButton {
-      display: flex;
-      align-items: center;
-      padding: 5px;
-      color: $dark-grey;
-      text-decoration: none;
-      cursor: pointer;
-
-      .addIcon {
-        margin-right: 15px;
-      }
-    }
   }
 
   .contacts {
-    padding: 24px;
+    padding: 12px;
   }
 
   .contact {
@@ -37,17 +25,9 @@
       margin-bottom: 0;
     }
 
-    .details {
-      .name {
-        margin-bottom: 10px;
-        font-size: 20px;
-        font-weight: 600;
-      }
-
-      .address {
-        color: #939393;
-        font-size: 12px;
-      }
+    .address {
+      display: flex;
+      align-items: center;
     }
 
     .actions {
@@ -55,8 +35,17 @@
       align-items: center;
 
       .editButton {
-        width: 130px;
+        width: 110px;
         margin-right: 10px;
+      }
+
+      .infoButton {
+        width: 160px;
+        margin-right: 10px;
+      }
+
+      .sendButton {
+        width: 160px;
       }
 
       .deleteButton {
@@ -64,4 +53,33 @@
       }
     }
   }
+}
+
+.addButton {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  color: $dark-grey;
+  text-decoration: none;
+  cursor: pointer;
+
+  svg {
+    margin-right: 15px;
+    height: 24px;
+    width: 24px;
+  }
+
+  .addIcon {
+    margin-right: 5px;
+    height: 24px;
+    width: 24px;
+  }
+}
+
+.emptyContactsContainer {
+  position: absolute;
+  width: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

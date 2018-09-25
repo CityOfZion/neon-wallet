@@ -57,15 +57,18 @@
     svg {
       width: 24px;
     }
-    &:last-child {
-      padding-right: 0;
-      margin-right: 0;
-    }
   }
 }
 
 .enterQrHeaderButton {
   @extend .sendPanelHeaderButton;
+  margin-right: 5px;
+}
+
+.disabledFeature {
+  display: flex !important;
+  opacity: 0.4;
+  cursor: default;
 }
 
 .confirmButtonsContainer {

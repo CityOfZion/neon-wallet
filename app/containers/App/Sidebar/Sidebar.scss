@@ -82,3 +82,15 @@ $size: 64px;
     }
   }
 }
+
+.disabledNavIem {
+  @extend .navItem;
+  cursor: default;
+  opacity: 0.3;
+
+  &.active,
+  &:hover {
+    background: #fff;
+    border-image: none;
+  }
+}
