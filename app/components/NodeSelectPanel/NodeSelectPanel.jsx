@@ -27,9 +27,17 @@ type Props = {
   selectedNode: string
 }
 
-export default class NodeSelect extends React.Component<Props> {
+type State = {
+  refreshDisabled: boolean
+}
+
+export default class NodeSelect extends React.Component<Props, State> {
+  state = {
+    refreshDisabled: false
+  }
+
   render() {
-    const { loading, loadNodesData, nodesShown } = this.props
+    const { loading, nodesShown } = this.props
     return (
       <FullHeightPanel
         headerText="Node Selection"
@@ -44,11 +52,16 @@ export default class NodeSelect extends React.Component<Props> {
         </div>
         <section className={styles.tableContainer}>
           <div className={styles.header}>
-            <Tooltip title="Refresh" className={styles.refresh}>
-              <span onClick={loading ? null : loadNodesData}> Refresh </span>
+            <Tooltip
+              title="Refresh"
+              className={classNames(styles.refresh, {
+                [styles.refreshDisabled]: this.state.refreshDisabled
+              })}
+            >
+              <span onClick={this.handleRefreshNodeData}> Refresh </span>
               <RefreshIcon
                 id="refresh"
-                onClick={loading ? null : loadNodesData}
+                onClick={this.handleRefreshNodeData}
                 className={classNames(styles.icon, {
                   [styles.loading]: loading
                 })}
@@ -63,6 +76,18 @@ export default class NodeSelect extends React.Component<Props> {
         </section>
       </FullHeightPanel>
     )
+  }
+
+  handleRefreshNodeData = () => {
+    const { loading, loadNodesData } = this.props
+    const { refreshDisabled } = this.state
+    if (!refreshDisabled) {
+      loadNodesData()
+      this.setState({ refreshDisabled: true })
+      setTimeout(() => {
+        this.setState({ refreshDisabled: false })
+      }, 15000)
+    }
   }
 
   renderAutomaticSelect = () => {
