@@ -1,5 +1,39 @@
 @import './variables';
 
+@font-face {
+  font-family: 'Gotham';
+  src: url('../assets/fonts/Gotham-Book.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Gotham';
+  src: url('../assets/fonts/Gotham-Bold.otf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gotham-Medium';
+  src: url('../assets/fonts/Gotham-Medium.otf');
+}
+@font-face {
+  font-family: 'Gotham-Bold';
+  src: url('../assets/fonts/Gotham-Bold.otf');
+}
+@font-face {
+  font-family: 'Gotham-Light';
+  src: url('../assets/fonts/Gotham-Light.otf');
+}
+@font-face {
+  font-family: 'Gotham-Thin';
+  src: url('../assets/fonts/Gotham-Thin.otf');
+}
+@font-face {
+  font-family: 'Gotham-Book';
+  src: url('../assets/fonts/Gotham-Book.otf');
+}
+
 @media print {
   #newWallet {
     font-size: 0.8em;

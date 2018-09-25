@@ -125,7 +125,7 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.(ttf|eot)(\?[a-z0-9#=&.]+)?$/,
+        test: /\.(ttf|eot|otf)(\?[a-z0-9#=&.]+)?$/,
         use: {
           loader: 'file-loader'
         }
