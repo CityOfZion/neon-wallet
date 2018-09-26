@@ -54,11 +54,7 @@ class Notifications extends Component<Props> {
                     }
                   )}
                 >
-                  {notifications[0].level === 'success' ? (
-                    <CheckIcon />
-                  ) : (
-                    <WarningIcon />
-                  )}
+                  {this.renderIcon(notifications[0].level)}
                 </div>
               </div>
             ),
@@ -91,6 +87,18 @@ class Notifications extends Component<Props> {
         allowHTML
       />
     )
+  }
+
+  renderIcon(level: string) {
+    console.log(level)
+    switch (level) {
+      case 'success':
+        return <CheckIcon />
+      case 'error' || 'warning':
+        return <WarningIcon />
+      default:
+        return null
+    }
   }
 }
 

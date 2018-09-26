@@ -47,10 +47,9 @@ export default class LoginLocalStorage extends Component<Props, State> {
         <form onSubmit={this.handleSubmit}>
           <div className={styles.selectMargin}>
             <StyledReactSelect
-              disabled={!accounts.length}
               value={selectedAccount}
               onChange={this.handleChange}
-              options={mappedAccounts}
+              options={mappedAccounts || []}
             />
           </div>
           <div className={styles.inputMargin}>
