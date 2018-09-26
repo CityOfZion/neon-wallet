@@ -75,7 +75,6 @@ export default class EditContactPanel extends React.Component<Props> {
   }
 
   handleDelete = () => {
-    // console.log('foo')
     const { name } = this.props
     if (window.confirm(`Are you sure you want to delete contact "${name}"?`)) {
       this.props.deleteContact(name)

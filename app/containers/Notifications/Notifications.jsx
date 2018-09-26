@@ -90,7 +90,6 @@ class Notifications extends Component<Props> {
   }
 
   renderIcon(level: string) {
-    console.log(level)
     switch (level) {
       case 'success':
         return <CheckIcon />
