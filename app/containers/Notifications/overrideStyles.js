@@ -35,11 +35,11 @@ const overrideStyles = {
     },
     warning: {
       backgroundColor: '#FFCF48',
-      color: 'black'
+      color: '#000000'
     },
     info: {
       backgroundColor: '#FFCF48',
-      color: 'black'
+      color: '#000000'
     }
   },
 
