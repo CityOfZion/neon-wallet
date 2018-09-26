@@ -19,10 +19,6 @@
     justify-content: space-between;
   }
 
-  .contacts {
-    // padding: 12px;
-  }
-
   .contact {
     display: flex;
     align-items: center;
@@ -33,7 +29,6 @@
     button {
       background-color: transparent;
     }
-    // margin-bottom: 45px;
 
     &:last-child {
       margin-bottom: 0;

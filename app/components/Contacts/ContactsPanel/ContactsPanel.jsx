@@ -57,7 +57,6 @@ export default class ContactsPanel extends React.Component<Props, State> {
 
   render() {
     const { contacts } = this.props
-    console.log(contacts)
     return (
       <React.Fragment>
         <HeaderBar
@@ -75,16 +74,15 @@ export default class ContactsPanel extends React.Component<Props, State> {
           renderHeader={this.renderHeader}
           contentClassName={styles.contactPanelContent}
         >
-          {!isEmpty(contacts) && (
+          {isEmpty(contacts) ? (
+            <div className={styles.emptyContactsContainer}>
+              <LogoWithStrikethrough />
+            </div>
+          ) : (
             <div className={styles.contacts}>
               {Object.keys(contacts).map((key, i) =>
                 this.renderContact({ address: contacts[key], name: key }, i)
               )}
-            </div>
-          )}
-          {isEmpty(contacts) && (
-            <div className={styles.emptyContactsContainer}>
-              <LogoWithStrikethrough />
             </div>
           )}
         </Panel>
@@ -96,9 +94,6 @@ export default class ContactsPanel extends React.Component<Props, State> {
     const { sorting } = this.state
     const { contacts } = this.props
     return (
-      // <div className={styles.header}>
-      //   <span>Contacts</span>
-      // </div>
       <div className={styles.headerSelect}>
         <StyledReactSelect
           disabled={isEmpty(contacts)}
@@ -134,7 +129,7 @@ export default class ContactsPanel extends React.Component<Props, State> {
           <Button
             className={styles.editButton}
             renderIcon={EditIcon}
-            onClick={this.handleEdit(name)}
+            onClick={() => this.handleEdit(name)}
           >
             Edit
           </Button>
@@ -150,11 +145,7 @@ export default class ContactsPanel extends React.Component<Props, State> {
             }}
             className={styles.settingsDonations}
           >
-            <Button
-              className={styles.sendButton}
-              renderIcon={SendIcon}
-              // onClick={this.handleEdit(name)}
-            >
+            <Button className={styles.sendButton} renderIcon={SendIcon}>
               Send Assets
             </Button>
           </Link>
