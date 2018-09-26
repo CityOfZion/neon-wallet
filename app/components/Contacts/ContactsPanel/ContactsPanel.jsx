@@ -158,7 +158,7 @@ export default class ContactsPanel extends React.Component<Props, State> {
     this.setState({ sorting: option })
   }
 
-  handleEdit = (name: string) => () => {
+  handleEdit = (name: string) => {
     this.props.history.push(`/contacts/edit/${encodeURIComponent(name)}`)
   }
 
