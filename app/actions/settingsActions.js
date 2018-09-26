@@ -40,7 +40,10 @@ const getSettings = async (): Promise<Settings> => {
 
   const { version } = pack
   const tokens = uniqBy(
-    [...(defaults.tokens || []), ...(settings.tokens || [])],
+    [
+      ...(defaults.tokens || []),
+      ...(settings.tokens.filter(token => token.length === 40) || [])
+    ],
     token => [token.networkId, token.scriptHash].join('-')
   )
 
