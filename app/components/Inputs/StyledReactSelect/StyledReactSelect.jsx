@@ -11,6 +11,16 @@ const customStyles = {
   noOptionsMessage: styles => ({
     ...styles,
     fontFamily: 'Gotham-Light'
+  }),
+  control: (styles, props) => ({
+    ...styles,
+    cursor: 'pointer',
+    border:
+      props.isFocused && props.selectProps.hideHighlight && 'none !important',
+    background:
+      props.isFocused &&
+      props.selectProps.hideHighlight &&
+      'transparent !important'
   })
 }
 

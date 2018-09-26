@@ -175,6 +175,7 @@ input {
 // TODO: work out a solution that does not expose these globally
 .react-select-container {
   width: 100%;
+  cursor: pointer;
 
   .react-select__placeholder {
     color: rgba(106, 106, 106, 1);

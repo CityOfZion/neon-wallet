@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import type { Node } from 'react'
 import classNames from 'classnames'
 
 import { openExplorerAddress } from '../../../core/explorer'
@@ -9,12 +10,22 @@ type Props = {
   className?: string,
   networkId: NetworkType,
   explorer: ExplorerType,
-  address: string
+  address: string,
+  asWrapper: boolean,
+  children: Array<Node>
 }
 
 export default class Address extends React.Component<Props> {
   render = () => {
-    const { address, className } = this.props
+    const { address, className, asWrapper, children } = this.props
+
+    if (asWrapper) {
+      return (
+        <div className={className} onClick={this.handleClick}>
+          {children}
+        </div>
+      )
+    }
 
     return (
       <span
