@@ -22,6 +22,10 @@ type State = {
 }
 
 export default class LoginLocalStorage extends Component<Props, State> {
+  static defaultProps = {
+    accounts: []
+  }
+
   state = {
     passphrase: '',
     selectedAccount: null,
