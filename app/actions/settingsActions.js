@@ -27,6 +27,20 @@ const DEFAULT_SETTINGS: () => Promise<Settings> = async () => ({
   tokens: await getDefaultTokens()
 })
 
+const ensureHex = (token: string): boolean => {
+  const hexRegex = /^([0-9A-Fa-f]{2})*$/
+  try {
+    return hexRegex.test(token)
+  } catch (err) {
+    console.warn('An invalid script hash was manually entered in Settings!', {
+      scriptHash: token
+    })
+    return false
+  }
+}
+
+const validateHashLength = (token: string): boolean => token.length === 40
+
 const getSettings = async (): Promise<Settings> => {
   const defaults = await DEFAULT_SETTINGS()
   const settings = (await getStorage(STORAGE_KEY)) || {}
@@ -40,7 +54,10 @@ const getSettings = async (): Promise<Settings> => {
 
   const { version } = pack
   const tokens = uniqBy(
-    [...(defaults.tokens || []), ...(settings.tokens || [])],
+    [
+      ...(defaults.tokens || []),
+      ...(settings.tokens.filter(ensureHex).filter(validateHashLength) || [])
+    ],
     token => [token.networkId, token.scriptHash].join('-')
   )
 
