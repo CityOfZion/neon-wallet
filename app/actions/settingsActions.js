@@ -39,9 +39,7 @@ const ensureHex = (token: string): boolean => {
   }
 }
 
-const validateHashLength = (token: string): boolean => {
-  return token.length === 40
-}
+const validateHashLength = (token: string): boolean => token.length === 40
 
 const getSettings = async (): Promise<Settings> => {
   const defaults = await DEFAULT_SETTINGS()
@@ -65,7 +63,6 @@ const getSettings = async (): Promise<Settings> => {
 
   return { ...defaults, ...settings, tokens, version }
 }
-
 
 export const ID = 'settings'
 
