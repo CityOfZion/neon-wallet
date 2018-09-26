@@ -17,7 +17,7 @@ export const ID = 'balances'
 
 async function getBalances({ net, address, tokens }: Props) {
   let endpoint = await getNode()
-  if (!endpoint) {
+  if (isEmpty(endpoint)) {
     endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
   }
   // token balances
