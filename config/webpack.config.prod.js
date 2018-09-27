@@ -110,12 +110,14 @@ module.exports = {
         }
       },
       {
-        test: /\.woff(2)?(\?[a-z0-9#=&.]+)?$/,
+        // Match woff2 in addition to patterns like .woff?v=1.1.1.
+        test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
         use: {
           loader: 'url-loader',
           options: {
-            limit: 10000,
-            mimetype: 'application/font-woff'
+            limit: 50000,
+            mimetype: 'application/font-woff',
+            name: './fonts/[name].[ext]'
           }
         }
       },
@@ -123,12 +125,6 @@ module.exports = {
         test: /\.svg$/,
         use: ['svg-react-loader'],
         exclude: /node_modules/
-      },
-      {
-        test: /\.(ttf|eot|otf)(\?[a-z0-9#=&.]+)?$/,
-        use: {
-          loader: 'file-loader'
-        }
       }
     ]
   },
