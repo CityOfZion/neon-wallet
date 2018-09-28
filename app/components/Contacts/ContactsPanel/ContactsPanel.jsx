@@ -76,14 +76,14 @@ const getContactsInGroups = (
   )
 
   const groupedContacts = Object.entries(groupContactsByFirstLetter).map(
-    ([groupLetter, groupContacts]) => ({
-      groupLetter,
+    ([groupName, groupContacts]) => ({
+      groupName,
       /* $FlowFixMe */
       groupContacts: orderBy(groupContacts, 'name', orderDirection)
     })
   )
 
-  return orderBy(groupedContacts, 'groupLetter', orderDirection)
+  return orderBy(groupedContacts, 'groupName', orderDirection)
 }
 
 export default class ContactsPanel extends React.Component<Props, State> {
@@ -188,9 +188,9 @@ export default class ContactsPanel extends React.Component<Props, State> {
           ) : (
             <div className={styles.contacts}>
               {getContactsInGroups(contacts, sorting.value).map(
-                ({ groupLetter, groupContacts }) => (
-                  <div key={`group${groupLetter}`}>
-                    <div className={styles.groupHeader}>{groupLetter}</div>
+                ({ groupName, groupContacts }) => (
+                  <div key={`group${groupName}`}>
+                    <div className={styles.groupHeader}>{groupName}</div>
                     {groupContacts.map(({ address, name }, i) =>
                       this.renderContact(address, name, i)
                     )}
