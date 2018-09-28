@@ -38,6 +38,7 @@
       display: flex;
       align-items: center;
       width: 420px;
+      justify-content: space-between;
     }
 
     .actions {
@@ -100,6 +101,12 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.groupHeader {
+  padding: 10px 24px;
+  background-color: #F6F7F8;
+  font-weight: bold;
 }
 
 .headerSelect {

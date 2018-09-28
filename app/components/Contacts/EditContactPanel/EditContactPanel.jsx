@@ -1,11 +1,9 @@
 // @flow
 import React from 'react'
 import { Link } from 'react-router-dom'
-import classNames from 'classnames'
 import { noop } from 'lodash-es'
 
 import FullHeightPanel from '../../Panel/FullHeightPanel'
-import Panel from '../../Panel'
 import ContactForm from '../ContactForm'
 import ArrowIcon from '../../../assets/icons/arrow.svg'
 import Close from '../../../assets/icons/close.svg'
