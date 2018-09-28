@@ -72,7 +72,10 @@ const getContactsInGroups = (
 
   const groupContactsByFirstLetter = groupBy(
     contactsArray,
-    ({ name }: Contact) => name.substr(0, 1).toUpperCase()
+    ({ name }: Contact) => {
+      const firstLetter = name.substr(0, 1).toUpperCase()
+      return /[a-zA-Z]/.test(firstLetter) ? firstLetter : '#'
+    }
   )
 
   const groupedContacts = Object.entries(groupContactsByFirstLetter).map(
