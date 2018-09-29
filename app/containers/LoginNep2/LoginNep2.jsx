@@ -51,6 +51,7 @@ export default class LoginNep2 extends Component<Props, State> {
             className={styles.loginButtonMargin}
             renderIcon={LoginIcon}
             disabled={loading || !this.isValid()}
+            shouldCenterButtonLabelText
           >
             Login
           </Button>

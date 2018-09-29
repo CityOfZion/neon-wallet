@@ -1,9 +1,7 @@
 @import '../../styles/variables';
 
 .active {
-  background-image: linear-gradient(to right, #66eb8e, #6bdaf6),
-    radial-gradient(circle at top left, #66eb8e, #6bdaf6) !important;
-  color: #fff !important;
+  background-image: linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%);
 }
 
 .button {
@@ -18,26 +16,29 @@
   padding: 12px;
   white-space: nowrap;
   transition: opacity 0.2s;
+  height: 50px;
 
   &[disabled] {
-    opacity: 0.25;
+    opacity: 0.6;
+    background: #d6d9e0 !important;
+    color: #8d98ae !important;
   }
 
   &:not([disabled]) {
     cursor: pointer;
-
-    &:hover {
-      background-image: linear-gradient(to right, #66eb8e, #6bdaf6),
-        radial-gradient(circle at top left, #66eb8e, #6bdaf6);
-    }
   }
 
   &.dark {
-    background: $primary-button;
-    color: #fff;
+    background-image: linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%);
+    font-size: 14px;
+    color: #394152;
 
     path {
-      fill: #fff;
+      fill: #394152;
+    }
+
+    &:not([disabled]):hover {
+      background: #66edcd;
     }
   }
 
@@ -46,7 +47,7 @@
     border-width: 2px;
     border-color: transparent;
     background: #fff;
-    color: $primary-button;
+    color: #394152;
 
     &:not([disabled]):hover {
       border: double 2px transparent;
@@ -54,11 +55,7 @@
       background-clip: content-box, border-box;
       border-color: transparent;
       border-color: transparent;
-      color: white;
-
-      path {
-        fill: #fff;
-      }
+      background: #f2f2f2 !important;
     }
   }
 
@@ -66,22 +63,18 @@
     width: 100%;
   }
 
+  .centeredLabel {
+    position: absolute;
+    align-self: center !important;
+  }
+
   .icon {
     svg {
       height: 24.5px;
       width: 24.5px;
     }
-
     height: 24.5px;
     width: 24.5px;
     align-self: flex-start;
-
-    &.dark {
-      // TODO
-    }
-
-    &.light {
-      // TODO
-    }
   }
 }
