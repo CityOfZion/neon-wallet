@@ -11,8 +11,7 @@ type Props = {
   primary: ?boolean,
   active?: boolean,
   type: ?string,
-  // design spec says label should NOT be centered by default when
-  // bring rendered with icon.
+  // will center label if rendered with icon
   shouldCenterButtonLabelText: boolean,
   children: React$Node
 }
