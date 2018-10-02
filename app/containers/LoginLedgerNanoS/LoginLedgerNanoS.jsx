@@ -52,6 +52,7 @@ export default class LoginLedgerNanoS extends React.Component<Props> {
             renderIcon={LoginIcon}
             disabled={!this.canLogin()}
             onClick={this.handleLogin}
+            shouldCenterButtonLabelText
           >
             Login
           </Button>

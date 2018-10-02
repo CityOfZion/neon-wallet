@@ -44,6 +44,7 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
             className={styles.loginButtonMargin}
             renderIcon={LoginIcon}
             disabled={wif.length < 10}
+            shouldCenterButtonLabelText
           >
             Login
           </Button>

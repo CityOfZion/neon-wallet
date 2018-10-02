@@ -47,6 +47,11 @@
   }
   button {
     margin: 0;
+    height: auto;
     border: solid thin #8d98ae !important;
+
+    span {
+      align-self: center !important;
+    }
   }
 }
