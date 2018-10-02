@@ -13,9 +13,11 @@ import {
 import pack from '../../package.json'
 
 type Settings = {
-  currency?: string,
-  blockExplorer?: string,
-  tokens?: Array<TokenItemType>
+  currency: string,
+  blockExplorer: string,
+  tokens: Array<TokenItemType>,
+  version: string,
+  theme: string
 }
 
 const STORAGE_KEY = 'settings'
@@ -24,7 +26,8 @@ const DEFAULT_SETTINGS: () => Promise<Settings> = async () => ({
   currency: DEFAULT_CURRENCY_CODE,
   theme: DEFAULT_THEME,
   blockExplorer: EXPLORERS.NEO_SCAN,
-  tokens: await getDefaultTokens()
+  tokens: await getDefaultTokens(),
+  version: pack
 })
 
 const ensureHex = (token: string): boolean => {
@@ -43,31 +46,24 @@ const validateHashLength = (token: string): boolean => token.length === 40
 
 const getSettings = async (): Promise<Settings> => {
   const defaults = await DEFAULT_SETTINGS()
-  const settings = (await getStorage(STORAGE_KEY)) || {}
-
-  // indicates that this user is running 0.2.7 or less
-  // and we override the saved settings with EXPLORERS.NEO_SCAN
-  // until user updtates settings themselves
-  if (!settings.version) {
-    settings.blockExplorer = EXPLORERS.NEO_SCAN
-  }
-
-  const { version } = pack
+  const settings = await getStorage(STORAGE_KEY)
   const tokens = uniqBy(
     [
-      ...(defaults.tokens || []),
-      ...(settings.tokens.filter(ensureHex).filter(validateHashLength) || [])
+      ...defaults.tokens,
+      ...(settings.tokens
+        ? settings.tokens.filter(ensureHex).filter(validateHashLength)
+        : [])
     ],
     token => [token.networkId, token.scriptHash].join('-')
   )
-
-  return { ...defaults, ...settings, tokens, version }
+  return { ...defaults, ...settings, tokens }
 }
 
 export const ID = 'settings'
 
 export const updateSettingsActions = createActions(
   ID,
+  // $FlowFixMe
   (values: Settings = {}) => async (): Promise<Settings> => {
     const settings = await getSettings()
     const newSettings = {
