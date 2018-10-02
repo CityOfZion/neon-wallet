@@ -1,7 +1,15 @@
 @import '../../styles/variables';
 
 .active {
-  background-image: linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%);
+  background-image: linear-gradient(
+    -216deg,
+    #66ed87 0%,
+    #6ad8ff 100%
+  ) !important;
+
+  &:hover {
+    background: #66edcd !important;
+  }
 }
 
 .button {
@@ -55,7 +63,7 @@
       background-clip: content-box, border-box;
       border-color: transparent;
       border-color: transparent;
-      background: #f2f2f2 !important;
+      background: #f2f2f2;
     }
   }
 
