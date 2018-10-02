@@ -20,6 +20,7 @@ exports[`Login renders without crashing 1`] = `
       id="loginButton"
       primary={true}
       renderIcon={[Function]}
+      shouldCenterButtonLabelText={true}
       type="submit"
     >
       Login
