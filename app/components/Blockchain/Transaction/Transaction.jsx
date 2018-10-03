@@ -3,6 +3,7 @@ import React from 'react'
 import classNames from 'classnames'
 import moment from 'moment'
 
+import Button from '../../Button'
 import { openExplorerTx } from '../../../core/explorer'
 import styles from './Transaction.scss'
 import { ASSETS } from '../../../core/constants'
@@ -11,12 +12,16 @@ import { formatBalance } from '../../../core/formatters'
 import ClaimIcon from '../../../assets/icons/claim.svg'
 import SendIcon from '../../../assets/icons/send-tx.svg'
 import ReceiveIcon from '../../../assets/icons/receive-tx.svg'
+import ContactsAdd from '../../../assets/icons/contacts-add.svg'
+import InfoIcon from '../../../assets/icons/info.svg'
+import CopyToClipboard from '../../CopyToClipboard'
 
 type Props = {
   className?: string,
   tx: Object,
   networkId: string,
-  explorer: ExplorerType
+  explorer: ExplorerType,
+  showAddContactModal: ({ address: string }) => null
 }
 
 export default class Transaction extends React.Component<Props> {
@@ -34,15 +39,43 @@ export default class Transaction extends React.Component<Props> {
         </div>
         <div className={styles.txLabelContainer}>{label}</div>
         <div className={styles.txAmountContainer}>{amount}</div>
-        <div className={styles.txToContainer}>{to}</div>
-        <span
-          className={classNames(styles.txidLink, className)}
+        <div className={styles.txToContainer}>
+          {to}
+          {to !== 'NETWORK FEES' && (
+            <CopyToClipboard
+              className={styles.copy}
+              text={to}
+              tooltip="Copy Public Address"
+            />
+          )}
+        </div>
+
+        {to === 'NETWORK FEES' ? (
+          <div className={styles.historyButtonPlaceholder} />
+        ) : (
+          <Button
+            className={styles.transactionHistoryButton}
+            renderIcon={ContactsAdd}
+            onClick={this.displayModal}
+          >
+            Add
+          </Button>
+        )}
+        <Button
+          className={styles.transactionHistoryButton}
+          renderIcon={InfoIcon}
           onClick={this.handleClick}
         >
-          {txid.substring(0, 32)}
-        </span>
+          View
+        </Button>
       </div>
     )
+  }
+
+  displayModal = () => {
+    const { showAddContactModal, tx } = this.props
+    const { to } = tx
+    showAddContactModal({ address: to })
   }
 
   handleClick = () => {

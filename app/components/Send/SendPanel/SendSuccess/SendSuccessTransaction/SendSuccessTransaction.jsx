@@ -54,6 +54,7 @@ class SendSuccessTransaction extends Component<Props> {
           <CopyToClipboard
             className={styles.sendSuccessButton}
             text={address}
+            tooltip="Copy Public Address"
           />
         </div>
         <div className={styles.buttonContainer}>

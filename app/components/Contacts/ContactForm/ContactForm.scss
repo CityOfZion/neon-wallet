@@ -1,56 +1,69 @@
 @import '../../../styles/variables.scss';
 
-.contactFormHeader {
-  color: $dark-grey;
-  font-weight: 300;
+.contactFormContainer {
+  height: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  flex: 1;
 
-  svg {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-  }
-}
-
-.contactForm {
-  max-width: 500px;
-  margin: 0 auto;
-
-  .input {
-    margin-bottom: 10px;
-  }
-
-  .contactFormSubheader {
-    font-size: 0.9rem;
-    border-bottom: 1px solid $light-grey;
-    padding: 10px 0;
-    margin: 35px 0;
+  .contactFormHeader {
     color: $dark-grey;
-  }
-
-  .contactFormLabel {
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 0.8rem;
-    display: block;
-    color: $medium-grey;
-    margin: 15px 0 10px 0;
-  }
-
-  .conactFormDialogue {
-    width: 100%;
-    // margin-top: auto;
+    font-weight: 300;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     svg {
       width: 40px;
       height: 40px;
+      margin-right: 10px;
     }
   }
 
-  .dialogueAndButtonContainer {
+  .contactForm {
+    max-width: 500px;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    .input {
+      margin-bottom: 10px;
+    }
+
+    .contactFormSubheader {
+      font-size: 0.9rem;
+      border-bottom: 1px solid $light-grey;
+      padding: 10px 0;
+      margin: 35px 0;
+      color: $dark-grey;
+    }
+
+    .contactFormLabel {
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 0.8rem;
+      display: block;
+      color: $medium-grey;
+      margin: 15px 0 10px 0;
+    }
+
+    .conactFormDialogue {
+      width: 100%;
+
+      svg {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    .dialogueAndButtonContainer {
+      margin-top: -20px;
+    }
+  }
+
+  .submitButton {
     margin-top: auto;
-    margin-bottom: 50px;
   }
 }

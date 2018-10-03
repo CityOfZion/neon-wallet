@@ -23,7 +23,7 @@ class AddContactModal extends Component<Props> {
     const { address, hideModal } = this.props
 
     return (
-      <BaseModal hideModal={hideModal} height="700px">
+      <BaseModal hideModal={hideModal} height="500px">
         <ContactForm
           formAddress={address}
           submitLabel="Add to contacts"
