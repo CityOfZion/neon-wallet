@@ -8,7 +8,7 @@ $size: 64px;
   justify-content: space-between;
   box-sizing: border-box;
   width: $size;
-  background: #f2f2f2;
+  background: #fff;
 
   .group {
     flex: 0 0 auto;
@@ -73,7 +73,9 @@ $size: 64px;
   &.active,
   &:hover {
     background: #fff;
-    border-image: linear-gradient(to bottom, #66eb8e, #6bdaf6) 1 100%;
+    //border-image: linear-gradient(to bottom, #66eb8e, #6bdaf6) 1 100%;
+    border-color: #5abf6b;
+    border-width: 4px;
 
     &,
     & svg,

@@ -16,7 +16,7 @@ import TokenSaleIcon from '../../../assets/navigation/tokens.svg'
 import SettingsIcon from '../../../assets/navigation/settings.svg'
 import { ROUTES } from '../../../core/constants'
 
-import LogoWithoutText from '../../../assets/images/logo-without-text.png'
+import LogoWithoutText from '../../../assets/images/logo-without-text-black.png'
 
 type Props = {
   className: string,
