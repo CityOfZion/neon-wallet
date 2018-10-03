@@ -19,6 +19,7 @@ const ZeroAssets = ({ address, children }: Props) => (
   <Panel renderHeader={() => <p>No available assets to send</p>}>
     <section className={styles.zeroAssets}>
       <div className={styles.emptyBalanceContainer}>
+        <LogoWithStrikethrough />
         <p>
           You’ll need to <b>transfer compatible NEP-5 assets</b> to this wallet
           using{' '}
@@ -35,7 +36,6 @@ const ZeroAssets = ({ address, children }: Props) => (
             tooltip="Copy Public Address"
           />
         </div>
-        <LogoWithStrikethrough />
       </div>
     </section>
     {children}
