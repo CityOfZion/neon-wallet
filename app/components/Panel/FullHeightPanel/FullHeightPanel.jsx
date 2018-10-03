@@ -24,7 +24,7 @@ export default class ViewLayout extends Component<Props> {
   static defaultProps = {
     shouldRenderHeader: true,
     renderInstructions: () => <div> Enter Details </div>,
-    iconColor: '#5ABF6B'
+    iconColor: '#69E27E'
   }
 
   render() {
