@@ -53,6 +53,7 @@
 
     &[disabled] {
       cursor: default;
+      opacity: 0.6;
     }
 
     .sendPanelHeaderButtonIcon {
@@ -76,7 +77,6 @@
 
 .disabledFeature {
   display: flex !important;
-  opacity: 0.4;
   cursor: default;
 }
 
