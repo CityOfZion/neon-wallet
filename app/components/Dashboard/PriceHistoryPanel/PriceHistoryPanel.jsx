@@ -7,7 +7,11 @@ import PriceHistoryChart from './PriceHistoryChart'
 import Panel from '../../Panel'
 import BoundingBox from './BoundingBox'
 import DropdownIcon from '../../../assets/icons/dropdown.svg'
-import { ASSETS, CURRENCIES } from '../../../core/constants'
+import {
+  ASSETS,
+  CURRENCIES,
+  DEFAULT_CURRENCY_CODE
+} from '../../../core/constants'
 import styles from './PriceHistoryPanel.scss'
 import { formatFiat, formatThousands } from '../../../core/formatters'
 
@@ -124,7 +128,9 @@ export default class PriceHistoryPanel extends React.Component<Props> {
     formatter: Function = formatThousands
   ): string => {
     const { symbol } = CURRENCIES[this.props.currency]
-    return `${symbol}${formatter(price)}`
+    return `${symbol || CURRENCIES[DEFAULT_CURRENCY_CODE].symbol}${formatter(
+      price
+    )}`
   }
 
   renderPriceChange = () => {
@@ -152,6 +158,6 @@ export default class PriceHistoryPanel extends React.Component<Props> {
 
   getLatestPrice = (): number => {
     const { prices, priceKey } = this.props
-    return prices[prices.length - 1][priceKey]
+    return prices.length ? prices[prices.length - 1][priceKey] : 0
   }
 }

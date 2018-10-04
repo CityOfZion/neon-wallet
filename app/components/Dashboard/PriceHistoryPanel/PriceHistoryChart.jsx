@@ -10,6 +10,7 @@ import {
   YAxis,
   Tooltip
 } from 'recharts'
+import { get } from 'lodash-es'
 
 import AxisLabel from './AxisLabel'
 import { formatThousands } from '../../../core/formatters'
@@ -104,11 +105,14 @@ export default class PriceHistoryChart extends React.Component<Props, State> {
     !!tooltipProps.payload.length && (
       <div className={styles.tooltipContainer}>
         <div className={styles.tooltipTime}>
-          {this.formatLabel(tooltipProps.payload[0].payload.time)}
+          {this.formatLabel(get(tooltipProps.payload[0], 'payload.time', 0))}
         </div>
         <div className={styles.tooltipPrice}>
-          {/* $FlowFixMe */}
-          {this.formatPrice(tooltipProps.payload[0].payload.close, null)}
+          {this.formatPrice(
+            get(tooltipProps.payload[0], 'payload.close', 0),
+            /* $FlowFixMe */
+            null
+          )}
         </div>
       </div>
     )
