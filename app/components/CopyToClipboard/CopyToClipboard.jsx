@@ -41,8 +41,6 @@ class CopyToClipboard extends React.Component<Props, State> {
     const { text, tooltip = '', className = '' } = this.props
     const { copied } = this.state
 
-    console.log(this.props)
-
     return (
       <button
         type="button"
