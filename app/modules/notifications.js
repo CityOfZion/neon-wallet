@@ -103,7 +103,7 @@ export const showErrorNotification = (args: NotificationArgsType) => (
       title: DEFAULT_ERROR_TITLE,
       ...args,
       level: NOTIFICATION_LEVELS.ERROR,
-      autoDismiss: 0
+      autoDismiss: 5
     },
     dispatch
   )
