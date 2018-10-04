@@ -19,7 +19,8 @@ type Props = {
   sendError: boolean,
   noSendableAssets: boolean,
   disabled: boolean,
-  hasNetworkFees: boolean
+  hasNetworkFees: boolean,
+  maxNumberOfRecipients: number
 }
 
 const SendPanelHeader = ({
@@ -31,12 +32,13 @@ const SendPanelHeader = ({
   sendSuccess,
   noSendableAssets,
   disabled,
-  hasNetworkFees = false
+  hasNetworkFees = false,
+  maxNumberOfRecipients
 }: Props) => {
   const numberOfItems = sendRowDetails.length
 
   let headerTitle = 'Select Assets'
-  let headerSubtitle = `${numberOfItems} of 10 Recipients`
+  let headerSubtitle = `${numberOfItems} of ${maxNumberOfRecipients} Recipients`
   let buttons = (
     <div className={styles.sendPanelHeaderButtons}>
       <Tooltip

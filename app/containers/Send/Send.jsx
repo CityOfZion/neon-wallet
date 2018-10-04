@@ -16,6 +16,8 @@ import SendPanel from '../../components/Send/SendPanel'
 import HeaderBar from '../../components/HeaderBar'
 import styles from './Send.scss'
 
+const MAX_NUMBER_OF_RECIPIENTS = 10
+
 type Props = {
   sendableAssets: Object,
   prices: Object,
@@ -150,7 +152,7 @@ export default class Send extends React.Component<Props, State> {
     this.setState((prevState: Object) => {
       const newState = [...prevState.sendRowDetails]
 
-      if (newState.length < 10) {
+      if (newState.length < MAX_NUMBER_OF_RECIPIENTS) {
         newState.push(this.generateRow())
 
         return { sendRowDetails: newState }
@@ -384,6 +386,7 @@ export default class Send extends React.Component<Props, State> {
           />
         )}
         <SendPanel
+          maxNumberOfRecipients={MAX_NUMBER_OF_RECIPIENTS}
           sendRowDetails={sendRowDetails}
           sendableAssets={sendableAssets}
           showConfirmSend={showConfirmSend}
