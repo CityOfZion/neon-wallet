@@ -129,9 +129,10 @@ export default class PriceHistoryChart extends React.Component<Props, State> {
     const date = new Date(timestamp * 1000)
 
     return date.toLocaleString('en-US', {
-      weekday: 'short',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric'
     })
   }
 
