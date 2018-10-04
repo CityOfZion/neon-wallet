@@ -150,7 +150,7 @@ export default class Send extends React.Component<Props, State> {
     this.setState((prevState: Object) => {
       const newState = [...prevState.sendRowDetails]
 
-      if (newState.length < 5) {
+      if (newState.length < 10) {
         newState.push(this.generateRow())
 
         return { sendRowDetails: newState }

@@ -50,12 +50,21 @@
     font-size: 1rem;
     align-items: center;
     cursor: pointer;
+
+    &[disabled] {
+      cursor: default;
+    }
+
     .sendPanelHeaderButtonIcon {
       color: $dark-grey;
       margin-right: 10px;
     }
     svg {
       width: 24px;
+
+      path {
+        fill: #5abf6b;
+      }
     }
   }
 }
@@ -122,7 +131,7 @@
 }
 
 .sendSuccessPanel {
-  margin-bottom: 25px;
+  height: 100%;
 }
 
 .priorityExplanationText {
