@@ -13,9 +13,9 @@ const ReceivePanelHeader = ({ address }: Props) => (
   <section className={styles.receivePanelHeader}>
     <div className={styles.receivePanelHeaderInfo}>Select Deposit Method</div>
     <div className={styles.walletAddressContainer}>
-      <div className={styles.description}>Wallet Address</div>
+      <div className={styles.description}>Your Public Address</div>
       <div className={styles.address}>{address}</div>
-      <CopyToClipboard text={address} />
+      <CopyToClipboard className={styles.copy} text={address} />
     </div>
   </section>
 )
