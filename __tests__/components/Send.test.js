@@ -1,5 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import { uniqueId } from 'lodash-es'
 
 import Send from '../../app/containers/Send/Send'
 import ZeroAssets from '../../app/components/ZeroAssets/ZeroAssets'
@@ -34,8 +35,25 @@ describe('Send', () => {
     expect(wrapper.find(ZeroAssets)).toBeTruthy()
   })
 
-  test('It adds a row when you click Add Recipient button', () => {
+  test('It does not add a row when you click Add Recipient button and without details for the first row being filled in', () => {
     const wrapper = setup()
+
+    wrapper.find('.sendPanelHeaderButton').simulate('click')
+    expect(wrapper.instance().state.sendRowDetails.length).toBe(1)
+    expect(wrapper.find(SendRecipientListItem).children().length).toBe(1)
+  })
+
+  test('It does add a row when you click Add Recipient button and details are filled in', () => {
+    const wrapper = setup()
+
+    const sendRowDetails = []
+    const asset = createAsset('GAS', 1)
+    asset.amount = 1.523
+    asset.address = 'ARU4Sw9yyqgfjxfqF1TNwWHHFvLbAVdTj1'
+    asset.id = uniqueId()
+    wrapper.setState({
+      sendRowDetails: [asset]
+    })
 
     wrapper.find('.sendPanelHeaderButton').simulate('click')
     expect(wrapper.instance().state.sendRowDetails.length).toBe(2)
@@ -65,15 +83,16 @@ describe('Send', () => {
     expect(wrapperRows[1].asset).toBe('RPX')
   })
 
-  test('It adds a maximum of 5 rows', () => {
+  // TODO: update this test so that valid values are added
+  test('.sendPanelHeaderButton is disabled until details are filled out', () => {
     const wrapper = setup()
 
-    for (let i = 0; i <= 6; i++) {
+    for (let i = 0; i <= 10; i++) {
       wrapper.find('.sendPanelHeaderButton').simulate('click')
     }
 
-    expect(wrapper.instance().state.sendRowDetails.length).toBe(5)
-    expect(wrapper.find(SendRecipientListItem).children().length).toBe(5)
+    expect(wrapper.instance().state.sendRowDetails.length).toBe(1)
+    expect(wrapper.find(SendRecipientListItem).children().length).toBe(1)
   })
 
   test('There is no trash icon when only one row is present', () => {
@@ -181,13 +200,6 @@ describe('Send', () => {
       .at(1)
       .simulate('click')
     expect(wrapper.instance().state.sendRowDetails[0].amount).toBe(5)
-
-    wrapper.find('.sendPanelHeaderButton').simulate('click')
-    wrapper
-      .find('.maxButton')
-      .at(3)
-      .simulate('click')
-    expect(wrapper.instance().state.sendRowDetails[1].amount).toBe(0)
   })
 
   test('It proceeds to the next step with valid input', () => {

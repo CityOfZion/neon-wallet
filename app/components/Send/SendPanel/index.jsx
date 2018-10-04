@@ -176,7 +176,10 @@ const SendPanel = ({
           resetViews={resetViews}
           noSendableAssets={noSendableAssets}
           hasNetworkFees={!!fees}
-          disabled={shouldDisableSendButton(sendRowDetails)}
+          disabled={
+            shouldDisableSendButton(sendRowDetails) ||
+            sendRowDetails.length === 10
+          }
         />
       )}
       className={styles.sendSuccessPanel}
