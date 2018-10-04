@@ -48,6 +48,7 @@ function parseAbstractData(data, currentUserAddress, tokens) {
     const iconType = parsedIconType(abstract)
     const summary = {
       to: abstract.address_to === 'fees' ? 'NETWORK FEES' : abstract.address_to,
+      isNetworkFee: abstract.address_to === 'fees',
       from: abstract.address_from,
       txid: abstract.txid,
       time: abstract.time,

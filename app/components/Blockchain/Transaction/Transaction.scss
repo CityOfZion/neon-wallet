@@ -48,6 +48,10 @@
   align-items: center;
   justify-content: space-evenly;
   width: 100%;
+
+  button[disabled] {
+    background: transparent !important;
+  }
 }
 
 .invocationTransaction {

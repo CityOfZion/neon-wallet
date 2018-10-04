@@ -1,33 +1,33 @@
 // @flow
 import React from 'react'
-import classNames from 'classnames'
+import type { Node } from 'react'
+
 import moment from 'moment'
+import { isEmpty } from 'lodash-es'
 
 import Button from '../../Button'
 import { openExplorerTx } from '../../../core/explorer'
 import styles from './Transaction.scss'
-import { ASSETS } from '../../../core/constants'
-import { isZero } from '../../../core/math'
-import { formatBalance } from '../../../core/formatters'
 import ClaimIcon from '../../../assets/icons/claim.svg'
 import SendIcon from '../../../assets/icons/send-tx.svg'
 import ReceiveIcon from '../../../assets/icons/receive-tx.svg'
 import ContactsAdd from '../../../assets/icons/contacts-add.svg'
 import InfoIcon from '../../../assets/icons/info.svg'
 import CopyToClipboard from '../../CopyToClipboard'
+import Tooltip from '../../Tooltip'
 
 type Props = {
-  className?: string,
   tx: Object,
   networkId: string,
   explorer: ExplorerType,
+  contacts: Object,
   showAddContactModal: ({ address: string }) => null
 }
 
 export default class Transaction extends React.Component<Props> {
   render = () => {
-    const { tx, className } = this.props
-    const { txid, iconType, time, label, amount, to } = tx
+    const { tx } = this.props
+    const { txid, iconType, time, label, amount, isNetworkFee, to } = tx
 
     return (
       <div className={styles.transactionContainer}>
@@ -40,8 +40,8 @@ export default class Transaction extends React.Component<Props> {
         <div className={styles.txLabelContainer}>{label}</div>
         <div className={styles.txAmountContainer}>{amount}</div>
         <div className={styles.txToContainer}>
-          {to}
-          {to !== 'NETWORK FEES' && (
+          {this.findContact(to)}
+          {!isNetworkFee && (
             <CopyToClipboard
               className={styles.copy}
               text={to}
@@ -49,14 +49,14 @@ export default class Transaction extends React.Component<Props> {
             />
           )}
         </div>
-
-        {to === 'NETWORK FEES' ? (
+        {isNetworkFee ? (
           <div className={styles.historyButtonPlaceholder} />
         ) : (
           <Button
             className={styles.transactionHistoryButton}
             renderIcon={ContactsAdd}
             onClick={this.displayModal}
+            disabled={this.findContact(to) !== to}
           >
             Add
           </Button>
@@ -72,9 +72,25 @@ export default class Transaction extends React.Component<Props> {
     )
   }
 
+  findContact = (address: string): Node => {
+    const { contacts } = this.props
+    if (contacts && !isEmpty(contacts)) {
+      let label
+      Object.keys(contacts).forEach(key => {
+        if (contacts[key] === address) {
+          label = key
+        }
+      })
+      return label ? <Tooltip title={address}>{label}</Tooltip> : address
+    }
+    return address
+  }
+
   displayModal = () => {
-    const { showAddContactModal, tx } = this.props
-    const { to } = tx
+    const {
+      showAddContactModal,
+      tx: { to }
+    } = this.props
     showAddContactModal({ address: to })
   }
 
