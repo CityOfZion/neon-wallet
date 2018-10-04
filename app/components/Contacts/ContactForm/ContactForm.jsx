@@ -55,7 +55,7 @@ export default class ContactForm extends React.Component<Props, State> {
     const { nameError, addressError } = this.state
 
     return (
-      <section>
+      <section className={styles.contactFormContainer}>
         <form className={styles.contactForm} onSubmit={this.handleSubmit}>
           <TextInput
             id="contactName"
@@ -83,15 +83,15 @@ export default class ContactForm extends React.Component<Props, State> {
               text="Please review and ensure that you have entered the address correctly to avoid loss of funds"
               className={styles.conactFormDialogue}
             />
-            <Button
-              className={styles.submitButton}
-              primary
-              type="submit"
-              renderIcon={AddContactIcon}
-            >
-              {submitLabel}
-            </Button>
           </div>
+          <Button
+            className={styles.submitButton}
+            primary
+            type="submit"
+            renderIcon={AddContactIcon}
+          >
+            {submitLabel}
+          </Button>
         </form>
       </section>
     )

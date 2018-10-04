@@ -27,21 +27,40 @@
 }
 
 .txToContainer {
-  width: 285px;
+  width: 315px;
   text-align: center;
+  align-items: center;
+  display: flex;
   font-size: 12px;
+  justify-content: space-between;
+
+  button {
+    align-self: flex-end;
+  }
+}
+
+.historyButtonPlaceholder {
+  width: 90px;
 }
 
 .transactionContainer {
   display: flex;
   align-items: center;
-  padding: 0 20px;
   justify-content: space-evenly;
   width: 100%;
+
+  button[disabled] {
+    background: transparent !important;
+  }
 }
 
 .invocationTransaction {
   font-size: 13px;
+}
+
+.transactionHistoryButton {
+  max-width: 90px;
+  background: transparent !important;
 }
 
 .amounts {

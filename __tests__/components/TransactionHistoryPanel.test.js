@@ -116,22 +116,6 @@ describe('TransactionHistoryPanel', () => {
     expect(
       transactionList
         .childAt(0)
-        .find('.txidLink')
-        .hostNodes()
-        .text()
-    ).toEqual(transactions[0].txid.substring(0, 32))
-
-    expect(
-      transactionList
-        .childAt(1)
-        .find('.txidLink')
-        .hostNodes()
-        .text()
-    ).toEqual(transactions[1].txid.substring(0, 32))
-
-    expect(
-      transactionList
-        .childAt(0)
         .find('.txAmountContainer')
         .text()
     ).toEqual('0.11988459')
