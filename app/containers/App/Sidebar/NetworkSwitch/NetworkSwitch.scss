@@ -9,6 +9,9 @@
     background: transparent;
     border: none;
     width: 100px;
+    font-size: 16px;
+    max-width: 85px;
+    padding-right: 0px;
   }
 
   .networkSwitchTextInputWrapper {
@@ -33,7 +36,7 @@
   .dropdownItem {
     padding: 10px 20px;
     color: $black;
-    font-size: 14px;
+    font-size: 16px;
     cursor: pointer;
 
     &:hover {

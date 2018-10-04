@@ -124,6 +124,7 @@ export default class CreateWallet extends React.Component<Props, State> {
                 <Button
                   renderIcon={option === 'IMPORT' ? CheckIcon : AddIcon}
                   type="submit"
+                  shouldCenterButtonLabelText
                   primary
                   disabled={this.isDisabled()}
                 >
