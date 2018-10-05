@@ -9,10 +9,10 @@
     max-height: 180px;
     overflow: auto;
     background: #f2f2f2;
-    border: 2px solid #323242;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     border-top: none;
     border-radius: 0 0 4px 4px;
-    margin-top: -20px;
+    margin-top: -19px;
     z-index: 1;
 
     .dropdownItem {
