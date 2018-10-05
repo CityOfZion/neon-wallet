@@ -46,8 +46,8 @@ export default class PortfolioBreakdownChart extends React.Component<Props> {
             data={data}
             dataKey="value"
             nameKey="symbol"
-            innerRadius={70}
-            outerRadius={78}
+            innerRadius={71}
+            outerRadius={81}
           >
             {times(data.length, index => (
               <Cell

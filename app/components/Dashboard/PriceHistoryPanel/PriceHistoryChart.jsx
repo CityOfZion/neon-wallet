@@ -10,10 +10,10 @@ import {
   YAxis,
   Tooltip
 } from 'recharts'
+import { get } from 'lodash-es'
 
 import AxisLabel from './AxisLabel'
-import BoundingBox from './BoundingBox'
-import { formatFiat, formatThousands } from '../../../core/formatters'
+import { formatThousands } from '../../../core/formatters'
 import { CURRENCIES } from '../../../core/constants'
 
 import styles from './PriceHistoryChart.scss'
@@ -67,86 +67,55 @@ export default class PriceHistoryChart extends React.Component<Props, State> {
             dataKey={timeKey}
             type="category"
             interval="preserveStartEnd"
-            stroke="#9ca0a8"
             tickLine={false}
             tickFormatter={this.formatDate}
             tickMargin={24}
             minTickGap={50}
+            stroke="#9ca0a8"
           />
           <YAxis
-            stroke="#9ca0a8"
             axisLine={false}
             tickLine={false}
             tickFormatter={this.formatPrice}
             tickMargin={20}
             domain={['auto', 'auto']}
+            stroke="#9ca0a8"
           />
           <CartesianGrid stroke="#e6e6e6" />
           <Tooltip
+            content={this.tooltipContent}
             formatter={this.formatValue}
             labelFormatter={this.formatLabel}
           />
           <Line
             dataKey={priceKey}
             type="monotone"
-            stroke="#66ED87"
+            stroke="#5ABF6B"
             strokeWidth={4}
             dot={false}
             animationDuration={500}
             animationEasing="ease-out"
           />
-          {this.renderLatestPrice()}
-          {this.renderPriceChange()}
         </LineChart>
       </ResponsiveContainer>
     )
   }
 
-  renderLatestPrice = () => {
-    const { staticPrice } = this.props
-    return (
-      <text
-        className={styles.current}
-        x="50%"
-        y={0}
-        textAnchor="middle"
-        alignmentBaseline="hanging"
-        fill="#282828"
-      >
-        {this.formatPrice(staticPrice, formatFiat)}
-      </text>
+  tooltipContent = (tooltipProps: Object) =>
+    !!tooltipProps.payload.length && (
+      <div className={styles.tooltipContainer}>
+        <div className={styles.tooltipTime}>
+          {this.formatLabel(get(tooltipProps.payload[0], 'payload.time', 0))}
+        </div>
+        <div className={styles.tooltipPrice}>
+          {this.formatPrice(
+            get(tooltipProps.payload[0], 'payload.close', 0),
+            /* $FlowFixMe */
+            null
+          )}
+        </div>
+      </div>
     )
-  }
-
-  renderPriceChange = () => {
-    const change = this.getPriceChange()
-    const classes = classNames(styles.change, {
-      [styles.increase]: change >= 0,
-      [styles.decrease]: change < 0
-    })
-
-    return (
-      <BoundingBox
-        className={classes}
-        roundedX={3}
-        roundedY={3}
-        paddingX={3}
-        paddingY={1}
-      >
-        <text
-          className={styles.changeText}
-          x="50%"
-          y={35}
-          textAnchor="middle"
-          alignmentBaseline="hanging"
-          fill="#282828"
-        >
-          {change >= 0 && '+'}
-          {(change * 100).toFixed(2)}%
-        </text>
-      </BoundingBox>
-    )
-  }
 
   renderAxisLabel = (axisType: string, label: ?string): Function => ({
     viewBox
@@ -164,10 +133,10 @@ export default class PriceHistoryChart extends React.Component<Props, State> {
     const date = new Date(timestamp * 1000)
 
     return date.toLocaleString('en-US', {
-      weekday: 'short',
-      year: 'numeric',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric'
     })
   }
 
@@ -176,22 +145,9 @@ export default class PriceHistoryChart extends React.Component<Props, State> {
     formatter: Function = formatThousands
   ): string => {
     const { symbol } = CURRENCIES[this.props.currency]
-    return `${symbol}${formatter(price)}`
+    return formatter ? `${symbol}${formatter(price)}` : `${symbol}${price}`
   }
 
   formatDate = (timestamp: number): string =>
     this.props.formatDate(new Date(timestamp * 1000))
-
-  getInitialPrice = (): number => {
-    const { prices, priceKey } = this.props
-    return prices[0][priceKey]
-  }
-
-  getLatestPrice = (): number => {
-    const { prices, priceKey } = this.props
-    return prices[prices.length - 1][priceKey]
-  }
-
-  getPriceChange = () =>
-    (this.getLatestPrice() - this.getInitialPrice()) / this.getInitialPrice()
 }

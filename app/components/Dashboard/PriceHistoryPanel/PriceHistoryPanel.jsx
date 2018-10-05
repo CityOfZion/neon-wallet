@@ -5,9 +5,15 @@ import { keys } from 'lodash-es'
 
 import PriceHistoryChart from './PriceHistoryChart'
 import Panel from '../../Panel'
+import BoundingBox from './BoundingBox'
 import DropdownIcon from '../../../assets/icons/dropdown.svg'
-import { ASSETS } from '../../../core/constants'
+import {
+  ASSETS,
+  CURRENCIES,
+  DEFAULT_CURRENCY_CODE
+} from '../../../core/constants'
 import styles from './PriceHistoryPanel.scss'
+import { formatFiat, formatThousands } from '../../../core/formatters'
 
 type Duration = '1m' | '1w' | '1d'
 
@@ -29,7 +35,8 @@ type Props = {
   prices: Array<Price>,
   staticPrice: number,
   setAsset: Function,
-  setDuration: Function
+  setDuration: Function,
+  priceKey: string
 }
 
 const DURATIONS: { [key: Duration]: string } = {
@@ -39,6 +46,10 @@ const DURATIONS: { [key: Duration]: string } = {
 }
 
 export default class PriceHistoryPanel extends React.Component<Props> {
+  static defaultProps = {
+    priceKey: 'close'
+  }
+
   render = () => {
     const { className, prices, currency, staticPrice } = this.props
 
@@ -67,7 +78,8 @@ export default class PriceHistoryPanel extends React.Component<Props> {
       <span>Market Data</span>
       <span className={styles.asset} onClick={this.handleChangeAsset}>
         {this.props.asset}
-        <DropdownIcon className={styles.icon} />
+        {this.renderLatestPrice()}
+        {this.renderPriceChange()}
       </span>
       <span className={styles.duration} onClick={this.handleChangeDuration}>
         {this.getDuration()}
@@ -100,5 +112,52 @@ export default class PriceHistoryPanel extends React.Component<Props> {
       })
     }
     return date.toLocaleString('en-US', { month: 'numeric', day: 'numeric' })
+  }
+
+  renderLatestPrice = () => {
+    const { staticPrice } = this.props
+    return (
+      <div className={styles.currentPrice}>
+        {this.formatPrice(staticPrice, formatFiat)}
+      </div>
+    )
+  }
+
+  formatPrice = (
+    price: number,
+    formatter: Function = formatThousands
+  ): string => {
+    const { symbol } = CURRENCIES[this.props.currency]
+    return `${symbol || CURRENCIES[DEFAULT_CURRENCY_CODE].symbol}${formatter(
+      price
+    )}`
+  }
+
+  renderPriceChange = () => {
+    const change = this.getPriceChange()
+    const classes = classNames(styles.change, {
+      [styles.increase]: change >= 0,
+      [styles.decrease]: change < 0
+    })
+
+    return (
+      <div className={classes}>
+        {change >= 0 && '+'}
+        {(change * 100).toFixed(2)}%
+      </div>
+    )
+  }
+
+  getInitialPrice = (): number => {
+    const { prices, priceKey } = this.props
+    return prices[0][priceKey]
+  }
+
+  getPriceChange = () =>
+    (this.getLatestPrice() - this.getInitialPrice()) / this.getInitialPrice()
+
+  getLatestPrice = (): number => {
+    const { prices, priceKey } = this.props
+    return prices.length ? prices[prices.length - 1][priceKey] : 0
   }
 }

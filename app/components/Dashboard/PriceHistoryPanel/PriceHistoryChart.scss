@@ -3,29 +3,21 @@
   display: flex;
   flex: 1;
   align-self: center;
-  // height: 500px;
-  // min-height: 100%;
-  // min-height: 375px;
+}
 
-  .current {
-    font-size: 24px;
-    font-weight: 600;
-  }
+.tooltipContainer {
+  display: flex;
+  padding: 10px;
+  background: #394152;
+  border-radius: 4px;
+  font-family: Gotham-Book;
+  font-size: 12px;
+  color: #ffffff;
+  text-align: center;
 
-  .change {
-    &.increase {
-      fill: #5abf6b;
-    }
-
-    &.decrease {
-      fill: #ee6d66;
-    }
-  }
-
-  .changeText {
-    fill: #fff;
-    line-height: 12px;
-    font-size: 12px;
-    font-weight: 600;
+  .tooltipTime {
+    opacity: 0.5;
+    font-family: Gotham-Book;
+    margin-right: 10px;
   }
 }

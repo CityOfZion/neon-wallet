@@ -80,20 +80,7 @@ const SendPanel = ({
   }
 
   if (noSendableAssets) {
-    return (
-      <ZeroAssets address={address}>
-        <Button
-          primary
-          className={styles.sendFormButton}
-          renderIcon={() => <SendIcon />}
-          type="submit"
-          disabled={shouldDisableSendButton(sendRowDetails)}
-        >
-          Send {pluralize('Asset', sendRowDetails.length)}{' '}
-          {fees ? 'With Fee' : 'Without Fee'}
-        </Button>
-      </ZeroAssets>
-    )
+    return <ZeroAssets address={address} />
   }
 
   let content = (

@@ -28,9 +28,31 @@
   }
 }
 
+.change {
+  color: #fff;
+  line-height: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px;
+  border-radius: 2px;
+  margin-left: 10px;
+
+  &.increase {
+    background: #5abf6b;
+  }
+
+  &.decrease {
+    background: #ee6d66;
+  }
+}
+
+.currentPrice {
+  margin-left: 10px;
+  color: #333;
+}
+
 .flexContainer {
   display: flex;
   overflow-y: hidden !important;
   height: 100%;
-  // width: 100%;
 }

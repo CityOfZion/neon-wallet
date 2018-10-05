@@ -237,3 +237,13 @@ input {
     }
   }
 }
+
+.recharts-cartesian-grid-vertical {
+  line:first-child {
+    stroke: rgb(230, 230, 230);
+  }
+
+  line {
+    stroke: transparent;
+  }
+}
