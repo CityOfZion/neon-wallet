@@ -29,6 +29,7 @@ type Props = {
   fees: number,
   handleAddPriorityFee: number => any,
   address: string,
+  maxNumberOfRecipients: number,
   resetViewsAfterError: () => any,
   resetViews: () => any,
   handleSubmit: () => any,
@@ -61,7 +62,8 @@ const SendPanel = ({
   handleEditRecipientsClick,
   handleAddPriorityFee,
   fees,
-  address
+  address,
+  maxNumberOfRecipients
 }: Props) => {
   function shouldDisableSendButton(sendRowDetails) {
     let disabled = false
@@ -163,6 +165,11 @@ const SendPanel = ({
           resetViews={resetViews}
           noSendableAssets={noSendableAssets}
           hasNetworkFees={!!fees}
+          maxNumberOfRecipients={maxNumberOfRecipients}
+          disabled={
+            shouldDisableSendButton(sendRowDetails) ||
+            sendRowDetails.length === maxNumberOfRecipients
+          }
         />
       )}
       className={styles.sendSuccessPanel}

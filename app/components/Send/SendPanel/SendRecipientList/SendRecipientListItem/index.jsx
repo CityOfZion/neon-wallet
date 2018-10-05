@@ -143,7 +143,7 @@ class SendRecipientListItem extends Component<Props> {
 
     return (
       <li className={styles.sendRecipientListItem}>
-        <div className={styles.rowNumber}>{`0${index + 1}`}</div>
+        <div className={styles.rowNumber}>{`${`0${index + 1}`.slice(-2)}`}</div>
         <div className={styles.asset}>{selectInput}</div>
         <div className={styles.amount}>{numberInput}</div>
         <div className={styles.address}>{addressInput}</div>
