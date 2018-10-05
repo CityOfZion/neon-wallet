@@ -50,7 +50,7 @@ $size: 64px;
   box-sizing: border-box;
   width: $size;
   height: $size;
-  border-left: 2px solid transparent;
+  border-left: 4px solid transparent;
   font-size: 24px;
   display: flex;
   flex-direction: column;
@@ -74,7 +74,6 @@ $size: 64px;
   &:hover {
     background: #fff;
     border-color: #5abf6b;
-    border-width: 4px;
 
     &,
     & svg,
