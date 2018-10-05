@@ -1,6 +1,11 @@
 import React from 'react'
 import Select from 'react-select'
 
+const returnDropdownIndicatorColor = props => {
+  if (props.isFocused) return '#6bdaf6'
+  return '#9599a2'
+}
+
 const customStyles = {
   option: (styles, { data, isDisabled, isFocused, isSelected }) => ({
     ...styles,
@@ -21,7 +26,13 @@ const customStyles = {
       props.isFocused &&
       props.selectProps.hideHighlight &&
       'transparent !important'
-  })
+  }),
+  dropdownIndicator: (styles, props) => ({
+    display: 'flex',
+    padding: '8px',
+    color: returnDropdownIndicatorColor(props)
+  }),
+  indicatorSeparator: () => ({ display: 'none' })
 }
 
 const StyledReactSelect = props => (
