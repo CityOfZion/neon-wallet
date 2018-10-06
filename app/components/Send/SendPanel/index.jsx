@@ -38,7 +38,8 @@ type Props = {
   addRow: () => any,
   removeRow: (index: number) => any,
   updateRowField: (index: number, field: string, value: any) => any,
-  handleEditRecipientsClick: () => any
+  handleEditRecipientsClick: () => any,
+  showSendModal: () => any,
 }
 
 const SendPanel = ({
@@ -63,7 +64,8 @@ const SendPanel = ({
   handleAddPriorityFee,
   fees,
   address,
-  maxNumberOfRecipients
+  maxNumberOfRecipients,
+  showSendModal
 }: Props) => {
   function shouldDisableSendButton(sendRowDetails) {
     let disabled = false
@@ -166,6 +168,7 @@ const SendPanel = ({
           noSendableAssets={noSendableAssets}
           hasNetworkFees={!!fees}
           maxNumberOfRecipients={maxNumberOfRecipients}
+          showSendModal={showSendModal}
           disabled={
             shouldDisableSendButton(sendRowDetails) ||
             sendRowDetails.length === maxNumberOfRecipients

@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux'
 import Send from './Send'
 
 import { sendTransaction } from '../../modules/transactions'
+import { showModal } from '../../modules/modal'
 import { getNotifications } from '../../modules/notifications'
 import withPricesData from '../../hocs/withPricesData'
 import withNetworkData from '../../hocs/withNetworkData'
@@ -21,9 +22,16 @@ import withLoadingProp from '../../hocs/withLoadingProp'
 import balancesActions from '../../actions/balancesActions'
 import withSuccessNotification from '../../hocs/withSuccessNotification'
 import withFailureNotification from '../../hocs/withFailureNotification'
+import { MODAL_TYPES } from '../../core/constants'
 
 const mapDispatchToProps = (dispatch: Function) =>
-  bindActionCreators({ sendTransaction }, dispatch)
+  bindActionCreators(
+    {
+      sendTransaction,
+      showSendModal: props => dispatch(showModal(MODAL_TYPES.SEND, props))
+    },
+    dispatch
+  )
 
 const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
   notification: getNotifications(state)

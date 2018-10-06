@@ -29,7 +29,8 @@ type Props = {
   currencyCode: string,
   address: string,
   shouldRenderHeaderBar: boolean,
-  location: Object
+  location: Object,
+  showSendModal: Function
 }
 
 type State = {
@@ -370,7 +371,8 @@ export default class Send extends React.Component<Props, State> {
       contacts,
       currencyCode,
       shouldRenderHeaderBar,
-      address
+      address,
+      showSendModal
     } = this.props
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 
@@ -408,6 +410,7 @@ export default class Send extends React.Component<Props, State> {
           handleEditRecipientsClick={this.handleEditRecipientsClick}
           handleSend={this.handleSend}
           resetViews={this.resetViews}
+          showSendModal={showSendModal}
         />
       </section>
     )

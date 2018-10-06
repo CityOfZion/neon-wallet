@@ -33,7 +33,8 @@ const SendPanelHeader = ({
   noSendableAssets,
   disabled,
   hasNetworkFees = false,
-  maxNumberOfRecipients
+  maxNumberOfRecipients,
+  showSendModal
 }: Props) => {
   const numberOfItems = sendRowDetails.length
 
@@ -41,21 +42,15 @@ const SendPanelHeader = ({
   let headerSubtitle = `${numberOfItems} of ${maxNumberOfRecipients} Recipients`
   let buttons = (
     <div className={styles.sendPanelHeaderButtons}>
-      <Tooltip
-        className={styles.disabledFeature}
-        title="Coming Soon"
-        position="left"
+      <button
+        type="button"
+        className={styles.enterQrHeaderButton}
+        onClick={() => showSendModal()}
       >
-        <button
-          type="button"
-          disabled
-          className={styles.enterQrHeaderButton}
-          onClick={addRow}
-        >
-          <GridIcon className={styles.sendPanelHeaderButtonIcon} /> Enter QR
-          Code
-        </button>
-      </Tooltip>
+        <GridIcon className={styles.sendPanelHeaderButtonIcon} /> Enter QR
+        Code
+      </button>
+      
       <button
         type="button"
         className={styles.sendPanelHeaderButton}
