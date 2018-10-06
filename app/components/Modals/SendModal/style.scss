@@ -33,46 +33,20 @@
   }
 }
 
-.urlSection,
 .section {
   margin-bottom: 16px;
 
   .sectionTitle {
-    margin-bottom: 8px;
     font-size: 14px;
     font-weight: 500;
   }
 
-  .qrcode,
   .sectionContent {
-    border-radius: 4px;
     line-height: 24px;
   }
 
   .sectionContent {
-    padding: 16px;
-    background-color: $light-grey;
-  }
-
-  .qrcode {
-    display: flex;
-    justify-content: center;
-    height: 200px;
-  }
-
-  .imgUri {
-    width: 330px;
-    word-wrap: break-word;
-    margin-right: 70px;
-  }
-
-  .assetAmount {
-    font-weight: 500;
+    padding: 16px 0 16px 0;
   }
 }
 
-.urlSection {
-  .sectionContent {
-    display: flex;
-  }
-}
