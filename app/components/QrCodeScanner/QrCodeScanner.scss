@@ -1,0 +1,10 @@
+.qrCodeScanner{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  button {
+    margin-top: 8px;
+    width: 40%;
+  }
+}
