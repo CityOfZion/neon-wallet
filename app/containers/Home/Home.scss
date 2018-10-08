@@ -67,10 +67,10 @@ $navigation-margin: 20px;
 
 .ledgerStatusActiveStage {
   opacity: 1.0;  
-  border-left-color: #66eb8e;
-  border-top-color: #66eb8e;
-  border-right-color: #6bdaf6;
-  border-bottom-color: #6bdaf6 !important;
+  border-color: #66eb8e #6bdaf6 #6bdaf6 #66eb8e;
+  &:first-child {
+    border-bottom-color: #6bdaf6;
+  }
 
   .ledgerStatusIcon {
     path {
