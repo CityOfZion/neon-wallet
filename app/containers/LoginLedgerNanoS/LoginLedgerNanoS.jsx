@@ -42,7 +42,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
 
-    this.state = this.computeLedgerStageFromProps(props)
+    this.state = this.computeStateFromProps(props)
   }
 
   intervalId: ?number
@@ -56,11 +56,11 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
     const { progress, error } = this.props
 
     if (progress !== nextProps.progress || error !== nextProps.error) {
-      this.setState(this.computeLedgerStageFromProps(nextProps))
+      this.setState(this.computeStateFromProps(nextProps))
     }
   }
 
-  computeLedgerStageFromProps = (props: Props) => {
+  computeStateFromProps = (props: Props) => {
     if (props.progress === LOADED) {
       return { ledgerStage: CONNECTED, isLoading: false }
     }
