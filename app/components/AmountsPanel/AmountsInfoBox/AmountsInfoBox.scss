@@ -2,9 +2,12 @@
 
 .amountsInfoBox {
   display: flex;
-  align-items: center;
-  margin-right: 20px;
+  justify-content: center;
   height: 50px;
+  max-width: 320px;
+  min-width: 280px;
+  margin: 10px;
+  padding: 5px 15px;
 
   &:last-child {
     margin-right: 0;
