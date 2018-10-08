@@ -106,12 +106,11 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
     )
   }
 
-  getLedgerStageIcon = (stage: LedgerConnectionStage) => {
-    const { ledgerStage, isLoading } = this.state
-    if (ledgerStage === stage && isLoading) {
+  getStatusIcon = (ledgerStage: LedgerConnectionStage) => {
+    if (this.state.isLoading && this.state.ledgerStage === ledgerStage) {
       return <RefreshIcon className={styles.ledgerStageRefreshIcon} />
     }
-    if (ledgerStage > stage) {
+    if (this.state.ledgerStage > ledgerStage) {
       return <ConfirmIcon className={styles.ledgerStageIcon} />
     }
     return <i />
@@ -127,7 +126,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
             [styles.ledgerStageCompleted]: ledgerStage > NOT_CONNECTED
           })}
         >
-          {this.getLedgerStageIcon(NOT_CONNECTED)}
+          {this.getStatusIcon(NOT_CONNECTED)}
           <div>
             Connect and unlock your <strong>Ledger device</strong>
           </div>
@@ -138,7 +137,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
             [styles.ledgerStageCompleted]: ledgerStage > OPEN_APP
           })}
         >
-          {this.getLedgerStageIcon(OPEN_APP)}
+          {this.getStatusIcon(OPEN_APP)}
           <div>
             Navigate to the <strong>NEO app</strong> on your device
           </div>
