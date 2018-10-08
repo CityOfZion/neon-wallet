@@ -33,7 +33,7 @@ $navigation-margin: 20px;
   margin-bottom: 10px;
 }
 
-.ledgerStatusStage {
+.ledgerStage {
   font-family: Gotham-Book;
   margin-top: 0;
   display: flex;
@@ -59,32 +59,32 @@ $navigation-margin: 20px;
   }
 }
 
-.ledgerStatusIcon {
+.ledgerStageIcon {
   path {
     fill: #66ED87;
   }
 }
 
-.ledgerStatusActiveStage {
+.ledgerStageActive {
   opacity: 1.0;  
   border-color: #66eb8e #6bdaf6 #6bdaf6 #66eb8e;
   &:first-child {
     border-bottom-color: #6bdaf6;
   }
 
-  .ledgerStatusIcon {
+  .ledgerStageIcon {
     path {
       fill: #5C677F;
     }
   }
 }
 
-.ledgerStatusCompletedStage {
+.ledgerStageCompleted {
   opacity: 1.0;
 }
 
-.ledgerStatusRefreshIcon {
-  @extend .ledgerStatusIcon;
+.ledgerStageRefreshIcon {
+  @extend .ledgerStageIcon;
   animation: spin 2s linear infinite;
 }
 

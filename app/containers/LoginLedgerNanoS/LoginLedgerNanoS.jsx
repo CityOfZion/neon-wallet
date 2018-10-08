@@ -109,10 +109,10 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
   getLedgerStageIcon = (stage: LedgerConnectionStage) => {
     const { ledgerStage, isLoading } = this.state
     if (ledgerStage === stage && isLoading) {
-      return <RefreshIcon className={styles.ledgerStatusRefreshIcon} />
+      return <RefreshIcon className={styles.ledgerStageRefreshIcon} />
     }
     if (ledgerStage > stage) {
-      return <ConfirmIcon className={styles.ledgerStatusIcon} />
+      return <ConfirmIcon className={styles.ledgerStageIcon} />
     }
     return <i />
   }
@@ -122,9 +122,9 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
     return (
       <div>
         <div
-          className={classNames(styles.ledgerStatusStage, {
-            [styles.ledgerStatusActiveStage]: ledgerStage === NOT_CONNECTED,
-            [styles.ledgerStatusCompletedStage]: ledgerStage > NOT_CONNECTED
+          className={classNames(styles.ledgerStage, {
+            [styles.ledgerStageActive]: ledgerStage === NOT_CONNECTED,
+            [styles.ledgerStageCompleted]: ledgerStage > NOT_CONNECTED
           })}
         >
           {this.getLedgerStageIcon(NOT_CONNECTED)}
@@ -133,9 +133,9 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
           </div>
         </div>
         <div
-          className={classNames(styles.ledgerStatusStage, {
-            [styles.ledgerStatusActiveStage]: ledgerStage === OPEN_APP,
-            [styles.ledgerStatusCompletedStage]: ledgerStage > OPEN_APP
+          className={classNames(styles.ledgerStage, {
+            [styles.ledgerStageActive]: ledgerStage === OPEN_APP,
+            [styles.ledgerStageCompleted]: ledgerStage > OPEN_APP
           })}
         >
           {this.getLedgerStageIcon(OPEN_APP)}
