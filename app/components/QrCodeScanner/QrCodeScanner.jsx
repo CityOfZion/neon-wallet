@@ -1,9 +1,8 @@
 // @flow
 import React, { Component } from 'react'
-
-import Button from '../Button'
 import Instascan from 'instascan'
 
+import Button from '../Button'
 import styles from './QrCodeScanner.scss'
 
 type Props = {

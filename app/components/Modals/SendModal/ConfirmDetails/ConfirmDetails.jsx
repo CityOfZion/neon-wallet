@@ -18,7 +18,7 @@ type State = {
 export default class ConfirmDetails extends React.Component<Props, State> {
   render() { 
     return (
-      <div></div>
+      <div>{this.props.recipientData}</div>
     )
   }
 }

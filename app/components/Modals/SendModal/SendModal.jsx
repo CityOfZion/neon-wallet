@@ -11,42 +11,50 @@ type Props = {
 
 type State = {
   step: Number,
+  recipientData: Object,
 }
 
 export default class SendModal extends React.Component<Props, State> {
-  state = {
-    step: 2
+  constructor(){
+    super();
+    this.gotoNextStep = this.gotoNextStep.bind(this);
   }
 
-  getCurrentStep(){
-    switch (this.state.step) {
-      default:
-      case 1:
-      return {
-          title: 'Use a QR Code',
-          component: <ReadCode/>
-        }
-      case 2:
-        return {
-          title: 'QR Code Identified!',
-          backAction: () => this.setState({ step: 1 }),
-          component: <ConfirmDetails/>
-        }
+  state = {
+    step: 1,
+    recipientData: {}
+  }
+
+  gotoPreviousStep(){
+    if(this.state.step === 2){
+      return () => this.setState({ step: 1 });
     }
+
+    return null;
+  }
+
+  gotoNextStep(recipientData){
+    this.setState({ 
+      step: 2,
+      recipientData
+    })
+  }
+
+  getStepComponent(){
+    return ({
+      1: <ReadCode gotoNextStep={this.gotoNextStep}/>,
+      2: <ConfirmDetails recipientData={this.state.recipientData}/>
+    })[this.state.step]
   }
 
   render() {
-      const currentStep = this.getCurrentStep();
-      const { hideModal } = this.props;
-
       return (
         <BaseModal
-          title={currentStep.title}
-          backAction={currentStep.backAction}
-          hideModal={hideModal}
           style={{ content: { width: '775px', height: '830px' } }}
+          backButtonAction={this.gotoPreviousStep()}
+          hideModal={this.props.hideModal}
         >
-          {currentStep.component}
+          {this.getStepComponent()}
         </BaseModal>
       )
   }
