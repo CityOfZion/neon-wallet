@@ -13,6 +13,16 @@ const APP_CLOSED = 0x6e00
 const TX_DENIED = 0x6985
 const TX_PARSE_ERR = 0x6d07
 
+export const MESSAGES = {
+  NOT_SUPPORTED: 'Your computer does not support the ledger',
+  NOT_CONNECTED: 'Connect and unlock your Ledger device',
+  APP_CLOSED: 'Navigate to the NEO app on your Ledger device',
+  MSG_TOO_BIG: 'Your transaction is too big for the Ledger to sign',
+  TX_DENIED: 'Your transaction is too big for the Ledger to sign',
+  TX_PARSE_ERR:
+    'Error parsing transaction. Make sure your NEO Ledger app version is up to date'
+}
+
 /**
  * Evaluates Transport Error thrown and rewrite the error message to be more user friendly.
  * @param {Error} err
@@ -22,17 +32,16 @@ const evalTransportError = error => {
   const err = cloneDeep(error)
   switch (err.statusCode) {
     case APP_CLOSED:
-      err.message = 'Your NEO app is closed! Please login.'
+      err.message = MESSAGES.APP_CLOSED
       break
     case MSG_TOO_BIG:
-      err.message = 'Your transaction is too big for the ledger to sign!'
+      err.message = MESSAGES.MSG_TOO_BIG
       break
     case TX_DENIED:
-      err.message = 'You have denied the transaction on your ledger.'
+      err.message = MESSAGES.TX_DENIED
       break
     case TX_PARSE_ERR:
-      err.message =
-        'Error parsing transaction. Make sure your NEO app version is up to date.'
+      err.message = MESSAGES.TX_PARSE_ERR
       break
     default:
   }
@@ -60,10 +69,10 @@ export default class NeonLedger {
   static async init() {
     const supported = await LedgerNode.isSupported()
     if (!supported) {
-      throw new Error('Your computer does not support the ledger!')
+      throw new Error(MESSAGES.NOT_SUPPORTED)
     }
     const paths = await NeonLedger.list()
-    if (paths.length === 0) throw new Error('USB Error: No device found.')
+    if (paths.length === 0) throw new Error(MESSAGES.NOT_CONNECTED)
     const ledger = new NeonLedger(paths[0])
     return ledger.open()
   }
