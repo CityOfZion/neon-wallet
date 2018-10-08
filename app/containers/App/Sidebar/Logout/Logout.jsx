@@ -18,6 +18,7 @@ const Logout = ({ id, className, logout }: Props) => (
     onClick={logout}
   >
     <LogoutIcon />
+    <div className={styles.logoutText}> Logout </div>
   </div>
 )
 

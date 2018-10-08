@@ -74,6 +74,16 @@ export default () => (
       <PrivateRoute exact path={ROUTES.EDIT_CONTACT} component={EditContact} />
       <PrivateRoute exact path={ROUTES.SEND} component={Send} />
       <PrivateRoute exact path={ROUTES.TOKEN_SALE} component={TokenSale} />
+      <PrivateRoute
+        exact
+        path={ROUTES.TOKEN_SALE_CONFIRMATION}
+        component={TokenSale}
+      />
+      <PrivateRoute
+        exact
+        path={ROUTES.TOKEN_SALE_SUCCESS}
+        component={TokenSale}
+      />
       <PrivateRoute exact path={ROUTES.SEND_ADDRESS} component={Send} />
       <PrivateRoute exact path={ROUTES.ENCRYPT} component={Encrypt} />
       <PrivateRoute exact path={ROUTES.NODE_SELECT} component={NodeSelect} />

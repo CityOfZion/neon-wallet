@@ -1,17 +1,17 @@
 @import '../../../styles/variables';
- .checkBox {
-    width: 25px;
-    height: 25px;
-    min-width: 25px;
-    background: transparent;
-    margin-left: auto;
-    border: 3px solid $dark-grey;
-    border-radius: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
+.checkBox {
+  width: 25px;
+  height: 25px;
+  min-width: 25px;
+  background: transparent;
+  margin-left: auto;
+  border: 1.5px solid $dark-grey;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
- .checkBoxActive {
-    background-color: $warning-red;
-} 
+.checkBoxActive {
+  background-color: $warning-red;
+}

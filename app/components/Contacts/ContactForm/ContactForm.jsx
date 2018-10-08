@@ -88,6 +88,7 @@ export default class ContactForm extends React.Component<Props, State> {
             className={styles.submitButton}
             primary
             type="submit"
+            disabled={this.disableButton(formName, formAddress)}
             renderIcon={AddContactIcon}
           >
             {submitLabel}
@@ -103,6 +104,22 @@ export default class ContactForm extends React.Component<Props, State> {
     if (newAddress) {
       setAddress('')
     }
+  }
+
+  disableButton = (name: string, address: string) => {
+    if (name.length === 0) {
+      return true
+    }
+
+    if (name.length > 100) {
+      return true
+    }
+
+    if (!wallet.isAddress(address)) {
+      return true
+    }
+
+    return false
   }
 
   validate = (name: string, address: string) => {

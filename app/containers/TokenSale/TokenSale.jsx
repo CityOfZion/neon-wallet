@@ -27,10 +27,10 @@ import {
 import styles from './TokenSale.scss'
 
 const conditions = [
-  'I understand that submitting NEO or GAS multiple times may result in a loss of funds or a delayed refund depending on the policy of the ICO company',
-  'I understand that some sales may only accept NEO or GAS, and I have verified which is accepted. Sure thing.',
-  'I understand that submitting NEO or GAS multiple times may result in a loss of funds or a delayed refund depending on the policy of the ICO company. My company.',
-  'I understand that some sales may only accept NEO or GAS, and I have verified which is accepted. Ok then.'
+  'I understand that submitting NEO or GAS multiple times may result in a loss of funds or a delayed refund depending on the policy of the ICO company.',
+  'I understand that some sales may only accept NEO or GAS, and I have verified which is accepted.',
+  'I understand that if I send NEO or GAS to a token sale that has already ended, I will lose my NEO/GAS and will not be refunded.',
+  "I understand that City of Zion (CoZ) is not responsible for my usage of this feature, and I have consulted this software's licenses." // eslint-disable-line
 ]
 
 type Props = {
@@ -38,6 +38,7 @@ type Props = {
   icoTokens: Array<Object>,
   prices: Object,
   address: string,
+  history: Object,
   participateInSale: (
     neoToSend: string,
     gasToSend: string,
@@ -200,7 +201,10 @@ class TokenSale extends Component<Props, State> {
     this.setState({ inputErrorMessage: '' }, () => {
       const validFields = this.isValid()
 
-      if (validFields) this.setStep(TOKEN_SALE_CONFIRM)
+      if (validFields) {
+        this.setStep(TOKEN_SALE_CONFIRM)
+        this.props.history.push('/token-sale-confirm')
+      }
     })
   }
 
@@ -270,28 +274,30 @@ class TokenSale extends Component<Props, State> {
     const disabledButton = !(acceptedConditions.length === conditions.length)
     const availableGas = assetBalances.GAS
     return (
-      <section className={styles.purchaseSection}>
-        {' '}
-        <AmountsPanel currencyCode="usd" amountsData={amountsData} />
-        <TokenSalePanel
-          onClickHandler={this.getOnClickHandler()}
-          getAssetsToPurchaseWith={this.getAssetsToPurchaseWith}
-          assetBalances={assetBalances}
-          assetToPurchaseWith={assetToPurchaseWith}
-          assetToPurchase={assetToPurchase}
-          amountToPurchaseFor={amountToPurchaseFor}
-          updateField={this.updateField}
-          getPurchaseableAssets={this.getPurchaseableAssets}
-          disabledButton={disabledButton}
-          conditions={conditions}
-          updateConditions={this.updateConditions}
-          acceptedConditions={acceptedConditions}
-          inputErrorMessage={inputErrorMessage}
-          handleAddPriorityFee={this.handleAddPriorityFee}
-          gasFee={gasFee}
-          availableGas={availableGas}
-        />
-      </section>
+      <Fragment>
+        <HeaderBar shouldRenderRefresh label="Token Sale" />
+        <section className={styles.purchaseSection}>
+          <AmountsPanel currencyCode="usd" amountsData={amountsData} />
+          <TokenSalePanel
+            onClickHandler={this.getOnClickHandler()}
+            getAssetsToPurchaseWith={this.getAssetsToPurchaseWith}
+            assetBalances={assetBalances}
+            assetToPurchaseWith={assetToPurchaseWith}
+            assetToPurchase={assetToPurchase}
+            amountToPurchaseFor={amountToPurchaseFor}
+            updateField={this.updateField}
+            getPurchaseableAssets={this.getPurchaseableAssets}
+            disabledButton={disabledButton}
+            conditions={conditions}
+            updateConditions={this.updateConditions}
+            acceptedConditions={acceptedConditions}
+            inputErrorMessage={inputErrorMessage}
+            handleAddPriorityFee={this.handleAddPriorityFee}
+            gasFee={gasFee}
+            availableGas={availableGas}
+          />
+        </section>
+      </Fragment>
     )
   }
 
@@ -353,7 +359,6 @@ class TokenSale extends Component<Props, State> {
 
     return (
       <section className={styles.tokenSaleContainer}>
-        <HeaderBar shouldRenderRefresh label="Token Sale" />
         <div className={styles.tokenSaleContentContainer}>
           {loading && <Loader />}
           {!loading && displayTokenSalePurchase && this.renderPurchase()}

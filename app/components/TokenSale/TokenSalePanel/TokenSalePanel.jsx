@@ -65,7 +65,7 @@ const TokenSalePanel = ({
         inputErrorMessage={inputErrorMessage}
       />
       <DialogueBox
-        icon={<WarningIcon />}
+        icon={<WarningIcon className={styles.warningIcon} />}
         text="Please read and acknowledge these statements to continue"
         className={styles.tokenSalePanelDialogueBox}
       />
@@ -78,7 +78,7 @@ const TokenSalePanel = ({
         availableGas={Number(availableGas)}
         handleAddPriorityFee={handleAddPriorityFee}
         fees={gasFee}
-        disabled={false}
+        disabled={disabledButton}
       />
       <Button
         onClick={onClickHandler}

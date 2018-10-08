@@ -19,11 +19,10 @@ import { ROUTES } from '../../../core/constants'
 import LogoWithoutText from '../../../assets/images/logo-without-text-black.png'
 
 type Props = {
-  className: string,
-  showTokenSaleModal: Function
+  className: string
 }
 
-const Sidebar = ({ className, showTokenSaleModal }: Props) => (
+const Sidebar = ({ className }: Props) => (
   <div className={classNames(styles.container, className)}>
     <div className={styles.group}>
       <div className={styles.logo}>
@@ -112,16 +111,14 @@ const Sidebar = ({ className, showTokenSaleModal }: Props) => (
       </NavLink>
     </div>
 
-    <div
+    <Logout
       className={classNames(
         styles.group,
         styles.logoutToolTipGroup,
         styles.navItem
       )}
-    >
-      <Logout id="logout" />
-      <div className={styles.logoutText}> Logout </div>
-    </div>
+      id="logout"
+    />
   </div>
 )
 
