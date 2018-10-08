@@ -111,16 +111,14 @@ const Sidebar = ({ className }: Props) => (
       </NavLink>
     </div>
 
-    <div
+    <Logout
       className={classNames(
         styles.group,
         styles.logoutToolTipGroup,
         styles.navItem
       )}
-    >
-      <Logout id="logout" />
-      <div className={styles.logoutText}> Logout </div>
-    </div>
+      id="logout"
+    />
   </div>
 )
 
