@@ -2,13 +2,15 @@
 
 import React from 'react'
 
-import Panel from '../../Panel'
+import FullHeightPanel from '../../Panel/FullHeightPanel'
 import TokenSaleConfirmDetails from './TokenSaleConfirmDetails/TokenSaleConfirmDetails'
 import Button from '../../Button'
 import TokenSaleIcon from '../../../assets/navigation/tokens.svg'
-
+import CheckMarkSVG from '../../../assets/icons/checkGreen.svg'
+import CloseButton from '../../CloseButton'
+import BackButton from '../../BackButton'
+import { ROUTES } from '../../../core/constants'
 import styles from './TokenSaleConfirm.scss'
-import Logo from '../../../assets/images/grey-logo.png'
 
 type Props = {
   onClickHandler: () => void,
@@ -23,15 +25,11 @@ const TokenSaleConfirm = ({
   tokenInfo,
   amountToPurchaseFor
 }: Props) => (
-  <Panel
-    className={styles.tokenSaleConfirmPanel}
-    renderHeader={() => (
-      <img
-        src={Logo}
-        alt="Neon logo"
-        className={styles.tokenSaleConfirmImage}
-      />
-    )}
+  <FullHeightPanel
+    headerText="Confirm Purchase"
+    renderInstructions={() => <div />}
+    renderHeaderIcon={() => <CheckMarkSVG />}
+    renderCloseButton={() => <CloseButton routeTo={ROUTES.DASHBOARD} />}
   >
     <div className={styles.tokenSaleConfirmContainer}>
       <TokenSaleConfirmDetails
@@ -48,7 +46,7 @@ const TokenSaleConfirm = ({
         Confirm and Purchase
       </Button>
     </div>
-  </Panel>
+  </FullHeightPanel>
 )
 
 export default TokenSaleConfirm

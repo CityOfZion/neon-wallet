@@ -3,8 +3,6 @@ import React from 'react'
 
 import styles from './TokenSaleConfirmDetails.scss'
 
-import CheckMarkSVG from '../../../../assets/icons/checkGreen.svg'
-
 type Props = {
   tokenInfo: Object,
   assetToPurchaseWith: string,
@@ -17,10 +15,6 @@ const TokenSaleConfirmDetails = ({
   amountToPurchaseFor
 }: Props) => (
   <div className={styles.tokenSaleConfirmDetails}>
-    <h1 className={styles.tokenSaleConfirmDetailsMainHeading}>
-      <CheckMarkSVG className={styles.tokenSaleConfirmDetailsCheckMarkSVG} />Confirm
-      Purchase
-    </h1>
     <h2 className={styles.tokenSaleConfirmDetailsHeading}>Purchase assets</h2>
     <div className={styles.tokenSaleConfirmDetailsContainer}>
       <h3 className={styles.tokenSaleConfirmDetailsSecondaryHeading}>Name</h3>

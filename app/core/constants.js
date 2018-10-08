@@ -31,6 +31,8 @@ export const ROUTES = {
   IMPORT_WALLET: '/import',
   IMPORT_WALLET_AUTHENTICATED: '/import-authenticated',
   TOKEN_SALE: '/token-sale',
+  TOKEN_SALE_CONFIRMATION: '/token-sale-confirm',
+  TOKEN_SALE_SUCCESS: 'token-sale-success',
   TRANSACTION_HISTORY: '/transactions',
   SETTINGS: '/settings',
   DISPLAY_WALLET_KEYS: '/display-wallet-keys',

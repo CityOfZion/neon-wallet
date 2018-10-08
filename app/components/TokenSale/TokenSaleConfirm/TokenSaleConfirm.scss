@@ -1,38 +1,41 @@
 @import '../../../styles/variables';
 
-
 .tokenSaleConfirmDetails {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .tokenSaleConfirmPanel {
-    max-width: 600px;
-    margin: 0 auto;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .tokenSaleConfirmPanelHeader {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .tokenSaleConfirmPanelHeaderLogo {
-    height: 30px;
-    width: 30px;
-    margin-right: 5px;
+  height: 30px;
+  width: 30px;
+  margin-right: 5px;
 }
 
 .tokenSaleConfirmContainer {
-    max-width: 400px;
-    margin: 0 auto;
+  min-width: 450px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .tokenSaleConfirmButton {
-    margin: 25px 0;
+  margin: 25px 0;
+  min-height: 50px;
 }
 
 .tokenSaleConfirmImage {
-    width: 100px;
-    margin: 0 auto;
+  width: 100px;
+  margin: 0 auto;
 }

@@ -1,19 +1,19 @@
 @import '../../../../../styles/variables';
 
 .tokenSaleCondition {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .tokenSaleConditionText {
-    font-size: 0.9rem;
-    margin-right: 10px;
+  font-size: 0.9rem;
+  margin-right: 25px;
 }
 
-.tokenSaleCheckBox[aria-checked="true"] {
-    border: 3px solid $warning-red;
+.tokenSaleCheckBox[aria-checked='true'] {
+  border: 3px solid $warning-red;
 }
 
 .tokenSaleConditionCheckBoxIcon {
-    transform: translateY(-6px)
+  transform: translateY(-6px);
 }

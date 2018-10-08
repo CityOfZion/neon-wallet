@@ -1,34 +1,40 @@
 @import '../../../../styles/variables';
 
 .tokenSaleConfirmDetailsHeading {
-    font-size: 0.8rem;
-    margin-top: 25px;
-    font-weight: 200;
-    text-transform: uppercase;
-    color: $medium-grey;
+  font-size: 0.8rem;
+  margin-top: 25px;
+  font-weight: 200;
+  text-transform: uppercase;
+  color: $medium-grey;
 }
 
 .tokenSaleConfirmDetailsContainer {
-    padding: 20px 30px;
-    background-color: $light-grey;
-    border-radius: 3px;
+  padding: 15px;
+  background-color: $light-grey;
+  border-radius: 3px;
 }
 
 .tokenSaleConfirmDetailsSecondaryHeading {
-    font-size: 1rem;
-    font-weight: bold;
+  font-size: 1rem;
+  font-weight: bold;
 }
 
 .tokenSaleConfirmDetailsMainHeading {
-    display: flex;
-    align-items: center;
-    font-size: 1.8rem;
-    margin-bottom: 40px;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  font-size: 1.8rem;
+  margin-bottom: 40px;
+  justify-content: center;
 }
 
 .tokenSaleConfirmDetailsCheckMarkSVG {
-    height: 40px;
-    width: 40px;
-    margin-right: 8px;
+  height: 40px;
+  width: 40px;
+  margin-right: 8px;
+}
+
+.tokenSaleConfirmDetails {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
