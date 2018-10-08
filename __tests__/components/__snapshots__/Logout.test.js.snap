@@ -6,5 +6,10 @@ exports[`Logout should render without crashing 1`] = `
   onClick={[MockFunction]}
 >
   <Component />
+  <div
+    className="logoutText"
+  >
+     Logout 
+  </div>
 </div>
 `;
