@@ -10,6 +10,8 @@ type Props = {
   networkId: string,
   onChange: Function,
   className: string,
+  value: string,
+  disabled: boolean,
   networks: Array<NetworkItemType>
 }
 
@@ -19,7 +21,7 @@ export default class NetworkSwitch extends Component<Props> {
   }
 
   render() {
-    const { networkId, networks, className } = this.props
+    const { networkId, networks, className, value, disabled } = this.props
 
     const items = networks.filter(network => network.id !== networkId)
 
@@ -32,7 +34,8 @@ export default class NetworkSwitch extends Component<Props> {
           activeStyles={styles.networkSwitchActive}
           textInputContainerClassName={styles.networkSwitchTextInputContainer}
           textInputClassName={styles.networkSwitchTextInput}
-          value={this.getNetworkLabel()}
+          value={value || this.getNetworkLabel()}
+          disabled={disabled}
           readOnly
           customChangeEvent
         />

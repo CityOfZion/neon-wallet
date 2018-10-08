@@ -7,13 +7,14 @@ import styles from './DropdownButton.scss'
 
 type Props = {
   className?: string,
-  onToggle: Function
+  onToggle: Function,
+  disabled: boolean
 }
 
-const DropdownButton = ({ className, onToggle }: Props) => (
+const DropdownButton = ({ className, onToggle, disabled }: Props) => (
   <DropdownIcon
     className={classNames(styles.dropdownButton, className)}
-    onClick={() => onToggle()}
+    onClick={() => !disabled && onToggle()}
   />
 )
 

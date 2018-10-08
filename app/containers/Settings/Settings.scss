@@ -60,12 +60,13 @@ $panel-top-margin: 25px;
     align-items: center;
     font-size: 14px;
 
-    .add {
-      svg {
-        width: $add-icon-size;
-        height: $add-icon-size;
+    svg {
+      path {
+        fill: #5abf6b;
       }
+    }
 
+    .add {
       width: $add-icon-size;
       height: $add-icon-size;
       margin-right: 10px;
