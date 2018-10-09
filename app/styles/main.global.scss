@@ -191,22 +191,13 @@ input {
     background: $text-input-background-color;
     font-size: $text-input-font-size;
     border-radius: $text-input-border-radius;
-    // border: transparent;
-    // border-width: 1px;
   }
 
   .react-select__control {
     color: $text-input-color;
     background: $text-input-background-color;
-    // border: transparent;
-    // border-width: 2px;
     border-radius: $text-input-border-radius;
-    //height: 42px;
     border: 2px solid #f2f2f2;
-    // :hover {
-    //   border-color: #f2f2f2 !important;
-    //   // border-width: 1px;
-    // }
   }
 
   .react-select__control:hover {
@@ -239,7 +230,6 @@ input {
   .react-select__control--is-focused {
     @include active-input;
     border-color: transparent !important;
-    // border: none !important;
     box-shadow: none;
 
     .react-select__value-container {
