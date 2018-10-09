@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import classNames from 'classnames'
 
 import Button from '../../../Button'
 import QrCodeScanner from '../../../QrCodeScanner'
@@ -15,12 +16,41 @@ type Props = {
 }
 
 type State = {
-
+  scannerActive: boolean,
 }
 
 export default class ReadCode extends React.Component<Props, State> {
-  render() {
+  constructor(){
+    super();
+    this.toggleScanner = this.toggleScanner.bind(this);  
+  }
+
+  state = {
+    scannerActive: false
+  }
+
+  toggleScanner(){
+    const { scannerActive } = this.state;
+    this.setState({ scannerActive: !scannerActive });
+  }
+
+  getScanner(){
+    const { scannerActive } = this.state;
     const { gotoNextStep } = this.props;
+
+    if(scannerActive){
+      return (
+        <QrCodeScanner 
+          callback={recipientData => gotoNextStep(recipientData)} 
+        />
+      )
+    }
+
+    return <img src={CozDonationQrCode} alt="Donate to CoZ" />
+  }
+
+  render() {
+    const { scannerActive } = this.state;
 
     return(
       <div className={baseStyles.contentContainer}>
@@ -29,25 +59,31 @@ export default class ReadCode extends React.Component<Props, State> {
           <div className={baseStyles.title}>Use a QR Code</div>
         </div>
 
-        <div className={baseStyles.subHeader}></div>
+        <div className={baseStyles.divider}></div>
+
         <div className={baseStyles.section}>
           <div className={baseStyles.sectionContent}>
             So you've been sent a QR code? Hold it up to your camera or paste the image URL below:
           </div>
         </div>
 
-        <div className={baseStyles.qrCodeScannerSection}>
+        <div className={baseStyles.section}>
           <div className={baseStyles.sectionTitle}>CAPTURE QR CODE</div>
-          <div className={baseStyles.sectionContent}>
+          <div className={classNames(
+            baseStyles.sectionContent,
+            styles.qrCodeScannerSection
+          )}>
             <div className={styles.qrCodeScannerPlaceholder}>
               <div></div>
               <div></div>
               <div></div>
               <div></div>
-              <img src={CozDonationQrCode} alt="Donate to CoZ" />
+              {this.getScanner()}
             </div>
 
-            <QrCodeScanner callback={recipientData => gotoNextStep(recipientData)} />
+            <Button onClick={this.toggleScanner}>
+              {scannerActive ? 'Cancel' : 'Capture'}
+            </Button>
           </div>
         </div>
 

@@ -2,18 +2,19 @@
 import React, { Component } from 'react'
 import Instascan from 'instascan'
 
-import Button from '../Button'
-import styles from './QrCodeScanner.scss'
-
 type Props = {
-  callback: (content: string) => any,
+  callback: (content: string) => any
 }
 
 type State = {
   scannerInstance: ?Object
 }
 
-class QrCodeScanner extends Component<Props, State> {
+export default class QrCodeScanner extends Component<Props, State> {
+  static defaultProps = {
+    placeholder: () => null
+  }
+
   scanPreviewElement: ?HTMLVideoElement
 
   state = {
@@ -21,25 +22,19 @@ class QrCodeScanner extends Component<Props, State> {
   }
 
   componentWillUnmount () {
-    const { scannerInstance } = this.state
-    scannerInstance && scannerInstance.stop()
+    this.destroyScanner();
   }
 
-  toggleScanner () {
-    const { scannerInstance } = this.state
+  componentDidMount () {
+    this.initializeScanner();
+  }
+
+  initializeScanner () {
     const { callback } = this.props
-
-    if (scannerInstance) {
-      scannerInstance.stop()
-      this.setState(prevState => ({ scannerInstance: null }))
-      return
-    }
-
     const newScannerInstance = new Instascan.Scanner({ video: this.scanPreviewElement })
     
     newScannerInstance.addListener('scan', content => {
-      newScannerInstance.stop()
-      this.setState(prevState => ({ scannerInstance: null }))
+      this.destroyScanner();
       callback(content)
     })
 
@@ -51,18 +46,17 @@ class QrCodeScanner extends Component<Props, State> {
       }
     }).catch(e => console.error(e))
 
-    this.setState(prevState => ({ scannerInstance: newScannerInstance }))
+    this.setState({ scannerInstance: newScannerInstance })
+  }
+
+  destroyScanner () {
+    const { scannerInstance } = this.state
+    scannerInstance.stop()
   }
 
   render () {
-    const { scannerInstance } = this.state
     return (
-      <div className={styles.qrCodeScanner}>
-        <video ref={ref => { this.scanPreviewElement = ref }} />
-        <Button onClick={() => this.toggleScanner()}>{!scannerInstance ? 'Capture' : 'Cancel'}</Button>
-      </div>
+      <video ref={ref => { this.scanPreviewElement = ref }} />
     )
   }
 }
-
-export default QrCodeScanner

@@ -22,24 +22,11 @@
   }
 }
 
-.subHeader {
-  display: flex;
-  padding-bottom: 6px;
+.divider {
   border-bottom: black solid 1px;
   margin-bottom: 20px;
-
-  .title {
-    flex: 1;
-  }
 }
 
-.qrCodeScannerSection {
-  video{
-    width: 230px;
-  }
-}
-
-.qrCodeScannerSection,
 .section {
   margin-bottom: 16px;
 
