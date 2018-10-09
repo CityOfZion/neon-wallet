@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import { reject, noop } from 'lodash-es'
+import { reject, noop, isEqual } from 'lodash-es'
 
 import { getNewTokenItem, validateTokens } from './utils'
 
@@ -95,13 +95,19 @@ class TokenModal extends Component<Props, State> {
   shouldDisableSaveButton = () => {
     const { tokens } = this.state
 
-    const invalidUserGeneratedTokens = tokens
-      .filter((token: TokenItemType) => token.isUserGenerated)
-      .filter((token: TokenItemType) => !token.scriptHash.length)
+    const invalidUserGeneratedTokens = tokens.filter(
+      (token: TokenItemType) =>
+        token.isUserGenerated && !token.scriptHash.length
+    )
 
-    if (tokens === this.props.tokens) return true
-    if (invalidUserGeneratedTokens.length) return true
-    if (tokens.length === this.props.tokens.length) return true
+    if (
+      isEqual(tokens, this.props.tokens) ||
+      invalidUserGeneratedTokens.length ||
+      tokens.length === this.props.tokens.length
+    ) {
+      return true
+    }
+
     return false
   }
 
