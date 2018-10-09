@@ -12,11 +12,7 @@ type Props = {
 }
 
 export default class ConfirmDetails extends React.Component<Props, State> {
-  state = {
-    recipientData: null
-  }
-
-  render() { 
+  render() {
     return (
       <div className={baseStyles.contentContainer}>
         <div className={baseStyles.header}>
@@ -27,6 +23,7 @@ export default class ConfirmDetails extends React.Component<Props, State> {
         <div className={baseStyles.section}>
           <div className={baseStyles.sectionTitle}>PAYMENT DETAILS</div>
           <div className={styles.paymentDetails}>
+
             <div className={styles.detailGroup}>
               <div className={styles.detailName}>Asset</div>
               <div>asdf</div>
@@ -41,6 +38,7 @@ export default class ConfirmDetails extends React.Component<Props, State> {
               <div className={styles.detailName}>Reference</div>
               <div>asdf</div>
             </div>
+            
           </div>
         </div>
 

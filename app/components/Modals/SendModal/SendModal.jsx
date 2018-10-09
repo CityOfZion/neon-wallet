@@ -15,32 +15,29 @@ type State = {
 }
 
 export default class SendModal extends React.Component<Props, State> {
-  constructor(){
-    super();
-    this.gotoNextStep = this.gotoNextStep.bind(this);
-  }
-
   state = {
-    step: 2,
+    step: 1,
     recipientData: {}
   }
 
-  gotoPreviousStep(){
-    if(this.state.step === 2){
-      return () => this.setState({ step: 1 });
-    }
-
-    return null;
+  isStepTwo = () => {
+    return this.state.step === 2;
   }
 
-  gotoNextStep(recipientData){
+  gotoPreviousStep = () => {
+    this.setState({ 
+      step: 1 
+    });
+  }
+
+  gotoNextStep = (recipientData) => {
     this.setState({ 
       step: 2,
       recipientData
     })
   }
 
-  getStepComponent(){
+  getStepComponent = () => {
     return ({
       1: <ReadCode gotoNextStep={this.gotoNextStep}/>,
       2: <ConfirmDetails recipientData={this.state.recipientData}/>
@@ -51,7 +48,7 @@ export default class SendModal extends React.Component<Props, State> {
       return (
         <BaseModal
           style={{ content: { width: '775px', height: '830px' } }}
-          backButtonAction={this.gotoPreviousStep()}
+          backButtonAction={this.isStepTwo() ? this.gotoPreviousStep : null}
           hideModal={this.props.hideModal}
         >
           {this.getStepComponent()}

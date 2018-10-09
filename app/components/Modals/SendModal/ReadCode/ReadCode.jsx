@@ -12,36 +12,29 @@ import baseStyles from '../SendModal.scss'
 import styles from './ReadCode.scss'
 
 type Props = {
-  gotoNextStep: Function,
+  gotoNextStep: Function
 }
 
 type State = {
-  scannerActive: boolean,
+  url: string,
+  scannerActive: boolean
 }
 
 export default class ReadCode extends React.Component<Props, State> {
-  constructor(){
-    super();
-    this.toggleScanner = this.toggleScanner.bind(this);  
-  }
-
   state = {
+    url: '',
     scannerActive: false
   }
 
-  toggleScanner(){
-    const { scannerActive } = this.state;
-    this.setState({ scannerActive: !scannerActive });
+  toggleScanner = () => {
+    this.setState({ scannerActive: !this.state.scannerActive });
   }
 
-  getScanner(){
-    const { scannerActive } = this.state;
-    const { gotoNextStep } = this.props;
-
-    if(scannerActive){
+  getScanner = () => {
+    if(this.state.scannerActive){
       return (
         <QrCodeScanner 
-          callback={recipientData => gotoNextStep(recipientData)} 
+          callback={this.props.gotoNextStep} 
         />
       )
     }
@@ -50,7 +43,7 @@ export default class ReadCode extends React.Component<Props, State> {
   }
 
   render() {
-    const { scannerActive } = this.state;
+    const { scannerActive, url } = this.state;
 
     return(
       <div className={baseStyles.contentContainer}>
@@ -92,9 +85,11 @@ export default class ReadCode extends React.Component<Props, State> {
           <div className={baseStyles.sectionContent}>
             <TextInput
               placeholder="Paste a QR code image URL here..."
+              onChange={e => this.setState({ url: e.target.value })}
+              value={url}
             />
 
-            <Button primary>
+            <Button>
               Use This Code
             </Button>
           </div>
