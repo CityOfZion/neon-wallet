@@ -10,14 +10,14 @@
 }
 
 .switchNetworkContainer {
-  max-height: 40px;
+  cursor: pointer;
+  max-height: 35px;
   padding-right: 25px;
-  font-size: 14px;
-  cursor: default !important;
-  svg {
-    cursor: default !important;
+
+  input {
+    font-size: 12px;
+    cursor: pointer;
   }
-  opacity: 0.6;
 }
 
 .switchNetworkLabel {

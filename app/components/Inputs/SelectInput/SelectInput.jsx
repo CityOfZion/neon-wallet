@@ -25,8 +25,7 @@ type Props = {
   onFocus?: Function,
   onChange?: Function,
   customChangeEvent?: boolean,
-  onToggle?: Function,
-  disabled: boolean
+  onToggle?: Function
 }
 
 type State = {
@@ -92,7 +91,6 @@ export default class SelectInput extends React.Component<Props, State> {
         open={this.state.open}
         onClose={this.handleClose}
         renderDropdown={this.renderDropdown}
-        disabled={this.props.disabled}
       >
         <TextInput
           {...passDownProps}
@@ -109,11 +107,7 @@ export default class SelectInput extends React.Component<Props, State> {
     )
   }
 
-  renderAfter = () =>
-    this.props.renderAfter({
-      onToggle: this.handleToggle,
-      disabled: this.props.disabled
-    })
+  renderAfter = () => this.props.renderAfter({ onToggle: this.handleToggle })
 
   renderDropdown = ({ className }: { className: string }) => {
     const items = this.getItems()

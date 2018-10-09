@@ -9,11 +9,13 @@ export const isTestNetwork = (networkId: string) =>
 export const getNetworks = () => [
   {
     id: MAIN_NETWORK_ID,
+    value: MAIN_NETWORK_ID,
     label: 'MainNet',
     network: 'MainNet'
   },
   {
     id: TEST_NETWORK_ID,
+    value: TEST_NETWORK_ID,
     label: 'TestNet',
     network: 'TestNet'
   }

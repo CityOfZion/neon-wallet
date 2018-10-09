@@ -133,22 +133,9 @@ class TokenModal extends Component<Props, State> {
             >
               Add a new token
             </Button>
-            <Tooltip
-              title="Neon only supports adding custom script hashes for TestNet at this time."
-              className={styles.switchNetworkContainer}
-            >
-              <NetworkSwitch
-                disabled
-                value="TestNet"
-                networks={[
-                  {
-                    id: TEST_NETWORK_ID,
-                    label: 'TestNet',
-                    network: 'TestNet'
-                  }
-                ]}
-              />
-            </Tooltip>
+            <div className={styles.switchNetworkContainer}>
+              <NetworkSwitch />
+            </div>
           </div>
           <form
             onSubmit={e => {

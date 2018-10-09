@@ -48,6 +48,8 @@ export default class Dashboard extends Component<Props> {
         <HeaderBar
           renderLeftContent={() => (
             <NetworkSwitch
+              fontSize={16}
+              transparent
               className={styles.dashboardNetworkSwitch}
               networkSwitchTextInputContainer={
                 styles.dashboardNetworkSwitchTextInputContainer

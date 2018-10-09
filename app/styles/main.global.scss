@@ -175,7 +175,7 @@ input {
 // TODO: work out a solution that does not expose these globally
 .react-select-container {
   width: 100%;
-  cursor: pointer;
+  cursor: pointer !important;
 
   .react-select__placeholder {
     color: rgba(106, 106, 106, 1);
@@ -191,17 +191,26 @@ input {
     background: $text-input-background-color;
     font-size: $text-input-font-size;
     border-radius: $text-input-border-radius;
+    // border: transparent;
+    // border-width: 1px;
   }
 
   .react-select__control {
     color: $text-input-color;
     background: $text-input-background-color;
-    border: transparent;
+    // border: transparent;
+    // border-width: 2px;
     border-radius: $text-input-border-radius;
-    height: 46px;
-    &.hover {
-      border: transparent;
-    }
+    //height: 42px;
+    border: 2px solid #f2f2f2;
+    // :hover {
+    //   border-color: #f2f2f2 !important;
+    //   // border-width: 1px;
+    // }
+  }
+
+  .react-select__control:hover {
+    border-color: #f2f2f2;
   }
 
   .react-select__option--is-focused {
@@ -222,7 +231,7 @@ input {
     background: #f2f2f2;
     border-top: none;
     border-radius: 0 0 4px 4px;
-    margin-top: -8px;
+    margin-top: -7px;
     z-index: 1;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   }
@@ -230,6 +239,7 @@ input {
   .react-select__control--is-focused {
     @include active-input;
     border-color: transparent !important;
+    // border: none !important;
     box-shadow: none;
 
     .react-select__value-container {

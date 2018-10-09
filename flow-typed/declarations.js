@@ -59,6 +59,7 @@ declare type ModalType = $Values<typeof MODAL_TYPES>
 declare type SymbolType = string
 
 declare type NetworkItemType = {
+  value: string,
   id: string,
   label: string,
   network: NetworkType
