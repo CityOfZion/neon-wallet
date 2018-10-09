@@ -23,7 +23,7 @@
 }
 
 .divider {
-  border-bottom: black solid 1px;
+  border-bottom: $black solid 1px;
   margin-bottom: 20px;
 }
 
@@ -37,9 +37,6 @@
 
   .sectionContent {
     line-height: 24px;
-  }
-
-  .sectionContent {
     padding: 16px 0 16px 0;
   }
 }

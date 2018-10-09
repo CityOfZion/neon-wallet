@@ -2,18 +2,20 @@
 import React from 'react'
 
 import Button from '../../../Button'
-import baseStyles from '../SendModal.scss'
 import GridIcon from '../../../../assets/icons/grid.svg'
 
+import baseStyles from '../SendModal.scss'
+import styles from './ConfirmDetails.scss'
+
 type Props = {
-
-}
-
-type State = {
-
+  recipientData: Object
 }
 
 export default class ConfirmDetails extends React.Component<Props, State> {
+  state = {
+    recipientData: null
+  }
+
   render() { 
     return (
       <div className={baseStyles.contentContainer}>
@@ -24,12 +26,27 @@ export default class ConfirmDetails extends React.Component<Props, State> {
 
         <div className={baseStyles.section}>
           <div className={baseStyles.sectionTitle}>PAYMENT DETAILS</div>
-          <div className={baseStyles.sectionContent}>
-            <Button primary>
-              Send Assets
-            </Button>
+          <div className={styles.paymentDetails}>
+            <div className={styles.detailGroup}>
+              <div className={styles.detailName}>Asset</div>
+              <div>asdf</div>
+            </div>
+
+            <div className={styles.detailGroup}>
+              <div className={styles.detailName}>Address</div>
+              <div>asdf</div>
+            </div>
+
+            <div className={styles.detailGroup}>
+              <div className={styles.detailName}>Reference</div>
+              <div>asdf</div>
+            </div>
           </div>
         </div>
+
+        <Button primary>
+          Send Assets
+        </Button>
       </div>
     )
   }

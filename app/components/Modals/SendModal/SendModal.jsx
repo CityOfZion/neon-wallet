@@ -21,7 +21,7 @@ export default class SendModal extends React.Component<Props, State> {
   }
 
   state = {
-    step: 1,
+    step: 2,
     recipientData: {}
   }
 
