@@ -36,7 +36,6 @@ export default class HeaderBar extends React.PureComponent<Props> {
         {label ? <h3> {label}</h3> : renderLeftContent()}
         {shouldRenderRefresh ? (
           <div className={styles.refreshButton}>
-            <span onClick={loading ? null : loadWalletData}> Refresh </span>
             <RefreshIcon
               id="refresh"
               className={classNames(styles.refresh, {
@@ -44,6 +43,7 @@ export default class HeaderBar extends React.PureComponent<Props> {
               })}
               onClick={loading ? null : loadWalletData}
             />
+            <span onClick={loading ? null : loadWalletData}> Refresh </span>
           </div>
         ) : (
           renderRightContent()

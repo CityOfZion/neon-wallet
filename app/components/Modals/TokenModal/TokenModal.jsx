@@ -1,15 +1,18 @@
 // @flow
 import React, { Component } from 'react'
-import { reject, noop } from 'lodash-es'
+import { reject, noop, isEqual } from 'lodash-es'
 
 import { getNewTokenItem, validateTokens } from './utils'
 
+import { TEST_NETWORK_ID } from '../../../core/constants'
+import Tooltip from '../../Tooltip'
 import BaseModal from '../BaseModal'
 import Button from '../../Button'
 import Row from './Row'
 import NetworkSwitch from '../../../containers/App/Sidebar/NetworkSwitch'
 import AddIcon from '../../../assets/icons/add.svg'
 import styles from './TokenModal.scss'
+import LogoWithStrikethrough from '../../LogoWithStrikethrough'
 
 type Props = {
   hideModal: () => any,
@@ -48,10 +51,9 @@ class TokenModal extends Component<Props, State> {
   }
 
   addToken = () => {
-    // TODO: fix me! (Use callback in setState when referencing the previous state)
-    this.setState({
-      tokens: [...this.state.tokens, getNewTokenItem(this.props.networkId)] // eslint-disable-line
-    })
+    this.setState(state => ({
+      tokens: [...state.tokens, getNewTokenItem(this.props.networkId)]
+    }))
   }
 
   saveAndValidateTokens = () => {
@@ -90,9 +92,32 @@ class TokenModal extends Component<Props, State> {
     })
   }
 
+  shouldDisableSaveButton = () => {
+    const { tokens } = this.state
+
+    const invalidUserGeneratedTokens = tokens.filter(
+      (token: TokenItemType) =>
+        token.isUserGenerated && !token.scriptHash.length
+    )
+
+    if (
+      isEqual(tokens, this.props.tokens) ||
+      invalidUserGeneratedTokens.length ||
+      tokens.length === this.props.tokens.length
+    ) {
+      return true
+    }
+
+    return false
+  }
+
   render() {
     const { hideModal, networkId } = this.props
     const { tokens, errorItemId, errorType } = this.state
+
+    const customTokenListLength = tokens.filter(
+      token => token.networkId === networkId && token.isUserGenerated
+    ).length
 
     return (
       <BaseModal
@@ -100,18 +125,21 @@ class TokenModal extends Component<Props, State> {
         hideModal={hideModal}
         style={{
           content: {
-            width: '500px',
-            height: '500px'
+            width: '550px',
+            height: '550px'
           }
         }}
       >
         <div className={styles.container}>
           <div className={styles.addToken}>
-            <Button onClick={this.addToken} renderIcon={AddIcon}>
+            <Button
+              onClick={this.addToken}
+              className={styles.addTokenButton}
+              renderIcon={AddIcon}
+            >
               Add a new token
             </Button>
             <div className={styles.switchNetworkContainer}>
-              <span className={styles.switchNetworkLabel}>Network:</span>
               <NetworkSwitch />
             </div>
           </div>
@@ -122,27 +150,37 @@ class TokenModal extends Component<Props, State> {
             }}
           >
             <div className={styles.rowsContainer}>
-              {tokens
-                .filter(token => token.networkId === networkId)
-                .map((token: TokenItemType) => (
-                  <Row
-                    token={token}
-                    isScriptHashInvalid={
-                      errorItemId === token.id && errorType === 'scriptHash'
-                    }
-                    onChangeScriptHash={(scriptHash: string) =>
-                      this.updateToken(token.id, { ...token, scriptHash })
-                    }
-                    onDelete={() => this.deleteToken(token.id)}
-                    key={`tokenOption${token.id}`}
-                  />
-                ))}
+              {!customTokenListLength ? (
+                <LogoWithStrikethrough />
+              ) : (
+                tokens
+                  .filter(
+                    token =>
+                      token.networkId === networkId && token.isUserGenerated
+                  )
+                  .map((token: TokenItemType) => (
+                    <Row
+                      token={token}
+                      isScriptHashInvalid={
+                        errorItemId === token.id && errorType === 'scriptHash'
+                      }
+                      onChangeScriptHash={(scriptHash: string) =>
+                        this.updateToken(token.id, { ...token, scriptHash })
+                      }
+                      onDelete={() => this.deleteToken(token.id)}
+                      key={`tokenOption${token.id}`}
+                    />
+                  ))
+              )}
             </div>
             <div className={styles.modalFooter}>
-              <Button primary onClick={this.saveAndValidateTokens}>
+              <Button
+                primary
+                disabled={this.shouldDisableSaveButton()}
+                onClick={this.saveAndValidateTokens}
+              >
                 Save
               </Button>
-              <Button onClick={hideModal}>Cancel</Button>
             </div>
           </form>
         </div>
