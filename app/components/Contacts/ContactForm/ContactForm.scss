@@ -60,6 +60,12 @@
 
     .dialogueAndButtonContainer {
       margin-top: -20px;
+
+      svg {
+        path {
+          fill: #ee6d66;
+        }
+      }
     }
   }
 

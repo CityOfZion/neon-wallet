@@ -8,6 +8,20 @@ export const getNewTokenItem = (networkId: string) => ({
   isUserGenerated: true
 })
 
+const ensureHex = (token: string): boolean => {
+  const hexRegex = /^([0-9A-Fa-f]{2})*$/
+  try {
+    return hexRegex.test(token)
+  } catch (err) {
+    console.warn('An invalid script hash was manually entered in Settings!', {
+      scriptHash: token
+    })
+    return false
+  }
+}
+
+const validateHashLength = (token: string): boolean => token.length === 40
+
 export const validateTokens = (tokens: Array<TokenItemType>) => {
   let errorMessage = null
   let errorType = null
@@ -15,7 +29,7 @@ export const validateTokens = (tokens: Array<TokenItemType>) => {
 
   tokens.some(({ scriptHash, id }: TokenItemType) => {
     if (!scriptHash) {
-      errorMessage = 'Script hash cannot be left blank'
+      errorMessage = 'Invalid script hash length'
       errorType = 'scriptHash'
     }
 
@@ -25,6 +39,16 @@ export const validateTokens = (tokens: Array<TokenItemType>) => {
     }
     return false
   })
+
+  const invalidTokens = tokens
+    .map(({ scriptHash }) => scriptHash)
+    .filter(ensureHex)
+    .filter(validateHashLength)
+
+  if (invalidTokens) {
+    errorMessage = 'Invalid script hash detected.'
+    errorType = 'scriptHash'
+  }
 
   return {
     errorMessage,
