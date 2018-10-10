@@ -12,6 +12,10 @@ type Props = {
 }
 
 export default class ConfirmDetails extends React.Component<Props, State> {
+  getRecipientData(key){
+    return this.props.recipientData[key] || 'Not specified'
+  }
+  
   render() {
     return (
       <div className={baseStyles.contentContainer}>
@@ -26,17 +30,17 @@ export default class ConfirmDetails extends React.Component<Props, State> {
 
             <div className={styles.detailGroup}>
               <div className={styles.detailName}>Asset</div>
-              <div>asdf</div>
+              <div>{this.getRecipientData('asset')}</div>
             </div>
 
             <div className={styles.detailGroup}>
               <div className={styles.detailName}>Address</div>
-              <div>asdf</div>
+              <div>{this.getRecipientData('address')}</div>
             </div>
 
             <div className={styles.detailGroup}>
               <div className={styles.detailName}>Reference</div>
-              <div>asdf</div>
+              <div>{this.getRecipientData('reference')}</div>
             </div>
             
           </div>

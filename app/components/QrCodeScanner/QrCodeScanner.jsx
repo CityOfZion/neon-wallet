@@ -22,8 +22,7 @@ export default class QrCodeScanner extends Component<Props, State> {
     this.scannerInstance = new Instascan.Scanner({ video: this.scanPreviewElement })
     
     this.scannerInstance.addListener('scan', content => {
-      this.stopScanner();
-      callback(content)
+      callback(content, this.stopScanner.bind(this));
     })
 
     Instascan.Camera.getCameras().then((cameras: Array<Object>) => {
@@ -36,7 +35,7 @@ export default class QrCodeScanner extends Component<Props, State> {
   }
 
   stopScanner () {
-    this.scannerInstance.stop()
+    this.scannerInstance && this.scannerInstance.stop()
   }
 
   render () {

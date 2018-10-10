@@ -5,8 +5,11 @@ import BaseModal from '../BaseModal'
 import ReadCode from './ReadCode'
 import ConfirmDetails from './ConfirmDetails';
 
+import parseQRCode from '../../../util/parseQRCode';
+
 type Props = {
-  hideModal: Function,
+  hideModal: () => any,
+  showErrorNotification: () => any
 }
 
 type State = {
@@ -30,11 +33,20 @@ export default class SendModal extends React.Component<Props, State> {
     });
   }
 
-  gotoNextStep = (recipientData) => {
-    this.setState({ 
-      step: 2,
-      recipientData
-    })
+  gotoNextStep = (recipientData, stopScanner) => {
+    try {
+      let parsedRecipientData = parseQRCode(recipientData);
+      stopScanner();
+
+      this.setState({ 
+        step: 2,
+        recipientData: parsedRecipientData
+      })
+    } catch(err) {
+      this.props.showErrorNotification({ 
+        message: `An error occurred while scanning this QR code: ${err}. Please try again.` 
+      })
+    }
   }
 
   getStepComponent = () => {

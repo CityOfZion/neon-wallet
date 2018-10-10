@@ -4,7 +4,6 @@ import classNames from 'classnames'
 
 import Button from '../../../Button'
 import QrCodeScanner from '../../../QrCodeScanner'
-import TextInput from '../../../Inputs/TextInput'
 import GridIcon from '../../../../assets/icons/grid.svg'
 import CozDonationQrCode from '../../../../assets/images/coz-donation-qr-code.png'
 
@@ -16,13 +15,11 @@ type Props = {
 }
 
 type State = {
-  url: string,
   scannerActive: boolean
 }
 
 export default class ReadCode extends React.Component<Props, State> {
   state = {
-    url: '',
     scannerActive: false
   }
 
@@ -43,7 +40,7 @@ export default class ReadCode extends React.Component<Props, State> {
   }
 
   render() {
-    const { scannerActive, url } = this.state;
+    const { scannerActive } = this.state;
 
     return(
       <div className={baseStyles.contentContainer}>
@@ -56,7 +53,7 @@ export default class ReadCode extends React.Component<Props, State> {
 
         <div className={baseStyles.section}>
           <div className={baseStyles.sectionContent}>
-            So you've been sent a QR code? Hold it up to your camera or paste the image URL below:
+            So you've been given a QR code? Click capture and hold it up to your camera.
           </div>
         </div>
 
@@ -74,13 +71,13 @@ export default class ReadCode extends React.Component<Props, State> {
               {this.getScanner()}
             </div>
 
-            <Button onClick={this.toggleScanner}>
+            <Button primary onClick={this.toggleScanner}>
               {scannerActive ? 'Cancel' : 'Capture'}
             </Button>
           </div>
         </div>
 
-        <div className={baseStyles.section}>
+        {/* <div className={baseStyles.section}>
           <div className={baseStyles.sectionTitle}>OR USE AN IMAGE URL</div>
           <div className={baseStyles.sectionContent}>
             <TextInput
@@ -93,7 +90,7 @@ export default class ReadCode extends React.Component<Props, State> {
               Use This Code
             </Button>
           </div>
-        </div>
+        </div> */}
       </div>
     )
   }
