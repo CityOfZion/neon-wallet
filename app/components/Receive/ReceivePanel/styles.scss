@@ -62,7 +62,8 @@
   ul {
     margin-bottom: 0 !important;
     margin: 20px auto;
-    padding-bottom: 15px;
+    padding-bottom: 15px !important;
+    width: 400px;
   }
 }
 
@@ -79,8 +80,8 @@
   }
 
   canvas {
-    margin-bottom: 30px;
-    height: 250px;
-    width: 250px;
+    margin-bottom: 20px;
+    min-height: 225px;
+    min-width: 225px;
   }
 }

@@ -34,6 +34,10 @@ const customStyles = {
     transform: props.selectProps.menuIsOpen && 'rotate(180deg)'
   }),
   indicatorSeparator: () => ({ display: 'none' }),
+  singleValue: (styles, props) => ({
+    ...styles,
+    fontSize: props.selectProps.fontSize
+  }),
   valueContainer: (styles, props) => ({
     ...styles,
     background: props.selectProps.transparent && 'transparent !important',

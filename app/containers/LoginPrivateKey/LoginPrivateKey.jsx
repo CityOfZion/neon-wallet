@@ -31,12 +31,14 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
             loginWithPrivateKey(wif)
           }}
         >
-          <PasswordInput
-            placeholder="Enter your private key here"
-            value={wif}
-            onChange={(e: Object) => this.setState({ wif: e.target.value })}
-            autoFocus
-          />
+          <div className={styles.centeredInput}>
+            <PasswordInput
+              placeholder="Enter your private key here"
+              value={wif}
+              onChange={(e: Object) => this.setState({ wif: e.target.value })}
+              autoFocus
+            />
+          </div>
           <Button
             id="loginButton"
             primary

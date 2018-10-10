@@ -71,7 +71,7 @@
       @extend .symbol;
       width: 35px;
       margin-right: 40px;
-      color: #ccd0d9;
+      color: #5c677f;
       font-weight: 300;
       flex-direction: column;
       display: flex;
@@ -105,11 +105,13 @@
 
     .balance {
       flex: 0 0 auto;
+      font-size: 13px;
     }
 
     .balanceValue {
       flex: 0 0 auto;
       width: 70px;
+      font-size: 13px;
       font-weight: 300;
     }
 
@@ -122,6 +124,7 @@
     flex: 1 1 auto;
     margin-right: 16px;
     font-weight: 300;
+    font-size: 13px;
   }
 
   .tableHeader {

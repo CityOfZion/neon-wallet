@@ -47,8 +47,8 @@ export default class ReceivePanel extends React.Component<Props, State> {
               icon={
                 <WarningIcon
                   className={styles.warningIcon}
-                  height={50}
-                  width={50}
+                  height={60}
+                  width={60}
                 />
               }
               text="Only send assets, such as NEO and GAS, and tokens, such as RPX,
