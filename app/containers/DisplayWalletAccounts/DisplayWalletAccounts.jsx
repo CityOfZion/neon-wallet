@@ -41,12 +41,16 @@ class DisplayWalletAccounts extends Component<Props> {
       authenticated
     } = this.props
     const fields = [
-      { label: 'Passphrase', value: passphrase },
-      { label: 'Private Key', value: wif },
-      { label: 'Public Address', value: address }
+      {
+        label: 'Passphrase',
+        value: passphrase,
+        type: 'password'
+      },
+      { label: 'Private Key', value: wif, type: 'text' },
+      { label: 'Public Address', value: address, type: 'text' }
     ]
     if (walletName) {
-      fields.unshift({ label: 'Wallet Name', value: walletName })
+      fields.unshift({ label: 'Wallet Name', value: walletName, type: 'text' })
     }
     const conditionalPanelProps = {}
     if (authenticated) {
@@ -91,7 +95,12 @@ class DisplayWalletAccounts extends Component<Props> {
                     [styles.reducedInputFontSize]: item.label === 'Private Key'
                   })}
                 >
-                  <TextInput label={item.label} value={item.value} disabled />
+                  <TextInput
+                    type={item.type}
+                    label={item.label}
+                    value={item.value}
+                    disabled
+                  />
                 </div>
                 <CopyToClipboard
                   className={styles.clipboardCopy}
