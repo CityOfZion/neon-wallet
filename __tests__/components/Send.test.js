@@ -5,6 +5,7 @@ import { uniqueId } from 'lodash-es'
 import Send from '../../app/containers/Send/Send'
 import ZeroAssets from '../../app/components/ZeroAssets/ZeroAssets'
 import SendRecipientListItem from '../../app/components/Send/SendPanel/SendRecipientList/SendRecipientListItem'
+import PanelHeaderButton from '../../app/components/PanelHeaderButton/PanelHeaderButton'
 
 const setup = props =>
   mount(
@@ -38,7 +39,7 @@ describe('Send', () => {
   test('It does not add a row when you click Add Recipient button and without details for the first row being filled in', () => {
     const wrapper = setup()
 
-    wrapper.find('.sendPanelHeaderButton').simulate('click')
+    wrapper.find(PanelHeaderButton).at(1).simulate('click')
     expect(wrapper.instance().state.sendRowDetails.length).toBe(1)
     expect(wrapper.find(SendRecipientListItem).children().length).toBe(1)
   })
@@ -55,7 +56,7 @@ describe('Send', () => {
       sendRowDetails: [asset]
     })
 
-    wrapper.find('.sendPanelHeaderButton').simulate('click')
+    wrapper.find(PanelHeaderButton).at(1).simulate('click')
     expect(wrapper.instance().state.sendRowDetails.length).toBe(2)
     expect(wrapper.find(SendRecipientListItem).children().length).toBe(2)
   })
@@ -88,7 +89,7 @@ describe('Send', () => {
     const wrapper = setup()
 
     for (let i = 0; i <= 10; i++) {
-      wrapper.find('.sendPanelHeaderButton').simulate('click')
+      wrapper.find(PanelHeaderButton).at(1).simulate('click')
     }
 
     expect(wrapper.instance().state.sendRowDetails.length).toBe(1)
