@@ -5,19 +5,20 @@ import styles from './PanelHeaderButton.scss'
 
 type Props = {
   onClick: () => void,
-  renderIcon: () => $ReactNode,
+  renderIcon: () => $React$Node,
   buttonText: string,
+  className: string,
   disabled: boolean
 }
 
 class PanelHeaderButton extends Component<Props> {
   render() {
-    const { renderIcon, onClick, buttonText, disabled } = this.props
+    const { renderIcon, onClick, buttonText, disabled, className } = this.props
 
     return (
       <button
         type="button"
-        className={styles.panelHeaderButton}
+        className={`${styles.panelHeaderButton} ${className}`}
         onClick={onClick}
         disabled={disabled}
       >

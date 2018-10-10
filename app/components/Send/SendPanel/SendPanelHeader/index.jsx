@@ -5,7 +5,7 @@ import Tooltip from '../../../Tooltip'
 import AddIcon from '../../../../assets/icons/add.svg'
 import GridIcon from '../../../../assets/icons/grid.svg'
 import LightningIcon from '../../../../assets/icons/lightning.svg'
-import PanelHeaderButton from '../../../PanelHeaderButton'
+import PanelHeaderButton from '../../../PanelHeaderButton/PanelHeaderButton'
 
 import { pluralize } from '../../../../util/pluralize'
 

@@ -63,6 +63,7 @@ const TokenSalePanel = ({
           )}
           onClick={() => {}}
           buttonText="Add Custom Token"
+          className={styles.tokenSaleHeaderButton}
         />
       </div>
     )}

@@ -6,7 +6,7 @@ import styles from './CheckBox.scss'
 
 type Props = {
   onChange: () => void,
-  icon: React$Node,
+  renderIcon: () => React$Node,
   className?: string,
   checked: boolean
 }
@@ -30,7 +30,7 @@ class CheckBox extends Component<Props, State> {
 
   render() {
     const { checked } = this.state
-    const { icon, className } = this.props
+    const { renderIcon, className } = this.props
     const classes = classNames(styles.checkBox, className, {
       [styles.checkBoxActive]: checked
     })
@@ -42,7 +42,7 @@ class CheckBox extends Component<Props, State> {
         role="checkbox"
         className={classes}
       >
-        {checked && icon}
+        {checked && renderIcon && renderIcon()}
       </button>
     )
   }
