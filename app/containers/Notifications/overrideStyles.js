@@ -24,6 +24,7 @@ const overrideStyles = {
       display: 'flex',
       alignItems: 'center',
       paddingLeft: '60px',
+      borderRadius: '4px',
       color: '#FFF'
     },
 
