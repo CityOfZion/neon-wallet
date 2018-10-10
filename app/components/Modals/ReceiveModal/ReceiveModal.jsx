@@ -10,7 +10,6 @@ import { ASSETS, TOKENS } from '../../../core/constants'
 
 type Props = {
   hideModal: Function,
-  walletName: string,
   address: string,
   asset: string,
   amount: string,
@@ -29,14 +28,7 @@ export default class ReceiveModal extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    const {
-      hideModal,
-      walletName,
-      address,
-      asset,
-      amount,
-      description
-    } = this.props
+    const { address, asset, amount, description } = this.props
 
     const qrCode = new NeoQR({
       nep9Data: {
@@ -57,7 +49,7 @@ export default class ReceiveModal extends React.Component<Props, State> {
   render() {
     const {
       hideModal,
-      walletName,
+
       address,
       asset,
       amount,
@@ -75,8 +67,6 @@ export default class ReceiveModal extends React.Component<Props, State> {
             token.networks['1'].hash === asset ? token.symbol : accum,
           asset
         )
-
-    console.log(assetSymbol)
     return (
       <BaseModal
         title="Your QR Code"

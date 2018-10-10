@@ -62,6 +62,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
         defaultValue={null}
         hideHighlight={true}
         isSearchable={false}
+        maxMenuHeight={140}
         onChange={[Function]}
         options={
           Array [
@@ -86,6 +87,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
             "indicatorSeparator": [Function],
             "noOptionsMessage": [Function],
             "option": [Function],
+            "singleValue": [Function],
             "valueContainer": [Function],
           }
         }
@@ -125,7 +127,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
           isRtl={false}
           isSearchable={false}
           loadingMessage={[Function]}
-          maxMenuHeight={300}
+          maxMenuHeight={140}
           menuIsOpen={false}
           menuPlacement="bottom"
           menuPosition="absolute"
@@ -165,6 +167,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
               "indicatorSeparator": [Function],
               "noOptionsMessage": [Function],
               "option": [Function],
+              "singleValue": [Function],
               "valueContainer": [Function],
             }
           }
@@ -243,7 +246,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                 "isRtl": false,
                 "isSearchable": false,
                 "loadingMessage": [Function],
-                "maxMenuHeight": 300,
+                "maxMenuHeight": 140,
                 "menuIsOpen": false,
                 "menuPlacement": "bottom",
                 "menuPosition": "absolute",
@@ -280,6 +283,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                   "indicatorSeparator": [Function],
                   "noOptionsMessage": [Function],
                   "option": [Function],
+                  "singleValue": [Function],
                   "valueContainer": [Function],
                 },
                 "tabIndex": "0",
@@ -363,7 +367,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                     "isRtl": false,
                     "isSearchable": false,
                     "loadingMessage": [Function],
-                    "maxMenuHeight": 300,
+                    "maxMenuHeight": 140,
                     "menuIsOpen": false,
                     "menuPlacement": "bottom",
                     "menuPosition": "absolute",
@@ -400,6 +404,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                       "indicatorSeparator": [Function],
                       "noOptionsMessage": [Function],
                       "option": [Function],
+                      "singleValue": [Function],
                       "valueContainer": [Function],
                     },
                     "tabIndex": "0",
@@ -476,7 +481,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                         "isRtl": false,
                         "isSearchable": false,
                         "loadingMessage": [Function],
-                        "maxMenuHeight": 300,
+                        "maxMenuHeight": 140,
                         "menuIsOpen": false,
                         "menuPlacement": "bottom",
                         "menuPosition": "absolute",
@@ -513,6 +518,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                           "indicatorSeparator": [Function],
                           "noOptionsMessage": [Function],
                           "option": [Function],
+                          "singleValue": [Function],
                           "valueContainer": [Function],
                         },
                         "tabIndex": "0",
@@ -595,7 +601,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                             "isRtl": false,
                             "isSearchable": false,
                             "loadingMessage": [Function],
-                            "maxMenuHeight": 300,
+                            "maxMenuHeight": 140,
                             "menuIsOpen": false,
                             "menuPlacement": "bottom",
                             "menuPosition": "absolute",
@@ -632,6 +638,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                               "indicatorSeparator": [Function],
                               "noOptionsMessage": [Function],
                               "option": [Function],
+                              "singleValue": [Function],
                               "valueContainer": [Function],
                             },
                             "tabIndex": "0",
@@ -648,7 +655,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                         setValue={[Function]}
                       >
                         <div
-                          className="css-va7pk8 react-select__single-value"
+                          className="css-1wnopn1 react-select__single-value"
                         >
                           MainNet
                         </div>
@@ -732,7 +739,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                         "isRtl": false,
                         "isSearchable": false,
                         "loadingMessage": [Function],
-                        "maxMenuHeight": 300,
+                        "maxMenuHeight": 140,
                         "menuIsOpen": false,
                         "menuPlacement": "bottom",
                         "menuPosition": "absolute",
@@ -769,6 +776,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                           "indicatorSeparator": [Function],
                           "noOptionsMessage": [Function],
                           "option": [Function],
+                          "singleValue": [Function],
                           "valueContainer": [Function],
                         },
                         "tabIndex": "0",
@@ -844,7 +852,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                             "isRtl": false,
                             "isSearchable": false,
                             "loadingMessage": [Function],
-                            "maxMenuHeight": 300,
+                            "maxMenuHeight": 140,
                             "menuIsOpen": false,
                             "menuPlacement": "bottom",
                             "menuPosition": "absolute",
@@ -881,6 +889,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                               "indicatorSeparator": [Function],
                               "noOptionsMessage": [Function],
                               "option": [Function],
+                              "singleValue": [Function],
                               "valueContainer": [Function],
                             },
                             "tabIndex": "0",
@@ -964,7 +973,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                             "isRtl": false,
                             "isSearchable": false,
                             "loadingMessage": [Function],
-                            "maxMenuHeight": 300,
+                            "maxMenuHeight": 140,
                             "menuIsOpen": false,
                             "menuPlacement": "bottom",
                             "menuPosition": "absolute",
@@ -1001,6 +1010,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                               "indicatorSeparator": [Function],
                               "noOptionsMessage": [Function],
                               "option": [Function],
+                              "singleValue": [Function],
                               "valueContainer": [Function],
                             },
                             "tabIndex": "0",
