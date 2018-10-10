@@ -47,6 +47,8 @@ export default class Dashboard extends Component<Props> {
         <HeaderBar
           renderLeftContent={() => (
             <NetworkSwitch
+              fontSize={16}
+              transparent
               className={styles.dashboardNetworkSwitch}
               networkSwitchTextInputContainer={
                 styles.dashboardNetworkSwitchTextInputContainer
@@ -58,10 +60,23 @@ export default class Dashboard extends Component<Props> {
           renderRightContent={() => (
             <div className={classNames(styles.dashboardHeaderButonContainer)}>
               <NavLink id="wallet-manager" exact to={ROUTES.WALLET_MANAGER}>
-                <span> Manage Wallets </span>
                 <Wallet id="manage-wallets" />
+                <span> Manage Wallets </span>
               </NavLink>
+<<<<<<< HEAD
               <RefreshButton />
+=======
+              <div className={styles.refreshButton}>
+                <RefreshIcon
+                  id="refresh"
+                  className={classNames(styles.refresh, {
+                    [styles.loading]: loading
+                  })}
+                  onClick={loading ? null : loadWalletData}
+                />
+                <span onClick={loading ? null : loadWalletData}> Refresh </span>
+              </div>
+>>>>>>> design-v2
             </div>
           )}
         />

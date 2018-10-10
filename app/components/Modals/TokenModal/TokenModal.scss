@@ -1,28 +1,40 @@
-.container {
-    padding: 12px 0;
-}
-
 .addToken {
-    display: flex;
-    align-items: center;
-    padding-bottom: 15px;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  padding-bottom: 15px;
+  justify-content: space-between;
 }
 
 .switchNetworkContainer {
-    padding-right: 25px;
-    font-size: 14px;
+  cursor: pointer;
+  max-height: 35px;
+  padding-right: 25px;
+
+  input {
+    font-size: 12px;
+    cursor: pointer;
+  }
 }
 
 .switchNetworkLabel {
-    padding-right: 5px;
+  padding-right: 5px;
 }
 
 .rowsContainer {
-    height: 280px;
-    overflow-y: auto;
+  height: 280px;
+  overflow-y: auto;
 }
 
 .modalFooter {
-    padding-top: 20px;
+  padding-top: 20px;
+}
+
+.addTokenButton {
+  width: 200px;
+
+  svg {
+    path {
+      fill: #69e27e;
+    }
+  }
 }

@@ -245,10 +245,13 @@ export default class Settings extends Component<Props, State> {
   )
 
   renderHeaderBarRightContent = () => (
-    <Tooltip title="Add Token" className={styles.headerButtonContainer}>
+    <div
+      onClick={() => this.openTokenModal()}
+      className={styles.headerButtonContainer}
+    >
       <AddIcon className={styles.add} />
       <span>Add Token</span>
-    </Tooltip>
+    </div>
   )
 
   openDiscordLink = () => shell.openExternal(DISCORD_INVITE_LINK)

@@ -1,27 +1,37 @@
 .row {
-    padding-bottom: 5px;
+  padding-bottom: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  input {
+    width: 300px;
+  }
 }
 
 .rowLabel {
-    width: 80px;
-    margin-right: 10px;
-    padding: 5px;
-    font-size: 14px;
-    border: 1px solid transparent;
+  width: 80px;
+  margin-right: 10px;
+  font-size: 14px;
 }
 
 .rowURL {
-    width: 390px;
-    margin-right: 10px;
-    padding: 5px;
-    font-size: 14px;
-    border: 1px solid transparent;
+  width: 440px;
+  margin-right: 10px;
+  font-size: 14px;
 }
 
 .rowError {
-    border: 1px solid red;
+  border: 1px solid #ee6d66;
 }
 
 .icon {
-    cursor: pointer;
+  cursor: pointer;
+  margin-bottom: 20px;
+  width: 20px;
+  height: 20px;
+
+  path {
+    fill: #ee6d66;
+  }
 }

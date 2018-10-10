@@ -7,6 +7,7 @@ import LockOutline from 'react-icons/lib/md/lock-outline'
 import Tooltip from '../../Tooltip'
 
 import styles from './Row.scss'
+import TextInput from '../../Inputs/TextInput'
 
 type Props = {
   token: TokenItemType,
@@ -16,14 +17,6 @@ type Props = {
 }
 
 class Row extends Component<Props> {
-  scriptHashInput: ?HTMLInputElement
-
-  componentWillReceiveProps(nextProps: Props) {
-    if (nextProps.isScriptHashInvalid && this.scriptHashInput) {
-      this.scriptHashInput.focus()
-    }
-  }
-
   render() {
     const {
       token,
@@ -33,7 +26,7 @@ class Row extends Component<Props> {
     } = this.props
     return (
       <div className={styles.row}>
-        <input
+        <TextInput
           className={classNames(styles.rowURL, {
             [styles.rowError]: isScriptHashInvalid
           })}
@@ -41,23 +34,14 @@ class Row extends Component<Props> {
           readOnly={!token.isUserGenerated}
           disabled={!token.isUserGenerated}
           placeholder="script hash"
-          ref={node => {
-            this.scriptHashInput = node
-          }}
           defaultValue={token.scriptHash}
           onChange={e =>
             token.isUserGenerated && onChangeScriptHash(e.target.value)
           }
         />
-        {token.isUserGenerated ? (
-          <Tooltip title="Delete">
-            <Delete onClick={onDelete} className={styles.icon} />
-          </Tooltip>
-        ) : (
-          <Tooltip title="This token cannot be changed">
-            <LockOutline className={styles.icon} />
-          </Tooltip>
-        )}
+        <Tooltip title="Delete">
+          <Delete onClick={onDelete} className={styles.icon} />
+        </Tooltip>
       </div>
     )
   }
