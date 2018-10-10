@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import React, { Fragment } from 'react'
 import type { Node } from 'react'
 
 import moment from 'moment'
@@ -27,46 +27,10 @@ type Props = {
 export default class Transaction extends React.Component<Props> {
   render = () => {
     const { tx } = this.props
-    const { txid, iconType, time, label, amount, isNetworkFee, to, from } = tx
+    const { iconType } = tx
     return (
       <div className={styles.transactionContainer}>
-        <div className={styles.txTypeIconContainer}>
-          {this.renderTxTypeIcon(iconType)}
-        </div>
-        <div className={styles.txDateContainer}>
-          {moment.unix(time).format('MM/DD/YYYY | HH:MM:ss')}
-        </div>
-        <div className={styles.txLabelContainer}>{label}</div>
-        <div className={styles.txAmountContainer}>{amount}</div>
-        <div className={styles.txToContainer}>
-          {isNetworkFee ? (
-            <div className={styles.largerFont}> {to} </div>
-          ) : iconType === 'SEND' ? (
-            this.findContact(to)
-          ) : (
-            this.findContact(from)
-          )}
-          {!isNetworkFee &&
-            this.findContact(to) === to && (
-              <CopyToClipboard
-                className={styles.copy}
-                text={to}
-                tooltip="Copy Public Address"
-              />
-            )}
-        </div>
-        {isNetworkFee ? (
-          <div className={styles.historyButtonPlaceholder} />
-        ) : (
-          <Button
-            className={styles.transactionHistoryButton}
-            renderIcon={ContactsAdd}
-            onClick={this.displayModal}
-            disabled={this.findContact(to) !== to}
-          >
-            Add
-          </Button>
-        )}
+        {this.renderAbstract(iconType)}
         <Button
           className={styles.transactionHistoryButton}
           renderIcon={InfoIcon}
@@ -112,26 +76,117 @@ export default class Transaction extends React.Component<Props> {
     openExplorerTx(networkId, explorer, txid)
   }
 
-  renderTxTypeIcon = (type: string) => {
+  renderAbstract = (type: string) => {
+    const { tx } = this.props
+    const { iconType, time, label, amount, isNetworkFee, to, from } = tx
     switch (type) {
       case 'CLAIM':
         return (
-          <div className={styles.claimIconContainer}>
-            <ClaimIcon />
+          <div className={styles.abstractContainer}>
+            <div className={styles.txTypeIconContainer}>
+              <div className={styles.claimIconContainer}>
+                <ClaimIcon />
+              </div>
+            </div>
+            <div className={styles.txDateContainer}>
+              {moment.unix(time).format('MM/DD/YYYY | HH:MM:ss')}
+            </div>
+            <div className={styles.txLabelContainer}>{label}</div>
+            <div className={styles.txAmountContainer}>{amount}</div>
+            <div className={styles.txToContainer}>{this.findContact(to)}</div>
+            {this.findContact(to) !== to ? (
+              <div className={styles.transactionHistoryButton} />
+            ) : (
+              <Button
+                className={styles.transactionHistoryButton}
+                renderIcon={ContactsAdd}
+                onClick={this.displayModal}
+              >
+                Add
+              </Button>
+            )}
           </div>
         )
       case 'SEND':
         return (
-          <div className={styles.sendIconContainer}>
-            <SendIcon />
+          <div className={styles.abstractContainer}>
+            <div className={styles.txTypeIconContainer}>
+              <div className={styles.sendIconContainer}>
+                <SendIcon />
+              </div>
+            </div>
+            <div className={styles.txDateContainer}>
+              {moment.unix(time).format('MM/DD/YYYY | HH:MM:ss')}
+            </div>
+            <div className={styles.txLabelContainer}>{label}</div>
+            <div className={styles.txAmountContainer}>{amount}</div>
+            <div className={styles.txToContainer}>
+              {isNetworkFee ? (
+                <div className={styles.largerFont}> {to} </div>
+              ) : (
+                <Fragment>
+                  {to}
+                  {this.findContact(to) === to && (
+                    <CopyToClipboard
+                      className={styles.copy}
+                      text={to}
+                      tooltip="Copy Public Address"
+                    />
+                  )}
+                </Fragment>
+              )}
+            </div>
+            {isNetworkFee ? (
+              <div className={styles.historyButtonPlaceholder} />
+            ) : (
+              <Button
+                className={styles.transactionHistoryButton}
+                renderIcon={ContactsAdd}
+                onClick={this.displayModal}
+                disabled={this.findContact(to) !== to}
+              >
+                Add
+              </Button>
+            )}
           </div>
         )
       case 'RECEIVE':
         return (
-          <div className={styles.receiveIconContainer}>
-            <ReceiveIcon />
+          <div className={styles.abstractContainer}>
+            <div className={styles.txTypeIconContainer}>
+              <div className={styles.receiveIconContainer}>
+                <ReceiveIcon />
+              </div>
+            </div>
+            <div className={styles.txDateContainer}>
+              {moment.unix(time).format('MM/DD/YYYY | HH:MM:ss')}
+            </div>
+            <div className={styles.txLabelContainer}>{label}</div>
+            <div className={styles.txAmountContainer}>{amount}</div>
+            <div className={styles.txToContainer}>
+              {this.findContact(from)}
+              {this.findContact(from) === from && (
+                <CopyToClipboard
+                  className={styles.copy}
+                  text={from}
+                  tooltip="Copy Public Address"
+                />
+              )}
+            </div>
+            {this.findContact(from) !== from ? (
+              <div className={styles.transactionHistoryButton} />
+            ) : (
+              <Button
+                className={styles.transactionHistoryButton}
+                renderIcon={ContactsAdd}
+                onClick={this.displayModal}
+              >
+                Add
+              </Button>
+            )}
           </div>
         )
+
       default:
         console.warn('renderTxTypeIcon() invoked with an invalid argument!', {
           type

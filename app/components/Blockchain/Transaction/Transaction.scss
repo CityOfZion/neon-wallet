@@ -7,9 +7,9 @@
 }
 
 .txDateContainer {
-  width: 150px;
+  width: 200px;
+  font-size: 14px;
   text-align: center;
-  font-size: 13px;
   font-family: Gotham-Book;
 }
 
@@ -21,14 +21,14 @@
 }
 
 .txAmountContainer {
-  width: 115px;
+  width: 160px;
   text-align: center;
   font-weight: 400;
   font-size: 14px;
 }
 
 .txToContainer {
-  width: 315px;
+  width: 320px;
   text-align: center;
   align-items: center;
   display: flex;
@@ -60,12 +60,19 @@
   }
 }
 
+.abstractContainer {
+  @extend .transactionContainer;
+  justify-content: space-between;
+  margin-left: 20px;
+}
+
 .invocationTransaction {
   font-size: 14px;
 }
 
 .transactionHistoryButton {
   max-width: 90px;
+  min-width: 90px;
   background: transparent !important;
 }
 
@@ -77,7 +84,7 @@
 }
 
 .txTypeIconContainer {
-  width: 50px;
+  margin-left: 20px;
   .claimIconContainer {
     svg {
       path {
