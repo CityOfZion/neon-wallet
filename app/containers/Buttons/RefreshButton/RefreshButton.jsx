@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react'
 import classNames from 'classnames'
 
@@ -5,9 +6,12 @@ import RefreshIcon from '../../../assets/icons/refresh.svg'
 
 import styles from './RefreshButton.scss'
 
-console.log(styles)
+type Props = {
+  loadWalletData: () => void,
+  loading?: boolean
+}
 
-class RefreshButton extends Component {
+class RefreshButton extends Component<Props> {
   render() {
     const { loadWalletData, loading } = this.props
 
