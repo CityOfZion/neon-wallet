@@ -1,22 +1,23 @@
-export const getICOTokens = () =>
-  // Import List. For now return hardcoded
-  [
-    {
-      token: 'RPX',
-      scriptHash: 'AEdAeaa7421adkdaslkea2321qd',
-      supply: 11333311145,
-      name: 'Red Pulse'
-    },
-    {
-      token: 'ONT',
-      scriptHash: 'AEdAeaa7421adkdaslkea2321qd',
-      supply: 11333311145,
-      name: 'Ontology'
-    },
-    {
-      token: 'RNG',
-      scriptHash: 'AEdAeaa7421adkdaslkea2321qd',
-      supply: 11333311145,
-      name: 'Random Test Token'
-    }
-  ]
+import store from '../store/configureStore'
+
+import ICOTokenList from '../../ICOTokens.json'
+
+export const getICOTokens = () => {
+  const state = store.getState()
+  const tokens = state.spunky.settings.data.tokens
+  const userGeneratedTokens = tokens.filter(
+    token => token.isUserGenerated === true
+  )
+
+  const combinedTokenList = [
+    ...userGeneratedTokens,
+    ...ICOTokenList.ICOTokens
+  ].map(token => ({
+    token: token.symbol,
+    supply: token.supply || null,
+    id: token.id,
+    scriptHash: token.scriptHash
+  }))
+
+  return combinedTokenList
+}
