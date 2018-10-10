@@ -8,7 +8,7 @@ import styles from './HeaderBar.scss'
 
 type Props = {
   label: string,
-  shouldRenderRefresh: boolean,
+  shouldRenderRefresh?: boolean,
   renderLeftContent?: () => any,
   renderRightContent?: () => any,
   loadWalletData?: Function,
