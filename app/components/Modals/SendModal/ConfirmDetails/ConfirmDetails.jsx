@@ -47,7 +47,7 @@ export default class ConfirmDetails extends React.Component<Props, State> {
         </div>
 
         <Button primary>
-          Send Assets
+          Confirm Details
         </Button>
       </div>
     )

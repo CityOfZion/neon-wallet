@@ -9,18 +9,31 @@ import parseQRCode from '../../../util/parseQRCode';
 
 type Props = {
   hideModal: () => any,
-  showErrorNotification: () => any
+  showErrorNotification: () => any,
+  hideNotification: () => any,
 }
 
 type State = {
   step: Number,
+  error: String,
   recipientData: Object,
 }
 
 export default class SendModal extends React.Component<Props, State> {
   state = {
     step: 1,
+    error: null,
     recipientData: {}
+  }
+
+  displayError = (message) => {
+    const { showErrorNotification } = this.props;
+
+    const newError = showErrorNotification({ 
+      message: `An error occurred while scanning this QR code: ${message}. Please try again.` 
+    })
+
+    this.setState({ error: newError });
   }
 
   isStepTwo = () => {
@@ -34,18 +47,22 @@ export default class SendModal extends React.Component<Props, State> {
   }
 
   gotoNextStep = (recipientData, stopScanner) => {
+    const { error } = this.state;
+    const { hideNotification } = this.props;
+
     try {
       let parsedRecipientData = parseQRCode(recipientData);
+
       stopScanner();
 
+      if(error) hideNotification(error);
+  
       this.setState({ 
         step: 2,
         recipientData: parsedRecipientData
       })
-    } catch(err) {
-      this.props.showErrorNotification({ 
-        message: `An error occurred while scanning this QR code: ${err}. Please try again.` 
-      })
+    } catch(message) {
+      this.displayError(message);
     }
   }
 
