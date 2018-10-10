@@ -5,7 +5,7 @@ import styles from './PanelHeaderButton.scss'
 
 type Props = {
   onClick: () => void,
-  renderIcon: () => $ReactNode,
+  renderIcon: () => React$Node,
   buttonText: string,
   className?: string,
   disabled?: boolean
