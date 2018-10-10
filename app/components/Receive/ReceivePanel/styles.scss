@@ -16,7 +16,7 @@
   display: flex;
   padding: 0;
   overflow: hidden !important;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 .receivePanelHeader {
@@ -57,22 +57,29 @@
 }
 
 .tabs {
-  background: #f8f8f8;
+  background: #ffffff;
 
   ul {
     margin-bottom: 0 !important;
-    margin: 20px auto;
+    margin: 30px auto;
     padding-bottom: 15px !important;
     padding-left: 0;
-    // width: 400px;
+    width: 400px;
   }
 }
 
+.warningDialogue {
+  margin-top: 0;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
 .defaultReceiveContainer {
+  width: 400px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 
   .warningIcon {
     path {
@@ -81,8 +88,7 @@
   }
 
   canvas {
-    margin-bottom: 20px;
-    min-height: 225px;
-    min-width: 225px;
+    min-height: 250px;
+    min-width: 250px;
   }
 }

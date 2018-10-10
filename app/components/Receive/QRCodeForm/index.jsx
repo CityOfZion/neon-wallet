@@ -42,10 +42,6 @@ export default class QRCodeForm extends React.Component<Props, State> {
 
     return (
       <div className={classNames(styles.receivePanel, className)}>
-        <div className={styles.header}>
-          <GridIcon className={styles.icon} />
-          <div className={styles.title}>Create a bespoke QR Code</div>
-        </div>
         <form
           className={styles.form}
           onSubmit={() =>

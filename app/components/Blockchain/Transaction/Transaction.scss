@@ -2,7 +2,7 @@
 
 .txidLink {
   color: $link-color;
-  font-size: 13px;
+  font-size: 14px;
   cursor: pointer;
 }
 
@@ -24,6 +24,7 @@
   width: 115px;
   text-align: center;
   font-weight: 400;
+  font-size: 14px;
 }
 
 .txToContainer {
@@ -33,6 +34,11 @@
   display: flex;
   font-size: 12px;
   justify-content: space-between;
+
+  .largerFont {
+    font-size: 14px;
+    margin: auto;
+  }
 
   button {
     align-self: flex-end;
@@ -55,7 +61,7 @@
 }
 
 .invocationTransaction {
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .transactionHistoryButton {

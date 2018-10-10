@@ -27,8 +27,7 @@ type Props = {
 export default class Transaction extends React.Component<Props> {
   render = () => {
     const { tx } = this.props
-    const { txid, iconType, time, label, amount, isNetworkFee, to } = tx
-
+    const { txid, iconType, time, label, amount, isNetworkFee, to, from } = tx
     return (
       <div className={styles.transactionContainer}>
         <div className={styles.txTypeIconContainer}>
@@ -40,14 +39,21 @@ export default class Transaction extends React.Component<Props> {
         <div className={styles.txLabelContainer}>{label}</div>
         <div className={styles.txAmountContainer}>{amount}</div>
         <div className={styles.txToContainer}>
-          {this.findContact(to)}
-          {!isNetworkFee && (
-            <CopyToClipboard
-              className={styles.copy}
-              text={to}
-              tooltip="Copy Public Address"
-            />
+          {isNetworkFee ? (
+            <div className={styles.largerFont}> {to} </div>
+          ) : iconType === 'SEND' ? (
+            this.findContact(to)
+          ) : (
+            this.findContact(from)
           )}
+          {!isNetworkFee &&
+            this.findContact(to) === to && (
+              <CopyToClipboard
+                className={styles.copy}
+                text={to}
+                tooltip="Copy Public Address"
+              />
+            )}
         </div>
         {isNetworkFee ? (
           <div className={styles.historyButtonPlaceholder} />
@@ -81,7 +87,13 @@ export default class Transaction extends React.Component<Props> {
           label = key
         }
       })
-      return label ? <Tooltip title={address}>{label}</Tooltip> : address
+      return label ? (
+        <Tooltip title={address} className={styles.largerFont}>
+          {label}
+        </Tooltip>
+      ) : (
+        address
+      )
     }
     return address
   }
