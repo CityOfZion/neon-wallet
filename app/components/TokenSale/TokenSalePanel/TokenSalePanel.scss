@@ -17,6 +17,11 @@
   margin-bottom: 75px;
 }
 
+.tokenSalePanelHeaderContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
 .warningIcon {
   path {
     fill: #ee6d66;

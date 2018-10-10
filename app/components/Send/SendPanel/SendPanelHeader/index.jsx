@@ -5,6 +5,7 @@ import Tooltip from '../../../Tooltip'
 import AddIcon from '../../../../assets/icons/add.svg'
 import GridIcon from '../../../../assets/icons/grid.svg'
 import LightningIcon from '../../../../assets/icons/lightning.svg'
+import PanelHeaderButton from '../../../PanelHeaderButton'
 
 import { pluralize } from '../../../../util/pluralize'
 
@@ -46,24 +47,23 @@ const SendPanelHeader = ({
         title="Coming Soon"
         position="left"
       >
-        <button
-          type="button"
+        <PanelHeaderButton
           disabled
-          className={styles.enterQrHeaderButton}
-          onClick={addRow}
-        >
-          <GridIcon className={styles.sendPanelHeaderButtonIcon} /> Enter QR
-          Code
-        </button>
+          onClick={() => {}}
+          renderIcon={() => (
+            <GridIcon className={styles.sendPanelHeaderButtonIcon} />
+          )}
+          buttonText="Enter QR Code"
+        />
       </Tooltip>
-      <button
-        type="button"
-        className={styles.sendPanelHeaderButton}
-        onClick={addRow}
+      <PanelHeaderButton
         disabled={disabled}
-      >
-        <AddIcon className={styles.sendPanelHeaderButtonIcon} /> Add Recipient
-      </button>
+        onClick={addRow}
+        renderIcon={() => (
+          <AddIcon className={styles.sendPanelHeaderButtonIcon} />
+        )}
+        buttonText="Add Recipient"
+      />
     </div>
   )
 

@@ -10,6 +10,8 @@ import Button from '../../Button'
 import PriorityFee from '../../Send/SendPanel/PriorityFee'
 import WarningIcon from '../../../assets/icons/warning.svg'
 import CheckMarkIcon from '../../../assets/icons/check.svg'
+import AddIcon from '../../../assets/icons/add.svg'
+import PanelHeaderButton from '../../PanelHeaderButton/PanelHeaderButton'
 
 import styles from './TokenSalePanel.scss'
 
@@ -55,7 +57,13 @@ const TokenSalePanel = ({
     renderHeader={() => (
       <div className={styles.tokenSalePanelHeaderContainer}>
         <p>Participate in Token Sale</p>
-        <button>Add Token</button>
+        <PanelHeaderButton
+          renderIcon={() => (
+            <AddIcon className={styles.tokenSaleHeaderButtonIcon} />
+          )}
+          onClick={() => {}}
+          buttonText="Add Custom Token"
+        />
       </div>
     )}
   >
