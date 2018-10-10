@@ -10,9 +10,7 @@ type Props = {
   label: string,
   shouldRenderRefresh?: boolean,
   renderLeftContent?: () => any,
-  renderRightContent?: () => any,
-  loadWalletData?: Function,
-  loading?: boolean
+  renderRightContent?: () => any
 }
 
 export default class HeaderBar extends React.PureComponent<Props> {
