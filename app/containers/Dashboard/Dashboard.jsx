@@ -63,20 +63,7 @@ export default class Dashboard extends Component<Props> {
                 <Wallet id="manage-wallets" />
                 <span> Manage Wallets </span>
               </NavLink>
-<<<<<<< HEAD
               <RefreshButton />
-=======
-              <div className={styles.refreshButton}>
-                <RefreshIcon
-                  id="refresh"
-                  className={classNames(styles.refresh, {
-                    [styles.loading]: loading
-                  })}
-                  onClick={loading ? null : loadWalletData}
-                />
-                <span onClick={loading ? null : loadWalletData}> Refresh </span>
-              </div>
->>>>>>> design-v2
             </div>
           )}
         />
