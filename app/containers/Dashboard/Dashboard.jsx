@@ -12,13 +12,13 @@ import HeaderBar from '../../components/HeaderBar'
 import PortfolioPanel from '../../components/Dashboard/PortfolioPanel'
 import Wallet from '../../assets/icons/wallet.svg'
 import NetworkSwitch from '../App/Sidebar/NetworkSwitch'
-import RefreshIcon from '../../assets/icons/refresh.svg'
+
+import RefreshButton from '../Buttons/RefreshButton'
 
 import styles from './Dashboard.scss'
 
 type Props = {
-  loadWalletData: Function,
-  loading: boolean
+  loadWalletData: Function
 }
 
 const REFRESH_INTERVAL_MS = 30000
@@ -42,7 +42,6 @@ export default class Dashboard extends Component<Props> {
   }
 
   render() {
-    const { loadWalletData, loading } = this.props
     return (
       <div id="dashboard" className={styles.dashboard}>
         <HeaderBar
@@ -62,16 +61,7 @@ export default class Dashboard extends Component<Props> {
                 <span> Manage Wallets </span>
                 <Wallet id="manage-wallets" />
               </NavLink>
-              <div className={styles.refreshButton}>
-                <span onClick={loading ? null : loadWalletData}> Refresh </span>
-                <RefreshIcon
-                  id="refresh"
-                  className={classNames(styles.refresh, {
-                    [styles.loading]: loading
-                  })}
-                  onClick={loading ? null : loadWalletData}
-                />
-              </div>
+              <RefreshButton />
             </div>
           )}
         />

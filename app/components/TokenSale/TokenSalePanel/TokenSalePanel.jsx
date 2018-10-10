@@ -6,6 +6,7 @@ import TokenSaleSelection from './TokenSaleSelection/TokenSaleSelection'
 import TokenSaleConditions from './TokenSaleConditions/TokenSaleConditions'
 import DialogueBox from '../../DialogueBox'
 import Button from '../../Button'
+// import Tooltip from '../../components/Tooltip/Tooltip'
 import PriorityFee from '../../Send/SendPanel/PriorityFee'
 import WarningIcon from '../../../assets/icons/warning.svg'
 import CheckMarkIcon from '../../../assets/icons/check.svg'
@@ -51,7 +52,12 @@ const TokenSalePanel = ({
 }: Props) => (
   <Panel
     className={styles.tokenSalePanel}
-    renderHeader={() => <p>Participate in Token Sale</p>}
+    renderHeader={() => (
+      <div className={styles.tokenSalePanelHeaderContainer}>
+        <p>Participate in Token Sale</p>
+        <button>Add Token</button>
+      </div>
+    )}
   >
     <div className={styles.tokenSalePanelContainer}>
       <TokenSaleSelection
