@@ -58,7 +58,7 @@ export default class Home extends React.Component<Props, State> {
           <Tabs
             selectedIndex={this.state.tabIndex}
             onSelect={tabIndex => this.setState({ tabIndex })}
-            className={styles.homeTabs}
+            className="neon-tabs"
           >
             <TabList>
               {this.options.map(option => (

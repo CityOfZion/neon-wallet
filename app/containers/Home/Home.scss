@@ -61,12 +61,12 @@ $navigation-margin: 20px;
 
 .ledgerStageIcon {
   path {
-    fill: #66ED87;
+    fill: #66ed87;
   }
 }
 
 .ledgerStageActive {
-  opacity: 1.0;  
+  opacity: 1;
   border-color: #66eb8e #6bdaf6 #6bdaf6 #66eb8e;
   &:first-child {
     border-bottom-color: #6bdaf6;
@@ -74,13 +74,13 @@ $navigation-margin: 20px;
 
   .ledgerStageIcon {
     path {
-      fill: #5C677F;
+      fill: #5c677f;
     }
   }
 }
 
 .ledgerStageCompleted {
-  opacity: 1.0;
+  opacity: 1;
 }
 
 .ledgerStageRefreshIcon {
@@ -154,44 +154,8 @@ $navigation-margin: 20px;
   margin-top: -75px;
 }
 
-.homeTabs {
-  width: 100%;
-
-  form {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .homeTabPanel {
-    height: 100%;
-  }
-
-  ul {
-    text-decoration: none;
-    display: flex;
-    list-style-type: none;
-    padding: 0;
-    margin-bottom: 60px;
-
-    li {
-      display: flex;
-      margin: auto;
-      font-size: 12px;
-      color: #ced0d4;
-      cursor: pointer;
-      padding-bottom: 10px;
-      width: 100%;
-      border-bottom: solid #ced0d4 1px;
-      justify-content: center;
-    }
-
-    li[aria-selected='true'] {
-      font-weight: bold;
-      color: $default-text;
-      border-bottom: solid $default-text 2px;
-    }
-  }
+.homeTabPanel {
+  height: 100%;
 }
 
 .loginContentContainer {

@@ -1,13 +1,22 @@
 @import '../../../styles/variables';
 
-.receivePanel {
-  max-height: 545px;
+// .receivePanel {
+//   display: flex;
+//   flex-direction: column;
+// }
+
+.dynamicReceiveContent {
+  display: flex;
+  height: 500px;
+  align-items: center;
+  justify-content: center;
 }
 
 .receivePanelContent {
   display: flex;
   padding: 0;
   overflow: hidden !important;
+  flex-direction: column;
 }
 
 .receivePanelHeader {
@@ -40,5 +49,38 @@
     path {
       fill: #69e27e;
     }
+  }
+}
+
+.dynamicReceiveContent {
+  display: flex;
+}
+
+.tabs {
+  background: #f8f8f8;
+
+  ul {
+    margin-bottom: 0 !important;
+    margin: 20px auto;
+    padding-bottom: 15px;
+  }
+}
+
+.defaultReceiveContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .warningIcon {
+    path {
+      fill: #ee6d66;
+    }
+  }
+
+  canvas {
+    margin-bottom: 30px;
+    height: 250px;
+    width: 250px;
   }
 }
