@@ -13,7 +13,7 @@ import { isBlacklisted } from '../../core/wallet'
 
 import AmountsPanel from '../../components/AmountsPanel'
 import SendPanel from '../../components/Send/SendPanel'
-import HeaderBar from '../../components/HeaderBar'
+import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import styles from './Send.scss'
 
 const MAX_NUMBER_OF_RECIPIENTS = 10

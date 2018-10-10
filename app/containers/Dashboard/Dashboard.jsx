@@ -8,7 +8,7 @@ import AssetBalancesPanel from '../../components/Dashboard/AssetBalancesPanel'
 import TokenBalancesPanel from '../../components/Dashboard/TokenBalancesPanel'
 import PriceHistoryPanel from '../../components/Dashboard/PriceHistoryPanel'
 
-import HeaderBar from '../../components/HeaderBar'
+import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import PortfolioPanel from '../../components/Dashboard/PortfolioPanel'
 import Wallet from '../../assets/icons/wallet.svg'
 import NetworkSwitch from '../App/Sidebar/NetworkSwitch'

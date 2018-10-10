@@ -1,6 +1,6 @@
 import React from 'react'
 
-import HeaderBar from '../../components/HeaderBar'
+import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import TransactionHistoryPanel from '../../components/TransactionHistory/TransactionHistoryPanel'
 
 import styles from './TransactionHistory.scss'

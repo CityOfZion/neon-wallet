@@ -1,9 +1,8 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { omit } from 'lodash-es'
 
-import RefreshIcon from '../../assets/icons/refresh.svg'
+import RefreshButton from '../../containers/Buttons/RefreshButton'
 
 import styles from './HeaderBar.scss'
 
@@ -26,28 +25,13 @@ export default class HeaderBar extends React.PureComponent<Props> {
       label,
       shouldRenderRefresh = false,
       renderLeftContent = () => null,
-      renderRightContent = () => null,
-      loadWalletData,
-      loading
+      renderRightContent = () => null
     } = this.props
 
     return (
       <div className={styles.headerBar}>
         {label ? <h3> {label}</h3> : renderLeftContent()}
-        {shouldRenderRefresh ? (
-          <div className={styles.refreshButton}>
-            <span onClick={loading ? null : loadWalletData}> Refresh </span>
-            <RefreshIcon
-              id="refresh"
-              className={classNames(styles.refresh, {
-                [styles.loading]: loading
-              })}
-              onClick={loading ? null : loadWalletData}
-            />
-          </div>
-        ) : (
-          renderRightContent()
-        )}
+        {shouldRenderRefresh ? <RefreshButton /> : renderRightContent()}
       </div>
     )
   }
