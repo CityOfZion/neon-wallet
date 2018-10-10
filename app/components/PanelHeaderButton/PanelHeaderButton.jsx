@@ -7,8 +7,8 @@ type Props = {
   onClick: () => void,
   renderIcon: () => $React$Node,
   buttonText: string,
-  className: string,
-  disabled: boolean
+  className?: string,
+  disabled?: boolean
 }
 
 class PanelHeaderButton extends Component<Props> {
