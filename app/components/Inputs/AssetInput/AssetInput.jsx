@@ -23,11 +23,11 @@ function parsedSymbols(
 }
 
 export default class AssetInput extends React.Component<Props, State> {
+  parsedSymbols = parsedSymbols(this.props.symbols)
+
   state = {
     selectedAsset: this.parsedSymbols[0]
   }
-
-  parsedSymbols = parsedSymbols(this.props.symbols)
 
   render() {
     const { selectedAsset } = this.state
