@@ -8,7 +8,8 @@ describe('ConfirmModal', () => {
     text: 'text',
     hideModal: jest.fn(),
     onClick: jest.fn(),
-    onCancel: jest.fn()
+    onCancel: jest.fn(),
+    backButtonAction: jest.fn()
   }
 
   test('should render without crashing', () => {
