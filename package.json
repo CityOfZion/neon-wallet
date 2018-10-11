@@ -1,5 +1,6 @@
 {
   "name": "Neon",
+  "productName":"NEON Wallet",
   "version": "0.2.8",
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",
@@ -39,14 +40,15 @@
       "app/dist/style.css"
     ],
     "dmg": {
+      "background": "./app/assets/images/neon-gradient.png",
       "contents": [
         {
-          "x": 110,
-          "y": 150
+          "x": 180,
+          "y": 170
         },
         {
-          "x": 240,
-          "y": 150,
+          "x": 390,
+          "y": 170,
           "type": "link",
           "path": "/Applications"
         }
