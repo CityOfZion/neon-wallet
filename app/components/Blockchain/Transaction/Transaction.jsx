@@ -125,7 +125,7 @@ export default class Transaction extends React.Component<Props> {
                 <div className={styles.largerFont}> {to} </div>
               ) : (
                 <Fragment>
-                  {to}
+                  {this.findContact(to)}
                   {this.findContact(to) === to && (
                     <CopyToClipboard
                       className={styles.copy}

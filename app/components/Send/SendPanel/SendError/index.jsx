@@ -23,7 +23,9 @@ const SendError = ({ resetViewsAfterError, sendErrorMessage }: Props) => (
         <h1 className={styles.sendErrorHeaderTitle}>
           Oops! Something went wrong.
         </h1>
-        <p className={styles.sendErrorSubheader}>Error: {sendErrorMessage}</p>
+        <p className={styles.sendErrorSubheader}>
+          Error: {sendErrorMessage || 'A network error has occurred'}
+        </p>
       </div>
     </div>
     <DialogueBox
