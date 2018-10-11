@@ -1,6 +1,10 @@
 $panel-top-margin: 25px;
 
 .settingsContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
   .networkSwitchContainer {
     display: flex;
     justify-content: center;
@@ -15,7 +19,7 @@ $panel-top-margin: 25px;
   }
 
   .settingsPanel {
-    margin-top: $panel-top-margin;
+    height: 100%;
 
     .settingsPanelHeader {
       display: flex;
@@ -44,11 +48,16 @@ $panel-top-margin: 25px;
     .settingsDonations {
       font-size: 12px;
       color: #282828;
-      padding-top: 10px;
+      margin-top: 48px;
       text-align: center;
       justify-content: center;
       display: flex;
       text-decoration: none;
+      font-family: Gotham-Book;
+      font-size: 10px;
+      color: #5c677f;
+      letter-spacing: 0.4px;
+      text-align: center;
     }
   }
 
@@ -68,12 +77,21 @@ $panel-top-margin: 25px;
   }
 
   .settingsItemsContainer {
-    max-width: 500px;
-    margin: 20px auto;
+    max-width: 450px;
+    margin: auto;
   }
 
   .settingsSelectContainer {
     display: flex;
+    max-width: 150px;
     flex: 1;
   }
+}
+
+.settingsSpacer {
+  /* Rectangle 4 Copy: */
+  opacity: 0.35;
+  background: rgba(170, 178, 189, 0.3);
+  height: 20px;
+  width: 100%;
 }
