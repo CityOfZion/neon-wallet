@@ -10,7 +10,7 @@ type Props = {
   title: string,
   to: string,
   noBorderBottom?: boolean,
-  label: string,
+  label?: string,
   onClick?: Function,
   renderIcon?: Function
 }
