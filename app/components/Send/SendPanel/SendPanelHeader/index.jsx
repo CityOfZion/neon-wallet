@@ -12,7 +12,7 @@ import styles from '../SendPanel.scss'
 
 type Props = {
   sendRowDetails: Array<*>,
-  addRow: () => any,
+  addRow: (row: Object) => any,
   resetViews: () => any,
   showConfirmSend: boolean,
   sendSuccess: boolean,
@@ -22,8 +22,8 @@ type Props = {
   disableEnterQRCode: boolean,
   hasNetworkFees: boolean,
   maxNumberOfRecipients: number,
-  showSendModal: () => any,
-  pushQRCodeData: () => any,
+  showSendModal: (props: Object) => any,
+  pushQRCodeData: (data: Object) => any,
 }
 
 const SendPanelHeader = ({

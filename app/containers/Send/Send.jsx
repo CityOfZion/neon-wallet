@@ -30,7 +30,7 @@ type Props = {
   address: string,
   shouldRenderHeaderBar: boolean,
   location: Object,
-  showSendModal: Function
+  showSendModal: (props: Object) => any
 }
 
 type State = {
@@ -78,31 +78,31 @@ export default class Send extends React.Component<Props, State> {
     }
   }
 
-  pushQRCodeData = data => {
-    const { sendRowDetails } = this.state;
-    const { asset, address, amount } = data;
-    const firstRowEmpty = sendRowDetails.length === 1 && !parseInt(sendRowDetails[0].amount);
+  pushQRCodeData = (data: Object) => {
+    const { sendRowDetails } = this.state
+    const { asset, address, amount } = data
+    const firstRowEmpty = sendRowDetails.length === 1 && !parseInt(sendRowDetails[0].amount)
 
     if(firstRowEmpty){
       if(asset) this.updateRowField(0, 'asset', asset)
       if(address) this.updateRowField(0, 'address', address)
       if(amount) this.updateRowField(0, 'amount', amount)
     } else {
-      this.addRow(data);
+      this.addRow(data)
     }
   }
 
-  generateRow = (data = {}) => {
+  generateRow = (row: Object = {}) => {
     const { sendableAssets } = this.props
     const sendableAssetNames = Object.keys(sendableAssets)
     const firstSendableAssetName = sendableAssetNames[0]
 
     if (sendableAssetNames.length > 0) {
       return {
-        asset: data.asset || firstSendableAssetName,
-        amount: data.amount || 0,
-        address: data.address || '',
-        max: this.calculateMaxValue(data.asset || firstSendableAssetName),
+        asset: row.asset || firstSendableAssetName,
+        amount: row.amount || 0,
+        address: row.address || '',
+        max: this.calculateMaxValue(row.asset || firstSendableAssetName),
         id: uniqueId(),
         errors: {}
       }
@@ -163,12 +163,12 @@ export default class Send extends React.Component<Props, State> {
     })
   }
 
-  addRow = (data) => {
+  addRow = (row: Object) => {
     this.setState((prevState: Object) => {
       const newState = [...prevState.sendRowDetails]
 
       if (newState.length < MAX_NUMBER_OF_RECIPIENTS) {
-        newState.push(this.generateRow(data))
+        newState.push(this.generateRow(row))
 
         return { sendRowDetails: newState }
       }

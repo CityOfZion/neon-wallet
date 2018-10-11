@@ -35,12 +35,12 @@ type Props = {
   handleSubmit: () => any,
   handleSend: () => any,
   clearErrors: (index: number, field: string) => any,
-  addRow: () => any,
+  addRow: (row: Object) => any,
   removeRow: (index: number) => any,
   updateRowField: (index: number, field: string, value: any) => any,
   handleEditRecipientsClick: () => any,
-  showSendModal: () => any,
-  pushQRCodeData: () => any,
+  showSendModal: (props: Object) => any,
+  pushQRCodeData: (data: Object) => any,
 }
 
 const SendPanel = ({

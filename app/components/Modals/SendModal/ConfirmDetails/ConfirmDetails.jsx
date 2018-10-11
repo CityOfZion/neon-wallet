@@ -12,8 +12,8 @@ type Props = {
   confirmAndClose: () => any
 }
 
-export default class ConfirmDetails extends React.Component<Props, State> {
-  getRecipientData = (key) => this.props.recipientData[key] || 'Not specified';
+export default class ConfirmDetails extends React.Component<Props> {
+  getRecipientData = (key:string) => this.props.recipientData[key] || 'Not specified'
   
   render() {
     return (

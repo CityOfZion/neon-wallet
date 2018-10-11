@@ -3,18 +3,19 @@ import React, { Component } from 'react'
 import Instascan from 'instascan'
 
 type Props = {
-  callback: (content: string) => any
+  callback: (content: string, scannerInstance: any) => any
 }
 
-export default class QrCodeScanner extends Component<Props, State> {
+export default class QrCodeScanner extends Component<Props> {
   scanPreviewElement: ?HTMLVideoElement
+  scannerInstance: Instascan
 
   componentDidMount () {
-    this.startScanner();
+    this.startScanner()
   }
 
   componentWillUnmount () {
-    this.stopScanner();
+    this.stopScanner()
   }
 
   startScanner () {
@@ -22,7 +23,7 @@ export default class QrCodeScanner extends Component<Props, State> {
     this.scannerInstance = new Instascan.Scanner({ video: this.scanPreviewElement })
     
     this.scannerInstance.addListener('scan', content => {
-      callback(content, this.stopScanner.bind(this));
+      callback(content, this.stopScanner.bind(this))
     })
 
     Instascan.Camera.getCameras().then((cameras: Array<Object>) => {
