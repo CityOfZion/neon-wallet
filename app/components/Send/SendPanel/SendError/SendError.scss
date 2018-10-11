@@ -1,32 +1,36 @@
 .sendError {
-    .sendSerrorHeader {
-        padding: 40px 30px;
-        align-items: center;
-        display: flex;
-        justify-content: center;
+  .sendSerrorHeader {
+    padding: 40px 30px 10px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
 
-        svg {
-            height: 150px;
-            width: 150px;
-            min-width: 150px;
-            margin-right: 25px;
-        }
+    svg {
+      height: 50px;
+      width: 50px;
+      min-width: 50px;
+      margin-right: 25px;
 
-        .sendErrorHeaderTitle {
-            text-transform: uppercase;
-            font-weight: 300;
-            font-size: 2em;
-            margin: 0;
-        }
+      path {
+        fill: #ee6d66;
+      }
     }
 
-    .sendErrorButton {
-        width: 200px;
-        margin: 0 auto;
+    .sendErrorHeaderTitle {
+      text-transform: uppercase;
+      font-weight: 300;
+      font-size: 2em;
+      margin: 0;
     }
+  }
 
-    .sendErrorDialogueBox {
-        margin: 0 auto 20px auto;
-    }
+  .sendErrorButton {
+    width: 450px;
+    margin: 0 auto;
+  }
+
+  .sendErrorDialogueBox {
+    margin: 0 auto 20px auto;
+    width: 450px;
+  }
 }
-

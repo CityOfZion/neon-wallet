@@ -112,11 +112,12 @@ const SendPanelHeader = ({
         {headerTitle}{' '}
         <span className={styles.sendPanelRecipients}>{headerSubtitle}</span>
       </div>
-      {hasNetworkFees && (
-        <div className={styles.priorityTrasferHeaderTextContainer}>
-          <LightningIcon /> Priority Transfer
-        </div>
-      )}
+      {hasNetworkFees &&
+        !sendError && (
+          <div className={styles.priorityTrasferHeaderTextContainer}>
+            <LightningIcon /> Priority Transfer
+          </div>
+        )}
       {buttons}
     </section>
   )
