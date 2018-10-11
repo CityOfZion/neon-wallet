@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 
 import TextInput from '../../components/Inputs/TextInput'
+import PasswordInput from '../../components/Inputs/PasswordInput'
 import Button from '../../components/Button'
 import CopyToClipboard from '../../components/CopyToClipboard'
 import { ROUTES } from '../../core/constants'
@@ -41,12 +42,16 @@ class DisplayWalletAccounts extends Component<Props> {
       authenticated
     } = this.props
     const fields = [
-      { label: 'Passphrase', value: passphrase },
-      { label: 'Private Key', value: wif },
-      { label: 'Public Address', value: address }
+      {
+        label: 'Passphrase',
+        value: passphrase,
+        type: 'password'
+      },
+      { label: 'Private Key', value: wif, type: 'text' },
+      { label: 'Public Address', value: address, type: 'text' }
     ]
     if (walletName) {
-      fields.unshift({ label: 'Wallet Name', value: walletName })
+      fields.unshift({ label: 'Wallet Name', value: walletName, type: 'text' })
     }
     const conditionalPanelProps = {}
     if (authenticated) {
@@ -75,10 +80,8 @@ class DisplayWalletAccounts extends Component<Props> {
             icon={<WarningIcon />}
             renderText={() => (
               <div className={styles.saveDetails}>
-                <div>
-                  <b>Save these details!</b> If you lose these credentials,{' '}
-                </div>
-                <div>you lose access to your assets.</div>
+                <b>Save these details!</b> If you lose these credentials, you
+                lose access to your assets.
               </div>
             )}
             className={styles.displayWalletAccountsDialogue}
@@ -91,13 +94,28 @@ class DisplayWalletAccounts extends Component<Props> {
                     [styles.reducedInputFontSize]: item.label === 'Private Key'
                   })}
                 >
-                  <TextInput label={item.label} value={item.value} disabled />
+                  {item.type === 'text' ? (
+                    <TextInput
+                      type={item.type}
+                      label={item.label}
+                      value={item.value}
+                      disabled
+                    />
+                  ) : (
+                    <PasswordInput
+                      label={item.label}
+                      value={item.value}
+                      disabled
+                    />
+                  )}
                 </div>
-                <CopyToClipboard
-                  className={styles.clipboardCopy}
-                  text={item.value}
-                  tooltip={`Copy ${item.label}`}
-                />
+                {item.type === 'text' && (
+                  <CopyToClipboard
+                    className={styles.clipboardCopy}
+                    text={item.value}
+                    tooltip={`Copy ${item.label}`}
+                  />
+                )}
               </div>
             ))}
             <div className={styles.buttonContainer}>
