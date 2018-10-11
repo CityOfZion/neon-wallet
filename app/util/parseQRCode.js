@@ -16,6 +16,9 @@ const parseQRCode = data => {
 
   const { protocol, pathname, searchParams } = parsedData
 
+  if (protocol !== 'neo:') throw INVALID_PROTOCOL
+  if (!pathname) throw MISSING_ADDRESS
+
   let asset = searchParams.get('asset')
   const assetIsHash = asset && asset !== 'NEO' && asset !== 'GAS'
 
@@ -23,9 +26,6 @@ const parseQRCode = data => {
     asset = hashToSymbol(asset)
     if (!asset) throw UNRECOGNIZED_ASSET
   }
-
-  if (protocol !== 'neo:') throw INVALID_PROTOCOL
-  if (!pathname) throw MISSING_ADDRESS
 
   return {
     address: pathname,
