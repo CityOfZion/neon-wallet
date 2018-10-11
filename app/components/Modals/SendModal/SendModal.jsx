@@ -47,7 +47,7 @@ export default class SendModal extends React.Component<Props, State> {
     })
   }
 
-  gotoNextStep = (recipientData: Object, stopScanner: function) => {
+  gotoNextStep = (recipientData: Object, stopScanner: Function) => {
     const { error } = this.state
     const { hideNotification } = this.props
 
