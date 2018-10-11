@@ -21,7 +21,7 @@
 
   .feeCost {
     font-size: 11px;
-    font-weight: 100 !important;
+    font-weight: 100;
   }
 
   .speed {
@@ -49,6 +49,17 @@
     margin: 0;
     height: auto;
     border: solid thin #8d98ae !important;
+
+    &[disabled] {
+      opacity: 0.6;
+      background: #fff !important;
+
+      svg {
+        g {
+          fill: #d6d9e0;
+        }
+      }
+    }
 
     span {
       align-self: center !important;

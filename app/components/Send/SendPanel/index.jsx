@@ -4,7 +4,7 @@ import { get } from 'lodash-es'
 
 import Panel from '../../Panel'
 import SendRecipientList from './SendRecipientList'
-import PriorityFee from './PriorityFee'
+import PriorityFee from '../PriorityFee'
 import SendPanelHeader from './SendPanelHeader'
 import Button from '../../Button/Button'
 import ConfirmSend from './ConfirmSend'

@@ -205,7 +205,7 @@ export default class Send extends React.Component<Props, State> {
     if (rows.length > 0) {
       return (rows
         .filter((row: Object) => row.asset === asset)
-        .map((row: Object) => row.amount)
+        .map((row: Object) => Number(row.amount))
         .reduce(
           (accumulator: Object, currentValue: number | void) =>
             accumulator.plus(currentValue || 0),

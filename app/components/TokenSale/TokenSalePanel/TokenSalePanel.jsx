@@ -6,7 +6,7 @@ import TokenSaleSelection from './TokenSaleSelection/TokenSaleSelection'
 import TokenSaleConditions from './TokenSaleConditions/TokenSaleConditions'
 import DialogueBox from '../../DialogueBox'
 import Button from '../../Button'
-import PriorityFee from '../../Send/SendPanel/PriorityFee'
+import PriorityFee from '../../Send/PriorityFee'
 import WarningIcon from '../../../assets/icons/warning.svg'
 import CheckMarkIcon from '../../../assets/icons/check.svg'
 
