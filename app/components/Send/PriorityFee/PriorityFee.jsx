@@ -1,9 +1,9 @@
 // @flow
 import React from 'react'
 
-import LightningIcon from '../../../../assets/icons/lightning.svg'
-import Button from '../../../Button/Button'
-import { toFixedDecimals } from '../../../../core/formatters'
+import LightningIcon from '../../../assets/icons/lightning.svg'
+import Button from '../../Button/Button'
+import { toFixedDecimals } from '../../../core/formatters'
 import styles from './PriorityFee.scss'
 
 type Props = {

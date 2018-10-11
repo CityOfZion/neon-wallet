@@ -194,8 +194,7 @@ export const doGasClaim = () => async (
 
   dispatch(
     showSuccessNotification({
-      message:
-        'Claim was successful! Your balance will update once the blockchain has processed it.'
+      message: 'Claim was successful! Your balance will update shortly.'
     })
   )
   setTimeout(() => dispatch(disableClaim(false)), FIVE_MINUTES_MS)

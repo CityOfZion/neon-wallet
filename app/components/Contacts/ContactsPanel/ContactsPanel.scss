@@ -7,6 +7,7 @@
   .name {
     width: 180px;
     text-overflow: ellipsis;
+    font-size: 14px;
   }
 
   a {
@@ -37,7 +38,8 @@
     .address {
       display: flex;
       align-items: center;
-      width: 420px;
+      width: 375px;
+      font-size: 14px;
       justify-content: space-between;
     }
 
@@ -105,7 +107,7 @@
 
 .groupHeader {
   padding: 10px 24px;
-  background-color: #F6F7F8;
+  background-color: #f6f7f8;
   font-weight: bold;
 }
 

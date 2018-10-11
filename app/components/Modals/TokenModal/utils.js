@@ -1,5 +1,9 @@
 // @flow
 import uuidv4 from 'uuid/v4'
+import {
+  ensureHex,
+  validateHashLength
+} from '../../../util/tokenHashValidation'
 
 export const getNewTokenItem = (networkId: string) => ({
   id: uuidv4(),
@@ -15,7 +19,7 @@ export const validateTokens = (tokens: Array<TokenItemType>) => {
 
   tokens.some(({ scriptHash, id }: TokenItemType) => {
     if (!scriptHash) {
-      errorMessage = 'Script hash cannot be left blank'
+      errorMessage = 'Invalid script hash length'
       errorType = 'scriptHash'
     }
 
@@ -25,6 +29,16 @@ export const validateTokens = (tokens: Array<TokenItemType>) => {
     }
     return false
   })
+
+  const invalidTokens = tokens
+    .map(({ scriptHash }) => scriptHash)
+    .filter(ensureHex)
+    .filter(validateHashLength)
+
+  if (invalidTokens) {
+    errorMessage = 'Invalid script hash detected.'
+    errorType = 'scriptHash'
+  }
 
   return {
     errorMessage,

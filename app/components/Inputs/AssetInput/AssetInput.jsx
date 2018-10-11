@@ -1,79 +1,51 @@
 // @flow
 import React from 'react'
-import classNames from 'classnames'
-import { omit, noop } from 'lodash-es'
 
-import SelectInput from '../SelectInput'
-import styles from './AssetInput.scss'
+import StyledReactSelect from '../StyledReactSelect/StyledReactSelect'
+import { ASSETS, TOKENS } from '../../../core/constants'
 
 type Props = {
-  className?: string,
-  value?: string,
   symbols: Array<SymbolType>,
-  onChange: Function,
-  onFocus: Function,
-  onBlur: Function
+  onChange: Function
 }
 
 type State = {
-  typingValue: string
+  selectedAsset: Object
+}
+
+function parsedSymbols(
+  symbols = [ASSETS.NEO, ASSETS.GAS, ...Object.keys(TOKENS)]
+): Array<{ value: string, label: string }> {
+  return symbols.map(symbol => ({
+    value: symbol,
+    label: symbol
+  }))
 }
 
 export default class AssetInput extends React.Component<Props, State> {
-  static defaultProps = {
-    onChange: noop,
-    onFocus: noop,
-    onBlur: noop
-  }
-
   state = {
-    typingValue: this.props.value || ''
+    selectedAsset: this.parsedSymbols[0]
   }
 
-  render = () => {
-    const passDownProps = omit(this.props, 'symbols')
-    const { typingValue } = this.state
+  parsedSymbols = parsedSymbols(this.props.symbols)
+
+  render() {
+    const { selectedAsset } = this.state
 
     return (
-      <SelectInput
-        {...passDownProps}
-        value={typingValue}
-        className={classNames(styles.assetInput, this.props.className)}
-        items={this.props.symbols}
-        onChange={this.handleChange}
-        onFocus={this.handleFocus}
-        onBlur={this.handleBlur}
+      <StyledReactSelect
+        value={selectedAsset}
+        onChange={option => this.handleChange(option)}
+        options={this.parsedSymbols}
+        isSearchable={false}
       />
     )
   }
 
-  handleChange = (value: string) => {
-    const { symbols, onChange } = this.props
-
-    this.setState({ typingValue: value }, () => {
-      if (symbols.includes(value)) {
-        onChange(value)
-      }
+  handleChange = (selectedAsset: Object) => {
+    const { onChange } = this.props
+    this.setState({ selectedAsset }, () => {
+      onChange(selectedAsset.value)
     })
-  }
-
-  handleFocus = (event: Object) => {
-    const { value, onFocus } = this.props
-
-    this.setState({ typingValue: value })
-    event.persist()
-    onFocus()
-  }
-
-  handleBlur = (event: Object) => {
-    const { symbols, value, onBlur } = this.props
-    const { typingValue } = this.state
-
-    if (!symbols.includes(typingValue)) {
-      this.setState({ typingValue: value })
-    }
-
-    event.persist()
-    onBlur(event)
   }
 }

@@ -14,12 +14,25 @@ type Props = {
   disabled: boolean,
   networks: Array<NetworkItemType>,
   transparent: boolean,
+  shouldSwitchNetworks: boolean,
   fontSize: number
 }
 
-export default class NetworkSwitch extends Component<Props> {
+type State = {
+  option: NetworkItemType
+}
+
+export default class NetworkSwitch extends Component<Props, State> {
   static defaultProps = {
-    networks: getNetworks()
+    networks: getNetworks(),
+    shouldSwitchNetworks: true
+  }
+
+  state = {
+    option:
+      this.props.networks.find(
+        network => network.id === this.props.networkId
+      ) || this.props.networks[0]
   }
 
   render() {
@@ -32,6 +45,8 @@ export default class NetworkSwitch extends Component<Props> {
       fontSize
     } = this.props
 
+    const { option } = this.state
+
     return (
       <div id="network" className={classNames(styles.networkSwitch, className)}>
         <StyledReactSelect
@@ -39,7 +54,7 @@ export default class NetworkSwitch extends Component<Props> {
           transparent={transparent}
           hideHighlight
           disabled={disabled}
-          value={value || this.getSelectValue()}
+          value={option}
           onChange={this.handleChange}
           options={networks}
           isSearchable={false}
@@ -48,16 +63,10 @@ export default class NetworkSwitch extends Component<Props> {
     )
   }
 
-  getSelectValue = () => {
-    const { networkId, networks } = this.props
-    const currentNetwork = networks.find(network => network.id === networkId)
-    if (currentNetwork) {
-      return currentNetwork
-    }
-    return networks[0]
-  }
-
   handleChange = (option: NetworkItemType) => {
-    this.props.onChange(option.id)
+    if (this.props.shouldSwitchNetworks) {
+      return this.props.onChange(option.id)
+    }
+    return this.setState({ option })
   }
 }

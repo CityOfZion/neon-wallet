@@ -10,7 +10,6 @@ import { ASSETS, TOKENS } from '../../../core/constants'
 
 type Props = {
   hideModal: Function,
-  walletName: string,
   address: string,
   asset: string,
   amount: string,
@@ -29,14 +28,7 @@ export default class ReceiveModal extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    const {
-      hideModal,
-      walletName,
-      address,
-      asset,
-      amount,
-      description
-    } = this.props
+    const { address, asset, amount, description } = this.props
 
     const qrCode = new NeoQR({
       nep9Data: {
@@ -57,7 +49,7 @@ export default class ReceiveModal extends React.Component<Props, State> {
   render() {
     const {
       hideModal,
-      walletName,
+
       address,
       asset,
       amount,
@@ -75,12 +67,11 @@ export default class ReceiveModal extends React.Component<Props, State> {
             token.networks['1'].hash === asset ? token.symbol : accum,
           asset
         )
-
     return (
       <BaseModal
         title="Your QR Code"
         hideModal={hideModal}
-        style={{ content: { width: '775px', height: '830px' } }}
+        style={{ content: { width: '750px', height: '100%' } }}
       >
         <div className={styles.contentContainer}>
           <div className={styles.header}>
@@ -90,14 +81,13 @@ export default class ReceiveModal extends React.Component<Props, State> {
 
           <div className={styles.subHeader}>
             <div className={styles.title}>Receive assets</div>
-            <div className={styles.walletName}>{walletName}</div>
           </div>
 
           <div className={styles.section}>
             <div className={styles.sectionTitle}>PAYMENT REQUEST DETAILS</div>
             <div className={styles.sectionContent}>
               <div className={styles.assetAmount}>
-                {(amount ? `${amount} ` : '') + (assetSymbol || '')}
+                {(amount ? `${amount} ` : '') + (assetSymbol || 'NEO')}
               </div>
               <div className={styles.address}>{address}</div>
               <div className={styles.description}>
@@ -122,8 +112,7 @@ export default class ReceiveModal extends React.Component<Props, State> {
             <div className={styles.sectionTitle}>IMAGE URL</div>
             <div className={styles.sectionContent}>
               <div className={styles.imgUri}>
-                <div>'https://nep9.o3.network/'</div>
-                <div>{imgUri}</div>
+                {`https://nep9.o3.network/${imgUri}`}
               </div>
               <CopyToClipboard text={`https://nep9.o3.network/${imgUri}`} />
             </div>

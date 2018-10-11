@@ -34,7 +34,7 @@ export default class AssetBalancesPanel extends React.Component<Props> {
   render = () => {
     const { NEO, GAS, className } = this.props
 
-    const hasAssets = NEO !== '0' && GAS !== '0'
+    const hasAssets = NEO !== '0' || GAS !== '0'
 
     return (
       <Panel
@@ -44,7 +44,7 @@ export default class AssetBalancesPanel extends React.Component<Props> {
       >
         <div className={styles.totalValue}>
           <div className={styles.label}>Total</div>
-          <div id="walletTotal">
+          <div className={styles.walletTotal} id="walletTotal">
             {this.getFormattedFiatBalance(this.getTotalValue())}
           </div>
         </div>
@@ -52,7 +52,9 @@ export default class AssetBalancesPanel extends React.Component<Props> {
         {hasAssets ? (
           <div id="balance" className={styles.assets}>
             <div className={styles.asset}>
-              <div className={styles.label}>{ASSETS.NEO}</div>
+              <div className={classNames(styles.label, styles.assetName)}>
+                {ASSETS.NEO}
+              </div>
               <div className={styles.quantity} id="amountNeo">
                 {formatNEO(NEO)}
               </div>
@@ -70,7 +72,9 @@ export default class AssetBalancesPanel extends React.Component<Props> {
               </span>
             </div>
             <div className={styles.asset}>
-              <div className={styles.label}>{ASSETS.GAS}</div>
+              <div className={classNames(styles.label, styles.assetName)}>
+                {ASSETS.GAS}
+              </div>
               <div className={styles.quantity} id="amountGas">
                 <Tooltip
                   title={formatGAS(GAS)}

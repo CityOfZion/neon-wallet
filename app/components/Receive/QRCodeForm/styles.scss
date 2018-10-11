@@ -1,12 +1,17 @@
 .receivePanel {
   flex: 1;
-  padding: 42px;
-  max-width: 700px;
   margin: auto;
+  background: #ffffff;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   .form {
     height: 385px;
-    margin: 0 60px;
+    width: 400px;
+    margin: -40px 60px 0 60px;
   }
 
   .header {
@@ -38,8 +43,10 @@
 
   .amountContainer {
     display: flex;
+    margin-bottom: 20px;
 
     .asset {
+      min-width: 100px;
     }
 
     .amount {
@@ -49,7 +56,7 @@
   }
 
   .submitButton {
-    margin-top: 24px;
+    margin-top: 50px;
   }
 
   .address {

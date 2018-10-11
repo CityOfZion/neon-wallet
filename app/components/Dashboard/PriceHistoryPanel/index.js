@@ -34,7 +34,7 @@ export default compose(
   withActions(priceHistoryActions, mapPriceHistoryActionsToProps),
 
   // Fetch prices data based based upon the selected currency.  Reload data with the currency changes.
-  withProgressPanel(priceHistoryPanelActions, { title: 'Historic Price' }),
+  withProgressPanel(priceHistoryPanelActions, { title: 'Market Data' }),
   withCurrencyData('currency'),
   withPricesData(mapPriceDataToProps),
   withData(priceHistoryActions, mapPriceHistoryDataToProps)

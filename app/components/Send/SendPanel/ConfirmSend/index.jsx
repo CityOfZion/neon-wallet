@@ -42,7 +42,7 @@ const ConfirmSend = ({ handleEditRecipientsClick, fees }: Props) => (
         </Button>
       </div>
     </div>
-    {fees && (
+    {!!fees && (
       <div className={styles.confirmationFees}>
         <p>Fee: {formatGAS(fees)} GAS</p>
       </div>

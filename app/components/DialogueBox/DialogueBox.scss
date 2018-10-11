@@ -1,20 +1,24 @@
 @import '../../styles/variables';
 
 .dialogueBox {
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid $dark-grey;
-    font-size: 0.8rem;
-    width: 80%;
-    margin: 40px auto;
-    border-radius: 3px;
-    padding: 15px;
-    max-width: 600px;
-    box-sizing: border-box;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $dark-grey;
+  font-size: 0.8rem;
+  width: 80%;
+  margin: 40px auto;
+  border-radius: 3px;
+  padding: 15px;
+  max-width: 600px;
+  box-sizing: border-box;
 
-    svg {
-        margin-right: 10px;
+  svg {
+    margin-right: 10px;
+
+    path {
+      fill: #ee6d66;
     }
+  }
 }

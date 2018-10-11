@@ -1,7 +1,7 @@
 @import '../../../styles/variables';
 
 .contentContainer {
-  padding: 0 125px;
+  padding: 0 100px;
 }
 
 .header {
@@ -15,6 +15,10 @@
     width: 36px;
     height: 36px;
     margin-right: 24px;
+
+    path {
+      fill: #69e27e;
+    }
   }
 
   .title {
@@ -61,9 +65,12 @@
   }
 
   .imgUri {
-    width: 330px;
-    word-wrap: break-word;
-    margin-right: 70px;
+    max-width: 440px;
+    min-width: 440px;
+    text-overflow: ellipsis;
+    align-items: center;
+    font-size: 10px;
+    display: flex;
   }
 
   .assetAmount {

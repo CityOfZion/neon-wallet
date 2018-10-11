@@ -29,7 +29,7 @@
   }
 
   .assets {
-    margin: 0 24px;
+    margin: 0 24px 10px 24px;
     display: flex;
     align-items: flex-start;
     justify-content: space-around;
@@ -40,10 +40,11 @@
       .quantity {
         height: 48px;
         line-height: 48px;
-        color: #000;
-        font-size: 48px;
         font-weight: 200;
-        margin-bottom: 24px;
+        margin: 16px 0;
+        font-family: Gotham-Light;
+        font-size: 48px;
+        color: #394152;
       }
 
       .value {
@@ -69,6 +70,14 @@
     }
   }
 
+  .walletTotal {
+    font-family: Gotham-Medium;
+    font-size: 24px;
+    color: #394152;
+    text-align: center;
+    line-height: 32px;
+  }
+
   .totalValue {
     padding: 24px;
     display: flex;
@@ -77,19 +86,33 @@
     align-items: center;
     font-size: 24px;
     font-weight: 500;
+    padding: 12px 24px;
   }
 
   .label {
     margin-bottom: 8px;
-    opacity: 1;
     color: #969aa0;
     font-size: 24px;
     font-weight: 100;
     text-transform: uppercase;
+    opacity: 0.5;
+    font-family: Gotham-Light;
+    font-size: 24px;
+    color: #394152;
+  }
+
+  .assetName {
+    opacity: 0.5;
+    font-family: Gotham-Bold;
+    font-size: 13px;
+    color: #5c677f;
+    text-align: center;
   }
 
   .claim {
-    margin: 0 24px;
+    margin: 0 24px 12px;
+    width: 350px;
+    align-self: center;
 
     .claimButton {
       width: 100%;

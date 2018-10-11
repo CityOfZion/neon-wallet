@@ -140,7 +140,7 @@ class TokenModal extends Component<Props, State> {
               Add a new token
             </Button>
             <div className={styles.switchNetworkContainer}>
-              <NetworkSwitch />
+              <NetworkSwitch shouldSwitchNetworks={false} />
             </div>
           </div>
           <form

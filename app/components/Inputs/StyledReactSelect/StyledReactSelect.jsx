@@ -68,6 +68,7 @@ const customStyles = {
       : {}
     return {
       ...styles,
+      fontSize: props.selectProps.fontSize,
       ...conditionalStyles
     }
   }
@@ -76,6 +77,7 @@ const customStyles = {
 const StyledReactSelect = props => (
   <Select
     {...props}
+    maxMenuHeight={140}
     styles={customStyles}
     className="react-select-container"
     classNamePrefix="react-select"
