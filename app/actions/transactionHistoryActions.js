@@ -43,13 +43,24 @@ function parseAbstractData(data, currentUserAddress, tokens) {
     return {}
   }
 
+  const parsedTo = abstract => {
+    if (abstract.address_to === 'fees') return 'NETWORK FEES'
+    if (abstract.address_to === 'mint') return 'MINT TOKENS'
+    return abstract.address_to
+  }
+
+  const parsedFrom = abstract => {
+    if (abstract.address_from === 'mint') return 'MINT TOKENS'
+    return abstract.address_from
+  }
+
   return data.map(abstract => {
     const asset = parsedAsset(abstract)
     const iconType = parsedIconType(abstract)
     const summary = {
-      to: abstract.address_to === 'fees' ? 'NETWORK FEES' : abstract.address_to,
+      to: parsedTo(abstract),
       isNetworkFee: abstract.address_to === 'fees',
-      from: abstract.address_from,
+      from: parsedFrom(abstract),
       txid: abstract.txid,
       time: abstract.time,
       amount: abstract.amount,
