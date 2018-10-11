@@ -6,33 +6,33 @@ const MISSING_ADDRESS = 'Missing recipient address'
 const UNRECOGNIZED_ASSET = 'Unrecognized asset'
 
 const parseQRCode = data => {
-    let parsedData
+  let parsedData
 
-    try{
-        parsedData = new URL(data)
-    } catch(err) {
-        throw INVALID_FORMAT
-    }
+  try {
+    parsedData = new URL(data)
+  } catch (err) {
+    throw INVALID_FORMAT
+  }
 
-    const { protocol, pathname, searchParams } = parsedData
+  const { protocol, pathname, searchParams } = parsedData
 
-    let asset = searchParams.get("asset")
-    const assetIsHash = asset && asset !== "NEO" && asset !== "GAS"
+  let asset = searchParams.get('asset')
+  const assetIsHash = asset && asset !== 'NEO' && asset !== 'GAS'
 
-    if(assetIsHash){
-        asset = hashToSymbol(asset)
-        if(!asset) throw UNRECOGNIZED_ASSET
-    }
+  if (assetIsHash) {
+    asset = hashToSymbol(asset)
+    if (!asset) throw UNRECOGNIZED_ASSET
+  }
 
-    if(protocol !== 'neo:') throw INVALID_PROTOCOL
-    if(!pathname) throw MISSING_ADDRESS
+  if (protocol !== 'neo:') throw INVALID_PROTOCOL
+  if (!pathname) throw MISSING_ADDRESS
 
-    return {
-        address: pathname,
-        asset: asset,
-        amount: searchParams.get("amount"),
-        reference: searchParams.get("description"),
-    }
-};
+  return {
+    address: pathname,
+    asset: asset,
+    amount: searchParams.get('amount'),
+    reference: searchParams.get('description')
+  }
+}
 
 export default parseQRCode
