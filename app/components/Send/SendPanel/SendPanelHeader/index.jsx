@@ -18,9 +18,12 @@ type Props = {
   sendSuccess: boolean,
   sendError: boolean,
   noSendableAssets: boolean,
-  disabled: boolean,
+  disableAddRecipient: boolean,
+  disableEnterQRCode: boolean,
   hasNetworkFees: boolean,
-  maxNumberOfRecipients: number
+  maxNumberOfRecipients: number,
+  showSendModal: () => any,
+  pushQRCodeData: () => any,
 }
 
 const SendPanelHeader = ({
@@ -31,10 +34,12 @@ const SendPanelHeader = ({
   sendError,
   sendSuccess,
   noSendableAssets,
-  disabled,
+  disableAddRecipient,
+  disableEnterQRCode,
   hasNetworkFees = false,
   maxNumberOfRecipients,
-  showSendModal
+  showSendModal,
+  pushQRCodeData
 }: Props) => {
   const numberOfItems = sendRowDetails.length
 
@@ -45,7 +50,8 @@ const SendPanelHeader = ({
       <button
         type="button"
         className={styles.enterQrHeaderButton}
-        onClick={() => showSendModal()}
+        onClick={() => showSendModal({ pushQRCodeData })}
+        disabled={disableEnterQRCode}
       >
         <GridIcon className={styles.sendPanelHeaderButtonIcon} /> Enter QR
         Code
@@ -55,7 +61,7 @@ const SendPanelHeader = ({
         type="button"
         className={styles.sendPanelHeaderButton}
         onClick={addRow}
-        disabled={disabled}
+        disabled={disableAddRecipient}
       >
         <AddIcon className={styles.sendPanelHeaderButtonIcon} /> Add Recipient
       </button>

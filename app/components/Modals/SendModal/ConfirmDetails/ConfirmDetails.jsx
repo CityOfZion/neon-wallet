@@ -8,13 +8,12 @@ import baseStyles from '../SendModal.scss'
 import styles from './ConfirmDetails.scss'
 
 type Props = {
-  recipientData: Object
+  recipientData: Object,
+  confirmAndClose: () => any
 }
 
 export default class ConfirmDetails extends React.Component<Props, State> {
-  getRecipientData(key){
-    return this.props.recipientData[key] || 'Not specified'
-  }
+  getRecipientData = (key) => this.props.recipientData[key] || 'Not specified';
   
   render() {
     return (
@@ -27,7 +26,6 @@ export default class ConfirmDetails extends React.Component<Props, State> {
         <div className={baseStyles.section}>
           <div className={baseStyles.sectionTitle}>PAYMENT DETAILS</div>
           <div className={styles.paymentDetails}>
-
             <div className={styles.detailGroup}>
               <div className={styles.detailName}>Asset</div>
               <div>{this.getRecipientData('asset')}</div>
@@ -42,11 +40,10 @@ export default class ConfirmDetails extends React.Component<Props, State> {
               <div className={styles.detailName}>Reference</div>
               <div>{this.getRecipientData('reference')}</div>
             </div>
-            
           </div>
         </div>
 
-        <Button primary>
+        <Button primary onClick={this.props.confirmAndClose}>
           Confirm Details
         </Button>
       </div>

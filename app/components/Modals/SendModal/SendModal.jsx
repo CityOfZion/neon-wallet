@@ -11,6 +11,7 @@ type Props = {
   hideModal: () => any,
   showErrorNotification: () => any,
   hideNotification: () => any,
+  pushQRCodeData: () => any,
 }
 
 type State = {
@@ -55,7 +56,7 @@ export default class SendModal extends React.Component<Props, State> {
 
       stopScanner();
 
-      if(error) hideNotification(error);
+      if (error) hideNotification(error);
   
       this.setState({ 
         step: 2,
@@ -66,10 +67,22 @@ export default class SendModal extends React.Component<Props, State> {
     }
   }
 
+  confirmAndClose = () => {
+    const { pushQRCodeData, hideModal } = this.props;
+
+    pushQRCodeData(this.state.recipientData);
+    hideModal();
+  }
+
   getStepComponent = () => {
     return ({
-      1: <ReadCode gotoNextStep={this.gotoNextStep}/>,
-      2: <ConfirmDetails recipientData={this.state.recipientData}/>
+      1: <ReadCode 
+          gotoNextStep={this.gotoNextStep}
+        />,
+      2: <ConfirmDetails 
+          recipientData={this.state.recipientData} 
+          confirmAndClose={this.confirmAndClose}
+        />
     })[this.state.step]
   }
 

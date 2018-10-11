@@ -40,6 +40,7 @@ type Props = {
   updateRowField: (index: number, field: string, value: any) => any,
   handleEditRecipientsClick: () => any,
   showSendModal: () => any,
+  pushQRCodeData: () => any,
 }
 
 const SendPanel = ({
@@ -65,9 +66,10 @@ const SendPanel = ({
   fees,
   address,
   maxNumberOfRecipients,
-  showSendModal
+  showSendModal,
+  pushQRCodeData
 }: Props) => {
-  function shouldDisableSendButton(sendRowDetails) {
+  const shouldDisableSendButton = (sendRowDetails) => {
     let disabled = false
     sendRowDetails.some(detail => {
       if (!detail.address) {
@@ -82,6 +84,8 @@ const SendPanel = ({
     })
     return disabled
   }
+
+  const maxRecipientsMet = () => sendRowDetails.length === maxNumberOfRecipients;
 
   if (noSendableAssets) {
     return <ZeroAssets address={address} />
@@ -169,10 +173,12 @@ const SendPanel = ({
           hasNetworkFees={!!fees}
           maxNumberOfRecipients={maxNumberOfRecipients}
           showSendModal={showSendModal}
-          disabled={
+          pushQRCodeData={pushQRCodeData}
+          disableAddRecipient={
             shouldDisableSendButton(sendRowDetails) ||
-            sendRowDetails.length === maxNumberOfRecipients
+            maxRecipientsMet()
           }
+          disableEnterQRCode={maxRecipientsMet()}
         />
       )}
       className={styles.sendSuccessPanel}
