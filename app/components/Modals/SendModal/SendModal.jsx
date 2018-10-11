@@ -11,13 +11,13 @@ type Props = {
   hideModal: () => any,
   showErrorNotification: (error: Object) => any,
   hideNotification: (id: string) => any,
-  pushQRCodeData: (data: Object) => any,
+  pushQRCodeData: (data: Object) => any
 }
 
 type State = {
   step: number,
   error: ?string,
-  recipientData: Object,
+  recipientData: Object
 }
 
 export default class SendModal extends React.Component<Props, State> {
@@ -27,11 +27,11 @@ export default class SendModal extends React.Component<Props, State> {
     recipientData: {}
   }
 
-  displayError = (message:string) => {
+  displayError = (message: string) => {
     const { showErrorNotification } = this.props
 
-    const newError = showErrorNotification({ 
-      message: `An error occurred while scanning this QR code: ${message}. Please try again.` 
+    const newError = showErrorNotification({
+      message: `An error occurred while scanning this QR code: ${message}. Please try again.`
     })
 
     this.setState({ error: newError })
@@ -42,8 +42,8 @@ export default class SendModal extends React.Component<Props, State> {
   }
 
   gotoPreviousStep = () => {
-    this.setState({ 
-      step: 1 
+    this.setState({
+      step: 1
     })
   }
 
@@ -57,12 +57,12 @@ export default class SendModal extends React.Component<Props, State> {
       stopScanner()
 
       if (error) hideNotification(error)
-  
-      this.setState({ 
+
+      this.setState({
         step: 2,
         recipientData: parsedRecipientData
       })
-    } catch(message) {
+    } catch (message) {
       this.displayError(message)
     }
   }
@@ -75,26 +75,26 @@ export default class SendModal extends React.Component<Props, State> {
   }
 
   getStepComponent = () => {
-    return ({
-      [1]: <ReadCode 
-          gotoNextStep={this.gotoNextStep}
-        />,
-      [2]: <ConfirmDetails 
-          recipientData={this.state.recipientData} 
+    return {
+      [1]: <ReadCode gotoNextStep={this.gotoNextStep} />,
+      [2]: (
+        <ConfirmDetails
+          recipientData={this.state.recipientData}
           confirmAndClose={this.confirmAndClose}
         />
-    })[this.state.step]
+      )
+    }[this.state.step]
   }
 
   render() {
-      return (
-        <BaseModal
-          style={{ content: { width: '775px', height: '830px' } }}
-          backButtonAction={this.isStepTwo() ? this.gotoPreviousStep : null}
-          hideModal={this.props.hideModal}
-        >
-          {this.getStepComponent()}
-        </BaseModal>
-      )
+    return (
+      <BaseModal
+        style={{ content: { width: '775px', height: '830px' } }}
+        backButtonAction={this.isStepTwo() ? this.gotoPreviousStep : null}
+        hideModal={this.props.hideModal}
+      >
+        {this.getStepComponent()}
+      </BaseModal>
+    )
   }
 }

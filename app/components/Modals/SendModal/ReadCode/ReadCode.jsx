@@ -24,50 +24,49 @@ export default class ReadCode extends React.Component<Props, State> {
   }
 
   toggleScanner = () => {
-    this.setState({ scannerActive: !this.state.scannerActive });
+    this.setState({ scannerActive: !this.state.scannerActive })
   }
 
   getScanner = () => {
-    if(this.state.scannerActive){
-      return (
-        <QrCodeScanner 
-          callback={this.props.gotoNextStep} 
-        />
-      )
+    if (this.state.scannerActive) {
+      return <QrCodeScanner callback={this.props.gotoNextStep} />
     }
 
     return <img src={CozDonationQrCode} alt="Donate to CoZ" />
   }
 
   render() {
-    const { scannerActive } = this.state;
+    const { scannerActive } = this.state
 
-    return(
+    return (
       <div className={baseStyles.contentContainer}>
         <div className={baseStyles.header}>
           <GridIcon className={baseStyles.icon} />
           <div className={baseStyles.title}>Use a QR Code</div>
         </div>
 
-        <div className={baseStyles.divider}></div>
+        <div className={baseStyles.divider} />
 
         <div className={baseStyles.section}>
           <div className={baseStyles.sectionContent}>
-            So you've been given a QR code? Click capture and hold it up to your camera.
+            So you've been given a QR code? Click capture and hold it up to your
+            camera.
           </div>
         </div>
 
         <div className={baseStyles.section}>
           <div className={baseStyles.sectionTitle}>CAPTURE QR CODE</div>
-          <div className={classNames(
-            baseStyles.sectionContent,
-            styles.qrCodeScannerSection
-          )}>
+          <div
+            className={classNames(
+              baseStyles.sectionContent,
+              styles.qrCodeScannerSection
+            )}
+          >
             <div className={styles.qrCodeScannerPlaceholder}>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
+              <div />
+              <div />
+              <div />
+              <div />
               {this.getScanner()}
             </div>
 

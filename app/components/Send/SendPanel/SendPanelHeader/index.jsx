@@ -23,7 +23,7 @@ type Props = {
   hasNetworkFees: boolean,
   maxNumberOfRecipients: number,
   showSendModal: (props: Object) => any,
-  pushQRCodeData: (data: Object) => any,
+  pushQRCodeData: (data: Object) => any
 }
 
 const SendPanelHeader = ({
@@ -53,10 +53,9 @@ const SendPanelHeader = ({
         onClick={() => showSendModal({ pushQRCodeData })}
         disabled={disableEnterQRCode}
       >
-        <GridIcon className={styles.sendPanelHeaderButtonIcon} /> Enter QR
-        Code
+        <GridIcon className={styles.sendPanelHeaderButtonIcon} /> Enter QR Code
       </button>
-      
+
       <button
         type="button"
         className={styles.sendPanelHeaderButton}

@@ -10,38 +10,46 @@ export default class QrCodeScanner extends Component<Props> {
   scanPreviewElement: ?HTMLVideoElement
   scannerInstance: Instascan
 
-  componentDidMount () {
+  componentDidMount() {
     this.startScanner()
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.stopScanner()
   }
 
-  startScanner () {
+  startScanner() {
     const { callback } = this.props
-    this.scannerInstance = new Instascan.Scanner({ video: this.scanPreviewElement })
-    
+    this.scannerInstance = new Instascan.Scanner({
+      video: this.scanPreviewElement
+    })
+
     this.scannerInstance.addListener('scan', content => {
       callback(content, this.stopScanner.bind(this))
     })
 
-    Instascan.Camera.getCameras().then((cameras: Array<Object>) => {
-      if (cameras.length > 0) {
-        this.scannerInstance.start(cameras[0])
-      } else {
-        console.error('No cameras found.')
-      }
-    }).catch(e => console.error(e))
+    Instascan.Camera.getCameras()
+      .then((cameras: Array<Object>) => {
+        if (cameras.length > 0) {
+          this.scannerInstance.start(cameras[0])
+        } else {
+          console.error('No cameras found.')
+        }
+      })
+      .catch(e => console.error(e))
   }
 
-  stopScanner () {
+  stopScanner() {
     this.scannerInstance && this.scannerInstance.stop()
   }
 
-  render () {
+  render() {
     return (
-      <video ref={ref => { this.scanPreviewElement = ref }} />
+      <video
+        ref={ref => {
+          this.scanPreviewElement = ref
+        }}
+      />
     )
   }
 }

@@ -63,15 +63,17 @@ const BaseModal = ({
     onAfterOpen={onAfterOpen}
   >
     <div className={styles.modalHeader}>
-      {backButtonAction && <button
+      {backButtonAction && (
+        <button
           type="button"
           className={styles.modalHeaderBackButton}
           onClick={() => {
             backButtonAction()
           }}
         >
-        <Arrow />
-      </button>}
+          <Arrow />
+        </button>
+      )}
       <div className={styles.modalHeaderTitle}>
         <img src={Logo} alt="grey-neon-logo" />
       </div>

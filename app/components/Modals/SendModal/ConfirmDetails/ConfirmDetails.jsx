@@ -13,8 +13,9 @@ type Props = {
 }
 
 export default class ConfirmDetails extends React.Component<Props> {
-  getRecipientData = (key:string) => this.props.recipientData[key] || 'Not specified'
-  
+  getRecipientData = (key: string) =>
+    this.props.recipientData[key] || 'Not specified'
+
   render() {
     return (
       <div className={baseStyles.contentContainer}>
