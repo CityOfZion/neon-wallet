@@ -1,4 +1,4 @@
-import { TOKENS } from '../../app/core/constants'
+import { TOKENS } from '../core/constants'
 
 const hashToSymbol = hash => {
   const symbol = Object.keys(TOKENS).find(currentSymbol => {
@@ -7,9 +7,11 @@ const hashToSymbol = hash => {
     if (currentHash === hash) {
       return true
     }
+
+    return false
   })
 
-  return symbol || false
+  return symbol
 }
 
 export default hashToSymbol

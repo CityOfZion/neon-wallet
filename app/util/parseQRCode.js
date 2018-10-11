@@ -29,7 +29,7 @@ const parseQRCode = data => {
 
   return {
     address: pathname,
-    asset: asset,
+    asset,
     amount: searchParams.get('amount'),
     reference: searchParams.get('description')
   }

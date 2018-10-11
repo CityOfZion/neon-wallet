@@ -8,6 +8,7 @@ type Props = {
 
 export default class QrCodeScanner extends Component<Props> {
   scanPreviewElement: ?HTMLVideoElement
+
   scannerInstance: Instascan
 
   componentDidMount() {
@@ -40,11 +41,12 @@ export default class QrCodeScanner extends Component<Props> {
   }
 
   stopScanner() {
-    this.scannerInstance && this.scannerInstance.stop()
+    if (this.scannerInstance) this.scannerInstance.stop()
   }
 
   render() {
     return (
+      // eslint-disable-next-line
       <video
         ref={ref => {
           this.scanPreviewElement = ref

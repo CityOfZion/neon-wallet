@@ -15,14 +15,14 @@ type Props = {
 }
 
 type State = {
-  step: number,
+  step: string,
   error: ?string,
   recipientData: Object
 }
 
 export default class SendModal extends React.Component<Props, State> {
   state = {
-    step: 1,
+    step: '1',
     error: null,
     recipientData: {}
   }
@@ -37,13 +37,11 @@ export default class SendModal extends React.Component<Props, State> {
     this.setState({ error: newError })
   }
 
-  isStepTwo = () => {
-    return this.state.step === 2
-  }
+  isStepTwo = () => this.state.step === '2'
 
   gotoPreviousStep = () => {
     this.setState({
-      step: 1
+      step: '1'
     })
   }
 
@@ -52,14 +50,14 @@ export default class SendModal extends React.Component<Props, State> {
     const { hideNotification } = this.props
 
     try {
-      let parsedRecipientData = parseQRCode(recipientData)
+      const parsedRecipientData = parseQRCode(recipientData)
 
       stopScanner()
 
       if (error) hideNotification(error)
 
       this.setState({
-        step: 2,
+        step: '2',
         recipientData: parsedRecipientData
       })
     } catch (message) {
@@ -74,17 +72,16 @@ export default class SendModal extends React.Component<Props, State> {
     hideModal()
   }
 
-  getStepComponent = () => {
-    return {
-      [1]: <ReadCode gotoNextStep={this.gotoNextStep} />,
-      [2]: (
+  getStepComponent = () =>
+    ({
+      '1': <ReadCode gotoNextStep={this.gotoNextStep} />,
+      '2': (
         <ConfirmDetails
           recipientData={this.state.recipientData}
           confirmAndClose={this.confirmAndClose}
         />
       )
-    }[this.state.step]
-  }
+    }[this.state.step])
 
   render() {
     return (

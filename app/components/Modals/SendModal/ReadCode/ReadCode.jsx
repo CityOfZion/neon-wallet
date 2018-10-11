@@ -24,7 +24,7 @@ export default class ReadCode extends React.Component<Props, State> {
   }
 
   toggleScanner = () => {
-    this.setState({ scannerActive: !this.state.scannerActive })
+    this.setState(prevState => ({ scannerActive: !prevState.scannerActive }))
   }
 
   getScanner = () => {
@@ -75,21 +75,6 @@ export default class ReadCode extends React.Component<Props, State> {
             </Button>
           </div>
         </div>
-
-        {/* <div className={baseStyles.section}>
-          <div className={baseStyles.sectionTitle}>OR USE AN IMAGE URL</div>
-          <div className={baseStyles.sectionContent}>
-            <TextInput
-              placeholder="Paste a QR code image URL here..."
-              onChange={e => this.setState({ url: e.target.value })}
-              value={url}
-            />
-
-            <Button>
-              Use This Code
-            </Button>
-          </div>
-        </div> */}
       </div>
     )
   }

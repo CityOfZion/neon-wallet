@@ -82,7 +82,7 @@ export default class Send extends React.Component<Props, State> {
     const { sendRowDetails } = this.state
     const { asset, address, amount } = data
     const firstRowEmpty =
-      sendRowDetails.length === 1 && !parseInt(sendRowDetails[0].amount)
+      sendRowDetails.length === 1 && !parseInt(sendRowDetails[0].amount, 10)
 
     if (firstRowEmpty) {
       if (asset) this.updateRowField(0, 'asset', asset)
