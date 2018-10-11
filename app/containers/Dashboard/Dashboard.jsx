@@ -46,18 +46,6 @@ export default class Dashboard extends Component<Props> {
     return (
       <div id="dashboard" className={styles.dashboard}>
         <HeaderBar
-          renderLeftContent={() => (
-            <NetworkSwitch
-              fontSize={16}
-              transparent
-              className={styles.dashboardNetworkSwitch}
-              networkSwitchTextInputContainer={
-                styles.dashboardNetworkSwitchTextInputContainer
-              }
-              networkSwitchTextInput={styles.dashboardNetworkSwitchTextInput}
-              activeStyles={styles.dashboardNetworkSwitchActive}
-            />
-          )}
           renderRightContent={() => (
             <div className={classNames(styles.dashboardHeaderButonContainer)}>
               <NavLink id="wallet-manager" exact to={ROUTES.WALLET_MANAGER}>

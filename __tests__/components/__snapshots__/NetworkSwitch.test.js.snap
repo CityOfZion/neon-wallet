@@ -422,7 +422,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                 setValue={[Function]}
               >
                 <div
-                  className="css-704jww react-select__control"
+                  className="css-1ui96em react-select__control"
                   onMouseDown={[Function]}
                   onTouchEnd={[Function]}
                 >
@@ -536,7 +536,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                     setValue={[Function]}
                   >
                     <div
-                      className="css-10wu6am react-select__value-container react-select__value-container--has-value"
+                      className="css-74zsru react-select__value-container react-select__value-container--has-value"
                     >
                       <SingleValue
                         clearValue={[Function]}
@@ -1029,7 +1029,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                       >
                         <div
                           aria-hidden="true"
-                          className="css-fl6htp react-select__indicator react-select__dropdown-indicator"
+                          className="css-7ne3xr react-select__indicator react-select__dropdown-indicator"
                           onMouseDown={[Function]}
                           onTouchEnd={[Function]}
                         >

@@ -7,12 +7,11 @@ import { Link } from 'react-router-dom'
 
 import { recoverWallet } from '../../modules/generateWallet'
 import Panel from '../../components/Panel'
-import SelectInput from '../../components/Inputs/SelectInput'
 import StyledReactSelect from '../../components/Inputs/StyledReactSelect/StyledReactSelect'
 import HeaderBar from '../../components/HeaderBar'
 import SettingsItem from '../../components/Settings/SettingsItem'
 import SettingsLink from '../../components/Settings/SettingsLink'
-import WalletRecoveryPanel from '../../components/Settings/WalletRecoveryPanel'
+
 import {
   EXPLORERS,
   CURRENCIES,
@@ -25,6 +24,14 @@ import themes from '../../themes'
 import styles from './Settings.scss'
 import Tooltip from '../../components/Tooltip'
 import AddIcon from '../../assets/icons/add.svg'
+import LockIcon from '../../assets/icons/lock.svg'
+import CurrencyIcon from '../../assets/icons/currency-icon.svg'
+import BlockExplorerIcon from '../../assets/icons/block-explorer.svg'
+import LightbulbIcon from '../../assets/icons/lightbulb-icon.svg'
+import CogIcon from '../../assets/icons/cog-icon.svg'
+import NodeSelectIcon from '../../assets/icons/node-select.svg'
+import TimeIcon from '../../assets/icons/time-icon.svg'
+import SaveIcon from '../../assets/icons/save-icon.svg'
 
 const { dialog, shell } = require('electron').remote
 
@@ -38,7 +45,11 @@ type Props = {
   theme: string,
   showSuccessNotification: Object => any,
   showErrorNotification: Object => any,
-  showModal: Function
+  showModal: Function,
+  networks: Array<NetworkItemType>,
+  networkId: string,
+  handleNetworkChange: Function,
+  selectedNode: string
 }
 
 type SelectOption = {
@@ -47,6 +58,7 @@ type SelectOption = {
 }
 
 type State = {
+  selectedNetwork: NetworkItemType,
   selectedCurrency: SelectOption,
   selectedTheme: SelectOption,
   selectedExplorer: SelectOption
@@ -65,7 +77,11 @@ export default class Settings extends Component<Props, State> {
     selectedExplorer: {
       value: this.props.explorer,
       label: EXPLORERS[this.props.explorer] || EXPLORERS.NEO_SCAN
-    }
+    },
+    selectedNetwork:
+      this.props.networks.find(
+        network => network.id === this.props.networkId
+      ) || this.props.networks[0]
   }
 
   saveWalletRecovery = () => {
@@ -171,7 +187,6 @@ export default class Settings extends Component<Props, State> {
   }
 
   render() {
-    const { selectedCurrency, selectedExplorer } = this.state
     const parsedCurrencyOptions = Object.keys(CURRENCIES).map(key => ({
       value: key,
       label: key.toUpperCase()
@@ -192,38 +207,93 @@ export default class Settings extends Component<Props, State> {
           renderHeader={this.renderHeader}
         >
           <section className={styles.settingsItemsContainer}>
-            <SettingsItem title="THEME">
+            <SettingsItem renderIcon={() => <CogIcon />} title="NETWORK">
               <div className={styles.settingsSelectContainer}>
                 <StyledReactSelect
-                  isDisabled
-                  value={this.state.selectedTheme}
+                  settingsSelect
+                  options={this.props.networks}
+                  transparent
+                  value={this.state.selectedNetwork}
+                  onChange={selectedNetwork =>
+                    this.setState({ selectedNetwork }, () =>
+                      this.props.handleNetworkChange(selectedNetwork.id)
+                    )
+                  }
                 />
               </div>
             </SettingsItem>
-            <SettingsItem title="CURRENCY">
+            <SettingsItem
+              renderIcon={() => <BlockExplorerIcon />}
+              title="BLOCK EXPLORER"
+            >
               <div className={styles.settingsSelectContainer}>
                 <StyledReactSelect
-                  options={parsedCurrencyOptions}
-                  value={this.state.selectedCurrency}
-                  onChange={this.updateCurrencySettings}
-                />
-              </div>
-            </SettingsItem>
-            <SettingsItem title="BLOCK EXPLORER">
-              <div className={styles.settingsSelectContainer}>
-                <StyledReactSelect
+                  settingsSelect
+                  transparent
                   options={parsedExplorerOptions}
                   value={this.state.selectedExplorer}
                   onChange={this.updateExplorerSettings}
                 />
               </div>
             </SettingsItem>
-            <SettingsLink to={ROUTES.ENCRYPT} title="ENCRYPT A KEY" />
-            <SettingsLink to={ROUTES.NODE_SELECT} title="NODE SELECTON" />
-            <WalletRecoveryPanel
-              title="WALLET RECOVERY"
-              loadWalletRecovery={this.loadWalletRecovery}
-              saveWalletRecovery={this.saveWalletRecovery}
+            <SettingsItem renderIcon={() => <CurrencyIcon />} title="CURRENCY">
+              <div className={styles.settingsSelectContainer}>
+                <StyledReactSelect
+                  settingsSelect
+                  transparent
+                  options={parsedCurrencyOptions}
+                  value={this.state.selectedCurrency}
+                  onChange={this.updateCurrencySettings}
+                  isSearchable={false}
+                />
+              </div>
+            </SettingsItem>
+            <SettingsItem
+              renderIcon={() => <LightbulbIcon />}
+              noBorderBottom
+              title="THEME"
+            >
+              <Tooltip
+                className={styles.settingsSelectContainer}
+                title="Coming Soon"
+                position="bottom"
+              >
+                <StyledReactSelect
+                  settingsSelect
+                  isDisabled
+                  transparent
+                  value={this.state.selectedTheme}
+                />
+              </Tooltip>
+            </SettingsItem>
+            <div className={styles.settingsSpacer} />
+            <SettingsLink
+              renderIcon={() => <LockIcon />}
+              to={ROUTES.ENCRYPT}
+              title="ENCRYPT A KEY"
+            />
+            <SettingsLink
+              noBorderBottom
+              to={ROUTES.NODE_SELECT}
+              label={this.props.selectedNode || 'AUTOMATIC'}
+              renderIcon={() => <NodeSelectIcon />}
+              title="NODE SELECTON"
+            />
+            <div className={styles.settingsSpacer} />
+            <SettingsLink
+              onClick={this.loadWalletRecovery}
+              to={ROUTES.ENCRYPT}
+              label="IMPORT"
+              renderIcon={() => <TimeIcon />}
+              title="RECOVER WALLET"
+            />
+            <SettingsLink
+              renderIcon={() => <SaveIcon />}
+              noBorderBottom
+              label="EXPORT"
+              onClick={this.saveWalletRecovery}
+              to={ROUTES.NODE_SELECT}
+              title="BACKUP WALLET"
             />
             {this.renderDontions()}
           </section>

@@ -2,13 +2,12 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
-import { withData, withActions } from 'spunky'
+import { withData, withActions, type Actions } from 'spunky'
 
 import Settings from './Settings'
 import withExplorerData from '../../hocs/withExplorerData'
 import withCurrencyData from '../../hocs/withCurrencyData'
 import withThemeData from '../../hocs/withThemeData'
-import withPricesData from '../../hocs/withPricesData'
 import accountsActions, {
   updateAccountsActions
 } from '../../actions/accountsActions'
@@ -19,6 +18,9 @@ import {
   showSuccessNotification
 } from '../../modules/notifications'
 import { showModal } from '../../modules/modal'
+import networkActions from '../../actions/networkActions'
+import withNetworkData from '../../hocs/withNetworkData'
+import nodeStorageActions from '../../actions/nodeStorageActions'
 
 const mapStateToProps = () => ({
   networks: getNetworks()
@@ -56,16 +58,26 @@ const mapSettingsActionsToProps = actions => ({
     })
 })
 
+const mapActionsToProps = (actions: Actions, props: Object): Object => ({
+  handleNetworkChange: networkId => actions.call({ networkId })
+})
+
+const mapSelectedNodeDataToProps = url => ({
+  selectedNode: url
+})
+
 export default compose(
   connect(
     mapStateToProps,
     mapDispatchToProps
   ),
   withData(accountsActions, mapAccountsDataToProps),
-  withPricesData(),
+  withData(nodeStorageActions, mapSelectedNodeDataToProps),
+  withNetworkData(),
   withExplorerData(),
   withCurrencyData(),
   withThemeData(),
+  withActions(networkActions, mapActionsToProps),
   withActions(updateAccountsActions, mapAccountsActionsToProps),
   withActions(updateSettingsActions, mapSettingsActionsToProps)
 )(Settings)
