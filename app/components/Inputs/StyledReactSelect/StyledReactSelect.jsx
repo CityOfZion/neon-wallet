@@ -39,7 +39,6 @@ const customStyles = {
   }),
   indicatorSeparator: () => ({ display: 'none' }),
   valueContainer: (styles, props) => {
-    console.log(props)
     const conditionalStyles = props.selectProps.settingsSelect
       ? {
           fontFamily: 'Gotham-Bold',
