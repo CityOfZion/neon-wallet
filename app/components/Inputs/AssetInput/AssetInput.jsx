@@ -2,7 +2,7 @@
 import React from 'react'
 
 import StyledReactSelect from '../StyledReactSelect/StyledReactSelect'
-import styles from './AssetInput.scss'
+import { ASSETS, TOKENS } from '../../../core/constants'
 
 type Props = {
   symbols: Array<SymbolType>,
@@ -13,18 +13,25 @@ type State = {
   selectedAsset: Object
 }
 
-export default class AssetInput extends React.Component<Props, State> {
-  parsedSymbols = this.props.symbols.map(symbol => ({
+function parsedSymbols(
+  symbols = [ASSETS.NEO, ASSETS.GAS, ...Object.keys(TOKENS)]
+): Array<{ value: string, label: string }> {
+  return symbols.map(symbol => ({
     value: symbol,
     label: symbol
   }))
+}
 
+export default class AssetInput extends React.Component<Props, State> {
   state = {
     selectedAsset: this.parsedSymbols[0]
   }
 
+  parsedSymbols = parsedSymbols(this.props.symbols)
+
   render() {
     const { selectedAsset } = this.state
+
     return (
       <StyledReactSelect
         value={selectedAsset}
