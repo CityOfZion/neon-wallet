@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
+import { NavLink } from 'react-router-dom'
 
 import TextInput from '../../Inputs/TextInput'
 import CopyToClipboard from '../../CopyToClipboard'
@@ -11,7 +12,7 @@ import {
   formatToRoundedShortNumber
 } from '../../../core/formatters'
 import Nothing from '../../../assets/icons/nothing.svg'
-import { CURRENCIES } from '../../../core/constants'
+import { CURRENCIES, ROUTES } from '../../../core/constants'
 
 type Props = {
   className: ?string,
@@ -53,7 +54,11 @@ export default class TokenBalancesPanel extends React.Component<Props> {
         </div>
         <p>
           You’ll need to <b>transfer compatible NEP-5 assets</b> to this wallet
-          using ‘Receive’ or your public address:
+          using{' '}
+          <NavLink id="wallet-manager" exact to={ROUTES.RECEIVE}>
+            <span> receive </span>
+          </NavLink>{' '}
+          or your public address:
         </p>
         <div className={styles.address}>
           <TextInput value={address} disabled />
