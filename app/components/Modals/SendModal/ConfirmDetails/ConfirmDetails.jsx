@@ -1,8 +1,9 @@
 // @flow
 import React from 'react'
+import { get } from 'lodash-es'
 
+import GridIcon from 'assets/icons/grid.svg'
 import Button from '../../../Button'
-import GridIcon from '../../../../assets/icons/grid.svg'
 
 import baseStyles from '../SendModal.scss'
 import styles from './ConfirmDetails.scss'
@@ -14,7 +15,7 @@ type Props = {
 
 export default class ConfirmDetails extends React.Component<Props> {
   getRecipientData = (key: string) =>
-    this.props.recipientData[key] || 'Not specified'
+    get(this.props.recipientData, key) || 'Not specified'
 
   render() {
     return (
@@ -35,6 +36,11 @@ export default class ConfirmDetails extends React.Component<Props> {
             <div className={styles.detailGroup}>
               <div className={styles.detailName}>Address</div>
               <div>{this.getRecipientData('address')}</div>
+            </div>
+
+            <div className={styles.detailGroup}>
+              <div className={styles.detailName}>Amount</div>
+              <div>{this.getRecipientData('amount')}</div>
             </div>
 
             <div className={styles.detailGroup}>

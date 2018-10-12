@@ -11,8 +11,8 @@
             font-weight: bold;
         }
 
-        &:nth-child(2){
-            margin: 25px 0 25px 0;
+        &:not(:first-child){
+            margin-top: 25px;
         }
     }
 }

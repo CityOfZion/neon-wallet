@@ -2,10 +2,10 @@
 import React from 'react'
 import classNames from 'classnames'
 
+import GridIcon from 'assets/icons/grid.svg'
+import CozDonationQrCode from 'assets/images/coz-donation-qr-code.png'
 import Button from '../../../Button'
 import QrCodeScanner from '../../../QrCodeScanner'
-import GridIcon from '../../../../assets/icons/grid.svg'
-import CozDonationQrCode from '../../../../assets/images/coz-donation-qr-code.png'
 
 import baseStyles from '../SendModal.scss'
 import styles from './ReadCode.scss'
@@ -63,10 +63,10 @@ export default class ReadCode extends React.Component<Props, State> {
             )}
           >
             <div className={styles.qrCodeScannerPlaceholder}>
-              <div />
-              <div />
-              <div />
-              <div />
+              <div className="frameLineTopLeft" />
+              <div className="frameLineTopRight" />
+              <div className="frameLineBottomLeft" />
+              <div className="frameLineBottomRight" />
               {this.getScanner()}
             </div>
 
