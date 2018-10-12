@@ -7,6 +7,10 @@
   width: 680px;
   min-height: 100vh;
 
+  form {
+    max-height: 600px;
+  }
+
   .childrenContainer {
     display: flex;
     flex-direction: column;

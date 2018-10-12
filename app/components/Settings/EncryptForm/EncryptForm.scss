@@ -1,6 +1,9 @@
 .encryptForm {
   width: 500px;
   margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 
   form {
     align-self: flex-start;
@@ -13,5 +16,8 @@
 }
 
 .formContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   margin-bottom: auto;
 }
