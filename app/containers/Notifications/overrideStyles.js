@@ -19,8 +19,9 @@ const overrideStyles = {
   NotificationItem: {
     DefaultStyle: {
       borderTop: 'none',
-      height: '60px',
-      marginTop: 0,
+      height: '65px',
+      marginTop: '10px',
+      marginBottom: '10px',
       display: 'flex',
       alignItems: 'center',
       paddingLeft: '60px',
