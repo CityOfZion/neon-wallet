@@ -18,22 +18,11 @@ type Props = {
   value: NetworkItemType
 }
 
-// type State = {
-//   option: NetworkItemType
-// }
-
 export default class NetworkSwitch extends Component<Props> {
   static defaultProps = {
     networks: getNetworks(),
     shouldSwitchNetworks: true
   }
-
-  // state = {
-  //   option:
-  //     this.props.networks.find(
-  //       network => network.id === this.props.networkId
-  //     ) || this.props.networks[0]
-  // }
 
   render() {
     const {
