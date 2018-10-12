@@ -16,6 +16,8 @@ export const validateTokens = (
   tokens: Array<TokenItemType>,
   configuredTokens: Array<TokenItemType>
 ) => {
+  console.log({ tokens, configuredTokens })
+
   let errorMessage = null
   let errorType = null
   let errorItemId = null
@@ -43,13 +45,14 @@ export const validateTokens = (
     errorType = 'scriptHash'
   }
   tokens.forEach(token => {
-    const dupe = configuredTokens.find(
+    const duplicate = configuredTokens.find(
       configuredToken => configuredToken.scriptHash === token.scriptHash
     )
-    if (dupe) {
-      if (dupe.symbol) {
+    if (duplicate) {
+      console.warn('Attempted to add duplicate hash', { duplicate })
+      if (duplicate.symbol) {
         errorMessage = `Script hash for ${
-          dupe.symbol
+          duplicate.symbol
         } already configured in Neon - cannot add duplicate`
       } else {
         errorMessage =

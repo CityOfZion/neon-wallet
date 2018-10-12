@@ -39,15 +39,19 @@
       "app/dist/style.css"
     ],
     "dmg": {
-      "background": "./app/assets/images/neon-gradient.png",
+      "background": "./app/assets/images/background.tiff",
+      "window": {
+        "width": 576,
+        "height": 382.5
+      },
       "contents": [
         {
-          "x": 180,
-          "y": 170
+          "x": 168,
+          "y": 200
         },
         {
-          "x": 390,
-          "y": 170,
+          "x": 408,
+          "y": 200,
           "type": "link",
           "path": "/Applications"
         }

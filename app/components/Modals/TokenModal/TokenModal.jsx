@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import { reject, noop, isEqual } from 'lodash-es'
+import { reject, noop, isEqual, cloneDeep } from 'lodash-es'
 
 import { getNewTokenItem, validateTokens } from './utils'
 
@@ -56,8 +56,9 @@ class TokenModal extends Component<Props, State> {
   }
 
   addToken = () => {
+    const { networkOption } = this.state
     this.setState(state => ({
-      tokens: [...state.tokens, getNewTokenItem(this.props.networkId)]
+      tokens: [...state.tokens, getNewTokenItem(networkOption.id)]
     }))
   }
 
@@ -69,8 +70,11 @@ class TokenModal extends Component<Props, State> {
       onSave
     } = this.props
     const { tokens } = this.state
+
+    const newlyAddedTokens = tokens.filter(token => token.isNotValidated)
+
     const { errorMessage, errorType, errorItemId } = validateTokens(
-      tokens,
+      newlyAddedTokens,
       this.props.tokens
     )
 
@@ -81,18 +85,29 @@ class TokenModal extends Component<Props, State> {
         errorType
       })
     } else {
-      setUserGeneratedTokens(tokens)
+      const validatedTokens = tokens.map(token => {
+        if (token.isNotValidated) {
+          const validatedToken = cloneDeep(token)
+          delete validatedToken.isNotValidated
+          return validatedToken
+        }
+        return token
+      })
+      setUserGeneratedTokens([...validatedTokens])
       onSave()
       hideModal()
     }
   }
 
   updateToken = (id: string, newValue: TokenItemType) => {
+    const clonedNewValue = cloneDeep(newValue)
+
     const { tokens } = this.state
     const updatedTokens = [...tokens]
     const tokenIndex = updatedTokens.findIndex(token => token.id === id)
-    updatedTokens[tokenIndex] = newValue
 
+    clonedNewValue.isNotValidated = true
+    updatedTokens[tokenIndex] = clonedNewValue
     this.setState({
       tokens: updatedTokens,
       errorItemId: null,
@@ -100,8 +115,8 @@ class TokenModal extends Component<Props, State> {
     })
   }
 
-  // TODO: refactor this logic
-  shouldDisableSaveButton = () => false
+  shouldDisableSaveButton = () =>
+    this.state.tokens.filter(token => !token.scriptHash).length
 
   render() {
     const { hideModal } = this.props
