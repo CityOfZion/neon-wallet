@@ -7,45 +7,43 @@ import { getNetworks } from '../../../../core/networks'
 import styles from './NetworkSwitch.scss'
 
 type Props = {
-  networkId: string,
   onChange: Function,
+  handleControlledChange: Function,
   className: string,
-  value: string,
   disabled: boolean,
   networks: Array<NetworkItemType>,
   transparent: boolean,
   shouldSwitchNetworks: boolean,
-  fontSize: number
+  fontSize: number,
+  value: NetworkItemType
 }
 
-type State = {
-  option: NetworkItemType
-}
+// type State = {
+//   option: NetworkItemType
+// }
 
-export default class NetworkSwitch extends Component<Props, State> {
+export default class NetworkSwitch extends Component<Props> {
   static defaultProps = {
     networks: getNetworks(),
     shouldSwitchNetworks: true
   }
 
-  state = {
-    option:
-      this.props.networks.find(
-        network => network.id === this.props.networkId
-      ) || this.props.networks[0]
-  }
+  // state = {
+  //   option:
+  //     this.props.networks.find(
+  //       network => network.id === this.props.networkId
+  //     ) || this.props.networks[0]
+  // }
 
   render() {
     const {
       networks,
       className,
-      value,
       disabled,
       transparent,
-      fontSize
+      fontSize,
+      value
     } = this.props
-
-    const { option } = this.state
 
     return (
       <div id="network" className={classNames(styles.networkSwitch, className)}>
@@ -54,7 +52,7 @@ export default class NetworkSwitch extends Component<Props, State> {
           transparent={transparent}
           hideHighlight
           disabled={disabled}
-          value={option}
+          value={value}
           onChange={this.handleChange}
           options={networks}
           isSearchable={false}
@@ -67,6 +65,7 @@ export default class NetworkSwitch extends Component<Props, State> {
     if (this.props.shouldSwitchNetworks) {
       return this.props.onChange(option.id)
     }
-    return this.setState({ option })
+    this.props.handleControlledChange(option)
+    // return this.setState({ option })
   }
 }

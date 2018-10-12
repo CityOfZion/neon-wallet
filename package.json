@@ -1,6 +1,5 @@
 {
   "name": "Neon",
-  "productName":"NEON Wallet",
   "version": "0.2.8",
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",

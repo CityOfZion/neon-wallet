@@ -13,6 +13,7 @@ import NetworkSwitch from '../../../containers/App/Sidebar/NetworkSwitch'
 import AddIcon from '../../../assets/icons/add.svg'
 import styles from './TokenModal.scss'
 import LogoWithStrikethrough from '../../LogoWithStrikethrough'
+import { getNetworks } from '../../../core/networks'
 
 type Props = {
   hideModal: () => any,
@@ -28,7 +29,8 @@ type InputErrorType = 'scriptHash'
 type State = {
   tokens: Array<TokenItemType>,
   errorItemId: ?number,
-  errorType: ?InputErrorType
+  errorType: ?InputErrorType,
+  networkOption: NetworkItemType
 }
 
 class TokenModal extends Component<Props, State> {
@@ -39,7 +41,10 @@ class TokenModal extends Component<Props, State> {
   state = {
     tokens: this.props.tokens,
     errorItemId: null,
-    errorType: null
+    errorType: null,
+    networkOption:
+      getNetworks().find(network => network.id === this.props.networkId) ||
+      getNetworks()[0]
   }
 
   deleteToken = (id: string) => {
@@ -64,7 +69,10 @@ class TokenModal extends Component<Props, State> {
       onSave
     } = this.props
     const { tokens } = this.state
-    const { errorMessage, errorType, errorItemId } = validateTokens(tokens)
+    const { errorMessage, errorType, errorItemId } = validateTokens(
+      tokens,
+      this.props.tokens
+    )
 
     if (errorMessage) {
       showErrorNotification({ message: errorMessage })
@@ -92,28 +100,14 @@ class TokenModal extends Component<Props, State> {
     })
   }
 
-  shouldDisableSaveButton = () => {
-    const { tokens } = this.state
-
-    const invalidUserGeneratedTokens = tokens.filter(
-      (token: TokenItemType) =>
-        token.isUserGenerated && !token.scriptHash.length
-    )
-
-    if (
-      isEqual(tokens, this.props.tokens) ||
-      invalidUserGeneratedTokens.length ||
-      tokens.length === this.props.tokens.length
-    ) {
-      return true
-    }
-
-    return false
-  }
+  // TODO: refactor this logic
+  shouldDisableSaveButton = () => false
 
   render() {
-    const { hideModal, networkId } = this.props
-    const { tokens, errorItemId, errorType } = this.state
+    const { hideModal } = this.props
+    const { tokens, errorItemId, errorType, networkOption } = this.state
+
+    const networkId = networkOption.id
 
     const customTokenListLength = tokens.filter(
       token => token.networkId === networkId && token.isUserGenerated
@@ -140,7 +134,13 @@ class TokenModal extends Component<Props, State> {
               Add a new token
             </Button>
             <div className={styles.switchNetworkContainer}>
-              <NetworkSwitch shouldSwitchNetworks={false} />
+              <NetworkSwitch
+                handleControlledChange={option =>
+                  this.setState({ networkOption: option })
+                }
+                value={this.state.networkOption}
+                shouldSwitchNetworks={false}
+              />
             </div>
           </div>
           <form
@@ -156,7 +156,8 @@ class TokenModal extends Component<Props, State> {
                 tokens
                   .filter(
                     token =>
-                      token.networkId === networkId && token.isUserGenerated
+                      token.networkId === this.state.networkOption.id &&
+                      token.isUserGenerated
                   )
                   .map((token: TokenItemType) => (
                     <Row

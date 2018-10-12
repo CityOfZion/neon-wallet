@@ -28,21 +28,26 @@ const DEFAULT_SETTINGS: () => Promise<Settings> = async () => ({
   theme: DEFAULT_THEME,
   blockExplorer: EXPLORERS.NEO_SCAN,
   tokens: await getDefaultTokens(),
-  version: pack
+  version: pack.version
 })
 
 const getSettings = async (): Promise<Settings> => {
   const defaults = await DEFAULT_SETTINGS()
+
   const settings = await getStorage(STORAGE_KEY)
+
   const tokens = uniqBy(
     [
       ...defaults.tokens,
       ...(settings.tokens
-        ? settings.tokens.filter(ensureHex).filter(validateHashLength)
+        ? settings.tokens
+            .filter(token => ensureHex(token.scriptHash))
+            .filter(token => validateHashLength(token.scriptHash))
         : [])
     ],
     token => [token.networkId, token.scriptHash].join('-')
   )
+
   return { ...defaults, ...settings, tokens }
 }
 

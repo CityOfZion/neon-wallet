@@ -48,6 +48,17 @@ export default compose(
   withNetworkData(),
   withCurrencyData('currency'),
   withFilteredTokensData(),
+  withInitialCall(dashboardActions),
   withReset(accountActions, ['networkId']),
   withActions(accountActions, mapAccountActionsToProps)
 )(HeaderBar)
+
+// // Expose function for polling & reloading account related data.
+// withAuthData(),
+// withNetworkData(),
+// withCurrencyData('currency'),
+// withFilteredTokensData(),
+
+// withReset(accountActions, ['networkId']),
+// withActions(accountActions, mapAccountActionsToProps),
+// withLoadingProp(balancesActions)
