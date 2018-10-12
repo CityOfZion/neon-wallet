@@ -55,6 +55,5 @@ export default class NetworkSwitch extends Component<Props> {
       return this.props.onChange(option.id)
     }
     this.props.handleControlledChange(option)
-    // return this.setState({ option })
   }
 }
