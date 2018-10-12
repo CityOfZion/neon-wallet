@@ -38,6 +38,16 @@
     }
   }
 
+  .addressLink {
+    font-family: Gotham-Medium;
+    font-size: 16px;
+    line-height: 32px;
+    margin: 0;
+    text-align: left;
+    font-weight: 300;
+    cursor: pointer;
+  }
+
   .panelContainer {
     display: flex;
     max-width: 99%;
