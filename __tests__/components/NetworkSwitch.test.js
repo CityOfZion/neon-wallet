@@ -24,7 +24,7 @@ const NETWORKS = [
 
 const setup = () => {
   const props = {
-    networkId: MAIN_NETWORK_ID,
+    value: NETWORKS[0],
     networks: NETWORKS,
     onChange: jest.fn()
   }

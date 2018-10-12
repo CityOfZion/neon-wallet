@@ -2,7 +2,6 @@
 
 exports[`NetworkSwitch renders without crashing 1`] = `
 <NetworkSwitch
-  networkId="1"
   networks={
     Array [
       Object {
@@ -21,6 +20,14 @@ exports[`NetworkSwitch renders without crashing 1`] = `
   }
   onChange={[MockFunction]}
   shouldSwitchNetworks={true}
+  value={
+    Object {
+      "id": "1",
+      "label": "MainNet",
+      "network": "MainNet",
+      "value": "1",
+    }
+  }
 >
   <div
     className="networkSwitch"
