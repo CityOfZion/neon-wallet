@@ -52,13 +52,3 @@ export default compose(
   withReset(accountActions, ['networkId']),
   withActions(accountActions, mapAccountActionsToProps)
 )(HeaderBar)
-
-// // Expose function for polling & reloading account related data.
-// withAuthData(),
-// withNetworkData(),
-// withCurrencyData('currency'),
-// withFilteredTokensData(),
-
-// withReset(accountActions, ['networkId']),
-// withActions(accountActions, mapAccountActionsToProps),
-// withLoadingProp(balancesActions)
