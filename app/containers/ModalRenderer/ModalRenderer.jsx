@@ -8,6 +8,7 @@ import TokenModal from '../../components/Modals/TokenModal'
 import TokenSaleModal from '../../components/Modals/TokenSaleModal'
 import AddContactModal from '../../components/Modals/AddContactModal'
 import ReceiveModal from '../../components/Modals/ReceiveModal'
+import SendModal from '../../components/Modals/SendModal'
 
 import { MODAL_TYPES } from '../../core/constants'
 
@@ -27,7 +28,8 @@ const MODAL_COMPONENTS = {
   [TOKEN]: TokenModal,
   [ICO]: TokenSaleModal,
   [ADD_CONTACT]: AddContactModal,
-  [RECEIVE]: ReceiveModal
+  [RECEIVE]: ReceiveModal,
+  [SEND]: SendModal
 }
 
 type Props = {

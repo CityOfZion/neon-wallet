@@ -2,6 +2,7 @@
 
 exports[`ConfirmModal should render without crashing 1`] = `
 <BaseModal
+  backButtonAction={null}
   height="450px"
   hideModal={[MockFunction]}
   shouldCloseWithEscapeKey={true}

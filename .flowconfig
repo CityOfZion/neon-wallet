@@ -19,3 +19,4 @@ module.name_mapper.extension='scss' -> 'empty/object'
 module.file_ext=.js
 module.file_ext=.jsx
 module.file_ext=.json
+module.name_mapper='^assets' ->'<PROJECT_ROOT>/app/assets'
