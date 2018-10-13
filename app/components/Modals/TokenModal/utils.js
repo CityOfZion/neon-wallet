@@ -16,8 +16,6 @@ export const validateTokens = (
   tokens: Array<TokenItemType>,
   configuredTokens: Array<TokenItemType>
 ) => {
-  console.log({ tokens, configuredTokens })
-
   let errorMessage = null
   let errorType = null
   let errorItemId = null

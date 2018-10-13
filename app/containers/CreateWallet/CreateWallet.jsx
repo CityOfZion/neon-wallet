@@ -57,7 +57,6 @@ export default class CreateWallet extends React.Component<Props, State> {
   }
 
   render = () => {
-    console.log(this.props)
     const { passphrase, passphrase2, wif, walletName } = this.state
     const { option, authenticated } = this.props
     const conditionalPanelProps = {}
