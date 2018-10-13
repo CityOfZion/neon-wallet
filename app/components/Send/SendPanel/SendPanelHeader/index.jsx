@@ -12,15 +12,18 @@ import styles from '../SendPanel.scss'
 
 type Props = {
   sendRowDetails: Array<*>,
-  addRow: () => any,
+  addRow: (row: Object) => any,
   resetViews: () => any,
   showConfirmSend: boolean,
   sendSuccess: boolean,
   sendError: boolean,
   noSendableAssets: boolean,
-  disabled: boolean,
+  disableAddRecipient: boolean,
+  disableEnterQRCode: boolean,
   hasNetworkFees: boolean,
-  maxNumberOfRecipients: number
+  maxNumberOfRecipients: number,
+  showSendModal: (props: Object) => any,
+  pushQRCodeData: (data: Object) => any
 }
 
 const SendPanelHeader = ({
@@ -31,9 +34,12 @@ const SendPanelHeader = ({
   sendError,
   sendSuccess,
   noSendableAssets,
-  disabled,
+  disableAddRecipient,
+  disableEnterQRCode,
   hasNetworkFees = false,
-  maxNumberOfRecipients
+  maxNumberOfRecipients,
+  showSendModal,
+  pushQRCodeData
 }: Props) => {
   const numberOfItems = sendRowDetails.length
 
@@ -41,26 +47,20 @@ const SendPanelHeader = ({
   let headerSubtitle = `${numberOfItems} of ${maxNumberOfRecipients} Recipients`
   let buttons = (
     <div className={styles.sendPanelHeaderButtons}>
-      <Tooltip
-        className={styles.disabledFeature}
-        title="Coming Soon"
-        position="left"
+      <button
+        type="button"
+        className={styles.enterQrHeaderButton}
+        onClick={() => showSendModal({ pushQRCodeData })}
+        disabled={disableEnterQRCode}
       >
-        <button
-          type="button"
-          disabled
-          className={styles.enterQrHeaderButton}
-          onClick={addRow}
-        >
-          <GridIcon className={styles.sendPanelHeaderButtonIcon} /> Enter QR
-          Code
-        </button>
-      </Tooltip>
+        <GridIcon className={styles.sendPanelHeaderButtonIcon} /> Enter QR Code
+      </button>
+
       <button
         type="button"
         className={styles.sendPanelHeaderButton}
         onClick={addRow}
-        disabled={disabled}
+        disabled={disableAddRecipient}
       >
         <AddIcon className={styles.sendPanelHeaderButtonIcon} /> Add Recipient
       </button>

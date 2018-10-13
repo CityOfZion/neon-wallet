@@ -1,0 +1,46 @@
+@import '../../../styles/variables';
+
+.contentContainer {
+  padding: 0 125px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+  margin-top: 30px;
+
+  .icon {
+    width: 36px;
+    height: 36px;
+    margin-right: 24px;
+    path {
+      fill: $neon-green;
+    }
+  }
+
+  .title {
+    font-size: 36px;
+  }
+}
+
+.divider {
+  border-bottom: $black solid 1px;
+  margin-bottom: 20px;
+}
+
+.section {
+  margin-bottom: 16px;
+
+  .sectionTitle {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .sectionContent {
+    line-height: 24px;
+    padding: 16px 0 16px 0;
+  }
+}
+

@@ -29,7 +29,8 @@ type Props = {
   currencyCode: string,
   address: string,
   shouldRenderHeaderBar: boolean,
-  location: Object
+  location: Object,
+  showSendModal: (props: Object) => any
 }
 
 type State = {
@@ -77,17 +78,32 @@ export default class Send extends React.Component<Props, State> {
     }
   }
 
-  generateRow = () => {
+  pushQRCodeData = (data: Object) => {
+    const { sendRowDetails } = this.state
+    const { asset, address, amount } = data
+    const firstRowEmpty =
+      sendRowDetails.length === 1 && !parseInt(sendRowDetails[0].amount, 10)
+
+    if (firstRowEmpty) {
+      if (asset) this.updateRowField(0, 'asset', asset)
+      if (address) this.updateRowField(0, 'address', address)
+      if (amount) this.updateRowField(0, 'amount', amount)
+    } else {
+      this.addRow(data)
+    }
+  }
+
+  generateRow = (row: Object = {}) => {
     const { sendableAssets } = this.props
     const sendableAssetNames = Object.keys(sendableAssets)
     const firstSendableAssetName = sendableAssetNames[0]
 
     if (sendableAssetNames.length > 0) {
       return {
-        asset: firstSendableAssetName,
-        amount: 0,
-        address: '',
-        max: this.calculateMaxValue(firstSendableAssetName),
+        asset: row.asset || firstSendableAssetName,
+        amount: row.amount || 0,
+        address: row.address || '',
+        max: this.calculateMaxValue(row.asset || firstSendableAssetName),
         id: uniqueId(),
         errors: {}
       }
@@ -148,12 +164,12 @@ export default class Send extends React.Component<Props, State> {
     })
   }
 
-  addRow = () => {
+  addRow = (row: Object) => {
     this.setState((prevState: Object) => {
       const newState = [...prevState.sendRowDetails]
 
       if (newState.length < MAX_NUMBER_OF_RECIPIENTS) {
-        newState.push(this.generateRow())
+        newState.push(this.generateRow(row))
 
         return { sendRowDetails: newState }
       }
@@ -370,7 +386,8 @@ export default class Send extends React.Component<Props, State> {
       contacts,
       currencyCode,
       shouldRenderHeaderBar,
-      address
+      address,
+      showSendModal
     } = this.props
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 
@@ -408,6 +425,8 @@ export default class Send extends React.Component<Props, State> {
           handleEditRecipientsClick={this.handleEditRecipientsClick}
           handleSend={this.handleSend}
           resetViews={this.resetViews}
+          showSendModal={showSendModal}
+          pushQRCodeData={this.pushQRCodeData}
         />
       </section>
     )

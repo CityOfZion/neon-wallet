@@ -2,14 +2,16 @@
 import React from 'react'
 import classNames from 'classnames'
 import ReactModal from 'react-modal'
-import Close from 'react-icons/lib/md/close'
 
+import Close from '../../../assets/icons/close.svg'
+import Arrow from '../../../assets/icons/arrow.svg'
 import Logo from '../../../assets/images/grey-logo.png'
 
 import styles from './BaseModal.scss'
 
 type Props = {
   children: React$Node,
+  backButtonAction: Function,
   hideModal: Function,
   width?: string,
   height?: string,
@@ -24,6 +26,7 @@ type Props = {
 }
 
 const BaseModal = ({
+  backButtonAction,
   hideModal,
   children,
   width,
@@ -60,6 +63,17 @@ const BaseModal = ({
     onAfterOpen={onAfterOpen}
   >
     <div className={styles.modalHeader}>
+      {backButtonAction && (
+        <button
+          type="button"
+          className={styles.modalHeaderBackButton}
+          onClick={() => {
+            backButtonAction()
+          }}
+        >
+          <Arrow />
+        </button>
+      )}
       <div className={styles.modalHeaderTitle}>
         <img src={Logo} alt="grey-neon-logo" />
       </div>
@@ -80,6 +94,7 @@ const BaseModal = ({
 )
 
 BaseModal.defaultProps = {
+  backButtonAction: null,
   width: '450px',
   height: '450px',
   style: {

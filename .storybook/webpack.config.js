@@ -24,6 +24,7 @@ module.exports = storybookBaseConfig => {
     ...storybookBaseConfig.resolve,
     extensions: ['.js', '.jsx'],
     alias: {
+      assets: path.resolve(__dirname, '../app/assets'),
       styles: path.resolve(__dirname, '../app/styles'),
       components: path.resolve(__dirname, '../app/components')
     }
