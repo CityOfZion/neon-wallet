@@ -4,9 +4,6 @@ export const ensureHex = (token: string): boolean => {
   try {
     return hexRegex.test(token)
   } catch (err) {
-    console.warn('An invalid script hash was manually entered in Settings!', {
-      scriptHash: token
-    })
     return false
   }
 }

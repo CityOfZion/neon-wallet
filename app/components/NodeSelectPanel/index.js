@@ -6,13 +6,15 @@ import {
   withActions,
   alreadyLoadedStrategy,
   progressValues,
-  withProgressComponents
+  withProgressComponents,
+  withReset
 } from 'spunky'
 
 import withLoadingProp from '../../hocs/withLoadingProp'
 
 import NodeSelectPanel from './NodeSelectPanel'
 import nodeNetworkActions from '../../actions/nodeNetworkActions'
+import accountActions from '../../actions/accountActions'
 import nodeStorageActions from '../../actions/nodeStorageActions'
 import Loading from '../../containers/App/Loading'
 
@@ -80,5 +82,6 @@ export default compose(
   ),
   withData(nodeNetworkActions, mapNodesDataToProps),
   withData(nodeStorageActions, mapSelectedNodeDataToProps),
+  withReset(accountActions, ['selectedNode']),
   withLoadingProp(nodeNetworkActions)
 )(NodeSelectPanel)

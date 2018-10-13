@@ -86,7 +86,7 @@ export default class SendModal extends React.Component<Props, State> {
   render() {
     return (
       <BaseModal
-        style={{ content: { width: '775px', height: '830px' } }}
+        style={{ content: { width: '775px', height: '100%' } }}
         backButtonAction={this.isStepTwo() ? this.gotoPreviousStep : null}
         hideModal={this.props.hideModal}
       >

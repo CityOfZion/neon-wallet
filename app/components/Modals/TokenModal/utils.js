@@ -12,7 +12,10 @@ export const getNewTokenItem = (networkId: string) => ({
   isUserGenerated: true
 })
 
-export const validateTokens = (tokens: Array<TokenItemType>) => {
+export const validateTokens = (
+  tokens: Array<TokenItemType>,
+  configuredTokens: Array<TokenItemType>
+) => {
   let errorMessage = null
   let errorType = null
   let errorItemId = null
@@ -32,13 +35,30 @@ export const validateTokens = (tokens: Array<TokenItemType>) => {
 
   const invalidTokens = tokens
     .map(({ scriptHash }) => scriptHash)
-    .filter(ensureHex)
-    .filter(validateHashLength)
+    .filter(hash => !ensureHex(hash))
+    .filter(hash => !validateHashLength(hash))
 
-  if (invalidTokens) {
+  if (invalidTokens.length) {
     errorMessage = 'Invalid script hash detected.'
     errorType = 'scriptHash'
   }
+  tokens.forEach(token => {
+    const duplicate = configuredTokens.find(
+      configuredToken => configuredToken.scriptHash === token.scriptHash
+    )
+    if (duplicate) {
+      console.warn('Attempted to add duplicate hash', { duplicate })
+      if (duplicate.symbol) {
+        errorMessage = `Script hash for ${
+          duplicate.symbol
+        } already configured in Neon - cannot add duplicate`
+      } else {
+        errorMessage =
+          'Script hash  already configured in Neon - cannot add duplicate'
+      }
+      errorType = 'scriptHash'
+    }
+  })
 
   return {
     errorMessage,

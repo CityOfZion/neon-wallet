@@ -8,8 +8,9 @@ import storage from 'electron-json-storage'
 import DialogueBox from '../../DialogueBox'
 import WarningIcon from '../../../assets/icons/warning.svg'
 import CopyIcon from '../../../assets/icons/copy.svg'
-import Button from '../../Button'
+import ConfirmIcon from '../../../assets/icons/confirm.svg'
 
+import Button from '../../Button'
 import styles from '../ReceivePanel/styles.scss'
 
 type Props = {
@@ -17,11 +18,15 @@ type Props = {
 }
 
 type State = {
-  tabIndex: number
+  copied: boolean
 }
 
 export default class ReceivePanel extends React.Component<Props, State> {
   publicCanvas: ?HTMLCanvasElement
+
+  state = {
+    copied: false
+  }
 
   componentDidMount() {
     const { address } = this.props
@@ -58,7 +63,9 @@ export default class ReceivePanel extends React.Component<Props, State> {
         <Button
           primary
           className={styles.submitButton}
-          renderIcon={() => <CopyIcon />}
+          renderIcon={() =>
+            this.state.copied ? <ConfirmIcon /> : <CopyIcon />
+          }
           type="submit"
           onClick={() =>
             this.handleSaveCanvasToLocalStorageAndCopyToClipboard()
@@ -70,7 +77,15 @@ export default class ReceivePanel extends React.Component<Props, State> {
     )
   }
 
+  handleCopyIcon = () => {
+    this.setState({ copied: true })
+    setTimeout(() => {
+      this.setState({ copied: false })
+    }, 1000)
+  }
+
   handleSaveCanvasToLocalStorageAndCopyToClipboard = async () => {
+    this.handleCopyIcon()
     function writeFile(fileName, data, type) {
       return new Promise((resolve, reject) => {
         fs.writeFile(fileName, data, type, err => {

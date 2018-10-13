@@ -7,6 +7,10 @@
   width: 680px;
   min-height: 100vh;
 
+  form {
+    max-height: 600px;
+  }
+
   .childrenContainer {
     display: flex;
     flex-direction: column;
@@ -16,13 +20,17 @@
   }
 
   .header {
-    font-size: 30px;
-    font-weight: 100;
     margin-top: 50px;
-    color: #5c677f;
-    line-height: 32px;
     display: flex;
     align-items: center;
+    font-weight: 100;
+    font-size: 30px;
+    line-height: 32px;
+    font-family: Gotham-Light;
+    font-size: 30px;
+    color: #394152;
+    text-align: center;
+    line-height: 32px;
 
     .headerIcon {
       margin-right: 10px;

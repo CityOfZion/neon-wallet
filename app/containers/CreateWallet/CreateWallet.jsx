@@ -27,7 +27,8 @@ type State = {
   passphrase: string,
   passphrase2: string,
   wif: string,
-  walletName: string
+  walletName: string,
+  submitButtonDisabled: boolean
 }
 
 export default class CreateWallet extends React.Component<Props, State> {
@@ -35,10 +36,12 @@ export default class CreateWallet extends React.Component<Props, State> {
     passphrase: '',
     passphrase2: '',
     wif: '',
-    walletName: ''
+    walletName: '',
+    submitButtonDisabled: false
   }
 
   createWalletAccount = (e: SyntheticMouseEvent<*>) => {
+    this.setState({ submitButtonDisabled: true })
     e.preventDefault()
     const { history, option } = this.props
     const { passphrase, passphrase2, wif, walletName } = this.state
@@ -139,9 +142,16 @@ export default class CreateWallet extends React.Component<Props, State> {
   }
 
   isDisabled = () => {
-    const { passphrase, passphrase2, wif, walletName } = this.state
+    const {
+      passphrase,
+      passphrase2,
+      wif,
+      walletName,
+      submitButtonDisabled
+    } = this.state
     const { option } = this.props
     const validPassphrase = passphrase === passphrase2 && passphrase.length >= 4
+    if (submitButtonDisabled) return true
     if (option === 'CREATE') {
       return !(validPassphrase && !!walletName)
     }

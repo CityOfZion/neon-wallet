@@ -48,6 +48,7 @@ export default compose(
   withNetworkData(),
   withCurrencyData('currency'),
   withFilteredTokensData(),
+  withInitialCall(dashboardActions),
   withReset(accountActions, ['networkId']),
   withActions(accountActions, mapAccountActionsToProps)
 )(HeaderBar)

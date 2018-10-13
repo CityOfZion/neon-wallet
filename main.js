@@ -38,6 +38,7 @@ app.on('ready', () => {
       width: 1280,
       minHeight: 850,
       minWidth: 1200,
+      titleBarStyle: 'hidden',
       icon: path.join(__dirname, 'icons/png/64x64.png'),
       webPreferences: {
         allowRunningInsecureContent: false,

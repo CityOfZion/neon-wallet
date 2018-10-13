@@ -20,10 +20,13 @@ async function getBalances({ net, address, tokens }: Props) {
   if (isEmpty(endpoint)) {
     endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
   }
+
   // token balances
   const tokenBalances = await api.nep5.getTokenBalances(
     endpoint,
-    tokens.map(token => token.scriptHash),
+    tokens
+      .filter(token => !token.isUserGenerated)
+      .map(token => token.scriptHash),
     address
   )
 
@@ -42,8 +45,39 @@ async function getBalances({ net, address, tokens }: Props) {
     })
     .filter(tokenBalance => !isEmpty(tokenBalance))
 
+  // Handle manually added script hashses here
+  const userGeneratedTokenInfo = []
+  // eslint-disable-next-line
+  for (const token of tokens.filter(token => token.isUserGenerated)) {
+    // eslint-disable-next-line
+    const info = await api.nep5
+      .getToken(endpoint, token.scriptHash, address)
+      .catch(error => {
+        // eslint-disable-next-line
+        console.error(
+          'An error occurrred attempting to fetch custom script hash balance info.',
+          { error }
+        )
+        return Promise.resolve()
+      })
+    if (info) {
+      userGeneratedTokenInfo.push({
+        scriptHash: token.scriptHash,
+        ...info
+      })
+    }
+  }
+  userGeneratedTokenInfo.forEach(token => {
+    parsedTokenBalances.push({
+      [token.scriptHash]: {
+        ...token
+      }
+    })
+  })
+
   // asset balances
   const assetBalances = await api.getBalanceFrom({ net, address }, api.neoscan)
+
   const { assets } = assetBalances.balance
   // The API doesn't always return NEO or GAS keys if, for example, the address only has one asset
   const neoBalance = assets.NEO ? assets.NEO.balance.toString() : '0'

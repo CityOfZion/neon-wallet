@@ -34,13 +34,13 @@
   }
 }
 
-.modalHeaderBackButton{
+.modalHeaderBackButton {
   @extend .modalHeaderButton;
   left: 0;
   top: 0;
 }
 
-.modalHeaderCloseButton{
+.modalHeaderCloseButton {
   @extend .modalHeaderButton;
   right: 0;
   top: 0;
@@ -50,6 +50,5 @@
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  padding: 24px;
   overflow-y: auto;
 }

@@ -165,13 +165,14 @@ export default class Transaction extends React.Component<Props> {
             <div className={styles.txAmountContainer}>{amount}</div>
             <div className={styles.txToContainer}>
               {this.findContact(from)}
-              {this.findContact(from) === from && (
-                <CopyToClipboard
-                  className={styles.copy}
-                  text={from}
-                  tooltip="Copy Public Address"
-                />
-              )}
+              {this.findContact(from) === from &&
+                from !== 'MINT TOKENS' && (
+                  <CopyToClipboard
+                    className={styles.copy}
+                    text={from}
+                    tooltip="Copy Public Address"
+                  />
+                )}
             </div>
             {this.findContact(from) !== from ? (
               <div className={styles.transactionHistoryButton} />

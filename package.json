@@ -39,14 +39,19 @@
       "app/dist/style.css"
     ],
     "dmg": {
+      "background": "./app/assets/images/background.tiff",
+      "window": {
+        "width": 576,
+        "height": 382.5
+      },
       "contents": [
         {
-          "x": 110,
-          "y": 150
+          "x": 168,
+          "y": 200
         },
         {
-          "x": 240,
-          "y": 150,
+          "x": 408,
+          "y": 200,
           "type": "link",
           "path": "/Applications"
         }

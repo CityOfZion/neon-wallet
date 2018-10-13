@@ -12,7 +12,9 @@
 }
 
 .formContainer {
-  margin-bottom: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .editContactInstructions {

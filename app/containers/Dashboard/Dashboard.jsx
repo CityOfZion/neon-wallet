@@ -8,6 +8,7 @@ import AssetBalancesPanel from '../../components/Dashboard/AssetBalancesPanel'
 import TokenBalancesPanel from '../../components/Dashboard/TokenBalancesPanel'
 import PriceHistoryPanel from '../../components/Dashboard/PriceHistoryPanel'
 
+import Address from '../../components/Blockchain/Address'
 import HeaderBar from '../../components/HeaderBar'
 import PortfolioPanel from '../../components/Dashboard/PortfolioPanel'
 import Wallet from '../../assets/icons/wallet.svg'
@@ -18,7 +19,8 @@ import styles from './Dashboard.scss'
 
 type Props = {
   loadWalletData: Function,
-  loading: boolean
+  loading: boolean,
+  address: string
 }
 
 const REFRESH_INTERVAL_MS = 30000
@@ -42,10 +44,15 @@ export default class Dashboard extends Component<Props> {
   }
 
   render() {
-    const { loadWalletData, loading } = this.props
+    const { loadWalletData, loading, address } = this.props
     return (
       <div id="dashboard" className={styles.dashboard}>
         <HeaderBar
+          renderLeftContent={() => (
+            <Address address={address} asWrapper>
+              <div className={styles.addressLink}>{address}</div>
+            </Address>
+          )}
           renderRightContent={() => (
             <div className={classNames(styles.dashboardHeaderButonContainer)}>
               <NavLink id="wallet-manager" exact to={ROUTES.WALLET_MANAGER}>
