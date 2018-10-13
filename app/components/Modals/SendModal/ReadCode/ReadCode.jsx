@@ -69,11 +69,12 @@ export default class ReadCode extends React.Component<Props, State> {
               <div className="frameLineBottomRight" />
               {this.getScanner()}
             </div>
-
-            <Button primary onClick={this.toggleScanner}>
-              {scannerActive ? 'Cancel' : 'Capture'}
-            </Button>
           </div>
+        </div>
+        <div className={styles.scanButtonContainer}>
+          <Button primary onClick={this.toggleScanner}>
+            {scannerActive ? 'Cancel' : 'Capture'}
+          </Button>
         </div>
       </div>
     )

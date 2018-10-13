@@ -49,10 +49,11 @@ export default class ConfirmDetails extends React.Component<Props> {
             </div>
           </div>
         </div>
-
-        <Button primary onClick={this.props.confirmAndClose}>
-          Confirm Details
-        </Button>
+        <div className={styles.scanButtonContainer}>
+          <Button primary onClick={this.props.confirmAndClose}>
+            Confirm Details
+          </Button>
+        </div>
       </div>
     )
   }
