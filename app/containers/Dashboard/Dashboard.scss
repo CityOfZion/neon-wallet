@@ -8,6 +8,24 @@
   height: 100%;
   flex-direction: column;
 
+  .headerAddressContainer {
+    display: flex;
+    align-items: center;
+
+    label {
+      margin-right: 5px;
+      font-family: Gotham-Medium;
+    }
+
+    .addressLink {
+      font-size: 16px;
+      line-height: 32px;
+      margin: 0;
+      text-align: left;
+      cursor: pointer;
+    }
+  }
+
   .dashboardNetworkSwitch {
     position: absolute;
     left: 90px;
@@ -36,16 +54,6 @@
       margin-bottom: 24px;
       margin-bottom: 24px;
     }
-  }
-
-  .addressLink {
-    font-family: Gotham-Medium;
-    font-size: 16px;
-    line-height: 32px;
-    margin: 0;
-    text-align: left;
-    font-weight: 300;
-    cursor: pointer;
   }
 
   .panelContainer {

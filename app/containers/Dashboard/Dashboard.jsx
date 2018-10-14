@@ -49,9 +49,12 @@ export default class Dashboard extends Component<Props> {
       <div id="dashboard" className={styles.dashboard}>
         <HeaderBar
           renderLeftContent={() => (
-            <Address address={address} asWrapper>
-              <div className={styles.addressLink}>{address}</div>
-            </Address>
+            <div className={styles.headerAddressContainer}>
+              <label>My Public Address:</label>
+              <Address address={address} asWrapper>
+                <div className={styles.addressLink}>{address}</div>
+              </Address>
+            </div>
           )}
           renderRightContent={() => (
             <div className={classNames(styles.dashboardHeaderButonContainer)}>
