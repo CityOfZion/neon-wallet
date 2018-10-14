@@ -9,7 +9,7 @@ type Props = {
   currency?: string
 }
 
-function mapPrices(pricingData: Array<Object>, currency) {
+function mapPrices(pricingData: Array<any>, currency) {
   const mapping = {}
   const upperCasedCurrency = currency.toUpperCase()
   pricingData.forEach((price: { currency: { upperCasedCurrency: Object } }) => {
@@ -31,14 +31,13 @@ async function getPrices(currency) {
     .concat([ASSETS.NEO, ASSETS.GAS])
     .join(',')
   const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${joinedTokens}&tsyms=${currency.toUpperCase()}`
-  // $FlowFixMe
+
   const priceDataResponse = await axios
     .get(url)
     .catch(e => Promise.reject(new Error(e)))
-  // $FlowFixMe
-  if (priceDataResponse.error) throw new Error(priceDataResponse.error)
+
   const pricingArray = Object.values(priceDataResponse.data.RAW)
-  // $FlowFixMe
+
   return mapPrices(pricingArray, currency)
 }
 
