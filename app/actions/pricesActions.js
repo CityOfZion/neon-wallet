@@ -3,7 +3,7 @@ import axios from 'axios'
 import { createActions } from 'spunky'
 
 import { getDefaultTokens } from '../core/nep5'
-import { DEFAULT_CURRENCY_CODE } from '../core/constants'
+import { DEFAULT_CURRENCY_CODE, ASSETS } from '../core/constants'
 
 type Props = {
   currency?: string
@@ -28,7 +28,7 @@ async function getPrices(currency) {
   const tokens = await getDefaultTokens()
   const joinedTokens = tokens
     .map(token => token.symbol)
-    .concat(['NEO', 'GAS'])
+    .concat([ASSETS.NEO, ASSETS.GAS])
     .join(',')
   const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${joinedTokens}&tsyms=${currency.toUpperCase()}`
   // $FlowFixMe
