@@ -1,10 +1,12 @@
 // @flow
 import React, { Component } from 'react'
+import { resolveNnsDomain } from '../../../../../util/nns'
 
 import SelectInput from '../../../../Inputs/SelectInput'
 import NumberInput from '../../../../Inputs/NumberInput'
 import TextInput from '../../../../Inputs/TextInput'
 import DisplayInput from '../../../DisplayInput'
+import Loader from '../../../../Loader'
 
 import TrashCanIcon from '../../../../../assets/icons/delete.svg'
 
@@ -26,7 +28,15 @@ type Props = {
   updateRowField: (index: number, field: string, value: any) => any
 }
 
-class SendRecipientListItem extends Component<Props> {
+type State = {
+  nnsError: string,
+  isNnsResolving: boolean,
+}
+
+class SendRecipientListItem extends Component<Props, State> {
+  state = { addressLabel: '', isNnsResolving: false }
+  nnsFetchTimeout = undefined
+
   handleFieldChange = (e: Object) => {
     const {
       index,
@@ -49,6 +59,24 @@ class SendRecipientListItem extends Component<Props> {
     const { name } = e.target
     let { value } = e.target
     if (value > max) value = max
+    name === 'address' && this.setState({ nnsError: '' })
+    if (name === 'address' && value.endsWith('.neo')) {
+      this.setState({ isNnsResolving: true })
+      this.nnsFetchTimeout && clearTimeout(this.nnsFetchTimeout)
+      this.nnsFetchTimeout = setTimeout(() => {
+        resolveNnsDomain(value)
+        .then(address => {
+          clearErrors(index, name)
+          this.setState({ isNnsResolving: false })
+          return updateRowField(index, name, address)
+        })
+        .catch(() => this.setState({
+          nnsError: 'NNS domain not found',
+          isNnsResolving: false
+        }))
+      }, 500)
+    }
+
     clearErrors(index, name)
     return updateRowField(index, name, value)
   }
@@ -67,6 +95,7 @@ class SendRecipientListItem extends Component<Props> {
     const { name } = e.target
     const { clearErrors, index } = this.props
     clearErrors(index, name)
+    name === 'address' && this.setState({ nnsError: '' })
   }
 
   createAssetList = (): Array<string> => Object.keys(this.props.sendableAssets)
@@ -84,6 +113,7 @@ class SendRecipientListItem extends Component<Props> {
       showConfirmSend,
       numberOfRecipients
     } = this.props
+    const { nnsError, isNnsResolving } = this.state;
 
     const selectInput = showConfirmSend ? (
       <DisplayInput value={asset} />
@@ -126,7 +156,7 @@ class SendRecipientListItem extends Component<Props> {
         items={this.createContactList()}
         customChangeEvent
         onFocus={this.clearErrorsOnFocus}
-        error={errors.address}
+        error={(errors.address) || nnsError}
       />
     )
 
@@ -146,7 +176,10 @@ class SendRecipientListItem extends Component<Props> {
         <div className={styles.rowNumber}>{`${`0${index + 1}`.slice(-2)}`}</div>
         <div className={styles.asset}>{selectInput}</div>
         <div className={styles.amount}>{numberInput}</div>
-        <div className={styles.address}>{addressInput}</div>
+        <div className={styles.address}>
+          {addressInput}
+          {isNnsResolving && <Loader className={styles.loader} />}
+        </div>
         <div className={styles.delete}>
           {numberOfRecipients > 1 && trashCanButton}
         </div>
