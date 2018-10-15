@@ -36,7 +36,7 @@ type State = {
 class SendRecipientListItem extends Component<Props, State> {
   state = { nnsError: '', isNnsResolving: false }
 
-  nnsFetchTimeout = undefined
+  debounceTimer = undefined
 
   handleFieldChange = (e: Object) => {
     const {
@@ -62,8 +62,8 @@ class SendRecipientListItem extends Component<Props, State> {
     if (name === 'address') this.setState({ nnsError: '' })
     if (name === 'address' && value.endsWith('.neo')) {
       this.setState({ isNnsResolving: true })
-      if (this.nnsFetchTimeout) clearTimeout(this.nnsFetchTimeout)
-      this.nnsFetchTimeout = setTimeout(() => {
+      if (this.debounceTimer) clearTimeout(this.debounceTimer)
+      this.debounceTimer = setTimeout(() => {
         resolveNnsDomain(value)
           .then(address => {
             clearErrors(index, name)
