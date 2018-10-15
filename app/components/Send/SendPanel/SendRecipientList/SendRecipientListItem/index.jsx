@@ -30,11 +30,12 @@ type Props = {
 
 type State = {
   nnsError: string,
-  isNnsResolving: boolean,
+  isNnsResolving: boolean
 }
 
 class SendRecipientListItem extends Component<Props, State> {
-  state = { addressLabel: '', isNnsResolving: false }
+  state = { nnsError: '', isNnsResolving: false }
+
   nnsFetchTimeout = undefined
 
   handleFieldChange = (e: Object) => {
@@ -58,25 +59,27 @@ class SendRecipientListItem extends Component<Props, State> {
 
     const { name } = e.target
     let { value } = e.target
-    if (value > max) value = max
-    name === 'address' && this.setState({ nnsError: '' })
+    if (name === 'address') this.setState({ nnsError: '' })
     if (name === 'address' && value.endsWith('.neo')) {
       this.setState({ isNnsResolving: true })
-      this.nnsFetchTimeout && clearTimeout(this.nnsFetchTimeout)
+      if (this.nnsFetchTimeout) clearTimeout(this.nnsFetchTimeout)
       this.nnsFetchTimeout = setTimeout(() => {
         resolveNnsDomain(value)
-        .then(address => {
-          clearErrors(index, name)
-          this.setState({ isNnsResolving: false })
-          return updateRowField(index, name, address)
-        })
-        .catch(() => this.setState({
-          nnsError: 'NNS domain not found',
-          isNnsResolving: false
-        }))
+          .then(address => {
+            clearErrors(index, name)
+            this.setState({ isNnsResolving: false })
+            return updateRowField(index, name, address)
+          })
+          .catch(() =>
+            this.setState({
+              nnsError: 'NNS domain not found',
+              isNnsResolving: false
+            })
+          )
       }, 500)
     }
 
+    if (value > max) value = max
     clearErrors(index, name)
     return updateRowField(index, name, value)
   }
@@ -95,7 +98,7 @@ class SendRecipientListItem extends Component<Props, State> {
     const { name } = e.target
     const { clearErrors, index } = this.props
     clearErrors(index, name)
-    name === 'address' && this.setState({ nnsError: '' })
+    if (name === 'address') this.setState({ nnsError: '' })
   }
 
   createAssetList = (): Array<string> => Object.keys(this.props.sendableAssets)
@@ -113,7 +116,7 @@ class SendRecipientListItem extends Component<Props, State> {
       showConfirmSend,
       numberOfRecipients
     } = this.props
-    const { nnsError, isNnsResolving } = this.state;
+    const { nnsError, isNnsResolving } = this.state
 
     const selectInput = showConfirmSend ? (
       <DisplayInput value={asset} />
@@ -156,7 +159,7 @@ class SendRecipientListItem extends Component<Props, State> {
         items={this.createContactList()}
         customChangeEvent
         onFocus={this.clearErrorsOnFocus}
-        error={(errors.address) || nnsError}
+        error={errors.address || nnsError}
       />
     )
 
