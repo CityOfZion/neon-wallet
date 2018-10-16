@@ -2,68 +2,36 @@
 
 .amountsInfoBox {
   display: flex;
-  justify-content: center;
-  height: 50px;
-  max-width: 320px;
-  min-width: 280px;
-  margin: 10px;
-  padding: 5px 15px;
+  align-items: center;
+  width: 230px;
+  box-sizing: border-box;
+  font-size: 14px;
+  border-right: 1px solid var(--main-background);
+  font-family: Gotham-Book;
+  background-color: #f2f2f2;
 
   &:last-child {
-    margin-right: 0;
+    border-right: 0;
   }
 
-  h3,
-  p {
-    font-weight: normal;
-    margin: 0;
+  .assetName {
+    padding: 0 10px;
   }
 
-  .assetAmountsPrimary {
-    font-family: Gotham-Medium;
-    font-size: 20px;
+  .assetAmount {
+    padding-right: 20px;
+    width: 100px;
   }
+}
 
-  h3 {
-    font-family: Gotham-Light;
-    font-size: 20px;
-  }
+.amountsInSingleRow {
+  height: 70px;
+}
 
-  .assetTitle,
-  .assetAmounts {
-    height: 100%;
-    margin-right: 7px;
-  }
+.amountsInMultipleRows {
+  height: 35px;
+}
 
-  .assetAmounts,
-  .assetValue {
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .assetAmountsPrimary {
-    font-weight: bold;
-  }
-
-  .totalAssetValue {
-    font-family: Gotham-Book;
-    font-size: 20px;
-    margin-top: 1px;
-  }
-
-  .assetAmountsSecondary {
-    color: $medium-grey;
-    font-family: Gotham-Medium;
-    font-size: 14px;
-    margin-top: 5px;
-  }
-
-  .remainingAssetValue {
-    font-family: Gotham-Book;
-    font-size: 14px;
-    margin-top: 5px;
-    color: $medium-grey;
-  }
+.amountsInAltColor {
+  background-color: #d6d6d6;
 }

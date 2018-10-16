@@ -1,43 +1,33 @@
 // @flow
 import React from 'react'
+import classNames from 'classnames'
 
 import styles from './AmountsInfoBox.scss'
 
 type Props = {
   assetName: string,
   totalAmount: string,
-  remainingAmount: number,
   totalBalanceWorth: number,
-  remainingBalanceWorth: number,
-  fiatCurrencySymbol: string
+  fiatCurrencySymbol: string,
+  className: string
 }
 
 const AmountsInfoBox = ({
   assetName,
   totalAmount,
   totalBalanceWorth,
-  remainingBalanceWorth,
-  remainingAmount,
-  fiatCurrencySymbol
+  fiatCurrencySymbol,
+  className
 }: Props) => (
-  <div className={styles.amountsInfoBox}>
-    <div className={styles.assetTitle}>
-      <h3>{assetName}</h3>
-    </div>
-    <div className={styles.assetAmounts}>
-      <p className={styles.assetAmountsPrimary}>{totalAmount}</p>
-      <p className={styles.assetAmountsSecondary}>{remainingAmount}</p>
-    </div>
-    <div className={styles.assetValue}>
-      <p className={styles.totalAssetValue}>
-        {fiatCurrencySymbol}
-        {totalBalanceWorth.toFixed(2)}
-      </p>
-      <p className={styles.remainingAssetValue}>
-        {fiatCurrencySymbol}
-        {remainingBalanceWorth.toFixed(2)}
-      </p>
-    </div>
+  <div className={classNames(styles.amountsInfoBox, className)}>
+    <span className={styles.assetName}>{assetName}</span>
+    <span className={styles.assetAmount}>
+      <strong>{totalAmount}</strong>
+    </span>
+    <span>
+      {fiatCurrencySymbol}
+      {totalBalanceWorth.toFixed(2)}
+    </span>
   </div>
 )
 
