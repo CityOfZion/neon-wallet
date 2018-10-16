@@ -10,35 +10,38 @@ type Props = {
 }
 
 function mapPrices(pricingData: Array<any>, currency) {
-  const mapping = {}
   const upperCasedCurrency = currency.toUpperCase()
-  pricingData.forEach((price: { currency: { upperCasedCurrency: Object } }) => {
-    const priceInSelectedCurrency = price[upperCasedCurrency]
-    if (price && priceInSelectedCurrency) {
-      mapping[priceInSelectedCurrency.FROMSYMBOL] = parseFloat(
-        priceInSelectedCurrency.PRICE
-      )
-    }
-  })
-
-  return mapping
+  return pricingData.reduce(
+    (accum: Object, price: { currency: { upperCasedCurrency: Object } }) => {
+      const priceInSelectedCurrency = price[upperCasedCurrency]
+      if (price && priceInSelectedCurrency) {
+        // eslint-disable-next-line
+        accum[priceInSelectedCurrency.FROMSYMBOL] = parseFloat(
+          priceInSelectedCurrency.PRICE
+        )
+      }
+      return accum
+    },
+    {}
+  )
 }
 
 async function getPrices(currency) {
-  const tokens = await getDefaultTokens()
-  const joinedTokens = tokens
-    .map(token => token.symbol)
-    .concat([ASSETS.NEO, ASSETS.GAS])
-    .join(',')
-  const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${joinedTokens}&tsyms=${currency.toUpperCase()}`
+  try {
+    const tokens = await getDefaultTokens()
+    const joinedTokens = tokens
+      .map(token => token.symbol)
+      .concat([ASSETS.NEO, ASSETS.GAS])
+      .join(',')
+    const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${joinedTokens}&tsyms=${currency.toUpperCase()}`
 
-  const priceDataResponse = await axios
-    .get(url)
-    .catch(e => Promise.reject(new Error(e)))
-
-  const pricingArray = Object.values(priceDataResponse.data.RAW)
-
-  return mapPrices(pricingArray, currency)
+    const priceDataResponse = await axios.get(url)
+    const pricingArray = Object.values(priceDataResponse.data.RAW)
+    return mapPrices(pricingArray, currency)
+  } catch (error) {
+    console.error('An error occurred getting price data', { error })
+    return {}
+  }
 }
 
 export const ID = 'prices'
