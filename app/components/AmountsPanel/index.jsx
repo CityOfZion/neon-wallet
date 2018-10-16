@@ -41,7 +41,7 @@ const AmountsPanel = ({ amountsData, currencyCode }: Props) => {
     amountsData,
     ORDER_BY_FIELD,
     ORDERY_BY_DIRECTION
-  ).slice(amountsData, MAX_RESULTS)
+  ).slice(0, MAX_RESULTS)
 
   const amountsInSingleRow = orderedAmounts.length <= RESULTS_PER_ROW
   const amountToFill = amountsInSingleRow
