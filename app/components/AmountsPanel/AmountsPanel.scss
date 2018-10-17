@@ -39,9 +39,9 @@ h1 {
 }
 
 .amountsPanel {
-  width: 1150px;
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .container,
@@ -49,7 +49,7 @@ h1 {
 .zeroAmount {
   min-height: 70px;
   max-height: 70px;
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 .amountsPanelSingleRow {

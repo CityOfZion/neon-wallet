@@ -3,35 +3,49 @@
 .amountsInfoBox {
   display: flex;
   align-items: center;
-  width: 230px;
+  flex-basis: 20%;
+  padding: 0 12px;
   box-sizing: border-box;
   font-size: 14px;
+  color: #5c677f;
   border-right: 1px solid var(--main-background);
-  font-family: Gotham-Book;
   background-color: #f2f2f2;
-
-  &:last-child {
-    border-right: 0;
-  }
+  justify-content: space-between;
 
   .assetName {
-    padding: 0 10px;
+    padding-right: 15px;
+    font-family: Gotham-Light;
+    font-size: 14px;
+    position: relative;
   }
 
   .assetAmount {
-    padding-right: 20px;
-    width: 100px;
+    font-family: Gotham-Medium;
+  }
+
+  .assetWorth {
+    font-family: Gotham-Book;
   }
 }
 
 .amountsInSingleRow {
   height: 70px;
+  &.amountsInfoBox {
+    &:last-child {
+      border-right: 0;
+    }
+  }
 }
 
 .amountsInMultipleRows {
   height: 35px;
+  &.amountsInfoBox {
+    &:nth-child(5n) {
+      border-right: 0;
+    }
+  }
 }
 
 .amountsInAltColor {
-  background-color: #d6d6d6;
+  background-color: #fff;
 }

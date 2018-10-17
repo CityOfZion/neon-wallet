@@ -21,7 +21,8 @@ import {
   TOKEN_SALE_PURCHASE,
   TOKEN_SALE_CONFIRM,
   TOKEN_SALE_SUCCESS,
-  TOKEN_SALE_FAILURE
+  TOKEN_SALE_FAILURE,
+  PRICE_UNAVAILABLE
 } from '../../core/constants'
 
 import styles from './TokenSale.scss'
@@ -106,6 +107,7 @@ class TokenSale extends Component<Props, State> {
   createAmountsData = () => {
     const { prices, assetBalances } = this.props
     const { amountToPurchaseFor } = this.state
+    // TODO: Move this logic to AmountsPanel / Centralized place
     // $FlowFixMe
     return Object.keys(assetBalances).map((token: string) => {
       const price = prices[token]
@@ -117,8 +119,9 @@ class TokenSale extends Component<Props, State> {
         totalBalance: balance,
         price,
         currentBalance,
-        totalBalanceWorth: multiplyNumber(balance, price),
-        remainingBalanceWorth: multiplyNumber(currentBalance, price)
+        totalBalanceWorth: price
+          ? multiplyNumber(balance, price)
+          : PRICE_UNAVAILABLE
       }
 
       return amountsObject

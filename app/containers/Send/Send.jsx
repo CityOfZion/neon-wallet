@@ -10,6 +10,7 @@ import {
 } from '../../core/math'
 
 import { isBlacklisted } from '../../core/wallet'
+import { PRICE_UNAVAILABLE } from '../../core/constants'
 
 import AmountsPanel from '../../components/AmountsPanel'
 import SendPanel from '../../components/Send/SendPanel'
@@ -111,6 +112,7 @@ export default class Send extends React.Component<Props, State> {
     return {}
   }
 
+  // TODO: Move this logic to AmountsPanel / Centralized place
   createSendAmountsData = () => {
     const { sendableAssets, prices } = this.props
     const { showConfirmSend, sendSuccess, sendRowDetails } = this.state
@@ -129,28 +131,26 @@ export default class Send extends React.Component<Props, State> {
       ): Array<*>)
     }
 
-    return (assets
-      .filter((asset: string) => !!prices[asset])
-      .map((asset: string) => {
-        const { balance } = sendableAssets[asset]
-        const currentBalance = minusNumber(
-          balance,
-          this.calculateRowAmounts(asset)
-        )
-        const price = prices[asset]
+    return (assets.map((asset: string) => {
+      const { balance } = sendableAssets[asset]
+      const currentBalance = minusNumber(
+        balance,
+        this.calculateRowAmounts(asset)
+      )
+      const price = prices[asset]
 
-        const totalBalanceWorth = multiplyNumber(balance, price)
-        const remainingBalanceWorth = multiplyNumber(currentBalance, price)
+      const totalBalanceWorth = price
+        ? multiplyNumber(balance, price)
+        : PRICE_UNAVAILABLE
 
-        return {
-          symbol: asset,
-          totalBalance: balance,
-          price,
-          currentBalance,
-          totalBalanceWorth,
-          remainingBalanceWorth
-        }
-      }): Array<*>)
+      return {
+        symbol: asset,
+        totalBalance: balance,
+        price,
+        currentBalance,
+        totalBalanceWorth
+      }
+    }): Array<*>)
   }
 
   removeRow = (index: number) => {

@@ -1,10 +1,10 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { orderBy, times } from 'lodash-es'
+import { orderBy, times, has } from 'lodash-es'
 
 import AmountsInfoBox from './AmountsInfoBox'
-import { CURRENCIES } from '../../core/constants'
+import { CURRENCIES, PRICE_UNAVAILABLE } from '../../core/constants'
 
 import Nothing from '../../assets/icons/nothing.svg'
 
@@ -15,7 +15,7 @@ type AmountDataItem = {
   symbol: string,
   price: string,
   totalBalance: string,
-  totalBalanceWorth: number
+  totalBalanceWorth: number | typeof PRICE_UNAVAILABLE
 }
 
 type Props = {
@@ -24,12 +24,17 @@ type Props = {
 }
 
 const ORDER_BY_FIELD = 'totalBalanceWorth'
-const ORDERY_BY_DIRECTION = 'asc'
-const MAX_RESULTS = 10
+const ORDERY_BY_DIRECTION = 'desc'
 const RESULTS_PER_ROW = 5
 
+const validateAmountDataItem = (amountDataItem: AmountDataItem) =>
+  has(amountDataItem, 'symbol') &&
+  has(amountDataItem, 'price') &&
+  has(amountDataItem, 'totalBalance') &&
+  has(amountDataItem, 'totalBalanceWorth')
+
 const AmountsPanel = ({ amountsData, currencyCode }: Props) => {
-  if (amountsData.length === 0) {
+  if (!Array.isArray(amountsData) || amountsData.length === 0) {
     return (
       <div className={styles.zeroAmount}>
         <Nothing /> <h1> Nothing to see here! </h1>
@@ -38,15 +43,17 @@ const AmountsPanel = ({ amountsData, currencyCode }: Props) => {
   }
 
   const orderedAmounts = orderBy(
+    /* $FlowFixMe */
     amountsData,
-    ORDER_BY_FIELD,
+    item => (item.price ? item[ORDER_BY_FIELD] : '0'),
     ORDERY_BY_DIRECTION
-  ).slice(0, MAX_RESULTS)
+  )
 
   const amountsInSingleRow = orderedAmounts.length <= RESULTS_PER_ROW
   const amountToFill = amountsInSingleRow
     ? 0
-    : MAX_RESULTS - orderedAmounts.length
+    : Math.ceil(orderedAmounts.length / RESULTS_PER_ROW) * RESULTS_PER_ROW -
+      orderedAmounts.length
   return (
     <div className={styles.container}>
       <section
@@ -55,32 +62,38 @@ const AmountsPanel = ({ amountsData, currencyCode }: Props) => {
           [styles.amountsPanelMultipleRows]: !amountsInSingleRow
         })}
       >
-        {orderedAmounts.map((dataset: AmountDataItem, i: number) => (
-          <AmountsInfoBox
-            key={dataset.symbol}
-            assetName={dataset.symbol}
-            assetPrice={dataset.price}
-            totalAmount={dataset.totalBalance}
-            totalBalanceWorth={dataset.totalBalanceWorth}
-            fiatCurrencySymbol={CURRENCIES[currencyCode].symbol}
-            className={classNames({
-              [amountBoxStyles.amountsInSingleRow]: amountsInSingleRow,
-              [amountBoxStyles.amountsInMultipleRows]: !amountsInSingleRow,
-              [amountBoxStyles.amountsInAltColor]:
-                !amountsInSingleRow && i >= RESULTS_PER_ROW
-            })}
-          />
-        ))}
-        {amountToFill > 0 &&
-          times(amountToFill).map(i => (
-            <div
-              key={`infoBoxFill${i}`}
-              className={classNames(
-                amountBoxStyles.amountsInAltColor,
-                amountBoxStyles.amountsInfoBox
-              )}
-            />
-          ))}
+        {[...orderedAmounts, ...times(amountToFill)].map(
+          (dataset: AmountDataItem, i: number) => {
+            const isAltRow =
+              !amountsInSingleRow &&
+              Math.ceil((i + 1) / RESULTS_PER_ROW) % 2 === 0
+            if (validateAmountDataItem(dataset)) {
+              return (
+                <AmountsInfoBox
+                  key={`${dataset.symbol}${i}`}
+                  assetName={dataset.symbol}
+                  assetPrice={dataset.price}
+                  totalAmount={dataset.totalBalance}
+                  totalBalanceWorth={dataset.totalBalanceWorth}
+                  fiatCurrencySymbol={CURRENCIES[currencyCode].symbol}
+                  className={classNames({
+                    [amountBoxStyles.amountsInSingleRow]: amountsInSingleRow,
+                    [amountBoxStyles.amountsInMultipleRows]: !amountsInSingleRow,
+                    [amountBoxStyles.amountsInAltColor]: isAltRow
+                  })}
+                />
+              )
+            }
+            return (
+              <div
+                key={`infoBoxFill${i}`}
+                className={classNames(amountBoxStyles.amountsInfoBox, {
+                  [amountBoxStyles.amountsInAltColor]: isAltRow
+                })}
+              />
+            )
+          }
+        )}
       </section>
     </div>
   )

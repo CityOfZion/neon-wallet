@@ -164,3 +164,5 @@ export const TOKEN_SALE_SUCCESS = 'token_sale_success'
 export const TOKEN_SALE_FAILURE = 'token_sale_failure'
 
 export const NODES = nodes
+
+export const PRICE_UNAVAILABLE = 'N/A'
