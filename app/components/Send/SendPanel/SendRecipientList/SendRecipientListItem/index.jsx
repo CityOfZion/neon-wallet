@@ -159,7 +159,7 @@ class SendRecipientListItem extends Component<Props, State> {
         items={this.createContactList()}
         customChangeEvent
         onFocus={this.clearErrorsOnFocus}
-        error={errors.address || nnsError}
+        error={(errors && errors.address) || nnsError}
       />
     )
 
