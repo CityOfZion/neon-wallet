@@ -145,9 +145,7 @@ export default class TokenBalancesPanel extends React.Component<Props> {
       </div>
       <div className={styles.tokenName}>{token.name}</div>
       <div className={styles.price}>{this.formatPrice(token.symbol)}</div>
-      <div className={styles.balanceValue}>
-        {formatToRoundedShortNumber(Number(token.balance))}
-      </div>
+      <div className={styles.balanceValue}>{token.balance}</div>
     </div>
   )
 }
