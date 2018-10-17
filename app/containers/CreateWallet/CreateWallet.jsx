@@ -53,9 +53,7 @@ export default class CreateWallet extends React.Component<Props, State> {
       history,
       walletName,
       authenticated,
-      () =>
-        console.log('CALLBACK') ||
-        this.setState({ submitButtonDisabled: false })
+      () => this.setState({ submitButtonDisabled: false })
     )
   }
 
