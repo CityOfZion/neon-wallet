@@ -174,7 +174,8 @@ export const generateNewWalletAccount = (
   wif?: string,
   history: Object,
   walletName: string,
-  authenticated: boolean = false
+  authenticated: boolean = false,
+  onFailure: () => any = () => undefined
 ) => (dispatch: DispatchType) => {
   const isImport = !!wif
   const dispatchError = (message: string) => {
@@ -182,12 +183,15 @@ export const generateNewWalletAccount = (
     return false
   }
   if (passphrase !== passphrase2) {
+    onFailure()
     return dispatchError('Passphrases do not match')
   }
   if (!validatePassphraseLength(passphrase)) {
+    onFailure()
     return dispatchError('Please choose a longer passphrase')
   }
   if (wif && !wallet.isWIF(wif)) {
+    onFailure()
     return dispatchError('The private key is not valid')
   }
   const infoNotificationId: any = dispatch(
@@ -204,6 +208,7 @@ export const generateNewWalletAccount = (
 
       const storedWallet = await getWallet()
       if (walletName && walletHasLabel(storedWallet, walletName)) {
+        onFailure()
         return dispatchError('A wallet with this name already exists locally')
       }
 
@@ -235,6 +240,7 @@ export const generateNewWalletAccount = (
       else history.push(ROUTES.DISPLAY_WALLET_KEYS)
       return true
     } catch (e) {
+      onFailure()
       console.error(e)
       return dispatchError(
         `An error occured while trying to ${

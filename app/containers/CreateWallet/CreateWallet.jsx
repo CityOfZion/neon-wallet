@@ -52,7 +52,8 @@ export default class CreateWallet extends React.Component<Props, State> {
       option === 'IMPORT' ? wif : null,
       history,
       walletName,
-      authenticated
+      authenticated,
+      () => this.setState({ submitButtonDisabled: false })
     )
   }
 
