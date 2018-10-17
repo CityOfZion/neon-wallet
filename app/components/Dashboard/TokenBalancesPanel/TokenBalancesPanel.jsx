@@ -12,7 +12,7 @@ import {
   formatToRoundedShortNumber
 } from '../../../core/formatters'
 import Nothing from '../../../assets/icons/nothing.svg'
-import { CURRENCIES, ROUTES } from '../../../core/constants'
+import { CURRENCIES, ROUTES, PRICE_UNAVAILABLE } from '../../../core/constants'
 
 type Props = {
   className: ?string,
@@ -78,7 +78,7 @@ export default class TokenBalancesPanel extends React.Component<Props> {
     const { symbol } = CURRENCIES[currencyCode]
     let currPriceOfToken
     if (prices) currPriceOfToken = prices[ticker]
-    if (!currPriceOfToken) return 'N/A'
+    if (!currPriceOfToken) return PRICE_UNAVAILABLE
     if (currPriceOfToken < 1.0) {
       return `${symbol}${toFixedDecimals(currPriceOfToken, 4)}`
     }
