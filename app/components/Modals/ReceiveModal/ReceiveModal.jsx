@@ -2,6 +2,7 @@
 import React from 'react'
 import NeoQR from 'neo-qrcode'
 
+import Loader from '../../Loader'
 import BaseModal from '../BaseModal'
 import styles from './style.scss'
 import GridIcon from '../../../assets/icons/grid.svg'
@@ -17,14 +18,16 @@ type Props = {
 }
 
 type State = {
-  imgUri: string
+  imgUri: string,
+  loading: boolean
 }
 
 export default class ReceiveModal extends React.Component<Props, State> {
   image: ?HTMLImageElement
 
   state = {
-    imgUri: ''
+    imgUri: '',
+    loading: true
   }
 
   componentDidMount() {
@@ -41,22 +44,16 @@ export default class ReceiveModal extends React.Component<Props, State> {
 
     qrCode.toDataURL().then(imgData => {
       if (this.image) this.image.src = imgData
+      this.setState({ loading: false })
     })
 
     this.setState({ imgUri: qrCode.uri.replace('neo:', '') })
   }
 
   render() {
-    const {
-      hideModal,
+    const { hideModal, address, asset, amount, description } = this.props
 
-      address,
-      asset,
-      amount,
-      description
-    } = this.props
-
-    const { imgUri } = this.state
+    const { imgUri, loading } = this.state
 
     const tokensList: Array<any> = Object.values(TOKENS)
 
@@ -99,6 +96,7 @@ export default class ReceiveModal extends React.Component<Props, State> {
           <div className={styles.section}>
             <div className={styles.sectionTitle}>YOUR QR CODE</div>
             <div className={styles.qrcode}>
+              {loading && <Loader className={styles.loaderMargin} />}
               <img
                 ref={(el: ?HTMLImageElement) => {
                   this.image = el

@@ -25,7 +25,7 @@ export const isNumber = (value: string | number): boolean => {
 
 export const multiplyNumber = (x: string | number, y: string | number) =>
   toBigNumber(x)
-    .mul(y)
+    .mul(toBigNumber(y))
     .toNumber()
 
 export const minusNumber = (x: string | number, y: string | number) =>

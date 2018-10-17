@@ -42,6 +42,10 @@
   }
 }
 
+.loaderMargin {
+  margin-top: 50px;
+}
+
 .urlSection,
 .section {
   margin-bottom: 16px;
@@ -66,7 +70,8 @@
   .qrcode {
     display: flex;
     justify-content: center;
-    height: 200px;
+    align-items: center;
+    min-height: 200px;
   }
 
   .imgUri {
