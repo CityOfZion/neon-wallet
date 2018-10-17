@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
+import { get } from 'lodash-es'
 
 import AssetInput from '../../Inputs/AssetInput'
 import NumberInput from '../../Inputs/NumberInput'
@@ -9,7 +10,11 @@ import Button from '../../Button/Button'
 import CopyToClipboard from '../../CopyToClipboard'
 import { Address } from '../../Blockchain'
 import { ASSETS, TOKENS } from '../../../core/constants'
-import { COIN_DECIMAL_LENGTH } from '../../../core/formatters'
+import {
+  COIN_DECIMAL_LENGTH,
+  toFixedDecimals,
+  formatNEO
+} from '../../../core/formatters'
 import GridIcon from '../../../assets/icons/grid.svg'
 
 import styles from './styles.scss'
@@ -17,12 +22,13 @@ import styles from './styles.scss'
 type Props = {
   className?: string,
   address: string,
-  onSubmit: Function
+  onSubmit: Function,
+  networkId: string
 }
 
 type State = {
   asset: ?string,
-  amount: ?number,
+  amount: ?number | ?string,
   description: ?string
 }
 
@@ -30,7 +36,7 @@ export default class QRCodeForm extends React.Component<Props, State> {
   image: ?HTMLImageElement
 
   state = {
-    asset: undefined,
+    asset: ASSETS.NEO,
     amount: undefined,
     description: undefined
   }
@@ -59,8 +65,8 @@ export default class QRCodeForm extends React.Component<Props, State> {
               <div className={styles.inputDescription}>ASSET</div>
               <AssetInput
                 symbols={symbols}
-                value={asset}
-                onChange={value => this.setState({ asset: value })}
+                value={{ label: asset, value: asset }}
+                onChange={value => this.setState({ asset: value, amount: 0 })}
               />
             </div>
             <div className={styles.amount}>
@@ -68,8 +74,18 @@ export default class QRCodeForm extends React.Component<Props, State> {
               <NumberInput
                 value={amount}
                 placeholder="Amount"
-                options={{ numeralDecimalScale: COIN_DECIMAL_LENGTH }}
-                onChange={value => this.setState({ amount: value })}
+                options={{
+                  numeralDecimalScale: 8
+                }}
+                // this is a hack because Cleave will not update
+                // when props change https://github.com/nosir/cleave.js/issues/352
+                onChange={value =>
+                  this.setState({
+                    amount: !this.determineDecimalScale()
+                      ? formatNEO(value)
+                      : value
+                  })
+                }
               />
             </div>
           </div>
@@ -101,5 +117,13 @@ export default class QRCodeForm extends React.Component<Props, State> {
         </form>
       </div>
     )
+  }
+
+  determineDecimalScale = () => {
+    const { asset } = this.state
+    const { networkId } = this.props
+    if (asset === ASSETS.NEO) return 0
+    if (asset === ASSETS.GAS) return 8
+    return get(TOKENS[this.state.asset], `networks.${networkId}.decimals`, 8)
   }
 }

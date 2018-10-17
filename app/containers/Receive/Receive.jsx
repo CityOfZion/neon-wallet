@@ -22,7 +22,8 @@ type Props = {
   prices: Object,
   loading: boolean,
   loadWalletData: Function,
-  showReceiveModal: Function
+  showReceiveModal: Function,
+  networkId: string
 }
 
 type State = {
@@ -47,8 +48,10 @@ export default class Receive extends React.Component<Props, State> {
       loading,
       loadWalletData,
       address,
-      showReceiveModal
+      showReceiveModal,
+      networkId
     } = this.props
+
     const { walletName } = this.state
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 
@@ -63,6 +66,7 @@ export default class Receive extends React.Component<Props, State> {
         )}
         <ReceivePanel
           address={address}
+          networkId={networkId}
           onSubmit={props => showReceiveModal({ ...props, walletName })}
         />
       </section>

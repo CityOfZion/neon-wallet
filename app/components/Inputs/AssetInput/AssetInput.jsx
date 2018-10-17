@@ -6,7 +6,11 @@ import { ASSETS, TOKENS } from '../../../core/constants'
 
 type Props = {
   symbols: Array<SymbolType>,
-  onChange: Function
+  onChange: Function,
+  value: {
+    label: string,
+    value: string
+  }
 }
 
 type State = {
@@ -16,17 +20,19 @@ type State = {
 function parsedSymbols(
   symbols = [ASSETS.NEO, ASSETS.GAS, ...Object.keys(TOKENS)]
 ): Array<{ value: string, label: string }> {
-  return symbols.map(symbol => ({
-    value: symbol,
-    label: symbol
-  }))
+  return symbols
+    .map(symbol => ({
+      value: symbol,
+      label: symbol
+    }))
+    .filter(symbol => symbol.label.length > 1)
 }
 
 export default class AssetInput extends React.Component<Props, State> {
   parsedSymbols = parsedSymbols(this.props.symbols)
 
   state = {
-    selectedAsset: this.parsedSymbols[0]
+    selectedAsset: this.props.value || this.parsedSymbols[0]
   }
 
   render() {

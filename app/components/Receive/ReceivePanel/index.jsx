@@ -13,7 +13,8 @@ import styles from './styles.scss'
 
 type Props = {
   address: string,
-  onSubmit: Function
+  onSubmit: Function,
+  networkId: string
 }
 
 type State = {
@@ -40,6 +41,7 @@ export default class ReceivePanel extends React.Component<Props, State> {
       render: () => (
         <div className={styles.dynamicReceiveContent}>
           <QRCodeForm
+            networkId={this.props.networkId}
             address={this.props.address}
             onSubmit={this.props.onSubmit}
           />
