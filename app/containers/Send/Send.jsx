@@ -139,7 +139,10 @@ export default class Send extends React.Component<Props, State> {
         )
         const price = prices[asset]
 
-        const totalBalanceWorth = multiplyNumber(balance, price)
+        const totalBalanceWorth = multiplyNumber(
+          Number(balance).toFixed(15),
+          price
+        )
         const remainingBalanceWorth = multiplyNumber(currentBalance, price)
 
         return {
