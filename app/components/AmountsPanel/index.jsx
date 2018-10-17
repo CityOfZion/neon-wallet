@@ -26,6 +26,7 @@ type Props = {
 const ORDER_BY_FIELD = 'totalBalanceWorth'
 const ORDERY_BY_DIRECTION = 'desc'
 const RESULTS_PER_ROW = 5
+const MAX_RESULTS = 10
 
 const validateAmountDataItem = (amountDataItem: AmountDataItem) =>
   has(amountDataItem, 'symbol') &&
@@ -47,7 +48,7 @@ const AmountsPanel = ({ amountsData, currencyCode }: Props) => {
     amountsData,
     item => (item.price ? item[ORDER_BY_FIELD] : '0'),
     ORDERY_BY_DIRECTION
-  )
+  ).slice(0, MAX_RESULTS)
 
   const amountsInSingleRow = orderedAmounts.length <= RESULTS_PER_ROW
   const amountToFill = amountsInSingleRow
