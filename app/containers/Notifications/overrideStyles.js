@@ -54,14 +54,14 @@ const overrideStyles = {
 
   Dismiss: {
     DefaultStyle: {
-      top: '23px',
+      top: '25px',
       right: '25px',
       height: '22px',
       width: '22px',
       fontSize: '25px',
       fontWeight: 200,
       backgroundColor: 'none',
-      opacity: '0.3'
+      opacity: '0.8'
     }
   }
 }
