@@ -34,9 +34,9 @@ app.on('ready', () => {
   })
   const onAppReady = () => {
     mainWindow = new BrowserWindow({
-      height: 850,
-      width: 1280,
-      minHeight: 850,
+      height: 750,
+      width: 1200,
+      minHeight: 750,
       minWidth: 1200,
       titleBarStyle: 'hidden',
       show: false,
