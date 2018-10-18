@@ -42,6 +42,8 @@ export default class Nep9QrGenerator {
     ])
       // save the canvas and fetch nep5 data if not already fetched
       .then(([nep5Data, c]) => {
+        console.log({ nep5Data })
+        console.log({ nep9Data })
         canvas = c
 
         const token = {}
@@ -55,6 +57,7 @@ export default class Nep9QrGenerator {
               .find(token => token.networks[1].hash === nep9Data.asset) || {}
           token.symbol = foundToken.symbol
         }
+        console.log(token)
         const logo = imageMap[token.symbol] || imageMap.NEO
         return logo
       })
@@ -120,6 +123,7 @@ export default class Nep9QrGenerator {
               resolve(dt)
             }
             img.src = logoSrc
+            console.log({ imgage: img })
           })
       )
   }
