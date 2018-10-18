@@ -1,5 +1,5 @@
 // @flow
-import axios from 'axios'
+/* eslint-disable */
 import QRCode from 'qrcode/lib/browser'
 import nep9 from './nep9'
 import tokenList from '../../core/tokenList.json'
@@ -8,7 +8,6 @@ import { imageMap } from '../../assets/nep5/raw-svg-export'
 const TOKENS = Object.keys(tokenList)
   .map(key => tokenList[key])
   .reduce((accum, token) => {
-    // eslint-disable-next-line
     accum[token.networks[1].hash] = token
     return accum
   }, {})
@@ -62,11 +61,9 @@ export default class Nep9QrGenerator {
             // $FlowFixMe
             context.roundRect = function(x, y, w, h, r) {
               if (w < 2 * r) {
-                // eslint-disable-next-line
                 r = w / 2
               }
               if (h < 2 * r) {
-                // eslint-disable-next-line
                 r = h / 2
               }
               // $FlowFixMe
