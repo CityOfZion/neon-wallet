@@ -19,7 +19,7 @@ export default class Nep9QrGenerator {
   }
 
   // $FlowFixMe
-  constructor({ nep9Data, width = 200, canvasEl, imgEl }) {
+  constructor({ nep9Data, width = 250, canvasEl, imgEl }) {
     let canvas
     // $FlowFixMe
     this.uri = nep9.generateUri(nep9Data)
@@ -95,6 +95,7 @@ export default class Nep9QrGenerator {
             const img = new Image()
             img.onload = () => {
               const scale = width / 200
+              console.log(scale)
               context.roundRect(
                 70 * scale,
                 70 * scale,
