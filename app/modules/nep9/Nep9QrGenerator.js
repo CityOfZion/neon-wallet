@@ -3,7 +3,7 @@
 import QRCode from 'qrcode/lib/browser'
 import nep9 from './nep9'
 import tokenList from '../../core/tokenList.json'
-import { imageMap } from '../../assets/nep5/raw-svg-export'
+import { imageMap } from '../../assets/nep5/svg'
 
 const TOKENS = Object.keys(tokenList)
   .map(key => tokenList[key])
@@ -23,7 +23,7 @@ export default class Nep9QrGenerator {
     // $FlowFixMe
     this.uri = nep9.generateUri(nep9Data)
     const options = {
-      errorCorrectionLevel: 'H',
+      errorCorrectionLevel: 'Q',
       width
     }
 
@@ -52,10 +52,13 @@ export default class Nep9QrGenerator {
           token.symbol = foundToken.symbol
         }
         const logo = imageMap[token.symbol] || imageMap.NEO
-        return logo
+        return {
+          logoSrc: logo,
+          isGasOrNeo: nep9Data.asset === 'NEO' || nep9Data.asset === 'GAS'
+        }
       })
       .then(
-        logoSrc =>
+        ({ logoSrc, isGasOrNeo }) =>
           new Promise(resolve => {
             const context = canvas.getContext('2d')
             // $FlowFixMe
@@ -84,8 +87,7 @@ export default class Nep9QrGenerator {
             }
             const img = new Image()
             img.onload = () => {
-              // TODO: make this perfectly centered its super close but still not exact
-              const scale = 1.35
+              const scale = isGasOrNeo ? 1.15 : 1.35
               console.log(scale)
               context.roundRect(
                 70 * scale,
@@ -115,11 +117,9 @@ export default class Nep9QrGenerator {
               resolve(dt)
             }
             img.src = logoSrc
-            console.log({ imgage: img })
           })
       )
   }
-
   toDataURL(): Promise<any> {
     // $FlowFixMe
     return this.creationPromise

@@ -3,7 +3,7 @@ import React from 'react'
 import classNames from 'classnames'
 
 import GridIcon from 'assets/icons/grid.svg'
-import CozDonationQrCode from 'assets/images/coz-donation-qr-code.svg'
+import CozDonationQrCode from 'assets/images/coz-donation-qr-code.png'
 import Button from '../../../Button'
 import QrCodeScanner from '../../../QrCodeScanner'
 
@@ -32,7 +32,7 @@ export default class ReadCode extends React.Component<Props, State> {
       return <QrCodeScanner callback={this.props.gotoNextStep} />
     }
 
-    return <CozDonationQrCode height={250} width={250} />
+    return <img src={CozDonationQrCode} alt="coz-donation-qr-code.png" />
   }
 
   render() {
