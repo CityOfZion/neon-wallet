@@ -40,14 +40,9 @@ export default class Nep9QrGenerator {
         )
       })
     ])
-      // save the canvas and fetch nep5 data if not already fetched
       .then(([nep5Data, c]) => {
-        console.log({ nep5Data })
-        console.log({ nep9Data })
         canvas = c
-
         const token = {}
-
         if (nep9Data.asset === 'NEO') token.symbol = 'NEO'
         if (nep9Data.asset === 'GAS') token.symbol = 'GAS'
         else {
@@ -57,14 +52,12 @@ export default class Nep9QrGenerator {
               .find(token => token.networks[1].hash === nep9Data.asset) || {}
           token.symbol = foundToken.symbol
         }
-        console.log(token)
         const logo = imageMap[token.symbol] || imageMap.NEO
         return logo
       })
       .then(
         logoSrc =>
           new Promise(resolve => {
-            console.log({ logoSrc })
             const context = canvas.getContext('2d')
             // $FlowFixMe
             context.roundRect = function(x, y, w, h, r) {
@@ -94,7 +87,8 @@ export default class Nep9QrGenerator {
             }
             const img = new Image()
             img.onload = () => {
-              const scale = width / 200
+              // TODO: make this perfectly centered its super close but still not exact
+              const scale = 1.35
               console.log(scale)
               context.roundRect(
                 70 * scale,
