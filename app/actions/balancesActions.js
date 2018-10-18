@@ -1,6 +1,6 @@
 // @flow
 import { api } from 'neon-js'
-import { extend, isEmpty } from 'lodash-es'
+import { extend, isEmpty, unionBy } from 'lodash-es'
 import { createActions } from 'spunky'
 
 import { getNode } from './nodeStorageActions'
@@ -21,23 +21,42 @@ async function getBalances({ net, address, tokens }: Props) {
     endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
   }
 
-  // token balances
-  const tokenBalances = await api.nep5.getTokenBalances(
-    endpoint,
-    tokens
-      .filter(token => !token.isUserGenerated)
-      .map(token => token.scriptHash),
-    address
-  )
+  const chunks = tokens
+    .filter(token => !token.isUserGenerated)
+    .reduce((accum, currVal, index) => {
+      if (!accum.length) {
+        accum.push([currVal.scriptHash])
+        return accum
+      }
 
-  const parsedTokenBalances = Object.keys(tokenBalances)
+      if (accum[accum.length - 1].length < 4) {
+        accum[accum.length - 1].push(currVal.scriptHash)
+      } else {
+        accum.push([currVal.scriptHash])
+      }
+      return accum
+    }, [])
+
+  const promiseMap = chunks.map(chunk =>
+    api.nep5.getTokenBalances(endpoint, chunk, address)
+  )
+  const results = await Promise.all(promiseMap)
+  const resultObject = results.reduce((result, currentObject) => {
+    Object.keys(currentObject).forEach(key => {
+      // eslint-disable-next-line
+      result[key] = currentObject[key]
+    })
+    return result
+  }, {})
+
+  const parsedTokenBalances = Object.keys(resultObject)
     .map(tokenKey => {
       const foundToken = tokens.find(token => token.symbol === tokenKey)
-      if (foundToken && tokenBalances[tokenKey]) {
+      if (foundToken && resultObject[tokenKey]) {
         return {
           [foundToken.scriptHash]: {
             ...foundToken,
-            balance: tokenBalances[tokenKey]
+            balance: resultObject[tokenKey]
           }
         }
       }
