@@ -128,6 +128,16 @@ module.exports = {
           /node_modules/,
           path.resolve(__dirname, 'app/assets/nep5/raw-svg-export')
         ]
+      },
+      {
+        test: /\.(svg)$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000
+          }
+        },
+        include: [path.resolve(__dirname, '../app/assets/nep5')]
       }
     ]
   },
