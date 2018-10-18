@@ -88,7 +88,6 @@ export default class Nep9QrGenerator {
             const img = new Image()
             img.onload = () => {
               const scale = isGasOrNeo ? 1.15 : 1.35
-              console.log(scale)
               context.roundRect(
                 70 * scale,
                 70 * scale,
