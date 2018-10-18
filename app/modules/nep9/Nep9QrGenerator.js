@@ -19,7 +19,7 @@ export default class Nep9QrGenerator {
   }
 
   // $FlowFixMe
-  constructor({ nep9Data, width = 250, canvasEl, imgEl }) {
+  constructor({ nep9Data, width = 200, canvasEl, imgEl }) {
     let canvas
     // $FlowFixMe
     this.uri = nep9.generateUri(nep9Data)
