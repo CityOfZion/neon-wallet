@@ -7,7 +7,7 @@ import Panel from '../../Panel'
 import ReceivePanelHeader from './ReceivePanelHeader'
 import ReceiveExplanation from '../ReceiveExplanation'
 import DefaultReceive from '../DefaultReceive'
-import QRCodeForm from '../QRCodeForm'
+import QRCodeForm from '../QRCodeForm/QrCodeForm'
 
 import styles from './styles.scss'
 

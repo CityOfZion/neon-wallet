@@ -124,7 +124,10 @@ module.exports = {
       {
         test: /\.svg$/,
         use: ['svg-react-loader'],
-        exclude: /node_modules/
+        exclude: [
+          /node_modules/,
+          path.resolve(__dirname, 'app/assets/nep5/raw-svg-export')
+        ]
       }
     ]
   },

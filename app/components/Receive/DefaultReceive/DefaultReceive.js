@@ -1,9 +1,5 @@
 // @flow
 import React from 'react'
-import QRCode from 'qrcode/lib/browser'
-import { clipboard } from 'electron'
-import fs from 'fs'
-import storage from 'electron-json-storage'
 
 import DialogueBox from '../../DialogueBox'
 import WarningIcon from '../../../assets/icons/warning.svg'
@@ -14,25 +10,18 @@ import Button from '../../Button'
 import styles from '../ReceivePanel/styles.scss'
 
 type Props = {
-  address: string
+  address: string,
+  copied: boolean,
+  handleCopy: (?HTMLCanvasElement, string) => Promise<void>,
+  handleCreateCanvas: (?HTMLCanvasElement, string) => any
 }
 
-type State = {
-  copied: boolean
-}
-
-export default class ReceivePanel extends React.Component<Props, State> {
+export default class ReceivePanel extends React.Component<Props> {
   publicCanvas: ?HTMLCanvasElement
-
-  state = {
-    copied: false
-  }
 
   componentDidMount() {
     const { address } = this.props
-    QRCode.toCanvas(this.publicCanvas, address, { version: 5 }, err => {
-      if (err) console.error(err)
-    })
+    this.props.handleCreateCanvas(this.publicCanvas, address)
   }
 
   render() {
@@ -61,44 +50,20 @@ export default class ReceivePanel extends React.Component<Props, State> {
           className={styles.warningDialogue}
         />
         <Button
+          shouldCenterButtonLabelText
           primary
           className={styles.submitButton}
           renderIcon={() =>
-            this.state.copied ? <ConfirmIcon /> : <CopyIcon />
+            this.props.copied ? <ConfirmIcon /> : <CopyIcon />
           }
           type="submit"
           onClick={() =>
-            this.handleSaveCanvasToLocalStorageAndCopyToClipboard()
+            this.props.handleCopy(this.publicCanvas, 'public-address')
           }
         >
           Copy Code Image
         </Button>
       </div>
     )
-  }
-
-  handleCopyIcon = () => {
-    this.setState({ copied: true })
-    setTimeout(() => {
-      this.setState({ copied: false })
-    }, 1000)
-  }
-
-  handleSaveCanvasToLocalStorageAndCopyToClipboard = async () => {
-    this.handleCopyIcon()
-    function writeFile(fileName, data, type) {
-      return new Promise((resolve, reject) => {
-        fs.writeFile(fileName, data, type, err => {
-          if (err) reject(err)
-          else resolve(data)
-        })
-      })
-    }
-    // $FlowFixMe
-    const url = this.publicCanvas.toDataURL('image/jpg', 0.8)
-    const base64Data = url.replace(/^data:image\/png;base64,/, '')
-    const storagePath = storage.getDefaultDataPath()
-    await writeFile(`${storagePath}/public-address.jpg`, base64Data, 'base64')
-    clipboard.writeImage(`${storagePath}/public-address.jpg`)
   }
 }
