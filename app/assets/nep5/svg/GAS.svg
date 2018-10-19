@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>icons/tokens/ic_GAS3</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="78.4679174%" y1="100%" x2="78.4679172%" y2="17.1618045%" id="linearGradient-1">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#A7BDCC" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="78.4679174%" y1="96.9440844%" x2="78.4679172%" y2="17.1618045%" id="linearGradient-2">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#A7BDCC" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="icons/tokens/ic_GAS3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="logo_Gas2" transform="translate(2.000000, 0.000000)">
+            <polygon id="Path-9" fill="url(#linearGradient-1)" points="15 9.14823869 15 19.7253575 25.0458184 24.4996017 25.0458184 5.35197602"></polygon>
+            <polygon id="Path-7" fill="#A7BDCC" points="0.324288567 5.61320988 14.6966056 0.220252093 24.7257391 4.87172095 10.3371327 10.3536174"></polygon>
+            <polygon id="Path-9" fill="url(#linearGradient-2)" points="0 6 0 24.2257558 10.0458184 29 10.0458184 10.7033427"></polygon>
+        </g>
+    </g>
+</svg>

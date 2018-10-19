@@ -2,6 +2,13 @@
 
 .contentContainer {
   padding: 0 100px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.modalBody {
+  height: 100%;
 }
 
 .header {
@@ -31,6 +38,12 @@
   }
 }
 
+.qr {
+  border: none;
+  height: 250px;
+  width: 250px;
+}
+
 .subHeader {
   display: flex;
   padding-bottom: 6px;
@@ -42,8 +55,17 @@
   }
 }
 
+.hidden {
+  opacity: 0;
+}
+
 .loaderMargin {
-  margin-top: 50px;
+  margin-top: 100px;
+}
+
+.buttonContainer {
+  margin-top: auto;
+  margin-bottom: 50px;
 }
 
 .urlSection,
@@ -71,7 +93,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 200px;
+    min-height: 275px;
+    background: #f2f2f2;
+    padding: 16px;
   }
 
   .imgUri {

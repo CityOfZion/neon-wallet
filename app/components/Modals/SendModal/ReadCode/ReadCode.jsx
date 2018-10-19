@@ -32,7 +32,7 @@ export default class ReadCode extends React.Component<Props, State> {
       return <QrCodeScanner callback={this.props.gotoNextStep} />
     }
 
-    return <img src={CozDonationQrCode} alt="Donate to CoZ" />
+    return <img src={CozDonationQrCode} alt="coz-donation-qr-code.png" />
   }
 
   render() {

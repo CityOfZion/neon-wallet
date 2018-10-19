@@ -107,6 +107,7 @@ export default class QRCodeForm extends React.Component<Props, State> {
           </div>
           <Button
             primary
+            shouldCenterButtonLabelText
             className={styles.submitButton}
             renderIcon={() => <GridIcon />}
             disabled={!amount}

@@ -1,3 +1,4 @@
 import DefaultReceive from './DefaultReceive'
+import withCopyCanvasToClipboard from '../../../hocs/withCopyCanvasToClipboard'
 
-export default DefaultReceive
+export default withCopyCanvasToClipboard(DefaultReceive)
