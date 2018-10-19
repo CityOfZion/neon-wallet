@@ -10,6 +10,7 @@ import {
   MAIN_NETWORK_ID,
   TEST_NETWORK_ID
 } from './constants'
+import { imageMap } from '../assets/nep5/png'
 
 export const adjustDecimalAmountForTokenTransfer = (value: string): string =>
   toBigNumber(value)
@@ -23,7 +24,6 @@ const getTokenEntry = ((): Function => {
     symbol: string,
     scriptHash: string,
     networkId: string,
-    image: string,
     name: string,
     decimals: number
   ) => ({
@@ -32,7 +32,7 @@ const getTokenEntry = ((): Function => {
     scriptHash,
     networkId,
     isUserGenerated: false,
-    image,
+    image: imageMap[symbol],
     name,
     decimals
   })
@@ -47,7 +47,7 @@ export const getDefaultTokens = async (): Promise<Array<TokenItemType>> => {
         tokenData.symbol,
         tokenData.networks['1'].hash,
         MAIN_NETWORK_ID,
-        tokenData.image,
+
         tokenData.networks['1'].name,
         tokenData.networks['1'].decimals
       )
