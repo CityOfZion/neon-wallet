@@ -48,7 +48,7 @@ const mapSortedPortfolioBalanceProps = ({ prices, balances, total }) => ({
 })
 
 export default compose(
-  withProgressPanel(portfolioPanelActions, { title: 'Portfolio' }),
+  withProgressPanel(portfolioPanelActions, { title: 'Total Wallet Value' }),
   withData(pricesActions, mapPricesDataToProps),
   withBalancesData(mapBalancesDataToProps),
   withCurrencyData(),

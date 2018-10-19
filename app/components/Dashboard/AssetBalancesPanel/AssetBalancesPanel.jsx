@@ -111,7 +111,7 @@ export default class AssetBalancesPanel extends React.Component<Props> {
 
   renderHeader = () => (
     <div className={styles.header}>
-      <span>Holdings</span>
+      <span>System Assets</span>
     </div>
   )
 
