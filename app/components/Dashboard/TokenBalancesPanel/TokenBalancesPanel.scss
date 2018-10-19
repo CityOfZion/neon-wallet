@@ -4,10 +4,6 @@
   height: auto !important;
 }
 
-.tokenBalancesPanelContent {
-  padding: 0px 24px !important;
-}
-
 a {
   text-decoration: none;
   color: #3063c9;
@@ -18,141 +14,62 @@ a {
   align-items: center;
 }
 
-.tokenBalancesPanel {
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 50px;
+.tokenBalancesPanelContent {
+  padding-top: 0px;
+  padding-bottom: 0;
+  font-size: 13px;
 
-    .refresh {
-      cursor: pointer;
+  .gridContainer {
+    display: grid;
+    grid-template-columns: minmax(75px, 75px) 2fr 3fr 3fr;
 
-      &,
-      & path {
-        color: #9599a2;
-        fill: currentColor;
-      }
-
-      &.loading {
-        animation: spin 2s linear infinite;
-      }
-    }
-  }
-
-  .tableData {
-    min-height: 46px;
-    border-bottom: solid thin #f2f2f2;
-    padding: 5px 0px 2px 2px;
-    margin-left: -24px;
-    margin-right: -24px;
-    padding-left: 24px;
-    padding-right: 15px;
-  }
-
-  .tableHeader {
-    margin-bottom: 16px;
-    padding-left: 24px;
-    padding-right: 24px;
-    margin-left: -48px;
-    margin-right: -48px;
-    height: 30px;
-    align-items: center !important;
-  }
-
-  .tableHeader,
-  .tableData {
-    display: flex;
-    align-items: flex-start;
-    justify-content: stretch;
-
-    .symbol {
-      flex: 0 0 auto;
-      width: 50px;
-      margin-right: 25px;
-    }
-
-    .tickerName {
-      @extend .symbol;
-      width: 35px;
-      margin-right: 40px;
-      color: #5c677f;
-      font-weight: 300;
-      flex-direction: column;
-      display: flex;
-      padding-left: 2.5px;
+    .columnCell {
+      padding-top: 12px;
+      padding-bottom: 6px;
+      opacity: 0.5;
+      font-family: Gotham-Bold;
       font-size: 12px;
-      text-align: center;
+      color: #394152;
+      text-transform: uppercase;
     }
 
-    .name {
-      flex: 1 1 auto;
-      min-width: 175px;
-      margin-right: 10px;
-      width: 25%;
-      font-weight: bold;
+    .rowCell {
+      display: flex;
+      min-height: 46px;
+      align-items: center;
+      border-bottom: solid thin #f2f2f2;
     }
 
-    .priceLabel {
-      flex: 1 1 auto;
-      font-weight: bold;
+    .tokenImage {
+      max-height: 25px;
+      max-width: 25px;
+      width: 100%;
+      padding-left: 1.5px;
     }
 
     .tokenName {
-      font-size: 13px;
-      flex: 1 1 auto;
-      margin-right: 20px;
-      font-weight: 400;
-      color: #5c677f;
-      min-width: 165px;
-      width: 25%;
+      padding-right: 10px;
     }
 
-    .balance {
-      flex: 0 0 auto;
-      font-size: 13px;
+    .tickerName {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding-right: 10px;
     }
 
-    .balanceValue {
-      flex: 0 0 auto;
-      width: 70px;
-      font-size: 13px;
-      font-weight: 300;
-    }
-
-    &:last-child {
-      margin-bottom: 0;
+    span {
+      padding: 8px 4px;
+      border-bottom: 1px solid black;
     }
   }
+}
 
-  .price {
-    flex: 1 1 auto;
-    margin-right: 16px;
-    font-weight: 300;
-    font-size: 13px;
-  }
-
-  .tableHeader {
-    color: #969aa0;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-  }
-
-  .tableData {
-    color: #282828;
-    align-items: center;
-  }
-
-  .tokenImageContainer {
-    text-align: center;
-  }
-
-  .tokenImage {
-    max-height: 25px;
-    max-width: 25px;
-    width: 100%;
-  }
+.header {
+  display: flex;
+  align-items: center;
+  height: 50px;
 }
 
 .emptyBalanceContainer {
