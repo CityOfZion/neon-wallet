@@ -11,7 +11,7 @@ import {
   DEFAULT_CURRENCY_CODE,
   DEFAULT_THEME
 } from '../core/constants'
-import pack from '../../package.json'
+import { version } from '../../package.json'
 
 type Settings = {
   currency: string,
@@ -28,7 +28,7 @@ const DEFAULT_SETTINGS: () => Promise<Settings> = async () => ({
   theme: DEFAULT_THEME,
   blockExplorer: EXPLORERS.NEO_SCAN,
   tokens: await getDefaultTokens(),
-  version: pack.version
+  version
 })
 
 const getSettings = async (): Promise<Settings> => {
