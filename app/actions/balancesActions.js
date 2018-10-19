@@ -7,6 +7,8 @@ import { getNode } from './nodeStorageActions'
 import { ASSETS } from '../core/constants'
 import { COIN_DECIMAL_LENGTH } from '../core/formatters'
 
+const MAX_SCRIPT_HASH_CHUNK_SIZE = 5
+
 type Props = {
   net: string,
   address: string,
@@ -29,7 +31,7 @@ async function getBalances({ net, address, tokens }: Props) {
         return accum
       }
 
-      if (accum[accum.length - 1].length < 4) {
+      if (accum[accum.length - 1].length < MAX_SCRIPT_HASH_CHUNK_SIZE) {
         accum[accum.length - 1].push(currVal.scriptHash)
       } else {
         accum.push([currVal.scriptHash])
@@ -41,28 +43,21 @@ async function getBalances({ net, address, tokens }: Props) {
     api.nep5.getTokenBalances(endpoint, chunk, address)
   )
   const results = await Promise.all(promiseMap)
-  const resultObject = results.reduce((result, currentObject) => {
-    Object.keys(currentObject).forEach(key => {
-      // eslint-disable-next-line
-      result[key] = currentObject[key]
-    })
-    return result
-  }, {})
 
-  const parsedTokenBalances = Object.keys(resultObject)
-    .map(tokenKey => {
-      const foundToken = tokens.find(token => token.symbol === tokenKey)
-      if (foundToken && resultObject[tokenKey]) {
-        return {
+  const parsedTokenBalances = results.reduce((accum, currBalance) => {
+    Object.keys(currBalance).forEach(key => {
+      const foundToken = tokens.find(token => token.symbol === key)
+      if (foundToken && currBalance[key]) {
+        accum.push({
           [foundToken.scriptHash]: {
             ...foundToken,
-            balance: resultObject[tokenKey]
+            balance: currBalance[key]
           }
-        }
+        })
       }
-      return {}
     })
-    .filter(tokenBalance => !isEmpty(tokenBalance))
+    return accum
+  }, [])
 
   // Handle manually added script hashses here
   const userGeneratedTokenInfo = []
