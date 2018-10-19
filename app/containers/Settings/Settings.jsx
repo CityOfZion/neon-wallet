@@ -32,6 +32,7 @@ import CogIcon from '../../assets/icons/cog-icon.svg'
 import NodeSelectIcon from '../../assets/icons/node-select.svg'
 import TimeIcon from '../../assets/icons/time-icon.svg'
 import SaveIcon from '../../assets/icons/save-icon.svg'
+import pack from '../../../package.json'
 
 const { dialog, shell } = require('electron').remote
 
@@ -205,6 +206,7 @@ export default class Settings extends Component<Props, State> {
         <Panel
           className={styles.settingsPanel}
           renderHeader={this.renderHeader}
+          contentClassName={styles.panelContent}
         >
           <section className={styles.settingsItemsContainer}>
             <SettingsItem renderIcon={() => <CogIcon />} title="NETWORK">
@@ -329,7 +331,7 @@ export default class Settings extends Component<Props, State> {
   renderHeader = () => (
     <div className={styles.settingsPanelHeader}>
       <div className={styles.settingsPanelHeaderItem}>
-        Manage your neon wallet
+        Manage your neon wallet - v{pack.version}
       </div>
       <div className={styles.settingsPanelHeaderItem}>
         Community Support:{' '}

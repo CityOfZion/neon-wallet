@@ -1,5 +1,9 @@
 $panel-top-margin: 25px;
 
+.panelContent {
+  padding: 0 !important;
+}
+
 .settingsContainer {
   height: 100%;
   display: flex;
@@ -48,7 +52,7 @@ $panel-top-margin: 25px;
     .settingsDonations {
       font-size: 12px;
       color: #282828;
-      margin-top: 48px;
+      margin-top: 24px;
       text-align: center;
       justify-content: center;
       display: flex;
