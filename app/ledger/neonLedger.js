@@ -18,7 +18,7 @@ export const MESSAGES = {
   NOT_CONNECTED: 'Connect and unlock your Ledger device',
   APP_CLOSED: 'Navigate to the NEO app on your Ledger device',
   MSG_TOO_BIG: 'Your transaction is too big for the Ledger to sign',
-  TX_DENIED: 'Your transaction is too big for the Ledger to sign',
+  TX_DENIED: 'You have denied the transaction on your ledger',
   TX_PARSE_ERR:
     'Error parsing transaction. Make sure your NEO Ledger app version is up to date'
 }
