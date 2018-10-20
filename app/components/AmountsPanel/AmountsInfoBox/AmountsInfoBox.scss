@@ -3,7 +3,7 @@
 .amountsInfoBox {
   display: flex;
   align-items: center;
-  flex-basis: 20%;
+  flex-basis: 25%;
   padding: 0 12px;
   box-sizing: border-box;
   font-size: 14px;
@@ -13,7 +13,7 @@
   justify-content: space-between;
 
   .assetName {
-    padding-right: 15px;
+    padding-right: 10px;
     font-family: Gotham-Light;
     font-size: 14px;
     position: relative;
@@ -29,6 +29,12 @@
 
   .assetWorth {
     font-family: Gotham-Book;
+  }
+
+  .assetName,
+  .assetAmount,
+  .assetWorth {
+    white-space: nowrap;
   }
 }
 

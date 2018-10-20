@@ -25,8 +25,8 @@ type Props = {
 
 const ORDER_BY_FIELD = 'totalBalanceWorth'
 const ORDERY_BY_DIRECTION = 'desc'
-const RESULTS_PER_ROW = 5
-const MAX_RESULTS = 10
+const RESULTS_PER_ROW = 4
+const MAX_RESULTS = 8
 
 const validateAmountDataItem = (amountDataItem: AmountDataItem) =>
   has(amountDataItem, 'symbol') &&

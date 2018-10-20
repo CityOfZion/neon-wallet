@@ -31,7 +31,7 @@ const AmountsInfoBox = ({
     </span>
     <span className={styles.assetWorth}>
       {isNumber(totalBalanceWorth)
-        ? `${fiatCurrencySymbol} ${totalBalanceWorth.toFixed(2)}`
+        ? `${fiatCurrencySymbol}${totalBalanceWorth.toFixed(2)}`
         : totalBalanceWorth}
     </span>
   </div>
