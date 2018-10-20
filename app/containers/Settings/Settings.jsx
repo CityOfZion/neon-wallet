@@ -221,6 +221,7 @@ export default class Settings extends Component<Props, State> {
                       this.props.handleNetworkChange(selectedNetwork.id)
                     )
                   }
+                  isSearchable={false}
                 />
               </div>
             </SettingsItem>
@@ -235,6 +236,7 @@ export default class Settings extends Component<Props, State> {
                   options={parsedExplorerOptions}
                   value={this.state.selectedExplorer}
                   onChange={this.updateExplorerSettings}
+                  isSearchable={false}
                 />
               </div>
             </SettingsItem>
