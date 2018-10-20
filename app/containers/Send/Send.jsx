@@ -115,21 +115,8 @@ export default class Send extends React.Component<Props, State> {
   // TODO: Move this logic to AmountsPanel / Centralized place
   createSendAmountsData = () => {
     const { sendableAssets, prices } = this.props
-    const { showConfirmSend, sendSuccess, sendRowDetails } = this.state
 
-    let assets = Object.keys(sendableAssets)
-
-    if (showConfirmSend || sendSuccess) {
-      assets = (assets.filter((asset: string) =>
-        sendRowDetails
-          .reduce(
-            (accumulator: Array<*>, row: Object) =>
-              accumulator.concat(row.asset),
-            []
-          )
-          .includes(asset)
-      ): Array<*>)
-    }
+    const assets = Object.keys(sendableAssets)
 
     return (assets.map((asset: string) => {
       const { balance } = sendableAssets[asset]
