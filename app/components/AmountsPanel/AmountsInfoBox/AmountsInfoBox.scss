@@ -30,6 +30,12 @@
   .assetWorth {
     font-family: Gotham-Book;
   }
+
+  .assetName,
+  .assetAmount,
+  .assetWorth {
+    white-space: nowrap;
+  }
 }
 
 .amountsInSingleRow {
