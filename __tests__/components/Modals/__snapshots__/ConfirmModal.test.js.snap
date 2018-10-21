@@ -24,7 +24,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
           "entries": Array [
             Object {
               "hash": "",
-              "key": "tbdwcy",
+              "key": "vn7pyu",
               "pathname": "/",
               "search": "",
               "state": undefined,
@@ -38,7 +38,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "key": "tbdwcy",
+            "key": "vn7pyu",
             "pathname": "/",
             "search": "",
             "state": undefined,
