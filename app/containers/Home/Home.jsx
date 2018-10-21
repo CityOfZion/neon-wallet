@@ -21,7 +21,7 @@ type State = {
 
 type Props = {
   loading: boolean,
-  theme: string
+  theme: 'Light' | 'Dark'
 }
 
 const LOGIN_OPTIONS = {
