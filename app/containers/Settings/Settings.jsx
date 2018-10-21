@@ -258,15 +258,9 @@ export default class Settings extends Component<Props, State> {
               noBorderBottom
               title="THEME"
             >
-              {/* <Tooltip
-                className={styles.settingsSelectContainer}
-                title="Coming Soon"
-                position="bottom"
-              > */}
               <div className={styles.settingsSelectContainer}>
                 <StyledReactSelect
                   settingsSelect
-                  // isDisabled
                   onChange={this.updateThemeSettings}
                   isSearchable={false}
                   transparent
@@ -277,7 +271,6 @@ export default class Settings extends Component<Props, State> {
                   value={this.state.selectedTheme}
                 />
               </div>
-              {/* </Tooltip> */}
             </SettingsItem>
             <div className={styles.settingsSpacer} />
             <SettingsLink
