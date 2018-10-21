@@ -39,7 +39,7 @@ export default class PortfolioBreakdownChart extends React.Component<Props> {
     return (
       <ResponsiveContainer
         width={200}
-        className={classNames(styles.priceHistoryChart, className)}
+        className={classNames(styles.portfolioBreakdownChart, className)}
       >
         <PieChart width={200} height={180}>
           <Pie

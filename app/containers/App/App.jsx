@@ -51,7 +51,7 @@ class App extends Component<Props> {
       <div style={themes[theme]} className={styles.container}>
         {address &&
           routesWithSideBar.includes(location.pathname) && (
-            <Sidebar className={styles.sidebar} />
+            <Sidebar theme={theme} className={styles.sidebar} />
           )}
         <div className={styles.wrapper}>
           <div className={styles.content}>{children}</div>

@@ -18,11 +18,10 @@ import {
   ROUTES,
   MODAL_TYPES,
   COZ_DONATIONS_ADDRESS,
-  DISCORD_INVITE_LINK
+  DISCORD_INVITE_LINK,
+  THEMES
 } from '../../core/constants'
-import themes from '../../themes'
 import styles from './Settings.scss'
-import Tooltip from '../../components/Tooltip'
 import AddIcon from '../../assets/icons/add.svg'
 import LockIcon from '../../assets/icons/lock.svg'
 import CurrencyIcon from '../../assets/icons/currency-icon.svg'
@@ -179,6 +178,7 @@ export default class Settings extends Component<Props, State> {
   }
 
   updateThemeSettings = (option: SelectOption) => {
+    this.setState({ selectedTheme: option })
     const { setTheme } = this.props
     setTheme(option.value)
   }
@@ -195,6 +195,10 @@ export default class Settings extends Component<Props, State> {
     const parsedExplorerOptions = Object.keys(EXPLORERS).map(key => ({
       value: key,
       label: EXPLORERS[key]
+    }))
+    const parsedThemeOptions = Object.keys(THEMES).map(key => ({
+      value: THEMES[key],
+      label: THEMES[key]
     }))
 
     return (
@@ -257,18 +261,16 @@ export default class Settings extends Component<Props, State> {
               noBorderBottom
               title="THEME"
             >
-              <Tooltip
-                className={styles.settingsSelectContainer}
-                title="Coming Soon"
-                position="bottom"
-              >
+              <div className={styles.settingsSelectContainer}>
                 <StyledReactSelect
                   settingsSelect
-                  isDisabled
+                  onChange={this.updateThemeSettings}
+                  isSearchable={false}
                   transparent
+                  options={parsedThemeOptions}
                   value={this.state.selectedTheme}
                 />
-              </Tooltip>
+              </div>
             </SettingsItem>
             <div className={styles.settingsSpacer} />
             <SettingsLink

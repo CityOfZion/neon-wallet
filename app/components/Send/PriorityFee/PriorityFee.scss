@@ -33,26 +33,33 @@
     border-right: none !important;
     display: flex;
     flex: 2.25;
+    background: var(--button-priority-transfer-background);
+    color: var(--button-priority-transfer-color);
   }
   button:nth-child(2) {
     border-radius: 0;
     border-right: none !important;
     display: flex;
     flex: 2;
+    background: var(--button-priority-transfer-background);
+    color: var(--button-priority-transfer-color);
   }
   button:nth-child(3) {
     border-radius: 0 4px 4px 0;
     display: flex;
     flex: 1.5;
+    background: var(--button-priority-transfer-background);
+    color: var(--button-priority-transfer-color);
   }
   button {
     margin: 0;
     height: auto;
     border: solid thin #8d98ae !important;
+    background: var(--button-priority-transfer-background);
 
     &[disabled] {
       opacity: 0.6;
-      background: #fff !important;
+      background: var(--button-priority-transfer-disabled) !important;
 
       svg {
         g {

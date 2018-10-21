@@ -21,7 +21,7 @@
 
   .receivePanelHeaderInfo {
     display: flex;
-    color: $dark-grey;
+    color: var(--panel-header-text);
   }
 }
 
@@ -31,7 +31,7 @@
 
   .description {
     margin-right: 16px;
-    color: $medium-grey;
+    color: var(--panel-label-text);
   }
 
   .address {
@@ -52,11 +52,11 @@
 }
 
 .tabs {
-  background: #ffffff;
+  background: var(--panel-background);
 
   ul {
     margin-bottom: 0 !important;
-    margin: 30px auto;
+    margin: 14px auto;
     padding-bottom: 15px !important;
     padding-left: 0;
     width: 400px;
@@ -71,7 +71,7 @@
 
 .defaultReceiveContainer {
   width: 400px;
-  height: 530px;
+  height: 510px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -83,7 +83,8 @@
   }
 
   canvas {
-    min-height: 250px;
-    min-width: 250px;
+    min-height: 225px;
+    min-width: 225px;
+    margin: 12px 0 20px 0;
   }
 }

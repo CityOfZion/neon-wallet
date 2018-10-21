@@ -38,10 +38,9 @@
   .amount {
     display: block;
     text-align: right;
-    color: $thin-text-color;
   }
 }
 
 .oddNumberedRow {
-  background-color: #f2f2f2;
+  background-color: var(--tx-history-odd-row);
 }

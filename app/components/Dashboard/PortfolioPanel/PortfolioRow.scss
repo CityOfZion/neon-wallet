@@ -13,7 +13,7 @@
   .percent {
     font-size: 13px;
     font-weight: 100;
-    color: #394152;
+    color: var(--base-text);
     overflow: hidden;
     text-overflow: ellipsis;
     width: 20%;
@@ -35,5 +35,5 @@
 }
 
 .oddColor {
-  background-color: #f8f8f8;
+  background-color: var(--dashboard-total-wallet-value-odd-row);
 }

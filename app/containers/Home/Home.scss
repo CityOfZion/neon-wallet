@@ -101,7 +101,7 @@ $navigation-margin: 20px;
 }
 
 .innerHomeContainer {
-  background-color: #fff;
+  background-color: var(--auth-main-container-background);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -118,6 +118,14 @@ $navigation-margin: 20px;
   margin-top: 15px;
   margin-bottom: 30px;
   flex: 1;
+
+  button {
+    background: var(--auth-secondary-button-background) !important;
+  }
+
+  button:hover {
+    background: var(--button-secondary-background) !important;
+  }
 
   button:disabled {
     background: transparent !important;
@@ -173,12 +181,11 @@ $navigation-margin: 20px;
   line-height: 32px;
   font-family: Gotham-Light;
   font-size: 30px;
-  color: #394152;
+  color: var(--base-text);
 }
 
 .logo {
   width: 172px;
-  margin-bottom: 15px;
 }
 
 .inputContainer {

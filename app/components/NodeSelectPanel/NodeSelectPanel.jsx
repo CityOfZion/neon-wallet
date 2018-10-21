@@ -52,8 +52,7 @@ export default class NodeSelect extends React.Component<Props, State> {
         </div>
         <section className={styles.tableContainer}>
           <div className={styles.header}>
-            <Tooltip
-              title="Refresh"
+            <div
               className={classNames(styles.refresh, {
                 [styles.refreshDisabled]: this.state.refreshDisabled
               })}
@@ -66,7 +65,7 @@ export default class NodeSelect extends React.Component<Props, State> {
                   [styles.loading]: loading
                 })}
               />
-            </Tooltip>
+            </div>
 
             <div className={styles.count}>Top {nodesShown} nodes listed</div>
 
@@ -106,7 +105,7 @@ export default class NodeSelect extends React.Component<Props, State> {
 
     return (
       <Tooltip
-        title="Select automatically"
+        title="Allow NEON to choose a node automatically"
         className={classNames(styles.automaticSelect, {
           [styles.selected]: !selectedNode
         })}

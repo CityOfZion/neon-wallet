@@ -49,15 +49,12 @@ input {
   width: 100%;
   height: 100%;
   font-family: 'Gotham', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-  background-color: var(--main-background);
 }
 
 body {
   font-size: 16px;
   padding: 0px;
   margin: 0px;
-  background-color: var(--main-background);
-  color: $default-text;
   overflow: hidden;
   :focus {
     outline: none;
@@ -69,8 +66,6 @@ input {
   padding: 7px 15px;
   border: none;
   font-weight: 300;
-  background-color: $dark-input-color;
-  color: $default-text;
   :focus {
     outline: none;
   }
@@ -78,83 +73,15 @@ input {
 
 .notification-link {
   text-decoration: none;
-  color: $default-text;
 }
 
-#settings,
-#tokenSale {
-  .description {
-    font-size: 1.2em;
-    font-weight: 200;
-    margin-bottom: 20px;
-  }
-  .settingsForm {
-    margin-bottom: 20px;
-  }
-  input.scriptHash {
-    width: 500px;
-  }
-  input.neoAmount {
-    width: 100px;
-  }
-  label {
-    margin-right: 10px;
-  }
-  .walletItem {
-    width: 100%;
-  }
-  .settingsItem {
-    margin-bottom: 10px;
-  }
-  .itemTitle {
-    font-weight: 800;
-    margin-bottom: 5px;
-  }
-  .walletItem {
-    margin-bottom: 3px;
-  }
-  .walletName,
-  .walletKey,
-  .deleteWallet {
-    display: inline-block;
-    margin-right: 10px;
-  }
-  .walletName {
-    width: 25%;
-  }
-  .walletKey {
-    width: 50%;
-    font-size: 0.8em;
-    font-family: 'courier', monospace;
-  }
-  .deleteWallet {
-    width: 10%;
-    opacity: 0.6;
-    cursor: pointer;
-  }
-}
-
-#tokenSale {
-  .warning {
-    background-color: red;
-    color: white;
-    padding: 5px;
-    margin-bottom: 10px;
-  }
-}
-
-.vertical.Pane1 {
-  border-right: 1.5px solid $spacer-color;
-}
-
-// TODO: tool-tip seems broken
 .__react_component_tooltip {
   &.show {
     opacity: 1 !important;
   }
   &.solidTip {
     background-color: rgba(0, 0, 0, 1);
-    z-index: $z-index-tooltip;
+    z-index: 1000;
   }
 }
 
@@ -171,14 +98,20 @@ input {
   }
 }
 
-// react-select overrides
-// TODO: work out a solution that does not expose these globally
 .react-select-container {
   width: 100%;
   cursor: pointer !important;
 
   .react-select__placeholder {
-    color: rgba(106, 106, 106, 1);
+    color: var(--input-placeholder);
+  }
+
+  .react-select__input {
+    color: var(--input-text);
+  }
+
+  .react-select__single-value {
+    color: var(--input-text);
   }
 
   .react-select__value-container {
@@ -187,38 +120,41 @@ input {
     height: $text-input-height;
     padding: 7px 15px;
     line-height: $text-input-height;
-    color: $text-input-color;
-    background: $text-input-background-color;
+    color: var(--input-text);
+    background: var(--input-background);
     font-size: $text-input-font-size;
     border-radius: $text-input-border-radius;
   }
 
   .react-select__control {
-    color: $text-input-color;
-    background: $text-input-background-color;
+    color: var(--input-text);
+    background: var(--input-background);
     border-radius: $text-input-border-radius;
-    border: 2px solid #f2f2f2;
+    border: 2px solid var(--input-background);
   }
 
   .react-select__control:hover {
-    border-color: #f2f2f2;
+    border-color: var(--input-background);
+  }
+  .react-select__option:hover {
+    background-color: var(--input-select-hover);
   }
 
   .react-select__option--is-focused {
-    background: $main-background;
+    background: var(--input-select-hover);
     cursor: pointer;
   }
 
   .react-select__option--is-selected {
-    background: $main-background;
-    color: $default-text;
+    background: var(--input-select-hover);
+    color: var(--base-text);
   }
 
   .react-select__menu-list {
     box-sizing: border-box;
     width: 100%;
     overflow: auto;
-    background: #f2f2f2;
+    background: var(--input-background);
     border-top: none;
     border-radius: 0 0 4px 4px;
     margin-top: -7px;
@@ -277,8 +213,8 @@ input {
 
     li[aria-selected='true'] {
       font-weight: bold;
-      color: $default-text;
-      border-bottom: solid $default-text 2px;
+      color: var(--base-text);
+      border-bottom: solid var(--base-text) 2px;
     }
   }
 }

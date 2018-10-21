@@ -1,50 +1,50 @@
 @import '../../../../../styles/variables';
 
 .sendSuccessTransaction {
-    display: flex;
-    background-color: $light-grey;
-    color: $medium-grey;
-    padding: 8px 30px;
-    justify-content: space-around;
-    align-items: center;
-    margin: 5px 0;
+  display: flex;
+  background-color: var(--panel-header);
+  color: var(--panel-label-text);
+  padding: 8px 30px;
+  justify-content: space-around;
+  align-items: center;
+  margin: 5px 0;
 }
 
 .sendIconContainer,
 .assetContainer {
-    width: 10%;
+  width: 10%;
 }
 
 .amountContainer {
-    width: 15%;
+  width: 15%;
 }
 
 .amount {
-    color: $dark-grey;
-    font-weight: bold;
+  color: var(--panel-header-text);
+  font-weight: bold;
 }
 
 .addressContainer {
-    width: 50%;
-    display: flex;
-    align-items: center;
+  width: 50%;
+  display: flex;
+  align-items: center;
 }
 
 .buttonContainer {
-    width: 20%;
-    display: flex;
-    justify-content: space-between;
+  width: 20%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .sendSuccessButton {
-    border: none; 
-    background: transparent;
-    display: flex;
-    align-items: center;
-    font-size: 1rem;
-    cursor: pointer;
-    
-    svg {
-        margin-right: 5px;
-    }
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  cursor: pointer;
+
+  svg {
+    margin-right: 5px;
+  }
 }

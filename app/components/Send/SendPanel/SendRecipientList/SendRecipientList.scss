@@ -31,7 +31,7 @@
     position: absolute;
     left: -45px;
     height: 100%;
-    color: $dark-grey;
+    color: var(--panel-header-text);
     font-size: 1.3rem;
     font-weight: lighter;
     transform: translateY(13px);

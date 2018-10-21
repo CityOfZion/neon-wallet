@@ -42,6 +42,13 @@
 
   button {
     align-self: flex-end;
+    margin-top: 5px;
+
+    svg {
+      path {
+        fill: var(--tx-history-copy-icon);
+      }
+    }
   }
 }
 
@@ -74,6 +81,12 @@
   max-width: 90px;
   min-width: 90px;
   background: transparent !important;
+
+  svg {
+    path {
+      fill: var(--tx-history-button-icon) !important;
+    }
+  }
 }
 
 .amounts {

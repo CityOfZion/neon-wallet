@@ -1,14 +1,11 @@
 @import '../../styles/variables';
 
 .active {
-  background-image: linear-gradient(
-    -216deg,
-    #66ed87 0%,
-    #6ad8ff 100%
-  ) !important;
+  background-image: var(--button-active) !important;
+  background: var(--button-active) !important;
 
   &:hover {
-    background: #66edcd !important;
+    background: var(--button-active-hover) !important;
   }
 }
 
@@ -28,33 +25,36 @@
 
   &[disabled] {
     opacity: 0.6;
-    background: #d6d9e0 !important;
+    background: var(--button-disabled) !important;
   }
 
   &:not([disabled]) {
     cursor: pointer;
   }
 
+  // TODO: update class to .primary
   &.dark {
-    background-image: linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%);
+    background-image: var(--button-primary-background);
+    background-color: var(--button-primary-background);
     font-size: 14px;
-    color: #394152;
+    color: var(--button-primary-text);
 
     path {
-      fill: #394152;
+      fill: var(--button-icon-color);
     }
 
     &:not([disabled]):hover {
-      background: #66edcd;
+      background: var(--button-primary-hover);
     }
   }
 
+  // TODO: update class to .secondary
   &.light {
     border: solid;
     border-width: 2px;
     border-color: transparent;
-    background: #fff;
-    color: #394152;
+    background: var(--button-secondary-background);
+    color: var(--base-text);
 
     &:not([disabled]):hover {
       border: double 2px transparent;
@@ -62,7 +62,11 @@
       background-clip: content-box, border-box;
       border-color: transparent;
       border-color: transparent;
-      background: #f2f2f2;
+      background: var(--button-secondary-hover);
+    }
+
+    path {
+      fill: var(--secondary-button-icon-color);
     }
   }
 

@@ -4,14 +4,14 @@ $settings-link-color: #66ed87;
   cursor: pointer;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #f2f2f2;
+  border-bottom: 1px solid var(--settings-item-border-color);
   padding: 5px 0;
   max-height: 50px;
   height: 50px;
   text-decoration: none;
   font-family: Gotham-Bold;
   font-size: 12px;
-  color: #343b4a;
+  color: var(--settings-item-label);
 
   .settingsLinkLabel {
     flex: 1;
@@ -20,7 +20,7 @@ $settings-link-color: #66ed87;
 
   .settingsLinkIcon {
     path {
-      fill: #cccccc;
+      fill: var(--settings-item-icon);
     }
     transform: rotate(-90deg);
   }
@@ -40,7 +40,7 @@ $settings-link-color: #66ed87;
     max-height: 17px;
 
     path {
-      fill: #cccccc;
+      fill: var(--settings-item-icon);
     }
   }
 }
@@ -52,7 +52,7 @@ label {
 .greyLabel {
   font-family: Gotham-Bold;
   font-size: 12px;
-  color: #cccccc;
+  color: var(--settings-item-icon);
   min-width: 200px;
   text-align: right;
   margin-right: 24px;
@@ -61,7 +61,7 @@ label {
 .greenLabel {
   font-family: Gotham-Bold;
   font-size: 12px;
-  color: #69e27e;
+  color: var(--settings-link-text);
 }
 
 .noBorderBottom {

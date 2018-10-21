@@ -1239,7 +1239,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                       >
                         <div
                           aria-hidden="true"
-                          className="css-7ne3xr react-select__indicator react-select__dropdown-indicator"
+                          className="css-qfyl2b react-select__indicator react-select__dropdown-indicator"
                           onMouseDown={[Function]}
                           onTouchEnd={[Function]}
                         >

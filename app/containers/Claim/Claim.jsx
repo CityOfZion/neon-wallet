@@ -18,13 +18,17 @@ export default class Claim extends Component<Props> {
   intervalId: ?number
 
   render() {
-    const { className } = this.props
+    const { className, claimAmount } = this.props
     const disabled = this.isDisabled()
 
     return (
       <div>
         <Tooltip
-          title="You can claim GAS once every 5 minutes"
+          title={
+            toBigNumber(claimAmount).eq(0)
+              ? 'Address must hold NEO in order to claim GAS'
+              : 'You can claim GAS once every 5 minutes'
+          }
           disabled={!disabled}
         >
           <Button

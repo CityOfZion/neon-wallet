@@ -20,7 +20,8 @@ type State = {
 }
 
 type Props = {
-  loading: boolean
+  loading: boolean,
+  theme: ThemeType
 }
 
 const LOGIN_OPTIONS = {
@@ -51,9 +52,9 @@ export default class Home extends React.Component<Props, State> {
   options = Object.keys(LOGIN_OPTIONS).map((key: string) => LOGIN_OPTIONS[key])
 
   render = () => {
-    const { loading } = this.props
+    const { loading, theme } = this.props
     return (
-      <HomeLayout>
+      <HomeLayout theme={theme}>
         <div className={styles.inputContainer}>
           <Tabs
             selectedIndex={this.state.tabIndex}

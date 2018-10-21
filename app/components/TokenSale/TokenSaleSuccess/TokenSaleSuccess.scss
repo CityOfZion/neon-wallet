@@ -1,65 +1,64 @@
 @import '../../../styles/variables';
 
 .tokenSaleSuccess {
-    max-width: 600px;
-    margin: 0 auto;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .tokenSaleConfirmPanelHeader {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .tokenSaleSuccessContainer {
-    max-width: 400px;
-    margin: 0 auto;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 .tokenSaleSuccessHeading {
-    display: flex;
-    align-items: center;
-    justify-content:center;
-    font-weight: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: normal;
 }
 
 .tokenSaleSuccessSendIcon {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
 .tokenSaleSuccessImage {
-    width: 100px;
-    margin: 0 auto;
+  width: 100px;
+  margin: 0 auto;
 }
 
 .tokenSaleSuccessSpacer {
-    width: 100%;
-    height: 2px;
-    background-color: $medium-grey;
-    margin: 30px 0;
+  width: 100%;
+  height: 2px;
+  margin: 30px 0;
 }
 
 .tokenSaleSuccessInnerContainer {
-    display: flex;
-    margin-bottom: 150px;
+  display: flex;
+  margin-bottom: 150px;
 }
 
 .tokenSaleSuccessIcon {
-    height: 150px;
-    width: 150px;
+  height: 150px;
+  width: 150px;
 }
 
 .tokenSaleSuccessInnerTextContainer {
-    display: flex;
-    flex-direction: column;
-    margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
 }
 
 .tokenSaleSuccessInnerTextHeading {
-    font-size: 1.6rem;
-    margin-bottom: 0;
+  font-size: 1.6rem;
+  margin-bottom: 0;
 }
 
 .tokenSaleSuccessInnerTextParagraph {
-    font-size: 0.9rem;
+  font-size: 0.9rem;
 }

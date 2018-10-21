@@ -7,6 +7,8 @@
   justify-content: center;
   height: 50px;
   padding: 0 24px;
-  background: $light-grey;
-  color: $dark-grey;
+  font-family: Gotham-Book;
+  font-size: 14px;
+  background: var(--panel-header);
+  color: var(--panel-header-text);
 }

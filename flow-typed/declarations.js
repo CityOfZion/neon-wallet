@@ -7,7 +7,8 @@ import {
   ROUTES,
   NOTIFICATION_LEVELS,
   NOTIFICATION_POSITIONS,
-  MODAL_TYPES
+  MODAL_TYPES,
+  THEME,
 } from '../app/core/constants'
 
 declare type ActionCreatorType = any
@@ -100,3 +101,6 @@ declare type SendEntryType = {
   address: string,
   symbol: SymbolType
 }
+
+ 
+ declare type ThemeType = THEME.LIGHT | THEME.DARK

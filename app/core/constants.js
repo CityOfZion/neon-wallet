@@ -13,6 +13,13 @@ export const ASSETS = {
   GAS: 'GAS'
 }
 
+export const THEMES = {
+  LIGHT: 'Light',
+  DARK: 'Dark'
+}
+
+export const DEFAULT_THEME = THEMES.LIGHT
+
 export const EXPLORERS = {
   NEO_SCAN: 'Neoscan',
   NEO_TRACKER: 'Neotracker',
@@ -119,8 +126,6 @@ export const DEFAULT_WALLET = {
 }
 
 export const DEFAULT_CURRENCY_CODE = 'usd'
-
-export const DEFAULT_THEME = 'Light'
 
 export const CURRENCIES = {
   aud: { symbol: '$' },

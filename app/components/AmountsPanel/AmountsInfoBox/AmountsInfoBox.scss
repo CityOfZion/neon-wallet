@@ -7,9 +7,8 @@
   padding: 0 12px;
   box-sizing: border-box;
   font-size: 14px;
-  color: #5c677f;
   border-right: 1px solid var(--main-background);
-  background-color: #f2f2f2;
+  background-color: var(--amounts-panel-first-row-background);
   justify-content: space-between;
 
   .assetName {
@@ -25,10 +24,12 @@
 
   .assetAmount {
     font-family: Gotham-Medium;
+    color: var(--amounts-panel-asset-amount-text);
   }
 
   .assetWorth {
     font-family: Gotham-Book;
+    color: var(--amounts-panel-asset-worth-text);
   }
 
   .assetName,
@@ -57,5 +58,5 @@
 }
 
 .amountsInAltColor {
-  background-color: #fff;
+  background-color: var(--amounts-panel-second-row-background);
 }

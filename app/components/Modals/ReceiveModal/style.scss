@@ -33,7 +33,7 @@
     font-size: 30px;
     line-height: 32px;
     font-family: Gotham-Light;
-    color: #394152;
+    color: var(--base-text);
     text-align: center;
   }
 }
@@ -86,7 +86,7 @@
 
   .sectionContent {
     padding: 16px;
-    background-color: $light-grey;
+    background-color: var(--panel-header);
   }
 
   .qrcode {
@@ -94,7 +94,7 @@
     justify-content: center;
     align-items: center;
     min-height: 275px;
-    background: #f2f2f2;
+    background-color: var(--panel-header);
     padding: 16px;
   }
 

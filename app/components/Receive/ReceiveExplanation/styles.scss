@@ -1,7 +1,7 @@
 .receiveExplanation {
   width: 450px;
-  padding: 42px;
-  background: #f8f8f8;
+  padding: 21px 42px 42px 42px;
+  background: var(--panel-receive-explanation);
 
   .header {
     display: flex;
