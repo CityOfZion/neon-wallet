@@ -58,7 +58,6 @@ class App extends Component<Props> {
           <Notifications />
           <ModalRenderer />
         </div>
-        {/* {address && <Footer className={styles.footer} />} */}
       </div>
     )
   }
