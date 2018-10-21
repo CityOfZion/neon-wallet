@@ -58,7 +58,7 @@ $icon-size: 24px;
       cursor: pointer;
       display: flex !important;
       align-items: center;
-      color: var('--panel-full-height-instructions-text');
+      color: var(--panel-full-height-instructions-text);
 
       &.selected {
         cursor: default;
