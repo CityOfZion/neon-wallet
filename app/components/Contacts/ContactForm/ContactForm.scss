@@ -7,7 +7,7 @@
   flex: 1;
 
   .contactFormHeader {
-    color: $dark-grey;
+    color: var(--panel-header-text);
     font-weight: 300;
     display: flex;
     justify-content: center;
@@ -35,10 +35,10 @@
 
     .contactFormSubheader {
       font-size: 0.9rem;
-      border-bottom: 1px solid $light-grey;
+      border-bottom: 1px solid var(--panel-header);
       padding: 10px 0;
       margin: 35px 0;
-      color: $dark-grey;
+      color: var(--panel-header-text);
     }
 
     .contactFormLabel {
@@ -46,7 +46,7 @@
       font-weight: bold;
       font-size: 0.8rem;
       display: block;
-      color: $medium-grey;
+      color: var(--panel-label-text);
       margin: 15px 0 10px 0;
     }
 

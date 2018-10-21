@@ -6,7 +6,7 @@
   height: 45px;
   position: relative;
   padding: 8px 0;
-  background-color: $light-grey;
+  background-color: var(--panel-header);
 }
 
 .modalHeaderTitle {
@@ -15,7 +15,6 @@
 
   img {
     width: 100px;
-    // height: 30px;
   }
 }
 

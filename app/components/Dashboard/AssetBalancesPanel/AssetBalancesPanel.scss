@@ -42,7 +42,7 @@
         margin: 16px 0;
         font-family: Gotham-Light;
         font-size: 40px;
-        color: #394152;
+        color: var(--base-text);
       }
 
       .value {
@@ -72,7 +72,7 @@
   .walletTotal {
     font-family: Gotham-Medium;
     font-size: 24px;
-    color: #394152;
+    color: var(--base-text);
     text-align: center;
     line-height: 32px;
   }
@@ -80,7 +80,7 @@
   .totalValue {
     padding: 24px;
     display: flex;
-    background: rgba(230, 230, 230, 0.28);
+    background: var(--dashboard-asset-panel-total-background);
     justify-content: space-between;
     align-items: center;
     font-size: 24px;
@@ -97,14 +97,14 @@
     opacity: 0.5;
     font-family: Gotham-Light;
     font-size: 24px;
-    color: #394152;
+    color: var(--base-text);
   }
 
   .assetName {
     opacity: 0.5;
     font-family: Gotham-Bold;
     font-size: 13px;
-    color: #5c677f;
+    color: var(--dashboard-asset-panel-asset-name);
     text-align: center;
   }
 

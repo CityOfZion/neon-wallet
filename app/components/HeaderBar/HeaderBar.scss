@@ -21,9 +21,15 @@
     font-weight: 300;
   }
 
+  svg {
+    path {
+      fill: var(--header-bar-default-icon-color);
+    }
+  }
+
   a {
     text-decoration: none;
-    color: black;
+    color: var(--base-text);
     align-items: center;
     display: flex;
   }

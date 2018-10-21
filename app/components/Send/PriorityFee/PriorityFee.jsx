@@ -44,6 +44,7 @@ export default class PriorityFee extends React.Component<Props> {
             <Button
               key={option.description}
               className={styles.sendFormButton}
+              primary
               renderIcon={() => <LightningIcon />}
               active={fees === option.fee ? true : undefined}
               disabled={this.shouldDisableFeeButton(

@@ -20,7 +20,7 @@
     height: 36px;
     margin-right: 24px;
     path {
-      fill: $neon-green;
+      fill: var(--panel-icon);
     }
   }
 
@@ -29,13 +29,12 @@
     font-size: 30px;
     line-height: 32px;
     font-family: Gotham-Light;
-    color: #394152;
     text-align: center;
   }
 }
 
 .divider {
-  border-bottom: $black solid 1px;
+  border-bottom: var(--panel-header-border) solid 1px;
   margin-bottom: 20px;
 }
 

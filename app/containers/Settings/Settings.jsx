@@ -179,6 +179,7 @@ export default class Settings extends Component<Props, State> {
   }
 
   updateThemeSettings = (option: SelectOption) => {
+    this.setState({ selectedTheme: option })
     const { setTheme } = this.props
     setTheme(option.value)
   }
@@ -257,18 +258,26 @@ export default class Settings extends Component<Props, State> {
               noBorderBottom
               title="THEME"
             >
-              <Tooltip
+              {/* <Tooltip
                 className={styles.settingsSelectContainer}
                 title="Coming Soon"
                 position="bottom"
-              >
+              > */}
+              <div className={styles.settingsSelectContainer}>
                 <StyledReactSelect
                   settingsSelect
-                  isDisabled
+                  // isDisabled
+                  onChange={this.updateThemeSettings}
+                  isSearchable={false}
                   transparent
+                  options={[
+                    { value: 'Light', label: 'Light' },
+                    { value: 'Dark', label: 'Dark' }
+                  ]}
                   value={this.state.selectedTheme}
                 />
-              </Tooltip>
+              </div>
+              {/* </Tooltip> */}
             </SettingsItem>
             <div className={styles.settingsSpacer} />
             <SettingsLink

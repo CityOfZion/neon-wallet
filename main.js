@@ -40,7 +40,6 @@ app.on('ready', () => {
       minWidth: 1200,
       titleBarStyle: 'hidden',
       show: false,
-      backgroundColor: '#e6e6e6',
       icon: path.join(__dirname, 'icons/png/64x64.png'),
       webPreferences: {
         allowRunningInsecureContent: false,

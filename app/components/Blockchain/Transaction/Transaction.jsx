@@ -65,9 +65,9 @@ export default class Transaction extends React.Component<Props> {
   displayModal = () => {
     const {
       showAddContactModal,
-      tx: { to }
+      tx: { to, from, iconType }
     } = this.props
-    showAddContactModal({ address: to })
+    showAddContactModal({ address: iconType === 'RECEIVE' ? from : to })
   }
 
   handleClick = () => {

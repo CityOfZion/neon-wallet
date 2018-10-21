@@ -6,7 +6,7 @@
     cursor: pointer;
 
     &:hover {
-      background: #e6e6e6;
+      background: var(--input-background);
     }
 
     .label {

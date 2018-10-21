@@ -8,7 +8,7 @@ $size: 68px;
   justify-content: space-between;
   box-sizing: border-box;
   width: $size;
-  background: #fff;
+  background: var(--sidebar-background);
   padding-top: 12px;
 
   .group {
@@ -60,19 +60,19 @@ $size: 68px;
   &,
   & svg,
   & svg path {
-    color: #9599a2;
+    color: var(--sidebar-icon);
     fill: currentColor;
   }
 
   &.active,
   &:hover {
-    background: #f2f2f2;
-    border-color: #66edcd;
+    background: var(--sidebar-active-background);
+    border-color: var(--sidebar-active-border);
 
     &,
     & svg,
     & svg path {
-      color: #394152;
+      color: var(--base-text);
     }
   }
 }
@@ -84,7 +84,7 @@ $size: 68px;
 
   &.active,
   &:hover {
-    background: #fff;
+    background: var(--side-bar-disabled-item-background);
     border-image: none;
   }
 }

@@ -47,6 +47,12 @@
       display: flex;
       align-items: center;
 
+      svg {
+        path {
+          fill: var(--tx-history-button-icon);
+        }
+      }
+
       .editButton {
         width: 100px;
         margin-right: 10px;
@@ -76,7 +82,7 @@
   display: flex;
   align-items: center;
   padding: 5px;
-  color: $dark-grey;
+  color: var(--panel-header-text);
   text-decoration: none;
   cursor: pointer;
 
@@ -94,7 +100,7 @@
 }
 
 .oddNumberedRow {
-  background: rgba(230, 230, 230, 0.1);
+  background: var(--contacts-odd-numbered-row);
 }
 
 .emptyContactsContainer {
@@ -107,7 +113,8 @@
 
 .groupHeader {
   padding: 10px 24px;
-  background-color: #f6f7f8;
+  background-color: var(--contacts-group-header-background);
+  color: var(--contacts-group-header-text);
   font-weight: bold;
 }
 

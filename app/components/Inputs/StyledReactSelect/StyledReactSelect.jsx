@@ -3,9 +3,9 @@ import Select from 'react-select'
 import { omit } from 'lodash-es'
 
 const returnDropdownIndicatorColor = props => {
-  if (props.selectProps.settingsSelect) return '#69E27E'
+  if (props.selectProps.settingsSelect) return 'var(--settings-link-text)'
   if (props.isFocused && !props.selectProps.hideHighlight) return '#6bdaf6'
-  return '#9599a2'
+  return 'var(--input-icon)'
 }
 
 const customStyles = {
@@ -43,7 +43,7 @@ const customStyles = {
       ? {
           fontFamily: 'Gotham-Bold',
           fontSize: '14px',
-          color: '#69E27E !important',
+          color: 'var(--settings-select-value-text) !important',
           textAlign: 'right',
           opacity: props.isDisabled ? 0.6 : 1
         }
@@ -62,7 +62,7 @@ const customStyles = {
       ? {
           fontFamily: 'Gotham-Bold',
           fontSize: '14px',
-          color: '#69E27E',
+          color: 'var(--settings-select-value-text) !important',
           textAlign: 'right'
         }
       : {}
