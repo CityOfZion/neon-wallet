@@ -28,7 +28,7 @@ describe('ConfirmModal', () => {
       </Provider>
     )
 
-    expect(wrapper).toMatchSnapshot()
+    expect(wrapper.find(ConfirmModal)).toMatchSnapshot()
   })
 
   test('should render the text correctly', () => {
