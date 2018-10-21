@@ -21,7 +21,7 @@ import DarkLogoWithoutText from '../../../assets/images/logo-without-text.png'
 
 type Props = {
   className: string,
-  theme: 'Light' | 'Dark'
+  theme: ThemeType
 }
 
 const Sidebar = ({ className, theme }: Props) => {

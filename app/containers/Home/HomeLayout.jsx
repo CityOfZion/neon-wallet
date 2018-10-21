@@ -10,7 +10,7 @@ type Props = {
   children: React$Node,
   renderNavigation?: Function,
   headerText: string,
-  theme: 'Light' | 'Dark'
+  theme: ThemeType
 }
 
 export default class HomeLayout extends Component<Props> {
