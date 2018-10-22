@@ -49,6 +49,10 @@
     color: var(--input-text);
     background: var(--input-background);
     font-size: $text-input-font-size;
+
+    ::placeholder {
+      color: purple !important;
+    }
   }
 
   .maxButton {
@@ -70,4 +74,8 @@
       background: var(--button-max-amount-background) !important;
     }
   }
+}
+
+.numberInput ::placeholder {
+  color: var(--input-placeholder);
 }

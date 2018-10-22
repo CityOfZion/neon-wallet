@@ -71,6 +71,10 @@ input {
   }
 }
 
+input::placeholder {
+  color: var(--input-placeholder);
+}
+
 .notification-link {
   text-decoration: none;
 }
