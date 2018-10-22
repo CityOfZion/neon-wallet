@@ -13,6 +13,13 @@ export const ASSETS = {
   GAS: 'GAS'
 }
 
+export const THEMES = {
+  LIGHT: 'Light',
+  DARK: 'Dark'
+}
+
+export const DEFAULT_THEME = THEMES.LIGHT
+
 export const EXPLORERS = {
   NEO_SCAN: 'Neoscan',
   NEO_TRACKER: 'Neotracker',
@@ -62,8 +69,7 @@ export const NOTIFICATION_POSITIONS = {
   BOTTOM_LEFT: 'bl'
 }
 
-export const BIP44_PATH =
-  '8000002C' + '80000378' + '80000000' + '00000000' + '00000000' // eslint-disable-line
+export const BIP44_PATH = '8000002C' + '80000378' + '80000000' + '00000000' // eslint-disable-line
 
 export const MODAL_TYPES = {
   SEND: 'SEND',
@@ -121,8 +127,6 @@ export const DEFAULT_WALLET = {
 
 export const DEFAULT_CURRENCY_CODE = 'usd'
 
-export const DEFAULT_THEME = 'Light'
-
 export const CURRENCIES = {
   aud: { symbol: '$' },
   brl: { symbol: 'R$' },
@@ -164,3 +168,5 @@ export const TOKEN_SALE_SUCCESS = 'token_sale_success'
 export const TOKEN_SALE_FAILURE = 'token_sale_failure'
 
 export const NODES = nodes
+
+export const PRICE_UNAVAILABLE = 'N/A'

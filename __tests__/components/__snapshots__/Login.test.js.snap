@@ -8,12 +8,16 @@ exports[`Login renders without crashing 1`] = `
   <form
     onSubmit={[Function]}
   >
-    <PasswordInput
-      autoFocus={true}
-      onChange={[Function]}
-      placeholder="Enter your private key here"
-      value=""
-    />
+    <div
+      className="centeredInput"
+    >
+      <PasswordInput
+        autoFocus={true}
+        onChange={[Function]}
+        placeholder="Enter your private key here"
+        value=""
+      />
+    </div>
     <Button
       className="loginButtonMargin"
       disabled={true}

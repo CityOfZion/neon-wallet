@@ -46,8 +46,8 @@
 .buttonContainer {
   width: 100%;
   margin: auto;
-  margin-top: 10px;
-  margin-bottom: 25px;
+  margin-top: auto;
+  margin-bottom: 50px;
 }
 
 .disclaimer {
@@ -95,7 +95,8 @@
 }
 
 .displayWalletAccountsDialogue {
-  margin: 20px 0 -20px;
+  margin: 20px 0px 20px 0px;
+  max-width: 100%;
 
   .saveDetails {
     font-weight: 300;

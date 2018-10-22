@@ -1,7 +1,14 @@
 @import '../../../styles/variables';
 
 .contentContainer {
-  padding: 0 125px;
+  padding: 0 100px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.modalBody {
+  height: 100%;
 }
 
 .header {
@@ -15,11 +22,26 @@
     width: 36px;
     height: 36px;
     margin-right: 24px;
+
+    path {
+      fill: #69e27e;
+    }
   }
 
   .title {
-    font-size: 36px;
+    font-weight: 100;
+    font-size: 30px;
+    line-height: 32px;
+    font-family: Gotham-Light;
+    color: var(--base-text);
+    text-align: center;
   }
+}
+
+.qr {
+  border: none;
+  height: 250px;
+  width: 250px;
 }
 
 .subHeader {
@@ -31,6 +53,19 @@
   .title {
     flex: 1;
   }
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.loaderMargin {
+  margin-top: 100px;
+}
+
+.buttonContainer {
+  margin-top: auto;
+  margin-bottom: 50px;
 }
 
 .urlSection,
@@ -51,19 +86,25 @@
 
   .sectionContent {
     padding: 16px;
-    background-color: $light-grey;
+    background-color: var(--panel-header);
   }
 
   .qrcode {
     display: flex;
     justify-content: center;
-    height: 200px;
+    align-items: center;
+    min-height: 275px;
+    background-color: var(--panel-header);
+    padding: 16px;
   }
 
   .imgUri {
-    width: 330px;
-    word-wrap: break-word;
-    margin-right: 70px;
+    max-width: 440px;
+    min-width: 440px;
+    text-overflow: ellipsis;
+    align-items: center;
+    font-size: 10px;
+    display: flex;
   }
 
   .assetAmount {

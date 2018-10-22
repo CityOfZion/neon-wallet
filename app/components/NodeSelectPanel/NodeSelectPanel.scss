@@ -10,8 +10,9 @@ $icon-size: 24px;
   text-align: center;
   padding: 25px 0;
   font-size: 14px;
-  color: #969aa0;
+  color: var(--panel-full-height-instructions-text);
   text-align: center;
+  font-family: Gotham-Book;
 }
 
 .refreshDisabled {
@@ -30,17 +31,26 @@ $icon-size: 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #f2f2f2;
+    background-color: var(--node-select-header-background);
     padding: 25px;
     min-height: 12px;
+
+    .count {
+      color: var(--node-select-node-count);
+    }
 
     .refresh,
     .count,
     .automaticSelect {
       font-size: 14px;
       line-height: 14px;
-      color: #5c677f;
       font-family: Gotham-Book;
+
+      svg {
+        path {
+          fill: var(--node-select-refresh-icon);
+        }
+      }
     }
 
     .refresh,
@@ -48,7 +58,7 @@ $icon-size: 24px;
       cursor: pointer;
       display: flex !important;
       align-items: center;
-      color: #969aa0;
+      color: var(--panel-full-height-instructions-text);
 
       &.selected {
         cursor: default;
@@ -56,8 +66,11 @@ $icon-size: 24px;
     }
 
     .automaticSelect {
+      font-family: Gotham-Book;
+      font-size: 14px;
+      color: var(--node-select-automatic-select-button-text);
       svg path {
-        fill: #5abf6b;
+        fill: var(--node-select-icon-color);
       }
     }
 
@@ -86,7 +99,7 @@ $icon-size: 24px;
       font-size: 14px;
 
       &.odd {
-        background-color: rgba(230, 230, 230, 0.28);
+        background-color: var(--dashboard-total-wallet-value-odd-row);
       }
 
       &.selected {
@@ -139,7 +152,7 @@ $icon-size: 24px;
         flex-basis: 20%;
         display: flex;
         align-items: center;
-        color: #969aa0;
+
         cursor: pointer;
 
         .icon {
@@ -148,7 +161,7 @@ $icon-size: 24px;
 
         svg,
         svg path {
-          fill: #5abf6b;
+          fill: var(--node-select-icon-color);
         }
       }
     }

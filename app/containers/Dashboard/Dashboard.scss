@@ -8,11 +8,30 @@
   height: 100%;
   flex-direction: column;
 
+  .headerAddressContainer {
+    display: flex;
+    align-items: center;
+
+    label {
+      margin-right: 5px;
+      font-family: Gotham-Medium;
+    }
+
+    .addressLink {
+      font-size: 16px;
+      line-height: 32px;
+      margin: 0;
+      text-align: left;
+      cursor: pointer;
+    }
+  }
+
   .dashboardNetworkSwitch {
     position: absolute;
     left: 90px;
     top: 20px;
     font-size: 16px;
+    max-width: 120px;
   }
 
   .dataColumn {
@@ -21,23 +40,23 @@
     flex-direction: column;
     align-items: stretch;
     justify-content: center;
-    margin-right: 24px;
+    margin-right: 12px;
 
     .assetsPanel {
       height: 100%;
       max-height: 450px;
-      min-height: 390px;
+      min-height: 351px;
       margin-top: auto;
     }
 
     .tokensPanel {
       height: 100%;
-      margin-bottom: 24px;
-      margin-bottom: 24px;
+      margin-bottom: 12px;
     }
   }
 
   .panelContainer {
+    justify-content: center;
     display: flex;
     max-width: 99%;
     height: 100%;
@@ -57,7 +76,7 @@
 
     .portfolioPanel {
       height: 450px;
-      margin-bottom: 24px;
+      margin-bottom: 12px;
     }
   }
 

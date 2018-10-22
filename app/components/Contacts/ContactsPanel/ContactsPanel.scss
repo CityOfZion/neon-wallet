@@ -7,6 +7,7 @@
   .name {
     width: 180px;
     text-overflow: ellipsis;
+    font-size: 14px;
   }
 
   a {
@@ -37,13 +38,20 @@
     .address {
       display: flex;
       align-items: center;
-      width: 420px;
+      width: 375px;
+      font-size: 14px;
       justify-content: space-between;
     }
 
     .actions {
       display: flex;
       align-items: center;
+
+      svg {
+        path {
+          fill: var(--tx-history-button-icon);
+        }
+      }
 
       .editButton {
         width: 100px;
@@ -74,7 +82,7 @@
   display: flex;
   align-items: center;
   padding: 5px;
-  color: $dark-grey;
+  color: var(--panel-header-text);
   text-decoration: none;
   cursor: pointer;
 
@@ -92,7 +100,7 @@
 }
 
 .oddNumberedRow {
-  background: rgba(230, 230, 230, 0.1);
+  background: var(--contacts-odd-numbered-row);
 }
 
 .emptyContactsContainer {
@@ -105,7 +113,8 @@
 
 .groupHeader {
   padding: 10px 24px;
-  background-color: #F6F7F8;
+  background-color: var(--contacts-group-header-background);
+  color: var(--contacts-group-header-text);
   font-weight: bold;
 }
 

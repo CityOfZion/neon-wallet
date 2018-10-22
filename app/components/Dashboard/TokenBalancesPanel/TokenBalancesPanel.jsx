@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
+import { NavLink } from 'react-router-dom'
 
 import TextInput from '../../Inputs/TextInput'
 import CopyToClipboard from '../../CopyToClipboard'
@@ -11,7 +12,7 @@ import {
   formatToRoundedShortNumber
 } from '../../../core/formatters'
 import Nothing from '../../../assets/icons/nothing.svg'
-import { CURRENCIES } from '../../../core/constants'
+import { CURRENCIES, ROUTES, PRICE_UNAVAILABLE } from '../../../core/constants'
 
 type Props = {
   className: ?string,
@@ -38,7 +39,7 @@ export default class TokenBalancesPanel extends React.Component<Props> {
         renderHeader={this.renderHeader}
       >
         {balances.length
-          ? balances.sort(this.sortByValueInPortfolio).map(this.renderToken)
+          ? this.renderTokenBalances()
           : this.renderEmptyBalanceInfo()}
       </Panel>
     )
@@ -53,7 +54,11 @@ export default class TokenBalancesPanel extends React.Component<Props> {
         </div>
         <p>
           You’ll need to <b>transfer compatible NEP-5 assets</b> to this wallet
-          using ‘Receive’ or your public address:
+          using{' '}
+          <NavLink id="wallet-manager" exact to={ROUTES.RECEIVE}>
+            <span> receive </span>
+          </NavLink>{' '}
+          or your public address:
         </p>
         <div className={styles.address}>
           <TextInput value={address} disabled />
@@ -73,7 +78,7 @@ export default class TokenBalancesPanel extends React.Component<Props> {
     const { symbol } = CURRENCIES[currencyCode]
     let currPriceOfToken
     if (prices) currPriceOfToken = prices[ticker]
-    if (!currPriceOfToken) return 'N/A'
+    if (!currPriceOfToken) return PRICE_UNAVAILABLE
     if (currPriceOfToken < 1.0) {
       return `${symbol}${toFixedDecimals(currPriceOfToken, 4)}`
     }
@@ -109,40 +114,54 @@ export default class TokenBalancesPanel extends React.Component<Props> {
         <div className={styles.header}>
           <span>Token Balances</span>
         </div>
-        {!!balances.length && (
-          <div className={styles.tokenBalancesPanelContent}>
-            <div className={styles.tableHeader}>
-              <div className={styles.symbol}>Ticker</div>
-              <div className={styles.name}>Token</div>
-              <div className={styles.priceLabel}>Price</div>
-              <div className={styles.balance}>Holdings</div>
-            </div>
-          </div>
-        )}
       </div>
     )
   }
 
-  renderToken = (token: TokenBalanceType, i: number) => (
-    <div
-      key={token.scriptHash}
-      className={classNames(styles.tableData, {
-        [styles.oddNumberedRow]: i % 2 !== 0
-      })}
-    >
-      <div className={styles.tickerName}>
-        {!!token.image && (
-          <div className={styles.tokenImageContainer}>
-            <img className={styles.tokenImage} src={token.image} alt="" />
+  renderTokenBalances = () => {
+    const { balances } = this.props
+    return (
+      <div className={styles.tokenBalancesPanelContent}>
+        <div className={styles.gridContainer}>
+          <div className={classNames(styles.columnCell, styles.symbol)}>
+            Ticker
           </div>
-        )}
-        {token.symbol}
+          <div className={classNames(styles.columnCell, styles.name)}>
+            Token
+          </div>
+          <div className={classNames(styles.columnCell, styles.priceLabel)}>
+            Price
+          </div>
+          <div className={classNames(styles.columnCell, styles.balance)}>
+            Holdings
+          </div>
+          {balances.sort(this.sortByValueInPortfolio).map(token => (
+            <React.Fragment key={token.scriptHash}>
+              <span className={classNames(styles.rowCell, styles.tickerName)}>
+                {!!token.image && (
+                  <div className={styles.tokenImageContainer}>
+                    <img
+                      className={styles.tokenImage}
+                      src={token.image}
+                      alt=""
+                    />
+                  </div>
+                )}
+                {token.symbol}
+              </span>
+              <span className={classNames(styles.rowCell, styles.tokenName)}>
+                {token.name}
+              </span>
+              <span className={classNames(styles.rowCell, styles.price)}>
+                {this.formatPrice(token.symbol)}
+              </span>
+              <span className={classNames(styles.rowCell, styles.balanceValue)}>
+                {token.balance}
+              </span>
+            </React.Fragment>
+          ))}
+        </div>
       </div>
-      <div className={styles.tokenName}>{token.name}</div>
-      <div className={styles.price}>{this.formatPrice(token.symbol)}</div>
-      <div className={styles.balanceValue}>
-        {formatToRoundedShortNumber(Number(token.balance))}
-      </div>
-    </div>
-  )
+    )
+  }
 }

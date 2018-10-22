@@ -6,8 +6,12 @@ import TokenSaleSelection from './TokenSaleSelection/TokenSaleSelection'
 import TokenSaleConditions from './TokenSaleConditions/TokenSaleConditions'
 import DialogueBox from '../../DialogueBox'
 import Button from '../../Button'
+<<<<<<< HEAD
 // import Tooltip from '../../components/Tooltip/Tooltip'
 import PriorityFee from '../../Send/SendPanel/PriorityFee'
+=======
+import PriorityFee from '../../Send/PriorityFee'
+>>>>>>> design-v2
 import WarningIcon from '../../../assets/icons/warning.svg'
 import CheckMarkIcon from '../../../assets/icons/check.svg'
 import AddIcon from '../../../assets/icons/add.svg'

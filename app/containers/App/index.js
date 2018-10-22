@@ -16,6 +16,7 @@ import withLogoutRedirect from '../../hocs/auth/withLogoutRedirect'
 import withLogoutReset from '../../hocs/auth/withLogoutReset'
 import withInitialCall from '../../hocs/withInitialCall'
 import withAuthData from '../../hocs/withAuthData'
+import withThemeData from '../../hocs/withThemeData'
 import { checkVersion } from '../../modules/metadata'
 import { showErrorNotification } from '../../modules/notifications'
 
@@ -49,7 +50,8 @@ export default compose(
   withProgressComponents(
     appActions,
     {
-      [LOADING]: Loading
+      // TODO: seems to be a spunky race condition here in terms of applying the theme (minor severity)
+      [LOADING]: withThemeData()(Loading)
       // [FAILED]: Failed
     },
     {

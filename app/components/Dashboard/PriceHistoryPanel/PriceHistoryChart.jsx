@@ -90,7 +90,7 @@ export default class PriceHistoryChart extends React.Component<Props, State> {
           <Line
             dataKey={priceKey}
             type="monotone"
-            stroke="#5ABF6B"
+            stroke="var(--dashboard-market-data-line)"
             strokeWidth={4}
             dot={false}
             animationDuration={500}

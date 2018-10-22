@@ -5,12 +5,9 @@ import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import AmountsPanel from '../../components/AmountsPanel'
 import ReceivePanel from '../../components/Receive/ReceivePanel'
 
-import {
-  toNumber,
-  toBigNumber,
-  multiplyNumber,
-  minusNumber
-} from '../../core/math'
+import { PRICE_UNAVAILABLE } from '../../core/constants'
+
+import { multiplyNumber } from '../../core/math'
 
 import styles from './Receive.scss'
 
@@ -22,7 +19,8 @@ type Props = {
   prices: Object,
   loading: boolean,
   loadWalletData: Function,
-  showReceiveModal: Function
+  showReceiveModal: Function,
+  networkId: string
 }
 
 type State = {
@@ -47,8 +45,10 @@ export default class Receive extends React.Component<Props, State> {
       loading,
       loadWalletData,
       address,
-      showReceiveModal
+      showReceiveModal,
+      networkId
     } = this.props
+
     const { walletName } = this.state
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 
@@ -63,35 +63,36 @@ export default class Receive extends React.Component<Props, State> {
         )}
         <ReceivePanel
           address={address}
+          networkId={networkId}
           onSubmit={props => showReceiveModal({ ...props, walletName })}
         />
       </section>
     )
   }
 
+  // TODO: Move this logic to AmountsPanel / Centralized place
   createSendAmountsData() {
     const { sendableAssets, prices } = this.props
 
     const assets = Object.keys(sendableAssets)
 
-    return (assets
-      .filter((asset: string) => !!prices[asset])
-      .map((asset: string) => {
-        const { balance } = sendableAssets[asset]
-        const currentBalance = balance
-        const price = prices[asset]
+    /* $FlowFixMe */
+    return assets.map((asset: string) => {
+      const { balance } = sendableAssets[asset]
+      const currentBalance = balance
+      const price = prices[asset]
 
-        const totalBalanceWorth = multiplyNumber(balance, price)
-        const remainingBalanceWorth = multiplyNumber(currentBalance, price)
+      const totalBalanceWorth = price
+        ? multiplyNumber(balance, price)
+        : PRICE_UNAVAILABLE
 
-        return {
-          symbol: asset,
-          totalBalance: balance,
-          price,
-          currentBalance,
-          totalBalanceWorth,
-          remainingBalanceWorth
-        }
-      }): Array<*>)
+      return {
+        symbol: asset,
+        totalBalance: balance,
+        price,
+        currentBalance,
+        totalBalanceWorth
+      }
+    })
   }
 }

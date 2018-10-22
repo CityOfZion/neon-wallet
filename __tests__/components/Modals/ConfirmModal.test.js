@@ -1,6 +1,12 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { Provider } from 'react-redux'
+import { mount } from 'enzyme'
+import { MemoryRouter } from 'react-router-dom'
 import ConfirmModal from '../../../app/components/Modals/ConfirmModal/ConfirmModal'
+import { createStore } from '../../testHelpers'
+import configureStore from 'redux-mock-store'
+
+const store = configureStore()({})
 
 describe('ConfirmModal', () => {
   const props = {
@@ -8,32 +14,47 @@ describe('ConfirmModal', () => {
     text: 'text',
     hideModal: jest.fn(),
     onClick: jest.fn(),
-    onCancel: jest.fn()
+    onCancel: jest.fn(),
+    backButtonAction: jest.fn(),
+    store: store
   }
 
   test('should render without crashing', () => {
-    const wrapper = shallow(<ConfirmModal {...props} />)
+    const wrapper = mount(
+      <Provider store={store}>
+        <MemoryRouter>
+          <ConfirmModal {...props} />
+        </MemoryRouter>
+      </Provider>
+    )
 
-    expect(wrapper).toMatchSnapshot()
+    expect(wrapper.find(ConfirmModal)).toMatchSnapshot()
   })
 
   test('should render the text correctly', () => {
-    const wrapper = shallow(<ConfirmModal {...props} />)
+    const wrapper = mount(
+      <Provider store={store}>
+        <MemoryRouter>
+          <ConfirmModal {...props} />
+        </MemoryRouter>
+      </Provider>
+    )
 
-    expect(
-      wrapper
-        .dive()
-        .find('.text')
-        .text()
-    ).toEqual(props.text)
+    expect(wrapper.find('.text').text()).toEqual(props.text)
   })
 
   test('should trigger the onCancel function followed by hideModal', () => {
-    const wrapper = shallow(<ConfirmModal {...props} />)
+    const wrapper = mount(
+      <Provider store={store}>
+        <MemoryRouter>
+          <ConfirmModal {...props} />
+        </MemoryRouter>
+      </Provider>
+    )
 
     wrapper
-      .dive()
       .find('#cancel')
+      .hostNodes()
       .simulate('click')
 
     expect(props.onCancel).toHaveBeenCalled()
@@ -41,11 +62,17 @@ describe('ConfirmModal', () => {
   })
 
   test('should trigger the onClick function followed by hideModal', () => {
-    const wrapper = shallow(<ConfirmModal {...props} />)
+    const wrapper = mount(
+      <Provider store={store}>
+        <MemoryRouter>
+          <ConfirmModal {...props} />
+        </MemoryRouter>
+      </Provider>
+    )
 
     wrapper
-      .dive()
       .find('#confirm')
+      .hostNodes()
       .simulate('click')
 
     expect(props.onClick).toHaveBeenCalled()

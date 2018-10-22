@@ -1,4 +1,17 @@
 {
+  "\u0000": {
+    "symbol": "\u0000",
+    "companyName": "\u0000",
+    "type": "NEP5",
+    "networks": {
+      "1": {
+        "name": "\u0000",
+        "hash": "6e2aea28af9c5febea0774759b1b76398e3167f1",
+        "decimals": 0,
+        "totalSupply": 0
+      }
+    }
+  },
   "ACAT": {
     "symbol": "ACAT",
     "companyName": "ACAT Token",
@@ -19,9 +32,9 @@
     "networks": {
       "1": {
         "name": "Aphelion",
-        "hash": "6d36b38af912ca107f55a5daedc650054f7e4f75",
+        "hash": "a0777c3ce2b169d4a23bcba4565e3225a0122d95",
         "decimals": 8,
-        "totalSupply": 240000000
+        "totalSupply": 242817675
       }
     }
   },
@@ -50,7 +63,8 @@
         "totalSupply": 342015750
       }
     },
-    "image": "https://rawgit.com/undefined/neo-tokens/master/assets/png/asa.png"
+    "image":
+      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/png/asa.png"
   },
   "AVA": {
     "symbol": "AVA",
@@ -64,7 +78,8 @@
         "totalSupply": 61571086
       }
     },
-    "image": "https://rawgit.com/undefined/neo-tokens/master/assets/png/ava.png"
+    "image":
+      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/png/ava.png"
   },
   "BCS": {
     "symbol": "BCS",
@@ -101,7 +116,7 @@
         "name": "NEP5 GAS",
         "hash": "74f2dc36a68fdc4682034178eb2220729231db76",
         "decimals": 8,
-        "totalSupply": 0.50001
+        "totalSupply": 5.55851
       }
     }
   },
@@ -127,7 +142,7 @@
         "name": "CrazyGladiator",
         "hash": "cbbe4c3c0d2a3622e9e8d65fe9f6240078f356c9",
         "decimals": 0,
-        "totalSupply": 7187
+        "totalSupply": 7232
       }
     }
   },
@@ -182,7 +197,8 @@
         "totalSupply": 10000000000
       }
     },
-    "image": "https://rawgit.com/undefined/neo-tokens/master/assets/svg/dbc.svg"
+    "image":
+      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/svg/dbc.svg"
   },
   "EDS": {
     "symbol": "EDS",
@@ -248,7 +264,8 @@
         "totalSupply": 100000000
       }
     },
-    "image": "https://rawgit.com/undefined/neo-tokens/master/assets/png/ftw.png"
+    "image":
+      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/png/ftw.png"
   },
   "GALA": {
     "symbol": "GALA",
@@ -352,7 +369,8 @@
         "decimals": 8,
         "totalSupply": 808257693.386336
       }
-    }
+    },
+    "image": "https://rawgit.com/CityOfZion/neo-tokens/master/assets/svg/lx.svg"
   },
   "MCT": {
     "symbol": "MCT",
@@ -366,7 +384,8 @@
         "totalSupply": 580000000
       }
     },
-    "image": "https://rawgit.com/undefined/neo-tokens/master/assets/svg/mct.svg"
+    "image":
+      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/svg/mct.svg"
   },
   "NEX": {
     "symbol": "NEX",
@@ -380,7 +399,8 @@
         "totalSupply": 50000000
       }
     },
-    "image": "https://rawgit.com/undefined/neo-tokens/master/assets/svg/nex.svg"
+    "image":
+      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/svg/nex.svg"
   },
   "NKN": {
     "symbol": "NKN",
@@ -420,7 +440,8 @@
         "totalSupply": 46928004
       }
     },
-    "image": "https://rawgit.com/undefined/neo-tokens/master/assets/svg/nrve.svg"
+    "image":
+      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/svg/nrve.svg"
   },
   "NVL": {
     "symbol": "NVL",
@@ -447,7 +468,8 @@
         "totalSupply": 68960125.99999999
       }
     },
-    "image": "https://rawgit.com/undefined/neo-tokens/master/assets/png/obt.png"
+    "image":
+      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/png/obt.png"
   },
   "ONT": {
     "symbol": "ONT",
@@ -461,7 +483,8 @@
         "totalSupply": 1000000000.0000135
       }
     },
-    "image": "https://rawgit.com/undefined/neo-tokens/master/assets/png/ont.png"
+    "image":
+      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/png/ont.png"
   },
   "PEGCNY": {
     "symbol": "PEGCNY",
@@ -498,7 +521,7 @@
         "name": "Red Pulse Phoenix Token",
         "hash": "1578103c13e39df15d0d29826d957e85d770d8c9",
         "decimals": 8,
-        "totalSupply": 1373709430.4085617
+        "totalSupply": 1381262994.0262673
       }
     }
   },
@@ -540,7 +563,8 @@
         "totalSupply": 600000003
       }
     },
-    "image": "https://rawgit.com/undefined/neo-tokens/master/assets/svg/qlc.svg"
+    "image":
+      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/svg/qlc.svg"
   },
   "RHT": {
     "symbol": "RHT",
@@ -554,7 +578,8 @@
         "totalSupply": 60000
       }
     },
-    "image": "https://rawgit.com/undefined/neo-tokens/master/assets/png/rht.png"
+    "image":
+      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/png/rht.png"
   },
   "RPX": {
     "symbol": "RPX",
@@ -568,7 +593,8 @@
         "totalSupply": 1358371250
       }
     },
-    "image": "https://rawgit.com/undefined/neo-tokens/master/assets/svg/rpx.svg"
+    "image":
+      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/svg/rpx.svg"
   },
   "SCC": {
     "symbol": "SCC",
@@ -631,7 +657,7 @@
         "name": "NEP5.5 Coin With GAS 1:1",
         "hash": "961e628cc93d61bf636dc0443cf0548947a50dbe",
         "decimals": 8,
-        "totalSupply": 1247.33709867
+        "totalSupply": 1156.1434196
       }
     }
   },
@@ -647,7 +673,8 @@
         "totalSupply": 9750509
       }
     },
-    "image": "https://rawgit.com/undefined/neo-tokens/master/assets/svg/sgt.svg"
+    "image":
+      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/svg/sgt.svg"
   },
   "SOUL": {
     "symbol": "SOUL",
@@ -726,7 +753,8 @@
         "totalSupply": 9795844687
       }
     },
-    "image": "https://rawgit.com/undefined/neo-tokens/master/assets/png/tky.png"
+    "image":
+      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/png/tky.png"
   },
   "TNC": {
     "symbol": "TNC",
@@ -740,7 +768,8 @@
         "totalSupply": 1000000000
       }
     },
-    "image": "https://rawgit.com/undefined/neo-tokens/master/assets/svg/tnc.svg"
+    "image":
+      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/svg/tnc.svg"
   },
   "TOLL": {
     "symbol": "TOLL",
@@ -767,7 +796,8 @@
         "totalSupply": 8e-7
       }
     },
-    "image": "https://rawgit.com/undefined/neo-tokens/master/assets/png/utd.png"
+    "image":
+      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/png/utd.png"
   },
   "WWB": {
     "symbol": "WWB",
@@ -833,6 +863,7 @@
         "totalSupply": 1000000000
       }
     },
-    "image": "https://rawgit.com/undefined/neo-tokens/master/assets/png/zpt.png"
+    "image":
+      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/png/zpt.png"
   }
 }

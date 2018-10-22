@@ -105,6 +105,7 @@ export default class ContactsPanel extends React.Component<Props, State> {
           onChange={this.handleSort}
           options={SORTING_OPTIONS}
           isSearchable={false}
+          transparent
           hideHighlight
         />
       </div>

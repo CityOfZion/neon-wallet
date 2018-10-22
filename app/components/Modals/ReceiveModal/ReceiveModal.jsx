@@ -1,16 +1,22 @@
 // @flow
 import React from 'react'
-import NeoQR from 'neo-qrcode'
+import classNames from 'classnames'
+import { clipboard, nativeImage } from 'electron'
 
+import Nep9QrGenerator from '../../../modules/nep9/Nep9QrGenerator'
+import Loader from '../../Loader'
 import BaseModal from '../BaseModal'
 import styles from './style.scss'
 import GridIcon from '../../../assets/icons/grid.svg'
 import CopyToClipboard from '../../CopyToClipboard'
+import CopyIcon from '../../../assets/icons/copy.svg'
+import ConfirmIcon from '../../../assets/icons/confirm.svg'
+
+import Button from '../../Button'
 import { ASSETS, TOKENS } from '../../../core/constants'
 
 type Props = {
   hideModal: Function,
-  walletName: string,
   address: string,
   asset: string,
   amount: string,
@@ -18,27 +24,33 @@ type Props = {
 }
 
 type State = {
-  imgUri: string
+  loading: boolean,
+  copied: boolean
 }
 
 export default class ReceiveModal extends React.Component<Props, State> {
   image: ?HTMLImageElement
 
   state = {
-    imgUri: ''
+    loading: true
+  }
+
+  state = {
+    loading: true,
+    copied: false
+  }
+
+  handleCopyIcon = () => {
+    this.setState({ copied: true })
+    setTimeout(() => {
+      this.setState({ copied: false })
+    }, 1000)
   }
 
   componentDidMount() {
-    const {
-      hideModal,
-      walletName,
-      address,
-      asset,
-      amount,
-      description
-    } = this.props
+    const { address, asset, amount, description } = this.props
 
-    const qrCode = new NeoQR({
+    const qrCode = new Nep9QrGenerator({
       nep9Data: {
         address,
         asset,
@@ -49,22 +61,14 @@ export default class ReceiveModal extends React.Component<Props, State> {
 
     qrCode.toDataURL().then(imgData => {
       if (this.image) this.image.src = imgData
+      this.setState({ loading: false })
     })
-
-    this.setState({ imgUri: qrCode.uri.replace('neo:', '') })
   }
 
   render() {
-    const {
-      hideModal,
-      walletName,
-      address,
-      asset,
-      amount,
-      description
-    } = this.props
+    const { hideModal, address, asset, amount, description } = this.props
 
-    const { imgUri } = this.state
+    const { loading } = this.state
 
     const tokensList: Array<any> = Object.values(TOKENS)
 
@@ -75,12 +79,12 @@ export default class ReceiveModal extends React.Component<Props, State> {
             token.networks['1'].hash === asset ? token.symbol : accum,
           asset
         )
-
     return (
       <BaseModal
         title="Your QR Code"
         hideModal={hideModal}
-        style={{ content: { width: '775px', height: '830px' } }}
+        bodyClassName={styles.modalBody}
+        style={{ content: { width: '750px', height: '100%' } }}
       >
         <div className={styles.contentContainer}>
           <div className={styles.header}>
@@ -88,16 +92,11 @@ export default class ReceiveModal extends React.Component<Props, State> {
             <div className={styles.title}>Your QR Code</div>
           </div>
 
-          <div className={styles.subHeader}>
-            <div className={styles.title}>Receive assets</div>
-            <div className={styles.walletName}>{walletName}</div>
-          </div>
-
           <div className={styles.section}>
             <div className={styles.sectionTitle}>PAYMENT REQUEST DETAILS</div>
             <div className={styles.sectionContent}>
               <div className={styles.assetAmount}>
-                {(amount ? `${amount} ` : '') + (assetSymbol || '')}
+                {(amount ? `${amount} ` : '') + (assetSymbol || 'NEO')}
               </div>
               <div className={styles.address}>{address}</div>
               <div className={styles.description}>
@@ -109,7 +108,9 @@ export default class ReceiveModal extends React.Component<Props, State> {
           <div className={styles.section}>
             <div className={styles.sectionTitle}>YOUR QR CODE</div>
             <div className={styles.qrcode}>
+              {loading && <Loader className={styles.loaderMargin} />}
               <img
+                className={classNames(styles.qr, { [styles.hidden]: loading })}
                 ref={(el: ?HTMLImageElement) => {
                   this.image = el
                 }}
@@ -118,15 +119,27 @@ export default class ReceiveModal extends React.Component<Props, State> {
             </div>
           </div>
 
-          <div className={styles.urlSection}>
-            <div className={styles.sectionTitle}>IMAGE URL</div>
-            <div className={styles.sectionContent}>
-              <div className={styles.imgUri}>
-                <div>'https://nep9.o3.network/'</div>
-                <div>{imgUri}</div>
-              </div>
-              <CopyToClipboard text={`https://nep9.o3.network/${imgUri}`} />
-            </div>
+          <div className={styles.buttonContainer}>
+            <Button
+              shouldCenterButtonLabelText
+              primary
+              className={styles.submitButton}
+              renderIcon={() =>
+                this.state.copied ? <ConfirmIcon /> : <CopyIcon />
+              }
+              type="submit"
+              onClick={() => {
+                if (this.image) {
+                  this.handleCopyIcon()
+                  const imageForClipboard = nativeImage.createFromDataURL(
+                    this.image && this.image.src
+                  )
+                  clipboard.writeImage(imageForClipboard)
+                }
+              }}
+            >
+              Copy Code Image
+            </Button>
           </div>
         </div>
       </BaseModal>

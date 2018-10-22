@@ -2,7 +2,6 @@
 
 exports[`NetworkSwitch renders without crashing 1`] = `
 <NetworkSwitch
-  networkId="1"
   networks={
     Array [
       Object {
@@ -20,6 +19,15 @@ exports[`NetworkSwitch renders without crashing 1`] = `
     ]
   }
   onChange={[MockFunction]}
+  shouldSwitchNetworks={true}
+  value={
+    Object {
+      "id": "1",
+      "label": "MainNet",
+      "network": "MainNet",
+      "value": "1",
+    }
+  }
 >
   <div
     className="networkSwitch"
@@ -62,6 +70,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
         defaultValue={null}
         hideHighlight={true}
         isSearchable={false}
+        maxMenuHeight={140}
         onChange={[Function]}
         options={
           Array [
@@ -86,6 +95,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
             "indicatorSeparator": [Function],
             "noOptionsMessage": [Function],
             "option": [Function],
+            "singleValue": [Function],
             "valueContainer": [Function],
           }
         }
@@ -125,7 +135,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
           isRtl={false}
           isSearchable={false}
           loadingMessage={[Function]}
-          maxMenuHeight={300}
+          maxMenuHeight={140}
           menuIsOpen={false}
           menuPlacement="bottom"
           menuPosition="absolute"
@@ -165,6 +175,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
               "indicatorSeparator": [Function],
               "noOptionsMessage": [Function],
               "option": [Function],
+              "singleValue": [Function],
               "valueContainer": [Function],
             }
           }
@@ -243,7 +254,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                 "isRtl": false,
                 "isSearchable": false,
                 "loadingMessage": [Function],
-                "maxMenuHeight": 300,
+                "maxMenuHeight": 140,
                 "menuIsOpen": false,
                 "menuPlacement": "bottom",
                 "menuPosition": "absolute",
@@ -280,6 +291,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                   "indicatorSeparator": [Function],
                   "noOptionsMessage": [Function],
                   "option": [Function],
+                  "singleValue": [Function],
                   "valueContainer": [Function],
                 },
                 "tabIndex": "0",
@@ -294,6 +306,35 @@ exports[`NetworkSwitch renders without crashing 1`] = `
               }
             }
             setValue={[Function]}
+            theme={
+              Object {
+                "borderRadius": 4,
+                "colors": Object {
+                  "danger": "#DE350B",
+                  "dangerLight": "#FFBDAD",
+                  "neutral0": "hsl(0, 0%, 100%)",
+                  "neutral10": "hsl(0, 0%, 90%)",
+                  "neutral20": "hsl(0, 0%, 80%)",
+                  "neutral30": "hsl(0, 0%, 70%)",
+                  "neutral40": "hsl(0, 0%, 60%)",
+                  "neutral5": "hsl(0, 0%, 95%)",
+                  "neutral50": "hsl(0, 0%, 50%)",
+                  "neutral60": "hsl(0, 0%, 40%)",
+                  "neutral70": "hsl(0, 0%, 30%)",
+                  "neutral80": "hsl(0, 0%, 20%)",
+                  "neutral90": "hsl(0, 0%, 10%)",
+                  "primary": "#2684FF",
+                  "primary25": "#DEEBFF",
+                  "primary50": "#B2D4FF",
+                  "primary75": "#4C9AFF",
+                },
+                "spacing": Object {
+                  "baseUnit": 4,
+                  "controlHeight": 38,
+                  "menuGutter": 8,
+                },
+              }
+            }
           >
             <div
               className="css-10nd86i react-select-container"
@@ -363,7 +404,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                     "isRtl": false,
                     "isSearchable": false,
                     "loadingMessage": [Function],
-                    "maxMenuHeight": 300,
+                    "maxMenuHeight": 140,
                     "menuIsOpen": false,
                     "menuPlacement": "bottom",
                     "menuPosition": "absolute",
@@ -400,6 +441,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                       "indicatorSeparator": [Function],
                       "noOptionsMessage": [Function],
                       "option": [Function],
+                      "singleValue": [Function],
                       "valueContainer": [Function],
                     },
                     "tabIndex": "0",
@@ -414,9 +456,38 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                   }
                 }
                 setValue={[Function]}
+                theme={
+                  Object {
+                    "borderRadius": 4,
+                    "colors": Object {
+                      "danger": "#DE350B",
+                      "dangerLight": "#FFBDAD",
+                      "neutral0": "hsl(0, 0%, 100%)",
+                      "neutral10": "hsl(0, 0%, 90%)",
+                      "neutral20": "hsl(0, 0%, 80%)",
+                      "neutral30": "hsl(0, 0%, 70%)",
+                      "neutral40": "hsl(0, 0%, 60%)",
+                      "neutral5": "hsl(0, 0%, 95%)",
+                      "neutral50": "hsl(0, 0%, 50%)",
+                      "neutral60": "hsl(0, 0%, 40%)",
+                      "neutral70": "hsl(0, 0%, 30%)",
+                      "neutral80": "hsl(0, 0%, 20%)",
+                      "neutral90": "hsl(0, 0%, 10%)",
+                      "primary": "#2684FF",
+                      "primary25": "#DEEBFF",
+                      "primary50": "#B2D4FF",
+                      "primary75": "#4C9AFF",
+                    },
+                    "spacing": Object {
+                      "baseUnit": 4,
+                      "controlHeight": 38,
+                      "menuGutter": 8,
+                    },
+                  }
+                }
               >
                 <div
-                  className="css-704jww react-select__control"
+                  className="css-pi6jxv react-select__control"
                   onMouseDown={[Function]}
                   onTouchEnd={[Function]}
                 >
@@ -476,7 +547,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                         "isRtl": false,
                         "isSearchable": false,
                         "loadingMessage": [Function],
-                        "maxMenuHeight": 300,
+                        "maxMenuHeight": 140,
                         "menuIsOpen": false,
                         "menuPlacement": "bottom",
                         "menuPosition": "absolute",
@@ -513,6 +584,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                           "indicatorSeparator": [Function],
                           "noOptionsMessage": [Function],
                           "option": [Function],
+                          "singleValue": [Function],
                           "valueContainer": [Function],
                         },
                         "tabIndex": "0",
@@ -527,9 +599,38 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                       }
                     }
                     setValue={[Function]}
+                    theme={
+                      Object {
+                        "borderRadius": 4,
+                        "colors": Object {
+                          "danger": "#DE350B",
+                          "dangerLight": "#FFBDAD",
+                          "neutral0": "hsl(0, 0%, 100%)",
+                          "neutral10": "hsl(0, 0%, 90%)",
+                          "neutral20": "hsl(0, 0%, 80%)",
+                          "neutral30": "hsl(0, 0%, 70%)",
+                          "neutral40": "hsl(0, 0%, 60%)",
+                          "neutral5": "hsl(0, 0%, 95%)",
+                          "neutral50": "hsl(0, 0%, 50%)",
+                          "neutral60": "hsl(0, 0%, 40%)",
+                          "neutral70": "hsl(0, 0%, 30%)",
+                          "neutral80": "hsl(0, 0%, 20%)",
+                          "neutral90": "hsl(0, 0%, 10%)",
+                          "primary": "#2684FF",
+                          "primary25": "#DEEBFF",
+                          "primary50": "#B2D4FF",
+                          "primary75": "#4C9AFF",
+                        },
+                        "spacing": Object {
+                          "baseUnit": 4,
+                          "controlHeight": 38,
+                          "menuGutter": 8,
+                        },
+                      }
+                    }
                   >
                     <div
-                      className="css-10wu6am react-select__value-container react-select__value-container--has-value"
+                      className="css-k5geue react-select__value-container react-select__value-container--has-value"
                     >
                       <SingleValue
                         clearValue={[Function]}
@@ -595,7 +696,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                             "isRtl": false,
                             "isSearchable": false,
                             "loadingMessage": [Function],
-                            "maxMenuHeight": 300,
+                            "maxMenuHeight": 140,
                             "menuIsOpen": false,
                             "menuPlacement": "bottom",
                             "menuPosition": "absolute",
@@ -632,6 +733,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                               "indicatorSeparator": [Function],
                               "noOptionsMessage": [Function],
                               "option": [Function],
+                              "singleValue": [Function],
                               "valueContainer": [Function],
                             },
                             "tabIndex": "0",
@@ -646,9 +748,38 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                           }
                         }
                         setValue={[Function]}
+                        theme={
+                          Object {
+                            "borderRadius": 4,
+                            "colors": Object {
+                              "danger": "#DE350B",
+                              "dangerLight": "#FFBDAD",
+                              "neutral0": "hsl(0, 0%, 100%)",
+                              "neutral10": "hsl(0, 0%, 90%)",
+                              "neutral20": "hsl(0, 0%, 80%)",
+                              "neutral30": "hsl(0, 0%, 70%)",
+                              "neutral40": "hsl(0, 0%, 60%)",
+                              "neutral5": "hsl(0, 0%, 95%)",
+                              "neutral50": "hsl(0, 0%, 50%)",
+                              "neutral60": "hsl(0, 0%, 40%)",
+                              "neutral70": "hsl(0, 0%, 30%)",
+                              "neutral80": "hsl(0, 0%, 20%)",
+                              "neutral90": "hsl(0, 0%, 10%)",
+                              "primary": "#2684FF",
+                              "primary25": "#DEEBFF",
+                              "primary50": "#B2D4FF",
+                              "primary75": "#4C9AFF",
+                            },
+                            "spacing": Object {
+                              "baseUnit": 4,
+                              "controlHeight": 38,
+                              "menuGutter": 8,
+                            },
+                          }
+                        }
                       >
                         <div
-                          className="css-va7pk8 react-select__single-value"
+                          className="css-8bm2m9 react-select__single-value"
                         >
                           MainNet
                         </div>
@@ -732,7 +863,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                         "isRtl": false,
                         "isSearchable": false,
                         "loadingMessage": [Function],
-                        "maxMenuHeight": 300,
+                        "maxMenuHeight": 140,
                         "menuIsOpen": false,
                         "menuPlacement": "bottom",
                         "menuPosition": "absolute",
@@ -769,6 +900,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                           "indicatorSeparator": [Function],
                           "noOptionsMessage": [Function],
                           "option": [Function],
+                          "singleValue": [Function],
                           "valueContainer": [Function],
                         },
                         "tabIndex": "0",
@@ -783,6 +915,35 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                       }
                     }
                     setValue={[Function]}
+                    theme={
+                      Object {
+                        "borderRadius": 4,
+                        "colors": Object {
+                          "danger": "#DE350B",
+                          "dangerLight": "#FFBDAD",
+                          "neutral0": "hsl(0, 0%, 100%)",
+                          "neutral10": "hsl(0, 0%, 90%)",
+                          "neutral20": "hsl(0, 0%, 80%)",
+                          "neutral30": "hsl(0, 0%, 70%)",
+                          "neutral40": "hsl(0, 0%, 60%)",
+                          "neutral5": "hsl(0, 0%, 95%)",
+                          "neutral50": "hsl(0, 0%, 50%)",
+                          "neutral60": "hsl(0, 0%, 40%)",
+                          "neutral70": "hsl(0, 0%, 30%)",
+                          "neutral80": "hsl(0, 0%, 20%)",
+                          "neutral90": "hsl(0, 0%, 10%)",
+                          "primary": "#2684FF",
+                          "primary25": "#DEEBFF",
+                          "primary50": "#B2D4FF",
+                          "primary75": "#4C9AFF",
+                        },
+                        "spacing": Object {
+                          "baseUnit": 4,
+                          "controlHeight": 38,
+                          "menuGutter": 8,
+                        },
+                      }
+                    }
                   >
                     <div
                       className="css-1wy0on6 react-select__indicators"
@@ -844,7 +1005,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                             "isRtl": false,
                             "isSearchable": false,
                             "loadingMessage": [Function],
-                            "maxMenuHeight": 300,
+                            "maxMenuHeight": 140,
                             "menuIsOpen": false,
                             "menuPlacement": "bottom",
                             "menuPosition": "absolute",
@@ -881,6 +1042,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                               "indicatorSeparator": [Function],
                               "noOptionsMessage": [Function],
                               "option": [Function],
+                              "singleValue": [Function],
                               "valueContainer": [Function],
                             },
                             "tabIndex": "0",
@@ -895,6 +1057,35 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                           }
                         }
                         setValue={[Function]}
+                        theme={
+                          Object {
+                            "borderRadius": 4,
+                            "colors": Object {
+                              "danger": "#DE350B",
+                              "dangerLight": "#FFBDAD",
+                              "neutral0": "hsl(0, 0%, 100%)",
+                              "neutral10": "hsl(0, 0%, 90%)",
+                              "neutral20": "hsl(0, 0%, 80%)",
+                              "neutral30": "hsl(0, 0%, 70%)",
+                              "neutral40": "hsl(0, 0%, 60%)",
+                              "neutral5": "hsl(0, 0%, 95%)",
+                              "neutral50": "hsl(0, 0%, 50%)",
+                              "neutral60": "hsl(0, 0%, 40%)",
+                              "neutral70": "hsl(0, 0%, 30%)",
+                              "neutral80": "hsl(0, 0%, 20%)",
+                              "neutral90": "hsl(0, 0%, 10%)",
+                              "primary": "#2684FF",
+                              "primary25": "#DEEBFF",
+                              "primary50": "#B2D4FF",
+                              "primary75": "#4C9AFF",
+                            },
+                            "spacing": Object {
+                              "baseUnit": 4,
+                              "controlHeight": 38,
+                              "menuGutter": 8,
+                            },
+                          }
+                        }
                       >
                         <span
                           className="css-1hyfx7x react-select__indicator-separator"
@@ -964,7 +1155,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                             "isRtl": false,
                             "isSearchable": false,
                             "loadingMessage": [Function],
-                            "maxMenuHeight": 300,
+                            "maxMenuHeight": 140,
                             "menuIsOpen": false,
                             "menuPlacement": "bottom",
                             "menuPosition": "absolute",
@@ -1001,6 +1192,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                               "indicatorSeparator": [Function],
                               "noOptionsMessage": [Function],
                               "option": [Function],
+                              "singleValue": [Function],
                               "valueContainer": [Function],
                             },
                             "tabIndex": "0",
@@ -1015,10 +1207,39 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                           }
                         }
                         setValue={[Function]}
+                        theme={
+                          Object {
+                            "borderRadius": 4,
+                            "colors": Object {
+                              "danger": "#DE350B",
+                              "dangerLight": "#FFBDAD",
+                              "neutral0": "hsl(0, 0%, 100%)",
+                              "neutral10": "hsl(0, 0%, 90%)",
+                              "neutral20": "hsl(0, 0%, 80%)",
+                              "neutral30": "hsl(0, 0%, 70%)",
+                              "neutral40": "hsl(0, 0%, 60%)",
+                              "neutral5": "hsl(0, 0%, 95%)",
+                              "neutral50": "hsl(0, 0%, 50%)",
+                              "neutral60": "hsl(0, 0%, 40%)",
+                              "neutral70": "hsl(0, 0%, 30%)",
+                              "neutral80": "hsl(0, 0%, 20%)",
+                              "neutral90": "hsl(0, 0%, 10%)",
+                              "primary": "#2684FF",
+                              "primary25": "#DEEBFF",
+                              "primary50": "#B2D4FF",
+                              "primary75": "#4C9AFF",
+                            },
+                            "spacing": Object {
+                              "baseUnit": 4,
+                              "controlHeight": 38,
+                              "menuGutter": 8,
+                            },
+                          }
+                        }
                       >
                         <div
                           aria-hidden="true"
-                          className="css-fl6htp react-select__indicator react-select__dropdown-indicator"
+                          className="css-qfyl2b react-select__indicator react-select__dropdown-indicator"
                           onMouseDown={[Function]}
                           onTouchEnd={[Function]}
                         >

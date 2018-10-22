@@ -19,11 +19,13 @@ const overrideStyles = {
   NotificationItem: {
     DefaultStyle: {
       borderTop: 'none',
-      height: '60px',
-      marginTop: 0,
+      height: '65px',
+      marginTop: '10px',
+      marginBottom: '10px',
       display: 'flex',
       alignItems: 'center',
       paddingLeft: '60px',
+      borderRadius: '4px',
       color: '#FFF'
     },
 
@@ -52,14 +54,14 @@ const overrideStyles = {
 
   Dismiss: {
     DefaultStyle: {
-      top: '23px',
+      top: '25px',
       right: '25px',
       height: '22px',
       width: '22px',
       fontSize: '25px',
       fontWeight: 200,
       backgroundColor: 'none',
-      opacity: '0.3'
+      opacity: '0.8'
     }
   }
 }

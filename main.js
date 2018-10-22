@@ -34,15 +34,22 @@ app.on('ready', () => {
   })
   const onAppReady = () => {
     mainWindow = new BrowserWindow({
-      height: 850,
-      width: 1280,
-      minHeight: 850,
+      height: 750,
+      width: 1200,
+      minHeight: 750,
       minWidth: 1200,
+      titleBarStyle: 'hidden',
+      show: false,
       icon: path.join(__dirname, 'icons/png/64x64.png'),
       webPreferences: {
         allowRunningInsecureContent: false,
         webSecurity: true
       }
+    })
+
+    mainWindow.on('ready-to-show', () => {
+      mainWindow.show()
+      mainWindow.focus()
     })
 
     // https://discuss.atom.io/t/prevent-window-navigation-when-dropping-a-link/24365

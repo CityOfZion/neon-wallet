@@ -8,7 +8,7 @@
     width: 100%;
     max-height: 180px;
     overflow: auto;
-    background: #f2f2f2;
+    background: var(--input-background);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     border-top: none;
     border-radius: 0 0 4px 4px;
@@ -17,12 +17,11 @@
 
     .dropdownItem {
       padding: 10px 20px;
-      color: #000;
       font-size: 14px;
       cursor: pointer;
 
       &:hover {
-        background: #e6e6e6;
+        background: var(--input-select-hover);
       }
 
       .highlight {

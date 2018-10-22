@@ -13,15 +13,18 @@ import styles from '../SendPanel.scss'
 
 type Props = {
   sendRowDetails: Array<*>,
-  addRow: () => any,
+  addRow: (row: Object) => any,
   resetViews: () => any,
   showConfirmSend: boolean,
   sendSuccess: boolean,
   sendError: boolean,
   noSendableAssets: boolean,
-  disabled: boolean,
+  disableAddRecipient: boolean,
+  disableEnterQRCode: boolean,
   hasNetworkFees: boolean,
-  maxNumberOfRecipients: number
+  maxNumberOfRecipients: number,
+  showSendModal: (props: Object) => any,
+  pushQRCodeData: (data: Object) => any
 }
 
 const SendPanelHeader = ({
@@ -32,9 +35,12 @@ const SendPanelHeader = ({
   sendError,
   sendSuccess,
   noSendableAssets,
-  disabled,
+  disableAddRecipient,
+  disableEnterQRCode,
   hasNetworkFees = false,
-  maxNumberOfRecipients
+  maxNumberOfRecipients,
+  showSendModal,
+  pushQRCodeData
 }: Props) => {
   const numberOfItems = sendRowDetails.length
 
@@ -42,11 +48,13 @@ const SendPanelHeader = ({
   let headerSubtitle = `${numberOfItems} of ${maxNumberOfRecipients} Recipients`
   let buttons = (
     <div className={styles.sendPanelHeaderButtons}>
-      <Tooltip
-        className={styles.disabledFeature}
-        title="Coming Soon"
-        position="left"
+      <button
+        type="button"
+        className={styles.enterQrHeaderButton}
+        onClick={() => showSendModal({ pushQRCodeData })}
+        disabled={disableEnterQRCode}
       >
+<<<<<<< HEAD
         <PanelHeaderButton
           disabled
           onClick={() => {}}
@@ -64,6 +72,19 @@ const SendPanelHeader = ({
         )}
         buttonText="Add Recipient"
       />
+=======
+        <GridIcon className={styles.sendPanelHeaderButtonIcon} /> Enter QR Code
+      </button>
+
+      <button
+        type="button"
+        className={styles.sendPanelHeaderButton}
+        onClick={addRow}
+        disabled={disableAddRecipient}
+      >
+        <AddIcon className={styles.sendPanelHeaderButtonIcon} /> Add Recipient
+      </button>
+>>>>>>> design-v2
     </div>
   )
 
@@ -112,11 +133,12 @@ const SendPanelHeader = ({
         {headerTitle}{' '}
         <span className={styles.sendPanelRecipients}>{headerSubtitle}</span>
       </div>
-      {hasNetworkFees && (
-        <div className={styles.priorityTrasferHeaderTextContainer}>
-          <LightningIcon /> Priority Transfer
-        </div>
-      )}
+      {hasNetworkFees &&
+        !sendError && (
+          <div className={styles.priorityTrasferHeaderTextContainer}>
+            <LightningIcon /> Priority Transfer
+          </div>
+        )}
       {buttons}
     </section>
   )

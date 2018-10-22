@@ -5,12 +5,12 @@
   margin-top: 25px;
   font-weight: 200;
   text-transform: uppercase;
-  color: $medium-grey;
+  color: var(--panel-label-text);
 }
 
 .tokenSaleConfirmDetailsContainer {
   padding: 15px;
-  background-color: $light-grey;
+  background-color: var(--panel-header);
   border-radius: 3px;
 }
 

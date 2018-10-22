@@ -2,32 +2,46 @@
 import axios from 'axios'
 import { createActions } from 'spunky'
 
-import { DEFAULT_CURRENCY_CODE } from '../core/constants'
+import { getDefaultTokens } from '../core/nep5'
+import { DEFAULT_CURRENCY_CODE, ASSETS } from '../core/constants'
 
 type Props = {
   currency?: string
 }
 
-function mapPrices(tickers, currency) {
-  const mapping = {}
-
-  tickers.forEach(ticker => {
-    mapping[ticker.symbol] = parseFloat(
-      ticker[`price_${currency.toLowerCase()}`]
-    )
-  })
-
-  return mapping
+function mapPrices(pricingData: Array<any>, currency) {
+  const upperCasedCurrency = currency.toUpperCase()
+  return pricingData.reduce(
+    (accum: Object, price: { currency: { upperCasedCurrency: Object } }) => {
+      const priceInSelectedCurrency = price[upperCasedCurrency]
+      if (price && priceInSelectedCurrency) {
+        // eslint-disable-next-line
+        accum[priceInSelectedCurrency.FROMSYMBOL] = parseFloat(
+          priceInSelectedCurrency.PRICE
+        )
+      }
+      return accum
+    },
+    {}
+  )
 }
 
-function getPrices(currency) {
-  const url = `https://api.coinmarketcap.com/v1/ticker/?limit=0&convert=${currency.toLowerCase()}`
+async function getPrices(currency) {
+  try {
+    const tokens = await getDefaultTokens()
+    const joinedTokens = tokens
+      .map(token => token.symbol)
+      .concat([ASSETS.NEO, ASSETS.GAS])
+      .join(',')
+    const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${joinedTokens}&tsyms=${currency.toUpperCase()}`
 
-  return axios.get(url).then(response => {
-    const { data } = response
-    if (data.error) throw new Error(data.error)
-    return mapPrices(data, currency)
-  })
+    const priceDataResponse = await axios.get(url)
+    const pricingArray = Object.values(priceDataResponse.data.RAW)
+    return mapPrices(pricingArray, currency)
+  } catch (error) {
+    console.error('An error occurred getting price data', { error })
+    return {}
+  }
 }
 
 export const ID = 'prices'

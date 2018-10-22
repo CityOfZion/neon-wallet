@@ -1,13 +1,17 @@
 @import '../../../styles/variables';
 
-.receivePanel {
-  max-height: 545px;
+.dynamicReceiveContent {
+  display: flex;
+  height: 500px;
+  align-items: center;
+  justify-content: center;
 }
 
 .receivePanelContent {
   display: flex;
   padding: 0;
   overflow: hidden !important;
+  flex-direction: row;
 }
 
 .receivePanelHeader {
@@ -17,7 +21,7 @@
 
   .receivePanelHeaderInfo {
     display: flex;
-    color: $dark-grey;
+    color: var(--panel-header-text);
   }
 }
 
@@ -27,7 +31,7 @@
 
   .description {
     margin-right: 16px;
-    color: $medium-grey;
+    color: var(--panel-label-text);
   }
 
   .address {
@@ -40,5 +44,47 @@
     path {
       fill: #69e27e;
     }
+  }
+}
+
+.dynamicReceiveContent {
+  display: flex;
+}
+
+.tabs {
+  background: var(--panel-background);
+
+  ul {
+    margin-bottom: 0 !important;
+    margin: 14px auto;
+    padding-bottom: 15px !important;
+    padding-left: 0;
+    width: 400px;
+  }
+}
+
+.warningDialogue {
+  margin-top: 0;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.defaultReceiveContainer {
+  width: 400px;
+  height: 510px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .warningIcon {
+    path {
+      fill: #ee6d66;
+    }
+  }
+
+  canvas {
+    min-height: 225px;
+    min-width: 225px;
+    margin: 12px 0 20px 0;
   }
 }

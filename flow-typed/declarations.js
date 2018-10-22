@@ -7,7 +7,8 @@ import {
   ROUTES,
   NOTIFICATION_LEVELS,
   NOTIFICATION_POSITIONS,
-  MODAL_TYPES
+  MODAL_TYPES,
+  THEME,
 } from '../app/core/constants'
 
 declare type ActionCreatorType = any
@@ -73,7 +74,8 @@ declare type TokenItemType = {
   symbol?: string,
   totalSupply?: number,
   decimals?: number,
-  image?: ?string
+  image?: ?string,
+  isNotValidated?: boolean
 }
 
 declare type TokenType = {
@@ -99,3 +101,6 @@ declare type SendEntryType = {
   address: string,
   symbol: SymbolType
 }
+
+ 
+ declare type ThemeType = THEME.LIGHT | THEME.DARK

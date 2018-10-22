@@ -1,5 +1,5 @@
 .portfolioBreakdownChart {
-  .totalValue {
-    font-size: 20px;
+  tspan {
+    fill: var(--dashboard-total-wallet-value-total-text);
   }
 }

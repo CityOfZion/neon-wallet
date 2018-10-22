@@ -11,9 +11,9 @@
   .balance,
   .value,
   .percent {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 100;
-    color: #394152;
+    color: var(--base-text);
     overflow: hidden;
     text-overflow: ellipsis;
     width: 20%;
@@ -28,12 +28,12 @@
 
   .percent {
     color: #969aa0;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     text-transform: uppercase;
   }
 }
 
 .oddColor {
-  background-color: #f8f8f8;
+  background-color: var(--dashboard-total-wallet-value-odd-row);
 }

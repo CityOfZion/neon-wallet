@@ -1,6 +1,6 @@
 @import '../../../styles/variables';
 
-$size: 64px;
+$size: 68px;
 
 .container {
   display: flex;
@@ -8,7 +8,8 @@ $size: 64px;
   justify-content: space-between;
   box-sizing: border-box;
   width: $size;
-  background: #fff;
+  background: var(--sidebar-background);
+  padding-top: 12px;
 
   .group {
     flex: 0 0 auto;
@@ -59,19 +60,19 @@ $size: 64px;
   &,
   & svg,
   & svg path {
-    color: #9599a2;
+    color: var(--sidebar-icon);
     fill: currentColor;
   }
 
   &.active,
   &:hover {
-    background: #fff;
-    border-color: #66edcd;
+    background: var(--sidebar-active-background);
+    border-color: var(--sidebar-active-border);
 
     &,
     & svg,
     & svg path {
-      color: #394152;
+      color: var(--base-text);
     }
   }
 }
@@ -83,7 +84,7 @@ $size: 64px;
 
   &.active,
   &:hover {
-    background: #fff;
+    background: var(--side-bar-disabled-item-background);
     border-image: none;
   }
 }

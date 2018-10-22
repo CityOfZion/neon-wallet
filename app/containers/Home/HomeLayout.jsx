@@ -3,12 +3,14 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 
 import styles from './Home.scss'
-import logo from '../../assets/images/logo.png'
+import lightLogo from '../../assets/images/logo-light.png'
+import darkLogo from '../../assets/images/logo-dark.png'
 
 type Props = {
   children: React$Node,
   renderNavigation?: Function,
-  headerText: string
+  headerText: string,
+  theme: ThemeType
 }
 
 export default class HomeLayout extends Component<Props> {
@@ -17,7 +19,8 @@ export default class HomeLayout extends Component<Props> {
   }
 
   render = () => {
-    const { children, renderNavigation, headerText } = this.props
+    const { children, renderNavigation, headerText, theme } = this.props
+    const dynamicImage = theme === 'Light' ? lightLogo : darkLogo
     return (
       <div id="home" className={styles.homeContainer}>
         <div className={styles.innerHomeContainer}>
@@ -32,7 +35,7 @@ export default class HomeLayout extends Component<Props> {
                 : styles.logoContainer
             }
           >
-            <img className={styles.logo} src={logo} alt="" />
+            <img className={styles.logo} src={dynamicImage} alt="" />
           </div>
           <div className={styles.loginHeader}>{headerText}</div>
           {children}

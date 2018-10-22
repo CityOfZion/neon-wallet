@@ -4,7 +4,7 @@ import { get } from 'lodash-es'
 
 import Panel from '../../Panel'
 import SendRecipientList from './SendRecipientList'
-import PriorityFee from './PriorityFee'
+import PriorityFee from '../PriorityFee'
 import SendPanelHeader from './SendPanelHeader'
 import Button from '../../Button/Button'
 import ConfirmSend from './ConfirmSend'
@@ -35,10 +35,12 @@ type Props = {
   handleSubmit: () => any,
   handleSend: () => any,
   clearErrors: (index: number, field: string) => any,
-  addRow: () => any,
+  addRow: (row: Object) => any,
   removeRow: (index: number) => any,
   updateRowField: (index: number, field: string, value: any) => any,
-  handleEditRecipientsClick: () => any
+  handleEditRecipientsClick: () => any,
+  showSendModal: (props: Object) => any,
+  pushQRCodeData: (data: Object) => any
 }
 
 const SendPanel = ({
@@ -63,9 +65,11 @@ const SendPanel = ({
   handleAddPriorityFee,
   fees,
   address,
-  maxNumberOfRecipients
+  maxNumberOfRecipients,
+  showSendModal,
+  pushQRCodeData
 }: Props) => {
-  function shouldDisableSendButton(sendRowDetails) {
+  const shouldDisableSendButton = sendRowDetails => {
     let disabled = false
     sendRowDetails.some(detail => {
       if (!detail.address) {
@@ -80,6 +84,8 @@ const SendPanel = ({
     })
     return disabled
   }
+
+  const maxRecipientsMet = () => sendRowDetails.length === maxNumberOfRecipients
 
   if (noSendableAssets) {
     return <ZeroAssets address={address} />
@@ -166,10 +172,12 @@ const SendPanel = ({
           noSendableAssets={noSendableAssets}
           hasNetworkFees={!!fees}
           maxNumberOfRecipients={maxNumberOfRecipients}
-          disabled={
-            shouldDisableSendButton(sendRowDetails) ||
-            sendRowDetails.length === maxNumberOfRecipients
+          showSendModal={showSendModal}
+          pushQRCodeData={pushQRCodeData}
+          disableAddRecipient={
+            shouldDisableSendButton(sendRowDetails) || maxRecipientsMet()
           }
+          disableEnterQRCode={maxRecipientsMet()}
         />
       )}
       className={styles.sendSuccessPanel}

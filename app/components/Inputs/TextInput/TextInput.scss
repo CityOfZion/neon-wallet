@@ -5,12 +5,16 @@
   flex-direction: column;
   margin-bottom: 20px;
 
+  input::placeholder {
+    color: var(--input-placeholder);
+  }
+
   label {
     font-weight: bold;
     font-size: 12px;
     text-transform: uppercase;
-    opacity: 0.5;
-    color: #5c677f;
+    opacity: var(--input-label-opacity);
+    color: var(--input-label);
     margin-bottom: 10px;
   }
 
@@ -19,9 +23,9 @@
     flex-wrap: nowrap;
     align-items: stretch;
     height: $text-input-height;
-    border: 2px solid $text-input-background-color;
+    border: 2px solid var(--input-background);
     border-radius: $text-input-border-radius;
-    background: $text-input-background-color;
+    background: var(--input-background);
     position: relative;
 
     &.active {
@@ -29,20 +33,20 @@
     }
 
     &.error {
-      border: 2px solid $error-color;
+      border: 2px solid var(--input-error);
       border-top-right-radius: 3px;
       border-top-left-radius: 3px;
     }
 
     .errorIcon {
-      color: #ee6d66;
+      color: var(--input-error);
       position: absolute;
       right: 8px;
       top: 10px;
     }
 
     .errorMessage {
-      background-color: $error-color;
+      background-color: var(--input-error);
       color: #fff;
       position: absolute;
       top: 39px;
@@ -67,8 +71,8 @@
   width: 100%;
   height: $text-input-height;
   line-height: $text-input-height;
-  color: $text-input-color;
-  background: $text-input-background-color;
+  color: var(--input-text);
+  background: var(--input-background);
   font-size: $text-input-font-size;
 }
 

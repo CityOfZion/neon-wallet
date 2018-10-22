@@ -24,7 +24,7 @@ const ZeroAssets = ({ address, children }: Props) => (
           You’ll need to <b>transfer compatible NEP-5 assets</b> to this wallet
           using{' '}
           <NavLink id="wallet-manager" exact to={ROUTES.RECEIVE}>
-            <span> Receive </span>
+            <span> receive </span>
           </NavLink>{' '}
           or your public address:
         </p>

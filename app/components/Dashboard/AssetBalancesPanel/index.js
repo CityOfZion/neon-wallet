@@ -64,7 +64,7 @@ export default compose(
   withNetworkData(),
   withAuthData(),
   withFilteredTokensData(),
-  withProgressPanel(assetBalancesPanelActions, { title: 'Balances' }),
+  withProgressPanel(assetBalancesPanelActions, { title: 'System Assets' }),
   withPricesData(mapPricesDataToProps),
   withBalancesData(mapBalanceDataToProps),
   withData(priceHistoryActions, mapPriceChangeDataToProps),

@@ -1,0 +1,23 @@
+@import '../../../../styles/variables';
+
+.paymentDetails {
+  line-height: 24px;
+  background-color: var(--panel-header);
+  margin: 10px 0 50px 0;
+  padding: 20px;
+
+  .detailGroup {
+    .detailName {
+      font-weight: bold;
+    }
+
+    &:not(:first-child) {
+      margin-top: 25px;
+    }
+  }
+}
+
+.scanButtonContainer {
+  margin-top: auto;
+  margin-bottom: 50px;
+}

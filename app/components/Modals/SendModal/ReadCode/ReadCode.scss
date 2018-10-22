@@ -1,0 +1,71 @@
+@import '../../../../styles/variables';
+
+.qrCodeScannerSection {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  video {
+    width: 350px;
+  }
+
+  button {
+    margin-top: 16px;
+  }
+}
+
+.frameLine {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-style: solid;
+}
+
+.scanButtonContainer {
+  margin-top: auto;
+  margin-bottom: 50px;
+}
+
+.qrCodeScannerPlaceholder {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 220px;
+  border-radius: 5px;
+  background-color: var(--panel-header);
+  padding: 30px 0px;
+
+  .frameLineTopLeft {
+    @extend .frameLine;
+    top: 15px;
+    left: 15px;
+    border-width: 2px 0 0 2px;
+    border-top-left-radius: 5px;
+  }
+
+  .frameLineTopRight {
+    @extend .frameLine;
+    top: 15px;
+    right: 15px;
+    border-width: 2px 2px 0 0;
+    border-top-right-radius: 5px;
+  }
+
+  .frameLineBottomLeft {
+    @extend .frameLine;
+    bottom: 15px;
+    left: 15px;
+    border-width: 0 0 2px 2px;
+    border-bottom-left-radius: 5px;
+  }
+
+  .frameLineBottomRight {
+    @extend .frameLine;
+    bottom: 15px;
+    right: 15px;
+    border-width: 0 2px 2px 0;
+    border-bottom-right-radius: 5px;
+  }
+}

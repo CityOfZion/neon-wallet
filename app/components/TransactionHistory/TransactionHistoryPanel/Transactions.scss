@@ -18,7 +18,7 @@
   display: flex;
   list-style-type: none;
   font-weight: 200;
-  padding: 10px 20px;
+  padding: 10px 10px;
   height: 50px;
 
   .txid {
@@ -38,10 +38,9 @@
   .amount {
     display: block;
     text-align: right;
-    color: $thin-text-color;
   }
 }
 
 .oddNumberedRow {
-  background-color: #f2f2f2;
+  background-color: var(--tx-history-odd-row);
 }

@@ -8,7 +8,10 @@
 
   button {
     width: 125px;
-    //height: 49px;
+    background: transparent !important;
+  }
+  button:hover {
+    background: var(--button-secondary-hover) !important;
   }
 
   a {

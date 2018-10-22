@@ -1,6 +1,14 @@
 $panel-top-margin: 25px;
 
+.panelContent {
+  padding: 0 !important;
+}
+
 .settingsContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
   .networkSwitchContainer {
     display: flex;
     justify-content: center;
@@ -15,17 +23,13 @@ $panel-top-margin: 25px;
   }
 
   .settingsPanel {
-    margin-top: $panel-top-margin;
+    height: 100%;
 
     .settingsPanelHeader {
       display: flex;
 
       .settingsPanelHeaderItem {
         flex: auto;
-
-        &:first-child {
-          color: #282828;
-        }
 
         &:last-child {
           text-align: right;
@@ -43,12 +47,16 @@ $panel-top-margin: 25px;
 
     .settingsDonations {
       font-size: 12px;
-      color: #282828;
-      padding-top: 10px;
+      margin-top: 24px;
       text-align: center;
       justify-content: center;
       display: flex;
       text-decoration: none;
+      font-family: Gotham-Book;
+      font-size: 10px;
+      color: var(--settings-donation-text);
+      letter-spacing: 0.4px;
+      text-align: center;
     }
   }
 
@@ -68,12 +76,20 @@ $panel-top-margin: 25px;
   }
 
   .settingsItemsContainer {
-    max-width: 500px;
-    margin: 20px auto;
+    max-width: 450px;
+    margin: auto;
   }
 
   .settingsSelectContainer {
     display: flex;
+    max-width: 150px;
     flex: 1;
   }
+}
+
+.settingsSpacer {
+  opacity: 0.35;
+  background: var(--settings-spacer);
+  height: 20px;
+  width: 100%;
 }

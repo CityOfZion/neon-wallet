@@ -2,68 +2,61 @@
 
 .amountsInfoBox {
   display: flex;
-  justify-content: center;
-  height: 50px;
-  max-width: 320px;
-  min-width: 280px;
-  margin: 10px;
-  padding: 5px 15px;
+  align-items: center;
+  flex-basis: 25%;
+  padding: 0 12px;
+  box-sizing: border-box;
+  font-size: 14px;
+  border-right: 1px solid var(--main-background);
+  background-color: var(--amounts-panel-first-row-background);
+  justify-content: space-between;
 
-  &:last-child {
-    margin-right: 0;
-  }
-
-  h3,
-  p {
-    font-weight: normal;
-    margin: 0;
-  }
-
-  .assetAmountsPrimary {
-    font-family: Gotham-Medium;
-    font-size: 20px;
-  }
-
-  h3 {
+  .assetName {
+    padding-right: 10px;
     font-family: Gotham-Light;
-    font-size: 20px;
+    font-size: 14px;
+    position: relative;
+
+    img {
+      max-height: 25px;
+    }
   }
 
-  .assetTitle,
-  .assetAmounts {
-    height: 100%;
-    margin-right: 7px;
-  }
-
-  .assetAmounts,
-  .assetValue {
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .assetAmountsPrimary {
-    font-weight: bold;
-  }
-
-  .totalAssetValue {
-    font-family: Gotham-Book;
-    font-size: 20px;
-    margin-top: 1px;
-  }
-
-  .assetAmountsSecondary {
-    color: $medium-grey;
+  .assetAmount {
     font-family: Gotham-Medium;
-    font-size: 14px;
-    margin-top: 5px;
+    color: var(--amounts-panel-asset-amount-text);
   }
 
-  .remainingAssetValue {
+  .assetWorth {
     font-family: Gotham-Book;
-    font-size: 14px;
-    margin-top: 5px;
-    color: $medium-grey;
+    color: var(--amounts-panel-asset-worth-text);
   }
+
+  .assetName,
+  .assetAmount,
+  .assetWorth {
+    white-space: nowrap;
+  }
+}
+
+.amountsInSingleRow {
+  height: 70px;
+  &.amountsInfoBox {
+    &:last-child {
+      border-right: 0;
+    }
+  }
+}
+
+.amountsInMultipleRows {
+  height: 35px;
+  &.amountsInfoBox {
+    &:nth-child(5n) {
+      border-right: 0;
+    }
+  }
+}
+
+.amountsInAltColor {
+  background-color: var(--amounts-panel-second-row-background);
 }

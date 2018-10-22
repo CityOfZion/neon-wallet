@@ -17,6 +17,7 @@ import withProgressPanel from '../../../hocs/withProgressPanel'
 import { toBigNumber } from '../../../core/math'
 import pricesActions from '../../../actions/pricesActions'
 import neoLogo from '../../../assets/images/neo-logo.png'
+import { imageMap } from '../../../assets/nep5/png'
 
 const mapPricesDataToProps = prices => ({ prices })
 
@@ -43,7 +44,7 @@ const mapBalanceDataToProps = balances => {
         symbol: key,
         balance: mutatedBalances[key],
         name: key,
-        image: neoLogo
+        image: imageMap[key]
       }
     }
   })

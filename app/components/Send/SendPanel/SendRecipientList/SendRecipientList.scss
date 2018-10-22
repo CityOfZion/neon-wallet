@@ -31,7 +31,7 @@
     position: absolute;
     left: -45px;
     height: 100%;
-    color: $dark-grey;
+    color: var(--panel-header-text);
     font-size: 1.3rem;
     font-weight: lighter;
     transform: translateY(13px);
@@ -50,6 +50,14 @@
   .address {
     width: 60%;
     margin-right: 8px;
+    position: relative;
+  }
+
+  .loader {
+    transform: scale(0.5);
+    left: auto;
+    top: 7%;
+    right: 7%;
   }
 
   .delete {

@@ -8,7 +8,9 @@ import AssetBalancesPanel from '../../components/Dashboard/AssetBalancesPanel'
 import TokenBalancesPanel from '../../components/Dashboard/TokenBalancesPanel'
 import PriceHistoryPanel from '../../components/Dashboard/PriceHistoryPanel'
 
+
 import HeaderBar from '../../components/HeaderBar/HeaderBar'
+import Address from '../../components/Blockchain/Address'
 import PortfolioPanel from '../../components/Dashboard/PortfolioPanel'
 import Wallet from '../../assets/icons/wallet.svg'
 import NetworkSwitch from '../App/Sidebar/NetworkSwitch'
@@ -18,7 +20,9 @@ import RefreshButton from '../Buttons/RefreshButton'
 import styles from './Dashboard.scss'
 
 type Props = {
-  loadWalletData: Function
+  loadWalletData: Function,
+  loading: boolean,
+  address: string
 }
 
 const REFRESH_INTERVAL_MS = 30000
@@ -42,20 +46,17 @@ export default class Dashboard extends Component<Props> {
   }
 
   render() {
+    const { address } = this.props
     return (
       <div id="dashboard" className={styles.dashboard}>
         <HeaderBar
           renderLeftContent={() => (
-            <NetworkSwitch
-              fontSize={16}
-              transparent
-              className={styles.dashboardNetworkSwitch}
-              networkSwitchTextInputContainer={
-                styles.dashboardNetworkSwitchTextInputContainer
-              }
-              networkSwitchTextInput={styles.dashboardNetworkSwitchTextInput}
-              activeStyles={styles.dashboardNetworkSwitchActive}
-            />
+            <div className={styles.headerAddressContainer}>
+              <label>My Public Address:</label>
+              <Address address={address} asWrapper>
+                <div className={styles.addressLink}>{address}</div>
+              </Address>
+            </div>
           )}
           renderRightContent={() => (
             <div className={classNames(styles.dashboardHeaderButonContainer)}>

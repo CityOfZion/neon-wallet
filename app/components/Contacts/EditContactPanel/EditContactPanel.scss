@@ -12,7 +12,9 @@
 }
 
 .formContainer {
-  margin-bottom: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .editContactInstructions {
@@ -23,14 +25,14 @@
   span {
     font-family: Gotham-Medium;
     font-size: 14px;
-    color: #ff967e;
+    color: #ee6d66;
     display: flex;
     align-items: center;
     cursor: pointer;
 
     svg {
       path {
-        fill: #ff967e;
+        fill: #ee6d66;
       }
     }
   }

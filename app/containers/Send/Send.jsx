@@ -10,6 +10,7 @@ import {
 } from '../../core/math'
 
 import { isBlacklisted } from '../../core/wallet'
+import { PRICE_UNAVAILABLE } from '../../core/constants'
 
 import AmountsPanel from '../../components/AmountsPanel'
 import SendPanel from '../../components/Send/SendPanel'
@@ -29,7 +30,8 @@ type Props = {
   currencyCode: string,
   address: string,
   shouldRenderHeaderBar: boolean,
-  location: Object
+  location: Object,
+  showSendModal: (props: Object) => any
 }
 
 type State = {
@@ -77,17 +79,32 @@ export default class Send extends React.Component<Props, State> {
     }
   }
 
-  generateRow = () => {
+  pushQRCodeData = (data: Object) => {
+    const { sendRowDetails } = this.state
+    const { asset, address, amount } = data
+    const firstRowEmpty =
+      sendRowDetails.length === 1 && !parseInt(sendRowDetails[0].amount, 10)
+
+    if (firstRowEmpty) {
+      if (asset) this.updateRowField(0, 'asset', asset)
+      if (address) this.updateRowField(0, 'address', address)
+      if (amount) this.updateRowField(0, 'amount', amount)
+    } else {
+      this.addRow(data)
+    }
+  }
+
+  generateRow = (row: Object = {}) => {
     const { sendableAssets } = this.props
     const sendableAssetNames = Object.keys(sendableAssets)
     const firstSendableAssetName = sendableAssetNames[0]
 
     if (sendableAssetNames.length > 0) {
       return {
-        asset: firstSendableAssetName,
-        amount: 0,
-        address: '',
-        max: this.calculateMaxValue(firstSendableAssetName),
+        asset: row.asset || firstSendableAssetName,
+        amount: row.amount || 0,
+        address: row.address || '',
+        max: this.calculateMaxValue(row.asset || firstSendableAssetName),
         id: uniqueId(),
         errors: {}
       }
@@ -95,46 +112,32 @@ export default class Send extends React.Component<Props, State> {
     return {}
   }
 
+  // TODO: Move this logic to AmountsPanel / Centralized place
   createSendAmountsData = () => {
     const { sendableAssets, prices } = this.props
-    const { showConfirmSend, sendSuccess, sendRowDetails } = this.state
 
-    let assets = Object.keys(sendableAssets)
+    const assets = Object.keys(sendableAssets)
 
-    if (showConfirmSend || sendSuccess) {
-      assets = (assets.filter((asset: string) =>
-        sendRowDetails
-          .reduce(
-            (accumulator: Array<*>, row: Object) =>
-              accumulator.concat(row.asset),
-            []
-          )
-          .includes(asset)
-      ): Array<*>)
-    }
+    return (assets.map((asset: string) => {
+      const { balance } = sendableAssets[asset]
+      const currentBalance = minusNumber(
+        balance,
+        this.calculateRowAmounts(asset)
+      )
+      const price = prices[asset]
 
-    return (assets
-      .filter((asset: string) => !!prices[asset])
-      .map((asset: string) => {
-        const { balance } = sendableAssets[asset]
-        const currentBalance = minusNumber(
-          balance,
-          this.calculateRowAmounts(asset)
-        )
-        const price = prices[asset]
+      const totalBalanceWorth = price
+        ? multiplyNumber(balance, price)
+        : PRICE_UNAVAILABLE
 
-        const totalBalanceWorth = multiplyNumber(balance, price)
-        const remainingBalanceWorth = multiplyNumber(currentBalance, price)
-
-        return {
-          symbol: asset,
-          totalBalance: balance,
-          price,
-          currentBalance,
-          totalBalanceWorth,
-          remainingBalanceWorth
-        }
-      }): Array<*>)
+      return {
+        symbol: asset,
+        totalBalance: balance,
+        price,
+        currentBalance,
+        totalBalanceWorth
+      }
+    }): Array<*>)
   }
 
   removeRow = (index: number) => {
@@ -148,12 +151,12 @@ export default class Send extends React.Component<Props, State> {
     })
   }
 
-  addRow = () => {
+  addRow = (row: Object) => {
     this.setState((prevState: Object) => {
       const newState = [...prevState.sendRowDetails]
 
       if (newState.length < MAX_NUMBER_OF_RECIPIENTS) {
-        newState.push(this.generateRow())
+        newState.push(this.generateRow(row))
 
         return { sendRowDetails: newState }
       }
@@ -205,7 +208,7 @@ export default class Send extends React.Component<Props, State> {
     if (rows.length > 0) {
       return (rows
         .filter((row: Object) => row.asset === asset)
-        .map((row: Object) => row.amount)
+        .map((row: Object) => Number(row.amount))
         .reduce(
           (accumulator: Object, currentValue: number | void) =>
             accumulator.plus(currentValue || 0),
@@ -370,7 +373,8 @@ export default class Send extends React.Component<Props, State> {
       contacts,
       currencyCode,
       shouldRenderHeaderBar,
-      address
+      address,
+      showSendModal
     } = this.props
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 
@@ -408,6 +412,8 @@ export default class Send extends React.Component<Props, State> {
           handleEditRecipientsClick={this.handleEditRecipientsClick}
           handleSend={this.handleSend}
           resetViews={this.resetViews}
+          showSendModal={showSendModal}
+          pushQRCodeData={this.pushQRCodeData}
         />
       </section>
     )

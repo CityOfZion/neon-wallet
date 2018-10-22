@@ -10,6 +10,7 @@
     .duration {
       display: flex;
       align-items: center;
+      font-family: Gotham;
       color: #969aa0;
       font-size: 12px;
       font-weight: 600;
@@ -48,7 +49,7 @@
 
 .currentPrice {
   margin-left: 10px;
-  color: #333;
+  color: var(--dashboard-price-history-current-price);
 }
 
 .flexContainer {
