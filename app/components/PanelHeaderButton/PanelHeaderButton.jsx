@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react'
+import classNames from 'classnames'
 
 import styles from './PanelHeaderButton.scss'
 
@@ -18,7 +19,7 @@ class PanelHeaderButton extends Component<Props> {
     return (
       <button
         type="button"
-        className={`${styles.panelHeaderButton} ${className || ''}`}
+        className={classNames(styles.panelHeaderButton, className)}
         onClick={onClick}
         disabled={disabled}
       >

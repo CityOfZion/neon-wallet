@@ -1,7 +1,6 @@
 // @flow
 import React from 'react'
 
-import Tooltip from '../../../Tooltip'
 import AddIcon from '../../../../assets/icons/add.svg'
 import GridIcon from '../../../../assets/icons/grid.svg'
 import LightningIcon from '../../../../assets/icons/lightning.svg'
@@ -48,43 +47,22 @@ const SendPanelHeader = ({
   let headerSubtitle = `${numberOfItems} of ${maxNumberOfRecipients} Recipients`
   let buttons = (
     <div className={styles.sendPanelHeaderButtons}>
-      <button
-        type="button"
-        className={styles.enterQrHeaderButton}
-        onClick={() => showSendModal({ pushQRCodeData })}
-        disabled={disableEnterQRCode}
-      >
-<<<<<<< HEAD
-        <PanelHeaderButton
-          disabled
-          onClick={() => {}}
-          renderIcon={() => (
-            <GridIcon className={styles.sendPanelHeaderButtonIcon} />
-          )}
-          buttonText="Enter QR Code"
-        />
-      </Tooltip>
       <PanelHeaderButton
-        disabled={disabled}
+        disabled={disableEnterQRCode}
+        onClick={() => showSendModal({ pushQRCodeData })}
+        renderIcon={() => (
+          <GridIcon className={styles.sendPanelHeaderButtonIcon} />
+        )}
+        buttonText="Enter QR Code"
+      />
+      <PanelHeaderButton
+        disabled={disableAddRecipient}
         onClick={addRow}
         renderIcon={() => (
           <AddIcon className={styles.sendPanelHeaderButtonIcon} />
         )}
         buttonText="Add Recipient"
       />
-=======
-        <GridIcon className={styles.sendPanelHeaderButtonIcon} /> Enter QR Code
-      </button>
-
-      <button
-        type="button"
-        className={styles.sendPanelHeaderButton}
-        onClick={addRow}
-        disabled={disableAddRecipient}
-      >
-        <AddIcon className={styles.sendPanelHeaderButtonIcon} /> Add Recipient
-      </button>
->>>>>>> design-v2
     </div>
   )
 
