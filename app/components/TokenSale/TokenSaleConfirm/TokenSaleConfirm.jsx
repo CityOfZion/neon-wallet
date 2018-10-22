@@ -8,12 +8,12 @@ import Button from '../../Button'
 import TokenSaleIcon from '../../../assets/navigation/tokens.svg'
 import CheckMarkSVG from '../../../assets/icons/checkGreen.svg'
 import CloseButton from '../../CloseButton'
-import BackButton from '../../BackButton'
 import { ROUTES } from '../../../core/constants'
 import styles from './TokenSaleConfirm.scss'
 
 type Props = {
   onClickHandler: () => void,
+  handleBack: () => void,
   assetToPurchaseWith: string,
   tokenInfo: Object,
   amountToPurchaseFor: number
@@ -23,13 +23,21 @@ const TokenSaleConfirm = ({
   onClickHandler,
   assetToPurchaseWith,
   tokenInfo,
+  handleBack,
   amountToPurchaseFor
 }: Props) => (
   <FullHeightPanel
     headerText="Confirm Purchase"
     renderInstructions={() => <div />}
     renderHeaderIcon={() => <CheckMarkSVG />}
-    renderCloseButton={() => <CloseButton routeTo={ROUTES.DASHBOARD} />}
+    renderCloseButton={() => (
+      <button
+        className={styles.tokenSaleConfirmCloseButton}
+        onClick={handleBack}
+      >
+        <CloseButton routeTo={ROUTES.TOKEN_SALE} />
+      </button>
+    )}
   >
     <div className={styles.tokenSaleConfirmContainer}>
       <TokenSaleConfirmDetails
