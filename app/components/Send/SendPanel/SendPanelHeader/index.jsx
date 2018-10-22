@@ -12,7 +12,7 @@ import styles from '../SendPanel.scss'
 
 type Props = {
   sendRowDetails: Array<*>,
-  addRow: () => any,
+  addRow: (row: Object) => any,
   resetViews: () => any,
   showConfirmSend: boolean,
   sendSuccess: boolean,

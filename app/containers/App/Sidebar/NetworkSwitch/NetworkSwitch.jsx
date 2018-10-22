@@ -57,7 +57,9 @@ export default class NetworkSwitch extends Component<Props> {
   handleChange = (option: NetworkItemType) => {
     if (this.props.shouldSwitchNetworks) {
       this.props.onChange(option.id)
-      this.props.loadWalletData()
+      setTimeout(() => {
+        this.props.loadWalletData()
+      }, 0)
     } else {
       this.props.handleControlledChange(option)
     }
