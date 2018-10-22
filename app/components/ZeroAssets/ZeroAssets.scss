@@ -13,7 +13,7 @@
 
   a {
     text-decoration: none;
-    color: $link-color;
+    color: var(--base-link-color);
   }
 
   .address {
