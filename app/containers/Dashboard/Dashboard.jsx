@@ -8,12 +8,10 @@ import AssetBalancesPanel from '../../components/Dashboard/AssetBalancesPanel'
 import TokenBalancesPanel from '../../components/Dashboard/TokenBalancesPanel'
 import PriceHistoryPanel from '../../components/Dashboard/PriceHistoryPanel'
 
-
 import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import Address from '../../components/Blockchain/Address'
 import PortfolioPanel from '../../components/Dashboard/PortfolioPanel'
 import Wallet from '../../assets/icons/wallet.svg'
-import NetworkSwitch from '../App/Sidebar/NetworkSwitch'
 
 import RefreshButton from '../Buttons/RefreshButton'
 
@@ -21,7 +19,6 @@ import styles from './Dashboard.scss'
 
 type Props = {
   loadWalletData: Function,
-  loading: boolean,
   address: string
 }
 

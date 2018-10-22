@@ -47,9 +47,6 @@ type Props = {
   showSuccessNotification: Object => any,
   showErrorNotification: Object => any,
   showModal: Function,
-  networks: Array<NetworkItemType>,
-  networkId: string,
-  handleNetworkChange: Function,
   selectedNode: string,
   net: string
 }
