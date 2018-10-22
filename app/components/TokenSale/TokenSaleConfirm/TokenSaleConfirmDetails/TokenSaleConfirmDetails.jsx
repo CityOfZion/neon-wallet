@@ -18,7 +18,9 @@ const TokenSaleConfirmDetails = ({
     <h2 className={styles.tokenSaleConfirmDetailsHeading}>Purchase assets</h2>
     <div className={styles.tokenSaleConfirmDetailsContainer}>
       <h3 className={styles.tokenSaleConfirmDetailsSecondaryHeading}>Name</h3>
-      <p className={styles.tokenSaleConfirmParagraph}>{tokenInfo.name}</p>
+      <p className={styles.tokenSaleConfirmParagraph}>
+        {tokenInfo.name || tokenInfo.token}
+      </p>
       <h3 className={styles.tokenSaleConfirmDetailsSecondaryHeading}>
         Script Hash
       </h3>
