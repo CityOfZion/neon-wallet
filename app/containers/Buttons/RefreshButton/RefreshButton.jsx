@@ -21,8 +21,7 @@ class RefreshButton extends Component<Props> {
           onClick={loading ? null : loadWalletData}
           className={styles.refreshButtonSpan}
         >
-          {' '}
-          Refresh{' '}
+          Refresh
         </span>
         <RefreshIcon
           id="refresh"
