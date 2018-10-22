@@ -151,7 +151,7 @@ export default class Send extends React.Component<Props, State> {
     })
   }
 
-  addRow = (row: Object) => {
+  addRow = (row?: Object) => {
     this.setState((prevState: Object) => {
       const newState = [...prevState.sendRowDetails]
 
