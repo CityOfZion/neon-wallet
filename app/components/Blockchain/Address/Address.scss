@@ -1,6 +1,6 @@
 @import '../../../styles/variables';
 
 .address {
-    color: $link-color;
-    cursor: pointer;
+  color: var(--base-link-color);
+  cursor: pointer;
 }

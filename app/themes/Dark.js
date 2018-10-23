@@ -1,6 +1,7 @@
 const BASE = {
   '--base-main-background': '#242933',
-  '--base-text': '#fff'
+  '--base-text': '#fff',
+  '--base-link-color': '#6bdaf6'
 }
 
 const BUTTON = {
@@ -10,9 +11,9 @@ const BUTTON = {
   '--button-primary-background': '#66ED87',
   '--button-primary-hover': '#69E27E',
   '--button-secondary-hover': '#3B3B4F',
-  '--button-primary-text': '#394152',
+  '--button-primary-text': '#242933',
   '--button-secondary-text': '#394152',
-  '--button-icon-color': '#394152',
+  '--button-icon-color': '#242933',
   '--button-active-hover': '#69E27E',
   '--secondary-button-icon-color': '#fff',
   '--button-priority-transfer-background': '#2E3542',

@@ -1,6 +1,7 @@
 const BASE = {
   '--base-main-background': '#e6e6e6',
-  '--base-text': '#394152'
+  '--base-text': '#394152',
+  '--base-link-color': '#3063c9'
 }
 
 const BUTTON = {

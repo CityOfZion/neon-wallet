@@ -93,18 +93,19 @@ export default class Transaction extends React.Component<Props> {
             </div>
             <div className={styles.txLabelContainer}>{label}</div>
             <div className={styles.txAmountContainer}>{amount}</div>
-            <div className={styles.txToContainer}>{this.findContact(to)}</div>
-            {this.findContact(to) !== to ? (
-              <div className={styles.transactionHistoryButton} />
-            ) : (
-              <Button
-                className={styles.transactionHistoryButton}
-                renderIcon={ContactsAdd}
-                onClick={this.displayModal}
-              >
-                Add
-              </Button>
-            )}
+            <div className={styles.txToContainer}>
+              <Fragment>
+                {this.findContact(to)}
+                {this.findContact(to) === to && (
+                  <CopyToClipboard
+                    className={styles.copy}
+                    text={to}
+                    tooltip="Copy Public Address"
+                  />
+                )}
+              </Fragment>
+            </div>
+            <div className={styles.historyButtonPlaceholder} />
           </div>
         )
       case 'SEND':
