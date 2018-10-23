@@ -94,13 +94,6 @@ class TokenSale extends Component<Props, State> {
     this.setState({ amountsData, hasAssets })
   }
 
-  // componentDidUpdate(prevProps) {
-  //   console.log(prevProps)
-  //   if (this.props.icoTokens && this.props.icoToken.length > 0) {
-  //     this.setState({ assetToPurchase: props.icoTokens[0].token })
-  //   }
-  // }
-
   setStep = (step: string) => this.setState({ step })
 
   getAssetsToPurchaseWith = () => {
