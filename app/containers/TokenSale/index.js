@@ -12,7 +12,6 @@ import withNetworkData from '../../hocs/withNetworkData'
 import withPricesData from '../../hocs/withPricesData'
 import withTokensData from '../../hocs/withTokensData'
 
-
 import { participateInSale } from '../../modules/sale'
 
 const mapPricesDataToProps = (prices: Object) => ({
@@ -24,10 +23,10 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapBalancesDataToProps = balances => ({
-  assetBalances: pick(balances, 'NEO', 'GAS'),
+  assetBalances: pick(balances, 'NEO', 'GAS')
 })
 
-const mapIcoTokensToProps = (icoTokens) => ({ icoTokens })
+const mapIcoTokensToProps = icoTokens => ({ icoTokens })
 
 export default compose(
   withAuthData(),
