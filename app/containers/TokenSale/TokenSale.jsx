@@ -72,7 +72,7 @@ class TokenSale extends Component<Props, State> {
       step: TOKEN_SALE_PURCHASE,
       assetToPurchaseWith: Object.keys(this.props.assetBalances)[0],
       amountToPurchaseFor: 0,
-      assetToPurchase: this.props.icoTokens[0].token,
+      assetToPurchase: 'Loading tokens...',
       conditions: [...conditions],
       loading: false,
       gasFee: 0,
@@ -93,6 +93,13 @@ class TokenSale extends Component<Props, State> {
 
     this.setState({ amountsData, hasAssets })
   }
+
+  // componentDidUpdate(prevProps) {
+  //   console.log(prevProps)
+  //   if (this.props.icoTokens && this.props.icoToken.length > 0) {
+  //     this.setState({ assetToPurchase: props.icoTokens[0].token })
+  //   }
+  // }
 
   setStep = (step: string) => this.setState({ step })
 
@@ -131,11 +138,13 @@ class TokenSale extends Component<Props, State> {
 
   getPurchaseableAssets = () => {
     const { icoTokens } = this.props
+    if (!icoTokens) return
     return icoTokens.map(item => item.token)
   }
 
   getTokenToPurchaseInformation = () => {
     const { icoTokens } = this.props
+    if (!icoTokens) return
     const { assetToPurchase } = this.state
 
     return icoTokens.find(tokenObj => tokenObj.token === assetToPurchase)
