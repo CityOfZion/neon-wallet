@@ -57,6 +57,7 @@ const PANEL = {
   '--panel-full-height-nav-background': '#292F3B',
   '--panel-full-height-instructions-text': 'rgba(255, 255, 255, 0.5)',
   '--panel-full-height-instructions-border': '#8D98AE',
+  '--panel-full-height-header-icon-color': '#fff',
   '--panel-receive-explanation': '#394152'
 }
 
@@ -66,7 +67,8 @@ const MODAL = {
 
 const AUTH_STYLES = {
   '--auth-main-container-background': '#2E3542',
-  '--auth-secondary-button-background': 'transparent'
+  '--auth-secondary-button-background': '#2E3542',
+  '--auth-scan-qr-border': '#5c677f'
 }
 
 const DASHBOARD = {

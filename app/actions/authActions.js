@@ -35,7 +35,7 @@ export const wifLoginActions = createActions(
   ID,
   ({ wif }: WifLoginProps) => (state: Object): AccountType => {
     if (!wallet.isWIF(wif) && !wallet.isPrivateKey(wif)) {
-      throw new Error('That is not a valid private key')
+      throw new Error('Invalid private key entered')
     }
 
     const account = new wallet.Account(wif)
@@ -58,7 +58,7 @@ export const nep2LoginActions = createActions(
     }
 
     if (!wallet.isNEP2(encryptedWIF)) {
-      throw new Error('That is not a valid encrypted key')
+      throw new Error('Invalid encrypted key entered')
     }
 
     const wif = await wallet.decryptAsync(encryptedWIF, passphrase)

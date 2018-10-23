@@ -82,6 +82,12 @@
       margin-right: 30px;
     }
 
+    svg {
+      path {
+        fill: var(--panel-full-height-header-icon-color);
+      }
+    }
+
     img {
       padding: 15px;
       height: 40px;

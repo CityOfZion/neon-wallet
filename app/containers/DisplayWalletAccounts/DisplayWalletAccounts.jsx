@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import { NavLink } from 'react-router-dom'
 
 import TextInput from '../../components/Inputs/TextInput'
 import PasswordInput from '../../components/Inputs/PasswordInput'
@@ -15,6 +16,7 @@ import AddIcon from '../../assets/icons/add.svg'
 import CheckIcon from '../../assets/icons/check.svg'
 import DialogueBox from '../../components/DialogueBox'
 import WarningIcon from '../../assets/icons/warning.svg'
+import GridIcon from '../../assets/icons/grid.svg'
 
 type Props = {
   walletName: string,
@@ -26,12 +28,6 @@ type Props = {
 }
 
 class DisplayWalletAccounts extends Component<Props> {
-  publicCanvas: ?HTMLCanvasElement
-
-  encryptedCanvas: ?HTMLCanvasElement
-
-  privateCanvas: ?HTMLCanvasElement
-
   render() {
     const {
       passphrase,
@@ -122,6 +118,15 @@ class DisplayWalletAccounts extends Component<Props> {
               <Button renderIcon={AddIcon} primary onClick={this.handlePrint}>
                 Print
               </Button>
+              <NavLink
+                id="display-wallet-qrs"
+                exact
+                to={ROUTES.DISPLAY_WALLET_QRS}
+              >
+                <Button primary renderIcon={() => <GridIcon />} type="submit">
+                  Generate QR Codes
+                </Button>
+              </NavLink>
             </div>
           </div>
         </div>

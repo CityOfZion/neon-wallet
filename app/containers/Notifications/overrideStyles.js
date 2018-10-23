@@ -1,5 +1,5 @@
 // overrideStyles for notifications
-const defaultWidth = 600
+const defaultWidth = 610
 const marginLeft = -(defaultWidth / 2)
 
 const overrideStyles = {
