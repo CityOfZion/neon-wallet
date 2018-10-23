@@ -25,7 +25,7 @@ async function getBalances({ net, address, tokens }: Props) {
 
   const chunks = tokens
     .filter(token => !token.isUserGenerated)
-    .reduce((accum, currVal, index) => {
+    .reduce((accum, currVal) => {
       if (!accum.length) {
         accum.push([currVal.scriptHash])
         return accum

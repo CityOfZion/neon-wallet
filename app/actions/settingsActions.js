@@ -1,5 +1,5 @@
 // @flow
-import { pick, keys, uniqBy } from 'lodash-es'
+import { pick, keys, uniqBy, cloneDeep } from 'lodash-es'
 import { createActions } from 'spunky'
 
 import { getStorage, setStorage } from '../core/storage'
@@ -62,8 +62,14 @@ export const updateSettingsActions = createActions(
       ...settings,
       ...values
     }
-    await setStorage(STORAGE_KEY, newSettings)
-
+    const parsedForLocalStorage = cloneDeep(newSettings)
+    const tokensForStorage = [
+      ...newSettings.tokens.filter(token => token.isUserGenerated)
+    ]
+    // NOTE: we only save user generated tokens to local storage to avoid
+    // conflicts in managing the "master" nep5 list
+    parsedForLocalStorage.tokens = tokensForStorage
+    await setStorage(STORAGE_KEY, parsedForLocalStorage)
     return newSettings
   }
 )
