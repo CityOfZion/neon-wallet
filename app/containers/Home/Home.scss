@@ -44,6 +44,10 @@ $navigation-margin: 20px;
   }
 }
 
+.privateKeyLoginLoader {
+  min-height: 17px;
+}
+
 .privateKeyLoginButtonRowScannerActive {
   button {
     width: 200px;
@@ -61,6 +65,7 @@ $navigation-margin: 20px;
 .scannerContainer {
   display: flex;
   justify-content: center;
+  min-height: 150px;
   video {
     min-width: 350px;
     margin-top: -40px;

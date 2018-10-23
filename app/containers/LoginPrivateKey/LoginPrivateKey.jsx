@@ -16,7 +16,8 @@ type Props = {
 
 type State = {
   wif: string,
-  scannerActive: boolean
+  scannerActive: boolean,
+  loading: boolean
 }
 
 export default class LoginPrivateKey extends React.Component<Props, State> {
@@ -26,7 +27,8 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
 
   state = {
     wif: '',
-    scannerActive: false
+    scannerActive: false,
+    loading: false
   }
 
   componentWillUnmount() {
@@ -122,12 +124,15 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
     })
 
     this.scannerInstance.addListener('scan', content => {
-      this.toggleScanner()
       loginWithPrivateKey(content)
     })
 
+    this.setState({ loading: true })
     Instascan.Camera.getCameras()
       .then((cameras: Array<Object>) => {
+        this.setState(prevState => ({
+          loading: prevState.loading
+        }))
         if (cameras.length > 0) {
           this.scannerInstance.start(cameras[0])
         } else {
