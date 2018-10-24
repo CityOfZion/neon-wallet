@@ -1,3 +1,5 @@
+@import '../../../styles/variables';
+
 .tokenSalePanelDialogueBox {
   border: none;
   margin: 20px auto;
@@ -17,8 +19,17 @@
   margin-bottom: 75px;
 }
 
+.tokenSalePanelHeaderContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tokenSaleHeaderButton {
+  width: 200px;
+}
+
 .warningIcon {
   path {
-    fill: #ee6d66;
+    fill: $warning-red;
   }
 }

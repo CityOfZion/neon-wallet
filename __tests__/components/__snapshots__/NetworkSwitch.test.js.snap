@@ -285,6 +285,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                 "pageSize": 5,
                 "placeholder": "Select...",
                 "screenReaderStatus": [Function],
+                "settingsSelect": undefined,
                 "styles": Object {
                   "control": [Function],
                   "dropdownIndicator": [Function],
@@ -435,6 +436,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                     "pageSize": 5,
                     "placeholder": "Select...",
                     "screenReaderStatus": [Function],
+                    "settingsSelect": undefined,
                     "styles": Object {
                       "control": [Function],
                       "dropdownIndicator": [Function],
@@ -578,6 +580,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                         "pageSize": 5,
                         "placeholder": "Select...",
                         "screenReaderStatus": [Function],
+                        "settingsSelect": undefined,
                         "styles": Object {
                           "control": [Function],
                           "dropdownIndicator": [Function],
@@ -727,6 +730,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                             "pageSize": 5,
                             "placeholder": "Select...",
                             "screenReaderStatus": [Function],
+                            "settingsSelect": undefined,
                             "styles": Object {
                               "control": [Function],
                               "dropdownIndicator": [Function],
@@ -894,6 +898,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                         "pageSize": 5,
                         "placeholder": "Select...",
                         "screenReaderStatus": [Function],
+                        "settingsSelect": undefined,
                         "styles": Object {
                           "control": [Function],
                           "dropdownIndicator": [Function],
@@ -1036,6 +1041,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                             "pageSize": 5,
                             "placeholder": "Select...",
                             "screenReaderStatus": [Function],
+                            "settingsSelect": undefined,
                             "styles": Object {
                               "control": [Function],
                               "dropdownIndicator": [Function],
@@ -1186,6 +1192,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                             "pageSize": 5,
                             "placeholder": "Select...",
                             "screenReaderStatus": [Function],
+                            "settingsSelect": undefined,
                             "styles": Object {
                               "control": [Function],
                               "dropdownIndicator": [Function],

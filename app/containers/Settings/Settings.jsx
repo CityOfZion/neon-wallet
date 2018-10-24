@@ -8,9 +8,10 @@ import { Link } from 'react-router-dom'
 import { recoverWallet } from '../../modules/generateWallet'
 import Panel from '../../components/Panel'
 import StyledReactSelect from '../../components/Inputs/StyledReactSelect/StyledReactSelect'
-import HeaderBar from '../../components/HeaderBar'
+import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import SettingsItem from '../../components/Settings/SettingsItem'
 import SettingsLink from '../../components/Settings/SettingsLink'
+import NetworkSwitch from '../App/Sidebar/NetworkSwitch'
 
 import {
   EXPLORERS,
@@ -46,10 +47,8 @@ type Props = {
   showSuccessNotification: Object => any,
   showErrorNotification: Object => any,
   showModal: Function,
-  networks: Array<NetworkItemType>,
-  networkId: string,
-  handleNetworkChange: Function,
-  selectedNode: string
+  selectedNode: string,
+  net: string
 }
 
 type SelectOption = {
@@ -58,7 +57,6 @@ type SelectOption = {
 }
 
 type State = {
-  selectedNetwork: NetworkItemType,
   selectedCurrency: SelectOption,
   selectedTheme: SelectOption,
   selectedExplorer: SelectOption
@@ -77,11 +75,7 @@ export default class Settings extends Component<Props, State> {
     selectedExplorer: {
       value: this.props.explorer,
       label: EXPLORERS[this.props.explorer] || EXPLORERS.NEO_SCAN
-    },
-    selectedNetwork:
-      this.props.networks.find(
-        network => network.id === this.props.networkId
-      ) || this.props.networks[0]
+    }
   }
 
   saveWalletRecovery = () => {
@@ -215,17 +209,10 @@ export default class Settings extends Component<Props, State> {
           <section className={styles.settingsItemsContainer}>
             <SettingsItem renderIcon={() => <CogIcon />} title="NETWORK">
               <div className={styles.settingsSelectContainer}>
-                <StyledReactSelect
-                  settingsSelect
-                  options={this.props.networks}
+                <NetworkSwitch
                   transparent
-                  value={this.state.selectedNetwork}
-                  onChange={selectedNetwork =>
-                    this.setState({ selectedNetwork }, () =>
-                      this.props.handleNetworkChange(selectedNetwork.id)
-                    )
-                  }
-                  isSearchable={false}
+                  value={{ label: this.props.net }}
+                  settingsSelect
                 />
               </div>
             </SettingsItem>

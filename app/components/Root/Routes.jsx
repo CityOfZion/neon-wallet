@@ -98,6 +98,11 @@ export default () => (
         path={ROUTES.TOKEN_SALE_SUCCESS}
         component={TokenSale}
       />
+      <PrivateRoute
+        exact
+        path={ROUTES.TOKEN_SALE_FAILURE}
+        component={TokenSale}
+      />
       <PrivateRoute exact path={ROUTES.SEND_ADDRESS} component={Send} />
       <PrivateRoute exact path={ROUTES.ENCRYPT} component={Encrypt} />
       <PrivateRoute exact path={ROUTES.NODE_SELECT} component={NodeSelect} />

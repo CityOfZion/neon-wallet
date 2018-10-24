@@ -14,7 +14,7 @@ import { PRICE_UNAVAILABLE } from '../../core/constants'
 
 import AmountsPanel from '../../components/AmountsPanel'
 import SendPanel from '../../components/Send/SendPanel'
-import HeaderBar from '../../components/HeaderBar'
+import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import styles from './Send.scss'
 
 const MAX_NUMBER_OF_RECIPIENTS = 10
@@ -151,7 +151,7 @@ export default class Send extends React.Component<Props, State> {
     })
   }
 
-  addRow = (row: Object) => {
+  addRow = (row?: Object) => {
     this.setState((prevState: Object) => {
       const newState = [...prevState.sendRowDetails]
 

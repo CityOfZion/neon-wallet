@@ -22,7 +22,8 @@ import {
   TOKEN_SALE_CONFIRM,
   TOKEN_SALE_SUCCESS,
   TOKEN_SALE_FAILURE,
-  PRICE_UNAVAILABLE
+  PRICE_UNAVAILABLE,
+  ROUTES
 } from '../../core/constants'
 
 import styles from './TokenSale.scss'
@@ -71,7 +72,7 @@ class TokenSale extends Component<Props, State> {
       step: TOKEN_SALE_PURCHASE,
       assetToPurchaseWith: Object.keys(this.props.assetBalances)[0],
       amountToPurchaseFor: 0,
-      assetToPurchase: this.props.icoTokens[0].token,
+      assetToPurchase: 'Loading tokens...',
       conditions: [...conditions],
       loading: false,
       gasFee: 0,
@@ -130,11 +131,13 @@ class TokenSale extends Component<Props, State> {
 
   getPurchaseableAssets = () => {
     const { icoTokens } = this.props
+    if (!icoTokens) return
     return icoTokens.map(item => item.token)
   }
 
   getTokenToPurchaseInformation = () => {
     const { icoTokens } = this.props
+    if (!icoTokens) return
     const { assetToPurchase } = this.state
 
     return icoTokens.find(tokenObj => tokenObj.token === assetToPurchase)
@@ -206,9 +209,14 @@ class TokenSale extends Component<Props, State> {
 
       if (validFields) {
         this.setStep(TOKEN_SALE_CONFIRM)
-        this.props.history.push('/token-sale-confirm')
+        this.props.history.push(ROUTES.TOKEN_SALE_CONFIRMATION)
       }
     })
+  }
+
+  setPurchaseStep = () => {
+    this.setStep(TOKEN_SALE_PURCHASE)
+    this.props.history.push(ROUTES.TOKEN_SALE)
   }
 
   handleConfirm = () => {
@@ -235,12 +243,14 @@ class TokenSale extends Component<Props, State> {
         )
 
         if (success) this.setState({ step: TOKEN_SALE_SUCCESS, loading: false })
+        this.props.history.push(ROUTES.TOKEN_SALE_SUCCESS)
       } catch (err) {
         this.setState({
           step: TOKEN_SALE_FAILURE,
           loading: false,
           tokenSaleError: err
         })
+        this.props.history.push(ROUTES.TOKEN_SALE_FAILURE)
       }
     })
   }
@@ -253,9 +263,9 @@ class TokenSale extends Component<Props, State> {
       case TOKEN_SALE_CONFIRM:
         return this.handleConfirm
       case TOKEN_SALE_SUCCESS:
-        return () => this.setStep(TOKEN_SALE_PURCHASE)
+        return this.setPurchaseStep
       case TOKEN_SALE_FAILURE:
-        return () => this.setStep(TOKEN_SALE_PURCHASE)
+        return this.setPurchaseStep
       default:
         return this.handlePurchase
     }
@@ -313,6 +323,7 @@ class TokenSale extends Component<Props, State> {
     return (
       <TokenSaleConfirm
         onClickHandler={this.getOnClickHandler()}
+        handleBack={this.setPurchaseStep}
         tokenInfo={tokenInformation}
         assetToPurchaseWith={assetToPurchaseWith}
         amountToPurchaseFor={amountToPurchaseFor}

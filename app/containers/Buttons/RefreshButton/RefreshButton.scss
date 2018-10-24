@@ -1,0 +1,19 @@
+@import '../../../styles/animations';
+
+.refreshButtonSpan {
+    margin-right: 10px;
+}
+
+.refresh {
+    cursor: pointer;
+}
+
+.refreshButton {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.loading {
+    animation: spin 2s linear infinite;
+}

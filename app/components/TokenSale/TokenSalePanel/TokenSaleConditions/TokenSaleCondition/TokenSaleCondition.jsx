@@ -18,9 +18,9 @@ const TokenSaleCondition = ({ text, updateConditions, checked }: Props) => (
     <CheckBox
       onChange={() => updateConditions(text)}
       checked={checked}
-      icon={
+      renderIcon={() => (
         <QuestionMarkIcon className={styles.tokenSaleConditionCheckBoxIcon} />
-      }
+      )}
       className={styles.tokenSaleCheckBox}
     />
   </div>

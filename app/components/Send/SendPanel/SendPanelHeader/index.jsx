@@ -1,10 +1,10 @@
 // @flow
 import React from 'react'
 
-import Tooltip from '../../../Tooltip'
 import AddIcon from '../../../../assets/icons/add.svg'
 import GridIcon from '../../../../assets/icons/grid.svg'
 import LightningIcon from '../../../../assets/icons/lightning.svg'
+import PanelHeaderButton from '../../../PanelHeaderButton/PanelHeaderButton'
 
 import { pluralize } from '../../../../util/pluralize'
 
@@ -12,7 +12,7 @@ import styles from '../SendPanel.scss'
 
 type Props = {
   sendRowDetails: Array<*>,
-  addRow: (row: Object) => any,
+  addRow: (row?: Object) => any,
   resetViews: () => any,
   showConfirmSend: boolean,
   sendSuccess: boolean,
@@ -47,23 +47,22 @@ const SendPanelHeader = ({
   let headerSubtitle = `${numberOfItems} of ${maxNumberOfRecipients} Recipients`
   let buttons = (
     <div className={styles.sendPanelHeaderButtons}>
-      <button
-        type="button"
-        className={styles.enterQrHeaderButton}
-        onClick={() => showSendModal({ pushQRCodeData })}
+      <PanelHeaderButton
         disabled={disableEnterQRCode}
-      >
-        <GridIcon className={styles.sendPanelHeaderButtonIcon} /> Enter QR Code
-      </button>
-
-      <button
-        type="button"
-        className={styles.sendPanelHeaderButton}
-        onClick={addRow}
+        onClick={() => showSendModal({ pushQRCodeData })}
+        renderIcon={() => (
+          <GridIcon className={styles.sendPanelHeaderButtonIcon} />
+        )}
+        buttonText="Enter QR Code"
+      />
+      <PanelHeaderButton
         disabled={disableAddRecipient}
-      >
-        <AddIcon className={styles.sendPanelHeaderButtonIcon} /> Add Recipient
-      </button>
+        onClick={addRow}
+        renderIcon={() => (
+          <AddIcon className={styles.sendPanelHeaderButtonIcon} />
+        )}
+        buttonText="Add Recipient"
+      />
     </div>
   )
 
