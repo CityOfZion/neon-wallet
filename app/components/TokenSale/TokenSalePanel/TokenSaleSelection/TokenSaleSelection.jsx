@@ -30,23 +30,6 @@ const TokenSaleSelection = ({
   inputErrorMessage
 }: Props) => {
   const maxBalance = assetBalances[assetToPurchaseWith]
-
-  const purchasableAssets = getPurchaseableAssets()
-
-  //   <SelectInput
-  //   items={purchasableAssets}
-  //   name="assetToPurchase"
-  //   onChange={updateField}
-  //   value={assetToPurchase}
-  //   getItemValue={item => ({
-  //     value: item,
-  //     name: 'assetToPurchase',
-  //     toString: () => item
-  //   })}
-  //   customChangeEvent
-  // />
-  console.log(getPurchaseableAssets())
-  console.log(assetToPurchase)
   return (
     <section className={styles.tokenSaleSelectionContainer}>
       <div className={styles.tokenSaleSelectTokenContainer}>
