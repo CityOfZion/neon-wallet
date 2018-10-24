@@ -21,7 +21,6 @@ export default class HeaderBar extends React.PureComponent<Props> {
   }
 
   render() {
-    console.log(this.props)
     const {
       label,
       shouldRenderRefresh = false,
