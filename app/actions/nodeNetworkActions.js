@@ -45,7 +45,6 @@ const raceNodePromises = (total, promises) => {
 export default createActions(
   ID,
   ({ totalDisplayed = 15, networkId }) => async () => {
-    console.log({ networkId })
     let nodes
     switch (networkId) {
       case MAIN_NETWORK_ID:
@@ -59,7 +58,6 @@ export default createActions(
     }
     const promises = nodes.map(node => getBlockCount(node))
     const result = await raceNodePromises(totalDisplayed, promises)
-    console.log({ result, nodes })
     return result
   }
 )

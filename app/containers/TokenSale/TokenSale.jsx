@@ -66,23 +66,27 @@ type State = {
   amountsData: Array<Object>
 }
 
+const INITIAL_STATE = {
+  step: TOKEN_SALE_PURCHASE,
+  amountToPurchaseFor: 0,
+  assetToPurchase: '',
+  conditions: [...conditions],
+  loading: false,
+  gasFee: 0,
+  acceptedConditions: [],
+  inputErrorMessage: '',
+  tokenSaleError: {}
+}
+
 class TokenSale extends Component<Props, State> {
   constructor(props: Props) {
     super(props)
 
     this.state = {
-      step: TOKEN_SALE_PURCHASE,
       assetToPurchaseWith: Object.keys(this.props.assetBalances)[0],
-      amountToPurchaseFor: 0,
-      assetToPurchase: '',
-      conditions: [...conditions],
-      loading: false,
-      gasFee: 0,
-      acceptedConditions: [],
-      inputErrorMessage: '',
       hasAssets: false,
-      tokenSaleError: {},
-      amountsData: []
+      amountsData: [],
+      ...INITIAL_STATE
     }
   }
 
@@ -245,8 +249,14 @@ class TokenSale extends Component<Props, State> {
   }
 
   setPurchaseStep = () => {
-    this.setStep(TOKEN_SALE_PURCHASE)
-    this.props.history.push(ROUTES.TOKEN_SALE)
+    this.setState(
+      {
+        assetToPurchaseWith: Object.keys(this.props.assetBalances)[0],
+        hasAssets: true,
+        ...INITIAL_STATE
+      },
+      () => this.props.history.push(ROUTES.TOKEN_SALE)
+    )
   }
 
   handleConfirm = () => {
