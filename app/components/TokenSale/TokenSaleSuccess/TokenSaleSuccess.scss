@@ -13,7 +13,18 @@
 
 .tokenSaleSuccessContainer {
   max-width: 400px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   margin: 0 auto;
+
+  button {
+    margin-bottom: 50px;
+  }
+}
+.tokenSaleSuccessCloseButton {
+  background: transparent;
+  border: none;
 }
 
 .tokenSaleSuccessHeading {
@@ -21,6 +32,7 @@
   align-items: center;
   justify-content: center;
   font-weight: normal;
+  color: var(--base-text);
 }
 
 .tokenSaleSuccessSendIcon {
@@ -40,7 +52,7 @@
 
 .tokenSaleSuccessInnerContainer {
   display: flex;
-  margin-bottom: 150px;
+  margin-bottom: auto;
 }
 
 .tokenSaleSuccessIcon {
@@ -52,6 +64,7 @@
   display: flex;
   flex-direction: column;
   margin-left: 20px;
+  justify-content: center;
 }
 
 .tokenSaleSuccessInnerTextHeading {

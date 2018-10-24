@@ -57,7 +57,7 @@ const TokenSaleConfirm = ({
       >
         Confirm and Purchase
       </Button>
-      {gasFee && (
+      {!!gasFee && (
         <div className={styles.confirmationFees}>
           <p>Fee: {formatGAS(gasFee)} GAS</p>
         </div>
