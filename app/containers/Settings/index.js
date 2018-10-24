@@ -17,6 +17,7 @@ import withThemeData from '../../hocs/withThemeData'
 import accountsActions, {
   updateAccountsActions
 } from '../../actions/accountsActions'
+import pricesActions from '../../actions/pricesActions'
 import { updateSettingsActions } from '../../actions/settingsActions'
 import { getNetworks } from '../../core/networks'
 import {
@@ -87,5 +88,6 @@ export default compose(
   withActions(networkActions, mapActionsToProps),
   withRecall(nodeStorageActions, ['networkId']),
   withActions(updateAccountsActions, mapAccountsActionsToProps),
-  withActions(updateSettingsActions, mapSettingsActionsToProps)
+  withActions(updateSettingsActions, mapSettingsActionsToProps),
+  withRecall(pricesActions, ['currency'])
 )(Settings)
