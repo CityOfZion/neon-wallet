@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import { recoverWallet } from '../../modules/generateWallet'
 import Panel from '../../components/Panel'
 import StyledReactSelect from '../../components/Inputs/StyledReactSelect/StyledReactSelect'
-import HeaderBar from '../../components/HeaderBar'
+import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import SettingsItem from '../../components/Settings/SettingsItem'
 import SettingsLink from '../../components/Settings/SettingsLink'
 import NetworkSwitch from '../App/Sidebar/NetworkSwitch'
@@ -48,7 +48,8 @@ type Props = {
   showErrorNotification: Object => any,
   showModal: Function,
   selectedNode: string,
-  net: string
+  net: string,
+  networkId: string
 }
 
 type SelectOption = {
@@ -198,6 +199,8 @@ export default class Settings extends Component<Props, State> {
     return (
       <section className={styles.settingsContainer}>
         <HeaderBar
+          networkId={this.props.networkId}
+          net={this.props.net}
           label="Settings"
           renderRightContent={this.renderHeaderBarRightContent}
         />

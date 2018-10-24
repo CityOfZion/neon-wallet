@@ -1,6 +1,7 @@
 // @flow
 import tokenList from './tokenList.json'
-import nodes from './nodes.json'
+import nodesMainNet from './nodes-main-net.json'
+import nodesTestNet from './nodes-test-net.json'
 
 export const NEON_WALLET_RELEASE_LINK =
   'https://github.com/CityOfZion/neon-wallet/releases'
@@ -170,6 +171,7 @@ export const TOKEN_SALE_CONFIRM = 'token_sale_confirm'
 export const TOKEN_SALE_SUCCESS = 'token_sale_success'
 export const TOKEN_SALE_FAILURE = 'token_sale_failure'
 
-export const NODES = nodes
+export const NODES_MAIN_NET = nodesMainNet
+export const NODES_TEST_NET = nodesTestNet
 
 export const PRICE_UNAVAILABLE = 'N/A'

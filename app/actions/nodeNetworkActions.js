@@ -1,7 +1,12 @@
 // @flow
 import { rpc } from 'neon-js'
 import { createActions } from 'spunky'
-import { NODES } from '../core/constants'
+import {
+  NODES_MAIN_NET,
+  NODES_TEST_NET,
+  MAIN_NETWORK_ID,
+  TEST_NETWORK_ID
+} from '../core/constants'
 
 const ID = 'nodeNetwork'
 
@@ -37,8 +42,24 @@ const raceNodePromises = (total, promises) => {
   )
 }
 
-export default createActions(ID, ({ totalDisplayed = 15 }) => async () => {
-  const promises = NODES.map(node => getBlockCount(node))
-  const result = await raceNodePromises(totalDisplayed, promises)
-  return result
-})
+export default createActions(
+  ID,
+  ({ totalDisplayed = 15, networkId }) => async () => {
+    console.log({ networkId })
+    let nodes
+    switch (networkId) {
+      case MAIN_NETWORK_ID:
+        nodes = NODES_MAIN_NET
+        break
+      case TEST_NETWORK_ID:
+        nodes = NODES_TEST_NET
+        break
+      default:
+        nodes = NODES_MAIN_NET
+    }
+    const promises = nodes.map(node => getBlockCount(node))
+    const result = await raceNodePromises(totalDisplayed, promises)
+    console.log({ result, nodes })
+    return result
+  }
+)
