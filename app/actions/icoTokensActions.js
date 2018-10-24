@@ -18,7 +18,7 @@ async function getICOTokens({ net, tokens }: Props) {
   if (!tokens) return []
   const userGeneratedTokens = tokens.filter(token => token.isUserGenerated)
 
-  let endpoint = await getNode()
+  let endpoint = await getNode(net)
   if (isEmpty(endpoint)) {
     endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
   }

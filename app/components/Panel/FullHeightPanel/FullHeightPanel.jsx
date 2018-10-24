@@ -16,6 +16,7 @@ type Props = {
   headerText: string,
   iconColor: string,
   className: string,
+  containerClassName: string,
   headerContainerClassName: string,
   instructionsClassName: string
 }
@@ -28,11 +29,13 @@ export default class ViewLayout extends Component<Props> {
   }
 
   render() {
-    const { children, className } = this.props
+    const { children, className, containerClassName } = this.props
 
     return (
       <div className={classNames(styles.layoutContainer, className)}>
-        <div className={styles.contentContainer}>
+        <div
+          className={classNames(styles.contentContainer, containerClassName)}
+        >
           <div className={styles.navigation}>
             <span>{this.renderBackButton()}</span>
             <span>

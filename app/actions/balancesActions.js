@@ -18,7 +18,7 @@ type Props = {
 export const ID = 'balances'
 
 async function getBalances({ net, address, tokens }: Props) {
-  let endpoint = await getNode()
+  let endpoint = await getNode(net)
   if (isEmpty(endpoint)) {
     endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
   }

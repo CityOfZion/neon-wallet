@@ -1,0 +1,162 @@
+[
+  {
+    "url": "seed1.switcheo.network",
+    "protocol": "https",
+    "port": "10331"
+  },
+  {
+    "url": "seed3.switcheo.network",
+    "protocol": "https",
+    "port": "10331"
+  },
+  {
+    "url": "seed1.travala.com",
+    "protocol": "http",
+    "port": "10332"
+  },
+  {
+    "url": "seed1.neo.org",
+    "protocol": "https",
+    "port": "10331"
+  },
+  {
+    "url": "seed1.cityofzion.io",
+    "protocol": "https",
+    "port": "443"
+  },
+  {
+    "url": "seed2.cityofzion.io",
+    "protocol": "https",
+    "port": "443"
+  },
+  {
+    "url": "seed3.cityofzion.io",
+    "protocol": "https",
+    "port": "443"
+  },
+  {
+    "url": "seed4.cityofzion.io",
+    "protocol": "https",
+    "port": "443"
+  },
+  {
+    "url": "seed5.cityofzion.io",
+    "protocol": "https",
+    "port": "443"
+  },
+  {
+    "url": "seed0.cityofzion.io",
+    "protocol": "https",
+    "port": "443"
+  },
+  {
+    "url": "seed6.cityofzion.io",
+    "protocol": "https",
+    "port": "443"
+  },
+  {
+    "url": "seed7.cityofzion.io",
+    "protocol": "https",
+    "port": "443"
+  },
+  {
+    "url": "seed8.cityofzion.io",
+    "protocol": "https",
+    "port": "443"
+  },
+  {
+    "url": "seed9.cityofzion.io",
+    "protocol": "https",
+    "port": "443"
+  },
+  {
+    "url": "seed1.redpulse.com",
+    "protocol": "https",
+    "port": "443"
+  },
+  {
+    "url": "seed2.redpulse.com",
+    "protocol": "https",
+    "port": "443"
+  },
+  {
+    "url": "seed.o3node.org",
+    "protocol": "https",
+    "port": "10331"
+  },
+  {
+    "url": "seed1.aphelion-neo.com",
+    "protocol": "http",
+    "port": "10332"
+  },
+  {
+    "url": "seed2.aphelion-neo.com",
+    "protocol": "http",
+    "port": "10332"
+  },
+  {
+    "url": "seed4.aphelion-neo.com",
+    "protocol": "http",
+    "port": "10332"
+  },
+  {
+    "url": "seed1.spotcoin.com",
+    "protocol": "https",
+    "port": "10332"
+  },
+  {
+    "url": "rustylogic.ddns.net",
+    "protocol": "http",
+    "port": "10332"
+  },
+  {
+    "url": "seed1.ngd.network",
+    "protocol": "http",
+    "port": "10332"
+  },
+  {
+    "url": "seed2.ngd.network",
+    "protocol": "http",
+    "port": "10332"
+  },
+  {
+    "url": "seed3.ngd.network",
+    "protocol": "http",
+    "port": "10332"
+  },
+  {
+    "url": "seed4.ngd.network",
+    "protocol": "http",
+    "port": "10332"
+  },
+  {
+    "url": "seed5.ngd.network",
+    "protocol": "http",
+    "port": "10332"
+  },
+  {
+    "url": "seed6.ngd.network",
+    "protocol": "http",
+    "port": "10332"
+  },
+  {
+    "url": "seed7.ngd.network",
+    "protocol": "http",
+    "port": "10332"
+  },
+  {
+    "url": "seed8.ngd.network",
+    "protocol": "http",
+    "port": "10332"
+  },
+  {
+    "url": "seed9.ngd.network",
+    "protocol": "http",
+    "port": "10332"
+  },
+  {
+    "url": "seed10.ngd.network",
+    "protocol": "http",
+    "port": "10332"
+  }
+]
