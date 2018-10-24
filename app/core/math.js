@@ -32,3 +32,8 @@ export const minusNumber = (x: string | number, y: string | number) =>
   toBigNumber(x)
     .minus(y)
     .toNumber()
+
+export const addNumber = (x: string | number, y: string | number) =>
+  toBigNumber(x)
+    .plus(y)
+    .toNumber()

@@ -7,12 +7,12 @@
 
 .tokenSalePanelContainer {
   max-width: 600px;
-  margin: 20px auto;
+  margin: 0px auto;
 }
 
 .tokenSaleButton {
-  max-width: 400px;
-  margin: 20px auto;
+  max-width: 450px;
+  margin: 12px auto;
 }
 
 .tokenSalePanel {
@@ -24,12 +24,13 @@
   justify-content: space-between;
 }
 
-.tokenSaleHeaderButton {
-  width: 200px;
-}
-
 .warningIcon {
   path {
     fill: $warning-red;
   }
+}
+
+.priorityFeeContainer {
+  margin: auto;
+  max-width: 450px;
 }
