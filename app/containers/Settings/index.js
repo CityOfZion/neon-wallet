@@ -2,7 +2,7 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
-import { withData, withActions, type Actions } from 'spunky'
+import { withRecall, withData, withActions, type Actions } from 'spunky'
 
 import Settings from './Settings'
 import withExplorerData from '../../hocs/withExplorerData'
@@ -11,6 +11,7 @@ import withThemeData from '../../hocs/withThemeData'
 import accountsActions, {
   updateAccountsActions
 } from '../../actions/accountsActions'
+import pricesActions from '../../actions/pricesActions'
 import { updateSettingsActions } from '../../actions/settingsActions'
 import { getNetworks } from '../../core/networks'
 import {
@@ -79,5 +80,6 @@ export default compose(
   withThemeData(),
   withActions(networkActions, mapActionsToProps),
   withActions(updateAccountsActions, mapAccountsActionsToProps),
-  withActions(updateSettingsActions, mapSettingsActionsToProps)
+  withActions(updateSettingsActions, mapSettingsActionsToProps),
+  withRecall(pricesActions, ['currency'])
 )(Settings)
