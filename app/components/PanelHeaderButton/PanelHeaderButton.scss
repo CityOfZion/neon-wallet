@@ -1,26 +1,30 @@
-  .panelHeaderButton {
-    border: none;
-    background: transparent;
-    padding: 8px;
-    display: flex;
+.panelHeaderButton {
+  border: none;
+  background: transparent;
+  padding: 8px;
+  display: flex;
+  margin-right: 10px;
+  align-items: center;
+  width: auto;
+  font-size: 1rem;
+  align-items: center;
+  cursor: pointer;
+  color: var(--base-text) !important;
+
+  button {
+  }
+
+  &[disabled] {
+    cursor: default;
+    opacity: 0.6;
+  }
+
+  svg {
+    width: 24px;
     margin-right: 10px;
-    align-items: center;
-    width: 170px;
-    font-size: 1rem;
-    align-items: center;
-    cursor: pointer;
 
-    &[disabled] {
-      cursor: default;
-      opacity: 0.6;
-    }
-
-    svg {
-      width: 24px;
-      margin-right: 10px;
-
-      path {
-        fill: #5abf6b;
-      }
+    path {
+      fill: var(--panel-icon);
     }
   }
+}
