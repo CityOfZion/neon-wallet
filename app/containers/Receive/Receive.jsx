@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 
-import HeaderBar from '../../components/HeaderBar/HeaderBar'
+import HeaderBar from '../../components/HeaderBar'
 import AmountsPanel from '../../components/AmountsPanel'
 import ReceivePanel from '../../components/Receive/ReceivePanel'
 

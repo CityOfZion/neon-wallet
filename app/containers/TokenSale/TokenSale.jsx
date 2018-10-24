@@ -10,7 +10,7 @@ import {
 } from '../../core/math'
 
 import AmountsPanel from '../../components/AmountsPanel'
-import HeaderBar from '../../components/HeaderBar/HeaderBar'
+import HeaderBar from '../../components/HeaderBar'
 import ZeroAssets from '../../components/ZeroAssets/ZeroAssets'
 import TokenSalePanel from '../../components/TokenSale/TokenSalePanel/TokenSalePanel'
 import TokenSaleConfirm from '../../components/TokenSale/TokenSaleConfirm/TokenSaleConfirm'

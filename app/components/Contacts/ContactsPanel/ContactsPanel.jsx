@@ -5,7 +5,7 @@ import { orderBy, groupBy, isEmpty } from 'lodash-es'
 import classNames from 'classnames'
 
 import StyledReactSelect from '../../Inputs/StyledReactSelect/StyledReactSelect'
-import HeaderBar from '../../HeaderBar/HeaderBar'
+import HeaderBar from '../../HeaderBar'
 import Address from '../../Blockchain/Address'
 import Panel from '../../Panel'
 import Button from '../../Button'

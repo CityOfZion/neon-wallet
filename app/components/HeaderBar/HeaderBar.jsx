@@ -2,6 +2,7 @@
 import React from 'react'
 
 import RefreshButton from '../../containers/Buttons/RefreshButton'
+import { isMainNetwork } from '../../core/networks'
 
 import styles from './HeaderBar.scss'
 
@@ -9,7 +10,9 @@ type Props = {
   label: string,
   shouldRenderRefresh?: boolean,
   renderLeftContent?: () => any,
-  renderRightContent?: () => any
+  renderRightContent?: () => any,
+  networkId: string,
+  net: string
 }
 
 export default class HeaderBar extends React.PureComponent<Props> {
@@ -18,18 +21,26 @@ export default class HeaderBar extends React.PureComponent<Props> {
   }
 
   render() {
+    console.log(this.props)
     const {
       label,
       shouldRenderRefresh = false,
       renderLeftContent = () => null,
-      renderRightContent = () => null
+      renderRightContent = () => null,
+      networkId,
+      net
     } = this.props
 
     return (
-      <div className={styles.headerBar}>
-        {label ? <h3> {label}</h3> : renderLeftContent()}
-        {shouldRenderRefresh ? <RefreshButton /> : renderRightContent()}
-      </div>
+      <React.Fragment>
+        {!isMainNetwork(networkId) && (
+          <div className={styles.currentNetwork}>{net}</div>
+        )}
+        <div className={styles.headerBar}>
+          {label ? <h3> {label}</h3> : renderLeftContent()}
+          {shouldRenderRefresh ? <RefreshButton /> : renderRightContent()}
+        </div>
+      </React.Fragment>
     )
   }
 }
