@@ -72,6 +72,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
               "--amounts-panel-first-row-background": "#f2f2f2",
               "--amounts-panel-second-row-background": "#fff",
               "--auth-main-container-background": "#fff",
+              "--auth-scan-qr-border": "#f2f2f2",
               "--base-link-color": "#3063c9",
               "--base-main-background": "#e6e6e6",
               "--base-text": "#394152",
@@ -119,6 +120,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
               "--node-select-refresh-icon": "#394152",
               "--panel-background": "#fff",
               "--panel-full-height-background": "#fff",
+              "--panel-full-height-header-icon-color": "#394152",
               "--panel-full-height-instructions-border": "rgba(0, 0, 0, 0.15)",
               "--panel-full-height-instructions-text": "#5c677f",
               "--panel-full-height-nav-background": "#f2f2f2",
@@ -166,6 +168,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
               "--amounts-panel-first-row-background": "#f2f2f2",
               "--amounts-panel-second-row-background": "#fff",
               "--auth-main-container-background": "#fff",
+              "--auth-scan-qr-border": "#f2f2f2",
               "--base-link-color": "#3063c9",
               "--base-main-background": "#e6e6e6",
               "--base-text": "#394152",
@@ -213,6 +216,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
               "--node-select-refresh-icon": "#394152",
               "--panel-background": "#fff",
               "--panel-full-height-background": "#fff",
+              "--panel-full-height-header-icon-color": "#394152",
               "--panel-full-height-instructions-border": "rgba(0, 0, 0, 0.15)",
               "--panel-full-height-instructions-text": "#5c677f",
               "--panel-full-height-nav-background": "#f2f2f2",
@@ -247,340 +251,126 @@ exports[`ConfirmModal should render without crashing 1`] = `
           }
         }
       >
-        <ModalPortal
-          ariaHideApp={true}
-          bodyOpenClassName="ReactModal__Body--open"
-          closeTimeoutMS={0}
-          defaultStyles={
-            Object {
-              "content": Object {
-                "WebkitOverflowScrolling": "touch",
-                "background": "#fff",
-                "border": "1px solid #ccc",
-                "borderRadius": "4px",
-                "bottom": "40px",
-                "left": "40px",
-                "outline": "none",
-                "overflow": "auto",
-                "padding": "20px",
-                "position": "absolute",
-                "right": "40px",
-                "top": "40px",
-              },
-              "overlay": Object {
-                "backgroundColor": "rgba(255, 255, 255, 0.75)",
-                "bottom": 0,
-                "left": 0,
-                "position": "fixed",
-                "right": 0,
-                "top": 0,
-              },
-            }
-          }
-          isOpen={true}
-          onRequestClose={[Function]}
-          parentSelector={[Function]}
-          portalClassName="ReactModalPortal"
-          shouldCloseOnEsc={true}
-          shouldCloseOnOverlayClick={true}
-          shouldFocusAfterRender={true}
-          shouldReturnFocusAfterClose={true}
-          style={
-            Object {
-              "content": Object {
-                "--amounts-panel-asset-amount-text": "#515151",
-                "--amounts-panel-asset-name-text": "#515151",
-                "--amounts-panel-asset-worth-text": "#515151",
-                "--amounts-panel-first-row-background": "#f2f2f2",
-                "--amounts-panel-second-row-background": "#fff",
-                "--auth-main-container-background": "#fff",
-                "--base-link-color": "#3063c9",
-                "--base-main-background": "#e6e6e6",
-                "--base-text": "#394152",
-                "--button-active": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
-                "--button-active-hover": "#66edcd",
-                "--button-disabled": "#d6d9e0",
-                "--button-icon-color": "#394152",
-                "--button-max-amount-background": "#e6e6e6",
-                "--button-max-amount-text": "#8f939b",
-                "--button-primary-background": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
-                "--button-primary-hover": "#66edcd",
-                "--button-primary-text": "#394152",
-                "--button-priority-transfer-background": "#fff",
-                "--button-priority-transfer-color": "#394152",
-                "--button-priority-transfer-disabled": "#fff",
-                "--button-secondary-background": "#fff",
-                "--button-secondary-hover": "#f2f2f2",
-                "--button-secondary-text": "#394152",
-                "--contacts-group-header-background": "#f6f7f8",
-                "--contacts-group-header-text": "#394152",
-                "--contacts-odd-numbered-row": "rgba(230, 230, 230, 0.1)",
-                "--dashboard-asset-panel-asset-name": "#5c677f",
-                "--dashboard-asset-panel-total-background": "rgba(230, 230, 230, 0.28)",
-                "--dashboard-market-data-line": "#3fd0ae",
-                "--dashboard-price-history-current-price": "#394152",
-                "--dashboard-token-balances-divider-line": "#f2f2f2",
-                "--dashboard-total-wallet-value-odd-row": "#f8f8f8",
-                "--dashboard-total-wallet-value-total-text": "#394152",
-                "--header-bar-default-icon-color": "#394152",
-                "--input-active": "linear-gradient(#f2f2f2, #f2f2f2), radial-gradient(circle at top left, #66eb8e, #6bdaf6)",
-                "--input-background": "#f2f2f2",
-                "--input-error": "#ee6d66",
-                "--input-error-text": "#fff",
-                "--input-icon": "#9ca0a9",
-                "--input-label": "#5c677f",
-                "--input-label-opacity": 0.5,
-                "--input-placeholder": "rgba(40, 40, 40, 0.5)",
-                "--input-select-hover": "#e6e6e6",
-                "--input-text": "#282828",
-                "--modal-overlay": "rgba(26, 54, 80, 0.25)",
-                "--node-select-automatic-select-button-text": "#5c677f",
-                "--node-select-header-background": "#f2f2f2",
-                "--node-select-icon-color": "#69e27e",
-                "--node-select-node-count": "#5c677f",
-                "--node-select-refresh-icon": "#394152",
-                "--panel-background": "#fff",
-                "--panel-full-height-background": "#fff",
-                "--panel-full-height-instructions-border": "rgba(0, 0, 0, 0.15)",
-                "--panel-full-height-instructions-text": "#5c677f",
-                "--panel-full-height-nav-background": "#f2f2f2",
-                "--panel-header": "#f2f2f2",
-                "--panel-header-border": "#8d98ae",
-                "--panel-header-text": "#394152",
-                "--panel-icon": "#69e27e",
-                "--panel-label-text": "#8d98ae",
-                "--panel-receive-explanation": "rgba(242, 242, 242, .5)",
-                "--secondary-button-icon-color": "#394152",
-                "--settings-donation-text": "#5c677f",
-                "--settings-item-border-color": "#f2f2f2",
-                "--settings-item-icon": "#cccccc",
-                "--settings-item-label": "#343b4a",
-                "--settings-link-text": "#69e27e",
-                "--settings-select-value-text": "#69e27e",
-                "--settings-spacer": "rgba(170, 178, 189, 0.3)",
-                "--side-bar-disabled-item-background": "#fff",
-                "--sidebar-active-background": "#f2f2f2",
-                "--sidebar-active-border": "#66edcd",
-                "--sidebar-active-icon": "#394152",
-                "--sidebar-background": "#fff",
-                "--sidebar-icon": "#9599a2",
-                "--tab-border": "#394152",
-                "--tab-text": "#394152",
-                "--tx-history-button-icon": "#394152",
-                "--tx-history-copy-icon": "#9599a2",
-                "--tx-history-odd-row": "#f2f2f2",
-                "background": "var(--panel-background)",
-                "border": "none",
-                "borderRadius": "4px",
-                "boxShadow": "rgba(0, 0, 0, 0.1) 0px 0px 4px",
-                "color": "var(--base-text)",
-                "display": "flex",
-                "flexDirection": "column",
-                "height": "250px",
-                "margin": "auto",
-                "padding": 0,
-                "width": "500px",
-              },
-              "overlay": Object {
-                "--amounts-panel-asset-amount-text": "#515151",
-                "--amounts-panel-asset-name-text": "#515151",
-                "--amounts-panel-asset-worth-text": "#515151",
-                "--amounts-panel-first-row-background": "#f2f2f2",
-                "--amounts-panel-second-row-background": "#fff",
-                "--auth-main-container-background": "#fff",
-                "--base-link-color": "#3063c9",
-                "--base-main-background": "#e6e6e6",
-                "--base-text": "#394152",
-                "--button-active": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
-                "--button-active-hover": "#66edcd",
-                "--button-disabled": "#d6d9e0",
-                "--button-icon-color": "#394152",
-                "--button-max-amount-background": "#e6e6e6",
-                "--button-max-amount-text": "#8f939b",
-                "--button-primary-background": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
-                "--button-primary-hover": "#66edcd",
-                "--button-primary-text": "#394152",
-                "--button-priority-transfer-background": "#fff",
-                "--button-priority-transfer-color": "#394152",
-                "--button-priority-transfer-disabled": "#fff",
-                "--button-secondary-background": "#fff",
-                "--button-secondary-hover": "#f2f2f2",
-                "--button-secondary-text": "#394152",
-                "--contacts-group-header-background": "#f6f7f8",
-                "--contacts-group-header-text": "#394152",
-                "--contacts-odd-numbered-row": "rgba(230, 230, 230, 0.1)",
-                "--dashboard-asset-panel-asset-name": "#5c677f",
-                "--dashboard-asset-panel-total-background": "rgba(230, 230, 230, 0.28)",
-                "--dashboard-market-data-line": "#3fd0ae",
-                "--dashboard-price-history-current-price": "#394152",
-                "--dashboard-token-balances-divider-line": "#f2f2f2",
-                "--dashboard-total-wallet-value-odd-row": "#f8f8f8",
-                "--dashboard-total-wallet-value-total-text": "#394152",
-                "--header-bar-default-icon-color": "#394152",
-                "--input-active": "linear-gradient(#f2f2f2, #f2f2f2), radial-gradient(circle at top left, #66eb8e, #6bdaf6)",
-                "--input-background": "#f2f2f2",
-                "--input-error": "#ee6d66",
-                "--input-error-text": "#fff",
-                "--input-icon": "#9ca0a9",
-                "--input-label": "#5c677f",
-                "--input-label-opacity": 0.5,
-                "--input-placeholder": "rgba(40, 40, 40, 0.5)",
-                "--input-select-hover": "#e6e6e6",
-                "--input-text": "#282828",
-                "--modal-overlay": "rgba(26, 54, 80, 0.25)",
-                "--node-select-automatic-select-button-text": "#5c677f",
-                "--node-select-header-background": "#f2f2f2",
-                "--node-select-icon-color": "#69e27e",
-                "--node-select-node-count": "#5c677f",
-                "--node-select-refresh-icon": "#394152",
-                "--panel-background": "#fff",
-                "--panel-full-height-background": "#fff",
-                "--panel-full-height-instructions-border": "rgba(0, 0, 0, 0.15)",
-                "--panel-full-height-instructions-text": "#5c677f",
-                "--panel-full-height-nav-background": "#f2f2f2",
-                "--panel-header": "#f2f2f2",
-                "--panel-header-border": "#8d98ae",
-                "--panel-header-text": "#394152",
-                "--panel-icon": "#69e27e",
-                "--panel-label-text": "#8d98ae",
-                "--panel-receive-explanation": "rgba(242, 242, 242, .5)",
-                "--secondary-button-icon-color": "#394152",
-                "--settings-donation-text": "#5c677f",
-                "--settings-item-border-color": "#f2f2f2",
-                "--settings-item-icon": "#cccccc",
-                "--settings-item-label": "#343b4a",
-                "--settings-link-text": "#69e27e",
-                "--settings-select-value-text": "#69e27e",
-                "--settings-spacer": "rgba(170, 178, 189, 0.3)",
-                "--side-bar-disabled-item-background": "#fff",
-                "--sidebar-active-background": "#f2f2f2",
-                "--sidebar-active-border": "#66edcd",
-                "--sidebar-active-icon": "#394152",
-                "--sidebar-background": "#fff",
-                "--sidebar-icon": "#9599a2",
-                "--tab-border": "#394152",
-                "--tab-text": "#394152",
-                "--tx-history-button-icon": "#394152",
-                "--tx-history-copy-icon": "#9599a2",
-                "--tx-history-odd-row": "#f2f2f2",
-                "backgroundColor": "var(--modal-overlay)",
-                "margin": "auto",
-              },
-            }
+        <Portal
+          containerInfo={
+            <div
+              class="ReactModalPortal"
+            >
+              <div
+                class="ReactModal__Overlay ReactModal__Overlay--after-open"
+                style="position: fixed; top: 0px; left: 0px; right: 0px; bottom: 0px; margin: auto;"
+              >
+                <div
+                  class="ReactModal__Content ReactModal__Content--after-open"
+                  style="position: absolute; top: 40px; left: 40px; right: 40px; bottom: 40px; overflow: auto; border-radius: 4px; outline: none; padding: 0px; width: 500px; height: 250px; margin: auto; box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 4px; display: flex; flex-direction: column;"
+                  tabindex="-1"
+                >
+                  <div
+                    class="modalHeader"
+                  >
+                    <div
+                      class="modalHeaderTitle"
+                    >
+                      <img
+                        alt="grey-neon-logo"
+                        src="test-file-stub"
+                      />
+                    </div>
+                    <button
+                      class="modalHeaderCloseButton"
+                      type="button"
+                    >
+                      <svg />
+                    </button>
+                  </div>
+                  <div
+                    class="modalBody"
+                  >
+                    <div
+                      class="textContainer"
+                    >
+                      <strong
+                        class="text"
+                      >
+                        text
+                      </strong>
+                    </div>
+                    <div
+                      class="modalFooter"
+                    >
+                      <button
+                        class="button actionButton dark"
+                        id="confirm"
+                        type="button"
+                      >
+                        <span>
+                          Confirm
+                        </span>
+                      </button>
+                      <button
+                        class="button light"
+                        id="cancel"
+                        type="button"
+                      >
+                        <span>
+                          Cancel
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           }
         >
-          <div
-            className="ReactModal__Overlay ReactModal__Overlay--after-open"
-            onClick={[Function]}
-            onMouseDown={[Function]}
-            onMouseUp={[Function]}
-            style={
+          <ModalPortal
+            ariaHideApp={true}
+            bodyOpenClassName="ReactModal__Body--open"
+            closeTimeoutMS={0}
+            defaultStyles={
               Object {
-                "--amounts-panel-asset-amount-text": "#515151",
-                "--amounts-panel-asset-name-text": "#515151",
-                "--amounts-panel-asset-worth-text": "#515151",
-                "--amounts-panel-first-row-background": "#f2f2f2",
-                "--amounts-panel-second-row-background": "#fff",
-                "--auth-main-container-background": "#fff",
-                "--base-link-color": "#3063c9",
-                "--base-main-background": "#e6e6e6",
-                "--base-text": "#394152",
-                "--button-active": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
-                "--button-active-hover": "#66edcd",
-                "--button-disabled": "#d6d9e0",
-                "--button-icon-color": "#394152",
-                "--button-max-amount-background": "#e6e6e6",
-                "--button-max-amount-text": "#8f939b",
-                "--button-primary-background": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
-                "--button-primary-hover": "#66edcd",
-                "--button-primary-text": "#394152",
-                "--button-priority-transfer-background": "#fff",
-                "--button-priority-transfer-color": "#394152",
-                "--button-priority-transfer-disabled": "#fff",
-                "--button-secondary-background": "#fff",
-                "--button-secondary-hover": "#f2f2f2",
-                "--button-secondary-text": "#394152",
-                "--contacts-group-header-background": "#f6f7f8",
-                "--contacts-group-header-text": "#394152",
-                "--contacts-odd-numbered-row": "rgba(230, 230, 230, 0.1)",
-                "--dashboard-asset-panel-asset-name": "#5c677f",
-                "--dashboard-asset-panel-total-background": "rgba(230, 230, 230, 0.28)",
-                "--dashboard-market-data-line": "#3fd0ae",
-                "--dashboard-price-history-current-price": "#394152",
-                "--dashboard-token-balances-divider-line": "#f2f2f2",
-                "--dashboard-total-wallet-value-odd-row": "#f8f8f8",
-                "--dashboard-total-wallet-value-total-text": "#394152",
-                "--header-bar-default-icon-color": "#394152",
-                "--input-active": "linear-gradient(#f2f2f2, #f2f2f2), radial-gradient(circle at top left, #66eb8e, #6bdaf6)",
-                "--input-background": "#f2f2f2",
-                "--input-error": "#ee6d66",
-                "--input-error-text": "#fff",
-                "--input-icon": "#9ca0a9",
-                "--input-label": "#5c677f",
-                "--input-label-opacity": 0.5,
-                "--input-placeholder": "rgba(40, 40, 40, 0.5)",
-                "--input-select-hover": "#e6e6e6",
-                "--input-text": "#282828",
-                "--modal-overlay": "rgba(26, 54, 80, 0.25)",
-                "--node-select-automatic-select-button-text": "#5c677f",
-                "--node-select-header-background": "#f2f2f2",
-                "--node-select-icon-color": "#69e27e",
-                "--node-select-node-count": "#5c677f",
-                "--node-select-refresh-icon": "#394152",
-                "--panel-background": "#fff",
-                "--panel-full-height-background": "#fff",
-                "--panel-full-height-instructions-border": "rgba(0, 0, 0, 0.15)",
-                "--panel-full-height-instructions-text": "#5c677f",
-                "--panel-full-height-nav-background": "#f2f2f2",
-                "--panel-header": "#f2f2f2",
-                "--panel-header-border": "#8d98ae",
-                "--panel-header-text": "#394152",
-                "--panel-icon": "#69e27e",
-                "--panel-label-text": "#8d98ae",
-                "--panel-receive-explanation": "rgba(242, 242, 242, .5)",
-                "--secondary-button-icon-color": "#394152",
-                "--settings-donation-text": "#5c677f",
-                "--settings-item-border-color": "#f2f2f2",
-                "--settings-item-icon": "#cccccc",
-                "--settings-item-label": "#343b4a",
-                "--settings-link-text": "#69e27e",
-                "--settings-select-value-text": "#69e27e",
-                "--settings-spacer": "rgba(170, 178, 189, 0.3)",
-                "--side-bar-disabled-item-background": "#fff",
-                "--sidebar-active-background": "#f2f2f2",
-                "--sidebar-active-border": "#66edcd",
-                "--sidebar-active-icon": "#394152",
-                "--sidebar-background": "#fff",
-                "--sidebar-icon": "#9599a2",
-                "--tab-border": "#394152",
-                "--tab-text": "#394152",
-                "--tx-history-button-icon": "#394152",
-                "--tx-history-copy-icon": "#9599a2",
-                "--tx-history-odd-row": "#f2f2f2",
-                "backgroundColor": "var(--modal-overlay)",
-                "bottom": 0,
-                "left": 0,
-                "margin": "auto",
-                "position": "fixed",
-                "right": 0,
-                "top": 0,
+                "content": Object {
+                  "WebkitOverflowScrolling": "touch",
+                  "background": "#fff",
+                  "border": "1px solid #ccc",
+                  "borderRadius": "4px",
+                  "bottom": "40px",
+                  "left": "40px",
+                  "outline": "none",
+                  "overflow": "auto",
+                  "padding": "20px",
+                  "position": "absolute",
+                  "right": "40px",
+                  "top": "40px",
+                },
+                "overlay": Object {
+                  "backgroundColor": "rgba(255, 255, 255, 0.75)",
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "fixed",
+                  "right": 0,
+                  "top": 0,
+                },
               }
             }
-          >
-            <div
-              className="ReactModal__Content ReactModal__Content--after-open"
-              onClick={[Function]}
-              onKeyDown={[Function]}
-              onMouseDown={[Function]}
-              onMouseUp={[Function]}
-              style={
-                Object {
+            isOpen={true}
+            onRequestClose={[Function]}
+            parentSelector={[Function]}
+            portalClassName="ReactModalPortal"
+            shouldCloseOnEsc={true}
+            shouldCloseOnOverlayClick={true}
+            shouldFocusAfterRender={true}
+            shouldReturnFocusAfterClose={true}
+            style={
+              Object {
+                "content": Object {
                   "--amounts-panel-asset-amount-text": "#515151",
                   "--amounts-panel-asset-name-text": "#515151",
                   "--amounts-panel-asset-worth-text": "#515151",
                   "--amounts-panel-first-row-background": "#f2f2f2",
                   "--amounts-panel-second-row-background": "#fff",
                   "--auth-main-container-background": "#fff",
+                  "--auth-scan-qr-border": "#f2f2f2",
                   "--base-link-color": "#3063c9",
                   "--base-main-background": "#e6e6e6",
                   "--base-text": "#394152",
@@ -628,6 +418,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--node-select-refresh-icon": "#394152",
                   "--panel-background": "#fff",
                   "--panel-full-height-background": "#fff",
+                  "--panel-full-height-header-icon-color": "#394152",
                   "--panel-full-height-instructions-border": "rgba(0, 0, 0, 0.15)",
                   "--panel-full-height-instructions-text": "#5c677f",
                   "--panel-full-height-nav-background": "#f2f2f2",
@@ -656,31 +447,214 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--tx-history-button-icon": "#394152",
                   "--tx-history-copy-icon": "#9599a2",
                   "--tx-history-odd-row": "#f2f2f2",
-                  "WebkitOverflowScrolling": "touch",
                   "background": "var(--panel-background)",
                   "border": "none",
                   "borderRadius": "4px",
-                  "bottom": "40px",
                   "boxShadow": "rgba(0, 0, 0, 0.1) 0px 0px 4px",
                   "color": "var(--base-text)",
                   "display": "flex",
                   "flexDirection": "column",
                   "height": "250px",
-                  "left": "40px",
                   "margin": "auto",
-                  "outline": "none",
-                  "overflow": "auto",
                   "padding": 0,
-                  "position": "absolute",
-                  "right": "40px",
-                  "top": "40px",
                   "width": "500px",
+                },
+                "overlay": Object {
+                  "--amounts-panel-asset-amount-text": "#515151",
+                  "--amounts-panel-asset-name-text": "#515151",
+                  "--amounts-panel-asset-worth-text": "#515151",
+                  "--amounts-panel-first-row-background": "#f2f2f2",
+                  "--amounts-panel-second-row-background": "#fff",
+                  "--auth-main-container-background": "#fff",
+                  "--auth-scan-qr-border": "#f2f2f2",
+                  "--base-link-color": "#3063c9",
+                  "--base-main-background": "#e6e6e6",
+                  "--base-text": "#394152",
+                  "--button-active": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
+                  "--button-active-hover": "#66edcd",
+                  "--button-disabled": "#d6d9e0",
+                  "--button-icon-color": "#394152",
+                  "--button-max-amount-background": "#e6e6e6",
+                  "--button-max-amount-text": "#8f939b",
+                  "--button-primary-background": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
+                  "--button-primary-hover": "#66edcd",
+                  "--button-primary-text": "#394152",
+                  "--button-priority-transfer-background": "#fff",
+                  "--button-priority-transfer-color": "#394152",
+                  "--button-priority-transfer-disabled": "#fff",
+                  "--button-secondary-background": "#fff",
+                  "--button-secondary-hover": "#f2f2f2",
+                  "--button-secondary-text": "#394152",
+                  "--contacts-group-header-background": "#f6f7f8",
+                  "--contacts-group-header-text": "#394152",
+                  "--contacts-odd-numbered-row": "rgba(230, 230, 230, 0.1)",
+                  "--dashboard-asset-panel-asset-name": "#5c677f",
+                  "--dashboard-asset-panel-total-background": "rgba(230, 230, 230, 0.28)",
+                  "--dashboard-market-data-line": "#3fd0ae",
+                  "--dashboard-price-history-current-price": "#394152",
+                  "--dashboard-token-balances-divider-line": "#f2f2f2",
+                  "--dashboard-total-wallet-value-odd-row": "#f8f8f8",
+                  "--dashboard-total-wallet-value-total-text": "#394152",
+                  "--header-bar-default-icon-color": "#394152",
+                  "--input-active": "linear-gradient(#f2f2f2, #f2f2f2), radial-gradient(circle at top left, #66eb8e, #6bdaf6)",
+                  "--input-background": "#f2f2f2",
+                  "--input-error": "#ee6d66",
+                  "--input-error-text": "#fff",
+                  "--input-icon": "#9ca0a9",
+                  "--input-label": "#5c677f",
+                  "--input-label-opacity": 0.5,
+                  "--input-placeholder": "rgba(40, 40, 40, 0.5)",
+                  "--input-select-hover": "#e6e6e6",
+                  "--input-text": "#282828",
+                  "--modal-overlay": "rgba(26, 54, 80, 0.25)",
+                  "--node-select-automatic-select-button-text": "#5c677f",
+                  "--node-select-header-background": "#f2f2f2",
+                  "--node-select-icon-color": "#69e27e",
+                  "--node-select-node-count": "#5c677f",
+                  "--node-select-refresh-icon": "#394152",
+                  "--panel-background": "#fff",
+                  "--panel-full-height-background": "#fff",
+                  "--panel-full-height-header-icon-color": "#394152",
+                  "--panel-full-height-instructions-border": "rgba(0, 0, 0, 0.15)",
+                  "--panel-full-height-instructions-text": "#5c677f",
+                  "--panel-full-height-nav-background": "#f2f2f2",
+                  "--panel-header": "#f2f2f2",
+                  "--panel-header-border": "#8d98ae",
+                  "--panel-header-text": "#394152",
+                  "--panel-icon": "#69e27e",
+                  "--panel-label-text": "#8d98ae",
+                  "--panel-receive-explanation": "rgba(242, 242, 242, .5)",
+                  "--secondary-button-icon-color": "#394152",
+                  "--settings-donation-text": "#5c677f",
+                  "--settings-item-border-color": "#f2f2f2",
+                  "--settings-item-icon": "#cccccc",
+                  "--settings-item-label": "#343b4a",
+                  "--settings-link-text": "#69e27e",
+                  "--settings-select-value-text": "#69e27e",
+                  "--settings-spacer": "rgba(170, 178, 189, 0.3)",
+                  "--side-bar-disabled-item-background": "#fff",
+                  "--sidebar-active-background": "#f2f2f2",
+                  "--sidebar-active-border": "#66edcd",
+                  "--sidebar-active-icon": "#394152",
+                  "--sidebar-background": "#fff",
+                  "--sidebar-icon": "#9599a2",
+                  "--tab-border": "#394152",
+                  "--tab-text": "#394152",
+                  "--tx-history-button-icon": "#394152",
+                  "--tx-history-copy-icon": "#9599a2",
+                  "--tx-history-odd-row": "#f2f2f2",
+                  "backgroundColor": "var(--modal-overlay)",
+                  "margin": "auto",
+                },
+              }
+            }
+          >
+            <div
+              className="ReactModal__Overlay ReactModal__Overlay--after-open"
+              onClick={[Function]}
+              onMouseDown={[Function]}
+              onMouseUp={[Function]}
+              style={
+                Object {
+                  "--amounts-panel-asset-amount-text": "#515151",
+                  "--amounts-panel-asset-name-text": "#515151",
+                  "--amounts-panel-asset-worth-text": "#515151",
+                  "--amounts-panel-first-row-background": "#f2f2f2",
+                  "--amounts-panel-second-row-background": "#fff",
+                  "--auth-main-container-background": "#fff",
+                  "--auth-scan-qr-border": "#f2f2f2",
+                  "--base-link-color": "#3063c9",
+                  "--base-main-background": "#e6e6e6",
+                  "--base-text": "#394152",
+                  "--button-active": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
+                  "--button-active-hover": "#66edcd",
+                  "--button-disabled": "#d6d9e0",
+                  "--button-icon-color": "#394152",
+                  "--button-max-amount-background": "#e6e6e6",
+                  "--button-max-amount-text": "#8f939b",
+                  "--button-primary-background": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
+                  "--button-primary-hover": "#66edcd",
+                  "--button-primary-text": "#394152",
+                  "--button-priority-transfer-background": "#fff",
+                  "--button-priority-transfer-color": "#394152",
+                  "--button-priority-transfer-disabled": "#fff",
+                  "--button-secondary-background": "#fff",
+                  "--button-secondary-hover": "#f2f2f2",
+                  "--button-secondary-text": "#394152",
+                  "--contacts-group-header-background": "#f6f7f8",
+                  "--contacts-group-header-text": "#394152",
+                  "--contacts-odd-numbered-row": "rgba(230, 230, 230, 0.1)",
+                  "--dashboard-asset-panel-asset-name": "#5c677f",
+                  "--dashboard-asset-panel-total-background": "rgba(230, 230, 230, 0.28)",
+                  "--dashboard-market-data-line": "#3fd0ae",
+                  "--dashboard-price-history-current-price": "#394152",
+                  "--dashboard-token-balances-divider-line": "#f2f2f2",
+                  "--dashboard-total-wallet-value-odd-row": "#f8f8f8",
+                  "--dashboard-total-wallet-value-total-text": "#394152",
+                  "--header-bar-default-icon-color": "#394152",
+                  "--input-active": "linear-gradient(#f2f2f2, #f2f2f2), radial-gradient(circle at top left, #66eb8e, #6bdaf6)",
+                  "--input-background": "#f2f2f2",
+                  "--input-error": "#ee6d66",
+                  "--input-error-text": "#fff",
+                  "--input-icon": "#9ca0a9",
+                  "--input-label": "#5c677f",
+                  "--input-label-opacity": 0.5,
+                  "--input-placeholder": "rgba(40, 40, 40, 0.5)",
+                  "--input-select-hover": "#e6e6e6",
+                  "--input-text": "#282828",
+                  "--modal-overlay": "rgba(26, 54, 80, 0.25)",
+                  "--node-select-automatic-select-button-text": "#5c677f",
+                  "--node-select-header-background": "#f2f2f2",
+                  "--node-select-icon-color": "#69e27e",
+                  "--node-select-node-count": "#5c677f",
+                  "--node-select-refresh-icon": "#394152",
+                  "--panel-background": "#fff",
+                  "--panel-full-height-background": "#fff",
+                  "--panel-full-height-header-icon-color": "#394152",
+                  "--panel-full-height-instructions-border": "rgba(0, 0, 0, 0.15)",
+                  "--panel-full-height-instructions-text": "#5c677f",
+                  "--panel-full-height-nav-background": "#f2f2f2",
+                  "--panel-header": "#f2f2f2",
+                  "--panel-header-border": "#8d98ae",
+                  "--panel-header-text": "#394152",
+                  "--panel-icon": "#69e27e",
+                  "--panel-label-text": "#8d98ae",
+                  "--panel-receive-explanation": "rgba(242, 242, 242, .5)",
+                  "--secondary-button-icon-color": "#394152",
+                  "--settings-donation-text": "#5c677f",
+                  "--settings-item-border-color": "#f2f2f2",
+                  "--settings-item-icon": "#cccccc",
+                  "--settings-item-label": "#343b4a",
+                  "--settings-link-text": "#69e27e",
+                  "--settings-select-value-text": "#69e27e",
+                  "--settings-spacer": "rgba(170, 178, 189, 0.3)",
+                  "--side-bar-disabled-item-background": "#fff",
+                  "--sidebar-active-background": "#f2f2f2",
+                  "--sidebar-active-border": "#66edcd",
+                  "--sidebar-active-icon": "#394152",
+                  "--sidebar-background": "#fff",
+                  "--sidebar-icon": "#9599a2",
+                  "--tab-border": "#394152",
+                  "--tab-text": "#394152",
+                  "--tx-history-button-icon": "#394152",
+                  "--tx-history-copy-icon": "#9599a2",
+                  "--tx-history-odd-row": "#f2f2f2",
+                  "backgroundColor": "var(--modal-overlay)",
+                  "bottom": 0,
+                  "left": 0,
+                  "margin": "auto",
+                  "position": "fixed",
+                  "right": 0,
+                  "top": 0,
                 }
               }
-              tabIndex="-1"
             >
               <div
-                className="modalHeader"
+                className="ReactModal__Content ReactModal__Content--after-open"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                onMouseDown={[Function]}
+                onMouseUp={[Function]}
                 style={
                   Object {
                     "--amounts-panel-asset-amount-text": "#515151",
@@ -689,6 +663,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                     "--amounts-panel-first-row-background": "#f2f2f2",
                     "--amounts-panel-second-row-background": "#fff",
                     "--auth-main-container-background": "#fff",
+                    "--auth-scan-qr-border": "#f2f2f2",
                     "--base-link-color": "#3063c9",
                     "--base-main-background": "#e6e6e6",
                     "--base-text": "#394152",
@@ -736,6 +711,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                     "--node-select-refresh-icon": "#394152",
                     "--panel-background": "#fff",
                     "--panel-full-height-background": "#fff",
+                    "--panel-full-height-header-icon-color": "#394152",
                     "--panel-full-height-instructions-border": "rgba(0, 0, 0, 0.15)",
                     "--panel-full-height-instructions-text": "#5c677f",
                     "--panel-full-height-nav-background": "#f2f2f2",
@@ -764,169 +740,282 @@ exports[`ConfirmModal should render without crashing 1`] = `
                     "--tx-history-button-icon": "#394152",
                     "--tx-history-copy-icon": "#9599a2",
                     "--tx-history-odd-row": "#f2f2f2",
+                    "WebkitOverflowScrolling": "touch",
+                    "background": "var(--panel-background)",
+                    "border": "none",
+                    "borderRadius": "4px",
+                    "bottom": "40px",
+                    "boxShadow": "rgba(0, 0, 0, 0.1) 0px 0px 4px",
+                    "color": "var(--base-text)",
+                    "display": "flex",
+                    "flexDirection": "column",
+                    "height": "250px",
+                    "left": "40px",
+                    "margin": "auto",
+                    "outline": "none",
+                    "overflow": "auto",
+                    "padding": 0,
+                    "position": "absolute",
+                    "right": "40px",
+                    "top": "40px",
+                    "width": "500px",
                   }
                 }
+                tabIndex="-1"
               >
                 <div
-                  className="modalHeaderTitle"
-                >
-                  <img
-                    alt="grey-neon-logo"
-                    src="test-file-stub"
-                  />
-                </div>
-                <button
-                  className="modalHeaderCloseButton"
-                  onClick={[Function]}
-                  type="button"
-                >
-                  <Component>
-                    <svg />
-                  </Component>
-                </button>
-              </div>
-              <div
-                className="modalBody"
-                style={
-                  Object {
-                    "--amounts-panel-asset-amount-text": "#515151",
-                    "--amounts-panel-asset-name-text": "#515151",
-                    "--amounts-panel-asset-worth-text": "#515151",
-                    "--amounts-panel-first-row-background": "#f2f2f2",
-                    "--amounts-panel-second-row-background": "#fff",
-                    "--auth-main-container-background": "#fff",
-                    "--base-link-color": "#3063c9",
-                    "--base-main-background": "#e6e6e6",
-                    "--base-text": "#394152",
-                    "--button-active": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
-                    "--button-active-hover": "#66edcd",
-                    "--button-disabled": "#d6d9e0",
-                    "--button-icon-color": "#394152",
-                    "--button-max-amount-background": "#e6e6e6",
-                    "--button-max-amount-text": "#8f939b",
-                    "--button-primary-background": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
-                    "--button-primary-hover": "#66edcd",
-                    "--button-primary-text": "#394152",
-                    "--button-priority-transfer-background": "#fff",
-                    "--button-priority-transfer-color": "#394152",
-                    "--button-priority-transfer-disabled": "#fff",
-                    "--button-secondary-background": "#fff",
-                    "--button-secondary-hover": "#f2f2f2",
-                    "--button-secondary-text": "#394152",
-                    "--contacts-group-header-background": "#f6f7f8",
-                    "--contacts-group-header-text": "#394152",
-                    "--contacts-odd-numbered-row": "rgba(230, 230, 230, 0.1)",
-                    "--dashboard-asset-panel-asset-name": "#5c677f",
-                    "--dashboard-asset-panel-total-background": "rgba(230, 230, 230, 0.28)",
-                    "--dashboard-market-data-line": "#3fd0ae",
-                    "--dashboard-price-history-current-price": "#394152",
-                    "--dashboard-token-balances-divider-line": "#f2f2f2",
-                    "--dashboard-total-wallet-value-odd-row": "#f8f8f8",
-                    "--dashboard-total-wallet-value-total-text": "#394152",
-                    "--header-bar-default-icon-color": "#394152",
-                    "--input-active": "linear-gradient(#f2f2f2, #f2f2f2), radial-gradient(circle at top left, #66eb8e, #6bdaf6)",
-                    "--input-background": "#f2f2f2",
-                    "--input-error": "#ee6d66",
-                    "--input-error-text": "#fff",
-                    "--input-icon": "#9ca0a9",
-                    "--input-label": "#5c677f",
-                    "--input-label-opacity": 0.5,
-                    "--input-placeholder": "rgba(40, 40, 40, 0.5)",
-                    "--input-select-hover": "#e6e6e6",
-                    "--input-text": "#282828",
-                    "--modal-overlay": "rgba(26, 54, 80, 0.25)",
-                    "--node-select-automatic-select-button-text": "#5c677f",
-                    "--node-select-header-background": "#f2f2f2",
-                    "--node-select-icon-color": "#69e27e",
-                    "--node-select-node-count": "#5c677f",
-                    "--node-select-refresh-icon": "#394152",
-                    "--panel-background": "#fff",
-                    "--panel-full-height-background": "#fff",
-                    "--panel-full-height-instructions-border": "rgba(0, 0, 0, 0.15)",
-                    "--panel-full-height-instructions-text": "#5c677f",
-                    "--panel-full-height-nav-background": "#f2f2f2",
-                    "--panel-header": "#f2f2f2",
-                    "--panel-header-border": "#8d98ae",
-                    "--panel-header-text": "#394152",
-                    "--panel-icon": "#69e27e",
-                    "--panel-label-text": "#8d98ae",
-                    "--panel-receive-explanation": "rgba(242, 242, 242, .5)",
-                    "--secondary-button-icon-color": "#394152",
-                    "--settings-donation-text": "#5c677f",
-                    "--settings-item-border-color": "#f2f2f2",
-                    "--settings-item-icon": "#cccccc",
-                    "--settings-item-label": "#343b4a",
-                    "--settings-link-text": "#69e27e",
-                    "--settings-select-value-text": "#69e27e",
-                    "--settings-spacer": "rgba(170, 178, 189, 0.3)",
-                    "--side-bar-disabled-item-background": "#fff",
-                    "--sidebar-active-background": "#f2f2f2",
-                    "--sidebar-active-border": "#66edcd",
-                    "--sidebar-active-icon": "#394152",
-                    "--sidebar-background": "#fff",
-                    "--sidebar-icon": "#9599a2",
-                    "--tab-border": "#394152",
-                    "--tab-text": "#394152",
-                    "--tx-history-button-icon": "#394152",
-                    "--tx-history-copy-icon": "#9599a2",
-                    "--tx-history-odd-row": "#f2f2f2",
+                  className="modalHeader"
+                  style={
+                    Object {
+                      "--amounts-panel-asset-amount-text": "#515151",
+                      "--amounts-panel-asset-name-text": "#515151",
+                      "--amounts-panel-asset-worth-text": "#515151",
+                      "--amounts-panel-first-row-background": "#f2f2f2",
+                      "--amounts-panel-second-row-background": "#fff",
+                      "--auth-main-container-background": "#fff",
+                      "--auth-scan-qr-border": "#f2f2f2",
+                      "--base-link-color": "#3063c9",
+                      "--base-main-background": "#e6e6e6",
+                      "--base-text": "#394152",
+                      "--button-active": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
+                      "--button-active-hover": "#66edcd",
+                      "--button-disabled": "#d6d9e0",
+                      "--button-icon-color": "#394152",
+                      "--button-max-amount-background": "#e6e6e6",
+                      "--button-max-amount-text": "#8f939b",
+                      "--button-primary-background": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
+                      "--button-primary-hover": "#66edcd",
+                      "--button-primary-text": "#394152",
+                      "--button-priority-transfer-background": "#fff",
+                      "--button-priority-transfer-color": "#394152",
+                      "--button-priority-transfer-disabled": "#fff",
+                      "--button-secondary-background": "#fff",
+                      "--button-secondary-hover": "#f2f2f2",
+                      "--button-secondary-text": "#394152",
+                      "--contacts-group-header-background": "#f6f7f8",
+                      "--contacts-group-header-text": "#394152",
+                      "--contacts-odd-numbered-row": "rgba(230, 230, 230, 0.1)",
+                      "--dashboard-asset-panel-asset-name": "#5c677f",
+                      "--dashboard-asset-panel-total-background": "rgba(230, 230, 230, 0.28)",
+                      "--dashboard-market-data-line": "#3fd0ae",
+                      "--dashboard-price-history-current-price": "#394152",
+                      "--dashboard-token-balances-divider-line": "#f2f2f2",
+                      "--dashboard-total-wallet-value-odd-row": "#f8f8f8",
+                      "--dashboard-total-wallet-value-total-text": "#394152",
+                      "--header-bar-default-icon-color": "#394152",
+                      "--input-active": "linear-gradient(#f2f2f2, #f2f2f2), radial-gradient(circle at top left, #66eb8e, #6bdaf6)",
+                      "--input-background": "#f2f2f2",
+                      "--input-error": "#ee6d66",
+                      "--input-error-text": "#fff",
+                      "--input-icon": "#9ca0a9",
+                      "--input-label": "#5c677f",
+                      "--input-label-opacity": 0.5,
+                      "--input-placeholder": "rgba(40, 40, 40, 0.5)",
+                      "--input-select-hover": "#e6e6e6",
+                      "--input-text": "#282828",
+                      "--modal-overlay": "rgba(26, 54, 80, 0.25)",
+                      "--node-select-automatic-select-button-text": "#5c677f",
+                      "--node-select-header-background": "#f2f2f2",
+                      "--node-select-icon-color": "#69e27e",
+                      "--node-select-node-count": "#5c677f",
+                      "--node-select-refresh-icon": "#394152",
+                      "--panel-background": "#fff",
+                      "--panel-full-height-background": "#fff",
+                      "--panel-full-height-header-icon-color": "#394152",
+                      "--panel-full-height-instructions-border": "rgba(0, 0, 0, 0.15)",
+                      "--panel-full-height-instructions-text": "#5c677f",
+                      "--panel-full-height-nav-background": "#f2f2f2",
+                      "--panel-header": "#f2f2f2",
+                      "--panel-header-border": "#8d98ae",
+                      "--panel-header-text": "#394152",
+                      "--panel-icon": "#69e27e",
+                      "--panel-label-text": "#8d98ae",
+                      "--panel-receive-explanation": "rgba(242, 242, 242, .5)",
+                      "--secondary-button-icon-color": "#394152",
+                      "--settings-donation-text": "#5c677f",
+                      "--settings-item-border-color": "#f2f2f2",
+                      "--settings-item-icon": "#cccccc",
+                      "--settings-item-label": "#343b4a",
+                      "--settings-link-text": "#69e27e",
+                      "--settings-select-value-text": "#69e27e",
+                      "--settings-spacer": "rgba(170, 178, 189, 0.3)",
+                      "--side-bar-disabled-item-background": "#fff",
+                      "--sidebar-active-background": "#f2f2f2",
+                      "--sidebar-active-border": "#66edcd",
+                      "--sidebar-active-icon": "#394152",
+                      "--sidebar-background": "#fff",
+                      "--sidebar-icon": "#9599a2",
+                      "--tab-border": "#394152",
+                      "--tab-text": "#394152",
+                      "--tx-history-button-icon": "#394152",
+                      "--tx-history-copy-icon": "#9599a2",
+                      "--tx-history-odd-row": "#f2f2f2",
+                    }
                   }
-                }
-              >
-                <div
-                  className="textContainer"
                 >
-                  <strong
-                    className="text"
+                  <div
+                    className="modalHeaderTitle"
                   >
-                    text
-                  </strong>
-                </div>
-                <div
-                  className="modalFooter"
-                >
-                  <Button
-                    className="actionButton"
-                    id="confirm"
+                    <img
+                      alt="grey-neon-logo"
+                      src="test-file-stub"
+                    />
+                  </div>
+                  <button
+                    className="modalHeaderCloseButton"
                     onClick={[Function]}
-                    primary={true}
-                    shouldCenterButtonLabelText={false}
                     type="button"
                   >
-                    <button
-                      className="button actionButton dark"
+                    <Component>
+                      <svg />
+                    </Component>
+                  </button>
+                </div>
+                <div
+                  className="modalBody"
+                  style={
+                    Object {
+                      "--amounts-panel-asset-amount-text": "#515151",
+                      "--amounts-panel-asset-name-text": "#515151",
+                      "--amounts-panel-asset-worth-text": "#515151",
+                      "--amounts-panel-first-row-background": "#f2f2f2",
+                      "--amounts-panel-second-row-background": "#fff",
+                      "--auth-main-container-background": "#fff",
+                      "--auth-scan-qr-border": "#f2f2f2",
+                      "--base-link-color": "#3063c9",
+                      "--base-main-background": "#e6e6e6",
+                      "--base-text": "#394152",
+                      "--button-active": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
+                      "--button-active-hover": "#66edcd",
+                      "--button-disabled": "#d6d9e0",
+                      "--button-icon-color": "#394152",
+                      "--button-max-amount-background": "#e6e6e6",
+                      "--button-max-amount-text": "#8f939b",
+                      "--button-primary-background": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
+                      "--button-primary-hover": "#66edcd",
+                      "--button-primary-text": "#394152",
+                      "--button-priority-transfer-background": "#fff",
+                      "--button-priority-transfer-color": "#394152",
+                      "--button-priority-transfer-disabled": "#fff",
+                      "--button-secondary-background": "#fff",
+                      "--button-secondary-hover": "#f2f2f2",
+                      "--button-secondary-text": "#394152",
+                      "--contacts-group-header-background": "#f6f7f8",
+                      "--contacts-group-header-text": "#394152",
+                      "--contacts-odd-numbered-row": "rgba(230, 230, 230, 0.1)",
+                      "--dashboard-asset-panel-asset-name": "#5c677f",
+                      "--dashboard-asset-panel-total-background": "rgba(230, 230, 230, 0.28)",
+                      "--dashboard-market-data-line": "#3fd0ae",
+                      "--dashboard-price-history-current-price": "#394152",
+                      "--dashboard-token-balances-divider-line": "#f2f2f2",
+                      "--dashboard-total-wallet-value-odd-row": "#f8f8f8",
+                      "--dashboard-total-wallet-value-total-text": "#394152",
+                      "--header-bar-default-icon-color": "#394152",
+                      "--input-active": "linear-gradient(#f2f2f2, #f2f2f2), radial-gradient(circle at top left, #66eb8e, #6bdaf6)",
+                      "--input-background": "#f2f2f2",
+                      "--input-error": "#ee6d66",
+                      "--input-error-text": "#fff",
+                      "--input-icon": "#9ca0a9",
+                      "--input-label": "#5c677f",
+                      "--input-label-opacity": 0.5,
+                      "--input-placeholder": "rgba(40, 40, 40, 0.5)",
+                      "--input-select-hover": "#e6e6e6",
+                      "--input-text": "#282828",
+                      "--modal-overlay": "rgba(26, 54, 80, 0.25)",
+                      "--node-select-automatic-select-button-text": "#5c677f",
+                      "--node-select-header-background": "#f2f2f2",
+                      "--node-select-icon-color": "#69e27e",
+                      "--node-select-node-count": "#5c677f",
+                      "--node-select-refresh-icon": "#394152",
+                      "--panel-background": "#fff",
+                      "--panel-full-height-background": "#fff",
+                      "--panel-full-height-header-icon-color": "#394152",
+                      "--panel-full-height-instructions-border": "rgba(0, 0, 0, 0.15)",
+                      "--panel-full-height-instructions-text": "#5c677f",
+                      "--panel-full-height-nav-background": "#f2f2f2",
+                      "--panel-header": "#f2f2f2",
+                      "--panel-header-border": "#8d98ae",
+                      "--panel-header-text": "#394152",
+                      "--panel-icon": "#69e27e",
+                      "--panel-label-text": "#8d98ae",
+                      "--panel-receive-explanation": "rgba(242, 242, 242, .5)",
+                      "--secondary-button-icon-color": "#394152",
+                      "--settings-donation-text": "#5c677f",
+                      "--settings-item-border-color": "#f2f2f2",
+                      "--settings-item-icon": "#cccccc",
+                      "--settings-item-label": "#343b4a",
+                      "--settings-link-text": "#69e27e",
+                      "--settings-select-value-text": "#69e27e",
+                      "--settings-spacer": "rgba(170, 178, 189, 0.3)",
+                      "--side-bar-disabled-item-background": "#fff",
+                      "--sidebar-active-background": "#f2f2f2",
+                      "--sidebar-active-border": "#66edcd",
+                      "--sidebar-active-icon": "#394152",
+                      "--sidebar-background": "#fff",
+                      "--sidebar-icon": "#9599a2",
+                      "--tab-border": "#394152",
+                      "--tab-text": "#394152",
+                      "--tx-history-button-icon": "#394152",
+                      "--tx-history-copy-icon": "#9599a2",
+                      "--tx-history-odd-row": "#f2f2f2",
+                    }
+                  }
+                >
+                  <div
+                    className="textContainer"
+                  >
+                    <strong
+                      className="text"
+                    >
+                      text
+                    </strong>
+                  </div>
+                  <div
+                    className="modalFooter"
+                  >
+                    <Button
+                      className="actionButton"
                       id="confirm"
                       onClick={[Function]}
+                      primary={true}
+                      shouldCenterButtonLabelText={false}
                       type="button"
                     >
-                      <span>
-                        Confirm
-                      </span>
-                    </button>
-                  </Button>
-                  <Button
-                    id="cancel"
-                    onClick={[Function]}
-                    primary={false}
-                    shouldCenterButtonLabelText={false}
-                    type="button"
-                  >
-                    <button
-                      className="button light"
+                      <button
+                        className="button actionButton dark"
+                        id="confirm"
+                        onClick={[Function]}
+                        type="button"
+                      >
+                        <span>
+                          Confirm
+                        </span>
+                      </button>
+                    </Button>
+                    <Button
                       id="cancel"
                       onClick={[Function]}
+                      primary={false}
+                      shouldCenterButtonLabelText={false}
                       type="button"
                     >
-                      <span>
-                        Cancel
-                      </span>
-                    </button>
-                  </Button>
+                      <button
+                        className="button light"
+                        id="cancel"
+                        onClick={[Function]}
+                        type="button"
+                      >
+                        <span>
+                          Cancel
+                        </span>
+                      </button>
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </ModalPortal>
+          </ModalPortal>
+        </Portal>
       </Modal>
     </withData(BaseModal)>
   </Connect(withData(BaseModal))>

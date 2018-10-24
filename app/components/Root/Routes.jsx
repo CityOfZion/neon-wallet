@@ -16,6 +16,7 @@ import TransactionHistory from '../../containers/TransactionHistory'
 import WalletManager from '../../containers/WalletManager'
 import EditWallet from '../../containers/EditWallet'
 import DisplayWalletAccounts from '../../containers/DisplayWalletAccounts'
+import DisplayWalletAccountsQrCodes from '../../containers/DisplayWalletAccounts/DisplayWalletAccountsQrCodes/index'
 import Send from '../../containers/Send'
 import TokenSale from '../../containers/TokenSale'
 import Encrypt from '../../containers/Encrypt'
@@ -60,6 +61,19 @@ export default () => (
         path={ROUTES.DISPLAY_WALLET_KEYS_AUTHENTICATED}
         render={props => <DisplayWalletAccounts {...props} authenticated />}
       />
+      <Route
+        exact
+        path={ROUTES.DISPLAY_WALLET_QRS_AUTHENTICATED}
+        render={props => (
+          <DisplayWalletAccountsQrCodes {...props} authenticated />
+        )}
+      />
+      <Route
+        exact
+        path={ROUTES.DISPLAY_WALLET_QRS}
+        render={props => <DisplayWalletAccountsQrCodes {...props} />}
+      />
+
       <Route exact path={ROUTES.SETTINGS} component={Settings} />
       <PrivateRoute
         exact

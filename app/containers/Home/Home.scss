@@ -33,6 +33,46 @@ $navigation-margin: 20px;
   margin-bottom: 10px;
 }
 
+.privateKeyLoginButtonRow {
+  display: flex;
+  margin-top: auto;
+  button:first-child {
+    margin-right: 12px;
+  }
+  button:last-child {
+    margin-right: 0;
+  }
+}
+
+.privateKeyLoginLoader {
+  min-height: 17px;
+}
+
+.privateKeyLoginButtonRowScannerActive {
+  button {
+    width: 200px;
+    margin: auto;
+    background: var(--button-secondary-hover) !important;
+
+    svg {
+      path {
+        fill: #ff967e !important;
+      }
+    }
+  }
+}
+
+.scannerContainer {
+  display: flex;
+  justify-content: center;
+  min-height: 150px;
+  video {
+    min-width: 350px;
+    margin-top: -40px;
+    margin-bottom: 12px;
+  }
+}
+
 .ledgerStage {
   font-family: Gotham-Book;
   margin-top: 0;
@@ -124,7 +164,7 @@ $navigation-margin: 20px;
   }
 
   button:hover {
-    background: var(--button-secondary-background) !important;
+    background: var(--button-secondary-hover) !important;
   }
 
   button:disabled {

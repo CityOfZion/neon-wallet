@@ -18,17 +18,30 @@ exports[`Login renders without crashing 1`] = `
         value=""
       />
     </div>
-    <Button
-      className="loginButtonMargin"
-      disabled={true}
-      id="loginButton"
-      primary={true}
-      renderIcon={[Function]}
-      shouldCenterButtonLabelText={true}
-      type="submit"
+    <div
+      className="privateKeyLoginButtonRow"
     >
-      Login
-    </Button>
+      <Button
+        disabled={true}
+        id="loginButton"
+        primary={true}
+        renderIcon={[Function]}
+        shouldCenterButtonLabelText={false}
+        type="submit"
+      >
+        Login
+      </Button>
+      <Button
+        id="scan-private-key-qr-button"
+        onClick={[Function]}
+        primary={true}
+        renderIcon={[Function]}
+        shouldCenterButtonLabelText={false}
+        type="button"
+      >
+        Scan QR
+      </Button>
+    </div>
   </form>
 </div>
 `;

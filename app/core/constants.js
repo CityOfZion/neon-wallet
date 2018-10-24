@@ -44,6 +44,8 @@ export const ROUTES = {
   SETTINGS: '/settings',
   DISPLAY_WALLET_KEYS: '/display-wallet-keys',
   DISPLAY_WALLET_KEYS_AUTHENTICATED: '/display-wallet-keys-authenticated',
+  DISPLAY_WALLET_QRS: '/display-wallet-qrs',
+  DISPLAY_WALLET_QRS_AUTHENTICATED: '/display-wallet-qrs-authenticated',
   WALLET_MANAGER: '/wallet-manager',
   EDIT_WALLET: '/edit-wallet/:key/:label',
   SEND: '/send/',

@@ -14,6 +14,43 @@
   flex: 1;
 }
 
+.qrContainer {
+  display: flex;
+  justify-content: space-around;
+  flex: 1;
+  margin-top: 24px;
+  width: 100%;
+
+  .qr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  canvas {
+    min-width: 200px;
+    min-height: 200px;
+  }
+
+  button {
+    margin-top: 12px;
+  }
+
+  label {
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    opacity: var(--input-label-opacity);
+    color: var(--input-label);
+    margin-bottom: 10px;
+  }
+}
+
+.qrPrintButtonContainer {
+  margin-bottom: 50px;
+  width: 475px;
+}
+
 .input {
   min-width: 475px;
   width: 60%;
@@ -48,6 +85,23 @@
   margin: auto;
   margin-top: auto;
   margin-bottom: 50px;
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+
+  a {
+  }
+
+  button {
+    width: 225px;
+  }
+
+  button:first-child {
+    margin-right: 12px;
+  }
+  button:last-child {
+    margin-right: 0;
+  }
 }
 
 .disclaimer {
@@ -72,25 +126,6 @@
   height: 100%;
   z-index: 1;
   margin-right: 0px;
-
-  svg {
-    path {
-      // fill: #66ed87;
-    }
-  }
-}
-
-.qrContainer {
-  display: flex;
-  justify-content: space-around;
-  text-align: center;
-  margin-bottom: 35px;
-  min-width: 475px;
-  width: 75%;
-
-  .qrItem {
-    flex: 1;
-  }
 }
 
 .displayWalletAccountsDialogue {

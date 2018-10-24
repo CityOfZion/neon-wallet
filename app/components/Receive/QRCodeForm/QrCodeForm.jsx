@@ -113,7 +113,7 @@ export default class QRCodeForm extends React.Component<Props, State> {
             disabled={!amount}
             type="submit"
           >
-            Generate Code
+            Generate QR Code
           </Button>
         </form>
       </div>

@@ -78,21 +78,24 @@ export default class Receive extends React.Component<Props, State> {
 
     /* $FlowFixMe */
     return assets.map((asset: string) => {
-      const { balance } = sendableAssets[asset]
-      const currentBalance = balance
-      const price = prices[asset]
+      if (sendableAssets) {
+        const { balance } = sendableAssets[asset]
+        const currentBalance = balance
+        const price = prices[asset]
 
-      const totalBalanceWorth = price
-        ? multiplyNumber(balance, price)
-        : PRICE_UNAVAILABLE
+        const totalBalanceWorth = price
+          ? multiplyNumber(balance, price)
+          : PRICE_UNAVAILABLE
 
-      return {
-        symbol: asset,
-        totalBalance: balance,
-        price,
-        currentBalance,
-        totalBalanceWorth
+        return {
+          symbol: asset,
+          totalBalance: balance,
+          price,
+          currentBalance,
+          totalBalanceWorth
+        }
       }
+      return {}
     })
   }
 }
