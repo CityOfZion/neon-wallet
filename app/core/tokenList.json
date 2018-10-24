@@ -581,21 +581,6 @@
     "image":
       "https://rawgit.com/CityOfZion/neo-tokens/master/assets/png/rht.png"
   },
-  "RPX": {
-    "symbol": "RPX",
-    "companyName": "Red Pulse Token",
-    "type": "NEP5",
-    "networks": {
-      "1": {
-        "name": "Red Pulse Token",
-        "hash": "ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9",
-        "decimals": 8,
-        "totalSupply": 1358371250
-      }
-    },
-    "image":
-      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/svg/rpx.svg"
-  },
   "SCC": {
     "symbol": "SCC",
     "companyName": "Stem Cell Coin",
