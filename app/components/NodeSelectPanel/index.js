@@ -11,6 +11,7 @@ import {
 } from 'spunky'
 
 import withLoadingProp from '../../hocs/withLoadingProp'
+import withNetworkData from '../../hocs/withNetworkData'
 
 import NodeSelectPanel from './NodeSelectPanel'
 import nodeNetworkActions from '../../actions/nodeNetworkActions'
@@ -63,11 +64,13 @@ const mapNodesActionsToProps = actions => ({
 })
 
 const mapSaveNodeActionsToProps = actions => ({
-  saveSelectedNode: url => actions.call(url)
+  saveSelectedNode: ({ url, net }) =>
+    console.log(url) || actions.call({ url, net })
 })
 
 export default compose(
   withProps(mapNodesShownToProps),
+  withNetworkData(),
   withCall(nodeNetworkActions),
   withActions(nodeNetworkActions, mapNodesActionsToProps),
   withActions(nodeStorageActions, mapSaveNodeActionsToProps),
