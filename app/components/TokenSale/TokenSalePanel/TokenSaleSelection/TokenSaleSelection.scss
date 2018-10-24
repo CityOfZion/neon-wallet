@@ -1,35 +1,38 @@
 .tokenSaleSelectionContainer {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .tokenSaleSelectTokenContainer,
 .tokenSaleContributionSelectToken,
 .tokenSaleContributionAmount {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .tokenSaleSelectTokenContainer,
 .tokenSaleContributionSelectToken {
-    max-width: 120px;
+  max-width: 120px;
 }
 
 .tokenSaleContributionSelectToken {
-    margin-right: 15px;
+  margin-right: 15px;
 }
 
 .tokenSaleContributionContainer {
-    margin-left: auto;
-    display: flex;
+  display: flex;
 }
 
 .tokenSaleSelectionHeader {
-    text-transform: uppercase;
-    font-weight: 300;
-    font-size: 0.8rem;
+  text-transform: uppercase;
+  font-weight: 300;
+  font-size: 0.8rem;
 }
 
 .tokenSaleContributionNumberInput {
-    width: 178px;
+  width: 178px;
+}
+
+.tokenPurchaseSelect {
+  min-width: 100px;
 }

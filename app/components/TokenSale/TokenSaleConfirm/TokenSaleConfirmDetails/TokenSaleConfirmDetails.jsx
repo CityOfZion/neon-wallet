@@ -6,7 +6,8 @@ import styles from './TokenSaleConfirmDetails.scss'
 type Props = {
   tokenInfo: Object,
   assetToPurchaseWith: string,
-  amountToPurchaseFor: number
+  amountToPurchaseFor: number,
+  gasFee: number
 }
 
 const TokenSaleConfirmDetails = ({

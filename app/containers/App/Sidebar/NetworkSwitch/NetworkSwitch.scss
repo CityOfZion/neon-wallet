@@ -1,40 +1,5 @@
 @import '../../../../styles/variables';
 
 .networkSwitch {
-  color: #666;
-  font-size: 0.8em;
-  border-radius: 0px;
   width: 150px;
-
-  .networkSwitchTextInputWrapper {
-    margin-bottom: 0;
-  }
-
-  .networkSwitchTextInputContainer {
-    background-color: transparent;
-    border: none;
-  }
-
-  .networkSwitchActive {
-    background-color: transparent;
-    border: none;
-  }
-
-  .label {
-    margin-right: 4px;
-  }
-
-  .dropdownItem {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-
-    &:hover {
-      background: #e6e6e6;
-    }
-
-    .highlight {
-      font-weight: 600;
-    }
-  }
 }

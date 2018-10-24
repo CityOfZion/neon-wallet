@@ -5,6 +5,7 @@ import {
   isZero,
   isNumber,
   toBigNumber,
+  addNumber,
   minusNumber,
   multiplyNumber
 } from '../../core/math'
@@ -41,6 +42,7 @@ type Props = {
   prices: Object,
   address: string,
   history: Object,
+  showModal: Function,
   participateInSale: (
     neoToSend: string,
     gasToSend: string,
@@ -72,7 +74,7 @@ class TokenSale extends Component<Props, State> {
       step: TOKEN_SALE_PURCHASE,
       assetToPurchaseWith: Object.keys(this.props.assetBalances)[0],
       amountToPurchaseFor: 0,
-      assetToPurchase: 'Loading tokens...',
+      assetToPurchase: '',
       conditions: [...conditions],
       loading: false,
       gasFee: 0,
@@ -131,15 +133,14 @@ class TokenSale extends Component<Props, State> {
 
   getPurchaseableAssets = () => {
     const { icoTokens } = this.props
-    if (!icoTokens) return
+    if (!icoTokens) return []
     return icoTokens.map(item => item.token)
   }
 
   getTokenToPurchaseInformation = () => {
     const { icoTokens } = this.props
-    if (!icoTokens) return
+    if (!icoTokens) return {}
     const { assetToPurchase } = this.state
-
     return icoTokens.find(tokenObj => tokenObj.token === assetToPurchase)
   }
 
@@ -167,22 +168,24 @@ class TokenSale extends Component<Props, State> {
   }
 
   isValid = () => {
-    const { amountToPurchaseFor, assetToPurchaseWith } = this.state
+    const { amountToPurchaseFor, assetToPurchaseWith, gasFee } = this.state
     const { assetBalances } = this.props
 
-    if (!isNumber(amountToPurchaseFor)) {
+    const amountWithoutCommas = amountToPurchaseFor.toString().replace(/,/g, '')
+
+    if (!isNumber(Number(amountToPurchaseFor))) {
       this.setState({ inputErrorMessage: 'Amount must be a number.' })
       return false
     }
 
-    if (isZero(amountToPurchaseFor)) {
+    if (isZero(amountWithoutCommas)) {
       this.setState({ inputErrorMessage: 'Amount must be greater than 0.' })
       return false
     }
 
     if (
       assetToPurchaseWith === 'NEO' &&
-      !toBigNumber(amountToPurchaseFor).isInteger()
+      !toBigNumber(amountWithoutCommas).isInteger()
     ) {
       this.setState({
         inputErrorMessage: "You can't send fractional amounts of NEO" // eslint-disable-line
@@ -191,7 +194,34 @@ class TokenSale extends Component<Props, State> {
     }
 
     const assetBalance = toBigNumber(assetBalances[assetToPurchaseWith])
-    if (toBigNumber(amountToPurchaseFor).greaterThan(assetBalance)) {
+
+    const gasBalance = toBigNumber(assetBalances.GAS)
+
+    if (gasFee) {
+      if (toBigNumber(gasFee).greaterThan(gasBalance)) {
+        this.setState({
+          inputErrorMessage:
+            'You do not have enough GAS to prioritize this transaction' // eslint-disable-line
+        })
+        return false
+      }
+    }
+
+    if (assetToPurchaseWith === 'GAS') {
+      if (
+        toBigNumber(addNumber(amountWithoutCommas, gasFee)).greaterThan(
+          gasBalance
+        )
+      ) {
+        this.setState({
+          inputErrorMessage:
+            'You do not have enough GAS to prioritize this transaction' // eslint-disable-line
+        })
+        return false
+      }
+    }
+
+    if (toBigNumber(amountWithoutCommas).greaterThan(assetBalance)) {
       this.setState({
         inputErrorMessage: `You don't have enough ${assetToPurchaseWith}.`
       })
@@ -283,7 +313,7 @@ class TokenSale extends Component<Props, State> {
       amountsData
     } = this.state
 
-    const { assetBalances } = this.props
+    const { assetBalances, showModal } = this.props
     const disabledButton = !(acceptedConditions.length === conditions.length)
     const availableGas = assetBalances.GAS
     return (
@@ -292,6 +322,7 @@ class TokenSale extends Component<Props, State> {
         <section className={styles.purchaseSection}>
           <AmountsPanel currencyCode="usd" amountsData={amountsData} />
           <TokenSalePanel
+            showModal={showModal}
             onClickHandler={this.getOnClickHandler()}
             getAssetsToPurchaseWith={this.getAssetsToPurchaseWith}
             assetBalances={assetBalances}
@@ -315,7 +346,7 @@ class TokenSale extends Component<Props, State> {
   }
 
   renderConfirm = () => {
-    const { assetToPurchaseWith, amountToPurchaseFor } = this.state
+    const { assetToPurchaseWith, amountToPurchaseFor, gasFee } = this.state
 
     const tokenInformation = this.getTokenToPurchaseInformation()
     if (!tokenInformation) return null
@@ -327,6 +358,7 @@ class TokenSale extends Component<Props, State> {
         tokenInfo={tokenInformation}
         assetToPurchaseWith={assetToPurchaseWith}
         amountToPurchaseFor={amountToPurchaseFor}
+        gasFee={gasFee}
       />
     )
   }

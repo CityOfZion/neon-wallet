@@ -11,9 +11,6 @@
   cursor: pointer;
   color: var(--base-text) !important;
 
-  button {
-  }
-
   &[disabled] {
     cursor: default;
     opacity: 0.6;

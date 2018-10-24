@@ -12,6 +12,8 @@ import withNetworkData from '../../hocs/withNetworkData'
 import withPricesData from '../../hocs/withPricesData'
 import withTokensData from '../../hocs/withTokensData'
 
+import { showModal } from '../../modules/modal'
+
 import { participateInSale } from '../../modules/sale'
 
 const mapPricesDataToProps = (prices: Object) => ({
@@ -19,7 +21,8 @@ const mapPricesDataToProps = (prices: Object) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  participateInSale: (...args) => dispatch(participateInSale(...args))
+  participateInSale: (...args) => dispatch(participateInSale(...args)),
+  showModal: (...args) => dispatch(showModal(...args))
 })
 
 const mapBalancesDataToProps = balances => ({
@@ -29,6 +32,10 @@ const mapBalancesDataToProps = balances => ({
 const mapIcoTokensToProps = icoTokens => ({ icoTokens })
 
 export default compose(
+  connect(
+    null,
+    mapDispatchToProps
+  ),
   withAuthData(),
   withNetworkData(),
   withTokensData(),
