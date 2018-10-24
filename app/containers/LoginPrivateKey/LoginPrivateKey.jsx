@@ -48,55 +48,58 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
           }}
         >
           {scannerActive ? (
-            <div className={styles.scannerContainer}>
-              {/* eslint-disable-next-line */}
-              <video
-                ref={ref => {
-                  this.scanPreviewElement = ref
-                }}
-              />
-            </div>
+            <React.Fragment>
+              <div className={styles.scannerContainer}>
+                {/* eslint-disable-next-line */}
+                <video
+                  ref={ref => {
+                    this.scanPreviewElement = ref
+                  }}
+                />
+              </div>
+              <div className={styles.privateKeyLoginButtonRowScannerActive}>
+                <Button
+                  id="scan-private-key-qr-button"
+                  renderIcon={Close}
+                  onClick={this.toggleScanner}
+                  shouldCenterButtonLabelText
+                >
+                  Cancel
+                </Button>
+              </div>
+            </React.Fragment>
           ) : (
-            <div className={styles.centeredInput}>
-              <PasswordInput
-                placeholder="Enter your private key here"
-                value={wif}
-                onChange={(e: Object) => this.setState({ wif: e.target.value })}
-                autoFocus
-              />
-            </div>
-          )}
-          {scannerActive ? (
-            <div className={styles.privateKeyLoginButtonRowScannerActive}>
-              <Button
-                id="scan-private-key-qr-button"
-                renderIcon={Close}
-                onClick={this.toggleScanner}
-                shouldCenterButtonLabelText
-              >
-                Cancel
-              </Button>
-            </div>
-          ) : (
-            <div className={styles.privateKeyLoginButtonRow}>
-              <Button
-                id="loginButton"
-                primary
-                type="submit"
-                renderIcon={LoginIcon}
-                disabled={wif.length < 10}
-              >
-                Login
-              </Button>
-              <Button
-                id="scan-private-key-qr-button"
-                primary
-                renderIcon={GridIcon}
-                onClick={this.toggleScanner}
-              >
-                Scan QR
-              </Button>
-            </div>
+            <React.Fragment>
+              <div className={styles.centeredInput}>
+                <PasswordInput
+                  placeholder="Enter your private key here"
+                  value={wif}
+                  onChange={(e: Object) =>
+                    this.setState({ wif: e.target.value })
+                  }
+                  autoFocus
+                />
+              </div>
+              <div className={styles.privateKeyLoginButtonRow}>
+                <Button
+                  id="loginButton"
+                  primary
+                  type="submit"
+                  renderIcon={LoginIcon}
+                  disabled={wif.length < 10}
+                >
+                  Login
+                </Button>
+                <Button
+                  id="scan-private-key-qr-button"
+                  primary
+                  renderIcon={GridIcon}
+                  onClick={this.toggleScanner}
+                >
+                  Scan QR
+                </Button>
+              </div>
+            </React.Fragment>
           )}
         </form>
       </div>
