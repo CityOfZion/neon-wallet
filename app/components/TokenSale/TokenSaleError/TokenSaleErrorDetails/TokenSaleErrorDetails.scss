@@ -29,6 +29,13 @@
   font-size: 1.8rem;
   margin-bottom: 40px;
   justify-content: center;
+  color: var(--base-main-text);
+
+  svg {
+    path {
+      fill: var(--input-error);
+    }
+  }
 }
 
 .tokenSaleErrorDetailsIcon {

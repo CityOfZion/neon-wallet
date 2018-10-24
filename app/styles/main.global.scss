@@ -104,6 +104,7 @@ input::placeholder {
 
 .react-select-container {
   width: 100%;
+  min-width: 120px;
   cursor: pointer !important;
 
   .react-select__placeholder {

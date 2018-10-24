@@ -9,6 +9,7 @@ import TokenSaleIcon from '../../../assets/navigation/tokens.svg'
 import CheckMarkSVG from '../../../assets/icons/checkGreen.svg'
 import CloseButton from '../../CloseButton'
 import { ROUTES } from '../../../core/constants'
+import { formatGAS } from '../../../core/formatters'
 import styles from './TokenSaleConfirm.scss'
 
 type Props = {
@@ -16,7 +17,8 @@ type Props = {
   handleBack: () => void,
   assetToPurchaseWith: string,
   tokenInfo: Object,
-  amountToPurchaseFor: number
+  amountToPurchaseFor: number,
+  gasFee: number
 }
 
 const TokenSaleConfirm = ({
@@ -24,7 +26,8 @@ const TokenSaleConfirm = ({
   assetToPurchaseWith,
   tokenInfo,
   handleBack,
-  amountToPurchaseFor
+  amountToPurchaseFor,
+  gasFee
 }: Props) => (
   <FullHeightPanel
     headerText="Confirm Purchase"
@@ -41,6 +44,7 @@ const TokenSaleConfirm = ({
   >
     <div className={styles.tokenSaleConfirmContainer}>
       <TokenSaleConfirmDetails
+        gasFee={gasFee}
         tokenInfo={tokenInfo}
         assetToPurchaseWith={assetToPurchaseWith}
         amountToPurchaseFor={amountToPurchaseFor}
@@ -53,6 +57,11 @@ const TokenSaleConfirm = ({
       >
         Confirm and Purchase
       </Button>
+      {gasFee && (
+        <div className={styles.confirmationFees}>
+          <p>Fee: {formatGAS(gasFee)} GAS</p>
+        </div>
+      )}
     </div>
   </FullHeightPanel>
 )
