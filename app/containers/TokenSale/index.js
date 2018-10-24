@@ -11,7 +11,7 @@ import withAuthData from '../../hocs/withAuthData'
 import withNetworkData from '../../hocs/withNetworkData'
 import withPricesData from '../../hocs/withPricesData'
 import withTokensData from '../../hocs/withTokensData'
-
+import withSuccessNotification from '../../hocs/withSuccessNotification'
 import { showModal } from '../../modules/modal'
 
 import { participateInSale } from '../../modules/sale'
@@ -43,6 +43,10 @@ export default compose(
   withPricesData(mapPricesDataToProps),
   withCall(icoTokensActions),
   withData(icoTokensActions, mapIcoTokensToProps),
+  withSuccessNotification(
+    balancesActions,
+    'Received latest blockchain information.'
+  ),
   connect(
     null,
     mapDispatchToProps
