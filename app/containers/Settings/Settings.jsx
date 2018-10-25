@@ -30,6 +30,7 @@ import BlockExplorerIcon from '../../assets/icons/block-explorer.svg'
 import LightbulbIcon from '../../assets/icons/lightbulb-icon.svg'
 import CogIcon from '../../assets/icons/cog-icon.svg'
 import NodeSelectIcon from '../../assets/icons/node-select.svg'
+import VolumeIcon from '../../assets/icons/volume-icon.svg'
 import TimeIcon from '../../assets/icons/time-icon.svg'
 import SaveIcon from '../../assets/icons/save-icon.svg'
 import pack from '../../../package.json'
@@ -246,10 +247,22 @@ export default class Settings extends Component<Props, State> {
                 />
               </div>
             </SettingsItem>
+            <SettingsItem renderIcon={() => <LightbulbIcon />} title="THEME">
+              <div className={styles.settingsSelectContainer}>
+                <StyledReactSelect
+                  settingsSelect
+                  onChange={this.updateThemeSettings}
+                  isSearchable={false}
+                  transparent
+                  options={parsedThemeOptions}
+                  value={this.state.selectedTheme}
+                />
+              </div>
+            </SettingsItem>
             <SettingsItem
-              renderIcon={() => <LightbulbIcon />}
+              renderIcon={() => <VolumeIcon />}
               noBorderBottom
-              title="THEME"
+              title="SOUND"
             >
               <div className={styles.settingsSelectContainer}>
                 <StyledReactSelect
