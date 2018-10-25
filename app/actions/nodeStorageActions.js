@@ -20,7 +20,7 @@ const setNode = async (node: string, net: string): Promise<string> =>
 export default createActions(
   ID,
   ({ url, net }: Props = {}) => async (): Promise<string> => {
-    if (url) {
+    if (url || url === '') {
       await setNode(url, net)
       return url
     }

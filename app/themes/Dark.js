@@ -128,6 +128,10 @@ const CONTACTS = {
   '--contacts-group-header-text': '#171B24'
 }
 
+const SEND = {
+  '--send-success-row-info': '#cccccc'
+}
+
 export default {
   ...CONTACTS,
   ...AMOUNTS_PANEL,
@@ -143,5 +147,6 @@ export default {
   ...SIDEBAR,
   ...HEADER_BAR,
   ...TX_HISTORY,
-  ...SETTINGS
+  ...SETTINGS,
+  ...SEND
 }

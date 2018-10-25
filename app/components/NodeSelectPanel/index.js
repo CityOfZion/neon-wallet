@@ -64,8 +64,7 @@ const mapNodesActionsToProps = actions => ({
 })
 
 const mapSaveNodeActionsToProps = actions => ({
-  saveSelectedNode: ({ url, net }) =>
-    console.log(url) || actions.call({ url, net })
+  saveSelectedNode: ({ url, net }) => actions.call({ url, net })
 })
 
 export default compose(
