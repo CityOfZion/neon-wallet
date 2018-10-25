@@ -43,7 +43,9 @@ app.on('ready', () => {
       icon: path.join(__dirname, 'icons/png/64x64.png'),
       webPreferences: {
         allowRunningInsecureContent: false,
-        webSecurity: true
+        webSecurity: true,
+        nodeIntegration: false,
+        preload: path.join(__dirname, 'preload.js')
       }
     })
 
