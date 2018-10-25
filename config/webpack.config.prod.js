@@ -138,6 +138,12 @@ module.exports = {
           }
         },
         include: [path.resolve(__dirname, '../app/assets/nep5/svg')]
+      },
+      {
+        test: /\.(wav)(\?[a-z0-9#=&.]+)?$/,
+        use: {
+          loader: 'file-loader'
+        }
       }
     ]
   },

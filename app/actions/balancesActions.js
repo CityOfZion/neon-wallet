@@ -2,6 +2,9 @@
 import { api } from 'neon-js'
 import { extend, isEmpty, unionBy } from 'lodash-es'
 import { createActions } from 'spunky'
+import { Howl, Howler } from 'howler'
+// eslint-disable-next-line $FlowFixMe
+import coinAudioSample from '../assets/audio/coin.wav'
 
 import { getNode } from './nodeStorageActions'
 import { ASSETS } from '../core/constants'
@@ -15,7 +18,30 @@ type Props = {
   tokens: Array<TokenItemType>
 }
 
+const inMemoryBalances = {}
+let hasTriggeredAudio = false
+const sound = new Howl({
+  src: [coinAudioSample]
+})
+
 export const ID = 'balances'
+
+function determineIfBalanceUpdated(balanceData: Object) {
+  if (isEmpty(inMemoryBalances) || hasTriggeredAudio) {
+    return undefined
+  }
+  Object.keys(balanceData).forEach(key => {
+    // TODO: refactor to use common util functions from math.js
+    if (Number(balanceData[key]) > Number(inMemoryBalances[key])) {
+      sound.play()
+      hasTriggeredAudio = true
+    }
+  })
+}
+
+function resetAudioTrigger() {
+  hasTriggeredAudio = false
+}
 
 async function getBalances({ net, address, tokens }: Props) {
   let endpoint = await getNode(net)
@@ -48,6 +74,10 @@ async function getBalances({ net, address, tokens }: Props) {
     Object.keys(currBalance).forEach(key => {
       const foundToken = tokens.find(token => token.symbol === key)
       if (foundToken && currBalance[key]) {
+        // $FlowFixMe
+        determineIfBalanceUpdated({ [foundToken.symbol]: currBalance[key] })
+        // $FlowFixMe
+        inMemoryBalances[foundToken.symbol] = currBalance[key]
         accum.push({
           [foundToken.scriptHash]: {
             ...foundToken,
@@ -82,6 +112,8 @@ async function getBalances({ net, address, tokens }: Props) {
     }
   }
   userGeneratedTokenInfo.forEach(token => {
+    determineIfBalanceUpdated({ [token.symbol]: token.balance })
+    inMemoryBalances[token.symbol] = token.balance
     parsedTokenBalances.push({
       [token.scriptHash]: {
         ...token
@@ -102,6 +134,13 @@ async function getBalances({ net, address, tokens }: Props) {
     { [ASSETS.NEO]: neoBalance },
     { [ASSETS.GAS]: gasBalance }
   ]
+  determineIfBalanceUpdated({ [ASSETS.NEO]: neoBalance })
+  inMemoryBalances[ASSETS.NEO] = neoBalance
+  determineIfBalanceUpdated({ [ASSETS.GAS]: gasBalance })
+  inMemoryBalances[ASSETS.GAS] = gasBalance
+
+  console.log(inMemoryBalances)
+
   // $FlowFixMe
   return extend({}, ...parsedTokenBalances, ...parsedAssets)
 }
