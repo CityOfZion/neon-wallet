@@ -1,5 +1,6 @@
 // @flow
 import { createActions } from 'spunky'
+import { isEmpty } from 'lodash-es'
 
 import { getStorage, setStorage } from '../core/storage'
 
@@ -25,6 +26,6 @@ export default createActions(
       return url
     }
     const storage = await getNode(net)
-    return storage
+    return isEmpty(storage) ? '' : storage
   }
 )
