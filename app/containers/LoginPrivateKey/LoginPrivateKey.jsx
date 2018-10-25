@@ -62,7 +62,6 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
                   id="scan-private-key-qr-button"
                   renderIcon={Close}
                   onClick={this.toggleScanner}
-                  shouldCenterButtonLabelText
                 >
                   Cancel
                 </Button>
