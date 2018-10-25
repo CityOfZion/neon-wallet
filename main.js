@@ -44,7 +44,9 @@ app.on('ready', () => {
       contextIsolation: true,
       webPreferences: {
         allowRunningInsecureContent: false,
-        webSecurity: true
+        webSecurity: true,
+        nodeIntegration: false,
+        preload: path.join(__dirname, 'preload.js')
       }
     })
 
