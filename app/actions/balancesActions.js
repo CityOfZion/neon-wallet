@@ -139,8 +139,7 @@ async function getBalances({ net, address, tokens }: Props) {
   determineIfBalanceUpdated({ [ASSETS.GAS]: gasBalance })
   inMemoryBalances[ASSETS.GAS] = gasBalance
 
-  console.log(inMemoryBalances)
-
+  resetAudioTrigger()
   // $FlowFixMe
   return extend({}, ...parsedTokenBalances, ...parsedAssets)
 }
