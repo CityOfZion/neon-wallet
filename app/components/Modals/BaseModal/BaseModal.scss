@@ -37,12 +37,24 @@
   @extend .modalHeaderButton;
   left: 0;
   top: 0;
+
+  svg {
+    path {
+      fill: var(--panel-full-height-nav-background);
+    }
+  }
 }
 
 .modalHeaderCloseButton {
   @extend .modalHeaderButton;
   right: 0;
   top: 0;
+
+  svg {
+    path {
+      fill: var(--panel-full-height-nav-background);
+    }
+  }
 }
 
 .modalBody {
