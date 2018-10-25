@@ -1,12 +1,13 @@
 .panelHeaderButton {
   border: none;
   background: transparent;
+  font-family: Gotham-Book;
   padding: 8px;
   display: flex;
   margin-right: 10px;
   align-items: center;
   width: auto;
-  font-size: 1rem;
+  font-size: 14px;
   align-items: center;
   cursor: pointer;
   color: var(--base-text) !important;

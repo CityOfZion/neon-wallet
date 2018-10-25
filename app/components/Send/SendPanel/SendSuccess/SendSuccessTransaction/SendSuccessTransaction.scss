@@ -8,11 +8,28 @@
   justify-content: space-around;
   align-items: center;
   margin: 5px 0;
+  min-height: 55px;
+  p {
+    margin: 0;
+  }
 }
 
 .sendIconContainer,
 .assetContainer {
   width: 10%;
+  display: flex;
+  align-items: center;
+
+  p {
+    color: var(--send-success-row-info);
+    margin: 0;
+  }
+
+  svg {
+    path {
+      fill: #ff967e;
+    }
+  }
 }
 
 .amountContainer {
@@ -28,6 +45,13 @@
   width: 50%;
   display: flex;
   align-items: center;
+  color: var(--send-success-row-info);
+
+  svg {
+    path {
+      fill: var(--tx-history-copy-icon) !important;
+    }
+  }
 }
 
 .buttonContainer {
@@ -42,9 +66,14 @@
   display: flex;
   align-items: center;
   font-size: 1rem;
+  color: var(--base-text);
   cursor: pointer;
 
   svg {
     margin-right: 5px;
+
+    path {
+      fill: var(--tx-history-button-icon);
+    }
   }
 }

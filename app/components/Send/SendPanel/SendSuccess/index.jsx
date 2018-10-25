@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 
-import CheckMarkIcon from '../../../../assets/icons/confirm.svg'
+import CheckMarkIcon from '../../../../assets/icons/confirm-circle.svg'
 import SendSuccessTransaction from './SendSuccessTransaction'
 
 import { pluralize } from '../../../../util/pluralize'
