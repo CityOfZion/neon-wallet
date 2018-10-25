@@ -33,6 +33,7 @@
   "build": {
     "appId": "com.electron.neon",
     "files": [
+      "./preload.js",
       "./main.js",
       "app/dist/index.html",
       "app/dist/bundle.js",
