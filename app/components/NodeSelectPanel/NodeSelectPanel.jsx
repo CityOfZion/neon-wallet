@@ -25,7 +25,8 @@ type Props = {
   loadNodesData: Function,
   saveSelectedNode: Function,
   selectedNode: string,
-  net: string
+  net: string,
+  networkId: string
 }
 
 type State = {
@@ -80,10 +81,10 @@ export default class NodeSelect extends React.Component<Props, State> {
   }
 
   handleRefreshNodeData = () => {
-    const { loading, loadNodesData } = this.props
+    const { loading, loadNodesData, networkId } = this.props
     const { refreshDisabled } = this.state
     if (!refreshDisabled) {
-      loadNodesData()
+      loadNodesData({ networkId })
       this.setState({ refreshDisabled: true })
       setTimeout(() => {
         this.setState({ refreshDisabled: false })

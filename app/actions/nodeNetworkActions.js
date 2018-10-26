@@ -52,6 +52,8 @@ export default createActions(
         break
       case TEST_NETWORK_ID:
         nodes = NODES_TEST_NET
+        // eslint-disable-next-line
+        totalDisplayed = NODES_TEST_NET.length
         break
       default:
         nodes = NODES_MAIN_NET

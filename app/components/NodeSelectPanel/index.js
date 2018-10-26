@@ -7,7 +7,8 @@ import {
   alreadyLoadedStrategy,
   progressValues,
   withProgressComponents,
-  withReset
+  withReset,
+  withRecall
 } from 'spunky'
 
 import withLoadingProp from '../../hocs/withLoadingProp'
@@ -60,7 +61,7 @@ const mapSelectedNodeDataToProps = url => ({
 })
 
 const mapNodesActionsToProps = actions => ({
-  loadNodesData: () => actions.call(count)
+  loadNodesData: ({ networkId }) => actions.call({ networkId })
 })
 
 const mapSaveNodeActionsToProps = actions => ({
@@ -85,5 +86,6 @@ export default compose(
   withData(nodeNetworkActions, mapNodesDataToProps),
   withData(nodeStorageActions, mapSelectedNodeDataToProps),
   withReset(accountActions, ['selectedNode']),
+
   withLoadingProp(nodeNetworkActions)
 )(NodeSelectPanel)
