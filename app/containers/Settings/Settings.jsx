@@ -12,6 +12,7 @@ import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import SettingsItem from '../../components/Settings/SettingsItem'
 import SettingsLink from '../../components/Settings/SettingsLink'
 import NetworkSwitch from '../App/Sidebar/NetworkSwitch'
+import Switch from '../../components/Inputs/Switch'
 
 import {
   EXPLORERS,
@@ -30,6 +31,7 @@ import BlockExplorerIcon from '../../assets/icons/block-explorer.svg'
 import LightbulbIcon from '../../assets/icons/lightbulb-icon.svg'
 import CogIcon from '../../assets/icons/cog-icon.svg'
 import NodeSelectIcon from '../../assets/icons/node-select.svg'
+import VolumeIcon from '../../assets/icons/volume-icon.svg'
 import TimeIcon from '../../assets/icons/time-icon.svg'
 import SaveIcon from '../../assets/icons/save-icon.svg'
 import pack from '../../../package.json'
@@ -49,7 +51,9 @@ type Props = {
   showModal: Function,
   selectedNode: string,
   net: string,
-  networkId: string
+  networkId: string,
+  soundEnabled: boolean,
+  setSoundSetting: boolean => any
 }
 
 type SelectOption = {
@@ -60,7 +64,8 @@ type SelectOption = {
 type State = {
   selectedCurrency: SelectOption,
   selectedTheme: SelectOption,
-  selectedExplorer: SelectOption
+  selectedExplorer: SelectOption,
+  soundEnabled: boolean
 }
 
 export default class Settings extends Component<Props, State> {
@@ -76,7 +81,8 @@ export default class Settings extends Component<Props, State> {
     selectedExplorer: {
       value: this.props.explorer,
       label: EXPLORERS[this.props.explorer] || EXPLORERS.NEO_SCAN
-    }
+    },
+    soundEnabled: this.props.soundEnabled
   }
 
   saveWalletRecovery = () => {
@@ -178,6 +184,12 @@ export default class Settings extends Component<Props, State> {
     setTheme(option.value)
   }
 
+  updateSoundSetting = (soundEnabled: boolean) => {
+    this.setState({ soundEnabled })
+    const { setSoundSetting } = this.props
+    setSoundSetting(soundEnabled)
+  }
+
   openTokenModal = () => {
     this.props.showModal(MODAL_TYPES.TOKEN)
   }
@@ -246,11 +258,7 @@ export default class Settings extends Component<Props, State> {
                 />
               </div>
             </SettingsItem>
-            <SettingsItem
-              renderIcon={() => <LightbulbIcon />}
-              noBorderBottom
-              title="THEME"
-            >
+            <SettingsItem renderIcon={() => <LightbulbIcon />} title="THEME">
               <div className={styles.settingsSelectContainer}>
                 <StyledReactSelect
                   settingsSelect
@@ -259,6 +267,18 @@ export default class Settings extends Component<Props, State> {
                   transparent
                   options={parsedThemeOptions}
                   value={this.state.selectedTheme}
+                />
+              </div>
+            </SettingsItem>
+            <SettingsItem
+              renderIcon={() => <VolumeIcon />}
+              noBorderBottom
+              title="SOUND"
+            >
+              <div className={styles.settingsSwitchContainer}>
+                <Switch
+                  checked={this.state.soundEnabled}
+                  handleCheck={this.updateSoundSetting}
                 />
               </div>
             </SettingsItem>

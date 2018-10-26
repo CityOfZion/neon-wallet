@@ -22,6 +22,12 @@ $panel-top-margin: 25px;
     }
   }
 
+  .settingsSwitchContainer {
+    justify-content: flex-end;
+    // margin-right: 24px;
+    align-self: flex-end;
+  }
+
   .settingsPanel {
     height: 100%;
 
@@ -47,7 +53,7 @@ $panel-top-margin: 25px;
 
     .settingsDonations {
       font-size: 12px;
-      margin-top: 24px;
+      margin: 12px 0;
       text-align: center;
       justify-content: center;
       display: flex;
