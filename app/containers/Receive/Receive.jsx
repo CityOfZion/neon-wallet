@@ -28,6 +28,10 @@ type State = {
 }
 
 export default class Receive extends React.Component<Props, State> {
+  static defaultProps = {
+    accounts: []
+  }
+
   constructor(props: Props) {
     super(props)
     const walletName: ?string = props.accounts.reduce(

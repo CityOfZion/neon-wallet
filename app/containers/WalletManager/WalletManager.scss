@@ -5,6 +5,8 @@
   flex-direction: column;
   flex: 1;
   overflow-y: auto;
+  width: 100%;
+  width: 610px;
 
   button {
     width: 125px;
@@ -22,15 +24,22 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 605px;
     min-height: 60px;
-    align-self: flex-start;
+    align-self: center;
     padding: 30px;
+    padding-left: 0;
+    padding-right: 0;
+
     border-bottom: solid 0.5px #8d98ae;
+
+    h2 {
+      margin-right: 24px;
+    }
 
     .iconAndHeader,
     .buttonRow {
       display: flex;
+      padding: 0px 0px;
       align-items: center;
     }
 

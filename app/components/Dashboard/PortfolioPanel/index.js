@@ -40,10 +40,10 @@ const mapSortedPortfolioBalanceProps = ({ prices, balances, total }) => ({
     const balance = toNumber(tokenBalance)
     const value = balance * (prices[symbol] || 0)
     const percent = value / total
-
     return { symbol, balance, value, percent }
   })
     .sort((a: Object, b: Object) => b.value - a.value)
+    .filter(balances => balances.value)
     .slice(0, 5)
 })
 
