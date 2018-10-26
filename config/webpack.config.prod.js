@@ -142,7 +142,7 @@ module.exports = {
       {
         test: /\.(wav)(\?[a-z0-9#=&.]+)?$/,
         use: {
-          loader: 'file-loader'
+          loader: 'url-loader'
         }
       }
     ]
