@@ -2,6 +2,7 @@
 
 import React from 'react'
 import classNames from 'classnames'
+import { uniqueId } from 'lodash-es'
 
 import SendRecipientListItem from './SendRecipientListItem'
 
@@ -29,7 +30,7 @@ const SendRecipientList = ({
   const renderRows = () =>
     sendRowDetails.map((row, index) => (
       <SendRecipientListItem
-        key={row.id}
+        key={row.id || uniqueId}
         {...row}
         index={index}
         numberOfRecipients={sendRowDetails.length}
