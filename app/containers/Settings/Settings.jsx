@@ -12,6 +12,7 @@ import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import SettingsItem from '../../components/Settings/SettingsItem'
 import SettingsLink from '../../components/Settings/SettingsLink'
 import NetworkSwitch from '../App/Sidebar/NetworkSwitch'
+import Switch from '../../components/Inputs/Switch'
 
 import {
   EXPLORERS,
@@ -50,7 +51,9 @@ type Props = {
   showModal: Function,
   selectedNode: string,
   net: string,
-  networkId: string
+  networkId: string,
+  soundEnabled: boolean,
+  setSoundSetting: boolean => any
 }
 
 type SelectOption = {
@@ -61,7 +64,8 @@ type SelectOption = {
 type State = {
   selectedCurrency: SelectOption,
   selectedTheme: SelectOption,
-  selectedExplorer: SelectOption
+  selectedExplorer: SelectOption,
+  soundEnabled: boolean
 }
 
 export default class Settings extends Component<Props, State> {
@@ -77,7 +81,8 @@ export default class Settings extends Component<Props, State> {
     selectedExplorer: {
       value: this.props.explorer,
       label: EXPLORERS[this.props.explorer] || EXPLORERS.NEO_SCAN
-    }
+    },
+    soundEnabled: this.props.soundEnabled
   }
 
   saveWalletRecovery = () => {
@@ -179,11 +184,18 @@ export default class Settings extends Component<Props, State> {
     setTheme(option.value)
   }
 
+  updateSoundSetting = (soundEnabled: boolean) => {
+    this.setState({ soundEnabled })
+    const { setSoundSetting } = this.props
+    setSoundSetting(soundEnabled)
+  }
+
   openTokenModal = () => {
     this.props.showModal(MODAL_TYPES.TOKEN)
   }
 
   render() {
+    console.log(this.props)
     const parsedCurrencyOptions = Object.keys(CURRENCIES).map(key => ({
       value: key,
       label: key.toUpperCase()
@@ -264,14 +276,10 @@ export default class Settings extends Component<Props, State> {
               noBorderBottom
               title="SOUND"
             >
-              <div className={styles.settingsSelectContainer}>
-                <StyledReactSelect
-                  settingsSelect
-                  onChange={this.updateThemeSettings}
-                  isSearchable={false}
-                  transparent
-                  options={parsedThemeOptions}
-                  value={this.state.selectedTheme}
+              <div className={styles.settingsSwitchContainer}>
+                <Switch
+                  checked={this.state.soundEnabled}
+                  handleCheck={this.updateSoundSetting}
                 />
               </div>
             </SettingsItem>

@@ -18,7 +18,8 @@ type Settings = {
   blockExplorer: string,
   tokens: Array<TokenItemType>,
   version: string,
-  theme: string
+  theme: string,
+  soundEnabled: boolean
 }
 
 const STORAGE_KEY = 'settings'
@@ -28,10 +29,11 @@ const DEFAULT_SETTINGS: () => Promise<Settings> = async () => ({
   theme: DEFAULT_THEME,
   blockExplorer: EXPLORERS.NEO_SCAN,
   tokens: await getDefaultTokens(),
-  version
+  version,
+  soundEnabled: true
 })
 
-const getSettings = async (): Promise<Settings> => {
+export const getSettings = async (): Promise<Settings> => {
   const defaults = await DEFAULT_SETTINGS()
 
   const settings = await getStorage(STORAGE_KEY)

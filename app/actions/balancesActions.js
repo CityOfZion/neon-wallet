@@ -6,9 +6,11 @@ import { Howl, Howler } from 'howler'
 // eslint-disable-next-line $FlowFixMe
 import coinAudioSample from '../assets/audio/coin.wav'
 
+import { getSettings } from './settingsActions'
 import { getNode } from './nodeStorageActions'
 import { ASSETS } from '../core/constants'
 import { COIN_DECIMAL_LENGTH } from '../core/formatters'
+import { toBigNumber } from '../core/math'
 
 const MAX_SCRIPT_HASH_CHUNK_SIZE = 5
 
@@ -20,19 +22,23 @@ type Props = {
 
 const inMemoryBalances = {}
 let hasTriggeredAudio = false
+let inMemoryNetwork
 const sound = new Howl({
   src: [coinAudioSample]
 })
 
 export const ID = 'balances'
 
-function determineIfBalanceUpdated(balanceData: Object) {
-  if (isEmpty(inMemoryBalances) || hasTriggeredAudio) {
+function determineIfBalanceUpdated(balanceData: Object, soundEnabled: boolean) {
+  console.log({ inMemoryBalances })
+  console.log({ balanceData })
+
+  if (isEmpty(inMemoryBalances) || hasTriggeredAudio || !soundEnabled) {
     return undefined
   }
   Object.keys(balanceData).forEach(key => {
-    // TODO: refactor to use common util functions from math.js
-    if (Number(balanceData[key]) > Number(inMemoryBalances[key])) {
+    const inMemoryBalance = toBigNumber(inMemoryBalances[key] || 0)
+    if (toBigNumber(balanceData[key]).greaterThan(inMemoryBalance)) {
       sound.play()
       hasTriggeredAudio = true
     }
@@ -44,6 +50,9 @@ function resetAudioTrigger() {
 }
 
 async function getBalances({ net, address, tokens }: Props) {
+  const { soundEnabled } = await getSettings()
+  inMemoryNetwork = net
+
   let endpoint = await getNode(net)
   if (isEmpty(endpoint)) {
     endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
@@ -74,8 +83,11 @@ async function getBalances({ net, address, tokens }: Props) {
     Object.keys(currBalance).forEach(key => {
       const foundToken = tokens.find(token => token.symbol === key)
       if (foundToken && currBalance[key]) {
-        // $FlowFixMe
-        determineIfBalanceUpdated({ [foundToken.symbol]: currBalance[key] })
+        determineIfBalanceUpdated(
+          // $FlowFixMe
+          { [foundToken.symbol]: currBalance[key] },
+          soundEnabled
+        )
         // $FlowFixMe
         inMemoryBalances[foundToken.symbol] = currBalance[key]
         accum.push({
@@ -112,7 +124,7 @@ async function getBalances({ net, address, tokens }: Props) {
     }
   }
   userGeneratedTokenInfo.forEach(token => {
-    determineIfBalanceUpdated({ [token.symbol]: token.balance })
+    determineIfBalanceUpdated({ [token.symbol]: token.balance }, soundEnabled)
     inMemoryBalances[token.symbol] = token.balance
     parsedTokenBalances.push({
       [token.scriptHash]: {
@@ -134,9 +146,9 @@ async function getBalances({ net, address, tokens }: Props) {
     { [ASSETS.NEO]: neoBalance },
     { [ASSETS.GAS]: gasBalance }
   ]
-  determineIfBalanceUpdated({ [ASSETS.NEO]: neoBalance })
+  determineIfBalanceUpdated({ [ASSETS.NEO]: neoBalance }, soundEnabled)
   inMemoryBalances[ASSETS.NEO] = neoBalance
-  determineIfBalanceUpdated({ [ASSETS.GAS]: gasBalance })
+  determineIfBalanceUpdated({ [ASSETS.GAS]: gasBalance }, soundEnabled)
   inMemoryBalances[ASSETS.GAS] = gasBalance
 
   resetAudioTrigger()
