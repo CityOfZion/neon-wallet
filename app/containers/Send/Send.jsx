@@ -256,7 +256,7 @@ export default class Send extends React.Component<Props, State> {
 
     const entries = sendRowDetails.map((row: Object) => ({
       address: row.address,
-      amount: toNumber(row.amount),
+      amount: toNumber(row.amount.toString().replace(/,/g, '')),
       symbol: row.asset
     }))
 
