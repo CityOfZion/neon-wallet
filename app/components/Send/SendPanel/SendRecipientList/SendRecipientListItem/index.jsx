@@ -89,7 +89,7 @@ class SendRecipientListItem extends Component<Props> {
       <DisplayInput value={asset} />
     ) : (
       <SelectInput
-        value={this.createAssetList()[0]}
+        value={asset}
         name="asset"
         onChange={this.handleFieldChange}
         items={this.createAssetList()}
