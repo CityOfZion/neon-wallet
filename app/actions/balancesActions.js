@@ -23,17 +23,24 @@ type Props = {
 const inMemoryBalances = {}
 let hasTriggeredAudio = false
 let inMemoryNetwork
+
 const sound = new Howl({
   src: [coinAudioSample]
 })
 
 export const ID = 'balances'
 
-function determineIfBalanceUpdated(balanceData: Object, soundEnabled: boolean) {
-  console.log({ inMemoryBalances })
-  console.log({ balanceData })
-
-  if (isEmpty(inMemoryBalances) || hasTriggeredAudio || !soundEnabled) {
+function determineIfBalanceUpdated(
+  balanceData: Object,
+  soundEnabled: boolean,
+  networkHasChanged: boolean | void
+) {
+  if (
+    isEmpty(inMemoryBalances) ||
+    hasTriggeredAudio ||
+    !soundEnabled ||
+    networkHasChanged
+  ) {
     return undefined
   }
   Object.keys(balanceData).forEach(key => {
@@ -51,9 +58,11 @@ function resetAudioTrigger() {
 
 async function getBalances({ net, address, tokens }: Props) {
   const { soundEnabled } = await getSettings()
-  inMemoryNetwork = net
-
   let endpoint = await getNode(net)
+
+  let networkHasChanged = true
+  if (net === inMemoryNetwork) networkHasChanged = false
+
   if (isEmpty(endpoint)) {
     endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
   }
@@ -86,7 +95,8 @@ async function getBalances({ net, address, tokens }: Props) {
         determineIfBalanceUpdated(
           // $FlowFixMe
           { [foundToken.symbol]: currBalance[key] },
-          soundEnabled
+          soundEnabled,
+          networkHasChanged
         )
         // $FlowFixMe
         inMemoryBalances[foundToken.symbol] = currBalance[key]
@@ -124,7 +134,11 @@ async function getBalances({ net, address, tokens }: Props) {
     }
   }
   userGeneratedTokenInfo.forEach(token => {
-    determineIfBalanceUpdated({ [token.symbol]: token.balance }, soundEnabled)
+    determineIfBalanceUpdated(
+      { [token.symbol]: token.balance },
+      soundEnabled,
+      networkHasChanged
+    )
     inMemoryBalances[token.symbol] = token.balance
     parsedTokenBalances.push({
       [token.scriptHash]: {
@@ -146,12 +160,21 @@ async function getBalances({ net, address, tokens }: Props) {
     { [ASSETS.NEO]: neoBalance },
     { [ASSETS.GAS]: gasBalance }
   ]
-  determineIfBalanceUpdated({ [ASSETS.NEO]: neoBalance }, soundEnabled)
+  determineIfBalanceUpdated(
+    { [ASSETS.NEO]: neoBalance },
+    soundEnabled,
+    networkHasChanged
+  )
   inMemoryBalances[ASSETS.NEO] = neoBalance
-  determineIfBalanceUpdated({ [ASSETS.GAS]: gasBalance }, soundEnabled)
+  determineIfBalanceUpdated(
+    { [ASSETS.GAS]: gasBalance },
+    soundEnabled,
+    networkHasChanged
+  )
   inMemoryBalances[ASSETS.GAS] = gasBalance
 
   resetAudioTrigger()
+  inMemoryNetwork = net
   // $FlowFixMe
   return extend({}, ...parsedTokenBalances, ...parsedAssets)
 }

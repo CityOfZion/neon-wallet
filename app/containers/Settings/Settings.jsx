@@ -195,7 +195,6 @@ export default class Settings extends Component<Props, State> {
   }
 
   render() {
-    console.log(this.props)
     const parsedCurrencyOptions = Object.keys(CURRENCIES).map(key => ({
       value: key,
       label: key.toUpperCase()
