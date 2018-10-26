@@ -7,7 +7,8 @@ import {
   withActions,
   type Actions,
   withCall,
-  withRecall
+  withRecall,
+  withReset
 } from 'spunky'
 
 import Settings from './Settings'
@@ -28,6 +29,7 @@ import { showModal } from '../../modules/modal'
 import networkActions from '../../actions/networkActions'
 import withNetworkData from '../../hocs/withNetworkData'
 import nodeStorageActions from '../../actions/nodeStorageActions'
+import dashboardActions from '../../actions/dashboardActions'
 
 const mapStateToProps = () => ({
   networks: getNetworks()
@@ -89,5 +91,7 @@ export default compose(
   withRecall(nodeStorageActions, ['networkId']),
   withActions(updateAccountsActions, mapAccountsActionsToProps),
   withActions(updateSettingsActions, mapSettingsActionsToProps),
-  withRecall(pricesActions, ['currency'])
+  withReset(dashboardActions, ['currency']),
+  withReset(pricesActions, ['currency']),
+  withRecall(dashboardActions, ['currency'])
 )(Settings)
