@@ -35,8 +35,7 @@ const INPUT = {
   '--input-active':
     'linear-gradient(#f2f2f2, #f2f2f2), radial-gradient(circle at top left, #66eb8e, #6bdaf6)',
   '--input-icon': '#9ca0a9',
-  '--input-placeholder': 'rgba(40, 40, 40, 0.5)',
-  '--input-switch-background': '#f2f2f2'
+  '--input-placeholder': 'rgba(40, 40, 40, 0.5)'
 }
 
 const HEADER_BAR = {
