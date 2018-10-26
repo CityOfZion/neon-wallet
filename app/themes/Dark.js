@@ -76,7 +76,7 @@ const DASHBOARD = {
   '--dashboard-asset-panel-total-background': '#343B4A',
   '--dashboard-total-wallet-value-odd-row': '#343B4A',
   '--dashboard-total-wallet-value-total-text': '#fff',
-  '--dashboard-asset-panel-asset-name': 'rgba(255, 255, 255, 0.5)',
+  '--dashboard-asset-panel-asset-name': 'rgba(255, 255, 255, 0.9)',
   '--dashboard-token-balances-divider-line': '#343B4A',
   '--dashboard-price-history-current-price': '#fff'
 }

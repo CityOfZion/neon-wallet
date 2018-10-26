@@ -428,6 +428,21 @@
       }
     }
   },
+  "NOS": {
+    "symbol": "NOS",
+    "companyName": "nOS",
+    "type": "NEP5",
+    "networks": {
+      "1": {
+        "name": "nOS",
+        "hash": "17389cf72eeb2a96a95133b438b50844dfe3f128",
+        "decimals": 8,
+        "totalSupply": 1000000000
+      }
+    },
+    "image":
+      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/svg/nrve.svg"
+  },
   "NRVE": {
     "symbol": "NRVE",
     "companyName": "Narrative Token",

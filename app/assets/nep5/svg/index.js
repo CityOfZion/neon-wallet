@@ -45,6 +45,7 @@ import UTD from './UTD.svg'
 import WWB from './WWB.svg'
 import XQTA from './XQTA.svg'
 import ZPT from './ZPT.svg'
+import NOS from './NOS.svg'
 
 export const imageMap = {
   NEO,
@@ -93,5 +94,6 @@ export const imageMap = {
   UTD,
   WWB,
   XQTA,
-  ZPT
+  ZPT,
+  NOS
 }

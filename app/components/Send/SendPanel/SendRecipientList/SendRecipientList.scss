@@ -12,7 +12,7 @@
   .sendRecipientListHeader {
     text-transform: uppercase;
     font-size: 0.8rem;
-    color: #515151;
+    color: var(--dashboard-asset-panel-asset-name);
   }
 
   .sendRecipientList {
@@ -78,6 +78,10 @@
       height: 24px;
       width: 24px;
       min-width: 24px;
+
+      path {
+        fill: #ee6d66;
+      }
     }
   }
 }

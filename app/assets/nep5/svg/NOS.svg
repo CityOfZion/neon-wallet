@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="988px" height="988px" viewBox="0 0 988 988" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>download</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="-3.04048096e-05%" y1="50%" x2="100.00002%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#B9D532" offset="0%"></stop>
+            <stop stop-color="#5BBA47" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="download" fill="url(#linearGradient-1)" fill-rule="nonzero">
+            <path d="M493.899,0.732 C221.428,0.732 0.555,221.688 0.555,494.252 C0.555,766.81 221.429,987.768 493.899,987.768 C766.367,987.768 987.241,766.81 987.241,494.252 C987.241,221.688 766.367,0.732 493.899,0.732 Z M493.899,864.389 C289.543,864.389 123.892,698.679 123.892,494.253 C123.892,289.828 289.543,124.112 493.899,124.112 C698.252,124.112 863.903,289.828 863.903,494.253 C863.903,698.679 698.252,864.389 493.899,864.389 Z" id="Shape"></path>
+        </g>
+    </g>
+</svg>

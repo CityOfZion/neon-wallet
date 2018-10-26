@@ -72,6 +72,7 @@ const BaseModal = ({
       {backButtonAction && (
         <button
           type="button"
+          style={themes[theme]}
           className={styles.modalHeaderBackButton}
           onClick={() => {
             backButtonAction()
@@ -84,6 +85,7 @@ const BaseModal = ({
         <img src={Logo} alt="grey-neon-logo" />
       </div>
       <button
+        style={themes[theme]}
         type="button"
         className={styles.modalHeaderCloseButton}
         onClick={() => {
