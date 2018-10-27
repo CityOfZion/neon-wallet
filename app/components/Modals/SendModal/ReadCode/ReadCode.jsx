@@ -55,7 +55,7 @@ export default class ReadCode extends React.Component<Props, State> {
         </div>
 
         <div className={baseStyles.section}>
-          <div className={baseStyles.sectionTitle}>SCAN QR CODE</div>
+          <div className={baseStyles.sectionTitle}>CAPTURE</div>
           <div
             className={classNames(
               baseStyles.sectionContent,
@@ -73,7 +73,7 @@ export default class ReadCode extends React.Component<Props, State> {
         </div>
         <div className={styles.scanButtonContainer}>
           <Button primary onClick={this.toggleScanner}>
-            {scannerActive ? 'Cancel' : 'Scan QR'}
+            {scannerActive ? 'Cancel' : 'Capture'}
           </Button>
         </div>
       </div>

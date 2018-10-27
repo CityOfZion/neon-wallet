@@ -3,6 +3,7 @@ import { wallet } from 'neon-js'
 import { noop } from 'lodash-es'
 import { createActions } from 'spunky'
 
+import { resetBalanceState } from './balancesActions'
 import { upgradeNEP6AddAddresses } from '../core/account'
 import { validatePassphraseLength } from '../core/wallet'
 import { ledgerNanoSCreateSignatureAsync } from '../ledger/ledgerNanoS'
@@ -91,7 +92,10 @@ export const ledgerLoginActions = createActions(
 
 export const logoutActions = createActions(
   ID,
-  () => (state: Object): AccountType => null
+  () => (state: Object): AccountType => {
+    resetBalanceState()
+    return null
+  }
 )
 
 // TODO: Better way to expose action data than to make a faux function?  One idea is to change
