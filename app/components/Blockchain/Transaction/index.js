@@ -6,6 +6,7 @@ import { withData } from 'spunky'
 import Transaction from './Transaction'
 import withNetworkData from '../../../hocs/withNetworkData'
 import withExplorerData from '../../../hocs/withExplorerData'
+import withAuthData from '../../../hocs/withAuthData'
 import { showModal } from '../../../modules/modal'
 import { MODAL_TYPES } from '../../../core/constants'
 
@@ -23,6 +24,7 @@ export default compose(
     null,
     mapDispatchToProps
   ),
+  withAuthData(),
   withData(contactsActions, mapContactsDataToProps),
   withNetworkData(),
   withExplorerData()
