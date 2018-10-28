@@ -123,7 +123,7 @@ export default class Transaction extends React.Component<Props> {
             <div className={styles.txAmountContainer}>{amount}</div>
             <div className={styles.txToContainer}>
               {isNetworkFee ? (
-                <div className={styles.largerFont}> {to} </div>
+                to
               ) : (
                 <Fragment>
                   {this.findContact(to)}
