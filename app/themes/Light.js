@@ -1,4 +1,6 @@
 const BASE = {
+  '--base-scrollbar-track': '#fff',
+  '--base-scrollbar-thumb': '#5c677f',
   '--base-main-background': '#e6e6e6',
   '--base-text': '#394152',
   '--base-link-color': '#3063c9'

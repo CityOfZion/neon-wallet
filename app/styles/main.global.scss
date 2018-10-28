@@ -61,6 +61,19 @@ body {
   }
 }
 
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--base-scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--base-scrollbar-thumb);
+}
+
 input {
   font-size: 1.2em;
   padding: 7px 15px;
