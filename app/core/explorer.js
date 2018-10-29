@@ -3,29 +3,28 @@ import { openExternal } from './electron'
 import { EXPLORERS } from './constants'
 import { isMainNetwork } from './networks'
 
+const { NEO_SCAN, NEO_TRACKER, ANT_CHAIN } = EXPLORERS
+
 export const getExplorerBaseURL = (
   networkId: string,
   explorer: ExplorerType
 ) => {
-  let baseURL
-  if (explorer === EXPLORERS.NEO_TRACKER) {
-    if (isMainNetwork(networkId)) {
-      baseURL = 'https://neotracker.io'
-    } else {
-      baseURL = 'https://testnet.neotracker.io'
+  const isMainNet = isMainNetwork(networkId)
+  switch (explorer) {
+    case NEO_TRACKER: {
+      return isMainNet
+        ? 'https://neotracker.io'
+        : 'https://testnet.neotracker.io'
     }
-  } else if (explorer === EXPLORERS.NEO_SCAN) {
-    if (isMainNetwork(networkId)) {
-      baseURL = 'https://neoscan.io'
-    } else {
-      baseURL = 'https://neoscan-testnet.io'
+    case NEO_SCAN: {
+      return isMainNet ? 'https://neoscan.io' : 'https://neoscan-testnet.io'
     }
-  } else if (isMainNetwork(networkId)) {
-    baseURL = 'http://antcha.in'
-  } else {
-    baseURL = 'http://testnet.antcha.in'
+    case ANT_CHAIN: {
+      return isMainNet ? 'http://antcha.in' : 'http://testnet.antcha.in'
+    }
+    default:
+      throw new Error(`Unknown explorer ${explorer}`)
   }
-  return baseURL
 }
 
 export const getExplorerTxLink = (
@@ -35,13 +34,16 @@ export const getExplorerTxLink = (
 ) => {
   const baseURL = getExplorerBaseURL(networkId, explorer)
 
-  if (explorer === EXPLORERS.NEO_TRACKER) {
-    return `${baseURL}/tx/${txId}`
+  switch (explorer) {
+    case NEO_TRACKER:
+      return `${baseURL}/tx/${txId}`
+    case NEO_SCAN:
+      return `${baseURL}/transaction/${txId}`
+    case ANT_CHAIN:
+      return `${baseURL}/tx/hash/0x${txId}`
+    default:
+      throw new Error(`Unknown explorer ${explorer}`)
   }
-  if (explorer === EXPLORERS.NEO_SCAN) {
-    return `${baseURL}/transaction/${txId}`
-  }
-  return `${baseURL}/tx/hash/${txId}`
 }
 
 export const getExplorerAddressLink = (
@@ -51,17 +53,16 @@ export const getExplorerAddressLink = (
 ) => {
   const baseURL = getExplorerBaseURL(networkId, explorer)
 
-  if (explorer === EXPLORERS.NEO_TRACKER) {
-    return `${baseURL}/address/${address}`
+  switch (explorer) {
+    case NEO_TRACKER:
+      return `${baseURL}/address/${address}`
+    case NEO_SCAN:
+      return `${baseURL}/address/${address}/1`
+    case ANT_CHAIN:
+      return `${baseURL}/address/info/${address}`
+    default:
+      throw new Error(`Unknown explorer ${explorer}`)
   }
-  if (explorer === EXPLORERS.NEO_SCAN) {
-    return `${baseURL}/address/${address}/1`
-  }
-  // $FlowFixMe
-  if (explorer === EXPLORERS.NEO_VERSE) {
-    return `${baseURL}/addresses/${address}`
-  }
-  return `${baseURL}/address/info/${address}`
 }
 
 export const getExplorerAssetLink = (
@@ -70,18 +71,15 @@ export const getExplorerAssetLink = (
   assetId: string
 ) => {
   const baseURL = getExplorerBaseURL(networkId, explorer)
-
-  if (explorer === EXPLORERS.NEO_TRACKER) {
-    return `${baseURL}/asset/${assetId}`
+  switch (explorer) {
+    case NEO_TRACKER:
+    case NEO_SCAN:
+      return `${baseURL}/asset/${assetId}`
+    case ANT_CHAIN:
+      return `${baseURL}/assets/hash/${assetId}`
+    default:
+      throw new Error(`Unknown explorer ${explorer}`)
   }
-  if (explorer === EXPLORERS.NEO_SCAN) {
-    return `${baseURL}/asset/${assetId}`
-  }
-  // $FlowFixMe
-  if (explorer === EXPLORERS.NEO_VERSE) {
-    return `${baseURL}/assets/${assetId}`
-  }
-  return `${baseURL}/asset/hash/${assetId}`
 }
 
 export const openExplorerTx = (
