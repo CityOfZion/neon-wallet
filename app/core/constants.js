@@ -27,6 +27,8 @@ export const EXPLORERS = {
   ANT_CHAIN: 'Antchain'
 }
 
+export const DEFAULT_EXPLORER = EXPLORERS.NEO_SCAN
+
 export const ROUTES = {
   HOME: '/',
   DASHBOARD: '/dashboard',

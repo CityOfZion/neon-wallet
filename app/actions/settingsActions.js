@@ -7,7 +7,7 @@ import { getDefaultTokens } from '../core/nep5'
 import { ensureHex, validateHashLength } from '../util/tokenHashValidation'
 
 import {
-  EXPLORERS,
+  DEFAULT_EXPLORER,
   DEFAULT_CURRENCY_CODE,
   DEFAULT_THEME
 } from '../core/constants'
@@ -27,7 +27,7 @@ const STORAGE_KEY = 'settings'
 const DEFAULT_SETTINGS: () => Promise<Settings> = async () => ({
   currency: DEFAULT_CURRENCY_CODE,
   theme: DEFAULT_THEME,
-  blockExplorer: EXPLORERS.NEO_SCAN,
+  blockExplorer: DEFAULT_EXPLORER,
   tokens: await getDefaultTokens(),
   version,
   soundEnabled: true
