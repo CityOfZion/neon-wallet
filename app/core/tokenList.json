@@ -435,7 +435,7 @@
     "networks": {
       "1": {
         "name": "nOS",
-        "hash": "72709e3e3457abe6b5192af982cc58a4a424c4b6",
+        "hash": "c9c0fc5a2b66a29d6b14601e752e6e1a445e088d",
         "decimals": 8,
         "totalSupply": 1000000000
       }
