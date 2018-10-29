@@ -16,6 +16,7 @@ import Switch from '../../components/Inputs/Switch'
 
 import {
   EXPLORERS,
+  DEFAULT_EXPLORER,
   CURRENCIES,
   ROUTES,
   MODAL_TYPES,
@@ -69,6 +70,10 @@ type State = {
 }
 
 export default class Settings extends Component<Props, State> {
+  static defaultProps = {
+    explorer: DEFAULT_EXPLORER
+  }
+
   state = {
     selectedCurrency: {
       value: this.props.currency,
@@ -80,7 +85,7 @@ export default class Settings extends Component<Props, State> {
     },
     selectedExplorer: {
       value: this.props.explorer,
-      label: EXPLORERS[this.props.explorer] || EXPLORERS.NEO_SCAN
+      label: this.props.explorer
     },
     soundEnabled: this.props.soundEnabled
   }
