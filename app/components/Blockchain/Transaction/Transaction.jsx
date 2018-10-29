@@ -21,7 +21,8 @@ type Props = {
   networkId: string,
   explorer: ExplorerType,
   contacts: Object,
-  showAddContactModal: ({ address: string }) => null
+  showAddContactModal: ({ address: string }) => null,
+  address: string
 }
 
 export default class Transaction extends React.Component<Props> {
@@ -157,7 +158,7 @@ export default class Transaction extends React.Component<Props> {
         const contactFrom = this.findContact(from)
         const contactFromExists = contactFrom !== from
         const isMintTokens = from === 'MINT TOKENS'
-
+        const isGasClaim = this.props.address === from && !Number(amount)
         return (
           <div className={styles.abstractContainer}>
             <div className={styles.txTypeIconContainer}>
@@ -179,7 +180,7 @@ export default class Transaction extends React.Component<Props> {
                   />
                 )}
             </div>
-            {isMintTokens ? (
+            {isMintTokens || isGasClaim ? (
               <div className={styles.transactionHistoryButton} />
             ) : (
               <Button
