@@ -31,7 +31,6 @@ type Props = {
   address: string,
   shouldRenderHeaderBar: boolean,
   location: Object,
-  loading: boolean,
   showSendModal: (props: Object) => any
 }
 
@@ -295,8 +294,6 @@ export default class Send extends React.Component<Props, State> {
     const { errors } = this.state.sendRowDetails[index]
 
     const amountNum = Number(amount)
-
-    console.log(amountNum)
 
     if (typeof amountNum !== 'number') {
       errors.amount = 'Amount must be a number.'
