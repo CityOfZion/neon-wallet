@@ -3,7 +3,7 @@ import React from 'react'
 import classNames from 'classnames'
 
 import styles from './SuccessMessage.scss'
-import ConfirmIcon from '../../assets/icons/confirm.svg'
+import ConfirmIcon from '../../assets/icons/confirm-circle.svg'
 
 type Props = {
   className?: string,

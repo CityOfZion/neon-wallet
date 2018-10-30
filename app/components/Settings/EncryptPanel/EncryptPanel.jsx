@@ -12,12 +12,13 @@ import CloseButton from '../../CloseButton'
 import styles from './EncryptPanel.scss'
 
 type State = {
-  encryptedkey: string,
-  privateKey: string
+  encryptedkey: string
 }
 
 type Props = {
   handleSubmit: Function,
+  validatePassphraseLength: Function,
+  isWIF: Function,
   className: string,
   title: string
 }
@@ -27,8 +28,7 @@ export default class EncryptPanel extends React.Component<Props, State> {
     super(props)
 
     this.state = {
-      encryptedkey: '',
-      privateKey: ''
+      encryptedkey: ''
     }
   }
 
@@ -56,12 +56,10 @@ export default class EncryptPanel extends React.Component<Props, State> {
   renderHeader = () => <span>{this.props.title}</span>
 
   renderInstructions = () => {
-    const { privateKey } = this.state
     const { encryptedkey } = this.state
     if (!encryptedkey) {
       return <div>Choose a passphrase to encrypt an existing key</div>
     }
-    return <div className={styles.privateKeyInstruction}>{privateKey}</div>
   }
 
   renderPanelContent = () => {
@@ -71,6 +69,9 @@ export default class EncryptPanel extends React.Component<Props, State> {
         <EncryptForm
           submitLabel="Generate Encrypted Key"
           onSubmit={this.onSubmit}
+          encryptPrivateKey={encryptedkey}
+          isWIF={this.props.isWIF}
+          validatePassphraseLength={this.props.validatePassphraseLength}
         />
       )
     }
@@ -81,7 +82,6 @@ export default class EncryptPanel extends React.Component<Props, State> {
 
   reset = () => {
     this.setState({ encryptedkey: '' })
-    this.setState({ privateKey: '' })
   }
 
   renderIcon = () => (
@@ -98,6 +98,5 @@ export default class EncryptPanel extends React.Component<Props, State> {
     const { handleSubmit } = this.props
     const result = handleSubmit(privateKey, passphrase, confirmPassphrase)
     this.setState({ encryptedkey: result })
-    this.setState({ privateKey })
   }
 }

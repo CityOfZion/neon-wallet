@@ -12,7 +12,7 @@ import { ASSETS } from '../core/constants'
 import { COIN_DECIMAL_LENGTH } from '../core/formatters'
 import { toBigNumber } from '../core/math'
 
-const MAX_SCRIPT_HASH_CHUNK_SIZE = 2
+const MAX_SCRIPT_HASH_CHUNK_SIZE = 5
 
 type Props = {
   net: string,

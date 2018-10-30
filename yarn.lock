@@ -9704,6 +9704,12 @@ react-notification-system@0.2.16:
     object-assign "^4.0.1"
     prop-types "^15.5.6"
 
+react-number-format@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/react-number-format/-/react-number-format-4.0.0.tgz#501a504a8d26cc0c8825d78aaa8932e5523bed61"
+  dependencies:
+    prop-types "^15.6.0"
+
 react-onclickoutside@^6.5.0:
   version "6.7.1"
   resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.7.1.tgz#6a5b5b8b4eae6b776259712c89c8a2b36b17be93"

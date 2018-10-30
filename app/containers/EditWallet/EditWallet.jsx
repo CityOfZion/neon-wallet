@@ -105,7 +105,7 @@ class EditWallet extends Component<Props, State> {
 
     showModal(MODAL_TYPES.CONFIRM, {
       title: 'Confirm Delete',
-      text: `Please confirm deleting saved wallet - ${label}`,
+      text: `Please confirm removing saved wallet - ${label}`,
       onClick: async () => {
         const data = await getStorage('userWallet').catch(readError =>
           showErrorNotification({

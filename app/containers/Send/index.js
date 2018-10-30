@@ -86,7 +86,6 @@ export default compose(
   withNetworkData(),
   withAuthData(),
   withFilteredTokensData(),
-  withLoadingProp(balancesActions),
   withSuccessNotification(
     balancesActions,
     'Received latest blockchain information.'

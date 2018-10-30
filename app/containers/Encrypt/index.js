@@ -21,7 +21,7 @@ const encryptPrivateKey = (privateKey, passphrase, confirmPassphrase) => {
 export default compose(
   withProps({
     encryptPrivateKey,
-    isWif: wallet.isWIF,
+    isWIF: wallet.isWIF,
     validatePassphraseLength
   })
 )(Encrypt)

@@ -1,4 +1,4 @@
-$success-icon-size: 140px;
+$success-icon-size: 115px;
 
 .successMessage {
   display: flex;
@@ -11,12 +11,6 @@ $success-icon-size: 140px;
     svg {
       width: $success-icon-size;
       height: $success-icon-size;
-
-      path {
-        fill: #6ad8ff;
-        stroke-width: 1px;
-        stroke: white;
-      }
     }
   }
 }
