@@ -299,13 +299,6 @@ export default class Send extends React.Component<Props, State> {
 
     const amountNum = Number(amount)
 
-    const decpoint =
-      amountNum.toString().length - 1 - amountNum.toString().indexOf('.')
-
-    const foundToken: TokenItemType | void = tokens.find(
-      token => token.symbol === asset && token.networkId === networkId
-    )
-
     if (typeof amountNum !== 'number') {
       errors.amount = 'Amount must be a number.'
     }
@@ -326,12 +319,21 @@ export default class Send extends React.Component<Props, State> {
       errors.amount = `You do not have enough balance to send ${amount} ${asset}.`
     }
 
-    if (foundToken && decpoint > toNumber(get(foundToken, 'decimals', 8))) {
-      errors.amount = `You can only send ${asset} up to ${get(
-        foundToken,
-        'decimals',
-        8
-      )} decimals.`
+    if (asset !== 'NEO' && asset !== 'GAS') {
+      const decpoint =
+        amountNum.toString().length - 1 - amountNum.toString().indexOf('.')
+
+      const foundToken: TokenItemType | void = tokens.find(
+        token => token.symbol === asset && token.networkId === networkId
+      )
+
+      if (foundToken && decpoint > toNumber(get(foundToken, 'decimals', 8))) {
+        errors.amount = `You can only send ${asset} up to ${get(
+          foundToken,
+          'decimals',
+          8
+        )} decimals.`
+      }
     }
 
     if (errors.amount) {
