@@ -31,7 +31,9 @@ type Props = {
   address: string,
   shouldRenderHeaderBar: boolean,
   location: Object,
-  showSendModal: (props: Object) => any
+  showSendModal: (props: Object) => any,
+  tokens: Array<TokenItemType>,
+  networkId: string
 }
 
 type State = {
@@ -292,8 +294,18 @@ export default class Send extends React.Component<Props, State> {
     index: number
   ) => {
     const { errors } = this.state.sendRowDetails[index]
+    const { tokens, networkId } = this.props
 
     const amountNum = Number(amount)
+
+    const decpoint =
+      amountNum.toString().length - 1 - amountNum.toString().indexOf('.')
+
+    console.log({ decpoint, asset, tokens })
+
+    const foundToken = tokens.find(
+      token => token.symbol === asset && token.networkId === networkId
+    )
 
     if (typeof amountNum !== 'number') {
       errors.amount = 'Amount must be a number.'
@@ -313,6 +325,12 @@ export default class Send extends React.Component<Props, State> {
 
     if (amountNum > max) {
       errors.amount = `You do not have enough balance to send ${amount} ${asset}.`
+    }
+
+    if (foundToken && decpoint > foundToken.decimals) {
+      errors.amount = `You can only send ${asset} up to ${
+        foundToken.decimals
+      } decimals.`
     }
 
     if (errors.amount) {
