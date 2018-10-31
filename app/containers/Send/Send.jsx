@@ -6,7 +6,8 @@ import {
   toNumber,
   toBigNumber,
   multiplyNumber,
-  minusNumber
+  minusNumber,
+  isNumber
 } from '../../core/math'
 
 import { isBlacklisted } from '../../core/wallet'
@@ -301,9 +302,7 @@ export default class Send extends React.Component<Props, State> {
     const decpoint =
       amountNum.toString().length - 1 - amountNum.toString().indexOf('.')
 
-    console.log({ decpoint, asset, tokens })
-
-    const foundToken = tokens.find(
+    const foundToken: TokenItemType | void = tokens.find(
       token => token.symbol === asset && token.networkId === networkId
     )
 
@@ -327,10 +326,12 @@ export default class Send extends React.Component<Props, State> {
       errors.amount = `You do not have enough balance to send ${amount} ${asset}.`
     }
 
-    if (foundToken && decpoint > foundToken.decimals) {
-      errors.amount = `You can only send ${asset} up to ${
-        foundToken.decimals
-      } decimals.`
+    if (foundToken && decpoint > toNumber(get(foundToken, 'decimals', 8))) {
+      errors.amount = `You can only send ${asset} up to ${get(
+        foundToken,
+        'decimals',
+        8
+      )} decimals.`
     }
 
     if (errors.amount) {
