@@ -118,8 +118,6 @@ export const sendTransaction = ({
 
     const error = validateTransactionsBeforeSending(balances, sendEntries)
 
-    console.log({ sendEntries })
-
     if (error) {
       rejectTransaction(error)
       return reject(error)
