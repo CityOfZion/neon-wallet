@@ -210,7 +210,7 @@ describe('Send', () => {
       .find('.maxButton')
       .at(1)
       .simulate('click')
-    expect(wrapper.instance().state.sendRowDetails[0].amount).toBe(5)
+    expect(wrapper.instance().state.sendRowDetails[0].amount).toBe('5')
   })
 
   test('It proceeds to the next step with valid input', () => {

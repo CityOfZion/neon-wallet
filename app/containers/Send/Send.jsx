@@ -65,7 +65,8 @@ export default class Send extends React.Component<Props, State> {
   }
 
   static defaultProps = {
-    shouldRenderHeaderBar: true
+    shouldRenderHeaderBar: true,
+    tokens: []
   }
 
   componentDidMount() {

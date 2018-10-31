@@ -22,16 +22,6 @@ exports[`Login renders without crashing 1`] = `
       className="privateKeyLoginButtonRow"
     >
       <Button
-        disabled={true}
-        id="loginButton"
-        primary={true}
-        renderIcon={[Function]}
-        shouldCenterButtonLabelText={false}
-        type="submit"
-      >
-        Login
-      </Button>
-      <Button
         id="scan-private-key-qr-button"
         onClick={[Function]}
         primary={true}
@@ -40,6 +30,16 @@ exports[`Login renders without crashing 1`] = `
         type="button"
       >
         Scan QR
+      </Button>
+      <Button
+        disabled={true}
+        id="loginButton"
+        primary={true}
+        renderIcon={[Function]}
+        shouldCenterButtonLabelText={false}
+        type="submit"
+      >
+        Login
       </Button>
     </div>
   </form>
