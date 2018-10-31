@@ -227,95 +227,100 @@ export default class Settings extends Component<Props, State> {
           contentClassName={styles.panelContent}
         >
           <section className={styles.settingsItemsContainer}>
-            <SettingsItem renderIcon={() => <CogIcon />} title="NETWORK">
-              <div className={styles.settingsSelectContainer}>
-                <NetworkSwitch
-                  transparent
-                  value={{ label: this.props.net }}
-                  settingsSelect
-                />
-              </div>
-            </SettingsItem>
-            <SettingsItem
-              renderIcon={() => <BlockExplorerIcon />}
-              title="BLOCK EXPLORER"
-            >
-              <div className={styles.settingsSelectContainer}>
-                <StyledReactSelect
-                  settingsSelect
-                  transparent
-                  options={parsedExplorerOptions}
-                  value={this.state.selectedExplorer}
-                  onChange={this.updateExplorerSettings}
-                  isSearchable={false}
-                />
-              </div>
-            </SettingsItem>
-            <SettingsItem renderIcon={() => <CurrencyIcon />} title="CURRENCY">
-              <div className={styles.settingsSelectContainer}>
-                <StyledReactSelect
-                  settingsSelect
-                  transparent
-                  options={parsedCurrencyOptions}
-                  value={this.state.selectedCurrency}
-                  onChange={this.updateCurrencySettings}
-                  isSearchable={false}
-                />
-              </div>
-            </SettingsItem>
-            <SettingsItem renderIcon={() => <LightbulbIcon />} title="THEME">
-              <div className={styles.settingsSelectContainer}>
-                <StyledReactSelect
-                  settingsSelect
-                  onChange={this.updateThemeSettings}
-                  isSearchable={false}
-                  transparent
-                  options={parsedThemeOptions}
-                  value={this.state.selectedTheme}
-                />
-              </div>
-            </SettingsItem>
-            <SettingsItem
-              renderIcon={() => <VolumeIcon />}
-              noBorderBottom
-              title="SOUND"
-            >
-              <div className={styles.settingsSwitchContainer}>
-                <Switch
-                  checked={this.state.soundEnabled}
-                  handleCheck={this.updateSoundSetting}
-                />
-              </div>
-            </SettingsItem>
-            <div className={styles.settingsSpacer} />
-            <SettingsLink
-              renderIcon={() => <LockIcon />}
-              to={ROUTES.ENCRYPT}
-              title="ENCRYPT A KEY"
-            />
-            <SettingsLink
-              noBorderBottom
-              to={ROUTES.NODE_SELECT}
-              label={this.props.selectedNode || 'AUTOMATIC'}
-              renderIcon={() => <NodeSelectIcon />}
-              title="NODE SELECTON"
-            />
-            <div className={styles.settingsSpacer} />
-            <SettingsLink
-              onClick={this.loadWalletRecovery}
-              to={ROUTES.ENCRYPT}
-              label="IMPORT"
-              renderIcon={() => <TimeIcon />}
-              title="RECOVER WALLET"
-            />
-            <SettingsLink
-              renderIcon={() => <SaveIcon />}
-              noBorderBottom
-              label="EXPORT"
-              onClick={this.saveWalletRecovery}
-              to={ROUTES.NODE_SELECT}
-              title="BACKUP WALLET"
-            />
+            <div className={styles.innerContainer}>
+              <SettingsItem renderIcon={() => <CogIcon />} title="NETWORK">
+                <div className={styles.settingsSelectContainer}>
+                  <NetworkSwitch
+                    transparent
+                    value={{ label: this.props.net }}
+                    settingsSelect
+                  />
+                </div>
+              </SettingsItem>
+              <SettingsItem
+                renderIcon={() => <BlockExplorerIcon />}
+                title="BLOCK EXPLORER"
+              >
+                <div className={styles.settingsSelectContainer}>
+                  <StyledReactSelect
+                    settingsSelect
+                    transparent
+                    options={parsedExplorerOptions}
+                    value={this.state.selectedExplorer}
+                    onChange={this.updateExplorerSettings}
+                    isSearchable={false}
+                  />
+                </div>
+              </SettingsItem>
+              <SettingsItem
+                renderIcon={() => <CurrencyIcon />}
+                title="CURRENCY"
+              >
+                <div className={styles.settingsSelectContainer}>
+                  <StyledReactSelect
+                    settingsSelect
+                    transparent
+                    options={parsedCurrencyOptions}
+                    value={this.state.selectedCurrency}
+                    onChange={this.updateCurrencySettings}
+                    isSearchable={false}
+                  />
+                </div>
+              </SettingsItem>
+              <SettingsItem renderIcon={() => <LightbulbIcon />} title="THEME">
+                <div className={styles.settingsSelectContainer}>
+                  <StyledReactSelect
+                    settingsSelect
+                    onChange={this.updateThemeSettings}
+                    isSearchable={false}
+                    transparent
+                    options={parsedThemeOptions}
+                    value={this.state.selectedTheme}
+                  />
+                </div>
+              </SettingsItem>
+              <SettingsItem
+                renderIcon={() => <VolumeIcon />}
+                noBorderBottom
+                title="SOUND"
+              >
+                <div className={styles.settingsSwitchContainer}>
+                  <Switch
+                    checked={this.state.soundEnabled}
+                    handleCheck={this.updateSoundSetting}
+                  />
+                </div>
+              </SettingsItem>
+              <div className={styles.settingsSpacer} />
+              <SettingsLink
+                renderIcon={() => <LockIcon />}
+                to={ROUTES.ENCRYPT}
+                title="ENCRYPT A KEY"
+              />
+              <SettingsLink
+                noBorderBottom
+                to={ROUTES.NODE_SELECT}
+                label={this.props.selectedNode || 'AUTOMATIC'}
+                renderIcon={() => <NodeSelectIcon />}
+                title="NODE SELECTON"
+              />
+              <div className={styles.settingsSpacer} />
+              <SettingsLink
+                onClick={this.loadWalletRecovery}
+                to={ROUTES.ENCRYPT}
+                label="IMPORT"
+                renderIcon={() => <TimeIcon />}
+                title="RECOVER WALLET"
+              />
+              <SettingsLink
+                renderIcon={() => <SaveIcon />}
+                noBorderBottom
+                label="EXPORT"
+                onClick={this.saveWalletRecovery}
+                to={ROUTES.NODE_SELECT}
+                title="BACKUP WALLET"
+              />
+            </div>
             {this.renderDontions()}
           </section>
         </Panel>
