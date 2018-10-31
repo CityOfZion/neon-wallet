@@ -39,6 +39,7 @@ type Props = {
 
 type State = {
   showConfirmSend: boolean,
+  pendingTransaction: boolean,
   sendSuccess: boolean,
   sendError: boolean,
   sendErrorMessage: string,
@@ -53,6 +54,7 @@ export default class Send extends React.Component<Props, State> {
     super(props)
     this.state = {
       showConfirmSend: false,
+      pendingTransaction: false,
       sendSuccess: false,
       sendError: false,
       sendErrorMessage: '',
@@ -263,12 +265,21 @@ export default class Send extends React.Component<Props, State> {
       symbol: row.asset
     }))
 
+    this.setState({ pendingTransaction: true })
     sendTransaction({ sendEntries: entries, fees })
       .then((result: Object) => {
-        this.setState({ sendSuccess: true, txid: result.txid })
+        this.setState({
+          sendSuccess: true,
+          txid: result.txid,
+          pendingTransaction: false
+        })
       })
       .catch((error: Object) => {
-        this.setState({ sendError: true, sendErrorMessage: error.message })
+        this.setState({
+          sendError: true,
+          sendErrorMessage: error.message,
+          pendingTransaction: false
+        })
       })
   }
 
@@ -389,7 +400,8 @@ export default class Send extends React.Component<Props, State> {
       sendError,
       sendErrorMessage,
       txid,
-      fees
+      fees,
+      pendingTransaction
     } = this.state
     const {
       sendableAssets,
@@ -417,6 +429,7 @@ export default class Send extends React.Component<Props, State> {
           sendRowDetails={sendRowDetails}
           sendableAssets={sendableAssets}
           showConfirmSend={showConfirmSend}
+          pendingTransaction={pendingTransaction}
           sendSuccess={sendSuccess}
           sendError={sendError}
           sendErrorMessage={sendErrorMessage}
