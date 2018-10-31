@@ -199,12 +199,27 @@ export default class Send extends React.Component<Props, State> {
   }
 
   calculateMaxValue = (asset: string) => {
-    const { sendableAssets } = this.props
-
+    const { sendableAssets, tokens, networkId } = this.props
     const existingAmounts = this.calculateRowAmounts(asset)
-
+    let decimals = 8
+    if (asset === 'NEO') {
+      decimals = 0
+    }
+    if (asset === 'GAS') {
+      decimals = 8
+    } else {
+      const foundToken: TokenItemType | void = tokens.find(
+        token => token.symbol === asset && token.networkId === networkId
+      )
+      if (foundToken) {
+        decimals = foundToken.decimals || 8
+      }
+    }
     if (sendableAssets[asset]) {
-      return minusNumber(sendableAssets[asset].balance, existingAmounts)
+      return minusNumber(
+        sendableAssets[asset].balance,
+        existingAmounts
+      ).toFixed(decimals)
     }
     return 0
   }

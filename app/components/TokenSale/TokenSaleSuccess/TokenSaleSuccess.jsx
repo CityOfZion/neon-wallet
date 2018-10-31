@@ -1,10 +1,11 @@
 // @flow
 
 import React from 'react'
-
+import { Link } from 'react-router-dom'
 import FullHeightPanel from '../../Panel/FullHeightPanel'
 import Button from '../../Button'
 import TokenSaleIcon from '../../../assets/navigation/tokens.svg'
+import HomeIcon from '../../../assets/navigation/home.svg'
 import SendIcon from '../../../assets/icons/send.svg'
 import ConfirmCircle from '../../../assets/icons/confirm-circle.svg'
 import { createFormattedDate } from '../../../util/createFormattedDate'
@@ -46,13 +47,25 @@ const TokenSaleSuccess = ({ onClickHandler, token }: Props) => (
           </p>
         </div>
       </div>
+    </div>
+    <div className={styles.buttonContainer}>
       <Button
         onClick={onClickHandler}
         primary
         renderIcon={TokenSaleIcon}
         className={styles.tokenSaleSuccessButton}
       >
-        Purchase another token
+        Enter another sale
+      </Button>
+
+      <Button renderIcon={HomeIcon} className={styles.tokenSaleSuccessButton}>
+        <Link
+          to={{
+            pathname: ROUTES.DASHBOARD
+          }}
+        >
+          Return to dashboard
+        </Link>
       </Button>
     </div>
   </FullHeightPanel>
