@@ -2,7 +2,7 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
-import { withActions } from 'spunky'
+import { withActions, withRecall } from 'spunky'
 
 import TokenModal from './TokenModal'
 import accountActions from '../../../actions/accountActions'

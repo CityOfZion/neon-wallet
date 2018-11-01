@@ -23,7 +23,8 @@ type Props = {
   },
   onAfterOpen?: Function,
   shouldCloseWithEscapeKey: boolean,
-  theme: string
+  theme: string,
+  shouldRenderHeader: boolean
 }
 
 const BaseModal = ({
@@ -37,7 +38,8 @@ const BaseModal = ({
   style,
   onAfterOpen,
   shouldCloseWithEscapeKey,
-  theme
+  theme,
+  shouldRenderHeader = true
 }: Props) => (
   <ReactModal
     isOpen
@@ -68,33 +70,35 @@ const BaseModal = ({
     className={className}
     onAfterOpen={onAfterOpen}
   >
-    <div style={themes[theme]} className={styles.modalHeader}>
-      {backButtonAction && (
+    {shouldRenderHeader && (
+      <div style={themes[theme]} className={styles.modalHeader}>
+        {backButtonAction && (
+          <button
+            type="button"
+            style={themes[theme]}
+            className={styles.modalHeaderBackButton}
+            onClick={() => {
+              backButtonAction()
+            }}
+          >
+            <Arrow />
+          </button>
+        )}
+        <div className={styles.modalHeaderTitle}>
+          <img src={Logo} alt="grey-neon-logo" />
+        </div>
         <button
-          type="button"
           style={themes[theme]}
-          className={styles.modalHeaderBackButton}
+          type="button"
+          className={styles.modalHeaderCloseButton}
           onClick={() => {
-            backButtonAction()
+            hideModal()
           }}
         >
-          <Arrow />
+          <Close />
         </button>
-      )}
-      <div className={styles.modalHeaderTitle}>
-        <img src={Logo} alt="grey-neon-logo" />
       </div>
-      <button
-        style={themes[theme]}
-        type="button"
-        className={styles.modalHeaderCloseButton}
-        onClick={() => {
-          hideModal()
-        }}
-      >
-        <Close />
-      </button>
-    </div>
+    )}
     <div
       style={themes[theme]}
       className={classNames(styles.modalBody, bodyClassName)}

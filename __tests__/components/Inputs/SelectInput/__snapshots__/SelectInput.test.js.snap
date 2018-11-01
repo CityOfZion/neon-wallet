@@ -12,6 +12,7 @@ exports[`SelectInput should render without crashing 1`] = `
     onChange={[Function]}
     onFocus={[Function]}
     renderAfter={[Function]}
+    shouldRenderErrorIcon={true}
     type="text"
     value="some text"
   />

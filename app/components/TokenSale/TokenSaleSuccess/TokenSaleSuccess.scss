@@ -17,14 +17,32 @@
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-
-  button {
-    margin-bottom: 50px;
-  }
 }
 .tokenSaleSuccessCloseButton {
   background: transparent;
   border: none;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 50px;
+  justify-content: space-between;
+  width: 500px;
+
+  button:first-child {
+    width: 45%;
+  }
+
+  a {
+    width: 45%;
+    color: var(--base-text);
+  }
+
+  button:last-child {
+    margin-right: 0;
+    width: 45%;
+  }
 }
 
 .tokenSaleSuccessHeading {

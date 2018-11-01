@@ -3,6 +3,7 @@ import React from 'react'
 import { isNumber } from 'lodash-es'
 import classNames from 'classnames'
 import { PRICE_UNAVAILABLE } from '../../../core/constants'
+import { toBigNumber } from '../../../core/math'
 import { imageMap } from '../../../assets/nep5/png'
 
 import styles from './AmountsInfoBox.scss'
@@ -26,7 +27,7 @@ const AmountsInfoBox = ({
     <span>
       <span className={styles.assetName}>{assetName}</span>
       <span className={styles.assetAmount}>
-        <strong>{totalAmount}</strong>
+        <strong>{toBigNumber(totalAmount).toString()}</strong>
       </span>
     </span>
     <span className={styles.assetWorth}>

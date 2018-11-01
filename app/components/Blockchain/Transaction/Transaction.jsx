@@ -81,7 +81,7 @@ export default class Transaction extends React.Component<Props> {
     const { tx } = this.props
     const { iconType, time, label, amount, isNetworkFee, to, from } = tx
 
-    const formattedTime = moment.unix(time).format('MM/DD/YYYY | HH:MM:ss')
+    const formattedTime = moment.unix(time).format('MM/DD/YYYY | HH:mm:ss')
 
     const contactTo = this.findContact(to)
     const contactToExists = contactTo !== to

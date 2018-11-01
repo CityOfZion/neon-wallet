@@ -30,6 +30,7 @@ export default class PasswordInput extends React.Component<Props, State> {
         className={classNames(styles.passwordInput, this.props.className)}
         type={this.state.showPassword ? 'text' : 'password'}
         renderAfter={this.renderAfter}
+        shouldRenderErrorIcon={false}
         {...this.props}
       />
     )

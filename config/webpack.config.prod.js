@@ -132,10 +132,7 @@ module.exports = {
       {
         test: /\.(svg)$/,
         use: {
-          loader: 'url-loader',
-          options: {
-            limit: 10000
-          }
+          loader: 'url-loader'
         },
         include: [path.resolve(__dirname, '../app/assets/nep5/svg')]
       },

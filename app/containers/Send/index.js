@@ -23,6 +23,7 @@ import balancesActions from '../../actions/balancesActions'
 import withSuccessNotification from '../../hocs/withSuccessNotification'
 import withFailureNotification from '../../hocs/withFailureNotification'
 import { MODAL_TYPES } from '../../core/constants'
+import withTokensData from '../../hocs/withTokensData'
 
 const mapDispatchToProps = (dispatch: Function) =>
   bindActionCreators(
@@ -79,6 +80,7 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps
   ),
+  withTokensData(),
   withBalancesData(mapBalanceDataToProps),
   withCurrencyData('currencyCode'),
   withData(contactsActions, mapContactsDataToProps),
@@ -86,7 +88,6 @@ export default compose(
   withNetworkData(),
   withAuthData(),
   withFilteredTokensData(),
-  withLoadingProp(balancesActions),
   withSuccessNotification(
     balancesActions,
     'Received latest blockchain information.'

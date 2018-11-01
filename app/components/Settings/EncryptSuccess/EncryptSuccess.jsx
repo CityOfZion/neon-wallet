@@ -28,7 +28,7 @@ export default class EncryptSuccess extends React.Component<Props> {
             text="Private key encrypted successfully!"
             className={styles.successMessage}
           />
-          <label className={styles.label}>Your private key</label>
+          <label className={styles.label}>Your encrypted key</label>
           <div className={styles.encryptedKeyContainer}>
             <div className={styles.encryptedKey}>
               <input value={encryptedKey} disabled />

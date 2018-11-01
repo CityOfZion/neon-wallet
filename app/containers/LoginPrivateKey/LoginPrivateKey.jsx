@@ -81,6 +81,14 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
               </div>
               <div className={styles.privateKeyLoginButtonRow}>
                 <Button
+                  id="scan-private-key-qr-button"
+                  primary
+                  renderIcon={GridIcon}
+                  onClick={this.toggleScanner}
+                >
+                  Scan QR
+                </Button>
+                <Button
                   id="loginButton"
                   primary
                   type="submit"
@@ -88,14 +96,6 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
                   disabled={wif.length < 10}
                 >
                   Login
-                </Button>
-                <Button
-                  id="scan-private-key-qr-button"
-                  primary
-                  renderIcon={GridIcon}
-                  onClick={this.toggleScanner}
-                >
-                  Scan QR
                 </Button>
               </div>
             </React.Fragment>

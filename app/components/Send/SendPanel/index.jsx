@@ -21,6 +21,7 @@ type Props = {
   sendableAssets: Object,
   contacts: Object,
   showConfirmSend: boolean,
+  pendingTransaction: boolean,
   sendSuccess: boolean,
   sendErrorMessage: string,
   sendError: boolean,
@@ -67,7 +68,8 @@ const SendPanel = ({
   address,
   maxNumberOfRecipients,
   showSendModal,
-  pushQRCodeData
+  pushQRCodeData,
+  pendingTransaction
 }: Props) => {
   const shouldDisableSendButton = sendRowDetails => {
     let disabled = false
@@ -140,6 +142,7 @@ const SendPanel = ({
         <ConfirmSend
           handleEditRecipientsClick={handleEditRecipientsClick}
           fees={fees}
+          pendingTransaction={pendingTransaction}
         />
       </form>
     )

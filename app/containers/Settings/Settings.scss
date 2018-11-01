@@ -2,12 +2,18 @@ $panel-top-margin: 25px;
 
 .panelContent {
   padding: 0 !important;
+  height: 100%;
 }
 
 .settingsContainer {
   height: 100%;
   display: flex;
   flex-direction: column;
+
+  .innerContainer {
+    margin: auto;
+    width: 100%;
+  }
 
   .networkSwitchContainer {
     display: flex;
@@ -24,7 +30,6 @@ $panel-top-margin: 25px;
 
   .settingsSwitchContainer {
     justify-content: flex-end;
-    // margin-right: 24px;
     align-self: flex-end;
   }
 
@@ -53,7 +58,6 @@ $panel-top-margin: 25px;
 
     .settingsDonations {
       font-size: 12px;
-      margin: 12px 0;
       text-align: center;
       justify-content: center;
       display: flex;
@@ -63,6 +67,8 @@ $panel-top-margin: 25px;
       color: var(--settings-donation-text);
       letter-spacing: 0.4px;
       text-align: center;
+      margin-top: auto;
+      margin-bottom: 20px;
     }
   }
 
@@ -82,7 +88,11 @@ $panel-top-margin: 25px;
   }
 
   .settingsItemsContainer {
-    max-width: 450px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 475px;
+    min-width: 475px;
     margin: auto;
   }
 

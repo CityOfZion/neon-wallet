@@ -12,8 +12,7 @@ type Props = {
   onClick: Function,
   onCancel: Function,
   hideModal: Function,
-  width: string,
-  height: string
+  width: string
 }
 
 const ConfirmModal = ({
@@ -22,43 +21,45 @@ const ConfirmModal = ({
   onClick,
   onCancel,
   text,
-  width,
-  height
+  width
 }: Props) => (
   <BaseModal
     title={title}
     hideModal={hideModal}
+    shouldRenderHeader={false}
     style={{
       content: {
         width,
-        height
+        height: '200px'
       }
     }}
   >
-    <div className={styles.textContainer}>
-      <strong className={styles.text}>{text}</strong>
-    </div>
-    <div className={styles.modalFooter}>
-      <Button
-        id="confirm"
-        primary
-        className={styles.actionButton}
-        onClick={() => {
-          onClick()
-          hideModal()
-        }}
-      >
-        Confirm
-      </Button>
-      <Button
-        id="cancel"
-        onClick={() => {
-          hideModal()
-          onCancel()
-        }}
-      >
-        Cancel
-      </Button>
+    <div className={styles.contentContainer}>
+      <div className={styles.textContainer}>
+        <strong className={styles.text}>{text}</strong>
+      </div>
+      <div className={styles.modalFooter}>
+        <Button
+          id="confirm"
+          primary
+          className={styles.actionButton}
+          onClick={() => {
+            onClick()
+            hideModal()
+          }}
+        >
+          Confirm
+        </Button>
+        <Button
+          id="cancel"
+          onClick={() => {
+            hideModal()
+            onCancel()
+          }}
+        >
+          Cancel
+        </Button>
+      </div>
     </div>
   </BaseModal>
 )

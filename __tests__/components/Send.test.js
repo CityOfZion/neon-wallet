@@ -39,7 +39,10 @@ describe('Send', () => {
   test('It does not add a row when you click Add Recipient button and without details for the first row being filled in', () => {
     const wrapper = setup()
 
-    wrapper.find(PanelHeaderButton).at(1).simulate('click')
+    wrapper
+      .find(PanelHeaderButton)
+      .at(1)
+      .simulate('click')
     expect(wrapper.instance().state.sendRowDetails.length).toBe(1)
     expect(wrapper.find(SendRecipientListItem).children().length).toBe(1)
   })
@@ -56,7 +59,10 @@ describe('Send', () => {
       sendRowDetails: [asset]
     })
 
-    wrapper.find(PanelHeaderButton).at(1).simulate('click')
+    wrapper
+      .find(PanelHeaderButton)
+      .at(1)
+      .simulate('click')
     expect(wrapper.instance().state.sendRowDetails.length).toBe(2)
     expect(wrapper.find(SendRecipientListItem).children().length).toBe(2)
   })
@@ -89,7 +95,10 @@ describe('Send', () => {
     const wrapper = setup()
 
     for (let i = 0; i <= 10; i++) {
-      wrapper.find(PanelHeaderButton).at(1).simulate('click')
+      wrapper
+        .find(PanelHeaderButton)
+        .at(1)
+        .simulate('click')
     }
 
     expect(wrapper.instance().state.sendRowDetails.length).toBe(1)
@@ -105,6 +114,7 @@ describe('Send', () => {
     const wrapper = setup()
 
     wrapper.find('form').simulate('submit')
+
     const errors = wrapper.instance().state.sendRowDetails[0].errors
 
     expect(errors.amount).toBe('Can not send 0 NEO.')
@@ -200,7 +210,7 @@ describe('Send', () => {
       .find('.maxButton')
       .at(1)
       .simulate('click')
-    expect(wrapper.instance().state.sendRowDetails[0].amount).toBe(5)
+    expect(wrapper.instance().state.sendRowDetails[0].amount).toBe('5')
   })
 
   test('It proceeds to the next step with valid input', () => {
