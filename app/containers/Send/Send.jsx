@@ -174,6 +174,7 @@ export default class Send extends React.Component<Props, State> {
   updateRowField = (index: number, field: string, value: string) => {
     this.setState((prevState: Object) => {
       const newState = [...prevState.sendRowDetails]
+      const { sendableAssets } = this.props
 
       const objectToModify = newState[index]
 
@@ -186,15 +187,23 @@ export default class Send extends React.Component<Props, State> {
       }
 
       if (field === 'amount') {
+        const valueAsString = value.toString()
+
+        const additionalValue =
+          toNumber(valueAsString.replace(/,/g, '')) >
+          toNumber(sendableAssets[objectToModify.asset].balance)
+            ? 0
+            : toNumber(valueAsString.replace(/,/g, ''))
+
         const maxValue =
-          this.calculateMaxValue(objectToModify.asset) + Number(value)
+          Number(this.calculateMaxValue(objectToModify.asset)) + additionalValue
+
         objectToModify.max = maxValue
       }
 
       if (field === 'address') {
         objectToModify.address = value
       }
-
       return { sendRowDetails: newState }
     })
   }
@@ -213,16 +222,18 @@ export default class Send extends React.Component<Props, State> {
         token => token.symbol === asset && token.networkId === networkId
       )
       if (foundToken) {
-        decimals = foundToken.decimals || 8
+        decimals = get(foundToken, 'decimals', 8)
       }
     }
     if (sendableAssets[asset]) {
-      return minusNumber(
-        sendableAssets[asset].balance,
-        existingAmounts
-      ).toFixed(decimals)
+      const max = toNumber(decimals)
+        ? minusNumber(sendableAssets[asset].balance, existingAmounts).toFixed(
+            decimals
+          )
+        : minusNumber(sendableAssets[asset].balance, existingAmounts)
+      return max < 0 ? toNumber(sendableAssets[asset].balance) : max
     }
-    return 0
+    return toNumber(get(sendableAssets, [asset, 'balance'], 0))
   }
 
   calculateRowAmounts = (asset: string) => {
@@ -231,7 +242,11 @@ export default class Send extends React.Component<Props, State> {
     if (rows.length > 0) {
       return (rows
         .filter((row: Object) => row.asset === asset)
-        .map((row: Object) => Number(row.amount))
+        .map((row: Object) =>
+          get(row, 'amount', '0')
+            .toString()
+            .replace(/,/g, '')
+        )
         .reduce(
           (accumulator: Object, currentValue: number | void) =>
             accumulator.plus(currentValue || 0),

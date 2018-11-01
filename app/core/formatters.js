@@ -46,5 +46,5 @@ export const toFixedDecimals = (
   decimals: number = COIN_DECIMAL_LENGTH
 ): string => toBigNumber(value).toFixed(decimals)
 
-export const formatFiat = (value: ValueType): string =>
+export const formatFiat = (value: ValueType = 0): string =>
   toBigNumber(value).toFormat(2)
