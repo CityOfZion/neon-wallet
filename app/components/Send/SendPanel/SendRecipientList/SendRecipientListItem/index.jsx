@@ -5,6 +5,7 @@ import SelectInput from '../../../../Inputs/SelectInput'
 import NumberInput from '../../../../Inputs/NumberInput'
 import TextInput from '../../../../Inputs/TextInput'
 import DisplayInput from '../../../DisplayInput'
+import { toBigNumber } from '../../../../../core/math'
 
 import TrashCanIcon from '../../../../../assets/icons/delete.svg'
 
@@ -48,14 +49,19 @@ class SendRecipientListItem extends Component<Props> {
 
     const { name } = e.target
     let { value } = e.target
-    if (value > max) value = max
+
+    const valueIsGreaterThanMax = toBigNumber(
+      value.replace(/,/g, '')
+    ).greaterThan(toBigNumber(max))
+
+    if (valueIsGreaterThanMax) value = max.toString()
     clearErrors(index, name)
     return updateRowField(index, name, value)
   }
 
   handleMaxClick = () => {
     const { index, updateRowField, max } = this.props
-    updateRowField(index, 'amount', max)
+    updateRowField(index, 'amount', max.toString())
   }
 
   handleDeleteRow = () => {
@@ -103,7 +109,7 @@ class SendRecipientListItem extends Component<Props> {
       <DisplayInput value={amount} />
     ) : (
       <NumberInput
-        value={amount}
+        value={amount || 0}
         max={max}
         name="amount"
         onChange={this.handleFieldChange}

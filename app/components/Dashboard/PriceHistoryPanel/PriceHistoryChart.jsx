@@ -13,7 +13,7 @@ import {
 import { get } from 'lodash-es'
 
 import AxisLabel from './AxisLabel'
-import { formatThousands } from '../../../core/formatters'
+import { formatFiat } from '../../../core/formatters'
 import { CURRENCIES } from '../../../core/constants'
 
 import styles from './PriceHistoryChart.scss'
@@ -75,6 +75,7 @@ export default class PriceHistoryChart extends React.Component<Props, State> {
           />
           <YAxis
             axisLine={false}
+            width={70}
             tickLine={false}
             tickFormatter={this.formatPrice}
             tickMargin={20}
@@ -109,9 +110,8 @@ export default class PriceHistoryChart extends React.Component<Props, State> {
         </div>
         <div className={styles.tooltipPrice}>
           {this.formatPrice(
-            get(tooltipProps.payload[0], 'payload.close', 0),
+            get(tooltipProps.payload[0], 'payload.close', 0)
             /* $FlowFixMe */
-            null
           )}
         </div>
       </div>
@@ -140,10 +140,7 @@ export default class PriceHistoryChart extends React.Component<Props, State> {
     })
   }
 
-  formatPrice = (
-    price: number,
-    formatter: Function = formatThousands
-  ): string => {
+  formatPrice = (price: number, formatter: Function = formatFiat): string => {
     const { symbol } = CURRENCIES[this.props.currency]
     return formatter ? `${symbol}${formatter(price)}` : `${symbol}${price}`
   }

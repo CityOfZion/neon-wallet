@@ -48,7 +48,7 @@ export default createActions(
   ID,
   ({
     currency = DEFAULT_CURRENCY_CODE,
-    duration = '1m'
+    duration = '1d'
   }: Props = {}) => async () => {
     const [neo, gas] = await Promise.all([
       fetchPriceHistory(ASSETS.NEO, currency, duration),

@@ -1,9 +1,11 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
+import { Link } from 'react-router-dom'
 
 import Panel from '../Panel'
 import styles from './FailedPanel.scss'
+import { ROUTES } from '../../core/constants'
 
 type Props = {
   className: ?string,
@@ -24,7 +26,15 @@ export default class LoadingPanel extends React.Component<Props> {
         contentClassName={styles.content}
         renderHeader={this.renderHeader}
       >
-        Failed to load. {this.renderRetry()}
+        Failed to load. {this.renderRetry()} or{' '}
+        <Link
+          to={{
+            pathname: ROUTES.NODE_SELECT
+          }}
+          className={styles.settingsDonations}
+        >
+          select a different node.
+        </Link>
       </Panel>
     )
   }
@@ -35,7 +45,7 @@ export default class LoadingPanel extends React.Component<Props> {
     if (this.props.onRetry) {
       return (
         <a href="#" onClick={this.handleRetry}>
-          Retry?
+          Retry
         </a>
       )
     }

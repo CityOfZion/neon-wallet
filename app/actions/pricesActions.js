@@ -3,6 +3,7 @@ import axios from 'axios'
 import { createActions } from 'spunky'
 
 import { getDefaultTokens } from '../core/nep5'
+import { getSettings } from './settingsActions'
 import { DEFAULT_CURRENCY_CODE, ASSETS } from '../core/constants'
 
 type Props = {
@@ -26,13 +27,16 @@ function mapPrices(pricingData: Array<any>, currency) {
   )
 }
 
-async function getPrices(currency) {
+async function getPrices() {
   try {
     const tokens = await getDefaultTokens()
+    const settings = await getSettings()
+    const { currency } = settings
     const joinedTokens = tokens
       .map(token => token.symbol)
       .concat([ASSETS.NEO, ASSETS.GAS])
       .join(',')
+
     const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${joinedTokens}&tsyms=${currency.toUpperCase()}`
 
     const priceDataResponse = await axios.get(url)
@@ -49,5 +53,5 @@ export const ID = 'prices'
 export default createActions(
   ID,
   ({ currency = DEFAULT_CURRENCY_CODE }: Props = {}) => (state: Object) =>
-    getPrices(currency)
+    getPrices()
 )
