@@ -66,11 +66,11 @@ export default class PriceHistoryChart extends React.Component<Props, State> {
           <XAxis
             dataKey={timeKey}
             type="category"
-            interval="preserveStartEnd"
+            interval="preserveStart"
             tickLine={false}
             tickFormatter={this.formatDate}
             tickMargin={24}
-            minTickGap={50}
+            minTickGap={75}
             stroke="#9ca0a8"
           />
           <YAxis
