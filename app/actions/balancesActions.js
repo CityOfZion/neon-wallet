@@ -66,8 +66,8 @@ function determineIfBalanceUpdated(
   })
 }
 
-async function getBalances({ net, address, tokens }: Props) {
-  const { soundEnabled } = await getSettings()
+async function getBalances({ net, address }: Props) {
+  const { soundEnabled, tokens } = await getSettings()
   let endpoint = await getNode(net)
 
   let networkHasChanged = true

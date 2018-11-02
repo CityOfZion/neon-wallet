@@ -94,8 +94,10 @@ class TokenModal extends Component<Props, State> {
         return token
       })
       setUserGeneratedTokens([...validatedTokens])
-      onSave()
-      hideModal()
+      setTimeout(() => {
+        onSave()
+        hideModal()
+      }, 100)
     }
   }
 
