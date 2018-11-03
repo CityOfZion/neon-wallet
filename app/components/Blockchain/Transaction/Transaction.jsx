@@ -100,7 +100,7 @@ export default class Transaction extends React.Component<Props> {
             <div className={styles.txAmountContainer}>{amount}</div>
             <div className={styles.txToContainer}>
               <Fragment>
-                {contactTo}
+                <span>{contactTo}</span>
                 {!contactToExists && (
                   <CopyToClipboard
                     className={styles.copy}
@@ -129,7 +129,7 @@ export default class Transaction extends React.Component<Props> {
                 to
               ) : (
                 <Fragment>
-                  {contactTo}
+                  <span>{contactTo}</span>
                   {!contactToExists && (
                     <CopyToClipboard
                       className={styles.copy}
@@ -170,7 +170,7 @@ export default class Transaction extends React.Component<Props> {
             <div className={styles.txLabelContainer}>{label}</div>
             <div className={styles.txAmountContainer}>{amount}</div>
             <div className={styles.txToContainer}>
-              {contactFrom}
+              <span>{contactFrom}</span>
               {!contactFromExists &&
                 !isMintTokens && (
                   <CopyToClipboard

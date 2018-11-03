@@ -121,7 +121,7 @@ export default class ContactsPanel extends React.Component<Props, State> {
     >
       <div className={styles.name}>{name}</div>
       <div className={styles.address}>
-        {address}{' '}
+        <span>{address}</span>
         <CopyToClipboard
           className={styles.copy}
           text={address}

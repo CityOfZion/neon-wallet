@@ -7,6 +7,7 @@ import {
   toBigNumber,
   multiplyNumber,
   minusNumber,
+  addNumber,
   isNumber
 } from '../../core/math'
 
@@ -277,13 +278,50 @@ export default class Send extends React.Component<Props, State> {
       this.validateRow(row, index)
     )
 
-    Promise.all(promises).then(values => {
-      const isValid = values.every((result: boolean) => result)
+    if (this.validateRowAmounts(rows)) {
+      Promise.all(promises).then(values => {
+        const isValid = values.every((result: boolean) => result)
 
-      if (isValid) {
-        this.setState({ showConfirmSend: true })
+        if (isValid) {
+          this.setState({ showConfirmSend: true })
+        }
+      })
+    }
+  }
+
+  validateRowAmounts = (rows: Array<any>) => {
+    const { sendableAssets } = this.props
+
+    let validAmounts = true
+
+    rows.reduce((accum, currRow, index) => {
+      if (accum[currRow.asset]) {
+        // eslint-disable-next-line
+        accum[currRow.asset] = addNumber(
+          accum[currRow.asset],
+          toBigNumber(currRow.amount)
+        )
+        if (
+          toBigNumber(accum[currRow.asset]).greaterThan(
+            toBigNumber(sendableAssets[currRow.asset].balance)
+          )
+        ) {
+          const { errors } = this.state.sendRowDetails[index]
+
+          errors.amount = `You do not have enough balance to send ${
+            accum[currRow.asset]
+          } ${currRow.asset}.`
+          this.updateRowField(index, 'errors', errors)
+          validAmounts = false
+        }
+      } else {
+        // eslint-disable-next-line
+        accum[currRow.asset] = toBigNumber(currRow.amount)
       }
-    })
+      return accum
+    }, {})
+
+    return validAmounts
   }
 
   handleSend = () => {

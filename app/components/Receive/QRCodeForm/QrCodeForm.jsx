@@ -7,17 +7,13 @@ import AssetInput from '../../Inputs/AssetInput'
 import NumberInput from '../../Inputs/NumberInput'
 import TextInput from '../../Inputs/TextInput'
 import Button from '../../Button/Button'
-import CopyToClipboard from '../../CopyToClipboard'
 import { Address } from '../../Blockchain'
 import { ASSETS, TOKENS } from '../../../core/constants'
-import {
-  COIN_DECIMAL_LENGTH,
-  toFixedDecimals,
-  formatNEO
-} from '../../../core/formatters'
+import { formatNEO } from '../../../core/formatters'
 import GridIcon from '../../../assets/icons/grid.svg'
 
 import styles from './styles.scss'
+import { toBigNumber, toNumber } from '../../../core/math'
 
 type Props = {
   className?: string,
@@ -29,7 +25,8 @@ type Props = {
 type State = {
   asset: ?string,
   amount: ?number | ?string,
-  description: ?string
+  description: ?string,
+  error: ?string
 }
 
 export default class QRCodeForm extends React.Component<Props, State> {
@@ -38,7 +35,8 @@ export default class QRCodeForm extends React.Component<Props, State> {
   state = {
     asset: ASSETS.NEO,
     amount: undefined,
-    description: undefined
+    description: undefined,
+    error: undefined
   }
 
   render() {
@@ -50,15 +48,17 @@ export default class QRCodeForm extends React.Component<Props, State> {
       <div className={classNames(styles.receivePanel, className)}>
         <form
           className={styles.form}
-          onSubmit={() =>
-            onSubmit({
-              address,
-              asset:
-                (TOKENS[asset] && TOKENS[asset].networks['1'].hash) || asset,
-              amount,
-              description
-            })
-          }
+          onSubmit={() => {
+            if (this.validateForm()) {
+              onSubmit({
+                address,
+                asset:
+                  (TOKENS[asset] && TOKENS[asset].networks['1'].hash) || asset,
+                amount,
+                description
+              })
+            }
+          }}
         >
           <div className={styles.amountContainer}>
             <div className={styles.asset}>
@@ -77,13 +77,14 @@ export default class QRCodeForm extends React.Component<Props, State> {
                 options={{
                   numeralDecimalScale: 8
                 }}
+                error={this.state.error}
                 // this is a hack because Cleave will not update
                 // when props change https://github.com/nosir/cleave.js/issues/352
                 onChange={value =>
                   this.setState({
                     amount: !this.determineDecimalScale()
-                      ? formatNEO(value)
-                      : value
+                      ? formatNEO(value || 0)
+                      : value || 0
                   })
                 }
               />
@@ -118,6 +119,49 @@ export default class QRCodeForm extends React.Component<Props, State> {
         </form>
       </div>
     )
+  }
+
+  validateForm = () => {
+    const { amount, asset } = this.state
+    const { networkId } = this.props
+
+    let valid = false
+
+    if (asset && amount) {
+      const decpoint =
+        amount.toString().length - 1 - amount.toString().indexOf('.')
+
+      const validDecimals = get(
+        TOKENS[asset],
+        `networks.${networkId}.decimals`,
+        8
+      )
+      if (decpoint > validDecimals && asset !== 'NEO') {
+        valid = false
+        this.setState({
+          error: `You can only request ${asset} up to ${validDecimals} decimals.`
+        })
+      }
+      if (
+        toBigNumber(amount.toString().replace(/,/g, '')).greaterThan(
+          toBigNumber(1000000000)
+        )
+      ) {
+        valid = false
+        this.setState({
+          error: `You cannot request more than 100,000,000 ${asset}.`
+        })
+      }
+      if (!toNumber(amount.toString().replace(/,/g, ''))) {
+        valid = false
+        this.setState({
+          error: `You cannot request 0 ${asset}.`
+        })
+      } else {
+        valid = true
+      }
+    }
+    return valid
   }
 
   determineDecimalScale = () => {

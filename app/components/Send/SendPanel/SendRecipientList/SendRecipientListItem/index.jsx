@@ -28,7 +28,7 @@ type Props = {
 }
 
 class SendRecipientListItem extends Component<Props> {
-  handleFieldChange = (e: Object) => {
+  handleFieldChange = (e: Object, type: 'asset' | 'amount' | 'address') => {
     const {
       index,
       updateRowField,
@@ -50,13 +50,15 @@ class SendRecipientListItem extends Component<Props> {
     const { name } = e.target
     let { value } = e.target
 
-    const valueIsGreaterThanMax = toBigNumber(
-      value.replace(/,/g, '')
-    ).greaterThan(toBigNumber(max))
+    if (type === 'amount' && !!value) {
+      const valueIsGreaterThanMax = toBigNumber(
+        value.replace(/,/g, '')
+      ).greaterThan(toBigNumber(max))
+      if (valueIsGreaterThanMax) value = max.toString()
+    }
 
-    if (valueIsGreaterThanMax) value = max.toString()
     clearErrors(index, name)
-    return updateRowField(index, name, value)
+    return updateRowField(index, name, value || '0')
   }
 
   handleMaxClick = () => {
@@ -97,7 +99,7 @@ class SendRecipientListItem extends Component<Props> {
       <SelectInput
         value={asset}
         name="asset"
-        onChange={this.handleFieldChange}
+        onChange={e => this.handleFieldChange(e, 'asset')}
         items={this.createAssetList()}
         customChangeEvent
         onFocus={this.clearErrorsOnFocus}
@@ -112,7 +114,7 @@ class SendRecipientListItem extends Component<Props> {
         value={amount || 0}
         max={max}
         name="amount"
-        onChange={this.handleFieldChange}
+        onChange={e => this.handleFieldChange(e, 'amount')}
         customChangeEvent
         handleMaxClick={this.handleMaxClick}
         onFocus={this.clearErrorsOnFocus}
@@ -128,7 +130,7 @@ class SendRecipientListItem extends Component<Props> {
         placeholder="Add wallet or select contact"
         value={address || ''}
         name="address"
-        onChange={this.handleFieldChange}
+        onChange={e => this.handleFieldChange(e, 'address')}
         items={this.createContactList()}
         customChangeEvent
         onFocus={this.clearErrorsOnFocus}
