@@ -11,6 +11,7 @@ import {
   toFixedDecimals,
   formatToRoundedShortNumber
 } from '../../../core/formatters'
+import { toBigNumber } from '../../../core/math'
 import Nothing from '../../../assets/icons/nothing.svg'
 import { CURRENCIES, ROUTES, PRICE_UNAVAILABLE } from '../../../core/constants'
 
@@ -156,7 +157,7 @@ export default class TokenBalancesPanel extends React.Component<Props> {
                 {this.formatPrice(token.symbol)}
               </span>
               <span className={classNames(styles.rowCell, styles.balanceValue)}>
-                {token.balance}
+                {toBigNumber(token.balance).toString()}
               </span>
             </React.Fragment>
           ))}

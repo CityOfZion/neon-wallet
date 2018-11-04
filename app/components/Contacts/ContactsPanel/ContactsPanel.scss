@@ -8,6 +8,7 @@
     width: 180px;
     text-overflow: ellipsis;
     font-size: 14px;
+    overflow: hidden;
   }
 
   a {
@@ -42,6 +43,10 @@
       font-size: 14px;
       justify-content: space-between;
       margin-bottom: -5px;
+      span {
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
     }
 
     .actions {

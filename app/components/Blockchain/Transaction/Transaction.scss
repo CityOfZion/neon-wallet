@@ -35,6 +35,11 @@
   font-size: 12px;
   justify-content: space-between;
 
+  span {
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
   button {
     align-self: flex-end;
     margin-top: 5px;

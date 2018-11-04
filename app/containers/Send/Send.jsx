@@ -7,6 +7,7 @@ import {
   toBigNumber,
   multiplyNumber,
   minusNumber,
+  addNumber,
   isNumber
 } from '../../core/math'
 
@@ -186,7 +187,7 @@ export default class Send extends React.Component<Props, State> {
         objectToModify.max = maxValue
       }
 
-      if (field === 'amount') {
+      if (field === 'amount' && value) {
         const valueAsString = value.toString()
 
         const additionalValue =
@@ -195,10 +196,12 @@ export default class Send extends React.Component<Props, State> {
             ? 0
             : toNumber(valueAsString.replace(/,/g, ''))
 
+        const decimals = this.calculateDecimals(objectToModify.asset)
+
         const maxValue =
           Number(this.calculateMaxValue(objectToModify.asset)) + additionalValue
 
-        objectToModify.max = maxValue
+        objectToModify.max = maxValue.toFixed(decimals)
       }
 
       if (field === 'address') {
@@ -208,9 +211,8 @@ export default class Send extends React.Component<Props, State> {
     })
   }
 
-  calculateMaxValue = (asset: string) => {
-    const { sendableAssets, tokens, networkId } = this.props
-    const existingAmounts = this.calculateRowAmounts(asset)
+  calculateDecimals = (asset: string) => {
+    const { tokens, networkId } = this.props
     let decimals = 8
     if (asset === 'NEO') {
       decimals = 0
@@ -225,6 +227,13 @@ export default class Send extends React.Component<Props, State> {
         decimals = get(foundToken, 'decimals', 8)
       }
     }
+    return decimals
+  }
+
+  calculateMaxValue = (asset: string) => {
+    const { sendableAssets, tokens, networkId } = this.props
+    const existingAmounts = this.calculateRowAmounts(asset)
+    const decimals = this.calculateDecimals(asset)
     if (sendableAssets[asset]) {
       const max = toNumber(decimals)
         ? minusNumber(sendableAssets[asset].balance, existingAmounts).toFixed(
@@ -277,13 +286,50 @@ export default class Send extends React.Component<Props, State> {
       this.validateRow(row, index)
     )
 
-    Promise.all(promises).then(values => {
-      const isValid = values.every((result: boolean) => result)
+    if (this.validateRowAmounts(rows)) {
+      Promise.all(promises).then(values => {
+        const isValid = values.every((result: boolean) => result)
 
-      if (isValid) {
-        this.setState({ showConfirmSend: true })
+        if (isValid) {
+          this.setState({ showConfirmSend: true })
+        }
+      })
+    }
+  }
+
+  validateRowAmounts = (rows: Array<any>) => {
+    const { sendableAssets } = this.props
+
+    let validAmounts = true
+
+    rows.reduce((accum, currRow, index) => {
+      if (accum[currRow.asset]) {
+        // eslint-disable-next-line
+        accum[currRow.asset] = addNumber(
+          accum[currRow.asset],
+          toBigNumber(currRow.amount)
+        )
+        if (
+          toBigNumber(accum[currRow.asset]).greaterThan(
+            toBigNumber(sendableAssets[currRow.asset].balance)
+          )
+        ) {
+          const { errors } = this.state.sendRowDetails[index]
+
+          errors.amount = `You do not have enough balance to send ${
+            accum[currRow.asset]
+          } ${currRow.asset}.`
+          this.updateRowField(index, 'errors', errors)
+          validAmounts = false
+        }
+      } else {
+        // eslint-disable-next-line
+        accum[currRow.asset] = toBigNumber(currRow.amount)
       }
-    })
+      return accum
+    }, {})
+
+    return validAmounts
   }
 
   handleSend = () => {
