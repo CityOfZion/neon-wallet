@@ -187,7 +187,7 @@ export default class Send extends React.Component<Props, State> {
         objectToModify.max = maxValue
       }
 
-      if (field === 'amount') {
+      if (field === 'amount' && value) {
         const valueAsString = value.toString()
 
         const additionalValue =
@@ -196,10 +196,12 @@ export default class Send extends React.Component<Props, State> {
             ? 0
             : toNumber(valueAsString.replace(/,/g, ''))
 
+        const decimals = this.calculateDecimals(objectToModify.asset)
+
         const maxValue =
           Number(this.calculateMaxValue(objectToModify.asset)) + additionalValue
 
-        objectToModify.max = maxValue
+        objectToModify.max = maxValue.toFixed(decimals)
       }
 
       if (field === 'address') {
@@ -209,9 +211,8 @@ export default class Send extends React.Component<Props, State> {
     })
   }
 
-  calculateMaxValue = (asset: string) => {
-    const { sendableAssets, tokens, networkId } = this.props
-    const existingAmounts = this.calculateRowAmounts(asset)
+  calculateDecimals = (asset: string) => {
+    const { tokens, networkId } = this.props
     let decimals = 8
     if (asset === 'NEO') {
       decimals = 0
@@ -226,6 +227,13 @@ export default class Send extends React.Component<Props, State> {
         decimals = get(foundToken, 'decimals', 8)
       }
     }
+    return decimals
+  }
+
+  calculateMaxValue = (asset: string) => {
+    const { sendableAssets, tokens, networkId } = this.props
+    const existingAmounts = this.calculateRowAmounts(asset)
+    const decimals = this.calculateDecimals(asset)
     if (sendableAssets[asset]) {
       const max = toNumber(decimals)
         ? minusNumber(sendableAssets[asset].balance, existingAmounts).toFixed(

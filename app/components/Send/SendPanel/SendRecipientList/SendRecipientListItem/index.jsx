@@ -58,7 +58,7 @@ class SendRecipientListItem extends Component<Props> {
     }
 
     clearErrors(index, name)
-    return updateRowField(index, name, value || '0')
+    return updateRowField(index, name, value)
   }
 
   handleMaxClick = () => {
