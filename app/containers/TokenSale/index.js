@@ -1,7 +1,7 @@
 // @flow
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
-import { pick } from 'lodash'
+import { pick } from 'lodash-es'
 import { withData, withCall } from 'spunky'
 import TokenSale from './TokenSale'
 
