@@ -56,9 +56,7 @@ export default class PriorityFee extends React.Component<Props> {
                 option.fee
               )}
               onClick={() =>
-                fees === option.fee
-                  ? handleAddPriorityFee(0)
-                  : handleAddPriorityFee(option.fee)
+                handleAddPriorityFee(fees === option.fee ? 0 : option.fee)
               }
             >
               <div>
