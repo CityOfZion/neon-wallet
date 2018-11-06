@@ -175,21 +175,19 @@ class TokenSale extends Component<Props, State> {
     const { amountToPurchaseFor, assetToPurchaseWith, gasFee } = this.state
     const { assetBalances } = this.props
 
-    const amountWithoutCommas = amountToPurchaseFor.toString()
-
     if (!isNumber(Number(amountToPurchaseFor))) {
       this.setState({ inputErrorMessage: 'Amount must be a number.' })
       return false
     }
 
-    if (isZero(amountWithoutCommas)) {
+    if (isZero(amountToPurchaseFor)) {
       this.setState({ inputErrorMessage: 'Amount must be greater than 0.' })
       return false
     }
 
     if (
       assetToPurchaseWith === 'NEO' &&
-      !toBigNumber(amountWithoutCommas).isInteger()
+      !toBigNumber(amountToPurchaseFor).isInteger()
     ) {
       this.setState({
         inputErrorMessage: "You can't send fractional amounts of NEO" // eslint-disable-line
@@ -213,7 +211,7 @@ class TokenSale extends Component<Props, State> {
 
     if (assetToPurchaseWith === 'GAS') {
       if (
-        toBigNumber(addNumber(amountWithoutCommas, gasFee)).greaterThan(
+        toBigNumber(addNumber(amountToPurchaseFor, gasFee)).greaterThan(
           gasBalance
         )
       ) {
@@ -225,7 +223,7 @@ class TokenSale extends Component<Props, State> {
       }
     }
 
-    if (toBigNumber(amountWithoutCommas).greaterThan(assetBalance)) {
+    if (toBigNumber(amountToPurchaseFor).greaterThan(assetBalance)) {
       this.setState({
         inputErrorMessage: `You don't have enough ${assetToPurchaseWith}.`
       })
