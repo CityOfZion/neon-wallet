@@ -48,11 +48,11 @@
 
 .qrPrintButtonContainer {
   margin-bottom: 50px;
-  width: 475px;
+  width: 490px;
 }
 
 .input {
-  min-width: 475px;
+  min-width: 490px;
   width: 60%;
 }
 
@@ -82,13 +82,12 @@
 
 .buttonContainer {
   width: 100%;
-  margin-top: 20px;
+  margin-top: auto;
   display: flex;
+  align-items: flex-end;
+  margin-bottom: 50px;
   flex: 1;
   justify-content: space-between;
-
-  a {
-  }
 
   button {
     width: 225px;
