@@ -30,6 +30,9 @@ export const formatThousands = (value: ValueType): string =>
 export const formatNEO = (value: ValueType): string =>
   toBigNumber(value).toFormat(0)
 
+export const formatNumberByDecimalScale = (value: ValueType): string =>
+  toBigNumber(value).toFormat()
+
 export const formatBalance = (
   symbol: SymbolType,
   balance: ValueType,

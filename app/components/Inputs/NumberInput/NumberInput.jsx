@@ -25,7 +25,6 @@ type Props = {
   onBlur?: Function,
   handleMaxClick: Function,
   error?: string,
-  customChangeEvent?: boolean,
   options?: {
     numeralThousandsGroupStyle?: 'thousand' | 'lakh' | 'wan' | 'none',
     numeralIntegerScale?: number,
@@ -44,8 +43,7 @@ export default class NumberInput extends React.Component<Props, State> {
   static defaultProps = {
     max: Infinity,
     onChange: noop,
-    options: {},
-    customChangeEvent: false
+    options: {}
   }
 
   state = {
@@ -59,7 +57,6 @@ export default class NumberInput extends React.Component<Props, State> {
       'options',
       'onChange',
       'className',
-      'customChangeEvent',
       'handleMaxClick'
     )
 
@@ -78,11 +75,7 @@ export default class NumberInput extends React.Component<Props, State> {
           options={this.getOptions()}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
-          onChange={
-            this.props.customChangeEvent
-              ? this.props.onChange
-              : this.handleChange
-          }
+          onChange={this.handleChange}
         />
         {error && <ErrorIcon className={styles.errorIcon} />}
         {error && <div className={styles.errorMessage}>{error}</div>}
@@ -127,7 +120,7 @@ export default class NumberInput extends React.Component<Props, State> {
   handleChange = (event: Object) => {
     const { onChange } = this.props
     if (onChange) {
-      return onChange(event.target.rawValue)
+      return onChange(event, event.target.rawValue)
     }
   }
 

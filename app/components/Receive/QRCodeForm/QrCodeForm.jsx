@@ -80,7 +80,7 @@ export default class QRCodeForm extends React.Component<Props, State> {
                 error={this.state.error}
                 // this is a hack because Cleave will not update
                 // when props change https://github.com/nosir/cleave.js/issues/352
-                onChange={value =>
+                onChange={(e, value) =>
                   this.setState({
                     amount: !this.determineDecimalScale()
                       ? formatNEO(value || 0)
@@ -142,17 +142,13 @@ export default class QRCodeForm extends React.Component<Props, State> {
           error: `You can only request ${asset} up to ${validDecimals} decimals.`
         })
       }
-      if (
-        toBigNumber(amount.toString().replace(/,/g, '')).greaterThan(
-          toBigNumber(1000000000)
-        )
-      ) {
+      if (toBigNumber(amount.toString()).greaterThan(toBigNumber(1000000000))) {
         valid = false
         this.setState({
           error: `You cannot request more than 100,000,000 ${asset}.`
         })
       }
-      if (!toNumber(amount.toString().replace(/,/g, ''))) {
+      if (!toNumber(amount.toString())) {
         valid = false
         this.setState({
           error: `You cannot request 0 ${asset}.`

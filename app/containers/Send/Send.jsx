@@ -191,10 +191,10 @@ export default class Send extends React.Component<Props, State> {
         const valueAsString = value.toString()
 
         const additionalValue =
-          toNumber(valueAsString.replace(/,/g, '')) >
+          toNumber(valueAsString) >
           toNumber(sendableAssets[objectToModify.asset].balance)
             ? 0
-            : toNumber(valueAsString.replace(/,/g, ''))
+            : toNumber(valueAsString)
 
         const decimals = this.calculateDecimals(objectToModify.asset)
 
@@ -251,11 +251,7 @@ export default class Send extends React.Component<Props, State> {
     if (rows.length > 0) {
       return (rows
         .filter((row: Object) => row.asset === asset)
-        .map((row: Object) =>
-          get(row, 'amount', '0')
-            .toString()
-            .replace(/,/g, '')
-        )
+        .map((row: Object) => get(row, 'amount', '0').toString())
         .reduce(
           (accumulator: Object, currentValue: number | void) =>
             accumulator.plus(currentValue || 0),
@@ -338,7 +334,7 @@ export default class Send extends React.Component<Props, State> {
 
     const entries = sendRowDetails.map((row: Object) => ({
       address: row.address,
-      amount: toNumber(row.amount.toString().replace(/,/g, '')),
+      amount: toNumber(row.amount.toString()),
       symbol: row.asset
     }))
 
