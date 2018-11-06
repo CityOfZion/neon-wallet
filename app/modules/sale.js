@@ -93,12 +93,8 @@ export const participateInSale = (
     gas: 0,
     publicKey: isHardwareLogin ? publicKey : null,
     signingFunction: isHardwareLogin ? signingFunction : null,
-    fees
-  }
-
-  if (url) {
-    // eslint-disable-next-line $FlowFixMe
-    config.url = url
+    fees,
+    url
   }
 
   try {

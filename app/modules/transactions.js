@@ -115,6 +115,8 @@ export const sendTransaction = ({
     const isHardwareSend = getIsHardwareLogin(state)
     const url = await getNode(net)
 
+    console.log({ url })
+
     const rejectTransaction = (message: string) =>
       dispatch(showErrorNotification({ message }))
 
@@ -148,12 +150,8 @@ export const sendTransaction = ({
       publicKey,
       privateKey: new wallet.Account(wif).privateKey,
       signingFunction: isHardwareSend ? signingFunction : null,
-      fees
-    }
-
-    if (url) {
-      // eslint-disable-next-line $FlowFixMe
-      config.url = url
+      fees,
+      url
     }
 
     try {
