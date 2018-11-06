@@ -6,7 +6,7 @@ import NumberInput from '../../../../Inputs/NumberInput'
 import DisplayInput from '../../../DisplayInput'
 
 import { toBigNumber } from '../../../../../core/math'
-import { formatBalanceByDecimalScale } from '../../../../../core/formatters'
+import { formatNumberByDecimalScale } from '../../../../../core/formatters'
 
 import TrashCanIcon from '../../../../../assets/icons/delete.svg'
 
@@ -97,7 +97,7 @@ class SendRecipientListItem extends Component<Props> {
     )
 
     const numberInput = showConfirmSend ? (
-      <DisplayInput value={formatBalanceByDecimalScale(amount)} />
+      <DisplayInput value={formatNumberByDecimalScale(amount)} />
     ) : (
       <NumberInput
         value={amount || 0}
