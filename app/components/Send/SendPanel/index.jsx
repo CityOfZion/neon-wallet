@@ -15,6 +15,7 @@ import { pluralize } from '../../../util/pluralize'
 import SendIcon from '../../../assets/icons/send.svg'
 
 import styles from './SendPanel.scss'
+import { isZero } from '../../../core/math'
 
 type Props = {
   sendRowDetails: Array<*>,
@@ -44,6 +45,11 @@ type Props = {
   pushQRCodeData: (data: Object) => any
 }
 
+const shouldDisableSendButton = sendRowDetails =>
+  sendRowDetails.some(
+    detail => !detail.address || !detail.amount || isZero(detail.amount)
+  )
+
 const SendPanel = ({
   sendRowDetails,
   sendableAssets,
@@ -71,27 +77,10 @@ const SendPanel = ({
   pushQRCodeData,
   pendingTransaction
 }: Props) => {
-  const shouldDisableSendButton = sendRowDetails => {
-    let disabled = false
-    sendRowDetails.some(detail => {
-      if (!detail.address) {
-        disabled = true
-        return true
-      }
-      if (!detail.amount) {
-        disabled = true
-        return true
-      }
-      return false
-    })
-    return disabled
-  }
-
-  const maxRecipientsMet = () => sendRowDetails.length === maxNumberOfRecipients
-
   if (noSendableAssets) {
     return <ZeroAssets address={address} />
   }
+  const maxRecipientsMet = sendRowDetails.length === maxNumberOfRecipients
 
   let content = (
     <form onSubmit={handleSubmit}>
@@ -178,9 +167,9 @@ const SendPanel = ({
           showSendModal={showSendModal}
           pushQRCodeData={pushQRCodeData}
           disableAddRecipient={
-            shouldDisableSendButton(sendRowDetails) || maxRecipientsMet()
+            shouldDisableSendButton(sendRowDetails) || maxRecipientsMet
           }
-          disableEnterQRCode={maxRecipientsMet()}
+          disableEnterQRCode={maxRecipientsMet}
         />
       )}
       className={styles.sendSuccessPanel}
