@@ -2,6 +2,8 @@
 import { wallet, api } from 'neon-js'
 import { flatten } from 'lodash-es'
 
+import { getNode } from '../actions/nodeStorageActions'
+
 import {
   showErrorNotification,
   showInfoNotification,
@@ -25,7 +27,7 @@ export const participateInSale = (
   neoToSend: string,
   gasToSend: string,
   scriptHash: string,
-  gasCost: string = '0'
+  fees: number = 0
 ) => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
   const wif = getWIF(state)
@@ -36,6 +38,7 @@ export const participateInSale = (
   const address = getAddress(state)
   const isHardwareLogin = getIsHardwareLogin(state)
   const signingFunction = getSigningFunction(state)
+  const url = await getNode(net)
 
   const account = new wallet.Account(wif)
   const neoToMint = toNumber(neoToSend)
@@ -89,7 +92,13 @@ export const participateInSale = (
     script,
     gas: 0,
     publicKey: isHardwareLogin ? publicKey : null,
-    signingFunction: isHardwareLogin ? signingFunction : null
+    signingFunction: isHardwareLogin ? signingFunction : null,
+    fees
+  }
+
+  if (url) {
+    // eslint-disable-next-line $FlowFixMe
+    config.url = url
   }
 
   try {

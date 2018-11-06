@@ -11,6 +11,7 @@ import { getNode } from './nodeStorageActions'
 import { ASSETS } from '../core/constants'
 import { COIN_DECIMAL_LENGTH } from '../core/formatters'
 import { toBigNumber } from '../core/math'
+import { findNetworkIdByLabel } from '../core/networks'
 
 const MAX_SCRIPT_HASH_CHUNK_SIZE = 5
 
@@ -68,6 +69,8 @@ function determineIfBalanceUpdated(
 
 async function getBalances({ net, address }: Props) {
   const { soundEnabled, tokens } = await getSettings()
+  const network = findNetworkIdByLabel(net)
+
   let endpoint = await getNode(net)
 
   let networkHasChanged = true
@@ -129,7 +132,9 @@ async function getBalances({ net, address }: Props) {
   // Handle manually added script hashses here
   const userGeneratedTokenInfo = []
   // eslint-disable-next-line
-  for (const token of tokens.filter(token => token.isUserGenerated)) {
+  for (const token of tokens.filter(
+    token => token.isUserGenerated && token.networkId === network.id
+  )) {
     // eslint-disable-next-line
     const info = await api.nep5
       .getToken(endpoint, token.scriptHash, address)

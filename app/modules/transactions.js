@@ -24,6 +24,7 @@ import {
   getTokenBalancesMap
 } from '../core/wallet'
 import { toNumber } from '../core/math'
+import { getNode } from '../actions/nodeStorageActions'
 
 const extractTokens = (sendEntries: Array<SendEntryType>) =>
   sendEntries.filter(({ symbol }) => isToken(symbol))
@@ -112,6 +113,7 @@ export const sendTransaction = ({
     const signingFunction = getSigningFunction(state)
     const publicKey = getPublicKey(state)
     const isHardwareSend = getIsHardwareLogin(state)
+    const url = await getNode(net)
 
     const rejectTransaction = (message: string) =>
       dispatch(showErrorNotification({ message }))
@@ -139,16 +141,23 @@ export const sendTransaction = ({
       )
     }
 
+    const config = {
+      net,
+      tokensBalanceMap,
+      address: fromAddress,
+      publicKey,
+      privateKey: new wallet.Account(wif).privateKey,
+      signingFunction: isHardwareSend ? signingFunction : null,
+      fees
+    }
+
+    if (url) {
+      // eslint-disable-next-line $FlowFixMe
+      config.url = url
+    }
+
     try {
-      const { response } = await makeRequest(sendEntries, {
-        net,
-        tokensBalanceMap,
-        address: fromAddress,
-        publicKey,
-        privateKey: new wallet.Account(wif).privateKey,
-        signingFunction: isHardwareSend ? signingFunction : null,
-        fees
-      })
+      const { response } = await makeRequest(sendEntries, config)
 
       if (!response.result) {
         throw new Error('Rejected by RPC server.')
