@@ -175,20 +175,19 @@ class TokenSale extends Component<Props, State> {
     const { amountToPurchaseFor, assetToPurchaseWith, gasFee } = this.state
     const { assetBalances } = this.props
 
-    if (!isNumber(Number(amountToPurchaseFor))) {
+    const amount = amountToPurchaseFor.toString()
+
+    if (!isNumber(Number(amount))) {
       this.setState({ inputErrorMessage: 'Amount must be a number.' })
       return false
     }
 
-    if (isZero(amountToPurchaseFor)) {
+    if (isZero(amount)) {
       this.setState({ inputErrorMessage: 'Amount must be greater than 0.' })
       return false
     }
 
-    if (
-      assetToPurchaseWith === 'NEO' &&
-      !toBigNumber(amountToPurchaseFor).isInteger()
-    ) {
+    if (assetToPurchaseWith === 'NEO' && !toBigNumber(amount).isInteger()) {
       this.setState({
         inputErrorMessage: "You can't send fractional amounts of NEO" // eslint-disable-line
       })
@@ -210,11 +209,7 @@ class TokenSale extends Component<Props, State> {
     }
 
     if (assetToPurchaseWith === 'GAS') {
-      if (
-        toBigNumber(addNumber(amountToPurchaseFor, gasFee)).greaterThan(
-          gasBalance
-        )
-      ) {
+      if (toBigNumber(addNumber(amount, gasFee)).greaterThan(gasBalance)) {
         this.setState({
           inputErrorMessage:
             'You do not have enough GAS to prioritize this transaction' // eslint-disable-line
@@ -223,7 +218,7 @@ class TokenSale extends Component<Props, State> {
       }
     }
 
-    if (toBigNumber(amountToPurchaseFor).greaterThan(assetBalance)) {
+    if (toBigNumber(amount).greaterThan(assetBalance)) {
       this.setState({
         inputErrorMessage: `You don't have enough ${assetToPurchaseWith}.`
       })
