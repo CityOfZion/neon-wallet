@@ -175,7 +175,7 @@ class TokenSale extends Component<Props, State> {
     const { amountToPurchaseFor, assetToPurchaseWith, gasFee } = this.state
     const { assetBalances } = this.props
 
-    const amountWithoutCommas = amountToPurchaseFor.toString().replace(/,/g, '')
+    const amountWithoutCommas = amountToPurchaseFor.toString()
 
     if (!isNumber(Number(amountToPurchaseFor))) {
       this.setState({ inputErrorMessage: 'Amount must be a number.' })

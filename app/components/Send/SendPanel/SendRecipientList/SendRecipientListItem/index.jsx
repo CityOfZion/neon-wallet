@@ -3,9 +3,10 @@ import React, { Component } from 'react'
 
 import SelectInput from '../../../../Inputs/SelectInput'
 import NumberInput from '../../../../Inputs/NumberInput'
-import TextInput from '../../../../Inputs/TextInput'
 import DisplayInput from '../../../DisplayInput'
+
 import { toBigNumber } from '../../../../../core/math'
+import { formatBalanceByDecimalScale } from '../../../../../core/formatters'
 
 import TrashCanIcon from '../../../../../assets/icons/delete.svg'
 
@@ -28,37 +29,26 @@ type Props = {
 }
 
 class SendRecipientListItem extends Component<Props> {
-  handleFieldChange = (e: Object, type: 'asset' | 'amount' | 'address') => {
-    const {
-      index,
-      updateRowField,
-      contacts,
-      sendableAssets,
-      clearErrors,
-      max
-    } = this.props
+  handleFieldChange = (value: string, type: 'asset' | 'amount' | 'address') => {
+    const { index, updateRowField, contacts, clearErrors, max } = this.props
 
-    const isAssetString = Object.keys(sendableAssets).find(asset => asset === e)
-    if (isAssetString) return updateRowField(index, 'asset', e)
+    let normalizedValue = value
 
-    const isContactString = Object.keys(contacts).find(contact => contact === e)
-    if (isContactString) {
-      updateRowField(index, 'address', contacts[e])
-      return clearErrors(index, 'address')
+    if (type === 'address') {
+      const isContactString = Object.keys(contacts).find(
+        contact => contact === value
+      )
+      if (isContactString) {
+        normalizedValue = contacts[value]
+      }
+    } else if (type === 'amount' && value) {
+      normalizedValue = toBigNumber(value).gt(toBigNumber(max))
+        ? max.toString()
+        : value
     }
 
-    const { name } = e.target
-    let { value } = e.target
-
-    if (type === 'amount' && !!value) {
-      const valueIsGreaterThanMax = toBigNumber(
-        value.replace(/,/g, '')
-      ).greaterThan(toBigNumber(max))
-      if (valueIsGreaterThanMax) value = max.toString()
-    }
-
-    clearErrors(index, name)
-    return updateRowField(index, name, value)
+    clearErrors(index, type)
+    updateRowField(index, type, normalizedValue)
   }
 
   handleMaxClick = () => {
@@ -99,23 +89,21 @@ class SendRecipientListItem extends Component<Props> {
       <SelectInput
         value={asset}
         name="asset"
-        onChange={e => this.handleFieldChange(e, 'asset')}
+        onChange={value => this.handleFieldChange(value, 'asset')}
         items={this.createAssetList()}
-        customChangeEvent
         onFocus={this.clearErrorsOnFocus}
         disabled
       />
     )
 
     const numberInput = showConfirmSend ? (
-      <DisplayInput value={amount} />
+      <DisplayInput value={formatBalanceByDecimalScale(amount)} />
     ) : (
       <NumberInput
         value={amount || 0}
         max={max}
         name="amount"
-        onChange={e => this.handleFieldChange(e, 'amount')}
-        customChangeEvent
+        onChange={(e, value) => this.handleFieldChange(value, 'amount')}
         handleMaxClick={this.handleMaxClick}
         onFocus={this.clearErrorsOnFocus}
         error={errors && errors.amount}
@@ -130,9 +118,8 @@ class SendRecipientListItem extends Component<Props> {
         placeholder="Add wallet or select contact"
         value={address || ''}
         name="address"
-        onChange={e => this.handleFieldChange(e, 'address')}
+        onChange={value => this.handleFieldChange(value, 'address')}
         items={this.createContactList()}
-        customChangeEvent
         onFocus={this.clearErrorsOnFocus}
         error={errors && errors.address}
       />
