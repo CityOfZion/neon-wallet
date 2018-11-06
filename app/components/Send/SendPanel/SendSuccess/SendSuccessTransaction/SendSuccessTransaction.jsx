@@ -5,6 +5,7 @@ import SendIcon from '../../../../../assets/navigation/send.svg'
 import AddContactIcon from '../../../../../assets/icons/contacts-add.svg'
 import InfoIcon from '../../../../../assets/icons/info.svg'
 import CopyToClipboard from '../../../../CopyToClipboard'
+import { openExplorerTx } from '../../../../../core/explorer'
 
 import styles from './SendSuccessTransaction.scss'
 
@@ -15,8 +16,9 @@ type Props = {
   amount: string,
   address: string,
   showAddContactModal: ({ address: string }) => null,
-  net: string,
-  txid: string
+  networkId: string,
+  txid: string,
+  explorer: ExplorerType
 }
 
 class SendSuccessTransaction extends Component<Props> {
@@ -25,16 +27,10 @@ class SendSuccessTransaction extends Component<Props> {
     showAddContactModal({ address })
   }
 
-  createNeoscanUrl = () => {
-    const { net, txid } = this.props
-
-    if (net === 'TestNet') {
-      return `https://neoscan-testnet.io/transaction/${txid}`
-    }
-    return `https://neoscan.io/transaction/${txid}`
+  handleViewClick = () => {
+    const { networkId, explorer, txid } = this.props
+    openExplorerTx(networkId, explorer, txid)
   }
-
-  handleViewClick = () => shell.openExternal(this.createNeoscanUrl())
 
   render() {
     const { asset, amount, address } = this.props

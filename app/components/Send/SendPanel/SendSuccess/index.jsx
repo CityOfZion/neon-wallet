@@ -23,7 +23,7 @@ const SendSuccess = ({ sendRowDetails, txid }: Props) => {
         <CheckMarkIcon className={styles.sendSuccessHeaderIcon} />
         <div className={styles.sendSuccessHeaderInfo}>
           <h1 className={styles.sendSuccessHeaderInfoText}>
-            {numberOfItems} {pluralize('Transaction', numberOfItems)} completed
+            {numberOfItems} {pluralize('Transfer', numberOfItems)} completed
           </h1>
           <p className={styles.sendSuccessParagraphText}>
             {createFormattedDate()}

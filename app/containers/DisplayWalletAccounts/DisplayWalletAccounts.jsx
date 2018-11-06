@@ -121,7 +121,11 @@ class DisplayWalletAccounts extends Component<Props> {
               <NavLink
                 id="display-wallet-qrs"
                 exact
-                to={ROUTES.DISPLAY_WALLET_QRS}
+                to={
+                  authenticated
+                    ? ROUTES.DISPLAY_WALLET_QRS_AUTHENTICATED
+                    : ROUTES.DISPLAY_WALLET_QRS
+                }
               >
                 <Button primary renderIcon={() => <GridIcon />} type="submit">
                   Generate QR Codes

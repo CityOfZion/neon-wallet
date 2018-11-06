@@ -3,9 +3,11 @@
 .active {
   background-image: var(--button-active) !important;
   background: var(--button-active) !important;
+  color: var(--button-active-text) !important;
 
-  &:hover {
+  &:not([disabled]):hover {
     background: var(--button-active-hover) !important;
+    color: var(--button-active-text) !important;
   }
 }
 

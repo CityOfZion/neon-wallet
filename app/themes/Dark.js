@@ -9,6 +9,7 @@ const BASE = {
 const BUTTON = {
   '--button-disabled': '#5C677F',
   '--button-active': '#66ED87',
+  '--button-active-text': '#242933',
   '--button-secondary-background': '#3B3B4F',
   '--button-primary-background': '#66ED87',
   '--button-primary-hover': '#69E27E',
