@@ -1,5 +1,6 @@
 // @flow
 import React, { Component, Fragment } from 'react'
+import { isEmpty } from 'lodash-es'
 
 import {
   isZero,
@@ -9,7 +10,6 @@ import {
   minusNumber,
   multiplyNumber
 } from '../../core/math'
-
 import AmountsPanel from '../../components/AmountsPanel'
 import HeaderBar from '../../components/HeaderBar'
 import ZeroAssets from '../../components/ZeroAssets/ZeroAssets'
@@ -90,7 +90,20 @@ class TokenSale extends Component<Props, State> {
     }
   }
 
+  componentDidUpdate(prevProps: Props) {
+    if (
+      prevProps.assetBalances !== this.props.assetBalances &&
+      !isEmpty(this.props.assetBalances)
+    ) {
+      this.handleUpdatedAssets()
+    }
+  }
+
   componentDidMount() {
+    this.handleUpdatedAssets()
+  }
+
+  handleUpdatedAssets = () => {
     const { assetBalances } = this.props
     const amountsData = this.createAmountsData()
     const hasAssets = Object.keys(assetBalances).some(asset =>
