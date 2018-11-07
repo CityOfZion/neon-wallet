@@ -23,7 +23,7 @@ import {
   validateTransactionsBeforeSending,
   getTokenBalancesMap
 } from '../core/wallet'
-import { toNumber, toBigNumber } from '../core/math'
+import { toNumber } from '../core/math'
 import { getNode } from '../actions/nodeStorageActions'
 
 const extractTokens = (sendEntries: Array<SendEntryType>) =>
