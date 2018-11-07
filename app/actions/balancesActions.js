@@ -1,6 +1,6 @@
 // @flow
 import { api } from 'neon-js'
-import { extend, isEmpty } from 'lodash-es'
+import { extend, isEmpty, get } from 'lodash-es'
 import { createActions } from 'spunky'
 import { Howl } from 'howler'
 // eslint-disable-next-line $FlowFixMe
@@ -169,9 +169,11 @@ async function getBalances({ net, address }: Props) {
   })
 
   // asset balances
-  const assetBalances = await api.getBalanceFrom({ net, address }, api.neoscan)
+  const assetBalances = await api
+    .getBalanceFrom({ net, address }, api.neoscan)
+    .catch(e => console.error(e))
 
-  const { assets } = assetBalances.balance
+  const assets = get(assetBalances, 'balance.assets', {})
   // The API doesn't always return NEO or GAS keys if, for example, the address only has one asset
   const neoBalance = assets.NEO ? assets.NEO.balance.toString() : '0'
   const gasBalance = assets.GAS

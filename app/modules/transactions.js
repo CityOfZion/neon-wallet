@@ -23,7 +23,7 @@ import {
   validateTransactionsBeforeSending,
   getTokenBalancesMap
 } from '../core/wallet'
-import { toNumber } from '../core/math'
+import { toNumber, toBigNumber } from '../core/math'
 import { getNode } from '../actions/nodeStorageActions'
 
 const extractTokens = (sendEntries: Array<SendEntryType>) =>
@@ -121,6 +121,7 @@ export const sendTransaction = ({
     const error = validateTransactionsBeforeSending(balances, sendEntries)
 
     if (error) {
+      console.error({ error })
       rejectTransaction(error)
       return reject(error)
     }
@@ -151,6 +152,23 @@ export const sendTransaction = ({
       fees
     }
 
+    await api
+      .getBalanceFrom({ net, address: fromAddress }, api.neoscan)
+      .catch(e => {
+        // indicates that neo scan is down and that api.sendAsset and api.doInvoke
+        // will fail unless balances are supplied
+        console.error(e)
+        const balance = new wallet.Balance({ address: fromAddress, net })
+        Object.keys(tokensBalanceMap).forEach(key => {
+          balance.addAsset(tokensBalanceMap[key].name, {
+            balance: tokensBalanceMap[key].balance,
+            unspent: []
+          })
+        })
+        // $FlowFixMe
+        config.balance = balance
+      })
+
     if (!isEmpty(url)) {
       // $FlowFixMe
       config.url = url
@@ -172,6 +190,7 @@ export const sendTransaction = ({
 
       return resolve(response)
     } catch (err) {
+      console.error({ err })
       rejectTransaction(`Transaction failed: ${err.message}`)
       return reject(err)
     }
