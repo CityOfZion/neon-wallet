@@ -1,7 +1,7 @@
 // @flow
 /* eslint-disable camelcase */
 import { api, sc, u, wallet } from 'neon-js'
-import { flatMap, keyBy } from 'lodash-es'
+import { flatMap, keyBy, isEmpty } from 'lodash-es'
 
 import {
   showErrorNotification,
@@ -115,8 +115,6 @@ export const sendTransaction = ({
     const isHardwareSend = getIsHardwareLogin(state)
     const url = await getNode(net)
 
-    console.log({ url })
-
     const rejectTransaction = (message: string) =>
       dispatch(showErrorNotification({ message }))
 
@@ -150,8 +148,12 @@ export const sendTransaction = ({
       publicKey,
       privateKey: new wallet.Account(wif).privateKey,
       signingFunction: isHardwareSend ? signingFunction : null,
-      fees,
-      url
+      fees
+    }
+
+    if (!isEmpty(url)) {
+      // $FlowFixMe
+      config.url = url
     }
 
     try {

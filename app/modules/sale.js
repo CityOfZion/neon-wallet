@@ -1,6 +1,6 @@
 // @flow
 import { wallet, api } from 'neon-js'
-import { flatten } from 'lodash-es'
+import { flatten, isEmpty } from 'lodash-es'
 
 import { getNode } from '../actions/nodeStorageActions'
 
@@ -93,8 +93,12 @@ export const participateInSale = (
     gas: 0,
     publicKey: isHardwareLogin ? publicKey : null,
     signingFunction: isHardwareLogin ? signingFunction : null,
-    fees,
-    url
+    fees
+  }
+
+  if (!isEmpty(url)) {
+    // $FlowFixMe
+    config.url = url
   }
 
   try {
