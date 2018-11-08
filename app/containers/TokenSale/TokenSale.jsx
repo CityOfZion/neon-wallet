@@ -1,6 +1,6 @@
 // @flow
 import React, { Component, Fragment } from 'react'
-import { isEmpty } from 'lodash-es'
+import { isEmpty, isEqual } from 'lodash-es'
 
 import {
   isZero,
@@ -92,7 +92,7 @@ class TokenSale extends Component<Props, State> {
 
   componentDidUpdate(prevProps: Props) {
     if (
-      prevProps.assetBalances !== this.props.assetBalances &&
+      !isEqual(prevProps.assetBalances, this.props.assetBalances) &&
       !isEmpty(this.props.assetBalances)
     ) {
       this.handleUpdatedAssets()
