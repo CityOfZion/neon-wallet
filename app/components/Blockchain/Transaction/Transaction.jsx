@@ -79,7 +79,7 @@ export default class Transaction extends React.Component<Props> {
 
   renderAbstract = (type: string) => {
     const { tx } = this.props
-    const { iconType, time, label, amount, isNetworkFee, to, from } = tx
+    const { time, label, amount, isNetworkFee, to, from } = tx
 
     const formattedTime = moment.unix(time).format('MM/DD/YYYY | HH:mm:ss')
 
