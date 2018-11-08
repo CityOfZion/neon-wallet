@@ -7,7 +7,7 @@ import {
   toBigNumber,
   multiplyNumber,
   minusNumber,
-  addNumber,
+  addNumber
 } from '../../core/math'
 
 import { isBlacklisted } from '../../core/wallet'

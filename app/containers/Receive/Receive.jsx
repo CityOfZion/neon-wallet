@@ -17,8 +17,6 @@ type Props = {
   address: string,
   accounts: Array<any>,
   prices: Object,
-  loading: boolean,
-  loadWalletData: Function,
   showReceiveModal: Function,
   networkId: string
 }
