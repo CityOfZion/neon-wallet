@@ -1,6 +1,5 @@
 import React from 'react'
 import Select from 'react-select'
-import { omit } from 'lodash-es'
 
 const returnDropdownIndicatorColor = props => {
   if (props.selectProps.settingsSelect) return 'var(--settings-link-text)'
@@ -30,7 +29,7 @@ const customStyles = {
       'transparent !important',
     border: props.selectProps.hideHighlight && 'none !important'
   }),
-  dropdownIndicator: (styles, props, state) => ({
+  dropdownIndicator: props => ({
     display: 'flex',
     padding: '8px',
     color: returnDropdownIndicatorColor(props),
