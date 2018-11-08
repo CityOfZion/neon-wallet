@@ -8,7 +8,6 @@ import {
   multiplyNumber,
   minusNumber,
   addNumber,
-  isNumber
 } from '../../core/math'
 
 import { isBlacklisted } from '../../core/wallet'
@@ -231,7 +230,7 @@ export default class Send extends React.Component<Props, State> {
   }
 
   calculateMaxValue = (asset: string) => {
-    const { sendableAssets, tokens, networkId } = this.props
+    const { sendableAssets } = this.props
     const existingAmounts = this.calculateRowAmounts(asset)
     const decimals = this.calculateDecimals(asset)
     if (sendableAssets[asset]) {

@@ -14,10 +14,7 @@ const CURRENT_RELEASE_URL =
   'https://api.github.com/repos/CityOfZion/neon-wallet/releases/latest'
 
 // Actions
-export const checkVersion = () => async (
-  dispatch: DispatchType,
-  getState: GetStateType
-) => {
+export const checkVersion = () => async (dispatch: DispatchType) => {
   const showError = message =>
     dispatch(
       showWarningNotification({
