@@ -185,7 +185,7 @@ export default class SelectInput extends React.Component<Props, State> {
     this.setState({ open, search: '' })
   }
 
-  generateSelectHandler = (item: Object) => (event: Object) => {
+  generateSelectHandler = (item: Object) => () => {
     const { onChange, getItemValue } = this.props
     if (onChange) {
       onChange(getItemValue(item))
