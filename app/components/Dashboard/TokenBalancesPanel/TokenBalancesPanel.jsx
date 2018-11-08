@@ -7,10 +7,7 @@ import TextInput from '../../Inputs/TextInput'
 import CopyToClipboard from '../../CopyToClipboard'
 import Panel from '../../Panel'
 import styles from './TokenBalancesPanel.scss'
-import {
-  toFixedDecimals,
-  formatToRoundedShortNumber
-} from '../../../core/formatters'
+import { toFixedDecimals } from '../../../core/formatters'
 import { toBigNumber } from '../../../core/math'
 import Nothing from '../../../assets/icons/nothing.svg'
 import { CURRENCIES, ROUTES, PRICE_UNAVAILABLE } from '../../../core/constants'
@@ -63,7 +60,6 @@ export default class TokenBalancesPanel extends React.Component<Props> {
         </p>
         <div className={styles.address}>
           <TextInput value={address} disabled />
-          {/* <Address className={styles.link} address={address} /> */}
           <CopyToClipboard
             className={styles.copy}
             text={address}
@@ -109,7 +105,6 @@ export default class TokenBalancesPanel extends React.Component<Props> {
   }
 
   renderHeader = () => {
-    const { balances } = this.props
     return (
       <div>
         <div className={styles.header}>
