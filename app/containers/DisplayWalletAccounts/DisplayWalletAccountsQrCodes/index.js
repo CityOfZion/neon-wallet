@@ -14,7 +14,6 @@ import {
   getWalletName,
   getIsImport
 } from '../../../modules/generateWallet'
-import withCopyCanvasToClipboard from '../../../hocs/withCopyCanvasToClipboard'
 
 const mapStateToProps = (state: Object) => ({
   wif: getWIF(state),
