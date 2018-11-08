@@ -158,15 +158,13 @@ export const sendTransaction = ({
         // indicates that neo scan is down and that api.sendAsset and api.doInvoke
         // will fail unless balances are supplied
         console.error(e)
-        const balance = new wallet.Balance({ address: fromAddress, net })
-        Object.keys(tokensBalanceMap).forEach(key => {
-          balance.addAsset(tokensBalanceMap[key].name, {
-            balance: tokensBalanceMap[key].balance,
-            unspent: []
-          })
+        const Balance = new wallet.Balance({ address: fromAddress, net })
+        // $FlowFixMe
+        Object.values(tokensBalanceMap).forEach(({ name, balance }) => {
+          Balance.addAsset(name, { balance, unspent: [] })
         })
         // $FlowFixMe
-        config.balance = balance
+        config.balance = Balance
       })
 
     if (!isEmpty(url)) {
