@@ -46,8 +46,6 @@ export default class Receive extends React.Component<Props, State> {
     const {
       sendableAssets,
       currencyCode,
-      loading,
-      loadWalletData,
       address,
       showReceiveModal,
       networkId
