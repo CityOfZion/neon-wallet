@@ -3,8 +3,6 @@
 import React from 'react'
 import Switch from 'react-switch'
 
-import themes from '../../../themes'
-import styles from './Switch.scss'
 import { THEMES } from '../../../core/constants'
 
 type Props = {
