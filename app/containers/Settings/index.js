@@ -69,7 +69,7 @@ const mapSettingsActionsToProps = actions => ({
   setSoundSetting: soundEnabled => actions.call({ soundEnabled })
 })
 
-const mapActionsToProps = (actions: Actions, props: Object): Object => ({
+const mapActionsToProps = (actions: Actions): Object => ({
   handleNetworkChange: networkId => actions.call({ networkId })
 })
 
