@@ -101,7 +101,6 @@ export default createActions(
     const { data } = await axios.get(
       `${endpoint}/v1/get_address_abstracts/${address}/${page}`
     )
-    totalPages = data.total_pages
 
     const parsedEntries = parseAbstractData(data.entries, address, tokens)
     page += 1
