@@ -9,8 +9,6 @@ import { openExplorerTx } from '../../../../../core/explorer'
 
 import styles from './SendSuccessTransaction.scss'
 
-const { shell } = require('electron')
-
 type Props = {
   asset: string,
   amount: string,
