@@ -121,6 +121,7 @@ export const sendTransaction = ({
     const error = validateTransactionsBeforeSending(balances, sendEntries)
 
     if (error) {
+      console.error({ error })
       rejectTransaction(error)
       return reject(error)
     }
@@ -151,6 +152,21 @@ export const sendTransaction = ({
       fees
     }
 
+    await api
+      .getBalanceFrom({ net, address: fromAddress }, api.neoscan)
+      .catch(e => {
+        // indicates that neo scan is down and that api.sendAsset and api.doInvoke
+        // will fail unless balances are supplied
+        console.error(e)
+        const Balance = new wallet.Balance({ address: fromAddress, net })
+        // $FlowFixMe
+        Object.values(tokensBalanceMap).forEach(({ name, balance }) => {
+          Balance.addAsset(name, { balance, unspent: [] })
+        })
+        // $FlowFixMe
+        config.balance = Balance
+      })
+
     if (!isEmpty(url)) {
       // $FlowFixMe
       config.url = url
@@ -172,6 +188,7 @@ export const sendTransaction = ({
 
       return resolve(response)
     } catch (err) {
+      console.error({ err })
       rejectTransaction(`Transaction failed: ${err.message}`)
       return reject(err)
     }
