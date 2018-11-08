@@ -10,7 +10,7 @@ import withFailureNotification from '../../../hocs/withFailureNotification'
 
 const { LOADED } = progressValues
 
-const mapContactActionsToProps = (actions, props) => ({
+const mapContactActionsToProps = actions => ({
   onSave: (name, address) =>
     actions.call({ name: trim(name), address: trim(address) })
 })
