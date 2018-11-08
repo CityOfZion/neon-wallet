@@ -5,7 +5,7 @@ import SelectInput from '../../../../Inputs/SelectInput'
 import NumberInput from '../../../../Inputs/NumberInput'
 import DisplayInput from '../../../DisplayInput'
 
-import { toBigNumber } from '../../../../../core/math'
+import { toBigNumber, toNumber } from '../../../../../core/math'
 import { formatNumberByDecimalScale } from '../../../../../core/formatters'
 
 import TrashCanIcon from '../../../../../assets/icons/delete.svg'
@@ -25,12 +25,20 @@ type Props = {
   numberOfRecipients: number,
   clearErrors: (index: number, field: string) => any,
   removeRow: (index: number) => any,
-  updateRowField: (index: number, field: string, value: any) => any
+  updateRowField: (index: number, field: string, value: any) => any,
+  calculateMaxValue: (asset: string, index: number) => string
 }
 
 class SendRecipientListItem extends Component<Props> {
   handleFieldChange = (value: string, type: 'asset' | 'amount' | 'address') => {
-    const { index, updateRowField, contacts, clearErrors, max } = this.props
+    const {
+      index,
+      updateRowField,
+      contacts,
+      clearErrors,
+      calculateMaxValue,
+      asset
+    } = this.props
 
     let normalizedValue = value
 
@@ -42,8 +50,9 @@ class SendRecipientListItem extends Component<Props> {
         normalizedValue = contacts[value]
       }
     } else if (type === 'amount' && value) {
-      normalizedValue = toBigNumber(value).gt(toBigNumber(max))
-        ? max.toString()
+      const dynamicMax = calculateMaxValue(asset, index)
+      normalizedValue = toBigNumber(value).gt(toBigNumber(dynamicMax))
+        ? dynamicMax
         : value
     }
 
@@ -52,7 +61,8 @@ class SendRecipientListItem extends Component<Props> {
   }
 
   handleMaxClick = () => {
-    const { index, updateRowField, max } = this.props
+    const { index, updateRowField, calculateMaxValue, asset } = this.props
+    const max = calculateMaxValue(asset, index)
     updateRowField(index, 'amount', max.toString())
   }
 
