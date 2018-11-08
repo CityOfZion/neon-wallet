@@ -104,15 +104,13 @@ export default class TokenBalancesPanel extends React.Component<Props> {
     return 0
   }
 
-  renderHeader = () => {
-    return (
-      <div>
-        <div className={styles.header}>
-          <span>Token Balances</span>
-        </div>
+  renderHeader = () => (
+    <div>
+      <div className={styles.header}>
+        <span>Token Balances</span>
       </div>
-    )
-  }
+    </div>
+  )
 
   renderTokenBalances = () => {
     const { balances } = this.props

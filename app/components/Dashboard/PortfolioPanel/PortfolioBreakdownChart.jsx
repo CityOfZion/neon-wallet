@@ -1,13 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import {
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-  Label
-} from 'recharts'
+import { ResponsiveContainer, PieChart, Pie, Cell, Label } from 'recharts'
 // $FlowFixMe
 import { map, times } from 'lodash-es'
 
