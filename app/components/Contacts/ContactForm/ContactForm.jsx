@@ -26,8 +26,7 @@ type Props = {
 
 type State = {
   nameError: string,
-  addressError: string,
-  ownAddress: string
+  addressError: string
 }
 
 export default class ContactForm extends React.Component<Props, State> {
@@ -36,8 +35,7 @@ export default class ContactForm extends React.Component<Props, State> {
 
     this.state = {
       nameError: '',
-      addressError: '',
-      ownAddress: this.props.address
+      addressError: ''
     }
   }
 
