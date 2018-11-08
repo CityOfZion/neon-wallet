@@ -16,7 +16,6 @@ type Props = {
   formName: string,
   formAddress: string,
   mode?: string,
-  address: string,
   contacts: Object,
   setName: Function,
   newAddress?: boolean,
