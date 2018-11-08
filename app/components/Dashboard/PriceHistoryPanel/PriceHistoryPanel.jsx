@@ -5,7 +5,6 @@ import { keys } from 'lodash-es'
 
 import PriceHistoryChart from './PriceHistoryChart'
 import Panel from '../../Panel'
-import BoundingBox from './BoundingBox'
 import DropdownIcon from '../../../assets/icons/dropdown.svg'
 import {
   ASSETS,
