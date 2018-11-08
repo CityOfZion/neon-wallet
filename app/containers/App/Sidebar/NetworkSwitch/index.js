@@ -9,7 +9,7 @@ import withAuthData from '../../../../hocs/withAuthData'
 import accountActions from '../../../../actions/accountActions'
 import withFilteredTokensData from '../../../../hocs/withFilteredTokensData'
 
-const mapActionsToProps = (actions: Actions, props: Object): Object => ({
+const mapActionsToProps = (actions: Actions): Object => ({
   onChange: networkId => actions.call({ networkId })
 })
 
