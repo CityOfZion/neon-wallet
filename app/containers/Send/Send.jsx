@@ -18,7 +18,7 @@ import SendPanel from '../../components/Send/SendPanel'
 import HeaderBar from '../../components/HeaderBar'
 import styles from './Send.scss'
 
-const MAX_NUMBER_OF_RECIPIENTS = 10
+const MAX_NUMBER_OF_RECIPIENTS = 25
 
 type Props = {
   sendableAssets: Object,

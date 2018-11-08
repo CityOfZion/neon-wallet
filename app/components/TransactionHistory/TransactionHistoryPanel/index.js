@@ -23,11 +23,11 @@ const mapAccountActionsToProps = (actions, props) => ({
 })
 
 export default compose(
+  withAuthData(),
+  withNetworkData(),
   withProgressPanel(transactionHistoryActions, {
     title: 'Transaction History'
   }),
-  withAuthData(),
-  withNetworkData(),
   withActions(transactionHistoryActions, mapAccountActionsToProps),
   withLoadingProp(transactionHistoryActions),
   withData(transactionHistoryActions, mapTransactionsDataToProps)

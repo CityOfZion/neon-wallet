@@ -10,6 +10,7 @@ import icoTokensActions from '../../actions/icoTokensActions'
 import withAuthData from '../../hocs/withAuthData'
 import withNetworkData from '../../hocs/withNetworkData'
 import withPricesData from '../../hocs/withPricesData'
+import withBalancesData from '../../hocs/withBalancesData'
 import withTokensData from '../../hocs/withTokensData'
 import withSuccessNotification from '../../hocs/withSuccessNotification'
 import { showModal } from '../../modules/modal'
@@ -39,7 +40,7 @@ export default compose(
   withAuthData(),
   withNetworkData(),
   withTokensData(),
-  withData(balancesActions, mapBalancesDataToProps),
+  withBalancesData(mapBalancesDataToProps),
   withPricesData(mapPricesDataToProps),
   withCall(icoTokensActions),
   withData(icoTokensActions, mapIcoTokensToProps),

@@ -84,7 +84,6 @@ const TokenSaleSelection = ({
               value: maxBalance
             })
           }
-          customChangeEvent
         />
       </div>
     </section>
