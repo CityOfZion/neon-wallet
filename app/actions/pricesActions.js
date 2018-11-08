@@ -50,8 +50,4 @@ async function getPrices() {
 
 export const ID = 'prices'
 
-export default createActions(
-  ID,
-  ({ currency = DEFAULT_CURRENCY_CODE }: Props = {}) => (state: Object) =>
-    getPrices()
-)
+export default createActions(ID, () => () => getPrices())
