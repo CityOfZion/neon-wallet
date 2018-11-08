@@ -29,7 +29,7 @@ const customStyles = {
       'transparent !important',
     border: props.selectProps.hideHighlight && 'none !important'
   }),
-  dropdownIndicator: props => ({
+  dropdownIndicator: (styles, props, state) => ({
     display: 'flex',
     padding: '8px',
     color: returnDropdownIndicatorColor(props),
