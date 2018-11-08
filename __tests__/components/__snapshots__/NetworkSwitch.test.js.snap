@@ -633,7 +633,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                     }
                   >
                     <div
-                      className="css-k5geue react-select__value-container react-select__value-container--has-value"
+                      className="css-6zqqc react-select__value-container react-select__value-container--has-value"
                     >
                       <SingleValue
                         clearValue={[Function]}
@@ -783,7 +783,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                         }
                       >
                         <div
-                          className="css-8bm2m9 react-select__single-value"
+                          className="css-ljsv20 react-select__single-value"
                         >
                           MainNet
                         </div>
