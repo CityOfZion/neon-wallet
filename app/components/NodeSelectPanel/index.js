@@ -7,8 +7,7 @@ import {
   alreadyLoadedStrategy,
   progressValues,
   withProgressComponents,
-  withReset,
-  withRecall
+  withReset
 } from 'spunky'
 
 import withLoadingProp from '../../hocs/withLoadingProp'
