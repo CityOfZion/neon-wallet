@@ -39,7 +39,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
   }
 
   render() {
-    const { loading, accounts } = this.props
+    const { loading } = this.props
     const { passphrase, selectedAccount, mappedAccounts } = this.state
 
     return (
