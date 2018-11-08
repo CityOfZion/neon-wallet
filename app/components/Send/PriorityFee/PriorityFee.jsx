@@ -16,9 +16,9 @@ type Props = {
 
 const FEE_OPTIONS = [
   {
-    fee: 0.00000001,
+    fee: 0.001,
     description: 'Fast',
-    precision: 8
+    precision: 3
   },
   {
     fee: 0.05,
