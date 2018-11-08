@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react'
-import classNames from 'classnames'
 
 import Button from '../../../components/Button'
 import { ROUTES } from '../../../core/constants'
