@@ -38,7 +38,7 @@ export default function withFailureNotification(
     [ERROR_PROP]: isFunction(message) ? message(error) : message
   })
 
-  const mapDisptchToProps = (dispatch, ownProps) => ({
+  const mapDisptchToProps = dispatch => ({
     [NOTIFICATION_PROP]: (...args) => dispatch(showErrorNotification(...args))
   })
 
