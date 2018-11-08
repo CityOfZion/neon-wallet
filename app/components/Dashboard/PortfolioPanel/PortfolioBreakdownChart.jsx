@@ -6,7 +6,6 @@ import {
   PieChart,
   Pie,
   Cell,
-  Tooltip,
   Label
 } from 'recharts'
 // $FlowFixMe
