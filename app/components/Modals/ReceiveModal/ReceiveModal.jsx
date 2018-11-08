@@ -8,7 +8,6 @@ import Loader from '../../Loader'
 import BaseModal from '../BaseModal'
 import styles from './style.scss'
 import GridIcon from '../../../assets/icons/grid.svg'
-import CopyToClipboard from '../../CopyToClipboard'
 import CopyIcon from '../../../assets/icons/copy.svg'
 import ConfirmIcon from '../../../assets/icons/confirm.svg'
 
