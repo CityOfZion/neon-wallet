@@ -7,12 +7,12 @@ import {
   alreadyLoadedStrategy,
   progressValues,
   withProgressComponents,
-  withReset,
   withRecall
 } from 'spunky'
 
 import withLoadingProp from '../../hocs/withLoadingProp'
 import withNetworkData from '../../hocs/withNetworkData'
+import withAuthData from '../../hocs/withAuthData'
 
 import NodeSelectPanel from './NodeSelectPanel'
 import nodeNetworkActions from '../../actions/nodeNetworkActions'
@@ -70,6 +70,7 @@ const mapSaveNodeActionsToProps = actions => ({
 
 export default compose(
   withProps(mapNodesShownToProps),
+  withAuthData(),
   withNetworkData(),
   withCall(nodeNetworkActions),
   withActions(nodeNetworkActions, mapNodesActionsToProps),
@@ -85,7 +86,6 @@ export default compose(
   ),
   withData(nodeNetworkActions, mapNodesDataToProps),
   withData(nodeStorageActions, mapSelectedNodeDataToProps),
-  withReset(accountActions, ['selectedNode']),
-
+  withRecall(accountActions, ['selectedNode']),
   withLoadingProp(nodeNetworkActions)
 )(NodeSelectPanel)
