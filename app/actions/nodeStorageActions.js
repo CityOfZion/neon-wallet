@@ -1,6 +1,6 @@
 // @flow
 import { createActions } from 'spunky'
-import { isEmpty } from 'lodash-es'
+import { isEmpty, random } from 'lodash-es'
 import { rpc } from 'neon-js'
 
 import { getStorage, setStorage } from '../core/storage'
@@ -62,7 +62,7 @@ export const getRPCEndpoint = async (
       n => n.client.lastSeenHeight >= heightThreshold
     )
     const randomlySelectedRPCUrl =
-      goodNodes[Math.floor(Math.random() * goodNodes.length)].client.net
+      goodNodes[random(goodNodes.length)].client.net
     cachedRPCUrl = randomlySelectedRPCUrl
     return randomlySelectedRPCUrl
   } catch (error) {
