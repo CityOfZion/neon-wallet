@@ -8,7 +8,8 @@ import {
   MAIN_NETWORK_ID,
   TEST_NETWORK_ID,
   NODES_MAIN_NET,
-  NODES_TEST_NET
+  NODES_TEST_NET,
+  NODE_EXLUSION_CRITERIA
 } from '../core/constants'
 import { findNetworkByLabel } from '../core/networks'
 
@@ -23,7 +24,7 @@ type Props = {
 
 export const getRPCEndpoint = async (
   net: string,
-  excludeCritera: Array<string> = ['ngd', 'neo.org']
+  excludeCritera: Array<string> = NODE_EXLUSION_CRITERIA
 ) => {
   try {
     if (cachedRPCUrl) return cachedRPCUrl
