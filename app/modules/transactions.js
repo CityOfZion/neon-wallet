@@ -118,8 +118,6 @@ export const sendTransaction = ({
       url = await getRPCEndpoint(net)
     }
 
-    console.log({ url })
-
     const rejectTransaction = (message: string) =>
       dispatch(showErrorNotification({ message }))
 
