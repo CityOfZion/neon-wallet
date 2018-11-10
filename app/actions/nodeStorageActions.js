@@ -11,7 +11,7 @@ import {
   NODES_MAIN_NET,
   NODES_TEST_NET
 } from '../core/constants'
-import { findNetworkIdByLabel } from '../core/networks'
+import { findNetworkByLabel } from '../core/networks'
 
 const ID = 'nodeStorage'
 const STORAGE_KEY = 'selectedNode'
@@ -22,15 +22,11 @@ type Props = {
   net: string
 }
 
-const getRPCEndpoint = async (
-  net,
-  filterCriteria = [''],
-  excludeCritera = ['ngd', 'neo.org']
-) => {
+const getRPCEndpoint = async (net, excludeCritera = ['ngd', 'neo.org']) => {
   try {
-    const NETWORK_ID = findNetworkIdByLabel(net)
+    const NETWORK = findNetworkByLabel(net)
     let nodeList
-    switch (NETWORK_ID) {
+    switch (NETWORK.id) {
       case MAIN_NETWORK_ID:
         nodeList = NODES_MAIN_NET
         break
@@ -41,11 +37,8 @@ const getRPCEndpoint = async (
         nodeList = NODES_MAIN_NET
     }
     const data = nodeList
-      // eslint-disable-next-line
       .filter(
-        data =>
-          filterCriteria.some(criteria => data.url.includes(criteria)) &&
-          excludeCritera.some(criteria => !data.url.includes(criteria))
+        data => !excludeCritera.some(criteria => data.url.includes(criteria))
       )
       .map(data => {
         let url = data.protocol ? `${data.protocol}://${data.url}` : data.url

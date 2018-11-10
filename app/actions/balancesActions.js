@@ -11,7 +11,7 @@ import { getNode } from './nodeStorageActions'
 import { ASSETS } from '../core/constants'
 import { COIN_DECIMAL_LENGTH } from '../core/formatters'
 import { toBigNumber } from '../core/math'
-import { findNetworkIdByLabel } from '../core/networks'
+import { findNetworkByLabel } from '../core/networks'
 
 const MAX_SCRIPT_HASH_CHUNK_SIZE = 5
 
@@ -69,7 +69,7 @@ function determineIfBalanceUpdated(
 
 async function getBalances({ net, address }: Props) {
   const { soundEnabled, tokens } = await getSettings()
-  const network = findNetworkIdByLabel(net)
+  const network = findNetworkByLabel(net)
 
   let endpoint = await getNode(net)
 

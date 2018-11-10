@@ -26,7 +26,7 @@ export const findNetwork = (networkId: string): NetworkItemType => {
   return networks.find(({ id }) => id === networkId) || networks[0]
 }
 
-export const findNetworkIdByLabel = (networkLabel: string): NetworkItemType => {
+export const findNetworkByLabel = (networkLabel: string): NetworkItemType => {
   const networks = getNetworks()
   return networks.find(({ label }) => networkLabel === label) || networks[0]
 }
