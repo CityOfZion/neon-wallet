@@ -1,12 +1,12 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { keys } from 'lodash-es'
+import { find } from 'lodash-es'
 
 import PriceHistoryChart from './PriceHistoryChart'
 import Panel from '../../Panel'
 import BoundingBox from './BoundingBox'
-import DropdownIcon from '../../../assets/icons/dropdown.svg'
+import StyledReactSelect from '../../Inputs/StyledReactSelect/StyledReactSelect'
 import {
   ASSETS,
   CURRENCIES,
@@ -16,6 +16,11 @@ import styles from './PriceHistoryPanel.scss'
 import { formatFiat, formatThousands } from '../../../core/formatters'
 
 type Duration = '1m' | '1w' | '1d'
+// react-select option format
+type SelectOption = {
+  value: Duration,
+  label: string
+}
 
 type Price = {
   time: number,
@@ -39,11 +44,17 @@ type Props = {
   priceKey: string
 }
 
-const DURATIONS: { [key: Duration]: string } = {
-  '1m': '1 month',
-  '1w': '1 week',
-  '1d': '1 day'
-}
+const DURATIONS: Array<[Duration, string]> = [
+  ['1d', '1 DAY'],
+  ['1w', '1 WEEK'],
+  ['1m', '1 MONTH']
+]
+
+// convert DURATIONS to react-select option format
+const DURATION_OPTIONS: Array<SelectOption> = DURATIONS.map(([k, v]) => ({
+  value: k,
+  label: v
+}))
 
 export default class PriceHistoryPanel extends React.Component<Props> {
   static defaultProps = {
@@ -81,9 +92,17 @@ export default class PriceHistoryPanel extends React.Component<Props> {
         {this.renderLatestPrice()}
         {this.renderPriceChange()}
       </span>
-      <span className={styles.duration} onClick={this.handleChangeDuration}>
-        {this.getDuration()}
-        <DropdownIcon className={styles.icon} />
+      <span className={styles.duration}>
+        <StyledReactSelect
+          defaultValue={this.getDuration()}
+          onChange={this.handleChangeDuration}
+          options={DURATION_OPTIONS}
+          isSearchable={false}
+          fontWeight="normal"
+          transparent
+          hideHighlight
+          textAlign="right"
+        />
       </span>
     </div>
   )
@@ -94,14 +113,12 @@ export default class PriceHistoryPanel extends React.Component<Props> {
     )
   }
 
-  handleChangeDuration = () => {
-    const durations = keys(DURATIONS)
-    const index =
-      (durations.indexOf(this.props.duration) + 1) % durations.length
-    this.props.setDuration(durations[index])
+  handleChangeDuration = (selected: SelectOption) => {
+    this.props.setDuration(selected.value)
   }
 
-  getDuration = () => DURATIONS[this.props.duration]
+  getDuration = (): ?SelectOption =>
+    find(DURATION_OPTIONS, ['value', this.props.duration])
 
   formatDate = (date: Date): string => {
     if (this.props.duration === '1d') {
