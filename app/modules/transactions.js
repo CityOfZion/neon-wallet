@@ -115,8 +115,10 @@ export const sendTransaction = ({
     const isHardwareSend = getIsHardwareLogin(state)
     let url = await getNode(net)
     if (isEmpty(url)) {
-      url = getRPCEndpoint(net)
+      url = await getRPCEndpoint(net)
     }
+
+    console.log({ url })
 
     const rejectTransaction = (message: string) =>
       dispatch(showErrorNotification({ message }))

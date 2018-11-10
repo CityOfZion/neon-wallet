@@ -73,7 +73,7 @@ async function getBalances({ net, address }: Props) {
 
   let endpoint = await getNode(net)
   if (isEmpty(endpoint)) {
-    endpoint = getRPCEndpoint(net)
+    endpoint = await getRPCEndpoint(net)
   }
 
   let networkHasChanged = true
@@ -82,10 +82,6 @@ async function getBalances({ net, address }: Props) {
   let adressHasChanged = false
   if (!inMemoryAddress) adressHasChanged = false
   else if (inMemoryAddress !== address) adressHasChanged = true
-
-  if (isEmpty(endpoint)) {
-    endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
-  }
 
   const chunks = tokens
     .filter(token => !token.isUserGenerated)

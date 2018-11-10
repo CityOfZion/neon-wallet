@@ -41,7 +41,7 @@ export const participateInSale = (
   let url = await getNode(net)
 
   if (isEmpty(url)) {
-    url = getRPCEndpoint(net)
+    url = await getRPCEndpoint(net)
   }
 
   const account = new wallet.Account(wif)

@@ -20,7 +20,7 @@ async function getICOTokens({ net, tokens }: Props) {
 
   let endpoint = await getNode(net)
   if (isEmpty(endpoint)) {
-    endpoint = getRPCEndpoint(net)
+    endpoint = await getRPCEndpoint(net)
   }
 
   if (userGeneratedTokens.length === 0 && ICOTokenList.ICOTokens.length === 0)
