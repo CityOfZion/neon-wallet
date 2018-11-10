@@ -52,6 +52,7 @@ const customStyles = {
       ...styles,
       background: props.selectProps.transparent && 'transparent !important',
       fontSize: props.selectProps.fontSize,
+      fontWeight: props.selectProps.fontWeight,
       padding: !props.hideHighlight && '7px 15px !important',
       justifyContent: props.selectProps.settingsSelect && 'flex-end',
       ...conditionalStyles
@@ -69,6 +70,8 @@ const customStyles = {
     return {
       ...styles,
       fontSize: props.selectProps.fontSize,
+      fontWeight: props.selectProps.fontWeight,
+      [props.selectProps.textAlign]: 0,
       ...conditionalStyles
     }
   }
