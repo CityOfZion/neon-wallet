@@ -73,7 +73,7 @@ export const getRPCEndpoint = async (
   }
 }
 
-export const getNode = async (net: string): Promise<string> =>
+export const getNode = async (net: string): Promise<string | {}> =>
   getStorage(`${STORAGE_KEY}-${net}`)
 
 const setNode = async (node: string, net: string): Promise<string> =>
