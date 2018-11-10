@@ -24,7 +24,7 @@ import {
   getTokenBalancesMap
 } from '../core/wallet'
 import { toNumber } from '../core/math'
-import { getNode } from '../actions/nodeStorageActions'
+import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 
 const extractTokens = (sendEntries: Array<SendEntryType>) =>
   sendEntries.filter(({ symbol }) => isToken(symbol))
@@ -113,7 +113,10 @@ export const sendTransaction = ({
     const signingFunction = getSigningFunction(state)
     const publicKey = getPublicKey(state)
     const isHardwareSend = getIsHardwareLogin(state)
-    const url = await getNode(net)
+    let url = await getNode(net)
+    if (isEmpty(url)) {
+      url = getRPCEndpoint(net)
+    }
 
     const rejectTransaction = (message: string) =>
       dispatch(showErrorNotification({ message }))

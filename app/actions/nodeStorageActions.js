@@ -21,8 +21,12 @@ type Props = {
   net: string
 }
 
-const getRPCEndpoint = async (net, excludeCritera = ['ngd', 'neo.org']) => {
+export const getRPCEndpoint = async (
+  net: string,
+  excludeCritera: Array<string> = ['ngd', 'neo.org']
+) => {
   try {
+    if (cachedRPCUrl) return cachedRPCUrl
     const NETWORK = findNetworkByLabel(net)
     let nodeList
     switch (NETWORK.id) {
@@ -68,13 +72,8 @@ const getRPCEndpoint = async (net, excludeCritera = ['ngd', 'neo.org']) => {
   }
 }
 
-export const getNode = async (net: string): Promise<string> => {
-  let url = await getStorage(`${STORAGE_KEY}-${net}`)
-  if (isEmpty(url)) {
-    url = cachedRPCUrl || (await getRPCEndpoint(net))
-  }
-  return url
-}
+export const getNode = async (net: string): Promise<string> =>
+  getStorage(`${STORAGE_KEY}-${net}`)
 
 const setNode = async (node: string, net: string): Promise<string> =>
   setStorage(`${STORAGE_KEY}-${net}`, node)

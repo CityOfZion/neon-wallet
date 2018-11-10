@@ -7,7 +7,7 @@ import { Howl } from 'howler'
 import coinAudioSample from '../assets/audio/coin.wav'
 
 import { getSettings } from './settingsActions'
-import { getNode } from './nodeStorageActions'
+import { getNode, getRPCEndpoint } from './nodeStorageActions'
 import { ASSETS } from '../core/constants'
 import { COIN_DECIMAL_LENGTH } from '../core/formatters'
 import { toBigNumber } from '../core/math'
@@ -72,6 +72,9 @@ async function getBalances({ net, address }: Props) {
   const network = findNetworkByLabel(net)
 
   let endpoint = await getNode(net)
+  if (isEmpty(endpoint)) {
+    endpoint = getRPCEndpoint(net)
+  }
 
   let networkHasChanged = true
   if (net === inMemoryNetwork) networkHasChanged = false
