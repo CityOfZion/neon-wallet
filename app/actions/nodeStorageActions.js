@@ -1,8 +1,7 @@
 // @flow
-import axios from 'axios'
 import { createActions } from 'spunky'
 import { isEmpty } from 'lodash-es'
-import { RPCClient, api, timeout, rpc } from 'neon-js'
+import { rpc } from 'neon-js'
 
 import { getStorage, setStorage } from '../core/storage'
 import {
