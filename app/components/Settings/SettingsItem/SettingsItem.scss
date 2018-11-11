@@ -7,7 +7,7 @@
 
   .settingsItemLabel {
     flex: 1;
-    font-family: Gotham-Bold;
+    font-family: var(--font-gotham-bold);
     font-size: 12px;
     color: var(--settings-item-label);
   }
