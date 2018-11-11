@@ -15,6 +15,8 @@ type Props = {
 }
 
 export default class SendSuccess extends React.Component<Props> {
+  txTimestamp: string
+
   componentDidMount() {
     this.txTimestamp = createFormattedDate()
   }
