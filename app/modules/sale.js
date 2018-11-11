@@ -39,8 +39,7 @@ export const participateInSale = (
   const isHardwareLogin = getIsHardwareLogin(state)
   const signingFunction = getSigningFunction(state)
   let url = await getNode(net)
-
-  if (isEmpty(url)) {
+  if (!url) {
     url = await getRPCEndpoint(net)
   }
 
@@ -97,12 +96,8 @@ export const participateInSale = (
     gas: 0,
     publicKey: isHardwareLogin ? publicKey : null,
     signingFunction: isHardwareLogin ? signingFunction : null,
-    fees
-  }
-
-  if (!isEmpty(url)) {
-    // $FlowFixMe
-    config.url = url
+    fees,
+    url
   }
 
   try {

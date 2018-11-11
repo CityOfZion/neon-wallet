@@ -73,8 +73,11 @@ export const getRPCEndpoint = async (
   }
 }
 
-export const getNode = async (net: string): Promise<string | {}> =>
-  getStorage(`${STORAGE_KEY}-${net}`)
+export const getNode = async (net: string): Promise<string> => {
+  const storage = await getStorage(`${STORAGE_KEY}-${net}`).catch(console.error)
+  if (!storage) return ''
+  return isEmpty(storage) ? '' : storage
+}
 
 const setNode = async (node: string, net: string): Promise<string> =>
   setStorage(`${STORAGE_KEY}-${net}`, node)
@@ -86,7 +89,6 @@ export default createActions(
       await setNode(url, net)
       return url
     }
-    const storage = await getNode(net)
-    return isEmpty(storage) ? '' : storage
+    return getNode(net)
   }
 )

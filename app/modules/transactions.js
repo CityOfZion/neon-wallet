@@ -152,7 +152,8 @@ export const sendTransaction = ({
       publicKey,
       privateKey: new wallet.Account(wif).privateKey,
       signingFunction: isHardwareSend ? signingFunction : null,
-      fees
+      fees,
+      url
     }
 
     await api
@@ -169,11 +170,6 @@ export const sendTransaction = ({
         // $FlowFixMe
         config.balance = Balance
       })
-
-    if (!isEmpty(url)) {
-      // $FlowFixMe
-      config.url = url
-    }
 
     try {
       const { response } = await makeRequest(sendEntries, config)

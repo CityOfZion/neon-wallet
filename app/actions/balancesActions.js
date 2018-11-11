@@ -72,7 +72,7 @@ async function getBalances({ net, address }: Props) {
   const network = findNetworkByLabel(net)
 
   let endpoint = await getNode(net)
-  if (isEmpty(endpoint)) {
+  if (!endpoint) {
     endpoint = await getRPCEndpoint(net)
   }
 
