@@ -27,7 +27,7 @@ a {
       padding-top: 12px;
       padding-bottom: 6px;
       opacity: 0.5;
-      font-family: Gotham-Bold;
+      font-family: var(--font-gotham-bold);
       font-size: 12px;
       color: var(--base-text);
       text-transform: uppercase;
@@ -111,7 +111,7 @@ a {
 
   h1 {
     margin-top: 0;
-    font-family: Gotham-Light;
+    font-family: var(--font-gotham-light);
     font-weight: 100;
     font-size: 30px;
     color: #8d98ae;

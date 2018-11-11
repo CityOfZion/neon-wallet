@@ -10,14 +10,14 @@
   padding: 10px;
   background: #394152;
   border-radius: 4px;
-  font-family: Gotham-Book;
+  font-family: var(--font-gotham-book);
   font-size: 12px;
   color: #ffffff;
   text-align: center;
 
   .tooltipTime {
     opacity: 0.5;
-    font-family: Gotham-Book;
+    font-family: var(--font-gotham-book);
     margin-right: 10px;
   }
 }

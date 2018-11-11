@@ -10,11 +10,11 @@
   width: 200px;
   font-size: 14px;
   text-align: center;
-  font-family: Gotham-Book;
+  font-family: var(--font-gotham-book);
 }
 
 .txLabelContainer {
-  font-family: Gotham-Book;
+  font-family: var(--font-gotham-book);
   font-size: 14px;
   text-align: center;
   width: 75px;
