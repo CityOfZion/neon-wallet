@@ -14,43 +14,49 @@ type Props = {
   txid: string
 }
 
-const SendSuccess = ({ sendRowDetails, txid }: Props) => {
-  const numberOfItems = sendRowDetails.length
+export default class SendSuccess extends React.Component<Props> {
+  txFormattedDate: string
 
-  return (
-    <section>
-      <div className={styles.sendSuccessHeader}>
-        <CheckMarkIcon className={styles.sendSuccessHeaderIcon} />
-        <div className={styles.sendSuccessHeaderInfo}>
-          <h1 className={styles.sendSuccessHeaderInfoText}>
-            {numberOfItems} {pluralize('Transfer', numberOfItems)} completed
-          </h1>
-          <p className={styles.sendSuccessParagraphText}>
-            {createFormattedDate()}
-          </p>
-          <p className={styles.sendSuccessParagraphText}>
-            Transaction ID: {txid}
-          </p>
+  componentDidMount() {
+    this.txFormattedDate = createFormattedDate()
+  }
+
+  render() {
+    const { sendRowDetails, txid } = this.props
+    const numberOfItems = sendRowDetails.length
+    return (
+      <section>
+        <div className={styles.sendSuccessHeader}>
+          <CheckMarkIcon className={styles.sendSuccessHeaderIcon} />
+          <div className={styles.sendSuccessHeaderInfo}>
+            <h1 className={styles.sendSuccessHeaderInfoText}>
+              {numberOfItems} {pluralize('Transfer', numberOfItems)} completed
+            </h1>
+            <p className={styles.sendSuccessParagraphText}>
+              {this.txFormattedDate}
+            </p>
+            <p className={styles.sendSuccessParagraphText}>
+              Transaction ID: {txid}
+            </p>
+          </div>
         </div>
-      </div>
-      <div className={styles.sendSuccessBody}>
-        <h2 className={styles.sendSuccessBodyHeaderText}>
-          Asset {pluralize('Recipient', numberOfItems)}
-        </h2>
-        <ul className={styles.sendSuccessBodyList}>
-          {sendRowDetails.map(row => (
-            <SendSuccessTransaction
-              key={row.id}
-              amount={row.amount}
-              asset={row.asset}
-              address={row.address}
-              txid={txid}
-            />
-          ))}
-        </ul>
-      </div>
-    </section>
-  )
+        <div className={styles.sendSuccessBody}>
+          <h2 className={styles.sendSuccessBodyHeaderText}>
+            Asset {pluralize('Recipient', numberOfItems)}
+          </h2>
+          <ul className={styles.sendSuccessBodyList}>
+            {sendRowDetails.map(row => (
+              <SendSuccessTransaction
+                key={row.id}
+                amount={row.amount}
+                asset={row.asset}
+                address={row.address}
+                txid={txid}
+              />
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
 }
-
-export default SendSuccess
