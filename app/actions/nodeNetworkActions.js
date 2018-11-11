@@ -5,7 +5,8 @@ import {
   NODES_MAIN_NET,
   NODES_TEST_NET,
   MAIN_NETWORK_ID,
-  TEST_NETWORK_ID
+  TEST_NETWORK_ID,
+  NODE_EXLUSION_CRITERIA
 } from '../core/constants'
 
 const ID = 'nodeNetwork'
@@ -58,7 +59,12 @@ export default createActions(
       default:
         nodes = NODES_MAIN_NET
     }
-    const promises = nodes.map(node => getBlockCount(node))
+    const promises = nodes
+      .filter(
+        data =>
+          !NODE_EXLUSION_CRITERIA.some(criteria => data.url.includes(criteria))
+      )
+      .map(node => getBlockCount(node))
     const result = await raceNodePromises(totalDisplayed, promises)
     return result
   }

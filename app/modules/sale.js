@@ -2,7 +2,7 @@
 import { wallet, api } from 'neon-js'
 import { flatten, isEmpty } from 'lodash-es'
 
-import { getNode } from '../actions/nodeStorageActions'
+import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 
 import {
   showErrorNotification,
@@ -38,7 +38,10 @@ export const participateInSale = (
   const address = getAddress(state)
   const isHardwareLogin = getIsHardwareLogin(state)
   const signingFunction = getSigningFunction(state)
-  const url = await getNode(net)
+  let url = await getNode(net)
+  if (!url) {
+    url = await getRPCEndpoint(net)
+  }
 
   const account = new wallet.Account(wif)
   const neoToMint = toNumber(neoToSend)
@@ -93,12 +96,8 @@ export const participateInSale = (
     gas: 0,
     publicKey: isHardwareLogin ? publicKey : null,
     signingFunction: isHardwareLogin ? signingFunction : null,
-    fees
-  }
-
-  if (!isEmpty(url)) {
-    // $FlowFixMe
-    config.url = url
+    fees,
+    url
   }
 
   try {

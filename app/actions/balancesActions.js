@@ -7,11 +7,11 @@ import { Howl } from 'howler'
 import coinAudioSample from '../assets/audio/coin.wav'
 
 import { getSettings } from './settingsActions'
-import { getNode } from './nodeStorageActions'
+import { getNode, getRPCEndpoint } from './nodeStorageActions'
 import { ASSETS } from '../core/constants'
 import { COIN_DECIMAL_LENGTH } from '../core/formatters'
 import { toBigNumber } from '../core/math'
-import { findNetworkIdByLabel } from '../core/networks'
+import { findNetworkByLabel } from '../core/networks'
 
 const MAX_SCRIPT_HASH_CHUNK_SIZE = 5
 
@@ -69,9 +69,12 @@ function determineIfBalanceUpdated(
 
 async function getBalances({ net, address }: Props) {
   const { soundEnabled, tokens } = await getSettings()
-  const network = findNetworkIdByLabel(net)
+  const network = findNetworkByLabel(net)
 
   let endpoint = await getNode(net)
+  if (!endpoint) {
+    endpoint = await getRPCEndpoint(net)
+  }
 
   let networkHasChanged = true
   if (net === inMemoryNetwork) networkHasChanged = false
@@ -79,10 +82,6 @@ async function getBalances({ net, address }: Props) {
   let adressHasChanged = false
   if (!inMemoryAddress) adressHasChanged = false
   else if (inMemoryAddress !== address) adressHasChanged = true
-
-  if (isEmpty(endpoint)) {
-    endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
-  }
 
   const chunks = tokens
     .filter(token => !token.isUserGenerated)

@@ -24,7 +24,7 @@ import {
   getTokenBalancesMap
 } from '../core/wallet'
 import { toNumber } from '../core/math'
-import { getNode } from '../actions/nodeStorageActions'
+import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 
 const extractTokens = (sendEntries: Array<SendEntryType>) =>
   sendEntries.filter(({ symbol }) => isToken(symbol))
@@ -113,7 +113,10 @@ export const sendTransaction = ({
     const signingFunction = getSigningFunction(state)
     const publicKey = getPublicKey(state)
     const isHardwareSend = getIsHardwareLogin(state)
-    const url = await getNode(net)
+    let url = await getNode(net)
+    if (isEmpty(url)) {
+      url = await getRPCEndpoint(net)
+    }
 
     const rejectTransaction = (message: string) =>
       dispatch(showErrorNotification({ message }))
@@ -149,7 +152,8 @@ export const sendTransaction = ({
       publicKey,
       privateKey: new wallet.Account(wif).privateKey,
       signingFunction: isHardwareSend ? signingFunction : null,
-      fees
+      fees,
+      url
     }
 
     await api
@@ -166,11 +170,6 @@ export const sendTransaction = ({
         // $FlowFixMe
         config.balance = Balance
       })
-
-    if (!isEmpty(url)) {
-      // $FlowFixMe
-      config.url = url
-    }
 
     try {
       const { response } = await makeRequest(sendEntries, config)
