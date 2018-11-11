@@ -15,10 +15,10 @@ type Props = {
 }
 
 export default class SendSuccess extends React.Component<Props> {
-  txTimestamp: string
+  txFormattedDate: string
 
   componentDidMount() {
-    this.txTimestamp = createFormattedDate()
+    this.txFormattedDate = createFormattedDate()
   }
 
   render() {
@@ -33,7 +33,7 @@ export default class SendSuccess extends React.Component<Props> {
               {numberOfItems} {pluralize('Transfer', numberOfItems)} completed
             </h1>
             <p className={styles.sendSuccessParagraphText}>
-              {this.txTimestamp}
+              {this.txFormattedDate}
             </p>
             <p className={styles.sendSuccessParagraphText}>
               Transaction ID: {txid}
