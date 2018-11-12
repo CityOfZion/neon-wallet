@@ -15,7 +15,7 @@ import { findNetworkByLabel } from '../core/networks'
 
 const ID = 'nodeStorage'
 const STORAGE_KEY = 'selectedNode'
-let cachedRPCUrl
+const cachedRPCUrl = {}
 
 type Props = {
   url: string,
@@ -27,7 +27,7 @@ export const getRPCEndpoint = async (
   excludeCritera: Array<string> = NODE_EXLUSION_CRITERIA
 ) => {
   try {
-    if (cachedRPCUrl) return cachedRPCUrl
+    if (cachedRPCUrl[net]) return cachedRPCUrl[net]
     const NETWORK = findNetworkByLabel(net)
     let nodeList
     switch (NETWORK.id) {
@@ -63,7 +63,7 @@ export const getRPCEndpoint = async (
     )
     const randomlySelectedRPCUrl =
       goodNodes[random(goodNodes.length)].client.net
-    cachedRPCUrl = randomlySelectedRPCUrl
+    cachedRPCUrl[net] = randomlySelectedRPCUrl
     return randomlySelectedRPCUrl
   } catch (error) {
     console.log('An error occurred attempting to obtain RPC endpoint', {
