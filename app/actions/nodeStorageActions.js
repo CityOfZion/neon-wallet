@@ -1,7 +1,7 @@
 // @flow
 import { createActions } from 'spunky'
 import { isEmpty, random } from 'lodash-es'
-import { rpc } from 'neon-js'
+import { rpc, api } from 'neon-js'
 
 import { getStorage, setStorage } from '../core/storage'
 import {
@@ -40,7 +40,7 @@ export const getRPCEndpoint = async (
       default:
         nodeList = NODES_MAIN_NET
     }
-    const data = nodeList
+    const data = [...nodeList]
       .filter(
         data => !excludeCritera.some(criteria => data.url.includes(criteria))
       )
@@ -62,14 +62,18 @@ export const getRPCEndpoint = async (
       n => n.client.lastSeenHeight >= heightThreshold
     )
     const randomlySelectedRPCUrl =
-      goodNodes[random(goodNodes.length)].client.net
+      goodNodes[random(goodNodes.length) - 1].client.net
     cachedRPCUrl[net] = randomlySelectedRPCUrl
     return randomlySelectedRPCUrl
   } catch (error) {
-    console.log('An error occurred attempting to obtain RPC endpoint', {
-      error
-    })
-    return ''
+    console.warn(
+      'An error occurred attempting to obtain RPC endpoint defaulting to neon-js getRPCEndpointFrom()',
+      {
+        error
+      }
+    )
+    const endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
+    return endpoint
   }
 }
 

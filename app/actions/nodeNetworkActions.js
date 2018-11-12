@@ -49,7 +49,12 @@ export default createActions(
     let nodes
     switch (networkId) {
       case MAIN_NETWORK_ID:
-        nodes = NODES_MAIN_NET
+        nodes = NODES_MAIN_NET.filter(
+          data =>
+            !NODE_EXLUSION_CRITERIA.some(criteria =>
+              data.url.includes(criteria)
+            )
+        )
         break
       case TEST_NETWORK_ID:
         nodes = NODES_TEST_NET
@@ -57,14 +62,14 @@ export default createActions(
         totalDisplayed = NODES_TEST_NET.length
         break
       default:
-        nodes = NODES_MAIN_NET
+        nodes = NODES_MAIN_NET.filter(
+          data =>
+            !NODE_EXLUSION_CRITERIA.some(criteria =>
+              data.url.includes(criteria)
+            )
+        )
     }
-    const promises = nodes
-      .filter(
-        data =>
-          !NODE_EXLUSION_CRITERIA.some(criteria => data.url.includes(criteria))
-      )
-      .map(node => getBlockCount(node))
+    const promises = [...nodes].map(node => getBlockCount(node))
     const result = await raceNodePromises(totalDisplayed, promises)
     return result
   }
