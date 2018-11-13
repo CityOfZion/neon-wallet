@@ -61,8 +61,12 @@ export const getRPCEndpoint = async (
     const goodNodes = nodes.filter(
       n => n.client.lastSeenHeight >= heightThreshold
     )
-    const randomlySelectedRPCUrl =
-      goodNodes[random(goodNodes.length) - 1].client.net
+    let randomIndex = random(goodNodes.length)
+    if (randomIndex === goodNodes.length) {
+      // eslint-disable-next-line
+      randomIndex--
+    }
+    const randomlySelectedRPCUrl = goodNodes[randomIndex].client.net
     cachedRPCUrl[net] = randomlySelectedRPCUrl
     return randomlySelectedRPCUrl
   } catch (error) {
