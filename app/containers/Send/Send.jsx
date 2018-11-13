@@ -191,15 +191,18 @@ export default class Send extends React.Component<Props, State> {
 
   calculateMaxValue = (asset: string, index: number = 0) => {
     const { sendableAssets } = this.props
-    const rows = [...this.state.sendRowDetails]
-    const rowsWithAsset = rows.filter(row => row.asset === asset)
-    const existingAmounts = this.calculateRowAmounts(asset, index)
-    const decimals = this.calculateDecimals(asset)
-    const totalSendableAssets = toBigNumber(sendableAssets[asset].balance)
-    if (rowsWithAsset.length === 1 || rowsWithAsset.length === 0) {
-      return toNumber(sendableAssets[asset].balance).toFixed(decimals)
+    if (sendableAssets[asset]) {
+      const rows = [...this.state.sendRowDetails]
+      const rowsWithAsset = rows.filter(row => row.asset === asset)
+      const existingAmounts = this.calculateRowAmounts(asset, index)
+      const decimals = this.calculateDecimals(asset)
+      const totalSendableAssets = toBigNumber(sendableAssets[asset].balance)
+      if (rowsWithAsset.length === 1 || rowsWithAsset.length === 0) {
+        return toNumber(sendableAssets[asset].balance).toFixed(decimals)
+      }
+      return minusNumber(totalSendableAssets, existingAmounts).toFixed(decimals)
     }
-    return minusNumber(totalSendableAssets, existingAmounts).toFixed(decimals)
+    return '0'
   }
 
   calculateRowAmounts = (asset: string, index: number) => {

@@ -696,9 +696,9 @@
     "networks": {
       "1": {
         "name": "Spotcoin",
-        "hash": "0a91cdc3c5ff89983c79e3c72e1ccd9e5beaa5d5",
+        "hash": "2830fc346b1c7a350914fbaea5ef7b3fbe3c994c",
         "decimals": 8,
-        "totalSupply": 694303
+        "totalSupply": 97807005
       }
     }
   },

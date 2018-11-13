@@ -1,7 +1,7 @@
 // @flow
 import { createActions } from 'spunky'
 import { isEmpty, random } from 'lodash-es'
-import { rpc } from 'neon-js'
+import { rpc, api } from 'neon-js'
 
 import { getStorage, setStorage } from '../core/storage'
 import {
@@ -15,7 +15,7 @@ import { findNetworkByLabel } from '../core/networks'
 
 const ID = 'nodeStorage'
 const STORAGE_KEY = 'selectedNode'
-let cachedRPCUrl
+const cachedRPCUrl = {}
 
 type Props = {
   url: string,
@@ -27,7 +27,7 @@ export const getRPCEndpoint = async (
   excludeCritera: Array<string> = NODE_EXLUSION_CRITERIA
 ) => {
   try {
-    if (cachedRPCUrl) return cachedRPCUrl
+    if (cachedRPCUrl[net]) return cachedRPCUrl[net]
     const NETWORK = findNetworkByLabel(net)
     let nodeList
     switch (NETWORK.id) {
@@ -40,7 +40,7 @@ export const getRPCEndpoint = async (
       default:
         nodeList = NODES_MAIN_NET
     }
-    const data = nodeList
+    const data = [...nodeList]
       .filter(
         data => !excludeCritera.some(criteria => data.url.includes(criteria))
       )
@@ -61,15 +61,23 @@ export const getRPCEndpoint = async (
     const goodNodes = nodes.filter(
       n => n.client.lastSeenHeight >= heightThreshold
     )
-    const randomlySelectedRPCUrl =
-      goodNodes[random(goodNodes.length)].client.net
-    cachedRPCUrl = randomlySelectedRPCUrl
+    let randomIndex = random(goodNodes.length)
+    if (randomIndex === goodNodes.length) {
+      // eslint-disable-next-line
+      randomIndex--
+    }
+    const randomlySelectedRPCUrl = goodNodes[randomIndex].client.net
+    cachedRPCUrl[net] = randomlySelectedRPCUrl
     return randomlySelectedRPCUrl
   } catch (error) {
-    console.log('An error occurred attempting to obtain RPC endpoint', {
-      error
-    })
-    return ''
+    console.warn(
+      'An error occurred attempting to obtain RPC endpoint defaulting to neon-js getRPCEndpointFrom()',
+      {
+        error
+      }
+    )
+    const endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
+    return endpoint
   }
 }
 
