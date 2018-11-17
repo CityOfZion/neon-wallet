@@ -48,7 +48,8 @@ type Props = {
     gasToSend: string,
     scriptHash: string,
     gasCost: string
-  ) => Promise<any>
+  ) => Promise<any>,
+  currencyCode: string
 }
 
 type State = {
@@ -329,14 +330,14 @@ class TokenSale extends Component<Props, State> {
       amountsData
     } = this.state
 
-    const { assetBalances, showModal } = this.props
+    const { assetBalances, showModal, currencyCode } = this.props
     const disabledButton = !(acceptedConditions.length === conditions.length)
     const availableGas = assetBalances.GAS
     return (
       <Fragment>
         <HeaderBar shouldRenderRefresh label="Token Sale" />
         <section className={styles.purchaseSection}>
-          <AmountsPanel currencyCode="usd" amountsData={amountsData} />
+          <AmountsPanel currencyCode={currencyCode} amountsData={amountsData} />
           <TokenSalePanel
             showModal={showModal}
             onClickHandler={this.getOnClickHandler()}
