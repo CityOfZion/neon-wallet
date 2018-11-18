@@ -240,40 +240,6 @@ export default class Send extends React.Component<Props, State> {
     return decimals
   }
 
-<<<<<<< HEAD
-  calculateMaxValue = (asset: string) => {
-    const { sendableAssets } = this.props
-    const existingAmounts = this.calculateRowAmounts(asset)
-    const decimals = this.calculateDecimals(asset)
-    if (sendableAssets[asset]) {
-      const max = toNumber(decimals)
-        ? minusNumber(sendableAssets[asset].balance, existingAmounts).toFixed(
-            decimals
-          )
-        : minusNumber(sendableAssets[asset].balance, existingAmounts)
-      return max < 0 ? toNumber(sendableAssets[asset].balance) : max
-    }
-    return toNumber(get(sendableAssets, [asset, 'balance'], 0))
-  }
-
-  calculateRowAmounts = (asset: string) => {
-    const rows = [...this.state.sendRowDetails]
-
-    if (rows.length > 0) {
-      return (rows
-        .filter((row: Object) => row.asset === asset)
-        .map((row: Object) => get(row, 'amount', '0').toString())
-        .reduce(
-          (accumulator: Object, currentValue: number | void) =>
-            accumulator.plus(currentValue || 0),
-          toBigNumber(0)
-        ): number)
-    }
-    return 0
-  }
-
-=======
->>>>>>> dev
   resetViews = () => {
     this.setState(() => {
       const newState = []
