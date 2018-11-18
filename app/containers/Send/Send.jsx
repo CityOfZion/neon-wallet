@@ -383,14 +383,22 @@ export default class Send extends React.Component<Props, State> {
     }
 
     if (asset !== 'NEO' && asset !== 'GAS') {
-      const decpoint =
-        amountNum.toString().length - 1 - amountNum.toString().indexOf('.')
+      let decimalPlaces = 0
+      const amountStr = amountNum.toString()
+      const decPointIndex = amountStr.indexOf('.')
+
+      if (decPointIndex !== -1) {
+        decimalPlaces = amountStr.length - 1 - decPointIndex
+      }
 
       const foundToken: TokenItemType | void = tokens.find(
         token => token.symbol === asset && token.networkId === networkId
       )
 
-      if (foundToken && decpoint > toNumber(get(foundToken, 'decimals', 8))) {
+      if (
+        foundToken &&
+        decimalPlaces > toNumber(get(foundToken, 'decimals', 8))
+      ) {
         errors.amount = `You can only send ${asset} up to ${get(
           foundToken,
           'decimals',
