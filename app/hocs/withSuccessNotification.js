@@ -29,7 +29,7 @@ export default function withSuccessNotification(
   message: Message,
   options: Object = {}
 ) {
-  const mapDispatchToProps = dispatch => ({
+  const mapDispatchToProps = (dispatch: DispatchType) => ({
     [NOTIFICATION_PROP]: (...args) => dispatch(showSuccessNotification(...args))
   })
 
