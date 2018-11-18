@@ -12,6 +12,7 @@ import withNetworkData from '../../hocs/withNetworkData'
 import withPricesData from '../../hocs/withPricesData'
 import withBalancesData from '../../hocs/withBalancesData'
 import withTokensData from '../../hocs/withTokensData'
+import withCurrencyData from '../../hocs/withCurrencyData'
 import withSuccessNotification from '../../hocs/withSuccessNotification'
 import { showModal } from '../../modules/modal'
 
@@ -40,6 +41,7 @@ export default compose(
   withAuthData(),
   withNetworkData(),
   withTokensData(),
+  withCurrencyData('currencyCode'),
   withBalancesData(mapBalancesDataToProps),
   withPricesData(mapPricesDataToProps),
   withCall(icoTokensActions),
