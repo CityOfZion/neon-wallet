@@ -6,10 +6,7 @@ import {
   showInfoNotification,
   showSuccessNotification
 } from './notifications'
-import {
-  getNetwork,
-  getWIF
-} from '../core/deprecated'
+import { getNetwork, getWIF } from '../core/deprecated'
 
 export const setupVote = (candidateKeys: CandidateKeys = []) => async (
   dispatch: DispatchType,
@@ -23,9 +20,7 @@ export const setupVote = (candidateKeys: CandidateKeys = []) => async (
   const wif = getWIF(state)
   const net = getNetwork(state)
 
-  dispatch(
-    showInfoNotification({ message: 'Casting vote...', autoDismiss: 0 })
-  )
+  dispatch(showInfoNotification({ message: 'Casting vote...', autoDismiss: 0 }))
 
   try {
     const response = await api.setupVote({
@@ -34,16 +29,19 @@ export const setupVote = (candidateKeys: CandidateKeys = []) => async (
       candidateKeys
     })
     if (response.result) {
-      return dispatch(showSuccessNotification({
-        message: 'Your vote was recorded by the network.'
-      }))
-    } else {
-      throw new Error('The vote transaction went through but failed')
+      return dispatch(
+        showSuccessNotification({
+          message: 'Your vote was recorded by the network.'
+        })
+      )
     }
+    throw new Error('The vote transaction went through but failed')
   } catch (err) {
     console.error(err)
-    return dispatch(showErrorNotification({
-      message: 'The transaction failed. Please try voting again later.'
-    }))
+    return dispatch(
+      showErrorNotification({
+        message: 'The transaction failed. Please try voting again later.'
+      })
+    )
   }
 }

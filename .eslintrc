@@ -31,7 +31,7 @@
     "no-new": 0,
     "no-shadow": 0,
     "prettier/prettier": ["error"],
-    "no-unused-vars": ["error"],
+    "no-unused-vars": ["warn"],
     "global-require": 0,
     "quotes": ["warn", "single"],
     "object-curly-spacing": ["error", "always"],
