@@ -383,8 +383,11 @@ export default class Send extends React.Component<Props, State> {
     }
 
     if (asset !== 'NEO' && asset !== 'GAS') {
-      const decpoint =
-        amountNum.toString().length - 1 - amountNum.toString().indexOf('.')
+      let decpoint = 0
+      if (amountNum.toString().indexOf('.') > -1) {
+        decpoint =
+          amountNum.toString().length - 1 - amountNum.toString().indexOf('.')
+      }
 
       const foundToken: TokenItemType | void = tokens.find(
         token => token.symbol === asset && token.networkId === networkId
