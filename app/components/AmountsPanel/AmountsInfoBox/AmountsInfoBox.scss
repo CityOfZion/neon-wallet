@@ -13,7 +13,7 @@
 
   .assetName {
     padding-right: 10px;
-    font-family: Gotham-Light;
+    font-family: var(--font-gotham-light);
     font-size: 14px;
     position: relative;
 
@@ -23,12 +23,12 @@
   }
 
   .assetAmount {
-    font-family: Gotham-Medium;
+    font-family: var(--font-gotham-medium);
     color: var(--amounts-panel-asset-amount-text);
   }
 
   .assetWorth {
-    font-family: Gotham-Book;
+    font-family: var(--font-gotham-book);
     color: var(--amounts-panel-asset-worth-text);
   }
 

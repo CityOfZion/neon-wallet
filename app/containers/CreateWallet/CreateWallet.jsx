@@ -26,15 +26,25 @@ type Props = {
 type State = {
   passphrase: string,
   passphrase2: string,
+  passphraseValid: boolean,
+  passphrase2Valid: boolean,
+  passphraseError: string,
+  passphrase2Error: string,
   wif: string,
   walletName: string,
   submitButtonDisabled: boolean
 }
 
+const PASS_MIN_LENGTH = 4
+
 export default class CreateWallet extends React.Component<Props, State> {
   state = {
     passphrase: '',
     passphrase2: '',
+    passphraseValid: false,
+    passphrase2Valid: false,
+    passphraseError: '',
+    passphrase2Error: '',
     wif: '',
     walletName: '',
     submitButtonDisabled: false
@@ -58,7 +68,7 @@ export default class CreateWallet extends React.Component<Props, State> {
   }
 
   render = () => {
-    const { passphrase, passphrase2, wif, walletName } = this.state
+    const { passphraseError, passphrase2Error, wif, walletName } = this.state
     const { option, authenticated } = this.props
     const conditionalPanelProps = {}
     if (authenticated) {
@@ -114,15 +124,15 @@ export default class CreateWallet extends React.Component<Props, State> {
               />
               <PasswordInput
                 label="Passphrase"
-                value={passphrase}
-                onChange={e => this.setState({ passphrase: e.target.value })}
+                onChange={this.handleChangePassphrase}
                 placeholder="Password"
+                error={passphraseError}
               />
               <PasswordInput
                 label="Confirm Passphrase"
-                value={passphrase2}
-                onChange={e => this.setState({ passphrase2: e.target.value })}
+                onChange={this.handleChangePassphrase2}
                 placeholder="Confirm Password"
+                error={passphrase2Error}
               />
               <div className={styles.loginButtonMargin}>
                 <Button
@@ -142,16 +152,51 @@ export default class CreateWallet extends React.Component<Props, State> {
     )
   }
 
+  handleChangePassphrase = (e: SyntheticInputEvent<HTMLInputElement>) => {
+    this.setState({ passphrase: e.target.value }, this.validatePassphrase)
+  }
+
+  handleChangePassphrase2 = (e: SyntheticInputEvent<HTMLInputElement>) => {
+    this.setState({ passphrase2: e.target.value }, this.validatePassphrase2)
+  }
+
+  validatePassphrase = () => {
+    const { passphrase: p } = this.state
+    // validate min char count
+    const errorMessage =
+      p && p.length < PASS_MIN_LENGTH
+        ? `Passphrase must contain at least ${PASS_MIN_LENGTH} characters`
+        : ''
+    this.setState(
+      {
+        passphraseError: errorMessage,
+        passphraseValid: !!(p && !errorMessage)
+      },
+      this.validatePassphrase2
+    )
+  }
+
+  validatePassphrase2 = () => {
+    const { passphrase: p1, passphrase2: p2, passphraseValid } = this.state
+    // validate phrases match
+    const errorMessage =
+      p1 && p2 && p1 !== p2 && passphraseValid ? 'Passphrases must match' : ''
+    this.setState({
+      passphrase2Error: errorMessage,
+      passphrase2Valid: !!(p2 && !errorMessage)
+    })
+  }
+
   isDisabled = () => {
     const {
-      passphrase,
-      passphrase2,
+      passphraseValid,
+      passphrase2Valid,
       wif,
       walletName,
       submitButtonDisabled
     } = this.state
     const { option } = this.props
-    const validPassphrase = passphrase === passphrase2 && passphrase.length >= 4
+    const validPassphrase = passphraseValid && passphrase2Valid
     if (submitButtonDisabled) return true
     if (option === 'CREATE') {
       return !(validPassphrase && !!walletName)

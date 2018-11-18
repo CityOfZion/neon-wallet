@@ -14,7 +14,7 @@
 
     label {
       margin-right: 5px;
-      font-family: Gotham-Medium;
+      font-family: var(--font-gotham-medium);
     }
 
     .addressLink {
@@ -45,7 +45,7 @@
     .assetsPanel {
       height: 100%;
       max-height: 450px;
-      min-height: 351px;
+      min-height: 350px;
       margin-top: auto;
     }
 

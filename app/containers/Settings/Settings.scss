@@ -62,7 +62,7 @@ $panel-top-margin: 25px;
       justify-content: center;
       display: flex;
       text-decoration: none;
-      font-family: Gotham-Book;
+      font-family: var(--font-gotham-book);
       font-size: 10px;
       color: var(--settings-donation-text);
       letter-spacing: 0.4px;

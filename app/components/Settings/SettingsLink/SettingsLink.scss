@@ -9,7 +9,7 @@ $settings-link-color: #66ed87;
   max-height: 45px;
   height: 45px;
   text-decoration: none;
-  font-family: Gotham-Bold;
+  font-family: var(--font-gotham-bold);
   font-size: 12px;
   color: var(--settings-item-label);
 
@@ -50,7 +50,7 @@ label {
 }
 
 .greyLabel {
-  font-family: Gotham-Bold;
+  font-family: var(--font-gotham-bold);
   font-size: 12px;
   color: var(--settings-item-icon);
   min-width: 200px;
@@ -59,7 +59,7 @@ label {
 }
 
 .greenLabel {
-  font-family: Gotham-Bold;
+  font-family: var(--font-gotham-bold);
   font-size: 12px;
   color: var(--settings-link-text);
 }

@@ -24,7 +24,7 @@
     display: flex;
     flex: 0.4;
     justify-content: flex-end;
-    font-family: Gotham;
+    font-family: var(--font-gotham);
   }
 
   .priorityTrasferHeaderTextContainer {
@@ -97,7 +97,7 @@
   display: flex;
   flex-direction: column;
   margin-top: 10px;
-  font-family: Gotham-Book;
+  font-family: var(--font-gotham-book);
   font-size: 12px;
   color: #8d98ae;
   text-align: center;
@@ -140,7 +140,7 @@
   font-size: 14px;
   text-align: left;
   opacity: 0.5;
-  font-family: Gotham-Bold;
+  font-family: var(--font-gotham-bold);
   font-size: 12px;
   margin-bottom: 10px;
 }

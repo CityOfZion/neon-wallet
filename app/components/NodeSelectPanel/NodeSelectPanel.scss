@@ -12,7 +12,7 @@ $icon-size: 24px;
   font-size: 14px;
   color: var(--panel-full-height-instructions-text);
   text-align: center;
-  font-family: Gotham-Book;
+  font-family: var(--font-gotham-book);
 }
 
 .nodeSelectContainer {
@@ -48,7 +48,7 @@ $icon-size: 24px;
     .automaticSelect {
       font-size: 14px;
       line-height: 14px;
-      font-family: Gotham-Book;
+      font-family: var(--font-gotham-book);
 
       svg {
         path {
@@ -70,7 +70,7 @@ $icon-size: 24px;
     }
 
     .automaticSelect {
-      font-family: Gotham-Book;
+      font-family: var(--font-gotham-book);
       font-size: 14px;
       color: var(--node-select-automatic-select-button-text);
       svg path {

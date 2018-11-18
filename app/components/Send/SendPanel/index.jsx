@@ -42,7 +42,8 @@ type Props = {
   updateRowField: (index: number, field: string, value: any) => any,
   handleEditRecipientsClick: () => any,
   showSendModal: (props: Object) => any,
-  pushQRCodeData: (data: Object) => any
+  pushQRCodeData: (data: Object) => any,
+  calculateMaxValue: (asset: string, index: number) => string
 }
 
 const shouldDisableSendButton = sendRowDetails =>
@@ -75,7 +76,8 @@ const SendPanel = ({
   maxNumberOfRecipients,
   showSendModal,
   pushQRCodeData,
-  pendingTransaction
+  pendingTransaction,
+  calculateMaxValue
 }: Props) => {
   if (noSendableAssets) {
     return <ZeroAssets address={address} />
@@ -92,6 +94,7 @@ const SendPanel = ({
         contacts={contacts}
         clearErrors={clearErrors}
         showConfirmSend={showConfirmSend}
+        calculateMaxValue={calculateMaxValue}
       />
 
       <div className={styles.priorityFeeContainer}>
@@ -127,6 +130,7 @@ const SendPanel = ({
           contacts={contacts}
           clearErrors={clearErrors}
           showConfirmSend={showConfirmSend}
+          calculateMaxValue={calculateMaxValue}
         />
         <ConfirmSend
           handleEditRecipientsClick={handleEditRecipientsClick}

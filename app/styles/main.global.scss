@@ -34,6 +34,15 @@
   src: url('../assets/fonts/Gotham-Book.woff') format('woff');
 }
 
+:root {
+  --font-fallback: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  --font-gotham: 'Gotham', var(--font-fallback);
+  --font-gotham-medium: 'Gotham-Medium', var(--font-fallback);
+  --font-gotham-bold: 'Gotham-Bold', var(--font-fallback);
+  --font-gotham-thin: 'Gotham-Thin', var(--font-fallback);
+  --font-gotham-book: 'Gotham-Book', var(--font-fallback);
+}
+
 @media print {
   #newWallet {
     font-size: 0.8em;
@@ -48,7 +57,7 @@ input {
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  font-family: 'Gotham', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-family: var(--font-gotham);
 }
 
 body {

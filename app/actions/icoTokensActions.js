@@ -3,7 +3,7 @@ import { api } from 'neon-js'
 import { isEmpty } from 'lodash-es'
 import { createActions } from 'spunky'
 
-import { getNode } from './nodeStorageActions'
+import { getNode, getRPCEndpoint } from './nodeStorageActions'
 
 import ICOTokenList from '../../ICOTokens.json'
 
@@ -19,8 +19,8 @@ async function getICOTokens({ net, tokens }: Props) {
   const userGeneratedTokens = tokens.filter(token => token.isUserGenerated)
 
   let endpoint = await getNode(net)
-  if (isEmpty(endpoint)) {
-    endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
+  if (!endpoint) {
+    endpoint = await getRPCEndpoint(net)
   }
 
   if (userGeneratedTokens.length === 0 && ICOTokenList.ICOTokens.length === 0)

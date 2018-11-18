@@ -74,7 +74,7 @@ $navigation-margin: 20px;
 }
 
 .ledgerStage {
-  font-family: Gotham-Book;
+  font-family: var(--font-gotham-book);
   margin-top: 0;
   display: flex;
   align-items: center;
@@ -211,7 +211,7 @@ $navigation-margin: 20px;
 }
 
 .loginHeader {
-  font-family: Gotham-Light;
+  font-family: var(--font-gotham-light);
   font-weight: 300;
   width: 500px;
   display: flex;
@@ -219,7 +219,7 @@ $navigation-margin: 20px;
   text-align: center;
   justify-content: center;
   line-height: 32px;
-  font-family: Gotham-Light;
+  font-family: var(--font-gotham-light);
   font-size: 30px;
   color: var(--base-text);
 }

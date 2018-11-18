@@ -40,7 +40,7 @@
       .quantity {
         font-weight: 200;
         margin: 16px 0;
-        font-family: Gotham-Light;
+        font-family: var(--font-gotham-light);
         font-size: 40px;
         color: var(--base-text);
       }
@@ -70,7 +70,7 @@
   }
 
   .walletTotal {
-    font-family: Gotham-Medium;
+    font-family: var(--font-gotham-medium);
     font-size: 24px;
     color: var(--base-text);
     text-align: center;
@@ -95,14 +95,14 @@
     font-weight: 100;
     text-transform: uppercase;
     opacity: 0.5;
-    font-family: Gotham-Light;
+    font-family: var(--font-gotham-light);
     font-size: 24px;
     color: var(--base-text);
   }
 
   .assetName {
     opacity: 0.5;
-    font-family: Gotham-Bold;
+    font-family: var(--font-gotham-bold);
     font-size: 13px;
     color: var(--dashboard-asset-panel-asset-name);
     text-align: center;

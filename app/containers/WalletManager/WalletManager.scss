@@ -61,7 +61,7 @@
 
     h2 {
       /* Manage Wallets: */
-      font-family: Gotham-Light;
+      font-family: var(--font-gotham-light);
       font-weight: 100;
       font-size: 30px;
       line-height: 32px;
@@ -92,7 +92,7 @@
     }
 
     .address {
-      font-family: Gotham-Book;
+      font-family: var(--font-gotham-book);
       font-size: 12px;
       width: 300px;
       color: #8d98ae;

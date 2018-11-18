@@ -1,7 +1,7 @@
 // @flow
 import storage from 'electron-json-storage'
 import { wallet } from 'neon-js'
-import { isEmpty } from 'lodash-es'
+import { isEmpty, intersectionBy } from 'lodash-es'
 
 import {
   showErrorNotification,
@@ -149,6 +149,13 @@ export const recoverWallet = (wallet: Object): Promise<*> =>
 
       if (!accounts.length) {
         reject(Error('No accounts found in recovery file.'))
+      }
+
+      // check if wallet label already exists
+      const duplicateLabels = intersectionBy(data.accounts, accounts, 'label')
+
+      if (duplicateLabels.length > 0) {
+        reject(Error('A wallet with this name already exists locally.'))
       }
 
       // eslint-disable-next-line

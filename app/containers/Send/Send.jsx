@@ -128,10 +128,6 @@ export default class Send extends React.Component<Props, State> {
 
     return (assets.map((asset: string) => {
       const { balance } = sendableAssets[asset]
-      const currentBalance = minusNumber(
-        balance,
-        this.calculateRowAmounts(asset)
-      )
       const price = prices[asset]
 
       const totalBalanceWorth = price
@@ -142,7 +138,6 @@ export default class Send extends React.Component<Props, State> {
         symbol: asset,
         totalBalance: balance,
         price,
-        currentBalance,
         totalBalanceWorth
       }
     }): Array<*>)
@@ -174,10 +169,7 @@ export default class Send extends React.Component<Props, State> {
   updateRowField = (index: number, field: string, value: string) => {
     this.setState((prevState: Object) => {
       const newState = [...prevState.sendRowDetails]
-      const { sendableAssets } = this.props
-
       const objectToModify = newState[index]
-
       objectToModify[field] = value
 
       if (field === 'asset') {
@@ -187,20 +179,7 @@ export default class Send extends React.Component<Props, State> {
       }
 
       if (field === 'amount' && value) {
-        const valueAsString = value.toString()
-
-        const additionalValue =
-          toNumber(valueAsString) >
-          toNumber(sendableAssets[objectToModify.asset].balance)
-            ? 0
-            : toNumber(valueAsString)
-
-        const decimals = this.calculateDecimals(objectToModify.asset)
-
-        const maxValue =
-          Number(this.calculateMaxValue(objectToModify.asset)) + additionalValue
-
-        objectToModify.max = maxValue.toFixed(decimals)
+        objectToModify.max = this.calculateMaxValue(objectToModify.asset, index)
       }
 
       if (field === 'address') {
@@ -208,6 +187,38 @@ export default class Send extends React.Component<Props, State> {
       }
       return { sendRowDetails: newState }
     })
+  }
+
+  calculateMaxValue = (asset: string, index: number = 0) => {
+    const { sendableAssets } = this.props
+    if (sendableAssets[asset]) {
+      const rows = [...this.state.sendRowDetails]
+      const rowsWithAsset = rows.filter(row => row.asset === asset)
+      const existingAmounts = this.calculateRowAmounts(asset, index)
+      const decimals = this.calculateDecimals(asset)
+      const totalSendableAssets = toBigNumber(sendableAssets[asset].balance)
+      if (rowsWithAsset.length === 1 || rowsWithAsset.length === 0) {
+        return toNumber(sendableAssets[asset].balance).toFixed(decimals)
+      }
+      return minusNumber(totalSendableAssets, existingAmounts).toFixed(decimals)
+    }
+    return '0'
+  }
+
+  calculateRowAmounts = (asset: string, index: number) => {
+    const rows = [...this.state.sendRowDetails]
+    rows.splice(index, 1)
+    if (rows.length > 0) {
+      return (rows
+        .filter((row: Object) => row.asset === asset)
+        .map((row: Object) => get(row, 'amount', 0))
+        .reduce(
+          (accumulator: Object, currentValue: number | void) =>
+            accumulator.plus(currentValue || 0),
+          toBigNumber(0)
+        ): number)
+    }
+    return 0
   }
 
   calculateDecimals = (asset: string) => {
@@ -229,6 +240,7 @@ export default class Send extends React.Component<Props, State> {
     return decimals
   }
 
+<<<<<<< HEAD
   calculateMaxValue = (asset: string) => {
     const { sendableAssets } = this.props
     const existingAmounts = this.calculateRowAmounts(asset)
@@ -260,6 +272,8 @@ export default class Send extends React.Component<Props, State> {
     return 0
   }
 
+=======
+>>>>>>> dev
   resetViews = () => {
     this.setState(() => {
       const newState = []
@@ -403,14 +417,22 @@ export default class Send extends React.Component<Props, State> {
     }
 
     if (asset !== 'NEO' && asset !== 'GAS') {
-      const decpoint =
-        amountNum.toString().length - 1 - amountNum.toString().indexOf('.')
+      let decimalPlaces = 0
+      const amountStr = amountNum.toString()
+      const decPointIndex = amountStr.indexOf('.')
+
+      if (decPointIndex !== -1) {
+        decimalPlaces = amountStr.length - 1 - decPointIndex
+      }
 
       const foundToken: TokenItemType | void = tokens.find(
         token => token.symbol === asset && token.networkId === networkId
       )
 
-      if (foundToken && decpoint > toNumber(get(foundToken, 'decimals', 8))) {
+      if (
+        foundToken &&
+        decimalPlaces > toNumber(get(foundToken, 'decimals', 8))
+      ) {
         errors.amount = `You can only send ${asset} up to ${get(
           foundToken,
           'decimals',
@@ -497,6 +519,7 @@ export default class Send extends React.Component<Props, State> {
           />
         )}
         <SendPanel
+          calculateMaxValue={this.calculateMaxValue}
           maxNumberOfRecipients={MAX_NUMBER_OF_RECIPIENTS}
           sendRowDetails={sendRowDetails}
           sendableAssets={sendableAssets}

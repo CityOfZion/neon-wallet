@@ -26,7 +26,7 @@
     font-weight: 100;
     font-size: 30px;
     line-height: 32px;
-    font-family: Gotham-Light;
+    font-family: var(--font-gotham-light);
     font-size: 30px;
     color: var(--base-text);
     text-align: center;
@@ -51,13 +51,13 @@
 
   .instructions {
     border-bottom: solid thin var(--panel-full-height-instructions-border);
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     margin-top: 40px;
     padding-bottom: 5px;
     width: 500px;
     font-size: 14px;
     color: var(--panel-full-height-instructions-text);
-    font-family: Gotham-Book;
+    font-family: var(--font-gotham-book);
   }
 
   .navigation {

@@ -6,11 +6,10 @@
     align-items: center;
     justify-content: space-between;
 
-    .asset,
-    .duration {
+    .asset {
       display: flex;
       align-items: center;
-      font-family: Gotham;
+      font-family: var(--font-gotham);
       color: #969aa0;
       font-size: 12px;
       font-weight: 600;
