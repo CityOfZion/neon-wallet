@@ -12,6 +12,7 @@ import {
 import { validatePassphraseLength } from '../core/wallet'
 import { ROUTES, DEFAULT_WALLET } from '../core/constants'
 import { Account } from '../core/schemas'
+import toSentence from '../util/toSentence'
 
 // Actions
 import { saveAccountActions, getWallet } from '../actions/accountsActions'
@@ -152,10 +153,16 @@ export const recoverWallet = (wallet: Object): Promise<*> =>
       }
 
       // check if wallet label already exists
-      const duplicateLabels = intersectionBy(data.accounts, accounts, 'label')
+      const dupAccounts = intersectionBy(data.accounts, accounts, 'label')
 
-      if (duplicateLabels.length > 0) {
-        reject(Error('A wallet with this name already exists locally.'))
+      if (dupAccounts.length > 0) {
+        const labels = dupAccounts.map(acc => `"${acc.label}"`)
+        const errMsg =
+          labels.length === 1
+            ? `A wallet named ${labels[0]} already exists locally.`
+            : `Wallets named ${toSentence(labels)} already exist locally.`
+
+        reject(Error(errMsg))
       }
 
       // eslint-disable-next-line
