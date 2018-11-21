@@ -47,7 +47,7 @@ const mapPriceChangeDataToProps = (prices: Object) => {
   }
 }
 
-const mapBalancesActionsToProps = (actions, props) => ({
+const mapBalancesActionsToProps = (actions: Object, props: Object) => ({
   refresh: () =>
     actions.call({
       net: props.net,
