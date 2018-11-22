@@ -4,6 +4,7 @@ import type { Node } from 'react'
 
 import moment from 'moment'
 import { isEmpty } from 'lodash-es'
+import classNames from 'classnames'
 
 import Button from '../../Button'
 import { openExplorerTx } from '../../../core/explorer'
@@ -22,15 +23,16 @@ type Props = {
   explorer: ExplorerType,
   contacts: Object,
   showAddContactModal: ({ address: string }) => null,
-  address: string
+  address: string,
+  className?: string
 }
 
 export default class Transaction extends React.Component<Props> {
   render = () => {
-    const { tx } = this.props
+    const { tx, className } = this.props
     const { iconType } = tx
     return (
-      <div className={styles.transactionContainer}>
+      <div className={classNames(styles.transactionContainer, className)}>
         {this.renderAbstract(iconType)}
         <Button
           className={styles.transactionHistoryButton}
