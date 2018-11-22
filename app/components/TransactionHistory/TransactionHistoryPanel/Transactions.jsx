@@ -3,6 +3,7 @@ import React from 'react'
 import classNames from 'classnames'
 
 import Transaction from '../../Blockchain/Transaction'
+import TransactionList from '../../Blockchain/Transaction/TransactionList'
 import LogoWithStrikethrough from '../../LogoWithStrikethrough'
 import { ASSETS } from '../../../core/constants'
 import { isZero } from '../../../core/math'
@@ -28,21 +29,9 @@ export default class Transactions extends React.Component<Props> {
     }
 
     return (
-      <ul
-        id="transactionList"
-        className={classNames(styles.transactionList, className)}
-      >
-        {transactions.map((tx, i) => (
-          <li
-            key={tx.id}
-            className={classNames(styles.row, {
-              [styles.oddNumberedRow]: i % 2 === 0
-            })}
-          >
-            <Transaction className={classNames(styles.txid, 'txid')} tx={tx} />
-          </li>
-        ))}
-      </ul>
+      <TransactionList className={className} alternateRows>
+        {transactions.map((tx, i) => <Transaction tx={tx} key={i} />)}
+      </TransactionList>
     )
   }
 }
