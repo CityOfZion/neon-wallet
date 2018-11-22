@@ -72,14 +72,26 @@ export default class Transaction extends React.Component<Props> {
     openExplorerTx(networkId, explorer, txid)
   }
 
+  renderTxDate = (time: ?number) => {
+    if (!time) {
+      return null
+    }
+
+    return (
+      <div className={styles.txDateContainer}>
+        {moment.unix(time).format('MM/DD/YYYY | HH:mm:ss')}
+      </div>
+    )
+  }
+
   renderAbstract = (type: string) => {
     const { tx } = this.props
-
-    const formattedTime = moment.unix(time).format('MM/DD/YYYY | HH:mm:ss')
     const { time, label, amount, isNetworkFee, to, from } = tx
 
     const contactTo = this.findContact(to)
     const contactToExists = contactTo !== to
+
+    const txDate = this.renderTxDate(time)
 
     switch (type) {
       case 'CLAIM':
@@ -90,7 +102,7 @@ export default class Transaction extends React.Component<Props> {
                 <ClaimIcon />
               </div>
             </div>
-            <div className={styles.txDateContainer}>{formattedTime}</div>
+            {txDate}
             <div className={styles.txLabelContainer}>{label}</div>
             <div className={styles.txAmountContainer}>{amount}</div>
             <div className={styles.txToContainer}>
@@ -116,7 +128,7 @@ export default class Transaction extends React.Component<Props> {
                 <SendIcon />
               </div>
             </div>
-            <div className={styles.txDateContainer}>{formattedTime}</div>
+            {txDate}
             <div className={styles.txLabelContainer}>{label}</div>
             <div className={styles.txAmountContainer}>{amount}</div>
             <div className={styles.txToContainer}>
@@ -161,7 +173,7 @@ export default class Transaction extends React.Component<Props> {
                 <ReceiveIcon />
               </div>
             </div>
-            <div className={styles.txDateContainer}>{formattedTime}</div>
+            {txDate}
             <div className={styles.txLabelContainer}>{label}</div>
             <div className={styles.txAmountContainer}>{amount}</div>
             <div className={styles.txToContainer}>
