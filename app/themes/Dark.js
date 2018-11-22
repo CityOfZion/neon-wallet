@@ -93,10 +93,10 @@ const SIDEBAR = {
   '--sidebar-active-icon': '#fff'
 }
 
-const TX_HISTORY = {
-  '--tx-history-odd-row': '#343B4A',
-  '--tx-history-button-icon': '#66ED87',
-  '--tx-history-copy-icon': '#66ED87'
+const TX_LIST = {
+  '--tx-list-odd-row': '#343B4A',
+  '--tx-list-button-icon': '#66ED87',
+  '--tx-list-copy-icon': '#66ED87'
 }
 
 const SETTINGS = {
@@ -149,7 +149,7 @@ export default {
   ...DASHBOARD,
   ...SIDEBAR,
   ...HEADER_BAR,
-  ...TX_HISTORY,
+  ...TX_LIST,
   ...SETTINGS,
   ...SEND
 }

@@ -46,7 +46,7 @@
 
     svg {
       path {
-        fill: var(--tx-history-copy-icon);
+        fill: var(--tx-list-copy-icon);
       }
     }
   }
@@ -84,7 +84,7 @@
 
   svg {
     path {
-      fill: var(--tx-history-button-icon) !important;
+      fill: var(--tx-list-button-icon) !important;
     }
   }
 }
