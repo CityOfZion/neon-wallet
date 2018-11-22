@@ -46,12 +46,7 @@ export default class Transaction extends React.Component<Props> {
   findContact = (address: string): Node => {
     const { contacts } = this.props
     if (contacts && !isEmpty(contacts)) {
-      let label
-      Object.keys(contacts).forEach(key => {
-        if (contacts[key] === address) {
-          label = key
-        }
-      })
+      const label = contacts[address]
       return label ? (
         <Tooltip title={address} className={styles.largerFont}>
           {label}
@@ -79,9 +74,9 @@ export default class Transaction extends React.Component<Props> {
 
   renderAbstract = (type: string) => {
     const { tx } = this.props
-    const { iconType, time, label, amount, isNetworkFee, to, from } = tx
 
     const formattedTime = moment.unix(time).format('MM/DD/YYYY | HH:mm:ss')
+    const { time, label, amount, isNetworkFee, to, from } = tx
 
     const contactTo = this.findContact(to)
     const contactToExists = contactTo !== to
