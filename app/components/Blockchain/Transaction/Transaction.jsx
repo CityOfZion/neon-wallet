@@ -4,6 +4,7 @@ import type { Node } from 'react'
 
 import moment from 'moment'
 import { isEmpty } from 'lodash-es'
+import classNames from 'classnames'
 
 import Button from '../../Button'
 import { openExplorerTx } from '../../../core/explorer'
@@ -22,15 +23,16 @@ type Props = {
   explorer: ExplorerType,
   contacts: Object,
   showAddContactModal: ({ address: string }) => null,
-  address: string
+  address: string,
+  className?: string
 }
 
 export default class Transaction extends React.Component<Props> {
   render = () => {
-    const { tx } = this.props
+    const { tx, className } = this.props
     const { iconType } = tx
     return (
-      <div className={styles.transactionContainer}>
+      <div className={classNames(styles.transactionContainer, className)}>
         {this.renderAbstract(iconType)}
         <Button
           className={styles.transactionHistoryButton}
@@ -46,12 +48,7 @@ export default class Transaction extends React.Component<Props> {
   findContact = (address: string): Node => {
     const { contacts } = this.props
     if (contacts && !isEmpty(contacts)) {
-      let label
-      Object.keys(contacts).forEach(key => {
-        if (contacts[key] === address) {
-          label = key
-        }
-      })
+      const label = contacts[address]
       return label ? (
         <Tooltip title={address} className={styles.largerFont}>
           {label}
@@ -77,14 +74,26 @@ export default class Transaction extends React.Component<Props> {
     openExplorerTx(networkId, explorer, txid)
   }
 
+  renderTxDate = (time: ?number) => {
+    if (!time) {
+      return null
+    }
+
+    return (
+      <div className={styles.txDateContainer}>
+        {moment.unix(time).format('MM/DD/YYYY | HH:mm:ss')}
+      </div>
+    )
+  }
+
   renderAbstract = (type: string) => {
     const { tx } = this.props
-    const { iconType, time, label, amount, isNetworkFee, to, from } = tx
-
-    const formattedTime = moment.unix(time).format('MM/DD/YYYY | HH:mm:ss')
+    const { time, label, amount, isNetworkFee, to, from } = tx
 
     const contactTo = this.findContact(to)
     const contactToExists = contactTo !== to
+
+    const txDate = this.renderTxDate(time)
 
     switch (type) {
       case 'CLAIM':
@@ -95,7 +104,7 @@ export default class Transaction extends React.Component<Props> {
                 <ClaimIcon />
               </div>
             </div>
-            <div className={styles.txDateContainer}>{formattedTime}</div>
+            {txDate}
             <div className={styles.txLabelContainer}>{label}</div>
             <div className={styles.txAmountContainer}>{amount}</div>
             <div className={styles.txToContainer}>
@@ -121,7 +130,7 @@ export default class Transaction extends React.Component<Props> {
                 <SendIcon />
               </div>
             </div>
-            <div className={styles.txDateContainer}>{formattedTime}</div>
+            {txDate}
             <div className={styles.txLabelContainer}>{label}</div>
             <div className={styles.txAmountContainer}>{amount}</div>
             <div className={styles.txToContainer}>
@@ -166,7 +175,7 @@ export default class Transaction extends React.Component<Props> {
                 <ReceiveIcon />
               </div>
             </div>
-            <div className={styles.txDateContainer}>{formattedTime}</div>
+            {txDate}
             <div className={styles.txLabelContainer}>{label}</div>
             <div className={styles.txAmountContainer}>{amount}</div>
             <div className={styles.txToContainer}>
