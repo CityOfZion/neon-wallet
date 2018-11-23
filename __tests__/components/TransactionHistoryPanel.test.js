@@ -53,7 +53,7 @@ const transactions = [
     amount: '0.11988459',
     asset: { symbol: 'GAS' },
     label: 'Gas Claim',
-    iconType: 'CLAIM',
+    type: 'CLAIM',
     id: '_ymelbt8mb'
   },
   {
@@ -66,7 +66,7 @@ const transactions = [
       symbol: 'MCT'
     },
     label: 'MCT',
-    iconType: 'RECEIVE',
+    type: 'RECEIVE',
     id: '_r3mihxg36'
   }
 ]

@@ -89,6 +89,12 @@ export const MODAL_TYPES = {
   RECEIVE: 'RECEIVE'
 }
 
+export const TX_TYPES = {
+  SEND: 'SEND',
+  RECEIVE: 'RECEIVE',
+  CLAIM: 'CLAIM'
+}
+
 export const MAIN_NETWORK_ID = '1'
 export const TEST_NETWORK_ID = '2'
 

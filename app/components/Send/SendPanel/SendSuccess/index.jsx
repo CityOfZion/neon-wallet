@@ -9,6 +9,7 @@ import { pluralize } from '../../../../util/pluralize'
 import { createFormattedDate } from '../../../../util/createFormattedDate'
 
 import styles from './SendSuccess.scss'
+import { TX_TYPES } from '../../../../core/constants'
 
 type Props = {
   sendRowDetails: Array<*>,
@@ -26,7 +27,7 @@ export default class SendSuccess extends React.Component<Props> {
     const { sendRowDetails, txid } = this.props
     // normalize tx data for Transaction
     const transactions = sendRowDetails.map(row => ({
-      iconType: 'SEND',
+      type: TX_TYPES.SEND,
       amount: row.amount,
       label: row.asset,
       to: row.address,
