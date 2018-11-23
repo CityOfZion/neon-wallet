@@ -4,6 +4,7 @@ import { api } from 'neon-js'
 import { createActions } from 'spunky'
 
 import { getDefaultTokens } from '../core/nep5'
+import { TX_TYPES, ASSETS } from '../core/constants'
 
 export const NEO_ID =
   'c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b'
@@ -17,14 +18,14 @@ type Props = {
 }
 
 function parseAbstractData(data, currentUserAddress, tokens) {
-  const parsedIconType = abstract => {
+  const parsedTxType = abstract => {
     if (
       abstract.address_to === currentUserAddress &&
       abstract.address_from !== 'claim'
     )
-      return 'RECEIVE'
-    if (abstract.address_from === 'claim') return 'CLAIM'
-    return 'SEND'
+      return TX_TYPES.RECEIVE
+    if (abstract.address_from === 'claim') return TX_TYPES.CLAIM
+    return TX_TYPES.SEND
   }
 
   const parsedAsset = abstract => {
@@ -32,12 +33,12 @@ function parseAbstractData(data, currentUserAddress, tokens) {
     if (token) return token
     if (abstract.asset === NEO_ID) {
       return {
-        symbol: 'NEO'
+        symbol: ASSETS.NEO
       }
     }
     if (abstract.asset === GAS_ID) {
       return {
-        symbol: 'GAS'
+        symbol: ASSETS.GAS
       }
     }
     return {}
@@ -56,8 +57,8 @@ function parseAbstractData(data, currentUserAddress, tokens) {
 
   return data.map(abstract => {
     const asset = parsedAsset(abstract)
-    const iconType = parsedIconType(abstract)
-    const summary = {
+    const type = parsedTxType(abstract)
+    const summary: TxEntryType = {
       to: parsedTo(abstract),
       isNetworkFee: abstract.address_to === 'fees',
       from: parsedFrom(abstract),
@@ -65,8 +66,8 @@ function parseAbstractData(data, currentUserAddress, tokens) {
       time: abstract.time,
       amount: abstract.amount,
       asset,
-      label: iconType === 'CLAIM' ? 'Gas Claim' : asset.symbol,
-      iconType,
+      label: type === TX_TYPES.CLAIM ? 'Gas Claim' : asset.symbol,
+      type,
       id: `_${Math.random()
         .toString(36)
         .substr(2, 9)}`

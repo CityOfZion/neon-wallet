@@ -8,6 +8,8 @@ import {
   NOTIFICATION_LEVELS,
   NOTIFICATION_POSITIONS,
   MODAL_TYPES,
+  TX_TYPES,
+  ASSETS,
   THEME,
 } from '../app/core/constants'
 
@@ -56,6 +58,19 @@ declare type TransactionHistoryType = {
 }
 
 declare type ModalType = $Values<typeof MODAL_TYPES>
+
+declare type TxType = $Values<typeof TX_TYPES>
+
+declare type TxEntryType = {
+  type: TxType,
+  txid: string,
+  to: string,
+  from?: string,
+  amount: number,
+  label: $Values<typeof ASSETS>,
+  time?: number,
+  isNetworkFee?: boolean
+}
 
 declare type SymbolType = string
 

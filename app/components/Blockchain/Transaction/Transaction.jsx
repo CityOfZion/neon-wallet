@@ -5,6 +5,7 @@ import type { Node } from 'react'
 import moment from 'moment'
 import { isEmpty } from 'lodash-es'
 import classNames from 'classnames'
+import { TX_TYPES } from '../../../core/constants'
 
 import Button from '../../Button'
 import { openExplorerTx } from '../../../core/explorer'
@@ -18,7 +19,7 @@ import CopyToClipboard from '../../CopyToClipboard'
 import Tooltip from '../../Tooltip'
 
 type Props = {
-  tx: Object,
+  tx: TxEntryType,
   networkId: string,
   explorer: ExplorerType,
   contacts: Object,
@@ -29,11 +30,13 @@ type Props = {
 
 export default class Transaction extends React.Component<Props> {
   render = () => {
-    const { tx, className } = this.props
-    const { iconType } = tx
+    const {
+      tx: { type },
+      className
+    } = this.props
     return (
       <div className={classNames(styles.transactionContainer, className)}>
-        {this.renderAbstract(iconType)}
+        {this.renderAbstract(type)}
         <Button
           className={styles.transactionHistoryButton}
           renderIcon={InfoIcon}
@@ -60,12 +63,8 @@ export default class Transaction extends React.Component<Props> {
     return address
   }
 
-  displayModal = () => {
-    const {
-      showAddContactModal,
-      tx: { to, from, iconType }
-    } = this.props
-    showAddContactModal({ address: iconType === 'RECEIVE' ? from : to })
+  displayModal = (address: string) => {
+    this.props.showAddContactModal({ address })
   }
 
   handleClick = () => {
@@ -87,8 +86,7 @@ export default class Transaction extends React.Component<Props> {
   }
 
   renderAbstract = (type: string) => {
-    const { tx } = this.props
-    const { time, label, amount, isNetworkFee, to, from } = tx
+    const { time, label, amount, isNetworkFee, to, from } = this.props.tx
 
     const contactTo = this.findContact(to)
     const contactToExists = contactTo !== to
@@ -96,7 +94,7 @@ export default class Transaction extends React.Component<Props> {
     const txDate = this.renderTxDate(time)
 
     switch (type) {
-      case 'CLAIM':
+      case TX_TYPES.CLAIM:
         return (
           <div className={styles.abstractContainer}>
             <div className={styles.txTypeIconContainer}>
@@ -122,7 +120,7 @@ export default class Transaction extends React.Component<Props> {
             <div className={styles.historyButtonPlaceholder} />
           </div>
         )
-      case 'SEND':
+      case TX_TYPES.SEND:
         return (
           <div className={styles.abstractContainer}>
             <div className={styles.txTypeIconContainer}>
@@ -155,7 +153,7 @@ export default class Transaction extends React.Component<Props> {
               <Button
                 className={styles.transactionHistoryButton}
                 renderIcon={ContactsAdd}
-                onClick={this.displayModal}
+                onClick={() => this.displayModal(to)}
                 disabled={contactToExists}
               >
                 Add
@@ -163,7 +161,11 @@ export default class Transaction extends React.Component<Props> {
             )}
           </div>
         )
-      case 'RECEIVE': {
+      case TX_TYPES.RECEIVE: {
+        if (!from) {
+          // shouldn't happen but for flow's sake
+          return null
+        }
         const contactFrom = this.findContact(from)
         const contactFromExists = contactFrom !== from
         const isMintTokens = from === 'MINT TOKENS'
@@ -195,7 +197,7 @@ export default class Transaction extends React.Component<Props> {
               <Button
                 className={styles.transactionHistoryButton}
                 renderIcon={ContactsAdd}
-                onClick={this.displayModal}
+                onClick={() => this.displayModal(from)}
                 disabled={contactFromExists}
               >
                 Add
