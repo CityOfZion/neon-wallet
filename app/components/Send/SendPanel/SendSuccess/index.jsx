@@ -2,12 +2,14 @@
 import React from 'react'
 
 import CheckMarkIcon from '../../../../assets/icons/confirm-circle.svg'
-import SendSuccessTransaction from './SendSuccessTransaction'
+import Transaction from '../../../Blockchain/Transaction'
+import TransactionList from '../../../Blockchain/Transaction/TransactionList'
 
 import { pluralize } from '../../../../util/pluralize'
 import { createFormattedDate } from '../../../../util/createFormattedDate'
 
 import styles from './SendSuccess.scss'
+import { TX_TYPES } from '../../../../core/constants'
 
 type Props = {
   sendRowDetails: Array<*>,
@@ -23,6 +25,14 @@ export default class SendSuccess extends React.Component<Props> {
 
   render() {
     const { sendRowDetails, txid } = this.props
+    // normalize tx data for Transaction
+    const transactions = sendRowDetails.map(row => ({
+      type: TX_TYPES.SEND,
+      amount: row.amount,
+      label: row.asset,
+      to: row.address,
+      txid
+    }))
     const numberOfItems = sendRowDetails.length
     return (
       <section>
@@ -44,17 +54,15 @@ export default class SendSuccess extends React.Component<Props> {
           <h2 className={styles.sendSuccessBodyHeaderText}>
             Asset {pluralize('Recipient', numberOfItems)}
           </h2>
-          <ul className={styles.sendSuccessBodyList}>
-            {sendRowDetails.map(row => (
-              <SendSuccessTransaction
-                key={row.id}
-                amount={row.amount}
-                asset={row.asset}
-                address={row.address}
-                txid={txid}
+          <TransactionList>
+            {transactions.map((tx, i) => (
+              <Transaction
+                tx={tx}
+                key={`sentTx${i}`}
+                className={styles.sendSuccessBodyListItem}
               />
             ))}
-          </ul>
+          </TransactionList>
         </div>
       </section>
     )
