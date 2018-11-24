@@ -9,7 +9,7 @@ import ArrowIcon from '../../../assets/icons/arrow.svg'
 import Close from '../../../assets/icons/close.svg'
 import AddIcon from '../../../assets/icons/add.svg'
 import BackButton from '../../BackButton'
-import { ROUTES } from '../../../core/constants'
+import { ROUTES, MODAL_TYPES } from '../../../core/constants'
 import styles from './EditContactPanel.scss'
 
 type Props = {
@@ -17,7 +17,9 @@ type Props = {
   name: string,
   address: string,
   onSave: Function,
-  deleteContact: Function
+  deleteContact: Function,
+  showSuccessNotification: Object => any,
+  showModal: (modalType: string, modalProps: Object) => any
 }
 
 export default class EditContactPanel extends React.Component<Props> {
@@ -73,9 +75,17 @@ export default class EditContactPanel extends React.Component<Props> {
   }
 
   handleDelete = () => {
-    const { name } = this.props
-    if (window.confirm(`Are you sure you want to delete contact "${name}"?`)) {
-      this.props.deleteContact(name)
-    }
+    const { name, showModal, showSuccessNotification } = this.props
+
+    showModal(MODAL_TYPES.CONFIRM, {
+      title: 'Confirm Delete',
+      text: `Please confirm removing contact - ${name}`,
+      onClick: () => {
+        this.props.deleteContact(name)
+        showSuccessNotification({
+          message: 'Contact removal was successful.'
+        })
+      }
+    })
   }
 }

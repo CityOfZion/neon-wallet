@@ -10,6 +10,10 @@ import {
   updateContactActions,
   deleteContactActions
 } from '../../../actions/contactsActions'
+import {
+  showErrorNotification,
+  showSuccessNotification
+} from '../../../modules/notifications'
 import withProgressChange from '../../../hocs/withProgressChange'
 import withFailureNotification from '../../../hocs/withFailureNotification'
 import { showModal } from '../../../modules/modal'
@@ -17,7 +21,9 @@ import { showModal } from '../../../modules/modal'
 const { LOADED } = progressValues
 
 const actionCreators = {
-  showModal
+  showModal,
+  showErrorNotification,
+  showSuccessNotification
 }
 
 const mapContactActionsToProps = (actions, props) => ({
