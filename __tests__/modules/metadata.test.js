@@ -1,6 +1,6 @@
 import nock from 'nock'
 
-import { checkVersion } from '../../app/modules/metadata'
+import { checkVersion, RETRY_CONFIG } from '../../app/modules/metadata'
 import * as notifications from '../../app/modules/notifications'
 import { TEST_NETWORK_ID } from '../../app/core/constants'
 import { version } from '../../package.json'
@@ -46,6 +46,23 @@ describe('metadata module tests', () => {
 
       await checkVersion()(dispatch, getState)
       expect(spy).toHaveBeenCalled()
+      done()
+    })
+
+    test('it retries when getting server error', async done => {
+      // original request
+      nock('https://api.github.com/repos/CityOfZion/neon-wallet')
+        .get('/releases/latest')
+        .reply(500, {}, { 'Access-Control-Allow-Origin': '*' })
+
+      // retries
+      nock('https://api.github.com/repos/CityOfZion/neon-wallet')
+        .get('/releases/latest')
+        .times(RETRY_CONFIG.retries)
+        .reply(500, {}, { 'Access-Control-Allow-Origin': '*' })
+
+      await checkVersion()(dispatch, getState)
+      expect(nock.isDone()).toBeTruthy();
       done()
     })
   })
