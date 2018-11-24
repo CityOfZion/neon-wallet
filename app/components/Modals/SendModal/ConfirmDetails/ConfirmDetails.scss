@@ -8,7 +8,9 @@
 
   .detailGroup {
     .detailName {
-      font-weight: bold;
+      font-family: var(--font-gotham-thin);
+      text-transform: uppercase;
+      font-size: 14px;
     }
 
     &:not(:first-child) {

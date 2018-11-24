@@ -95,10 +95,14 @@ export default class ReceiveModal extends React.Component<Props, State> {
             <div className={styles.sectionTitle}>PAYMENT REQUEST DETAILS</div>
             <div className={styles.sectionContent}>
               <div className={styles.assetAmount}>
+                <label>Amount: </label>
                 {(amount ? `${amount} ` : '') + (assetSymbol || 'NEO')}
               </div>
-              <div className={styles.address}>{address}</div>
+              <div className={styles.address}>
+                <label>Address: </label> {address}
+              </div>
               <div className={styles.description}>
+                <label> Reference: </label>
                 {description || '(No Reference)'}
               </div>
             </div>
