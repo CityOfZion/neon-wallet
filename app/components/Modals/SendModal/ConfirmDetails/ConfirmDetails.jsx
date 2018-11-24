@@ -34,13 +34,13 @@ export default class ConfirmDetails extends React.Component<Props> {
             </div>
 
             <div className={styles.detailGroup}>
-              <div className={styles.detailName}>Address:</div>
-              <div>{this.getRecipientData('address')}</div>
+              <div className={styles.detailName}>Amount:</div>
+              <div>{this.getRecipientData('amount')}</div>
             </div>
 
             <div className={styles.detailGroup}>
-              <div className={styles.detailName}>Amount:</div>
-              <div>{this.getRecipientData('amount')}</div>
+              <div className={styles.detailName}>Address:</div>
+              <div>{this.getRecipientData('address')}</div>
             </div>
 
             <div className={styles.detailGroup}>
