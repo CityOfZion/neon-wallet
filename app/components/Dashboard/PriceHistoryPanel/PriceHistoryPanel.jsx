@@ -5,7 +5,6 @@ import { find } from 'lodash-es'
 
 import PriceHistoryChart from './PriceHistoryChart'
 import Panel from '../../Panel'
-import BoundingBox from './BoundingBox'
 import StyledReactSelect from '../../Inputs/StyledReactSelect/StyledReactSelect'
 import {
   ASSETS,

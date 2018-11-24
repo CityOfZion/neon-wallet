@@ -1,7 +1,7 @@
 // @flow
 import { compose } from 'recompose'
 import { values, omit } from 'lodash-es'
-import { withData, withActions } from 'spunky'
+import { withData } from 'spunky'
 import { connect, type MapStateToProps } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
@@ -17,8 +17,6 @@ import withBalancesData from '../../hocs/withBalancesData'
 import withCurrencyData from '../../hocs/withCurrencyData'
 import withFilteredTokensData from '../../hocs/withFilteredTokensData'
 import contactsActions from '../../actions/contactsActions'
-import accountActions from '../../actions/accountActions'
-import withLoadingProp from '../../hocs/withLoadingProp'
 import balancesActions from '../../actions/balancesActions'
 import withSuccessNotification from '../../hocs/withSuccessNotification'
 import withFailureNotification from '../../hocs/withFailureNotification'

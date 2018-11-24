@@ -22,9 +22,8 @@ import { showErrorNotification } from '../../modules/notifications'
 
 import App from './App'
 import Loading from './Loading'
-import Failed from './Failed'
 
-const { LOADING, FAILED } = progressValues
+const { LOADING } = progressValues
 
 const actionCreators = {
   checkVersion,

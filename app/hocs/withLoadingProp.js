@@ -14,7 +14,7 @@ type Options = {
 
 export default function withLoadingProp(
   actions: Actions,
-  { propName = LOADING_PROP, ...options }: Options = {}
+  { ...options }: Options = {}
 ) {
   return compose(
     withProgress(actions, { propName: PROGRESS_PROP, ...options }),

@@ -34,7 +34,7 @@ export const ID = 'auth'
 
 export const wifLoginActions = createActions(
   ID,
-  ({ wif }: WifLoginProps) => (state: Object): AccountType => {
+  ({ wif }: WifLoginProps) => (): AccountType => {
     if (!wallet.isWIF(wif) && !wallet.isPrivateKey(wif)) {
       throw new Error('Invalid private key entered')
     }
@@ -77,7 +77,7 @@ export const nep2LoginActions = createActions(
 
 export const ledgerLoginActions = createActions(
   ID,
-  ({ publicKey }: LedgerLoginProps) => (state: Object): AccountType => {
+  ({ publicKey }: LedgerLoginProps) => (): AccountType => {
     const publicKeyEncoded = wallet.getPublicKeyEncoded(publicKey)
     const account = new wallet.Account(publicKeyEncoded)
 
@@ -90,14 +90,11 @@ export const ledgerLoginActions = createActions(
   }
 )
 
-export const logoutActions = createActions(
-  ID,
-  () => (state: Object): AccountType => {
-    resetBalanceState()
-    return null
-  }
-)
+export const logoutActions = createActions(ID, () => (): AccountType => {
+  resetBalanceState()
+  return null
+})
 
 // TODO: Better way to expose action data than to make a faux function?  One idea is to change
 //       `withData` to accept the `ID` exported from this file instead of a generated action.
-export default createActions(ID, () => (state: Object) => noop)
+export default createActions(ID, () => () => noop)

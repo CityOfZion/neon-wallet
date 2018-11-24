@@ -81,7 +81,7 @@ export default class NodeSelect extends React.Component<Props, State> {
   }
 
   handleRefreshNodeData = () => {
-    const { loading, loadNodesData, networkId } = this.props
+    const { loadNodesData, networkId } = this.props
     const { refreshDisabled } = this.state
     if (!refreshDisabled) {
       loadNodesData({ networkId })

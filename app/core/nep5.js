@@ -1,6 +1,5 @@
 // @flow
-import { map, isEmpty } from 'lodash-es'
-import axios from 'axios'
+import { map } from 'lodash-es'
 
 import { toBigNumber } from './math'
 import { COIN_DECIMAL_LENGTH } from './formatters'

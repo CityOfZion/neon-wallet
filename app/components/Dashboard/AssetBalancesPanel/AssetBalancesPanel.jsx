@@ -9,7 +9,6 @@ import Tooltip from '../../Tooltip'
 import { formatGAS, formatFiat, formatNEO } from '../../../core/formatters'
 import { toNumber, toBigNumber } from '../../../core/math'
 import { ASSETS, CURRENCIES } from '../../../core/constants'
-import RefreshIcon from '../../../assets/icons/refresh.svg'
 import LogoWithStrikethrough from '../../LogoWithStrikethrough'
 import styles from './AssetBalancesPanel.scss'
 

@@ -1,6 +1,5 @@
 // @flow
 import React from 'react'
-import ReactDOM from 'react-dom'
 import classNames from 'classnames'
 
 import Transactions from './Transactions'

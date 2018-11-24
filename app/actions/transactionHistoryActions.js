@@ -83,12 +83,13 @@ export const ID = 'transactionHistory'
 // hold entries in memory for infinite scroll
 let entries = []
 let page = 1
-let totalPages
 export default createActions(
   ID,
-  ({ net, address, shouldIncrementPagination = false }: Props = {}) => async (
-    state: Object
-  ) => {
+  ({
+    net,
+    address,
+    shouldIncrementPagination = false
+  }: Props = {}) => async () => {
     // If refresh action dispatched reset pagination
     // to grab the most recent abstracts
     if (!shouldIncrementPagination) {
@@ -101,7 +102,6 @@ export default createActions(
     const { data } = await axios.get(
       `${endpoint}/v1/get_address_abstracts/${address}/${page}`
     )
-    totalPages = data.total_pages
 
     const parsedEntries = parseAbstractData(data.entries, address, tokens)
     page += 1

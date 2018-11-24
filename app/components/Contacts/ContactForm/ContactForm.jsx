@@ -16,7 +16,6 @@ type Props = {
   formName: string,
   formAddress: string,
   mode?: string,
-  address: string,
   contacts: Object,
   setName: Function,
   newAddress?: boolean,
@@ -26,8 +25,7 @@ type Props = {
 
 type State = {
   nameError: string,
-  addressError: string,
-  ownAddress: string
+  addressError: string
 }
 
 export default class ContactForm extends React.Component<Props, State> {
@@ -36,8 +34,7 @@ export default class ContactForm extends React.Component<Props, State> {
 
     this.state = {
       nameError: '',
-      addressError: '',
-      ownAddress: this.props.address
+      addressError: ''
     }
   }
 
@@ -51,7 +48,7 @@ export default class ContactForm extends React.Component<Props, State> {
   }
 
   render() {
-    const { submitLabel, formName, mode, formAddress } = this.props
+    const { submitLabel, formName, formAddress } = this.props
     const { nameError, addressError } = this.state
 
     return (
@@ -159,7 +156,6 @@ export default class ContactForm extends React.Component<Props, State> {
   }
 
   validateAddress = (address: string) => {
-    const { ownAddress } = this.state
     const { mode, contacts, formAddress } = this.props
     let error
 

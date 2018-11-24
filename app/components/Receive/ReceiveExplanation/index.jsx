@@ -1,6 +1,5 @@
 // @flow
 import React from 'react'
-import classNames from 'classnames'
 
 import InfoIcon from '../../../assets/icons/info.svg'
 

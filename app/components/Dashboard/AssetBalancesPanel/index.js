@@ -31,7 +31,7 @@ const mapPricesDataToProps = ({ NEO, GAS }) => ({
   gasPrice: GAS
 })
 
-const mapPriceChangeDataToProps = (prices, props) => {
+const mapPriceChangeDataToProps = (prices: Object) => {
   const oldNeo = toBigNumber(prices[ASSETS.NEO][0].close)
   const newNeo = toBigNumber(
     prices[ASSETS.NEO][prices[ASSETS.NEO].length - 1].close
@@ -47,7 +47,7 @@ const mapPriceChangeDataToProps = (prices, props) => {
   }
 }
 
-const mapBalancesActionsToProps = (actions, props) => ({
+const mapBalancesActionsToProps = (actions: Object, props: Object) => ({
   refresh: () =>
     actions.call({
       net: props.net,

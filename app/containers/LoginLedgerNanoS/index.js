@@ -13,11 +13,11 @@ import LoginLedgerNanoS from './LoginLedgerNanoS'
 import ledgerActions from '../../actions/ledgerActions'
 import { ledgerLoginActions } from '../../actions/authActions'
 
-const mapLedgerActionsToProps = actions => ({
+const mapLedgerActionsToProps = () => ({
   connect: () => ledgerActions.call()
 })
 
-const mapAccountActionsToProps = actions => ({
+const mapAccountActionsToProps = () => ({
   login: publicKey => ledgerLoginActions.call({ publicKey })
 })
 

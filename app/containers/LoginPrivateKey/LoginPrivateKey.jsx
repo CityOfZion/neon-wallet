@@ -1,7 +1,6 @@
 // @flow
 import React from 'react'
 import Instascan from 'instascan'
-import classNames from 'classnames'
 
 import Button from '../../components/Button'
 import PasswordInput from '../../components/Inputs/PasswordInput/PasswordInput'

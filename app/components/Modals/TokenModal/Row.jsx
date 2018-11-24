@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 
 import Delete from 'react-icons/lib/md/delete'
-import LockOutline from 'react-icons/lib/md/lock-outline'
 import Tooltip from '../../Tooltip'
 
 import styles from './Row.scss'

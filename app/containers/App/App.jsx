@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 
 import { ROUTES } from '../../core/constants'
 import Sidebar from './Sidebar'
-import Footer from './Footer'
 import ModalRenderer from '../ModalRenderer'
 import Notifications from '../Notifications'
 import withThemeData from '../../hocs/withThemeData'

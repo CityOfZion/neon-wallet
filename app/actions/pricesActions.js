@@ -4,11 +4,7 @@ import { createActions } from 'spunky'
 
 import { getDefaultTokens } from '../core/nep5'
 import { getSettings } from './settingsActions'
-import { DEFAULT_CURRENCY_CODE, ASSETS } from '../core/constants'
-
-type Props = {
-  currency?: string
-}
+import { ASSETS } from '../core/constants'
 
 function mapPrices(pricingData: Array<any>, currency) {
   const upperCasedCurrency = currency.toUpperCase()
@@ -50,8 +46,4 @@ async function getPrices() {
 
 export const ID = 'prices'
 
-export default createActions(
-  ID,
-  ({ currency = DEFAULT_CURRENCY_CODE }: Props = {}) => (state: Object) =>
-    getPrices()
-)
+export default createActions(ID, () => () => getPrices())

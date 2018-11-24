@@ -17,8 +17,6 @@ type Props = {
   address: string,
   accounts: Array<any>,
   prices: Object,
-  loading: boolean,
-  loadWalletData: Function,
   showReceiveModal: Function,
   networkId: string
 }
@@ -46,8 +44,6 @@ export default class Receive extends React.Component<Props, State> {
     const {
       sendableAssets,
       currencyCode,
-      loading,
-      loadWalletData,
       address,
       showReceiveModal,
       networkId

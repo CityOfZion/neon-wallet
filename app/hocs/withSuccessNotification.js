@@ -29,7 +29,7 @@ export default function withSuccessNotification(
   message: Message,
   options: Object = {}
 ) {
-  const mapDisptchToProps = (dispatch, ownProps) => ({
+  const mapDispatchToProps = (dispatch: DispatchType) => ({
     [NOTIFICATION_PROP]: (...args) => dispatch(showSuccessNotification(...args))
   })
 
@@ -56,7 +56,7 @@ export default function withSuccessNotification(
     return compose(
       connect(
         null,
-        mapDisptchToProps
+        mapDispatchToProps
       ),
       withProgress(actions, { ...options, propName: PROGRESS_PROP })
     )(LoadedNotifier)

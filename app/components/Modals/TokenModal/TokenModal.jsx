@@ -1,11 +1,9 @@
 // @flow
 import React, { Component } from 'react'
-import { reject, noop, isEqual, cloneDeep } from 'lodash-es'
+import { reject, noop, cloneDeep } from 'lodash-es'
 
 import { getNewTokenItem, validateTokens } from './utils'
 
-import { TEST_NETWORK_ID } from '../../../core/constants'
-import Tooltip from '../../Tooltip'
 import BaseModal from '../BaseModal'
 import Button from '../../Button'
 import Row from './Row'

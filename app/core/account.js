@@ -18,7 +18,7 @@ export async function upgradeNEP6AddAddresses(
   const loggedIntoAccount = new wallet.Account(wif)
 
   if (data && data.accounts) {
-    const accounts = data.accounts.map((account, idx) => ({
+    const accounts = data.accounts.map(account => ({
       ...account,
       ...getNEP6AddressData(
         account.key === encryptedWIF,

@@ -1,6 +1,5 @@
 import React from 'react'
 import Select from 'react-select'
-import { omit } from 'lodash-es'
 
 const returnDropdownIndicatorColor = props => {
   if (props.selectProps.settingsSelect) return 'var(--settings-link-text)'

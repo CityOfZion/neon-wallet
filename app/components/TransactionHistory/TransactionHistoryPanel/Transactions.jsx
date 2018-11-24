@@ -5,9 +5,6 @@ import classNames from 'classnames'
 import Transaction from '../../Blockchain/Transaction'
 import TransactionList from '../../Blockchain/Transaction/TransactionList'
 import LogoWithStrikethrough from '../../LogoWithStrikethrough'
-import { ASSETS } from '../../../core/constants'
-import { isZero } from '../../../core/math'
-import { formatBalance } from '../../../core/formatters'
 
 import styles from './Transactions.scss'
 
