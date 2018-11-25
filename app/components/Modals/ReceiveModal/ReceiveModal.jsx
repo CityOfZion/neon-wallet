@@ -96,7 +96,7 @@ export default class ReceiveModal extends React.Component<Props, State> {
             <div className={styles.sectionContent}>
               <div className={styles.assetAmount}>
                 <label>Asset: </label>
-                {assetSymbol || 'NEO'}
+                {assetSymbol || ASSETS.NEO}
               </div>
               <div className={styles.assetAmount}>
                 <label>Amount: </label>
