@@ -163,6 +163,7 @@ export const recoverWallet = (wallet: Object): Promise<*> =>
             : `Wallets named ${toSentence(labels)} already exist locally.`
 
         reject(Error(errMsg))
+        return
       }
 
       // eslint-disable-next-line
