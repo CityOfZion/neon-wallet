@@ -17,8 +17,8 @@ type Props = {
   name: string,
   address: string,
   onSave: Function,
-  deleteContact: Function,
-  showSuccessNotification: Object => any,
+  deleteContact: string => void,
+  showSuccessNotification: ({ message: string }) => void,
   showModal: (modalType: string, modalProps: Object) => any
 }
 
