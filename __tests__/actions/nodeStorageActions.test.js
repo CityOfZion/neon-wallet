@@ -4,7 +4,7 @@ import nock from 'nock'
 import nodeStorageActions, {
   determineIfCacheIsExpired,
   getRPCEndpoint,
-  parseUrlData
+  buildNodeUrl
 } from '../../app/actions/nodeStorageActions'
 import {
   TEST_NETWORK_ID,
@@ -79,7 +79,7 @@ describe('nodeStorageActions', () => {
     test('returns an RPC endpoint', async () => {
       nock.enableNetConnect()
       const selectedNode = await getRPCEndpoint(TEST_NETWORK_LABEL)
-      const arrOfCandidates = NODES_TEST_NET.map(parseUrlData)
+      const arrOfCandidates = NODES_TEST_NET.map(buildNodeUrl)
       expect(arrOfCandidates).toContain(selectedNode)
       nock.disableNetConnect()
     })

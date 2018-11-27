@@ -11,7 +11,9 @@ import {
   TX_TYPES,
   ASSETS,
   THEME,
-  NETWORK_LABELS
+  NETWORK_LABELS,
+  MAIN_NETWORK_LABEL,
+  TEST_NETWORK_LABEL
 } from '../app/core/constants'
 
 declare type ActionCreatorType = any
@@ -29,7 +31,7 @@ declare type ReduxAction = () => {
 
 declare type NetworkType = string
 
-declare type NetworkLabelTypes = $Values<typeof NETWORK_LABELS>
+declare type NetworkLabelTypes = MAIN_NETWORK_LABEL | TEST_NETWORK_LABEL
 
 declare type ExplorerType = $Values<Explorer>
 

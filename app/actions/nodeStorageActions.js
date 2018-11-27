@@ -1,6 +1,6 @@
 // @flow
 import { createActions } from 'spunky'
-import { isEmpty, random, get } from 'lodash-es'
+import { isEmpty, random, get, compact } from 'lodash-es'
 import { rpc, api } from 'neon-js'
 
 import { getStorage, setStorage } from '../core/storage'
@@ -31,15 +31,16 @@ export const determineIfCacheIsExpired = (
   expiration: number = CACHE_EXPIRATION
 ): boolean => timestamp + expiration < new Date().getTime()
 
-export const parseUrlData = (data: {
+export const buildNodeUrl = (data: {
   height: number,
   port: string,
   protocol: string,
   url: string
 }): string => {
-  let url = data.protocol ? `${data.protocol}://${data.url}` : data.url
-  url = data.port ? `${url}:${data.port}` : url
-  return url
+  const { protocol, url, port } = data
+  return compact([protocol && `${protocol}://`, url, port && `:${port}`]).join(
+    ''
+  )
 }
 
 export const getRPCEndpoint = async (
@@ -70,7 +71,7 @@ export const getRPCEndpoint = async (
         data => !excludeCritera.some(criteria => data.url.includes(criteria))
       )
       .map(data => {
-        const url = parseUrlData(data)
+        const url = buildNodeUrl(data)
         const client = new rpc.RPCClient(url)
         // eslint-disable-next-line
         data.client = client
@@ -112,9 +113,7 @@ export const getNode = async (net: Net): Promise<string> => {
   const storage = await getStorage(`${STORAGE_KEY}-${net}`).catch(console.error)
   const nodeInStorage = get(storage, 'node')
   const expiration = get(storage, 'timestamp')
-  if (!nodeInStorage) return ''
-  if (!expiration) return ''
-  if (determineIfCacheIsExpired(expiration)) {
+  if (!nodeInStorage || !expiration || determineIfCacheIsExpired(expiration)) {
     return ''
   }
   return nodeInStorage
