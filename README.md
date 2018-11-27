@@ -20,7 +20,7 @@
 </p>
 
 <p align="center">
-  <img src="/wallet.png">
+  <img src="./app/assets/images/wallet.png">
 </p>
 
 ## Overview

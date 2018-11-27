@@ -23,7 +23,6 @@
     "prepush": "echo 'running flow...' && yarn flow && echo 'running lint...' && yarn lint && echo 'running tests...' && yarn test",
     "electron-rebuild": "electron-rebuild --force --module_dir . -w node-hid",
     "flow": "flow check",
-    "release-master": "./scripts/release-master.sh",
     "format": "prettier --write '**/*.{js,jsx,.scss,.css}'",
     "clean": "rm -r app/dist/*",
     "storybook": "start-storybook -p 9001 -c .storybook"

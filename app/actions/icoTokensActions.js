@@ -5,7 +5,7 @@ import { createActions } from 'spunky'
 
 import { getNode, getRPCEndpoint } from './nodeStorageActions'
 
-import ICOTokenList from '../../ICOTokens.json'
+import ICOTokenList from '../core/ICOTokens.json'
 
 type Props = {
   net: string,
