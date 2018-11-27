@@ -84,7 +84,7 @@ async function getBalances({ net, address }: Props) {
   else if (inMemoryAddress !== address) adressHasChanged = true
 
   const chunks = tokens
-    .filter(token => !token.isUserGenerated)
+    .filter(token => !token.isUserGenerated && token.networkId === network.id)
     .reduce((accum, currVal) => {
       if (!accum.length) {
         accum.push([currVal.scriptHash])
