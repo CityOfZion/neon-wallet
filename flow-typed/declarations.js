@@ -122,5 +122,23 @@ declare type SendEntryType = {
   symbol: SymbolType
 }
 
- 
- declare type ThemeType = THEME.LIGHT | THEME.DARK
+declare type ThemeType = THEME.LIGHT | THEME.DARK
+
+// polyfill flow's bom since Node does implement navigator.mediaDevices
+declare interface Navigator extends Navigator {
+  mediaDevices: MediaDevicesType;
+}
+
+// https://mdn.io/MediaDevices
+// https://mdn.io/MediaDevices/enumerateDevices
+declare type MediaDevicesType = {
+  enumerateDevices(): Promise<Array<MediaDeviceInfoType>>
+}
+
+// https://mdn.io/MediaDeviceInfo
+declare type MediaDeviceInfoType = {
+  deviceId: string,
+  groupId: string,
+  kind: 'videoinput' | 'audioinput' | 'audiooutput',
+  label: string
+}

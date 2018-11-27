@@ -10,7 +10,8 @@ import Close from '../../assets/icons/close.svg'
 import styles from '../Home/Home.scss'
 
 type Props = {
-  loginWithPrivateKey: Function
+  loginWithPrivateKey: Function,
+  cameraAvailable: boolean
 }
 
 type State = {
@@ -35,7 +36,7 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
   }
 
   render = () => {
-    const { loginWithPrivateKey } = this.props
+    const { loginWithPrivateKey, cameraAvailable } = this.props
     const { wif, scannerActive } = this.state
 
     return (
@@ -84,6 +85,7 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
                   primary
                   renderIcon={GridIcon}
                   onClick={this.toggleScanner}
+                  disabled={!cameraAvailable}
                 >
                   Scan QR
                 </Button>

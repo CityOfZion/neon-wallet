@@ -4,6 +4,7 @@ import { withActions } from 'spunky'
 
 import LoginPrivateKey from './LoginPrivateKey'
 import withFailureNotification from '../../hocs/withFailureNotification'
+import withCameraAvailability from '../../hocs/withCameraAvailability'
 import { wifLoginActions } from '../../actions/authActions'
 
 const mapActionsToProps = actions => ({
@@ -12,5 +13,6 @@ const mapActionsToProps = actions => ({
 
 export default compose(
   withActions(wifLoginActions, mapActionsToProps),
-  withFailureNotification(wifLoginActions)
+  withFailureNotification(wifLoginActions),
+  withCameraAvailability
 )(LoginPrivateKey)
