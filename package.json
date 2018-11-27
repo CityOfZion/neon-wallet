@@ -72,6 +72,7 @@
   "dependencies": {
     "@ledgerhq/hw-transport-node-hid": "4.7.6",
     "axios": "0.17.0",
+    "axios-retry": "3.1.1",
     "bignumber.js": "5.0.0",
     "buffer": "5.0.8",
     "chai": "^4.1.2",
