@@ -25,10 +25,15 @@ let inMemoryBalances = {}
 let hasTriggeredAudio = false
 let inMemoryAddress
 let inMemoryNetwork
+let sound
 
-const sound = new Howl({
-  src: [coinAudioSample]
-})
+// TODO: leverage a better solution to supress warnings stemming
+// from jest tests
+if (process.env.NODE_ENV !== 'test') {
+  sound = new Howl({
+    src: [coinAudioSample]
+  })
+}
 
 export const ID = 'balances'
 
