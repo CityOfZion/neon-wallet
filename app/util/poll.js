@@ -3,18 +3,30 @@ import delay from './delay'
 const DEFAULT_ATTEMPTS = Infinity
 const DEFAULT_FREQUENCY = 1000
 
+export class CancellationError extends Error {
+  constructor() {
+    super('Polling was actively cancelled')
+    this.name = 'CancellationError'
+  }
+}
+
 export class TimeoutError extends Error {
   constructor() {
-    super('Poll reached maximum attempts')
+    super('Polling reached max attempts')
     this.name = 'TimeoutError'
   }
 }
 
-export default function poll(
+export function cancellablePoll(
   request,
   { attempts = DEFAULT_ATTEMPTS, frequency = DEFAULT_FREQUENCY } = {}
 ) {
-  return request().catch(function retry() {
+  let hasCancelled = false
+  const promise = request().catch(function retry() {
+    if (hasCancelled) {
+      throw new CancellationError()
+    }
+
     // eslint-disable-next-line
     if (attempts-- > 0) {
       return delay(frequency)
@@ -23,4 +35,15 @@ export default function poll(
     }
     throw new TimeoutError()
   })
+
+  return {
+    promise,
+    cancel() {
+      hasCancelled = true
+    }
+  }
+}
+
+export default function poll(request, config) {
+  return cancellablePoll(request, config).promise
 }

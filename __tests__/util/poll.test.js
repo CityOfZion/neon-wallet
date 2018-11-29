@@ -1,4 +1,8 @@
-import poll, { TimeoutError } from '../../app/util/poll'
+import poll, {
+  TimeoutError,
+  CancellationError,
+  cancellablePoll
+} from '../../app/util/poll'
 
 describe('poll functionality', () => {
   test('should stop when condition fulfilled', async () => {
@@ -28,6 +32,30 @@ describe('poll functionality', () => {
     } catch (e) {
       expect(e.name).toBe(TimeoutError.name) // expect it to reach max attempts
       expect(condition).toHaveBeenCalledTimes(11) // expect to have run 10 (+1) attempts
+    }
+  })
+})
+
+describe('cancellable functionality', () => {
+  test('should be cancellable', async () => {
+    // 10 rounds of 10ms
+    const pollCfg = { attempts: 10, frequency: 10 }
+    let attempts = 3, pl
+
+    // reject until on 3rd attempt call cancel()
+    const condition = jest.fn(() => {
+      if (--attempts === 0) {
+        pl.cancel()
+      }
+      return Promise.reject()
+    })
+    pl = cancellablePoll(condition, pollCfg)
+
+    try {
+      await pl.promise // run poll
+    } catch(e) {
+      expect(e.name).toBe(CancellationError.name) // expect it to have been cancelled
+      expect(condition).toHaveBeenCalledTimes(3) // expect to have run 3 times until cancellation
     }
   })
 })
