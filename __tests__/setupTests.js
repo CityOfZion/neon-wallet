@@ -9,7 +9,6 @@ configure({ adapter: new Adapter() })
 
 beforeAll(() => {
   api.setSwitchFreeze(true)
-  nock.disableNetConnect()
 })
 
 afterAll(() => {
