@@ -22,7 +22,7 @@ export function cancellablePoll(
   { attempts = DEFAULT_ATTEMPTS, frequency = DEFAULT_FREQUENCY } = {}
 ) {
   let hasCancelled = false
-  const promise = request().catch(function retry() {
+  const retry = () => {
     if (hasCancelled) {
       throw new CancellationError()
     }
@@ -34,7 +34,8 @@ export function cancellablePoll(
         .catch(retry)
     }
     throw new TimeoutError()
-  })
+  }
+  const promise = request().catch(retry)
 
   return {
     promise,
