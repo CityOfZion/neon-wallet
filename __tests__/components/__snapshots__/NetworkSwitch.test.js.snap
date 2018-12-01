@@ -307,35 +307,6 @@ exports[`NetworkSwitch renders without crashing 1`] = `
               }
             }
             setValue={[Function]}
-            theme={
-              Object {
-                "borderRadius": 4,
-                "colors": Object {
-                  "danger": "#DE350B",
-                  "dangerLight": "#FFBDAD",
-                  "neutral0": "hsl(0, 0%, 100%)",
-                  "neutral10": "hsl(0, 0%, 90%)",
-                  "neutral20": "hsl(0, 0%, 80%)",
-                  "neutral30": "hsl(0, 0%, 70%)",
-                  "neutral40": "hsl(0, 0%, 60%)",
-                  "neutral5": "hsl(0, 0%, 95%)",
-                  "neutral50": "hsl(0, 0%, 50%)",
-                  "neutral60": "hsl(0, 0%, 40%)",
-                  "neutral70": "hsl(0, 0%, 30%)",
-                  "neutral80": "hsl(0, 0%, 20%)",
-                  "neutral90": "hsl(0, 0%, 10%)",
-                  "primary": "#2684FF",
-                  "primary25": "#DEEBFF",
-                  "primary50": "#B2D4FF",
-                  "primary75": "#4C9AFF",
-                },
-                "spacing": Object {
-                  "baseUnit": 4,
-                  "controlHeight": 38,
-                  "menuGutter": 8,
-                },
-              }
-            }
           >
             <div
               className="css-10nd86i react-select-container"
@@ -458,38 +429,9 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                   }
                 }
                 setValue={[Function]}
-                theme={
-                  Object {
-                    "borderRadius": 4,
-                    "colors": Object {
-                      "danger": "#DE350B",
-                      "dangerLight": "#FFBDAD",
-                      "neutral0": "hsl(0, 0%, 100%)",
-                      "neutral10": "hsl(0, 0%, 90%)",
-                      "neutral20": "hsl(0, 0%, 80%)",
-                      "neutral30": "hsl(0, 0%, 70%)",
-                      "neutral40": "hsl(0, 0%, 60%)",
-                      "neutral5": "hsl(0, 0%, 95%)",
-                      "neutral50": "hsl(0, 0%, 50%)",
-                      "neutral60": "hsl(0, 0%, 40%)",
-                      "neutral70": "hsl(0, 0%, 30%)",
-                      "neutral80": "hsl(0, 0%, 20%)",
-                      "neutral90": "hsl(0, 0%, 10%)",
-                      "primary": "#2684FF",
-                      "primary25": "#DEEBFF",
-                      "primary50": "#B2D4FF",
-                      "primary75": "#4C9AFF",
-                    },
-                    "spacing": Object {
-                      "baseUnit": 4,
-                      "controlHeight": 38,
-                      "menuGutter": 8,
-                    },
-                  }
-                }
               >
                 <div
-                  className="css-pi6jxv react-select__control"
+                  className="css-1ui96em react-select__control"
                   onMouseDown={[Function]}
                   onTouchEnd={[Function]}
                 >
@@ -602,38 +544,9 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                       }
                     }
                     setValue={[Function]}
-                    theme={
-                      Object {
-                        "borderRadius": 4,
-                        "colors": Object {
-                          "danger": "#DE350B",
-                          "dangerLight": "#FFBDAD",
-                          "neutral0": "hsl(0, 0%, 100%)",
-                          "neutral10": "hsl(0, 0%, 90%)",
-                          "neutral20": "hsl(0, 0%, 80%)",
-                          "neutral30": "hsl(0, 0%, 70%)",
-                          "neutral40": "hsl(0, 0%, 60%)",
-                          "neutral5": "hsl(0, 0%, 95%)",
-                          "neutral50": "hsl(0, 0%, 50%)",
-                          "neutral60": "hsl(0, 0%, 40%)",
-                          "neutral70": "hsl(0, 0%, 30%)",
-                          "neutral80": "hsl(0, 0%, 20%)",
-                          "neutral90": "hsl(0, 0%, 10%)",
-                          "primary": "#2684FF",
-                          "primary25": "#DEEBFF",
-                          "primary50": "#B2D4FF",
-                          "primary75": "#4C9AFF",
-                        },
-                        "spacing": Object {
-                          "baseUnit": 4,
-                          "controlHeight": 38,
-                          "menuGutter": 8,
-                        },
-                      }
-                    }
                   >
                     <div
-                      className="css-6zqqc react-select__value-container react-select__value-container--has-value"
+                      className="css-1n98qky react-select__value-container react-select__value-container--has-value"
                     >
                       <SingleValue
                         clearValue={[Function]}
@@ -752,38 +665,9 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                           }
                         }
                         setValue={[Function]}
-                        theme={
-                          Object {
-                            "borderRadius": 4,
-                            "colors": Object {
-                              "danger": "#DE350B",
-                              "dangerLight": "#FFBDAD",
-                              "neutral0": "hsl(0, 0%, 100%)",
-                              "neutral10": "hsl(0, 0%, 90%)",
-                              "neutral20": "hsl(0, 0%, 80%)",
-                              "neutral30": "hsl(0, 0%, 70%)",
-                              "neutral40": "hsl(0, 0%, 60%)",
-                              "neutral5": "hsl(0, 0%, 95%)",
-                              "neutral50": "hsl(0, 0%, 50%)",
-                              "neutral60": "hsl(0, 0%, 40%)",
-                              "neutral70": "hsl(0, 0%, 30%)",
-                              "neutral80": "hsl(0, 0%, 20%)",
-                              "neutral90": "hsl(0, 0%, 10%)",
-                              "primary": "#2684FF",
-                              "primary25": "#DEEBFF",
-                              "primary50": "#B2D4FF",
-                              "primary75": "#4C9AFF",
-                            },
-                            "spacing": Object {
-                              "baseUnit": 4,
-                              "controlHeight": 38,
-                              "menuGutter": 8,
-                            },
-                          }
-                        }
                       >
                         <div
-                          className="css-ljsv20 react-select__single-value"
+                          className="css-mdengd react-select__single-value"
                         >
                           MainNet
                         </div>
@@ -920,35 +804,6 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                       }
                     }
                     setValue={[Function]}
-                    theme={
-                      Object {
-                        "borderRadius": 4,
-                        "colors": Object {
-                          "danger": "#DE350B",
-                          "dangerLight": "#FFBDAD",
-                          "neutral0": "hsl(0, 0%, 100%)",
-                          "neutral10": "hsl(0, 0%, 90%)",
-                          "neutral20": "hsl(0, 0%, 80%)",
-                          "neutral30": "hsl(0, 0%, 70%)",
-                          "neutral40": "hsl(0, 0%, 60%)",
-                          "neutral5": "hsl(0, 0%, 95%)",
-                          "neutral50": "hsl(0, 0%, 50%)",
-                          "neutral60": "hsl(0, 0%, 40%)",
-                          "neutral70": "hsl(0, 0%, 30%)",
-                          "neutral80": "hsl(0, 0%, 20%)",
-                          "neutral90": "hsl(0, 0%, 10%)",
-                          "primary": "#2684FF",
-                          "primary25": "#DEEBFF",
-                          "primary50": "#B2D4FF",
-                          "primary75": "#4C9AFF",
-                        },
-                        "spacing": Object {
-                          "baseUnit": 4,
-                          "controlHeight": 38,
-                          "menuGutter": 8,
-                        },
-                      }
-                    }
                   >
                     <div
                       className="css-1wy0on6 react-select__indicators"
@@ -1063,35 +918,6 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                           }
                         }
                         setValue={[Function]}
-                        theme={
-                          Object {
-                            "borderRadius": 4,
-                            "colors": Object {
-                              "danger": "#DE350B",
-                              "dangerLight": "#FFBDAD",
-                              "neutral0": "hsl(0, 0%, 100%)",
-                              "neutral10": "hsl(0, 0%, 90%)",
-                              "neutral20": "hsl(0, 0%, 80%)",
-                              "neutral30": "hsl(0, 0%, 70%)",
-                              "neutral40": "hsl(0, 0%, 60%)",
-                              "neutral5": "hsl(0, 0%, 95%)",
-                              "neutral50": "hsl(0, 0%, 50%)",
-                              "neutral60": "hsl(0, 0%, 40%)",
-                              "neutral70": "hsl(0, 0%, 30%)",
-                              "neutral80": "hsl(0, 0%, 20%)",
-                              "neutral90": "hsl(0, 0%, 10%)",
-                              "primary": "#2684FF",
-                              "primary25": "#DEEBFF",
-                              "primary50": "#B2D4FF",
-                              "primary75": "#4C9AFF",
-                            },
-                            "spacing": Object {
-                              "baseUnit": 4,
-                              "controlHeight": 38,
-                              "menuGutter": 8,
-                            },
-                          }
-                        }
                       >
                         <span
                           className="css-1hyfx7x react-select__indicator-separator"
@@ -1214,35 +1040,6 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                           }
                         }
                         setValue={[Function]}
-                        theme={
-                          Object {
-                            "borderRadius": 4,
-                            "colors": Object {
-                              "danger": "#DE350B",
-                              "dangerLight": "#FFBDAD",
-                              "neutral0": "hsl(0, 0%, 100%)",
-                              "neutral10": "hsl(0, 0%, 90%)",
-                              "neutral20": "hsl(0, 0%, 80%)",
-                              "neutral30": "hsl(0, 0%, 70%)",
-                              "neutral40": "hsl(0, 0%, 60%)",
-                              "neutral5": "hsl(0, 0%, 95%)",
-                              "neutral50": "hsl(0, 0%, 50%)",
-                              "neutral60": "hsl(0, 0%, 40%)",
-                              "neutral70": "hsl(0, 0%, 30%)",
-                              "neutral80": "hsl(0, 0%, 20%)",
-                              "neutral90": "hsl(0, 0%, 10%)",
-                              "primary": "#2684FF",
-                              "primary25": "#DEEBFF",
-                              "primary50": "#B2D4FF",
-                              "primary75": "#4C9AFF",
-                            },
-                            "spacing": Object {
-                              "baseUnit": 4,
-                              "controlHeight": 38,
-                              "menuGutter": 8,
-                            },
-                          }
-                        }
                       >
                         <div
                           aria-hidden="true"
