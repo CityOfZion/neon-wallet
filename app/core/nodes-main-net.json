@@ -1,13 +1,5 @@
 [
   {
-    "service": "neoScan",
-    "url": "https://neoscan.io/api/main_net/v1/",
-    "location": "United States",
-    "address": "104.25.126.31",
-    "locale": "us",
-    "type": "REST"
-  },
-  {
     "protocol": "https",
     "url": "seed1.switcheo.network",
     "location": "Singapore",
@@ -26,22 +18,6 @@
   {
     "protocol": "https",
     "url": "seed3.switcheo.network",
-    "location": "Singapore",
-    "port": "10331",
-    "locale": "sg",
-    "type": "RPC"
-  },
-  {
-    "protocol": "https",
-    "url": "seed4.switcheo.network",
-    "location": "Singapore",
-    "port": "10331",
-    "locale": "sg",
-    "type": "RPC"
-  },
-  {
-    "protocol": "https",
-    "url": "seed5.switcheo.network",
     "location": "Singapore",
     "port": "10331",
     "locale": "sg",
@@ -122,14 +98,6 @@
     "location": "Canada",
     "address": "47.91.92.192",
     "locale": "ca",
-    "type": "RPC"
-  },
-  {
-    "protocol": "http",
-    "url": "api.otcgo.cn",
-    "location": "China",
-    "address": "121.42.26.131",
-    "locale": "cn",
     "type": "RPC"
   },
   {
@@ -261,38 +229,6 @@
     "type": "RPC"
   },
   {
-    "protocol": "https",
-    "url": "seed1.redpulse.com",
-    "location": "Frankfurt",
-    "locale": "de",
-    "port": "443",
-    "type": "RPC"
-  },
-  {
-    "protocol": "https",
-    "url": "seed2.redpulse.com",
-    "location": "Singapore",
-    "locale": "sg",
-    "port": "443",
-    "type": "RPC"
-  },
-  {
-    "protocol": "https",
-    "url": "pyrpc1.redpulse.com",
-    "location": "Frankfurt",
-    "locale": "de",
-    "port": "10331",
-    "type": "RPC"
-  },
-  {
-    "protocol": "https",
-    "url": "pyrpc2.redpulse.com",
-    "location": "Singapore",
-    "locale": "sg",
-    "port": "10331",
-    "type": "RPC"
-  },
-  {
     "protocol": "http",
     "url": "pyrpc1.redpulse.com",
     "location": "Frankfurt",
@@ -307,75 +243,6 @@
     "locale": "sg",
     "port": "10332",
     "type": "RPC"
-  },
-  {
-    "protocol": "https",
-    "url": "seed.o3node.org",
-    "location": "Tokyo",
-    "address": "13.230.26.79",
-    "locale": "jp",
-    "port": "10331",
-    "type": "RPC"
-  },
-  {
-    "protocol": "https",
-    "url": "pyrpc1.narrative.org",
-    "location": "Texas",
-    "locale": "us",
-    "port": "443",
-    "type": "RPC"
-  },
-  {
-    "service": "pyrest",
-    "url": "https://pyrest1.narrative.org/v1/",
-    "location": "Texas",
-    "locale": "us",
-    "type": "REST"
-  },
-  {
-    "protocol": "https",
-    "url": "pyrpc2.narrative.org",
-    "location": "New York",
-    "locale": "us",
-    "port": "443",
-    "type": "RPC"
-  },
-  {
-    "service": "pyrest",
-    "url": "https://pyrest2.narrative.org/v1/",
-    "location": "New York",
-    "locale": "us",
-    "type": "REST"
-  },
-  {
-    "protocol": "https",
-    "url": "pyrpc3.narrative.org",
-    "location": "London",
-    "locale": "gb",
-    "port": "443",
-    "type": "RPC"
-  },
-  {
-    "service": "pyrest",
-    "url": "https://pyrest3.narrative.org/v1/",
-    "location": "London",
-    "locale": "gb",
-    "type": "REST"
-  },
-  {
-    "protocol": "https",
-    "url": "pyrpc4.narrative.org",
-    "location": "Amsterdam",
-    "locale": "nl",
-    "port": "443",
-    "type": "RPC"
-  },
-  {
-    "service": "pyrest",
-    "url": "https://pyrest4.narrative.org/v1/",
-    "location": "Amsterdam",
-    "locale": "nl",
-    "type": "REST"
   },
   {
     "protocol": "http",
@@ -414,15 +281,6 @@
     "type": "RPC"
   },
   {
-    "protocol": "http",
-    "url": "pyrpc1.nodeneo.ch",
-    "location": "Switzerland",
-    "address": "178.195.151.229",
-    "locale": "ch",
-    "port": "10332",
-    "type": "RPC"
-  },
-  {
     "protocol": "https",
     "url": "seed1.spotcoin.com",
     "location": "Frankfurt",
@@ -431,15 +289,6 @@
     "port": "10332",
     "type": "RPC"
   },
-  {
-    "protocol": "http",
-    "url": "rustylogic.ddns.net",
-    "location": "London",
-    "locale": "gb",
-    "port": "10332",
-    "type": "RPC"
-  },
-
   {
     "protocol": "http",
     "url": "seed1.ngd.network",
