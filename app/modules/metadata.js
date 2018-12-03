@@ -1,7 +1,9 @@
 // @flow
+import React from 'react'
 import axios from 'axios'
 import retry from 'axios-retry'
 import compareVersions from 'compare-versions'
+import { shell } from 'electron'
 
 import { showWarningNotification } from './notifications'
 import {
@@ -10,7 +12,6 @@ import {
 } from '../core/constants'
 import { version } from '../../package.json'
 
-const DOWNLOAD_LINK = `<a href='${NEON_WALLET_RELEASE_LINK}' target='_blank' class="notification-link">${NEON_WALLET_RELEASE_LINK}</a>`
 const CURRENT_RELEASE_URL =
   'https://api.github.com/repos/CityOfZion/neon-wallet/releases/latest'
 export const RETRY_CONFIG = {
@@ -21,13 +22,13 @@ export const RETRY_CONFIG = {
 
 // Actions
 export const checkVersion = () => async (dispatch: DispatchType) => {
-  const showError = message =>
+  const showError = children =>
     dispatch(
       showWarningNotification({
-        message,
         autoDismiss: 0,
         stack: true,
-        position: NOTIFICATION_POSITIONS.BOTTOM_CENTER
+        position: NOTIFICATION_POSITIONS.BOTTOM_CENTER,
+        children
       })
     )
 
@@ -53,7 +54,15 @@ export const checkVersion = () => async (dispatch: DispatchType) => {
 
     if (shouldUpdate) {
       showError(
-        `Your wallet is out of date! Please download the latest version from ${DOWNLOAD_LINK}`
+        <div>
+          Your wallet is out of date! Please download the latest version from{' '}
+          <div
+            className="notification-download-link"
+            onClick={() => shell.openExternal(NEON_WALLET_RELEASE_LINK)}
+          >
+            {NEON_WALLET_RELEASE_LINK}
+          </div>
+        </div>
       )
     }
   } catch (_) {} // eslint-disable-line no-empty

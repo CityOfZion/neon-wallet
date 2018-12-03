@@ -139,6 +139,14 @@ app.on('ready', () => {
       inputMenu.popup(mainWindow)
     })
 
+    mainWindow.webContents.on('will-navigate', (e, url) => {
+      console.log('will-nav', url, mainWindow.webContents.getURL())
+      if (url.substr(0, 21) !== 'http://localhost:3000') {
+        e.preventDefault()
+        shell.openExternal(url)
+      }
+    })
+
     if (process.env.START_HOT) {
       mainWindow.loadURL(`http://localhost:${port}/dist`)
     } else {
