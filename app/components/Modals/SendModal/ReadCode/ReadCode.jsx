@@ -11,7 +11,7 @@ import baseStyles from '../SendModal.scss'
 import styles from './ReadCode.scss'
 
 type Props = {
-  gotoNextStep: Function,
+  gotoNextStep: (content: string, stopScanner: Function) => void,
   cameraAvailable: boolean
 }
 

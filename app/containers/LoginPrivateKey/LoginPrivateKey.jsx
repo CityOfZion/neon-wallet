@@ -10,7 +10,7 @@ import Close from '../../assets/icons/close.svg'
 import styles from '../Home/Home.scss'
 
 type Props = {
-  loginWithPrivateKey: Function,
+  loginWithPrivateKey: (content: string) => void,
   cameraAvailable: boolean
 }
 
