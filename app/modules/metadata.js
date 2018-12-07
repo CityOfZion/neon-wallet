@@ -3,7 +3,7 @@ import React from 'react'
 import axios from 'axios'
 import retry from 'axios-retry'
 import compareVersions from 'compare-versions'
-import { shell } from 'electron'
+import { ConditionalLink } from '../util/ConditionalLink'
 
 import { showWarningNotification } from './notifications'
 import {
@@ -56,12 +56,9 @@ export const checkVersion = () => async (dispatch: DispatchType) => {
       showError(
         <div>
           Your wallet is out of date! Please download the latest version from{' '}
-          <div
-            className="notification-download-link"
-            onClick={() => shell.openExternal(NEON_WALLET_RELEASE_LINK)}
-          >
+          <ConditionalLink href={NEON_WALLET_RELEASE_LINK}>
             {NEON_WALLET_RELEASE_LINK}
-          </div>
+          </ConditionalLink>
         </div>
       )
     }
