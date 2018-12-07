@@ -11,7 +11,8 @@ import baseStyles from '../SendModal.scss'
 import styles from './ReadCode.scss'
 
 type Props = {
-  gotoNextStep: Function
+  gotoNextStep: (content: string, stopScanner: Function) => void,
+  cameraAvailable: boolean
 }
 
 type State = {
@@ -36,6 +37,7 @@ export default class ReadCode extends React.Component<Props, State> {
   }
 
   render() {
+    const { cameraAvailable } = this.props
     const { scannerActive } = this.state
 
     return (
@@ -72,7 +74,11 @@ export default class ReadCode extends React.Component<Props, State> {
           </div>
         </div>
         <div className={styles.scanButtonContainer}>
-          <Button primary onClick={this.toggleScanner}>
+          <Button
+            primary
+            onClick={this.toggleScanner}
+            disabled={!scannerActive && !cameraAvailable}
+          >
             {scannerActive ? 'Cancel' : 'Capture'}
           </Button>
         </div>

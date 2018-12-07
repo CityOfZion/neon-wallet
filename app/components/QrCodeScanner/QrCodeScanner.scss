@@ -1,0 +1,16 @@
+.error {
+  color: var(--input-label);
+  text-align: center;
+  .heading svg {
+    vertical-align: middle;
+    position: relative;
+    top: -2px;
+    path {
+      fill: var(--input-error)
+    }
+  }
+  .desc {
+    font-size: 14px;
+    padding: 10px 50px 0;
+  }
+}
