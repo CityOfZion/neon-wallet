@@ -63,6 +63,10 @@ const overrideStyles = {
       fontWeight: 200,
       backgroundColor: 'none',
       opacity: '0.8'
+    },
+    warning: {
+      color: '#000000',
+      opacity: 0.4
     }
   }
 }
