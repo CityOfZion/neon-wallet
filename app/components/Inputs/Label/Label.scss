@@ -1,8 +1,29 @@
+@import '../../../styles/animations';
+
 .label {
   font-weight: bold;
   font-size: 12px;
   text-transform: uppercase;
   opacity: var(--input-label-opacity);
   color: var(--input-label);
-  margin-bottom: 10px;
+}
+
+.labelContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  min-height: 24px;
+
+  svg {
+    animation: spin 2s linear infinite;
+    margin-left: 5px;
+    path {
+      fill: #5c677f;
+    }
+  }
+}
+
+.additionalContentContainer {
+  margin-left: auto;
 }

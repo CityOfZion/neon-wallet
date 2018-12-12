@@ -235,7 +235,7 @@ export const getPublicKeys = async (
 ): Promise<Array<{ account: number, key: string }>> => {
   const ledger = await NeonLedger.init()
   try {
-    return ledger.getPublicKeys(acct)
+    return await ledger.getPublicKeys(acct)
   } finally {
     await ledger.close()
   }
@@ -244,7 +244,7 @@ export const getPublicKeys = async (
 export const getDeviceInfo = async () => {
   const ledger = await NeonLedger.init()
   try {
-    return ledger.getDeviceInfo()
+    return await ledger.getDeviceInfo()
   } finally {
     await ledger.close()
   }

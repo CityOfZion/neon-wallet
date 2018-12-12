@@ -47,10 +47,14 @@ type State = {
   isLoading: boolean,
   addressOption: SelectOption | null,
   publicKeys: Array<LedgerPublicKey>,
-  loadingPublicKeys: boolean
+  loadingPublicKeys: boolean,
+  error: string | null
 }
 
 const POLL_FREQUENCY_MS = 1000
+
+const FETCH_INITIAL_KEYS_ERROR = 'Error fetching public keys.'
+const FETCH_ADDITIONAL_KEYS_ERROR = 'Error fetching additional public keys.'
 
 export default class LoginLedgerNanoS extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -59,7 +63,8 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
       ...this.computeStateFromProps(props),
       addressOption: null,
       publicKeys: [],
-      loadingPublicKeys: true
+      loadingPublicKeys: true,
+      error: null
     }
   }
 
@@ -125,13 +130,11 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
       <div id="loginLedgerNanoS" className={styles.flexContainer}>
         <form>
           {this.renderStatus()}
-          <div className={styles.publicAddressLabelContainer}>
-            <Label label="public address:" />
-            {loadingPublicKeys && (
-              <RefreshIcon className={styles.ledgerStageRefreshIcon} />
-            )}
-          </div>
-
+          <Label
+            loading={loadingPublicKeys}
+            label="public address:"
+            renderAdditionalContent={this.renderAdditionalLabelContent}
+          />
           <StyledReactSelect
             value={this.state.addressOption}
             onChange={addressOption => this.setState({ addressOption })}
@@ -157,33 +160,80 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
   }
 
   fetchInitialKeys = async () => {
-    const publicKeys = await getPublicKeys()
-
-    const initialPublicKey = publicKeys[0]
-
-    this.setState({
-      publicKeys,
-      loadingPublicKeys: false,
-      addressOption: {
-        value: initialPublicKey.key,
-        label: this.unencodedHexToAddress(initialPublicKey.key)
-      }
+    const publicKeys = await getPublicKeys().catch(() => {
+      console.error('An error occurred getting public keys from ledger')
+      this.setState({
+        error: FETCH_INITIAL_KEYS_ERROR
+      })
     })
+
+    if (publicKeys) {
+      const initialPublicKey = publicKeys[0]
+
+      this.setState({
+        publicKeys,
+        loadingPublicKeys: false,
+        addressOption: {
+          value: initialPublicKey.key,
+          label: this.unencodedHexToAddress(initialPublicKey.key)
+        }
+      })
+    }
   }
 
   fetchAdditionalKeys = async () => {
     const { publicKeys } = this.state
 
-    this.setState({ loadingPublicKeys: true })
+    this.setState({ loadingPublicKeys: true, error: null })
 
     const lastAccountLoaded = publicKeys[publicKeys.length - 1].account
 
-    const nextBatchOfKeys = await getPublicKeys(lastAccountLoaded)
+    const nextBatchOfKeys = await getPublicKeys(lastAccountLoaded).catch(() => {
+      console.error(
+        'An error occurred getting additional public keys from ledger'
+      )
+      this.setState({
+        error: FETCH_ADDITIONAL_KEYS_ERROR
+      })
+    })
 
-    this.setState(state => ({
-      publicKeys: [...state.publicKeys, ...nextBatchOfKeys],
-      loadingPublicKeys: false
-    }))
+    if (nextBatchOfKeys) {
+      this.setState(state => ({
+        publicKeys: [...state.publicKeys, ...nextBatchOfKeys],
+        loadingPublicKeys: false
+      }))
+    }
+  }
+
+  renderAdditionalLabelContent = () => {
+    const { loadingPublicKeys, error } = this.state
+    if (!loadingPublicKeys && !error) {
+      return (
+        <a
+          onClick={this.fetchAdditionalKeys}
+          className={styles.fetchAdditionalLedgerKeysLink}
+        >
+          Fetch additional public keys
+        </a>
+      )
+    }
+    if (!loadingPublicKeys && error) {
+      return (
+        <div className={styles.errorLoadingPublicKeysContainer}>
+          <p> {error} </p>{' '}
+          <a
+            onClick={
+              error === FETCH_ADDITIONAL_KEYS_ERROR
+                ? this.fetchAdditionalKeys
+                : this.fetchInitialKeys
+            }
+            className={styles.fetchAdditionalLedgerKeysLink}
+          >
+            Retry?
+          </a>
+        </div>
+      )
+    }
   }
 
   unencodedHexToAddress = (hexString: string) => {
