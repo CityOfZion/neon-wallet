@@ -110,6 +110,7 @@ export default class NeonLedger {
   ) {
     const res = await this.send('80040000', BIP44(acct), [VALID_STATUS])
     const key = await res.toString('hex').substring(0, 130)
+
     if (unencodedPublicKeys.length < batchSize) {
       unencodedPublicKeys.push({ account: acct, key })
       const nextKey = acct + 1
@@ -234,8 +235,7 @@ export const getPublicKeys = async (
 ): Promise<Array<{ account: number, key: string }>> => {
   const ledger = await NeonLedger.init()
   try {
-    const keys = await ledger.getPublicKeys(acct)
-    return keys
+    return ledger.getPublicKeys(acct)
   } finally {
     await ledger.close()
   }

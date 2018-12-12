@@ -45,7 +45,7 @@ type SelectOption = {
 type State = {
   ledgerStage: LedgerConnectionStage,
   isLoading: boolean,
-  address: SelectOption | null,
+  addressOption: SelectOption | null,
   publicKeys: Array<LedgerPublicKey>,
   loadingPublicKeys: boolean
 }
@@ -57,7 +57,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
     super(props)
     this.state = {
       ...this.computeStateFromProps(props),
-      address: null,
+      addressOption: null,
       publicKeys: [],
       loadingPublicKeys: true
     }
@@ -70,7 +70,6 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    // $FlowFixMe
     this.intervalId = setInterval(this.props.connect, POLL_FREQUENCY_MS)
     if (this.props.progress === LOADED) {
       this.fetchInitialKeys()
@@ -92,7 +91,6 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
   computeStateFromProps = (props: Props) => {
     if (props.progress === LOADED) {
       if (this.intervalId) {
-        // $FlowFixMe
         clearInterval(this.intervalId)
       }
       return {
@@ -115,7 +113,6 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
 
   componentWillUnmount() {
     if (this.intervalId) {
-      // $FlowFixMe
       clearInterval(this.intervalId)
     }
   }
@@ -123,6 +120,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
   render() {
     const options = this.createOptionsFromKeys()
     const { loadingPublicKeys } = this.state
+
     return (
       <div id="loginLedgerNanoS" className={styles.flexContainer}>
         <form>
@@ -135,10 +133,10 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
           </div>
 
           <StyledReactSelect
-            value={this.state.address}
-            onChange={address => this.setState({ address })}
+            value={this.state.addressOption}
+            onChange={addressOption => this.setState({ addressOption })}
             options={options}
-            onMenuScrollToBottom={() => this.fetchAdditionalKeys()}
+            onMenuScrollToBottom={this.fetchAdditionalKeys}
             isSearchable
           />
           <Button
@@ -158,23 +156,28 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
     )
   }
 
-  async fetchInitialKeys() {
+  fetchInitialKeys = async () => {
     const publicKeys = await getPublicKeys()
+    const initialPublicKey = publicKeys[0]
+
     this.setState({
       publicKeys,
       loadingPublicKeys: false,
-      address: {
-        value: publicKeys[0].key,
-        label: this.unencodedHexToAddress(publicKeys[0].key)
+      addressOption: {
+        value: initialPublicKey.key,
+        label: this.unencodedHexToAddress(initialPublicKey.key)
       }
     })
   }
 
-  async fetchAdditionalKeys() {
+  fetchAdditionalKeys = async () => {
     const { publicKeys } = this.state
+
     this.setState({ loadingPublicKeys: true })
+
     const lastAccountLoaded = publicKeys[publicKeys.length - 1].account
     const nextBatchOfKeys = await getPublicKeys(lastAccountLoaded)
+
     this.setState(state => ({
       publicKeys: [...state.publicKeys, ...nextBatchOfKeys],
       loadingPublicKeys: false
@@ -183,13 +186,14 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
 
   unencodedHexToAddress = (hexString: string) => {
     const encodedKey = wallet.getPublicKeyEncoded(hexString)
+
     return new wallet.Account(encodedKey).address
   }
 
   createOptionsFromKeys = () => {
-    const options = this.state.publicKeys.map(key => ({
-      label: this.unencodedHexToAddress(key.key),
-      value: key.key
+    const options = this.state.publicKeys.map((publicKey: LedgerPublicKey) => ({
+      label: this.unencodedHexToAddress(publicKey.key),
+      value: publicKey.key
     }))
     return options
   }
@@ -235,9 +239,11 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
   }
 
   handleLogin = () => {
-    if (this.state.publicKeys.length && this.state.address) {
+    if (this.state.publicKeys.length && this.state.addressOption) {
       const keyData = this.state.publicKeys.find(
-        key => this.state.address && this.state.address.value === key.key
+        publicKey =>
+          this.state.addressOption &&
+          this.state.addressOption.value === publicKey.key
       )
       if (keyData) {
         this.props.login(keyData)
@@ -245,5 +251,5 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
     }
   }
 
-  canLogin = () => this.props.progress === LOADED && this.state.address
+  canLogin = () => this.props.progress === LOADED && this.state.addressOption
 }
