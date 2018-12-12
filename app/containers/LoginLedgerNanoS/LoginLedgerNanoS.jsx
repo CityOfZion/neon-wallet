@@ -158,6 +158,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
 
   fetchInitialKeys = async () => {
     const publicKeys = await getPublicKeys()
+
     const initialPublicKey = publicKeys[0]
 
     this.setState({
@@ -176,6 +177,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
     this.setState({ loadingPublicKeys: true })
 
     const lastAccountLoaded = publicKeys[publicKeys.length - 1].account
+
     const nextBatchOfKeys = await getPublicKeys(lastAccountLoaded)
 
     this.setState(state => ({
@@ -210,6 +212,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
 
   renderStatus = () => {
     const { ledgerStage } = this.state
+
     return (
       <div className={styles.ledgerStagesContainer}>
         <div
