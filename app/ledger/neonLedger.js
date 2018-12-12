@@ -103,6 +103,21 @@ export default class NeonLedger {
     return Promise.resolve()
   }
 
+  async getPublicKeys(
+    acct: number = 0,
+    unencodedPublicKeys: Array<{ account: number, key: string }> = [],
+    batchSize: number = 10
+  ) {
+    const res = await this.send('80040000', BIP44(acct), [VALID_STATUS])
+    const key = await res.toString('hex').substring(0, 130)
+    if (unencodedPublicKeys.length < batchSize) {
+      unencodedPublicKeys.push({ account: acct, key })
+      const nextKey = acct + 1
+      return this.getPublicKeys(nextKey, unencodedPublicKeys)
+    }
+    return unencodedPublicKeys
+  }
+
   /**
    * Retrieves the public key of an account from the Ledger.
    * @param {number} [acct] - Account that you want to retrieve the public key from.
@@ -214,10 +229,13 @@ const assembleSignature = (response: string): string => {
   return integers.join('')
 }
 
-export const getPublicKey = async (acct: number = 0): Promise<string> => {
+export const getPublicKeys = async (
+  acct: number = 0
+): Promise<Array<{ account: number, key: string }>> => {
   const ledger = await NeonLedger.init()
   try {
-    return await ledger.getPublicKey(acct)
+    const keys = await ledger.getPublicKeys(acct)
+    return keys
   } finally {
     await ledger.close()
   }
@@ -226,7 +244,7 @@ export const getPublicKey = async (acct: number = 0): Promise<string> => {
 export const getDeviceInfo = async () => {
   const ledger = await NeonLedger.init()
   try {
-    return await ledger.getDeviceInfo()
+    return ledger.getDeviceInfo()
   } finally {
     await ledger.close()
   }

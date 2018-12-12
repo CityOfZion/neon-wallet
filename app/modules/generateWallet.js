@@ -227,6 +227,13 @@ export const generateNewWalletAccount = (
         return dispatchError('A wallet with this name already exists locally')
       }
 
+      if (walletHasKey(storedWallet, encryptedWIF)) {
+        onFailure()
+        return dispatchError(
+          'A wallet with this address already exists locally'
+        )
+      }
+
       dispatch(
         saveAccountActions.call({
           isImport,

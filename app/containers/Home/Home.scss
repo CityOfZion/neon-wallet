@@ -74,6 +74,28 @@ $navigation-margin: 20px;
   }
 }
 
+.ledgerStagesContainer {
+  margin: -40px 0 15px 0;
+}
+
+.publicAddressLabelContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  min-height: 24px;
+
+  label {
+    margin-bottom: 0 !important;
+  }
+
+  svg {
+    margin-left: 5px;
+    path {
+      fill: #5c677f;
+    }
+  }
+}
+
 .ledgerStage {
   font-family: var(--font-gotham-book);
   margin-top: 0;

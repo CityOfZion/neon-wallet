@@ -3,6 +3,7 @@ import axios from 'axios'
 import { api } from 'neon-js'
 import { createActions } from 'spunky'
 
+import { getRPCEndpoint } from './nodeStorageActions'
 import { getDefaultTokens } from '../core/nep5'
 import { TX_TYPES, ASSETS } from '../core/constants'
 
@@ -17,7 +18,7 @@ type Props = {
   shouldIncrementPagination: boolean
 }
 
-function parseAbstractData(data, currentUserAddress, tokens) {
+async function parseAbstractData(data, currentUserAddress, tokens, net) {
   const parsedTxType = abstract => {
     if (
       abstract.address_to === currentUserAddress &&
@@ -28,7 +29,7 @@ function parseAbstractData(data, currentUserAddress, tokens) {
     return TX_TYPES.SEND
   }
 
-  const parsedAsset = abstract => {
+  const parsedAsset = async abstract => {
     const token = tokens.find(token => token.scriptHash === abstract.asset)
     if (token) return token
     if (abstract.asset === NEO_ID) {
@@ -41,7 +42,16 @@ function parseAbstractData(data, currentUserAddress, tokens) {
         symbol: ASSETS.GAS
       }
     }
-    return {}
+    const endpoint = await getRPCEndpoint(net)
+    const tokenInfo = await api.nep5
+      .getToken(endpoint, abstract.asset)
+      .catch(e => {
+        console.error(e)
+        return {}
+      })
+    return {
+      symbol: tokenInfo.symbol
+    }
   }
 
   const parsedTo = abstract => {
@@ -55,8 +65,11 @@ function parseAbstractData(data, currentUserAddress, tokens) {
     return abstract.address_from
   }
 
-  return data.map(abstract => {
-    const asset = parsedAsset(abstract)
+  const results = []
+  // eslint-disable-next-line no-restricted-syntax
+  for (const abstract of data) {
+    // eslint-disable-next-line no-await-in-loop
+    const asset = await parsedAsset(abstract)
     const type = parsedTxType(abstract)
     const summary: TxEntryType = {
       to: parsedTo(abstract),
@@ -73,8 +86,9 @@ function parseAbstractData(data, currentUserAddress, tokens) {
         .substr(2, 9)}`
     }
 
-    return summary
-  })
+    results.push(summary)
+  }
+  return results
 }
 
 export const ID = 'transactionHistory'
@@ -103,7 +117,12 @@ export default createActions(
       `${endpoint}/v1/get_address_abstracts/${address}/${page}`
     )
 
-    const parsedEntries = parseAbstractData(data.entries, address, tokens)
+    const parsedEntries = await parseAbstractData(
+      data.entries,
+      address,
+      tokens,
+      net
+    )
     page += 1
     if (shouldIncrementPagination) {
       if (page === 1) entries = []

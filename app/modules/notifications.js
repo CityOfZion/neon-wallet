@@ -4,14 +4,15 @@ import { reject, uniqueId } from 'lodash-es'
 import { NOTIFICATION_LEVELS, NOTIFICATION_POSITIONS } from '../core/constants'
 
 type NotificationArgsType = {
-  message: string,
+  message?: string,
   id?: string,
   title?: string,
   position?: $Values<typeof NOTIFICATION_POSITIONS>,
   dismissible?: boolean,
   autoDismiss?: number,
   autoDismiss?: number,
-  stack?: boolean
+  stack?: boolean,
+  children?: React$Node
 }
 
 type NotificationFactoryArgsType = {

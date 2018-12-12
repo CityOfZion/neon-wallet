@@ -1,13 +1,18 @@
 // @flow
 import React from 'react'
+import { wallet } from 'neon-js'
 import { progressValues } from 'spunky'
 import classNames from 'classnames'
+import { get } from 'lodash-es'
 
 import Button from '../../components/Button'
+import StyledReactSelect from '../../components/Inputs/StyledReactSelect/StyledReactSelect'
+import Label from '../../components/Inputs/Label'
 import LoginIcon from '../../assets/icons/login.svg'
 import ConfirmIcon from '../../assets/icons/confirm.svg'
 import RefreshIcon from '../../assets/icons/refresh.svg'
 import styles from '../Home/Home.scss'
+import { getPublicKeys } from '../../ledger/ledgerNanoS'
 
 import { MESSAGES } from '../../ledger/neonLedger'
 
@@ -23,17 +28,26 @@ const { NOT_CONNECTED, OPEN_APP, CONNECTED } = LEDGER_CONNECTION_STAGES
 
 type LedgerConnectionStage = $Values<typeof LEDGER_CONNECTION_STAGES>
 
+type LedgerPublicKey = { account: number, key: string }
+
 type Props = {
   progress: string,
   login: Function,
   connect: Function,
-  publicKey: ?string,
   error: ?string
+}
+
+type SelectOption = {
+  label: string,
+  value: string
 }
 
 type State = {
   ledgerStage: LedgerConnectionStage,
-  isLoading: boolean
+  isLoading: boolean,
+  address: SelectOption | null,
+  publicKeys: Array<LedgerPublicKey>,
+  loadingPublicKeys: boolean
 }
 
 const POLL_FREQUENCY_MS = 1000
@@ -41,15 +55,26 @@ const POLL_FREQUENCY_MS = 1000
 export default class LoginLedgerNanoS extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
-
-    this.state = this.computeStateFromProps(props)
+    this.state = {
+      ...this.computeStateFromProps(props),
+      address: null,
+      publicKeys: [],
+      loadingPublicKeys: true
+    }
   }
 
   intervalId: ?number
 
+  static defaultProps = {
+    publicKeys: []
+  }
+
   componentDidMount() {
     // $FlowFixMe
     this.intervalId = setInterval(this.props.connect, POLL_FREQUENCY_MS)
+    if (this.props.progress === LOADED) {
+      this.fetchInitialKeys()
+    }
   }
 
   componentWillReceiveProps(nextProps: Props) {
@@ -58,11 +83,22 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
     if (progress !== nextProps.progress || error !== nextProps.error) {
       this.setState(this.computeStateFromProps(nextProps))
     }
+
+    if (this.props !== LOADED && nextProps.progress === LOADED) {
+      this.fetchInitialKeys()
+    }
   }
 
   computeStateFromProps = (props: Props) => {
     if (props.progress === LOADED) {
-      return { ledgerStage: CONNECTED, isLoading: false }
+      if (this.intervalId) {
+        // $FlowFixMe
+        clearInterval(this.intervalId)
+      }
+      return {
+        ledgerStage: CONNECTED,
+        isLoading: false
+      }
     }
     if (props.progress === FAILED && props.error) {
       return {
@@ -85,10 +121,26 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
   }
 
   render() {
+    const options = this.createOptionsFromKeys()
+    const { loadingPublicKeys } = this.state
     return (
       <div id="loginLedgerNanoS" className={styles.flexContainer}>
         <form>
           {this.renderStatus()}
+          <div className={styles.publicAddressLabelContainer}>
+            <Label label="public address:" />
+            {loadingPublicKeys && (
+              <RefreshIcon className={styles.ledgerStageRefreshIcon} />
+            )}
+          </div>
+
+          <StyledReactSelect
+            value={this.state.address}
+            onChange={address => this.setState({ address })}
+            options={options}
+            onMenuScrollToBottom={() => this.fetchAdditionalKeys()}
+            isSearchable
+          />
           <Button
             id="loginButton"
             primary
@@ -106,6 +158,42 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
     )
   }
 
+  async fetchInitialKeys() {
+    const publicKeys = await getPublicKeys()
+    this.setState({
+      publicKeys,
+      loadingPublicKeys: false,
+      address: {
+        value: publicKeys[0].key,
+        label: this.unencodedHexToAddress(publicKeys[0].key)
+      }
+    })
+  }
+
+  async fetchAdditionalKeys() {
+    const { publicKeys } = this.state
+    this.setState({ loadingPublicKeys: true })
+    const lastAccountLoaded = publicKeys[publicKeys.length - 1].account
+    const nextBatchOfKeys = await getPublicKeys(lastAccountLoaded)
+    this.setState(state => ({
+      publicKeys: [...state.publicKeys, ...nextBatchOfKeys],
+      loadingPublicKeys: false
+    }))
+  }
+
+  unencodedHexToAddress = (hexString: string) => {
+    const encodedKey = wallet.getPublicKeyEncoded(hexString)
+    return new wallet.Account(encodedKey).address
+  }
+
+  createOptionsFromKeys = () => {
+    const options = this.state.publicKeys.map(key => ({
+      label: this.unencodedHexToAddress(key.key),
+      value: key.key
+    }))
+    return options
+  }
+
   getStatusIcon = (ledgerStage: LedgerConnectionStage) => {
     if (this.state.isLoading && this.state.ledgerStage === ledgerStage) {
       return <RefreshIcon className={styles.ledgerStageRefreshIcon} />
@@ -119,7 +207,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
   renderStatus = () => {
     const { ledgerStage } = this.state
     return (
-      <div>
+      <div className={styles.ledgerStagesContainer}>
         <div
           className={classNames(styles.ledgerStage, {
             [styles.ledgerStageActive]: ledgerStage === NOT_CONNECTED,
@@ -147,8 +235,15 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
   }
 
   handleLogin = () => {
-    this.props.login(this.props.publicKey)
+    if (this.state.publicKeys.length && this.state.address) {
+      const keyData = this.state.publicKeys.find(
+        key => this.state.address && this.state.address.value === key.key
+      )
+      if (keyData) {
+        this.props.login(keyData)
+      }
+    }
   }
 
-  canLogin = () => this.props.progress === LOADED
+  canLogin = () => this.props.progress === LOADED && this.state.address
 }

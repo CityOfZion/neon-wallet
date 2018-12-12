@@ -18,12 +18,13 @@ const mapLedgerActionsToProps = () => ({
 })
 
 const mapAccountActionsToProps = () => ({
-  login: publicKey => ledgerLoginActions.call({ publicKey })
+  login: ({ account, key }) =>
+    ledgerLoginActions.call({ publicKey: key, account })
 })
 
 const mapLedgerDataToProps = data => {
-  const { deviceInfo, publicKey } = data || {}
-  return { deviceInfo, publicKey }
+  const { deviceInfo } = data || {}
+  return { deviceInfo }
 }
 
 const mapLedgerErrorToProps = error => ({ error })
