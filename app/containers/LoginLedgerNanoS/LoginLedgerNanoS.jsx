@@ -131,7 +131,6 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
         <form>
           {this.renderStatus()}
           <Label
-            loading={loadingPublicKeys}
             label="public address:"
             renderAdditionalContent={this.renderAdditionalLabelContent}
           />
@@ -141,6 +140,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
             options={options}
             onMenuScrollToBottom={this.fetchAdditionalKeys}
             isSearchable
+            isLoading={loadingPublicKeys}
           />
           <Button
             id="loginButton"
@@ -163,6 +163,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
     const publicKeys = await getPublicKeys().catch(() => {
       console.error('An error occurred getting public keys from ledger')
       this.setState({
+        loadingPublicKeys: false,
         error: FETCH_INITIAL_KEYS_ERROR
       })
     })
