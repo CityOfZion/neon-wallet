@@ -63,7 +63,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
     }
   }
 
-  intervalId: ?number
+  intervalId: IntervalID
 
   static defaultProps = {
     publicKeys: []
