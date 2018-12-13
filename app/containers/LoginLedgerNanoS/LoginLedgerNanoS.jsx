@@ -171,15 +171,17 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
 
     const lastAccountLoaded = publicKeys[publicKeys.length - 1].account
 
-    const nextBatchOfKeys = await getPublicKeys(lastAccountLoaded).catch(() => {
-      console.error(
-        'An error occurred getting additional public keys from ledger'
-      )
-      this.setState({
-        error: FETCH_ADDITIONAL_KEYS_ERROR,
-        loadingPublicKeys: false
-      })
-    })
+    const nextBatchOfKeys = await getPublicKeys(lastAccountLoaded + 1).catch(
+      () => {
+        console.error(
+          'An error occurred getting additional public keys from ledger'
+        )
+        this.setState({
+          error: FETCH_ADDITIONAL_KEYS_ERROR,
+          loadingPublicKeys: false
+        })
+      }
+    )
 
     if (nextBatchOfKeys) {
       this.setState(state => ({
