@@ -128,7 +128,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
 
   render() {
     const options = this.createOptionsFromKeys()
-    const { loadingPublicKeys } = this.state
+    const { loadingPublicKeys, publicKeys } = this.state
 
     return (
       <div id="loginLedgerNanoS" className={styles.flexContainer}>
@@ -140,6 +140,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
           />
           <StyledReactSelect
             value={this.state.addressOption}
+            isDisabled={publicKeys.length === 1}
             onChange={addressOption => this.setState({ addressOption })}
             options={options}
             onMenuScrollToBottom={this.fetchAdditionalKeys}
