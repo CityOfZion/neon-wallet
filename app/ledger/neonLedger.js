@@ -124,7 +124,9 @@ export default class NeonLedger {
    * @param {number} [acct] - Account that you want to retrieve the public key from.
    * @return {string} Public Key (Unencoded)
    */
-  async getPublicKey(acct: number = 0): Promise<string> {
+  async getPublicKey(
+    acct: number = 0
+  ): Promise<{ account: number, key: string }> {
     const res = await this.send('80040000', BIP44(acct), [VALID_STATUS])
     const key = await res.toString('hex').substring(0, 130)
     return { account: acct, key }
