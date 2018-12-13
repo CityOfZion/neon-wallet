@@ -15,6 +15,7 @@ exports[`Login renders without crashing 1`] = `
         autoFocus={true}
         onChange={[Function]}
         placeholder="Enter your private key here"
+        textInputClassName="privateKeyInput"
         value=""
       />
     </div>
