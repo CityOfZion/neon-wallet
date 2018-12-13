@@ -23,8 +23,8 @@ const mapAccountActionsToProps = () => ({
 })
 
 const mapLedgerDataToProps = data => {
-  const { deviceInfo } = data || {}
-  return { deviceInfo }
+  const { deviceInfo, publicKey } = data || {}
+  return { deviceInfo, publicKey }
 }
 
 const mapLedgerErrorToProps = error => ({ error })

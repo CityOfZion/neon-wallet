@@ -18,7 +18,14 @@ export default class Label extends React.Component<Props> {
   render() {
     const { label, loading, renderAdditionalContent } = this.props
 
-    const passDownProps = omit(this.props, 'label', 'loading')
+    const passDownProps = omit(
+      this.props,
+      'label',
+      'loading',
+      'labelClassName',
+      'labelContainerClassName',
+      'renderAdditionalContent'
+    )
 
     const labelClassName = classNames(styles.label, this.props.labelClassName)
     const labelContainerClassName = classNames(

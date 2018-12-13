@@ -32,6 +32,7 @@ type LedgerPublicKey = { account: number, key: string }
 
 type Props = {
   progress: string,
+  publicKey: LedgerPublicKey,
   login: Function,
   connect: Function,
   error: ?string
@@ -53,7 +54,6 @@ type State = {
 
 const POLL_FREQUENCY_MS = 1000
 
-const FETCH_INITIAL_KEYS_ERROR = 'Error fetching public keys.'
 const FETCH_ADDITIONAL_KEYS_ERROR = 'Error fetching additional public keys.'
 
 export default class LoginLedgerNanoS extends React.Component<Props, State> {
@@ -76,20 +76,24 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
 
   componentDidMount() {
     this.intervalId = setInterval(this.props.connect, POLL_FREQUENCY_MS)
-    if (this.props.progress === LOADED) {
-      this.fetchInitialKeys()
-    }
   }
 
   componentWillReceiveProps(nextProps: Props) {
     const { progress, error } = this.props
 
-    if (progress !== nextProps.progress || error !== nextProps.error) {
-      this.setState(this.computeStateFromProps(nextProps))
+    if (nextProps.publicKey && !this.state.addressOption) {
+      this.setState({
+        publicKeys: [nextProps.publicKey],
+        loadingPublicKeys: false,
+        addressOption: {
+          value: nextProps.publicKey.key,
+          label: this.unencodedHexToAddress(nextProps.publicKey.key)
+        }
+      })
     }
 
-    if (this.props !== LOADED && nextProps.progress === LOADED) {
-      this.fetchInitialKeys()
+    if (progress !== nextProps.progress || error !== nextProps.error) {
+      this.setState(this.computeStateFromProps(nextProps))
     }
   }
 
@@ -159,29 +163,6 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
     )
   }
 
-  fetchInitialKeys = async () => {
-    const publicKeys = await getPublicKeys().catch(() => {
-      console.error('An error occurred getting public keys from ledger')
-      this.setState({
-        loadingPublicKeys: false,
-        error: FETCH_INITIAL_KEYS_ERROR
-      })
-    })
-
-    if (publicKeys) {
-      const initialPublicKey = publicKeys[0]
-
-      this.setState({
-        publicKeys,
-        loadingPublicKeys: false,
-        addressOption: {
-          value: initialPublicKey.key,
-          label: this.unencodedHexToAddress(initialPublicKey.key)
-        }
-      })
-    }
-  }
-
   fetchAdditionalKeys = async () => {
     const { publicKeys } = this.state
 
@@ -194,7 +175,8 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
         'An error occurred getting additional public keys from ledger'
       )
       this.setState({
-        error: FETCH_ADDITIONAL_KEYS_ERROR
+        error: FETCH_ADDITIONAL_KEYS_ERROR,
+        loadingPublicKeys: false
       })
     })
 
@@ -223,11 +205,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
         <div className={styles.errorLoadingPublicKeysContainer}>
           <p> {error} </p>{' '}
           <a
-            onClick={
-              error === FETCH_ADDITIONAL_KEYS_ERROR
-                ? this.fetchAdditionalKeys
-                : this.fetchInitialKeys
-            }
+            onClick={this.fetchAdditionalKeys}
             className={styles.fetchAdditionalLedgerKeysLink}
           >
             Retry?

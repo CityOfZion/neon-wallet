@@ -126,7 +126,8 @@ export default class NeonLedger {
    */
   async getPublicKey(acct: number = 0): Promise<string> {
     const res = await this.send('80040000', BIP44(acct), [VALID_STATUS])
-    return res.toString('hex').substring(0, 130)
+    const key = await res.toString('hex').substring(0, 130)
+    return { account: acct, key }
   }
 
   getDeviceInfo() {
@@ -244,7 +245,9 @@ export const getPublicKeys = async (
 export const getDeviceInfo = async () => {
   const ledger = await NeonLedger.init()
   try {
-    return await ledger.getDeviceInfo()
+    const deviceInfo = await ledger.getDeviceInfo()
+    const publicKey = await ledger.getPublicKey()
+    return { deviceInfo, publicKey }
   } finally {
     await ledger.close()
   }
