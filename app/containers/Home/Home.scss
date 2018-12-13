@@ -62,6 +62,13 @@ $navigation-margin: 20px;
   }
 }
 
+.privateKeyInput {
+  font-size: 12px;
+  &::placeholder {
+    font-size: 14px;
+  }
+}
+
 .scannerContainer {
   display: flex;
   justify-content: center;

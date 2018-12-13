@@ -62,7 +62,7 @@ export default class TextInput extends React.Component<Props, State> {
           {this.renderBefore()}
           <input
             {...passDownProps}
-            className={`${styles.input} ${textInputClassName || ''}`}
+            className={classNames(styles.input, textInputClassName)}
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
           />
