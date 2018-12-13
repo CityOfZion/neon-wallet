@@ -6,6 +6,10 @@ import { getDefaultTokens } from '../core/nep5'
 import { getSettings } from './settingsActions'
 import { ASSETS } from '../core/constants'
 
+const PRICE_API_SYMBOL_EXCEPTIONS = {
+  SOUL: 'SOUL*'
+}
+
 function mapPrices(pricingData: Array<any>, currency) {
   const upperCasedCurrency = currency.toUpperCase()
   return pricingData.reduce(
@@ -29,7 +33,12 @@ async function getPrices() {
     const settings = await getSettings()
     const { currency } = settings
     const joinedTokens = tokens
-      .map(token => token.symbol)
+      .map(
+        (token: TokenItemType) =>
+          token.symbol
+            ? PRICE_API_SYMBOL_EXCEPTIONS[token.symbol] || token.symbol
+            : token.symbol
+      )
       .concat([ASSETS.NEO, ASSETS.GAS])
       .join(',')
 
