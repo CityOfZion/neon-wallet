@@ -60,6 +60,7 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
             <React.Fragment>
               <div className={styles.centeredInput}>
                 <PasswordInput
+                  textInputClassName={styles.privateKeyInput}
                   placeholder="Enter your private key here"
                   value={wif}
                   onChange={(e: Object) =>
