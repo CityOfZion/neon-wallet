@@ -1,6 +1,7 @@
 // @flow
 import axios from 'axios'
 import { createActions } from 'spunky'
+import { get } from 'lodash-es'
 
 import { getDefaultTokens } from '../core/nep5'
 import { getSettings } from './settingsActions'
@@ -33,11 +34,8 @@ async function getPrices() {
     const settings = await getSettings()
     const { currency } = settings
     const joinedTokens = tokens
-      .map(
-        (token: TokenItemType) =>
-          token.symbol
-            ? PRICE_API_SYMBOL_EXCEPTIONS[token.symbol] || token.symbol
-            : token.symbol
+      .map((token: TokenItemType) =>
+        get(PRICE_API_SYMBOL_EXCEPTIONS, token.symbol, token.symbol)
       )
       .concat([ASSETS.NEO, ASSETS.GAS])
       .join(',')
