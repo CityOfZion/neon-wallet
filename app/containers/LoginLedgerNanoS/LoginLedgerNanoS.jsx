@@ -268,11 +268,10 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
   }
 
   handleLogin = () => {
-    if (this.state.publicKeys.length && this.state.addressOption) {
-      const keyData = this.state.publicKeys.find(
-        publicKey =>
-          this.state.addressOption &&
-          this.state.addressOption.value === publicKey.key
+    const { addressOption, publicKeys } = this.state
+    if (publicKeys.length && addressOption) {
+      const keyData = publicKeys.find(
+        publicKey => addressOption.value === publicKey.key
       )
       if (keyData) {
         this.props.login(keyData)
