@@ -1,14 +1,13 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { omit } from 'lodash-es'
 
-import RefreshIcon from '../../../assets/icons/refresh.svg'
 import styles from './Label.scss'
 
 type Props = {
   label: string,
   loading: boolean,
+  children: React$Node,
   labelClassName: string,
   labelContainerClassName: string,
   renderAdditionalContent: () => React$Node
@@ -16,34 +15,31 @@ type Props = {
 
 export default class Label extends React.Component<Props> {
   render() {
-    const { label, loading, renderAdditionalContent } = this.props
+    const {
+      label,
+      loading,
+      children,
+      labelClassName,
+      labelContainerClassName,
+      renderAdditionalContent,
+      ...passDownProps
+    } = this.props
 
-    const passDownProps = omit(
-      this.props,
-      'label',
-      'loading',
-      'labelClassName',
-      'labelContainerClassName',
-      'renderAdditionalContent'
+    const combinedLabelClassName = classNames(
+      styles.label,
+      this.props.labelClassName
     )
-
-    const labelClassName = classNames(styles.label, this.props.labelClassName)
-    const labelContainerClassName = classNames(
+    const combinedLabelContainerClassName = classNames(
       styles.labelContainer,
       this.props.labelContainerClassName
     )
 
     return (
-      <div className={labelContainerClassName}>
-        <label {...passDownProps} className={labelClassName}>
+      <div className={combinedLabelContainerClassName}>
+        <label {...passDownProps} className={combinedLabelClassName}>
           {label}
         </label>
-        {loading && <RefreshIcon className={styles.ledgerStageRefreshIcon} />}
-        {renderAdditionalContent && (
-          <div className={styles.additionalContentContainer}>
-            {renderAdditionalContent()}
-          </div>
-        )}
+        {children}
       </div>
     )
   }

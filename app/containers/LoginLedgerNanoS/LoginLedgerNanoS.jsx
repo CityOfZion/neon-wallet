@@ -134,10 +134,9 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
       <div id="loginLedgerNanoS" className={styles.flexContainer}>
         <form>
           {this.renderStatus()}
-          <Label
-            label="public address:"
-            renderAdditionalContent={this.renderAdditionalLabelContent}
-          />
+          <Label label=" Public Address">
+            {this.renderAdditionalLabelContent()}
+          </Label>
           <StyledReactSelect
             value={this.state.addressOption}
             isDisabled={publicKeys.length === 1}
