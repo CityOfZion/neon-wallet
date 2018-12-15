@@ -103,14 +103,33 @@ export default class NeonLedger {
     return Promise.resolve()
   }
 
+  async getPublicKeys(
+    acct: number = 0,
+    unencodedPublicKeys: Array<{ account: number, key: string }> = [],
+    batchSize: number = 10
+  ) {
+    const res = await this.send('80040000', BIP44(acct), [VALID_STATUS])
+    const key = await res.toString('hex').substring(0, 130)
+
+    if (unencodedPublicKeys.length < batchSize) {
+      unencodedPublicKeys.push({ account: acct, key })
+      const nextKey = acct + 1
+      return this.getPublicKeys(nextKey, unencodedPublicKeys)
+    }
+    return unencodedPublicKeys
+  }
+
   /**
    * Retrieves the public key of an account from the Ledger.
    * @param {number} [acct] - Account that you want to retrieve the public key from.
    * @return {string} Public Key (Unencoded)
    */
-  async getPublicKey(acct: number = 0): Promise<string> {
+  async getPublicKey(
+    acct: number = 0
+  ): Promise<{ account: number, key: string }> {
     const res = await this.send('80040000', BIP44(acct), [VALID_STATUS])
-    return res.toString('hex').substring(0, 130)
+    const key = await res.toString('hex').substring(0, 130)
+    return { account: acct, key }
   }
 
   getDeviceInfo() {
@@ -214,10 +233,12 @@ const assembleSignature = (response: string): string => {
   return integers.join('')
 }
 
-export const getPublicKey = async (acct: number = 0): Promise<string> => {
+export const getPublicKeys = async (
+  acct: number = 0
+): Promise<Array<{ account: number, key: string }>> => {
   const ledger = await NeonLedger.init()
   try {
-    return await ledger.getPublicKey(acct)
+    return await ledger.getPublicKeys(acct)
   } finally {
     await ledger.close()
   }
@@ -226,7 +247,9 @@ export const getPublicKey = async (acct: number = 0): Promise<string> => {
 export const getDeviceInfo = async () => {
   const ledger = await NeonLedger.init()
   try {
-    return await ledger.getDeviceInfo()
+    const deviceInfo = await ledger.getDeviceInfo()
+    const publicKey = await ledger.getPublicKey()
+    return { deviceInfo, publicKey }
   } finally {
     await ledger.close()
   }

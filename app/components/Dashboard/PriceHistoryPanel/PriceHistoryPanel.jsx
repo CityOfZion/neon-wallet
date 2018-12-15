@@ -16,9 +16,9 @@ import { formatFiat, formatThousands } from '../../../core/formatters'
 
 type Duration = '1m' | '1w' | '1d'
 // react-select option format
-type SelectOption = {
-  value: Duration,
-  label: string
+type DurationSelectOption = {
+  ...SelectOption,
+  value: Duration
 }
 
 type Price = {
@@ -50,10 +50,12 @@ const DURATIONS: Array<[Duration, string]> = [
 ]
 
 // convert DURATIONS to react-select option format
-const DURATION_OPTIONS: Array<SelectOption> = DURATIONS.map(([k, v]) => ({
-  value: k,
-  label: v
-}))
+const DURATION_OPTIONS: Array<DurationSelectOption> = DURATIONS.map(
+  ([k, v]) => ({
+    value: k,
+    label: v
+  })
+)
 
 export default class PriceHistoryPanel extends React.Component<Props> {
   static defaultProps = {
@@ -112,11 +114,11 @@ export default class PriceHistoryPanel extends React.Component<Props> {
     )
   }
 
-  handleChangeDuration = (selected: SelectOption) => {
+  handleChangeDuration = (selected: DurationSelectOption) => {
     this.props.setDuration(selected.value)
   }
 
-  getDuration = (): ?SelectOption =>
+  getDuration = (): ?DurationSelectOption =>
     find(DURATION_OPTIONS, ['value', this.props.duration])
 
   formatDate = (date: Date): string => {

@@ -3,6 +3,7 @@ import { wallet } from 'neon-js'
 import { noop } from 'lodash-es'
 import { createActions } from 'spunky'
 
+import { bindArgsFromN } from '../util/bindHelpers'
 import { resetBalanceState } from './balancesActions'
 import { upgradeNEP6AddAddresses } from '../core/account'
 import { validatePassphraseLength } from '../core/wallet'
@@ -14,7 +15,8 @@ type WifLoginProps = {
 
 type LedgerLoginProps = {
   publicKey: string,
-  signingFunction: Function
+  signingFunction: Function,
+  account: number
 }
 
 type Nep2LoginProps = {
@@ -77,14 +79,18 @@ export const nep2LoginActions = createActions(
 
 export const ledgerLoginActions = createActions(
   ID,
-  ({ publicKey }: LedgerLoginProps) => (): AccountType => {
+  ({ publicKey, account }: LedgerLoginProps) => (): AccountType => {
     const publicKeyEncoded = wallet.getPublicKeyEncoded(publicKey)
-    const account = new wallet.Account(publicKeyEncoded)
+    const walletAccount = new wallet.Account(publicKeyEncoded)
 
     return {
       publicKey,
-      address: account.address,
-      signingFunction: ledgerNanoSCreateSignatureAsync,
+      address: walletAccount.address,
+      signingFunction: bindArgsFromN(
+        ledgerNanoSCreateSignatureAsync,
+        3,
+        account
+      ),
       isHardwareLogin: true
     }
   }

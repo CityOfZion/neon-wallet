@@ -56,11 +56,6 @@ type Props = {
   setSoundSetting: boolean => any
 }
 
-type SelectOption = {
-  value: string,
-  label: string
-}
-
 type State = {
   selectedCurrency: SelectOption,
   selectedTheme: SelectOption,

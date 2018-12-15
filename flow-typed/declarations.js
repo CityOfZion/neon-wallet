@@ -29,6 +29,11 @@ declare type ReduxAction = () => {
   error?: Object
 }
 
+declare type SelectOption = {
+  label: string,
+  value: string
+}
+
 declare type NetworkType = string
 
 declare type NetworkLabelTypes = MAIN_NETWORK_LABEL | TEST_NETWORK_LABEL

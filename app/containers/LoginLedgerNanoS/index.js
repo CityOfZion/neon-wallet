@@ -18,7 +18,8 @@ const mapLedgerActionsToProps = () => ({
 })
 
 const mapAccountActionsToProps = () => ({
-  login: publicKey => ledgerLoginActions.call({ publicKey })
+  login: ({ account, key }) =>
+    ledgerLoginActions.call({ publicKey: key, account })
 })
 
 const mapLedgerDataToProps = data => {
