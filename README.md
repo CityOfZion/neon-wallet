@@ -43,7 +43,7 @@
 
 ## Installation
 
-Standalone apps can be found [here](https://neonwallet.com/), to build manually see the steps below.
+The latest release binaries can be found [here](https://neonwallet.com/), to build manually see the steps below.
 
 ### Required Tools and Dependencies
 
