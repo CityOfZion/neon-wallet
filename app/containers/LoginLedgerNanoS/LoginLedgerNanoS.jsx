@@ -38,11 +38,6 @@ type Props = {
   error: ?string
 }
 
-type SelectOption = {
-  label: string,
-  value: string
-}
-
 type State = {
   ledgerStage: LedgerConnectionStage,
   isLoading: boolean,
