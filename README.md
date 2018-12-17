@@ -40,10 +40,11 @@
 - Switch networks (Test/Main)
 - nep9 QR support
 - Participate in NEO token sales
+- View wallet activity
 
 ## Installation
 
-Standalone apps can be found [here](https://neonwallet.com/), to build manually see the steps below.
+The latest release binaries can be found [here](https://neonwallet.com/), to build manually see the steps below.
 
 ### Required Tools and Dependencies
 
