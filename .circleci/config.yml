@@ -27,19 +27,18 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: neon-wallet-{{ checksum "yarn.lock" }}
+          key: neon-wallet-cache-{{ checksum "yarn.lock" }}
       - run: apt-get -y update
       - run: apt-get -y install libusb-1.0-0-dev icnsutils graphicsmagick libudev-dev
       - run: yarn config delete proxy
-      - run: yarn install --network-timeout 1000000 --network-concurrency 1
+      - run: yarn install --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
       - run: yarn lint
       - run: yarn flow
       - run: yarn dist
       - save_cache:
-          key: neon-wallet-{{ checksum "yarn.lock" }}
+          key: neon-wallet-cache-{{ checksum "yarn.lock" }}
           paths:
-            - ~/.yarn-cache
-            - ./node_modules
+            - /usr/local/share/.cache/yarn/v2
       - persist_to_workspace:
           root: *workspace_root
           paths:
@@ -50,12 +49,12 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: neon-wallet-{{ checksum "yarn.lock" }}
+          key: neon-wallet-cache-{{ checksum "yarn.lock" }}
       - run: apt-get -y update
       - run: apt-get -y install libusb-1.0-0-dev graphicsmagick libudev-dev
       - run: apt-get -y install libxtst6 libxss1 libgtk2.0-0 libnss3 libasound2 libgconf-2-4
-      - run: yarn install --network-timeout 1000000 --network-concurrency 1
-      - run: yarn test
+      - run: yarn test-ci
+      # TODO: add these steps back when e2e test suite is functional
       # - run:
       #     name: Running Xvfb for e2e test
       #     command: Xvfb -ac :99 -screen 0 1280x1024x16
@@ -76,7 +75,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: neon-wallet-{{ checksum "yarn.lock" }}
+          key: neon-wallet-cache-{{ checksum "yarn.lock" }}
       - run: apt-get -y update
       - run: apt-get -y install libusb-1.0-0-dev icnsutils graphicsmagick libudev-dev
       - run: apt-get install --no-install-recommends -y gcc-multilib g++-multilib
@@ -92,7 +91,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: neon-wallet-{{ checksum "yarn.lock" }}
+          key: neon-wallet-cache-{{ checksum "yarn.lock" }}
       - run: apt-get -y update
       - run: apt-get -y install libusb-1.0-0-dev icnsutils graphicsmagick libudev-dev
       - run: yarn install --network-timeout 1000000 --network-concurrency 1
