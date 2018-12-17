@@ -40,6 +40,7 @@
 - Switch networks (Test/Main)
 - nep9 QR support
 - Participate in NEO token sales
+- View wallet activity
 
 ## Installation
 
