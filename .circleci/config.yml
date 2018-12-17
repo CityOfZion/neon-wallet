@@ -36,9 +36,10 @@ jobs:
       - run: yarn flow
       - run: yarn dist
       - save_cache:
-          key: neon-wallet-cache-{{ checksum "yarn.lock" }}
+          key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
           paths:
             - /usr/local/share/.cache/yarn/v2
+            - ./node_modules
       - persist_to_workspace:
           root: *workspace_root
           paths:
@@ -49,7 +50,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: neon-wallet-cache-{{ checksum "yarn.lock" }}
+          key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
       - run: apt-get -y update
       - run: apt-get -y install libusb-1.0-0-dev graphicsmagick libudev-dev
       - run: apt-get -y install libxtst6 libxss1 libgtk2.0-0 libnss3 libasound2 libgconf-2-4
@@ -75,11 +76,10 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: neon-wallet-cache-{{ checksum "yarn.lock" }}
+          key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
       - run: apt-get -y update
       - run: apt-get -y install libusb-1.0-0-dev icnsutils graphicsmagick libudev-dev
       - run: apt-get install --no-install-recommends -y gcc-multilib g++-multilib
-      - run: yarn install --network-timeout 1000000 --network-concurrency 1
       - run: yarn assets
       - run: yarn build -w --x64
       - store_artifacts:
@@ -91,10 +91,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: neon-wallet-cache-{{ checksum "yarn.lock" }}
+          key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
       - run: apt-get -y update
       - run: apt-get -y install libusb-1.0-0-dev icnsutils graphicsmagick libudev-dev
-      - run: yarn install --network-timeout 1000000 --network-concurrency 1
       - run: yarn dist
       - store_artifacts:
           path: dist
