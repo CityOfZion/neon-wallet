@@ -1,6 +1,7 @@
 .error {
   color: var(--input-label);
   text-align: center;
+  margin-top: 20px;
   .heading svg {
     vertical-align: middle;
     position: relative;
@@ -13,4 +14,8 @@
     font-size: 14px;
     padding: 10px 50px 0;
   }
+}
+
+video {
+  transform: scaleX(-1); // mirror image
 }

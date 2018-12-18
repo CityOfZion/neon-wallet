@@ -136,8 +136,10 @@ declare interface Navigator extends Navigator {
 
 // https://mdn.io/MediaDevices
 // https://mdn.io/MediaDevices/enumerateDevices
+// https://mdn.io/MediaDevices/getUserMedia
 declare type MediaDevicesType = {
-  enumerateDevices(): Promise<Array<MediaDeviceInfoType>>
+  enumerateDevices(): Promise<Array<MediaDeviceInfoType>>,
+  getUserMedia(MediaStreamConstraints): Promise<MediaStream>
 }
 
 // https://mdn.io/MediaDeviceInfo
@@ -146,4 +148,9 @@ declare type MediaDeviceInfoType = {
   groupId: string,
   kind: 'videoinput' | 'audioinput' | 'audiooutput',
   label: string
+}
+
+// https://mdn.io/MediaStreamConstraints
+declare type MediaStreamConstraints = {
+  ['audio' | 'video']: Object | boolean
 }

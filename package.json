@@ -91,6 +91,7 @@
     "howler": "2.0.15",
     "instascan": "1.0.0",
     "isomorphic-fetch": "2.2.1",
+    "jsqr": "^1.1.1",
     "lodash-es": "4.17.11",
     "moment": "2.22.2",
     "neon-js": "git+https://github.com/cityofzion/neon-js.git#3.11.0",
