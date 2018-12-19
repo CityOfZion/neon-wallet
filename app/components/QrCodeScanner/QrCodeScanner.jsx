@@ -18,7 +18,7 @@ type ScannerError = {
 }
 
 type Props = {
-  callback: (content: string, scannerInstance: any) => any,
+  callback: string => any,
   theme: string,
   width: number,
   height: number
@@ -122,7 +122,7 @@ export default class QrCodeScanner extends Component<Props, State> {
 
         // code found
         this.pause()
-        this.props.callback(code.data, this.stop.bind(this))
+        this.props.callback(code.data)
       } catch (err) {
         this.rafId = requestAnimationFrame(this.scan.bind(this)) // continue scan
       }
