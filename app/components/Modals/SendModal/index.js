@@ -1,5 +1,5 @@
 import { compose } from 'recompose'
-import { withActions, withData } from 'spunky'
+import { withActions, withData, withProgress } from 'spunky'
 
 import SendModal from './SendModal'
 import {
@@ -26,6 +26,7 @@ export default compose(
     message =>
       `An error occurred while scanning this QR code: ${message}. Please try again.`,
   ),
+  withProgress(getRecipientData),
 
   withActions(clearRecipientData, mapClearDataToProps),
   withData(clearRecipientData, mapRecipientDataToProps),

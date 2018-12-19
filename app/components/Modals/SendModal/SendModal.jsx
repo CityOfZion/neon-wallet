@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import { type ProgressState } from 'spunky'
 
 import BaseModal from '../BaseModal'
 import ReadCode from './ReadCode'
@@ -12,6 +13,7 @@ type Props = {
   getRecipientData: string => any,
   clearRecipientData: () => null,
   recipientData: ?RecipientData,
+  progress: ProgressState,
 }
 
 export default class SendModal extends React.Component<Props> {
@@ -23,7 +25,7 @@ export default class SendModal extends React.Component<Props> {
   }
 
   get stepComponent(): React$Element<ConfirmDetails | ReadCode> {
-    const { recipientData, getRecipientData } = this.props
+    const { recipientData, getRecipientData, progress } = this.props
 
     return recipientData ? (
       <ConfirmDetails
@@ -31,7 +33,7 @@ export default class SendModal extends React.Component<Props> {
         confirmAndClose={() => this.confirmAndClose(recipientData)}
       />
     ) : (
-      <ReadCode gotoNextStep={getRecipientData} />
+      <ReadCode callback={getRecipientData} callbackProgress={progress} />
     )
   }
 

@@ -2,15 +2,18 @@
 import React, { Component, Fragment } from 'react'
 import jsqr from 'jsqr'
 import { get, assign } from 'lodash-es'
+import { type ProgressState, progressValues } from 'spunky'
 
+import delay from '../../util/delay'
 import Loading from '../../containers/App/Loading'
 import { ConditionalLink } from '../../util/ConditionalLink'
 import ErrorIcon from '../../assets/icons/error.svg'
 
 import styles from './QrCodeScanner.scss'
 
-const PAUSE_DURATION = 4000
+const RESUME_DELAY = 1500
 const JSQR_OPTIONS = { inversionAttempts: 'dontInvert' } // https://bit.ly/2EHM8ay
+const { FAILED, LOADING } = progressValues
 
 type ScannerError = {
   message: string,
@@ -19,6 +22,7 @@ type ScannerError = {
 
 type Props = {
   callback: string => any,
+  callbackProgress: ProgressState,
   theme: string,
   width: number,
   height: number,
@@ -47,8 +51,6 @@ export default class QrCodeScanner extends Component<Props, State> {
 
   rafId: ?AnimationFrameID
 
-  pauseTimeoutId: ?TimeoutID
-
   lastCodeData: ?string
 
   componentDidMount() {
@@ -59,6 +61,18 @@ export default class QrCodeScanner extends Component<Props, State> {
 
   componentWillUnmount() {
     this.stop()
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    // resume if callback state changed to FAILED
+    if (
+      this.state.paused &&
+      this.props.callbackProgress === FAILED &&
+      prevProps.callbackProgress === LOADING
+    ) {
+      // UX related delay - let fail notification come in before resuming
+      delay(RESUME_DELAY).then(() => this.resume())
+    }
   }
 
   start() {
@@ -87,8 +101,6 @@ export default class QrCodeScanner extends Component<Props, State> {
   stop() {
     // cancel scan
     window.cancelAnimationFrame(this.rafId)
-    // cancel pause
-    window.clearTimeout(this.pauseTimeoutId)
     // stop media stream
     if (this.stream) {
       this.stream.getTracks().forEach(trk => trk.stop())
@@ -96,9 +108,6 @@ export default class QrCodeScanner extends Component<Props, State> {
   }
 
   pause(): Promise<void> {
-    // resume within a preset duration
-    // will be swapped for an event listener in impending commit
-    this.pauseTimeoutId = setTimeout(() => this.resume(), PAUSE_DURATION)
     this.setState({ paused: true })
 
     const { video } = this
