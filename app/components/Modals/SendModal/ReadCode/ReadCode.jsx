@@ -65,10 +65,10 @@ export default class ReadCode extends React.Component<Props, State> {
             )}
           >
             <div className={styles.qrCodeScannerPlaceholder}>
-              <div className="frameLineTopLeft" />
-              <div className="frameLineTopRight" />
-              <div className="frameLineBottomLeft" />
-              <div className="frameLineBottomRight" />
+              <div className={styles.frameLineTopRight} />
+              <div className={styles.frameLineTopLeft} />
+              <div className={styles.frameLineBottomRight} />
+              <div className={styles.frameLineBottomLeft} />
               {this.getScanner()}
             </div>
           </div>
