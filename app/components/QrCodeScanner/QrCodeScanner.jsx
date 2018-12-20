@@ -26,12 +26,14 @@ type Props = {
 
 type State = {
   loading: boolean,
+  paused: boolean,
   error: ?ScannerError
 }
 
 export default class QrCodeScanner extends Component<Props, State> {
   state = {
     loading: true,
+    paused: false,
     error: null
   }
 
@@ -46,6 +48,8 @@ export default class QrCodeScanner extends Component<Props, State> {
   rafId: ?AnimationFrameID
 
   pauseTimeoutId: ?TimeoutID
+
+  lastCodeData: ?string
 
   componentDidMount() {
     const { width, height } = this.props
@@ -91,13 +95,30 @@ export default class QrCodeScanner extends Component<Props, State> {
     }
   }
 
-  pause() {
+  pause(): Promise<void> {
     // resume within a preset duration
     // will be swapped for an event listener in impending commit
     this.pauseTimeoutId = setTimeout(() => this.resume(), PAUSE_DURATION)
+    this.setState({ paused: true })
+
+    const { video } = this
+    if (video) {
+      // allow "flash" animation (QrCodeScanner.scss) to conclude
+      return new Promise(resolve => {
+        // $FlowFixMe falsely rejects 'animationend'
+        video.addEventListener('animationend', resolve)
+        video.pause() // freeze frame and run animations
+      })
+    }
+
+    return Promise.resolve()
   }
 
-  resume() {
+  async resume() {
+    if (this.video) {
+      await this.video.play()
+    }
+    this.setState({ paused: false })
     this.scan()
   }
 
@@ -117,12 +138,20 @@ export default class QrCodeScanner extends Component<Props, State> {
 
         // code not found
         if (!code) {
+          this.lastCodeData = null
           throw new Error('qr code not found') // exit
         }
 
+        // protect against send loop
+        if (code.data === this.lastCodeData) {
+          throw new Error('duplicate code found')
+        }
+
         // code found
-        this.pause()
-        this.props.callback(code.data)
+        this.lastCodeData = code.data
+        this.pause().then(() => {
+          this.props.callback(code.data)
+        })
       } catch (err) {
         this.rafId = requestAnimationFrame(this.scan.bind(this)) // continue scan
       }
@@ -177,13 +206,13 @@ export default class QrCodeScanner extends Component<Props, State> {
 
   renderLoadingIndicator() {
     const { theme } = this.props
-    const { loading } = this.state
+    const { loading, paused } = this.state
 
-    return loading ? <Loading theme={theme} nobackground /> : null
+    return loading || paused ? <Loading theme={theme} nobackground /> : null
   }
 
   renderScanner() {
-    const { error } = this.state
+    const { error, paused, loading } = this.state
     if (error) {
       return (
         <div className={styles.error}>
@@ -198,14 +227,20 @@ export default class QrCodeScanner extends Component<Props, State> {
     const { width, height } = this.props
 
     return (
-      /* eslint-disable-next-line jsx-a11y/media-has-caption */
-      <video
-        ref={ref => {
-          this.video = ref
-        }}
-        width={width}
-        height={height}
-      />
+      <div
+        className={styles.videoWrapper}
+        data-paused={paused}
+        data-loading={loading}
+      >
+        {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+        <video
+          ref={ref => {
+            this.video = ref
+          }}
+          width={width}
+          height={height}
+        />
+      </div>
     )
   }
 }

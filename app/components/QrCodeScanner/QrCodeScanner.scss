@@ -16,6 +16,46 @@
   }
 }
 
-video {
-  transform: scaleX(-1); // mirror image
+.videoWrapper {
+  position: absolute;
+
+  video {
+    transform: scaleX(-1); // mirror image
+    vertical-align: middle;
+  }
+
+  &[data-paused=false][data-loading=false] {
+    animation: pulse 2s infinite;
+  }
+
+  &[data-paused=true] {
+    background: white;
+    box-shadow: 0 0 0 5px var(--qr-scan-paused);
+
+    video {
+      // NOTICE: QrCodeScanner.pause() depends on this
+      animation: flash 500ms ease-out;
+    }
+  }
+}
+
+@keyframes flash {
+  from {
+    opacity: 0.1;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--qr-scan-animation-start);
+  }
+  70% {
+    box-shadow: 0 0 0 10px var(--qr-scan-animation-end);
+  }
+  100% {
+    box-shadow: 0 0 0 0 var(--qr-scan-animation-end);
+  }
 }
