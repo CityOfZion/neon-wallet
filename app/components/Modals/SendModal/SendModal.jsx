@@ -22,7 +22,7 @@ export default class SendModal extends React.Component<Props> {
     hideModal()
   }
 
-  getStepComponent = () => {
+  get stepComponent(): React$Element<ConfirmDetails | ReadCode> {
     const { recipientData, getRecipientData } = this.props
     return recipientData ? (
       <ConfirmDetails
@@ -42,7 +42,7 @@ export default class SendModal extends React.Component<Props> {
         backButtonAction={recipientData ? clearRecipientData : null}
         hideModal={hideModal}
       >
-        {this.getStepComponent()}
+        {this.stepComponent}
       </BaseModal>
     )
   }
