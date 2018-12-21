@@ -1,13 +1,16 @@
 // @flow
 import React, { Component, Fragment } from 'react'
-import Instascan from 'instascan'
-import { get } from 'lodash-es'
+import jsqr from 'jsqr'
+import { get, assign } from 'lodash-es'
 
-import Loading, { ANIMATION_DURATION } from '../../containers/App/Loading'
+import Loading from '../../containers/App/Loading'
 import { ConditionalLink } from '../../util/ConditionalLink'
 import ErrorIcon from '../../assets/icons/error.svg'
 
 import styles from './QrCodeScanner.scss'
+
+const PAUSE_DURATION = 4000
+const JSQR_OPTIONS = { inversionAttempts: 'dontInvert' } // https://bit.ly/2EHM8ay
 
 type ScannerError = {
   message: string,
@@ -16,7 +19,9 @@ type ScannerError = {
 
 type Props = {
   callback: (content: string, scannerInstance: any) => any,
-  theme: string
+  theme: string,
+  width: number,
+  height: number
 }
 
 type State = {
@@ -26,55 +31,102 @@ type State = {
 
 export default class QrCodeScanner extends Component<Props, State> {
   state = {
-    loading: false,
+    loading: true,
     error: null
   }
 
-  scanPreviewElement: ?HTMLVideoElement
+  video: ?HTMLVideoElement
 
-  scannerInstance: Instascan
+  canvas: HTMLCanvasElement = document.createElement('canvas')
+
+  canvasCtx: CanvasRenderingContext2D = this.canvas.getContext('2d')
+
+  stream: ?MediaStream
+
+  rafId: ?AnimationFrameID
+
+  pauseTimeoutId: ?TimeoutID
 
   componentDidMount() {
-    this.startScanner()
+    const { width, height } = this.props
+    assign(this.canvas, { width, height })
+    this.start()
   }
 
   componentWillUnmount() {
-    this.stopScanner()
+    this.stop()
   }
 
-  startScanner() {
-    const { callback } = this.props
-    this.scannerInstance = new Instascan.Scanner({
-      video: this.scanPreviewElement
-    })
+  start() {
+    const { video } = this
+    if (video) {
+      const { width, height } = this.props
+      navigator.mediaDevices
+        .getUserMedia({
+          video: { mandatory: { minAspectRatio: width / height } }
+        })
+        .then(stream => {
+          this.stream = stream // stored to later be stopped
+          video.srcObject = stream
+          video.play()
+          this.scan()
+        })
+        .catch(err => {
+          this.setState({ error: this.constructor.getScannerError(err) })
+        })
+        .finally(() => {
+          this.setState({ loading: false })
+        })
+    }
+  }
 
-    this.scannerInstance.addListener('scan', content => {
-      callback(content, this.stopScanner.bind(this))
-    })
+  stop() {
+    // cancel scan
+    window.cancelAnimationFrame(this.rafId)
+    // cancel pause
+    window.clearTimeout(this.pauseTimeoutId)
+    // stop media stream
+    if (this.stream) {
+      this.stream.getTracks().forEach(trk => trk.stop())
+    }
+  }
 
-    // since the browser halts while getting usermedia
-    // let the loading animation finish one round and only then continue
-    this.setState({ loading: true })
-    new Promise(resolve => setTimeout(resolve, ANIMATION_DURATION))
-      .then(() => Instascan.Camera.getCameras())
-      .then((cameras: Array<Object>) => {
-        if (!cameras.length) {
-          // shouldn't happen, case covered by withCameraAvailability
-          throw new Error('No cameras found.')
+  pause() {
+    // resume within a preset duration
+    // will be swapped for an event listener in impending commit
+    this.pauseTimeoutId = setTimeout(() => this.resume(), PAUSE_DURATION)
+  }
+
+  resume() {
+    this.scan()
+  }
+
+  scan() {
+    if (this.video) {
+      try {
+        // check readiness
+        if (this.video.readyState !== this.video.HAVE_ENOUGH_DATA) {
+          throw new Error('video not ready yet') // exit
         }
-        return this.scannerInstance.start(cameras[0])
-      })
-      .catch(err => {
-        this.setState({ error: this.constructor.getScannerError(err) })
-      })
-      .finally(() => {
-        this.setState({ loading: false })
-      })
-  }
 
-  stopScanner() {
-    if (this.scannerInstance) this.scannerInstance.stop()
-    this.setState({ error: null }) // clear error
+        // capture and scan image
+        const { width: w, height: h } = this.props
+        this.canvasCtx.drawImage(this.video, 0, 0, w, h)
+        const { data, width, height } = this.canvasCtx.getImageData(0, 0, w, h)
+        const code: { data: string } = jsqr(data, width, height, JSQR_OPTIONS)
+
+        // code not found
+        if (!code) {
+          throw new Error('qr code not found') // exit
+        }
+
+        // code found
+        this.pause()
+        this.props.callback(code.data, this.stop.bind(this))
+      } catch (err) {
+        this.rafId = requestAnimationFrame(this.scan.bind(this)) // continue scan
+      }
+    }
   }
 
   static getScannerError(err: Error) {
@@ -143,12 +195,16 @@ export default class QrCodeScanner extends Component<Props, State> {
       )
     }
 
+    const { width, height } = this.props
+
     return (
       /* eslint-disable-next-line jsx-a11y/media-has-caption */
       <video
         ref={ref => {
-          this.scanPreviewElement = ref
+          this.video = ref
         }}
+        width={width}
+        height={height}
       />
     )
   }

@@ -6,8 +6,6 @@ import themes from '../../themes'
 import Loader from '../../components/Loader'
 import styles from './Loading.scss'
 
-export const ANIMATION_DURATION = 900 // one animation round in ms
-
 type Props = {
   theme: ThemeType,
   nobackground?: boolean
