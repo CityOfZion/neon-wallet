@@ -10,7 +10,7 @@ type Props = {
   hideModal: () => any,
   pushQRCodeData: (data: Object) => any,
   getRecipientData: string => any,
-  clearRecipientData: Function,
+  clearRecipientData: () => null,
   recipientData: ?RecipientData
 }
 
@@ -24,6 +24,7 @@ export default class SendModal extends React.Component<Props> {
 
   get stepComponent(): React$Element<ConfirmDetails | ReadCode> {
     const { recipientData, getRecipientData } = this.props
+
     return recipientData ? (
       <ConfirmDetails
         recipientData={recipientData}
