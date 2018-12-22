@@ -6,7 +6,7 @@ import styles from './Table.scss'
 
 type Props = {
   children: React$Node,
-  className?: string
+  className?: string,
 }
 
 const Table = ({ children, className = '' }: Props) => (

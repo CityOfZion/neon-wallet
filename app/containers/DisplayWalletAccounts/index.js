@@ -15,7 +15,7 @@ import {
   getEncryptedWIF,
   getPassphrase,
   getWalletName,
-  getIsImport
+  getIsImport,
 } from '../../modules/generateWallet'
 
 const mapStateToProps = (state: Object) => ({
@@ -24,25 +24,25 @@ const mapStateToProps = (state: Object) => ({
   encryptedWIF: getEncryptedWIF(state),
   passphrase: getPassphrase(state),
   walletName: getWalletName(state),
-  isImport: getIsImport(state)
+  isImport: getIsImport(state),
 })
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ resetKey }, dispatch)
 
 const mapAccountActionsToProps = actions => ({
-  saveAccount: (label, address, key) => actions.call({ label, address, key })
+  saveAccount: (label, address, key) => actions.call({ label, address, key }),
 })
 
 export default compose(
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
   ),
   withActions(saveAccountActions, mapAccountActionsToProps),
   withSuccessNotification(saveAccountActions, 'Account saved!'),
   withFailureNotification(
     saveAccountActions,
-    message => `Error saving account: ${message}`
-  )
+    message => `Error saving account: ${message}`,
+  ),
 )(DisplayWalletAccounts)

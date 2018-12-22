@@ -1,7 +1,7 @@
 import NeonLedger, {
   legacySignWithLedger,
   getPublicKeys,
-  getDeviceInfo
+  getDeviceInfo,
 } from './neonLedger'
 
 export default NeonLedger

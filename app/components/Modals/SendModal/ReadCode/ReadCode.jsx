@@ -12,16 +12,16 @@ import styles from './ReadCode.scss'
 
 type Props = {
   gotoNextStep: (content: string, stopScanner: Function) => void,
-  cameraAvailable: boolean
+  cameraAvailable: boolean,
 }
 
 type State = {
-  scannerActive: boolean
+  scannerActive: boolean,
 }
 
 export default class ReadCode extends React.Component<Props, State> {
   state = {
-    scannerActive: false
+    scannerActive: false,
   }
 
   toggleScanner = () => {
@@ -67,7 +67,7 @@ export default class ReadCode extends React.Component<Props, State> {
           <div
             className={classNames(
               baseStyles.sectionContent,
-              styles.qrCodeScannerSection
+              styles.qrCodeScannerSection,
             )}
           >
             <div className={styles.qrCodeScannerPlaceholder}>

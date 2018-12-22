@@ -19,7 +19,7 @@ export class TimeoutError extends Error {
 
 export function cancellablePoll(
   request,
-  { attempts = DEFAULT_ATTEMPTS, frequency = DEFAULT_FREQUENCY } = {}
+  { attempts = DEFAULT_ATTEMPTS, frequency = DEFAULT_FREQUENCY } = {},
 ) {
   let hasCancelled = false
   const retry = () => {
@@ -41,7 +41,7 @@ export function cancellablePoll(
     promise,
     cancel() {
       hasCancelled = true
-    }
+    },
   }
 }
 

@@ -4,7 +4,7 @@ import React from 'react'
 import styles from './WalletVersion.scss'
 
 type Props = {
-  version: number
+  version: number,
 }
 
 const WalletVersion = ({ version }: Props) => (

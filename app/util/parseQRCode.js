@@ -31,7 +31,7 @@ const parseQRCode = data => {
     address: pathname,
     asset,
     amount: searchParams.get('amount'),
-    reference: searchParams.get('description')
+    reference: searchParams.get('description'),
   }
 }
 

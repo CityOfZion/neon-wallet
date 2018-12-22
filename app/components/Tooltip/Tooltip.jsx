@@ -5,7 +5,7 @@ import { Tooltip as Tippy } from 'react-tippy'
 
 type Props = {
   position: 'top' | 'left' | 'right' | 'bottom',
-  children: React$Node
+  children: React$Node,
 }
 
 const Tooltip = ({ children, position = 'bottom', ...rest }: Props) => (

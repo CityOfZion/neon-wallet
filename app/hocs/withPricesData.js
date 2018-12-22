@@ -11,6 +11,6 @@ export default function withPricesData(mapPricesDataToProps: Function | void) {
     withCurrencyData('currencyCode'),
     withInitialCall(pricesActions),
     withReset(pricesActions, ['currencyCode']),
-    withData(pricesActions, mapPricesDataToProps)
+    withData(pricesActions, mapPricesDataToProps),
   )
 }

@@ -6,14 +6,14 @@ const overrideStyles = {
   Containers: {
     DefaultStyle: {
       width: defaultWidth,
-      padding: 0
+      padding: 0,
     },
     tc: {
-      marginLeft
+      marginLeft,
     },
     bc: {
-      marginLeft
-    }
+      marginLeft,
+    },
   },
 
   NotificationItem: {
@@ -27,30 +27,30 @@ const overrideStyles = {
       paddingLeft: '60px',
       paddingRight: '50px',
       borderRadius: '4px',
-      color: '#FFF'
+      color: '#FFF',
     },
 
     success: {
       backgroundColor: '#5ABF6B',
-      color: '#FFF'
+      color: '#FFF',
     },
     error: {
-      backgroundColor: '#EE6D66'
+      backgroundColor: '#EE6D66',
     },
     warning: {
       backgroundColor: '#FFCF48',
-      color: '#000000'
+      color: '#000000',
     },
     info: {
       backgroundColor: '#FFCF48',
-      color: '#000000'
-    }
+      color: '#000000',
+    },
   },
 
   Title: {
     DefaultStyle: {
-      display: 'none'
-    }
+      display: 'none',
+    },
   },
 
   Dismiss: {
@@ -62,12 +62,12 @@ const overrideStyles = {
       fontSize: '25px',
       fontWeight: 200,
       backgroundColor: 'none',
-      opacity: '0.8'
+      opacity: '0.8',
     },
     warning: {
       color: '#000000',
-      opacity: 0.4
-    }
-  }
+      opacity: 0.4,
+    },
+  },
 }
 export default overrideStyles

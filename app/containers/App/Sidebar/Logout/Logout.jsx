@@ -8,7 +8,7 @@ import styles from './Logout.scss'
 type Props = {
   id?: string,
   className?: string,
-  logout: Function
+  logout: Function,
 }
 
 const Logout = ({ id, className, logout }: Props) => (

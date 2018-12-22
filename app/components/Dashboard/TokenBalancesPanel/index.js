@@ -43,12 +43,12 @@ const mapBalanceDataToProps = balances => {
         symbol: key,
         balance: mutatedBalances[key],
         name: key,
-        image: imageMap[key]
+        image: imageMap[key],
       }
     }
   })
   return {
-    balances: filterZeroBalanceTokens(mutatedBalances).sort(sortedByImage)
+    balances: filterZeroBalanceTokens(mutatedBalances).sort(sortedByImage),
   }
 }
 
@@ -57,8 +57,8 @@ const mapBalancesActionsToProps = (actions, props) => ({
     actions.call({
       net: props.net,
       address: props.address,
-      tokens: props.tokens
-    })
+      tokens: props.tokens,
+    }),
 })
 
 export default compose(
@@ -73,5 +73,5 @@ export default compose(
 
   // expose data & functionality needed for `refresh` action
   withActions(balancesActions, mapBalancesActionsToProps),
-  withLoadingProp(balancesActions)
+  withLoadingProp(balancesActions),
 )(TokenBalancesPanel)

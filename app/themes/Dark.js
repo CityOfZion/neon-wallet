@@ -3,7 +3,7 @@ const BASE = {
   '--base-scrollbar-thumb': '#5c677f',
   '--base-main-background': '#242933',
   '--base-text': '#fff',
-  '--base-link-color': '#6bdaf6'
+  '--base-link-color': '#6bdaf6',
 }
 
 const BUTTON = {
@@ -23,7 +23,7 @@ const BUTTON = {
   '--button-priority-transfer-color': '#fff',
   '--button-priority-transfer-disabled': '#2E3542',
   '--button-max-amount-background': '#8D98AE',
-  '--button-max-amount-text': '#394152'
+  '--button-max-amount-text': '#394152',
 }
 
 const INPUT = {
@@ -37,16 +37,16 @@ const INPUT = {
   '--input-active':
     'linear-gradient(#f2f2f2, #f2f2f2), radial-gradient(circle at top left, #66eb8e, #6bdaf6)',
   '--input-icon': '#9ca0a9',
-  '--input-placeholder': 'rgba(255, 255, 255, 0.5)'
+  '--input-placeholder': 'rgba(255, 255, 255, 0.5)',
 }
 
 const HEADER_BAR = {
-  '--header-bar-default-icon-color': '#66ED87'
+  '--header-bar-default-icon-color': '#66ED87',
 }
 
 const TAB = {
   '--tab-text': '#394152',
-  '--tab-border': '#394152'
+  '--tab-border': '#394152',
 }
 
 const PANEL = {
@@ -61,17 +61,17 @@ const PANEL = {
   '--panel-full-height-instructions-text': 'rgba(255, 255, 255, 0.5)',
   '--panel-full-height-instructions-border': '#8D98AE',
   '--panel-full-height-header-icon-color': '#fff',
-  '--panel-receive-explanation': '#394152'
+  '--panel-receive-explanation': '#394152',
 }
 
 const MODAL = {
-  '--modal-overlay': 'rgba(248, 248, 248, 0.21)'
+  '--modal-overlay': 'rgba(248, 248, 248, 0.21)',
 }
 
 const AUTH_STYLES = {
   '--auth-main-container-background': '#2E3542',
   '--auth-secondary-button-background': '#2E3542',
-  '--auth-scan-qr-border': '#5c677f'
+  '--auth-scan-qr-border': '#5c677f',
 }
 
 const DASHBOARD = {
@@ -81,7 +81,7 @@ const DASHBOARD = {
   '--dashboard-total-wallet-value-total-text': '#fff',
   '--dashboard-asset-panel-asset-name': 'rgba(255, 255, 255, 0.9)',
   '--dashboard-token-balances-divider-line': '#343B4A',
-  '--dashboard-price-history-current-price': '#fff'
+  '--dashboard-price-history-current-price': '#fff',
 }
 
 const SIDEBAR = {
@@ -90,13 +90,13 @@ const SIDEBAR = {
   '--sidebar-icon': '#9CA0A8',
   '--sidebar-active-border': '#66ED87',
   '--sidebar-active-background': '#1B2029',
-  '--sidebar-active-icon': '#fff'
+  '--sidebar-active-icon': '#fff',
 }
 
 const TX_LIST = {
   '--tx-list-odd-row': '#343B4A',
   '--tx-list-button-icon': '#66ED87',
-  '--tx-list-copy-icon': '#66ED87'
+  '--tx-list-copy-icon': '#66ED87',
 }
 
 const SETTINGS = {
@@ -106,7 +106,7 @@ const SETTINGS = {
   '--settings-link-text': '#66ED87',
   '--settings-select-value-text': '#66ED87',
   '--settings-donation-text': '#F2F2F2',
-  '--settings-spacer': 'rgba(170, 178, 189, 0.3)'
+  '--settings-spacer': 'rgba(170, 178, 189, 0.3)',
 }
 
 const NODE_SELECT = {
@@ -114,7 +114,7 @@ const NODE_SELECT = {
   '--node-select-icon-color': '#66ED87',
   '--node-select-automatic-select-button-text': '#FFFFFF',
   '--node-select-refresh-icon': '#66ED87',
-  '--node-select-node-count': 'rgba(255, 255, 255, 0.5)'
+  '--node-select-node-count': 'rgba(255, 255, 255, 0.5)',
 }
 
 const AMOUNTS_PANEL = {
@@ -122,17 +122,17 @@ const AMOUNTS_PANEL = {
   '--amounts-panel-second-row-background': '#12161E',
   '--amounts-panel-asset-name-text': 'rgba(255, 255, 255, 0.5)',
   '--amounts-panel-asset-amount-text': '#fff',
-  '--amounts-panel-asset-worth-text': '#CCD0D9'
+  '--amounts-panel-asset-worth-text': '#CCD0D9',
 }
 
 const CONTACTS = {
   '--contacts-odd-numbered-row': '#343B4A',
   '--contacts-group-header-background': '#AAB2BD',
-  '--contacts-group-header-text': '#171B24'
+  '--contacts-group-header-text': '#171B24',
 }
 
 const SEND = {
-  '--send-success-row-info': '#cccccc'
+  '--send-success-row-info': '#cccccc',
 }
 
 export default {
@@ -151,5 +151,5 @@ export default {
   ...HEADER_BAR,
   ...TX_LIST,
   ...SETTINGS,
-  ...SEND
+  ...SEND,
 }

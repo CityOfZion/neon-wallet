@@ -9,21 +9,21 @@ type Props = {
   onChange: Function,
   value: {
     label: string,
-    value: string
-  }
+    value: string,
+  },
 }
 
 type State = {
-  selectedAsset: Object
+  selectedAsset: Object,
 }
 
 function parsedSymbols(
-  symbols = [ASSETS.NEO, ASSETS.GAS, ...Object.keys(TOKENS)]
+  symbols = [ASSETS.NEO, ASSETS.GAS, ...Object.keys(TOKENS)],
 ): Array<{ value: string, label: string }> {
   return symbols
     .map(symbol => ({
       value: symbol,
-      label: symbol
+      label: symbol,
     }))
     .filter(symbol => symbol.label.length > 1)
 }
@@ -32,7 +32,7 @@ export default class AssetInput extends React.Component<Props, State> {
   parsedSymbols = parsedSymbols(this.props.symbols)
 
   state = {
-    selectedAsset: this.props.value || this.parsedSymbols[0]
+    selectedAsset: this.props.value || this.parsedSymbols[0],
   }
 
   render() {

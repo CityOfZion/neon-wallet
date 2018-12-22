@@ -5,15 +5,15 @@ import { compose } from 'recompose'
 import { withData, withActions } from 'spunky'
 
 import accountsActions, {
-  updateAccountsActions
+  updateAccountsActions,
 } from '../../actions/accountsActions'
 
 import walletLabelActions, {
-  updateLabelActions
+  updateLabelActions,
 } from '../../actions/walletLabelActions'
 import {
   showErrorNotification,
-  showSuccessNotification
+  showSuccessNotification,
 } from '../../modules/notifications'
 import withSuccessNotification from '../../hocs/withSuccessNotification'
 import withFailureNotification from '../../hocs/withFailureNotification'
@@ -24,21 +24,21 @@ import { showModal } from '../../modules/modal'
 import EditWallet from './EditWallet'
 
 const mapAccountsDataToProps = accounts => ({
-  accounts
+  accounts,
 })
 
 const actionCreators = {
   showModal,
   showErrorNotification,
-  showSuccessNotification
+  showSuccessNotification,
 }
 
 const mapSaveAccountActionsToProps = actions => ({
-  saveAccount: ({ label, address }) => actions.call({ label, address })
+  saveAccount: ({ label, address }) => actions.call({ label, address }),
 })
 
 const mapSaveAccountsActionsToProps = actions => ({
-  setAccounts: accounts => actions.call(accounts)
+  setAccounts: accounts => actions.call(accounts),
 })
 
 const mapDispatchToProps = dispatch =>
@@ -47,7 +47,7 @@ const mapDispatchToProps = dispatch =>
 export default compose(
   connect(
     null,
-    mapDispatchToProps
+    mapDispatchToProps,
   ),
   withAuthData(),
   withData(accountsActions, mapAccountsDataToProps),
@@ -57,6 +57,6 @@ export default compose(
   withFailureNotification(updateLabelActions),
   withSuccessNotification(
     updateLabelActions,
-    'Succesfully updated wallet name.'
-  )
+    'Succesfully updated wallet name.',
+  ),
 )(EditWallet)

@@ -6,7 +6,7 @@ import styles from './TransactionList.scss'
 type Props = {
   className?: string,
   alternateRows?: boolean,
-  children: Array<React$Node>
+  children: Array<React$Node>,
 }
 
 export default class TransactionList extends React.Component<Props> {
@@ -14,7 +14,7 @@ export default class TransactionList extends React.Component<Props> {
     const { children, alternateRows } = this.props
     return React.Children.map(children, (child, i) => {
       const oddRowClass = alternateRows && {
-        [styles.oddNumberedRow]: i % 2 === 0
+        [styles.oddNumberedRow]: i % 2 === 0,
       }
       return (
         <li key={`txli${i}`} className={classNames(styles.row, oddRowClass)}>

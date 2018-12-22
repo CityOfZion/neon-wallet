@@ -12,17 +12,17 @@ export const showModal = (modalType: ModalType, modalProps: Object = {}) => ({
   type: SHOW_MODAL,
   payload: {
     modalType,
-    modalProps
-  }
+    modalProps,
+  },
 })
 
 export const hideModal = () => ({
-  type: HIDE_MODAL
+  type: HIDE_MODAL,
 })
 
 const initialState = {
   modalType: null,
-  modalProps: {}
+  modalProps: {},
 }
 
 export default (state: Object = initialState, action: ReduxAction) => {
@@ -31,7 +31,7 @@ export default (state: Object = initialState, action: ReduxAction) => {
       const { modalType, modalProps } = action.payload
       return {
         modalType,
-        modalProps
+        modalProps,
       }
     case HIDE_MODAL:
       return initialState

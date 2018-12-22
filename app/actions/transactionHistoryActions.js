@@ -15,7 +15,7 @@ export const GAS_ID =
 type Props = {
   net: string,
   address: string,
-  shouldIncrementPagination: boolean
+  shouldIncrementPagination: boolean,
 }
 
 async function parseAbstractData(data, currentUserAddress, tokens, net) {
@@ -34,12 +34,12 @@ async function parseAbstractData(data, currentUserAddress, tokens, net) {
     if (token) return token
     if (abstract.asset === NEO_ID) {
       return {
-        symbol: ASSETS.NEO
+        symbol: ASSETS.NEO,
       }
     }
     if (abstract.asset === GAS_ID) {
       return {
-        symbol: ASSETS.GAS
+        symbol: ASSETS.GAS,
       }
     }
     const endpoint = await getRPCEndpoint(net)
@@ -50,7 +50,7 @@ async function parseAbstractData(data, currentUserAddress, tokens, net) {
         return {}
       })
     return {
-      symbol: tokenInfo.symbol
+      symbol: tokenInfo.symbol,
     }
   }
 
@@ -83,7 +83,7 @@ async function parseAbstractData(data, currentUserAddress, tokens, net) {
       type,
       id: `_${Math.random()
         .toString(36)
-        .substr(2, 9)}`
+        .substr(2, 9)}`,
     }
 
     results.push(summary)
@@ -102,7 +102,7 @@ export default createActions(
   ({
     net,
     address,
-    shouldIncrementPagination = false
+    shouldIncrementPagination = false,
   }: Props = {}) => async () => {
     // If refresh action dispatched reset pagination
     // to grab the most recent abstracts
@@ -114,14 +114,14 @@ export default createActions(
     const tokens = await getDefaultTokens()
     const endpoint = api.neoscan.getAPIEndpoint(net)
     const { data } = await axios.get(
-      `${endpoint}/v1/get_address_abstracts/${address}/${page}`
+      `${endpoint}/v1/get_address_abstracts/${address}/${page}`,
     )
 
     const parsedEntries = await parseAbstractData(
       data.entries,
       address,
       tokens,
-      net
+      net,
     )
     page += 1
     if (shouldIncrementPagination) {
@@ -131,5 +131,5 @@ export default createActions(
     }
     entries = [...parsedEntries]
     return entries
-  }
+  },
 )

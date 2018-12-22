@@ -22,12 +22,12 @@ type Props = {
   gasPrice: number,
   neoPriceChange: BigNumber,
   gasPriceChange: BigNumber,
-  currencyCode: string
+  currencyCode: string,
 }
 
 export default class AssetBalancesPanel extends React.Component<Props> {
   static defaultProps = {
-    loading: false
+    loading: false,
   }
 
   render = () => {
@@ -63,7 +63,7 @@ export default class AssetBalancesPanel extends React.Component<Props> {
               <span
                 className={classNames(
                   styles.change,
-                  styles[this.getNEOPriceChangeDirection()]
+                  styles[this.getNEOPriceChangeDirection()],
                 )}
                 id="priceChangeNeo"
               >
@@ -88,7 +88,7 @@ export default class AssetBalancesPanel extends React.Component<Props> {
               <span
                 className={classNames(
                   styles.change,
-                  styles[this.getGASPriceChangeDirection()]
+                  styles[this.getGASPriceChangeDirection()],
                 )}
                 id="priceChangeGas"
               >

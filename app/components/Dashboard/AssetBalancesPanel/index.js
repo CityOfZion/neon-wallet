@@ -23,27 +23,27 @@ import { toBigNumber } from '../../../core/math'
 const mapBalanceDataToProps = balances => ({
   NEO: balances.NEO,
   GAS: balances.GAS,
-  tokenBalances: values(omit(balances, 'NEO', 'GAS'))
+  tokenBalances: values(omit(balances, 'NEO', 'GAS')),
 })
 
 const mapPricesDataToProps = ({ NEO, GAS }) => ({
   neoPrice: NEO,
-  gasPrice: GAS
+  gasPrice: GAS,
 })
 
 const mapPriceChangeDataToProps = (prices: Object) => {
   const oldNeo = toBigNumber(prices[ASSETS.NEO][0].close)
   const newNeo = toBigNumber(
-    prices[ASSETS.NEO][prices[ASSETS.NEO].length - 1].close
+    prices[ASSETS.NEO][prices[ASSETS.NEO].length - 1].close,
   )
   const oldGas = toBigNumber(prices[ASSETS.GAS][0].close)
   const newGas = toBigNumber(
-    prices[ASSETS.GAS][prices[ASSETS.GAS].length - 1].close
+    prices[ASSETS.GAS][prices[ASSETS.GAS].length - 1].close,
   )
 
   return {
     neoPriceChange: newNeo.sub(oldNeo).dividedBy(oldNeo),
-    gasPriceChange: newGas.sub(oldGas).dividedBy(oldGas)
+    gasPriceChange: newGas.sub(oldGas).dividedBy(oldGas),
   }
 }
 
@@ -52,8 +52,8 @@ const mapBalancesActionsToProps = (actions: Object, props: Object) => ({
     actions.call({
       net: props.net,
       address: props.address,
-      tokens: props.tokens
-    })
+      tokens: props.tokens,
+    }),
 })
 
 export default compose(
@@ -74,10 +74,10 @@ export default compose(
   withLoadingProp(balancesActions),
   withSuccessNotification(
     balancesActions,
-    'Received latest blockchain information.'
+    'Received latest blockchain information.',
   ),
   withFailureNotification(
     balancesActions,
-    'Failed to retrieve blockchain information.'
-  )
+    'Failed to retrieve blockchain information.',
+  ),
 )(AssetBalancesPanel)

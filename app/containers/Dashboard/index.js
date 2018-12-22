@@ -17,11 +17,11 @@ import { showModal } from '../../modules/modal'
 import Dashboard from './Dashboard'
 
 const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
-  notification: getNotifications(state)
+  notification: getNotifications(state),
 })
 
 const actionCreators = {
-  showModal
+  showModal,
 }
 
 const mapDispatchToProps = dispatch =>
@@ -32,14 +32,14 @@ const mapAccountActionsToProps = (actions, props) => ({
     actions.call({
       net: props.net,
       address: props.address,
-      tokens: props.tokens
-    })
+      tokens: props.tokens,
+    }),
 })
 
 export default compose(
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
   ),
 
   // Expose function for polling & reloading account related data.
@@ -49,5 +49,5 @@ export default compose(
   withFilteredTokensData(),
   withInitialCall(dashboardActions),
   withReset(accountActions, ['networkId']),
-  withActions(accountActions, mapAccountActionsToProps)
+  withActions(accountActions, mapAccountActionsToProps),
 )(Dashboard)

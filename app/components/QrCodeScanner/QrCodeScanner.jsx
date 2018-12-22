@@ -14,25 +14,25 @@ const JSQR_OPTIONS = { inversionAttempts: 'dontInvert' } // https://bit.ly/2EHM8
 
 type ScannerError = {
   message: string,
-  details?: React$Element<*>
+  details?: React$Element<*>,
 }
 
 type Props = {
   callback: (content: string, scannerInstance: any) => any,
   theme: string,
   width: number,
-  height: number
+  height: number,
 }
 
 type State = {
   loading: boolean,
-  error: ?ScannerError
+  error: ?ScannerError,
 }
 
 export default class QrCodeScanner extends Component<Props, State> {
   state = {
     loading: true,
-    error: null
+    error: null,
   }
 
   video: ?HTMLVideoElement
@@ -63,7 +63,7 @@ export default class QrCodeScanner extends Component<Props, State> {
       const { width, height } = this.props
       navigator.mediaDevices
         .getUserMedia({
-          video: { mandatory: { minAspectRatio: width / height } }
+          video: { mandatory: { minAspectRatio: width / height } },
         })
         .then(stream => {
           this.stream = stream // stored to later be stopped
@@ -131,7 +131,7 @@ export default class QrCodeScanner extends Component<Props, State> {
 
   static getScannerError(err: Error) {
     const scanErr: ScannerError = {
-      message: 'Could not connect to camera'
+      message: 'Could not connect to camera',
     }
 
     if (err.name === 'TrackStartError') {
@@ -139,16 +139,16 @@ export default class QrCodeScanner extends Component<Props, State> {
       const docs = {
         darwin: [
           'https://support.apple.com/en-il/guide/mac-help/mh32356/10.14/mac',
-          'MacOS User Guide: Change Privacy preferences'
+          'MacOS User Guide: Change Privacy preferences',
         ],
         win32: [
           'https://support.microsoft.com/en-ca/help/10557/windows-10-app-permissions',
-          'Windows Support: App permissions'
+          'Windows Support: App permissions',
         ],
         linux: [
           'https://wiki.ubuntu.com/SecurityPermissions',
-          'Ubuntu Wiki: Security Permissions'
-        ]
+          'Ubuntu Wiki: Security Permissions',
+        ],
       }
       const [link, title] = get(docs, process.platform, [])
 

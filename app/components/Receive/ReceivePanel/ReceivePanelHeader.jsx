@@ -6,7 +6,7 @@ import CopyToClipboard from '../../CopyToClipboard'
 import styles from './styles.scss'
 
 type Props = {
-  address: string
+  address: string,
 }
 
 const ReceivePanelHeader = ({ address }: Props) => (

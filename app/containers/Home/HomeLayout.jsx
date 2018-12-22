@@ -10,12 +10,12 @@ type Props = {
   children: React$Node,
   renderNavigation?: Function,
   headerText: string,
-  theme: ThemeType
+  theme: ThemeType,
 }
 
 export default class HomeLayout extends Component<Props> {
   static defaultProps = {
-    headerText: 'Login'
+    headerText: 'Login',
   }
 
   render = () => {
@@ -30,7 +30,7 @@ export default class HomeLayout extends Component<Props> {
               renderNavigation
                 ? classNames(
                     styles.logoWithNegativeMargin,
-                    styles.logoContainer
+                    styles.logoContainer,
                   )
                 : styles.logoContainer
             }

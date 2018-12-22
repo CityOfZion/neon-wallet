@@ -12,12 +12,12 @@ type Props = {
   headerClassName: ?string,
   children: React$Node,
   renderHeader: ?Function,
-  onScroll?: Function
+  onScroll?: Function,
 }
 
 export default class Panel extends React.Component<Props> {
   static defaultProps = {
-    renderHeader: null
+    renderHeader: null,
   }
 
   render = () => (

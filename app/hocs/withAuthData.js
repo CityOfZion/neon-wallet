@@ -8,7 +8,7 @@ type Mapping = {
   address?: string,
   publicKey?: string,
   wif?: string,
-  signingFunction?: string
+  signingFunction?: string,
 }
 
 const keys: Array<string> = ['address', 'publicKey', 'wif', 'signingFunction']

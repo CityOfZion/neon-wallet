@@ -19,7 +19,7 @@ import { MESSAGES } from '../../ledger/neonLedger'
 const LEDGER_CONNECTION_STAGES = {
   NOT_CONNECTED: 1,
   OPEN_APP: 2,
-  CONNECTED: 3
+  CONNECTED: 3,
 }
 
 const { LOADED, FAILED } = progressValues
@@ -35,7 +35,7 @@ type Props = {
   publicKey: LedgerPublicKey,
   login: Function,
   connect: Function,
-  error: ?string
+  error: ?string,
 }
 
 type State = {
@@ -44,7 +44,7 @@ type State = {
   addressOption: SelectOption | null,
   publicKeys: Array<LedgerPublicKey>,
   loadingPublicKeys: boolean,
-  error: string | null
+  error: string | null,
 }
 
 const POLL_FREQUENCY_MS = 1000
@@ -59,14 +59,14 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
       addressOption: null,
       publicKeys: [],
       loadingPublicKeys: true,
-      error: null
+      error: null,
     }
   }
 
   intervalId: IntervalID
 
   static defaultProps = {
-    publicKeys: []
+    publicKeys: [],
   }
 
   componentDidMount() {
@@ -82,8 +82,8 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
         loadingPublicKeys: false,
         addressOption: {
           value: nextProps.publicKey.key,
-          label: this.unencodedHexToAddress(nextProps.publicKey.key)
-        }
+          label: this.unencodedHexToAddress(nextProps.publicKey.key),
+        },
       })
     }
 
@@ -99,19 +99,19 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
       }
       return {
         ledgerStage: CONNECTED,
-        isLoading: false
+        isLoading: false,
       }
     }
     if (props.progress === FAILED && props.error) {
       return {
         isLoading: true,
         ledgerStage:
-          props.error === MESSAGES.APP_CLOSED ? OPEN_APP : NOT_CONNECTED
+          props.error === MESSAGES.APP_CLOSED ? OPEN_APP : NOT_CONNECTED,
       }
     }
     return {
       isLoading: true,
-      ledgerStage: NOT_CONNECTED
+      ledgerStage: NOT_CONNECTED,
     }
   }
 
@@ -168,19 +168,19 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
     const nextBatchOfKeys = await getPublicKeys(lastAccountLoaded + 1).catch(
       () => {
         console.error(
-          'An error occurred getting additional public keys from ledger'
+          'An error occurred getting additional public keys from ledger',
         )
         this.setState({
           error: FETCH_ADDITIONAL_KEYS_ERROR,
-          loadingPublicKeys: false
+          loadingPublicKeys: false,
         })
-      }
+      },
     )
 
     if (nextBatchOfKeys) {
       this.setState(state => ({
         publicKeys: [...state.publicKeys, ...nextBatchOfKeys],
-        loadingPublicKeys: false
+        loadingPublicKeys: false,
       }))
     }
   }
@@ -221,7 +221,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
   createOptionsFromKeys = () => {
     const options = this.state.publicKeys.map((publicKey: LedgerPublicKey) => ({
       label: this.unencodedHexToAddress(publicKey.key),
-      value: publicKey.key
+      value: publicKey.key,
     }))
     return options
   }
@@ -244,7 +244,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
         <div
           className={classNames(styles.ledgerStage, {
             [styles.ledgerStageActive]: ledgerStage === NOT_CONNECTED,
-            [styles.ledgerStageCompleted]: ledgerStage > NOT_CONNECTED
+            [styles.ledgerStageCompleted]: ledgerStage > NOT_CONNECTED,
           })}
         >
           {this.getStatusIcon(NOT_CONNECTED)}
@@ -255,7 +255,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
         <div
           className={classNames(styles.ledgerStage, {
             [styles.ledgerStageActive]: ledgerStage === OPEN_APP,
-            [styles.ledgerStageCompleted]: ledgerStage > OPEN_APP
+            [styles.ledgerStageCompleted]: ledgerStage > OPEN_APP,
           })}
         >
           {this.getStatusIcon(OPEN_APP)}
@@ -271,7 +271,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
     const { addressOption, publicKeys } = this.state
     if (publicKeys.length && addressOption) {
       const keyData = publicKeys.find(
-        publicKey => addressOption.value === publicKey.key
+        publicKey => addressOption.value === publicKey.key,
       )
       if (keyData) {
         this.props.login(keyData)

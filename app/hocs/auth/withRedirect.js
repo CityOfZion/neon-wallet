@@ -10,21 +10,21 @@ import authActions from '../../actions/authActions'
 type Props = {
   [key: string]: string,
   history: {
-    push: Function
-  }
+    push: Function,
+  },
 }
 
 type Options = {
-  propName?: string
+  propName?: string,
 }
 
 export default function withRedirect(
   route: string,
   strategy: Function,
-  { propName = '__address__' }: Options = {}
+  { propName = '__address__' }: Options = {},
 ) {
   const mapAuthDataToProps = account => ({
-    [propName]: account && account.address
+    [propName]: account && account.address,
   })
 
   return (Component: Class<React.Component<*>>) => {
@@ -43,7 +43,7 @@ export default function withRedirect(
 
     return compose(
       withRouter,
-      withData(authActions, mapAuthDataToProps)
+      withData(authActions, mapAuthDataToProps),
     )(WrappedComponent)
   }
 }

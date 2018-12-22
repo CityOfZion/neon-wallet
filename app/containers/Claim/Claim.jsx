@@ -11,7 +11,7 @@ type Props = {
   className: ?string,
   doGasClaim: Function,
   disableClaimButton: boolean,
-  claimAmount: string
+  claimAmount: string,
 }
 
 export default class Claim extends Component<Props> {

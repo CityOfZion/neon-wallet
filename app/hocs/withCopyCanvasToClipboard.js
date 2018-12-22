@@ -7,7 +7,7 @@ import fs from 'fs'
 import storage from 'electron-json-storage'
 
 type State = {
-  copied: boolean
+  copied: boolean,
 }
 
 type Props = {}
@@ -16,7 +16,7 @@ type Props = {}
 export default function withCopyCanvasToClipboard(Component) {
   class hasCopyCanvasToClipboard extends React.Component<Props, State> {
     state = {
-      copied: false
+      copied: false,
     }
 
     handleCreateCanvas = (ref: ?HTMLCanvasElement, data: string) => {

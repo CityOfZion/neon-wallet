@@ -11,22 +11,22 @@ const PROGRESS_PROP: string = '__progress__'
 type Props = {
   __data__: Object,
   __error__: string,
-  __progress__: string
+  __progress__: string,
 }
 
 export default function withProgressChange(
   actions: Actions,
   progress: string,
-  callback: Function
+  callback: Function,
 ) {
   const progresses = castArray(progress)
 
   const mapDataToProps = data => ({
-    [DATA_PROP]: data
+    [DATA_PROP]: data,
   })
 
   const mapErrorToProps = error => ({
-    [ERROR_PROP]: error
+    [ERROR_PROP]: error,
   })
 
   return (Component: Class<React.Component<*>>) => {
@@ -38,7 +38,7 @@ export default function withProgressChange(
         ) {
           callback(
             this.getCallbackState(nextProps),
-            this.getCallbackProps(nextProps)
+            this.getCallbackProps(nextProps),
           )
         }
       }
@@ -50,7 +50,7 @@ export default function withProgressChange(
 
       getCallbackState = props => ({
         data: props[DATA_PROP],
-        error: props[ERROR_PROP]
+        error: props[ERROR_PROP],
       })
 
       getCallbackProps = props =>
@@ -60,7 +60,7 @@ export default function withProgressChange(
     return compose(
       withProgress(actions, { propName: PROGRESS_PROP }),
       withData(actions, mapDataToProps),
-      withError(actions, mapErrorToProps)
+      withError(actions, mapErrorToProps),
     )(WrappedComponent)
   }
 }

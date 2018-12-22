@@ -8,7 +8,7 @@ import {
   toBigNumber,
   addNumber,
   minusNumber,
-  multiplyNumber
+  multiplyNumber,
 } from '../../core/math'
 import AmountsPanel from '../../components/AmountsPanel'
 import HeaderBar from '../../components/HeaderBar'
@@ -24,7 +24,7 @@ import {
   TOKEN_SALE_SUCCESS,
   TOKEN_SALE_FAILURE,
   PRICE_UNAVAILABLE,
-  ROUTES
+  ROUTES,
 } from '../../core/constants'
 
 import styles from './TokenSale.scss'
@@ -33,7 +33,7 @@ const conditions = [
   'I understand that submitting NEO or GAS multiple times may result in a loss of funds or a delayed refund depending on the policy of the ICO company.',
   'I understand that some sales may only accept NEO or GAS, and I have verified which is accepted.',
   'I understand that if I send NEO or GAS to a token sale that has already ended, I will lose my NEO/GAS and will not be refunded.',
-  "I understand that City of Zion (CoZ) is not responsible for my usage of this feature, and I have consulted this software's licenses." // eslint-disable-line
+  "I understand that City of Zion (CoZ) is not responsible for my usage of this feature, and I have consulted this software's licenses.", // eslint-disable-line
 ]
 
 type Props = {
@@ -47,9 +47,9 @@ type Props = {
     neoToSend: string,
     gasToSend: string,
     scriptHash: string,
-    gasCost: string
+    gasCost: string,
   ) => Promise<any>,
-  currencyCode: string
+  currencyCode: string,
 }
 
 type State = {
@@ -64,7 +64,7 @@ type State = {
   inputErrorMessage: string,
   tokenSaleError: Object,
   hasAssets: boolean,
-  amountsData: Array<Object>
+  amountsData: Array<Object>,
 }
 
 const INITIAL_STATE = {
@@ -76,7 +76,7 @@ const INITIAL_STATE = {
   gasFee: 0,
   acceptedConditions: [],
   inputErrorMessage: '',
-  tokenSaleError: {}
+  tokenSaleError: {},
 }
 
 class TokenSale extends Component<Props, State> {
@@ -87,7 +87,7 @@ class TokenSale extends Component<Props, State> {
       assetToPurchaseWith: Object.keys(this.props.assetBalances)[0],
       hasAssets: false,
       amountsData: [],
-      ...INITIAL_STATE
+      ...INITIAL_STATE,
     }
   }
 
@@ -108,7 +108,7 @@ class TokenSale extends Component<Props, State> {
     const { assetBalances } = this.props
     const amountsData = this.createAmountsData()
     const hasAssets = Object.keys(assetBalances).some(asset =>
-      toBigNumber(assetBalances[asset]).greaterThan(0)
+      toBigNumber(assetBalances[asset]).greaterThan(0),
     )
 
     this.setState({ amountsData, hasAssets })
@@ -142,7 +142,7 @@ class TokenSale extends Component<Props, State> {
         currentBalance,
         totalBalanceWorth: price
           ? multiplyNumber(balance, price)
-          : PRICE_UNAVAILABLE
+          : PRICE_UNAVAILABLE,
       }
 
       return amountsObject
@@ -171,14 +171,14 @@ class TokenSale extends Component<Props, State> {
   updateConditions = (condition: string) => {
     const { acceptedConditions } = this.state
     const conditionAccepted = acceptedConditions.find(
-      (element: string) => element === condition
+      (element: string) => element === condition,
     )
 
     if (conditionAccepted) {
       this.setState({
         acceptedConditions: [...acceptedConditions].filter(
-          (item: string) => item !== condition
-        )
+          (item: string) => item !== condition,
+        ),
       })
     } else {
       this.setState({ acceptedConditions: [...acceptedConditions, condition] })
@@ -203,7 +203,7 @@ class TokenSale extends Component<Props, State> {
 
     if (assetToPurchaseWith === 'NEO' && !toBigNumber(amount).isInteger()) {
       this.setState({
-        inputErrorMessage: "You can't send fractional amounts of NEO" // eslint-disable-line
+        inputErrorMessage: "You can't send fractional amounts of NEO", // eslint-disable-line
       })
       return false
     }
@@ -216,7 +216,7 @@ class TokenSale extends Component<Props, State> {
       if (toBigNumber(gasFee).greaterThan(gasBalance)) {
         this.setState({
           inputErrorMessage:
-            'You do not have enough GAS to prioritize this transaction' // eslint-disable-line
+            'You do not have enough GAS to prioritize this transaction', // eslint-disable-line
         })
         return false
       }
@@ -226,7 +226,7 @@ class TokenSale extends Component<Props, State> {
       if (toBigNumber(addNumber(amount, gasFee)).greaterThan(gasBalance)) {
         this.setState({
           inputErrorMessage:
-            'You do not have enough GAS to prioritize this transaction' // eslint-disable-line
+            'You do not have enough GAS to prioritize this transaction', // eslint-disable-line
         })
         return false
       }
@@ -234,7 +234,7 @@ class TokenSale extends Component<Props, State> {
 
     if (toBigNumber(amount).greaterThan(assetBalance)) {
       this.setState({
-        inputErrorMessage: `You don't have enough ${assetToPurchaseWith}.`
+        inputErrorMessage: `You don't have enough ${assetToPurchaseWith}.`,
       })
       return false
     }
@@ -260,9 +260,9 @@ class TokenSale extends Component<Props, State> {
       {
         assetToPurchaseWith: Object.keys(this.props.assetBalances)[0],
         hasAssets: true,
-        ...INITIAL_STATE
+        ...INITIAL_STATE,
       },
-      () => this.props.history.push(ROUTES.TOKEN_SALE)
+      () => this.props.history.push(ROUTES.TOKEN_SALE),
     )
   }
 
@@ -286,7 +286,7 @@ class TokenSale extends Component<Props, State> {
           String(neoToSend),
           String(gasToSend),
           String(scriptHash),
-          String(gasFee)
+          String(gasFee),
         )
 
         if (success) this.setState({ step: TOKEN_SALE_SUCCESS, loading: false })
@@ -295,7 +295,7 @@ class TokenSale extends Component<Props, State> {
         this.setState({
           step: TOKEN_SALE_FAILURE,
           loading: false,
-          tokenSaleError: err
+          tokenSaleError: err,
         })
         this.props.history.push(ROUTES.TOKEN_SALE_FAILURE)
       }
@@ -327,7 +327,7 @@ class TokenSale extends Component<Props, State> {
       conditions,
       inputErrorMessage,
       gasFee,
-      amountsData
+      amountsData,
     } = this.state
 
     const { assetBalances, showModal, currencyCode } = this.props

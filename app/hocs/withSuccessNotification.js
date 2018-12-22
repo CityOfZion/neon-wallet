@@ -7,14 +7,14 @@ import {
   withProgress,
   progressValues,
   type Actions,
-  type ProgressState
+  type ProgressState,
 } from 'spunky'
 
 import { showSuccessNotification } from '../modules/notifications'
 
 type Props = {
   __progress__: ProgressState,
-  __showSuccessNotification__: Function
+  __showSuccessNotification__: Function,
 }
 
 type Message = string | Function
@@ -27,10 +27,11 @@ const { LOADED } = progressValues
 export default function withSuccessNotification(
   actions: Actions,
   message: Message,
-  options: Object = {}
+  options: Object = {},
 ) {
   const mapDispatchToProps = (dispatch: DispatchType) => ({
-    [NOTIFICATION_PROP]: (...args) => dispatch(showSuccessNotification(...args))
+    [NOTIFICATION_PROP]: (...args) =>
+      dispatch(showSuccessNotification(...args)),
   })
 
   return (Component: Class<React.Component<*>>): Class<React.Component<*>> => {
@@ -42,7 +43,7 @@ export default function withSuccessNotification(
         if (progressChangedToLoaded(this.props, nextProps)) {
           const showSuccessNotification = nextProps[NOTIFICATION_PROP]
           showSuccessNotification({
-            message: isFunction(message) ? message(nextProps) : message
+            message: isFunction(message) ? message(nextProps) : message,
           })
         }
       }
@@ -56,9 +57,9 @@ export default function withSuccessNotification(
     return compose(
       connect(
         null,
-        mapDispatchToProps
+        mapDispatchToProps,
       ),
-      withProgress(actions, { ...options, propName: PROGRESS_PROP })
+      withProgress(actions, { ...options, propName: PROGRESS_PROP }),
     )(LoadedNotifier)
   }
 }

@@ -10,12 +10,12 @@ import styles from './EncryptSuccess.scss'
 
 type Props = {
   encryptedKey: string,
-  handleReset: Function
+  handleReset: Function,
 }
 
 export default class EncryptSuccess extends React.Component<Props> {
   static defaultProps = {
-    handleReset: noop
+    handleReset: noop,
   }
 
   render() {

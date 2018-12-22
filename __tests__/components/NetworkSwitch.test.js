@@ -12,26 +12,26 @@ const NETWORKS = [
     id: MAIN_NETWORK_ID,
     value: MAIN_NETWORK_ID,
     label: 'MainNet',
-    network: 'MainNet'
+    network: 'MainNet',
   },
   {
     id: TEST_NETWORK_ID,
     value: TEST_NETWORK_ID,
     label: 'TestNet',
-    network: 'TestNet'
-  }
+    network: 'TestNet',
+  },
 ]
 
 const setup = () => {
   const props = {
     value: NETWORKS[0],
     networks: NETWORKS,
-    onChange: jest.fn()
+    onChange: jest.fn(),
   }
   const wrapper = mount(<NetworkSwitch {...props} />)
 
   return {
-    wrapper
+    wrapper,
   }
 }
 

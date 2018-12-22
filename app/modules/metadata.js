@@ -8,7 +8,7 @@ import { ConditionalLink } from '../util/ConditionalLink'
 import { showWarningNotification } from './notifications'
 import {
   NEON_WALLET_RELEASE_LINK,
-  NOTIFICATION_POSITIONS
+  NOTIFICATION_POSITIONS,
 } from '../core/constants'
 import { version } from '../../package.json'
 
@@ -17,7 +17,7 @@ const CURRENT_RELEASE_URL =
 export const RETRY_CONFIG = {
   retries: 3,
   retryDelay: () => 1000,
-  timeout: 1000
+  timeout: 1000,
 }
 
 // Actions
@@ -28,8 +28,8 @@ export const checkVersion = () => async (dispatch: DispatchType) => {
         autoDismiss: 0,
         stack: true,
         position: NOTIFICATION_POSITIONS.BOTTOM_CENTER,
-        children
-      })
+        children,
+      }),
     )
 
   // wait for network connection
@@ -59,7 +59,7 @@ export const checkVersion = () => async (dispatch: DispatchType) => {
           <ConditionalLink href={NEON_WALLET_RELEASE_LINK}>
             {NEON_WALLET_RELEASE_LINK}
           </ConditionalLink>
-        </div>
+        </div>,
       )
     }
   } catch (_) {} // eslint-disable-line no-empty

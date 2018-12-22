@@ -10,7 +10,7 @@ import styles from './ConfirmDetails.scss'
 
 type Props = {
   recipientData: Object,
-  confirmAndClose: () => any
+  confirmAndClose: () => any,
 }
 
 export default class ConfirmDetails extends React.Component<Props> {

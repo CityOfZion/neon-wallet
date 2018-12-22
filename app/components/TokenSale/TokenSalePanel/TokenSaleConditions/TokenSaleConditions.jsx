@@ -9,18 +9,18 @@ import styles from './TokenSaleConditions.scss'
 type Props = {
   conditions: Array<string>,
   updateConditions: (condition: string) => void,
-  acceptedConditions: Array<string>
+  acceptedConditions: Array<string>,
 }
 
 const TokenSaleConditions = ({
   conditions,
   updateConditions,
-  acceptedConditions
+  acceptedConditions,
 }: Props) => (
   <section className={styles.tokenSaleConditions}>
     {conditions.map(condition => {
       const checked = acceptedConditions.find(
-        acceptedCondition => acceptedCondition === condition
+        acceptedCondition => acceptedCondition === condition,
       )
       return (
         <TokenSaleCondition

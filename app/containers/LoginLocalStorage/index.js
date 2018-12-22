@@ -10,17 +10,17 @@ import withFailureNotification from '../../hocs/withFailureNotification'
 import pureStrategy from '../../hocs/helpers/pureStrategy'
 
 const mapAccountsDataToProps = accounts => ({
-  accounts
+  accounts,
 })
 
 const mapActionsToProps = actions => ({
   loginNep2: (passphrase, encryptedWIF) =>
-    actions.call({ passphrase, encryptedWIF })
+    actions.call({ passphrase, encryptedWIF }),
 })
 
 export default compose(
   withData(accountsActions, mapAccountsDataToProps),
   withActions(nep2LoginActions, mapActionsToProps),
   withLoadingProp(nep2LoginActions, { strategy: pureStrategy }),
-  withFailureNotification(nep2LoginActions)
+  withFailureNotification(nep2LoginActions),
 )(LoginLocalStorage)

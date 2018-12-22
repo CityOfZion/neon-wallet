@@ -25,11 +25,11 @@ describe('blockHeightActions', () => {
         type: 'blockHeight/ACTION/CALL',
         meta: {
           id: 'blockHeight',
-          type: 'ACTION/CALL'
+          type: 'ACTION/CALL',
         },
         payload: {
-          fn: expect.any(Function)
-        }
+          fn: expect.any(Function),
+        },
       })
     })
 
@@ -48,8 +48,8 @@ describe('blockHeightActions', () => {
         type: 'blockHeight/ACTION/CANCEL',
         meta: {
           id: 'blockHeight',
-          type: 'ACTION/CANCEL'
-        }
+          type: 'ACTION/CANCEL',
+        },
       })
     })
   })
@@ -61,8 +61,8 @@ describe('blockHeightActions', () => {
         type: 'blockHeight/ACTION/RESET',
         meta: {
           id: 'blockHeight',
-          type: 'ACTION/RESET'
-        }
+          type: 'ACTION/RESET',
+        },
       })
     })
   })

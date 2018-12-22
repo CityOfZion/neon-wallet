@@ -6,13 +6,13 @@ import styles from './TokenSaleConfirmDetails.scss'
 type Props = {
   tokenInfo: Object,
   assetToPurchaseWith: string,
-  amountToPurchaseFor: number
+  amountToPurchaseFor: number,
 }
 
 const TokenSaleConfirmDetails = ({
   tokenInfo,
   assetToPurchaseWith,
-  amountToPurchaseFor
+  amountToPurchaseFor,
 }: Props) => (
   <div className={styles.tokenSaleConfirmDetails}>
     <h2 className={styles.tokenSaleConfirmDetailsHeading}>Purchase assets</h2>

@@ -11,19 +11,19 @@ import { addContactActions } from '../../../actions/contactsActions'
 
 const mapContactActionsToProps = (actions: Object) => ({
   onSave: (name: string, address: string) =>
-    actions.call({ name: trim(name), address: trim(address) })
+    actions.call({ name: trim(name), address: trim(address) }),
 })
 
 const mapDispatchToProps = (dispatch: Function) => ({
   triggerSuccessNotification(text: string) {
     dispatch(showSuccessNotification({ message: text }))
-  }
+  },
 })
 
 export default compose(
   connect(
     null,
-    mapDispatchToProps
+    mapDispatchToProps,
   ),
-  withActions(addContactActions, mapContactActionsToProps)
+  withActions(addContactActions, mapContactActionsToProps),
 )(AddContactModal)

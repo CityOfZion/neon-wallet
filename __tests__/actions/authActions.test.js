@@ -14,11 +14,11 @@ describe('authActions', () => {
           type: 'auth/ACTION/CALL',
           meta: {
             id: 'auth',
-            type: 'ACTION/CALL'
+            type: 'ACTION/CALL',
           },
           payload: {
-            fn: expect.any(Function)
-          }
+            fn: expect.any(Function),
+          },
         })
       })
 
@@ -28,7 +28,7 @@ describe('authActions', () => {
           expect(call.payload.fn({})).toEqual({
             wif,
             address,
-            isHardwareLogin: false
+            isHardwareLogin: false,
           })
         })
       })
@@ -39,7 +39,7 @@ describe('authActions', () => {
           expect(call.payload.fn({})).toEqual({
             wif,
             address,
-            isHardwareLogin: false
+            isHardwareLogin: false,
           })
         })
       })
@@ -48,7 +48,7 @@ describe('authActions', () => {
         test('throws an error', () => {
           const call = wifLoginActions.call({ wif: 'invalid' })
           expect(() => call.payload.fn({})).toThrowError(
-            'Invalid private key entered'
+            'Invalid private key entered',
           )
         })
       })
@@ -61,8 +61,8 @@ describe('authActions', () => {
           type: 'auth/ACTION/CANCEL',
           meta: {
             id: 'auth',
-            type: 'ACTION/CANCEL'
-          }
+            type: 'ACTION/CANCEL',
+          },
         })
       })
     })
@@ -74,8 +74,8 @@ describe('authActions', () => {
           type: 'auth/ACTION/RESET',
           meta: {
             id: 'auth',
-            type: 'ACTION/RESET'
-          }
+            type: 'ACTION/RESET',
+          },
         })
       })
     })

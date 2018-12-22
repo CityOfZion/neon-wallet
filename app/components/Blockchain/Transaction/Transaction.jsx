@@ -25,14 +25,14 @@ type Props = {
   contacts: Object,
   showAddContactModal: ({ address: string }) => null,
   address: string,
-  className?: string
+  className?: string,
 }
 
 export default class Transaction extends React.Component<Props> {
   render = () => {
     const {
       tx: { type },
-      className
+      className,
     } = this.props
     return (
       <div className={classNames(styles.transactionContainer, className)}>
@@ -209,7 +209,7 @@ export default class Transaction extends React.Component<Props> {
 
       default:
         console.warn('renderTxTypeIcon() invoked with an invalid argument!', {
-          type
+          type,
         })
         return null
     }

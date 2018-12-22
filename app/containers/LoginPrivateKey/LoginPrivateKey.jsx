@@ -11,18 +11,18 @@ import styles from '../Home/Home.scss'
 
 type Props = {
   loginWithPrivateKey: (content: string) => void,
-  cameraAvailable: boolean
+  cameraAvailable: boolean,
 }
 
 type State = {
   wif: string,
-  scannerActive: boolean
+  scannerActive: boolean,
 }
 
 export default class LoginPrivateKey extends React.Component<Props, State> {
   state = {
     wif: '',
-    scannerActive: false
+    scannerActive: false,
   }
 
   toggleScanner = () => {

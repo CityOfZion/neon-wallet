@@ -16,7 +16,7 @@ type Props = {
   clearErrors: (index: number, field: string) => any,
   removeRow: (index: number) => any,
   updateRowField: (index: number, field: string, value: any) => any,
-  calculateMaxValue: (asset: string, index: number) => string
+  calculateMaxValue: (asset: string, index: number) => string,
 }
 
 const SendRecipientList = ({
@@ -27,7 +27,7 @@ const SendRecipientList = ({
   contacts,
   clearErrors,
   showConfirmSend,
-  calculateMaxValue
+  calculateMaxValue,
 }: Props) => {
   const renderRows = () =>
     sendRowDetails.map((row, index) => (

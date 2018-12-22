@@ -23,7 +23,7 @@ type Props = {
   hasNetworkFees: boolean,
   maxNumberOfRecipients: number,
   showSendModal: (props: Object) => any,
-  pushQRCodeData: (data: Object) => any
+  pushQRCodeData: (data: Object) => any,
 }
 
 const SendPanelHeader = ({
@@ -39,7 +39,7 @@ const SendPanelHeader = ({
   hasNetworkFees = false,
   maxNumberOfRecipients,
   showSendModal,
-  pushQRCodeData
+  pushQRCodeData,
 }: Props) => {
   const numberOfItems = sendRowDetails.length
 
@@ -76,7 +76,7 @@ const SendPanelHeader = ({
     headerTitle = 'Complete!'
     headerSubtitle = `${numberOfItems} asset ${pluralize(
       'type',
-      numberOfItems
+      numberOfItems,
     )} sent to 
     ${numberOfItems} ${pluralize('recipient', numberOfItems)}.`
     buttons = (

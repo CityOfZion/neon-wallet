@@ -4,12 +4,12 @@ import nock from 'nock'
 import nodeStorageActions, {
   determineIfCacheIsExpired,
   getRPCEndpoint,
-  buildNodeUrl
+  buildNodeUrl,
 } from '../../app/actions/nodeStorageActions'
 import {
   TEST_NETWORK_ID,
   TEST_NETWORK_LABEL,
-  NODES_TEST_NET
+  NODES_TEST_NET,
 } from '../../app/core/constants'
 
 const MINUTES_AS_MS =
@@ -23,8 +23,8 @@ describe('nodeStorageActions', () => {
         type: 'nodeStorage/ACTION/CANCEL',
         meta: {
           id: 'nodeStorage',
-          type: 'ACTION/CANCEL'
-        }
+          type: 'ACTION/CANCEL',
+        },
       })
     })
   })
@@ -36,8 +36,8 @@ describe('nodeStorageActions', () => {
         type: 'nodeStorage/ACTION/RESET',
         meta: {
           id: 'nodeStorage',
-          type: 'ACTION/RESET'
-        }
+          type: 'ACTION/RESET',
+        },
       })
     })
   })
@@ -49,11 +49,11 @@ describe('nodeStorageActions', () => {
         type: 'nodeStorage/ACTION/CALL',
         meta: {
           id: 'nodeStorage',
-          type: 'ACTION/CALL'
+          type: 'ACTION/CALL',
         },
         payload: {
-          fn: expect.any(Function)
-        }
+          fn: expect.any(Function),
+        },
       })
     })
     test('payload function returns an empty string with no node in storage', async done => {
@@ -66,7 +66,7 @@ describe('nodeStorageActions', () => {
   describe('cacheReset', () => {
     test('returns true when current date is AFTER default expiration', () => {
       expect(
-        determineIfCacheIsExpired(new Date().getTime() - MINUTES_AS_MS)
+        determineIfCacheIsExpired(new Date().getTime() - MINUTES_AS_MS),
       ).toEqual(true)
     })
 

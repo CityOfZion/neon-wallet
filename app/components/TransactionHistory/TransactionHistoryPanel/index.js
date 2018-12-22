@@ -10,7 +10,7 @@ import withNetworkData from '../../../hocs/withNetworkData'
 import withLoadingProp from '../../../hocs/withLoadingProp'
 
 const mapTransactionsDataToProps = transactions => ({
-  transactions
+  transactions,
 })
 
 const mapAccountActionsToProps = (actions, props) => ({
@@ -18,17 +18,17 @@ const mapAccountActionsToProps = (actions, props) => ({
     actions.call({
       net: props.net,
       address: props.address,
-      shouldIncrementPagination: true
-    })
+      shouldIncrementPagination: true,
+    }),
 })
 
 export default compose(
   withAuthData(),
   withNetworkData(),
   withProgressPanel(transactionHistoryActions, {
-    title: 'Transaction History'
+    title: 'Transaction History',
   }),
   withActions(transactionHistoryActions, mapAccountActionsToProps),
   withLoadingProp(transactionHistoryActions),
-  withData(transactionHistoryActions, mapTransactionsDataToProps)
+  withData(transactionHistoryActions, mapTransactionsDataToProps),
 )(TransactionHistoryPanel)

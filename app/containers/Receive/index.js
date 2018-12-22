@@ -29,13 +29,14 @@ const mapDispatchToProps = (dispatch: Function) =>
   bindActionCreators(
     {
       sendTransaction,
-      showReceiveModal: props => dispatch(showModal(MODAL_TYPES.RECEIVE, props))
+      showReceiveModal: props =>
+        dispatch(showModal(MODAL_TYPES.RECEIVE, props)),
     },
-    dispatch
+    dispatch,
   )
 
 const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
-  notification: getNotifications(state)
+  notification: getNotifications(state),
 })
 
 const filterSendableAssets = (balances: Object) => {
@@ -54,7 +55,7 @@ const filterSendableAssets = (balances: Object) => {
       .forEach(token => {
         sendableAssets[token.symbol] = {
           symbol: token.symbol,
-          balance: token.balance
+          balance: token.balance,
         }
       })
   }
@@ -63,7 +64,7 @@ const filterSendableAssets = (balances: Object) => {
 }
 
 const mapPricesDataToProps = (prices: Object) => ({
-  prices
+  prices,
 })
 
 const mapContactsDataToProps = (contacts: Object) => ({ contacts })
@@ -72,7 +73,7 @@ const mapBalanceDataToProps = (balances: Object) => ({
   NEO: balances ? balances.NEO : 0,
   GAS: balances ? balances.GAS : 0,
   tokenBalances: values(omit(balances, 'NEO', 'GAS')),
-  sendableAssets: filterSendableAssets(balances)
+  sendableAssets: filterSendableAssets(balances),
 })
 
 const mapAccountActionsToProps = (actions, props) => ({
@@ -80,18 +81,18 @@ const mapAccountActionsToProps = (actions, props) => ({
     actions.call({
       net: props.net,
       address: props.address,
-      tokens: props.tokenBalances
-    })
+      tokens: props.tokenBalances,
+    }),
 })
 
 const mapAccountsDataToProps = accounts => ({
-  accounts
+  accounts,
 })
 
 export default compose(
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
   ),
   withBalancesData(mapBalanceDataToProps),
   withCurrencyData('currencyCode'),
@@ -105,10 +106,10 @@ export default compose(
   withLoadingProp(balancesActions),
   withSuccessNotification(
     balancesActions,
-    'Received latest blockchain information.'
+    'Received latest blockchain information.',
   ),
   withFailureNotification(
     balancesActions,
-    'Failed to retrieve blockchain information.'
-  )
+    'Failed to retrieve blockchain information.',
+  ),
 )(Receive)

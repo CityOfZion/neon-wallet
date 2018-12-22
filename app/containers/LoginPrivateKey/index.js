@@ -8,11 +8,11 @@ import withCameraAvailability from '../../hocs/withCameraAvailability'
 import { wifLoginActions } from '../../actions/authActions'
 
 const mapActionsToProps = actions => ({
-  loginWithPrivateKey: wif => actions.call({ wif })
+  loginWithPrivateKey: wif => actions.call({ wif }),
 })
 
 export default compose(
   withActions(wifLoginActions, mapActionsToProps),
   withFailureNotification(wifLoginActions),
-  withCameraAvailability
+  withCameraAvailability,
 )(LoginPrivateKey)

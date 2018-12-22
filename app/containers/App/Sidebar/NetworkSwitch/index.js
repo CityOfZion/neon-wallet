@@ -10,7 +10,7 @@ import accountActions from '../../../../actions/accountActions'
 import withFilteredTokensData from '../../../../hocs/withFilteredTokensData'
 
 const mapActionsToProps = (actions: Actions): Object => ({
-  onChange: networkId => actions.call({ networkId })
+  onChange: networkId => actions.call({ networkId }),
 })
 
 const mapAccountActionsToProps = (actions, props) => ({
@@ -18,8 +18,8 @@ const mapAccountActionsToProps = (actions, props) => ({
     actions.call({
       net: props.net,
       address: props.address,
-      tokens: props.tokens
-    })
+      tokens: props.tokens,
+    }),
 })
 
 export default compose(
@@ -27,5 +27,5 @@ export default compose(
   withNetworkData(),
   withActions(networkActions, mapActionsToProps),
   withFilteredTokensData(),
-  withActions(accountActions, mapAccountActionsToProps)
+  withActions(accountActions, mapAccountActionsToProps),
 )(NetworkSwitch)

@@ -24,7 +24,7 @@ describe('metadata module tests', () => {
         .reply(
           200,
           { tag_name: version },
-          { 'Access-Control-Allow-Origin': '*' }
+          { 'Access-Control-Allow-Origin': '*' },
         )
 
       await checkVersion()(dispatch, getState)
@@ -62,7 +62,7 @@ describe('metadata module tests', () => {
         .reply(500, {}, { 'Access-Control-Allow-Origin': '*' })
 
       await checkVersion()(dispatch, getState)
-      expect(nock.isDone()).toBeTruthy();
+      expect(nock.isDone()).toBeTruthy()
       done()
     })
   })

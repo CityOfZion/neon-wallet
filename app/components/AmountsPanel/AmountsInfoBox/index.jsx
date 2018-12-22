@@ -12,7 +12,7 @@ type Props = {
   totalAmount: string,
   totalBalanceWorth: number | typeof PRICE_UNAVAILABLE,
   fiatCurrencySymbol: string,
-  className: string
+  className: string,
 }
 
 const AmountsInfoBox = ({
@@ -20,7 +20,7 @@ const AmountsInfoBox = ({
   totalAmount,
   totalBalanceWorth,
   fiatCurrencySymbol,
-  className
+  className,
 }: Props) => (
   <div className={classNames(styles.amountsInfoBox, className)}>
     <span>

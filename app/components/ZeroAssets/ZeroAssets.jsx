@@ -12,7 +12,7 @@ import styles from './ZeroAssets.scss'
 
 type Props = {
   address: string,
-  children?: React$Node
+  children?: React$Node,
 }
 
 const ZeroAssets = ({ address, children }: Props) => (

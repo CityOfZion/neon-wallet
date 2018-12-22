@@ -11,27 +11,27 @@ type Props = {
   hideModal: () => any,
   showErrorNotification: (error: Object) => any,
   hideNotification: (id: string) => any,
-  pushQRCodeData: (data: Object) => any
+  pushQRCodeData: (data: Object) => any,
 }
 
 type State = {
   step: string,
   error: ?string,
-  recipientData: Object
+  recipientData: Object,
 }
 
 export default class SendModal extends React.Component<Props, State> {
   state = {
     step: '1',
     error: null,
-    recipientData: {}
+    recipientData: {},
   }
 
   displayError = (message: string) => {
     const { showErrorNotification } = this.props
 
     const newError = showErrorNotification({
-      message: `An error occurred while scanning this QR code: ${message}. Please try again.`
+      message: `An error occurred while scanning this QR code: ${message}. Please try again.`,
     })
 
     this.setState({ error: newError })
@@ -41,7 +41,7 @@ export default class SendModal extends React.Component<Props, State> {
 
   gotoPreviousStep = () => {
     this.setState({
-      step: '1'
+      step: '1',
     })
   }
 
@@ -58,7 +58,7 @@ export default class SendModal extends React.Component<Props, State> {
 
       this.setState({
         step: '2',
-        recipientData: parsedRecipientData
+        recipientData: parsedRecipientData,
       })
     } catch (message) {
       this.displayError(message)
@@ -80,7 +80,7 @@ export default class SendModal extends React.Component<Props, State> {
           recipientData={this.state.recipientData}
           confirmAndClose={this.confirmAndClose}
         />
-      )
+      ),
     }[this.state.step])
 
   render() {

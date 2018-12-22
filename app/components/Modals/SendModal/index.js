@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import SendModal from './SendModal'
 import {
   showErrorNotification,
-  hideNotification
+  hideNotification,
 } from '../../../modules/notifications'
 
 const mapDispatchToProps = dispatch =>
@@ -12,5 +12,5 @@ const mapDispatchToProps = dispatch =>
 
 export default connect(
   null,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(SendModal)

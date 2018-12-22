@@ -12,5 +12,5 @@ export default combineReducers({
   generateWallet,
   claim,
   notifications,
-  modal
+  modal,
 })

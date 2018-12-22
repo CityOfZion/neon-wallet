@@ -5,7 +5,6 @@ import { MemoryRouter } from 'react-router-dom'
 import { shallow, mount } from 'enzyme'
 import { waitForElement } from '../testHelpers'
 
-
 import Login from '../../app/containers/LoginPrivateKey/LoginPrivateKey'
 import LoginWithHOC from '../../app/containers/LoginPrivateKey/'
 
@@ -15,9 +14,9 @@ const setup = (
   state = {
     account: {
       loggedIn: true,
-      wif: undefined
-    }
-  }
+      wif: undefined,
+    },
+  },
 ) => {
   const store = configureStore()(state)
   const Component = withHOC ? LoginWithHOC : Login
@@ -31,13 +30,13 @@ const setup = (
         <MemoryRouter>
           <Component store={store} />
         </MemoryRouter>
-      </Provider>
+      </Provider>,
     )
   }
 
   return {
     store,
-    wrapper
+    wrapper,
   }
 }
 
@@ -66,13 +65,13 @@ describe('Login', () => {
 
     // mock 1 available camera
     global.navigator.mediaDevices = {
-      enumerateDevices: jest.fn().mockResolvedValue([{ kind: 'videoinput' }])
+      enumerateDevices: jest.fn().mockResolvedValue([{ kind: 'videoinput' }]),
     }
 
     // wait until the enabled button is found in dom
     const enabledButton = await waitForElement(
       wrapper,
-      '#scan-private-key-qr-button[disabled=false]'
+      '#scan-private-key-qr-button[disabled=false]',
     )
 
     // assert that the enabled button exists
@@ -80,13 +79,13 @@ describe('Login', () => {
 
     // mock 0 available cameras
     global.navigator.mediaDevices = {
-      enumerateDevices: jest.fn().mockResolvedValue([])
+      enumerateDevices: jest.fn().mockResolvedValue([]),
     }
 
     // wait until the disabled button is found in dom
     const disabledButton = await waitForElement(
       wrapper,
-      '#scan-private-key-qr-button[disabled=true]'
+      '#scan-private-key-qr-button[disabled=true]',
     )
 
     // assert that the disabled button exists

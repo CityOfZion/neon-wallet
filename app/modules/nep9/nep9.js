@@ -31,7 +31,7 @@ function parseUri(uri: string) {
 
   const uriParts = uri.split('?')
   const nep9 = {
-    address: uriParts[0]
+    address: uriParts[0],
   }
 
   if (uriParts.length === 1) {
@@ -59,5 +59,5 @@ function parseUri(uri: string) {
 
 export default {
   generateUri,
-  parseUri
+  parseUri,
 }

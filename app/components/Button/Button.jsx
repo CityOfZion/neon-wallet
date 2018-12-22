@@ -13,14 +13,14 @@ type Props = {
   type: ?string,
   // will center label if rendered with icon
   shouldCenterButtonLabelText: boolean,
-  children: React$Node
+  children: React$Node,
 }
 
 class Button extends React.Component<Props> {
   static defaultProps = {
     primary: false,
     type: 'button',
-    shouldCenterButtonLabelText: false
+    shouldCenterButtonLabelText: false,
   }
 
   render = () => {
@@ -30,7 +30,7 @@ class Button extends React.Component<Props> {
       'primary',
       'renderIcon',
       'active',
-      'shouldCenterButtonLabelText'
+      'shouldCenterButtonLabelText',
     )
 
     return (
@@ -40,7 +40,7 @@ class Button extends React.Component<Props> {
           styles.button,
           className,
           this.getActiveButtonStyle(),
-          this.getButtonStyle()
+          this.getButtonStyle(),
         )}
       >
         {this.renderIcon()}
@@ -58,7 +58,7 @@ class Button extends React.Component<Props> {
           className={classNames(
             styles.icon,
             { [styles.centeredLabel]: shouldCenterButtonLabelText },
-            this.getIconStyle()
+            this.getIconStyle(),
           )}
         >
           {renderIcon()}

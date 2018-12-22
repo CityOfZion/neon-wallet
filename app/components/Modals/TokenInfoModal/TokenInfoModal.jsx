@@ -10,7 +10,7 @@ import styles from './TokenInfoModal.scss'
 
 type Props = {
   hideModal: Function,
-  token: TokenType
+  token: TokenType,
 }
 
 const TokenInfoModal = ({ hideModal, token }: Props) => (
@@ -20,8 +20,8 @@ const TokenInfoModal = ({ hideModal, token }: Props) => (
     style={{
       content: {
         width: '350px',
-        height: '300px'
-      }
+        height: '300px',
+      },
     }}
   >
     <div className={styles.container}>

@@ -15,8 +15,8 @@ const mapAccountActionsToProps = (actions, props) => ({
     actions.call({
       net: props.net,
       address: props.address,
-      tokens: props.tokens
-    })
+      tokens: props.tokens,
+    }),
 })
 
 export default compose(
@@ -24,5 +24,5 @@ export default compose(
   withNetworkData(),
   withFilteredTokensData(),
   withActions(accountActions, mapAccountActionsToProps),
-  withLoadingProp(balancesActions)
+  withLoadingProp(balancesActions),
 )(RefreshButton)

@@ -7,5 +7,5 @@ import withExplorerData from '../../../hocs/withExplorerData'
 
 export default compose(
   withNetworkData(),
-  withExplorerData()
+  withExplorerData(),
 )(Address)

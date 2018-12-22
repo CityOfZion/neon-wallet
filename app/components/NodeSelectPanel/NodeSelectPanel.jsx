@@ -15,7 +15,7 @@ import styles from './NodeSelectPanel.scss'
 type Node = {
   latency: string,
   url: string,
-  blockCount: number
+  blockCount: number,
 }
 
 type Props = {
@@ -26,16 +26,16 @@ type Props = {
   saveSelectedNode: Function,
   selectedNode: string,
   net: string,
-  networkId: string
+  networkId: string,
 }
 
 type State = {
-  refreshDisabled: boolean
+  refreshDisabled: boolean,
 }
 
 export default class NodeSelect extends React.Component<Props, State> {
   state = {
-    refreshDisabled: false
+    refreshDisabled: false,
   }
 
   render() {
@@ -57,7 +57,7 @@ export default class NodeSelect extends React.Component<Props, State> {
           <div className={styles.header}>
             <div
               className={classNames(styles.refresh, {
-                [styles.refreshDisabled]: this.state.refreshDisabled
+                [styles.refreshDisabled]: this.state.refreshDisabled,
               })}
             >
               <span onClick={this.handleRefreshNodeData}> Refresh </span>
@@ -65,7 +65,7 @@ export default class NodeSelect extends React.Component<Props, State> {
                 id="refresh"
                 onClick={this.handleRefreshNodeData}
                 className={classNames(styles.icon, {
-                  [styles.loading]: loading
+                  [styles.loading]: loading,
                 })}
               />
             </div>
@@ -110,7 +110,7 @@ export default class NodeSelect extends React.Component<Props, State> {
       <Tooltip
         title="Allow NEON to choose a node automatically"
         className={classNames(styles.automaticSelect, {
-          [styles.selected]: !selectedNode
+          [styles.selected]: !selectedNode,
         })}
       >
         {icon}
@@ -153,7 +153,7 @@ export default class NodeSelect extends React.Component<Props, State> {
           <div
             key={index}
             className={classNames(styles.row, rowClass, {
-              [styles.odd]: index % 2 !== 0
+              [styles.odd]: index % 2 !== 0,
             })}
           >
             <div className={styles.latency}>

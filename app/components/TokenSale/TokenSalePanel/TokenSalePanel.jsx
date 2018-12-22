@@ -32,7 +32,7 @@ type Props = {
   availableGas: number,
   gasFee: number,
   handleAddPriorityFee: (gasFee: number) => void,
-  showModal: Function
+  showModal: Function,
 }
 
 class TokenSalePanel extends React.Component<Props> {
@@ -53,7 +53,7 @@ class TokenSalePanel extends React.Component<Props> {
       inputErrorMessage,
       availableGas,
       gasFee,
-      handleAddPriorityFee
+      handleAddPriorityFee,
     } = this.props
     return (
       <Panel

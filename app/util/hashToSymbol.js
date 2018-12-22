@@ -5,7 +5,7 @@ const hashToSymbol = hash =>
   Object.keys(TOKENS).find(currentSymbol => {
     const currentHash = get(
       TOKENS,
-      `${currentSymbol}.networks.${MAIN_NETWORK_ID}.hash`
+      `${currentSymbol}.networks.${MAIN_NETWORK_ID}.hash`,
     )
     return currentHash === hash
   })

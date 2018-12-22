@@ -8,7 +8,7 @@ import styles from './Loading.scss'
 
 type Props = {
   theme: ThemeType,
-  nobackground?: boolean
+  nobackground?: boolean,
 }
 
 export default function Loading(props: Props) {

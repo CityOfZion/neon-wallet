@@ -43,12 +43,12 @@ type Props = {
   handleEditRecipientsClick: () => any,
   showSendModal: (props: Object) => any,
   pushQRCodeData: (data: Object) => any,
-  calculateMaxValue: (asset: string, index: number) => string
+  calculateMaxValue: (asset: string, index: number) => string,
 }
 
 const shouldDisableSendButton = sendRowDetails =>
   sendRowDetails.some(
-    detail => !detail.address || !detail.amount || isZero(detail.amount)
+    detail => !detail.address || !detail.amount || isZero(detail.amount),
   )
 
 const SendPanel = ({
@@ -77,7 +77,7 @@ const SendPanel = ({
   showSendModal,
   pushQRCodeData,
   pendingTransaction,
-  calculateMaxValue
+  calculateMaxValue,
 }: Props) => {
   if (noSendableAssets) {
     return <ZeroAssets address={address} />

@@ -31,7 +31,7 @@ export const updateAccountsActions = createActions(
     await setStorage(STORAGE_KEY, newWallet)
 
     return accounts
-  }
+  },
 )
 
 export const saveAccountActions = createActions(
@@ -39,11 +39,11 @@ export const saveAccountActions = createActions(
   ({
     label,
     address,
-    key
+    key,
   }: {
     label: string,
     address: string,
-    key: string
+    key: string,
   }) => async () => {
     if (isEmpty(label)) {
       throw new Error('A valid name is required.')
@@ -71,7 +71,7 @@ export const saveAccountActions = createActions(
     await setWallet(wallet)
 
     return wallet.accounts
-  }
+  },
 )
 
 export default createActions(ID, () => async (): Promise<Object> => {

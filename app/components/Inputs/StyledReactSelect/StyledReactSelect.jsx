@@ -11,12 +11,12 @@ const customStyles = {
   option: styles => ({
     ...styles,
     '&:active': {
-      backgroundColor: '#e6e6e6'
-    }
+      backgroundColor: '#e6e6e6',
+    },
   }),
   noOptionsMessage: styles => ({
     ...styles,
-    fontFamily: 'Gotham-Light'
+    fontFamily: 'Gotham-Light',
   }),
   control: (styles, props) => ({
     ...styles,
@@ -27,14 +27,14 @@ const customStyles = {
     borderColor:
       (props.selectProps.hideHighlight || props.selectProps.settingsSelect) &&
       'transparent !important',
-    border: props.selectProps.hideHighlight && 'none !important'
+    border: props.selectProps.hideHighlight && 'none !important',
   }),
   dropdownIndicator: (styles, props, state) => ({
     display: 'flex',
     padding: '8px',
     color: returnDropdownIndicatorColor(props),
     transform: props.selectProps.menuIsOpen && 'rotate(180deg)',
-    opacity: props.isDisabled ? 0.6 : 1
+    opacity: props.isDisabled ? 0.6 : 1,
   }),
   indicatorSeparator: () => ({ display: 'none' }),
   valueContainer: (styles, props) => {
@@ -44,7 +44,7 @@ const customStyles = {
           fontSize: '14px',
           color: 'var(--settings-select-value-text) !important',
           textAlign: 'right',
-          opacity: props.isDisabled ? 0.6 : 1
+          opacity: props.isDisabled ? 0.6 : 1,
         }
       : {}
     return {
@@ -54,7 +54,7 @@ const customStyles = {
       fontWeight: props.selectProps.fontWeight,
       padding: !props.hideHighlight && '7px 15px !important',
       justifyContent: props.selectProps.settingsSelect && 'flex-end',
-      ...conditionalStyles
+      ...conditionalStyles,
     }
   },
   singleValue: (styles, props) => {
@@ -63,7 +63,7 @@ const customStyles = {
           fontFamily: 'Gotham-Bold',
           fontSize: '14px',
           color: 'var(--settings-select-value-text) !important',
-          textAlign: 'right'
+          textAlign: 'right',
         }
       : {}
     return {
@@ -71,9 +71,9 @@ const customStyles = {
       fontSize: props.selectProps.fontSize,
       fontWeight: props.selectProps.fontWeight,
       [props.selectProps.textAlign]: 0,
-      ...conditionalStyles
+      ...conditionalStyles,
     }
-  }
+  },
 }
 
 const StyledReactSelect = props => (

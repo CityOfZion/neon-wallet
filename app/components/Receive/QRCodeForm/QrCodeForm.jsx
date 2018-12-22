@@ -19,14 +19,14 @@ type Props = {
   className?: string,
   address: string,
   onSubmit: Function,
-  networkId: string
+  networkId: string,
 }
 
 type State = {
   asset: ?string,
   amount: ?number | ?string,
   description: ?string,
-  error: ?string
+  error: ?string,
 }
 
 export default class QRCodeForm extends React.Component<Props, State> {
@@ -36,7 +36,7 @@ export default class QRCodeForm extends React.Component<Props, State> {
     asset: ASSETS.NEO,
     amount: undefined,
     description: undefined,
-    error: undefined
+    error: undefined,
   }
 
   render() {
@@ -55,7 +55,7 @@ export default class QRCodeForm extends React.Component<Props, State> {
                 asset:
                   (TOKENS[asset] && TOKENS[asset].networks['1'].hash) || asset,
                 amount,
-                description
+                description,
               })
             }
           }}
@@ -75,13 +75,13 @@ export default class QRCodeForm extends React.Component<Props, State> {
                 value={amount}
                 placeholder="Amount"
                 options={{
-                  numeralDecimalScale: 8
+                  numeralDecimalScale: 8,
                 }}
                 error={this.state.error}
                 onChange={e =>
                   this.setState({
                     amount: e.target.rawValue,
-                    error: undefined
+                    error: undefined,
                   })
                 }
               />
@@ -132,7 +132,7 @@ export default class QRCodeForm extends React.Component<Props, State> {
       let validDecimals = get(
         TOKENS[asset],
         `networks.${networkId}.decimals`,
-        8
+        8,
       )
 
       if (asset === 'NEO') validDecimals = 0
@@ -140,28 +140,28 @@ export default class QRCodeForm extends React.Component<Props, State> {
       if (!validDecimals && !toBigNumber(amountNum).isInteger()) {
         valid = false
         this.setState({
-          error: `You canot request fractional ${asset}.`
+          error: `You canot request fractional ${asset}.`,
         })
         return valid
       }
       if (decpoint > validDecimals && validDecimals) {
         valid = false
         this.setState({
-          error: `You can only request ${asset} up to ${validDecimals} decimals.`
+          error: `You can only request ${asset} up to ${validDecimals} decimals.`,
         })
         return valid
       }
       if (toBigNumber(amountNum).greaterThan(toBigNumber(1000000000))) {
         valid = false
         this.setState({
-          error: `You cannot request more than 100,000,000 ${asset}.`
+          error: `You cannot request more than 100,000,000 ${asset}.`,
         })
         return valid
       }
       if (!toNumber(amountNum)) {
         valid = false
         this.setState({
-          error: `You cannot request 0 ${asset}.`
+          error: `You cannot request 0 ${asset}.`,
         })
         return valid
       }

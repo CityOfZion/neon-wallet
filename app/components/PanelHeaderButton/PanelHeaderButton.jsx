@@ -9,7 +9,7 @@ type Props = {
   renderIcon: () => React$Node,
   buttonText: string,
   className?: string,
-  disabled?: boolean
+  disabled?: boolean,
 }
 
 class PanelHeaderButton extends Component<Props> {

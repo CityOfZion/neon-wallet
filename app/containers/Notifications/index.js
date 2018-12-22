@@ -7,11 +7,11 @@ import { hideNotification, getNotifications } from '../../modules/notifications'
 import Notifications from './Notifications'
 
 const mapStateToProps = (state: Object) => ({
-  notifications: getNotifications(state)
+  notifications: getNotifications(state),
 })
 
 const actionCreators = {
-  hideNotification
+  hideNotification,
 }
 
 const mapDispatchToProps = dispatch =>
@@ -19,5 +19,5 @@ const mapDispatchToProps = dispatch =>
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Notifications)
