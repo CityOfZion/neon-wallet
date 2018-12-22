@@ -134,6 +134,12 @@ const SEND = {
   '--send-success-row-info': '#394152'
 }
 
+const QR_SCANNER = {
+  '--qr-scan-paused': 'rgba(102, 237, 135, 0.6)',
+  '--qr-scan-animation-start': 'rgba(57, 65, 82, 1)',
+  '--qr-scan-animation-end': 'rgba(57, 65, 82, 0)'
+}
+
 export default {
   ...AMOUNTS_PANEL,
   ...NODE_SELECT,
@@ -150,5 +156,6 @@ export default {
   ...SETTINGS,
   ...HEADER_BAR,
   ...CONTACTS,
-  ...SEND
+  ...SEND,
+  ...QR_SCANNER
 }
