@@ -12,7 +12,7 @@ import styles from './SendError.scss'
 
 type Props = {
   resetViewsAfterError: () => any,
-  sendErrorMessage: string
+  sendErrorMessage: string,
 }
 
 const SendError = ({ resetViewsAfterError, sendErrorMessage }: Props) => (

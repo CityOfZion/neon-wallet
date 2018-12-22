@@ -14,13 +14,13 @@ import styles from '../SendPanel.scss'
 type Props = {
   handleEditRecipientsClick: () => any,
   fees: number,
-  pendingTransaction: boolean
+  pendingTransaction: boolean,
 }
 
 const ConfirmSend = ({
   handleEditRecipientsClick,
   fees,
-  pendingTransaction
+  pendingTransaction,
 }: Props) => (
   <section>
     <DialogueBox

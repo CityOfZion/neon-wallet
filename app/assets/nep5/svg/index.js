@@ -95,5 +95,5 @@ export const imageMap = {
   WWB,
   XQTA,
   ZPT,
-  NOS
+  NOS,
 }

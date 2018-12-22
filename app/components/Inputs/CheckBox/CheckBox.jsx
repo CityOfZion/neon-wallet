@@ -8,18 +8,18 @@ type Props = {
   onChange: () => void,
   renderIcon: () => React$Node,
   className?: string,
-  checked: boolean
+  checked: boolean,
 }
 
 type State = {
-  checked: boolean
+  checked: boolean,
 }
 
 class CheckBox extends Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      checked: this.props.checked
+      checked: this.props.checked,
     }
   }
 
@@ -32,7 +32,7 @@ class CheckBox extends Component<Props, State> {
     const { checked } = this.state
     const { renderIcon, className } = this.props
     const classes = classNames(styles.checkBox, className, {
-      [styles.checkBoxActive]: checked
+      [styles.checkBoxActive]: checked,
     })
     return (
       <button

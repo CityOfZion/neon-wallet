@@ -7,7 +7,7 @@ import { generateNewWalletAccount } from '../../modules/generateWallet'
 import CreateWallet from './CreateWallet'
 
 const actionCreators = {
-  generateNewWalletAccount
+  generateNewWalletAccount,
 }
 
 const mapDispatchToProps = dispatch =>
@@ -15,5 +15,5 @@ const mapDispatchToProps = dispatch =>
 
 export default connect(
   null,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(CreateWallet)

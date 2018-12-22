@@ -3,7 +3,7 @@ import {
   MAIN_NETWORK_ID,
   TEST_NETWORK_ID,
   MAIN_NETWORK_LABEL,
-  TEST_NETWORK_LABEL
+  TEST_NETWORK_LABEL,
 } from './constants'
 
 export const isMainNetwork = (networkId: string) =>
@@ -16,14 +16,14 @@ export const getNetworks = () => [
     id: MAIN_NETWORK_ID,
     value: MAIN_NETWORK_ID,
     label: MAIN_NETWORK_LABEL,
-    network: MAIN_NETWORK_LABEL
+    network: MAIN_NETWORK_LABEL,
   },
   {
     id: TEST_NETWORK_ID,
     value: TEST_NETWORK_ID,
     label: TEST_NETWORK_LABEL,
-    network: TEST_NETWORK_LABEL
-  }
+    network: TEST_NETWORK_LABEL,
+  },
 ]
 
 export const findNetwork = (networkId: string): NetworkItemType => {

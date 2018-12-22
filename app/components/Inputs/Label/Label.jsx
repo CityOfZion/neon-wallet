@@ -10,7 +10,7 @@ type Props = {
   children: React$Node,
   labelClassName: string,
   labelContainerClassName: string,
-  renderAdditionalContent: () => React$Node
+  renderAdditionalContent: () => React$Node,
 }
 
 export default class Label extends React.Component<Props> {
@@ -27,11 +27,11 @@ export default class Label extends React.Component<Props> {
 
     const combinedLabelClassName = classNames(
       styles.label,
-      this.props.labelClassName
+      this.props.labelClassName,
     )
     const combinedLabelContainerClassName = classNames(
       styles.labelContainer,
-      this.props.labelContainerClassName
+      this.props.labelContainerClassName,
     )
 
     return (

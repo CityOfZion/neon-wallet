@@ -13,12 +13,12 @@ export const NODE_EXLUSION_CRITERIA = ['ngd', 'neo.org']
 
 export const ASSETS = {
   NEO: 'NEO',
-  GAS: 'GAS'
+  GAS: 'GAS',
 }
 
 export const THEMES = {
   LIGHT: 'Light',
-  DARK: 'Dark'
+  DARK: 'Dark',
 }
 
 export const DEFAULT_THEME = THEMES.LIGHT
@@ -26,7 +26,7 @@ export const DEFAULT_THEME = THEMES.LIGHT
 export const EXPLORERS = {
   NEO_SCAN: 'Neoscan',
   NEO_TRACKER: 'Neotracker',
-  ANT_CHAIN: 'Antchain'
+  ANT_CHAIN: 'Antchain',
 }
 
 export const DEFAULT_EXPLORER = EXPLORERS.NEO_SCAN
@@ -58,14 +58,14 @@ export const ROUTES = {
   SEND_ADDRESS: '/send/:address',
   ENCRYPT: '/encrypt-private-key',
   NODE_SELECT: '/node-select',
-  VOTING: '/voting'
+  VOTING: '/voting',
 }
 
 export const NOTIFICATION_LEVELS = {
   ERROR: 'error',
   SUCCESS: 'success',
   INFO: 'info',
-  WARNING: 'warning'
+  WARNING: 'warning',
 }
 
 export const NOTIFICATION_POSITIONS = {
@@ -74,7 +74,7 @@ export const NOTIFICATION_POSITIONS = {
   TOP_LEFT: 'tl',
   BOTTOM_CENTER: 'bc',
   BOTTOM_RIGHT: 'br',
-  BOTTOM_LEFT: 'bl'
+  BOTTOM_LEFT: 'bl',
 }
 
 export const BIP44_PATH = '8000002C' + '80000378' + '80000000' + '00000000' // eslint-disable-line
@@ -86,13 +86,13 @@ export const MODAL_TYPES = {
   TOKEN: 'TOKEN',
   ICO: 'ICO',
   ADD_CONTACT: 'ADD_CONTACT',
-  RECEIVE: 'RECEIVE'
+  RECEIVE: 'RECEIVE',
 }
 
 export const TX_TYPES = {
   SEND: 'SEND',
   RECEIVE: 'RECEIVE',
-  CLAIM: 'CLAIM'
+  CLAIM: 'CLAIM',
 }
 
 export const MAIN_NETWORK_ID = '1'
@@ -105,7 +105,7 @@ export const NETWORK_LABELS = [MAIN_NETWORK_LABEL, TEST_NETWORK_LABEL]
 export const TOKENS_TEST = {
   DBC: 'b951ecbbc5fe37a9c280a76cb0ce0014827294cf',
   RPX: '5b7074e873973a6ed3708862f219a6fbf4d1c411',
-  QLC: '0d821bd7b6d53f5c2b40e217c6defc8bbe896cf5'
+  QLC: '0d821bd7b6d53f5c2b40e217c6defc8bbe896cf5',
 }
 
 // MainNet
@@ -126,7 +126,7 @@ export const ENDED_ICO_TOKENS = [
   'SWTH',
   'EFX',
   'MCT',
-  'PKC'
+  'PKC',
 ]
 
 export const DEFAULT_WALLET = {
@@ -136,10 +136,10 @@ export const DEFAULT_WALLET = {
     cost: 16384,
     blockSize: 8,
     parallel: 8,
-    size: 64
+    size: 64,
   },
   accounts: [],
-  extra: null
+  extra: null,
 }
 
 export const DEFAULT_CURRENCY_CODE = 'usd'
@@ -176,7 +176,7 @@ export const CURRENCIES = {
   try: { symbol: '₺' },
   twd: { symbol: 'NT$' },
   usd: { symbol: '$' },
-  zar: { symbol: 'R ' }
+  zar: { symbol: 'R ' },
 }
 
 export const TOKEN_SALE_PURCHASE = 'token_sale_purchase'

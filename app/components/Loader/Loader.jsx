@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import styles from './Loader.scss'
 
 type Props = {
-  className?: string
+  className?: string,
 }
 
 export default function Loader({ className }: Props) {

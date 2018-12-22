@@ -27,11 +27,11 @@ describe('claimsActions', () => {
         type: 'claims/ACTION/CALL',
         meta: {
           id: 'claims',
-          type: 'ACTION/CALL'
+          type: 'ACTION/CALL',
         },
         payload: {
-          fn: expect.any(Function)
-        }
+          fn: expect.any(Function),
+        },
       })
     })
 
@@ -50,8 +50,8 @@ describe('claimsActions', () => {
         type: 'claims/ACTION/CANCEL',
         meta: {
           id: 'claims',
-          type: 'ACTION/CANCEL'
-        }
+          type: 'ACTION/CANCEL',
+        },
       })
     })
   })
@@ -63,8 +63,8 @@ describe('claimsActions', () => {
         type: 'claims/ACTION/RESET',
         meta: {
           id: 'claims',
-          type: 'ACTION/RESET'
-        }
+          type: 'ACTION/RESET',
+        },
       })
     })
   })

@@ -6,7 +6,7 @@ import {
   NODES_TEST_NET,
   MAIN_NETWORK_ID,
   TEST_NETWORK_ID,
-  NODE_EXLUSION_CRITERIA
+  NODE_EXLUSION_CRITERIA,
 } from '../core/constants'
 
 const ID = 'nodeNetwork'
@@ -24,7 +24,7 @@ const getBlockCount = async node =>
           resolve({
             url,
             blockCount: client.lastSeenHeight,
-            latency
+            latency,
           })
         }
       })
@@ -38,8 +38,8 @@ const raceNodePromises = (total, promises) => {
       promise.then(result => {
         responses.push(result)
         if (responses.length === total) resolve(responses)
-      })
-    )
+      }),
+    ),
   )
 }
 
@@ -52,8 +52,8 @@ export default createActions(
         nodes = NODES_MAIN_NET.filter(
           data =>
             !NODE_EXLUSION_CRITERIA.some(criteria =>
-              data.url.includes(criteria)
-            )
+              data.url.includes(criteria),
+            ),
         )
         break
       case TEST_NETWORK_ID:
@@ -65,12 +65,12 @@ export default createActions(
         nodes = NODES_MAIN_NET.filter(
           data =>
             !NODE_EXLUSION_CRITERIA.some(criteria =>
-              data.url.includes(criteria)
-            )
+              data.url.includes(criteria),
+            ),
         )
     }
     const promises = [...nodes].map(node => getBlockCount(node))
     const result = await raceNodePromises(totalDisplayed, promises)
     return result
-  }
+  },
 )

@@ -31,5 +31,5 @@ export default [
   'AVMSGh3kokzGF7S4SEcsWGvooqC3zhKbfj',
   'AdYrtEk4UP4Qi7owUeKJh5jzjA7q3KKwzb',
   'AM6pTLd47VL7WTRotzwjdxGBfd82Zkw7Gi',
-  'AcjAiMavJZqogqjuA2owi5Gyb4tRWE3Fen'
+  'AcjAiMavJZqogqjuA2owi5Gyb4tRWE3Fen',
 ]

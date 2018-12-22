@@ -7,7 +7,7 @@ export const createFormattedDate = () => {
     'Wednesday',
     'Thursday',
     'Friday',
-    'Saturday'
+    'Saturday',
   ]
   const months = [
     'January',
@@ -21,7 +21,7 @@ export const createFormattedDate = () => {
     'September',
     'October',
     'November',
-    'December'
+    'December',
   ]
 
   const prefix = 0

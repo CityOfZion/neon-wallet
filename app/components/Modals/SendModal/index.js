@@ -4,16 +4,16 @@ import { withActions, withData } from 'spunky'
 import SendModal from './SendModal'
 import {
   getRecipientData,
-  clearRecipientData
+  clearRecipientData,
 } from '../../../actions/sendModalActions'
 import withFailureNotification from '../../../hocs/withFailureNotification'
 
 const mapGetDataToProps = action => ({
-  getRecipientData: url => action.call(url)
+  getRecipientData: url => action.call(url),
 })
 
 const mapClearDataToProps = action => ({
-  clearRecipientData: () => action.call()
+  clearRecipientData: () => action.call(),
 })
 
 const mapRecipientDataToProps = recipientData => ({ recipientData })
@@ -24,9 +24,9 @@ export default compose(
   withFailureNotification(
     getRecipientData,
     message =>
-      `An error occurred while scanning this QR code: ${message}. Please try again.`
+      `An error occurred while scanning this QR code: ${message}. Please try again.`,
   ),
 
   withActions(clearRecipientData, mapClearDataToProps),
-  withData(clearRecipientData, mapRecipientDataToProps)
+  withData(clearRecipientData, mapRecipientDataToProps),
 )(SendModal)

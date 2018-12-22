@@ -15,20 +15,20 @@ import contactsActions from '../../../actions/contactsActions'
 
 const mapDispatchToProps = dispatch => ({
   showAddContactModal: props =>
-    dispatch(showModal(MODAL_TYPES.ADD_CONTACT, props))
+    dispatch(showModal(MODAL_TYPES.ADD_CONTACT, props)),
 })
 
 const mapContactsDataToProps = (contacts: Object) => ({
-  contacts: invert(contacts)
+  contacts: invert(contacts),
 })
 
 export default compose(
   connect(
     null,
-    mapDispatchToProps
+    mapDispatchToProps,
   ),
   withAuthData(),
   withData(contactsActions, mapContactsDataToProps),
   withNetworkData(),
-  withExplorerData()
+  withExplorerData(),
 )(Transaction)

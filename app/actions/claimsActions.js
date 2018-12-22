@@ -4,7 +4,7 @@ import { createActions } from 'spunky'
 
 type Props = {
   net: string,
-  address: string
+  address: string,
 }
 
 export const ID = 'claims'
@@ -14,5 +14,5 @@ export default createActions(
   ({ net, address }: Props = {}) => async (): Promise<Object> => {
     const total = await api.getMaxClaimAmountFrom({ net, address }, api.neoscan)
     return { total: total.toString() }
-  }
+  },
 )

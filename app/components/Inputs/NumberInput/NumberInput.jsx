@@ -14,7 +14,7 @@ const DEFAULT_OPTIONS = {
   numeral: true,
   numeralThousandsGroupStyle: 'thousand',
   numeralPositiveOnly: true,
-  stripLeadingZeroes: true
+  stripLeadingZeroes: true,
 }
 
 type Props = {
@@ -31,23 +31,23 @@ type Props = {
     numeralDecimalScale?: number,
     numeralDecimalMark?: string,
     numeralPositiveOnly?: boolean,
-    stripLeadingZeroes?: boolean
-  }
+    stripLeadingZeroes?: boolean,
+  },
 }
 
 type State = {
-  active: boolean
+  active: boolean,
 }
 
 export default class NumberInput extends React.Component<Props, State> {
   static defaultProps = {
     max: Infinity,
     onChange: noop,
-    options: {}
+    options: {},
   }
 
   state = {
-    active: false
+    active: false,
   }
 
   render = () => {
@@ -57,12 +57,12 @@ export default class NumberInput extends React.Component<Props, State> {
       'options',
       'onChange',
       'className',
-      'handleMaxClick'
+      'handleMaxClick',
     )
 
     const className = classNames(styles.numberInput, this.props.className, {
       [styles.active]: this.state.active,
-      [styles.error]: !!this.props.error
+      [styles.error]: !!this.props.error,
     })
 
     const { error } = this.props

@@ -8,12 +8,12 @@ import styles from './LoadingPanel.scss'
 
 type Props = {
   className: ?string,
-  title: ?string
+  title: ?string,
 }
 
 export default class LoadingPanel extends React.Component<Props> {
   static defaultProps = {
-    title: 'Loading'
+    title: 'Loading',
   }
 
   render() {

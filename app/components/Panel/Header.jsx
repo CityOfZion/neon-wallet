@@ -6,7 +6,7 @@ import styles from './Header.scss'
 
 type Props = {
   className: ?string,
-  children: React$Node
+  children: React$Node,
 }
 
 export default function Header(props: Props) {

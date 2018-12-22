@@ -20,12 +20,12 @@ type Props = {
   setName: Function,
   newAddress?: boolean,
   setAddress: Function,
-  onSubmit: Function
+  onSubmit: Function,
 }
 
 type State = {
   nameError: string,
-  addressError: string
+  addressError: string,
 }
 
 export default class ContactForm extends React.Component<Props, State> {
@@ -34,7 +34,7 @@ export default class ContactForm extends React.Component<Props, State> {
 
     this.state = {
       nameError: '',
-      addressError: ''
+      addressError: '',
     }
   }
 
@@ -44,7 +44,7 @@ export default class ContactForm extends React.Component<Props, State> {
     address: '',
     setName: noop,
     setAddress: noop,
-    onSubmit: noop
+    onSubmit: noop,
   }
 
   render() {
@@ -140,7 +140,7 @@ export default class ContactForm extends React.Component<Props, State> {
 
     if (mode !== 'edit') {
       const nameExists = Object.keys(contacts).filter(
-        (contactName: string) => contactName === name
+        (contactName: string) => contactName === name,
       )
 
       if (nameExists.length > 0) {

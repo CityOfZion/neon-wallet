@@ -6,8 +6,8 @@ describe('AddressInput', () => {
   const props = {
     contacts: {
       Lenny: 'AW4FD7bz6PF2QadFKF8qXUT7tNmWgvXZc4',
-      Carl: 'AUB7tuEZK63a9fkPEgeeddiZBg7A6PgbZB'
-    }
+      Carl: 'AUB7tuEZK63a9fkPEgeeddiZBg7A6PgbZB',
+    },
   }
 
   test('should render without crashing', () => {

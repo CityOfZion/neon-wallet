@@ -19,24 +19,24 @@ type Props = {
   address: string,
   asset: string,
   amount: string,
-  description: string
+  description: string,
 }
 
 type State = {
   loading: boolean,
-  copied: boolean
+  copied: boolean,
 }
 
 export default class ReceiveModal extends React.Component<Props, State> {
   image: ?HTMLImageElement
 
   state = {
-    loading: true
+    loading: true,
   }
 
   state = {
     loading: true,
-    copied: false
+    copied: false,
   }
 
   handleCopyIcon = () => {
@@ -54,8 +54,8 @@ export default class ReceiveModal extends React.Component<Props, State> {
         address,
         asset,
         amount,
-        description
-      }
+        description,
+      },
     })
 
     qrCode.toDataURL().then(imgData => {
@@ -76,7 +76,7 @@ export default class ReceiveModal extends React.Component<Props, State> {
       : tokensList.reduce(
           (accum, token) =>
             token.networks['1'].hash === asset ? token.symbol : accum,
-          asset
+          asset,
         )
     return (
       <BaseModal
@@ -139,7 +139,7 @@ export default class ReceiveModal extends React.Component<Props, State> {
                 if (this.image) {
                   this.handleCopyIcon()
                   const imageForClipboard = nativeImage.createFromDataURL(
-                    this.image && this.image.src
+                    this.image && this.image.src,
                   )
                   clipboard.writeImage(imageForClipboard)
                 }

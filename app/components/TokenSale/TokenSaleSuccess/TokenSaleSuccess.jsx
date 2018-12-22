@@ -16,7 +16,7 @@ import styles from './TokenSaleSuccess.scss'
 
 type Props = {
   onClickHandler: () => void,
-  token: string
+  token: string,
 }
 
 const TokenSaleSuccess = ({ onClickHandler, token }: Props) => (
@@ -61,7 +61,7 @@ const TokenSaleSuccess = ({ onClickHandler, token }: Props) => (
       <Button renderIcon={HomeIcon} className={styles.tokenSaleSuccessButton}>
         <Link
           to={{
-            pathname: ROUTES.DASHBOARD
+            pathname: ROUTES.DASHBOARD,
           }}
         >
           Return to dashboard

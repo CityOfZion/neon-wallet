@@ -3,7 +3,7 @@ import {
   withActions,
   withProgressComponents,
   recentlyCompletedStrategy,
-  progressValues
+  progressValues,
 } from 'spunky'
 
 import LoadingPanel from '../components/LoadingPanel'
@@ -12,16 +12,16 @@ import FailedPanel from '../components/FailedPanel'
 const { LOADING, FAILED } = progressValues
 
 const mapActionsToProps = (action, props) => ({
-  onRetry: () => action.call(props)
+  onRetry: () => action.call(props),
 })
 
 export default function withProgressPanel(
   actions,
-  { title, strategy = recentlyCompletedStrategy, ...options } = {}
+  { title, strategy = recentlyCompletedStrategy, ...options } = {},
 ) {
   const Loading = withProps({ title })(LoadingPanel)
   const Failed = withProps(props => ({ title, onRetry: props.onRetry }))(
-    FailedPanel
+    FailedPanel,
   )
 
   return compose(
@@ -30,12 +30,12 @@ export default function withProgressPanel(
       actions,
       {
         [LOADING]: Loading,
-        [FAILED]: Failed
+        [FAILED]: Failed,
       },
       {
         strategy,
-        ...options
-      }
-    )
+        ...options,
+      },
+    ),
   )
 }

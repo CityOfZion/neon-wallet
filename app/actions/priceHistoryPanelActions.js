@@ -8,5 +8,5 @@ export const ID = 'priceHistoryPanel'
 
 export default createBatchActions(ID, {
   prices: priceHistoryActions,
-  staticPrices: pricesActions
+  staticPrices: pricesActions,
 })

@@ -7,15 +7,15 @@ import EditContact from './EditContact'
 import contactsActions from '../../actions/contactsActions'
 
 const mapNameToProps = props => ({
-  name: decodeURIComponent(props.match.params.name)
+  name: decodeURIComponent(props.match.params.name),
 })
 
 const mapContactsDataToProps = (contacts: Object, ownProps: Object) => ({
-  address: contacts[ownProps.name]
+  address: contacts[ownProps.name],
 })
 
 export default compose(
   withRouter,
   withProps(mapNameToProps),
-  withData(contactsActions, mapContactsDataToProps)
+  withData(contactsActions, mapContactsDataToProps),
 )(EditContact)

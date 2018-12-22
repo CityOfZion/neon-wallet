@@ -6,7 +6,7 @@ import { flatMap, keyBy, isEmpty } from 'lodash-es'
 import {
   showErrorNotification,
   showInfoNotification,
-  showSuccessNotification
+  showSuccessNotification,
 } from './notifications'
 import {
   getNetwork,
@@ -16,12 +16,12 @@ import {
   getAddress,
   getIsHardwareLogin,
   getAssetBalances,
-  getTokenBalances
+  getTokenBalances,
 } from '../core/deprecated'
 import {
   isToken,
   validateTransactionsBeforeSending,
-  getTokenBalancesMap
+  getTokenBalancesMap,
 } from '../core/wallet'
 import { toNumber } from '../core/math'
 import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
@@ -36,7 +36,7 @@ const buildIntents = (sendEntries: Array<SendEntryType>) => {
   const assetEntries = extractAssets(sendEntries)
   // $FlowFixMe
   return flatMap(assetEntries, ({ address, amount, symbol }) =>
-    api.makeIntent({ [symbol]: toNumber(amount) }, address)
+    api.makeIntent({ [symbol]: toNumber(amount) }, address),
   )
 }
 
@@ -45,8 +45,8 @@ const buildTransferScript = (
   sendEntries: Array<SendEntryType>,
   fromAddress: string,
   tokensBalanceMap: {
-    [key: string]: TokenBalanceType
-  }
+    [key: string]: TokenBalanceType,
+  },
 ) => {
   const tokenEntries = extractTokens(sendEntries)
   const fromAcct = new wallet.Account(fromAddress)
@@ -58,7 +58,7 @@ const buildTransferScript = (
     const args = [
       u.reverseHex(fromAcct.scriptHash),
       u.reverseHex(toAcct.scriptHash),
-      sc.ContractParam.byteArray(toNumber(amount), 'fixed8', decimals)
+      sc.ContractParam.byteArray(toNumber(amount), 'fixed8', decimals),
     ]
 
     scriptBuilder.emitAppCall(scriptHash, 'transfer', args)
@@ -72,13 +72,13 @@ const makeRequest = (sendEntries: Array<SendEntryType>, config: Object) => {
     config.net,
     sendEntries,
     config.address,
-    config.tokensBalanceMap
+    config.tokensBalanceMap,
   )
 
   if (script === '') {
     return api.sendAsset(
       { ...config, intents: buildIntents(sendEntries) },
-      api.neoscan
+      api.neoscan,
     )
   }
   return api.doInvoke(
@@ -86,18 +86,18 @@ const makeRequest = (sendEntries: Array<SendEntryType>, config: Object) => {
       ...config,
       intents: buildIntents(sendEntries),
       script,
-      gas: 0
+      gas: 0,
     },
-    api.neoscan
+    api.neoscan,
   )
 }
 
 export const sendTransaction = ({
   sendEntries,
-  fees
+  fees,
 }: {
   sendEntries: Array<SendEntryType>,
-  fees: number
+  fees: number,
 }) => (dispatch: DispatchType, getState: GetStateType): Promise<*> =>
   new Promise(async (resolve, reject) => {
     const state = getState()
@@ -108,7 +108,7 @@ export const sendTransaction = ({
     const tokensBalanceMap = keyBy(tokenBalances, 'symbol')
     const balances = {
       ...getAssetBalances(state),
-      ...getTokenBalancesMap(tokenBalances)
+      ...getTokenBalancesMap(tokenBalances),
     }
     const signingFunction = getSigningFunction(state)
     const publicKey = getPublicKey(state)
@@ -132,16 +132,16 @@ export const sendTransaction = ({
     dispatch(
       showInfoNotification({
         message: 'Sending Transaction...',
-        autoDismiss: 0
-      })
+        autoDismiss: 0,
+      }),
     )
 
     if (isHardwareSend) {
       dispatch(
         showInfoNotification({
           message: 'Please sign the transaction on your hardware device',
-          autoDismiss: 0
-        })
+          autoDismiss: 0,
+        }),
       )
     }
 
@@ -153,7 +153,7 @@ export const sendTransaction = ({
       privateKey: new wallet.Account(wif).privateKey,
       signingFunction: isHardwareSend ? signingFunction : null,
       fees,
-      url
+      url,
     }
 
     await api
@@ -181,8 +181,8 @@ export const sendTransaction = ({
       dispatch(
         showSuccessNotification({
           message:
-            'Transaction complete! Your balance will automatically update when the blockchain has processed it.'
-        })
+            'Transaction complete! Your balance will automatically update when the blockchain has processed it.',
+        }),
       )
 
       return resolve(response)

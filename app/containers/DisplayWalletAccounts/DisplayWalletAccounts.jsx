@@ -24,7 +24,7 @@ type Props = {
   wif: string,
   passphrase: string,
   isImport: boolean,
-  authenticated: boolean
+  authenticated: boolean,
 }
 
 class DisplayWalletAccounts extends Component<Props> {
@@ -35,16 +35,16 @@ class DisplayWalletAccounts extends Component<Props> {
       wif,
       walletName,
       isImport,
-      authenticated
+      authenticated,
     } = this.props
     const fields = [
       {
         label: 'Passphrase',
         value: passphrase,
-        type: 'password'
+        type: 'password',
       },
       { label: 'Private Key', value: wif, type: 'text' },
-      { label: 'Public Address', value: address, type: 'text' }
+      { label: 'Public Address', value: address, type: 'text' },
     ]
     if (walletName) {
       fields.unshift({ label: 'Wallet Name', value: walletName, type: 'text' })
@@ -87,7 +87,7 @@ class DisplayWalletAccounts extends Component<Props> {
               <div key={item.label} className={styles.detailRow}>
                 <div
                   className={classNames(styles.input, {
-                    [styles.reducedInputFontSize]: item.label === 'Private Key'
+                    [styles.reducedInputFontSize]: item.label === 'Private Key',
                   })}
                 >
                   {item.type === 'text' ? (

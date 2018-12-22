@@ -20,21 +20,21 @@ type Props = {
   onFocus?: Function,
   onBlur?: Function,
   label: string,
-  shouldRenderErrorIcon?: boolean
+  shouldRenderErrorIcon?: boolean,
 }
 
 type State = {
-  active: boolean
+  active: boolean,
 }
 
 export default class TextInput extends React.Component<Props, State> {
   static defaultProps = {
     type: 'text',
-    shouldRenderErrorIcon: true
+    shouldRenderErrorIcon: true,
   }
 
   state = {
-    active: false
+    active: false,
   }
 
   render() {
@@ -45,14 +45,14 @@ export default class TextInput extends React.Component<Props, State> {
       'activeStyles',
       'renderBefore',
       'renderAfter',
-      'shouldRenderErrorIcon'
+      'shouldRenderErrorIcon',
     )
 
     const { error, label, textInputClassName, activeStyles } = this.props
 
     const className = classNames(styles.textInput, this.props.className, {
       [activeStyles || styles.active]: this.state.active,
-      [styles.error]: !!error
+      [styles.error]: !!error,
     })
 
     return (

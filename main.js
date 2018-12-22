@@ -4,7 +4,7 @@ const {
   Menu,
   BrowserWindow,
   globalShortcut,
-  session
+  session,
 } = require('electron') // eslint-disable-line import/no-extraneous-dependencies
 const path = require('path')
 const url = require('url')
@@ -19,7 +19,7 @@ const installExtensions = () => {
   const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS']
 
   return Promise.all(
-    extensions.map(name => installer.default(installer[name]))
+    extensions.map(name => installer.default(installer[name])),
   ).catch(console.error)
 }
 
@@ -46,8 +46,8 @@ app.on('ready', () => {
         allowRunningInsecureContent: false,
         webSecurity: true,
         nodeIntegration: false,
-        preload: path.join(__dirname, 'preload.js')
-      }
+        preload: path.join(__dirname, 'preload.js'),
+      },
     })
 
     mainWindow.on('ready-to-show', () => {
@@ -74,7 +74,7 @@ app.on('ready', () => {
       const template = [
         {
           label: app.getName(),
-          submenu: [{ role: 'about' }, { type: 'separator' }, { role: 'quit' }]
+          submenu: [{ role: 'about' }, { type: 'separator' }, { role: 'quit' }],
         },
         {
           label: 'Edit',
@@ -84,12 +84,12 @@ app.on('ready', () => {
             { type: 'separator' },
             { role: 'cut' },
             { role: 'copy' },
-            { role: 'paste' }
-          ]
+            { role: 'paste' },
+          ],
         },
         {
           label: 'View',
-          submenu: [{ role: 'toggledevtools' }]
+          submenu: [{ role: 'toggledevtools' }],
         },
         {
           role: 'help',
@@ -98,28 +98,28 @@ app.on('ready', () => {
               label: 'City of Zion',
               click() {
                 shell.openExternal('https://cityofzion.io/')
-              }
+              },
             },
             {
               label: 'GitHub',
               click() {
                 shell.openExternal('https://github.com/CityOfZion')
-              }
+              },
             },
             {
               label: 'NEO Reddit',
               click() {
                 shell.openExternal('https://www.reddit.com/r/NEO/')
-              }
+              },
             },
             {
               label: 'Slack',
               click() {
                 shell.openExternal('https://neosmarteconomy.slack.com')
-              }
-            }
-          ]
-        }
+              },
+            },
+          ],
+        },
       ]
       const menu = Menu.buildFromTemplate(template)
       Menu.setApplicationMenu(menu)
@@ -131,8 +131,8 @@ app.on('ready', () => {
         accelerator: 'CmdOrCtrl+V',
         click() {
           mainWindow.webContents.paste()
-        }
-      }
+        },
+      },
     ])
 
     mainWindow.webContents.on('context-menu', () => {
@@ -146,8 +146,8 @@ app.on('ready', () => {
         url.format({
           protocol: 'file',
           slashes: true,
-          pathname: path.join(__dirname, '/app/dist/index.html')
-        })
+          pathname: path.join(__dirname, '/app/dist/index.html'),
+        }),
       )
     }
     mainWindow.on('closed', () => {

@@ -12,16 +12,16 @@ type Props = {
   value?: string,
   onChange?: Function,
   placeholder?: string,
-  autoFocus?: boolean
+  autoFocus?: boolean,
 }
 
 type State = {
-  showPassword: boolean
+  showPassword: boolean,
 }
 
 export default class PasswordInput extends React.Component<Props, State> {
   state = {
-    showPassword: false
+    showPassword: false,
   }
 
   render() {

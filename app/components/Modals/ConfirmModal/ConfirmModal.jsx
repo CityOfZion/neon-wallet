@@ -12,7 +12,7 @@ type Props = {
   onClick: Function,
   onCancel: Function,
   hideModal: Function,
-  width: string
+  width: string,
 }
 
 const ConfirmModal = ({
@@ -21,7 +21,7 @@ const ConfirmModal = ({
   onClick,
   onCancel,
   text,
-  width
+  width,
 }: Props) => (
   <BaseModal
     title={title}
@@ -30,8 +30,8 @@ const ConfirmModal = ({
     style={{
       content: {
         width,
-        height: '200px'
-      }
+        height: '200px',
+      },
     }}
   >
     <div className={styles.contentContainer}>
@@ -67,7 +67,7 @@ const ConfirmModal = ({
 ConfirmModal.defaultProps = {
   width: '500px',
   height: '250px',
-  onCancel: noop
+  onCancel: noop,
 }
 
 export default ConfirmModal

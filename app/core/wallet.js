@@ -15,7 +15,7 @@ let addressBlacklist: Array<string> | null = null
 export const isBlacklisted = async (address: string): Promise<boolean> => {
   if (addressBlacklist === null) {
     const { data } = await axios.get(
-      'https://raw.githubusercontent.com/CityOfZion/phishing/master/blockedAddresses.json'
+      'https://raw.githubusercontent.com/CityOfZion/phishing/master/blockedAddresses.json',
     )
     if (data) {
       addressBlacklist = data
@@ -36,16 +36,16 @@ export const obtainBalance = (balances: Object, symbol: SymbolType) =>
   balances[symbol] || 0
 
 export const getTokenBalancesMap = (tokenBalances: {
-  [key: string]: TokenBalanceType
+  [key: string]: TokenBalanceType,
 }) =>
   extend(
     {},
-    ...map(tokenBalances, ({ symbol, balance }) => ({ [symbol]: balance }))
+    ...map(tokenBalances, ({ symbol, balance }) => ({ [symbol]: balance })),
   )
 
 export const validateTransactionBeforeSending = (
   balance: number | string,
-  sendEntry: SendEntryType
+  sendEntry: SendEntryType,
 ) => {
   const { address, amount, symbol } = sendEntry
 
@@ -84,7 +84,7 @@ export const validateTransactionBeforeSending = (
 
 export const validateTransactionsBeforeSending = (
   balances: Object,
-  sendEntries: Array<SendEntryType>
+  sendEntries: Array<SendEntryType>,
 ) => {
   const getValidationError = sendEntry => {
     const balance = obtainBalance(balances, sendEntry.symbol)

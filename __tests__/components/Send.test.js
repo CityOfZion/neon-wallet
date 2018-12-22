@@ -16,7 +16,7 @@ const setup = props =>
       contacts={{ NeoFriend: 'AMKxqiSSLR89wLVEk5CoGRjKHRrmrR8bDr' }}
       currencyCode="usd"
       shouldRenderHeaderBar={false}
-    />
+    />,
   )
 
 const createAsset = (name, id) => ({
@@ -26,7 +26,7 @@ const createAsset = (name, id) => ({
   amount: 0,
   max: 10,
   id,
-  errors: {}
+  errors: {},
 })
 
 describe('Send', () => {
@@ -56,7 +56,7 @@ describe('Send', () => {
     asset.address = 'ARU4Sw9yyqgfjxfqF1TNwWHHFvLbAVdTj1'
     asset.id = uniqueId()
     wrapper.setState({
-      sendRowDetails: [asset]
+      sendRowDetails: [asset],
     })
 
     wrapper
@@ -74,7 +74,7 @@ describe('Send', () => {
     sendRowDetails.push(
       createAsset('NEO', 1),
       createAsset('GAS', 2),
-      createAsset('RPX', 3)
+      createAsset('RPX', 3),
     )
 
     wrapper.setState({ sendRowDetails })
@@ -155,7 +155,7 @@ describe('Send', () => {
 
     const errors = wrapper.instance().state.sendRowDetails[0].errors
     expect(errors.amount).toBe(
-      'You do not have enough balance to send 100 NEO.'
+      'You do not have enough balance to send 100 NEO.',
     )
   })
 
@@ -184,7 +184,7 @@ describe('Send', () => {
       const errors = wrapper.instance().state.sendRowDetails[0].errors
 
       expect(errors.address).toBe(
-        'Address is blacklisted. This is a known phishing address.'
+        'Address is blacklisted. This is a known phishing address.',
       )
     }, 0)
   })
@@ -224,7 +224,7 @@ describe('Send', () => {
 
     setTimeout(
       () => expect(wrapper.instance().state.showConfirmSend).toBe(true),
-      0
+      0,
     )
   })
 
@@ -248,8 +248,8 @@ describe('Send', () => {
           address: 'AMKxqiSSLR89wLVEk5CoGRjKHRrmrR8bDr',
           amount: 1,
           note: '',
-          symbol: 'NEO'
-        }
+          symbol: 'NEO',
+        },
       ])
     }, 0)
   })

@@ -18,7 +18,7 @@ type Props = {
   assetToPurchaseWith: string,
   tokenInfo: Object,
   amountToPurchaseFor: number,
-  gasFee: number
+  gasFee: number,
 }
 
 const TokenSaleConfirm = ({
@@ -27,7 +27,7 @@ const TokenSaleConfirm = ({
   tokenInfo,
   handleBack,
   amountToPurchaseFor,
-  gasFee
+  gasFee,
 }: Props) => (
   <FullHeightPanel
     headerText="Confirm Purchase"

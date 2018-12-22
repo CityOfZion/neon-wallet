@@ -6,7 +6,7 @@ import {
   withCall,
   alreadyLoadedStrategy,
   progressValues,
-  withProgressComponents
+  withProgressComponents,
 } from 'spunky'
 
 import Loading from '../App/Loading'
@@ -16,7 +16,7 @@ import WalletManager from './WalletManager'
 const { LOADING } = progressValues
 
 const mapAccountsDataToProps = accounts => ({
-  accounts
+  accounts,
 })
 
 export default compose(
@@ -24,11 +24,11 @@ export default compose(
   withProgressComponents(
     walletLabelActions,
     {
-      [LOADING]: Loading
+      [LOADING]: Loading,
     },
     {
-      strategy: alreadyLoadedStrategy
-    }
+      strategy: alreadyLoadedStrategy,
+    },
   ),
-  withData(walletLabelActions, mapAccountsDataToProps)
+  withData(walletLabelActions, mapAccountsDataToProps),
 )(WalletManager)

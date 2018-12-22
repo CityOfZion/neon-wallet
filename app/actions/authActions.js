@@ -10,18 +10,18 @@ import { validatePassphraseLength } from '../core/wallet'
 import { ledgerNanoSCreateSignatureAsync } from '../ledger/ledgerNanoS'
 
 type WifLoginProps = {
-  wif: string
+  wif: string,
 }
 
 type LedgerLoginProps = {
   publicKey: string,
   signingFunction: Function,
-  account: number
+  account: number,
 }
 
 type Nep2LoginProps = {
   passphrase: string,
-  encryptedWIF: string
+  encryptedWIF: string,
 }
 
 type AccountType = ?{
@@ -29,7 +29,7 @@ type AccountType = ?{
   wif?: string,
   publicKey?: string,
   signingFunction?: Function,
-  isHardwareLogin: boolean
+  isHardwareLogin: boolean,
 }
 
 export const ID = 'auth'
@@ -46,15 +46,15 @@ export const wifLoginActions = createActions(
     return {
       wif: account.WIF,
       address: account.address,
-      isHardwareLogin: false
+      isHardwareLogin: false,
     }
-  }
+  },
 )
 
 export const nep2LoginActions = createActions(
   ID,
   ({ passphrase, encryptedWIF }: Nep2LoginProps) => async (): Promise<
-    AccountType
+    AccountType,
   > => {
     if (!validatePassphraseLength(passphrase)) {
       throw new Error('Passphrase too short')
@@ -72,9 +72,9 @@ export const nep2LoginActions = createActions(
     return {
       wif: account.WIF,
       address: account.address,
-      isHardwareLogin: false
+      isHardwareLogin: false,
     }
-  }
+  },
 )
 
 export const ledgerLoginActions = createActions(
@@ -89,11 +89,11 @@ export const ledgerLoginActions = createActions(
       signingFunction: bindArgsFromN(
         ledgerNanoSCreateSignatureAsync,
         3,
-        account
+        account,
       ),
-      isHardwareLogin: true
+      isHardwareLogin: true,
     }
-  }
+  },
 )
 
 export const logoutActions = createActions(ID, () => (): AccountType => {

@@ -8,7 +8,7 @@ import { getSettings } from './settingsActions'
 import { ASSETS } from '../core/constants'
 
 const PRICE_API_SYMBOL_EXCEPTIONS = {
-  SOUL: 'SOUL*'
+  SOUL: 'SOUL*',
 }
 
 function mapPrices(pricingData: Array<any>, currency) {
@@ -19,12 +19,12 @@ function mapPrices(pricingData: Array<any>, currency) {
       if (price && priceInSelectedCurrency) {
         // eslint-disable-next-line
         accum[priceInSelectedCurrency.FROMSYMBOL] = parseFloat(
-          priceInSelectedCurrency.PRICE
+          priceInSelectedCurrency.PRICE,
         )
       }
       return accum
     },
-    {}
+    {},
   )
 }
 
@@ -35,7 +35,7 @@ async function getPrices() {
     const { currency } = settings
     const joinedTokens = tokens
       .map((token: TokenItemType) =>
-        get(PRICE_API_SYMBOL_EXCEPTIONS, token.symbol, token.symbol)
+        get(PRICE_API_SYMBOL_EXCEPTIONS, token.symbol, token.symbol),
       )
       .concat([ASSETS.NEO, ASSETS.GAS])
       .join(',')

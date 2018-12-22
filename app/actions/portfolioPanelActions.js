@@ -8,5 +8,5 @@ export const ID = 'portfolioPanel'
 
 export default createBatchActions(ID, {
   prices: pricesActions,
-  balances: settingsActions
+  balances: settingsActions,
 })

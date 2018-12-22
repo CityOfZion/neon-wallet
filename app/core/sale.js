@@ -4,7 +4,7 @@ export const validateMintTokensInputs = (
   gasToMint: number,
   scriptHash: string,
   NEO: number,
-  GAS: number
+  GAS: number,
 ) => {
   let message
 

@@ -6,7 +6,7 @@ import styles from '../Button/Button.scss'
 
 type Props = {
   className: ?string,
-  routeTo: string
+  routeTo: string,
 }
 
 export default class CloseButton extends React.Component<Props> {

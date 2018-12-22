@@ -26,7 +26,7 @@ type Props = {
   clearErrors: (index: number, field: string) => any,
   removeRow: (index: number) => any,
   updateRowField: (index: number, field: string, value: any) => any,
-  calculateMaxValue: (asset: string, index: number) => string
+  calculateMaxValue: (asset: string, index: number) => string,
 }
 
 class SendRecipientListItem extends Component<Props> {
@@ -37,14 +37,14 @@ class SendRecipientListItem extends Component<Props> {
       contacts,
       clearErrors,
       calculateMaxValue,
-      asset
+      asset,
     } = this.props
 
     let normalizedValue = value
 
     if (type === 'address') {
       const isContactString = Object.keys(contacts).find(
-        contact => contact === value
+        contact => contact === value,
       )
       if (isContactString) {
         normalizedValue = contacts[value]
@@ -90,7 +90,7 @@ class SendRecipientListItem extends Component<Props> {
       errors,
       max,
       showConfirmSend,
-      numberOfRecipients
+      numberOfRecipients,
     } = this.props
 
     const selectInput = showConfirmSend ? (

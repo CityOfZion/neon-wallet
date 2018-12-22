@@ -8,7 +8,7 @@ import styles from './AddContact.scss'
 type Props = {
   history: Object,
   name: string,
-  address: string
+  address: string,
 }
 
 export default class AddContact extends React.Component<Props> {

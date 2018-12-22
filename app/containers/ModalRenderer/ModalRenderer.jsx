@@ -19,7 +19,7 @@ const MODAL_COMPONENTS = {
   [TOKEN]: TokenModal,
   [ADD_CONTACT]: AddContactModal,
   [RECEIVE]: ReceiveModal,
-  [SEND]: SendModal
+  [SEND]: SendModal,
 }
 
 type Props = {
@@ -29,7 +29,7 @@ type Props = {
   showErrorNotification: Object => any,
   showSuccessNotification: Object => any,
   showInfoNotification: Object => any,
-  showWarningNotification: Object => any
+  showWarningNotification: Object => any,
 }
 
 const ModalRenderer = (props: Props) => {

@@ -10,7 +10,7 @@ describe('SelectInput', () => {
     value: 'some text',
     items: ['Foo', 'Bar', 'Has some text'],
     onFocus: jest.fn(),
-    onChange: jest.fn()
+    onChange: jest.fn(),
   }
 
   test('should render without crashing', () => {
@@ -24,7 +24,7 @@ describe('SelectInput', () => {
       wrapper
         .dive()
         .find(TextInput)
-        .props().value
+        .props().value,
     ).toEqual(props.value)
   })
 
@@ -34,7 +34,7 @@ describe('SelectInput', () => {
       wrapper
         .dive()
         .find('.dropdown')
-        .exists()
+        .exists(),
     ).toEqual(false)
   })
 

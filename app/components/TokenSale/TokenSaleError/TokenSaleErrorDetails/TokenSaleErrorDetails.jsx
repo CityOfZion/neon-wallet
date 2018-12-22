@@ -6,7 +6,7 @@ import styles from './TokenSaleErrorDetails.scss'
 import ErrorIcon from '../../../../assets/icons/error.svg'
 
 type Props = {
-  error: Object
+  error: Object,
 }
 
 const TokenSaleErrorDetails = ({ error }: Props) => (

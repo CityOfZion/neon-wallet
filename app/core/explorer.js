@@ -7,7 +7,7 @@ const { NEO_SCAN, NEO_TRACKER, ANT_CHAIN } = EXPLORERS
 
 export const getExplorerBaseURL = (
   networkId: string,
-  explorer: ExplorerType
+  explorer: ExplorerType,
 ) => {
   const isMainNet = isMainNetwork(networkId)
   switch (explorer) {
@@ -30,7 +30,7 @@ export const getExplorerBaseURL = (
 export const getExplorerTxLink = (
   networkId: string,
   explorer: ExplorerType,
-  txId: string
+  txId: string,
 ) => {
   const baseURL = getExplorerBaseURL(networkId, explorer)
 
@@ -49,7 +49,7 @@ export const getExplorerTxLink = (
 export const getExplorerAddressLink = (
   networkId: string,
   explorer: ExplorerType,
-  address: string
+  address: string,
 ) => {
   const baseURL = getExplorerBaseURL(networkId, explorer)
 
@@ -68,7 +68,7 @@ export const getExplorerAddressLink = (
 export const getExplorerAssetLink = (
   networkId: string,
   explorer: ExplorerType,
-  assetId: string
+  assetId: string,
 ) => {
   const baseURL = getExplorerBaseURL(networkId, explorer)
   switch (explorer) {
@@ -85,17 +85,17 @@ export const getExplorerAssetLink = (
 export const openExplorerTx = (
   networkId: string,
   explorer: ExplorerType,
-  txId: string
+  txId: string,
 ) => openExternal(getExplorerTxLink(networkId, explorer, txId))
 
 export const openExplorerAddress = (
   networkId: string,
   explorer: ExplorerType,
-  address: string
+  address: string,
 ) => openExternal(getExplorerAddressLink(networkId, explorer, address))
 
 export const openExplorerAsset = (
   networkId: string,
   explorer: ExplorerType,
-  assetId: string
+  assetId: string,
 ) => openExternal(getExplorerAssetLink(networkId, explorer, assetId))

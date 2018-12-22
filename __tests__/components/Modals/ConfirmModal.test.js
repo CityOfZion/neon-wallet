@@ -16,7 +16,7 @@ describe('ConfirmModal', () => {
     onClick: jest.fn(),
     onCancel: jest.fn(),
     backButtonAction: jest.fn(),
-    store: store
+    store: store,
   }
 
   test('should render without crashing', () => {
@@ -25,7 +25,7 @@ describe('ConfirmModal', () => {
         <MemoryRouter>
           <ConfirmModal {...props} />
         </MemoryRouter>
-      </Provider>
+      </Provider>,
     )
 
     expect(wrapper.find(ConfirmModal)).toMatchSnapshot()
@@ -37,7 +37,7 @@ describe('ConfirmModal', () => {
         <MemoryRouter>
           <ConfirmModal {...props} />
         </MemoryRouter>
-      </Provider>
+      </Provider>,
     )
 
     expect(wrapper.find('.text').text()).toEqual(props.text)
@@ -49,7 +49,7 @@ describe('ConfirmModal', () => {
         <MemoryRouter>
           <ConfirmModal {...props} />
         </MemoryRouter>
-      </Provider>
+      </Provider>,
     )
 
     wrapper
@@ -67,7 +67,7 @@ describe('ConfirmModal', () => {
         <MemoryRouter>
           <ConfirmModal {...props} />
         </MemoryRouter>
-      </Provider>
+      </Provider>,
     )
 
     wrapper

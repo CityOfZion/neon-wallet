@@ -10,13 +10,13 @@ import { ROUTES } from '../../core/constants'
 type Props = {
   className: ?string,
   title: ?string,
-  onRetry: ?Function
+  onRetry: ?Function,
 }
 
 export default class LoadingPanel extends React.Component<Props> {
   static defaultProps = {
     title: 'Failed',
-    onRetry: null
+    onRetry: null,
   }
 
   render() {
@@ -29,7 +29,7 @@ export default class LoadingPanel extends React.Component<Props> {
         Failed to load. {this.renderRetry()} or{' '}
         <Link
           to={{
-            pathname: ROUTES.NODE_SELECT
+            pathname: ROUTES.NODE_SELECT,
           }}
           className={styles.settingsDonations}
         >

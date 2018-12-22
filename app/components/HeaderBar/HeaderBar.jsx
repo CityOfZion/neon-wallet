@@ -12,12 +12,12 @@ type Props = {
   renderLeftContent?: () => any,
   renderRightContent?: () => any,
   networkId: string,
-  net: string
+  net: string,
 }
 
 export default class HeaderBar extends React.PureComponent<Props> {
   static defaultProps = {
-    label: ''
+    label: '',
   }
 
   render() {
@@ -27,7 +27,7 @@ export default class HeaderBar extends React.PureComponent<Props> {
       renderLeftContent = () => null,
       renderRightContent = () => null,
       networkId,
-      net
+      net,
     } = this.props
 
     return (

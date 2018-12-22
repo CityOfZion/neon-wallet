@@ -10,7 +10,7 @@ import styles from './Transactions.scss'
 
 type Props = {
   className?: string,
-  transactions: Array<Object>
+  transactions: Array<Object>,
 }
 
 export default class Transactions extends React.Component<Props> {

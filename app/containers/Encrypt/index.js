@@ -22,6 +22,6 @@ export default compose(
   withProps({
     encryptPrivateKey,
     isWIF: wallet.isWIF,
-    validatePassphraseLength
-  })
+    validatePassphraseLength,
+  }),
 )(Encrypt)

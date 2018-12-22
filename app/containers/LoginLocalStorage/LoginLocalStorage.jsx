@@ -12,18 +12,18 @@ import styles from '../Home/Home.scss'
 type Props = {
   loading: boolean,
   loginNep2: Function,
-  accounts: Object
+  accounts: Object,
 }
 
 type State = {
   passphrase: string,
   selectedAccount: Object | null,
-  mappedAccounts: Array<Object>
+  mappedAccounts: Array<Object>,
 }
 
 export default class LoginLocalStorage extends Component<Props, State> {
   static defaultProps = {
-    accounts: []
+    accounts: [],
   }
 
   state = {
@@ -35,7 +35,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
         const clonedAccount = cloneDeep(account)
         clonedAccount.value = account.label
         return clonedAccount
-      })
+      }),
   }
 
   render() {
@@ -86,7 +86,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
     const { passphrase, selectedAccount } = this.state
     if (selectedAccount) {
       const accountInStorage = accounts.find(
-        account => account.label === selectedAccount.value
+        account => account.label === selectedAccount.value,
       )
 
       event.preventDefault()

@@ -13,7 +13,7 @@ function configureStore(initialState = {}) {
   const store = createStore(
     rootReducer,
     initialState,
-    applyMiddleware(...middlewares)
+    applyMiddleware(...middlewares),
   )
 
   sagaMiddleware.run(saga)

@@ -15,7 +15,7 @@ type Props = {
   formConfirmPassphrase: string,
   validatePassphraseLength: Function,
   isWIF: Function,
-  onSubmit: Function
+  onSubmit: Function,
 }
 
 type State = {
@@ -25,7 +25,7 @@ type State = {
   isDisabled: boolean,
   privateKey: string,
   passphrase: string,
-  confirmPassphrase: string
+  confirmPassphrase: string,
 }
 
 export default class EncryptForm extends React.Component<Props, State> {
@@ -39,7 +39,7 @@ export default class EncryptForm extends React.Component<Props, State> {
       isDisabled: false,
       privateKey: '',
       passphrase: '',
-      confirmPassphrase: ''
+      confirmPassphrase: '',
     }
   }
 
@@ -47,7 +47,7 @@ export default class EncryptForm extends React.Component<Props, State> {
     submitLabel: 'Generate Encrypted key',
     onSubmit: noop,
     isWIF: noop,
-    validatePassphraseLength: noop
+    validatePassphraseLength: noop,
   }
 
   render() {
@@ -55,13 +55,13 @@ export default class EncryptForm extends React.Component<Props, State> {
       submitLabel,
       formPrivateKey,
       formPassphrase,
-      formConfirmPassphrase
+      formConfirmPassphrase,
     } = this.props
     const {
       privateKeyError,
       passphraseError,
       confirmPassphraseError,
-      isDisabled
+      isDisabled,
     } = this.state
 
     return (
@@ -133,12 +133,12 @@ export default class EncryptForm extends React.Component<Props, State> {
   validate = (
     privateKey: string,
     passphrase: string,
-    confirmPassphrase: string
+    confirmPassphrase: string,
   ) => {
     const validPrivateKey = this.validatePrivateKey(privateKey)
     const validatePassphrase = this.validatePassphrase(
       passphrase,
-      confirmPassphrase
+      confirmPassphrase,
     )
 
     return validPrivateKey && validatePassphrase
@@ -156,7 +156,7 @@ export default class EncryptForm extends React.Component<Props, State> {
   setButtonIsDisabled = () => {
     const { privateKey, passphrase, confirmPassphrase } = this.state
     this.setState({
-      isDisabled: !privateKey || !passphrase || !confirmPassphrase
+      isDisabled: !privateKey || !passphrase || !confirmPassphrase,
     })
   }
 

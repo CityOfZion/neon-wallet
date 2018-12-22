@@ -9,7 +9,7 @@ type ValueType = string | number
 
 export const formatGAS = (
   value: ValueType,
-  shortDisplay: boolean = false
+  shortDisplay: boolean = false,
 ): string => {
   const decimals = shortDisplay
     ? SHORT_DISPLAY_DECIMAL_LENGTH
@@ -36,7 +36,7 @@ export const formatNumberByDecimalScale = (value: ValueType): string =>
 export const formatBalance = (
   symbol: SymbolType,
   balance: ValueType,
-  shortDisplay: boolean = false
+  shortDisplay: boolean = false,
 ): string => {
   if (symbol === ASSETS.NEO) {
     return formatNEO(balance)
@@ -46,7 +46,7 @@ export const formatBalance = (
 
 export const toFixedDecimals = (
   value: ValueType,
-  decimals: number = COIN_DECIMAL_LENGTH
+  decimals: number = COIN_DECIMAL_LENGTH,
 ): string => toBigNumber(value).toFixed(decimals)
 
 export const formatFiat = (value: ValueType = 0): string =>

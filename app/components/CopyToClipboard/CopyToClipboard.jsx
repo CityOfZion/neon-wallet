@@ -13,20 +13,20 @@ import styles from './CopyToClipboard.scss'
 type Props = {
   className?: string,
   text: string,
-  tooltip: string
+  tooltip: string,
 }
 
 type State = {
-  copied: boolean
+  copied: boolean,
 }
 
 class CopyToClipboard extends React.Component<Props, State> {
   static defaultProps = {
-    tooltip: 'Copy'
+    tooltip: 'Copy',
   }
 
   state = {
-    copied: false
+    copied: false,
   }
 
   copyText = (text: string) => {

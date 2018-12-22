@@ -7,7 +7,7 @@ import {
   alreadyLoadedStrategy,
   progressValues,
   withProgressComponents,
-  withRecall
+  withRecall,
 } from 'spunky'
 
 import withLoadingProp from '../../hocs/withLoadingProp'
@@ -49,23 +49,23 @@ const sortByBlockCountThenLatency = (a, b) => {
 }
 
 const mapNodesShownToProps = () => ({
-  nodesShown: count
+  nodesShown: count,
 })
 
 const mapNodesDataToProps = nodes => ({
-  nodes: nodes ? nodes.sort(sortByBlockCountThenLatency) : []
+  nodes: nodes ? nodes.sort(sortByBlockCountThenLatency) : [],
 })
 
 const mapSelectedNodeDataToProps = url => ({
-  selectedNode: url
+  selectedNode: url,
 })
 
 const mapNodesActionsToProps = actions => ({
-  loadNodesData: ({ networkId }) => actions.call({ networkId })
+  loadNodesData: ({ networkId }) => actions.call({ networkId }),
 })
 
 const mapSaveNodeActionsToProps = actions => ({
-  saveSelectedNode: ({ url, net }) => actions.call({ url, net })
+  saveSelectedNode: ({ url, net }) => actions.call({ url, net }),
 })
 
 export default compose(
@@ -78,14 +78,14 @@ export default compose(
   withProgressComponents(
     nodeNetworkActions,
     {
-      [LOADING]: Loading
+      [LOADING]: Loading,
     },
     {
-      strategy: alreadyLoadedStrategy
-    }
+      strategy: alreadyLoadedStrategy,
+    },
   ),
   withData(nodeNetworkActions, mapNodesDataToProps),
   withData(nodeStorageActions, mapSelectedNodeDataToProps),
   withRecall(accountActions, ['selectedNode']),
-  withLoadingProp(nodeNetworkActions)
+  withLoadingProp(nodeNetworkActions),
 )(NodeSelectPanel)

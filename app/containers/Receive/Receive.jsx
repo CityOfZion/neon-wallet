@@ -18,16 +18,16 @@ type Props = {
   accounts: Array<any>,
   prices: Object,
   showReceiveModal: Function,
-  networkId: string
+  networkId: string,
 }
 
 type State = {
-  walletName: ?string
+  walletName: ?string,
 }
 
 export default class Receive extends React.Component<Props, State> {
   static defaultProps = {
-    accounts: []
+    accounts: [],
   }
 
   constructor(props: Props) {
@@ -35,7 +35,7 @@ export default class Receive extends React.Component<Props, State> {
     const walletName: ?string = props.accounts.reduce(
       (accum, account) =>
         props.address === account.address ? account.label : accum,
-      null
+      null,
     )
     this.state = { walletName }
   }
@@ -46,7 +46,7 @@ export default class Receive extends React.Component<Props, State> {
       currencyCode,
       address,
       showReceiveModal,
-      networkId
+      networkId,
     } = this.props
 
     const { walletName } = this.state
@@ -92,7 +92,7 @@ export default class Receive extends React.Component<Props, State> {
           totalBalance: balance,
           price,
           currentBalance,
-          totalBalanceWorth
+          totalBalanceWorth,
         }
       }
       return {}

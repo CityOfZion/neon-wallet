@@ -50,7 +50,16 @@
     "jsx-a11y/click-events-have-key-events": 0,
     "jsx-a11y/heading-has-content": 0,
     "jsx-a11y/anchor-has-content": 0,
-    "comma-dangle": ["error", "never"],
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "always-multiline"
+      }
+    ],
     "react/no-array-index-key": 0,
     "react/require-default-props": 0,
     "react/no-unescaped-entities": 0,
