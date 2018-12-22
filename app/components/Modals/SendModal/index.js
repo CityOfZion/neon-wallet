@@ -1,16 +1,32 @@
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { compose } from 'recompose'
+import { withActions, withData } from 'spunky'
 
 import SendModal from './SendModal'
 import {
-  showErrorNotification,
-  hideNotification
-} from '../../../modules/notifications'
+  getRecipientData,
+  clearRecipientData
+} from '../../../actions/sendModalActions'
+import withFailureNotification from '../../../hocs/withFailureNotification'
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ showErrorNotification, hideNotification }, dispatch)
+const mapGetDataToProps = action => ({
+  getRecipientData: url => action.call(url)
+})
 
-export default connect(
-  null,
-  mapDispatchToProps
+const mapClearDataToProps = action => ({
+  clearRecipientData: () => action.call()
+})
+
+const mapRecipientDataToProps = recipientData => ({ recipientData })
+
+export default compose(
+  withActions(getRecipientData, mapGetDataToProps),
+  withData(getRecipientData, mapRecipientDataToProps),
+  withFailureNotification(
+    getRecipientData,
+    message =>
+      `An error occurred while scanning this QR code: ${message}. Please try again.`
+  ),
+
+  withActions(clearRecipientData, mapClearDataToProps),
+  withData(clearRecipientData, mapRecipientDataToProps)
 )(SendModal)
