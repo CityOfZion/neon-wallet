@@ -6,6 +6,6 @@ module.exports = {
   alias: {
     assets: resolveApp('assets'),
     styles: resolveApp('styles'),
-    components: resolveApp('components')
-  }
+    components: resolveApp('components'),
+  },
 }

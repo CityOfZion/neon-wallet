@@ -9,7 +9,7 @@ import {
   TEST_NETWORK_ID,
   NODES_MAIN_NET,
   NODES_TEST_NET,
-  NODE_EXLUSION_CRITERIA
+  NODE_EXLUSION_CRITERIA,
 } from '../core/constants'
 import { findNetworkByLabel } from '../core/networks'
 
@@ -23,29 +23,29 @@ type Net = NetworkLabelTypes
 
 type Props = {
   url: string,
-  net: Net
+  net: Net,
 }
 
 export const determineIfCacheIsExpired = (
   timestamp: number,
-  expiration: number = CACHE_EXPIRATION
+  expiration: number = CACHE_EXPIRATION,
 ): boolean => timestamp + expiration < new Date().getTime()
 
 export const buildNodeUrl = (data: {
   height: number,
   port: string,
   protocol: string,
-  url: string
+  url: string,
 }): string => {
   const { protocol, url, port } = data
   return compact([protocol && `${protocol}://`, url, port && `:${port}`]).join(
-    ''
+    '',
   )
 }
 
 export const getRPCEndpoint = async (
   net: Net,
-  excludeCritera: Array<string> = NODE_EXLUSION_CRITERIA
+  excludeCritera: Array<string> = NODE_EXLUSION_CRITERIA,
 ) => {
   try {
     if (
@@ -68,7 +68,7 @@ export const getRPCEndpoint = async (
     }
     const data = [...nodeList]
       .filter(
-        data => !excludeCritera.some(criteria => data.url.includes(criteria))
+        data => !excludeCritera.some(criteria => data.url.includes(criteria)),
       )
       .map(data => {
         const url = buildNodeUrl(data)
@@ -79,12 +79,12 @@ export const getRPCEndpoint = async (
       })
     await Promise.all(data.map(data => data.client.ping()))
     const nodes = data.sort(
-      (a, b) => b.client.lastSeenHeight - a.client.lastSeenHeight
+      (a, b) => b.client.lastSeenHeight - a.client.lastSeenHeight,
     )
     if (nodes.length === 0) throw new Error('No eligible nodes found!')
     const heightThreshold = nodes[0].client.lastSeenHeight - 1
     const goodNodes = nodes.filter(
-      n => n.client.lastSeenHeight >= heightThreshold
+      n => n.client.lastSeenHeight >= heightThreshold,
     )
     let randomIndex = random(goodNodes.length)
     if (randomIndex === goodNodes.length) {
@@ -94,15 +94,15 @@ export const getRPCEndpoint = async (
     const randomlySelectedRPCUrl = goodNodes[randomIndex].client.net
     cachedRPCUrl[net] = {
       node: randomlySelectedRPCUrl,
-      timestamp: new Date().getTime()
+      timestamp: new Date().getTime(),
     }
     return randomlySelectedRPCUrl
   } catch (error) {
     console.warn(
       'An error occurred attempting to obtain RPC endpoint defaulting to neon-js getRPCEndpointFrom()',
       {
-        error
-      }
+        error,
+      },
     )
     const endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
     return endpoint
@@ -130,5 +130,5 @@ export default createActions(
       return url
     }
     return getNode(net)
-  }
+  },
 )

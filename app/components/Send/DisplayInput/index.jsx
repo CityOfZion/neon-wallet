@@ -7,7 +7,7 @@ import styles from './DisplayInput.scss'
 
 type Props = {
   className?: string,
-  value: any
+  value: any,
 }
 
 const DisplayInput = ({ className, value }: Props) => (

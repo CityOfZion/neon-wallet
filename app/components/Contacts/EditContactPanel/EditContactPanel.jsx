@@ -19,7 +19,7 @@ type Props = {
   onSave: Function,
   deleteContact: string => void,
   showSuccessNotification: ({ message: string }) => void,
-  showModal: (modalType: string, modalProps: Object) => any
+  showModal: (modalType: string, modalProps: Object) => any,
 }
 
 export default class EditContactPanel extends React.Component<Props> {
@@ -28,7 +28,7 @@ export default class EditContactPanel extends React.Component<Props> {
     address: '',
     setName: noop,
     setAddress: noop,
-    onSave: noop
+    onSave: noop,
   }
 
   render() {
@@ -83,9 +83,9 @@ export default class EditContactPanel extends React.Component<Props> {
       onClick: () => {
         this.props.deleteContact(name)
         showSuccessNotification({
-          message: 'Contact removal was successful.'
+          message: 'Contact removal was successful.',
         })
-      }
+      },
     })
   }
 }

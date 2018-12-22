@@ -8,11 +8,11 @@ import { trim } from 'lodash-es'
 import EditContactPanel from './EditContactPanel'
 import {
   updateContactActions,
-  deleteContactActions
+  deleteContactActions,
 } from '../../../actions/contactsActions'
 import {
   showErrorNotification,
-  showSuccessNotification
+  showSuccessNotification,
 } from '../../../modules/notifications'
 import withProgressChange from '../../../hocs/withProgressChange'
 import withFailureNotification from '../../../hocs/withFailureNotification'
@@ -23,7 +23,7 @@ const { LOADED } = progressValues
 const actionCreators = {
   showModal,
   showErrorNotification,
-  showSuccessNotification
+  showSuccessNotification,
 }
 
 const mapContactActionsToProps = (actions, props) => ({
@@ -31,30 +31,30 @@ const mapContactActionsToProps = (actions, props) => ({
     actions.call({
       oldName: props.oldName,
       newName: trim(name),
-      newAddress: trim(address)
-    })
+      newAddress: trim(address),
+    }),
 })
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(actionCreators, dispatch)
 
 const mapDeleteContactActionsToProps = actions => ({
-  deleteContact: name => actions.call({ name })
+  deleteContact: name => actions.call({ name }),
 })
 
 export default compose(
   connect(
     null,
-    mapDispatchToProps
+    mapDispatchToProps,
   ),
   withProps(({ name }) => ({ oldName: name })),
   withProgressChange(
     updateContactActions,
     LOADED,
-    (state, props) => props.onSave && props.onSave()
+    (state, props) => props.onSave && props.onSave(),
   ),
   withActions(updateContactActions, mapContactActionsToProps),
   withActions(deleteContactActions, mapDeleteContactActionsToProps),
   withFailureNotification(deleteContactActions),
-  withFailureNotification(updateContactActions)
+  withFailureNotification(updateContactActions),
 )(EditContactPanel)

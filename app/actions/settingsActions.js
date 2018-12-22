@@ -9,7 +9,7 @@ import { ensureHex, validateHashLength } from '../util/tokenHashValidation'
 import {
   DEFAULT_EXPLORER,
   DEFAULT_CURRENCY_CODE,
-  DEFAULT_THEME
+  DEFAULT_THEME,
 } from '../core/constants'
 import { version } from '../../package.json'
 
@@ -19,7 +19,7 @@ type Settings = {
   tokens: Array<TokenItemType>,
   version: string,
   theme: string,
-  soundEnabled: boolean
+  soundEnabled: boolean,
 }
 
 const STORAGE_KEY = 'settings'
@@ -30,7 +30,7 @@ const DEFAULT_SETTINGS: () => Promise<Settings> = async () => ({
   blockExplorer: DEFAULT_EXPLORER,
   tokens: await getDefaultTokens(),
   version,
-  soundEnabled: true
+  soundEnabled: true,
 })
 
 export const getSettings = async (): Promise<Settings> => {
@@ -45,9 +45,9 @@ export const getSettings = async (): Promise<Settings> => {
         ? settings.tokens
             .filter(token => ensureHex(token.scriptHash))
             .filter(token => validateHashLength(token.scriptHash))
-        : [])
+        : []),
     ],
-    token => [token.networkId, token.scriptHash].join('-')
+    token => [token.networkId, token.scriptHash].join('-'),
   )
 
   return { ...defaults, ...settings, tokens }
@@ -62,18 +62,18 @@ export const updateSettingsActions = createActions(
     const settings = await getSettings()
     const newSettings = {
       ...settings,
-      ...values
+      ...values,
     }
     const parsedForLocalStorage = cloneDeep(newSettings)
     const tokensForStorage = [
-      ...newSettings.tokens.filter(token => token.isUserGenerated)
+      ...newSettings.tokens.filter(token => token.isUserGenerated),
     ]
     // NOTE: we only save user generated tokens to local storage to avoid
     // conflicts in managing the "master" nep5 list
     parsedForLocalStorage.tokens = tokensForStorage
     await setStorage(STORAGE_KEY, parsedForLocalStorage)
     return newSettings
-  }
+  },
 )
 
 export default createActions(ID, () => async (): Promise<Settings> => {

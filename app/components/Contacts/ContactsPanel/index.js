@@ -8,11 +8,11 @@ import { deleteContactActions } from '../../../actions/contactsActions'
 import withFailureNotification from '../../../hocs/withFailureNotification'
 
 const mapContactActionsToProps = actions => ({
-  deleteContact: name => actions.call({ name })
+  deleteContact: name => actions.call({ name }),
 })
 
 export default compose(
   withRouter,
   withActions(deleteContactActions, mapContactActionsToProps),
-  withFailureNotification(deleteContactActions)
+  withFailureNotification(deleteContactActions),
 )(ContactsPanel)

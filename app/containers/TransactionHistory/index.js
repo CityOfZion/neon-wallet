@@ -17,11 +17,11 @@ export default compose(
   withLoadingProp(balancesActions),
   withSuccessNotification(
     balancesActions,
-    'Received latest blockchain information.'
+    'Received latest blockchain information.',
   ),
   withFailureNotification(
     balancesActions,
-    'Failed to retrieve blockchain information.'
+    'Failed to retrieve blockchain information.',
   ),
-  withCall(transactionHistoryActions)
+  withCall(transactionHistoryActions),
 )(TransactionHistory)

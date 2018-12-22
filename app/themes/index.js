@@ -3,5 +3,5 @@ import Dark from './Dark'
 
 export default {
   Light,
-  Dark
+  Dark,
 }

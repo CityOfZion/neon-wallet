@@ -7,7 +7,7 @@ import styles from './DropdownButton.scss'
 
 type Props = {
   className?: string,
-  onToggle: Function
+  onToggle: Function,
 }
 
 const DropdownButton = ({ className, onToggle }: Props) => (

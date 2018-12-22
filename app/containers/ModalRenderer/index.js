@@ -7,14 +7,14 @@ import {
   showErrorNotification,
   showSuccessNotification,
   showInfoNotification,
-  showWarningNotification
+  showWarningNotification,
 } from '../../modules/notifications'
 
 import ModalRenderer from './ModalRenderer'
 
 const mapStateToProps = (state: Object) => ({
   modalType: getModalType(state),
-  modalProps: getModalProps(state)
+  modalProps: getModalProps(state),
 })
 
 const actionCreators = {
@@ -22,7 +22,7 @@ const actionCreators = {
   showSuccessNotification,
   showInfoNotification,
   showWarningNotification,
-  showErrorNotification
+  showErrorNotification,
 }
 
 const mapDispatchToProps = dispatch =>
@@ -30,5 +30,5 @@ const mapDispatchToProps = dispatch =>
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(ModalRenderer)

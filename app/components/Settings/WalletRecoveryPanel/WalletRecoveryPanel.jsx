@@ -14,7 +14,7 @@ type Props = {
   childClassName?: string,
   title: string,
   saveWalletRecovery: Function,
-  loadWalletRecovery: Function
+  loadWalletRecovery: Function,
 }
 
 const WalletRecoveryPanel = ({
@@ -22,7 +22,7 @@ const WalletRecoveryPanel = ({
   childClassName,
   title,
   saveWalletRecovery,
-  loadWalletRecovery
+  loadWalletRecovery,
 }: Props) => (
   <div className={classNames(styles.walletPanel, className)}>
     <span className={classNames(styles.walletPanelTitle, childClassName)}>

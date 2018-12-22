@@ -10,7 +10,7 @@ import AssetBalancesPanel from '../../../app/components/Dashboard/PortfolioPanel
 import {
   DEFAULT_CURRENCY_CODE,
   MAIN_NETWORK_ID,
-  ASSETS
+  ASSETS,
 } from '../../../app/core/constants'
 import PortfolioPanel from '../../../app/components/Dashboard/PortfolioPanel'
 import PortfolioRow from '../../../app/components/Dashboard/PortfolioPanel/PortfolioRow'
@@ -25,33 +25,33 @@ const initialState = {
       batch: false,
       progress: LOADED,
       data: MAIN_NETWORK_ID,
-      loadedCount: 1
+      loadedCount: 1,
     },
     auth: {
       batch: false,
       progress: LOADED,
       data: {
-        address: 'ANqUrhv99rwCiFTL6N1An9NH5UVkPYxTuw'
+        address: 'ANqUrhv99rwCiFTL6N1An9NH5UVkPYxTuw',
       },
-      loadedCount: 1
+      loadedCount: 1,
     },
     settings: {
       batch: false,
       progress: LOADED,
       data: {
         currency: DEFAULT_CURRENCY_CODE,
-        tokens: []
+        tokens: [],
       },
-      loadedCount: 1
+      loadedCount: 1,
     },
     prices: {
       batch: false,
       progress: LOADED,
       data: {
         NEO: 25.48,
-        GAS: 18.1
+        GAS: 18.1,
       },
-      loadedCount: 1
+      loadedCount: 1,
     },
     priceHistory: {
       batch: false,
@@ -59,54 +59,54 @@ const initialState = {
       data: {
         [ASSETS.NEO]: [
           {
-            close: 5
+            close: 5,
           },
           ...new Array(29).fill({}),
           {
-            close: 10
-          }
+            close: 10,
+          },
         ],
         [ASSETS.GAS]: [
           {
-            close: 10
+            close: 10,
           },
           ...new Array(29).fill({}),
           {
-            close: 5
-          }
-        ]
+            close: 5,
+          },
+        ],
       },
-      loadedCount: 1
+      loadedCount: 1,
     },
     balances: {
       batch: false,
       progress: LOADED,
       data: {
         NEO: '100001',
-        GAS: '1000.0001601'
+        GAS: '1000.0001601',
       },
-      loadedCount: 1
+      loadedCount: 1,
     },
     claims: {
       batch: false,
       progress: LOADED,
       data: {
-        total: '0.5'
+        total: '0.5',
       },
-      loadedCount: 1
-    }
+      loadedCount: 1,
+    },
   },
   claim: {
     claimRequest: false,
-    disableClaimButton: false
-  }
+    disableClaimButton: false,
+  },
 }
 
 describe('PortfolioPanel', () => {
   beforeEach(() => {
     const response = [
       { symbol: 'NEO', price_usd: 24.5 },
-      { symbol: 'GAS', price_usd: 18.2 }
+      { symbol: 'GAS', price_usd: 18.2 },
     ]
     nock('https://api.coinmarketcap.com')
       .get('/v1/ticker/')
@@ -144,8 +144,8 @@ describe('PortfolioPanel', () => {
     expect(store.getActions()).toContainEqual(
       expect.objectContaining({
         type: 'balances/ACTION/CALL',
-        meta: expect.objectContaining({ id: 'balances' })
-      })
+        meta: expect.objectContaining({ id: 'balances' }),
+      }),
     )
   })
 })

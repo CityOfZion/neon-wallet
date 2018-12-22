@@ -6,7 +6,7 @@ import {
   withProgress,
   progressValues,
   type Actions,
-  type Progress
+  type Progress,
 } from 'spunky'
 import { omit } from 'lodash-es'
 
@@ -18,7 +18,7 @@ const PROGRESS_PROP = '__progress__'
 
 type Options = {
   propName: string,
-  strategy: (Array<Object>) => Progress
+  strategy: (Array<Object>) => Progress,
 }
 
 function defaultMapPropsToAction(props) {
@@ -32,15 +32,15 @@ const withInitialCall = (
     propName = PROGRESS_PROP,
     strategy = pureStrategy,
     ...options
-  }: Options = {}
+  }: Options = {},
 ) => (Component: Class<React.Component<*>>): Class<React.Component<*>> => {
   type Props = {
-    [propName: string]: string
+    [propName: string]: string,
   }
 
   class ConditionalCallComponent extends React.Component<Props> {
     static propTypes = {
-      [propName]: string.isRequired
+      [propName]: string.isRequired,
     }
 
     componentWillMount() {
@@ -76,7 +76,7 @@ const withInitialCall = (
   }
 
   return withProgress(actions, { propName, strategy, ...options })(
-    ConditionalCallComponent
+    ConditionalCallComponent,
   )
 }
 

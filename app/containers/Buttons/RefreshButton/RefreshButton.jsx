@@ -8,7 +8,7 @@ import styles from './RefreshButton.scss'
 
 type Props = {
   loadWalletData: () => void,
-  loading?: boolean
+  loading?: boolean,
 }
 
 class RefreshButton extends Component<Props> {
@@ -26,7 +26,7 @@ class RefreshButton extends Component<Props> {
         <RefreshIcon
           id="refresh"
           className={classNames(styles.refresh, {
-            [styles.loading]: loading
+            [styles.loading]: loading,
           })}
           onClick={loading ? null : loadWalletData}
         />

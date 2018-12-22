@@ -17,7 +17,7 @@ export const updateLabelActions = createActions(
       throw new Error(err)
     }
     const accountToUpdate = wallet.accounts.find(
-      account => account.address === address
+      account => account.address === address,
     )
     if (!accountToUpdate) {
       console.warn('There is no account to update!')
@@ -26,7 +26,7 @@ export const updateLabelActions = createActions(
     accountToUpdate.label = label
     await setWallet(wallet)
     return wallet.accounts
-  }
+  },
 )
 
 export default createActions(ID, () => async (): Promise<Object> => {

@@ -5,7 +5,7 @@ import { createActions } from 'spunky'
 import { getNetworkById } from '../core/deprecated'
 
 type Props = {
-  networkId: string
+  networkId: string,
 }
 
 export const ID = 'blockHeight'

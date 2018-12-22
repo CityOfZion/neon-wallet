@@ -9,7 +9,7 @@ type Duration = '1m' | '1w' | '1d'
 
 type Props = {
   currency?: string,
-  duration: Duration
+  duration: Duration,
 }
 
 export const ID = 'priceHistory'
@@ -18,20 +18,20 @@ const createFetch = (
   symbol: SymbolType,
   currency: string,
   call: string,
-  options: Object
+  options: Object,
 ) =>
   axios.get(`https://min-api.cryptocompare.com/data/${call}`, {
     params: {
       ...options,
       fsym: toUpper(symbol),
-      tsym: toUpper(currency)
-    }
+      tsym: toUpper(currency),
+    },
   })
 
 const fetchPriceHistory = (
   symbol: SymbolType,
   currency: string,
-  duration: Duration
+  duration: Duration,
 ): Promise<Object> => {
   switch (duration) {
     case '1d':
@@ -48,16 +48,16 @@ export default createActions(
   ID,
   ({
     currency = DEFAULT_CURRENCY_CODE,
-    duration = '1d'
+    duration = '1d',
   }: Props = {}) => async () => {
     const [neo, gas] = await Promise.all([
       fetchPriceHistory(ASSETS.NEO, currency, duration),
-      fetchPriceHistory(ASSETS.GAS, currency, duration)
+      fetchPriceHistory(ASSETS.GAS, currency, duration),
     ])
 
     return {
       [ASSETS.NEO]: neo.data.Data,
-      [ASSETS.GAS]: gas.data.Data
+      [ASSETS.GAS]: gas.data.Data,
     }
-  }
+  },
 )

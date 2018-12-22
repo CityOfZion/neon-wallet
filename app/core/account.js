@@ -12,7 +12,7 @@ function getNEP6AddressData(matchesEncryptedWIF: boolean, address: string) {
 
 export async function upgradeNEP6AddAddresses(
   encryptedWIF: string,
-  wif: string
+  wif: string,
 ) {
   const data = getStorage('userWallet')
   const loggedIntoAccount = new wallet.Account(wif)
@@ -22,8 +22,8 @@ export async function upgradeNEP6AddAddresses(
       ...account,
       ...getNEP6AddressData(
         account.key === encryptedWIF,
-        loggedIntoAccount.address
-      )
+        loggedIntoAccount.address,
+      ),
     }))
 
     await setStorage('userWallet', { ...data, accounts })

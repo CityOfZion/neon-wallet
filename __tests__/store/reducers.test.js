@@ -7,7 +7,7 @@ describe('root reducer', () => {
       generateWallet: expect.any(Object),
       notifications: expect.any(Object),
       claim: expect.any(Object),
-      modal: expect.any(Object)
+      modal: expect.any(Object),
     })
   })
 })

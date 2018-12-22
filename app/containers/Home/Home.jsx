@@ -16,36 +16,36 @@ import HomeLayout from './HomeLayout'
 import pack from '../../../package.json'
 
 type State = {
-  tabIndex: number
+  tabIndex: number,
 }
 
 type Props = {
   loading: boolean,
-  theme: ThemeType
+  theme: ThemeType,
 }
 
 const LOGIN_OPTIONS = {
   LOCAL_STORAGE: {
     render: () => <LoginLocalStorage />,
-    display: 'Saved Wallet'
+    display: 'Saved Wallet',
   },
   PRIVATE_KEY: {
     render: () => <LoginPrivateKey />,
-    display: 'Private Key'
+    display: 'Private Key',
   },
   NEP2: {
     render: () => <LoginNep2 />,
-    display: 'Encrypted Key'
+    display: 'Encrypted Key',
   },
   ledger: {
     render: () => <LoginLedgerNanoS />,
-    display: 'Ledger'
-  }
+    display: 'Ledger',
+  },
 }
 
 export default class Home extends React.Component<Props, State> {
   state = {
-    tabIndex: 0
+    tabIndex: 0,
   }
 
   // $FlowFixMe

@@ -8,7 +8,7 @@ type Props = {
   title: string,
   children: React$Node,
   noBorderBottom?: boolean,
-  renderIcon?: Function
+  renderIcon?: Function,
 }
 
 export default class SettingsItem extends Component<Props> {
@@ -16,7 +16,7 @@ export default class SettingsItem extends Component<Props> {
     return (
       <div
         className={classNames(styles.settingsItem, {
-          [styles.noBorderBottom]: this.props.noBorderBottom
+          [styles.noBorderBottom]: this.props.noBorderBottom,
         })}
       >
         {this.props.renderIcon && (

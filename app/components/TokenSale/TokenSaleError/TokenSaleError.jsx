@@ -15,7 +15,7 @@ import Logo from '../../../assets/images/grey-logo.png'
 type Props = {
   retryHandler: () => void,
   backHandler: () => void,
-  error: Object
+  error: Object,
 }
 
 const TokenSaleError = ({ retryHandler, backHandler, error }: Props) => (

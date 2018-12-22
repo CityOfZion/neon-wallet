@@ -21,7 +21,7 @@ import DarkLogoWithoutText from '../../../assets/images/logo-without-text.png'
 
 type Props = {
   className: string,
-  theme: ThemeType
+  theme: ThemeType,
 }
 
 const Sidebar = ({ className, theme }: Props) => {
@@ -121,7 +121,7 @@ const Sidebar = ({ className, theme }: Props) => {
         className={classNames(
           styles.group,
           styles.logoutToolTipGroup,
-          styles.navItem
+          styles.navItem,
         )}
         id="logout"
       />

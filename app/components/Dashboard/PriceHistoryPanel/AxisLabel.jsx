@@ -8,7 +8,7 @@ type Options = {
   width: number,
   height: number,
   stroke: ?string,
-  children: ?(React$Node | string)
+  children: ?(React$Node | string),
 }
 
 export default function AxisLabel({
@@ -18,7 +18,7 @@ export default function AxisLabel({
   width,
   height,
   stroke,
-  children
+  children,
 }: Options) {
   const isVertical = axisType === 'y'
   const cx = isVertical ? x : x + width / 2

@@ -19,7 +19,7 @@ import styles from './Dashboard.scss'
 
 type Props = {
   loadWalletData: Function,
-  address: string
+  address: string,
 }
 
 const REFRESH_INTERVAL_MS = 30000
@@ -83,7 +83,7 @@ export default class Dashboard extends Component<Props> {
     // $FlowFixMe
     this.walletDataInterval = setInterval(
       this.props.loadWalletData,
-      REFRESH_INTERVAL_MS
+      REFRESH_INTERVAL_MS,
     )
   }
 

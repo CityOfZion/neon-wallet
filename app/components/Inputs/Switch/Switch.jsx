@@ -8,7 +8,7 @@ import { THEMES } from '../../../core/constants'
 type Props = {
   theme: string,
   handleCheck: boolean => any,
-  checked: boolean
+  checked: boolean,
 }
 
 export default class NeonSwitch extends React.Component<Props> {

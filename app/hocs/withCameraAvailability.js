@@ -7,7 +7,7 @@ import type { CancellableType } from '../util/poll'
 const POLL_FREQUENCY = 1000
 
 type State = {
-  avail: boolean
+  avail: boolean,
 }
 
 type Props = {}
@@ -20,7 +20,7 @@ export default function withCameraAvailability(Component) {
     cancellable: CancellableType
 
     state = {
-      avail: false
+      avail: false,
     }
 
     componentDidMount() {

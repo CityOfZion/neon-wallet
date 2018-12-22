@@ -7,12 +7,12 @@ import { ROUTES } from '../../../core/constants'
 
 type Props = {
   authenticated: ?boolean,
-  component: Function
+  component: Function,
 }
 
 export default class PrivateRoute extends React.Component<Props> {
   static defaultProps = {
-    authenticated: false
+    authenticated: false,
   }
 
   render() {

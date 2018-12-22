@@ -9,7 +9,7 @@ import styles from './TokenSaleCondition.scss'
 type Props = {
   text: string,
   checked: boolean,
-  updateConditions: (condition: string) => void
+  updateConditions: (condition: string) => void,
 }
 
 const TokenSaleCondition = ({ text, updateConditions, checked }: Props) => (

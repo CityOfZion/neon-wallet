@@ -6,7 +6,7 @@ import Tooltip from '../components/Tooltip'
 type Props = {
   href: ?string,
   tooltip?: string,
-  children: React$Node
+  children: React$Node,
 }
 
 export function ConditionalLink(props: Props): React$Element<*> {
@@ -20,7 +20,7 @@ export function ConditionalLink(props: Props): React$Element<*> {
 
     const linkProps = {
       onClick: () => shell.openExternal(href), // open in default browser
-      href: 'return false' // prevent default
+      href: 'return false', // prevent default
     }
 
     return <a {...linkProps}>{children}</a>

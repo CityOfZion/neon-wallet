@@ -11,7 +11,7 @@ type Props = {
   pushQRCodeData: (data: Object) => any,
   getRecipientData: string => any,
   clearRecipientData: () => null,
-  recipientData: ?RecipientData
+  recipientData: ?RecipientData,
 }
 
 export default class SendModal extends React.Component<Props> {

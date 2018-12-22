@@ -15,7 +15,7 @@ type Props = {
   percent: number,
   color: string,
   currency: string,
-  index: number
+  index: number,
 }
 
 export default class PortfolioRow extends React.Component<Props> {
@@ -27,13 +27,13 @@ export default class PortfolioRow extends React.Component<Props> {
       value,
       percent,
       color,
-      index
+      index,
     } = this.props
     return (
       <div
         className={classNames(styles.portfolioRow, className, {
           [styles.oddColor]: index % 2 !== 0,
-          [styles.evenColor]: index % 2 === 0
+          [styles.evenColor]: index % 2 === 0,
         })}
       >
         <span className={styles.color} style={{ background: color }} />

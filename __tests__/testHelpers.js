@@ -33,7 +33,7 @@ export const mockPromiseRejected = (message = 'test error') =>
 export const waitForElement = async (
   wrapper,
   selector,
-  config = { attempts: 10, frequency: 200 }
+  config = { attempts: 10, frequency: 200 },
 ) => {
   const findElement = async () => {
     const element = wrapper.update().find(selector)

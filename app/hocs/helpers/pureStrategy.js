@@ -13,7 +13,7 @@ export default function pureStrategy(actionStates: Array<Object>): Progress {
 
   const prioritizedProgress = find(
     [INITIAL, FAILED, LOADING, LOADED],
-    progress => currentProgresses.includes(progress)
+    progress => currentProgresses.includes(progress),
   )
 
   return prioritizedProgress || INITIAL

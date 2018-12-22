@@ -12,7 +12,7 @@ type Props = {
   explorer: ExplorerType,
   address: string,
   asWrapper: boolean,
-  children: Array<Node>
+  children: Array<Node>,
 }
 
 export default class Address extends React.Component<Props> {

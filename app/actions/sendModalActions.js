@@ -13,7 +13,7 @@ export const getRecipientData = createActions(
     } catch (msg) {
       throw new Error(msg)
     }
-  }
+  },
 )
 
 export const clearRecipientData = createActions(ID, () => () => null)

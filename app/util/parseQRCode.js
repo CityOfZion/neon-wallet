@@ -10,7 +10,7 @@ export type RecipientData = {
   address: string,
   asset: ?string,
   amount: ?string,
-  reference: ?string
+  reference: ?string,
 }
 
 const parseQRCode = (data: string): RecipientData => {
@@ -39,7 +39,7 @@ const parseQRCode = (data: string): RecipientData => {
     address: pathname,
     asset,
     amount: searchParams.get('amount'),
-    reference: searchParams.get('description')
+    reference: searchParams.get('description'),
   }
 }
 

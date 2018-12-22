@@ -20,7 +20,7 @@ type Props = {
   showSuccessNotification: Object => any,
   showErrorNotification: Object => any,
   setAccounts: (Array<Object>) => any,
-  showModal: (modalType: string, modalProps: Object) => any
+  showModal: (modalType: string, modalProps: Object) => any,
 }
 
 class WalletManager extends Component<Props> {

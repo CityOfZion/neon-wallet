@@ -5,7 +5,7 @@ import { compose } from 'recompose'
 import {
   withProgressComponents,
   alreadyLoadedStrategy,
-  progressValues
+  progressValues,
 } from 'spunky'
 
 import appActions from '../../actions/appActions'
@@ -27,7 +27,7 @@ const { LOADING } = progressValues
 
 const actionCreators = {
   checkVersion,
-  showErrorNotification
+  showErrorNotification,
 }
 
 const mapDispatchToProps = dispatch =>
@@ -37,7 +37,7 @@ export default compose(
   // Old way of fetching data, need to refactor this out...
   connect(
     null,
-    mapDispatchToProps
+    mapDispatchToProps,
   ),
 
   // Provide authenticated state so dashboard knows what layout to use.
@@ -50,12 +50,12 @@ export default compose(
     appActions,
     {
       // TODO: seems to be a spunky race condition here in terms of applying the theme (minor severity)
-      [LOADING]: withThemeData()(Loading)
+      [LOADING]: withThemeData()(Loading),
       // [FAILED]: Failed
     },
     {
-      strategy: alreadyLoadedStrategy
-    }
+      strategy: alreadyLoadedStrategy,
+    },
   ),
 
   // Navigate to the home or dashboard when the user logs in or out.
@@ -64,5 +64,5 @@ export default compose(
 
   // Remove stale data from store on logout
   withLogoutReset(authActions),
-  withLogoutReset(accountActions)
+  withLogoutReset(accountActions),
 )(App)

@@ -13,7 +13,7 @@ type Props = {
   address: string,
   copied: boolean,
   handleCopy: (?HTMLCanvasElement, string) => Promise<void>,
-  handleCreateCanvas: (?HTMLCanvasElement, string) => any
+  handleCreateCanvas: (?HTMLCanvasElement, string) => any,
 }
 
 export default class ReceivePanel extends React.Component<Props> {

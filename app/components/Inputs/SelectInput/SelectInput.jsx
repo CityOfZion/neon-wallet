@@ -25,17 +25,17 @@ type Props = {
   onFocus?: Function,
   onChange?: Function,
   customChangeEvent?: boolean,
-  onToggle?: Function
+  onToggle?: Function,
 }
 
 type State = {
   open: boolean,
-  search: string
+  search: string,
 }
 
 type RenderItemProps = {
   search: string,
-  onSelect: Function
+  onSelect: Function,
 }
 
 const defaultRenderAfter = (props: Props) => <DropdownButton {...props} />
@@ -53,12 +53,12 @@ export default class SelectInput extends React.Component<Props, State> {
     getItemValue: defaultItemValue,
     getSearchResults: defaultSearchResults,
     onFocus: noop,
-    onChange: noop
+    onChange: noop,
   }
 
   state = {
     open: false,
-    search: ''
+    search: '',
   }
 
   componentWillReceiveProps = (nextProps: Props) => {
@@ -78,7 +78,7 @@ export default class SelectInput extends React.Component<Props, State> {
       'onFocus',
       'onChange',
       'customChangeEvent',
-      'textInputContainerClassName'
+      'textInputContainerClassName',
     )
 
     const { error, textInputContainerClassName } = this.props
@@ -130,8 +130,8 @@ export default class SelectInput extends React.Component<Props, State> {
     return (items.map(item =>
       renderItem(item, {
         search,
-        onSelect: this.generateSelectHandler(item)
-      })
+        onSelect: this.generateSelectHandler(item),
+      }),
     ): Array<React$Node>)
   }
 

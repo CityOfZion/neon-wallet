@@ -9,7 +9,7 @@ import StyledReactSelect from '../../Inputs/StyledReactSelect/StyledReactSelect'
 import {
   ASSETS,
   CURRENCIES,
-  DEFAULT_CURRENCY_CODE
+  DEFAULT_CURRENCY_CODE,
 } from '../../../core/constants'
 import styles from './PriceHistoryPanel.scss'
 import { formatFiat, formatThousands } from '../../../core/formatters'
@@ -18,7 +18,7 @@ type Duration = '1m' | '1w' | '1d'
 // react-select option format
 type DurationSelectOption = {
   ...SelectOption,
-  value: Duration
+  value: Duration,
 }
 
 type Price = {
@@ -28,7 +28,7 @@ type Price = {
   low: number,
   open: number,
   volumefrom: number,
-  volumeto: number
+  volumeto: number,
 }
 
 type Props = {
@@ -40,26 +40,26 @@ type Props = {
   staticPrice: number,
   setAsset: Function,
   setDuration: Function,
-  priceKey: string
+  priceKey: string,
 }
 
 const DURATIONS: Array<[Duration, string]> = [
   ['1d', '1 DAY'],
   ['1w', '1 WEEK'],
-  ['1m', '1 MONTH']
+  ['1m', '1 MONTH'],
 ]
 
 // convert DURATIONS to react-select option format
 const DURATION_OPTIONS: Array<DurationSelectOption> = DURATIONS.map(
   ([k, v]) => ({
     value: k,
-    label: v
-  })
+    label: v,
+  }),
 )
 
 export default class PriceHistoryPanel extends React.Component<Props> {
   static defaultProps = {
-    priceKey: 'close'
+    priceKey: 'close',
   }
 
   render = () => {
@@ -70,7 +70,7 @@ export default class PriceHistoryPanel extends React.Component<Props> {
         className={classNames(
           styles.priceHistoryPanel,
 
-          className
+          className,
         )}
         contentClassName={styles.flexContainer}
         renderHeader={this.renderHeader}
@@ -110,7 +110,7 @@ export default class PriceHistoryPanel extends React.Component<Props> {
 
   handleChangeAsset = () => {
     this.props.setAsset(
-      this.props.asset === ASSETS.NEO ? ASSETS.GAS : ASSETS.NEO
+      this.props.asset === ASSETS.NEO ? ASSETS.GAS : ASSETS.NEO,
     )
   }
 
@@ -126,7 +126,7 @@ export default class PriceHistoryPanel extends React.Component<Props> {
       return date.toLocaleString('en-US', {
         hour: 'numeric',
         minute: 'numeric',
-        hour12: true
+        hour12: true,
       })
     }
     return date.toLocaleString('en-US', { month: 'numeric', day: 'numeric' })
@@ -143,11 +143,11 @@ export default class PriceHistoryPanel extends React.Component<Props> {
 
   formatPrice = (
     price: number,
-    formatter: Function = formatThousands
+    formatter: Function = formatThousands,
   ): string => {
     const { symbol } = CURRENCIES[this.props.currency]
     return `${symbol || CURRENCIES[DEFAULT_CURRENCY_CODE].symbol}${formatter(
-      price
+      price,
     )}`
   }
 
@@ -155,7 +155,7 @@ export default class PriceHistoryPanel extends React.Component<Props> {
     const change = this.getPriceChange()
     const classes = classNames(styles.change, {
       [styles.increase]: change >= 0,
-      [styles.decrease]: change < 0
+      [styles.decrease]: change < 0,
     })
 
     return (

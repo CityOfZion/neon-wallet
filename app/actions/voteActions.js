@@ -6,7 +6,7 @@ import { getNetworkById } from '../core/deprecated'
 
 type Props = {
   networkId: string,
-  address: string
+  address: string,
 }
 
 export const ID = 'VOTE'
@@ -23,7 +23,7 @@ export default createActions(
 
     return {
       validators,
-      votes: accountState.votes
+      votes: accountState.votes,
     }
-  }
+  },
 )

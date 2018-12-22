@@ -16,7 +16,7 @@ type Props = {
   amountToPurchaseFor: number,
   getPurchaseableAssets: () => Array<string>,
   updateField: ({ name: string, value: string | number }) => void,
-  inputErrorMessage: string
+  inputErrorMessage: string,
 }
 
 const TokenSaleSelection = ({
@@ -27,7 +27,7 @@ const TokenSaleSelection = ({
   amountToPurchaseFor,
   getPurchaseableAssets,
   updateField,
-  inputErrorMessage
+  inputErrorMessage,
 }: Props) => {
   const maxBalance = assetBalances[assetToPurchaseWith]
   return (
@@ -43,7 +43,7 @@ const TokenSaleSelection = ({
           }
           options={getPurchaseableAssets().map(asset => ({
             label: asset,
-            value: asset
+            value: asset,
           }))}
           isSearchable={false}
         />
@@ -59,7 +59,7 @@ const TokenSaleSelection = ({
           getItemValue={item => ({
             value: item,
             name: 'assetToPurchaseWith',
-            toString: () => item
+            toString: () => item,
           })}
           customChangeEvent
         />
@@ -72,7 +72,7 @@ const TokenSaleSelection = ({
           name="amountToPurchaseFor"
           error={inputErrorMessage}
           options={{
-            numeralDecimalScale: 8
+            numeralDecimalScale: 8,
           }}
           className={styles.tokenSaleContributionNumberInput}
           onChange={e =>
@@ -81,7 +81,7 @@ const TokenSaleSelection = ({
           handleMaxClick={() =>
             updateField({
               name: 'amountToPurchaseFor',
-              value: maxBalance
+              value: maxBalance,
             })
           }
         />

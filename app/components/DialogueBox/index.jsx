@@ -9,7 +9,7 @@ type Props = {
   icon: React$Node,
   className?: string,
   text?: string,
-  renderText?: () => React$Node
+  renderText?: () => React$Node,
 }
 
 const DialogueBox = ({ icon, text, renderText, className }: Props) => (

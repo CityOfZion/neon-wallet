@@ -19,12 +19,12 @@ type Props = {
   bodyClassName?: string,
   style: {
     content: Object,
-    overlay: Object
+    overlay: Object,
   },
   onAfterOpen?: Function,
   shouldCloseWithEscapeKey: boolean,
   theme: string,
-  shouldRenderHeader: boolean
+  shouldRenderHeader: boolean,
 }
 
 const BaseModal = ({
@@ -39,7 +39,7 @@ const BaseModal = ({
   onAfterOpen,
   shouldCloseWithEscapeKey,
   theme,
-  shouldRenderHeader = true
+  shouldRenderHeader = true,
 }: Props) => (
   <ReactModal
     isOpen
@@ -58,14 +58,14 @@ const BaseModal = ({
         display: 'flex',
         flexDirection: 'column',
         background: 'var(--panel-background)',
-        ...style.content
+        ...style.content,
       },
       overlay: {
         ...themes[theme],
         backgroundColor: 'var(--modal-overlay)',
         margin: 'auto',
-        ...style.overlay
-      }
+        ...style.overlay,
+      },
     }}
     className={className}
     onAfterOpen={onAfterOpen}
@@ -114,9 +114,9 @@ BaseModal.defaultProps = {
   height: '450px',
   style: {
     content: {},
-    overlay: {}
+    overlay: {},
   },
-  shouldCloseWithEscapeKey: true
+  shouldCloseWithEscapeKey: true,
 }
 
 export default BaseModal

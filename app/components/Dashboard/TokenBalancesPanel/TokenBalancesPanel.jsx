@@ -17,12 +17,12 @@ type Props = {
   balances: Array<TokenBalanceType>,
   prices: Object,
   currencyCode: string,
-  address: string
+  address: string,
 }
 
 export default class TokenBalancesPanel extends React.Component<Props> {
   static defaultProps = {
-    loading: false
+    loading: false,
   }
 
   render = () => {
@@ -31,7 +31,7 @@ export default class TokenBalancesPanel extends React.Component<Props> {
       <Panel
         className={classNames(styles.tokenBalancesPanel, className)}
         contentClassName={classNames(styles.tokenBalancesPanelContent, {
-          [styles.emptyBalanceContent]: !balances.length
+          [styles.emptyBalanceContent]: !balances.length,
         })}
         headerClassName={styles.headerStyle}
         renderHeader={this.renderHeader}
@@ -84,7 +84,7 @@ export default class TokenBalancesPanel extends React.Component<Props> {
 
   sortByValueInPortfolio = (
     a: TokenBalanceType,
-    b: TokenBalanceType
+    b: TokenBalanceType,
   ): number => {
     const { prices } = this.props
     if (prices) {

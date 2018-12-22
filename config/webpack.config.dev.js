@@ -12,8 +12,8 @@ const commonLoaders = {
   css: {
     loader: 'css-loader',
     options: {
-      sourceMap: true
-    }
+      sourceMap: true,
+    },
   },
   cssModules: {
     loader: 'css-loader',
@@ -21,9 +21,9 @@ const commonLoaders = {
       modules: true,
       sourceMap: true,
       importLoaders: 1,
-      localIdentName: '[name]__[local]__[hash:base64:5]'
-    }
-  }
+      localIdentName: '[name]__[local]__[hash:base64:5]',
+    },
+  },
 }
 
 module.exports = {
@@ -33,92 +33,92 @@ module.exports = {
     'babel-polyfill',
     `webpack-dev-server/client?http://localhost:${port}/`,
     'webpack/hot/only-dev-server',
-    path.join(__dirname, '..', 'app/index.js')
+    path.join(__dirname, '..', 'app/index.js'),
   ],
   externals: {
-    'node-hid': 'require("node-hid")'
+    'node-hid': 'require("node-hid")',
   },
   output: {
     path: path.join(__dirname, '..', 'app/dist/'),
     filename: 'bundle.js',
-    publicPath
+    publicPath,
   },
   resolve: {
     extensions: ['.js', '.jsx'],
-    alias: paths.alias
+    alias: paths.alias,
   },
   node: {
-    __dirname: false
+    __dirname: false,
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: 'app/index.tpl.html',
       inject: true,
-      filename: 'index.html'
+      filename: 'index.html',
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
+      'process.env.NODE_ENV': JSON.stringify('development'),
     }),
-    new webpack.IgnorePlugin(/vertx/)
+    new webpack.IgnorePlugin(/vertx/),
   ],
   module: {
     rules: [
       {
         test: /\.jsx?$/,
         use: {
-          loader: 'babel-loader'
+          loader: 'babel-loader',
         },
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.json?$/,
-        loader: 'json-loader'
+        loader: 'json-loader',
       },
       {
         test: /\.global\.css$/,
-        use: ['style-loader', commonLoaders.css]
+        use: ['style-loader', commonLoaders.css],
       },
       {
         test: /^((?!\.global).)*\.css$/,
-        use: ['style-loader', commonLoaders.cssModules]
+        use: ['style-loader', commonLoaders.cssModules],
       },
       {
         test: /\.global\.scss$/,
-        use: ['style-loader', commonLoaders.css, 'sass-loader']
+        use: ['style-loader', commonLoaders.css, 'sass-loader'],
       },
       {
         test: /^((?!\.global).)*\.scss$/,
-        use: ['style-loader', commonLoaders.cssModules, 'sass-loader']
+        use: ['style-loader', commonLoaders.cssModules, 'sass-loader'],
       },
       {
         test: /\.(png|jpg|gif)$/,
         use: {
           loader: 'url-loader',
           options: {
-            limit: 10000
-          }
-        }
+            limit: 10000,
+          },
+        },
       },
       {
         test: /\.svg$/,
         use: ['svg-react-loader'],
         exclude: [
           /node_modules/,
-          path.resolve(__dirname, '../app/assets/nep5/svg')
-        ]
+          path.resolve(__dirname, '../app/assets/nep5/svg'),
+        ],
       },
       {
         test: /\.(svg)$/,
         use: {
           loader: 'url-loader',
           options: {
-            limit: 10000
-          }
+            limit: 10000,
+          },
         },
-        include: [path.resolve(__dirname, '../app/assets/nep5/svg')]
+        include: [path.resolve(__dirname, '../app/assets/nep5/svg')],
       },
       {
         test: /\.woff(2)?(\?[a-z0-9#=&.]+)?$/,
@@ -126,17 +126,17 @@ module.exports = {
           loader: 'url-loader',
           options: {
             limit: 10000,
-            mimetype: 'application/font-woff'
-          }
-        }
+            mimetype: 'application/font-woff',
+          },
+        },
       },
       {
         test: /\.(ttf|eot|otf|wav)(\?[a-z0-9#=&.]+)?$/,
         use: {
-          loader: 'file-loader'
-        }
-      }
-    ]
+          loader: 'file-loader',
+        },
+      },
+    ],
   },
   // adapted from https://github.com/chentsulin/electron-react-boilerplate
   devServer: {
@@ -153,25 +153,25 @@ module.exports = {
     watchOptions: {
       aggregateTimeout: 300,
       ignored: /node_modules/,
-      poll: 100
+      poll: 100,
     },
     historyApiFallback: {
       verbose: true,
-      disableDotRule: false
+      disableDotRule: false,
     },
     before() {
       if (process.env.START_HOT) {
         spawn('npm', ['run', 'start-dev'], {
           shell: true,
           env: process.env,
-          stdio: 'inherit'
+          stdio: 'inherit',
         })
           .on('close', code => process.exit(code))
           .on('error', spawnError => console.error(spawnError))
       }
-    }
+    },
   },
   performance: {
-    hints: false
-  }
+    hints: false,
+  },
 }

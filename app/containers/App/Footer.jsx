@@ -8,7 +8,7 @@ import NetworkSwitch from './Sidebar/NetworkSwitch'
 import styles from './Footer.scss'
 
 type Props = {
-  className?: string
+  className?: string,
 }
 
 export default class Footer extends React.Component<Props> {

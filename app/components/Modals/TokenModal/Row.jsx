@@ -12,7 +12,7 @@ type Props = {
   token: TokenItemType,
   onChangeScriptHash: Function,
   onDelete: Function,
-  isScriptHashInvalid: boolean
+  isScriptHashInvalid: boolean,
 }
 
 class Row extends Component<Props> {
@@ -21,13 +21,13 @@ class Row extends Component<Props> {
       token,
       onChangeScriptHash,
       onDelete,
-      isScriptHashInvalid
+      isScriptHashInvalid,
     } = this.props
     return (
       <div className={styles.row}>
         <TextInput
           className={classNames(styles.rowURL, {
-            [styles.rowError]: isScriptHashInvalid
+            [styles.rowError]: isScriptHashInvalid,
           })}
           type="text"
           readOnly={!token.isUserGenerated}

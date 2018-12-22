@@ -9,5 +9,5 @@ import pureStrategy from '../../hocs/helpers/pureStrategy'
 
 export default compose(
   withLoadingProp(authActions, { strategy: pureStrategy }),
-  withThemeData()
+  withThemeData(),
 )(Home)

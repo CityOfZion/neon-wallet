@@ -13,18 +13,18 @@ import { ASSETS } from '../../../core/constants'
 type Duration = '1m' | '1w' | '1d'
 
 const mapPriceHistoryDataToProps = (prices, props) => ({
-  prices: prices[props.asset]
+  prices: prices[props.asset],
 })
 
 const mapPriceDataToProps = (staticPrices, props) => ({
-  staticPrice: staticPrices[props.asset]
+  staticPrice: staticPrices[props.asset],
 })
 
 const mapPriceHistoryActionsToProps = (actions, props) => ({
   setDuration: (duration: Duration) => {
     props.setDuration(duration)
     return actions.call({ duration, currency: props.currency })
-  }
+  },
 })
 
 export default compose(
@@ -37,5 +37,5 @@ export default compose(
   // Fetch prices data based based upon the selected currency.  Reload data with the currency changes.
   withProgressPanel(priceHistoryPanelActions, { title: 'Market Data' }),
   withPricesData(mapPriceDataToProps),
-  withData(priceHistoryActions, mapPriceHistoryDataToProps)
+  withData(priceHistoryActions, mapPriceHistoryDataToProps),
 )(PriceHistoryPanel)

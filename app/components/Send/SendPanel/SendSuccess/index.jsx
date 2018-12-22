@@ -13,7 +13,7 @@ import { TX_TYPES } from '../../../../core/constants'
 
 type Props = {
   sendRowDetails: Array<*>,
-  txid: string
+  txid: string,
 }
 
 export default class SendSuccess extends React.Component<Props> {
@@ -31,7 +31,7 @@ export default class SendSuccess extends React.Component<Props> {
       amount: row.amount,
       label: row.asset,
       to: row.address,
-      txid
+      txid,
     }))
     const numberOfItems = sendRowDetails.length
     return (

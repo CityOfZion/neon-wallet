@@ -11,7 +11,7 @@ export default function withoutProps(...propNames: Array<string>): Function {
     }
 
     return compose(setDisplayName(wrapDisplayName(Component, 'withoutProps')))(
-      ComponentWithoutProps
+      ComponentWithoutProps,
     )
   }
 }

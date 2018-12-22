@@ -17,7 +17,7 @@ type Props = {
   checkVersion: Function,
   showErrorNotification: Function,
   location: Object,
-  theme: string
+  theme: string,
 }
 
 const routesWithSideBar = [
@@ -27,7 +27,7 @@ const routesWithSideBar = [
   ROUTES.CONTACTS,
   ROUTES.SETTINGS,
   ROUTES.SEND,
-  ROUTES.TOKEN_SALE
+  ROUTES.TOKEN_SALE,
 ]
 
 class App extends Component<Props> {
@@ -38,7 +38,7 @@ class App extends Component<Props> {
       await upgradeUserWalletNEP6()
     } catch (error) {
       this.props.showErrorNotification({
-        message: `Error upgrading legacy wallet: ${error.message}`
+        message: `Error upgrading legacy wallet: ${error.message}`,
       })
     }
   }
