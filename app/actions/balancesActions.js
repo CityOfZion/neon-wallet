@@ -1,5 +1,5 @@
 // @flow
-import { api } from 'neon-js'
+import { api } from '@cityofzion/neon-js'
 import { extend, isEmpty, get } from 'lodash-es'
 import { createActions } from 'spunky'
 import { Howl } from 'howler'

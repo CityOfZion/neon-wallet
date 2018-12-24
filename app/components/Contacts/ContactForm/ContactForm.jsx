@@ -2,7 +2,7 @@
 import React from 'react'
 import { noop } from 'lodash-es'
 
-import { wallet } from 'neon-js'
+import { wallet } from '@cityofzion/neon-js'
 
 import Button from '../../Button'
 import TextInput from '../../Inputs/TextInput'

@@ -1,5 +1,5 @@
 // @flow
-import { rpc } from 'neon-js'
+import { rpc } from '@cityofzion/neon-js'
 import { createActions } from 'spunky'
 import {
   NODES_MAIN_NET,

@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import { uniqueId, get } from 'lodash-es'
-import { wallet } from 'neon-js'
+import { wallet } from '@cityofzion/neon-js'
 import {
   toNumber,
   toBigNumber,
@@ -327,6 +327,8 @@ export default class Send extends React.Component<Props, State> {
         })
       })
       .catch((error: Object) => {
+        // TODO: here is where we must generate the expected txId locally
+        // and then add it to our pending tx arr
         this.setState({
           sendError: true,
           sendErrorMessage: error.message,

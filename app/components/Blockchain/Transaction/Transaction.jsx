@@ -8,6 +8,7 @@ import classNames from 'classnames'
 import { TX_TYPES } from '../../../core/constants'
 
 import Button from '../../Button'
+import PendingTransaction from './PendingTransaction'
 import { openExplorerTx } from '../../../core/explorer'
 import styles from './Transaction.scss'
 import ClaimIcon from '../../../assets/icons/claim.svg'
@@ -20,30 +21,57 @@ import Tooltip from '../../Tooltip'
 
 type Props = {
   tx: TxEntryType,
+  pendingTx: {
+    asset: {
+      symbol: string,
+      image?: string,
+    },
+    blocktime: number,
+    amount: string,
+    to: string,
+    confirmations: number,
+  },
   networkId: string,
   explorer: ExplorerType,
   contacts: Object,
   showAddContactModal: ({ address: string }) => null,
   address: string,
   className?: string,
+  isPending?: boolean,
 }
 
 export default class Transaction extends React.Component<Props> {
+  static defaultProps = {
+    tx: {},
+  }
+
   render = () => {
     const {
       tx: { type },
       className,
+      isPending,
     } = this.props
     return (
       <div className={classNames(styles.transactionContainer, className)}>
-        {this.renderAbstract(type)}
-        <Button
-          className={styles.transactionHistoryButton}
-          renderIcon={InfoIcon}
-          onClick={this.handleClick}
-        >
-          View
-        </Button>
+        {isPending ? (
+          <PendingTransaction
+            renderTxDate={this.renderTxDate}
+            findContact={this.findContact}
+            showAddContactModal={this.displayModal}
+            {...this.props.pendingTx}
+          />
+        ) : (
+          <Fragment>
+            {this.renderAbstract(type)}
+            <Button
+              className={styles.transactionHistoryButton}
+              renderIcon={InfoIcon}
+              onClick={this.handleClick}
+            >
+              View
+            </Button>
+          </Fragment>
+        )}
       </div>
     )
   }
@@ -86,11 +114,11 @@ export default class Transaction extends React.Component<Props> {
   }
 
   renderAbstract = (type: string) => {
-    const { time, label, amount, isNetworkFee, to, from } = this.props.tx
+    const { time, label, amount, isNetworkFee, to, from, image } = this.props.tx
 
     const contactTo = this.findContact(to)
     const contactToExists = contactTo !== to
-
+    const logo = image && <img src={image} alt={`${label}`} />
     const txDate = this.renderTxDate(time)
 
     switch (type) {
@@ -103,7 +131,10 @@ export default class Transaction extends React.Component<Props> {
               </div>
             </div>
             {txDate}
-            <div className={styles.txLabelContainer}>{label}</div>
+            <div className={styles.txLabelContainer}>
+              {logo}
+              {label}
+            </div>
             <div className={styles.txAmountContainer}>{amount}</div>
             <div className={styles.txToContainer}>
               <Fragment>
@@ -129,7 +160,10 @@ export default class Transaction extends React.Component<Props> {
               </div>
             </div>
             {txDate}
-            <div className={styles.txLabelContainer}>{label}</div>
+            <div className={styles.txLabelContainer}>
+              {logo}
+              {label}
+            </div>
             <div className={styles.txAmountContainer}>{amount}</div>
             <div className={styles.txToContainer}>
               {isNetworkFee ? (
@@ -178,7 +212,10 @@ export default class Transaction extends React.Component<Props> {
               </div>
             </div>
             {txDate}
-            <div className={styles.txLabelContainer}>{label}</div>
+            <div className={styles.txLabelContainer}>
+              {logo}
+              {label}
+            </div>
             <div className={styles.txAmountContainer}>{amount}</div>
             <div className={styles.txToContainer}>
               <span>{contactFrom}</span>

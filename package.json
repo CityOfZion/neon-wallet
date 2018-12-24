@@ -69,6 +69,7 @@
     }
   },
   "dependencies": {
+    "@cityofzion/neon-js": "3.11.9",
     "@ledgerhq/hw-transport-node-hid": "4.7.6",
     "axios": "0.17.0",
     "axios-retry": "3.1.1",
@@ -94,7 +95,6 @@
     "jsqr": "1.1.1",
     "lodash-es": "4.17.11",
     "moment": "2.22.2",
-    "neon-js": "git+https://github.com/cityofzion/neon-js.git#3.11.0",
     "nock": "9.2.3",
     "prop-types": "15.6.2",
     "qrcode": "0.9.0",

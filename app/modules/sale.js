@@ -1,5 +1,5 @@
 // @flow
-import { wallet, api } from 'neon-js'
+import { wallet, api } from '@cityofzion/neon-js'
 import { flatten, isEmpty } from 'lodash-es'
 
 import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'

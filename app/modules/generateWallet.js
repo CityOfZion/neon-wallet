@@ -1,6 +1,6 @@
 // @flow
 import storage from 'electron-json-storage'
-import { wallet } from 'neon-js'
+import { wallet } from '@cityofzion/neon-js'
 import { isEmpty, intersectionBy } from 'lodash-es'
 
 import {

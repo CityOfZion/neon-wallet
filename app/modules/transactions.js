@@ -1,6 +1,6 @@
 // @flow
 /* eslint-disable camelcase */
-import { api, sc, u, wallet } from 'neon-js'
+import { api, sc, u, wallet, settings } from '@cityofzion/neon-js'
 import { flatMap, keyBy, isEmpty } from 'lodash-es'
 
 import {
@@ -25,6 +25,10 @@ import {
 } from '../core/wallet'
 import { toNumber } from '../core/math'
 import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
+import { addPendingTransaction } from '../actions/pendingTransactionActions'
+
+export const DEFAULT_RPC_TIMEOUT = 60000
+settings.timeout.rpc = DEFAULT_RPC_TIMEOUT
 
 const extractTokens = (sendEntries: Array<SendEntryType>) =>
   sendEntries.filter(({ symbol }) => isToken(symbol))
@@ -67,14 +71,11 @@ const buildTransferScript = (
   return scriptBuilder.str
 }
 
-const makeRequest = (sendEntries: Array<SendEntryType>, config: Object) => {
-  const script = buildTransferScript(
-    config.net,
-    sendEntries,
-    config.address,
-    config.tokensBalanceMap,
-  )
-
+const makeRequest = (
+  sendEntries: Array<SendEntryType>,
+  config: Object,
+  script: string,
+) => {
   if (script === '') {
     return api.sendAsset(
       { ...config, intents: buildIntents(sendEntries) },
@@ -89,6 +90,49 @@ const makeRequest = (sendEntries: Array<SendEntryType>, config: Object) => {
       gas: 0,
     },
     api.neoscan,
+  )
+}
+
+export const generateBalanceInfo = (
+  tokensBalanceMap: any,
+  address: string,
+  net: NetworkType,
+) => {
+  const Balance = new wallet.Balance({ address, net })
+  // $FlowFixMe
+  Object.values(tokensBalanceMap).forEach(({ name, balance }) => {
+    Balance.addAsset(name, { balance, unspent: [] })
+  })
+}
+
+export const buildTxAndAddPendingHash = async (
+  script: string,
+  sendEntries: Array<SendEntryType>,
+  config: Object,
+  dispatch: DispatchType,
+) => {
+  let configWithTransaction
+  if (script) {
+    configWithTransaction = await api.createTx(
+      {
+        ...config,
+        intents: buildIntents(sendEntries),
+        script,
+        gas: 0,
+      },
+      'invocation',
+    )
+  }
+  configWithTransaction = await api.createTx(
+    {
+      ...config,
+      intents: buildIntents(sendEntries),
+    },
+    'contract',
+  )
+  const { tx } = configWithTransaction
+  dispatch(
+    addPendingTransaction.call({ address: config.address, txId: tx.hash }),
   )
 }
 
@@ -154,25 +198,30 @@ export const sendTransaction = ({
       signingFunction: isHardwareSend ? signingFunction : null,
       fees,
       url,
-    }
 
-    await api
+      balance: undefined,
+    }
+    const balanceResults = await api
       .getBalanceFrom({ net, address: fromAddress }, api.neoscan)
       .catch(e => {
         // indicates that neo scan is down and that api.sendAsset and api.doInvoke
         // will fail unless balances are supplied
         console.error(e)
-        const Balance = new wallet.Balance({ address: fromAddress, net })
-        // $FlowFixMe
-        Object.values(tokensBalanceMap).forEach(({ name, balance }) => {
-          Balance.addAsset(name, { balance, unspent: [] })
-        })
-        // $FlowFixMe
-        config.balance = Balance
+        config.balance = generateBalanceInfo(tokensBalanceMap, fromAddress, net)
       })
+    if (balanceResults) config.balance = balanceResults.balance
 
     try {
-      const { response } = await makeRequest(sendEntries, config)
+      const script = buildTransferScript(
+        config.net,
+        sendEntries,
+        config.address,
+        // $FlowFixMe
+        config.tokensBalanceMap,
+      )
+
+      await buildTxAndAddPendingHash(script, sendEntries, config, dispatch)
+      const { response } = await makeRequest(sendEntries, config, script)
 
       if (!response.result) {
         throw new Error('Rejected by RPC server.')
