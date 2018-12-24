@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import { type ProgressState } from 'spunky'
 
 import QrCodeScanner from '../../components/QrCodeScanner'
 import Button from '../../components/Button'
@@ -12,6 +13,7 @@ import styles from '../Home/Home.scss'
 type Props = {
   loginWithPrivateKey: (content: string) => void,
   cameraAvailable: boolean,
+  progress: ProgressState,
 }
 
 type State = {
@@ -30,7 +32,7 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
   }
 
   render = () => {
-    const { loginWithPrivateKey, cameraAvailable } = this.props
+    const { loginWithPrivateKey, cameraAvailable, progress } = this.props
     const { wif, scannerActive } = this.state
 
     return (
@@ -46,6 +48,7 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
               <div className={styles.scannerContainer}>
                 <QrCodeScanner
                   callback={loginWithPrivateKey}
+                  callbackProgress={progress}
                   width="316"
                   height="178"
                 />

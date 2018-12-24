@@ -1,6 +1,6 @@
 // @flow
 import { compose } from 'recompose'
-import { withActions } from 'spunky'
+import { withActions, withProgress } from 'spunky'
 
 import LoginPrivateKey from './LoginPrivateKey'
 import withFailureNotification from '../../hocs/withFailureNotification'
@@ -14,5 +14,6 @@ const mapActionsToProps = actions => ({
 export default compose(
   withActions(wifLoginActions, mapActionsToProps),
   withFailureNotification(wifLoginActions),
+  withProgress(wifLoginActions),
   withCameraAvailability,
 )(LoginPrivateKey)
