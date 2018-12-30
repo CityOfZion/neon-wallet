@@ -15,7 +15,6 @@ type Props = {
   amount: string | number,
   contactTo: React$Node | string,
   to: string,
-
   contactToExists: boolean,
   showAddContactModal: (to: string) => void,
   isNetworkFee: boolean,

@@ -13,15 +13,19 @@ type Props = {
   transactions: Array<Object>,
   pendingTransactions: Array<Object>,
   handleFetchAddtionalTxData: () => any,
-  getPendingTransactionInfo: ({ address: string, net: string }) => void,
   address: string,
-  net: string,
 }
 
 export default class TransactionHistory extends React.Component<Props> {
+  static defaultProps = {
+    transactions: [],
+    pendingTransactions: [],
+  }
+
   render() {
+    const { className, transactions } = this.props
+    const filteredPendingTransactions = this.pruneConfirmedTransactionsFromPending()
     this.pruneReturnedTransactionsFromStorage()
-    const { className, transactions, pendingTransactions } = this.props
     return (
       <Panel
         className={classNames(styles.transactionHistoryPanel, className)}
@@ -30,36 +34,32 @@ export default class TransactionHistory extends React.Component<Props> {
         <Transactions
           className={styles.transactions}
           transactions={transactions}
-          pendingTransactions={pendingTransactions || []}
+          pendingTransactions={filteredPendingTransactions || []}
         />
       </Panel>
     )
   }
 
+  pruneConfirmedTransactionsFromPending() {
+    const { transactions, pendingTransactions } = this.props
+    const confirmed = transactions.map(tx => tx.txid)
+    return pendingTransactions.reduce((accum, currVal) => {
+      if (confirmed.find(tx => tx === currVal.txid.substring(2))) return accum
+      accum.push(currVal)
+      return accum
+    }, [])
+  }
+
   async pruneReturnedTransactionsFromStorage() {
-    const {
-      transactions,
-      pendingTransactions,
-      address,
-      net,
-      getPendingTransactionInfo,
-    } = this.props
-    if (
-      transactions &&
-      transactions.length &&
-      pendingTransactions &&
-      pendingTransactions.length
-    ) {
-      const confirmed = transactions.map(tx => tx.txid)
-      // NOTE: removes the '0x' prepended to every txId
-      const pending = pendingTransactions.map(tx => tx.txid.substring(2))
-      const toBePurged = intersection(confirmed, pending)
+    const { transactions, pendingTransactions, address } = this.props
+    const confirmed = transactions.map(tx => tx.txid)
+    // NOTE: removes the '0x' prepended to every txId
+    const pending = pendingTransactions.map(tx => tx.txid.substring(2))
+    const toBePurged = intersection(confirmed, pending)
+    // eslint-disable-next-line
+    for (const id of toBePurged) {
       // eslint-disable-next-line
-      for (const id of toBePurged) {
-        // eslint-disable-next-line
-        await pruneConfirmedOrStaleTransaction(address, id)
-        getPendingTransactionInfo({ address, net })
-      }
+      await pruneConfirmedOrStaleTransaction(address, id)
     }
   }
 

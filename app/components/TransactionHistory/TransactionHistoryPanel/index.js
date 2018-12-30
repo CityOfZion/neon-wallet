@@ -1,6 +1,5 @@
 // @flow
 import { compose } from 'recompose'
-import { connect } from 'react-redux'
 import { withData, withActions, withCall } from 'spunky'
 
 import TransactionHistoryPanel from './TransactionHistoryPanel'
@@ -24,20 +23,11 @@ const mapAccountActionsToProps = (actions, props) => ({
     }),
 })
 
-const mapDispatchToProps = dispatch => ({
-  getPendingTransactionInfo: ({ address, net }) =>
-    dispatch(getPendingTransactionInfo.call({ address, net })),
-})
-
 const mapPendingTransactionInfoToProps = pendingTransactions => ({
-  pendingTransactions,
+  pendingTransactions: pendingTransactions || [],
 })
 
 export default compose(
-  connect(
-    null,
-    mapDispatchToProps,
-  ),
   withAuthData(),
   withNetworkData(),
   withProgressPanel(transactionHistoryActions, {
