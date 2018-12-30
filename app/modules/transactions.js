@@ -1,7 +1,7 @@
 // @flow
 /* eslint-disable camelcase */
 import { api, sc, u, wallet, settings } from '@cityofzion/neon-js'
-import { flatMap, keyBy, isEmpty } from 'lodash-es'
+import { flatMap, keyBy, isEmpty, get } from 'lodash-es'
 
 import {
   showErrorNotification,
@@ -76,21 +76,18 @@ const makeRequest = (
   config: Object,
   script: string,
 ) => {
+  // NOTE: We purposefully mutate the contents of config
+  // because neon-js will also mutate this same object by reference
+  // eslint-disable-next-line no-param-reassign
+  config.intents = buildIntents(sendEntries)
   if (script === '') {
-    return api.sendAsset(
-      { ...config, intents: buildIntents(sendEntries) },
-      api.neoscan,
-    )
+    return api.sendAsset(config, api.neoscan)
   }
-  return api.doInvoke(
-    {
-      ...config,
-      intents: buildIntents(sendEntries),
-      script,
-      gas: 0,
-    },
-    api.neoscan,
-  )
+  // eslint-disable-next-line no-param-reassign
+  config.script = script
+  // eslint-disable-next-line no-param-reassign
+  config.gas = 0
+  return api.doInvoke(config, api.neoscan)
 }
 
 export const generateBalanceInfo = (
@@ -103,37 +100,6 @@ export const generateBalanceInfo = (
   Object.values(tokensBalanceMap).forEach(({ name, balance }) => {
     Balance.addAsset(name, { balance, unspent: [] })
   })
-}
-
-export const buildTxAndAddPendingHash = async (
-  script: string,
-  sendEntries: Array<SendEntryType>,
-  config: Object,
-  dispatch: DispatchType,
-) => {
-  let configWithTransaction
-  if (script) {
-    configWithTransaction = await api.createTx(
-      {
-        ...config,
-        intents: buildIntents(sendEntries),
-        script,
-        gas: 0,
-      },
-      'invocation',
-    )
-  }
-  configWithTransaction = await api.createTx(
-    {
-      ...config,
-      intents: buildIntents(sendEntries),
-    },
-    'contract',
-  )
-  const { tx } = configWithTransaction
-  dispatch(
-    addPendingTransaction.call({ address: config.address, txId: tx.hash }),
-  )
 }
 
 export const sendTransaction = ({
@@ -198,7 +164,6 @@ export const sendTransaction = ({
       signingFunction: isHardwareSend ? signingFunction : null,
       fees,
       url,
-
       balance: undefined,
     }
     const balanceResults = await api
@@ -219,8 +184,6 @@ export const sendTransaction = ({
         // $FlowFixMe
         config.tokensBalanceMap,
       )
-
-      await buildTxAndAddPendingHash(script, sendEntries, config, dispatch)
       const { response } = await makeRequest(sendEntries, config, script)
 
       if (!response.result) {
@@ -233,11 +196,23 @@ export const sendTransaction = ({
             'Transaction complete! Your balance will automatically update when the blockchain has processed it.',
         }),
       )
-
       return resolve(response)
     } catch (err) {
       console.error({ err })
       rejectTransaction(`Transaction failed: ${err.message}`)
       return reject(err)
+    } finally {
+      const outputs = get(config, 'tx.outputs')
+      const hash = get(config, 'tx.hash')
+
+      dispatch(
+        addPendingTransaction.call({
+          address: config.address,
+          tx: {
+            hash,
+            sendEntries,
+          },
+        }),
+      )
     }
   })

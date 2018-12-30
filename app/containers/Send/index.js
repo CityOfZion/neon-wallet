@@ -22,14 +22,11 @@ import withSuccessNotification from '../../hocs/withSuccessNotification'
 import withFailureNotification from '../../hocs/withFailureNotification'
 import { MODAL_TYPES } from '../../core/constants'
 import withTokensData from '../../hocs/withTokensData'
-import { addPendingTransaction } from '../../actions/pendingTransactionActions'
 
 const mapDispatchToProps = (dispatch: Function) =>
   bindActionCreators(
     {
       sendTransaction,
-      addPendingTransaction: ({ address, txId }) =>
-        addPendingTransaction.call({ address, txId }),
       showSendModal: props => dispatch(showModal(MODAL_TYPES.SEND, props)),
     },
     dispatch,

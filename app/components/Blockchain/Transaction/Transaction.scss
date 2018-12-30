@@ -13,6 +13,13 @@
   font-family: var(--font-gotham-book);
 }
 
+.pendingTxDate {
+  @extend .txDateContainer;
+  font-style: italic;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
 .txLabelContainer {
   font-family: var(--font-gotham-book);
   font-size: 14px;
@@ -67,11 +74,11 @@
 
 .confirmationsContainer {
   max-width: 90px;
+  min-width: 90px;
   text-align: center;
   font-size: 12px;
   display: flex;
   flex-direction: column;
-  // justify-content: center;
 }
 
 .transactionContainer {

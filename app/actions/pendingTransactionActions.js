@@ -3,24 +3,30 @@ import { createActions } from 'spunky'
 import Neon from '@cityofzion/neon-js'
 import { isEmpty } from 'lodash-es'
 
+import { toBigNumber } from '../core/math'
 import { getStorage, setStorage } from '../core/storage'
 import { getNode, getRPCEndpoint } from './nodeStorageActions'
-import { findAndReturnTokenInfo } from '../util/findAndReturnTokenInfo'
+import {
+  findAndReturnTokenInfo,
+  getImageBySymbol,
+} from '../util/findAndReturnTokenInfo'
 
 export const ID = 'pendingTransactions'
 const STORAGE_KEY = 'pendingTransactions'
-const MINIMUM_CONFIRMATIONS = 40
+const MINIMUM_CONFIRMATIONS = 10
 
 type PendingTransactions = {
-  [address: string]: Array<string>,
+  [address: string]: Array<any>,
 }
 
 type PendingTransaction = {
   vout: Array<{ asset: string, address: string, value: string }>,
+  sendEntries: Array<SendEntryType>,
   confirmations: number,
   txid: number,
   net_fee: string,
   blocktime: number,
+  type: string,
 }
 
 type ParsedPendingTransaction = {
@@ -30,10 +36,66 @@ type ParsedPendingTransaction = {
   blocktime: number,
   to: string,
   amount: string,
-  asset: string,
+  asset: {
+    symbol: string,
+    image: string,
+  },
 }
 
-export const parsePendingTxInfo = async (
+export const parseContractTransaction = async (
+  transaction: PendingTransaction,
+  net: string,
+): Promise<Array<ParsedPendingTransaction>> => {
+  const parsedData = []
+  // eslint-disable-next-line camelcase
+  const { confirmations, txid, net_fee, blocktime = 0 } = transaction
+  transaction.vout.pop()
+  // eslint-disable-next-line
+  for (const send of transaction.vout) {
+    parsedData.push({
+      confirmations,
+      txid,
+      net_fee,
+      blocktime,
+      amount: toBigNumber(send.value).toString(),
+      to: send.address,
+      // eslint-disable-next-line no-await-in-loop
+      asset: await findAndReturnTokenInfo(send.asset, net),
+    })
+  }
+  return parsedData
+}
+
+export const parseInvocationTransaction = (
+  transaction: PendingTransaction,
+): Array<ParsedPendingTransaction> => {
+  const {
+    confirmations,
+    txid,
+    // eslint-disable-next-line camelcase
+    net_fee,
+    blocktime = 0,
+    sendEntries,
+  } = transaction
+
+  // things get tricky during invocation transactions as there is no vout array
+  // and it is not straight forward parsing the produced script. Instead we
+  // use the original send entries array.
+  return sendEntries.map(send => ({
+    confirmations,
+    txid,
+    net_fee,
+    blocktime,
+    amount: toBigNumber(send.amount).toString(),
+    to: send.address,
+    asset: {
+      symbol: send.symbol,
+      image: getImageBySymbol(send.symbol),
+    },
+  }))
+}
+
+export const parsePendingContractTxInfo = async (
   pendingTransactionsInfo: Array<PendingTransaction>,
   net: string,
 ) => {
@@ -41,21 +103,11 @@ export const parsePendingTxInfo = async (
   // eslint-disable-next-line
   for (const transaction of pendingTransactionsInfo) {
     if (transaction) {
-      // eslint-disable-next-line
-      const { confirmations, txid, net_fee, blocktime = 0 } = transaction
-      transaction.vout.pop()
-      // eslint-disable-next-line
-      for (const send of transaction.vout) {
-        parsedData.push({
-          confirmations,
-          txid,
-          net_fee,
-          blocktime,
-          amount: send.value,
-          to: send.address,
-          // eslint-disable-next-line no-await-in-loop
-          asset: await findAndReturnTokenInfo(send.asset, net),
-        })
+      if (transaction.type === 'InvocationTransaction') {
+        parsedData.push(...parseInvocationTransaction(transaction))
+      } else {
+        // eslint-disable-next-line no-await-in-loop
+        parsedData.push(...(await parseContractTransaction(transaction, net)))
       }
     }
   }
@@ -83,7 +135,7 @@ export const pruneConfirmedOrStaleTransaction = async (
   const storage = await getPendingTransactions()
   if (Array.isArray(storage[address])) {
     storage[address] = storage[address].filter(
-      transaction => transaction !== txId,
+      transaction => transaction.hash !== txId,
     )
   }
   await setPendingTransactions(storage)
@@ -91,13 +143,13 @@ export const pruneConfirmedOrStaleTransaction = async (
 
 export const addPendingTransaction = createActions(
   ID,
-  ({ address, txId }) => async (): Promise<void> => {
+  ({ address, tx }) => async (): Promise<void> => {
     const transactions = await getPendingTransactions()
 
     if (Array.isArray(transactions[address])) {
-      transactions[address].push(txId)
+      transactions[address].push(tx)
     } else {
-      transactions[address] = []
+      transactions[address] = [tx]
     }
     await setPendingTransactions(transactions)
   },
@@ -121,24 +173,34 @@ export const getPendingTransactionInfo = createActions(
         if (transaction) {
           // eslint-disable-next-line
           const result = await client
-            .getRawTransaction(transaction, 1)
+            .getRawTransaction(transaction.hash, 1)
             .catch(async e => {
               console.error(
                 e,
-                'An transaction was added to storage that the blockchain does not recognize - purging from storage',
+                `Error performing getRawTransaction for txid: ${
+                  transaction.hash
+                }`,
               )
-              await pruneConfirmedOrStaleTransaction(address, transaction)
+              if (e.message === 'Unknown transaction') {
+                await pruneConfirmedOrStaleTransaction(
+                  address,
+                  transaction.hash,
+                )
+              }
             })
 
-          if (result.confirmations > MINIMUM_CONFIRMATIONS) {
-            // eslint-disable-next-line
-            await pruneConfirmedOrStaleTransaction(address, transaction)
+          if (result) {
+            if (result.confirmations > MINIMUM_CONFIRMATIONS) {
+              // eslint-disable-next-line
+              await pruneConfirmedOrStaleTransaction(address, transaction.hash)
+            } else {
+              pendingTransactionInfo.push({ ...result, ...transaction })
+            }
           }
-          pendingTransactionInfo.push(result)
         }
       }
 
-      return parsePendingTxInfo(pendingTransactionInfo, net)
+      return parsePendingContractTxInfo(pendingTransactionInfo, net)
     }
     return []
   },

@@ -9,20 +9,20 @@ import CopyToClipboard from '../../CopyToClipboard'
 import { pluralize } from '../../../util/pluralize'
 
 type Props = {
-  renderTxDate: (time: ?number) => React$Node | null,
+  txDate: React$Node | null,
   findContact: (address: string) => React$Node | null,
   asset: {
     symbol: string,
     image?: string,
   },
   blocktime: number,
-  amount: string,
+  amount: string | number,
   to: string,
   confirmations: number,
   showAddContactModal: (address: string) => void,
 }
 
-export default class Transaction extends React.Component<Props> {
+export default class PendingAbstract extends React.Component<Props> {
   render = () => {
     const {
       asset,
@@ -32,6 +32,7 @@ export default class Transaction extends React.Component<Props> {
       findContact,
       showAddContactModal,
       confirmations,
+      txDate,
     } = this.props
     const contactTo = findContact(to)
     const contactToExists = contactTo !== to
@@ -47,7 +48,14 @@ export default class Transaction extends React.Component<Props> {
               <SendIcon />
             </div>
           </div>
-          {!!blocktime && this.props.renderTxDate(blocktime)}
+          {!blocktime ? (
+            <div className={styles.pendingTxDate}>
+              awaiting confirmations...
+            </div>
+          ) : (
+            txDate
+          )}
+
           <div className={styles.txLabelContainer}>
             {logo}
             {asset.symbol}
