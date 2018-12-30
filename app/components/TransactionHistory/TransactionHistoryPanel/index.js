@@ -14,7 +14,7 @@ const mapTransactionsDataToProps = transactions => ({
 })
 
 const mapAccountActionsToProps = (actions, props) => ({
-  handleFetchAddtionalTxData: () =>
+  handleFetchAdditionalTxData: () =>
     actions.call({
       net: props.net,
       address: props.address,

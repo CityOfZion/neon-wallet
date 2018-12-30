@@ -10,7 +10,7 @@ import styles from './TransactionHistoryPanel.scss'
 type Props = {
   className: ?string,
   transactions: Array<Object>,
-  handleFetchAddtionalTxData: () => any,
+  handleFetchAdditionalTxData: () => any
 }
 
 export default class TransactionHistory extends React.Component<Props> {
@@ -30,11 +30,11 @@ export default class TransactionHistory extends React.Component<Props> {
   }
 
   handleScroll = (e: SyntheticInputEvent<EventTarget>) => {
-    const { handleFetchAddtionalTxData } = this.props
+    const { handleFetchAdditionalTxData } = this.props
     const bottom =
       e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight
     if (bottom) {
-      handleFetchAddtionalTxData()
+      handleFetchAdditionalTxData()
     }
   }
 }
