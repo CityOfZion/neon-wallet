@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { intersection } from 'lodash-es'
+import { intersectionBy } from 'lodash-es'
 
 import Transactions from './Transactions'
 import Panel from '../../Panel'
@@ -44,7 +44,7 @@ export default class TransactionHistory extends React.Component<Props> {
     const { transactions, pendingTransactions } = this.props
     const confirmed = transactions.map(tx => tx.txid)
     return pendingTransactions.reduce((accum, currVal) => {
-      if (confirmed.find(tx => tx === currVal.txid.substring(2))) return accum
+      if (confirmed.find(tx => tx === currVal.txid)) return accum
       accum.push(currVal)
       return accum
     }, [])
@@ -52,14 +52,11 @@ export default class TransactionHistory extends React.Component<Props> {
 
   async pruneReturnedTransactionsFromStorage() {
     const { transactions, pendingTransactions, address } = this.props
-    const confirmed = transactions.map(tx => tx.txid)
-    // NOTE: removes the '0x' prepended to every txId
-    const pending = pendingTransactions.map(tx => tx.txid.substring(2))
-    const toBePurged = intersection(confirmed, pending)
+    const toBePurged = intersectionBy(transactions, pendingTransactions, 'txId')
     // eslint-disable-next-line
-    for (const id of toBePurged) {
+    for (const transaction of toBePurged) {
       // eslint-disable-next-line
-      await pruneConfirmedOrStaleTransaction(address, id)
+      await pruneConfirmedOrStaleTransaction(address, transaction.txid)
     }
   }
 

@@ -23,7 +23,7 @@ type PendingTransaction = {
   vout: Array<{ asset: string, address: string, value: string }>,
   sendEntries: Array<SendEntryType>,
   confirmations: number,
-  txid: number,
+  txid: string,
   net_fee: string,
   blocktime: number,
   type: string,
@@ -31,7 +31,7 @@ type PendingTransaction = {
 
 type ParsedPendingTransaction = {
   confirmations: number,
-  txid: number,
+  txid: string,
   net_fee: string,
   blocktime: number,
   to: string,
@@ -54,7 +54,7 @@ export const parseContractTransaction = async (
   for (const send of transaction.vout) {
     parsedData.push({
       confirmations,
-      txid,
+      txid: txid.substring(2),
       net_fee,
       blocktime,
       amount: toBigNumber(send.value).toString(),
@@ -83,7 +83,7 @@ export const parseInvocationTransaction = (
   // use the original send entries array.
   return sendEntries.map(send => ({
     confirmations,
-    txid,
+    txid: txid.substring(2),
     net_fee,
     blocktime,
     amount: toBigNumber(send.amount).toString(),
@@ -135,7 +135,8 @@ export const pruneConfirmedOrStaleTransaction = async (
   const storage = await getPendingTransactions()
   if (Array.isArray(storage[address])) {
     storage[address] = storage[address].filter(
-      transaction => transaction.hash !== txId,
+      // use includes here to be indifferent to 0x prefix
+      transaction => !transaction.hash.includes(txId),
     )
   }
   await setPendingTransactions(storage)
