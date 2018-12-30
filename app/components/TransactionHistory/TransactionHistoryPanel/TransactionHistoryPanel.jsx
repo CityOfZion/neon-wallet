@@ -10,7 +10,7 @@ import styles from './TransactionHistoryPanel.scss'
 type Props = {
   className: ?string,
   transactions: Array<Object>,
-  handleFetchAdditionalTxData: () => any
+  handleFetchAdditionalTxData: () => any,
 }
 
 export default class TransactionHistory extends React.Component<Props> {

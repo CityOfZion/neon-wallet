@@ -143,7 +143,6 @@ async function getBalances({ net, address }: Props) {
     const info = await api.nep5
       .getToken(endpoint, token.scriptHash, address)
       .catch(error => {
-        // eslint-disable-next-line
         console.error(
           'An error occurrred attempting to fetch custom script hash balance info.',
           { error },

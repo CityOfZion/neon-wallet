@@ -34,6 +34,7 @@
     "no-unused-vars": ["warn"],
     "global-require": 0,
     "quotes": ["warn", "single"],
+    "no-console": ["error", { "allow": ["warn", "error"] }],
     "object-curly-spacing": ["error", "always"],
     "import/no-unresolved": 0,
     "import/prefer-default-export": 0,
