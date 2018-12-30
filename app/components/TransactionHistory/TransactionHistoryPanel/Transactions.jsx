@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
+import { isEmpty } from 'lodash-es'
 
 import Transaction from '../../Blockchain/Transaction'
 import TransactionList from '../../Blockchain/Transaction/TransactionList'
@@ -21,10 +22,7 @@ export default class Transactions extends React.Component<Props> {
 
   render() {
     const { className, transactions, pendingTransactions } = this.props
-    if (
-      !transactions.length === 0 &&
-      (!pendingTransactions || !pendingTransactions.length)
-    ) {
+    if (isEmpty(transactions) && isEmpty(pendingTransactions)) {
       return (
         <div className={classNames(styles.noTransactions, className)}>
           <LogoWithStrikethrough />
