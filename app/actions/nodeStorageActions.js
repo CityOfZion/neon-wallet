@@ -1,6 +1,6 @@
 // @flow
 import { createActions } from 'spunky'
-import { isEmpty, random, get, compact } from 'lodash-es'
+import { random, get, compact } from 'lodash-es'
 import { rpc, api } from 'neon-js'
 
 import { getStorage, setStorage } from '../core/storage'

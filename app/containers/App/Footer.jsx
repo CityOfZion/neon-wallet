@@ -19,7 +19,6 @@ export default class Footer extends React.Component<Props> {
           <NetworkSwitch />
         </span>
         <span className={styles.item}>
-          {/* eslint-disable-next-line */}
           <a href="#" onClick={this.handleSupport}>
             Community Support
           </a>
