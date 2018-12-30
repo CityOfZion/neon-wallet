@@ -191,7 +191,7 @@ export const getPendingTransactionInfo = createActions(
             })
 
           if (result) {
-            if (result.confirmations > MINIMUM_CONFIRMATIONS) {
+            if (result.confirmations >= MINIMUM_CONFIRMATIONS) {
               // eslint-disable-next-line
               await pruneConfirmedOrStaleTransaction(address, transaction.hash)
             } else {

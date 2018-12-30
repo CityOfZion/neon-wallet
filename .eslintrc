@@ -70,7 +70,8 @@
     "react/destructuring-assignment": 0,
     "react/sort-comp": 0,
     "react/button-has-type": 0,
-    "flowtype/generic-spacing": 0
+    "flowtype/generic-spacing": 0,
+    "no-param-reassign": ["warn"]
   },
   "settings": {
     "import/resolver": {

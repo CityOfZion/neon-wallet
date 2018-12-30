@@ -78,14 +78,11 @@ const makeRequest = (
 ) => {
   // NOTE: We purposefully mutate the contents of config
   // because neon-js will also mutate this same object by reference
-  // eslint-disable-next-line no-param-reassign
   config.intents = buildIntents(sendEntries)
   if (script === '') {
     return api.sendAsset(config, api.neoscan)
   }
-  // eslint-disable-next-line no-param-reassign
   config.script = script
-  // eslint-disable-next-line no-param-reassign
   config.gas = 0
   return api.doInvoke(config, api.neoscan)
 }
