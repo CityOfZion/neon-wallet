@@ -9,7 +9,6 @@ import CopyToClipboard from '../../CopyToClipboard'
 import { pluralize } from '../../../util/pluralize'
 
 type Props = {
-  txDate: React$Node | null,
   findContact: (address: string) => React$Node | null,
   asset: {
     symbol: string,
@@ -20,6 +19,7 @@ type Props = {
   to: string,
   confirmations: number,
   showAddContactModal: (address: string) => void,
+  renderTxDate: (time: number) => React$Node | null,
 }
 
 export default class PendingAbstract extends React.Component<Props> {
@@ -32,7 +32,7 @@ export default class PendingAbstract extends React.Component<Props> {
       findContact,
       showAddContactModal,
       confirmations,
-      txDate,
+      renderTxDate,
     } = this.props
     const contactTo = findContact(to)
     const contactToExists = contactTo !== to
@@ -53,7 +53,7 @@ export default class PendingAbstract extends React.Component<Props> {
               awaiting confirmations...
             </div>
           ) : (
-            txDate
+            renderTxDate(blocktime)
           )}
 
           <div className={styles.txLabelContainer}>

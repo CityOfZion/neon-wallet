@@ -129,7 +129,13 @@ export default class Transaction extends React.Component<Props> {
     }
 
     if (isPending) {
-      return <PendingAbstract {...abstractProps} {...this.props.pendingTx} />
+      return (
+        <PendingAbstract
+          {...abstractProps}
+          {...this.props.pendingTx}
+          renderTxDate={this.renderTxDate}
+        />
+      )
     }
 
     switch (type) {
