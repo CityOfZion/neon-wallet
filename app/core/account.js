@@ -1,5 +1,5 @@
 // @flow
-import { wallet } from 'neon-js'
+import { wallet } from '@cityofzion/neon-js'
 
 import { getStorage, setStorage } from './storage'
 

@@ -1,7 +1,7 @@
 // @flow
 /* eslint-disable camelcase */
-import { api, sc, u, wallet } from 'neon-js'
-import { flatMap, keyBy, isEmpty } from 'lodash-es'
+import { api, sc, u, wallet, settings } from '@cityofzion/neon-js'
+import { flatMap, keyBy, isEmpty, get } from 'lodash-es'
 
 import {
   showErrorNotification,
@@ -25,6 +25,10 @@ import {
 } from '../core/wallet'
 import { toNumber } from '../core/math'
 import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
+import { addPendingTransaction } from '../actions/pendingTransactionActions'
+
+export const DEFAULT_RPC_TIMEOUT = 60000
+settings.timeout.rpc = DEFAULT_RPC_TIMEOUT
 
 const extractTokens = (sendEntries: Array<SendEntryType>) =>
   sendEntries.filter(({ symbol }) => isToken(symbol))
@@ -67,29 +71,32 @@ const buildTransferScript = (
   return scriptBuilder.str
 }
 
-const makeRequest = (sendEntries: Array<SendEntryType>, config: Object) => {
-  const script = buildTransferScript(
-    config.net,
-    sendEntries,
-    config.address,
-    config.tokensBalanceMap,
-  )
-
+const makeRequest = (
+  sendEntries: Array<SendEntryType>,
+  config: Object,
+  script: string,
+) => {
+  // NOTE: We purposefully mutate the contents of config
+  // because neon-js will also mutate this same object by reference
+  config.intents = buildIntents(sendEntries)
   if (script === '') {
-    return api.sendAsset(
-      { ...config, intents: buildIntents(sendEntries) },
-      api.neoscan,
-    )
+    return api.sendAsset(config, api.neoscan)
   }
-  return api.doInvoke(
-    {
-      ...config,
-      intents: buildIntents(sendEntries),
-      script,
-      gas: 0,
-    },
-    api.neoscan,
-  )
+  config.script = script
+  config.gas = 0
+  return api.doInvoke(config, api.neoscan)
+}
+
+export const generateBalanceInfo = (
+  tokensBalanceMap: any,
+  address: string,
+  net: NetworkType,
+) => {
+  const Balance = new wallet.Balance({ address, net })
+  // $FlowFixMe
+  Object.values(tokensBalanceMap).forEach(({ name, balance }) => {
+    Balance.addAsset(name, { balance, unspent: [] })
+  })
 }
 
 export const sendTransaction = ({
@@ -154,25 +161,27 @@ export const sendTransaction = ({
       signingFunction: isHardwareSend ? signingFunction : null,
       fees,
       url,
+      balance: undefined,
     }
-
-    await api
+    const balanceResults = await api
       .getBalanceFrom({ net, address: fromAddress }, api.neoscan)
       .catch(e => {
         // indicates that neo scan is down and that api.sendAsset and api.doInvoke
         // will fail unless balances are supplied
         console.error(e)
-        const Balance = new wallet.Balance({ address: fromAddress, net })
-        // $FlowFixMe
-        Object.values(tokensBalanceMap).forEach(({ name, balance }) => {
-          Balance.addAsset(name, { balance, unspent: [] })
-        })
-        // $FlowFixMe
-        config.balance = Balance
+        config.balance = generateBalanceInfo(tokensBalanceMap, fromAddress, net)
       })
+    if (balanceResults) config.balance = balanceResults.balance
 
     try {
-      const { response } = await makeRequest(sendEntries, config)
+      const script = buildTransferScript(
+        config.net,
+        sendEntries,
+        config.address,
+        // $FlowFixMe
+        config.tokensBalanceMap,
+      )
+      const { response } = await makeRequest(sendEntries, config, script)
 
       if (!response.result) {
         throw new Error('Rejected by RPC server.')
@@ -184,11 +193,23 @@ export const sendTransaction = ({
             'Transaction complete! Your balance will automatically update when the blockchain has processed it.',
         }),
       )
-
       return resolve(response)
     } catch (err) {
       console.error({ err })
       rejectTransaction(`Transaction failed: ${err.message}`)
       return reject(err)
+    } finally {
+      const outputs = get(config, 'tx.outputs')
+      const hash = get(config, 'tx.hash')
+
+      dispatch(
+        addPendingTransaction.call({
+          address: config.address,
+          tx: {
+            hash,
+            sendEntries,
+          },
+        }),
+      )
     }
   })

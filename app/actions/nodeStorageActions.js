@@ -1,7 +1,7 @@
 // @flow
 import { createActions } from 'spunky'
 import { random, get, compact } from 'lodash-es'
-import { rpc, api } from 'neon-js'
+import { rpc, api } from '@cityofzion/neon-js'
 
 import { getStorage, setStorage } from '../core/storage'
 import {

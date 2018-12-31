@@ -1,4 +1,4 @@
-import { api } from 'neon-js'
+import { api } from '@cityofzion/neon-js'
 import nock from 'nock'
 
 import nodeStorageActions, {

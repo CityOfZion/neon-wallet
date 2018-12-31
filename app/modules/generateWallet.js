@@ -1,6 +1,6 @@
 // @flow
 import storage from 'electron-json-storage'
-import { wallet } from 'neon-js'
+import { wallet } from '@cityofzion/neon-js'
 import { isEmpty, intersectionBy } from 'lodash-es'
 
 import {
@@ -127,7 +127,7 @@ export const recoverWallet = (wallet: Object): Promise<*> =>
 
       // If for some reason we have no NEP-6 wallet stored, create a default.
       if (!data) {
-        data = { ...DEFAULT_WALLET } // eslint-disable-line no-param-reassign
+        data = { ...DEFAULT_WALLET }
       }
 
       if (!wallet.accounts) {

@@ -1,7 +1,7 @@
 // @flow
 /* eslint-disable */
 
-import { type Fixed8 } from 'neon-js'
+import { type Fixed8 } from '@cityofzion/neon-js'
 
 import {
   ROUTES,
@@ -79,7 +79,8 @@ declare type TxEntryType = {
   amount: number,
   label: $Values<typeof ASSETS>,
   time?: number,
-  isNetworkFee?: boolean
+  isNetworkFee?: boolean,
+  image?: string
 }
 
 declare type SymbolType = string

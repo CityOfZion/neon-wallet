@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import { wallet } from 'neon-js'
+import { wallet } from '@cityofzion/neon-js'
 import { progressValues } from 'spunky'
 import classNames from 'classnames'
 
