@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { api, u } from 'neon-js'
+import { api, u } from '@cityofzion/neon-js'
 
 import claimsActions from '../../app/actions/claimsActions'
 import { mockPromiseResolved } from '../testHelpers'

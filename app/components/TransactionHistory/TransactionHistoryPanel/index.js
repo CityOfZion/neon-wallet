@@ -1,9 +1,10 @@
 // @flow
 import { compose } from 'recompose'
-import { withData, withActions } from 'spunky'
+import { withData, withActions, withCall } from 'spunky'
 
 import TransactionHistoryPanel from './TransactionHistoryPanel'
 import transactionHistoryActions from '../../../actions/transactionHistoryActions'
+import { getPendingTransactionInfo } from '../../../actions/pendingTransactionActions'
 import withProgressPanel from '../../../hocs/withProgressPanel'
 import withAuthData from '../../../hocs/withAuthData'
 import withNetworkData from '../../../hocs/withNetworkData'
@@ -22,6 +23,10 @@ const mapAccountActionsToProps = (actions, props) => ({
     }),
 })
 
+const mapPendingTransactionInfoToProps = pendingTransactions => ({
+  pendingTransactions: pendingTransactions || [],
+})
+
 export default compose(
   withAuthData(),
   withNetworkData(),
@@ -29,6 +34,8 @@ export default compose(
     title: 'Transaction History',
   }),
   withActions(transactionHistoryActions, mapAccountActionsToProps),
+  withCall(getPendingTransactionInfo),
+  withData(getPendingTransactionInfo, mapPendingTransactionInfoToProps),
   withLoadingProp(transactionHistoryActions),
   withData(transactionHistoryActions, mapTransactionsDataToProps),
 )(TransactionHistoryPanel)

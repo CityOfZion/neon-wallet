@@ -1,5 +1,5 @@
 // @flow
-import { api, type Claims } from 'neon-js'
+import { api, type Claims } from '@cityofzion/neon-js'
 import { map, reduce } from 'lodash-es'
 
 import {
