@@ -4,12 +4,11 @@ import React from 'react'
 import CheckMarkIcon from '../../../../assets/icons/confirm-circle.svg'
 import Transaction from '../../../Blockchain/Transaction'
 import TransactionList from '../../../Blockchain/Transaction/TransactionList'
-
 import { pluralize } from '../../../../util/pluralize'
 import { createFormattedDate } from '../../../../util/createFormattedDate'
-
 import styles from './SendSuccess.scss'
 import { TX_TYPES } from '../../../../core/constants'
+import ActivityLink from '../ActivityLink'
 
 type Props = {
   sendRowDetails: Array<*>,
@@ -49,6 +48,9 @@ export default class SendSuccess extends React.Component<Props> {
               Transaction ID: {txid}
             </p>
           </div>
+        </div>
+        <div className={styles.activityLinkText}>
+          <ActivityLink />
         </div>
         <div className={styles.sendSuccessBody}>
           <h2 className={styles.sendSuccessBodyHeaderText}>

@@ -22,9 +22,10 @@ import DarkLogoWithoutText from '../../../assets/images/logo-without-text.png'
 type Props = {
   className: string,
   theme: ThemeType,
+  pendingTransactionsCount: number,
 }
 
-const Sidebar = ({ className, theme }: Props) => {
+const Sidebar = ({ className, theme, pendingTransactionsCount }: Props) => {
   const themeBasedLogo =
     theme === 'Light' ? LightLogoWithoutText : DarkLogoWithoutText
 
@@ -53,6 +54,11 @@ const Sidebar = ({ className, theme }: Props) => {
           className={styles.navItem}
           activeClassName={styles.active}
         >
+          {!!pendingTransactionsCount && (
+            <div className={styles.pendingTransactionsCount}>
+              {pendingTransactionsCount}
+            </div>
+          )}
           <HistoryIcon />
           <div> Activity </div>
         </NavLink>
