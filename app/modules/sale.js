@@ -77,7 +77,7 @@ export const participateInSale = (
   const scriptHashAddress = wallet.getAddressFromScriptHash(formattedScriptHash)
 
   const intents = [[ASSETS.NEO, neoToMint], [ASSETS.GAS, gasToMint]]
-    .filter(([symbol, amount]) => amount > 0) // eslint-disable-line
+    .filter(([symbol, amount]) => amount > 0) // eslint-disable-line no-unused-vars
     .map(([symbol, amount]) =>
       api.makeIntent({ [symbol]: amount }, scriptHashAddress),
     )

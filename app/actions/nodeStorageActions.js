@@ -110,9 +110,7 @@ export const getRPCEndpoint = async (
 }
 
 export const getNode = async (net: Net): Promise<string> => {
-  const storage = await getStorage(`${STORAGE_KEY}-${net}`).catch(e =>
-    console.error(e),
-  )
+  const storage = await getStorage(`${STORAGE_KEY}-${net}`).catch(console.error)
   const nodeInStorage = get(storage, 'node')
   const expiration = get(storage, 'timestamp')
   if (!nodeInStorage || !expiration || determineIfCacheIsExpired(expiration)) {
