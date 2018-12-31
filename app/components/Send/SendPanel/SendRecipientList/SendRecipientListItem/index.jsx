@@ -5,7 +5,7 @@ import SelectInput from '../../../../Inputs/SelectInput'
 import NumberInput from '../../../../Inputs/NumberInput'
 import DisplayInput from '../../../DisplayInput'
 
-import { toBigNumber, toNumber } from '../../../../../core/math'
+import { toBigNumber } from '../../../../../core/math'
 import { formatNumberByDecimalScale } from '../../../../../core/formatters'
 
 import TrashCanIcon from '../../../../../assets/icons/delete.svg'

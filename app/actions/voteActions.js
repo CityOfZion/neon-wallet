@@ -13,7 +13,7 @@ export const ID = 'VOTE'
 
 export default createActions(
   ID,
-  ({ networkId, address }: Props = {}) => async (state: Object) => {
+  ({ networkId, address }: Props = {}) => async () => {
     const net = getNetworkById(networkId)
     const endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
     const client = new rpc.RPCClient(endpoint)

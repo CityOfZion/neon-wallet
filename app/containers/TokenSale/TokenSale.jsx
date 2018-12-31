@@ -216,7 +216,7 @@ class TokenSale extends Component<Props, State> {
       if (toBigNumber(gasFee).greaterThan(gasBalance)) {
         this.setState({
           inputErrorMessage:
-            'You do not have enough GAS to prioritize this transaction', // eslint-disable-line
+            'You do not have enough GAS to prioritize this transaction',
         })
         return false
       }
@@ -226,7 +226,7 @@ class TokenSale extends Component<Props, State> {
       if (toBigNumber(addNumber(amount, gasFee)).greaterThan(gasBalance)) {
         this.setState({
           inputErrorMessage:
-            'You do not have enough GAS to prioritize this transaction', // eslint-disable-line
+            'You do not have enough GAS to prioritize this transaction',
         })
         return false
       }

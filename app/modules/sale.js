@@ -1,6 +1,6 @@
 // @flow
+import { flatten } from 'lodash-es'
 import { wallet, api } from '@cityofzion/neon-js'
-import { flatten, isEmpty } from 'lodash-es'
 
 import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 
@@ -77,7 +77,7 @@ export const participateInSale = (
   const scriptHashAddress = wallet.getAddressFromScriptHash(formattedScriptHash)
 
   const intents = [[ASSETS.NEO, neoToMint], [ASSETS.GAS, gasToMint]]
-    .filter(([symbol, amount]) => amount > 0)
+    .filter(([symbol, amount]) => amount > 0) // eslint-disable-line no-unused-vars
     .map(([symbol, amount]) =>
       api.makeIntent({ [symbol]: amount }, scriptHashAddress),
     )

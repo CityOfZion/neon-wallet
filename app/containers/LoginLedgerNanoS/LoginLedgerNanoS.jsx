@@ -3,7 +3,6 @@ import React from 'react'
 import { wallet } from '@cityofzion/neon-js'
 import { progressValues } from 'spunky'
 import classNames from 'classnames'
-import { get } from 'lodash-es'
 
 import Button from '../../components/Button'
 import StyledReactSelect from '../../components/Inputs/StyledReactSelect/StyledReactSelect'

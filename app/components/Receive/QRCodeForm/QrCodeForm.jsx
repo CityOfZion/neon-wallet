@@ -9,7 +9,6 @@ import TextInput from '../../Inputs/TextInput'
 import Button from '../../Button/Button'
 import { Address } from '../../Blockchain'
 import { ASSETS, TOKENS } from '../../../core/constants'
-import { formatNEO } from '../../../core/formatters'
 import GridIcon from '../../../assets/icons/grid.svg'
 
 import styles from './styles.scss'

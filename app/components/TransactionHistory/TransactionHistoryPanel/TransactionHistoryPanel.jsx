@@ -11,8 +11,8 @@ import styles from './TransactionHistoryPanel.scss'
 type Props = {
   className: ?string,
   transactions: Array<Object>,
+  handleFetchAdditionalTxData: () => any,
   pendingTransactions: Array<Object>,
-  handleFetchAddtionalTxData: () => any,
   address: string,
 }
 
@@ -61,11 +61,11 @@ export default class TransactionHistory extends React.Component<Props> {
   }
 
   handleScroll = (e: SyntheticInputEvent<EventTarget>) => {
-    const { handleFetchAddtionalTxData } = this.props
+    const { handleFetchAdditionalTxData } = this.props
     const bottom =
       e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight
     if (bottom) {
-      handleFetchAddtionalTxData()
+      handleFetchAdditionalTxData()
     }
   }
 }
