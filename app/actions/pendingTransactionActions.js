@@ -134,7 +134,6 @@ export const pruneConfirmedOrStaleTransaction = async (
 ) => {
   const storage = await getPendingTransactions()
   if (Array.isArray(storage[address])) {
-    console.log(storage[address])
     storage[address] = storage[address].filter(
       // use includes here to be indifferent to 0x prefix
       transaction => transaction.hash && !transaction.hash.includes(txId),
@@ -203,7 +202,6 @@ export const addPendingTransaction = createActions(
   ({ address, tx, net }) => async (): Promise<
     Array<ParsedPendingTransaction>,
   > => {
-    console.log('adding pending transaction', { address, tx, net })
     const transactions = await getPendingTransactions()
 
     if (Array.isArray(transactions[address])) {
