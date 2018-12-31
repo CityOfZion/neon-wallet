@@ -13,11 +13,27 @@
   font-family: var(--font-gotham-book);
 }
 
+.pendingTxDate {
+  @extend .txDateContainer;
+  font-style: italic;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
 .txLabelContainer {
   font-family: var(--font-gotham-book);
   font-size: 14px;
+  display: flex;
   text-align: center;
   width: 75px;
+  flex-direction: column;
+  align-items: center;
+
+  img {
+    max-height: 25px;
+    max-width: 25px;
+    margin-bottom: 5px;
+  }
 }
 
 .txAmountContainer {
@@ -54,6 +70,15 @@
 
 .historyButtonPlaceholder {
   width: 90px;
+}
+
+.confirmationsContainer {
+  max-width: 90px;
+  min-width: 90px;
+  text-align: center;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
 }
 
 .transactionContainer {

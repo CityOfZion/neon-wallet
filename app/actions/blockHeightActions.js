@@ -1,5 +1,5 @@
 // @flow
-import { api } from 'neon-js'
+import { api } from '@cityofzion/neon-js'
 import { createActions } from 'spunky'
 
 import { getNetworkById } from '../core/deprecated'

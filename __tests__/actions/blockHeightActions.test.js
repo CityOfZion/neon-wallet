@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { api } from 'neon-js'
+import { api } from '@cityofzion/neon-js'
 
 import blockHeightActions from '../../app/actions/blockHeightActions'
 import { TEST_NETWORK_ID } from '../../app/core/constants'
