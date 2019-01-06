@@ -117,7 +117,7 @@ export const pruneConfirmedOrStaleTransaction = async (
 }
 
 export const fetchTransactionInfo = async (
-  transactions: PendingTransactions,
+  transactions: PendingTransactions = {},
   address: string,
   net: string,
 ) => {
