@@ -16,6 +16,7 @@ const commonLoaders = {
 }
 
 module.exports = {
+  mode: 'production',
   bail: true,
   devtool: false,
   target: 'electron-main',
@@ -72,10 +73,6 @@ module.exports = {
           },
         },
         exclude: /node_modules/,
-      },
-      {
-        test: /\.json?$/,
-        loader: 'json-loader',
       },
       {
         test: /\.global\.css$/,

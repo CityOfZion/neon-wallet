@@ -27,6 +27,7 @@ const commonLoaders = {
 }
 
 module.exports = {
+  mode: 'development',
   devtool: 'cheap-module-inline-source-map',
   target: 'electron-renderer',
   entry: [
@@ -72,10 +73,6 @@ module.exports = {
           loader: 'babel-loader',
         },
         exclude: /node_modules/,
-      },
-      {
-        test: /\.json?$/,
-        loader: 'json-loader',
       },
       {
         test: /\.global\.css$/,
