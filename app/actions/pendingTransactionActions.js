@@ -16,33 +16,6 @@ const STORAGE_KEY = 'pendingTransactions'
 const MINIMUM_CONFIRMATIONS = 10
 const INVALID_TX_ERROR_MESSAGE = 'Unknown transaction'
 
-type PendingTransactions = {
-  [address: string]: Array<any>,
-}
-
-type PendingTransaction = {
-  vout: Array<{ asset: string, address: string, value: string }>,
-  sendEntries: Array<SendEntryType>,
-  confirmations: number,
-  txid: string,
-  net_fee: string,
-  blocktime: number,
-  type: string,
-}
-
-type ParsedPendingTransaction = {
-  confirmations: number,
-  txid: string,
-  net_fee: string,
-  blocktime: number,
-  to: string,
-  amount: string,
-  asset: {
-    symbol: string,
-    image: string,
-  },
-}
-
 export const parseContractTransaction = async (
   transaction: PendingTransaction,
   net: string,

@@ -8,7 +8,7 @@ import Sidebar from './Sidebar'
 import { addPendingTransaction } from '../../../actions/pendingTransactionActions'
 
 const mapPendingTransactionsDataToProps = (
-  pendingTransactions: Array<any>,
+  pendingTransactions: Array<PendingTransactions>,
 ) => ({
   pendingTransactionsCount: get(pendingTransactions, 'length', 0),
 })
