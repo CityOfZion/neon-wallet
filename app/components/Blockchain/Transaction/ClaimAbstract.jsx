@@ -44,13 +44,13 @@ export default class ClaimAbstract extends React.Component<Props> {
           <div className={styles.txToContainer}>
             <Fragment>
               <span>{contactTo}</span>
-              {!contactToExists && (
+              {
                 <CopyToClipboard
                   className={styles.copy}
                   text={to}
                   tooltip="Copy Public Address"
                 />
-              )}
+              }
             </Fragment>
           </div>
           <div className={styles.historyButtonPlaceholder} />
