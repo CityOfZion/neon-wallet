@@ -11,9 +11,8 @@ type Props = {
 
 export const ActivityLink = ({ error }: Props) => (
   <div>
-    {error
-      ? 'Although an error occured its possible your transaction was processed. '
-      : ' '}
+    {error &&
+      'Although an error occurred its possible your transaction was processed.'}{' '}
     Check the
     <NavLink id="wallet-manager" exact to={ROUTES.TRANSACTION_HISTORY}>
       <span> activity </span>
