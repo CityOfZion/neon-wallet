@@ -54,7 +54,7 @@ const Sidebar = ({ className, theme, pendingTransactionsCount }: Props) => {
           className={styles.navItem}
           activeClassName={styles.active}
         >
-          {!!pendingTransactionsCount && (
+          {pendingTransactionsCount > 0 && (
             <div className={styles.pendingTransactionsCount}>
               {pendingTransactionsCount}
             </div>

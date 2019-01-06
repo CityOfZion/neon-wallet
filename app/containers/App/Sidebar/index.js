@@ -1,5 +1,6 @@
 // @flow
 import { compose } from 'recompose'
+import { get } from 'lodash-es'
 import { withData } from 'spunky'
 import { withRouter } from 'react-router-dom'
 
@@ -9,8 +10,7 @@ import { addPendingTransaction } from '../../../actions/pendingTransactionAction
 const mapPendingTransactionsDataToProps = (
   pendingTransactions: Array<any>,
 ) => ({
-  pendingTransactionsCount:
-    (Array.isArray(pendingTransactions) && pendingTransactions.length) || 0,
+  pendingTransactionsCount: get(pendingTransactions, 'length', 0),
 })
 
 export default compose(
