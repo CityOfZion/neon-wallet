@@ -14,33 +14,7 @@ import {
 export const ID = 'pendingTransactions'
 const STORAGE_KEY = 'pendingTransactions'
 const MINIMUM_CONFIRMATIONS = 10
-
-type PendingTransactions = {
-  [address: string]: Array<any>,
-}
-
-type PendingTransaction = {
-  vout: Array<{ asset: string, address: string, value: string }>,
-  sendEntries: Array<SendEntryType>,
-  confirmations: number,
-  txid: string,
-  net_fee: string,
-  blocktime: number,
-  type: string,
-}
-
-type ParsedPendingTransaction = {
-  confirmations: number,
-  txid: string,
-  net_fee: string,
-  blocktime: number,
-  to: string,
-  amount: string,
-  asset: {
-    symbol: string,
-    image: string,
-  },
-}
+const INVALID_TX_ERROR_MESSAGE = 'Unknown transaction'
 
 export const parseContractTransaction = async (
   transaction: PendingTransaction,
@@ -95,7 +69,7 @@ export const parseInvocationTransaction = (
   }))
 }
 
-export const parsePendingContractTxInfo = async (
+export const parseTransactionInfo = async (
   pendingTransactionsInfo: Array<PendingTransaction>,
   net: string,
 ) => {
@@ -136,15 +110,72 @@ export const pruneConfirmedOrStaleTransaction = async (
   if (Array.isArray(storage[address])) {
     storage[address] = storage[address].filter(
       // use includes here to be indifferent to 0x prefix
-      transaction => !transaction.hash.includes(txId),
+      transaction => transaction.hash && !transaction.hash.includes(txId),
     )
   }
   await setPendingTransactions(storage)
 }
 
+export const fetchTransactionInfo = async (
+  transactions: PendingTransactions = {},
+  address: string,
+  net: string,
+) => {
+  if (Array.isArray(transactions[address]) && transactions[address].length) {
+    let url = await getNode(net)
+    if (isEmpty(url)) {
+      url = await getRPCEndpoint(net)
+    }
+    const client = Neon.create.rpcClient(url)
+    const pendingTransactionInfo = []
+
+    // eslint-disable-next-line
+    for (const transaction of transactions[address]) {
+      if (transaction) {
+        // eslint-disable-next-line
+        const result = await client
+          .getRawTransaction(transaction.hash, 1)
+          .catch(async e => {
+            console.error(
+              e,
+              `Error performing getRawTransaction for txid: ${
+                transaction.hash
+              }`,
+            )
+            if (e.message === INVALID_TX_ERROR_MESSAGE) {
+              await pruneConfirmedOrStaleTransaction(address, transaction.hash)
+            }
+          })
+
+        if (result) {
+          if (result.confirmations >= MINIMUM_CONFIRMATIONS) {
+            // eslint-disable-next-line
+            await pruneConfirmedOrStaleTransaction(address, transaction.hash)
+          } else {
+            pendingTransactionInfo.push({ ...result, ...transaction })
+          }
+        }
+      }
+    }
+
+    return parseTransactionInfo(pendingTransactionInfo, net)
+  }
+  return []
+}
+
+export const getPendingTransactionsFromStorage = createActions(
+  ID,
+  () => async () => {
+    const pendingTransactions = await getPendingTransactions()
+    return pendingTransactions
+  },
+)
+
 export const addPendingTransaction = createActions(
   ID,
-  ({ address, tx }) => async (): Promise<void> => {
+  ({ address, tx, net }) => async (): Promise<
+    Array<ParsedPendingTransaction>,
+  > => {
     const transactions = await getPendingTransactions()
 
     if (Array.isArray(transactions[address])) {
@@ -153,6 +184,7 @@ export const addPendingTransaction = createActions(
       transactions[address] = [tx]
     }
     await setPendingTransactions(transactions)
+    return fetchTransactionInfo(transactions, address, net)
   },
 )
 
@@ -160,54 +192,6 @@ export const getPendingTransactionInfo = createActions(
   ID,
   ({ address, net }) => async (): Promise<Array<Object>> => {
     const transactions = await getPendingTransactions()
-    if (Array.isArray(transactions[address]) && transactions[address].length) {
-      let url = await getNode(net)
-      if (isEmpty(url)) {
-        url = await getRPCEndpoint(net)
-      }
-      const client = Neon.create.rpcClient(url)
-
-      const pendingTransactionInfo = []
-
-      // eslint-disable-next-line
-      for (const transaction of transactions[address]) {
-        if (transaction) {
-          // eslint-disable-next-line
-          const result = await client
-            .getRawTransaction(transaction.hash, 1)
-            .catch(async e => {
-              console.error(
-                e,
-                `Error performing getRawTransaction for txid: ${
-                  transaction.hash
-                }`,
-              )
-              if (e.message === 'Unknown transaction') {
-                await pruneConfirmedOrStaleTransaction(
-                  address,
-                  transaction.hash,
-                )
-              }
-            })
-
-          if (result) {
-            if (result.confirmations >= MINIMUM_CONFIRMATIONS) {
-              // eslint-disable-next-line
-              await pruneConfirmedOrStaleTransaction(address, transaction.hash)
-            } else {
-              pendingTransactionInfo.push({ ...result, ...transaction })
-            }
-          }
-        }
-      }
-
-      return parsePendingContractTxInfo(pendingTransactionInfo, net)
-    }
-    return []
+    return fetchTransactionInfo(transactions, address, net)
   },
 )
-
-export default createActions(ID, () => async () => {
-  const pendingTransactions = await getPendingTransactions()
-  return pendingTransactions
-})

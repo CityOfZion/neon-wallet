@@ -37,6 +37,22 @@ $size: 68px;
   }
 }
 
+.pendingTransactionsCount {
+  position: fixed;
+  height: 24px;
+  width: 24px;
+  background-color: var(--input-error);
+  margin-top: -22px !important;
+  margin-left: 10px;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: var(--font-gotham-book);
+  font-size: 14px !important;
+}
+
 .navItem {
   display: flex;
   justify-content: center;

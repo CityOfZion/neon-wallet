@@ -83,6 +83,33 @@ declare type TxEntryType = {
   image?: string
 }
 
+type PendingTransactions = {
+  [address: string]: Array<any>,
+}
+
+type PendingTransaction = {
+  vout: Array<{ asset: string, address: string, value: string }>,
+  sendEntries: Array<SendEntryType>,
+  confirmations: number,
+  txid: string,
+  net_fee: string,
+  blocktime: number,
+  type: string,
+}
+
+type ParsedPendingTransaction = {
+  confirmations: number,
+  txid: string,
+  net_fee: string,
+  blocktime: number,
+  to: string,
+  amount: string,
+  asset: {
+    symbol: string,
+    image: string,
+  },
+}
+
 declare type SymbolType = string
 
 declare type NetworkItemType = {

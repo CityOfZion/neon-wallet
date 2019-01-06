@@ -201,7 +201,6 @@ export const sendTransaction = ({
     } finally {
       const outputs = get(config, 'tx.outputs')
       const hash = get(config, 'tx.hash')
-
       dispatch(
         addPendingTransaction.call({
           address: config.address,
@@ -209,6 +208,7 @@ export const sendTransaction = ({
             hash,
             sendEntries,
           },
+          net,
         }),
       )
     }
