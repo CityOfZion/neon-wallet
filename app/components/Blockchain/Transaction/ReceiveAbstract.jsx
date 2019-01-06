@@ -52,8 +52,7 @@ export default class ReceiveAbstract extends React.Component<Props> {
           <div className={styles.txAmountContainer}>{amount}</div>
           <div className={styles.txToContainer}>
             <span>{contactFrom}</span>
-            {!contactFromExists &&
-              !isMintTokens && (
+            { !isMintTokens && (
                 <CopyToClipboard
                   className={styles.copy}
                   text={from}
