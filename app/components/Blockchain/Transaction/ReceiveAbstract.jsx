@@ -60,9 +60,7 @@ export default class ReceiveAbstract extends React.Component<Props> {
               />
             )}
           </div>
-          {isMintTokens || isGasClaim ? (
-            <div className={styles.transactionHistoryButton} />
-          ) : (
+          {
             <Button
               className={styles.transactionHistoryButton}
               renderIcon={ContactsAdd}
@@ -71,7 +69,7 @@ export default class ReceiveAbstract extends React.Component<Props> {
             >
               Add
             </Button>
-          )}
+          }
         </div>
       </div>
     )
