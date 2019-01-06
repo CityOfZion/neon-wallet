@@ -53,12 +53,12 @@ export default class ReceiveAbstract extends React.Component<Props> {
           <div className={styles.txToContainer}>
             <span>{contactFrom}</span>
             {!isMintTokens && (
-                <CopyToClipboard
-                  className={styles.copy}
-                  text={from}
-                  tooltip="Copy Public Address"
-                />
-              )}
+              <CopyToClipboard
+                className={styles.copy}
+                text={from}
+                tooltip="Copy Public Address"
+              />
+            )}
           </div>
           {isMintTokens || isGasClaim ? (
             <div className={styles.transactionHistoryButton} />

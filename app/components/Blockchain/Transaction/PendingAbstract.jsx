@@ -64,11 +64,13 @@ export default class PendingAbstract extends React.Component<Props> {
           <div className={styles.txToContainer}>
             <Fragment>
               <span>{contactTo}</span>
-              {<CopyToClipboard
+              {
+                <CopyToClipboard
                   className={styles.copy}
                   text={to}
                   tooltip="Copy Public Address"
-                />}
+                />
+              }
             </Fragment>
           </div>
           <Button
