@@ -14,6 +14,7 @@ import {
 export const ID = 'pendingTransactions'
 const STORAGE_KEY = 'pendingTransactions'
 const MINIMUM_CONFIRMATIONS = 10
+const INVALID_TX_ERROR_MESSAGE = 'Unknown transaction'
 
 type PendingTransactions = {
   [address: string]: Array<any>,
@@ -168,7 +169,7 @@ export const fetchTransactionInfo = async (
                 transaction.hash
               }`,
             )
-            if (e.message === 'Unknown transaction') {
+            if (e.message === INVALID_TX_ERROR_MESSAGE) {
               await pruneConfirmedOrStaleTransaction(address, transaction.hash)
             }
           })
