@@ -48,25 +48,21 @@ export default class ClaimAbstract extends React.Component<Props> {
           <div className={styles.txToContainer}>
             <Fragment>
               <span>{contactTo}</span>
-              {
-                <CopyToClipboard
-                  className={styles.copy}
-                  text={to}
-                  tooltip="Copy Public Address"
-                />
-              }
+              <CopyToClipboard
+                className={styles.copy}
+                text={to}
+                tooltip="Copy Public Address"
+              />
             </Fragment>
           </div>
-          {
-            <Button
-              className={styles.transactionHistoryButton}
-              renderIcon={ContactsAdd}
-              onClick={() => showAddContactModal(to)}
-              disabled={contactToExists}
-            >
-              Add
-            </Button>
-          }
+          <Button
+            className={styles.transactionHistoryButton}
+            renderIcon={ContactsAdd}
+            onClick={() => showAddContactModal(to)}
+            disabled={contactToExists}
+          >
+            Add
+          </Button>
         </div>
       </div>
     )

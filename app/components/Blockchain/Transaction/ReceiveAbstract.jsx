@@ -60,16 +60,14 @@ export default class ReceiveAbstract extends React.Component<Props> {
               />
             )}
           </div>
-          {
-            <Button
-              className={styles.transactionHistoryButton}
-              renderIcon={ContactsAdd}
-              onClick={() => showAddContactModal(from)}
-              disabled={contactFromExists}
-            >
-              Add
-            </Button>
-          }
+          <Button
+            className={styles.transactionHistoryButton}
+            renderIcon={ContactsAdd}
+            onClick={() => showAddContactModal(from)}
+            disabled={contactFromExists}
+          >
+            Add
+          </Button>
         </div>
       </div>
     )
