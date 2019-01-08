@@ -60,18 +60,14 @@ export default class ReceiveAbstract extends React.Component<Props> {
               />
             )}
           </div>
-          {isMintTokens || isGasClaim ? (
-            <div className={styles.transactionHistoryButton} />
-          ) : (
-            <Button
-              className={styles.transactionHistoryButton}
-              renderIcon={ContactsAdd}
-              onClick={() => showAddContactModal(from)}
-              disabled={contactFromExists}
-            >
-              Add
-            </Button>
-          )}
+          <Button
+            className={styles.transactionHistoryButton}
+            renderIcon={ContactsAdd}
+            onClick={() => showAddContactModal(from)}
+            disabled={contactFromExists}
+          >
+            Add
+          </Button>
         </div>
       </div>
     )

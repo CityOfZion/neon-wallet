@@ -2,8 +2,10 @@
 import React, { Fragment } from 'react'
 
 import classNames from 'classnames'
+import Button from '../../Button'
 import styles from './Transaction.scss'
 import ClaimIcon from '../../../assets/icons/claim.svg'
+import ContactsAdd from '../../../assets/icons/contacts-add.svg'
 import CopyToClipboard from '../../CopyToClipboard'
 
 type Props = {
@@ -14,6 +16,7 @@ type Props = {
   contactTo: React$Node | string,
   to: string,
   contactToExists: boolean,
+  showAddContactModal: (from: string) => void,
 }
 
 export default class ClaimAbstract extends React.Component<Props> {
@@ -26,6 +29,7 @@ export default class ClaimAbstract extends React.Component<Props> {
       contactTo,
       to,
       contactToExists,
+      showAddContactModal,
     } = this.props
     return (
       <div className={classNames(styles.transactionContainer)}>
@@ -44,16 +48,21 @@ export default class ClaimAbstract extends React.Component<Props> {
           <div className={styles.txToContainer}>
             <Fragment>
               <span>{contactTo}</span>
-              {
-                <CopyToClipboard
-                  className={styles.copy}
-                  text={to}
-                  tooltip="Copy Public Address"
-                />
-              }
+              <CopyToClipboard
+                className={styles.copy}
+                text={to}
+                tooltip="Copy Public Address"
+              />
             </Fragment>
           </div>
-          <div className={styles.historyButtonPlaceholder} />
+          <Button
+            className={styles.transactionHistoryButton}
+            renderIcon={ContactsAdd}
+            onClick={() => showAddContactModal(to)}
+            disabled={contactToExists}
+          >
+            Add
+          </Button>
         </div>
       </div>
     )
