@@ -64,7 +64,7 @@ Setup:
 
 Developing:
 
-- `yarn dev` - Hot reload (WIP - a manual refresh in chrome dev tools is currently required one time after running yarn dev for hot reloading to work properly)
+- `yarn dev` - Start the application in development mode with hot reloading enabled
 
 Running (for production):
 
