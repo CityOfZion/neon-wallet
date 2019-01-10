@@ -61,7 +61,7 @@ export default class AssetBalancesPanel extends React.Component<Props> {
               <span className={styles.value} id="neoWalletValue">
                 {this.getFormattedFiatBalance(this.getNEOValue())}
               </span>
-              {!Number.isNaN(this.props.neoPriceChange.toNumber()) && (
+              {!this.props.neoPriceChange.isNaN() && (
                 <span
                   className={classNames(
                     styles.change,
@@ -88,7 +88,7 @@ export default class AssetBalancesPanel extends React.Component<Props> {
               <span className={styles.value} id="gasWalletValue">
                 {this.getFormattedFiatBalance(this.getGASValue())}
               </span>
-              {!Number.isNaN(this.props.gasPriceChange.toNumber()) && (
+              {!this.props.gasPriceChange.isNaN() && (
                 <span
                   className={classNames(
                     styles.change,
