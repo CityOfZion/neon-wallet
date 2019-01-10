@@ -52,6 +52,7 @@ export const getRPCEndpoint = async (
         data.client = client
         return data
       })
+
     await Promise.all(data.map(data => data.client.ping()))
     const nodes = data.sort(
       (a, b) => b.client.lastSeenHeight - a.client.lastSeenHeight

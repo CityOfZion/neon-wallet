@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { find } from 'lodash-es'
+import { find, get } from 'lodash-es'
 
 import PriceHistoryChart from './PriceHistoryChart'
 import Panel from '../../Panel'
@@ -158,16 +158,18 @@ export default class PriceHistoryPanel extends React.Component<Props> {
     })
 
     return (
-      <div className={classes}>
-        {change >= 0 && '+'}
-        {(change * 100).toFixed(2)}%
-      </div>
+      !Number.isNaN(change) && (
+        <div className={classes}>
+          {change >= 0 && '+'}
+          {(change * 100).toFixed(2)}%
+        </div>
+      )
     )
   }
 
   getInitialPrice = (): number => {
     const { prices, priceKey } = this.props
-    return prices[0][priceKey]
+    return get(prices, `[0][${priceKey}]`)
   }
 
   getPriceChange = () =>

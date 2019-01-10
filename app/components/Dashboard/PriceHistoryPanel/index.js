@@ -13,7 +13,7 @@ import { ASSETS } from '../../../core/constants'
 type Duration = '1m' | '1w' | '1d'
 
 const mapPriceHistoryDataToProps = (prices, props) => ({
-  prices: prices[props.asset]
+  prices: Array.isArray(prices[props.asset]) ? prices[props.asset] : []
 })
 
 const mapPriceDataToProps = (staticPrices, props) => ({
