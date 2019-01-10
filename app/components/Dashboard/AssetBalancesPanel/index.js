@@ -1,6 +1,6 @@
 // @flow
 import { compose } from 'recompose'
-import { values, omit } from 'lodash-es'
+import { values, omit, get } from 'lodash-es'
 import { withActions, withData } from 'spunky'
 
 import AssetBalancesPanel from './AssetBalancesPanel'
@@ -31,14 +31,14 @@ const mapPricesDataToProps = ({ NEO, GAS }) => ({
   gasPrice: GAS
 })
 
-const mapPriceChangeDataToProps = (prices, props) => {
-  const oldNeo = toBigNumber(prices[ASSETS.NEO][0].close)
+const mapPriceChangeDataToProps = (prices: Object) => {
+  const oldNeo = toBigNumber(get(prices, `[${ASSETS.NEO}][0].close`, 0))
   const newNeo = toBigNumber(
-    prices[ASSETS.NEO][prices[ASSETS.NEO].length - 1].close
+    get(prices, `[${ASSETS.NEO}][prices[${ASSETS.NEO}].length - 1].close`, 0)
   )
-  const oldGas = toBigNumber(prices[ASSETS.GAS][0].close)
+  const oldGas = toBigNumber(get(prices, `[${ASSETS.GAS}][0].close`, 0))
   const newGas = toBigNumber(
-    prices[ASSETS.GAS][prices[ASSETS.GAS].length - 1].close
+    get(prices, `[${ASSETS.GAS}][prices[${ASSETS.GAS}].length - 1].close`, 0)
   )
 
   return {
