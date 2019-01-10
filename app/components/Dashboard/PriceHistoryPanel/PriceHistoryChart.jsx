@@ -105,7 +105,7 @@ export default class PriceHistoryChart extends React.Component<Props, State> {
   }
 
   tooltipContent = (tooltipProps: Object) =>
-    !!get(tooltipProps, '.payload.length') && (
+    !!get(tooltipProps, 'payload.length') && (
       <div className={styles.tooltipContainer}>
         <div className={styles.tooltipTime}>
           {this.formatLabel(get(tooltipProps.payload[0], 'payload.time', 0))}
