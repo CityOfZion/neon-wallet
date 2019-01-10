@@ -36,9 +36,7 @@ async function parseAbstractData(data, currentUserAddress, net) {
   }
 
   const results = []
-  // eslint-disable-next-line no-restricted-syntax
   for (const abstract of data) {
-    // eslint-disable-next-line no-await-in-loop
     const asset = await findAndReturnTokenInfo(abstract.asset, net)
 
     const type = parsedTxType(abstract)

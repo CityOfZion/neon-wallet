@@ -24,42 +24,6 @@
     "type": "RPC"
   },
   {
-    "protocol": "http",
-    "url": "seed1.travala.com",
-    "location": "Singapore",
-    "address": "52.74.91.157",
-    "locale": "sg",
-    "port": "10332",
-    "type": "RPC"
-  },
-  {
-    "protocol": "http",
-    "url": "seed2.travala.com",
-    "location": "Seoul",
-    "address": "13.209.29.171",
-    "locale": "kr",
-    "port": "10332",
-    "type": "RPC"
-  },
-  {
-    "protocol": "http",
-    "url": "seed3.travala.com",
-    "location": "Canada",
-    "address": "35.182.220.56",
-    "locale": "ca",
-    "port": "10332",
-    "type": "RPC"
-  },
-  {
-    "protocol": "http",
-    "url": "seed4.travala.com",
-    "location": "London",
-    "address": "52.56.132.44",
-    "locale": "gb",
-    "port": "10332",
-    "type": "RPC"
-  },
-  {
     "protocol": "https",
     "url": "seed1.neo.org",
     "location": "China",
@@ -182,54 +146,6 @@
   },
   {
     "protocol": "http",
-    "url": "node1.ams2.bridgeprotocol.io",
-    "location": "Netherlands",
-    "address": "198.211.127.188",
-    "locale": "nl",
-    "type": "RPC"
-  },
-  {
-    "protocol": "http",
-    "url": "node2.ams2.bridgeprotocol.io",
-    "location": "Netherlands",
-    "address": "37.139.22.119",
-    "locale": "nl",
-    "type": "RPC"
-  },
-  {
-    "protocol": "http",
-    "url": "node1.nyc3.bridgeprotocol.io",
-    "location": "USA",
-    "address": "165.227.186.72",
-    "locale": "us",
-    "type": "RPC"
-  },
-  {
-    "protocol": "http",
-    "url": "node2.nyc3.bridgeprotocol.io",
-    "location": "USA",
-    "address": "159.65.244.191",
-    "locale": "us",
-    "type": "RPC"
-  },
-  {
-    "protocol": "http",
-    "url": "node1.sgp1.bridgeprotocol.io",
-    "location": "Singapore",
-    "address": "206.189.94.221",
-    "locale": "sg",
-    "type": "RPC"
-  },
-  {
-    "protocol": "http",
-    "url": "node2.sgp1.bridgeprotocol.io",
-    "location": "Singapore",
-    "address": "206.189.152.158",
-    "locale": "sg",
-    "type": "RPC"
-  },
-  {
-    "protocol": "http",
     "url": "pyrpc1.redpulse.com",
     "location": "Frankfurt",
     "locale": "de",
@@ -277,15 +193,6 @@
     "location": "Sao Paulo",
     "address": "54.233.224.215",
     "locale": "br",
-    "port": "10332",
-    "type": "RPC"
-  },
-  {
-    "protocol": "https",
-    "url": "seed1.spotcoin.com",
-    "location": "Frankfurt",
-    "address": "18.194.110.81",
-    "locale": "de",
     "port": "10332",
     "type": "RPC"
   },

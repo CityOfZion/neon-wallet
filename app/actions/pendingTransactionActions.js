@@ -24,7 +24,6 @@ export const parseContractTransaction = async (
   // eslint-disable-next-line camelcase
   const { confirmations, txid, net_fee, blocktime = 0 } = transaction
   transaction.vout.pop()
-  // eslint-disable-next-line
   for (const send of transaction.vout) {
     parsedData.push({
       confirmations,
@@ -33,7 +32,6 @@ export const parseContractTransaction = async (
       blocktime,
       amount: toBigNumber(send.value).toString(),
       to: send.address,
-      // eslint-disable-next-line no-await-in-loop
       asset: await findAndReturnTokenInfo(send.asset, net),
     })
   }
@@ -74,13 +72,11 @@ export const parseTransactionInfo = async (
   net: string,
 ) => {
   const parsedData: Array<ParsedPendingTransaction> = []
-  // eslint-disable-next-line
   for (const transaction of pendingTransactionsInfo) {
     if (transaction) {
       if (transaction.type === 'InvocationTransaction') {
         parsedData.push(...parseInvocationTransaction(transaction))
       } else {
-        // eslint-disable-next-line no-await-in-loop
         parsedData.push(...(await parseContractTransaction(transaction, net)))
       }
     }
@@ -129,10 +125,8 @@ export const fetchTransactionInfo = async (
     const client = Neon.create.rpcClient(url)
     const pendingTransactionInfo = []
 
-    // eslint-disable-next-line
     for (const transaction of transactions[address]) {
       if (transaction) {
-        // eslint-disable-next-line
         const result = await client
           .getRawTransaction(transaction.hash, 1)
           .catch(async e => {
@@ -149,7 +143,6 @@ export const fetchTransactionInfo = async (
 
         if (result) {
           if (result.confirmations >= MINIMUM_CONFIRMATIONS) {
-            // eslint-disable-next-line
             await pruneConfirmedOrStaleTransaction(address, transaction.hash)
           } else {
             pendingTransactionInfo.push({ ...result, ...transaction })

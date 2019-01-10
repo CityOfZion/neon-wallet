@@ -1,6 +1,7 @@
 // @flow
-import { rpc } from '@cityofzion/neon-js'
+import { rpc, settings } from '@cityofzion/neon-js'
 import { createActions } from 'spunky'
+
 import {
   NODES_MAIN_NET,
   NODES_TEST_NET,
@@ -10,67 +11,60 @@ import {
 } from '../core/constants'
 
 const ID = 'nodeNetwork'
+const MAX_RESPONSE_TIME = 10000
+const DEFAULT_RPC_PING = 10000
 
-const getBlockCount = async node =>
-  new Promise(resolve => {
-    let url = node.protocol ? `${node.protocol}://${node.url}` : node.url
-    url = node.port ? `${url}:${node.port}` : url
-
-    const client = new rpc.RPCClient(url)
-    client
-      .ping()
-      .then(latency => {
-        if (client.lastSeenHeight !== 0) {
-          resolve({
-            url,
-            blockCount: client.lastSeenHeight,
-            latency,
-          })
-        }
-      })
-      .catch({})
-  })
-
-const raceNodePromises = (total, promises) => {
+const pingNodes = (nodes: Array<any>) => {
+  settings.timeout.ping = DEFAULT_RPC_PING
   const responses = []
-  return new Promise(resolve =>
-    promises.forEach(promise =>
-      promise.then(result => {
-        responses.push(result)
-        if (responses.length === total) resolve(responses)
-      }),
-    ),
-  )
+  return new Promise(resolve => {
+    nodes.forEach(node => {
+      let url = node.protocol ? `${node.protocol}://${node.url}` : node.url
+      url = node.port ? `${url}:${node.port}` : url
+
+      const client = new rpc.RPCClient(url)
+      client
+        .ping()
+        .then(latency => {
+          if (client.lastSeenHeight !== 0) {
+            responses.push({
+              url,
+              blockCount: client.lastSeenHeight,
+              latency,
+            })
+          }
+          if (responses.length === nodes.length) {
+            resolve(responses)
+          }
+        })
+        .catch(console.error)
+
+      // if condition on line 58 is never met return the results
+      // that were obtained instead of waiting indefinitely
+      setTimeout(() => {
+        resolve(responses)
+      }, MAX_RESPONSE_TIME)
+    })
+  })
 }
 
-export default createActions(
-  ID,
-  ({ totalDisplayed = 15, networkId }) => async () => {
-    let nodes
-    switch (networkId) {
-      case MAIN_NETWORK_ID:
-        nodes = NODES_MAIN_NET.filter(
-          data =>
-            !NODE_EXLUSION_CRITERIA.some(criteria =>
-              data.url.includes(criteria),
-            ),
-        )
-        break
-      case TEST_NETWORK_ID:
-        nodes = NODES_TEST_NET
-        // eslint-disable-next-line
-        totalDisplayed = NODES_TEST_NET.length
-        break
-      default:
-        nodes = NODES_MAIN_NET.filter(
-          data =>
-            !NODE_EXLUSION_CRITERIA.some(criteria =>
-              data.url.includes(criteria),
-            ),
-        )
-    }
-    const promises = [...nodes].map(node => getBlockCount(node))
-    const result = await raceNodePromises(totalDisplayed, promises)
-    return result
-  },
-)
+export default createActions(ID, ({ networkId }) => async () => {
+  let nodes
+  switch (networkId) {
+    case MAIN_NETWORK_ID:
+      nodes = NODES_MAIN_NET.filter(
+        data =>
+          !NODE_EXLUSION_CRITERIA.some(criteria => data.url.includes(criteria)),
+      )
+      break
+    case TEST_NETWORK_ID:
+      nodes = NODES_TEST_NET
+      break
+    default:
+      nodes = NODES_MAIN_NET.filter(
+        data =>
+          !NODE_EXLUSION_CRITERIA.some(criteria => data.url.includes(criteria)),
+      )
+  }
+  return pingNodes(nodes)
+})

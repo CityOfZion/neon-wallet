@@ -1,7 +1,7 @@
 // @flow
 import { createActions } from 'spunky'
 import { random, get, compact } from 'lodash-es'
-import { rpc, api } from '@cityofzion/neon-js'
+import { rpc, api, settings } from '@cityofzion/neon-js'
 
 import { getStorage, setStorage } from '../core/storage'
 import {
@@ -12,6 +12,8 @@ import {
   NODE_EXLUSION_CRITERIA,
 } from '../core/constants'
 import { findNetworkByLabel } from '../core/networks'
+
+const DEFAULT_RPC_PING = 1000
 
 const ID = 'nodeStorage'
 const STORAGE_KEY = 'selectedNode'
@@ -47,6 +49,7 @@ export const getRPCEndpoint = async (
   net: Net,
   excludeCritera: Array<string> = NODE_EXLUSION_CRITERIA,
 ) => {
+  settings.timeout.ping = DEFAULT_RPC_PING
   try {
     if (
       cachedRPCUrl[net] &&
@@ -77,6 +80,7 @@ export const getRPCEndpoint = async (
         data.client = client
         return data
       })
+
     await Promise.all(data.map(data => data.client.ping()))
     const nodes = data.sort(
       (a, b) => b.client.lastSeenHeight - a.client.lastSeenHeight,

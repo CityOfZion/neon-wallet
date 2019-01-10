@@ -60,15 +60,17 @@ export default class AssetBalancesPanel extends React.Component<Props> {
               <span className={styles.value} id="neoWalletValue">
                 {this.getFormattedFiatBalance(this.getNEOValue())}
               </span>
-              <span
-                className={classNames(
-                  styles.change,
-                  styles[this.getNEOPriceChangeDirection()],
-                )}
-                id="priceChangeNeo"
-              >
-                {this.getNEOFormattedPriceChange()}
-              </span>
+              {!this.props.neoPriceChange.isNaN() && (
+                <span
+                  className={classNames(
+                    styles.change,
+                    styles[this.getNEOPriceChangeDirection()],
+                  )}
+                  id="priceChangeNeo"
+                >
+                  {this.getNEOFormattedPriceChange()}
+                </span>
+              )}
             </div>
             <div className={styles.asset}>
               <div className={classNames(styles.label, styles.assetName)}>
@@ -85,15 +87,17 @@ export default class AssetBalancesPanel extends React.Component<Props> {
               <span className={styles.value} id="gasWalletValue">
                 {this.getFormattedFiatBalance(this.getGASValue())}
               </span>
-              <span
-                className={classNames(
-                  styles.change,
-                  styles[this.getGASPriceChangeDirection()],
-                )}
-                id="priceChangeGas"
-              >
-                {this.getGASFormattedPriceChange()}
-              </span>
+              {!this.props.gasPriceChange.isNaN() && (
+                <span
+                  className={classNames(
+                    styles.change,
+                    styles[this.getGASPriceChangeDirection()],
+                  )}
+                  id="priceChangeGas"
+                >
+                  {this.getGASFormattedPriceChange()}
+                </span>
+              )}
             </div>
           </div>
         ) : (

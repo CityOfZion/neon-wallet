@@ -9,8 +9,11 @@ import CloseButton from '../CloseButton'
 import ConfirmIcon from '../../assets/icons/confirm.svg'
 import RefreshIcon from '../../assets/icons/refresh.svg'
 import AddIcon from '../../assets/icons/add.svg'
+import WarningIcon from '../../assets/icons/warning.svg'
 import Tooltip from '../Tooltip'
 import styles from './NodeSelectPanel.scss'
+import DialogueBox from '../DialogueBox'
+import Loading from '../../containers/App/Loading'
 
 type Node = {
   latency: string,
@@ -20,13 +23,13 @@ type Node = {
 
 type Props = {
   nodes: Node[],
-  nodesShown: number,
   loading: Boolean,
   loadNodesData: Function,
   saveSelectedNode: Function,
   selectedNode: string,
   net: string,
   networkId: string,
+  theme: string,
 }
 
 type State = {
@@ -39,7 +42,7 @@ export default class NodeSelect extends React.Component<Props, State> {
   }
 
   render() {
-    const { loading, nodesShown } = this.props
+    const { loading, nodes } = this.props
     return (
       <FullHeightPanel
         headerText="Node Selection"
@@ -49,31 +52,36 @@ export default class NodeSelect extends React.Component<Props, State> {
         instructionsClassName={styles.instructions}
         containerClassName={styles.nodeSelectContainer}
       >
-        <div className={styles.instructions}>
-          If you’re experiencing performance issues, try selecting a custom node
-          below
-        </div>
-        <section className={styles.tableContainer}>
-          <div className={styles.header}>
-            <div
-              className={classNames(styles.refresh, {
-                [styles.refreshDisabled]: this.state.refreshDisabled,
-              })}
-            >
-              <span onClick={this.handleRefreshNodeData}> Refresh </span>
-              <RefreshIcon
-                id="refresh"
-                onClick={this.handleRefreshNodeData}
-                className={classNames(styles.icon, {
-                  [styles.loading]: loading,
-                })}
-              />
-            </div>
-
-            <div className={styles.count}>Top {nodesShown} nodes listed</div>
-
-            {this.renderAutomaticSelect()}
+        {!!nodes.length && (
+          <div className={styles.instructions}>
+            If you’re experiencing performance issues, try selecting a custom
+            node below
           </div>
+        )}
+        <section className={styles.tableContainer}>
+          {!!nodes.length && (
+            <div className={styles.header}>
+              <div
+                className={classNames(styles.refresh, {
+                  [styles.refreshDisabled]: this.state.refreshDisabled,
+                })}
+              >
+                <span onClick={this.handleRefreshNodeData}> Refresh </span>
+                <RefreshIcon
+                  id="refresh"
+                  onClick={this.handleRefreshNodeData}
+                  className={classNames(styles.icon, {
+                    [styles.loading]: loading,
+                  })}
+                />
+              </div>
+              <div className={styles.count}>
+                Top {nodes.length} nodes listed
+              </div>
+
+              {this.renderAutomaticSelect()}
+            </div>
+          )}
           {this.renderNodeList()}
         </section>
       </FullHeightPanel>
@@ -135,8 +143,18 @@ export default class NodeSelect extends React.Component<Props, State> {
   }
 
   renderNodeList = () => {
-    const { nodes, selectedNode } = this.props
-    if (nodes) {
+    const {
+      nodes,
+      selectedNode,
+      loading,
+      theme,
+      loadNodesData,
+      networkId,
+    } = this.props
+    if (loading && !nodes.length) {
+      return <Loading theme={theme} nobackground />
+    }
+    if (nodes.length) {
       const listItems = nodes.map((node, index) => {
         const { latency, blockCount, url } = node
 
@@ -174,7 +192,20 @@ export default class NodeSelect extends React.Component<Props, State> {
       })
       return <div className={styles.content}>{listItems}</div>
     }
-    return <span>Loading</span>
+    if (!loading && !nodes.length) {
+      return (
+        <DialogueBox
+          icon={<WarningIcon className={styles.warningIcon} />}
+          renderText={() => (
+            <div>
+              Oops! There was an issue retrieving metrics from the network.{' '}
+              <a onClick={() => loadNodesData({ networkId })}>Retry?</a>
+            </div>
+          )}
+          className={styles.tokenSalePanelDialogueBox}
+        />
+      )
+    }
   }
 
   renderIcon = () => (

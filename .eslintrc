@@ -72,7 +72,9 @@
     "react/sort-comp": 0,
     "react/button-has-type": 0,
     "flowtype/generic-spacing": 0,
-    "no-param-reassign": ["warn"]
+    "no-param-reassign": ["warn"],
+    "no-restricted-syntax": ["error", "LabeledStatement", "WithStatement"],
+    "no-await-in-loop": 0
   },
   "settings": {
     "import/resolver": {
