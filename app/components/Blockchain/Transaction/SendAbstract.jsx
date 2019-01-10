@@ -53,13 +53,11 @@ export default class SendAbstract extends React.Component<Props> {
             ) : (
               <Fragment>
                 <span>{contactTo}</span>
-                {
-                  <CopyToClipboard
-                    className={styles.copy}
-                    text={to}
-                    tooltip="Copy Public Address"
-                  />
-                }
+                <CopyToClipboard
+                  className={styles.copy}
+                  text={to}
+                  tooltip="Copy Public Address"
+                />
               </Fragment>
             )}
           </div>
