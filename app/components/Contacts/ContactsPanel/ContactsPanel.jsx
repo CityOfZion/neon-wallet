@@ -34,6 +34,8 @@ type Contacts = {
 type Props = {
   history: Object,
   contacts: Contacts,
+  showSuccessNotification: ({ message: string }) => void,
+  showModal: (modalType: string, modalProps: Object) => any,
 }
 
 type State = {
