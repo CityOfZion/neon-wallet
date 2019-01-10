@@ -34,6 +34,7 @@ type Contacts = {
 type Props = {
   history: Object,
   contacts: Contacts,
+  deleteContact: string => void,
   showSuccessNotification: ({ message: string }) => void,
   showModal: (modalType: string, modalProps: Object) => any,
 }
@@ -218,7 +219,7 @@ export default class ContactsPanel extends React.Component<Props, State> {
     )
   }
 
-  handleDelete = (name) => {
+  handleDelete = (name: string) => {
     const { showModal, showSuccessNotification } = this.props
 
     showModal(MODAL_TYPES.CONFIRM, {
