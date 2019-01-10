@@ -55,7 +55,7 @@ export default class PriceHistoryChart extends React.Component<Props, State> {
   render = (): React$Node => {
     const { className, prices, timeKey, priceKey } = this.props
 
-    return isEmpty(prices) ? (
+    return !prices.length ? (
       <div>Oops! Historical market data is not available at this time.</div>
     ) : (
       <ResponsiveContainer
