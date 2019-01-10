@@ -34,11 +34,11 @@ const mapPricesDataToProps = ({ NEO, GAS }) => ({
 const mapPriceChangeDataToProps = (prices: Object) => {
   const oldNeo = toBigNumber(get(prices, `[${ASSETS.NEO}][0].close`, 0))
   const newNeo = toBigNumber(
-    get(prices, `[${ASSETS.NEO}][prices[${ASSETS.NEO}].length - 1].close`, 0),
+    get(prices, `[${ASSETS.NEO}][${prices[ASSETS.NEO].length - 1}].close`, 0),
   )
   const oldGas = toBigNumber(get(prices, `[${ASSETS.GAS}][0].close`, 0))
   const newGas = toBigNumber(
-    get(prices, `[${ASSETS.GAS}][prices[${ASSETS.GAS}].length - 1].close`, 0),
+    get(prices, `[${ASSETS.GAS}][${prices[ASSETS.GAS].length - 1}].close`, 0),
   )
 
   return {

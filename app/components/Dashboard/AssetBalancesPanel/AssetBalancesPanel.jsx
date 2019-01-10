@@ -95,7 +95,7 @@ export default class AssetBalancesPanel extends React.Component<Props> {
                   )}
                   id="priceChangeGas"
                 >
-                  this.getGASFormattedPriceChange()
+                  {this.getGASFormattedPriceChange()}
                 </span>
               )}
             </div>
