@@ -12,8 +12,9 @@ import Button from '../../Button'
 import AddIcon from '../../../assets/icons/add.svg'
 import InfoIcon from '../../../assets/icons/info.svg'
 import EditIcon from '../../../assets/icons/edit.svg'
+import DeleteIcon from '../../../assets/icons/delete.svg'
 import SendIcon from '../../../assets/icons/send.svg'
-import { ROUTES } from '../../../core/constants'
+import { ROUTES, MODAL_TYPES } from '../../../core/constants'
 import CopyToClipboard from '../../CopyToClipboard'
 import LogoWithStrikethrough from '../../LogoWithStrikethrough'
 
@@ -33,6 +34,9 @@ type Contacts = {
 type Props = {
   history: Object,
   contacts: Contacts,
+  deleteContact: string => void,
+  showSuccessNotification: ({ message: string }) => void,
+  showModal: (modalType: string, modalProps: Object) => any,
 }
 
 type State = {
@@ -136,6 +140,13 @@ export default class ContactsPanel extends React.Component<Props, State> {
         >
           Edit
         </Button>
+        <Button
+          className={styles.deleteButton}
+          renderIcon={DeleteIcon}
+          onClick={() => this.handleDelete(name)}
+        >
+          Delete
+        </Button>
         <Address address={address} asWrapper>
           <Button className={styles.infoButton} renderIcon={InfoIcon}>
             View Activity
@@ -206,5 +217,20 @@ export default class ContactsPanel extends React.Component<Props, State> {
         </Panel>
       </React.Fragment>
     )
+  }
+
+  handleDelete = (name: string) => {
+    const { showModal, showSuccessNotification } = this.props
+
+    showModal(MODAL_TYPES.CONFIRM, {
+      title: 'Confirm Delete',
+      text: `Please confirm removing contact - ${name}`,
+      onClick: () => {
+        this.props.deleteContact(name)
+        showSuccessNotification({
+          message: 'Contact removal was successful.',
+        })
+      },
+    })
   }
 }
