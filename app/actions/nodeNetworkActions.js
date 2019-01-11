@@ -12,10 +12,10 @@ import {
 
 const ID = 'nodeNetwork'
 const MAX_RESPONSE_TIME = 10000
-const DEFAULT_RPC_PING = 10000
+const RPC_PING_OVERRIDE = 10000
 
 const pingNodes = (nodes: Array<any>) => {
-  settings.timeout.ping = DEFAULT_RPC_PING
+  settings.timeout.ping = RPC_PING_OVERRIDE
   const responses = []
   return new Promise(resolve => {
     nodes.forEach(node => {
