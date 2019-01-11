@@ -151,66 +151,10 @@ export default class NodeSelect extends React.Component<Props, State> {
       loadNodesData,
       networkId,
     } = this.props
-if (!nodes.length) {
-  return loading ? (
-    <Loading theme={theme} nobackground />
-  ) : (
-    <DialogueBox
-      icon={<WarningIcon className={styles.warningIcon} />}
-      renderText={() => (
-        <div>
-          Oops! There was an issue retrieving metrics from the network.{" "}
-          <a onClick={() => loadNodesData({ networkId })}>Retry?</a>
-        </div>
-      )}
-      className={styles.tokenSalePanelDialogueBox}
-    />
-  );
-}
-
-return ... (other condition)
-      return <Loading theme={theme} nobackground />
-    }
-    if (nodes.length) {
-      const listItems = nodes.map((node, index) => {
-        const { latency, blockCount, url } = node
-
-        let icon
-        let rowClass
-        if (selectedNode === url) {
-          icon = <ConfirmIcon className={styles.icon} />
-          rowClass = styles.selected
-        } else {
-          icon = <AddIcon className={styles.icon} />
-        }
-
-        return (
-          <div
-            key={index}
-            className={classNames(styles.row, rowClass, {
-              [styles.odd]: index % 2 !== 0,
-            })}
-          >
-            <div className={styles.latency}>
-              <div className={this.getLatencyClass(parseInt(latency, 10))} />
-              <span>{latency}ms</span>
-            </div>
-            <div className={styles.blockHeight}>Block Height: {blockCount}</div>
-            <div className={styles.url}>{url}</div>
-            <div
-              className={styles.select}
-              onClick={() => this.handleSelect(url)}
-            >
-              {icon}
-              <span>Select</span>
-            </div>
-          </div>
-        )
-      })
-      return <div className={styles.content}>{listItems}</div>
-    }
-    if (!loading && !nodes.length) {
-      return (
+    if (!nodes.length) {
+      return loading ? (
+        <Loading theme={theme} nobackground />
+      ) : (
         <DialogueBox
           icon={<WarningIcon className={styles.warningIcon} />}
           renderText={() => (
@@ -223,6 +167,37 @@ return ... (other condition)
         />
       )
     }
+    const listItems = nodes.map((node, index) => {
+      const { latency, blockCount, url } = node
+      let icon
+      let rowClass
+      if (selectedNode === url) {
+        icon = <ConfirmIcon className={styles.icon} />
+        rowClass = styles.selected
+      } else {
+        icon = <AddIcon className={styles.icon} />
+      }
+      return (
+        <div
+          key={index}
+          className={classNames(styles.row, rowClass, {
+            [styles.odd]: index % 2 !== 0,
+          })}
+        >
+          <div className={styles.latency}>
+            <div className={this.getLatencyClass(parseInt(latency, 10))} />
+            <span>{latency}ms</span>
+          </div>
+          <div className={styles.blockHeight}>Block Height: {blockCount}</div>
+          <div className={styles.url}>{url}</div>
+          <div className={styles.select} onClick={() => this.handleSelect(url)}>
+            {icon}
+            <span>Select</span>
+          </div>
+        </div>
+      )
+    })
+    return <div className={styles.content}>{listItems}</div>
   }
 
   renderIcon = () => (

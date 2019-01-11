@@ -11,8 +11,7 @@ import {
 } from '../core/constants'
 
 const ID = 'nodeNetwork'
-const MAX_RESPONSE_TIME = 10000
-const RPC_PING_OVERRIDE = 10000
+const RPC_PING_OVERRIDE = 5000
 
 const pingNodes = (nodes: Array<any>) => {
   settings.timeout.ping = RPC_PING_OVERRIDE
@@ -38,12 +37,9 @@ const pingNodes = (nodes: Array<any>) => {
           }
         })
         .catch(console.error)
-
-      // if condition on line 58 is never met return the results
-      // that were obtained instead of waiting indefinitely
       setTimeout(() => {
         resolve(responses)
-      }, MAX_RESPONSE_TIME)
+      }, RPC_PING_OVERRIDE)
     })
   })
 }
