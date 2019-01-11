@@ -21,6 +21,10 @@ const pingNodes = (nodes: Array<any>) => {
       let url = node.protocol ? `${node.protocol}://${node.url}` : node.url
       url = node.port ? `${url}:${node.port}` : url
 
+      const maxWaitTimer = setTimeout(() => {
+        resolve(responses)
+      }, RPC_PING_OVERRIDE)
+
       const client = new rpc.RPCClient(url)
       client
         .ping()
@@ -33,13 +37,11 @@ const pingNodes = (nodes: Array<any>) => {
             })
           }
           if (responses.length === nodes.length) {
+            clearTimeout(maxWaitTimer)
             resolve(responses)
           }
         })
         .catch(console.error)
-      setTimeout(() => {
-        resolve(responses)
-      }, RPC_PING_OVERRIDE)
     })
   })
 }
