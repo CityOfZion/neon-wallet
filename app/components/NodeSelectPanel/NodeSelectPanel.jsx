@@ -151,7 +151,24 @@ export default class NodeSelect extends React.Component<Props, State> {
       loadNodesData,
       networkId,
     } = this.props
-    if (loading && !nodes.length) {
+if (!nodes.length) {
+  return loading ? (
+    <Loading theme={theme} nobackground />
+  ) : (
+    <DialogueBox
+      icon={<WarningIcon className={styles.warningIcon} />}
+      renderText={() => (
+        <div>
+          Oops! There was an issue retrieving metrics from the network.{" "}
+          <a onClick={() => loadNodesData({ networkId })}>Retry?</a>
+        </div>
+      )}
+      className={styles.tokenSalePanelDialogueBox}
+    />
+  );
+}
+
+return ... (other condition)
       return <Loading theme={theme} nobackground />
     }
     if (nodes.length) {
