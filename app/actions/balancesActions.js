@@ -135,11 +135,9 @@ async function getBalances({ net, address }: Props) {
 
   // Handle manually added script hashses here
   const userGeneratedTokenInfo = []
-  // eslint-disable-next-line
   for (const token of tokens.filter(
     token => token.isUserGenerated && token.networkId === network.id,
   )) {
-    // eslint-disable-next-line
     const info = await api.nep5
       .getToken(endpoint, token.scriptHash, address)
       .catch(error => {

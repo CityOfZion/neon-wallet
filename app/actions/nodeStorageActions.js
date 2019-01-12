@@ -1,7 +1,7 @@
 // @flow
 import { createActions } from 'spunky'
 import { random, get, compact } from 'lodash-es'
-import { rpc, api } from '@cityofzion/neon-js'
+import { rpc, api, settings } from '@cityofzion/neon-js'
 
 import { getStorage, setStorage } from '../core/storage'
 import {
@@ -12,6 +12,9 @@ import {
   NODE_EXLUSION_CRITERIA,
 } from '../core/constants'
 import { findNetworkByLabel } from '../core/networks'
+
+const PING_TIMEOUT_OVERRIDE = 1000
+const DEFAULT_PING_TIMEOUT = settings.timeout.ping
 
 const ID = 'nodeStorage'
 const STORAGE_KEY = 'selectedNode'
@@ -47,6 +50,7 @@ export const getRPCEndpoint = async (
   net: Net,
   excludeCritera: Array<string> = NODE_EXLUSION_CRITERIA,
 ) => {
+  settings.timeout.ping = PING_TIMEOUT_OVERRIDE
   try {
     if (
       cachedRPCUrl[net] &&
@@ -107,6 +111,8 @@ export const getRPCEndpoint = async (
     )
     const endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
     return endpoint
+  } finally {
+    settings.timeout.ping = DEFAULT_PING_TIMEOUT
   }
 }
 
