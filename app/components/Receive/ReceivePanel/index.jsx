@@ -58,7 +58,6 @@ export default class ReceivePanel extends React.Component<Props, State> {
     const { address } = this.props
     return (
       <Panel
-        className={styles.receivePanel}
         renderHeader={() => <ReceivePanelHeader address={address} />}
         contentClassName={styles.receivePanelContent}
       >
