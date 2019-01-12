@@ -13,7 +13,8 @@ import {
 } from '../core/constants'
 import { findNetworkByLabel } from '../core/networks'
 
-const RPC_PING_OVERRIDE = 1000
+const PING_TIMEOUT_OVERRIDE = 1000
+const DEFAULT_PING_TIMEOUT = settings.timeout.ping
 
 const ID = 'nodeStorage'
 const STORAGE_KEY = 'selectedNode'
@@ -49,7 +50,7 @@ export const getRPCEndpoint = async (
   net: Net,
   excludeCritera: Array<string> = NODE_EXLUSION_CRITERIA,
 ) => {
-  settings.timeout.ping = RPC_PING_OVERRIDE
+  settings.timeout.ping = PING_TIMEOUT_OVERRIDE
   try {
     if (
       cachedRPCUrl[net] &&
@@ -110,6 +111,8 @@ export const getRPCEndpoint = async (
     )
     const endpoint = await api.getRPCEndpointFrom({ net }, api.neoscan)
     return endpoint
+  } finally {
+    settings.timeout.ping = DEFAULT_PING_TIMEOUT
   }
 }
 

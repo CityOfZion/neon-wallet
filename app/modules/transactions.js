@@ -27,8 +27,8 @@ import { toNumber } from '../core/math'
 import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 import { addPendingTransaction } from '../actions/pendingTransactionActions'
 
-export const DEFAULT_RPC_TIMEOUT = 60000
-settings.timeout.rpc = DEFAULT_RPC_TIMEOUT
+const RPC_TIMEOUT_OVERRIDE = 60000
+settings.timeout.rpc = RPC_TIMEOUT_OVERRIDE
 
 const extractTokens = (sendEntries: Array<SendEntryType>) =>
   sendEntries.filter(({ symbol }) => isToken(symbol))
