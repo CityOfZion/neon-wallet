@@ -13,7 +13,7 @@ import {
 
 export const ID = 'pendingTransactions'
 const STORAGE_KEY = 'pendingTransactions'
-const MINIMUM_CONFIRMATIONS = 10
+const MINIMUM_CONFIRMATIONS = 3
 const INVALID_TX_ERROR_MESSAGE = 'Unknown transaction'
 
 export const parseContractTransaction = async (
@@ -24,6 +24,7 @@ export const parseContractTransaction = async (
   // eslint-disable-next-line camelcase
   const { confirmations, txid, net_fee, blocktime = 0 } = transaction
   transaction.vout.pop()
+  console.log({ transaction })
   for (const send of transaction.vout) {
     parsedData.push({
       confirmations,
@@ -170,8 +171,10 @@ export const addPendingTransaction = createActions(
     Array<ParsedPendingTransaction>,
   > => {
     const transactions = await getPendingTransactions()
-
-    if (Array.isArray(transactions[address])) {
+    if (
+      Array.isArray(transactions[address]) &&
+      !transactions[address].find(pendingTx => pendingTx.hash === tx.hash)
+    ) {
       transactions[address].push(tx)
     } else {
       transactions[address] = [tx]
