@@ -84,3 +84,7 @@ A gentle reminder, github issues are meant to be used by developers for maintain
 - _"Why is my balance not showing?"_
 
 should be asked in proper support channels such as the [NEO subreddit](https://www.reddit.com/r/NEO/), or the official [NEO Discord Channel](https://discord.gg/R8v48YA). You should also check the list of [frequently asked questions (FAQ)](https://github.com/CityOfZion/awesome-NEO/blob/master/resources/faq.md) to see if your question has been answered there already.
+
+### Contributing
+
+Contributing to neon-wallet is eligible for rewards distributed in NEO via the [City of Zion](https://github.com/CityOfZion/standards/blob/master/Introduction.md). Open issues are categorized into high, medium and low impact to roughly group issues and feature requests into their significance and impact to the project. These categories generally correspond to the level of reward that will be distributed upon completion of the issue. Additionally, QA testing, pull request review and creation of issues are also all items eligible for contribution rewards.
