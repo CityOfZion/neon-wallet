@@ -1,7 +1,7 @@
 // @flow
 import { createActions } from 'spunky'
 import Neon from '@cityofzion/neon-js'
-import { isEmpty } from 'lodash-es'
+import { isEmpty, cloneDeep } from 'lodash-es'
 
 import { toBigNumber } from '../core/math'
 import { getStorage, setStorage } from '../core/storage'
@@ -13,7 +13,7 @@ import {
 
 export const ID = 'pendingTransactions'
 const STORAGE_KEY = 'pendingTransactions'
-const MINIMUM_CONFIRMATIONS = 3
+const MINIMUM_CONFIRMATIONS = 2
 const INVALID_TX_ERROR_MESSAGE = 'Unknown transaction'
 
 export const parseContractTransaction = async (
@@ -22,18 +22,23 @@ export const parseContractTransaction = async (
 ): Promise<Array<ParsedPendingTransaction>> => {
   const parsedData = []
   // eslint-disable-next-line camelcase
-  const { confirmations, txid, net_fee, blocktime = 0 } = transaction
-  transaction.vout.pop()
-  console.log({ transaction })
-  for (const send of transaction.vout) {
+  const {
+    confirmations,
+    txid,
+    net_fee, // eslint-disable-line camelcase
+    blocktime = 0,
+    sendEntries,
+  } = transaction
+
+  for (const send of sendEntries) {
     parsedData.push({
       confirmations,
       txid: txid.substring(2),
       net_fee,
       blocktime,
-      amount: toBigNumber(send.value).toString(),
+      amount: toBigNumber(send.amount).toString(),
       to: send.address,
-      asset: await findAndReturnTokenInfo(send.asset, net),
+      asset: await findAndReturnTokenInfo('', net, send.symbol),
     })
   }
   return parsedData
