@@ -24,6 +24,7 @@ import MCT from './MCT.svg'
 import NEX from './NEX.svg'
 import NKN from './NKN.svg'
 import NNC from './NNC.svg'
+import NNN from './NNN.svg'
 import NRVE from './NRVE.svg'
 import NVL from './NVL.svg'
 import OBT from './OBT.svg'
@@ -74,6 +75,7 @@ export const imageMap = {
   NEX,
   NKN,
   NNC,
+  NNN,
   NRVE,
   NVL,
   OBT,
