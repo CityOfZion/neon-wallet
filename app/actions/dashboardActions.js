@@ -5,6 +5,7 @@ import balancesActions from './balancesActions'
 import claimsActions from './claimsActions'
 import pricesActions from './pricesActions'
 import priceHistoryActions from './priceHistoryActions'
+import { getPendingTransactionInfo } from './pendingTransactionActions'
 
 export const ID = 'dashboard'
 
@@ -13,4 +14,5 @@ export default createBatchActions(ID, {
   claims: claimsActions,
   prices: pricesActions,
   priceHistory: priceHistoryActions,
+  getPendingTransactionInfo,
 })
