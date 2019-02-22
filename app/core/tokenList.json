@@ -428,6 +428,19 @@
       }
     }
   },
+  "NNN": {
+    "symbol": "NNN",
+    "companyName": "Novem Gold AG",
+    "type": "NEP5",
+    "networks": {
+      "1": {
+        "name": "Novem Gold Token",
+        "hash": "50091057ff12863f1a43266b9786209e399c6ffc",
+        "decimals": 8,
+        "totalSupply": 1
+      }
+    }
+  },
   "NOS": {
     "symbol": "NOS",
     "companyName": "nOS",
