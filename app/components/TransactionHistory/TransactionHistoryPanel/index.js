@@ -14,12 +14,20 @@ const mapTransactionsDataToProps = transactions => ({
   transactions,
 })
 
-const mapAccountActionsToProps = (actions, props) => ({
+const mapAccountActionsToProps = (actions, { net, address }) => ({
   handleFetchAdditionalTxData: () =>
     actions.call({
-      net: props.net,
-      address: props.address,
+      net,
+      address,
       shouldIncrementPagination: true,
+    }),
+})
+
+const mapPendingTransactionActionsToProps = (actions, { net, address }) => ({
+  handleGetPendingTransactionInfo: () =>
+    actions.call({
+      net,
+      address,
     }),
 })
 
@@ -34,6 +42,7 @@ export default compose(
     title: 'Transaction History',
   }),
   withActions(transactionHistoryActions, mapAccountActionsToProps),
+  withActions(getPendingTransactionInfo, mapPendingTransactionActionsToProps),
   withCall(getPendingTransactionInfo),
   withData(getPendingTransactionInfo, mapPendingTransactionInfoToProps),
   withLoadingProp(transactionHistoryActions),

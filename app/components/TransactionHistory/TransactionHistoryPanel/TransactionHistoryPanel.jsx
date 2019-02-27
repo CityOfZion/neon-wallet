@@ -11,7 +11,8 @@ import styles from './TransactionHistoryPanel.scss'
 type Props = {
   className: ?string,
   transactions: Array<Object>,
-  handleFetchAdditionalTxData: () => any,
+  handleFetchAdditionalTxData: () => void,
+  handleGetPendingTransactionInfo: () => void,
   pendingTransactions: Array<Object>,
   address: string,
 }
@@ -51,12 +52,18 @@ export default class TransactionHistory extends React.Component<Props> {
   }
 
   async pruneReturnedTransactionsFromStorage() {
-    const { transactions, pendingTransactions, address } = this.props
-    const toBePurged = intersectionBy(transactions, pendingTransactions, 'txId')
+    const {
+      transactions,
+      pendingTransactions,
+      address,
+      handleGetPendingTransactionInfo,
+    } = this.props
+    const toBePurged = intersectionBy(transactions, pendingTransactions, 'txid')
     // eslint-disable-next-line
     for (const transaction of toBePurged) {
       // eslint-disable-next-line
       await pruneConfirmedOrStaleTransaction(address, transaction.txid)
+      handleGetPendingTransactionInfo()
     }
   }
 
