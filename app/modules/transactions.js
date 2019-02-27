@@ -190,7 +190,7 @@ export const sendTransaction = ({
       dispatch(
         showSuccessNotification({
           message:
-            'Transaction complete! Your balance will automatically update when the blockchain has processed it.',
+            'Transaction pending! Your balance will automatically update when the blockchain has processed it.',
         }),
       )
       return resolve(response)

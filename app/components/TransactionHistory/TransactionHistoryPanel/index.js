@@ -9,6 +9,7 @@ import withProgressPanel from '../../../hocs/withProgressPanel'
 import withAuthData from '../../../hocs/withAuthData'
 import withNetworkData from '../../../hocs/withNetworkData'
 import withLoadingProp from '../../../hocs/withLoadingProp'
+import withSuccessNotification from '../../../hocs/withSuccessNotification'
 
 const mapTransactionsDataToProps = transactions => ({
   transactions,
@@ -20,6 +21,12 @@ const mapAccountActionsToProps = (actions, { net, address }) => ({
       net,
       address,
       shouldIncrementPagination: true,
+    }),
+  handleRefreshTxData: () =>
+    actions.call({
+      net,
+      address,
+      shouldIncrementPagination: false,
     }),
 })
 
@@ -47,4 +54,8 @@ export default compose(
   withData(getPendingTransactionInfo, mapPendingTransactionInfoToProps),
   withLoadingProp(transactionHistoryActions),
   withData(transactionHistoryActions, mapTransactionsDataToProps),
+  withSuccessNotification(
+    transactionHistoryActions,
+    'Received latest transaction information.',
+  ),
 )(TransactionHistoryPanel)

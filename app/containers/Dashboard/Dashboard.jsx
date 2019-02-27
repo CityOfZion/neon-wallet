@@ -25,7 +25,7 @@ type Props = {
 const REFRESH_INTERVAL_MS = 30000
 
 export default class Dashboard extends Component<Props> {
-  walletDataInterval: ?number
+  walletDataInterval: ?IntervalID
 
   componentDidMount() {
     this.addPolling()
@@ -80,7 +80,6 @@ export default class Dashboard extends Component<Props> {
   }
 
   addPolling = () => {
-    // $FlowFixMe
     this.walletDataInterval = setInterval(
       this.props.loadWalletData,
       REFRESH_INTERVAL_MS,
@@ -88,9 +87,7 @@ export default class Dashboard extends Component<Props> {
   }
 
   removePolling = () => {
-    // $FlowFixMe
     if (this.walletDataInterval) {
-      // $FlowFixMe
       clearInterval(this.walletDataInterval)
     }
   }
