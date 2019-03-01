@@ -13,14 +13,27 @@ type Props = {
   transactions: Array<Object>,
   handleFetchAdditionalTxData: () => void,
   handleGetPendingTransactionInfo: () => void,
+  handleRefreshTxData: () => void,
   pendingTransactions: Array<Object>,
   address: string,
 }
 
+const REFRESH_INTERVAL_MS = 30000
+
 export default class TransactionHistory extends React.Component<Props> {
+  transactionDataInterval: IntervalID
+
   static defaultProps = {
     transactions: [],
     pendingTransactions: [],
+  }
+
+  componentDidMount() {
+    this.addPolling()
+  }
+
+  componentWillUnmount() {
+    this.removePolling()
   }
 
   render() {
@@ -39,6 +52,19 @@ export default class TransactionHistory extends React.Component<Props> {
         />
       </Panel>
     )
+  }
+
+  addPolling = () => {
+    this.transactionDataInterval = setInterval(async () => {
+      await this.props.handleGetPendingTransactionInfo()
+      this.props.handleRefreshTxData()
+    }, REFRESH_INTERVAL_MS)
+  }
+
+  removePolling = () => {
+    if (this.transactionDataInterval) {
+      clearInterval(this.transactionDataInterval)
+    }
   }
 
   pruneConfirmedTransactionsFromPending() {

@@ -39,7 +39,7 @@ export default class SendSuccess extends React.Component<Props> {
           <CheckMarkIcon className={styles.sendSuccessHeaderIcon} />
           <div className={styles.sendSuccessHeaderInfo}>
             <h1 className={styles.sendSuccessHeaderInfoText}>
-              {numberOfItems} {pluralize('Transfer', numberOfItems)} completed
+              {numberOfItems} {pluralize('Transfer', numberOfItems)} pending
             </h1>
             <p className={styles.sendSuccessParagraphText}>
               {this.txFormattedDate}
