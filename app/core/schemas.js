@@ -9,6 +9,6 @@ export const Account = (account: Object) => {
     lock: false,
     key,
     contract: {},
-    extra: null
+    extra: null,
   }
 }

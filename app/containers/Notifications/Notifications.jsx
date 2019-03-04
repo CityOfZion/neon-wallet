@@ -11,7 +11,7 @@ import CheckIcon from '../../assets/icons/check.svg'
 
 type Props = {
   notifications: Array<NotificationType>,
-  hideNotification: Function
+  hideNotification: Function,
 }
 
 class Notifications extends Component<Props> {
@@ -24,12 +24,12 @@ class Notifications extends Component<Props> {
     if (notifications.length > 0) {
       const systemNotifications = this.rnsRef.state.notifications || []
       const systemNotificationsIds = systemNotifications.map(
-        notification => notification.id
+        notification => notification.id,
       )
       const notificationIds = notifications.map(notification => notification.id)
 
       difference(systemNotificationsIds, notificationIds).forEach(
-        notificationId => this.rnsRef.removeNotification(notificationId)
+        notificationId => this.rnsRef.removeNotification(notificationId),
       )
 
       difference(notificationIds, systemNotificationsIds).forEach(
@@ -40,18 +40,18 @@ class Notifications extends Component<Props> {
                 className={classNames(
                   style.icon,
                   'notification-hidden',
-                  'notification-visible'
+                  'notification-visible',
                 )}
               >
                 <div
                   className={classNames(
                     {
-                      [style.warnIcon]: notifications[0].level === 'warning'
+                      [style.warnIcon]: notifications[0].level === 'warning',
                     },
                     { [style.errorIcon]: notifications[0].level === 'error' },
                     {
-                      [style.successIcon]: notifications[0].level === 'success'
-                    }
+                      [style.successIcon]: notifications[0].level === 'success',
+                    },
                   )}
                 >
                   {this.renderIcon(notifications[0].level)}
@@ -60,13 +60,13 @@ class Notifications extends Component<Props> {
             ),
             uid: notificationId,
             ...notifications.find(
-              notification => notification.id === notificationId
+              notification => notification.id === notificationId,
             ),
             onRemove: () => {
               hideNotification(notificationId)
-            }
+            },
           })
-        }
+        },
       )
     } else if (notifications.length === 0) {
       this.rnsRef.clearNotifications()
@@ -89,7 +89,7 @@ class Notifications extends Component<Props> {
     )
   }
 
-  renderIcon(level: string) {
+  renderIcon = (level: string) => {
     switch (level) {
       case 'success':
         return <CheckIcon />

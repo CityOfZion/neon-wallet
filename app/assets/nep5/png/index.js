@@ -24,6 +24,7 @@ import MCT from './MCT.png'
 import NEX from './NEX.png'
 import NKN from './NKN.png'
 import NNC from './NNC.png'
+import NNN from './NNN.png'
 import NRVE from './NRVE.png'
 import NVL from './NVL.png'
 import OBT from './OBT.png'
@@ -74,6 +75,7 @@ export const imageMap = {
   NEX,
   NKN,
   NNC,
+  NNN,
   NRVE,
   NVL,
   OBT,
@@ -95,5 +97,5 @@ export const imageMap = {
   WWB,
   XQTA,
   ZPT,
-  NOS
+  NOS,
 }

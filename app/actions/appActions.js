@@ -12,5 +12,5 @@ export default createBatchActions(ID, {
   network: networkActions,
   accounts: accountsActions,
   settings: settingsActions,
-  contacts: contactsActions
+  contacts: contactsActions,
 })

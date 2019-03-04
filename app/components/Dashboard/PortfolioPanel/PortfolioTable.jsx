@@ -12,13 +12,13 @@ type BalanceType = {
   symbol: SymbolType,
   balance: string,
   value: number,
-  percent: number
+  percent: number,
 }
 
 type Props = {
   className?: string,
   balances: { [key: SymbolType]: BalanceType },
-  currency: string
+  currency: string,
 }
 
 export default class PortfolioTable extends React.Component<Props> {

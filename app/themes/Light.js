@@ -3,7 +3,7 @@ const BASE = {
   '--base-scrollbar-thumb': '#5c677f',
   '--base-main-background': '#e6e6e6',
   '--base-text': '#394152',
-  '--base-link-color': '#3063c9'
+  '--base-link-color': '#3063c9',
 }
 
 const BUTTON = {
@@ -23,7 +23,7 @@ const BUTTON = {
   '--button-priority-transfer-color': '#394152',
   '--button-priority-transfer-disabled': '#fff',
   '--button-max-amount-background': '#e6e6e6',
-  '--button-max-amount-text': '#8f939b'
+  '--button-max-amount-text': '#8f939b',
 }
 
 const INPUT = {
@@ -37,16 +37,16 @@ const INPUT = {
   '--input-active':
     'linear-gradient(#f2f2f2, #f2f2f2), radial-gradient(circle at top left, #66eb8e, #6bdaf6)',
   '--input-icon': '#9ca0a9',
-  '--input-placeholder': 'rgba(40, 40, 40, 0.5)'
+  '--input-placeholder': 'rgba(40, 40, 40, 0.5)',
 }
 
 const HEADER_BAR = {
-  '--header-bar-default-icon-color': '#394152'
+  '--header-bar-default-icon-color': '#394152',
 }
 
 const TAB = {
   '--tab-text': '#394152',
-  '--tab-border': '#394152'
+  '--tab-border': '#394152',
 }
 
 const PANEL = {
@@ -61,16 +61,16 @@ const PANEL = {
   '--panel-full-height-instructions-text': '#5c677f',
   '--panel-full-height-instructions-border': 'rgba(0, 0, 0, 0.15)',
   '--panel-full-height-header-icon-color': '#394152',
-  '--panel-receive-explanation': 'rgba(242, 242, 242, .5)'
+  '--panel-receive-explanation': 'rgba(242, 242, 242, .5)',
 }
 
 const MODAL = {
-  '--modal-overlay': 'rgba(26, 54, 80, 0.25)'
+  '--modal-overlay': 'rgba(26, 54, 80, 0.25)',
 }
 
 const AUTH_STYLES = {
   '--auth-main-container-background': '#fff',
-  '--auth-scan-qr-border': '#f2f2f2'
+  '--auth-scan-qr-border': '#f2f2f2',
 }
 
 const DASHBOARD = {
@@ -80,7 +80,7 @@ const DASHBOARD = {
   '--dashboard-total-wallet-value-total-text': '#394152',
   '--dashboard-asset-panel-asset-name': '#5c677f',
   '--dashboard-token-balances-divider-line': '#f2f2f2',
-  '--dashboard-price-history-current-price': '#394152'
+  '--dashboard-price-history-current-price': '#394152',
 }
 
 const SIDEBAR = {
@@ -89,13 +89,13 @@ const SIDEBAR = {
   '--sidebar-icon': '#9599a2',
   '--sidebar-active-border': '#66edcd',
   '--sidebar-active-background': '#f2f2f2',
-  '--sidebar-active-icon': '#394152'
+  '--sidebar-active-icon': '#394152',
 }
 
-const TX_HISTORY = {
-  '--tx-history-odd-row': '#f2f2f2',
-  '--tx-history-button-icon': '#394152',
-  '--tx-history-copy-icon': '#9599a2'
+const TX_LIST = {
+  '--tx-list-odd-row': '#f2f2f2',
+  '--tx-list-button-icon': '#394152',
+  '--tx-list-copy-icon': '#9599a2',
 }
 
 const SETTINGS = {
@@ -105,7 +105,7 @@ const SETTINGS = {
   '--settings-link-text': '#69e27e',
   '--settings-select-value-text': '#69e27e',
   '--settings-donation-text': '#5c677f',
-  '--settings-spacer': 'rgba(170, 178, 189, 0.3)'
+  '--settings-spacer': 'rgba(170, 178, 189, 0.3)',
 }
 
 const NODE_SELECT = {
@@ -113,7 +113,7 @@ const NODE_SELECT = {
   '--node-select-icon-color': '#69e27e',
   '--node-select-automatic-select-button-text': '#5c677f',
   '--node-select-refresh-icon': '#394152',
-  '--node-select-node-count': '#5c677f'
+  '--node-select-node-count': '#5c677f',
 }
 
 const AMOUNTS_PANEL = {
@@ -121,17 +121,23 @@ const AMOUNTS_PANEL = {
   '--amounts-panel-second-row-background': '#fff',
   '--amounts-panel-asset-name-text': '#515151',
   '--amounts-panel-asset-amount-text': '#515151',
-  '--amounts-panel-asset-worth-text': '#515151'
+  '--amounts-panel-asset-worth-text': '#515151',
 }
 
 const CONTACTS = {
   '--contacts-odd-numbered-row': 'rgba(230, 230, 230, 0.1)',
   '--contacts-group-header-background': '#f6f7f8',
-  '--contacts-group-header-text': '#394152'
+  '--contacts-group-header-text': '#394152',
 }
 
 const SEND = {
-  '--send-success-row-info': '#394152'
+  '--send-success-row-info': '#394152',
+}
+
+const QR_SCANNER = {
+  '--qr-scan-paused': 'rgba(102, 237, 135, 0.6)',
+  '--qr-scan-animation-start': 'rgba(57, 65, 82, 1)',
+  '--qr-scan-animation-end': 'rgba(57, 65, 82, 0)',
 }
 
 export default {
@@ -146,9 +152,10 @@ export default {
   ...TAB,
   ...DASHBOARD,
   ...SIDEBAR,
-  ...TX_HISTORY,
+  ...TX_LIST,
   ...SETTINGS,
   ...HEADER_BAR,
   ...CONTACTS,
-  ...SEND
+  ...SEND,
+  ...QR_SCANNER,
 }

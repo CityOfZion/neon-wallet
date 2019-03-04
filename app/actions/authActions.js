@@ -1,25 +1,27 @@
 // @flow
-import { wallet } from 'neon-js'
+import { wallet } from '@cityofzion/neon-js'
 import { noop } from 'lodash-es'
 import { createActions } from 'spunky'
 
+import { bindArgsFromN } from '../util/bindHelpers'
 import { resetBalanceState } from './balancesActions'
 import { upgradeNEP6AddAddresses } from '../core/account'
 import { validatePassphraseLength } from '../core/wallet'
 import { ledgerNanoSCreateSignatureAsync } from '../ledger/ledgerNanoS'
 
 type WifLoginProps = {
-  wif: string
+  wif: string,
 }
 
 type LedgerLoginProps = {
   publicKey: string,
-  signingFunction: Function
+  signingFunction: Function,
+  account: number,
 }
 
 type Nep2LoginProps = {
   passphrase: string,
-  encryptedWIF: string
+  encryptedWIF: string,
 }
 
 type AccountType = ?{
@@ -27,14 +29,14 @@ type AccountType = ?{
   wif?: string,
   publicKey?: string,
   signingFunction?: Function,
-  isHardwareLogin: boolean
+  isHardwareLogin: boolean,
 }
 
 export const ID = 'auth'
 
 export const wifLoginActions = createActions(
   ID,
-  ({ wif }: WifLoginProps) => (state: Object): AccountType => {
+  ({ wif }: WifLoginProps) => (): AccountType => {
     if (!wallet.isWIF(wif) && !wallet.isPrivateKey(wif)) {
       throw new Error('Invalid private key entered')
     }
@@ -44,15 +46,15 @@ export const wifLoginActions = createActions(
     return {
       wif: account.WIF,
       address: account.address,
-      isHardwareLogin: false
+      isHardwareLogin: false,
     }
-  }
+  },
 )
 
 export const nep2LoginActions = createActions(
   ID,
   ({ passphrase, encryptedWIF }: Nep2LoginProps) => async (): Promise<
-    AccountType
+    AccountType,
   > => {
     if (!validatePassphraseLength(passphrase)) {
       throw new Error('Passphrase too short')
@@ -70,34 +72,35 @@ export const nep2LoginActions = createActions(
     return {
       wif: account.WIF,
       address: account.address,
-      isHardwareLogin: false
+      isHardwareLogin: false,
     }
-  }
+  },
 )
 
 export const ledgerLoginActions = createActions(
   ID,
-  ({ publicKey }: LedgerLoginProps) => (state: Object): AccountType => {
+  ({ publicKey, account }: LedgerLoginProps) => (): AccountType => {
     const publicKeyEncoded = wallet.getPublicKeyEncoded(publicKey)
-    const account = new wallet.Account(publicKeyEncoded)
+    const walletAccount = new wallet.Account(publicKeyEncoded)
 
     return {
       publicKey,
-      address: account.address,
-      signingFunction: ledgerNanoSCreateSignatureAsync,
-      isHardwareLogin: true
+      address: walletAccount.address,
+      signingFunction: bindArgsFromN(
+        ledgerNanoSCreateSignatureAsync,
+        3,
+        account,
+      ),
+      isHardwareLogin: true,
     }
-  }
+  },
 )
 
-export const logoutActions = createActions(
-  ID,
-  () => (state: Object): AccountType => {
-    resetBalanceState()
-    return null
-  }
-)
+export const logoutActions = createActions(ID, () => (): AccountType => {
+  resetBalanceState()
+  return null
+})
 
 // TODO: Better way to expose action data than to make a faux function?  One idea is to change
 //       `withData` to accept the `ID` exported from this file instead of a generated action.
-export default createActions(ID, () => (state: Object) => noop)
+export default createActions(ID, () => () => noop)

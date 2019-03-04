@@ -11,25 +11,25 @@ type Props = {
   disabled: boolean,
   fees: number,
   availableGas: number,
-  handleAddPriorityFee: number => any
+  handleAddPriorityFee: number => any,
 }
 
 const FEE_OPTIONS = [
   {
     fee: 0.001,
     description: 'Fast',
-    precision: 3
+    precision: 3,
   },
   {
     fee: 0.05,
     description: 'Faster',
-    precision: 2
+    precision: 2,
   },
   {
     fee: 0.1,
     description: 'Fastest',
-    precision: 1
-  }
+    precision: 1,
+  },
 ]
 
 export default class PriorityFee extends React.Component<Props> {
@@ -45,7 +45,7 @@ export default class PriorityFee extends React.Component<Props> {
             <Button
               key={option.description}
               className={classNames(styles.sendFormButton, {
-                [styles.activeButton]: fees === option.fee
+                [styles.activeButton]: fees === option.fee,
               })}
               primary
               renderIcon={() => <LightningIcon />}
@@ -53,7 +53,7 @@ export default class PriorityFee extends React.Component<Props> {
               disabled={this.shouldDisableFeeButton(
                 disabled,
                 availableGas,
-                option.fee
+                option.fee,
               )}
               onClick={() =>
                 handleAddPriorityFee(fees === option.fee ? 0 : option.fee)
@@ -75,7 +75,7 @@ export default class PriorityFee extends React.Component<Props> {
   shouldDisableFeeButton = (
     disabled: boolean,
     availableGas: number,
-    feeAmount: number
+    feeAmount: number,
   ) => {
     if (disabled) return true
     if (availableGas < feeAmount) return true

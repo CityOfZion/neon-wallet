@@ -8,7 +8,6 @@ import Loader from '../../Loader'
 import BaseModal from '../BaseModal'
 import styles from './style.scss'
 import GridIcon from '../../../assets/icons/grid.svg'
-import CopyToClipboard from '../../CopyToClipboard'
 import CopyIcon from '../../../assets/icons/copy.svg'
 import ConfirmIcon from '../../../assets/icons/confirm.svg'
 
@@ -20,24 +19,24 @@ type Props = {
   address: string,
   asset: string,
   amount: string,
-  description: string
+  description: string,
 }
 
 type State = {
   loading: boolean,
-  copied: boolean
+  copied: boolean,
 }
 
 export default class ReceiveModal extends React.Component<Props, State> {
   image: ?HTMLImageElement
 
   state = {
-    loading: true
+    loading: true,
   }
 
   state = {
     loading: true,
-    copied: false
+    copied: false,
   }
 
   handleCopyIcon = () => {
@@ -55,8 +54,8 @@ export default class ReceiveModal extends React.Component<Props, State> {
         address,
         asset,
         amount,
-        description
-      }
+        description,
+      },
     })
 
     qrCode.toDataURL().then(imgData => {
@@ -77,7 +76,7 @@ export default class ReceiveModal extends React.Component<Props, State> {
       : tokensList.reduce(
           (accum, token) =>
             token.networks['1'].hash === asset ? token.symbol : accum,
-          asset
+          asset,
         )
     return (
       <BaseModal
@@ -96,10 +95,18 @@ export default class ReceiveModal extends React.Component<Props, State> {
             <div className={styles.sectionTitle}>PAYMENT REQUEST DETAILS</div>
             <div className={styles.sectionContent}>
               <div className={styles.assetAmount}>
-                {(amount ? `${amount} ` : '') + (assetSymbol || 'NEO')}
+                <label>Asset: </label>
+                {assetSymbol || ASSETS.NEO}
               </div>
-              <div className={styles.address}>{address}</div>
+              <div className={styles.assetAmount}>
+                <label>Amount: </label>
+                {amount}
+              </div>
+              <div className={styles.address}>
+                <label>Address: </label> {address}
+              </div>
               <div className={styles.description}>
+                <label> Reference: </label>
                 {description || '(No Reference)'}
               </div>
             </div>
@@ -132,7 +139,7 @@ export default class ReceiveModal extends React.Component<Props, State> {
                 if (this.image) {
                   this.handleCopyIcon()
                   const imageForClipboard = nativeImage.createFromDataURL(
-                    this.image && this.image.src
+                    this.image && this.image.src,
                   )
                   clipboard.writeImage(imageForClipboard)
                 }

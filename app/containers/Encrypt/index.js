@@ -1,6 +1,6 @@
 // @flow
 import { compose, withProps } from 'recompose'
-import { wallet } from 'neon-js'
+import { wallet } from '@cityofzion/neon-js'
 import { validatePassphraseLength } from '../../core/wallet'
 
 import Encrypt from './Encrypt'
@@ -22,6 +22,6 @@ export default compose(
   withProps({
     encryptPrivateKey,
     isWIF: wallet.isWIF,
-    validatePassphraseLength
-  })
+    validatePassphraseLength,
+  }),
 )(Encrypt)

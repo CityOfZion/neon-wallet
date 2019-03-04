@@ -12,22 +12,23 @@ import withNetworkData from '../../hocs/withNetworkData'
 import withPricesData from '../../hocs/withPricesData'
 import withBalancesData from '../../hocs/withBalancesData'
 import withTokensData from '../../hocs/withTokensData'
+import withCurrencyData from '../../hocs/withCurrencyData'
 import withSuccessNotification from '../../hocs/withSuccessNotification'
 import { showModal } from '../../modules/modal'
 
 import { participateInSale } from '../../modules/sale'
 
 const mapPricesDataToProps = (prices: Object) => ({
-  prices
+  prices,
 })
 
 const mapDispatchToProps = dispatch => ({
   participateInSale: (...args) => dispatch(participateInSale(...args)),
-  showModal: (...args) => dispatch(showModal(...args))
+  showModal: (...args) => dispatch(showModal(...args)),
 })
 
 const mapBalancesDataToProps = balances => ({
-  assetBalances: pick(balances, 'NEO', 'GAS')
+  assetBalances: pick(balances, 'NEO', 'GAS'),
 })
 
 const mapIcoTokensToProps = icoTokens => ({ icoTokens })
@@ -35,21 +36,22 @@ const mapIcoTokensToProps = icoTokens => ({ icoTokens })
 export default compose(
   connect(
     null,
-    mapDispatchToProps
+    mapDispatchToProps,
   ),
   withAuthData(),
   withNetworkData(),
   withTokensData(),
+  withCurrencyData('currencyCode'),
   withBalancesData(mapBalancesDataToProps),
   withPricesData(mapPricesDataToProps),
   withCall(icoTokensActions),
   withData(icoTokensActions, mapIcoTokensToProps),
   withSuccessNotification(
     balancesActions,
-    'Received latest blockchain information.'
+    'Received latest blockchain information.',
   ),
   connect(
     null,
-    mapDispatchToProps
-  )
+    mapDispatchToProps,
+  ),
 )(TokenSale)

@@ -15,12 +15,12 @@ type AmountDataItem = {
   symbol: string,
   price: string,
   totalBalance: string,
-  totalBalanceWorth: number | typeof PRICE_UNAVAILABLE
+  totalBalanceWorth: number | typeof PRICE_UNAVAILABLE,
 }
 
 type Props = {
   amountsData: AmountDataItem[],
-  currencyCode: string
+  currencyCode: string,
 }
 
 const ORDER_BY_FIELD = 'totalBalanceWorth'
@@ -47,7 +47,7 @@ const AmountsPanel = ({ amountsData, currencyCode }: Props) => {
     /* $FlowFixMe */
     amountsData,
     item => (item.price ? item[ORDER_BY_FIELD] : '0'),
-    ORDERY_BY_DIRECTION
+    ORDERY_BY_DIRECTION,
   ).slice(0, MAX_RESULTS)
 
   const amountsInSingleRow = orderedAmounts.length <= RESULTS_PER_ROW
@@ -60,7 +60,7 @@ const AmountsPanel = ({ amountsData, currencyCode }: Props) => {
       <section
         className={classNames(styles.amountsPanel, {
           [styles.amountsPanelSingleRow]: amountsInSingleRow,
-          [styles.amountsPanelMultipleRows]: !amountsInSingleRow
+          [styles.amountsPanelMultipleRows]: !amountsInSingleRow,
         })}
       >
         {[...orderedAmounts, ...times(amountToFill)].map(
@@ -80,7 +80,7 @@ const AmountsPanel = ({ amountsData, currencyCode }: Props) => {
                   className={classNames({
                     [amountBoxStyles.amountsInSingleRow]: amountsInSingleRow,
                     [amountBoxStyles.amountsInMultipleRows]: !amountsInSingleRow,
-                    [amountBoxStyles.amountsInAltColor]: isAltRow
+                    [amountBoxStyles.amountsInAltColor]: isAltRow,
                   })}
                 />
               )
@@ -89,11 +89,11 @@ const AmountsPanel = ({ amountsData, currencyCode }: Props) => {
               <div
                 key={`infoBoxFill${i}`}
                 className={classNames(amountBoxStyles.amountsInfoBox, {
-                  [amountBoxStyles.amountsInAltColor]: isAltRow
+                  [amountBoxStyles.amountsInAltColor]: isAltRow,
                 })}
               />
             )
-          }
+          },
         )}
       </section>
     </div>

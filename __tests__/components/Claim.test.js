@@ -7,7 +7,7 @@ describe('Claim', () => {
   const props = {
     doGasClaim: () => {},
     disableClaimButton: false,
-    claimAmount: '1.25406935'
+    claimAmount: '1.25406935',
   }
 
   test('should render claim GAS button as enabled', () => {

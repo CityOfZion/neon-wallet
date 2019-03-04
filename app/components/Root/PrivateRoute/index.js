@@ -14,6 +14,6 @@ export default compose(
   withProgress(authActions, { propName: 'progress' }),
   mapProps(props => ({
     ...omit(props, 'progress'),
-    authenticated: props.progress === LOADED
-  }))
+    authenticated: props.progress === LOADED,
+  })),
 )(PrivateRoute)

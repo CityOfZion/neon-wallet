@@ -1,8 +1,8 @@
 // @flow
 import React from 'react'
-import Instascan from 'instascan'
-import classNames from 'classnames'
+import { type ProgressState } from 'spunky'
 
+import QrCodeScanner from '../../components/QrCodeScanner'
 import Button from '../../components/Button'
 import PasswordInput from '../../components/Inputs/PasswordInput/PasswordInput'
 import LoginIcon from '../../assets/icons/login.svg'
@@ -11,32 +11,28 @@ import Close from '../../assets/icons/close.svg'
 import styles from '../Home/Home.scss'
 
 type Props = {
-  loginWithPrivateKey: Function
+  loginWithPrivateKey: (content: string) => void,
+  cameraAvailable: boolean,
+  progress: ProgressState,
 }
 
 type State = {
   wif: string,
   scannerActive: boolean,
-  loading: boolean
 }
 
 export default class LoginPrivateKey extends React.Component<Props, State> {
-  scannerInstance: Instascan
-
-  scanPreviewElement: ?HTMLVideoElement
-
   state = {
     wif: '',
     scannerActive: false,
-    loading: false
   }
 
-  componentWillUnmount() {
-    this.stopScanner()
+  toggleScanner = () => {
+    this.setState(prevState => ({ scannerActive: !prevState.scannerActive }))
   }
 
   render = () => {
-    const { loginWithPrivateKey } = this.props
+    const { loginWithPrivateKey, cameraAvailable, progress } = this.props
     const { wif, scannerActive } = this.state
 
     return (
@@ -50,11 +46,11 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
           {scannerActive ? (
             <React.Fragment>
               <div className={styles.scannerContainer}>
-                {/* eslint-disable-next-line */}
-                <video
-                  ref={ref => {
-                    this.scanPreviewElement = ref
-                  }}
+                <QrCodeScanner
+                  callback={loginWithPrivateKey}
+                  callbackProgress={progress}
+                  width="316"
+                  height="178"
                 />
               </div>
               <div className={styles.privateKeyLoginButtonRowScannerActive}>
@@ -71,6 +67,7 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
             <React.Fragment>
               <div className={styles.centeredInput}>
                 <PasswordInput
+                  textInputClassName={styles.privateKeyInput}
                   placeholder="Enter your private key here"
                   value={wif}
                   onChange={(e: Object) =>
@@ -85,6 +82,7 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
                   primary
                   renderIcon={GridIcon}
                   onClick={this.toggleScanner}
+                  disabled={!cameraAvailable}
                 >
                   Scan QR
                 </Button>
@@ -103,44 +101,5 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
         </form>
       </div>
     )
-  }
-
-  toggleScanner = () => {
-    this.setState(
-      prevState => ({ scannerActive: !prevState.scannerActive }),
-      () => {
-        if (this.state.scannerActive) return this.startScanner()
-        return this.stopScanner()
-      }
-    )
-  }
-
-  stopScanner() {
-    if (this.scannerInstance) this.scannerInstance.stop()
-  }
-
-  startScanner() {
-    const { loginWithPrivateKey } = this.props
-    this.scannerInstance = new Instascan.Scanner({
-      video: this.scanPreviewElement
-    })
-
-    this.scannerInstance.addListener('scan', content => {
-      loginWithPrivateKey(content)
-    })
-
-    this.setState({ loading: true })
-    Instascan.Camera.getCameras()
-      .then((cameras: Array<Object>) => {
-        this.setState(prevState => ({
-          loading: prevState.loading
-        }))
-        if (cameras.length > 0) {
-          this.scannerInstance.start(cameras[0])
-        } else {
-          console.error('No cameras found.')
-        }
-      })
-      .catch(e => console.error(e))
   }
 }

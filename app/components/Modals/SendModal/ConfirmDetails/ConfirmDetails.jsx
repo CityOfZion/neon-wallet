@@ -10,7 +10,7 @@ import styles from './ConfirmDetails.scss'
 
 type Props = {
   recipientData: Object,
-  confirmAndClose: () => any
+  confirmAndClose: () => any,
 }
 
 export default class ConfirmDetails extends React.Component<Props> {
@@ -29,22 +29,22 @@ export default class ConfirmDetails extends React.Component<Props> {
           <div className={baseStyles.sectionTitle}>PAYMENT DETAILS</div>
           <div className={styles.paymentDetails}>
             <div className={styles.detailGroup}>
-              <div className={styles.detailName}>Asset</div>
+              <div className={styles.detailName}>Asset:</div>
               <div>{this.getRecipientData('asset')}</div>
             </div>
 
             <div className={styles.detailGroup}>
-              <div className={styles.detailName}>Address</div>
-              <div>{this.getRecipientData('address')}</div>
-            </div>
-
-            <div className={styles.detailGroup}>
-              <div className={styles.detailName}>Amount</div>
+              <div className={styles.detailName}>Amount:</div>
               <div>{this.getRecipientData('amount')}</div>
             </div>
 
             <div className={styles.detailGroup}>
-              <div className={styles.detailName}>Reference</div>
+              <div className={styles.detailName}>Address:</div>
+              <div>{this.getRecipientData('address')}</div>
+            </div>
+
+            <div className={styles.detailGroup}>
+              <div className={styles.detailName}>Reference:</div>
               <div>{this.getRecipientData('reference')}</div>
             </div>
           </div>

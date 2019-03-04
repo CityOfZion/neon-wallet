@@ -1,3 +1,4 @@
+// @flow
 import hashToSymbol from './hashToSymbol'
 
 const INVALID_FORMAT = 'Invalid format'
@@ -5,7 +6,14 @@ const INVALID_PROTOCOL = 'Invalid protocol'
 const MISSING_ADDRESS = 'Missing recipient address'
 const UNRECOGNIZED_ASSET = 'Unrecognized asset'
 
-const parseQRCode = data => {
+export type RecipientData = {
+  address: string,
+  asset: ?string,
+  amount: ?string,
+  reference: ?string,
+}
+
+const parseQRCode = (data: string): RecipientData => {
   let parsedData
 
   try {
@@ -31,7 +39,7 @@ const parseQRCode = data => {
     address: pathname,
     asset,
     amount: searchParams.get('amount'),
-    reference: searchParams.get('description')
+    reference: searchParams.get('description'),
   }
 }
 

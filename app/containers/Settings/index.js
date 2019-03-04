@@ -8,7 +8,7 @@ import {
   type Actions,
   withCall,
   withRecall,
-  withReset
+  withReset,
 } from 'spunky'
 
 import Settings from './Settings'
@@ -17,14 +17,14 @@ import withCurrencyData from '../../hocs/withCurrencyData'
 import withThemeData from '../../hocs/withThemeData'
 import withSoundEnabledData from '../../hocs/withSoundEnabledData'
 import accountsActions, {
-  updateAccountsActions
+  updateAccountsActions,
 } from '../../actions/accountsActions'
 import pricesActions from '../../actions/pricesActions'
 import { updateSettingsActions } from '../../actions/settingsActions'
 import { getNetworks } from '../../core/networks'
 import {
   showErrorNotification,
-  showSuccessNotification
+  showSuccessNotification,
 } from '../../modules/notifications'
 import { showModal } from '../../modules/modal'
 import networkActions from '../../actions/networkActions'
@@ -33,54 +33,54 @@ import nodeStorageActions from '../../actions/nodeStorageActions'
 import dashboardActions from '../../actions/dashboardActions'
 
 const mapStateToProps = () => ({
-  networks: getNetworks()
+  networks: getNetworks(),
 })
 
 const actionCreators = {
   showModal,
   showErrorNotification,
-  showSuccessNotification
+  showSuccessNotification,
 }
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(actionCreators, dispatch)
 
 const mapAccountsDataToProps = accounts => ({
-  accounts
+  accounts,
 })
 
 const mapAccountsActionsToProps = actions => ({
-  setAccounts: accounts => actions.call(accounts)
+  setAccounts: accounts => actions.call(accounts),
 })
 
 const mapSettingsActionsToProps = actions => ({
   setCurrency: currency =>
     actions.call({
-      currency
+      currency,
     }),
   setBlockExplorer: blockExplorer =>
     actions.call({
-      blockExplorer
+      blockExplorer,
     }),
   setTheme: theme =>
     actions.call({
-      theme
+      theme,
     }),
-  setSoundSetting: soundEnabled => actions.call({ soundEnabled })
+  setSoundSetting: soundEnabled => actions.call({ soundEnabled }),
 })
 
-const mapActionsToProps = (actions: Actions, props: Object): Object => ({
-  handleNetworkChange: networkId => actions.call({ networkId })
+const mapActionsToProps = (actions: Actions): Object => ({
+  handleNetworkChange: networkId => actions.call({ networkId }),
 })
 
 const mapSelectedNodeDataToProps = url => ({
-  selectedNode: url
+  selectedNode: url,
 })
 
 export default compose(
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
   ),
   withNetworkData(),
   withCall(nodeStorageActions),
@@ -96,5 +96,5 @@ export default compose(
   withActions(updateSettingsActions, mapSettingsActionsToProps),
   withReset(dashboardActions, ['currency']),
   withReset(pricesActions, ['currency']),
-  withRecall(dashboardActions, ['currency'])
+  withRecall(dashboardActions, ['currency']),
 )(Settings)

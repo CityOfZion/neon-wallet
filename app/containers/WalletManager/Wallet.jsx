@@ -10,7 +10,7 @@ import styles from './WalletManager.scss'
 
 type Props = {
   label: string,
-  address: string
+  address: string,
 }
 
 class WalletManager extends Component<Props> {

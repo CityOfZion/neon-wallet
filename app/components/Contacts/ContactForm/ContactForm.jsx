@@ -2,7 +2,7 @@
 import React from 'react'
 import { noop } from 'lodash-es'
 
-import { wallet } from 'neon-js'
+import { wallet } from '@cityofzion/neon-js'
 
 import Button from '../../Button'
 import TextInput from '../../Inputs/TextInput'
@@ -16,18 +16,16 @@ type Props = {
   formName: string,
   formAddress: string,
   mode?: string,
-  address: string,
   contacts: Object,
   setName: Function,
   newAddress?: boolean,
   setAddress: Function,
-  onSubmit: Function
+  onSubmit: Function,
 }
 
 type State = {
   nameError: string,
   addressError: string,
-  ownAddress: string
 }
 
 export default class ContactForm extends React.Component<Props, State> {
@@ -37,7 +35,6 @@ export default class ContactForm extends React.Component<Props, State> {
     this.state = {
       nameError: '',
       addressError: '',
-      ownAddress: this.props.address
     }
   }
 
@@ -47,11 +44,11 @@ export default class ContactForm extends React.Component<Props, State> {
     address: '',
     setName: noop,
     setAddress: noop,
-    onSubmit: noop
+    onSubmit: noop,
   }
 
   render() {
-    const { submitLabel, formName, mode, formAddress } = this.props
+    const { submitLabel, formName, formAddress } = this.props
     const { nameError, addressError } = this.state
 
     return (
@@ -143,7 +140,7 @@ export default class ContactForm extends React.Component<Props, State> {
 
     if (mode !== 'edit') {
       const nameExists = Object.keys(contacts).filter(
-        (contactName: string) => contactName === name
+        (contactName: string) => contactName === name,
       )
 
       if (nameExists.length > 0) {
@@ -159,7 +156,6 @@ export default class ContactForm extends React.Component<Props, State> {
   }
 
   validateAddress = (address: string) => {
-    const { ownAddress } = this.state
     const { mode, contacts, formAddress } = this.props
     let error
 

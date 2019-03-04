@@ -8,18 +8,18 @@ import styles from '../Home/Home.scss'
 
 type Props = {
   loading: boolean,
-  loginNep2: Function
+  loginNep2: Function,
 }
 
 type State = {
   encryptedWIF: string,
-  passphrase: string
+  passphrase: string,
 }
 
 export default class LoginNep2 extends Component<Props, State> {
   state = {
     encryptedWIF: '',
-    passphrase: ''
+    passphrase: '',
   }
 
   render() {

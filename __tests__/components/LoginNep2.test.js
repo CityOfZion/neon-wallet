@@ -21,13 +21,13 @@ const setup = (shallowRender = true) => {
         <MemoryRouter>
           <LoginNep2 />
         </MemoryRouter>
-      </Provider>
+      </Provider>,
     )
   }
 
   return {
     store,
-    wrapper
+    wrapper,
   }
 }
 

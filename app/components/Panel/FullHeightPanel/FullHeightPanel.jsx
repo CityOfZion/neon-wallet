@@ -18,14 +18,14 @@ type Props = {
   className: string,
   containerClassName: string,
   headerContainerClassName: string,
-  instructionsClassName: string
+  instructionsClassName: string,
 }
 
 export default class ViewLayout extends Component<Props> {
   static defaultProps = {
     shouldRenderHeader: true,
     renderInstructions: () => <div> Enter Details </div>,
-    iconColor: '#69E27E'
+    iconColor: '#69E27E',
   }
 
   render() {
@@ -74,7 +74,7 @@ export default class ViewLayout extends Component<Props> {
       shouldRenderHeader,
       headerContainerClassName,
       iconColor,
-      headerText
+      headerText,
     } = this.props
     return (
       shouldRenderHeader && (

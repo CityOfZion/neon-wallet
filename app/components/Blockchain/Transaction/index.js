@@ -2,6 +2,7 @@
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
 import { withData } from 'spunky'
+import { invert } from 'lodash-es'
 
 import Transaction from './Transaction'
 import withNetworkData from '../../../hocs/withNetworkData'
@@ -14,18 +15,20 @@ import contactsActions from '../../../actions/contactsActions'
 
 const mapDispatchToProps = dispatch => ({
   showAddContactModal: props =>
-    dispatch(showModal(MODAL_TYPES.ADD_CONTACT, props))
+    dispatch(showModal(MODAL_TYPES.ADD_CONTACT, props)),
 })
 
-const mapContactsDataToProps = (contacts: Object) => ({ contacts })
+const mapContactsDataToProps = (contacts: Object) => ({
+  contacts: invert(contacts),
+})
 
 export default compose(
   connect(
     null,
-    mapDispatchToProps
+    mapDispatchToProps,
   ),
   withAuthData(),
   withData(contactsActions, mapContactsDataToProps),
   withNetworkData(),
-  withExplorerData()
+  withExplorerData(),
 )(Transaction)

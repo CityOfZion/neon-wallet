@@ -1,12 +1,12 @@
 // @flow
 import { createActions } from 'spunky'
-import { wallet } from 'neon-js'
+import { wallet } from '@cityofzion/neon-js'
 import { has, isEmpty, keys, values, indexOf, zipObject, omit } from 'lodash-es'
 
 import { getStorage, setStorage } from '../core/storage'
 
 type Contacts = {
-  [name: string]: string
+  [name: string]: string,
 }
 
 const STORAGE_KEY = 'addressBook'
@@ -31,7 +31,7 @@ export const ID = 'contacts'
 export const addContactActions = createActions(
   ID,
   ({ name, address }: { name: string, address: string }) => async (): Promise<
-    Contacts
+    Contacts,
   > => {
     validateContact(name, address)
 
@@ -45,7 +45,7 @@ export const addContactActions = createActions(
     await setContacts(newContacts)
 
     return newContacts
-  }
+  },
 )
 
 export const updateContactActions = createActions(
@@ -53,11 +53,11 @@ export const updateContactActions = createActions(
   ({
     oldName,
     newName,
-    newAddress
+    newAddress,
   }: {
     oldName: string,
     newName: string,
-    newAddress: string
+    newAddress: string,
   }) => async (): Promise<Contacts> => {
     validateContact(newName, newAddress)
 
@@ -72,12 +72,12 @@ export const updateContactActions = createActions(
 
     const newContacts = zipObject(
       [...names.slice(0, index), newName, ...names.slice(index + 1)],
-      [...addresses.slice(0, index), newAddress, ...addresses.slice(index + 1)]
+      [...addresses.slice(0, index), newAddress, ...addresses.slice(index + 1)],
     )
     await setContacts(newContacts)
 
     return newContacts
-  }
+  },
 )
 
 export const deleteContactActions = createActions(
@@ -93,9 +93,9 @@ export const deleteContactActions = createActions(
     await setContacts(newContacts)
 
     return newContacts
-  }
+  },
 )
 
 export default createActions(ID, () => async (): Promise<Contacts> =>
-  getContacts()
+  getContacts(),
 )

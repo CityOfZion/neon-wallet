@@ -7,12 +7,13 @@ import DialogueBox from '../../../DialogueBox'
 
 import BackIcon from '../../../../assets/icons/arrow.svg'
 import WarningIcon from '../../../../assets/icons/warning.svg'
+import ActivityLink from '../ActivityLink'
 
 import styles from './SendError.scss'
 
 type Props = {
   resetViewsAfterError: () => any,
-  sendErrorMessage: string
+  sendErrorMessage: string,
 }
 
 const SendError = ({ resetViewsAfterError, sendErrorMessage }: Props) => (
@@ -30,7 +31,7 @@ const SendError = ({ resetViewsAfterError, sendErrorMessage }: Props) => (
     </div>
     <DialogueBox
       icon={<WarningIcon />}
-      text="Your transaction has not been processed. Press the button below to go back and try again."
+      renderText={() => <ActivityLink error />}
       className={styles.sendErrorDialogueBox}
     />
     <Button

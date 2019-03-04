@@ -14,7 +14,7 @@ type Props = {
   className: ?string,
   name: string,
   address: string,
-  onSave: Function
+  onSave: Function,
 }
 
 export default class AddContactPanel extends React.Component<Props> {
@@ -23,7 +23,7 @@ export default class AddContactPanel extends React.Component<Props> {
     address: '',
     setName: noop,
     setAddress: noop,
-    onSave: noop
+    onSave: noop,
   }
 
   render() {

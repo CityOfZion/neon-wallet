@@ -11,6 +11,12 @@
   height: 100%;
 }
 
+label {
+  font-family: var(--font-gotham-thin);
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
 .header {
   display: flex;
   align-items: center;

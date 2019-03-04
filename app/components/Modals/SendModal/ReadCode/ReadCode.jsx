@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
+import { type ProgressState } from 'spunky'
 
 import GridIcon from 'assets/icons/grid.svg'
 import CozDonationQrCode from 'assets/images/coz-donation-qr-code.png'
@@ -11,16 +12,18 @@ import baseStyles from '../SendModal.scss'
 import styles from './ReadCode.scss'
 
 type Props = {
-  gotoNextStep: Function
+  callback: string => any,
+  callbackProgress: ProgressState,
+  cameraAvailable: boolean,
 }
 
 type State = {
-  scannerActive: boolean
+  scannerActive: boolean,
 }
 
 export default class ReadCode extends React.Component<Props, State> {
   state = {
-    scannerActive: false
+    scannerActive: false,
   }
 
   toggleScanner = () => {
@@ -29,13 +32,22 @@ export default class ReadCode extends React.Component<Props, State> {
 
   getScanner = () => {
     if (this.state.scannerActive) {
-      return <QrCodeScanner callback={this.props.gotoNextStep} />
+      const { callback, callbackProgress } = this.props
+      return (
+        <QrCodeScanner
+          callback={callback}
+          callbackProgress={callbackProgress}
+          width="352"
+          height="220"
+        />
+      )
     }
 
     return <img src={CozDonationQrCode} alt="coz-donation-qr-code.png" />
   }
 
   render() {
+    const { cameraAvailable } = this.props
     const { scannerActive } = this.state
 
     return (
@@ -59,20 +71,24 @@ export default class ReadCode extends React.Component<Props, State> {
           <div
             className={classNames(
               baseStyles.sectionContent,
-              styles.qrCodeScannerSection
+              styles.qrCodeScannerSection,
             )}
           >
             <div className={styles.qrCodeScannerPlaceholder}>
-              <div className="frameLineTopLeft" />
-              <div className="frameLineTopRight" />
-              <div className="frameLineBottomLeft" />
-              <div className="frameLineBottomRight" />
+              <div className={styles.frameLineTopRight} />
+              <div className={styles.frameLineTopLeft} />
+              <div className={styles.frameLineBottomRight} />
+              <div className={styles.frameLineBottomLeft} />
               {this.getScanner()}
             </div>
           </div>
         </div>
         <div className={styles.scanButtonContainer}>
-          <Button primary onClick={this.toggleScanner}>
+          <Button
+            primary
+            onClick={this.toggleScanner}
+            disabled={!scannerActive && !cameraAvailable}
+          >
             {scannerActive ? 'Cancel' : 'Capture'}
           </Button>
         </div>

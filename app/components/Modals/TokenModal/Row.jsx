@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 
 import Delete from 'react-icons/lib/md/delete'
-import LockOutline from 'react-icons/lib/md/lock-outline'
 import Tooltip from '../../Tooltip'
 
 import styles from './Row.scss'
@@ -13,7 +12,7 @@ type Props = {
   token: TokenItemType,
   onChangeScriptHash: Function,
   onDelete: Function,
-  isScriptHashInvalid: boolean
+  isScriptHashInvalid: boolean,
 }
 
 class Row extends Component<Props> {
@@ -22,13 +21,13 @@ class Row extends Component<Props> {
       token,
       onChangeScriptHash,
       onDelete,
-      isScriptHashInvalid
+      isScriptHashInvalid,
     } = this.props
     return (
       <div className={styles.row}>
         <TextInput
           className={classNames(styles.rowURL, {
-            [styles.rowError]: isScriptHashInvalid
+            [styles.rowError]: isScriptHashInvalid,
           })}
           type="text"
           readOnly={!token.isUserGenerated}

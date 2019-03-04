@@ -12,12 +12,12 @@ module.exports = storybookBaseConfig => {
           modules: true,
           sourceMap: true,
           importLoaders: 1,
-          localIdentName: '[name]__[local]__[hash:base64:5]'
-        }
+          localIdentName: '[name]__[local]__[hash:base64:5]',
+        },
       },
-      'sass-loader'
+      'sass-loader',
     ],
-    include: path.resolve(__dirname, '../')
+    include: path.resolve(__dirname, '../'),
   })
 
   storybookBaseConfig.resolve = {
@@ -26,8 +26,8 @@ module.exports = storybookBaseConfig => {
     alias: {
       assets: path.resolve(__dirname, '../app/assets'),
       styles: path.resolve(__dirname, '../app/styles'),
-      components: path.resolve(__dirname, '../app/components')
-    }
+      components: path.resolve(__dirname, '../app/components'),
+    },
   }
 
   return storybookBaseConfig

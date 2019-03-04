@@ -1,19 +1,16 @@
 // @flow
-import { api } from 'neon-js'
+import { api } from '@cityofzion/neon-js'
 import { createActions } from 'spunky'
 
 import { getNetworkById } from '../core/deprecated'
 
 type Props = {
-  networkId: string
+  networkId: string,
 }
 
 export const ID = 'blockHeight'
 
-export default createActions(
-  ID,
-  ({ networkId }: Props = {}) => async (state: Object) => {
-    const network = getNetworkById(networkId)
-    return api.getWalletDBHeightFrom({ net: network }, api.neoscan)
-  }
-)
+export default createActions(ID, ({ networkId }: Props = {}) => async () => {
+  const network = getNetworkById(networkId)
+  return api.getWalletDBHeightFrom({ net: network }, api.neoscan)
+})

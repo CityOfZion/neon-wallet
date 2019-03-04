@@ -8,7 +8,7 @@ describe('Address', () => {
   const props = {
     address: 'AW4FD7bz6PF2QadFKF8qXUT7tNmWgvXZc4',
     networkId: TEST_NETWORK_ID,
-    explorer: EXPLORERS.NEO_SCAN
+    explorer: EXPLORERS.NEO_SCAN,
   }
 
   test('should render without crashing', () => {

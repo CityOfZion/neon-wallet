@@ -2,19 +2,19 @@
 import uuidv4 from 'uuid/v4'
 import {
   ensureHex,
-  validateHashLength
+  validateHashLength,
 } from '../../../util/tokenHashValidation'
 
 export const getNewTokenItem = (networkId: string) => ({
   id: uuidv4(),
   scriptHash: '',
   networkId,
-  isUserGenerated: true
+  isUserGenerated: true,
 })
 
 export const validateTokens = (
   tokens: Array<TokenItemType>,
-  configuredTokens: Array<TokenItemType>
+  configuredTokens: Array<TokenItemType>,
 ) => {
   let errorMessage = null
   let errorType = null
@@ -44,7 +44,7 @@ export const validateTokens = (
   }
   tokens.forEach(token => {
     const duplicate = configuredTokens.find(
-      configuredToken => configuredToken.scriptHash === token.scriptHash
+      configuredToken => configuredToken.scriptHash === token.scriptHash,
     )
     if (duplicate) {
       console.warn('Attempted to add duplicate hash', { duplicate })
@@ -63,6 +63,6 @@ export const validateTokens = (
   return {
     errorMessage,
     errorType,
-    errorItemId
+    errorItemId,
   }
 }

@@ -8,7 +8,7 @@ import {
   CartesianGrid,
   XAxis,
   YAxis,
-  Tooltip
+  Tooltip,
 } from 'recharts'
 import { get, isEmpty } from 'lodash-es'
 
@@ -25,7 +25,7 @@ type Price = {
   low: number,
   open: number,
   volumefrom: number,
-  volumeto: number
+  volumeto: number,
 }
 
 type Props = {
@@ -35,11 +35,11 @@ type Props = {
   timeKey: string,
   priceKey: string,
   staticPrice: number,
-  formatDate(Date): string
+  formatDate(Date): string,
 }
 
 type State = {
-  windowHeight: number
+  windowHeight: number,
 }
 
 const formatDate = (date: Date): string =>
@@ -49,7 +49,7 @@ export default class PriceHistoryChart extends React.Component<Props, State> {
   static defaultProps = {
     timeKey: 'time',
     priceKey: 'close',
-    formatDate
+    formatDate,
   }
 
   render = (): React$Node => {
@@ -112,7 +112,7 @@ export default class PriceHistoryChart extends React.Component<Props, State> {
         </div>
         <div className={styles.tooltipPrice}>
           {this.formatPrice(
-            get(tooltipProps.payload[0], 'payload.close', 0)
+            get(tooltipProps.payload[0], 'payload.close', 0),
             /* $FlowFixMe */
           )}
         </div>
@@ -120,9 +120,9 @@ export default class PriceHistoryChart extends React.Component<Props, State> {
     )
 
   renderAxisLabel = (axisType: string, label: ?string): Function => ({
-    viewBox
+    viewBox,
   }: {
-    viewBox: Object
+    viewBox: Object,
   }): React$Node => (
     <AxisLabel axisType={axisType} {...viewBox}>
       {label}
@@ -138,7 +138,7 @@ export default class PriceHistoryChart extends React.Component<Props, State> {
       month: 'long',
       day: 'numeric',
       hour: 'numeric',
-      minute: 'numeric'
+      minute: 'numeric',
     })
   }
 

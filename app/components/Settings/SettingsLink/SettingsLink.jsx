@@ -12,7 +12,7 @@ type Props = {
   noBorderBottom?: boolean,
   label?: string,
   onClick?: Function,
-  renderIcon?: Function
+  renderIcon?: Function,
 }
 
 export default class SettingsLink extends Component<Props> {
@@ -20,7 +20,7 @@ export default class SettingsLink extends Component<Props> {
     return this.props.onClick ? (
       <div
         className={classNames(styles.settingsLink, {
-          [styles.noBorderBottom]: this.props.noBorderBottom
+          [styles.noBorderBottom]: this.props.noBorderBottom,
         })}
         onClick={this.props.onClick}
       >
@@ -34,7 +34,7 @@ export default class SettingsLink extends Component<Props> {
     ) : (
       <Link
         className={classNames(styles.settingsLink, {
-          [styles.noBorderBottom]: this.props.noBorderBottom
+          [styles.noBorderBottom]: this.props.noBorderBottom,
         })}
         to={this.props.to}
       >

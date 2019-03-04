@@ -12,47 +12,47 @@ const initialState = {
   spunky: {
     app: {
       batch: true,
-      mapping: ['accounts', 'blockHeight', 'settings']
+      mapping: ['accounts', 'blockHeight', 'settings'],
     },
     accounts: {
       batch: false,
       progress: LOADED,
       data: [],
-      loadedCount: 1
+      loadedCount: 1,
     },
     blockHeight: {
       batch: false,
       progress: LOADED,
       data: 2000000,
-      loadedCount: 1
+      loadedCount: 1,
     },
     network: {
       batch: false,
       progress: LOADED,
       data: MAIN_NETWORK_ID,
-      loadedCount: 1
+      loadedCount: 1,
     },
     prices: {
       batch: false,
       progress: LOADED,
       data: {
         NEO: 40.5,
-        GAS: 19.8
+        GAS: 19.8,
       },
-      loadedCount: 1
+      loadedCount: 1,
     },
     settings: {
       batch: false,
       progress: LOADED,
       data: {},
-      loadedCount: 1
-    }
+      loadedCount: 1,
+    },
   },
   account: {},
   wallet: {
-    transactions: []
+    transactions: [],
   },
-  modal: {}
+  modal: {},
 }
 
 describe('App', () => {

@@ -5,20 +5,9 @@
   align-items: center;
   flex-direction: column;
 
-  video {
-    width: 350px;
-  }
-
   button {
     margin-top: 16px;
   }
-}
-
-.frameLine {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border-style: solid;
 }
 
 .scanButtonContainer {
@@ -29,43 +18,75 @@
 .qrCodeScannerPlaceholder {
   position: relative;
   display: flex;
-  align-items: center;
   justify-content: center;
   width: 100%;
   height: 220px;
   border-radius: 5px;
   background-color: var(--panel-header);
   padding: 30px 0px;
+}
 
-  .frameLineTopLeft {
-    @extend .frameLine;
+// frameLine placeholder selectors
+%frameLine {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border: {
+    style: solid;
+    width: 3px;
+    radius: 5px;
+  }
+  opacity: 0.5;
+
+  &Top {
     top: 15px;
-    left: 15px;
-    border-width: 2px 0 0 2px;
-    border-top-left-radius: 5px;
+    border-bottom: {
+      color: transparent;
+      left-radius: 0;
+      right-radius: 0;
+    }
   }
 
-  .frameLineTopRight {
-    @extend .frameLine;
-    top: 15px;
-    right: 15px;
-    border-width: 2px 2px 0 0;
-    border-top-right-radius: 5px;
-  }
-
-  .frameLineBottomLeft {
-    @extend .frameLine;
+  &Bottom {
     bottom: 15px;
-    left: 15px;
-    border-width: 0 0 2px 2px;
-    border-bottom-left-radius: 5px;
+    border-top: {
+      color: transparent;
+      left-radius: 0;
+      right-radius: 0;
+    }
   }
 
-  .frameLineBottomRight {
-    @extend .frameLine;
-    bottom: 15px;
+  &Right {
     right: 15px;
-    border-width: 0 2px 2px 0;
-    border-bottom-right-radius: 5px;
+    border: {
+      left-color: transparent;
+      top-left-radius: 0;
+      bottom-left-radius: 0;
+    }
+  }
+
+  &Left {
+    left: 15px;
+    border: {
+      right-color: transparent;
+      top-right-radius: 0;
+      bottom-right-radius: 0;
+    }
+  }
+}
+
+.frameLine {
+  &TopLeft {
+    @extend %frameLine, %frameLineTop, %frameLineLeft;
+  }
+  &TopRight {
+    @extend %frameLine, %frameLineTop, %frameLineRight;
+  }
+  &BottomLeft {
+    @extend %frameLine, %frameLineBottom, %frameLineLeft;
+  }
+  &BottomRight {
+    @extend %frameLine, %frameLineBottom, %frameLineRight;
   }
 }

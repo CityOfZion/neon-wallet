@@ -1,12 +1,12 @@
 import {
   getExplorerAddressLink,
   getExplorerTxLink,
-  openExplorerTx
+  openExplorerTx,
 } from '../../app/core/explorer'
 import {
   MAIN_NETWORK_ID,
   TEST_NETWORK_ID,
-  EXPLORERS
+  EXPLORERS,
 } from '../../app/core/constants'
 import { shell } from 'electron'
 
@@ -87,7 +87,7 @@ describe('explorer tests', () => {
       const expectedUrl = `https://neotracker.io/address/${address}`
 
       expect(getExplorerAddressLink(networkId, explorer, address)).toEqual(
-        expectedUrl
+        expectedUrl,
       )
     })
 
@@ -97,7 +97,7 @@ describe('explorer tests', () => {
       const expectedUrl = `https://testnet.neotracker.io/address/${address}`
 
       expect(getExplorerAddressLink(networkId, explorer, address)).toEqual(
-        expectedUrl
+        expectedUrl,
       )
     })
 
@@ -107,7 +107,7 @@ describe('explorer tests', () => {
       const expectedUrl = `https://neoscan.io/address/${address}/1`
 
       expect(getExplorerAddressLink(networkId, explorer, address)).toEqual(
-        expectedUrl
+        expectedUrl,
       )
     })
 
@@ -117,7 +117,7 @@ describe('explorer tests', () => {
       const expectedUrl = `https://neoscan-testnet.io/address/${address}/1`
 
       expect(getExplorerAddressLink(networkId, explorer, address)).toEqual(
-        expectedUrl
+        expectedUrl,
       )
     })
 
@@ -127,7 +127,7 @@ describe('explorer tests', () => {
       const expectedUrl = `http://antcha.in/address/info/${address}`
 
       expect(getExplorerAddressLink(networkId, explorer, address)).toEqual(
-        expectedUrl
+        expectedUrl,
       )
     })
 
@@ -137,7 +137,7 @@ describe('explorer tests', () => {
       const expectedUrl = `http://testnet.antcha.in/address/info/${address}`
 
       expect(getExplorerAddressLink(networkId, explorer, address)).toEqual(
-        expectedUrl
+        expectedUrl,
       )
     })
   })

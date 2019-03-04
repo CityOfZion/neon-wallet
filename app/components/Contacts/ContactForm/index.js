@@ -13,5 +13,9 @@ export default compose(
   withAuthData(),
   withData(contactsActions, mapContactsDataToProps),
   withState('formName', 'setName', ({ formName }) => formName || ''),
-  withState('formAddress', 'setAddress', ({ formAddress }) => formAddress || '')
+  withState(
+    'formAddress',
+    'setAddress',
+    ({ formAddress }) => formAddress || '',
+  ),
 )(ContactForm)

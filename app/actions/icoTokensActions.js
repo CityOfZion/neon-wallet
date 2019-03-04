@@ -1,15 +1,15 @@
 // @flow
-import { api } from 'neon-js'
+import { api } from '@cityofzion/neon-js'
 import { isEmpty } from 'lodash-es'
 import { createActions } from 'spunky'
 
 import { getNode, getRPCEndpoint } from './nodeStorageActions'
 
-import ICOTokenList from '../../ICOTokens.json'
+import ICOTokenList from '../core/ICOTokens.json'
 
 type Props = {
   net: string,
-  tokens: Array<TokenItemType>
+  tokens: Array<TokenItemType>,
 }
 
 export const ID = 'icoTokens'
@@ -28,7 +28,7 @@ async function getICOTokens({ net, tokens }: Props) {
 
   const combinedTokenList = [
     ...userGeneratedTokens,
-    ...ICOTokenList.ICOTokens
+    ...ICOTokenList.ICOTokens,
   ].map(async token => {
     try {
       const tokenInfo = await api.nep5.getToken(endpoint, token.scriptHash)
@@ -38,7 +38,7 @@ async function getICOTokens({ net, tokens }: Props) {
         name: tokenInfo.name,
         supply: tokenInfo.totalSupply,
         id: `${tokenInfo.symbol}-${tokenInfo.totalSupply}`,
-        scriptHash: token.scriptHash
+        scriptHash: token.scriptHash,
       }
     } catch (err) {
       return null
@@ -51,5 +51,5 @@ async function getICOTokens({ net, tokens }: Props) {
 }
 
 export default createActions(ID, ({ net, tokens }: Props = {}) => async () =>
-  getICOTokens({ net, tokens })
+  getICOTokens({ net, tokens }),
 )

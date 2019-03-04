@@ -7,10 +7,7 @@ import TextInput from '../../Inputs/TextInput'
 import CopyToClipboard from '../../CopyToClipboard'
 import Panel from '../../Panel'
 import styles from './TokenBalancesPanel.scss'
-import {
-  toFixedDecimals,
-  formatToRoundedShortNumber
-} from '../../../core/formatters'
+import { toFixedDecimals } from '../../../core/formatters'
 import { toBigNumber } from '../../../core/math'
 import Nothing from '../../../assets/icons/nothing.svg'
 import { CURRENCIES, ROUTES, PRICE_UNAVAILABLE } from '../../../core/constants'
@@ -20,12 +17,12 @@ type Props = {
   balances: Array<TokenBalanceType>,
   prices: Object,
   currencyCode: string,
-  address: string
+  address: string,
 }
 
 export default class TokenBalancesPanel extends React.Component<Props> {
   static defaultProps = {
-    loading: false
+    loading: false,
   }
 
   render = () => {
@@ -34,7 +31,7 @@ export default class TokenBalancesPanel extends React.Component<Props> {
       <Panel
         className={classNames(styles.tokenBalancesPanel, className)}
         contentClassName={classNames(styles.tokenBalancesPanelContent, {
-          [styles.emptyBalanceContent]: !balances.length
+          [styles.emptyBalanceContent]: !balances.length,
         })}
         headerClassName={styles.headerStyle}
         renderHeader={this.renderHeader}
@@ -63,7 +60,6 @@ export default class TokenBalancesPanel extends React.Component<Props> {
         </p>
         <div className={styles.address}>
           <TextInput value={address} disabled />
-          {/* <Address className={styles.link} address={address} /> */}
           <CopyToClipboard
             className={styles.copy}
             text={address}
@@ -88,7 +84,7 @@ export default class TokenBalancesPanel extends React.Component<Props> {
 
   sortByValueInPortfolio = (
     a: TokenBalanceType,
-    b: TokenBalanceType
+    b: TokenBalanceType,
   ): number => {
     const { prices } = this.props
     if (prices) {
@@ -108,16 +104,13 @@ export default class TokenBalancesPanel extends React.Component<Props> {
     return 0
   }
 
-  renderHeader = () => {
-    const { balances } = this.props
-    return (
-      <div>
-        <div className={styles.header}>
-          <span>Token Balances</span>
-        </div>
+  renderHeader = () => (
+    <div>
+      <div className={styles.header}>
+        <span>Token Balances</span>
       </div>
-    )
-  }
+    </div>
+  )
 
   renderTokenBalances = () => {
     const { balances } = this.props

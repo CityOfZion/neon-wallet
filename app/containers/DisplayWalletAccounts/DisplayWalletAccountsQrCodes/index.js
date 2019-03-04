@@ -12,9 +12,8 @@ import {
   getEncryptedWIF,
   getPassphrase,
   getWalletName,
-  getIsImport
+  getIsImport,
 } from '../../../modules/generateWallet'
-import withCopyCanvasToClipboard from '../../../hocs/withCopyCanvasToClipboard'
 
 const mapStateToProps = (state: Object) => ({
   wif: getWIF(state),
@@ -22,7 +21,7 @@ const mapStateToProps = (state: Object) => ({
   encryptedWIF: getEncryptedWIF(state),
   passphrase: getPassphrase(state),
   walletName: getWalletName(state),
-  isImport: getIsImport(state)
+  isImport: getIsImport(state),
 })
 
 const mapDispatchToProps = dispatch =>
@@ -31,6 +30,6 @@ const mapDispatchToProps = dispatch =>
 export default compose(
   connect(
     mapStateToProps,
-    mapDispatchToProps
-  )
+    mapDispatchToProps,
+  ),
 )(DisplayWalletAccountsQrCodes)

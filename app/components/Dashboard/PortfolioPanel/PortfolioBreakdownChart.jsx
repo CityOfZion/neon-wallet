@@ -1,14 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import {
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  Label
-} from 'recharts'
+import { ResponsiveContainer, PieChart, Pie, Cell, Label } from 'recharts'
 // $FlowFixMe
 import { map, times } from 'lodash-es'
 
@@ -22,13 +15,13 @@ type BalanceType = {
   symbol: SymbolType,
   balance: string,
   value: number,
-  percent: number
+  percent: number,
 }
 
 type Props = {
   className?: string,
   balances: { [key: SymbolType]: BalanceType },
-  currency: string
+  currency: string,
 }
 
 export default class PortfolioBreakdownChart extends React.Component<Props> {
@@ -71,12 +64,12 @@ export default class PortfolioBreakdownChart extends React.Component<Props> {
   getTotalValueWithPrice = () => {
     const balanceInfo = map(this.props.balances, ({ value }, symbol) => ({
       symbol,
-      value
+      value,
     }))
 
     const total = balanceInfo.reduce(
       (accum, current) => accum + current.value,
-      0
+      0,
     )
     return this.formatPrice(total, formatThousands)
   }
@@ -86,7 +79,7 @@ export default class PortfolioBreakdownChart extends React.Component<Props> {
 
   formatPrice = (
     price: number,
-    formatter: Function = formatThousands
+    formatter: Function = formatThousands,
   ): string => {
     const { symbol } = CURRENCIES[this.props.currency]
     return `${symbol}${formatter(price)}`

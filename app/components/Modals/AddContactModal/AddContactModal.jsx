@@ -7,7 +7,7 @@ type Props = {
   address: string,
   hideModal: () => null,
   triggerSuccessNotification: (text: string) => void,
-  onSave: (name: string, address: string) => any
+  onSave: (name: string, address: string) => any,
 }
 
 class AddContactModal extends Component<Props> {

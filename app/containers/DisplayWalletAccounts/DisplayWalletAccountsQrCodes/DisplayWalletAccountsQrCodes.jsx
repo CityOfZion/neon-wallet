@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react'
-import classNames from 'classnames'
 
 import Button from '../../../components/Button'
 import { ROUTES } from '../../../core/constants'
@@ -25,12 +24,12 @@ type Props = {
   authenticated: boolean,
   handleCopy: (?HTMLCanvasElement, string, ?boolean) => Promise<void>,
   handleCreateCanvas: (?HTMLCanvasElement, string) => any,
-  copied: boolean
+  copied: boolean,
 }
 
 type State = {
   publicCopied: boolean,
-  privateCopied: boolean
+  privateCopied: boolean,
 }
 
 class DisplayWalletAccountsQrCodes extends Component<Props, State> {

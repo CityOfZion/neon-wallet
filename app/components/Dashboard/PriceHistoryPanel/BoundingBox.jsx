@@ -10,11 +10,11 @@ type SVGRect = {
   x: number,
   y: number,
   width: number,
-  height: number
+  height: number,
 }
 
 type SVGLocatable = {
-  getBBox(): SVGRect
+  getBBox(): SVGRect,
 }
 
 type Props = {
@@ -23,11 +23,11 @@ type Props = {
   paddingX: number,
   paddingY: number,
   roundedX: number,
-  roundedY: number
+  roundedY: number,
 }
 
 type State = {
-  position: ?SVGRect
+  position: ?SVGRect,
 }
 
 export default class BoundingBox extends React.Component<Props, State> {
@@ -40,13 +40,13 @@ export default class BoundingBox extends React.Component<Props, State> {
     paddingX: 0,
     paddingY: 0,
     roundedX: 0,
-    roundedY: 0
+    roundedY: 0,
   }
 
   group: ?Node
 
   state = {
-    position: null
+    position: null,
   }
 
   componentDidMount() {
@@ -124,10 +124,10 @@ export default class BoundingBox extends React.Component<Props, State> {
           x: newX,
           y: newY,
           width: newX + Math.max(result.x + result.width, box.x + box.width),
-          height: newY + Math.max(result.y + result.height, box.y + box.height)
+          height: newY + Math.max(result.y + result.height, box.y + box.height),
         }
       },
-      getBoundingBox(nodes.pop())
+      getBoundingBox(nodes.pop()),
     )
 
     const { paddingX, paddingY } = this.props
@@ -136,7 +136,7 @@ export default class BoundingBox extends React.Component<Props, State> {
       x: position.x - paddingX,
       y: position.y - paddingY,
       width: position.width + paddingX * 2,
-      height: position.height + paddingY * 2
+      height: position.height + paddingY * 2,
     }
   }
 }

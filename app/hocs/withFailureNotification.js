@@ -8,7 +8,7 @@ import {
   withProgress,
   progressValues,
   type Actions,
-  type ProgressState
+  type ProgressState,
 } from 'spunky'
 
 import { showErrorNotification } from '../modules/notifications'
@@ -16,7 +16,7 @@ import { showErrorNotification } from '../modules/notifications'
 type Props = {
   __error__: string,
   __progress__: ProgressState,
-  __showErrorNotification__: Function
+  __showErrorNotification__: Function,
 }
 
 type Message = string | Function
@@ -32,14 +32,14 @@ const defaultMessage = error => error
 export default function withFailureNotification(
   actions: Actions,
   message: Message = defaultMessage,
-  options: Object = {}
+  options: Object = {},
 ) {
   const mapErrorToProps = (error: Error) => ({
-    [ERROR_PROP]: isFunction(message) ? message(error) : message
+    [ERROR_PROP]: isFunction(message) ? message(error) : message,
   })
 
-  const mapDisptchToProps = (dispatch, ownProps) => ({
-    [NOTIFICATION_PROP]: (...args) => dispatch(showErrorNotification(...args))
+  const mapDisptchToProps = dispatch => ({
+    [NOTIFICATION_PROP]: (...args) => dispatch(showErrorNotification(...args)),
   })
 
   return (Component: Class<React.Component<*>>): Class<React.Component<*>> => {
@@ -64,7 +64,7 @@ export default function withFailureNotification(
           this.props,
           ERROR_PROP,
           PROGRESS_PROP,
-          NOTIFICATION_PROP
+          NOTIFICATION_PROP,
         )
         return <Component {...passDownProps} />
       }
@@ -73,10 +73,10 @@ export default function withFailureNotification(
     return compose(
       connect(
         null,
-        mapDisptchToProps
+        mapDisptchToProps,
       ),
       withError(actions, mapErrorToProps),
-      withProgress(actions, { ...options, propName: PROGRESS_PROP })
+      withProgress(actions, { ...options, propName: PROGRESS_PROP }),
     )(ErrorNotifier)
   }
 }

@@ -1,5 +1,10 @@
 // @flow
-import { MAIN_NETWORK_ID, TEST_NETWORK_ID } from './constants'
+import {
+  MAIN_NETWORK_ID,
+  TEST_NETWORK_ID,
+  MAIN_NETWORK_LABEL,
+  TEST_NETWORK_LABEL,
+} from './constants'
 
 export const isMainNetwork = (networkId: string) =>
   networkId === MAIN_NETWORK_ID
@@ -10,15 +15,15 @@ export const getNetworks = () => [
   {
     id: MAIN_NETWORK_ID,
     value: MAIN_NETWORK_ID,
-    label: 'MainNet',
-    network: 'MainNet'
+    label: MAIN_NETWORK_LABEL,
+    network: MAIN_NETWORK_LABEL,
   },
   {
     id: TEST_NETWORK_ID,
     value: TEST_NETWORK_ID,
-    label: 'TestNet',
-    network: 'TestNet'
-  }
+    label: TEST_NETWORK_LABEL,
+    network: TEST_NETWORK_LABEL,
+  },
 ]
 
 export const findNetwork = (networkId: string): NetworkItemType => {

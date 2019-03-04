@@ -9,20 +9,20 @@ import claimsActions from '../../actions/claimsActions'
 import { doGasClaim, getDisableClaimButton } from '../../modules/claim'
 
 const mapStateToProps = (state: Object) => ({
-  disableClaimButton: getDisableClaimButton(state)
+  disableClaimButton: getDisableClaimButton(state),
 })
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ doGasClaim }, dispatch)
 
 const mapClaimsDataToProps = claims => ({
-  claimAmount: claims.total
+  claimAmount: claims.total,
 })
 
 export default compose(
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
   ),
-  withData(claimsActions, mapClaimsDataToProps)
+  withData(claimsActions, mapClaimsDataToProps),
 )(Claim)

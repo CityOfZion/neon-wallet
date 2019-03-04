@@ -40,6 +40,7 @@
   --font-gotham-medium: 'Gotham-Medium', var(--font-fallback);
   --font-gotham-bold: 'Gotham-Bold', var(--font-fallback);
   --font-gotham-thin: 'Gotham-Thin', var(--font-fallback);
+  --font-gotham-light: 'Gotham-Light', var(--font-fallback);
   --font-gotham-book: 'Gotham-Book', var(--font-fallback);
 }
 
@@ -210,6 +211,12 @@ input::placeholder {
   }
 }
 
+.notifications-wrapper {
+  .notification-download-link {
+    color: #0000ff;
+  }
+}
+
 .neon-tabs {
   width: 100%;
 
@@ -244,4 +251,8 @@ input::placeholder {
       border-bottom: solid var(--base-text) 2px;
     }
   }
+}
+
+a {
+  cursor: pointer;
 }

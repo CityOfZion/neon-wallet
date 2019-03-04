@@ -1,13 +1,14 @@
 // @flow
 import axios from 'axios'
 import { createActions } from 'spunky'
+import { get } from 'lodash-es'
 
 import { getDefaultTokens } from '../core/nep5'
 import { getSettings } from './settingsActions'
-import { DEFAULT_CURRENCY_CODE, ASSETS } from '../core/constants'
+import { ASSETS } from '../core/constants'
 
-type Props = {
-  currency?: string
+const PRICE_API_SYMBOL_EXCEPTIONS = {
+  SOUL: 'SOUL*',
 }
 
 function mapPrices(pricingData: Array<any>, currency) {
@@ -18,12 +19,12 @@ function mapPrices(pricingData: Array<any>, currency) {
       if (price && priceInSelectedCurrency) {
         // eslint-disable-next-line
         accum[priceInSelectedCurrency.FROMSYMBOL] = parseFloat(
-          priceInSelectedCurrency.PRICE
+          priceInSelectedCurrency.PRICE,
         )
       }
       return accum
     },
-    {}
+    {},
   )
 }
 
@@ -33,7 +34,9 @@ async function getPrices() {
     const settings = await getSettings()
     const { currency } = settings
     const joinedTokens = tokens
-      .map(token => token.symbol)
+      .map((token: TokenItemType) =>
+        get(PRICE_API_SYMBOL_EXCEPTIONS, token.symbol, token.symbol),
+      )
       .concat([ASSETS.NEO, ASSETS.GAS])
       .join(',')
 
@@ -50,8 +53,4 @@ async function getPrices() {
 
 export const ID = 'prices'
 
-export default createActions(
-  ID,
-  ({ currency = DEFAULT_CURRENCY_CODE }: Props = {}) => (state: Object) =>
-    getPrices()
-)
+export default createActions(ID, () => () => getPrices())

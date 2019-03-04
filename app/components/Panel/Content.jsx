@@ -6,7 +6,7 @@ import styles from './Content.scss'
 
 type Props = {
   className: ?string,
-  children: React$Node
+  children: React$Node,
 }
 
 export default function Content(props: Props) {

@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react'
-import { map, reject } from 'lodash-es'
 import fs from 'fs'
 import storage from 'electron-json-storage'
 import { Link } from 'react-router-dom'
@@ -22,7 +21,7 @@ import {
   MODAL_TYPES,
   COZ_DONATIONS_ADDRESS,
   DISCORD_INVITE_LINK,
-  THEMES
+  THEMES,
 } from '../../core/constants'
 import styles from './Settings.scss'
 import AddIcon from '../../assets/icons/add.svg'
@@ -54,40 +53,35 @@ type Props = {
   net: string,
   networkId: string,
   soundEnabled: boolean,
-  setSoundSetting: boolean => any
-}
-
-type SelectOption = {
-  value: string,
-  label: string
+  setSoundSetting: boolean => any,
 }
 
 type State = {
   selectedCurrency: SelectOption,
   selectedTheme: SelectOption,
   selectedExplorer: SelectOption,
-  soundEnabled: boolean
+  soundEnabled: boolean,
 }
 
 export default class Settings extends Component<Props, State> {
   static defaultProps = {
-    explorer: DEFAULT_EXPLORER
+    explorer: DEFAULT_EXPLORER,
   }
 
   state = {
     selectedCurrency: {
       value: this.props.currency,
-      label: this.props.currency.toUpperCase()
+      label: this.props.currency.toUpperCase(),
     },
     selectedTheme: {
       value: this.props.theme,
-      label: this.props.theme
+      label: this.props.theme,
     },
     selectedExplorer: {
       value: this.props.explorer,
-      label: this.props.explorer
+      label: this.props.explorer,
     },
-    soundEnabled: this.props.soundEnabled
+    soundEnabled: this.props.soundEnabled,
   }
 
   saveWalletRecovery = () => {
@@ -98,7 +92,7 @@ export default class Settings extends Component<Props, State> {
         showErrorNotification({
           message: `An error occurred reading wallet file: ${
             errorReading.message
-          }`
+          }`,
         })
         return
       }
@@ -108,9 +102,9 @@ export default class Settings extends Component<Props, State> {
           filters: [
             {
               name: 'JSON',
-              extensions: ['json']
-            }
-          ]
+              extensions: ['json'],
+            },
+          ],
         },
         fileName => {
           if (fileName === undefined) {
@@ -122,15 +116,15 @@ export default class Settings extends Component<Props, State> {
               showErrorNotification({
                 message: `An error occurred creating the file: ${
                   errorWriting.message
-                }`
+                }`,
               })
             } else {
               showSuccessNotification({
-                message: 'The file has been succesfully saved'
+                message: 'The file has been succesfully saved',
               })
             }
           })
-        }
+        },
       )
     })
   }
@@ -139,7 +133,7 @@ export default class Settings extends Component<Props, State> {
     const {
       showSuccessNotification,
       showErrorNotification,
-      setAccounts
+      setAccounts,
     } = this.props
 
     dialog.showOpenDialog(fileNames => {
@@ -151,7 +145,7 @@ export default class Settings extends Component<Props, State> {
       fs.readFile(filepath, 'utf-8', (err, data) => {
         if (err) {
           showErrorNotification({
-            message: `An error occurred reading the file: ${err.message}`
+            message: `An error occurred reading the file: ${err.message}`,
           })
           return
         }
@@ -164,7 +158,7 @@ export default class Settings extends Component<Props, State> {
           })
           .catch(err => {
             showErrorNotification({
-              message: `An error occurred recovering wallet: ${err.message}`
+              message: `An error occurred recovering wallet: ${err.message}`,
             })
           })
       })
@@ -202,15 +196,15 @@ export default class Settings extends Component<Props, State> {
   render() {
     const parsedCurrencyOptions = Object.keys(CURRENCIES).map(key => ({
       value: key,
-      label: key.toUpperCase()
+      label: key.toUpperCase(),
     }))
     const parsedExplorerOptions = Object.keys(EXPLORERS).map(key => ({
       value: key,
-      label: EXPLORERS[key]
+      label: EXPLORERS[key],
     }))
     const parsedThemeOptions = Object.keys(THEMES).map(key => ({
       value: THEMES[key],
-      label: THEMES[key]
+      label: THEMES[key],
     }))
 
     return (
@@ -332,7 +326,7 @@ export default class Settings extends Component<Props, State> {
     <Link
       to={{
         pathname: ROUTES.SEND,
-        state: { address: COZ_DONATIONS_ADDRESS }
+        state: { address: COZ_DONATIONS_ADDRESS },
       }}
       className={styles.settingsDonations}
     >

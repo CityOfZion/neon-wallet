@@ -55,7 +55,7 @@
 
       svg {
         path {
-          fill: var(--tx-history-button-icon);
+          fill: var(--tx-list-button-icon);
         }
       }
 
@@ -74,7 +74,7 @@
       }
 
       .deleteButton {
-        width: 250px;
+        width: 100px;
       }
     }
   }

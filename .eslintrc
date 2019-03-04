@@ -34,13 +34,14 @@
     "no-unused-vars": ["warn"],
     "global-require": 0,
     "quotes": ["warn", "single"],
+    "no-console": ["error", { "allow": ["warn", "error"] }],
     "object-curly-spacing": ["error", "always"],
     "import/no-unresolved": 0,
     "import/prefer-default-export": 0,
     "import/no-dynamic-require": 0,
     "semi": [2, "never"],
     "max-len": 0,
-    "consistent-return": ["warn"],
+    "consistent-return": ["warn", { "treatUndefinedAsUnspecified": true }],
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "class-methods-use-this": ["warn"],
     "jsx-a11y/anchor-is-valid": 0,
@@ -50,7 +51,16 @@
     "jsx-a11y/click-events-have-key-events": 0,
     "jsx-a11y/heading-has-content": 0,
     "jsx-a11y/anchor-has-content": 0,
-    "comma-dangle": ["error", "never"],
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "always-multiline"
+      }
+    ],
     "react/no-array-index-key": 0,
     "react/require-default-props": 0,
     "react/no-unescaped-entities": 0,
@@ -61,7 +71,10 @@
     "react/destructuring-assignment": 0,
     "react/sort-comp": 0,
     "react/button-has-type": 0,
-    "flowtype/generic-spacing": 0
+    "flowtype/generic-spacing": 0,
+    "no-param-reassign": ["warn"],
+    "no-restricted-syntax": ["error", "LabeledStatement", "WithStatement"],
+    "no-await-in-loop": 0
   },
   "settings": {
     "import/resolver": {

@@ -14,16 +14,16 @@ import styles from './styles.scss'
 type Props = {
   address: string,
   onSubmit: Function,
-  networkId: string
+  networkId: string,
 }
 
 type State = {
-  tabIndex: number
+  tabIndex: number,
 }
 
 export default class ReceivePanel extends React.Component<Props, State> {
   state = {
-    tabIndex: 0
+    tabIndex: 0,
   }
 
   publicCanvas: ?HTMLCanvasElement
@@ -35,7 +35,7 @@ export default class ReceivePanel extends React.Component<Props, State> {
           <DefaultReceive address={this.props.address} />
         </div>
       ),
-      display: 'Your Address'
+      display: 'Your Address',
     },
     nep9: {
       render: () => (
@@ -47,8 +47,8 @@ export default class ReceivePanel extends React.Component<Props, State> {
           />
         </div>
       ),
-      display: 'Request Assets'
-    }
+      display: 'Request Assets',
+    },
   }
 
   // $FlowFixMe
@@ -58,7 +58,6 @@ export default class ReceivePanel extends React.Component<Props, State> {
     const { address } = this.props
     return (
       <Panel
-        className={styles.receivePanel}
         renderHeader={() => <ReceivePanelHeader address={address} />}
         contentClassName={styles.receivePanelContent}
       >

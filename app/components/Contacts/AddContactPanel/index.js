@@ -10,9 +10,9 @@ import withFailureNotification from '../../../hocs/withFailureNotification'
 
 const { LOADED } = progressValues
 
-const mapContactActionsToProps = (actions, props) => ({
+const mapContactActionsToProps = (actions: Object) => ({
   onSave: (name, address) =>
-    actions.call({ name: trim(name), address: trim(address) })
+    actions.call({ name: trim(name), address: trim(address) }),
 })
 
 export default compose(
@@ -20,8 +20,8 @@ export default compose(
   withProgressChange(
     addContactActions,
     LOADED,
-    (state, props) => props.onSave && props.onSave()
+    (state, props) => props.onSave && props.onSave(),
   ),
   withActions(addContactActions, mapContactActionsToProps),
-  withFailureNotification(addContactActions)
+  withFailureNotification(addContactActions),
 )(AddContactPanel)

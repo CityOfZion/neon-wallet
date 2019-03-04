@@ -17,13 +17,13 @@ type Props = {
   loadWalletData: () => void,
   settingsSelect: boolean,
   fontSize: number,
-  value: NetworkItemType
+  value: NetworkItemType,
 }
 
 export default class NetworkSwitch extends Component<Props> {
   static defaultProps = {
     networks: getNetworks(),
-    shouldSwitchNetworks: true
+    shouldSwitchNetworks: true,
   }
 
   render() {
@@ -34,7 +34,7 @@ export default class NetworkSwitch extends Component<Props> {
       transparent,
       fontSize,
       settingsSelect,
-      value
+      value,
     } = this.props
 
     return (

@@ -1,5 +1,5 @@
 // @flow
-import { api } from 'neon-js'
+import { api } from '@cityofzion/neon-js'
 import { extend, isEmpty, get } from 'lodash-es'
 import { createActions } from 'spunky'
 import { Howl } from 'howler'
@@ -18,17 +18,22 @@ const MAX_SCRIPT_HASH_CHUNK_SIZE = 5
 type Props = {
   net: string,
   address: string,
-  tokens: Array<TokenItemType>
+  tokens: Array<TokenItemType>,
 }
 
 let inMemoryBalances = {}
 let hasTriggeredAudio = false
 let inMemoryAddress
 let inMemoryNetwork
+let sound
 
-const sound = new Howl({
-  src: [coinAudioSample]
-})
+// TODO: leverage a better solution to supress warnings stemming
+// from jest tests
+if (process.env.NODE_ENV !== 'test') {
+  sound = new Howl({
+    src: [coinAudioSample],
+  })
+}
 
 export const ID = 'balances'
 
@@ -47,7 +52,7 @@ function determineIfBalanceUpdated(
   balanceData: Object,
   soundEnabled: boolean,
   networkHasChanged: boolean | void,
-  addressHasChanged: boolean | void
+  addressHasChanged: boolean | void,
 ) {
   if (
     isEmpty(inMemoryBalances) ||
@@ -84,7 +89,7 @@ async function getBalances({ net, address }: Props) {
   else if (inMemoryAddress !== address) adressHasChanged = true
 
   const chunks = tokens
-    .filter(token => !token.isUserGenerated)
+    .filter(token => !token.isUserGenerated && token.networkId === network.id)
     .reduce((accum, currVal) => {
       if (!accum.length) {
         accum.push([currVal.scriptHash])
@@ -100,7 +105,7 @@ async function getBalances({ net, address }: Props) {
     }, [])
 
   const promiseMap = chunks.map(chunk =>
-    api.nep5.getTokenBalances(endpoint, chunk, address)
+    api.nep5.getTokenBalances(endpoint, chunk, address),
   )
   const results = await Promise.all(promiseMap)
 
@@ -113,15 +118,15 @@ async function getBalances({ net, address }: Props) {
           { [foundToken.symbol]: currBalance[key] },
           soundEnabled,
           networkHasChanged,
-          adressHasChanged
+          adressHasChanged,
         )
         // $FlowFixMe
         inMemoryBalances[foundToken.symbol] = currBalance[key]
         accum.push({
           [foundToken.scriptHash]: {
             ...foundToken,
-            balance: currBalance[key]
-          }
+            balance: currBalance[key],
+          },
         })
       }
     })
@@ -130,25 +135,22 @@ async function getBalances({ net, address }: Props) {
 
   // Handle manually added script hashses here
   const userGeneratedTokenInfo = []
-  // eslint-disable-next-line
   for (const token of tokens.filter(
-    token => token.isUserGenerated && token.networkId === network.id
+    token => token.isUserGenerated && token.networkId === network.id,
   )) {
-    // eslint-disable-next-line
     const info = await api.nep5
       .getToken(endpoint, token.scriptHash, address)
       .catch(error => {
-        // eslint-disable-next-line
         console.error(
           'An error occurrred attempting to fetch custom script hash balance info.',
-          { error }
+          { error },
         )
         return Promise.resolve()
       })
     if (info) {
       userGeneratedTokenInfo.push({
         scriptHash: token.scriptHash,
-        ...info
+        ...info,
       })
     }
   }
@@ -157,13 +159,13 @@ async function getBalances({ net, address }: Props) {
       { [token.symbol]: token.balance },
       soundEnabled,
       networkHasChanged,
-      adressHasChanged
+      adressHasChanged,
     )
     inMemoryBalances[token.symbol] = token.balance
     parsedTokenBalances.push({
       [token.scriptHash]: {
-        ...token
-      }
+        ...token,
+      },
     })
   })
 
@@ -180,20 +182,20 @@ async function getBalances({ net, address }: Props) {
     : '0'
   const parsedAssets = [
     { [ASSETS.NEO]: neoBalance },
-    { [ASSETS.GAS]: gasBalance }
+    { [ASSETS.GAS]: gasBalance },
   ]
   determineIfBalanceUpdated(
     { [ASSETS.NEO]: neoBalance },
     soundEnabled,
     networkHasChanged,
-    adressHasChanged
+    adressHasChanged,
   )
   inMemoryBalances[ASSETS.NEO] = neoBalance
   determineIfBalanceUpdated(
     { [ASSETS.GAS]: gasBalance },
     soundEnabled,
     networkHasChanged,
-    adressHasChanged
+    adressHasChanged,
   )
   inMemoryBalances[ASSETS.GAS] = gasBalance
 
@@ -206,5 +208,5 @@ async function getBalances({ net, address }: Props) {
 export default createActions(
   ID,
   ({ net, address, tokens }: Props = {}) => async () =>
-    getBalances({ net, address, tokens })
+    getBalances({ net, address, tokens }),
 )

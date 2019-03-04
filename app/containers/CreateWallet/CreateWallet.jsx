@@ -20,7 +20,7 @@ type Props = {
   generateNewWalletAccount: Function,
   history: Object,
   option: Option,
-  authenticated: boolean
+  authenticated: boolean,
 }
 
 type State = {
@@ -32,7 +32,7 @@ type State = {
   passphrase2Error: string,
   wif: string,
   walletName: string,
-  submitButtonDisabled: boolean
+  submitButtonDisabled: boolean,
 }
 
 const PASS_MIN_LENGTH = 4
@@ -47,7 +47,7 @@ export default class CreateWallet extends React.Component<Props, State> {
     passphrase2Error: '',
     wif: '',
     walletName: '',
-    submitButtonDisabled: false
+    submitButtonDisabled: false,
   }
 
   createWalletAccount = (e: SyntheticMouseEvent<*>) => {
@@ -63,7 +63,7 @@ export default class CreateWallet extends React.Component<Props, State> {
       history,
       walletName,
       authenticated,
-      () => this.setState({ submitButtonDisabled: false })
+      () => this.setState({ submitButtonDisabled: false }),
     )
   }
 
@@ -170,9 +170,9 @@ export default class CreateWallet extends React.Component<Props, State> {
     this.setState(
       {
         passphraseError: errorMessage,
-        passphraseValid: !!(p && !errorMessage)
+        passphraseValid: !!(p && !errorMessage),
       },
-      this.validatePassphrase2
+      this.validatePassphrase2,
     )
   }
 
@@ -183,7 +183,7 @@ export default class CreateWallet extends React.Component<Props, State> {
       p1 && p2 && p1 !== p2 && passphraseValid ? 'Passphrases must match' : ''
     this.setState({
       passphrase2Error: errorMessage,
-      passphrase2Valid: !!(p2 && !errorMessage)
+      passphrase2Valid: !!(p2 && !errorMessage),
     })
   }
 
@@ -193,7 +193,7 @@ export default class CreateWallet extends React.Component<Props, State> {
       passphrase2Valid,
       wif,
       walletName,
-      submitButtonDisabled
+      submitButtonDisabled,
     } = this.state
     const { option } = this.props
     const validPassphrase = passphraseValid && passphrase2Valid

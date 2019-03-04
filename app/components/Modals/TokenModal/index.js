@@ -2,7 +2,7 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
-import { withActions, withRecall } from 'spunky'
+import { withActions } from 'spunky'
 
 import TokenModal from './TokenModal'
 import accountActions from '../../../actions/accountActions'
@@ -16,7 +16,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators({ showErrorNotification }, dispatch)
 
 const mapSettingsActionsToProps = actions => ({
-  setUserGeneratedTokens: tokens => actions.call({ tokens })
+  setUserGeneratedTokens: tokens => actions.call({ tokens }),
 })
 
 const mapAccountActionsToProps = (actions, props) => ({
@@ -24,18 +24,18 @@ const mapAccountActionsToProps = (actions, props) => ({
     actions.call({
       net: props.net,
       address: props.address,
-      tokens: props.tokens
-    })
+      tokens: props.tokens,
+    }),
 })
 
 export default compose(
   connect(
     null,
-    mapDispatchToProps
+    mapDispatchToProps,
   ),
   withNetworkData(),
   withAuthData(),
   withTokensData(),
   withActions(updateSettingsActions, mapSettingsActionsToProps),
-  withActions(accountActions, mapAccountActionsToProps)
+  withActions(accountActions, mapAccountActionsToProps),
 )(TokenModal)

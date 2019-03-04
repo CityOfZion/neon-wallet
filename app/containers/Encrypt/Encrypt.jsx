@@ -9,14 +9,14 @@ import styles from './Encrypt.scss'
 type Props = {
   encryptPrivateKey: Function,
   isWIF: Function,
-  validatePassphraseLength: Function
+  validatePassphraseLength: Function,
 }
 
 export default class Encrypt extends React.Component<Props> {
   static defaultProps = {
     encryptPrivateKey: noop,
     validatePassphraseLength: noop,
-    isWIF: noop
+    isWIF: noop,
   }
 
   render = () => {

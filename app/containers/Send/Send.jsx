@@ -1,13 +1,13 @@
 // @flow
 import React from 'react'
 import { uniqueId, get } from 'lodash-es'
-import { wallet } from 'neon-js'
+import { wallet } from '@cityofzion/neon-js'
 import {
   toNumber,
   toBigNumber,
   multiplyNumber,
   minusNumber,
-  addNumber
+  addNumber,
 } from '../../core/math'
 
 import { isBlacklisted } from '../../core/wallet'
@@ -25,7 +25,7 @@ type Props = {
   prices: Object,
   sendTransaction: ({
     sendEntries: Array<SendEntryType>,
-    fees: number
+    fees: number,
   }) => Object,
   contacts: Object,
   currencyCode: string,
@@ -34,7 +34,7 @@ type Props = {
   location: Object,
   showSendModal: (props: Object) => any,
   tokens: Array<TokenItemType>,
-  networkId: string
+  networkId: string,
 }
 
 type State = {
@@ -46,7 +46,7 @@ type State = {
   txid: string,
   fees: number,
   sendRowDetails: Array<Object>,
-  address?: string
+  address?: string,
 }
 
 export default class Send extends React.Component<Props, State> {
@@ -60,13 +60,13 @@ export default class Send extends React.Component<Props, State> {
       sendErrorMessage: '',
       txid: '',
       sendRowDetails: [],
-      fees: 0
+      fees: 0,
     }
   }
 
   static defaultProps = {
     shouldRenderHeaderBar: true,
-    tokens: []
+    tokens: [],
   }
 
   componentDidMount() {
@@ -112,11 +112,11 @@ export default class Send extends React.Component<Props, State> {
         address: row.address || '',
         max: this.calculateMaxValue(row.asset || firstSendableAssetName),
         id: uniqueId(),
-        errors: {}
+        errors: {},
       }
     }
     return {
-      errors: {}
+      errors: {},
     }
   }
 
@@ -138,7 +138,7 @@ export default class Send extends React.Component<Props, State> {
         symbol: asset,
         totalBalance: balance,
         price,
-        totalBalanceWorth
+        totalBalanceWorth,
       }
     }): Array<*>)
   }
@@ -215,7 +215,7 @@ export default class Send extends React.Component<Props, State> {
         .reduce(
           (accumulator: Object, currentValue: number | void) =>
             accumulator.plus(currentValue || 0),
-          toBigNumber(0)
+          toBigNumber(0),
         ): number)
     }
     return 0
@@ -231,7 +231,7 @@ export default class Send extends React.Component<Props, State> {
       decimals = 8
     } else {
       const foundToken: TokenItemType | void = tokens.find(
-        token => token.symbol === asset && token.networkId === networkId
+        token => token.symbol === asset && token.networkId === networkId,
       )
       if (foundToken) {
         decimals = get(foundToken, 'decimals', 8)
@@ -250,7 +250,7 @@ export default class Send extends React.Component<Props, State> {
         showConfirmSend: false,
         sendSuccess: false,
         sendRowDetails: newState,
-        fees: 0
+        fees: 0,
       }
     })
   }
@@ -258,7 +258,7 @@ export default class Send extends React.Component<Props, State> {
   handleSubmit = () => {
     const rows = [...this.state.sendRowDetails]
     const promises = rows.map((row: Object, index: number) =>
-      this.validateRow(row, index)
+      this.validateRow(row, index),
     )
 
     if (this.validateRowAmounts(rows)) {
@@ -282,11 +282,11 @@ export default class Send extends React.Component<Props, State> {
         // eslint-disable-next-line
         accum[currRow.asset] = addNumber(
           accum[currRow.asset],
-          toBigNumber(currRow.amount)
+          toBigNumber(currRow.amount),
         )
         if (
           toBigNumber(accum[currRow.asset]).greaterThan(
-            toBigNumber(sendableAssets[currRow.asset].balance)
+            toBigNumber(sendableAssets[currRow.asset].balance),
           )
         ) {
           const { errors } = this.state.sendRowDetails[index]
@@ -314,7 +314,7 @@ export default class Send extends React.Component<Props, State> {
     const entries = sendRowDetails.map((row: Object) => ({
       address: row.address,
       amount: toNumber(row.amount.toString()),
-      symbol: row.asset
+      symbol: row.asset,
     }))
 
     this.setState({ pendingTransaction: true })
@@ -323,14 +323,16 @@ export default class Send extends React.Component<Props, State> {
         this.setState({
           sendSuccess: true,
           txid: result.txid,
-          pendingTransaction: false
+          pendingTransaction: false,
         })
       })
       .catch((error: Object) => {
+        // TODO: here is where we must generate the expected txId locally
+        // and then add it to our pending tx arr
         this.setState({
           sendError: true,
           sendErrorMessage: error.message,
-          pendingTransaction: false
+          pendingTransaction: false,
         })
       })
   }
@@ -344,7 +346,7 @@ export default class Send extends React.Component<Props, State> {
       row.amount,
       row.max,
       row.asset,
-      index
+      index,
     )
     const validAddress = await this.validateAddress(row.address, index)
 
@@ -355,7 +357,7 @@ export default class Send extends React.Component<Props, State> {
     amount: number,
     max: number,
     asset: string,
-    index: number
+    index: number,
   ) => {
     const { errors } = this.state.sendRowDetails[index]
     const { tokens, networkId } = this.props
@@ -383,18 +385,26 @@ export default class Send extends React.Component<Props, State> {
     }
 
     if (asset !== 'NEO' && asset !== 'GAS') {
-      const decpoint =
-        amountNum.toString().length - 1 - amountNum.toString().indexOf('.')
+      let decimalPlaces = 0
+      const amountStr = amountNum.toString()
+      const decPointIndex = amountStr.indexOf('.')
+
+      if (decPointIndex !== -1) {
+        decimalPlaces = amountStr.length - 1 - decPointIndex
+      }
 
       const foundToken: TokenItemType | void = tokens.find(
-        token => token.symbol === asset && token.networkId === networkId
+        token => token.symbol === asset && token.networkId === networkId,
       )
 
-      if (foundToken && decpoint > toNumber(get(foundToken, 'decimals', 8))) {
+      if (
+        foundToken &&
+        decimalPlaces > toNumber(get(foundToken, 'decimals', 8))
+      ) {
         errors.amount = `You can only send ${asset} up to ${get(
           foundToken,
           'decimals',
-          8
+          8,
         )} decimals.`
       }
     }
@@ -453,7 +463,7 @@ export default class Send extends React.Component<Props, State> {
       sendErrorMessage,
       txid,
       fees,
-      pendingTransaction
+      pendingTransaction,
     } = this.state
     const {
       sendableAssets,
@@ -461,7 +471,7 @@ export default class Send extends React.Component<Props, State> {
       currencyCode,
       shouldRenderHeaderBar,
       address,
-      showSendModal
+      showSendModal,
     } = this.props
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 

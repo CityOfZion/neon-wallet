@@ -9,17 +9,17 @@ const PROGRESS_PROP: string = '__progress__'
 
 type Options = {
   propName?: string,
-  [key: string]: mixed
+  [key: string]: mixed,
 }
 
 export default function withLoadingProp(
   actions: Actions,
-  { propName = LOADING_PROP, ...options }: Options = {}
+  { ...options }: Options = {},
 ) {
   return compose(
     withProgress(actions, { propName: PROGRESS_PROP, ...options }),
     withProps(props => ({
-      [LOADING_PROP]: props[PROGRESS_PROP] === LOADING
-    }))
+      [LOADING_PROP]: props[PROGRESS_PROP] === LOADING,
+    })),
   )
 }

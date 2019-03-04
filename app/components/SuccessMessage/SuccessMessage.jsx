@@ -8,7 +8,7 @@ import ConfirmIcon from '../../assets/icons/confirm-circle.svg'
 type Props = {
   className?: string,
   text?: string,
-  icon?: React$Node
+  icon?: React$Node,
 }
 
 const SuccessMessage = ({ className, text, icon }: Props) => (

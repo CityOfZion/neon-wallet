@@ -1,11 +1,9 @@
 // @flow
 import React, { Component } from 'react'
-import { reject, noop, isEqual, cloneDeep } from 'lodash-es'
+import { reject, noop, cloneDeep } from 'lodash-es'
 
 import { getNewTokenItem, validateTokens } from './utils'
 
-import { TEST_NETWORK_ID } from '../../../core/constants'
-import Tooltip from '../../Tooltip'
 import BaseModal from '../BaseModal'
 import Button from '../../Button'
 import Row from './Row'
@@ -21,7 +19,7 @@ type Props = {
   setUserGeneratedTokens: Function,
   tokens: Array<TokenItemType>,
   showErrorNotification: Object => any,
-  onSave: () => any
+  onSave: () => any,
 }
 
 type InputErrorType = 'scriptHash'
@@ -30,12 +28,12 @@ type State = {
   tokens: Array<TokenItemType>,
   errorItemId: ?number,
   errorType: ?InputErrorType,
-  networkOption: NetworkItemType
+  networkOption: NetworkItemType,
 }
 
 class TokenModal extends Component<Props, State> {
   static defaultProps = {
-    onSave: noop
+    onSave: noop,
   }
 
   state = {
@@ -44,21 +42,21 @@ class TokenModal extends Component<Props, State> {
     errorType: null,
     networkOption:
       getNetworks().find(network => network.id === this.props.networkId) ||
-      getNetworks()[0]
+      getNetworks()[0],
   }
 
   deleteToken = (id: string) => {
     const { tokens } = this.state
 
     this.setState({
-      tokens: reject(tokens, { id })
+      tokens: reject(tokens, { id }),
     })
   }
 
   addToken = () => {
     const { networkOption } = this.state
     this.setState(state => ({
-      tokens: [...state.tokens, getNewTokenItem(networkOption.id)]
+      tokens: [...state.tokens, getNewTokenItem(networkOption.id)],
     }))
   }
 
@@ -67,7 +65,7 @@ class TokenModal extends Component<Props, State> {
       setUserGeneratedTokens,
       hideModal,
       showErrorNotification,
-      onSave
+      onSave,
     } = this.props
     const { tokens } = this.state
 
@@ -75,14 +73,14 @@ class TokenModal extends Component<Props, State> {
 
     const { errorMessage, errorType, errorItemId } = validateTokens(
       newlyAddedTokens,
-      this.props.tokens
+      this.props.tokens,
     )
 
     if (errorMessage) {
       showErrorNotification({ message: errorMessage })
       this.setState({
         errorItemId,
-        errorType
+        errorType,
       })
     } else {
       const validatedTokens = tokens.map(token => {
@@ -113,7 +111,7 @@ class TokenModal extends Component<Props, State> {
     this.setState({
       tokens: updatedTokens,
       errorItemId: null,
-      errorType: null
+      errorType: null,
     })
   }
 
@@ -126,7 +124,7 @@ class TokenModal extends Component<Props, State> {
     const networkId = networkOption.id
 
     const customTokenListLength = tokens.filter(
-      token => token.networkId === networkId && token.isUserGenerated
+      token => token.networkId === networkId && token.isUserGenerated,
     ).length
 
     return (
@@ -136,8 +134,8 @@ class TokenModal extends Component<Props, State> {
         style={{
           content: {
             width: '550px',
-            height: '550px'
-          }
+            height: '550px',
+          },
         }}
       >
         <div className={styles.container}>
@@ -173,7 +171,7 @@ class TokenModal extends Component<Props, State> {
                   .filter(
                     token =>
                       token.networkId === this.state.networkOption.id &&
-                      token.isUserGenerated
+                      token.isUserGenerated,
                   )
                   .map((token: TokenItemType) => (
                     <Row

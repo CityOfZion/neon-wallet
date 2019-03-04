@@ -24,16 +24,16 @@ type Props = {
   showModal: (modalType: string, modalProps: Object) => any,
   match: Object,
   address: string,
-  history: Object
+  history: Object,
 }
 
 type State = {
-  walletName: string
+  walletName: string,
 }
 
 class EditWallet extends Component<Props, State> {
   state = {
-    walletName: this.props.match.params.label
+    walletName: this.props.match.params.label,
   }
 
   render() {
@@ -98,7 +98,7 @@ class EditWallet extends Component<Props, State> {
       showErrorNotification,
       setAccounts,
       showModal,
-      history
+      history,
     } = this.props
 
     const { label, key } = this.props.match.params
@@ -111,8 +111,8 @@ class EditWallet extends Component<Props, State> {
           showErrorNotification({
             message: `An error occurred reading previously stored wallet: ${
               readError.message
-            }`
-          })
+            }`,
+          }),
         )
         if (data) {
           data.accounts = reject(data.accounts, { address: key })
@@ -120,16 +120,16 @@ class EditWallet extends Component<Props, State> {
             showErrorNotification({
               message: `An error occurred updating the wallet: ${
                 saveError.message
-              }`
-            })
+              }`,
+            }),
           )
           showSuccessNotification({
-            message: 'Account deletion was successful.'
+            message: 'Account deletion was successful.',
           })
           setAccounts(data.accounts)
           history.goBack()
         }
-      }
+      },
     })
   }
 }

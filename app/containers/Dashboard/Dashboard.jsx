@@ -19,13 +19,13 @@ import styles from './Dashboard.scss'
 
 type Props = {
   loadWalletData: Function,
-  address: string
+  address: string,
 }
 
 const REFRESH_INTERVAL_MS = 30000
 
 export default class Dashboard extends Component<Props> {
-  walletDataInterval: ?number
+  walletDataInterval: ?IntervalID
 
   componentDidMount() {
     this.addPolling()
@@ -80,17 +80,14 @@ export default class Dashboard extends Component<Props> {
   }
 
   addPolling = () => {
-    // $FlowFixMe
     this.walletDataInterval = setInterval(
       this.props.loadWalletData,
-      REFRESH_INTERVAL_MS
+      REFRESH_INTERVAL_MS,
     )
   }
 
   removePolling = () => {
-    // $FlowFixMe
     if (this.walletDataInterval) {
-      // $FlowFixMe
       clearInterval(this.walletDataInterval)
     }
   }

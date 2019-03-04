@@ -9,7 +9,7 @@ import rootReducer from '../modules'
 
 function configureStore(initialState = {}) {
   const logger = createLogger({
-    collapsed: true
+    collapsed: true,
   })
 
   const sagaMiddleware = createSagaMiddleware()
@@ -19,7 +19,7 @@ function configureStore(initialState = {}) {
   const store = createStore(
     rootReducer,
     initialState,
-    composeWithDevTools(applyMiddleware(...middlewares))
+    composeWithDevTools(applyMiddleware(...middlewares)),
   )
 
   sagaMiddleware.run(saga)

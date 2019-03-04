@@ -1,7 +1,7 @@
 // @flow
-import { tx, wallet, u } from 'neon-js'
+import { tx, wallet, u } from '@cityofzion/neon-js'
 import { cloneDeep } from 'lodash-es'
-import type { Transaction } from 'neon-js'
+import type { Transaction } from '@cityofzion/neon-js'
 
 import LedgerNode from '@ledgerhq/hw-transport-node-hid'
 import asyncWrap from '../core/asyncHelper'
@@ -20,7 +20,7 @@ export const MESSAGES = {
   MSG_TOO_BIG: 'Your transaction is too big for the Ledger to sign',
   TX_DENIED: 'You have denied the transaction on your ledger',
   TX_PARSE_ERR:
-    'Error parsing transaction. Make sure your NEO Ledger app version is up to date'
+    'Error parsing transaction. Make sure your NEO Ledger app version is up to date',
 }
 
 /**
@@ -103,14 +103,33 @@ export default class NeonLedger {
     return Promise.resolve()
   }
 
+  async getPublicKeys(
+    acct: number = 0,
+    unencodedPublicKeys: Array<{ account: number, key: string }> = [],
+    batchSize: number = 10,
+  ) {
+    const res = await this.send('80040000', BIP44(acct), [VALID_STATUS])
+    const key = await res.toString('hex').substring(0, 130)
+
+    if (unencodedPublicKeys.length < batchSize) {
+      unencodedPublicKeys.push({ account: acct, key })
+      const nextKey = acct + 1
+      return this.getPublicKeys(nextKey, unencodedPublicKeys)
+    }
+    return unencodedPublicKeys
+  }
+
   /**
    * Retrieves the public key of an account from the Ledger.
    * @param {number} [acct] - Account that you want to retrieve the public key from.
    * @return {string} Public Key (Unencoded)
    */
-  async getPublicKey(acct: number = 0): Promise<string> {
+  async getPublicKey(
+    acct: number = 0,
+  ): Promise<{ account: number, key: string }> {
     const res = await this.send('80040000', BIP44(acct), [VALID_STATUS])
-    return res.toString('hex').substring(0, 130)
+    const key = await res.toString('hex').substring(0, 130)
+    return { account: acct, key }
   }
 
   getDeviceInfo() {
@@ -131,7 +150,7 @@ export default class NeonLedger {
   async send(
     params: string,
     msg: string,
-    statusList: number[]
+    statusList: number[],
   ): Promise<Buffer> {
     if (params.length !== 8) throw new Error('params requires 4 bytes')
     // $FlowFixMe
@@ -143,7 +162,7 @@ export default class NeonLedger {
         p1,
         p2,
         Buffer.from(msg, 'hex'),
-        statusList
+        statusList,
       )
     } catch (err) {
       throw evalTransportError(err)
@@ -169,7 +188,7 @@ export default class NeonLedger {
       const params = `8002${p}00`
       // eslint-disable-next-line
       const [err, res] = await asyncWrap(
-        this.send(params, chunk, [VALID_STATUS])
+        this.send(params, chunk, [VALID_STATUS]),
       )
       if (err) throw evalTransportError(err)
       response = res
@@ -214,10 +233,12 @@ const assembleSignature = (response: string): string => {
   return integers.join('')
 }
 
-export const getPublicKey = async (acct: number = 0): Promise<string> => {
+export const getPublicKeys = async (
+  acct: number = 0,
+): Promise<Array<{ account: number, key: string }>> => {
   const ledger = await NeonLedger.init()
   try {
-    return await ledger.getPublicKey(acct)
+    return await ledger.getPublicKeys(acct)
   } finally {
     await ledger.close()
   }
@@ -226,7 +247,9 @@ export const getPublicKey = async (acct: number = 0): Promise<string> => {
 export const getDeviceInfo = async () => {
   const ledger = await NeonLedger.init()
   try {
-    return await ledger.getDeviceInfo()
+    const deviceInfo = await ledger.getDeviceInfo()
+    const publicKey = await ledger.getPublicKey()
+    return { deviceInfo, publicKey }
   } finally {
     await ledger.close()
   }
@@ -240,7 +263,7 @@ export const getDeviceInfo = async () => {
  */
 export const signWithLedger = async (
   unsignedTx: Transaction | string,
-  acct: number = 0
+  acct: number = 0,
 ): Promise<string> => {
   const ledger = await NeonLedger.init()
   try {
@@ -251,7 +274,7 @@ export const signWithLedger = async (
     const publicKey = await ledger.getPublicKey(acct)
     const invocationScript = `40${await ledger.getSignature(data, acct)}`
     const verificationScript = wallet.getVerificationScriptFromPublicKey(
-      publicKey
+      publicKey,
     )
     const txObj = tx.deserializeTransaction(data)
     txObj.scripts.push({ invocationScript, verificationScript })
@@ -264,7 +287,7 @@ export const signWithLedger = async (
 export const legacySignWithLedger = async (
   unsignedTx: Transaction | string,
   publicKeyEncoded: string,
-  acct: number = 0
+  acct: number = 0,
 ): Promise<string> => {
   const ledger = await NeonLedger.init()
   try {
@@ -274,7 +297,7 @@ export const legacySignWithLedger = async (
         : unsignedTx
     const invocationScript = `40${await ledger.getSignature(data, acct)}`
     const verificationScript = wallet.getVerificationScriptFromPublicKey(
-      publicKeyEncoded
+      publicKeyEncoded,
     )
     const txObj = tx.deserializeTransaction(data)
     txObj.scripts.push({ invocationScript, verificationScript })

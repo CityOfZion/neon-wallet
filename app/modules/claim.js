@@ -1,11 +1,11 @@
 // @flow
-import { api, type Claims } from 'neon-js'
+import { api, type Claims } from '@cityofzion/neon-js'
 import { map, reduce } from 'lodash-es'
 
 import {
   showErrorNotification,
   showSuccessNotification,
-  showInfoNotification
+  showInfoNotification,
 } from './notifications'
 import {
   getNetwork,
@@ -14,7 +14,7 @@ import {
   getSigningFunction,
   getPublicKey,
   getIsHardwareLogin,
-  getNEO
+  getNEO,
 } from '../core/deprecated'
 import { toBigNumber, toNumber } from '../core/math'
 import { ASSETS } from '../core/constants'
@@ -30,7 +30,7 @@ const POLL_FREQUENCY = 10000
 export function disableClaim(disableClaimButton: boolean) {
   return {
     type: DISABLE_CLAIM,
-    payload: { disableClaimButton }
+    payload: { disableClaimButton },
   }
 }
 
@@ -54,7 +54,7 @@ const updateClaimableAmount = async ({
   publicKey,
   privateKey,
   signingFunction,
-  balance
+  balance,
 }) => {
   const { response } = await api.sendAsset(
     {
@@ -63,9 +63,9 @@ const updateClaimableAmount = async ({
       publicKey,
       privateKey,
       signingFunction,
-      intents: api.makeIntent({ [ASSETS.NEO]: toNumber(balance) }, address)
+      intents: api.makeIntent({ [ASSETS.NEO]: toNumber(balance) }, address),
     },
-    api.neoscan
+    api.neoscan,
   )
 
   if (!response.result || !response.txid) {
@@ -78,7 +78,7 @@ const updateClaimableAmount = async ({
 const pollForUpdatedClaimableAmount = async ({
   net,
   address,
-  claimableAmount
+  claimableAmount,
 }) =>
   poll(
     async () => {
@@ -90,7 +90,7 @@ const pollForUpdatedClaimableAmount = async ({
 
       return updatedClaimableAmount
     },
-    { attempts: POLL_ATTEMPTS, frequency: POLL_FREQUENCY }
+    { attempts: POLL_ATTEMPTS, frequency: POLL_FREQUENCY },
   )
 
 const getUpdatedClaimableAmount = async ({
@@ -99,7 +99,7 @@ const getUpdatedClaimableAmount = async ({
   balance,
   publicKey,
   privateKey,
-  signingFunction
+  signingFunction,
 }) => {
   const claimableAmount = await getClaimableAmount({ net, address })
 
@@ -112,14 +112,14 @@ const getUpdatedClaimableAmount = async ({
     balance,
     publicKey,
     privateKey,
-    signingFunction
+    signingFunction,
   })
   return pollForUpdatedClaimableAmount({ net, address, claimableAmount })
 }
 
 export const doGasClaim = () => async (
   dispatch: DispatchType,
-  getState: GetStateType
+  getState: GetStateType,
 ) => {
   const state = getState()
   const address = getAddress(state)
@@ -135,8 +135,8 @@ export const doGasClaim = () => async (
   if (isHardwareClaim) {
     dispatch(
       showInfoNotification({
-        message: 'Please sign transaction 1 of 2 on hardware device.'
-      })
+        message: 'Please sign transaction 1 of 2 on hardware device.',
+      }),
     )
   } else {
     dispatch(showInfoNotification({ message: 'Calculating claimable GAS...' }))
@@ -150,14 +150,14 @@ export const doGasClaim = () => async (
       balance,
       publicKey,
       privateKey,
-      signingFunction
+      signingFunction,
     })
   } catch (err) {
     dispatch(disableClaim(false))
     dispatch(
       showErrorNotification({
-        message: `Error calculating claimable GAS: ${err.message}`
-      })
+        message: `Error calculating claimable GAS: ${err.message}`,
+      }),
     )
     return
   }
@@ -165,8 +165,8 @@ export const doGasClaim = () => async (
   if (isHardwareClaim) {
     dispatch(
       showInfoNotification({
-        message: 'Please sign transaction 2 of 2 on hardware device.'
-      })
+        message: 'Please sign transaction 2 of 2 on hardware device.',
+      }),
     )
   } else {
     dispatch(showInfoNotification({ message: 'Claiming GAS...' }))
@@ -178,7 +178,7 @@ export const doGasClaim = () => async (
     if (isHardwareClaim) claims = claims.slice(0, 25)
     const { response } = await api.claimGas(
       { net, address, claims, publicKey, privateKey, signingFunction },
-      api.neoscan
+      api.neoscan,
     )
 
     if (!response.result) {
@@ -187,15 +187,15 @@ export const doGasClaim = () => async (
   } catch (err) {
     dispatch(disableClaim(false))
     dispatch(
-      showErrorNotification({ message: `Claiming GAS failed: ${err.message}` })
+      showErrorNotification({ message: `Claiming GAS failed: ${err.message}` }),
     )
     return
   }
 
   dispatch(
     showSuccessNotification({
-      message: 'Claim was successful! Your balance will update shortly.'
-    })
+      message: 'Claim was successful! Your balance will update shortly.',
+    }),
   )
   setTimeout(() => dispatch(disableClaim(false)), FIVE_MINUTES_MS)
 }
@@ -205,7 +205,7 @@ export const getDisableClaimButton = (state: Object) =>
   state.claim.disableClaimButton
 
 const initialState = {
-  disableClaimButton: false
+  disableClaimButton: false,
 }
 
 export default (state: Object = initialState, action: ReduxAction) => {
@@ -215,7 +215,7 @@ export default (state: Object = initialState, action: ReduxAction) => {
       const { disableClaimButton } = action.payload
       return {
         ...state,
-        disableClaimButton
+        disableClaimButton,
       }
     default:
       return state

@@ -1,57 +1,74 @@
 // @flow
-import React, { Fragment } from 'react'
+import React from 'react'
 import type { Node } from 'react'
 
 import moment from 'moment'
 import { isEmpty } from 'lodash-es'
+import classNames from 'classnames'
+import { TX_TYPES } from '../../../core/constants'
 
 import Button from '../../Button'
+import PendingAbstract from './PendingAbstract'
+import ClaimAbstract from './ClaimAbstract'
+import SendAbstract from './SendAbstract'
+import ReceiveAbstract from './ReceiveAbstract'
+import InfoIcon from '../../../assets/icons/info.svg'
 import { openExplorerTx } from '../../../core/explorer'
 import styles from './Transaction.scss'
-import ClaimIcon from '../../../assets/icons/claim.svg'
-import SendIcon from '../../../assets/icons/send-tx.svg'
-import ReceiveIcon from '../../../assets/icons/receive-tx.svg'
-import ContactsAdd from '../../../assets/icons/contacts-add.svg'
-import InfoIcon from '../../../assets/icons/info.svg'
-import CopyToClipboard from '../../CopyToClipboard'
 import Tooltip from '../../Tooltip'
 
 type Props = {
-  tx: Object,
+  tx: TxEntryType,
+  pendingTx: {
+    asset: {
+      symbol: string,
+      image?: string,
+    },
+    blocktime: number,
+    amount: string,
+    to: string,
+    confirmations: number,
+  },
   networkId: string,
   explorer: ExplorerType,
   contacts: Object,
   showAddContactModal: ({ address: string }) => null,
-  address: string
+  address: string,
+  className?: string,
+  isPending?: boolean,
 }
 
 export default class Transaction extends React.Component<Props> {
+  static defaultProps = {
+    tx: {},
+  }
+
   render = () => {
-    const { tx } = this.props
-    const { iconType } = tx
+    const {
+      tx: { type },
+      className,
+      isPending,
+    } = this.props
     return (
-      <div className={styles.transactionContainer}>
-        {this.renderAbstract(iconType)}
-        <Button
-          className={styles.transactionHistoryButton}
-          renderIcon={InfoIcon}
-          onClick={this.handleClick}
-        >
-          View
-        </Button>
+      <div className={classNames(styles.transactionContainer, className)}>
+        {this.renderAbstract(type)}
+        {!isPending && (
+          <Button
+            className={styles.transactionHistoryButton}
+            renderIcon={InfoIcon}
+            onClick={this.handleViewTransaction}
+          >
+            View
+          </Button>
+        )}
       </div>
     )
   }
 
-  findContact = (address: string): Node => {
+  findContact = (address: string): Node | string => {
     const { contacts } = this.props
     if (contacts && !isEmpty(contacts)) {
-      let label
-      Object.keys(contacts).forEach(key => {
-        if (contacts[key] === address) {
-          label = key
-        }
-      })
+      const label = contacts[address]
       return label ? (
         <Tooltip title={address} className={styles.largerFont}>
           {label}
@@ -63,142 +80,75 @@ export default class Transaction extends React.Component<Props> {
     return address
   }
 
-  displayModal = () => {
-    const {
-      showAddContactModal,
-      tx: { to, from, iconType }
-    } = this.props
-    showAddContactModal({ address: iconType === 'RECEIVE' ? from : to })
+  displayModal = (address: string) => {
+    this.props.showAddContactModal({ address })
   }
 
-  handleClick = () => {
+  handleViewTransaction = () => {
     const { networkId, explorer, tx } = this.props
     const { txid } = tx
     openExplorerTx(networkId, explorer, txid)
   }
 
+  renderTxDate = (time: ?number) => {
+    if (!time) {
+      return null
+    }
+
+    return (
+      <div className={styles.txDateContainer}>
+        {moment.unix(time).format('MM/DD/YYYY | HH:mm:ss')}
+      </div>
+    )
+  }
+
   renderAbstract = (type: string) => {
-    const { tx } = this.props
-    const { iconType, time, label, amount, isNetworkFee, to, from } = tx
-
-    const formattedTime = moment.unix(time).format('MM/DD/YYYY | HH:mm:ss')
-
+    const { isPending, address } = this.props
+    const { time, label, amount, isNetworkFee, to, from, image } = this.props.tx
     const contactTo = this.findContact(to)
+    const contactFrom = from && this.findContact(from)
     const contactToExists = contactTo !== to
+    const contactFromExists = contactFrom !== from
+    const logo = image && <img src={image} alt={`${label}`} />
+    const txDate = this.renderTxDate(time)
+
+    const abstractProps = {
+      txDate,
+      logo,
+      contactTo,
+      amount,
+      contactFrom,
+      contactToExists,
+      findContact: this.findContact,
+      showAddContactModal: this.displayModal,
+      isNetworkFee,
+      contactFromExists,
+      from,
+      address,
+      ...this.props.tx,
+    }
+
+    if (isPending) {
+      return (
+        <PendingAbstract
+          {...abstractProps}
+          {...this.props.pendingTx}
+          renderTxDate={this.renderTxDate}
+        />
+      )
+    }
 
     switch (type) {
-      case 'CLAIM':
-        return (
-          <div className={styles.abstractContainer}>
-            <div className={styles.txTypeIconContainer}>
-              <div className={styles.claimIconContainer}>
-                <ClaimIcon />
-              </div>
-            </div>
-            <div className={styles.txDateContainer}>{formattedTime}</div>
-            <div className={styles.txLabelContainer}>{label}</div>
-            <div className={styles.txAmountContainer}>{amount}</div>
-            <div className={styles.txToContainer}>
-              <Fragment>
-                <span>{contactTo}</span>
-                {!contactToExists && (
-                  <CopyToClipboard
-                    className={styles.copy}
-                    text={to}
-                    tooltip="Copy Public Address"
-                  />
-                )}
-              </Fragment>
-            </div>
-            <div className={styles.historyButtonPlaceholder} />
-          </div>
-        )
-      case 'SEND':
-        return (
-          <div className={styles.abstractContainer}>
-            <div className={styles.txTypeIconContainer}>
-              <div className={styles.sendIconContainer}>
-                <SendIcon />
-              </div>
-            </div>
-            <div className={styles.txDateContainer}>{formattedTime}</div>
-            <div className={styles.txLabelContainer}>{label}</div>
-            <div className={styles.txAmountContainer}>{amount}</div>
-            <div className={styles.txToContainer}>
-              {isNetworkFee ? (
-                to
-              ) : (
-                <Fragment>
-                  <span>{contactTo}</span>
-                  {!contactToExists && (
-                    <CopyToClipboard
-                      className={styles.copy}
-                      text={to}
-                      tooltip="Copy Public Address"
-                    />
-                  )}
-                </Fragment>
-              )}
-            </div>
-            {isNetworkFee ? (
-              <div className={styles.historyButtonPlaceholder} />
-            ) : (
-              <Button
-                className={styles.transactionHistoryButton}
-                renderIcon={ContactsAdd}
-                onClick={this.displayModal}
-                disabled={contactToExists}
-              >
-                Add
-              </Button>
-            )}
-          </div>
-        )
-      case 'RECEIVE': {
-        const contactFrom = this.findContact(from)
-        const contactFromExists = contactFrom !== from
-        const isMintTokens = from === 'MINT TOKENS'
-        const isGasClaim = this.props.address === from && !Number(amount)
-        return (
-          <div className={styles.abstractContainer}>
-            <div className={styles.txTypeIconContainer}>
-              <div className={styles.receiveIconContainer}>
-                <ReceiveIcon />
-              </div>
-            </div>
-            <div className={styles.txDateContainer}>{formattedTime}</div>
-            <div className={styles.txLabelContainer}>{label}</div>
-            <div className={styles.txAmountContainer}>{amount}</div>
-            <div className={styles.txToContainer}>
-              <span>{contactFrom}</span>
-              {!contactFromExists &&
-                !isMintTokens && (
-                  <CopyToClipboard
-                    className={styles.copy}
-                    text={from}
-                    tooltip="Copy Public Address"
-                  />
-                )}
-            </div>
-            {isMintTokens || isGasClaim ? (
-              <div className={styles.transactionHistoryButton} />
-            ) : (
-              <Button
-                className={styles.transactionHistoryButton}
-                renderIcon={ContactsAdd}
-                onClick={this.displayModal}
-                disabled={contactFromExists}
-              >
-                Add
-              </Button>
-            )}
-          </div>
-        )
+      case TX_TYPES.CLAIM:
+        return <ClaimAbstract {...abstractProps} />
+      case TX_TYPES.SEND:
+        return <SendAbstract {...abstractProps} />
+      case TX_TYPES.RECEIVE: {
+        return <ReceiveAbstract {...abstractProps} />
       }
-
       default:
         console.warn('renderTxTypeIcon() invoked with an invalid argument!', {
-          type
+          type,
         })
         return null
     }

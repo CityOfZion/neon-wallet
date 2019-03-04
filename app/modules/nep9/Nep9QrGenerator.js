@@ -24,7 +24,7 @@ export default class Nep9QrGenerator {
     this.uri = nep9.generateUri(nep9Data)
     const options = {
       errorCorrectionLevel: 'Q',
-      width
+      width,
     }
 
     // $FlowFixMe
@@ -35,9 +35,9 @@ export default class Nep9QrGenerator {
           // $FlowFixMe
           this.uri,
           options,
-          (err, canvas) => (err ? reject(err) : resolve(canvas))
+          (err, canvas) => (err ? reject(err) : resolve(canvas)),
         )
-      })
+      }),
     ])
       .then(([nep5Data, c]) => {
         canvas = c
@@ -54,7 +54,7 @@ export default class Nep9QrGenerator {
         const logo = imageMap[token.symbol] || imageMap.NEO
         return {
           logoSrc: logo,
-          isGasOrNeo: nep9Data.asset === 'NEO' || nep9Data.asset === 'GAS'
+          isGasOrNeo: nep9Data.asset === 'NEO' || nep9Data.asset === 'GAS',
         }
       })
       .then(
@@ -93,7 +93,7 @@ export default class Nep9QrGenerator {
                 70 * scale,
                 60 * scale,
                 60 * scale,
-                5 * scale
+                5 * scale,
               )
               context.fillStyle = 'white'
               context.fill()
@@ -102,7 +102,7 @@ export default class Nep9QrGenerator {
                 80 * scale,
                 80 * scale,
                 40 * scale,
-                40 * scale
+                40 * scale,
               )
               const dt = canvas.toDataURL('image/png')
               if (canvasEl) {
@@ -116,7 +116,7 @@ export default class Nep9QrGenerator {
               resolve(dt)
             }
             img.src = logoSrc
-          })
+          }),
       )
   }
   toDataURL(): Promise<any> {

@@ -1,10 +1,15 @@
 @import '../../../../styles/variables';
 
 .sendSuccessHeader {
-  padding: 60px 30px;
+  padding: 60px 30px 15px 60px;
   align-items: center;
   display: flex;
   justify-content: center;
+}
+
+.activityLinkText {
+  text-align: center;
+  font-family: var(--font-gotham-light);
 }
 
 .sendSuccessHeaderIcon {
@@ -41,8 +46,6 @@
   padding: 0 30px;
 }
 
-.sendSuccessBodyList {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
+.sendSuccessBodyListItem {
+  background: var(--tx-list-odd-row);
 }

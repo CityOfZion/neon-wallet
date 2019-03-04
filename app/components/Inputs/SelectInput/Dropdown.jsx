@@ -13,14 +13,14 @@ type Props = {
   children: NodeOrNodes,
   open: boolean,
   onClose: Function,
-  renderDropdown: Function
+  renderDropdown: Function,
 }
 
 class Dropdown extends React.Component<Props> {
   static defaultProps = {
     open: false,
     onClose: noop,
-    renderDropdown: noop
+    renderDropdown: noop,
   }
 
   render = () => (

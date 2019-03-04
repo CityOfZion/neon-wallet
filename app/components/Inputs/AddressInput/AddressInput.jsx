@@ -10,17 +10,17 @@ import styles from './AddressInput.scss'
 
 type ItemType = {
   label: string,
-  value: string
+  value: string,
 }
 
 type Props = {
   value: string,
-  contacts?: Object
+  contacts?: Object,
 }
 
 export default class AddressInput extends React.Component<Props> {
   static defaultProps = {
-    contacts: {}
+    contacts: {},
   }
 
   render = () => {
@@ -41,7 +41,7 @@ export default class AddressInput extends React.Component<Props> {
 
   renderItem = (
     item: ItemType,
-    { search, onSelect }: { search: string, onSelect: Function }
+    { search, onSelect }: { search: string, onSelect: Function },
   ) => (
     <div className={styles.addressItem} key={item.label} onClick={onSelect}>
       <div className={styles.label}>
@@ -72,7 +72,7 @@ export default class AddressInput extends React.Component<Props> {
     }
     return map(contacts, (address, name) => ({
       label: name,
-      value: address
+      value: address,
     }))
   }
 
@@ -80,12 +80,12 @@ export default class AddressInput extends React.Component<Props> {
 
   getSearchResults = (
     items: Array<ItemType>,
-    term: string
+    term: string,
   ): Array<ItemType> => {
     const sifter = new Sifter(items)
     const result = sifter.search(term, {
       fields: ['label', 'value'],
-      sort: [{ field: 'label', direction: 'asc' }]
+      sort: [{ field: 'label', direction: 'asc' }],
     })
     return result.items.map(resultItem => items[resultItem.id])
   }

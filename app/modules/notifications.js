@@ -4,24 +4,25 @@ import { reject, uniqueId } from 'lodash-es'
 import { NOTIFICATION_LEVELS, NOTIFICATION_POSITIONS } from '../core/constants'
 
 type NotificationArgsType = {
-  message: string,
+  message?: string,
   id?: string,
   title?: string,
   position?: $Values<typeof NOTIFICATION_POSITIONS>,
   dismissible?: boolean,
   autoDismiss?: number,
   autoDismiss?: number,
-  stack?: boolean
+  stack?: boolean,
+  children?: React$Node,
 }
 
 type NotificationFactoryArgsType = {
   ...NotificationArgsType,
-  level: $Values<typeof NOTIFICATION_LEVELS>
+  level: $Values<typeof NOTIFICATION_LEVELS>,
 }
 
 type HideNotificationType = {
   ...NotificationFactoryArgsType,
-  message?: string
+  message?: string,
 }
 
 // Constants
@@ -38,31 +39,31 @@ export const AUTO_DISMISS_TIMEOUT = 5
 // Actions
 export const showNotification = (args: NotificationType) => ({
   type: SHOW_NOTIFICATION,
-  payload: args
+  payload: args,
 })
 
 export const hideNotification = (id: string) => ({
   type: HIDE_NOTIFICATION,
   payload: {
-    id
-  }
+    id,
+  },
 })
 
 export const hideNotifications = (args: HideNotificationType) => ({
   type: HIDE_NOTIFICATIONS,
-  payload: args
+  payload: args,
 })
 
 const notificationFactory = (
   args: NotificationFactoryArgsType,
-  dispatch: DispatchType
+  dispatch: DispatchType,
 ): string => {
   const {
     autoDismiss = AUTO_DISMISS_TIMEOUT,
     dismissible = true,
     stack = false,
     position = DEFAULT_POSITION,
-    id = uniqueId('notification_')
+    id = uniqueId('notification_'),
   } = args
 
   const shouldHideNonDismissibleNotifications = !stack
@@ -76,56 +77,56 @@ const notificationFactory = (
       position,
       dismissible,
       autoDismiss,
-      ...args
-    })
+      ...args,
+    }),
   )
 
   return id
 }
 
 export const showSuccessNotification = (args: NotificationArgsType) => (
-  dispatch: DispatchType
+  dispatch: DispatchType,
 ): string =>
   notificationFactory(
     {
       title: DEFAULT_SUCCESS_TITLE,
       ...args,
-      level: NOTIFICATION_LEVELS.SUCCESS
+      level: NOTIFICATION_LEVELS.SUCCESS,
     },
-    dispatch
+    dispatch,
   )
 
 export const showErrorNotification = (args: NotificationArgsType) => (
-  dispatch: DispatchType
+  dispatch: DispatchType,
 ): string =>
   notificationFactory(
     {
       title: DEFAULT_ERROR_TITLE,
       ...args,
       level: NOTIFICATION_LEVELS.ERROR,
-      autoDismiss: 5
+      autoDismiss: 5,
     },
-    dispatch
+    dispatch,
   )
 
 export const showWarningNotification = (args: NotificationArgsType) => (
-  dispatch: DispatchType
+  dispatch: DispatchType,
 ): string =>
   notificationFactory(
     {
       title: DEFAULT_WARNING_TITLE,
       ...args,
-      level: NOTIFICATION_LEVELS.WARNING
+      level: NOTIFICATION_LEVELS.WARNING,
     },
-    dispatch
+    dispatch,
   )
 
 export const showInfoNotification = (args: NotificationArgsType) => (
-  dispatch: DispatchType
+  dispatch: DispatchType,
 ): string =>
   notificationFactory(
     { title: DEFAULT_INFO_TITLE, ...args, level: NOTIFICATION_LEVELS.INFO },
-    dispatch
+    dispatch,
   )
 
 // state Getters

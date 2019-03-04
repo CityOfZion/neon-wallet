@@ -18,30 +18,30 @@ const initialState = {
       progress: LOADED,
       data: {
         address: 'AWy7RNBVr9vDadRMK9p7i7Z1tL7GrLAxoh',
-        wif: 'L4SLRcPgqNMAMwM3nFSxnh36f1v5omjPg3Ewy1tg2PnEon8AcHou'
-      }
+        wif: 'L4SLRcPgqNMAMwM3nFSxnh36f1v5omjPg3Ewy1tg2PnEon8AcHou',
+      },
     },
     network: {
       batch: false,
       progress: LOADED,
       loadedCount: 1,
-      data: MAIN_NETWORK_ID
+      data: MAIN_NETWORK_ID,
     },
     settings: {
       batch: false,
       progress: LOADED,
       loadedCount: 1,
       data: {
-        blockExplorer: EXPLORERS.NEO_TRACKER
-      }
+        blockExplorer: EXPLORERS.NEO_TRACKER,
+      },
     },
     transactionHistory: {
       batch: false,
       progress: LOADED,
       loadedCount: 1,
-      data: []
-    }
-  }
+      data: [],
+    },
+  },
 }
 
 const transactions = [
@@ -53,8 +53,8 @@ const transactions = [
     amount: '0.11988459',
     asset: { symbol: 'GAS' },
     label: 'Gas Claim',
-    iconType: 'CLAIM',
-    id: '_ymelbt8mb'
+    type: 'CLAIM',
+    id: '_ymelbt8mb',
   },
   {
     to: 'AXmzKD3dvj7dPUQKkBeNZmRDYF6AhrwrtQ',
@@ -63,12 +63,12 @@ const transactions = [
     time: 1537234593,
     amount: '0',
     asset: {
-      symbol: 'MCT'
+      symbol: 'MCT',
     },
     label: 'MCT',
-    iconType: 'RECEIVE',
-    id: '_r3mihxg36'
-  }
+    type: 'RECEIVE',
+    id: '_r3mihxg36',
+  },
 ]
 
 const setup = (state = initialState, shallowRender = true) => {
@@ -81,13 +81,13 @@ const setup = (state = initialState, shallowRender = true) => {
     wrapper = mount(
       <Provider store={store}>
         <TransactionHistoryPanel />
-      </Provider>
+      </Provider>,
     )
   }
 
   return {
     store,
-    wrapper
+    wrapper,
   }
 }
 
@@ -106,7 +106,7 @@ describe('TransactionHistoryPanel', () => {
 
   test('correctly renders with NEO and GAS transaction history', () => {
     const transactionState = merge({}, initialState, {
-      spunky: { transactionHistory: { data: transactions } }
+      spunky: { transactionHistory: { data: transactions } },
     })
     const { wrapper } = setup(transactionState, false)
 
@@ -117,42 +117,42 @@ describe('TransactionHistoryPanel', () => {
       transactionList
         .childAt(0)
         .find('.txAmountContainer')
-        .text()
+        .text(),
     ).toEqual('0.11988459')
 
     expect(
       transactionList
         .childAt(1)
         .find('.txAmountContainer')
-        .text()
+        .text(),
     ).toEqual('0')
 
     expect(
       transactionList
         .childAt(1)
         .find('.txLabelContainer')
-        .text()
+        .text(),
     ).toEqual('MCT')
 
     expect(
       transactionList
         .childAt(0)
         .find('.txLabelContainer')
-        .text()
+        .text(),
     ).toEqual('Gas Claim')
 
     expect(
       transactionList
         .childAt(0)
         .find('.txToContainer')
-        .text()
+        .text(),
     ).toEqual(transactions[0].to)
 
     expect(
       transactionList
         .childAt(1)
         .find('.txToContainer')
-        .text()
+        .text(),
     ).toEqual(transactions[1].to)
   })
 })

@@ -10,19 +10,19 @@ import notificationsReducer, {
   HIDE_NOTIFICATION,
   DEFAULT_POSITION,
   AUTO_DISMISS_TIMEOUT,
-  showNotification
+  showNotification,
 } from '../../app/modules/notifications'
 import {
   NOTIFICATION_LEVELS,
-  NOTIFICATION_POSITIONS
+  NOTIFICATION_POSITIONS,
 } from '../../app/core/constants'
 
 const hideNonDismissibleAction = {
   payload: {
     dismissible: true,
-    position: DEFAULT_POSITION
+    position: DEFAULT_POSITION,
   },
-  type: HIDE_NOTIFICATIONS
+  type: HIDE_NOTIFICATIONS,
 }
 
 describe('notifications module tests', () => {
@@ -39,17 +39,17 @@ describe('notifications module tests', () => {
             id: 'notification_success_1',
             level: NOTIFICATION_LEVELS.SUCCESS,
             message: 'success',
-            position: DEFAULT_POSITION
+            position: DEFAULT_POSITION,
           },
-          type: SHOW_NOTIFICATION
-        }
-      ]
+          type: SHOW_NOTIFICATION,
+        },
+      ],
     ]
 
     showSuccessNotification({
       title: 'success',
       message: 'success',
-      id: 'notification_success_1'
+      id: 'notification_success_1',
     })(dispatch)
 
     expect(dispatch.mock.calls[0]).toEqual(expectedActions[0])
@@ -69,10 +69,10 @@ describe('notifications module tests', () => {
             level: NOTIFICATION_LEVELS.SUCCESS,
             message: 'first success message',
             position: DEFAULT_POSITION,
-            stack: true
+            stack: true,
           },
-          type: SHOW_NOTIFICATION
-        }
+          type: SHOW_NOTIFICATION,
+        },
       ],
       [
         {
@@ -84,11 +84,11 @@ describe('notifications module tests', () => {
             level: NOTIFICATION_LEVELS.SUCCESS,
             message: 'second success message',
             position: DEFAULT_POSITION,
-            stack: true
+            stack: true,
           },
-          type: SHOW_NOTIFICATION
-        }
-      ]
+          type: SHOW_NOTIFICATION,
+        },
+      ],
     ]
 
     showSuccessNotification({
@@ -96,7 +96,7 @@ describe('notifications module tests', () => {
       message: 'first success message',
       id: 'notification_success_1',
       stack: true,
-      autoDismiss: 3
+      autoDismiss: 3,
     })(dispatch)
 
     showSuccessNotification({
@@ -104,7 +104,7 @@ describe('notifications module tests', () => {
       message: 'second success message',
       id: 'notification_success_2',
       stack: true,
-      dismissible: false
+      dismissible: false,
     })(dispatch)
 
     expect(dispatch.mock.calls[0]).toEqual(expectedActions[0])
@@ -124,18 +124,18 @@ describe('notifications module tests', () => {
             id: 'notification_error_1',
             level: NOTIFICATION_LEVELS.ERROR,
             message: 'error',
-            position: DEFAULT_POSITION
+            position: DEFAULT_POSITION,
           },
-          type: SHOW_NOTIFICATION
-        }
-      ]
+          type: SHOW_NOTIFICATION,
+        },
+      ],
     ]
 
     showErrorNotification({
       title: 'error',
       message: 'error',
       id: 'notification_error_1',
-      dismissible: false
+      dismissible: false,
     })(dispatch)
 
     expect(dispatch.mock.calls[0]).toEqual(expectedActions[0])
@@ -155,18 +155,18 @@ describe('notifications module tests', () => {
             id: 'notification_info_1',
             level: NOTIFICATION_LEVELS.INFO,
             message: 'some info message',
-            position: NOTIFICATION_POSITIONS.TOP_CENTER
+            position: NOTIFICATION_POSITIONS.TOP_CENTER,
           },
-          type: SHOW_NOTIFICATION
-        }
-      ]
+          type: SHOW_NOTIFICATION,
+        },
+      ],
     ]
 
     showInfoNotification({
       title: 'some info title message',
       message: 'some info message',
       id: 'notification_info_1',
-      position: NOTIFICATION_POSITIONS.TOP_CENTER
+      position: NOTIFICATION_POSITIONS.TOP_CENTER,
     })(dispatch)
 
     expect(dispatch.mock.calls[0]).toEqual(expectedActions[0])
@@ -186,18 +186,18 @@ describe('notifications module tests', () => {
             id: 'notification_warning_1',
             level: NOTIFICATION_LEVELS.WARNING,
             message: 'warning',
-            position: NOTIFICATION_POSITIONS.TOP_CENTER
+            position: NOTIFICATION_POSITIONS.TOP_CENTER,
           },
-          type: SHOW_NOTIFICATION
-        }
-      ]
+          type: SHOW_NOTIFICATION,
+        },
+      ],
     ]
 
     showWarningNotification({
       title: 'warning',
       message: 'warning',
       id: 'notification_warning_1',
-      position: NOTIFICATION_POSITIONS.TOP_CENTER
+      position: NOTIFICATION_POSITIONS.TOP_CENTER,
     })(dispatch)
 
     expect(dispatch.mock.calls[0]).toEqual(expectedActions[0])
@@ -211,13 +211,13 @@ describe('notifications module tests', () => {
       id: 'notification_success_1',
       level: NOTIFICATION_LEVELS.SUCCESS,
       message: 'success',
-      position: DEFAULT_POSITION
+      position: DEFAULT_POSITION,
     }
 
     test('showNotification action works', () => {
       const action = {
         type: SHOW_NOTIFICATION,
-        payload: notificationArgs
+        payload: notificationArgs,
       }
       expect(showNotification(notificationArgs)).toEqual(action)
     })
@@ -225,7 +225,7 @@ describe('notifications module tests', () => {
     test('showNotification should add the correct notification', () => {
       const action = {
         type: SHOW_NOTIFICATION,
-        payload: notificationArgs
+        payload: notificationArgs,
       }
       const initialState = []
 
@@ -240,8 +240,8 @@ describe('notifications module tests', () => {
       const action = {
         type: HIDE_NOTIFICATION,
         payload: {
-          id: 'notification_id_1'
-        }
+          id: 'notification_id_1',
+        },
       }
       expect(hideNotification('notification_id_1')).toEqual(action)
     })
@@ -250,16 +250,16 @@ describe('notifications module tests', () => {
       const action = {
         type: HIDE_NOTIFICATION,
         payload: {
-          id: 'notification_id_1'
-        }
+          id: 'notification_id_1',
+        },
       }
       const initialState = [
         { message: 'some message', id: 'notification_id_1' },
-        { message: 'some other message', id: 'notification_id_2' }
+        { message: 'some other message', id: 'notification_id_2' },
       ]
 
       const expectedState = [
-        { message: 'some other message', id: 'notification_id_2' }
+        { message: 'some other message', id: 'notification_id_2' },
       ]
 
       expect(notificationsReducer(initialState, action)).toEqual(expectedState)
@@ -271,8 +271,8 @@ describe('notifications module tests', () => {
       const action = {
         type: HIDE_NOTIFICATIONS,
         payload: {
-          position: DEFAULT_POSITION
-        }
+          position: DEFAULT_POSITION,
+        },
       }
       expect(hideNotifications({ position: DEFAULT_POSITION })).toEqual(action)
     })
@@ -281,29 +281,29 @@ describe('notifications module tests', () => {
       const action = {
         type: HIDE_NOTIFICATIONS,
         payload: {
-          position: DEFAULT_POSITION
-        }
+          position: DEFAULT_POSITION,
+        },
       }
 
       const initialState = [
         {
           message: 'some message',
           id: 'notification_id_1',
-          position: DEFAULT_POSITION
+          position: DEFAULT_POSITION,
         },
         {
           message: 'some other message',
           id: 'notification_id_2',
-          position: NOTIFICATION_POSITIONS.BOTTOM_CENTER
-        }
+          position: NOTIFICATION_POSITIONS.BOTTOM_CENTER,
+        },
       ]
 
       const expectedState = [
         {
           message: 'some other message',
           id: 'notification_id_2',
-          position: NOTIFICATION_POSITIONS.BOTTOM_CENTER
-        }
+          position: NOTIFICATION_POSITIONS.BOTTOM_CENTER,
+        },
       ]
 
       expect(notificationsReducer(initialState, action)).toEqual(expectedState)
@@ -311,12 +311,12 @@ describe('notifications module tests', () => {
 
     test('hideNotifications removes all notification when used without args', () => {
       const action = {
-        type: HIDE_NOTIFICATIONS
+        type: HIDE_NOTIFICATIONS,
       }
 
       const initialState = [
         { message: 'some message', id: 'notification_id_1' },
-        { message: 'some other message', id: 'notification_id_2' }
+        { message: 'some other message', id: 'notification_id_2' },
       ]
 
       const expectedState = []

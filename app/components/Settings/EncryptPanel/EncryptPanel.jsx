@@ -12,7 +12,7 @@ import CloseButton from '../../CloseButton'
 import styles from './EncryptPanel.scss'
 
 type State = {
-  encryptedkey: string
+  encryptedkey: string,
 }
 
 type Props = {
@@ -20,7 +20,7 @@ type Props = {
   validatePassphraseLength: Function,
   isWIF: Function,
   className: string,
-  title: string
+  title: string,
 }
 
 export default class EncryptPanel extends React.Component<Props, State> {
@@ -28,12 +28,12 @@ export default class EncryptPanel extends React.Component<Props, State> {
     super(props)
 
     this.state = {
-      encryptedkey: ''
+      encryptedkey: '',
     }
   }
 
   static defaultProps = {
-    handleSubmit: noop
+    handleSubmit: noop,
   }
 
   render() {
@@ -93,7 +93,7 @@ export default class EncryptPanel extends React.Component<Props, State> {
   onSubmit = (
     privateKey: string,
     passphrase: string,
-    confirmPassphrase: string
+    confirmPassphrase: string,
   ) => {
     const { handleSubmit } = this.props
     const result = handleSubmit(privateKey, passphrase, confirmPassphrase)

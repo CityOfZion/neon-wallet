@@ -1,12 +1,12 @@
 // @flow
 /* eslint-disable camelcase */
-import { api, sc, u, wallet } from 'neon-js'
-import { flatMap, keyBy, isEmpty } from 'lodash-es'
+import { api, sc, u, wallet, settings } from '@cityofzion/neon-js'
+import { flatMap, keyBy, isEmpty, get } from 'lodash-es'
 
 import {
   showErrorNotification,
   showInfoNotification,
-  showSuccessNotification
+  showSuccessNotification,
 } from './notifications'
 import {
   getNetwork,
@@ -16,15 +16,19 @@ import {
   getAddress,
   getIsHardwareLogin,
   getAssetBalances,
-  getTokenBalances
+  getTokenBalances,
 } from '../core/deprecated'
 import {
   isToken,
   validateTransactionsBeforeSending,
-  getTokenBalancesMap
+  getTokenBalancesMap,
 } from '../core/wallet'
 import { toNumber } from '../core/math'
 import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
+import { addPendingTransaction } from '../actions/pendingTransactionActions'
+
+const RPC_TIMEOUT_OVERRIDE = 60000
+settings.timeout.rpc = RPC_TIMEOUT_OVERRIDE
 
 const extractTokens = (sendEntries: Array<SendEntryType>) =>
   sendEntries.filter(({ symbol }) => isToken(symbol))
@@ -36,7 +40,7 @@ const buildIntents = (sendEntries: Array<SendEntryType>) => {
   const assetEntries = extractAssets(sendEntries)
   // $FlowFixMe
   return flatMap(assetEntries, ({ address, amount, symbol }) =>
-    api.makeIntent({ [symbol]: toNumber(amount) }, address)
+    api.makeIntent({ [symbol]: toNumber(amount) }, address),
   )
 }
 
@@ -45,8 +49,8 @@ const buildTransferScript = (
   sendEntries: Array<SendEntryType>,
   fromAddress: string,
   tokensBalanceMap: {
-    [key: string]: TokenBalanceType
-  }
+    [key: string]: TokenBalanceType,
+  },
 ) => {
   const tokenEntries = extractTokens(sendEntries)
   const fromAcct = new wallet.Account(fromAddress)
@@ -58,7 +62,7 @@ const buildTransferScript = (
     const args = [
       u.reverseHex(fromAcct.scriptHash),
       u.reverseHex(toAcct.scriptHash),
-      sc.ContractParam.byteArray(toNumber(amount), 'fixed8', decimals)
+      sc.ContractParam.byteArray(toNumber(amount), 'fixed8', decimals),
     ]
 
     scriptBuilder.emitAppCall(scriptHash, 'transfer', args)
@@ -67,37 +71,40 @@ const buildTransferScript = (
   return scriptBuilder.str
 }
 
-const makeRequest = (sendEntries: Array<SendEntryType>, config: Object) => {
-  const script = buildTransferScript(
-    config.net,
-    sendEntries,
-    config.address,
-    config.tokensBalanceMap
-  )
-
+const makeRequest = (
+  sendEntries: Array<SendEntryType>,
+  config: Object,
+  script: string,
+) => {
+  // NOTE: We purposefully mutate the contents of config
+  // because neon-js will also mutate this same object by reference
+  config.intents = buildIntents(sendEntries)
   if (script === '') {
-    return api.sendAsset(
-      { ...config, intents: buildIntents(sendEntries) },
-      api.neoscan
-    )
+    return api.sendAsset(config, api.neoscan)
   }
-  return api.doInvoke(
-    {
-      ...config,
-      intents: buildIntents(sendEntries),
-      script,
-      gas: 0
-    },
-    api.neoscan
-  )
+  config.script = script
+  config.gas = 0
+  return api.doInvoke(config, api.neoscan)
+}
+
+export const generateBalanceInfo = (
+  tokensBalanceMap: any,
+  address: string,
+  net: NetworkType,
+) => {
+  const Balance = new wallet.Balance({ address, net })
+  // $FlowFixMe
+  Object.values(tokensBalanceMap).forEach(({ name, balance }) => {
+    Balance.addAsset(name, { balance, unspent: [] })
+  })
 }
 
 export const sendTransaction = ({
   sendEntries,
-  fees
+  fees,
 }: {
   sendEntries: Array<SendEntryType>,
-  fees: number
+  fees: number,
 }) => (dispatch: DispatchType, getState: GetStateType): Promise<*> =>
   new Promise(async (resolve, reject) => {
     const state = getState()
@@ -108,7 +115,7 @@ export const sendTransaction = ({
     const tokensBalanceMap = keyBy(tokenBalances, 'symbol')
     const balances = {
       ...getAssetBalances(state),
-      ...getTokenBalancesMap(tokenBalances)
+      ...getTokenBalancesMap(tokenBalances),
     }
     const signingFunction = getSigningFunction(state)
     const publicKey = getPublicKey(state)
@@ -132,16 +139,16 @@ export const sendTransaction = ({
     dispatch(
       showInfoNotification({
         message: 'Sending Transaction...',
-        autoDismiss: 0
-      })
+        autoDismiss: 0,
+      }),
     )
 
     if (isHardwareSend) {
       dispatch(
         showInfoNotification({
           message: 'Please sign the transaction on your hardware device',
-          autoDismiss: 0
-        })
+          autoDismiss: 0,
+        }),
       )
     }
 
@@ -153,26 +160,28 @@ export const sendTransaction = ({
       privateKey: new wallet.Account(wif).privateKey,
       signingFunction: isHardwareSend ? signingFunction : null,
       fees,
-      url
+      url,
+      balance: undefined,
     }
-
-    await api
+    const balanceResults = await api
       .getBalanceFrom({ net, address: fromAddress }, api.neoscan)
       .catch(e => {
         // indicates that neo scan is down and that api.sendAsset and api.doInvoke
         // will fail unless balances are supplied
         console.error(e)
-        const Balance = new wallet.Balance({ address: fromAddress, net })
-        // $FlowFixMe
-        Object.values(tokensBalanceMap).forEach(({ name, balance }) => {
-          Balance.addAsset(name, { balance, unspent: [] })
-        })
-        // $FlowFixMe
-        config.balance = Balance
+        config.balance = generateBalanceInfo(tokensBalanceMap, fromAddress, net)
       })
+    if (balanceResults) config.balance = balanceResults.balance
 
     try {
-      const { response } = await makeRequest(sendEntries, config)
+      const script = buildTransferScript(
+        config.net,
+        sendEntries,
+        config.address,
+        // $FlowFixMe
+        config.tokensBalanceMap,
+      )
+      const { response } = await makeRequest(sendEntries, config, script)
 
       if (!response.result) {
         throw new Error('Rejected by RPC server.')
@@ -181,14 +190,26 @@ export const sendTransaction = ({
       dispatch(
         showSuccessNotification({
           message:
-            'Transaction complete! Your balance will automatically update when the blockchain has processed it.'
-        })
+            'Transaction pending! Your balance will automatically update when the blockchain has processed it.',
+        }),
       )
-
       return resolve(response)
     } catch (err) {
       console.error({ err })
       rejectTransaction(`Transaction failed: ${err.message}`)
       return reject(err)
+    } finally {
+      const outputs = get(config, 'tx.outputs')
+      const hash = get(config, 'tx.hash')
+      dispatch(
+        addPendingTransaction.call({
+          address: config.address,
+          tx: {
+            hash,
+            sendEntries,
+          },
+          net,
+        }),
+      )
     }
   })

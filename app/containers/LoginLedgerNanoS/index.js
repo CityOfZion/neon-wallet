@@ -6,19 +6,20 @@ import {
   withData,
   withError,
   withActions,
-  recentlyCompletedStrategy
+  recentlyCompletedStrategy,
 } from 'spunky'
 
 import LoginLedgerNanoS from './LoginLedgerNanoS'
 import ledgerActions from '../../actions/ledgerActions'
 import { ledgerLoginActions } from '../../actions/authActions'
 
-const mapLedgerActionsToProps = actions => ({
-  connect: () => ledgerActions.call()
+const mapLedgerActionsToProps = () => ({
+  connect: () => ledgerActions.call(),
 })
 
-const mapAccountActionsToProps = actions => ({
-  login: publicKey => ledgerLoginActions.call({ publicKey })
+const mapAccountActionsToProps = () => ({
+  login: ({ account, key }) =>
+    ledgerLoginActions.call({ publicKey: key, account }),
 })
 
 const mapLedgerDataToProps = data => {
@@ -33,8 +34,8 @@ export default compose(
   withActions(ledgerActions, mapLedgerActionsToProps),
   withActions(ledgerLoginActions, mapAccountActionsToProps),
   withProgress(ledgerActions, {
-    strategy: recentlyCompletedStrategy
+    strategy: recentlyCompletedStrategy,
   }),
   withData(ledgerActions, mapLedgerDataToProps),
-  withError(ledgerActions, mapLedgerErrorToProps)
+  withError(ledgerActions, mapLedgerErrorToProps),
 )(LoginLedgerNanoS)

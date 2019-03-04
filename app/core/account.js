@@ -1,5 +1,5 @@
 // @flow
-import { wallet } from 'neon-js'
+import { wallet } from '@cityofzion/neon-js'
 
 import { getStorage, setStorage } from './storage'
 
@@ -12,18 +12,18 @@ function getNEP6AddressData(matchesEncryptedWIF: boolean, address: string) {
 
 export async function upgradeNEP6AddAddresses(
   encryptedWIF: string,
-  wif: string
+  wif: string,
 ) {
   const data = getStorage('userWallet')
   const loggedIntoAccount = new wallet.Account(wif)
 
   if (data && data.accounts) {
-    const accounts = data.accounts.map((account, idx) => ({
+    const accounts = data.accounts.map(account => ({
       ...account,
       ...getNEP6AddressData(
         account.key === encryptedWIF,
-        loggedIntoAccount.address
-      )
+        loggedIntoAccount.address,
+      ),
     }))
 
     await setStorage('userWallet', { ...data, accounts })

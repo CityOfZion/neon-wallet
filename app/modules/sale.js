@@ -1,13 +1,13 @@
 // @flow
-import { wallet, api } from 'neon-js'
-import { flatten, isEmpty } from 'lodash-es'
+import { flatten } from 'lodash-es'
+import { wallet, api } from '@cityofzion/neon-js'
 
 import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 
 import {
   showErrorNotification,
   showInfoNotification,
-  hideNotification
+  hideNotification,
 } from './notifications'
 import {
   getNetwork,
@@ -17,7 +17,7 @@ import {
   getSigningFunction,
   getPublicKey,
   getNEO,
-  getGAS
+  getGAS,
 } from '../core/deprecated'
 import { toNumber } from '../core/math'
 import { ASSETS } from '../core/constants'
@@ -27,7 +27,7 @@ export const participateInSale = (
   neoToSend: string,
   gasToSend: string,
   scriptHash: string,
-  fees: number = 0
+  fees: number = 0,
 ) => async (dispatch: DispatchType, getState: GetStateType) => {
   const state = getState()
   const wif = getWIF(state)
@@ -52,7 +52,7 @@ export const participateInSale = (
     gasToMint,
     scriptHash,
     NEO,
-    GAS
+    GAS,
   )
 
   if (!isValid) {
@@ -70,22 +70,22 @@ export const participateInSale = (
       message: isHardwareLogin
         ? 'Please sign the transaction on your hardware device'
         : 'Sending transaction',
-      autoDismiss: 0
-    })
+      autoDismiss: 0,
+    }),
   )
 
   const scriptHashAddress = wallet.getAddressFromScriptHash(formattedScriptHash)
 
   const intents = [[ASSETS.NEO, neoToMint], [ASSETS.GAS, gasToMint]]
-    .filter(([symbol, amount]) => amount > 0)
+    .filter(([symbol, amount]) => amount > 0) // eslint-disable-line no-unused-vars
     .map(([symbol, amount]) =>
-      api.makeIntent({ [symbol]: amount }, scriptHashAddress)
+      api.makeIntent({ [symbol]: amount }, scriptHashAddress),
     )
 
   const script = {
     scriptHash: formattedScriptHash,
     operation: 'mintTokens',
-    args: []
+    args: [],
   }
   const config = {
     net,
@@ -97,7 +97,7 @@ export const participateInSale = (
     publicKey: isHardwareLogin ? publicKey : null,
     signingFunction: isHardwareLogin ? signingFunction : null,
     fees,
-    url
+    url,
   }
 
   try {
@@ -109,8 +109,8 @@ export const participateInSale = (
   } catch (err) {
     dispatch(
       showErrorNotification({
-        message: `Sale participation failed: ${err.message}`
-      })
+        message: `Sale participation failed: ${err.message}`,
+      }),
     )
     throw new Error(`${err.message}`)
   }

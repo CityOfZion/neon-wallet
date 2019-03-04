@@ -12,8 +12,9 @@ import Button from '../../Button'
 import AddIcon from '../../../assets/icons/add.svg'
 import InfoIcon from '../../../assets/icons/info.svg'
 import EditIcon from '../../../assets/icons/edit.svg'
+import DeleteIcon from '../../../assets/icons/delete.svg'
 import SendIcon from '../../../assets/icons/send.svg'
-import { ROUTES } from '../../../core/constants'
+import { ROUTES, MODAL_TYPES } from '../../../core/constants'
 import CopyToClipboard from '../../CopyToClipboard'
 import LogoWithStrikethrough from '../../LogoWithStrikethrough'
 
@@ -21,53 +22,56 @@ import styles from './ContactsPanel.scss'
 
 type Contact = {
   address: string,
-  name: string
+  name: string,
 }
 
 type OrderDirection = 'desc' | 'asc'
 
 type Contacts = {
-  [key: string]: Contact
+  [key: string]: Contact,
 }
 
 type Props = {
   history: Object,
-  contacts: Contacts
+  contacts: Contacts,
+  deleteContact: string => void,
+  showSuccessNotification: ({ message: string }) => void,
+  showModal: (modalType: string, modalProps: Object) => any,
 }
 
 type State = {
   sorting: {
     label: string,
-    value: OrderDirection
-  }
+    value: OrderDirection,
+  },
 }
 
 type SelectOption = {
   label: string,
-  value: OrderDirection
+  value: OrderDirection,
 }
 
 const SORTING_OPTIONS = [
   {
     label: 'Sorting A-Z',
-    value: 'asc'
+    value: 'asc',
   },
   {
     label: 'Sorting Z-A',
-    value: 'desc'
-  }
+    value: 'desc',
+  },
 ]
 
 const getContactsInGroups = (
   contacts: Contacts,
-  orderDirection: OrderDirection
+  orderDirection: OrderDirection,
 ) => {
   /* $FlowFixMe */
   const contactsArray: Array<Contacts> = Object.entries(contacts).map(
     ([name, address]) => ({
       name,
-      address
-    })
+      address,
+    }),
   )
 
   const groupContactsByFirstLetter = groupBy(
@@ -75,15 +79,15 @@ const getContactsInGroups = (
     ({ name }: Contact) => {
       const firstLetter = name.substr(0, 1).toUpperCase()
       return /[a-zA-Z]/.test(firstLetter) ? firstLetter : '#'
-    }
+    },
   )
 
   const groupedContacts = Object.entries(groupContactsByFirstLetter).map(
     ([groupName, groupContacts]) => ({
       groupName,
       /* $FlowFixMe */
-      groupContacts: orderBy(groupContacts, 'name', orderDirection)
-    })
+      groupContacts: orderBy(groupContacts, 'name', orderDirection),
+    }),
   )
 
   return orderBy(groupedContacts, 'groupName', orderDirection)
@@ -91,7 +95,7 @@ const getContactsInGroups = (
 
 export default class ContactsPanel extends React.Component<Props, State> {
   state = {
-    sorting: SORTING_OPTIONS[0]
+    sorting: SORTING_OPTIONS[0],
   }
 
   renderHeader = () => {
@@ -116,7 +120,7 @@ export default class ContactsPanel extends React.Component<Props, State> {
     <div
       key={`contact${name}${i}`}
       className={classNames(styles.contact, {
-        [styles.oddNumberedRow]: i % 2 === 0
+        [styles.oddNumberedRow]: i % 2 === 0,
       })}
     >
       <div className={styles.name}>{name}</div>
@@ -136,6 +140,13 @@ export default class ContactsPanel extends React.Component<Props, State> {
         >
           Edit
         </Button>
+        <Button
+          className={styles.deleteButton}
+          renderIcon={DeleteIcon}
+          onClick={() => this.handleDelete(name)}
+        >
+          Delete
+        </Button>
         <Address address={address} asWrapper>
           <Button className={styles.infoButton} renderIcon={InfoIcon}>
             View Activity
@@ -144,7 +155,7 @@ export default class ContactsPanel extends React.Component<Props, State> {
         <Link
           to={{
             pathname: ROUTES.SEND,
-            state: { address }
+            state: { address },
           }}
           className={styles.settingsDonations}
         >
@@ -196,15 +207,30 @@ export default class ContactsPanel extends React.Component<Props, State> {
                   <div key={`group${groupName}`}>
                     <div className={styles.groupHeader}>{groupName}</div>
                     {groupContacts.map(({ address, name }, i) =>
-                      this.renderContact(address, name, i)
+                      this.renderContact(address, name, i),
                     )}
                   </div>
-                )
+                ),
               )}
             </div>
           )}
         </Panel>
       </React.Fragment>
     )
+  }
+
+  handleDelete = (name: string) => {
+    const { showModal, showSuccessNotification } = this.props
+
+    showModal(MODAL_TYPES.CONFIRM, {
+      title: 'Confirm Delete',
+      text: `Please confirm removing contact - ${name}`,
+      onClick: () => {
+        this.props.deleteContact(name)
+        showSuccessNotification({
+          message: 'Contact removal was successful.',
+        })
+      },
+    })
   }
 }

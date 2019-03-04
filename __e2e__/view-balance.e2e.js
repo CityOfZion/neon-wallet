@@ -7,7 +7,7 @@ let electronPath = path.join(
   '..',
   'node_modules',
   '.bin',
-  'electron'
+  'electron',
 )
 if (process.platform === 'win32') {
   electronPath += '.cmd'
@@ -16,7 +16,7 @@ const appPath = path.join(__dirname, '..')
 
 const app = new Application({
   path: electronPath,
-  args: [appPath]
+  args: [appPath],
 })
 
 test.before(async () => {
@@ -43,7 +43,7 @@ test.serial('should login successfully and switch networks', async t => {
   // Enter Wif
   await app.client.setValue(
     'input[type="password"]',
-    'KxB52D1FGe5xBn6YeezNwj7grhkHZxq7bv2tmaCPoT4rxApMwMvU'
+    'KxB52D1FGe5xBn6YeezNwj7grhkHZxq7bv2tmaCPoT4rxApMwMvU',
   )
 
   // Click on login btn
@@ -70,7 +70,7 @@ test.serial('should show correct transaction list', async t => {
   await app.client.waitUntilTextExists(
     '#transactionList li:nth-child(2) .txid',
     '57da6b7a1074c8508796549c19fdb2a8',
-    60000
+    60000,
   )
   const transactions = await app.client.getText('#transactionList li .txid')
   t.is(transactions[0], '4bb9b6e0a6ef46c42dd6a1f11326fb0c')
