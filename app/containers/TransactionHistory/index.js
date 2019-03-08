@@ -1,6 +1,8 @@
 // @flow
 import { compose } from 'recompose'
 import { withCall } from 'spunky'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
 import TransactionHistory from './TransactionHistory'
 import transactionHistoryActions from '../../actions/transactionHistoryActions'
@@ -10,8 +12,24 @@ import balancesActions from '../../actions/balancesActions'
 import withLoadingProp from '../../hocs/withLoadingProp'
 import withSuccessNotification from '../../hocs/withSuccessNotification'
 import withFailureNotification from '../../hocs/withFailureNotification'
+import {
+  showErrorNotification,
+  showSuccessNotification,
+} from '../../modules/notifications'
+
+const actionCreators = {
+  showErrorNotification,
+  showSuccessNotification,
+}
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(actionCreators, dispatch)
 
 export default compose(
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
   withNetworkData(),
   withAuthData(),
   withLoadingProp(balancesActions),
