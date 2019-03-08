@@ -18,9 +18,10 @@ import { parseAbstractData } from '../../actions/transactionHistoryActions'
 const { dialog } = require('electron').remote
 
 type Props = {
-  showSuccessNotification: ({ message: string }) => void,
-  showErrorNotification: ({ message: string }) => void,
-  showInfoNotification: ({ message: string }) => void,
+  showSuccessNotification: ({ message: string }) => string,
+  showErrorNotification: ({ message: string }) => string,
+  showInfoNotification: ({ message: string }) => string,
+  hideNotification: string => void,
   net: string,
   address: string,
 }
@@ -55,6 +56,7 @@ export default class TransactionHistory extends Component<Props> {
       showErrorNotification,
       showSuccessNotification,
       showInfoNotification,
+      hideNotification,
       net,
       address,
     } = this.props
@@ -71,7 +73,7 @@ export default class TransactionHistory extends Component<Props> {
     try {
       const parser = new Parser(fields)
 
-      showInfoNotification({
+      const infoNotification = showInfoNotification({
         message: 'Fetching entire transaction history...',
       })
       const abstracts = []
@@ -103,6 +105,7 @@ export default class TransactionHistory extends Component<Props> {
           return omitted
         }),
       )
+      hideNotification(infoNotification)
       dialog.showSaveDialog(
         {
           filters: [
