@@ -15,11 +15,13 @@ import withFailureNotification from '../../hocs/withFailureNotification'
 import {
   showErrorNotification,
   showSuccessNotification,
+  showInfoNotification,
 } from '../../modules/notifications'
 
 const actionCreators = {
   showErrorNotification,
   showSuccessNotification,
+  showInfoNotification,
 }
 
 const mapDispatchToProps = dispatch =>

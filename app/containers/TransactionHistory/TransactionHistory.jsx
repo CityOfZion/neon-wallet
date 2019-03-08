@@ -2,19 +2,27 @@
 import React, { Component } from 'react'
 import fs from 'fs'
 import { Parser } from 'json2csv'
+import { api } from '@cityofzion/neon-js'
+import axios from 'axios'
+import { omit } from 'lodash-es'
+import moment from 'moment'
 
 import HeaderBar from '../../components/HeaderBar'
 import TransactionHistoryPanel from '../../components/TransactionHistory/TransactionHistoryPanel'
 import styles from './TransactionHistory.scss'
-import RefreshButton from '../Buttons/RefreshButton/RefreshButton'
+import RefreshButton from '../Buttons/RefreshButton'
 import ExportIcon from '../../assets/icons/export.svg'
 import PanelHeaderButton from '../../components/PanelHeaderButton/PanelHeaderButton'
+import { parseAbstractData } from '../../actions/transactionHistoryActions'
 
 const { dialog } = require('electron').remote
 
 type Props = {
-  showSuccessNotification: ({ message: string }) => any,
-  showErrorNotification: ({ message: string }) => any,
+  showSuccessNotification: ({ message: string }) => void,
+  showErrorNotification: ({ message: string }) => void,
+  showInfoNotification: ({ message: string }) => void,
+  net: string,
+  address: string,
 }
 
 export default class TransactionHistory extends Component<Props> {
@@ -42,30 +50,59 @@ export default class TransactionHistory extends Component<Props> {
     </div>
   )
 
-  generateAndSaveHistoryRecord = () => {
-    const { showErrorNotification, showSuccessNotification } = this.props
-    const fields = ['car', 'price', 'color']
-    const myCars = [
-      {
-        car: 'Audi',
-        price: 40000,
-        color: 'blue',
-      },
-      {
-        car: 'BMW',
-        price: 35000,
-        color: 'black',
-      },
-      {
-        car: 'Porsche',
-        price: 60000,
-        color: 'green',
-      },
+  generateAndSaveHistoryRecord = async () => {
+    const {
+      showErrorNotification,
+      showSuccessNotification,
+      showInfoNotification,
+      net,
+      address,
+    } = this.props
+    const fields = [
+      'to',
+      'from',
+      'txid',
+      'time',
+      'amount',
+      'symbol',
+      'type',
+      'id',
     ]
-
     try {
       const parser = new Parser(fields)
-      const csv = parser.parse(myCars)
+
+      showInfoNotification({
+        message: 'Fetching entire transaction history...',
+      })
+      const abstracts = []
+      const endpoint = api.neoscan.getAPIEndpoint(net)
+      let numberOfPages = 1
+      let currentPage = 1
+
+      while (currentPage !== numberOfPages || currentPage === 1) {
+        const { data } = await axios.get(
+          `${endpoint}/v1/get_address_abstracts/${address}/${currentPage}`,
+        )
+        abstracts.push(...data.entries)
+        numberOfPages = data.total_pages
+        currentPage += 1
+      }
+
+      const parsedAbstracts = await parseAbstractData(abstracts, address, net)
+      const csv = parser.parse(
+        parsedAbstracts.map(abstract => {
+          const omitted = omit(abstract, [
+            'isNetworkFee',
+            'asset',
+            'image',
+            'label',
+          ])
+          omitted.time = moment
+            .unix(omitted.time)
+            .format('MM/DD/YYYY | HH:mm:ss')
+          return omitted
+        }),
+      )
       dialog.showSaveDialog(
         {
           filters: [
@@ -97,6 +134,9 @@ export default class TransactionHistory extends Component<Props> {
       )
     } catch (err) {
       console.error(err)
+      showErrorNotification({
+        message: `An error occurred creating the file: ${err.message}`,
+      })
     }
   }
 }

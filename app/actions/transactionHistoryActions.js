@@ -13,7 +13,11 @@ type Props = {
   shouldIncrementPagination: boolean,
 }
 
-async function parseAbstractData(data, currentUserAddress, net) {
+export async function parseAbstractData(
+  data: Array<any>,
+  currentUserAddress: string,
+  net: string,
+) {
   const parsedTxType = abstract => {
     if (
       abstract.address_to === currentUserAddress &&
@@ -48,6 +52,7 @@ async function parseAbstractData(data, currentUserAddress, net) {
       time: abstract.time,
       amount: abstract.amount,
       asset,
+      symbol: asset.symbol,
       image: asset.image,
       label: type === TX_TYPES.CLAIM ? 'GAS Claim' : asset.symbol,
       type,
