@@ -80,6 +80,7 @@
     "cleave.js": "1.0.7",
     "compare-versions": "3.1.0",
     "coveralls": "3.0.2",
+    "csv": "^5.1.1",
     "electron-context-menu": "0.9.1",
     "electron-json-storage": "4.1.0",
     "electron-save-file": "1.0.2",
