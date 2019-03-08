@@ -7,3 +7,19 @@
     flex: 1 1 auto;
   }
 }
+
+.panelHeaderButtons {
+  width: 250px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.exportButton {
+  font-size: 16px !important;
+
+  svg {
+    path {
+      fill: var(--base-text) !important;
+    }
+  }
+}

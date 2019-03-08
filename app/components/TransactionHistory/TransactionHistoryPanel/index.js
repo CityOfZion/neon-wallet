@@ -54,8 +54,4 @@ export default compose(
   withData(getPendingTransactionInfo, mapPendingTransactionInfoToProps),
   withLoadingProp(transactionHistoryActions),
   withData(transactionHistoryActions, mapTransactionsDataToProps),
-  withSuccessNotification(
-    transactionHistoryActions,
-    'Received latest transaction information.',
-  ),
 )(TransactionHistoryPanel)
