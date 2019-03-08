@@ -42,7 +42,7 @@ export default class TransactionHistory extends Component<Props> {
   renderPanelHeaderContent = () => (
     <div className={styles.panelHeaderButtons}>
       <PanelHeaderButton
-        onClick={this.generateAndSaveHistoryRecord}
+        onClick={this.saveHistoryFile}
         className={styles.exportButton}
         renderIcon={() => <ExportIcon />}
         buttonText="Export"
@@ -51,14 +51,34 @@ export default class TransactionHistory extends Component<Props> {
     </div>
   )
 
-  generateAndSaveHistoryRecord = async () => {
+  fetchHistory = async () => {
+    const { showInfoNotification, net, address } = this.props
+    const infoNotification = showInfoNotification({
+      message: 'Fetching entire transaction history...',
+    })
+    const abstracts = []
+    const endpoint = api.neoscan.getAPIEndpoint(net)
+    let numberOfPages = 1
+    let currentPage = 1
+
+    while (currentPage !== numberOfPages || currentPage === 1) {
+      const { data } = await axios.get(
+        `${endpoint}/v1/get_address_abstracts/${address}/${currentPage}`,
+      )
+      abstracts.push(...data.entries)
+      numberOfPages = data.total_pages
+      currentPage += 1
+    }
+
+    const parsedAbstracts = await parseAbstractData(abstracts, address, net)
+    return { infoNotification, parsedAbstracts }
+  }
+
+  saveHistoryFile = async () => {
     const {
       showErrorNotification,
       showSuccessNotification,
-      showInfoNotification,
       hideNotification,
-      net,
-      address,
     } = this.props
     const fields = [
       'to',
@@ -71,26 +91,8 @@ export default class TransactionHistory extends Component<Props> {
       'id',
     ]
     try {
+      const { infoNotification, parsedAbstracts } = await this.fetchHistory()
       const parser = new Parser(fields)
-
-      const infoNotification = showInfoNotification({
-        message: 'Fetching entire transaction history...',
-      })
-      const abstracts = []
-      const endpoint = api.neoscan.getAPIEndpoint(net)
-      let numberOfPages = 1
-      let currentPage = 1
-
-      while (currentPage !== numberOfPages || currentPage === 1) {
-        const { data } = await axios.get(
-          `${endpoint}/v1/get_address_abstracts/${address}/${currentPage}`,
-        )
-        abstracts.push(...data.entries)
-        numberOfPages = data.total_pages
-        currentPage += 1
-      }
-
-      const parsedAbstracts = await parseAbstractData(abstracts, address, net)
       const csv = parser.parse(
         parsedAbstracts.map(abstract => {
           const omitted = omit(abstract, [
