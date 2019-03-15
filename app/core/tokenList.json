@@ -784,16 +784,16 @@
     "image":
       "https://rawgit.com/CityOfZion/neo-tokens/master/assets/svg/tnc.svg"
   },
-  "TOLL": {
-    "symbol": "TOLL",
+  "BRDG": {
+    "symbol": "BRDG",
     "companyName": "Bridge Protocol",
     "type": "NEP5",
     "networks": {
       "1": {
         "name": "Bridge Protocol",
-        "hash": "78fd589f7894bf9642b4a573ec0e6957dfd84c48",
+        "hash": "bac0d143a547dc66a1d6a2b7d66b06de42614971",
         "decimals": 8,
-        "totalSupply": 708097040
+        "totalSupply": 450000000
       }
     }
   },
