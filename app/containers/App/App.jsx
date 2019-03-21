@@ -10,6 +10,7 @@ import { upgradeUserWalletNEP6 } from '../../modules/generateWallet'
 
 import styles from './App.scss'
 import themes from '../../themes'
+import ErrorBoundary from '../../components/ErrorBoundaries/Main'
 
 type Props = {
   children: React$Node,
@@ -47,17 +48,19 @@ class App extends Component<Props> {
     const { children, address, theme, location } = this.props
 
     return (
-      <div style={themes[theme]} className={styles.container}>
-        {address &&
-          routesWithSideBar.includes(location.pathname) && (
-            <Sidebar theme={theme} className={styles.sidebar} />
-          )}
-        <div className={styles.wrapper}>
-          <div className={styles.content}>{children}</div>
-          <Notifications />
-          <ModalRenderer />
+      <ErrorBoundary>
+        <div style={themes[theme]} className={styles.container}>
+          {address &&
+            routesWithSideBar.includes(location.pathname) && (
+              <Sidebar theme={theme} className={styles.sidebar} />
+            )}
+          <div className={styles.wrapper}>
+            <div className={styles.content}>{children}</div>
+            <Notifications />
+            <ModalRenderer />
+          </div>
         </div>
-      </div>
+      </ErrorBoundary>
     )
   }
 }
