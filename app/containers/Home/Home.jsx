@@ -53,7 +53,6 @@ export default class Home extends React.Component<Props, State> {
 
   render = () => {
     const { loading, theme } = this.props
-    throw new Error('foo')
     return (
       <HomeLayout theme={theme}>
         <div className={styles.inputContainer}>
