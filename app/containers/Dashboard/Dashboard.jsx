@@ -29,6 +29,8 @@ export default class Dashboard extends Component<Props> {
 
   componentDidMount() {
     this.addPolling()
+
+    throw new Error('Foo')
   }
 
   componentWillUnmount() {
