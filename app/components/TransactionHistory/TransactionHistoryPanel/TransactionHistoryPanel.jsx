@@ -16,6 +16,7 @@ type Props = {
   handleRefreshTxData: () => void,
   pendingTransactions: Array<Object>,
   address: string,
+  showSuccessNotification: ({ message: string }) => void,
 }
 
 const REFRESH_INTERVAL_MS = 30000
@@ -55,9 +56,13 @@ export default class TransactionHistory extends React.Component<Props> {
   }
 
   addPolling = () => {
+    const { showSuccessNotification } = this.props
     this.transactionDataInterval = setInterval(async () => {
       await this.props.handleGetPendingTransactionInfo()
       this.props.handleRefreshTxData()
+      showSuccessNotification({
+        message: 'Recevied latest transaction information.',
+      })
     }, REFRESH_INTERVAL_MS)
   }
 
