@@ -193,11 +193,13 @@ export default class ContactForm extends React.Component<Props, State> {
   handleChangeName = (event: Object) => {
     this.clearErrors(event.target.name)
     this.props.setName(event.target.value)
+    this.validate(event.target.value, this.props.formAddress)
   }
 
   handleChangeAddress = (event: Object) => {
     this.clearErrors(event.target.name)
     this.props.setAddress(event.target.value)
+    this.validate(this.props.formName, event.target.value)
   }
 
   handleSubmit = (event: Object) => {
