@@ -65,6 +65,7 @@ Setup:
 Developing:
 
 - `yarn dev` - Start the application in development mode with hot reloading enabled
+  - There is a known condition that may arise on Linux systems where `yarn dev` builds but Neon never opens. Try using `yarn dev >/dev/null`.
 
 Running (for production):
 
