@@ -18,8 +18,6 @@ import { parseAbstractData } from '../../actions/transactionHistoryActions'
 
 const { dialog, app } = require('electron').remote
 
-console.log()
-
 type Props = {
   showSuccessNotification: ({ message: string }) => string,
   showErrorNotification: ({ message: string }) => string,
