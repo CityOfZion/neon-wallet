@@ -6,6 +6,7 @@ import { api } from '@cityofzion/neon-js'
 import axios from 'axios'
 import { omit } from 'lodash-es'
 import moment from 'moment'
+// import { app } from 'electron'
 
 import HeaderBar from '../../components/HeaderBar'
 import TransactionHistoryPanel from '../../components/TransactionHistory/TransactionHistoryPanel'
@@ -15,7 +16,9 @@ import ExportIcon from '../../assets/icons/export.svg'
 import PanelHeaderButton from '../../components/PanelHeaderButton/PanelHeaderButton'
 import { parseAbstractData } from '../../actions/transactionHistoryActions'
 
-const { dialog } = require('electron').remote
+const { dialog, app } = require('electron').remote
+
+console.log()
 
 type Props = {
   showSuccessNotification: ({ message: string }) => string,
@@ -26,13 +29,21 @@ type Props = {
   address: string,
 }
 
-export default class TransactionHistory extends Component<Props> {
+type State = {
+  isExporting: boolean,
+}
+
+export default class TransactionHistory extends Component<Props, State> {
+  state = {
+    isExporting: false,
+  }
+
   render() {
     return (
       <div className={styles.transactionHistory}>
         <HeaderBar
           label="All Activity"
-          renderRightContent={this.renderPanelHeaderContent}
+          renderRightContent={() => this.renderPanelHeaderContent()}
         />
         <TransactionHistoryPanel className={styles.transactionHistoryPanel} />
       </div>
@@ -42,6 +53,7 @@ export default class TransactionHistory extends Component<Props> {
   renderPanelHeaderContent = () => (
     <div className={styles.panelHeaderButtons}>
       <PanelHeaderButton
+        disabled={this.state.isExporting}
         onClick={this.saveHistoryFile}
         className={styles.exportButton}
         renderIcon={() => <ExportIcon />}
@@ -75,6 +87,9 @@ export default class TransactionHistory extends Component<Props> {
   }
 
   saveHistoryFile = async () => {
+    this.setState({
+      isExporting: true,
+    })
     const {
       showErrorNotification,
       showSuccessNotification,
@@ -110,6 +125,9 @@ export default class TransactionHistory extends Component<Props> {
       hideNotification(infoNotification)
       dialog.showSaveDialog(
         {
+          defaultPath: `${app.getPath(
+            'documents',
+          )}/neon-wallet-activity-${moment().unix()}.csv`,
           filters: [
             {
               name: 'CSV',
@@ -118,6 +136,9 @@ export default class TransactionHistory extends Component<Props> {
           ],
         },
         fileName => {
+          this.setState({
+            isExporting: false,
+          })
           if (fileName === undefined) {
             return
           }
@@ -139,6 +160,9 @@ export default class TransactionHistory extends Component<Props> {
       )
     } catch (err) {
       console.error(err)
+      this.setState({
+        isExporting: false,
+      })
       showErrorNotification({
         message: `An error occurred creating the file: ${err.message}`,
       })
