@@ -6,7 +6,6 @@ import { api } from '@cityofzion/neon-js'
 import axios from 'axios'
 import { omit } from 'lodash-es'
 import moment from 'moment'
-// import { app } from 'electron'
 
 import HeaderBar from '../../components/HeaderBar'
 import TransactionHistoryPanel from '../../components/TransactionHistory/TransactionHistoryPanel'
