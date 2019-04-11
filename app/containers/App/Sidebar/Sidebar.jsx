@@ -14,6 +14,7 @@ import ContactsIcon from '../../../assets/navigation/contacts.svg'
 import VotingIcon from '../../../assets/navigation/bars.svg'
 import TokenSaleIcon from '../../../assets/navigation/tokens.svg'
 import SettingsIcon from '../../../assets/navigation/settings.svg'
+import NewsIcon from '../../../assets/navigation/news.svg'
 import { ROUTES } from '../../../core/constants'
 
 import LightLogoWithoutText from '../../../assets/images/logo-without-text-black.png'
@@ -105,12 +106,15 @@ const Sidebar = ({ className, theme, pendingTransactionsCount }: Props) => {
           <div> Token Sale </div>
         </NavLink>
 
-        <Tooltip title="Coming Soon" position="right">
-          <div id="voting" className={styles.disabledNavIem}>
-            <VotingIcon />
-            <div> Voting </div>
-          </div>
-        </Tooltip>
+        <NavLink
+          id="News"
+          to={ROUTES.NEWS}
+          className={styles.navItem}
+          activeClassName={styles.active}
+        >
+          <NewsIcon />
+          <div> News </div>
+        </NavLink>
 
         <NavLink
           id="settings"

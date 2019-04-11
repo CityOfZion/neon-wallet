@@ -21,6 +21,7 @@ import Send from '../../containers/Send'
 import TokenSale from '../../containers/TokenSale'
 import Encrypt from '../../containers/Encrypt'
 import NodeSelect from '../../containers/NodeSelect'
+import News from '../../containers/News'
 import { ROUTES } from '../../core/constants'
 
 export default () => (
@@ -111,6 +112,7 @@ export default () => (
         path={ROUTES.TRANSACTION_HISTORY}
         component={TransactionHistory}
       />
+      <PrivateRoute exact path={ROUTES.NEWS} component={News} />
       <Redirect to={ROUTES.DASHBOARD} />
     </Switch>
   </App>

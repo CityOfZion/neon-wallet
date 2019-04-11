@@ -29,6 +29,7 @@ const routesWithSideBar = [
   ROUTES.SETTINGS,
   ROUTES.SEND,
   ROUTES.TOKEN_SALE,
+  ROUTES.NEWS,
 ]
 
 class App extends Component<Props> {
