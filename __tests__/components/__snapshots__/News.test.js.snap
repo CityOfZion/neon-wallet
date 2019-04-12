@@ -1,0 +1,474 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`News renders without crashing 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <MemoryRouter>
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "key": "cfyz64",
+              "pathname": "/",
+              "search": "",
+              "state": undefined,
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "key": "cfyz64",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <Connect(withCall(Connect(withData(Connect(withProgress(withProps(Connect(withData(withProps(News))))))))))
+        store={
+          Object {
+            "clearActions": [Function],
+            "dispatch": [Function],
+            "getActions": [Function],
+            "getState": [Function],
+            "replaceReducer": [Function],
+            "subscribe": [Function],
+          }
+        }
+      >
+        <withCall(Connect(withData(Connect(withProgress(withProps(Connect(withData(withProps(News)))))))))
+          performAction={[Function]}
+          store={
+            Object {
+              "clearActions": [Function],
+              "dispatch": [Function],
+              "getActions": [Function],
+              "getState": [Function],
+              "replaceReducer": [Function],
+              "subscribe": [Function],
+            }
+          }
+        >
+          <withoutProps(Connect(withData(Connect(withProgress(withProps(Connect(withData(withProps(News)))))))))
+            performAction={[Function]}
+            store={
+              Object {
+                "clearActions": [Function],
+                "dispatch": [Function],
+                "getActions": [Function],
+                "getState": [Function],
+                "replaceReducer": [Function],
+                "subscribe": [Function],
+              }
+            }
+          >
+            <Connect(withData(Connect(withProgress(withProps(Connect(withData(withProps(News))))))))
+              store={
+                Object {
+                  "clearActions": [Function],
+                  "dispatch": [Function],
+                  "getActions": [Function],
+                  "getState": [Function],
+                  "replaceReducer": [Function],
+                  "subscribe": [Function],
+                }
+              }
+            >
+              <withData(Connect(withProgress(withProps(Connect(withData(withProps(News)))))))
+                dispatch={[Function]}
+                store={
+                  Object {
+                    "clearActions": [Function],
+                    "dispatch": [Function],
+                    "getActions": [Function],
+                    "getState": [Function],
+                    "replaceReducer": [Function],
+                    "subscribe": [Function],
+                  }
+                }
+                storeSubscription={
+                  t {
+                    "listeners": Object {
+                      "clear": [Function],
+                      "get": [Function],
+                      "notify": [Function],
+                      "subscribe": [Function],
+                    },
+                    "onStateChange": [Function],
+                    "parentSub": undefined,
+                    "store": Object {
+                      "clearActions": [Function],
+                      "dispatch": [Function],
+                      "getActions": [Function],
+                      "getState": [Function],
+                      "replaceReducer": [Function],
+                      "subscribe": [Function],
+                    },
+                    "unsubscribe": [Function],
+                  }
+                }
+              >
+                <withProgress(withProps(Connect(withData(withProps(News)))))
+                  __progress__="LOADING"
+                  dispatch={[Function]}
+                  store={
+                    Object {
+                      "clearActions": [Function],
+                      "dispatch": [Function],
+                      "getActions": [Function],
+                      "getState": [Function],
+                      "replaceReducer": [Function],
+                      "subscribe": [Function],
+                    }
+                  }
+                  storeSubscription={
+                    t {
+                      "listeners": Object {
+                        "clear": [Function],
+                        "get": [Function],
+                        "notify": [Function],
+                        "subscribe": [Function],
+                      },
+                      "onStateChange": [Function],
+                      "parentSub": t {
+                        "listeners": Object {
+                          "clear": [Function],
+                          "get": [Function],
+                          "notify": [Function],
+                          "subscribe": [Function],
+                        },
+                        "onStateChange": [Function],
+                        "parentSub": undefined,
+                        "store": Object {
+                          "clearActions": [Function],
+                          "dispatch": [Function],
+                          "getActions": [Function],
+                          "getState": [Function],
+                          "replaceReducer": [Function],
+                          "subscribe": [Function],
+                        },
+                        "unsubscribe": [Function],
+                      },
+                      "store": Object {
+                        "clearActions": [Function],
+                        "dispatch": [Function],
+                        "getActions": [Function],
+                        "getState": [Function],
+                        "replaceReducer": [Function],
+                        "subscribe": [Function],
+                      },
+                      "unsubscribe": [Function],
+                    }
+                  }
+                >
+                  <Connect(withData(withProps(News)))
+                    __progress__="LOADING"
+                    dispatch={[Function]}
+                    loading={true}
+                    store={
+                      Object {
+                        "clearActions": [Function],
+                        "dispatch": [Function],
+                        "getActions": [Function],
+                        "getState": [Function],
+                        "replaceReducer": [Function],
+                        "subscribe": [Function],
+                      }
+                    }
+                    storeSubscription={
+                      t {
+                        "listeners": Object {
+                          "clear": [Function],
+                          "get": [Function],
+                          "notify": [Function],
+                          "subscribe": [Function],
+                        },
+                        "onStateChange": [Function],
+                        "parentSub": t {
+                          "listeners": Object {
+                            "clear": [Function],
+                            "get": [Function],
+                            "notify": [Function],
+                            "subscribe": [Function],
+                          },
+                          "onStateChange": [Function],
+                          "parentSub": undefined,
+                          "store": Object {
+                            "clearActions": [Function],
+                            "dispatch": [Function],
+                            "getActions": [Function],
+                            "getState": [Function],
+                            "replaceReducer": [Function],
+                            "subscribe": [Function],
+                          },
+                          "unsubscribe": [Function],
+                        },
+                        "store": Object {
+                          "clearActions": [Function],
+                          "dispatch": [Function],
+                          "getActions": [Function],
+                          "getState": [Function],
+                          "replaceReducer": [Function],
+                          "subscribe": [Function],
+                        },
+                        "unsubscribe": [Function],
+                      }
+                    }
+                  >
+                    <withData(withProps(News))
+                      __progress__="LOADING"
+                      dispatch={[Function]}
+                      loading={true}
+                      networkId={null}
+                      store={
+                        Object {
+                          "clearActions": [Function],
+                          "dispatch": [Function],
+                          "getActions": [Function],
+                          "getState": [Function],
+                          "replaceReducer": [Function],
+                          "subscribe": [Function],
+                        }
+                      }
+                      storeSubscription={
+                        t {
+                          "listeners": Object {
+                            "clear": [Function],
+                            "get": [Function],
+                            "notify": [Function],
+                            "subscribe": [Function],
+                          },
+                          "onStateChange": [Function],
+                          "parentSub": t {
+                            "listeners": Object {
+                              "clear": [Function],
+                              "get": [Function],
+                              "notify": [Function],
+                              "subscribe": [Function],
+                            },
+                            "onStateChange": [Function],
+                            "parentSub": t {
+                              "listeners": Object {
+                                "clear": [Function],
+                                "get": [Function],
+                                "notify": [Function],
+                                "subscribe": [Function],
+                              },
+                              "onStateChange": [Function],
+                              "parentSub": undefined,
+                              "store": Object {
+                                "clearActions": [Function],
+                                "dispatch": [Function],
+                                "getActions": [Function],
+                                "getState": [Function],
+                                "replaceReducer": [Function],
+                                "subscribe": [Function],
+                              },
+                              "unsubscribe": [Function],
+                            },
+                            "store": Object {
+                              "clearActions": [Function],
+                              "dispatch": [Function],
+                              "getActions": [Function],
+                              "getState": [Function],
+                              "replaceReducer": [Function],
+                              "subscribe": [Function],
+                            },
+                            "unsubscribe": [Function],
+                          },
+                          "store": Object {
+                            "clearActions": [Function],
+                            "dispatch": [Function],
+                            "getActions": [Function],
+                            "getState": [Function],
+                            "replaceReducer": [Function],
+                            "subscribe": [Function],
+                          },
+                          "unsubscribe": [Function],
+                        }
+                      }
+                    >
+                      <News
+                        __progress__="LOADING"
+                        dispatch={[Function]}
+                        loading={true}
+                        net="MainNet"
+                        networkId={null}
+                        store={
+                          Object {
+                            "clearActions": [Function],
+                            "dispatch": [Function],
+                            "getActions": [Function],
+                            "getState": [Function],
+                            "replaceReducer": [Function],
+                            "subscribe": [Function],
+                          }
+                        }
+                        storeSubscription={
+                          t {
+                            "listeners": Object {
+                              "clear": [Function],
+                              "get": [Function],
+                              "notify": [Function],
+                              "subscribe": [Function],
+                            },
+                            "onStateChange": [Function],
+                            "parentSub": t {
+                              "listeners": Object {
+                                "clear": [Function],
+                                "get": [Function],
+                                "notify": [Function],
+                                "subscribe": [Function],
+                              },
+                              "onStateChange": [Function],
+                              "parentSub": t {
+                                "listeners": Object {
+                                  "clear": [Function],
+                                  "get": [Function],
+                                  "notify": [Function],
+                                  "subscribe": [Function],
+                                },
+                                "onStateChange": [Function],
+                                "parentSub": undefined,
+                                "store": Object {
+                                  "clearActions": [Function],
+                                  "dispatch": [Function],
+                                  "getActions": [Function],
+                                  "getState": [Function],
+                                  "replaceReducer": [Function],
+                                  "subscribe": [Function],
+                                },
+                                "unsubscribe": [Function],
+                              },
+                              "store": Object {
+                                "clearActions": [Function],
+                                "dispatch": [Function],
+                                "getActions": [Function],
+                                "getState": [Function],
+                                "replaceReducer": [Function],
+                                "subscribe": [Function],
+                              },
+                              "unsubscribe": [Function],
+                            },
+                            "store": Object {
+                              "clearActions": [Function],
+                              "dispatch": [Function],
+                              "getActions": [Function],
+                              "getState": [Function],
+                              "replaceReducer": [Function],
+                              "subscribe": [Function],
+                            },
+                            "unsubscribe": [Function],
+                          }
+                        }
+                      >
+                        <div
+                          className="newsContainer"
+                        >
+                          <Connect(withData(withProps(HeaderBar)))
+                            label="News"
+                            net="MainNet"
+                            networkId={null}
+                          >
+                            <withData(withProps(HeaderBar))
+                              dispatch={[Function]}
+                              label="News"
+                              net="MainNet"
+                              networkId={null}
+                            >
+                              <HeaderBar
+                                dispatch={[Function]}
+                                label="News"
+                                net="MainNet"
+                                networkId={null}
+                              >
+                                <div
+                                  className="currentNetwork"
+                                >
+                                  MainNet
+                                </div>
+                                <div
+                                  className="headerBar"
+                                >
+                                  <h3>
+                                     
+                                    News
+                                  </h3>
+                                </div>
+                              </HeaderBar>
+                            </withData(withProps(HeaderBar))>
+                          </Connect(withData(withProps(HeaderBar)))>
+                          <Panel
+                            className="newsPanel"
+                            renderHeader={null}
+                          >
+                            <div
+                              className="panel newsPanel"
+                            >
+                              <Content
+                                className="content"
+                              >
+                                <div
+                                  className="content content"
+                                >
+                                  <Loader>
+                                    <div
+                                      className="loader"
+                                    >
+                                      <div />
+                                      <div
+                                        className="rect2"
+                                      />
+                                      <div
+                                        className="rect3"
+                                      />
+                                      <div
+                                        className="rect4"
+                                      />
+                                      <div
+                                        className="rect5"
+                                      />
+                                    </div>
+                                  </Loader>
+                                </div>
+                              </Content>
+                            </div>
+                          </Panel>
+                        </div>
+                      </News>
+                    </withData(withProps(News))>
+                  </Connect(withData(withProps(News)))>
+                </withProgress(withProps(Connect(withData(withProps(News)))))>
+              </withData(Connect(withProgress(withProps(Connect(withData(withProps(News)))))))>
+            </Connect(withData(Connect(withProgress(withProps(Connect(withData(withProps(News))))))))>
+          </withoutProps(Connect(withData(Connect(withProgress(withProps(Connect(withData(withProps(News)))))))))>
+        </withCall(Connect(withData(Connect(withProgress(withProps(Connect(withData(withProps(News)))))))))>
+      </Connect(withCall(Connect(withData(Connect(withProgress(withProps(Connect(withData(withProps(News))))))))))>
+    </Router>
+  </MemoryRouter>
+</Provider>
+`;

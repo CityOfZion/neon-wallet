@@ -7,7 +7,7 @@ import HeaderBar from '../../components/HeaderBar'
 import styles from './News.scss'
 import Loader from '../../components/Loader'
 
-const { shell } = require('electron').remote
+const electron = require('electron').remote
 
 type Props = {
   feed: {
@@ -60,7 +60,7 @@ export default class News extends React.Component<Props> {
             item.content.match(imgTagRegex)[0],
           )
           const { title } = item
-          const openLink = () => shell.openExternal(item.link)
+          const openLink = () => electron.shell.openExternal(item.link)
           return (
             <div onClick={openLink} className={styles.newsItem} key={title}>
               <img src={imgSrc} alt="" className={styles.newsImage} />
