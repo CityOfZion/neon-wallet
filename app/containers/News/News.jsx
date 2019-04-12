@@ -63,7 +63,7 @@ export default class News extends React.Component<Props> {
           const openLink = () => electron.shell.openExternal(item.link)
           return (
             <div onClick={openLink} className={styles.newsItem} key={title}>
-              <img src={imgSrc} alt="" className={styles.newsImage} />
+              <img src={imgSrc} alt={title} className={styles.newsImage} />
               <small>{moment(item.isoDate).format('YYYY-MM-DD')}</small>
               <p> {title}</p>
             </div>
