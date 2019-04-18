@@ -20,7 +20,7 @@ const setup = (
 
   const wrapper = mount(
     <Provider store={store}>
-      <MemoryRouter>
+      <MemoryRouter initialEntries={['/']} keyLength={0}>
         <Component store={store} />
       </MemoryRouter>
     </Provider>,

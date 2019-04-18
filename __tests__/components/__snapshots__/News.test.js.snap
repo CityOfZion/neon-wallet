@@ -13,7 +13,14 @@ exports[`News renders without crashing 1`] = `
     }
   }
 >
-  <MemoryRouter>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        "/",
+      ]
+    }
+    keyLength={0}
+  >
     <Router
       history={
         Object {
@@ -24,7 +31,6 @@ exports[`News renders without crashing 1`] = `
           "entries": Array [
             Object {
               "hash": "",
-              "key": "0q2xeb",
               "pathname": "/",
               "search": "",
               "state": undefined,
@@ -38,7 +44,6 @@ exports[`News renders without crashing 1`] = `
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "key": "0q2xeb",
             "pathname": "/",
             "search": "",
             "state": undefined,
