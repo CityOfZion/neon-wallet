@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import styles from './PanelHeaderButton.scss'
 
 type Props = {
-  onClick: () => void,
+  onClick: () => void | Promise<void>,
   renderIcon: () => React$Node,
   buttonText: string,
   className?: string,

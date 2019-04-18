@@ -7,7 +7,7 @@ import RefreshIcon from '../../../assets/icons/refresh.svg'
 import styles from './RefreshButton.scss'
 
 type Props = {
-  loadWalletData: () => void,
+  loadWalletData?: () => void,
   loading?: boolean,
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "Neon",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",
   "homepage": "https://github.com/CityOfZion/neon-wallet",
@@ -92,6 +92,7 @@
     "howler": "2.0.15",
     "instascan": "1.0.0",
     "isomorphic-fetch": "2.2.1",
+    "json2csv": "^4.3.5",
     "jsqr": "1.1.1",
     "lodash-es": "4.17.11",
     "moment": "2.22.2",

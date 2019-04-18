@@ -149,7 +149,7 @@ export default class ContactsPanel extends React.Component<Props, State> {
         </Button>
         <Address address={address} asWrapper>
           <Button className={styles.infoButton} renderIcon={InfoIcon}>
-            View Activity
+            Activity
           </Button>
         </Address>
         <Link
@@ -160,7 +160,7 @@ export default class ContactsPanel extends React.Component<Props, State> {
           className={styles.settingsDonations}
         >
           <Button className={styles.sendButton} renderIcon={SendIcon}>
-            Send Assets
+            Send
           </Button>
         </Link>
       </div>

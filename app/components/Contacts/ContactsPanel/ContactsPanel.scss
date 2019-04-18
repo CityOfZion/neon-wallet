@@ -26,7 +26,7 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: nowrap;
-    padding: 12px 24px;
+    padding: 12px 12px 12px 24px;
 
     button {
       background-color: transparent;
@@ -53,28 +53,14 @@
       display: flex;
       align-items: center;
 
+      span {
+        margin-left: 6px;
+      }
+
       svg {
         path {
           fill: var(--tx-list-button-icon);
         }
-      }
-
-      .editButton {
-        width: 100px;
-        margin-right: 10px;
-      }
-
-      .infoButton {
-        width: 150px;
-        margin-right: 10px;
-      }
-
-      .sendButton {
-        width: 150px;
-      }
-
-      .deleteButton {
-        width: 100px;
       }
     }
   }
