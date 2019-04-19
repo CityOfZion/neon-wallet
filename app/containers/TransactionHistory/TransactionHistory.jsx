@@ -69,14 +69,22 @@ export default class TransactionHistory extends Component<Props, State> {
     const endpoint = api.neoscan.getAPIEndpoint(net)
     let numberOfPages = 1
     let currentPage = 1
+    let shouldFetchAdditionalPages = true
 
-    while (currentPage !== numberOfPages || currentPage === 1) {
+    while (
+      (currentPage - 1 !== numberOfPages || currentPage === 1) &&
+      shouldFetchAdditionalPages
+    ) {
       const { data } = await axios.get(
         `${endpoint}/v1/get_address_abstracts/${address}/${currentPage}`,
       )
       abstracts.push(...data.entries)
       numberOfPages = data.total_pages
       currentPage += 1
+
+      if (data.total_pages === 1 || data.total_pages === 0) {
+        shouldFetchAdditionalPages = false
+      }
     }
 
     const parsedAbstracts = await parseAbstractData(abstracts, address, net)
