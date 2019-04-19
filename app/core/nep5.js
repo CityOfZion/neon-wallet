@@ -69,6 +69,8 @@ export const getDefaultTokens = async (): Promise<Array<TokenItemType>> => {
         tokenData.symbol,
         tokenData.networks['1'].hash,
         MAIN_NETWORK_ID,
+        tokenData.networks['1'].name,
+        tokenData.networks['1'].decimals,
         tokenData.networks['1'],
       ),
     ),
