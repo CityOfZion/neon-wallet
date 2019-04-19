@@ -19,7 +19,7 @@
 
   svg {
     path {
-      fill: var(--header-bar-default-icon-color);
+      fill: var(--header-bar-default-icon-color) !important;
     }
   }
 }
