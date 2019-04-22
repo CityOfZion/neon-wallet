@@ -59,6 +59,7 @@ export const ROUTES = {
   ENCRYPT: '/encrypt-private-key',
   NODE_SELECT: '/node-select',
   VOTING: '/voting',
+  NEWS: '/news',
 }
 
 export const NOTIFICATION_LEVELS = {

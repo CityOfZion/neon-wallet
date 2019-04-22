@@ -1,0 +1,25 @@
+.newsPanel {
+  height: 100%;
+}
+
+.newsContainer {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.newsItemsContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  .newsItem {
+    cursor: pointer;
+    padding: 12px;
+    max-width: 320px;
+    img {
+      max-width: 320px;
+    }
+  }
+}
