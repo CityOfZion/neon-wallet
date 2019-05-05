@@ -2,7 +2,6 @@
 import React from 'react'
 import moment from 'moment'
 
-
 import Panel from '../../components/Panel'
 import HeaderBar from '../../components/HeaderBar'
 import styles from './News.scss'
