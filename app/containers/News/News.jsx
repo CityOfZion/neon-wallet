@@ -2,6 +2,7 @@
 import React from 'react'
 import moment from 'moment'
 
+
 import Panel from '../../components/Panel'
 import HeaderBar from '../../components/HeaderBar'
 import styles from './News.scss'
@@ -24,7 +25,15 @@ type Props = {
   net: string,
 }
 
-export default class News extends React.Component<Props> {
+type State = {
+  currentPage: number,
+}
+
+export default class News extends React.Component<Props, State> {
+  state = {
+    currentPage: 1,
+  }
+
   render() {
     return (
       <div className={styles.newsContainer}>
@@ -33,14 +42,24 @@ export default class News extends React.Component<Props> {
           net={this.props.net}
           label="News"
         />
-        <Panel className={styles.newsPanel}>
+        <Panel onScroll={this.handleScroll} className={styles.newsPanel}>
           {this.props.loading ? <Loader /> : this.parseItems()}
         </Panel>
       </div>
     )
   }
 
-  parseItems() {
+  handleScroll = (e: SyntheticInputEvent<EventTarget>) => {
+    const bottom =
+      e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight
+    if (bottom) {
+      setTimeout(() => {
+        this.setState(state => ({ currentPage: state.currentPage + 1 }))
+      }, 500)
+    }
+  }
+
+  parseItems = () => {
     const { items } = this.props.feed
     const imgTagRegex = new RegExp('<s*img[^>]*>(.*?)')
 
@@ -52,9 +71,11 @@ export default class News extends React.Component<Props> {
         .replace('src=', '')
         .replace('"', '')
 
+    const reducedItems = items.slice(0, this.state.currentPage * 15)
+
     return (
       <div className={styles.newsItemsContainer}>
-        {items.map(item => {
+        {reducedItems.map(item => {
           const imgSrc = imageHrefFromImgTags(
             // $FlowFixMe
             item.content.match(imgTagRegex)[0],
