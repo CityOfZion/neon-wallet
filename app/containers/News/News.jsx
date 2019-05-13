@@ -68,6 +68,8 @@ export default class News extends React.Component<Props, State> {
         .find(prop => prop.includes('src'))
         // $FlowFixMe
         .replace('src=', '')
+        .replace('.png', '')
+        .replace('"', '')
         .replace('"', '')
 
     const reducedItems = items.slice(0, this.state.currentPage * 15)
@@ -75,10 +77,10 @@ export default class News extends React.Component<Props, State> {
     return (
       <div className={styles.newsItemsContainer}>
         {reducedItems.map(item => {
-          const imgSrc = imageHrefFromImgTags(
+          const imgSrc = `${imageHrefFromImgTags(
             // $FlowFixMe
             item.content.match(imgTagRegex)[0],
-          )
+          )}-300x169.png`
           const { title } = item
           const openLink = () => electron.shell.openExternal(item.link)
           return (
