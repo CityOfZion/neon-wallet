@@ -13,6 +13,10 @@ type WifLoginProps = {
   wif: string,
 }
 
+type WatchOnlyLoginProps = {
+  address: string,
+}
+
 type LedgerLoginProps = {
   publicKey: string,
   signingFunction: Function,
@@ -46,6 +50,20 @@ export const wifLoginActions = createActions(
     return {
       wif: account.WIF,
       address: account.address,
+      isHardwareLogin: false,
+    }
+  },
+)
+
+export const watchOnlyLoginActions = createActions(
+  ID,
+  ({ address }: WatchOnlyLoginProps) => (): AccountType => {
+    if (!wallet.isAddress(address)) {
+      throw new Error('Invalid public key entered')
+    }
+
+    return {
+      address,
       isHardwareLogin: false,
     }
   },
