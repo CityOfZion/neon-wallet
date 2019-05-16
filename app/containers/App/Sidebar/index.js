@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom'
 
 import Sidebar from './Sidebar'
 import { addPendingTransaction } from '../../../actions/pendingTransactionActions'
+import withAuthData from '../../../hocs/withAuthData'
 
 const mapPendingTransactionsDataToProps = (
   pendingTransactions: Array<PendingTransactions>,
@@ -15,5 +16,6 @@ const mapPendingTransactionsDataToProps = (
 
 export default compose(
   withRouter, // allow `NavLink` components to re-render when the window location changes
+  withAuthData(),
   withData(addPendingTransaction, mapPendingTransactionsDataToProps),
 )(Sidebar)
