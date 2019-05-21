@@ -33,7 +33,7 @@ $navigation-margin: 20px;
   margin-bottom: 10px;
 }
 
-.privateKeyLoginButtonRow {
+.loginButtonRow {
   display: flex;
   margin-top: auto;
   button:first-child {
@@ -48,7 +48,7 @@ $navigation-margin: 20px;
   min-height: 17px;
 }
 
-.privateKeyLoginButtonRowScannerActive {
+.loginButtonRowScannerActive {
   button {
     width: 200px;
     margin: auto;

@@ -50,7 +50,7 @@ export default class LoginNep2 extends Component<Props, State> {
                   height="178"
                 />
               </div>
-              <div className={styles.privateKeyLoginButtonRowScannerActive}>
+              <div className={styles.loginButtonRowScannerActive}>
                 <Button
                   id="scan-private-key-qr-button"
                   renderIcon={Close}
