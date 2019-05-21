@@ -9,8 +9,8 @@ import styles from '../Home/Home.scss'
 type Props = {
   loading: boolean,
   loginNep2: Function,
+  cameraAvailable: boolean,
 }
-
 type State = {
   encryptedWIF: string,
   passphrase: string,
@@ -23,7 +23,7 @@ export default class LoginNep2 extends Component<Props, State> {
   }
 
   render() {
-    const { loading } = this.props
+    const { loading, cameraAvailable } = this.props
     const { encryptedWIF, passphrase } = this.state
 
     return (
