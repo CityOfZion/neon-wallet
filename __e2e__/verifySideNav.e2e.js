@@ -43,41 +43,58 @@ test.serial('should login successfully', async t => {
   )
   // Click on login btn
   await app.client.click('#loginButton')
-  // // Check that the default network is MainNet
-  await app.client
-    .getValue('#current-network')
-    .catch(error =>
-      t.is(
-        error.message,
-        'An element could not be located on the page using the given search parameters ("#current-network").',
-      ),
-    )
-  // click activity tab
-  await app.client.click('#history')
-  await app.client.waitUntilWindowLoaded(10000)
-
-  // click send tab
-  await app.client.click('#send')
-  await app.client.waitUntilWindowLoaded(10000)
-
-  // click receive tab
-  await app.client.click('#receive')
-  await app.client.waitUntilWindowLoaded(10000)
-
-  // click contacts tab
-  await app.client.click('#contacts')
-  await app.client.waitUntilWindowLoaded(10000)
-
-  // click token sale tab
-  await app.client.click('#tokensale')
-  await app.client.waitUntilWindowLoaded(10000)
-
-  // click settings tab
-  await app.client.click('#settings')
-  await app.client.waitUntilWindowLoaded(10000)
-
-  //click logout
-  //await app.client.click('#logout')
-  //await app.client.waitUntilWindowLoaded(10000)
+  await app.client.waitUntilTextExists('//span', 'Manage Wallets')
+  t.pass()
 })
 
+test.serial('Activity page clicked', async t => {
+  // click activity tab
+  await app.client.click('#history')
+  await app.client.waitUntilTextExists('//h3', 'All Activity')
+  t.pass()
+})
+test.serial('Send tab clicked', async t => {
+  // click send tab
+  await app.client.click('#send')
+  await app.client.waitUntilTextExists('//h3', 'Send Assets')
+  t.pass()
+})
+
+test.serial('Receive tab clicked', async t => {
+  // click receive tab
+  await app.client.click('#receive')
+  await app.client.waitUntilTextExists('//h3', 'Receive Assets')
+  t.pass()
+})
+test.serial('Contacts tab clicked', async t => {
+  // click contacts tab
+  await app.client.click('#contacts')
+  await app.client.waitUntilTextExists('//h3', 'Manage Contacts')
+  t.pass()
+})
+test.serial('Token sale tab clicked', async t => {
+  // click token sale tab
+  await app.client.click('#tokensale')
+  await app.client.waitUntilTextExists('//h3', 'Token Sale')
+  t.pass()
+})
+test.serial('News tab clicked', async t => {
+  // click token sale tab
+  await app.client.click('#News')
+  await app.client.waitUntilTextExists('//h3', 'News')
+  t.pass()
+})
+test.serial('Settings tab clicked', async t => {
+  // click settings tab
+  await app.client.click('#settings')
+  await app.client.waitUntilTextExists('//h3', 'Settings')
+  await app.browserWindow.isVisible('//h3[text()=\'Settings\']')
+  t.pass()
+})
+test.serial('Logout button clicked', async t => {
+  //click logout
+  await app.client.click('#logout')
+  await app.client.waitUntilTextExists('//span', 'Create Wallet')
+  t.pass()
+
+})
