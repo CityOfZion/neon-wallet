@@ -44,7 +44,9 @@ export default class LoginNep2 extends Component<Props, State> {
             <React.Fragment>
               <div className={styles.scannerContainer}>
                 <QrCodeScanner
-                  callback={this.handleSubmit}
+                  callback={encryptedWIF =>
+                    this.setState({ encryptedWIF, scannerActive: false })
+                  }
                   callbackProgress={progress}
                   width="316"
                   height="178"
@@ -79,26 +81,28 @@ export default class LoginNep2 extends Component<Props, State> {
                 disabled={loading}
                 onChange={e => this.setState({ passphrase: e.target.value })}
               />
-              <Button
-                id="scan-private-key-qr-button"
-                primary
-                renderIcon={GridIcon}
-                onClick={this.toggleScanner}
-                disabled={!cameraAvailable}
-              >
-                Scan QR
-              </Button>
-              <Button
-                id="loginButton"
-                primary
-                type="submit"
-                className={styles.loginButtonMargin}
-                renderIcon={LoginIcon}
-                disabled={loading || !this.isValid()}
-                shouldCenterButtonLabelText
-              >
-                Login
-              </Button>
+              <div className={styles.loginButtonRow}>
+                <Button
+                  id="scan-private-key-qr-button"
+                  primary
+                  renderIcon={GridIcon}
+                  onClick={this.toggleScanner}
+                  disabled={!cameraAvailable}
+                >
+                  Scan QR
+                </Button>
+                <Button
+                  id="loginButton"
+                  primary
+                  type="submit"
+                  className={styles.loginButtonMargin}
+                  renderIcon={LoginIcon}
+                  disabled={loading || !this.isValid()}
+                  shouldCenterButtonLabelText
+                >
+                  Login
+                </Button>
+              </div>
             </React.Fragment>
           )}
         </form>
