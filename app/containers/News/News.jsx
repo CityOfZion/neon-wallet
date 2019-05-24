@@ -86,8 +86,10 @@ export default class News extends React.Component<Props, State> {
           return (
             <div onClick={openLink} className={styles.newsItem} key={title}>
               <img src={imgSrc} alt={title} className={styles.newsImage} />
-              <small>{moment(item.isoDate).format('YYYY-MM-DD')}</small>
-              <p> {title}</p>
+              <div className={styles.content}>
+                <small>{moment(item.isoDate).format('YYYY-MM-DD')}</small>
+                <p> {title}</p>
+              </div>
             </div>
           )
         })}
