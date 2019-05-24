@@ -11,7 +11,7 @@ import {
 } from '../../core/math'
 
 import { isBlacklisted } from '../../core/wallet'
-import { PRICE_UNAVAILABLE } from '../../core/constants'
+import { PRICE_UNAVAILABLE, TOKENS } from '../../core/constants'
 
 import AmountsPanel from '../../components/AmountsPanel'
 import SendPanel from '../../components/Send/SendPanel'
@@ -35,6 +35,7 @@ type Props = {
   showSendModal: (props: Object) => any,
   tokens: Array<TokenItemType>,
   networkId: string,
+  isWatchOnly?: boolean,
 }
 
 type State = {
@@ -70,6 +71,7 @@ export default class Send extends React.Component<Props, State> {
   }
 
   componentDidMount() {
+    console.log(this.props.isWatchOnly)
     this.setState((prevState: Object) => {
       const newState = [...prevState.sendRowDetails]
 
@@ -454,6 +456,21 @@ export default class Send extends React.Component<Props, State> {
   resetViewsAfterError = () =>
     this.setState({ sendError: false, sendErrorMessage: '' })
 
+  generateAllSendableAssets = () => {
+    const assets = {}
+    Object.keys(TOKENS).forEach(key => {
+      // balance: 10000,
+      // symbol: TOKENS[key].symbol,
+
+      assets[TOKENS[key].symbol] = {
+        balance: '10000',
+        symbol: TOKENS[key].symbol,
+      }
+    })
+
+    return assets
+  }
+
   render() {
     const {
       sendRowDetails,
@@ -472,6 +489,7 @@ export default class Send extends React.Component<Props, State> {
       shouldRenderHeaderBar,
       address,
       showSendModal,
+      isWatchOnly,
     } = this.props
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 
@@ -490,7 +508,9 @@ export default class Send extends React.Component<Props, State> {
           calculateMaxValue={this.calculateMaxValue}
           maxNumberOfRecipients={MAX_NUMBER_OF_RECIPIENTS}
           sendRowDetails={sendRowDetails}
-          sendableAssets={sendableAssets}
+          sendableAssets={
+            isWatchOnly ? this.generateAllSendableAssets() : sendableAssets
+          }
           showConfirmSend={showConfirmSend}
           pendingTransaction={pendingTransaction}
           sendSuccess={sendSuccess}
@@ -513,6 +533,7 @@ export default class Send extends React.Component<Props, State> {
           resetViews={this.resetViews}
           showSendModal={showSendModal}
           pushQRCodeData={this.pushQRCodeData}
+          isWatchOnly={isWatchOnly}
         />
       </section>
     )

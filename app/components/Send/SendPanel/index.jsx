@@ -32,6 +32,7 @@ type Props = {
   handleAddPriorityFee: number => any,
   address: string,
   maxNumberOfRecipients: number,
+  isWatchOnly?: boolean,
   resetViewsAfterError: () => any,
   resetViews: () => any,
   handleSubmit: () => any,
@@ -78,8 +79,9 @@ const SendPanel = ({
   pushQRCodeData,
   pendingTransaction,
   calculateMaxValue,
+  isWatchOnly,
 }: Props) => {
-  if (noSendableAssets) {
+  if (noSendableAssets && !isWatchOnly) {
     return <ZeroAssets address={address} />
   }
   const maxRecipientsMet = sendRowDetails.length === maxNumberOfRecipients
@@ -95,6 +97,7 @@ const SendPanel = ({
         clearErrors={clearErrors}
         showConfirmSend={showConfirmSend}
         calculateMaxValue={calculateMaxValue}
+        isWatchOnly={isWatchOnly}
       />
 
       <div className={styles.priorityFeeContainer}>

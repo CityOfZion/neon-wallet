@@ -34,6 +34,7 @@ type AccountType = ?{
   publicKey?: string,
   signingFunction?: Function,
   isHardwareLogin: boolean,
+  isWatchOnly?: boolean,
 }
 
 export const ID = 'auth'
@@ -65,6 +66,7 @@ export const watchOnlyLoginActions = createActions(
     return {
       address,
       isHardwareLogin: false,
+      isWatchOnly: true,
     }
   },
 )

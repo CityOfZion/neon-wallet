@@ -67,6 +67,7 @@ const buildTransferScript = (
 
     scriptBuilder.emitAppCall(scriptHash, 'transfer', args)
   })
+  console.log(scriptBuilder.toScriptParams())
 
   return scriptBuilder.str
 }
