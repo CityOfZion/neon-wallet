@@ -24,9 +24,17 @@ type Props = {
   className: string,
   theme: ThemeType,
   pendingTransactionsCount: number,
+  wif?: string,
 }
 
-const Sidebar = ({ className, theme, pendingTransactionsCount }: Props) => {
+const Sidebar = ({
+  className,
+  theme,
+  pendingTransactionsCount,
+  wif,
+}: Props) => {
+  const isWatchOnly = !wif
+
   const themeBasedLogo =
     theme === 'Light' ? LightLogoWithoutText : DarkLogoWithoutText
 
@@ -64,16 +72,18 @@ const Sidebar = ({ className, theme, pendingTransactionsCount }: Props) => {
           <div> Activity </div>
         </NavLink>
 
-        <NavLink
-          id="send"
-          exact
-          to={ROUTES.SEND}
-          className={styles.navItem}
-          activeClassName={styles.active}
-        >
-          <SendIcon />
-          <div> Send </div>
-        </NavLink>
+        {!isWatchOnly && (
+          <NavLink
+            id="send"
+            exact
+            to={ROUTES.SEND}
+            className={styles.navItem}
+            activeClassName={styles.active}
+          >
+            <SendIcon />
+            <div> Send </div>
+          </NavLink>
+        )}
 
         <NavLink
           id="receive"
@@ -96,16 +106,17 @@ const Sidebar = ({ className, theme, pendingTransactionsCount }: Props) => {
           <div> Contacts </div>
         </NavLink>
 
-        <NavLink
-          id="tokensale"
-          to={ROUTES.TOKEN_SALE}
-          className={styles.navItem}
-          activeClassName={styles.active}
-        >
-          <TokenSaleIcon />
-          <div> Token Sale </div>
-        </NavLink>
-
+        {!isWatchOnly && (
+          <NavLink
+            id="tokensale"
+            to={ROUTES.TOKEN_SALE}
+            className={styles.navItem}
+            activeClassName={styles.active}
+          >
+            <TokenSaleIcon />
+            <div> Token Sale </div>
+          </NavLink>
+        )}
         <NavLink
           id="News"
           to={ROUTES.NEWS}
