@@ -116,6 +116,7 @@ const SendPanel = ({
           renderIcon={() => <EditIcon />}
           type="submit"
           disabled={shouldDisableSendButton(sendRowDetails)}
+          shouldCenterButtonLabelText
         >
           Generate transaction
         </Button>

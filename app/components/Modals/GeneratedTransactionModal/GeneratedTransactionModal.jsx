@@ -14,7 +14,7 @@ import ConfirmIcon from '../../../assets/icons/confirm.svg'
 import SaveIcon from '../../../assets/icons/save-icon.svg'
 import Button from '../../Button'
 
-const { dialog, app } = require('electron').remote
+const electron = require('electron').remote
 
 type Props = {
   showSuccessNotification: ({ message: string }) => string,
@@ -46,6 +46,7 @@ export default class GeneratedTransactionModal extends React.Component<
 
   handleSave = async () => {
     const { showSuccessNotification, showErrorNotification } = this.props
+    const { dialog, app } = electron
     try {
       dialog.showSaveDialog(
         {
