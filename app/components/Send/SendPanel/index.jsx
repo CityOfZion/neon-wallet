@@ -34,8 +34,6 @@ type Props = {
   address: string,
   maxNumberOfRecipients: number,
   isWatchOnly?: boolean,
-  transactionGeneratedSuccess?: boolean,
-  generatedTransaction?: Object,
   resetViewsAfterError: () => any,
   resetViews: () => any,
   handleSubmit: () => any,
@@ -83,7 +81,6 @@ const SendPanel = ({
   pendingTransaction,
   calculateMaxValue,
   isWatchOnly,
-  transactionGeneratedSuccess,
 }: Props) => {
   if (noSendableAssets) {
     return <ZeroAssets address={address} />

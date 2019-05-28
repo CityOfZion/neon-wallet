@@ -19,9 +19,14 @@ const { dialog, app } = require('electron').remote
 type Props = {
   showSuccessNotification: ({ message: string }) => string,
   showErrorNotification: ({ message: string }) => string,
+  // TODO: define this using the export from neon-js
+  tx: Object,
+  hideModal: () => void,
 }
 
-type State = {}
+type State = {
+  copied: boolean,
+}
 
 export default class GeneratedTransactionModal extends React.Component<
   Props,
