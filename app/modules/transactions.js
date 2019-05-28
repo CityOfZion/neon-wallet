@@ -67,7 +67,6 @@ const buildTransferScript = (
 
     scriptBuilder.emitAppCall(scriptHash, 'transfer', args)
   })
-  console.log(scriptBuilder.toScriptParams())
 
   return scriptBuilder.str
 }
@@ -81,15 +80,11 @@ const makeRequest = (
   // because neon-js will also mutate this same object by reference
   config.intents = buildIntents(sendEntries)
 
-  console.log({ config })
   if (script === '') {
     return api.sendAsset(config, api.neoscan)
   }
   config.script = script
   config.gas = 0
-
-  console.log({ config })
-
   return api.doInvoke(config, api.neoscan)
 }
 
@@ -175,6 +170,7 @@ export const sendTransaction = ({
       url,
       balance: undefined,
       tx: undefined,
+      intents: undefined,
     }
     const balanceResults = await api
       .getBalanceFrom({ net, address: fromAddress }, api.neoscan)
@@ -194,7 +190,6 @@ export const sendTransaction = ({
         // $FlowFixMe
         config.tokensBalanceMap,
       )
-      console.log({ isWatchOnly })
       if (isWatchOnly) {
         config.intents = buildIntents(sendEntries)
         if (!script) {
@@ -210,7 +205,6 @@ export const sendTransaction = ({
         )
         return resolve(config)
       }
-      console.log('wtf')
       const { response } = await makeRequest(sendEntries, config, script)
 
       if (!response.result) {
