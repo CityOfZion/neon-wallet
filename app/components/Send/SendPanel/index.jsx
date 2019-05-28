@@ -118,7 +118,6 @@ const SendPanel = ({
           className={styles.sendFormButton}
           renderIcon={() => <EditIcon />}
           type="submit"
-          onClick={handleSend}
           disabled={shouldDisableSendButton(sendRowDetails)}
         >
           Generate transaction
@@ -158,10 +157,6 @@ const SendPanel = ({
         />
       </form>
     )
-  }
-
-  if (transactionGeneratedSuccess) {
-    content = <div> Hello Generated tx </div>
   }
 
   if (sendSuccess) {

@@ -11,7 +11,7 @@ import {
 } from '../../core/math'
 
 import { isBlacklisted } from '../../core/wallet'
-import { PRICE_UNAVAILABLE, TOKENS } from '../../core/constants'
+import { PRICE_UNAVAILABLE, TOKENS, MODAL_TYPES } from '../../core/constants'
 
 import AmountsPanel from '../../components/AmountsPanel'
 import SendPanel from '../../components/Send/SendPanel'
@@ -36,6 +36,7 @@ type Props = {
   tokens: Array<TokenItemType>,
   networkId: string,
   isWatchOnly?: boolean,
+  showGeneratedTransactionModal: Object => void,
 }
 
 type State = {
@@ -270,8 +271,12 @@ export default class Send extends React.Component<Props, State> {
       Promise.all(promises).then(values => {
         const isValid = values.every((result: boolean) => result)
 
-        if (isValid) {
+        if (isValid && !this.props.isWatchOnly) {
           this.setState({ showConfirmSend: true })
+        }
+        if (isValid && this.props.isWatchOnly) {
+          console.log('handling send')
+          this.handleSend()
         }
       })
     }
@@ -313,7 +318,11 @@ export default class Send extends React.Component<Props, State> {
   }
 
   handleSend = () => {
-    const { sendTransaction, isWatchOnly } = this.props
+    const {
+      sendTransaction,
+      isWatchOnly,
+      showGeneratedTransactionModal,
+    } = this.props
     const { sendRowDetails, fees } = this.state
 
     const entries = sendRowDetails.map((row: Object) => ({
@@ -323,7 +332,6 @@ export default class Send extends React.Component<Props, State> {
     }))
 
     this.setState({ pendingTransaction: true })
-    console.log('sending')
     sendTransaction({ sendEntries: entries, fees, isWatchOnly })
       .then((result: Object) => {
         console.log({ result })
@@ -333,6 +341,7 @@ export default class Send extends React.Component<Props, State> {
             generatedTransaction: result,
             pendingTransaction: false,
           })
+          showGeneratedTransactionModal(result)
         } else {
           this.setState({
             sendSuccess: true,

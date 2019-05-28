@@ -139,16 +139,13 @@ export const sendTransaction = ({
       return reject(error)
     }
 
-    dispatch(
-      showInfoNotification({
-        message: `${
-          isWatchOnly
-            ? 'Generating transaction...'
-            : 'Broadcasting transaction to network...'
-        } `,
-        autoDismiss: 0,
-      }),
-    )
+    if (!isWatchOnly)
+      dispatch(
+        showInfoNotification({
+          message: 'Broadcasting transaction to network...',
+          autoDismiss: 0,
+        }),
+      )
 
     if (isHardwareSend) {
       dispatch(
@@ -197,12 +194,12 @@ export const sendTransaction = ({
         } else {
           api.createTx(config, 'invocation')
         }
-        dispatch(
-          showSuccessNotification({
-            message:
-              'Transaction generated! Login with a private key, or ledger in order to sign it and broadcast to network.',
-          }),
-        )
+        // dispatch(
+        //   showSuccessNotification({
+        //     message:
+        //       'Transaction generated! Login with a private key, or ledger in order to sign it and broadcast to network.',
+        //   }),
+        // )
         return resolve(config)
       }
       const { response } = await makeRequest(sendEntries, config, script)
