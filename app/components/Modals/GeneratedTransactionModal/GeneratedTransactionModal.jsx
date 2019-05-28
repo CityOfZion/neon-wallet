@@ -19,7 +19,6 @@ const electron = require('electron').remote
 type Props = {
   showSuccessNotification: ({ message: string }) => string,
   showErrorNotification: ({ message: string }) => string,
-  // TODO: define this using the export from neon-js
   tx: Object,
   hideModal: () => void,
 }

@@ -49,9 +49,6 @@ type State = {
   txid: string,
   fees: number,
   sendRowDetails: Array<Object>,
-  // TODO: define better
-  generatedTransaction?: Object,
-  transactionGeneratedSuccess?: boolean,
   address?: string,
 }
 
@@ -334,11 +331,6 @@ export default class Send extends React.Component<Props, State> {
     sendTransaction({ sendEntries: entries, fees, isWatchOnly })
       .then((result: Object) => {
         if (isWatchOnly) {
-          this.setState({
-            transactionGeneratedSuccess: true,
-            generatedTransaction: result,
-            pendingTransaction: false,
-          })
           showGeneratedTransactionModal(result)
         } else {
           this.setState({
@@ -486,8 +478,6 @@ export default class Send extends React.Component<Props, State> {
       txid,
       fees,
       pendingTransaction,
-      transactionGeneratedSuccess,
-      generatedTransaction,
     } = this.state
     const {
       sendableAssets,
@@ -539,8 +529,6 @@ export default class Send extends React.Component<Props, State> {
           showSendModal={showSendModal}
           pushQRCodeData={this.pushQRCodeData}
           isWatchOnly={isWatchOnly}
-          transactionGeneratedSuccess={transactionGeneratedSuccess}
-          generatedTransaction={generatedTransaction}
         />
       </section>
     )
