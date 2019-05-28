@@ -194,12 +194,6 @@ export const sendTransaction = ({
         } else {
           api.createTx(config, 'invocation')
         }
-        // dispatch(
-        //   showSuccessNotification({
-        //     message:
-        //       'Transaction generated! Login with a private key, or ledger in order to sign it and broadcast to network.',
-        //   }),
-        // )
         return resolve(config)
       }
       const { response } = await makeRequest(sendEntries, config, script)
