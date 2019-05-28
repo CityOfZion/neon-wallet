@@ -11,7 +11,7 @@ import {
 } from '../../core/math'
 
 import { isBlacklisted } from '../../core/wallet'
-import { PRICE_UNAVAILABLE, TOKENS, MODAL_TYPES } from '../../core/constants'
+import { PRICE_UNAVAILABLE } from '../../core/constants'
 
 import AmountsPanel from '../../components/AmountsPanel'
 import SendPanel from '../../components/Send/SendPanel'
@@ -275,7 +275,6 @@ export default class Send extends React.Component<Props, State> {
           this.setState({ showConfirmSend: true })
         }
         if (isValid && this.props.isWatchOnly) {
-          console.log('handling send')
           this.handleSend()
         }
       })
@@ -334,7 +333,6 @@ export default class Send extends React.Component<Props, State> {
     this.setState({ pendingTransaction: true })
     sendTransaction({ sendEntries: entries, fees, isWatchOnly })
       .then((result: Object) => {
-        console.log({ result })
         if (isWatchOnly) {
           this.setState({
             transactionGeneratedSuccess: true,
