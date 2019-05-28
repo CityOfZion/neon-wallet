@@ -13,6 +13,7 @@ import SendError from './SendError'
 import ZeroAssets from '../../ZeroAssets/ZeroAssets'
 import { pluralize } from '../../../util/pluralize'
 import SendIcon from '../../../assets/icons/send.svg'
+import EditIcon from '../../../assets/icons/edit.svg'
 
 import styles from './SendPanel.scss'
 import { isZero } from '../../../core/math'
@@ -33,6 +34,8 @@ type Props = {
   address: string,
   maxNumberOfRecipients: number,
   isWatchOnly?: boolean,
+  transactionGeneratedSuccess?: boolean,
+  generatedTransaction?: Object,
   resetViewsAfterError: () => any,
   resetViews: () => any,
   handleSubmit: () => any,
@@ -80,8 +83,9 @@ const SendPanel = ({
   pendingTransaction,
   calculateMaxValue,
   isWatchOnly,
+  transactionGeneratedSuccess,
 }: Props) => {
-  if (noSendableAssets && !isWatchOnly) {
+  if (noSendableAssets) {
     return <ZeroAssets address={address} />
   }
   const maxRecipientsMet = sendRowDetails.length === maxNumberOfRecipients
@@ -108,21 +112,33 @@ const SendPanel = ({
           disabled={shouldDisableSendButton(sendRowDetails)}
         />
       </div>
-
-      <Button
-        primary
-        className={styles.sendFormButton}
-        renderIcon={() => <SendIcon />}
-        type="submit"
-        disabled={shouldDisableSendButton(sendRowDetails)}
-      >
-        Send {pluralize('Asset', sendRowDetails.length)}{' '}
-        {fees ? 'With Fee' : 'Without Fee'}
-      </Button>
+      {isWatchOnly ? (
+        <Button
+          primary
+          className={styles.sendFormButton}
+          renderIcon={() => <EditIcon />}
+          type="submit"
+          onClick={handleSend}
+          disabled={shouldDisableSendButton(sendRowDetails)}
+        >
+          Generate transaction
+        </Button>
+      ) : (
+        <Button
+          primary
+          className={styles.sendFormButton}
+          renderIcon={() => <SendIcon />}
+          type="submit"
+          disabled={shouldDisableSendButton(sendRowDetails)}
+        >
+          Send {pluralize('Asset', sendRowDetails.length)}{' '}
+          {fees ? 'With Fee' : 'Without Fee'}
+        </Button>
+      )}
     </form>
   )
 
-  if (showConfirmSend) {
+  if (showConfirmSend && !isWatchOnly) {
     content = (
       <form onSubmit={handleSend}>
         <SendRecipientList
@@ -142,6 +158,10 @@ const SendPanel = ({
         />
       </form>
     )
+  }
+
+  if (transactionGeneratedSuccess) {
+    content = <div> Hello Generated tx </div>
   }
 
   if (sendSuccess) {

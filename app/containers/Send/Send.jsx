@@ -44,9 +44,13 @@ type State = {
   sendSuccess: boolean,
   sendError: boolean,
   sendErrorMessage: string,
+
   txid: string,
   fees: number,
   sendRowDetails: Array<Object>,
+  // TODO: define better
+  generatedTransaction?: Object,
+  transactionGeneratedSuccess?: boolean,
   address?: string,
 }
 
@@ -71,7 +75,6 @@ export default class Send extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    console.log(this.props.isWatchOnly)
     this.setState((prevState: Object) => {
       const newState = [...prevState.sendRowDetails]
 
@@ -310,7 +313,7 @@ export default class Send extends React.Component<Props, State> {
   }
 
   handleSend = () => {
-    const { sendTransaction } = this.props
+    const { sendTransaction, isWatchOnly } = this.props
     const { sendRowDetails, fees } = this.state
 
     const entries = sendRowDetails.map((row: Object) => ({
@@ -320,13 +323,23 @@ export default class Send extends React.Component<Props, State> {
     }))
 
     this.setState({ pendingTransaction: true })
-    sendTransaction({ sendEntries: entries, fees })
+    console.log('sending')
+    sendTransaction({ sendEntries: entries, fees, isWatchOnly })
       .then((result: Object) => {
-        this.setState({
-          sendSuccess: true,
-          txid: result.txid,
-          pendingTransaction: false,
-        })
+        console.log({ result })
+        if (isWatchOnly) {
+          this.setState({
+            transactionGeneratedSuccess: true,
+            generatedTransaction: result,
+            pendingTransaction: false,
+          })
+        } else {
+          this.setState({
+            sendSuccess: true,
+            txid: result.txid,
+            pendingTransaction: false,
+          })
+        }
       })
       .catch((error: Object) => {
         // TODO: here is where we must generate the expected txId locally
@@ -456,21 +469,6 @@ export default class Send extends React.Component<Props, State> {
   resetViewsAfterError = () =>
     this.setState({ sendError: false, sendErrorMessage: '' })
 
-  generateAllSendableAssets = () => {
-    const assets = {}
-    Object.keys(TOKENS).forEach(key => {
-      // balance: 10000,
-      // symbol: TOKENS[key].symbol,
-
-      assets[TOKENS[key].symbol] = {
-        balance: '10000',
-        symbol: TOKENS[key].symbol,
-      }
-    })
-
-    return assets
-  }
-
   render() {
     const {
       sendRowDetails,
@@ -481,6 +479,8 @@ export default class Send extends React.Component<Props, State> {
       txid,
       fees,
       pendingTransaction,
+      transactionGeneratedSuccess,
+      generatedTransaction,
     } = this.state
     const {
       sendableAssets,
@@ -508,9 +508,7 @@ export default class Send extends React.Component<Props, State> {
           calculateMaxValue={this.calculateMaxValue}
           maxNumberOfRecipients={MAX_NUMBER_OF_RECIPIENTS}
           sendRowDetails={sendRowDetails}
-          sendableAssets={
-            isWatchOnly ? this.generateAllSendableAssets() : sendableAssets
-          }
+          sendableAssets={sendableAssets}
           showConfirmSend={showConfirmSend}
           pendingTransaction={pendingTransaction}
           sendSuccess={sendSuccess}
@@ -534,6 +532,8 @@ export default class Send extends React.Component<Props, State> {
           showSendModal={showSendModal}
           pushQRCodeData={this.pushQRCodeData}
           isWatchOnly={isWatchOnly}
+          transactionGeneratedSuccess={transactionGeneratedSuccess}
+          generatedTransaction={generatedTransaction}
         />
       </section>
     )

@@ -1,6 +1,6 @@
 // @flow
 /* eslint-disable camelcase */
-import { api, sc, u, wallet, settings } from '@cityofzion/neon-js'
+import { api, sc, u, wallet, settings, tx } from '@cityofzion/neon-js'
 import { flatMap, keyBy, isEmpty, get } from 'lodash-es'
 
 import {
@@ -80,11 +80,16 @@ const makeRequest = (
   // NOTE: We purposefully mutate the contents of config
   // because neon-js will also mutate this same object by reference
   config.intents = buildIntents(sendEntries)
+
+  console.log({ config })
   if (script === '') {
     return api.sendAsset(config, api.neoscan)
   }
   config.script = script
   config.gas = 0
+
+  console.log({ config })
+
   return api.doInvoke(config, api.neoscan)
 }
 
@@ -103,9 +108,11 @@ export const generateBalanceInfo = (
 export const sendTransaction = ({
   sendEntries,
   fees,
+  isWatchOnly,
 }: {
   sendEntries: Array<SendEntryType>,
   fees: number,
+  isWatchOnly?: boolean,
 }) => (dispatch: DispatchType, getState: GetStateType): Promise<*> =>
   new Promise(async (resolve, reject) => {
     const state = getState()
@@ -139,7 +146,11 @@ export const sendTransaction = ({
 
     dispatch(
       showInfoNotification({
-        message: 'Sending Transaction...',
+        message: `${
+          isWatchOnly
+            ? 'Generating transaction...'
+            : 'Broadcasting transaction to network...'
+        } `,
         autoDismiss: 0,
       }),
     )
@@ -163,6 +174,7 @@ export const sendTransaction = ({
       fees,
       url,
       balance: undefined,
+      tx: undefined,
     }
     const balanceResults = await api
       .getBalanceFrom({ net, address: fromAddress }, api.neoscan)
@@ -182,6 +194,23 @@ export const sendTransaction = ({
         // $FlowFixMe
         config.tokensBalanceMap,
       )
+      console.log({ isWatchOnly })
+      if (isWatchOnly) {
+        config.intents = buildIntents(sendEntries)
+        if (!script) {
+          api.createTx(config, 'contract')
+        } else {
+          api.createTx(config, 'invocation')
+        }
+        dispatch(
+          showSuccessNotification({
+            message:
+              'Transaction generated! Login with a private key, or ledger in order to sign it and broadcast to network.',
+          }),
+        )
+        return resolve(config)
+      }
+      console.log('wtf')
       const { response } = await makeRequest(sendEntries, config, script)
 
       if (!response.result) {
@@ -200,17 +229,19 @@ export const sendTransaction = ({
       rejectTransaction(`Transaction failed: ${err.message}`)
       return reject(err)
     } finally {
-      const outputs = get(config, 'tx.outputs')
       const hash = get(config, 'tx.hash')
-      dispatch(
-        addPendingTransaction.call({
-          address: config.address,
-          tx: {
-            hash,
-            sendEntries,
-          },
-          net,
-        }),
-      )
+
+      if (!isWatchOnly) {
+        dispatch(
+          addPendingTransaction.call({
+            address: config.address,
+            tx: {
+              hash,
+              sendEntries,
+            },
+            net,
+          }),
+        )
+      }
     }
   })
