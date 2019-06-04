@@ -259,7 +259,7 @@ export default class Send extends React.Component<Props, State> {
     })
   }
 
-  handleSubmit = () => {
+  handleSubmit = (generateTransaction = false) => {
     const rows = [...this.state.sendRowDetails]
     const promises = rows.map((row: Object, index: number) =>
       this.validateRow(row, index),
@@ -269,11 +269,11 @@ export default class Send extends React.Component<Props, State> {
       Promise.all(promises).then(values => {
         const isValid = values.every((result: boolean) => result)
 
-        if (isValid && !this.props.isWatchOnly) {
+        if (isValid && !this.props.isWatchOnly && !generateTransaction) {
           this.setState({ showConfirmSend: true })
         }
-        if (isValid && this.props.isWatchOnly) {
-          this.handleSend()
+        if ((isValid && this.props.isWatchOnly) || generateTransaction) {
+          this.handleSend(true)
         }
       })
     }
@@ -314,7 +314,7 @@ export default class Send extends React.Component<Props, State> {
     return validAmounts
   }
 
-  handleSend = () => {
+  handleSend = (showTransactionModal = false) => {
     const {
       sendTransaction,
       isWatchOnly,
@@ -329,9 +329,13 @@ export default class Send extends React.Component<Props, State> {
     }))
 
     this.setState({ pendingTransaction: true })
-    sendTransaction({ sendEntries: entries, fees, isWatchOnly })
+    sendTransaction({
+      sendEntries: entries,
+      fees,
+      isWatchOnly: isWatchOnly || showTransactionModal,
+    })
       .then((result: Object) => {
-        if (isWatchOnly) {
+        if (isWatchOnly || showTransactionModal) {
           showGeneratedTransactionModal(result)
         } else {
           this.setState({

@@ -39,20 +39,26 @@ export default class GeneratedTransactionModal extends React.Component<
   handleSave = async () => {}
 
   signTransaction = () => {
-    const { Transaction } = tx
-    const { wif } = this.props
-    console.log(this.props)
-    // TODO:
-    // 1.) We need validate the transaction json blob here
-    // 2.) Convert blob to neon js tx object
-    // 3.) sign transaction
-    // 4.) spit back to client
-    console.log(this.state)
-    const Tx = new Transaction(JSON.parse(this.state.transaction))
-    const signedTx = Tx.sign(wif)
-    this.setState({
-      signedTx,
-    })
+    try {
+      const { Transaction } = tx
+      const { wif } = this.props
+      console.log(this.props)
+      // TODO:
+      // 1.) We need validate the transaction json blob here
+      // 2.) Convert blob to neon js tx object
+      // 3.) sign transaction
+      // 4.) spit back to client
+      console.log(this.state)
+      const Tx = new Transaction(JSON.parse(this.state.transaction))
+      const signedTx = Tx.sign(wif)
+      this.setState({
+        signedTx,
+      })
+    } catch (error) {
+      this.props.showErrorNotification({
+        message: `An error occurred signing the transaction: ${error.message}`,
+      })
+    }
 
     // console.log(Tx.serialize())
     //let Tx = new tx(transaction)

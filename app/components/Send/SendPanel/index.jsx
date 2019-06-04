@@ -90,7 +90,7 @@ const SendPanel = ({
   const maxRecipientsMet = sendRowDetails.length === maxNumberOfRecipients
 
   let content = (
-    <form onSubmit={handleSubmit}>
+    <form>
       <SendRecipientList
         sendRowDetails={sendRowDetails}
         sendableAssets={sendableAssets}
@@ -102,7 +102,6 @@ const SendPanel = ({
         calculateMaxValue={calculateMaxValue}
         isWatchOnly={isWatchOnly}
       />
-
       <div className={styles.priorityFeeContainer}>
         <PriorityFee
           availableGas={Number(get(sendableAssets, 'GAS.balance', 0))}
@@ -111,29 +110,28 @@ const SendPanel = ({
           disabled={shouldDisableSendButton(sendRowDetails)}
         />
       </div>
-      {isWatchOnly ? (
-        <Button
-          primary
-          className={styles.sendFormButton}
-          renderIcon={() => <EditIcon />}
-          type="submit"
-          disabled={shouldDisableSendButton(sendRowDetails)}
-          shouldCenterButtonLabelText
-        >
-          Generate transaction
-        </Button>
-      ) : (
-        <Button
-          primary
-          className={styles.sendFormButton}
-          renderIcon={() => <SendIcon />}
-          type="submit"
-          disabled={shouldDisableSendButton(sendRowDetails)}
-        >
-          Send {pluralize('Asset', sendRowDetails.length)}{' '}
-          {fees ? 'With Fee' : 'Without Fee'}
-        </Button>
-      )}
+      <Button
+        secondary
+        className={styles.generateTransactionButton}
+        renderIcon={() => <EditIcon />}
+        type="submit"
+        disabled={shouldDisableSendButton(sendRowDetails)}
+        shouldCenterButtonLabelText
+        onClick={() => handleSubmit(true)}
+      >
+        Generate transaction JSON
+      </Button>
+      <Button
+        primary
+        className={styles.sendFormButton}
+        renderIcon={() => <SendIcon />}
+        type="submit"
+        disabled={shouldDisableSendButton(sendRowDetails)}
+        onClick={handleSubmit}
+      >
+        Send {pluralize('Asset', sendRowDetails.length)}{' '}
+        {fees ? 'With Fee' : 'Without Fee'}
+      </Button>
     </form>
   )
 
