@@ -42,13 +42,6 @@ export default class GeneratedTransactionModal extends React.Component<
     try {
       const { Transaction } = tx
       const { wif } = this.props
-      console.log(this.props)
-      // TODO:
-      // 1.) We need validate the transaction json blob here
-      // 2.) Convert blob to neon js tx object
-      // 3.) sign transaction
-      // 4.) spit back to client
-      console.log(this.state)
       const Tx = new Transaction(JSON.parse(this.state.transaction))
       const signedTx = Tx.sign(wif)
       this.setState({
@@ -59,22 +52,6 @@ export default class GeneratedTransactionModal extends React.Component<
         message: `An error occurred signing the transaction: ${error.message}`,
       })
     }
-
-    // console.log(Tx.serialize())
-    //let Tx = new tx(transaction)
-    //console.log(Tx)
-    // console.log(tx)
-    // console.log(Neon)
-    // console.log(tx.default.serialize(transaction))
-    // console.log(tx.serializeTransaction(transaction))
-
-    // const GeneratedTransaction = new Tx(transaction)
-    // console.log(Neon)
-    // console.log(Neon.serialize.tx(transaction))
-    // console.log(tx.Transaction.createContractTx(transaction))
-    // console.log(Neon.create.contractTx(transaction))
-    // console.log(GeneratedTransaction)
-    // console.log(GeneratedTransaction.serializeTransaction())
   }
 
   handleSave = async () => {
@@ -337,30 +314,3 @@ export default class GeneratedTransactionModal extends React.Component<
     )
   }
 }
-
-// dispatch(
-//   showSuccessNotification({
-//     message:
-//       'Transaction pending! Your balance will automatically update when the blockchain has processed it.',
-//   }),
-// )
-// return resolve(response)
-// } catch (err) {
-// console.error({ err })
-// rejectTransaction(`Transaction failed: ${err.message}`)
-// return reject(err)
-// } finally {
-// const hash = get(config, 'tx.hash')
-
-// if (!isWatchOnly) {
-//   dispatch(
-//     addPendingTransaction.call({
-//       address: config.address,
-//       tx: {
-//         hash,
-//         sendEntries,
-//       },
-//       net,
-//     }),
-//   )
-// }
