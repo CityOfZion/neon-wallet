@@ -44,6 +44,7 @@ type Props = {
   updateRowField: (index: number, field: string, value: any) => any,
   handleEditRecipientsClick: () => any,
   showSendModal: (props: Object) => any,
+  showImportModal: (props: Object) => any,
   pushQRCodeData: (data: Object) => any,
   calculateMaxValue: (asset: string, index: number) => string,
 }
@@ -81,6 +82,7 @@ const SendPanel = ({
   pendingTransaction,
   calculateMaxValue,
   isWatchOnly,
+  showImportModal,
 }: Props) => {
   if (noSendableAssets) {
     return <ZeroAssets address={address} />
@@ -190,6 +192,7 @@ const SendPanel = ({
             shouldDisableSendButton(sendRowDetails) || maxRecipientsMet
           }
           disableEnterQRCode={maxRecipientsMet}
+          showImportModal={showImportModal}
         />
       )}
       className={styles.sendSuccessPanel}

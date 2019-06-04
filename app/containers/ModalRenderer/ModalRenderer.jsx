@@ -9,6 +9,7 @@ import AddContactModal from '../../components/Modals/AddContactModal'
 import ReceiveModal from '../../components/Modals/ReceiveModal'
 import SendModal from '../../components/Modals/SendModal'
 import GeneratedTransactionModal from '../../components/Modals/GeneratedTransactionModal'
+import ImportTransactionModal from '../../components/Modals/ImportTransactionModal'
 
 import { MODAL_TYPES } from '../../core/constants'
 
@@ -20,6 +21,7 @@ const {
   ADD_CONTACT,
   RECEIVE,
   GENERATED_TRANSACTION,
+  IMPORT_TRANSACTION,
 } = MODAL_TYPES
 
 const MODAL_COMPONENTS = {
@@ -30,6 +32,7 @@ const MODAL_COMPONENTS = {
   [RECEIVE]: ReceiveModal,
   [SEND]: SendModal,
   [GENERATED_TRANSACTION]: GeneratedTransactionModal,
+  [IMPORT_TRANSACTION]: ImportTransactionModal,
 }
 
 type Props = {

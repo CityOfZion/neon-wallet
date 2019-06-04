@@ -37,6 +37,7 @@ type Props = {
   networkId: string,
   isWatchOnly?: boolean,
   showGeneratedTransactionModal: Object => void,
+  showImportModal: (props: Object) => void,
 }
 
 type State = {
@@ -487,6 +488,7 @@ export default class Send extends React.Component<Props, State> {
       address,
       showSendModal,
       isWatchOnly,
+      showImportModal,
     } = this.props
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 
@@ -529,6 +531,7 @@ export default class Send extends React.Component<Props, State> {
           showSendModal={showSendModal}
           pushQRCodeData={this.pushQRCodeData}
           isWatchOnly={isWatchOnly}
+          showImportModal={showImportModal}
         />
       </section>
     )
