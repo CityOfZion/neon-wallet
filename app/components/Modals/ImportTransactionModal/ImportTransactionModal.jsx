@@ -4,7 +4,7 @@ import moment from 'moment'
 import Neon, { tx, logging, rpc } from '@cityofzion/neon-js'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import classNames from 'classnames'
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 
 import { getNode, getRPCEndpoint } from '../../../actions/nodeStorageActions'
 import baseStyles from '../SendModal/SendModal.scss'
@@ -14,6 +14,7 @@ import ConfirmIcon from '../../../assets/icons/confirm.svg'
 import ImportIcon from '../../../assets/icons/import.svg'
 import SaveIcon from '../../../assets/icons/save-icon.svg'
 import Button from '../../Button'
+import Loading from '../../../containers/App/Loading'
 
 logging.logger.setAll('info') // sets logging level of neon-js to 'info'
 
@@ -32,6 +33,7 @@ export default class GeneratedTransactionModal extends React.Component<
   state = {
     tabIndex: 0,
     transaction: '',
+    serializedTransactionInput: '',
   }
 
   handleSave = async () => {}
@@ -117,7 +119,11 @@ export default class GeneratedTransactionModal extends React.Component<
     }
   }
 
-  handleBroadcast = async () => {
+  handleBroadcast = async (
+    rawTransaction,
+    transactionObjectAvailable = true,
+  ) => {
+    this.setState({ loading: true })
     const { net } = this.props
     let url = await getNode(net)
     if (isEmpty(url)) {
@@ -125,10 +131,23 @@ export default class GeneratedTransactionModal extends React.Component<
     }
     const RPC = new rpc.RPCClient(url)
     console.log({ RPC })
-    const response = await RPC.sendRawTransaction(
-      this.state.signedTx.serialize(),
-    )
+    const response = await RPC.sendRawTransaction(rawTransaction).catch(e => {
+      this.props.showErrorNotification({
+        message: `There was an issue broadcasting the transaction to the network... ${
+          e.message
+        }`,
+      })
+      this.setState({ loading: false })
+    })
     console.log({ response })
+    if (response) {
+      this.props.showSuccessNotification({
+        message:
+          'Transaction pending! Wallet balances will automatically update when the blockchain has processed it.',
+      })
+      this.setState({ loading: false })
+      this.props.hideModal()
+    }
   }
 
   generateOptions = () => ({
@@ -140,10 +159,10 @@ export default class GeneratedTransactionModal extends React.Component<
               <div className={baseStyles.section}>
                 {/* TODO: componentize this in a seperate PR */}
                 <textarea
-                  value={this.state.serializedSignedTx}
+                  value={this.state.signedTx.serialize()}
                   rows="15"
+                  disabled
                   className={styles.transactionInput}
-                  onChange={e => this.setState({ transaction: e.target.value })}
                 />
               </div>
               <div className={styles.buttonContainer}>
@@ -162,7 +181,9 @@ export default class GeneratedTransactionModal extends React.Component<
                   className={styles.submitButton}
                   renderIcon={() => <ConfirmIcon />}
                   type="submit"
-                  onClick={this.handleBroadcast}
+                  onClick={() =>
+                    this.handleBroadcast(this.state.signedTx.serialize())
+                  }
                 >
                   Broadcast Transaction
                 </Button>
@@ -210,11 +231,33 @@ export default class GeneratedTransactionModal extends React.Component<
     },
     broadcastTransaction: {
       render: () => (
-        <div className={styles.dynamicReceiveContent}>
-          <div>hello bar</div>
-        </div>
+        <Fragment>
+          <div className={baseStyles.section}>
+            {/* TODO: componentize this in a seperate PR */}
+            <textarea
+              value={this.state.serializedTransactionInput}
+              rows="15"
+              className={styles.transactionInput}
+              onChange={e =>
+                this.setState({ serializedTransactionInput: e.target.value })
+              }
+            />
+          </div>
+          <Button
+            shouldCenterButtonLabelText
+            primary
+            className={styles.submitButton}
+            renderIcon={() => <ConfirmIcon />}
+            type="submit"
+            onClick={() =>
+              this.handleBroadcast(this.state.serializedTransactionInput, false)
+            }
+          >
+            Broadcast Transaction
+          </Button>
+        </Fragment>
       ),
-      display: 'Add Signed Transaction',
+      display: 'Add Signed Raw Transaction',
     },
   })
 
@@ -234,42 +277,55 @@ export default class GeneratedTransactionModal extends React.Component<
         style={{ content: { width: '750px', height: '100%' } }}
       >
         <div className={styles.contentContainer}>
-          <div className={baseStyles.header}>
-            <ImportIcon className={baseStyles.icon} />
-            <div className={baseStyles.title}>Import Transaction</div>
-          </div>
+          {this.state.loading ? (
+            <Loading theme={this.props.theme} nobackground />
+          ) : (
+            <Fragment>
+              <div className={baseStyles.header}>
+                <ImportIcon className={baseStyles.icon} />
+                <div className={baseStyles.title}>Import Transaction</div>
+              </div>
 
-          <div className={baseStyles.divider} />
+              <div className={baseStyles.divider} />
 
-          <div className={baseStyles.section}>
-            <div className={baseStyles.sectionContent}>
-              {!this.state.tabIndex
-                ? 'If you have produced a transction from a watch only address you can sign it below or import an already signed transaction.'
-                : 'Add a signed transaction below to broadcast it to the network.'}
-            </div>
-          </div>
+              <div className={baseStyles.section}>
+                <div className={baseStyles.sectionContent}>
+                  {!this.state.tabIndex ? (
+                    'If you have produced a transction from a watch only address you can sign it below or import an already signed transaction.'
+                  ) : (
+                    <div style={{ paddingBottom: '24px' }}>
+                      Add a signed transaction below to broadcast it to the
+                      network.
+                    </div>
+                  )}
+                </div>
+              </div>
 
-          <Tabs
-            selectedIndex={this.state.tabIndex}
-            onSelect={tabIndex => {
-              this.setState({ tabIndex })
-            }}
-            className={classNames(styles.tabs, 'neon-tabs')}
-          >
-            <TabList>
-              {this.tabOptions.map(option => (
-                <Tab key={option.display}>{option.display.toUpperCase()}</Tab>
-              ))}
-            </TabList>
-            {this.tabOptions.map(option => (
-              <TabPanel
-                key={option.display}
-                selectedClassName={styles.homeTabPanel}
+              <Tabs
+                selectedIndex={this.state.tabIndex}
+                onSelect={tabIndex => {
+                  this.setState({ tabIndex })
+                }}
+                className={classNames(styles.tabs, 'neon-tabs')}
               >
-                {option.render()}
-              </TabPanel>
-            ))}
-          </Tabs>
+                <TabList>
+                  {this.tabOptions.map(option => (
+                    <Tab key={option.display}>
+                      {option.display.toUpperCase()}
+                    </Tab>
+                  ))}
+                </TabList>
+                {this.tabOptions.map(option => (
+                  <TabPanel
+                    key={option.display}
+                    selectedClassName={styles.homeTabPanel}
+                  >
+                    {option.render()}
+                  </TabPanel>
+                ))}
+              </Tabs>
+            </Fragment>
+          )}
         </div>
       </BaseModal>
     )

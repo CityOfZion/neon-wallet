@@ -10,6 +10,7 @@ import {
 } from '../../../modules/notifications'
 import withAuthData from '../../../hocs/withAuthData'
 import withNetworkData from '../../../hocs/withNetworkData'
+import withThemeData from '../../../hocs/withThemeData'
 
 const actionCreators = {
   showErrorNotification,
@@ -31,4 +32,5 @@ export default compose(
   // handleTest(),
   withAuthData(),
   withNetworkData(),
+  withThemeData(),
 )(ImportTransactionModal)
