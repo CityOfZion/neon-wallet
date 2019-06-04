@@ -79,6 +79,7 @@ const makeRequest = (
   // NOTE: We purposefully mutate the contents of config
   // because neon-js will also mutate this same object by reference
   config.intents = buildIntents(sendEntries)
+
   if (script === '') {
     return api.sendAsset(config, api.neoscan)
   }
@@ -102,9 +103,11 @@ export const generateBalanceInfo = (
 export const sendTransaction = ({
   sendEntries,
   fees,
+  isWatchOnly,
 }: {
   sendEntries: Array<SendEntryType>,
   fees: number,
+  isWatchOnly?: boolean,
 }) => (dispatch: DispatchType, getState: GetStateType): Promise<*> =>
   new Promise(async (resolve, reject) => {
     const state = getState()
@@ -136,12 +139,13 @@ export const sendTransaction = ({
       return reject(error)
     }
 
-    dispatch(
-      showInfoNotification({
-        message: 'Sending Transaction...',
-        autoDismiss: 0,
-      }),
-    )
+    if (!isWatchOnly)
+      dispatch(
+        showInfoNotification({
+          message: 'Broadcasting transaction to network...',
+          autoDismiss: 0,
+        }),
+      )
 
     if (isHardwareSend) {
       dispatch(
@@ -162,6 +166,8 @@ export const sendTransaction = ({
       fees,
       url,
       balance: undefined,
+      tx: undefined,
+      intents: undefined,
     }
     const balanceResults = await api
       .getBalanceFrom({ net, address: fromAddress }, api.neoscan)
@@ -181,6 +187,15 @@ export const sendTransaction = ({
         // $FlowFixMe
         config.tokensBalanceMap,
       )
+      if (isWatchOnly) {
+        config.intents = buildIntents(sendEntries)
+        if (!script) {
+          api.createTx(config, 'contract')
+        } else {
+          api.createTx(config, 'invocation')
+        }
+        return resolve(config)
+      }
       const { response } = await makeRequest(sendEntries, config, script)
 
       if (!response.result) {
@@ -199,17 +214,19 @@ export const sendTransaction = ({
       rejectTransaction(`Transaction failed: ${err.message}`)
       return reject(err)
     } finally {
-      const outputs = get(config, 'tx.outputs')
       const hash = get(config, 'tx.hash')
-      dispatch(
-        addPendingTransaction.call({
-          address: config.address,
-          tx: {
-            hash,
-            sendEntries,
-          },
-          net,
-        }),
-      )
+
+      if (!isWatchOnly) {
+        dispatch(
+          addPendingTransaction.call({
+            address: config.address,
+            tx: {
+              hash,
+              sendEntries,
+            },
+            net,
+          }),
+        )
+      }
     }
   })

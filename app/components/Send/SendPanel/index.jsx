@@ -13,6 +13,7 @@ import SendError from './SendError'
 import ZeroAssets from '../../ZeroAssets/ZeroAssets'
 import { pluralize } from '../../../util/pluralize'
 import SendIcon from '../../../assets/icons/send.svg'
+import EditIcon from '../../../assets/icons/edit.svg'
 
 import styles from './SendPanel.scss'
 import { isZero } from '../../../core/math'
@@ -32,6 +33,7 @@ type Props = {
   handleAddPriorityFee: number => any,
   address: string,
   maxNumberOfRecipients: number,
+  isWatchOnly?: boolean,
   resetViewsAfterError: () => any,
   resetViews: () => any,
   handleSubmit: () => any,
@@ -78,6 +80,7 @@ const SendPanel = ({
   pushQRCodeData,
   pendingTransaction,
   calculateMaxValue,
+  isWatchOnly,
 }: Props) => {
   if (noSendableAssets) {
     return <ZeroAssets address={address} />
@@ -95,6 +98,7 @@ const SendPanel = ({
         clearErrors={clearErrors}
         showConfirmSend={showConfirmSend}
         calculateMaxValue={calculateMaxValue}
+        isWatchOnly={isWatchOnly}
       />
 
       <div className={styles.priorityFeeContainer}>
@@ -105,21 +109,33 @@ const SendPanel = ({
           disabled={shouldDisableSendButton(sendRowDetails)}
         />
       </div>
-
-      <Button
-        primary
-        className={styles.sendFormButton}
-        renderIcon={() => <SendIcon />}
-        type="submit"
-        disabled={shouldDisableSendButton(sendRowDetails)}
-      >
-        Send {pluralize('Asset', sendRowDetails.length)}{' '}
-        {fees ? 'With Fee' : 'Without Fee'}
-      </Button>
+      {isWatchOnly ? (
+        <Button
+          primary
+          className={styles.sendFormButton}
+          renderIcon={() => <EditIcon />}
+          type="submit"
+          disabled={shouldDisableSendButton(sendRowDetails)}
+          shouldCenterButtonLabelText
+        >
+          Generate transaction
+        </Button>
+      ) : (
+        <Button
+          primary
+          className={styles.sendFormButton}
+          renderIcon={() => <SendIcon />}
+          type="submit"
+          disabled={shouldDisableSendButton(sendRowDetails)}
+        >
+          Send {pluralize('Asset', sendRowDetails.length)}{' '}
+          {fees ? 'With Fee' : 'Without Fee'}
+        </Button>
+      )}
     </form>
   )
 
-  if (showConfirmSend) {
+  if (showConfirmSend && !isWatchOnly) {
     content = (
       <form onSubmit={handleSend}>
         <SendRecipientList

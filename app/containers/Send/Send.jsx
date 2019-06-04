@@ -35,6 +35,8 @@ type Props = {
   showSendModal: (props: Object) => any,
   tokens: Array<TokenItemType>,
   networkId: string,
+  isWatchOnly?: boolean,
+  showGeneratedTransactionModal: Object => void,
 }
 
 type State = {
@@ -43,6 +45,7 @@ type State = {
   sendSuccess: boolean,
   sendError: boolean,
   sendErrorMessage: string,
+
   txid: string,
   fees: number,
   sendRowDetails: Array<Object>,
@@ -265,8 +268,11 @@ export default class Send extends React.Component<Props, State> {
       Promise.all(promises).then(values => {
         const isValid = values.every((result: boolean) => result)
 
-        if (isValid) {
+        if (isValid && !this.props.isWatchOnly) {
           this.setState({ showConfirmSend: true })
+        }
+        if (isValid && this.props.isWatchOnly) {
+          this.handleSend()
         }
       })
     }
@@ -308,7 +314,11 @@ export default class Send extends React.Component<Props, State> {
   }
 
   handleSend = () => {
-    const { sendTransaction } = this.props
+    const {
+      sendTransaction,
+      isWatchOnly,
+      showGeneratedTransactionModal,
+    } = this.props
     const { sendRowDetails, fees } = this.state
 
     const entries = sendRowDetails.map((row: Object) => ({
@@ -318,13 +328,17 @@ export default class Send extends React.Component<Props, State> {
     }))
 
     this.setState({ pendingTransaction: true })
-    sendTransaction({ sendEntries: entries, fees })
+    sendTransaction({ sendEntries: entries, fees, isWatchOnly })
       .then((result: Object) => {
-        this.setState({
-          sendSuccess: true,
-          txid: result.txid,
-          pendingTransaction: false,
-        })
+        if (isWatchOnly) {
+          showGeneratedTransactionModal(result)
+        } else {
+          this.setState({
+            sendSuccess: true,
+            txid: result.txid,
+            pendingTransaction: false,
+          })
+        }
       })
       .catch((error: Object) => {
         // TODO: here is where we must generate the expected txId locally
@@ -472,6 +486,7 @@ export default class Send extends React.Component<Props, State> {
       shouldRenderHeaderBar,
       address,
       showSendModal,
+      isWatchOnly,
     } = this.props
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 
@@ -513,6 +528,7 @@ export default class Send extends React.Component<Props, State> {
           resetViews={this.resetViews}
           showSendModal={showSendModal}
           pushQRCodeData={this.pushQRCodeData}
+          isWatchOnly={isWatchOnly}
         />
       </section>
     )

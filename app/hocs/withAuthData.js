@@ -1,5 +1,4 @@
 // @flow
-import { isEmpty, zipObject, mapValues, invert } from 'lodash-es'
 import { withData } from 'spunky'
 
 import authActions from '../actions/authActions'
@@ -9,16 +8,9 @@ type Mapping = {
   publicKey?: string,
   wif?: string,
   signingFunction?: string,
+  isWatchOnly?: boolean,
 }
 
-const keys: Array<string> = ['address', 'publicKey', 'wif', 'signingFunction']
-const defaultMapping: Mapping = zipObject(keys, keys)
-
-export default function withAuthData(mapping: Mapping = defaultMapping) {
-  return withData(authActions, auth => {
-    if (!isEmpty(auth)) {
-      return mapValues(invert(mapping), field => auth[field])
-    }
-    return {}
-  })
+export default function withAuthData(): Mapping {
+  return withData(authActions, auth => auth || {})
 }
