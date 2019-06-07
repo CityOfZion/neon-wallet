@@ -111,13 +111,13 @@ const SendPanel = ({
         />
       </div>
       <Button
-        secondary
         className={styles.generateTransactionButton}
         renderIcon={() => <EditIcon />}
         type="submit"
         disabled={shouldDisableSendButton(sendRowDetails)}
         shouldCenterButtonLabelText
         onClick={() => handleSubmit(true)}
+        id="generate-transaction-json"
       >
         Generate transaction JSON
       </Button>
@@ -127,7 +127,8 @@ const SendPanel = ({
         renderIcon={() => <SendIcon />}
         type="submit"
         disabled={shouldDisableSendButton(sendRowDetails)}
-        onClick={handleSubmit}
+        onClick={() => handleSubmit(false)}
+        id="send-assets"
       >
         Send {pluralize('Asset', sendRowDetails.length)}{' '}
         {fees ? 'With Fee' : 'Without Fee'}
