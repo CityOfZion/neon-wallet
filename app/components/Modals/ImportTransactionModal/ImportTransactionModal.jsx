@@ -1,10 +1,11 @@
 // @flow
 import React, { Fragment } from 'react'
 import moment from 'moment'
-import Neon, { tx, logging, rpc } from '@cityofzion/neon-js'
+import { tx, rpc } from '@cityofzion/neon-js'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import classNames from 'classnames'
 import { isEmpty } from 'lodash-es'
+import fs from 'fs'
 
 import { getNode, getRPCEndpoint } from '../../../actions/nodeStorageActions'
 import baseStyles from '../SendModal/SendModal.scss'
@@ -16,16 +17,36 @@ import SaveIcon from '../../../assets/icons/save-icon.svg'
 import Button from '../../Button'
 import Loading from '../../../containers/App/Loading'
 
-logging.logger.setAll('info') // sets logging level of neon-js to 'info'
+const electron = require('electron').remote
+
+type Tx = {
+  type: number,
+  version: number,
+  attributes: Array<*>,
+  inputs: Array<*>,
+  output: Array<*>,
+  scripts: Array<*>,
+  serialize: () => string,
+}
 
 type Props = {
   hideModal: () => void,
+  showErrorNotification: ({ message: string }) => void,
+  showSuccessNotification: ({ message: string }) => void,
+  wif: string,
+  tx: Tx,
+  net: string,
+  theme: string,
 }
 
 type State = {
   tabIndex: number,
   transaction: string,
+  signedTx: null | Tx,
+  serializedTransactionInput: string,
+  loading: boolean,
 }
+
 export default class GeneratedTransactionModal extends React.Component<
   Props,
   State,
@@ -34,6 +55,8 @@ export default class GeneratedTransactionModal extends React.Component<
     tabIndex: 0,
     transaction: '',
     serializedTransactionInput: '',
+    signedTx: null,
+    loading: false,
   }
 
   handleSave = async () => {}
@@ -102,10 +125,7 @@ export default class GeneratedTransactionModal extends React.Component<
     }
   }
 
-  handleBroadcast = async (
-    rawTransaction,
-    transactionObjectAvailable = true,
-  ) => {
+  handleBroadcast = async (rawTransaction: string) => {
     this.setState({ loading: true })
     const { net } = this.props
     let url = await getNode(net)
@@ -113,7 +133,6 @@ export default class GeneratedTransactionModal extends React.Component<
       url = await getRPCEndpoint(net)
     }
     const RPC = new rpc.RPCClient(url)
-    console.log({ RPC })
     const response = await RPC.sendRawTransaction(rawTransaction).catch(e => {
       this.props.showErrorNotification({
         message: `There was an issue broadcasting the transaction to the network... ${
@@ -122,7 +141,6 @@ export default class GeneratedTransactionModal extends React.Component<
       })
       this.setState({ loading: false })
     })
-    console.log({ response })
     if (response) {
       this.props.showSuccessNotification({
         message:
@@ -165,6 +183,7 @@ export default class GeneratedTransactionModal extends React.Component<
                   renderIcon={() => <ConfirmIcon />}
                   type="submit"
                   onClick={() =>
+                    this.state.signedTx &&
                     this.handleBroadcast(this.state.signedTx.serialize())
                   }
                 >
@@ -233,7 +252,7 @@ export default class GeneratedTransactionModal extends React.Component<
             renderIcon={() => <ConfirmIcon />}
             type="submit"
             onClick={() =>
-              this.handleBroadcast(this.state.serializedTransactionInput, false)
+              this.handleBroadcast(this.state.serializedTransactionInput)
             }
           >
             Broadcast Transaction
