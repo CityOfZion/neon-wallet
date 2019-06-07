@@ -36,7 +36,7 @@ type Props = {
   isWatchOnly?: boolean,
   resetViewsAfterError: () => any,
   resetViews: () => any,
-  handleSubmit: () => any,
+  handleSubmit: boolean => any,
   handleSend: () => any,
   clearErrors: (index: number, field: string) => any,
   addRow: (row?: Object) => any,

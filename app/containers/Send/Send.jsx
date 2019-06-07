@@ -259,7 +259,7 @@ export default class Send extends React.Component<Props, State> {
     })
   }
 
-  handleSubmit = (generateTransaction = false) => {
+  handleSubmit = (generateTransaction: boolean = false) => {
     const rows = [...this.state.sendRowDetails]
     const promises = rows.map((row: Object, index: number) =>
       this.validateRow(row, index),
@@ -314,7 +314,7 @@ export default class Send extends React.Component<Props, State> {
     return validAmounts
   }
 
-  handleSend = (showTransactionModal = false) => {
+  handleSend = (showTransactionModal: boolean = false) => {
     const {
       sendTransaction,
       isWatchOnly,
