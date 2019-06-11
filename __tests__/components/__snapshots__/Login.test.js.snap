@@ -20,7 +20,7 @@ exports[`Login renders without crashing 1`] = `
       />
     </div>
     <div
-      className="privateKeyLoginButtonRow"
+      className="loginButtonRow"
     >
       <Button
         disabled={true}
