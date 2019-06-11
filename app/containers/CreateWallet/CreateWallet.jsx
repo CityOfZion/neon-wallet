@@ -31,6 +31,7 @@ type State = {
   passphraseError: string,
   passphrase2Error: string,
   wif: string,
+  encryptedWIF: String,
   walletName: string,
   submitButtonDisabled: boolean,
 }
@@ -46,6 +47,7 @@ export default class CreateWallet extends React.Component<Props, State> {
     passphraseError: '',
     passphrase2Error: '',
     wif: '',
+    encryptedWIF: '',
     walletName: '',
     submitButtonDisabled: false,
   }
@@ -54,7 +56,13 @@ export default class CreateWallet extends React.Component<Props, State> {
     this.setState({ submitButtonDisabled: true })
     e.preventDefault()
     const { history, option } = this.props
-    const { passphrase, passphrase2, wif, walletName } = this.state
+    const {
+      passphrase,
+      passphrase2,
+      wif,
+      encryptedWIF,
+      walletName,
+    } = this.state
     const { generateNewWalletAccount, authenticated } = this.props
     generateNewWalletAccount(
       passphrase,
@@ -68,7 +76,15 @@ export default class CreateWallet extends React.Component<Props, State> {
   }
 
   render = () => {
-    const { passphraseError, passphrase2Error, wif, walletName } = this.state
+    const {
+      passphraseError,
+      passphrase2Error,
+      wif,
+      walletName,
+      encryptedWIF,
+    } = this.state
+    console.log('XXXXXXXXXXXXXXXX encryptedWIF ' + encryptedWIF)
+    console.log('XXXXXXXXXXXXXXXX wif ' + wif)
     const { option, authenticated } = this.props
     const conditionalPanelProps = {}
     if (authenticated) {
