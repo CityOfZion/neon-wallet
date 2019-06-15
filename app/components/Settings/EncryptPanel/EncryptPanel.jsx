@@ -1,6 +1,5 @@
 // @flow
 import React from 'react'
-import { noop } from 'lodash-es'
 import classNames from 'classnames'
 
 import { ROUTES } from '../../../core/constants'
@@ -11,33 +10,19 @@ import LockIcon from '../../../assets/icons/lock.svg'
 import CloseButton from '../../CloseButton'
 import styles from './EncryptPanel.scss'
 
-type State = {
-  encryptedkey: string,
-}
-
 type Props = {
   handleSubmit: Function,
   validatePassphraseLength: Function,
   isWIF: Function,
   className: string,
   title: string,
+  resetEncryptedWIF: Function,
+  encryptedWIF: string,
 }
 
-export default class EncryptPanel extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props)
-
-    this.state = {
-      encryptedkey: '',
-    }
-  }
-
-  static defaultProps = {
-    handleSubmit: noop,
-  }
-
+export default class EncryptPanel extends React.Component<Props> {
   render() {
-    const { className } = this.props
+    const { className, resetEncryptedWIF, encryptedWIF } = this.props
 
     return (
       <FullHeightPanel
@@ -48,40 +33,37 @@ export default class EncryptPanel extends React.Component<Props, State> {
         renderHeaderIcon={this.renderIcon}
         renderInstructions={this.renderInstructions}
       >
-        {this.renderPanelContent()}
+        {this.renderPanelContent(encryptedWIF, resetEncryptedWIF)}
       </FullHeightPanel>
     )
   }
 
   renderHeader = () => <span>{this.props.title}</span>
 
-  renderInstructions = () => {
-    const { encryptedkey } = this.state
-    if (!encryptedkey) {
+  renderInstructions = encryptedWIF => {
+    if (!encryptedWIF) {
       return <div>Choose a passphrase to encrypt an existing key</div>
     }
   }
 
-  renderPanelContent = () => {
-    const { encryptedkey } = this.state
-    if (!encryptedkey) {
+  renderPanelContent = (encryptedWIF, resetEncryptedWIF) => {
+    if (!encryptedWIF) {
       return (
         <EncryptForm
           submitLabel="Generate Encrypted Key"
           onSubmit={this.onSubmit}
-          encryptPrivateKey={encryptedkey}
+          encryptPrivateKey={encryptedWIF}
           isWIF={this.props.isWIF}
           validatePassphraseLength={this.props.validatePassphraseLength}
         />
       )
     }
     return (
-      <EncryptSuccess encryptedKey={encryptedkey} handleReset={this.reset} />
+      <EncryptSuccess
+        encryptedKey={encryptedWIF}
+        handleReset={resetEncryptedWIF}
+      />
     )
-  }
-
-  reset = () => {
-    this.setState({ encryptedkey: '' })
   }
 
   renderIcon = () => (
@@ -96,7 +78,6 @@ export default class EncryptPanel extends React.Component<Props, State> {
     confirmPassphrase: string,
   ) => {
     const { handleSubmit } = this.props
-    const result = handleSubmit(privateKey, passphrase, confirmPassphrase)
-    this.setState({ encryptedkey: result })
+    handleSubmit(privateKey, passphrase, confirmPassphrase)
   }
 }
