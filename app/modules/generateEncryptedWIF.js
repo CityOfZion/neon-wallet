@@ -8,7 +8,11 @@ import { validatePassphraseLength } from '../core/wallet'
 export const NEW_ENCRYPTED_WIF = 'NEW_ENCRYPTED_WIF'
 export const RESET_ENCRYPTED_WIF = 'RESET_ENCRYPTED_WIF'
 
-export const generateNewEncryptedWIF = (wif, passphrase, confirmPassphrase) => {
+export const generateNewEncryptedWIF = (
+  wif: string,
+  passphrase: string,
+  confirmPassphrase: string,
+) => {
   if (passphrase !== confirmPassphrase) {
     throw new Error('Passphrases do not match')
   }

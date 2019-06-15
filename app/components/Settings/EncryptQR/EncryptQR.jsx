@@ -20,7 +20,7 @@ type Props = {
   copied: boolean,
 }
 
-class EncryptQR extends Component<Props, State> {
+class EncryptQR extends Component<Props> {
   encryptedCanvas: ?HTMLCanvasElement
 
   componentDidMount() {

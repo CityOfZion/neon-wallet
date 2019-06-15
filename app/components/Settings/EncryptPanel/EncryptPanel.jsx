@@ -40,13 +40,13 @@ export default class EncryptPanel extends React.Component<Props> {
 
   renderHeader = () => <span>{this.props.title}</span>
 
-  renderInstructions = encryptedWIF => {
+  renderInstructions = (encryptedWIF: string) => {
     if (!encryptedWIF) {
       return <div>Choose a passphrase to encrypt an existing key</div>
     }
   }
 
-  renderPanelContent = (encryptedWIF, resetEncryptedWIF) => {
+  renderPanelContent = (encryptedWIF: string, resetEncryptedWIF: Function) => {
     if (!encryptedWIF) {
       return (
         <EncryptForm
