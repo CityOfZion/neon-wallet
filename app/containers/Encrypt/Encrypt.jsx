@@ -7,25 +7,28 @@ import LockIcon from '../../assets/icons/lock.svg'
 import styles from './Encrypt.scss'
 
 type Props = {
-  encryptPrivateKey: Function,
+  generateNewEncryptedWIF: Function,
   isWIF: Function,
   validatePassphraseLength: Function,
 }
 
 export default class Encrypt extends React.Component<Props> {
   static defaultProps = {
-    encryptPrivateKey: noop,
     validatePassphraseLength: noop,
     isWIF: noop,
   }
 
   render = () => {
-    const { encryptPrivateKey, isWIF, validatePassphraseLength } = this.props
+    const {
+      generateNewEncryptedWIF,
+      isWIF,
+      validatePassphraseLength,
+    } = this.props
     return (
       <div className={styles.encrypt}>
         <EncryptPanel
           title="Encrypt Private Key"
-          handleSubmit={encryptPrivateKey}
+          handleSubmit={generateNewEncryptedWIF}
           isWIF={isWIF}
           validatePassphraseLength={validatePassphraseLength}
         />
