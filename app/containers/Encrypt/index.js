@@ -1,26 +1,27 @@
 // @flow
+
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
 import { compose, withProps } from 'recompose'
 import { wallet } from '@cityofzion/neon-js'
 import { validatePassphraseLength } from '../../core/wallet'
-
+import { generateNewEncryptedWIF } from '../../modules/generateEncryptedWIF'
 import Encrypt from './Encrypt'
 
-const encryptPrivateKey = (privateKey, passphrase, confirmPassphrase) => {
-  if (passphrase !== confirmPassphrase) {
-    throw new Error('Passphrases do not match')
-  }
-  if (!validatePassphraseLength(passphrase)) {
-    throw new Error('Please choose a longer passphrase')
-  }
-  if (privateKey && !wallet.isWIF(privateKey)) {
-    throw new Error('The private key is not valid')
-  }
-  return wallet.encrypt(privateKey, passphrase)
+const actionCreators = {
+  generateNewEncryptedWIF,
 }
 
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(actionCreators, dispatch)
+
 export default compose(
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
   withProps({
-    encryptPrivateKey,
     isWIF: wallet.isWIF,
     validatePassphraseLength,
   }),

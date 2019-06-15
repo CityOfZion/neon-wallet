@@ -52,3 +52,24 @@ $encrypt-icon-size: 24px;
     }
   }
 }
+
+.buttonContainer {
+  width: 100%;
+  margin-top: auto;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 50px;
+  flex: 1;
+  justify-content: space-between;
+
+  button {
+    width: 225px;
+  }
+
+  button:first-child {
+    margin-right: 12px;
+  }
+  button:last-child {
+    margin-right: 0;
+  }
+}

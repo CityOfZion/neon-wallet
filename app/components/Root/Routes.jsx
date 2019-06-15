@@ -22,6 +22,7 @@ import TokenSale from '../../containers/TokenSale'
 import Encrypt from '../../containers/Encrypt'
 import NodeSelect from '../../containers/NodeSelect'
 import News from '../../containers/News'
+import EncryptQR from '../Settings/EncryptQR'
 import { ROUTES } from '../../core/constants'
 
 export default () => (
@@ -74,7 +75,11 @@ export default () => (
         path={ROUTES.DISPLAY_WALLET_QRS}
         render={props => <DisplayWalletAccountsQrCodes {...props} />}
       />
-
+      <Route
+        exact
+        path={ROUTES.DISPLAY_ENCRYPTED_WIF_QR}
+        render={props => <EncryptQR {...props} />}
+      />
       <Route exact path={ROUTES.SETTINGS} component={Settings} />
       <PrivateRoute
         exact

@@ -52,6 +52,8 @@ export const ROUTES = {
   DISPLAY_WALLET_KEYS_AUTHENTICATED: '/display-wallet-keys-authenticated',
   DISPLAY_WALLET_QRS: '/display-wallet-qrs',
   DISPLAY_WALLET_QRS_AUTHENTICATED: '/display-wallet-qrs-authenticated',
+  DISPLAY_ENCRYPTED_WIF_QR: '/display-encrypted-wif-qr',
+  DISPLAY_ENCRYPTED_WIF: 'display-encrypted-wif',
   WALLET_MANAGER: '/wallet-manager',
   EDIT_WALLET: '/edit-wallet/:key/:label',
   SEND: '/send/',
