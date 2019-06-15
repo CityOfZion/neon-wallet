@@ -22,6 +22,7 @@ type Props = {
   walletName: string,
   address: string,
   wif: string,
+  encryptedWIF: string,
   passphrase: string,
   isImport: boolean,
   authenticated: boolean,
@@ -33,6 +34,7 @@ class DisplayWalletAccounts extends Component<Props> {
       passphrase,
       address,
       wif,
+      encryptedWIF,
       walletName,
       isImport,
       authenticated,
@@ -44,6 +46,7 @@ class DisplayWalletAccounts extends Component<Props> {
         type: 'password',
       },
       { label: 'Private Key', value: wif, type: 'text' },
+      { label: 'Encrypted Key', value: encryptedWIF, type: 'text' },
       { label: 'Public Address', value: address, type: 'text' },
     ]
     if (walletName) {
@@ -87,7 +90,10 @@ class DisplayWalletAccounts extends Component<Props> {
               <div key={item.label} className={styles.detailRow}>
                 <div
                   className={classNames(styles.input, {
-                    [styles.reducedInputFontSize]: item.label === 'Private Key',
+                    [styles.reducedInputFontSize]: [
+                      'Private Key',
+                      'Encrypted Key',
+                    ].includes(item.label),
                   })}
                 >
                   {item.type === 'text' ? (

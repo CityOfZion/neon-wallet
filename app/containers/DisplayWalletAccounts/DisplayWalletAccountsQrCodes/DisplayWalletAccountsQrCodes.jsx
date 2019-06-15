@@ -19,6 +19,7 @@ type Props = {
   walletName: string,
   address: string,
   wif: string,
+  encryptedWIF: string,
   passphrase: string,
   isImport: boolean,
   authenticated: boolean,
@@ -30,6 +31,7 @@ type Props = {
 type State = {
   publicCopied: boolean,
   privateCopied: boolean,
+  encryptedCopied: boolean,
 }
 
 class DisplayWalletAccountsQrCodes extends Component<Props, State> {
@@ -37,10 +39,13 @@ class DisplayWalletAccountsQrCodes extends Component<Props, State> {
 
   privateCanvas: ?HTMLCanvasElement
 
+  encryptedCanvas: ?HTMLCanvasElement
+
   componentDidMount() {
-    const { address, wif } = this.props
+    const { address, wif, encryptedWIF } = this.props
     this.props.handleCreateCanvas(this.publicCanvas, address)
     this.props.handleCreateCanvas(this.privateCanvas, wif)
+    this.props.handleCreateCanvas(this.encryptedCanvas, encryptedWIF)
   }
 
   render() {
@@ -92,6 +97,14 @@ class DisplayWalletAccountsQrCodes extends Component<Props, State> {
               <canvas
                 ref={node => {
                   this.privateCanvas = node
+                }}
+              />
+            </div>
+            <div className={styles.qr}>
+              <label> encrypted key </label>
+              <canvas
+                ref={node => {
+                  this.encryptedCanvas = node
                 }}
               />
             </div>
