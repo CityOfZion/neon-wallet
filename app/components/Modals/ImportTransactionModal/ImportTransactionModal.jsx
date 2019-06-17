@@ -77,7 +77,40 @@ export default class GeneratedTransactionModal extends React.Component<
     }
   }
 
-  handleSave = async () => {
+  handleImport = async (isSignedRawTx: boolean = false) => {
+    const { showErrorNotification } = this.props
+    const { dialog } = electron
+    try {
+      dialog.showOpenDialog(fileName => {
+        if (fileName === undefined) {
+          return this.props.showErrorNotification({
+            message: 'Unable to import this file...',
+          })
+        }
+        const rawData = fs.readFileSync(fileName[0])
+
+        const data = isSignedRawTx
+          ? rawData.toString('utf8')
+          : JSON.parse(rawData)
+        const transaction = isSignedRawTx ? data : JSON.stringify(data)
+
+        return isSignedRawTx
+          ? this.setState({
+              serializedTransactionInput: transaction,
+            })
+          : this.setState({
+              transaction,
+            })
+      })
+    } catch (err) {
+      console.error(err)
+      showErrorNotification({
+        message: `An error occurred importing the file: ${err.message}`,
+      })
+    }
+  }
+
+  handleSave = async (isSignedRawTx: boolean = false) => {
     const { showSuccessNotification, showErrorNotification } = this.props
     const { dialog, app } = electron
     try {
@@ -85,11 +118,11 @@ export default class GeneratedTransactionModal extends React.Component<
         {
           defaultPath: `${app.getPath(
             'documents',
-          )}/neon-wallet-transaction-${moment().unix()}`,
+          )}/neon-wallet-signed-transaction-${moment().unix()}`,
           filters: [
             {
-              name: 'JSON',
-              extensions: ['json'],
+              name: isSignedRawTx ? 'TXT' : 'JSON',
+              extensions: isSignedRawTx ? ['txt'] : ['json'],
             },
           ],
         },
@@ -97,10 +130,11 @@ export default class GeneratedTransactionModal extends React.Component<
           if (fileName === undefined) {
             return
           }
-          // fileName is a string that contains the path and filename created in the save file dialog.
           fs.writeFile(
             fileName,
-            JSON.stringify(this.props.tx, null, 2),
+            isSignedRawTx && this.state.signedTx
+              ? this.state.signedTx.serialize()
+              : JSON.stringify(this.props.tx),
             errorWriting => {
               if (errorWriting) {
                 showErrorNotification({
@@ -158,10 +192,9 @@ export default class GeneratedTransactionModal extends React.Component<
           return (
             <Fragment>
               <div className={baseStyles.section}>
-                {/* TODO: componentize this in a seperate PR */}
                 <textarea
                   value={this.state.signedTx.serialize()}
-                  rows="15"
+                  rows="17"
                   disabled
                   className={styles.transactionInput}
                 />
@@ -172,7 +205,7 @@ export default class GeneratedTransactionModal extends React.Component<
                   className={styles.submitButton}
                   renderIcon={() => <SaveIcon />}
                   type="submit"
-                  onClick={this.handleSave}
+                  onClick={() => this.handleSave(true)}
                 >
                   Save
                 </Button>
@@ -196,10 +229,9 @@ export default class GeneratedTransactionModal extends React.Component<
         return (
           <Fragment>
             <div className={baseStyles.section}>
-              {/* TODO: componentize this in a seperate PR */}
               <textarea
                 value={this.state.transaction}
-                rows="15"
+                rows="17"
                 className={styles.transactionInput}
                 onChange={e => this.setState({ transaction: e.target.value })}
               />
@@ -210,9 +242,9 @@ export default class GeneratedTransactionModal extends React.Component<
                 className={styles.submitButton}
                 renderIcon={() => <ImportIcon />}
                 type="submit"
-                // onClick={() => this.copyText(JSON.stringify(this.props.tx))}
+                onClick={() => this.handleImport()}
               >
-                Upload file
+                Import File
               </Button>
 
               <Button
@@ -235,28 +267,38 @@ export default class GeneratedTransactionModal extends React.Component<
       render: () => (
         <Fragment>
           <div className={baseStyles.section}>
-            {/* TODO: componentize this in a seperate PR */}
             <textarea
               value={this.state.serializedTransactionInput}
-              rows="18"
+              rows="17"
               className={styles.transactionInput}
               onChange={e =>
                 this.setState({ serializedTransactionInput: e.target.value })
               }
             />
           </div>
-          <Button
-            shouldCenterButtonLabelText
-            primary
-            className={styles.submitButton}
-            renderIcon={() => <ConfirmIcon />}
-            type="submit"
-            onClick={() =>
-              this.handleBroadcast(this.state.serializedTransactionInput)
-            }
-          >
-            Broadcast Transaction
-          </Button>
+          <div className={styles.buttonContainer}>
+            <Button
+              shouldCenterButtonLabelText
+              className={styles.submitButton}
+              renderIcon={() => <ImportIcon />}
+              type="submit"
+              onClick={() => this.handleImport(true)}
+            >
+              Import File
+            </Button>
+            <Button
+              shouldCenterButtonLabelText
+              primary
+              className={styles.submitButton}
+              renderIcon={() => <ConfirmIcon />}
+              type="submit"
+              onClick={() =>
+                this.handleBroadcast(this.state.serializedTransactionInput)
+              }
+            >
+              Broadcast Transaction
+            </Button>
+          </div>
         </Fragment>
       ),
       display: 'Add Signed Raw Transaction',

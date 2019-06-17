@@ -52,7 +52,7 @@ export default class GeneratedTransactionModal extends React.Component<
         {
           defaultPath: `${app.getPath(
             'documents',
-          )}/neon-wallet-transaction-${moment().unix()}.csv`,
+          )}/neon-wallet-transaction-${moment().unix()}`,
           filters: [
             {
               name: 'JSON',
