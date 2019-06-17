@@ -182,11 +182,11 @@ export default class ContactForm extends React.Component<Props, State> {
 
   clearErrors = (name: string) => {
     if (name === 'name') {
-      return this.setState({ nameError: '' })
+      this.setState({ nameError: '' })
     }
 
     if (name === 'address') {
-      return this.setState({ addressError: '' })
+      this.setState({ addressError: '' })
     }
   }
 

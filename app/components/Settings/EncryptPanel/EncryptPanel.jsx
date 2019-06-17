@@ -60,6 +60,7 @@ export default class EncryptPanel extends React.Component<Props, State> {
     if (!encryptedkey) {
       return <div>Choose a passphrase to encrypt an existing key</div>
     }
+    return null
   }
 
   renderPanelContent = () => {

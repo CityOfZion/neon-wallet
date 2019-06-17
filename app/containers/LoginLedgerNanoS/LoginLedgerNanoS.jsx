@@ -209,6 +209,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
         </div>
       )
     }
+    return null
   }
 
   unencodedHexToAddress = (hexString: string) => {
