@@ -294,7 +294,7 @@ export default class GeneratedTransactionModal extends React.Component<
               <div className={baseStyles.section}>
                 <div className={baseStyles.sectionContent}>
                   {!this.state.tabIndex ? (
-                    'If you have produced a transction from a watch only address you can sign it below or import an already signed transaction.'
+                    'If you have generated a transaction you can sign it below or import an already signed transaction.'
                   ) : (
                     <div style={{ paddingBottom: '24px' }}>
                       Add a signed transaction below to broadcast it to the
