@@ -3,6 +3,7 @@
   font-size: 10px;
   width: 525px;
   padding: 12px;
+  height: 290px;
   margin: 12px 0 24px 0;
   overflow: auto;
 }
@@ -17,6 +18,7 @@
 
 .buttonContainer {
   display: flex;
+  margin-bottom: 24px;
 
   button:first-child {
     margin-right: 24px;

@@ -238,7 +238,7 @@ export default class GeneratedTransactionModal extends React.Component<
             {/* TODO: componentize this in a seperate PR */}
             <textarea
               value={this.state.serializedTransactionInput}
-              rows="15"
+              rows="18"
               className={styles.transactionInput}
               onChange={e =>
                 this.setState({ serializedTransactionInput: e.target.value })
