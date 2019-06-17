@@ -168,6 +168,8 @@ export const sendTransaction = ({
       balance: undefined,
       tx: undefined,
       intents: undefined,
+      script: undefined,
+      gas: undefined,
     }
     const balanceResults = await api
       .getBalanceFrom({ net, address: fromAddress }, api.neoscan)
@@ -190,8 +192,10 @@ export const sendTransaction = ({
       if (isWatchOnly) {
         config.intents = buildIntents(sendEntries)
         if (!script) {
-          api.createTx(config, 'contract')
+          config.script = script
         } else {
+          config.script = script
+          config.gas = 0
           api.createTx(config, 'invocation')
         }
         return resolve(config)
@@ -214,6 +218,7 @@ export const sendTransaction = ({
       rejectTransaction(`Transaction failed: ${err.message}`)
       return reject(err)
     } finally {
+      console.log(JSON.stringify(config.tx))
       const hash = get(config, 'tx.hash')
 
       if (!isWatchOnly) {

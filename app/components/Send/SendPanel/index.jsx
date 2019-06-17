@@ -138,7 +138,7 @@ const SendPanel = ({
 
   if (showConfirmSend && !isWatchOnly) {
     content = (
-      <form onSubmit={handleSend}>
+      <form onSubmit={() => handleSend()}>
         <SendRecipientList
           sendRowDetails={sendRowDetails}
           sendableAssets={sendableAssets}

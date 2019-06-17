@@ -273,6 +273,7 @@ export default class Send extends React.Component<Props, State> {
           this.setState({ showConfirmSend: true })
         }
         if ((isValid && this.props.isWatchOnly) || generateTransaction) {
+          console.log('handling send')
           this.handleSend(true)
         }
       })
@@ -320,6 +321,8 @@ export default class Send extends React.Component<Props, State> {
       isWatchOnly,
       showGeneratedTransactionModal,
     } = this.props
+
+    console.log({ showTransactionModal })
     const { sendRowDetails, fees } = this.state
 
     const entries = sendRowDetails.map((row: Object) => ({

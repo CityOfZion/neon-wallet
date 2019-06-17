@@ -17,10 +17,6 @@ const actionCreators = {
   showSuccessNotification,
 }
 
-// const handleTest = () => {
-//   console.log('test')
-// }
-
 const mapDispatchToProps = dispatch =>
   bindActionCreators(actionCreators, dispatch)
 
@@ -29,7 +25,6 @@ export default compose(
     null,
     mapDispatchToProps,
   ),
-  // handleTest(),
   withAuthData(),
   withNetworkData(),
   withThemeData(),
