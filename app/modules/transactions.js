@@ -30,6 +30,13 @@ import { addPendingTransaction } from '../actions/pendingTransactionActions'
 const RPC_TIMEOUT_OVERRIDE = 60000
 settings.timeout.rpc = RPC_TIMEOUT_OVERRIDE
 
+const {
+  reverseHex,
+  getScriptHashFromAddress,
+  ab2hexstring,
+  generateRandomArray,
+} = u
+
 const extractTokens = (sendEntries: Array<SendEntryType>) =>
   sendEntries.filter(({ symbol }) => isToken(symbol))
 
@@ -98,6 +105,18 @@ export const generateBalanceInfo = (
   Object.values(tokensBalanceMap).forEach(({ name, balance }) => {
     Balance.addAsset(name, { balance, unspent: [] })
   })
+}
+
+// This adds some random bits to the transaction to prevent any hash collision.
+const attachAttributesForEmptyTransaction = (config: api.apiConfig) => {
+  config.tx.addAttribute(
+    32,
+    reverseHex(wallet.getScriptHashFromAddress(config.address)),
+  )
+  config.tx.addRemark(
+    Date.now().toString() + ab2hexstring(wallet.generateRandomArray(4)),
+  )
+  return config
 }
 
 export const sendTransaction = ({
@@ -191,12 +210,14 @@ export const sendTransaction = ({
       )
       if (isWatchOnly) {
         config.intents = buildIntents(sendEntries)
-        if (!script) {
-          config.script = script
-        } else {
-          config.script = script
+        config.script = script
+        if (script) {
           config.gas = 0
           api.createTx(config, 'invocation')
+          attachAttributesForEmptyTransaction(config)
+        } else {
+          api.createTx(config, 'contract')
+          attachAttributesForEmptyTransaction(config)
         }
         return resolve(config)
       }

@@ -67,6 +67,7 @@ export default class GeneratedTransactionModal extends React.Component<
       const { wif } = this.props
       const Tx = new Transaction(JSON.parse(this.state.transaction))
       const signedTx = Tx.sign(wif)
+      console.log(JSON.stringify(Tx))
       this.setState({
         signedTx,
       })
