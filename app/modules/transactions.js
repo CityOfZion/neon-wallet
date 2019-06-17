@@ -218,7 +218,6 @@ export const sendTransaction = ({
       rejectTransaction(`Transaction failed: ${err.message}`)
       return reject(err)
     } finally {
-      console.log(JSON.stringify(config.tx))
       const hash = get(config, 'tx.hash')
 
       if (!isWatchOnly) {
