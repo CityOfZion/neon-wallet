@@ -15,6 +15,7 @@ import withCopyCanvasToClipboard from '../../../hocs/withCopyCanvasToClipboard'
 
 type Props = {
   encryptedWIF: string,
+  resetEncryptedWIF: Function,
   handleCopy: (?HTMLCanvasElement, string, ?boolean) => Promise<void>,
   handleCreateCanvas: (?HTMLCanvasElement, string) => any,
   copied: boolean,
@@ -29,13 +30,18 @@ class EncryptQR extends Component<Props> {
   }
 
   render() {
+    const { resetEncryptedWIF } = this.props
     return (
       <FullHeightPanel
         headerText="Encrypted QR Code"
         renderInstructions={false}
         headerContainerClassName={styles.headerIconMargin}
         renderHeaderIcon={() => <CheckIcon />}
-        renderCloseButton={() => <CloseButton routeTo={ROUTES.SETTINGS} />}
+        renderCloseButton={() => (
+          <div onClick={resetEncryptedWIF}>
+            <CloseButton routeTo={ROUTES.SETTINGS} />
+          </div>
+        )}
         renderBackButton={() => <BackButton routeTo={ROUTES.ENCRYPT} />}
         iconColor="#F7BC33"
       >

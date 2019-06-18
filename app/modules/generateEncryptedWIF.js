@@ -1,7 +1,5 @@
 // @flow
-
 import { wallet } from '@cityofzion/neon-js'
-
 import { validatePassphraseLength } from '../core/wallet'
 
 // Constants

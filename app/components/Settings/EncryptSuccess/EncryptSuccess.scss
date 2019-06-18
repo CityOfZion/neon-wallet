@@ -33,12 +33,16 @@ $encrypt-icon-size: 24px;
     border-radius: 4px;
 
     input {
-      font-size: 14px;
+      font-size: 11.5px;
       background: transparent;
     }
 
     .copy {
-      flex: 0 0 auto;
+      margin-left: -20px;
+      margin-top: 5px;
+      height: 100%;
+      z-index: 1;
+      margin-right: -25px;
     }
   }
 

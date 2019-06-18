@@ -1,5 +1,4 @@
 // @flow
-
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import { bindActionCreators } from 'redux'

@@ -52,7 +52,7 @@ export default class EncryptSuccess extends React.Component<Props> {
               to={ROUTES.DISPLAY_ENCRYPTED_WIF_QR}
             >
               <Button primary renderIcon={() => <GridIcon />} type="submit">
-                Generate QR Codes
+                Generate QR Code
               </Button>
             </NavLink>
           </div>
