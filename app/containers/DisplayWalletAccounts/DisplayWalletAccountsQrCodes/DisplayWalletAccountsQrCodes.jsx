@@ -28,13 +28,17 @@ type Props = {
   copied: boolean,
 }
 
+type copyType = 'PRIVATE' | 'ENCRYPTED' | 'PUBLIC' | ''
+
 type State = {
-  publicCopied: boolean,
-  privateCopied: boolean,
-  encryptedCopied: boolean,
+  qrCopied: copyType,
 }
 
 class DisplayWalletAccountsQrCodes extends Component<Props, State> {
+  state: State = {
+    qrCopied: '',
+  }
+
   publicCanvas: ?HTMLCanvasElement
 
   privateCanvas: ?HTMLCanvasElement
@@ -46,6 +50,12 @@ class DisplayWalletAccountsQrCodes extends Component<Props, State> {
     this.props.handleCreateCanvas(this.publicCanvas, address)
     this.props.handleCreateCanvas(this.privateCanvas, wif)
     this.props.handleCreateCanvas(this.encryptedCanvas, encryptedWIF)
+  }
+
+  qrCopied(qr: copyType): boolean {
+    // When the user clicks on the focus QR icon,
+    // qrCopied is temporarily true only for the focus QR.
+    return qr === this.state.qrCopied && this.props.copied
   }
 
   render() {
@@ -91,6 +101,9 @@ class DisplayWalletAccountsQrCodes extends Component<Props, State> {
             )}
             className={styles.displayWalletAccountsDialogue}
           />
+          {/* TODO: use a loop to reduce duplicate code. (Look at the DisplayWalletAccounts
+            for reference). It would be nice to add extend CopyToClipboard to be able to copy QR code
+            as well. */}
           <div className={styles.qrContainer}>
             <div className={styles.qr}>
               <label> private key </label>
@@ -99,6 +112,19 @@ class DisplayWalletAccountsQrCodes extends Component<Props, State> {
                   this.privateCanvas = node
                 }}
               />
+              <Button
+                className={styles.submitButton}
+                renderIcon={() =>
+                  this.qrCopied('PRIVATE') ? <ConfirmIcon /> : <CopyIcon />
+                }
+                type="submit"
+                onClick={() => {
+                  this.setState({ qrCopied: 'PRIVATE' })
+                  this.props.handleCopy(this.privateCanvas, 'private-key')
+                }}
+              >
+                Copy Code Image
+              </Button>
             </div>
             <div className={styles.qr}>
               <label> encrypted key </label>
@@ -107,6 +133,19 @@ class DisplayWalletAccountsQrCodes extends Component<Props, State> {
                   this.encryptedCanvas = node
                 }}
               />
+              <Button
+                className={styles.submitButton}
+                renderIcon={() =>
+                  this.qrCopied('ENCRYPTED') ? <ConfirmIcon /> : <CopyIcon />
+                }
+                type="submit"
+                onClick={() => {
+                  this.setState({ qrCopied: 'ENCRYPTED' })
+                  this.props.handleCopy(this.encryptedCanvas, 'encrypted-key')
+                }}
+              >
+                Copy Code Image
+              </Button>
             </div>
             <div className={styles.qr}>
               <label> public key </label>
@@ -118,10 +157,11 @@ class DisplayWalletAccountsQrCodes extends Component<Props, State> {
               <Button
                 className={styles.submitButton}
                 renderIcon={() =>
-                  this.props.copied ? <ConfirmIcon /> : <CopyIcon />
+                  this.qrCopied('PUBLIC') ? <ConfirmIcon /> : <CopyIcon />
                 }
                 type="submit"
                 onClick={() => {
+                  this.setState({ qrCopied: 'PUBLIC' })
                   this.props.handleCopy(this.publicCanvas, 'public-address')
                 }}
               >
