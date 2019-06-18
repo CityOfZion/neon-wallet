@@ -119,7 +119,7 @@ const SendPanel = ({
         onClick={() => handleSubmit(true)}
         id="generate-transaction-json"
       >
-        Generate transaction JSON
+        Generate Transaction JSON
       </Button>
       <Button
         primary
