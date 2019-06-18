@@ -32,6 +32,17 @@
   }
 }
 
+.signedButtonContainer {
+  display: flex;
+
+  button:first-child {
+    margin-right: 24px;
+    svg {
+      max-width: 20px;
+    }
+  }
+}
+
 .transactionInput {
   width: 100%;
   background-color: var(--panel-header);

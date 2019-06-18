@@ -83,9 +83,7 @@ export default class GeneratedTransactionModal extends React.Component<
     try {
       dialog.showOpenDialog(fileName => {
         if (fileName === undefined) {
-          return this.props.showErrorNotification({
-            message: 'Unable to import this file...',
-          })
+          return null
         }
         const rawData = fs.readFileSync(fileName[0])
 
@@ -199,7 +197,7 @@ export default class GeneratedTransactionModal extends React.Component<
                   className={styles.transactionInput}
                 />
               </div>
-              <div className={styles.buttonContainer}>
+              <div className={styles.signedButtonContainer}>
                 <Button
                   shouldCenterButtonLabelText
                   className={styles.submitButton}
