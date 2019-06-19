@@ -37,6 +37,7 @@ type Props = {
   tx: Tx,
   net: string,
   theme: string,
+  hasInternetConnectivity: boolean,
 }
 
 type State = {
@@ -207,19 +208,21 @@ export default class GeneratedTransactionModal extends React.Component<
                 >
                   Save
                 </Button>
-                <Button
-                  shouldCenterButtonLabelText
-                  primary
-                  className={styles.submitButton}
-                  renderIcon={() => <ConfirmIcon />}
-                  type="submit"
-                  onClick={() =>
-                    this.state.signedTx &&
-                    this.handleBroadcast(this.state.signedTx.serialize())
-                  }
-                >
-                  Broadcast Transaction
-                </Button>
+                {this.props.hasInternetConnectivity && (
+                  <Button
+                    shouldCenterButtonLabelText
+                    primary
+                    className={styles.submitButton}
+                    renderIcon={() => <ConfirmIcon />}
+                    type="submit"
+                    onClick={() =>
+                      this.state.signedTx &&
+                      this.handleBroadcast(this.state.signedTx.serialize())
+                    }
+                  >
+                    Broadcast Transaction
+                  </Button>
+                )}
               </div>
             </Fragment>
           )
@@ -303,10 +306,12 @@ export default class GeneratedTransactionModal extends React.Component<
     },
   })
 
-  // $FlowFixMe
-  tabOptions = Object.keys(this.generateOptions()).map(
-    (key: string) => this.generateOptions()[key],
-  )
+  tabOptions = this.props.hasInternetConnectivity
+    ? // $FlowFixMe
+      Object.keys(this.generateOptions()).map(
+        (key: string) => this.generateOptions()[key],
+      )
+    : [this.generateOptions().signTransaction]
 
   render() {
     const { hideModal } = this.props
@@ -332,40 +337,39 @@ export default class GeneratedTransactionModal extends React.Component<
 
               <div className={baseStyles.section}>
                 <div className={styles.sectionContent}>
-                  {!this.state.tabIndex ? (
-                    'If you have generated a transaction you can sign it below or import an already signed transaction.'
-                  ) : (
-                    <div style={{ paddingBottom: '24px' }}>
-                      Add a signed transaction below to broadcast it to the
-                      network.
-                    </div>
-                  )}
+                  {!this.state.tabIndex
+                    ? 'Paste or import generated transaction JSON below for signing.'
+                    : 'Add a signed transaction below to broadcast it to the network.'}
                 </div>
               </div>
 
-              <Tabs
-                selectedIndex={this.state.tabIndex}
-                onSelect={tabIndex => {
-                  this.setState({ tabIndex })
-                }}
-                className={classNames('neon-tabs', styles.tabs)}
-              >
-                <TabList>
+              {this.tabOptions.length > 1 ? (
+                <Tabs
+                  selectedIndex={this.state.tabIndex}
+                  onSelect={tabIndex => {
+                    this.setState({ tabIndex })
+                  }}
+                  className={classNames('neon-tabs', styles.tabs)}
+                >
+                  <TabList>
+                    {this.tabOptions.map(option => (
+                      <Tab key={option.display}>
+                        {option.display.toUpperCase()}
+                      </Tab>
+                    ))}
+                  </TabList>
                   {this.tabOptions.map(option => (
-                    <Tab key={option.display}>
-                      {option.display.toUpperCase()}
-                    </Tab>
+                    <TabPanel
+                      key={option.display}
+                      selectedClassName={styles.homeTabPanel}
+                    >
+                      {option.render()}
+                    </TabPanel>
                   ))}
-                </TabList>
-                {this.tabOptions.map(option => (
-                  <TabPanel
-                    key={option.display}
-                    selectedClassName={styles.homeTabPanel}
-                  >
-                    {option.render()}
-                  </TabPanel>
-                ))}
-              </Tabs>
+                </Tabs>
+              ) : (
+                this.tabOptions[0].render()
+              )}
             </Fragment>
           )}
         </div>

@@ -21,11 +21,8 @@
 .buttonContainer {
   display: flex;
 
-  button:first-child {
-    margin-right: 24px;
-  }
-
   button:nth-child(2) {
+    margin-left: 24px;
     svg {
       max-width: 20px;
     }
@@ -35,8 +32,10 @@
 .signedButtonContainer {
   display: flex;
 
+  button:nth-child(2) {
+    margin-left: 24px;
+  }
   button:first-child {
-    margin-right: 24px;
     svg {
       max-width: 20px;
     }
@@ -53,7 +52,7 @@
 
 .sectionContent {
   line-height: 24px;
-  padding: 16px 0 0 0;
+  padding: 16px 0;
 }
 
 .tabs {

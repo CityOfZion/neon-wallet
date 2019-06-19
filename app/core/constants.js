@@ -60,6 +60,7 @@ export const ROUTES = {
   NODE_SELECT: '/node-select',
   VOTING: '/voting',
   NEWS: '/news',
+  OFFLINE_SIGNING_PROMPT: '/offline-signing-prompt',
 }
 
 export const NOTIFICATION_LEVELS = {

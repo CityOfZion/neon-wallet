@@ -2,7 +2,7 @@
 import { connect, type MapStateToProps } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
-import { withReset, withActions } from 'spunky'
+import { withReset, withActions, withData } from 'spunky'
 
 import dashboardActions from '../../actions/dashboardActions'
 import accountActions from '../../actions/accountActions'
@@ -13,6 +13,7 @@ import withNetworkData from '../../hocs/withNetworkData'
 import withFilteredTokensData from '../../hocs/withFilteredTokensData'
 import { getNotifications } from '../../modules/notifications'
 import { showModal } from '../../modules/modal'
+import { internetConnectionPromptPresented } from '../../actions/internetConnectivityPromptActions'
 
 import Dashboard from './Dashboard'
 
@@ -50,4 +51,5 @@ export default compose(
   withInitialCall(dashboardActions),
   withReset(accountActions, ['networkId']),
   withActions(accountActions, mapAccountActionsToProps),
+  withData(internetConnectionPromptPresented),
 )(Dashboard)
