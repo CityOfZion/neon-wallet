@@ -331,7 +331,7 @@ export default class GeneratedTransactionModal extends React.Component<
               <div className={baseStyles.divider} />
 
               <div className={baseStyles.section}>
-                <div className={baseStyles.sectionContent}>
+                <div className={styles.sectionContent}>
                   {!this.state.tabIndex ? (
                     'If you have generated a transaction you can sign it below or import an already signed transaction.'
                   ) : (
@@ -348,7 +348,7 @@ export default class GeneratedTransactionModal extends React.Component<
                 onSelect={tabIndex => {
                   this.setState({ tabIndex })
                 }}
-                className={classNames(styles.tabs, 'neon-tabs')}
+                className={classNames('neon-tabs', styles.tabs)}
               >
                 <TabList>
                   {this.tabOptions.map(option => (

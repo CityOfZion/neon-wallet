@@ -46,12 +46,18 @@
 .transactionInput {
   width: 100%;
   background-color: var(--panel-header);
-  // padding: 12px;
   margin: 12px 0 24px 0;
   padding: 12px;
   box-sizing: border-box;
 }
 
-ul {
-  margin-bottom: 24px !important;
+.sectionContent {
+  line-height: 24px;
+  padding: 16px 0 0 0;
+}
+
+.tabs {
+  ul {
+    margin-bottom: 24px;
+  }
 }
