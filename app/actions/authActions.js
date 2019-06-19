@@ -43,11 +43,11 @@ export const ID = 'auth'
 
 export const checkForInternetConnectivity = (): Promise<boolean> =>
   new Promise(resolve => {
-    dns.lookup('google.com', err => {
-      if (err && err.code === 'ENOTFOUND') {
-        resolve(false)
+    dns.resolve('google.com', 'A', err => {
+      if (err) {
+        return resolve(false)
       }
-      resolve(true)
+      return resolve(true)
     })
   })
 
