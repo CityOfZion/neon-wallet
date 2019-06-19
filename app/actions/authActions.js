@@ -44,13 +44,12 @@ export const ID = 'auth'
 
 export const checkForInternetConnectivity = (): Promise<boolean> =>
   new Promise(resolve => {
-    resolve(false)
-    // dns.lookup('google.com', err => {
-    //   if (err && err.code === 'ENOTFOUND') {
-    //     resolve(false)
-    //   }
-    //   resolve(true)
-    // })
+    dns.lookup('google.com', err => {
+      if (err && err.code === 'ENOTFOUND') {
+        resolve(false)
+      }
+      resolve(true)
+    })
   })
 
 export const internetPromptPresentedActions = createActions(ID, () => (): {

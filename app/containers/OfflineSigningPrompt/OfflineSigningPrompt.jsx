@@ -37,7 +37,7 @@ export default class OfflineSigningPrompt extends Component<Props> {
     return (
       <div style={themes[theme]} className={styles.container}>
         <img className={styles.logo} src={dynamicImage} alt="" />
-        <h1>It looks like your machine if offline...</h1>
+        <h1>It looks like your machine is offline...</h1>
         <Button
           renderIcon={() => <Edit />}
           shouldCenterButtonLabelText
