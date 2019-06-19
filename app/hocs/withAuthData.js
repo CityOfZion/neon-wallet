@@ -9,6 +9,7 @@ type Mapping = {
   wif?: string,
   signingFunction?: string,
   isWatchOnly?: boolean,
+  isHardwareLogin: boolean,
 }
 
 export default function withAuthData(): Mapping {

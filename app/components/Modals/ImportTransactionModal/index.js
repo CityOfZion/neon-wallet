@@ -7,6 +7,7 @@ import ImportTransactionModal from './ImportTransactionModal'
 import {
   showErrorNotification,
   showSuccessNotification,
+  showInfoNotification,
 } from '../../../modules/notifications'
 import withAuthData from '../../../hocs/withAuthData'
 import withNetworkData from '../../../hocs/withNetworkData'
@@ -15,6 +16,7 @@ import withThemeData from '../../../hocs/withThemeData'
 const actionCreators = {
   showErrorNotification,
   showSuccessNotification,
+  showInfoNotification,
 }
 
 const mapDispatchToProps = dispatch =>
