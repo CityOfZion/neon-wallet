@@ -8,6 +8,8 @@ import ImportTransactionModal from './ImportTransactionModal'
 import {
   showErrorNotification,
   showSuccessNotification,
+  showInfoNotification,
+  hideNotification,
 } from '../../../modules/notifications'
 import withAuthData from '../../../hocs/withAuthData'
 import withNetworkData from '../../../hocs/withNetworkData'
@@ -17,6 +19,8 @@ import { internetConnectionPromptPresented } from '../../../actions/internetConn
 const actionCreators = {
   showErrorNotification,
   showSuccessNotification,
+  showInfoNotification,
+  hideNotification,
 }
 
 const mapDispatchToProps = dispatch =>

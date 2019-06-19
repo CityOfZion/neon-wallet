@@ -37,7 +37,6 @@ type AccountType = ?{
   isHardwareLogin: boolean,
   isWatchOnly?: boolean,
   hasInternetConnectivity: boolean,
-  internetConnectionPromptPresented: boolean,
 }
 
 export const ID = 'auth'
@@ -51,12 +50,6 @@ export const checkForInternetConnectivity = (): Promise<boolean> =>
       resolve(true)
     })
   })
-
-export const internetPromptPresentedActions = createActions(ID, () => (): {
-  internetConnectionPromptPresented: boolean,
-} => ({
-  internetConnectionPromptPresented: true,
-}))
 
 export const wifLoginActions = createActions(
   ID,
@@ -73,7 +66,6 @@ export const wifLoginActions = createActions(
       address: account.address,
       isHardwareLogin: false,
       hasInternetConnectivity,
-      internetConnectionPromptPresented: false,
     }
   },
 )
@@ -91,7 +83,6 @@ export const watchOnlyLoginActions = createActions(
       isHardwareLogin: false,
       isWatchOnly: true,
       hasInternetConnectivity,
-      internetConnectionPromptPresented: false,
     }
   },
 )
@@ -121,7 +112,6 @@ export const nep2LoginActions = createActions(
       address: account.address,
       isHardwareLogin: false,
       hasInternetConnectivity,
-      internetConnectionPromptPresented: false,
     }
   },
 )
@@ -145,7 +135,6 @@ export const ledgerLoginActions = createActions(
       ),
       isHardwareLogin: true,
       hasInternetConnectivity,
-      internetConnectionPromptPresented: false,
     }
   },
 )
