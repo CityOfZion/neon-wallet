@@ -39,8 +39,7 @@ type Props = {
   tx: Tx,
   net: string,
   theme: string,
-  hasInternetConnectivity: boolean,
-  internetConnectionPromptPresented: boolean,
+  isOfflineMode: boolean,
   isHardwareLogin: Boolean,
   signingFunction?: () => void,
   publicKey?: string,
@@ -241,22 +240,21 @@ export default class GeneratedTransactionModal extends React.Component<
                 >
                   Save
                 </Button>
-                {this.props.hasInternetConnectivity &&
-                  this.props.internetConnectionPromptPresented && (
-                    <Button
-                      shouldCenterButtonLabelText
-                      primary
-                      className={styles.submitButton}
-                      renderIcon={() => <ConfirmIcon />}
-                      type="submit"
-                      onClick={() =>
-                        this.state.signedTx &&
-                        this.handleBroadcast(this.state.signedTx.serialize())
-                      }
-                    >
-                      Broadcast Transaction
-                    </Button>
-                  )}
+                {!this.props.isOfflineMode && (
+                  <Button
+                    shouldCenterButtonLabelText
+                    primary
+                    className={styles.submitButton}
+                    renderIcon={() => <ConfirmIcon />}
+                    type="submit"
+                    onClick={() =>
+                      this.state.signedTx &&
+                      this.handleBroadcast(this.state.signedTx.serialize())
+                    }
+                  >
+                    Broadcast Transaction
+                  </Button>
+                )}
               </div>
             </Fragment>
           )
@@ -340,14 +338,12 @@ export default class GeneratedTransactionModal extends React.Component<
     },
   })
 
-  tabOptions =
-    this.props.hasInternetConnectivity &&
-    this.props.internetConnectionPromptPresented
-      ? // $FlowFixMe
-        Object.keys(this.generateOptions()).map(
-          (key: string) => this.generateOptions()[key],
-        )
-      : [this.generateOptions().signTransaction]
+  tabOptions = !this.props.isOfflineMode
+    ? // $FlowFixMe
+      Object.keys(this.generateOptions()).map(
+        (key: string) => this.generateOptions()[key],
+      )
+    : [this.generateOptions().signTransaction]
 
   render() {
     const { hideModal } = this.props

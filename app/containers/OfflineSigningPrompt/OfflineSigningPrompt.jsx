@@ -53,8 +53,7 @@ export default class OfflineSigningPrompt extends Component<Props> {
             shouldCenterButtonLabelText
             className={styles.promptButton}
             onClick={() => {
-              // in the event that connection is restablished after navigating to dashboard
-              promptHasBeenDisplayed(false)
+              promptHasBeenDisplayed(true)
             }}
           >
             Continue to Dashboard

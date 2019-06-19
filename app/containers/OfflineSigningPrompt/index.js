@@ -19,7 +19,12 @@ const mapDispatchToProps = (dispatch: Function) =>
   bindActionCreators(
     {
       showImportModal: props =>
-        dispatch(showModal(MODAL_TYPES.IMPORT_TRANSACTION, props)),
+        dispatch(
+          showModal(MODAL_TYPES.IMPORT_TRANSACTION, {
+            ...props,
+            isOfflineMode: true,
+          }),
+        ),
     },
     dispatch,
   )
