@@ -38,6 +38,7 @@ type Props = {
   net: string,
   theme: string,
   hasInternetConnectivity: boolean,
+  internetConnectionPromptPresented: boolean,
 }
 
 type State = {
@@ -208,21 +209,22 @@ export default class GeneratedTransactionModal extends React.Component<
                 >
                   Save
                 </Button>
-                {this.props.hasInternetConnectivity && (
-                  <Button
-                    shouldCenterButtonLabelText
-                    primary
-                    className={styles.submitButton}
-                    renderIcon={() => <ConfirmIcon />}
-                    type="submit"
-                    onClick={() =>
-                      this.state.signedTx &&
-                      this.handleBroadcast(this.state.signedTx.serialize())
-                    }
-                  >
-                    Broadcast Transaction
-                  </Button>
-                )}
+                {this.props.hasInternetConnectivity &&
+                  this.props.internetConnectionPromptPresented && (
+                    <Button
+                      shouldCenterButtonLabelText
+                      primary
+                      className={styles.submitButton}
+                      renderIcon={() => <ConfirmIcon />}
+                      type="submit"
+                      onClick={() =>
+                        this.state.signedTx &&
+                        this.handleBroadcast(this.state.signedTx.serialize())
+                      }
+                    >
+                      Broadcast Transaction
+                    </Button>
+                  )}
               </div>
             </Fragment>
           )
@@ -306,7 +308,7 @@ export default class GeneratedTransactionModal extends React.Component<
     },
   })
 
-  tabOptions = this.props.hasInternetConnectivity
+  tabOptions = this.props.hasInternetConnectivity && this.propsinternetConnectionPromptPresented &&
     ? // $FlowFixMe
       Object.keys(this.generateOptions()).map(
         (key: string) => this.generateOptions()[key],
