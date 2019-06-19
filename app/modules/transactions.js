@@ -166,7 +166,7 @@ export const sendTransaction = ({
         }),
       )
 
-    if (isHardwareSend) {
+    if (isHardwareSend && !isWatchOnly) {
       dispatch(
         showInfoNotification({
           message: 'Please sign the transaction on your hardware device',

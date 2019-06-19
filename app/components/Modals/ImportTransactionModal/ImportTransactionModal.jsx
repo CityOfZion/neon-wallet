@@ -1,7 +1,7 @@
 // @flow
 import React, { Fragment } from 'react'
 import moment from 'moment'
-import { tx, rpc } from '@cityofzion/neon-js'
+import { tx, rpc, api } from '@cityofzion/neon-js'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import classNames from 'classnames'
 import { isEmpty } from 'lodash-es'
@@ -31,12 +31,17 @@ type Tx = {
 
 type Props = {
   hideModal: () => void,
-  showErrorNotification: ({ message: string }) => void,
-  showSuccessNotification: ({ message: string }) => void,
+  showErrorNotification: ({ message: string }) => string,
+  showSuccessNotification: ({ message: string }) => string,
+  showInfoNotification: ({ message: string }) => string,
+  hideNotification: (id: string) => void,
   wif: string,
   tx: Tx,
   net: string,
   theme: string,
+  isHardwareLogin: Boolean,
+  signingFunction?: () => void,
+  publicKey?: string,
 }
 
 type State = {
@@ -64,12 +69,39 @@ export default class GeneratedTransactionModal extends React.Component<
   signTransaction = () => {
     try {
       const { Transaction } = tx
-      const { wif } = this.props
+      const {
+        wif,
+        isHardwareLogin,
+        signingFunction,
+        showInfoNotification,
+        hideNotification,
+        publicKey,
+      } = this.props
       const Tx = new Transaction(JSON.parse(this.state.transaction))
-      const signedTx = Tx.sign(wif)
-      this.setState({
-        signedTx,
-      })
+      if (isHardwareLogin) {
+        const notificationId = showInfoNotification({
+          message: 'Please sign the transaction on your hardware device',
+          autoDismiss: 0,
+        })
+        const config = {
+          tx: Tx,
+          signingFunction,
+          publicKey,
+        }
+        const signingPromise = api.signTx(config)
+        signingPromise.then(config => {
+          hideNotification(notificationId)
+          const signedTx = config.tx
+          this.setState({
+            signedTx,
+          })
+        })
+      } else {
+        const signedTx = Tx.sign(wif)
+        this.setState({
+          signedTx,
+        })
+      }
     } catch (error) {
       this.props.showErrorNotification({
         message: `An error occurred signing the transaction: ${error.message}`,
