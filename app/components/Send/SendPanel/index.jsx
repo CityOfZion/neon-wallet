@@ -121,18 +121,20 @@ const SendPanel = ({
       >
         Generate Transaction JSON
       </Button>
-      <Button
-        primary
-        className={styles.sendFormButton}
-        renderIcon={() => <SendIcon />}
-        type="submit"
-        disabled={shouldDisableSendButton(sendRowDetails)}
-        onClick={() => handleSubmit(false)}
-        id="send-assets"
-      >
-        Send {pluralize('Asset', sendRowDetails.length)}{' '}
-        {fees ? 'With Fee' : 'Without Fee'}
-      </Button>
+      {!isWatchOnly && (
+        <Button
+          primary
+          className={styles.sendFormButton}
+          renderIcon={() => <SendIcon />}
+          type="submit"
+          disabled={shouldDisableSendButton(sendRowDetails)}
+          onClick={() => handleSubmit(false)}
+          id="send-assets"
+        >
+          Send {pluralize('Asset', sendRowDetails.length)}{' '}
+          {fees ? 'With Fee' : 'Without Fee'}
+        </Button>
+      )}
     </form>
   )
 
