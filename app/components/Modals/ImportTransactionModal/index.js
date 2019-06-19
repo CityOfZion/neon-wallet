@@ -8,6 +8,7 @@ import {
   showErrorNotification,
   showSuccessNotification,
   showInfoNotification,
+  hideNotification,
 } from '../../../modules/notifications'
 import withAuthData from '../../../hocs/withAuthData'
 import withNetworkData from '../../../hocs/withNetworkData'
@@ -17,6 +18,7 @@ const actionCreators = {
   showErrorNotification,
   showSuccessNotification,
   showInfoNotification,
+  hideNotification,
 }
 
 const mapDispatchToProps = dispatch =>

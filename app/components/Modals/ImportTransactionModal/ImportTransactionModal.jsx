@@ -31,9 +31,10 @@ type Tx = {
 
 type Props = {
   hideModal: () => void,
-  showErrorNotification: ({ message: string }) => void,
-  showSuccessNotification: ({ message: string }) => void,
-  showInfoNotification: ({ message: string }) => void,
+  showErrorNotification: ({ message: string }) => string,
+  showSuccessNotification: ({ message: string }) => string,
+  showInfoNotification: ({ message: string }) => string,
+  hideNotification: (id: string) => void,
   wif: string,
   tx: Tx,
   net: string,
@@ -73,11 +74,12 @@ export default class GeneratedTransactionModal extends React.Component<
         isHardwareLogin,
         signingFunction,
         showInfoNotification,
+        hideNotification,
         publicKey,
       } = this.props
       const Tx = new Transaction(JSON.parse(this.state.transaction))
       if (isHardwareLogin) {
-        showInfoNotification({
+        const notificationId = showInfoNotification({
           message: 'Please sign the transaction on your hardware device',
           autoDismiss: 0,
         })
@@ -88,6 +90,7 @@ export default class GeneratedTransactionModal extends React.Component<
         }
         const signingPromise = api.signTx(config)
         signingPromise.then(config => {
+          hideNotification(notificationId)
           const signedTx = config.tx
           this.setState({
             signedTx,
