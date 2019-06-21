@@ -183,94 +183,137 @@ export const recoverWallet = (wallet: Object): Promise<*> =>
     })
   })
 
+// This method return the WIF from the encryptedWIF and passphrase
+export async function decryptEncryptedWIF(
+  encryptedWIF: string,
+  passphrase: string,
+) {
+  if (!wallet.isNEP2(encryptedWIF)) {
+    throw new Error('The encrypted key is not valid')
+  }
+  const wa = new wallet.Account({
+    key: encryptedWIF,
+  })
+  const a = await wa.decrypt(passphrase)
+  return a.WIF
+}
+
+export function validateInputs(
+  wif: string,
+  passphrase: string,
+  passphrase2: string,
+) {
+  if (passphrase !== passphrase2) {
+    throw new Error('Passphrases do not match')
+  }
+  if (!validatePassphraseLength(passphrase)) {
+    throw new Error('Please choose a longer passphrase')
+  }
+  if (wif && !wallet.isWIF(wif)) {
+    throw new Error('The private key is not valid')
+  }
+}
+
+type KeyOption = 'WIF' | 'ENCRYPTED_WIF' // keyof typeof IMPORT_WALLET_KEY_OPTIONS
+
 export const generateNewWalletAccount = (
   passphrase: string,
   passphrase2: string,
-  wif?: string,
+  key: string,
+  keyOption: KeyOption,
   history: Object,
   walletName: string,
   authenticated: boolean = false,
   onFailure: () => any = () => undefined,
 ) => (dispatch: DispatchType) => {
-  const isImport = !!wif
   const dispatchError = (message: string) => {
     dispatch(showErrorNotification({ message }))
     return false
   }
-  if (passphrase !== passphrase2) {
-    onFailure()
-    return dispatchError('Passphrases do not match')
-  }
-  if (!validatePassphraseLength(passphrase)) {
-    onFailure()
-    return dispatchError('Please choose a longer passphrase')
-  }
-  if (wif && !wallet.isWIF(wif)) {
-    onFailure()
-    return dispatchError('The private key is not valid')
-  }
+
   const infoNotificationId: any = dispatch(
     showInfoNotification({
       message: 'Generating encoded key...',
       autoDismiss: 0,
     }),
   )
-  setTimeout(async () => {
-    try {
-      const account = new wallet.Account(wif || wallet.generatePrivateKey())
-      const { WIF, address } = account
-      const encryptedWIF = wallet.encrypt(WIF, passphrase)
+  let wif = ''
+  // If the key is not given, it means that the user has choosen
+  // the option 'Create Wallet'. Therefore isImport = false.
+  // If the key is given, isImport = true.
+  const isImport = key === null
 
-      const storedWallet = await getWallet()
-      if (walletName && walletHasLabel(storedWallet, walletName)) {
-        onFailure()
-        return dispatchError('A wallet with this name already exists locally')
-      }
+  Promise.resolve()
+    .then(async () => {
+      wif =
+        keyOption === 'WIF' ? key : await decryptEncryptedWIF(key, passphrase)
 
-      if (walletHasKey(storedWallet, encryptedWIF)) {
-        onFailure()
-        return dispatchError(
-          'A wallet with this address already exists locally',
-        )
-      }
+      validateInputs(wif, passphrase, passphrase2)
+    })
+    .then(() =>
+      setTimeout(async () => {
+        try {
+          const account = new wallet.Account(wif || wallet.generatePrivateKey())
+          const { WIF, address } = account
+          const encryptedWIF =
+            keyOption === 'WIF' ? wallet.encrypt(WIF, passphrase) : key
+          const storedWallet = await getWallet()
+          if (walletName && walletHasLabel(storedWallet, walletName)) {
+            onFailure()
+            return dispatchError(
+              'A wallet with this name already exists locally',
+            )
+          }
 
-      dispatch(
-        saveAccountActions.call({
-          isImport,
-          label: walletName,
-          address,
-          key: encryptedWIF,
-        }),
-      )
+          if (walletHasKey(storedWallet, encryptedWIF)) {
+            onFailure()
+            return dispatchError('A  already exists locally')
+          }
 
-      dispatch(hideNotification(infoNotificationId))
-      dispatch(
-        newWalletAccount({
-          account: {
-            wif: WIF,
-            address,
-            passphrase,
-            encryptedWIF,
-            walletName,
-          },
-          isImport,
-        }),
-      )
+          dispatch(
+            saveAccountActions.call({
+              isImport,
+              label: walletName,
+              address,
+              key: encryptedWIF,
+            }),
+          )
 
-      if (wif) history.push(ROUTES.HOME)
-      if (authenticated) history.push(ROUTES.DISPLAY_WALLET_KEYS_AUTHENTICATED)
-      else history.push(ROUTES.DISPLAY_WALLET_KEYS)
-      return true
-    } catch (e) {
+          dispatch(hideNotification(infoNotificationId))
+          dispatch(
+            newWalletAccount({
+              account: {
+                wif: WIF,
+                address,
+                passphrase,
+                encryptedWIF,
+                walletName,
+              },
+              isImport,
+            }),
+          )
+
+          if (wif) history.push(ROUTES.HOME)
+          if (authenticated)
+            history.push(ROUTES.DISPLAY_WALLET_KEYS_AUTHENTICATED)
+          else history.push(ROUTES.DISPLAY_WALLET_KEYS)
+          return true
+        } catch (e) {
+          onFailure()
+          console.error(e)
+          return dispatchError(
+            `An error occured while trying to ${
+              isImport ? 'import' : 'generate'
+            } a new wallet`,
+          )
+        }
+      }, 500),
+    )
+    .catch(e => {
       onFailure()
       console.error(e)
-      return dispatchError(
-        `An error occured while trying to ${
-          isImport ? 'import' : 'generate'
-        } a new wallet`,
-      )
-    }
-  }, 500)
+      return dispatchError(e.message)
+    })
 }
 
 // state getters

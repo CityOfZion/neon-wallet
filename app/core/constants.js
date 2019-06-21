@@ -31,6 +31,11 @@ export const EXPLORERS = {
 
 export const DEFAULT_EXPLORER = EXPLORERS.NEO_SCAN
 
+export const IMPORT_WALLET_KEY_OPTIONS = {
+  WIF: 'PRIVATE KEY',
+  ENCRYPTED_WIF: 'ENCRYPTED KEY',
+}
+
 export const ROUTES = {
   HOME: '/',
   DASHBOARD: '/dashboard',
@@ -52,6 +57,7 @@ export const ROUTES = {
   DISPLAY_WALLET_KEYS_AUTHENTICATED: '/display-wallet-keys-authenticated',
   DISPLAY_WALLET_QRS: '/display-wallet-qrs',
   DISPLAY_WALLET_QRS_AUTHENTICATED: '/display-wallet-qrs-authenticated',
+  DISPLAY_ENCRYPTED_WIF_QR: '/display-encrypted-wif-qr',
   WALLET_MANAGER: '/wallet-manager',
   EDIT_WALLET: '/edit-wallet/:key/:label',
   SEND: '/send/',
