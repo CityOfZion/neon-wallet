@@ -6,6 +6,7 @@ import Send from '../../app/containers/Send/Send'
 import ZeroAssets from '../../app/components/ZeroAssets/ZeroAssets'
 import SendRecipientListItem from '../../app/components/Send/SendPanel/SendRecipientList/SendRecipientListItem'
 import PanelHeaderButton from '../../app/components/PanelHeaderButton/PanelHeaderButton'
+import Button from '../../app/components/Button'
 
 const setup = props =>
   mount(
@@ -38,10 +39,9 @@ describe('Send', () => {
 
   test('It does not add a row when you click Add Recipient button and without details for the first row being filled in', () => {
     const wrapper = setup()
-
     wrapper
       .find(PanelHeaderButton)
-      .at(1)
+      .at(2)
       .simulate('click')
     expect(wrapper.instance().state.sendRowDetails.length).toBe(1)
     expect(wrapper.find(SendRecipientListItem).children().length).toBe(1)
@@ -61,7 +61,7 @@ describe('Send', () => {
 
     wrapper
       .find(PanelHeaderButton)
-      .at(1)
+      .at(2)
       .simulate('click')
     expect(wrapper.instance().state.sendRowDetails.length).toBe(2)
     expect(wrapper.find(SendRecipientListItem).children().length).toBe(2)
@@ -97,7 +97,7 @@ describe('Send', () => {
     for (let i = 0; i <= 10; i++) {
       wrapper
         .find(PanelHeaderButton)
-        .at(1)
+        .at(2)
         .simulate('click')
     }
 
@@ -113,7 +113,11 @@ describe('Send', () => {
   test('It validates and sets error in state when you submit empty inputs', () => {
     const wrapper = setup()
 
-    wrapper.find('form').simulate('submit')
+    wrapper
+      .find('#send-assets')
+      .find(Button)
+      .props()
+      .onClick()
 
     const errors = wrapper.instance().state.sendRowDetails[0].errors
 
@@ -127,7 +131,11 @@ describe('Send', () => {
     const asset = createAsset('NEO', 1)
     asset.amount = -5
     wrapper.setState({ sendRowDetails: [asset] })
-    wrapper.find('form').simulate('submit')
+    wrapper
+      .find('#send-assets')
+      .find(Button)
+      .props()
+      .onClick()
 
     const errors = wrapper.instance().state.sendRowDetails[0].errors
     expect(errors.amount).toBe('You cannot send negative amounts of NEO.')
@@ -139,7 +147,11 @@ describe('Send', () => {
     const asset = createAsset('NEO', 1)
     asset.amount = 1.5
     wrapper.setState({ sendRowDetails: [asset] })
-    wrapper.find('form').simulate('submit')
+    wrapper
+      .find('#send-assets')
+      .find(Button)
+      .props()
+      .onClick()
 
     const errors = wrapper.instance().state.sendRowDetails[0].errors
     expect(errors.amount).toBe('You cannot send fractional amounts of NEO.')
@@ -151,7 +163,11 @@ describe('Send', () => {
     const asset = createAsset('NEO', 1)
     asset.amount = 100
     wrapper.setState({ sendRowDetails: [asset] })
-    wrapper.find('form').simulate('submit')
+    wrapper
+      .find('#send-assets')
+      .find(Button)
+      .props()
+      .onClick()
 
     const errors = wrapper.instance().state.sendRowDetails[0].errors
     expect(errors.amount).toBe(
@@ -165,7 +181,11 @@ describe('Send', () => {
     const asset = createAsset('GAS', 1)
     asset.amount = 1.523
     wrapper.setState({ sendRowDetails: [asset] })
-    wrapper.find('form').simulate('submit')
+    wrapper
+      .find('#send-assets')
+      .find(Button)
+      .props()
+      .onClick()
 
     const errors = wrapper.instance().state.sendRowDetails[0].errors
     expect(errors.amount).toBe(undefined)
@@ -178,7 +198,11 @@ describe('Send', () => {
     asset.amount = 1.523
     asset.address = 'ARU4Sw9yyqgfjxfqF1TNwWHHFvLbAVdTj1'
     wrapper.setState({ sendRowDetails: [asset] })
-    wrapper.find('form').simulate('submit')
+    wrapper
+      .find('#send-assets')
+      .find(Button)
+      .props()
+      .onClick()
 
     setTimeout(() => {
       const errors = wrapper.instance().state.sendRowDetails[0].errors
@@ -196,7 +220,11 @@ describe('Send', () => {
     asset.amount = 1.523
     asset.address = 'AMKxqiSSLR89wLVEk5CoGRjKHRrmrR8bDr'
     wrapper.setState({ sendRowDetails: [asset] })
-    wrapper.find('form').simulate('submit')
+    wrapper
+      .find('#send-assets')
+      .find(Button)
+      .props()
+      .onClick()
 
     const errors = wrapper.instance().state.sendRowDetails[0].errors
 
@@ -220,7 +248,11 @@ describe('Send', () => {
     asset.amount = 1
     asset.address = 'AMKxqiSSLR89wLVEk5CoGRjKHRrmrR8bDr'
     wrapper.setState({ sendRowDetails: [asset] })
-    wrapper.find('form').simulate('submit')
+    wrapper
+      .find('#send-assets')
+      .find(Button)
+      .props()
+      .onClick()
 
     setTimeout(
       () => expect(wrapper.instance().state.showConfirmSend).toBe(true),
@@ -236,8 +268,11 @@ describe('Send', () => {
     asset.address = 'AMKxqiSSLR89wLVEk5CoGRjKHRrmrR8bDr'
     wrapper.setState({ sendRowDetails: [asset] })
 
-    wrapper.find('form').simulate('submit')
-    wrapper.find('form').simulate('submit')
+    wrapper
+      .find('#send-assets')
+      .find(Button)
+      .props()
+      .onClick()
 
     const sendTransaction = wrapper.instance().props.sendTransaction
 

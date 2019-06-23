@@ -4,6 +4,7 @@ import EditIcon from 'assets/icons/edit.svg'
 import { clipboard } from 'electron'
 import moment from 'moment'
 import fs from 'fs'
+import JSONPretty from 'react-json-pretty'
 
 import baseStyles from '../SendModal/SendModal.scss'
 import styles from './GeneratedTransactionModal.scss'
@@ -51,7 +52,7 @@ export default class GeneratedTransactionModal extends React.Component<
         {
           defaultPath: `${app.getPath(
             'documents',
-          )}/neon-wallet-transaction-${moment().unix()}.csv`,
+          )}/neon-wallet-transaction-${moment().unix()}`,
           filters: [
             {
               name: 'JSON',
@@ -99,7 +100,9 @@ export default class GeneratedTransactionModal extends React.Component<
         title="Generated Transaction"
         hideModal={hideModal}
         bodyClassName={styles.modalBody}
-        style={{ content: { width: '750px', height: '100%' } }}
+        style={{
+          content: { width: '750px', height: '100%', overflow: 'none' },
+        }}
       >
         <div className={styles.contentContainer}>
           <div className={baseStyles.header}>
@@ -119,7 +122,10 @@ export default class GeneratedTransactionModal extends React.Component<
           <div className={baseStyles.section}>
             <div className={baseStyles.sectionTitle}>TRANSACTION OUPUT</div>{' '}
             <div className={styles.transactionOutput}>
-              <pre>{JSON.stringify(this.props.tx, null, 2)}</pre>
+              <JSONPretty
+                id="json-pretty"
+                data={JSON.stringify(this.props.tx)}
+              />
             </div>
           </div>
           <div className={styles.buttonContainer}>

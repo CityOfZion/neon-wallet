@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 
+import ImportIcon from '../../../../assets/icons/import.svg'
 import AddIcon from '../../../../assets/icons/add.svg'
 import GridIcon from '../../../../assets/icons/grid.svg'
 import LightningIcon from '../../../../assets/icons/lightning.svg'
@@ -24,6 +25,7 @@ type Props = {
   maxNumberOfRecipients: number,
   showSendModal: (props: Object) => any,
   pushQRCodeData: (data: Object) => any,
+  showImportModal: (props: Object) => void,
 }
 
 const SendPanelHeader = ({
@@ -39,6 +41,7 @@ const SendPanelHeader = ({
   hasNetworkFees = false,
   maxNumberOfRecipients,
   showSendModal,
+  showImportModal,
   pushQRCodeData,
 }: Props) => {
   const numberOfItems = sendRowDetails.length
@@ -47,6 +50,13 @@ const SendPanelHeader = ({
   let headerSubtitle = `${numberOfItems} of ${maxNumberOfRecipients} Recipients`
   let buttons = (
     <div className={styles.sendPanelHeaderButtons}>
+      <PanelHeaderButton
+        onClick={() => showImportModal({ pushQRCodeData })}
+        renderIcon={() => (
+          <ImportIcon className={styles.sendPanelHeaderButtonIcon} />
+        )}
+        buttonText="Import"
+      />
       <PanelHeaderButton
         disabled={disableEnterQRCode}
         onClick={() => showSendModal({ pushQRCodeData })}

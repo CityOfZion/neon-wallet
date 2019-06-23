@@ -30,6 +30,8 @@ const mapDispatchToProps = (dispatch: Function) =>
       showSendModal: props => dispatch(showModal(MODAL_TYPES.SEND, props)),
       showGeneratedTransactionModal: props =>
         dispatch(showModal(MODAL_TYPES.GENERATED_TRANSACTION, props)),
+      showImportModal: props =>
+        dispatch(showModal(MODAL_TYPES.IMPORT_TRANSACTION, props)),
     },
     dispatch,
   )
