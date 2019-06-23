@@ -23,32 +23,34 @@ describe('authActions', () => {
       })
 
       describe('with valid WIF', () => {
-        test('returns authenticated account data', () => {
+        test('returns authenticated account data', async () => {
           const call = wifLoginActions.call({ wif })
-          expect(call.payload.fn({})).toEqual({
+          expect(await call.payload.fn({})).toEqual({
             wif,
             address,
             isHardwareLogin: false,
+            hasInternetConnectivity: true,
           })
         })
       })
 
       describe('with valid private key', () => {
-        test('returns authenticated account data', () => {
+        test('returns authenticated account data', async () => {
           const call = wifLoginActions.call({ wif: privateKey })
-          expect(call.payload.fn({})).toEqual({
+          expect(await call.payload.fn({})).toEqual({
             wif,
             address,
             isHardwareLogin: false,
+            hasInternetConnectivity: true,
           })
         })
       })
 
       describe('with invalid private key', () => {
-        test('throws an error', () => {
+        test('throws an error', async () => {
           const call = wifLoginActions.call({ wif: 'invalid' })
-          expect(() => call.payload.fn({})).toThrowError(
-            'Invalid private key entered',
+          expect(call.payload.fn({})).rejects.toEqual(
+            Error('Invalid private key entered'),
           )
         })
       })

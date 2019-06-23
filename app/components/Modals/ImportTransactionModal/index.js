@@ -1,5 +1,6 @@
 // @flow
 import { compose } from 'recompose'
+import { withData } from 'spunky'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -13,6 +14,7 @@ import {
 import withAuthData from '../../../hocs/withAuthData'
 import withNetworkData from '../../../hocs/withNetworkData'
 import withThemeData from '../../../hocs/withThemeData'
+import { internetConnectionPromptPresented } from '../../../actions/internetConnectivityPromptActions'
 
 const actionCreators = {
   showErrorNotification,
@@ -32,4 +34,5 @@ export default compose(
   withAuthData(),
   withNetworkData(),
   withThemeData(),
+  withData(internetConnectionPromptPresented),
 )(ImportTransactionModal)

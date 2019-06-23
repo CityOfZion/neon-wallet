@@ -9,13 +9,17 @@ type Props = {
   id?: string,
   className?: string,
   logout: Function,
+  promptHasBeenDisplayed: boolean => void,
 }
 
-const Logout = ({ id, className, logout }: Props) => (
+const Logout = ({ id, className, logout, promptHasBeenDisplayed }: Props) => (
   <div
     id={id}
     className={classNames(styles.logout, className)}
-    onClick={logout}
+    onClick={() => {
+      promptHasBeenDisplayed(false)
+      logout()
+    }}
   >
     <LogoutIcon />
     <div className={styles.logoutText}> Logout </div>
