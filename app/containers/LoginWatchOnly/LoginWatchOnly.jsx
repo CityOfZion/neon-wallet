@@ -34,7 +34,6 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
           <React.Fragment>
             <div className={styles.centeredInput}>
               <TextInput
-                textInputClassName={styles.privateKeyInput}
                 placeholder="Enter a NEO address here"
                 value={address}
                 onChange={(e: Object) =>
@@ -43,7 +42,7 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
                 autoFocus
               />
             </div>
-            <div className={styles.privateKeyLoginButtonRow}>
+            <div className={styles.loginButtonRow}>
               <Button
                 id="loginButton"
                 primary
