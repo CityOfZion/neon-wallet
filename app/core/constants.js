@@ -31,11 +31,6 @@ export const EXPLORERS = {
 
 export const DEFAULT_EXPLORER = EXPLORERS.NEO_SCAN
 
-export const IMPORT_WALLET_KEY_OPTIONS = {
-  WIF: 'PRIVATE KEY',
-  ENCRYPTED_WIF: 'ENCRYPTED KEY',
-}
-
 export const ROUTES = {
   HOME: '/',
   DASHBOARD: '/dashboard',

@@ -1,13 +1,13 @@
 // @flow
 
 import React from 'react'
-import { ROUTES, IMPORT_WALLET_KEY_OPTIONS } from '../../core/constants'
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
+import { ROUTES } from '../../core/constants'
 import PasswordInput from '../../components/Inputs/PasswordInput'
 import TextInput from '../../components/Inputs/TextInput'
 import CloseButton from '../../components/CloseButton'
 import BackButton from '../../components/BackButton'
 import Button from '../../components/Button'
-import StyledReactSelect from '../../components/Inputs/StyledReactSelect/StyledReactSelect'
 import ImportIcon from '../../assets/icons/import.svg'
 import CheckIcon from '../../assets/icons/check.svg'
 import AddIcon from '../../assets/icons/add.svg'
@@ -31,7 +31,7 @@ type State = {
   passphraseError: string,
   passphrase2Error: string,
   key: string,
-  selectedImportKeyOption: SelectOption,
+  importTabIndex: number,
   walletName: string,
   submitButtonDisabled: boolean,
 }
@@ -47,32 +47,32 @@ export default class CreateWallet extends React.Component<Props, State> {
     passphraseError: '',
     passphrase2Error: '',
     key: '',
-    selectedImportKeyOption: {
-      value: 'WIF',
-      label: 'PRIVATE KEY',
-    },
     walletName: '',
     submitButtonDisabled: false,
+    importTabIndex: 0,
+  }
+
+  imporKeyOption = (niceText: boolean = false) => {
+    const lookkup = {
+      WIF: 'Private Key',
+      ENCRYPTED_WIF: 'Encrypted Key',
+    }
+    const keyOption = this.state.importTabIndex === 0 ? 'WIF' : 'ENCRYPTED_WIF'
+    return niceText ? lookkup[keyOption] : keyOption
   }
 
   createWalletAccount = (e: SyntheticMouseEvent<*>) => {
     this.setState({ submitButtonDisabled: true })
     e.preventDefault()
     const { history, option } = this.props
-    const {
-      passphrase,
-      passphrase2,
-      key,
-      selectedImportKeyOption,
-      walletName,
-    } = this.state
+    const { passphrase, passphrase2, key, walletName } = this.state
     const { generateNewWalletAccount, authenticated } = this.props
 
     generateNewWalletAccount(
       passphrase,
       passphrase2,
       option === 'IMPORT' ? key : null,
-      selectedImportKeyOption.value,
+      option === 'IMPORT' ? this.imporKeyOption() : 'WIF',
       history,
       walletName,
       authenticated,
@@ -80,23 +80,13 @@ export default class CreateWallet extends React.Component<Props, State> {
     )
   }
 
-  updateImportKeyOption = (option: SelectOption) => {
-    this.setState({ selectedImportKeyOption: option })
-  }
-
   render = () => {
-    const parsedKeyOptions = Object.keys(IMPORT_WALLET_KEY_OPTIONS).map(
-      key => ({
-        value: key,
-        label: IMPORT_WALLET_KEY_OPTIONS[key],
-      }),
-    )
     const {
       passphraseError,
       passphrase2Error,
       key,
-      selectedImportKeyOption,
       walletName,
+      importTabIndex,
     } = this.state
     const { option, authenticated } = this.props
     const conditionalPanelProps = {}
@@ -137,25 +127,29 @@ export default class CreateWallet extends React.Component<Props, State> {
             >
               {option === 'IMPORT' && (
                 <div>
-                  <div className={styles.SelectContainer}>
-                    <StyledReactSelect
-                      settingsSelect
-                      transparent
-                      options={parsedKeyOptions}
-                      value={selectedImportKeyOption}
-                      onChange={this.updateImportKeyOption}
-                      isSearchable={false}
-                      textAlign="left"
-                    />
+                  <div className={styles.inputContainer}>
+                    <Tabs
+                      selectedIndex={importTabIndex}
+                      onSelect={importTabIndex =>
+                        this.setState({ importTabIndex })
+                      }
+                      className="neon-tabs"
+                    >
+                      <TabList>
+                        <Tab key="WIF">Private Key</Tab>
+                        <Tab key="ENCRYPTED_WIF">Encrypted Key</Tab>
+                      </TabList>
+                      <div>
+                        <TabPanel key="WIF" />
+                        <TabPanel key="ENCRYPTED_WIF" />
+                      </div>
+                    </Tabs>
                   </div>
                   <PasswordInput
                     value={key}
+                    label={this.imporKeyOption(true)}
                     onChange={e => this.setState({ key: e.target.value })}
-                    placeholder={
-                      selectedImportKeyOption.value === 'WIF'
-                        ? 'Private Key'
-                        : 'Encrypted Key'
-                    }
+                    placeholder={this.imporKeyOption(true)}
                     autoFocus
                   />
                 </div>

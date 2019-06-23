@@ -28,8 +28,11 @@
   margin-bottom: 50px;
 }
 
-.SelectContainer {
+.inputContainer {
   display: flex;
-  max-width: 172px;
-  flex: 1;
+  flex-direction: column;
+  width: 500px;
+  align-items: center;
+  margin-bottom: -20px;
+  margin-top: -15px;
 }
