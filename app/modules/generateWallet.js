@@ -243,72 +243,67 @@ export const generateNewWalletAccount = (
   // If the key is given, isImport = true.
   const isImport = key === null
 
-  Promise.resolve()
+  const setWIF = async () => {
+    wif = keyOption === 'WIF' ? key : await decryptEncryptedWIF(key, passphrase)
+    validateInputs(wif, passphrase, passphrase2)
+  }
+
+  setWIF()
     .then(async () => {
-      wif =
-        keyOption === 'WIF' ? key : await decryptEncryptedWIF(key, passphrase)
-
-      validateInputs(wif, passphrase, passphrase2)
-    })
-    .then(() =>
-      setTimeout(async () => {
-        try {
-          const account = new wallet.Account(wif || wallet.generatePrivateKey())
-          const { WIF, address } = account
-          const encryptedWIF =
-            keyOption === 'WIF' ? wallet.encrypt(WIF, passphrase) : key
-          const storedWallet = await getWallet()
-          if (walletName && walletHasLabel(storedWallet, walletName)) {
-            onFailure()
-            return dispatchError(
-              'A wallet with this name already exists locally',
-            )
-          }
-
-          if (walletHasKey(storedWallet, encryptedWIF)) {
-            onFailure()
-            return dispatchError('A  already exists locally')
-          }
-
-          dispatch(
-            saveAccountActions.call({
-              isImport,
-              label: walletName,
-              address,
-              key: encryptedWIF,
-            }),
-          )
-
-          dispatch(hideNotification(infoNotificationId))
-          dispatch(
-            newWalletAccount({
-              account: {
-                wif: WIF,
-                address,
-                passphrase,
-                encryptedWIF,
-                walletName,
-              },
-              isImport,
-            }),
-          )
-
-          if (wif) history.push(ROUTES.HOME)
-          if (authenticated)
-            history.push(ROUTES.DISPLAY_WALLET_KEYS_AUTHENTICATED)
-          else history.push(ROUTES.DISPLAY_WALLET_KEYS)
-          return true
-        } catch (e) {
+      try {
+        const account = new wallet.Account(wif || wallet.generatePrivateKey())
+        const { WIF, address } = account
+        const encryptedWIF =
+          keyOption === 'WIF' ? wallet.encrypt(WIF, passphrase) : key
+        const storedWallet = await getWallet()
+        if (walletName && walletHasLabel(storedWallet, walletName)) {
           onFailure()
-          console.error(e)
-          return dispatchError(
-            `An error occured while trying to ${
-              isImport ? 'import' : 'generate'
-            } a new wallet`,
-          )
+          return dispatchError('A wallet with this name already exists locally')
         }
-      }, 500),
-    )
+
+        if (walletHasKey(storedWallet, encryptedWIF)) {
+          onFailure()
+          return dispatchError('A  already exists locally')
+        }
+
+        dispatch(
+          saveAccountActions.call({
+            isImport,
+            label: walletName,
+            address,
+            key: encryptedWIF,
+          }),
+        )
+
+        dispatch(hideNotification(infoNotificationId))
+        dispatch(
+          newWalletAccount({
+            account: {
+              wif: WIF,
+              address,
+              passphrase,
+              encryptedWIF,
+              walletName,
+            },
+            isImport,
+          }),
+        )
+
+        if (wif) history.push(ROUTES.HOME)
+        if (authenticated)
+          history.push(ROUTES.DISPLAY_WALLET_KEYS_AUTHENTICATED)
+        else history.push(ROUTES.DISPLAY_WALLET_KEYS)
+        return true
+      } catch (e) {
+        onFailure()
+        console.error(e)
+        return dispatchError(
+          `An error occured while trying to ${
+            isImport ? 'import' : 'generate'
+          } a new wallet`,
+        )
+      }
+    })
     .catch(e => {
       onFailure()
       console.error(e)
