@@ -214,7 +214,7 @@ export function validateInputs(
   }
 }
 
-type KeyOption = 'WIF' | 'ENCRYPTED_WIF' // keyof typeof IMPORT_WALLET_KEY_OPTIONS
+type KeyOption = 'WIF' | 'ENCRYPTED_WIF'
 
 export const generateNewWalletAccount = (
   passphrase: string,
@@ -241,7 +241,7 @@ export const generateNewWalletAccount = (
   // If the key is not given, it means that the user has choosen
   // the option 'Create Wallet'. Therefore isImport = false.
   // If the key is given, isImport = true.
-  const isImport = key === null
+  const isImport = key !== null
 
   const setWIF = async () => {
     wif = keyOption === 'WIF' ? key : await decryptEncryptedWIF(key, passphrase)
