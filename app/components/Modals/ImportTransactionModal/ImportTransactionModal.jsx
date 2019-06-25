@@ -347,12 +347,10 @@ export default class GeneratedTransactionModal extends React.Component<
     display: string,
   }> => {
     const { isOfflineMode, isWatchOnly } = this.props
-    console.log({ isWatchOnly })
     if (isOfflineMode) {
       return [this.generateOptions().signTransaction]
     }
     if (isWatchOnly) {
-      console.log('foo')
       return [this.generateOptions().broadcastTransaction]
     }
     return [
