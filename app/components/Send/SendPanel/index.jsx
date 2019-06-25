@@ -115,7 +115,6 @@ const SendPanel = ({
         renderIcon={() => <EditIcon />}
         type="submit"
         disabled={shouldDisableSendButton(sendRowDetails)}
-        shouldCenterButtonLabelText
         onClick={() => handleSubmit(true)}
         id="generate-transaction-json"
       >
