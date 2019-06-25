@@ -1,5 +1,6 @@
 .transactionOutput {
   background-color: var(--panel-header);
+  color: var(--base-text);
   font-size: 10px;
   width: 525px;
   padding: 12px;
@@ -45,6 +46,7 @@
 .transactionInput {
   width: 100%;
   background-color: var(--panel-header);
+  color: var(--base-text);
   margin: 12px 0 24px 0;
   padding: 12px;
   box-sizing: border-box;
