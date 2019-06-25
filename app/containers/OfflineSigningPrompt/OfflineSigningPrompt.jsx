@@ -17,6 +17,7 @@ type Props = {
   logout: () => void,
   showImportModal: () => void,
   promptHasBeenDisplayed: boolean => void,
+  isWatchOnly: boolean,
 }
 
 export default class OfflineSigningPrompt extends Component<Props> {
@@ -31,6 +32,7 @@ export default class OfflineSigningPrompt extends Component<Props> {
       logout,
       showImportModal,
       promptHasBeenDisplayed,
+      isWatchOnly,
     } = this.props
     const dynamicImage = theme === 'Light' ? lightLogo : darkLogo
 
@@ -38,15 +40,23 @@ export default class OfflineSigningPrompt extends Component<Props> {
       <div style={themes[theme]} className={styles.container}>
         <img className={styles.logo} src={dynamicImage} alt="" />
         <h1>It looks like your machine is offline...</h1>
-        <Button
-          renderIcon={() => <Edit />}
-          shouldCenterButtonLabelText
-          className={styles.signButton}
-          onClick={() => showImportModal()}
-          primary
-        >
-          Sign Transaction
-        </Button>
+        {isWatchOnly && (
+          <h4>
+            Log in with a private key, encrypted key or ledger to sign
+            transactions offline
+          </h4>
+        )}
+        {!isWatchOnly && (
+          <Button
+            renderIcon={() => <Edit />}
+            shouldCenterButtonLabelText
+            className={styles.signButton}
+            onClick={() => showImportModal()}
+            primary
+          >
+            Sign Transaction
+          </Button>
+        )}
         <Link to={ROUTES.DASHBOARD}>
           <Button
             renderIcon={() => <Home />}

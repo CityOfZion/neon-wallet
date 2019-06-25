@@ -40,9 +40,10 @@ type Props = {
   net: string,
   theme: string,
   isOfflineMode: boolean,
-  isHardwareLogin: Boolean,
+  isHardwareLogin: boolean,
   signingFunction?: () => void,
   publicKey?: string,
+  isWatchOnly: boolean,
 }
 
 type State = {
@@ -216,7 +217,10 @@ export default class GeneratedTransactionModal extends React.Component<
     }
   }
 
-  generateOptions = () => ({
+  generateOptions = (): {
+    signTransaction: { render: () => any, display: string },
+    broadcastTransaction: { render: () => any, display: string },
+  } => ({
     signTransaction: {
       render: () => {
         if (this.state.signedTx) {
@@ -338,15 +342,31 @@ export default class GeneratedTransactionModal extends React.Component<
     },
   })
 
-  tabOptions = !this.props.isOfflineMode
-    ? // $FlowFixMe
-      Object.keys(this.generateOptions()).map(
-        (key: string) => this.generateOptions()[key],
-      )
-    : [this.generateOptions().signTransaction]
+  tabOptions = (): Array<{
+    render: () => any,
+    display: string,
+  }> => {
+    const { isOfflineMode, isWatchOnly } = this.props
+    console.log({ isWatchOnly })
+    if (isOfflineMode) {
+      return [this.generateOptions().signTransaction]
+    }
+    if (isWatchOnly) {
+      console.log('foo')
+      return [this.generateOptions().broadcastTransaction]
+    }
+    return [
+      this.generateOptions().signTransaction,
+      this.generateOptions().broadcastTransaction,
+    ]
+  }
 
   render() {
     const { hideModal } = this.props
+    const tabOptions: Array<{
+      render: () => any,
+      display: string,
+    }> = this.tabOptions()
 
     return (
       <BaseModal
@@ -375,7 +395,7 @@ export default class GeneratedTransactionModal extends React.Component<
                 </div>
               </div>
 
-              {this.tabOptions.length > 1 ? (
+              {tabOptions.length > 1 ? (
                 <Tabs
                   selectedIndex={this.state.tabIndex}
                   onSelect={tabIndex => {
@@ -384,13 +404,13 @@ export default class GeneratedTransactionModal extends React.Component<
                   className={classNames('neon-tabs', styles.tabs)}
                 >
                   <TabList>
-                    {this.tabOptions.map(option => (
+                    {tabOptions.map(option => (
                       <Tab key={option.display}>
                         {option.display.toUpperCase()}
                       </Tab>
                     ))}
                   </TabList>
-                  {this.tabOptions.map(option => (
+                  {tabOptions.map(option => (
                     <TabPanel
                       key={option.display}
                       selectedClassName={styles.homeTabPanel}
@@ -400,7 +420,7 @@ export default class GeneratedTransactionModal extends React.Component<
                   ))}
                 </Tabs>
               ) : (
-                this.tabOptions[0].render()
+                tabOptions[0].render()
               )}
             </Fragment>
           )}

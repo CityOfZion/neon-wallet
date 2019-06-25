@@ -10,6 +10,7 @@ import withThemeData from '../../hocs/withThemeData'
 import { logoutActions } from '../../actions/authActions'
 import { MODAL_TYPES } from '../../core/constants'
 import { internetConnectionPromptPresented } from '../../actions/internetConnectivityPromptActions'
+import withAuthData from '../../hocs/withAuthData'
 
 type Props = {
   logout: Function,
@@ -45,4 +46,5 @@ export default compose(
   withActions(logoutActions, mapActionsToProps),
   withActions(internetConnectionPromptPresented, mapPromptActionsToProps),
   withThemeData(),
+  withAuthData(),
 )(OfflineSigningPrompt)
