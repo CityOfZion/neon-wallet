@@ -207,9 +207,7 @@ export const sendTransaction = ({
       fees,
       url,
       balance: undefined,
-      tx: {
-        serialize: () => undefined,
-      },
+      tx: undefined,
       intents: undefined,
       script: undefined,
       gas: undefined,
@@ -245,6 +243,7 @@ export const sendTransaction = ({
         }
 
         const feeSize = calculateTransactionFees(
+          // $FlowFixMe
           hexStringToByteArray(config.tx.serialize()),
         )
 
