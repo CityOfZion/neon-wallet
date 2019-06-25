@@ -1,7 +1,10 @@
 // @flow
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import { noop } from 'lodash-es'
-
+import { ROUTES } from '../../../core/constants'
+import GridIcon from '../../../assets/icons/grid.svg'
+import AddIcon from '../../../assets/icons/add.svg'
 import LockIcon from '../../../assets/icons/lock.svg'
 import CopyToClipboard from '../../CopyToClipboard'
 import Button from '../../Button'
@@ -39,6 +42,21 @@ export default class EncryptSuccess extends React.Component<Props> {
               />
             </div>
           </div>
+          <div className={styles.buttonContainer}>
+            <Button renderIcon={AddIcon} primary onClick={this.handlePrint}>
+              Print
+            </Button>
+            <NavLink
+              id="display-encrypted-wif-qr"
+              exact
+              to={ROUTES.DISPLAY_ENCRYPTED_WIF_QR}
+            >
+              <Button primary renderIcon={() => <GridIcon />} type="submit">
+                Generate QR Code
+              </Button>
+            </NavLink>
+          </div>
+
           <Button
             className={styles.encryptResetButton}
             onClick={handleReset}
@@ -50,5 +68,9 @@ export default class EncryptSuccess extends React.Component<Props> {
         </div>
       </section>
     )
+  }
+
+  handlePrint = () => {
+    window.print()
   }
 }

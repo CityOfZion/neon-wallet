@@ -33,12 +33,16 @@ $encrypt-icon-size: 24px;
     border-radius: 4px;
 
     input {
-      font-size: 14px;
+      font-size: 11.5px;
       background: transparent;
     }
 
     .copy {
-      flex: 0 0 auto;
+      margin-left: -20px;
+      margin-top: 5px;
+      height: 100%;
+      z-index: 1;
+      margin-right: -25px;
     }
   }
 
@@ -50,5 +54,26 @@ $encrypt-icon-size: 24px;
       width: $encrypt-icon-size;
       height: $encrypt-icon-size;
     }
+  }
+}
+
+.buttonContainer {
+  width: 100%;
+  margin-top: auto;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 50px;
+  flex: 1;
+  justify-content: space-between;
+
+  button {
+    width: 225px;
+  }
+
+  button:first-child {
+    margin-right: 12px;
+  }
+  button:last-child {
+    margin-right: 0;
   }
 }

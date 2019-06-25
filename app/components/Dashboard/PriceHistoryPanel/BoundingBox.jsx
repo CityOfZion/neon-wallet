@@ -132,6 +132,7 @@ export default class BoundingBox extends React.Component<Props, State> {
 
     const { paddingX, paddingY } = this.props
 
+    // eslint-disable-next-line
     return {
       x: position.x - paddingX,
       y: position.y - paddingY,

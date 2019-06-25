@@ -49,6 +49,7 @@ export default class LoadingPanel extends React.Component<Props> {
         </a>
       )
     }
+    return null
   }
 
   handleRetry = (event: Object) => {

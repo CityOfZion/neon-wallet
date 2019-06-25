@@ -59,7 +59,7 @@ export const convertOldWalletAccount = (
   key: string,
   isDefault: boolean,
 ) => {
-  if (!key || typeof key !== 'string') return
+  if (!key || typeof key !== 'string') return null
   return new Account({
     address: '', // Unfortunately all we have is the encrypted private keys, so no way to get this for now.
     label,
@@ -127,6 +127,7 @@ export const recoverWallet = (wallet: Object): Promise<*> =>
 
       // If for some reason we have no NEP-6 wallet stored, create a default.
       if (!data) {
+        // eslint-disable-next-line no-param-reassign
         data = { ...DEFAULT_WALLET }
       }
 
@@ -237,6 +238,7 @@ export const generateNewWalletAccount = (
       autoDismiss: 0,
     }),
   )
+
   let wif = ''
   // If the key is not given, it means that the user has choosen
   // the option 'Create Wallet'. Therefore isImport = false.

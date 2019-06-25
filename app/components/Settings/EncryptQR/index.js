@@ -1,12 +1,12 @@
 // @flow
 import { connect } from 'react-redux'
-import { compose } from 'recompose'
 import { bindActionCreators } from 'redux'
+
 import {
   getEncryptedWIF,
   resetEncryptedWIF,
 } from '../../../modules/generateEncryptedWIF'
-import EncryptPanel from './EncryptPanel'
+import EncryptQR from './EncryptQR'
 
 const mapStateToProps = (state: Object) => ({
   encryptedWIF: getEncryptedWIF(state),
@@ -19,9 +19,7 @@ const actionCreators = {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(actionCreators, dispatch)
 
-export default compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  ),
-)(EncryptPanel)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(EncryptQR)

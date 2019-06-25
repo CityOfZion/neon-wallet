@@ -99,6 +99,7 @@ export default class NumberInput extends React.Component<Props, State> {
         </Button>
       )
     }
+    return null
   }
 
   handleFocus = (event: Object, ...args: Array<any>) => {
@@ -122,14 +123,15 @@ export default class NumberInput extends React.Component<Props, State> {
     if (onChange) {
       return onChange(event, event.target.rawValue)
     }
+    return null
   }
 
   handleMaxValue = () => {
     const { onChange, max } = this.props
-
     if (onChange) {
       return onChange(max)
     }
+    return null
   }
 
   getOptions = () => ({ ...DEFAULT_OPTIONS, ...this.props.options })

@@ -16,7 +16,6 @@ type Props = {
   showAddContactModal: (from: string) => void,
   contactFromExists: boolean,
   from: string,
-  address: string,
   contactFrom: React$Node | string,
   contactFromExists: boolean,
 }
@@ -32,10 +31,9 @@ export default class ReceiveAbstract extends React.Component<Props> {
       showAddContactModal,
       contactFromExists,
       from,
-      address,
     } = this.props
     const isMintTokens = from === 'MINT TOKENS'
-    const isGasClaim = address === from && !Number(amount)
+
     return (
       <div className={classNames(styles.transactionContainer)}>
         <div className={styles.abstractContainer}>
