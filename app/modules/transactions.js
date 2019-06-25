@@ -30,12 +30,11 @@ import { addPendingTransaction } from '../actions/pendingTransactionActions'
 const RPC_TIMEOUT_OVERRIDE = 60000
 settings.timeout.rpc = RPC_TIMEOUT_OVERRIDE
 
-const {
-  reverseHex,
-  getScriptHashFromAddress,
-  ab2hexstring,
-  generateRandomArray,
-} = u
+const { reverseHex, ab2hexstring } = u
+
+const MAX_FREE_TX_SIZE = 1024
+const FEE_PER_EXTRA_BYTE = 0.00001
+const LOW_PRIORITY_THRESHOLD_GAS_AMOUNT = 0.001
 
 const extractTokens = (sendEntries: Array<SendEntryType>) =>
   sendEntries.filter(({ symbol }) => isToken(symbol))
@@ -119,9 +118,32 @@ const attachAttributesForEmptyTransaction = (config: api.apiConfig) => {
   return config
 }
 
+// Convert a hex string to a byte array (adopted from crypto js)
+const hexStringToByteArray = (hex = '0') => {
+  // eslint-disable-next-line
+  for (var bytes = [], c = 0; c < hex.length; c += 2)
+    bytes.push(parseInt(hex.substr(c, 2), 16))
+  // eslint-disable-next-line
+  return bytes
+}
+
+const calculateTransactionFees = bytes => {
+  let fee = 0
+
+  if (bytes.length > MAX_FREE_TX_SIZE) {
+    const requiredFee = FEE_PER_EXTRA_BYTE * (bytes.length - MAX_FREE_TX_SIZE)
+    if (requiredFee < LOW_PRIORITY_THRESHOLD_GAS_AMOUNT) {
+      fee = LOW_PRIORITY_THRESHOLD_GAS_AMOUNT
+    } else {
+      fee = requiredFee
+    }
+  }
+  return fee
+}
+
 export const sendTransaction = ({
   sendEntries,
-  fees,
+  fees = 0,
   isWatchOnly,
 }: {
   sendEntries: Array<SendEntryType>,
@@ -185,7 +207,9 @@ export const sendTransaction = ({
       fees,
       url,
       balance: undefined,
-      tx: undefined,
+      tx: {
+        serialize: () => undefined,
+      },
       intents: undefined,
       script: undefined,
       gas: undefined,
@@ -219,6 +243,17 @@ export const sendTransaction = ({
           api.createTx(config, 'contract')
           attachAttributesForEmptyTransaction(config)
         }
+
+        const feeSize = calculateTransactionFees(
+          hexStringToByteArray(config.tx.serialize()),
+        )
+
+        if (feeSize > config.fees) {
+          throw new Error(
+            `Based on the size of this transaction a fee of at least ${feeSize} GAS is required`,
+          )
+        }
+
         return resolve(config)
       }
       const { response } = await makeRequest(sendEntries, config, script)
