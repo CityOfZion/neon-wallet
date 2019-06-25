@@ -10,7 +10,7 @@ import {
   YAxis,
   Tooltip,
 } from 'recharts'
-import { get, isEmpty } from 'lodash-es'
+import { get } from 'lodash-es'
 
 import AxisLabel from './AxisLabel'
 import { formatFiat } from '../../../core/formatters'
