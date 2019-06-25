@@ -38,6 +38,11 @@ type State = {
 
 const PASS_MIN_LENGTH = 4
 
+const LOOKUP_KEY = {
+  WIF: 'Private Key',
+  ENCRYPTED_WIF: 'Encrypted Key',
+}
+
 export default class CreateWallet extends React.Component<Props, State> {
   state = {
     passphrase: '',
@@ -52,13 +57,9 @@ export default class CreateWallet extends React.Component<Props, State> {
     importTabIndex: 0,
   }
 
-  imporKeyOption = (niceText: boolean = false) => {
-    const lookkup = {
-      WIF: 'Private Key',
-      ENCRYPTED_WIF: 'Encrypted Key',
-    }
+  importKeyOption = (niceText: boolean = false) => {
     const keyOption = this.state.importTabIndex === 0 ? 'WIF' : 'ENCRYPTED_WIF'
-    return niceText ? lookkup[keyOption] : keyOption
+    return niceText ? LOOKUP_KEY[keyOption] : keyOption
   }
 
   createWalletAccount = (e: SyntheticMouseEvent<*>) => {
@@ -72,7 +73,7 @@ export default class CreateWallet extends React.Component<Props, State> {
       passphrase,
       passphrase2,
       option === 'IMPORT' ? key : null,
-      option === 'IMPORT' ? this.imporKeyOption() : 'WIF',
+      option === 'IMPORT' ? this.importKeyOption() : 'WIF',
       history,
       walletName,
       authenticated,
@@ -103,6 +104,10 @@ export default class CreateWallet extends React.Component<Props, State> {
       )
     }
 
+    if (option === 'IMPORT') {
+      conditionalPanelProps.renderInstructions = false
+    }
+
     return (
       <FullHeightPanel
         headerText={option === 'CREATE' ? 'Create New Wallet' : 'Import Wallet'}
@@ -127,7 +132,7 @@ export default class CreateWallet extends React.Component<Props, State> {
             >
               {option === 'IMPORT' && (
                 <div>
-                  <div className={styles.inputContainer}>
+                  <div className={styles.tabContainer}>
                     <Tabs
                       selectedIndex={importTabIndex}
                       onSelect={importTabIndex =>
@@ -136,8 +141,10 @@ export default class CreateWallet extends React.Component<Props, State> {
                       className="neon-tabs"
                     >
                       <TabList>
-                        <Tab key="WIF">Private Key</Tab>
-                        <Tab key="ENCRYPTED_WIF">Encrypted Key</Tab>
+                        <Tab key="WIF"> {LOOKUP_KEY.WIF.toUpperCase()}</Tab>
+                        <Tab key="ENCRYPTED_WIF">
+                          {LOOKUP_KEY.ENCRYPTED_WIF.toUpperCase()}
+                        </Tab>
                       </TabList>
                       <div>
                         <TabPanel key="WIF" />
@@ -147,9 +154,9 @@ export default class CreateWallet extends React.Component<Props, State> {
                   </div>
                   <PasswordInput
                     value={key}
-                    label={this.imporKeyOption(true)}
+                    label={this.importKeyOption(true)}
                     onChange={e => this.setState({ key: e.target.value })}
-                    placeholder={this.imporKeyOption(true)}
+                    placeholder={this.importKeyOption(true)}
                     autoFocus
                   />
                 </div>
