@@ -260,12 +260,16 @@ export const generateNewWalletAccount = (
         const storedWallet = await getWallet()
         if (walletName && walletHasLabel(storedWallet, walletName)) {
           onFailure()
-          return dispatchError('A wallet with this name already exists locally')
+          return dispatchError(
+            'A wallet with this name already exists locally.',
+          )
         }
 
         if (walletHasKey(storedWallet, encryptedWIF)) {
           onFailure()
-          return dispatchError('A  already exists locally')
+          return dispatchError(
+            'A wallet with this encrypted key already exists locally.',
+          )
         }
 
         dispatch(
