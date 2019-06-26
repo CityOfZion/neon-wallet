@@ -249,7 +249,7 @@ export const sendTransaction = ({
 
         if (feeSize > config.fees) {
           throw new Error(
-            `Based on the size of this transaction a fee of at least ${feeSize} GAS is required`,
+            `Based on the size of this transaction a fee of at least ${feeSize} GAS is required.`,
           )
         }
 
