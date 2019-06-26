@@ -134,7 +134,6 @@ export const hexStringToByteArray = (hex: string = '0') => {
 
 export const calculateTransactionFees = (bytes: Array<number>) => {
   let fee = 0
-  console.log('bytes', bytes.length)
   if (bytes.length > MAX_FREE_TX_SIZE) {
     const requiredFee = FEE_PER_EXTRA_BYTE * (bytes.length - MAX_FREE_TX_SIZE)
     if (requiredFee < LOW_PRIORITY_THRESHOLD_GAS_AMOUNT) {
@@ -149,9 +148,8 @@ export const calculateTransactionFees = (bytes: Array<number>) => {
 export const checkConfigForFees = (config: {
   fees: number,
   tx: { serialize: () => string } | void,
-}): Promise<void> => {
-  return new Promise((resolve, reject) => {
-    console.log('checking config for fees')
+}): Promise<void> =>
+  new Promise((resolve, reject) => {
     if (config.tx) {
       const feeSize = calculateTransactionFees(
         hexStringToByteArray(config.tx.serialize()),
@@ -172,7 +170,6 @@ export const checkConfigForFees = (config: {
     }
     return resolve()
   })
-}
 
 export const sendTransaction = ({
   sendEntries,
