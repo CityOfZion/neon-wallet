@@ -293,7 +293,7 @@ export const sendTransaction = ({
       return resolve(response)
     } catch (err) {
       console.error({ err })
-      checkConfigForFees(config)
+      return checkConfigForFees(config)
         .then(() => {
           rejectTransaction(`Transaction failed: ${err.message}`)
           return reject(err)
