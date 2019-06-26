@@ -164,9 +164,9 @@ export default class Send extends React.Component<Props, State> {
 
       if (newState.length < MAX_NUMBER_OF_RECIPIENTS) {
         newState.push(this.generateRow(row))
-
         return { sendRowDetails: newState }
       }
+      return prevState
     })
   }
 

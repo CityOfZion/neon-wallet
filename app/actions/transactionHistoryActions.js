@@ -3,7 +3,6 @@ import axios from 'axios'
 import { api } from '@cityofzion/neon-js'
 import { createActions } from 'spunky'
 
-import { getDefaultTokens } from '../core/nep5'
 import { TX_TYPES } from '../core/constants'
 import { findAndReturnTokenInfo } from '../util/findAndReturnTokenInfo'
 

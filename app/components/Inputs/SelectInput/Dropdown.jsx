@@ -35,6 +35,7 @@ class Dropdown extends React.Component<Props> {
       const DropdownContent = this.props.renderDropdown
       return <DropdownContent className={styles.content} />
     }
+    return null
   }
 
   handleClickOutside = () => {
