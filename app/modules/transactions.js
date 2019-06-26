@@ -1,7 +1,7 @@
 // @flow
 /* eslint-disable camelcase */
 import { api, sc, u, wallet, settings } from '@cityofzion/neon-js'
-import { flatMap, keyBy, isEmpty, get } from 'lodash-es'
+import { flatMap, keyBy, isEmpty, get, cloneDeep } from 'lodash-es'
 
 import {
   showErrorNotification,
@@ -79,9 +79,11 @@ const buildTransferScript = (
 
 const makeRequest = (
   sendEntries: Array<SendEntryType>,
-  config: Object,
+  _config: Object,
   script: string,
 ) => {
+  const config = cloneDeep(_config)
+
   // NOTE: We purposefully mutate the contents of config
   // because neon-js will also mutate this same object by reference
   config.intents = buildIntents(sendEntries)

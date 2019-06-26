@@ -1,7 +1,7 @@
 // @flow
 import { createActions } from 'spunky'
 import Neon from '@cityofzion/neon-js'
-import { isEmpty, cloneDeep } from 'lodash-es'
+import { isEmpty } from 'lodash-es'
 
 import { toBigNumber } from '../core/math'
 import { getStorage, setStorage } from '../core/storage'
