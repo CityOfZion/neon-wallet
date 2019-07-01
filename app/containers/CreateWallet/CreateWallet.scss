@@ -27,3 +27,12 @@
   margin-top: auto;
   margin-bottom: 50px;
 }
+
+.tabContainer {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  align-items: center;
+  margin-bottom: -10px;
+  margin-top: 20px;
+}

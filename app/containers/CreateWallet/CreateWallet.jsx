@@ -1,8 +1,8 @@
 // @flow
 
 import React from 'react'
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import { ROUTES } from '../../core/constants'
-
 import PasswordInput from '../../components/Inputs/PasswordInput'
 import TextInput from '../../components/Inputs/TextInput'
 import CloseButton from '../../components/CloseButton'
@@ -30,12 +30,18 @@ type State = {
   passphrase2Valid: boolean,
   passphraseError: string,
   passphrase2Error: string,
-  wif: string,
+  key: string,
+  importTabIndex: number,
   walletName: string,
   submitButtonDisabled: boolean,
 }
 
 const PASS_MIN_LENGTH = 4
+
+const LOOKUP_KEY = {
+  WIF: 'Private Key',
+  ENCRYPTED_WIF: 'Encrypted Key',
+}
 
 export default class CreateWallet extends React.Component<Props, State> {
   state = {
@@ -45,21 +51,29 @@ export default class CreateWallet extends React.Component<Props, State> {
     passphrase2Valid: false,
     passphraseError: '',
     passphrase2Error: '',
-    wif: '',
+    key: '',
     walletName: '',
     submitButtonDisabled: false,
+    importTabIndex: 0,
+  }
+
+  importKeyOption = (niceText: boolean = false) => {
+    const keyOption = this.state.importTabIndex === 0 ? 'WIF' : 'ENCRYPTED_WIF'
+    return niceText ? LOOKUP_KEY[keyOption] : keyOption
   }
 
   createWalletAccount = (e: SyntheticMouseEvent<*>) => {
     this.setState({ submitButtonDisabled: true })
     e.preventDefault()
     const { history, option } = this.props
-    const { passphrase, passphrase2, wif, walletName } = this.state
+    const { passphrase, passphrase2, key, walletName } = this.state
     const { generateNewWalletAccount, authenticated } = this.props
+
     generateNewWalletAccount(
       passphrase,
       passphrase2,
-      option === 'IMPORT' ? wif : null,
+      option === 'IMPORT' ? key : null,
+      option === 'IMPORT' ? this.importKeyOption() : 'WIF',
       history,
       walletName,
       authenticated,
@@ -68,7 +82,13 @@ export default class CreateWallet extends React.Component<Props, State> {
   }
 
   render = () => {
-    const { passphraseError, passphrase2Error, wif, walletName } = this.state
+    const {
+      passphraseError,
+      passphrase2Error,
+      key,
+      walletName,
+      importTabIndex,
+    } = this.state
     const { option, authenticated } = this.props
     const conditionalPanelProps = {}
     if (authenticated) {
@@ -82,6 +102,10 @@ export default class CreateWallet extends React.Component<Props, State> {
       conditionalPanelProps.renderCloseButton = () => (
         <CloseButton routeTo={ROUTES.HOME} />
       )
+    }
+
+    if (option === 'IMPORT') {
+      conditionalPanelProps.renderInstructions = false
     }
 
     return (
@@ -107,14 +131,37 @@ export default class CreateWallet extends React.Component<Props, State> {
               onSubmit={this.createWalletAccount}
             >
               {option === 'IMPORT' && (
-                <PasswordInput
-                  value={wif}
-                  label="Private Key"
-                  onChange={e => this.setState({ wif: e.target.value })}
-                  placeholder="Private Key"
-                  autoFocus
-                />
+                <div>
+                  <div className={styles.tabContainer}>
+                    <Tabs
+                      selectedIndex={importTabIndex}
+                      onSelect={importTabIndex =>
+                        this.setState({ importTabIndex })
+                      }
+                      className="neon-tabs"
+                    >
+                      <TabList>
+                        <Tab key="WIF"> {LOOKUP_KEY.WIF.toUpperCase()}</Tab>
+                        <Tab key="ENCRYPTED_WIF">
+                          {LOOKUP_KEY.ENCRYPTED_WIF.toUpperCase()}
+                        </Tab>
+                      </TabList>
+                      <div>
+                        <TabPanel key="WIF" />
+                        <TabPanel key="ENCRYPTED_WIF" />
+                      </div>
+                    </Tabs>
+                  </div>
+                  <PasswordInput
+                    value={key}
+                    label={this.importKeyOption(true)}
+                    onChange={e => this.setState({ key: e.target.value })}
+                    placeholder={this.importKeyOption(true)}
+                    autoFocus
+                  />
+                </div>
               )}
+
               <TextInput
                 value={walletName}
                 label="Wallet Name"
@@ -191,7 +238,7 @@ export default class CreateWallet extends React.Component<Props, State> {
     const {
       passphraseValid,
       passphrase2Valid,
-      wif,
+      key,
       walletName,
       submitButtonDisabled,
     } = this.state
@@ -201,6 +248,6 @@ export default class CreateWallet extends React.Component<Props, State> {
     if (option === 'CREATE') {
       return !(validPassphrase && !!walletName)
     }
-    return !(validPassphrase && !!walletName && !!wif)
+    return !(validPassphrase && !!walletName && !!key)
   }
 }
