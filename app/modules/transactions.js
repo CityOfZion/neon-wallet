@@ -27,14 +27,19 @@ import { toNumber } from '../core/math'
 import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 import { addPendingTransaction } from '../actions/pendingTransactionActions'
 
-const RPC_TIMEOUT_OVERRIDE = 60000
-settings.timeout.rpc = RPC_TIMEOUT_OVERRIDE
-
 const { reverseHex, ab2hexstring } = u
 
 const MAX_FREE_TX_SIZE = 1024
 const FEE_PER_EXTRA_BYTE = 0.00001
 const LOW_PRIORITY_THRESHOLD_GAS_AMOUNT = 0.001
+const RPC_TIMEOUT_OVERRIDE = 60000
+const FEE_OPTIONS = {
+  LOW: 0.001,
+  MEDIUM: 0.05,
+  HIGH: 0.1,
+}
+
+settings.timeout.rpc = RPC_TIMEOUT_OVERRIDE
 
 const extractTokens = (sendEntries: Array<SendEntryType>) =>
   sendEntries.filter(({ symbol }) => isToken(symbol))
@@ -79,19 +84,20 @@ const buildTransferScript = (
 
 const makeRequest = (
   sendEntries: Array<SendEntryType>,
-  _config: Object,
+  config: Object,
   script: string,
 ) => {
-  const config = cloneDeep(_config)
-
   // NOTE: We purposefully mutate the contents of config
   // because neon-js will also mutate this same object by reference
+  // eslint-disable-next-line no-param-reassign
   config.intents = buildIntents(sendEntries)
 
   if (script === '') {
     return api.sendAsset(config, api.neoscan)
   }
+  // eslint-disable-next-line no-param-reassign
   config.script = script
+  // eslint-disable-next-line no-param-reassign
   config.gas = 0
   return api.doInvoke(config, api.neoscan)
 }
@@ -121,7 +127,7 @@ const attachAttributesForEmptyTransaction = (config: api.apiConfig) => {
 }
 
 // Convert a hex string to a byte array (adopted from crypto js)
-const hexStringToByteArray = (hex = '0') => {
+export const hexStringToByteArray = (hex: string = '0') => {
   // eslint-disable-next-line
   for (var bytes = [], c = 0; c < hex.length; c += 2)
     bytes.push(parseInt(hex.substr(c, 2), 16))
@@ -129,9 +135,8 @@ const hexStringToByteArray = (hex = '0') => {
   return bytes
 }
 
-const calculateTransactionFees = bytes => {
+export const calculateTransactionFees = (bytes: Array<number>) => {
   let fee = 0
-
   if (bytes.length > MAX_FREE_TX_SIZE) {
     const requiredFee = FEE_PER_EXTRA_BYTE * (bytes.length - MAX_FREE_TX_SIZE)
     if (requiredFee < LOW_PRIORITY_THRESHOLD_GAS_AMOUNT) {
@@ -142,6 +147,32 @@ const calculateTransactionFees = bytes => {
   }
   return fee
 }
+
+export const checkConfigForFees = (config: {
+  fees: number,
+  tx: { serialize: () => string } | void,
+}): Promise<void> =>
+  new Promise((resolve, reject) => {
+    if (config.tx) {
+      const feeSize = calculateTransactionFees(
+        hexStringToByteArray(config.tx.serialize()),
+      )
+      if (feeSize > config.fees) {
+        const gasFeeOption = Object.keys(FEE_OPTIONS)
+          .map(key => FEE_OPTIONS[key])
+          .find((feeOption: number) => feeOption >= feeSize)
+
+        return reject(
+          new Error(
+            `Based on the size of this transaction a fee of at least ${gasFeeOption ||
+              feeSize} GAS is required.`,
+          ),
+        )
+      }
+      return resolve()
+    }
+    return resolve()
+  })
 
 export const sendTransaction = ({
   sendEntries,
@@ -244,16 +275,7 @@ export const sendTransaction = ({
           attachAttributesForEmptyTransaction(config)
         }
 
-        const feeSize = calculateTransactionFees(
-          // $FlowFixMe
-          hexStringToByteArray(config.tx.serialize()),
-        )
-
-        if (feeSize > config.fees) {
-          throw new Error(
-            `Based on the size of this transaction a fee of at least ${feeSize} GAS is required.`,
-          )
-        }
+        await checkConfigForFees(config)
 
         return resolve(config)
       }
@@ -272,8 +294,15 @@ export const sendTransaction = ({
       return resolve(response)
     } catch (err) {
       console.error({ err })
-      rejectTransaction(`Transaction failed: ${err.message}`)
-      return reject(err)
+      return checkConfigForFees(config)
+        .then(() => {
+          rejectTransaction(`Transaction failed: ${err.message}`)
+          return reject(err)
+        })
+        .catch(e => {
+          rejectTransaction(`Transaction failed: ${e.message}`)
+          return reject(e)
+        })
     } finally {
       const hash = get(config, 'tx.hash')
 
