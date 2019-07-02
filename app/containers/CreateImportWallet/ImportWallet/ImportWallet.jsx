@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import { ROUTES } from '../../../core/constants'
 import CloseButton from '../../../components/CloseButton'
@@ -12,22 +12,19 @@ import ImportIcon from '../../../assets/icons/import.svg'
 import AddIcon from '../../../assets/icons/add.svg'
 import styles from './ImportWallet.scss'
 
+/* eslint-disable react/no-unused-prop-types */
 type Props = {
-  // eslint-disable-next-line react/no-unused-prop-types
   authenticated: boolean,
-  // eslint-disable-next-line react/no-unused-prop-types
   setAccounts: (Array<Object>) => any,
-  // eslint-disable-next-line react/no-unused-prop-types
-  showSuccessNotification: Object => any,
-  // eslint-disable-next-line react/no-unused-prop-types
-  showErrorNotification: Object => any,
+  showSuccessNotification: ({ message: string }) => string,
+  showErrorNotification: ({ message: string }) => string,
 }
 
 type State = {
   tabIndex: number,
 }
 
-const IMPORT_KEY_OPTIONS = {
+const IMPORT_OPTIONS = {
   WIF: {
     render: (props: Props) => (
       <CreateImportWalletForm
@@ -51,25 +48,31 @@ const IMPORT_KEY_OPTIONS = {
 
   RECOVER_WALLET: {
     render: (props: Props) => (
-      <div
-        className={styles.buttonContainer}
-        onClick={() => {
-          loadWalletRecovery(
-            props.showSuccessNotification,
-            props.showErrorNotification,
-            props.setAccounts,
-          )
-        }}
-      >
-        <Button
-          renderIcon={AddIcon}
-          type="submit"
-          shouldCenterButtonLabelText
-          primary
+      <Fragment>
+        <p>
+          Upload a JSON wallet recovery file here to add your accounts to Neon.
+          This option is also available on the Settings page.
+        </p>
+        <div
+          className={styles.buttonContainer}
+          onClick={() => {
+            loadWalletRecovery(
+              props.showSuccessNotification,
+              props.showErrorNotification,
+              props.setAccounts,
+            )
+          }}
         >
-          Import File
-        </Button>
-      </div>
+          <Button
+            renderIcon={AddIcon}
+            type="submit"
+            shouldCenterButtonLabelText
+            primary
+          >
+            Import File
+          </Button>
+        </div>
+      </Fragment>
     ),
     display: 'Recover Wallet',
   },
@@ -81,8 +84,8 @@ export default class ImportWallet extends React.Component<Props, State> {
   }
 
   // $FlowFixMe
-  options = Object.keys(IMPORT_KEY_OPTIONS).map(
-    (key: string) => IMPORT_KEY_OPTIONS[key],
+  options = Object.keys(IMPORT_OPTIONS).map(
+    (key: string) => IMPORT_OPTIONS[key],
   )
 
   render = () => {
