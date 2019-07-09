@@ -10,14 +10,13 @@ import {
   DISCORD_INVITE_LINK,
 } from '../../../core/constants'
 
-const { shell } = require('electron').remote
-
 type Props = {
   hideModal: () => any,
 }
 
 export default class GitHubIssueModal extends React.Component<Props> {
   render() {
+    const { shell } = require('electron').remote
     const { hideModal } = this.props
     return (
       <BaseModal
