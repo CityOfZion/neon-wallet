@@ -10,6 +10,7 @@ import ReceiveModal from '../../components/Modals/ReceiveModal'
 import SendModal from '../../components/Modals/SendModal'
 import GeneratedTransactionModal from '../../components/Modals/GeneratedTransactionModal'
 import ImportTransactionModal from '../../components/Modals/ImportTransactionModal'
+import GitHubIssueModal from '../../components/Modals/GitHubIssueModal'
 
 import { MODAL_TYPES } from '../../core/constants'
 
@@ -22,6 +23,7 @@ const {
   RECEIVE,
   GENERATED_TRANSACTION,
   IMPORT_TRANSACTION,
+  GITHUB_ISSUE,
 } = MODAL_TYPES
 
 const MODAL_COMPONENTS = {
@@ -33,6 +35,7 @@ const MODAL_COMPONENTS = {
   [SEND]: SendModal,
   [GENERATED_TRANSACTION]: GeneratedTransactionModal,
   [IMPORT_TRANSACTION]: ImportTransactionModal,
+  [GITHUB_ISSUE]: GitHubIssueModal,
 }
 
 type Props = {

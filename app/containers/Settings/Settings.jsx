@@ -20,7 +20,6 @@ import {
   ROUTES,
   MODAL_TYPES,
   COZ_DONATIONS_ADDRESS,
-  DISCORD_INVITE_LINK,
   THEMES,
 } from '../../core/constants'
 import styles from './Settings.scss'
@@ -36,7 +35,7 @@ import TimeIcon from '../../assets/icons/time-icon.svg'
 import SaveIcon from '../../assets/icons/save-icon.svg'
 import pack from '../../../package.json'
 
-const { dialog, shell } = require('electron').remote
+const { dialog } = require('electron').remote
 
 type Props = {
   setAccounts: (Array<Object>) => any,
@@ -96,7 +95,6 @@ export const loadWalletRecovery = (
     })
   })
 }
-
 export default class Settings extends Component<Props, State> {
   static defaultProps = {
     explorer: DEFAULT_EXPLORER,
@@ -191,13 +189,16 @@ export default class Settings extends Component<Props, State> {
     this.props.showModal(MODAL_TYPES.TOKEN)
   }
 
+  openGitHubIssueModal = () => {
+    this.props.showModal(MODAL_TYPES.GITHUB_ISSUE)
+  }
+
   render() {
     const {
       showSuccessNotification,
       showErrorNotification,
       setAccounts,
     } = this.props
-
     const parsedCurrencyOptions = Object.keys(CURRENCIES).map(key => ({
       value: key,
       label: key.toUpperCase(),
@@ -354,16 +355,13 @@ export default class Settings extends Component<Props, State> {
     </div>
   )
 
-  openDiscordLink = () => shell.openExternal(DISCORD_INVITE_LINK)
-
   renderHeader = () => (
     <div className={styles.settingsPanelHeader}>
       <div className={styles.settingsPanelHeaderItem}>
         Manage your neon wallet - v{pack.version}
       </div>
       <div className={styles.settingsPanelHeaderItem}>
-        Community Support:{' '}
-        <a onClick={this.openDiscordLink}>{DISCORD_INVITE_LINK}</a>
+        <a onClick={this.openGitHubIssueModal}>Need Help?</a>
       </div>
     </div>
   )

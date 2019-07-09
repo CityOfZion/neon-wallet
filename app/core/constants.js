@@ -6,6 +6,13 @@ import nodesTestNet from './nodes-test-net.json'
 export const NEON_WALLET_RELEASE_LINK =
   'https://github.com/CityOfZion/neon-wallet/releases'
 
+export const GITHUB_ISSUE_LINK =
+  'https://github.com/CityOfZion/neon-wallet/issues/new'
+
+export const AWESOME_NEO_LINK =
+  'https://github.com/CityOfZion/awesome-NEO/blob/master/resources/faq.md'
+
+export const REDDIT_NEO_LINK = 'https://www.reddit.com/r/NEO/'
 export const DISCORD_INVITE_LINK = 'https://discordapp.com/invite/R8v48YA'
 export const COZ_DONATIONS_ADDRESS = 'Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A'
 
@@ -92,6 +99,7 @@ export const MODAL_TYPES = {
   RECEIVE: 'RECEIVE',
   GENERATED_TRANSACTION: 'GENERATED_TRANSACTION',
   IMPORT_TRANSACTION: 'IMPORT_TRANSACTION',
+  GITHUB_ISSUE: 'GITHUB_ISSUE',
 }
 
 export const TX_TYPES = {
