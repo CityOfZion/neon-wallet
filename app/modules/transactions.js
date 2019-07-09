@@ -27,7 +27,18 @@ import { toNumber } from '../core/math'
 import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 import { addPendingTransaction } from '../actions/pendingTransactionActions'
 
+const { reverseHex, ab2hexstring } = u
+
+const MAX_FREE_TX_SIZE = 1024
+const FEE_PER_EXTRA_BYTE = 0.00001
+const LOW_PRIORITY_THRESHOLD_GAS_AMOUNT = 0.001
 const RPC_TIMEOUT_OVERRIDE = 60000
+const FEE_OPTIONS = {
+  LOW: 0.001,
+  MEDIUM: 0.05,
+  HIGH: 0.1,
+}
+
 settings.timeout.rpc = RPC_TIMEOUT_OVERRIDE
 
 const extractTokens = (sendEntries: Array<SendEntryType>) =>
@@ -73,18 +84,20 @@ const buildTransferScript = (
 
 const makeRequest = (
   sendEntries: Array<SendEntryType>,
-  _config: Object,
+  config: Object,
   script: string,
 ) => {
-  const config = cloneDeep(_config)
-
   // NOTE: We purposefully mutate the contents of config
   // because neon-js will also mutate this same object by reference
+  // eslint-disable-next-line no-param-reassign
   config.intents = buildIntents(sendEntries)
+
   if (script === '') {
     return api.sendAsset(config, api.neoscan)
   }
+  // eslint-disable-next-line no-param-reassign
   config.script = script
+  // eslint-disable-next-line no-param-reassign
   config.gas = 0
   return api.doInvoke(config, api.neoscan)
 }
@@ -101,12 +114,74 @@ export const generateBalanceInfo = (
   })
 }
 
+// This adds some random bits to the transaction to prevent any hash collision.
+const attachAttributesForEmptyTransaction = (config: api.apiConfig) => {
+  config.tx.addAttribute(
+    32,
+    reverseHex(wallet.getScriptHashFromAddress(config.address)),
+  )
+  config.tx.addRemark(
+    Date.now().toString() + ab2hexstring(wallet.generateRandomArray(4)),
+  )
+  return config
+}
+
+// Convert a hex string to a byte array (adopted from crypto js)
+export const hexStringToByteArray = (hex: string = '0') => {
+  // eslint-disable-next-line
+  for (var bytes = [], c = 0; c < hex.length; c += 2)
+    bytes.push(parseInt(hex.substr(c, 2), 16))
+  // eslint-disable-next-line
+  return bytes
+}
+
+export const calculateTransactionFees = (bytes: Array<number>) => {
+  let fee = 0
+  if (bytes.length > MAX_FREE_TX_SIZE) {
+    const requiredFee = FEE_PER_EXTRA_BYTE * (bytes.length - MAX_FREE_TX_SIZE)
+    if (requiredFee < LOW_PRIORITY_THRESHOLD_GAS_AMOUNT) {
+      fee = LOW_PRIORITY_THRESHOLD_GAS_AMOUNT
+    } else {
+      fee = requiredFee
+    }
+  }
+  return fee
+}
+
+export const checkConfigForFees = (config: {
+  fees: number,
+  tx: { serialize: () => string } | void,
+}): Promise<void> =>
+  new Promise((resolve, reject) => {
+    if (config.tx) {
+      const feeSize = calculateTransactionFees(
+        hexStringToByteArray(config.tx.serialize()),
+      )
+      if (feeSize > config.fees) {
+        const gasFeeOption = Object.keys(FEE_OPTIONS)
+          .map(key => FEE_OPTIONS[key])
+          .find((feeOption: number) => feeOption >= feeSize)
+
+        return reject(
+          new Error(
+            `Based on the size of this transaction a fee of at least ${gasFeeOption ||
+              feeSize} GAS is required.`,
+          ),
+        )
+      }
+      return resolve()
+    }
+    return resolve()
+  })
+
 export const sendTransaction = ({
   sendEntries,
-  fees,
+  fees = 0,
+  isWatchOnly,
 }: {
   sendEntries: Array<SendEntryType>,
   fees: number,
+  isWatchOnly?: boolean,
 }) => (dispatch: DispatchType, getState: GetStateType): Promise<*> =>
   new Promise(async (resolve, reject) => {
     const state = getState()
@@ -138,14 +213,15 @@ export const sendTransaction = ({
       return reject(error)
     }
 
-    dispatch(
-      showInfoNotification({
-        message: 'Sending Transaction...',
-        autoDismiss: 0,
-      }),
-    )
+    if (!isWatchOnly)
+      dispatch(
+        showInfoNotification({
+          message: 'Broadcasting transaction to network...',
+          autoDismiss: 0,
+        }),
+      )
 
-    if (isHardwareSend) {
+    if (isHardwareSend && !isWatchOnly) {
       dispatch(
         showInfoNotification({
           message: 'Please sign the transaction on your hardware device',
@@ -164,6 +240,10 @@ export const sendTransaction = ({
       fees,
       url,
       balance: undefined,
+      tx: undefined,
+      intents: undefined,
+      script: undefined,
+      gas: undefined,
     }
     const balanceResults = await api
       .getBalanceFrom({ net, address: fromAddress }, api.neoscan)
@@ -183,6 +263,22 @@ export const sendTransaction = ({
         // $FlowFixMe
         config.tokensBalanceMap,
       )
+      if (isWatchOnly) {
+        config.intents = buildIntents(sendEntries)
+        config.script = script
+        if (script) {
+          config.gas = 0
+          api.createTx(config, 'invocation')
+          attachAttributesForEmptyTransaction(config)
+        } else {
+          api.createTx(config, 'contract')
+          attachAttributesForEmptyTransaction(config)
+        }
+
+        await checkConfigForFees(config)
+
+        return resolve(config)
+      }
       const { response } = await makeRequest(sendEntries, config, script)
 
       if (!response.result) {
@@ -198,19 +294,29 @@ export const sendTransaction = ({
       return resolve(response)
     } catch (err) {
       console.error({ err })
-      rejectTransaction(`Transaction failed: ${err.message}`)
-      return reject(err)
+      return checkConfigForFees(config)
+        .then(() => {
+          rejectTransaction(`Transaction failed: ${err.message}`)
+          return reject(err)
+        })
+        .catch(e => {
+          rejectTransaction(`Transaction failed: ${e.message}`)
+          return reject(e)
+        })
     } finally {
       const hash = get(config, 'tx.hash')
-      dispatch(
-        addPendingTransaction.call({
-          address: config.address,
-          tx: {
-            hash,
-            sendEntries,
-          },
-          net,
-        }),
-      )
+
+      if (!isWatchOnly) {
+        dispatch(
+          addPendingTransaction.call({
+            address: config.address,
+            tx: {
+              hash,
+              sendEntries,
+            },
+            net,
+          }),
+        )
+      }
     }
   })

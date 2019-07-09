@@ -25,6 +25,7 @@ import NodeSelect from '../../containers/NodeSelect'
 import News from '../../containers/News'
 import EncryptQR from '../Settings/EncryptQR'
 import { ROUTES } from '../../core/constants'
+import OfflineSigningPrompt from '../../containers/OfflineSigningPrompt'
 
 export default () => (
   <App>
@@ -115,6 +116,11 @@ export default () => (
         component={TransactionHistory}
       />
       <PrivateRoute exact path={ROUTES.NEWS} component={News} />
+      <PrivateRoute
+        exact
+        path={ROUTES.OFFLINE_SIGNING_PROMPT}
+        component={OfflineSigningPrompt}
+      />
       <Redirect to={ROUTES.DASHBOARD} />
     </Switch>
   </App>

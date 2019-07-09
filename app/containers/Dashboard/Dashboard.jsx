@@ -1,25 +1,24 @@
 // @flow
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Redirect } from 'react-router-dom'
 
 import { ROUTES } from '../../core/constants'
 import AssetBalancesPanel from '../../components/Dashboard/AssetBalancesPanel'
 import TokenBalancesPanel from '../../components/Dashboard/TokenBalancesPanel'
 import PriceHistoryPanel from '../../components/Dashboard/PriceHistoryPanel'
-
 import HeaderBar from '../../components/HeaderBar'
 import Address from '../../components/Blockchain/Address'
 import PortfolioPanel from '../../components/Dashboard/PortfolioPanel'
 import Wallet from '../../assets/icons/wallet.svg'
-
 import RefreshButton from '../Buttons/RefreshButton'
-
 import styles from './Dashboard.scss'
 
 type Props = {
   loadWalletData: Function,
   address: string,
+  hasInternetConnectivity: boolean,
+  internetConnectionPromptPresented: Boolean,
 }
 
 const REFRESH_INTERVAL_MS = 30000
@@ -43,7 +42,14 @@ export default class Dashboard extends Component<Props> {
   }
 
   render() {
-    const { address } = this.props
+    const {
+      address,
+      hasInternetConnectivity,
+      internetConnectionPromptPresented,
+    } = this.props
+    if (!hasInternetConnectivity && !internetConnectionPromptPresented) {
+      return <Redirect to={ROUTES.OFFLINE_SIGNING_PROMPT} />
+    }
     return (
       <div id="dashboard" className={styles.dashboard}>
         <HeaderBar

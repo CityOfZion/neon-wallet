@@ -61,6 +61,7 @@ export const ROUTES = {
   NODE_SELECT: '/node-select',
   VOTING: '/voting',
   NEWS: '/news',
+  OFFLINE_SIGNING_PROMPT: '/offline-signing-prompt',
 }
 
 export const NOTIFICATION_LEVELS = {
@@ -89,6 +90,8 @@ export const MODAL_TYPES = {
   ICO: 'ICO',
   ADD_CONTACT: 'ADD_CONTACT',
   RECEIVE: 'RECEIVE',
+  GENERATED_TRANSACTION: 'GENERATED_TRANSACTION',
+  IMPORT_TRANSACTION: 'IMPORT_TRANSACTION',
 }
 
 export const TX_TYPES = {

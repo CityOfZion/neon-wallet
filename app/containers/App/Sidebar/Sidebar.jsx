@@ -22,17 +22,15 @@ type Props = {
   className: string,
   theme: ThemeType,
   pendingTransactionsCount: number,
-  wif?: string,
+  isWatchOnly?: boolean,
 }
 
 const Sidebar = ({
   className,
   theme,
   pendingTransactionsCount,
-  wif,
+  isWatchOnly,
 }: Props) => {
-  const isWatchOnly = !wif
-
   const themeBasedLogo =
     theme === 'Light' ? LightLogoWithoutText : DarkLogoWithoutText
 
@@ -70,18 +68,16 @@ const Sidebar = ({
           <div> Activity </div>
         </NavLink>
 
-        {!isWatchOnly && (
-          <NavLink
-            id="send"
-            exact
-            to={ROUTES.SEND}
-            className={styles.navItem}
-            activeClassName={styles.active}
-          >
-            <SendIcon />
-            <div> Send </div>
-          </NavLink>
-        )}
+        <NavLink
+          id="send"
+          exact
+          to={ROUTES.SEND}
+          className={styles.navItem}
+          activeClassName={styles.active}
+        >
+          <SendIcon />
+          <div> Send </div>
+        </NavLink>
 
         <NavLink
           id="receive"

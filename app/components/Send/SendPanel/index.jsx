@@ -13,6 +13,7 @@ import SendError from './SendError'
 import ZeroAssets from '../../ZeroAssets/ZeroAssets'
 import { pluralize } from '../../../util/pluralize'
 import SendIcon from '../../../assets/icons/send.svg'
+import EditIcon from '../../../assets/icons/edit.svg'
 
 import styles from './SendPanel.scss'
 import { isZero } from '../../../core/math'
@@ -32,9 +33,10 @@ type Props = {
   handleAddPriorityFee: number => any,
   address: string,
   maxNumberOfRecipients: number,
+  isWatchOnly?: boolean,
   resetViewsAfterError: () => any,
   resetViews: () => any,
-  handleSubmit: () => any,
+  handleSubmit: boolean => any,
   handleSend: () => any,
   clearErrors: (index: number, field: string) => any,
   addRow: (row?: Object) => any,
@@ -42,6 +44,7 @@ type Props = {
   updateRowField: (index: number, field: string, value: any) => any,
   handleEditRecipientsClick: () => any,
   showSendModal: (props: Object) => any,
+  showImportModal: (props: Object) => any,
   pushQRCodeData: (data: Object) => any,
   calculateMaxValue: (asset: string, index: number) => string,
 }
@@ -78,6 +81,8 @@ const SendPanel = ({
   pushQRCodeData,
   pendingTransaction,
   calculateMaxValue,
+  isWatchOnly,
+  showImportModal,
 }: Props) => {
   if (noSendableAssets) {
     return <ZeroAssets address={address} />
@@ -85,7 +90,7 @@ const SendPanel = ({
   const maxRecipientsMet = sendRowDetails.length === maxNumberOfRecipients
 
   let content = (
-    <form onSubmit={handleSubmit}>
+    <form>
       <SendRecipientList
         sendRowDetails={sendRowDetails}
         sendableAssets={sendableAssets}
@@ -95,8 +100,8 @@ const SendPanel = ({
         clearErrors={clearErrors}
         showConfirmSend={showConfirmSend}
         calculateMaxValue={calculateMaxValue}
+        isWatchOnly={isWatchOnly}
       />
-
       <div className={styles.priorityFeeContainer}>
         <PriorityFee
           availableGas={Number(get(sendableAssets, 'GAS.balance', 0))}
@@ -105,23 +110,36 @@ const SendPanel = ({
           disabled={shouldDisableSendButton(sendRowDetails)}
         />
       </div>
-
       <Button
-        primary
-        className={styles.sendFormButton}
-        renderIcon={() => <SendIcon />}
+        className={styles.generateTransactionButton}
+        renderIcon={() => <EditIcon />}
         type="submit"
         disabled={shouldDisableSendButton(sendRowDetails)}
+        onClick={() => handleSubmit(true)}
+        id="generate-transaction-json"
       >
-        Send {pluralize('Asset', sendRowDetails.length)}{' '}
-        {fees ? 'With Fee' : 'Without Fee'}
+        Generate Transaction JSON
       </Button>
+      {!isWatchOnly && (
+        <Button
+          primary
+          className={styles.sendFormButton}
+          renderIcon={() => <SendIcon />}
+          type="submit"
+          disabled={shouldDisableSendButton(sendRowDetails)}
+          onClick={() => handleSubmit(false)}
+          id="send-assets"
+        >
+          Send {pluralize('Asset', sendRowDetails.length)}{' '}
+          {fees ? 'With Fee' : 'Without Fee'}
+        </Button>
+      )}
     </form>
   )
 
-  if (showConfirmSend) {
+  if (showConfirmSend && !isWatchOnly) {
     content = (
-      <form onSubmit={handleSend}>
+      <form onSubmit={() => handleSend()}>
         <SendRecipientList
           sendRowDetails={sendRowDetails}
           sendableAssets={sendableAssets}
@@ -174,6 +192,7 @@ const SendPanel = ({
             shouldDisableSendButton(sendRowDetails) || maxRecipientsMet
           }
           disableEnterQRCode={maxRecipientsMet}
+          showImportModal={showImportModal}
         />
       )}
       className={styles.sendSuccessPanel}
