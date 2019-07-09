@@ -7,10 +7,6 @@
   width: 500px;
 }
 
-.inputContainer {
-  height: 100%;
-}
-
 .createWalletForm {
   display: flex;
   flex-direction: column;
@@ -18,21 +14,7 @@
   flex: 1;
 }
 
-.iconDisplay {
-  display: flex;
-  margin-right: 10px;
-}
-
 .loginButtonMargin {
   margin-top: auto;
   margin-bottom: 50px;
-}
-
-.tabContainer {
-  display: flex;
-  flex-direction: column;
-  width: 500px;
-  align-items: center;
-  margin-bottom: -10px;
-  margin-top: 20px;
 }

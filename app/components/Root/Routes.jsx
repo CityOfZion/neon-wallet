@@ -5,7 +5,8 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import PrivateRoute from './PrivateRoute'
 import App from '../../containers/App'
 import Home from '../../containers/Home'
-import CreateWallet from '../../containers/CreateWallet'
+import CreateWallet from '../../containers/CreateImportWallet/CreateWallet'
+import ImportWallet from '../../containers/CreateImportWallet/ImportWallet'
 import Dashboard from '../../containers/Dashboard'
 import Receive from '../../containers/Receive'
 import Contacts from '../../containers/Contacts'
@@ -32,26 +33,22 @@ export default () => (
       <Route
         exact
         path={ROUTES.CREATE_WALLET}
-        render={props => <CreateWallet option="CREATE" {...props} />}
+        render={props => <CreateWallet {...props} />}
       />
       <Route
         exact
         path={ROUTES.CREATE_WALLET_AUTHENTICATED}
-        render={props => (
-          <CreateWallet option="CREATE" authenticated {...props} />
-        )}
+        render={props => <CreateWallet authenticated {...props} />}
       />
       <Route
         exact
         path={ROUTES.IMPORT_WALLET}
-        render={props => <CreateWallet option="IMPORT" {...props} />}
+        render={props => <ImportWallet {...props} />}
       />
       <Route
         exact
         path={ROUTES.IMPORT_WALLET_AUTHENTICATED}
-        render={props => (
-          <CreateWallet option="IMPORT" authenticated {...props} />
-        )}
+        render={props => <ImportWallet authenticated {...props} />}
       />
       <Route
         exact

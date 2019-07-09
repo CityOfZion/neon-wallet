@@ -1,10 +1,8 @@
 // @flow
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-
+import CreateImportWalletForm from './CreateImportWalletForm'
 import { generateNewWalletAccount } from '../../modules/generateWallet'
-
-import CreateWallet from './CreateWallet'
 
 const actionCreators = {
   generateNewWalletAccount,
@@ -16,4 +14,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   null,
   mapDispatchToProps,
-)(CreateWallet)
+)(CreateImportWalletForm)

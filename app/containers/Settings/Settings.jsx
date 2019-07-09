@@ -63,6 +63,40 @@ type State = {
   soundEnabled: boolean,
 }
 
+export const loadWalletRecovery = (
+  showSuccessNotification: Object => any,
+  showErrorNotification: Object => any,
+  setAccounts: (Array<Object>) => any,
+) => {
+  dialog.showOpenDialog(fileNames => {
+    // fileNames is an array that contains all the selected
+    if (!fileNames) {
+      return
+    }
+    const filepath = fileNames[0]
+    fs.readFile(filepath, 'utf-8', (err, data) => {
+      if (err) {
+        showErrorNotification({
+          message: `An error occurred reading the file: ${err.message}`,
+        })
+        return
+      }
+      const walletData = JSON.parse(data)
+
+      recoverWallet(walletData)
+        .then(data => {
+          showSuccessNotification({ message: 'Recovery was successful.' })
+          setAccounts(data.accounts)
+        })
+        .catch(err => {
+          showErrorNotification({
+            message: `An error occurred recovering wallet: ${err.message}`,
+          })
+        })
+    })
+  })
+}
+
 export default class Settings extends Component<Props, State> {
   static defaultProps = {
     explorer: DEFAULT_EXPLORER,
@@ -129,42 +163,6 @@ export default class Settings extends Component<Props, State> {
     })
   }
 
-  loadWalletRecovery = () => {
-    const {
-      showSuccessNotification,
-      showErrorNotification,
-      setAccounts,
-    } = this.props
-
-    dialog.showOpenDialog(fileNames => {
-      // fileNames is an array that contains all the selected
-      if (!fileNames) {
-        return
-      }
-      const filepath = fileNames[0]
-      fs.readFile(filepath, 'utf-8', (err, data) => {
-        if (err) {
-          showErrorNotification({
-            message: `An error occurred reading the file: ${err.message}`,
-          })
-          return
-        }
-        const walletData = JSON.parse(data)
-
-        recoverWallet(walletData)
-          .then(data => {
-            showSuccessNotification({ message: 'Recovery was successful.' })
-            setAccounts(data.accounts)
-          })
-          .catch(err => {
-            showErrorNotification({
-              message: `An error occurred recovering wallet: ${err.message}`,
-            })
-          })
-      })
-    })
-  }
-
   updateExplorerSettings = (option: SelectOption) => {
     this.setState({ selectedExplorer: option })
     const { setBlockExplorer } = this.props
@@ -194,6 +192,12 @@ export default class Settings extends Component<Props, State> {
   }
 
   render() {
+    const {
+      showSuccessNotification,
+      showErrorNotification,
+      setAccounts,
+    } = this.props
+
     const parsedCurrencyOptions = Object.keys(CURRENCIES).map(key => ({
       value: key,
       label: key.toUpperCase(),
@@ -300,7 +304,13 @@ export default class Settings extends Component<Props, State> {
               />
               <div className={styles.settingsSpacer} />
               <SettingsLink
-                onClick={this.loadWalletRecovery}
+                onClick={() =>
+                  loadWalletRecovery(
+                    showSuccessNotification,
+                    showErrorNotification,
+                    setAccounts,
+                  )
+                }
                 to={ROUTES.ENCRYPT}
                 label="IMPORT"
                 renderIcon={() => <TimeIcon />}
