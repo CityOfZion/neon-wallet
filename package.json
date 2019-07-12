@@ -206,7 +206,9 @@
     "lodash.mergewith": "4.6.2",
     "lodash.merge": "4.6.2",
     "merge": "1.2.1",
-    "atob": "2.1.0"
+    "atob": "2.1.0",
+    "lodash-es": "4.17.14",
+    "lodash": "4.17.13"
   },
   "jest": {
     "moduleNameMapper": {
