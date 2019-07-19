@@ -49,7 +49,7 @@ const IMPORT_OPTIONS = {
   RECOVER_WALLET: {
     render: (props: Props) => (
       <Fragment>
-        <p>
+        <p className={styles.importRecoveryInstructions}>
           Upload a JSON wallet recovery file here to add your accounts to Neon.
           This option is also available on the Settings page.
         </p>

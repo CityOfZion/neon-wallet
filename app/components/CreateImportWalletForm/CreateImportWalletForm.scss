@@ -14,7 +14,13 @@
   flex: 1;
 }
 
+.importWalletForm {
+  @extend .createWalletForm;
+  margin-top: -24px;
+}
+
 .loginButtonMargin {
   margin-top: auto;
   margin-bottom: 50px;
+  margin-top: 24px;
 }
