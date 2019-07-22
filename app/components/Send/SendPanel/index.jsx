@@ -110,17 +110,18 @@ const SendPanel = ({
           disabled={shouldDisableSendButton(sendRowDetails)}
         />
       </div>
-      <Button
-        className={styles.generateTransactionButton}
-        renderIcon={() => <EditIcon />}
-        type="submit"
-        disabled={shouldDisableSendButton(sendRowDetails)}
-        onClick={() => handleSubmit(true)}
-        id="generate-transaction-json"
-      >
-        Generate Transaction JSON
-      </Button>
-      {!isWatchOnly && (
+      {isWatchOnly ? (
+        <Button
+          className={styles.generateTransactionButton}
+          renderIcon={() => <EditIcon />}
+          type="submit"
+          disabled={shouldDisableSendButton(sendRowDetails)}
+          onClick={() => handleSubmit(true)}
+          id="generate-transaction-json"
+        >
+          Generate Transaction JSON
+        </Button>
+      ) : (
         <Button
           primary
           className={styles.sendFormButton}
