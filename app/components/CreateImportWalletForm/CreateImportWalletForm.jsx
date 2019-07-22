@@ -76,7 +76,11 @@ class CreateImportWalletForm extends React.Component<Props, State> {
     return (
       <div id="createWallet" className={styles.flexContainer}>
         <form
-          className={styles.createWalletForm}
+          className={
+            option === 'IMPORT'
+              ? styles.importWalletForm
+              : styles.createWalletForm
+          }
           onSubmit={this.createWalletAccount}
         >
           {option === 'IMPORT' && (
