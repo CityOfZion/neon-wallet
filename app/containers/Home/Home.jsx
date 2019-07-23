@@ -7,6 +7,7 @@ import LoginPrivateKey from '../LoginPrivateKey'
 import LoginNep2 from '../LoginNep2'
 import LoginLedgerNanoS from '../LoginLedgerNanoS'
 import LoginLocalStorage from '../LoginLocalStorage'
+import LoginWatchOnly from '../LoginWatchOnly'
 import Button from '../../components/Button'
 import styles from './Home.scss'
 import AddIcon from '../../assets/icons/add.svg'
@@ -18,7 +19,6 @@ import pack from '../../../package.json'
 type State = {
   tabIndex: number,
 }
-
 type Props = {
   loading: boolean,
   theme: ThemeType,
@@ -27,15 +27,19 @@ type Props = {
 const LOGIN_OPTIONS = {
   LOCAL_STORAGE: {
     render: () => <LoginLocalStorage />,
-    display: 'Saved Wallet',
+    display: 'Saved',
   },
   PRIVATE_KEY: {
     render: () => <LoginPrivateKey />,
-    display: 'Private Key',
+    display: 'Private',
   },
   NEP2: {
     render: () => <LoginNep2 />,
-    display: 'Encrypted Key',
+    display: 'Encrypted',
+  },
+  watch: {
+    render: () => <LoginWatchOnly />,
+    display: 'Watch',
   },
   ledger: {
     render: () => <LoginLedgerNanoS />,

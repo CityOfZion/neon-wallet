@@ -1,6 +1,5 @@
 // @flow
 import { api } from '@cityofzion/neon-js'
-import { isEmpty } from 'lodash-es'
 import { createActions } from 'spunky'
 
 import { getNode, getRPCEndpoint } from './nodeStorageActions'

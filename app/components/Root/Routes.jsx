@@ -5,7 +5,8 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import PrivateRoute from './PrivateRoute'
 import App from '../../containers/App'
 import Home from '../../containers/Home'
-import CreateWallet from '../../containers/CreateWallet'
+import CreateWallet from '../../containers/CreateImportWallet/CreateWallet'
+import ImportWallet from '../../containers/CreateImportWallet/ImportWallet'
 import Dashboard from '../../containers/Dashboard'
 import Receive from '../../containers/Receive'
 import Contacts from '../../containers/Contacts'
@@ -21,7 +22,10 @@ import Send from '../../containers/Send'
 import TokenSale from '../../containers/TokenSale'
 import Encrypt from '../../containers/Encrypt'
 import NodeSelect from '../../containers/NodeSelect'
+import News from '../../containers/News'
+import EncryptQR from '../Settings/EncryptQR'
 import { ROUTES } from '../../core/constants'
+import OfflineSigningPrompt from '../../containers/OfflineSigningPrompt'
 
 export default () => (
   <App>
@@ -30,26 +34,22 @@ export default () => (
       <Route
         exact
         path={ROUTES.CREATE_WALLET}
-        render={props => <CreateWallet option="CREATE" {...props} />}
+        render={props => <CreateWallet {...props} />}
       />
       <Route
         exact
         path={ROUTES.CREATE_WALLET_AUTHENTICATED}
-        render={props => (
-          <CreateWallet option="CREATE" authenticated {...props} />
-        )}
+        render={props => <CreateWallet authenticated {...props} />}
       />
       <Route
         exact
         path={ROUTES.IMPORT_WALLET}
-        render={props => <CreateWallet option="IMPORT" {...props} />}
+        render={props => <ImportWallet {...props} />}
       />
       <Route
         exact
         path={ROUTES.IMPORT_WALLET_AUTHENTICATED}
-        render={props => (
-          <CreateWallet option="IMPORT" authenticated {...props} />
-        )}
+        render={props => <ImportWallet authenticated {...props} />}
       />
       <Route
         exact
@@ -73,7 +73,11 @@ export default () => (
         path={ROUTES.DISPLAY_WALLET_QRS}
         render={props => <DisplayWalletAccountsQrCodes {...props} />}
       />
-
+      <Route
+        exact
+        path={ROUTES.DISPLAY_ENCRYPTED_WIF_QR}
+        render={props => <EncryptQR {...props} />}
+      />
       <Route exact path={ROUTES.SETTINGS} component={Settings} />
       <PrivateRoute
         exact
@@ -110,6 +114,12 @@ export default () => (
         exact
         path={ROUTES.TRANSACTION_HISTORY}
         component={TransactionHistory}
+      />
+      <PrivateRoute exact path={ROUTES.NEWS} component={News} />
+      <PrivateRoute
+        exact
+        path={ROUTES.OFFLINE_SIGNING_PROMPT}
+        component={OfflineSigningPrompt}
       />
       <Redirect to={ROUTES.DASHBOARD} />
     </Switch>

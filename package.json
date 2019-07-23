@@ -1,6 +1,6 @@
 {
   "name": "Neon",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",
   "homepage": "https://github.com/CityOfZion/neon-wallet",
@@ -8,10 +8,10 @@
   "scripts": {
     "postinstall": "electron-builder install-app-deps && electron-rebuild --force --module_dir . -w node-hid -v 1.8.4",
     "start": "cross-env NODE_ENV=production electron .",
-    "assets": "cross-env NODE_ENV=production webpack --config ./config/webpack.config.prod",
-    "dev": "cross-env START_HOT=1 NODE_ENV=development node_modules/.bin/webpack-dev-server --config ./config/webpack.config.dev",
-    "start-dev": "cross-env NODE_ENV=development electron . --enable-logging --remote-debugging-port=9222",
-    "assets-dev": "cross-env NODE_ENV=development webpack --config ./config/webpack.config.dev",
+    "assets": "cross-env NODE_ENV=production webpack --config ./config/webpack.config.prod --progress",
+    "dev": "cross-env START_HOT=1 NODE_ENV=development node_modules/.bin/webpack-dev-server --progress --config ./config/webpack.config.dev",
+    "start-dev": "cross-env NODE_ENV=development electron . --enable-logging --remote-debugging-port=9222 --progress",
+    "assets-dev": "cross-env NODE_ENV=development webpack --config ./config/webpack.config.dev --progress",
     "test": "npm rebuild node-hid && ./node_modules/.bin/jest --coverage",
     "test-ci": "yarn test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test:e2e": "ava __e2e__/*.e2e.js --timeout=120s -s",
@@ -71,7 +71,7 @@
   "dependencies": {
     "@cityofzion/neon-js": "3.11.9",
     "@ledgerhq/hw-transport-node-hid": "4.7.6",
-    "axios": "0.17.0",
+    "axios": "0.18.1",
     "axios-retry": "3.1.1",
     "bignumber.js": "5.0.0",
     "buffer": "5.0.8",
@@ -94,7 +94,7 @@
     "isomorphic-fetch": "2.2.1",
     "json2csv": "^4.3.5",
     "jsqr": "1.1.1",
-    "lodash-es": "4.17.11",
+    "lodash-es": "4.17.14",
     "moment": "2.22.2",
     "nock": "9.2.3",
     "prop-types": "15.6.2",
@@ -107,6 +107,7 @@
     "react-highlight-words": "0.12.0",
     "react-hot-loader": "4.6.3",
     "react-icons": "2.2.7",
+    "react-json-pretty": "^2.1.0",
     "react-modal": "3.1.2",
     "react-notification-system": "0.2.16",
     "react-redux": "5.0.6",
@@ -125,6 +126,7 @@
     "redux-saga": "0.16.0",
     "redux-thunk": "2.2.0",
     "reselect": "3.0.1",
+    "rss-parser": "^3.7.0",
     "sifter": "0.5.3",
     "spunky": "1.3.1",
     "svg-react-loader": "0.4.5",
@@ -196,6 +198,17 @@
     "webpack": "4.28.3",
     "webpack-cli": "3.2.0",
     "webpack-dev-server": "3.1.14"
+  },
+  "resolutions": {
+    "fstream": "^1.0.12",
+    "handlebars": "^4.0.14",
+    "js-yaml": "^3.13.1",
+    "lodash.mergewith": "4.6.2",
+    "lodash.merge": "4.6.2",
+    "merge": "1.2.1",
+    "atob": "2.1.0",
+    "lodash-es": "4.17.14",
+    "lodash": "4.17.13"
   },
   "jest": {
     "moduleNameMapper": {

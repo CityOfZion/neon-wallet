@@ -6,8 +6,10 @@ import generateWalletReducer, {
   convertOldWalletAccount,
   upgradeUserWalletNEP6,
   recoverWallet,
+  decryptEncryptedWIF,
   NEW_WALLET_ACCOUNT,
   RESET_WALLET_ACCOUNT,
+  validateInputs,
 } from '../../app/modules/generateWallet'
 
 import { DEFAULT_WALLET } from '../../app/core/constants'
@@ -58,6 +60,39 @@ describe('generateWallet module tests', () => {
       expect(generateWalletReducer(undefined, expectedAction)).toEqual(
         expectedState,
       )
+    })
+
+    test('test decryptEncryptedWIF: descrypt valid encrypted wif', async () => {
+      const expectedWIF = wif
+      const actualWIF = await decryptEncryptedWIF(encryptedWIF, passphrase)
+      expect(actualWIF).toEqual(expectedWIF)
+    })
+
+    test('test decryptEncryptedWIF: throw if the encrpyted wif is not valid ', async () => {
+      await expect(decryptEncryptedWIF('asa', passphrase)).rejects.toThrow(
+        'The encrypted key is not valid',
+      )
+    })
+
+    test('test validateInputs: Throw if the passphrase2 does not match passphrase ', () => {
+      expect(() => {
+        const passphrase2 = 'xxxxx'
+        validateInputs(wif, passphrase, passphrase2)
+      }).toThrow('Passphrases do not match')
+    })
+
+    test('test validateInputs: Throw if wif is not walid ', () => {
+      expect(() => {
+        const wifInvalid = 'abcd'
+        validateInputs(wifInvalid, passphrase, passphrase)
+      }).toThrow('The private key is not valid')
+    })
+
+    test('test validateInputs: Throw if passphrase is too short', () => {
+      expect(() => {
+        const shortPassphrase = 'adf'
+        validateInputs(wif, shortPassphrase, shortPassphrase)
+      }).toThrow('Please choose a longer passphrase')
     })
   })
 

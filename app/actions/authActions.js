@@ -2,6 +2,7 @@
 import { wallet } from '@cityofzion/neon-js'
 import { noop } from 'lodash-es'
 import { createActions } from 'spunky'
+import dns from 'dns'
 
 import { bindArgsFromN } from '../util/bindHelpers'
 import { resetBalanceState } from './balancesActions'
@@ -11,6 +12,10 @@ import { ledgerNanoSCreateSignatureAsync } from '../ledger/ledgerNanoS'
 
 type WifLoginProps = {
   wif: string,
+}
+
+type WatchOnlyLoginProps = {
+  address: string,
 }
 
 type LedgerLoginProps = {
@@ -30,23 +35,54 @@ type AccountType = ?{
   publicKey?: string,
   signingFunction?: Function,
   isHardwareLogin: boolean,
+  isWatchOnly?: boolean,
+  hasInternetConnectivity: boolean,
 }
 
 export const ID = 'auth'
 
+export const checkForInternetConnectivity = (): Promise<boolean> =>
+  new Promise(resolve => {
+    dns.resolve('google.com', 'A', err => {
+      if (err) {
+        return resolve(false)
+      }
+      return resolve(true)
+    })
+  })
+
 export const wifLoginActions = createActions(
   ID,
-  ({ wif }: WifLoginProps) => (): AccountType => {
+  ({ wif }: WifLoginProps) => async (): Promise<AccountType> => {
     if (!wallet.isWIF(wif) && !wallet.isPrivateKey(wif)) {
       throw new Error('Invalid private key entered')
     }
 
     const account = new wallet.Account(wif)
+    const hasInternetConnectivity = await checkForInternetConnectivity()
 
     return {
       wif: account.WIF,
       address: account.address,
       isHardwareLogin: false,
+      hasInternetConnectivity,
+    }
+  },
+)
+
+export const watchOnlyLoginActions = createActions(
+  ID,
+  ({ address }: WatchOnlyLoginProps) => async (): Promise<AccountType> => {
+    if (!wallet.isAddress(address)) {
+      throw new Error('Invalid public key entered')
+    }
+    const hasInternetConnectivity = await checkForInternetConnectivity()
+
+    return {
+      address,
+      isHardwareLogin: false,
+      isWatchOnly: true,
+      hasInternetConnectivity,
     }
   },
 )
@@ -69,19 +105,25 @@ export const nep2LoginActions = createActions(
 
     await upgradeNEP6AddAddresses(encryptedWIF, wif)
 
+    const hasInternetConnectivity = await checkForInternetConnectivity()
+
     return {
       wif: account.WIF,
       address: account.address,
       isHardwareLogin: false,
+      hasInternetConnectivity,
     }
   },
 )
 
 export const ledgerLoginActions = createActions(
   ID,
-  ({ publicKey, account }: LedgerLoginProps) => (): AccountType => {
+  ({ publicKey, account }: LedgerLoginProps) => async (): Promise<
+    AccountType,
+  > => {
     const publicKeyEncoded = wallet.getPublicKeyEncoded(publicKey)
     const walletAccount = new wallet.Account(publicKeyEncoded)
+    const hasInternetConnectivity = await checkForInternetConnectivity()
 
     return {
       publicKey,
@@ -92,6 +134,7 @@ export const ledgerLoginActions = createActions(
         account,
       ),
       isHardwareLogin: true,
+      hasInternetConnectivity,
     }
   },
 )

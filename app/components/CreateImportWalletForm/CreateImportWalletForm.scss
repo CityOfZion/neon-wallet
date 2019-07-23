@@ -7,10 +7,6 @@
   width: 500px;
 }
 
-.inputContainer {
-  height: 100%;
-}
-
 .createWalletForm {
   display: flex;
   flex-direction: column;
@@ -18,12 +14,13 @@
   flex: 1;
 }
 
-.iconDisplay {
-  display: flex;
-  margin-right: 10px;
+.importWalletForm {
+  @extend .createWalletForm;
+  margin-top: -24px;
 }
 
 .loginButtonMargin {
   margin-top: auto;
   margin-bottom: 50px;
+  margin-top: 24px;
 }

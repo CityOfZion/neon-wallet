@@ -3,7 +3,6 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { ROUTES } from '../../../../core/constants'
-import styles from './ActivityLink.scss'
 
 type Props = {
   error: boolean,

@@ -5,15 +5,14 @@ import { NavLink } from 'react-router-dom'
 
 import Logout from './Logout'
 import styles from './Sidebar.scss'
-import Tooltip from '../../../components/Tooltip'
 import HomeIcon from '../../../assets/navigation/home.svg'
 import HistoryIcon from '../../../assets/navigation/history.svg'
 import SendIcon from '../../../assets/navigation/send.svg'
 import ReceiveIcon from '../../../assets/navigation/receive.svg'
 import ContactsIcon from '../../../assets/navigation/contacts.svg'
-import VotingIcon from '../../../assets/navigation/bars.svg'
 import TokenSaleIcon from '../../../assets/navigation/tokens.svg'
 import SettingsIcon from '../../../assets/navigation/settings.svg'
+import NewsIcon from '../../../assets/navigation/news.svg'
 import { ROUTES } from '../../../core/constants'
 
 import LightLogoWithoutText from '../../../assets/images/logo-without-text-black.png'
@@ -23,9 +22,15 @@ type Props = {
   className: string,
   theme: ThemeType,
   pendingTransactionsCount: number,
+  isWatchOnly?: boolean,
 }
 
-const Sidebar = ({ className, theme, pendingTransactionsCount }: Props) => {
+const Sidebar = ({
+  className,
+  theme,
+  pendingTransactionsCount,
+  isWatchOnly,
+}: Props) => {
   const themeBasedLogo =
     theme === 'Light' ? LightLogoWithoutText : DarkLogoWithoutText
 
@@ -95,22 +100,26 @@ const Sidebar = ({ className, theme, pendingTransactionsCount }: Props) => {
           <div> Contacts </div>
         </NavLink>
 
+        {!isWatchOnly && (
+          <NavLink
+            id="tokensale"
+            to={ROUTES.TOKEN_SALE}
+            className={styles.navItem}
+            activeClassName={styles.active}
+          >
+            <TokenSaleIcon />
+            <div> Token Sale </div>
+          </NavLink>
+        )}
         <NavLink
-          id="tokensale"
-          to={ROUTES.TOKEN_SALE}
+          id="News"
+          to={ROUTES.NEWS}
           className={styles.navItem}
           activeClassName={styles.active}
         >
-          <TokenSaleIcon />
-          <div> Token Sale </div>
+          <NewsIcon />
+          <div> News </div>
         </NavLink>
-
-        <Tooltip title="Coming Soon" position="right">
-          <div id="voting" className={styles.disabledNavIem}>
-            <VotingIcon />
-            <div> Voting </div>
-          </div>
-        </Tooltip>
 
         <NavLink
           id="settings"

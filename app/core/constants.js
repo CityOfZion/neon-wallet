@@ -52,6 +52,7 @@ export const ROUTES = {
   DISPLAY_WALLET_KEYS_AUTHENTICATED: '/display-wallet-keys-authenticated',
   DISPLAY_WALLET_QRS: '/display-wallet-qrs',
   DISPLAY_WALLET_QRS_AUTHENTICATED: '/display-wallet-qrs-authenticated',
+  DISPLAY_ENCRYPTED_WIF_QR: '/display-encrypted-wif-qr',
   WALLET_MANAGER: '/wallet-manager',
   EDIT_WALLET: '/edit-wallet/:key/:label',
   SEND: '/send/',
@@ -59,6 +60,8 @@ export const ROUTES = {
   ENCRYPT: '/encrypt-private-key',
   NODE_SELECT: '/node-select',
   VOTING: '/voting',
+  NEWS: '/news',
+  OFFLINE_SIGNING_PROMPT: '/offline-signing-prompt',
 }
 
 export const NOTIFICATION_LEVELS = {
@@ -87,6 +90,8 @@ export const MODAL_TYPES = {
   ICO: 'ICO',
   ADD_CONTACT: 'ADD_CONTACT',
   RECEIVE: 'RECEIVE',
+  GENERATED_TRANSACTION: 'GENERATED_TRANSACTION',
+  IMPORT_TRANSACTION: 'IMPORT_TRANSACTION',
 }
 
 export const TX_TYPES = {

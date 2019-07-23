@@ -4,7 +4,7 @@
   width: 100%;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 40px;
 }
 
 .detailsContainer {
@@ -12,6 +12,7 @@
   flex-direction: column;
   justify-content: center;
   flex: 1;
+  margin-top: 15px;
 }
 
 .qrContainer {
@@ -28,8 +29,8 @@
   }
 
   canvas {
-    min-width: 200px;
-    min-height: 200px;
+    min-width: 180px;
+    min-height: 180px;
   }
 
   button {
@@ -47,7 +48,7 @@
 }
 
 .qrPrintButtonContainer {
-  margin-bottom: 50px;
+  margin-bottom: 40px;
   width: 490px;
 }
 
@@ -82,10 +83,10 @@
 
 .buttonContainer {
   width: 100%;
-  margin-top: auto;
   display: flex;
   align-items: flex-end;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
+  margin-top: 40px;
   flex: 1;
   justify-content: space-between;
 
@@ -113,7 +114,7 @@
 
 .reducedInputFontSize {
   input {
-    font-size: 12px !important;
+    font-size: 11.5px !important;
   }
 }
 

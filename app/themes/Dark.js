@@ -141,7 +141,12 @@ const QR_SCANNER = {
   '--qr-scan-animation-end': 'rgba(102, 237, 135, 0)',
 }
 
+const NEWS = {
+  '--news-content-border-color': 'rgba(141, 152, 174, .5)',
+}
+
 export default {
+  ...NEWS,
   ...CONTACTS,
   ...AMOUNTS_PANEL,
   ...NODE_SELECT,
