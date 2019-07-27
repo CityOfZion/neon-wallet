@@ -47,7 +47,6 @@ const getTokenEntry = ((): Function => {
 export const getDefaultTokens = async (): Promise<Array<TokenItemType>> => {
   const tokens = []
   // Prevent duplicate requests here
-
   if (!fetchedTokens) {
     const response = await axios
       // use a time stamp query param to prevent caching

@@ -55,15 +55,11 @@ async function getPrices() {
     const settings = await getSettings()
     const { currency } = settings
     const joinedTokens = tokens
-      .map((token: TokenItemType) => {
+      .map((token: TokenItemType) =>
         // We pass to the cryptocompare api the token cryptocompareSymbol
         // if they are available. Otherwise we pass the token symbol.
-        return get(
-          PRICE_API_SYMBOL_EXCEPTIONS.direct,
-          token.symbol,
-          token.symbol,
-        )
-      })
+        get(PRICE_API_SYMBOL_EXCEPTIONS.direct, token.symbol, token.symbol),
+      )
       .concat([ASSETS.NEO, ASSETS.GAS])
       .join(',')
 
