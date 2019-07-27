@@ -68,6 +68,7 @@
   },
   "AVA": {
     "symbol": "AVA",
+    "cryptocompareSymbol": "AVALA",
     "companyName": "Travala",
     "type": "NEP5",
     "networks": {
@@ -440,7 +441,8 @@
         "totalSupply": 1
       }
     },
-    "image": "https://rawgit.com/CityOfZion/neo-tokens/master/assets/svg/nnn.svg"
+    "image":
+      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/svg/nnn.svg"
   },
   "NOS": {
     "symbol": "NOS",
@@ -692,6 +694,7 @@
   },
   "SOUL": {
     "symbol": "SOUL",
+    "cryptocompareSymbol": "SOUL*",
     "companyName": "Phantasma",
     "type": "NEP5",
     "networks": {
