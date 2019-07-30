@@ -5,20 +5,22 @@ import { get, map } from 'lodash-es'
 
 import { getDefaultTokens } from '../core/nep5'
 import { getSettings } from './settingsActions'
-import { ASSETS, TOKENS } from '../core/constants'
+import { ASSETS } from '../core/constants'
 
-export const PRICE_API_SYMBOL_EXCEPTIONS = (() => {
+const getPriceApiSymbolExceptions = (tokens: Array<TokenItemType>) => {
   const directMap = {}
   const reverseMap = {}
 
-  map(TOKENS, token => {
+  map(tokens, token => {
     if (token.symbol !== undefined && token.cryptocompareSymbol !== undefined) {
       directMap[token.symbol] = token.cryptocompareSymbol
+      // $FlowFixMe
       reverseMap[token.cryptocompareSymbol] = token.symbol
     }
   })
+
   return { direct: directMap, reverse: reverseMap }
-})()
+}
 
 function mapPrices(pricingData: Array<any>, currency) {
   const upperCasedCurrency = currency.toUpperCase()
@@ -52,6 +54,8 @@ const apiCallWrapper = async (url, currency) => {
 async function getPrices() {
   try {
     const tokens = await getDefaultTokens()
+    const PRICE_API_SYMBOL_EXCEPTIONS = getPriceApiSymbolExceptions(tokens)
+
     const settings = await getSettings()
     const { currency } = settings
     const joinedTokens = tokens
