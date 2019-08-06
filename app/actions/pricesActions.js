@@ -6,6 +6,7 @@ import { get, map } from 'lodash-es'
 import { getDefaultTokens } from '../core/nep5'
 import { getSettings } from './settingsActions'
 import { ASSETS } from '../core/constants'
+import { toFixedDecimals } from '../core/formatters'
 
 const getPriceApiSymbolExceptions = (tokens: Array<TokenItemType>) => {
   const directMap = {}
@@ -24,7 +25,7 @@ const getPriceApiSymbolExceptions = (tokens: Array<TokenItemType>) => {
 
 function mapPrices(pricingData: Array<any>, currency) {
   const upperCasedCurrency = currency.toUpperCase()
-  const prices = pricingData.reduce(
+  return pricingData.reduce(
     (accum: Object, price: { currency: { upperCasedCurrency: Object } }) => {
       const priceInSelectedCurrency = price[upperCasedCurrency]
       if (price && priceInSelectedCurrency) {
@@ -37,18 +38,27 @@ function mapPrices(pricingData: Array<any>, currency) {
     },
     {},
   )
-
-  return prices
 }
 
 const apiCall = async url => {
-  const priceDataResponse = await axios.get(url)
-  return Object.values(priceDataResponse.data.RAW)
+  const priceDataResponse = await axios.get(url).catch(error => {
+    console.error(`Unable to retrieve prices from the api ${url}`, error)
+    return undefined
+  })
+
+  if (priceDataResponse !== undefined && priceDataResponse !== null) {
+    return Object.values(priceDataResponse.data.RAW)
+  }
+
+  return []
 }
 
 const apiCallWrapper = async (url, currency) => {
   const pricingArray = await apiCall(url)
-  return mapPrices(pricingArray, currency)
+  if (pricingArray !== []) {
+    return mapPrices(pricingArray, currency)
+  }
+  return {}
 }
 
 async function getPrices() {
@@ -79,13 +89,13 @@ async function getPrices() {
     // Build final prices map
     Object.entries(neoPrices).forEach(([key, value]) => {
       if (!(key in prices)) {
-        prices[key] = parseFloat(value) * prices.NEO
+        prices[key] = toFixedDecimals(parseFloat(value) * prices.NEO, 2)
       }
     })
 
-    // Adjust price map keys: within the app we use the token symbol to retrieve the price.
-    // Therefore we need to replace the token cryptocompareSimbol key with the corrisponding token
-    // Symbol.
+    // Within the neon-wallet app, we use the token's symbol to retrieve the token's price.
+    // Therefore if any key in the price object is a "cryptocompare" symbol,
+    // we have to replace it by the corresponding token's symbol.
     Object.entries(prices).forEach(([key, value]) => {
       prices[get(PRICE_API_SYMBOL_EXCEPTIONS.reverse, key, key)] = value
     })
