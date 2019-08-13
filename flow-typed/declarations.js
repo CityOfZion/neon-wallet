@@ -125,6 +125,7 @@ declare type TokenItemType = {
   networkId: string,
   isUserGenerated: boolean,
   symbol?: string,
+  cryptocompareSymbol?: string, 
   totalSupply?: number,
   decimals?: number,
   image?: ?string,
