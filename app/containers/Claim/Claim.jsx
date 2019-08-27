@@ -12,23 +12,20 @@ type Props = {
   doGasClaim: Function,
   disableClaimButton: boolean,
   claimAmount: string,
+  isWatchOnly?: boolean,
 }
 
 export default class Claim extends Component<Props> {
   intervalId: ?number
 
   render() {
-    const { className, claimAmount } = this.props
+    const { className, claimAmount, isWatchOnly } = this.props
     const disabled = this.isDisabled()
 
     return (
       <div>
         <Tooltip
-          title={
-            toBigNumber(claimAmount).eq(0)
-              ? 'Address must hold NEO in order to claim GAS'
-              : 'You can claim GAS once every 5 minutes'
-          }
+          title={this.tooltipText(isWatchOnly, claimAmount)}
           disabled={!disabled}
         >
           <Button
@@ -37,7 +34,7 @@ export default class Claim extends Component<Props> {
             disabled={disabled}
             primary
             renderIcon={ClaimIcon}
-            onClick={this.handleClaim}
+            onClick={isWatchOnly ? () => {} : this.handleClaim}
           >
             Claim {this.getFormattedAmount()} GAS
           </Button>
@@ -56,4 +53,12 @@ export default class Claim extends Component<Props> {
   }
 
   getFormattedAmount = () => formatGAS(this.props.claimAmount)
+
+  tooltipText = (isWatchOnly?: boolean, claimAmount: string): string => {
+    if (isWatchOnly) return 'Gas claims are unavailable in Watch mode'
+
+    return toBigNumber(claimAmount).eq(0)
+      ? 'Address must hold NEO in order to claim GAS'
+      : 'You can claim GAS once every 5 minutes'
+  }
 }
