@@ -7,6 +7,7 @@ import { withData } from 'spunky'
 import Claim from './Claim'
 import claimsActions from '../../actions/claimsActions'
 import { doGasClaim, getDisableClaimButton } from '../../modules/claim'
+import withAuthData from '../../hocs/withAuthData'
 
 const mapStateToProps = (state: Object) => ({
   disableClaimButton: getDisableClaimButton(state),
@@ -25,4 +26,5 @@ export default compose(
     mapDispatchToProps,
   ),
   withData(claimsActions, mapClaimsDataToProps),
+  withAuthData(),
 )(Claim)
