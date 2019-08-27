@@ -48,14 +48,14 @@ export default class Claim extends Component<Props> {
   }
 
   isDisabled = () => {
-    const { claimAmount, disableClaimButton } = this.props
-    return disableClaimButton || toBigNumber(claimAmount).eq(0)
+    const { claimAmount, disableClaimButton, isWatchOnly } = this.props
+    return disableClaimButton || toBigNumber(claimAmount).eq(0) || isWatchOnly
   }
 
   getFormattedAmount = () => formatGAS(this.props.claimAmount)
 
   tooltipText = (isWatchOnly?: boolean, claimAmount: string): string => {
-    if (isWatchOnly) return 'Gas claims are unavailable in Watch mode'
+    if (isWatchOnly) return 'GAS claims are unavailable in Watch mode'
 
     return toBigNumber(claimAmount).eq(0)
       ? 'Address must hold NEO in order to claim GAS'

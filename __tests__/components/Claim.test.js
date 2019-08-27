@@ -28,4 +28,13 @@ describe('Claim', () => {
 
     expect(claimSpy).toHaveBeenCalled()
   })
+
+  test('Claim button should be disabled in watchOnly', () => {
+    const claimSpy = jest.fn()
+    const watchOnlyProps = { ...props }
+    watchOnlyProps.isWatchOnly = true
+    const wrapper = mount(<Claim {...watchOnlyProps} doGasClaim={claimSpy} />)
+    expect(claimSpy).toHaveBeenCalledTimes(0)
+    expect(wrapper.find('button#claim').prop('disabled')).toBeTruthy()
+  })
 })
