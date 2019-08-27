@@ -19,7 +19,7 @@ export default class Claim extends Component<Props> {
   intervalId: ?number
 
   render() {
-    const { className, claimAmount } = this.props
+    const { className } = this.props
     const disabled = this.isDisabled()
 
     return (
