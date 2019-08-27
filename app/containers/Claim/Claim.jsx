@@ -48,8 +48,8 @@ export default class Claim extends Component<Props> {
   }
 
   isDisabled = () => {
-    const { claimAmount, disableClaimButton } = this.props
-    return disableClaimButton || toBigNumber(claimAmount).eq(0)
+    const { claimAmount, disableClaimButton, isWatchOnly } = this.props
+    return disableClaimButton || toBigNumber(claimAmount).eq(0) || isWatchOnly
   }
 
   getFormattedAmount = () => formatGAS(this.props.claimAmount)
