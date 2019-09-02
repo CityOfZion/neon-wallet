@@ -7,6 +7,7 @@ import generateWalletReducer, {
   upgradeUserWalletNEP6,
   recoverWallet,
   decryptEncryptedWIF,
+  joinWIFKeys,
   NEW_WALLET_ACCOUNT,
   RESET_WALLET_ACCOUNT,
   validateInputs,
