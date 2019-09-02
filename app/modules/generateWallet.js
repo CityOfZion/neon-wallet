@@ -2,6 +2,7 @@
 import storage from 'electron-json-storage'
 import { wallet } from '@cityofzion/neon-js'
 import { isEmpty, intersectionBy } from 'lodash-es'
+import { ECCurves } from 'ecc-jsbn'
 
 import {
   showErrorNotification,
@@ -16,6 +17,8 @@ import toSentence from '../util/toSentence'
 
 // Actions
 import { saveAccountActions, getWallet } from '../actions/accountsActions'
+
+const { BigInteger } = require('jsbn')
 
 // Constants
 export const NEW_WALLET_ACCOUNT = 'NEW_WALLET_ACCOUNT'
@@ -199,6 +202,23 @@ export async function decryptEncryptedWIF(
   return a.WIF
 }
 
+function padHex(hex: string, len: number) {
+  return hex.length >= len ? hex : padHex(`0${hex}`, len)
+}
+
+// This method returns one WIF from two WIFs added together modulo the curve order (split-key method)
+export async function joinWIFKeys(wif1: string, wif2: string) {
+  const a = new wallet.Account(wif1)
+  const b = new wallet.Account(wif2)
+  const q = ECCurves.secp256r1().getN()
+  const x = new BigInteger(a.privateKey, 16)
+  const y = new BigInteger(b.privateKey, 16)
+  const r = x.add(y).mod(q)
+  const c = padHex(r.toString(16), 64)
+  const priv = new wallet.Account(c)
+  return priv.WIF
+}
+
 export function validateInputs(
   wif: string,
   passphrase: string,
@@ -215,12 +235,13 @@ export function validateInputs(
   }
 }
 
-type KeyOption = 'WIF' | 'ENCRYPTED_WIF'
+type KeyOption = 'WIF' | 'ENCRYPTED_WIF' | 'SPLIT'
 
 export const generateNewWalletAccount = (
   passphrase: string,
   passphrase2: string,
   key: string,
+  keypart2: string,
   keyOption: KeyOption,
   history: Object,
   walletName: string,
@@ -245,8 +266,17 @@ export const generateNewWalletAccount = (
   // If the key is given, isImport = true.
   const isImport = key !== null
 
+  const iff = (condition, then, otherwise) => (condition ? then : otherwise)
+
   const setWIF = async () => {
-    wif = keyOption === 'WIF' ? key : await decryptEncryptedWIF(key, passphrase)
+    wif =
+      keyOption === 'WIF'
+        ? key
+        : iff(
+            keyOption === 'SPLIT',
+            await joinWIFKeys(key, keypart2),
+            await decryptEncryptedWIF(key, passphrase),
+          )
     validateInputs(wif, passphrase, passphrase2)
   }
 
@@ -256,7 +286,13 @@ export const generateNewWalletAccount = (
         const account = new wallet.Account(wif || wallet.generatePrivateKey())
         const { WIF, address } = account
         const encryptedWIF =
-          keyOption === 'WIF' ? wallet.encrypt(WIF, passphrase) : key
+          keyOption === 'WIF'
+            ? wallet.encrypt(WIF, passphrase)
+            : iff(
+                keyOption === 'SPLIT',
+                wallet.encrypt(await joinWIFKeys(key, keypart2), passphrase),
+                key,
+              )
         const storedWallet = await getWallet()
         if (walletName && walletHasLabel(storedWallet, walletName)) {
           onFailure()
