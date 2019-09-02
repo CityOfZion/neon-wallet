@@ -19,10 +19,29 @@
 
     .addressLink {
       font-size: 16px;
-      line-height: 32px;
+      line-height: 24px;
       margin: 0;
       text-align: left;
       cursor: pointer;
+    }
+  }
+
+  .headerPublicKeyContainer {
+    display: flex;
+    align-items: center;
+
+    label {
+      opacity: 0.4;
+      font-size: 11px;
+      margin-right: 5px;
+      font-family: var(--font-gotham-medium);
+    }
+
+    .publicKey {
+      opacity: 0.4;
+      font-size: 11px;
+      margin: 0;
+      text-align: left;
     }
   }
 
