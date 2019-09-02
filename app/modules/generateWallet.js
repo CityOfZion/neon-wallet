@@ -202,10 +202,6 @@ export async function decryptEncryptedWIF(
   return a.WIF
 }
 
-function padHex(hex: string, len: number) {
-  return hex.length >= len ? hex : padHex(`0${hex}`, len)
-}
-
 // This method returns one WIF from two WIFs added together modulo the curve order (split-key method)
 export async function joinWIFKeys(wif1: string, wif2: string) {
   const a = new wallet.Account(wif1)
@@ -214,7 +210,7 @@ export async function joinWIFKeys(wif1: string, wif2: string) {
   const x = new BigInteger(a.privateKey, 16)
   const y = new BigInteger(b.privateKey, 16)
   const r = x.add(y).mod(q)
-  const c = padHex(r.toString(16), 64)
+  const c = r.toString(16).padStart(64, '0')
   const priv = new wallet.Account(c)
   return priv.WIF
 }
