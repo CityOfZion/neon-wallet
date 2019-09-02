@@ -266,17 +266,17 @@ export const generateNewWalletAccount = (
   // If the key is given, isImport = true.
   const isImport = key !== null
 
-  const iff = (condition, then, otherwise) => (condition ? then : otherwise)
-
   const setWIF = async () => {
-    wif =
-      keyOption === 'WIF'
-        ? key
-        : iff(
-            keyOption === 'SPLIT',
-            await joinWIFKeys(key, keypart2),
-            await decryptEncryptedWIF(key, passphrase),
-          )
+    switch (keyOption) {
+      case 'ENCRYPTED_WIF':
+        wif = await decryptEncryptedWIF(key, passphrase)
+        break
+      case 'SPLIT':
+        wif = await joinWIFKeys(key, keypart2)
+        break
+      default:
+        wif = key
+    }
     validateInputs(wif, passphrase, passphrase2)
   }
 
@@ -285,14 +285,20 @@ export const generateNewWalletAccount = (
       try {
         const account = new wallet.Account(wif || wallet.generatePrivateKey())
         const { WIF, address } = account
-        const encryptedWIF =
-          keyOption === 'WIF'
-            ? wallet.encrypt(WIF, passphrase)
-            : iff(
-                keyOption === 'SPLIT',
-                wallet.encrypt(await joinWIFKeys(key, keypart2), passphrase),
-                key,
-              )
+        let encryptedWIF
+        switch (keyOption) {
+          case 'WIF':
+            encryptedWIF = wallet.encrypt(WIF, passphrase)
+            break
+          case 'SPLIT':
+            encryptedWIF = wallet.encrypt(
+              await joinWIFKeys(key, keypart2),
+              passphrase,
+            )
+            break
+          default:
+            encryptedWIF = key
+        }
         const storedWallet = await getWallet()
         if (walletName && walletHasLabel(storedWallet, walletName)) {
           onFailure()
