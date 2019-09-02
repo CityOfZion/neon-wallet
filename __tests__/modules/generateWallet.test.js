@@ -18,6 +18,8 @@ describe('generateWallet module tests', () => {
   // TODO when looking into pulling axios mock adapter into helper file to stay DRY
   // do the same for commonly used test variables like wif and address, etc...
   const wif = 'L4AJ14CNaBWPemRJKC34wyZwbmxg33GETs4Y1F8uK7rRmZ2UHrJn'
+  const secondWIF = 'L2rmJijbdfxBxv53gW4FKS7WV6eJc1yLR14XXAovLX1erAGnwcAK'
+  const splitWIFResult = 'L1DiYxUEfoMinFAeNt22mSTu4sAtj6CPTuRaZVyMiNL2TAmDfmkj'
   const address = 'AM22coFfbe9N6omgL9ucFBLkeaMNg9TEyL'
   const passphrase = 'Th!s1$@FakePassphrase'
   const encryptedWIF =
@@ -62,7 +64,7 @@ describe('generateWallet module tests', () => {
       )
     })
 
-    test('test decryptEncryptedWIF: descrypt valid encrypted wif', async () => {
+    test('test decryptEncryptedWIF: decrypt valid encrypted wif', async () => {
       const expectedWIF = wif
       const actualWIF = await decryptEncryptedWIF(encryptedWIF, passphrase)
       expect(actualWIF).toEqual(expectedWIF)
@@ -72,6 +74,12 @@ describe('generateWallet module tests', () => {
       await expect(decryptEncryptedWIF('asa', passphrase)).rejects.toThrow(
         'The encrypted key is not valid',
       )
+    })
+
+    test('test joinWIFKeys: combine two wif keys to create a third', async () => {
+      const expectedWIF = splitWIFResult
+      const actualWIF = await joinWIFKeys(wif, secondWIF)
+      expect(actualWIF).toEqual(expectedWIF)
     })
 
     test('test validateInputs: Throw if the passphrase2 does not match passphrase ', () => {
