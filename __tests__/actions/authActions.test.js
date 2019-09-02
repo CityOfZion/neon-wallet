@@ -7,6 +7,8 @@ describe('authActions', () => {
       const address = 'ASJQLBnhAs6fSgBv2R7KtRZjC8A9fAmcNW'
       const privateKey =
         '1c7a992d0e68b7b23cb430ba596bd68cecde042410d81e9e95ee19dc1bcd739d'
+      const publicKey =
+        '0283f580607cda861f828628002bde53f13e489188c104cbf9628fbab93c70e475'
 
       test('returns an action object', () => {
         expect(wifLoginActions.call({ wif })).toEqual({
@@ -28,6 +30,7 @@ describe('authActions', () => {
           expect(await call.payload.fn({})).toEqual({
             wif,
             address,
+            publicKey,
             isHardwareLogin: false,
             hasInternetConnectivity: true,
           })
@@ -40,6 +43,7 @@ describe('authActions', () => {
           expect(await call.payload.fn({})).toEqual({
             wif,
             address,
+            publicKey,
             isHardwareLogin: false,
             hasInternetConnectivity: true,
           })
