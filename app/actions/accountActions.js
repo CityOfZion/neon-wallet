@@ -6,7 +6,7 @@ import claimsActions from './claimsActions'
 import pricesActions from './pricesActions'
 import transactionHistoryActions from './transactionHistoryActions'
 import { getPendingTransactionInfo } from './pendingTransactionActions'
-import blockHeightActions from './blockHeightActions'
+import { blockHeightActions } from './blockHeightActions'
 
 export const ID = 'account'
 

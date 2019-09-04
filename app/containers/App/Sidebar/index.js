@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import { addPendingTransaction } from '../../../actions/pendingTransactionActions'
 import withAuthData from '../../../hocs/withAuthData'
-import blockHeightActions from '../../../actions/blockHeightActions'
+import { blockHeightActions } from '../../../actions/blockHeightActions'
 
 const mapPendingTransactionsDataToProps = (
   pendingTransactions: Array<PendingTransactions>,
