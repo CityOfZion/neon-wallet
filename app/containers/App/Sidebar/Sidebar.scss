@@ -24,6 +24,26 @@ $size: 68px;
   }
 }
 
+.blockHeight {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-gotham-book);
+  font-size: 10px;
+  text-align: center;
+  margin-top: -10px;
+  margin-bottom: 5px;
+  flex-direction: column;
+  min-height: 19px;
+  max-height: 19px;
+
+  .heightText {
+    opacity: 0.6;
+    font-size: 6px;
+    display: flex;
+  }
+}
+
 .logo {
   width: $size;
   height: $size;

@@ -1,6 +1,6 @@
 // @flow
 import { compose } from 'recompose'
-import { withActions } from 'spunky'
+import { withActions, withCall } from 'spunky'
 import RefreshButton from './RefreshButton'
 
 import accountActions from '../../../actions/accountActions'
@@ -9,6 +9,7 @@ import balancesActions from '../../../actions/balancesActions'
 import withAuthData from '../../../hocs/withAuthData'
 import withNetworkData from '../../../hocs/withNetworkData'
 import withFilteredTokensData from '../../../hocs/withFilteredTokensData'
+import blockHeightActions from '../../../actions/blockHeightActions'
 
 const mapAccountActionsToProps = (actions, props) => ({
   loadWalletData: () =>

@@ -6,6 +6,7 @@ import claimsActions from './claimsActions'
 import pricesActions from './pricesActions'
 import transactionHistoryActions from './transactionHistoryActions'
 import { getPendingTransactionInfo } from './pendingTransactionActions'
+import blockHeightActions from './blockHeightActions'
 
 export const ID = 'account'
 
@@ -15,4 +16,5 @@ export default createBatchActions(ID, {
   transactions: transactionHistoryActions,
   pendingTransactionsInfo: getPendingTransactionInfo,
   prices: pricesActions,
+  blockHeight: blockHeightActions,
 })

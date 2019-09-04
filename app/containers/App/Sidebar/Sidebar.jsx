@@ -22,6 +22,7 @@ type Props = {
   className: string,
   theme: ThemeType,
   pendingTransactionsCount: number,
+  count: number,
   isWatchOnly?: boolean,
 }
 
@@ -30,6 +31,7 @@ const Sidebar = ({
   theme,
   pendingTransactionsCount,
   isWatchOnly,
+  count,
 }: Props) => {
   const themeBasedLogo =
     theme === 'Light' ? LightLogoWithoutText : DarkLogoWithoutText
@@ -41,6 +43,12 @@ const Sidebar = ({
           <img src={themeBasedLogo} alt="neon-logo" />
         </div>
 
+        {count && (
+          <div className={styles.blockHeight}>
+            <div className={styles.heightText}>CURRENT BLOCK: </div>
+            <div id="block-height">{count}</div>
+          </div>
+        )}
         <NavLink
           id="dashboard"
           exact
