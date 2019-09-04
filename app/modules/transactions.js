@@ -1,7 +1,7 @@
 // @flow
 /* eslint-disable camelcase */
 import { api, sc, u, wallet, settings } from '@cityofzion/neon-js'
-import { flatMap, keyBy, isEmpty, get, cloneDeep } from 'lodash-es'
+import { flatMap, keyBy, isEmpty, get } from 'lodash-es'
 
 import {
   showErrorNotification,
