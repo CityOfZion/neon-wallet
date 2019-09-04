@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import React, { Fragment } from 'react'
 import classNames from 'classnames'
 import { NavLink } from 'react-router-dom'
 
@@ -43,12 +43,15 @@ const Sidebar = ({
           <img src={themeBasedLogo} alt="neon-logo" />
         </div>
 
-        {count && (
-          <div className={styles.blockHeight}>
-            <div className={styles.heightText}>CURRENT BLOCK: </div>
-            <div id="block-height">{count}</div>
-          </div>
-        )}
+        <div className={styles.blockHeight}>
+          {count && (
+            <Fragment>
+              <div className={styles.heightText}>CURRENT BLOCK: </div>
+              <div id="block-height">{count}</div>
+            </Fragment>
+          )}
+        </div>
+
         <NavLink
           id="dashboard"
           exact

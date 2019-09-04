@@ -27,7 +27,6 @@ exports[`Sidebar renders without crashing 1`] = `
         id="block-height"
       >
         200
-         
       </div>
     </div>
     <NavLink

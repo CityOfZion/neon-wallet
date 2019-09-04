@@ -14,7 +14,6 @@ describe('Sidebar', () => {
   })
 
   test('renders block height when count prop present', () => {
-    console.log({ wrapper: wrapper.debug() })
     const height = wrapper.find('#block-height')
     expect(height.text()).toEqual('200')
   })
