@@ -39,14 +39,16 @@ const Sidebar = ({
   return (
     <div className={classNames(styles.container, className)}>
       <div className={styles.group}>
-        <div className={styles.logo}>
-          <img src={themeBasedLogo} alt="neon-logo" />
+        <div className={styles.logo} id="neon-logo-container">
+          <img src={themeBasedLogo} id="neon-logo" alt="neon-logo" />
         </div>
 
-        <div className={styles.blockHeight}>
+        <div id="block-height-container" className={styles.blockHeight}>
           {count && (
             <Fragment>
-              <div className={styles.heightText}>CURRENT BLOCK: </div>
+              <div id="block-height-label" className={styles.heightText}>
+                CURRENT BLOCK:
+              </div>
               <div id="block-height">{count}</div>
             </Fragment>
           )}
@@ -119,7 +121,7 @@ const Sidebar = ({
             activeClassName={styles.active}
           >
             <TokenSaleIcon />
-            <div> Token Sale </div>
+            <div id="token-sale-label"> Token Sale </div>
           </NavLink>
         )}
         <NavLink
