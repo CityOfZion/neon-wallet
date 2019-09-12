@@ -33,6 +33,7 @@ type State = {
   submitButtonDisabled: boolean,
   selectedAccount: Object | null,
   mappedAccounts: Array<Object>,
+  step: number,
 }
 
 const PASS_MIN_LENGTH = 4
@@ -105,7 +106,7 @@ class CreateImportSplitWalletForm extends React.Component<Props, State> {
     }
   }
 
-  toggleStep = async (e: SyntheticMouseEvent<*>) => {
+  toggleStep = (e: SyntheticMouseEvent<*>) => {
     if (this.state.step === 1) {
       const { existingPassphrase, selectedAccount, keypart2 } = this.state
       const { showErrorNotification } = this.props
