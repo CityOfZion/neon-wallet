@@ -16,14 +16,40 @@
 
 .importWalletForm {
   @extend .createWalletForm;
-  margin-top: -24px;
+  margin-top: 15px;
 }
 
 .loginButtonMargin {
   margin-top: auto;
   margin-bottom: 50px;
+  margin-top: 24px;
 }
 
 .selectMargin {
+  margin-top: 10px;
   margin-bottom: 20px;
+}
+
+.splitWalletInstructions {
+  margin-top: -24px; 
+}
+
+.selectLabel {
+  font-weight: bold;
+  font-size: 12px;
+  text-transform: uppercase;
+  opacity: var(--input-label-opacity);
+  color: var(--input-label);
+}
+
+.halfButton {
+  display: inline-flex;
+  margin-right: 5px;
+  width: 49%;
+  vertical-align: top;
+}
+
+.halfButton.icon {
+  display: flex !important;
+  width: 24.5px !important;
 }

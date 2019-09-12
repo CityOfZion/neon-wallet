@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import React, { Fragment } from 'react'
 import { wallet } from '@cityofzion/neon-js'
 import { withRouter } from 'react-router-dom'
 import { cloneDeep } from 'lodash-es'
@@ -8,6 +8,8 @@ import StyledReactSelect from '../Inputs/StyledReactSelect/StyledReactSelect'
 import TextInput from '../Inputs/TextInput'
 import Button from '../Button'
 import CheckIcon from '../../assets/icons/check.svg'
+import BackArrow from '../../assets/icons/arrow.svg'
+import ForwardArrow from '../../assets/icons/forward-arrow.svg'
 import styles from './CreateImportSplitWalletForm.scss'
 
 type Props = {
@@ -15,6 +17,7 @@ type Props = {
   history: Object,
   authenticated: boolean,
   accounts: Object,
+  showErrorNotification: Object => any,
 }
 
 type State = {
@@ -51,6 +54,7 @@ class CreateImportSplitWalletForm extends React.Component<Props, State> {
     walletName: '',
     submitButtonDisabled: false,
     selectedAccount: null,
+    step: 1,
     mappedAccounts:
       this.props.accounts.length &&
       this.props.accounts.map(account => {
@@ -101,6 +105,38 @@ class CreateImportSplitWalletForm extends React.Component<Props, State> {
     }
   }
 
+  toggleStep = async (e: SyntheticMouseEvent<*>) => {
+    if (this.state.step === 1) {
+      const { existingPassphrase, selectedAccount, keypart2 } = this.state
+      const { showErrorNotification } = this.props
+
+      if (selectedAccount) {
+        const accountInStorage = this.props.accounts.find(
+          account => account.label === selectedAccount.value,
+        )
+
+        this.setState({ submitButtonDisabled: true })
+        e.preventDefault()
+
+        wallet
+          .decryptAsync(accountInStorage.key, existingPassphrase)
+          .then(() => {
+            if (keypart2 && !wallet.isWIF(keypart2)) {
+              showErrorNotification({
+                message: 'Invalid secondary private key WIF',
+              })
+            } else {
+              this.setState({ step: 2 })
+            }
+          })
+          .catch(err => showErrorNotification({ message: err.message }))
+          .finally(() => this.setState({ submitButtonDisabled: false }))
+      }
+    } else {
+      this.setState({ step: 1 })
+    }
+  }
+
   render = () => {
     const {
       passphraseError,
@@ -110,64 +146,115 @@ class CreateImportSplitWalletForm extends React.Component<Props, State> {
       existingPassphrase,
       selectedAccount,
       mappedAccounts,
+      submitButtonDisabled,
     } = this.state
 
-    return (
-      <div id="createWallet" className={styles.flexContainer}>
-        <form
-          className={styles.importWalletForm}
-          onSubmit={this.createWalletAccount}
-        >
-          <div className={styles.selectMargin}>
-            <StyledReactSelect
-              value={selectedAccount}
-              placeholder="Existing Private Key"
-              onChange={this.handleChange}
-              options={mappedAccounts || []}
-            />
-          </div>
-          <PasswordInput
-            placeholder="Existing Password"
-            value={existingPassphrase}
-            onChange={e =>
-              this.setState({ existingPassphrase: e.target.value })
-            }
-          />
+    const instructions =
+      'The Split Key import option allows users to create a new NEO account by combining the private key of an existing account with a separate private key.'
 
-          <PasswordInput
-            value={keypart2}
-            onChange={e => this.setState({ keypart2: e.target.value })}
-            placeholder="Second Private Key"
-          />
-
-          <TextInput
-            value={walletName}
-            onChange={e => this.setState({ walletName: e.target.value })}
-            placeholder="Wallet Name"
-          />
-          <PasswordInput
-            onChange={this.handleChangePassphrase}
-            placeholder="Password"
-            error={passphraseError}
-          />
-          <PasswordInput
-            onChange={this.handleChangePassphrase2}
-            placeholder="Confirm Password"
-            error={passphrase2Error}
-          />
-          <div className={styles.loginButtonMargin}>
-            <Button
-              renderIcon={CheckIcon}
-              type="submit"
-              shouldCenterButtonLabelText
-              primary
-              disabled={this.isDisabled()}
+    if (this.state.step === 2) {
+      return (
+        <Fragment>
+          <p className={styles.splitWalletInstructions}>{instructions}</p>
+          <div id="createWallet" className={styles.flexContainer}>
+            <form
+              className={styles.importWalletForm}
+              onSubmit={this.createWalletAccount}
             >
-              Import Wallet
-            </Button>
+              <TextInput
+                value={walletName}
+                onChange={e => this.setState({ walletName: e.target.value })}
+                label="Wallet Name"
+                placeholder="Enter your new split key wallet name..."
+              />
+              <PasswordInput
+                key="np1"
+                onChange={this.handleChangePassphrase}
+                label="Passphrase"
+                placeholder="Enter password"
+                error={passphraseError}
+              />
+              <PasswordInput
+                key="np2"
+                onChange={this.handleChangePassphrase2}
+                label="Confirm Passphrase"
+                placeholder="Confirm password"
+                error={passphrase2Error}
+              />
+              <div className={styles.loginButtonMargin}>
+                <Button
+                  className={styles.halfButton}
+                  renderIcon={BackArrow}
+                  shouldCenterButtonLabelText
+                  onClick={this.toggleStep}
+                  disabled={false}
+                >
+                  Previous Step
+                </Button>
+
+                <Button
+                  className={styles.halfButton}
+                  renderIcon={CheckIcon}
+                  type="submit"
+                  shouldCenterButtonLabelText
+                  primary
+                  disabled={this.isStep2Disabled()}
+                >
+                  Import Wallet
+                </Button>
+              </div>
+            </form>
           </div>
-        </form>
-      </div>
+        </Fragment>
+      )
+    }
+    return (
+      <Fragment>
+        <p className={styles.splitWalletInstructions}>{instructions}</p>
+        <div id="createWallet" className={styles.flexContainer}>
+          <form className={styles.importWalletForm}>
+            <label className={styles.selectLabel}>
+              Choose an Existing Account
+            </label>
+            <div className={styles.selectMargin}>
+              <StyledReactSelect
+                value={selectedAccount}
+                placeholder="Choose wallet"
+                onChange={this.handleChange}
+                options={mappedAccounts || []}
+              />
+            </div>
+            <PasswordInput
+              key="op"
+              value={existingPassphrase}
+              label="Passphrase"
+              placeholder="Enter password"
+              onChange={e =>
+                this.setState({ existingPassphrase: e.target.value })
+              }
+            />
+            <PasswordInput
+              key="pk"
+              value={keypart2}
+              label="Private Key"
+              onChange={e => this.setState({ keypart2: e.target.value })}
+              placeholder="Enter private key"
+            />
+            <div className={styles.loginButtonMargin}>
+              <Button
+                renderIcon={ForwardArrow}
+                type="submit"
+                shouldCenterButtonLabelText
+                primary
+                onClick={this.toggleStep}
+                disabled={submitButtonDisabled || this.isStep1Disabled()}
+              >
+                Next Step
+              </Button>
+            </div>
+          </form>
+        </div>
+      </Fragment>
     )
   }
 
@@ -206,7 +293,12 @@ class CreateImportSplitWalletForm extends React.Component<Props, State> {
     })
   }
 
-  isDisabled = () => {
+  isStep1Disabled = () => {
+    const { existingPassphrase, selectedAccount, keypart2 } = this.state
+    return !(existingPassphrase && !!selectedAccount && !!keypart2)
+  }
+
+  isStep2Disabled = () => {
     const {
       passphraseValid,
       passphrase2Valid,

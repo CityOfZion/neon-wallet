@@ -6,9 +6,11 @@ import { withData } from 'spunky'
 import accountsActions from '../../actions/accountsActions'
 import CreateImportSplitWalletForm from './CreateImportSplitWalletForm'
 import { generateNewWalletAccount } from '../../modules/generateWallet'
+import { showErrorNotification } from '../../modules/notifications'
 
 const actionCreators = {
   generateNewWalletAccount,
+  showErrorNotification,
 }
 
 const mapAccountsDataToProps = accounts => ({
