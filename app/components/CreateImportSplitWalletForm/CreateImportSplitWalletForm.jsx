@@ -182,9 +182,8 @@ class CreateImportSplitWalletForm extends React.Component<Props, State> {
                 placeholder="Confirm password"
                 error={passphrase2Error}
               />
-              <div className={styles.loginButtonMargin}>
+              <div className={styles.buttonContainer}>
                 <Button
-                  className={styles.halfButton}
                   renderIcon={BackArrow}
                   shouldCenterButtonLabelText
                   onClick={this.toggleStep}
@@ -194,7 +193,6 @@ class CreateImportSplitWalletForm extends React.Component<Props, State> {
                 </Button>
 
                 <Button
-                  className={styles.halfButton}
                   renderIcon={CheckIcon}
                   type="submit"
                   shouldCenterButtonLabelText

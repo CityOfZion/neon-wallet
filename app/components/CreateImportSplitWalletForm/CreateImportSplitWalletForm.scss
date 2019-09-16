@@ -42,14 +42,24 @@
   color: var(--input-label);
 }
 
-.halfButton {
-  display: inline-flex;
-  margin-right: 5px;
-  width: 49%;
-  vertical-align: top;
+.buttonContainer {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 40px;
+  margin-top: 24px;
+  flex: 1;
+  justify-content: space-between;
+
+  button {
+    width: 225px;
+  }
+
+  button:first-child {
+    margin-right: 12px;
+  }
+  button:last-child {
+    margin-right: 0;
+  }
 }
 
-.halfButton.icon {
-  display: flex !important;
-  width: 24.5px !important;
-}
