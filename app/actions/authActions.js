@@ -63,6 +63,7 @@ export const wifLoginActions = createActions(
 
     return {
       wif: account.WIF,
+      publicKey: account.publicKey,
       address: account.address,
       isHardwareLogin: false,
       hasInternetConnectivity,
@@ -109,6 +110,7 @@ export const nep2LoginActions = createActions(
 
     return {
       wif: account.WIF,
+      publicKey: account.publicKey,
       address: account.address,
       isHardwareLogin: false,
       hasInternetConnectivity,

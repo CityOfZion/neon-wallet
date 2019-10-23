@@ -61,6 +61,7 @@ class CreateImportWalletForm extends React.Component<Props, State> {
       passphrase,
       passphrase2,
       option === 'IMPORT' ? key : null,
+      null,
       option === 'IMPORT' ? importKeyOption : 'WIF',
       history,
       walletName,
