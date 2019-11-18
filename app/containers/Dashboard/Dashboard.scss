@@ -11,6 +11,7 @@
   .headerAddressContainer {
     display: flex;
     align-items: center;
+    margin-bottom: 2px;
 
     label {
       margin-right: 5px;
@@ -18,8 +19,7 @@
     }
 
     .addressLink {
-      font-size: 16px;
-      line-height: 24px;
+      font-size: 14px;
       margin: 0;
       text-align: left;
       cursor: pointer;
@@ -29,17 +29,18 @@
   .headerPublicKeyContainer {
     display: flex;
     align-items: center;
+    opacity: 0.75;
 
     label {
       opacity: 0.4;
-      font-size: 11px;
+      font-size: 11.5px;
       margin-right: 5px;
       font-family: var(--font-gotham-medium);
     }
 
     .publicKey {
       opacity: 0.4;
-      font-size: 11px;
+      font-size: 11.5px;
       margin: 0;
       text-align: left;
     }

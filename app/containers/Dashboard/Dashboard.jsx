@@ -58,7 +58,7 @@ export default class Dashboard extends Component<Props> {
           renderLeftContent={() => (
             <div>
               <div className={styles.headerAddressContainer}>
-                <label>My Public Address:</label>
+                <label>Address:</label>
                 <Address address={address} asWrapper>
                   <div className={styles.addressLink}>{address}</div>
                 </Address>
