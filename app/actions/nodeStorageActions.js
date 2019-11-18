@@ -41,9 +41,14 @@ export const buildNodeUrl = (data: {
   url: string,
 }): string => {
   const { protocol, url, port } = data
-  return compact([protocol && `${protocol}://`, url, port && `:${port}`]).join(
-    '',
-  )
+  if (protocol || port) {
+    return compact([
+      protocol && `${protocol}://`,
+      url,
+      port && `:${port}`,
+    ]).join('')
+  }
+  return url
 }
 
 export const getRPCEndpoint = async (
