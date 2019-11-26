@@ -15,10 +15,8 @@ const ID = 'nodeNetwork'
 const PING_TIMEOUT_OVERRIDE = 5000
 const DEFAULT_PING_TIMEOUT = settings.timeout.ping
 
-const pingNode = node =>
+const pingNode = ({ url }) =>
   new Promise(resolve => {
-    let url = node.protocol ? `${node.protocol}://${node.url}` : node.url
-    url = node.port ? `${url}:${node.port}` : url
     const client = new rpc.RPCClient(url)
     client.ping().then(latency => {
       if (client.lastSeenHeight !== 0) {
