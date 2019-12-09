@@ -1,0 +1,16 @@
+.networkConfigPanel {
+  display: flex;
+  justify-content: center;
+
+  .networkConfigInstructions {
+    border-bottom: none !important;
+  }
+
+  .networkItemsContainer {
+    max-width: 450px;
+    min-width: 450px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: auto;
+  }
+}

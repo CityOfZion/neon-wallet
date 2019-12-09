@@ -49,7 +49,7 @@ const Sidebar = ({
               <div id="block-height-label" className={styles.heightText}>
                 CURRENT BLOCK:
               </div>
-              <div id="block-height">{count}</div>
+              <div id="block-height">{count.toLocaleString()}</div>
             </Fragment>
           )}
         </div>

@@ -62,6 +62,7 @@ export const ROUTES = {
   VOTING: '/voting',
   NEWS: '/news',
   OFFLINE_SIGNING_PROMPT: '/offline-signing-prompt',
+  NETWORK_CONFIGURATION: '/network-configuration',
 }
 
 export const NOTIFICATION_LEVELS = {

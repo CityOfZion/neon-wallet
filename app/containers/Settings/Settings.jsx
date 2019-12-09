@@ -226,7 +226,10 @@ export default class Settings extends Component<Props, State> {
         >
           <section className={styles.settingsItemsContainer}>
             <div className={styles.innerContainer}>
-              <SettingsItem renderIcon={() => <CogIcon />} title="NETWORK">
+              {/* <SettingsItem
+                renderIcon={() => <CogIcon />}
+                title="NETWORK CONFIGURATION"
+              >
                 <div className={styles.settingsSelectContainer}>
                   <NetworkSwitch
                     transparent
@@ -234,8 +237,9 @@ export default class Settings extends Component<Props, State> {
                     settingsSelect
                   />
                 </div>
-              </SettingsItem>
-              <SettingsItem
+              </SettingsItem> */}
+
+              {/* <SettingsItem
                 renderIcon={() => <BlockExplorerIcon />}
                 title="BLOCK EXPLORER"
               >
@@ -249,7 +253,21 @@ export default class Settings extends Component<Props, State> {
                     isSearchable={false}
                   />
                 </div>
-              </SettingsItem>
+              </SettingsItem> */}
+              <SettingsLink
+                // onClick={
+                //   () => undefined
+                //   // loadWalletRecovery(
+                //   //   showSuccessNotification,
+                //   //   showErrorNotification,
+                //   //   setAccounts,
+                //   // )
+                // }
+                to={ROUTES.NETWORK_CONFIGURATION}
+                // label="IMPORT"
+                renderIcon={() => <CogIcon />}
+                title="NETWORK CONFIGURATION"
+              />
               <SettingsItem
                 renderIcon={() => <CurrencyIcon />}
                 title="CURRENCY"
@@ -290,19 +308,20 @@ export default class Settings extends Component<Props, State> {
                 </div>
               </SettingsItem>
               <div className={styles.settingsSpacer} />
+
               <SettingsLink
                 renderIcon={() => <LockIcon />}
                 to={ROUTES.ENCRYPT}
                 title="ENCRYPT A KEY"
               />
-              <SettingsLink
+              {/* <SettingsLink
                 noBorderBottom
                 to={ROUTES.NODE_SELECT}
                 label={this.props.selectedNode || 'AUTOMATIC'}
                 renderIcon={() => <NodeSelectIcon />}
                 title="NODE SELECTON"
-              />
-              <div className={styles.settingsSpacer} />
+              /> */}
+              {/* <div className={styles.settingsSpacer} /> */}
               <SettingsLink
                 onClick={() =>
                   loadWalletRecovery(
