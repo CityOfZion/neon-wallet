@@ -10,17 +10,18 @@ import accountActions from '../../../../actions/accountActions'
 import withFilteredTokensData from '../../../../hocs/withFilteredTokensData'
 
 const mapActionsToProps = (actions: Actions): Object => ({
-  onChange: networkId => actions.call({ networkId }),
+  onChange: networkId => console.log(networkId) || actions.call({ networkId }),
 })
 
-const mapAccountActionsToProps = (actions, props) => ({
-  loadWalletData: () =>
-    actions.call({
-      net: props.net,
-      address: props.address,
-      tokens: props.tokens,
-    }),
-})
+const mapAccountActionsToProps = (actions, props) =>
+  console.log(props) || {
+    loadWalletData: () =>
+      actions.call({
+        net: props.net,
+        address: props.address,
+        tokens: props.tokens,
+      }),
+  }
 
 export default compose(
   withAuthData(),

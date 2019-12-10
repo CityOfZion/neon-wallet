@@ -12,6 +12,8 @@ export default function withNetworkData(key: string = 'networkId') {
     withData(networkActions, mapNetworkDataToProps),
 
     // TODO: refactor this out by updating network state to use new action implementation
-    withProps(props => ({ net: getNetworkById(props.networkId) })),
+    withProps(props => ({
+      net: getNetworkById(props.networkId).deprecatedLabel,
+    })),
   )
 }

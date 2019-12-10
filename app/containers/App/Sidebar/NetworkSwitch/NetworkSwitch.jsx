@@ -3,7 +3,10 @@ import React, { Component } from 'react'
 
 import classNames from 'classnames'
 import StyledReactSelect from '../../../../components/Inputs/StyledReactSelect/StyledReactSelect'
-import { getNetworks } from '../../../../core/networks'
+import {
+  getNetworks,
+  findNetworkByDeprecatedLabel,
+} from '../../../../core/networks'
 import styles from './NetworkSwitch.scss'
 
 type Props = {
@@ -27,6 +30,7 @@ export default class NetworkSwitch extends Component<Props> {
   }
 
   render() {
+    console.log(this.props.net)
     const {
       networks,
       className,
@@ -45,7 +49,9 @@ export default class NetworkSwitch extends Component<Props> {
           settingsSelect={settingsSelect}
           hideHighlight
           disabled={disabled}
-          value={value}
+          value={{
+            label: findNetworkByDeprecatedLabel(this.props.net).label,
+          }}
           onChange={this.handleChange}
           options={networks}
           isSearchable={false}
@@ -55,6 +61,7 @@ export default class NetworkSwitch extends Component<Props> {
   }
 
   handleChange = (option: NetworkItemType) => {
+    console.log({ option })
     if (this.props.shouldSwitchNetworks) {
       this.props.onChange(option.id)
       setTimeout(() => {

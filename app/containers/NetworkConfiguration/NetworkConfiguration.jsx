@@ -13,6 +13,7 @@ import CloseButton from '../../components/CloseButton'
 import SettingsItem from '../../components/Settings/SettingsItem'
 import StyledReactSelect from '../../components/Inputs/StyledReactSelect/StyledReactSelect'
 import SettingsLink from '../../components/Settings/SettingsLink'
+import { findNetworkByDeprecatedLabel } from '../../core/networks'
 
 import styles from './NetworkConfiguration.scss'
 import settingsStyles from '../Settings/Settings.scss'
@@ -103,7 +104,9 @@ export default class NetworkConfiguration extends React.Component<
               <div className={styles.settingsSelectContainer}>
                 <NetworkSwitch
                   transparent
-                  value={{ label: this.props.net }}
+                  // value={{
+                  //   label: findNetworkByDeprecatedLabel(this.props.net).label,
+                  // }}
                   settingsSelect
                 />
               </div>

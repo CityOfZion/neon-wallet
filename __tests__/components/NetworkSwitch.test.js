@@ -5,22 +5,14 @@ import Select from 'react-select'
 import NetworkSwitch from '../../app/containers/App/Sidebar/NetworkSwitch/NetworkSwitch'
 import SelectInput from '../../app/components/Inputs/SelectInput'
 import DropdownButton from '../../app/components/Inputs/SelectInput/DropdownButton'
-import { MAIN_NETWORK_ID, TEST_NETWORK_ID } from '../../app/core/constants'
+import {
+  MAIN_NETWORK_ID,
+  TEST_NETWORK_ID,
+  MAIN_NETWORK_LABEL,
+} from '../../app/core/constants'
+import { getNetworks } from '../../app/core/networks'
 
-const NETWORKS = [
-  {
-    id: MAIN_NETWORK_ID,
-    value: MAIN_NETWORK_ID,
-    label: 'MainNet',
-    network: 'MainNet',
-  },
-  {
-    id: TEST_NETWORK_ID,
-    value: TEST_NETWORK_ID,
-    label: 'TestNet',
-    network: 'TestNet',
-  },
-]
+const NETWORKS = getNetworks()
 
 const setup = () => {
   const props = {
@@ -44,17 +36,6 @@ describe('NetworkSwitch', () => {
   test('correctly renders MainNet initially', () => {
     const { wrapper } = setup()
     const networkInput = wrapper.find(Select).instance()
-    expect(networkInput.props.value.label).toEqual('MainNet')
+    expect(networkInput.props.value.label).toEqual(MAIN_NETWORK_LABEL)
   })
-
-  // TODO: fix me!
-  // test('switches to the correct network when chosen from the dropdown', () => {
-  //   const { wrapper } = setup()
-  //   const networkInput = wrapper.find(Select).instance()
-  //   wrapper.find(Select).simulate('click')
-  //   wrapper.find(Select).simulate('keyDown', { keyCode: 40 })
-  //   wrapper.find(Select).simulate('keyDown', { keyCode: 13 })
-
-  //   expect(networkInput.props.value.label).toEqual('TestNet')
-  // })
 })

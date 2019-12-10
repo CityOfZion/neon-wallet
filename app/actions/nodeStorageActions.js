@@ -63,6 +63,7 @@ export const getRPCEndpoint = async (
     ) {
       return cachedRPCUrl[net].node
     }
+    console.log(net)
     const NETWORK = findNetworkByLabel(net)
     let nodeList
     switch (NETWORK.id) {
