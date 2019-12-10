@@ -118,7 +118,6 @@ declare type NetworkItemType = {
   label: string,
   network: NetworkType,
   deprecatedLabel: string,
-  net: string,
 }
 
 declare type TokenItemType = {
