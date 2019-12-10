@@ -13,20 +13,12 @@ import CloseButton from '../../components/CloseButton'
 import SettingsItem from '../../components/Settings/SettingsItem'
 import StyledReactSelect from '../../components/Inputs/StyledReactSelect/StyledReactSelect'
 import SettingsLink from '../../components/Settings/SettingsLink'
-import { findNetworkByDeprecatedLabel } from '../../core/networks'
 
 import styles from './NetworkConfiguration.scss'
 import settingsStyles from '../Settings/Settings.scss'
 import NetworkSwitch from '../App/Sidebar/NetworkSwitch'
 
 type Props = {
-  // handleSubmit: Function,
-  // validatePassphraseLength: Function,
-  // isWIF: Function,
-  // className: string,
-  // title: string,
-  // resetEncryptedWIF: Function,
-  // encryptedWIF: string,
   explorer: string,
   setBlockExplorer: string => any,
   selectedNode: string,
@@ -102,54 +94,10 @@ export default class NetworkConfiguration extends React.Component<
               title="CURRENT NETWORK"
             >
               <div className={styles.settingsSelectContainer}>
-                <NetworkSwitch
-                  transparent
-                  // value={{
-                  //   label: findNetworkByDeprecatedLabel(this.props.net).label,
-                  // }}
-                  settingsSelect
-                />
+                <NetworkSwitch transparent settingsSelect />
               </div>
             </SettingsItem>
           </div>
-
-          {/* <div className={settingsStyles.innerContainer}>
-            <SettingsItem
-              renderIcon={() => <BlockExplorerIcon />}
-              title="BLOCK EXPLORER"
-            >
-              <div className={settingsStyles.settingsSelectContainer}>
-                <StyledReactSelect
-                  settingsSelect
-                  isDisabled
-                  transparent
-                  options={parsedExplorerOptions}
-                  value={this.state.selectedExplorer}
-                  onChange={this.updateExplorerSettings}
-                  isSearchable={false}
-                />
-              </div>
-            </SettingsItem>
-          </div>
-
-          <div className={settingsStyles.innerContainer}>
-            <SettingsItem
-              renderIcon={() => <BlockExplorerIcon />}
-              title="BLOCK EXPLORER"
-            >
-              <div className={settingsStyles.settingsSelectContainer}>
-                <StyledReactSelect
-                  settingsSelect
-                  isDisabled
-                  transparent
-                  options={parsedExplorerOptions}
-                  value={this.state.selectedExplorer}
-                  onChange={this.updateExplorerSettings}
-                  isSearchable={false}
-                />
-              </div>
-            </SettingsItem>
-          </div> */}
         </section>
       </FullHeightPanel>
     )

@@ -14,7 +14,8 @@ const PREFIX = 'spunky'
 //       is normally provided by functions like `getNetwork` can instead be retrieved via the
 //       `withData` higher-order component.
 
-export const getNetworkById = (networkId: string) => findNetwork(networkId)
+export const getNetworkById = (networkId: string) =>
+  findNetwork(networkId).network
 
 export const getBalances = (state: Object) =>
   get(state, `${PREFIX}.${BALANCES_ID}.data`)

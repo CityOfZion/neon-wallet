@@ -13,9 +13,6 @@ import {
 
 import NetworkConfiguration from './NetworkConfiguration'
 import withExplorerData from '../../hocs/withExplorerData'
-import withCurrencyData from '../../hocs/withCurrencyData'
-import withThemeData from '../../hocs/withThemeData'
-import withSoundEnabledData from '../../hocs/withSoundEnabledData'
 import accountsActions, {
   updateAccountsActions,
 } from '../../actions/accountsActions'
@@ -54,19 +51,10 @@ const mapAccountsActionsToProps = actions => ({
 })
 
 const mapSettingsActionsToProps = actions => ({
-  setCurrency: currency =>
-    actions.call({
-      currency,
-    }),
   setBlockExplorer: blockExplorer =>
     actions.call({
       blockExplorer,
     }),
-  setTheme: theme =>
-    actions.call({
-      theme,
-    }),
-  setSoundSetting: soundEnabled => actions.call({ soundEnabled }),
 })
 
 const mapActionsToProps = (actions: Actions): Object => ({
@@ -87,9 +75,6 @@ export default compose(
   withData(accountsActions, mapAccountsDataToProps),
   withData(nodeStorageActions, mapSelectedNodeDataToProps),
   withExplorerData(),
-  withCurrencyData(),
-  withThemeData(),
-  withSoundEnabledData(),
   withActions(networkActions, mapActionsToProps),
   withRecall(nodeStorageActions, ['networkId']),
   withActions(updateAccountsActions, mapAccountsActionsToProps),
