@@ -92,6 +92,7 @@ export default class NetworkConfiguration extends React.Component<
             <SettingsItem
               renderIcon={() => <NeoLogo />}
               title="CURRENT NETWORK"
+              noBorderBottom
             >
               <div className={styles.settingsSelectContainer}>
                 <NetworkSwitch transparent settingsSelect />
