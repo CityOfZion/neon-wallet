@@ -20,7 +20,7 @@ type Props = {
   loadWalletData: () => void,
   settingsSelect: boolean,
   fontSize: number,
-  value: NetworkItemType,
+  net: string,
 }
 
 export default class NetworkSwitch extends Component<Props> {
@@ -30,7 +30,6 @@ export default class NetworkSwitch extends Component<Props> {
   }
 
   render() {
-    console.log(this.props.net)
     const {
       networks,
       className,
@@ -38,7 +37,6 @@ export default class NetworkSwitch extends Component<Props> {
       transparent,
       fontSize,
       settingsSelect,
-      value,
     } = this.props
 
     return (
@@ -61,7 +59,6 @@ export default class NetworkSwitch extends Component<Props> {
   }
 
   handleChange = (option: NetworkItemType) => {
-    console.log({ option })
     if (this.props.shouldSwitchNetworks) {
       this.props.onChange(option.id)
       setTimeout(() => {
