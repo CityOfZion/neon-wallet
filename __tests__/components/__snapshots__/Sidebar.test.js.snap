@@ -429,6 +429,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                 interactive={true}
                                 onShow={[Function]}
                                 position="left"
+                                theme="network-settings"
                               >
                                 <Tooltip
                                   animateFill={true}
@@ -465,7 +466,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                   sticky={false}
                                   stickyDuration={200}
                                   style={Object {}}
-                                  theme="dark"
+                                  theme="network-settings"
                                   touchHold={false}
                                   trigger="mouseenter focus"
                                   unmountHTMLWhenHide={false}
