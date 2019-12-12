@@ -54,8 +54,8 @@ export default class NetworkConfiguration extends React.Component<
         instructionsClassName={styles.networkConfigInstructions}
         renderInstructions={() => (
           <div>
-            Upload and save specific network configurations or alter the default
-            settings.
+            Manage all network settings related to how Neon interacts with the
+            blockchain
           </div>
         )}
       >
