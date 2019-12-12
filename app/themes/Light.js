@@ -146,8 +146,27 @@ const NEWS = {
 
 const NETWORK_CONFIG_TOOLTIP = {
   '--network-config-tooltip-label': '#8D98AE',
-  '--tooltip-background': '#f2f2f2',
+  '--network-config-tooltip-background': '#f8f8f8',
+  '--network-config-tooltip-color': '#394152',
 }
+
+// .tippy-tooltip.neon-light-theme {
+//   background-color: #f8f8f8;
+//   color: #394152;
+
+//   .arrow-regular {
+//     border-right: 7px solid #f8f8f8 !important;
+//   }
+// }
+
+// .tippy-tooltip.neon-dark-theme {
+//   background-color: #1b2029;
+//   color: #fff;
+
+//   .arrow-regular {
+//     border-right: 7px solid #1b2029 !important;
+//   }
+// }
 
 export default {
   ...NEWS,

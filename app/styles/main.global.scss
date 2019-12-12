@@ -270,20 +270,20 @@ a {
   max-width: none;
 }
 
-.tippy-tooltip.neon-light-theme {
-  background-color: #f8f8f8;
-  color: #394152;
+.tippy-tooltip {
+  background-color: var(--network-config-tooltip-background);
+  color: var(--network-config-tooltip-color);
 
   .arrow-regular {
-    border-right: 7px solid #f8f8f8 !important;
+    border-right: 7px solid var(--network-config-tooltip-background) !important;
   }
 }
 
-.tippy-tooltip.neon-dark-theme {
-  background-color: #1b2029;
-  color: #fff;
+// .tippy-tooltip.neon-dark-theme {
+//   background-color: #1b2029;
+//   color: #fff;
 
-  .arrow-regular {
-    border-right: 7px solid #1b2029 !important;
-  }
-}
+//   .arrow-regular {
+//     border-right: 7px solid #1b2029 !important;
+//   }
+// }

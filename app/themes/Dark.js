@@ -147,8 +147,8 @@ const NEWS = {
 
 const NETWORK_CONFIG_TOOLTIP = {
   '--network-config-tooltip-label': '#8D98AE',
-  '-nnetwork-config-cog-icon': '#fff',
-  '--tooltip-background': '#1b2029',
+  '--network-config-tooltip-background': '#1b2029',
+  '--network-config-tooltip-color': '#fff',
 }
 
 export default {

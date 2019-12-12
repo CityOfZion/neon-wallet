@@ -1,11 +1,10 @@
 // @flow
-import React, { Fragment } from 'react'
+import React from 'react'
 import classNames from 'classnames'
 import { NavLink } from 'react-router-dom'
 
 import Logout from './Logout'
 import Tooltip from '../../../components/Tooltip'
-import NetworkConfigurationTooltip from '../../../components/NetworkConfigurationTooltip'
 import { ROUTES } from '../../../core/constants'
 
 import HomeIcon from '../../../assets/navigation/home.svg'
@@ -16,8 +15,7 @@ import ContactsIcon from '../../../assets/navigation/contacts.svg'
 import TokenSaleIcon from '../../../assets/navigation/tokens.svg'
 import SettingsIcon from '../../../assets/navigation/settings.svg'
 import NewsIcon from '../../../assets/navigation/news.svg'
-import LightLogoWithoutText from '../../../assets/images/logo-without-text-black.png'
-import DarkLogoWithoutText from '../../../assets/images/logo-without-text.png'
+import LogoWithTooltipAndBlockHeight from '../../../components/LogoWithTooltipAndBlockHeight/LogoWithTooltipAndBlockHeight'
 
 import styles from './Sidebar.scss'
 
@@ -28,44 +26,6 @@ type Props = {
   count: number,
   isWatchOnly?: boolean,
   store: any,
-}
-
-const LogoWithTooltipAndBlockHeight = ({
-  count,
-  theme,
-  store,
-}: {
-  count: number,
-  theme: string,
-  store: any,
-}) => {
-  const themeBasedLogo =
-    theme === 'Light' ? LightLogoWithoutText : DarkLogoWithoutText
-
-  const toolTipTheme = theme === 'Light' ? 'neon-light' : 'neon-dark'
-  return (
-    <Tooltip
-      position="left"
-      interactive
-      theme={toolTipTheme}
-      html={<NetworkConfigurationTooltip store={store} />}
-    >
-      <div className={styles.logo} id="neon-logo-container">
-        <img src={themeBasedLogo} id="neon-logo" alt="neon-logo" />
-      </div>
-
-      <div id="block-height-container" className={styles.blockHeight}>
-        {count && (
-          <Fragment>
-            <div id="block-height-label" className={styles.heightText}>
-              CURRENT BLOCK:
-            </div>
-            <div id="block-height">{count.toLocaleString()}</div>
-          </Fragment>
-        )}
-      </div>
-    </Tooltip>
-  )
 }
 
 const Sidebar = ({
