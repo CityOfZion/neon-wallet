@@ -247,6 +247,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                 "formatGroupLabel": [Function],
                 "getOptionLabel": [Function],
                 "getOptionValue": [Function],
+                "hideChevron": undefined,
                 "hideHighlight": true,
                 "inputValue": "",
                 "isDisabled": false,
@@ -370,6 +371,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                     "formatGroupLabel": [Function],
                     "getOptionLabel": [Function],
                     "getOptionValue": [Function],
+                    "hideChevron": undefined,
                     "hideHighlight": true,
                     "inputValue": "",
                     "isDisabled": false,
@@ -433,7 +435,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                 setValue={[Function]}
               >
                 <div
-                  className="css-1ui96em react-select__control"
+                  className="css-14c2uc6 react-select__control"
                   onMouseDown={[Function]}
                   onTouchEnd={[Function]}
                 >
@@ -486,6 +488,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                         "formatGroupLabel": [Function],
                         "getOptionLabel": [Function],
                         "getOptionValue": [Function],
+                        "hideChevron": undefined,
                         "hideHighlight": true,
                         "inputValue": "",
                         "isDisabled": false,
@@ -605,6 +608,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                             "formatGroupLabel": [Function],
                             "getOptionLabel": [Function],
                             "getOptionValue": [Function],
+                            "hideChevron": undefined,
                             "hideHighlight": true,
                             "inputValue": "",
                             "isDisabled": false,
@@ -745,6 +749,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                         "formatGroupLabel": [Function],
                         "getOptionLabel": [Function],
                         "getOptionValue": [Function],
+                        "hideChevron": undefined,
                         "hideHighlight": true,
                         "inputValue": "",
                         "isDisabled": false,
@@ -860,6 +865,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                             "formatGroupLabel": [Function],
                             "getOptionLabel": [Function],
                             "getOptionValue": [Function],
+                            "hideChevron": undefined,
                             "hideHighlight": true,
                             "inputValue": "",
                             "isDisabled": false,
@@ -983,6 +989,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                             "formatGroupLabel": [Function],
                             "getOptionLabel": [Function],
                             "getOptionValue": [Function],
+                            "hideChevron": undefined,
                             "hideHighlight": true,
                             "inputValue": "",
                             "isDisabled": false,

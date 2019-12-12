@@ -421,14 +421,21 @@ exports[`Sidebar renders without crashing 1`] = `
                               count={300}
                             >
                               <Tooltip
+                                html={
+                                  <Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip))))))))))))))))
+                                    store={undefined}
+                                  />
+                                }
+                                interactive={true}
                                 position="left"
+                                theme="neon-dark"
                               >
                                 <Tooltip
                                   animateFill={true}
                                   animation="fade"
                                   arrow={true}
                                   arrowSize="regular"
-                                  className=""
+                                  className="tippy"
                                   delay={0}
                                   disabled={false}
                                   distance={10}
@@ -437,9 +444,13 @@ exports[`Sidebar renders without crashing 1`] = `
                                   hideDelay={0}
                                   hideDuration={375}
                                   hideOnClick={true}
-                                  html={null}
+                                  html={
+                                    <Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip))))))))))))))))
+                                      store={undefined}
+                                    />
+                                  }
                                   inertia={false}
-                                  interactive={false}
+                                  interactive={true}
                                   interactiveBorder={2}
                                   multiple={false}
                                   offset={0}
@@ -453,17 +464,22 @@ exports[`Sidebar renders without crashing 1`] = `
                                   size="regular"
                                   sticky={false}
                                   stickyDuration={200}
-                                  style={Object {}}
-                                  theme="dark"
+                                  style={
+                                    Object {
+                                      "width": "5000px !important",
+                                    }
+                                  }
+                                  theme="neon-dark"
                                   touchHold={false}
                                   trigger="mouseenter focus"
                                   unmountHTMLWhenHide={false}
                                 >
                                   <div
-                                    className=""
+                                    className="tippy"
                                     style={
                                       Object {
                                         "display": "inline",
+                                        "width": "5000px !important",
                                       }
                                     }
                                   >
