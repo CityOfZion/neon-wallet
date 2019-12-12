@@ -150,24 +150,6 @@ const NETWORK_CONFIG_TOOLTIP = {
   '--network-config-tooltip-color': '#394152',
 }
 
-// .tippy-tooltip.neon-light-theme {
-//   background-color: #f8f8f8;
-//   color: #394152;
-
-//   .arrow-regular {
-//     border-right: 7px solid #f8f8f8 !important;
-//   }
-// }
-
-// .tippy-tooltip.neon-dark-theme {
-//   background-color: #1b2029;
-//   color: #fff;
-
-//   .arrow-regular {
-//     border-right: 7px solid #1b2029 !important;
-//   }
-// }
-
 export default {
   ...NEWS,
   ...AMOUNTS_PANEL,

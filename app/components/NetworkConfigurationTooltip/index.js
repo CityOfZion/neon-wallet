@@ -51,5 +51,4 @@ export default compose(
   withExplorerData(),
   withAuthData(),
   withThemeData(),
-  // withNetworkData(),
 )(NetworkConfigurationTooltip)
