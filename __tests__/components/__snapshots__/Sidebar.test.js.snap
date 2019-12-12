@@ -427,15 +427,15 @@ exports[`Sidebar renders without crashing 1`] = `
                                   />
                                 }
                                 interactive={true}
+                                onShow={[Function]}
                                 position="left"
-                                theme="neon-dark"
                               >
                                 <Tooltip
                                   animateFill={true}
                                   animation="fade"
                                   arrow={true}
                                   arrowSize="regular"
-                                  className="tippy"
+                                  className=""
                                   delay={0}
                                   disabled={false}
                                   distance={10}
@@ -464,22 +464,17 @@ exports[`Sidebar renders without crashing 1`] = `
                                   size="regular"
                                   sticky={false}
                                   stickyDuration={200}
-                                  style={
-                                    Object {
-                                      "width": "5000px !important",
-                                    }
-                                  }
-                                  theme="neon-dark"
+                                  style={Object {}}
+                                  theme="dark"
                                   touchHold={false}
                                   trigger="mouseenter focus"
                                   unmountHTMLWhenHide={false}
                                 >
                                   <div
-                                    className="tippy"
+                                    className=""
                                     style={
                                       Object {
                                         "display": "inline",
-                                        "width": "5000px !important",
                                       }
                                     }
                                   >
