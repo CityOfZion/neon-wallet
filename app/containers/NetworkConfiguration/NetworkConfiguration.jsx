@@ -80,7 +80,7 @@ export default class NetworkConfiguration extends React.Component<
               <div className={settingsStyles.settingsSelectContainer}>
                 <StyledReactSelect
                   settingsSelect
-                  isDisabled
+                  // isDisabled
                   transparent
                   options={parsedExplorerOptions}
                   value={this.state.selectedExplorer}

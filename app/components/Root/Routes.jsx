@@ -28,8 +28,8 @@ import { ROUTES } from '../../core/constants'
 import OfflineSigningPrompt from '../../containers/OfflineSigningPrompt'
 import NetworkConfiguration from '../../containers/NetworkConfiguration'
 
-export default () => (
-  <App>
+export default ({ store }: { store: any }) => (
+  <App store={store}>
     <Switch>
       <Route exact path={ROUTES.HOME} component={Home} />
       <Route

@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom'
 
 import Logout from './Logout'
 import Tooltip from '../../../components/Tooltip'
+import NetworkConfigurationTooltip from '../../../components/NetworkConfigurationTooltip'
 import { ROUTES } from '../../../core/constants'
 
 import HomeIcon from '../../../assets/navigation/home.svg'
@@ -26,19 +27,29 @@ type Props = {
   pendingTransactionsCount: number,
   count: number,
   isWatchOnly?: boolean,
+  store: any,
 }
 
 const LogoWithTooltipAndBlockHeight = ({
   count,
   theme,
+  store,
 }: {
   count: number,
   theme: string,
+  store: any,
 }) => {
   const themeBasedLogo =
     theme === 'Light' ? LightLogoWithoutText : DarkLogoWithoutText
+
+  const toolTipTheme = theme === 'Light' ? 'neon-light' : 'neon-dark'
   return (
-    <Tooltip position="left">
+    <Tooltip
+      position="left"
+      interactive
+      theme={toolTipTheme}
+      html={<NetworkConfigurationTooltip store={store} />}
+    >
       <div className={styles.logo} id="neon-logo-container">
         <img src={themeBasedLogo} id="neon-logo" alt="neon-logo" />
       </div>
@@ -63,10 +74,15 @@ const Sidebar = ({
   pendingTransactionsCount,
   isWatchOnly,
   count,
+  store,
 }: Props) => (
   <div className={classNames(styles.container, className)}>
     <div className={styles.group}>
-      <LogoWithTooltipAndBlockHeight theme={theme} count={count} />
+      <LogoWithTooltipAndBlockHeight
+        store={store}
+        theme={theme}
+        count={count}
+      />
       <NavLink
         id="dashboard"
         exact

@@ -17,7 +17,6 @@ import styles from './Dashboard.scss'
 type Props = {
   loadWalletData: Function,
   address: string,
-  publicKey: string,
   hasInternetConnectivity: boolean,
   internetConnectionPromptPresented: Boolean,
 }
@@ -45,7 +44,6 @@ export default class Dashboard extends Component<Props> {
   render() {
     const {
       address,
-      publicKey,
       hasInternetConnectivity,
       internetConnectionPromptPresented,
     } = this.props
@@ -62,10 +60,6 @@ export default class Dashboard extends Component<Props> {
                 <Address address={address} asWrapper>
                   <div className={styles.addressLink}>{address}</div>
                 </Address>
-              </div>
-              <div className={styles.headerPublicKeyContainer}>
-                <label>Public Key:</label>
-                <div className={styles.publicKey}>{publicKey}</div>
               </div>
             </div>
           )}

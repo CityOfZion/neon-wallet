@@ -21,6 +21,8 @@ type Props = {
   settingsSelect: boolean,
   fontSize: number,
   net: string,
+  isDisabled?: boolean,
+  hideChevron?: Boolean,
 }
 
 export default class NetworkSwitch extends Component<Props> {
@@ -37,6 +39,8 @@ export default class NetworkSwitch extends Component<Props> {
       transparent,
       fontSize,
       settingsSelect,
+      isDisabled,
+      hideChevron,
     } = this.props
 
     return (
@@ -53,6 +57,8 @@ export default class NetworkSwitch extends Component<Props> {
           onChange={this.handleChange}
           options={networks}
           isSearchable={false}
+          isDisabled={isDisabled}
+          hideChevron={hideChevron}
         />
       </div>
     )
