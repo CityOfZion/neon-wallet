@@ -57,14 +57,13 @@ class LogoWithTooltipAndBlockHeight extends React.Component<Props> {
         // $FlowFixMe
         currentlySelectedThemeElement.style = ''
         const styleString = Object.entries(themes[theme]).reduce(
+          // eslint-disable-next-line
           (styleString, [propName, propValue]) => {
             if (
               typeof propValue === 'string' &&
               typeof styleString === 'string'
             )
               return `${styleString}${propName}:${propValue};`
-
-            return undefined
           },
           '',
         )
