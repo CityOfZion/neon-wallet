@@ -4,7 +4,6 @@ import classNames from 'classnames'
 import { NavLink } from 'react-router-dom'
 
 import Logout from './Logout'
-import Tooltip from '../../../components/Tooltip'
 import { ROUTES } from '../../../core/constants'
 
 import HomeIcon from '../../../assets/navigation/home.svg'

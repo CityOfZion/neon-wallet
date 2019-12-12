@@ -63,6 +63,8 @@ class LogoWithTooltipAndBlockHeight extends React.Component<Props> {
               typeof styleString === 'string'
             )
               return `${styleString}${propName}:${propValue};`
+
+            return undefined
           },
           '',
         )
