@@ -83,11 +83,6 @@ describe('Sidebar', () => {
   test('Renders the config tooltip with appropriate data based on state', () => {
     const { wrapper } = networkConfigTooltipSetup()
     expect(wrapper.text().includes(MAIN_NETWORK_LABEL.toUpperCase())).toBe(true)
-    expect(
-      wrapper
-        .text()
-        .includes(TEST_ADDRESS)
-        .toBe(true),
-    )
+    expect(wrapper.text().includes(TEST_ADDRESS)).toBe(true)
   })
 })

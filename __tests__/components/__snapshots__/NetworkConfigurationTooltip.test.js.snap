@@ -294,6 +294,7 @@ exports[`Sidebar renders without crashing 1`] = `
                         >
                           <withData(Connect(withData(NetworkConfigurationTooltip)))
                             accounts={null}
+                            address="TOOLTIP_TEST"
                             dispatch={[Function]}
                             explorer="Neotracker"
                             isWatchOnly={false}
@@ -324,6 +325,7 @@ exports[`Sidebar renders without crashing 1`] = `
                           >
                             <withData(NetworkConfigurationTooltip)
                               accounts={null}
+                              address="TOOLTIP_TEST"
                               dispatch={[Function]}
                               explorer="Neotracker"
                               isWatchOnly={false}
@@ -490,6 +492,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                           className="addressLink"
                                         >
                                            
+                                          TOOLTIP_TEST
                                         </div>
                                       </div>
                                       <SettingsLink
