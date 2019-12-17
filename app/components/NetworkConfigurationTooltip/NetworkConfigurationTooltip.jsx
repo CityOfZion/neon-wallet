@@ -33,6 +33,7 @@ export default class NetworkConfigurationTooltip extends React.Component<
     const { address, publicKey, theme } = this.props
     return (
       <section
+        id="network-config-tooltip"
         style={themes[theme]}
         className={classNames(
           settingsStyles.settingsItemsContainer,

@@ -9,9 +9,16 @@ import { cloneDeep } from 'lodash-es'
 
 import { createStore, provideStore, provideState } from '../testHelpers'
 import Sidebar from '../../app/containers/App/Sidebar'
-import { THEMES } from '../../app/core/constants'
+import {
+  THEMES,
+  EXPLORERS,
+  MAIN_NETWORK_DEPRECATED_LABEL,
+  MAIN_NETWORK_LABEL,
+} from '../../app/core/constants'
 import LightLogoWithoutText from '../../../assets/images/logo-without-text-black.png'
 import DarkLogoWithoutText from '../../../assets/images/logo-without-text.png'
+import Tooltip from '../../app/components/Tooltip'
+import NetworkConfigurationTooltip from '../../app/components/NetworkConfigurationTooltip'
 
 const { LOADED, LOADING } = progressValues
 
@@ -31,12 +38,19 @@ const initialState = {
       loadedCount: 1,
       data: 300,
     },
+    network: {
+      batch: false,
+      progress: LOADED,
+      loadedCount: 1,
+      data: 1,
+    },
     settings: {
       batch: false,
       progress: LOADED,
       loadedCount: 1,
       data: {
         theme: THEMES.LIGHT,
+        blockExplorer: EXPLORERS.NEO_TRACKER,
       },
     },
   },
