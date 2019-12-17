@@ -210,7 +210,10 @@
     "merge": "1.2.1",
     "atob": "2.1.0",
     "lodash-es": "4.17.14",
-    "lodash": "4.17.13"
+    "lodash": "4.17.13",
+    "csv-parse": "4.4.6",
+    "set-value": "2.0.1",
+    "serialize-javascript": "2.1.1"
   },
   "jest": {
     "moduleNameMapper": {
