@@ -417,32 +417,98 @@ exports[`Sidebar renders without crashing 1`] = `
                           <div
                             className="group"
                           >
-                            <div
-                              className="logo"
-                              id="neon-logo-container"
+                            <LogoWithTooltipAndBlockHeight
+                              count={300}
                             >
-                              <img
-                                alt="neon-logo"
-                                id="neon-logo"
-                                src="test-file-stub"
-                              />
-                            </div>
-                            <div
-                              className="blockHeight"
-                              id="block-height-container"
-                            >
-                              <div
-                                className="heightText"
-                                id="block-height-label"
+                              <Tooltip
+                                html={
+                                  <Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip))))))))))))))))
+                                    store={undefined}
+                                  />
+                                }
+                                interactive={true}
+                                onShow={[Function]}
+                                position="left"
+                                theme="network-settings"
                               >
-                                CURRENT BLOCK:
-                              </div>
-                              <div
-                                id="block-height"
-                              >
-                                300
-                              </div>
-                            </div>
+                                <Tooltip
+                                  animateFill={true}
+                                  animation="fade"
+                                  arrow={true}
+                                  arrowSize="regular"
+                                  className=""
+                                  delay={0}
+                                  disabled={false}
+                                  distance={10}
+                                  duration={375}
+                                  followCursor={false}
+                                  hideDelay={0}
+                                  hideDuration={375}
+                                  hideOnClick={true}
+                                  html={
+                                    <Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip))))))))))))))))
+                                      store={undefined}
+                                    />
+                                  }
+                                  inertia={false}
+                                  interactive={true}
+                                  interactiveBorder={2}
+                                  multiple={false}
+                                  offset={0}
+                                  onHidden={[Function]}
+                                  onHide={[Function]}
+                                  onRequestClose={[Function]}
+                                  onShow={[Function]}
+                                  onShown={[Function]}
+                                  popperOptions={Object {}}
+                                  position="left"
+                                  size="regular"
+                                  sticky={false}
+                                  stickyDuration={200}
+                                  style={Object {}}
+                                  theme="network-settings"
+                                  touchHold={false}
+                                  trigger="mouseenter focus"
+                                  unmountHTMLWhenHide={false}
+                                >
+                                  <div
+                                    className=""
+                                    style={
+                                      Object {
+                                        "display": "inline",
+                                      }
+                                    }
+                                  >
+                                    <div
+                                      className="logo"
+                                      id="neon-logo-container"
+                                    >
+                                      <img
+                                        alt="neon-logo"
+                                        id="neon-logo"
+                                        src="test-file-stub"
+                                      />
+                                    </div>
+                                    <div
+                                      className="blockHeight"
+                                      id="block-height-container"
+                                    >
+                                      <div
+                                        className="heightText"
+                                        id="block-height-label"
+                                      >
+                                        CURRENT BLOCK:
+                                      </div>
+                                      <div
+                                        id="block-height"
+                                      >
+                                        300
+                                      </div>
+                                    </div>
+                                  </div>
+                                </Tooltip>
+                              </Tooltip>
+                            </LogoWithTooltipAndBlockHeight>
                             <NavLink
                               activeClassName="active"
                               aria-current="page"

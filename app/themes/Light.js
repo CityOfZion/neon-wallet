@@ -144,6 +144,12 @@ const NEWS = {
   '--news-content-border-color': '#ececec',
 }
 
+const NETWORK_CONFIG_TOOLTIP = {
+  '--network-config-tooltip-label': '#8D98AE',
+  '--network-config-tooltip-background': '#f8f8f8',
+  '--network-config-tooltip-color': '#394152',
+}
+
 export default {
   ...NEWS,
   ...AMOUNTS_PANEL,
@@ -163,4 +169,5 @@ export default {
   ...CONTACTS,
   ...SEND,
   ...QR_SCANNER,
+  ...NETWORK_CONFIG_TOOLTIP,
 }

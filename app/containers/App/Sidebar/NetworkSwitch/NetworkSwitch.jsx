@@ -3,7 +3,10 @@ import React, { Component } from 'react'
 
 import classNames from 'classnames'
 import StyledReactSelect from '../../../../components/Inputs/StyledReactSelect/StyledReactSelect'
-import { getNetworks } from '../../../../core/networks'
+import {
+  getNetworks,
+  findNetworkByDeprecatedLabel,
+} from '../../../../core/networks'
 import styles from './NetworkSwitch.scss'
 
 type Props = {
@@ -17,7 +20,9 @@ type Props = {
   loadWalletData: () => void,
   settingsSelect: boolean,
   fontSize: number,
-  value: NetworkItemType,
+  net: string,
+  isDisabled?: boolean,
+  hideChevron?: Boolean,
 }
 
 export default class NetworkSwitch extends Component<Props> {
@@ -34,7 +39,8 @@ export default class NetworkSwitch extends Component<Props> {
       transparent,
       fontSize,
       settingsSelect,
-      value,
+      isDisabled,
+      hideChevron,
     } = this.props
 
     return (
@@ -45,10 +51,14 @@ export default class NetworkSwitch extends Component<Props> {
           settingsSelect={settingsSelect}
           hideHighlight
           disabled={disabled}
-          value={value}
+          value={{
+            label: findNetworkByDeprecatedLabel(this.props.net).label,
+          }}
           onChange={this.handleChange}
           options={networks}
           isSearchable={false}
+          isDisabled={isDisabled}
+          hideChevron={hideChevron}
         />
       </div>
     )

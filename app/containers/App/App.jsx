@@ -19,6 +19,7 @@ type Props = {
   showErrorNotification: Function,
   location: Object,
   theme: string,
+  store: any,
 }
 
 const routesWithSideBar = [
@@ -53,7 +54,11 @@ class App extends Component<Props> {
         <div style={themes[theme]} className={styles.container}>
           {address &&
             routesWithSideBar.includes(location.pathname) && (
-              <Sidebar theme={theme} className={styles.sidebar} />
+              <Sidebar
+                store={this.props.store}
+                theme={theme}
+                className={styles.sidebar}
+              />
             )}
           <div className={styles.wrapper}>
             <div className={styles.content}>{children}</div>

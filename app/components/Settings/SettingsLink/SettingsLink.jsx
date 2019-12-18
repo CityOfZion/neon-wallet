@@ -9,6 +9,7 @@ import DropdownIcon from '../../../assets/icons/dropdown.svg'
 type Props = {
   title: string,
   to: string,
+  tooltip?: boolean,
   noBorderBottom?: boolean,
   label?: string,
   onClick?: Function,
@@ -17,10 +18,12 @@ type Props = {
 
 export default class SettingsLink extends Component<Props> {
   render() {
+    const { tooltip = false } = this.props
     return this.props.onClick ? (
       <div
         className={classNames(styles.settingsLink, {
           [styles.noBorderBottom]: this.props.noBorderBottom,
+          [styles.defaultCursor]: tooltip,
         })}
         onClick={this.props.onClick}
       >
@@ -29,12 +32,13 @@ export default class SettingsLink extends Component<Props> {
         )}
         <span className={styles.settingsLinkLabel}>{this.props.title}</span>
         <label className={styles.greenLabel}>{this.props.label}</label>
-        <DropdownIcon className={styles.settingsLinkIcon} />
+        {!tooltip && <DropdownIcon className={styles.settingsLinkIcon} />}
       </div>
     ) : (
       <Link
         className={classNames(styles.settingsLink, {
           [styles.noBorderBottom]: this.props.noBorderBottom,
+          [styles.defaultCursor]: tooltip,
         })}
         to={this.props.to}
       >
@@ -43,7 +47,7 @@ export default class SettingsLink extends Component<Props> {
         )}
         <span className={styles.settingsLinkLabel}>{this.props.title}</span>
         <label className={styles.greyLabel}>{this.props.label}</label>
-        <DropdownIcon className={styles.settingsLinkIcon} />
+        {!tooltip && <DropdownIcon className={styles.settingsLinkIcon} />}
       </Link>
     )
   }

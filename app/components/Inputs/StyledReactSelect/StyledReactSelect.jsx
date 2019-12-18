@@ -28,9 +28,10 @@ const customStyles = {
       (props.selectProps.hideHighlight || props.selectProps.settingsSelect) &&
       'transparent !important',
     border: props.selectProps.hideHighlight && 'none !important',
+    width: props.selectProps.settingsSelect ? '150px' : 'auto',
   }),
   dropdownIndicator: (styles, props) => ({
-    display: 'flex',
+    display: props.selectProps.hideChevron ? 'none' : 'flex',
     padding: '8px',
     color: returnDropdownIndicatorColor(props),
     transform: props.selectProps.menuIsOpen && 'rotate(180deg)',

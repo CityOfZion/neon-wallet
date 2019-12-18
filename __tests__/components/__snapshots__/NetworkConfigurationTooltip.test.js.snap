@@ -1,0 +1,661 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sidebar renders without crashing 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        "/",
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "",
+              "state": undefined,
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip))))))))))))))))>
+        <Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip)))))))))))))))
+          networks={
+            Array [
+              Object {
+                "deprecatedLabel": "MainNet",
+                "id": "1",
+                "label": "2.x MainNet",
+                "network": "MainNet",
+                "value": "1",
+              },
+              Object {
+                "deprecatedLabel": "TestNet",
+                "id": "2",
+                "label": "2.x TestNet",
+                "network": "TestNet",
+                "value": "2",
+              },
+            ]
+          }
+          showErrorNotification={[Function]}
+          showModal={[Function]}
+          showSuccessNotification={[Function]}
+        >
+          <withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip))))))))))))))
+            dispatch={[Function]}
+            networkId={1}
+            networks={
+              Array [
+                Object {
+                  "deprecatedLabel": "MainNet",
+                  "id": "1",
+                  "label": "2.x MainNet",
+                  "network": "MainNet",
+                  "value": "1",
+                },
+                Object {
+                  "deprecatedLabel": "TestNet",
+                  "id": "2",
+                  "label": "2.x TestNet",
+                  "network": "TestNet",
+                  "value": "2",
+                },
+              ]
+            }
+            showErrorNotification={[Function]}
+            showModal={[Function]}
+            showSuccessNotification={[Function]}
+          >
+            <Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip))))))))))))
+              dispatch={[Function]}
+              net="MainNet"
+              networkId={1}
+              networks={
+                Array [
+                  Object {
+                    "deprecatedLabel": "MainNet",
+                    "id": "1",
+                    "label": "2.x MainNet",
+                    "network": "MainNet",
+                    "value": "1",
+                  },
+                  Object {
+                    "deprecatedLabel": "TestNet",
+                    "id": "2",
+                    "label": "2.x TestNet",
+                    "network": "TestNet",
+                    "value": "2",
+                  },
+                ]
+              }
+              showErrorNotification={[Function]}
+              showModal={[Function]}
+              showSuccessNotification={[Function]}
+            >
+              <withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip)))))))))))
+                dispatch={[Function]}
+                net="MainNet"
+                networkId={1}
+                networks={
+                  Array [
+                    Object {
+                      "deprecatedLabel": "MainNet",
+                      "id": "1",
+                      "label": "2.x MainNet",
+                      "network": "MainNet",
+                      "value": "1",
+                    },
+                    Object {
+                      "deprecatedLabel": "TestNet",
+                      "id": "2",
+                      "label": "2.x TestNet",
+                      "network": "TestNet",
+                      "value": "2",
+                    },
+                  ]
+                }
+                performAction={[Function]}
+                showErrorNotification={[Function]}
+                showModal={[Function]}
+                showSuccessNotification={[Function]}
+              >
+                <withoutProps(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip)))))))))))
+                  dispatch={[Function]}
+                  net="MainNet"
+                  networkId={1}
+                  networks={
+                    Array [
+                      Object {
+                        "deprecatedLabel": "MainNet",
+                        "id": "1",
+                        "label": "2.x MainNet",
+                        "network": "MainNet",
+                        "value": "1",
+                      },
+                      Object {
+                        "deprecatedLabel": "TestNet",
+                        "id": "2",
+                        "label": "2.x TestNet",
+                        "network": "TestNet",
+                        "value": "2",
+                      },
+                    ]
+                  }
+                  performAction={[Function]}
+                  showErrorNotification={[Function]}
+                  showModal={[Function]}
+                  showSuccessNotification={[Function]}
+                >
+                  <Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip))))))))))
+                    dispatch={[Function]}
+                    net="MainNet"
+                    networkId={1}
+                    networks={
+                      Array [
+                        Object {
+                          "deprecatedLabel": "MainNet",
+                          "id": "1",
+                          "label": "2.x MainNet",
+                          "network": "MainNet",
+                          "value": "1",
+                        },
+                        Object {
+                          "deprecatedLabel": "TestNet",
+                          "id": "2",
+                          "label": "2.x TestNet",
+                          "network": "TestNet",
+                          "value": "2",
+                        },
+                      ]
+                    }
+                    showErrorNotification={[Function]}
+                    showModal={[Function]}
+                    showSuccessNotification={[Function]}
+                  >
+                    <withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip)))))))))
+                      accounts={null}
+                      dispatch={[Function]}
+                      net="MainNet"
+                      networkId={1}
+                      networks={
+                        Array [
+                          Object {
+                            "deprecatedLabel": "MainNet",
+                            "id": "1",
+                            "label": "2.x MainNet",
+                            "network": "MainNet",
+                            "value": "1",
+                          },
+                          Object {
+                            "deprecatedLabel": "TestNet",
+                            "id": "2",
+                            "label": "2.x TestNet",
+                            "network": "TestNet",
+                            "value": "2",
+                          },
+                        ]
+                      }
+                      showErrorNotification={[Function]}
+                      showModal={[Function]}
+                      showSuccessNotification={[Function]}
+                    >
+                      <withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip)))))))
+                        accounts={null}
+                        dispatch={[Function]}
+                        net="MainNet"
+                        networkId={1}
+                        networks={
+                          Array [
+                            Object {
+                              "deprecatedLabel": "MainNet",
+                              "id": "1",
+                              "label": "2.x MainNet",
+                              "network": "MainNet",
+                              "value": "1",
+                            },
+                            Object {
+                              "deprecatedLabel": "TestNet",
+                              "id": "2",
+                              "label": "2.x TestNet",
+                              "network": "TestNet",
+                              "value": "2",
+                            },
+                          ]
+                        }
+                        selectedNode={null}
+                        showErrorNotification={[Function]}
+                        showModal={[Function]}
+                        showSuccessNotification={[Function]}
+                      >
+                        <withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip)))))
+                          accounts={null}
+                          dispatch={[Function]}
+                          explorer="Neotracker"
+                          net="MainNet"
+                          networkId={1}
+                          networks={
+                            Array [
+                              Object {
+                                "deprecatedLabel": "MainNet",
+                                "id": "1",
+                                "label": "2.x MainNet",
+                                "network": "MainNet",
+                                "value": "1",
+                              },
+                              Object {
+                                "deprecatedLabel": "TestNet",
+                                "id": "2",
+                                "label": "2.x TestNet",
+                                "network": "TestNet",
+                                "value": "2",
+                              },
+                            ]
+                          }
+                          selectedNode={null}
+                          showErrorNotification={[Function]}
+                          showModal={[Function]}
+                          showSuccessNotification={[Function]}
+                        >
+                          <withData(Connect(withData(NetworkConfigurationTooltip)))
+                            accounts={null}
+                            address="TOOLTIP_TEST"
+                            dispatch={[Function]}
+                            explorer="Neotracker"
+                            isWatchOnly={false}
+                            net="MainNet"
+                            networkId={1}
+                            networks={
+                              Array [
+                                Object {
+                                  "deprecatedLabel": "MainNet",
+                                  "id": "1",
+                                  "label": "2.x MainNet",
+                                  "network": "MainNet",
+                                  "value": "1",
+                                },
+                                Object {
+                                  "deprecatedLabel": "TestNet",
+                                  "id": "2",
+                                  "label": "2.x TestNet",
+                                  "network": "TestNet",
+                                  "value": "2",
+                                },
+                              ]
+                            }
+                            selectedNode={null}
+                            showErrorNotification={[Function]}
+                            showModal={[Function]}
+                            showSuccessNotification={[Function]}
+                          >
+                            <withData(NetworkConfigurationTooltip)
+                              accounts={null}
+                              address="TOOLTIP_TEST"
+                              dispatch={[Function]}
+                              explorer="Neotracker"
+                              isWatchOnly={false}
+                              net="MainNet"
+                              networkId={1}
+                              networks={
+                                Array [
+                                  Object {
+                                    "deprecatedLabel": "MainNet",
+                                    "id": "1",
+                                    "label": "2.x MainNet",
+                                    "network": "MainNet",
+                                    "value": "1",
+                                  },
+                                  Object {
+                                    "deprecatedLabel": "TestNet",
+                                    "id": "2",
+                                    "label": "2.x TestNet",
+                                    "network": "TestNet",
+                                    "value": "2",
+                                  },
+                                ]
+                              }
+                              selectedNode={null}
+                              showErrorNotification={[Function]}
+                              showModal={[Function]}
+                              showSuccessNotification={[Function]}
+                              theme="Light"
+                            >
+                              <section
+                                className="settingsItemsContainer networkItemsContainer tooltipContainer"
+                                id="network-config-tooltip"
+                                style={
+                                  Object {
+                                    "--amounts-panel-asset-amount-text": "#515151",
+                                    "--amounts-panel-asset-name-text": "#515151",
+                                    "--amounts-panel-asset-worth-text": "#515151",
+                                    "--amounts-panel-first-row-background": "#f2f2f2",
+                                    "--amounts-panel-second-row-background": "#fff",
+                                    "--auth-main-container-background": "#fff",
+                                    "--auth-scan-qr-border": "#f2f2f2",
+                                    "--base-link-color": "#3063c9",
+                                    "--base-main-background": "#e6e6e6",
+                                    "--base-scrollbar-thumb": "#5c677f",
+                                    "--base-scrollbar-track": "#fff",
+                                    "--base-text": "#394152",
+                                    "--button-active": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
+                                    "--button-active-hover": "#66edcd",
+                                    "--button-disabled": "#d6d9e0",
+                                    "--button-icon-color": "#394152",
+                                    "--button-max-amount-background": "#e6e6e6",
+                                    "--button-max-amount-text": "#8f939b",
+                                    "--button-primary-background": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
+                                    "--button-primary-hover": "#66edcd",
+                                    "--button-primary-text": "#394152",
+                                    "--button-priority-transfer-background": "#fff",
+                                    "--button-priority-transfer-color": "#394152",
+                                    "--button-priority-transfer-disabled": "#fff",
+                                    "--button-secondary-background": "#fff",
+                                    "--button-secondary-hover": "#f2f2f2",
+                                    "--button-secondary-text": "#394152",
+                                    "--contacts-group-header-background": "#f6f7f8",
+                                    "--contacts-group-header-text": "#394152",
+                                    "--contacts-odd-numbered-row": "rgba(230, 230, 230, 0.1)",
+                                    "--dashboard-asset-panel-asset-name": "#5c677f",
+                                    "--dashboard-asset-panel-total-background": "rgba(230, 230, 230, 0.28)",
+                                    "--dashboard-market-data-line": "#3fd0ae",
+                                    "--dashboard-price-history-current-price": "#394152",
+                                    "--dashboard-token-balances-divider-line": "#f2f2f2",
+                                    "--dashboard-total-wallet-value-odd-row": "#f8f8f8",
+                                    "--dashboard-total-wallet-value-total-text": "#394152",
+                                    "--header-bar-default-icon-color": "#394152",
+                                    "--input-active": "linear-gradient(#f2f2f2, #f2f2f2), radial-gradient(circle at top left, #66eb8e, #6bdaf6)",
+                                    "--input-background": "#f2f2f2",
+                                    "--input-error": "#ee6d66",
+                                    "--input-error-text": "#fff",
+                                    "--input-icon": "#9ca0a9",
+                                    "--input-label": "#5c677f",
+                                    "--input-label-opacity": 0.5,
+                                    "--input-placeholder": "rgba(40, 40, 40, 0.5)",
+                                    "--input-select-hover": "#e6e6e6",
+                                    "--input-text": "#282828",
+                                    "--modal-overlay": "rgba(26, 54, 80, 0.25)",
+                                    "--network-config-tooltip-background": "#f8f8f8",
+                                    "--network-config-tooltip-color": "#394152",
+                                    "--network-config-tooltip-label": "#8D98AE",
+                                    "--news-content-border-color": "#ececec",
+                                    "--node-select-automatic-select-button-text": "#5c677f",
+                                    "--node-select-header-background": "#f2f2f2",
+                                    "--node-select-icon-color": "#69e27e",
+                                    "--node-select-node-count": "#5c677f",
+                                    "--node-select-refresh-icon": "#394152",
+                                    "--panel-background": "#fff",
+                                    "--panel-full-height-background": "#fff",
+                                    "--panel-full-height-header-icon-color": "#394152",
+                                    "--panel-full-height-instructions-border": "rgba(0, 0, 0, 0.15)",
+                                    "--panel-full-height-instructions-text": "#5c677f",
+                                    "--panel-full-height-nav-background": "#f2f2f2",
+                                    "--panel-header": "#f2f2f2",
+                                    "--panel-header-border": "#8d98ae",
+                                    "--panel-header-text": "#394152",
+                                    "--panel-icon": "#69e27e",
+                                    "--panel-label-text": "#8d98ae",
+                                    "--panel-receive-explanation": "rgba(242, 242, 242, .5)",
+                                    "--qr-scan-animation-end": "rgba(57, 65, 82, 0)",
+                                    "--qr-scan-animation-start": "rgba(57, 65, 82, 1)",
+                                    "--qr-scan-paused": "rgba(102, 237, 135, 0.6)",
+                                    "--secondary-button-icon-color": "#394152",
+                                    "--send-success-row-info": "#394152",
+                                    "--settings-donation-text": "#5c677f",
+                                    "--settings-item-border-color": "#f2f2f2",
+                                    "--settings-item-icon": "#cccccc",
+                                    "--settings-item-label": "#343b4a",
+                                    "--settings-link-text": "#69e27e",
+                                    "--settings-select-value-text": "#69e27e",
+                                    "--settings-spacer": "rgba(170, 178, 189, 0.3)",
+                                    "--side-bar-disabled-item-background": "#fff",
+                                    "--sidebar-active-background": "#f2f2f2",
+                                    "--sidebar-active-border": "#66edcd",
+                                    "--sidebar-active-icon": "#394152",
+                                    "--sidebar-background": "#fff",
+                                    "--sidebar-icon": "#9599a2",
+                                    "--tab-border": "#394152",
+                                    "--tab-text": "#394152",
+                                    "--tx-list-button-icon": "#394152",
+                                    "--tx-list-copy-icon": "#9599a2",
+                                    "--tx-list-odd-row": "#f2f2f2",
+                                  }
+                                }
+                              >
+                                <HashRouter>
+                                  <Router
+                                    history={
+                                      Object {
+                                        "action": "POP",
+                                        "block": [Function],
+                                        "createHref": [Function],
+                                        "go": [Function],
+                                        "goBack": [Function],
+                                        "goForward": [Function],
+                                        "length": 1,
+                                        "listen": [Function],
+                                        "location": Object {
+                                          "hash": "",
+                                          "pathname": "/",
+                                          "search": "",
+                                          "state": undefined,
+                                        },
+                                        "push": [Function],
+                                        "replace": [Function],
+                                      }
+                                    }
+                                  >
+                                    <div
+                                      className="innerContainer"
+                                    >
+                                      <div
+                                        className="addressInfo"
+                                      >
+                                        <span>
+                                          ADDRESS:
+                                        </span>
+                                        <div
+                                          className="addressLink"
+                                        >
+                                           
+                                          TOOLTIP_TEST
+                                        </div>
+                                      </div>
+                                      <SettingsLink
+                                        label="AUTOMATIC"
+                                        noBorderBottom={true}
+                                        onClick={[Function]}
+                                        renderIcon={[Function]}
+                                        title="NODE SELECTON"
+                                        to="/node-select"
+                                        tooltip={true}
+                                      >
+                                        <div
+                                          className="settingsLink noBorderBottom defaultCursor"
+                                          onClick={[Function]}
+                                        >
+                                          <div
+                                            className="icon"
+                                          >
+                                            <Component>
+                                              <svg />
+                                            </Component>
+                                             
+                                          </div>
+                                          <span
+                                            className="settingsLinkLabel"
+                                          >
+                                            NODE SELECTON
+                                          </span>
+                                          <label
+                                            className="greenLabel"
+                                          >
+                                            AUTOMATIC
+                                          </label>
+                                        </div>
+                                      </SettingsLink>
+                                      <div
+                                        className="tooltipItemBorder"
+                                      />
+                                      <SettingsItem
+                                        noBorderBottom={true}
+                                        renderIcon={[Function]}
+                                        title="BLOCK EXPLORER"
+                                        tooltip={true}
+                                      >
+                                        <div
+                                          className="settingsItem noBorderBottom"
+                                        >
+                                          <div
+                                            className="icon"
+                                          >
+                                            <Component>
+                                              <svg />
+                                            </Component>
+                                             
+                                          </div>
+                                          <span
+                                            className="settingsItemLabel"
+                                          >
+                                            BLOCK EXPLORER
+                                          </span>
+                                          <div
+                                            className="settingsSelectContainer"
+                                          >
+                                            <div
+                                              className="configLabel"
+                                            >
+                                              NEOTRACKER
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </SettingsItem>
+                                      <div
+                                        className="tooltipItemBorder"
+                                      />
+                                      <SettingsItem
+                                        noBorderBottom={true}
+                                        renderIcon={[Function]}
+                                        title="CURRENT NETWORK"
+                                        tooltip={true}
+                                      >
+                                        <div
+                                          className="settingsItem noBorderBottom"
+                                        >
+                                          <div
+                                            className="icon"
+                                          >
+                                            <Component>
+                                              <svg />
+                                            </Component>
+                                             
+                                          </div>
+                                          <span
+                                            className="settingsItemLabel"
+                                          >
+                                            CURRENT NETWORK
+                                          </span>
+                                          <div
+                                            className="settingsSelectContainer"
+                                          >
+                                            <div
+                                              className="configLabel"
+                                            >
+                                              2.X MAINNET
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </SettingsItem>
+                                      <div
+                                        className="tooltipItemBorder"
+                                      />
+                                      <div
+                                        className="buttonContainer"
+                                      >
+                                        <Link
+                                          replace={false}
+                                          to="/network-configuration"
+                                        >
+                                          <a
+                                            href="#/network-configuration"
+                                            onClick={[Function]}
+                                          >
+                                            <Button
+                                              primary={false}
+                                              renderIcon={[Function]}
+                                              shouldCenterButtonLabelText={true}
+                                              type="button"
+                                            >
+                                              <button
+                                                className="button light"
+                                                type="button"
+                                              >
+                                                <span
+                                                  className="icon centeredLabel dark"
+                                                >
+                                                  <Component>
+                                                    <svg />
+                                                  </Component>
+                                                </span>
+                                                <span>
+                                                  Update Settings
+                                                </span>
+                                              </button>
+                                            </Button>
+                                          </a>
+                                        </Link>
+                                      </div>
+                                    </div>
+                                  </Router>
+                                </HashRouter>
+                              </section>
+                            </withData(NetworkConfigurationTooltip)>
+                          </withData(Connect(withData(NetworkConfigurationTooltip)))>
+                        </withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip)))))>
+                      </withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip)))))))>
+                    </withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip)))))))))>
+                  </Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip))))))))))>
+                </withoutProps(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip)))))))))))>
+              </withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip)))))))))))>
+            </Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip))))))))))))>
+          </withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip))))))))))))))>
+        </Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip)))))))))))))))>
+      </Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip))))))))))))))))>
+    </Router>
+  </MemoryRouter>
+</Provider>
+`;

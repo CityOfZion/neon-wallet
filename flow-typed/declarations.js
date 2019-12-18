@@ -13,7 +13,7 @@ import {
   THEME,
   NETWORK_LABELS,
   MAIN_NETWORK_LABEL,
-  TEST_NETWORK_LABEL
+  TEST_NETWORK_LABEL,
 } from '../app/core/constants'
 
 declare type ActionCreatorType = any
@@ -26,12 +26,12 @@ declare type ReduxAction = () => {
   type: string,
   payload: Object,
   meta?: Object,
-  error?: Object
+  error?: Object,
 }
 
 declare type SelectOption = {
   label: string,
-  value: string
+  value: string,
 }
 
 declare type NetworkType = string
@@ -43,7 +43,7 @@ declare type ExplorerType = $Values<Explorer>
 declare type Explorer = {
   NEO_TRACKER: string,
   NEO_SCAN: string,
-  ANT_CHAIN: string
+  ANT_CHAIN: string,
 }
 
 declare type RouteType = $Values<typeof ROUTES>
@@ -55,16 +55,16 @@ declare type NotificationType = {
   message: string,
   position: $Values<typeof NOTIFICATION_POSITIONS>,
   dismissible: boolean,
-  autoDismiss: number
+  autoDismiss: number,
 }
 
 declare type TransactionHistoryType = {
   change: {
     NEO: Fixed8,
-    GAS: Fixed8
+    GAS: Fixed8,
   },
   txid: string,
-  blockHeight: Fixed8
+  blockHeight: Fixed8,
 }
 
 declare type ModalType = $Values<typeof MODAL_TYPES>
@@ -80,7 +80,7 @@ declare type TxEntryType = {
   label: $Values<typeof ASSETS>,
   time?: number,
   isNetworkFee?: boolean,
-  image?: string
+  image?: string,
 }
 
 type PendingTransactions = {
@@ -116,7 +116,8 @@ declare type NetworkItemType = {
   value: string,
   id: string,
   label: string,
-  network: NetworkType
+  network: NetworkType,
+  deprecatedLabel: string,
 }
 
 declare type TokenItemType = {
@@ -125,11 +126,11 @@ declare type TokenItemType = {
   networkId: string,
   isUserGenerated: boolean,
   symbol?: string,
-  cryptocompareSymbol?: string, 
+  cryptocompareSymbol?: string,
   totalSupply?: number,
   decimals?: number,
   image?: ?string,
-  isNotValidated?: boolean
+  isNotValidated?: boolean,
 }
 
 declare type TokenType = {
@@ -137,7 +138,7 @@ declare type TokenType = {
   balance: number,
   totalSupply: number,
   decimals: number,
-  name: string
+  name: string,
 }
 
 declare type TokenBalanceType = {
@@ -147,13 +148,13 @@ declare type TokenBalanceType = {
   scriptHash: string,
   totalSupply: number,
   decimals: number,
-  name: string
+  name: string,
 }
 
 declare type SendEntryType = {
   amount: string,
   address: string,
-  symbol: SymbolType
+  symbol: SymbolType,
 }
 
 declare type ThemeType = THEME.LIGHT | THEME.DARK
@@ -168,7 +169,7 @@ declare interface Navigator extends Navigator {
 // https://mdn.io/MediaDevices/getUserMedia
 declare type MediaDevicesType = {
   enumerateDevices(): Promise<Array<MediaDeviceInfoType>>,
-  getUserMedia(MediaStreamConstraints): Promise<MediaStream>
+  getUserMedia(MediaStreamConstraints): Promise<MediaStream>,
 }
 
 // https://mdn.io/MediaDeviceInfo
@@ -176,10 +177,10 @@ declare type MediaDeviceInfoType = {
   deviceId: string,
   groupId: string,
   kind: 'videoinput' | 'audioinput' | 'audiooutput',
-  label: string
+  label: string,
 }
 
 // https://mdn.io/MediaStreamConstraints
 declare type MediaStreamConstraints = {
-  ['audio' | 'video']: Object | boolean
+  ['audio' | 'video']: Object | boolean,
 }

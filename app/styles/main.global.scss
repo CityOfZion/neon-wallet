@@ -256,3 +256,16 @@ input::placeholder {
 a {
   cursor: pointer;
 }
+
+.tippy-popper {
+  max-width: none;
+}
+
+.tippy-tooltip.network-settings-theme {
+  background-color: var(--network-config-tooltip-background);
+  color: var(--network-config-tooltip-color);
+
+  .arrow-regular {
+    border-right: 7px solid var(--network-config-tooltip-background) !important;
+  }
+}

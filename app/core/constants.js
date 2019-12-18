@@ -62,6 +62,7 @@ export const ROUTES = {
   VOTING: '/voting',
   NEWS: '/news',
   OFFLINE_SIGNING_PROMPT: '/offline-signing-prompt',
+  NETWORK_CONFIGURATION: '/network-configuration',
 }
 
 export const NOTIFICATION_LEVELS = {
@@ -101,9 +102,13 @@ export const TX_TYPES = {
 }
 
 export const MAIN_NETWORK_ID = '1'
-export const MAIN_NETWORK_LABEL = 'MainNet'
+export const MAIN_NETWORK_LABEL = '2.x MainNet'
+export const MAIN_NETWORK_DEPRECATED_LABEL = 'MainNet'
+
 export const TEST_NETWORK_ID = '2'
-export const TEST_NETWORK_LABEL = 'TestNet'
+export const TEST_NETWORK_LABEL = '2.x TestNet'
+export const TEST_NETWORK_DEPRECATED_LABEL = 'TestNet'
+
 export const NETWORK_LABELS = [MAIN_NETWORK_LABEL, TEST_NETWORK_LABEL]
 
 // TestNet
