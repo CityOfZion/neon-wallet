@@ -1,5 +1,5 @@
 // @flow
-import { wallet } from '@cityofzion/neon-js'
+import Neon, { wallet, Account } from '@cityofzion/neon-js'
 import { noop } from 'lodash-es'
 import { createActions } from 'spunky'
 import dns from 'dns'
@@ -101,20 +101,46 @@ export const nep2LoginActions = createActions(
       throw new Error('Invalid encrypted key entered')
     }
 
-    const wif = await wallet.decryptAsync(encryptedWIF, passphrase)
-    const account = new wallet.Account(wif)
+    const c = new wallet.Account(encryptedWIF)
+    const w1 = Neon.create.wallet({ name: 'myWallet' })
 
-    await upgradeNEP6AddAddresses(encryptedWIF, wif)
+    w1.addAccount(c)
 
-    const hasInternetConnectivity = await checkForInternetConnectivity()
+    await w1.decrypt(0, passphrase)
 
-    return {
-      wif: account.WIF,
-      publicKey: account.publicKey,
-      address: account.address,
-      isHardwareLogin: false,
-      hasInternetConnectivity,
-    }
+    console.log(w1)
+    // const encryptedWallet = wallet.create.account(encryptedWIF)
+    // console.log({ encryptedWallet })
+    // // Wallet.addAccount(new Account(encryptedWIF))
+    // await Wallet.decrypt(0, passphrase)
+
+    // const encryptedWallet = new wallet.Account(encryptedWIF)
+    // console.log({ encryptedWallet: encryptedWallet.encrypted, passphrase })
+    // await encryptedWallet.decrypt(passphrase).catch(e => console.log(e))
+    // console.log({ encryptedWallet })
+
+    // const c = new wallet.Account(
+    //   '6PYLHmDf6AjF4AsVtosmxHuPYeuyJL3SLuw7J1U8i7HxKAnYNsp61HYRfF',
+    // )
+    // console.log(c.encrypted) // encrypted key
+    // //console.log(c.address) // throws error
+    // c.decrypt('city of zion').then(() => console.log(c.address))
+
+    //   const wif = await wallet.decrypt(encryptedWIF, passphrase)
+
+    //   console.log({ wif })
+    //   const account = new wallet.Account(wif)
+
+    //   await upgradeNEP6AddAddresses(encryptedWIF, wif)
+
+    //   const hasInternetConnectivity = await checkForInternetConnectivity()
+
+    //   return {
+    //     wif: account.WIF,
+    //     publicKey: account.publicKey,
+    //     address: account.address,
+    //     isHardwareLogin: false,
+    //     hasInternetConnectivity,
   },
 )
 
