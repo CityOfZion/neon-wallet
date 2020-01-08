@@ -131,24 +131,51 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@cityofzion/neon-js@3.11.9":
-  version "3.11.9"
-  resolved "https://registry.yarnpkg.com/@cityofzion/neon-js/-/neon-js-3.11.9.tgz#c2687bbd177423f1ad4ac9f0fd627a76ef3b7c5f"
+"@cityofzion/neon-api@^5.0.0-next.2":
+  version "5.0.0-next.2"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neon-api/-/neon-api-5.0.0-next.2.tgz#9a9bde72884143f3dda2f415fdbdd0f1e976919e"
+  integrity sha512-IPbIWFtlzm3gYXrgbp87T5kMXYOwSL4nxdnATQvScWe6EWq0sJwTyO7VRsFofhzUUj8LNKGFKphstfuzDVjSrA==
   dependencies:
-    axios "0.18.0"
-    bignumber.js "5.0.0"
-    bn.js "^4.11.8"
+    "@cityofzion/neon-core" "^5.0.0-next.2"
+    axios "0.19.0"
+
+"@cityofzion/neon-core@^5.0.0-next.2":
+  version "5.0.0-next.2"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neon-core/-/neon-core-5.0.0-next.2.tgz#0fb882b85aa924a76ea09f309aa797075a6b50fb"
+  integrity sha512-QwLzmrTQpFXXJQYWY5J65Q/M93Gau8O2MaLrlH406NCjYaZQT3xZ+r6mb9iEIReQ24Lme++lznRhEV5pp1ebcg==
+  dependencies:
+    "@types/bn.js" "4.11.5"
+    "@types/bs58" "4.0.1"
+    "@types/crypto-js" "3.1.43"
+    "@types/elliptic" "6.4.10"
+    axios "0.19.0"
+    bignumber.js "7.2.1"
+    bn.js "4.11.8"
     bs58 "4.0.1"
     bs58check "2.1.2"
     crypto-js "3.1.9-1"
     elliptic "6.4.1"
-    js-scrypt "0.2.0"
-    loglevel "1.6.1"
+    loglevel "1.6.4"
     loglevel-plugin-prefix "0.8.4"
     scrypt-js "2.0.4"
     secure-random "1.1.1"
-    semver "5.6.0"
     wif "2.0.6"
+
+"@cityofzion/neon-js@5.0.0-next.2":
+  version "5.0.0-next.2"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neon-js/-/neon-js-5.0.0-next.2.tgz#bcf1be79b1c843511fb70d6fec3dc2f868e05761"
+  integrity sha512-L6ciff59t97yO5CGz4i3I4FM/xYQoDrS8VGD+wfLmJSKq6Ukomg5s81wx+mqgJC1rA5SQFjJA/6KE/+GLj5wZw==
+  dependencies:
+    "@cityofzion/neon-api" "^5.0.0-next.2"
+    "@cityofzion/neon-core" "^5.0.0-next.2"
+    "@cityofzion/neon-nep5" "^5.0.0-next.2"
+
+"@cityofzion/neon-nep5@^5.0.0-next.2":
+  version "5.0.0-next.2"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neon-nep5/-/neon-nep5-5.0.0-next.2.tgz#f42b2cce56cb1a2322e383731079806ed61ae7a7"
+  integrity sha512-eLRuqu/teMVogxnti9wCBMVPHDyXGkg7MatcbrZD9/CKCyIBARaUdVi4VD+4Ww3sZkMkGUEeb5qFr+RxZX1o6Q==
+  dependencies:
+    "@cityofzion/neon-core" "^5.0.0-next.2"
 
 "@concordance/react@^1.0.0":
   version "1.0.0"
@@ -439,6 +466,39 @@
     react-modal "^3.3.2"
     react-split-pane "^0.1.77"
     react-treebeard "^2.1.0"
+
+"@types/bn.js@*":
+  version "4.11.6"
+  resolved "https://registry.yarnpkg.com/@types/bn.js/-/bn.js-4.11.6.tgz#c306c70d9358aaea33cd4eda092a742b9505967c"
+  integrity sha512-pqr857jrp2kPuO9uRjZ3PwnJTjoQy+fcdxvBTvHm6dkmEL9q+hDD/2j/0ELOBPtPnS8LjCX0gI9nbl8lVkadpg==
+  dependencies:
+    "@types/node" "*"
+
+"@types/bn.js@4.11.5":
+  version "4.11.5"
+  resolved "https://registry.yarnpkg.com/@types/bn.js/-/bn.js-4.11.5.tgz#40e36197433f78f807524ec623afcf0169ac81dc"
+  integrity sha512-AEAZcIZga0JgVMHNtl1CprA/hXX7/wPt79AgR4XqaDt7jyj3QWYw6LPoOiznPtugDmlubUnAahMs2PFxGcQrng==
+  dependencies:
+    "@types/node" "*"
+
+"@types/bs58@4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@types/bs58/-/bs58-4.0.1.tgz#3d51222aab067786d3bc3740a84a7f5a0effaa37"
+  integrity sha512-yfAgiWgVLjFCmRv8zAcOIHywYATEwiTVccTLnRp6UxTNavT55M9d/uhK3T03St/+8/z/wW+CRjGKUNmEqoHHCA==
+  dependencies:
+    base-x "^3.0.6"
+
+"@types/crypto-js@3.1.43":
+  version "3.1.43"
+  resolved "https://registry.yarnpkg.com/@types/crypto-js/-/crypto-js-3.1.43.tgz#b859347d6289ba13e347c335a4c9efa63337a748"
+  integrity sha512-EHe/YKctU3IYNBsDmSOPX/7jLHPRlx8WaiDKSY9JCTnJ8XJeM4c0ZJvx+9Gxmr2s2ihI92R+3U/gNL1sq5oRuQ==
+
+"@types/elliptic@6.4.10":
+  version "6.4.10"
+  resolved "https://registry.yarnpkg.com/@types/elliptic/-/elliptic-6.4.10.tgz#352078ebc911484e30fc0d1eca3e3c865bf0e8f8"
+  integrity sha512-9h+Bw+aNiLzcq9DGstHccNxSsJ5iNId7mzruid7+kwm7F1IGvb4rBOOPo3+twt9ZPhI3y+JJ2m1UfgU8cOEJuQ==
+  dependencies:
+    "@types/bn.js" "*"
 
 "@types/inline-style-prefixer@^3.0.0":
   version "3.0.1"
@@ -1241,16 +1301,17 @@ axios-retry@3.1.1:
   dependencies:
     is-retry-allowed "^1.1.0"
 
-axios@0.18.0:
-  version "0.18.0"
-  resolved "https://registry.npmjs.org/axios/-/axios-0.18.0.tgz#32d53e4851efdc0a11993b6cd000789d70c05102"
-  dependencies:
-    follow-redirects "^1.3.0"
-    is-buffer "^1.1.5"
-
 axios@0.18.1:
   version "0.18.1"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.18.1.tgz#ff3f0de2e7b5d180e757ad98000f1081b87bcea3"
+  dependencies:
+    follow-redirects "1.5.10"
+    is-buffer "^2.0.2"
+
+axios@0.19.0:
+  version "0.19.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.0.tgz#8e09bff3d9122e133f7b8101c8fbdd00ed3d2ab8"
+  integrity sha512-1uvKqKQta3KBxIz14F2v06AEHZ/dIoeKfbTRkK1E5oqjDnuEerLmYTgJB5AiQZHJcljpg1TuRzdjDR06qNk0DQ==
   dependencies:
     follow-redirects "1.5.10"
     is-buffer "^2.0.2"
@@ -2360,6 +2421,13 @@ base-x@^3.0.2:
   dependencies:
     safe-buffer "^5.0.1"
 
+base-x@^3.0.6:
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/base-x/-/base-x-3.0.7.tgz#1c5a7fafe8f66b4114063e8da102799d4e7c408f"
+  integrity sha512-zAKJGuQPihXW22fkrfOclUUZXM2g92z5GzlSMHxhO6r6Qj+Nm0ccaGNBzDZojzwOMkpjAv4J0fOv1U4go+a4iw==
+  dependencies:
+    safe-buffer "^5.0.1"
+
 base64-js@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.2.0.tgz#a39992d723584811982be5e290bb6a53d86700f1"
@@ -2405,6 +2473,11 @@ big.js@^3.1.3:
 bignumber.js@5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-5.0.0.tgz#fbce63f09776b3000a83185badcde525daf34833"
+
+bignumber.js@7.2.1:
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-7.2.1.tgz#80c048759d826800807c4bfd521e50edbba57a5f"
+  integrity sha512-S4XzBk5sMB+Rcb/LNcpzXr57VRTxgAvaAEDAl1AwRx27j00hT84O6OkteE7u8UB3NuaaygCRrEpqox4uDOrbdQ==
 
 binary-extensions@^1.0.0:
   version "1.12.0"
@@ -2452,7 +2525,7 @@ bluebird@~3.4.1:
   version "3.4.7"
   resolved "https://registry.npmjs.org/bluebird/-/bluebird-3.4.7.tgz#f72d760be09b7f76d08ed8fae98b289a8d05fab3"
 
-bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.11.8, bn.js@^4.4.0:
+bn.js@4.11.8, bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.8"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
 
@@ -5623,7 +5696,7 @@ follow-redirects@1.5.10:
   dependencies:
     debug "=3.1.0"
 
-follow-redirects@^1.0.0, follow-redirects@^1.3.0:
+follow-redirects@^1.0.0:
   version "1.5.9"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.5.9.tgz#c9ed9d748b814a39535716e531b9196a845d89c6"
   dependencies:
@@ -5850,10 +5923,6 @@ gaze@^1.0.0, gaze@~1.1.2:
   resolved "https://registry.yarnpkg.com/gaze/-/gaze-1.1.3.tgz#c441733e13b927ac8c0ff0b4c3b033f28812924a"
   dependencies:
     globule "^1.0.0"
-
-generic-pool@~2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/generic-pool/-/generic-pool-2.0.4.tgz#f9718deda82fa125ed5c43e341c9a215a766d9a3"
 
 get-caller-file@^1.0.1:
   version "1.0.3"
@@ -7428,12 +7497,6 @@ js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.4.9"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.9.tgz#748911fb04f48a60c4771b375cac45a80df11c03"
 
-js-scrypt@0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/js-scrypt/-/js-scrypt-0.2.0.tgz#7a62b701b4616e70ad0cde544627aabb99d7fe39"
-  dependencies:
-    generic-pool "~2.0.4"
-
 js-string-escape@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/js-string-escape/-/js-string-escape-1.0.1.tgz#e2625badbc0d67c7533e9edc1068c587ae4137ef"
@@ -7952,7 +8015,12 @@ loglevel-plugin-prefix@0.8.4:
   version "0.8.4"
   resolved "https://registry.yarnpkg.com/loglevel-plugin-prefix/-/loglevel-plugin-prefix-0.8.4.tgz#2fe0e05f1a820317d98d8c123e634c1bd84ff644"
 
-loglevel@1.6.1, loglevel@^1.4.1:
+loglevel@1.6.4:
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/loglevel/-/loglevel-1.6.4.tgz#f408f4f006db8354d0577dcf6d33485b3cb90d56"
+  integrity sha512-p0b6mOGKcGa+7nnmKbpzR6qloPbrgLcnio++E+14Vo/XffOGwZtRpUhr8dTH/x2oCMmEoIU0Zwm3ZauhvYD17g==
+
+loglevel@^1.4.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/loglevel/-/loglevel-1.6.1.tgz#e0fc95133b6ef276cdc8887cdaf24aa6f156f8fa"
 
@@ -11061,7 +11129,7 @@ semver-diff@^2.0.0:
   dependencies:
     semver "^5.0.3"
 
-"semver@2 || 3 || 4 || 5", semver@5.6.0, semver@^5.0.1, semver@^5.0.3, semver@^5.1.0, semver@^5.3.0, semver@^5.4.1, semver@^5.5.0, semver@^5.6.0:
+"semver@2 || 3 || 4 || 5", semver@^5.0.1, semver@^5.0.3, semver@^5.1.0, semver@^5.3.0, semver@^5.4.1, semver@^5.5.0, semver@^5.6.0:
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.6.0.tgz#7e74256fbaa49c75aa7c7a205cc22799cac80004"
 
