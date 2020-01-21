@@ -1,5 +1,5 @@
 // @flow
-import Neon, { wallet, Account } from '@cityofzion/neon-js'
+import { wallet } from '@cityofzion/neon-js'
 import { noop } from 'lodash-es'
 import { createActions } from 'spunky'
 import dns from 'dns'
@@ -101,46 +101,32 @@ export const nep2LoginActions = createActions(
       throw new Error('Invalid encrypted key entered')
     }
 
-    const c = new wallet.Account(encryptedWIF)
-    const w1 = Neon.create.wallet({ name: 'myWallet' })
+    async function decryptEncryptedWIF(
+      encryptedWIF: string,
+      passphrase: string,
+    ) {
+      if (!wallet.isNEP2(encryptedWIF)) {
+        throw new Error('The encrypted key is not valid')
+      }
+      const wa = new wallet.Account({
+        key: encryptedWIF,
+      })
+      const a = await wa.decrypt(passphrase)
+      return a.WIF
+    }
 
-    w1.addAccount(c)
+    const wif = await decryptEncryptedWIF(encryptedWIF, passphrase)
+    const account = new wallet.Account(wif)
 
-    await w1.decrypt(0, passphrase)
+    const hasInternetConnectivity = await checkForInternetConnectivity()
 
-    console.log(w1)
-    // const encryptedWallet = wallet.create.account(encryptedWIF)
-    // console.log({ encryptedWallet })
-    // // Wallet.addAccount(new Account(encryptedWIF))
-    // await Wallet.decrypt(0, passphrase)
-
-    // const encryptedWallet = new wallet.Account(encryptedWIF)
-    // console.log({ encryptedWallet: encryptedWallet.encrypted, passphrase })
-    // await encryptedWallet.decrypt(passphrase).catch(e => console.log(e))
-    // console.log({ encryptedWallet })
-
-    // const c = new wallet.Account(
-    //   '6PYLHmDf6AjF4AsVtosmxHuPYeuyJL3SLuw7J1U8i7HxKAnYNsp61HYRfF',
-    // )
-    // console.log(c.encrypted) // encrypted key
-    // //console.log(c.address) // throws error
-    // c.decrypt('city of zion').then(() => console.log(c.address))
-
-    //   const wif = await wallet.decrypt(encryptedWIF, passphrase)
-
-    //   console.log({ wif })
-    //   const account = new wallet.Account(wif)
-
-    //   await upgradeNEP6AddAddresses(encryptedWIF, wif)
-
-    //   const hasInternetConnectivity = await checkForInternetConnectivity()
-
-    //   return {
-    //     wif: account.WIF,
-    //     publicKey: account.publicKey,
-    //     address: account.address,
-    //     isHardwareLogin: false,
-    //     hasInternetConnectivity,
+    return {
+      wif: account.WIF,
+      publicKey: account.publicKey,
+      address: account.address,
+      isHardwareLogin: false,
+      hasInternetConnectivity,
+    }
   },
 )
 
