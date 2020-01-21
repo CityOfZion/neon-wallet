@@ -297,7 +297,6 @@ export const generateNewWalletAccount = (
         }
         const storedWallet = await getWallet()
 
-        console.log({ storedWallet })
         if (walletName && walletHasLabel(storedWallet, walletName)) {
           onFailure()
           return dispatchError(

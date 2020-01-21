@@ -6,7 +6,6 @@ import dns from 'dns'
 
 import { bindArgsFromN } from '../util/bindHelpers'
 import { resetBalanceState } from './balancesActions'
-import { upgradeNEP6AddAddresses } from '../core/account'
 import { validatePassphraseLength } from '../core/wallet'
 import { ledgerNanoSCreateSignatureAsync } from '../ledger/ledgerNanoS'
 
