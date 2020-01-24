@@ -116,6 +116,120 @@ const REQUEST_ASSETS = {
   requestAssetRefLabel: 'REFERENCE',
   requestAssetRefPlaceholder: 'Add a note...',
   requestAssetQRButton: 'Generate QR Code',
+  requestAssetYourQRHeader: 'Your QR Code',
+  requestAssetsPaymentDetails: 'PAYMENT REQUEST DETAILS',
+  requestAssetsYourQRLabel: 'YOUR QR CODE',
+  requestAssetsRefLabel: 'REFERENCE',
+  requestAssetsAddressLabel: 'ADDRESS',
+  requestAssetsAmountLabel: 'AMOUNT',
+  requestAssetsAssetLabel: 'ASSET',
+}
+
+const TRANSACTION_FEE = {
+  transactionFeeQuestion: 'PRIORITIZE YOUR TRANSACTION WITH A FEE?',
+  fast: 'Fast',
+  faster: 'Faster',
+  fastest: 'Fastest',
+  sendWithFee: 'Send {itemCount, plural, one {asset} other {assets}} With Fee',
+  sendWithOutFee:
+    'Send {itemCount, plural, one {asset} other {assets}} Without Fee',
+  asset: 'Asset',
+  assets: 'Assets',
+}
+
+const SEND = {
+  sendPageLabel: 'Send Assets',
+  sendImport: 'Import',
+  sendEnterQRCode: 'Enter QR Code',
+  sendAdd: 'Add Recipient',
+  sendAssetLabel: 'ASSET',
+  sendAmountLabel: 'AMOUNT',
+  sendAddressLabel: 'RECIPIENT ADDRESS',
+  sendAddressPlaceholder: 'Add wallet or select contact',
+  sendTranfer: 'TRANSFER',
+  sendMaxAmount: 'MAX',
+  sendTransferPlural: 'TRANSFERS',
+  sendAsset: 'asset',
+  sendAssets: 'assets',
+  sendRecipient: 'recipient',
+  sendRecipients: 'recipients',
+  sendAssetCapital: 'Asset',
+  sendAssetsCapital: 'Assets',
+  sendRecipientCapital: 'Recipient',
+  sendRecipientsCapital: 'Recipients',
+  sendCompleteNotification:
+    'Transaction pending! Your balance will automatically update when the blockchain has processed it.',
+  sendSelectAssets:
+    'Select Assets {transferCount, number} of {25, number} Recipients',
+  sendTransferMessage:
+    '{transferCount, number} {transferCount, plural, one {sendTransfer} other {sendTransferPlural}} pending',
+  sendBroadcasting: 'Broadcasting transaction to network...',
+  sendDisclaimer:
+    'Please review and ensure that you have entered the correct details to avoid loss of funds.',
+  sendActivityLink:
+    'Check the activity tab to see the status of your transaction.',
+  sendCompletion:
+    'Complete! {transferCount, number} {transferCount, plural, one {sendAsset} other {sendAssets}} to {transferCount, plural, one {sendRecipient} other {sendRecipients}}',
+}
+
+const SETTINGS = {
+  settingsNetworkConfigLabel: 'NETWORK CONFIGURATION',
+  settingCurrencyLabel: 'CURRENCY',
+  settingsThemeLabel: 'THEME',
+  settingsSoundLabel: 'SOUND',
+  settingsEncryptLink: 'ENCRYPT A KEY',
+  settingsRecoverWalletLinkLabel: 'RECOVER WALLET',
+  settingsRecoverWalletLink: 'IMPORT',
+  settingsBackUpLinkLabel: 'BACKUP WALLET',
+  settingsBackUpLink: 'EXPORT',
+  settingsManageLabel: 'Manage your neon wallet',
+  settingsCommunity: 'Cummonity Support',
+  settingsDonationLink:
+    'Created by CoZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A',
+}
+
+const NETWORK_SETTINGS = {
+  networkSettingsInstructions:
+    'Manage all network settings related to how Neon interacts with the blockchain',
+  networkSettingsNodeSelectLabel: 'NODE SELECTION',
+  networkSettingsExplorerLabel: 'BLOCK EXPLORER',
+  networkSettingsCurrentLabel: 'CURRENT NETWORK',
+  networkSettingsAutomatic: 'AUTOMATIC',
+}
+
+const NODE_SELECTION = {
+  nodeSelectPanelHeader: 'Node Selection',
+  nodeSelectionInstructions:
+    'If you’re experiencing performance issues, try selecting a custom node below',
+  nodeSelectSelectAutomatically: 'Select automatically',
+  nodeSelectInfo: 'Top {nodeCount, number} nodes listed',
+  nodeSelectBlockHeight: 'Block Height',
+}
+
+const ENCRYPT_KEY = {
+  encryptPanelHeader: 'Encrypt a key',
+  encryptInstructions: 'Choose a passphrase to encrypt an existing key',
+  encryptStep1Label: '1) ENTER THE PRIVATE KEY YOU WANT TO ENCRYPT',
+  encryptStep1Placeholder: 'Enter key',
+  encryptStep2Label: '2) CREATE A PASSPHRASE',
+  encryptStep2Placeholder: 'Enter Passphrase',
+  encryptStep3Label: '3) CONFIM YOUR PASSPHRASE',
+  encryptStep3Placeholder: 'Confirm Passphrase',
+  encryptButton: 'Generate Encrypted Key',
+}
+
+const TOKEN_SALE = {
+  tokenSalePageHeader: 'Participate in Token Sale',
+  tokenSaleDisclaimer1:
+    'Please read and acknowledge these statements to continue',
+  tokenSaleDiclaimer2:
+    'I understand that submitting NEO or GAS multiple times may result in a loss of funds or a delayed refund depending on the policy of the ICO company.',
+  tokenSaleDisclaimer3:
+    'I understand that some sales may only accept NEO or GAS, and I have verified which is accepted.',
+  tokenSaleDisclaimer4:
+    'I understand that if I send NEO or GAS to a token sale that has already ended, I will lose my NEO/GAS and will not be refunded.',
+  tokenSaleDiclaimer5:
+    "I understand that City of Zion (CoZ) is not responsible for my usage of this feature, and I have consulted this software's licenses.",
 }
 
 export default {
@@ -128,4 +242,11 @@ export default {
   ...ACTIVITY,
   ...RECEIVE,
   ...REQUEST_ASSETS,
+  ...TRANSACTION_FEE,
+  ...SEND,
+  ...SETTINGS,
+  ...NETWORK_SETTINGS,
+  ...NODE_SELECTION,
+  ...ENCRYPT_KEY,
+  ...TOKEN_SALE,
 }
