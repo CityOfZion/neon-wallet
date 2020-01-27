@@ -8,10 +8,10 @@ import { api } from '@cityofzion/neon-js'
 configure({ adapter: new Adapter() })
 
 beforeAll(() => {
-  api.setSwitchFreeze(true)
+  // api.setSwitchFreeze(true)
 })
 
 afterAll(() => {
-  api.setSwitchFreeze(false)
+  // api.setSwitchFreeze(false)
   nock.cleanAll()
 })

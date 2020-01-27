@@ -88,10 +88,7 @@ class CreateImportSplitWalletForm extends React.Component<Props, State> {
         account => account.label === selectedAccount.value,
       )
 
-      const key = await wallet.decryptAsync(
-        accountInStorage.key,
-        existingPassphrase,
-      )
+      const key = await wallet.decrypt(accountInStorage.key, existingPassphrase)
       generateNewWalletAccount(
         passphrase,
         passphrase2,
@@ -120,7 +117,7 @@ class CreateImportSplitWalletForm extends React.Component<Props, State> {
         e.preventDefault()
 
         wallet
-          .decryptAsync(accountInStorage.key, existingPassphrase)
+          .decrypt(accountInStorage.key, existingPassphrase)
           .then(() => {
             if (keypart2 && !wallet.isWIF(keypart2)) {
               showErrorNotification({
