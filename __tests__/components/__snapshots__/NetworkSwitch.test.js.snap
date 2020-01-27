@@ -5,14 +5,16 @@ exports[`NetworkSwitch renders without crashing 1`] = `
   networks={
     Array [
       Object {
+        "deprecatedLabel": "MainNet",
         "id": "1",
-        "label": "MainNet",
+        "label": "2.x MainNet",
         "network": "MainNet",
         "value": "1",
       },
       Object {
+        "deprecatedLabel": "TestNet",
         "id": "2",
-        "label": "TestNet",
+        "label": "2.x TestNet",
         "network": "TestNet",
         "value": "2",
       },
@@ -22,8 +24,9 @@ exports[`NetworkSwitch renders without crashing 1`] = `
   shouldSwitchNetworks={true}
   value={
     Object {
+      "deprecatedLabel": "MainNet",
       "id": "1",
-      "label": "MainNet",
+      "label": "2.x MainNet",
       "network": "MainNet",
       "value": "1",
     }
@@ -40,14 +43,16 @@ exports[`NetworkSwitch renders without crashing 1`] = `
       options={
         Array [
           Object {
+            "deprecatedLabel": "MainNet",
             "id": "1",
-            "label": "MainNet",
+            "label": "2.x MainNet",
             "network": "MainNet",
             "value": "1",
           },
           Object {
+            "deprecatedLabel": "TestNet",
             "id": "2",
-            "label": "TestNet",
+            "label": "2.x TestNet",
             "network": "TestNet",
             "value": "2",
           },
@@ -55,10 +60,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
       }
       value={
         Object {
-          "id": "1",
-          "label": "MainNet",
-          "network": "MainNet",
-          "value": "1",
+          "label": "2.x MainNet",
         }
       }
     >
@@ -75,14 +77,16 @@ exports[`NetworkSwitch renders without crashing 1`] = `
         options={
           Array [
             Object {
+              "deprecatedLabel": "MainNet",
               "id": "1",
-              "label": "MainNet",
+              "label": "2.x MainNet",
               "network": "MainNet",
               "value": "1",
             },
             Object {
+              "deprecatedLabel": "TestNet",
               "id": "2",
-              "label": "TestNet",
+              "label": "2.x TestNet",
               "network": "TestNet",
               "value": "2",
             },
@@ -101,10 +105,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
         }
         value={
           Object {
-            "id": "1",
-            "label": "MainNet",
-            "network": "MainNet",
-            "value": "1",
+            "label": "2.x MainNet",
           }
         }
       >
@@ -152,14 +153,16 @@ exports[`NetworkSwitch renders without crashing 1`] = `
           options={
             Array [
               Object {
+                "deprecatedLabel": "MainNet",
                 "id": "1",
-                "label": "MainNet",
+                "label": "2.x MainNet",
                 "network": "MainNet",
                 "value": "1",
               },
               Object {
+                "deprecatedLabel": "TestNet",
                 "id": "2",
-                "label": "TestNet",
+                "label": "2.x TestNet",
                 "network": "TestNet",
                 "value": "2",
               },
@@ -183,10 +186,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
           tabSelectsValue={true}
           value={
             Object {
-              "id": "1",
-              "label": "MainNet",
-              "network": "MainNet",
-              "value": "1",
+              "label": "2.x MainNet",
             }
           }
         >
@@ -210,14 +210,16 @@ exports[`NetworkSwitch renders without crashing 1`] = `
             options={
               Array [
                 Object {
+                  "deprecatedLabel": "MainNet",
                   "id": "1",
-                  "label": "MainNet",
+                  "label": "2.x MainNet",
                   "network": "MainNet",
                   "value": "1",
                 },
                 Object {
+                  "deprecatedLabel": "TestNet",
                   "id": "2",
-                  "label": "TestNet",
+                  "label": "2.x TestNet",
                   "network": "TestNet",
                   "value": "2",
                 },
@@ -245,6 +247,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                 "formatGroupLabel": [Function],
                 "getOptionLabel": [Function],
                 "getOptionValue": [Function],
+                "hideChevron": undefined,
                 "hideHighlight": true,
                 "inputValue": "",
                 "isDisabled": false,
@@ -270,14 +273,16 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                 "openMenuOnFocus": false,
                 "options": Array [
                   Object {
+                    "deprecatedLabel": "MainNet",
                     "id": "1",
-                    "label": "MainNet",
+                    "label": "2.x MainNet",
                     "network": "MainNet",
                     "value": "1",
                   },
                   Object {
+                    "deprecatedLabel": "TestNet",
                     "id": "2",
-                    "label": "TestNet",
+                    "label": "2.x TestNet",
                     "network": "TestNet",
                     "value": "2",
                   },
@@ -299,10 +304,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                 "tabSelectsValue": true,
                 "transparent": undefined,
                 "value": Object {
-                  "id": "1",
-                  "label": "MainNet",
-                  "network": "MainNet",
-                  "value": "1",
+                  "label": "2.x MainNet",
                 },
               }
             }
@@ -332,14 +334,16 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                 options={
                   Array [
                     Object {
+                      "deprecatedLabel": "MainNet",
                       "id": "1",
-                      "label": "MainNet",
+                      "label": "2.x MainNet",
                       "network": "MainNet",
                       "value": "1",
                     },
                     Object {
+                      "deprecatedLabel": "TestNet",
                       "id": "2",
-                      "label": "TestNet",
+                      "label": "2.x TestNet",
                       "network": "TestNet",
                       "value": "2",
                     },
@@ -367,6 +371,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                     "formatGroupLabel": [Function],
                     "getOptionLabel": [Function],
                     "getOptionValue": [Function],
+                    "hideChevron": undefined,
                     "hideHighlight": true,
                     "inputValue": "",
                     "isDisabled": false,
@@ -392,14 +397,16 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                     "openMenuOnFocus": false,
                     "options": Array [
                       Object {
+                        "deprecatedLabel": "MainNet",
                         "id": "1",
-                        "label": "MainNet",
+                        "label": "2.x MainNet",
                         "network": "MainNet",
                         "value": "1",
                       },
                       Object {
+                        "deprecatedLabel": "TestNet",
                         "id": "2",
-                        "label": "TestNet",
+                        "label": "2.x TestNet",
                         "network": "TestNet",
                         "value": "2",
                       },
@@ -421,17 +428,14 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                     "tabSelectsValue": true,
                     "transparent": undefined,
                     "value": Object {
-                      "id": "1",
-                      "label": "MainNet",
-                      "network": "MainNet",
-                      "value": "1",
+                      "label": "2.x MainNet",
                     },
                   }
                 }
                 setValue={[Function]}
               >
                 <div
-                  className="css-1ui96em react-select__control"
+                  className="css-14c2uc6 react-select__control"
                   onMouseDown={[Function]}
                   onTouchEnd={[Function]}
                 >
@@ -447,14 +451,16 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                     options={
                       Array [
                         Object {
+                          "deprecatedLabel": "MainNet",
                           "id": "1",
-                          "label": "MainNet",
+                          "label": "2.x MainNet",
                           "network": "MainNet",
                           "value": "1",
                         },
                         Object {
+                          "deprecatedLabel": "TestNet",
                           "id": "2",
-                          "label": "TestNet",
+                          "label": "2.x TestNet",
                           "network": "TestNet",
                           "value": "2",
                         },
@@ -482,6 +488,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                         "formatGroupLabel": [Function],
                         "getOptionLabel": [Function],
                         "getOptionValue": [Function],
+                        "hideChevron": undefined,
                         "hideHighlight": true,
                         "inputValue": "",
                         "isDisabled": false,
@@ -507,14 +514,16 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                         "openMenuOnFocus": false,
                         "options": Array [
                           Object {
+                            "deprecatedLabel": "MainNet",
                             "id": "1",
-                            "label": "MainNet",
+                            "label": "2.x MainNet",
                             "network": "MainNet",
                             "value": "1",
                           },
                           Object {
+                            "deprecatedLabel": "TestNet",
                             "id": "2",
-                            "label": "TestNet",
+                            "label": "2.x TestNet",
                             "network": "TestNet",
                             "value": "2",
                           },
@@ -536,10 +545,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                         "tabSelectsValue": true,
                         "transparent": undefined,
                         "value": Object {
-                          "id": "1",
-                          "label": "MainNet",
-                          "network": "MainNet",
-                          "value": "1",
+                          "label": "2.x MainNet",
                         },
                       }
                     }
@@ -553,10 +559,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                         cx={[Function]}
                         data={
                           Object {
-                            "id": "1",
-                            "label": "MainNet",
-                            "network": "MainNet",
-                            "value": "1",
+                            "label": "2.x MainNet",
                           }
                         }
                         getStyles={[Function]}
@@ -568,14 +571,16 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                         options={
                           Array [
                             Object {
+                              "deprecatedLabel": "MainNet",
                               "id": "1",
-                              "label": "MainNet",
+                              "label": "2.x MainNet",
                               "network": "MainNet",
                               "value": "1",
                             },
                             Object {
+                              "deprecatedLabel": "TestNet",
                               "id": "2",
-                              "label": "TestNet",
+                              "label": "2.x TestNet",
                               "network": "TestNet",
                               "value": "2",
                             },
@@ -603,6 +608,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                             "formatGroupLabel": [Function],
                             "getOptionLabel": [Function],
                             "getOptionValue": [Function],
+                            "hideChevron": undefined,
                             "hideHighlight": true,
                             "inputValue": "",
                             "isDisabled": false,
@@ -628,14 +634,16 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                             "openMenuOnFocus": false,
                             "options": Array [
                               Object {
+                                "deprecatedLabel": "MainNet",
                                 "id": "1",
-                                "label": "MainNet",
+                                "label": "2.x MainNet",
                                 "network": "MainNet",
                                 "value": "1",
                               },
                               Object {
+                                "deprecatedLabel": "TestNet",
                                 "id": "2",
-                                "label": "TestNet",
+                                "label": "2.x TestNet",
                                 "network": "TestNet",
                                 "value": "2",
                               },
@@ -657,10 +665,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                             "tabSelectsValue": true,
                             "transparent": undefined,
                             "value": Object {
-                              "id": "1",
-                              "label": "MainNet",
-                              "network": "MainNet",
-                              "value": "1",
+                              "label": "2.x MainNet",
                             },
                           }
                         }
@@ -669,7 +674,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                         <div
                           className="css-mdengd react-select__single-value"
                         >
-                          MainNet
+                          2.x MainNet
                         </div>
                       </SingleValue>
                       <DummyInput
@@ -707,14 +712,16 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                     options={
                       Array [
                         Object {
+                          "deprecatedLabel": "MainNet",
                           "id": "1",
-                          "label": "MainNet",
+                          "label": "2.x MainNet",
                           "network": "MainNet",
                           "value": "1",
                         },
                         Object {
+                          "deprecatedLabel": "TestNet",
                           "id": "2",
-                          "label": "TestNet",
+                          "label": "2.x TestNet",
                           "network": "TestNet",
                           "value": "2",
                         },
@@ -742,6 +749,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                         "formatGroupLabel": [Function],
                         "getOptionLabel": [Function],
                         "getOptionValue": [Function],
+                        "hideChevron": undefined,
                         "hideHighlight": true,
                         "inputValue": "",
                         "isDisabled": false,
@@ -767,14 +775,16 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                         "openMenuOnFocus": false,
                         "options": Array [
                           Object {
+                            "deprecatedLabel": "MainNet",
                             "id": "1",
-                            "label": "MainNet",
+                            "label": "2.x MainNet",
                             "network": "MainNet",
                             "value": "1",
                           },
                           Object {
+                            "deprecatedLabel": "TestNet",
                             "id": "2",
-                            "label": "TestNet",
+                            "label": "2.x TestNet",
                             "network": "TestNet",
                             "value": "2",
                           },
@@ -796,10 +806,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                         "tabSelectsValue": true,
                         "transparent": undefined,
                         "value": Object {
-                          "id": "1",
-                          "label": "MainNet",
-                          "network": "MainNet",
-                          "value": "1",
+                          "label": "2.x MainNet",
                         },
                       }
                     }
@@ -821,14 +828,16 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                         options={
                           Array [
                             Object {
+                              "deprecatedLabel": "MainNet",
                               "id": "1",
-                              "label": "MainNet",
+                              "label": "2.x MainNet",
                               "network": "MainNet",
                               "value": "1",
                             },
                             Object {
+                              "deprecatedLabel": "TestNet",
                               "id": "2",
-                              "label": "TestNet",
+                              "label": "2.x TestNet",
                               "network": "TestNet",
                               "value": "2",
                             },
@@ -856,6 +865,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                             "formatGroupLabel": [Function],
                             "getOptionLabel": [Function],
                             "getOptionValue": [Function],
+                            "hideChevron": undefined,
                             "hideHighlight": true,
                             "inputValue": "",
                             "isDisabled": false,
@@ -881,14 +891,16 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                             "openMenuOnFocus": false,
                             "options": Array [
                               Object {
+                                "deprecatedLabel": "MainNet",
                                 "id": "1",
-                                "label": "MainNet",
+                                "label": "2.x MainNet",
                                 "network": "MainNet",
                                 "value": "1",
                               },
                               Object {
+                                "deprecatedLabel": "TestNet",
                                 "id": "2",
-                                "label": "TestNet",
+                                "label": "2.x TestNet",
                                 "network": "TestNet",
                                 "value": "2",
                               },
@@ -910,10 +922,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                             "tabSelectsValue": true,
                             "transparent": undefined,
                             "value": Object {
-                              "id": "1",
-                              "label": "MainNet",
-                              "network": "MainNet",
-                              "value": "1",
+                              "label": "2.x MainNet",
                             },
                           }
                         }
@@ -943,14 +952,16 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                         options={
                           Array [
                             Object {
+                              "deprecatedLabel": "MainNet",
                               "id": "1",
-                              "label": "MainNet",
+                              "label": "2.x MainNet",
                               "network": "MainNet",
                               "value": "1",
                             },
                             Object {
+                              "deprecatedLabel": "TestNet",
                               "id": "2",
-                              "label": "TestNet",
+                              "label": "2.x TestNet",
                               "network": "TestNet",
                               "value": "2",
                             },
@@ -978,6 +989,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                             "formatGroupLabel": [Function],
                             "getOptionLabel": [Function],
                             "getOptionValue": [Function],
+                            "hideChevron": undefined,
                             "hideHighlight": true,
                             "inputValue": "",
                             "isDisabled": false,
@@ -1003,14 +1015,16 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                             "openMenuOnFocus": false,
                             "options": Array [
                               Object {
+                                "deprecatedLabel": "MainNet",
                                 "id": "1",
-                                "label": "MainNet",
+                                "label": "2.x MainNet",
                                 "network": "MainNet",
                                 "value": "1",
                               },
                               Object {
+                                "deprecatedLabel": "TestNet",
                                 "id": "2",
-                                "label": "TestNet",
+                                "label": "2.x TestNet",
                                 "network": "TestNet",
                                 "value": "2",
                               },
@@ -1032,10 +1046,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                             "tabSelectsValue": true,
                             "transparent": undefined,
                             "value": Object {
-                              "id": "1",
-                              "label": "MainNet",
-                              "network": "MainNet",
-                              "value": "1",
+                              "label": "2.x MainNet",
                             },
                           }
                         }

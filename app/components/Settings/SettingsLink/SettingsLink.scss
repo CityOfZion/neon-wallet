@@ -49,6 +49,10 @@ label {
   min-width: 75px;
 }
 
+.defaultCursor {
+  cursor: default !important;
+}
+
 .greyLabel {
   font-family: var(--font-gotham-bold);
   font-size: 12px;

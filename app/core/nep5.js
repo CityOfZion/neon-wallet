@@ -25,6 +25,7 @@ const getTokenEntry = ((): Function => {
 
   return (
     symbol: string,
+    cryptocompareSymbol: string,
     scriptHash: string,
     networkId: string,
     name: string,
@@ -33,6 +34,7 @@ const getTokenEntry = ((): Function => {
   ) => ({
     id: `${id++}`, // eslint-disable-line no-plusplus
     symbol,
+    cryptocompareSymbol,
     scriptHash,
     networkId,
     isUserGenerated: false,
@@ -67,6 +69,7 @@ export const getDefaultTokens = async (): Promise<Array<TokenItemType>> => {
     ...map(fetchedTokens, tokenData =>
       getTokenEntry(
         tokenData.symbol,
+        tokenData.cryptocompareSymbol,
         tokenData.networks['1'].hash,
         MAIN_NETWORK_ID,
         tokenData.networks['1'].name,
@@ -75,9 +78,10 @@ export const getDefaultTokens = async (): Promise<Array<TokenItemType>> => {
       ),
     ),
   )
+
   tokens.push(
     ...map(TOKENS_TEST, (scriptHash, symbol) =>
-      getTokenEntry(symbol, scriptHash, TEST_NETWORK_ID),
+      getTokenEntry(symbol, undefined, scriptHash, TEST_NETWORK_ID),
     ),
   )
 

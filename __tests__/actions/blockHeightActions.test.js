@@ -1,17 +1,17 @@
-/* eslint-disable */
-import { api } from '@cityofzion/neon-js'
+import { rpc } from '@cityofzion/neon-js'
 
-import blockHeightActions from '../../app/actions/blockHeightActions'
+import main, {
+  blockHeightActions,
+  getBlockHeight,
+} from '../../app/actions/blockHeightActions'
 import { TEST_NETWORK_ID } from '../../app/core/constants'
 import { mockPromiseResolved } from '../testHelpers'
-
-const apiClone = Object.assign({}, api.neoscan)
 
 describe('blockHeightActions', () => {
   beforeEach(() => {
     jest
-      .spyOn(apiClone, 'getWalletDBHeight')
-      .mockImplementation(mockPromiseResolved(586435))
+      .spyOn(main, 'getBlockHeight')
+      .mockImplementation(mockPromiseResolved(36))
   })
 
   afterEach(() => {
@@ -33,12 +33,13 @@ describe('blockHeightActions', () => {
       })
     })
 
-    // TODO: FIX ME!!!!
-    // test("payload function requests the network's block height", async done => {
-    //   const call = blockHeightActions.call({ networkId: TEST_NETWORK_ID })
-    //   expect(await call.payload.fn({})).toEqual(586435)
-    //   done()
-    // })
+    test("payload function requests the network's block height", async done => {
+      const spy = jest.spyOn(main, 'getBlockHeight')
+      const call = await blockHeightActions.call({ networkId: TEST_NETWORK_ID })
+      expect(await call.payload.fn({})).toEqual(36)
+      expect(spy).toHaveBeenCalledTimes(1)
+      done()
+    })
   })
 
   describe('cancel', () => {

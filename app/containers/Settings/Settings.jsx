@@ -10,11 +10,9 @@ import StyledReactSelect from '../../components/Inputs/StyledReactSelect/StyledR
 import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import SettingsItem from '../../components/Settings/SettingsItem'
 import SettingsLink from '../../components/Settings/SettingsLink'
-import NetworkSwitch from '../App/Sidebar/NetworkSwitch'
 import Switch from '../../components/Inputs/Switch'
 
 import {
-  EXPLORERS,
   DEFAULT_EXPLORER,
   CURRENCIES,
   ROUTES,
@@ -27,10 +25,8 @@ import styles from './Settings.scss'
 import AddIcon from '../../assets/icons/add.svg'
 import LockIcon from '../../assets/icons/lock.svg'
 import CurrencyIcon from '../../assets/icons/currency-icon.svg'
-import BlockExplorerIcon from '../../assets/icons/block-explorer.svg'
 import LightbulbIcon from '../../assets/icons/lightbulb-icon.svg'
 import CogIcon from '../../assets/icons/cog-icon.svg'
-import NodeSelectIcon from '../../assets/icons/node-select.svg'
 import VolumeIcon from '../../assets/icons/volume-icon.svg'
 import TimeIcon from '../../assets/icons/time-icon.svg'
 import SaveIcon from '../../assets/icons/save-icon.svg'
@@ -40,8 +36,6 @@ const { dialog, shell } = require('electron').remote
 
 type Props = {
   setAccounts: (Array<Object>) => any,
-  setBlockExplorer: string => any,
-  explorer: string,
   setCurrency: string => any,
   currency: string,
   setTheme: string => any,
@@ -49,7 +43,6 @@ type Props = {
   showSuccessNotification: Object => any,
   showErrorNotification: Object => any,
   showModal: Function,
-  selectedNode: string,
   net: string,
   networkId: string,
   soundEnabled: boolean,
@@ -59,7 +52,6 @@ type Props = {
 type State = {
   selectedCurrency: SelectOption,
   selectedTheme: SelectOption,
-  selectedExplorer: SelectOption,
   soundEnabled: boolean,
 }
 
@@ -111,10 +103,6 @@ export default class Settings extends Component<Props, State> {
       value: this.props.theme,
       label: this.props.theme,
     },
-    selectedExplorer: {
-      value: this.props.explorer,
-      label: this.props.explorer,
-    },
     soundEnabled: this.props.soundEnabled,
   }
 
@@ -163,12 +151,6 @@ export default class Settings extends Component<Props, State> {
     })
   }
 
-  updateExplorerSettings = (option: SelectOption) => {
-    this.setState({ selectedExplorer: option })
-    const { setBlockExplorer } = this.props
-    setBlockExplorer(option.label)
-  }
-
   updateCurrencySettings = (option: SelectOption) => {
     this.setState({ selectedCurrency: option })
     const { setCurrency } = this.props
@@ -202,10 +184,6 @@ export default class Settings extends Component<Props, State> {
       value: key,
       label: key.toUpperCase(),
     }))
-    const parsedExplorerOptions = Object.keys(EXPLORERS).map(key => ({
-      value: key,
-      label: EXPLORERS[key],
-    }))
     const parsedThemeOptions = Object.keys(THEMES).map(key => ({
       value: THEMES[key],
       label: THEMES[key],
@@ -226,30 +204,11 @@ export default class Settings extends Component<Props, State> {
         >
           <section className={styles.settingsItemsContainer}>
             <div className={styles.innerContainer}>
-              <SettingsItem renderIcon={() => <CogIcon />} title="NETWORK">
-                <div className={styles.settingsSelectContainer}>
-                  <NetworkSwitch
-                    transparent
-                    value={{ label: this.props.net }}
-                    settingsSelect
-                  />
-                </div>
-              </SettingsItem>
-              <SettingsItem
-                renderIcon={() => <BlockExplorerIcon />}
-                title="BLOCK EXPLORER"
-              >
-                <div className={styles.settingsSelectContainer}>
-                  <StyledReactSelect
-                    settingsSelect
-                    transparent
-                    options={parsedExplorerOptions}
-                    value={this.state.selectedExplorer}
-                    onChange={this.updateExplorerSettings}
-                    isSearchable={false}
-                  />
-                </div>
-              </SettingsItem>
+              <SettingsLink
+                to={ROUTES.NETWORK_CONFIGURATION}
+                renderIcon={() => <CogIcon />}
+                title="NETWORK CONFIGURATION"
+              />
               <SettingsItem
                 renderIcon={() => <CurrencyIcon />}
                 title="CURRENCY"
@@ -290,19 +249,12 @@ export default class Settings extends Component<Props, State> {
                 </div>
               </SettingsItem>
               <div className={styles.settingsSpacer} />
+
               <SettingsLink
                 renderIcon={() => <LockIcon />}
                 to={ROUTES.ENCRYPT}
                 title="ENCRYPT A KEY"
               />
-              <SettingsLink
-                noBorderBottom
-                to={ROUTES.NODE_SELECT}
-                label={this.props.selectedNode || 'AUTOMATIC'}
-                renderIcon={() => <NodeSelectIcon />}
-                title="NODE SELECTON"
-              />
-              <div className={styles.settingsSpacer} />
               <SettingsLink
                 onClick={() =>
                   loadWalletRecovery(

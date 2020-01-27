@@ -11,7 +11,7 @@ import {
   NODES_TEST_NET,
   NODE_EXLUSION_CRITERIA,
 } from '../core/constants'
-import { findNetworkByLabel } from '../core/networks'
+import { findNetworkByDeprecatedLabel } from '../core/networks'
 
 const PING_TIMEOUT_OVERRIDE = 1000
 const DEFAULT_PING_TIMEOUT = settings.timeout.ping
@@ -41,9 +41,14 @@ export const buildNodeUrl = (data: {
   url: string,
 }): string => {
   const { protocol, url, port } = data
-  return compact([protocol && `${protocol}://`, url, port && `:${port}`]).join(
-    '',
-  )
+  if (protocol || port) {
+    return compact([
+      protocol && `${protocol}://`,
+      url,
+      port && `:${port}`,
+    ]).join('')
+  }
+  return url
 }
 
 export const getRPCEndpoint = async (
@@ -58,7 +63,7 @@ export const getRPCEndpoint = async (
     ) {
       return cachedRPCUrl[net].node
     }
-    const NETWORK = findNetworkByLabel(net)
+    const NETWORK = findNetworkByDeprecatedLabel(net)
     let nodeList
     switch (NETWORK.id) {
       case MAIN_NETWORK_ID:
@@ -70,6 +75,7 @@ export const getRPCEndpoint = async (
       default:
         nodeList = NODES_MAIN_NET
     }
+
     const data = [...nodeList]
       .filter(
         data => !excludeCritera.some(criteria => data.url.includes(criteria)),

@@ -118,9 +118,6 @@ export default class TokenBalancesPanel extends React.Component<Props> {
       <div className={styles.tokenBalancesPanelContent}>
         <div className={styles.gridContainer}>
           <div className={classNames(styles.columnCell, styles.symbol)}>
-            Ticker
-          </div>
-          <div className={classNames(styles.columnCell, styles.name)}>
             Token
           </div>
           <div className={classNames(styles.columnCell, styles.priceLabel)}>
@@ -142,9 +139,6 @@ export default class TokenBalancesPanel extends React.Component<Props> {
                   </div>
                 )}
                 {token.symbol}
-              </span>
-              <span className={classNames(styles.rowCell, styles.tokenName)}>
-                {token.name}
               </span>
               <span className={classNames(styles.rowCell, styles.price)}>
                 {this.formatPrice(token.symbol)}

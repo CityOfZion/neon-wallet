@@ -6,6 +6,7 @@ import CloseButton from '../../../components/CloseButton'
 import BackButton from '../../../components/BackButton'
 import Button from '../../../components/Button'
 import CreateImportWalletForm from '../../../components/CreateImportWalletForm'
+import CreateImportSplitWalletForm from '../../../components/CreateImportSplitWalletForm'
 import FullHeightPanel from '../../../components/Panel/FullHeightPanel'
 import { loadWalletRecovery } from '../../Settings/Settings'
 import ImportIcon from '../../../assets/icons/import.svg'
@@ -44,6 +45,13 @@ const IMPORT_OPTIONS = {
       />
     ),
     display: 'Encrypted Key',
+  },
+
+  SPLIT: {
+    render: (props: Props) => (
+      <CreateImportSplitWalletForm authenticated={props.authenticated} />
+    ),
+    display: 'Split Key',
   },
 
   RECOVER_WALLET: {

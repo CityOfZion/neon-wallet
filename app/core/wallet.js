@@ -70,7 +70,7 @@ export const validateTransactionBeforeSending = (
     return 'You cannot send fractional amounts of NEO.'
   }
 
-  if (toBigNumber(amount).gt(balance)) {
+  if (toBigNumber(amount).gt(toBigNumber(balance))) {
     return `You do not have enough ${symbol} to send.`
   }
 

@@ -68,6 +68,7 @@
   },
   "AVA": {
     "symbol": "AVA",
+    "cryptocompareSymbol": "AVALA",
     "companyName": "Travala",
     "type": "NEP5",
     "networks": {
@@ -365,7 +366,7 @@
     "networks": {
       "1": {
         "name": "Moonlight Lux",
-        "hash": "bb3b54ab244b3658155f2db4429fc38ac4cef625",
+        "hash": "9c1f315264200988a0d2fbb5489f2c9adb9c765f",
         "decimals": 8,
         "totalSupply": 808257693.386336
       }
@@ -440,7 +441,8 @@
         "totalSupply": 1
       }
     },
-    "image": "https://rawgit.com/CityOfZion/neo-tokens/master/assets/svg/nnn.svg"
+    "image":
+      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/svg/nnn.svg"
   },
   "NOS": {
     "symbol": "NOS",
@@ -692,6 +694,7 @@
   },
   "SOUL": {
     "symbol": "SOUL",
+    "cryptocompareSymbol": "SOUL*",
     "companyName": "Phantasma",
     "type": "NEP5",
     "networks": {

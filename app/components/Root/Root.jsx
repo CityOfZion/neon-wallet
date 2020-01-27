@@ -16,7 +16,7 @@ export default class Root extends React.Component<Props> {
     return (
       <Provider store={store}>
         <HashRouter>
-          <Routes />
+          <Routes store={store} />
         </HashRouter>
       </Provider>
     )
