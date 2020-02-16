@@ -81,7 +81,7 @@ export default class Home extends React.Component<Props, State> {
             <div className={styles.loginContentContainer}>
               {this.options.map(option => (
                 <TabPanel
-                  key={option.display}
+                  key={option.displayKey}
                   selectedClassName={styles.homeTabPanel}
                 >
                   {option.render()}
