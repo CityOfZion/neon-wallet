@@ -7,6 +7,15 @@ const INPUTS = {
   authWatchPlaceholder: 'Enter a NEO address here',
 }
 
+const VARIOUS_MISSING_TRANSLATIONS = {
+  'auth.cancel': 'Cancel',
+  'auth.ledger.connectLedger': `Connect and unlock your <strong>Ledger device</strong>`,
+  'auth.ledger.navigateToNeoApp': `Navigate to the <strong>NEO app</strong> on your device`,
+  'auth.ledger.retry': 'Retry?',
+  'auth.ledger.fetchAddress': 'Fetch additional addresses',
+  publicAddress: 'Public Address',
+}
+
 const AUTH = {
   authLogin: 'Login',
   authSaved: 'SAVED',
@@ -15,7 +24,7 @@ const AUTH = {
   authWatch: 'WATCH',
   authLedger: 'LEDGER',
   authCreateWallet: 'Create Wallet',
-  authImportWallet: 'Import Walet',
+  authImportWallet: 'Import Wallet',
   authScanQRButton: 'Scan QR',
   authLoginButton: 'Login',
   authLedgerFirstStep: 'Connect and unlock your Ledger device',
@@ -249,4 +258,5 @@ export default {
   ...NODE_SELECTION,
   ...ENCRYPT_KEY,
   ...TOKEN_SALE,
+  ...VARIOUS_MISSING_TRANSLATIONS,
 }
