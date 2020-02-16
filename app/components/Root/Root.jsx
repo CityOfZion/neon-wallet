@@ -3,6 +3,7 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
 
+import IntlWrapper from './IntlWrapper'
 import Routes from './Routes'
 
 type Props = {
@@ -15,9 +16,11 @@ export default class Root extends React.Component<Props> {
 
     return (
       <Provider store={store}>
-        <HashRouter>
-          <Routes store={store} />
-        </HashRouter>
+        <IntlWrapper lang="english">
+          <HashRouter>
+            <Routes store={store} />
+          </HashRouter>
+        </IntlWrapper>
       </Provider>
     )
   }

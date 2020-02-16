@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import { FormattedMessage } from 'react-intl'
 
 import styles from './Home.scss'
 import lightLogo from '../../assets/images/logo-light.png'
@@ -37,7 +38,9 @@ export default class HomeLayout extends Component<Props> {
           >
             <img className={styles.logo} src={dynamicImage} alt="" />
           </div>
-          <div className={styles.loginHeader}>{headerText}</div>
+          <div className={styles.loginHeader}>
+            <FormattedMessage id="authLogin" />
+          </div>
           {children}
         </div>
       </div>
