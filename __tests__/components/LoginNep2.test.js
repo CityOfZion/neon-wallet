@@ -5,6 +5,7 @@ import { MemoryRouter } from 'react-router-dom'
 import thunk from 'redux-thunk'
 import { shallow, mount } from 'enzyme'
 
+import IntlWrapper from '../../app/components/Root/IntlWrapper'
 import LoginNep2 from '../../app/containers/LoginNep2'
 
 jest.useFakeTimers()
@@ -18,9 +19,11 @@ const setup = (shallowRender = true) => {
   } else {
     wrapper = mount(
       <Provider store={store}>
-        <MemoryRouter>
-          <LoginNep2 />
-        </MemoryRouter>
+        <IntlWrapper lang="en">
+          <MemoryRouter>
+            <LoginNep2 />
+          </MemoryRouter>
+        </IntlWrapper>
       </Provider>,
     )
   }
