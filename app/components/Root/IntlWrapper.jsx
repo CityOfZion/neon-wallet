@@ -2,7 +2,9 @@
 import React from 'react'
 import { IntlProvider } from 'react-intl'
 
-import { english } from '../../translations'
+import translations from '../../translations'
+
+const { english } = translations
 
 type IntlWrapperProps = {
   children: any,
@@ -12,9 +14,8 @@ type IntlWrapperProps = {
 class IntlWrapper extends React.Component<IntlWrapperProps> {
   render() {
     const { children, lang } = this.props
-
     return (
-      <IntlProvider locale={lang} messages={english}>
+      <IntlProvider locale="en" messages={english}>
         {children}
       </IntlProvider>
     )
