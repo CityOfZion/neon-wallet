@@ -9,11 +9,16 @@ const INPUTS = {
 
 const VARIOUS_MISSING_TRANSLATIONS = {
   'auth.cancel': 'Cancel',
-  'auth.ledger.connectLedger': `Connect and unlock your <strong>Ledger device</strong>`,
-  'auth.ledger.navigateToNeoApp': `Navigate to the <strong>NEO app</strong> on your device`,
+  'auth.ledger.connectLedger':
+    'Connect and unlock your <strong>Ledger device</strong>',
+  'auth.ledger.navigateToNeoApp':
+    'Navigate to the <strong>NEO app</strong> on your device',
   'auth.ledger.retry': 'Retry?',
   'auth.ledger.fetchAddress': 'Fetch additional addresses',
   publicAddress: 'Public Address',
+  'auth.import.recoveryInstructions':
+    'Upload a JSON wallet recovery file here to add your accounts to Neon. This option is also available on the Settings page.',
+  importFile: 'Import File',
 }
 
 const AUTH = {
@@ -45,12 +50,14 @@ const WALLET_CREATION = {
   walletCreatedHeader: 'Wallet Created!',
   walletCreatedDisclaimer:
     '<b>Save these details!</b> If you lose these credentials, you lose access to your assets.',
-  walletCreatedPrivateKeyLabel: 'PRIVATE KEY',
-  walletCreatedEncryptedKeyLabel: 'ENCRYPTED KEY',
-  walletCreatedAddressLabelL: 'PUBLIC ADDRESS',
-  walletCreatedPrintButton: 'Print',
-  walletCreatedQRButton: 'Generate QR Codes',
-  walletCreatedCopyQR: 'Copy Code Image',
+  privateKeyLabel: 'PRIVATE KEY',
+  encryptedKeyLabel: 'ENCRYPTED KEY',
+  addressLabel: 'PUBLIC ADDRESS',
+  splitKeyLabel: 'SPLIT KEY',
+  recoverWalletLabel: 'RECOVER WALLET',
+  print: 'Print',
+  generateQrCodes: 'Generate QR Codes',
+  copyCodeImage: 'Copy Code Image',
 }
 
 const DASHBOARD = {
@@ -187,7 +194,7 @@ const SETTINGS = {
   settingsThemeLabel: 'THEME',
   settingsSoundLabel: 'SOUND',
   settingsEncryptLink: 'ENCRYPT A KEY',
-  settingsRecoverWalletLinkLabel: 'RECOVER WALLET',
+  recoverWallet: 'RECOVER WALLET',
   settingsRecoverWalletLink: 'IMPORT',
   settingsBackUpLinkLabel: 'BACKUP WALLET',
   settingsBackUpLink: 'EXPORT',
