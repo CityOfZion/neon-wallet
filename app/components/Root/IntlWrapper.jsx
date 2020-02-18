@@ -22,7 +22,6 @@ const tranlationsMappings = {
 class IntlWrapper extends React.Component<IntlWrapperProps> {
   render() {
     const { children, language } = this.props
-    console.log({ language })
     return (
       <IntlProvider locale="en" messages={tranlationsMappings[language]}>
         {children}

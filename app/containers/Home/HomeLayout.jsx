@@ -20,7 +20,7 @@ export default class HomeLayout extends Component<Props> {
   }
 
   render = () => {
-    const { children, renderNavigation, headerText, theme } = this.props
+    const { children, renderNavigation, theme } = this.props
     const dynamicImage = theme === 'Light' ? lightLogo : darkLogo
     return (
       <div id="home" className={styles.homeContainer}>

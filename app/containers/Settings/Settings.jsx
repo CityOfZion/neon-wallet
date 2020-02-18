@@ -21,7 +21,6 @@ import {
   DISCORD_INVITE_LINK,
   THEMES,
   LANGUAGES,
-  DEFAULT_LANGUAGE,
 } from '../../core/constants'
 import styles from './Settings.scss'
 import AddIcon from '../../assets/icons/add.svg'
