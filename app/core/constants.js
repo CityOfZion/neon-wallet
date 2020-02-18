@@ -29,6 +29,19 @@ export const EXPLORERS = {
   ANT_CHAIN: 'Antchain',
 }
 
+export const LANGUAGES = {
+  ENGLISH: {
+    label: 'English',
+    value: 'ENGLISH',
+  },
+  KOREAN: {
+    label: '한국어',
+    value: 'KOREAN',
+  },
+}
+
+export const DEFAULT_LANGUAGE = LANGUAGES.ENGLISH.value
+
 export const DEFAULT_EXPLORER = EXPLORERS.NEO_SCAN
 
 export const ROUTES = {

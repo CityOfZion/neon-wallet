@@ -20,6 +20,8 @@ import {
   COZ_DONATIONS_ADDRESS,
   DISCORD_INVITE_LINK,
   THEMES,
+  LANGUAGES,
+  DEFAULT_LANGUAGE,
 } from '../../core/constants'
 import styles from './Settings.scss'
 import AddIcon from '../../assets/icons/add.svg'
@@ -27,6 +29,7 @@ import LockIcon from '../../assets/icons/lock.svg'
 import CurrencyIcon from '../../assets/icons/currency-icon.svg'
 import LightbulbIcon from '../../assets/icons/lightbulb-icon.svg'
 import CogIcon from '../../assets/icons/cog-icon.svg'
+import LangIcon from '../../assets/icons/lang-icon.svg'
 import VolumeIcon from '../../assets/icons/volume-icon.svg'
 import TimeIcon from '../../assets/icons/time-icon.svg'
 import SaveIcon from '../../assets/icons/save-icon.svg'
@@ -39,10 +42,13 @@ type Props = {
   setCurrency: string => any,
   currency: string,
   setTheme: string => any,
+  setLanguageSetting: string => any,
   theme: string,
   showSuccessNotification: Object => any,
   showErrorNotification: Object => any,
   showModal: Function,
+  language: string,
+  languageDisplayValue: string,
   net: string,
   networkId: string,
   soundEnabled: boolean,
@@ -53,6 +59,7 @@ type State = {
   selectedCurrency: SelectOption,
   selectedTheme: SelectOption,
   soundEnabled: boolean,
+  selectedLanguage: SelectOption,
 }
 
 export const loadWalletRecovery = (
@@ -104,6 +111,10 @@ export default class Settings extends Component<Props, State> {
       label: this.props.theme,
     },
     soundEnabled: this.props.soundEnabled,
+    selectedLanguage: {
+      value: this.props.language,
+      label: this.props.languageDisplayValue,
+    },
   }
 
   saveWalletRecovery = () => {
@@ -169,6 +180,12 @@ export default class Settings extends Component<Props, State> {
     setSoundSetting(soundEnabled)
   }
 
+  updateLanguageSetting = (option: SelectOption) => {
+    this.setState({ selectedLanguage: option })
+    const { setLanguageSetting } = this.props
+    setLanguageSetting(option.value)
+  }
+
   openTokenModal = () => {
     this.props.showModal(MODAL_TYPES.TOKEN)
   }
@@ -187,6 +204,10 @@ export default class Settings extends Component<Props, State> {
     const parsedThemeOptions = Object.keys(THEMES).map(key => ({
       value: THEMES[key],
       label: THEMES[key],
+    }))
+    const parsedLangOptions = Object.keys(LANGUAGES).map(key => ({
+      value: LANGUAGES[key].value,
+      label: LANGUAGES[key].label,
     }))
 
     return (
@@ -221,6 +242,18 @@ export default class Settings extends Component<Props, State> {
                     value={this.state.selectedCurrency}
                     onChange={this.updateCurrencySettings}
                     isSearchable={false}
+                  />
+                </div>
+              </SettingsItem>
+              <SettingsItem renderIcon={() => <LangIcon />} title="LANGUAGE">
+                <div className={styles.settingsSelectContainer}>
+                  <StyledReactSelect
+                    settingsSelect
+                    onChange={this.updateLanguageSetting}
+                    isSearchable={false}
+                    transparent
+                    options={parsedLangOptions}
+                    value={this.state.selectedLanguage}
                   />
                 </div>
               </SettingsItem>

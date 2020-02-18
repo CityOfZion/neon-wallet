@@ -1,25 +1,34 @@
 // @flow
 import React from 'react'
+import { compose } from 'recompose'
 import { IntlProvider } from 'react-intl'
 
 import translations from '../../translations'
+import withLanguageData from '../../hocs/withLanguageData'
+import { LANGUAGES } from '../../core/constants'
 
-const { english } = translations
+const { english, korean } = translations
 
 type IntlWrapperProps = {
   children: any,
-  lang: string,
+  language: string,
+}
+
+const tranlationsMappings = {
+  [LANGUAGES.ENGLISH.value]: english,
+  [LANGUAGES.KOREAN.value]: korean,
 }
 
 class IntlWrapper extends React.Component<IntlWrapperProps> {
   render() {
-    const { children, lang } = this.props
+    const { children, language } = this.props
+    console.log({ language })
     return (
-      <IntlProvider locale="en" messages={english}>
+      <IntlProvider locale="en" messages={tranlationsMappings[language]}>
         {children}
       </IntlProvider>
     )
   }
 }
 
-export default IntlWrapper
+export default compose(withLanguageData())(IntlWrapper)

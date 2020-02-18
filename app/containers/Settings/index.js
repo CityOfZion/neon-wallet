@@ -15,6 +15,7 @@ import Settings from './Settings'
 import withExplorerData from '../../hocs/withExplorerData'
 import withCurrencyData from '../../hocs/withCurrencyData'
 import withThemeData from '../../hocs/withThemeData'
+import withLanguageData from '../../hocs/withLanguageData'
 import withSoundEnabledData from '../../hocs/withSoundEnabledData'
 import accountsActions, {
   updateAccountsActions,
@@ -67,6 +68,7 @@ const mapSettingsActionsToProps = actions => ({
       theme,
     }),
   setSoundSetting: soundEnabled => actions.call({ soundEnabled }),
+  setLanguageSetting: language => actions.call({ language }),
 })
 
 const mapActionsToProps = (actions: Actions): Object => ({
@@ -90,6 +92,7 @@ export default compose(
   withCurrencyData(),
   withThemeData(),
   withSoundEnabledData(),
+  withLanguageData(),
   withActions(networkActions, mapActionsToProps),
   withRecall(nodeStorageActions, ['networkId']),
   withActions(updateAccountsActions, mapAccountsActionsToProps),
