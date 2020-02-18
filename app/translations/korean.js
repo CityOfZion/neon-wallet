@@ -244,8 +244,8 @@ const TOKEN_SALE = {
     'I understand that some sales may only accept NEO or GAS, and I have verified which is accepted.',
   tokenSaleDisclaimer4:
     'I understand that if I send NEO or GAS to a token sale that has already ended, I will lose my NEO/GAS and will not be refunded.',
-  // eslint-disable-next-line
   tokenSaleDiclaimer5:
+    // eslint-disable-next-line
     "I understand that City of Zion (CoZ) is not responsible for my usage of this feature, and I have consulted this software's licenses.",
 }
 

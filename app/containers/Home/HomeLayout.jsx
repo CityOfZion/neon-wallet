@@ -10,7 +10,6 @@ import darkLogo from '../../assets/images/logo-dark.png'
 type Props = {
   children: React$Node,
   renderNavigation?: Function,
-  headerText: string,
   theme: ThemeType,
 }
 
