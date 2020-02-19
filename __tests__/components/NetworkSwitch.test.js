@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import Select from 'react-select'
+import { IntlProvider } from 'react-intl'
 
 import NetworkSwitch from '../../app/containers/App/Sidebar/NetworkSwitch/NetworkSwitch'
 import SelectInput from '../../app/components/Inputs/SelectInput'
@@ -20,7 +21,11 @@ const setup = () => {
     networks: NETWORKS,
     onChange: jest.fn(),
   }
-  const wrapper = mount(<NetworkSwitch {...props} />)
+  const wrapper = mount(
+    <IntlProvider locale="en">
+      <NetworkSwitch {...props} />
+    </IntlProvider>,
+  )
 
   return {
     wrapper,

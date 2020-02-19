@@ -1,78 +1,53 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`NetworkSwitch renders without crashing 1`] = `
-<NetworkSwitch
-  networks={
-    Array [
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en"
+  messages={Object {}}
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+>
+  <NetworkSwitch
+    networks={
+      Array [
+        Object {
+          "deprecatedLabel": "MainNet",
+          "id": "1",
+          "label": "2.x MainNet",
+          "network": "MainNet",
+          "value": "1",
+        },
+        Object {
+          "deprecatedLabel": "TestNet",
+          "id": "2",
+          "label": "2.x TestNet",
+          "network": "TestNet",
+          "value": "2",
+        },
+      ]
+    }
+    onChange={[MockFunction]}
+    shouldSwitchNetworks={true}
+    value={
       Object {
         "deprecatedLabel": "MainNet",
         "id": "1",
         "label": "2.x MainNet",
         "network": "MainNet",
         "value": "1",
-      },
-      Object {
-        "deprecatedLabel": "TestNet",
-        "id": "2",
-        "label": "2.x TestNet",
-        "network": "TestNet",
-        "value": "2",
-      },
-    ]
-  }
-  onChange={[MockFunction]}
-  shouldSwitchNetworks={true}
-  value={
-    Object {
-      "deprecatedLabel": "MainNet",
-      "id": "1",
-      "label": "2.x MainNet",
-      "network": "MainNet",
-      "value": "1",
+      }
     }
-  }
->
-  <div
-    className="networkSwitch"
-    id="network"
   >
-    <StyledReactSelect
-      hideHighlight={true}
-      isSearchable={false}
-      onChange={[Function]}
-      options={
-        Array [
-          Object {
-            "deprecatedLabel": "MainNet",
-            "id": "1",
-            "label": "2.x MainNet",
-            "network": "MainNet",
-            "value": "1",
-          },
-          Object {
-            "deprecatedLabel": "TestNet",
-            "id": "2",
-            "label": "2.x TestNet",
-            "network": "TestNet",
-            "value": "2",
-          },
-        ]
-      }
-      value={
-        Object {
-          "label": "2.x MainNet",
-        }
-      }
+    <div
+      className="networkSwitch"
+      id="network"
     >
-      <StateManager
-        className="react-select-container"
-        classNamePrefix="react-select"
-        defaultInputValue=""
-        defaultMenuIsOpen={false}
-        defaultValue={null}
+      <StyledReactSelect
         hideHighlight={true}
         isSearchable={false}
-        maxMenuHeight={140}
         onChange={[Function]}
         options={
           Array [
@@ -92,64 +67,22 @@ exports[`NetworkSwitch renders without crashing 1`] = `
             },
           ]
         }
-        styles={
-          Object {
-            "control": [Function],
-            "dropdownIndicator": [Function],
-            "indicatorSeparator": [Function],
-            "noOptionsMessage": [Function],
-            "option": [Function],
-            "singleValue": [Function],
-            "valueContainer": [Function],
-          }
-        }
         value={
           Object {
             "label": "2.x MainNet",
           }
         }
       >
-        <Select
-          backspaceRemovesValue={true}
-          blurInputOnSelect={true}
-          captureMenuScroll={false}
+        <StateManager
           className="react-select-container"
           classNamePrefix="react-select"
-          closeMenuOnScroll={false}
-          closeMenuOnSelect={true}
-          components={Object {}}
-          controlShouldRenderValue={true}
           defaultInputValue=""
           defaultMenuIsOpen={false}
           defaultValue={null}
-          escapeClearsValue={false}
-          filterOption={[Function]}
-          formatGroupLabel={[Function]}
-          getOptionLabel={[Function]}
-          getOptionValue={[Function]}
           hideHighlight={true}
-          inputValue=""
-          isDisabled={false}
-          isLoading={false}
-          isMulti={false}
-          isOptionDisabled={[Function]}
-          isRtl={false}
           isSearchable={false}
-          loadingMessage={[Function]}
           maxMenuHeight={140}
-          menuIsOpen={false}
-          menuPlacement="bottom"
-          menuPosition="absolute"
-          menuShouldBlockScroll={false}
-          menuShouldScrollIntoView={true}
-          minMenuHeight={140}
-          noOptionsMessage={[Function]}
           onChange={[Function]}
-          onInputChange={[Function]}
-          onMenuClose={[Function]}
-          onMenuOpen={[Function]}
-          openMenuOnClick={true}
-          openMenuOnFocus={false}
           options={
             Array [
               Object {
@@ -168,9 +101,6 @@ exports[`NetworkSwitch renders without crashing 1`] = `
               },
             ]
           }
-          pageSize={5}
-          placeholder="Select..."
-          screenReaderStatus={[Function]}
           styles={
             Object {
               "control": [Function],
@@ -182,31 +112,53 @@ exports[`NetworkSwitch renders without crashing 1`] = `
               "valueContainer": [Function],
             }
           }
-          tabIndex="0"
-          tabSelectsValue={true}
           value={
             Object {
               "label": "2.x MainNet",
             }
           }
         >
-          <SelectContainer
+          <Select
+            backspaceRemovesValue={true}
+            blurInputOnSelect={true}
+            captureMenuScroll={false}
             className="react-select-container"
-            clearValue={[Function]}
-            cx={[Function]}
-            getStyles={[Function]}
-            getValue={[Function]}
-            hasValue={true}
-            innerProps={
-              Object {
-                "id": undefined,
-                "onKeyDown": [Function],
-              }
-            }
+            classNamePrefix="react-select"
+            closeMenuOnScroll={false}
+            closeMenuOnSelect={true}
+            components={Object {}}
+            controlShouldRenderValue={true}
+            defaultInputValue=""
+            defaultMenuIsOpen={false}
+            defaultValue={null}
+            escapeClearsValue={false}
+            filterOption={[Function]}
+            formatGroupLabel={[Function]}
+            getOptionLabel={[Function]}
+            getOptionValue={[Function]}
+            hideHighlight={true}
+            inputValue=""
             isDisabled={false}
-            isFocused={false}
+            isLoading={false}
             isMulti={false}
+            isOptionDisabled={[Function]}
             isRtl={false}
+            isSearchable={false}
+            loadingMessage={[Function]}
+            maxMenuHeight={140}
+            menuIsOpen={false}
+            menuPlacement="bottom"
+            menuPosition="absolute"
+            menuShouldBlockScroll={false}
+            menuShouldScrollIntoView={true}
+            minMenuHeight={140}
+            noOptionsMessage={[Function]}
+            onChange={[Function]}
+            onInputChange={[Function]}
+            onMenuClose={[Function]}
+            onMenuOpen={[Function]}
+            openMenuOnClick={true}
+            openMenuOnFocus={false}
             options={
               Array [
                 Object {
@@ -225,53 +177,47 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                 },
               ]
             }
-            selectOption={[Function]}
-            selectProps={
+            pageSize={5}
+            placeholder="Select..."
+            screenReaderStatus={[Function]}
+            styles={
               Object {
-                "backspaceRemovesValue": true,
-                "blurInputOnSelect": true,
-                "captureMenuScroll": false,
-                "className": "react-select-container",
-                "classNamePrefix": "react-select",
-                "closeMenuOnScroll": false,
-                "closeMenuOnSelect": true,
-                "components": Object {},
-                "controlShouldRenderValue": true,
-                "defaultInputValue": "",
-                "defaultMenuIsOpen": false,
-                "defaultValue": null,
-                "disabled": undefined,
-                "escapeClearsValue": false,
-                "filterOption": [Function],
-                "fontSize": undefined,
-                "formatGroupLabel": [Function],
-                "getOptionLabel": [Function],
-                "getOptionValue": [Function],
-                "hideChevron": undefined,
-                "hideHighlight": true,
-                "inputValue": "",
-                "isDisabled": false,
-                "isLoading": false,
-                "isMulti": false,
-                "isOptionDisabled": [Function],
-                "isRtl": false,
-                "isSearchable": false,
-                "loadingMessage": [Function],
-                "maxMenuHeight": 140,
-                "menuIsOpen": false,
-                "menuPlacement": "bottom",
-                "menuPosition": "absolute",
-                "menuShouldBlockScroll": false,
-                "menuShouldScrollIntoView": true,
-                "minMenuHeight": 140,
+                "control": [Function],
+                "dropdownIndicator": [Function],
+                "indicatorSeparator": [Function],
                 "noOptionsMessage": [Function],
-                "onChange": [Function],
-                "onInputChange": [Function],
-                "onMenuClose": [Function],
-                "onMenuOpen": [Function],
-                "openMenuOnClick": true,
-                "openMenuOnFocus": false,
-                "options": Array [
+                "option": [Function],
+                "singleValue": [Function],
+                "valueContainer": [Function],
+              }
+            }
+            tabIndex="0"
+            tabSelectsValue={true}
+            value={
+              Object {
+                "label": "2.x MainNet",
+              }
+            }
+          >
+            <SelectContainer
+              className="react-select-container"
+              clearValue={[Function]}
+              cx={[Function]}
+              getStyles={[Function]}
+              getValue={[Function]}
+              hasValue={true}
+              innerProps={
+                Object {
+                  "id": undefined,
+                  "onKeyDown": [Function],
+                }
+              }
+              isDisabled={false}
+              isFocused={false}
+              isMulti={false}
+              isRtl={false}
+              options={
+                Array [
                   Object {
                     "deprecatedLabel": "MainNet",
                     "id": "1",
@@ -286,53 +232,55 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                     "network": "TestNet",
                     "value": "2",
                   },
-                ],
-                "pageSize": 5,
-                "placeholder": "Select...",
-                "screenReaderStatus": [Function],
-                "settingsSelect": undefined,
-                "styles": Object {
-                  "control": [Function],
-                  "dropdownIndicator": [Function],
-                  "indicatorSeparator": [Function],
-                  "noOptionsMessage": [Function],
-                  "option": [Function],
-                  "singleValue": [Function],
-                  "valueContainer": [Function],
-                },
-                "tabIndex": "0",
-                "tabSelectsValue": true,
-                "transparent": undefined,
-                "value": Object {
-                  "label": "2.x MainNet",
-                },
+                ]
               }
-            }
-            setValue={[Function]}
-          >
-            <div
-              className="css-10nd86i react-select-container"
-              onKeyDown={[Function]}
-            >
-              <Control
-                clearValue={[Function]}
-                cx={[Function]}
-                getStyles={[Function]}
-                getValue={[Function]}
-                hasValue={true}
-                innerProps={
-                  Object {
-                    "onMouseDown": [Function],
-                    "onTouchEnd": [Function],
-                  }
-                }
-                innerRef={[Function]}
-                isDisabled={false}
-                isFocused={false}
-                isMulti={false}
-                isRtl={false}
-                options={
-                  Array [
+              selectOption={[Function]}
+              selectProps={
+                Object {
+                  "backspaceRemovesValue": true,
+                  "blurInputOnSelect": true,
+                  "captureMenuScroll": false,
+                  "className": "react-select-container",
+                  "classNamePrefix": "react-select",
+                  "closeMenuOnScroll": false,
+                  "closeMenuOnSelect": true,
+                  "components": Object {},
+                  "controlShouldRenderValue": true,
+                  "defaultInputValue": "",
+                  "defaultMenuIsOpen": false,
+                  "defaultValue": null,
+                  "disabled": undefined,
+                  "escapeClearsValue": false,
+                  "filterOption": [Function],
+                  "fontSize": undefined,
+                  "formatGroupLabel": [Function],
+                  "getOptionLabel": [Function],
+                  "getOptionValue": [Function],
+                  "hideChevron": undefined,
+                  "hideHighlight": true,
+                  "inputValue": "",
+                  "isDisabled": false,
+                  "isLoading": false,
+                  "isMulti": false,
+                  "isOptionDisabled": [Function],
+                  "isRtl": false,
+                  "isSearchable": false,
+                  "loadingMessage": [Function],
+                  "maxMenuHeight": 140,
+                  "menuIsOpen": false,
+                  "menuPlacement": "bottom",
+                  "menuPosition": "absolute",
+                  "menuShouldBlockScroll": false,
+                  "menuShouldScrollIntoView": true,
+                  "minMenuHeight": 140,
+                  "noOptionsMessage": [Function],
+                  "onChange": [Function],
+                  "onInputChange": [Function],
+                  "onMenuClose": [Function],
+                  "onMenuOpen": [Function],
+                  "openMenuOnClick": true,
+                  "openMenuOnFocus": false,
+                  "options": Array [
                     Object {
                       "deprecatedLabel": "MainNet",
                       "id": "1",
@@ -347,55 +295,53 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                       "network": "TestNet",
                       "value": "2",
                     },
-                  ]
-                }
-                selectOption={[Function]}
-                selectProps={
-                  Object {
-                    "backspaceRemovesValue": true,
-                    "blurInputOnSelect": true,
-                    "captureMenuScroll": false,
-                    "className": "react-select-container",
-                    "classNamePrefix": "react-select",
-                    "closeMenuOnScroll": false,
-                    "closeMenuOnSelect": true,
-                    "components": Object {},
-                    "controlShouldRenderValue": true,
-                    "defaultInputValue": "",
-                    "defaultMenuIsOpen": false,
-                    "defaultValue": null,
-                    "disabled": undefined,
-                    "escapeClearsValue": false,
-                    "filterOption": [Function],
-                    "fontSize": undefined,
-                    "formatGroupLabel": [Function],
-                    "getOptionLabel": [Function],
-                    "getOptionValue": [Function],
-                    "hideChevron": undefined,
-                    "hideHighlight": true,
-                    "inputValue": "",
-                    "isDisabled": false,
-                    "isLoading": false,
-                    "isMulti": false,
-                    "isOptionDisabled": [Function],
-                    "isRtl": false,
-                    "isSearchable": false,
-                    "loadingMessage": [Function],
-                    "maxMenuHeight": 140,
-                    "menuIsOpen": false,
-                    "menuPlacement": "bottom",
-                    "menuPosition": "absolute",
-                    "menuShouldBlockScroll": false,
-                    "menuShouldScrollIntoView": true,
-                    "minMenuHeight": 140,
+                  ],
+                  "pageSize": 5,
+                  "placeholder": "Select...",
+                  "screenReaderStatus": [Function],
+                  "settingsSelect": undefined,
+                  "styles": Object {
+                    "control": [Function],
+                    "dropdownIndicator": [Function],
+                    "indicatorSeparator": [Function],
                     "noOptionsMessage": [Function],
-                    "onChange": [Function],
-                    "onInputChange": [Function],
-                    "onMenuClose": [Function],
-                    "onMenuOpen": [Function],
-                    "openMenuOnClick": true,
-                    "openMenuOnFocus": false,
-                    "options": Array [
+                    "option": [Function],
+                    "singleValue": [Function],
+                    "valueContainer": [Function],
+                  },
+                  "tabIndex": "0",
+                  "tabSelectsValue": true,
+                  "transparent": undefined,
+                  "value": Object {
+                    "label": "2.x MainNet",
+                  },
+                }
+              }
+              setValue={[Function]}
+            >
+              <div
+                className="css-10nd86i react-select-container"
+                onKeyDown={[Function]}
+              >
+                <Control
+                  clearValue={[Function]}
+                  cx={[Function]}
+                  getStyles={[Function]}
+                  getValue={[Function]}
+                  hasValue={true}
+                  innerProps={
+                    Object {
+                      "onMouseDown": [Function],
+                      "onTouchEnd": [Function],
+                    }
+                  }
+                  innerRef={[Function]}
+                  isDisabled={false}
+                  isFocused={false}
+                  isMulti={false}
+                  isRtl={false}
+                  options={
+                    Array [
                       Object {
                         "deprecatedLabel": "MainNet",
                         "id": "1",
@@ -410,46 +356,55 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                         "network": "TestNet",
                         "value": "2",
                       },
-                    ],
-                    "pageSize": 5,
-                    "placeholder": "Select...",
-                    "screenReaderStatus": [Function],
-                    "settingsSelect": undefined,
-                    "styles": Object {
-                      "control": [Function],
-                      "dropdownIndicator": [Function],
-                      "indicatorSeparator": [Function],
-                      "noOptionsMessage": [Function],
-                      "option": [Function],
-                      "singleValue": [Function],
-                      "valueContainer": [Function],
-                    },
-                    "tabIndex": "0",
-                    "tabSelectsValue": true,
-                    "transparent": undefined,
-                    "value": Object {
-                      "label": "2.x MainNet",
-                    },
+                    ]
                   }
-                }
-                setValue={[Function]}
-              >
-                <div
-                  className="css-14c2uc6 react-select__control"
-                  onMouseDown={[Function]}
-                  onTouchEnd={[Function]}
-                >
-                  <ValueContainer
-                    clearValue={[Function]}
-                    cx={[Function]}
-                    getStyles={[Function]}
-                    getValue={[Function]}
-                    hasValue={true}
-                    isDisabled={false}
-                    isMulti={false}
-                    isRtl={false}
-                    options={
-                      Array [
+                  selectOption={[Function]}
+                  selectProps={
+                    Object {
+                      "backspaceRemovesValue": true,
+                      "blurInputOnSelect": true,
+                      "captureMenuScroll": false,
+                      "className": "react-select-container",
+                      "classNamePrefix": "react-select",
+                      "closeMenuOnScroll": false,
+                      "closeMenuOnSelect": true,
+                      "components": Object {},
+                      "controlShouldRenderValue": true,
+                      "defaultInputValue": "",
+                      "defaultMenuIsOpen": false,
+                      "defaultValue": null,
+                      "disabled": undefined,
+                      "escapeClearsValue": false,
+                      "filterOption": [Function],
+                      "fontSize": undefined,
+                      "formatGroupLabel": [Function],
+                      "getOptionLabel": [Function],
+                      "getOptionValue": [Function],
+                      "hideChevron": undefined,
+                      "hideHighlight": true,
+                      "inputValue": "",
+                      "isDisabled": false,
+                      "isLoading": false,
+                      "isMulti": false,
+                      "isOptionDisabled": [Function],
+                      "isRtl": false,
+                      "isSearchable": false,
+                      "loadingMessage": [Function],
+                      "maxMenuHeight": 140,
+                      "menuIsOpen": false,
+                      "menuPlacement": "bottom",
+                      "menuPosition": "absolute",
+                      "menuShouldBlockScroll": false,
+                      "menuShouldScrollIntoView": true,
+                      "minMenuHeight": 140,
+                      "noOptionsMessage": [Function],
+                      "onChange": [Function],
+                      "onInputChange": [Function],
+                      "onMenuClose": [Function],
+                      "onMenuOpen": [Function],
+                      "openMenuOnClick": true,
+                      "openMenuOnFocus": false,
+                      "options": Array [
                         Object {
                           "deprecatedLabel": "MainNet",
                           "id": "1",
@@ -464,55 +419,46 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                           "network": "TestNet",
                           "value": "2",
                         },
-                      ]
-                    }
-                    selectOption={[Function]}
-                    selectProps={
-                      Object {
-                        "backspaceRemovesValue": true,
-                        "blurInputOnSelect": true,
-                        "captureMenuScroll": false,
-                        "className": "react-select-container",
-                        "classNamePrefix": "react-select",
-                        "closeMenuOnScroll": false,
-                        "closeMenuOnSelect": true,
-                        "components": Object {},
-                        "controlShouldRenderValue": true,
-                        "defaultInputValue": "",
-                        "defaultMenuIsOpen": false,
-                        "defaultValue": null,
-                        "disabled": undefined,
-                        "escapeClearsValue": false,
-                        "filterOption": [Function],
-                        "fontSize": undefined,
-                        "formatGroupLabel": [Function],
-                        "getOptionLabel": [Function],
-                        "getOptionValue": [Function],
-                        "hideChevron": undefined,
-                        "hideHighlight": true,
-                        "inputValue": "",
-                        "isDisabled": false,
-                        "isLoading": false,
-                        "isMulti": false,
-                        "isOptionDisabled": [Function],
-                        "isRtl": false,
-                        "isSearchable": false,
-                        "loadingMessage": [Function],
-                        "maxMenuHeight": 140,
-                        "menuIsOpen": false,
-                        "menuPlacement": "bottom",
-                        "menuPosition": "absolute",
-                        "menuShouldBlockScroll": false,
-                        "menuShouldScrollIntoView": true,
-                        "minMenuHeight": 140,
+                      ],
+                      "pageSize": 5,
+                      "placeholder": "Select...",
+                      "screenReaderStatus": [Function],
+                      "settingsSelect": undefined,
+                      "styles": Object {
+                        "control": [Function],
+                        "dropdownIndicator": [Function],
+                        "indicatorSeparator": [Function],
                         "noOptionsMessage": [Function],
-                        "onChange": [Function],
-                        "onInputChange": [Function],
-                        "onMenuClose": [Function],
-                        "onMenuOpen": [Function],
-                        "openMenuOnClick": true,
-                        "openMenuOnFocus": false,
-                        "options": Array [
+                        "option": [Function],
+                        "singleValue": [Function],
+                        "valueContainer": [Function],
+                      },
+                      "tabIndex": "0",
+                      "tabSelectsValue": true,
+                      "transparent": undefined,
+                      "value": Object {
+                        "label": "2.x MainNet",
+                      },
+                    }
+                  }
+                  setValue={[Function]}
+                >
+                  <div
+                    className="css-14c2uc6 react-select__control"
+                    onMouseDown={[Function]}
+                    onTouchEnd={[Function]}
+                  >
+                    <ValueContainer
+                      clearValue={[Function]}
+                      cx={[Function]}
+                      getStyles={[Function]}
+                      getValue={[Function]}
+                      hasValue={true}
+                      isDisabled={false}
+                      isMulti={false}
+                      isRtl={false}
+                      options={
+                        Array [
                           Object {
                             "deprecatedLabel": "MainNet",
                             "id": "1",
@@ -527,49 +473,55 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                             "network": "TestNet",
                             "value": "2",
                           },
-                        ],
-                        "pageSize": 5,
-                        "placeholder": "Select...",
-                        "screenReaderStatus": [Function],
-                        "settingsSelect": undefined,
-                        "styles": Object {
-                          "control": [Function],
-                          "dropdownIndicator": [Function],
-                          "indicatorSeparator": [Function],
-                          "noOptionsMessage": [Function],
-                          "option": [Function],
-                          "singleValue": [Function],
-                          "valueContainer": [Function],
-                        },
-                        "tabIndex": "0",
-                        "tabSelectsValue": true,
-                        "transparent": undefined,
-                        "value": Object {
-                          "label": "2.x MainNet",
-                        },
+                        ]
                       }
-                    }
-                    setValue={[Function]}
-                  >
-                    <div
-                      className="css-1n98qky react-select__value-container react-select__value-container--has-value"
-                    >
-                      <SingleValue
-                        clearValue={[Function]}
-                        cx={[Function]}
-                        data={
-                          Object {
-                            "label": "2.x MainNet",
-                          }
-                        }
-                        getStyles={[Function]}
-                        getValue={[Function]}
-                        hasValue={true}
-                        isDisabled={false}
-                        isMulti={false}
-                        isRtl={false}
-                        options={
-                          Array [
+                      selectOption={[Function]}
+                      selectProps={
+                        Object {
+                          "backspaceRemovesValue": true,
+                          "blurInputOnSelect": true,
+                          "captureMenuScroll": false,
+                          "className": "react-select-container",
+                          "classNamePrefix": "react-select",
+                          "closeMenuOnScroll": false,
+                          "closeMenuOnSelect": true,
+                          "components": Object {},
+                          "controlShouldRenderValue": true,
+                          "defaultInputValue": "",
+                          "defaultMenuIsOpen": false,
+                          "defaultValue": null,
+                          "disabled": undefined,
+                          "escapeClearsValue": false,
+                          "filterOption": [Function],
+                          "fontSize": undefined,
+                          "formatGroupLabel": [Function],
+                          "getOptionLabel": [Function],
+                          "getOptionValue": [Function],
+                          "hideChevron": undefined,
+                          "hideHighlight": true,
+                          "inputValue": "",
+                          "isDisabled": false,
+                          "isLoading": false,
+                          "isMulti": false,
+                          "isOptionDisabled": [Function],
+                          "isRtl": false,
+                          "isSearchable": false,
+                          "loadingMessage": [Function],
+                          "maxMenuHeight": 140,
+                          "menuIsOpen": false,
+                          "menuPlacement": "bottom",
+                          "menuPosition": "absolute",
+                          "menuShouldBlockScroll": false,
+                          "menuShouldScrollIntoView": true,
+                          "minMenuHeight": 140,
+                          "noOptionsMessage": [Function],
+                          "onChange": [Function],
+                          "onInputChange": [Function],
+                          "onMenuClose": [Function],
+                          "onMenuOpen": [Function],
+                          "openMenuOnClick": true,
+                          "openMenuOnFocus": false,
+                          "options": Array [
                             Object {
                               "deprecatedLabel": "MainNet",
                               "id": "1",
@@ -584,55 +536,49 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                               "network": "TestNet",
                               "value": "2",
                             },
-                          ]
-                        }
-                        selectOption={[Function]}
-                        selectProps={
-                          Object {
-                            "backspaceRemovesValue": true,
-                            "blurInputOnSelect": true,
-                            "captureMenuScroll": false,
-                            "className": "react-select-container",
-                            "classNamePrefix": "react-select",
-                            "closeMenuOnScroll": false,
-                            "closeMenuOnSelect": true,
-                            "components": Object {},
-                            "controlShouldRenderValue": true,
-                            "defaultInputValue": "",
-                            "defaultMenuIsOpen": false,
-                            "defaultValue": null,
-                            "disabled": undefined,
-                            "escapeClearsValue": false,
-                            "filterOption": [Function],
-                            "fontSize": undefined,
-                            "formatGroupLabel": [Function],
-                            "getOptionLabel": [Function],
-                            "getOptionValue": [Function],
-                            "hideChevron": undefined,
-                            "hideHighlight": true,
-                            "inputValue": "",
-                            "isDisabled": false,
-                            "isLoading": false,
-                            "isMulti": false,
-                            "isOptionDisabled": [Function],
-                            "isRtl": false,
-                            "isSearchable": false,
-                            "loadingMessage": [Function],
-                            "maxMenuHeight": 140,
-                            "menuIsOpen": false,
-                            "menuPlacement": "bottom",
-                            "menuPosition": "absolute",
-                            "menuShouldBlockScroll": false,
-                            "menuShouldScrollIntoView": true,
-                            "minMenuHeight": 140,
+                          ],
+                          "pageSize": 5,
+                          "placeholder": "Select...",
+                          "screenReaderStatus": [Function],
+                          "settingsSelect": undefined,
+                          "styles": Object {
+                            "control": [Function],
+                            "dropdownIndicator": [Function],
+                            "indicatorSeparator": [Function],
                             "noOptionsMessage": [Function],
-                            "onChange": [Function],
-                            "onInputChange": [Function],
-                            "onMenuClose": [Function],
-                            "onMenuOpen": [Function],
-                            "openMenuOnClick": true,
-                            "openMenuOnFocus": false,
-                            "options": Array [
+                            "option": [Function],
+                            "singleValue": [Function],
+                            "valueContainer": [Function],
+                          },
+                          "tabIndex": "0",
+                          "tabSelectsValue": true,
+                          "transparent": undefined,
+                          "value": Object {
+                            "label": "2.x MainNet",
+                          },
+                        }
+                      }
+                      setValue={[Function]}
+                    >
+                      <div
+                        className="css-1n98qky react-select__value-container react-select__value-container--has-value"
+                      >
+                        <SingleValue
+                          clearValue={[Function]}
+                          cx={[Function]}
+                          data={
+                            Object {
+                              "label": "2.x MainNet",
+                            }
+                          }
+                          getStyles={[Function]}
+                          getValue={[Function]}
+                          hasValue={true}
+                          isDisabled={false}
+                          isMulti={false}
+                          isRtl={false}
+                          options={
+                            Array [
                               Object {
                                 "deprecatedLabel": "MainNet",
                                 "id": "1",
@@ -647,133 +593,133 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                                 "network": "TestNet",
                                 "value": "2",
                               },
-                            ],
-                            "pageSize": 5,
-                            "placeholder": "Select...",
-                            "screenReaderStatus": [Function],
-                            "settingsSelect": undefined,
-                            "styles": Object {
-                              "control": [Function],
-                              "dropdownIndicator": [Function],
-                              "indicatorSeparator": [Function],
-                              "noOptionsMessage": [Function],
-                              "option": [Function],
-                              "singleValue": [Function],
-                              "valueContainer": [Function],
-                            },
-                            "tabIndex": "0",
-                            "tabSelectsValue": true,
-                            "transparent": undefined,
-                            "value": Object {
-                              "label": "2.x MainNet",
-                            },
+                            ]
                           }
-                        }
-                        setValue={[Function]}
-                      >
-                        <div
-                          className="css-mdengd react-select__single-value"
+                          selectOption={[Function]}
+                          selectProps={
+                            Object {
+                              "backspaceRemovesValue": true,
+                              "blurInputOnSelect": true,
+                              "captureMenuScroll": false,
+                              "className": "react-select-container",
+                              "classNamePrefix": "react-select",
+                              "closeMenuOnScroll": false,
+                              "closeMenuOnSelect": true,
+                              "components": Object {},
+                              "controlShouldRenderValue": true,
+                              "defaultInputValue": "",
+                              "defaultMenuIsOpen": false,
+                              "defaultValue": null,
+                              "disabled": undefined,
+                              "escapeClearsValue": false,
+                              "filterOption": [Function],
+                              "fontSize": undefined,
+                              "formatGroupLabel": [Function],
+                              "getOptionLabel": [Function],
+                              "getOptionValue": [Function],
+                              "hideChevron": undefined,
+                              "hideHighlight": true,
+                              "inputValue": "",
+                              "isDisabled": false,
+                              "isLoading": false,
+                              "isMulti": false,
+                              "isOptionDisabled": [Function],
+                              "isRtl": false,
+                              "isSearchable": false,
+                              "loadingMessage": [Function],
+                              "maxMenuHeight": 140,
+                              "menuIsOpen": false,
+                              "menuPlacement": "bottom",
+                              "menuPosition": "absolute",
+                              "menuShouldBlockScroll": false,
+                              "menuShouldScrollIntoView": true,
+                              "minMenuHeight": 140,
+                              "noOptionsMessage": [Function],
+                              "onChange": [Function],
+                              "onInputChange": [Function],
+                              "onMenuClose": [Function],
+                              "onMenuOpen": [Function],
+                              "openMenuOnClick": true,
+                              "openMenuOnFocus": false,
+                              "options": Array [
+                                Object {
+                                  "deprecatedLabel": "MainNet",
+                                  "id": "1",
+                                  "label": "2.x MainNet",
+                                  "network": "MainNet",
+                                  "value": "1",
+                                },
+                                Object {
+                                  "deprecatedLabel": "TestNet",
+                                  "id": "2",
+                                  "label": "2.x TestNet",
+                                  "network": "TestNet",
+                                  "value": "2",
+                                },
+                              ],
+                              "pageSize": 5,
+                              "placeholder": "Select...",
+                              "screenReaderStatus": [Function],
+                              "settingsSelect": undefined,
+                              "styles": Object {
+                                "control": [Function],
+                                "dropdownIndicator": [Function],
+                                "indicatorSeparator": [Function],
+                                "noOptionsMessage": [Function],
+                                "option": [Function],
+                                "singleValue": [Function],
+                                "valueContainer": [Function],
+                              },
+                              "tabIndex": "0",
+                              "tabSelectsValue": true,
+                              "transparent": undefined,
+                              "value": Object {
+                                "label": "2.x MainNet",
+                              },
+                            }
+                          }
+                          setValue={[Function]}
                         >
-                          2.x MainNet
-                        </div>
-                      </SingleValue>
-                      <DummyInput
-                        id="react-select-2-input"
-                        innerRef={[Function]}
-                        onBlur={[Function]}
-                        onChange={[Function]}
-                        onFocus={[Function]}
-                        readOnly={true}
-                        tabIndex="0"
-                        value=""
-                      >
-                        <input
-                          className="css-14uuagi"
+                          <div
+                            className="css-mdengd react-select__single-value"
+                          >
+                            2.x MainNet
+                          </div>
+                        </SingleValue>
+                        <DummyInput
                           id="react-select-2-input"
+                          innerRef={[Function]}
                           onBlur={[Function]}
                           onChange={[Function]}
                           onFocus={[Function]}
                           readOnly={true}
                           tabIndex="0"
                           value=""
-                        />
-                      </DummyInput>
-                    </div>
-                  </ValueContainer>
-                  <IndicatorsContainer
-                    clearValue={[Function]}
-                    cx={[Function]}
-                    getStyles={[Function]}
-                    getValue={[Function]}
-                    hasValue={true}
-                    isDisabled={false}
-                    isMulti={false}
-                    isRtl={false}
-                    options={
-                      Array [
-                        Object {
-                          "deprecatedLabel": "MainNet",
-                          "id": "1",
-                          "label": "2.x MainNet",
-                          "network": "MainNet",
-                          "value": "1",
-                        },
-                        Object {
-                          "deprecatedLabel": "TestNet",
-                          "id": "2",
-                          "label": "2.x TestNet",
-                          "network": "TestNet",
-                          "value": "2",
-                        },
-                      ]
-                    }
-                    selectOption={[Function]}
-                    selectProps={
-                      Object {
-                        "backspaceRemovesValue": true,
-                        "blurInputOnSelect": true,
-                        "captureMenuScroll": false,
-                        "className": "react-select-container",
-                        "classNamePrefix": "react-select",
-                        "closeMenuOnScroll": false,
-                        "closeMenuOnSelect": true,
-                        "components": Object {},
-                        "controlShouldRenderValue": true,
-                        "defaultInputValue": "",
-                        "defaultMenuIsOpen": false,
-                        "defaultValue": null,
-                        "disabled": undefined,
-                        "escapeClearsValue": false,
-                        "filterOption": [Function],
-                        "fontSize": undefined,
-                        "formatGroupLabel": [Function],
-                        "getOptionLabel": [Function],
-                        "getOptionValue": [Function],
-                        "hideChevron": undefined,
-                        "hideHighlight": true,
-                        "inputValue": "",
-                        "isDisabled": false,
-                        "isLoading": false,
-                        "isMulti": false,
-                        "isOptionDisabled": [Function],
-                        "isRtl": false,
-                        "isSearchable": false,
-                        "loadingMessage": [Function],
-                        "maxMenuHeight": 140,
-                        "menuIsOpen": false,
-                        "menuPlacement": "bottom",
-                        "menuPosition": "absolute",
-                        "menuShouldBlockScroll": false,
-                        "menuShouldScrollIntoView": true,
-                        "minMenuHeight": 140,
-                        "noOptionsMessage": [Function],
-                        "onChange": [Function],
-                        "onInputChange": [Function],
-                        "onMenuClose": [Function],
-                        "onMenuOpen": [Function],
-                        "openMenuOnClick": true,
-                        "openMenuOnFocus": false,
-                        "options": Array [
+                        >
+                          <input
+                            className="css-14uuagi"
+                            id="react-select-2-input"
+                            onBlur={[Function]}
+                            onChange={[Function]}
+                            onFocus={[Function]}
+                            readOnly={true}
+                            tabIndex="0"
+                            value=""
+                          />
+                        </DummyInput>
+                      </div>
+                    </ValueContainer>
+                    <IndicatorsContainer
+                      clearValue={[Function]}
+                      cx={[Function]}
+                      getStyles={[Function]}
+                      getValue={[Function]}
+                      hasValue={true}
+                      isDisabled={false}
+                      isMulti={false}
+                      isRtl={false}
+                      options={
+                        Array [
                           Object {
                             "deprecatedLabel": "MainNet",
                             "id": "1",
@@ -788,108 +734,108 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                             "network": "TestNet",
                             "value": "2",
                           },
-                        ],
-                        "pageSize": 5,
-                        "placeholder": "Select...",
-                        "screenReaderStatus": [Function],
-                        "settingsSelect": undefined,
-                        "styles": Object {
-                          "control": [Function],
-                          "dropdownIndicator": [Function],
-                          "indicatorSeparator": [Function],
-                          "noOptionsMessage": [Function],
-                          "option": [Function],
-                          "singleValue": [Function],
-                          "valueContainer": [Function],
-                        },
-                        "tabIndex": "0",
-                        "tabSelectsValue": true,
-                        "transparent": undefined,
-                        "value": Object {
-                          "label": "2.x MainNet",
-                        },
+                        ]
                       }
-                    }
-                    setValue={[Function]}
-                  >
-                    <div
-                      className="css-1wy0on6 react-select__indicators"
+                      selectOption={[Function]}
+                      selectProps={
+                        Object {
+                          "backspaceRemovesValue": true,
+                          "blurInputOnSelect": true,
+                          "captureMenuScroll": false,
+                          "className": "react-select-container",
+                          "classNamePrefix": "react-select",
+                          "closeMenuOnScroll": false,
+                          "closeMenuOnSelect": true,
+                          "components": Object {},
+                          "controlShouldRenderValue": true,
+                          "defaultInputValue": "",
+                          "defaultMenuIsOpen": false,
+                          "defaultValue": null,
+                          "disabled": undefined,
+                          "escapeClearsValue": false,
+                          "filterOption": [Function],
+                          "fontSize": undefined,
+                          "formatGroupLabel": [Function],
+                          "getOptionLabel": [Function],
+                          "getOptionValue": [Function],
+                          "hideChevron": undefined,
+                          "hideHighlight": true,
+                          "inputValue": "",
+                          "isDisabled": false,
+                          "isLoading": false,
+                          "isMulti": false,
+                          "isOptionDisabled": [Function],
+                          "isRtl": false,
+                          "isSearchable": false,
+                          "loadingMessage": [Function],
+                          "maxMenuHeight": 140,
+                          "menuIsOpen": false,
+                          "menuPlacement": "bottom",
+                          "menuPosition": "absolute",
+                          "menuShouldBlockScroll": false,
+                          "menuShouldScrollIntoView": true,
+                          "minMenuHeight": 140,
+                          "noOptionsMessage": [Function],
+                          "onChange": [Function],
+                          "onInputChange": [Function],
+                          "onMenuClose": [Function],
+                          "onMenuOpen": [Function],
+                          "openMenuOnClick": true,
+                          "openMenuOnFocus": false,
+                          "options": Array [
+                            Object {
+                              "deprecatedLabel": "MainNet",
+                              "id": "1",
+                              "label": "2.x MainNet",
+                              "network": "MainNet",
+                              "value": "1",
+                            },
+                            Object {
+                              "deprecatedLabel": "TestNet",
+                              "id": "2",
+                              "label": "2.x TestNet",
+                              "network": "TestNet",
+                              "value": "2",
+                            },
+                          ],
+                          "pageSize": 5,
+                          "placeholder": "Select...",
+                          "screenReaderStatus": [Function],
+                          "settingsSelect": undefined,
+                          "styles": Object {
+                            "control": [Function],
+                            "dropdownIndicator": [Function],
+                            "indicatorSeparator": [Function],
+                            "noOptionsMessage": [Function],
+                            "option": [Function],
+                            "singleValue": [Function],
+                            "valueContainer": [Function],
+                          },
+                          "tabIndex": "0",
+                          "tabSelectsValue": true,
+                          "transparent": undefined,
+                          "value": Object {
+                            "label": "2.x MainNet",
+                          },
+                        }
+                      }
+                      setValue={[Function]}
                     >
-                      <IndicatorSeparator
-                        clearValue={[Function]}
-                        cx={[Function]}
-                        getStyles={[Function]}
-                        getValue={[Function]}
-                        hasValue={true}
-                        isDisabled={false}
-                        isFocused={false}
-                        isMulti={false}
-                        isRtl={false}
-                        options={
-                          Array [
-                            Object {
-                              "deprecatedLabel": "MainNet",
-                              "id": "1",
-                              "label": "2.x MainNet",
-                              "network": "MainNet",
-                              "value": "1",
-                            },
-                            Object {
-                              "deprecatedLabel": "TestNet",
-                              "id": "2",
-                              "label": "2.x TestNet",
-                              "network": "TestNet",
-                              "value": "2",
-                            },
-                          ]
-                        }
-                        selectOption={[Function]}
-                        selectProps={
-                          Object {
-                            "backspaceRemovesValue": true,
-                            "blurInputOnSelect": true,
-                            "captureMenuScroll": false,
-                            "className": "react-select-container",
-                            "classNamePrefix": "react-select",
-                            "closeMenuOnScroll": false,
-                            "closeMenuOnSelect": true,
-                            "components": Object {},
-                            "controlShouldRenderValue": true,
-                            "defaultInputValue": "",
-                            "defaultMenuIsOpen": false,
-                            "defaultValue": null,
-                            "disabled": undefined,
-                            "escapeClearsValue": false,
-                            "filterOption": [Function],
-                            "fontSize": undefined,
-                            "formatGroupLabel": [Function],
-                            "getOptionLabel": [Function],
-                            "getOptionValue": [Function],
-                            "hideChevron": undefined,
-                            "hideHighlight": true,
-                            "inputValue": "",
-                            "isDisabled": false,
-                            "isLoading": false,
-                            "isMulti": false,
-                            "isOptionDisabled": [Function],
-                            "isRtl": false,
-                            "isSearchable": false,
-                            "loadingMessage": [Function],
-                            "maxMenuHeight": 140,
-                            "menuIsOpen": false,
-                            "menuPlacement": "bottom",
-                            "menuPosition": "absolute",
-                            "menuShouldBlockScroll": false,
-                            "menuShouldScrollIntoView": true,
-                            "minMenuHeight": 140,
-                            "noOptionsMessage": [Function],
-                            "onChange": [Function],
-                            "onInputChange": [Function],
-                            "onMenuClose": [Function],
-                            "onMenuOpen": [Function],
-                            "openMenuOnClick": true,
-                            "openMenuOnFocus": false,
-                            "options": Array [
+                      <div
+                        className="css-1wy0on6 react-select__indicators"
+                      >
+                        <IndicatorSeparator
+                          clearValue={[Function]}
+                          cx={[Function]}
+                          getStyles={[Function]}
+                          getValue={[Function]}
+                          hasValue={true}
+                          isDisabled={false}
+                          isFocused={false}
+                          isMulti={false}
+                          isRtl={false}
+                          options={
+                            Array [
                               Object {
                                 "deprecatedLabel": "MainNet",
                                 "id": "1",
@@ -904,189 +850,253 @@ exports[`NetworkSwitch renders without crashing 1`] = `
                                 "network": "TestNet",
                                 "value": "2",
                               },
-                            ],
-                            "pageSize": 5,
-                            "placeholder": "Select...",
-                            "screenReaderStatus": [Function],
-                            "settingsSelect": undefined,
-                            "styles": Object {
-                              "control": [Function],
-                              "dropdownIndicator": [Function],
-                              "indicatorSeparator": [Function],
+                            ]
+                          }
+                          selectOption={[Function]}
+                          selectProps={
+                            Object {
+                              "backspaceRemovesValue": true,
+                              "blurInputOnSelect": true,
+                              "captureMenuScroll": false,
+                              "className": "react-select-container",
+                              "classNamePrefix": "react-select",
+                              "closeMenuOnScroll": false,
+                              "closeMenuOnSelect": true,
+                              "components": Object {},
+                              "controlShouldRenderValue": true,
+                              "defaultInputValue": "",
+                              "defaultMenuIsOpen": false,
+                              "defaultValue": null,
+                              "disabled": undefined,
+                              "escapeClearsValue": false,
+                              "filterOption": [Function],
+                              "fontSize": undefined,
+                              "formatGroupLabel": [Function],
+                              "getOptionLabel": [Function],
+                              "getOptionValue": [Function],
+                              "hideChevron": undefined,
+                              "hideHighlight": true,
+                              "inputValue": "",
+                              "isDisabled": false,
+                              "isLoading": false,
+                              "isMulti": false,
+                              "isOptionDisabled": [Function],
+                              "isRtl": false,
+                              "isSearchable": false,
+                              "loadingMessage": [Function],
+                              "maxMenuHeight": 140,
+                              "menuIsOpen": false,
+                              "menuPlacement": "bottom",
+                              "menuPosition": "absolute",
+                              "menuShouldBlockScroll": false,
+                              "menuShouldScrollIntoView": true,
+                              "minMenuHeight": 140,
                               "noOptionsMessage": [Function],
-                              "option": [Function],
-                              "singleValue": [Function],
-                              "valueContainer": [Function],
-                            },
-                            "tabIndex": "0",
-                            "tabSelectsValue": true,
-                            "transparent": undefined,
-                            "value": Object {
-                              "label": "2.x MainNet",
-                            },
-                          }
-                        }
-                        setValue={[Function]}
-                      >
-                        <span
-                          className="css-1hyfx7x react-select__indicator-separator"
-                        />
-                      </IndicatorSeparator>
-                      <DropdownIndicator
-                        clearValue={[Function]}
-                        cx={[Function]}
-                        getStyles={[Function]}
-                        getValue={[Function]}
-                        hasValue={true}
-                        innerProps={
-                          Object {
-                            "aria-hidden": "true",
-                            "onMouseDown": [Function],
-                            "onTouchEnd": [Function],
-                          }
-                        }
-                        isDisabled={false}
-                        isFocused={false}
-                        isMulti={false}
-                        isRtl={false}
-                        options={
-                          Array [
-                            Object {
-                              "deprecatedLabel": "MainNet",
-                              "id": "1",
-                              "label": "2.x MainNet",
-                              "network": "MainNet",
-                              "value": "1",
-                            },
-                            Object {
-                              "deprecatedLabel": "TestNet",
-                              "id": "2",
-                              "label": "2.x TestNet",
-                              "network": "TestNet",
-                              "value": "2",
-                            },
-                          ]
-                        }
-                        selectOption={[Function]}
-                        selectProps={
-                          Object {
-                            "backspaceRemovesValue": true,
-                            "blurInputOnSelect": true,
-                            "captureMenuScroll": false,
-                            "className": "react-select-container",
-                            "classNamePrefix": "react-select",
-                            "closeMenuOnScroll": false,
-                            "closeMenuOnSelect": true,
-                            "components": Object {},
-                            "controlShouldRenderValue": true,
-                            "defaultInputValue": "",
-                            "defaultMenuIsOpen": false,
-                            "defaultValue": null,
-                            "disabled": undefined,
-                            "escapeClearsValue": false,
-                            "filterOption": [Function],
-                            "fontSize": undefined,
-                            "formatGroupLabel": [Function],
-                            "getOptionLabel": [Function],
-                            "getOptionValue": [Function],
-                            "hideChevron": undefined,
-                            "hideHighlight": true,
-                            "inputValue": "",
-                            "isDisabled": false,
-                            "isLoading": false,
-                            "isMulti": false,
-                            "isOptionDisabled": [Function],
-                            "isRtl": false,
-                            "isSearchable": false,
-                            "loadingMessage": [Function],
-                            "maxMenuHeight": 140,
-                            "menuIsOpen": false,
-                            "menuPlacement": "bottom",
-                            "menuPosition": "absolute",
-                            "menuShouldBlockScroll": false,
-                            "menuShouldScrollIntoView": true,
-                            "minMenuHeight": 140,
-                            "noOptionsMessage": [Function],
-                            "onChange": [Function],
-                            "onInputChange": [Function],
-                            "onMenuClose": [Function],
-                            "onMenuOpen": [Function],
-                            "openMenuOnClick": true,
-                            "openMenuOnFocus": false,
-                            "options": Array [
-                              Object {
-                                "deprecatedLabel": "MainNet",
-                                "id": "1",
+                              "onChange": [Function],
+                              "onInputChange": [Function],
+                              "onMenuClose": [Function],
+                              "onMenuOpen": [Function],
+                              "openMenuOnClick": true,
+                              "openMenuOnFocus": false,
+                              "options": Array [
+                                Object {
+                                  "deprecatedLabel": "MainNet",
+                                  "id": "1",
+                                  "label": "2.x MainNet",
+                                  "network": "MainNet",
+                                  "value": "1",
+                                },
+                                Object {
+                                  "deprecatedLabel": "TestNet",
+                                  "id": "2",
+                                  "label": "2.x TestNet",
+                                  "network": "TestNet",
+                                  "value": "2",
+                                },
+                              ],
+                              "pageSize": 5,
+                              "placeholder": "Select...",
+                              "screenReaderStatus": [Function],
+                              "settingsSelect": undefined,
+                              "styles": Object {
+                                "control": [Function],
+                                "dropdownIndicator": [Function],
+                                "indicatorSeparator": [Function],
+                                "noOptionsMessage": [Function],
+                                "option": [Function],
+                                "singleValue": [Function],
+                                "valueContainer": [Function],
+                              },
+                              "tabIndex": "0",
+                              "tabSelectsValue": true,
+                              "transparent": undefined,
+                              "value": Object {
                                 "label": "2.x MainNet",
-                                "network": "MainNet",
-                                "value": "1",
                               },
-                              Object {
-                                "deprecatedLabel": "TestNet",
-                                "id": "2",
-                                "label": "2.x TestNet",
-                                "network": "TestNet",
-                                "value": "2",
-                              },
-                            ],
-                            "pageSize": 5,
-                            "placeholder": "Select...",
-                            "screenReaderStatus": [Function],
-                            "settingsSelect": undefined,
-                            "styles": Object {
-                              "control": [Function],
-                              "dropdownIndicator": [Function],
-                              "indicatorSeparator": [Function],
-                              "noOptionsMessage": [Function],
-                              "option": [Function],
-                              "singleValue": [Function],
-                              "valueContainer": [Function],
-                            },
-                            "tabIndex": "0",
-                            "tabSelectsValue": true,
-                            "transparent": undefined,
-                            "value": Object {
-                              "label": "2.x MainNet",
-                            },
+                            }
                           }
-                        }
-                        setValue={[Function]}
-                      >
-                        <div
-                          aria-hidden="true"
-                          className="css-qfyl2b react-select__indicator react-select__dropdown-indicator"
-                          onMouseDown={[Function]}
-                          onTouchEnd={[Function]}
+                          setValue={[Function]}
                         >
-                          <DownChevron>
-                            <Svg
-                              size={20}
-                            >
-                              <svg
-                                aria-hidden="true"
-                                className="css-19bqh2r"
-                                focusable="false"
-                                height={20}
-                                viewBox="0 0 20 20"
-                                width={20}
+                          <span
+                            className="css-1hyfx7x react-select__indicator-separator"
+                          />
+                        </IndicatorSeparator>
+                        <DropdownIndicator
+                          clearValue={[Function]}
+                          cx={[Function]}
+                          getStyles={[Function]}
+                          getValue={[Function]}
+                          hasValue={true}
+                          innerProps={
+                            Object {
+                              "aria-hidden": "true",
+                              "onMouseDown": [Function],
+                              "onTouchEnd": [Function],
+                            }
+                          }
+                          isDisabled={false}
+                          isFocused={false}
+                          isMulti={false}
+                          isRtl={false}
+                          options={
+                            Array [
+                              Object {
+                                "deprecatedLabel": "MainNet",
+                                "id": "1",
+                                "label": "2.x MainNet",
+                                "network": "MainNet",
+                                "value": "1",
+                              },
+                              Object {
+                                "deprecatedLabel": "TestNet",
+                                "id": "2",
+                                "label": "2.x TestNet",
+                                "network": "TestNet",
+                                "value": "2",
+                              },
+                            ]
+                          }
+                          selectOption={[Function]}
+                          selectProps={
+                            Object {
+                              "backspaceRemovesValue": true,
+                              "blurInputOnSelect": true,
+                              "captureMenuScroll": false,
+                              "className": "react-select-container",
+                              "classNamePrefix": "react-select",
+                              "closeMenuOnScroll": false,
+                              "closeMenuOnSelect": true,
+                              "components": Object {},
+                              "controlShouldRenderValue": true,
+                              "defaultInputValue": "",
+                              "defaultMenuIsOpen": false,
+                              "defaultValue": null,
+                              "disabled": undefined,
+                              "escapeClearsValue": false,
+                              "filterOption": [Function],
+                              "fontSize": undefined,
+                              "formatGroupLabel": [Function],
+                              "getOptionLabel": [Function],
+                              "getOptionValue": [Function],
+                              "hideChevron": undefined,
+                              "hideHighlight": true,
+                              "inputValue": "",
+                              "isDisabled": false,
+                              "isLoading": false,
+                              "isMulti": false,
+                              "isOptionDisabled": [Function],
+                              "isRtl": false,
+                              "isSearchable": false,
+                              "loadingMessage": [Function],
+                              "maxMenuHeight": 140,
+                              "menuIsOpen": false,
+                              "menuPlacement": "bottom",
+                              "menuPosition": "absolute",
+                              "menuShouldBlockScroll": false,
+                              "menuShouldScrollIntoView": true,
+                              "minMenuHeight": 140,
+                              "noOptionsMessage": [Function],
+                              "onChange": [Function],
+                              "onInputChange": [Function],
+                              "onMenuClose": [Function],
+                              "onMenuOpen": [Function],
+                              "openMenuOnClick": true,
+                              "openMenuOnFocus": false,
+                              "options": Array [
+                                Object {
+                                  "deprecatedLabel": "MainNet",
+                                  "id": "1",
+                                  "label": "2.x MainNet",
+                                  "network": "MainNet",
+                                  "value": "1",
+                                },
+                                Object {
+                                  "deprecatedLabel": "TestNet",
+                                  "id": "2",
+                                  "label": "2.x TestNet",
+                                  "network": "TestNet",
+                                  "value": "2",
+                                },
+                              ],
+                              "pageSize": 5,
+                              "placeholder": "Select...",
+                              "screenReaderStatus": [Function],
+                              "settingsSelect": undefined,
+                              "styles": Object {
+                                "control": [Function],
+                                "dropdownIndicator": [Function],
+                                "indicatorSeparator": [Function],
+                                "noOptionsMessage": [Function],
+                                "option": [Function],
+                                "singleValue": [Function],
+                                "valueContainer": [Function],
+                              },
+                              "tabIndex": "0",
+                              "tabSelectsValue": true,
+                              "transparent": undefined,
+                              "value": Object {
+                                "label": "2.x MainNet",
+                              },
+                            }
+                          }
+                          setValue={[Function]}
+                        >
+                          <div
+                            aria-hidden="true"
+                            className="css-qfyl2b react-select__indicator react-select__dropdown-indicator"
+                            onMouseDown={[Function]}
+                            onTouchEnd={[Function]}
+                          >
+                            <DownChevron>
+                              <Svg
+                                size={20}
                               >
-                                <path
-                                  d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
-                                />
-                              </svg>
-                            </Svg>
-                          </DownChevron>
-                        </div>
-                      </DropdownIndicator>
-                    </div>
-                  </IndicatorsContainer>
-                </div>
-              </Control>
-            </div>
-          </SelectContainer>
-        </Select>
-      </StateManager>
-    </StyledReactSelect>
-  </div>
-</NetworkSwitch>
+                                <svg
+                                  aria-hidden="true"
+                                  className="css-19bqh2r"
+                                  focusable="false"
+                                  height={20}
+                                  viewBox="0 0 20 20"
+                                  width={20}
+                                >
+                                  <path
+                                    d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                                  />
+                                </svg>
+                              </Svg>
+                            </DownChevron>
+                          </div>
+                        </DropdownIndicator>
+                      </div>
+                    </IndicatorsContainer>
+                  </div>
+                </Control>
+              </div>
+            </SelectContainer>
+          </Select>
+        </StateManager>
+      </StyledReactSelect>
+    </div>
+  </NetworkSwitch>
+</IntlProvider>
 `;
