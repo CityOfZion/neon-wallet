@@ -1,6 +1,8 @@
 // @flow
 import React from 'react'
 import { withRouter } from 'react-router-dom'
+import { intlShape } from 'react-intl'
+
 import PasswordInput from '../Inputs/PasswordInput'
 import TextInput from '../Inputs/TextInput'
 import Button from '../Button'
@@ -16,6 +18,7 @@ type Props = {
   option: Option,
   importKeyOption: 'WIF' | 'ENCRYPTED_WIF',
   authenticated: boolean,
+  intl: intlShape,
 }
 
 type State = {
@@ -50,29 +53,19 @@ class CreateImportWalletForm extends React.Component<Props, State> {
     submitButtonDisabled: false,
   }
 
-  createWalletAccount = (e: SyntheticMouseEvent<*>) => {
-    this.setState({ submitButtonDisabled: true })
-    e.preventDefault()
-    const { history, option, importKeyOption } = this.props
-    const { passphrase, passphrase2, key, walletName } = this.state
-    const { generateNewWalletAccount, authenticated } = this.props
-
-    generateNewWalletAccount(
-      passphrase,
-      passphrase2,
-      option === 'IMPORT' ? key : null,
-      null,
-      option === 'IMPORT' ? importKeyOption : 'WIF',
-      history,
-      walletName,
-      authenticated,
-      () => this.setState({ submitButtonDisabled: false }),
-    )
-  }
-
   render = () => {
     const { passphraseError, passphrase2Error, key, walletName } = this.state
     const { option, importKeyOption } = this.props
+    const {
+      walletCreationWalletNamePlaceholder,
+      walletCreationWalletNameLabel,
+      walletCreationWalletPasswordLabel,
+      walletCreationWalletPasswordPlaceholder,
+      walletCreationWalletPasswordConfirmLabel,
+      walletCreationWalletPasswordConfirmPlaceholder,
+      authCreateWallet,
+      authImportWallet,
+    } = this.getTranslations()
 
     return (
       <div id="createWallet" className={styles.flexContainer}>
@@ -95,24 +88,23 @@ class CreateImportWalletForm extends React.Component<Props, State> {
               />
             </div>
           )}
-
           <TextInput
             value={walletName}
-            label="Wallet Name"
+            label={walletCreationWalletNameLabel}
             onChange={e => this.setState({ walletName: e.target.value })}
-            placeholder="Wallet Name"
+            placeholder={walletCreationWalletNamePlaceholder}
             autoFocus={option !== 'IMPORT'}
           />
           <PasswordInput
-            label="Passphrase"
+            label={walletCreationWalletPasswordLabel}
             onChange={this.handleChangePassphrase}
-            placeholder="Password"
+            placeholder={walletCreationWalletPasswordPlaceholder}
             error={passphraseError}
           />
           <PasswordInput
-            label="Confirm Passphrase"
+            label={walletCreationWalletPasswordConfirmLabel}
             onChange={this.handleChangePassphrase2}
-            placeholder="Confirm Password"
+            placeholder={walletCreationWalletPasswordConfirmPlaceholder}
             error={passphrase2Error}
           />
           <div className={styles.loginButtonMargin}>
@@ -123,12 +115,77 @@ class CreateImportWalletForm extends React.Component<Props, State> {
               primary
               disabled={this.isDisabled()}
             >
-              {option === 'IMPORT' ? 'Import Wallet' : 'Create Wallet'}
+              {option === 'IMPORT' ? authImportWallet : authCreateWallet}
             </Button>
           </div>
         </form>
       </div>
     )
+  }
+
+  createWalletAccount = (e: SyntheticMouseEvent<*>) => {
+    this.setState({ submitButtonDisabled: true })
+    e.preventDefault()
+    const { history, option, importKeyOption } = this.props
+    const { passphrase, passphrase2, key, walletName } = this.state
+    const { generateNewWalletAccount, authenticated } = this.props
+
+    generateNewWalletAccount(
+      passphrase,
+      passphrase2,
+      option === 'IMPORT' ? key : null,
+      null,
+      option === 'IMPORT' ? importKeyOption : 'WIF',
+      history,
+      walletName,
+      authenticated,
+      () => this.setState({ submitButtonDisabled: false }),
+    )
+  }
+
+  getTranslations = () => {
+    const { intl } = this.props
+    const walletCreationWalletNamePlaceholder = intl.formatMessage({
+      id: 'walletCreationWalletNamePlaceholder',
+    })
+    const walletCreationWalletNameLabel = intl.formatMessage({
+      id: 'walletCreationWalletNameLabel',
+    })
+
+    const walletCreationWalletPasswordLabel = intl.formatMessage({
+      id: 'walletCreationWalletPasswordLabel',
+    })
+
+    const walletCreationWalletPasswordPlaceholder = intl.formatMessage({
+      id: 'walletCreationWalletPasswordPlaceholder',
+    })
+
+    const walletCreationWalletPasswordConfirmLabel = intl.formatMessage({
+      id: 'walletCreationWalletPasswordConfirmLabel',
+    })
+
+    const walletCreationWalletPasswordConfirmPlaceholder = intl.formatMessage({
+      id: 'walletCreationWalletPasswordConfirmPlaceholder',
+    })
+
+    const authCreateWallet = intl.formatMessage({
+      id: 'authCreateWallet',
+    })
+
+    const authImportWallet = intl.formatMessage({
+      id: 'authImportWallet',
+    })
+
+    return {
+      walletCreationWalletNamePlaceholder,
+      walletCreationWalletNameLabel,
+      walletCreationWalletPasswordLabel,
+      walletCreationWalletPasswordPlaceholder,
+      walletCreationWalletPasswordConfirmLabel,
+      walletCreationWalletPasswordConfirmPlaceholder,
+      authCreateWallet,
+      authImportWallet,
+    }
   }
 
   handleChangePassphrase = (e: SyntheticInputEvent<HTMLInputElement>) => {
