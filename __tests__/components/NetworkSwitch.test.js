@@ -10,9 +10,12 @@ import {
   MAIN_NETWORK_ID,
   TEST_NETWORK_ID,
   MAIN_NETWORK_LABEL,
+  LANGUAGES,
 } from '../../app/core/constants'
 import { getNetworks } from '../../app/core/networks'
+import translations from '../../app/translations'
 
+const { english, korean } = translations
 const NETWORKS = getNetworks()
 
 const setup = () => {
@@ -21,8 +24,9 @@ const setup = () => {
     networks: NETWORKS,
     onChange: jest.fn(),
   }
+  // TODO: create a test util wrapper that will take care of this
   const wrapper = mount(
-    <IntlProvider locale="en">
+    <IntlProvider locale="en" messages={english}>
       <NetworkSwitch {...props} />
     </IntlProvider>,
   )
