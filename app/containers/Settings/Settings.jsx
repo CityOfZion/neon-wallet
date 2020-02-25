@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import fs from 'fs'
 import storage from 'electron-json-storage'
 import { Link } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
 
 import { recoverWallet } from '../../modules/generateWallet'
 import Panel from '../../components/Panel'
@@ -11,7 +12,6 @@ import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import SettingsItem from '../../components/Settings/SettingsItem'
 import SettingsLink from '../../components/Settings/SettingsLink'
 import Switch from '../../components/Inputs/Switch'
-
 import {
   DEFAULT_EXPLORER,
   CURRENCIES,
@@ -211,12 +211,16 @@ export default class Settings extends Component<Props, State> {
 
     return (
       <section className={styles.settingsContainer}>
-        <HeaderBar
-          networkId={this.props.networkId}
-          net={this.props.net}
-          label="Settings"
-          renderRightContent={this.renderHeaderBarRightContent}
-        />
+        <FormattedMessage id="sidebarSettings">
+          {t => (
+            <HeaderBar
+              networkId={this.props.networkId}
+              net={this.props.net}
+              label={t}
+              renderRightContent={this.renderHeaderBarRightContent}
+            />
+          )}
+        </FormattedMessage>
         <Panel
           className={styles.settingsPanel}
           renderHeader={this.renderHeader}
@@ -224,69 +228,99 @@ export default class Settings extends Component<Props, State> {
         >
           <section className={styles.settingsItemsContainer}>
             <div className={styles.innerContainer}>
-              <SettingsLink
-                to={ROUTES.NETWORK_CONFIGURATION}
-                renderIcon={() => <CogIcon />}
-                title="NETWORK CONFIGURATION"
-              />
-              <SettingsItem
-                renderIcon={() => <CurrencyIcon />}
-                title="CURRENCY"
-              >
-                <div className={styles.settingsSelectContainer}>
-                  <StyledReactSelect
-                    settingsSelect
-                    transparent
-                    options={parsedCurrencyOptions}
-                    value={this.state.selectedCurrency}
-                    onChange={this.updateCurrencySettings}
-                    isSearchable={false}
+              <FormattedMessage id="settingsNetworkConfigLabel">
+                {translation => (
+                  <SettingsLink
+                    to={ROUTES.NETWORK_CONFIGURATION}
+                    renderIcon={() => <CogIcon />}
+                    title={translation}
                   />
-                </div>
-              </SettingsItem>
-              <SettingsItem renderIcon={() => <LangIcon />} title="LANGUAGE">
-                <div className={styles.settingsSelectContainer}>
-                  <StyledReactSelect
-                    settingsSelect
-                    onChange={this.updateLanguageSetting}
-                    isSearchable={false}
-                    transparent
-                    options={parsedLangOptions}
-                    value={this.state.selectedLanguage}
-                  />
-                </div>
-              </SettingsItem>
-              <SettingsItem renderIcon={() => <LightbulbIcon />} title="THEME">
-                <div className={styles.settingsSelectContainer}>
-                  <StyledReactSelect
-                    settingsSelect
-                    onChange={this.updateThemeSettings}
-                    isSearchable={false}
-                    transparent
-                    options={parsedThemeOptions}
-                    value={this.state.selectedTheme}
-                  />
-                </div>
-              </SettingsItem>
-              <SettingsItem
-                renderIcon={() => <VolumeIcon />}
-                noBorderBottom
-                title="SOUND"
-              >
-                <div className={styles.settingsSwitchContainer}>
-                  <Switch
-                    checked={this.state.soundEnabled}
-                    handleCheck={this.updateSoundSetting}
-                  />
-                </div>
-              </SettingsItem>
+                )}
+              </FormattedMessage>
+              <FormattedMessage id="settingCurrencyLabel">
+                {translation => (
+                  <SettingsItem
+                    renderIcon={() => <CurrencyIcon />}
+                    title={translation}
+                  >
+                    <div className={styles.settingsSelectContainer}>
+                      <StyledReactSelect
+                        settingsSelect
+                        transparent
+                        options={parsedCurrencyOptions}
+                        value={this.state.selectedCurrency}
+                        onChange={this.updateCurrencySettings}
+                        isSearchable={false}
+                      />
+                    </div>
+                  </SettingsItem>
+                )}
+              </FormattedMessage>
+              <FormattedMessage id="settingsLanguageLabel">
+                {translation => (
+                  <SettingsItem
+                    renderIcon={() => <LangIcon />}
+                    title={translation}
+                  >
+                    <div className={styles.settingsSelectContainer}>
+                      <StyledReactSelect
+                        settingsSelect
+                        onChange={this.updateLanguageSetting}
+                        isSearchable={false}
+                        transparent
+                        options={parsedLangOptions}
+                        value={this.state.selectedLanguage}
+                      />
+                    </div>
+                  </SettingsItem>
+                )}
+              </FormattedMessage>
+              <FormattedMessage id="settingsThemeLabel">
+                {translation => (
+                  <SettingsItem
+                    renderIcon={() => <LightbulbIcon />}
+                    title={translation}
+                  >
+                    <div className={styles.settingsSelectContainer}>
+                      <StyledReactSelect
+                        settingsSelect
+                        onChange={this.updateThemeSettings}
+                        isSearchable={false}
+                        transparent
+                        options={parsedThemeOptions}
+                        value={this.state.selectedTheme}
+                      />
+                    </div>
+                  </SettingsItem>
+                )}
+              </FormattedMessage>
+              <FormattedMessage id="settingsSoundLabel">
+                {translation => (
+                  <SettingsItem
+                    renderIcon={() => <VolumeIcon />}
+                    noBorderBottom
+                    title={translation}
+                  >
+                    <div className={styles.settingsSwitchContainer}>
+                      <Switch
+                        checked={this.state.soundEnabled}
+                        handleCheck={this.updateSoundSetting}
+                      />
+                    </div>
+                  </SettingsItem>
+                )}
+              </FormattedMessage>
               <div className={styles.settingsSpacer} />
 
-              <SettingsLink
-                renderIcon={() => <LockIcon />}
-                to={ROUTES.ENCRYPT}
-                title="ENCRYPT A KEY"
-              />
+              <FormattedMessage id="settingsEncryptLink">
+                {translation => (
+                  <SettingsLink
+                    renderIcon={() => <LockIcon />}
+                    to={ROUTES.ENCRYPT}
+                    title={translation}
+                  />
+                )}
+              </FormattedMessage>
               <SettingsLink
                 onClick={() =>
                   loadWalletRecovery(
@@ -296,17 +330,17 @@ export default class Settings extends Component<Props, State> {
                   )
                 }
                 to={ROUTES.ENCRYPT}
-                label="IMPORT"
+                label={<FormattedMessage id="settingsRecoverWalletLink" />}
                 renderIcon={() => <TimeIcon />}
-                title="RECOVER WALLET"
+                title={<FormattedMessage id="recoverWallet" />}
               />
               <SettingsLink
                 renderIcon={() => <SaveIcon />}
                 noBorderBottom
-                label="EXPORT"
+                label={<FormattedMessage id="settingsBackUpLink" />}
                 onClick={this.saveWalletRecovery}
                 to={ROUTES.NODE_SELECT}
-                title="BACKUP WALLET"
+                title={<FormattedMessage id="settingsBackUpLinkLabel" />}
               />
             </div>
             {this.renderDontions()}
@@ -324,7 +358,7 @@ export default class Settings extends Component<Props, State> {
       }}
       className={styles.settingsDonations}
     >
-      Created by CoZ. Donations: {COZ_DONATIONS_ADDRESS}
+      <FormattedMessage id="settingsDonationLink" /> {COZ_DONATIONS_ADDRESS}
     </Link>
   )
 
@@ -334,7 +368,9 @@ export default class Settings extends Component<Props, State> {
       className={styles.headerButtonContainer}
     >
       <AddIcon className={styles.add} />
-      <span>Add Token</span>
+      <span>
+        <FormattedMessage id="addToken" />
+      </span>
     </div>
   )
 
@@ -343,10 +379,10 @@ export default class Settings extends Component<Props, State> {
   renderHeader = () => (
     <div className={styles.settingsPanelHeader}>
       <div className={styles.settingsPanelHeaderItem}>
-        Manage your neon wallet - v{pack.version}
+        <FormattedMessage id="settingsManageLabel" /> - v{pack.version}
       </div>
       <div className={styles.settingsPanelHeaderItem}>
-        Community Support:{' '}
+        <FormattedMessage id="settingsCommunity" />:{' '}
         <a onClick={this.openDiscordLink}>{DISCORD_INVITE_LINK}</a>
       </div>
     </div>

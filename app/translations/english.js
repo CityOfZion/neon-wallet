@@ -21,6 +21,8 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   importFile: 'Import File',
   dashboardTokenBalancesPrice: 'PRICE',
   dashboardTokenBalancesHoldings: 'HOLDINGS',
+  settingsLanguageLabel: 'LANGUAGE',
+  addToken: 'Add Token',
 }
 
 const AUTH = {
@@ -201,9 +203,8 @@ const SETTINGS = {
   settingsBackUpLinkLabel: 'BACKUP WALLET',
   settingsBackUpLink: 'EXPORT',
   settingsManageLabel: 'Manage your neon wallet',
-  settingsCommunity: 'Cummonity Support',
-  settingsDonationLink:
-    'Created by CoZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A',
+  settingsCommunity: 'Community Support',
+  settingsDonationLink: 'Created by CoZ. Donations:',
 }
 
 const NETWORK_SETTINGS = {

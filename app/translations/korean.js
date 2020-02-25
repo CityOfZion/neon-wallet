@@ -19,6 +19,8 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   importFile: 'Import File',
   dashboardTokenBalancesPrice: '가격',
   dashboardTokenBalancesHoldings: '지주',
+  settingsLanguageLabel: '언어',
+  addToken: '토큰 추가하기',
 }
 
 const AUTH = {
@@ -199,8 +201,7 @@ const SETTINGS = {
   settingsBackUpLink: '내보내기',
   settingsManageLabel: '네온 지갑 관리',
   settingsCommunity: '커뮤니티 지원',
-  settingsDonationLink:
-    'Created by COZ. 후원: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A',
+  settingsDonationLink: 'Created by COZ. 후원: ',
 }
 
 const NETWORK_SETTINGS = {
