@@ -7,6 +7,7 @@ import PortfolioTable from './PortfolioTable'
 import Panel from '../../Panel'
 import LogoWithStrikethrough from '../../LogoWithStrikethrough'
 import styles from './PortfolioPanel.scss'
+import { FormattedMessage } from 'react-intl'
 
 type BalanceType = {
   symbol: SymbolType,
@@ -54,5 +55,9 @@ export default class PortfolioPanel extends React.Component<Props> {
     )
   }
 
-  renderHeader = () => <div className={styles.header}>Total Wallet Value</div>
+  renderHeader = () => (
+    <div className={styles.header}>
+      <FormattedMessage id="dashboardValueLabel" />
+    </div>
+  )
 }

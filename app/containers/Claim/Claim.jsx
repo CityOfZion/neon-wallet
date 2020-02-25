@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react'
+import { FormattedMessage } from 'react-intl'
 
 import Button from '../../components/Button'
 import Tooltip from '../../components/Tooltip'
@@ -36,7 +37,12 @@ export default class Claim extends Component<Props> {
             renderIcon={ClaimIcon}
             onClick={isWatchOnly ? () => {} : this.handleClaim}
           >
-            Claim {this.getFormattedAmount()} GAS
+            {/* Claim {this.getFormattedAmount()} GAS */}
+
+            <FormattedMessage
+              id="dashboardGasClaimButton"
+              values={{ amount: this.getFormattedAmount() }}
+            />
           </Button>
         </Tooltip>
       </div>

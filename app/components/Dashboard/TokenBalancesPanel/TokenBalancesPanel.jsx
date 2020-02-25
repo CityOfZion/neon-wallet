@@ -11,6 +11,7 @@ import { toFixedDecimals } from '../../../core/formatters'
 import { toBigNumber } from '../../../core/math'
 import Nothing from '../../../assets/icons/nothing.svg'
 import { CURRENCIES, ROUTES, PRICE_UNAVAILABLE } from '../../../core/constants'
+import { FormattedMessage } from 'react-intl'
 
 type Props = {
   className: ?string,
@@ -107,7 +108,9 @@ export default class TokenBalancesPanel extends React.Component<Props> {
   renderHeader = () => (
     <div>
       <div className={styles.header}>
-        <span>Token Balances</span>
+        <span>
+          <FormattedMessage id="dashboardBalancePanelLabel" />
+        </span>
       </div>
     </div>
   )
@@ -118,13 +121,13 @@ export default class TokenBalancesPanel extends React.Component<Props> {
       <div className={styles.tokenBalancesPanelContent}>
         <div className={styles.gridContainer}>
           <div className={classNames(styles.columnCell, styles.symbol)}>
-            Token
+            <FormattedMessage id="dashboardTokenBalancesToken" />
           </div>
           <div className={classNames(styles.columnCell, styles.priceLabel)}>
-            Price
+            <FormattedMessage id="dashboardTokenBalancesPrice" />
           </div>
           <div className={classNames(styles.columnCell, styles.balance)}>
-            Holdings
+            <FormattedMessage id="dashboardTokenBalancesHoldings" />
           </div>
           {balances.sort(this.sortByValueInPortfolio).map(token => (
             <React.Fragment key={token.scriptHash}>

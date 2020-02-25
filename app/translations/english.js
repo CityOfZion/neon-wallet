@@ -19,6 +19,8 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   'auth.import.recoveryInstructions':
     'Upload a JSON wallet recovery file here to add your accounts to Neon. This option is also available on the Settings page.',
   importFile: 'Import File',
+  dashboardTokenBalancesPrice: 'PRICE',
+  dashboardTokenBalancesHoldings: 'HOLDINGS',
 }
 
 const AUTH = {

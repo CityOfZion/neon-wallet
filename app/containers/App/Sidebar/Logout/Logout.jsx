@@ -4,6 +4,7 @@ import classNames from 'classnames'
 
 import LogoutIcon from '../../../../assets/navigation/logout.svg'
 import styles from './Logout.scss'
+import { FormattedMessage } from 'react-intl'
 
 type Props = {
   id?: string,
@@ -22,7 +23,9 @@ const Logout = ({ id, className, logout, promptHasBeenDisplayed }: Props) => (
     }}
   >
     <LogoutIcon />
-    <div className={styles.logoutText}> Logout </div>
+    <div className={styles.logoutText}>
+      <FormattedMessage id="sidebarLogout" />
+    </div>
   </div>
 )
 

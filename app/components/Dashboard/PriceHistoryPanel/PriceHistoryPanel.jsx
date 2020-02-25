@@ -1,7 +1,9 @@
 // @flow
 import React from 'react'
+import type { Node } from 'react'
 import classNames from 'classnames'
 import { find, get } from 'lodash-es'
+import { FormattedMessage } from 'react-intl'
 
 import PriceHistoryChart from './PriceHistoryChart'
 import Panel from '../../Panel'
@@ -43,10 +45,10 @@ type Props = {
   priceKey: string,
 }
 
-const DURATIONS: Array<[Duration, string]> = [
-  ['1d', '1 DAY'],
-  ['1w', '1 WEEK'],
-  ['1m', '1 MONTH'],
+const DURATIONS: Array<[Duration, Node]> = [
+  ['1d', <FormattedMessage id="dashboardMarketData1Day" />],
+  ['1w', <FormattedMessage id="dashboardMarketData1Week" />],
+  ['1m', <FormattedMessage id="dashboardMarketData1Month" />],
 ]
 
 // convert DURATIONS to react-select option format
@@ -87,7 +89,9 @@ export default class PriceHistoryPanel extends React.Component<Props> {
 
   renderHeader = () => (
     <div className={styles.header}>
-      <span>Market Data</span>
+      <span>
+        <FormattedMessage id="dashboardMarketDataLabel" />
+      </span>
       <span className={styles.asset} onClick={this.handleChangeAsset}>
         {this.props.asset}
         {this.renderLatestPrice()}
