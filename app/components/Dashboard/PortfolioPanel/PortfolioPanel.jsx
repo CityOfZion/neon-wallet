@@ -1,13 +1,13 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
+import { FormattedMessage } from 'react-intl'
 
 import PortfolioBreakdownChart from './PortfolioBreakdownChart'
 import PortfolioTable from './PortfolioTable'
 import Panel from '../../Panel'
 import LogoWithStrikethrough from '../../LogoWithStrikethrough'
 import styles from './PortfolioPanel.scss'
-import { FormattedMessage } from 'react-intl'
 
 type BalanceType = {
   symbol: SymbolType,
