@@ -50,6 +50,8 @@ exports[`NetworkSwitch renders without crashing 1`] = `
       "dashboardMarketDataLabel": "Market Data",
       "dashboardPriceNotAvailable": "N/A",
       "dashboardRefresh": "Refresh",
+      "dashboardTokenBalancesHoldings": "HOLDINGS",
+      "dashboardTokenBalancesPrice": "PRICE",
       "dashboardTokenBalancesToken": "Token",
       "dashboardValueLabel": "Total Wallet Value",
       "encryptButton": "Generate Encrypted Key",

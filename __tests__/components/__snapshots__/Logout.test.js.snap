@@ -9,7 +9,10 @@ exports[`Logout should render without crashing 1`] = `
   <div
     className="logoutText"
   >
-     Logout 
+    <FormattedMessage
+      id="sidebarLogout"
+      values={Object {}}
+    />
   </div>
 </div>
 `;
