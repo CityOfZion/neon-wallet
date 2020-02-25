@@ -2,6 +2,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { noop } from 'lodash-es'
+import { FormattedMessage, IntlShape } from 'react-intl'
 
 import FullHeightPanel from '../../Panel/FullHeightPanel'
 import ContactForm from '../ContactForm'
@@ -20,6 +21,7 @@ type Props = {
   deleteContact: string => void,
   showSuccessNotification: ({ message: string }) => void,
   showModal: (modalType: string, modalProps: Object) => any,
+  intl: IntlShape,
 }
 
 export default class EditContactPanel extends React.Component<Props> {
@@ -39,12 +41,14 @@ export default class EditContactPanel extends React.Component<Props> {
         className={className}
         renderHeaderIcon={() => <AddIcon />}
         renderBackButton={() => <BackButton routeTo={ROUTES.CONTACTS} />}
-        headerText="Edit A Contact"
+        headerText={<FormattedMessage id="editAContact" />}
         renderInstructions={() => (
           <div className={styles.editContactInstructions}>
-            <div>Modify Details</div>
+            <div>
+              <FormattedMessage id="modifyDetails" />
+            </div>
             <span onClick={this.handleDelete}>
-              <Close /> Remove Contact
+              <Close /> <FormattedMessage id="removeContact" />
             </span>
           </div>
         )}
@@ -75,11 +79,13 @@ export default class EditContactPanel extends React.Component<Props> {
   }
 
   handleDelete = () => {
-    const { name, showModal, showSuccessNotification } = this.props
+    const { name, showModal, showSuccessNotification, intl } = this.props
 
     showModal(MODAL_TYPES.CONFIRM, {
       title: 'Confirm Delete',
-      text: `Please confirm removing contact - ${name}`,
+      text: `${intl.formatMessage({
+        id: 'confirmRemoveContact',
+      })} - ${name}`,
       onClick: () => {
         this.props.deleteContact(name)
         showSuccessNotification({

@@ -3,6 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { orderBy, groupBy, isEmpty } from 'lodash-es'
 import classNames from 'classnames'
+import { FormattedMessage, IntlShape } from 'react-intl'
 
 import StyledReactSelect from '../../Inputs/StyledReactSelect/StyledReactSelect'
 import HeaderBar from '../../HeaderBar'
@@ -37,6 +38,7 @@ type Props = {
   deleteContact: string => void,
   showSuccessNotification: ({ message: string }) => void,
   showModal: (modalType: string, modalProps: Object) => any,
+  intl: IntlShape,
 }
 
 type State = {
@@ -138,18 +140,18 @@ export default class ContactsPanel extends React.Component<Props, State> {
           renderIcon={EditIcon}
           onClick={() => this.handleEdit(name)}
         >
-          Edit
+          <FormattedMessage id="manageWalletsEdit" />
         </Button>
         <Button
           className={styles.deleteButton}
           renderIcon={DeleteIcon}
           onClick={() => this.handleDelete(name)}
         >
-          Delete
+          <FormattedMessage id="deleteLabel" />
         </Button>
         <Address address={address} asWrapper>
           <Button className={styles.infoButton} renderIcon={InfoIcon}>
-            Activity
+            <FormattedMessage id="sidebarActivity" />
           </Button>
         </Address>
         <Link
@@ -160,7 +162,7 @@ export default class ContactsPanel extends React.Component<Props, State> {
           className={styles.settingsDonations}
         >
           <Button className={styles.sendButton} renderIcon={SendIcon}>
-            Send
+            <FormattedMessage id="sidebarSend" />
           </Button>
         </Link>
       </div>
@@ -182,12 +184,14 @@ export default class ContactsPanel extends React.Component<Props, State> {
     return (
       <React.Fragment>
         <HeaderBar
-          label="Manage Contacts"
+          label={<FormattedMessage id="contactsPageLabel" />}
           shouldRenderRefresh={false}
           renderRightContent={() => (
             <Link id="add" className={styles.addButton} to={ROUTES.ADD_CONTACT}>
               <AddIcon className={styles.addIcon} />
-              <span>New Contact</span>
+              <span>
+                <FormattedMessage id="newContact" />
+              </span>
             </Link>
           )}
         />
@@ -220,11 +224,13 @@ export default class ContactsPanel extends React.Component<Props, State> {
   }
 
   handleDelete = (name: string) => {
-    const { showModal, showSuccessNotification } = this.props
+    const { showModal, showSuccessNotification, intl } = this.props
 
     showModal(MODAL_TYPES.CONFIRM, {
       title: 'Confirm Delete',
-      text: `Please confirm removing contact - ${name}`,
+      text: `${intl.formatMessage({
+        id: 'confirmRemoveContact',
+      })} - ${name}`,
       onClick: () => {
         this.props.deleteContact(name)
         showSuccessNotification({

@@ -1,10 +1,10 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
+import { FormattedMessage, intlShape } from 'react-intl'
 
 import { ROUTES, EXPLORERS } from '../../core/constants'
 import FullHeightPanel from '../../components/Panel/FullHeightPanel'
-
 import NeoLogo from '../../assets/icons/neo.svg'
 import NodeSelectIcon from '../../assets/icons/node-select.svg'
 import BlockExplorerIcon from '../../assets/icons/block-explorer.svg'
@@ -13,15 +13,16 @@ import CloseButton from '../../components/CloseButton'
 import SettingsItem from '../../components/Settings/SettingsItem'
 import StyledReactSelect from '../../components/Inputs/StyledReactSelect/StyledReactSelect'
 import SettingsLink from '../../components/Settings/SettingsLink'
-
-import styles from './NetworkConfiguration.scss'
 import settingsStyles from '../Settings/Settings.scss'
 import NetworkSwitch from '../App/Sidebar/NetworkSwitch'
+
+import styles from './NetworkConfiguration.scss'
 
 type Props = {
   explorer: string,
   setBlockExplorer: string => any,
   selectedNode: string,
+  intl: intlShape,
 }
 
 type State = {
@@ -45,17 +46,18 @@ export default class NetworkConfiguration extends React.Component<
       label: EXPLORERS[key],
     }))
 
+    const { intl } = this.props
+
     return (
       <FullHeightPanel
         className={styles.networkConfigPanel}
-        headerText="Network Settings"
+        headerText={<FormattedMessage id="networkSettingsLabel" />}
         renderCloseButton={() => <CloseButton routeTo={ROUTES.SETTINGS} />}
         renderHeaderIcon={() => <CogIcon />}
         instructionsClassName={styles.networkConfigInstructions}
         renderInstructions={() => (
           <div>
-            Manage all network settings related to how Neon interacts with the
-            blockchain
+            <FormattedMessage id="networkSettingsInstructions" />
           </div>
         )}
       >
@@ -70,12 +72,16 @@ export default class NetworkConfiguration extends React.Component<
               to={ROUTES.NODE_SELECT}
               label={this.props.selectedNode || 'AUTOMATIC'}
               renderIcon={() => <NodeSelectIcon />}
-              title="NODE SELECTON"
+              title={intl.formatMessage({
+                id: 'networkSettingsNodeSelectLabel',
+              })}
             />
 
             <SettingsItem
               renderIcon={() => <BlockExplorerIcon />}
-              title="BLOCK EXPLORER"
+              title={intl.formatMessage({
+                id: 'networkSettingsExplorerLabel',
+              })}
             >
               <div className={settingsStyles.settingsSelectContainer}>
                 <StyledReactSelect
@@ -90,7 +96,9 @@ export default class NetworkConfiguration extends React.Component<
             </SettingsItem>
             <SettingsItem
               renderIcon={() => <NeoLogo />}
-              title="CURRENT NETWORK"
+              title={intl.formatMessage({
+                id: 'networkSettingsCurrentLabel',
+              })}
               noBorderBottom
             >
               <div className={styles.settingsSelectContainer}>

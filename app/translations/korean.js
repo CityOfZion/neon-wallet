@@ -21,6 +21,26 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   dashboardTokenBalancesHoldings: '지주',
   settingsLanguageLabel: '언어',
   addToken: '토큰 추가하기',
+  deleteLabel: '지우다',
+
+  addToContacts: '연락처에 추가',
+  contactName: '이름',
+  enterAContactName: '담당자 이름 입력 ...',
+  enterAWalletAddress: '월렛 주소 입력 ...',
+  contactWalletAddress: '지갑 주소',
+  editAContact: '연락처 편집',
+  modifyDetails: '세부 사항 수정',
+  removeContact: '연락처를 없 에다',
+  saveContactButtonText: '연락처 저장',
+  editContactDisclaimer:
+    '자금 손실을 피하기 위해 주소를 올바르게 입력했는지 확인하고 입력하십시오',
+  addAContact: '연락처 추가',
+  addContactDetails: '연락처 세부 사항 추가',
+  confirmRemoveContact: '연락처 제거를 확인하십시오',
+  modalActionConfirm: '확인',
+  modalActionCancel: '취소',
+  newsPageLabel: '뉴스',
+  networkSettingsLabel: '네트워크 설정',
 }
 
 const AUTH = {
@@ -60,6 +80,8 @@ const WALLET_CREATION = {
   print: 'Print',
   generateQrCodes: 'Generate QR Codes',
   copyCodeImage: 'Copy Code Image',
+  contactsPageLabel: '연락처 관리',
+  newContact: '새로운 연락처',
 }
 
 const DASHBOARD = {

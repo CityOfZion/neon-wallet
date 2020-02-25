@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import { noop } from 'lodash-es'
-
+import { FormattedMessage, intlShape } from 'react-intl'
 import { wallet } from '@cityofzion/neon-js'
 
 import Button from '../../Button'
@@ -21,6 +21,7 @@ type Props = {
   newAddress?: boolean,
   setAddress: Function,
   onSubmit: Function,
+  intl: intlShape,
 }
 
 type State = {
@@ -39,7 +40,7 @@ export default class ContactForm extends React.Component<Props, State> {
   }
 
   static defaultProps = {
-    submitLabel: 'Save Contact',
+    submitLabel: <FormattedMessage id="saveContactButtonText" />,
     name: '',
     address: '',
     setName: noop,
@@ -48,7 +49,7 @@ export default class ContactForm extends React.Component<Props, State> {
   }
 
   render() {
-    const { submitLabel, formName, formAddress } = this.props
+    const { submitLabel, formName, formAddress, intl } = this.props
     const { nameError, addressError } = this.state
 
     return (
@@ -57,19 +58,27 @@ export default class ContactForm extends React.Component<Props, State> {
           <TextInput
             id="contactName"
             name="name"
-            label="Name"
+            label={intl.formatMessage({
+              id: 'contactName',
+            })}
             className={styles.input}
-            placeholder="Enter Contact Name..."
+            placeholder={intl.formatMessage({
+              id: 'enterAContactName',
+            })}
             value={formName}
             onChange={this.handleChangeName}
             error={nameError}
           />
           <TextInput
             id="contactAddress"
-            label="Wallet Address"
+            label={intl.formatMessage({
+              id: 'contactWalletAddress',
+            })}
             name="address"
             className={styles.input}
-            placeholder="Enter Wallet Address..."
+            placeholder={intl.formatMessage({
+              id: 'enterAWalletAddress',
+            })}
             value={formAddress}
             onChange={this.handleChangeAddress}
             error={addressError}
@@ -77,7 +86,9 @@ export default class ContactForm extends React.Component<Props, State> {
           <div className={styles.dialogueAndButtonContainer}>
             <DialogueBox
               icon={<WarningIcon />}
-              text="Please review and ensure that you have entered the address correctly to avoid loss of funds"
+              text={intl.formatMessage({
+                id: 'editContactDisclaimer',
+              })}
               className={styles.conactFormDialogue}
             />
           </div>

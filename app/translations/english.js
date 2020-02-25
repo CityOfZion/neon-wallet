@@ -23,6 +23,29 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   dashboardTokenBalancesHoldings: 'HOLDINGS',
   settingsLanguageLabel: 'LANGUAGE',
   addToken: 'Add Token',
+  contactsPageLabel: 'Manage Contacts',
+  newContact: 'New Contact',
+  deleteLabel: 'Delete',
+
+  addToContacts: 'Add to contacts',
+  contactName: 'Name',
+  enterAContactName: 'Enter Contact Name...',
+  enterAWalletAddress: 'Enter Wallet Address...',
+  contactWalletAddress: 'Wallet Address',
+  editAContact: 'Edit A Contact',
+  modifyDetails: 'Modify Details',
+  removeContact: 'Remove Contact',
+  saveContactButtonText: 'Save Contact',
+
+  editContactDisclaimer:
+    'Please review and ensure that you have entered the address correctly to avoid loss of funds',
+  addAContact: 'Add A Contact',
+  addContactDetails: 'Add Contact Details',
+  confirmRemoveContact: 'Please confirm removing contact',
+  modalActionConfirm: 'Confirm',
+  modalActionCancel: 'Cancel',
+  newsPageLabel: 'News',
+  networkSettingsLabel: 'Network Settings',
 }
 
 const AUTH = {
