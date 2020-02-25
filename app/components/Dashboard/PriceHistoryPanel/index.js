@@ -1,4 +1,6 @@
 // @flow
+import React from 'react'
+import { FormattedMessage } from 'react-intl'
 import { compose, withState } from 'recompose'
 import { withData, withActions } from 'spunky'
 
@@ -35,7 +37,9 @@ export default compose(
   withActions(priceHistoryActions, mapPriceHistoryActionsToProps),
 
   // Fetch prices data based based upon the selected currency.  Reload data with the currency changes.
-  withProgressPanel(priceHistoryPanelActions, { title: 'Market Data' }),
+  withProgressPanel(priceHistoryPanelActions, {
+    title: <FormattedMessage id="dashboardMarketDataLabel" />,
+  }),
   withPricesData(mapPriceDataToProps),
   withData(priceHistoryActions, mapPriceHistoryDataToProps),
 )(PriceHistoryPanel)

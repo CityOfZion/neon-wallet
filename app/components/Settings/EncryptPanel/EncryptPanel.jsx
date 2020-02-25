@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
+import { FormattedMessage } from 'react-intl'
 
 import { ROUTES } from '../../../core/constants'
 import FullHeightPanel from '../../Panel/FullHeightPanel'
@@ -25,16 +26,20 @@ export default class EncryptPanel extends React.Component<Props> {
     const { className, resetEncryptedWIF, encryptedWIF } = this.props
 
     return (
-      <FullHeightPanel
-        className={classNames(styles.encryptPanel, className)}
-        renderHeader={this.renderHeader}
-        headerText="Encrypt a key"
-        renderCloseButton={() => <CloseButton routeTo={ROUTES.SETTINGS} />}
-        renderHeaderIcon={this.renderIcon}
-        renderInstructions={this.renderInstructions}
-      >
-        {this.renderPanelContent(encryptedWIF, resetEncryptedWIF)}
-      </FullHeightPanel>
+      <FormattedMessage id="encryptPanelHeader">
+        {t => (
+          <FullHeightPanel
+            className={classNames(styles.encryptPanel, className)}
+            renderHeader={this.renderHeader}
+            headerText={t}
+            renderCloseButton={() => <CloseButton routeTo={ROUTES.SETTINGS} />}
+            renderHeaderIcon={this.renderIcon}
+            renderInstructions={this.renderInstructions}
+          >
+            {this.renderPanelContent(encryptedWIF, resetEncryptedWIF)}
+          </FullHeightPanel>
+        )}
+      </FormattedMessage>
     )
   }
 
@@ -42,7 +47,11 @@ export default class EncryptPanel extends React.Component<Props> {
 
   renderInstructions = (encryptedWIF: string) => {
     if (!encryptedWIF) {
-      return <div>Choose a passphrase to encrypt an existing key</div>
+      return (
+        <div>
+          <FormattedMessage id="encryptInstructions" />
+        </div>
+      )
     }
     return null
   }
@@ -50,13 +59,17 @@ export default class EncryptPanel extends React.Component<Props> {
   renderPanelContent = (encryptedWIF: string, resetEncryptedWIF: Function) => {
     if (!encryptedWIF) {
       return (
-        <EncryptForm
-          submitLabel="Generate Encrypted Key"
-          onSubmit={this.onSubmit}
-          encryptPrivateKey={encryptedWIF}
-          isWIF={this.props.isWIF}
-          validatePassphraseLength={this.props.validatePassphraseLength}
-        />
+        <FormattedMessage id="encryptButton">
+          {t => (
+            <EncryptForm
+              submitLabel={t}
+              onSubmit={this.onSubmit}
+              encryptPrivateKey={encryptedWIF}
+              isWIF={this.props.isWIF}
+              validatePassphraseLength={this.props.validatePassphraseLength}
+            />
+          )}
+        </FormattedMessage>
       )
     }
     return (

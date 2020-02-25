@@ -2,6 +2,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
+import { FormattedMessage } from 'react-intl'
 
 import Panel from '../../Panel'
 import ReceivePanelHeader from './ReceivePanelHeader'
@@ -30,14 +31,16 @@ export default class ReceivePanel extends React.Component<Props, State> {
 
   options = {
     default: {
+      key: 'default',
       render: () => (
         <div className={styles.dynamicReceiveContent}>
           <DefaultReceive address={this.props.address} />
         </div>
       ),
-      display: 'Your Address',
+      display: <FormattedMessage id="receiveYourAddressTabLabel" />,
     },
     nep9: {
+      key: 'nep9',
       render: () => (
         <div className={styles.dynamicReceiveContent}>
           <QRCodeForm
@@ -47,7 +50,7 @@ export default class ReceivePanel extends React.Component<Props, State> {
           />
         </div>
       ),
-      display: 'Request Assets',
+      display: <FormattedMessage id="receiveRequestTabAssets" />,
     },
   }
 
@@ -71,14 +74,11 @@ export default class ReceivePanel extends React.Component<Props, State> {
         >
           <TabList>
             {this.tabOptions.map(option => (
-              <Tab key={option.display}>{option.display.toUpperCase()}</Tab>
+              <Tab key={option.key}>{option.display}</Tab>
             ))}
           </TabList>
           {this.tabOptions.map(option => (
-            <TabPanel
-              key={option.display}
-              selectedClassName={styles.homeTabPanel}
-            >
+            <TabPanel key={option.key} selectedClassName={styles.homeTabPanel}>
               {option.render()}
             </TabPanel>
           ))}
