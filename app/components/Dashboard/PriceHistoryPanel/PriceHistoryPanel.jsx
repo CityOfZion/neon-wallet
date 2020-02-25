@@ -19,7 +19,7 @@ import { formatFiat, formatThousands } from '../../../core/formatters'
 type Duration = '1m' | '1w' | '1d'
 // react-select option format
 type DurationSelectOption = {
-  ...SelectOption,
+  label: string | Node,
   value: Duration,
 }
 

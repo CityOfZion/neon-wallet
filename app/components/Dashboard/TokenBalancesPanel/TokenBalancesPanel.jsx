@@ -2,6 +2,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import { NavLink } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
 
 import TextInput from '../../Inputs/TextInput'
 import CopyToClipboard from '../../CopyToClipboard'
@@ -11,7 +12,6 @@ import { toFixedDecimals } from '../../../core/formatters'
 import { toBigNumber } from '../../../core/math'
 import Nothing from '../../../assets/icons/nothing.svg'
 import { CURRENCIES, ROUTES, PRICE_UNAVAILABLE } from '../../../core/constants'
-import { FormattedMessage } from 'react-intl'
 
 type Props = {
   className: ?string,

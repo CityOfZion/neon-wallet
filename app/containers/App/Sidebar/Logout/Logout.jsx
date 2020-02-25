@@ -1,10 +1,10 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
+import { FormattedMessage } from 'react-intl'
 
 import LogoutIcon from '../../../../assets/navigation/logout.svg'
 import styles from './Logout.scss'
-import { FormattedMessage } from 'react-intl'
 
 type Props = {
   id?: string,
