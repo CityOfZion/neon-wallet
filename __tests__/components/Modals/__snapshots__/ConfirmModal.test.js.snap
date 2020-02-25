@@ -941,7 +941,12 @@ exports[`ConfirmModal should render without crashing 1`] = `
                           type="button"
                         >
                           <span>
-                            Confirm
+                            <FormattedMessage
+                              id="modalActionConfirm"
+                              values={Object {}}
+                            >
+                              Confirm
+                            </FormattedMessage>
                           </span>
                         </button>
                       </Button>
@@ -959,7 +964,12 @@ exports[`ConfirmModal should render without crashing 1`] = `
                           type="button"
                         >
                           <span>
-                            Cancel
+                            <FormattedMessage
+                              id="modalActionCancel"
+                              values={Object {}}
+                            >
+                              Cancel
+                            </FormattedMessage>
                           </span>
                         </button>
                       </Button>
