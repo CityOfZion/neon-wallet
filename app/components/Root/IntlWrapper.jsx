@@ -23,7 +23,10 @@ class IntlWrapper extends React.Component<IntlWrapperProps> {
   render() {
     const { children, language } = this.props
     return (
-      <IntlProvider locale="en" messages={tranlationsMappings[language]}>
+      <IntlProvider
+        locale="en"
+        messages={tranlationsMappings[language] || english}
+      >
         {children}
       </IntlProvider>
     )
