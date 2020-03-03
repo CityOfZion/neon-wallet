@@ -227,6 +227,8 @@ exports[`Sidebar renders without crashing 1`] = `
             "walletCreationWalletPasswordConfirmPlaceholder": "Confirm Password",
             "walletCreationWalletPasswordLabel": "PASSPHRASE",
             "walletCreationWalletPasswordPlaceholder": "Password",
+            "walletManagerNoLocalInfo": "It looks like you have no wallet information saved locally...",
+            "walletManagerRemoveWallet": "Remove Wallet",
           }
         }
         onError={[Function]}
