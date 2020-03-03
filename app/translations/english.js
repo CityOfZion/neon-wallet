@@ -46,6 +46,11 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   modalActionCancel: 'Cancel',
   newsPageLabel: 'News',
   networkSettingsLabel: 'Network Settings',
+
+  walletManagerNoLocalInfo:
+    'It looks like you have no wallet information saved locally...',
+
+  walletManagerRemoveWallet: 'Remove Wallet',
 }
 
 const AUTH = {

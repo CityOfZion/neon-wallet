@@ -41,6 +41,8 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   modalActionCancel: '취소',
   newsPageLabel: '뉴스',
   networkSettingsLabel: '네트워크 설정',
+  walletManagerNoLocalInfo: '로컬로 저장된 지갑 정보가없는 것 같습니다...',
+  walletManagerRemoveWallet: '월렛 제거',
 }
 
 const AUTH = {
@@ -72,11 +74,11 @@ const WALLET_CREATION = {
   walletCreatedHeader: 'Wallet Created!',
   walletCreatedDisclaimer:
     '<b>세부사항을 저장하십시오!</b> 크리덴셜을 잃게 되면 자산 액세스 권한이 상실됩니다.',
-  privateKeyLabel: 'PRIVATE KEY',
-  encryptedKeyLabel: 'ENCRYPTED KEY',
+  privateKeyLabel: '개인 키',
+  encryptedKeyLabel: '암호화 된 키',
   addressLabel: '퍼블릭 주소',
-  splitKeyLabel: 'SPLIT KEY',
-  recoverWalletLabel: 'RECOVER WALLET',
+  splitKeyLabel: '스플릿 키',
+  recoverWalletLabel: '리커버 지갑',
   print: 'Print',
   generateQrCodes: 'Generate QR Codes',
   copyCodeImage: 'Copy Code Image',

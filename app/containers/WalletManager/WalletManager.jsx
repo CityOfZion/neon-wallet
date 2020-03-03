@@ -1,6 +1,7 @@
 // @flow
 
 import React, { Component } from 'react'
+import { FormattedMessage } from 'react-intl'
 
 import { NavLink } from 'react-router-dom'
 import { ROUTES } from '../../core/constants'
@@ -13,7 +14,6 @@ import Add from '../../assets/icons/add.svg'
 import WalletIcon from '../../assets/icons/wallet.svg'
 
 import styles from './WalletManager.scss'
-import { FormattedMessage } from 'react-intl'
 
 type Props = {
   accounts: Array<Object>,
@@ -50,14 +50,18 @@ class WalletManager extends Component<Props> {
                 exact
                 to={ROUTES.IMPORT_WALLET_AUTHENTICATED}
               >
-                <Button renderIcon={Import}>Import</Button>
+                <Button renderIcon={Import}>
+                  <FormattedMessage id="manageWalletsImport" />
+                </Button>
               </NavLink>
               <NavLink
                 id="create-wallet-authenticated-link"
                 exact
                 to={ROUTES.CREATE_WALLET_AUTHENTICATED}
               >
-                <Button renderIcon={Add}>Create</Button>
+                <Button renderIcon={Add}>
+                  <FormattedMessage id="manageWalletsCreate" />
+                </Button>
               </NavLink>
             </div>
           </div>
@@ -68,7 +72,7 @@ class WalletManager extends Component<Props> {
 
             {!accounts.length && (
               <div className={styles.noWalletInfo}>
-                It looks like you have no wallet information saved locally...{' '}
+                <FormattedMessage id="walletManagerNoLocalInfo" />
               </div>
             )}
           </div>
