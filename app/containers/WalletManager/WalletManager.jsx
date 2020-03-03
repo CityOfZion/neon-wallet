@@ -13,6 +13,7 @@ import Add from '../../assets/icons/add.svg'
 import WalletIcon from '../../assets/icons/wallet.svg'
 
 import styles from './WalletManager.scss'
+import { FormattedMessage } from 'react-intl'
 
 type Props = {
   accounts: Array<Object>,
@@ -39,7 +40,9 @@ class WalletManager extends Component<Props> {
               <div className={styles.walletIcon}>
                 <WalletIcon id="manage-wallets" />
               </div>
-              <h2>Manage Wallets</h2>
+              <h2>
+                <FormattedMessage id="dashboardManageWallets" />
+              </h2>
             </div>
             <div className={styles.buttonRow}>
               <NavLink
