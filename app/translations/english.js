@@ -69,6 +69,7 @@ const VARIOUS_MISSING_TRANSLATIONS = {
     '{transferCount, number} {transferCount, plural, one {Recipient} other {Transfers}}',
   completeExclaim: 'Complete!',
   receiveQRExplanation:
+    // eslint-disable-next-line
     "So you've been given a QR code? Click capture and hold it up to your camera.",
   captureQR: 'Capture',
   captureQRCaps: 'CAPTURE',

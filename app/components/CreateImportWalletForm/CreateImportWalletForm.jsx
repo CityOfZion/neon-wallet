@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import { withRouter } from 'react-router-dom'
-import { intlShape, FormattedMessage } from 'react-intl'
+import { intlShape } from 'react-intl'
 
 import PasswordInput from '../Inputs/PasswordInput'
 import TextInput from '../Inputs/TextInput'
