@@ -1,6 +1,8 @@
 // @flow
 import React from 'react'
 import { compose } from 'recompose'
+import '@formatjs/intl-pluralrules/polyfill'
+import '@formatjs/intl-pluralrules/polyfill-locales'
 import { IntlProvider } from 'react-intl'
 
 import translations from '../../translations'

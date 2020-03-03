@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import { get } from 'lodash-es'
+import { FormattedMessage } from 'react-intl'
 
 import Panel from '../../Panel'
 import SendRecipientList from './SendRecipientList'
@@ -11,12 +12,11 @@ import ConfirmSend from './ConfirmSend'
 import SendSuccess from './SendSuccess'
 import SendError from './SendError'
 import ZeroAssets from '../../ZeroAssets/ZeroAssets'
-import { pluralize } from '../../../util/pluralize'
+import { isZero } from '../../../core/math'
 import SendIcon from '../../../assets/icons/send.svg'
 import EditIcon from '../../../assets/icons/edit.svg'
 
 import styles from './SendPanel.scss'
-import { isZero } from '../../../core/math'
 
 type Props = {
   sendRowDetails: Array<*>,
@@ -131,8 +131,24 @@ const SendPanel = ({
           onClick={() => handleSubmit(false)}
           id="send-assets"
         >
-          Send {pluralize('Asset', sendRowDetails.length)}{' '}
-          {fees ? 'With Fee' : 'Without Fee'}
+          {/* Send {pluralize('Asset', sendRowDetails.length)}{' '}
+          {fees ? 'With Fee' : 'Without Fee'} */}
+
+          {fees ? (
+            <FormattedMessage
+              id="sendWithFee"
+              values={{
+                itemCount: sendRowDetails.length,
+              }}
+            />
+          ) : (
+            <FormattedMessage
+              id="sendWithoutFee"
+              values={{
+                itemCount: sendRowDetails.length,
+              }}
+            />
+          )}
         </Button>
       )}
     </form>

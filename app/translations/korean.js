@@ -8,21 +8,20 @@ const INPUTS = {
 }
 
 const VARIOUS_MISSING_TRANSLATIONS = {
-  'auth.cancel': 'Cancel',
+  'auth.cancel': '취소',
   'auth.ledger.connectLedger': '연결 후 원장 기기를 잠금 해제 해주세요',
   'auth.ledger.navigateToNeoApp': 'NEO 앱을 기기로 이동합니다',
   'auth.ledger.retry': 'Retry?',
-  'auth.ledger.fetchAddress': 'Fetch additional addresses',
-  publicAddress: 'Public Address',
+  'auth.ledger.fetchAddress': '추가 주소 가져 오기',
+  publicAddress: '퍼블릭 주소',
   'auth.import.recoveryInstructions':
-    'Upload a JSON wallet recovery file here to add your accounts to Neon. This option is also available on the Settings page.',
-  importFile: 'Import File',
+    '여기에 JSON 지갑 복구 파일을 업로드하여 계정을 Neon에 추가하십시오. 이 옵션은 설정 페이지에서도 사용할 수 있습니다.',
+  importFile: '파일 가져 오기',
   dashboardTokenBalancesPrice: '가격',
   dashboardTokenBalancesHoldings: '지주',
   settingsLanguageLabel: '언어',
   addToken: '토큰 추가하기',
   deleteLabel: '지우다',
-
   addToContacts: '연락처에 추가',
   contactName: '이름',
   enterAContactName: '담당자 이름 입력 ...',
@@ -43,6 +42,21 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   networkSettingsLabel: '네트워크 설정',
   walletManagerNoLocalInfo: '로컬로 저장된 지갑 정보가없는 것 같습니다...',
   walletManagerRemoveWallet: '월렛 제거',
+  selectAssets: '자산 선택',
+  priorityTransfer: '우선권 양도',
+  editRecipients: '받는 사람 편집]',
+  confirmAndSend: '확인 및 발송',
+  fee: '회비:',
+  sendMoreAssets: '더 많은 자산 보내기',
+  transactionId: '거래 ID:',
+  numberofTransactionsPending:
+    '{transferCount, number} {transferCount, plural, one {이전} other {양도}} 보류 중',
+  assetRecipients: '자산 수령인',
+  completeExclaim: '완전한!',
+  sendQRExplanation:
+    'QR 코드를 받았습니까? 캡처를 클릭하고 카메라에 고정시킵니다.',
+  captureQR: '포착',
+  captureQRCaps: '포착',
 }
 
 const AUTH = {
@@ -173,9 +187,9 @@ const TRANSACTION_FEE = {
   faster: '더 빠르게',
   fastest: '제일 빠르게',
   sendWithFee:
-    '수수료 붙여 {itemCount, plural, one {asset} other {assets}} 보내기',
-  sendWithOutFee:
-    '수수료 없이 {itemCount, plural, one {asset} other {assets}} 보내기',
+    '수수료 붙여 {itemCount, plural, one {유산} other {자산}} 보내기',
+  sendWithoutFee:
+    '수수료 없이 {itemCount, plural, one {유산} other {자산}} 보내기',
   asset: '자산',
   assets: '자산',
 }
@@ -202,7 +216,8 @@ const SEND = {
   sendRecipientsCapital: '수취인',
   sendCompleteNotification:
     '트랜잭션을 보류 중입니다. 블록체인이 처리하면 잔액이 자동으로 업데이트됩니다.',
-  sendSelectAssets: '{25, number} 수취인의 {transferCount, number} 자산 선택',
+  sendSelectAssets:
+    '{maxNumberOfRecipients, number} 수취인의 {transferCount, number} 자산 선택',
   sendTransferMessage:
     '{transferCount, number} {transferCount, plural, one {sendTransfer} other {sendTransferPlural}} 보류 중',
   sendBroadcasting: '네트워크로 트랜잭션 브로드캐스팅 중...',
@@ -211,6 +226,9 @@ const SEND = {
   sendActivityLink: '활동 탭에서 거래 상태를 확인합니다.',
   sendCompletion:
     '완료! {transferCount, plural, one {sendRecipient} other {sendRecipients}}로 {transferCount, number} {transferCount, plural, one {sendAsset} other {sendAssets}} ',
+  confirmation: '확인',
+  confirmationRecipient:
+    '{transferCount, number} {transferCount, plural, one {받는 사람} other {받는 사람}}',
 }
 
 const SETTINGS = {
