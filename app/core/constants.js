@@ -42,6 +42,10 @@ export const LANGUAGES = {
     label: 'Francés',
     value: 'FRENCH',
   },
+  VIETNAMESE: {
+    label: 'Tiếng Việt',
+    value: 'VIETNAMESE',
+  },
 }
 
 export const DEFAULT_LANGUAGE = LANGUAGES.ENGLISH.value
