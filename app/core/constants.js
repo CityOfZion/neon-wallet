@@ -34,14 +34,19 @@ export const LANGUAGES = {
     label: 'English',
     value: 'ENGLISH',
   },
-  KOREAN: {
-    label: '한국어',
-    value: 'KOREAN',
-  },
   FRENCH: {
     label: 'Francés',
     value: 'FRENCH',
   },
+  GERMAN: {
+    label: 'Deutsche',
+    value: 'GERMAN',
+  },
+  KOREAN: {
+    label: '한국어',
+    value: 'KOREAN',
+  },
+
   VIETNAMESE: {
     label: 'Tiếng Việt',
     value: 'VIETNAMESE',
