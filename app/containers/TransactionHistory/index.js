@@ -3,6 +3,7 @@ import { compose } from 'recompose'
 import { withCall } from 'spunky'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { injectIntl } from 'react-intl'
 
 import TransactionHistory from './TransactionHistory'
 import transactionHistoryActions from '../../actions/transactionHistoryActions'
@@ -46,4 +47,5 @@ export default compose(
     'Failed to retrieve blockchain information.',
   ),
   withCall(transactionHistoryActions),
+  injectIntl,
 )(TransactionHistory)

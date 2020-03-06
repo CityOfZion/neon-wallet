@@ -19,6 +19,60 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   'auth.import.recoveryInstructions':
     'Upload a JSON wallet recovery file here to add your accounts to Neon. This option is also available on the Settings page.',
   importFile: 'Import File',
+  dashboardTokenBalancesPrice: 'PRICE',
+  dashboardTokenBalancesHoldings: 'HOLDINGS',
+  settingsLanguageLabel: 'LANGUAGE',
+  addToken: 'Add Token',
+  contactsPageLabel: 'Manage Contacts',
+  newContact: 'New Contact',
+  deleteLabel: 'Delete',
+
+  addToContacts: 'Add to contacts',
+  contactName: 'Name',
+  enterAContactName: 'Enter Contact Name...',
+  enterAWalletAddress: 'Enter Wallet Address...',
+  contactWalletAddress: 'Wallet Address',
+  editAContact: 'Edit A Contact',
+  modifyDetails: 'Modify Details',
+  removeContact: 'Remove Contact',
+  saveContactButtonText: 'Save Contact',
+
+  editContactDisclaimer:
+    'Please review and ensure that you have entered the address correctly to avoid loss of funds',
+  addAContact: 'Add A Contact',
+  addContactDetails: 'Add Contact Details',
+  confirmRemoveContact: 'Please confirm removing contact',
+  modalActionConfirm: 'Confirm',
+  modalActionCancel: 'Cancel',
+  newsPageLabel: 'News',
+  networkSettingsLabel: 'Network Settings',
+
+  walletManagerNoLocalInfo:
+    'It looks like you have no wallet information saved locally...',
+
+  walletManagerRemoveWallet: 'Remove Wallet',
+
+  selectAssets: 'Select Assets',
+  priorityTransfer: 'Priority Transfer',
+
+  editRecipients: 'Edit Recipients',
+  confirmAndSend: 'Confirm & Send',
+  fee: 'Fee:',
+  sendMoreAssets: 'Send More Assets',
+  transactionId: 'Transaction ID:',
+  numberofTransactionsPending:
+    '{transferCount, number} {transferCount, plural, one {Transfer} other {Transfers}} pending',
+  assetRecipients:
+    'Asset {transferCount, plural, one {Recipient} other {Recipients}}',
+  confirmation: 'Confirmation',
+  confirmationRecipient:
+    '{transferCount, number} {transferCount, plural, one {Recipient} other {Transfers}}',
+  completeExclaim: 'Complete!',
+  sendQRExplanation:
+    // eslint-disable-next-line
+    "So you've been given a QR code? Click capture and hold it up to your camera.",
+  captureQR: 'Capture',
+  captureQRCaps: 'CAPTURE',
 }
 
 const AUTH = {
@@ -146,10 +200,10 @@ const TRANSACTION_FEE = {
   fast: 'Fast',
   faster: 'Faster',
   fastest: 'Fastest',
-  sendWithFee: 'Send {itemCount, plural, one {asset} other {assets}} With Fee',
-  sendWithOutFee:
-    'Send {itemCount, plural, one {asset} other {assets}} Without Fee',
-  asset: 'Asset',
+  sendWithFee: 'Send {itemCount, plural, one {Asset} other {Assets}} With Fee',
+  sendWithoutFee:
+    'Send {itemCount, plural, one {Asset} other {Assets}} Without Fee',
+  Asset: 'Assetasdasd',
   assets: 'Assets',
 }
 
@@ -176,7 +230,7 @@ const SEND = {
   sendCompleteNotification:
     'Transaction pending! Your balance will automatically update when the blockchain has processed it.',
   sendSelectAssets:
-    'Select Assets {transferCount, number} of {25, number} Recipients',
+    '{transferCount, number} of {maxNumberOfRecipients, number} Recipients',
   sendTransferMessage:
     '{transferCount, number} {transferCount, plural, one {sendTransfer} other {sendTransferPlural}} pending',
   sendBroadcasting: 'Broadcasting transaction to network...',
@@ -184,6 +238,7 @@ const SEND = {
     'Please review and ensure that you have entered the correct details to avoid loss of funds.',
   sendActivityLink:
     'Check the activity tab to see the status of your transaction.',
+
   sendCompletion:
     'Complete! {transferCount, number} {transferCount, plural, one {sendAsset} other {sendAssets}} to {transferCount, plural, one {sendRecipient} other {sendRecipients}}',
 }
@@ -199,9 +254,8 @@ const SETTINGS = {
   settingsBackUpLinkLabel: 'BACKUP WALLET',
   settingsBackUpLink: 'EXPORT',
   settingsManageLabel: 'Manage your neon wallet',
-  settingsCommunity: 'Cummonity Support',
-  settingsDonationLink:
-    'Created by CoZ. Donations: Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A',
+  settingsCommunity: 'Community Support',
+  settingsDonationLink: 'Created by CoZ. Donations:',
 }
 
 const NETWORK_SETTINGS = {

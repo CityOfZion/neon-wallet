@@ -1,10 +1,10 @@
 // @flow
 import React from 'react'
+import { FormattedMessage } from 'react-intl'
 
 import DialogueBox from '../../../DialogueBox'
 import Button from '../../../Button/Button'
 import { formatGAS } from '../../../../core/formatters'
-
 import WarningIcon from '../../../../assets/icons/warning.svg'
 import CheckMarkIcon from '../../../../assets/icons/confirm.svg'
 import ErrorIcon from '../../../../assets/icons/error.svg'
@@ -25,7 +25,7 @@ const ConfirmSend = ({
   <section>
     <DialogueBox
       icon={<WarningIcon />}
-      text="Please review and ensure that you have entered the correct details to avoid loss of funds."
+      text={<FormattedMessage id="sendDisclaimer" />}
     />
     <div className={styles.confirmButtonsContainer}>
       <Button
@@ -34,7 +34,7 @@ const ConfirmSend = ({
         onClick={handleEditRecipientsClick}
         disabled={pendingTransaction}
       >
-        Edit Recipients
+        <FormattedMessage id="editRecipients" />
       </Button>
 
       <div className={styles.confirmContainer}>
@@ -45,13 +45,16 @@ const ConfirmSend = ({
           type="submit"
           disabled={pendingTransaction}
         >
-          Confirm & Send
+          <FormattedMessage id="confirmAndSend" />
         </Button>
       </div>
     </div>
     {!!fees && (
       <div className={styles.confirmationFees}>
-        <p>Fee: {formatGAS(fees)} GAS</p>
+        <p>
+          {' '}
+          <FormattedMessage id="fee" /> {formatGAS(fees)} GAS
+        </p>
       </div>
     )}
   </section>

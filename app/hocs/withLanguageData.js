@@ -4,7 +4,7 @@ import { withData } from 'spunky'
 import { DEFAULT_LANGUAGE, LANGUAGES } from '../core/constants'
 import settingsActions from '../actions/settingsActions'
 
-export default function withThemeData() {
+export default function withLanguageData() {
   const mapSettingsDataToProps = settings => ({
     languageDisplayValue: settings
       ? LANGUAGES[settings.language].label || LANGUAGES.ENGLISH.label

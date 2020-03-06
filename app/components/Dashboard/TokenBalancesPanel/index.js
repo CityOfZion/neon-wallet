@@ -1,5 +1,7 @@
 // @flow
+import React from 'react'
 import { compose } from 'recompose'
+import { FormattedMessage } from 'react-intl'
 
 // $FlowFixMe
 import { filter, cloneDeep } from 'lodash-es'
@@ -67,7 +69,9 @@ export default compose(
   withNetworkData(),
   withAuthData(),
   withFilteredTokensData(),
-  withProgressPanel(balancesActions, { title: 'Token Balances' }),
+  withProgressPanel(balancesActions, {
+    title: <FormattedMessage id="dashboardBalancePanelLabel" />,
+  }),
   withBalancesData(mapBalanceDataToProps),
   withData(pricesActions, mapPricesDataToProps),
 

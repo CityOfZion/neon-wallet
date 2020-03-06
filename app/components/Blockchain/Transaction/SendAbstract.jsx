@@ -1,6 +1,7 @@
 // @flow
 import React, { Fragment } from 'react'
 import classNames from 'classnames'
+import { FormattedMessage } from 'react-intl'
 
 import Button from '../../Button'
 import styles from './Transaction.scss'
@@ -70,7 +71,7 @@ export default class SendAbstract extends React.Component<Props> {
               onClick={() => showAddContactModal(to)}
               disabled={contactToExists}
             >
-              Add
+              <FormattedMessage id="activityAddAddress" />
             </Button>
           )}
         </div>

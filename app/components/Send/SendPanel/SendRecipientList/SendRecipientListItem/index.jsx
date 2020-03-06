@@ -1,13 +1,12 @@
 // @flow
 import React, { Component } from 'react'
+import { injectIntl, IntlShape } from 'react-intl'
 
 import SelectInput from '../../../../Inputs/SelectInput'
 import NumberInput from '../../../../Inputs/NumberInput'
 import DisplayInput from '../../../DisplayInput'
-
 import { toBigNumber } from '../../../../../core/math'
 import { formatNumberByDecimalScale } from '../../../../../core/formatters'
-
 import TrashCanIcon from '../../../../../assets/icons/delete.svg'
 
 import styles from '../SendRecipientList.scss'
@@ -27,6 +26,7 @@ type Props = {
   removeRow: (index: number) => any,
   updateRowField: (index: number, field: string, value: any) => any,
   calculateMaxValue: (asset: string, index: number) => string,
+  intl: IntlShape,
 }
 
 class SendRecipientListItem extends Component<Props> {
@@ -91,6 +91,7 @@ class SendRecipientListItem extends Component<Props> {
       max,
       showConfirmSend,
       numberOfRecipients,
+      intl,
     } = this.props
 
     const selectInput = showConfirmSend ? (
@@ -125,7 +126,7 @@ class SendRecipientListItem extends Component<Props> {
       <DisplayInput value={address} />
     ) : (
       <SelectInput
-        placeholder="Add wallet or select contact"
+        placeholder={intl.formatMessage({ id: 'sendAddressPlaceholder' })}
         value={address || ''}
         name="address"
         onChange={value => this.handleFieldChange(value, 'address')}
@@ -160,4 +161,4 @@ class SendRecipientListItem extends Component<Props> {
   }
 }
 
-export default SendRecipientListItem
+export default injectIntl(SendRecipientListItem)

@@ -2,6 +2,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import { clipboard, nativeImage } from 'electron'
+import { FormattedMessage } from 'react-intl'
 
 import Nep9QrGenerator from '../../../modules/nep9/Nep9QrGenerator'
 import Loader from '../../Loader'
@@ -88,32 +89,49 @@ export default class ReceiveModal extends React.Component<Props, State> {
         <div className={styles.contentContainer}>
           <div className={styles.header}>
             <GridIcon className={styles.icon} />
-            <div className={styles.title}>Your QR Code</div>
+            <div className={styles.title}>
+              <FormattedMessage id="requestAssetYourQRHeader" />
+            </div>
           </div>
 
           <div className={styles.section}>
-            <div className={styles.sectionTitle}>PAYMENT REQUEST DETAILS</div>
+            <div className={styles.sectionTitle}>
+              <FormattedMessage id="requestAssetsPaymentDetails" />
+            </div>
             <div className={styles.sectionContent}>
               <div className={styles.assetAmount}>
-                <label>Asset: </label>
+                <label>
+                  <FormattedMessage id="requestAssetsAssetLabel" />:{' '}
+                </label>
                 {assetSymbol || ASSETS.NEO}
               </div>
               <div className={styles.assetAmount}>
-                <label>Amount: </label>
+                <label>
+                  {' '}
+                  <FormattedMessage id="sendAmountLabel" />:{' '}
+                </label>
                 {amount}
               </div>
               <div className={styles.address}>
-                <label>Address: </label> {address}
+                <label>
+                  <FormattedMessage id="requestAssetsAddressLabel" />:{' '}
+                </label>{' '}
+                {address}
               </div>
               <div className={styles.description}>
-                <label> Reference: </label>
+                <label>
+                  {' '}
+                  <FormattedMessage id="requestAssetsRefLabel" />:{' '}
+                </label>
                 {description || '(No Reference)'}
               </div>
             </div>
           </div>
 
           <div className={styles.section}>
-            <div className={styles.sectionTitle}>YOUR QR CODE</div>
+            <div className={styles.sectionTitle}>
+              <FormattedMessage id="requestAssetsYourQRLabel" />
+            </div>
             <div className={styles.qrcode}>
               {loading && <Loader className={styles.loaderMargin} />}
               <img
@@ -145,7 +163,7 @@ export default class ReceiveModal extends React.Component<Props, State> {
                 }
               }}
             >
-              Copy Code Image
+              <FormattedMessage id="receiveCopyCodeButton" />
             </Button>
           </div>
         </div>

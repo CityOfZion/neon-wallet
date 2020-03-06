@@ -36,8 +36,8 @@ type State = {
 const PASS_MIN_LENGTH = 4
 
 const LOOKUP_KEY = {
-  WIF: 'Private Key',
-  ENCRYPTED_WIF: 'Encrypted Key',
+  WIF: 'privateKeyLabel',
+  ENCRYPTED_WIF: 'encryptedKeyLabel',
 }
 
 class CreateImportWalletForm extends React.Component<Props, State> {
@@ -55,7 +55,7 @@ class CreateImportWalletForm extends React.Component<Props, State> {
 
   render = () => {
     const { passphraseError, passphrase2Error, key, walletName } = this.state
-    const { option, importKeyOption } = this.props
+    const { option, importKeyOption, intl } = this.props
     const {
       walletCreationWalletNamePlaceholder,
       walletCreationWalletNameLabel,
@@ -81,9 +81,13 @@ class CreateImportWalletForm extends React.Component<Props, State> {
             <div>
               <PasswordInput
                 value={key}
-                label={LOOKUP_KEY[importKeyOption]}
+                label={intl.formatMessage({
+                  id: LOOKUP_KEY[importKeyOption],
+                })}
                 onChange={e => this.setState({ key: e.target.value })}
-                placeholder={LOOKUP_KEY[importKeyOption]}
+                placeholder={intl.formatMessage({
+                  id: LOOKUP_KEY[importKeyOption],
+                })}
                 autoFocus
               />
             </div>

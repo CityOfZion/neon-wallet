@@ -6,8 +6,13 @@ import { shallow, mount } from 'enzyme'
 import { merge } from 'lodash-es'
 import { progressValues } from 'spunky'
 
+import IntlWrapper from '../../app/components/Root/IntlWrapper'
 import TransactionHistoryPanel from '../../app/components/TransactionHistory/TransactionHistoryPanel'
-import { MAIN_NETWORK_ID, EXPLORERS } from '../../app/core/constants'
+import {
+  MAIN_NETWORK_ID,
+  EXPLORERS,
+  DEFAULT_LANGUAGE,
+} from '../../app/core/constants'
 
 const { LOADED } = progressValues
 
@@ -33,6 +38,7 @@ const initialState = {
       loadedCount: 1,
       data: {
         blockExplorer: EXPLORERS.NEO_TRACKER,
+        language: DEFAULT_LANGUAGE,
       },
     },
     transactionHistory: {
@@ -80,7 +86,9 @@ const setup = (state = initialState, shallowRender = true) => {
   } else {
     wrapper = mount(
       <Provider store={store}>
-        <TransactionHistoryPanel />
+        <IntlWrapper>
+          <TransactionHistoryPanel />
+        </IntlWrapper>
       </Provider>,
     )
   }

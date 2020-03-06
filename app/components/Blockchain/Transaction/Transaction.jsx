@@ -1,12 +1,12 @@
 // @flow
 import React from 'react'
 import type { Node } from 'react'
-
+import { FormattedMessage } from 'react-intl'
 import moment from 'moment'
 import { isEmpty } from 'lodash-es'
 import classNames from 'classnames'
-import { TX_TYPES } from '../../../core/constants'
 
+import { TX_TYPES } from '../../../core/constants'
 import Button from '../../Button'
 import PendingAbstract from './PendingAbstract'
 import ClaimAbstract from './ClaimAbstract'
@@ -14,8 +14,9 @@ import SendAbstract from './SendAbstract'
 import ReceiveAbstract from './ReceiveAbstract'
 import InfoIcon from '../../../assets/icons/info.svg'
 import { openExplorerTx } from '../../../core/explorer'
-import styles from './Transaction.scss'
 import Tooltip from '../../Tooltip'
+
+import styles from './Transaction.scss'
 
 type Props = {
   tx: TxEntryType,
@@ -58,7 +59,7 @@ export default class Transaction extends React.Component<Props> {
             renderIcon={InfoIcon}
             onClick={this.handleViewTransaction}
           >
-            View
+            <FormattedMessage id="activityViewTx" />
           </Button>
         )}
       </div>

@@ -38,6 +38,10 @@ export const LANGUAGES = {
     label: '한국어',
     value: 'KOREAN',
   },
+  FRENCH: {
+    label: 'Francés',
+    value: 'FRENCH',
+  },
 }
 
 export const DEFAULT_LANGUAGE = LANGUAGES.ENGLISH.value

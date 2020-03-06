@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import { FormattedHTMLMessage, FormattedMessage } from 'react-intl'
 
 import DialogueBox from '../../DialogueBox'
 import WarningIcon from '../../../assets/icons/warning.svg'
@@ -42,9 +43,7 @@ export default class ReceivePanel extends React.Component<Props> {
           }
           renderText={() => (
             <div>
-              Only send assets that are{' '}
-              <b>compatible with the NEO blockchain (NEO, GAS, etc.)</b>.
-              Sending other assets will result in permanent loss.{' '}
+              <FormattedHTMLMessage id="receiveDisclaimer" />
             </div>
           )}
           className={styles.warningDialogue}
@@ -61,7 +60,7 @@ export default class ReceivePanel extends React.Component<Props> {
             this.props.handleCopy(this.publicCanvas, 'public-address')
           }
         >
-          Copy Code Image
+          <FormattedMessage id="receiveCopyCodeButton" />
         </Button>
       </div>
     )

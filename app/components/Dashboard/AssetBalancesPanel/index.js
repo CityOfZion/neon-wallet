@@ -1,4 +1,6 @@
 // @flow
+import React from 'react'
+import { FormattedMessage } from 'react-intl'
 import { compose } from 'recompose'
 import { values, omit, get } from 'lodash-es'
 import { withActions, withData } from 'spunky'
@@ -64,7 +66,9 @@ export default compose(
   withNetworkData(),
   withAuthData(),
   withFilteredTokensData(),
-  withProgressPanel(assetBalancesPanelActions, { title: 'System Assets' }),
+  withProgressPanel(assetBalancesPanelActions, {
+    title: <FormattedMessage id="dashboardAssetsPanelLabel" />,
+  }),
   withPricesData(mapPricesDataToProps),
   withBalancesData(mapBalanceDataToProps),
   withData(priceHistoryActions, mapPriceChangeDataToProps),
