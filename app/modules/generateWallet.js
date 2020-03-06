@@ -284,10 +284,10 @@ export const generateNewWalletAccount = (
         let encryptedWIF
         switch (keyOption) {
           case 'WIF':
-            encryptedWIF = wallet.encrypt(WIF, passphrase)
+            encryptedWIF = await wallet.encrypt(WIF, passphrase)
             break
           case 'SPLIT':
-            encryptedWIF = wallet.encrypt(
+            encryptedWIF = await wallet.encrypt(
               await joinWIFKeys(key, keypart2),
               passphrase,
             )
@@ -296,6 +296,7 @@ export const generateNewWalletAccount = (
             encryptedWIF = key
         }
         const storedWallet = await getWallet()
+
         if (walletName && walletHasLabel(storedWallet, walletName)) {
           onFailure()
           return dispatchError(

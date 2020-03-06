@@ -6,7 +6,6 @@ import dns from 'dns'
 
 import { bindArgsFromN } from '../util/bindHelpers'
 import { resetBalanceState } from './balancesActions'
-import { upgradeNEP6AddAddresses } from '../core/account'
 import { validatePassphraseLength } from '../core/wallet'
 import { ledgerNanoSCreateSignatureAsync } from '../ledger/ledgerNanoS'
 
@@ -101,10 +100,22 @@ export const nep2LoginActions = createActions(
       throw new Error('Invalid encrypted key entered')
     }
 
-    const wif = await wallet.decryptAsync(encryptedWIF, passphrase)
-    const account = new wallet.Account(wif)
+    async function decryptEncryptedWIF(
+      encryptedWIF: string,
+      passphrase: string,
+    ) {
+      if (!wallet.isNEP2(encryptedWIF)) {
+        throw new Error('The encrypted key is not valid')
+      }
+      const wa = new wallet.Account({
+        key: encryptedWIF,
+      })
+      const a = await wa.decrypt(passphrase)
+      return a.WIF
+    }
 
-    await upgradeNEP6AddAddresses(encryptedWIF, wif)
+    const wif = await decryptEncryptedWIF(encryptedWIF, passphrase)
+    const account = new wallet.Account(wif)
 
     const hasInternetConnectivity = await checkForInternetConnectivity()
 

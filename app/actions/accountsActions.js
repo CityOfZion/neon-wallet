@@ -6,10 +6,17 @@ import { getStorage, setStorage } from '../core/storage'
 import { DEFAULT_WALLET } from '../core/constants'
 import { Account } from '../core/schemas'
 
-const STORAGE_KEY = 'userWallet'
+// NOTE: in Neon 3.x we update the account storage key
+// such that keys are retrieved from a new key value pair
+const STORAGE_KEY = 'userWallet3'
 
-export const getWallet = async (): Promise<Object> =>
-  (await getStorage(STORAGE_KEY)) || DEFAULT_WALLET
+export const getWallet = async (): Promise<Object> => {
+  const wallet = await getStorage(STORAGE_KEY)
+  if (!wallet || isEmpty(wallet)) {
+    return DEFAULT_WALLET
+  }
+  return wallet
+}
 
 export const setWallet = async (wallet: Object) => {
   setStorage(STORAGE_KEY, wallet)
