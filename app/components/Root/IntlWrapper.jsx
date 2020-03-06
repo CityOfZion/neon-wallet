@@ -9,7 +9,7 @@ import translations from '../../translations'
 import withLanguageData from '../../hocs/withLanguageData'
 import { LANGUAGES } from '../../core/constants'
 
-const { english, korean, french } = translations
+const { english, korean, french, vietnamese } = translations
 
 type IntlWrapperProps = {
   children: any,
@@ -20,6 +20,7 @@ const tranlationsMappings = {
   [LANGUAGES.ENGLISH.value]: english,
   [LANGUAGES.KOREAN.value]: korean,
   [LANGUAGES.FRENCH.value]: french,
+  [LANGUAGES.VIETNAMESE.value]: vietnamese,
 }
 
 class IntlWrapper extends React.Component<IntlWrapperProps> {
