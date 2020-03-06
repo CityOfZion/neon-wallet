@@ -67,7 +67,7 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   confirmationRecipient:
     '{transferCount, number} {transferCount, plural, one {Recipient} other {Transfers}}',
   completeExclaim: 'Complete!',
-  receiveQRExplanation:
+  sendQRExplanation:
     // eslint-disable-next-line
     "So you've been given a QR code? Click capture and hold it up to your camera.",
   captureQR: 'Capture',
@@ -199,9 +199,9 @@ const TRANSACTION_FEE = {
   faster: 'Plus rapide',
   fastest: 'Tres rapide',
   sendWithFee:
-    'Envoyer {itemCount, plural, one {asset} other {assets}} avec des frais',
-  sendWithOutFee:
-    'Envoyer {itemCount, plural, one {asset} other {assets}} sans frais',
+    'Envoyer {itemCount, plural, one {Actif} other {Actifs}} Avec Des Drais',
+  sendWithoutFee:
+    'Envoyer {itemCount, plural, one {Actif} other {Actifs}} Sans Frais',
   asset: 'Actif',
   assets: 'Actifs',
 }
@@ -229,7 +229,7 @@ const SEND = {
   sendCompleteNotification:
     'Transaction en attente ! Votre solde sera automatiquement mise a jour lorsque la blockchain l`aura traitée.',
   sendSelectAssets:
-    'Sélectionner actifs {transferCount, number} de {25, number} destinataires',
+    'Sélectionner actifs {transferCount, number} de {maxNumberOfRecipients, number} destinataires',
   sendTransferMessage:
     '{transferCount, number} {transferCount, plural, one {sendTransfer} other {sendTransferPlural}} en attente',
   sendBroadcasting: 'Diffusion de la transaction vers le réseau...',
