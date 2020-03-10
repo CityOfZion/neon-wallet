@@ -8,9 +8,8 @@ import { IntlProvider } from 'react-intl'
 import translations from '../../translations'
 import withLanguageData from '../../hocs/withLanguageData'
 import { LANGUAGES } from '../../core/constants'
-import german from '../../translations/german'
 
-const { english, korean, french, vietnamese } = translations
+const { english, korean, french, vietnamese, chinese, german } = translations
 
 type IntlWrapperProps = {
   children: any,
@@ -23,6 +22,7 @@ const tranlationsMappings = {
   [LANGUAGES.FRENCH.value]: french,
   [LANGUAGES.VIETNAMESE.value]: vietnamese,
   [LANGUAGES.GERMAN.value]: german,
+  [LANGUAGES.CHINESE.value]: chinese,
 }
 
 class IntlWrapper extends React.Component<IntlWrapperProps> {

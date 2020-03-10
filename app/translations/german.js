@@ -78,8 +78,8 @@ const VARIOUS_MISSING_TRANSLATIONS = {
 const AUTH = {
   authLogin: 'Log-in',
   authSaved: 'GESPEICHERT',
-  authPrivate: 'PRIVATER KEY',
-  authEncrypted: 'VERSCHLÜSSELTER KEY',
+  authPrivate: 'PRIVATER',
+  authEncrypted: 'VERSCHLÜSSELTER',
   authWatch: 'ANZEIGEN',
   authLedger: 'LEDGER',
   authCreateWallet: ' Wallet erstellen',

@@ -42,11 +42,14 @@ export const LANGUAGES = {
     label: 'Deutsche',
     value: 'GERMAN',
   },
+  CHINESE: {
+    label: '中文',
+    value: 'CHINESE',
+  },
   KOREAN: {
     label: '한국어',
     value: 'KOREAN',
   },
-
   VIETNAMESE: {
     label: 'Tiếng Việt',
     value: 'VIETNAMESE',
