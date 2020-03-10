@@ -3,6 +3,7 @@ import korean from './korean'
 import french from './french'
 import vietnamese from './vietnamese'
 import german from './german'
+import chinese from './chinese'
 
 export default {
   english,
@@ -10,4 +11,5 @@ export default {
   french,
   vietnamese,
   german,
+  chinese,
 }
