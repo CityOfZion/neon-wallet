@@ -217,7 +217,7 @@
     "set-value": "2.0.1",
     "serialize-javascript": "2.1.1",
     "minimist": "^1.2.2",
-    "acorn": "^6.4.1",
+    "acorn": "^7.1.1",
     "kind-of": "^6.0.3",
     "tar": "^2.2.2",
     "braces": "^2.3.1",
