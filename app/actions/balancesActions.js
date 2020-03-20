@@ -3,7 +3,7 @@ import { api } from '@cityofzion/neon-js'
 import { extend, isEmpty, get } from 'lodash-es'
 import { createActions } from 'spunky'
 import { Howl } from 'howler'
-// eslint-disable-next-line
+// $FlowFixMe
 import coinAudioSample from '../assets/audio/coin.wav'
 
 import { getSettings } from './settingsActions'
