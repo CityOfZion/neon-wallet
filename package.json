@@ -145,7 +145,7 @@
     "ava": "0.23.0",
     "babel-cli": "6.26.0",
     "babel-core": "6.26.0",
-    "babel-eslint": "8.1.2",
+    "babel-eslint": "10.1.0",
     "babel-jest": "23.4.2",
     "babel-loader": "7.1.2",
     "babel-plugin-lodash": "3.2.11",
@@ -166,7 +166,7 @@
     "enzyme": "3.7.0",
     "enzyme-adapter-react-16": "1.6.0",
     "enzyme-to-json": "3.2.1",
-    "eslint": "4.19.1",
+    "eslint": "^6.8.0",
     "eslint-config-airbnb": "17.0.0",
     "eslint-config-import": "0.13.0",
     "eslint-config-prettier": "2.9.0",
@@ -215,7 +215,14 @@
     "lodash": "4.17.13",
     "csv-parse": "4.4.6",
     "set-value": "2.0.1",
-    "serialize-javascript": "2.1.1"
+    "serialize-javascript": "2.1.1",
+    "minimist": "^1.2.2",
+    "kind-of": "^6.0.3",
+    "tar": "^2.2.2",
+    "braces": "^2.3.1",
+    "mem": "^4.0.0",
+    "decompress-zip": "^0.2.2",
+    "https-proxy-agent": "^2.2.3"
   },
   "jest": {
     "moduleNameMapper": {
