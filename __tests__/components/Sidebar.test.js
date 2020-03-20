@@ -14,11 +14,13 @@ import {
   EXPLORERS,
   MAIN_NETWORK_DEPRECATED_LABEL,
   MAIN_NETWORK_LABEL,
+  DEFAULT_LANGUAGE,
 } from '../../app/core/constants'
 import LightLogoWithoutText from '../../../assets/images/logo-without-text-black.png'
 import DarkLogoWithoutText from '../../../assets/images/logo-without-text.png'
 import Tooltip from '../../app/components/Tooltip'
 import NetworkConfigurationTooltip from '../../app/components/NetworkConfigurationTooltip'
+import IntlWrapper from '../../app/components/Root/IntlWrapper'
 
 const { LOADED, LOADING } = progressValues
 
@@ -51,6 +53,7 @@ const initialState = {
       data: {
         theme: THEMES.LIGHT,
         blockExplorer: EXPLORERS.NEO_TRACKER,
+        language: DEFAULT_LANGUAGE,
       },
     },
   },
@@ -60,9 +63,11 @@ const setup = (state = initialState, shallowRender = true) => {
   const store = configureStore([thunk])(state)
   const wrapper = mount(
     <Provider store={store}>
-      <MemoryRouter initialEntries={['/']} keyLength={0}>
-        <Sidebar />
-      </MemoryRouter>
+      <IntlWrapper>
+        <MemoryRouter initialEntries={['/']} keyLength={0}>
+          <Sidebar />
+        </MemoryRouter>
+      </IntlWrapper>
     </Provider>,
   )
   return {

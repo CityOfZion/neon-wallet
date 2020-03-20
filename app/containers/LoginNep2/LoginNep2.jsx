@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import { type ProgressState } from 'spunky'
+import { FormattedMessage } from 'react-intl'
 
 import QrCodeScanner from '../../components/QrCodeScanner'
 import Button from '../../components/Button'
@@ -58,7 +59,7 @@ export default class LoginNep2 extends Component<Props, State> {
                   renderIcon={Close}
                   onClick={this.toggleScanner}
                 >
-                  Cancel
+                  <FormattedMessage id="auth.cancel" />
                 </Button>
               </div>
             </React.Fragment>
@@ -75,12 +76,18 @@ export default class LoginNep2 extends Component<Props, State> {
                   }
                 />
               </div>
-              <PasswordInput
-                placeholder="Password"
-                value={passphrase}
-                disabled={loading}
-                onChange={e => this.setState({ passphrase: e.target.value })}
-              />
+              <FormattedMessage id="inputPasswordPlaceholder">
+                {translaction => (
+                  <PasswordInput
+                    placeholder={translaction}
+                    value={passphrase}
+                    disabled={loading}
+                    onChange={e =>
+                      this.setState({ passphrase: e.target.value })
+                    }
+                  />
+                )}
+              </FormattedMessage>
               <div className={styles.loginButtonRow}>
                 <Button
                   id="scan-private-key-qr-button"
@@ -89,7 +96,7 @@ export default class LoginNep2 extends Component<Props, State> {
                   onClick={this.toggleScanner}
                   disabled={!cameraAvailable}
                 >
-                  Scan QR
+                  <FormattedMessage id="authScanQRButton" />
                 </Button>
                 <Button
                   id="loginButton"
@@ -100,7 +107,7 @@ export default class LoginNep2 extends Component<Props, State> {
                   disabled={loading || !this.isValid()}
                   shouldCenterButtonLabelText
                 >
-                  Login
+                  <FormattedMessage id="authLogin" />
                 </Button>
               </div>
             </React.Fragment>

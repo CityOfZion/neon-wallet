@@ -1,6 +1,8 @@
 // @flow
 import React, { Fragment } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
+import { FormattedMessage } from 'react-intl'
+
 import { ROUTES } from '../../../core/constants'
 import CloseButton from '../../../components/CloseButton'
 import BackButton from '../../../components/BackButton'
@@ -34,6 +36,7 @@ const IMPORT_OPTIONS = {
         authenticated={props.authenticated}
       />
     ),
+    translationId: 'privateKeyLabel',
     display: 'Private Key',
   },
   ENCRYPTED_WIF: {
@@ -44,6 +47,7 @@ const IMPORT_OPTIONS = {
         authenticated={props.authenticated}
       />
     ),
+    translationId: 'encryptedKeyLabel',
     display: 'Encrypted Key',
   },
 
@@ -51,6 +55,7 @@ const IMPORT_OPTIONS = {
     render: (props: Props) => (
       <CreateImportSplitWalletForm authenticated={props.authenticated} />
     ),
+    translationId: 'splitKeyLabel',
     display: 'Split Key',
   },
 
@@ -58,8 +63,7 @@ const IMPORT_OPTIONS = {
     render: (props: Props) => (
       <Fragment>
         <p className={styles.importRecoveryInstructions}>
-          Upload a JSON wallet recovery file here to add your accounts to Neon.
-          This option is also available on the Settings page.
+          <FormattedMessage id="auth.import.recoveryInstructions" />
         </p>
         <div
           className={styles.buttonContainer}
@@ -77,11 +81,12 @@ const IMPORT_OPTIONS = {
             shouldCenterButtonLabelText
             primary
           >
-            Import File
+            <FormattedMessage id="importFile" />
           </Button>
         </div>
       </Fragment>
     ),
+    translationId: 'recoverWalletLabel',
     display: 'Recover Wallet',
   },
 }
@@ -114,37 +119,43 @@ export default class ImportWallet extends React.Component<Props, State> {
     }
 
     return (
-      <FullHeightPanel
-        headerText="Import Wallet"
-        renderInstructions={false}
-        renderHeaderIcon={() => (
-          <div className={styles.iconDisplay}>
-            <ImportIcon />
-          </div>
-        )}
-        {...conditionalPanelProps}
-      >
-        <div className={styles.tabContainer}>
-          <Tabs
-            selectedIndex={tabIndex}
-            onSelect={tabIndex => this.setState({ tabIndex })}
-            className="neon-tabs"
+      <FormattedMessage id="authImportWallet">
+        {translation => (
+          <FullHeightPanel
+            headerText={translation}
+            renderInstructions={false}
+            renderHeaderIcon={() => (
+              <div className={styles.iconDisplay}>
+                <ImportIcon />
+              </div>
+            )}
+            {...conditionalPanelProps}
           >
-            <TabList>
-              {this.options.map(option => (
-                <Tab key={option.display}>{option.display.toUpperCase()}</Tab>
-              ))}
-            </TabList>
-            <div>
-              {this.options.map(option => (
-                <TabPanel key={option.display}>
-                  {option.render(this.props)}
-                </TabPanel>
-              ))}
+            <div className={styles.tabContainer}>
+              <Tabs
+                selectedIndex={tabIndex}
+                onSelect={tabIndex => this.setState({ tabIndex })}
+                className="neon-tabs"
+              >
+                <TabList>
+                  {this.options.map(option => (
+                    <Tab key={option.display}>
+                      <FormattedMessage id={option.translationId} />
+                    </Tab>
+                  ))}
+                </TabList>
+                <div>
+                  {this.options.map(option => (
+                    <TabPanel key={option.display}>
+                      {option.render(this.props)}
+                    </TabPanel>
+                  ))}
+                </div>
+              </Tabs>
             </div>
-          </Tabs>
-        </div>
-      </FullHeightPanel>
+          </FullHeightPanel>
+        )}
+      </FormattedMessage>
     )
   }
 }

@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import { noop } from 'lodash-es'
+import { FormattedMessage, intlShape } from 'react-intl'
 
 import Button from '../../Button'
 import TextInput from '../../Inputs/TextInput'
@@ -16,6 +17,7 @@ type Props = {
   validatePassphraseLength: Function,
   isWIF: Function,
   onSubmit: Function,
+  intl: intlShape,
 }
 
 type State = {
@@ -56,6 +58,7 @@ export default class EncryptForm extends React.Component<Props, State> {
       formPrivateKey,
       formPassphrase,
       formConfirmPassphrase,
+      intl,
     } = this.props
     const {
       privateKeyError,
@@ -70,8 +73,8 @@ export default class EncryptForm extends React.Component<Props, State> {
           <TextInput
             id="privateKey"
             name="privateKey"
-            label="1) Enter the private key you want to encrypt"
-            placeholder="Enter key"
+            label={<FormattedMessage id="encryptStep1Label" />}
+            placeholder={intl.formatMessage({ id: 'encryptStep1Placeholder' })}
             value={formPrivateKey}
             onChange={this.handleChangePrivateKey}
             error={privateKeyError}
@@ -79,8 +82,8 @@ export default class EncryptForm extends React.Component<Props, State> {
           <PasswordInput
             id="passphrase"
             name="passphrase"
-            label="2) Create a passphrase"
-            placeholder="Enter Passphrase"
+            label={<FormattedMessage id="encryptStep2Label" />}
+            placeholder={intl.formatMessage({ id: 'encryptStep2Placeholder' })}
             value={formPassphrase}
             onChange={this.handleChangePassphrase}
             error={passphraseError}
@@ -88,8 +91,8 @@ export default class EncryptForm extends React.Component<Props, State> {
           <PasswordInput
             id="confirmPassphrase"
             name="confirmPassphrase"
-            label="3) Confim your passphrase"
-            placeholder="Confirm Passphrase"
+            label={<FormattedMessage id="encryptStep3Label" />}
+            placeholder={intl.formatMessage({ id: 'encryptStep3Placeholder' })}
             value={formConfirmPassphrase}
             onChange={this.handleChangeConfirmPassphrase}
             error={confirmPassphraseError}

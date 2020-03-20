@@ -1,6 +1,8 @@
 // @flow
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { injectIntl } from 'react-intl'
+
 import CreateImportWalletForm from './CreateImportWalletForm'
 import { generateNewWalletAccount } from '../../modules/generateWallet'
 
@@ -14,4 +16,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   null,
   mapDispatchToProps,
-)(CreateImportWalletForm)
+)(injectIntl(CreateImportWalletForm))

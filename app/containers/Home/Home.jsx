@@ -2,6 +2,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
+import { FormattedMessage } from 'react-intl'
 
 import LoginPrivateKey from '../LoginPrivateKey'
 import LoginNep2 from '../LoginNep2'
@@ -27,23 +28,28 @@ type Props = {
 const LOGIN_OPTIONS = {
   LOCAL_STORAGE: {
     render: () => <LoginLocalStorage />,
-    display: 'Saved',
+    displayKey: 'Saved',
+    renderDisplayMessage: () => <FormattedMessage id="authSaved" />,
   },
   PRIVATE_KEY: {
     render: () => <LoginPrivateKey />,
-    display: 'Private',
+    displayKey: 'Private',
+    renderDisplayMessage: () => <FormattedMessage id="authPrivate" />,
   },
   NEP2: {
     render: () => <LoginNep2 />,
-    display: 'Encrypted',
+    displayKey: 'Encrypted',
+    renderDisplayMessage: () => <FormattedMessage id="authEncrypted" />,
   },
   watch: {
     render: () => <LoginWatchOnly />,
-    display: 'Watch',
+    displayKey: 'Watch',
+    renderDisplayMessage: () => <FormattedMessage id="authWatch" />,
   },
   ledger: {
     render: () => <LoginLedgerNanoS />,
-    display: 'Ledger',
+    displayKey: 'Ledger',
+    renderDisplayMessage: () => <FormattedMessage id="authLedger" />,
   },
 }
 
@@ -67,13 +73,15 @@ export default class Home extends React.Component<Props, State> {
           >
             <TabList>
               {this.options.map(option => (
-                <Tab key={option.display}>{option.display.toUpperCase()}</Tab>
+                <Tab key={option.displayKey}>
+                  {option.renderDisplayMessage()}
+                </Tab>
               ))}
             </TabList>
             <div className={styles.loginContentContainer}>
               {this.options.map(option => (
                 <TabPanel
-                  key={option.display}
+                  key={option.displayKey}
                   selectedClassName={styles.homeTabPanel}
                 >
                   {option.render()}
@@ -85,14 +93,14 @@ export default class Home extends React.Component<Props, State> {
             <div className={styles.buttonContainer}>
               <Link to={ROUTES.CREATE_WALLET}>
                 <Button disabled={loading} renderIcon={AddIcon}>
-                  Create Wallet
+                  <FormattedMessage id="authCreateWallet" />
                 </Button>
               </Link>
             </div>
             <div className={styles.buttonContainer}>
               <Link to={ROUTES.IMPORT_WALLET}>
                 <Button disabled={loading} renderIcon={ImportIcon}>
-                  Import Wallet
+                  <FormattedMessage id="authImportWallet" />
                 </Button>
               </Link>
             </div>

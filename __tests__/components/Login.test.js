@@ -5,6 +5,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { shallow, mount } from 'enzyme'
 import { waitForElement } from '../testHelpers'
 
+import IntlWrapper from '../../app/components/Root/IntlWrapper'
 import Login from '../../app/containers/LoginPrivateKey/LoginPrivateKey'
 import LoginWithHOC from '../../app/containers/LoginPrivateKey/'
 
@@ -27,9 +28,11 @@ const setup = (
   } else {
     wrapper = mount(
       <Provider store={store}>
-        <MemoryRouter>
-          <Component store={store} />
-        </MemoryRouter>
+        <IntlWrapper lang="en">
+          <MemoryRouter>
+            <Component store={store} />
+          </MemoryRouter>
+        </IntlWrapper>
       </Provider>,
     )
   }

@@ -6,6 +6,8 @@ import ConfirmModal from '../../../app/components/Modals/ConfirmModal/ConfirmMod
 import { createStore } from '../../testHelpers'
 import configureStore from 'redux-mock-store'
 
+import IntlWrapper from '../../../app/components/Root/IntlWrapper'
+
 const store = configureStore()({})
 
 describe('ConfirmModal', () => {
@@ -22,9 +24,11 @@ describe('ConfirmModal', () => {
   test('should render without crashing', () => {
     const wrapper = mount(
       <Provider store={store}>
-        <MemoryRouter>
-          <ConfirmModal {...props} />
-        </MemoryRouter>
+        <IntlWrapper>
+          <MemoryRouter>
+            <ConfirmModal {...props} />
+          </MemoryRouter>
+        </IntlWrapper>
       </Provider>,
     )
 
@@ -34,9 +38,11 @@ describe('ConfirmModal', () => {
   test('should render the text correctly', () => {
     const wrapper = mount(
       <Provider store={store}>
-        <MemoryRouter>
-          <ConfirmModal {...props} />
-        </MemoryRouter>
+        <IntlWrapper>
+          <MemoryRouter>
+            <ConfirmModal {...props} />
+          </MemoryRouter>
+        </IntlWrapper>
       </Provider>,
     )
 
@@ -46,9 +52,11 @@ describe('ConfirmModal', () => {
   test('should trigger the onCancel function followed by hideModal', () => {
     const wrapper = mount(
       <Provider store={store}>
-        <MemoryRouter>
-          <ConfirmModal {...props} />
-        </MemoryRouter>
+        <IntlWrapper>
+          <MemoryRouter>
+            <ConfirmModal {...props} />
+          </MemoryRouter>
+        </IntlWrapper>
       </Provider>,
     )
 
@@ -64,9 +72,11 @@ describe('ConfirmModal', () => {
   test('should trigger the onClick function followed by hideModal', () => {
     const wrapper = mount(
       <Provider store={store}>
-        <MemoryRouter>
-          <ConfirmModal {...props} />
-        </MemoryRouter>
+        <IntlWrapper>
+          <MemoryRouter>
+            <ConfirmModal {...props} />
+          </MemoryRouter>
+        </IntlWrapper>
       </Provider>,
     )
 

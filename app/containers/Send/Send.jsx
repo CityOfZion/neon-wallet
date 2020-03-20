@@ -2,6 +2,8 @@
 import React from 'react'
 import { uniqueId, get } from 'lodash-es'
 import { wallet } from '@cityofzion/neon-js'
+import { FormattedMessage } from 'react-intl'
+
 import {
   toNumber,
   toBigNumber,
@@ -9,13 +11,12 @@ import {
   minusNumber,
   addNumber,
 } from '../../core/math'
-
 import { isBlacklisted } from '../../core/wallet'
 import { PRICE_UNAVAILABLE } from '../../core/constants'
-
 import AmountsPanel from '../../components/AmountsPanel'
 import SendPanel from '../../components/Send/SendPanel'
 import HeaderBar from '../../components/HeaderBar'
+
 import styles from './Send.scss'
 
 const MAX_NUMBER_OF_RECIPIENTS = 25
@@ -501,7 +502,10 @@ export default class Send extends React.Component<Props, State> {
     return (
       <section className={styles.sendContainer}>
         {shouldRenderHeaderBar && (
-          <HeaderBar label="Send Assets" shouldRenderRefresh />
+          <HeaderBar
+            label={<FormattedMessage id="sendPageLabel" />}
+            shouldRenderRefresh
+          />
         )}
         {!noSendableAssets && (
           <AmountsPanel

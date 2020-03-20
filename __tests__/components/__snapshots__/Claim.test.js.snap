@@ -15,9 +15,14 @@ exports[`Claim should render claim GAS button as disabled 1`] = `
       shouldCenterButtonLabelText={false}
       type="button"
     >
-      Claim 
-      1.25406935
-       GAS
+      <FormattedMessage
+        id="dashboardGasClaimButton"
+        values={
+          Object {
+            "amount": "1.25406935",
+          }
+        }
+      />
     </Button>
   </Tooltip>
 </div>
@@ -37,9 +42,14 @@ exports[`Claim should render claim GAS button as enabled 1`] = `
       shouldCenterButtonLabelText={false}
       type="button"
     >
-      Claim 
-      1.25406935
-       GAS
+      <FormattedMessage
+        id="dashboardGasClaimButton"
+        values={
+          Object {
+            "amount": "1.25406935",
+          }
+        }
+      />
     </Button>
   </Tooltip>
 </div>

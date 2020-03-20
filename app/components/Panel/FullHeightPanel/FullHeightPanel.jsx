@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 
+import { FormattedMessage } from 'react-intl'
 import greyLogo from '../../../assets/images/grey-logo.png'
 
 import styles from './FullHeightPanel.scss'
@@ -24,7 +25,12 @@ type Props = {
 export default class ViewLayout extends Component<Props> {
   static defaultProps = {
     shouldRenderHeader: true,
-    renderInstructions: () => <div> Enter Details </div>,
+    renderInstructions: () => (
+      <div>
+        {' '}
+        <FormattedMessage id="walletCreationInstruction" />{' '}
+      </div>
+    ),
     iconColor: '#69E27E',
   }
 

@@ -10,6 +10,7 @@ import {
   withRecall,
   withReset,
 } from 'spunky'
+import { injectIntl } from 'react-intl'
 
 import NetworkConfiguration from './NetworkConfiguration'
 import withExplorerData from '../../hocs/withExplorerData'
@@ -82,4 +83,5 @@ export default compose(
   withReset(dashboardActions, ['currency']),
   withReset(pricesActions, ['currency']),
   withRecall(dashboardActions, ['currency']),
+  injectIntl,
 )(NetworkConfiguration)

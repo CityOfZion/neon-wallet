@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import { FormattedMessage } from 'react-intl'
 
 import RefreshIcon from '../../../assets/icons/refresh.svg'
 
@@ -21,7 +22,7 @@ class RefreshButton extends Component<Props> {
           onClick={loading ? null : loadWalletData}
           className={styles.refreshButtonSpan}
         >
-          Refresh
+          <FormattedMessage id="dashboardRefresh" />
         </span>
         <RefreshIcon
           id="refresh"

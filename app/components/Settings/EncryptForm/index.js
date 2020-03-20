@@ -1,1 +1,4 @@
-export { default } from './EncryptForm'
+import { injectIntl } from 'react-intl'
+import EncryptForm from './EncryptForm'
+
+export default injectIntl(EncryptForm)

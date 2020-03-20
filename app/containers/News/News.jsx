@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import moment from 'moment'
+import { FormattedMessage } from 'react-intl'
 
 import Panel from '../../components/Panel'
 import HeaderBar from '../../components/HeaderBar'
@@ -39,7 +40,7 @@ export default class News extends React.Component<Props, State> {
         <HeaderBar
           networkId={this.props.networkId}
           net={this.props.net}
-          label="News"
+          label={<FormattedMessage id="newsPageLabel" />}
         />
         <Panel onScroll={this.handleScroll} className={styles.newsPanel}>
           {this.props.loading ? <Loader /> : this.parseItems()}

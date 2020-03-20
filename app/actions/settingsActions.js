@@ -10,6 +10,7 @@ import {
   DEFAULT_EXPLORER,
   DEFAULT_CURRENCY_CODE,
   DEFAULT_THEME,
+  DEFAULT_LANGUAGE,
 } from '../core/constants'
 import { version } from '../../package.json'
 
@@ -31,6 +32,7 @@ const DEFAULT_SETTINGS: () => Promise<Settings> = async () => ({
   tokens: await getDefaultTokens(),
   version,
   soundEnabled: true,
+  language: DEFAULT_LANGUAGE,
 })
 
 export const getSettings = async (): Promise<Settings> => {

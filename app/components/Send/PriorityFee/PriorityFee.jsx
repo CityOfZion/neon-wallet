@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
+import { FormattedMessage } from 'react-intl'
 
 import LightningIcon from '../../../assets/icons/lightning.svg'
 import Button from '../../Button/Button'
@@ -18,16 +19,19 @@ const FEE_OPTIONS = [
   {
     fee: 0.001,
     description: 'Fast',
+    translationId: 'fast',
     precision: 3,
   },
   {
     fee: 0.05,
     description: 'Faster',
+    translationId: 'faster',
     precision: 2,
   },
   {
     fee: 0.1,
     description: 'Fastest',
+    translationId: 'fastest',
     precision: 1,
   },
 ]
@@ -38,12 +42,12 @@ export default class PriorityFee extends React.Component<Props> {
     return (
       <div>
         <div className={styles.priorityExplanationText}>
-          Prioritize your transaction with a fee?
+          <FormattedMessage id="transactionFeeQuestion" />
         </div>
         <div className={styles.priorityFeeButtonContainer}>
           {FEE_OPTIONS.map(option => (
             <Button
-              key={option.description}
+              key={option.fee}
               className={classNames(styles.sendFormButton, {
                 [styles.activeButton]: fees === option.fee,
               })}
@@ -60,7 +64,9 @@ export default class PriorityFee extends React.Component<Props> {
               }
             >
               <div>
-                <div className={styles.speed}>{option.description}</div>
+                <div className={styles.speed}>
+                  <FormattedMessage id={option.translationId} />
+                </div>
                 <div className={styles.feeCost}>
                   {toFixedDecimals(option.fee, option.precision)} GAS
                 </div>

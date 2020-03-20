@@ -1,14 +1,14 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-
+import { FormattedMessage } from 'react-intl'
 import Cleave from 'cleave.js/react'
 import { omit, noop } from 'lodash-es'
 
 import ErrorIcon from '../../../assets/icons/errorRed.svg'
+import Button from '../../Button'
 
 import styles from './NumberInput.scss'
-import Button from '../../Button'
 
 const DEFAULT_OPTIONS = {
   numeral: true,
@@ -95,7 +95,7 @@ export default class NumberInput extends React.Component<Props, State> {
               : this.handleMaxValue
           }
         >
-          MAX
+          <FormattedMessage id="sendMaxAmount" />
         </Button>
       )
     }

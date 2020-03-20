@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
 
 import Button from '../../components/Button'
 import Edit from '../../assets/icons/edit.svg'
@@ -26,7 +27,9 @@ class WalletManager extends Component<Props> {
             exact
             to={`edit-wallet/${address}/${label}`}
           >
-            <Button renderIcon={Edit}>Edit</Button>
+            <Button renderIcon={Edit}>
+              <FormattedMessage id="manageWalletsEdit" />
+            </Button>
           </NavLink>
         </div>
       </div>

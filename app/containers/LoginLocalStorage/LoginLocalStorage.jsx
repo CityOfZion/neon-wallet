@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import { cloneDeep } from 'lodash-es'
+import { FormattedMessage } from 'react-intl'
 
 import PasswordInput from '../../components/Inputs/PasswordInput'
 import Button from '../../components/Button'
@@ -53,12 +54,16 @@ export default class LoginLocalStorage extends Component<Props, State> {
             />
           </div>
           <div className={styles.inputMargin}>
-            <PasswordInput
-              placeholder="Password"
-              value={passphrase}
-              disabled={loading}
-              onChange={e => this.setState({ passphrase: e.target.value })}
-            />
+            <FormattedMessage id="inputPasswordPlaceholder">
+              {placeholder => (
+                <PasswordInput
+                  placeholder={placeholder}
+                  value={passphrase}
+                  disabled={loading}
+                  onChange={e => this.setState({ passphrase: e.target.value })}
+                />
+              )}
+            </FormattedMessage>
           </div>
 
           <Button
@@ -70,7 +75,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
             disabled={loading || !this.isValid()}
             renderIcon={() => <LoginIcon />}
           >
-            Login
+            <FormattedMessage id="authLogin" />
           </Button>
         </form>
       </div>

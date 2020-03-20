@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import { FormattedHTMLMessage, FormattedMessage } from 'react-intl'
 
 import InfoIcon from '../../../assets/icons/info.svg'
 
@@ -10,23 +11,12 @@ export default function ReceiveExplanation() {
     <div className={styles.receiveExplanation}>
       <div className={styles.header}>
         <InfoIcon className={styles.icon} />
-        <div className={styles.title}>Why use a QR code?</div>
+        <div className={styles.title}>
+          <FormattedMessage id="recieveWhyUseQRLabel" />
+        </div>
       </div>
       <div className={styles.message}>
-        <p>
-          Ever sent assets to the wrong address because of an errant character
-          in the wallet address?
-        </p>
-        <p>If not, lucky you - but it happens with frightening regularity.</p>
-        <p>
-          Here at CoZ, we want to ensure people that pay you get your details
-          right. You can generate a QR code for requesting assets to help them
-          help you.
-        </p>
-        <p>
-          Every code you generate will include your public wallet address, an
-          asset amount and a reference - all set by you.
-        </p>
+        <FormattedHTMLMessage id="receiveQRExplanation" />
       </div>
     </div>
   )

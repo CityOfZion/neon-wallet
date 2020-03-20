@@ -6,6 +6,7 @@ import { api } from '@cityofzion/neon-js'
 import axios from 'axios'
 import { omit } from 'lodash-es'
 import moment from 'moment'
+import { FormattedMessage, intlShape } from 'react-intl'
 
 import HeaderBar from '../../components/HeaderBar'
 import TransactionHistoryPanel from '../../components/TransactionHistory/TransactionHistoryPanel'
@@ -24,6 +25,7 @@ type Props = {
   hideNotification: string => void,
   net: string,
   address: string,
+  intl: intlShape,
 }
 
 type State = {
@@ -39,7 +41,7 @@ export default class TransactionHistory extends Component<Props, State> {
     return (
       <div className={styles.transactionHistory}>
         <HeaderBar
-          label="All Activity"
+          label={<FormattedMessage id="activityPageLabel" />}
           renderRightContent={() => this.renderPanelHeaderContent()}
         />
         <TransactionHistoryPanel className={styles.transactionHistoryPanel} />
@@ -47,18 +49,23 @@ export default class TransactionHistory extends Component<Props, State> {
     )
   }
 
-  renderPanelHeaderContent = () => (
-    <div className={styles.panelHeaderButtons}>
-      <PanelHeaderButton
-        disabled={this.state.isExporting}
-        onClick={this.saveHistoryFile}
-        className={styles.exportButton}
-        renderIcon={() => <ExportIcon />}
-        buttonText="Export"
-      />
-      <RefreshButton />
-    </div>
-  )
+  renderPanelHeaderContent = () => {
+    const { intl } = this.props
+    return (
+      <div className={styles.panelHeaderButtons}>
+        <PanelHeaderButton
+          disabled={this.state.isExporting}
+          onClick={this.saveHistoryFile}
+          className={styles.exportButton}
+          renderIcon={() => <ExportIcon />}
+          buttonText={intl.formatMessage({
+            id: 'activityExport',
+          })}
+        />
+        <RefreshButton />
+      </div>
+    )
+  }
 
   fetchHistory = async () => {
     const { showInfoNotification, net, address } = this.props
