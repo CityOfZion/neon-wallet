@@ -3,6 +3,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { withActions } from 'spunky'
 import { compose } from 'redux'
+import { FormattedMessage } from 'react-intl'
 
 import styles from './Home.scss'
 import lightLogo from '../../assets/images/logo-light.png'
@@ -16,10 +17,10 @@ import { updateSettingsActions } from '../../actions/settingsActions'
 type Props = {
   children: React$Node,
   renderNavigation?: Function,
-  headerText: string,
   theme: ThemeType,
   languageDisplayValue: string,
   setLanguageSetting: (value: String) => void,
+  headerText: string,
 }
 
 type State = {
@@ -101,7 +102,9 @@ class HomeLayout extends React.Component<Props, State> {
           >
             <img className={styles.logo} src={dynamicImage} alt="" />
           </div>
-          <div className={styles.loginHeader}>{headerText}</div>
+          <div className={styles.loginHeader}>
+            <FormattedMessage id="authLogin" />
+          </div>
           {children}
         </div>
       </div>
