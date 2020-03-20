@@ -209,10 +209,10 @@ const initialState = {
 }
 
 export default (state: Object = initialState, action: ReduxAction) => {
+  const { disableClaimButton } = action.payload
   switch (action.type) {
     // eslint-disable-next-line
     case DISABLE_CLAIM:
-      const { disableClaimButton } = action.payload
       return {
         ...state,
         disableClaimButton,
