@@ -20,7 +20,6 @@ type Props = {
   theme: ThemeType,
   languageDisplayValue: string,
   setLanguageSetting: (value: String) => void,
-  headerText: string,
 }
 
 type State = {
