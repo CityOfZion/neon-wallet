@@ -24,6 +24,8 @@ const BUTTON = {
   '--button-priority-transfer-disabled': '#fff',
   '--button-max-amount-background': '#e6e6e6',
   '--button-max-amount-text': '#8f939b',
+  '--button-flag-icon-color': '#394152',
+  '--button-flag-icon-opacity': 0.3,
 }
 
 const INPUT = {

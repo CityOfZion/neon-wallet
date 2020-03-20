@@ -30,6 +30,7 @@ const customStyles = {
       'transparent !important',
     border: props.selectProps.hideHighlight && 'none !important',
     width: props.selectProps.settingsSelect ? '150px' : 'auto',
+    display: props.selectProps.hideControl ? 'none' : 'flex',
   }),
   dropdownIndicator: (styles, props) => ({
     display: props.selectProps.hideChevron ? 'none' : 'flex',
