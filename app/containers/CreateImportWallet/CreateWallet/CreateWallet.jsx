@@ -1,5 +1,7 @@
 // @flow
 import React from 'react'
+import { FormattedMessage } from 'react-intl'
+
 import { ROUTES } from '../../../core/constants'
 import CloseButton from '../../../components/CloseButton'
 import BackButton from '../../../components/BackButton'
@@ -30,19 +32,23 @@ export default class CreateWallet extends React.Component<Props> {
     }
 
     return (
-      <FullHeightPanel
-        headerText="Create New Wallet"
-        renderHeaderIcon={() => (
-          <div className={styles.iconDisplay}>
-            <AddIcon />
-          </div>
+      <FormattedMessage id="createANewWallet">
+        {translation => (
+          <FullHeightPanel
+            headerText={translation}
+            renderHeaderIcon={() => (
+              <div className={styles.iconDisplay}>
+                <AddIcon />
+              </div>
+            )}
+            {...conditionalPanelProps}
+          >
+            <div className={styles.inputContainer}>
+              <CreateImportWalletForm option="CREATE" />
+            </div>
+          </FullHeightPanel>
         )}
-        {...conditionalPanelProps}
-      >
-        <div className={styles.inputContainer}>
-          <CreateImportWalletForm option="CREATE" />
-        </div>
-      </FullHeightPanel>
+      </FormattedMessage>
     )
   }
 }

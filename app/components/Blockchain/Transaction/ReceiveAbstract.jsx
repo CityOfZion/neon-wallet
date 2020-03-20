@@ -1,12 +1,14 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
+import { FormattedMessage } from 'react-intl'
 
 import Button from '../../Button'
-import styles from './Transaction.scss'
 import ReceiveIcon from '../../../assets/icons/receive-tx.svg'
 import ContactsAdd from '../../../assets/icons/contacts-add.svg'
 import CopyToClipboard from '../../CopyToClipboard'
+
+import styles from './Transaction.scss'
 
 type Props = {
   txDate: React$Node,
@@ -64,7 +66,7 @@ export default class ReceiveAbstract extends React.Component<Props> {
             onClick={() => showAddContactModal(from)}
             disabled={contactFromExists}
           >
-            Add
+            <FormattedMessage id="activityAddAddress" />
           </Button>
         </div>
       </div>

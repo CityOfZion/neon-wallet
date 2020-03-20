@@ -1,5 +1,6 @@
 import React from 'react'
 import Select from 'react-select'
+import { FormattedMessage } from 'react-intl'
 
 const returnDropdownIndicatorColor = props => {
   if (props.selectProps.settingsSelect) return 'var(--settings-link-text)'
@@ -29,6 +30,7 @@ const customStyles = {
       'transparent !important',
     border: props.selectProps.hideHighlight && 'none !important',
     width: props.selectProps.settingsSelect ? '150px' : 'auto',
+    display: props.selectProps.hideControl ? 'none' : 'flex',
   }),
   dropdownIndicator: (styles, props) => ({
     display: props.selectProps.hideChevron ? 'none' : 'flex',
@@ -78,13 +80,18 @@ const customStyles = {
 }
 
 const StyledReactSelect = props => (
-  <Select
-    {...props}
-    maxMenuHeight={140}
-    styles={customStyles}
-    className="react-select-container"
-    classNamePrefix="react-select"
-  />
+  <FormattedMessage id="inputSelectPlaceholder">
+    {translation => (
+      <Select
+        {...props}
+        maxMenuHeight={140}
+        styles={customStyles}
+        className="react-select-container"
+        classNamePrefix="react-select"
+        placeholder={`${translation}...`}
+      />
+    )}
+  </FormattedMessage>
 )
 
 export default StyledReactSelect

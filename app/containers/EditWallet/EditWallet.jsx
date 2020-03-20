@@ -1,10 +1,10 @@
 // @flow
 import React, { Component } from 'react'
 import { reject } from 'lodash-es'
+import { FormattedMessage, IntlShape } from 'react-intl'
 
 import { getStorage, setStorage } from '../../core/storage'
 import { ROUTES, MODAL_TYPES } from '../../core/constants'
-
 import CloseButton from '../../components/CloseButton'
 import BackButton from '../../components/BackButton'
 import TextInput from '../../components/Inputs/TextInput'
@@ -25,6 +25,7 @@ type Props = {
   match: Object,
   address: string,
   history: Object,
+  intl: IntlShape,
 }
 
 type State = {
@@ -37,19 +38,21 @@ class EditWallet extends Component<Props, State> {
   }
 
   render() {
-    const { saveAccount, address } = this.props
+    const { saveAccount, address, intl } = this.props
     const { key } = this.props.match.params
     const { walletName } = this.state
     const isCurrentAddress = address === key
     return (
       <FullHeightPanel
-        headerText="Edit Wallet"
+        headerText={<FormattedMessage id="manageWalletsEditWallet" />}
         renderInstructions={() => (
           <div className={styles.editWalletInstructions}>
-            <div>Modify Details</div>
+            <div>
+              <FormattedMessage id="modifyDetails" />
+            </div>
             {!isCurrentAddress && (
               <span onClick={this.deleteWalletAccount}>
-                <Close /> Remove Wallet
+                <Close /> <FormattedMessage id="walletManagerRemoveWallet" />
               </span>
             )}
           </div>
@@ -61,11 +64,21 @@ class EditWallet extends Component<Props, State> {
         <div className={styles.inputContainer}>
           <TextInput
             value={walletName}
-            label="Wallet Name"
+            label={intl.formatMessage({
+              id: 'walletCreationWalletNameLabel',
+            })}
             onChange={e => this.setState({ walletName: e.target.value })}
-            placeholder="Wallet Name"
+            placeholder={intl.formatMessage({
+              id: 'walletCreationWalletNamePlaceholder',
+            })}
           />
-          <TextInput value={key} label="Wallet Address" disabled />
+          <TextInput
+            value={key}
+            label={intl.formatMessage({
+              id: 'contactWalletAddress',
+            })}
+            disabled
+          />
         </div>
         <Button
           renderIcon={() => <CheckIcon />}
@@ -77,7 +90,7 @@ class EditWallet extends Component<Props, State> {
           }
           disabled={this.isDisabled()}
         >
-          Save Changes
+          <FormattedMessage id="manageWalletsEditWalletSave" />
         </Button>
       </FullHeightPanel>
     )

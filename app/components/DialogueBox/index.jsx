@@ -8,7 +8,7 @@ import styles from './DialogueBox.scss'
 type Props = {
   icon: React$Node,
   className?: string,
-  text?: string,
+  text?: string | React$Node,
   renderText?: () => React$Node,
 }
 

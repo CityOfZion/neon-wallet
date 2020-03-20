@@ -8,9 +8,11 @@ import { createStore, provideStore, provideState } from '../../testHelpers'
 import AssetBalancesPanel from '../../../app/components/Dashboard/AssetBalancesPanel'
 import {
   DEFAULT_CURRENCY_CODE,
+  DEFAULT_LANGUAGE,
   MAIN_NETWORK_ID,
   ASSETS,
 } from '../../../app/core/constants'
+import IntlWrapper from '../../../app/components/Root/IntlWrapper'
 
 const { LOADED } = progressValues
 
@@ -36,6 +38,7 @@ const initialState = {
       data: {
         currency: DEFAULT_CURRENCY_CODE,
         tokens: [],
+        language: DEFAULT_LANGUAGE,
       },
       loadedCount: 1,
     },
@@ -116,7 +119,14 @@ describe('AssetBalancesPanel', () => {
   })
 
   test.only('correctly renders data from state', () => {
-    const wrapper = mount(provideState(<AssetBalancesPanel />, initialState))
+    const wrapper = mount(
+      provideState(
+        <IntlWrapper>
+          <AssetBalancesPanel />
+        </IntlWrapper>,
+        initialState,
+      ),
+    )
 
     expect(wrapper.find('#neoWalletValue').text()).toEqual('$2,548,025.48')
     expect(wrapper.find('#gasWalletValue').text()).toEqual('$18,100.00')
@@ -129,7 +139,14 @@ describe('AssetBalancesPanel', () => {
 
   test('account data refreshes when refresh button is clicked', () => {
     const store = createStore(initialState)
-    const wrapper = mount(provideStore(<AssetBalancesPanel />, store))
+    const wrapper = mount(
+      provideStore(
+        <IntlWrapper>
+          <AssetBalancesPanel />
+        </IntlWrapper>,
+        store,
+      ),
+    )
 
     wrapper
       .find('#refresh')

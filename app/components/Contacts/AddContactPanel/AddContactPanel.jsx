@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import { noop } from 'lodash-es'
+import { FormattedMessage } from 'react-intl'
 
 import FullHeightPanel from '../../Panel/FullHeightPanel'
 import ContactForm from '../ContactForm'
@@ -34,15 +35,20 @@ export default class AddContactPanel extends React.Component<Props> {
         className={className}
         renderHeaderIcon={() => <AddIcon />}
         renderBackButton={() => <BackButton routeTo={ROUTES.CONTACTS} />}
-        headerText="Add A Contact"
-        renderInstructions={() => <div>Insert Contact Details</div>}
+        headerText={<FormattedMessage id="addAContact" />}
+        renderInstructions={() => (
+          <div>
+            {' '}
+            <FormattedMessage id="addContactDetails" />
+          </div>
+        )}
       >
         <div className={styles.formContainer}>
           <ContactForm
             formName={name}
             newAddress
             formAddress={address}
-            submitLabel="Add to Contacts"
+            submitLabel={<FormattedMessage id="addToContacts" />}
             onSubmit={this.handleSubmit}
           />
         </div>

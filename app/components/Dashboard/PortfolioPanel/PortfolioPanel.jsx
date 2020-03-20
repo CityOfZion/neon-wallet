@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
+import { FormattedMessage } from 'react-intl'
 
 import PortfolioBreakdownChart from './PortfolioBreakdownChart'
 import PortfolioTable from './PortfolioTable'
@@ -54,5 +55,9 @@ export default class PortfolioPanel extends React.Component<Props> {
     )
   }
 
-  renderHeader = () => <div className={styles.header}>Total Wallet Value</div>
+  renderHeader = () => (
+    <div className={styles.header}>
+      <FormattedMessage id="dashboardValueLabel" />
+    </div>
+  )
 }

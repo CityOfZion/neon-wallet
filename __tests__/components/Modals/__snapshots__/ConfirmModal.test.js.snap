@@ -83,6 +83,8 @@ exports[`ConfirmModal should render without crashing 1`] = `
               "--button-active": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
               "--button-active-hover": "#66edcd",
               "--button-disabled": "#d6d9e0",
+              "--button-flag-icon-color": "#394152",
+              "--button-flag-icon-opacity": 0.3,
               "--button-icon-color": "#394152",
               "--button-max-amount-background": "#e6e6e6",
               "--button-max-amount-text": "#8f939b",
@@ -189,6 +191,8 @@ exports[`ConfirmModal should render without crashing 1`] = `
               "--button-active": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
               "--button-active-hover": "#66edcd",
               "--button-disabled": "#d6d9e0",
+              "--button-flag-icon-color": "#394152",
+              "--button-flag-icon-opacity": 0.3,
               "--button-icon-color": "#394152",
               "--button-max-amount-background": "#e6e6e6",
               "--button-max-amount-text": "#8f939b",
@@ -387,6 +391,8 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--button-active": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
                   "--button-active-hover": "#66edcd",
                   "--button-disabled": "#d6d9e0",
+                  "--button-flag-icon-color": "#394152",
+                  "--button-flag-icon-opacity": 0.3,
                   "--button-icon-color": "#394152",
                   "--button-max-amount-background": "#e6e6e6",
                   "--button-max-amount-text": "#8f939b",
@@ -493,6 +499,8 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--button-active": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
                   "--button-active-hover": "#66edcd",
                   "--button-disabled": "#d6d9e0",
+                  "--button-flag-icon-color": "#394152",
+                  "--button-flag-icon-opacity": 0.3,
                   "--button-icon-color": "#394152",
                   "--button-max-amount-background": "#e6e6e6",
                   "--button-max-amount-text": "#8f939b",
@@ -599,6 +607,8 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--button-active": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
                   "--button-active-hover": "#66edcd",
                   "--button-disabled": "#d6d9e0",
+                  "--button-flag-icon-color": "#394152",
+                  "--button-flag-icon-opacity": 0.3,
                   "--button-icon-color": "#394152",
                   "--button-max-amount-background": "#e6e6e6",
                   "--button-max-amount-text": "#8f939b",
@@ -710,6 +720,8 @@ exports[`ConfirmModal should render without crashing 1`] = `
                     "--button-active": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
                     "--button-active-hover": "#66edcd",
                     "--button-disabled": "#d6d9e0",
+                    "--button-flag-icon-color": "#394152",
+                    "--button-flag-icon-opacity": 0.3,
                     "--button-icon-color": "#394152",
                     "--button-max-amount-background": "#e6e6e6",
                     "--button-max-amount-text": "#8f939b",
@@ -830,6 +842,8 @@ exports[`ConfirmModal should render without crashing 1`] = `
                       "--button-active": "linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)",
                       "--button-active-hover": "#66edcd",
                       "--button-disabled": "#d6d9e0",
+                      "--button-flag-icon-color": "#394152",
+                      "--button-flag-icon-opacity": 0.3,
                       "--button-icon-color": "#394152",
                       "--button-max-amount-background": "#e6e6e6",
                       "--button-max-amount-text": "#8f939b",
@@ -941,7 +955,12 @@ exports[`ConfirmModal should render without crashing 1`] = `
                           type="button"
                         >
                           <span>
-                            Confirm
+                            <FormattedMessage
+                              id="modalActionConfirm"
+                              values={Object {}}
+                            >
+                              Confirm
+                            </FormattedMessage>
                           </span>
                         </button>
                       </Button>
@@ -959,7 +978,12 @@ exports[`ConfirmModal should render without crashing 1`] = `
                           type="button"
                         >
                           <span>
-                            Cancel
+                            <FormattedMessage
+                              id="modalActionCancel"
+                              values={Object {}}
+                            >
+                              Cancel
+                            </FormattedMessage>
                           </span>
                         </button>
                       </Button>

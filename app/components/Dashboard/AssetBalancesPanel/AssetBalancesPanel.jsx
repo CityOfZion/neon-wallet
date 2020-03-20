@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
+import { FormattedMessage } from 'react-intl'
 
 import { BigNumber } from 'bignumber.js'
 import Panel from '../../Panel'
@@ -42,7 +43,9 @@ export default class AssetBalancesPanel extends React.Component<Props> {
         renderHeader={this.renderHeader}
       >
         <div className={styles.totalValue}>
-          <div className={styles.label}>Total</div>
+          <div className={styles.label}>
+            <FormattedMessage id="dashboardAssetsTotal" />
+          </div>
           <div className={styles.walletTotal} id="walletTotal">
             {this.getFormattedFiatBalance(this.getTotalValue())}
           </div>
@@ -114,7 +117,9 @@ export default class AssetBalancesPanel extends React.Component<Props> {
 
   renderHeader = () => (
     <div className={styles.header}>
-      <span>System Assets</span>
+      <span>
+        <FormattedMessage id="dashboardAssetsPanelLabel" />
+      </span>
     </div>
   )
 
