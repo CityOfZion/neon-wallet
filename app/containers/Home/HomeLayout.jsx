@@ -41,7 +41,6 @@ class HomeLayout extends React.Component<Props, State> {
     const {
       children,
       renderNavigation,
-      headerText,
       theme,
       languageDisplayValue,
       setLanguageSetting,
