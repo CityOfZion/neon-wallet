@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 import { shallow, mount } from 'enzyme'
 
+import IntlWrapper from '../../app/components/Root/IntlWrapper'
 import News from '../../app/containers/News'
 
 const setup = (
@@ -20,9 +21,11 @@ const setup = (
 
   const wrapper = mount(
     <Provider store={store}>
-      <MemoryRouter initialEntries={['/']} keyLength={0}>
-        <Component store={store} />
-      </MemoryRouter>
+      <IntlWrapper>
+        <MemoryRouter initialEntries={['/']} keyLength={0}>
+          <Component store={store} />
+        </MemoryRouter>
+      </IntlWrapper>
     </Provider>,
   )
 

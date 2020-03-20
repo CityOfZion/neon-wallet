@@ -1,10 +1,10 @@
 // @flow
 import React from 'react'
+import { FormattedMessage } from 'react-intl'
 
 import CheckMarkIcon from '../../../../assets/icons/confirm-circle.svg'
 import Transaction from '../../../Blockchain/Transaction'
 import TransactionList from '../../../Blockchain/Transaction/TransactionList'
-import { pluralize } from '../../../../util/pluralize'
 import { createFormattedDate } from '../../../../util/createFormattedDate'
 import styles from './SendSuccess.scss'
 import { TX_TYPES } from '../../../../core/constants'
@@ -32,20 +32,26 @@ export default class SendSuccess extends React.Component<Props> {
       to: row.address,
       txid,
     }))
-    const numberOfItems = sendRowDetails.length
+    const transferCount = sendRowDetails.length
+
     return (
       <section>
         <div className={styles.sendSuccessHeader}>
           <CheckMarkIcon className={styles.sendSuccessHeaderIcon} />
           <div className={styles.sendSuccessHeaderInfo}>
             <h1 className={styles.sendSuccessHeaderInfoText}>
-              {numberOfItems} {pluralize('Transfer', numberOfItems)} pending
+              <FormattedMessage
+                id="numberofTransactionsPending"
+                values={{
+                  transferCount,
+                }}
+              />
             </h1>
             <p className={styles.sendSuccessParagraphText}>
               {this.txFormattedDate}
             </p>
             <p className={styles.sendSuccessParagraphText}>
-              Transaction ID: {txid}
+              <FormattedMessage id="transactionId" /> {txid}
             </p>
           </div>
         </div>
@@ -54,7 +60,12 @@ export default class SendSuccess extends React.Component<Props> {
         </div>
         <div className={styles.sendSuccessBody}>
           <h2 className={styles.sendSuccessBodyHeaderText}>
-            Asset {pluralize('Recipient', numberOfItems)}
+            <FormattedMessage
+              id="assetRecipients"
+              values={{
+                transferCount,
+              }}
+            />
           </h2>
           <TransactionList>
             {transactions.map((tx, i) => (

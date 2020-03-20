@@ -1,13 +1,12 @@
 // @flow
 import React from 'react'
+import { injectIntl, IntlShape, FormattedMessage } from 'react-intl'
 
 import ImportIcon from '../../../../assets/icons/import.svg'
 import AddIcon from '../../../../assets/icons/add.svg'
 import GridIcon from '../../../../assets/icons/grid.svg'
 import LightningIcon from '../../../../assets/icons/lightning.svg'
 import PanelHeaderButton from '../../../PanelHeaderButton/PanelHeaderButton'
-
-import { pluralize } from '../../../../util/pluralize'
 
 import styles from '../SendPanel.scss'
 
@@ -26,6 +25,7 @@ type Props = {
   showSendModal: (props: Object) => any,
   pushQRCodeData: (data: Object) => any,
   showImportModal: (props: Object) => void,
+  intl: IntlShape,
 }
 
 const SendPanelHeader = ({
@@ -43,11 +43,20 @@ const SendPanelHeader = ({
   showSendModal,
   showImportModal,
   pushQRCodeData,
+  intl,
 }: Props) => {
   const numberOfItems = sendRowDetails.length
 
-  let headerTitle = 'Select Assets'
-  let headerSubtitle = `${numberOfItems} of ${maxNumberOfRecipients} Recipients`
+  let headerTitle = intl.formatMessage({ id: 'selectAssets' })
+  let headerSubtitle = intl.formatMessage(
+    {
+      id: 'sendSelectAssets',
+    },
+    {
+      transferCount: numberOfItems,
+      maxNumberOfRecipients,
+    },
+  )
   let buttons = (
     <div className={styles.sendPanelHeaderButtons}>
       <PanelHeaderButton
@@ -55,7 +64,7 @@ const SendPanelHeader = ({
         renderIcon={() => (
           <ImportIcon className={styles.sendPanelHeaderButtonIcon} />
         )}
-        buttonText="Import"
+        buttonText={<FormattedMessage id="sendImport" />}
       />
       <PanelHeaderButton
         disabled={disableEnterQRCode}
@@ -63,7 +72,7 @@ const SendPanelHeader = ({
         renderIcon={() => (
           <GridIcon className={styles.sendPanelHeaderButtonIcon} />
         )}
-        buttonText="Enter QR Code"
+        buttonText={<FormattedMessage id="sendEnterQRCode" />}
       />
       <PanelHeaderButton
         disabled={disableAddRecipient}
@@ -71,24 +80,25 @@ const SendPanelHeader = ({
         renderIcon={() => (
           <AddIcon className={styles.sendPanelHeaderButtonIcon} />
         )}
-        buttonText="Add Recipient"
+        buttonText={<FormattedMessage id="sendAdd" />}
       />
     </div>
   )
 
   if (showConfirmSend) {
-    headerTitle = 'Confirmation'
-    headerSubtitle = `${numberOfItems} ${pluralize('Recipient', numberOfItems)}`
+    headerTitle = <FormattedMessage id="confirmation" />
+    headerSubtitle = (
+      <FormattedMessage
+        id="confirmationRecipient"
+        values={{ transferCount: numberOfItems }}
+      />
+    )
     buttons = <div className={styles.sendPanelHeaderButtons} />
   }
 
   if (sendSuccess) {
-    headerTitle = 'Complete!'
-    headerSubtitle = `${numberOfItems} asset ${pluralize(
-      'type',
-      numberOfItems,
-    )} sent to 
-    ${numberOfItems} ${pluralize('recipient', numberOfItems)}.`
+    headerTitle = <FormattedMessage id="completeExclaim" />
+
     buttons = (
       <div className={styles.sendPanelHeaderButtons}>
         <button
@@ -96,8 +106,8 @@ const SendPanelHeader = ({
           className={styles.sendPanelHeaderButton}
           onClick={resetViews}
         >
-          <AddIcon className={styles.sendPanelHeaderButtonIcon} /> Send More
-          Assets
+          <AddIcon className={styles.sendPanelHeaderButtonIcon} />{' '}
+          <FormattedMessage id="sendMoreAssets" />
         </button>
       </div>
     )
@@ -124,7 +134,7 @@ const SendPanelHeader = ({
       {hasNetworkFees &&
         !sendError && (
           <div className={styles.priorityTrasferHeaderTextContainer}>
-            <LightningIcon /> Priority Transfer
+            <LightningIcon /> <FormattedMessage id="priorityTransfer" />
           </div>
         )}
       {buttons}
@@ -132,4 +142,4 @@ const SendPanelHeader = ({
   )
 }
 
-export default SendPanelHeader
+export default injectIntl(SendPanelHeader)

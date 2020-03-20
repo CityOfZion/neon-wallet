@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { NavLink, Redirect } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
 
 import { ROUTES } from '../../core/constants'
 import AssetBalancesPanel from '../../components/Dashboard/AssetBalancesPanel'
@@ -12,6 +13,7 @@ import Address from '../../components/Blockchain/Address'
 import PortfolioPanel from '../../components/Dashboard/PortfolioPanel'
 import Wallet from '../../assets/icons/wallet.svg'
 import RefreshButton from '../Buttons/RefreshButton'
+
 import styles from './Dashboard.scss'
 
 type Props = {
@@ -56,7 +58,9 @@ export default class Dashboard extends Component<Props> {
           renderLeftContent={() => (
             <div>
               <div className={styles.headerAddressContainer}>
-                <label>Address:</label>
+                <label>
+                  <FormattedMessage id="dashboardAddressLabel" />
+                </label>
                 <Address address={address} asWrapper>
                   <div className={styles.addressLink}>{address}</div>
                 </Address>
@@ -67,7 +71,9 @@ export default class Dashboard extends Component<Props> {
             <div className={classNames(styles.dashboardHeaderButonContainer)}>
               <NavLink id="wallet-manager" exact to={ROUTES.WALLET_MANAGER}>
                 <Wallet id="manage-wallets" />
-                <span> Manage Wallets </span>
+                <span>
+                  <FormattedMessage id="dashboardManageWallets" />
+                </span>
               </NavLink>
               <RefreshButton />
             </div>

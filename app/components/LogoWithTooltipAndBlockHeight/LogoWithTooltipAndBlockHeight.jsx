@@ -1,5 +1,6 @@
 // @flow
 import React, { Fragment } from 'react'
+import { FormattedMessage } from 'react-intl'
 
 import Tooltip from '../Tooltip'
 import NetworkConfigurationTooltip from '../NetworkConfigurationTooltip'
@@ -38,7 +39,7 @@ class LogoWithTooltipAndBlockHeight extends React.Component<Props> {
           {count && (
             <Fragment>
               <div id="block-height-label" className={styles.heightText}>
-                CURRENT BLOCK:
+                <FormattedMessage id="sidebarCurrentBlock" />
               </div>
               <div id="block-height">{count.toLocaleString()}</div>
             </Fragment>

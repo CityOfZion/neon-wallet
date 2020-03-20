@@ -11,13 +11,12 @@ exports[`Login renders without crashing 1`] = `
     <div
       className="centeredInput"
     >
-      <PasswordInput
-        autoFocus={true}
-        onChange={[Function]}
-        placeholder="Enter your private key here"
-        textInputClassName="privateKeyInput"
-        value=""
-      />
+      <FormattedMessage
+        id="authPrivateKeyPlaceholder"
+        values={Object {}}
+      >
+        <Component />
+      </FormattedMessage>
     </div>
     <div
       className="loginButtonRow"
@@ -31,7 +30,10 @@ exports[`Login renders without crashing 1`] = `
         shouldCenterButtonLabelText={false}
         type="button"
       >
-        Scan QR
+        <FormattedMessage
+          id="authScanQRButton"
+          values={Object {}}
+        />
       </Button>
       <Button
         disabled={true}
@@ -41,7 +43,10 @@ exports[`Login renders without crashing 1`] = `
         shouldCenterButtonLabelText={false}
         type="submit"
       >
-        Login
+        <FormattedMessage
+          id="authLogin"
+          values={Object {}}
+        />
       </Button>
     </div>
   </form>

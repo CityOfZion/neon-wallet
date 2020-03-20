@@ -11,7 +11,7 @@ import { getNode, getRPCEndpoint } from './nodeStorageActions'
 import { ASSETS } from '../core/constants'
 import { COIN_DECIMAL_LENGTH } from '../core/formatters'
 import { toBigNumber } from '../core/math'
-import { findNetworkByLabel } from '../core/networks'
+import { findNetworkByDeprecatedLabel } from '../core/networks'
 
 const MAX_SCRIPT_HASH_CHUNK_SIZE = 5
 
@@ -74,7 +74,7 @@ function determineIfBalanceUpdated(
 
 async function getBalances({ net, address }: Props) {
   const { soundEnabled, tokens } = await getSettings()
-  const network = findNetworkByLabel(net)
+  const network = findNetworkByDeprecatedLabel(net)
 
   let endpoint = await getNode(net)
   if (!endpoint) {

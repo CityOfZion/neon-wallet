@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
 import { withData, withActions } from 'spunky'
+import { injectIntl } from 'react-intl'
 
 import accountsActions, {
   updateAccountsActions,
 } from '../../actions/accountsActions'
-
 import walletLabelActions, {
   updateLabelActions,
 } from '../../actions/walletLabelActions'
@@ -18,9 +18,7 @@ import {
 import withSuccessNotification from '../../hocs/withSuccessNotification'
 import withFailureNotification from '../../hocs/withFailureNotification'
 import withAuthData from '../../hocs/withAuthData'
-
 import { showModal } from '../../modules/modal'
-
 import EditWallet from './EditWallet'
 
 const mapAccountsDataToProps = accounts => ({
@@ -59,4 +57,5 @@ export default compose(
     updateLabelActions,
     'Succesfully updated wallet name.',
   ),
+  injectIntl,
 )(EditWallet)

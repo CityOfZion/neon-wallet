@@ -65,7 +65,7 @@ export default compose(
   withAuthData(),
   withNetworkData(),
   withProgressPanel(transactionHistoryActions, {
-    title: 'Transaction History',
+    title: '',
   }),
   withActions(transactionHistoryActions, mapAccountActionsToProps),
   withActions(getPendingTransactionInfo, mapPendingTransactionActionsToProps),

@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react'
+import type { Node } from 'react'
 import { Link } from 'react-router-dom'
 import classNames from 'classnames'
 
@@ -7,11 +8,11 @@ import styles from './SettingsLink.scss'
 import DropdownIcon from '../../../assets/icons/dropdown.svg'
 
 type Props = {
-  title: string,
+  title: string | Node,
   to: string,
   tooltip?: boolean,
   noBorderBottom?: boolean,
-  label?: string,
+  label?: string | Node,
   onClick?: Function,
   renderIcon?: Function,
 }

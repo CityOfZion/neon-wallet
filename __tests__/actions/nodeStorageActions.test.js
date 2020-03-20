@@ -10,6 +10,7 @@ import {
   TEST_NETWORK_ID,
   TEST_NETWORK_LABEL,
   NODES_TEST_NET,
+  TEST_NETWORK_DEPRECATED_LABEL,
 } from '../../app/core/constants'
 
 const MINUTES_AS_MS =
@@ -78,7 +79,7 @@ describe('nodeStorageActions', () => {
   describe('getRPCEndpoint', () => {
     test('returns an RPC endpoint', async () => {
       nock.enableNetConnect()
-      const selectedNode = await getRPCEndpoint(TEST_NETWORK_LABEL)
+      const selectedNode = await getRPCEndpoint(TEST_NETWORK_DEPRECATED_LABEL)
       const arrOfCandidates = NODES_TEST_NET.map(buildNodeUrl)
       expect(arrOfCandidates).toContain(selectedNode)
       nock.disableNetConnect()

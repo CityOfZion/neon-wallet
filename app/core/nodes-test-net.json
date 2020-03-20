@@ -1,33 +1,7 @@
 [
-  {
-    "url": "seed2.neo.org",
-    "height": 1897900,
-    "protocol": "http",
-    "port": "20332"
-  },
-  {
-    "url": "test1.cityofzion.io",
-    "height": 1939921,
-    "protocol": "https"
-  },
-  {
-    "url": "test2.cityofzion.io",
-    "height": 1939921,
-    "protocol": "https"
-  },
-  {
-    "url": "test3.cityofzion.io",
-    "height": 1939921,
-    "protocol": "https"
-  },
-  {
-    "url": "test4.cityofzion.io",
-    "height": 1939918,
-    "protocol": "https"
-  },
-  {
-    "url": "test5.cityofzion.io",
-    "height": 1939921,
-    "protocol": "https"
-  }
+  { "url": "https://test1.cityofzion.io" },
+  { "url": "https://test2.cityofzion.io" },
+  { "url": "https://test3.cityofzion.io" },
+  { "url": "https://test4.cityofzion.io" },
+  { "url": "https://test5.cityofzion.io" }
 ]

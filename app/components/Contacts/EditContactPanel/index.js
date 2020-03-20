@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import { compose, withProps } from 'recompose'
 import { withActions, progressValues } from 'spunky'
 import { trim } from 'lodash-es'
+import { injectIntl } from 'react-intl'
 
 import EditContactPanel from './EditContactPanel'
 import {
@@ -57,4 +58,5 @@ export default compose(
   withActions(deleteContactActions, mapDeleteContactActionsToProps),
   withFailureNotification(deleteContactActions),
   withFailureNotification(updateContactActions),
+  injectIntl,
 )(EditContactPanel)

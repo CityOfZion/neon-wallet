@@ -2,6 +2,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import { NavLink } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
 
 import Logout from './Logout'
 import { ROUTES } from '../../../core/constants'
@@ -50,7 +51,9 @@ const Sidebar = ({
         activeClassName={styles.active}
       >
         <HomeIcon />
-        <div> Wallet </div>
+        <div>
+          <FormattedMessage id="sidebarWallet" />
+        </div>
       </NavLink>
 
       <NavLink
@@ -66,7 +69,10 @@ const Sidebar = ({
           </div>
         )}
         <HistoryIcon />
-        <div> Activity </div>
+        <div>
+          {' '}
+          <FormattedMessage id="sidebarActivity" />{' '}
+        </div>
       </NavLink>
 
       <NavLink
@@ -77,7 +83,10 @@ const Sidebar = ({
         activeClassName={styles.active}
       >
         <SendIcon />
-        <div> Send </div>
+        <div>
+          {' '}
+          <FormattedMessage id="sidebarSend" />{' '}
+        </div>
       </NavLink>
 
       <NavLink
@@ -88,7 +97,10 @@ const Sidebar = ({
         activeClassName={styles.active}
       >
         <ReceiveIcon />
-        <div> Receive </div>
+        <div>
+          {' '}
+          <FormattedMessage id="sidebarReceive" />{' '}
+        </div>
       </NavLink>
 
       <NavLink
@@ -98,7 +110,10 @@ const Sidebar = ({
         activeClassName={styles.active}
       >
         <ContactsIcon />
-        <div> Contacts </div>
+        <div>
+          {' '}
+          <FormattedMessage id="sidebarContacts" />{' '}
+        </div>
       </NavLink>
 
       {!isWatchOnly && (
@@ -109,7 +124,10 @@ const Sidebar = ({
           activeClassName={styles.active}
         >
           <TokenSaleIcon />
-          <div id="token-sale-label"> Token Sale </div>
+          <div id="token-sale-label">
+            {' '}
+            <FormattedMessage id="sidebarTokenSale" />{' '}
+          </div>
         </NavLink>
       )}
       <NavLink
@@ -119,7 +137,10 @@ const Sidebar = ({
         activeClassName={styles.active}
       >
         <NewsIcon />
-        <div> News </div>
+        <div>
+          {' '}
+          <FormattedMessage id="sidebarNews" />{' '}
+        </div>
       </NavLink>
 
       <NavLink
@@ -129,7 +150,10 @@ const Sidebar = ({
         activeClassName={styles.active}
       >
         <SettingsIcon />
-        <div> Settings </div>
+        <div>
+          {' '}
+          <FormattedMessage id="sidebarSettings" />{' '}
+        </div>
       </NavLink>
     </div>
 

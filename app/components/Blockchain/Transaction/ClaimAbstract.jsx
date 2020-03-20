@@ -1,12 +1,14 @@
 // @flow
 import React, { Fragment } from 'react'
+import { FormattedMessage } from 'react-intl'
 
 import classNames from 'classnames'
 import Button from '../../Button'
-import styles from './Transaction.scss'
 import ClaimIcon from '../../../assets/icons/claim.svg'
 import ContactsAdd from '../../../assets/icons/contacts-add.svg'
 import CopyToClipboard from '../../CopyToClipboard'
+
+import styles from './Transaction.scss'
 
 type Props = {
   txDate: React$Node,
@@ -61,7 +63,7 @@ export default class ClaimAbstract extends React.Component<Props> {
             onClick={() => showAddContactModal(to)}
             disabled={contactToExists}
           >
-            Add
+            <FormattedMessage id="activityAddAddress" />
           </Button>
         </div>
       </div>
