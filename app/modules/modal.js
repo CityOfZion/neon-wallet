@@ -26,9 +26,10 @@ const initialState = {
 }
 
 export default (state: Object = initialState, action: ReduxAction) => {
-  const { modalType, modalProps } = action.payload
   switch (action.type) {
     case SHOW_MODAL: // eslint-disable-line no-case-declarations
+      // eslint-disable-next-line no-case-declarations
+      const { modalType, modalProps } = action.payload
       return {
         modalType,
         modalProps,
