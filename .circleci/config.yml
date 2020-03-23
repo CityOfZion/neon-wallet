@@ -54,7 +54,7 @@ jobs:
       - run: apt-get -y update
       - run: apt-get -y install libusb-1.0-0-dev graphicsmagick libudev-dev
       - run: apt-get -y install libxtst6 libxss1 libgtk2.0-0 libnss3 libasound2 libgconf-2-4
-      - run: yarn test-ci --detectOpenHandles
+      - run: yarn test-ci
       # TODO: add these steps back when e2e test suite is functional
       # - run:
       #     name: Running Xvfb for e2e test
