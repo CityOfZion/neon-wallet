@@ -73,7 +73,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
     this.intervalId = setInterval(this.props.connect, POLL_FREQUENCY_MS)
   }
 
-  componentWillReceiveProps(nextProps: Props) {
+  UNSAFE_componentWillReceiveProps(nextProps: Props) {
     const { progress, error } = this.props
 
     if (nextProps.publicKey && !this.state.addressOption) {

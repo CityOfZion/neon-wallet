@@ -49,7 +49,7 @@ export default function withFailureNotification(
       prevProps[PROGRESS_PROP] !== FAILED && nextProps[PROGRESS_PROP] === FAILED
 
     class ErrorNotifier extends React.Component<Props> {
-      componentWillReceiveProps(nextProps) {
+      UNSAFE_componentWillReceiveProps(nextProps) {
         if (
           hasError(nextProps) &&
           progressChangedToError(this.props, nextProps)
@@ -78,5 +78,5 @@ export default function withFailureNotification(
       withError(actions, mapErrorToProps),
       withProgress(actions, { ...options, propName: PROGRESS_PROP }),
     )(ErrorNotifier)
-  }
+  };
 }

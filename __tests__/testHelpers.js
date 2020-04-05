@@ -12,7 +12,6 @@ export const provideState = (node, initialState = {}) => {
 }
 
 export const provideStore = (node, store) => {
-  console.log({ store })
   return <Provider store={store}>{node}</Provider>
 }
 

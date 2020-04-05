@@ -17,7 +17,7 @@ type Props = {
 class Notifications extends Component<Props> {
   rnsRef: any
 
-  componentWillReceiveProps(nextProps: Props) {
+  UNSAFE_componentWillReceiveProps(nextProps: Props) {
     // Adapted from https://github.com/gor181/react-notification-system-redux/blob/master/src/notifications.js
     const { hideNotification } = this.props
     const { notifications } = nextProps

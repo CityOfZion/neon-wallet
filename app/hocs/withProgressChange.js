@@ -31,7 +31,7 @@ export default function withProgressChange(
 
   return (Component: Class<React.Component<*>>) => {
     class WrappedComponent extends React.Component<Props> {
-      componentWillReceiveProps(nextProps) {
+      UNSAFE_componentWillReceiveProps(nextProps) {
         if (
           !progresses.includes(this.props[PROGRESS_PROP]) &&
           progresses.includes(nextProps[PROGRESS_PROP])
@@ -62,5 +62,5 @@ export default function withProgressChange(
       withData(actions, mapDataToProps),
       withError(actions, mapErrorToProps),
     )(WrappedComponent)
-  }
+  };
 }

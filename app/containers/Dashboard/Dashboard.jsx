@@ -36,7 +36,7 @@ export default class Dashboard extends Component<Props> {
     this.removePolling()
   }
 
-  componentWillReceiveProps(nextProps: Props) {
+  UNSAFE_componentWillReceiveProps(nextProps: Props) {
     if (this.props.loadWalletData !== nextProps.loadWalletData) {
       this.removePolling()
       this.addPolling()

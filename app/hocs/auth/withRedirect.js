@@ -29,7 +29,7 @@ export default function withRedirect(
 
   return (Component: Class<React.Component<*>>) => {
     class WrappedComponent extends React.Component<Props> {
-      componentWillReceiveProps(nextProps) {
+      UNSAFE_componentWillReceiveProps(nextProps) {
         if (strategy(this.props[propName], nextProps[propName])) {
           this.props.history.push(route)
         }
@@ -45,5 +45,5 @@ export default function withRedirect(
       withRouter,
       withData(authActions, mapAuthDataToProps),
     )(WrappedComponent)
-  }
+  };
 }
