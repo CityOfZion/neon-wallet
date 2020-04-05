@@ -113,6 +113,7 @@ export default class Transaction extends React.Component<Props> {
     const logo = image && <img src={image} alt={`${label}`} />
     const txDate = this.renderTxDate(time)
 
+    // $FlowFixMe
     const abstractProps = {
       txDate,
       logo,

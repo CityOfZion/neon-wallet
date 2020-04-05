@@ -73,6 +73,7 @@ function determineIfBalanceUpdated(
 }
 
 async function getBalances({ net, address }: Props) {
+  // $FlowFixMe
   const { soundEnabled, tokens } = await getSettings()
   const network = findNetworkByDeprecatedLabel(net)
 

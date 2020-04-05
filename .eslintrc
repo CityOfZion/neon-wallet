@@ -26,7 +26,7 @@
     "test": true,
     "it": true
   },
-  "plugins": ["prettier", "react", "flowtype", "import"],
+  "plugins": ["prettier", "react", "react-hooks", "flowtype", "import"],
   "rules": {
     "no-new": 0,
     "no-shadow": 0,

@@ -58,6 +58,7 @@ export default class Receive extends React.Component<Props, State> {
         </FormattedMessage>
         {!noSendableAssets && (
           <AmountsPanel
+            // $FlowFixMe
             amountsData={this.createSendAmountsData()}
             currencyCode={currencyCode}
           />

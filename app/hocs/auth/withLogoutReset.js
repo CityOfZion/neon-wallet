@@ -7,7 +7,7 @@ import didLogout from '../helpers/didLogout'
 import authActions from '../../actions/authActions'
 
 type Options = {
-  propName?: string,
+  propName: string,
 }
 
 export default function withLogoutReset(

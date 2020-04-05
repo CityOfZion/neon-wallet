@@ -15,7 +15,7 @@ type Props = {
 }
 
 type Options = {
-  propName?: string,
+  propName: string,
 }
 
 export default function withRedirect(

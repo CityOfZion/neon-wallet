@@ -22,7 +22,7 @@ declare type DispatchType = (actionCreator: ActionCreatorType) => Promise<*>
 
 declare type GetStateType = () => Object
 
-declare type ReduxAction = () => {
+declare type ReduxAction = {
   type: string,
   payload: Object,
   meta?: Object,

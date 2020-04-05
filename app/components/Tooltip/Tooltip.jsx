@@ -9,6 +9,7 @@ type Props = {
 }
 
 const Tooltip = ({ children, position = 'bottom', style, ...rest }: Props) => (
+  // $FlowFixMe
   <Tippy arrow position={position} animation="fade" {...rest}>
     {children}
   </Tippy>

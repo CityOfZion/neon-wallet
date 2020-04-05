@@ -34,6 +34,7 @@ class Notifications extends Component<Props> {
 
       difference(notificationIds, systemNotificationsIds).forEach(
         notificationId => {
+          // $FlowFixMe
           this.rnsRef.addNotification({
             children: (
               <div

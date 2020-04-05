@@ -74,7 +74,7 @@ const withInitialCall = (
       return Component
     }
   }
-
+  // $FlowFixMe
   return withProgress(actions, { propName, strategy, ...options })(
     ConditionalCallComponent,
   )

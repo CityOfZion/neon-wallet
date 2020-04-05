@@ -68,10 +68,12 @@ const notificationFactory = (
 
   const shouldHideNonDismissibleNotifications = !stack
   if (shouldHideNonDismissibleNotifications) {
+    // $FlowFixMe
     dispatch(hideNotifications({ position, dismissible: true }))
   }
 
   dispatch(
+    // $FlowFixMe
     showNotification({
       id,
       position,
@@ -137,8 +139,10 @@ export default (state: Array<NotificationType> = [], action: ReduxAction) => {
     case SHOW_NOTIFICATION:
       return [...state, { ...action.payload }]
     case HIDE_NOTIFICATION:
+      // $FlowFixMe
       return reject(state, { id: action.payload.id })
     case HIDE_NOTIFICATIONS:
+      // $FlowFixMe
       return reject(state, action.payload)
     default:
       return state
