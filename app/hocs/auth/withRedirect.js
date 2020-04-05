@@ -45,5 +45,5 @@ export default function withRedirect(
       withRouter,
       withData(authActions, mapAuthDataToProps),
     )(WrappedComponent)
-  };
+  }
 }

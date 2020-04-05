@@ -75,7 +75,7 @@
     "no-param-reassign": ["warn"],
     "no-restricted-syntax": ["error", "LabeledStatement", "WithStatement"],
     "no-await-in-loop": 0,
-    "camelcase": ["warn"]
+    "camelcase": 0
   },
   "settings": {
     "import/resolver": {

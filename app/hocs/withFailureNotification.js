@@ -78,5 +78,5 @@ export default function withFailureNotification(
       withError(actions, mapErrorToProps),
       withProgress(actions, { ...options, propName: PROGRESS_PROP }),
     )(ErrorNotifier)
-  };
+  }
 }

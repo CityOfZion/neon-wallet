@@ -61,5 +61,5 @@ export default function withSuccessNotification(
       ),
       withProgress(actions, { ...options, propName: PROGRESS_PROP }),
     )(LoadedNotifier)
-  };
+  }
 }

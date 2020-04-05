@@ -62,5 +62,5 @@ export default function withProgressChange(
       withData(actions, mapDataToProps),
       withError(actions, mapErrorToProps),
     )(WrappedComponent)
-  };
+  }
 }
