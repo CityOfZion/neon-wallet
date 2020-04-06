@@ -1,5 +1,5 @@
 // @flow
-import { connect, type MapStateToProps } from 'react-redux'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
 import { withReset, withActions, withData } from 'spunky'
@@ -17,7 +17,7 @@ import { internetConnectionPromptPresented } from '../../actions/internetConnect
 
 import Dashboard from './Dashboard'
 
-const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
+const mapStateToProps = (state: Object) => ({
   notification: getNotifications(state),
 })
 

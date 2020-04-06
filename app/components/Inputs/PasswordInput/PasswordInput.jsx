@@ -1,8 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import FaEye from 'react-icons/lib/fa/eye'
-import FaEyeSlash from 'react-icons/lib/fa/eye-slash'
+import { FaEyeSlash, FaEye } from 'react-icons/fa'
 
 import TextInput from '../TextInput'
 import styles from './PasswordInput.scss'
@@ -26,6 +25,7 @@ export default class PasswordInput extends React.Component<Props, State> {
 
   render() {
     return (
+      // $FlowFixMe
       <TextInput
         className={classNames(styles.passwordInput, this.props.className)}
         type={this.state.showPassword ? 'text' : 'password'}

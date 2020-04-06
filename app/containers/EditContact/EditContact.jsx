@@ -12,7 +12,7 @@ type Props = {
 }
 
 export default class EditContact extends React.Component<Props> {
-  componentWillMount = () => {
+  UNSAFE_componentWillMount = () => {
     if (!this.props.address) {
       this.props.history.push(ROUTES.CONTACTS)
     }

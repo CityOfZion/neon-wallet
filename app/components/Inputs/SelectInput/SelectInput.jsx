@@ -61,7 +61,7 @@ export default class SelectInput extends React.Component<Props, State> {
     search: '',
   }
 
-  componentWillReceiveProps = (nextProps: Props) => {
+  UNSAFE_componentWillReceiveProps = (nextProps: Props) => {
     if (nextProps.value !== this.props.value) {
       this.setState({ search: trim(nextProps.value) })
     }

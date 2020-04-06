@@ -103,7 +103,8 @@ describe('Sidebar', () => {
     expect(label.text()).toEqual(' Token Sale ')
 
     const container = wrapper.find('#tokensale')
-    expect(container.length).toEqual(3)
+
+    expect(container.length).toEqual(4)
   })
 
   test('does not render the token sale navigation option when in watch only mode', () => {

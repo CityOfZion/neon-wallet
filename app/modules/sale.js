@@ -79,6 +79,7 @@ export const participateInSale = (
   const intents = [[ASSETS.NEO, neoToMint], [ASSETS.GAS, gasToMint]]
     .filter(([symbol, amount]) => amount > 0) // eslint-disable-line no-unused-vars
     .map(([symbol, amount]) =>
+      // $FlowFixMe
       api.makeIntent({ [symbol]: amount }, scriptHashAddress),
     )
 

@@ -71,11 +71,14 @@ const getContactsInGroups = (
   /* $FlowFixMe */
   const contactsArray: Array<Contacts> = Object.entries(contacts).map(
     ([name, address]) => ({
+      // $FlowFixMe
       name,
+      // $FlowFixMe
       address,
     }),
   )
 
+  // $FlowFixMe
   const groupContactsByFirstLetter = groupBy(
     contactsArray,
     ({ name }: Contact) => {

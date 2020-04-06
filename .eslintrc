@@ -26,7 +26,7 @@
     "test": true,
     "it": true
   },
-  "plugins": ["prettier", "react", "flowtype", "import"],
+  "plugins": ["prettier", "react", "react-hooks", "flowtype", "import"],
   "rules": {
     "no-new": 0,
     "no-shadow": 0,
@@ -74,7 +74,8 @@
     "flowtype/generic-spacing": 0,
     "no-param-reassign": ["warn"],
     "no-restricted-syntax": ["error", "LabeledStatement", "WithStatement"],
-    "no-await-in-loop": 0
+    "no-await-in-loop": 0,
+    "camelcase": 0
   },
   "settings": {
     "import/resolver": {

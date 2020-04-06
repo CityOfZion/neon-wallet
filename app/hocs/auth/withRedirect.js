@@ -15,7 +15,7 @@ type Props = {
 }
 
 type Options = {
-  propName?: string,
+  propName: string,
 }
 
 export default function withRedirect(
@@ -29,7 +29,7 @@ export default function withRedirect(
 
   return (Component: Class<React.Component<*>>) => {
     class WrappedComponent extends React.Component<Props> {
-      componentWillReceiveProps(nextProps) {
+      UNSAFE_componentWillReceiveProps(nextProps) {
         if (strategy(this.props[propName], nextProps[propName])) {
           this.props.history.push(route)
         }

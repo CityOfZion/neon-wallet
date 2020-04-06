@@ -43,6 +43,7 @@ const AmountsPanel = ({ amountsData, currencyCode }: Props) => {
     )
   }
 
+  // $FlowFixMe
   const orderedAmounts = orderBy(
     /* $FlowFixMe */
     amountsData,
