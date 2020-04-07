@@ -15,8 +15,6 @@ import { MODAL_TYPES } from '../../../core/constants'
 
 import styles from './TokenSalePanel.scss'
 
-const emptyArray: Array<any> = []
-
 type Props = {
   onClickHandler: () => void,
   assetBalances: Object,
@@ -24,7 +22,7 @@ type Props = {
   assetToPurchaseWith: string,
   assetToPurchase: string,
   amountToPurchaseFor: number,
-  getPurchaseableAssets: () => Array<string> | typeof emptyArray,
+  getPurchaseableAssets: () => Array<string>,
   conditions: Array<string>,
   disabledButton: boolean,
   acceptedConditions: Array<string>,

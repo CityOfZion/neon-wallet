@@ -91,7 +91,6 @@ export default function withCameraAvailability(Component) {
     }
 
     render() {
-      // $FlowFixMe
       return <Component cameraAvailable={this.state.avail} {...this.props} />
     }
   }

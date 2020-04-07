@@ -39,7 +39,7 @@ export default function withSuccessNotification(
       prevProps[PROGRESS_PROP] !== LOADED && nextProps[PROGRESS_PROP] === LOADED
 
     class LoadedNotifier extends React.Component<Props> {
-      UNSAFE_componentWillReceiveProps(nextProps) {
+      componentWillReceiveProps(nextProps) {
         if (progressChangedToLoaded(this.props, nextProps)) {
           const showSuccessNotification = nextProps[NOTIFICATION_PROP]
           showSuccessNotification({

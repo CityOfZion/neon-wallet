@@ -2,7 +2,7 @@
 import { compose } from 'recompose'
 import { values, omit } from 'lodash-es'
 import { withData, withActions } from 'spunky'
-import { connect } from 'react-redux'
+import { connect, type MapStateToProps } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import Receive from './Receive'
@@ -35,7 +35,7 @@ const mapDispatchToProps = (dispatch: Function) =>
     dispatch,
   )
 
-const mapStateToProps = (state: Object) => ({
+const mapStateToProps: MapStateToProps<*, *, *> = (state: Object) => ({
   notification: getNotifications(state),
 })
 

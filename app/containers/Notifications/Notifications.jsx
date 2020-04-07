@@ -17,7 +17,7 @@ type Props = {
 class Notifications extends Component<Props> {
   rnsRef: any
 
-  UNSAFE_componentWillReceiveProps(nextProps: Props) {
+  componentWillReceiveProps(nextProps: Props) {
     // Adapted from https://github.com/gor181/react-notification-system-redux/blob/master/src/notifications.js
     const { hideNotification } = this.props
     const { notifications } = nextProps
@@ -34,7 +34,6 @@ class Notifications extends Component<Props> {
 
       difference(notificationIds, systemNotificationsIds).forEach(
         notificationId => {
-          // $FlowFixMe
           this.rnsRef.addNotification({
             children: (
               <div

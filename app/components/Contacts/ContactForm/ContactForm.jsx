@@ -106,7 +106,7 @@ export default class ContactForm extends React.Component<Props, State> {
     )
   }
 
-  UNSAFE_componentWillMount() {
+  componentWillMount() {
     const { newAddress, setAddress } = this.props
 
     if (newAddress) {

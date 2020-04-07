@@ -609,40 +609,36 @@ exports[`Sidebar renders without crashing 1`] = `
                                         className="buttonContainer"
                                       >
                                         <Link
+                                          replace={false}
                                           to="/network-configuration"
                                         >
-                                          <LinkAnchor
+                                          <a
                                             href="#/network-configuration"
-                                            navigate={[Function]}
+                                            onClick={[Function]}
                                           >
-                                            <a
-                                              href="#/network-configuration"
-                                              onClick={[Function]}
+                                            <Button
+                                              primary={false}
+                                              renderIcon={[Function]}
+                                              shouldCenterButtonLabelText={true}
+                                              type="button"
                                             >
-                                              <Button
-                                                primary={false}
-                                                renderIcon={[Function]}
-                                                shouldCenterButtonLabelText={true}
+                                              <button
+                                                className="button light"
                                                 type="button"
                                               >
-                                                <button
-                                                  className="button light"
-                                                  type="button"
+                                                <span
+                                                  className="icon centeredLabel dark"
                                                 >
-                                                  <span
-                                                    className="icon centeredLabel dark"
-                                                  >
-                                                    <Component>
-                                                      <svg />
-                                                    </Component>
-                                                  </span>
-                                                  <span>
-                                                    Update Settings
-                                                  </span>
-                                                </button>
-                                              </Button>
-                                            </a>
-                                          </LinkAnchor>
+                                                  <Component>
+                                                    <svg />
+                                                  </Component>
+                                                </span>
+                                                <span>
+                                                  Update Settings
+                                                </span>
+                                              </button>
+                                            </Button>
+                                          </a>
                                         </Link>
                                       </div>
                                     </div>

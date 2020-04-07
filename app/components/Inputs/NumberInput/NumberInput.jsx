@@ -134,6 +134,5 @@ export default class NumberInput extends React.Component<Props, State> {
     return null
   }
 
-  // $FlowFixMe
   getOptions = () => ({ ...DEFAULT_OPTIONS, ...this.props.options })
 }

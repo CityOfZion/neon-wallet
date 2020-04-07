@@ -3,7 +3,6 @@ import React, { Fragment } from 'react'
 import { wallet } from '@cityofzion/neon-js'
 import { withRouter } from 'react-router-dom'
 import { cloneDeep } from 'lodash-es'
-
 import PasswordInput from '../Inputs/PasswordInput'
 import StyledReactSelect from '../Inputs/StyledReactSelect/StyledReactSelect'
 import TextInput from '../Inputs/TextInput'
@@ -317,5 +316,4 @@ class CreateImportSplitWalletForm extends React.Component<Props, State> {
   }
 }
 
-// $FlowFixMe
 export default withRouter(CreateImportSplitWalletForm)

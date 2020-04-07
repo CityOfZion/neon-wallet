@@ -73,7 +73,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
     this.intervalId = setInterval(this.props.connect, POLL_FREQUENCY_MS)
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps: Props) {
+  componentWillReceiveProps(nextProps: Props) {
     const { progress, error } = this.props
 
     if (nextProps.publicKey && !this.state.addressOption) {
@@ -224,7 +224,6 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
   }
 
   createOptionsFromKeys = () => {
-    // $FlowFixMe
     const options = this.state.publicKeys.map((publicKey: LedgerPublicKey) => ({
       label: this.unencodedHexToAddress(publicKey.key),
       value: publicKey.key,
