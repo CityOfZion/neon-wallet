@@ -9,6 +9,7 @@ import DarkLogoWithoutText from '../../assets/images/logo-without-text.png'
 
 import styles from '../../containers/App/Sidebar/Sidebar.scss'
 import themes from '../../themes'
+import IntlWrapper from '../Root/IntlWrapper'
 
 type Props = {
   count: number,
@@ -29,7 +30,11 @@ class LogoWithTooltipAndBlockHeight extends React.Component<Props> {
         interactive
         theme="network-settings"
         onShow={() => this.handleOnShow()}
-        html={<NetworkConfigurationTooltip store={store} />}
+        html={
+          <IntlWrapper store={store}>
+            <NetworkConfigurationTooltip store={store} />{' '}
+          </IntlWrapper>
+        }
       >
         <div className={styles.logo} id="neon-logo-container">
           <img src={themeBasedLogo} id="neon-logo" alt="neon-logo" />

@@ -72,6 +72,10 @@ const VARIOUS_MISSING_TRANSLATIONS = {
     "So you've been given a QR code? Click capture and hold it up to your camera.",
   captureQR: 'Capture',
   captureQRCaps: 'CAPTURE',
+
+  networkConfigTooltipUpdateSettings: 'Update Settings',
+  networkConfigTooltipPublicKey: 'PUBLIC KEY:',
+  networkConfigTooltipAddress: 'ADDRESS:',
 }
 const AUTH = {
   authLogin: 'Đăng nhập',

@@ -2,6 +2,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import { HashRouter, Link } from 'react-router-dom'
+import { IntlShape } from 'react-intl'
 
 import { ROUTES } from '../../core/constants'
 import SettingsItem from '../Settings/SettingsItem'
@@ -24,13 +25,14 @@ type Props = {
   publicKey: string,
   selectedNode: string,
   explorer: string,
+  intl: IntlShape,
 }
 
 export default class NetworkConfigurationTooltip extends React.Component<
   Props,
 > {
   render() {
-    const { address, publicKey, theme } = this.props
+    const { address, publicKey, theme, intl } = this.props
     return (
       <section
         id="network-config-tooltip"
@@ -44,12 +46,20 @@ export default class NetworkConfigurationTooltip extends React.Component<
         <HashRouter>
           <div className={settingsStyles.innerContainer}>
             <div className={styles.addressInfo}>
-              <span>ADDRESS:</span>
+              <span>
+                {intl.formatMessage({
+                  id: 'networkConfigTooltipAddress',
+                })}
+              </span>
               <div className={styles.addressLink}> {address}</div>
             </div>
             {publicKey && (
               <div className={styles.publicKeyInfo}>
-                <span>PUBLIC KEY:</span>
+                <span>
+                  {intl.formatMessage({
+                    id: 'networkConfigTooltipPublicKey',
+                  })}
+                </span>
                 <div className={styles.publicKey}> {publicKey}</div>
               </div>
             )}
@@ -58,7 +68,9 @@ export default class NetworkConfigurationTooltip extends React.Component<
               to={ROUTES.NODE_SELECT}
               label={this.props.selectedNode || 'AUTOMATIC'}
               renderIcon={() => <NodeSelectIcon />}
-              title="NODE SELECTON"
+              title={intl.formatMessage({
+                id: 'networkSettingsNodeSelectLabel',
+              })}
               tooltip
               noBorderBottom
               onClick={() => undefined}
@@ -66,7 +78,7 @@ export default class NetworkConfigurationTooltip extends React.Component<
             <div className={styles.tooltipItemBorder} />
             <SettingsItem
               renderIcon={() => <BlockExplorerIcon />}
-              title="BLOCK EXPLORER"
+              title={intl.formatMessage({ id: 'networkSettingsExplorerLabel' })}
               tooltip
               noBorderBottom
             >
@@ -81,7 +93,7 @@ export default class NetworkConfigurationTooltip extends React.Component<
 
             <SettingsItem
               renderIcon={() => <NeoLogo />}
-              title="CURRENT NETWORK"
+              title={intl.formatMessage({ id: 'networkSettingsCurrentLabel' })}
               tooltip
               noBorderBottom
             >
@@ -100,7 +112,9 @@ export default class NetworkConfigurationTooltip extends React.Component<
                   shouldCenterButtonLabelText
                   renderIcon={() => <CogIcon />}
                 >
-                  Update Settings
+                  {intl.formatMessage({
+                    id: 'networkConfigTooltipUpdateSettings',
+                  })}
                 </Button>
               </Link>
             </div>

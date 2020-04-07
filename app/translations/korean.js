@@ -57,6 +57,10 @@ const VARIOUS_MISSING_TRANSLATIONS = {
     'QR 코드를 받았습니까? 캡처를 클릭하고 카메라에 고정시킵니다.',
   captureQR: '포착',
   captureQRCaps: '포착',
+
+  networkConfigTooltipUpdateSettings: 'Update Settings',
+  networkConfigTooltipPublicKey: 'PUBLIC KEY:',
+  networkConfigTooltipAddress: 'ADDRESS:',
 }
 
 const AUTH = {
