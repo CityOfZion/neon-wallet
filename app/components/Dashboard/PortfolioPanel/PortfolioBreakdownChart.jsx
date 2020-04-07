@@ -75,7 +75,6 @@ export default class PortfolioBreakdownChart extends React.Component<Props> {
   }
 
   getData = () =>
-    // $FlowFixMe
     map(this.props.balances, ({ value }, symbol) => ({ symbol, value }))
 
   formatPrice = (

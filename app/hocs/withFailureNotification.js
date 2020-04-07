@@ -49,7 +49,7 @@ export default function withFailureNotification(
       prevProps[PROGRESS_PROP] !== FAILED && nextProps[PROGRESS_PROP] === FAILED
 
     class ErrorNotifier extends React.Component<Props> {
-      UNSAFE_componentWillReceiveProps(nextProps) {
+      componentWillReceiveProps(nextProps) {
         if (
           hasError(nextProps) &&
           progressChangedToError(this.props, nextProps)

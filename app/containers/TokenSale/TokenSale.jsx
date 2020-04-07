@@ -151,9 +151,7 @@ class TokenSale extends Component<Props, State> {
 
   getPurchaseableAssets = () => {
     const { icoTokens } = this.props
-    // $FlowFixMe
     if (!icoTokens) return []
-    // $FlowFixMe
     return icoTokens.map(item => item.token)
   }
 

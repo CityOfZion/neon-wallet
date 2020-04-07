@@ -28,7 +28,6 @@ const mapBalancesDataToProps = balances => ({
 })
 
 const mapTotalPortfolioValueToProps = ({ prices, balances }) => ({
-  // $FlowFixMe
   total: reduce(
     balances,
     (result, balance, symbol) =>
@@ -39,7 +38,6 @@ const mapTotalPortfolioValueToProps = ({ prices, balances }) => ({
 
 // sort balances by highest value and return only top 5
 const mapSortedPortfolioBalanceProps = ({ prices, balances, total }) => ({
-  // $FlowFixMe
   balances: map(balances, (tokenBalance, symbol) => {
     const balance = toNumber(tokenBalance)
     const value = balance * (prices[symbol] || 0)

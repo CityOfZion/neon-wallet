@@ -43,12 +43,12 @@ const withInitialCall = (
       [propName]: string.isRequired,
     }
 
-    UNSAFE_componentWillMount() {
+    componentWillMount() {
       // $FlowFixMe
       this.Component = this.createComponent(this.props)
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps) {
       const progress = this.props[propName]
       const nextProgress = nextProps[propName]
 
@@ -74,7 +74,7 @@ const withInitialCall = (
       return Component
     }
   }
-  // $FlowFixMe
+
   return withProgress(actions, { propName, strategy, ...options })(
     ConditionalCallComponent,
   )

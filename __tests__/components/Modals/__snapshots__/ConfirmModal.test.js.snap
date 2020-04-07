@@ -61,7 +61,6 @@ exports[`ConfirmModal should render without crashing 1`] = `
         onRequestClose={[Function]}
         parentSelector={[Function]}
         portalClassName="ReactModalPortal"
-        role="dialog"
         shouldCloseOnEsc={true}
         shouldCloseOnOverlayClick={true}
         shouldFocusAfterRender={true}
@@ -289,7 +288,6 @@ exports[`ConfirmModal should render without crashing 1`] = `
               >
                 <div
                   class="ReactModal__Content ReactModal__Content--after-open"
-                  role="dialog"
                   style="position: absolute; top: 40px; left: 40px; right: 40px; bottom: 40px; overflow: auto; border-radius: 4px; outline: none; padding: 0px; width: 500px; height: 200px; margin: auto; box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 4px; display: flex; flex-direction: column;"
                   tabindex="-1"
                 >
@@ -371,7 +369,6 @@ exports[`ConfirmModal should render without crashing 1`] = `
             onRequestClose={[Function]}
             parentSelector={[Function]}
             portalClassName="ReactModalPortal"
-            role="dialog"
             shouldCloseOnEsc={true}
             shouldCloseOnOverlayClick={true}
             shouldFocusAfterRender={true}
@@ -592,6 +589,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
               className="ReactModal__Overlay ReactModal__Overlay--after-open"
               onClick={[Function]}
               onMouseDown={[Function]}
+              onMouseUp={[Function]}
               style={
                 Object {
                   "--amounts-panel-asset-amount-text": "#515151",
@@ -705,7 +703,6 @@ exports[`ConfirmModal should render without crashing 1`] = `
                 onKeyDown={[Function]}
                 onMouseDown={[Function]}
                 onMouseUp={[Function]}
-                role="dialog"
                 style={
                   Object {
                     "--amounts-panel-asset-amount-text": "#515151",
