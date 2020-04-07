@@ -38,9 +38,14 @@ $panel-top-margin: 25px;
 
     .settingsPanelHeader {
       display: flex;
+      align-items: center;
 
       .settingsPanelHeaderItem {
         flex: auto;
+
+        div:last-child {
+          margin-top: 4px;
+        }
 
         &:last-child {
           text-align: right;

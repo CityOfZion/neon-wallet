@@ -657,6 +657,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                     count={300}
                                   >
                                     <Tooltip
+                                      distance={-60}
                                       html={
                                         <Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip))))))))))))))))
                                           store={undefined}
@@ -675,7 +676,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                         className=""
                                         delay={0}
                                         disabled={false}
-                                        distance={10}
+                                        distance={-60}
                                         duration={375}
                                         followCursor={false}
                                         hideDelay={0}

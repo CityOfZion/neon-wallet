@@ -85,7 +85,7 @@ const AUTH = {
   authPrivate: '私钥',
   authEncrypted: '密钥',
   authWatch: '观察',
-  authLedger: 'LEDGER',
+  authLedger: '分类帐',
   authCreateWallet: '生成钱包',
   authImportWallet: '导入钱包文',
   authScanQRButton: '扫描二维码',

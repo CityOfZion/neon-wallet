@@ -105,23 +105,6 @@ const initialState = {
   },
 }
 
-// const setup = (state = initialState, shallowRender = true) => {
-//   const store = configureStore([thunk])(state)
-//   const wrapper = mount(
-//     <Provider store={store}>
-//       <IntlWrapper>
-//         <MemoryRouter initialEntries={['/']} keyLength={0}>
-//           <Sidebar />
-//         </MemoryRouter>
-//       </IntlWrapper>
-//     </Provider>,
-//   )
-//   return {
-//     store,
-//     wrapper,
-//   }
-// }
-
 describe('PortfolioPanel', () => {
   beforeEach(() => {
     const response = [

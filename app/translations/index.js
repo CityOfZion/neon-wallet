@@ -4,6 +4,7 @@ import french from './french'
 import vietnamese from './vietnamese'
 import german from './german'
 import chinese from './chinese'
+import italian from './italian'
 
 export default {
   english,
@@ -12,4 +13,5 @@ export default {
   vietnamese,
   german,
   chinese,
+  italian,
 }
