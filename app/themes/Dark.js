@@ -147,7 +147,7 @@ const NEWS = {
   '--news-content-border-color': 'rgba(141, 152, 174, .5)',
 }
 
-const NETWORK_CONFIG_TOOLTIP = {
+export const DARK_NETWORK_CONFIG_TOOLTIP = {
   '--network-config-tooltip-label': '#8D98AE',
   '--network-config-tooltip-background': '#1b2029',
   '--network-config-tooltip-color': '#fff',
@@ -172,5 +172,5 @@ export default {
   ...SETTINGS,
   ...SEND,
   ...QR_SCANNER,
-  ...NETWORK_CONFIG_TOOLTIP,
+  ...DARK_NETWORK_CONFIG_TOOLTIP,
 }
