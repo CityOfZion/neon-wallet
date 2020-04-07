@@ -65,7 +65,6 @@ class LogoWithTooltipAndBlockHeight extends React.Component<Props> {
           : DARK_NETWORK_CONFIG_TOOLTIP
       if (currentlySelectedThemeElement) {
         // $FlowFixMe
-        // currentlySelectedThemeElement.style = ''
         const styleString = Object.entries(tooltipTheme).reduce(
           // eslint-disable-next-line
           (styleString, [propName, propValue]) => {
