@@ -14,6 +14,7 @@ import {
   EXPLORERS,
   MAIN_NETWORK_DEPRECATED_LABEL,
   MAIN_NETWORK_LABEL,
+  DEFAULT_LANGUAGE,
 } from '../../app/core/constants'
 import NetworkConfigurationTooltip from '../../app/components/NetworkConfigurationTooltip'
 import IntlWrapper from '../../app/components/Root/IntlWrapper'
@@ -52,6 +53,7 @@ const initialState = {
       data: {
         theme: THEMES.LIGHT,
         blockExplorer: EXPLORERS.NEO_TRACKER,
+        language: DEFAULT_LANGUAGE,
       },
     },
   },
