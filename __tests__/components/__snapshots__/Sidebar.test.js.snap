@@ -125,6 +125,9 @@ exports[`Sidebar renders without crashing 1`] = `
             "modalActionCancel": "Cancel",
             "modalActionConfirm": "Confirm",
             "modifyDetails": "Modify Details",
+            "networkConfigTooltipAddress": "ADDRESS:",
+            "networkConfigTooltipPublicKey": "PUBLIC KEY:",
+            "networkConfigTooltipUpdateSettings": "Update Settings",
             "networkSettingsAutomatic": "AUTOMATIC",
             "networkSettingsCurrentLabel": "CURRENT NETWORK",
             "networkSettingsExplorerLabel": "BLOCK EXPLORER",
@@ -224,11 +227,11 @@ exports[`Sidebar renders without crashing 1`] = `
             "sidebarTokenSale": "Token Sale",
             "sidebarWallet": "Wallet",
             "splitKeyLabel": "SPLIT KEY",
-            "tokenSaleDisclaimer2": "I understand that submitting NEO or GAS multiple times may result in a loss of funds or a delayed refund depending on the policy of the ICO company.",
-            "tokenSaleDisclaimer5": "I understand that City of Zion (CoZ) is not responsible for my usage of this feature, and I have consulted this software's licenses.",
             "tokenSaleDisclaimer1": "Please read and acknowledge these statements to continue",
+            "tokenSaleDisclaimer2": "I understand that submitting NEO or GAS multiple times may result in a loss of funds or a delayed refund depending on the policy of the ICO company.",
             "tokenSaleDisclaimer3": "I understand that some sales may only accept NEO or GAS, and I have verified which is accepted.",
             "tokenSaleDisclaimer4": "I understand that if I send NEO or GAS to a token sale that has already ended, I will lose my NEO/GAS and will not be refunded.",
+            "tokenSaleDisclaimer5": "I understand that City of Zion (CoZ) is not responsible for my usage of this feature, and I have consulted this software's licenses.",
             "tokenSalePageHeader": "Participate in Token Sale",
             "transactionFeeQuestion": "PRIORITIZE YOUR TRANSACTION WITH A FEE?",
             "transactionId": "Transaction ID:",
@@ -659,9 +662,14 @@ exports[`Sidebar renders without crashing 1`] = `
                                     <Tooltip
                                       distance={-60}
                                       html={
-                                        <Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip))))))))))))))))
+                                        <Connect(withData(IntlWrapper))
                                           store={undefined}
-                                        />
+                                        >
+                                          <Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))))))))
+                                            store={undefined}
+                                          />
+                                           
+                                        </Connect(withData(IntlWrapper))>
                                       }
                                       interactive={true}
                                       onShow={[Function]}
@@ -683,9 +691,14 @@ exports[`Sidebar renders without crashing 1`] = `
                                         hideDuration={375}
                                         hideOnClick={true}
                                         html={
-                                          <Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(NetworkConfigurationTooltip))))))))))))))))
+                                          <Connect(withData(IntlWrapper))
                                             store={undefined}
-                                          />
+                                          >
+                                            <Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))))))))
+                                              store={undefined}
+                                            />
+                                             
+                                          </Connect(withData(IntlWrapper))>
                                         }
                                         inertia={false}
                                         interactive={true}

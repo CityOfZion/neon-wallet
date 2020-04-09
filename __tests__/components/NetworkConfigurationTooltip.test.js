@@ -16,6 +16,7 @@ import {
   MAIN_NETWORK_LABEL,
 } from '../../app/core/constants'
 import NetworkConfigurationTooltip from '../../app/components/NetworkConfigurationTooltip'
+import IntlWrapper from '../../app/components/Root/IntlWrapper'
 
 const { LOADED, LOADING } = progressValues
 
@@ -63,9 +64,11 @@ const networkConfigTooltipSetup = (
   const store = configureStore([thunk])(state)
   const wrapper = mount(
     <Provider store={store}>
-      <MemoryRouter initialEntries={['/']} keyLength={0}>
-        <NetworkConfigurationTooltip />
-      </MemoryRouter>
+      <IntlWrapper lang="en">
+        <MemoryRouter initialEntries={['/']} keyLength={0}>
+          <NetworkConfigurationTooltip />
+        </MemoryRouter>
+      </IntlWrapper>
     </Provider>,
   )
   return {
