@@ -65,7 +65,7 @@ exports[`Sidebar renders without crashing 1`] = `
             "confirmAndSend": "Confirm & Send",
             "confirmRemoveContact": "Please confirm removing contact",
             "confirmation": "Confirmation",
-            "confirmationRecipient": "{transferCount, number} {transferCount, plural, one {Recipient} other {Transfers}}",
+            "confirmationRecipient": "{transferCount, number} {transferCount, plural, one {Recipient} other {Recipients}}",
             "contactName": "Name",
             "contactWalletAddress": "Wallet Address",
             "contactsPageLabel": "Manage Contacts",
@@ -245,6 +245,7 @@ exports[`Sidebar renders without crashing 1`] = `
             "walletCreationWalletPasswordConfirmPlaceholder": "Confirm Password",
             "walletCreationWalletPasswordLabel": "PASSPHRASE",
             "walletCreationWalletPasswordPlaceholder": "Password",
+            "walletImportedHeader": "Wallet Created!",
             "walletManagerNoLocalInfo": "It looks like you have no wallet information saved locally...",
             "walletManagerRemoveWallet": "Remove Wallet",
           }

@@ -105,6 +105,7 @@ const WALLET_CREATION = {
   walletCreationWalletPasswordConfirmPlaceholder: 'Şifreyi Onayla',
   walletCreationButton: 'Cüzdan Oluştur',
   walletCreatedHeader: 'Cüzdan Oluşturuldu!',
+  walletImportedHeader: 'Cüzdan İçe Aktarıldı!',
   walletCreatedDisclaimer:
     '<b> Bu ayrıntıları kaydedin! </b> Bu kimlik bilgilerini kaybederseniz varlıklarınıza erişiminizi kaybedersiniz.',
   privateKeyLabel: 'ÖZEL ANAHTAR',

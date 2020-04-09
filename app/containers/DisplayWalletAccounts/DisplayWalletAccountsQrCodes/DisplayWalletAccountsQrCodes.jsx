@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react'
+import { IntlShape, FormattedHTMLMessage, FormattedMessage } from 'react-intl'
 
 import Button from '../../../components/Button'
 import { ROUTES } from '../../../core/constants'
@@ -26,6 +27,7 @@ type Props = {
   handleCopy: (?HTMLCanvasElement, string, ?boolean) => Promise<void>,
   handleCreateCanvas: (?HTMLCanvasElement, string) => any,
   copied: boolean,
+  intl: IntlShape,
 }
 
 type copyType = 'ENCRYPTED' | 'PUBLIC' | ''
@@ -95,8 +97,7 @@ class DisplayWalletAccountsQrCodes extends Component<Props, State> {
             icon={<WarningIcon />}
             renderText={() => (
               <div className={styles.saveDetails}>
-                <b>Save these details!</b> If you lose these credentials, you
-                lose access to your assets.
+                <FormattedHTMLMessage id="walletCreatedDisclaimer" />
               </div>
             )}
             className={styles.displayWalletAccountsDialogue}
@@ -157,7 +158,7 @@ class DisplayWalletAccountsQrCodes extends Component<Props, State> {
           </div>
           <div className={styles.qrPrintButtonContainer}>
             <Button renderIcon={AddIcon} primary onClick={this.handlePrint}>
-              Print
+              <FormattedMessage id="print" />
             </Button>
           </div>
         </div>

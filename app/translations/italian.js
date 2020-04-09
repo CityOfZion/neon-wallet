@@ -105,6 +105,7 @@ const WALLET_CREATION = {
   walletCreationWalletPasswordConfirmPlaceholder: 'conferma Password',
   walletCreationButton: 'Crea portafoglio',
   walletCreatedHeader: 'Portafoglio creato!',
+  walletImportedHeader: 'Portafoglio importato!',
   walletCreatedDisclaimer: `<b> Salva questi dettagli! </b> Se perdi queste credenziali, perdi l'accesso alle tue risorse.`,
   privateKeyLabel: 'CHIAVE PRIVATA',
   encryptedKeyLabel: 'TASTO CRIPTATO',

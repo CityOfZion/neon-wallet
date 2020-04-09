@@ -102,6 +102,7 @@ const WALLET_CREATION = {
   walletCreationWalletPasswordConfirmPlaceholder: '确认密码',
   walletCreationButton: '生成钱包',
   walletCreatedHeader: '生成钱包成功!',
+  walletImportedHeader: '钱包进口!',
   walletCreatedDisclaimer:
     '<b>保存这些信息！</b>如果丢失这些凭据，则将失去移动资产的权限。',
   privateKeyLabel: '私钥',
@@ -228,7 +229,7 @@ const SEND = {
   sendRecipientsCapital: '接受者',
   sendCompleteNotification: '交易待处理！您的余额将在区块链处理完后自动更新.',
   sendSelectAssets:
-    '选择资产 {transferCount, number} / {maxNumberOfRecipients, number} 接受者',
+    '{transferCount, number} of {maxNumberOfRecipients, number} 收件者',
   sendTransferMessage:
     '{transferCount, number} {transferCount, plural, one {sendTransfer} other {sendTransferPlural}} 待定',
   sendBroadcasting: '正在将交易广播到网络...',

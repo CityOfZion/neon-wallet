@@ -102,6 +102,7 @@ const WALLET_CREATION = {
   walletCreationWalletPasswordConfirmPlaceholder: 'Xác Nhận Mật Khẩu',
   walletCreationButton: 'Tạo Ví',
   walletCreatedHeader: 'Ví đã được Tạo!',
+  walletImportedHeader: 'Ví nhập khẩu!',
   walletCreatedDisclaimer:
     '<b>Lưu những thông tin này lại!</b> Nếu bạn mất những thông tin đăng nhập này, bạn sẽ mất quyền truy cập vào ví của bạn.',
   privateKeyLabel: 'KHÓA RIÊNG TƯ',

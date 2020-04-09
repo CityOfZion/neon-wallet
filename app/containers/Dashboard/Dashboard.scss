@@ -80,11 +80,14 @@
   }
 
   .dashboardHeaderButonContainer {
-    width: 300px;
     display: flex !important;
     align-items: center;
     justify-content: space-between;
     margin-left: auto;
+
+    #manage-wallets {
+      margin-right: 24px;
+    }
 
     span {
       margin-left: 10px;

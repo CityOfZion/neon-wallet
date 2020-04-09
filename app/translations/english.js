@@ -66,7 +66,7 @@ const VARIOUS_MISSING_TRANSLATIONS = {
     'Asset {transferCount, plural, one {Recipient} other {Recipients}}',
   confirmation: 'Confirmation',
   confirmationRecipient:
-    '{transferCount, number} {transferCount, plural, one {Recipient} other {Transfers}}',
+    '{transferCount, number} {transferCount, plural, one {Recipient} other {Recipients}}',
   completeExclaim: 'Complete!',
   sendQRExplanation:
     // eslint-disable-next-line
@@ -106,6 +106,7 @@ const WALLET_CREATION = {
   walletCreationWalletPasswordConfirmPlaceholder: 'Confirm Password',
   walletCreationButton: 'Create Wallet',
   walletCreatedHeader: 'Wallet Created!',
+  walletImportedHeader: 'Wallet Created!',
   walletCreatedDisclaimer:
     '<b>Save these details!</b> If you lose these credentials, you lose access to your assets.',
   privateKeyLabel: 'PRIVATE KEY',

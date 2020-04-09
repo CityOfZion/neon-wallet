@@ -105,6 +105,7 @@ const WALLET_CREATION = {
   walletCreationWalletPasswordConfirmPlaceholder: 'تأكيد كلمة السر',
   walletCreationButton: 'إنشاء محفظة',
   walletCreatedHeader: '!تم إنشاء المحفظة',
+  walletImportedHeader: '!تم إنشاء المحفظة',
   walletCreatedDisclaimer:
     '<b>!قم بحفظ هذه البيانات</b> إذا فقدت هذه البيانات, ستفقد إمكانية الوصول إلى أموالك.',
   privateKeyLabel: 'المفتاح الخاص',

@@ -58,9 +58,9 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   captureQR: '포착',
   captureQRCaps: '포착',
 
-  networkConfigTooltipUpdateSettings: 'Update Settings',
-  networkConfigTooltipPublicKey: 'PUBLIC KEY:',
-  networkConfigTooltipAddress: 'ADDRESS:',
+  networkConfigTooltipUpdateSettings: '업데이트 설정',
+  networkConfigTooltipPublicKey: '공개 키:',
+  networkConfigTooltipAddress: '주소:',
 }
 
 const AUTH = {
@@ -89,7 +89,8 @@ const WALLET_CREATION = {
   walletCreationWalletPasswordConfirmLabel: '비밀번호 확인',
   walletCreationWalletPasswordConfirmPlaceholder: '비밀번호 확인',
   walletCreationButton: '월렛 만들기',
-  walletCreatedHeader: 'Wallet Created!',
+  walletCreatedHeader: '지갑이 만들어졌습니다!',
+  walletImportedHeader: '월렛을 가져 왔습니다!',
   walletCreatedDisclaimer:
     '<b>세부사항을 저장하십시오!</b> 크리덴셜을 잃게 되면 자산 액세스 권한이 상실됩니다.',
   privateKeyLabel: '개인 키',
@@ -97,9 +98,9 @@ const WALLET_CREATION = {
   addressLabel: '퍼블릭 주소',
   splitKeyLabel: '스플릿 키',
   recoverWalletLabel: '리커버 지갑',
-  print: 'Print',
-  generateQrCodes: 'Generate QR Codes',
-  copyCodeImage: 'Copy Code Image',
+  print: '인쇄',
+  generateQrCodes: 'QR 코드 생성',
+  copyCodeImage: '코드 이미지 복사',
   contactsPageLabel: '연락처 관리',
   newContact: '새로운 연락처',
 }

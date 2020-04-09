@@ -107,13 +107,14 @@ const WALLET_CREATION = {
   walletCreationWalletPasswordConfirmPlaceholder: 'Confirmar senha',
   walletCreationButton: 'Criar Wallet',
   walletCreatedHeader: 'Wallet Criada!',
+  walletImportedHeader: 'Carteira importada!',
   walletCreatedDisclaimer:
     '<b>Salve esses detalhes!</b> Se você perder essas credenciais, você perderá o acesso aos seus ativos. ',
   privateKeyLabel: 'CHAVE PRIVADA',
   encryptedKeyLabel: 'CHAVE CRIPTOGRAFADA',
   addressLabel: 'ENDEREÇO PÚBLICO',
   splitKeyLabel: 'SPLIT KEY',
-  recoverWalletLabel: 'RECOVER WALLET',
+  recoverWalletLabel: 'RECUPERAR',
   print: 'Imprimir',
   generateQrCodes: 'Gerar QR Codes',
   copyCodeImage: 'Copiar QR Code',
@@ -144,7 +145,7 @@ const SIDEBAR = {
   sidebarContacts: 'Contatos',
   sidebarTokenSale: 'Venda de Tokens',
   sidebarNews: 'Novidades',
-  sidebarSettings: 'Configurações',
+  sidebarSettings: 'Definições',
   sidebarLogout: 'Logout',
   sidebarCurrentBlock: 'BLOCO ATUAL',
 }
@@ -236,7 +237,8 @@ const SEND = {
   sendCompleteNotification:
     'Transação pendente! Seu saldo será atualizado automaticamente assim que o blockchain processar a operação.',
   sendSelectAssets:
-    'Selecionar Ativos {transferCount, number} de {25, number} Destinatários',
+    '{transferCount, number} of {maxNumberOfRecipients, number} Destinatários',
+
   sendTransferMessage:
     '{transferCount, number} {transferCount, plural, one {Transferir} other {Transferências}} pendente',
   sendBroadcasting: 'Transmitindo transação para a rede...',
