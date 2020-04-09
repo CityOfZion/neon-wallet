@@ -21,6 +21,7 @@ import {
   DISCORD_INVITE_LINK,
   THEMES,
   LANGUAGES,
+  PIPEFY_SUPPORT,
 } from '../../core/constants'
 import styles from './Settings.scss'
 import AddIcon from '../../assets/icons/add.svg'
@@ -376,14 +377,23 @@ export default class Settings extends Component<Props, State> {
 
   openDiscordLink = () => shell.openExternal(DISCORD_INVITE_LINK)
 
+  openPipefyLink = () => shell.openExternal(PIPEFY_SUPPORT)
+
   renderHeader = () => (
     <div className={styles.settingsPanelHeader}>
       <div className={styles.settingsPanelHeaderItem}>
         <FormattedMessage id="settingsManageLabel" /> - v{pack.version}
       </div>
       <div className={styles.settingsPanelHeaderItem}>
-        <FormattedMessage id="settingsCommunity" />:{' '}
-        <a onClick={this.openDiscordLink}>{DISCORD_INVITE_LINK}</a>
+        <div>
+          <FormattedMessage id="settingsCommunity" />:{' '}
+          <a onClick={this.openPipefyLink}>{PIPEFY_SUPPORT}</a>
+        </div>
+
+        <div>
+          NEO Discord:{' '}
+          <a onClick={this.openDiscordLink}>{DISCORD_INVITE_LINK}</a>
+        </div>
       </div>
     </div>
   )

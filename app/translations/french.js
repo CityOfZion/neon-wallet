@@ -7,71 +7,72 @@ const INPUTS = {
 }
 
 const VARIOUS_MISSING_TRANSLATIONS = {
-  'auth.cancel': 'Cancel',
+  'auth.cancel': 'Annuler',
   'auth.ledger.connectLedger':
-    'Connect and unlock your <strong>Ledger device</strong>',
-  'auth.ledger.navigateToNeoApp':
-    'Navigate to the <strong>NEO app</strong> on your device',
-  'auth.ledger.retry': 'Retry?',
-  'auth.ledger.fetchAddress': 'Fetch additional addresses',
-  publicAddress: 'Public Address',
+    'Connecter et déverouiller votre <strong>Ledger</strong>',
+  'auth.ledger.navigateToNeoApp': `Sélectionner <strong>l'application NEO</strong> sur votre périphérique`,
+  'auth.ledger.retry': 'Réessayer?',
+  'auth.ledger.fetchAddress': 'Récupérer adresses additionnelles',
+  publicAddress: 'Adresse Publique',
   'auth.import.recoveryInstructions':
-    'Upload a JSON wallet recovery file here to add your accounts to Neon. This option is also available on the Settings page.',
-  importFile: 'Import File',
-  dashboardTokenBalancesPrice: 'PRICE',
-  dashboardTokenBalancesHoldings: 'HOLDINGS',
-  settingsLanguageLabel: 'LANGUAGE',
-  addToken: 'Add Token',
-  contactsPageLabel: 'Manage Contacts',
-  newContact: 'New Contact',
-  deleteLabel: 'Delete',
+    'Uploader un portefeuille sauvegardé au format JSON ici pour ajouter vos comptes à Neon. Cette option est aussi disponible dans la page des Paramètres.',
+  importFile: 'Importer Fichier',
+  dashboardTokenBalancesPrice: 'PRIX',
+  dashboardTokenBalancesHoldings: 'ACTIFS',
+  settingsLanguageLabel: 'LANGUE',
+  addToken: 'Ajouter Jeton',
+  contactsPageLabel: 'Gérer Contacts',
+  newContact: 'Nouveau Contact',
+  deleteLabel: 'Supprimer',
 
-  addToContacts: 'Add to contacts',
-  contactName: 'Name',
-  enterAContactName: 'Enter Contact Name...',
-  enterAWalletAddress: 'Enter Wallet Address...',
-  contactWalletAddress: 'Wallet Address',
-  editAContact: 'Edit A Contact',
-  modifyDetails: 'Modify Details',
-  removeContact: 'Remove Contact',
-  saveContactButtonText: 'Save Contact',
+  addToContacts: 'Ajouter aux contacts',
+  contactName: 'Nom',
+  enterAContactName: 'Entrer le nom du contact...',
+  enterAWalletAddress: `Entrer l'adresse du portefeuille...`,
+  contactWalletAddress: 'Adresse du portefeuille',
+  editAContact: 'Editer Contact',
+  modifyDetails: 'Modifier Détails',
+  removeContact: 'Supprimer Contact',
+  saveContactButtonText: 'Sauvegarder Contact',
 
-  editContactDisclaimer:
-    'Please review and ensure that you have entered the address correctly to avoid loss of funds',
-  addAContact: 'Add A Contact',
-  addContactDetails: 'Add Contact Details',
-  confirmRemoveContact: 'Please confirm removing contact',
-  modalActionConfirm: 'Confirm',
-  modalActionCancel: 'Cancel',
-  newsPageLabel: 'News',
-  networkSettingsLabel: 'Network Settings',
+  editContactDisclaimer: `Vérifier et assurez-vous que vous avez entré l'adresse correctement pour éviter de risquer une perte de fonds`,
+  addAContact: 'Ajouter un Contact',
+  addContactDetails: 'Ajouter des détails à un contact',
+  confirmRemoveContact: 'Confirmer la suppression du contact',
+  modalActionConfirm: 'Confirmer',
+  modalActionCancel: 'Annuler',
+  newsPageLabel: 'Actualités',
+  networkSettingsLabel: 'Paramètres réseau',
 
-  walletManagerNoLocalInfo:
-    'It looks like you have no wallet information saved locally...',
+  walletManagerNoLocalInfo: `Il semble que vous n'ayez pas d'information de portefeuille sauvegardé localement...`,
 
-  walletManagerRemoveWallet: 'Remove Wallet',
+  walletManagerRemoveWallet: 'Supprimer portefeuille',
 
-  selectAssets: 'Select Assets',
-  priorityTransfer: 'Priority Transfer',
+  selectAssets: 'Sélectionner Actifs',
+  priorityTransfer: 'Chuyển khoản Ưu tiên',
 
-  editRecipients: 'Edit Recipients',
-  confirmAndSend: 'Confirm & Send',
-  fee: 'Fee:',
-  sendMoreAssets: 'Send More Assets',
-  transactionId: 'Transaction ID:',
+  editRecipients: 'Editer Destinataires',
+  confirmAndSend: 'Confirmer & Envoyer',
+  fee: 'Frais:',
+  sendMoreAssets: `Envoyer plus d'actifs`,
+  transactionId: 'ID de transaction:',
   numberofTransactionsPending:
-    '{transferCount, number} {transferCount, plural, one {Transfer} other {Transfers}} pending',
+    '{transferCount, number} {transferCount, plural, one {Transfert} other {Transferts}} pending',
   assetRecipients:
-    'Asset {transferCount, plural, one {Recipient} other {Recipients}}',
+    'Asset {transferCount, plural, one {Destinataire} other {Destinataires}}',
   confirmation: 'Confirmation',
   confirmationRecipient:
     '{transferCount, number} {transferCount, plural, one {Recipient} other {Transfers}}',
-  completeExclaim: 'Complete!',
+  completeExclaim: 'Terminé!',
   sendQRExplanation:
     // eslint-disable-next-line
-    "So you've been given a QR code? Click capture and hold it up to your camera.",
-  captureQR: 'Capture',
-  captureQRCaps: 'CAPTURE',
+    'On vous a donné un code QR? Cliquer sur capturer et tener le en façe de la caméra.',
+  captureQR: 'Capturer',
+  captureQRCaps: 'CAPTURER',
+
+  networkConfigTooltipUpdateSettings: 'Mise à jour',
+  networkConfigTooltipPublicKey: 'CLÉ PUBLIQUE:',
+  networkConfigTooltipAddress: 'ADRESSE:',
 }
 const AUTH = {
   authLogin: 'Connexion',
@@ -99,14 +100,15 @@ const WALLET_CREATION = {
   walletCreationWalletPasswordConfirmLabel: 'Confirmer mot de passe',
   walletCreationWalletPasswordConfirmPlaceholder: 'Confirmer mot de passe',
   walletCreationButton: 'Créer portefeuille',
-  walletCreatedHeader: 'Portefeuille créé !',
+  walletCreatedHeader: 'Portefeuille créé!',
+  walletImportedHeader: 'Portefeuille importé!',
   walletCreatedDisclaimer:
     '<b>Sauvegarder ces détails !</b> Si vous perdez ces identifiants, vous perdrez l`accès à vos actifs.',
   privateKeyLabel: 'CLÉ PRIVÉE',
   encryptedKeyLabel: 'CLÉ CHIFFRÉE',
   addressLabel: 'ADRESSE PUBLIQUE',
-  splitKeyLabel: 'Divisé CLÉ',
-  recoverWalletLabel: 'PORTEFEUILLE DE RÉCUPÉRATION',
+  splitKeyLabel: 'DIVISÉ CLÉ',
+  recoverWalletLabel: 'RÉCUPÉRATION',
   print: 'Imprimer',
   generateQrCodes: 'Générer codes QR',
   copyCodeImage: 'Copier le code QR',
@@ -292,14 +294,14 @@ const TOKEN_SALE = {
   tokenSalePageHeader: 'Participer à une vente de jetons',
   tokenSaleDisclaimer1:
     'Veuillez lire et approuver ces conditions pour continuer',
-  tokenSaleDiclaimer2:
+  tokenSaleDisclaimer2:
     'Je comprends que soumettre NEO our GAS à de multiples reprises peut entraîner une perte de fonds ou un remboursement retardé, dépendamment de la politique de l`ICO.',
   tokenSaleDisclaimer3:
     'Je comprends que certaines ventes peuvent n`accepter que NEO ou GAS et j`ai verifié ce qui etait accepté.',
   tokenSaleDisclaimer4:
     'Je comprends que si j`envoie NEO ou GAS à une vente de jetons qui s`est dejà terminée, je perdrai mes NEO/GAS et ne serait pas remboursé.',
   // eslint-disable-next-line
-  tokenSaleDiclaimer5: `Je comprends que COZ n'est pas responsable de mon utilisation de cette fonctionalité et jai verifié les licenses de ce logiciel.`,
+  tokenSaleDisclaimer5: `Je comprends que COZ n'est pas responsable de mon utilisation de cette fonctionalité et jai verifié les licenses de ce logiciel.`,
 }
 
 export default {

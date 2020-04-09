@@ -14,8 +14,10 @@ import {
   EXPLORERS,
   MAIN_NETWORK_DEPRECATED_LABEL,
   MAIN_NETWORK_LABEL,
+  DEFAULT_LANGUAGE,
 } from '../../app/core/constants'
 import NetworkConfigurationTooltip from '../../app/components/NetworkConfigurationTooltip'
+import IntlWrapper from '../../app/components/Root/IntlWrapper'
 
 const { LOADED, LOADING } = progressValues
 
@@ -51,6 +53,7 @@ const initialState = {
       data: {
         theme: THEMES.LIGHT,
         blockExplorer: EXPLORERS.NEO_TRACKER,
+        language: DEFAULT_LANGUAGE,
       },
     },
   },
@@ -63,9 +66,11 @@ const networkConfigTooltipSetup = (
   const store = configureStore([thunk])(state)
   const wrapper = mount(
     <Provider store={store}>
-      <MemoryRouter initialEntries={['/']} keyLength={0}>
-        <NetworkConfigurationTooltip />
-      </MemoryRouter>
+      <IntlWrapper lang="en">
+        <MemoryRouter initialEntries={['/']} keyLength={0}>
+          <NetworkConfigurationTooltip />
+        </MemoryRouter>
+      </IntlWrapper>
     </Provider>,
   )
   return {

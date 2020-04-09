@@ -57,6 +57,10 @@ const VARIOUS_MISSING_TRANSLATIONS = {
     'QR 코드를 받았습니까? 캡처를 클릭하고 카메라에 고정시킵니다.',
   captureQR: '포착',
   captureQRCaps: '포착',
+
+  networkConfigTooltipUpdateSettings: '업데이트 설정',
+  networkConfigTooltipPublicKey: '공개 키:',
+  networkConfigTooltipAddress: '주소:',
 }
 
 const AUTH = {
@@ -85,7 +89,8 @@ const WALLET_CREATION = {
   walletCreationWalletPasswordConfirmLabel: '비밀번호 확인',
   walletCreationWalletPasswordConfirmPlaceholder: '비밀번호 확인',
   walletCreationButton: '월렛 만들기',
-  walletCreatedHeader: 'Wallet Created!',
+  walletCreatedHeader: '지갑이 만들어졌습니다!',
+  walletImportedHeader: '월렛을 가져 왔습니다!',
   walletCreatedDisclaimer:
     '<b>세부사항을 저장하십시오!</b> 크리덴셜을 잃게 되면 자산 액세스 권한이 상실됩니다.',
   privateKeyLabel: '개인 키',
@@ -93,9 +98,9 @@ const WALLET_CREATION = {
   addressLabel: '퍼블릭 주소',
   splitKeyLabel: '스플릿 키',
   recoverWalletLabel: '리커버 지갑',
-  print: 'Print',
-  generateQrCodes: 'Generate QR Codes',
-  copyCodeImage: 'Copy Code Image',
+  print: '인쇄',
+  generateQrCodes: 'QR 코드 생성',
+  copyCodeImage: '코드 이미지 복사',
   contactsPageLabel: '연락처 관리',
   newContact: '새로운 연락처',
 }
@@ -279,13 +284,13 @@ const ENCRYPT_KEY = {
 const TOKEN_SALE = {
   tokenSalePageHeader: '토큰 세일 참여',
   tokenSaleDisclaimer1: '계속하려면 이 문장을 읽고 승인해 주십시오.',
-  tokenSaleDiclaimer2:
+  tokenSaleDisclaimer2:
     'NEO나 GAS를 여러 번 제출하면 ICO사의 방침에 따라 자금 손실이 발생하거나 환불이 지연될 수 있는 것으로 알고 있습니다.',
   tokenSaleDisclaimer3:
     '일부 판매는 NEO 또는 GAS만 수락할 수 있으며, 어느 것이 받아들여지는지 확인했습니다.',
   tokenSaleDisclaimer4:
     '이미 끝난 토큰 세일에 NEO나 GAS를 보내면 NEO/GAS가 없어져 환불이 되지 않는 것으로 알고 있습니다.',
-  tokenSaleDiclaimer5:
+  tokenSaleDisclaimer5:
     // eslint-disable-next-line
     'COZ는 이 기능의 사용에 대한 책임이 없으며 이 소프트웨어의 라이센스에 문의했습니다.',
 }

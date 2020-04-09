@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import { FormattedMessage } from 'react-intl'
 
 import Panel from '../../Panel'
 import TokenSaleSelection from './TokenSaleSelection/TokenSaleSelection'
@@ -12,7 +13,6 @@ import CheckMarkIcon from '../../../assets/icons/check.svg'
 import AddIcon from '../../../assets/icons/add.svg'
 import PanelHeaderButton from '../../PanelHeaderButton/PanelHeaderButton'
 import { MODAL_TYPES } from '../../../core/constants'
-
 import styles from './TokenSalePanel.scss'
 
 type Props = {
@@ -60,13 +60,15 @@ class TokenSalePanel extends React.Component<Props> {
         className={styles.tokenSalePanel}
         renderHeader={() => (
           <div className={styles.tokenSalePanelHeaderContainer}>
-            <p>Participate in Token Sale</p>
+            <p>
+              <FormattedMessage id="tokenSalePageHeader" />
+            </p>
             <PanelHeaderButton
               renderIcon={() => (
                 <AddIcon className={styles.tokenSaleHeaderButtonIcon} />
               )}
               onClick={() => this.openTokenModal()}
-              buttonText="Add Token"
+              buttonText={<FormattedMessage id="addToken" />}
               className={styles.tokenSaleHeaderButton}
             />
           </div>
@@ -85,7 +87,7 @@ class TokenSalePanel extends React.Component<Props> {
           />
           <DialogueBox
             icon={<WarningIcon className={styles.warningIcon} />}
-            text="Please read and acknowledge these statements to continue"
+            text={<FormattedMessage id="tokenSaleDisclaimer1" />}
             className={styles.tokenSalePanelDialogueBox}
           />
           <TokenSaleConditions

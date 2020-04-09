@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import { type ProgressState } from 'spunky'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, IntlShape } from 'react-intl'
 
 import QrCodeScanner from '../../components/QrCodeScanner'
 import Button from '../../components/Button'
@@ -16,6 +16,7 @@ type Props = {
   loginNep2: Function,
   cameraAvailable: boolean,
   progress: ProgressState,
+  intl: IntlShape,
 }
 type State = {
   encryptedWIF: string,
@@ -35,7 +36,7 @@ export default class LoginNep2 extends Component<Props, State> {
   }
 
   render() {
-    const { loading, cameraAvailable, progress } = this.props
+    const { loading, cameraAvailable, progress, intl } = this.props
     const { encryptedWIF, passphrase, scannerActive } = this.state
 
     return (
@@ -67,7 +68,9 @@ export default class LoginNep2 extends Component<Props, State> {
             <React.Fragment>
               <div className={styles.inputMargin}>
                 <PasswordInput
-                  placeholder="Encrypted Key"
+                  placeholder={intl.formatMessage({
+                    id: 'inputEncryptedPlaceholder',
+                  })}
                   autoFocus
                   value={encryptedWIF}
                   disabled={loading}

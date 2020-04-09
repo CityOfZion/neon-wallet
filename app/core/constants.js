@@ -9,6 +9,8 @@ export const NEON_WALLET_RELEASE_LINK =
 export const DISCORD_INVITE_LINK = 'https://discordapp.com/invite/R8v48YA'
 export const COZ_DONATIONS_ADDRESS = 'Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A'
 
+export const PIPEFY_SUPPORT = 'https://portal.pipefy.com/coz-support'
+
 export const NODE_EXLUSION_CRITERIA = ['ngd', 'neo.org']
 
 export const ASSETS = {
@@ -34,6 +36,10 @@ export const LANGUAGES = {
     label: 'English',
     value: 'ENGLISH',
   },
+  CHINESE: {
+    label: '中文',
+    value: 'CHINESE',
+  },
   FRENCH: {
     label: 'Francés',
     value: 'FRENCH',
@@ -42,9 +48,17 @@ export const LANGUAGES = {
     label: 'Deutsche',
     value: 'GERMAN',
   },
-  CHINESE: {
-    label: '中文',
-    value: 'CHINESE',
+  ITALIAN: {
+    label: 'Italiano',
+    value: 'ITALIAN',
+  },
+  PORTUGUESE: {
+    label: 'Português',
+    value: 'PORTUGUESE',
+  },
+  TURKISH: {
+    label: 'Türkçe',
+    value: 'TURKISH',
   },
   KOREAN: {
     label: '한국어',
@@ -53,6 +67,10 @@ export const LANGUAGES = {
   VIETNAMESE: {
     label: 'Tiếng Việt',
     value: 'VIETNAMESE',
+  },
+  ARABIC: {
+    label: 'العربية',
+    value: 'ARABIC',
   },
 }
 

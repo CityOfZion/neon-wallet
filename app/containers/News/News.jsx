@@ -42,7 +42,11 @@ export default class News extends React.Component<Props, State> {
           net={this.props.net}
           label={<FormattedMessage id="newsPageLabel" />}
         />
-        <Panel onScroll={this.handleScroll} className={styles.newsPanel}>
+        <Panel
+          onScroll={this.handleScroll}
+          contentClassName={styles.newsPanelContent}
+          className={styles.newsPanel}
+        >
           {this.props.loading ? <Loader /> : this.parseItems()}
         </Panel>
       </div>

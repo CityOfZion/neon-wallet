@@ -69,12 +69,12 @@
 }
 
 .historyButtonPlaceholder {
-  width: 90px;
+  width: 100px;
 }
 
 .confirmationsContainer {
-  max-width: 90px;
-  min-width: 90px;
+  max-width: 100px;
+  min-width: 100px;
   text-align: center;
   font-size: 12px;
   display: flex;
@@ -103,8 +103,8 @@
 }
 
 .transactionHistoryButton {
-  max-width: 90px;
-  min-width: 90px;
+  max-width: 100px;
+  min-width: 100px;
   background: transparent !important;
 
   svg {

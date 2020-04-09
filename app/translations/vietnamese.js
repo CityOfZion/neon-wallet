@@ -7,71 +7,73 @@ const INPUTS = {
   authWatchPlaceholder: 'Nhập một địa chỉ ví NEO tại đây',
 }
 const VARIOUS_MISSING_TRANSLATIONS = {
-  'auth.cancel': 'Cancel',
+  'auth.cancel': 'Hủy',
   'auth.ledger.connectLedger':
-    'Connect and unlock your <strong>Ledger device</strong>',
+    'Kết nối và mở khóa <strong>Thiết bị Ledger</strong> của bạn',
   'auth.ledger.navigateToNeoApp':
-    'Navigate to the <strong>NEO app</strong> on your device',
-  'auth.ledger.retry': 'Retry?',
-  'auth.ledger.fetchAddress': 'Fetch additional addresses',
-  publicAddress: 'Public Address',
+    'Điều hướng đến <strong>Ứng dụng NEO</strong> trên thiết bị của bạn',
+  'auth.ledger.retry': 'Thử lại?',
+  'auth.ledger.fetchAddress': 'Lấy địa chỉ bổ sung',
+  publicAddress: 'Địa chỉ Công khai',
   'auth.import.recoveryInstructions':
-    'Upload a JSON wallet recovery file here to add your accounts to Neon. This option is also available on the Settings page.',
-  importFile: 'Import File',
-  dashboardTokenBalancesPrice: 'PRICE',
-  dashboardTokenBalancesHoldings: 'HOLDINGS',
-  settingsLanguageLabel: 'LANGUAGE',
-  addToken: 'Add Token',
-  contactsPageLabel: 'Manage Contacts',
-  newContact: 'New Contact',
-  deleteLabel: 'Delete',
+    'Tải lên tệp khôi phục ví JSON tại đây để thêm tài khoản của bạn vào Neon. Tùy chọn này cũng có sẵn trên trang Cài đặt.',
+  importFile: 'Nhập Tệp',
+  dashboardTokenBalancesPrice: 'GIÁ',
+  dashboardTokenBalancesHoldings: 'NẮM GIỮ',
+  settingsLanguageLabel: 'NGÔN NGỮ',
+  addToken: 'Thêm Token',
+  contactsPageLabel: 'Quản lý Liên hệ',
+  newContact: 'Liên hệ Mới',
+  deleteLabel: 'Xóa',
 
-  addToContacts: 'Add to contacts',
-  contactName: 'Name',
-  enterAContactName: 'Enter Contact Name...',
-  enterAWalletAddress: 'Enter Wallet Address...',
-  contactWalletAddress: 'Wallet Address',
-  editAContact: 'Edit A Contact',
-  modifyDetails: 'Modify Details',
-  removeContact: 'Remove Contact',
-  saveContactButtonText: 'Save Contact',
+  addToContacts: 'Thêm vào liên hệ',
+  contactName: 'Tên',
+  enterAContactName: 'Nhập Tên Liên hệ...',
+  enterAWalletAddress: 'Nhập Địa chỉ Ví...',
+  contactWalletAddress: 'Địa chỉ Ví',
+  editAContact: 'Chỉnh sửa Một Liên hệ',
+  modifyDetails: 'Sửa đổi Chi tiết',
+  removeContact: 'Xóa Liên hệ',
+  saveContactButtonText: 'Lưu Liên hệ',
 
   editContactDisclaimer:
-    'Please review and ensure that you have entered the address correctly to avoid loss of funds',
-  addAContact: 'Add A Contact',
-  addContactDetails: 'Add Contact Details',
-  confirmRemoveContact: 'Please confirm removing contact',
-  modalActionConfirm: 'Confirm',
-  modalActionCancel: 'Cancel',
-  newsPageLabel: 'News',
-  networkSettingsLabel: 'Network Settings',
+    'Vui lòng xem lại và đảm bảo rằng bạn đã nhập đúng địa chỉ để tránh mất tiền',
+  addAContact: 'Thêm Một Liên hệ',
+  addContactDetails: 'Thêm Chi tiết Liên hệ',
+  confirmRemoveContact: 'Vui lòng xác nhận xóa liên hệ',
+  modalActionConfirm: 'Xác nhận',
+  modalActionCancel: 'Hủy',
+  newsPageLabel: 'Tin tức',
+  networkSettingsLabel: 'Cài đặt Mạng',
 
   walletManagerNoLocalInfo:
-    'It looks like you have no wallet information saved locally...',
+    'Có vẻ như bạn không có thông tin ví nào được lưu cục bộ ...',
 
-  walletManagerRemoveWallet: 'Remove Wallet',
+  walletManagerRemoveWallet: 'Xóa Ví',
 
-  selectAssets: 'Select Assets',
-  priorityTransfer: 'Priority Transfer',
+  selectAssets: 'Chọn Tài sản',
+  priorityTransfer: 'Chuyển ưu tiên',
 
-  editRecipients: 'Edit Recipients',
-  confirmAndSend: 'Confirm & Send',
-  fee: 'Fee:',
-  sendMoreAssets: 'Send More Assets',
-  transactionId: 'Transaction ID:',
-  numberofTransactionsPending:
-    '{transferCount, number} {transferCount, plural, one {Transfer} other {Transfers}} pending',
-  assetRecipients:
-    'Asset {transferCount, plural, one {Recipient} other {Recipients}}',
+  editRecipients: 'Chỉnh sửa Người nhận',
+  confirmAndSend: 'Xác nhận và Gửi',
+  fee: 'Phí:',
+  sendMoreAssets: 'Gửi thêm Tài sản',
+  transactionId: 'ID Giao dịch:',
+  numberofTransactionsPending: `{transferCount, number} {transferCount, plural, one {Giao dịch} khác {Giao dịch}} đang chờ xử lý`,
+  assetRecipients: `Tài sản {transferCount, plural, one {Người nhận} khác {Người nhận}}`,
   confirmation: 'Confirmation',
   confirmationRecipient:
     '{transferCount, number} {transferCount, plural, one {Recipient} other {Transfers}}',
-  completeExclaim: 'Complete!',
+  completeExclaim: 'Hoàn tất!!',
   sendQRExplanation:
     // eslint-disable-next-line
-    "So you've been given a QR code? Click capture and hold it up to your camera.",
-  captureQR: 'Capture',
-  captureQRCaps: 'CAPTURE',
+    'Vậy bạn đã được cấp mã QR chưa? Nhấp vào chụp lại và giữ nó lên máy ảnh của bạn.',
+  captureQR: 'Chụp lại',
+  captureQRCaps: 'CHỤP LẠI',
+
+  networkConfigTooltipUpdateSettings: 'Cập nhật cài đặt',
+  networkConfigTooltipPublicKey: 'KHÓA CÔNG KHAI:',
+  networkConfigTooltipAddress: 'ĐỊA CHỈ:',
 }
 const AUTH = {
   authLogin: 'Đăng nhập',
@@ -100,6 +102,7 @@ const WALLET_CREATION = {
   walletCreationWalletPasswordConfirmPlaceholder: 'Xác Nhận Mật Khẩu',
   walletCreationButton: 'Tạo Ví',
   walletCreatedHeader: 'Ví đã được Tạo!',
+  walletImportedHeader: 'Ví nhập khẩu!',
   walletCreatedDisclaimer:
     '<b>Lưu những thông tin này lại!</b> Nếu bạn mất những thông tin đăng nhập này, bạn sẽ mất quyền truy cập vào ví của bạn.',
   privateKeyLabel: 'KHÓA RIÊNG TƯ',
@@ -260,7 +263,7 @@ const NETWORK_SETTINGS = {
   networkSettingsInstructions:
     'Quản lý tất cả các cài đặt mạng liên quan đến cách thức Ví neon tương tác với blockchain',
   networkSettingsNodeSelectLabel: 'LỰA CHỌN NODE',
-  networkSettingsExplorerLabel: 'node sự khám phá',
+  networkSettingsExplorerLabel: 'KHAI THÁC BLOCK',
   networkSettingsCurrentLabel: 'MẠNG HIỆN HÀNH',
   networkSettingsAutomatic: 'TỰ ĐỘNG',
 }
@@ -290,14 +293,14 @@ const TOKEN_SALE = {
   tokenSalePageHeader: 'Tham gia Đợt chào bán Token',
   tokenSaleDisclaimer1:
     'Vui lòng đọc và thừa nhận những tuyên bố này để tiếp tục',
-  tokenSaleDiclaimer2:
+  tokenSaleDisclaimer2:
     'Tôi hiểu rằng việc gửi NEO hoặc GAS nhiều lần có thể dẫn đến việc mất tiền hoặc hoàn trả chậm tùy thuộc vào chính sách của công ty ICO.',
   tokenSaleDisclaimer3:
     'Tôi hiểu rằng một số đợt chào bán chỉ có thể chấp nhận NEO hoặc GAS và tôi đã xác minh được chấp nhận.',
   tokenSaleDisclaimer4:
     'Tôi hiểu rằng nếu tôi gửi NEO hoặc GAS đến một đợt chào bán token đã kết thúc, tôi sẽ mất NEO / GAS và sẽ không được hoàn trả.',
   // eslint-disable-next-line
-  tokenSaleDiclaimer5: `Tôi hiểu rằng COZ không chịu trách nhiệm cho việc sử dụng tính năng này của tôi và tôi đã tham khảo giấy phép của phần mềm này.`,
+  tokenSaleDisclaimer5: `Tôi hiểu rằng COZ không chịu trách nhiệm cho việc sử dụng tính năng này của tôi và tôi đã tham khảo giấy phép của phần mềm này.`,
 }
 
 export default {

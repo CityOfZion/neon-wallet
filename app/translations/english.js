@@ -66,13 +66,17 @@ const VARIOUS_MISSING_TRANSLATIONS = {
     'Asset {transferCount, plural, one {Recipient} other {Recipients}}',
   confirmation: 'Confirmation',
   confirmationRecipient:
-    '{transferCount, number} {transferCount, plural, one {Recipient} other {Transfers}}',
+    '{transferCount, number} {transferCount, plural, one {Recipient} other {Recipients}}',
   completeExclaim: 'Complete!',
   sendQRExplanation:
     // eslint-disable-next-line
     "So you've been given a QR code? Click capture and hold it up to your camera.",
   captureQR: 'Capture',
   captureQRCaps: 'CAPTURE',
+
+  networkConfigTooltipUpdateSettings: 'Update Settings',
+  networkConfigTooltipPublicKey: 'PUBLIC KEY:',
+  networkConfigTooltipAddress: 'ADDRESS:',
 }
 
 const AUTH = {
@@ -102,6 +106,7 @@ const WALLET_CREATION = {
   walletCreationWalletPasswordConfirmPlaceholder: 'Confirm Password',
   walletCreationButton: 'Create Wallet',
   walletCreatedHeader: 'Wallet Created!',
+  walletImportedHeader: 'Wallet Created!',
   walletCreatedDisclaimer:
     '<b>Save these details!</b> If you lose these credentials, you lose access to your assets.',
   privateKeyLabel: 'PRIVATE KEY',
@@ -292,14 +297,14 @@ const TOKEN_SALE = {
   tokenSalePageHeader: 'Participate in Token Sale',
   tokenSaleDisclaimer1:
     'Please read and acknowledge these statements to continue',
-  tokenSaleDiclaimer2:
+  tokenSaleDisclaimer2:
     'I understand that submitting NEO or GAS multiple times may result in a loss of funds or a delayed refund depending on the policy of the ICO company.',
   tokenSaleDisclaimer3:
     'I understand that some sales may only accept NEO or GAS, and I have verified which is accepted.',
   tokenSaleDisclaimer4:
     'I understand that if I send NEO or GAS to a token sale that has already ended, I will lose my NEO/GAS and will not be refunded.',
   // eslint-disable-next-line
-  tokenSaleDiclaimer5: `I understand that City of Zion (CoZ) is not responsible for my usage of this feature, and I have consulted this software's licenses.`,
+  tokenSaleDisclaimer5: `I understand that City of Zion (CoZ) is not responsible for my usage of this feature, and I have consulted this software's licenses.`,
 }
 
 export default {

@@ -8,71 +8,75 @@ const INPUTS = {
 }
 
 const VARIOUS_MISSING_TRANSLATIONS = {
-  'auth.cancel': 'Cancel',
+  'auth.cancel': 'Stornieren',
   'auth.ledger.connectLedger':
-    'Connect and unlock your <strong>Ledger device</strong>',
+    'Verbinden und entsperren Sie Ihr <strong>Ledger-Gerät</strong>',
   'auth.ledger.navigateToNeoApp':
-    'Navigate to the <strong>NEO app</strong> on your device',
-  'auth.ledger.retry': 'Retry?',
-  'auth.ledger.fetchAddress': 'Fetch additional addresses',
-  publicAddress: 'Public Address',
+    'Navigieren Sie auf Ihrem Gerät zur <strong> NEO-App </ strong>',
+  'auth.ledger.retry': 'Wiederholen?',
+  'auth.ledger.fetchAddress': 'Zusätzliche Adressen abrufen',
+  publicAddress: 'Öffentliche Adresse',
   'auth.import.recoveryInstructions':
-    'Upload a JSON wallet recovery file here to add your accounts to Neon. This option is also available on the Settings page.',
-  importFile: 'Import File',
-  dashboardTokenBalancesPrice: 'PRICE',
+    'Laden Sie hier eine JSON-Wallet-Wiederherstellungsdatei hoch, um Ihre Konten zu Neon hinzuzufügen. Diese Option ist auch auf der Seite Einstellungen verfügbar.',
+  importFile: 'Datei importieren',
+  dashboardTokenBalancesPrice: 'PREIS',
   dashboardTokenBalancesHoldings: 'HOLDINGS',
-  settingsLanguageLabel: 'LANGUAGE',
-  addToken: 'Add Token',
-  contactsPageLabel: 'Manage Contacts',
-  newContact: 'New Contact',
-  deleteLabel: 'Delete',
+  settingsLanguageLabel: 'SPRACHE',
+  addToken: 'Token hinzufügen',
+  contactsPageLabel: 'Kontakte verwalten',
+  newContact: 'Neuer Kontakt',
+  deleteLabel: 'Löschen',
 
-  addToContacts: 'Add to contacts',
+  addToContacts: 'Zu den Kontakten hinzufügen',
   contactName: 'Name',
-  enterAContactName: 'Enter Contact Name...',
-  enterAWalletAddress: 'Enter Wallet Address...',
-  contactWalletAddress: 'Wallet Address',
-  editAContact: 'Edit A Contact',
-  modifyDetails: 'Modify Details',
-  removeContact: 'Remove Contact',
-  saveContactButtonText: 'Save Contact',
+  enterAContactName: 'Kontaktname eingeben...',
+  enterAWalletAddress: 'Brieftaschenadresse eingeben...',
+  contactWalletAddress: 'Brieftaschenadresse',
+  editAContact: 'Bearbeiten Sie einen Kontakt',
+  modifyDetails: 'Details ändern',
+  removeContact: 'Kontakt entfernen',
+  saveContactButtonText: 'Kontakt speichern',
 
   editContactDisclaimer:
-    'Please review and ensure that you have entered the address correctly to avoid loss of funds',
-  addAContact: 'Add A Contact',
-  addContactDetails: 'Add Contact Details',
-  confirmRemoveContact: 'Please confirm removing contact',
-  modalActionConfirm: 'Confirm',
-  modalActionCancel: 'Cancel',
-  newsPageLabel: 'News',
-  networkSettingsLabel: 'Network Settings',
+    'Bitte überprüfen Sie und stellen Sie sicher, dass Sie die Adresse korrekt eingegeben haben, um einen Verlust von Geldern zu vermeiden',
+  addAContact: 'Einen Kontakt hinzufügen',
+  addContactDetails: 'Kontaktdaten hinzufügen',
+  confirmRemoveContact: 'Bitte bestätigen Sie das Entfernen des Kontakts',
+  modalActionConfirm: 'Bestätigen',
+  modalActionCancel: 'Stornieren',
+  newsPageLabel: 'Nachrichten',
+  networkSettingsLabel: 'Netzwerkeinstellungen',
 
   walletManagerNoLocalInfo:
-    'It looks like you have no wallet information saved locally...',
+    'Es sieht so aus, als hätten Sie keine lokal gespeicherten Brieftascheninformationen...',
 
-  walletManagerRemoveWallet: 'Remove Wallet',
+  walletManagerRemoveWallet: 'Brieftasche entfernen',
 
-  selectAssets: 'Select Assets',
-  priorityTransfer: 'Priority Transfer',
+  selectAssets: 'Wählen Sie Assets',
+  priorityTransfer: 'Prioritätsübertragung',
 
-  editRecipients: 'Edit Recipients',
-  confirmAndSend: 'Confirm & Send',
-  fee: 'Fee:',
-  sendMoreAssets: 'Send More Assets',
-  transactionId: 'Transaction ID:',
+  editRecipients: 'Empfänger bearbeiten',
+  confirmAndSend: 'Bestätigen und senden',
+  fee: 'Gebühr:',
+  sendMoreAssets: 'Senden Sie weitere Assets',
+  transactionId: 'Transaktions-ID:',
   numberofTransactionsPending:
-    '{transferCount, number} {transferCount, plural, one {Transfer} other {Transfers}} pending',
+    '{transferCount, number} {transferCount, plural, one {Übertragung} other {Überweisungen}} ausstehend',
   assetRecipients:
-    'Asset {transferCount, plural, one {Recipient} other {Recipients}}',
-  confirmation: 'Confirmation',
+    'Anlagegut {transferCount, plural, one {Empfänger} other {Empfänger}}',
+  confirmation: 'Bestätigung',
   confirmationRecipient:
-    '{transferCount, number} {transferCount, plural, one {Recipient} other {Transfers}}',
-  completeExclaim: 'Complete!',
+    '{transferCount, number} {transferCount, plural, one {Empfänger} other {Empfänger}}',
+  completeExclaim: 'Komplett!',
   sendQRExplanation:
     // eslint-disable-next-line
-    "So you've been given a QR code? Click capture and hold it up to your camera.",
-  captureQR: 'Capture',
-  captureQRCaps: 'CAPTURE',
+    'Sie haben also einen QR-Code erhalten? Klicken Sie auf Aufnahme und halten Sie es an Ihre Kamera.',
+  captureQR: 'Erfassung',
+  captureQRCaps: 'ERFASSUNG',
+
+  networkConfigTooltipUpdateSettings: 'Update Einstellungen',
+  networkConfigTooltipPublicKey: 'ÖFFENTLICHER SCHLÜSSEL:',
+  networkConfigTooltipAddress: 'ADRESSE:',
 }
 
 const AUTH = {
@@ -102,6 +106,7 @@ const WALLET_CREATION = {
   walletCreationWalletPasswordConfirmPlaceholder: 'Passwort bestätigen',
   walletCreationButton: 'Wallet erstellen',
   walletCreatedHeader: 'Wallet erstellt!',
+  walletImportedHeader: 'Brieftasche importiert!',
   walletCreatedDisclaimer:
     '<b>Notiere diese Angaben!</b> Wenn du sie verlierst, verlierst du auch den Zugriff auf deine Assets.',
   privateKeyLabel: 'PRIVATER KEY',
@@ -294,14 +299,14 @@ const TOKEN_SALE = {
   tokenSalePageHeader: 'An Token-Sales teilnehmen',
   tokenSaleDisclaimer1:
     'Bitte lies und bestätige diese Erklärung, um fortzufahren',
-  tokenSaleDiclaimer2:
+  tokenSaleDisclaimer2:
     'Ich verstehe, dass das mehrfache Senden von NEO oder GAS in einem Verlust der Assets oder einer verzögerten Rückzahlung resultieren kann, abhängig von den Bestimmungen des ausgebenden Unternehmens.',
   tokenSaleDisclaimer3:
     'Ich verstehe, dass einige Sales entweder NEO oder GAS akzeptieren und ich habe sichergestellt, welches Asset angenommen wird.',
   tokenSaleDisclaimer4:
     'Ich verstehe, dass das Senden von NEO oder GAS an einen Token-Sale, der bereits beendet ist, in einem unwiderruflichen Verlust meiner NEO/GAS-Tokens resultieren wird.',
   // eslint-disable-next-line
-  tokenSaleDiclaimer5: `Ich verstehe, dass COZ nicht für meine Verwendung dieses Features verantwortlich ist und ich habe die Lizenzen dieser Software zur Kenntnis genommen.`,
+  tokenSaleDisclaimer5: `Ich verstehe, dass COZ nicht für meine Verwendung dieses Features verantwortlich ist und ich habe die Lizenzen dieser Software zur Kenntnis genommen.`,
 }
 
 export default {

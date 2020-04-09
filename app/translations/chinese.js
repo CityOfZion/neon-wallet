@@ -8,71 +8,71 @@ const INPUTS = {
 }
 
 const VARIOUS_MISSING_TRANSLATIONS = {
-  'auth.cancel': 'Cancel',
-  'auth.ledger.connectLedger':
-    'Connect and unlock your <strong>Ledger device</strong>',
-  'auth.ledger.navigateToNeoApp':
-    'Navigate to the <strong>NEO app</strong> on your device',
-  'auth.ledger.retry': 'Retry?',
-  'auth.ledger.fetchAddress': 'Fetch additional addresses',
-  publicAddress: 'Public Address',
+  'auth.cancel': '取消',
+  'auth.ledger.connectLedger': '连接并解锁您的分类帐设备',
+  'auth.ledger.navigateToNeoApp': '导航到设备上的NEO应用',
+  'auth.ledger.retry': '重试?',
+  'auth.ledger.fetchAddress': '获取其他地址',
+  publicAddress: '公开地址',
   'auth.import.recoveryInstructions':
-    'Upload a JSON wallet recovery file here to add your accounts to Neon. This option is also available on the Settings page.',
-  importFile: 'Import File',
-  dashboardTokenBalancesPrice: 'PRICE',
-  dashboardTokenBalancesHoldings: 'HOLDINGS',
-  settingsLanguageLabel: 'LANGUAGE',
-  addToken: 'Add Token',
-  contactsPageLabel: 'Manage Contacts',
-  newContact: 'New Contact',
-  deleteLabel: 'Delete',
+    '在此处上传JSON钱包恢复文件，以将您的帐户添加到Neon。此选项在“设置”页面上也可用。',
+  importFile: '导入文件',
+  dashboardTokenBalancesPrice: '价钱',
+  dashboardTokenBalancesHoldings: '控股',
+  settingsLanguageLabel: '语言',
+  addToken: '添加令牌',
+  contactsPageLabel: '管理联络人',
+  newContact: '新联系人',
+  deleteLabel: '删除',
 
-  addToContacts: 'Add to contacts',
-  contactName: 'Name',
-  enterAContactName: 'Enter Contact Name...',
-  enterAWalletAddress: 'Enter Wallet Address...',
-  contactWalletAddress: 'Wallet Address',
-  editAContact: 'Edit A Contact',
-  modifyDetails: 'Modify Details',
-  removeContact: 'Remove Contact',
-  saveContactButtonText: 'Save Contact',
+  addToContacts: '添加到通讯录',
+  contactName: '名称',
+  enterAContactName: '输入联系人姓名...',
+  enterAWalletAddress: '输入电子钱包地址...',
+  contactWalletAddress: 'W钱包地址',
+  editAContact: '编辑联系人',
+  modifyDetails: '修改详细资料',
+  removeContact: '移除联系人',
+  saveContactButtonText: '储存联络人',
 
-  editContactDisclaimer:
-    'Please review and ensure that you have entered the address correctly to avoid loss of funds',
-  addAContact: 'Add A Contact',
-  addContactDetails: 'Add Contact Details',
-  confirmRemoveContact: 'Please confirm removing contact',
-  modalActionConfirm: 'Confirm',
-  modalActionCancel: 'Cancel',
-  newsPageLabel: 'News',
-  networkSettingsLabel: 'Network Settings',
+  editContactDisclaimer: '请检查并确保您正确输入了地址，以免造成资金损失',
+  addAContact: '添加联系人',
+  addContactDetails: '添加联系方式',
+  confirmRemoveContact: '请确认删除联系人',
+  modalActionConfirm: '确认',
+  modalActionCancel: '取消',
+  newsPageLabel: '新闻',
+  networkSettingsLabel: '网络设置',
 
-  walletManagerNoLocalInfo:
-    'It looks like you have no wallet information saved locally...',
+  walletManagerNoLocalInfo: '您似乎没有本地保存的钱包信息...',
 
-  walletManagerRemoveWallet: 'Remove Wallet',
+  walletManagerRemoveWallet: '删除钱包',
 
-  selectAssets: 'Select Assets',
-  priorityTransfer: 'Priority Transfer',
+  selectAssets: '选择资产',
+  priorityTransfer: '优先转移',
 
-  editRecipients: 'Edit Recipients',
-  confirmAndSend: 'Confirm & Send',
-  fee: 'Fee:',
-  sendMoreAssets: 'Send More Assets',
-  transactionId: 'Transaction ID:',
+  editRecipients: '编辑收件人',
+  confirmAndSend: '确认并发送',
+  fee: '费用:',
+  sendMoreAssets: '发送更多资产',
+  transactionId: '交易编号:',
   numberofTransactionsPending:
     '{transferCount, number} {transferCount, plural, one {Transfer} other {Transfers}} pending',
   assetRecipients:
     'Asset {transferCount, plural, one {Recipient} other {Recipients}}',
-  confirmation: 'Confirmation',
+  confirmation: '确认书',
   confirmationRecipient:
     '{transferCount, number} {transferCount, plural, one {Recipient} other {Transfers}}',
-  completeExclaim: 'Complete!',
+  completeExclaim: '完成!',
   sendQRExplanation:
     // eslint-disable-next-line
-    "So you've been given a QR code? Click capture and hold it up to your camera.",
-  captureQR: 'Capture',
-  captureQRCaps: 'CAPTURE',
+    '因此，您已获得QR码？单击捕获并将其保持在相机上.',
+  captureQR: '捕获',
+  captureQRCaps: '捕获',
+
+  networkConfigTooltipUpdateSettings: '更新设定',
+  networkConfigTooltipPublicKey: '公钥:',
+  networkConfigTooltipAddress: '地址:',
 }
 
 const AUTH = {
@@ -81,7 +81,7 @@ const AUTH = {
   authPrivate: '私钥',
   authEncrypted: '密钥',
   authWatch: '观察',
-  authLedger: 'LEDGER',
+  authLedger: '分类帐',
   authCreateWallet: '生成钱包',
   authImportWallet: '导入钱包文',
   authScanQRButton: '扫描二维码',
@@ -102,6 +102,7 @@ const WALLET_CREATION = {
   walletCreationWalletPasswordConfirmPlaceholder: '确认密码',
   walletCreationButton: '生成钱包',
   walletCreatedHeader: '生成钱包成功!',
+  walletImportedHeader: '钱包进口!',
   walletCreatedDisclaimer:
     '<b>保存这些信息！</b>如果丢失这些凭据，则将失去移动资产的权限。',
   privateKeyLabel: '私钥',
@@ -228,7 +229,7 @@ const SEND = {
   sendRecipientsCapital: '接受者',
   sendCompleteNotification: '交易待处理！您的余额将在区块链处理完后自动更新.',
   sendSelectAssets:
-    '选择资产 {transferCount, number} / {maxNumberOfRecipients, number} 接受者',
+    '{transferCount, number} of {maxNumberOfRecipients, number} 收件者',
   sendTransferMessage:
     '{transferCount, number} {transferCount, plural, one {sendTransfer} other {sendTransferPlural}} 待定',
   sendBroadcasting: '正在将交易广播到网络...',
@@ -284,13 +285,13 @@ const ENCRYPT_KEY = {
 const TOKEN_SALE = {
   tokenSalePageHeader: '参加代币销售',
   tokenSaleDisclaimer1: '请阅读并确认这些声明以继续',
-  tokenSaleDiclaimer2:
+  tokenSaleDisclaimer2:
     '我了解，根据ICO公司的政策，多次提交NEO或GAS可能会导致资金损失或退款延迟.',
   tokenSaleDisclaimer3: '我了解某些销售可能仅接受NEO或GAS，并且我已确认接受了.',
   tokenSaleDisclaimer4:
     '我了解，如果我将NEO或GAS发送到已经结束的代币销售中，我将丢失NEO / GAS，并且不会退款',
   // eslint-disable-next-line
-  tokenSaleDiclaimer5:
+  tokenSaleDisclaimer5:
     '我了解COZ对使用此功能不承担任何责任，并且我已经查阅了此软件的许可证.',
 }
 

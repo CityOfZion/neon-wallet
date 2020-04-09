@@ -1,6 +1,7 @@
 // @flow
 import { compose } from 'recompose'
 import { withActions, withProgress } from 'spunky'
+import { injectIntl } from 'react-intl'
 
 import LoginNep2 from './LoginNep2'
 import withLoadingProp from '../../hocs/withLoadingProp'
@@ -20,4 +21,5 @@ export default compose(
   withFailureNotification(nep2LoginActions),
   withProgress(nep2LoginActions),
   withCameraAvailability,
+  injectIntl,
 )(LoginNep2)

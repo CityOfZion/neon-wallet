@@ -7,6 +7,7 @@ import NetworkConfigurationTooltip from '../NetworkConfigurationTooltip'
 import LightLogoWithoutText from '../../assets/images/logo-without-text-black.png'
 import DarkLogoWithoutText from '../../assets/images/logo-without-text.png'
 import styles from '../../containers/App/Sidebar/Sidebar.scss'
+import IntlWrapper from '../Root/IntlWrapper'
 import { LIGHT_NETWORK_CONFIG_TOOLTIP } from '../../themes/Light'
 import { DARK_NETWORK_CONFIG_TOOLTIP } from '../../themes/Dark'
 
@@ -30,7 +31,11 @@ class LogoWithTooltipAndBlockHeight extends React.Component<Props> {
         distance={-60}
         theme="network-settings"
         onShow={() => this.handleOnShow()}
-        html={<NetworkConfigurationTooltip store={store} />}
+        html={
+          <IntlWrapper store={store}>
+            <NetworkConfigurationTooltip store={store} />{' '}
+          </IntlWrapper>
+        }
       >
         <div className={styles.logo} id="neon-logo-container">
           <img src={themeBasedLogo} id="neon-logo" alt="neon-logo" />
