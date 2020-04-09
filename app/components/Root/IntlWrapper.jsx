@@ -17,6 +17,9 @@ const {
   chinese,
   german,
   italian,
+  portuguese,
+  turkish,
+  arabic,
 } = translations
 
 type IntlWrapperProps = {
@@ -32,6 +35,9 @@ const tranlationsMappings = {
   [LANGUAGES.GERMAN.value]: german,
   [LANGUAGES.CHINESE.value]: chinese,
   [LANGUAGES.ITALIAN.value]: italian,
+  [LANGUAGES.PORTUGUESE.value]: portuguese,
+  [LANGUAGES.TURKISH.value]: turkish,
+  [LANGUAGES.ARABIC.value]: arabic,
 }
 
 class IntlWrapper extends React.Component<IntlWrapperProps> {

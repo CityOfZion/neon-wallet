@@ -298,14 +298,14 @@ const TOKEN_SALE = {
   tokenSalePageHeader: 'An Token-Sales teilnehmen',
   tokenSaleDisclaimer1:
     'Bitte lies und bestätige diese Erklärung, um fortzufahren',
-  tokenSaleDiclaimer2:
+  tokenSaleDisclaimer2:
     'Ich verstehe, dass das mehrfache Senden von NEO oder GAS in einem Verlust der Assets oder einer verzögerten Rückzahlung resultieren kann, abhängig von den Bestimmungen des ausgebenden Unternehmens.',
   tokenSaleDisclaimer3:
     'Ich verstehe, dass einige Sales entweder NEO oder GAS akzeptieren und ich habe sichergestellt, welches Asset angenommen wird.',
   tokenSaleDisclaimer4:
     'Ich verstehe, dass das Senden von NEO oder GAS an einen Token-Sale, der bereits beendet ist, in einem unwiderruflichen Verlust meiner NEO/GAS-Tokens resultieren wird.',
   // eslint-disable-next-line
-  tokenSaleDiclaimer5: `Ich verstehe, dass COZ nicht für meine Verwendung dieses Features verantwortlich ist und ich habe die Lizenzen dieser Software zur Kenntnis genommen.`,
+  tokenSaleDisclaimer5: `Ich verstehe, dass COZ nicht für meine Verwendung dieses Features verantwortlich ist und ich habe die Lizenzen dieser Software zur Kenntnis genommen.`,
 }
 
 export default {

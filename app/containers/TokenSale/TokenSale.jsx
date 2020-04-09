@@ -1,6 +1,7 @@
 // @flow
 import React, { Component, Fragment } from 'react'
 import { isEmpty, isEqual } from 'lodash-es'
+import { injectIntl, IntlShape } from 'react-intl'
 
 import {
   isZero,
@@ -26,15 +27,7 @@ import {
   PRICE_UNAVAILABLE,
   ROUTES,
 } from '../../core/constants'
-
 import styles from './TokenSale.scss'
-
-const conditions = [
-  'I understand that submitting NEO or GAS multiple times may result in a loss of funds or a delayed refund depending on the policy of the ICO company.',
-  'I understand that some sales may only accept NEO or GAS, and I have verified which is accepted.',
-  'I understand that if I send NEO or GAS to a token sale that has already ended, I will lose my NEO/GAS and will not be refunded.',
-  "I understand that City of Zion (CoZ) is not responsible for my usage of this feature, and I have consulted this software's licenses.", // eslint-disable-line
-]
 
 type Props = {
   assetBalances: Object,
@@ -50,6 +43,7 @@ type Props = {
     gasCost: string,
   ) => Promise<any>,
   currencyCode: string,
+  intl: IntlShape,
 }
 
 type State = {
@@ -71,13 +65,19 @@ const INITIAL_STATE = {
   step: TOKEN_SALE_PURCHASE,
   amountToPurchaseFor: 0,
   assetToPurchase: '',
-  conditions: [...conditions],
   loading: false,
   gasFee: 0,
   acceptedConditions: [],
   inputErrorMessage: '',
   tokenSaleError: {},
 }
+
+// const conditions = [
+//   'I understand that submitting NEO or GAS multiple times may result in a loss of funds or a delayed refund depending on the policy of the ICO company.',
+//   'I understand that some sales may only accept NEO or GAS, and I have verified which is accepted.',
+//   'I understand that if I send NEO or GAS to a token sale that has already ended, I will lose my NEO/GAS and will not be refunded.',
+//   "I understand that City of Zion (CoZ) is not responsible for my usage of this feature, and I have consulted this software's licenses.", // eslint-disable-line
+// ]
 
 class TokenSale extends Component<Props, State> {
   constructor(props: Props) {
@@ -87,6 +87,12 @@ class TokenSale extends Component<Props, State> {
       assetToPurchaseWith: Object.keys(this.props.assetBalances)[0],
       hasAssets: false,
       amountsData: [],
+      conditions: [
+        this.props.intl.formatMessage({ id: 'tokenSaleDisclaimer2' }),
+        this.props.intl.formatMessage({ id: 'tokenSaleDisclaimer3' }),
+        this.props.intl.formatMessage({ id: 'tokenSaleDisclaimer4' }),
+        this.props.intl.formatMessage({ id: 'tokenSaleDisclaimer5' }),
+      ],
       ...INITIAL_STATE,
     }
   }
@@ -330,12 +336,15 @@ class TokenSale extends Component<Props, State> {
       amountsData,
     } = this.state
 
-    const { assetBalances, showModal, currencyCode } = this.props
+    const { assetBalances, showModal, currencyCode, intl } = this.props
     const disabledButton = !(acceptedConditions.length === conditions.length)
     const availableGas = assetBalances.GAS
     return (
       <Fragment>
-        <HeaderBar shouldRenderRefresh label="Token Sale" />
+        <HeaderBar
+          shouldRenderRefresh
+          label={intl.formatMessage({ id: 'sidebarTokenSale' })}
+        />
         <section className={styles.purchaseSection}>
           <AmountsPanel currencyCode={currencyCode} amountsData={amountsData} />
           <TokenSalePanel
@@ -434,4 +443,4 @@ class TokenSale extends Component<Props, State> {
   }
 }
 
-export default TokenSale
+export default injectIntl(TokenSale)

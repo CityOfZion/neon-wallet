@@ -292,14 +292,14 @@ const TOKEN_SALE = {
   tokenSalePageHeader: 'Tham gia Đợt chào bán Token',
   tokenSaleDisclaimer1:
     'Vui lòng đọc và thừa nhận những tuyên bố này để tiếp tục',
-  tokenSaleDiclaimer2:
+  tokenSaleDisclaimer2:
     'Tôi hiểu rằng việc gửi NEO hoặc GAS nhiều lần có thể dẫn đến việc mất tiền hoặc hoàn trả chậm tùy thuộc vào chính sách của công ty ICO.',
   tokenSaleDisclaimer3:
     'Tôi hiểu rằng một số đợt chào bán chỉ có thể chấp nhận NEO hoặc GAS và tôi đã xác minh được chấp nhận.',
   tokenSaleDisclaimer4:
     'Tôi hiểu rằng nếu tôi gửi NEO hoặc GAS đến một đợt chào bán token đã kết thúc, tôi sẽ mất NEO / GAS và sẽ không được hoàn trả.',
   // eslint-disable-next-line
-  tokenSaleDiclaimer5: `Tôi hiểu rằng COZ không chịu trách nhiệm cho việc sử dụng tính năng này của tôi và tôi đã tham khảo giấy phép của phần mềm này.`,
+  tokenSaleDisclaimer5: `Tôi hiểu rằng COZ không chịu trách nhiệm cho việc sử dụng tính năng này của tôi và tôi đã tham khảo giấy phép của phần mềm này.`,
 }
 
 export default {

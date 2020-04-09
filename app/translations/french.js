@@ -293,14 +293,14 @@ const TOKEN_SALE = {
   tokenSalePageHeader: 'Participer à une vente de jetons',
   tokenSaleDisclaimer1:
     'Veuillez lire et approuver ces conditions pour continuer',
-  tokenSaleDiclaimer2:
+  tokenSaleDisclaimer2:
     'Je comprends que soumettre NEO our GAS à de multiples reprises peut entraîner une perte de fonds ou un remboursement retardé, dépendamment de la politique de l`ICO.',
   tokenSaleDisclaimer3:
     'Je comprends que certaines ventes peuvent n`accepter que NEO ou GAS et j`ai verifié ce qui etait accepté.',
   tokenSaleDisclaimer4:
     'Je comprends que si j`envoie NEO ou GAS à une vente de jetons qui s`est dejà terminée, je perdrai mes NEO/GAS et ne serait pas remboursé.',
   // eslint-disable-next-line
-  tokenSaleDiclaimer5: `Je comprends que COZ n'est pas responsable de mon utilisation de cette fonctionalité et jai verifié les licenses de ce logiciel.`,
+  tokenSaleDisclaimer5: `Je comprends que COZ n'est pas responsable de mon utilisation de cette fonctionalité et jai verifié les licenses de ce logiciel.`,
 }
 
 export default {

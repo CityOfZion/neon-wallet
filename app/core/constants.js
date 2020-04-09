@@ -36,6 +36,10 @@ export const LANGUAGES = {
     label: 'English',
     value: 'ENGLISH',
   },
+  CHINESE: {
+    label: '中文',
+    value: 'CHINESE',
+  },
   FRENCH: {
     label: 'Francés',
     value: 'FRENCH',
@@ -48,9 +52,13 @@ export const LANGUAGES = {
     label: 'Italiano',
     value: 'ITALIAN',
   },
-  CHINESE: {
-    label: '中文',
-    value: 'CHINESE',
+  PORTUGUESE: {
+    label: 'Português',
+    value: 'PORTUGUESE',
+  },
+  TURKISH: {
+    label: 'Türkçe',
+    value: 'TURKISH',
   },
   KOREAN: {
     label: '한국어',
@@ -59,6 +67,10 @@ export const LANGUAGES = {
   VIETNAMESE: {
     label: 'Tiếng Việt',
     value: 'VIETNAMESE',
+  },
+  ARABIC: {
+    label: 'العربية',
+    value: 'ARABIC',
   },
 }
 

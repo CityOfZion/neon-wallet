@@ -295,13 +295,13 @@ const TOKEN_SALE = {
   tokenSalePageHeader: 'Partecipa alla vendita di token',
   tokenSaleDisclaimer1:
     'Si prega di leggere e riconoscere queste dichiarazioni per continuare',
-  tokenSaleDiclaimer2: `Comprendo che l'invio di NEO o GAS più volte può comportare una perdita di fondi o un rimborso ritardato a seconda della politica della società ICO.`,
+  tokenSaleDisclaimer2: `Comprendo che l'invio di NEO o GAS più volte può comportare una perdita di fondi o un rimborso ritardato a seconda della politica della società ICO.`,
   tokenSaleDisclaimer3:
     'Comprendo che alcune vendite possono accettare solo NEO o GAS e ho verificato quale è accettato.',
   tokenSaleDisclaimer4:
     'Comprendo che se invio NEO o GAS a una vendita di token già terminata, perderò il mio NEO / GAS e non verrà rimborsato.',
   // eslint-disable-next-line
-  tokenSaleDiclaimer5: `Comprendo che COZ non è responsabile per il mio utilizzo di questa funzione e ho consultato le licenze di questo software.`,
+  tokenSaleDisclaimer5: `Comprendo che COZ non è responsabile per il mio utilizzo di questa funzione e ho consultato le licenze di questo software.`,
 }
 
 export default {

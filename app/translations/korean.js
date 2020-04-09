@@ -283,13 +283,13 @@ const ENCRYPT_KEY = {
 const TOKEN_SALE = {
   tokenSalePageHeader: '토큰 세일 참여',
   tokenSaleDisclaimer1: '계속하려면 이 문장을 읽고 승인해 주십시오.',
-  tokenSaleDiclaimer2:
+  tokenSaleDisclaimer2:
     'NEO나 GAS를 여러 번 제출하면 ICO사의 방침에 따라 자금 손실이 발생하거나 환불이 지연될 수 있는 것으로 알고 있습니다.',
   tokenSaleDisclaimer3:
     '일부 판매는 NEO 또는 GAS만 수락할 수 있으며, 어느 것이 받아들여지는지 확인했습니다.',
   tokenSaleDisclaimer4:
     '이미 끝난 토큰 세일에 NEO나 GAS를 보내면 NEO/GAS가 없어져 환불이 되지 않는 것으로 알고 있습니다.',
-  tokenSaleDiclaimer5:
+  tokenSaleDisclaimer5:
     // eslint-disable-next-line
     'COZ는 이 기능의 사용에 대한 책임이 없으며 이 소프트웨어의 라이센스에 문의했습니다.',
 }

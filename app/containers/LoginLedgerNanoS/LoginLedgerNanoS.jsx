@@ -56,6 +56,8 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
     super(props)
     this.state = {
       ...this.computeStateFromProps(props),
+      // ledgerStage: OPEN_APP,
+      // isLoading: false,
       addressOption: null,
       publicKeys: [],
       loadingPublicKeys: true,
@@ -252,8 +254,10 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
             [styles.ledgerStageCompleted]: ledgerStage > NOT_CONNECTED,
           })}
         >
-          {this.getStatusIcon(NOT_CONNECTED)}
-          <div>
+          <div className={styles.ledgerStatusIconContainer}>
+            {this.getStatusIcon(NOT_CONNECTED)}
+          </div>
+          <div className={styles.ledgerStageText}>
             <FormattedHTMLMessage id="auth.ledger.connectLedger" />
           </div>
         </div>
@@ -263,8 +267,10 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
             [styles.ledgerStageCompleted]: ledgerStage > OPEN_APP,
           })}
         >
-          {this.getStatusIcon(OPEN_APP)}
-          <div>
+          <div className={styles.ledgerStatusIconContainer}>
+            {this.getStatusIcon(OPEN_APP)}
+          </div>
+          <div className={styles.ledgerStageText}>
             <FormattedHTMLMessage id="auth.ledger.navigateToNeoApp" />
           </div>
         </div>
