@@ -8,11 +8,9 @@ import { FormattedMessage } from 'react-intl'
 import styles from './Home.scss'
 import lightLogo from '../../assets/images/logo-light.png'
 import darkLogo from '../../assets/images/logo-dark.png'
-import Flag from '../../assets/icons/flag.svg'
-import StyledReactSelect from '../../components/Inputs/StyledReactSelect/StyledReactSelect'
 import withLanguageData from '../../hocs/withLanguageData'
-import { LANGUAGES } from '../../core/constants'
 import { updateSettingsActions } from '../../actions/settingsActions'
+import LanguageSelect from '../../components/Inputs/LanguageSelect'
 
 type Props = {
   children: React$Node,
@@ -25,11 +23,6 @@ type Props = {
 type State = {
   languageMenuOpen: boolean,
 }
-
-const parsedLangOptions = Object.keys(LANGUAGES).map(key => ({
-  value: LANGUAGES[key].value,
-  label: LANGUAGES[key].label,
-}))
 
 class HomeLayout extends React.Component<Props, State> {
   state = {
@@ -57,37 +50,12 @@ class HomeLayout extends React.Component<Props, State> {
       >
         <div className={styles.innerHomeContainer}>
           {renderNavigation && renderNavigation()}
-          <div
-            onClick={() =>
-              !languageMenuOpen && this.setState({ languageMenuOpen: true })
-            }
-            id={styles.flagDropdownContainer}
-          >
-            <Flag
-              onClick={() =>
-                this.setState({ languageMenuOpen: !languageMenuOpen })
-              }
-            />
-            {languageMenuOpen && (
-              <div id={styles.floatingLanguageSelect}>
-                <StyledReactSelect
-                  hideControl
-                  settingsSelect
-                  onChange={({ value }) => {
-                    this.setState({ languageMenuOpen: true })
-                    setLanguageSetting(value)
-                  }}
-                  isSearchable={false}
-                  transparent
-                  menuIsOpen
-                  options={parsedLangOptions}
-                  value={parsedLangOptions.find(
-                    option => option.label === languageDisplayValue,
-                  )}
-                />
-              </div>
-            )}
-          </div>
+          <LanguageSelect
+            setLanguageSetting={setLanguageSetting}
+            languageMenuOpen={languageMenuOpen}
+            toggleMenu={languageMenuOpen => this.setState({ languageMenuOpen })}
+            languageDisplayValue={languageDisplayValue}
+          />
           <div
             className={
               renderNavigation

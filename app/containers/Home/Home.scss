@@ -293,22 +293,3 @@ $navigation-margin: 20px;
 .centeredInput {
   margin-top: 20px;
 }
-
-#floatingLanguageSelect {
-  position: absolute;
-  margin-left: -110px;
-  margin-top: 18px;
-}
-
-#flagDropdownContainer {
-  display: flex;
-  align-items: center;
-  align-self: flex-end;
-  margin: 24px 24px -48px -48px;
-  svg {
-    cursor: pointer;
-    opacity: var(--button-flag-icon-opacity);
-    width: 18px;
-    fill: var(--button-flag-icon-color);
-  }
-}

@@ -34,6 +34,7 @@ import VolumeIcon from '../../assets/icons/volume-icon.svg'
 import TimeIcon from '../../assets/icons/time-icon.svg'
 import SaveIcon from '../../assets/icons/save-icon.svg'
 import pack from '../../../package.json'
+import { LanguageSettingsIcon } from '../../components/Inputs/LanguageSelect/LanguageSelect'
 
 const { dialog, shell } = require('electron').remote
 
@@ -60,6 +61,12 @@ type State = {
   selectedTheme: SelectOption,
   soundEnabled: boolean,
   selectedLanguage: SelectOption,
+}
+
+type Language = {
+  label: string,
+  value: string,
+  renderFlag: () => React$Element<any>,
 }
 
 export const loadWalletRecovery = (
@@ -205,10 +212,21 @@ export default class Settings extends Component<Props, State> {
       value: THEMES[key],
       label: THEMES[key],
     }))
+
     const parsedLangOptions = Object.keys(LANGUAGES).map(key => ({
       value: LANGUAGES[key].value,
       label: LANGUAGES[key].label,
+      renderFlag: LANGUAGES[key].renderFlag,
     }))
+
+    const arrOfLanguages: Array<Language> = Object.keys(LANGUAGES).map(
+      key => LANGUAGES[key],
+    )
+
+    const selectedLang =
+      arrOfLanguages.find(
+        lang => lang.label === this.state.selectedLanguage.label,
+      ) || LANGUAGES.ENGLISH
 
     return (
       <section className={styles.settingsContainer}>
@@ -260,11 +278,16 @@ export default class Settings extends Component<Props, State> {
               <FormattedMessage id="settingsLanguageLabel">
                 {translation => (
                   <SettingsItem
-                    renderIcon={() => <LangIcon />}
+                    renderIcon={() => (
+                      <div id={styles.languageSettingsFlagIcon}>
+                        {selectedLang.renderFlag()}
+                      </div>
+                    )}
                     title={translation}
                   >
                     <div className={styles.settingsSelectContainer}>
                       <StyledReactSelect
+                        components={{ Option: LanguageSettingsIcon }}
                         settingsSelect
                         onChange={this.updateLanguageSetting}
                         isSearchable={false}
