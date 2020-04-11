@@ -47,52 +47,52 @@ export const LANGUAGES = {
   ENGLISH: {
     label: 'English',
     value: 'ENGLISH',
-    renderFlag: () => <England />,
+    renderFlag: () => <England alt="English" />,
   },
   CHINESE: {
     label: '中文',
     value: 'CHINESE',
-    renderFlag: () => <China />,
+    renderFlag: () => <China alt="中文" />,
   },
   FRENCH: {
     label: 'Francés',
     value: 'FRENCH',
-    renderFlag: () => <France />,
+    renderFlag: () => <France alt="Francés" />,
   },
   GERMAN: {
     label: 'Deutsche',
     value: 'GERMAN',
-    renderFlag: () => <Germany />,
+    renderFlag: () => <Germany alt="Deutsche" />,
   },
   ITALIAN: {
     label: 'Italiano',
     value: 'ITALIAN',
-    renderFlag: () => <Italy />,
+    renderFlag: () => <Italy alt="Italiano" />,
   },
   PORTUGUESE: {
     label: 'Português',
     value: 'PORTUGUESE',
-    renderFlag: () => <Brazil />,
+    renderFlag: () => <Brazil alt="Português" />,
   },
   TURKISH: {
     label: 'Türkçe',
     value: 'TURKISH',
-    renderFlag: () => <Turkey />,
+    renderFlag: () => <Turkey alt="Türkçe" />,
   },
   KOREAN: {
     label: '한국어',
     value: 'KOREAN',
-    renderFlag: () => <Korea />,
+    renderFlag: () => <Korea alt="한국어" />,
   },
   VIETNAMESE: {
     label: 'Tiếng Việt',
     value: 'VIETNAMESE',
-    renderFlag: () => <Vietnam />,
+    renderFlag: () => <Vietnam alt="Tiếng Việt" />,
   },
   ARABIC: {
     label: 'العربية',
     value: 'ARABIC',
-    renderFlag: () => <UnitedArabEmirates />,
+    renderFlag: () => <UnitedArabEmirates alt="العربية" />,
   },
 }
 

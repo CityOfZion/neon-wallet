@@ -6,7 +6,7 @@ import { LANGUAGES } from '../../../core/constants'
 import styles from './LanguageSelect.scss'
 
 type Props = {
-  languageDisplayValue: string,
+  value: string,
   setLanguageSetting: (value: String) => void,
   toggleMenu: (open: boolean) => void,
   languageMenuOpen: boolean,
@@ -38,7 +38,7 @@ export const LanguageSettingsIcon = (data: Language) => {
 export default function LanguageSelect({
   setLanguageSetting,
   toggleMenu,
-  languageDisplayValue,
+  value,
   languageMenuOpen,
 }: Props) {
   const arrOfLanguages: Array<Language> = Object.keys(LANGUAGES).map(
@@ -46,8 +46,7 @@ export default function LanguageSelect({
   )
 
   const selectedLang =
-    arrOfLanguages.find(lang => lang.label === languageDisplayValue) ||
-    LANGUAGES.ENGLISH
+    arrOfLanguages.find(lang => lang.value === value) || LANGUAGES.ENGLISH
 
   return (
     <div
@@ -55,7 +54,10 @@ export default function LanguageSelect({
       id={styles.flagDropdownContainer}
     >
       <div id={styles.flagButtonContainer}>
-        <div onClick={() => toggleMenu(!languageMenuOpen)}>
+        <div
+          id="selected-lang-country-flag"
+          onClick={() => toggleMenu(!languageMenuOpen)}
+        >
           {selectedLang.renderFlag()}
         </div>
       </div>
@@ -75,9 +77,7 @@ export default function LanguageSelect({
             transparent
             menuIsOpen
             options={parsedLangOptions}
-            value={parsedLangOptions.find(
-              option => option.label === languageDisplayValue,
-            )}
+            value={parsedLangOptions.find(option => option.value === value)}
           />
         </div>
       )}

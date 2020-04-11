@@ -16,7 +16,7 @@ type Props = {
   children: React$Node,
   renderNavigation?: Function,
   theme: ThemeType,
-  languageDisplayValue: string,
+  language: string,
   setLanguageSetting: (value: String) => void,
 }
 
@@ -34,7 +34,7 @@ class HomeLayout extends React.Component<Props, State> {
       children,
       renderNavigation,
       theme,
-      languageDisplayValue,
+      language,
       setLanguageSetting,
     } = this.props
     const dynamicImage = theme === 'Light' ? lightLogo : darkLogo
@@ -54,7 +54,7 @@ class HomeLayout extends React.Component<Props, State> {
             setLanguageSetting={setLanguageSetting}
             languageMenuOpen={languageMenuOpen}
             toggleMenu={languageMenuOpen => this.setState({ languageMenuOpen })}
-            languageDisplayValue={languageDisplayValue}
+            value={language}
           />
           <div
             className={
