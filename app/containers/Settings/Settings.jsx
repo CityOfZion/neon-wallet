@@ -48,24 +48,23 @@ type Props = {
   showErrorNotification: Object => any,
   showModal: Function,
   language: string,
-  languageDisplayValue: string,
   net: string,
   networkId: string,
   soundEnabled: boolean,
   setSoundSetting: boolean => any,
 }
 
-type State = {
-  selectedCurrency: SelectOption,
-  selectedTheme: SelectOption,
-  soundEnabled: boolean,
-  selectedLanguage: SelectOption,
-}
-
 type Language = {
   label: string,
   value: string,
   renderFlag: () => React$Element<any>,
+}
+
+type State = {
+  selectedCurrency: SelectOption,
+  selectedTheme: SelectOption,
+  soundEnabled: boolean,
+  selectedLanguage: Language,
 }
 
 export const loadWalletRecovery = (
@@ -117,10 +116,10 @@ export default class Settings extends Component<Props, State> {
       label: this.props.theme,
     },
     soundEnabled: this.props.soundEnabled,
-    selectedLanguage: {
-      value: this.props.language,
-      label: this.props.languageDisplayValue,
-    },
+    selectedLanguage:
+      Object.keys(LANGUAGES)
+        .map(key => LANGUAGES[key])
+        .find(lang => lang.value === this.props.language) || LANGUAGES.ENGLISH,
   }
 
   saveWalletRecovery = () => {
@@ -186,10 +185,10 @@ export default class Settings extends Component<Props, State> {
     setSoundSetting(soundEnabled)
   }
 
-  updateLanguageSetting = (option: SelectOption) => {
-    this.setState({ selectedLanguage: option })
+  updateLanguageSetting = (selectedLanguage: Language) => {
+    this.setState({ selectedLanguage })
     const { setLanguageSetting } = this.props
-    setLanguageSetting(option.value)
+    setLanguageSetting(selectedLanguage.value)
   }
 
   openTokenModal = () => {
