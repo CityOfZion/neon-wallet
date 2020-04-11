@@ -1,7 +1,5 @@
 // @flow
 import React from 'react'
-//  $FlowFixMe
-import { components } from 'react-select'
 
 import StyledReactSelect from '../StyledReactSelect/StyledReactSelect'
 import { LANGUAGES } from '../../../core/constants'
@@ -26,16 +24,16 @@ const parsedLangOptions = Object.keys(LANGUAGES).map(key => ({
   renderFlag: LANGUAGES[key].renderFlag,
 }))
 
-const { Option } = components
-export const LanguageSettingsIcon = ({ data, ...rest }: { data: Language }) => (
-  <Option {...rest}>
+export const LanguageSettingsIcon = (data: Language) => {
+  const { renderFlag, label } = data
+  return (
     <div className={styles.languageOptionRow}>
-      {data.renderFlag()}
+      {renderFlag()}
       <div />
-      {data.label}
+      {label}
     </div>
-  </Option>
-)
+  )
+}
 
 export default function LanguageSelect({
   setLanguageSetting,
@@ -65,7 +63,7 @@ export default function LanguageSelect({
       {languageMenuOpen && (
         <div id={styles.floatingLanguageSelect}>
           <StyledReactSelect
-            components={{ Option: LanguageSettingsIcon }}
+            formatOptionLabel={LanguageSettingsIcon}
             hideControl
             settiingsSelect
             languageSelect

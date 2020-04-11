@@ -29,7 +29,6 @@ import LockIcon from '../../assets/icons/lock.svg'
 import CurrencyIcon from '../../assets/icons/currency-icon.svg'
 import LightbulbIcon from '../../assets/icons/lightbulb-icon.svg'
 import CogIcon from '../../assets/icons/cog-icon.svg'
-import LangIcon from '../../assets/icons/lang-icon.svg'
 import VolumeIcon from '../../assets/icons/volume-icon.svg'
 import TimeIcon from '../../assets/icons/time-icon.svg'
 import SaveIcon from '../../assets/icons/save-icon.svg'
@@ -287,7 +286,7 @@ export default class Settings extends Component<Props, State> {
                   >
                     <div className={styles.settingsSelectContainer}>
                       <StyledReactSelect
-                        components={{ Option: LanguageSettingsIcon }}
+                        formatOptionLabel={LanguageSettingsIcon}
                         settingsSelect
                         onChange={this.updateLanguageSetting}
                         isSearchable={false}
