@@ -7,11 +7,11 @@ const INPUTS = {
   authWatchPlaceholder: 'NEO 주소를 입력해주세요',
 }
 
-const VARIOUS_MISSING_TRANSLATIONS = {
+const MISCELLANEOUS = {
   'auth.cancel': '취소',
   'auth.ledger.connectLedger': '연결 후 원장 기기를 잠금 해제 해주세요',
   'auth.ledger.navigateToNeoApp': 'NEO 앱을 기기로 이동합니다',
-  'auth.ledger.retry': 'Retry?',
+  'auth.ledger.retry': '다시 해 보다?',
   'auth.ledger.fetchAddress': '추가 주소 가져 오기',
   publicAddress: '퍼블릭 주소',
   'auth.import.recoveryInstructions':
@@ -66,6 +66,13 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   isLoadingMessage: '불러오는 중...',
 
   nothingToSeeHere: '여기는 볼게 없다!',
+  noAvailableAssetsToSend: '보낼 자산이 없습니다.',
+  sendErrorLabel: '오류!',
+  automaticNodeSelectionTooltip: 'NEON이 노드를 자동으로 선택하도록 허용',
+  depositAssets:
+    '귀하의 주소를 사용하여 <b> NEO 블록 체인과 호환되는 </ b> 자산을 입금하십시오:',
+  copyAddressTooltip: '월렛 주소 복사',
+  walletQrCodes: '월렛 QR 코드',
 }
 
 const AUTH = {
@@ -317,5 +324,5 @@ export default {
   ...NODE_SELECTION,
   ...ENCRYPT_KEY,
   ...TOKEN_SALE,
-  ...VARIOUS_MISSING_TRANSLATIONS,
+  ...MISCELLANEOUS,
 }

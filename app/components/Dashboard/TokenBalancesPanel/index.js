@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import { compose } from 'recompose'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
 // $FlowFixMe
 import { filter, cloneDeep } from 'lodash-es'
@@ -78,4 +78,5 @@ export default compose(
   // expose data & functionality needed for `refresh` action
   withActions(balancesActions, mapBalancesActionsToProps),
   withLoadingProp(balancesActions),
+  injectIntl,
 )(TokenBalancesPanel)

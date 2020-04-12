@@ -53,7 +53,7 @@ class DisplayWalletAccounts extends Component<Props> {
       },
       {
         label: intl.formatMessage({
-          id: 'inputPrivatePlaceholder',
+          id: 'privateKeyLabel',
         }),
         value: wif,
         type: 'text',

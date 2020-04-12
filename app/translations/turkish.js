@@ -7,7 +7,7 @@ const INPUTS = {
   authWatchPlaceholder: 'Buraya bir NEO adresi girin',
 }
 
-const VARIOUS_MISSING_TRANSLATIONS = {
+const MISCELLANEOUS = {
   'auth.cancel': 'İptal Et',
   'auth.ledger.connectLedger':
     '<strong>Ledger cihazınızı</strong> bağlayın ve kilidini açın',
@@ -81,6 +81,13 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   isLoadingMessage: 'Yükleniyor...',
 
   nothingToSeeHere: 'Görecek hiçbirşey yok!',
+  noAvailableAssetsToSend: 'Gönderilecek mevcut öğe yok',
+  sendErrorLabel: 'Hata!',
+  automaticNodeSelectionTooltip: `NEON'un otomatik olarak bir düğüm seçmesine izin ver`,
+  depositAssets:
+    'Adresinizi kullanarak <b> NEO blok zinciriyle uyumlu </b> varlıkları depolayın:',
+  copyAddressTooltip: 'M-cüzdan adresini kopyala',
+  walletQrCodes: 'Cüzdan QR Kodları',
 }
 
 const AUTH = {
@@ -323,5 +330,5 @@ export default {
   ...NODE_SELECTION,
   ...ENCRYPT_KEY,
   ...TOKEN_SALE,
-  ...VARIOUS_MISSING_TRANSLATIONS,
+  ...MISCELLANEOUS,
 }

@@ -37,8 +37,6 @@ export default class Claim extends Component<Props> {
             renderIcon={ClaimIcon}
             onClick={isWatchOnly ? () => {} : this.handleClaim}
           >
-            {/* Claim {this.getFormattedAmount()} GAS */}
-
             <FormattedMessage
               id="dashboardGasClaimButton"
               values={{ amount: this.getFormattedAmount() }}

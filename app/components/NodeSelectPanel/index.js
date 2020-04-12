@@ -1,12 +1,12 @@
 // @flow
 import { compose } from 'recompose'
 import { withData, withCall, withActions, withRecall } from 'spunky'
+import { injectIntl } from 'react-intl'
 
 import withLoadingProp from '../../hocs/withLoadingProp'
 import withNetworkData from '../../hocs/withNetworkData'
 import withAuthData from '../../hocs/withAuthData'
 import withThemeData from '../../hocs/withThemeData'
-
 import NodeSelectPanel from './NodeSelectPanel'
 import nodeNetworkActions from '../../actions/nodeNetworkActions'
 import accountActions from '../../actions/accountActions'
@@ -63,4 +63,5 @@ export default compose(
   withData(nodeStorageActions, mapSelectedNodeDataToProps),
   withRecall(accountActions, ['selectedNode']),
   withLoadingProp(nodeNetworkActions),
+  injectIntl,
 )(NodeSelectPanel)

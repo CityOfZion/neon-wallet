@@ -114,13 +114,13 @@ const SendPanelHeader = ({
   }
 
   if (sendError) {
-    headerTitle = 'Error!'
+    headerTitle = <FormattedMessage id="sendErrorLabel" />
     headerSubtitle = null
     buttons = null
   }
 
   if (noSendableAssets) {
-    headerTitle = 'No available assets to send'
+    headerTitle = <FormattedMessage id="noAvailableAssetsToSend" />
     headerSubtitle = null
     buttons = null
   }

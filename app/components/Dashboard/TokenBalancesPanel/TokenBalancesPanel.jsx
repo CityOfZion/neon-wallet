@@ -1,8 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { NavLink } from 'react-router-dom'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, FormattedHTMLMessage, IntlShape } from 'react-intl'
 
 import TextInput from '../../Inputs/TextInput'
 import CopyToClipboard from '../../CopyToClipboard'
@@ -11,7 +10,7 @@ import styles from './TokenBalancesPanel.scss'
 import { toFixedDecimals } from '../../../core/formatters'
 import { toBigNumber } from '../../../core/math'
 import Nothing from '../../../assets/icons/nothing.svg'
-import { CURRENCIES, ROUTES, PRICE_UNAVAILABLE } from '../../../core/constants'
+import { CURRENCIES, PRICE_UNAVAILABLE } from '../../../core/constants'
 
 type Props = {
   className: ?string,
@@ -19,6 +18,7 @@ type Props = {
   prices: Object,
   currencyCode: string,
   address: string,
+  intl: IntlShape,
 }
 
 export default class TokenBalancesPanel extends React.Component<Props> {
@@ -45,7 +45,7 @@ export default class TokenBalancesPanel extends React.Component<Props> {
   }
 
   renderEmptyBalanceInfo = () => {
-    const { address } = this.props
+    const { address, intl } = this.props
     return (
       <div className={styles.emptyBalanceContainer}>
         <div className={styles.headerContainer}>
@@ -54,13 +54,15 @@ export default class TokenBalancesPanel extends React.Component<Props> {
             <FormattedMessage id="nothingToSeeHere" />
           </h1>
         </div>
-        <p />
+        <p>
+          <FormattedHTMLMessage id="depositAssets" />
+        </p>
         <div className={styles.address}>
           <TextInput value={address} disabled />
           <CopyToClipboard
             className={styles.copy}
             text={address}
-            tooltip="Copy Public Address"
+            tooltip={intl.formatMessage({ id: 'copyAddressTooltip' })}
           />
         </div>
       </div>

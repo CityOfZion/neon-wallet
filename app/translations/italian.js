@@ -7,7 +7,7 @@ const INPUTS = {
   authWatchPlaceholder: 'Inserisci qui un indirizzo NEO',
 }
 
-const VARIOUS_MISSING_TRANSLATIONS = {
+const MISCELLANEOUS = {
   'auth.cancel': 'Annulla',
   'auth.ledger.connectLedger':
     'Connetti e sblocca il tuo <strong> dispositivo di contabilità generale </strong>',
@@ -81,6 +81,14 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   isLoadingMessage: 'Caricamento in corso...',
 
   nothingToSeeHere: 'Niente da vedere quì!',
+  noAvailableAssetsToSend: 'Nessuna risorsa disponibile da inviare',
+  sendErrorLabel: 'Errore!',
+  automaticNodeSelectionTooltip:
+    'Consenti a NEON di scegliere automaticamente un nodo',
+  depositAssets:
+    'Deposita risorse <b> compatibili con la blockchain NEO </b> utilizzando il tuo indirizzo:',
+  copyAddressTooltip: `Copia l'indirizzo del portafoglio`,
+  walletQrCodes: 'Codici QR del portafoglio',
 }
 
 const AUTH = {
@@ -327,5 +335,5 @@ export default {
   ...NODE_SELECTION,
   ...ENCRYPT_KEY,
   ...TOKEN_SALE,
-  ...VARIOUS_MISSING_TRANSLATIONS,
+  ...MISCELLANEOUS,
 }

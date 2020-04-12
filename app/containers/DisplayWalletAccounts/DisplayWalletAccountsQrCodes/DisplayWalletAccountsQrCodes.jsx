@@ -82,7 +82,7 @@ class DisplayWalletAccountsQrCodes extends Component<Props, State> {
 
     return (
       <FullHeightPanel
-        headerText="Wallet QR Codes"
+        headerText={<FormattedMessage id="walletQrCodes" />}
         renderInstructions={false}
         headerContainerClassName={styles.headerIconMargin}
         renderHeaderIcon={() => <CheckIcon />}
@@ -106,7 +106,10 @@ class DisplayWalletAccountsQrCodes extends Component<Props, State> {
             for reference) */}
           <div className={styles.qrContainer}>
             <div className={styles.qr}>
-              <label> private key </label>
+              <label>
+                {' '}
+                <FormattedMessage id="privateKeyLabel" />{' '}
+              </label>
               <canvas
                 ref={node => {
                   this.privateCanvas = node
@@ -114,7 +117,10 @@ class DisplayWalletAccountsQrCodes extends Component<Props, State> {
               />
             </div>
             <div className={styles.qr}>
-              <label> encrypted key </label>
+              <label>
+                {' '}
+                <FormattedMessage id="encryptedKeyLabel" />{' '}
+              </label>
               <canvas
                 ref={node => {
                   this.encryptedCanvas = node
@@ -131,11 +137,14 @@ class DisplayWalletAccountsQrCodes extends Component<Props, State> {
                   this.props.handleCopy(this.encryptedCanvas, 'encrypted-key')
                 }}
               >
-                Copy Code Image
+                <FormattedMessage id="copyCodeImage" />
               </Button>
             </div>
             <div className={styles.qr}>
-              <label> public key </label>
+              <label>
+                {' '}
+                <FormattedMessage id="addressLabel" />
+              </label>
               <canvas
                 ref={node => {
                   this.publicCanvas = node
@@ -152,7 +161,7 @@ class DisplayWalletAccountsQrCodes extends Component<Props, State> {
                   this.props.handleCopy(this.publicCanvas, 'public-address')
                 }}
               >
-                Copy Code Image
+                <FormattedMessage id="copyCodeImage" />
               </Button>
             </div>
           </div>

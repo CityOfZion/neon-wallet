@@ -6,7 +6,7 @@ const INPUTS = {
   authPrivateKeyPlaceholder: 'Nhập mật khẩu riêng tư của bạn tại đây',
   authWatchPlaceholder: 'Nhập một địa chỉ ví NEO tại đây',
 }
-const VARIOUS_MISSING_TRANSLATIONS = {
+const MISCELLANEOUS = {
   'auth.cancel': 'Hủy',
   'auth.ledger.connectLedger':
     'Kết nối và mở khóa <strong>Thiết bị Ledger</strong> của bạn',
@@ -79,6 +79,13 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   isLoadingMessage: 'Đang tải...',
 
   nothingToSeeHere: 'Không có gì để xem!',
+  noAvailableAssetsToSend: 'Không có tài sản có sẵn để gửi',
+  sendErrorLabel: 'Lỗi!',
+  automaticNodeSelectionTooltip: 'Cho phép NEON chọn một nút tự động',
+  depositAssets:
+    'Tài sản tiền gửi <b> tương thích với blockchain NEO </ b> bằng địa chỉ của bạn:',
+  copyAddressTooltip: 'Sao chép địa chỉ ví',
+  walletQrCodes: 'Mã QR ví',
 }
 const AUTH = {
   authLogin: 'Đăng nhập',
@@ -325,5 +332,5 @@ export default {
   ...NODE_SELECTION,
   ...ENCRYPT_KEY,
   ...TOKEN_SALE,
-  ...VARIOUS_MISSING_TRANSLATIONS,
+  ...MISCELLANEOUS,
 }

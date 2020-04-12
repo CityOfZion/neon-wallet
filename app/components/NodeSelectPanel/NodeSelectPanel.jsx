@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, IntlShape } from 'react-intl'
 
 import { ROUTES } from '../../core/constants'
 import FullHeightPanel from '../Panel/FullHeightPanel'
@@ -31,6 +31,7 @@ type Props = {
   net: string,
   networkId: string,
   theme: string,
+  intl: IntlShape,
 }
 
 type State = {
@@ -110,7 +111,7 @@ export default class NodeSelect extends React.Component<Props, State> {
   }
 
   renderAutomaticSelect = () => {
-    const { selectedNode } = this.props
+    const { selectedNode, intl } = this.props
     let icon
     if (selectedNode) {
       icon = (
@@ -125,7 +126,7 @@ export default class NodeSelect extends React.Component<Props, State> {
 
     return (
       <Tooltip
-        title="Allow NEON to choose a node automatically"
+        title={intl.formatMessage({ id: 'automaticNodeSelectionTooltip' })}
         className={classNames(styles.automaticSelect, {
           [styles.selected]: !selectedNode,
         })}
@@ -171,7 +172,9 @@ export default class NodeSelect extends React.Component<Props, State> {
           renderText={() => (
             <div>
               Oops! There was an issue retrieving metrics from the network.{' '}
-              <a onClick={() => loadNodesData({ networkId })}>Retry?</a>
+              <a onClick={() => loadNodesData({ networkId })}>
+                <FormattedMessage id="auth.ledger.retry" />
+              </a>
             </div>
           )}
           className={styles.tokenSalePanelDialogueBox}

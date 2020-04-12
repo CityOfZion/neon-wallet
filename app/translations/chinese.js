@@ -7,7 +7,7 @@ const INPUTS = {
   authWatchPlaceholder: '输入账户地址',
 }
 
-const VARIOUS_MISSING_TRANSLATIONS = {
+const MISCELLANEOUS = {
   'auth.cancel': '取消',
   'auth.ledger.connectLedger': '连接并解锁您的分类帐设备',
   'auth.ledger.navigateToNeoApp': '导航到设备上的NEO应用',
@@ -78,6 +78,12 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   isLoadingMessage: '载入中...',
 
   nothingToSeeHere: '這沒東西看!',
+  noAvailableAssetsToSend: '没有可用资产发送',
+  sendErrorLabel: '错误!',
+  automaticNodeSelectionTooltip: '允许NEON自动选择节点',
+  depositAssets: '使用您的地址存款与NEO区块链兼容的资产:',
+  copyAddressTooltip: '复制钱包地址',
+  walletQrCodes: '钱包QR码',
 }
 
 const AUTH = {
@@ -317,5 +323,5 @@ export default {
   ...NODE_SELECTION,
   ...ENCRYPT_KEY,
   ...TOKEN_SALE,
-  ...VARIOUS_MISSING_TRANSLATIONS,
+  ...MISCELLANEOUS,
 }

@@ -7,7 +7,7 @@ const INPUTS = {
   authWatchPlaceholder: 'NEO أدخل عنوان',
 }
 
-const VARIOUS_MISSING_TRANSLATIONS = {
+const MISCELLANEOUS = {
   'auth.cancel': 'إلغاء',
   'auth.ledger.connectLedger':
     'قم بالاتصال وإلغاء قفل محفظة ليدجر <strong>محفظة ليدجر</strong>',
@@ -81,6 +81,13 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   isLoadingMessage: 'جار التحميل...',
 
   nothingToSeeHere: 'ليس هناك ما تراه هنا!',
+  noAvailableAssetsToSend: 'لا توجد أصول متاحة للإرسال',
+  sendErrorLabel: '!خطأ',
+  automaticNodeSelectionTooltip: 'السماح لـ NEON باختيار العقدة تلقائيًا',
+  depositAssets:
+    'Deposit assets <b> compatible  with the NEO blockchain </b> using your address:',
+  copyAddressTooltip: 'نسخ عنوان المحفظة',
+  walletQrCodes: 'رموز QR المحفظة',
 }
 
 const AUTH = {
@@ -324,5 +331,5 @@ export default {
   ...NODE_SELECTION,
   ...ENCRYPT_KEY,
   ...TOKEN_SALE,
-  ...VARIOUS_MISSING_TRANSLATIONS,
+  ...MISCELLANEOUS,
 }

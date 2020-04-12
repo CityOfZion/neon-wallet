@@ -1,10 +1,10 @@
 // @flow
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import { FormattedMessage } from 'react-intl'
 
 import Delete from 'react-icons/lib/md/delete'
 import Tooltip from '../../Tooltip'
-
 import styles from './Row.scss'
 import TextInput from '../../Inputs/TextInput'
 
@@ -38,7 +38,7 @@ class Row extends Component<Props> {
             token.isUserGenerated && onChangeScriptHash(e.target.value)
           }
         />
-        <Tooltip title="Delete">
+        <Tooltip title={<FormattedMessage id="deleteLabel" />}>
           <Delete onClick={onDelete} className={styles.icon} />
         </Tooltip>
       </div>
