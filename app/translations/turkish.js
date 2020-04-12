@@ -76,6 +76,11 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   networkConfigTooltipUpdateSettings: 'Ayarları güncelle',
   networkConfigTooltipPublicKey: 'PGENEL ANAHTAR:',
   networkConfigTooltipAddress: 'ADRES:',
+
+  noOptionsMessage: 'Seçenek yok',
+  isLoadingMessage: 'Yükleniyor...',
+
+  nothingToSeeHere: 'Görecek hiçbirşey yok!',
 }
 
 const AUTH = {

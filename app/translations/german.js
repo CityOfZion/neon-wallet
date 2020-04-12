@@ -77,13 +77,18 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   networkConfigTooltipUpdateSettings: 'Update Einstellungen',
   networkConfigTooltipPublicKey: 'ÖFFENTLICHER SCHLÜSSEL:',
   networkConfigTooltipAddress: 'ADRESSE:',
+
+  noOptionsMessage: 'Keine Optionen',
+  isLoadingMessage: 'Wird geladen...',
+
+  nothingToSeeHere: 'Es gibt hier nichts zu sehen!',
 }
 
 const AUTH = {
   authLogin: 'Log-in',
   authSaved: 'GESPEICHERT',
-  authPrivate: 'PRIVATER',
-  authEncrypted: 'VERSCHLÜSSELTER',
+  authPrivate: 'WIF',
+  authEncrypted: 'NEP-2',
   authWatch: 'ANZEIGEN',
   authLedger: 'LEDGER',
   authCreateWallet: ' Wallet erstellen',
@@ -141,7 +146,7 @@ const SIDEBAR = {
   sidebarActivity: 'Aktivität',
   sidebarSend: 'Senden',
   sidebarReceive: 'Empfangen',
-  sidebarContacts: 'Contacts',
+  sidebarContacts: 'Kontakte',
   sidebarTokenSale: 'Token-Sale',
   sidebarNews: 'News',
   sidebarSettings: 'Einstellungen',

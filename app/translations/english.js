@@ -77,6 +77,11 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   networkConfigTooltipUpdateSettings: 'Update Settings',
   networkConfigTooltipPublicKey: 'PUBLIC KEY:',
   networkConfigTooltipAddress: 'ADDRESS:',
+
+  noOptionsMessage: 'No options',
+  isLoadingMessage: 'Loading...',
+
+  nothingToSeeHere: 'Nothing to see here!',
 }
 
 const AUTH = {

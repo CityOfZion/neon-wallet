@@ -49,16 +49,12 @@ export default class TokenBalancesPanel extends React.Component<Props> {
     return (
       <div className={styles.emptyBalanceContainer}>
         <div className={styles.headerContainer}>
-          <Nothing /> <h1> Nothing to see here! </h1>
+          <Nothing />
+          <h1>
+            <FormattedMessage id="nothingToSeeHere" />
+          </h1>
         </div>
-        <p>
-          You’ll need to <b>transfer compatible NEP-5 assets</b> to this wallet
-          using{' '}
-          <NavLink id="wallet-manager" exact to={ROUTES.RECEIVE}>
-            <span> receive </span>
-          </NavLink>{' '}
-          or your public address:
-        </p>
+        <p />
         <div className={styles.address}>
           <TextInput value={address} disabled />
           <CopyToClipboard

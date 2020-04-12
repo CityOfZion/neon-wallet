@@ -74,6 +74,11 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   networkConfigTooltipUpdateSettings: 'Cập nhật cài đặt',
   networkConfigTooltipPublicKey: 'KHÓA CÔNG KHAI:',
   networkConfigTooltipAddress: 'ĐỊA CHỈ:',
+
+  noOptionsMessage: 'Không có lựa chọn',
+  isLoadingMessage: 'Đang tải...',
+
+  nothingToSeeHere: 'Không có gì để xem!',
 }
 const AUTH = {
   authLogin: 'Đăng nhập',

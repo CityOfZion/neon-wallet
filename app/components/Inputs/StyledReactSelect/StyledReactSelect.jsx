@@ -84,6 +84,8 @@ const StyledReactSelect = props => (
     {translation => (
       <Select
         {...props}
+        noOptionsMessage={() => <FormattedMessage id="noOptionsMessage" />}
+        loadingMessage={() => <FormattedMessage id="isLoadingMessage" />}
         maxMenuHeight={140}
         styles={customStyles}
         className="react-select-container"

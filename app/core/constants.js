@@ -60,7 +60,7 @@ export const LANGUAGES = {
     renderFlag: () => <France alt="Francés" />,
   },
   GERMAN: {
-    label: 'Deutsche',
+    label: 'Deutsch',
     value: 'GERMAN',
     renderFlag: () => <Germany alt="Deutsche" />,
   },

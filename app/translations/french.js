@@ -73,6 +73,11 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   networkConfigTooltipUpdateSettings: 'Mise à jour',
   networkConfigTooltipPublicKey: 'CLÉ PUBLIQUE:',
   networkConfigTooltipAddress: 'ADRESSE:',
+
+  noOptionsMessage: 'Aucune option',
+  isLoadingMessage: 'Chargement...',
+
+  nothingToSeeHere: 'Rien à voir ici!',
 }
 const AUTH = {
   authLogin: 'Connexion',

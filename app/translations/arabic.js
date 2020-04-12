@@ -76,6 +76,11 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   networkConfigTooltipUpdateSettings: 'إعدادات التحديث',
   networkConfigTooltipPublicKey: 'المفتاح العمومي:',
   networkConfigTooltipAddress: 'عنوان:',
+
+  noOptionsMessage: 'لا يوجد خيارات',
+  isLoadingMessage: 'جار التحميل...',
+
+  nothingToSeeHere: 'ليس هناك ما تراه هنا!',
 }
 
 const AUTH = {

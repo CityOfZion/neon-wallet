@@ -73,6 +73,11 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   networkConfigTooltipUpdateSettings: '更新设定',
   networkConfigTooltipPublicKey: '公钥:',
   networkConfigTooltipAddress: '地址:',
+
+  noOptionsMessage: '没有选择',
+  isLoadingMessage: '载入中...',
+
+  nothingToSeeHere: '這沒東西看!',
 }
 
 const AUTH = {
