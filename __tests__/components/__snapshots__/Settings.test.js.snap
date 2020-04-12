@@ -112,6 +112,7 @@ exports[`Settings renders without crashing 1`] = `
             "inputEncryptedPlaceholder": "Encrypted Key",
             "inputPasswordPlaceholder": "Password",
             "inputSelectPlaceholder": "Select",
+            "isLoadingMessage": "Loading...",
             "manageWalletsCreate": "Create",
             "manageWalletsEdit": "Edit",
             "manageWalletsEditWallet": "Edit Wallet",
@@ -136,11 +137,13 @@ exports[`Settings renders without crashing 1`] = `
             "networkSettingsNodeSelectLabel": "NODE SELECTION",
             "newContact": "New Contact",
             "newsPageLabel": "News",
+            "noOptionsMessage": "No options",
             "nodeSelectBlockHeight": "Block Height",
             "nodeSelectInfo": "Top {nodeCount, number} nodes listed",
             "nodeSelectPanelHeader": "Node Selection",
             "nodeSelectSelectAutomatically": "Select automatically",
             "nodeSelectionInstructions": "If you’re experiencing performance issues, try selecting a custom node below",
+            "nothingToSeeHere": "Nothing to see here!",
             "numberofTransactionsPending": "{transferCount, number} {transferCount, plural, one {Transfer} other {Transfers}} pending",
             "print": "Print",
             "priorityTransfer": "Priority Transfer",
@@ -1601,7 +1604,9 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                   defaultMenuIsOpen={false}
                                                                                                   defaultValue={null}
                                                                                                   isSearchable={false}
+                                                                                                  loadingMessage={[Function]}
                                                                                                   maxMenuHeight={140}
+                                                                                                  noOptionsMessage={[Function]}
                                                                                                   onChange={[Function]}
                                                                                                   options={
                                                                                                     Array [
@@ -4488,7 +4493,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                     "value": "FRENCH",
                                                                                                   },
                                                                                                   Object {
-                                                                                                    "label": "Deutsche",
+                                                                                                    "label": "Deutsch",
                                                                                                     "renderFlag": [Function],
                                                                                                     "value": "GERMAN",
                                                                                                   },
@@ -4546,7 +4551,9 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                   defaultValue={null}
                                                                                                   formatOptionLabel={[Function]}
                                                                                                   isSearchable={false}
+                                                                                                  loadingMessage={[Function]}
                                                                                                   maxMenuHeight={140}
+                                                                                                  noOptionsMessage={[Function]}
                                                                                                   onChange={[Function]}
                                                                                                   options={
                                                                                                     Array [
@@ -4566,7 +4573,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                         "value": "FRENCH",
                                                                                                       },
                                                                                                       Object {
-                                                                                                        "label": "Deutsche",
+                                                                                                        "label": "Deutsch",
                                                                                                         "renderFlag": [Function],
                                                                                                         "value": "GERMAN",
                                                                                                       },
@@ -4683,7 +4690,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                           "value": "FRENCH",
                                                                                                         },
                                                                                                         Object {
-                                                                                                          "label": "Deutsche",
+                                                                                                          "label": "Deutsch",
                                                                                                           "renderFlag": [Function],
                                                                                                           "value": "GERMAN",
                                                                                                         },
@@ -4780,7 +4787,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                             "value": "FRENCH",
                                                                                                           },
                                                                                                           Object {
-                                                                                                            "label": "Deutsche",
+                                                                                                            "label": "Deutsch",
                                                                                                             "renderFlag": [Function],
                                                                                                             "value": "GERMAN",
                                                                                                           },
@@ -4876,7 +4883,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                               "value": "FRENCH",
                                                                                                             },
                                                                                                             Object {
-                                                                                                              "label": "Deutsche",
+                                                                                                              "label": "Deutsch",
                                                                                                               "renderFlag": [Function],
                                                                                                               "value": "GERMAN",
                                                                                                             },
@@ -4975,7 +4982,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                 "value": "FRENCH",
                                                                                                               },
                                                                                                               Object {
-                                                                                                                "label": "Deutsche",
+                                                                                                                "label": "Deutsch",
                                                                                                                 "renderFlag": [Function],
                                                                                                                 "value": "GERMAN",
                                                                                                               },
@@ -5071,7 +5078,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                   "value": "FRENCH",
                                                                                                                 },
                                                                                                                 Object {
-                                                                                                                  "label": "Deutsche",
+                                                                                                                  "label": "Deutsch",
                                                                                                                   "renderFlag": [Function],
                                                                                                                   "value": "GERMAN",
                                                                                                                 },
@@ -5163,7 +5170,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                     "value": "FRENCH",
                                                                                                                   },
                                                                                                                   Object {
-                                                                                                                    "label": "Deutsche",
+                                                                                                                    "label": "Deutsch",
                                                                                                                     "renderFlag": [Function],
                                                                                                                     "value": "GERMAN",
                                                                                                                   },
@@ -5259,7 +5266,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                       "value": "FRENCH",
                                                                                                                     },
                                                                                                                     Object {
-                                                                                                                      "label": "Deutsche",
+                                                                                                                      "label": "Deutsch",
                                                                                                                       "renderFlag": [Function],
                                                                                                                       "value": "GERMAN",
                                                                                                                     },
@@ -5356,7 +5363,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                         "value": "FRENCH",
                                                                                                                       },
                                                                                                                       Object {
-                                                                                                                        "label": "Deutsche",
+                                                                                                                        "label": "Deutsch",
                                                                                                                         "renderFlag": [Function],
                                                                                                                         "value": "GERMAN",
                                                                                                                       },
@@ -5452,7 +5459,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                           "value": "FRENCH",
                                                                                                                         },
                                                                                                                         Object {
-                                                                                                                          "label": "Deutsche",
+                                                                                                                          "label": "Deutsch",
                                                                                                                           "renderFlag": [Function],
                                                                                                                           "value": "GERMAN",
                                                                                                                         },
@@ -5580,7 +5587,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                     "value": "FRENCH",
                                                                                                                   },
                                                                                                                   Object {
-                                                                                                                    "label": "Deutsche",
+                                                                                                                    "label": "Deutsch",
                                                                                                                     "renderFlag": [Function],
                                                                                                                     "value": "GERMAN",
                                                                                                                   },
@@ -5676,7 +5683,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                       "value": "FRENCH",
                                                                                                                     },
                                                                                                                     Object {
-                                                                                                                      "label": "Deutsche",
+                                                                                                                      "label": "Deutsch",
                                                                                                                       "renderFlag": [Function],
                                                                                                                       "value": "GERMAN",
                                                                                                                     },
@@ -5767,7 +5774,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                         "value": "FRENCH",
                                                                                                                       },
                                                                                                                       Object {
-                                                                                                                        "label": "Deutsche",
+                                                                                                                        "label": "Deutsch",
                                                                                                                         "renderFlag": [Function],
                                                                                                                         "value": "GERMAN",
                                                                                                                       },
@@ -5863,7 +5870,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                           "value": "FRENCH",
                                                                                                                         },
                                                                                                                         Object {
-                                                                                                                          "label": "Deutsche",
+                                                                                                                          "label": "Deutsch",
                                                                                                                           "renderFlag": [Function],
                                                                                                                           "value": "GERMAN",
                                                                                                                         },
@@ -5962,7 +5969,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                         "value": "FRENCH",
                                                                                                                       },
                                                                                                                       Object {
-                                                                                                                        "label": "Deutsche",
+                                                                                                                        "label": "Deutsch",
                                                                                                                         "renderFlag": [Function],
                                                                                                                         "value": "GERMAN",
                                                                                                                       },
@@ -6058,7 +6065,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                           "value": "FRENCH",
                                                                                                                         },
                                                                                                                         Object {
-                                                                                                                          "label": "Deutsche",
+                                                                                                                          "label": "Deutsch",
                                                                                                                           "renderFlag": [Function],
                                                                                                                           "value": "GERMAN",
                                                                                                                         },
@@ -6220,7 +6227,9 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                   defaultMenuIsOpen={false}
                                                                                                   defaultValue={null}
                                                                                                   isSearchable={false}
+                                                                                                  loadingMessage={[Function]}
                                                                                                   maxMenuHeight={140}
+                                                                                                  noOptionsMessage={[Function]}
                                                                                                   onChange={[Function]}
                                                                                                   options={
                                                                                                     Array [
