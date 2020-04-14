@@ -1,6 +1,7 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 import { progressValues } from 'spunky'
+import { injectIntl } from 'react-intl'
 
 import { createStore, provideStore } from '../testHelpers'
 import Claim from '../../app/containers/Claim/Claim'
@@ -8,6 +9,8 @@ import IntlWrapper from '../../app/components/Root/IntlWrapper'
 import { DEFAULT_LANGUAGE } from '../../app/core/constants'
 
 const { LOADED } = progressValues
+
+const ClaimWithIntl = injectIntl(Claim)
 
 const initialState = {
   spunky: {
@@ -22,6 +25,12 @@ const initialState = {
   },
 }
 
+const INTL_STUB = {
+  noClaimableGas: 'Address has no claimable GAS',
+  claimTimeDisclaimer: 'You can claim GAS once every 5 minutes',
+  claimUnavailableInWatch: 'GAS claims are unavailable in Watch mode',
+}
+
 describe('Claim', () => {
   const props = {
     doGasClaim: () => {},
@@ -30,12 +39,20 @@ describe('Claim', () => {
   }
 
   test('should render claim GAS button as enabled', () => {
-    const wrapper = shallow(<Claim {...props} />)
+    const wrapper = shallow(
+      <Claim intl={{ formatMessage: id => INTL_STUB[id] }} {...props} />,
+    )
     expect(wrapper).toMatchSnapshot()
   })
 
   test('should render claim GAS button as disabled', () => {
-    const wrapper = shallow(<Claim {...props} disableClaimButton />)
+    const wrapper = shallow(
+      <Claim
+        intl={{ formatMessage: id => INTL_STUB[id] }}
+        {...props}
+        disableClaimButton
+      />,
+    )
     expect(wrapper).toMatchSnapshot()
   })
 
@@ -46,7 +63,7 @@ describe('Claim', () => {
     const wrapper = mount(
       provideStore(
         <IntlWrapper>
-          <Claim {...props} doGasClaim={claimSpy} />
+          <ClaimWithIntl {...props} doGasClaim={claimSpy} />
         </IntlWrapper>,
         store,
       ),
@@ -66,7 +83,7 @@ describe('Claim', () => {
     const wrapper = mount(
       provideStore(
         <IntlWrapper>
-          <Claim {...watchOnlyProps} doGasClaim={claimSpy} />
+          <ClaimWithIntl {...watchOnlyProps} doGasClaim={claimSpy} />
         </IntlWrapper>,
         store,
       ),

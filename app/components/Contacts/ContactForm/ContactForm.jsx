@@ -138,15 +138,15 @@ export default class ContactForm extends React.Component<Props, State> {
   }
 
   validateName = (name: string) => {
-    const { contacts, mode } = this.props
+    const { contacts, mode, intl } = this.props
     let error
 
     if (name.length === 0) {
-      error = "Name can't be null." // eslint-disable-line
+      error = intl.formatMessage({ id: 'errors.contact.nameNull' }) // eslint-disable-line
     }
 
     if (name.length > 100) {
-      error = 'Name is too long.'
+      error = intl.formatMessage({ id: 'errors.contact.nameLength' })
     }
 
     if (mode !== 'edit') {
@@ -155,7 +155,7 @@ export default class ContactForm extends React.Component<Props, State> {
       )
 
       if (nameExists.length > 0) {
-        error = 'You already have an account saved with that name.'
+        error = intl.formatMessage({ id: 'errors.contact.nameDupe' })
       }
     }
 
@@ -167,11 +167,11 @@ export default class ContactForm extends React.Component<Props, State> {
   }
 
   validateAddress = (address: string) => {
-    const { mode, contacts, formAddress } = this.props
+    const { mode, contacts, formAddress, intl } = this.props
     let error
 
     if (!wallet.isAddress(address)) {
-      error = 'Address is not valid.'
+      error = intl.formatMessage({ id: 'errors.contact.invalidAddress' })
     }
 
     if (mode !== 'edit') {
@@ -180,7 +180,7 @@ export default class ContactForm extends React.Component<Props, State> {
         .filter(adr => adr === formAddress)
 
       if (addressExists.length > 0) {
-        error = 'You already have a contact with that address.'
+        error = intl.formatMessage({ id: 'errors.contact.contactExists' })
       }
     }
 

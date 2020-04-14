@@ -10,6 +10,7 @@ import {
   type Actions,
   type ProgressState,
 } from 'spunky'
+import { IntlShape, injectIntl } from 'react-intl'
 
 import { showErrorNotification } from '../modules/notifications'
 
@@ -17,6 +18,7 @@ type Props = {
   __error__: string,
   __progress__: ProgressState,
   __showErrorNotification__: Function,
+  intl: IntlShape,
 }
 
 type Message = string | Function
@@ -33,6 +35,7 @@ export default function withFailureNotification(
   actions: Actions,
   message: Message = defaultMessage,
   options: Object = {},
+  isTranslation?: boolean,
 ) {
   const mapErrorToProps = (error: Error) => ({
     [ERROR_PROP]: isFunction(message) ? message(error) : message,
@@ -50,12 +53,21 @@ export default function withFailureNotification(
 
     class ErrorNotifier extends React.Component<Props> {
       componentWillReceiveProps(nextProps) {
+        const { intl } = this.props
+
         if (
           hasError(nextProps) &&
           progressChangedToError(this.props, nextProps)
         ) {
           const showErrorNotification = nextProps[NOTIFICATION_PROP]
-          showErrorNotification({ message: nextProps[ERROR_PROP] })
+
+          let dynamicMessage = nextProps[ERROR_PROP]
+
+          if (isTranslation) {
+            dynamicMessage = intl.formatMessage({ id: message })
+          }
+
+          showErrorNotification({ message: dynamicMessage })
         }
       }
 
@@ -77,6 +89,7 @@ export default function withFailureNotification(
       ),
       withError(actions, mapErrorToProps),
       withProgress(actions, { ...options, propName: PROGRESS_PROP }),
+      injectIntl,
     )(ErrorNotifier)
   }
 }

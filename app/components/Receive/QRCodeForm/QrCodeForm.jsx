@@ -131,7 +131,7 @@ export default class QRCodeForm extends React.Component<Props, State> {
 
   validateForm = () => {
     const { amount, asset } = this.state
-    const { networkId } = this.props
+    const { networkId, intl } = this.props
 
     let valid = false
 
@@ -151,28 +151,34 @@ export default class QRCodeForm extends React.Component<Props, State> {
       if (!validDecimals && !toBigNumber(amountNum).isInteger()) {
         valid = false
         this.setState({
-          error: `You canot request fractional ${asset}.`,
+          error: intl.formatMessage(
+            { id: 'errors.request.fractional' },
+            { asset },
+          ),
         })
         return valid
       }
       if (decpoint > validDecimals && validDecimals) {
         valid = false
         this.setState({
-          error: `You can only request ${asset} up to ${validDecimals} decimals.`,
+          error: intl.formatMessage(
+            { id: 'errors.request.validDecimals' },
+            { asset, validDecimals },
+          ),
         })
         return valid
       }
       if (toBigNumber(amountNum).greaterThan(toBigNumber(1000000000))) {
         valid = false
         this.setState({
-          error: `You cannot request more than 100,000,000 ${asset}.`,
+          error: intl.formatMessage({ id: 'errors.request.max' }, { asset }),
         })
         return valid
       }
       if (!toNumber(amountNum)) {
         valid = false
         this.setState({
-          error: `You cannot request 0 ${asset}.`,
+          error: intl.formatMessage({ id: 'errors.request.min' }, { asset }),
         })
         return valid
       }

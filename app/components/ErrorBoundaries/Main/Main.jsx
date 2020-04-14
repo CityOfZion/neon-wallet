@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
 
 import styles from './Main.scss'
 import Button from '../../Button'
@@ -39,7 +40,9 @@ export default class ErrorBoundary extends Component<Props, State> {
       return (
         <div style={themes[theme]} className={styles.errorContainer}>
           <img className={styles.logo} src={dynamicImage} alt="" />
-          <h1>Oops something went wrong...</h1>
+          <h1>
+            <FormattedMessage id="errors.network.general" />
+          </h1>
           <Link to={ROUTES.HOME}>
             <Button
               renderIcon={() => <Arrow />}

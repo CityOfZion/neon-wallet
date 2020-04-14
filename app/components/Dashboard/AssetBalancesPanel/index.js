@@ -78,10 +78,14 @@ export default compose(
   withLoadingProp(balancesActions),
   withSuccessNotification(
     balancesActions,
-    'Received latest blockchain information.',
+    'notifications.success.receivedBlockchainInfo',
+    {},
+    true,
   ),
   withFailureNotification(
     balancesActions,
-    'Failed to retrieve blockchain information.',
+    'notifications.failure.blockchainInfoFailure',
+    {},
+    true,
   ),
 )(AssetBalancesPanel)

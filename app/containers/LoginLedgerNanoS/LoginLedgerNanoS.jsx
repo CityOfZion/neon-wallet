@@ -56,8 +56,6 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
     super(props)
     this.state = {
       ...this.computeStateFromProps(props),
-      // ledgerStage: OPEN_APP,
-      // isLoading: false,
       addressOption: null,
       publicKeys: [],
       loadingPublicKeys: true,

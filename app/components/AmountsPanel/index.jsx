@@ -2,12 +2,11 @@
 import React from 'react'
 import classNames from 'classnames'
 import { orderBy, times, has } from 'lodash-es'
+import { FormattedMessage } from 'react-intl'
 
 import AmountsInfoBox from './AmountsInfoBox'
 import { CURRENCIES, PRICE_UNAVAILABLE } from '../../core/constants'
-
 import Nothing from '../../assets/icons/nothing.svg'
-
 import amountBoxStyles from './AmountsInfoBox/AmountsInfoBox.scss'
 import styles from './AmountsPanel.scss'
 
@@ -38,7 +37,10 @@ const AmountsPanel = ({ amountsData, currencyCode }: Props) => {
   if (!Array.isArray(amountsData) || amountsData.length === 0) {
     return (
       <div className={styles.zeroAmount}>
-        <Nothing /> <h1> Nothing to see here! </h1>
+        <Nothing />{' '}
+        <h1>
+          <FormattedMessage id="nothingToSeeHere" />
+        </h1>
       </div>
     )
   }

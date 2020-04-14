@@ -48,7 +48,9 @@ export default compose(
   withData(icoTokensActions, mapIcoTokensToProps),
   withSuccessNotification(
     balancesActions,
-    'Received latest blockchain information.',
+    'notifications.success.receivedBlockchainInfo',
+    {},
+    true,
   ),
   connect(
     null,

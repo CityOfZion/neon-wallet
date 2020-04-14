@@ -4,6 +4,7 @@ import { uniqueId } from 'lodash-es'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 import { progressValues } from 'spunky'
+import { injectIntl } from 'react-intl'
 
 import Send from '../../app/containers/Send/Send'
 import ZeroAssets from '../../app/components/ZeroAssets/ZeroAssets'
@@ -28,12 +29,14 @@ const initialState = {
   },
 }
 
+const SendWithIntl = injectIntl(Send)
+
 const setup = props => {
   const store = configureStore()(initialState)
   const wrapper = mount(
     <Provider store={store}>
       <IntlWrapper>
-        <Send
+        <SendWithIntl
           {...props}
           sendableAssets={{ NEO: { balance: 5, symbol: 'NEO' } }}
           prices={{ NEO: 38 }}

@@ -1,9 +1,13 @@
 // @flow
 
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import {
+  FormattedHTMLMessage,
+  FormattedMessage,
+  IntlShape,
+  injectIntl,
+} from 'react-intl'
 
-import { ROUTES } from '../../core/constants'
 import TextInput from '../Inputs/TextInput'
 import CopyToClipboard from '../CopyToClipboard'
 import LogoWithStrikethrough from '../LogoWithStrikethrough'
@@ -13,27 +17,29 @@ import styles from './ZeroAssets.scss'
 type Props = {
   address: string,
   children?: React$Node,
+  intl: IntlShape,
 }
 
-const ZeroAssets = ({ address, children }: Props) => (
-  <Panel renderHeader={() => <p>No available assets to send</p>}>
+const ZeroAssets = ({ address, children, intl }: Props) => (
+  <Panel
+    renderHeader={() => (
+      <p>
+        <FormattedMessage id="noAvailableAssetsToSend" />
+      </p>
+    )}
+  >
     <section className={styles.zeroAssets}>
       <div className={styles.emptyBalanceContainer}>
         <LogoWithStrikethrough />
         <p>
-          You’ll need to <b>transfer compatible NEP-5 assets</b> to this wallet
-          using{' '}
-          <NavLink id="wallet-manager" exact to={ROUTES.RECEIVE}>
-            <span> receive </span>
-          </NavLink>{' '}
-          or your public address:
+          <FormattedHTMLMessage id="depositAssets" />
         </p>
         <div className={styles.address}>
           <TextInput value={address} disabled />
           <CopyToClipboard
             className={styles.copy}
             text={address}
-            tooltip="Copy Public Address"
+            tooltip={intl.formatMessage({ id: 'copyAddressTooltip' })}
           />
         </div>
       </div>
@@ -42,4 +48,4 @@ const ZeroAssets = ({ address, children }: Props) => (
   </Panel>
 )
 
-export default ZeroAssets
+export default injectIntl(ZeroAssets)

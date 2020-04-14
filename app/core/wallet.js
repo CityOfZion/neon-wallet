@@ -8,7 +8,7 @@ import { toBigNumber } from './math'
 
 import blacklist from '../util/blacklist'
 
-const MIN_PASSPHRASE_LEN = 4
+export const MIN_PASSPHRASE_LEN = 4
 
 let addressBlacklist: Array<string> | null = null
 

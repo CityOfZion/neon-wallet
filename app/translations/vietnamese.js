@@ -6,7 +6,7 @@ const INPUTS = {
   authPrivateKeyPlaceholder: 'Nhập mật khẩu riêng tư của bạn tại đây',
   authWatchPlaceholder: 'Nhập một địa chỉ ví NEO tại đây',
 }
-const VARIOUS_MISSING_TRANSLATIONS = {
+const MISCELLANEOUS = {
   'auth.cancel': 'Hủy',
   'auth.ledger.connectLedger':
     'Kết nối và mở khóa <strong>Thiết bị Ledger</strong> của bạn',
@@ -74,7 +74,69 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   networkConfigTooltipUpdateSettings: 'Cập nhật cài đặt',
   networkConfigTooltipPublicKey: 'KHÓA CÔNG KHAI:',
   networkConfigTooltipAddress: 'ĐỊA CHỈ:',
+
+  noOptionsMessage: 'Không có lựa chọn',
+  isLoadingMessage: 'Đang tải...',
+
+  nothingToSeeHere: 'Không có gì để xem!',
+  noAvailableAssetsToSend: 'Không có tài sản có sẵn để gửi',
+  sendErrorLabel: 'Lỗi!',
+  automaticNodeSelectionTooltip: 'Cho phép NEON chọn một nút tự động',
+  depositAssets:
+    'Tài sản tiền gửi <b> tương thích với blockchain NEO </ b> bằng địa chỉ của bạn:',
+  copyAddressTooltip: 'Sao chép địa chỉ ví',
+  walletQrCodes: 'Mã QR ví',
+
+  noClaimableGas: 'Địa chỉ không có yêu cầu GAS',
+  claimTimeDisclaimer: 'Bạn có thể yêu cầu GAS cứ sau 5 phút',
+  claimUnavailableInWatch: 'Khiếu nại GAS không khả dụng trong chế độ Xem',
+  takeMeBack: 'Đưa tôi trở lại',
+  splitKeyWalletInstructions:
+    'Tùy chọn nhập Khóa chia cho phép người dùng tạo tài khoản NEO mới bằng cách kết hợp khóa riêng của tài khoản hiện tại với khóa riêng.',
+  splitKeyWalletNamePlaceholder: 'Nhập tên ví khóa chia mới của bạn ...',
+  chooseAccount: 'Chọn một tài khoản hiện có',
+  nextStep: 'Bước tiếp theo',
+  previousStep: 'Bước trước',
+  privateKey: 'Khóa riêng',
 }
+
+const ERRORS = {
+  'errors.contact.nameNull': 'Tên không thể là null.',
+  'errors.contact.nameLength': 'Cái tên quá dài.',
+  'errors.contact.nameDupe': 'Bạn đã có một tài khoản được lưu với tên đó.',
+  'errors.contact.invalidAddress': 'Địa chỉ không hợp lệ.',
+  'errors.contact.contactExists': 'Bạn đã có một liên hệ với địa chỉ đó.',
+  'errors.password.length': `Cụm mật khẩu phải chứa ít nhất {PASS_MIN_LENGTH, number} ký tự`,
+  'errors.password.match': 'Cụm mật khẩu phải khớp',
+  'errors.request.fractional': `Bạn không thể yêu cầu phân đoạn {asset}.`,
+  'errors.request.validDecimals': `Bạn chỉ có thể yêu cầu {asset}  tối đa {validDecimals, number} số thập phân.`,
+  'errors.request.max': `Bạn không thể yêu cầu hơn 100.000.000 {asset}.`,
+  'errors.request.min': `Bạn không thể yêu cầu 0 {asset}.`,
+  'errors.network.general': 'Giáo sư! Đã xảy ra lỗi.',
+  'errors.encrypt.valid': 'Khóa riêng không hợp lệ',
+
+  'errors.send.network': 'Xảy ra lỗi mạng',
+
+  'errors.send.balance': 'Bạn không có đủ số dư để gửi {total} {asset}.',
+  'errors.send.number': 'Số tiền phải là một con số.',
+  'errors.send.fraction': 'Bạn không thể gửi số lượng NEO một phần.',
+  'errors.send.negative': `Bạn không thể gửi số tiền âm của {asset}.`,
+  'errors.send.zero': `Không thể gửi 0 {asset}.`,
+  'errors.send.decimal': `Bạn chỉ có thể gửi {asset} tối đa {decimalCount, number} số thập phân.`,
+  'errors.send.invalidAddress': 'Bạn cần chỉ định một địa chỉ NEO hợp lệ.',
+  'errors.send.blackListed':
+    'Địa chỉ được liệt kê vào danh sách đen. Đây là một địa chỉ lừa đảo được biết đến.',
+}
+
+const NOTIFICATIONS = {
+  'notifications.success.receivedBlockchainInfo':
+    'Nhận được thông tin blockchain mới nhất.',
+  'notifications.success.accountSaved': 'Tài khoản đã được lưu!',
+  'notifications.success.updatedWalletName': 'Tên ví được cập nhật thành công.',
+  'notificiations.failure.blockchainInfoFailure':
+    'Không thể truy xuất thông tin blockchain.',
+}
+
 const AUTH = {
   authLogin: 'Đăng nhập',
   authSaved: 'ĐÃ LƯU',
@@ -320,5 +382,7 @@ export default {
   ...NODE_SELECTION,
   ...ENCRYPT_KEY,
   ...TOKEN_SALE,
-  ...VARIOUS_MISSING_TRANSLATIONS,
+  ...MISCELLANEOUS,
+  ...ERRORS,
+  ...NOTIFICATIONS,
 }

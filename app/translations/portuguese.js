@@ -3,11 +3,11 @@ const INPUTS = {
   inputSelectPlaceholder: 'Selecionar',
   inputPasswordPlaceholder: 'Senha',
   inputEncryptedPlaceholder: 'Chave Privada',
-  authPrivateKeyPlaceholder: 'Insira sua chave privada',
+  authPrivateKeyPlaceholder: 'Endereço NEO',
   authWatchPlaceholder: 'Insira um endereço do NEO',
 }
 
-const VARIOUS_MISSING_TRANSLATIONS = {
+const MISCELLANEOUS = {
   'auth.cancel': 'Cancelar',
   'auth.ledger.connectLedger':
     'Conectar e destravar seu <strong>dispositivo Ledger</strong>',
@@ -53,7 +53,7 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   walletManagerRemoveWallet: 'Remover Wallet',
 
   selectAssets: 'Selecionar Ativos',
-  priorityTransfer: 'Transferência Prioritária',
+  priorityTransfer: 'Prioridade',
 
   editRecipients: 'Editar Destinatários',
   confirmAndSend: 'Confirmar & Enviar',
@@ -78,15 +78,82 @@ const VARIOUS_MISSING_TRANSLATIONS = {
   networkConfigTooltipUpdateSettings: 'Atualizar configurações',
   networkConfigTooltipPublicKey: 'CHAVE PÚBLICA:',
   networkConfigTooltipAddress: 'ENDEREÇO:',
+
+  noOptionsMessage: 'Sem opções',
+  isLoadingMessage: 'Carregando...',
+
+  nothingToSeeHere: 'Nada para ver aqui!',
+  noAvailableAssetsToSend: 'Nenhum ativo disponível para enviar',
+  sendErrorLabel: 'Erro!',
+  automaticNodeSelectionTooltip:
+    'Permitir que o NEON escolha um nó automaticamente',
+  depositAssets:
+    'Deposite ativos <b> compatíveis com a blockchain NEO </b> usando seu endereço:',
+  copyAddressTooltip: 'Copiar endereço da carteira',
+  walletQrCodes: 'Códigos QR da carteira',
+
+  noClaimableGas: 'O endereço não possui GAS claimable',
+  claimTimeDisclaimer: 'Você pode reivindicar o GAS uma vez a cada 5 minutos',
+  claimUnavailableInWatch:
+    'As reivindicações de GAS não estão disponíveis neste modo',
+  takeMeBack: 'Me leve de volta',
+
+  splitKeyWalletInstructions:
+    'A opção de importação de chave dividida permite que os usuários criem uma nova conta NEO combinando a chave privada de uma conta existente com uma chave privada separada.',
+  splitKeyWalletNamePlaceholder:
+    'Digite seu novo nome de carteira com chave de divisão...',
+  chooseAccount: 'Escolha uma conta existente',
+  nextStep: 'Próxima Etapa',
+  previousStep: 'Passo anterior',
+  privateKey: 'Chave privada',
+}
+
+const ERRORS = {
+  'errors.contact.nameNull': 'O nome não pode ser nulo.',
+  'errors.contact.nameLength': 'O nome é muito longo.',
+  'errors.contact.nameDupe': 'Você já tem uma conta salva com esse nome.',
+  'errors.contact.invalidAddress': 'O endereço não é válido.',
+  'errors.contact.contactExists': 'Você já tem um contato com esse endereço.',
+  'errors.password.length': `A senha deve conter pelo menos {PASS_MIN_LENGTH, number} caracteres`,
+  'errors.password.match': 'As senhas devem corresponder',
+  'errors.request.fractional': `Você não pode solicitar {asset} fracionário.`,
+  'errors.request.validDecimals': `Você pode solicitar apenas {asset} até {validDecimals, number} decimais.`,
+  'errors.request.max': `Você não pode solicitar mais de 100.000.000 {asset}.`,
+  'errors.request.min': `Você não pode solicitar 0 {asset}.`,
+  'errors.network.general': 'Opa! Algo deu errado.',
+  'errors.encrypt.valid': 'A chave privada não é válida',
+
+  'errors.send.network': 'Ocorreu um erro de rede.',
+  'errors.send.balance': `Você não tem saldo suficiente para enviar {total} {asset}.`,
+  'errors.send.number': 'O valor deve ser um número.',
+  'errors.send.fraction':
+    'Você não pode enviar quantidades fracionárias de NEO.',
+  'errors.send.negative': `Você não pode enviar valores negativos de {asset}.`,
+  'errors.send.zero': `Não é possível enviar 0 {asset}.`,
+  'errors.send.decimal': `Você pode enviar apenas {asset} até {decimalCount, number} decimais.`,
+  'errors.send.invalidAddress':
+    'Você precisa especificar um endereço NEO válido.',
+  'errors.send.blackListed':
+    'O endereço está na lista negra. Este é um endereço de phishing conhecido.',
+}
+
+const NOTIFICATIONS = {
+  'notifications.success.receivedBlockchainInfo':
+    'Recebeu as informações mais recentes sobre blockchain.',
+  'notifications.success.accountSaved': 'Conta salva!',
+  'notifications.success.updatedWalletName':
+    'Nome do portfólio atualizado com sucesso.',
+  'notificiations.failure.blockchainInfoFailure':
+    'Falha ao recuperar as informações da blockchain.',
 }
 
 const AUTH = {
   authLogin: 'Login',
   authSaved: 'SALVO',
-  authPrivate: 'PRIVADO',
-  authEncrypted: 'CRIPTOGRAFADO',
+  authPrivate: 'CHAVE (WIF)',
+  authEncrypted: 'CHAVE (NEP-2)',
   authWatch: 'OBSERVAR',
-  authLedger: 'REGISTRO',
+  authLedger: 'HARDWARE',
   authCreateWallet: 'Criar Wallet',
   authImportWallet: 'Importar Wallet',
   authScanQRButton: 'Escanear QR Code',
@@ -122,10 +189,10 @@ const WALLET_CREATION = {
 
 const DASHBOARD = {
   dashboardBalancePanelLabel: 'Saldo de Tokens',
-  dashboardAssetsPanelLabel: 'Moedas do Sistema',
+  dashboardAssetsPanelLabel: 'Saldo de Moedas',
   dashboardAssetsTotal: 'TOTAL',
   dashboardMarketDataLabel: 'Dados do Mercado',
-  dashboardValueLabel: 'Valor Total da Wallet',
+  dashboardValueLabel: 'Valor da Wallet',
   dashboardAddressLabel: 'Endereço:',
   dashboardPriceNotAvailable: 'N/A',
   dashboardGasClaimButton: 'Requerer {amount} GAS',
@@ -160,7 +227,7 @@ const MANAGE_WALLETS = {
   manageWalletsEditWalletNameLabel: 'NOME DA WALLET',
   manageWalletsEditWalletNamePlaceholder: 'Nome da Wallet',
   manageWalletsEditWalletAddressLabel: 'ENDEREÇO DA WALLET',
-  manageWalletsEditWalletSave: 'SSalvar Alterações',
+  manageWalletsEditWalletSave: 'Salvar Alterações',
 }
 
 const ACTIVITY = {
@@ -178,7 +245,7 @@ const RECEIVE = {
   receiveCopyCodeButton: 'Copiar QR Code',
   receiveDisclaimer:
     'Apenas envie moedas <b>compatíveis com o blockchain NEO (NEO, GAS, etc.)</b>. Enviar outros ativos vai resultar em sua perda permanente.',
-  receiveRequestTabAssets: 'SOLICITAR ATIVOS',
+  receiveRequestTabAssets: 'SOLICITAR PAGAMENTO',
   recieveWhyUseQRLabel: 'Por que usar um QR Code?',
   receiveQRExplanation:
     '<p>Já enviou ativos para o endereço errado por causa de um erro no caractere do endereço da wallet?</p><p>Se não, sorte a sua - mas acontece com uma frequência assustadora.</p> <p>Aqui na COZ, queremos garantir que as pessoas que te pagam acertem e tenham as informações corretas. Você pode gerar um QR Code na solicitação de ativos e pagamentos, para ajudá-los a te ajudar.</p><p>Todo código que você gerar vai incluir o endereço público da sua wallet, uma quantia e uma referência - todos determinados por você.</p>',
@@ -190,7 +257,7 @@ const REQUEST_ASSETS = {
   requestAssetAmount: 'QUANTIA',
   requestAssetDepositLabel: 'DEPOSITAR NESTA WALLET',
   requestAssetRefLabel: 'REFERÊNCIA',
-  requestAssetRefPlaceholder: 'Adicionar uma anotação...',
+  requestAssetRefPlaceholder: 'Adicionar nota...',
   requestAssetQRButton: 'Gerar QR Code',
   requestAssetYourQRHeader: 'Seu QR Code',
   requestAssetsPaymentDetails: 'DETALHES DA SOLICITAÇÃO DE PAGAMENTO',
@@ -258,7 +325,7 @@ const SETTINGS = {
   settingsEncryptLink: 'CRIPTOGRAFE UMA CHAVE',
   recoverWallet: 'RECUPERAR WALLET',
   settingsRecoverWalletLink: 'IMPORTAR',
-  settingsBackUpLinkLabel: 'FAZER BACKUP DE WALLET',
+  settingsBackUpLinkLabel: 'FAZER BACKUP DA WALLET',
   settingsBackUpLink: 'EXPORTAR',
   settingsManageLabel: 'Administre sua Neon Wallet',
   settingsCommunity: 'Suporte da Comunidade',
@@ -267,7 +334,7 @@ const SETTINGS = {
 
 const NETWORK_SETTINGS = {
   networkSettingsInstructions:
-    'Gerenciar configurações da rede relacionadas a como Neon Wallet interage com o blockchain',
+    'Gerenciar configurações da rede relacionadas a como Neon Wallet interage com o blockchain.',
   networkSettingsNodeSelectLabel: 'SELECIONAR NÓ',
   networkSettingsExplorerLabel: 'BLOCK EXPLORER',
   networkSettingsCurrentLabel: 'REDE ATUAL',
@@ -327,5 +394,7 @@ export default {
   ...NODE_SELECTION,
   ...ENCRYPT_KEY,
   ...TOKEN_SALE,
-  ...VARIOUS_MISSING_TRANSLATIONS,
+  ...MISCELLANEOUS,
+  ...ERRORS,
+  ...NOTIFICATIONS,
 }
