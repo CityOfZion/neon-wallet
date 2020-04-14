@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
 import { withCall, withData } from 'spunky'
+import { injectIntl } from 'react-intl'
 
 import NetworkConfigurationTooltip from './NetworkConfigurationTooltip'
 import withExplorerData from '../../hocs/withExplorerData'
@@ -51,4 +52,5 @@ export default compose(
   withExplorerData(),
   withAuthData(),
   withThemeData(),
+  injectIntl,
 )(NetworkConfigurationTooltip)

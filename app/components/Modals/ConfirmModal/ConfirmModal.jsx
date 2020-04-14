@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import { noop } from 'lodash-es'
+import { FormattedMessage } from 'react-intl'
 
 import BaseModal from '../BaseModal'
 import Button from '../../Button'
@@ -48,7 +49,7 @@ const ConfirmModal = ({
             hideModal()
           }}
         >
-          Confirm
+          <FormattedMessage id="modalActionConfirm" />
         </Button>
         <Button
           id="cancel"
@@ -57,7 +58,7 @@ const ConfirmModal = ({
             onCancel()
           }}
         >
-          Cancel
+          <FormattedMessage id="modalActionCancel" />
         </Button>
       </div>
     </div>

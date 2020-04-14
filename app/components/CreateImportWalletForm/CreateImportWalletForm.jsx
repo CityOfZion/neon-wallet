@@ -1,6 +1,8 @@
 // @flow
 import React from 'react'
 import { withRouter } from 'react-router-dom'
+import { intlShape } from 'react-intl'
+
 import PasswordInput from '../Inputs/PasswordInput'
 import TextInput from '../Inputs/TextInput'
 import Button from '../Button'
@@ -16,6 +18,7 @@ type Props = {
   option: Option,
   importKeyOption: 'WIF' | 'ENCRYPTED_WIF',
   authenticated: boolean,
+  intl: intlShape,
 }
 
 type State = {
@@ -33,8 +36,8 @@ type State = {
 const PASS_MIN_LENGTH = 4
 
 const LOOKUP_KEY = {
-  WIF: 'Private Key',
-  ENCRYPTED_WIF: 'Encrypted Key',
+  WIF: 'privateKeyLabel',
+  ENCRYPTED_WIF: 'encryptedKeyLabel',
 }
 
 class CreateImportWalletForm extends React.Component<Props, State> {
@@ -48,6 +51,80 @@ class CreateImportWalletForm extends React.Component<Props, State> {
     key: '',
     walletName: '',
     submitButtonDisabled: false,
+  }
+
+  render = () => {
+    const { passphraseError, passphrase2Error, key, walletName } = this.state
+    const { option, importKeyOption, intl } = this.props
+    const {
+      walletCreationWalletNamePlaceholder,
+      walletCreationWalletNameLabel,
+      walletCreationWalletPasswordLabel,
+      walletCreationWalletPasswordPlaceholder,
+      walletCreationWalletPasswordConfirmLabel,
+      walletCreationWalletPasswordConfirmPlaceholder,
+      authCreateWallet,
+      authImportWallet,
+    } = this.getTranslations()
+
+    return (
+      <div id="createWallet" className={styles.flexContainer}>
+        <form
+          className={
+            option === 'IMPORT'
+              ? styles.importWalletForm
+              : styles.createWalletForm
+          }
+          onSubmit={this.createWalletAccount}
+        >
+          {option === 'IMPORT' && (
+            <div>
+              <PasswordInput
+                value={key}
+                label={intl.formatMessage({
+                  id: LOOKUP_KEY[importKeyOption],
+                })}
+                onChange={e => this.setState({ key: e.target.value })}
+                placeholder={intl.formatMessage({
+                  id: LOOKUP_KEY[importKeyOption],
+                })}
+                autoFocus
+              />
+            </div>
+          )}
+          <TextInput
+            value={walletName}
+            label={walletCreationWalletNameLabel}
+            onChange={e => this.setState({ walletName: e.target.value })}
+            placeholder={walletCreationWalletNamePlaceholder}
+            autoFocus={option !== 'IMPORT'}
+          />
+          <PasswordInput
+            label={walletCreationWalletPasswordLabel}
+            onChange={this.handleChangePassphrase}
+            placeholder={walletCreationWalletPasswordPlaceholder}
+            error={passphraseError}
+          />
+          <PasswordInput
+            label={walletCreationWalletPasswordConfirmLabel}
+            onChange={this.handleChangePassphrase2}
+            placeholder={walletCreationWalletPasswordConfirmPlaceholder}
+            error={passphrase2Error}
+          />
+          <div className={styles.loginButtonMargin}>
+            <Button
+              renderIcon={option === 'IMPORT' ? CheckIcon : AddIcon}
+              type="submit"
+              shouldCenterButtonLabelText
+              primary
+              disabled={this.isDisabled()}
+            >
+              {option === 'IMPORT' ? authImportWallet : authCreateWallet}
+            </Button>
+          </div>
+        </form>
+      </div>
+    )
   }
 
   createWalletAccount = (e: SyntheticMouseEvent<*>) => {
@@ -70,65 +147,49 @@ class CreateImportWalletForm extends React.Component<Props, State> {
     )
   }
 
-  render = () => {
-    const { passphraseError, passphrase2Error, key, walletName } = this.state
-    const { option, importKeyOption } = this.props
+  getTranslations = () => {
+    const { intl } = this.props
+    const walletCreationWalletNamePlaceholder = intl.formatMessage({
+      id: 'walletCreationWalletNamePlaceholder',
+    })
+    const walletCreationWalletNameLabel = intl.formatMessage({
+      id: 'walletCreationWalletNameLabel',
+    })
 
-    return (
-      <div id="createWallet" className={styles.flexContainer}>
-        <form
-          className={
-            option === 'IMPORT'
-              ? styles.importWalletForm
-              : styles.createWalletForm
-          }
-          onSubmit={this.createWalletAccount}
-        >
-          {option === 'IMPORT' && (
-            <div>
-              <PasswordInput
-                value={key}
-                label={LOOKUP_KEY[importKeyOption]}
-                onChange={e => this.setState({ key: e.target.value })}
-                placeholder={LOOKUP_KEY[importKeyOption]}
-                autoFocus
-              />
-            </div>
-          )}
+    const walletCreationWalletPasswordLabel = intl.formatMessage({
+      id: 'walletCreationWalletPasswordLabel',
+    })
 
-          <TextInput
-            value={walletName}
-            label="Wallet Name"
-            onChange={e => this.setState({ walletName: e.target.value })}
-            placeholder="Wallet Name"
-            autoFocus={option !== 'IMPORT'}
-          />
-          <PasswordInput
-            label="Passphrase"
-            onChange={this.handleChangePassphrase}
-            placeholder="Password"
-            error={passphraseError}
-          />
-          <PasswordInput
-            label="Confirm Passphrase"
-            onChange={this.handleChangePassphrase2}
-            placeholder="Confirm Password"
-            error={passphrase2Error}
-          />
-          <div className={styles.loginButtonMargin}>
-            <Button
-              renderIcon={option === 'IMPORT' ? CheckIcon : AddIcon}
-              type="submit"
-              shouldCenterButtonLabelText
-              primary
-              disabled={this.isDisabled()}
-            >
-              {option === 'IMPORT' ? 'Import Wallet' : 'Create Wallet'}
-            </Button>
-          </div>
-        </form>
-      </div>
-    )
+    const walletCreationWalletPasswordPlaceholder = intl.formatMessage({
+      id: 'walletCreationWalletPasswordPlaceholder',
+    })
+
+    const walletCreationWalletPasswordConfirmLabel = intl.formatMessage({
+      id: 'walletCreationWalletPasswordConfirmLabel',
+    })
+
+    const walletCreationWalletPasswordConfirmPlaceholder = intl.formatMessage({
+      id: 'walletCreationWalletPasswordConfirmPlaceholder',
+    })
+
+    const authCreateWallet = intl.formatMessage({
+      id: 'authCreateWallet',
+    })
+
+    const authImportWallet = intl.formatMessage({
+      id: 'authImportWallet',
+    })
+
+    return {
+      walletCreationWalletNamePlaceholder,
+      walletCreationWalletNameLabel,
+      walletCreationWalletPasswordLabel,
+      walletCreationWalletPasswordPlaceholder,
+      walletCreationWalletPasswordConfirmLabel,
+      walletCreationWalletPasswordConfirmPlaceholder,
+      authCreateWallet,
+      authImportWallet,
+    }
   }
 
   handleChangePassphrase = (e: SyntheticInputEvent<HTMLInputElement>) => {
@@ -141,10 +202,16 @@ class CreateImportWalletForm extends React.Component<Props, State> {
 
   validatePassphrase = () => {
     const { passphrase: p } = this.state
+    const { intl } = this.props
     // validate min char count
     const errorMessage =
       p && p.length < PASS_MIN_LENGTH
-        ? `Passphrase must contain at least ${PASS_MIN_LENGTH} characters`
+        ? intl.formatMessage(
+            {
+              id: 'errors.password.length',
+            },
+            { PASS_MIN_LENGTH },
+          )
         : ''
     this.setState(
       {
@@ -157,9 +224,12 @@ class CreateImportWalletForm extends React.Component<Props, State> {
 
   validatePassphrase2 = () => {
     const { passphrase: p1, passphrase2: p2, passphraseValid } = this.state
+    const { intl } = this.props
     // validate phrases match
     const errorMessage =
-      p1 && p2 && p1 !== p2 && passphraseValid ? 'Passphrases must match' : ''
+      p1 && p2 && p1 !== p2 && passphraseValid
+        ? intl.formatMessage({ id: 'errors.password.match' })
+        : ''
     this.setState({
       passphrase2Error: errorMessage,
       passphrase2Valid: !!(p2 && !errorMessage),

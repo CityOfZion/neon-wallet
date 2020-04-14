@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react'
+import { IntlShape, FormattedHTMLMessage, FormattedMessage } from 'react-intl'
 
 import Button from '../../../components/Button'
 import { ROUTES } from '../../../core/constants'
@@ -26,6 +27,7 @@ type Props = {
   handleCopy: (?HTMLCanvasElement, string, ?boolean) => Promise<void>,
   handleCreateCanvas: (?HTMLCanvasElement, string) => any,
   copied: boolean,
+  intl: IntlShape,
 }
 
 type copyType = 'ENCRYPTED' | 'PUBLIC' | ''
@@ -80,7 +82,7 @@ class DisplayWalletAccountsQrCodes extends Component<Props, State> {
 
     return (
       <FullHeightPanel
-        headerText="Wallet QR Codes"
+        headerText={<FormattedMessage id="walletQrCodes" />}
         renderInstructions={false}
         headerContainerClassName={styles.headerIconMargin}
         renderHeaderIcon={() => <CheckIcon />}
@@ -95,8 +97,7 @@ class DisplayWalletAccountsQrCodes extends Component<Props, State> {
             icon={<WarningIcon />}
             renderText={() => (
               <div className={styles.saveDetails}>
-                <b>Save these details!</b> If you lose these credentials, you
-                lose access to your assets.
+                <FormattedHTMLMessage id="walletCreatedDisclaimer" />
               </div>
             )}
             className={styles.displayWalletAccountsDialogue}
@@ -105,7 +106,10 @@ class DisplayWalletAccountsQrCodes extends Component<Props, State> {
             for reference) */}
           <div className={styles.qrContainer}>
             <div className={styles.qr}>
-              <label> private key </label>
+              <label>
+                {' '}
+                <FormattedMessage id="privateKeyLabel" />{' '}
+              </label>
               <canvas
                 ref={node => {
                   this.privateCanvas = node
@@ -113,7 +117,10 @@ class DisplayWalletAccountsQrCodes extends Component<Props, State> {
               />
             </div>
             <div className={styles.qr}>
-              <label> encrypted key </label>
+              <label>
+                {' '}
+                <FormattedMessage id="encryptedKeyLabel" />{' '}
+              </label>
               <canvas
                 ref={node => {
                   this.encryptedCanvas = node
@@ -130,11 +137,14 @@ class DisplayWalletAccountsQrCodes extends Component<Props, State> {
                   this.props.handleCopy(this.encryptedCanvas, 'encrypted-key')
                 }}
               >
-                Copy Code Image
+                <FormattedMessage id="copyCodeImage" />
               </Button>
             </div>
             <div className={styles.qr}>
-              <label> public key </label>
+              <label>
+                {' '}
+                <FormattedMessage id="addressLabel" />
+              </label>
               <canvas
                 ref={node => {
                   this.publicCanvas = node
@@ -151,13 +161,13 @@ class DisplayWalletAccountsQrCodes extends Component<Props, State> {
                   this.props.handleCopy(this.publicCanvas, 'public-address')
                 }}
               >
-                Copy Code Image
+                <FormattedMessage id="copyCodeImage" />
               </Button>
             </div>
           </div>
           <div className={styles.qrPrintButtonContainer}>
             <Button renderIcon={AddIcon} primary onClick={this.handlePrint}>
-              Print
+              <FormattedMessage id="print" />
             </Button>
           </div>
         </div>

@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { NavLink } from 'react-router-dom'
+import { FormattedMessage, FormattedHTMLMessage, IntlShape } from 'react-intl'
 
 import TextInput from '../../Inputs/TextInput'
 import CopyToClipboard from '../../CopyToClipboard'
@@ -10,7 +10,7 @@ import styles from './TokenBalancesPanel.scss'
 import { toFixedDecimals } from '../../../core/formatters'
 import { toBigNumber } from '../../../core/math'
 import Nothing from '../../../assets/icons/nothing.svg'
-import { CURRENCIES, ROUTES, PRICE_UNAVAILABLE } from '../../../core/constants'
+import { CURRENCIES, PRICE_UNAVAILABLE } from '../../../core/constants'
 
 type Props = {
   className: ?string,
@@ -18,6 +18,7 @@ type Props = {
   prices: Object,
   currencyCode: string,
   address: string,
+  intl: IntlShape,
 }
 
 export default class TokenBalancesPanel extends React.Component<Props> {
@@ -44,26 +45,24 @@ export default class TokenBalancesPanel extends React.Component<Props> {
   }
 
   renderEmptyBalanceInfo = () => {
-    const { address } = this.props
+    const { address, intl } = this.props
     return (
       <div className={styles.emptyBalanceContainer}>
         <div className={styles.headerContainer}>
-          <Nothing /> <h1> Nothing to see here! </h1>
+          <Nothing />
+          <h1>
+            <FormattedMessage id="nothingToSeeHere" />
+          </h1>
         </div>
         <p>
-          You’ll need to <b>transfer compatible NEP-5 assets</b> to this wallet
-          using{' '}
-          <NavLink id="wallet-manager" exact to={ROUTES.RECEIVE}>
-            <span> receive </span>
-          </NavLink>{' '}
-          or your public address:
+          <FormattedHTMLMessage id="depositAssets" />
         </p>
         <div className={styles.address}>
           <TextInput value={address} disabled />
           <CopyToClipboard
             className={styles.copy}
             text={address}
-            tooltip="Copy Public Address"
+            tooltip={intl.formatMessage({ id: 'copyAddressTooltip' })}
           />
         </div>
       </div>
@@ -107,7 +106,9 @@ export default class TokenBalancesPanel extends React.Component<Props> {
   renderHeader = () => (
     <div>
       <div className={styles.header}>
-        <span>Token Balances</span>
+        <span>
+          <FormattedMessage id="dashboardBalancePanelLabel" />
+        </span>
       </div>
     </div>
   )
@@ -118,13 +119,13 @@ export default class TokenBalancesPanel extends React.Component<Props> {
       <div className={styles.tokenBalancesPanelContent}>
         <div className={styles.gridContainer}>
           <div className={classNames(styles.columnCell, styles.symbol)}>
-            Token
+            <FormattedMessage id="dashboardTokenBalancesToken" />
           </div>
           <div className={classNames(styles.columnCell, styles.priceLabel)}>
-            Price
+            <FormattedMessage id="dashboardTokenBalancesPrice" />
           </div>
           <div className={classNames(styles.columnCell, styles.balance)}>
-            Holdings
+            <FormattedMessage id="dashboardTokenBalancesHoldings" />
           </div>
           {balances.sort(this.sortByValueInPortfolio).map(token => (
             <React.Fragment key={token.scriptHash}>

@@ -2,6 +2,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import { get } from 'lodash-es'
+import { IntlShape, FormattedMessage } from 'react-intl'
 
 import AssetInput from '../../Inputs/AssetInput'
 import NumberInput from '../../Inputs/NumberInput'
@@ -19,6 +20,7 @@ type Props = {
   address: string,
   onSubmit: Function,
   networkId: string,
+  intl: IntlShape,
 }
 
 type State = {
@@ -39,7 +41,7 @@ export default class QRCodeForm extends React.Component<Props, State> {
   }
 
   render() {
-    const { className, address, onSubmit } = this.props
+    const { className, address, onSubmit, intl } = this.props
     const { asset, amount, description } = this.state
     const symbols = [ASSETS.NEO, ASSETS.GAS, ...Object.keys(TOKENS)]
 
@@ -61,7 +63,9 @@ export default class QRCodeForm extends React.Component<Props, State> {
         >
           <div className={styles.amountContainer}>
             <div className={styles.asset}>
-              <div className={styles.inputDescription}>ASSET</div>
+              <div className={styles.inputDescription}>
+                <FormattedMessage id="requestAssetLabel" />
+              </div>
               <AssetInput
                 symbols={symbols}
                 value={{ label: asset, value: asset }}
@@ -69,10 +73,14 @@ export default class QRCodeForm extends React.Component<Props, State> {
               />
             </div>
             <div className={styles.amount}>
-              <div className={styles.inputDescription}>AMOUNT</div>
+              <div className={styles.inputDescription}>
+                <FormattedMessage id="requestAssetAmount" />
+              </div>
               <NumberInput
                 value={amount}
-                placeholder="Amount"
+                placeholder={intl.formatMessage({
+                  id: 'requestAssetAmountLabel',
+                })}
                 options={{
                   numeralDecimalScale: 8,
                 }}
@@ -88,17 +96,21 @@ export default class QRCodeForm extends React.Component<Props, State> {
           </div>
           <div className={styles.rowContainer}>
             <div className={styles.inputDescription}>
-              DEPOSIT INTO THIS WALLET
+              <FormattedMessage id="requestAssetDepositLabel" />
             </div>
             <div className={styles.address}>
               <Address className={styles.link} address={address} />
             </div>
           </div>
           <div className={styles.rowContainer}>
-            <div className={styles.inputDescription}>REFERENCE</div>
+            <div className={styles.inputDescription}>
+              <FormattedMessage id="requestAssetRefLabel" />
+            </div>
             <TextInput
               value={description}
-              placeholder="Add a note..."
+              placeholder={intl.formatMessage({
+                id: 'requestAssetRefPlaceholder',
+              })}
               onChange={e => this.setState({ description: e.target.value })}
             />
           </div>
@@ -110,7 +122,7 @@ export default class QRCodeForm extends React.Component<Props, State> {
             disabled={!amount}
             type="submit"
           >
-            Generate QR Code
+            <FormattedMessage id="requestAssetQRButton" />
           </Button>
         </form>
       </div>
@@ -119,7 +131,7 @@ export default class QRCodeForm extends React.Component<Props, State> {
 
   validateForm = () => {
     const { amount, asset } = this.state
-    const { networkId } = this.props
+    const { networkId, intl } = this.props
 
     let valid = false
 
@@ -139,28 +151,34 @@ export default class QRCodeForm extends React.Component<Props, State> {
       if (!validDecimals && !toBigNumber(amountNum).isInteger()) {
         valid = false
         this.setState({
-          error: `You canot request fractional ${asset}.`,
+          error: intl.formatMessage(
+            { id: 'errors.request.fractional' },
+            { asset },
+          ),
         })
         return valid
       }
       if (decpoint > validDecimals && validDecimals) {
         valid = false
         this.setState({
-          error: `You can only request ${asset} up to ${validDecimals} decimals.`,
+          error: intl.formatMessage(
+            { id: 'errors.request.validDecimals' },
+            { asset, validDecimals },
+          ),
         })
         return valid
       }
       if (toBigNumber(amountNum).greaterThan(toBigNumber(1000000000))) {
         valid = false
         this.setState({
-          error: `You cannot request more than 100,000,000 ${asset}.`,
+          error: intl.formatMessage({ id: 'errors.request.max' }, { asset }),
         })
         return valid
       }
       if (!toNumber(amountNum)) {
         valid = false
         this.setState({
-          error: `You cannot request 0 ${asset}.`,
+          error: intl.formatMessage({ id: 'errors.request.min' }, { asset }),
         })
         return valid
       }

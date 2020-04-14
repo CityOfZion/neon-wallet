@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import { FormattedMessage } from 'react-intl'
 
 import Button from '../../components/Button'
 import LoginIcon from '../../assets/icons/login.svg'
@@ -33,14 +34,18 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
         >
           <React.Fragment>
             <div className={styles.centeredInput}>
-              <TextInput
-                placeholder="Enter a NEO address here"
-                value={address}
-                onChange={(e: Object) =>
-                  this.setState({ address: e.target.value })
-                }
-                autoFocus
-              />
+              <FormattedMessage id="authWatchPlaceholder">
+                {translation => (
+                  <TextInput
+                    placeholder={translation}
+                    value={address}
+                    onChange={(e: Object) =>
+                      this.setState({ address: e.target.value })
+                    }
+                    autoFocus
+                  />
+                )}
+              </FormattedMessage>
             </div>
             <div className={styles.loginButtonRow}>
               <Button
@@ -50,7 +55,7 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
                 renderIcon={LoginIcon}
                 disabled={address.length < 10}
               >
-                Login
+                <FormattedMessage id="authLogin" />
               </Button>
             </div>
           </React.Fragment>

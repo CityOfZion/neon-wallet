@@ -3,6 +3,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import { uniqueId } from 'lodash-es'
+import { FormattedMessage } from 'react-intl'
 
 import SendRecipientListItem from './SendRecipientListItem'
 
@@ -52,17 +53,17 @@ const SendRecipientList = ({
         <h3
           className={classNames(styles.sendRecipientListHeader, styles.asset)}
         >
-          Asset
+          <FormattedMessage id="sendAssetLabel" />
         </h3>
         <h3
           className={classNames(styles.sendRecipientListHeader, styles.amount)}
         >
-          Amount
+          <FormattedMessage id="sendAmountLabel" />
         </h3>
         <h3
           className={classNames(styles.sendRecipientListHeader, styles.address)}
         >
-          Recipient Address
+          <FormattedMessage id="sendAddressLabel" />
         </h3>
         <div className={styles.delete} />
       </div>

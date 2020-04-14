@@ -3,6 +3,7 @@ import React from 'react'
 import { wallet } from '@cityofzion/neon-js'
 import { progressValues } from 'spunky'
 import classNames from 'classnames'
+import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 
 import Button from '../../components/Button'
 import StyledReactSelect from '../../components/Inputs/StyledReactSelect/StyledReactSelect'
@@ -128,9 +129,13 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
       <div id="loginLedgerNanoS" className={styles.flexContainer}>
         <form>
           {this.renderStatus()}
-          <Label label=" Public Address">
-            {this.renderAdditionalLabelContent()}
-          </Label>
+          <FormattedMessage id="publicAddress">
+            {translation => (
+              <Label label={translation}>
+                {this.renderAdditionalLabelContent()}
+              </Label>
+            )}
+          </FormattedMessage>
           <StyledReactSelect
             value={this.state.addressOption}
             isDisabled={publicKeys.length === 1}
@@ -150,7 +155,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
             onClick={this.handleLogin}
             shouldCenterButtonLabelText
           >
-            Login
+            <FormattedMessage id="authLogin" />
           </Button>
         </form>
       </div>
@@ -192,7 +197,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
           onClick={this.fetchAdditionalKeys}
           className={styles.fetchAdditionalLedgerKeysLink}
         >
-          Fetch additional public keys
+          <FormattedMessage id="auth.ledger.fetchAddress" />
         </a>
       )
     }
@@ -204,7 +209,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
             onClick={this.fetchAdditionalKeys}
             className={styles.fetchAdditionalLedgerKeysLink}
           >
-            Retry?
+            <FormattedMessage id="auth.ledger.retry" />
           </a>
         </div>
       )
@@ -247,9 +252,11 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
             [styles.ledgerStageCompleted]: ledgerStage > NOT_CONNECTED,
           })}
         >
-          {this.getStatusIcon(NOT_CONNECTED)}
-          <div>
-            Connect and unlock your <strong>Ledger device</strong>
+          <div className={styles.ledgerStatusIconContainer}>
+            {this.getStatusIcon(NOT_CONNECTED)}
+          </div>
+          <div className={styles.ledgerStageText}>
+            <FormattedHTMLMessage id="auth.ledger.connectLedger" />
           </div>
         </div>
         <div
@@ -258,9 +265,11 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
             [styles.ledgerStageCompleted]: ledgerStage > OPEN_APP,
           })}
         >
-          {this.getStatusIcon(OPEN_APP)}
-          <div>
-            Navigate to the <strong>NEO app</strong> on your device
+          <div className={styles.ledgerStatusIconContainer}>
+            {this.getStatusIcon(OPEN_APP)}
+          </div>
+          <div className={styles.ledgerStageText}>
+            <FormattedHTMLMessage id="auth.ledger.navigateToNeoApp" />
           </div>
         </div>
       </div>

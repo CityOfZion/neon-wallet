@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
+import { FormattedMessage, IntlShape } from 'react-intl'
 
 import { ROUTES } from '../../core/constants'
 import FullHeightPanel from '../Panel/FullHeightPanel'
@@ -30,6 +31,7 @@ type Props = {
   net: string,
   networkId: string,
   theme: string,
+  intl: IntlShape,
 }
 
 type State = {
@@ -45,7 +47,7 @@ export default class NodeSelect extends React.Component<Props, State> {
     const { loading, nodes } = this.props
     return (
       <FullHeightPanel
-        headerText="Node Selection"
+        headerText={<FormattedMessage id="nodeSelectPanelHeader" />}
         renderCloseButton={() => <CloseButton routeTo={ROUTES.SETTINGS} />}
         renderHeaderIcon={this.renderIcon}
         renderInstructions={false}
@@ -54,8 +56,7 @@ export default class NodeSelect extends React.Component<Props, State> {
       >
         {!!nodes.length && (
           <div className={styles.instructions}>
-            If you’re experiencing performance issues, try selecting a custom
-            node below
+            <FormattedMessage id="nodeSelectionInstructions" />
           </div>
         )}
         <section className={styles.tableContainer}>
@@ -66,7 +67,10 @@ export default class NodeSelect extends React.Component<Props, State> {
                   [styles.refreshDisabled]: this.state.refreshDisabled,
                 })}
               >
-                <span onClick={this.handleRefreshNodeData}> Refresh </span>
+                <span onClick={this.handleRefreshNodeData}>
+                  {' '}
+                  <FormattedMessage id="dashboardRefresh" />
+                </span>
                 <RefreshIcon
                   id="refresh"
                   onClick={this.handleRefreshNodeData}
@@ -76,7 +80,13 @@ export default class NodeSelect extends React.Component<Props, State> {
                 />
               </div>
               <div className={styles.count}>
-                Top {nodes.length} nodes listed
+                <FormattedMessage
+                  id="nodeSelectInfo"
+                  values={{
+                    nodeCount: nodes.length,
+                  }}
+                />
+                {/* Top {nodes.length} nodes listed */}
               </div>
 
               {this.renderAutomaticSelect()}
@@ -101,7 +111,7 @@ export default class NodeSelect extends React.Component<Props, State> {
   }
 
   renderAutomaticSelect = () => {
-    const { selectedNode } = this.props
+    const { selectedNode, intl } = this.props
     let icon
     if (selectedNode) {
       icon = (
@@ -116,13 +126,15 @@ export default class NodeSelect extends React.Component<Props, State> {
 
     return (
       <Tooltip
-        title="Allow NEON to choose a node automatically"
+        title={intl.formatMessage({ id: 'automaticNodeSelectionTooltip' })}
         className={classNames(styles.automaticSelect, {
           [styles.selected]: !selectedNode,
         })}
       >
         {icon}
-        <span onClick={() => this.handleSelect('')}>Select automatically</span>
+        <span onClick={() => this.handleSelect('')}>
+          <FormattedMessage id="nodeSelectSelectAutomatically" />
+        </span>
       </Tooltip>
     )
   }
@@ -160,7 +172,9 @@ export default class NodeSelect extends React.Component<Props, State> {
           renderText={() => (
             <div>
               Oops! There was an issue retrieving metrics from the network.{' '}
-              <a onClick={() => loadNodesData({ networkId })}>Retry?</a>
+              <a onClick={() => loadNodesData({ networkId })}>
+                <FormattedMessage id="auth.ledger.retry" />
+              </a>
             </div>
           )}
           className={styles.tokenSalePanelDialogueBox}
@@ -188,11 +202,15 @@ export default class NodeSelect extends React.Component<Props, State> {
             <div className={this.getLatencyClass(parseInt(latency, 10))} />
             <span>{latency}ms</span>
           </div>
-          <div className={styles.blockHeight}>Block Height: {blockCount}</div>
+          <div className={styles.blockHeight}>
+            <FormattedMessage id="nodeSelectBlockHeight" />: {blockCount}
+          </div>
           <div className={styles.url}>{url}</div>
           <div className={styles.select} onClick={() => this.handleSelect(url)}>
             {icon}
-            <span>Select</span>
+            <span>
+              <FormattedMessage id="inputSelectPlaceholder" />
+            </span>
           </div>
         </div>
       )

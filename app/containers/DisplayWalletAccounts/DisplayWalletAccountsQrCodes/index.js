@@ -3,6 +3,7 @@
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import { bindActionCreators } from 'redux'
+import { injectIntl } from 'react-intl'
 
 import DisplayWalletAccountsQrCodes from './DisplayWalletAccountsQrCodes'
 import {
@@ -32,4 +33,5 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps,
   ),
+  injectIntl,
 )(DisplayWalletAccountsQrCodes)

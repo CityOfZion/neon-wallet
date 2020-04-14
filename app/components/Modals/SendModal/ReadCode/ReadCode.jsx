@@ -2,6 +2,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import { type ProgressState } from 'spunky'
+import { FormattedMessage } from 'react-intl'
 
 import GridIcon from 'assets/icons/grid.svg'
 import CozDonationQrCode from 'assets/images/coz-donation-qr-code.png'
@@ -54,20 +55,23 @@ export default class ReadCode extends React.Component<Props, State> {
       <div className={baseStyles.contentContainer}>
         <div className={baseStyles.header}>
           <GridIcon className={baseStyles.icon} />
-          <div className={baseStyles.title}>Use a QR Code</div>
+          <div className={baseStyles.title}>
+            <FormattedMessage id="recieveWhyUseQRLabel" />
+          </div>
         </div>
 
         <div className={baseStyles.divider} />
 
         <div className={baseStyles.section}>
           <div className={baseStyles.sectionContent}>
-            So you've been given a QR code? Click capture and hold it up to your
-            camera.
+            <FormattedMessage id="sendQRExplanation" />
           </div>
         </div>
 
         <div className={baseStyles.section}>
-          <div className={baseStyles.sectionTitle}>CAPTURE</div>
+          <div className={baseStyles.sectionTitle}>
+            <FormattedMessage id="captureQRCaps" />
+          </div>
           <div
             className={classNames(
               baseStyles.sectionContent,
@@ -89,7 +93,11 @@ export default class ReadCode extends React.Component<Props, State> {
             onClick={this.toggleScanner}
             disabled={!scannerActive && !cameraAvailable}
           >
-            {scannerActive ? 'Cancel' : 'Capture'}
+            {scannerActive ? (
+              <FormattedMessage id="modalActionCancel" />
+            ) : (
+              <FormattedMessage id="captureQR" />
+            )}
           </Button>
         </div>
       </div>

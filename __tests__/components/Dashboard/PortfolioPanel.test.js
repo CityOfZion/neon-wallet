@@ -11,11 +11,13 @@ import {
   DEFAULT_CURRENCY_CODE,
   MAIN_NETWORK_ID,
   ASSETS,
+  DEFAULT_LANGUAGE,
 } from '../../../app/core/constants'
 import PortfolioPanel from '../../../app/components/Dashboard/PortfolioPanel'
 import PortfolioRow from '../../../app/components/Dashboard/PortfolioPanel/PortfolioRow'
 import PortfolioTable from '../../../app/components/Dashboard/PortfolioPanel/PortfolioTable'
 import PortfolioBreakdownChart from '../../../app/components/Dashboard/PortfolioPanel/PortfolioBreakdownChart'
+import IntlWrapper from '../../../app/components/Root/IntlWrapper'
 
 const { LOADED } = progressValues
 
@@ -40,6 +42,7 @@ const initialState = {
       progress: LOADED,
       data: {
         currency: DEFAULT_CURRENCY_CODE,
+        language: DEFAULT_LANGUAGE,
         tokens: [],
       },
       loadedCount: 1,
@@ -122,19 +125,40 @@ describe('PortfolioPanel', () => {
 
   test.only('renders <PortfolioBreakDownChart/>', () => {
     const store = createStore(initialState)
-    const wrapper = mount(provideStore(<PortfolioPanel />, store))
+    const wrapper = mount(
+      provideStore(
+        <IntlWrapper>
+          <PortfolioPanel />{' '}
+        </IntlWrapper>,
+        store,
+      ),
+    )
     expect(wrapper.find(PortfolioBreakdownChart)).to.have.length(1)
   })
 
   test.only('renders 2 <PortfolioRow/> for two assets saturated from store', () => {
     const store = createStore(initialState)
-    const wrapper = mount(provideStore(<PortfolioPanel />, store))
+    const wrapper = mount(
+      provideStore(
+        <IntlWrapper>
+          <PortfolioPanel />
+        </IntlWrapper>,
+        store,
+      ),
+    )
     expect(wrapper.find(PortfolioRow)).to.have.length(2)
   })
 
   test('account data refreshes when refresh button is clicked', () => {
     const store = createStore(initialState)
-    const wrapper = mount(provideStore(<PortfolioPanel />, store))
+    const wrapper = mount(
+      provideStore(
+        <IntlWrapper>
+          <PortfolioPanel />
+        </IntlWrapper>,
+        store,
+      ),
+    )
 
     wrapper
       .find('#refresh')

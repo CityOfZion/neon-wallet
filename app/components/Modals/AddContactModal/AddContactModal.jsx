@@ -1,5 +1,7 @@
 // @flow
 import React, { Component } from 'react'
+import { FormattedMessage } from 'react-intl'
+
 import BaseModal from '../BaseModal'
 import ContactForm from '../../Contacts/ContactForm'
 
@@ -26,7 +28,7 @@ class AddContactModal extends Component<Props> {
       <BaseModal hideModal={hideModal} height="600px">
         <ContactForm
           formAddress={address}
-          submitLabel="Add to contacts"
+          submitLabel={<FormattedMessage id="addToContacts" />}
           onSubmit={this.handleSubmit}
         />
       </BaseModal>

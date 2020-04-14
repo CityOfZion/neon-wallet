@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import { bindActionCreators } from 'redux'
 import { withActions } from 'spunky'
+import { injectIntl } from 'react-intl'
 
 import DisplayWalletAccounts from './DisplayWalletAccounts'
 import { saveAccountActions } from '../../actions/accountsActions'
@@ -40,9 +41,15 @@ export default compose(
     mapDispatchToProps,
   ),
   withActions(saveAccountActions, mapAccountActionsToProps),
-  withSuccessNotification(saveAccountActions, 'Account saved!'),
+  withSuccessNotification(
+    saveAccountActions,
+    'notifications.success.accountSaved',
+    {},
+    true,
+  ),
   withFailureNotification(
     saveAccountActions,
     message => `Error saving account: ${message}`,
   ),
+  injectIntl,
 )(DisplayWalletAccounts)

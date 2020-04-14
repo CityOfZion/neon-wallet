@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { NavLink } from 'react-router-dom'
+import { IntlShape, FormattedHTMLMessage, FormattedMessage } from 'react-intl'
 
 import TextInput from '../../components/Inputs/TextInput'
 import PasswordInput from '../../components/Inputs/PasswordInput'
@@ -26,6 +27,7 @@ type Props = {
   passphrase: string,
   isImport: boolean,
   authenticated: boolean,
+  intl: IntlShape,
 }
 
 class DisplayWalletAccounts extends Component<Props> {
@@ -38,19 +40,47 @@ class DisplayWalletAccounts extends Component<Props> {
       walletName,
       isImport,
       authenticated,
+      intl,
     } = this.props
+
     const fields = [
       {
-        label: 'Passphrase',
+        label: intl.formatMessage({
+          id: 'walletCreationWalletPasswordPlaceholder',
+        }),
         value: passphrase,
         type: 'password',
       },
-      { label: 'Private Key', value: wif, type: 'text' },
-      { label: 'Encrypted Key', value: encryptedWIF, type: 'text' },
-      { label: 'Public Address', value: address, type: 'text' },
+      {
+        label: intl.formatMessage({
+          id: 'privateKeyLabel',
+        }),
+        value: wif,
+        type: 'text',
+      },
+      {
+        label: intl.formatMessage({
+          id: 'inputEncryptedPlaceholder',
+        }),
+        value: encryptedWIF,
+        type: 'text',
+      },
+      {
+        label: intl.formatMessage({
+          id: 'publicAddress',
+        }),
+        value: address,
+        type: 'text',
+      },
     ]
     if (walletName) {
-      fields.unshift({ label: 'Wallet Name', value: walletName, type: 'text' })
+      fields.unshift({
+        label: intl.formatMessage({
+          id: 'walletCreationWalletNameLabel',
+        }),
+        value: walletName,
+        type: 'text',
+      })
     }
     const conditionalPanelProps = {}
     if (authenticated) {
@@ -67,7 +97,15 @@ class DisplayWalletAccounts extends Component<Props> {
     }
     return (
       <FullHeightPanel
-        headerText={isImport ? 'Wallet Imported!' : 'Wallet Created!'}
+        headerText={
+          isImport
+            ? intl.formatMessage({
+                id: 'walletImportedHeader',
+              })
+            : intl.formatMessage({
+                id: 'walletCreatedHeader',
+              })
+        }
         renderInstructions={false}
         headerContainerClassName={styles.headerIconMargin}
         renderHeaderIcon={() => <CheckIcon />}
@@ -79,8 +117,7 @@ class DisplayWalletAccounts extends Component<Props> {
             icon={<WarningIcon />}
             renderText={() => (
               <div className={styles.saveDetails}>
-                <b>Save these details!</b> If you lose these credentials, you
-                lose access to your assets.
+                <FormattedHTMLMessage id="walletCreatedDisclaimer" />
               </div>
             )}
             className={styles.displayWalletAccountsDialogue}
@@ -122,7 +159,7 @@ class DisplayWalletAccounts extends Component<Props> {
             ))}
             <div className={styles.buttonContainer}>
               <Button renderIcon={AddIcon} primary onClick={this.handlePrint}>
-                Print
+                <FormattedMessage id="print" />
               </Button>
               <NavLink
                 id="display-wallet-qrs"
@@ -134,7 +171,7 @@ class DisplayWalletAccounts extends Component<Props> {
                 }
               >
                 <Button primary renderIcon={() => <GridIcon />} type="submit">
-                  Generate QR Codes
+                  <FormattedMessage id="generateQrCodes" />
                 </Button>
               </NavLink>
             </div>

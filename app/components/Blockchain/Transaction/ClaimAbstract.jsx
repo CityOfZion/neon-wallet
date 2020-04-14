@@ -1,12 +1,14 @@
 // @flow
 import React, { Fragment } from 'react'
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl'
 
 import classNames from 'classnames'
 import Button from '../../Button'
-import styles from './Transaction.scss'
 import ClaimIcon from '../../../assets/icons/claim.svg'
 import ContactsAdd from '../../../assets/icons/contacts-add.svg'
 import CopyToClipboard from '../../CopyToClipboard'
+
+import styles from './Transaction.scss'
 
 type Props = {
   txDate: React$Node,
@@ -17,9 +19,10 @@ type Props = {
   to: string,
   contactToExists: boolean,
   showAddContactModal: (from: string) => void,
+  intl: IntlShape,
 }
 
-export default class ClaimAbstract extends React.Component<Props> {
+class ClaimAbstract extends React.Component<Props> {
   render = () => {
     const {
       txDate,
@@ -30,6 +33,7 @@ export default class ClaimAbstract extends React.Component<Props> {
       to,
       contactToExists,
       showAddContactModal,
+      intl,
     } = this.props
     return (
       <div className={classNames(styles.transactionContainer)}>
@@ -51,7 +55,7 @@ export default class ClaimAbstract extends React.Component<Props> {
               <CopyToClipboard
                 className={styles.copy}
                 text={to}
-                tooltip="Copy Public Address"
+                tooltip={intl.formatMessage({ id: 'copyAddressTooltip' })}
               />
             </Fragment>
           </div>
@@ -61,10 +65,12 @@ export default class ClaimAbstract extends React.Component<Props> {
             onClick={() => showAddContactModal(to)}
             disabled={contactToExists}
           >
-            Add
+            <FormattedMessage id="activityAddAddress" />
           </Button>
         </div>
       </div>
     )
   }
 }
+
+export default injectIntl(ClaimAbstract)

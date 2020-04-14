@@ -1,12 +1,12 @@
 module.exports = {
   app: {
-    getPath: () => {
-      return 'C:\\tmp\\mock_path'
-    },
+    getPath: () => 'C:\\tmp\\mock_path',
   },
   shell: {
-    openExternal: url => {
-      return true
-    },
+    openExternal: () => true,
+  },
+  remote: {
+    shell: () => undefined,
+    dialog: () => undefined,
   },
 }

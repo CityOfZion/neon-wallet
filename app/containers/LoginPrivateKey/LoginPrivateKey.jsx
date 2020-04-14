@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import { type ProgressState } from 'spunky'
+import { FormattedMessage } from 'react-intl'
 
 import QrCodeScanner from '../../components/QrCodeScanner'
 import Button from '../../components/Button'
@@ -59,22 +60,26 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
                   renderIcon={Close}
                   onClick={this.toggleScanner}
                 >
-                  Cancel
+                  <FormattedMessage id="auth.cancel" />
                 </Button>
               </div>
             </React.Fragment>
           ) : (
             <React.Fragment>
               <div className={styles.centeredInput}>
-                <PasswordInput
-                  textInputClassName={styles.privateKeyInput}
-                  placeholder="Enter your private key here"
-                  value={wif}
-                  onChange={(e: Object) =>
-                    this.setState({ wif: e.target.value })
-                  }
-                  autoFocus
-                />
+                <FormattedMessage id="authPrivateKeyPlaceholder">
+                  {translation => (
+                    <PasswordInput
+                      textInputClassName={styles.privateKeyInput}
+                      placeholder={translation}
+                      value={wif}
+                      onChange={(e: Object) =>
+                        this.setState({ wif: e.target.value })
+                      }
+                      autoFocus
+                    />
+                  )}
+                </FormattedMessage>
               </div>
               <div className={styles.loginButtonRow}>
                 <Button
@@ -84,7 +89,7 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
                   onClick={this.toggleScanner}
                   disabled={!cameraAvailable}
                 >
-                  Scan QR
+                  <FormattedMessage id="authScanQRButton" />
                 </Button>
                 <Button
                   id="loginButton"
@@ -93,7 +98,7 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
                   renderIcon={LoginIcon}
                   disabled={wif.length < 10}
                 >
-                  Login
+                  <FormattedMessage id="authLogin" />
                 </Button>
               </div>
             </React.Fragment>

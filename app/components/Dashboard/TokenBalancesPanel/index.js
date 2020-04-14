@@ -1,5 +1,7 @@
 // @flow
+import React from 'react'
 import { compose } from 'recompose'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
 // $FlowFixMe
 import { filter, cloneDeep } from 'lodash-es'
@@ -67,11 +69,14 @@ export default compose(
   withNetworkData(),
   withAuthData(),
   withFilteredTokensData(),
-  withProgressPanel(balancesActions, { title: 'Token Balances' }),
+  withProgressPanel(balancesActions, {
+    title: <FormattedMessage id="dashboardBalancePanelLabel" />,
+  }),
   withBalancesData(mapBalanceDataToProps),
   withData(pricesActions, mapPricesDataToProps),
 
   // expose data & functionality needed for `refresh` action
   withActions(balancesActions, mapBalancesActionsToProps),
   withLoadingProp(balancesActions),
+  injectIntl,
 )(TokenBalancesPanel)

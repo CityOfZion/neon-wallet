@@ -1,6 +1,7 @@
 // @flow
 import { compose, withState } from 'recompose'
 import { withData } from 'spunky'
+import { injectIntl } from 'react-intl'
 
 import withAuthData from '../../../hocs/withAuthData'
 
@@ -18,4 +19,5 @@ export default compose(
     'setAddress',
     ({ formAddress }) => formAddress || '',
   ),
+  injectIntl,
 )(ContactForm)

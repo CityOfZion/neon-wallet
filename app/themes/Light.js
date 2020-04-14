@@ -24,6 +24,8 @@ const BUTTON = {
   '--button-priority-transfer-disabled': '#fff',
   '--button-max-amount-background': '#e6e6e6',
   '--button-max-amount-text': '#8f939b',
+  '--button-flag-icon-color': '#394152',
+  '--button-flag-icon-opacity': 0.3,
 }
 
 const INPUT = {
@@ -144,7 +146,7 @@ const NEWS = {
   '--news-content-border-color': '#ececec',
 }
 
-const NETWORK_CONFIG_TOOLTIP = {
+export const LIGHT_NETWORK_CONFIG_TOOLTIP = {
   '--network-config-tooltip-label': '#8D98AE',
   '--network-config-tooltip-background': '#f8f8f8',
   '--network-config-tooltip-color': '#394152',
@@ -169,5 +171,5 @@ export default {
   ...CONTACTS,
   ...SEND,
   ...QR_SCANNER,
-  ...NETWORK_CONFIG_TOOLTIP,
+  ...LIGHT_NETWORK_CONFIG_TOOLTIP,
 }

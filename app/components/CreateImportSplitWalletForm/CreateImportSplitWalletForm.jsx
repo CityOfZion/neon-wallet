@@ -3,6 +3,8 @@ import React, { Fragment } from 'react'
 import { wallet } from '@cityofzion/neon-js'
 import { withRouter } from 'react-router-dom'
 import { cloneDeep } from 'lodash-es'
+import { IntlShape, injectIntl, FormattedMessage } from 'react-intl'
+
 import PasswordInput from '../Inputs/PasswordInput'
 import StyledReactSelect from '../Inputs/StyledReactSelect/StyledReactSelect'
 import TextInput from '../Inputs/TextInput'
@@ -18,6 +20,7 @@ type Props = {
   authenticated: boolean,
   accounts: Object,
   showErrorNotification: Object => any,
+  intl: IntlShape,
 }
 
 type State = {
@@ -150,8 +153,11 @@ class CreateImportSplitWalletForm extends React.Component<Props, State> {
       submitButtonDisabled,
     } = this.state
 
-    const instructions =
-      'The Split Key import option allows users to create a new NEO account by combining the private key of an existing account with a separate private key.'
+    const { intl } = this.props
+
+    const instructions = intl.formatMessage({
+      id: 'splitKeyWalletInstructions',
+    })
 
     if (this.state.step === 2) {
       return (
@@ -165,21 +171,33 @@ class CreateImportSplitWalletForm extends React.Component<Props, State> {
               <TextInput
                 value={walletName}
                 onChange={e => this.setState({ walletName: e.target.value })}
-                label="Wallet Name"
-                placeholder="Enter your new split key wallet name..."
+                label={intl.formatMessage({
+                  id: 'walletCreationWalletNamePlaceholder',
+                })}
+                placeholder={intl.formatMessage({
+                  id: 'splitKeyWalletNamePlaceholder',
+                })}
               />
               <PasswordInput
                 key="np1"
                 onChange={this.handleChangePassphrase}
-                label="Passphrase"
-                placeholder="Enter password"
+                label={intl.formatMessage({
+                  id: 'inputPasswordPlaceholder',
+                })}
+                placeholder={intl.formatMessage({
+                  id: 'inputPasswordPlaceholder',
+                })}
                 error={passphraseError}
               />
               <PasswordInput
                 key="np2"
                 onChange={this.handleChangePassphrase2}
-                label="Confirm Passphrase"
-                placeholder="Confirm password"
+                label={intl.formatMessage({
+                  id: 'walletCreationWalletPasswordConfirmPlaceholder',
+                })}
+                placeholder={intl.formatMessage({
+                  id: 'walletCreationWalletPasswordConfirmPlaceholder',
+                })}
                 error={passphrase2Error}
               />
               <div className={styles.buttonContainer}>
@@ -199,7 +217,7 @@ class CreateImportSplitWalletForm extends React.Component<Props, State> {
                   primary
                   disabled={this.isStep2Disabled()}
                 >
-                  Import Wallet
+                  <FormattedMessage id="authImportWallet" />
                 </Button>
               </div>
             </form>
@@ -213,12 +231,14 @@ class CreateImportSplitWalletForm extends React.Component<Props, State> {
         <div id="createWallet" className={styles.flexContainer}>
           <form className={styles.importWalletForm}>
             <label className={styles.selectLabel}>
-              Choose an Existing Account
+              <FormattedMessage id="chooseAccount" />
             </label>
             <div className={styles.selectMargin}>
               <StyledReactSelect
                 value={selectedAccount}
-                placeholder="Choose wallet"
+                placeholder={intl.formatMessage({
+                  id: 'chooseAccount',
+                })}
                 onChange={this.handleChange}
                 options={mappedAccounts || []}
               />
@@ -226,8 +246,12 @@ class CreateImportSplitWalletForm extends React.Component<Props, State> {
             <PasswordInput
               key="op"
               value={existingPassphrase}
-              label="Passphrase"
-              placeholder="Enter password"
+              label={intl.formatMessage({
+                id: 'inputPasswordPlaceholder',
+              })}
+              placeholder={intl.formatMessage({
+                id: 'inputPasswordPlaceholder',
+              })}
               onChange={e =>
                 this.setState({ existingPassphrase: e.target.value })
               }
@@ -235,9 +259,13 @@ class CreateImportSplitWalletForm extends React.Component<Props, State> {
             <PasswordInput
               key="pk"
               value={keypart2}
-              label="Private Key"
+              label={intl.formatMessage({
+                id: 'privateKey',
+              })}
               onChange={e => this.setState({ keypart2: e.target.value })}
-              placeholder="Enter private key"
+              placeholder={intl.formatMessage({
+                id: 'privateKey',
+              })}
             />
             <div className={styles.loginButtonMargin}>
               <Button
@@ -248,7 +276,7 @@ class CreateImportSplitWalletForm extends React.Component<Props, State> {
                 onClick={this.toggleStep}
                 disabled={submitButtonDisabled || this.isStep1Disabled()}
               >
-                Next Step
+                <FormattedMessage id="nextStep" />
               </Button>
             </div>
           </form>
@@ -267,10 +295,16 @@ class CreateImportSplitWalletForm extends React.Component<Props, State> {
 
   validatePassphrase = () => {
     const { passphrase: p } = this.state
+    const { intl } = this.props
     // validate min char count
     const errorMessage =
       p && p.length < PASS_MIN_LENGTH
-        ? `Passphrase must contain at least ${PASS_MIN_LENGTH} characters`
+        ? intl.formatMessage(
+            {
+              id: 'errors.password.length',
+            },
+            { PASS_MIN_LENGTH },
+          )
         : ''
     this.setState(
       {
@@ -283,9 +317,12 @@ class CreateImportSplitWalletForm extends React.Component<Props, State> {
 
   validatePassphrase2 = () => {
     const { passphrase: p1, passphrase2: p2, passphraseValid } = this.state
+    const { intl } = this.props
     // validate phrases match
     const errorMessage =
-      p1 && p2 && p1 !== p2 && passphraseValid ? 'Passphrases must match' : ''
+      p1 && p2 && p1 !== p2 && passphraseValid
+        ? intl.formatMessage({ id: 'errors.password.match' })
+        : ''
     this.setState({
       passphrase2Error: errorMessage,
       passphrase2Valid: !!(p2 && !errorMessage),
@@ -316,4 +353,4 @@ class CreateImportSplitWalletForm extends React.Component<Props, State> {
   }
 }
 
-export default withRouter(CreateImportSplitWalletForm)
+export default withRouter(injectIntl(CreateImportSplitWalletForm))

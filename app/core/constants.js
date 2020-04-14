@@ -1,13 +1,27 @@
 // @flow
+import React from 'react'
+
 import tokenList from './tokenList.json'
 import nodesMainNet from './nodes-main-net.json'
 import nodesTestNet from './nodes-test-net.json'
+import England from '../assets/flags/united-kingdom.svg'
+import China from '../assets/flags/china.svg'
+import France from '../assets/flags/france.svg'
+import Germany from '../assets/flags/germany.svg'
+import Italy from '../assets/flags/italy.svg'
+import Brazil from '../assets/flags/brazil.svg'
+import Turkey from '../assets/flags/turkey.svg'
+import Vietnam from '../assets/flags/vietnam.svg'
+import Korea from '../assets/flags/south-korea.svg'
+import UnitedArabEmirates from '../assets/flags/united-arab-emirates.svg'
 
 export const NEON_WALLET_RELEASE_LINK =
   'https://github.com/CityOfZion/neon-wallet/releases'
 
 export const DISCORD_INVITE_LINK = 'https://discordapp.com/invite/R8v48YA'
 export const COZ_DONATIONS_ADDRESS = 'Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A'
+
+export const PIPEFY_SUPPORT = 'https://portal.pipefy.com/coz-support'
 
 export const NODE_EXLUSION_CRITERIA = ['ngd', 'neo.org']
 
@@ -28,6 +42,61 @@ export const EXPLORERS = {
   NEO_TRACKER: 'Neotracker',
   ANT_CHAIN: 'Antchain',
 }
+
+export const LANGUAGES = {
+  ENGLISH: {
+    label: 'English',
+    value: 'ENGLISH',
+    renderFlag: () => <England alt="English" />,
+  },
+  CHINESE: {
+    label: '中文',
+    value: 'CHINESE',
+    renderFlag: () => <China alt="中文" />,
+  },
+  FRENCH: {
+    label: 'Francés',
+    value: 'FRENCH',
+    renderFlag: () => <France alt="Francés" />,
+  },
+  GERMAN: {
+    label: 'Deutsch',
+    value: 'GERMAN',
+    renderFlag: () => <Germany alt="Deutsche" />,
+  },
+  ITALIAN: {
+    label: 'Italiano',
+    value: 'ITALIAN',
+    renderFlag: () => <Italy alt="Italiano" />,
+  },
+  PORTUGUESE: {
+    label: 'Português',
+    value: 'PORTUGUESE',
+    renderFlag: () => <Brazil alt="Português" />,
+  },
+  TURKISH: {
+    label: 'Türkçe',
+    value: 'TURKISH',
+    renderFlag: () => <Turkey alt="Türkçe" />,
+  },
+  KOREAN: {
+    label: '한국어',
+    value: 'KOREAN',
+    renderFlag: () => <Korea alt="한국어" />,
+  },
+  VIETNAMESE: {
+    label: 'Tiếng Việt',
+    value: 'VIETNAMESE',
+    renderFlag: () => <Vietnam alt="Tiếng Việt" />,
+  },
+  ARABIC: {
+    label: 'العربية',
+    value: 'ARABIC',
+    renderFlag: () => <UnitedArabEmirates alt="العربية" />,
+  },
+}
+
+export const DEFAULT_LANGUAGE = LANGUAGES.ENGLISH.value
 
 export const DEFAULT_EXPLORER = EXPLORERS.NEO_SCAN
 

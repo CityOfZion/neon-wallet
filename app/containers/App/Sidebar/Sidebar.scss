@@ -1,6 +1,6 @@
 @import '../../../styles/variables';
 
-$size: 68px;
+$size: 70px;
 
 .container {
   display: flex;
@@ -86,6 +86,7 @@ $size: 68px;
   flex-direction: column;
   cursor: pointer;
   text-decoration: none;
+  text-align: center;
 
   div {
     font-family: var(--font-gotham-book);

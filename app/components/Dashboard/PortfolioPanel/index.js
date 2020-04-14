@@ -1,7 +1,9 @@
 // @flow
+import React from 'react'
 import { compose, withProps } from 'recompose'
 import { withData } from 'spunky'
 import { pickBy, pick, omit, reduce, map } from 'lodash-es'
+import { FormattedMessage } from 'react-intl'
 
 import PortfolioPanel from './PortfolioPanel'
 import portfolioPanelActions from '../../../actions/portfolioPanelActions'
@@ -48,7 +50,9 @@ const mapSortedPortfolioBalanceProps = ({ prices, balances, total }) => ({
 })
 
 export default compose(
-  withProgressPanel(portfolioPanelActions, { title: 'Total Wallet Value' }),
+  withProgressPanel(portfolioPanelActions, {
+    title: <FormattedMessage id="dashboardValueLabel" />,
+  }),
   withData(pricesActions, mapPricesDataToProps),
   withBalancesData(mapBalancesDataToProps),
   withCurrencyData(),

@@ -4,7 +4,6 @@ exports[`Claim should render claim GAS button as disabled 1`] = `
 <div>
   <Tooltip
     disabled={false}
-    title="You can claim GAS once every 5 minutes"
   >
     <Button
       disabled={true}
@@ -15,9 +14,14 @@ exports[`Claim should render claim GAS button as disabled 1`] = `
       shouldCenterButtonLabelText={false}
       type="button"
     >
-      Claim 
-      1.25406935
-       GAS
+      <FormattedMessage
+        id="dashboardGasClaimButton"
+        values={
+          Object {
+            "amount": "1.25406935",
+          }
+        }
+      />
     </Button>
   </Tooltip>
 </div>
@@ -27,7 +31,6 @@ exports[`Claim should render claim GAS button as enabled 1`] = `
 <div>
   <Tooltip
     disabled={true}
-    title="You can claim GAS once every 5 minutes"
   >
     <Button
       id="claim"
@@ -37,9 +40,14 @@ exports[`Claim should render claim GAS button as enabled 1`] = `
       shouldCenterButtonLabelText={false}
       type="button"
     >
-      Claim 
-      1.25406935
-       GAS
+      <FormattedMessage
+        id="dashboardGasClaimButton"
+        values={
+          Object {
+            "amount": "1.25406935",
+          }
+        }
+      />
     </Button>
   </Tooltip>
 </div>

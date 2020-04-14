@@ -1,12 +1,14 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl'
 
 import Button from '../../Button'
-import styles from './Transaction.scss'
 import ReceiveIcon from '../../../assets/icons/receive-tx.svg'
 import ContactsAdd from '../../../assets/icons/contacts-add.svg'
 import CopyToClipboard from '../../CopyToClipboard'
+
+import styles from './Transaction.scss'
 
 type Props = {
   txDate: React$Node,
@@ -18,9 +20,10 @@ type Props = {
   from: string,
   contactFrom: React$Node | string,
   contactFromExists: boolean,
+  intl: IntlShape,
 }
 
-export default class ReceiveAbstract extends React.Component<Props> {
+class ReceiveAbstract extends React.Component<Props> {
   render = () => {
     const {
       txDate,
@@ -31,6 +34,7 @@ export default class ReceiveAbstract extends React.Component<Props> {
       showAddContactModal,
       contactFromExists,
       from,
+      intl,
     } = this.props
     const isMintTokens = from === 'MINT TOKENS'
 
@@ -54,7 +58,7 @@ export default class ReceiveAbstract extends React.Component<Props> {
               <CopyToClipboard
                 className={styles.copy}
                 text={from}
-                tooltip="Copy Public Address"
+                tooltip={intl.formatMessage({ id: 'copyAddressTooltip' })}
               />
             )}
           </div>
@@ -64,10 +68,12 @@ export default class ReceiveAbstract extends React.Component<Props> {
             onClick={() => showAddContactModal(from)}
             disabled={contactFromExists}
           >
-            Add
+            <FormattedMessage id="activityAddAddress" />
           </Button>
         </div>
       </div>
     )
   }
 }
+
+export default injectIntl(ReceiveAbstract)

@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react'
+import { FormattedMessage, IntlShape } from 'react-intl'
 
 import Button from '../../components/Button'
 import Tooltip from '../../components/Tooltip'
@@ -13,6 +14,7 @@ type Props = {
   disableClaimButton: boolean,
   claimAmount: string,
   isWatchOnly?: boolean,
+  intl: IntlShape,
 }
 
 export default class Claim extends Component<Props> {
@@ -36,7 +38,10 @@ export default class Claim extends Component<Props> {
             renderIcon={ClaimIcon}
             onClick={isWatchOnly ? () => {} : this.handleClaim}
           >
-            Claim {this.getFormattedAmount()} GAS
+            <FormattedMessage
+              id="dashboardGasClaimButton"
+              values={{ amount: this.getFormattedAmount() }}
+            />
           </Button>
         </Tooltip>
       </div>
@@ -55,10 +60,12 @@ export default class Claim extends Component<Props> {
   getFormattedAmount = () => formatGAS(this.props.claimAmount)
 
   tooltipText = (isWatchOnly?: boolean, claimAmount: string): string => {
-    if (isWatchOnly) return 'GAS claims are unavailable in Watch mode'
+    const { intl } = this.props
+    if (isWatchOnly)
+      return intl.formatMessage({ id: 'claimUnavailableInWatch' })
 
     return toBigNumber(claimAmount).eq(0)
-      ? 'Address must hold NEO in order to claim GAS'
-      : 'You can claim GAS once every 5 minutes'
+      ? intl.formatMessage({ id: 'noClaimableGas' })
+      : intl.formatMessage({ id: 'claimTimeDisclaimer' })
   }
 }

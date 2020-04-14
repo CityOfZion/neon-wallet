@@ -9,12 +9,14 @@ import {
   type Actions,
   type ProgressState,
 } from 'spunky'
+import { injectIntl, IntlShape } from 'react-intl'
 
 import { showSuccessNotification } from '../modules/notifications'
 
 type Props = {
   __progress__: ProgressState,
   __showSuccessNotification__: Function,
+  intl: IntlShape,
 }
 
 type Message = string | Function
@@ -28,6 +30,7 @@ export default function withSuccessNotification(
   actions: Actions,
   message: Message,
   options: Object = {},
+  isTranslation?: boolean,
 ) {
   const mapDispatchToProps = (dispatch: DispatchType) => ({
     [NOTIFICATION_PROP]: (...args) =>
@@ -41,9 +44,19 @@ export default function withSuccessNotification(
     class LoadedNotifier extends React.Component<Props> {
       componentWillReceiveProps(nextProps) {
         if (progressChangedToLoaded(this.props, nextProps)) {
+          const { intl } = this.props
           const showSuccessNotification = nextProps[NOTIFICATION_PROP]
+
+          let dynamicMessage = isFunction(message)
+            ? message(nextProps)
+            : message
+
+          if (isTranslation) {
+            dynamicMessage = intl.formatMessage({ id: message })
+          }
+
           showSuccessNotification({
-            message: isFunction(message) ? message(nextProps) : message,
+            message: dynamicMessage,
           })
         }
       }
@@ -60,6 +73,7 @@ export default function withSuccessNotification(
         mapDispatchToProps,
       ),
       withProgress(actions, { ...options, propName: PROGRESS_PROP }),
+      injectIntl,
     )(LoadedNotifier)
   }
 }

@@ -1,24 +1,54 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import { uniqueId } from 'lodash-es'
+import configureStore from 'redux-mock-store'
+import { Provider } from 'react-redux'
+import { progressValues } from 'spunky'
+import { injectIntl } from 'react-intl'
 
 import Send from '../../app/containers/Send/Send'
 import ZeroAssets from '../../app/components/ZeroAssets/ZeroAssets'
 import SendRecipientListItem from '../../app/components/Send/SendPanel/SendRecipientList/SendRecipientListItem'
 import PanelHeaderButton from '../../app/components/PanelHeaderButton/PanelHeaderButton'
 import Button from '../../app/components/Button'
+import IntlWrapper from '../../app/components/Root/IntlWrapper'
+import { DEFAULT_LANGUAGE } from '../../app/core/constants'
 
-const setup = props =>
-  mount(
-    <Send
-      {...props}
-      sendableAssets={{ NEO: { balance: 5, symbol: 'NEO' } }}
-      prices={{ NEO: 38 }}
-      contacts={{ NeoFriend: 'AMKxqiSSLR89wLVEk5CoGRjKHRrmrR8bDr' }}
-      currencyCode="usd"
-      shouldRenderHeaderBar={false}
-    />,
+const { LOADED, LOADING } = progressValues
+
+const initialState = {
+  spunky: {
+    settings: {
+      batch: false,
+      progress: LOADED,
+      loadedCount: 1,
+      data: {
+        language: DEFAULT_LANGUAGE,
+      },
+    },
+  },
+}
+
+const SendWithIntl = injectIntl(Send)
+
+const setup = props => {
+  const store = configureStore()(initialState)
+  const wrapper = mount(
+    <Provider store={store}>
+      <IntlWrapper>
+        <SendWithIntl
+          {...props}
+          sendableAssets={{ NEO: { balance: 5, symbol: 'NEO' } }}
+          prices={{ NEO: 38 }}
+          contacts={{ NeoFriend: 'AMKxqiSSLR89wLVEk5CoGRjKHRrmrR8bDr' }}
+          currencyCode="usd"
+          shouldRenderHeaderBar={false}
+        />{' '}
+      </IntlWrapper>
+    </Provider>,
   )
+  return wrapper
+}
 
 const createAsset = (name, id) => ({
   asset: name,
@@ -43,7 +73,7 @@ describe('Send', () => {
       .find(PanelHeaderButton)
       .at(2)
       .simulate('click')
-    expect(wrapper.instance().state.sendRowDetails.length).toBe(1)
+    expect(wrapper.find(Send).instance().state.sendRowDetails.length).toBe(1)
     expect(wrapper.find(SendRecipientListItem).children().length).toBe(1)
   })
 
@@ -55,7 +85,7 @@ describe('Send', () => {
     asset.amount = 1.523
     asset.address = 'ARU4Sw9yyqgfjxfqF1TNwWHHFvLbAVdTj1'
     asset.id = uniqueId()
-    wrapper.setState({
+    wrapper.find(Send).setState({
       sendRowDetails: [asset],
     })
 
@@ -63,7 +93,7 @@ describe('Send', () => {
       .find(PanelHeaderButton)
       .at(2)
       .simulate('click')
-    expect(wrapper.instance().state.sendRowDetails.length).toBe(2)
+    expect(wrapper.find(Send).instance().state.sendRowDetails.length).toBe(2)
     expect(wrapper.find(SendRecipientListItem).children().length).toBe(2)
   })
 
@@ -77,13 +107,13 @@ describe('Send', () => {
       createAsset('RPX', 3),
     )
 
-    wrapper.setState({ sendRowDetails })
+    wrapper.find(Send).setState({ sendRowDetails })
     wrapper
       .find('.deleteButton')
       .first()
       .simulate('click')
 
-    const wrapperRows = wrapper.instance().state.sendRowDetails
+    const wrapperRows = wrapper.find(Send).instance().state.sendRowDetails
 
     expect(wrapperRows.length).toBe(2)
     expect(wrapperRows[0].asset).toBe('GAS')
@@ -101,7 +131,7 @@ describe('Send', () => {
         .simulate('click')
     }
 
-    expect(wrapper.instance().state.sendRowDetails.length).toBe(1)
+    expect(wrapper.find(Send).instance().state.sendRowDetails.length).toBe(1)
     expect(wrapper.find(SendRecipientListItem).children().length).toBe(1)
   })
 
@@ -119,7 +149,7 @@ describe('Send', () => {
       .props()
       .onClick()
 
-    const errors = wrapper.instance().state.sendRowDetails[0].errors
+    const errors = wrapper.find(Send).instance().state.sendRowDetails[0].errors
 
     expect(errors.amount).toBe('Can not send 0 NEO.')
     expect(errors.address).toBe('You need to specify a valid NEO address.')
@@ -130,14 +160,14 @@ describe('Send', () => {
 
     const asset = createAsset('NEO', 1)
     asset.amount = -5
-    wrapper.setState({ sendRowDetails: [asset] })
+    wrapper.find(Send).setState({ sendRowDetails: [asset] })
     wrapper
       .find('#send-assets')
       .find(Button)
       .props()
       .onClick()
 
-    const errors = wrapper.instance().state.sendRowDetails[0].errors
+    const errors = wrapper.find(Send).instance().state.sendRowDetails[0].errors
     expect(errors.amount).toBe('You cannot send negative amounts of NEO.')
   })
 
@@ -146,14 +176,14 @@ describe('Send', () => {
 
     const asset = createAsset('NEO', 1)
     asset.amount = 1.5
-    wrapper.setState({ sendRowDetails: [asset] })
+    wrapper.find(Send).setState({ sendRowDetails: [asset] })
     wrapper
       .find('#send-assets')
       .find(Button)
       .props()
       .onClick()
 
-    const errors = wrapper.instance().state.sendRowDetails[0].errors
+    const errors = wrapper.find(Send).instance().state.sendRowDetails[0].errors
     expect(errors.amount).toBe('You cannot send fractional amounts of NEO.')
   })
 
@@ -162,14 +192,14 @@ describe('Send', () => {
 
     const asset = createAsset('NEO', 1)
     asset.amount = 100
-    wrapper.setState({ sendRowDetails: [asset] })
+    wrapper.find(Send).setState({ sendRowDetails: [asset] })
     wrapper
       .find('#send-assets')
       .find(Button)
       .props()
       .onClick()
 
-    const errors = wrapper.instance().state.sendRowDetails[0].errors
+    const errors = wrapper.find(Send).instance().state.sendRowDetails[0].errors
     expect(errors.amount).toBe(
       'You do not have enough balance to send 100 NEO.',
     )
@@ -180,14 +210,14 @@ describe('Send', () => {
 
     const asset = createAsset('GAS', 1)
     asset.amount = 1.523
-    wrapper.setState({ sendRowDetails: [asset] })
+    wrapper.find(Send).setState({ sendRowDetails: [asset] })
     wrapper
       .find('#send-assets')
       .find(Button)
       .props()
       .onClick()
 
-    const errors = wrapper.instance().state.sendRowDetails[0].errors
+    const errors = wrapper.find(Send).instance().state.sendRowDetails[0].errors
     expect(errors.amount).toBe(undefined)
   })
 
@@ -197,7 +227,7 @@ describe('Send', () => {
     const asset = createAsset('GAS', 1)
     asset.amount = 1.523
     asset.address = 'ARU4Sw9yyqgfjxfqF1TNwWHHFvLbAVdTj1'
-    wrapper.setState({ sendRowDetails: [asset] })
+    wrapper.find(Send).setState({ sendRowDetails: [asset] })
     wrapper
       .find('#send-assets')
       .find(Button)
@@ -205,7 +235,8 @@ describe('Send', () => {
       .onClick()
 
     setTimeout(() => {
-      const errors = wrapper.instance().state.sendRowDetails[0].errors
+      const errors = wrapper.find(Send).instance().state.sendRowDetails[0]
+        .errors
 
       expect(errors.address).toBe(
         'Address is blacklisted. This is a known phishing address.',
@@ -219,14 +250,14 @@ describe('Send', () => {
     const asset = createAsset('GAS', 1)
     asset.amount = 1.523
     asset.address = 'AMKxqiSSLR89wLVEk5CoGRjKHRrmrR8bDr'
-    wrapper.setState({ sendRowDetails: [asset] })
+    wrapper.find(Send).setState({ sendRowDetails: [asset] })
     wrapper
       .find('#send-assets')
       .find(Button)
       .props()
       .onClick()
 
-    const errors = wrapper.instance().state.sendRowDetails[0].errors
+    const errors = wrapper.find(Send).instance().state.sendRowDetails[0].errors
 
     expect(errors.address).toBe(undefined)
   })
@@ -238,7 +269,9 @@ describe('Send', () => {
       .find('.maxButton')
       .at(1)
       .simulate('click')
-    expect(wrapper.instance().state.sendRowDetails[0].amount).toBe('5')
+    expect(wrapper.find(Send).instance().state.sendRowDetails[0].amount).toBe(
+      '5',
+    )
   })
 
   test('It proceeds to the next step with valid input', () => {
@@ -255,7 +288,8 @@ describe('Send', () => {
       .onClick()
 
     setTimeout(
-      () => expect(wrapper.instance().state.showConfirmSend).toBe(true),
+      () =>
+        expect(wrapper.find(Send).instance().state.showConfirmSend).toBe(true),
       0,
     )
   })
@@ -274,7 +308,7 @@ describe('Send', () => {
       .props()
       .onClick()
 
-    const sendTransaction = wrapper.instance().props.sendTransaction
+    const sendTransaction = wrapper.find(Send).instance().props.sendTransaction
 
     setTimeout(() => {
       expect(sendTransaction).toHaveBeenCalledTimes(1)

@@ -212,6 +212,7 @@ export default (state: Object = initialState, action: ReduxAction) => {
   switch (action.type) {
     // eslint-disable-next-line
     case DISABLE_CLAIM:
+      // eslint-disable-next-line no-case-declarations
       const { disableClaimButton } = action.payload
       return {
         ...state,

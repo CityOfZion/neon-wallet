@@ -1,14 +1,13 @@
 // @flow
 import React from 'react'
+import { FormattedMessage } from 'react-intl'
 
 import ErrorIcon from '../../../../assets/icons/error.svg'
 import Button from '../../../Button'
 import DialogueBox from '../../../DialogueBox'
-
 import BackIcon from '../../../../assets/icons/arrow.svg'
 import WarningIcon from '../../../../assets/icons/warning.svg'
 import ActivityLink from '../ActivityLink'
-
 import styles from './SendError.scss'
 
 type Props = {
@@ -22,10 +21,11 @@ const SendError = ({ resetViewsAfterError, sendErrorMessage }: Props) => (
       <ErrorIcon />
       <div className={styles.sendErrorInfo}>
         <h1 className={styles.sendErrorHeaderTitle}>
-          Oops! Something went wrong.
+          <FormattedMessage id="errors.network.general" />
         </h1>
         <p className={styles.sendErrorSubheader}>
-          Error: {sendErrorMessage || 'A network error has occurred'}
+          Error:{' '}
+          {sendErrorMessage || <FormattedMessage id="errors.send.network" />}
         </p>
       </div>
     </div>
@@ -40,7 +40,7 @@ const SendError = ({ resetViewsAfterError, sendErrorMessage }: Props) => (
       onClick={resetViewsAfterError}
       className={styles.sendErrorButton}
     >
-      Take me back
+      <FormattedMessage id="takeMeBack" />
     </Button>
   </section>
 )

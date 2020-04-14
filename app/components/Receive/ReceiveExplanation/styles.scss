@@ -2,6 +2,7 @@
   width: 450px;
   padding: 21px 42px 42px 42px;
   background: var(--panel-receive-explanation);
+  text-align: center;
 
   .header {
     display: flex;
@@ -23,7 +24,7 @@
     font-size: 16px;
 
     p {
-      margin: 24px 0;
+      margin: 12px 0;
     }
   }
 }
