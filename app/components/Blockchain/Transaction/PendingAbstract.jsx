@@ -1,6 +1,6 @@
 // @flow
 import React, { Fragment } from 'react'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl'
 
 import Button from '../../Button'
 import styles from './Transaction.scss'
@@ -21,9 +21,10 @@ type Props = {
   confirmations: number,
   showAddContactModal: (address: string) => void,
   renderTxDate: (time: number) => React$Node | null,
+  intl: IntlShape,
 }
 
-export default class PendingAbstract extends React.Component<Props> {
+class PendingAbstract extends React.Component<Props> {
   render = () => {
     const {
       asset,
@@ -34,6 +35,7 @@ export default class PendingAbstract extends React.Component<Props> {
       showAddContactModal,
       confirmations,
       renderTxDate,
+      intl,
     } = this.props
     const contactTo = findContact(to)
     const contactToExists = contactTo !== to
@@ -68,7 +70,7 @@ export default class PendingAbstract extends React.Component<Props> {
               <CopyToClipboard
                 className={styles.copy}
                 text={to}
-                tooltip="Copy Public Address"
+                tooltip={intl.formatMessage({ id: 'copyAddressTooltip' })}
               />
             </Fragment>
           </div>
@@ -89,3 +91,5 @@ export default class PendingAbstract extends React.Component<Props> {
     )
   }
 }
+
+export default injectIntl(PendingAbstract)

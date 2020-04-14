@@ -53,7 +53,7 @@ const MISCELLANEOUS = {
   walletManagerRemoveWallet: 'Brieftasche entfernen',
 
   selectAssets: 'Wählen Sie Assets',
-  priorityTransfer: 'Prioritätsübertragung',
+  priorityTransfer: 'Priorität',
 
   editRecipients: 'Empfänger bearbeiten',
   confirmAndSend: 'Bestätigen und senden',

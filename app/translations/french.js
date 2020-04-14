@@ -49,7 +49,7 @@ const MISCELLANEOUS = {
   walletManagerRemoveWallet: 'Supprimer portefeuille',
 
   selectAssets: 'Sélectionner Actifs',
-  priorityTransfer: 'Chuyển khoản Ưu tiên',
+  priorityTransfer: 'Priorité',
 
   editRecipients: 'Editer Destinataires',
   confirmAndSend: 'Confirmer & Envoyer',

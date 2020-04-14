@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl'
 
 import Button from '../../Button'
 import ReceiveIcon from '../../../assets/icons/receive-tx.svg'
@@ -20,9 +20,10 @@ type Props = {
   from: string,
   contactFrom: React$Node | string,
   contactFromExists: boolean,
+  intl: IntlShape,
 }
 
-export default class ReceiveAbstract extends React.Component<Props> {
+class ReceiveAbstract extends React.Component<Props> {
   render = () => {
     const {
       txDate,
@@ -33,6 +34,7 @@ export default class ReceiveAbstract extends React.Component<Props> {
       showAddContactModal,
       contactFromExists,
       from,
+      intl,
     } = this.props
     const isMintTokens = from === 'MINT TOKENS'
 
@@ -56,7 +58,7 @@ export default class ReceiveAbstract extends React.Component<Props> {
               <CopyToClipboard
                 className={styles.copy}
                 text={from}
-                tooltip="Copy Public Address"
+                tooltip={intl.formatMessage({ id: 'copyAddressTooltip' })}
               />
             )}
           </div>
@@ -73,3 +75,5 @@ export default class ReceiveAbstract extends React.Component<Props> {
     )
   }
 }
+
+export default injectIntl(ReceiveAbstract)

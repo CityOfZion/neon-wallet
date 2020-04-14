@@ -1,7 +1,7 @@
 // @flow
 import React, { Fragment } from 'react'
 import classNames from 'classnames'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, IntlShape, injectIntl } from 'react-intl'
 
 import Button from '../../Button'
 import styles from './Transaction.scss'
@@ -19,9 +19,10 @@ type Props = {
   contactToExists: boolean,
   showAddContactModal: (to: string) => void,
   isNetworkFee: boolean,
+  intl: IntlShape,
 }
 
-export default class SendAbstract extends React.Component<Props> {
+class SendAbstract extends React.Component<Props> {
   render = () => {
     const {
       txDate,
@@ -33,6 +34,7 @@ export default class SendAbstract extends React.Component<Props> {
       contactToExists,
       showAddContactModal,
       isNetworkFee,
+      intl,
     } = this.props
     return (
       <div className={classNames(styles.transactionContainer)}>
@@ -57,7 +59,7 @@ export default class SendAbstract extends React.Component<Props> {
                 <CopyToClipboard
                   className={styles.copy}
                   text={to}
-                  tooltip="Copy Public Address"
+                  tooltip={intl.formatMessage({ id: 'copyAddressTooltip' })}
                 />
               </Fragment>
             )}
@@ -79,3 +81,5 @@ export default class SendAbstract extends React.Component<Props> {
     )
   }
 }
+
+export default injectIntl(SendAbstract)

@@ -118,56 +118,59 @@ export default class ContactsPanel extends React.Component<Props, State> {
     )
   }
 
-  renderContact = (address: string, name: string, i: number) => (
-    <div
-      key={`contact${name}${i}`}
-      className={classNames(styles.contact, {
-        [styles.oddNumberedRow]: i % 2 === 0,
-      })}
-    >
-      <div className={styles.name}>{name}</div>
-      <div className={styles.address}>
-        <span>{address}</span>
-        <CopyToClipboard
-          className={styles.copy}
-          text={address}
-          tooltip="Copy Public Address"
-        />
-      </div>
-      <div className={styles.actions}>
-        <Button
-          className={styles.editButton}
-          renderIcon={EditIcon}
-          onClick={() => this.handleEdit(name)}
-        >
-          <FormattedMessage id="manageWalletsEdit" />
-        </Button>
-        <Button
-          className={styles.deleteButton}
-          renderIcon={DeleteIcon}
-          onClick={() => this.handleDelete(name)}
-        >
-          <FormattedMessage id="deleteLabel" />
-        </Button>
-        <Address address={address} asWrapper>
-          <Button className={styles.infoButton} renderIcon={InfoIcon}>
-            <FormattedMessage id="sidebarActivity" />
+  renderContact = (address: string, name: string, i: number) => {
+    const { intl } = this.props
+    return (
+      <div
+        key={`contact${name}${i}`}
+        className={classNames(styles.contact, {
+          [styles.oddNumberedRow]: i % 2 === 0,
+        })}
+      >
+        <div className={styles.name}>{name}</div>
+        <div className={styles.address}>
+          <span>{address}</span>
+          <CopyToClipboard
+            className={styles.copy}
+            text={address}
+            tooltip={intl.formatMessage({ id: 'copyAddressTooltip' })}
+          />
+        </div>
+        <div className={styles.actions}>
+          <Button
+            className={styles.editButton}
+            renderIcon={EditIcon}
+            onClick={() => this.handleEdit(name)}
+          >
+            <FormattedMessage id="manageWalletsEdit" />
           </Button>
-        </Address>
-        <Link
-          to={{
-            pathname: ROUTES.SEND,
-            state: { address },
-          }}
-          className={styles.settingsDonations}
-        >
-          <Button className={styles.sendButton} renderIcon={SendIcon}>
-            <FormattedMessage id="sidebarSend" />
+          <Button
+            className={styles.deleteButton}
+            renderIcon={DeleteIcon}
+            onClick={() => this.handleDelete(name)}
+          >
+            <FormattedMessage id="deleteLabel" />
           </Button>
-        </Link>
+          <Address address={address} asWrapper>
+            <Button className={styles.infoButton} renderIcon={InfoIcon}>
+              <FormattedMessage id="sidebarActivity" />
+            </Button>
+          </Address>
+          <Link
+            to={{
+              pathname: ROUTES.SEND,
+              state: { address },
+            }}
+            className={styles.settingsDonations}
+          >
+            <Button className={styles.sendButton} renderIcon={SendIcon}>
+              <FormattedMessage id="sidebarSend" />
+            </Button>
+          </Link>
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 
   handleSort = (option: SelectOption) => {
     this.setState({ sorting: option })
