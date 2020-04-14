@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
 import { withData } from 'spunky'
+import { injectIntl } from 'react-intl'
 
 import Claim from './Claim'
 import claimsActions from '../../actions/claimsActions'
@@ -27,4 +28,5 @@ export default compose(
   ),
   withAuthData(),
   withData(claimsActions, mapClaimsDataToProps),
+  injectIntl,
 )(Claim)

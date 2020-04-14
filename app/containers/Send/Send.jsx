@@ -2,7 +2,7 @@
 import React from 'react'
 import { uniqueId, get } from 'lodash-es'
 import { wallet } from '@cityofzion/neon-js'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, IntlShape } from 'react-intl'
 
 import {
   toNumber,
@@ -39,6 +39,7 @@ type Props = {
   isWatchOnly?: boolean,
   showGeneratedTransactionModal: Object => void,
   showImportModal: (props: Object) => void,
+  intl: IntlShape,
 }
 
 type State = {
@@ -281,7 +282,7 @@ export default class Send extends React.Component<Props, State> {
   }
 
   validateRowAmounts = (rows: Array<any>) => {
-    const { sendableAssets } = this.props
+    const { sendableAssets, intl } = this.props
 
     let validAmounts = true
 
@@ -299,9 +300,13 @@ export default class Send extends React.Component<Props, State> {
         ) {
           const { errors } = this.state.sendRowDetails[index]
 
-          errors.amount = `You do not have enough balance to send ${
-            accum[currRow.asset]
-          } ${currRow.asset}.`
+          const error = intl.formatMessage(
+            { id: 'errors.send.balance' },
+            { total: accum[currRow.asset], asset: currRow.asset },
+          )
+
+          errors.amount = error
+
           this.updateRowField(index, 'errors', errors)
           validAmounts = false
         }
@@ -382,28 +387,34 @@ export default class Send extends React.Component<Props, State> {
     index: number,
   ) => {
     const { errors } = this.state.sendRowDetails[index]
-    const { tokens, networkId } = this.props
+    const { tokens, networkId, intl } = this.props
 
     const amountNum = Number(amount)
 
     if (typeof amountNum !== 'number') {
-      errors.amount = 'Amount must be a number.'
+      errors.amount = intl.formatMessage({ id: 'errors.send.number' })
     }
 
     if (asset === 'NEO' && !toBigNumber(amountNum).isInteger()) {
-      errors.amount = 'You cannot send fractional amounts of NEO.'
+      errors.amount = intl.formatMessage({ id: 'errors.send.fraction' })
     }
 
     if (amountNum < 0) {
-      errors.amount = `You cannot send negative amounts of ${asset}.`
+      errors.amount = intl.formatMessage(
+        { id: 'errors.send.negative' },
+        { asset },
+      )
     }
 
     if (amountNum === 0) {
-      errors.amount = `Can not send 0 ${asset}.`
+      errors.amount = intl.formatMessage({ id: 'errors.send.zero' }, { asset })
     }
 
     if (amountNum > max) {
-      errors.amount = `You do not have enough balance to send ${amount} ${asset}.`
+      errors.amount = intl.formatMessage(
+        { id: 'errors.send.balance' },
+        { asset, total: amount },
+      )
     }
 
     if (asset !== 'NEO' && asset !== 'GAS') {
@@ -423,11 +434,14 @@ export default class Send extends React.Component<Props, State> {
         foundToken &&
         decimalPlaces > toNumber(get(foundToken, 'decimals', 8))
       ) {
-        errors.amount = `You can only send ${asset} up to ${get(
-          foundToken,
-          'decimals',
-          8,
-        )} decimals.`
+        const decimalError = intl.formatMessage(
+          { id: 'errors.send.decimal' },
+          {
+            asset,
+            decimalCount: get(foundToken, 'decimals', 8),
+          },
+        )
+        errors.amount = decimalError
       }
     }
 
@@ -439,16 +453,16 @@ export default class Send extends React.Component<Props, State> {
   }
 
   validateAddress = async (formAddress: string, index: number) => {
+    const { intl } = this.props
     const { errors } = this.state.sendRowDetails[index]
 
     if (!wallet.isAddress(formAddress)) {
-      errors.address = 'You need to specify a valid NEO address.'
+      errors.address = intl.formatMessage({ id: 'errors.send.invalidAddress' })
     }
 
     const blackListedAddress = await isBlacklisted(formAddress)
     if (blackListedAddress) {
-      errors.address =
-        'Address is blacklisted. This is a known phishing address.'
+      errors.address = intl.formatMessage({ id: 'errors.send.blackListed' })
     }
 
     if (errors.address) {

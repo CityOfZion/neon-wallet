@@ -88,7 +88,61 @@ const MISCELLANEOUS = {
     'Deposit assets <b> compatible  with the NEO blockchain </b> using your address:',
   copyAddressTooltip: 'نسخ عنوان المحفظة',
   walletQrCodes: 'رموز QR المحفظة',
+
+  // TODO: implement all
+  noClaimableGas: 'العنوان لا يوجد لديه غاز يمكن المطالبة به',
+  claimTimeDisclaimer: 'يمكنك المطالبة بالغاز مرة كل 5 دقائق',
+  claimUnavailableInWatch: 'مطالبات GAS غير متاحة في وضع المشاهدة',
+  takeMeBack: 'اعدني',
+
+  // TODO: also update placeholders
+  splitKeyWalletInstructions:
+    'يسمح خيار استيراد المفتاح المقسم للمستخدمين بإنشاء حساب NEO جديد من خلال الجمع بين المفتاح الخاص لحساب موجود ومفتاح خاص منفصل.',
+  splitKeyWalletNamePlaceholder: 'أدخل اسم محفظة المفاتيح المقسمة الجديدة ...',
+  chooseAccount: 'اختر حسابًا موجودًا',
+  nextStep: 'الخطوة التالية',
+  previousStep: 'خطوة سابقة',
+  privateKey: 'مفتاح سري',
 }
+
+const ERRORS = {
+  'errors.contact.nameNull': 'لا يمكن أن يكون الاسم فارغًا.',
+  'errors.contact.nameLength': 'الاسم طويل جدا.',
+  'errors.contact.nameDupe': 'لديك بالفعل حساب محفوظ بهذا الاسم.',
+  'errors.contact.invalidAddress': 'العنوان غير صالح.',
+  'errors.contact.contactExists': 'لديك بالفعل اتصال بهذا العنوان.',
+
+  'errors.password.length': `يجب أن تحتوي عبارة المرور على 4 أحرف على الأقل`,
+  'errors.password.match': 'يجب أن تتطابق عبارات المرور',
+  'errors.request.fractional': `لا يمكنك طلب كسور {asset}.`,
+  'errors.request.validDecimals': `يمكنك فقط طلب {asset} حتى {validDecimals، number} عشرية.`,
+  'errors.request.max': `You cannot request more than 100,000,000 {asset}.`,
+  'errors.request.min': `You cannot request 0 {asset}.`,
+  'errors.network.general': 'وجه الفتاة! هناك خطأ ما.',
+  'errors.encrypt.valid': 'المفتاح الخاص غير صالح',
+
+  'errors.send.network': 'حدث خطأ في الشبكة',
+  'errors.send.balance': `ليس لديك رصيد كافٍ لإرسال {total} {asset}.`,
+  'errors.send.number': 'يجب أن يكون المبلغ رقمًا.',
+  'errors.send.fraction': 'لا يمكنك إرسال كميات قليلة من NEO.',
+  'errors.send.negative': `لا يمكنك إرسال مبالغ سلبية لـ {asset}.`,
+  'errors.send.zero': `Can not send 0 {asset}.`,
+  'errors.send.decimal': `يمكنك فقط إرسال {asset} حتى {decimalCount, number} عشرية.`,
+  'errors.send.invalidAddress': 'تحتاج إلى تحديد عنوان NEO صالح.',
+  'errors.send.blackListed':
+    'تم إدراج العنوان في القائمة السوداء. هذا عنوان تصيد معروف.',
+}
+
+const NOTIFICATIONS = {
+  'notifications.success.receivedBlockchainInfo':
+    'تلقي أحدث معلومات blockchain.',
+  'notifications.success.accountSaved': 'تم حفظ الحساب!',
+  'notifications.success.updatedWalletName': 'تم تحديث اسم المحفظة بنجاح.',
+  'notificiations.failure.blockchainInfoFailure':
+    'فشل في استعادة معلومات blockchain.',
+}
+
+// end TODO
 
 const AUTH = {
   authLogin: 'تسجيل الدخول',
@@ -332,4 +386,6 @@ export default {
   ...ENCRYPT_KEY,
   ...TOKEN_SALE,
   ...MISCELLANEOUS,
+  ...ERRORS,
+  ...NOTIFICATIONS,
 }

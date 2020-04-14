@@ -84,6 +84,51 @@ const MISCELLANEOUS = {
   depositAssets: '使用您的地址存款与NEO区块链兼容的资产:',
   copyAddressTooltip: '复制钱包地址',
   walletQrCodes: '钱包QR码',
+  // TODO: implement all
+  noClaimableGas: '地址没有可声明的GAS',
+  claimTimeDisclaimer: '您可以每5分钟申请一次GAS',
+  claimUnavailableInWatch: 'GAS声明在“监视”模式下不可用',
+  takeMeBack: '带我回去',
+  splitKeyWalletInstructions:
+    '拆分密钥导入选项允许用户通过将现有帐户的私钥与单独的私钥组合来创建新的NEO帐户.',
+  splitKeyWalletNamePlaceholder: '输入新的拆分密钥钱包名称...',
+  chooseAccount: '选择一个现有帐户',
+  nextStep: '下一步',
+  previousStep: '前一步',
+  privateKey: '私钥',
+}
+
+const ERRORS = {
+  'errors.contact.nameNull': '名称不能为空.',
+  'errors.contact.nameLength': '名字太长.',
+  'errors.contact.nameDupe': '您已经用该名称保存了一个帐户.',
+  'errors.contact.invalidAddress': '地址无效.',
+  'errors.contact.contactExists': '您已经有该地址的联系人.',
+  'errors.password.length': `密码短语必须至少包含{PASS_MIN_LENGTH，number}个字符`,
+  'errors.password.match': '密码必须匹配',
+  'errors.request.fractional': `您可以请求分数{asset}.`,
+  'errors.request.validDecimals': `您最多只能请求{asset}个{validDecimals，number}个小数.`,
+  'errors.request.max': `您所要求的{asset}不能超过100,000,000.`,
+  'errors.request.min': `您不能请求0 {asset}.`,
+  'errors.network.general': '糟糕！出问题了...',
+  'errors.encrypt.valid': '私钥无效.',
+
+  'errors.send.balance': `您的余额不足，无法发送{total} {asset}.`,
+  'errors.send.network': '发生网络错误',
+  'errors.send.number': '金额必须是数字.',
+  'errors.send.fraction': '您不能发送少量的NEO.',
+  'errors.send.negative': `您不能发送负数的{asset}.`,
+  'errors.send.zero': `无法发送0 {asset}.`,
+  'errors.send.decimal': `您最多只能发送{asset}个{decimalCount，number}个小数.`,
+  'errors.send.invalidAddress': '您需要指定一个有效的NEO地址.',
+  'errors.send.blackListed': '地址已列入黑名单。这是已知的网络钓鱼地址。',
+}
+
+const NOTIFICATIONS = {
+  'notifications.success.receivedBlockchainInfo': '收到最新的区块链信息。',
+  'notifications.success.accountSaved': '帐户已保存!',
+  'notifications.success.updatedWalletName': '成功更新了钱包名称.',
+  'notificiations.failure.blockchainInfoFailure': '检索区块链信息失败。',
 }
 
 const AUTH = {
@@ -119,8 +164,8 @@ const WALLET_CREATION = {
   privateKeyLabel: '私钥',
   encryptedKeyLabel: '密钥',
   addressLabel: '账户地址',
-  splitKeyLabel: 'SPLIT KEY',
-  recoverWalletLabel: 'RECOVER WALLET',
+  splitKeyLabel: '分割键',
+  recoverWalletLabel: '复苏',
   print: '打印',
   generateQrCodes: '生成二维码',
   copyCodeImage: '复制图片',
@@ -157,23 +202,23 @@ const SIDEBAR = {
 }
 
 const MANAGE_WALLETS = {
-  manageWalletsLabel: '월렛 관리',
-  manageWalletsImport: '불러오기',
-  manageWalletsCreate: '생성',
-  manageWalletsEdit: '수정',
-  manageWalletsEditWallet: '월렛 수정',
-  manageWalletsEditWalletInstructions: '디테일 수정',
-  manageWalletsEditWalletNameLabel: '월렛 이름',
-  manageWalletsEditWalletNamePlaceholder: '월렛 이름',
-  manageWalletsEditWalletAddressLabel: '월렛 주소',
-  manageWalletsEditWalletSave: '변경사항 저장',
+  manageWalletsLabel: '管理钱包',
+  manageWalletsImport: '进口',
+  manageWalletsCreate: '创建',
+  manageWalletsEdit: '编辑',
+  manageWalletsEditWallet: '编辑钱包',
+  manageWalletsEditWalletInstructions: '修改详细资料',
+  manageWalletsEditWalletNameLabel: '钱包名称',
+  manageWalletsEditWalletNamePlaceholder: '钱包名称',
+  manageWalletsEditWalletAddressLabel: '钱包地址',
+  manageWalletsEditWalletSave: '保存更改',
 }
 
 const ACTIVITY = {
-  activityAddAddress: '추가',
-  activityViewTx: '보기',
-  activityPageLabel: '활동',
-  activityExport: '내보내기',
+  activityAddAddress: '加',
+  activityViewTx: '视图',
+  activityPageLabel: '所有活动',
+  activityExport: '出口',
 }
 
 const RECEIVE = {
@@ -324,4 +369,6 @@ export default {
   ...ENCRYPT_KEY,
   ...TOKEN_SALE,
   ...MISCELLANEOUS,
+  ...ERRORS,
+  ...NOTIFICATIONS,
 }

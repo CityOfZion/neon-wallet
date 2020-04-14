@@ -202,10 +202,16 @@ class CreateImportWalletForm extends React.Component<Props, State> {
 
   validatePassphrase = () => {
     const { passphrase: p } = this.state
+    const { intl } = this.props
     // validate min char count
     const errorMessage =
       p && p.length < PASS_MIN_LENGTH
-        ? `Passphrase must contain at least ${PASS_MIN_LENGTH} characters`
+        ? intl.formatMessage(
+            {
+              id: 'errors.password.length',
+            },
+            { PASS_MIN_LENGTH },
+          )
         : ''
     this.setState(
       {
@@ -218,9 +224,12 @@ class CreateImportWalletForm extends React.Component<Props, State> {
 
   validatePassphrase2 = () => {
     const { passphrase: p1, passphrase2: p2, passphraseValid } = this.state
+    const { intl } = this.props
     // validate phrases match
     const errorMessage =
-      p1 && p2 && p1 !== p2 && passphraseValid ? 'Passphrases must match' : ''
+      p1 && p2 && p1 !== p2 && passphraseValid
+        ? intl.formatMessage({ id: 'errors.password.match' })
+        : ''
     this.setState({
       passphrase2Error: errorMessage,
       passphrase2Valid: !!(p2 && !errorMessage),

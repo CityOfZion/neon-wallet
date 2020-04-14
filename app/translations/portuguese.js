@@ -91,6 +91,60 @@ const MISCELLANEOUS = {
     'Deposite ativos <b> compatíveis com a blockchain NEO </b> usando seu endereço:',
   copyAddressTooltip: 'Copiar endereço da carteira',
   walletQrCodes: 'Códigos QR da carteira',
+
+  noClaimableGas: 'O endereço não possui GAS claimable',
+  claimTimeDisclaimer: 'Você pode reivindicar o GAS uma vez a cada 5 minutos',
+  claimUnavailableInWatch:
+    'As reivindicações de GAS não estão disponíveis neste modo',
+  takeMeBack: 'Me leve de volta',
+
+  splitKeyWalletInstructions:
+    'A opção de importação de chave dividida permite que os usuários criem uma nova conta NEO combinando a chave privada de uma conta existente com uma chave privada separada.',
+  splitKeyWalletNamePlaceholder:
+    'Digite seu novo nome de carteira com chave de divisão...',
+  chooseAccount: 'Escolha uma conta existente',
+  nextStep: 'Próxima Etapa',
+  previousStep: 'Passo anterior',
+  privateKey: 'Chave privada',
+}
+
+const ERRORS = {
+  'errors.contact.nameNull': 'O nome não pode ser nulo.',
+  'errors.contact.nameLength': 'O nome é muito longo.',
+  'errors.contact.nameDupe': 'Você já tem uma conta salva com esse nome.',
+  'errors.contact.invalidAddress': 'O endereço não é válido.',
+  'errors.contact.contactExists': 'Você já tem um contato com esse endereço.',
+  'errors.password.length': `A senha deve conter pelo menos {PASS_MIN_LENGTH, number} caracteres`,
+  'errors.password.match': 'As senhas devem corresponder',
+  'errors.request.fractional': `Você não pode solicitar {asset} fracionário.`,
+  'errors.request.validDecimals': `Você pode solicitar apenas {asset} até {validDecimals, number} decimais.`,
+  'errors.request.max': `Você não pode solicitar mais de 100.000.000 {asset}.`,
+  'errors.request.min': `Você não pode solicitar 0 {asset}.`,
+  'errors.network.general': 'Opa! Algo deu errado.',
+  'errors.encrypt.valid': 'A chave privada não é válida',
+
+  'errors.send.network': 'Ocorreu um erro de rede.',
+  'errors.send.balance': `Você não tem saldo suficiente para enviar {total} {asset}.`,
+  'errors.send.number': 'O valor deve ser um número.',
+  'errors.send.fraction':
+    'Você não pode enviar quantidades fracionárias de NEO.',
+  'errors.send.negative': `Você não pode enviar valores negativos de {asset}.`,
+  'errors.send.zero': `Não é possível enviar 0 {asset}.`,
+  'errors.send.decimal': `Você pode enviar apenas {asset} até {decimalCount, number} decimais.`,
+  'errors.send.invalidAddress':
+    'Você precisa especificar um endereço NEO válido.',
+  'errors.send.blackListed':
+    'O endereço está na lista negra. Este é um endereço de phishing conhecido.',
+}
+
+const NOTIFICATIONS = {
+  'notifications.success.receivedBlockchainInfo':
+    'Recebeu as informações mais recentes sobre blockchain.',
+  'notifications.success.accountSaved': 'Conta salva!',
+  'notifications.success.updatedWalletName':
+    'Nome do portfólio atualizado com sucesso.',
+  'notificiations.failure.blockchainInfoFailure':
+    'Falha ao recuperar as informações da blockchain.',
 }
 
 const AUTH = {
@@ -173,7 +227,7 @@ const MANAGE_WALLETS = {
   manageWalletsEditWalletNameLabel: 'NOME DA WALLET',
   manageWalletsEditWalletNamePlaceholder: 'Nome da Wallet',
   manageWalletsEditWalletAddressLabel: 'ENDEREÇO DA WALLET',
-  manageWalletsEditWalletSave: 'SSalvar Alterações',
+  manageWalletsEditWalletSave: 'Salvar Alterações',
 }
 
 const ACTIVITY = {
@@ -341,4 +395,6 @@ export default {
   ...ENCRYPT_KEY,
   ...TOKEN_SALE,
   ...MISCELLANEOUS,
+  ...ERRORS,
+  ...NOTIFICATIONS,
 }

@@ -55,7 +55,9 @@ export default compose(
   withFailureNotification(updateLabelActions),
   withSuccessNotification(
     updateLabelActions,
-    'Succesfully updated wallet name.',
+    'notifications.success.updatedWalletName',
+    {},
+    true,
   ),
   injectIntl,
 )(EditWallet)

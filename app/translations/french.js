@@ -86,7 +86,57 @@ const MISCELLANEOUS = {
     'Déposez des actifs <b> compatibles avec la blockchain NEO </b> en utilisant votre adresse:',
   copyAddressTooltip: `Copier l'adresse du portefeuille`,
   walletQrCodes: 'Codes QR pour portefeuille',
+  noClaimableGas: `L'adresse n'a pas de GAS réclamable`,
+  claimTimeDisclaimer:
+    'Vous pouvez réclamer le GAS une fois toutes les 5 minutes',
+  claimUnavailableInWatch: `Les réclamations GAS ne sont pas disponibles en mode montre`,
+  takeMeBack: 'Reprends moi',
+  splitKeyWalletInstructions: `L'option d'importation Split Key permet aux utilisateurs de créer un nouveau compte NEO en combinant la clé privée d'un compte existant avec une clé privée distincte.`,
+  splitKeyWalletNamePlaceholder:
+    'Saisissez le nouveau nom de votre portefeuille à clé partagée...',
+  chooseAccount: 'Choisissez un compte existant',
+  nextStep: `L'étape suivante`,
+  previousStep: `Étape précédente`,
+  privateKey: 'Clé privée',
 }
+
+const ERRORS = {
+  'errors.contact.nameNull': 'Le nom ne peut pas être nul.',
+  'errors.contact.nameLength': 'Le nom est trop long.',
+  'errors.contact.nameDupe': 'Vous avez déjà un compte enregistré avec ce nom.',
+  'errors.contact.invalidAddress': `L'adresse n'est pas valide.`,
+  'errors.contact.contactExists':
+    'Vous avez déjà un contact avec cette adresse.',
+  'errors.password.length': `La phrase secrète doit contenir au moins {PASS_MIN_LENGTH, number} caractères`,
+  'errors.password.match': 'Les mots de passe doivent correspondre',
+  'errors.request.fractional': `Vous ne pouvez pas demander un {asset} fractionné.`,
+  'errors.request.validDecimals': `Vous ne pouvez demander que {asset} jusqu'à {validDecimals, number} décimales.`,
+  'errors.request.max': `Vous ne pouvez pas demander plus de 100 000 000 {élément}.`,
+  'errors.request.min': `Vous ne pouvez pas demander 0 {asset}.`,
+  'errors.network.general': 'Oops! Quelque chose a mal tourné.',
+  'errors.encrypt.valid': `La clé privée n'est pas valide`,
+
+  'errors.send.network': `Une erreur réseau s'est produite`,
+  'errors.send.balance': `Vous n'avez pas suffisamment de solde pour envoyer {total} {asset}.`,
+  'errors.send.number': 'Le montant doit être un nombre.',
+  'errors.send.fraction': 'Vous ne pouvez pas envoyer de fractions de NEO.',
+  'errors.send.negative': `Vous ne pouvez pas envoyer de montants négatifs de {asset}.`,
+  'errors.send.zero': `Impossible d'envoyer 0 {asset}.`,
+  'errors.send.decimal': `Vous ne pouvez envoyer que {asset} jusqu'à {decimalCount, number} décimales.`,
+  'errors.send.invalidAddress': 'Vous devez spécifier une adresse NEO valide.',
+  'errors.send.blackListed': `L'adresse est sur liste noire. Il s'agit d'une adresse de phishing connue.`,
+}
+
+const NOTIFICATIONS = {
+  'notifications.success.receivedBlockchainInfo':
+    'Reçu les dernières informations sur la blockchain.',
+  'notifications.success.accountSaved': 'Compte enregistré!',
+  'notifications.success.updatedWalletName':
+    'Nom du portefeuille mis à jour avec succès.',
+  'notificiations.failure.blockchainInfoFailure':
+    'Échec de la récupération des informations de la chaîne de blocs.',
+}
+
 const AUTH = {
   authLogin: 'Connexion',
   authSaved: 'SAUVÉ',
@@ -335,4 +385,6 @@ export default {
   ...ENCRYPT_KEY,
   ...TOKEN_SALE,
   ...MISCELLANEOUS,
+  ...ERRORS,
+  ...NOTIFICATIONS,
 }

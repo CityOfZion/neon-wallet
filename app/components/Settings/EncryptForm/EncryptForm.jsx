@@ -8,6 +8,7 @@ import TextInput from '../../Inputs/TextInput'
 import PasswordInput from '../../Inputs/PasswordInput'
 import AddIcon from '../../../assets/icons/add.svg'
 import styles from './EncryptForm.scss'
+import { MIN_PASSPHRASE_LEN } from '../../../core/wallet'
 
 type Props = {
   submitLabel: string,
@@ -112,22 +113,32 @@ export default class EncryptForm extends React.Component<Props, State> {
   }
 
   validatePrivateKey = (privateKey: string) => {
-    const { isWIF } = this.props
+    const { isWIF, intl } = this.props
     if (privateKey && !isWIF(privateKey)) {
-      this.setState({ privateKeyError: 'The private key is not valid' })
+      this.setState({
+        privateKeyError: intl.formatMessage({ id: 'errors.encrypt.valid' }),
+      })
       return false
     }
     return true
   }
 
   validatePassphrase = (passphrase: string, confirmPassphrase: string) => {
-    const { validatePassphraseLength } = this.props
+    const { validatePassphraseLength, intl } = this.props
     if (passphrase !== confirmPassphrase) {
-      this.setState({ passphraseError: 'Passphrases do not match' })
+      this.setState({
+        passphraseError: intl.formatMessage({ id: '  errors.password.match' }),
+      })
       return false
     }
+
     if (!validatePassphraseLength(passphrase)) {
-      this.setState({ passphraseError: 'Please choose a longer passphrase' })
+      this.setState({
+        passphraseError: intl.formatMessage(
+          { id: 'errors.password.length' },
+          { MIN_PASSPHRASE_LEN },
+        ),
+      })
       return false
     }
     return true

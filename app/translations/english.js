@@ -91,7 +91,58 @@ const MISCELLANEOUS = {
     'Deposit assets <b> compatible  with the NEO blockchain </b> using your address:',
   copyAddressTooltip: 'Copy Wallet Address',
   walletQrCodes: 'Wallet QR Codes',
-  updatedBlockchainInfo: 'THIS IS A TEST!',
+
+  noClaimableGas: 'Address has no claimable GAS',
+  claimTimeDisclaimer: 'You can claim GAS once every 5 minutes',
+  claimUnavailableInWatch: 'GAS claims are unavailable in Watch mode',
+  takeMeBack: 'Take me back',
+
+  splitKeyWalletInstructions:
+    'The Split Key import option allows users to create a new NEO account by combining the private key of an existing account with a separate private key.',
+  splitKeyWalletNamePlaceholder: 'Enter your new split key wallet name...',
+  chooseAccount: 'Choose an Existing Account',
+  nextStep: 'Next Step',
+  previousStep: 'Previous Step',
+  privateKey: 'Private Key',
+}
+
+const ERRORS = {
+  'errors.contact.nameNull': "Name can't be null.",
+  'errors.contact.nameLength': 'Name is too long.',
+  'errors.contact.nameDupe':
+    'You already have an account saved with that name.',
+  'errors.contact.invalidAddress': 'Address is not valid.',
+  'errors.contact.contactExists':
+    'You already have a contact with that address.',
+
+  'errors.password.length': `Passphrase must contain at least {PASS_MIN_LENGTH, number} characters.`,
+  'errors.password.match': 'Passphrases must match.',
+  'errors.request.fractional': `You canot request fractional {asset}.`,
+  'errors.request.validDecimals': `You can only request {asset} up to {validDecimals, number} decimals.`,
+  'errors.request.max': `You cannot request more than 100,000,000 {asset}.`,
+  'errors.request.min': `You cannot request 0 {asset}.`,
+  'errors.network.general': 'Oops! Something went wrong...',
+  'errors.encrypt.valid': 'The private key is not valid.',
+
+  'errors.send.balance': `You do not have enough balance to send {total} {asset}.`,
+  'errors.send.network': 'A network error has occurred',
+  'errors.send.number': 'Amount must be a number.',
+  'errors.send.fraction': 'You cannot send fractional amounts of NEO.',
+  'errors.send.negative': `You cannot send negative amounts of {asset}.`,
+  'errors.send.zero': `Can not send 0 {asset}.`,
+  'errors.send.decimal': `You can only send {asset} up to {decimalCount, number} decimals.`,
+  'errors.send.invalidAddress': 'You need to specify a valid NEO address.',
+  'errors.send.blackListed':
+    'Address is blacklisted. This is a known phishing address.',
+}
+
+const NOTIFICATIONS = {
+  'notifications.success.receivedBlockchainInfo':
+    'Received latest blockchain information.',
+  'notifications.success.accountSaved': 'Account saved!',
+  'notifications.success.updatedWalletName': 'Succesfully updated wallet name.',
+  'notificiations.failure.blockchainInfoFailure':
+    'Failed to retrieve blockchain information.',
 }
 
 const AUTH = {
@@ -170,7 +221,7 @@ const MANAGE_WALLETS = {
   manageWalletsCreate: 'Create',
   manageWalletsEdit: 'Edit',
   manageWalletsEditWallet: 'Edit Wallet',
-  manageWalletsEditWalletInstructions: 'Moddify Details',
+  manageWalletsEditWalletInstructions: 'Modify Details',
   manageWalletsEditWalletNameLabel: 'WALLET NAME',
   manageWalletsEditWalletNamePlaceholder: 'Wallet Name',
   manageWalletsEditWalletAddressLabel: 'WALLET ADDRESS',
@@ -340,4 +391,6 @@ export default {
   ...ENCRYPT_KEY,
   ...TOKEN_SALE,
   ...MISCELLANEOUS,
+  ...ERRORS,
+  ...NOTIFICATIONS,
 }

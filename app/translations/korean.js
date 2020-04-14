@@ -73,7 +73,62 @@ const MISCELLANEOUS = {
     '귀하의 주소를 사용하여 <b> NEO 블록 체인과 호환되는 </ b> 자산을 입금하십시오:',
   copyAddressTooltip: '월렛 주소 복사',
   walletQrCodes: '월렛 QR 코드',
+
+  noClaimableGas: '주소에 청구 가능한 가스가 없습니다',
+  claimTimeDisclaimer: '5 분마다 GAS를 청구 할 수 있습니다.',
+  claimUnavailableInWatch:
+    '시계 모드에서는 GAS 소유권 주장을 사용할 수 없습니다.',
+  takeMeBack: '다시 데려다',
+  splitKeyWalletInstructions:
+    '스플릿 키 가져 오기 옵션을 사용하면 기존 계정의 개인 키와 별도의 개인 키를 결합하여 새 NEO 계정을 만들 수 있습니다.',
+  splitKeyWalletNamePlaceholder: '새로운 분할 키 지갑 이름을 입력하십시오 ...',
+  chooseAccount: '기존 계정을 선택하십시오',
+  nextStep: '다음 단계',
+  previousStep: '이전 단계',
+  privateKey: '개인 키',
 }
+
+const ERRORS = {
+  'errors.contact.nameNull': '이름은 null 일 수 없습니다.',
+  'errors.contact.nameLength': '이름이 너무 깁니다.',
+  'errors.contact.nameDupe': '해당 이름으로 저장된 계정이 이미 있습니다.',
+  'errors.contact.invalidAddress': '주소가 유효하지 않습니다.',
+  'errors.contact.contactExists': '해당 주소로 이미 연락하고 있습니다.',
+
+  'errors.password.length':
+    '암호는 {PASS_MIN_LENGTH, number} 자 이상이어야합니다.',
+  'errors.password.match': '암호는 일치해야합니다',
+  'errors.request.fractional': `분수 {asset}를 요청할 수 없습니다.`,
+  'errors.request.validDecimals':
+    '{asset}는 소수점 이하 {validDecimals, number} 자리까지만 요청할 수 있습니다',
+  'errors.request.max': `100,000,000 개 이상의 {asset}을 요청할 수 없습니다.`,
+  'errors.request.min': `0 {asset}을 (를) 요청할 수 없습니다.`,
+  'errors.network.general': '죄송합니다! 문제가 발생했습니다.',
+  'errors.encrypt.valid': '개인 키가 유효하지 않습니다',
+
+  'errors.send.balance': `{total} {asset}을 (를) 보낼 충분한 잔고가 없습니다.`,
+  'errors.send.network': '네트워크 오류가 발생했습니다.',
+  'errors.send.number': '금액은 숫자 여야합니다.',
+  'errors.send.fraction': '소수의 NEO를 보낼 수 없습니다.',
+  'errors.send.negative': `음수의 {asset}을 보낼 수 없습니다.`,
+  'errors.send.zero': `0 {asset}을 보낼 수 없습니다.`,
+  'errors.send.decimal': `{asset}은 최대 {decimalCount, number} 소수까지만 보낼 수 있습니다.`,
+  'errors.send.invalidAddress': '유효한 NEO 주소를 지정해야합니다.',
+  'errors.send.blackListed':
+    '주소가 블랙리스트에 있습니다. 이것은 알려진 피싱 주소입니다.',
+}
+
+const NOTIFICATIONS = {
+  'notifications.success.receivedBlockchainInfo':
+    '최신 블록 체인 정보를 받았습니다.',
+  'notifications.success.accountSaved': '계정이 저장되었습니다!',
+  'notifications.success.updatedWalletName':
+    '지갑 이름이 성공적으로 업데이트되었습니다.',
+  'notificiations.failure.blockchainInfoFailure':
+    '블록 체인 정보를 검색하지 못했습니다.',
+}
+
+// end TODO
 
 const AUTH = {
   authLogin: '로그인',
@@ -325,4 +380,6 @@ export default {
   ...ENCRYPT_KEY,
   ...TOKEN_SALE,
   ...MISCELLANEOUS,
+  ...ERRORS,
+  ...NOTIFICATIONS,
 }

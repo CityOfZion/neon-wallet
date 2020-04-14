@@ -41,7 +41,12 @@ export default compose(
     mapDispatchToProps,
   ),
   withActions(saveAccountActions, mapAccountActionsToProps),
-  withSuccessNotification(saveAccountActions, 'Account saved!'),
+  withSuccessNotification(
+    saveAccountActions,
+    'notifications.success.accountSaved',
+    {},
+    true,
+  ),
   withFailureNotification(
     saveAccountActions,
     message => `Error saving account: ${message}`,

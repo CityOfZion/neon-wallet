@@ -90,6 +90,59 @@ const MISCELLANEOUS = {
     'Hinterlegen Sie Vermögenswerte, die <b> mit der NEO-Blockchain </ b> kompatibel sind, unter Verwendung Ihrer Adresse:',
   copyAddressTooltip: 'Brieftaschenadresse kopieren',
   walletQrCodes: 'Brieftaschen-QR-Codes',
+  noClaimableGas: 'Die Adresse hat kein beanspruchbares GAS',
+  claimTimeDisclaimer: 'Sie können GAS alle 5 Minuten anfordern',
+  claimUnavailableInWatch:
+    'GAS-Ansprüche sind im Überwachungsmodus nicht verfügbar',
+  takeMeBack: 'Nimm mich zurück',
+
+  splitKeyWalletInstructions:
+    'Mit der Importoption "Geteilter Schlüssel" können Benutzer ein neues NEO-Konto erstellen, indem sie den privaten Schlüssel eines vorhandenen Kontos mit einem separaten privaten Schlüssel kombinieren.',
+  splitKeyWalletNamePlaceholder:
+    'Geben Sie Ihren neuen Namen für die Brieftasche mit geteiltem Schlüssel ein...',
+  chooseAccount: 'Wählen Sie ein bestehendes Konto',
+  nextStep: 'Nächster Schritt',
+  previousStep: 'Vorheriger Schritt',
+  privateKey: 'Privat Schlüssel',
+}
+
+const ERRORS = {
+  'errors.contact.nameNull': 'Der Name darf nicht null sein.',
+  'errors.contact.nameLength': 'Name ist zu lang.',
+  'errors.contact.nameDupe':
+    'Sie haben bereits ein Konto mit diesem Namen gespeichert.',
+  'errors.contact.invalidAddress': 'Adresse ist ungültig.',
+  'errors.contact.contactExists':
+    'Sie haben bereits einen Kontakt mit dieser Adresse.',
+  'errors.password.length': `Die Passphrase muss mindestens {PASS_MIN_LENGTH, number} Zeichen enthalten`,
+  'errors.password.match': 'Passphrasen müssen übereinstimmen',
+  'errors.request.fractional': `Sie können kein gebrochenes {asset} anfordern.`,
+  'errors.request.validDecimals': `Sie können nur {asset} bis zu {validDecimals, number} Dezimalstellen anfordern.`,
+  'errors.request.max': `Sie können nicht mehr als 100.000.000 {asset} anfordern.`,
+  'errors.request.min': `Sie können 0 {asset} nicht anfordern.`,
+  'errors.network.general': 'Hoppla! Etwas ist schief gelaufen.',
+  'errors.encrypt.valid': 'Der private Schlüssel ist ungültig',
+
+  'errors.send.network': 'Ein Netzwerkfehler ist aufgetreten',
+  'errors.send.balance': `Sie haben nicht genug Guthaben, um {total} {asset} zu senden.`,
+  'errors.send.number': 'Der Betrag muss eine Zahl sein.',
+  'errors.send.fraction': 'Sie können keine Teilbeträge von NEO senden.',
+  'errors.send.negative': `Sie können keine negativen Beträge von {asset} senden.`,
+  'errors.send.zero': `Kann 0 {asset} nicht senden.`,
+  'errors.send.decimal': `Sie können {asset} nur bis zu {decimalCount, number} Dezimalstellen senden.`,
+  'errors.send.invalidAddress': 'Sie müssen eine gültige NEO-Adresse angeben.',
+  'errors.send.blackListed':
+    'Die Adresse ist auf der schwarzen Liste. Dies ist eine bekannte Phishing-Adresse.',
+}
+
+const NOTIFICATIONS = {
+  'notifications.success.receivedBlockchainInfo':
+    'Erhalten Sie die neuesten Blockchain-Informationen.',
+  'notifications.success.accountSaved': 'Konto gespeichert!',
+  'notifications.success.updatedWalletName':
+    'Erfolgreich aktualisierter Brieftaschenname.',
+  'notificiations.failure.blockchainInfoFailure':
+    'Fehler beim Abrufen der Blockchain-Informationen.',
 }
 
 const AUTH = {
@@ -340,4 +393,6 @@ export default {
   ...ENCRYPT_KEY,
   ...TOKEN_SALE,
   ...MISCELLANEOUS,
+  ...ERRORS,
+  ...NOTIFICATIONS,
 }

@@ -4,9 +4,9 @@ import { values, omit } from 'lodash-es'
 import { withData } from 'spunky'
 import { connect, type MapStateToProps } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { injectIntl } from 'react-intl'
 
 import Send from './Send'
-
 import { sendTransaction } from '../../modules/transactions'
 import { showModal } from '../../modules/modal'
 import { getNotifications } from '../../modules/notifications'
@@ -92,10 +92,15 @@ export default compose(
   withFilteredTokensData(),
   withSuccessNotification(
     balancesActions,
-    'Received latest blockchain information.',
+    'notifications.success.receivedBlockchainInfo',
+    {},
+    true,
   ),
   withFailureNotification(
     balancesActions,
-    'Failed to retrieve blockchain information.',
+    'notificiations.failure.blockchainInfoFailure',
+    {},
+    true,
   ),
+  injectIntl,
 )(Send)

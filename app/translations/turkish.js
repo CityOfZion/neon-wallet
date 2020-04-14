@@ -88,6 +88,57 @@ const MISCELLANEOUS = {
     'Adresinizi kullanarak <b> NEO blok zinciriyle uyumlu </b> varlıkları depolayın:',
   copyAddressTooltip: 'M-cüzdan adresini kopyala',
   walletQrCodes: 'Cüzdan QR Kodları',
+
+  noClaimableGas: `Adresin iddia edilebilir GAS yok`,
+  claimTimeDisclaimer: 'GAS her 5 dakikada bir talep edebilirsiniz',
+  claimUnavailableInWatch: 'GAS talepleri İzleme modunda kullanılamaz',
+  takeMeBack: 'Beni geri al',
+
+  splitKeyWalletInstructions:
+    'Bölme Anahtarı içe aktarma seçeneği, kullanıcıların mevcut bir hesabın özel anahtarını ayrı bir özel anahtarla birleştirerek yeni bir NEO hesabı oluşturmasına olanak tanır.',
+  splitKeyWalletNamePlaceholder:
+    'Yeni bölünmüş anahtar cüzdanınızın adını girin...',
+  chooseAccount: 'Mevcut Bir Hesap Seçin',
+  nextStep: 'Sonraki adım',
+  previousStep: 'Önceki adım',
+  privateKey: 'Özel anahtar',
+}
+
+const ERRORS = {
+  'errors.contact.nameNull': 'İsim boş olamaz.',
+  'errors.contact.nameLength': 'İsim çok uzun.',
+  'errors.contact.nameDupe': 'Bu adla kaydedilmiş bir hesabınız var.',
+  'errors.contact.invalidAddress': 'Adres geçerli değil.',
+  'errors.contact.contactExists': 'Bu adresle zaten bir kişiniz var.',
+  'errors.password.length': `Parola en az {PASS_MIN_LENGTH, number} karakter içermelidir`,
+  'errors.password.match': 'Parola cümleleri eşleşmelidir',
+  'errors.request.fractional': `Kesirli {asset} isteğinde bulunamazsınız.`,
+  'errors.request.validDecimals': `En fazla {validDecimals, number} ondalık {asset} isteyebilirsiniz.`,
+  'errors.request.max': `100.000.000'dan fazla {asset} talep edemezsiniz.`,
+  'errors.request.min': `0 {asset} talep edemezsiniz.`,
+  'errors.network.general': 'Hata! Bir şeyler yanlış gitti.',
+  'errors.encrypt.valid': 'Özel anahtar geçerli değil',
+
+  'errors.send.network': 'Bir ağ hatası oluştu',
+  'errors.send.balance': `{total} {asset} göndermek için yeterli bakiyeniz yok.`,
+  'errors.send.number': 'Tutar bir sayı olmalıdır.',
+  'errors.send.fraction': 'Kesirli miktarlarda NEO gönderemezsiniz.',
+  'errors.send.negative': `Negatif miktarda {asset} gönderemezsiniz.`,
+  'errors.send.zero': `0 {asset} gönderilemiyor.`,
+  'errors.send.decimal': `En fazla {decimalCount, number} ondalık {asset} gönderebilirsiniz.`,
+  'errors.send.invalidAddress': 'Geçerli bir NEO adresi belirtmeniz gerekiyor.',
+  'errors.send.blackListed':
+    'Adres kara listeye alındı. Bu bilinen bir kimlik avı adresidir.',
+}
+
+const NOTIFICATIONS = {
+  'notifications.success.receivedBlockchainInfo':
+    'En son blockchain bilgileri alındı.',
+  'notifications.success.accountSaved': 'Hesap kaydedildi!',
+  'notifications.success.updatedWalletName':
+    'Cüzdan adı başarıyla güncellendi.',
+  'notificiations.failure.blockchainInfoFailure':
+    'Blockchain bilgileri alınamadı.',
 }
 
 const AUTH = {
@@ -331,4 +382,6 @@ export default {
   ...ENCRYPT_KEY,
   ...TOKEN_SALE,
   ...MISCELLANEOUS,
+  ...ERRORS,
+  ...NOTIFICATIONS,
 }
