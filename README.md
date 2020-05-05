@@ -41,7 +41,7 @@
 - nep9 QR support
 - Participate in NEO token sales
 - View wallet activity
-- Translation support for Arabic, Chinese, French, German, Italian, Korean, Portuguese, Turkish and Vietnamese.
+- Translation support for Arabic, Chinese, French, German, Italian, Korean, Portuguese, Russian, Turkish and Vietnamese.
 
 ## Installation
 

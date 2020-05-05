@@ -14,6 +14,7 @@ import Turkey from '../assets/flags/turkey.svg'
 import Vietnam from '../assets/flags/vietnam.svg'
 import Korea from '../assets/flags/south-korea.svg'
 import UnitedArabEmirates from '../assets/flags/united-arab-emirates.svg'
+import Russia from '../assets/flags/russia.svg'
 
 export const NEON_WALLET_RELEASE_LINK =
   'https://github.com/CityOfZion/neon-wallet/releases'
@@ -93,6 +94,11 @@ export const LANGUAGES = {
     label: 'العربية',
     value: 'ARABIC',
     renderFlag: () => <UnitedArabEmirates alt="العربية" />,
+  },
+  RUSSIAN: {
+    label: 'Русский',
+    value: 'RUSSIAN',
+    renderFlag: () => <Russia alt="Русский" />,
   },
 }
 
