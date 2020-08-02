@@ -56,9 +56,9 @@ export const LANGUAGES = {
     renderFlag: () => <China alt="中文" />,
   },
   FRENCH: {
-    label: 'Francés',
+    label: 'Français',
     value: 'FRENCH',
-    renderFlag: () => <France alt="Francés" />,
+    renderFlag: () => <France alt="Français" />,
   },
   GERMAN: {
     label: 'Deutsch',
