@@ -110,7 +110,6 @@ class DisplayWalletAccounts extends Component<Props> {
         headerContainerClassName={styles.headerIconMargin}
         renderHeaderIcon={() => <CheckIcon />}
         {...conditionalPanelProps}
-        iconColor="#F7BC33"
       >
         <div id="newWallet" className={styles.newWalletContainer}>
           <DialogueBox

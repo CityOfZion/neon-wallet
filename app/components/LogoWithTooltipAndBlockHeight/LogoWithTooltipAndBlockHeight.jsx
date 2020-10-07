@@ -21,6 +21,8 @@ class LogoWithTooltipAndBlockHeight extends React.Component<Props> {
   render() {
     const { count, theme, store } = this.props
 
+    console.log({ count })
+
     const themeBasedLogo =
       theme === 'Light' ? LightLogoWithoutText : DarkLogoWithoutText
 

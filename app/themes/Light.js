@@ -52,7 +52,7 @@ const TAB = {
 }
 
 const PANEL = {
-  '--panel-icon': '#69e27e',
+  '--panel-icon': '#4CFFB3',
   '--panel-header': '#f2f2f2',
   '--panel-header-text': '#394152',
   '--panel-background': '#fff',
@@ -104,15 +104,15 @@ const SETTINGS = {
   '--settings-item-label': '#343b4a',
   '--settings-item-icon': '#cccccc',
   '--settings-item-border-color': '#f2f2f2',
-  '--settings-link-text': '#69e27e',
-  '--settings-select-value-text': '#69e27e',
+  '--settings-link-text': '#4CFFB3',
+  '--settings-select-value-text': '#4CFFB3',
   '--settings-donation-text': '#5c677f',
   '--settings-spacer': 'rgba(170, 178, 189, 0.3)',
 }
 
 const NODE_SELECT = {
   '--node-select-header-background': '#f2f2f2',
-  '--node-select-icon-color': '#69e27e',
+  '--node-select-icon-color': '#4CFFB3',
   '--node-select-automatic-select-button-text': '#5c677f',
   '--node-select-refresh-icon': '#394152',
   '--node-select-node-count': '#5c677f',

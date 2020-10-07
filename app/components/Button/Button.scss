@@ -19,7 +19,7 @@
   flex-direction: row;
   align-items: center;
   font-size: 14px;
-  font-weight: 100;
+  font-weight: 500;
   padding: 12px;
   white-space: nowrap;
   transition: opacity 0.2s;
@@ -27,22 +27,30 @@
 
   &[disabled] {
     opacity: 0.6;
-    background: var(--button-disabled) !important;
   }
 
   &:not([disabled]) {
     cursor: pointer;
   }
 
-  // TODO: update class to .primary
+  // TODO 2.6.0: these need to be replaced with CSS vars for theming to work
   &.dark {
-    background-image: var(--button-primary-background);
-    background-color: var(--button-primary-background);
+    &[disabled] {
+      background-image: linear-gradient(180deg, #313e46 0%, #20292f 100%);
+      box-shadow: -12px -12px 36px 0 rgba(70, 77, 83, 0.5),
+        12px 12px 36px 0 rgba(18, 21, 23, 0.99),
+        inset -1px -1px 0 0 rgba(0, 0, 0, 0.32),
+        inset 1px 1px 0 0 rgba(214, 210, 210, 0.14);
+      color: #4a5d59;
+    }
+    // TODO 2.6.0: these need to be replaced with CSS vars for theming to work
+    border-radius: 4px;
+    background: #4cffb3;
     font-size: 14px;
     color: var(--button-primary-text);
 
     path {
-      fill: var(--button-icon-color);
+      fill: #4a5d59;
     }
 
     &:not([disabled]):hover {
@@ -50,7 +58,6 @@
     }
   }
 
-  // TODO: update class to .secondary
   &.light {
     border: solid;
     border-width: 2px;

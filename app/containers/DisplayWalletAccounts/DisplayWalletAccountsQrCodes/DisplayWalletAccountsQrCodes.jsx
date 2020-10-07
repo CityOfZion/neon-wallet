@@ -87,7 +87,7 @@ class DisplayWalletAccountsQrCodes extends Component<Props, State> {
         headerContainerClassName={styles.headerIconMargin}
         renderHeaderIcon={() => <CheckIcon />}
         {...conditionalPanelProps}
-        iconColor="#F7BC33"
+        iconColor="#4CFFB3"
       >
         <div
           id="wallet-accounts-qr-codes"

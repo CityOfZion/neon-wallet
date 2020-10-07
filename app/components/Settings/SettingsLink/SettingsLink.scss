@@ -16,6 +16,7 @@ $settings-link-color: #66ed87;
   .settingsLinkLabel {
     flex: 1;
     font-size: 12px;
+    font-weight: 600;
   }
 
   .settingsLinkIcon {
@@ -66,6 +67,7 @@ label {
   font-family: var(--font-gotham-bold);
   font-size: 12px;
   color: var(--settings-link-text);
+  font-weight: 600;
 }
 
 .noBorderBottom {

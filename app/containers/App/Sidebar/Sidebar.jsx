@@ -116,7 +116,7 @@ const Sidebar = ({
         </div>
       </NavLink>
 
-      {!isWatchOnly && (
+      {/* {!isWatchOnly && (
         <NavLink
           id="tokensale"
           to={ROUTES.TOKEN_SALE}
@@ -129,7 +129,7 @@ const Sidebar = ({
             <FormattedMessage id="sidebarTokenSale" />{' '}
           </div>
         </NavLink>
-      )}
+      )} */}
       <NavLink
         id="News"
         to={ROUTES.NEWS}

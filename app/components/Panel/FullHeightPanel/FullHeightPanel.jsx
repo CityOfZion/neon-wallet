@@ -31,7 +31,7 @@ export default class ViewLayout extends Component<Props> {
         <FormattedMessage id="walletCreationInstruction" />{' '}
       </div>
     ),
-    iconColor: '#69E27E',
+    iconColor: '#4CFFB3',
   }
 
   render() {

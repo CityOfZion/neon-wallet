@@ -1,47 +1,47 @@
 @import './variables';
 
 @font-face {
-  font-family: 'Gotham';
-  src: url('../assets/fonts/Gotham-Book.woff') format('woff');
+  font-family: 'SofiaPro';
+  src: url('../assets/fonts/SofiaProRegular.ttf') format('ttf');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
-  font-family: 'Gotham';
-  src: url('../assets/fonts/Gotham-Bold.woff') format('woff');
+  font-family: 'SofiaPro';
+  src: url('../assets/fonts/SofiaProBold.ttf') format('ttf');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Gotham-Medium';
-  src: url('../assets/fonts/Gotham-Medium.woff') format('woff');
+  font-family: 'SofiaPro-Medium';
+  src: url('../assets/fonts/SofiaProMedium.ttf') format('ttf');
 }
 @font-face {
-  font-family: 'Gotham-Bold';
-  src: url('../assets/fonts/Gotham-Bold.woff') format('woff');
+  font-family: 'SofiaPro-Bold';
+  src: url('../assets/fonts/SofiaProBold.ttf') format('ttf');
 }
 @font-face {
-  font-family: 'Gotham-Light';
-  src: url('../assets/fonts/Gotham-Light.woff') format('woff');
+  font-family: 'SofiaPro-Light';
+  src: url('../assets/fonts/SofiaProLight.ttf') format('ttf');
 }
 @font-face {
-  font-family: 'Gotham-Thin';
-  src: url('../assets/fonts/Gotham-Thin.woff') format('woff');
+  font-family: 'SofiaPro-Thin';
+  src: url('../assets/fonts/SofiaProUltraLight.ttf') format('ttf');
 }
 @font-face {
-  font-family: 'Gotham-Book';
-  src: url('../assets/fonts/Gotham-Book.woff') format('woff');
+  font-family: 'SofiaPro-Book';
+  src: url('../assets/fonts/SofiaProBold.ttf') format('ttf');
 }
 
 :root {
   --font-fallback: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-  --font-gotham: 'Gotham', var(--font-fallback);
-  --font-gotham-medium: 'Gotham-Medium', var(--font-fallback);
-  --font-gotham-bold: 'Gotham-Bold', var(--font-fallback);
-  --font-gotham-thin: 'Gotham-Thin', var(--font-fallback);
-  --font-gotham-light: 'Gotham-Light', var(--font-fallback);
-  --font-gotham-book: 'Gotham-Book', var(--font-fallback);
+  --font-gotham: 'SofiaPro', var(--font-fallback);
+  --font-gotham-medium: 'SofiaPro-Medium', var(--font-fallback);
+  --font-gotham-bold: 'SofiaPro-Bold', var(--font-fallback);
+  --font-gotham-thin: 'SofiaPro-Thin', var(--font-fallback);
+  --font-gotham-light: 'SofiaPro-Light', var(--font-fallback);
+  --font-gotham-book: 'SofiaPro-Book', var(--font-fallback);
 }
 
 @media print {
@@ -88,7 +88,7 @@ input {
   font-size: 1.2em;
   padding: 7px 15px;
   border: none;
-  font-weight: 300;
+  font-weight: 400;
   :focus {
     outline: none;
   }
@@ -176,6 +176,12 @@ input::placeholder {
   .react-select__option--is-selected {
     background: var(--input-select-hover);
     color: var(--base-text);
+  }
+
+  .react-select__indicator {
+    svg {
+      fill: #4cffb3;
+    }
   }
 
   .react-select__menu-list {

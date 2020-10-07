@@ -7234,7 +7234,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                     offColor="#f2f2f2"
                                                                                                     offHandleColor="#fff"
                                                                                                     onChange={[Function]}
-                                                                                                    onColor="#69e27e"
+                                                                                                    onColor="#4CFFB3"
                                                                                                     onHandleColor="#fff"
                                                                                                     uncheckedIcon={false}
                                                                                                     width={51}
@@ -7266,7 +7266,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                           Object {
                                                                                                             "MozTransition": "background 0.25s",
                                                                                                             "WebkitTransition": "background 0.25s",
-                                                                                                            "background": "#69e27e",
+                                                                                                            "background": "#4CFFB3",
                                                                                                             "borderRadius": 16,
                                                                                                             "cursor": "pointer",
                                                                                                             "height": 32,
