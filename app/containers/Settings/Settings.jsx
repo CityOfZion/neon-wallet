@@ -407,11 +407,6 @@ export default class Settings extends Component<Props, State> {
       </div>
       <div className={styles.settingsPanelHeaderItem}>
         <div>
-          <FormattedMessage id="settingsCommunity" />:{' '}
-          <a onClick={this.openPipefyLink}>{PIPEFY_SUPPORT}</a>
-        </div>
-
-        <div>
           NEO Discord:{' '}
           <a onClick={this.openDiscordLink}>{DISCORD_INVITE_LINK}</a>
         </div>

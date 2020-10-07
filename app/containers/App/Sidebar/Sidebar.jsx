@@ -12,7 +12,6 @@ import HistoryIcon from '../../../assets/navigation/history.svg'
 import SendIcon from '../../../assets/navigation/send.svg'
 import ReceiveIcon from '../../../assets/navigation/receive.svg'
 import ContactsIcon from '../../../assets/navigation/contacts.svg'
-import TokenSaleIcon from '../../../assets/navigation/tokens.svg'
 import SettingsIcon from '../../../assets/navigation/settings.svg'
 import NewsIcon from '../../../assets/navigation/news.svg'
 import LogoWithTooltipAndBlockHeight from '../../../components/LogoWithTooltipAndBlockHeight/LogoWithTooltipAndBlockHeight'
@@ -24,7 +23,6 @@ type Props = {
   theme: ThemeType,
   pendingTransactionsCount: number,
   count: number,
-  isWatchOnly?: boolean,
   store: any,
 }
 
@@ -32,7 +30,6 @@ const Sidebar = ({
   className,
   theme,
   pendingTransactionsCount,
-  isWatchOnly,
   count,
   store,
 }: Props) => (
@@ -116,20 +113,6 @@ const Sidebar = ({
         </div>
       </NavLink>
 
-      {!isWatchOnly && (
-        <NavLink
-          id="tokensale"
-          to={ROUTES.TOKEN_SALE}
-          className={styles.navItem}
-          activeClassName={styles.active}
-        >
-          <TokenSaleIcon />
-          <div id="token-sale-label">
-            {' '}
-            <FormattedMessage id="sidebarTokenSale" />{' '}
-          </div>
-        </NavLink>
-      )}
       <NavLink
         id="News"
         to={ROUTES.NEWS}

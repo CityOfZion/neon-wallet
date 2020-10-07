@@ -20,7 +20,7 @@ export default class NeonSwitch extends React.Component<Props> {
 
   render() {
     const { theme, checked } = this.props
-    const onColor = theme === THEMES.LIGHT ? '#69e27e' : '#66ED87'
+    const onColor = theme === THEMES.LIGHT ? '#4CFFB3' : '#66ED87'
     const offColor = theme === THEMES.LIGHT ? '#f2f2f2' : '#9ca0a9'
     return (
       <label htmlFor="neon-switch">

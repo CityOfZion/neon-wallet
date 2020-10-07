@@ -31,11 +31,12 @@ const overrideStyles = {
     },
 
     success: {
-      backgroundColor: '#5ABF6B',
-      color: '#FFF',
+      backgroundColor: '#2B5148',
+      color: '#4CFFB3',
     },
     error: {
-      backgroundColor: '#EE6D66',
+      backgroundColor: '#6B3B7C',
+      color: '#EB70FF',
     },
     warning: {
       backgroundColor: '#FFCF48',
@@ -64,9 +65,15 @@ const overrideStyles = {
       backgroundColor: 'none',
       opacity: '0.8',
     },
+    success: {
+      color: '#4CFFB3',
+    },
     warning: {
       color: '#000000',
       opacity: 0.4,
+    },
+    error: {
+      color: '#EB70FF',
     },
   },
 }
