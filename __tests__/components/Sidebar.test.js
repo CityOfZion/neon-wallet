@@ -97,14 +97,15 @@ describe('Sidebar', () => {
     expect(container.text()).toEqual('')
   })
 
-  test('does render the token sale navigation option when NOT in watch only mode', () => {
-    const { wrapper } = setup()
-    const label = wrapper.find('#token-sale-label')
-    expect(label.text()).toEqual(' Token Sale ')
+  // TODO 2.6.0: this probably should go away from the main navigation
+  // test('does render the token sale navigation option when NOT in watch only mode', () => {
+  //   const { wrapper } = setup()
+  //   const label = wrapper.find('#token-sale-label')
+  //   expect(label.text()).toEqual(' Token Sale ')
 
-    const container = wrapper.find('#tokensale')
-    expect(container.length).toEqual(3)
-  })
+  //   const container = wrapper.find('#tokensale')
+  //   expect(container.length).toEqual(3)
+  // })
 
   test('does not render the token sale navigation option when in watch only mode', () => {
     const testState = cloneDeep(initialState)
