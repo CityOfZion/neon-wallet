@@ -1025,49 +1025,6 @@ exports[`Sidebar renders without crashing 1`] = `
                                     activeClassName="active"
                                     aria-current="page"
                                     className="navItem"
-                                    id="tokensale"
-                                    to="/token-sale"
-                                  >
-                                    <Route
-                                      path="\\\\/token-sale"
-                                    >
-                                      <Link
-                                        aria-current={null}
-                                        className="navItem"
-                                        id="tokensale"
-                                        replace={false}
-                                        to="/token-sale"
-                                      >
-                                        <a
-                                          aria-current={null}
-                                          className="navItem"
-                                          href="/token-sale"
-                                          id="tokensale"
-                                          onClick={[Function]}
-                                        >
-                                          <Component>
-                                            <svg />
-                                          </Component>
-                                          <div
-                                            id="token-sale-label"
-                                          >
-                                             
-                                            <FormattedMessage
-                                              id="sidebarTokenSale"
-                                              values={Object {}}
-                                            >
-                                              Token Sale
-                                            </FormattedMessage>
-                                             
-                                          </div>
-                                        </a>
-                                      </Link>
-                                    </Route>
-                                  </NavLink>
-                                  <NavLink
-                                    activeClassName="active"
-                                    aria-current="page"
-                                    className="navItem"
                                     id="News"
                                     to="/news"
                                   >
