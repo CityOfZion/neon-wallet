@@ -4515,7 +4515,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                     "value": "CHINESE",
                                                                                                   },
                                                                                                   Object {
-                                                                                                    "label": "Francés",
+                                                                                                    "label": "Français",
                                                                                                     "renderFlag": [Function],
                                                                                                     "value": "FRENCH",
                                                                                                   },
@@ -4600,7 +4600,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                         "value": "CHINESE",
                                                                                                       },
                                                                                                       Object {
-                                                                                                        "label": "Francés",
+                                                                                                        "label": "Français",
                                                                                                         "renderFlag": [Function],
                                                                                                         "value": "FRENCH",
                                                                                                       },
@@ -4722,7 +4722,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                           "value": "CHINESE",
                                                                                                         },
                                                                                                         Object {
-                                                                                                          "label": "Francés",
+                                                                                                          "label": "Français",
                                                                                                           "renderFlag": [Function],
                                                                                                           "value": "FRENCH",
                                                                                                         },
@@ -4824,7 +4824,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                             "value": "CHINESE",
                                                                                                           },
                                                                                                           Object {
-                                                                                                            "label": "Francés",
+                                                                                                            "label": "Français",
                                                                                                             "renderFlag": [Function],
                                                                                                             "value": "FRENCH",
                                                                                                           },
@@ -4925,7 +4925,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                               "value": "CHINESE",
                                                                                                             },
                                                                                                             Object {
-                                                                                                              "label": "Francés",
+                                                                                                              "label": "Français",
                                                                                                               "renderFlag": [Function],
                                                                                                               "value": "FRENCH",
                                                                                                             },
@@ -5029,7 +5029,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                 "value": "CHINESE",
                                                                                                               },
                                                                                                               Object {
-                                                                                                                "label": "Francés",
+                                                                                                                "label": "Français",
                                                                                                                 "renderFlag": [Function],
                                                                                                                 "value": "FRENCH",
                                                                                                               },
@@ -5130,7 +5130,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                   "value": "CHINESE",
                                                                                                                 },
                                                                                                                 Object {
-                                                                                                                  "label": "Francés",
+                                                                                                                  "label": "Français",
                                                                                                                   "renderFlag": [Function],
                                                                                                                   "value": "FRENCH",
                                                                                                                 },
@@ -5227,7 +5227,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                     "value": "CHINESE",
                                                                                                                   },
                                                                                                                   Object {
-                                                                                                                    "label": "Francés",
+                                                                                                                    "label": "Français",
                                                                                                                     "renderFlag": [Function],
                                                                                                                     "value": "FRENCH",
                                                                                                                   },
@@ -5328,7 +5328,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                       "value": "CHINESE",
                                                                                                                     },
                                                                                                                     Object {
-                                                                                                                      "label": "Francés",
+                                                                                                                      "label": "Français",
                                                                                                                       "renderFlag": [Function],
                                                                                                                       "value": "FRENCH",
                                                                                                                     },
@@ -5430,7 +5430,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                         "value": "CHINESE",
                                                                                                                       },
                                                                                                                       Object {
-                                                                                                                        "label": "Francés",
+                                                                                                                        "label": "Français",
                                                                                                                         "renderFlag": [Function],
                                                                                                                         "value": "FRENCH",
                                                                                                                       },
@@ -5531,7 +5531,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                           "value": "CHINESE",
                                                                                                                         },
                                                                                                                         Object {
-                                                                                                                          "label": "Francés",
+                                                                                                                          "label": "Français",
                                                                                                                           "renderFlag": [Function],
                                                                                                                           "value": "FRENCH",
                                                                                                                         },
@@ -5664,7 +5664,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                     "value": "CHINESE",
                                                                                                                   },
                                                                                                                   Object {
-                                                                                                                    "label": "Francés",
+                                                                                                                    "label": "Français",
                                                                                                                     "renderFlag": [Function],
                                                                                                                     "value": "FRENCH",
                                                                                                                   },
@@ -5765,7 +5765,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                       "value": "CHINESE",
                                                                                                                     },
                                                                                                                     Object {
-                                                                                                                      "label": "Francés",
+                                                                                                                      "label": "Français",
                                                                                                                       "renderFlag": [Function],
                                                                                                                       "value": "FRENCH",
                                                                                                                     },
@@ -5861,7 +5861,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                         "value": "CHINESE",
                                                                                                                       },
                                                                                                                       Object {
-                                                                                                                        "label": "Francés",
+                                                                                                                        "label": "Français",
                                                                                                                         "renderFlag": [Function],
                                                                                                                         "value": "FRENCH",
                                                                                                                       },
@@ -5962,7 +5962,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                           "value": "CHINESE",
                                                                                                                         },
                                                                                                                         Object {
-                                                                                                                          "label": "Francés",
+                                                                                                                          "label": "Français",
                                                                                                                           "renderFlag": [Function],
                                                                                                                           "value": "FRENCH",
                                                                                                                         },
@@ -6066,7 +6066,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                         "value": "CHINESE",
                                                                                                                       },
                                                                                                                       Object {
-                                                                                                                        "label": "Francés",
+                                                                                                                        "label": "Français",
                                                                                                                         "renderFlag": [Function],
                                                                                                                         "value": "FRENCH",
                                                                                                                       },
@@ -6167,7 +6167,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                           "value": "CHINESE",
                                                                                                                         },
                                                                                                                         Object {
-                                                                                                                          "label": "Francés",
+                                                                                                                          "label": "Français",
                                                                                                                           "renderFlag": [Function],
                                                                                                                           "value": "FRENCH",
                                                                                                                         },
