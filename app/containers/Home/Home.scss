@@ -195,6 +195,7 @@ $navigation-margin: 20px;
   margin: auto;
   min-height: 550px;
   width: 600px;
+  box-shadow: var(--auth-inner-container-box-shadow);
 }
 
 .buttonRow {
@@ -258,8 +259,7 @@ $navigation-margin: 20px;
 }
 
 .loginHeader {
-  font-family: var(--font-gotham-light);
-  font-weight: 400;
+  font-weight: 300;
   width: 500px;
   display: flex;
   margin-bottom: 40px;
