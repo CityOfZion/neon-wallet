@@ -1,13 +1,19 @@
 const BASE = {
   '--base-scrollbar-track': '#fff',
   '--base-scrollbar-thumb': '#5c677f',
-  '--base-main-background': '#e6e6e6',
-  '--base-text': '#394152',
+  '--base-main-background': '#EEF4F9',
+  '--base-text': '#3D4D56',
   '--base-link-color': '#3063c9',
 }
 
 const BUTTON = {
   '--button-disabled': '#d6d9e0',
+  '--button-primary-box-shadow':
+    '-17px -17px 20px 0 rgba(255,255,255,0.54), 17px 17px 20px 0 #C6CCD1, inset -1px -1px 0 0 #A4B0C3, inset 1px 1px 0 0 #FFFFFF',
+  '--button-primary-disabled-background-image':
+    'linear-gradient(180deg, #EAEEF0 2%, #EAF2F7 100%)',
+  '--button-primary-disabled-background-color': '#3D4D56',
+  '--button-primary-disabled-text-color': '#41515C',
   '--button-active': 'linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)',
   '--button-secondary-background': '#fff',
   '--button-primary-background':
@@ -29,7 +35,7 @@ const BUTTON = {
 }
 
 const INPUT = {
-  '--input-background': '#f2f2f2',
+  '--input-background': '#F9FCFD',
   '--input-error': '#ee6d66',
   '--input-error-text': '#fff',
   '--input-text': '#282828',
@@ -52,8 +58,8 @@ const TAB = {
 }
 
 const PANEL = {
-  '--panel-icon': '#4CFFB3',
-  '--panel-header': '#f2f2f2',
+  '--panel-icon': '#282828',
+  '--panel-header': '#D4DEE4',
   '--panel-header-text': '#394152',
   '--panel-background': '#fff',
   '--panel-header-border': '#8d98ae',
@@ -71,13 +77,15 @@ const MODAL = {
 }
 
 const AUTH_STYLES = {
-  '--auth-main-container-background': '#fff',
+  '--auth-main-container-background': '#EAF2F7',
   '--auth-scan-qr-border': '#f2f2f2',
+  '--auth-inner-container-box-shadow': `-16px -16px 17px 0 rgba(255, 255, 255, 0.44),
+  16px 16px 20px 0 rgba(18, 21, 23, 0.24)`,
 }
 
 const DASHBOARD = {
   '--dashboard-market-data-line': '#3fd0ae',
-  '--dashboard-asset-panel-total-background': 'rgba(230, 230, 230, 0.28)',
+  '--dashboard-asset-panel-total-background': '#F1F5FC',
   '--dashboard-total-wallet-value-odd-row': '#f8f8f8',
   '--dashboard-total-wallet-value-total-text': '#394152',
   '--dashboard-asset-panel-asset-name': '#5c677f',
@@ -89,9 +97,11 @@ const SIDEBAR = {
   '--sidebar-background': '#fff',
   '--side-bar-disabled-item-background': '#fff',
   '--sidebar-icon': '#9599a2',
-  '--sidebar-active-border': '#66edcd',
-  '--sidebar-active-background': '#f2f2f2',
+  '--sidebar-active-border': '#66EDCD',
+  '--sidebar-active-background': '#F1F5FC',
   '--sidebar-active-icon': '#394152',
+  '--sidebar-shadow':
+    '-16px -16px 17px 0 rgba(255,255,255,0.44), -3px 16px 20px 0 rgba(18,21,23,0.24)',
 }
 
 const TX_LIST = {
@@ -104,15 +114,15 @@ const SETTINGS = {
   '--settings-item-label': '#343b4a',
   '--settings-item-icon': '#cccccc',
   '--settings-item-border-color': '#f2f2f2',
-  '--settings-link-text': '#4CFFB3',
-  '--settings-select-value-text': '#4CFFB3',
+  '--settings-link-text': '#3DF4A6',
+  '--settings-select-value-text': '#3DF4A6',
   '--settings-donation-text': '#5c677f',
   '--settings-spacer': 'rgba(170, 178, 189, 0.3)',
 }
 
 const NODE_SELECT = {
   '--node-select-header-background': '#f2f2f2',
-  '--node-select-icon-color': '#4CFFB3',
+  '--node-select-icon-color': '#3DF4A6',
   '--node-select-automatic-select-button-text': '#5c677f',
   '--node-select-refresh-icon': '#394152',
   '--node-select-node-count': '#5c677f',
@@ -152,6 +162,11 @@ export const LIGHT_NETWORK_CONFIG_TOOLTIP = {
   '--network-config-tooltip-color': '#394152',
 }
 
+export const NOTIFICATIONS = {
+  '--notifications-error-icon-color': '#fff',
+  '--notifications-success-icon-color': '#fff',
+}
+
 export default {
   ...NEWS,
   ...AMOUNTS_PANEL,
@@ -172,4 +187,5 @@ export default {
   ...SEND,
   ...QR_SCANNER,
   ...LIGHT_NETWORK_CONFIG_TOOLTIP,
+  ...NOTIFICATIONS,
 }

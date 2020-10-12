@@ -36,14 +36,10 @@
   // TODO 2.6.0: these need to be replaced with CSS vars for theming to work
   &.dark {
     &[disabled] {
-      background-image: linear-gradient(180deg, #313e46 0%, #20292f 100%);
-      box-shadow: -12px -12px 36px 0 rgba(70, 77, 83, 0.5),
-        12px 12px 36px 0 rgba(18, 21, 23, 0.99),
-        inset -1px -1px 0 0 rgba(0, 0, 0, 0.32),
-        inset 1px 1px 0 0 rgba(214, 210, 210, 0.14);
-      color: #4a5d59;
+      background-image: var(--button-primary-disabled-background-image);
+      box-shadow: var(--button-primary-box-shadow);
+      color: var(--button-primary-disabled-text-color);
     }
-    // TODO 2.6.0: these need to be replaced with CSS vars for theming to work
     border-radius: 4px;
     background: #4cffb3;
     font-size: 14px;

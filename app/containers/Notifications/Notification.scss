@@ -23,7 +23,7 @@
 
 .errorIcon {
   svg path {
-    fill: #eb70ff;
+    fill: var(--notifications-error-icon-color);
   }
 }
 
@@ -35,7 +35,7 @@
 
 .successIcon {
   svg path {
-    fill: #4cffb3;
+    fill: var(--notifications-success-icon-color);
   }
 }
 

@@ -1,8 +1,10 @@
+// @flow
+
 // overrideStyles for notifications
 const defaultWidth = 600
 const marginLeft = -(defaultWidth / 2)
 
-const overrideStyles = {
+const overrideStyles = (theme: string) => ({
   Containers: {
     DefaultStyle: {
       width: defaultWidth,
@@ -31,12 +33,12 @@ const overrideStyles = {
     },
 
     success: {
-      backgroundColor: '#2B5148',
-      color: '#4CFFB3',
+      backgroundColor: theme === 'Dark' ? '#2B5148' : '#5ABF6B',
+      color: theme === 'Dark' ? '#4CFFB3' : '#fff',
     },
     error: {
-      backgroundColor: '#6B3B7C',
-      color: '#EB70FF',
+      backgroundColor: theme === 'Dark' ? '#6B3B7C' : '#EE6D66',
+      color: theme === 'Dark' ? '#EB70FF' : '#fff',
     },
     warning: {
       backgroundColor: '#FFCF48',
@@ -66,15 +68,17 @@ const overrideStyles = {
       opacity: '0.8',
     },
     success: {
-      color: '#4CFFB3',
+      color: theme === 'Dark' ? '#4CFFB3' : '#fff',
+      opacity: theme === 'Dark' ? 1 : 0.4,
     },
     warning: {
       color: '#000000',
       opacity: 0.4,
     },
     error: {
-      color: '#EB70FF',
+      color: theme === 'Dark' ? '#EB70FF' : '#fff',
+      opacity: theme === 'Dark' ? 1 : 0.4,
     },
   },
-}
+})
 export default overrideStyles
