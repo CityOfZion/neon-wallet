@@ -34,7 +34,7 @@ export const DEFAULT_SUCCESS_TITLE = 'Success'
 export const DEFAULT_INFO_TITLE = 'Processing'
 export const DEFAULT_ERROR_TITLE = 'Error'
 export const DEFAULT_WARNING_TITLE = 'Warning'
-export const AUTO_DISMISS_TIMEOUT = 5000
+export const AUTO_DISMISS_TIMEOUT = 5
 
 // Actions
 export const showNotification = (args: NotificationType) => ({
