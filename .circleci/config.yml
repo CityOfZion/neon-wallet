@@ -82,7 +82,7 @@ jobs:
       - run: apt-get install --no-install-recommends -y gcc-multilib g++-multilib
       - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
       - run: yarn assets
-      - run: yarn build -w --x64
+      - run: yarn electron-builder -w --x64
       - store_artifacts:
           path: dist
           destination: build
