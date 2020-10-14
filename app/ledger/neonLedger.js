@@ -77,6 +77,7 @@ export default class NeonLedger {
       const ledger = new NeonLedger(paths[0])
       return ledger.open()
     }
+    return null
   }
 
   static async list(): Promise<(?string)[]> {

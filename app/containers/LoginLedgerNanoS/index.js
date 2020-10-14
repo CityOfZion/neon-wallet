@@ -9,7 +9,7 @@ import {
   recentlyCompletedStrategy,
 } from 'spunky'
 
-import LoginLedgerNanoS from './LoginLedgerNanoS'
+import LoginLedgerNanoS from './LoginneonLedger'
 import ledgerActions from '../../actions/ledgerActions'
 import { ledgerLoginActions } from '../../actions/authActions'
 
