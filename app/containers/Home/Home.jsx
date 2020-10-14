@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl'
 
 import LoginPrivateKey from '../LoginPrivateKey'
 import LoginNep2 from '../LoginNep2'
-import LoginLedgerNanoS from '../LoginneonLedger'
+import LoginLedgerNanoS from '../LoginLedgerNanoS'
 import LoginLocalStorage from '../LoginLocalStorage'
 import LoginWatchOnly from '../LoginWatchOnly'
 import Button from '../../components/Button'

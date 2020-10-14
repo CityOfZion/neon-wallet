@@ -9,13 +9,6 @@ configure({ adapter: new Adapter() })
 
 beforeAll(() => {
   api.setSwitchFreeze(true)
-
-  jest.doMock('../node_modules/usb/usb.js', () => {
-    return {
-      __esModule: true,
-      default: '',
-    }
-  })
 })
 
 afterAll(() => {
