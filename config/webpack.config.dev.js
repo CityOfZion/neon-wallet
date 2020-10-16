@@ -38,6 +38,7 @@ module.exports = {
   ],
   externals: {
     'node-hid': 'require("node-hid")',
+    usb: 'require("usb")',
   },
   output: {
     path: path.join(__dirname, '..', 'app/dist/'),

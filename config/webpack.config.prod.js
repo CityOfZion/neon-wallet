@@ -23,6 +23,7 @@ module.exports = {
   entry: ['babel-polyfill', path.join(__dirname, '..', 'app/index.js')],
   externals: {
     'node-hid': 'require("node-hid")',
+    usb: 'require("usb")',
   },
   output: {
     path: path.join(__dirname, '..', 'app/dist/'),
