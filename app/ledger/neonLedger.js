@@ -80,7 +80,7 @@ export default class NeonLedger {
     return null
   }
 
-  static async list(): Promise<string[]> {
+  static async list(): Promise<(?string)[]> {
     return LedgerNode.list()
   }
 
