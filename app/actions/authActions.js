@@ -8,7 +8,7 @@ import { bindArgsFromN } from '../util/bindHelpers'
 import { resetBalanceState } from './balancesActions'
 import { upgradeNEP6AddAddresses } from '../core/account'
 import { validatePassphraseLength } from '../core/wallet'
-import { legacySignWithLedger } from '../ledger/neonLedger'
+import { ledgerNanoSCreateSignatureAsync } from '../ledger/ledgerNanoS'
 
 type WifLoginProps = {
   wif: string,
@@ -130,7 +130,11 @@ export const ledgerLoginActions = createActions(
     return {
       publicKey,
       address: walletAccount.address,
-      signingFunction: bindArgsFromN(legacySignWithLedger, 3, account),
+      signingFunction: bindArgsFromN(
+        ledgerNanoSCreateSignatureAsync,
+        3,
+        account,
+      ),
       isHardwareLogin: true,
       hasInternetConnectivity,
     }
