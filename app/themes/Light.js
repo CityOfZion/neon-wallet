@@ -10,20 +10,17 @@ const BUTTON = {
   '--button-disabled': '#d6d9e0',
   '--button-primary-box-shadow':
     '-17px -17px 20px 0 rgba(255,255,255,0.54), 17px 17px 20px 0 #C6CCD1, inset -1px -1px 0 0 #A4B0C3, inset 1px 1px 0 0 #FFFFFF',
-  '--button-primary-disabled-background-image':
-    'linear-gradient(180deg, #EAEEF0 2%, #EAF2F7 100%)',
-  '--button-primary-disabled-background-color': '#3D4D56',
-  '--button-primary-disabled-text-color': '#41515C',
-  '--button-active': 'linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)',
+  '--button-primary-disabled-background-color': '#E0E9EF',
+  '--button-primary-background-image':
+    'linear-gradient(180deg, #EAF2F7 2%, #E6F0F6 97%)',
+  '--button-primary-hover-background-image':
+    'linear-gradient(180deg, #FFFFFF 2%, #E2EAEF 100%)',
+  '--button-primary-disabled-text-color': '#acbbc4',
   '--button-secondary-background': '#fff',
-  '--button-primary-background':
-    'linear-gradient(-216deg, #66ed87 0%, #6ad8ff 100%)',
-  '--button-primary-hover': '#66edcd',
   '--button-secondary-hover': '#f2f2f2',
   '--button-primary-text': '#394152',
   '--button-secondary-text': '#394152',
   '--button-icon-color': '#394152',
-  '--button-active-hover': '#66edcd',
   '--secondary-button-icon-color': '#394152',
   '--button-priority-transfer-background': '#fff',
   '--button-priority-transfer-color': '#394152',
