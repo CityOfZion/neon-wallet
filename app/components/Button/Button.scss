@@ -33,28 +33,33 @@
     cursor: pointer;
   }
 
-  // TODO 2.6.0: these need to be replaced with CSS vars for theming to work
-  &.dark {
+  &.primary {
     &[disabled] {
-      background-image: var(--button-primary-disabled-background-image);
-      box-shadow: var(--button-primary-box-shadow);
+      background-color: var(--button-primary-disabled-background-color);
+      background-image: var(--button-primary-disabled-background-color);
+      box-shadow: none;
       color: var(--button-primary-disabled-text-color);
+      path {
+        fill: var(--button-primary-disabled-text-color);
+      }
     }
+
+    background-image: var(--button-primary-background-image);
+    box-shadow: var(--button-primary-box-shadow);
     border-radius: 4px;
-    background: #4cffb3;
     font-size: 14px;
     color: var(--button-primary-text);
 
     path {
-      fill: #4a5d59;
+      fill: var(--button-primary-text);
     }
 
     &:not([disabled]):hover {
-      background: var(--button-primary-hover);
+      background-image: var(--button-primary-hover-background-image);
     }
   }
 
-  &.light {
+  &.secondary {
     border: solid;
     border-width: 2px;
     border-color: transparent;

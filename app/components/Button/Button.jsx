@@ -70,9 +70,10 @@ class Button extends React.Component<Props> {
 
   getActiveButtonStyle = () => (this.props.active ? styles.active : undefined)
 
-  getButtonStyle = () => (this.props.primary ? styles.dark : styles.light)
+  getButtonStyle = () =>
+    this.props.primary ? styles.primary : styles.secondary
 
-  getIconStyle = () => (this.props.primary ? styles.light : styles.dark)
+  getIconStyle = () => (this.props.primary ? styles.primary : styles.secondary)
 }
 
 export default Button
