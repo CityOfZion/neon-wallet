@@ -65,7 +65,7 @@ const PANEL = {
   '--panel-icon': '#4CFFB3',
   '--panel-header': '#1B2029',
   '--panel-header-text': '#fff',
-  '--panel-background': '#2E3542',
+  '--panel-background': '#333D46',
   '--panel-header-border': '#8d98ae',
   '--panel-label-text': '#8d98ae',
   '--panel-full-height-background': '#2E3542',
@@ -81,8 +81,8 @@ const MODAL = {
 }
 
 const AUTH_STYLES = {
-  '--auth-main-container-background': '#2E3542',
-  '--auth-secondary-button-background': '#2E3542',
+  '--auth-main-container-background': '#333D46',
+  '--auth-secondary-button-background': '#333D46',
   '--auth-scan-qr-border': '#5c677f',
 }
 
