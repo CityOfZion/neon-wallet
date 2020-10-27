@@ -67,37 +67,34 @@ type State = {
   selectedLanguage: Language,
 }
 
-export const loadWalletRecovery = (
+export const loadWalletRecovery = async (
   showSuccessNotification: Object => any,
   showErrorNotification: Object => any,
   setAccounts: (Array<Object>) => any,
 ) => {
-  dialog.showOpenDialog(fileNames => {
-    // fileNames is an array that contains all the selected
-    if (!fileNames) {
+  const { canceled, filePaths } = await dialog.showOpenDialog()
+  if (canceled || !filePaths) return
+
+  const filepath = filePaths[0]
+  fs.readFile(filepath, 'utf-8', (err, data) => {
+    if (err) {
+      showErrorNotification({
+        message: `An error occurred reading the file: ${err.message}`,
+      })
       return
     }
-    const filepath = fileNames[0]
-    fs.readFile(filepath, 'utf-8', (err, data) => {
-      if (err) {
-        showErrorNotification({
-          message: `An error occurred reading the file: ${err.message}`,
-        })
-        return
-      }
-      const walletData = JSON.parse(data)
+    const walletData = JSON.parse(data)
 
-      recoverWallet(walletData)
-        .then(data => {
-          showSuccessNotification({ message: 'Recovery was successful.' })
-          setAccounts(data.accounts)
+    recoverWallet(walletData)
+      .then(data => {
+        showSuccessNotification({ message: 'Recovery was successful.' })
+        setAccounts(data.accounts)
+      })
+      .catch(err => {
+        showErrorNotification({
+          message: `An error occurred recovering wallet: ${err.message}`,
         })
-        .catch(err => {
-          showErrorNotification({
-            message: `An error occurred recovering wallet: ${err.message}`,
-          })
-        })
-    })
+      })
   })
 }
 
