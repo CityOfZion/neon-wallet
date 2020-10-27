@@ -101,6 +101,15 @@ export const loadWalletRecovery = (
   })
 }
 
+async function storageGet(key) {
+  return new Promise((resolve, reject) => {
+    storage.get(key, (err, data) => {
+      if (err) reject(err)
+      resolve(data)
+    })
+  })
+}
+
 export default class Settings extends Component<Props, State> {
   static defaultProps = {
     explorer: DEFAULT_EXPLORER,
@@ -122,49 +131,42 @@ export default class Settings extends Component<Props, State> {
         .find(lang => lang.value === this.props.language) || LANGUAGES.ENGLISH,
   }
 
-  saveWalletRecovery = () => {
+  saveWalletRecovery = async () => {
     const { showSuccessNotification, showErrorNotification } = this.props
 
-    storage.get('userWallet', (errorReading, data) => {
-      if (errorReading) {
-        showErrorNotification({
-          message: `An error occurred reading wallet file: ${
-            errorReading.message
-          }`,
-        })
-        return
-      }
-      const content = JSON.stringify(data)
-      dialog.showSaveDialog(
+    let content
+    try {
+      content = JSON.stringify(await storageGet('userWallet'))
+    } catch (e) {
+      showErrorNotification({
+        message: `An error occurred reading wallet file: ${e.message}`,
+      })
+      return
+    }
+    const { filePath, canceled } = await dialog.showSaveDialog({
+      filters: [
         {
-          filters: [
-            {
-              name: 'JSON',
-              extensions: ['json'],
-            },
-          ],
+          name: 'JSON',
+          extensions: ['json'],
         },
-        fileName => {
-          if (fileName === undefined) {
-            return
-          }
-          // fileName is a string that contains the path and filename created in the save file dialog.
-          fs.writeFile(fileName, content, errorWriting => {
-            if (errorWriting) {
-              showErrorNotification({
-                message: `An error occurred creating the file: ${
-                  errorWriting.message
-                }`,
-              })
-            } else {
-              showSuccessNotification({
-                message: 'The file has been succesfully saved',
-              })
-            }
-          })
-        },
-      )
+      ],
     })
+
+    if (filePath && !canceled) {
+      fs.writeFile(filePath, content, errorWriting => {
+        if (errorWriting) {
+          showErrorNotification({
+            message: `An error occurred creating the file: ${
+              errorWriting.message
+            }`,
+          })
+        } else {
+          showSuccessNotification({
+            message: 'The file has been succesfully saved',
+          })
+        }
+      })
+    }
   }
 
   updateCurrencySettings = (option: SelectOption) => {
