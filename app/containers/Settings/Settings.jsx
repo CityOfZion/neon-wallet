@@ -76,6 +76,34 @@ export const loadWalletRecovery = async (
   if (canceled || !filePaths) return
 
   const filepath = filePaths[0]
+  fs.readFile(filepath, 'utf-8', async (err, data) => {
+    if (err) {
+      showErrorNotification({
+        message: `An error occurred reading the file: ${err.message}`,
+      })
+      return
+    }
+    const walletData = JSON.parse(data)
+    const recoveryData = await recoverWallet(walletData).catch(err => {
+      showErrorNotification({
+        message: `An error occurred recovering wallet: ${err.message}`,
+      })
+    })
+
+    if (recoveryData) {
+      showSuccessNotification({ message: 'Recovery was successful.' })
+      setAccounts(recoveryData.accounts)
+    }
+  })
+}
+  showSuccessNotification: Object => any,
+  showErrorNotification: Object => any,
+  setAccounts: (Array<Object>) => any,
+) => {
+  const { canceled, filePaths } = await dialog.showOpenDialog()
+  if (canceled || !filePaths) return
+
+  const filepath = filePaths[0]
   fs.readFile(filepath, 'utf-8', (err, data) => {
     if (err) {
       showErrorNotification({
