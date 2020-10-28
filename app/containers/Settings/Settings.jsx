@@ -96,35 +96,6 @@ export const loadWalletRecovery = async (
     }
   })
 }
-  showSuccessNotification: Object => any,
-  showErrorNotification: Object => any,
-  setAccounts: (Array<Object>) => any,
-) => {
-  const { canceled, filePaths } = await dialog.showOpenDialog()
-  if (canceled || !filePaths) return
-
-  const filepath = filePaths[0]
-  fs.readFile(filepath, 'utf-8', (err, data) => {
-    if (err) {
-      showErrorNotification({
-        message: `An error occurred reading the file: ${err.message}`,
-      })
-      return
-    }
-    const walletData = JSON.parse(data)
-
-    recoverWallet(walletData)
-      .then(data => {
-        showSuccessNotification({ message: 'Recovery was successful.' })
-        setAccounts(data.accounts)
-      })
-      .catch(err => {
-        showErrorNotification({
-          message: `An error occurred recovering wallet: ${err.message}`,
-        })
-      })
-  })
-}
 
 async function storageGet(key) {
   return new Promise((resolve, reject) => {
