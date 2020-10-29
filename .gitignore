@@ -2,6 +2,7 @@
 node_modules/*
 dist/
 env/
+.env
 .idea
 release-builds/*
 .DS_Store
