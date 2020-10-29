@@ -46,10 +46,6 @@
         "repo": "neon-wallet"
       }
     ],
-    "mac": {
-      "hardenedRuntime": true,
-      "entitlements": "./node_modules/electron-builder-notarize/entitlements.mac.inherit.plist"
-    },
     "dmg": {
       "background": "./app/assets/images/background.tiff",
       "window": {
@@ -69,15 +65,23 @@
         }
       ]
     },
+    "mac": {
+      "hardenedRuntime": true,
+      "entitlements": "./node_modules/electron-builder-notarize/entitlements.mac.inherit.plist",
+      "artifactName": "${productName}.${version}.${ext}"
+    },
     "linux": {
       "target": [
         "AppImage",
+        "snap",
         "deb"
-      ]
+      ],
+      "artifactName": "${productName}.${version}.${ext}"
     },
     "win": {
       "target": "nsis",
-      "icon": "build/icon.ico"
+      "icon": "build/icon.ico",
+      "artifactName": "${productName}.${version}.${ext}"
     }
   },
   "dependencies": {
