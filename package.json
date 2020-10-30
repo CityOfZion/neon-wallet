@@ -23,8 +23,7 @@
     "electron-rebuild": "electron-rebuild --force --module_dir . -w node-hid",
     "flow": "flow check",
     "format": "prettier --write '**/*.{js,jsx,.scss,.css}'",
-    "clean": "rm -r app/dist/*",
-    "publish": "dotenv build -p always NODE_OPTIONS='--max-old-space-size=8192'"
+    "clean": "rm -r app/dist/*"
   },
   "keywords": [],
   "license": "MIT",
