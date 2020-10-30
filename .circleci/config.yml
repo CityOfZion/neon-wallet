@@ -103,23 +103,25 @@ jobs:
 
 workflows:
   version: 2
-  build_test:
+  build_test_and_deploy:
     jobs:
       - build
       - test:
           requires:
             - build
-  deploy:
-    jobs:
       - deploy_win64:
+          requires:
+            - test
           filters:
             branches:
               ignore: /.*/
             tags:
-              only: /.*/
+              only: /v.*/
       - deploy_linux:
+          requires:
+            - test
           filters:
             branches:
               ignore: /.*/
             tags:
-              only: /.*/
+              only: /v.*/
