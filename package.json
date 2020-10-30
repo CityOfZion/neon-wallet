@@ -4,7 +4,6 @@
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",
   "homepage": "https://github.com/CityOfZion/neon-wallet",
-  "author": "Ethan Fast <ejhfast@gmail.com> (https://github.com/Ejhfast)",
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
     "start": "cross-env NODE_ENV=production electron .",
@@ -66,6 +65,9 @@
       ]
     },
     "mac": {
+      "target": [
+        "dmg"
+      ],
       "hardenedRuntime": true,
       "entitlements": "./node_modules/electron-builder-notarize/entitlements.mac.inherit.plist",
       "artifactName": "${productName}.${version}.${ext}"
@@ -73,7 +75,6 @@
     "linux": {
       "target": [
         "AppImage",
-        "snap",
         "deb"
       ],
       "artifactName": "${productName}.${version}.${ext}"
