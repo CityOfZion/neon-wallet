@@ -105,8 +105,14 @@ workflows:
   version: 2
   build_test_and_deploy:
     jobs:
-      - build
+      - build:
+          filters:
+            tags:
+              only: /v.*/
       - test:
+          filters:
+            tags:
+              only: /v.*/
           requires:
             - build
       - deploy_win64:
