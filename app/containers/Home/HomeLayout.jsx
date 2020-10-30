@@ -69,7 +69,6 @@ class HomeLayout extends React.Component<Props, State> {
             <img className={styles.logo} src={dynamicImage} alt="" />
           </div>
           <div className={styles.loginHeader}>
-            test (you auto-upgraded to 2.7.0!)
             <FormattedMessage id="authLogin" />
           </div>
           {children}

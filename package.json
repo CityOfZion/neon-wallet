@@ -1,10 +1,9 @@
 {
   "name": "Neon",
-  "version": "2.7.0",
+  "version": "2.6.0",
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",
   "homepage": "https://github.com/CityOfZion/neon-wallet",
-  "author": "Ethan Fast <ejhfast@gmail.com> (https://github.com/Ejhfast)",
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
     "start": "cross-env NODE_ENV=production electron .",
@@ -18,7 +17,6 @@
     "test-watch": "jest --watch",
     "pack": "build --dir",
     "dist": "yarn assets && dotenv yarn electron-builder --publish",
-    "dist:mac": "yarn assets && dotenv yarn electron-builder --publish always",
     "lint": "eslint -c .eslintrc ./app --ext .js,.jsx --ignore-pattern dist/",
     "lint-fix": "eslint -c .eslintrc ./app --ext .js,.jsx --fix --ignore-pattern dist/",
     "prepush": "echo 'running flow...' && yarn flow && echo 'running lint...' && yarn lint && echo 'running tests...' && yarn test",
