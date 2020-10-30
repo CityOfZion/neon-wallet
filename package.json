@@ -17,7 +17,7 @@
     "test:e2e": "ava __e2e__/*.e2e.js --timeout=120s -s",
     "test-watch": "jest --watch",
     "pack": "build --dir",
-    "dist": "yarn assets && yarn electron-builder",
+    "dist": "yarn assets && dotenv yarn electron-builder --publish",
     "lint": "eslint -c .eslintrc ./app --ext .js,.jsx --ignore-pattern dist/",
     "lint-fix": "eslint -c .eslintrc ./app --ext .js,.jsx --fix --ignore-pattern dist/",
     "prepush": "echo 'running flow...' && yarn flow && echo 'running lint...' && yarn lint && echo 'running tests...' && yarn test",
@@ -36,6 +36,14 @@
       "app/dist/index.html",
       "app/dist/bundle.js",
       "app/dist/style.css"
+    ],
+    "afterSign": "electron-builder-notarize",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "CityOfZion",
+        "repo": "neon-wallet"
+      }
     ],
     "dmg": {
       "background": "./app/assets/images/background.tiff",
@@ -56,15 +64,25 @@
         }
       ]
     },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "hardenedRuntime": true,
+      "entitlements": "./node_modules/electron-builder-notarize/entitlements.mac.inherit.plist",
+      "artifactName": "${productName}.${version}.${ext}"
+    },
     "linux": {
       "target": [
         "AppImage",
         "deb"
-      ]
+      ],
+      "artifactName": "${productName}.${version}.${ext}"
     },
     "win": {
       "target": "nsis",
-      "icon": "build/icon.ico"
+      "icon": "build/icon.ico",
+      "artifactName": "${productName}.${version}.${ext}"
     }
   },
   "dependencies": {
@@ -80,10 +98,13 @@
     "cleave.js": "1.0.7",
     "compare-versions": "3.1.0",
     "coveralls": "3.0.11",
+    "dotenv-cli": "^4.0.0",
     "ecc-jsbn": "0.2.0",
     "electron-context-menu": "0.9.1",
     "electron-json-storage": "4.1.0",
+    "electron-log": "^4.2.4",
     "electron-save-file": "1.0.2",
+    "electron-updater": "^4.3.5",
     "es6-promisify": "5.0.0",
     "file-loader": "3.0.1",
     "flow-typed": "2.5.1",
@@ -156,6 +177,7 @@
     "css-loader": "0.28.7",
     "electron": "8.5.2",
     "electron-builder": "22.9.1",
+    "electron-builder-notarize": "^1.2.0",
     "electron-devtools-installer": "2.2.4",
     "electron-packager": "12.0.1",
     "electron-rebuild": "1.7.3",
