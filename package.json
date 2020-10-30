@@ -41,7 +41,7 @@
     "publish": [
       {
         "provider": "github",
-        "owner": "comountainclimber",
+        "owner": "CityOfZion",
         "repo": "neon-wallet"
       }
     ],
