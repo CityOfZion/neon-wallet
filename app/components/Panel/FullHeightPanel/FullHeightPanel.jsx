@@ -49,9 +49,11 @@ export default class ViewLayout extends Component<Props> {
             </span>
             <span>{this.renderCloseButton()}</span>
           </div>
-          {this.renderHeader()}
-          {this.renderInstructions()}
-          <div className={styles.childrenContainer}>{children}</div>
+          <div className={styles.scrollableContent}>
+            {this.renderHeader()}
+            {this.renderInstructions()}
+            <div className={styles.childrenContainer}>{children}</div>
+          </div>
         </div>
       </div>
     )

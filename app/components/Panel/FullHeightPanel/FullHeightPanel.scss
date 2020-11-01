@@ -6,6 +6,7 @@
   margin: -24px auto;
   width: 600px;
   min-height: 100vh;
+  overflow-y: auto;
 
   form {
     max-height: 600px;
@@ -16,8 +17,6 @@
     flex-direction: column;
     justify-content: center;
     flex: 1;
-    height: 100%;
-    overflow-y: auto;
   }
 
   .header {
@@ -48,6 +47,14 @@
         }
       }
     }
+  }
+
+  .scrollableContent {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
   }
 
   .instructions {
