@@ -183,6 +183,7 @@ app.on('web-contents-created', (event, wc) => {
   })
 })
 
+global.autoUpdateStatus = { updateDownloaded: false }
 app.on('will-quit', () => {
   // Unregister all shortcuts.
   globalShortcut.unregisterAll()
@@ -220,5 +221,8 @@ autoUpdater.on('download-progress', progressObj => {
   sendStatusToWindow(logMessage)
 })
 autoUpdater.on('update-downloaded', info => {
+  // NOTE: we can use this flag to conditionally render
+  // the release notes in app
+  global.autoUpdateStatus.updateDownloaded = true
   sendStatusToWindow('Update downloaded')
 })
