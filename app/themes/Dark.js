@@ -8,12 +8,14 @@ const BASE = {
 
 const BUTTON = {
   '--button-disabled': '#5C677F',
+  '--button-primary-disabled-box-shadow':
+    '-12px -12px 36px 0 rgba(70,77,83,0.50), 12px 12px 36px 0 rgba(18,21,23,0.99), inset -1px -1px 0 0 rgba(0,0,0,0.32), inset 1px 1px 0 0 rgba(214,210,210,0.14)',
   '--button-primary-box-shadow':
     '-4px -4px 20px 0 rgba(94,101,107,0.50), 4px 4px 20px 0 rgba(18,21,23,0.81), inset -1px -1px 0 0 rgba(0,0,0,0.32), inset 1px 1px 0 0 rgba(214,210,210,0.14)',
   '--button-primary-disabled-background-image':
     'linear-gradient(180deg, #313e46 0%, #20292f 100%)',
-  '--button-primary-disabled-text-color': '#37414B',
-  '--button-primary-disabled-background-color': '#273239',
+  '--button-primary-disabled-text-color': '#4C5763',
+  '--button-primary-disabled-background-color': '#4C5763',
   '--button-primary-background-image':
     'linear-gradient(180deg, #42535D 0%, #273139 100%)',
   '--button-primary-hover-background-image':
