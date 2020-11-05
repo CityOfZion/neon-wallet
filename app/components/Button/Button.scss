@@ -59,6 +59,24 @@
     }
   }
 
+  &.secondaryRaised {
+    color: var(--base-text);
+
+    path {
+      fill: var(--base-text);
+    }
+
+    &[disabled] {
+      background-color: var(--button-primary-disabled-background-color);
+      background-image: var(--button-primary-disabled-background-image);
+      box-shadow: var(--button-primary-disabled-box-shadow);
+      color: var(--button-primary-disabled-text-color);
+      path {
+        fill: var(--button-primary-disabled-text-color);
+      }
+    }
+  }
+
   &.secondary {
     border: solid;
     border-width: 2px;

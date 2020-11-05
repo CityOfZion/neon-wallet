@@ -48,8 +48,7 @@ const INPUT = {
   '--input-label-opacity': 0.5,
   '--input-label': '#fff',
   '--input-select-hover': '#3B3B4F',
-  '--input-active':
-    'linear-gradient(#f2f2f2, #f2f2f2), radial-gradient(circle at top left, #4CFFB3, #6bdaf6)',
+  '--input-active': '#4CFFB3',
   '--input-icon': '#9ca0a9',
   '--input-placeholder': 'rgba(255, 255, 255, 0.5)',
 }
@@ -70,9 +69,9 @@ const PANEL = {
   '--panel-background': '#333D46',
   '--panel-header-border': '#8d98ae',
   '--panel-label-text': '#8d98ae',
-  '--panel-full-height-background': '#2E3542',
-  '--panel-full-height-nav-background': '#292F3B',
-  '--panel-full-height-instructions-text': 'rgba(255, 255, 255, 0.5)',
+  '--panel-full-height-background': '#333D46',
+  '--panel-full-height-nav-background': '#2B2F37',
+  '--panel-full-height-instructions-text': '#fff',
   '--panel-full-height-instructions-border': '#8D98AE',
   '--panel-full-height-header-icon-color': '#fff',
   '--panel-receive-explanation': '#394152',
@@ -84,7 +83,7 @@ const MODAL = {
 
 const AUTH_STYLES = {
   '--auth-main-container-background': '#333D46',
-  '--auth-secondary-button-background': '#333D46',
+  '--auth-secondary-button-background': 'transparent',
   '--auth-scan-qr-border': '#5c677f',
 }
 
