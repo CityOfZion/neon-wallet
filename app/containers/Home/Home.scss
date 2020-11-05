@@ -154,9 +154,9 @@ $navigation-margin: 20px;
 
 .ledgerStageActive {
   opacity: 1;
-  border-color: #66eb8e #6bdaf6 #6bdaf6 #66eb8e;
+  border-color: #66eb8e;
   &:first-child {
-    border-bottom-color: #6bdaf6;
+    border-bottom-color: #66eb8e;
   }
 
   .ledgerStageIcon {
@@ -206,18 +206,6 @@ $navigation-margin: 20px;
   margin-top: 15px;
   margin-bottom: 30px;
   flex: 1;
-
-  button {
-    background: var(--auth-secondary-button-background) !important;
-  }
-
-  button:hover {
-    background: var(--button-secondary-hover) !important;
-  }
-
-  button:disabled {
-    background: transparent !important;
-  }
 }
 
 .buttonContainer {

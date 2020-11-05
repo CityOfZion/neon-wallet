@@ -8,12 +8,14 @@ const BASE = {
 
 const BUTTON = {
   '--button-disabled': '#5C677F',
+  '--button-primary-disabled-box-shadow':
+    '-12px -12px 36px 0 rgba(70,77,83,0.50), 12px 12px 36px 0 rgba(18,21,23,0.99), inset -1px -1px 0 0 rgba(0,0,0,0.32), inset 1px 1px 0 0 rgba(214,210,210,0.14)',
   '--button-primary-box-shadow':
     '-4px -4px 20px 0 rgba(94,101,107,0.50), 4px 4px 20px 0 rgba(18,21,23,0.81), inset -1px -1px 0 0 rgba(0,0,0,0.32), inset 1px 1px 0 0 rgba(214,210,210,0.14)',
   '--button-primary-disabled-background-image':
     'linear-gradient(180deg, #313e46 0%, #20292f 100%)',
-  '--button-primary-disabled-text-color': '#37414B',
-  '--button-primary-disabled-background-color': '#273239',
+  '--button-primary-disabled-text-color': '#4C5763',
+  '--button-primary-disabled-background-color': '#4C5763',
   '--button-primary-background-image':
     'linear-gradient(180deg, #42535D 0%, #273139 100%)',
   '--button-primary-hover-background-image':
@@ -39,15 +41,14 @@ const BUTTON = {
 }
 
 const INPUT = {
-  '--input-background': '#394152',
+  '--input-background': '#28313A',
   '--input-error': '#ee6d66',
   '--input-error-text': '#fff',
   '--input-text': '#fff',
   '--input-label-opacity': 0.5,
   '--input-label': '#fff',
   '--input-select-hover': '#3B3B4F',
-  '--input-active':
-    'linear-gradient(#f2f2f2, #f2f2f2), radial-gradient(circle at top left, #4CFFB3, #6bdaf6)',
+  '--input-active': '#4CFFB3',
   '--input-icon': '#9ca0a9',
   '--input-placeholder': 'rgba(255, 255, 255, 0.5)',
 }
@@ -68,9 +69,9 @@ const PANEL = {
   '--panel-background': '#333D46',
   '--panel-header-border': '#8d98ae',
   '--panel-label-text': '#8d98ae',
-  '--panel-full-height-background': '#2E3542',
-  '--panel-full-height-nav-background': '#292F3B',
-  '--panel-full-height-instructions-text': 'rgba(255, 255, 255, 0.5)',
+  '--panel-full-height-background': '#333D46',
+  '--panel-full-height-nav-background': '#2B2F37',
+  '--panel-full-height-instructions-text': '#fff',
   '--panel-full-height-instructions-border': '#8D98AE',
   '--panel-full-height-header-icon-color': '#fff',
   '--panel-receive-explanation': '#394152',
@@ -82,7 +83,7 @@ const MODAL = {
 
 const AUTH_STYLES = {
   '--auth-main-container-background': '#333D46',
-  '--auth-secondary-button-background': '#333D46',
+  '--auth-secondary-button-background': 'transparent',
   '--auth-scan-qr-border': '#5c677f',
 }
 

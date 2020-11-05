@@ -52,6 +52,7 @@ const ConfirmModal = ({
           <FormattedMessage id="modalActionConfirm" />
         </Button>
         <Button
+          elevated
           id="cancel"
           onClick={() => {
             hideModal()
