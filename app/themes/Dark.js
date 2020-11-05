@@ -41,7 +41,7 @@ const BUTTON = {
 }
 
 const INPUT = {
-  '--input-background': '#394152',
+  '--input-background': '#28313A',
   '--input-error': '#ee6d66',
   '--input-error-text': '#fff',
   '--input-text': '#fff',
