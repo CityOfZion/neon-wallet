@@ -10,6 +10,8 @@ const BUTTON = {
   '--button-disabled': '#d6d9e0',
   '--button-primary-box-shadow':
     '-17px -17px 20px 0 rgba(255,255,255,0.54), 17px 17px 20px 0 #C6CCD1, inset -1px -1px 0 0 #A4B0C3, inset 1px 1px 0 0 #FFFFFF',
+  '--button-primary-disabled-box-shadow':
+    ' -17px -17px 20px 0 rgba(255,255,255,0.54), 17px 17px 20px 0 #C6CCD1',
   '--button-primary-disabled-background-color': '#E0E9EF',
   '--button-primary-background-image':
     'linear-gradient(180deg, #EAF2F7 2%, #E6F0F6 97%)',

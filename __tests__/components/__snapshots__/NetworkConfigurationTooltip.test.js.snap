@@ -1004,6 +1004,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                             "--button-primary-background-image": "linear-gradient(180deg, #EAF2F7 2%, #E6F0F6 97%)",
                                             "--button-primary-box-shadow": "-17px -17px 20px 0 rgba(255,255,255,0.54), 17px 17px 20px 0 #C6CCD1, inset -1px -1px 0 0 #A4B0C3, inset 1px 1px 0 0 #FFFFFF",
                                             "--button-primary-disabled-background-color": "#E0E9EF",
+                                            "--button-primary-disabled-box-shadow": " -17px -17px 20px 0 rgba(255,255,255,0.54), 17px 17px 20px 0 #C6CCD1",
                                             "--button-primary-disabled-text-color": "#acbbc4",
                                             "--button-primary-hover-background-image": "linear-gradient(180deg, #FFFFFF 2%, #E2EAEF 100%)",
                                             "--button-primary-text": "#394152",
@@ -1244,13 +1245,14 @@ exports[`Sidebar renders without crashing 1`] = `
                                                     onClick={[Function]}
                                                   >
                                                     <Button
+                                                      elevated={true}
                                                       primary={false}
                                                       renderIcon={[Function]}
                                                       shouldCenterButtonLabelText={true}
                                                       type="button"
                                                     >
                                                       <button
-                                                        className="button secondary"
+                                                        className="button primary secondaryRaised"
                                                         type="button"
                                                       >
                                                         <span
