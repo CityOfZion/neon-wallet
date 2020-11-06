@@ -15,7 +15,6 @@ type Props = {
   renderHeaderIcon: () => React$Node,
   shouldRenderHeader: Boolean,
   headerText: string,
-  iconColor: string,
   className: string,
   containerClassName: string,
   headerContainerClassName: string,
