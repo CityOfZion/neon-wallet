@@ -92,14 +92,14 @@ export default class Home extends React.Component<Props, State> {
           <div className={styles.buttonRow}>
             <div className={styles.buttonContainer}>
               <Link to={ROUTES.CREATE_WALLET}>
-                <Button elevated disabled={loading} renderIcon={AddIcon}>
+                <Button disabled={loading} renderIcon={AddIcon}>
                   <FormattedMessage id="authCreateWallet" />
                 </Button>
               </Link>
             </div>
             <div className={styles.buttonContainer}>
               <Link to={ROUTES.IMPORT_WALLET}>
-                <Button elevated disabled={loading} renderIcon={ImportIcon}>
+                <Button disabled={loading} renderIcon={ImportIcon}>
                   <FormattedMessage id="authImportWallet" />
                 </Button>
               </Link>

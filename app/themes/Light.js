@@ -24,13 +24,29 @@ const BUTTON = {
   '--button-secondary-text': '#394152',
   '--button-icon-color': '#394152',
   '--secondary-button-icon-color': '#394152',
-  '--button-priority-transfer-background': '#fff',
+  '--button-active': '#fff',
+  '--button-priority-active-hover': '#fff',
+  '--button-active-hover': '#fff',
+  '--button-priority-transfer-background':
+    'linear-gradient(180deg, #EAF2F7 2%, #E6F0F6 97%)',
+  '--button-priority-transfer-disabled': 'transparent',
+  '--button-priority-transfer-button-border': '1px solid #a4b0c3',
+  '--button-priority-transfer-disabled-color': '#CCD4D9',
   '--button-priority-transfer-color': '#394152',
-  '--button-priority-transfer-disabled': '#fff',
+  '--button-priority-disabled-opacity': '1',
+  '--button-priority-conditional-box-shadow': 'none',
+  '--button-priority-button-container-shadow':
+    '-4px -4px 9px 0 rgba(255, 255, 255, 0.54), 4px 4px 13px 0 #c6ccd1, inset -1px -1px 0 0 #a4b0c3, inset 1px 1px 0 0 #ffffff',
+  '--button-priority-standard-icon-color': '#394152',
+  '--button-priority-button-container-background':
+    'linear-gradient(180deg, #eff5f8 2%, #e4edf2 97%)',
+
   '--button-max-amount-background': '#e6e6e6',
   '--button-max-amount-text': '#8f939b',
   '--button-flag-icon-color': '#394152',
   '--button-flag-icon-opacity': 0.3,
+
+  '--secondary-raised-base-text': '#7f8f98',
 }
 
 const INPUT = {
@@ -40,7 +56,7 @@ const INPUT = {
   '--input-text': '#282828',
   '--input-label': '#5c677f',
   '--input-label-opacity': 0.5,
-  '--input-select-hover': '#e6e6e6',
+  '--input-select-hover': '#D4DEE4',
   '--input-active':
     'linear-gradient(#F1F5FC, #F1F5FC), radial-gradient(circle at top left, #66eb8e, #66eb8e)',
   '--input-icon': '#9ca0a9',
@@ -70,6 +86,8 @@ const PANEL = {
   '--panel-full-height-header-icon-color': '#394152',
   '--panel-receive-explanation': 'rgba(242, 242, 242, .5)',
   '--view-layout-header-icon-color': '#282828',
+  '--panel-box-shadow':
+    '-3px -3px 17px 0 rgba(255, 255, 255, 0.83), 3px 3px 20px 0 rgba(18, 21, 23, 0.09)',
 }
 
 const MODAL = {
@@ -109,6 +127,8 @@ const TX_LIST = {
   '--tx-list-button-icon': '#394152',
   '--tx-list-copy-icon': '#9599a2',
   '--tx-icon-color': '#32E096',
+  '--tx-list-box-shadow':
+    '-3px -3px 17px 0 rgba(255,255,255,0.44), 3px 4px 20px 0 rgba(18,21,23,0.24)',
 }
 
 const SETTINGS = {
@@ -141,6 +161,7 @@ const CONTACTS = {
   '--contacts-odd-numbered-row': 'rgba(230, 230, 230, 0.1)',
   '--contacts-group-header-background': '#f6f7f8',
   '--contacts-group-header-text': '#394152',
+  '--contacts-delete-contact-name': '#394152',
 }
 
 const SEND = {
@@ -159,7 +180,7 @@ const NEWS = {
 
 export const LIGHT_NETWORK_CONFIG_TOOLTIP = {
   '--network-config-tooltip-label': '#8D98AE',
-  '--network-config-tooltip-background': '#f8f8f8',
+  '--network-config-tooltip-background': '#fff',
   '--network-config-tooltip-color': '#394152',
 }
 

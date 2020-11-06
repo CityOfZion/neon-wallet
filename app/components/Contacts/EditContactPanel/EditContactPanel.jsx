@@ -83,9 +83,14 @@ export default class EditContactPanel extends React.Component<Props> {
 
     showModal(MODAL_TYPES.CONFIRM, {
       title: 'Confirm Delete',
-      text: `${intl.formatMessage({
-        id: 'confirmRemoveContact',
-      })} - ${name}`,
+      renderBody: () => (
+        <div className={styles.confirmDeleteModalPrompt}>
+          {`${intl.formatMessage({
+            id: 'confirmRemoveContact',
+          })}`}
+          <h2>{name}</h2>
+        </div>
+      ),
       onClick: () => {
         this.props.deleteContact(name)
         showSuccessNotification({

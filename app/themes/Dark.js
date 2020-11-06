@@ -1,5 +1,5 @@
 const BASE = {
-  '--base-scrollbar-track': '#2E3542',
+  '--base-scrollbar-track': '#39404c',
   '--base-scrollbar-thumb': '#5c677f',
   '--base-main-background': '#242B31',
   '--base-text': '#fff',
@@ -20,24 +20,34 @@ const BUTTON = {
     'linear-gradient(180deg, #42535D 0%, #273139 100%)',
   '--button-primary-hover-background-image':
     ' linear-gradient(180deg, #566A76 0%, #33414A 100%)',
-  '--button-active': '#4CFFB3',
-  '--button-active-text': '#242933',
-  '--button-secondary-background': '#3B3B4F',
+  '--button-active': 'linear-gradient(180deg, #273139 0%, #313D45 100%)',
+  '--button-active-text': '#4CFFB3',
+  '--button-secondary-background': 'transparent',
   '--button-primary-background': '#4CFFB3',
   '--button-primary-hover': '#4CFFB3',
-  '--button-secondary-hover': '#3B3B4F',
+  '--button-secondary-hover': 'transparent',
   '--button-primary-text': '#4CFFB3',
   '--button-secondary-text': '#394152',
   '--button-icon-color': '#4CFFB3',
-  '--button-active-hover': '#4CFFB3',
+  '--button-active-hover': 'linear-gradient(180deg, #273139 0%, #313D45 100%)',
+  '--button-priority-active-hover':
+    'linear-gradient(180deg, #273139 0%, #313D45 100%)',
   '--secondary-button-icon-color': '#fff',
-  '--button-priority-transfer-background': '#2E3542',
-  '--button-priority-transfer-color': '#fff',
-  '--button-priority-transfer-disabled': '#2E3542',
+  '--button-priority-standard-icon-color': '#4CFFB3',
+  '--button-priority-transfer-background':
+    'linear-gradient(180deg, #42535D 0%, #273139 100%)',
+  '--button-priority-transfer-color': '#9DB2BB',
+  '--button-priority-transfer-disabled-color': '#495460',
+  '--button-priority-disabled-opacity': '.6',
+  '--button-priority-transfer-disabled':
+    'linear-gradient(180deg, #2E3B44 0%, #20292F 100%)',
   '--button-max-amount-background': '#8D98AE',
   '--button-max-amount-text': '#394152',
   '--button-flag-icon-color': '#fff',
   '--button-flag-icon-opacity': 0.6,
+  '--button-priority-conditional-box-shadow':
+    ' -12px -12px 36px 0 rgba(70, 77, 83, 0.46), 12px 12px 36px 0 rgba(18, 21, 23, 0.99), inset -1px -1px 0 0 rgba(0, 0, 0, 0.32), inset 1px 1px 0 0 rgba(214, 210, 210, 0.14)',
+  '--secondary-raised-base-text': '#fff',
 }
 
 const INPUT = {
@@ -47,7 +57,7 @@ const INPUT = {
   '--input-text': '#fff',
   '--input-label-opacity': 0.5,
   '--input-label': '#fff',
-  '--input-select-hover': '#3B3B4F',
+  '--input-select-hover': '#39404c',
   '--input-active': '#4CFFB3',
   '--input-icon': '#9ca0a9',
   '--input-placeholder': 'rgba(255, 255, 255, 0.5)',
@@ -78,7 +88,7 @@ const PANEL = {
 }
 
 const MODAL = {
-  '--modal-overlay': 'rgba(248, 248, 248, 0.21)',
+  '--modal-overlay': 'rgba(0,0,0,0.60)',
 }
 
 const AUTH_STYLES = {
@@ -143,6 +153,7 @@ const CONTACTS = {
   '--contacts-odd-numbered-row': '#343B4A',
   '--contacts-group-header-background': '#20272F',
   '--contacts-group-header-text': '#8297A0',
+  '--contacts-delete-contact-name': '#4CFFB3',
 }
 
 const SEND = {
@@ -161,7 +172,7 @@ const NEWS = {
 
 export const DARK_NETWORK_CONFIG_TOOLTIP = {
   '--network-config-tooltip-label': '#8D98AE',
-  '--network-config-tooltip-background': '#1b2029',
+  '--network-config-tooltip-background': '#21242C',
   '--network-config-tooltip-color': '#fff',
 }
 
