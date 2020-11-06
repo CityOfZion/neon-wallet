@@ -7,7 +7,6 @@ const BASE = {
 }
 
 const BUTTON = {
-  '--button-disabled': '#5C677F',
   '--button-primary-disabled-box-shadow':
     '-12px -12px 36px 0 rgba(70,77,83,0.50), 12px 12px 36px 0 rgba(18,21,23,0.99), inset -1px -1px 0 0 rgba(0,0,0,0.32), inset 1px 1px 0 0 rgba(214,210,210,0.14)',
   '--button-primary-box-shadow':

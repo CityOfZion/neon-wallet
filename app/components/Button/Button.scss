@@ -58,23 +58,9 @@
       background-image: var(--button-primary-hover-background-image);
     }
   }
-  // background: #292F3B;
-  // border-radius: 4px;
-  // background-image: linear-gradient(180deg, #EAF2F7 2%, #E6F0F6 97%);
-  // box-shadow: -17px -17px 20px 0 rgba(255,255,255,0.54), 17px 17px 20px 0 #C6CCD1, inset -1px -1px 0 0 #A4B0C3, inset 1px 1px 0 0 #FFFFFF;
-  // border-radius: 4px;
-  // background: #7F8F98;
-  // font-family: Helvetica;
-  // font-size: 14px;
-  // color: #7F8F98;
-  // text-align: center;
 
   &.secondaryRaised {
     color: var(--secondary-raised-base-text);
-    // background-image: linear-gradient(180deg, #eaf2f7 2%, #e6f0f6 97%);
-    // box-shadow: -17px -17px 20px 0 rgba(255, 255, 255, 0.54),
-    //   17px 17px 20px 0 #c6ccd1, inset -1px -1px 0 0 #a4b0c3,
-    //   inset 1px 1px 0 0 #ffffff;
 
     path {
       fill: var(--base-text);

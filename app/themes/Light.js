@@ -7,7 +7,6 @@ const BASE = {
 }
 
 const BUTTON = {
-  '--button-disabled': '#d6d9e0',
   '--button-primary-box-shadow':
     '-17px -17px 20px 0 rgba(255,255,255,0.54), 17px 17px 20px 0 #C6CCD1, inset -1px -1px 0 0 #A4B0C3, inset 1px 1px 0 0 #FFFFFF',
   '--button-primary-disabled-box-shadow':
@@ -40,12 +39,10 @@ const BUTTON = {
   '--button-priority-standard-icon-color': '#394152',
   '--button-priority-button-container-background':
     'linear-gradient(180deg, #eff5f8 2%, #e4edf2 97%)',
-
   '--button-max-amount-background': '#e6e6e6',
   '--button-max-amount-text': '#8f939b',
   '--button-flag-icon-color': '#394152',
   '--button-flag-icon-opacity': 0.3,
-
   '--secondary-raised-base-text': '#7f8f98',
 }
 
