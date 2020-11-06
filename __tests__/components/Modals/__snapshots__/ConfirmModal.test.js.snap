@@ -82,6 +82,8 @@ exports[`ConfirmModal should render without crashing 1`] = `
               "--base-scrollbar-thumb": "#5c677f",
               "--base-scrollbar-track": "#fff",
               "--base-text": "#282828",
+              "--button-active": "#fff",
+              "--button-active-hover": "#fff",
               "--button-disabled": "#d6d9e0",
               "--button-flag-icon-color": "#394152",
               "--button-flag-icon-opacity": 0.3,
@@ -95,12 +97,21 @@ exports[`ConfirmModal should render without crashing 1`] = `
               "--button-primary-disabled-text-color": "#acbbc4",
               "--button-primary-hover-background-image": "linear-gradient(180deg, #FFFFFF 2%, #E2EAEF 100%)",
               "--button-primary-text": "#394152",
-              "--button-priority-transfer-background": "#fff",
+              "--button-priority-active-hover": "#fff",
+              "--button-priority-button-container-background": "linear-gradient(180deg, #eff5f8 2%, #e4edf2 97%)",
+              "--button-priority-button-container-shadow": "-4px -4px 9px 0 rgba(255, 255, 255, 0.54), 4px 4px 13px 0 #c6ccd1, inset -1px -1px 0 0 #a4b0c3, inset 1px 1px 0 0 #ffffff",
+              "--button-priority-conditional-box-shadow": "none",
+              "--button-priority-disabled-opacity": "1",
+              "--button-priority-standard-icon-color": "#394152",
+              "--button-priority-transfer-background": "linear-gradient(180deg, #EAF2F7 2%, #E6F0F6 97%)",
+              "--button-priority-transfer-button-border": "1px solid #a4b0c3",
               "--button-priority-transfer-color": "#394152",
-              "--button-priority-transfer-disabled": "#fff",
+              "--button-priority-transfer-disabled": "transparent",
+              "--button-priority-transfer-disabled-color": "#CCD4D9",
               "--button-secondary-background": "#fff",
               "--button-secondary-hover": "#F1F5FC",
               "--button-secondary-text": "#394152",
+              "--contacts-delete-contact-name": "#394152",
               "--contacts-group-header-background": "#f6f7f8",
               "--contacts-group-header-text": "#394152",
               "--contacts-odd-numbered-row": "rgba(230, 230, 230, 0.1)",
@@ -120,10 +131,10 @@ exports[`ConfirmModal should render without crashing 1`] = `
               "--input-label": "#5c677f",
               "--input-label-opacity": 0.5,
               "--input-placeholder": "rgba(40, 40, 40, 0.5)",
-              "--input-select-hover": "#e6e6e6",
+              "--input-select-hover": "#D4DEE4",
               "--input-text": "#282828",
               "--modal-overlay": "rgba(26, 54, 80, 0.25)",
-              "--network-config-tooltip-background": "#f8f8f8",
+              "--network-config-tooltip-background": "#fff",
               "--network-config-tooltip-color": "#394152",
               "--network-config-tooltip-label": "#8D98AE",
               "--news-content-border-color": "#ececec",
@@ -135,6 +146,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
               "--notifications-error-icon-color": "#fff",
               "--notifications-success-icon-color": "#fff",
               "--panel-background": "#fff",
+              "--panel-box-shadow": "-3px -3px 17px 0 rgba(255, 255, 255, 0.83), 3px 3px 20px 0 rgba(18, 21, 23, 0.09)",
               "--panel-full-height-background": "#fff",
               "--panel-full-height-header-icon-color": "#394152",
               "--panel-full-height-instructions-border": "rgba(0, 0, 0, 0.15)",
@@ -150,6 +162,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
               "--qr-scan-animation-start": "rgba(57, 65, 82, 1)",
               "--qr-scan-paused": "rgba(102, 237, 135, 0.6)",
               "--secondary-button-icon-color": "#394152",
+              "--secondary-raised-base-text": "#7f8f98",
               "--send-success-row-info": "#394152",
               "--settings-donation-text": "#5c677f",
               "--settings-item-border-color": "#F1F5FC",
@@ -168,6 +181,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
               "--tab-border": "#394152",
               "--tab-text": "#394152",
               "--tx-icon-color": "#32E096",
+              "--tx-list-box-shadow": "-3px -3px 17px 0 rgba(255,255,255,0.44), 3px 4px 20px 0 rgba(18,21,23,0.24)",
               "--tx-list-button-icon": "#394152",
               "--tx-list-copy-icon": "#9599a2",
               "--tx-list-odd-row": "#F1F5FC",
@@ -183,6 +197,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
               "margin": "auto",
               "padding": 0,
               "width": "500px",
+              "zIndex": 5000,
             },
             "overlay": Object {
               "--amounts-panel-asset-amount-text": "#515151",
@@ -199,6 +214,8 @@ exports[`ConfirmModal should render without crashing 1`] = `
               "--base-scrollbar-thumb": "#5c677f",
               "--base-scrollbar-track": "#fff",
               "--base-text": "#282828",
+              "--button-active": "#fff",
+              "--button-active-hover": "#fff",
               "--button-disabled": "#d6d9e0",
               "--button-flag-icon-color": "#394152",
               "--button-flag-icon-opacity": 0.3,
@@ -212,12 +229,21 @@ exports[`ConfirmModal should render without crashing 1`] = `
               "--button-primary-disabled-text-color": "#acbbc4",
               "--button-primary-hover-background-image": "linear-gradient(180deg, #FFFFFF 2%, #E2EAEF 100%)",
               "--button-primary-text": "#394152",
-              "--button-priority-transfer-background": "#fff",
+              "--button-priority-active-hover": "#fff",
+              "--button-priority-button-container-background": "linear-gradient(180deg, #eff5f8 2%, #e4edf2 97%)",
+              "--button-priority-button-container-shadow": "-4px -4px 9px 0 rgba(255, 255, 255, 0.54), 4px 4px 13px 0 #c6ccd1, inset -1px -1px 0 0 #a4b0c3, inset 1px 1px 0 0 #ffffff",
+              "--button-priority-conditional-box-shadow": "none",
+              "--button-priority-disabled-opacity": "1",
+              "--button-priority-standard-icon-color": "#394152",
+              "--button-priority-transfer-background": "linear-gradient(180deg, #EAF2F7 2%, #E6F0F6 97%)",
+              "--button-priority-transfer-button-border": "1px solid #a4b0c3",
               "--button-priority-transfer-color": "#394152",
-              "--button-priority-transfer-disabled": "#fff",
+              "--button-priority-transfer-disabled": "transparent",
+              "--button-priority-transfer-disabled-color": "#CCD4D9",
               "--button-secondary-background": "#fff",
               "--button-secondary-hover": "#F1F5FC",
               "--button-secondary-text": "#394152",
+              "--contacts-delete-contact-name": "#394152",
               "--contacts-group-header-background": "#f6f7f8",
               "--contacts-group-header-text": "#394152",
               "--contacts-odd-numbered-row": "rgba(230, 230, 230, 0.1)",
@@ -237,10 +263,10 @@ exports[`ConfirmModal should render without crashing 1`] = `
               "--input-label": "#5c677f",
               "--input-label-opacity": 0.5,
               "--input-placeholder": "rgba(40, 40, 40, 0.5)",
-              "--input-select-hover": "#e6e6e6",
+              "--input-select-hover": "#D4DEE4",
               "--input-text": "#282828",
               "--modal-overlay": "rgba(26, 54, 80, 0.25)",
-              "--network-config-tooltip-background": "#f8f8f8",
+              "--network-config-tooltip-background": "#fff",
               "--network-config-tooltip-color": "#394152",
               "--network-config-tooltip-label": "#8D98AE",
               "--news-content-border-color": "#ececec",
@@ -252,6 +278,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
               "--notifications-error-icon-color": "#fff",
               "--notifications-success-icon-color": "#fff",
               "--panel-background": "#fff",
+              "--panel-box-shadow": "-3px -3px 17px 0 rgba(255, 255, 255, 0.83), 3px 3px 20px 0 rgba(18, 21, 23, 0.09)",
               "--panel-full-height-background": "#fff",
               "--panel-full-height-header-icon-color": "#394152",
               "--panel-full-height-instructions-border": "rgba(0, 0, 0, 0.15)",
@@ -267,6 +294,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
               "--qr-scan-animation-start": "rgba(57, 65, 82, 1)",
               "--qr-scan-paused": "rgba(102, 237, 135, 0.6)",
               "--secondary-button-icon-color": "#394152",
+              "--secondary-raised-base-text": "#7f8f98",
               "--send-success-row-info": "#394152",
               "--settings-donation-text": "#5c677f",
               "--settings-item-border-color": "#F1F5FC",
@@ -285,12 +313,14 @@ exports[`ConfirmModal should render without crashing 1`] = `
               "--tab-border": "#394152",
               "--tab-text": "#394152",
               "--tx-icon-color": "#32E096",
+              "--tx-list-box-shadow": "-3px -3px 17px 0 rgba(255,255,255,0.44), 3px 4px 20px 0 rgba(18,21,23,0.24)",
               "--tx-list-button-icon": "#394152",
               "--tx-list-copy-icon": "#9599a2",
               "--tx-list-odd-row": "#F1F5FC",
               "--view-layout-header-icon-color": "#282828",
               "backgroundColor": "var(--modal-overlay)",
               "margin": "auto",
+              "zIndex": 200,
             },
           }
         }
@@ -302,11 +332,11 @@ exports[`ConfirmModal should render without crashing 1`] = `
             >
               <div
                 class="ReactModal__Overlay ReactModal__Overlay--after-open"
-                style="position: fixed; top: 0px; left: 0px; right: 0px; bottom: 0px; margin: auto;"
+                style="position: fixed; top: 0px; left: 0px; right: 0px; bottom: 0px; margin: auto; z-index: 200;"
               >
                 <div
                   class="ReactModal__Content ReactModal__Content--after-open"
-                  style="position: absolute; top: 40px; left: 40px; right: 40px; bottom: 40px; overflow: auto; border-radius: 4px; outline: none; padding: 0px; width: 500px; height: 200px; margin: auto; box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 4px; display: flex; flex-direction: column;"
+                  style="position: absolute; top: 40px; left: 40px; right: 40px; bottom: 40px; overflow: auto; border-radius: 4px; outline: none; padding: 0px; width: 500px; height: 200px; margin: auto; box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 4px; display: flex; flex-direction: column; z-index: 5000;"
                   tabindex="-1"
                 >
                   <div
@@ -328,21 +358,21 @@ exports[`ConfirmModal should render without crashing 1`] = `
                         class="modalFooter"
                       >
                         <button
-                          class="button actionButton primary"
-                          id="confirm"
-                          type="button"
-                        >
-                          <span>
-                            Confirm
-                          </span>
-                        </button>
-                        <button
                           class="button primary secondaryRaised"
                           id="cancel"
                           type="button"
                         >
                           <span>
                             Cancel
+                          </span>
+                        </button>
+                        <button
+                          class="button actionButton primary"
+                          id="confirm"
+                          type="button"
+                        >
+                          <span>
+                            Confirm
                           </span>
                         </button>
                       </div>
@@ -408,6 +438,8 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--base-scrollbar-thumb": "#5c677f",
                   "--base-scrollbar-track": "#fff",
                   "--base-text": "#282828",
+                  "--button-active": "#fff",
+                  "--button-active-hover": "#fff",
                   "--button-disabled": "#d6d9e0",
                   "--button-flag-icon-color": "#394152",
                   "--button-flag-icon-opacity": 0.3,
@@ -421,12 +453,21 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--button-primary-disabled-text-color": "#acbbc4",
                   "--button-primary-hover-background-image": "linear-gradient(180deg, #FFFFFF 2%, #E2EAEF 100%)",
                   "--button-primary-text": "#394152",
-                  "--button-priority-transfer-background": "#fff",
+                  "--button-priority-active-hover": "#fff",
+                  "--button-priority-button-container-background": "linear-gradient(180deg, #eff5f8 2%, #e4edf2 97%)",
+                  "--button-priority-button-container-shadow": "-4px -4px 9px 0 rgba(255, 255, 255, 0.54), 4px 4px 13px 0 #c6ccd1, inset -1px -1px 0 0 #a4b0c3, inset 1px 1px 0 0 #ffffff",
+                  "--button-priority-conditional-box-shadow": "none",
+                  "--button-priority-disabled-opacity": "1",
+                  "--button-priority-standard-icon-color": "#394152",
+                  "--button-priority-transfer-background": "linear-gradient(180deg, #EAF2F7 2%, #E6F0F6 97%)",
+                  "--button-priority-transfer-button-border": "1px solid #a4b0c3",
                   "--button-priority-transfer-color": "#394152",
-                  "--button-priority-transfer-disabled": "#fff",
+                  "--button-priority-transfer-disabled": "transparent",
+                  "--button-priority-transfer-disabled-color": "#CCD4D9",
                   "--button-secondary-background": "#fff",
                   "--button-secondary-hover": "#F1F5FC",
                   "--button-secondary-text": "#394152",
+                  "--contacts-delete-contact-name": "#394152",
                   "--contacts-group-header-background": "#f6f7f8",
                   "--contacts-group-header-text": "#394152",
                   "--contacts-odd-numbered-row": "rgba(230, 230, 230, 0.1)",
@@ -446,10 +487,10 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--input-label": "#5c677f",
                   "--input-label-opacity": 0.5,
                   "--input-placeholder": "rgba(40, 40, 40, 0.5)",
-                  "--input-select-hover": "#e6e6e6",
+                  "--input-select-hover": "#D4DEE4",
                   "--input-text": "#282828",
                   "--modal-overlay": "rgba(26, 54, 80, 0.25)",
-                  "--network-config-tooltip-background": "#f8f8f8",
+                  "--network-config-tooltip-background": "#fff",
                   "--network-config-tooltip-color": "#394152",
                   "--network-config-tooltip-label": "#8D98AE",
                   "--news-content-border-color": "#ececec",
@@ -461,6 +502,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--notifications-error-icon-color": "#fff",
                   "--notifications-success-icon-color": "#fff",
                   "--panel-background": "#fff",
+                  "--panel-box-shadow": "-3px -3px 17px 0 rgba(255, 255, 255, 0.83), 3px 3px 20px 0 rgba(18, 21, 23, 0.09)",
                   "--panel-full-height-background": "#fff",
                   "--panel-full-height-header-icon-color": "#394152",
                   "--panel-full-height-instructions-border": "rgba(0, 0, 0, 0.15)",
@@ -476,6 +518,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--qr-scan-animation-start": "rgba(57, 65, 82, 1)",
                   "--qr-scan-paused": "rgba(102, 237, 135, 0.6)",
                   "--secondary-button-icon-color": "#394152",
+                  "--secondary-raised-base-text": "#7f8f98",
                   "--send-success-row-info": "#394152",
                   "--settings-donation-text": "#5c677f",
                   "--settings-item-border-color": "#F1F5FC",
@@ -494,6 +537,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--tab-border": "#394152",
                   "--tab-text": "#394152",
                   "--tx-icon-color": "#32E096",
+                  "--tx-list-box-shadow": "-3px -3px 17px 0 rgba(255,255,255,0.44), 3px 4px 20px 0 rgba(18,21,23,0.24)",
                   "--tx-list-button-icon": "#394152",
                   "--tx-list-copy-icon": "#9599a2",
                   "--tx-list-odd-row": "#F1F5FC",
@@ -509,6 +553,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "margin": "auto",
                   "padding": 0,
                   "width": "500px",
+                  "zIndex": 5000,
                 },
                 "overlay": Object {
                   "--amounts-panel-asset-amount-text": "#515151",
@@ -525,6 +570,8 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--base-scrollbar-thumb": "#5c677f",
                   "--base-scrollbar-track": "#fff",
                   "--base-text": "#282828",
+                  "--button-active": "#fff",
+                  "--button-active-hover": "#fff",
                   "--button-disabled": "#d6d9e0",
                   "--button-flag-icon-color": "#394152",
                   "--button-flag-icon-opacity": 0.3,
@@ -538,12 +585,21 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--button-primary-disabled-text-color": "#acbbc4",
                   "--button-primary-hover-background-image": "linear-gradient(180deg, #FFFFFF 2%, #E2EAEF 100%)",
                   "--button-primary-text": "#394152",
-                  "--button-priority-transfer-background": "#fff",
+                  "--button-priority-active-hover": "#fff",
+                  "--button-priority-button-container-background": "linear-gradient(180deg, #eff5f8 2%, #e4edf2 97%)",
+                  "--button-priority-button-container-shadow": "-4px -4px 9px 0 rgba(255, 255, 255, 0.54), 4px 4px 13px 0 #c6ccd1, inset -1px -1px 0 0 #a4b0c3, inset 1px 1px 0 0 #ffffff",
+                  "--button-priority-conditional-box-shadow": "none",
+                  "--button-priority-disabled-opacity": "1",
+                  "--button-priority-standard-icon-color": "#394152",
+                  "--button-priority-transfer-background": "linear-gradient(180deg, #EAF2F7 2%, #E6F0F6 97%)",
+                  "--button-priority-transfer-button-border": "1px solid #a4b0c3",
                   "--button-priority-transfer-color": "#394152",
-                  "--button-priority-transfer-disabled": "#fff",
+                  "--button-priority-transfer-disabled": "transparent",
+                  "--button-priority-transfer-disabled-color": "#CCD4D9",
                   "--button-secondary-background": "#fff",
                   "--button-secondary-hover": "#F1F5FC",
                   "--button-secondary-text": "#394152",
+                  "--contacts-delete-contact-name": "#394152",
                   "--contacts-group-header-background": "#f6f7f8",
                   "--contacts-group-header-text": "#394152",
                   "--contacts-odd-numbered-row": "rgba(230, 230, 230, 0.1)",
@@ -563,10 +619,10 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--input-label": "#5c677f",
                   "--input-label-opacity": 0.5,
                   "--input-placeholder": "rgba(40, 40, 40, 0.5)",
-                  "--input-select-hover": "#e6e6e6",
+                  "--input-select-hover": "#D4DEE4",
                   "--input-text": "#282828",
                   "--modal-overlay": "rgba(26, 54, 80, 0.25)",
-                  "--network-config-tooltip-background": "#f8f8f8",
+                  "--network-config-tooltip-background": "#fff",
                   "--network-config-tooltip-color": "#394152",
                   "--network-config-tooltip-label": "#8D98AE",
                   "--news-content-border-color": "#ececec",
@@ -578,6 +634,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--notifications-error-icon-color": "#fff",
                   "--notifications-success-icon-color": "#fff",
                   "--panel-background": "#fff",
+                  "--panel-box-shadow": "-3px -3px 17px 0 rgba(255, 255, 255, 0.83), 3px 3px 20px 0 rgba(18, 21, 23, 0.09)",
                   "--panel-full-height-background": "#fff",
                   "--panel-full-height-header-icon-color": "#394152",
                   "--panel-full-height-instructions-border": "rgba(0, 0, 0, 0.15)",
@@ -593,6 +650,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--qr-scan-animation-start": "rgba(57, 65, 82, 1)",
                   "--qr-scan-paused": "rgba(102, 237, 135, 0.6)",
                   "--secondary-button-icon-color": "#394152",
+                  "--secondary-raised-base-text": "#7f8f98",
                   "--send-success-row-info": "#394152",
                   "--settings-donation-text": "#5c677f",
                   "--settings-item-border-color": "#F1F5FC",
@@ -611,12 +669,14 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--tab-border": "#394152",
                   "--tab-text": "#394152",
                   "--tx-icon-color": "#32E096",
+                  "--tx-list-box-shadow": "-3px -3px 17px 0 rgba(255,255,255,0.44), 3px 4px 20px 0 rgba(18,21,23,0.24)",
                   "--tx-list-button-icon": "#394152",
                   "--tx-list-copy-icon": "#9599a2",
                   "--tx-list-odd-row": "#F1F5FC",
                   "--view-layout-header-icon-color": "#282828",
                   "backgroundColor": "var(--modal-overlay)",
                   "margin": "auto",
+                  "zIndex": 200,
                 },
               }
             }
@@ -642,6 +702,8 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--base-scrollbar-thumb": "#5c677f",
                   "--base-scrollbar-track": "#fff",
                   "--base-text": "#282828",
+                  "--button-active": "#fff",
+                  "--button-active-hover": "#fff",
                   "--button-disabled": "#d6d9e0",
                   "--button-flag-icon-color": "#394152",
                   "--button-flag-icon-opacity": 0.3,
@@ -655,12 +717,21 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--button-primary-disabled-text-color": "#acbbc4",
                   "--button-primary-hover-background-image": "linear-gradient(180deg, #FFFFFF 2%, #E2EAEF 100%)",
                   "--button-primary-text": "#394152",
-                  "--button-priority-transfer-background": "#fff",
+                  "--button-priority-active-hover": "#fff",
+                  "--button-priority-button-container-background": "linear-gradient(180deg, #eff5f8 2%, #e4edf2 97%)",
+                  "--button-priority-button-container-shadow": "-4px -4px 9px 0 rgba(255, 255, 255, 0.54), 4px 4px 13px 0 #c6ccd1, inset -1px -1px 0 0 #a4b0c3, inset 1px 1px 0 0 #ffffff",
+                  "--button-priority-conditional-box-shadow": "none",
+                  "--button-priority-disabled-opacity": "1",
+                  "--button-priority-standard-icon-color": "#394152",
+                  "--button-priority-transfer-background": "linear-gradient(180deg, #EAF2F7 2%, #E6F0F6 97%)",
+                  "--button-priority-transfer-button-border": "1px solid #a4b0c3",
                   "--button-priority-transfer-color": "#394152",
-                  "--button-priority-transfer-disabled": "#fff",
+                  "--button-priority-transfer-disabled": "transparent",
+                  "--button-priority-transfer-disabled-color": "#CCD4D9",
                   "--button-secondary-background": "#fff",
                   "--button-secondary-hover": "#F1F5FC",
                   "--button-secondary-text": "#394152",
+                  "--contacts-delete-contact-name": "#394152",
                   "--contacts-group-header-background": "#f6f7f8",
                   "--contacts-group-header-text": "#394152",
                   "--contacts-odd-numbered-row": "rgba(230, 230, 230, 0.1)",
@@ -680,10 +751,10 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--input-label": "#5c677f",
                   "--input-label-opacity": 0.5,
                   "--input-placeholder": "rgba(40, 40, 40, 0.5)",
-                  "--input-select-hover": "#e6e6e6",
+                  "--input-select-hover": "#D4DEE4",
                   "--input-text": "#282828",
                   "--modal-overlay": "rgba(26, 54, 80, 0.25)",
-                  "--network-config-tooltip-background": "#f8f8f8",
+                  "--network-config-tooltip-background": "#fff",
                   "--network-config-tooltip-color": "#394152",
                   "--network-config-tooltip-label": "#8D98AE",
                   "--news-content-border-color": "#ececec",
@@ -695,6 +766,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--notifications-error-icon-color": "#fff",
                   "--notifications-success-icon-color": "#fff",
                   "--panel-background": "#fff",
+                  "--panel-box-shadow": "-3px -3px 17px 0 rgba(255, 255, 255, 0.83), 3px 3px 20px 0 rgba(18, 21, 23, 0.09)",
                   "--panel-full-height-background": "#fff",
                   "--panel-full-height-header-icon-color": "#394152",
                   "--panel-full-height-instructions-border": "rgba(0, 0, 0, 0.15)",
@@ -710,6 +782,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--qr-scan-animation-start": "rgba(57, 65, 82, 1)",
                   "--qr-scan-paused": "rgba(102, 237, 135, 0.6)",
                   "--secondary-button-icon-color": "#394152",
+                  "--secondary-raised-base-text": "#7f8f98",
                   "--send-success-row-info": "#394152",
                   "--settings-donation-text": "#5c677f",
                   "--settings-item-border-color": "#F1F5FC",
@@ -728,6 +801,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--tab-border": "#394152",
                   "--tab-text": "#394152",
                   "--tx-icon-color": "#32E096",
+                  "--tx-list-box-shadow": "-3px -3px 17px 0 rgba(255,255,255,0.44), 3px 4px 20px 0 rgba(18,21,23,0.24)",
                   "--tx-list-button-icon": "#394152",
                   "--tx-list-copy-icon": "#9599a2",
                   "--tx-list-odd-row": "#F1F5FC",
@@ -739,6 +813,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "position": "fixed",
                   "right": 0,
                   "top": 0,
+                  "zIndex": 200,
                 }
               }
             >
@@ -764,6 +839,8 @@ exports[`ConfirmModal should render without crashing 1`] = `
                     "--base-scrollbar-thumb": "#5c677f",
                     "--base-scrollbar-track": "#fff",
                     "--base-text": "#282828",
+                    "--button-active": "#fff",
+                    "--button-active-hover": "#fff",
                     "--button-disabled": "#d6d9e0",
                     "--button-flag-icon-color": "#394152",
                     "--button-flag-icon-opacity": 0.3,
@@ -777,12 +854,21 @@ exports[`ConfirmModal should render without crashing 1`] = `
                     "--button-primary-disabled-text-color": "#acbbc4",
                     "--button-primary-hover-background-image": "linear-gradient(180deg, #FFFFFF 2%, #E2EAEF 100%)",
                     "--button-primary-text": "#394152",
-                    "--button-priority-transfer-background": "#fff",
+                    "--button-priority-active-hover": "#fff",
+                    "--button-priority-button-container-background": "linear-gradient(180deg, #eff5f8 2%, #e4edf2 97%)",
+                    "--button-priority-button-container-shadow": "-4px -4px 9px 0 rgba(255, 255, 255, 0.54), 4px 4px 13px 0 #c6ccd1, inset -1px -1px 0 0 #a4b0c3, inset 1px 1px 0 0 #ffffff",
+                    "--button-priority-conditional-box-shadow": "none",
+                    "--button-priority-disabled-opacity": "1",
+                    "--button-priority-standard-icon-color": "#394152",
+                    "--button-priority-transfer-background": "linear-gradient(180deg, #EAF2F7 2%, #E6F0F6 97%)",
+                    "--button-priority-transfer-button-border": "1px solid #a4b0c3",
                     "--button-priority-transfer-color": "#394152",
-                    "--button-priority-transfer-disabled": "#fff",
+                    "--button-priority-transfer-disabled": "transparent",
+                    "--button-priority-transfer-disabled-color": "#CCD4D9",
                     "--button-secondary-background": "#fff",
                     "--button-secondary-hover": "#F1F5FC",
                     "--button-secondary-text": "#394152",
+                    "--contacts-delete-contact-name": "#394152",
                     "--contacts-group-header-background": "#f6f7f8",
                     "--contacts-group-header-text": "#394152",
                     "--contacts-odd-numbered-row": "rgba(230, 230, 230, 0.1)",
@@ -802,10 +888,10 @@ exports[`ConfirmModal should render without crashing 1`] = `
                     "--input-label": "#5c677f",
                     "--input-label-opacity": 0.5,
                     "--input-placeholder": "rgba(40, 40, 40, 0.5)",
-                    "--input-select-hover": "#e6e6e6",
+                    "--input-select-hover": "#D4DEE4",
                     "--input-text": "#282828",
                     "--modal-overlay": "rgba(26, 54, 80, 0.25)",
-                    "--network-config-tooltip-background": "#f8f8f8",
+                    "--network-config-tooltip-background": "#fff",
                     "--network-config-tooltip-color": "#394152",
                     "--network-config-tooltip-label": "#8D98AE",
                     "--news-content-border-color": "#ececec",
@@ -817,6 +903,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                     "--notifications-error-icon-color": "#fff",
                     "--notifications-success-icon-color": "#fff",
                     "--panel-background": "#fff",
+                    "--panel-box-shadow": "-3px -3px 17px 0 rgba(255, 255, 255, 0.83), 3px 3px 20px 0 rgba(18, 21, 23, 0.09)",
                     "--panel-full-height-background": "#fff",
                     "--panel-full-height-header-icon-color": "#394152",
                     "--panel-full-height-instructions-border": "rgba(0, 0, 0, 0.15)",
@@ -832,6 +919,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                     "--qr-scan-animation-start": "rgba(57, 65, 82, 1)",
                     "--qr-scan-paused": "rgba(102, 237, 135, 0.6)",
                     "--secondary-button-icon-color": "#394152",
+                    "--secondary-raised-base-text": "#7f8f98",
                     "--send-success-row-info": "#394152",
                     "--settings-donation-text": "#5c677f",
                     "--settings-item-border-color": "#F1F5FC",
@@ -850,6 +938,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                     "--tab-border": "#394152",
                     "--tab-text": "#394152",
                     "--tx-icon-color": "#32E096",
+                    "--tx-list-box-shadow": "-3px -3px 17px 0 rgba(255,255,255,0.44), 3px 4px 20px 0 rgba(18,21,23,0.24)",
                     "--tx-list-button-icon": "#394152",
                     "--tx-list-copy-icon": "#9599a2",
                     "--tx-list-odd-row": "#F1F5FC",
@@ -873,6 +962,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                     "right": "40px",
                     "top": "40px",
                     "width": "500px",
+                    "zIndex": 5000,
                   }
                 }
                 tabIndex="-1"
@@ -895,6 +985,8 @@ exports[`ConfirmModal should render without crashing 1`] = `
                       "--base-scrollbar-thumb": "#5c677f",
                       "--base-scrollbar-track": "#fff",
                       "--base-text": "#282828",
+                      "--button-active": "#fff",
+                      "--button-active-hover": "#fff",
                       "--button-disabled": "#d6d9e0",
                       "--button-flag-icon-color": "#394152",
                       "--button-flag-icon-opacity": 0.3,
@@ -908,12 +1000,21 @@ exports[`ConfirmModal should render without crashing 1`] = `
                       "--button-primary-disabled-text-color": "#acbbc4",
                       "--button-primary-hover-background-image": "linear-gradient(180deg, #FFFFFF 2%, #E2EAEF 100%)",
                       "--button-primary-text": "#394152",
-                      "--button-priority-transfer-background": "#fff",
+                      "--button-priority-active-hover": "#fff",
+                      "--button-priority-button-container-background": "linear-gradient(180deg, #eff5f8 2%, #e4edf2 97%)",
+                      "--button-priority-button-container-shadow": "-4px -4px 9px 0 rgba(255, 255, 255, 0.54), 4px 4px 13px 0 #c6ccd1, inset -1px -1px 0 0 #a4b0c3, inset 1px 1px 0 0 #ffffff",
+                      "--button-priority-conditional-box-shadow": "none",
+                      "--button-priority-disabled-opacity": "1",
+                      "--button-priority-standard-icon-color": "#394152",
+                      "--button-priority-transfer-background": "linear-gradient(180deg, #EAF2F7 2%, #E6F0F6 97%)",
+                      "--button-priority-transfer-button-border": "1px solid #a4b0c3",
                       "--button-priority-transfer-color": "#394152",
-                      "--button-priority-transfer-disabled": "#fff",
+                      "--button-priority-transfer-disabled": "transparent",
+                      "--button-priority-transfer-disabled-color": "#CCD4D9",
                       "--button-secondary-background": "#fff",
                       "--button-secondary-hover": "#F1F5FC",
                       "--button-secondary-text": "#394152",
+                      "--contacts-delete-contact-name": "#394152",
                       "--contacts-group-header-background": "#f6f7f8",
                       "--contacts-group-header-text": "#394152",
                       "--contacts-odd-numbered-row": "rgba(230, 230, 230, 0.1)",
@@ -933,10 +1034,10 @@ exports[`ConfirmModal should render without crashing 1`] = `
                       "--input-label": "#5c677f",
                       "--input-label-opacity": 0.5,
                       "--input-placeholder": "rgba(40, 40, 40, 0.5)",
-                      "--input-select-hover": "#e6e6e6",
+                      "--input-select-hover": "#D4DEE4",
                       "--input-text": "#282828",
                       "--modal-overlay": "rgba(26, 54, 80, 0.25)",
-                      "--network-config-tooltip-background": "#f8f8f8",
+                      "--network-config-tooltip-background": "#fff",
                       "--network-config-tooltip-color": "#394152",
                       "--network-config-tooltip-label": "#8D98AE",
                       "--news-content-border-color": "#ececec",
@@ -948,6 +1049,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                       "--notifications-error-icon-color": "#fff",
                       "--notifications-success-icon-color": "#fff",
                       "--panel-background": "#fff",
+                      "--panel-box-shadow": "-3px -3px 17px 0 rgba(255, 255, 255, 0.83), 3px 3px 20px 0 rgba(18, 21, 23, 0.09)",
                       "--panel-full-height-background": "#fff",
                       "--panel-full-height-header-icon-color": "#394152",
                       "--panel-full-height-instructions-border": "rgba(0, 0, 0, 0.15)",
@@ -963,6 +1065,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                       "--qr-scan-animation-start": "rgba(57, 65, 82, 1)",
                       "--qr-scan-paused": "rgba(102, 237, 135, 0.6)",
                       "--secondary-button-icon-color": "#394152",
+                      "--secondary-raised-base-text": "#7f8f98",
                       "--send-success-row-info": "#394152",
                       "--settings-donation-text": "#5c677f",
                       "--settings-item-border-color": "#F1F5FC",
@@ -981,6 +1084,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                       "--tab-border": "#394152",
                       "--tab-text": "#394152",
                       "--tx-icon-color": "#32E096",
+                      "--tx-list-box-shadow": "-3px -3px 17px 0 rgba(255,255,255,0.44), 3px 4px 20px 0 rgba(18,21,23,0.24)",
                       "--tx-list-button-icon": "#394152",
                       "--tx-list-copy-icon": "#9599a2",
                       "--tx-list-odd-row": "#F1F5FC",
@@ -1004,30 +1108,6 @@ exports[`ConfirmModal should render without crashing 1`] = `
                       className="modalFooter"
                     >
                       <Button
-                        className="actionButton"
-                        id="confirm"
-                        onClick={[Function]}
-                        primary={true}
-                        shouldCenterButtonLabelText={false}
-                        type="button"
-                      >
-                        <button
-                          className="button actionButton primary"
-                          id="confirm"
-                          onClick={[Function]}
-                          type="button"
-                        >
-                          <span>
-                            <FormattedMessage
-                              id="modalActionConfirm"
-                              values={Object {}}
-                            >
-                              Confirm
-                            </FormattedMessage>
-                          </span>
-                        </button>
-                      </Button>
-                      <Button
                         elevated={true}
                         id="cancel"
                         onClick={[Function]}
@@ -1047,6 +1127,30 @@ exports[`ConfirmModal should render without crashing 1`] = `
                               values={Object {}}
                             >
                               Cancel
+                            </FormattedMessage>
+                          </span>
+                        </button>
+                      </Button>
+                      <Button
+                        className="actionButton"
+                        id="confirm"
+                        onClick={[Function]}
+                        primary={true}
+                        shouldCenterButtonLabelText={false}
+                        type="button"
+                      >
+                        <button
+                          className="button actionButton primary"
+                          id="confirm"
+                          onClick={[Function]}
+                          type="button"
+                        >
+                          <span>
+                            <FormattedMessage
+                              id="modalActionConfirm"
+                              values={Object {}}
+                            >
+                              Confirm
                             </FormattedMessage>
                           </span>
                         </button>
