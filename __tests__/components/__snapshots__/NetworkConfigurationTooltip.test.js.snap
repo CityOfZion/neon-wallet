@@ -997,7 +997,6 @@ exports[`Sidebar renders without crashing 1`] = `
                                             "--base-text": "#282828",
                                             "--button-active": "#fff",
                                             "--button-active-hover": "#fff",
-                                            "--button-disabled": "#d6d9e0",
                                             "--button-flag-icon-color": "#394152",
                                             "--button-flag-icon-opacity": 0.3,
                                             "--button-icon-color": "#394152",
