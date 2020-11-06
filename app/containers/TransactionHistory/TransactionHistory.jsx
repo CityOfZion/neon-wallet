@@ -135,41 +135,40 @@ export default class TransactionHistory extends Component<Props, State> {
         }),
       )
       hideNotification(infoNotification)
-      dialog.showSaveDialog(
-        {
-          defaultPath: `${app.getPath(
-            'documents',
-          )}/neon-wallet-activity-${moment().unix()}.csv`,
-          filters: [
-            {
-              name: 'CSV',
-              extensions: ['csv'],
-            },
-          ],
-        },
-        fileName => {
-          this.setState({
-            isExporting: false,
+      const result = await dialog.showSaveDialog({
+        defaultPath: `${app.getPath(
+          'documents',
+        )}/neon-wallet-activity-${moment().unix()}.csv`,
+        filters: [
+          {
+            name: 'CSV',
+            extensions: ['csv'],
+          },
+        ],
+      })
+
+      const fileName = result.filePath
+
+      this.setState({
+        isExporting: false,
+      })
+      if (fileName === undefined) {
+        return
+      }
+      // fileName is a string that contains the path and filename created in the save file dialog.
+      fs.writeFile(fileName, csv, errorWriting => {
+        if (errorWriting) {
+          showErrorNotification({
+            message: `An error occurred creating the file: ${
+              errorWriting.message
+            }`,
           })
-          if (fileName === undefined) {
-            return
-          }
-          // fileName is a string that contains the path and filename created in the save file dialog.
-          fs.writeFile(fileName, csv, errorWriting => {
-            if (errorWriting) {
-              showErrorNotification({
-                message: `An error occurred creating the file: ${
-                  errorWriting.message
-                }`,
-              })
-            } else {
-              showSuccessNotification({
-                message: 'The file has been succesfully saved',
-              })
-            }
+        } else {
+          showSuccessNotification({
+            message: 'The file has been succesfully saved',
           })
-        },
-      )
+        }
+      })
     } catch (err) {
       console.error(err)
       this.setState({

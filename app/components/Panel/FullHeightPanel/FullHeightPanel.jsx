@@ -88,7 +88,7 @@ export default class ViewLayout extends Component<Props> {
       shouldRenderHeader && (
         <div className={classNames(styles.header, headerContainerClassName)}>
           <div
-            style={{ '--view-layout-header-icon-color': iconColor }}
+            // style={{ '--view-layout-header-icon-color': iconColor }}
             className={styles.headerIcon}
           >
             {this.renderHeaderIcon()}

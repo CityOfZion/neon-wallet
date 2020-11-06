@@ -1,7 +1,7 @@
 const BASE = {
   '--base-scrollbar-track': '#2E3542',
   '--base-scrollbar-thumb': '#5c677f',
-  '--base-main-background': '#242933',
+  '--base-main-background': '#242B31',
   '--base-text': '#fff',
   '--base-link-color': '#6bdaf6',
 }
@@ -64,13 +64,13 @@ const TAB = {
 
 const PANEL = {
   '--panel-icon': '#4CFFB3',
-  '--panel-header': '#1B2029',
+  '--panel-header': '#21242C',
   '--panel-header-text': '#fff',
-  '--panel-background': '#333D46',
+  '--panel-background': '#303740',
   '--panel-header-border': '#8d98ae',
   '--panel-label-text': '#8d98ae',
   '--panel-full-height-background': '#333D46',
-  '--panel-full-height-nav-background': '#2B2F37',
+  '--panel-full-height-nav-background': '#21242C',
   '--panel-full-height-instructions-text': '#fff',
   '--panel-full-height-instructions-border': '#8D98AE',
   '--panel-full-height-header-icon-color': '#fff',
@@ -107,9 +107,10 @@ const SIDEBAR = {
 }
 
 const TX_LIST = {
-  '--tx-list-odd-row': '#343B4A',
+  '--tx-list-odd-row': '#39404c',
   '--tx-list-button-icon': '#4CFFB3',
   '--tx-list-copy-icon': '#4CFFB3',
+  '--tx-icon-color': '#4CFFB3',
 }
 
 const SETTINGS = {
