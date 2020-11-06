@@ -75,7 +75,8 @@
     }
 
     .portfolioPanel {
-      height: 450px;
+      height: 260px;
+      min-height: 260px;
       margin-bottom: 12px;
     }
   }
@@ -106,6 +107,16 @@
 
     .loading {
       animation: spin 2s linear infinite;
+    }
+  }
+}
+
+.manageWallets {
+  min-width: 22px;
+  min-height: 22px;
+  g {
+    path {
+      fill: none;
     }
   }
 }

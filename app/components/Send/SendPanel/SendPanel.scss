@@ -32,12 +32,15 @@
     justify-content: center;
     display: flex;
     flex: 0.2;
-    font-weight: 400;
-    font-size: 14px;
-    color: #ffcf48;
 
+    font-size: 14px;
+    color: var(--button-priority-standard-icon-color);
+    font-family: var(--font-gotham-bold);
     svg {
       margin-right: 10px;
+      g {
+        fill: #3bfdab !important;
+      }
     }
   }
 
