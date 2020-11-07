@@ -71,7 +71,13 @@ export default class Home extends React.Component<Props, State> {
 
     const { shouldRenderReleaseNotes } = remote.getGlobal('autoUpdateStatus')
 
-    if (shouldRenderReleaseNotes) {
+    const firstReleaseWithNotesFeature = pack.version === '2.6.0'
+    const hasSeenReleaseNotes = localStorage.getItem('hasSeenReleaseNotes')
+
+    if (
+      shouldRenderReleaseNotes ||
+      (firstReleaseWithNotesFeature && !hasSeenReleaseNotes)
+    ) {
       // Allow users to view the normal for 1 second
       // befre rendering the release notes modal
       setTimeout(() => {
@@ -85,6 +91,7 @@ export default class Home extends React.Component<Props, State> {
       }, 1000)
 
       remote.getGlobal('autoUpdateStatus').shouldRenderReleaseNotes = false
+      localStorage.setItem('hasSeenReleaseNotes', 'true')
     }
 
     return (

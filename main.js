@@ -186,7 +186,7 @@ app.on('web-contents-created', (event, wc) => {
 
 global.autoUpdateStatus = {
   updateDownloaded: false,
-  shouldRenderReleaseNotes: true,
+  shouldRenderReleaseNotes: false,
 }
 
 app.on('will-quit', () => {
