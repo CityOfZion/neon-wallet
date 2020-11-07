@@ -10,7 +10,6 @@
   width: 200px;
   font-size: 14px;
   text-align: center;
-  font-family: var(--font-gotham-book);
 }
 
 .pendingTxDate {
@@ -21,7 +20,6 @@
 }
 
 .txLabelContainer {
-  font-family: var(--font-gotham-book);
   font-size: 14px;
   display: flex;
   text-align: center;
@@ -89,6 +87,7 @@
 
   button[disabled] {
     background: transparent !important;
+    opacity: 0.3;
   }
 }
 
@@ -126,7 +125,7 @@
   .claimIconContainer {
     svg {
       path {
-        fill: #ffcf48;
+        fill: var(--tx-icon-color);
       }
     }
   }
@@ -134,7 +133,7 @@
   .sendIconContainer {
     svg {
       path {
-        fill: #ff967e;
+        fill: #d355e7;
       }
     }
   }
@@ -142,7 +141,7 @@
   .receiveIconContainer {
     svg {
       path {
-        fill: #82e092;
+        fill: var(--tx-icon-color);
       }
     }
   }

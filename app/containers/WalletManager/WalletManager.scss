@@ -51,8 +51,10 @@
         margin: auto;
         overflow: visible;
 
-        path {
-          fill: #4cffb3;
+        g {
+          path {
+            fill: none;
+          }
         }
       }
     }

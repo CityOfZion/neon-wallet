@@ -26,7 +26,7 @@
   height: 50px;
 
   &[disabled] {
-    opacity: 0.6;
+    opacity: 1;
   }
 
   &:not([disabled]) {
@@ -36,8 +36,8 @@
   &.primary {
     &[disabled] {
       background-color: var(--button-primary-disabled-background-color);
-      background-image: var(--button-primary-disabled-background-color);
-      box-shadow: none;
+      background-image: var(--button-primary-disabled-background-image);
+      box-shadow: var(--button-primary-disabled-box-shadow);
       color: var(--button-primary-disabled-text-color);
       path {
         fill: var(--button-primary-disabled-text-color);
@@ -56,6 +56,24 @@
 
     &:not([disabled]):hover {
       background-image: var(--button-primary-hover-background-image);
+    }
+  }
+
+  &.secondaryRaised {
+    color: var(--secondary-raised-base-text);
+
+    path {
+      fill: var(--base-text);
+    }
+
+    &[disabled] {
+      background-color: var(--button-primary-disabled-background-color);
+      background-image: var(--button-primary-disabled-background-image);
+      box-shadow: var(--button-primary-disabled-box-shadow);
+      color: var(--button-primary-disabled-text-color);
+      path {
+        fill: var(--button-primary-disabled-text-color);
+      }
     }
   }
 

@@ -110,6 +110,7 @@ export default class NetworkConfigurationTooltip extends React.Component<
               <Link to={ROUTES.NETWORK_CONFIGURATION}>
                 <Button
                   shouldCenterButtonLabelText
+                  elevated
                   renderIcon={() => <CogIcon />}
                 >
                   {intl.formatMessage({

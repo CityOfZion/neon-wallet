@@ -14,6 +14,7 @@ type Props = {
   onCancel: Function,
   hideModal: Function,
   width: string,
+  renderBody: Function,
 }
 
 const ConfirmModal = ({
@@ -22,6 +23,7 @@ const ConfirmModal = ({
   onClick,
   onCancel,
   text,
+  renderBody,
   width,
 }: Props) => (
   <BaseModal
@@ -37,9 +39,20 @@ const ConfirmModal = ({
   >
     <div className={styles.contentContainer}>
       <div className={styles.textContainer}>
-        <strong className={styles.text}>{text}</strong>
+        {text && <strong className={styles.text}>{text}</strong>}
+        {renderBody && renderBody()}
       </div>
       <div className={styles.modalFooter}>
+        <Button
+          elevated
+          id="cancel"
+          onClick={() => {
+            hideModal()
+            onCancel()
+          }}
+        >
+          <FormattedMessage id="modalActionCancel" />
+        </Button>
         <Button
           id="confirm"
           primary
@@ -50,15 +63,6 @@ const ConfirmModal = ({
           }}
         >
           <FormattedMessage id="modalActionConfirm" />
-        </Button>
-        <Button
-          id="cancel"
-          onClick={() => {
-            hideModal()
-            onCancel()
-          }}
-        >
-          <FormattedMessage id="modalActionCancel" />
         </Button>
       </div>
     </div>

@@ -39,7 +39,7 @@
 
       .quantity {
         font-weight: 400;
-        margin: 16px 0;
+        margin: -8px 0 16px 0;
         font-family: var(--font-gotham-light);
         font-size: 40px;
         color: var(--base-text);
@@ -89,11 +89,9 @@
   }
 
   .label {
-    color: #969aa0;
     font-size: 24px;
     font-weight: 400;
     text-transform: uppercase;
-    opacity: 0.5;
     font-family: var(--font-gotham-light);
     font-size: 24px;
     color: var(--base-text);
