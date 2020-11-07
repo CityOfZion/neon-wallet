@@ -17,10 +17,6 @@ import { ROUTES, MODAL_TYPES } from '../../core/constants'
 import HomeLayout from './HomeLayout'
 import pack from '../../../package.json'
 
-const electron = require('electron')
-
-const { remote } = electron
-
 type State = {
   tabIndex: number,
 }
@@ -58,6 +54,20 @@ const LOGIN_OPTIONS = {
   },
 }
 
+// NOTE: all other solutions seemed to be overly
+// complex... Revisit this if it becomes painful
+const shouldRenderReleaseNotes = version => {
+  const displayWhitelist = ['2.6.0']
+
+  if (
+    displayWhitelist.includes(version) &&
+    !localStorage.getItem(`hasSeenReleaseNotes-${version}`)
+  ) {
+    return true
+  }
+  return false
+}
+
 export default class Home extends React.Component<Props, State> {
   state = {
     tabIndex: 0,
@@ -69,15 +79,7 @@ export default class Home extends React.Component<Props, State> {
   render = () => {
     const { loading, theme, showModal } = this.props
 
-    const { shouldRenderReleaseNotes } = remote.getGlobal('autoUpdateStatus')
-
-    const firstReleaseWithNotesFeature = pack.version === '2.6.0'
-    const hasSeenReleaseNotes = localStorage.getItem('hasSeenReleaseNotes')
-
-    if (
-      shouldRenderReleaseNotes ||
-      (firstReleaseWithNotesFeature && !hasSeenReleaseNotes)
-    ) {
+    if (shouldRenderReleaseNotes(pack.version)) {
       // Allow users to view the normal for 1 second
       // befre rendering the release notes modal
       setTimeout(() => {
@@ -89,9 +91,7 @@ export default class Home extends React.Component<Props, State> {
           ),
         })
       }, 1000)
-
-      remote.getGlobal('autoUpdateStatus').shouldRenderReleaseNotes = false
-      localStorage.setItem('hasSeenReleaseNotes', 'true')
+      localStorage.setItem(`hasSeenReleaseNotes-${pack.version}`, 'true')
     }
 
     return (

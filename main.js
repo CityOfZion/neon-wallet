@@ -10,7 +10,6 @@ const path = require('path')
 const url = require('url')
 const { autoUpdater } = require('electron-updater')
 const log = require('electron-log')
-const semver = require('semver')
 
 const port = process.env.PORT || 3000
 
@@ -184,11 +183,6 @@ app.on('web-contents-created', (event, wc) => {
   })
 })
 
-global.autoUpdateStatus = {
-  updateDownloaded: false,
-  shouldRenderReleaseNotes: false,
-}
-
 app.on('will-quit', () => {
   // Unregister all shortcuts.
   globalShortcut.unregisterAll()
@@ -206,9 +200,10 @@ autoUpdater.on('checking-for-update', () => {
   sendStatusToWindow('Checking for update...')
 })
 autoUpdater.on('update-available', info => {
-  sendStatusToWindow('Update available.')
+  // eslint-disable-next-line prefer-template
+  sendStatusToWindow('Update available. ' + info)
 })
-autoUpdater.on('update-not-available', info => {
+autoUpdater.on('update-not-available', () => {
   sendStatusToWindow('Update not available.')
 })
 autoUpdater.on('error', err => {
@@ -226,12 +221,6 @@ autoUpdater.on('download-progress', progressObj => {
   sendStatusToWindow(logMessage)
 })
 autoUpdater.on('update-downloaded', info => {
-  global.autoUpdateStatus.updateDownloaded = true
-  // compare current version to the version downloaded
-  // to see if patch version (do not render) or minor / major
-  const upgrade = semver.diff(autoUpdater.currentVersion.version, info.version)
-  if (upgrade === 'major' || upgrade === 'minor') {
-    global.autoUpdateStatus.shouldRenderReleaseNotes = true
-  }
-  sendStatusToWindow('Update downloaded')
+  // eslint-disable-next-line prefer-template
+  sendStatusToWindow('Update downloaded ' + info)
 })

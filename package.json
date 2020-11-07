@@ -152,7 +152,6 @@
     "redux-thunk": "2.2.0",
     "reselect": "3.0.1",
     "rss-parser": "^3.7.0",
-    "semver": "^7.3.2",
     "sifter": "0.5.3",
     "spunky": "1.3.1",
     "svg-react-loader": "0.4.5",
