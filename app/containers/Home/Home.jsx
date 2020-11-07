@@ -13,7 +13,7 @@ import Button from '../../components/Button'
 import styles from './Home.scss'
 import AddIcon from '../../assets/icons/add.svg'
 import ImportIcon from '../../assets/icons/import.svg'
-import { ROUTES } from '../../core/constants'
+import { ROUTES, MODAL_TYPES } from '../../core/constants'
 import HomeLayout from './HomeLayout'
 import pack from '../../../package.json'
 
@@ -23,6 +23,7 @@ type State = {
 type Props = {
   loading: boolean,
   theme: ThemeType,
+  showModal: (modalType: string, modalProps: Object) => any,
 }
 
 const LOGIN_OPTIONS = {
@@ -53,6 +54,20 @@ const LOGIN_OPTIONS = {
   },
 }
 
+// NOTE: all other solutions seemed to be overly
+// complex... Revisit this if it becomes painful
+const shouldRenderReleaseNotes = version => {
+  const displayWhitelist = ['']
+
+  if (
+    displayWhitelist.includes(version) &&
+    !localStorage.getItem(`hasSeenReleaseNotes-${version}`)
+  ) {
+    return true
+  }
+  return false
+}
+
 export default class Home extends React.Component<Props, State> {
   state = {
     tabIndex: 0,
@@ -62,7 +77,23 @@ export default class Home extends React.Component<Props, State> {
   options = Object.keys(LOGIN_OPTIONS).map((key: string) => LOGIN_OPTIONS[key])
 
   render = () => {
-    const { loading, theme } = this.props
+    const { loading, theme, showModal } = this.props
+
+    if (shouldRenderReleaseNotes(pack.version)) {
+      // Allow users to view the normal for 1 second
+      // befre rendering the release notes modal
+      setTimeout(() => {
+        showModal(MODAL_TYPES.RELEASE_NOTES, {
+          renderBody: () => (
+            <div className={styles.confirmDeleteModalPrompt}>
+              Please confirm removing saved wallet
+            </div>
+          ),
+        })
+      }, 1000)
+      localStorage.setItem(`hasSeenReleaseNotes-${pack.version}`, 'true')
+    }
+
     return (
       <HomeLayout theme={theme}>
         <div className={styles.inputContainer}>

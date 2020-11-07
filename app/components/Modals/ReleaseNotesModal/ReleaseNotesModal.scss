@@ -1,0 +1,68 @@
+.releaseNotesContainer {
+  margin: 0 !important;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.closeButton {
+  cursor: pointer;
+}
+
+.releaseNotesContents {
+  display: flex;
+  padding: 24px;
+  flex-direction: column;
+}
+
+.release {
+  display: flex;
+  margin-bottom: 48px;
+}
+
+.releaseContent {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  .date {
+    font-size: 14px;
+    font-family: var(--font-sofiapro-semibold);
+
+    color: #8297a0;
+    color: var(--release-notes-date);
+  }
+
+  button {
+    background: #4cffb3 !important;
+    border-radius: 4px;
+    width: 147px;
+    height: 36px;
+    padding: 0;
+    font-size: 14px;
+    text-align: center;
+    font-family: var(--font-gotham-medium);
+    color: var(--release-notes-button-color) !important;
+  }
+
+  h3 {
+    margin-bottom: 6px;
+    margin-top: 12px;
+  }
+
+  p {
+    font-size: 14px;
+    color: var(--release-notes-text);
+    line-height: 17px;
+  }
+}
+
+.marketingImage {
+  display: flex;
+  flex: 1;
+  align-items: center;
+
+  img {
+    display: block;
+    height: fit-content;
+  }
+}

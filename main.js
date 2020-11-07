@@ -200,9 +200,10 @@ autoUpdater.on('checking-for-update', () => {
   sendStatusToWindow('Checking for update...')
 })
 autoUpdater.on('update-available', info => {
-  sendStatusToWindow('Update available.')
+  // eslint-disable-next-line prefer-template
+  sendStatusToWindow('Update available. ' + info)
 })
-autoUpdater.on('update-not-available', info => {
+autoUpdater.on('update-not-available', () => {
   sendStatusToWindow('Update not available.')
 })
 autoUpdater.on('error', err => {
@@ -220,5 +221,6 @@ autoUpdater.on('download-progress', progressObj => {
   sendStatusToWindow(logMessage)
 })
 autoUpdater.on('update-downloaded', info => {
-  sendStatusToWindow('Update downloaded')
+  // eslint-disable-next-line prefer-template
+  sendStatusToWindow('Update downloaded ' + info)
 })
