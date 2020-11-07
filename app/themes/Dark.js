@@ -180,6 +180,12 @@ export const NOTIFICATIONS = {
   '--notifications-success-icon-color': '#4cffb3',
 }
 
+export const RELEASE_NOTES = {
+  '--release-notes-date': '#8297a0',
+  '--release-notes-text': '#8c97a2',
+  '--release-notes-button-color': '#394152',
+}
+
 export default {
   ...NEWS,
   ...CONTACTS,
@@ -201,4 +207,5 @@ export default {
   ...QR_SCANNER,
   ...DARK_NETWORK_CONFIG_TOOLTIP,
   ...NOTIFICATIONS,
+  ...RELEASE_NOTES,
 }

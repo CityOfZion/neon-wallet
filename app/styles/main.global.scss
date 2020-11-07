@@ -1,6 +1,12 @@
 @import './variables';
 
 @font-face {
+  font-family: 'SofiaPro-Light';
+  font-weight: lighter;
+  src: url('../assets/fonts/sofiapro-light-webfont.woff') format('woff');
+}
+
+@font-face {
   font-family: 'SofiaPro';
   src: url('../assets/fonts/sofiapro-regular-webfont.woff') format('woff');
   font-weight: normal;
@@ -14,10 +20,17 @@
 }
 
 @font-face {
-  font-family: 'SofiaPro-Light';
-  font-weight: lighter;
-  src: url('../assets/fonts/sofiapro-light-webfont.woff') format('woff');
+  font-family: 'SofiaPro-Medium';
+  src: url('../assets/fonts/sofiapro-medium-webfont.woff') format('woff');
+  font-style: normal;
 }
+
+@font-face {
+  font-family: 'SofiaPro-SemiBold';
+  src: url('../assets/fonts/sofiapro-semibold-webfont.woff') format('woff');
+  font-style: normal;
+}
+
 @font-face {
   font-family: 'SofiaPro-Bold';
   font-weight: bolder;
@@ -27,7 +40,8 @@
 :root {
   --font-fallback: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
   --font-gotham: 'SofiaPro', var(--font-fallback);
-  --font-gotham-medium: 'SofiaPro', var(--font-fallback);
+  --font-gotham-medium: 'SofiaPro-Medium', var(--font-fallback);
+  --font-sofiapro-semibold: 'SofiaPro-SemiBold', var(--font-fallback);
   --font-gotham-bold: 'SofiaPro-Bold', var(--font-fallback);
   --font-gotham-thin: 'SofiaPro-Light', var(--font-fallback);
   --font-gotham-light: 'SofiaPro-Light', var(--font-fallback);
