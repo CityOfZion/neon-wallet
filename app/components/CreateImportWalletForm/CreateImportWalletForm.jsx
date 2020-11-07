@@ -36,8 +36,8 @@ type State = {
 const PASS_MIN_LENGTH = 4
 
 const LOOKUP_KEY = {
-  WIF: 'privateKeyLabel',
-  ENCRYPTED_WIF: 'encryptedKeyLabel',
+  WIF: 'privateKey',
+  ENCRYPTED_WIF: 'inputEncryptedPlaceholder',
 }
 
 class CreateImportWalletForm extends React.Component<Props, State> {

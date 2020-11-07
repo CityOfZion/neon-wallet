@@ -17,20 +17,19 @@ class RefreshButton extends Component<Props> {
     const { loadWalletData, loading } = this.props
 
     return (
-      <div className={styles.refreshButton}>
-        <span
-          onClick={loading ? null : loadWalletData}
-          className={styles.refreshButtonSpan}
-        >
-          <FormattedMessage id="dashboardRefresh" />
-        </span>
+      <div
+        className={styles.refreshButton}
+        onClick={loading ? null : loadWalletData}
+      >
         <RefreshIcon
           id="refresh"
           className={classNames(styles.refresh, {
             [styles.loading]: loading,
           })}
-          onClick={loading ? null : loadWalletData}
         />
+        <span className={styles.refreshButtonSpan}>
+          <FormattedMessage id="dashboardRefresh" />
+        </span>
       </div>
     )
   }

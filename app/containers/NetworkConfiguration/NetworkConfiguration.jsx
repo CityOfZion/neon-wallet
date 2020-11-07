@@ -50,6 +50,7 @@ export default class NetworkConfiguration extends React.Component<
 
     return (
       <FullHeightPanel
+        containerClassName={styles.contentContainerStyle}
         className={styles.networkConfigPanel}
         headerText={<FormattedMessage id="networkSettingsLabel" />}
         renderCloseButton={() => <CloseButton routeTo={ROUTES.SETTINGS} />}

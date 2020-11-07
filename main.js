@@ -10,6 +10,7 @@ const path = require('path')
 const url = require('url')
 const { autoUpdater } = require('electron-updater')
 const log = require('electron-log')
+const semver = require('semver')
 
 const port = process.env.PORT || 3000
 
@@ -183,7 +184,11 @@ app.on('web-contents-created', (event, wc) => {
   })
 })
 
-global.autoUpdateStatus = { updateDownloaded: false }
+global.autoUpdateStatus = {
+  updateDownloaded: false,
+  shouldRenderReleaseNotes: true,
+}
+
 app.on('will-quit', () => {
   // Unregister all shortcuts.
   globalShortcut.unregisterAll()
@@ -221,8 +226,12 @@ autoUpdater.on('download-progress', progressObj => {
   sendStatusToWindow(logMessage)
 })
 autoUpdater.on('update-downloaded', info => {
-  // NOTE: we can use this flag to conditionally render
-  // the release notes in app
   global.autoUpdateStatus.updateDownloaded = true
+  // compare current version to the version downloaded
+  // to see if patch version (do not render) or minor / major
+  const upgrade = semver.diff(autoUpdater.currentVersion.version, info.version)
+  if (upgrade === 'major' || upgrade === 'minor') {
+    global.autoUpdateStatus.shouldRenderReleaseNotes = true
+  }
   sendStatusToWindow('Update downloaded')
 })
