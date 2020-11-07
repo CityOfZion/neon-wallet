@@ -25,15 +25,27 @@
   span {
     font-family: var(--font-gotham-medium);
     font-size: 14px;
-    color: #ee6d66;
+    color: #d355e7;
     display: flex;
     align-items: center;
     cursor: pointer;
 
     svg {
       path {
-        fill: #ee6d66;
+        fill: #d355e7;
       }
     }
+  }
+}
+.confirmDeleteModalPrompt {
+  text-align: center;
+  width: 100%;
+
+  h2 {
+    margin-top: 10px;
+
+    font-size: 18px;
+    color: var(--contacts-delete-contact-name);
+    text-align: center;
   }
 }
