@@ -57,7 +57,7 @@ const LOGIN_OPTIONS = {
 // NOTE: all other solutions seemed to be overly
 // complex... Revisit this if it becomes painful
 const shouldRenderReleaseNotes = version => {
-  const displayWhitelist = ['2.6.0']
+  const displayWhitelist = ['']
 
   if (
     displayWhitelist.includes(version) &&
