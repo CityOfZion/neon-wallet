@@ -65,9 +65,6 @@
       ]
     },
     "mac": {
-      "target": [
-        "dmg"
-      ],
       "hardenedRuntime": true,
       "entitlements": "./node_modules/electron-builder-notarize/entitlements.mac.inherit.plist",
       "artifactName": "${productName}.${version}.${ext}"
