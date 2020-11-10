@@ -81,14 +81,9 @@ workflows:
             tags:
               only: /v.*/
       - test:
-          filters:
-            tags:
-              only: /v.*/
           requires:
             - build
       - deploy_win64:
-          requires:
-            - test
           filters:
             branches:
               ignore: /.*/
