@@ -7,13 +7,18 @@ import Button from '../../Button'
 import styles from './ReleaseNotesModal.scss'
 import CloseButton from '../../CloseButton'
 import Gift from '../../../assets/icons/gift.svg'
-import MobileMarketing from '../../../assets/images/mobile-marketing.png'
+
+import release260Dark from '../../../assets/images/release-assets/2.6.0.dark.png'
+import release260Light from '../../../assets/images/release-assets/2.6.0.light.png'
+
+const electron = require('electron').remote
 
 type Props = {
   hideModal: Function,
+  theme: string,
 }
 
-const ReleaseNotesModal = ({ hideModal }: Props) => (
+const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
   <BaseModal
     hideModal={hideModal}
     shouldRenderHeader={false}
@@ -28,7 +33,7 @@ const ReleaseNotesModal = ({ hideModal }: Props) => (
       containerClassName={styles.releaseNotesContainer}
       renderInstructions={false}
       renderHeaderIcon={() => <Gift />}
-      headerText="New Features"
+      headerText="Release notes"
       renderCloseButton={() => (
         <div className={styles.closeButton} onClick={() => hideModal()}>
           <CloseButton renderWithoutLink />
@@ -38,46 +43,37 @@ const ReleaseNotesModal = ({ hideModal }: Props) => (
       <div className={styles.releaseNotesContents}>
         <div className={styles.release}>
           <div className={styles.releaseContent}>
-            <small> v2.7.0</small>
-            <small className={styles.date}>25th Sep 2020 </small>
-            <h3>We have now released our mobile wallet for IOS and Android!</h3>
+            <small className={styles.date}>10th Nov 2020 </small>
+            <h3>Welcome to the latest release of Neon wallet v.2.6.0</h3>
 
             <p>
-              Filium morte multavit si sine causa, mox videro; interea hoc
-              epicurus in gravissimo bello animadversionis metu degendae
-              praesidia firmissima filium morte multavit si sine metu
-              contineret, saluti prospexit civium, qua intellegebat contineri
-              suam atque corrupti, quos tu tam crudelis. Sunt autem quibusdam et
-              dolorem? sunt autem nusquam hoc tenebo, si mihi probabis ea, quae
-              sine dubio praeclara sunt.
+              In this update you will find the following improvements and
+              updated features:
+              <br />
+              <br />
+              <li>Automatic updates for future releases</li>
+              <li>Integrations with Neon Mobile</li>
+              <li>Security and dependency updates</li>
+              <li>Design enhancements</li>
+              <li>Various minor bug fixes</li>
+              <br />
             </p>
 
-            <Button>Learn more</Button>
+            <Button
+              onClick={() =>
+                electron.shell.openExternal(
+                  'https://github.com/CityOfZion/neon-wallet/releases/tag/v2.6.0',
+                )
+              }
+            >
+              Learn more
+            </Button>
           </div>
           <div className={styles.marketingImage}>
-            <img src={MobileMarketing} alt="marketing-content" />
-          </div>
-        </div>
-        <div className={styles.release}>
-          <div className={styles.releaseContent}>
-            <small> v2.7.0</small>
-            <small className={styles.date}>25th Sep 2020 </small>
-            <h3>We have now released our mobile wallet for IOS and Android!</h3>
-
-            <p>
-              Filium morte multavit si sine causa, mox videro; interea hoc
-              epicurus in gravissimo bello animadversionis metu degendae
-              praesidia firmissima filium morte multavit si sine metu
-              contineret, saluti prospexit civium, qua intellegebat contineri
-              suam atque corrupti, quos tu tam crudelis. Sunt autem quibusdam et
-              dolorem? sunt autem nusquam hoc tenebo, si mihi probabis ea, quae
-              sine dubio praeclara sunt.
-            </p>
-
-            <Button>Learn more</Button>
-          </div>
-          <div className={styles.marketingImage}>
-            <img src={MobileMarketing} alt="marketing-content" />
+            <img
+              src={theme === 'Light' ? release260Light : release260Dark}
+              alt="marketing-content"
+            />
           </div>
         </div>
       </div>

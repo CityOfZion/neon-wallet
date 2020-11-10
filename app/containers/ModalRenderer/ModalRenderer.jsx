@@ -12,7 +12,7 @@ import GeneratedTransactionModal from '../../components/Modals/GeneratedTransact
 import ImportTransactionModal from '../../components/Modals/ImportTransactionModal'
 
 import { MODAL_TYPES } from '../../core/constants'
-import ReleaseNotesModal from '../../components/Modals/ReleaseNotesModal/ReleaseNotesModal'
+import ReleaseNotesModal from '../../components/Modals/ReleaseNotesModal'
 
 const {
   CONFIRM,

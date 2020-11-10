@@ -52,7 +52,23 @@ export const checkVersion = () => async (dispatch: DispatchType) => {
       response.data &&
       compareVersions(version, response.data.tag_name) === -1
 
-    if (shouldUpdate) {
+    let opsys
+    const { platform } = process
+
+    if (platform === 'darwin') {
+      opsys = 'MacOS'
+    } else if (platform === 'win32' || platform === 'win64') {
+      opsys = 'Windows'
+    } else if (platform === 'linux') {
+      opsys = 'Linux'
+    }
+
+    // TODO: this should really only be a check against .deb
+    // file extension as auto updates only work on .AppImage
+    if (
+      shouldUpdate &&
+      (opsys === 'Linux' || process.env.NODE_ENV === 'test')
+    ) {
       showError(
         <div>
           Your wallet is out of date! Please download the latest version from{' '}
