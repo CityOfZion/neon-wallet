@@ -12,9 +12,6 @@ import {
 } from '../core/constants'
 import { version } from '../../package.json'
 
-const electron = require('electron').remote
-const { app } = electron
-
 const CURRENT_RELEASE_URL =
   'https://api.github.com/repos/CityOfZion/neon-wallet/releases/latest'
 export const RETRY_CONFIG = {
