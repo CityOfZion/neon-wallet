@@ -10,6 +10,7 @@ import Gift from '../../../assets/icons/gift.svg'
 
 import release260Dark from '../../../assets/images/release-assets/2.6.0.dark.png'
 import release260Light from '../../../assets/images/release-assets/2.6.0.light.png'
+import Github from '../../../assets/images/release-assets/github.svg'
 
 const electron = require('electron').remote
 
@@ -44,7 +45,7 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
         <div className={styles.release}>
           <div className={styles.releaseContent}>
             <small className={styles.date}>10th Nov 2020 </small>
-            <h3>Welcome to the latest release of Neon wallet v.2.6.0</h3>
+            <h3>Welcome to the latest release of Neon wallet v2.6.0</h3>
 
             <p>
               In this update you will find the following improvements and
@@ -57,17 +58,18 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
               <li>Design enhancements</li>
               <li>Various minor bug fixes</li>
               <br />
+              View full details of this release on GitHub
+              <br />
+              <br />
             </p>
 
-            <Button
+            <Github
               onClick={() =>
                 electron.shell.openExternal(
                   'https://github.com/CityOfZion/neon-wallet/releases/tag/v2.6.0',
                 )
               }
-            >
-              Learn more
-            </Button>
+            />
           </div>
           <div className={styles.marketingImage}>
             <img

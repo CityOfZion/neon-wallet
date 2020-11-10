@@ -54,6 +54,7 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
                 type="submit"
                 renderIcon={LoginIcon}
                 disabled={address.length < 10}
+                shouldCenterButtonLabelText
               >
                 <FormattedMessage id="authLogin" />
               </Button>
