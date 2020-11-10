@@ -65,7 +65,10 @@ export const checkVersion = () => async (dispatch: DispatchType) => {
 
     // TODO: this should really only be a check against .deb
     // file extension as auto updates only work on .AppImage
-    if (shouldUpdate && opsys === 'Linux') {
+    if (
+      shouldUpdate &&
+      (opsys === 'Linux' || process.env.NODE_ENV === 'test')
+    ) {
       showError(
         <div>
           Your wallet is out of date! Please download the latest version from{' '}
