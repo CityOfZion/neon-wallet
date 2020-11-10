@@ -1,7 +1,7 @@
 const BASE = {
   '--base-scrollbar-track': '#fff',
   '--base-scrollbar-thumb': '#5c677f',
-  '--base-main-background': '#EEF4F9',
+  '--base-main-background': '#ECF3F8',
   '--base-text': '#282828',
   '--base-link-color': '#3063c9',
 }

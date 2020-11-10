@@ -14,6 +14,7 @@ import { injectIntl } from 'react-intl'
 
 import NetworkConfiguration from './NetworkConfiguration'
 import withExplorerData from '../../hocs/withExplorerData'
+import withLoadingProp from '../../hocs/withLoadingProp'
 import accountsActions, {
   updateAccountsActions,
 } from '../../actions/accountsActions'
@@ -27,8 +28,11 @@ import {
 import { showModal } from '../../modules/modal'
 import networkActions from '../../actions/networkActions'
 import withNetworkData from '../../hocs/withNetworkData'
+import withSuccessNotification from '../../hocs/withSuccessNotification'
+import withAuthData from '../../hocs/withAuthData'
 import nodeStorageActions from '../../actions/nodeStorageActions'
 import dashboardActions from '../../actions/dashboardActions'
+import accountActions from '../../actions/accountActions'
 
 const mapStateToProps = () => ({
   networks: getNetworks(),
@@ -66,12 +70,27 @@ const mapSelectedNodeDataToProps = url => ({
   selectedNode: url,
 })
 
+const mapAccountActionsToProps = (actions, props) => ({
+  loadWalletData: () =>
+    actions.call({
+      net: props.net,
+      address: props.address,
+      tokens: props.tokens,
+    }),
+})
+
+const mapSaveNodeActionsToProps = actions => ({
+  saveSelectedNode: ({ url, net }) => actions.call({ url, net }),
+})
+
 export default compose(
   connect(
     mapStateToProps,
     mapDispatchToProps,
   ),
+  withAuthData(),
   withNetworkData(),
+
   withCall(nodeStorageActions),
   withData(accountsActions, mapAccountsDataToProps),
   withData(nodeStorageActions, mapSelectedNodeDataToProps),
@@ -83,5 +102,54 @@ export default compose(
   withReset(dashboardActions, ['currency']),
   withReset(pricesActions, ['currency']),
   withRecall(dashboardActions, ['currency']),
+  withActions(nodeStorageActions, mapSaveNodeActionsToProps),
+  withActions(accountActions, mapAccountActionsToProps),
+  withSuccessNotification(
+    dashboardActions,
+    'notifications.success.receivedBlockchainInfo',
+    {},
+    true,
+  ),
+  withLoadingProp(dashboardActions),
+
   injectIntl,
 )(NetworkConfiguration)
+
+// export default compose(
+//   withAuthData(),
+//   withNetworkData(),
+//   withThemeData(),
+//   withCall(nodeNetworkActions),
+//   withActions(nodeNetworkActions, mapNodesActionsToProps),
+
+// // @flow
+// import { compose } from 'recompose'
+// import { withActions, type Actions } from 'spunky'
+
+// import NetworkSwitch from './NetworkSwitch'
+// import networkActions from '../../../../actions/networkActions'
+// import withNetworkData from '../../../../hocs/withNetworkData'
+// import withAuthData from '../../../../hocs/withAuthData'
+// import accountActions from '../../../../actions/accountActions'
+// import withFilteredTokensData from '../../../../hocs/withFilteredTokensData'
+
+// const mapActionsToProps = (actions: Actions): Object => ({
+//   onChange: networkId => actions.call({ networkId }),
+// })
+
+// const mapAccountActionsToProps = (actions, props) => ({
+//   loadWalletData: () =>
+//     actions.call({
+//       net: props.net,
+//       address: props.address,
+//       tokens: props.tokens,
+//     }),
+// })
+
+// export default compose(
+//   withAuthData(),
+//   withNetworkData(),
+//   withActions(networkActions, mapActionsToProps),
+//   withFilteredTokensData(),
+//   withActions(accountActions, mapAccountActionsToProps),
+// )(NetworkSwitch)
