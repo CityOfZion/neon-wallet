@@ -50,15 +50,9 @@ $navigation-margin: 20px;
 
 .loginButtonRowScannerActive {
   button {
-    width: 200px;
+    width: 140px;
     margin: auto;
-    background: var(--button-secondary-hover) !important;
-
-    svg {
-      path {
-        fill: #ff967e !important;
-      }
-    }
+    margin-top: 10px;
   }
 }
 
