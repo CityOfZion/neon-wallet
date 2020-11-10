@@ -82,7 +82,7 @@ const PANEL = {
   '--panel-full-height-instructions-text': '#8297A0',
   '--panel-full-height-instructions-border': 'rgba(0, 0, 0, 0.15)',
   '--panel-full-height-header-icon-color': '#394152',
-  '--panel-receive-explanation': 'rgba(242, 242, 242, .5)',
+  '--panel-receive-explanation': '#CDDAE1',
   '--view-layout-header-icon-color': '#282828',
   '--panel-box-shadow':
     '-3px -3px 17px 0 rgba(255, 255, 255, 0.83), 3px 3px 20px 0 rgba(18, 21, 23, 0.09)',
