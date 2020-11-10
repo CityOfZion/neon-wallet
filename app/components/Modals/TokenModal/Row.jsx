@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { FormattedMessage } from 'react-intl'
+import { injectIntl, IntlShape } from 'react-intl'
 
 import Delete from 'react-icons/lib/md/delete'
 import Tooltip from '../../Tooltip'
@@ -13,6 +13,7 @@ type Props = {
   onChangeScriptHash: Function,
   onDelete: Function,
   isScriptHashInvalid: boolean,
+  intl: IntlShape,
 }
 
 class Row extends Component<Props> {
@@ -22,6 +23,7 @@ class Row extends Component<Props> {
       onChangeScriptHash,
       onDelete,
       isScriptHashInvalid,
+      intl,
     } = this.props
     return (
       <div className={styles.row}>
@@ -38,7 +40,11 @@ class Row extends Component<Props> {
             token.isUserGenerated && onChangeScriptHash(e.target.value)
           }
         />
-        <Tooltip title={<FormattedMessage id="deleteLabel" />}>
+        <Tooltip
+          title={intl.formatMessage({
+            id: 'deleteLabel',
+          })}
+        >
           <Delete onClick={onDelete} className={styles.icon} />
         </Tooltip>
       </div>
@@ -46,4 +52,4 @@ class Row extends Component<Props> {
   }
 }
 
-export default Row
+export default injectIntl(Row)

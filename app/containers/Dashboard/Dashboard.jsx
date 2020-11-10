@@ -12,6 +12,7 @@ import HeaderBar from '../../components/HeaderBar'
 import Address from '../../components/Blockchain/Address'
 import PortfolioPanel from '../../components/Dashboard/PortfolioPanel'
 import Wallet from '../../assets/icons/wallet.svg'
+import GreenWallet from '../../assets/icons/wallet-green.svg'
 import RefreshButton from '../Buttons/RefreshButton'
 
 import styles from './Dashboard.scss'
@@ -21,6 +22,7 @@ type Props = {
   address: string,
   hasInternetConnectivity: boolean,
   internetConnectionPromptPresented: Boolean,
+  theme: string,
 }
 
 const REFRESH_INTERVAL_MS = 30000
@@ -70,7 +72,17 @@ export default class Dashboard extends Component<Props> {
           renderRightContent={() => (
             <div className={classNames(styles.dashboardHeaderButonContainer)}>
               <NavLink id="wallet-manager" exact to={ROUTES.WALLET_MANAGER}>
-                <Wallet id="manage-wallets" />
+                {this.props.theme === 'Light' ? (
+                  <Wallet
+                    id="manage-wallets"
+                    className={styles.manageWallets}
+                  />
+                ) : (
+                  <GreenWallet
+                    id="manage-wallets"
+                    className={styles.manageWallets}
+                  />
+                )}
                 <span>
                   <FormattedMessage id="dashboardManageWallets" />
                 </span>

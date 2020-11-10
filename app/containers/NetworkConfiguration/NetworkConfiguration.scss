@@ -1,6 +1,7 @@
 .networkConfigPanel {
   display: flex;
   justify-content: center;
+  height: 100%;
 
   .networkConfigInstructions {
     border-bottom: none !important;
@@ -12,5 +13,14 @@
     display: flex;
     flex-direction: column;
     margin-bottom: auto;
+    height: 500px;
   }
+}
+
+.contentContainerStyle {
+  height: 100%;
+}
+
+.resetButton {
+  margin-top: 150px;
 }

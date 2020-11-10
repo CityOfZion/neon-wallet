@@ -168,6 +168,7 @@ export default class QrCodeScanner extends Component<Props, State> {
   }
 
   static getScannerError(err: Error) {
+    console.error({ err })
     const scanErr: ScannerError = {
       message: 'Could not connect to camera',
     }

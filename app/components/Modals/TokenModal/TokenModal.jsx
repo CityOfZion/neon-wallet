@@ -149,10 +149,10 @@ class TokenModal extends Component<Props, State> {
             </Button>
             <div className={styles.switchNetworkContainer}>
               <NetworkSwitch
-                handleControlledChange={option =>
-                  this.setState({ networkOption: option })
+                handleControlledChange={networkOption =>
+                  this.setState({ networkOption })
                 }
-                value={this.state.networkOption}
+                controlledNet={this.state.networkOption.deprecatedLabel}
                 shouldSwitchNetworks={false}
               />
             </div>

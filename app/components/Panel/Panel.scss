@@ -2,15 +2,15 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  box-shadow: var(--panel-box-shadow);
 
   .header {
     flex: 0 0 auto;
+    z-index: 100;
   }
 
   .content {
     flex: 1 1 auto;
     overflow-y: auto;
-    // display: flex;
-    // flex-direction: column;
   }
 }

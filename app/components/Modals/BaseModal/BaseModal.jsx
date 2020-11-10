@@ -58,12 +58,14 @@ const BaseModal = ({
         display: 'flex',
         flexDirection: 'column',
         background: 'var(--panel-background)',
+        zIndex: 5000,
         ...style.content,
       },
       overlay: {
         ...themes[theme],
         backgroundColor: 'var(--modal-overlay)',
         margin: 'auto',
+        zIndex: 200,
         ...style.overlay,
       },
     }}

@@ -73,11 +73,14 @@ export default class NeonLedger {
     }
     const paths = await NeonLedger.list()
     if (paths.length === 0) throw new Error(MESSAGES.NOT_CONNECTED)
-    const ledger = new NeonLedger(paths[0])
-    return ledger.open()
+    if (paths[0]) {
+      const ledger = new NeonLedger(paths[0])
+      return ledger.open()
+    }
+    return null
   }
 
-  static async list(): Promise<string[]> {
+  static async list(): Promise<(?string)[]> {
     return LedgerNode.list()
   }
 

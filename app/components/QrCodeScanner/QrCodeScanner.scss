@@ -1,5 +1,5 @@
 .error {
-  color: var(--input-label);
+  color: #d355e7;
   text-align: center;
   margin-top: 20px;
   .heading svg {
@@ -7,7 +7,7 @@
     position: relative;
     top: -2px;
     path {
-      fill: var(--input-error)
+      fill: #d355e7;
     }
   }
   .desc {
@@ -24,11 +24,11 @@
     vertical-align: middle;
   }
 
-  &[data-paused=false][data-loading=false] {
+  &[data-paused='false'][data-loading='false'] {
     animation: pulse 2s infinite;
   }
 
-  &[data-paused=true] {
+  &[data-paused='true'] {
     background: white;
     box-shadow: 0 0 0 5px var(--qr-scan-paused);
 

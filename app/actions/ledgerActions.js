@@ -1,6 +1,6 @@
 // @flow
 import { createActions } from 'spunky'
-import { getDeviceInfo } from '../ledger/ledgerNanoS'
+import { getDeviceInfo } from '../ledger/neonLedger'
 
 export const ID = 'ledger'
 

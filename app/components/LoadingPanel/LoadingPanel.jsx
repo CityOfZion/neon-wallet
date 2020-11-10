@@ -21,7 +21,7 @@ export default class LoadingPanel extends React.Component<Props> {
       <Panel
         className={classNames(styles.loadingPanel, this.props.className)}
         contentClassName={styles.content}
-        renderHeader={this.renderHeader}
+        renderHeader={this.props.title ? this.renderHeader : null}
       >
         <Loader />
       </Panel>

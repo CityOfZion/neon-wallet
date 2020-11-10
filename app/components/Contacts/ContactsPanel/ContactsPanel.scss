@@ -113,3 +113,16 @@
 .headerSelect {
   width: 150px;
 }
+
+.confirmDeleteModalPrompt {
+  text-align: center;
+  width: 100%;
+
+  h2 {
+    margin-top: 10px;
+
+    font-size: 18px;
+    color: var(--contacts-delete-contact-name);
+    text-align: center;
+  }
+}

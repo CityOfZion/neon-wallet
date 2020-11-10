@@ -12,9 +12,7 @@ import LoginIcon from '../../assets/icons/login.svg'
 import ConfirmIcon from '../../assets/icons/confirm.svg'
 import RefreshIcon from '../../assets/icons/refresh.svg'
 import styles from '../Home/Home.scss'
-import { getPublicKeys } from '../../ledger/ledgerNanoS'
-
-import { MESSAGES } from '../../ledger/neonLedger'
+import { getPublicKeys, MESSAGES } from '../../ledger/neonLedger'
 
 const LEDGER_CONNECTION_STAGES = {
   NOT_CONNECTED: 1,

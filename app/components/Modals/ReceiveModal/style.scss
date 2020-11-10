@@ -30,12 +30,12 @@ label {
     margin-right: 24px;
 
     path {
-      fill: #69e27e;
+      fill: #4cffb3;
     }
   }
 
   .title {
-    font-weight: 100;
+    font-weight: 400;
     font-size: 30px;
     line-height: 32px;
     font-family: var(--font-gotham-light);
@@ -72,6 +72,10 @@ label {
 .buttonContainer {
   margin-top: auto;
   margin-bottom: 50px;
+
+  svg {
+    margin-bottom: 50px;
+  }
 }
 
 .urlSection,

@@ -19,39 +19,65 @@
   flex-direction: row;
   align-items: center;
   font-size: 14px;
-  font-weight: 100;
+  font-weight: 500;
   padding: 12px;
   white-space: nowrap;
   transition: opacity 0.2s;
   height: 50px;
 
   &[disabled] {
-    opacity: 0.6;
-    background: var(--button-disabled) !important;
+    opacity: 1;
   }
 
   &:not([disabled]) {
     cursor: pointer;
   }
 
-  // TODO: update class to .primary
-  &.dark {
-    background-image: var(--button-primary-background);
-    background-color: var(--button-primary-background);
+  &.primary {
+    &[disabled] {
+      background-color: var(--button-primary-disabled-background-color);
+      background-image: var(--button-primary-disabled-background-image);
+      box-shadow: var(--button-primary-disabled-box-shadow);
+      color: var(--button-primary-disabled-text-color);
+      path {
+        fill: var(--button-primary-disabled-text-color);
+      }
+    }
+
+    background-image: var(--button-primary-background-image);
+    box-shadow: var(--button-primary-box-shadow);
+    border-radius: 4px;
     font-size: 14px;
     color: var(--button-primary-text);
 
     path {
-      fill: var(--button-icon-color);
+      fill: var(--button-primary-text);
     }
 
     &:not([disabled]):hover {
-      background: var(--button-primary-hover);
+      background-image: var(--button-primary-hover-background-image);
     }
   }
 
-  // TODO: update class to .secondary
-  &.light {
+  &.secondaryRaised {
+    color: var(--secondary-raised-base-text);
+
+    path {
+      fill: var(--base-text);
+    }
+
+    &[disabled] {
+      background-color: var(--button-primary-disabled-background-color);
+      background-image: var(--button-primary-disabled-background-image);
+      box-shadow: var(--button-primary-disabled-box-shadow);
+      color: var(--button-primary-disabled-text-color);
+      path {
+        fill: var(--button-primary-disabled-text-color);
+      }
+    }
+  }
+
+  &.secondary {
     border: solid;
     border-width: 2px;
     border-color: transparent;

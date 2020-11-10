@@ -1,6 +1,6 @@
 // // NOTE - begin process of testing the ledger app
 // import commNode from '../../app/ledger/ledger-comm-node'
-// import { ledgerNanoSCreateSignatureAsync } from '../../app/ledger/ledgerNanoS'
+// import { legacySignWithLedger } from '../../app/ledger/neonLedger'
 // import { BIP44_PATH } from '../../app/core/constants'
 //
 // const promiseMock = (result, error = false) => {
@@ -25,7 +25,7 @@
 //
 describe('ledgerNano Async Signature tests', () => {
   test('ledgerNano Async Signature works', async () => {
-    // const sign = await ledgerNanoSCreateSignatureAsync(unsignedTx, publicKey)
+    // const sign = await legacySignWithLedger(unsignedTx, publicKey)
     // console.log('sign repsonse', sign)
     expect(true).toEqual(true)
   })

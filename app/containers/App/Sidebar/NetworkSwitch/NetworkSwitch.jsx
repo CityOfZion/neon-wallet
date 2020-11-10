@@ -12,6 +12,7 @@ import styles from './NetworkSwitch.scss'
 type Props = {
   onChange: Function,
   handleControlledChange: Function,
+  controlledNet: string,
   className: string,
   disabled: boolean,
   networks: Array<NetworkItemType>,
@@ -52,7 +53,9 @@ export default class NetworkSwitch extends Component<Props> {
           hideHighlight
           disabled={disabled}
           value={{
-            label: findNetworkByDeprecatedLabel(this.props.net).label,
+            label: findNetworkByDeprecatedLabel(
+              this.props.controlledNet || this.props.net,
+            ).label,
           }}
           onChange={this.handleChange}
           options={networks}

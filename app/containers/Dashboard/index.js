@@ -10,6 +10,7 @@ import withInitialCall from '../../hocs/withInitialCall'
 import withAuthData from '../../hocs/withAuthData'
 import withCurrencyData from '../../hocs/withCurrencyData'
 import withNetworkData from '../../hocs/withNetworkData'
+import withThemeData from '../../hocs/withThemeData'
 import withFilteredTokensData from '../../hocs/withFilteredTokensData'
 import { getNotifications } from '../../modules/notifications'
 import { showModal } from '../../modules/modal'
@@ -52,4 +53,5 @@ export default compose(
   withReset(accountActions, ['networkId']),
   withActions(accountActions, mapAccountActionsToProps),
   withData(internetConnectionPromptPresented),
+  withThemeData(),
 )(Dashboard)

@@ -6,8 +6,8 @@
   align-items: stretch;
   justify-content: center;
   height: 50px;
+  min-height: 50px;
   padding: 0 24px;
-  font-family: var(--font-gotham-book);
   font-size: 14px;
   background: var(--panel-header);
   color: var(--panel-header-text);

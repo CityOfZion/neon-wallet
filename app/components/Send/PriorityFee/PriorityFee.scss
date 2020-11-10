@@ -17,22 +17,29 @@
 
 .priorityFeeButtonContainer {
   display: flex;
-  justify-content: center;
+  background-image: var(--button-priority-button-container-background);
+  box-shadow: var(--button-priority-button-container-shadow);
+  border-radius: 8px;
 
   .feeCost {
     font-size: 11px;
-    font-weight: 100;
+    text-align: left;
+    margin-left: 4px;
   }
 
   .speed {
-    font-weight: 400;
+    font-style: var(--font-gotham-book);
+    text-align: left;
+    font-size: 14px;
+    margin-left: 4px;
   }
 
   button:first-child {
-    border-radius: 4px 0 0 4px;
+    border-radius: 8px 0 0 8px;
     border-right: none !important;
+    border-left: none !important;
     display: flex;
-    flex: 2.25;
+    flex: 1;
     background: var(--button-priority-transfer-background);
   }
 
@@ -40,39 +47,66 @@
     border-radius: 0;
     border-right: none !important;
     display: flex;
-    flex: 2;
+    flex: 1;
     background: var(--button-priority-transfer-background);
   }
 
   button:nth-child(3) {
-    border-radius: 0 4px 4px 0;
+    border-radius: 0 8px 8px 0;
     display: flex;
-    flex: 1.5;
+    flex: 1;
     background: var(--button-priority-transfer-background);
   }
 
   .activeButton {
     color: var(--button-active-text) !important;
+
+    svg {
+      max-width: 8px;
+
+      g {
+        fill: #3bfdab !important;
+      }
+    }
   }
 
   button {
+    box-shadow: var(--button-priority-conditional-box-shadow) !important;
+    border-left: var(--button-priority-transfer-button-border);
+
+    svg {
+      max-width: 8px;
+
+      g {
+        fill: var(--button-priority-standard-icon-color);
+      }
+    }
     margin: 0;
-    height: auto;
-    border: solid thin #8d98ae !important;
+    height: 60px;
     background: var(--button-priority-transfer-background);
     color: var(--button-priority-transfer-color) !important;
 
     &:not([disabled]):hover {
       color: var(--button-active-text) !important;
+      background: var(--button-priority-active-hover) !important;
+
+      svg {
+        max-width: 8px;
+
+        g {
+          fill: #3bfdab !important;
+        }
+      }
     }
 
     &[disabled] {
-      opacity: 0.6;
+      opacity: var(--button-priority-disabled-opacity);
       background: var(--button-priority-transfer-disabled) !important;
+      color: var(--button-priority-transfer-disabled-color) !important;
 
       svg {
         g {
-          fill: #d6d9e0;
+          fill: var(--button-priority-transfer-disabled-color) !important;
         }
       }
     }

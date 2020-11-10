@@ -38,8 +38,8 @@
       text-align: center;
 
       .quantity {
-        font-weight: 200;
-        margin: 16px 0;
+        font-weight: 400;
+        margin: -8px 0 16px 0;
         font-family: var(--font-gotham-light);
         font-size: 40px;
         color: var(--base-text);
@@ -89,12 +89,9 @@
   }
 
   .label {
-    margin-bottom: 8px;
-    color: #969aa0;
     font-size: 24px;
-    font-weight: 100;
+    font-weight: 400;
     text-transform: uppercase;
-    opacity: 0.5;
     font-family: var(--font-gotham-light);
     font-size: 24px;
     color: var(--base-text);

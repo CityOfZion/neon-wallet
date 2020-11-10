@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl'
 
 const returnDropdownIndicatorColor = props => {
   if (props.selectProps.settingsSelect) return 'var(--settings-link-text)'
-  if (props.isFocused && !props.selectProps.hideHighlight) return '#6bdaf6'
+  if (props.isFocused && !props.selectProps.hideHighlight) return '#66eb8e'
   return 'var(--input-icon)'
 }
 

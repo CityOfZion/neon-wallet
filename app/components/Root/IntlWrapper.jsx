@@ -20,6 +20,7 @@ const {
   portuguese,
   turkish,
   arabic,
+  russian,
 } = translations
 
 type IntlWrapperProps = {
@@ -38,6 +39,7 @@ const tranlationsMappings = {
   [LANGUAGES.PORTUGUESE.value]: portuguese,
   [LANGUAGES.TURKISH.value]: turkish,
   [LANGUAGES.ARABIC.value]: arabic,
+  [LANGUAGES.RUSSIAN.value]: russian,
 }
 
 class IntlWrapper extends React.Component<IntlWrapperProps> {

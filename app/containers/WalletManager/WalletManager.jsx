@@ -12,6 +12,7 @@ import FullHeightPanel from '../../components/Panel/FullHeightPanel'
 import Import from '../../assets/icons/import.svg'
 import Add from '../../assets/icons/add.svg'
 import WalletIcon from '../../assets/icons/wallet.svg'
+import GreenWalletIcon from '../../assets/icons/wallet-green.svg'
 
 import styles from './WalletManager.scss'
 
@@ -22,6 +23,7 @@ type Props = {
   showErrorNotification: Object => any,
   setAccounts: (Array<Object>) => any,
   showModal: (modalType: string, modalProps: Object) => any,
+  theme: string,
 }
 
 class WalletManager extends Component<Props> {
@@ -38,7 +40,11 @@ class WalletManager extends Component<Props> {
           <div className={styles.walletManagerDetails}>
             <div className={styles.iconAndHeader}>
               <div className={styles.walletIcon}>
-                <WalletIcon id="manage-wallets" />
+                {this.props.theme === 'Light' ? (
+                  <WalletIcon id="manage-wallets" />
+                ) : (
+                  <GreenWalletIcon id="manage-wallets" />
+                )}
               </div>
               <h2>
                 <FormattedMessage id="dashboardManageWallets" />

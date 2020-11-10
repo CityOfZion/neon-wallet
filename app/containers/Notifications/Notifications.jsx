@@ -12,6 +12,7 @@ import CheckIcon from '../../assets/icons/check.svg'
 type Props = {
   notifications: Array<NotificationType>,
   hideNotification: Function,
+  theme: string,
 }
 
 class Notifications extends Component<Props> {
@@ -78,12 +79,13 @@ class Notifications extends Component<Props> {
   }
 
   render() {
+    const { theme } = this.props
     return (
       <ReactNotificationSystem
         ref={node => {
           this.rnsRef = node
         }}
-        style={overrideStyles}
+        style={overrideStyles(theme)}
         allowHTML
       />
     )

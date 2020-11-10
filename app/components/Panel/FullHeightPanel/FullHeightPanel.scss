@@ -6,6 +6,8 @@
   margin: -24px auto;
   width: 600px;
   min-height: 100vh;
+  overflow-y: auto;
+  box-shadow: var(--tx-list-box-shadow);
 
   form {
     max-height: 600px;
@@ -16,14 +18,13 @@
     flex-direction: column;
     justify-content: center;
     flex: 1;
-    height: 100%;
   }
 
   .header {
-    margin-top: 50px;
+    margin-top: 30px;
     display: flex;
     align-items: center;
-    font-weight: 100;
+    font-weight: 500;
     font-size: 30px;
     line-height: 32px;
     font-family: var(--font-gotham-light);
@@ -49,6 +50,15 @@
     }
   }
 
+  .scrollableContent {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    // height: 100%;
+  }
+
   .instructions {
     border-bottom: solid thin var(--panel-full-height-instructions-border);
     margin-bottom: 30px;
@@ -57,7 +67,6 @@
     width: 500px;
     font-size: 14px;
     color: var(--panel-full-height-instructions-text);
-    font-family: var(--font-gotham-book);
   }
 
   .navigation {

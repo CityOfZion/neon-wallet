@@ -13,6 +13,7 @@ import CloseButton from '../../components/CloseButton'
 import SettingsItem from '../../components/Settings/SettingsItem'
 import StyledReactSelect from '../../components/Inputs/StyledReactSelect/StyledReactSelect'
 import SettingsLink from '../../components/Settings/SettingsLink'
+import Button from '../../components/Button'
 import settingsStyles from '../Settings/Settings.scss'
 import NetworkSwitch from '../App/Sidebar/NetworkSwitch'
 
@@ -23,10 +24,15 @@ type Props = {
   setBlockExplorer: string => any,
   selectedNode: string,
   intl: intlShape,
+  handleNetworkChange: Function,
+  loadWalletData: Function,
+  saveSelectedNode: Function,
+  loading: boolean,
 }
 
 type State = {
   selectedExplorer: SelectOption,
+  disableResetButton: boolean,
 }
 
 export default class NetworkConfiguration extends React.Component<
@@ -38,6 +44,18 @@ export default class NetworkConfiguration extends React.Component<
       value: this.props.explorer,
       label: this.props.explorer,
     },
+    disableResetButton: false,
+  }
+
+  resetToDefault = () => {
+    this.setState({ disableResetButton: true })
+    this.updateExplorerSettings({ value: 'NEOSCAN', label: EXPLORERS.NEO_SCAN })
+    this.props.handleNetworkChange('1')
+    this.props.saveSelectedNode({ url: '', net: 'MainNet' })
+    setTimeout(() => {
+      this.props.loadWalletData()
+      this.setState({ disableResetButton: false })
+    }, 1000)
   }
 
   render() {
@@ -46,10 +64,11 @@ export default class NetworkConfiguration extends React.Component<
       label: EXPLORERS[key],
     }))
 
-    const { intl } = this.props
+    const { intl, loading } = this.props
 
     return (
       <FullHeightPanel
+        containerClassName={styles.contentContainerStyle}
         className={styles.networkConfigPanel}
         headerText={<FormattedMessage id="networkSettingsLabel" />}
         renderCloseButton={() => <CloseButton routeTo={ROUTES.SETTINGS} />}
@@ -105,6 +124,16 @@ export default class NetworkConfiguration extends React.Component<
                 <NetworkSwitch transparent settingsSelect />
               </div>
             </SettingsItem>
+
+            <div className={styles.resetButton}>
+              <Button
+                disabled={this.state.disableResetButton || loading}
+                elevated
+                onClick={this.resetToDefault}
+              >
+                Reset to default
+              </Button>
+            </div>
           </div>
         </section>
       </FullHeightPanel>

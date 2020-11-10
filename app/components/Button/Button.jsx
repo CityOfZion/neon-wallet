@@ -14,6 +14,7 @@ type Props = {
   // will center label if rendered with icon
   shouldCenterButtonLabelText: boolean,
   children: React$Node,
+  elevated?: boolean,
 }
 
 class Button extends React.Component<Props> {
@@ -31,6 +32,7 @@ class Button extends React.Component<Props> {
       'renderIcon',
       'active',
       'shouldCenterButtonLabelText',
+      'elevated',
     )
 
     return (
@@ -41,6 +43,7 @@ class Button extends React.Component<Props> {
           className,
           this.getActiveButtonStyle(),
           this.getButtonStyle(),
+          this.getElevatedSecondaryStyle(),
         )}
       >
         {this.renderIcon()}
@@ -70,9 +73,15 @@ class Button extends React.Component<Props> {
 
   getActiveButtonStyle = () => (this.props.active ? styles.active : undefined)
 
-  getButtonStyle = () => (this.props.primary ? styles.dark : styles.light)
+  getElevatedSecondaryStyle = () =>
+    this.props.elevated ? styles.secondaryRaised : undefined
 
-  getIconStyle = () => (this.props.primary ? styles.light : styles.dark)
+  getButtonStyle = () =>
+    this.props.primary || this.props.elevated
+      ? styles.primary
+      : styles.secondary
+
+  getIconStyle = () => (this.props.primary ? styles.primary : styles.secondary)
 }
 
 export default Button

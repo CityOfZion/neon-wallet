@@ -1,47 +1,51 @@
 @import './variables';
 
 @font-face {
-  font-family: 'Gotham';
-  src: url('../assets/fonts/Gotham-Book.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
+  font-family: 'SofiaPro-Light';
+  font-weight: lighter;
+  src: url('../assets/fonts/sofiapro-light-webfont.woff') format('woff');
 }
+
 @font-face {
-  font-family: 'Gotham';
-  src: url('../assets/fonts/Gotham-Bold.woff') format('woff');
-  font-weight: bold;
+  font-family: 'SofiaPro';
+  src: url('../assets/fonts/sofiapro-regular-webfont.woff') format('woff');
+  font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Gotham-Medium';
-  src: url('../assets/fonts/Gotham-Medium.woff') format('woff');
+  font-family: 'SofiaPro';
+  src: url('../assets/fonts/sofiapro-regularitalic-webfont.woff') format('woff');
+  font-style: italic;
 }
+
 @font-face {
-  font-family: 'Gotham-Bold';
-  src: url('../assets/fonts/Gotham-Bold.woff') format('woff');
+  font-family: 'SofiaPro-Medium';
+  src: url('../assets/fonts/sofiapro-medium-webfont.woff') format('woff');
+  font-style: normal;
 }
+
 @font-face {
-  font-family: 'Gotham-Light';
-  src: url('../assets/fonts/Gotham-Light.woff') format('woff');
+  font-family: 'SofiaPro-SemiBold';
+  src: url('../assets/fonts/sofiapro-semibold-webfont.woff') format('woff');
+  font-style: normal;
 }
+
 @font-face {
-  font-family: 'Gotham-Thin';
-  src: url('../assets/fonts/Gotham-Thin.woff') format('woff');
-}
-@font-face {
-  font-family: 'Gotham-Book';
-  src: url('../assets/fonts/Gotham-Book.woff') format('woff');
+  font-family: 'SofiaPro-Bold';
+  font-weight: bolder;
+  src: url('../assets/fonts/sofiapro-bold-webfont.woff') format('woff');
 }
 
 :root {
   --font-fallback: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-  --font-gotham: 'Gotham', var(--font-fallback);
-  --font-gotham-medium: 'Gotham-Medium', var(--font-fallback);
-  --font-gotham-bold: 'Gotham-Bold', var(--font-fallback);
-  --font-gotham-thin: 'Gotham-Thin', var(--font-fallback);
-  --font-gotham-light: 'Gotham-Light', var(--font-fallback);
-  --font-gotham-book: 'Gotham-Book', var(--font-fallback);
+  --font-gotham: 'SofiaPro', var(--font-fallback);
+  --font-gotham-medium: 'SofiaPro-Medium', var(--font-fallback);
+  --font-sofiapro-semibold: 'SofiaPro-SemiBold', var(--font-fallback);
+  --font-gotham-bold: 'SofiaPro-Bold', var(--font-fallback);
+  --font-gotham-thin: 'SofiaPro-Light', var(--font-fallback);
+  --font-gotham-light: 'SofiaPro-Light', var(--font-fallback);
+  --font-gotham-book: 'SofiaPro-Bold', var(--font-fallback);
 }
 
 @media print {
@@ -88,7 +92,7 @@ input {
   font-size: 1.2em;
   padding: 7px 15px;
   border: none;
-  font-weight: 300;
+  font-weight: 400;
   :focus {
     outline: none;
   }
@@ -128,6 +132,7 @@ input::placeholder {
 .react-select-container {
   width: 100%;
   min-width: 140px;
+  font-family: var(--font-gotham);
   cursor: pointer !important;
 
   .react-select__placeholder {
@@ -140,6 +145,7 @@ input::placeholder {
 
   .react-select__single-value {
     color: var(--input-text);
+    font-family: var(--font-sofiapro-semibold);
   }
 
   .react-select__value-container {
@@ -147,11 +153,11 @@ input::placeholder {
     width: 100%;
     height: $text-input-height;
     padding: 7px 15px;
-    line-height: $text-input-height;
     color: var(--input-text);
     background: var(--input-background);
     font-size: $text-input-font-size;
     border-radius: $text-input-border-radius;
+    font-family: var(--font-gotham);
   }
 
   .react-select__control {
@@ -237,7 +243,10 @@ input::placeholder {
       display: flex;
       margin: auto;
       font-size: 12px;
-      color: #ced0d4;
+      color: var(--base-text);
+      letter-spacing: 0.37px;
+      opacity: 0.5;
+
       cursor: pointer;
       padding-bottom: 10px;
       width: 100%;
@@ -246,6 +255,7 @@ input::placeholder {
     }
 
     li[aria-selected='true'] {
+      opacity: 1;
       font-weight: bold;
       color: var(--base-text);
       border-bottom: solid var(--base-text) 2px;
@@ -259,11 +269,13 @@ a {
 
 .tippy-popper {
   max-width: none;
+  margin-left: -5px;
 }
 
 .tippy-tooltip.network-settings-theme {
   background-color: var(--network-config-tooltip-background);
   color: var(--network-config-tooltip-color);
+  box-shadow: var(--network-config-box-shadow);
 
   .arrow-regular {
     border-right: 7px solid var(--network-config-tooltip-background) !important;

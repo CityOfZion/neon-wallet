@@ -1,3 +1,6 @@
-import LogoWithStrikethrough from './LogoWithStrikethrough'
+import { compose } from 'recompose'
 
-export default LogoWithStrikethrough
+import LogoWithStrikethrough from './LogoWithStrikethrough'
+import withThemeData from '../../hocs/withThemeData'
+
+export default compose(withThemeData())(LogoWithStrikethrough)

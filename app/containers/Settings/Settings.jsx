@@ -67,36 +67,41 @@ type State = {
   selectedLanguage: Language,
 }
 
-export const loadWalletRecovery = (
+export const loadWalletRecovery = async (
   showSuccessNotification: Object => any,
   showErrorNotification: Object => any,
   setAccounts: (Array<Object>) => any,
 ) => {
-  dialog.showOpenDialog(fileNames => {
-    // fileNames is an array that contains all the selected
-    if (!fileNames) {
+  const { canceled, filePaths } = await dialog.showOpenDialog()
+  if (canceled || !filePaths) return
+
+  const filepath = filePaths[0]
+  fs.readFile(filepath, 'utf-8', async (err, data) => {
+    if (err) {
+      showErrorNotification({
+        message: `An error occurred reading the file: ${err.message}`,
+      })
       return
     }
-    const filepath = fileNames[0]
-    fs.readFile(filepath, 'utf-8', (err, data) => {
-      if (err) {
-        showErrorNotification({
-          message: `An error occurred reading the file: ${err.message}`,
-        })
-        return
-      }
-      const walletData = JSON.parse(data)
+    const walletData = JSON.parse(data)
+    const recoveryData = await recoverWallet(walletData).catch(err => {
+      showErrorNotification({
+        message: `An error occurred recovering wallet: ${err.message}`,
+      })
+    })
 
-      recoverWallet(walletData)
-        .then(data => {
-          showSuccessNotification({ message: 'Recovery was successful.' })
-          setAccounts(data.accounts)
-        })
-        .catch(err => {
-          showErrorNotification({
-            message: `An error occurred recovering wallet: ${err.message}`,
-          })
-        })
+    if (recoveryData) {
+      showSuccessNotification({ message: 'Recovery was successful.' })
+      setAccounts(recoveryData.accounts)
+    }
+  })
+}
+
+async function storageGet(key) {
+  return new Promise((resolve, reject) => {
+    storage.get(key, (err, data) => {
+      if (err) reject(err)
+      resolve(data)
     })
   })
 }
@@ -122,49 +127,42 @@ export default class Settings extends Component<Props, State> {
         .find(lang => lang.value === this.props.language) || LANGUAGES.ENGLISH,
   }
 
-  saveWalletRecovery = () => {
+  saveWalletRecovery = async () => {
     const { showSuccessNotification, showErrorNotification } = this.props
 
-    storage.get('userWallet', (errorReading, data) => {
-      if (errorReading) {
-        showErrorNotification({
-          message: `An error occurred reading wallet file: ${
-            errorReading.message
-          }`,
-        })
-        return
-      }
-      const content = JSON.stringify(data)
-      dialog.showSaveDialog(
+    let content
+    try {
+      content = JSON.stringify(await storageGet('userWallet'))
+    } catch (e) {
+      showErrorNotification({
+        message: `An error occurred reading wallet file: ${e.message}`,
+      })
+      return
+    }
+    const { filePath, canceled } = await dialog.showSaveDialog({
+      filters: [
         {
-          filters: [
-            {
-              name: 'JSON',
-              extensions: ['json'],
-            },
-          ],
+          name: 'JSON',
+          extensions: ['json'],
         },
-        fileName => {
-          if (fileName === undefined) {
-            return
-          }
-          // fileName is a string that contains the path and filename created in the save file dialog.
-          fs.writeFile(fileName, content, errorWriting => {
-            if (errorWriting) {
-              showErrorNotification({
-                message: `An error occurred creating the file: ${
-                  errorWriting.message
-                }`,
-              })
-            } else {
-              showSuccessNotification({
-                message: 'The file has been succesfully saved',
-              })
-            }
-          })
-        },
-      )
+      ],
     })
+
+    if (filePath && !canceled) {
+      fs.writeFile(filePath, content, errorWriting => {
+        if (errorWriting) {
+          showErrorNotification({
+            message: `An error occurred creating the file: ${
+              errorWriting.message
+            }`,
+          })
+        } else {
+          showSuccessNotification({
+            message: 'The file has been succesfully saved',
+          })
+        }
+      })
+    }
   }
 
   updateCurrencySettings = (option: SelectOption) => {
@@ -406,11 +404,6 @@ export default class Settings extends Component<Props, State> {
         <FormattedMessage id="settingsManageLabel" /> - v{pack.version}
       </div>
       <div className={styles.settingsPanelHeaderItem}>
-        <div>
-          <FormattedMessage id="settingsCommunity" />:{' '}
-          <a onClick={this.openPipefyLink}>{PIPEFY_SUPPORT}</a>
-        </div>
-
         <div>
           NEO Discord:{' '}
           <a onClick={this.openDiscordLink}>{DISCORD_INVITE_LINK}</a>

@@ -2,6 +2,7 @@
 .*/test/.*
 .*/node_modules/.*/src/.*
 .*/node_modules/@ledgerhq/hw-transport/lib/Transport.js.flow
+.*/node_modules/roarr/dist/types.js.flow
 
 [include]
 

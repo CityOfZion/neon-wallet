@@ -8,6 +8,8 @@ const {
 } = require('electron') // eslint-disable-line import/no-extraneous-dependencies
 const path = require('path')
 const url = require('url')
+const { autoUpdater } = require('electron-updater')
+const log = require('electron-log')
 
 const port = process.env.PORT || 3000
 
@@ -49,6 +51,8 @@ app.on('ready', () => {
         preload: path.join(__dirname, 'preload.js'),
       },
     })
+
+    autoUpdater.checkForUpdatesAndNotify()
 
     mainWindow.on('ready-to-show', () => {
       mainWindow.show()
@@ -182,4 +186,41 @@ app.on('web-contents-created', (event, wc) => {
 app.on('will-quit', () => {
   // Unregister all shortcuts.
   globalShortcut.unregisterAll()
+})
+
+autoUpdater.logger = log
+autoUpdater.logger.transports.file.level = 'info'
+
+function sendStatusToWindow(text) {
+  log.info(text)
+  mainWindow.webContents.send('message', text)
+}
+
+autoUpdater.on('checking-for-update', () => {
+  sendStatusToWindow('Checking for update...')
+})
+autoUpdater.on('update-available', info => {
+  // eslint-disable-next-line prefer-template
+  sendStatusToWindow('Update available. ' + info)
+})
+autoUpdater.on('update-not-available', () => {
+  sendStatusToWindow('Update not available.')
+})
+autoUpdater.on('error', err => {
+  // eslint-disable-next-line prefer-template
+  sendStatusToWindow('Error in auto-updater. ' + err)
+})
+autoUpdater.on('download-progress', progressObj => {
+  // eslint-disable-next-line prefer-template
+  let logMessage = 'Download speed: ' + progressObj.bytesPerSecond
+  // eslint-disable-next-line prefer-template
+  logMessage = logMessage + ' - Downloaded ' + progressObj.percent + '%'
+  logMessage =
+    // eslint-disable-next-line prefer-template
+    logMessage + ' (' + progressObj.transferred + '/' + progressObj.total + ')'
+  sendStatusToWindow(logMessage)
+})
+autoUpdater.on('update-downloaded', info => {
+  // eslint-disable-next-line prefer-template
+  sendStatusToWindow('Update downloaded ' + info)
 })

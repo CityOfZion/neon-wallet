@@ -5,12 +5,13 @@
   background: transparent;
 
   &:hover {
-    opacity: .7;
+    opacity: 0.7;
   }
 
   svg {
-    &, & path {
-      fill: #9599a2;
+    &,
+    & path {
+      fill: var(--panel-icon);
     }
   }
 

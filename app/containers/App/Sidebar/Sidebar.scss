@@ -10,6 +10,9 @@ $size: 70px;
   width: $size;
   background: var(--sidebar-background);
   padding-top: 12px;
+  box-shadow: var(--sidebar-shadow);
+  position: relative;
+  z-index: 10;
 
   .group {
     flex: 0 0 auto;
@@ -28,7 +31,7 @@ $size: 70px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: var(--font-gotham-book);
+
   font-size: 10px;
   text-align: center;
   margin-top: -10px;
@@ -52,8 +55,8 @@ $size: 70px;
   align-items: center;
 
   img {
-    width: 28px;
-    height: 28px;
+    width: 34.34px;
+    height: 30.55px;
   }
 }
 
@@ -89,7 +92,6 @@ $size: 70px;
   text-align: center;
 
   div {
-    font-family: var(--font-gotham-book);
     font-size: 10px;
     margin-top: 5px;
   }

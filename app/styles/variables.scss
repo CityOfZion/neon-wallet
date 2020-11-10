@@ -11,7 +11,11 @@ $text-input-font-size: 14px;
       var(--input-background),
       var(--input-background)
     ),
-    radial-gradient(circle at top left, #66eb8e, #6bdaf6);
+    radial-gradient(
+      circle at top left,
+      var(--input-active-border),
+      var(--input-active-border)
+    );
   background-origin: border-box;
   background-clip: content-box, border-box;
 }

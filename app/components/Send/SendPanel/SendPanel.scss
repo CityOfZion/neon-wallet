@@ -32,12 +32,15 @@
     justify-content: center;
     display: flex;
     flex: 0.2;
-    font-weight: 200;
-    font-size: 14px;
-    color: #ffcf48;
 
+    font-size: 14px;
+    color: var(--button-priority-standard-icon-color);
+    font-family: var(--font-gotham-bold);
     svg {
       margin-right: 10px;
+      g {
+        fill: #3bfdab !important;
+      }
     }
   }
 
@@ -66,7 +69,7 @@
       width: 24px;
 
       path {
-        fill: #69e27e;
+        fill: var(--panel-icon);
       }
     }
   }
@@ -155,6 +158,8 @@
   flex-direction: column;
   width: 450px;
   margin: auto;
+  margin-top: 36px;
+  margin-bottom: 36px;
 }
 
 .priorityFeeButtonContainer {

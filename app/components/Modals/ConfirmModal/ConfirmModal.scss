@@ -1,23 +1,16 @@
 .modalFooter {
-  padding-top: 20px;
   text-align: right;
+  display: flex;
+  padding-top: 15px;
 }
 
 .actionButton {
-  background-color: red;
-  margin-bottom: 10px;
-  &:hover {
-    background-color: red;
-  }
+  margin-left: 12px;
 }
 
 .cancelButton {
   background: none;
-  border: 1px solid #999;
-  color: #000;
-  &:hover {
-    background: none;
-  }
+  margin-right: 12px;
 }
 
 .contentContainer {

@@ -1,0 +1,65 @@
+.releaseNotesContainer {
+  margin: 0 !important;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.closeButton {
+  cursor: pointer;
+}
+
+.releaseNotesContents {
+  display: flex;
+  padding: 48px 24px;
+  flex-direction: column;
+}
+
+.release {
+  display: flex;
+  margin-bottom: 48px;
+}
+
+.releaseContent {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 24px;
+
+  .date {
+    font-size: 14px;
+    font-family: var(--font-sofiapro-semibold);
+
+    color: #8297a0;
+    color: var(--release-notes-date);
+  }
+
+  svg {
+    cursor: pointer;
+  }
+
+  h3 {
+    margin-bottom: 6px;
+    margin-top: 0px;
+  }
+
+  li {
+    margin-left: 24px;
+  }
+
+  p {
+    font-size: 14px;
+    color: var(--release-notes-text);
+    line-height: 17px;
+  }
+}
+
+.marketingImage {
+  display: flex;
+  flex: 1;
+  align-items: center;
+
+  img {
+    display: block;
+    max-width: 310px;
+  }
+}

@@ -13,7 +13,7 @@ import Button from '../../components/Button'
 import styles from './Home.scss'
 import AddIcon from '../../assets/icons/add.svg'
 import ImportIcon from '../../assets/icons/import.svg'
-import { ROUTES } from '../../core/constants'
+import { ROUTES, MODAL_TYPES } from '../../core/constants'
 import HomeLayout from './HomeLayout'
 import pack from '../../../package.json'
 
@@ -23,6 +23,7 @@ type State = {
 type Props = {
   loading: boolean,
   theme: ThemeType,
+  showModal: (modalType: string, modalProps: Object) => any,
 }
 
 const LOGIN_OPTIONS = {
@@ -53,6 +54,19 @@ const LOGIN_OPTIONS = {
   },
 }
 
+// NOTE: all other solutions seemed to be overly
+// complex... Revisit this if it becomes painful
+const shouldRenderReleaseNotes = version => {
+  const displayWhitelist = ['2.6.0']
+  if (
+    displayWhitelist.includes(version) &&
+    !localStorage.getItem(`hasSeenReleaseNotes-${version}`)
+  ) {
+    return true
+  }
+  return false
+}
+
 export default class Home extends React.Component<Props, State> {
   state = {
     tabIndex: 0,
@@ -61,8 +75,28 @@ export default class Home extends React.Component<Props, State> {
   // $FlowFixMe
   options = Object.keys(LOGIN_OPTIONS).map((key: string) => LOGIN_OPTIONS[key])
 
-  render = () => {
+  renderReleaseNotesModal = () => {
+    this.props.showModal(MODAL_TYPES.RELEASE_NOTES, {
+      renderBody: () => (
+        <div className={styles.confirmDeleteModalPrompt}>
+          Please confirm removing saved wallet
+        </div>
+      ),
+    })
+  }
+
+  render() {
     const { loading, theme } = this.props
+
+    if (shouldRenderReleaseNotes(pack.version)) {
+      // Allow users to view the normal for 1 second
+      // befre rendering the release notes modal
+      setTimeout(() => {
+        this.renderReleaseNotesModal()
+      }, 1000)
+      localStorage.setItem(`hasSeenReleaseNotes-${pack.version}`, 'true')
+    }
+
     return (
       <HomeLayout theme={theme}>
         <div className={styles.inputContainer}>
@@ -105,7 +139,10 @@ export default class Home extends React.Component<Props, State> {
               </Link>
             </div>
           </div>
-          <div className={styles.versionNumber}>{`v${pack.version}`}</div>
+          <div
+            onClick={this.renderReleaseNotesModal}
+            className={styles.versionNumber}
+          >{`v${pack.version}`}</div>
         </div>
       </HomeLayout>
     )

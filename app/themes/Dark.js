@@ -1,49 +1,70 @@
 const BASE = {
-  '--base-scrollbar-track': '#2E3542',
+  '--base-scrollbar-track': '#39404c',
   '--base-scrollbar-thumb': '#5c677f',
-  '--base-main-background': '#242933',
+  '--base-main-background': '#242B31',
   '--base-text': '#fff',
   '--base-link-color': '#6bdaf6',
 }
 
 const BUTTON = {
-  '--button-disabled': '#5C677F',
-  '--button-active': '#66ED87',
-  '--button-active-text': '#242933',
-  '--button-secondary-background': '#3B3B4F',
-  '--button-primary-background': '#66ED87',
-  '--button-primary-hover': '#69E27E',
-  '--button-secondary-hover': '#3B3B4F',
-  '--button-primary-text': '#242933',
+  '--button-primary-disabled-box-shadow':
+    '-12px -12px 36px 0 rgba(70,77,83,0.50), 12px 12px 36px 0 rgba(18,21,23,0.99), inset -1px -1px 0 0 rgba(0,0,0,0.32), inset 1px 1px 0 0 rgba(214,210,210,0.14)',
+  '--button-primary-box-shadow':
+    '-4px -4px 20px 0 rgba(94,101,107,0.50), 4px 4px 20px 0 rgba(18,21,23,0.81), inset -1px -1px 0 0 rgba(0,0,0,0.32), inset 1px 1px 0 0 rgba(214,210,210,0.14)',
+  '--button-primary-disabled-background-image':
+    'linear-gradient(180deg, #313e46 0%, #20292f 100%)',
+  '--button-primary-disabled-text-color': '#4C5763',
+  '--button-primary-disabled-background-color': '#4C5763',
+  '--button-primary-background-image':
+    'linear-gradient(180deg, #42535D 0%, #273139 100%)',
+  '--button-primary-hover-background-image':
+    ' linear-gradient(180deg, #566A76 0%, #33414A 100%)',
+  '--button-active': 'linear-gradient(180deg, #273139 0%, #313D45 100%)',
+  '--button-active-text': '#4CFFB3',
+  '--button-secondary-background': 'transparent',
+  '--button-primary-background': '#4CFFB3',
+  '--button-primary-hover': '#4CFFB3',
+  '--button-secondary-hover': 'transparent',
+  '--button-primary-text': '#4CFFB3',
   '--button-secondary-text': '#394152',
-  '--button-icon-color': '#242933',
-  '--button-active-hover': '#69E27E',
+  '--button-icon-color': '#4CFFB3',
+  '--button-active-hover': 'linear-gradient(180deg, #273139 0%, #313D45 100%)',
+  '--button-priority-active-hover':
+    'linear-gradient(180deg, #273139 0%, #313D45 100%)',
   '--secondary-button-icon-color': '#fff',
-  '--button-priority-transfer-background': '#2E3542',
-  '--button-priority-transfer-color': '#fff',
-  '--button-priority-transfer-disabled': '#2E3542',
+  '--button-priority-standard-icon-color': '#4CFFB3',
+  '--button-priority-transfer-background':
+    'linear-gradient(180deg, #42535D 0%, #273139 100%)',
+  '--button-priority-transfer-color': '#9DB2BB',
+  '--button-priority-transfer-disabled-color': '#495460',
+  '--button-priority-disabled-opacity': '.6',
+  '--button-priority-transfer-disabled':
+    'linear-gradient(180deg, #2E3B44 0%, #20292F 100%)',
   '--button-max-amount-background': '#8D98AE',
   '--button-max-amount-text': '#394152',
   '--button-flag-icon-color': '#fff',
   '--button-flag-icon-opacity': 0.6,
+  '--button-priority-conditional-box-shadow':
+    ' -12px -12px 36px 0 rgba(70, 77, 83, 0.46), 12px 12px 36px 0 rgba(18, 21, 23, 0.99), inset -1px -1px 0 0 rgba(0, 0, 0, 0.32), inset 1px 1px 0 0 rgba(214, 210, 210, 0.14)',
+  '--secondary-raised-base-text': '#fff',
 }
 
 const INPUT = {
-  '--input-background': '#394152',
+  '--input-background': '#28313A',
   '--input-error': '#ee6d66',
   '--input-error-text': '#fff',
   '--input-text': '#fff',
-  '--input-label-opacity': 1,
+  '--input-label-opacity': 0.5,
   '--input-label': '#fff',
-  '--input-select-hover': '#3B3B4F',
-  '--input-active':
-    'linear-gradient(#f2f2f2, #f2f2f2), radial-gradient(circle at top left, #66eb8e, #6bdaf6)',
+  '--input-select-hover': '#39404c',
+  '--input-active': '#4CFFB3',
   '--input-icon': '#9ca0a9',
   '--input-placeholder': 'rgba(255, 255, 255, 0.5)',
+  '--input-active-border': '#4CFFB3',
 }
 
 const HEADER_BAR = {
-  '--header-bar-default-icon-color': '#66ED87',
+  '--header-bar-default-icon-color': '#4CFFB3',
 }
 
 const TAB = {
@@ -52,32 +73,33 @@ const TAB = {
 }
 
 const PANEL = {
-  '--panel-icon': '#69e27e',
-  '--panel-header': '#1B2029',
+  '--panel-icon': '#4CFFB3',
+  '--panel-header': '#21242C',
   '--panel-header-text': '#fff',
-  '--panel-background': '#2E3542',
+  '--panel-background': '#303740',
   '--panel-header-border': '#8d98ae',
   '--panel-label-text': '#8d98ae',
-  '--panel-full-height-background': '#2E3542',
-  '--panel-full-height-nav-background': '#292F3B',
-  '--panel-full-height-instructions-text': 'rgba(255, 255, 255, 0.5)',
+  '--panel-full-height-background': '#333D46',
+  '--panel-full-height-nav-background': '#21242C',
+  '--panel-full-height-instructions-text': '#fff',
   '--panel-full-height-instructions-border': '#8D98AE',
   '--panel-full-height-header-icon-color': '#fff',
   '--panel-receive-explanation': '#394152',
+  '--view-layout-header-icon-color': '#4CFFB3',
 }
 
 const MODAL = {
-  '--modal-overlay': 'rgba(248, 248, 248, 0.21)',
+  '--modal-overlay': 'rgba(0,0,0,0.60)',
 }
 
 const AUTH_STYLES = {
-  '--auth-main-container-background': '#2E3542',
-  '--auth-secondary-button-background': '#2E3542',
+  '--auth-main-container-background': '#333D46',
+  '--auth-secondary-button-background': 'transparent',
   '--auth-scan-qr-border': '#5c677f',
 }
 
 const DASHBOARD = {
-  '--dashboard-market-data-line': '#66ED87',
+  '--dashboard-market-data-line': '#4CFFB3',
   '--dashboard-asset-panel-total-background': '#343B4A',
   '--dashboard-total-wallet-value-odd-row': '#343B4A',
   '--dashboard-total-wallet-value-total-text': '#fff',
@@ -87,35 +109,36 @@ const DASHBOARD = {
 }
 
 const SIDEBAR = {
-  '--sidebar-background': '#1B2029',
+  '--sidebar-background': '#2A333B',
   '--side-bar-disabled-item-background': '#1B2029',
   '--sidebar-icon': '#9CA0A8',
-  '--sidebar-active-border': '#66ED87',
+  '--sidebar-active-border': '#4CFFB3',
   '--sidebar-active-background': '#1B2029',
   '--sidebar-active-icon': '#fff',
 }
 
 const TX_LIST = {
-  '--tx-list-odd-row': '#343B4A',
-  '--tx-list-button-icon': '#66ED87',
-  '--tx-list-copy-icon': '#66ED87',
+  '--tx-list-odd-row': '#39404c',
+  '--tx-list-button-icon': '#4CFFB3',
+  '--tx-list-copy-icon': '#4CFFB3',
+  '--tx-icon-color': '#4CFFB3',
 }
 
 const SETTINGS = {
   '--settings-item-label': '#fff',
   '--settings-item-icon': 'rgba(255, 255, 255, 0.5)',
   '--settings-item-border-color': '#8D98AE',
-  '--settings-link-text': '#66ED87',
-  '--settings-select-value-text': '#66ED87',
+  '--settings-link-text': '#4CFFB3',
+  '--settings-select-value-text': '#4CFFB3',
   '--settings-donation-text': '#F2F2F2',
   '--settings-spacer': 'rgba(170, 178, 189, 0.3)',
 }
 
 const NODE_SELECT = {
   '--node-select-header-background': '#1B2029',
-  '--node-select-icon-color': '#66ED87',
+  '--node-select-icon-color': '#4CFFB3',
   '--node-select-automatic-select-button-text': '#FFFFFF',
-  '--node-select-refresh-icon': '#66ED87',
+  '--node-select-refresh-icon': '#4CFFB3',
   '--node-select-node-count': 'rgba(255, 255, 255, 0.5)',
 }
 
@@ -129,8 +152,9 @@ const AMOUNTS_PANEL = {
 
 const CONTACTS = {
   '--contacts-odd-numbered-row': '#343B4A',
-  '--contacts-group-header-background': '#AAB2BD',
-  '--contacts-group-header-text': '#171B24',
+  '--contacts-group-header-background': '#20272F',
+  '--contacts-group-header-text': '#8297A0',
+  '--contacts-delete-contact-name': '#4CFFB3',
 }
 
 const SEND = {
@@ -138,8 +162,8 @@ const SEND = {
 }
 
 const QR_SCANNER = {
-  '--qr-scan-paused': 'rgba(102, 237, 135, 0.6)',
-  '--qr-scan-animation-start': 'rgba(102, 237, 135, 0.6)',
+  '--qr-scan-paused': '#4CFFB3',
+  '--qr-scan-animation-start': '#4CFFB3',
   '--qr-scan-animation-end': 'rgba(102, 237, 135, 0)',
 }
 
@@ -149,8 +173,19 @@ const NEWS = {
 
 export const DARK_NETWORK_CONFIG_TOOLTIP = {
   '--network-config-tooltip-label': '#8D98AE',
-  '--network-config-tooltip-background': '#1b2029',
+  '--network-config-tooltip-background': '#21242C',
   '--network-config-tooltip-color': '#fff',
+}
+
+export const NOTIFICATIONS = {
+  '--notifications-error-icon-color': '#eb70ff',
+  '--notifications-success-icon-color': '#4cffb3',
+}
+
+export const RELEASE_NOTES = {
+  '--release-notes-date': '#8297a0',
+  '--release-notes-text': '#8c97a2',
+  '--release-notes-button-color': '#394152',
 }
 
 export default {
@@ -173,4 +208,6 @@ export default {
   ...SEND,
   ...QR_SCANNER,
   ...DARK_NETWORK_CONFIG_TOOLTIP,
+  ...NOTIFICATIONS,
+  ...RELEASE_NOTES,
 }

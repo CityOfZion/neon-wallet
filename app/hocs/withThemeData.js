@@ -8,5 +8,6 @@ export default function withThemeData() {
   const mapSettingsDataToProps = settings => ({
     theme: settings ? settings.theme || DEFAULT_THEME : DEFAULT_THEME,
   })
+
   return withData(settingsActions, mapSettingsDataToProps)
 }
