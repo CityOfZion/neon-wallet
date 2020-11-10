@@ -39,8 +39,8 @@ const BUTTON = {
   '--button-priority-standard-icon-color': '#394152',
   '--button-priority-button-container-background':
     'linear-gradient(180deg, #eff5f8 2%, #e4edf2 97%)',
-  '--button-max-amount-background': '#e6e6e6',
-  '--button-max-amount-text': '#8f939b',
+  '--button-max-amount-background': '#8297A0',
+  '--button-max-amount-text': '#394152',
   '--button-flag-icon-color': '#394152',
   '--button-flag-icon-opacity': 0.3,
   '--secondary-raised-base-text': '#7f8f98',
@@ -58,6 +58,7 @@ const INPUT = {
     'linear-gradient(#F1F5FC, #F1F5FC), radial-gradient(circle at top left, #66eb8e, #66eb8e)',
   '--input-icon': '#9ca0a9',
   '--input-placeholder': 'rgba(40, 40, 40, 0.5)',
+  '--input-active-border': '#66eb8e',
 }
 
 const HEADER_BAR = {
@@ -101,7 +102,7 @@ const AUTH_STYLES = {
 const DASHBOARD = {
   '--dashboard-market-data-line': '#3fd0ae',
   '--dashboard-asset-panel-total-background': '#F1F5FC',
-  '--dashboard-total-wallet-value-odd-row': '#f8f8f8',
+  '--dashboard-total-wallet-value-odd-row': '#F1F5FC',
   '--dashboard-total-wallet-value-total-text': '#394152',
   '--dashboard-asset-panel-asset-name': '#5c677f',
   '--dashboard-token-balances-divider-line': '#F1F5FC',
@@ -112,7 +113,7 @@ const SIDEBAR = {
   '--sidebar-background': '#fff',
   '--side-bar-disabled-item-background': '#fff',
   '--sidebar-icon': '#9599a2',
-  '--sidebar-active-border': '#66EDCD',
+  '--sidebar-active-border': '#4CFFB3',
   '--sidebar-active-background': '#F1F5FC',
   '--sidebar-active-icon': '#394152',
   '--sidebar-shadow':
@@ -132,8 +133,8 @@ const SETTINGS = {
   '--settings-item-label': '#343b4a',
   '--settings-item-icon': '#cccccc',
   '--settings-item-border-color': '#F1F5FC',
-  '--settings-link-text': '#32E096',
-  '--settings-select-value-text': '#32E096',
+  '--settings-link-text': '#282828',
+  '--settings-select-value-text': '#282828',
   '--settings-donation-text': '#5c677f',
   '--settings-spacer': 'rgba(170, 178, 189, 0.3)',
 }
@@ -156,7 +157,7 @@ const AMOUNTS_PANEL = {
 
 const CONTACTS = {
   '--contacts-odd-numbered-row': 'rgba(230, 230, 230, 0.1)',
-  '--contacts-group-header-background': '#f6f7f8',
+  '--contacts-group-header-background': '#F1F5FC',
   '--contacts-group-header-text': '#394152',
   '--contacts-delete-contact-name': '#394152',
 }
@@ -179,6 +180,8 @@ export const LIGHT_NETWORK_CONFIG_TOOLTIP = {
   '--network-config-tooltip-label': '#8D98AE',
   '--network-config-tooltip-background': '#fff',
   '--network-config-tooltip-color': '#394152',
+  '--network-config-box-shadow':
+    '-3px -3px 17px 0 transparent, 3px 4px 20px 0 rgba(18,21,23,0.24)',
 }
 
 export const NOTIFICATIONS = {

@@ -132,6 +132,7 @@ input::placeholder {
 .react-select-container {
   width: 100%;
   min-width: 140px;
+  font-family: var(--font-gotham);
   cursor: pointer !important;
 
   .react-select__placeholder {
@@ -144,6 +145,7 @@ input::placeholder {
 
   .react-select__single-value {
     color: var(--input-text);
+    font-family: var(--font-sofiapro-semibold);
   }
 
   .react-select__value-container {
@@ -151,11 +153,11 @@ input::placeholder {
     width: 100%;
     height: $text-input-height;
     padding: 7px 15px;
-    line-height: $text-input-height;
     color: var(--input-text);
     background: var(--input-background);
     font-size: $text-input-font-size;
     border-radius: $text-input-border-radius;
+    font-family: var(--font-gotham);
   }
 
   .react-select__control {
@@ -273,6 +275,7 @@ a {
 .tippy-tooltip.network-settings-theme {
   background-color: var(--network-config-tooltip-background);
   color: var(--network-config-tooltip-color);
+  box-shadow: var(--network-config-box-shadow);
 
   .arrow-regular {
     border-right: 7px solid var(--network-config-tooltip-background) !important;

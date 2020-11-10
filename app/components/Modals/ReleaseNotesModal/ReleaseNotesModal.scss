@@ -10,7 +10,7 @@
 
 .releaseNotesContents {
   display: flex;
-  padding: 24px;
+  padding: 48px 24px;
   flex-direction: column;
 }
 
@@ -23,6 +23,7 @@
   display: flex;
   flex: 1;
   flex-direction: column;
+  padding: 24px;
 
   .date {
     font-size: 14px;
@@ -46,7 +47,11 @@
 
   h3 {
     margin-bottom: 6px;
-    margin-top: 12px;
+    margin-top: 0px;
+  }
+
+  li {
+    margin-left: 24px;
   }
 
   p {
@@ -63,6 +68,7 @@
 
   img {
     display: block;
-    height: fit-content;
+    // height: fit-content;
+    max-width: 310px;
   }
 }

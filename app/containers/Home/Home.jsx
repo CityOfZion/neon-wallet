@@ -57,8 +57,7 @@ const LOGIN_OPTIONS = {
 // NOTE: all other solutions seemed to be overly
 // complex... Revisit this if it becomes painful
 const shouldRenderReleaseNotes = version => {
-  const displayWhitelist = ['']
-
+  const displayWhitelist = ['2.6.0']
   if (
     displayWhitelist.includes(version) &&
     !localStorage.getItem(`hasSeenReleaseNotes-${version}`)
@@ -76,20 +75,24 @@ export default class Home extends React.Component<Props, State> {
   // $FlowFixMe
   options = Object.keys(LOGIN_OPTIONS).map((key: string) => LOGIN_OPTIONS[key])
 
-  render = () => {
-    const { loading, theme, showModal } = this.props
+  renderReleaseNotesModal = () => {
+    this.props.showModal(MODAL_TYPES.RELEASE_NOTES, {
+      renderBody: () => (
+        <div className={styles.confirmDeleteModalPrompt}>
+          Please confirm removing saved wallet
+        </div>
+      ),
+    })
+  }
+
+  render() {
+    const { loading, theme } = this.props
 
     if (shouldRenderReleaseNotes(pack.version)) {
       // Allow users to view the normal for 1 second
       // befre rendering the release notes modal
       setTimeout(() => {
-        showModal(MODAL_TYPES.RELEASE_NOTES, {
-          renderBody: () => (
-            <div className={styles.confirmDeleteModalPrompt}>
-              Please confirm removing saved wallet
-            </div>
-          ),
-        })
+        this.renderReleaseNotesModal()
       }, 1000)
       localStorage.setItem(`hasSeenReleaseNotes-${pack.version}`, 'true')
     }
@@ -136,7 +139,10 @@ export default class Home extends React.Component<Props, State> {
               </Link>
             </div>
           </div>
-          <div className={styles.versionNumber}>{`v${pack.version}`}</div>
+          <div
+            onClick={this.renderReleaseNotesModal}
+            className={styles.versionNumber}
+          >{`v${pack.version}`}</div>
         </div>
       </HomeLayout>
     )

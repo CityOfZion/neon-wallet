@@ -60,6 +60,7 @@ const INPUT = {
   '--input-active': '#4CFFB3',
   '--input-icon': '#9ca0a9',
   '--input-placeholder': 'rgba(255, 255, 255, 0.5)',
+  '--input-active-border': '#4CFFB3',
 }
 
 const HEADER_BAR = {
@@ -84,6 +85,7 @@ const PANEL = {
   '--panel-full-height-instructions-border': '#8D98AE',
   '--panel-full-height-header-icon-color': '#fff',
   '--panel-receive-explanation': '#394152',
+  '--view-layout-header-icon-color': '#4CFFB3',
 }
 
 const MODAL = {
