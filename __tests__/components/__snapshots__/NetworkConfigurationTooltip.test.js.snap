@@ -1071,7 +1071,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                             "--panel-header-text": "#394152",
                                             "--panel-icon": "#282828",
                                             "--panel-label-text": "#8d98ae",
-                                            "--panel-receive-explanation": "rgba(242, 242, 242, .5)",
+                                            "--panel-receive-explanation": "#CDDAE1",
                                             "--qr-scan-animation-end": "rgba(57, 65, 82, 0)",
                                             "--qr-scan-animation-start": "rgba(57, 65, 82, 1)",
                                             "--qr-scan-paused": "rgba(102, 237, 135, 0.6)",
