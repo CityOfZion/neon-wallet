@@ -34,7 +34,7 @@ jobs:
       - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
       - run: yarn lint
       - run: yarn flow
-      - run: yarn dist
+      - run: yarn assets
       - save_cache:
           key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
           paths:
@@ -72,6 +72,20 @@ jobs:
       - run: yarn assets
       - run: yarn electron-builder -w --x64
 
+  deploy_linux:
+    <<: *container_config
+    steps:
+      - checkout
+      - restore_cache:
+          key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
+      - run: apt-get -y update
+      - run: apt-get -y install libusb-1.0-0-dev icnsutils graphicsmagick libudev-dev
+      - run: yarn config delete proxy
+      - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
+      - run: yarn lint
+      - run: yarn flow
+      - run: yarn dist
+
 workflows:
   version: 2
   build_test_and_deploy:
@@ -84,6 +98,12 @@ workflows:
           requires:
             - build
       - deploy_win64:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v.*/
+      - deploy_linux:
           filters:
             branches:
               ignore: /.*/
