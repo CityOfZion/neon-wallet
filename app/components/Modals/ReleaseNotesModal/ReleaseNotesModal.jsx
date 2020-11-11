@@ -3,11 +3,9 @@ import React from 'react'
 
 import FullHeightPanel from '../../Panel/FullHeightPanel'
 import BaseModal from '../BaseModal'
-import Button from '../../Button'
 import styles from './ReleaseNotesModal.scss'
 import CloseButton from '../../CloseButton'
 import Gift from '../../../assets/icons/gift.svg'
-
 import release260Dark from '../../../assets/images/release-assets/2.6.0.dark.png'
 import release260Light from '../../../assets/images/release-assets/2.6.0.light.png'
 import Github from '../../../assets/images/release-assets/github.svg'
@@ -59,7 +57,6 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
               <li>Various minor bug fixes</li>
               <br />
               View full details of this release on GitHub
-              <br />
               <br />
             </p>
 

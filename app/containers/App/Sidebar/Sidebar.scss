@@ -64,7 +64,7 @@ $size: 70px;
   position: fixed;
   height: 24px;
   width: 24px;
-  background-color: var(--input-error);
+  background-color: #d355e7;
   margin-top: -22px !important;
   margin-left: 10px;
   border-radius: 100px;
@@ -72,7 +72,7 @@ $size: 70px;
   align-items: center;
   justify-content: center;
   color: white;
-  font-family: var(--font-gotham-book);
+  font-family: var(--font-gotham-medium);
   font-size: 14px !important;
 }
 
