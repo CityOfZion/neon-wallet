@@ -13,7 +13,7 @@ import { COIN_DECIMAL_LENGTH } from '../core/formatters'
 import { toBigNumber } from '../core/math'
 import { findNetworkByDeprecatedLabel } from '../core/networks'
 
-const MAX_SCRIPT_HASH_CHUNK_SIZE = 5
+const MAX_SCRIPT_HASH_CHUNK_SIZE = 3
 
 type Props = {
   net: string,
