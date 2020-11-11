@@ -40,10 +40,6 @@ jobs:
           paths:
             - /usr/local/share/.cache/yarn/v2
             - ./node_modules
-      - persist_to_workspace:
-          root: *workspace_root
-          paths:
-            - dist/*
 
   test:
     <<: *container_config
@@ -71,6 +67,9 @@ jobs:
       - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
       - run: yarn assets
       - run: yarn electron-builder -w --x64
+      - store_artifacts:
+          path: dist
+          destination: build
 
   deploy_linux:
     <<: *container_config
@@ -85,6 +84,9 @@ jobs:
       - run: yarn lint
       - run: yarn flow
       - run: yarn dist
+      - store_artifacts:
+          path: dist
+          destination: build
 
 workflows:
   version: 2
