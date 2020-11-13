@@ -24,7 +24,7 @@ export const COZ_DONATIONS_ADDRESS = 'Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A'
 
 export const PIPEFY_SUPPORT = 'https://portal.pipefy.com/coz-support'
 
-export const NODE_EXLUSION_CRITERIA = ['ngd', 'neo.org']
+export const NODE_EXLUSION_CRITERIA = []
 
 export const ASSETS = {
   NEO: 'NEO',
