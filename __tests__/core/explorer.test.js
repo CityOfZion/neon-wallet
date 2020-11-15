@@ -19,14 +19,14 @@ describe('explorer tests', () => {
     test('Dora mainnet explorer test', () => {
       const networkId = MAIN_NETWORK_ID
       const explorer = EXPLORERS.DORA
-      const expectedUrl = `https://dora.coz.io/transaction/${txId}`
+      const expectedUrl = `https://dora.coz.io/transaction/0x${txId}`
       expect(getExplorerTxLink(networkId, explorer, txId)).toEqual(expectedUrl)
     })
 
     test('Neotube mainnet explorer test', () => {
       const networkId = MAIN_NETWORK_ID
       const explorer = EXPLORERS.NEOTUBE
-      const expectedUrl = `https://neotube.io/transaction/${txId}`
+      const expectedUrl = `https://neotube.io/transaction/0x${txId}`
       expect(getExplorerTxLink(networkId, explorer, txId)).toEqual(expectedUrl)
     })
 
@@ -80,25 +80,12 @@ describe('explorer tests', () => {
     })
   })
 
-  describe('openExplorerTx tests', () => {
-    test('open NeoTracker mainnet explorer test', () => {
-      const networkId = MAIN_NETWORK_ID
-      const explorer = EXPLORERS.NEO_TRACKER
-      const expectedUrl = `https://neotracker.io/tx/${txId}`
-      const spy = jest.spyOn(shell, 'openExternal')
-
-      openExplorerTx(networkId, explorer, txId)
-
-      expect(spy).toHaveBeenCalledWith(expectedUrl)
-    })
-  })
-
   describe('getExplorerAddressLink tests', () => {
     test('Neotube mainnet explorer test', () => {
       const networkId = MAIN_NETWORK_ID
       const explorer = EXPLORERS.NEOTUBE
       const expectedUrl = `https://neotube.io/address/${address}`
-      expect(getExplorerTxLink(networkId, explorer, address)).toEqual(
+      expect(getExplorerAddressLink(networkId, explorer, address)).toEqual(
         expectedUrl,
       )
     })
@@ -107,7 +94,7 @@ describe('explorer tests', () => {
       const networkId = MAIN_NETWORK_ID
       const explorer = EXPLORERS.DORA
       const expectedUrl = `https://dora.coz.io/address/${address}`
-      expect(getExplorerTxLink(networkId, explorer, address)).toEqual(
+      expect(getExplorerAddressLink(networkId, explorer, address)).toEqual(
         expectedUrl,
       )
     })
