@@ -16,11 +16,24 @@ describe('explorer tests', () => {
   const address = 'AQpLnwMpnhxroPM4fcYGenB2pH5cLhMDao'
 
   describe('getExplorerTxLink tests', () => {
+    test('Dora mainnet explorer test', () => {
+      const networkId = MAIN_NETWORK_ID
+      const explorer = EXPLORERS.DORA
+      const expectedUrl = `https://dora.coz.io/transaction/${txId}`
+      expect(getExplorerTxLink(networkId, explorer, txId)).toEqual(expectedUrl)
+    })
+
+    test('Neotube mainnet explorer test', () => {
+      const networkId = MAIN_NETWORK_ID
+      const explorer = EXPLORERS.NEO_TRACKER
+      const expectedUrl = `https://neotube.io/transaction/${txId}`
+      expect(getExplorerTxLink(networkId, explorer, txId)).toEqual(expectedUrl)
+    })
+
     test('NeoTracker mainnet explorer test', () => {
       const networkId = MAIN_NETWORK_ID
       const explorer = EXPLORERS.NEO_TRACKER
       const expectedUrl = `https://neotracker.io/tx/${txId}`
-
       expect(getExplorerTxLink(networkId, explorer, txId)).toEqual(expectedUrl)
     })
 
@@ -81,6 +94,24 @@ describe('explorer tests', () => {
   })
 
   describe('getExplorerAddressLink tests', () => {
+    test('Neotube mainnet explorer test', () => {
+      const networkId = MAIN_NETWORK_ID
+      const explorer = EXPLORERS.NEO_TRACKER
+      const expectedUrl = `https://neotube.io/address/${address}`
+      expect(getExplorerTxLink(networkId, explorer, address)).toEqual(
+        expectedUrl,
+      )
+    })
+
+    test('Dora mainnet explorer test', () => {
+      const networkId = MAIN_NETWORK_ID
+      const explorer = EXPLORERS.NEO_TRACKER
+      const expectedUrl = `https://dora.coz.io/address/${address}`
+      expect(getExplorerTxLink(networkId, explorer, address)).toEqual(
+        expectedUrl,
+      )
+    })
+
     test('NeoTracker mainnet explorer test', () => {
       const networkId = MAIN_NETWORK_ID
       const explorer = EXPLORERS.NEO_TRACKER
