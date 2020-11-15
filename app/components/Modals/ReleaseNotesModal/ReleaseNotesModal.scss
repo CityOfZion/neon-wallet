@@ -16,13 +16,14 @@
 
 .release {
   display: flex;
-  margin-bottom: 48px;
+  margin-bottom: 36px;
 }
 
 .releaseContent {
   display: flex;
   flex: 1;
   flex-direction: column;
+  max-width: 50%;
   padding: 24px;
 
   .date {

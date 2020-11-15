@@ -43,15 +43,18 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
         <div className={styles.release}>
           <div className={styles.releaseContent}>
             <small className={styles.date}>13th Nov 2020 </small>
-            <h3>v2.6.1</h3>
+            <h3>Patch v2.6.1</h3>
 
             <p>
-              <li>Updates RPC node list to include NGD nodes</li>
+              In this update you will find the following minor improvements:
+              <br />
+              <br />
+              <li>Updates RPC node list</li>
               <li>
                 Fixes bug breaking balance logic for tokens that share the same
                 symbol
               </li>
-              <li>Adds Neotube and Dora to block explorer settings</li>
+              <li>Adds Dora and Neotube to block explorer settings</li>
               <br />
               View full details of this release on GitHub
               <br />
