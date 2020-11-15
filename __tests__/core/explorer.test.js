@@ -80,6 +80,19 @@ describe('explorer tests', () => {
     })
   })
 
+  describe('openExplorerTx tests', () => {
+    test('open NeoTracker mainnet explorer test', () => {
+      const networkId = MAIN_NETWORK_ID
+      const explorer = EXPLORERS.NEO_TRACKER
+      const expectedUrl = `https://neotracker.io/tx/${txId}`
+      const spy = jest.spyOn(shell, 'openExternal')
+
+      openExplorerTx(networkId, explorer, txId)
+
+      expect(spy).toHaveBeenCalledWith(expectedUrl)
+    })
+  })
+
   describe('getExplorerAddressLink tests', () => {
     test('Neotube mainnet explorer test', () => {
       const networkId = MAIN_NETWORK_ID
