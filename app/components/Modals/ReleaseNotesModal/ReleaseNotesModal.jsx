@@ -42,6 +42,33 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
       <div className={styles.releaseNotesContents}>
         <div className={styles.release}>
           <div className={styles.releaseContent}>
+            <small className={styles.date}>13th Nov 2020 </small>
+            <h3>v2.6.1</h3>
+
+            <p>
+              <li>Updates RPC node list to include NGD nodes</li>
+              <li>
+                Fixes bug breaking balance logic for tokens that share the same
+                symbol
+              </li>
+              <li>Adds Neotube and Dora to block explorer settings</li>
+              <br />
+              View full details of this release on GitHub
+              <br />
+            </p>
+
+            <Github
+              onClick={() =>
+                electron.shell.openExternal(
+                  'https://github.com/CityOfZion/neon-wallet/releases/tag/v2.6.0',
+                )
+              }
+            />
+          </div>
+        </div>
+
+        <div className={styles.release}>
+          <div className={styles.releaseContent}>
             <small className={styles.date}>10th Nov 2020 </small>
             <h3>Welcome to the latest release of Neon wallet v2.6.0</h3>
 
