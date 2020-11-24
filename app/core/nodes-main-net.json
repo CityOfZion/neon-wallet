@@ -43,5 +43,14 @@
   },
   {
     "url": "https://m5.neo.nash.io"
+  },
+  {
+    "url": "https://mainnet1.neo2.coz.io:443"
+  },
+  {
+    "url": "https://mainnet2.neo2.coz.io:443"
+  },
+  {
+    "url": "https://mainnet3.neo2.coz.io:443"
   }
 ]
