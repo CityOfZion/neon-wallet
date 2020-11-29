@@ -18,7 +18,8 @@ const MAX_SCRIPT_HASH_CHUNK_SIZE = 10
 type Props = {
   net: string,
   address: string,
-  tokens: Array<TokenItemType>,
+  tokens?: Array<TokenItemType>,
+  isRetry?: boolean,
 }
 
 let inMemoryBalances = {}
@@ -72,14 +73,18 @@ function determineIfBalanceUpdated(
   })
 }
 
-async function getBalances({ net, address }: Props) {
+let RETRY_COUNT = 0
+
+async function getBalances({ net, address, isRetry = false }: Props) {
   const { soundEnabled, tokens } = await getSettings()
   const network = findNetworkByDeprecatedLabel(net)
 
-  let endpoint = await getNode(net)
+  let endpoint = await getNode(net, isRetry)
   if (!endpoint) {
     endpoint = await getRPCEndpoint(net)
   }
+
+  console.log({ endpoint })
 
   let networkHasChanged = true
   if (net === inMemoryNetwork) networkHasChanged = false
@@ -107,31 +112,44 @@ async function getBalances({ net, address }: Props) {
   const promiseMap = chunks.map(chunk =>
     api.nep5.getTokenBalances(endpoint, chunk, address),
   )
-  const results = await Promise.all(promiseMap)
 
-  const parsedTokenBalances = results.reduce((accum, currBalance) => {
-    Object.keys(currBalance).forEach(key => {
-      const foundToken = tokens.find(token => token.symbol === key)
-      if (foundToken && currBalance[key]) {
-        determineIfBalanceUpdated(
+  let shouldRetry = false
+  const results = await Promise.all(promiseMap).catch(e => {
+    console.error(
+      `An error occurred fetching token balances using: ${endpoint} attempting to use a new RPC node.`,
+    )
+    shouldRetry = true
+  })
+  if (shouldRetry && RETRY_COUNT < 4) {
+    RETRY_COUNT += 1
+    return getBalances({ net, address, isRetry: true })
+  }
+
+  const parsedTokenBalances =
+    results &&
+    results.reduce((accum, currBalance) => {
+      Object.keys(currBalance).forEach(key => {
+        const foundToken = tokens.find(token => token.symbol === key)
+        if (foundToken && currBalance[key]) {
+          determineIfBalanceUpdated(
+            // $FlowFixMe
+            { [foundToken.symbol]: currBalance[key] },
+            soundEnabled,
+            networkHasChanged,
+            adressHasChanged,
+          )
           // $FlowFixMe
-          { [foundToken.symbol]: currBalance[key] },
-          soundEnabled,
-          networkHasChanged,
-          adressHasChanged,
-        )
-        // $FlowFixMe
-        inMemoryBalances[foundToken.symbol] = currBalance[key]
-        accum.push({
-          [foundToken.scriptHash]: {
-            ...foundToken,
-            balance: currBalance[key],
-          },
-        })
-      }
-    })
-    return accum
-  }, [])
+          inMemoryBalances[foundToken.symbol] = currBalance[key]
+          accum.push({
+            [foundToken.scriptHash]: {
+              ...foundToken,
+              balance: currBalance[key],
+            },
+          })
+        }
+      })
+      return accum
+    }, [])
 
   // Handle manually added script hashses here
   const userGeneratedTokenInfo = []
@@ -162,11 +180,13 @@ async function getBalances({ net, address }: Props) {
       adressHasChanged,
     )
     inMemoryBalances[token.symbol] = token.balance
-    parsedTokenBalances.push({
-      [token.scriptHash]: {
-        ...token,
-      },
-    })
+    if (parsedTokenBalances) {
+      parsedTokenBalances.push({
+        [token.scriptHash]: {
+          ...token,
+        },
+      })
+    }
   })
 
   // asset balances
