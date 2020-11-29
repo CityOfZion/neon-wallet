@@ -137,7 +137,7 @@ const NOTIFICATIONS = {
   'notifications.success.accountSaved': 'Hesap kaydedildi!',
   'notifications.success.updatedWalletName':
     'Cüzdan adı başarıyla güncellendi.',
-  'notificiations.failure.blockchainInfoFailure':
+  'notifications.failure.blockchainInfoFailure':
     'Blockchain bilgileri alınamadı.',
 }
 

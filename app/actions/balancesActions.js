@@ -12,6 +12,7 @@ import { ASSETS } from '../core/constants'
 import { COIN_DECIMAL_LENGTH } from '../core/formatters'
 import { toBigNumber } from '../core/math'
 import { findNetworkByDeprecatedLabel } from '../core/networks'
+import delay from '../util/delay'
 
 const MAX_SCRIPT_HASH_CHUNK_SIZE = 10
 
@@ -73,6 +74,7 @@ function determineIfBalanceUpdated(
 }
 
 async function getBalances({ net, address }: Props) {
+  await delay(1000)
   const { soundEnabled, tokens } = await getSettings()
   const network = findNetworkByDeprecatedLabel(net)
 

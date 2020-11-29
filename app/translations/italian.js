@@ -136,7 +136,7 @@ const NOTIFICATIONS = {
   'notifications.success.accountSaved': 'Account salvato!',
   'notifications.success.updatedWalletName':
     'Nome del portafoglio aggiornato con successo.',
-  'notificiations.failure.blockchainInfoFailure':
+  'notifications.failure.blockchainInfoFailure':
     'Impossibile recuperare le informazioni sulla blockchain.',
 }
 

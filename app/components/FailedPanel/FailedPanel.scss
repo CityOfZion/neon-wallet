@@ -1,6 +1,8 @@
-.failedPanel {
-  .content {
-    text-align: center;
-    vertical-align: middle;
-  }
+.loadingContent {
+  text-align: center;
+  vertical-align: middle;
+  position: relative;
+  min-height: 100px;
+  text-align: center;
+  vertical-align: middle;
 }

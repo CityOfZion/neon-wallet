@@ -6,7 +6,6 @@ import { values, omit, get } from 'lodash-es'
 import { withActions, withData } from 'spunky'
 
 import AssetBalancesPanel from './AssetBalancesPanel'
-import assetBalancesPanelActions from '../../../actions/assetBalancesPanelActions'
 import balancesActions from '../../../actions/balancesActions'
 import priceHistoryActions from '../../../actions/priceHistoryActions'
 import withBalancesData from '../../../hocs/withBalancesData'
@@ -66,7 +65,7 @@ export default compose(
   withNetworkData(),
   withAuthData(),
   withFilteredTokensData(),
-  withProgressPanel(assetBalancesPanelActions, {
+  withProgressPanel(balancesActions, {
     title: <FormattedMessage id="dashboardAssetsPanelLabel" />,
   }),
   withPricesData(mapPricesDataToProps),

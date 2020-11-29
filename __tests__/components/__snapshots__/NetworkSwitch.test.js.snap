@@ -160,7 +160,7 @@ exports[`NetworkSwitch renders without crashing 1`] = `
       "notifications.success.accountSaved": "Account saved!",
       "notifications.success.receivedBlockchainInfo": "Received latest blockchain information.",
       "notifications.success.updatedWalletName": "Succesfully updated wallet name.",
-      "notificiations.failure.blockchainInfoFailure": "Failed to retrieve blockchain information.",
+      "notifications.failure.blockchainInfoFailure": "Failed to retrieve blockchain information.",
       "numberofTransactionsPending": "{transferCount, number} {transferCount, plural, one {Transfer} other {Transfers}} pending",
       "previousStep": "Previous Step",
       "print": "Print",
