@@ -6,7 +6,7 @@
     "networks": {
       "1": {
         "name": "\u0000",
-        "hash": "6e2aea28af9c5febea0774759b1b76398e3167f1",
+        "hash": "fe041f87b1a4cc0efb827664d6f20a0e990d0969",
         "decimals": 0,
         "totalSupply": 0
       }
@@ -117,7 +117,7 @@
         "name": "NEP5 GAS",
         "hash": "74f2dc36a68fdc4682034178eb2220729231db76",
         "decimals": 8,
-        "totalSupply": 5.55851
+        "totalSupply": 24703.59811869
       }
     }
   },
@@ -143,7 +143,20 @@
         "name": "CrazyGladiator",
         "hash": "cbbe4c3c0d2a3622e9e8d65fe9f6240078f356c9",
         "decimals": 0,
-        "totalSupply": 7232
+        "totalSupply": 7267
+      }
+    }
+  },
+  "CNEO": {
+    "symbol": "CNEO",
+    "companyName": "NEP5 NEO",
+    "type": "NEP5",
+    "networks": {
+      "1": {
+        "name": "NEP5 NEO",
+        "hash": "c074a05e9dcf0141cbe6b4b3475dd67baf4dcb60",
+        "decimals": 8,
+        "totalSupply": 12
       }
     }
   },
@@ -253,6 +266,19 @@
       }
     }
   },
+  "FLM": {
+    "symbol": "FLM",
+    "companyName": "Flamingo Finance",
+    "type": "NEP5",
+    "networks": {
+      "1": {
+        "name": "Flamingo Finance",
+        "hash": "4d9eab13620fe3569ba3b0e56e2877739e4145e3",
+        "decimals": 8,
+        "totalSupply": 100000000
+      }
+    }
+  },
   "FTW": {
     "symbol": "FTW",
     "companyName": "For The Win",
@@ -267,6 +293,21 @@
     },
     "image":
       "https://rawgit.com/CityOfZion/neo-tokens/master/assets/png/ftw.png"
+  },
+  "FTX": {
+    "symbol": "FTX",
+    "companyName": "For The Win X",
+    "type": "NEP5",
+    "networks": {
+      "1": {
+        "name": "For The Win X",
+        "hash": "aac66f9779ca67d819d05492805d251dab02fc7b",
+        "decimals": 8,
+        "totalSupply": 50000000
+      }
+    },
+    "image":
+      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/png/ftx.png"
   },
   "GALA": {
     "symbol": "GALA",
@@ -388,6 +429,32 @@
     "image":
       "https://rawgit.com/CityOfZion/neo-tokens/master/assets/svg/mct.svg"
   },
+  "MRG": {
+    "symbol": "MRG",
+    "companyName": "merge",
+    "type": "NEP5",
+    "networks": {
+      "1": {
+        "name": "merge",
+        "hash": "5a3973149608ddbc9b509fc951b3ff2c47419774",
+        "decimals": 8,
+        "totalSupply": 2000000000
+      }
+    }
+  },
+  "MRW": {
+    "symbol": "MRW",
+    "companyName": "MirrorRoid World Coin",
+    "type": "NEP5",
+    "networks": {
+      "1": {
+        "name": "MirrorRoid World Coin",
+        "hash": "02f5f3c6e6bd07c8ff07ad779bb4f7bf9dc735e3",
+        "decimals": 8,
+        "totalSupply": 7500000000
+      }
+    }
+  },
   "NEX": {
     "symbol": "NEX",
     "companyName": "NEX Token",
@@ -436,7 +503,7 @@
     "networks": {
       "1": {
         "name": "Novem Gold Token",
-        "hash": "1e892bd588ea4ab409b3a93d3049d6115c6727f3",
+        "hash": "53b7577befb37d4d3b95a02f60f5da8933ab5f04",
         "decimals": 8,
         "totalSupply": 1
       }
@@ -453,11 +520,11 @@
         "name": "nOS",
         "hash": "c9c0fc5a2b66a29d6b14601e752e6e1a445e088d",
         "decimals": 8,
-        "totalSupply": 1000000000
+        "totalSupply": 299625982
       }
     },
     "image":
-      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/svg/nrve.svg"
+      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/svg/nos.svg"
   },
   "NRVE": {
     "symbol": "NRVE",
@@ -486,6 +553,21 @@
         "totalSupply": 20960002400
       }
     }
+  },
+  "NVM": {
+    "symbol": "NVM",
+    "companyName": "Novem Gold AG",
+    "type": "NEP5",
+    "networks": {
+      "1": {
+        "name": "Novem Token",
+        "hash": "2077a653306adb450516ea4813aebfbcdf594c97",
+        "decimals": 8,
+        "totalSupply": 300000000
+      }
+    },
+    "image":
+      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/svg/nvm.svg"
   },
   "OBT": {
     "symbol": "OBT",
@@ -552,7 +634,7 @@
         "name": "Red Pulse Phoenix Token",
         "hash": "1578103c13e39df15d0d29826d957e85d770d8c9",
         "decimals": 8,
-        "totalSupply": 1381262994.0262673
+        "totalSupply": 1393944678.324201
       }
     }
   },
@@ -597,6 +679,19 @@
     "image":
       "https://rawgit.com/CityOfZion/neo-tokens/master/assets/svg/qlc.svg"
   },
+  "RCPT": {
+    "symbol": "RCPT",
+    "companyName": "Recoupit",
+    "type": "NEP5",
+    "networks": {
+      "1": {
+        "name": "Recoupit",
+        "hash": "0dc27e3977160128c0dd6077a4b5a8b088eed151",
+        "decimals": 8,
+        "totalSupply": 401
+      }
+    }
+  },
   "RHT": {
     "symbol": "RHT",
     "companyName": "Redeemable HashPuppy Token",
@@ -611,6 +706,21 @@
     },
     "image":
       "https://rawgit.com/CityOfZion/neo-tokens/master/assets/png/rht.png"
+  },
+  "RPX": {
+    "symbol": "RPX",
+    "companyName": "Red Pulse Token",
+    "type": "NEP5",
+    "networks": {
+      "1": {
+        "name": "Red Pulse Token",
+        "hash": "ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9",
+        "decimals": 8,
+        "totalSupply": 1358371250
+      }
+    },
+    "image":
+      "https://rawgit.com/CityOfZion/neo-tokens/master/assets/svg/rpx.svg"
   },
   "SCC": {
     "symbol": "SCC",
@@ -673,7 +783,7 @@
         "name": "NEP5.5 Coin With GAS 1:1",
         "hash": "961e628cc93d61bf636dc0443cf0548947a50dbe",
         "decimals": 8,
-        "totalSupply": 1156.1434196
+        "totalSupply": 991.01924607
       }
     }
   },
@@ -713,9 +823,9 @@
     "networks": {
       "1": {
         "name": "Spotcoin",
-        "hash": "2830fc346b1c7a350914fbaea5ef7b3fbe3c994c",
+        "hash": "0a91cdc3c5ff89983c79e3c72e1ccd9e5beaa5d5",
         "decimals": 8,
-        "totalSupply": 97807005
+        "totalSupply": 694303
       }
     }
   },
@@ -732,14 +842,27 @@
       }
     }
   },
-  "SWTH": {
+  "SWTH V2": {
+    "symbol": "SWTH (OLD)",
+    "companyName": "Switcheo",
+    "type": "NEP5",
+    "networks": {
+      "1": {
+        "name": "Switcheo Legacy V2",
+        "hash": "ab38352559b8b203bde5fddfa0b07d8b2525e132",
+        "decimals": 8,
+        "totalSupply": 1000000000
+      }
+    }
+  },
+  "SWTH V3": {
     "symbol": "SWTH",
     "companyName": "Switcheo",
     "type": "NEP5",
     "networks": {
       "1": {
-        "name": "Switcheo",
-        "hash": "ab38352559b8b203bde5fddfa0b07d8b2525e132",
+        "name": "Switcheo V3",
+        "hash": "3e09e602eeeb401a2fec8e8ea137d59aae54a139",
         "decimals": 8,
         "totalSupply": 1000000000
       }
@@ -772,6 +895,19 @@
     },
     "image":
       "https://rawgit.com/CityOfZion/neo-tokens/master/assets/png/tky.png"
+  },
+  "TMN": {
+    "symbol": "TMN",
+    "companyName": "TranslateMe Network Token",
+    "type": "NEP5",
+    "networks": {
+      "1": {
+        "name": "TranslateMe Network Token",
+        "hash": "d613223fa138a1555ff711581982462acde209c5",
+        "decimals": 8,
+        "totalSupply": 100000000
+      }
+    }
   },
   "TNC": {
     "symbol": "TNC",
@@ -815,6 +951,32 @@
     },
     "image":
       "https://rawgit.com/CityOfZion/neo-tokens/master/assets/png/utd.png"
+  },
+  "WANDN": {
+    "symbol": "WANDN",
+    "companyName": "WAND NEO",
+    "type": "NEP5",
+    "networks": {
+      "1": {
+        "name": "WAND NEO",
+        "hash": "7703bf394b5f884ebf57b9c6d22f106035e2c029",
+        "decimals": 8,
+        "totalSupply": 100000000
+      }
+    }
+  },
+  "WHT": {
+    "symbol": "WHT",
+    "companyName": "World Hideout Coin",
+    "type": "NEP5",
+    "networks": {
+      "1": {
+        "name": "World Hideout Coin",
+        "hash": "25bd2b29636fed5945d26e1d03d279e1d9259320",
+        "decimals": 8,
+        "totalSupply": 10500000000
+      }
+    }
   },
   "WWB": {
     "symbol": "WWB",
@@ -867,6 +1029,20 @@
         "totalSupply": 1000000000
       }
     }
+  },
+  "LFX": {
+    "symbol": "LFX",
+    "companyName": "LIFEX",
+    "type": "NEP5",
+    "networks": {
+      "1": {
+        "name": "LIFEX",
+        "hash": "c54fc1e02a674ce2de52493b3138fb80ccff5a6e",
+        "decimals": 8,
+        "totalSupply": 1000000000
+      }
+    },
+    "image": "https://cdn.o3.network/img/nep5svgs/LFX.svg"
   },
   "ZPT": {
     "symbol": "ZPT",
