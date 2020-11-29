@@ -53,7 +53,6 @@ export default function withFailureNotification(
 
     class ErrorNotifier extends React.Component<Props> {
       componentWillReceiveProps(nextProps) {
-        console.log(nextProps)
         const { intl } = this.props
 
         if (

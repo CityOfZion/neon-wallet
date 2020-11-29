@@ -11,7 +11,6 @@ import priceHistoryActions from '../../../actions/priceHistoryActions'
 import withBalancesData from '../../../hocs/withBalancesData'
 import withCurrencyData from '../../../hocs/withCurrencyData'
 import withPricesData from '../../../hocs/withPricesData'
-import withLoadingProp from '../../../hocs/withLoadingProp'
 import withProgressPanel from '../../../hocs/withProgressPanel'
 import withSuccessNotification from '../../../hocs/withSuccessNotification'
 import withFailureNotification from '../../../hocs/withFailureNotification'
@@ -74,7 +73,6 @@ export default compose(
 
   // Expose data & functionality needed for `refresh` action.
   withActions(balancesActions, mapBalancesActionsToProps),
-  withLoadingProp(balancesActions),
   withSuccessNotification(
     balancesActions,
     'notifications.success.receivedBlockchainInfo',

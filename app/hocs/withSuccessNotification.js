@@ -32,7 +32,6 @@ export default function withSuccessNotification(
   options: Object = {},
   isTranslation?: boolean,
 ) {
-  console.log(arguments)
   const mapDispatchToProps = (dispatch: DispatchType) => ({
     [NOTIFICATION_PROP]: (...args) =>
       dispatch(showSuccessNotification(...args)),
@@ -44,7 +43,6 @@ export default function withSuccessNotification(
 
     class LoadedNotifier extends React.Component<Props> {
       componentWillReceiveProps(nextProps) {
-        console.log(nextProps)
         if (progressChangedToLoaded(this.props, nextProps)) {
           const { intl } = this.props
           const showSuccessNotification = nextProps[NOTIFICATION_PROP]
