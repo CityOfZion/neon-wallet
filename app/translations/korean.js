@@ -124,7 +124,7 @@ const NOTIFICATIONS = {
   'notifications.success.accountSaved': '계정이 저장되었습니다!',
   'notifications.success.updatedWalletName':
     '지갑 이름이 성공적으로 업데이트되었습니다.',
-  'notificiations.failure.blockchainInfoFailure':
+  'notifications.failure.blockchainInfoFailure':
     '블록 체인 정보를 검색하지 못했습니다.',
 }
 

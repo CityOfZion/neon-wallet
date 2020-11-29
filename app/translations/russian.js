@@ -142,7 +142,7 @@ const NOTIFICATIONS = {
   'notifications.success.accountSaved': 'Аккаунт сохранен!',
   'notifications.success.updatedWalletName':
     'Название кошелька успешно обновлено.',
-  'notificiations.failure.blockchainInfoFailure':
+  'notifications.failure.blockchainInfoFailure':
     'В процессе получения информации о блокчейне произошла ошибка.',
 }
 

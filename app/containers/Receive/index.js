@@ -112,7 +112,7 @@ export default compose(
   ),
   withFailureNotification(
     balancesActions,
-    'notificiations.failure.blockchainInfoFailure',
+    'notifications.failure.blockchainInfoFailure',
     {},
     true,
   ),

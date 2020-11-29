@@ -128,7 +128,7 @@ const NOTIFICATIONS = {
   'notifications.success.receivedBlockchainInfo': '收到最新的区块链信息。',
   'notifications.success.accountSaved': '帐户已保存!',
   'notifications.success.updatedWalletName': '成功更新了钱包名称.',
-  'notificiations.failure.blockchainInfoFailure': '检索区块链信息失败。',
+  'notifications.failure.blockchainInfoFailure': '检索区块链信息失败。',
 }
 
 const AUTH = {

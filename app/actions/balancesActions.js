@@ -13,7 +13,7 @@ import { COIN_DECIMAL_LENGTH } from '../core/formatters'
 import { toBigNumber } from '../core/math'
 import { findNetworkByDeprecatedLabel } from '../core/networks'
 
-const MAX_SCRIPT_HASH_CHUNK_SIZE = 10
+const MAX_SCRIPT_HASH_CHUNK_SIZE = 3
 
 type Props = {
   net: string,
@@ -76,15 +76,16 @@ function determineIfBalanceUpdated(
 let RETRY_COUNT = 0
 
 async function getBalances({ net, address, isRetry = false }: Props) {
-  const { soundEnabled, tokens } = await getSettings()
+  const { soundEnabled, tokens } = (await getSettings()) || {
+    tokens: [],
+    soundEnabled: true,
+  }
   const network = findNetworkByDeprecatedLabel(net)
 
   let endpoint = await getNode(net, isRetry)
   if (!endpoint) {
     endpoint = await getRPCEndpoint(net)
   }
-
-  console.log({ endpoint })
 
   let networkHasChanged = true
   if (net === inMemoryNetwork) networkHasChanged = false
@@ -93,25 +94,44 @@ async function getBalances({ net, address, isRetry = false }: Props) {
   if (!inMemoryAddress) adressHasChanged = false
   else if (inMemoryAddress !== address) adressHasChanged = true
 
-  const chunks = tokens
-    .filter(token => !token.isUserGenerated && token.networkId === network.id)
-    .reduce((accum, currVal) => {
-      if (!accum.length) {
-        accum.push([currVal.scriptHash])
+  const chunks =
+    tokens.length &&
+    tokens
+      .filter(token => !token.isUserGenerated && token.networkId === network.id)
+      .reduce((accum, currVal) => {
+        const chunk = {
+          scriptHash: currVal.scriptHash,
+          symbol: currVal.symbol,
+        }
+        if (!accum.length) {
+          accum.push([chunk])
+          return accum
+        }
+
+        if (accum[accum.length - 1].length < MAX_SCRIPT_HASH_CHUNK_SIZE) {
+          accum[accum.length - 1].push(chunk)
+        } else {
+          accum.push([chunk])
+        }
         return accum
-      }
+      }, [])
 
-      if (accum[accum.length - 1].length < MAX_SCRIPT_HASH_CHUNK_SIZE) {
-        accum[accum.length - 1].push(currVal.scriptHash)
-      } else {
-        accum.push([currVal.scriptHash])
-      }
-      return accum
-    }, [])
+  const promiseMap = chunks.map(async chunk => {
+    // NOTE: because the RPC nodes will respond with the contract
+    // symbol name, we need to use our original token list
+    // in case two tokens have the same symbol (SWTH vs SWTH OLD)
+    const balanceResults = await api.nep5.getTokenBalances(
+      endpoint,
+      chunk.map(({ scriptHash }) => scriptHash),
+      address,
+    )
+    const hashBasedBalance = {}
 
-  const promiseMap = chunks.map(chunk =>
-    api.nep5.getTokenBalances(endpoint, chunk, address),
-  )
+    chunk.forEach((token, i) => {
+      hashBasedBalance[token.symbol] = Object.values(balanceResults)[i]
+    })
+    return hashBasedBalance
+  })
 
   let shouldRetry = false
   const results = await Promise.all(promiseMap).catch(e => {
