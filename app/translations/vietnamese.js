@@ -133,7 +133,7 @@ const NOTIFICATIONS = {
     'Nhận được thông tin blockchain mới nhất.',
   'notifications.success.accountSaved': 'Tài khoản đã được lưu!',
   'notifications.success.updatedWalletName': 'Tên ví được cập nhật thành công.',
-  'notificiations.failure.blockchainInfoFailure':
+  'notifications.failure.blockchainInfoFailure':
     'Không thể truy xuất thông tin blockchain.',
 }
 

@@ -138,7 +138,7 @@ const NOTIFICATIONS = {
     'تلقي أحدث معلومات blockchain.',
   'notifications.success.accountSaved': 'تم حفظ الحساب!',
   'notifications.success.updatedWalletName': 'تم تحديث اسم المحفظة بنجاح.',
-  'notificiations.failure.blockchainInfoFailure':
+  'notifications.failure.blockchainInfoFailure':
     'فشل في استعادة معلومات blockchain.',
 }
 

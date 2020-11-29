@@ -133,7 +133,7 @@ const NOTIFICATIONS = {
   'notifications.success.accountSaved': 'Compte enregistré!',
   'notifications.success.updatedWalletName':
     'Nom du portefeuille mis à jour avec succès.',
-  'notificiations.failure.blockchainInfoFailure':
+  'notifications.failure.blockchainInfoFailure':
     'Échec de la récupération des informations de la chaîne de blocs.',
 }
 

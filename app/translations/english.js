@@ -141,7 +141,7 @@ const NOTIFICATIONS = {
     'Received latest blockchain information.',
   'notifications.success.accountSaved': 'Account saved!',
   'notifications.success.updatedWalletName': 'Succesfully updated wallet name.',
-  'notificiations.failure.blockchainInfoFailure':
+  'notifications.failure.blockchainInfoFailure':
     'Failed to retrieve blockchain information.',
 }
 
