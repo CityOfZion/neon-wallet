@@ -116,25 +116,28 @@ async function getBalances({ net, address, isRetry = false }: Props) {
         return accum
       }, [])
 
-  const promiseMap = chunks.map(async chunk => {
-    // NOTE: because the RPC nodes will respond with the contract
-    // symbol name, we need to use our original token list
-    // in case two tokens have the same symbol (SWTH vs SWTH OLD)
-    const balanceResults = await api.nep5.getTokenBalances(
-      endpoint,
-      chunk.map(({ scriptHash }) => scriptHash),
-      address,
-    )
-    const hashBasedBalance = {}
-
-    chunk.forEach((token, i) => {
-      hashBasedBalance[token.symbol] = Object.values(balanceResults)[i]
-    })
-    return hashBasedBalance
-  })
-
   let shouldRetry = false
-  const results = await Promise.all(promiseMap).catch(e => {
+  const results = await Promise.all(
+    chunks.map(async chunk => {
+      // NOTE: because the RPC nodes will respond with the contract
+      // symbol name, we need to use our original token list
+      // in case two tokens have the same symbol (SWTH vs SWTH OLD)
+      const balanceResults = await api.nep5
+        .getTokenBalances(
+          endpoint,
+          chunk.map(({ scriptHash }) => scriptHash),
+          address,
+        )
+        .catch(e => Promise.reject(e))
+
+      const hashBasedBalance = {}
+
+      chunk.forEach((token, i) => {
+        hashBasedBalance[token.symbol] = Object.values(balanceResults)[i]
+      })
+      return hashBasedBalance
+    }),
+  ).catch(() => {
     console.error(
       `An error occurred fetching token balances using: ${endpoint} attempting to use a new RPC node.`,
     )
