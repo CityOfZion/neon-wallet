@@ -9,7 +9,8 @@ import Gift from '../../../assets/icons/gift.svg'
 import release260Dark from '../../../assets/images/release-assets/2.6.0.dark.png'
 import release260Light from '../../../assets/images/release-assets/2.6.0.light.png'
 import Github from '../../../assets/images/release-assets/github.svg'
-import Patch from '../../../assets/images/release-assets/patch.svg'
+import PatchLight from '../../../assets/images/release-assets/patch-light.svg'
+import PatchDark from '../../../assets/images/release-assets/patch-dark.svg'
 
 const electron = require('electron').remote
 
@@ -51,11 +52,8 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
               <br />
               <br />
               <li>Updates RPC node list</li>
-              <li>
-                Fixes bug breaking balance logic for tokens that share the same
-                symbol
-              </li>
-              <li>Adds Dora and Neotube to block explorer settings</li>
+              <li>Fixes edge case balance bugs</li>
+              <li>Adds Dora and Neotube to explorers</li>
               <br />
               View full details of this release on GitHub
               <br />
@@ -70,7 +68,7 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
             />
           </div>
           <div className={styles.marketingImage}>
-            <Patch />
+            {theme === 'Light' ? <PatchLight /> : <PatchDark />}
           </div>
         </div>
 
