@@ -9,6 +9,7 @@ import Gift from '../../../assets/icons/gift.svg'
 import release260Dark from '../../../assets/images/release-assets/2.6.0.dark.png'
 import release260Light from '../../../assets/images/release-assets/2.6.0.light.png'
 import Github from '../../../assets/images/release-assets/github.svg'
+import Patch from '../../../assets/images/release-assets/patch.svg'
 
 const electron = require('electron').remote
 
@@ -42,7 +43,7 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
       <div className={styles.releaseNotesContents}>
         <div className={styles.release}>
           <div className={styles.releaseContent}>
-            <small className={styles.date}>13th Nov 2020 </small>
+            <small className={styles.date}>Dec 1st 2020 </small>
             <h3>Patch v2.6.1</h3>
 
             <p>
@@ -68,11 +69,14 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
               }
             />
           </div>
+          <div className={styles.marketingImage}>
+            <Patch />
+          </div>
         </div>
 
         <div className={styles.release}>
           <div className={styles.releaseContent}>
-            <small className={styles.date}>10th Nov 2020 </small>
+            <small className={styles.date}>Nov 10th 2020 </small>
             <h3>Welcome to the latest release of Neon wallet v2.6.0</h3>
 
             <p>
