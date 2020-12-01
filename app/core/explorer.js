@@ -3,7 +3,7 @@ import { openExternal } from './electron'
 import { EXPLORERS } from './constants'
 import { isMainNetwork } from './networks'
 
-const { NEO_SCAN, NEO_TRACKER, ANT_CHAIN } = EXPLORERS
+const { NEO_SCAN, NEO_TRACKER, ANT_CHAIN, DORA, NEOTUBE } = EXPLORERS
 
 export const getExplorerBaseURL = (
   networkId: string,
@@ -21,6 +21,13 @@ export const getExplorerBaseURL = (
     }
     case ANT_CHAIN: {
       return isMainNet ? 'http://antcha.in' : 'http://testnet.antcha.in'
+    }
+    // TODO: Update when Dora supports testnet in its url structure
+    case DORA: {
+      return isMainNet ? 'https://dora.coz.io' : 'https://dora.coz.io'
+    }
+    case NEOTUBE: {
+      return isMainNet ? 'https://neotube.io' : 'https://testnet.neotube.io'
     }
     default:
       throw new Error(`Unknown explorer ${explorer}`)
@@ -41,6 +48,9 @@ export const getExplorerTxLink = (
       return `${baseURL}/transaction/${txId}`
     case ANT_CHAIN:
       return `${baseURL}/tx/hash/0x${txId}`
+    case NEOTUBE:
+    case DORA:
+      return `${baseURL}/transaction/0x${txId}`
     default:
       throw new Error(`Unknown explorer ${explorer}`)
   }
@@ -60,6 +70,9 @@ export const getExplorerAddressLink = (
       return `${baseURL}/address/${address}/1`
     case ANT_CHAIN:
       return `${baseURL}/address/info/${address}`
+    case NEOTUBE:
+    case DORA:
+      return `${baseURL}/address/${address}`
     default:
       throw new Error(`Unknown explorer ${explorer}`)
   }
@@ -77,6 +90,10 @@ export const getExplorerAssetLink = (
       return `${baseURL}/asset/${assetId}`
     case ANT_CHAIN:
       return `${baseURL}/assets/hash/${assetId}`
+    case DORA:
+      return `${baseURL}/contract/${assetId}`
+    case NEOTUBE:
+      return `${baseURL}/nep5/${assetId}`
     default:
       throw new Error(`Unknown explorer ${explorer}`)
   }

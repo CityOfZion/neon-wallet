@@ -24,7 +24,7 @@ export const COZ_DONATIONS_ADDRESS = 'Adr3XjZ5QDzVJrWvzmsTTchpLRRGSzgS5A'
 
 export const PIPEFY_SUPPORT = 'https://portal.pipefy.com/coz-support'
 
-export const NODE_EXLUSION_CRITERIA = ['ngd', 'neo.org']
+export const NODE_EXLUSION_CRITERIA = []
 
 export const ASSETS = {
   NEO: 'NEO',
@@ -39,8 +39,10 @@ export const THEMES = {
 export const DEFAULT_THEME = THEMES.LIGHT
 
 export const EXPLORERS = {
-  NEO_SCAN: 'Neoscan',
+  DORA: 'Dora',
+  NEOTUBE: 'Neotube',
   NEO_TRACKER: 'Neotracker',
+  NEO_SCAN: 'Neoscan',
   ANT_CHAIN: 'Antchain',
 }
 

@@ -175,10 +175,10 @@ exports[`Settings renders without crashing 1`] = `
             "nodeSelectSelectAutomatically": "Select automatically",
             "nodeSelectionInstructions": "If you’re experiencing performance issues, try selecting a custom node below",
             "nothingToSeeHere": "Nothing to see here!",
+            "notifications.failure.blockchainInfoFailure": "Failed to retrieve blockchain information.",
             "notifications.success.accountSaved": "Account saved!",
             "notifications.success.receivedBlockchainInfo": "Received latest blockchain information.",
             "notifications.success.updatedWalletName": "Succesfully updated wallet name.",
-            "notificiations.failure.blockchainInfoFailure": "Failed to retrieve blockchain information.",
             "numberofTransactionsPending": "{transferCount, number} {transferCount, plural, one {Transfer} other {Transfers}} pending",
             "previousStep": "Previous Step",
             "print": "Print",
@@ -1373,7 +1373,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                       Manage your neon wallet
                                                                                     </FormattedMessage>
                                                                                      - v
-                                                                                    2.6.0
+                                                                                    2.6.1
                                                                                   </div>
                                                                                   <div
                                                                                     className="settingsPanelHeaderItem"

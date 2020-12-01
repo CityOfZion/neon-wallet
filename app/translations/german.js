@@ -141,7 +141,7 @@ const NOTIFICATIONS = {
   'notifications.success.accountSaved': 'Konto gespeichert!',
   'notifications.success.updatedWalletName':
     'Erfolgreich aktualisierter Brieftaschenname.',
-  'notificiations.failure.blockchainInfoFailure':
+  'notifications.failure.blockchainInfoFailure':
     'Fehler beim Abrufen der Blockchain-Informationen.',
 }
 

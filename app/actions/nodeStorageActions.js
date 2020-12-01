@@ -122,7 +122,18 @@ export const getRPCEndpoint = async (
   }
 }
 
-export const getNode = async (net: Net): Promise<string> => {
+const setNode = async (node: string, net: Net): Promise<string> =>
+  setStorage(`${STORAGE_KEY}-${net}`, { node, timestamp: new Date().getTime() })
+
+export const getNode = async (
+  net: Net,
+  errorOccurred?: boolean,
+): Promise<string> => {
+  if (errorOccurred) {
+    delete cachedRPCUrl[net]
+    await setNode('', net)
+    return ''
+  }
   const storage = await getStorage(`${STORAGE_KEY}-${net}`).catch(console.error)
   const nodeInStorage = get(storage, 'node')
   const expiration = get(storage, 'timestamp')
@@ -131,9 +142,6 @@ export const getNode = async (net: Net): Promise<string> => {
   }
   return nodeInStorage
 }
-
-const setNode = async (node: string, net: Net): Promise<string> =>
-  setStorage(`${STORAGE_KEY}-${net}`, { node, timestamp: new Date().getTime() })
 
 export default createActions(
   ID,

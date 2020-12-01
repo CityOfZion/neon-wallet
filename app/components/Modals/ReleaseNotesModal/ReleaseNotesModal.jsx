@@ -9,6 +9,8 @@ import Gift from '../../../assets/icons/gift.svg'
 import release260Dark from '../../../assets/images/release-assets/2.6.0.dark.png'
 import release260Light from '../../../assets/images/release-assets/2.6.0.light.png'
 import Github from '../../../assets/images/release-assets/github.svg'
+import PatchLight from '../../../assets/images/release-assets/patch-light.svg'
+import PatchDark from '../../../assets/images/release-assets/patch-dark.svg'
 
 const electron = require('electron').remote
 
@@ -42,7 +44,37 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
       <div className={styles.releaseNotesContents}>
         <div className={styles.release}>
           <div className={styles.releaseContent}>
-            <small className={styles.date}>10th Nov 2020 </small>
+            <small className={styles.date}>Dec 1st 2020 </small>
+            <h3>Patch v2.6.1</h3>
+
+            <p>
+              In this update you will find the following minor improvements:
+              <br />
+              <br />
+              <li>Updates RPC node list</li>
+              <li>Fixes edge case balance bugs</li>
+              <li>Adds Dora and Neotube to explorers</li>
+              <br />
+              View full details of this release on GitHub
+              <br />
+            </p>
+
+            <Github
+              onClick={() =>
+                electron.shell.openExternal(
+                  'https://github.com/CityOfZion/neon-wallet/releases/tag/v2.6.1',
+                )
+              }
+            />
+          </div>
+          <div className={styles.marketingImage}>
+            {theme === 'Light' ? <PatchLight /> : <PatchDark />}
+          </div>
+        </div>
+
+        <div className={styles.release}>
+          <div className={styles.releaseContent}>
+            <small className={styles.date}>Nov 10th 2020 </small>
             <h3>Welcome to the latest release of Neon wallet v2.6.0</h3>
 
             <p>
