@@ -48,20 +48,21 @@ export const getDefaultTokens = async (): Promise<Array<TokenItemType>> => {
   const tokens = []
   // Prevent duplicate requests here
   if (!fetchedTokens) {
-    // const response = await axios
-    //   // use a time stamp query param to prevent caching
-    //   .get(
-    //     `https://raw.githubusercontent.com/CityOfZion/neo-tokens/master/tokenList.json?timestamp=${new Date().getTime()}`,
-    //   )
-    //   .catch(error => {
-    //     console.error('Falling back to hardcoded list of NEP5 tokens!', error)
-    //     // if request to gh fails use hardcoded list
-    //     fetchedTokens = TOKENS
-    //   })
-    // if (response && response.data && !isEmpty(response.data)) {
-    //   fetchedTokens = response.data
-    // } else {
-    fetchedTokens = TOKENS
+    const response = await axios
+      // use a time stamp query param to prevent caching
+      .get(
+        `https://raw.githubusercontent.com/CityOfZion/neo-tokens/master/tokenList.json?timestamp=${new Date().getTime()}`,
+      )
+      .catch(error => {
+        console.error('Falling back to hardcoded list of NEP5 tokens!', error)
+        // if request to gh fails use hardcoded list
+        fetchedTokens = TOKENS
+      })
+    if (response && response.data && !isEmpty(response.data)) {
+      fetchedTokens = response.data
+    } else {
+      fetchedTokens = TOKENS
+    }
   }
 
   tokens.push(
