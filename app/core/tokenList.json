@@ -134,6 +134,19 @@
       }
     }
   },
+  "SWTH V2": {
+    "symbol": "SWTH (OLD)",
+    "companyName": "Switcheo",
+    "type": "NEP5",
+    "networks": {
+      "1": {
+        "name": "Switcheo Legacy V2",
+        "hash": "ab38352559b8b203bde5fddfa0b07d8b2525e132",
+        "decimals": 8,
+        "totalSupply": 1000000000
+      }
+    }
+  },
   "CGL": {
     "symbol": "CGL",
     "companyName": "CrazyGladiator",
@@ -842,32 +855,6 @@
       }
     }
   },
-  "SWTH V2": {
-    "symbol": "SWTH (OLD)",
-    "companyName": "Switcheo",
-    "type": "NEP5",
-    "networks": {
-      "1": {
-        "name": "Switcheo Legacy V2",
-        "hash": "ab38352559b8b203bde5fddfa0b07d8b2525e132",
-        "decimals": 8,
-        "totalSupply": 1000000000
-      }
-    }
-  },
-  "SWTH V3": {
-    "symbol": "SWTH",
-    "companyName": "Switcheo",
-    "type": "NEP5",
-    "networks": {
-      "1": {
-        "name": "Switcheo V3",
-        "hash": "3e09e602eeeb401a2fec8e8ea137d59aae54a139",
-        "decimals": 8,
-        "totalSupply": 1000000000
-      }
-    }
-  },
   "THOR": {
     "symbol": "THOR",
     "companyName": "Thor Token",
@@ -1058,5 +1045,18 @@
     },
     "image":
       "https://rawgit.com/CityOfZion/neo-tokens/master/assets/png/zpt.png"
+  },
+  "SWTH V3": {
+    "symbol": "SWTH",
+    "companyName": "Switcheo",
+    "type": "NEP5",
+    "networks": {
+      "1": {
+        "name": "Switcheo V3",
+        "hash": "3e09e602eeeb401a2fec8e8ea137d59aae54a139",
+        "decimals": 8,
+        "totalSupply": 1000000000
+      }
+    }
   }
 }
