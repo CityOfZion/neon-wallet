@@ -13,7 +13,7 @@ import { COIN_DECIMAL_LENGTH } from '../core/formatters'
 import { toBigNumber } from '../core/math'
 import { findNetworkByDeprecatedLabel } from '../core/networks'
 
-const { reverseHex, hexstring2str, fixed82num } = u
+const { reverseHex, hexstring2str } = u
 const { Query } = rpc
 const { ScriptBuilder } = sc
 const { getScriptHashFromAddress } = wallet
@@ -101,7 +101,7 @@ const getTokenBalances = (url, scriptHashArray, address) => {
   const addrScriptHash = reverseHex(getScriptHashFromAddress(address))
   const sb = new ScriptBuilder()
 
-  scriptHashArray.forEach((scriptHash, index) => {
+  scriptHashArray.forEach(scriptHash => {
     sb.emitAppCall(scriptHash, 'symbol')
       .emitAppCall(scriptHash, 'decimals')
       .emitAppCall(scriptHash, 'balanceOf', [addrScriptHash])
@@ -118,7 +118,6 @@ const getTokenBalances = (url, scriptHashArray, address) => {
       ) {
         for (let i = 0; i < res.result.stack.length; i += 3) {
           try {
-            console.log({ res })
             const symbol = hexstring2str(res.result.stack[i].value)
             const decimals = parseDecimals(res.result.stack[i + 1].value)
             tokenList[symbol] = NumberParser(res.result.stack[i + 2], decimals)
@@ -127,7 +126,6 @@ const getTokenBalances = (url, scriptHashArray, address) => {
           }
         }
       }
-      console.log({ tokenList })
       return tokenList
     })
     .catch(err => {
@@ -190,8 +188,6 @@ async function getBalances({ net, address, isRetry = false }: Props) {
         chunk.map(({ scriptHash }) => scriptHash),
         address,
       ).catch(e => Promise.reject(e))
-
-      console.log({ balanceResults })
 
       const hashBasedBalance = {}
 
