@@ -1,5 +1,5 @@
 // @flow
-import { api } from '@cityofzion/neon-js'
+import { api, u, rpc, sc, wallet } from '@cityofzion/neon-js'
 import { extend, isEmpty, get } from 'lodash-es'
 import { createActions } from 'spunky'
 import { Howl } from 'howler'
@@ -13,7 +13,12 @@ import { COIN_DECIMAL_LENGTH } from '../core/formatters'
 import { toBigNumber } from '../core/math'
 import { findNetworkByDeprecatedLabel } from '../core/networks'
 
-const MAX_SCRIPT_HASH_CHUNK_SIZE = 3
+const { reverseHex, hexstring2str } = u
+const { Query } = rpc
+const { ScriptBuilder } = sc
+const { getScriptHashFromAddress } = wallet
+
+const MAX_SCRIPT_HASH_CHUNK_SIZE = 20
 
 type Props = {
   net: string,
@@ -73,6 +78,62 @@ function determineIfBalanceUpdated(
   })
 }
 
+const parseDecimals = VMOutput => {
+  if (VMOutput === '') return 0
+  return parseInt(VMOutput, 10)
+}
+
+const parseHexNum = hex => (hex ? parseInt(reverseHex(hex), 16) : 0)
+
+function NumberParser(item, decimals) {
+  switch (item.type) {
+    case 'Integer':
+      return new u.Fixed8(item.value).div(100000000)
+    case 'ByteArray':
+      // eslint-disable-next-line
+      return parseHexNum(item.value) / Math.pow(10, decimals)
+    default:
+      throw new Error(`Received invalid type ${item.type}`)
+  }
+}
+
+const getTokenBalances = (url, scriptHashArray, address) => {
+  const addrScriptHash = reverseHex(getScriptHashFromAddress(address))
+  const sb = new ScriptBuilder()
+
+  scriptHashArray.forEach(scriptHash => {
+    sb.emitAppCall(scriptHash, 'symbol')
+      .emitAppCall(scriptHash, 'decimals')
+      .emitAppCall(scriptHash, 'balanceOf', [addrScriptHash])
+  })
+  return Query.invokeScript(sb.str, false)
+    .execute(url)
+    .then(res => {
+      const tokenList = {}
+      if (
+        res &&
+        res.result &&
+        res.result.stack &&
+        res.result.stack.length >= 3
+      ) {
+        for (let i = 0; i < res.result.stack.length; i += 3) {
+          try {
+            const symbol = hexstring2str(res.result.stack[i].value)
+            const decimals = parseDecimals(res.result.stack[i + 1].value)
+            tokenList[symbol] = NumberParser(res.result.stack[i + 2], decimals)
+          } catch (e) {
+            throw e
+          }
+        }
+      }
+      return tokenList
+    })
+    .catch(err => {
+      console.error({ err })
+      throw err
+    })
+}
+
 let RETRY_COUNT = 0
 
 async function getBalances({ net, address, isRetry = false }: Props) {
@@ -122,13 +183,11 @@ async function getBalances({ net, address, isRetry = false }: Props) {
       // NOTE: because the RPC nodes will respond with the contract
       // symbol name, we need to use our original token list
       // in case two tokens have the same symbol (SWTH vs SWTH OLD)
-      const balanceResults = await api.nep5
-        .getTokenBalances(
-          endpoint,
-          chunk.map(({ scriptHash }) => scriptHash),
-          address,
-        )
-        .catch(e => Promise.reject(e))
+      const balanceResults = await getTokenBalances(
+        endpoint,
+        chunk.map(({ scriptHash }) => scriptHash),
+        address,
+      ).catch(e => Promise.reject(e))
 
       const hashBasedBalance = {}
 
