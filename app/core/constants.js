@@ -68,11 +68,6 @@ export const LANGUAGES = {
     value: 'GERMAN',
     renderFlag: () => <Germany alt="Deutsche" />,
   },
-  DUTCH: {
-    label: 'Nederlands',
-    value: 'DUTCH',
-    renderFlag: () => <Dutch alt="Nederlands" />,
-  },
   ITALIAN: {
     label: 'Italiano',
     value: 'ITALIAN',
@@ -107,6 +102,11 @@ export const LANGUAGES = {
     label: 'Русский',
     value: 'RUSSIAN',
     renderFlag: () => <Russia alt="Русский" />,
+  },
+  DUTCH: {
+    label: 'Nederlands',
+    value: 'DUTCH',
+    renderFlag: () => <Dutch alt="Nederlands" />,
   },
 }
 
