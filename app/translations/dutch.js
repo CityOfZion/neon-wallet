@@ -128,7 +128,7 @@ const ERRORS = {
   'errors.send.network': 'Een netwerk probleem is opgetreden.',
   'errors.send.number': 'Aantal moet nummeriek zijn.',
   'errors.send.fraction': 'Je knt geen gedeelte van een NEO verzenden.',
-  'errors.send.negative': `Je unt geen negatieve aantallen {asset} verzenden`,
+  'errors.send.negative': `Je kunt geen negatieve aantallen {asset} verzenden`,
   'errors.send.zero': `Je kunt geen 0 {asset} verzenden.`,
   'errors.send.decimal': `Je kunt {asset} tot maximaal {decimalCount, number} verzenden.`,
   'errors.send.invalidAddress': 'Je moet een geldig NEO adres invoeren..',
