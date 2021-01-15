@@ -322,7 +322,7 @@ const SETTINGS = {
   settingsEncryptLink: 'BEVEILIG EEN SLEUTEL',
   recoverWallet: 'HERSTEL WALLET',
   settingsRecoverWalletLink: 'IMPORTEREN',
-  settingsBackUpLinkLabel: 'BACKUP WWrong ALLET',
+  settingsBackUpLinkLabel: 'BACKUP WALLET',
   settingsBackUpLink: 'EXPORTEREN',
   settingsManageLabel: 'Beheer je Neon wallet',
   settingsCommunity: 'Community ondersteuning',
