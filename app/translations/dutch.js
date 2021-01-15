@@ -128,7 +128,7 @@ const ERRORS = {
   'errors.send.network': 'Een netwerk probleem is opgetreden.',
   'errors.send.number': 'Aantal moet nummeriek zijn.',
   'errors.send.fraction': 'Je knt geen gedeelte van een NEO verzenden.',
-  'errors.send.negative': `Je unt geen negatieve aantallen {asset} verzenden`,
+  'errors.send.negative': `Je kunt geen negatieve aantallen {asset} verzenden`,
   'errors.send.zero': `Je kunt geen 0 {asset} verzenden.`,
   'errors.send.decimal': `Je kunt {asset} tot maximaal {decimalCount, number} verzenden.`,
   'errors.send.invalidAddress': 'Je moet een geldig NEO adres invoeren..',
@@ -138,7 +138,7 @@ const ERRORS = {
 
 const NOTIFICATIONS = {
   'notifications.success.receivedBlockchainInfo':
-    'Laaste blockchain informatie opgevraagd.',
+    'Laatste blockchain informatie opgevraagd.',
   'notifications.success.accountSaved': 'Account opgeslagen!',
   'notifications.success.updatedWalletName': 'Wallet naam opgeslagen..',
   'notifications.failure.blockchainInfoFailure':
@@ -156,7 +156,7 @@ const AUTH = {
   authImportWallet: 'Importeer wallet',
   authScanQRButton: 'Scan QR-Code',
   authLoginButton: 'Inloggen',
-  authLedgerFirstStep: 'Verbind en ontgrenden je Ledger-apparaat',
+  authLedgerFirstStep: 'Verbind en ontgrendel je Ledger-apparaat',
   authLedgerSecondStep: 'Navigeer naar de NEO-app op je apparaat',
   authLedgerAddressLabel: 'PUBLIEK ADRES',
 }
@@ -246,7 +246,7 @@ const RECEIVE = {
   receiveRequestTabAssets: 'VERZOEK ASSETS',
   recieveWhyUseQRLabel: 'Waarom een QR-Code gebruiken??',
   receiveQRExplanation:
-    '<p>Ooit assets naar het verkeerde adres gestuurd vanwege een foutief karakter in het wallet-adres?</p><p>Zo niet, dan heb je mazzel - maar het gebeurt veel te vaak.</p><p>Hier bij CoZ willen we ervoor zorgen dat mensen die jou betalen, het juiste adres krijgen. J kunt een QR-code genereren om assets aan te vragen, zodat ze jou kunnen helpen. </p> <p> Elke code die je genereert, bevat uw openbare wallet-adres, een aantal en een referentie - allemaal door jou ingesteld. </p>',
+    '<p>Ooit assets naar het verkeerde adres gestuurd vanwege een foutief karakter in het wallet-adres?</p><p>Zo niet, dan heb je mazzel - maar het gebeurt veel te vaak.</p><p>Hier bij CoZ willen we ervoor zorgen dat mensen die jou betalen, het juiste adres krijgen. Je kunt een QR-code genereren om assets aan te vragen, zodat ze jou kunnen helpen. </p> <p> Elke code die je genereert, bevat je openbare wallet-adres, een aantal en een referentie - allemaal door jou ingesteld. </p>',
 }
 
 const REQUEST_ASSETS = {
@@ -306,7 +306,7 @@ const SEND = {
     '{transferCount, number} {transferCount, plural, one {sendTransfer} other {sendTransferPlural}} in afwachting',
   sendBroadcasting: 'Transactie uitzenden naar netwerk...',
   sendDisclaimer:
-    'Controleer en zorg ervoor dat je de juiste gegevens hebt ingevoerd om verlies van aassets te voorkomen.',
+    'Controleer en zorg ervoor dat je de juiste gegevens hebt ingevoerd om verlies van assets te voorkomen.',
   sendActivityLink:
     'Kijk op het tabblad Activiteit om de status van je transactie te zien.',
 
@@ -339,7 +339,7 @@ const NETWORK_SETTINGS = {
 }
 
 const NODE_SELECTION = {
-  nodeSelectPanelHeader: 'Node Selection',
+  nodeSelectPanelHeader: 'Node Selectie',
   nodeSelectionInstructions:
     'Als je prestatieproblemen ondervindt, selecteer je hieronder een aangepaste node',
   nodeSelectSelectAutomatically: 'Selecteer automatisch',
