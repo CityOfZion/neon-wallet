@@ -66,7 +66,7 @@ const MISCELLANEOUS = {
     'Asset {transferCount, plural, one {Ontvanger} other {Ontvangers}}',
   confirmation: 'Confirmation',
   confirmationRecipient:
-    '{transferCount, number} {transferCount, plural, one {Recipient} other {Recipients}}',
+    '{transferCount, number} {transferCount, plural, one {Ontvanger} other {Ontvangers}}',
   completeExclaim: 'Bevestigd!',
   sendQRExplanation:
   // eslint-disable-next-line
