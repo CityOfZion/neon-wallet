@@ -138,7 +138,7 @@ const ERRORS = {
 
 const NOTIFICATIONS = {
   'notifications.success.receivedBlockchainInfo':
-    'Laaste blockchain informatie opgevraagd.',
+    'Laatste blockchain informatie opgevraagd.',
   'notifications.success.accountSaved': 'Account opgeslagen!',
   'notifications.success.updatedWalletName': 'Wallet naam opgeslagen..',
   'notifications.failure.blockchainInfoFailure':
