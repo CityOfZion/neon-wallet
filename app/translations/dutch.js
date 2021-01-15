@@ -339,7 +339,7 @@ const NETWORK_SETTINGS = {
 }
 
 const NODE_SELECTION = {
-  nodeSelectPanelHeader: 'Node Selection',
+  nodeSelectPanelHeader: 'Node Selectie',
   nodeSelectionInstructions:
     'Als je prestatieproblemen ondervindt, selecteer je hieronder een aangepaste node',
   nodeSelectSelectAutomatically: 'Selecteer automatisch',
