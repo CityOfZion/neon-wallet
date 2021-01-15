@@ -52,14 +52,14 @@ const MISCELLANEOUS = {
 
   walletManagerRemoveWallet: 'Wallet verwijderen',
 
-  selectAssets: 'Select Assets',
-  priorityTransfer: 'Priority Transfer',
+  selectAssets: 'Selecteer assets',
+  priorityTransfer: 'Prioriteitstransactie',
 
-  editRecipients: 'Edit Recipients',
-  confirmAndSend: 'Confirm & Send',
-  fee: 'Fee:',
-  sendMoreAssets: 'Send More Assets',
-  transactionId: 'Transaction ID:',
+  editRecipients: 'Pas ontvanger aan',
+  confirmAndSend: 'Bevestigen en verzenden',
+  fee: 'Vergoeding:',
+  sendMoreAssets: 'Verstuur meer assets',
+  transactionId: 'Transactie ID:',
   numberofTransactionsPending:
     '{transferCount, number} {transferCount, plural, one {Transactie} other {Transacties}} in afwachting',
   assetRecipients:
@@ -75,7 +75,7 @@ const MISCELLANEOUS = {
   captureQRCaps: 'FOTO NEMEN',
 
   networkConfigTooltipUpdateSettings: 'Instelling bijwerken',
-  networkConfigTooltipPublicKey: 'PUBLIEKE SLEUTEL:',
+  networkConfigTooltipPublicKey: 'PUBLIC KEY:',
   networkConfigTooltipAddress: 'ADRES:',
 
   noOptionsMessage: 'Geen opties',
@@ -103,7 +103,7 @@ const MISCELLANEOUS = {
   chooseAccount: 'Kies een bestaande account',
   nextStep: 'Volgende stap',
   previousStep: 'Vorige stap',
-  privateKey: 'Private sleutel',
+  privateKey: 'Private key',
 }
 
 const ERRORS = {
@@ -176,7 +176,7 @@ const WALLET_CREATION = {
   walletCreatedDisclaimer:
     '<b>Bewaar deze details!</b> Als je deze inloggegevens kwijtraakt, heb je geen toegang meer tot je assets.',
   privateKeyLabel: 'PRIVATE KEY',
-  encryptedKeyLabel: 'VERSLEUTELDE KEY',
+  encryptedKeyLabel: 'BEVEILIGDE SLEUTEL',
   addressLabel: 'PUBLIEK ADRES',
   splitKeyLabel: 'GESPLITSTE SLEUTEL',
   recoverWalletLabel: 'HERSTEL WALLET',
@@ -267,19 +267,19 @@ const REQUEST_ASSETS = {
 }
 
 const TRANSACTION_FEE = {
-  transactionFeeQuestion: 'PRIORITEER JOUW TRANSACTIE MET EEN FEE?',
+  transactionFeeQuestion: 'PRIORITEER JOUW TRANSACTIE MET EEN VERGOEDING?',
   fast: 'Snel',
   faster: 'Sneller',
   fastest: 'Snelst',
-  sendWithFee: 'Verstuur {itemCount, plural, one {Asset} other {Assets}} Met fee',
+  sendWithFee: 'Verstuur {itemCount, plural, one {asset} other {assets}} met vergoeding',
   sendWithoutFee:
-    'Verstuur {itemCount, plural, one {Asset} other {Assets}} Zonder fee',
+    'Verstuur {itemCount, plural, one {asset} other {assets}} zonder vergoeding',
   Asset: 'Asset',
   assets: 'Assets',
 }
 
 const SEND = {
-  sendPageLabel: 'Verstuur Assets',
+  sendPageLabel: 'Verstuur assets',
   sendImport: 'Importeren',
   sendEnterQRCode: 'Voer QR-Code in',
   sendAdd: 'Voeg ontvanger toe',
@@ -303,7 +303,7 @@ const SEND = {
   sendSelectAssets:
     '{transferCount, number} van {maxNumberOfRecipients, number} Ontvangers',
   sendTransferMessage:
-    '{transferCount, number} {transferCount, plural, one {sendTransfer} other {sendTransferPlural}} pending',
+    '{transferCount, number} {transferCount, plural, one {sendTransfer} other {sendTransferPlural}} in afwachting',
   sendBroadcasting: 'Transactie uitzenden naar netwerk...',
   sendDisclaimer:
     'Controleer en zorg ervoor dat je de juiste gegevens hebt ingevoerd om verlies van aassets te voorkomen.',
@@ -322,7 +322,7 @@ const SETTINGS = {
   settingsEncryptLink: 'BEVEILIG EEN SLEUTEL',
   recoverWallet: 'HERSTEL WALLET',
   settingsRecoverWalletLink: 'IMPORTEREN',
-  settingsBackUpLinkLabel: 'BACKUP WALLET',
+  settingsBackUpLinkLabel: 'BACKUP WWrong ALLET',
   settingsBackUpLink: 'EXPORTEREN',
   settingsManageLabel: 'Beheer je Neon wallet',
   settingsCommunity: 'Community ondersteuning',
@@ -351,7 +351,7 @@ const ENCRYPT_KEY = {
   encryptPanelHeader: 'Beveilig een sleutel',
   encryptInstructions: 'Kies een wachtwoord om een bestaande sleutel te beveiligen',
   encryptStep1Label: '1) VOER DE PRIVATE KEY IN DIE JE WILT BEVEILIGEN',
-  encryptStep1Placeholder: 'Voer sleutel in',
+  encryptStep1Placeholder: 'Voer private key in',
   encryptStep2Label: '2) VERZIN WACHTWOORD',
   encryptStep2Placeholder: 'Voer wachtwoord in',
   encryptStep3Label: '3) NOGMAALS JE WACHTWOORD',
