@@ -156,7 +156,7 @@ const AUTH = {
   authImportWallet: 'Importeer wallet',
   authScanQRButton: 'Scan QR-Code',
   authLoginButton: 'Inloggen',
-  authLedgerFirstStep: 'Verbind en ontgrenden je Ledger-apparaat',
+  authLedgerFirstStep: 'Verbind en ontgrendel je Ledger-apparaat',
   authLedgerSecondStep: 'Navigeer naar de NEO-app op je apparaat',
   authLedgerAddressLabel: 'PUBLIEK ADRES',
 }
