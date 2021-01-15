@@ -306,7 +306,7 @@ const SEND = {
     '{transferCount, number} {transferCount, plural, one {sendTransfer} other {sendTransferPlural}} pending',
   sendBroadcasting: 'Transactie uitzenden naar netwerk...',
   sendDisclaimer:
-    'Controleer en zorg ervoor dat je de juiste gegevens hebt ingevoerd om verlies van aassets te voorkomen.',
+    'Controleer en zorg ervoor dat je de juiste gegevens hebt ingevoerd om verlies van assets te voorkomen.',
   sendActivityLink:
     'Kijk op het tabblad Activiteit om de status van je transactie te zien.',
 
