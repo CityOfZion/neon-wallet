@@ -9,6 +9,7 @@ import portuguese from './portuguese'
 import turkish from './turkish'
 import arabic from './arabic'
 import russian from './russian'
+import dutch from './dutch'
 
 export default {
   english,
@@ -22,4 +23,5 @@ export default {
   turkish,
   arabic,
   russian,
+  dutch
 }

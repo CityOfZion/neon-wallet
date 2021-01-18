@@ -1373,7 +1373,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                       Manage your neon wallet
                                                                                     </FormattedMessage>
                                                                                      - v
-                                                                                    2.6.1
+                                                                                    2.6.2
                                                                                   </div>
                                                                                   <div
                                                                                     className="settingsPanelHeaderItem"
@@ -4559,6 +4559,11 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                     "renderFlag": [Function],
                                                                                                     "value": "RUSSIAN",
                                                                                                   },
+                                                                                                  Object {
+                                                                                                    "label": "Nederlands",
+                                                                                                    "renderFlag": [Function],
+                                                                                                    "value": "DUTCH",
+                                                                                                  },
                                                                                                 ]
                                                                                               }
                                                                                               settingsSelect={true}
@@ -4643,6 +4648,11 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                         "label": "Русский",
                                                                                                         "renderFlag": [Function],
                                                                                                         "value": "RUSSIAN",
+                                                                                                      },
+                                                                                                      Object {
+                                                                                                        "label": "Nederlands",
+                                                                                                        "renderFlag": [Function],
+                                                                                                        "value": "DUTCH",
                                                                                                       },
                                                                                                     ]
                                                                                                   }
@@ -4766,6 +4776,11 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                           "renderFlag": [Function],
                                                                                                           "value": "RUSSIAN",
                                                                                                         },
+                                                                                                        Object {
+                                                                                                          "label": "Nederlands",
+                                                                                                          "renderFlag": [Function],
+                                                                                                          "value": "DUTCH",
+                                                                                                        },
                                                                                                       ]
                                                                                                     }
                                                                                                     pageSize={5}
@@ -4868,6 +4883,11 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                             "renderFlag": [Function],
                                                                                                             "value": "RUSSIAN",
                                                                                                           },
+                                                                                                          Object {
+                                                                                                            "label": "Nederlands",
+                                                                                                            "renderFlag": [Function],
+                                                                                                            "value": "DUTCH",
+                                                                                                          },
                                                                                                         ]
                                                                                                       }
                                                                                                       selectOption={[Function]}
@@ -4968,6 +4988,11 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                               "label": "Русский",
                                                                                                               "renderFlag": [Function],
                                                                                                               "value": "RUSSIAN",
+                                                                                                            },
+                                                                                                            Object {
+                                                                                                              "label": "Nederlands",
+                                                                                                              "renderFlag": [Function],
+                                                                                                              "value": "DUTCH",
                                                                                                             },
                                                                                                           ],
                                                                                                           "pageSize": 5,
@@ -5073,6 +5098,11 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                 "renderFlag": [Function],
                                                                                                                 "value": "RUSSIAN",
                                                                                                               },
+                                                                                                              Object {
+                                                                                                                "label": "Nederlands",
+                                                                                                                "renderFlag": [Function],
+                                                                                                                "value": "DUTCH",
+                                                                                                              },
                                                                                                             ]
                                                                                                           }
                                                                                                           selectOption={[Function]}
@@ -5174,6 +5204,11 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                   "renderFlag": [Function],
                                                                                                                   "value": "RUSSIAN",
                                                                                                                 },
+                                                                                                                Object {
+                                                                                                                  "label": "Nederlands",
+                                                                                                                  "renderFlag": [Function],
+                                                                                                                  "value": "DUTCH",
+                                                                                                                },
                                                                                                               ],
                                                                                                               "pageSize": 5,
                                                                                                               "placeholder": "Select...",
@@ -5270,6 +5305,11 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                     "label": "Русский",
                                                                                                                     "renderFlag": [Function],
                                                                                                                     "value": "RUSSIAN",
+                                                                                                                  },
+                                                                                                                  Object {
+                                                                                                                    "label": "Nederlands",
+                                                                                                                    "renderFlag": [Function],
+                                                                                                                    "value": "DUTCH",
                                                                                                                   },
                                                                                                                 ]
                                                                                                               }
@@ -5371,6 +5411,11 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                       "label": "Русский",
                                                                                                                       "renderFlag": [Function],
                                                                                                                       "value": "RUSSIAN",
+                                                                                                                    },
+                                                                                                                    Object {
+                                                                                                                      "label": "Nederlands",
+                                                                                                                      "renderFlag": [Function],
+                                                                                                                      "value": "DUTCH",
                                                                                                                     },
                                                                                                                   ],
                                                                                                                   "pageSize": 5,
@@ -5474,6 +5519,11 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                         "renderFlag": [Function],
                                                                                                                         "value": "RUSSIAN",
                                                                                                                       },
+                                                                                                                      Object {
+                                                                                                                        "label": "Nederlands",
+                                                                                                                        "renderFlag": [Function],
+                                                                                                                        "value": "DUTCH",
+                                                                                                                      },
                                                                                                                     ]
                                                                                                                   }
                                                                                                                   selectOption={[Function]}
@@ -5574,6 +5624,11 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                           "label": "Русский",
                                                                                                                           "renderFlag": [Function],
                                                                                                                           "value": "RUSSIAN",
+                                                                                                                        },
+                                                                                                                        Object {
+                                                                                                                          "label": "Nederlands",
+                                                                                                                          "renderFlag": [Function],
+                                                                                                                          "value": "DUTCH",
                                                                                                                         },
                                                                                                                       ],
                                                                                                                       "pageSize": 5,
@@ -5708,6 +5763,11 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                     "renderFlag": [Function],
                                                                                                                     "value": "RUSSIAN",
                                                                                                                   },
+                                                                                                                  Object {
+                                                                                                                    "label": "Nederlands",
+                                                                                                                    "renderFlag": [Function],
+                                                                                                                    "value": "DUTCH",
+                                                                                                                  },
                                                                                                                 ]
                                                                                                               }
                                                                                                               selectOption={[Function]}
@@ -5809,6 +5869,11 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                       "renderFlag": [Function],
                                                                                                                       "value": "RUSSIAN",
                                                                                                                     },
+                                                                                                                    Object {
+                                                                                                                      "label": "Nederlands",
+                                                                                                                      "renderFlag": [Function],
+                                                                                                                      "value": "DUTCH",
+                                                                                                                    },
                                                                                                                   ],
                                                                                                                   "pageSize": 5,
                                                                                                                   "placeholder": "Select...",
@@ -5904,6 +5969,11 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                         "label": "Русский",
                                                                                                                         "renderFlag": [Function],
                                                                                                                         "value": "RUSSIAN",
+                                                                                                                      },
+                                                                                                                      Object {
+                                                                                                                        "label": "Nederlands",
+                                                                                                                        "renderFlag": [Function],
+                                                                                                                        "value": "DUTCH",
                                                                                                                       },
                                                                                                                     ]
                                                                                                                   }
@@ -6005,6 +6075,11 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                           "label": "Русский",
                                                                                                                           "renderFlag": [Function],
                                                                                                                           "value": "RUSSIAN",
+                                                                                                                        },
+                                                                                                                        Object {
+                                                                                                                          "label": "Nederlands",
+                                                                                                                          "renderFlag": [Function],
+                                                                                                                          "value": "DUTCH",
                                                                                                                         },
                                                                                                                       ],
                                                                                                                       "pageSize": 5,
@@ -6110,6 +6185,11 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                         "renderFlag": [Function],
                                                                                                                         "value": "RUSSIAN",
                                                                                                                       },
+                                                                                                                      Object {
+                                                                                                                        "label": "Nederlands",
+                                                                                                                        "renderFlag": [Function],
+                                                                                                                        "value": "DUTCH",
+                                                                                                                      },
                                                                                                                     ]
                                                                                                                   }
                                                                                                                   selectOption={[Function]}
@@ -6210,6 +6290,11 @@ exports[`Settings renders without crashing 1`] = `
                                                                                                                           "label": "Русский",
                                                                                                                           "renderFlag": [Function],
                                                                                                                           "value": "RUSSIAN",
+                                                                                                                        },
+                                                                                                                        Object {
+                                                                                                                          "label": "Nederlands",
+                                                                                                                          "renderFlag": [Function],
+                                                                                                                          "value": "DUTCH",
                                                                                                                         },
                                                                                                                       ],
                                                                                                                       "pageSize": 5,
