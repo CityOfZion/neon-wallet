@@ -44,6 +44,41 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
       <div className={styles.releaseNotesContents}>
         <div className={styles.release}>
           <div className={styles.releaseContent}>
+            <small className={styles.date}>Jan 18th 2021 </small>
+            <h3>Patch v2.6.2</h3>
+
+            <p>
+              In this update you will find the following minor improvements:
+              <br />
+              <br />
+              <li>Fixes bug related to SWTH contract</li>
+              <li>
+                Adds dutch translation{' '}
+                <span aria-label="party" role="img">
+                  🇳🇱🎉
+                </span>{' '}
+              </li>
+              <li>Performance enhancements</li>
+              <br />
+              View full details of this release on GitHub
+              <br />
+            </p>
+
+            <Github
+              onClick={() =>
+                electron.shell.openExternal(
+                  'https://github.com/CityOfZion/neon-wallet/releases/tag/v2.6.2',
+                )
+              }
+            />
+          </div>
+          <div className={styles.marketingImage}>
+            {theme === 'Light' ? <PatchLight /> : <PatchDark />}
+          </div>
+        </div>
+
+        <div className={styles.release}>
+          <div className={styles.releaseContent}>
             <small className={styles.date}>Dec 1st 2020 </small>
             <h3>Patch v2.6.1</h3>
 
@@ -66,9 +101,6 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
                 )
               }
             />
-          </div>
-          <div className={styles.marketingImage}>
-            {theme === 'Light' ? <PatchLight /> : <PatchDark />}
           </div>
         </div>
 
