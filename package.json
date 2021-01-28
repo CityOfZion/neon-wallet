@@ -172,7 +172,7 @@
     "babel-preset-stage-0": "6.24.1",
     "cross-env": "5.1.1",
     "css-loader": "0.28.7",
-    "electron": "8.5.2",
+    "electron": "9.4.0",
     "electron-builder": "22.9.1",
     "electron-builder-notarize": "^1.2.0",
     "electron-devtools-installer": "2.2.4",
