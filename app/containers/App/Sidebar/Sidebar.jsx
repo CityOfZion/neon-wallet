@@ -14,6 +14,7 @@ import ReceiveIcon from '../../../assets/navigation/receive.svg'
 import ContactsIcon from '../../../assets/navigation/contacts.svg'
 import SettingsIcon from '../../../assets/navigation/settings.svg'
 import NewsIcon from '../../../assets/navigation/news.svg'
+import MobileIcon from '../../../assets/navigation/mobile.svg'
 import LogoWithTooltipAndBlockHeight from '../../../components/LogoWithTooltipAndBlockHeight/LogoWithTooltipAndBlockHeight'
 
 import styles from './Sidebar.scss'
@@ -137,6 +138,16 @@ const Sidebar = ({
           {' '}
           <FormattedMessage id="sidebarSettings" />{' '}
         </div>
+      </NavLink>
+
+      <NavLink
+        id="mobile"
+        to={ROUTES.MOBILE}
+        className={styles.mobileNavItem}
+        activeClassName={styles.active}
+      >
+        <MobileIcon />
+        <div> Mobile app</div>
       </NavLink>
     </div>
 
