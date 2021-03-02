@@ -19,8 +19,6 @@ import EncryptedIconLight from '../../assets/icons/export_encrypted_light.svg'
 import WatchIconLight from '../../assets/icons/export_watch_light.svg'
 
 type Props = {
-  address: string,
-  accounts: Array<any>,
   theme: string,
 }
 
@@ -29,23 +27,7 @@ type State = {
 }
 
 export default class Receive extends React.Component<Props, State> {
-  static defaultProps = {
-    accounts: [],
-  }
-
-  constructor(props: Props) {
-    super(props)
-    const walletName: ?string = props.accounts.reduce(
-      (accum, account) =>
-        props.address === account.address ? account.label : accum,
-      null,
-    )
-    // this.state = { walletName }
-  }
-
   render() {
-    console.log(this.props.theme)
-
     return (
       <Panel
         renderHeader={() => <div> Export your wallet for mobile app </div>}
