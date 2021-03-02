@@ -146,6 +146,7 @@ export const ROUTES = {
   NEWS: '/news',
   OFFLINE_SIGNING_PROMPT: '/offline-signing-prompt',
   NETWORK_CONFIGURATION: '/network-configuration',
+  MOBILE: '/mobile',
 }
 
 export const NOTIFICATION_LEVELS = {

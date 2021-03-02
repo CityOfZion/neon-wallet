@@ -27,6 +27,46 @@ $size: 70px;
   }
 }
 
+.mobileNavItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: $size;
+  height: $size;
+  border-left: 4px solid transparent;
+  font-size: 24px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  color: var(--sidebar-icon);
+
+  div {
+    font-size: 10px;
+    margin-top: 5px;
+  }
+
+  & svg,
+  & svg path {
+    color: #1c202a;
+    fill: currentColor;
+  }
+
+  &.active,
+  &:hover {
+    background: var(--sidebar-active-background);
+    border-color: var(--sidebar-active-border);
+
+    // &,
+    // & svg,
+    // & svg path {
+    //   color: var(--base-text);
+    // }
+  }
+}
+
 .blockHeight {
   display: flex;
   justify-content: center;
