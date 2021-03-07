@@ -188,6 +188,11 @@ export const RELEASE_NOTES = {
   '--release-notes-button-color': '#394152',
 }
 
+export const MOBILE = {
+  '---mobile-export-card-background': '#37414b',
+  '--mobile-header-instructions-icon': '#7E858D',
+}
+
 export default {
   ...NEWS,
   ...CONTACTS,
@@ -210,4 +215,5 @@ export default {
   ...DARK_NETWORK_CONFIG_TOOLTIP,
   ...NOTIFICATIONS,
   ...RELEASE_NOTES,
+  ...MOBILE,
 }

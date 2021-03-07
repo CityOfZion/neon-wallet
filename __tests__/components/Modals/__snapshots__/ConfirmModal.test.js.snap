@@ -68,6 +68,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
         style={
           Object {
             "content": Object {
+              "---mobile-export-card-background": "#EAF2F7",
               "--amounts-panel-asset-amount-text": "#515151",
               "--amounts-panel-asset-name-text": "#515151",
               "--amounts-panel-asset-worth-text": "#515151",
@@ -133,6 +134,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
               "--input-placeholder": "rgba(40, 40, 40, 0.5)",
               "--input-select-hover": "#D4DEE4",
               "--input-text": "#282828",
+              "--mobile-header-instructions-icon": "#282828",
               "--modal-overlay": "rgba(26, 54, 80, 0.25)",
               "--network-config-box-shadow": "-3px -3px 17px 0 transparent, 3px 4px 20px 0 rgba(18,21,23,0.24)",
               "--network-config-tooltip-background": "#fff",
@@ -204,6 +206,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
               "zIndex": 5000,
             },
             "overlay": Object {
+              "---mobile-export-card-background": "#EAF2F7",
               "--amounts-panel-asset-amount-text": "#515151",
               "--amounts-panel-asset-name-text": "#515151",
               "--amounts-panel-asset-worth-text": "#515151",
@@ -269,6 +272,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
               "--input-placeholder": "rgba(40, 40, 40, 0.5)",
               "--input-select-hover": "#D4DEE4",
               "--input-text": "#282828",
+              "--mobile-header-instructions-icon": "#282828",
               "--modal-overlay": "rgba(26, 54, 80, 0.25)",
               "--network-config-box-shadow": "-3px -3px 17px 0 transparent, 3px 4px 20px 0 rgba(18,21,23,0.24)",
               "--network-config-tooltip-background": "#fff",
@@ -432,6 +436,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
             style={
               Object {
                 "content": Object {
+                  "---mobile-export-card-background": "#EAF2F7",
                   "--amounts-panel-asset-amount-text": "#515151",
                   "--amounts-panel-asset-name-text": "#515151",
                   "--amounts-panel-asset-worth-text": "#515151",
@@ -497,6 +502,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--input-placeholder": "rgba(40, 40, 40, 0.5)",
                   "--input-select-hover": "#D4DEE4",
                   "--input-text": "#282828",
+                  "--mobile-header-instructions-icon": "#282828",
                   "--modal-overlay": "rgba(26, 54, 80, 0.25)",
                   "--network-config-box-shadow": "-3px -3px 17px 0 transparent, 3px 4px 20px 0 rgba(18,21,23,0.24)",
                   "--network-config-tooltip-background": "#fff",
@@ -568,6 +574,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "zIndex": 5000,
                 },
                 "overlay": Object {
+                  "---mobile-export-card-background": "#EAF2F7",
                   "--amounts-panel-asset-amount-text": "#515151",
                   "--amounts-panel-asset-name-text": "#515151",
                   "--amounts-panel-asset-worth-text": "#515151",
@@ -633,6 +640,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--input-placeholder": "rgba(40, 40, 40, 0.5)",
                   "--input-select-hover": "#D4DEE4",
                   "--input-text": "#282828",
+                  "--mobile-header-instructions-icon": "#282828",
                   "--modal-overlay": "rgba(26, 54, 80, 0.25)",
                   "--network-config-box-shadow": "-3px -3px 17px 0 transparent, 3px 4px 20px 0 rgba(18,21,23,0.24)",
                   "--network-config-tooltip-background": "#fff",
@@ -704,6 +712,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
               onMouseUp={[Function]}
               style={
                 Object {
+                  "---mobile-export-card-background": "#EAF2F7",
                   "--amounts-panel-asset-amount-text": "#515151",
                   "--amounts-panel-asset-name-text": "#515151",
                   "--amounts-panel-asset-worth-text": "#515151",
@@ -769,6 +778,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "--input-placeholder": "rgba(40, 40, 40, 0.5)",
                   "--input-select-hover": "#D4DEE4",
                   "--input-text": "#282828",
+                  "--mobile-header-instructions-icon": "#282828",
                   "--modal-overlay": "rgba(26, 54, 80, 0.25)",
                   "--network-config-box-shadow": "-3px -3px 17px 0 transparent, 3px 4px 20px 0 rgba(18,21,23,0.24)",
                   "--network-config-tooltip-background": "#fff",
@@ -845,6 +855,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                 onMouseUp={[Function]}
                 style={
                   Object {
+                    "---mobile-export-card-background": "#EAF2F7",
                     "--amounts-panel-asset-amount-text": "#515151",
                     "--amounts-panel-asset-name-text": "#515151",
                     "--amounts-panel-asset-worth-text": "#515151",
@@ -910,6 +921,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                     "--input-placeholder": "rgba(40, 40, 40, 0.5)",
                     "--input-select-hover": "#D4DEE4",
                     "--input-text": "#282828",
+                    "--mobile-header-instructions-icon": "#282828",
                     "--modal-overlay": "rgba(26, 54, 80, 0.25)",
                     "--network-config-box-shadow": "-3px -3px 17px 0 transparent, 3px 4px 20px 0 rgba(18,21,23,0.24)",
                     "--network-config-tooltip-background": "#fff",
@@ -995,6 +1007,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   className="modalBody"
                   style={
                     Object {
+                      "---mobile-export-card-background": "#EAF2F7",
                       "--amounts-panel-asset-amount-text": "#515151",
                       "--amounts-panel-asset-name-text": "#515151",
                       "--amounts-panel-asset-worth-text": "#515151",
@@ -1060,6 +1073,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                       "--input-placeholder": "rgba(40, 40, 40, 0.5)",
                       "--input-select-hover": "#D4DEE4",
                       "--input-text": "#282828",
+                      "--mobile-header-instructions-icon": "#282828",
                       "--modal-overlay": "rgba(26, 54, 80, 0.25)",
                       "--network-config-box-shadow": "-3px -3px 17px 0 transparent, 3px 4px 20px 0 rgba(18,21,23,0.24)",
                       "--network-config-tooltip-background": "#fff",

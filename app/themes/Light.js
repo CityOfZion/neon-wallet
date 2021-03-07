@@ -195,6 +195,11 @@ export const RELEASE_NOTES = {
   '--release-notes-button-color': '#394152',
 }
 
+export const MOBILE = {
+  '---mobile-export-card-background': '#EAF2F7',
+  '--mobile-header-instructions-icon': '#282828',
+}
+
 export default {
   ...NEWS,
   ...AMOUNTS_PANEL,
@@ -217,4 +222,5 @@ export default {
   ...LIGHT_NETWORK_CONFIG_TOOLTIP,
   ...NOTIFICATIONS,
   ...RELEASE_NOTES,
+  ...MOBILE,
 }
