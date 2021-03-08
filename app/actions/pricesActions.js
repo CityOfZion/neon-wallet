@@ -61,9 +61,9 @@ const apiCallWrapper = async (url, currency) => {
   return {}
 }
 
-let hasUsedFallback = false
+let PRICE_REQUEST_ATTEMPTS = 0
 async function getPrices(useFallbackApi = false) {
-  if (useFallbackApi) hasUsedFallback = true
+  if (!useFallbackApi) PRICE_REQUEST_ATTEMPTS = 0
   try {
     const tokens = await getDefaultTokens()
     const PRICE_API_SYMBOL_EXCEPTIONS = getPriceApiSymbolExceptions(tokens)
@@ -105,9 +105,9 @@ async function getPrices(useFallbackApi = false) {
       prices[get(PRICE_API_SYMBOL_EXCEPTIONS.reverse, key, key)] = value
     })
 
-    // TODO: implement a fix to prevent infinite loop if both servers are down
-    // loss of connection etc
-    if (isEmpty(prices)) {
+    if (isEmpty(prices) && PRICE_REQUEST_ATTEMPTS < 2) {
+      console.log({ PRICE_REQUEST_ATTEMPTS, prices })
+      PRICE_REQUEST_ATTEMPTS += 1
       return getPrices(true)
     }
     return prices
