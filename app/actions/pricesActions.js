@@ -1,7 +1,7 @@
 // @flow
 import axios from 'axios'
 import { createActions } from 'spunky'
-import { get, map } from 'lodash-es'
+import { get, isEmpty, map } from 'lodash-es'
 
 import { getDefaultTokens } from '../core/nep5'
 import { getSettings } from './settingsActions'
@@ -61,7 +61,9 @@ const apiCallWrapper = async (url, currency) => {
   return {}
 }
 
-async function getPrices() {
+let hasUsedFallback = false
+async function getPrices(useFallbackApi = false) {
+  if (useFallbackApi) hasUsedFallback = true
   try {
     const tokens = await getDefaultTokens()
     const PRICE_API_SYMBOL_EXCEPTIONS = getPriceApiSymbolExceptions(tokens)
@@ -77,13 +79,17 @@ async function getPrices() {
       .concat([ASSETS.NEO, ASSETS.GAS])
       .join(',')
 
-    const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${joinedTokens}&tsyms=${currency.toUpperCase()}`
+    const url = useFallbackApi
+      ? `http://54.227.25.52:8090/data/pricemultifull?fsyms=${joinedTokens}&tsyms=${currency.toUpperCase()}`
+      : `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${joinedTokens}&tsyms=${currency.toUpperCase()}`
     const prices = await apiCallWrapper(url, currency)
 
     // We need to perform a second api call because there may be token that have price listed only in relationship to NEO.
     // As of now, (27.07.2019), for instance NEX price can't be retrieve via the first api call above.
     // Therefore we need a second api call with currency NEO.
-    const url2 = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${joinedTokens}&tsyms=NEO`
+    const url2 = useFallbackApi
+      ? `http://54.227.25.52:8090/data/pricemultifull?fsyms=${joinedTokens}&tsyms=NEO`
+      : `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${joinedTokens}&tsyms=NEO`
     const neoPrices = await apiCallWrapper(url2, 'NEO')
 
     // Build final prices map
@@ -92,7 +98,6 @@ async function getPrices() {
         prices[key] = toFixedDecimals(parseFloat(value) * prices.NEO, 2)
       }
     })
-
     // Within the neon-wallet app, we use the token's symbol to retrieve the token's price.
     // Therefore if any key in the price object is a "cryptocompare" symbol,
     // we have to replace it by the corresponding token's symbol.
@@ -100,6 +105,11 @@ async function getPrices() {
       prices[get(PRICE_API_SYMBOL_EXCEPTIONS.reverse, key, key)] = value
     })
 
+    // TODO: implement a fix to prevent infinite loop if both servers are down
+    // loss of connection etc
+    if (isEmpty(prices)) {
+      return getPrices(true)
+    }
     return prices
   } catch (error) {
     console.error('An error occurred getting price data', { error })
