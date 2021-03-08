@@ -106,7 +106,6 @@ async function getPrices(useFallbackApi = false) {
     })
 
     if (isEmpty(prices) && PRICE_REQUEST_ATTEMPTS < 2) {
-      console.log({ PRICE_REQUEST_ATTEMPTS, prices })
       PRICE_REQUEST_ATTEMPTS += 1
       return getPrices(true)
     }
