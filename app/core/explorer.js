@@ -49,6 +49,7 @@ export const getExplorerTxLink = (
     case ANT_CHAIN:
       return `${baseURL}/tx/hash/0x${txId}`
     case NEOTUBE:
+      return `${baseURL}/transaction/0x${txId}`
     case DORA:
       return `${baseURL}/transaction/neo2/mainnet/0x${txId}`
     default:
