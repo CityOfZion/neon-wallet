@@ -26,7 +26,6 @@ type Props = {
 
 export default class Receive extends React.Component<Props> {
   render() {
-    console.log(this.props)
     return (
       <Panel
         renderHeader={() => <div> Export your wallet for mobile app </div>}
