@@ -37,7 +37,7 @@ class ShowQrForExportModal extends Component<Props> {
   }
 
   render() {
-    const { hideModal, IS_NEP2_EXPORT, IS_ADDRESS } = this.props
+    const { hideModal, IS_NEP2_EXPORT } = this.props
     return (
       <BaseModal
         hideModal={hideModal}
