@@ -21,11 +21,12 @@ import WatchIconLight from '../../assets/icons/export_watch_light.svg'
 type Props = {
   theme: string,
   showQrForExportModal: ({ IS_NEP2_EXPORT?: boolean }) => void,
-  encryptedWif?: string,
+  encryptedWIF?: string,
 }
 
 export default class Receive extends React.Component<Props> {
   render() {
+    console.log(this.props)
     return (
       <Panel
         renderHeader={() => <div> Export your wallet for mobile app </div>}
@@ -79,7 +80,7 @@ export default class Receive extends React.Component<Props> {
           </span>
 
           <div className={styles.exportOptions}>
-            {this.props.encryptedWif && (
+            {this.props.encryptedWIF && (
               <div className={styles.exportOptionCard}>
                 {this.props.theme === 'Dark' ? (
                   <EncryptedIcon />
