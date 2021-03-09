@@ -10,9 +10,9 @@ import ReceiveModal from '../../components/Modals/ReceiveModal'
 import SendModal from '../../components/Modals/SendModal'
 import GeneratedTransactionModal from '../../components/Modals/GeneratedTransactionModal'
 import ImportTransactionModal from '../../components/Modals/ImportTransactionModal'
-
 import { MODAL_TYPES } from '../../core/constants'
 import ReleaseNotesModal from '../../components/Modals/ReleaseNotesModal'
+import ShowQrForExportModal from '../../components/Modals/ShowQrForExportModal'
 
 const {
   CONFIRM,
@@ -24,6 +24,7 @@ const {
   GENERATED_TRANSACTION,
   IMPORT_TRANSACTION,
   RELEASE_NOTES,
+  SHOW_QR_FOR_EXPORT,
 } = MODAL_TYPES
 
 const MODAL_COMPONENTS = {
@@ -36,6 +37,7 @@ const MODAL_COMPONENTS = {
   [GENERATED_TRANSACTION]: GeneratedTransactionModal,
   [IMPORT_TRANSACTION]: ImportTransactionModal,
   [RELEASE_NOTES]: ReleaseNotesModal,
+  [SHOW_QR_FOR_EXPORT]: ShowQrForExportModal,
 }
 
 type Props = {
