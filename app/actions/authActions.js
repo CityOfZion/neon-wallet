@@ -37,6 +37,7 @@ type AccountType = ?{
   isHardwareLogin: boolean,
   isWatchOnly?: boolean,
   hasInternetConnectivity: boolean,
+  encryptedWIF?: string,
 }
 
 export const ID = 'auth'
@@ -114,6 +115,7 @@ export const nep2LoginActions = createActions(
       address: account.address,
       isHardwareLogin: false,
       hasInternetConnectivity,
+      encryptedWIF,
     }
   },
 )

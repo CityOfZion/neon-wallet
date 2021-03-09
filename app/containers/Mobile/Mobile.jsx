@@ -20,13 +20,11 @@ import WatchIconLight from '../../assets/icons/export_watch_light.svg'
 
 type Props = {
   theme: string,
+  showQrForExportModal: ({ IS_NEP2_EXPORT?: boolean }) => void,
+  encryptedWif?: string,
 }
 
-type State = {
-  walletName: ?string,
-}
-
-export default class Receive extends React.Component<Props, State> {
+export default class Receive extends React.Component<Props> {
   render() {
     return (
       <Panel
@@ -81,22 +79,36 @@ export default class Receive extends React.Component<Props, State> {
           </span>
 
           <div className={styles.exportOptions}>
-            <div className={styles.exportOptionCard}>
-              {this.props.theme === 'Dark' ? (
-                <EncryptedIcon />
-              ) : (
-                <EncryptedIconLight />
-              )}
-              <p>ENCRYPTED KEY</p>
-              <Button primary renderIcon={() => <Export />}>
-                Generate code
-              </Button>
-            </div>
+            {this.props.encryptedWif && (
+              <div className={styles.exportOptionCard}>
+                {this.props.theme === 'Dark' ? (
+                  <EncryptedIcon />
+                ) : (
+                  <EncryptedIconLight />
+                )}
+                <p>ENCRYPTED KEY</p>
+                <Button
+                  onClick={() =>
+                    this.props.showQrForExportModal({ IS_NEP2_EXPORT: true })
+                  }
+                  primary
+                  renderIcon={() => <Export />}
+                >
+                  Generate code
+                </Button>
+              </div>
+            )}
 
             <div className={styles.exportOptionCard}>
               {this.props.theme === 'Dark' ? <WatchIcon /> : <WatchIconLight />}
               <p> WATCH WALLET</p>
-              <Button primary renderIcon={() => <Export />}>
+              <Button
+                onClick={() =>
+                  this.props.showQrForExportModal({ IS_ADDRESS: true })
+                }
+                primary
+                renderIcon={() => <Export />}
+              >
                 Generate code
               </Button>
             </div>
