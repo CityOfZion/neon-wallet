@@ -19,7 +19,7 @@ describe('explorer tests', () => {
     test('Dora mainnet explorer test', () => {
       const networkId = MAIN_NETWORK_ID
       const explorer = EXPLORERS.DORA
-      const expectedUrl = `https://dora.coz.io/transaction/0x${txId}`
+      const expectedUrl = `https://dora.coz.io/transaction/neo2/mainnet/0x${txId}`
       expect(getExplorerTxLink(networkId, explorer, txId)).toEqual(expectedUrl)
     })
 
@@ -106,7 +106,7 @@ describe('explorer tests', () => {
     test('Dora mainnet explorer test', () => {
       const networkId = MAIN_NETWORK_ID
       const explorer = EXPLORERS.DORA
-      const expectedUrl = `https://dora.coz.io/address/${address}`
+      const expectedUrl = `https://dora.coz.io/address/neo2/mainnet/${address}`
       expect(getExplorerAddressLink(networkId, explorer, address)).toEqual(
         expectedUrl,
       )

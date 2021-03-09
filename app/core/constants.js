@@ -112,7 +112,7 @@ export const LANGUAGES = {
 
 export const DEFAULT_LANGUAGE = LANGUAGES.ENGLISH.value
 
-export const DEFAULT_EXPLORER = EXPLORERS.NEO_SCAN
+export const DEFAULT_EXPLORER = EXPLORERS.DORA
 
 export const ROUTES = {
   HOME: '/',
