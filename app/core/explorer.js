@@ -49,8 +49,9 @@ export const getExplorerTxLink = (
     case ANT_CHAIN:
       return `${baseURL}/tx/hash/0x${txId}`
     case NEOTUBE:
-    case DORA:
       return `${baseURL}/transaction/0x${txId}`
+    case DORA:
+      return `${baseURL}/transaction/neo2/mainnet/0x${txId}`
     default:
       throw new Error(`Unknown explorer ${explorer}`)
   }
@@ -71,8 +72,9 @@ export const getExplorerAddressLink = (
     case ANT_CHAIN:
       return `${baseURL}/address/info/${address}`
     case NEOTUBE:
-    case DORA:
       return `${baseURL}/address/${address}`
+    case DORA:
+      return `${baseURL}/address/neo2/mainnet/${address}`
     default:
       throw new Error(`Unknown explorer ${explorer}`)
   }
@@ -91,7 +93,7 @@ export const getExplorerAssetLink = (
     case ANT_CHAIN:
       return `${baseURL}/assets/hash/${assetId}`
     case DORA:
-      return `${baseURL}/contract/${assetId}`
+      return `${baseURL}/contract/neo2/mainnet/${assetId}`
     case NEOTUBE:
       return `${baseURL}/nep5/${assetId}`
     default:
