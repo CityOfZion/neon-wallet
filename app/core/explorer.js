@@ -50,7 +50,7 @@ export const getExplorerTxLink = (
       return `${baseURL}/tx/hash/0x${txId}`
     case NEOTUBE:
     case DORA:
-      return `${baseURL}/transaction/0x${txId}`
+      return `${baseURL}/transaction/neo2/mainnet/0x${txId}`
     default:
       throw new Error(`Unknown explorer ${explorer}`)
   }
