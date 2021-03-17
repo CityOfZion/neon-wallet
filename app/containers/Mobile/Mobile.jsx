@@ -39,14 +39,13 @@ export default class Receive extends React.Component<Props> {
             </div>
           </div>
           <div className={styles.message}>
-            Sed ut ipsi auctori huius disciplinae placet: constituam, quid et
-            aperta iudicari ea. Ut placet, inquam tum dicere exorsus est et
-            rationibus confirmare, tantum satis esse.
+            To take Neon with you, try our new mobile wallet! Get started with
+            the Neon mobile wallet by using the download options below.
             <br />
             <br />
-            Alii autem, quibus ego cum teneam sententiam, quid et aperta
-            iudicari etenim quoniam. Sed ut aliquid ex ea voluptate velit esse,
-            quid bonum esse ratione neque.
+            Once downloaded, select an export method on the right to receive
+            your export code and further instructions. Don't worry, export codes
+            with sensitive information are encrypted.
           </div>
 
           <DialogueBox
