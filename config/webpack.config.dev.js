@@ -1,4 +1,3 @@
-// @flow
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -34,7 +33,7 @@ module.exports = {
     'babel-polyfill',
     `webpack-dev-server/client?http://localhost:${port}/`,
     'webpack/hot/only-dev-server',
-    path.join(__dirname, '..', 'app/index.js'),
+    path.join(__dirname, '..', 'app/index.tsx'),
   ],
   externals: {
     'node-hid': 'require("node-hid")',
@@ -46,7 +45,7 @@ module.exports = {
     publicPath,
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
     alias: paths.alias,
   },
   node: {
@@ -69,9 +68,19 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.tsx?$/,
+        use: {
+          loader: 'ts-loader',
+        },
+        exclude: /node_modules/,
+      },
+      {
         test: /\.jsx?$/,
         use: {
           loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-react'],
+          },
         },
         exclude: /node_modules/,
       },

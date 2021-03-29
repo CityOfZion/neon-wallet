@@ -20,7 +20,7 @@ module.exports = {
   bail: true,
   devtool: false,
   target: 'electron-main',
-  entry: ['babel-polyfill', path.join(__dirname, '..', 'app/index.js')],
+  entry: ['babel-polyfill', path.join(__dirname, '..', 'app/index.tsx')],
   externals: {
     'node-hid': 'require("node-hid")',
     usb: 'require("usb")',
@@ -31,7 +31,7 @@ module.exports = {
     publicPath: '',
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
     alias: paths.alias,
   },
   node: {
@@ -65,6 +65,13 @@ module.exports = {
   ],
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        use: {
+          loader: 'ts-loader',
+        },
+        exclude: /node_modules/,
+      },
       {
         test: /\.jsx?$/,
         use: {

@@ -33,7 +33,7 @@ jobs:
       - run: yarn config delete proxy
       - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
       - run: yarn lint
-      - run: yarn flow
+      - run: yarn typecheck
       - run: yarn assets
       - save_cache:
           key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
@@ -82,7 +82,7 @@ jobs:
       - run: yarn config delete proxy
       - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
       - run: yarn lint
-      - run: yarn flow
+      - run: yarn typecheck
       - run: yarn dist
       - store_artifacts:
           path: dist

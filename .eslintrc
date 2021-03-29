@@ -1,84 +1,20 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "extends": [
-    "airbnb",
+    "react-app",
     "prettier",
-    "prettier/flowtype",
-    "prettier/react",
-    "plugin:flowtype/recommended"
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
   "env": {
     "browser": true
   },
-  "globals": {
-    "jest": true,
-    "chrome": true,
-    "clearInterval": true,
-    "clearTimeout": true,
-    "console": true,
-    "document": true,
-    "expect": true,
-    "Promise": true,
-    "setInterval": true,
-    "setTimeout": true,
-    "window": true,
-    "describe": true,
-    "test": true,
-    "it": true
-  },
-  "plugins": ["prettier", "react", "flowtype", "import"],
+  "globals": {},
+  "plugins": ["prettier", "@typescript-eslint"],
   "rules": {
-    "no-new": 0,
-    "no-shadow": 0,
-    "prettier/prettier": ["error"],
-    "no-unused-vars": ["warn"],
-    "global-require": 0,
-    "quotes": ["warn", "single"],
-    "no-console": ["error", { "allow": ["warn", "error"] }],
-    "object-curly-spacing": ["error", "always"],
-    "import/no-unresolved": 0,
-    "import/prefer-default-export": 0,
-    "import/no-dynamic-require": 0,
-    "semi": [2, "never"],
-    "max-len": 0,
-    "consistent-return": ["warn", { "treatUndefinedAsUnspecified": true }],
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
-    "class-methods-use-this": ["warn"],
-    "jsx-a11y/anchor-is-valid": 0,
-    "jsx-a11y/label-has-for": 0,
-    "jsx-a11y/no-autofocus": 0,
-    "jsx-a11y/no-static-element-interactions": 0,
-    "jsx-a11y/click-events-have-key-events": 0,
-    "jsx-a11y/heading-has-content": 0,
-    "jsx-a11y/anchor-has-content": 0,
-    "comma-dangle": [
-      "error",
-      {
-        "arrays": "always-multiline",
-        "objects": "always-multiline",
-        "imports": "always-multiline",
-        "exports": "always-multiline",
-        "functions": "always-multiline"
-      }
-    ],
-    "react/no-array-index-key": 0,
-    "react/require-default-props": 0,
-    "react/no-unescaped-entities": 0,
-    "react/no-did-mount-set-state": 0,
-    "react/prefer-stateless-function": 0,
-    "react/jsx-filename-extension": 0,
-    "react/default-props-match-prop-types": 0,
-    "react/destructuring-assignment": 0,
-    "react/sort-comp": 0,
-    "react/button-has-type": 0,
-    "flowtype/generic-spacing": 0,
-    "no-param-reassign": ["warn"],
-    "no-restricted-syntax": ["error", "LabeledStatement", "WithStatement"],
-    "no-await-in-loop": 0
-  },
-  "settings": {
-    "import/resolver": {
-      "babel-module": {}
-    }
+    "prettier/prettier": 1,
+    "@typescript-eslint/member-delimiter-style": 0,
+    "@typescript-eslint/camelcase": 0,
+    "@typescript-eslint/no-var-requires": 0
   }
 }
