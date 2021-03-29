@@ -91,10 +91,15 @@
     "@cityofzion/neon-js": "3.11.9",
     "@formatjs/intl-pluralrules": "^1.5.2",
     "@ledgerhq/hw-transport-node-hid": "5.0.0",
+    "@types/enzyme": "^3.10.8",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
+    "@types/jest": "^26.0.22",
+    "@types/mocha": "^8.2.2",
     "@types/react-dom": "^17.0.3",
     "@types/react-redux": "^7.1.16",
     "@types/react-router-dom": "^5.1.7",
     "@types/redux-logger": "^3.0.8",
+    "@types/redux-mock-store": "^1.0.2",
     "@types/webpack-env": "^1.16.0",
     "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.20.0",
@@ -132,6 +137,7 @@
     "howler": "2.0.15",
     "instascan": "1.0.0",
     "isomorphic-fetch": "2.2.1",
+    "jest": "^26.6.3",
     "jsbn": "1.1.0",
     "json2csv": "^4.3.5",
     "jsqr": "1.1.1",
@@ -170,6 +176,7 @@
     "rss-parser": "^3.7.0",
     "sifter": "0.5.3",
     "svg-react-loader": "0.4.5",
+    "ts-jest": "^26.5.4",
     "uuid": "3.2.1"
   },
   "devDependencies": {
@@ -185,14 +192,13 @@
     "electron-devtools-installer": "2.2.4",
     "electron-packager": "12.0.1",
     "electron-rebuild": "1.7.3",
-    "enzyme": "3.7.0",
-    "enzyme-adapter-react-16": "1.6.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
     "enzyme-to-json": "3.2.1",
     "eslint": "^7.5.0",
     "extract-text-webpack-plugin": "4.0.0-beta.0",
     "html-webpack-plugin": "3.2.0",
     "identity-obj-proxy": "3.0.0",
-    "jest": "22.4.2",
     "json-loader": "0.5.7",
     "node-sass": "4.13.1",
     "prettier": "1.13.5",
@@ -210,28 +216,5 @@
     "webpack": "4.44.2",
     "webpack-cli": "3.2.0",
     "webpack-dev-server": "3.11.0"
-  },
-  "jest": {
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-      "\\.(svg)$": "<rootDir>/__mocks__/svgMock.js",
-      "\\.(css|less|sass|scss)$": "identity-obj-proxy"
-    },
-    "testPathIgnorePatterns": [
-      "__tests__/testHelpers.js",
-      "__tests__/setupTests.js"
-    ],
-    "unmockedModulePathPatterns": [
-      "node_modules/react/",
-      "node_modules/enzyme/"
-    ],
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ],
-    "transformIgnorePatterns": [
-      "<rootDir>/node_modules/(?!lodash-es)"
-    ],
-    "setupTestFrameworkScriptFile": "<rootDir>/__tests__/setupTests.js",
-    "testURL": "http://localhost"
   }
 }
