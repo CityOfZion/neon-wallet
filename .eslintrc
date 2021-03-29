@@ -15,6 +15,7 @@
     "prettier/prettier": 1,
     "@typescript-eslint/member-delimiter-style": 0,
     "@typescript-eslint/camelcase": 0,
-    "@typescript-eslint/no-var-requires": 0
+    "@typescript-eslint/no-var-requires": 0,
+    "import/no-anonymous-default-export": 0
   }
 }

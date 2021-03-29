@@ -1,7 +1,6 @@
 import React from 'react'
 
 import styles from './App.scss'
-import themes from '../../themes'
 
 type Props = {
   children: React.ReactNode
