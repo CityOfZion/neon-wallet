@@ -3,14 +3,14 @@ version: 2
 references:
   container_config: &container_config
     docker:
-      - image: electronuserland/builder:wine-chrome-05.18
+      - image: electronuserland/builder:wine-chrome-11.19
         environment:
           TARGET_ARCH: x64
     working_directory: ~/neon-wallet
 
   win_config: &win_config
     docker:
-      - image: electronuserland/builder:wine-01.19
+      - image: electronuserland/builder:wine
         environment:
           TARGET_ARCH: x64
     working_directory: ~/neon-wallet

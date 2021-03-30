@@ -13,10 +13,11 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react",
-    "noEmit": true,
-    "types": ["node", "jest"]
+    "noEmit": false,
+    "types": ["node", "jest"],
+    "outDir": "dist",
+    "sourceMap": true
   },
   "include": ["app", "global.d.ts"],
-  "exclude": ["./app/dist/*"],
-  "sourceMap": true
+  "exclude": ["./app/dist/*"]
 }
