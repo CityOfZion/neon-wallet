@@ -18,6 +18,6 @@
     "outDir": "dist",
     "sourceMap": true
   },
-  "include": ["app", "global.d.ts"],
+  "include": ["./app/**/*.ts", "global.d.ts"],
   "exclude": ["./app/dist/*"]
 }
