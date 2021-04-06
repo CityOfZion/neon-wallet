@@ -45,7 +45,7 @@ module.exports = {
     publicPath,
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx', ''],
     alias: paths.alias,
   },
   node: {
