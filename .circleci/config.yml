@@ -48,6 +48,7 @@ jobs:
       - checkout
       - restore_cache:
           key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
+      - run: wget -qO - https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/Release.key | apt-key add -
       - run: apt-get -y update
       - run: apt-get -y install libusb-1.0-0-dev graphicsmagick libudev-dev
       - run: apt-get -y install libxtst6 libxss1 libgtk2.0-0 libnss3 libasound2 libgconf-2-4
@@ -62,6 +63,7 @@ jobs:
       - checkout
       - restore_cache:
           key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
+      - run: wget -qO - https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/Release.key | apt-key add -
       - run: apt-get -y update
       - run: apt-get -y install libusb-1.0-0-dev icnsutils graphicsmagick libudev-dev
       - run: apt-get install --no-install-recommends -y gcc-multilib g++-multilib
@@ -78,6 +80,7 @@ jobs:
       - checkout
       - restore_cache:
           key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
+      - run: wget -qO - https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/Release.key | apt-key add -
       - run: apt-get -y update
       - run: apt-get -y install libusb-1.0-0-dev icnsutils graphicsmagick libudev-dev
       - run: yarn config delete proxy
