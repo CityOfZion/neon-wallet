@@ -26,10 +26,10 @@ class ShowQrForExportModal extends Component<Props> {
     const { address, encryptedWIF, IS_NEP2_EXPORT, IS_ADDRESS } = this.props
     let importString
     if (IS_NEP2_EXPORT) {
-      importString = encryptedWIF
+      importString = `neon://nep9/${encryptedWIF}`
     }
     if (IS_ADDRESS) {
-      importString = address
+      importString = `neon://import_address/${address}`
     }
     setTimeout(() => {
       this.props.handleCreateCanvas(this.targetCanvas, importString)
