@@ -243,6 +243,20 @@ export const DEFAULT_WALLET = {
   extra: null,
 }
 
+export const N3_DEFAULT_WALLET = {
+  name: 'n3UserWallet',
+  chain: 'neo3',
+  version: '1.0',
+  scrypt: {
+    cost: 16384,
+    blockSize: 8,
+    parallel: 8,
+    size: 64,
+  },
+  accounts: [],
+  extra: null,
+}
+
 export const DEFAULT_CURRENCY_CODE = 'usd'
 
 export const CURRENCIES = {

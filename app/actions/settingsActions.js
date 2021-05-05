@@ -21,6 +21,7 @@ type Settings = {
   version: string,
   theme: string,
   soundEnabled: boolean,
+  chain: string,
 }
 
 const STORAGE_KEY = 'settings'
@@ -33,6 +34,8 @@ const DEFAULT_SETTINGS: () => Promise<Settings> = async () => ({
   version,
   soundEnabled: true,
   language: DEFAULT_LANGUAGE,
+  // TODO: create constant like the other defaults
+  chain: 'neo2',
 })
 
 export const getSettings = async (): Promise<Settings> => {
