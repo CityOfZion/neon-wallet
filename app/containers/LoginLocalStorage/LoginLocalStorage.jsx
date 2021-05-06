@@ -94,17 +94,17 @@ export default class LoginLocalStorage extends Component<Props, State> {
   }
 
   handleSubmit = (event: Object) => {
-    const { loading, loginNep2, accounts } = this.props
+    const { loading, loginNep2, accounts, chain } = this.props
     const { passphrase, selectedAccount } = this.state
     if (selectedAccount) {
-      const accountInStorage = accounts.find(
+      const accountInStorage = this.returnMappedAccounts().find(
         account => account.label === selectedAccount.value,
       )
 
       event.preventDefault()
 
       if (!loading) {
-        loginNep2(passphrase, accountInStorage.key)
+        loginNep2(passphrase, accountInStorage.key, chain)
       }
     }
   }

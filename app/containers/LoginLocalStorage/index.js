@@ -20,8 +20,8 @@ const mapN3AccountsDataToProps = accounts => ({
 })
 
 const mapActionsToProps = actions => ({
-  loginNep2: (passphrase, encryptedWIF) =>
-    actions.call({ passphrase, encryptedWIF }),
+  loginNep2: (passphrase, encryptedWIF, chain) =>
+    actions.call({ passphrase, encryptedWIF, chain }),
 })
 
 export default compose(

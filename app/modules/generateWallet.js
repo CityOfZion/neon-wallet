@@ -25,11 +25,8 @@ import {
 
 const { BigInteger } = require('jsbn')
 
-crypto.randomBytes = randomBytes
-
-console.log(logging)
-
 logging.logger.setDefaultLevel('info')
+
 // Constants
 export const NEW_WALLET_ACCOUNT = 'NEW_WALLET_ACCOUNT'
 export const RESET_WALLET_ACCOUNT = 'RESET_WALLET_ACCOUNT'
@@ -281,13 +278,13 @@ export const generateN3NewWalletAccount = (
   setWIF()
     .then(async () => {
       try {
-        const account = new n3Wallet.Account(wif)
+        const account = new n3Wallet.Account(wif || wallet.generatePrivateKey())
 
         const { WIF, address } = account
         let encryptedWIF
         switch (keyOption) {
           case 'WIF':
-            encryptedWIF = n3Wallet.encrypt(WIF, passphrase)
+            encryptedWIF = await n3Wallet.encrypt(WIF, passphrase)
             break
           default:
             encryptedWIF = key
@@ -295,6 +292,7 @@ export const generateN3NewWalletAccount = (
 
         // TODO: Do we care about validating wallet names across chain?
         const storedWallet = await n3GetWallet()
+
         if (walletName && walletHasLabel(storedWallet, walletName)) {
           onFailure()
           return dispatchError(
