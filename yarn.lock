@@ -165,21 +165,22 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@cityofzion/neon-api@^5.0.0-next.8":
-  version "5.0.0-next.8"
-  resolved "https://registry.yarnpkg.com/@cityofzion/neon-api/-/neon-api-5.0.0-next.8.tgz#b86f0805c6be966a452ff84c658efd2828fe341d"
-  integrity sha512-hiLBCq/G1utw2whVm74wxx2oe3YPFvdtc3ikFVNiECqMkUymN8YVnDpIyjj7ip3sqCTm+weIOo3VaLC7H256gA==
+"@cityofzion/neon-api@^5.0.0-next.11":
+  version "5.0.0-next.11"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neon-api/-/neon-api-5.0.0-next.11.tgz#090b364094e356d2f14f65cf7fb28f342a15caa0"
+  integrity sha512-TEq1OB+6h2sdBZlK9jS2CH8KmkHVydwlgPksOldH8afRDZRCU96HF3nafhXWE/E29qIRZfddB2dFY0E7Q9Tb/A==
   dependencies:
     axios "0.21.1"
     isomorphic-ws "4.0.1"
     ws "7.4.4"
 
-"@cityofzion/neon-core@^5.0.0-next.8":
-  version "5.0.0-next.8"
-  resolved "https://registry.yarnpkg.com/@cityofzion/neon-core/-/neon-core-5.0.0-next.8.tgz#600c07d546cc52b83ea4b24b6948b9f8db995601"
-  integrity sha512-FqdGxIcgIbWx2pKTH66akkGwrMDHB6xqcG/037iI4I+eLEGHtk25fB5tZTmaEBbBtbTQoVUq4eFuibbjGIiz0Q==
+"@cityofzion/neon-core@^5.0.0-next.11":
+  version "5.0.0-next.11"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neon-core/-/neon-core-5.0.0-next.11.tgz#6282d7b85db0649055a6d1b7e0bf8c193c9f500e"
+  integrity sha512-ZYa1xtDMLLG7XuhjYZwCCB7o70WwZLyJrom5Gi+65cmigpwCvGm3wNxaBLmCitT8XknxoSnTrDsgQ5dmniy45g==
   dependencies:
     abort-controller "3.0.0"
+    bignumber.js "7.2.1"
     bn.js "5.2.0"
     bs58 "4.0.1"
     buffer "6.0.3"
@@ -191,13 +192,13 @@
     scrypt-js "3.0.1"
     secure-random "1.1.2"
 
-"@cityofzion/neon-js-next@npm:@cityofzion/neon-js@next":
-  version "5.0.0-next.9"
-  resolved "https://registry.yarnpkg.com/@cityofzion/neon-js/-/neon-js-5.0.0-next.9.tgz#f0d03a9594fe74b6c7366bac4423cd6416cd1924"
-  integrity sha512-pAsOy9hdlXAuFtQqAEl/RyuzgAyfNWfTVoCUxVLrvRtSAiSg638fxGQeU7bykj4o7vum2md+mxm8+QFfXLfIFQ==
+"@cityofzion/neon-js-next@npm:@cityofzion/neon-js@5.0.0-next.11":
+  version "5.0.0-next.11"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neon-js/-/neon-js-5.0.0-next.11.tgz#a9b89bef6abf242fecc0a7730ef0e9d1fc2da441"
+  integrity sha512-O8OW5jbbjStsTJb3L2dkjqW2SEk4d1bgcADSL9PrMETbHRi6dioyZYp49iRfWMZCcBtK8N/JWW2SkTYHgmh3JQ==
   dependencies:
-    "@cityofzion/neon-api" "^5.0.0-next.8"
-    "@cityofzion/neon-core" "^5.0.0-next.8"
+    "@cityofzion/neon-api" "^5.0.0-next.11"
+    "@cityofzion/neon-core" "^5.0.0-next.11"
 
 "@cityofzion/neon-js@3.11.9":
   version "3.11.9"
@@ -2461,6 +2462,11 @@ bignumber.js@5.0.0:
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-5.0.0.tgz#fbce63f09776b3000a83185badcde525daf34833"
   integrity sha512-KWTu6ZMVk9sxlDJQh2YH1UOnfDP8O8TpxUxgQG/vKASoSnEjK9aVuOueFaPcQEYQ5fyNXNTOYwYw3099RYebWg==
 
+bignumber.js@7.2.1:
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-7.2.1.tgz#80c048759d826800807c4bfd521e50edbba57a5f"
+  integrity sha512-S4XzBk5sMB+Rcb/LNcpzXr57VRTxgAvaAEDAl1AwRx27j00hT84O6OkteE7u8UB3NuaaygCRrEpqox4uDOrbdQ==
+
 binary-extensions@^1.0.0:
   version "1.13.1"
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-1.13.1.tgz#598afe54755b2868a5330d2aff9d4ebb53209b65"
@@ -2532,12 +2538,12 @@ bn.js@5.2.0:
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-5.2.0.tgz#358860674396c6997771a9d051fcc1b57d4ae002"
   integrity sha512-D7iWRBvnZE8ecXiLj/9wbxH7Tk79fAh8IHaTNq1RWRixsS02W+5qS+iE9yq6RYl0asXx5tw0bLhmT5pIfbSquw==
 
-bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.11.8, bn.js@^4.4.0:
+bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.4.0:
   version "4.11.9"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.9.tgz#26d556829458f9d1e81fc48952493d0ba3507828"
   integrity sha512-E6QoYqCKZfgatHTdHzs1RRKP7ip4vvm+EyRUeE2RF0NblwVvb0p6jSVeNTOFxPn26QXN2o6SMfNxKp6kU8zQaw==
 
-bn.js@^4.11.9:
+bn.js@^4.11.8, bn.js@^4.11.9:
   version "4.12.0"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.12.0.tgz#775b3f278efbb9718eec7361f483fb36fbbfea88"
   integrity sha512-c98Bf3tPniI+scsdk237ku1Dc3ujXQTSgyiPUDEOe7tRkhrqridvh8klBv0HCEso1OLOYcHuCv/cS6DNxKH+ZA==
@@ -6203,10 +6209,15 @@ fn-name@^2.0.0:
   resolved "https://registry.yarnpkg.com/fn-name/-/fn-name-2.0.1.tgz#5214d7537a4d06a4a301c0cc262feb84188002e7"
   integrity sha1-UhTXU3pNBqSjAcDMJi/rhBiAAuc=
 
-follow-redirects@^1.0.0, follow-redirects@^1.10.0, follow-redirects@^1.3.0:
+follow-redirects@^1.0.0, follow-redirects@^1.10.0:
   version "1.13.1"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.1.tgz#5f69b813376cee4fd0474a3aba835df04ab763b7"
   integrity sha512-SSG5xmZh1mkPGyKzjZP8zLjltIfpW32Y5QpdNJyjcfGxK3qo3NDDkZOZSFiGn1A6SclQxY9GzEwAHQ3dmYRWpg==
+
+follow-redirects@^1.3.0:
+  version "1.14.1"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.1.tgz#d9114ded0a1cfdd334e164e6662ad02bfd91ff43"
+  integrity sha512-HWqDgT7ZEkqRzBvc2s64vSZ/hfOceEol3ac/7tKwzuvEyWx3/4UegXh5oBOIotkGsObyk3xznnSRVADBgWSQVg==
 
 for-in@^0.1.3:
   version "0.1.8"

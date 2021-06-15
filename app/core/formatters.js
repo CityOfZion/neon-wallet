@@ -24,6 +24,14 @@ export const formatToRoundedShortNumber = (value: number): string => {
     .toString()
 }
 
+export const convertToArbitraryDecimals = (
+  num: number,
+  decimals: number = 8,
+): number => {
+  const multiplier = 1 / Math.pow(10, decimals)
+  return (num * multiplier).toFixed(decimals)
+}
+
 export const formatThousands = (value: ValueType): string =>
   toBigNumber(value).toFormat(0)
 
