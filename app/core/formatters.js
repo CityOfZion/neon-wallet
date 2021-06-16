@@ -27,7 +27,8 @@ export const formatToRoundedShortNumber = (value: number): string => {
 export const convertToArbitraryDecimals = (
   num: number,
   decimals: number = 8,
-): number => {
+): string => {
+  // eslint-disable-next-line
   const multiplier = 1 / Math.pow(10, decimals)
   return (num * multiplier).toFixed(decimals)
 }
