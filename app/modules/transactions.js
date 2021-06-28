@@ -211,37 +211,33 @@ export const sendTransaction = ({
   const signingFunction = getSigningFunction(state)
   const publicKey = getPublicKey(state)
   const isHardwareSend = getIsHardwareLogin(state)
-  const tokens = state.spunky.settings.data.tokens
-  const chain = state.spunky.settings.data.chain
+  const { tokens, chain } = state.spunky.settings.data
 
   return chain === 'neo3'
     ? new Promise(async (resolve, reject) => {
         try {
-          const NODE_URL = 'https://testnet2.neo.coz.io:443'
-          const FROM_ACCOUNT = new n3Wallet.Account(wif)
-          const rpcClient = new n3Rpc.RPCClient(NODE_URL)
-          const decimals = 8
-          const amountToTransfer =
-            decimals == 0
-              ? Number(sendEntries[0].amount)
-              : Number(sendEntries[0].amount) * Math.pow(10, decimals)
-          const CONFIG = {
-            account: FROM_ACCOUNT,
-            rpcAddress: NODE_URL,
-            networkMagic: 844378958,
-          }
-          // Hardcoded to filter out testnet tokens and hardcoded to only work with the first sendEntry
-          // eslint-disable-next-line
-          const CONTRACT_HASH = tokens.find(
-            t => t.networkId == 2 && t.symbol === sendEntries[0].symbol,
-          ).scriptHash
           /*
             TODO:
               - Ability to send multiple assets in a single transaction
               - Ability to attach custom fees
               - Ledger support
               - Support for test AND main net
+              - Node url should come from settings
           */
+
+          const NODE_URL = 'https://testnet2.neo.coz.io:443'
+          const FROM_ACCOUNT = new n3Wallet.Account(wif)
+          const CONFIG = {
+            account: FROM_ACCOUNT,
+            rpcAddress: NODE_URL,
+            networkMagic: 844378958,
+          }
+          // Hardcoded to filter out testnet tokens and hardcoded to only work with the first sendEntry
+
+          const CONTRACT_HASH = tokens.find(
+            // eslint-disable-next-line eqeqeq
+            t => t.networkId == 2 && t.symbol === sendEntries[0].symbol,
+          ).scriptHash
 
           const Contract = new experimental.nep17.Nep17Contract(
             CONTRACT_HASH,
@@ -252,7 +248,6 @@ export const sendTransaction = ({
             new n3Wallet.Account(sendEntries[0].address).address, // destination address
             sendEntries[0].amount, // amount
           )
-
           dispatch(
             showSuccessNotification({
               message:
