@@ -9,6 +9,11 @@ import N3Neon, {
   rpc as n3Rpc,
   experimental,
 } from '@cityofzion/neon-js-next'
+import {
+  addFees,
+  setBlockExpiry,
+} from '@cityofzion/neon-js-next/lib/experimental/helpers'
+import { Nep17Contract } from '@cityofzion/neon-js-next/lib/experimental/nep17'
 import { flatMap, keyBy, isEmpty, get } from 'lodash-es'
 
 import {
@@ -34,13 +39,6 @@ import {
 import { toNumber } from '../core/math'
 import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 import { addPendingTransaction } from '../actions/pendingTransactionActions'
-import { number } from 'prop-types'
-import {
-  addFees,
-  setBlockExpiry,
-} from '@cityofzion/neon-js-next/lib/experimental/helpers'
-import { config } from 'chai'
-import { Nep17Contract } from '@cityofzion/neon-js-next/lib/experimental/nep17'
 
 const { reverseHex, ab2hexstring } = u
 
@@ -233,6 +231,7 @@ export const sendTransaction = ({
             networkMagic: 844378958,
           }
           // Hardcoded to filter out testnet tokens and hardcoded to only work with the first sendEntry
+          // eslint-disable-next-line
           const CONTRACT_HASH = tokens.find(
             t => t.networkId == 2 && t.symbol === sendEntries[0].symbol,
           ).scriptHash
