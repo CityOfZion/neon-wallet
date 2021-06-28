@@ -1,10 +1,9 @@
 // @flow
 import storage from 'electron-json-storage'
 import { wallet } from '@cityofzion/neon-js'
-import N3Neon, { wallet as n3Wallet, logging } from '@cityofzion/neon-js-next'
+import { wallet as n3Wallet, logging } from '@cityofzion/neon-js-next'
 import { isEmpty, intersectionBy } from 'lodash-es'
 import { ECCurves } from 'ecc-jsbn'
-import randomBytes from 'randombytes'
 import {
   showErrorNotification,
   showInfoNotification,
