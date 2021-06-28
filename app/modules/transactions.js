@@ -216,8 +216,6 @@ export const sendTransaction = ({
   const tokens = state.spunky.settings.data.tokens
   const chain = state.spunky.settings.data.chain
 
-  console.log({ tokens, net })
-
   return chain === 'neo3'
     ? new Promise(async (resolve, reject) => {
         try {
