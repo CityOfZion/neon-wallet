@@ -1,19 +1,7 @@
 // @flow
 /* eslint-disable camelcase */
-import { api, sc, u, wallet, settings, rpc, tx } from '@cityofzion/neon-js'
-import N3Neon, {
-  tx as n3Tx,
-  wallet as n3Wallet,
-  sc as n3Sc,
-  u as n3U,
-  rpc as n3Rpc,
-  experimental,
-} from '@cityofzion/neon-js-next'
-import {
-  addFees,
-  setBlockExpiry,
-} from '@cityofzion/neon-js-next/lib/experimental/helpers'
-import { Nep17Contract } from '@cityofzion/neon-js-next/lib/experimental/nep17'
+import { api, sc, u, wallet, settings } from '@cityofzion/neon-js'
+import { wallet as n3Wallet, experimental } from '@cityofzion/neon-js-next'
 import { flatMap, keyBy, isEmpty, get } from 'lodash-es'
 
 import {
