@@ -332,14 +332,11 @@ export default class Send extends React.Component<Props, State> {
 
     const { sendRowDetails, fees } = this.state
 
-    const entries = sendRowDetails.map(
-      (row: Object) =>
-        console.log(row) || {
-          address: row.address,
-          amount: toNumber(row.amount.toString()),
-          symbol: row.asset,
-        },
-    )
+    const entries = sendRowDetails.map((row: Object) => ({
+      address: row.address,
+      amount: toNumber(row.amount.toString()),
+      symbol: row.asset,
+    }))
 
     this.setState({ pendingTransaction: true })
     sendTransaction({

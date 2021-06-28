@@ -234,19 +234,14 @@ export const sendTransaction = ({
             rpcAddress: NODE_URL,
             networkMagic: 844378958,
           }
-          console.log({ tokens })
           // Hardcoded to filter out testnet tokens and hardcoded to only work with the first sendEntry
           const CONTRACT_HASH = tokens.find(
             t => t.networkId == 2 && t.symbol === sendEntries[0].symbol,
           ).scriptHash
-
-          console.log(CONTRACT_HASH)
-
           /*
             TODO:
               - Ability to send multiple assets in a single transaction
-              - Ability to attach fees
-              - Pull hash based on symbol from token list (currently hard coded to GAS)
+              - Ability to attach custom fees
               - Ledger support
               - Support for test AND main net
           */
@@ -267,8 +262,6 @@ export const sendTransaction = ({
                 'Transaction pending! Your balance will automatically update when the blockchain has processed it.',
             }),
           )
-
-          console.log(results)
           return resolve({ txid: results })
           /*
             NOTE: potential alternate and more complex solution below
