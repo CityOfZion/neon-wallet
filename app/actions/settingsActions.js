@@ -81,8 +81,13 @@ export const updateSettingsActions = createActions(
   },
 )
 
-export default createActions(ID, () => async (): Promise<Settings> => {
+export default createActions(ID, ({ store }) => async (): Promise<Settings> => {
   const settings = await getSettings()
+  const { chain } = settings
+
   const picked = await pick(settings, keys(await DEFAULT_SETTINGS()))
+  if (chain === 'neo3') {
+    picked.tokens = await getDefaultTokens('neo3')
+  }
   return picked
 })
