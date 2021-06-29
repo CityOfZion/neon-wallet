@@ -18,6 +18,7 @@ import {
 import withProgressChange from '../../../hocs/withProgressChange'
 import withFailureNotification from '../../../hocs/withFailureNotification'
 import { showModal } from '../../../modules/modal'
+import withChainData from '../../../hocs/withChainData'
 
 const { LOADED } = progressValues
 
@@ -28,11 +29,12 @@ const actionCreators = {
 }
 
 const mapContactActionsToProps = (actions, props) => ({
-  onSave: (name, address) =>
+  onSave: (name, address, chain) =>
     actions.call({
       oldName: props.oldName,
       newName: trim(name),
       newAddress: trim(address),
+      chain,
     }),
 })
 
@@ -58,5 +60,6 @@ export default compose(
   withActions(deleteContactActions, mapDeleteContactActionsToProps),
   withFailureNotification(deleteContactActions),
   withFailureNotification(updateContactActions),
+  withChainData(),
   injectIntl,
 )(EditContactPanel)

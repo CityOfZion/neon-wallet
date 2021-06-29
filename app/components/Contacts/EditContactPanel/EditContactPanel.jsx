@@ -22,6 +22,7 @@ type Props = {
   showSuccessNotification: ({ message: string }) => void,
   showModal: (modalType: string, modalProps: Object) => any,
   intl: IntlShape,
+  chain: string,
 }
 
 export default class EditContactPanel extends React.Component<Props> {
@@ -75,7 +76,8 @@ export default class EditContactPanel extends React.Component<Props> {
   )
 
   handleSubmit = (name: string, address: string) => {
-    this.props.onSave(name, address)
+    const { chain } = this.props
+    this.props.onSave(name, address, chain)
   }
 
   handleDelete = () => {
