@@ -74,16 +74,14 @@ const getContactsInGroups = (
   chain: string,
 ) => {
   /* $FlowFixMe */
-  const contactsSpecifcChain = contactChains.filter(
+  const chainSpecificContacts = contactChains.filter(
     contactChain => contactChain.chain === chain,
   )
 
-  const contactsArray: Array<Contacts> = Object.entries(contacts)
+  const contactsLessChain: Array<Contacts> = Object.entries(contacts)
     .map(([name, address]) => {
       if (
-        contactsSpecifcChain.find(
-          contactSpecifcChain => contactSpecifcChain.contactKey === name,
-        )
+        !contactChains.find(contactChain => contactChain.contactKey === name)
       ) {
         return {
           name,
@@ -96,6 +94,28 @@ const getContactsInGroups = (
       }
     })
     .filter(contact => contact.name !== null && contact.address !== null)
+
+  const contactsArray: Array<Contacts> = [
+    ...Object.entries(contacts)
+      .map(([name, address]) => {
+        if (
+          chainSpecificContacts.find(
+            contactSpecifcChain => contactSpecifcChain.contactKey === name,
+          )
+        ) {
+          return {
+            name,
+            address,
+          }
+        }
+        return {
+          name: null,
+          address: null,
+        }
+      })
+      .filter(contact => contact.name !== null && contact.address !== null),
+    ...contactsLessChain,
+  ]
 
   const groupContactsByFirstLetter = groupBy(
     contactsArray,
@@ -122,11 +142,9 @@ export default class ContactsPanel extends React.Component<Props, State> {
     contactChains: [],
   }
 
-  componentDidMount() {
-    new Promise(async () => {
-      const chains = await getChains()
-      this.setState(prevState => ({ ...prevState, contactChains: chains }))
-    })
+  async componentDidMount() {
+    const contactChains = await getChains()
+    this.setState(prevState => ({ ...prevState, contactChains }))
   }
 
   renderHeader = () => {

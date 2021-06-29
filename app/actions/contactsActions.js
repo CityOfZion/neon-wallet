@@ -12,8 +12,10 @@ export type TChains = { contactKey: string, chain: string }[]
 const STORAGE_KEY_CHAIN = 'chainBook'
 const STORAGE_KEY = 'addressBook'
 
-export const getChains = async (): Promise<TChains> =>
-  getStorage(STORAGE_KEY_CHAIN)
+export const getChains = async (): Promise<TChains> => {
+  const chains = await getStorage(STORAGE_KEY_CHAIN)
+  return Array.isArray(chains) ? chains : []
+}
 
 const setChainContact = async (contactKey: string, chain: string) => {
   const chains = await getChains()
@@ -42,6 +44,8 @@ const updateChainContact = async (
       chainContacts[chainContacts.indexOf(chainContactFound)].chain = chain
 
       await setStorage(STORAGE_KEY_CHAIN, chainContacts)
+    } else {
+      await setChainContact(contactKey, chain)
     }
   }
 }
@@ -72,7 +76,8 @@ type Contacts = {
   [name: string]: string,
 }
 
-const getContacts = async (): Promise<Contacts> => getStorage(STORAGE_KEY)
+export const getContacts = async (): Promise<Contacts> =>
+  getStorage(STORAGE_KEY)
 
 const setContacts = async (contacts: Contacts): Promise<any> =>
   setStorage(STORAGE_KEY, contacts)
