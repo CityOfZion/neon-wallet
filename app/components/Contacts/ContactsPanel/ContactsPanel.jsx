@@ -20,7 +20,8 @@ import CopyToClipboard from '../../CopyToClipboard'
 import LogoWithStrikethrough from '../../LogoWithStrikethrough'
 
 import styles from './ContactsPanel.scss'
-import { getChains, TChains } from '../../../actions/contactsActions'
+import { getChains } from '../../../actions/contactsActions'
+import type { TChains } from '../../../actions/contactsActions'
 
 type Contact = {
   address: string,
@@ -73,11 +74,10 @@ const getContactsInGroups = (
   contactChains: TChains,
   chain: string,
 ) => {
-  /* $FlowFixMe */
   const chainSpecificContacts = contactChains.filter(
     contactChain => contactChain.chain === chain,
   )
-
+  /* $FlowFixMe */
   const contactsArray: Array<Contacts> = Object.entries(contacts)
     .map(([name, address]) => {
       if (
