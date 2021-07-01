@@ -40,28 +40,16 @@ export default class Receive extends React.Component<Props, State> {
   }
 
   render() {
-    const {
-      sendableAssets,
-      currencyCode,
-      address,
-      showReceiveModal,
-      networkId,
-    } = this.props
+    const { address, showReceiveModal, networkId } = this.props
 
     const { walletName } = this.state
-    const noSendableAssets = Object.keys(sendableAssets).length === 0
 
     return (
       <section className={styles.receiveContainer}>
         <FormattedMessage id="receivePageLabel">
           {t => <HeaderBar label={t} shouldRenderRefresh />}
         </FormattedMessage>
-        {!noSendableAssets && (
-          <AmountsPanel
-            amountsData={this.createSendAmountsData()}
-            currencyCode={currencyCode}
-          />
-        )}
+
         <ReceivePanel
           address={address}
           networkId={networkId}
