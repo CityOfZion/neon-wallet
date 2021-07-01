@@ -82,8 +82,6 @@ class SendRecipientListItem extends Component<Props> {
   createContactList = (): Array<string> => Object.keys(this.props.contacts)
 
   render() {
-    console.log(this.createContactList())
-
     const {
       index,
       address,
@@ -124,6 +122,7 @@ class SendRecipientListItem extends Component<Props> {
       />
     )
     // TODO: this should be converted to use the StyledReactSelect component
+    // currently the UI does not indicate if there are no contacts
     const addressInput = showConfirmSend ? (
       <DisplayInput value={address} />
     ) : (
