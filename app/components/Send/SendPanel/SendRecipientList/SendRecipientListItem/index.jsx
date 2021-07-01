@@ -82,6 +82,8 @@ class SendRecipientListItem extends Component<Props> {
   createContactList = (): Array<string> => Object.keys(this.props.contacts)
 
   render() {
+    console.log(this.createContactList())
+
     const {
       index,
       address,
@@ -121,7 +123,7 @@ class SendRecipientListItem extends Component<Props> {
         options={{ numeralDecimalScale: 8 }}
       />
     )
-
+    // TODO: this should be converted to use the StyledReactSelect component
     const addressInput = showConfirmSend ? (
       <DisplayInput value={address} />
     ) : (
