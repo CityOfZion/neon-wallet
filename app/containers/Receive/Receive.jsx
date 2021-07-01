@@ -3,7 +3,6 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 
 import HeaderBar from '../../components/HeaderBar'
-import AmountsPanel from '../../components/AmountsPanel'
 import ReceivePanel from '../../components/Receive/ReceivePanel'
 import { PRICE_UNAVAILABLE } from '../../core/constants'
 import { multiplyNumber } from '../../core/math'
@@ -12,7 +11,6 @@ import styles from './Receive.scss'
 
 type Props = {
   sendableAssets: Object,
-  currencyCode: string,
   address: string,
   accounts: Array<any>,
   prices: Object,
