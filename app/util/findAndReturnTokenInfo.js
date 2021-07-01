@@ -5,6 +5,7 @@ import { imageMap } from '../assets/nep5/png'
 import { getDefaultTokens } from '../core/nep5'
 import { ASSETS, NEO_ID, GAS_ID } from '../core/constants'
 import { getRPCEndpoint } from '../actions/nodeStorageActions'
+import { getSettings } from '../actions/settingsActions'
 
 export const getImageBySymbol = (symbol: string) => imageMap[symbol]
 
@@ -13,6 +14,20 @@ export const findAndReturnTokenInfo = async (
   net: string,
   symbol?: string,
 ): Promise<any> => {
+  const { chain } = await getSettings()
+
+  if (chain === 'neo3') {
+    const NEO = {
+      symbol: ASSETS.NEO,
+      image: getImageBySymbol(ASSETS.NEO),
+    }
+    const GAS = {
+      symbol: ASSETS.GAS,
+      image: getImageBySymbol(ASSETS.GAS),
+    }
+
+    return GAS
+  }
   const NEO = {
     symbol: ASSETS.NEO,
     image: getImageBySymbol(ASSETS.NEO),
