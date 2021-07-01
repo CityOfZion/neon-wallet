@@ -146,7 +146,7 @@ export default class ContactsPanel extends React.Component<Props, State> {
   }
 
   renderContact = (address: string, name: string, i: number) => {
-    const { intl } = this.props
+    const { intl, chain } = this.props
     return (
       <div
         key={`contact${name}${i}`}
@@ -178,7 +178,7 @@ export default class ContactsPanel extends React.Component<Props, State> {
           >
             <FormattedMessage id="deleteLabel" />
           </Button>
-          <Address address={address} asWrapper>
+          <Address address={address} chain={chain} asWrapper>
             <Button className={styles.infoButton} renderIcon={InfoIcon}>
               <FormattedMessage id="sidebarActivity" />
             </Button>
