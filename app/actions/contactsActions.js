@@ -8,11 +8,28 @@ import { getStorage, setStorage } from '../core/storage'
 export const ID = 'contacts'
 
 export type TChains = { contactKey: string, chain: string }[]
+type Contacts = {
+  [name: string]: string,
+}
 
 const STORAGE_KEY_CHAIN = 'chainBook'
 const STORAGE_KEY = 'addressBook'
 
+const setChainInContactsLessChain = async () => {
+  const contacts: Contacts = await getStorage(STORAGE_KEY)
+  const chains: TChains = await getStorage(STORAGE_KEY_CHAIN)
+  await Promise.all(
+    Object.entries(contacts).map(async ([name]) => {
+      if (!chains.find(chain => chain.contactKey === name)) {
+        chains.push({ contactKey: name, chain: 'neo2' })
+        await setStorage(STORAGE_KEY_CHAIN, chains)
+      }
+    }),
+  )
+}
+
 export const getChains = async (): Promise<TChains> => {
+  await setChainInContactsLessChain()
   const chains = await getStorage(STORAGE_KEY_CHAIN)
   return Array.isArray(chains) ? chains : []
 }
@@ -70,10 +87,6 @@ export const getContactChainAction = createActions(
 export const cleanContacts = async () => {
   await setStorage(STORAGE_KEY, {})
   await setStorage(STORAGE_KEY_CHAIN, [])
-}
-
-type Contacts = {
-  [name: string]: string,
 }
 
 export const getContacts = async (): Promise<Contacts> =>

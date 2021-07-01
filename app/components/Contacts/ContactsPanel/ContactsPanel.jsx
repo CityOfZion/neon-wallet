@@ -78,10 +78,12 @@ const getContactsInGroups = (
     contactChain => contactChain.chain === chain,
   )
 
-  const contactsLessChain: Array<Contacts> = Object.entries(contacts)
+  const contactsArray: Array<Contacts> = Object.entries(contacts)
     .map(([name, address]) => {
       if (
-        !contactChains.find(contactChain => contactChain.contactKey === name)
+        chainSpecificContacts.find(
+          contactSpecifcChain => contactSpecifcChain.contactKey === name,
+        )
       ) {
         return {
           name,
@@ -94,28 +96,6 @@ const getContactsInGroups = (
       }
     })
     .filter(contact => contact.name !== null && contact.address !== null)
-
-  const contactsArray: Array<Contacts> = [
-    ...Object.entries(contacts)
-      .map(([name, address]) => {
-        if (
-          chainSpecificContacts.find(
-            contactSpecifcChain => contactSpecifcChain.contactKey === name,
-          )
-        ) {
-          return {
-            name,
-            address,
-          }
-        }
-        return {
-          name: null,
-          address: null,
-        }
-      })
-      .filter(contact => contact.name !== null && contact.address !== null),
-    ...contactsLessChain,
-  ]
 
   const groupContactsByFirstLetter = groupBy(
     contactsArray,
