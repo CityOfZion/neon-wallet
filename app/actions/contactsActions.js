@@ -18,11 +18,12 @@ const STORAGE_KEY = 'addressBook'
 const setChainInContactsLessChain = async () => {
   const contacts: Contacts = await getStorage(STORAGE_KEY)
   const chains: TChains = await getStorage(STORAGE_KEY_CHAIN)
+  const contactChains = Array.isArray(chains) ? chains : []
   await Promise.all(
     Object.entries(contacts).map(async ([name]) => {
-      if (!chains.find(chain => chain.contactKey === name)) {
-        chains.push({ contactKey: name, chain: 'neo2' })
-        await setStorage(STORAGE_KEY_CHAIN, chains)
+      if (!contactChains.find(chain => chain.contactKey === name)) {
+        contactChains.push({ contactKey: name, chain: 'neo2' })
+        await setStorage(STORAGE_KEY_CHAIN, contactChains)
       }
     }),
   )
