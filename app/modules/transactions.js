@@ -1,20 +1,8 @@
 // @flow
 /* eslint-disable camelcase */
 import { api, sc, u, wallet, settings } from '@cityofzion/neon-js'
-import {
-  api as n3Api,
-  wallet as n3Wallet,
-  sc as n3Sc,
-  u as n3U,
-  tx as n3Tx,
-  rpc as n3Rpc,
-  experimental,
-} from '@cityofzion/neon-js-next'
+import { api as n3Api, wallet as n3Wallet } from '@cityofzion/neon-js-next'
 import { flatMap, keyBy, isEmpty, get } from 'lodash-es'
-import {
-  addFees,
-  setBlockExpiry,
-} from '@cityofzion/neon-js-next/lib/experimental/helpers'
 
 import {
   showErrorNotification,
