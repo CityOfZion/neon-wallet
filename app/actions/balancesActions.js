@@ -1,9 +1,6 @@
 // @flow
 import { api, u, rpc, sc, wallet } from '@cityofzion/neon-js'
-import N3Neon, {
-  wallet as n3Wallet,
-  rpc as n3Rpc,
-} from '@cityofzion/neon-js-next'
+import { rpc as n3Rpc } from '@cityofzion/neon-js-next'
 import { extend, isEmpty, get } from 'lodash-es'
 import { createActions } from 'spunky'
 import { Howl } from 'howler'
@@ -356,7 +353,8 @@ async function getN3Balances({ net, address }: Props) {
 
 export default createActions(
   ID,
-  ({ net, address, tokens, chain }: Props = {}) => async () => {
+  ({ net, address, tokens }: Props = {}) => async () => {
+    const { chain } = await getSettings()
     if (chain === 'neo3') {
       return getN3Balances({ net, address, tokens })
     }

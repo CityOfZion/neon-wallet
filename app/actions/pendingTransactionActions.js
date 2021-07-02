@@ -1,6 +1,6 @@
 // @flow
 import { createActions } from 'spunky'
-import Neon from '@cityofzion/neon-js'
+import Neon, { rpc } from '@cityofzion/neon-js'
 import { isEmpty } from 'lodash-es'
 
 import { toBigNumber } from '../core/math'
@@ -10,6 +10,7 @@ import {
   findAndReturnTokenInfo,
   getImageBySymbol,
 } from '../util/findAndReturnTokenInfo'
+import { getSettings } from './settingsActions'
 
 export const ID = 'pendingTransactions'
 const STORAGE_KEY = 'pendingTransactions'
@@ -78,6 +79,7 @@ export const parseTransactionInfo = async (
   net: string,
 ) => {
   const parsedData: Array<ParsedPendingTransaction> = []
+
   for (const transaction of pendingTransactionsInfo) {
     if (transaction) {
       if (transaction.type === 'InvocationTransaction') {
@@ -124,11 +126,20 @@ export const fetchTransactionInfo = async (
   net: string,
 ) => {
   if (Array.isArray(transactions[address]) && transactions[address].length) {
-    let url = await getNode(net)
-    if (isEmpty(url)) {
-      url = await getRPCEndpoint(net)
+    const { chain } = await getSettings()
+
+    let client
+    if (chain === 'neo2') {
+      let url = await getNode(net)
+      if (isEmpty(url)) {
+        url = await getRPCEndpoint(net)
+      }
+      client = Neon.create.rpcClient(url)
+    } else {
+      const url = 'https://testnet2.neo.coz.io:443'
+      client = new rpc.RPCClient(url, '2.3.3')
     }
-    const client = Neon.create.rpcClient(url)
+
     const pendingTransactionInfo = []
 
     for (const transaction of transactions[address]) {
