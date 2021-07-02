@@ -242,6 +242,19 @@ export const sendTransaction = ({
                 'Transaction pending! Your balance will automatically update when the blockchain has processed it.',
             }),
           )
+
+          if (!isWatchOnly) {
+            dispatch(
+              addPendingTransaction.call({
+                address: CONFIG.account.address,
+                tx: {
+                  hash: results,
+                  sendEntries,
+                },
+                net,
+              }),
+            )
+          }
           return resolve({ txid: results })
           /*
             NOTE: potential alternate and more complex solution below

@@ -1,6 +1,6 @@
 // @flow
 import { createActions } from 'spunky'
-import Neon from '@cityofzion/neon-js'
+import Neon, { rpc } from '@cityofzion/neon-js'
 import { isEmpty } from 'lodash-es'
 
 import { toBigNumber } from '../core/math'
@@ -10,6 +10,7 @@ import {
   findAndReturnTokenInfo,
   getImageBySymbol,
 } from '../util/findAndReturnTokenInfo'
+import { getSettings } from './settingsActions'
 
 export const ID = 'pendingTransactions'
 const STORAGE_KEY = 'pendingTransactions'
@@ -34,6 +35,34 @@ export const parseContractTransaction = async (
     parsedData.push({
       confirmations,
       txid: txid.substring(2),
+      net_fee,
+      blocktime,
+      amount: toBigNumber(send.amount).toString(),
+      to: send.address,
+      asset: await findAndReturnTokenInfo('', net, send.symbol),
+    })
+  }
+  return parsedData
+}
+
+export const parseN3Transaction = async (
+  transaction: PendingTransaction,
+  net: string,
+): Promise<Array<ParsedPendingTransaction>> => {
+  const parsedData = []
+  // eslint-disable-next-line camelcase
+  const {
+    confirmations,
+    hash,
+    net_fee, // eslint-disable-line camelcase
+    blocktime = 0,
+    sendEntries,
+  } = transaction
+
+  for (const send of sendEntries) {
+    parsedData.push({
+      confirmations,
+      txid: hash.substring(2),
       net_fee,
       blocktime,
       amount: toBigNumber(send.amount).toString(),
@@ -78,12 +107,19 @@ export const parseTransactionInfo = async (
   net: string,
 ) => {
   const parsedData: Array<ParsedPendingTransaction> = []
+
+  const { chain } = await getSettings()
+
   for (const transaction of pendingTransactionsInfo) {
     if (transaction) {
-      if (transaction.type === 'InvocationTransaction') {
-        parsedData.push(...parseInvocationTransaction(transaction))
+      if (chain === 'neo2') {
+        if (transaction.type === 'InvocationTransaction') {
+          parsedData.push(...parseInvocationTransaction(transaction))
+        } else {
+          parsedData.push(...(await parseContractTransaction(transaction, net)))
+        }
       } else {
-        parsedData.push(...(await parseContractTransaction(transaction, net)))
+        parsedData.push(...(await parseN3Transaction(transaction, net)))
       }
     }
   }
@@ -124,11 +160,20 @@ export const fetchTransactionInfo = async (
   net: string,
 ) => {
   if (Array.isArray(transactions[address]) && transactions[address].length) {
-    let url = await getNode(net)
-    if (isEmpty(url)) {
-      url = await getRPCEndpoint(net)
+    const { chain } = await getSettings()
+
+    let client
+    if (chain === 'neo2') {
+      let url = await getNode(net)
+      if (isEmpty(url)) {
+        url = await getRPCEndpoint(net)
+      }
+      client = Neon.create.rpcClient(url)
+    } else {
+      const url = 'https://testnet2.neo.coz.io:443'
+      client = new rpc.RPCClient(url, '2.3.3')
     }
-    const client = Neon.create.rpcClient(url)
+
     const pendingTransactionInfo = []
 
     for (const transaction of transactions[address]) {
