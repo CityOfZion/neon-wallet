@@ -38,7 +38,7 @@ export const getExplorerTxLink = (
   networkId: string,
   explorer: ExplorerType,
   txId: string,
-  chain: string,
+  chain: string = 'neo2',
 ) => {
   const baseURL = getExplorerBaseURL(networkId, explorer)
 
