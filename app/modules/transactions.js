@@ -1,7 +1,7 @@
 // @flow
 /* eslint-disable camelcase */
 import { api, sc, u, wallet, settings } from '@cityofzion/neon-js'
-import { wallet as n3Wallet, experimental } from '@cityofzion/neon-js-next'
+import { api as n3Api, wallet as n3Wallet } from '@cityofzion/neon-js-next'
 import { flatMap, keyBy, isEmpty, get } from 'lodash-es'
 
 import {
@@ -206,8 +206,6 @@ export const sendTransaction = ({
         try {
           /*
             TODO:
-              - Ability to send multiple assets in a single transaction
-              - Ability to attach custom fees
               - Ledger support
               - Support for test AND main net
               - Node url should come from settings
@@ -218,24 +216,39 @@ export const sendTransaction = ({
           const CONFIG = {
             account: FROM_ACCOUNT,
             rpcAddress: NODE_URL,
+            // TODO: this will have to by dynamic based on test/mainnets
             networkMagic: 844378958,
           }
-          // Hardcoded to filter out testnet tokens and hardcoded to only work with the first sendEntry
 
-          const CONTRACT_HASH = tokens.find(
-            // eslint-disable-next-line eqeqeq
-            t => t.networkId == 2 && t.symbol === sendEntries[0].symbol,
-          ).scriptHash
+          const facade = await n3Api.NetworkFacade.fromConfig({
+            node: NODE_URL,
+          })
 
-          const Contract = new experimental.nep17.Nep17Contract(
-            CONTRACT_HASH,
-            CONFIG,
+          const signingConfig = {
+            signingCallback: n3Api.signWithAccount(CONFIG.account),
+          }
+
+          const nep17Intents = sendEntries.map(
+            ({ address, amount, symbol }) => {
+              const { scriptHash } = tokens.find(
+                // eslint-disable-next-line eqeqeq
+                t => t.networkId == 2 && t.symbol === symbol,
+              )
+              const intent = {
+                from: CONFIG.account,
+                to: address,
+                decimalAmt: amount,
+                contractHash: scriptHash,
+              }
+              return intent
+            },
           )
-          const results = await Contract.transfer(
-            new n3Wallet.Account(fromAddress).address, // source address
-            new n3Wallet.Account(sendEntries[0].address).address, // destination address
-            sendEntries[0].amount, // amount
+
+          const results = await facade.transferToken(
+            nep17Intents,
+            signingConfig,
           )
+
           dispatch(
             showSuccessNotification({
               message:
@@ -257,35 +270,6 @@ export const sendTransaction = ({
             )
           }
           return resolve({ txid: results })
-          /*
-            NOTE: potential alternate and more complex solution below
-
-            const builder = new n3Sc.ScriptBuilder()
-            builder.emitAppCall(CONTRACT_HASH, 'transfer', [
-              n3U.HexString.fromHex(
-                n3Wallet.getScriptHashFromAddress(sendEntries[0].address),
-              ),
-              n3U.HexString.fromHex(
-                n3Wallet.getScriptHashFromAddress(CONFIG.account.address),
-              ),
-              amountToTransfer,
-              n3Sc.ContractParam.any(null),
-            ])
-            builder.emit(n3Sc.OpCode.ASSERT)
-            const transaction = new n3Tx.Transaction()
-            transaction.script = n3U.HexString.fromHex(builder.build())
-
-            await setBlockExpiry(transaction, CONFIG)
-
-            transaction.addSigner({
-              account: CONFIG.account.scriptHash,
-              scopes: 'CalledByEntry',
-            })
-
-            await addFees(transaction, CONFIG)
-            transaction.sign(CONFIG.account, CONFIG.networkMagic)
-            const results = await rpcClient.sendRawTransaction(transaction)
-          */
         } catch (e) {
           console.error({ e })
           return reject(e)
