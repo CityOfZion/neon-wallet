@@ -249,6 +249,7 @@ export const sendTransaction = ({
                 address: CONFIG.account.address,
                 tx: {
                   hash: results,
+                  txid: results,
                   sendEntries,
                 },
                 net,

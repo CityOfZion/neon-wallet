@@ -45,34 +45,6 @@ export const parseContractTransaction = async (
   return parsedData
 }
 
-export const parseN3Transaction = async (
-  transaction: PendingTransaction,
-  net: string,
-): Promise<Array<ParsedPendingTransaction>> => {
-  const parsedData = []
-  // eslint-disable-next-line camelcase
-  const {
-    confirmations,
-    hash,
-    net_fee, // eslint-disable-line camelcase
-    blocktime = 0,
-    sendEntries,
-  } = transaction
-
-  for (const send of sendEntries) {
-    parsedData.push({
-      confirmations,
-      txid: hash.substring(2),
-      net_fee,
-      blocktime,
-      amount: toBigNumber(send.amount).toString(),
-      to: send.address,
-      asset: await findAndReturnTokenInfo('', net, send.symbol),
-    })
-  }
-  return parsedData
-}
-
 export const parseInvocationTransaction = (
   transaction: PendingTransaction,
 ): Array<ParsedPendingTransaction> => {
@@ -108,18 +80,12 @@ export const parseTransactionInfo = async (
 ) => {
   const parsedData: Array<ParsedPendingTransaction> = []
 
-  const { chain } = await getSettings()
-
   for (const transaction of pendingTransactionsInfo) {
     if (transaction) {
-      if (chain === 'neo2') {
-        if (transaction.type === 'InvocationTransaction') {
-          parsedData.push(...parseInvocationTransaction(transaction))
-        } else {
-          parsedData.push(...(await parseContractTransaction(transaction, net)))
-        }
+      if (transaction.type === 'InvocationTransaction') {
+        parsedData.push(...parseInvocationTransaction(transaction))
       } else {
-        parsedData.push(...(await parseN3Transaction(transaction, net)))
+        parsedData.push(...(await parseContractTransaction(transaction, net)))
       }
     }
   }
