@@ -179,7 +179,6 @@ export const sendTransaction = ({
   sendEntries,
   fees = 0,
   isWatchOnly,
-  chain,
 }: {
   sendEntries: Array<SendEntryType>,
   fees: number,
@@ -201,6 +200,7 @@ export const sendTransaction = ({
   const isHardwareSend = getIsHardwareLogin(state)
   const { tokens, chain } = state.spunky.settings.data
 
+  console.log(tokensBalanceMap)
   return chain === 'neo3'
     ? new Promise(async (resolve, reject) => {
         try {
@@ -230,7 +230,7 @@ export const sendTransaction = ({
 
           const nep17Intents = sendEntries.map(
             ({ address, amount, symbol }) => {
-              const { scriptHash } = tokens.find(
+              const token = tokens.find(
                 // eslint-disable-next-line eqeqeq
                 t => t.networkId == 2 && t.symbol === symbol,
               )
@@ -238,7 +238,10 @@ export const sendTransaction = ({
                 from: CONFIG.account,
                 to: address,
                 decimalAmt: amount,
-                contractHash: scriptHash,
+                contractHash: token
+                  ? token.scriptHash
+                  : tokensBalanceMap[symbol] &&
+                    tokensBalanceMap[symbol].scriptHash,
               }
               return intent
             },

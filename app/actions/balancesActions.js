@@ -342,9 +342,26 @@ async function getN3Balances({ net, address }: Props) {
           console.error({ e })
         })
       const symbol = atob(tokenNameResponse.stack[0].value)
-      const parsedAmount = convertToArbitraryDecimals(amount)
-      balances[symbol] = parsedAmount
+      const decimalResponse = await new n3Rpc.RPCClient(NODE_URL)
+        .invokeFunction(assethash, 'decimals')
+        .catch(e => {
+          console.error({ e })
+        })
+      const decimals = decimalResponse.stack[0].value
+      const parsedAmount = convertToArbitraryDecimals(amount, decimals)
+      if (symbol === 'NEO' || symbol === 'GAS') {
+        balances[symbol] = Number(parsedAmount)
+      } else {
+        balances[assethash] = {
+          symbol,
+          cryptocompareSymbol: undefined,
+          scriptHash: assethash,
+          decimals,
+          balance: parsedAmount,
+        }
+      }
     }
+
     return balances
   } catch (e) {
     return balances
