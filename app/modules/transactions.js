@@ -200,7 +200,6 @@ export const sendTransaction = ({
   const isHardwareSend = getIsHardwareLogin(state)
   const { tokens, chain } = state.spunky.settings.data
 
-  console.log(tokensBalanceMap)
   return chain === 'neo3'
     ? new Promise(async (resolve, reject) => {
         try {

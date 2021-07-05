@@ -23,7 +23,6 @@ import { imageMap } from '../../../assets/nep5/png'
 const mapPricesDataToProps = prices => ({ prices })
 
 const filterZeroBalanceTokens = balances =>
-  console.log({ balances }) ||
   filter(balances, token => toBigNumber(token.balance).gt(0))
 
 const sortedByImage = a => {
