@@ -165,10 +165,10 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@cityofzion/neon-api@^5.0.0-next.12":
-  version "5.0.0-next.12"
-  resolved "https://registry.yarnpkg.com/@cityofzion/neon-api/-/neon-api-5.0.0-next.12.tgz#a664554bcb72bdcb0abc6ff60f7894ca5a77ba10"
-  integrity sha512-AV4TVil2aA2+ao+f9rWrvFr5E/U3tqVD73Px2HptaFMCL/fsxwE04oyJRatrA663xqd5CC6XCT7xzJC433m0Iw==
+"@cityofzion/neon-api@^5.0.0-next.13":
+  version "5.0.0-next.13"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neon-api/-/neon-api-5.0.0-next.13.tgz#4740f7b60390b20d6a311b5db8755775ec806440"
+  integrity sha512-ThiuSlTtUnGdVurv2MSIK0OrLAsqq2z+pQzwAeeZbjsyVViNERaisQrFUTzPivNnIFePGDMtpxhjKiKDOBa5DQ==
   dependencies:
     axios "0.21.1"
     isomorphic-ws "4.0.1"
@@ -191,12 +191,12 @@
     loglevel-plugin-prefix "0.8.4"
     scrypt-js "3.0.1"
 
-"@cityofzion/neon-js-next@npm:@cityofzion/neon-js@5.0.0-next.12":
-  version "5.0.0-next.12"
-  resolved "https://registry.yarnpkg.com/@cityofzion/neon-js/-/neon-js-5.0.0-next.12.tgz#f69b90fe60b5ef97cacc56c3dcf22290be8d076a"
-  integrity sha512-Uc9FyXPNJa0BHqjmw2zwdtR6LSOVKd96kp11juIR/VVAulTDY9rjzNK0iCVNDfKj+XVCJm4nl5jY2W09mKY4wg==
+"@cityofzion/neon-js-next@npm:@cityofzion/neon-js@5.0.0-next.13":
+  version "5.0.0-next.13"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neon-js/-/neon-js-5.0.0-next.13.tgz#11612878df353a5b18cb16cf6c7f883bf28eca70"
+  integrity sha512-m8fsnEKFnQGhiEJ7A5n0Zr8hph3P7tiVZcBfBnnIERSDp/3fyK2waeq8mPlyoYgkb99ppOX6dzBFFKrA+VS+XA==
   dependencies:
-    "@cityofzion/neon-api" "^5.0.0-next.12"
+    "@cityofzion/neon-api" "^5.0.0-next.13"
     "@cityofzion/neon-core" "^5.0.0-next.12"
 
 "@cityofzion/neon-js@3.11.9":
