@@ -85,7 +85,7 @@
   },
   "dependencies": {
     "@cityofzion/neon-js": "3.11.9",
-    "@cityofzion/neon-js-next": "npm:@cityofzion/neon-js@5.0.0-next.11",
+    "@cityofzion/neon-js-next": "npm:@cityofzion/neon-js@5.0.0-next.12",
     "@formatjs/intl-pluralrules": "^1.5.2",
     "@ledgerhq/hw-transport-node-hid": "5.0.0",
     "axios": "0.21.1",

@@ -20,6 +20,7 @@ const INVALID_TX_ERROR_MESSAGE = 'Unknown transaction'
 export const parseContractTransaction = async (
   transaction: PendingTransaction,
   net: string,
+  chain: string,
 ): Promise<Array<ParsedPendingTransaction>> => {
   const parsedData = []
   // eslint-disable-next-line camelcase
@@ -39,7 +40,14 @@ export const parseContractTransaction = async (
       blocktime,
       amount: toBigNumber(send.amount).toString(),
       to: send.address,
-      asset: await findAndReturnTokenInfo('', net, send.symbol),
+      asset:
+        chain === 'neo3'
+          ? await findAndReturnTokenInfo(
+              send.contractHash || '',
+              net,
+              send.symbol,
+            )
+          : await findAndReturnTokenInfo('', net, send.symbol),
     })
   }
   return parsedData
@@ -77,6 +85,7 @@ export const parseInvocationTransaction = (
 export const parseTransactionInfo = async (
   pendingTransactionsInfo: Array<PendingTransaction>,
   net: string,
+  chain: string,
 ) => {
   const parsedData: Array<ParsedPendingTransaction> = []
 
@@ -85,7 +94,9 @@ export const parseTransactionInfo = async (
       if (transaction.type === 'InvocationTransaction') {
         parsedData.push(...parseInvocationTransaction(transaction))
       } else {
-        parsedData.push(...(await parseContractTransaction(transaction, net)))
+        parsedData.push(
+          ...(await parseContractTransaction(transaction, net, chain)),
+        )
       }
     }
   }
@@ -168,7 +179,7 @@ export const fetchTransactionInfo = async (
       }
     }
 
-    return parseTransactionInfo(pendingTransactionInfo, net)
+    return parseTransactionInfo(pendingTransactionInfo, net, chain)
   }
   return []
 }
