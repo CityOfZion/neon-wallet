@@ -209,6 +209,14 @@ export const sendTransaction = ({
               - Node url should come from settings
           */
 
+          if (!isWatchOnly)
+            dispatch(
+              showInfoNotification({
+                message: 'Broadcasting transaction to network...',
+                autoDismiss: 0,
+              }),
+            )
+
           const NODE_URL = 'https://testnet2.neo.coz.io:443'
           const FROM_ACCOUNT = new n3Wallet.Account(wif)
           const CONFIG = {
