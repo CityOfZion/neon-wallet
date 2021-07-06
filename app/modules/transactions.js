@@ -199,7 +199,6 @@ export const sendTransaction = ({
   const publicKey = getPublicKey(state)
   const isHardwareSend = getIsHardwareLogin(state)
   const { tokens, chain } = state.spunky.settings.data
-
   return chain === 'neo3'
     ? new Promise(async (resolve, reject) => {
         try {
@@ -227,24 +226,25 @@ export const sendTransaction = ({
             signingCallback: n3Api.signWithAccount(CONFIG.account),
           }
 
-          const nep17Intents = sendEntries.map(
-            ({ address, amount, symbol }) => {
-              const token = tokens.find(
-                // eslint-disable-next-line eqeqeq
-                t => t.networkId == 2 && t.symbol === symbol,
-              )
-              const intent = {
-                from: CONFIG.account,
-                to: address,
-                decimalAmt: amount,
-                contractHash: token
-                  ? token.scriptHash
-                  : tokensBalanceMap[symbol] &&
-                    tokensBalanceMap[symbol].scriptHash,
-              }
-              return intent
-            },
-          )
+          const nep17Intents = sendEntries.map(entry => {
+            const { address, amount, symbol } = entry
+            const token = tokens.find(
+              // eslint-disable-next-line eqeqeq
+              t => t.networkId == 2 && t.symbol === symbol,
+            )
+            const contractHash = token
+              ? token.scriptHash
+              : tokensBalanceMap[symbol] && tokensBalanceMap[symbol].scriptHash
+
+            entry.contractHash = contractHash || ''
+            const intent = {
+              from: CONFIG.account,
+              to: address,
+              decimalAmt: amount,
+              contractHash,
+            }
+            return intent
+          })
 
           const results = await facade.transferToken(
             nep17Intents,
