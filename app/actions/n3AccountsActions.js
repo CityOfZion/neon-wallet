@@ -10,8 +10,13 @@ import { Account } from '../core/schemas'
 
 const STORAGE_KEY = 'n3UserWallet'
 
-export const getWallet = async (): Promise<Object> =>
-  (await getStorage(STORAGE_KEY)) || N3_DEFAULT_WALLET
+export const getWallet = async (): Promise<Object> => {
+  const storedWallet = getStorage(STORAGE_KEY)
+  if (storedWallet && storedWallet.accounts) {
+    return storedWallet
+  }
+  return N3_DEFAULT_WALLET
+}
 
 export const setWallet = async (wallet: Object) => {
   setStorage(STORAGE_KEY, wallet)
