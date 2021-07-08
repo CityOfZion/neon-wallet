@@ -1,9 +1,6 @@
 // @flow
 import { api, u, rpc, sc, wallet } from '@cityofzion/neon-js'
-import N3Neon, {
-  wallet as n3Wallet,
-  rpc as n3Rpc,
-} from '@cityofzion/neon-js-next'
+import { rpc as n3Rpc } from '@cityofzion/neon-js-next'
 import { extend, isEmpty, get } from 'lodash-es'
 import { createActions } from 'spunky'
 import { Howl } from 'howler'
@@ -345,9 +342,26 @@ async function getN3Balances({ net, address }: Props) {
           console.error({ e })
         })
       const symbol = atob(tokenNameResponse.stack[0].value)
-      const parsedAmount = convertToArbitraryDecimals(amount)
-      balances[symbol] = parsedAmount
+      const decimalResponse = await new n3Rpc.RPCClient(NODE_URL)
+        .invokeFunction(assethash, 'decimals')
+        .catch(e => {
+          console.error({ e })
+        })
+      const decimals = decimalResponse.stack[0].value
+      const parsedAmount = convertToArbitraryDecimals(amount, decimals)
+      if (symbol === 'NEO' || symbol === 'GAS') {
+        balances[symbol] = Number(parsedAmount)
+      } else {
+        balances[assethash] = {
+          symbol,
+          cryptocompareSymbol: undefined,
+          scriptHash: assethash,
+          decimals,
+          balance: parsedAmount,
+        }
+      }
     }
+
     return balances
   } catch (e) {
     return balances
@@ -356,7 +370,8 @@ async function getN3Balances({ net, address }: Props) {
 
 export default createActions(
   ID,
-  ({ net, address, tokens, chain }: Props = {}) => async () => {
+  ({ net, address, tokens }: Props = {}) => async () => {
+    const { chain } = await getSettings()
     if (chain === 'neo3') {
       return getN3Balances({ net, address, tokens })
     }

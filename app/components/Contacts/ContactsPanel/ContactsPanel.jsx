@@ -20,8 +20,6 @@ import CopyToClipboard from '../../CopyToClipboard'
 import LogoWithStrikethrough from '../../LogoWithStrikethrough'
 
 import styles from './ContactsPanel.scss'
-import { getChains } from '../../../actions/contactsActions'
-import type { TChains } from '../../../actions/contactsActions'
 
 type Contact = {
   address: string,
@@ -41,7 +39,6 @@ type Props = {
   showSuccessNotification: ({ message: string }) => void,
   showModal: (modalType: string, modalProps: Object) => any,
   intl: IntlShape,
-  chain: string,
 }
 
 type State = {
@@ -49,7 +46,6 @@ type State = {
     label: string,
     value: OrderDirection,
   },
-  contactChains: TChains,
 }
 
 type SelectOption = {
@@ -71,31 +67,14 @@ const SORTING_OPTIONS = [
 const getContactsInGroups = (
   contacts: Contacts,
   orderDirection: OrderDirection,
-  contactChains: TChains,
-  chain: string,
 ) => {
-  const chainSpecificContacts = contactChains.filter(
-    contactChain => contactChain.chain === chain,
-  )
   /* $FlowFixMe */
-  const contactsArray: Array<Contacts> = Object.entries(contacts)
-    .map(([name, address]) => {
-      if (
-        chainSpecificContacts.find(
-          contactSpecifcChain => contactSpecifcChain.contactKey === name,
-        )
-      ) {
-        return {
-          name,
-          address,
-        }
-      }
-      return {
-        name: null,
-        address: null,
-      }
-    })
-    .filter(contact => contact.name !== null && contact.address !== null)
+  const contactsArray: Array<Contacts> = Object.entries(contacts).map(
+    ([name, address]) => ({
+      name,
+      address,
+    }),
+  )
 
   const groupContactsByFirstLetter = groupBy(
     contactsArray,
@@ -119,12 +98,6 @@ const getContactsInGroups = (
 export default class ContactsPanel extends React.Component<Props, State> {
   state = {
     sorting: SORTING_OPTIONS[0],
-    contactChains: [],
-  }
-
-  async componentDidMount() {
-    const contactChains = await getChains()
-    this.setState(prevState => ({ ...prevState, contactChains }))
   }
 
   renderHeader = () => {
@@ -208,8 +181,8 @@ export default class ContactsPanel extends React.Component<Props, State> {
   }
 
   render() {
-    const { contacts, chain } = this.props
-    const { sorting, contactChains } = this.state
+    const { contacts } = this.props
+    const { sorting } = this.state
 
     return (
       <React.Fragment>
@@ -236,19 +209,16 @@ export default class ContactsPanel extends React.Component<Props, State> {
             </div>
           ) : (
             <div className={styles.contacts}>
-              {getContactsInGroups(
-                contacts,
-                sorting.value,
-                contactChains,
-                chain,
-              ).map(({ groupName, groupContacts }) => (
-                <div key={`group${groupName}`}>
-                  <div className={styles.groupHeader}>{groupName}</div>
-                  {groupContacts.map(({ address, name }, i) =>
-                    this.renderContact(address, name, i),
-                  )}
-                </div>
-              ))}
+              {getContactsInGroups(contacts, sorting.value).map(
+                ({ groupName, groupContacts }) => (
+                  <div key={`group${groupName}`}>
+                    <div className={styles.groupHeader}>{groupName}</div>
+                    {groupContacts.map(({ address, name }, i) =>
+                      this.renderContact(address, name, i),
+                    )}
+                  </div>
+                ),
+              )}
             </div>
           )}
         </Panel>

@@ -2,7 +2,7 @@
 import { createActions } from 'spunky'
 import { wallet } from '@cityofzion/neon-js'
 import { has, isEmpty, keys, values, indexOf, zipObject, omit } from 'lodash-es'
-
+import { getSettings } from './settingsActions'
 import { getStorage, setStorage } from '../core/storage'
 
 export const ID = 'contacts'
@@ -90,8 +90,42 @@ export const cleanContacts = async () => {
   await setStorage(STORAGE_KEY_CHAIN, [])
 }
 
-export const getContacts = async (): Promise<Contacts> =>
-  getStorage(STORAGE_KEY)
+export const getContacts = async (): Promise<Contacts> => {
+  const { chain } = await getSettings()
+  const contacts: Contacts = await getStorage(STORAGE_KEY)
+  const ContactsChains: TChains = await getStorage(STORAGE_KEY_CHAIN)
+  let contactsByChain: Contacts = {}
+  const chainSpecificContacts = ContactsChains.filter(
+    contactChain => contactChain.chain === chain,
+  )
+  const contactsArray: Array<{
+    name: string,
+    address: string,
+  }> = Object.entries(contacts)
+    .map(([name, address]) => {
+      if (
+        chainSpecificContacts.find(
+          contactSpecifcChain => contactSpecifcChain.contactKey === name,
+        )
+      ) {
+        return {
+          name, /* $FlowFixMe */
+          address,
+        }
+      }
+      return {
+        name: '',
+        address: '',
+      }
+    })
+    .filter(contact => contact.name !== '' && contact.address !== '')
+
+  contactsArray.forEach(c => {
+    contactsByChain = { ...contactsByChain, [c.name]: c.address }
+  })
+
+  return new Promise(resolve => resolve(contactsByChain))
+}
 
 const setContacts = async (contacts: Contacts): Promise<any> =>
   setStorage(STORAGE_KEY, contacts)
