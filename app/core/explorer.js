@@ -24,7 +24,7 @@ export const getExplorerBaseURL = (
     }
     // TODO: Update when Dora supports testnet in its url structure
     case DORA: {
-      return isMainNet ? 'https://dora.coz.io' : 'https://dora.coz.io'
+      return 'https://dora.coz.io'
     }
     case NEOTUBE: {
       return isMainNet ? 'https://neotube.io' : 'https://testnet.neotube.io'
@@ -62,8 +62,11 @@ export const getExplorerAddressLink = (
   networkId: string,
   explorer: ExplorerType,
   address: string,
+  chain: string,
 ) => {
   const baseURL = getExplorerBaseURL(networkId, explorer)
+  const isMainNet = isMainNetwork(networkId)
+  const network = isMainNet ? 'mainnet' : 'testnet'
 
   switch (explorer) {
     case NEO_TRACKER:
@@ -75,7 +78,7 @@ export const getExplorerAddressLink = (
     case NEOTUBE:
       return `${baseURL}/address/${address}`
     case DORA:
-      return `${baseURL}/address/neo2/mainnet/${address}`
+      return `${baseURL}/address/${chain}/${network}/${address}`
     default:
       throw new Error(`Unknown explorer ${explorer}`)
   }
@@ -113,7 +116,8 @@ export const openExplorerAddress = (
   networkId: string,
   explorer: ExplorerType,
   address: string,
-) => openExternal(getExplorerAddressLink(networkId, explorer, address))
+  chain: string,
+) => openExternal(getExplorerAddressLink(networkId, explorer, address, chain))
 
 export const openExplorerAsset = (
   networkId: string,
