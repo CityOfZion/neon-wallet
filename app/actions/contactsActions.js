@@ -9,7 +9,8 @@ export const ID = 'contacts'
 
 export type TChains = { contactKey: string, chain: string }[]
 type Contacts = {
-  [name: string]: string,
+  name: string,
+  address: string,
 }
 
 const STORAGE_KEY_CHAIN = 'chainBook'
@@ -90,19 +91,17 @@ export const cleanContacts = async () => {
   await setStorage(STORAGE_KEY_CHAIN, [])
 }
 
-export const getContacts = async (): Promise<Contacts> => {
+export const getContacts = async () => {
   const { chain } = await getSettings()
   const contacts: Contacts = await getStorage(STORAGE_KEY)
   const ContactsChains: TChains = await getStorage(STORAGE_KEY_CHAIN)
-  let contactsByChain: Contacts = {}
+  let contactsByChain: Contacts = { address: '', name: '' }
+
   const chainSpecificContacts = ContactsChains.filter(
     contactChain => contactChain.chain === chain,
   )
-  const contactsArray: Array<{
-    name: string,
-    address: string,
-  }> = Object.entries(contacts)
-    .map(([name, address]) => {
+  const contactsArray = Object.entries(contacts)
+    .map(([name, address = '']) => {
       if (
         chainSpecificContacts.find(
           contactSpecifcChain => contactSpecifcChain.contactKey === name,
@@ -124,7 +123,7 @@ export const getContacts = async (): Promise<Contacts> => {
     contactsByChain = { ...contactsByChain, [c.name]: c.address }
   })
 
-  return new Promise(resolve => resolve(contactsByChain))
+  return contactsByChain
 }
 
 const setContacts = async (contacts: Contacts): Promise<any> =>
