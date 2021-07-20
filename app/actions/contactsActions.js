@@ -109,7 +109,7 @@ export const getContacts = async (): Promise<Contacts> => {
         )
       ) {
         return {
-          name, /* $FlowFixMe */
+          name,
           address,
         }
       }
