@@ -528,6 +528,7 @@ export default class Send extends React.Component<Props, State> {
       showSendModal,
       isWatchOnly,
       showImportModal,
+      chain,
     } = this.props
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 
@@ -574,6 +575,7 @@ export default class Send extends React.Component<Props, State> {
           pushQRCodeData={this.pushQRCodeData}
           isWatchOnly={isWatchOnly}
           showImportModal={showImportModal}
+          chain={chain}
         />
       </section>
     )

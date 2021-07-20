@@ -47,7 +47,6 @@ export default class Receive extends React.Component<Props, State> {
         <FormattedMessage id="receivePageLabel">
           {t => <HeaderBar label={t} shouldRenderRefresh />}
         </FormattedMessage>
-
         <ReceivePanel
           address={address}
           networkId={networkId}
