@@ -39,6 +39,7 @@ type Props = {
   showSuccessNotification: ({ message: string }) => void,
   showModal: (modalType: string, modalProps: Object) => any,
   intl: IntlShape,
+  chain: string,
 }
 
 type State = {

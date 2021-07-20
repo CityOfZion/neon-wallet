@@ -11,7 +11,7 @@ type Props = {
   networkId: NetworkType,
   explorer: ExplorerType,
   address: string,
-  chain?: string,
+  chain: string,
   asWrapper: boolean,
   children: Array<Node>,
 }
