@@ -111,7 +111,7 @@ export default class AssetBalancesPanel extends React.Component<Props> {
         )}
 
         <div className={styles.claim}>
-          {chain === 'neo2' && <Claim className={styles.claimButton} />}
+          <Claim className={styles.claimButton} />
         </div>
       </Panel>
     )
