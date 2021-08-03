@@ -1,5 +1,12 @@
 // @flow
 import { api, type Claims } from '@cityofzion/neon-js'
+import {
+  api as n3Api,
+  wallet as n3Wallet,
+  u as n3U,
+  rpc as n3Rpc,
+  tx,
+} from '@cityofzion/neon-js-next'
 import { map, reduce } from 'lodash-es'
 
 import {
@@ -117,6 +124,54 @@ const getUpdatedClaimableAmount = async ({
   return pollForUpdatedClaimableAmount({ net, address, claimableAmount })
 }
 
+export const handleN3GasClaim = async ({
+  FROM_ACCOUNT,
+  dispatch,
+}: {
+  FROM_ACCOUNT: {},
+  dispatch: DispatchType,
+}) => {
+  // TODO:
+  // - Ledger support/integration
+
+  // TODO: this will have to by dynamic based on test/mainnets
+  const NODE_URL = 'https://testnet2.neo.coz.io:443'
+
+  const CONFIG = {
+    account: FROM_ACCOUNT,
+    rpcAddress: NODE_URL,
+    // TODO: this will have to by dynamic based on test/mainnets
+    networkMagic: 844378958,
+  }
+  const facade = await n3Api.NetworkFacade.fromConfig({
+    node: NODE_URL,
+  })
+  const signingConfig = {
+    signingCallback: n3Api.signWithAccount(CONFIG.account),
+  }
+
+  const results = await facade
+    .claimGas(FROM_ACCOUNT, signingConfig)
+    .catch(e => {
+      console.error(e)
+      dispatch(disableClaim(false))
+      dispatch(
+        showErrorNotification({
+          message: 'Error claiming GAS please try again.',
+        }),
+      )
+    })
+
+  if (results) {
+    dispatch(
+      showSuccessNotification({
+        message: 'Claim was successful! Your balance will update shortly.',
+      }),
+    )
+    setTimeout(() => dispatch(disableClaim(false)), FIVE_MINUTES_MS)
+  }
+}
+
 export const doGasClaim = () => async (
   dispatch: DispatchType,
   getState: GetStateType,
@@ -129,8 +184,15 @@ export const doGasClaim = () => async (
   const privateKey = getWIF(state)
   const signingFunction = getSigningFunction(state)
   const isHardwareClaim = getIsHardwareLogin(state)
+  const wif = getWIF(state)
+  const { chain } = state.spunky.settings.data
 
   dispatch(disableClaim(true))
+
+  if (chain === 'neo3') {
+    const FROM_ACCOUNT = new n3Wallet.Account(wif)
+    return handleN3GasClaim({ FROM_ACCOUNT, dispatch })
+  }
 
   if (isHardwareClaim) {
     dispatch(
