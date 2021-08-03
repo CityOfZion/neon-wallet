@@ -1060,6 +1060,8 @@ exports[`Sidebar renders without crashing 1`] = `
                                               "--button-secondary-background": "#fff",
                                               "--button-secondary-hover": "#F1F5FC",
                                               "--button-secondary-text": "#394152",
+                                              "--chain-switch-background": "#eaf2f7",
+                                              "--chain-switch-text": "#3D4D56",
                                               "--contacts-delete-contact-name": "#394152",
                                               "--contacts-group-header-background": "#F1F5FC",
                                               "--contacts-group-header-text": "#394152",
