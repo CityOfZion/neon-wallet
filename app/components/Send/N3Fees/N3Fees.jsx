@@ -19,7 +19,14 @@ type Props = {
   notEnoughGasCallback: boolean => void,
 }
 
-export default class PriorityFee extends React.Component<Props> {
+export default class N3Fees extends React.Component<Props> {
+  static defaultProps = {
+    fees: {
+      systemFee: 0,
+      networkFee: 0,
+    },
+  }
+
   render() {
     const {
       fees,

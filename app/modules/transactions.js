@@ -279,6 +279,7 @@ export const calculateN3Fees = ({
         networkFee: networkFee.toDecimal(8),
       })
     } catch (e) {
+      console.error(e)
       reject(e)
     }
   })

@@ -1,10 +1,16 @@
 // @flow
 import React from 'react'
+import classNames from 'classnames'
 
 import RefreshButton from '../../containers/Buttons/RefreshButton'
 import { isMainNetwork } from '../../core/networks'
+import { imageMap } from '../../assets/nep5/svg'
+import N3Logo from '../../assets/images/n3_logo.png'
+import OldNeoLogo from '../../assets/images/neo-logo.png'
 
 import styles from './HeaderBar.scss'
+
+const NEO_IMAGE = imageMap.NEO
 
 type Props = {
   label: string,
@@ -13,6 +19,7 @@ type Props = {
   renderRightContent?: () => any,
   networkId: string,
   net: string,
+  chain: string,
 }
 
 export default class HeaderBar extends React.PureComponent<Props> {
@@ -28,6 +35,7 @@ export default class HeaderBar extends React.PureComponent<Props> {
       renderRightContent = () => null,
       networkId,
       net,
+      chain,
     } = this.props
 
     return (
@@ -36,6 +44,33 @@ export default class HeaderBar extends React.PureComponent<Props> {
           <div className={styles.currentNetwork}>{net}</div>
         )}
         <div className={styles.headerBar}>
+          <div
+            className={classNames({
+              [styles.chainLogoContainer]: true,
+              [styles.withBorder]: renderLeftContent() !== null,
+            })}
+          >
+            {chain === 'neo3' ? (
+              <img
+                src={NEO_IMAGE}
+                className={styles.neoLogo}
+                alt="chain-logo"
+              />
+            ) : (
+              <img
+                src={OldNeoLogo}
+                className={styles.neoLogo}
+                alt="chain-logo"
+              />
+            )}
+            <span>
+              {chain === 'neo3' ? (
+                'N3'
+              ) : (
+                <div className={styles.legacyContainer}>Legacy</div>
+              )}
+            </span>
+          </div>
           {label ? <h3> {label}</h3> : renderLeftContent()}
           {shouldRenderRefresh ? <RefreshButton /> : renderRightContent()}
         </div>
