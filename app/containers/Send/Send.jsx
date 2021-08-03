@@ -29,6 +29,9 @@ type Props = {
     sendEntries: Array<SendEntryType>,
     fees: number,
   }) => Object,
+  calculateN3Fees: ({
+    sendEntries: Array<SendEntryType>,
+  }) => Object,
   contacts: Object,
   currencyCode: string,
   address: string,
@@ -50,11 +53,16 @@ type State = {
   sendSuccess: boolean,
   sendError: boolean,
   sendErrorMessage: string,
-
   txid: string,
   fees: number,
   sendRowDetails: Array<Object>,
   address?: string,
+  hasEnoughGas: boolean,
+  n3Fees: {
+    systemFee: string,
+    networkFee: string,
+  },
+  loading: boolean,
 }
 
 export default class Send extends React.Component<Props, State> {
@@ -69,6 +77,12 @@ export default class Send extends React.Component<Props, State> {
       txid: '',
       sendRowDetails: [],
       fees: 0,
+      n3Fees: {
+        systemFee: '0',
+        networkFee: '0',
+      },
+      hasEnoughGas: true,
+      loading: false,
     }
   }
 
@@ -158,6 +172,7 @@ export default class Send extends React.Component<Props, State> {
       if (newState.length > 1) {
         newState.splice(index, 1)
       }
+      this.attemptToCalculateN3Fees(newState)
       return { sendRowDetails: newState }
     })
   }
@@ -193,21 +208,97 @@ export default class Send extends React.Component<Props, State> {
       if (field === 'address') {
         objectToModify.address = value
       }
+
+      if (this.props.chain === 'neo3') {
+        this.attemptToCalculateN3Fees(newState)
+      }
+
       return { sendRowDetails: newState }
     })
   }
 
+  attemptToCalculateN3Fees = async (sendRowDetails: Array<Object>) => {
+    this.setState({ loading: true })
+    const sendEntries = sendRowDetails.map((row: Object) => ({
+      address: row.address,
+      amount: toNumber(row.amount.toString()),
+      symbol: row.asset,
+    }))
+
+    let shouldCalculateFees = true
+
+    // TODO: not exactly sure what the criteria should be for
+    // attempting to calculate fees
+    sendEntries.forEach(entry => {
+      if (!n3Wallet.isAddress(entry.address)) {
+        shouldCalculateFees = false
+      }
+    })
+
+    if (shouldCalculateFees) {
+      const fees = await this.props
+        .calculateN3Fees({ sendEntries })
+        .catch(() => {
+          console.warn('An error occurred attempting to calculate fees')
+        })
+      // eslint-disable-next-line
+      this.setState({
+        n3Fees: fees,
+        loading: false,
+      })
+    }
+  }
+
   calculateMaxValue = (asset: string, index: number = 0) => {
-    const { sendableAssets } = this.props
+    const { sendableAssets, chain } = this.props
+
+    const MIN_EXPECTED_GAS_FEE = 0.072
+
+    if (chain === 'neo2') {
+      if (sendableAssets[asset]) {
+        const rows = [...this.state.sendRowDetails]
+        const rowsWithAsset = rows.filter(row => row.asset === asset)
+        const existingAmounts = this.calculateRowAmounts(asset, index)
+        const decimals = this.calculateDecimals(asset)
+        const totalSendableAssets = toBigNumber(sendableAssets[asset].balance)
+        if (rowsWithAsset.length === 1 || rowsWithAsset.length === 0) {
+          return toNumber(sendableAssets[asset].balance).toFixed(decimals)
+        }
+        return minusNumber(totalSendableAssets, existingAmounts).toFixed(
+          decimals,
+        )
+      }
+      return '0'
+    }
+
     if (sendableAssets[asset]) {
       const rows = [...this.state.sendRowDetails]
       const rowsWithAsset = rows.filter(row => row.asset === asset)
       const existingAmounts = this.calculateRowAmounts(asset, index)
       const decimals = this.calculateDecimals(asset)
-      const totalSendableAssets = toBigNumber(sendableAssets[asset].balance)
-      if (rowsWithAsset.length === 1 || rowsWithAsset.length === 0) {
-        return toNumber(sendableAssets[asset].balance).toFixed(decimals)
+      let totalSendableAssets = toBigNumber(sendableAssets[asset].balance)
+
+      if (asset === 'GAS') {
+        const existingGasAmounts =
+          Number(this.calculateRowAmounts(asset, index)) - MIN_EXPECTED_GAS_FEE
+
+        totalSendableAssets = minusNumber(
+          totalSendableAssets,
+          MIN_EXPECTED_GAS_FEE * rowsWithAsset.length,
+        )
+
+        if (rowsWithAsset.length === 1 || rowsWithAsset.length === 0) {
+          return toNumber(totalSendableAssets).toFixed(decimals)
+        }
+        return minusNumber(totalSendableAssets, existingGasAmounts).toFixed(
+          decimals,
+        )
       }
+
+      if (rowsWithAsset.length === 1 || rowsWithAsset.length === 0) {
+        return toNumber(totalSendableAssets).toFixed(decimals)
+      }
+
       return minusNumber(totalSendableAssets, existingAmounts).toFixed(decimals)
     }
     return '0'
@@ -318,7 +409,6 @@ export default class Send extends React.Component<Props, State> {
       }
       return accum
     }, {})
-
     return validAmounts
   }
 
@@ -508,6 +598,9 @@ export default class Send extends React.Component<Props, State> {
   resetViewsAfterError = () =>
     this.setState({ sendError: false, sendErrorMessage: '' })
 
+  toggleHasEnoughGas = (hasEnough: boolean = false) =>
+    this.setState({ hasEnoughGas: hasEnough })
+
   render() {
     const {
       sendRowDetails,
@@ -518,6 +611,9 @@ export default class Send extends React.Component<Props, State> {
       txid,
       fees,
       pendingTransaction,
+      n3Fees,
+      hasEnoughGas,
+      loading,
     } = this.state
     const {
       sendableAssets,
@@ -576,6 +672,10 @@ export default class Send extends React.Component<Props, State> {
           isWatchOnly={isWatchOnly}
           showImportModal={showImportModal}
           chain={chain}
+          n3Fees={n3Fees}
+          hasEnoughGas={hasEnoughGas}
+          loading={loading}
+          toggleHasEnoughGas={this.toggleHasEnoughGas}
         />
       </section>
     )

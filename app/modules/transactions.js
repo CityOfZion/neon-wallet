@@ -1,7 +1,13 @@
 // @flow
 /* eslint-disable camelcase */
 import { api, sc, u, wallet, settings } from '@cityofzion/neon-js'
-import { api as n3Api, wallet as n3Wallet } from '@cityofzion/neon-js-next'
+import {
+  api as n3Api,
+  wallet as n3Wallet,
+  u as n3U,
+  rpc as n3Rpc,
+  tx,
+} from '@cityofzion/neon-js-next'
 import { flatMap, keyBy, isEmpty, get } from 'lodash-es'
 
 import {
@@ -175,6 +181,108 @@ export const checkConfigForFees = (config: {
     return resolve()
   })
 
+const buildNep17IntentsFromEntries = (
+  sendEntries: Array<SendEntryType>,
+  tokens,
+  tokensBalanceMap,
+  config,
+) =>
+  sendEntries.map(entry => {
+    const { address, amount, symbol } = entry
+    const token = tokens.find(
+      // eslint-disable-next-line eqeqeq
+      t => t.networkId == 2 && t.symbol === symbol,
+    )
+    const contractHash = token
+      ? token.scriptHash
+      : tokensBalanceMap[symbol] && tokensBalanceMap[symbol].scriptHash
+
+    entry.contractHash = contractHash || ''
+    const intent = {
+      from: config.account,
+      to: address,
+      decimalAmt: 30000,
+      contractHash,
+    }
+    return intent
+  })
+
+export const calculateN3Fees = ({
+  sendEntries,
+}: {
+  sendEntries: Array<SendEntryType>,
+}) => (dispatch: DispatchType, getState: GetStateType): Promise<*> =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const NODE_URL = 'https://testnet2.neo.coz.io:443'
+      const client = new n3Rpc.NeoServerRpcClient(NODE_URL)
+      const state = getState()
+      const wif = getWIF(state)
+      const FROM_ACCOUNT = new n3Wallet.Account(wif)
+      const tokenBalances = getTokenBalances(state)
+      const tokensBalanceMap = keyBy(tokenBalances, 'symbol')
+      const { tokens } = state.spunky.settings.data
+
+      const intents = buildNep17IntentsFromEntries(
+        sendEntries,
+        tokens,
+        tokensBalanceMap,
+        { account: FROM_ACCOUNT },
+      )
+
+      const txBuilder = new n3Api.TransactionBuilder()
+      for (const intent of intents) {
+        if (intent.decimalAmt) {
+          const [tokenInfo] = await n3Api.getTokenInfos(
+            [intent.contractHash],
+            client,
+          )
+          const amt = n3U.BigInteger.fromDecimal(
+            intent.decimalAmt,
+            tokenInfo.decimals,
+          )
+          txBuilder.addNep17Transfer(
+            intent.from,
+            intent.to,
+            intent.contractHash,
+            amt,
+          )
+        }
+      }
+      const { feePerByte, executionFeeFactor } = await n3Api.getFeeInformation(
+        client,
+      )
+
+      const txn = txBuilder.build()
+
+      const networkFee = await n3Api.calculateNetworkFee(
+        txn,
+        feePerByte,
+        executionFeeFactor,
+      )
+
+      const invokeFunctionResponse = await client.invokeScript(
+        n3U.HexString.fromHex(txn.script),
+        [
+          {
+            account: FROM_ACCOUNT.scriptHash,
+            scopes: tx.WitnessScope.CalledByEntry,
+          },
+        ],
+      )
+      const requiredSystemFee = n3U.BigInteger.fromNumber(
+        invokeFunctionResponse.gasconsumed,
+      )
+
+      return resolve({
+        systemFee: requiredSystemFee.toDecimal(8),
+        networkFee: networkFee.toDecimal(8),
+      })
+    } catch (e) {
+      reject(e)
+    }
+  })
+
 export const sendTransaction = ({
   sendEntries,
   fees = 0,
@@ -234,25 +342,12 @@ export const sendTransaction = ({
             signingCallback: n3Api.signWithAccount(CONFIG.account),
           }
 
-          const nep17Intents = sendEntries.map(entry => {
-            const { address, amount, symbol } = entry
-            const token = tokens.find(
-              // eslint-disable-next-line eqeqeq
-              t => t.networkId == 2 && t.symbol === symbol,
-            )
-            const contractHash = token
-              ? token.scriptHash
-              : tokensBalanceMap[symbol] && tokensBalanceMap[symbol].scriptHash
-
-            entry.contractHash = contractHash || ''
-            const intent = {
-              from: CONFIG.account,
-              to: address,
-              decimalAmt: amount,
-              contractHash,
-            }
-            return intent
-          })
+          const nep17Intents = buildNep17IntentsFromEntries(
+            sendEntries,
+            tokens,
+            tokensBalanceMap,
+            CONFIG,
+          )
 
           const results = await facade.transferToken(
             nep17Intents,
