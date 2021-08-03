@@ -338,9 +338,9 @@ exports[`Sidebar renders without crashing 1`] = `
               }
             }
           >
-            <withRouter(Connect(withData(Connect(withData(Connect(withCall(Connect(withData(Sidebar)))))))))>
+            <withRouter(Connect(withData(Connect(withData(withProps(Connect(withData(Connect(withData(Sidebar))))))))))>
               <Route>
-                <Connect(withData(Connect(withData(Connect(withCall(Connect(withData(Sidebar))))))))
+                <Connect(withData(Connect(withData(withProps(Connect(withData(Connect(withData(Sidebar)))))))))
                   history={
                     Object {
                       "action": "POP",
@@ -388,7 +388,7 @@ exports[`Sidebar renders without crashing 1`] = `
                     }
                   }
                 >
-                  <withData(Connect(withData(Connect(withCall(Connect(withData(Sidebar)))))))
+                  <withData(Connect(withData(withProps(Connect(withData(Connect(withData(Sidebar))))))))
                     dispatch={[Function]}
                     history={
                       Object {
@@ -438,7 +438,7 @@ exports[`Sidebar renders without crashing 1`] = `
                       }
                     }
                   >
-                    <withData(Connect(withCall(Connect(withData(Sidebar)))))
+                    <withData(withProps(Connect(withData(Connect(withData(Sidebar))))))
                       dispatch={[Function]}
                       history={
                         Object {
@@ -487,9 +487,9 @@ exports[`Sidebar renders without crashing 1`] = `
                           "url": "/",
                         }
                       }
-                      pendingTransactionsCount={0}
+                      networkId={1}
                     >
-                      <withCall(Connect(withData(Sidebar)))
+                      <Connect(withData(Connect(withData(Sidebar))))
                         dispatch={[Function]}
                         history={
                           Object {
@@ -538,10 +538,10 @@ exports[`Sidebar renders without crashing 1`] = `
                             "url": "/",
                           }
                         }
-                        pendingTransactionsCount={0}
-                        performAction={[Function]}
+                        net="MainNet"
+                        networkId={1}
                       >
-                        <withoutProps(Connect(withData(Sidebar)))
+                        <withData(Connect(withData(Sidebar)))
                           dispatch={[Function]}
                           history={
                             Object {
@@ -590,10 +590,12 @@ exports[`Sidebar renders without crashing 1`] = `
                               "url": "/",
                             }
                           }
+                          net="MainNet"
+                          networkId={1}
                           pendingTransactionsCount={0}
-                          performAction={[Function]}
                         >
-                          <Connect(withData(Sidebar))
+                          <withData(Sidebar)
+                            count={300}
                             dispatch={[Function]}
                             history={
                               Object {
@@ -642,549 +644,498 @@ exports[`Sidebar renders without crashing 1`] = `
                                 "url": "/",
                               }
                             }
+                            net="MainNet"
+                            networkId={1}
                             pendingTransactionsCount={0}
                           >
-                            <withData(Sidebar)
-                              count={300}
-                              dispatch={[Function]}
-                              history={
-                                Object {
-                                  "action": "POP",
-                                  "block": [Function],
-                                  "canGo": [Function],
-                                  "createHref": [Function],
-                                  "entries": Array [
-                                    Object {
-                                      "hash": "",
-                                      "pathname": "/",
-                                      "search": "",
-                                      "state": undefined,
-                                    },
-                                  ],
-                                  "go": [Function],
-                                  "goBack": [Function],
-                                  "goForward": [Function],
-                                  "index": 0,
-                                  "length": 1,
-                                  "listen": [Function],
-                                  "location": Object {
-                                    "hash": "",
-                                    "pathname": "/",
-                                    "search": "",
-                                    "state": undefined,
-                                  },
-                                  "push": [Function],
-                                  "replace": [Function],
-                                }
-                              }
-                              isWatchOnly={false}
-                              location={
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/",
-                                  "search": "",
-                                  "state": undefined,
-                                }
-                              }
-                              match={
-                                Object {
-                                  "isExact": true,
-                                  "params": Object {},
-                                  "path": "/",
-                                  "url": "/",
-                                }
-                              }
-                              pendingTransactionsCount={0}
+                            <div
+                              className="container"
                             >
                               <div
-                                className="container"
+                                className="group"
                               >
-                                <div
-                                  className="group"
+                                <LogoWithTooltipAndBlockHeight
+                                  count={300}
                                 >
-                                  <LogoWithTooltipAndBlockHeight
-                                    count={300}
+                                  <Tooltip
+                                    distance={-60}
+                                    html={
+                                      <Connect(withData(IntlWrapper))
+                                        store={undefined}
+                                      >
+                                        <Connect(Connect(withData(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))))))))))
+                                          store={undefined}
+                                        />
+                                         
+                                      </Connect(withData(IntlWrapper))>
+                                    }
+                                    interactive={true}
+                                    onShow={[Function]}
+                                    position="left"
+                                    theme="network-settings"
                                   >
                                     <Tooltip
+                                      animateFill={true}
+                                      animation="fade"
+                                      arrow={true}
+                                      arrowSize="regular"
+                                      className=""
+                                      delay={0}
+                                      disabled={false}
                                       distance={-60}
+                                      duration={375}
+                                      followCursor={false}
+                                      hideDelay={0}
+                                      hideDuration={375}
+                                      hideOnClick={true}
                                       html={
                                         <Connect(withData(IntlWrapper))
                                           store={undefined}
                                         >
-                                          <Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))))))))
+                                          <Connect(Connect(withData(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))))))))))
                                             store={undefined}
                                           />
                                            
                                         </Connect(withData(IntlWrapper))>
                                       }
+                                      inertia={false}
                                       interactive={true}
+                                      interactiveBorder={2}
+                                      multiple={false}
+                                      offset={0}
+                                      onHidden={[Function]}
+                                      onHide={[Function]}
+                                      onRequestClose={[Function]}
                                       onShow={[Function]}
+                                      onShown={[Function]}
+                                      popperOptions={Object {}}
                                       position="left"
+                                      size="regular"
+                                      sticky={false}
+                                      stickyDuration={200}
+                                      style={Object {}}
                                       theme="network-settings"
-                                    >
-                                      <Tooltip
-                                        animateFill={true}
-                                        animation="fade"
-                                        arrow={true}
-                                        arrowSize="regular"
-                                        className=""
-                                        delay={0}
-                                        disabled={false}
-                                        distance={-60}
-                                        duration={375}
-                                        followCursor={false}
-                                        hideDelay={0}
-                                        hideDuration={375}
-                                        hideOnClick={true}
-                                        html={
-                                          <Connect(withData(IntlWrapper))
-                                            store={undefined}
-                                          >
-                                            <Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))))))))
-                                              store={undefined}
-                                            />
-                                             
-                                          </Connect(withData(IntlWrapper))>
-                                        }
-                                        inertia={false}
-                                        interactive={true}
-                                        interactiveBorder={2}
-                                        multiple={false}
-                                        offset={0}
-                                        onHidden={[Function]}
-                                        onHide={[Function]}
-                                        onRequestClose={[Function]}
-                                        onShow={[Function]}
-                                        onShown={[Function]}
-                                        popperOptions={Object {}}
-                                        position="left"
-                                        size="regular"
-                                        sticky={false}
-                                        stickyDuration={200}
-                                        style={Object {}}
-                                        theme="network-settings"
-                                        touchHold={false}
-                                        trigger="mouseenter focus"
-                                        unmountHTMLWhenHide={false}
-                                      >
-                                        <div
-                                          className=""
-                                          style={
-                                            Object {
-                                              "display": "inline",
-                                            }
-                                          }
-                                        >
-                                          <div
-                                            className="logo"
-                                            id="neon-logo-container"
-                                          >
-                                            <img
-                                              alt="neon-logo"
-                                              id="neon-logo"
-                                              src="test-file-stub"
-                                            />
-                                          </div>
-                                          <div
-                                            className="blockHeight"
-                                            id="block-height-container"
-                                          >
-                                            <div
-                                              className="heightText"
-                                              id="block-height-label"
-                                            >
-                                              <FormattedMessage
-                                                id="sidebarCurrentBlock"
-                                                values={Object {}}
-                                              >
-                                                CURRENT BLOCK
-                                              </FormattedMessage>
-                                            </div>
-                                            <div
-                                              id="block-height"
-                                            >
-                                              300
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </Tooltip>
-                                    </Tooltip>
-                                  </LogoWithTooltipAndBlockHeight>
-                                  <NavLink
-                                    activeClassName="active"
-                                    aria-current="page"
-                                    className="navItem"
-                                    exact={true}
-                                    id="dashboard"
-                                    to="/dashboard"
-                                  >
-                                    <Route
-                                      exact={true}
-                                      path="\\\\/dashboard"
-                                    >
-                                      <Link
-                                        aria-current={null}
-                                        className="navItem"
-                                        id="dashboard"
-                                        replace={false}
-                                        to="/dashboard"
-                                      >
-                                        <a
-                                          aria-current={null}
-                                          className="navItem"
-                                          href="/dashboard"
-                                          id="dashboard"
-                                          onClick={[Function]}
-                                        >
-                                          <Component>
-                                            <svg />
-                                          </Component>
-                                          <div>
-                                            <FormattedMessage
-                                              id="sidebarWallet"
-                                              values={Object {}}
-                                            >
-                                              Wallet
-                                            </FormattedMessage>
-                                          </div>
-                                        </a>
-                                      </Link>
-                                    </Route>
-                                  </NavLink>
-                                  <NavLink
-                                    activeClassName="active"
-                                    aria-current="page"
-                                    className="navItem"
-                                    exact={true}
-                                    id="history"
-                                    to="/transactions"
-                                  >
-                                    <Route
-                                      exact={true}
-                                      path="\\\\/transactions"
-                                    >
-                                      <Link
-                                        aria-current={null}
-                                        className="navItem"
-                                        id="history"
-                                        replace={false}
-                                        to="/transactions"
-                                      >
-                                        <a
-                                          aria-current={null}
-                                          className="navItem"
-                                          href="/transactions"
-                                          id="history"
-                                          onClick={[Function]}
-                                        >
-                                          <Component>
-                                            <svg />
-                                          </Component>
-                                          <div>
-                                             
-                                            <FormattedMessage
-                                              id="sidebarActivity"
-                                              values={Object {}}
-                                            >
-                                              Activity
-                                            </FormattedMessage>
-                                             
-                                          </div>
-                                        </a>
-                                      </Link>
-                                    </Route>
-                                  </NavLink>
-                                  <NavLink
-                                    activeClassName="active"
-                                    aria-current="page"
-                                    className="navItem"
-                                    exact={true}
-                                    id="send"
-                                    to="/send/"
-                                  >
-                                    <Route
-                                      exact={true}
-                                      path="\\\\/send\\\\/"
-                                    >
-                                      <Link
-                                        aria-current={null}
-                                        className="navItem"
-                                        id="send"
-                                        replace={false}
-                                        to="/send/"
-                                      >
-                                        <a
-                                          aria-current={null}
-                                          className="navItem"
-                                          href="/send/"
-                                          id="send"
-                                          onClick={[Function]}
-                                        >
-                                          <Component>
-                                            <svg />
-                                          </Component>
-                                          <div>
-                                             
-                                            <FormattedMessage
-                                              id="sidebarSend"
-                                              values={Object {}}
-                                            >
-                                              Send
-                                            </FormattedMessage>
-                                             
-                                          </div>
-                                        </a>
-                                      </Link>
-                                    </Route>
-                                  </NavLink>
-                                  <NavLink
-                                    activeClassName="active"
-                                    aria-current="page"
-                                    className="navItem"
-                                    exact={true}
-                                    id="receive"
-                                    to="/receive"
-                                  >
-                                    <Route
-                                      exact={true}
-                                      path="\\\\/receive"
-                                    >
-                                      <Link
-                                        aria-current={null}
-                                        className="navItem"
-                                        id="receive"
-                                        replace={false}
-                                        to="/receive"
-                                      >
-                                        <a
-                                          aria-current={null}
-                                          className="navItem"
-                                          href="/receive"
-                                          id="receive"
-                                          onClick={[Function]}
-                                        >
-                                          <Component>
-                                            <svg />
-                                          </Component>
-                                          <div>
-                                             
-                                            <FormattedMessage
-                                              id="sidebarReceive"
-                                              values={Object {}}
-                                            >
-                                              Receive
-                                            </FormattedMessage>
-                                             
-                                          </div>
-                                        </a>
-                                      </Link>
-                                    </Route>
-                                  </NavLink>
-                                  <NavLink
-                                    activeClassName="active"
-                                    aria-current="page"
-                                    className="navItem"
-                                    id="contacts"
-                                    to="/contacts"
-                                  >
-                                    <Route
-                                      path="\\\\/contacts"
-                                    >
-                                      <Link
-                                        aria-current={null}
-                                        className="navItem"
-                                        id="contacts"
-                                        replace={false}
-                                        to="/contacts"
-                                      >
-                                        <a
-                                          aria-current={null}
-                                          className="navItem"
-                                          href="/contacts"
-                                          id="contacts"
-                                          onClick={[Function]}
-                                        >
-                                          <Component>
-                                            <svg />
-                                          </Component>
-                                          <div>
-                                             
-                                            <FormattedMessage
-                                              id="sidebarContacts"
-                                              values={Object {}}
-                                            >
-                                              Contacts
-                                            </FormattedMessage>
-                                             
-                                          </div>
-                                        </a>
-                                      </Link>
-                                    </Route>
-                                  </NavLink>
-                                  <NavLink
-                                    activeClassName="active"
-                                    aria-current="page"
-                                    className="navItem"
-                                    id="News"
-                                    to="/news"
-                                  >
-                                    <Route
-                                      path="\\\\/news"
-                                    >
-                                      <Link
-                                        aria-current={null}
-                                        className="navItem"
-                                        id="News"
-                                        replace={false}
-                                        to="/news"
-                                      >
-                                        <a
-                                          aria-current={null}
-                                          className="navItem"
-                                          href="/news"
-                                          id="News"
-                                          onClick={[Function]}
-                                        >
-                                          <Component>
-                                            <svg />
-                                          </Component>
-                                          <div>
-                                             
-                                            <FormattedMessage
-                                              id="sidebarNews"
-                                              values={Object {}}
-                                            >
-                                              News
-                                            </FormattedMessage>
-                                             
-                                          </div>
-                                        </a>
-                                      </Link>
-                                    </Route>
-                                  </NavLink>
-                                  <NavLink
-                                    activeClassName="active"
-                                    aria-current="page"
-                                    className="navItem"
-                                    id="settings"
-                                    to="/settings"
-                                  >
-                                    <Route
-                                      path="\\\\/settings"
-                                    >
-                                      <Link
-                                        aria-current={null}
-                                        className="navItem"
-                                        id="settings"
-                                        replace={false}
-                                        to="/settings"
-                                      >
-                                        <a
-                                          aria-current={null}
-                                          className="navItem"
-                                          href="/settings"
-                                          id="settings"
-                                          onClick={[Function]}
-                                        >
-                                          <Component>
-                                            <svg />
-                                          </Component>
-                                          <div>
-                                             
-                                            <FormattedMessage
-                                              id="sidebarSettings"
-                                              values={Object {}}
-                                            >
-                                              Settings
-                                            </FormattedMessage>
-                                             
-                                          </div>
-                                        </a>
-                                      </Link>
-                                    </Route>
-                                  </NavLink>
-                                  <NavLink
-                                    activeClassName="active"
-                                    aria-current="page"
-                                    className="mobileNavItem"
-                                    id="mobile"
-                                    to="/mobile"
-                                  >
-                                    <Route
-                                      path="\\\\/mobile"
-                                    >
-                                      <Link
-                                        aria-current={null}
-                                        className="mobileNavItem"
-                                        id="mobile"
-                                        replace={false}
-                                        to="/mobile"
-                                      >
-                                        <a
-                                          aria-current={null}
-                                          className="mobileNavItem"
-                                          href="/mobile"
-                                          id="mobile"
-                                          onClick={[Function]}
-                                        >
-                                          <Component>
-                                            <svg />
-                                          </Component>
-                                          <div>
-                                             Mobile app
-                                          </div>
-                                        </a>
-                                      </Link>
-                                    </Route>
-                                  </NavLink>
-                                </div>
-                                <Connect(withActions(Connect(withActions(Logout))))
-                                  className="group logoutToolTipGroup navItem"
-                                  id="logout"
-                                >
-                                  <withActions(Connect(withActions(Logout)))
-                                    className="group logoutToolTipGroup navItem"
-                                    id="logout"
-                                    logout={[Function]}
-                                  >
-                                    <withActions(Logout)
-                                      className="group logoutToolTipGroup navItem"
-                                      id="logout"
-                                      logout={[Function]}
-                                      promptHasBeenDisplayed={[Function]}
+                                      touchHold={false}
+                                      trigger="mouseenter focus"
+                                      unmountHTMLWhenHide={false}
                                     >
                                       <div
-                                        className="logout group logoutToolTipGroup navItem"
-                                        id="logout"
+                                        className=""
+                                        style={
+                                          Object {
+                                            "display": "inline",
+                                          }
+                                        }
+                                      >
+                                        <div
+                                          className="logo"
+                                          id="neon-logo-container"
+                                        >
+                                          <img
+                                            alt="neon-logo"
+                                            id="neon-logo"
+                                            src="test-file-stub"
+                                          />
+                                        </div>
+                                        <div
+                                          className="blockHeight"
+                                          id="block-height-container"
+                                        >
+                                          <div
+                                            className="heightText"
+                                            id="block-height-label"
+                                          >
+                                            <FormattedMessage
+                                              id="sidebarCurrentBlock"
+                                              values={Object {}}
+                                            >
+                                              CURRENT BLOCK
+                                            </FormattedMessage>
+                                          </div>
+                                          <div
+                                            id="block-height"
+                                          >
+                                            300
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </Tooltip>
+                                  </Tooltip>
+                                </LogoWithTooltipAndBlockHeight>
+                                <NavLink
+                                  activeClassName="active"
+                                  aria-current="page"
+                                  className="navItem"
+                                  exact={true}
+                                  id="dashboard"
+                                  to="/dashboard"
+                                >
+                                  <Route
+                                    exact={true}
+                                    path="\\\\/dashboard"
+                                  >
+                                    <Link
+                                      aria-current={null}
+                                      className="navItem"
+                                      id="dashboard"
+                                      replace={false}
+                                      to="/dashboard"
+                                    >
+                                      <a
+                                        aria-current={null}
+                                        className="navItem"
+                                        href="/dashboard"
+                                        id="dashboard"
                                         onClick={[Function]}
                                       >
                                         <Component>
                                           <svg />
                                         </Component>
-                                        <div
-                                          className="logoutText"
-                                        >
+                                        <div>
                                           <FormattedMessage
-                                            id="sidebarLogout"
+                                            id="sidebarWallet"
                                             values={Object {}}
                                           >
-                                            Logout
+                                            Wallet
                                           </FormattedMessage>
                                         </div>
-                                      </div>
-                                    </withActions(Logout)>
-                                  </withActions(Connect(withActions(Logout)))>
-                                </Connect(withActions(Connect(withActions(Logout))))>
+                                      </a>
+                                    </Link>
+                                  </Route>
+                                </NavLink>
+                                <NavLink
+                                  activeClassName="active"
+                                  aria-current="page"
+                                  className="navItem"
+                                  exact={true}
+                                  id="history"
+                                  to="/transactions"
+                                >
+                                  <Route
+                                    exact={true}
+                                    path="\\\\/transactions"
+                                  >
+                                    <Link
+                                      aria-current={null}
+                                      className="navItem"
+                                      id="history"
+                                      replace={false}
+                                      to="/transactions"
+                                    >
+                                      <a
+                                        aria-current={null}
+                                        className="navItem"
+                                        href="/transactions"
+                                        id="history"
+                                        onClick={[Function]}
+                                      >
+                                        <Component>
+                                          <svg />
+                                        </Component>
+                                        <div>
+                                           
+                                          <FormattedMessage
+                                            id="sidebarActivity"
+                                            values={Object {}}
+                                          >
+                                            Activity
+                                          </FormattedMessage>
+                                           
+                                        </div>
+                                      </a>
+                                    </Link>
+                                  </Route>
+                                </NavLink>
+                                <NavLink
+                                  activeClassName="active"
+                                  aria-current="page"
+                                  className="navItem"
+                                  exact={true}
+                                  id="send"
+                                  to="/send/"
+                                >
+                                  <Route
+                                    exact={true}
+                                    path="\\\\/send\\\\/"
+                                  >
+                                    <Link
+                                      aria-current={null}
+                                      className="navItem"
+                                      id="send"
+                                      replace={false}
+                                      to="/send/"
+                                    >
+                                      <a
+                                        aria-current={null}
+                                        className="navItem"
+                                        href="/send/"
+                                        id="send"
+                                        onClick={[Function]}
+                                      >
+                                        <Component>
+                                          <svg />
+                                        </Component>
+                                        <div>
+                                           
+                                          <FormattedMessage
+                                            id="sidebarSend"
+                                            values={Object {}}
+                                          >
+                                            Send
+                                          </FormattedMessage>
+                                           
+                                        </div>
+                                      </a>
+                                    </Link>
+                                  </Route>
+                                </NavLink>
+                                <NavLink
+                                  activeClassName="active"
+                                  aria-current="page"
+                                  className="navItem"
+                                  exact={true}
+                                  id="receive"
+                                  to="/receive"
+                                >
+                                  <Route
+                                    exact={true}
+                                    path="\\\\/receive"
+                                  >
+                                    <Link
+                                      aria-current={null}
+                                      className="navItem"
+                                      id="receive"
+                                      replace={false}
+                                      to="/receive"
+                                    >
+                                      <a
+                                        aria-current={null}
+                                        className="navItem"
+                                        href="/receive"
+                                        id="receive"
+                                        onClick={[Function]}
+                                      >
+                                        <Component>
+                                          <svg />
+                                        </Component>
+                                        <div>
+                                           
+                                          <FormattedMessage
+                                            id="sidebarReceive"
+                                            values={Object {}}
+                                          >
+                                            Receive
+                                          </FormattedMessage>
+                                           
+                                        </div>
+                                      </a>
+                                    </Link>
+                                  </Route>
+                                </NavLink>
+                                <NavLink
+                                  activeClassName="active"
+                                  aria-current="page"
+                                  className="navItem"
+                                  id="contacts"
+                                  to="/contacts"
+                                >
+                                  <Route
+                                    path="\\\\/contacts"
+                                  >
+                                    <Link
+                                      aria-current={null}
+                                      className="navItem"
+                                      id="contacts"
+                                      replace={false}
+                                      to="/contacts"
+                                    >
+                                      <a
+                                        aria-current={null}
+                                        className="navItem"
+                                        href="/contacts"
+                                        id="contacts"
+                                        onClick={[Function]}
+                                      >
+                                        <Component>
+                                          <svg />
+                                        </Component>
+                                        <div>
+                                           
+                                          <FormattedMessage
+                                            id="sidebarContacts"
+                                            values={Object {}}
+                                          >
+                                            Contacts
+                                          </FormattedMessage>
+                                           
+                                        </div>
+                                      </a>
+                                    </Link>
+                                  </Route>
+                                </NavLink>
+                                <NavLink
+                                  activeClassName="active"
+                                  aria-current="page"
+                                  className="navItem"
+                                  id="News"
+                                  to="/news"
+                                >
+                                  <Route
+                                    path="\\\\/news"
+                                  >
+                                    <Link
+                                      aria-current={null}
+                                      className="navItem"
+                                      id="News"
+                                      replace={false}
+                                      to="/news"
+                                    >
+                                      <a
+                                        aria-current={null}
+                                        className="navItem"
+                                        href="/news"
+                                        id="News"
+                                        onClick={[Function]}
+                                      >
+                                        <Component>
+                                          <svg />
+                                        </Component>
+                                        <div>
+                                           
+                                          <FormattedMessage
+                                            id="sidebarNews"
+                                            values={Object {}}
+                                          >
+                                            News
+                                          </FormattedMessage>
+                                           
+                                        </div>
+                                      </a>
+                                    </Link>
+                                  </Route>
+                                </NavLink>
+                                <NavLink
+                                  activeClassName="active"
+                                  aria-current="page"
+                                  className="navItem"
+                                  id="settings"
+                                  to="/settings"
+                                >
+                                  <Route
+                                    path="\\\\/settings"
+                                  >
+                                    <Link
+                                      aria-current={null}
+                                      className="navItem"
+                                      id="settings"
+                                      replace={false}
+                                      to="/settings"
+                                    >
+                                      <a
+                                        aria-current={null}
+                                        className="navItem"
+                                        href="/settings"
+                                        id="settings"
+                                        onClick={[Function]}
+                                      >
+                                        <Component>
+                                          <svg />
+                                        </Component>
+                                        <div>
+                                           
+                                          <FormattedMessage
+                                            id="sidebarSettings"
+                                            values={Object {}}
+                                          >
+                                            Settings
+                                          </FormattedMessage>
+                                           
+                                        </div>
+                                      </a>
+                                    </Link>
+                                  </Route>
+                                </NavLink>
+                                <NavLink
+                                  activeClassName="active"
+                                  aria-current="page"
+                                  className="mobileNavItem"
+                                  id="mobile"
+                                  to="/mobile"
+                                >
+                                  <Route
+                                    path="\\\\/mobile"
+                                  >
+                                    <Link
+                                      aria-current={null}
+                                      className="mobileNavItem"
+                                      id="mobile"
+                                      replace={false}
+                                      to="/mobile"
+                                    >
+                                      <a
+                                        aria-current={null}
+                                        className="mobileNavItem"
+                                        href="/mobile"
+                                        id="mobile"
+                                        onClick={[Function]}
+                                      >
+                                        <Component>
+                                          <svg />
+                                        </Component>
+                                        <div>
+                                           Mobile app
+                                        </div>
+                                      </a>
+                                    </Link>
+                                  </Route>
+                                </NavLink>
                               </div>
-                            </withData(Sidebar)>
-                          </Connect(withData(Sidebar))>
-                        </withoutProps(Connect(withData(Sidebar)))>
-                      </withCall(Connect(withData(Sidebar)))>
-                    </withData(Connect(withCall(Connect(withData(Sidebar)))))>
-                  </withData(Connect(withData(Connect(withCall(Connect(withData(Sidebar)))))))>
-                </Connect(withData(Connect(withData(Connect(withCall(Connect(withData(Sidebar))))))))>
+                              <Connect(withActions(Connect(withActions(Logout))))
+                                className="group logoutToolTipGroup navItem"
+                                id="logout"
+                              >
+                                <withActions(Connect(withActions(Logout)))
+                                  className="group logoutToolTipGroup navItem"
+                                  id="logout"
+                                  logout={[Function]}
+                                >
+                                  <withActions(Logout)
+                                    className="group logoutToolTipGroup navItem"
+                                    id="logout"
+                                    logout={[Function]}
+                                    promptHasBeenDisplayed={[Function]}
+                                  >
+                                    <div
+                                      className="logout group logoutToolTipGroup navItem"
+                                      id="logout"
+                                      onClick={[Function]}
+                                    >
+                                      <Component>
+                                        <svg />
+                                      </Component>
+                                      <div
+                                        className="logoutText"
+                                      >
+                                        <FormattedMessage
+                                          id="sidebarLogout"
+                                          values={Object {}}
+                                        >
+                                          Logout
+                                        </FormattedMessage>
+                                      </div>
+                                    </div>
+                                  </withActions(Logout)>
+                                </withActions(Connect(withActions(Logout)))>
+                              </Connect(withActions(Connect(withActions(Logout))))>
+                            </div>
+                          </withData(Sidebar)>
+                        </withData(Connect(withData(Sidebar)))>
+                      </Connect(withData(Connect(withData(Sidebar))))>
+                    </withData(withProps(Connect(withData(Connect(withData(Sidebar))))))>
+                  </withData(Connect(withData(withProps(Connect(withData(Connect(withData(Sidebar))))))))>
+                </Connect(withData(Connect(withData(withProps(Connect(withData(Connect(withData(Sidebar)))))))))>
               </Route>
-            </withRouter(Connect(withData(Connect(withData(Connect(withCall(Connect(withData(Sidebar)))))))))>
+            </withRouter(Connect(withData(Connect(withData(withProps(Connect(withData(Connect(withData(Sidebar))))))))))>
           </Router>
         </MemoryRouter>
       </IntlProvider>
