@@ -1,13 +1,12 @@
 // @flow
 import React from 'react'
 import Switch from 'react-switch'
+import classNames from 'classnames'
 
 import styles from './ChainSwitch.scss'
 import { imageMap } from '../../assets/nep5/svg'
-import N3Logo from '../../assets/images/n3_logo.png'
 import OldNeoLogo from '../../assets/images/neo-logo.png'
 import { THEMES } from '../../core/constants'
-import classNames from 'classnames'
 
 const NEO_IMAGE = imageMap.NEO
 
@@ -43,14 +42,10 @@ export default class CloseButton extends React.Component<Props> {
               checked={chain === 'neo3'}
               onChange={updateChain}
               onColor={onColor}
-              // onHandleColor="#4cffb3"
-              // offHandleColor="#4cffb3"
               offColor={offColor}
               handleDiameter={24}
               uncheckedIcon={false}
               checkedIcon={false}
-              // boxShadow="inset 0 1px 3px 0 rgba(0,0,0,0.50)"
-              // activeBoxShadow="inset 0 1px 3px 0 rgba(0,0,0,0.50)"
               height={22}
               width={48}
               className="neon-chain-switch"
