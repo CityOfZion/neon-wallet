@@ -11,7 +11,7 @@ import darkLogo from '../../assets/images/logo-dark.png'
 import withLanguageData from '../../hocs/withLanguageData'
 import { updateSettingsActions } from '../../actions/settingsActions'
 import LanguageSelect from '../../components/Inputs/LanguageSelect'
-import Switch from '../../components/Inputs/Switch'
+import ChainSwitch from '../../components/ChainSwitch'
 
 type Props = {
   children: React$Node,
@@ -44,6 +44,7 @@ class HomeLayout extends React.Component<Props, State> {
       theme,
       language,
       setLanguageSetting,
+      chain,
     } = this.props
     const dynamicImage = theme === 'Light' ? lightLogo : darkLogo
     const { languageMenuOpen } = this.state
@@ -57,16 +58,6 @@ class HomeLayout extends React.Component<Props, State> {
         }
       >
         <div className={styles.innerHomeContainer}>
-          <div className={styles.chainToggleContainer}>
-            <h5>NEO LEGACY</h5>
-            <Switch
-              checked={this.props.chain === 'neo3'}
-              handleCheck={this.updateChain}
-            />
-
-            <h5>N3</h5>
-          </div>
-
           {renderNavigation && renderNavigation()}
           <LanguageSelect
             setLanguageSetting={setLanguageSetting}
@@ -89,6 +80,7 @@ class HomeLayout extends React.Component<Props, State> {
           <div className={styles.loginHeader}>
             <FormattedMessage id="authLogin" />
           </div>
+          <ChainSwitch updateChain={this.updateChain} chain={chain} />
           {children}
         </div>
       </div>
