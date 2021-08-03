@@ -22,7 +22,7 @@ import accountsActions, {
 } from '../../actions/accountsActions'
 import pricesActions from '../../actions/pricesActions'
 import { updateSettingsActions } from '../../actions/settingsActions'
-import { getNetworks } from '../../core/networks'
+// import { getNetworks } from '../../core/networks'
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -34,9 +34,9 @@ import nodeStorageActions from '../../actions/nodeStorageActions'
 import dashboardActions from '../../actions/dashboardActions'
 import withChainData from '../../hocs/withChainData'
 
-const mapStateToProps = () => ({
-  networks: getNetworks(),
-})
+// const mapStateToProps = state => ({
+//   networks: getNetworks(state.spunky.settings.chain),
+// })
 
 const actionCreators = {
   showModal,
@@ -82,7 +82,7 @@ const mapSelectedNodeDataToProps = url => ({
 
 export default compose(
   connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps,
   ),
   withChainData(),

@@ -26,6 +26,7 @@ type Props = {
   selectedNode: string,
   explorer: string,
   intl: IntlShape,
+  chain: string,
 }
 
 export default class NetworkConfigurationTooltip extends React.Component<
@@ -101,6 +102,7 @@ export default class NetworkConfigurationTooltip extends React.Component<
                 <div className={styles.configLabel}>
                   {findNetworkByDeprecatedLabel(
                     this.props.net,
+                    this.props.chain,
                   ).label.toUpperCase()}
                 </div>
               </div>

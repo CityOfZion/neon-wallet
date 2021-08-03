@@ -324,8 +324,13 @@ async function getN3Balances({ net, address }: Props) {
     NEO: 0,
     GAS: 0,
   }
-  const NODE_URL = 'https://testnet2.neo.coz.io:443'
-  const rpcClient = new rpc.RPCClient(NODE_URL, '2.3.3')
+
+  let endpoint = await getNode(net)
+  if (!endpoint) {
+    endpoint = await getRPCEndpoint(net)
+  }
+
+  const rpcClient = new rpc.RPCClient(endpoint, '2.3.3')
   try {
     const balanceResponse = await rpcClient.execute(
       new rpc.Query({
@@ -336,13 +341,13 @@ async function getN3Balances({ net, address }: Props) {
     const { result } = balanceResponse
     for (const balance of result.balance) {
       const { assethash, amount } = balance
-      const tokenNameResponse = await new n3Rpc.RPCClient(NODE_URL)
+      const tokenNameResponse = await new n3Rpc.RPCClient(endpoint)
         .invokeFunction(assethash, 'symbol')
         .catch(e => {
           console.error({ e })
         })
       const symbol = atob(tokenNameResponse.stack[0].value)
-      const decimalResponse = await new n3Rpc.RPCClient(NODE_URL)
+      const decimalResponse = await new n3Rpc.RPCClient(endpoint)
         .invokeFunction(assethash, 'decimals')
         .catch(e => {
           console.error({ e })

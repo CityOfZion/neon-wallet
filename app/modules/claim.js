@@ -27,6 +27,7 @@ import { toBigNumber, toNumber } from '../core/math'
 import { ASSETS } from '../core/constants'
 import { FIVE_MINUTES_MS } from '../core/time'
 import poll from '../util/poll'
+import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 
 // Constants
 export const DISABLE_CLAIM = 'DISABLE_CLAIM'
@@ -127,24 +128,28 @@ const getUpdatedClaimableAmount = async ({
 export const handleN3GasClaim = async ({
   FROM_ACCOUNT,
   dispatch,
+  net,
 }: {
   FROM_ACCOUNT: {},
   dispatch: DispatchType,
+  net: string,
 }) => {
   // TODO:
   // - Ledger support/integration
 
-  // TODO: this will have to by dynamic based on test/mainnets
-  const NODE_URL = 'https://testnet2.neo.coz.io:443'
+  let endpoint = await getNode(net)
+  if (!endpoint) {
+    endpoint = await getRPCEndpoint(net)
+  }
 
   const CONFIG = {
     account: FROM_ACCOUNT,
-    rpcAddress: NODE_URL,
+    rpcAddress: endpoint,
     // TODO: this will have to by dynamic based on test/mainnets
     networkMagic: 844378958,
   }
   const facade = await n3Api.NetworkFacade.fromConfig({
-    node: NODE_URL,
+    node: endpoint,
   })
   const signingConfig = {
     signingCallback: n3Api.signWithAccount(CONFIG.account),
@@ -191,7 +196,7 @@ export const doGasClaim = () => async (
 
   if (chain === 'neo3') {
     const FROM_ACCOUNT = new n3Wallet.Account(wif)
-    return handleN3GasClaim({ FROM_ACCOUNT, dispatch })
+    return handleN3GasClaim({ FROM_ACCOUNT, dispatch, net })
   }
 
   if (isHardwareClaim) {

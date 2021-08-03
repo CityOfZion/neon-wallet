@@ -1,0 +1,7 @@
+[
+  { "url": "http://seed1.neo.org:10332" },
+  { "url": "http://seed2.neo.org:10332" },
+  { "url": "http://seed3.neo.org:10332" },
+  { "url": "http://seed4.neo.org:10332" },
+  { "url": "http://seed5.neo.org:10332" }
+]

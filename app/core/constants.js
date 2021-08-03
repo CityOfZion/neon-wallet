@@ -4,6 +4,10 @@ import React from 'react'
 import tokenList from './tokenList.json'
 import nodesMainNet from './nodes-main-net.json'
 import nodesTestNet from './nodes-test-net.json'
+
+import n3NodesMainNet from './n3-nodes-main-net.json'
+import n3NodesTestNet from './n3-nodes-test-net.json'
+
 import England from '../assets/flags/united-kingdom.svg'
 import China from '../assets/flags/china.svg'
 import France from '../assets/flags/france.svg'
@@ -195,6 +199,9 @@ export const TEST_NETWORK_ID = '2'
 export const TEST_NETWORK_LABEL = '2.x TestNet'
 export const TEST_NETWORK_DEPRECATED_LABEL = 'TestNet'
 
+export const N3_MAIN_NETWORK_LABEL = '3.x MainNet'
+export const N3_TEST_NETWORK_LABEL = '3.x TestNet (RC 3)'
+
 export const NETWORK_LABELS = [MAIN_NETWORK_LABEL, TEST_NETWORK_LABEL]
 
 // TestNet
@@ -340,5 +347,7 @@ export const TOKEN_SALE_FAILURE = 'token_sale_failure'
 
 export const NODES_MAIN_NET = nodesMainNet
 export const NODES_TEST_NET = nodesTestNet
+export const NODES_N3_TEST_NET = n3NodesTestNet
+export const NODES_N3_MAIN_NET = n3NodesMainNet
 
 export const PRICE_UNAVAILABLE = 'N/A'
