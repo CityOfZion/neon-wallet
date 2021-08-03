@@ -200,6 +200,11 @@ export const MOBILE = {
   '--mobile-header-instructions-icon': '#282828',
 }
 
+export const CHAIN_SWITCH = {
+  '--chain-switch-background': '#eaf2f7',
+  '--chain-switch-text': '#3D4D56',
+}
+
 export default {
   ...NEWS,
   ...AMOUNTS_PANEL,
@@ -223,4 +228,5 @@ export default {
   ...NOTIFICATIONS,
   ...RELEASE_NOTES,
   ...MOBILE,
+  ...CHAIN_SWITCH,
 }

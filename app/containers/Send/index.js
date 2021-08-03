@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux'
 import { injectIntl } from 'react-intl'
 
 import Send from './Send'
-import { sendTransaction } from '../../modules/transactions'
+import { sendTransaction, calculateN3Fees } from '../../modules/transactions'
 import { showModal } from '../../modules/modal'
 import { getNotifications } from '../../modules/notifications'
 import withPricesData from '../../hocs/withPricesData'
@@ -22,11 +22,13 @@ import withSuccessNotification from '../../hocs/withSuccessNotification'
 import withFailureNotification from '../../hocs/withFailureNotification'
 import { MODAL_TYPES } from '../../core/constants'
 import withTokensData from '../../hocs/withTokensData'
+import withChainData from '../../hocs/withChainData'
 
 const mapDispatchToProps = (dispatch: Function) =>
   bindActionCreators(
     {
       sendTransaction,
+      calculateN3Fees,
       showSendModal: props => dispatch(showModal(MODAL_TYPES.SEND, props)),
       showGeneratedTransactionModal: props =>
         dispatch(showModal(MODAL_TYPES.GENERATED_TRANSACTION, props)),
@@ -82,6 +84,7 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps,
   ),
+  withChainData(),
   withTokensData(),
   withBalancesData(mapBalanceDataToProps),
   withCurrencyData('currencyCode'),

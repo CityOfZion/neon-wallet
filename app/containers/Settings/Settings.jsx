@@ -52,6 +52,7 @@ type Props = {
   networkId: string,
   soundEnabled: boolean,
   setSoundSetting: boolean => any,
+  chain: string,
 }
 
 type Language = {
@@ -229,6 +230,7 @@ export default class Settings extends Component<Props, State> {
         <FormattedMessage id="sidebarSettings">
           {t => (
             <HeaderBar
+              chain={this.props.chain}
               networkId={this.props.networkId}
               net={this.props.net}
               label={t}
@@ -382,17 +384,18 @@ export default class Settings extends Component<Props, State> {
     </Link>
   )
 
-  renderHeaderBarRightContent = () => (
-    <div
-      onClick={() => this.openTokenModal()}
-      className={styles.headerButtonContainer}
-    >
-      <AddIcon className={styles.add} />
-      <span>
-        <FormattedMessage id="addToken" />
-      </span>
-    </div>
-  )
+  renderHeaderBarRightContent = () =>
+    this.props.chain === 'neo2' && (
+      <div
+        onClick={() => this.openTokenModal()}
+        className={styles.headerButtonContainer}
+      >
+        <AddIcon className={styles.add} />
+        <span>
+          <FormattedMessage id="addToken" />
+        </span>
+      </div>
+    )
 
   openDiscordLink = () => shell.openExternal(DISCORD_INVITE_LINK)
 

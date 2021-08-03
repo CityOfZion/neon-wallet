@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl'
 import Panel from '../../Panel'
 import SendRecipientList from './SendRecipientList'
 import PriorityFee from '../PriorityFee'
+import N3Fees from '../N3Fees'
 import SendPanelHeader from './SendPanelHeader'
 import Button from '../../Button/Button'
 import ConfirmSend from './ConfirmSend'
@@ -47,9 +48,15 @@ type Props = {
   showImportModal: (props: Object) => any,
   pushQRCodeData: (data: Object) => any,
   calculateMaxValue: (asset: string, index: number) => string,
+  chain: string,
+  n3Fees: Object,
+  toggleHasEnoughGas: () => void,
+  hasEnoughGas: boolean,
+  loading: boolean,
 }
 
-const shouldDisableSendButton = sendRowDetails =>
+const shouldDisableSendButton = (sendRowDetails, loading) =>
+  loading ||
   sendRowDetails.some(
     detail => !detail.address || !detail.amount || isZero(detail.amount),
   )
@@ -83,6 +90,11 @@ const SendPanel = ({
   calculateMaxValue,
   isWatchOnly,
   showImportModal,
+  chain,
+  n3Fees,
+  toggleHasEnoughGas,
+  hasEnoughGas,
+  loading,
 }: Props) => {
   if (noSendableAssets) {
     return <ZeroAssets address={address} />
@@ -102,14 +114,22 @@ const SendPanel = ({
         calculateMaxValue={calculateMaxValue}
         isWatchOnly={isWatchOnly}
       />
-      <div className={styles.priorityFeeContainer}>
-        <PriorityFee
-          availableGas={Number(get(sendableAssets, 'GAS.balance', 0))}
-          handleAddPriorityFee={handleAddPriorityFee}
-          fees={fees}
-          disabled={shouldDisableSendButton(sendRowDetails)}
-        />
-      </div>
+      {chain === 'neo2' && (
+        <div className={styles.priorityFeeContainer}>
+          <PriorityFee
+            availableGas={Number(get(sendableAssets, 'GAS.balance', 0))}
+            handleAddPriorityFee={handleAddPriorityFee}
+            fees={fees}
+            disabled={shouldDisableSendButton(sendRowDetails)}
+          />
+        </div>
+      )}
+
+      {chain === 'neo3' && (
+        <div className={styles.priorityFeeContainer}>
+          <N3Fees fees={n3Fees} notEnoughGasCallback={toggleHasEnoughGas} />{' '}
+        </div>
+      )}
       {isWatchOnly ? (
         <Button
           className={styles.generateTransactionButton}
@@ -127,27 +147,33 @@ const SendPanel = ({
           className={styles.sendFormButton}
           renderIcon={() => <SendIcon />}
           type="submit"
-          disabled={shouldDisableSendButton(sendRowDetails)}
+          disabled={
+            shouldDisableSendButton(sendRowDetails, loading) || !hasEnoughGas
+          }
           onClick={() => handleSubmit(false)}
           id="send-assets"
         >
           {/* Send {pluralize('Asset', sendRowDetails.length)}{' '}
           {fees ? 'With Fee' : 'Without Fee'} */}
-
-          {fees ? (
-            <FormattedMessage
-              id="sendWithFee"
-              values={{
-                itemCount: sendRowDetails.length,
-              }}
-            />
+          {/* eslint-disable-next-line no-nested-ternary */}
+          {chain === 'neo2' ? (
+            fees ? (
+              <FormattedMessage
+                id="sendWithFee"
+                values={{
+                  itemCount: sendRowDetails.length,
+                }}
+              />
+            ) : (
+              <FormattedMessage
+                id="sendWithoutFee"
+                values={{
+                  itemCount: sendRowDetails.length,
+                }}
+              />
+            )
           ) : (
-            <FormattedMessage
-              id="sendWithoutFee"
-              values={{
-                itemCount: sendRowDetails.length,
-              }}
-            />
+            'Send'
           )}
         </Button>
       )}
@@ -169,7 +195,11 @@ const SendPanel = ({
         />
         <ConfirmSend
           handleEditRecipientsClick={handleEditRecipientsClick}
-          fees={fees}
+          fees={
+            chain === 'neo2'
+              ? fees
+              : Number(n3Fees.networkFee) + Number(n3Fees.systemFee)
+          }
           pendingTransaction={pendingTransaction}
         />
       </form>
