@@ -679,7 +679,7 @@ exports[`News renders without crashing 1`] = `
                               <div
                                 className="newsContainer"
                               >
-                                <Connect(withData(withProps(HeaderBar)))
+                                <Connect(withData(withProps(Connect(withData(HeaderBar)))))
                                   label={
                                     <FormattedMessage
                                       id="newsPageLabel"
@@ -689,7 +689,7 @@ exports[`News renders without crashing 1`] = `
                                   net="MainNet"
                                   networkId={null}
                                 >
-                                  <withData(withProps(HeaderBar))
+                                  <withData(withProps(Connect(withData(HeaderBar))))
                                     dispatch={[Function]}
                                     label={
                                       <FormattedMessage
@@ -700,7 +700,7 @@ exports[`News renders without crashing 1`] = `
                                     net="MainNet"
                                     networkId={null}
                                   >
-                                    <HeaderBar
+                                    <Connect(withData(HeaderBar))
                                       dispatch={[Function]}
                                       label={
                                         <FormattedMessage
@@ -711,27 +711,56 @@ exports[`News renders without crashing 1`] = `
                                       net="MainNet"
                                       networkId={null}
                                     >
-                                      <div
-                                        className="currentNetwork"
-                                      >
-                                        MainNet
-                                      </div>
-                                      <div
-                                        className="headerBar"
-                                      >
-                                        <h3>
-                                           
+                                      <withData(HeaderBar)
+                                        chain="neo2"
+                                        dispatch={[Function]}
+                                        label={
                                           <FormattedMessage
                                             id="newsPageLabel"
                                             values={Object {}}
+                                          />
+                                        }
+                                        net="MainNet"
+                                        networkId={null}
+                                      >
+                                        <div
+                                          className="currentNetwork"
+                                        >
+                                          MainNet
+                                        </div>
+                                        <div
+                                          className="headerBar"
+                                        >
+                                          <div
+                                            className="chainLogoContainer"
                                           >
-                                            News
-                                          </FormattedMessage>
-                                        </h3>
-                                      </div>
-                                    </HeaderBar>
-                                  </withData(withProps(HeaderBar))>
-                                </Connect(withData(withProps(HeaderBar)))>
+                                            <img
+                                              alt="chain-logo"
+                                              className="neoLogo"
+                                              src="test-file-stub"
+                                            />
+                                            <span>
+                                              <div
+                                                className="legacyContainer"
+                                              >
+                                                Legacy
+                                              </div>
+                                            </span>
+                                          </div>
+                                          <h3>
+                                             
+                                            <FormattedMessage
+                                              id="newsPageLabel"
+                                              values={Object {}}
+                                            >
+                                              News
+                                            </FormattedMessage>
+                                          </h3>
+                                        </div>
+                                      </withData(HeaderBar)>
+                                    </Connect(withData(HeaderBar))>
+                                  </withData(withProps(Connect(withData(HeaderBar))))>
+                                </Connect(withData(withProps(Connect(withData(HeaderBar)))))>
                                 <Panel
                                   className="newsPanel"
                                   contentClassName="newsPanelContent"
