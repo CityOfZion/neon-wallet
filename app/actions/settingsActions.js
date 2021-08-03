@@ -65,17 +65,25 @@ export const updateSettingsActions = createActions(
   // $FlowFixMe
   (values: Settings = {}) => async (): Promise<Settings> => {
     const settings = await getSettings()
+    const { chain } = settings
     const newSettings = {
       ...settings,
       ...values,
     }
     const parsedForLocalStorage = cloneDeep(newSettings)
-    const tokensForStorage = [
-      ...newSettings.tokens.filter(token => token.isUserGenerated),
-    ]
+
+    if (chain === 'neo2') {
+      const tokensForStorage = [
+        ...newSettings.tokens.filter(token => token.isUserGenerated),
+      ]
+      parsedForLocalStorage.tokens = tokensForStorage
+    } else {
+      const tokens = await getDefaultTokens('neo3')
+      newSettings.tokens = tokens
+    }
     // NOTE: we only save user generated tokens to local storage to avoid
     // conflicts in managing the "master" nep5 list
-    parsedForLocalStorage.tokens = tokensForStorage
+
     await setStorage(STORAGE_KEY, parsedForLocalStorage)
     return newSettings
   },

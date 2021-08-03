@@ -52,6 +52,7 @@ type Props = {
   networkId: string,
   soundEnabled: boolean,
   setSoundSetting: boolean => any,
+  chain: string,
 }
 
 type Language = {
@@ -229,6 +230,7 @@ export default class Settings extends Component<Props, State> {
         <FormattedMessage id="sidebarSettings">
           {t => (
             <HeaderBar
+              chain={this.props.chain}
               networkId={this.props.networkId}
               net={this.props.net}
               label={t}

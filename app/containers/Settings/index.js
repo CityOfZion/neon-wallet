@@ -32,6 +32,7 @@ import networkActions from '../../actions/networkActions'
 import withNetworkData from '../../hocs/withNetworkData'
 import nodeStorageActions from '../../actions/nodeStorageActions'
 import dashboardActions from '../../actions/dashboardActions'
+import withChainData from '../../hocs/withChainData'
 
 const mapStateToProps = () => ({
   networks: getNetworks(),
@@ -84,6 +85,7 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps,
   ),
+  withChainData(),
   withNetworkData(),
   withCall(nodeStorageActions),
   withData(accountsActions, mapAccountsDataToProps),
