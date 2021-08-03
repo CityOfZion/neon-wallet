@@ -340,24 +340,6 @@ exports[`Settings renders without crashing 1`] = `
           >
             <Connect(Connect(withData(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withActions(Connect(withActions(withResponsiveAction(Connect(withActions(Connect(withActions(Connect(withActions(withResponsiveAction(Connect(withActions(withResponsiveAction(Connect(withActions(withResponsiveAction(Settings))))))))))))))))))))))))))))))))))))))))>
               <Connect(withData(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withActions(Connect(withActions(withResponsiveAction(Connect(withActions(Connect(withActions(Connect(withActions(withResponsiveAction(Connect(withActions(withResponsiveAction(Connect(withActions(withResponsiveAction(Settings)))))))))))))))))))))))))))))))))))))))
-                networks={
-                  Array [
-                    Object {
-                      "deprecatedLabel": "MainNet",
-                      "id": "1",
-                      "label": "2.x MainNet",
-                      "network": "MainNet",
-                      "value": "1",
-                    },
-                    Object {
-                      "deprecatedLabel": "TestNet",
-                      "id": "2",
-                      "label": "2.x TestNet",
-                      "network": "TestNet",
-                      "value": "2",
-                    },
-                  ]
-                }
                 showErrorNotification={[Function]}
                 showModal={[Function]}
                 showSuccessNotification={[Function]}
@@ -365,24 +347,6 @@ exports[`Settings renders without crashing 1`] = `
                 <withData(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withActions(Connect(withActions(withResponsiveAction(Connect(withActions(Connect(withActions(Connect(withActions(withResponsiveAction(Connect(withActions(withResponsiveAction(Connect(withActions(withResponsiveAction(Settings))))))))))))))))))))))))))))))))))))))
                   chain="neo2"
                   dispatch={[Function]}
-                  networks={
-                    Array [
-                      Object {
-                        "deprecatedLabel": "MainNet",
-                        "id": "1",
-                        "label": "2.x MainNet",
-                        "network": "MainNet",
-                        "value": "1",
-                      },
-                      Object {
-                        "deprecatedLabel": "TestNet",
-                        "id": "2",
-                        "label": "2.x TestNet",
-                        "network": "TestNet",
-                        "value": "2",
-                      },
-                    ]
-                  }
                   showErrorNotification={[Function]}
                   showModal={[Function]}
                   showSuccessNotification={[Function]}
@@ -391,24 +355,6 @@ exports[`Settings renders without crashing 1`] = `
                     chain="neo2"
                     dispatch={[Function]}
                     networkId={null}
-                    networks={
-                      Array [
-                        Object {
-                          "deprecatedLabel": "MainNet",
-                          "id": "1",
-                          "label": "2.x MainNet",
-                          "network": "MainNet",
-                          "value": "1",
-                        },
-                        Object {
-                          "deprecatedLabel": "TestNet",
-                          "id": "2",
-                          "label": "2.x TestNet",
-                          "network": "TestNet",
-                          "value": "2",
-                        },
-                      ]
-                    }
                     showErrorNotification={[Function]}
                     showModal={[Function]}
                     showSuccessNotification={[Function]}
@@ -418,24 +364,6 @@ exports[`Settings renders without crashing 1`] = `
                       dispatch={[Function]}
                       net="MainNet"
                       networkId={null}
-                      networks={
-                        Array [
-                          Object {
-                            "deprecatedLabel": "MainNet",
-                            "id": "1",
-                            "label": "2.x MainNet",
-                            "network": "MainNet",
-                            "value": "1",
-                          },
-                          Object {
-                            "deprecatedLabel": "TestNet",
-                            "id": "2",
-                            "label": "2.x TestNet",
-                            "network": "TestNet",
-                            "value": "2",
-                          },
-                        ]
-                      }
                       showErrorNotification={[Function]}
                       showModal={[Function]}
                       showSuccessNotification={[Function]}
@@ -445,24 +373,6 @@ exports[`Settings renders without crashing 1`] = `
                         dispatch={[Function]}
                         net="MainNet"
                         networkId={null}
-                        networks={
-                          Array [
-                            Object {
-                              "deprecatedLabel": "MainNet",
-                              "id": "1",
-                              "label": "2.x MainNet",
-                              "network": "MainNet",
-                              "value": "1",
-                            },
-                            Object {
-                              "deprecatedLabel": "TestNet",
-                              "id": "2",
-                              "label": "2.x TestNet",
-                              "network": "TestNet",
-                              "value": "2",
-                            },
-                          ]
-                        }
                         performAction={[Function]}
                         showErrorNotification={[Function]}
                         showModal={[Function]}
@@ -473,24 +383,6 @@ exports[`Settings renders without crashing 1`] = `
                           dispatch={[Function]}
                           net="MainNet"
                           networkId={null}
-                          networks={
-                            Array [
-                              Object {
-                                "deprecatedLabel": "MainNet",
-                                "id": "1",
-                                "label": "2.x MainNet",
-                                "network": "MainNet",
-                                "value": "1",
-                              },
-                              Object {
-                                "deprecatedLabel": "TestNet",
-                                "id": "2",
-                                "label": "2.x TestNet",
-                                "network": "TestNet",
-                                "value": "2",
-                              },
-                            ]
-                          }
                           performAction={[Function]}
                           showErrorNotification={[Function]}
                           showModal={[Function]}
@@ -501,24 +393,6 @@ exports[`Settings renders without crashing 1`] = `
                             dispatch={[Function]}
                             net="MainNet"
                             networkId={null}
-                            networks={
-                              Array [
-                                Object {
-                                  "deprecatedLabel": "MainNet",
-                                  "id": "1",
-                                  "label": "2.x MainNet",
-                                  "network": "MainNet",
-                                  "value": "1",
-                                },
-                                Object {
-                                  "deprecatedLabel": "TestNet",
-                                  "id": "2",
-                                  "label": "2.x TestNet",
-                                  "network": "TestNet",
-                                  "value": "2",
-                                },
-                              ]
-                            }
                             showErrorNotification={[Function]}
                             showModal={[Function]}
                             showSuccessNotification={[Function]}
@@ -529,24 +403,6 @@ exports[`Settings renders without crashing 1`] = `
                               dispatch={[Function]}
                               net="MainNet"
                               networkId={null}
-                              networks={
-                                Array [
-                                  Object {
-                                    "deprecatedLabel": "MainNet",
-                                    "id": "1",
-                                    "label": "2.x MainNet",
-                                    "network": "MainNet",
-                                    "value": "1",
-                                  },
-                                  Object {
-                                    "deprecatedLabel": "TestNet",
-                                    "id": "2",
-                                    "label": "2.x TestNet",
-                                    "network": "TestNet",
-                                    "value": "2",
-                                  },
-                                ]
-                              }
                               showErrorNotification={[Function]}
                               showModal={[Function]}
                               showSuccessNotification={[Function]}
@@ -557,24 +413,6 @@ exports[`Settings renders without crashing 1`] = `
                                 dispatch={[Function]}
                                 net="MainNet"
                                 networkId={null}
-                                networks={
-                                  Array [
-                                    Object {
-                                      "deprecatedLabel": "MainNet",
-                                      "id": "1",
-                                      "label": "2.x MainNet",
-                                      "network": "MainNet",
-                                      "value": "1",
-                                    },
-                                    Object {
-                                      "deprecatedLabel": "TestNet",
-                                      "id": "2",
-                                      "label": "2.x TestNet",
-                                      "network": "TestNet",
-                                      "value": "2",
-                                    },
-                                  ]
-                                }
                                 selectedNode={null}
                                 showErrorNotification={[Function]}
                                 showModal={[Function]}
@@ -587,24 +425,6 @@ exports[`Settings renders without crashing 1`] = `
                                   explorer="Neotracker"
                                   net="MainNet"
                                   networkId={null}
-                                  networks={
-                                    Array [
-                                      Object {
-                                        "deprecatedLabel": "MainNet",
-                                        "id": "1",
-                                        "label": "2.x MainNet",
-                                        "network": "MainNet",
-                                        "value": "1",
-                                      },
-                                      Object {
-                                        "deprecatedLabel": "TestNet",
-                                        "id": "2",
-                                        "label": "2.x TestNet",
-                                        "network": "TestNet",
-                                        "value": "2",
-                                      },
-                                    ]
-                                  }
                                   selectedNode={null}
                                   showErrorNotification={[Function]}
                                   showModal={[Function]}
@@ -618,24 +438,6 @@ exports[`Settings renders without crashing 1`] = `
                                     explorer="Neotracker"
                                     net="MainNet"
                                     networkId={null}
-                                    networks={
-                                      Array [
-                                        Object {
-                                          "deprecatedLabel": "MainNet",
-                                          "id": "1",
-                                          "label": "2.x MainNet",
-                                          "network": "MainNet",
-                                          "value": "1",
-                                        },
-                                        Object {
-                                          "deprecatedLabel": "TestNet",
-                                          "id": "2",
-                                          "label": "2.x TestNet",
-                                          "network": "TestNet",
-                                          "value": "2",
-                                        },
-                                      ]
-                                    }
                                     selectedNode={null}
                                     showErrorNotification={[Function]}
                                     showModal={[Function]}
@@ -649,24 +451,6 @@ exports[`Settings renders without crashing 1`] = `
                                       explorer="Neotracker"
                                       net="MainNet"
                                       networkId={null}
-                                      networks={
-                                        Array [
-                                          Object {
-                                            "deprecatedLabel": "MainNet",
-                                            "id": "1",
-                                            "label": "2.x MainNet",
-                                            "network": "MainNet",
-                                            "value": "1",
-                                          },
-                                          Object {
-                                            "deprecatedLabel": "TestNet",
-                                            "id": "2",
-                                            "label": "2.x TestNet",
-                                            "network": "TestNet",
-                                            "value": "2",
-                                          },
-                                        ]
-                                      }
                                       selectedNode={null}
                                       showErrorNotification={[Function]}
                                       showModal={[Function]}
@@ -681,24 +465,6 @@ exports[`Settings renders without crashing 1`] = `
                                         explorer="Neotracker"
                                         net="MainNet"
                                         networkId={null}
-                                        networks={
-                                          Array [
-                                            Object {
-                                              "deprecatedLabel": "MainNet",
-                                              "id": "1",
-                                              "label": "2.x MainNet",
-                                              "network": "MainNet",
-                                              "value": "1",
-                                            },
-                                            Object {
-                                              "deprecatedLabel": "TestNet",
-                                              "id": "2",
-                                              "label": "2.x TestNet",
-                                              "network": "TestNet",
-                                              "value": "2",
-                                            },
-                                          ]
-                                        }
                                         selectedNode={null}
                                         showErrorNotification={[Function]}
                                         showModal={[Function]}
@@ -716,24 +482,6 @@ exports[`Settings renders without crashing 1`] = `
                                           languageDisplayValue="English"
                                           net="MainNet"
                                           networkId={null}
-                                          networks={
-                                            Array [
-                                              Object {
-                                                "deprecatedLabel": "MainNet",
-                                                "id": "1",
-                                                "label": "2.x MainNet",
-                                                "network": "MainNet",
-                                                "value": "1",
-                                              },
-                                              Object {
-                                                "deprecatedLabel": "TestNet",
-                                                "id": "2",
-                                                "label": "2.x TestNet",
-                                                "network": "TestNet",
-                                                "value": "2",
-                                              },
-                                            ]
-                                          }
                                           selectedNode={null}
                                           showErrorNotification={[Function]}
                                           showModal={[Function]}
@@ -752,24 +500,6 @@ exports[`Settings renders without crashing 1`] = `
                                             languageDisplayValue="English"
                                             net="MainNet"
                                             networkId={null}
-                                            networks={
-                                              Array [
-                                                Object {
-                                                  "deprecatedLabel": "MainNet",
-                                                  "id": "1",
-                                                  "label": "2.x MainNet",
-                                                  "network": "MainNet",
-                                                  "value": "1",
-                                                },
-                                                Object {
-                                                  "deprecatedLabel": "TestNet",
-                                                  "id": "2",
-                                                  "label": "2.x TestNet",
-                                                  "network": "TestNet",
-                                                  "value": "2",
-                                                },
-                                              ]
-                                            }
                                             selectedNode={null}
                                             showErrorNotification={[Function]}
                                             showModal={[Function]}
@@ -788,24 +518,6 @@ exports[`Settings renders without crashing 1`] = `
                                               languageDisplayValue="English"
                                               net="MainNet"
                                               networkId={null}
-                                              networks={
-                                                Array [
-                                                  Object {
-                                                    "deprecatedLabel": "MainNet",
-                                                    "id": "1",
-                                                    "label": "2.x MainNet",
-                                                    "network": "MainNet",
-                                                    "value": "1",
-                                                  },
-                                                  Object {
-                                                    "deprecatedLabel": "TestNet",
-                                                    "id": "2",
-                                                    "label": "2.x TestNet",
-                                                    "network": "TestNet",
-                                                    "value": "2",
-                                                  },
-                                                ]
-                                              }
                                               performAction={[Function]}
                                               selectedNode={null}
                                               showErrorNotification={[Function]}
@@ -825,24 +537,6 @@ exports[`Settings renders without crashing 1`] = `
                                                 languageDisplayValue="English"
                                                 net="MainNet"
                                                 networkId={null}
-                                                networks={
-                                                  Array [
-                                                    Object {
-                                                      "deprecatedLabel": "MainNet",
-                                                      "id": "1",
-                                                      "label": "2.x MainNet",
-                                                      "network": "MainNet",
-                                                      "value": "1",
-                                                    },
-                                                    Object {
-                                                      "deprecatedLabel": "TestNet",
-                                                      "id": "2",
-                                                      "label": "2.x TestNet",
-                                                      "network": "TestNet",
-                                                      "value": "2",
-                                                    },
-                                                  ]
-                                                }
                                                 performAction={[Function]}
                                                 selectedNode={null}
                                                 showErrorNotification={[Function]}
@@ -862,24 +556,6 @@ exports[`Settings renders without crashing 1`] = `
                                                   languageDisplayValue="English"
                                                   net="MainNet"
                                                   networkId={null}
-                                                  networks={
-                                                    Array [
-                                                      Object {
-                                                        "deprecatedLabel": "MainNet",
-                                                        "id": "1",
-                                                        "label": "2.x MainNet",
-                                                        "network": "MainNet",
-                                                        "value": "1",
-                                                      },
-                                                      Object {
-                                                        "deprecatedLabel": "TestNet",
-                                                        "id": "2",
-                                                        "label": "2.x TestNet",
-                                                        "network": "TestNet",
-                                                        "value": "2",
-                                                      },
-                                                    ]
-                                                  }
                                                   selectedNode={null}
                                                   showErrorNotification={[Function]}
                                                   showModal={[Function]}
@@ -898,24 +574,6 @@ exports[`Settings renders without crashing 1`] = `
                                                     languageDisplayValue="English"
                                                     net="MainNet"
                                                     networkId={null}
-                                                    networks={
-                                                      Array [
-                                                        Object {
-                                                          "deprecatedLabel": "MainNet",
-                                                          "id": "1",
-                                                          "label": "2.x MainNet",
-                                                          "network": "MainNet",
-                                                          "value": "1",
-                                                        },
-                                                        Object {
-                                                          "deprecatedLabel": "TestNet",
-                                                          "id": "2",
-                                                          "label": "2.x TestNet",
-                                                          "network": "TestNet",
-                                                          "value": "2",
-                                                        },
-                                                      ]
-                                                    }
                                                     selectedNode={null}
                                                     setAccounts={[Function]}
                                                     showErrorNotification={[Function]}
@@ -935,24 +593,6 @@ exports[`Settings renders without crashing 1`] = `
                                                       languageDisplayValue="English"
                                                       net="MainNet"
                                                       networkId={null}
-                                                      networks={
-                                                        Array [
-                                                          Object {
-                                                            "deprecatedLabel": "MainNet",
-                                                            "id": "1",
-                                                            "label": "2.x MainNet",
-                                                            "network": "MainNet",
-                                                            "value": "1",
-                                                          },
-                                                          Object {
-                                                            "deprecatedLabel": "TestNet",
-                                                            "id": "2",
-                                                            "label": "2.x TestNet",
-                                                            "network": "TestNet",
-                                                            "value": "2",
-                                                          },
-                                                        ]
-                                                      }
                                                       selectedNode={null}
                                                       setAccounts={[Function]}
                                                       setBlockExplorer={[Function]}
@@ -977,24 +617,6 @@ exports[`Settings renders without crashing 1`] = `
                                                         languageDisplayValue="English"
                                                         net="MainNet"
                                                         networkId={null}
-                                                        networks={
-                                                          Array [
-                                                            Object {
-                                                              "deprecatedLabel": "MainNet",
-                                                              "id": "1",
-                                                              "label": "2.x MainNet",
-                                                              "network": "MainNet",
-                                                              "value": "1",
-                                                            },
-                                                            Object {
-                                                              "deprecatedLabel": "TestNet",
-                                                              "id": "2",
-                                                              "label": "2.x TestNet",
-                                                              "network": "TestNet",
-                                                              "value": "2",
-                                                            },
-                                                          ]
-                                                        }
                                                         performAction={[Function]}
                                                         selectedNode={null}
                                                         setAccounts={[Function]}
@@ -1020,24 +642,6 @@ exports[`Settings renders without crashing 1`] = `
                                                           languageDisplayValue="English"
                                                           net="MainNet"
                                                           networkId={null}
-                                                          networks={
-                                                            Array [
-                                                              Object {
-                                                                "deprecatedLabel": "MainNet",
-                                                                "id": "1",
-                                                                "label": "2.x MainNet",
-                                                                "network": "MainNet",
-                                                                "value": "1",
-                                                              },
-                                                              Object {
-                                                                "deprecatedLabel": "TestNet",
-                                                                "id": "2",
-                                                                "label": "2.x TestNet",
-                                                                "network": "TestNet",
-                                                                "value": "2",
-                                                              },
-                                                            ]
-                                                          }
                                                           performAction={[Function]}
                                                           selectedNode={null}
                                                           setAccounts={[Function]}
@@ -1063,24 +667,6 @@ exports[`Settings renders without crashing 1`] = `
                                                             languageDisplayValue="English"
                                                             net="MainNet"
                                                             networkId={null}
-                                                            networks={
-                                                              Array [
-                                                                Object {
-                                                                  "deprecatedLabel": "MainNet",
-                                                                  "id": "1",
-                                                                  "label": "2.x MainNet",
-                                                                  "network": "MainNet",
-                                                                  "value": "1",
-                                                                },
-                                                                Object {
-                                                                  "deprecatedLabel": "TestNet",
-                                                                  "id": "2",
-                                                                  "label": "2.x TestNet",
-                                                                  "network": "TestNet",
-                                                                  "value": "2",
-                                                                },
-                                                              ]
-                                                            }
                                                             selectedNode={null}
                                                             setAccounts={[Function]}
                                                             setBlockExplorer={[Function]}
@@ -1105,24 +691,6 @@ exports[`Settings renders without crashing 1`] = `
                                                               languageDisplayValue="English"
                                                               net="MainNet"
                                                               networkId={null}
-                                                              networks={
-                                                                Array [
-                                                                  Object {
-                                                                    "deprecatedLabel": "MainNet",
-                                                                    "id": "1",
-                                                                    "label": "2.x MainNet",
-                                                                    "network": "MainNet",
-                                                                    "value": "1",
-                                                                  },
-                                                                  Object {
-                                                                    "deprecatedLabel": "TestNet",
-                                                                    "id": "2",
-                                                                    "label": "2.x TestNet",
-                                                                    "network": "TestNet",
-                                                                    "value": "2",
-                                                                  },
-                                                                ]
-                                                              }
                                                               performAction={[Function]}
                                                               selectedNode={null}
                                                               setAccounts={[Function]}
@@ -1148,24 +716,6 @@ exports[`Settings renders without crashing 1`] = `
                                                                 languageDisplayValue="English"
                                                                 net="MainNet"
                                                                 networkId={null}
-                                                                networks={
-                                                                  Array [
-                                                                    Object {
-                                                                      "deprecatedLabel": "MainNet",
-                                                                      "id": "1",
-                                                                      "label": "2.x MainNet",
-                                                                      "network": "MainNet",
-                                                                      "value": "1",
-                                                                    },
-                                                                    Object {
-                                                                      "deprecatedLabel": "TestNet",
-                                                                      "id": "2",
-                                                                      "label": "2.x TestNet",
-                                                                      "network": "TestNet",
-                                                                      "value": "2",
-                                                                    },
-                                                                  ]
-                                                                }
                                                                 performAction={[Function]}
                                                                 selectedNode={null}
                                                                 setAccounts={[Function]}
@@ -1191,24 +741,6 @@ exports[`Settings renders without crashing 1`] = `
                                                                   languageDisplayValue="English"
                                                                   net="MainNet"
                                                                   networkId={null}
-                                                                  networks={
-                                                                    Array [
-                                                                      Object {
-                                                                        "deprecatedLabel": "MainNet",
-                                                                        "id": "1",
-                                                                        "label": "2.x MainNet",
-                                                                        "network": "MainNet",
-                                                                        "value": "1",
-                                                                      },
-                                                                      Object {
-                                                                        "deprecatedLabel": "TestNet",
-                                                                        "id": "2",
-                                                                        "label": "2.x TestNet",
-                                                                        "network": "TestNet",
-                                                                        "value": "2",
-                                                                      },
-                                                                    ]
-                                                                  }
                                                                   selectedNode={null}
                                                                   setAccounts={[Function]}
                                                                   setBlockExplorer={[Function]}
@@ -1233,24 +765,6 @@ exports[`Settings renders without crashing 1`] = `
                                                                     languageDisplayValue="English"
                                                                     net="MainNet"
                                                                     networkId={null}
-                                                                    networks={
-                                                                      Array [
-                                                                        Object {
-                                                                          "deprecatedLabel": "MainNet",
-                                                                          "id": "1",
-                                                                          "label": "2.x MainNet",
-                                                                          "network": "MainNet",
-                                                                          "value": "1",
-                                                                        },
-                                                                        Object {
-                                                                          "deprecatedLabel": "TestNet",
-                                                                          "id": "2",
-                                                                          "label": "2.x TestNet",
-                                                                          "network": "TestNet",
-                                                                          "value": "2",
-                                                                        },
-                                                                      ]
-                                                                    }
                                                                     performAction={[Function]}
                                                                     selectedNode={null}
                                                                     setAccounts={[Function]}
@@ -1276,24 +790,6 @@ exports[`Settings renders without crashing 1`] = `
                                                                       languageDisplayValue="English"
                                                                       net="MainNet"
                                                                       networkId={null}
-                                                                      networks={
-                                                                        Array [
-                                                                          Object {
-                                                                            "deprecatedLabel": "MainNet",
-                                                                            "id": "1",
-                                                                            "label": "2.x MainNet",
-                                                                            "network": "MainNet",
-                                                                            "value": "1",
-                                                                          },
-                                                                          Object {
-                                                                            "deprecatedLabel": "TestNet",
-                                                                            "id": "2",
-                                                                            "label": "2.x TestNet",
-                                                                            "network": "TestNet",
-                                                                            "value": "2",
-                                                                          },
-                                                                        ]
-                                                                      }
                                                                       performAction={[Function]}
                                                                       selectedNode={null}
                                                                       setAccounts={[Function]}
@@ -1319,24 +815,6 @@ exports[`Settings renders without crashing 1`] = `
                                                                         languageDisplayValue="English"
                                                                         net="MainNet"
                                                                         networkId={null}
-                                                                        networks={
-                                                                          Array [
-                                                                            Object {
-                                                                              "deprecatedLabel": "MainNet",
-                                                                              "id": "1",
-                                                                              "label": "2.x MainNet",
-                                                                              "network": "MainNet",
-                                                                              "value": "1",
-                                                                            },
-                                                                            Object {
-                                                                              "deprecatedLabel": "TestNet",
-                                                                              "id": "2",
-                                                                              "label": "2.x TestNet",
-                                                                              "network": "TestNet",
-                                                                              "value": "2",
-                                                                            },
-                                                                          ]
-                                                                        }
                                                                         selectedNode={null}
                                                                         setAccounts={[Function]}
                                                                         setBlockExplorer={[Function]}

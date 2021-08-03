@@ -22,7 +22,6 @@ import accountsActions, {
 } from '../../actions/accountsActions'
 import pricesActions from '../../actions/pricesActions'
 import { updateSettingsActions } from '../../actions/settingsActions'
-import { getNetworks } from '../../core/networks'
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -33,10 +32,6 @@ import withNetworkData from '../../hocs/withNetworkData'
 import nodeStorageActions from '../../actions/nodeStorageActions'
 import dashboardActions from '../../actions/dashboardActions'
 import withChainData from '../../hocs/withChainData'
-
-const mapStateToProps = () => ({
-  networks: getNetworks(),
-})
 
 const actionCreators = {
   showModal,
@@ -82,7 +77,7 @@ const mapSelectedNodeDataToProps = url => ({
 
 export default compose(
   connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps,
   ),
   withChainData(),

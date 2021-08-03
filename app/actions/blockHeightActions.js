@@ -5,7 +5,7 @@ import { isEmpty } from 'lodash-es'
 import { getNode, getRPCEndpoint } from './nodeStorageActions'
 
 type Props = {
-  networkId: string,
+  net: string,
 }
 
 const exportedModule = {}
@@ -25,8 +25,8 @@ exportedModule.getBlockHeight = getBlockHeight
 
 export const blockHeightActions = createActions(
   ID,
-  ({ networkId }: Props = {}) => async () => {
-    const count = await exportedModule.getBlockHeight(networkId)
+  ({ net }: Props = {}) => async () => {
+    const count = await exportedModule.getBlockHeight(net)
     return count
   },
 )

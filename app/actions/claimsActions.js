@@ -3,6 +3,8 @@ import { api } from '@cityofzion/neon-js'
 import { rpc as n3Rpc, u as n3U } from '@cityofzion/neon-js-next'
 import { createActions } from 'spunky'
 
+import { getNode, getRPCEndpoint } from './nodeStorageActions'
+
 type Props = {
   net: string,
   address: string,
@@ -21,9 +23,12 @@ export default createActions(
       )
       return { total: total.toString() }
     }
-    // TODO: this must be dynamic
-    const NODE_URL = 'https://testnet2.neo.coz.io:443'
-    const rpcClient = new n3Rpc.RPCClient(NODE_URL)
+
+    let endpoint = await getNode(net)
+    if (!endpoint) {
+      endpoint = await getRPCEndpoint(net)
+    }
+    const rpcClient = new n3Rpc.RPCClient(endpoint)
     try {
       const query = {
         method: 'getunclaimedgas',

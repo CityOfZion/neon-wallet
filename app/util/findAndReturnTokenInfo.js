@@ -5,7 +5,7 @@ import N3Neon, { rpc as n3Rpc } from '@cityofzion/neon-js-next'
 import { imageMap } from '../assets/nep5/png'
 import { getDefaultTokens } from '../core/nep5'
 import { ASSETS, NEO_ID, GAS_ID } from '../core/constants'
-import { getRPCEndpoint } from '../actions/nodeStorageActions'
+import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 import { getSettings } from '../actions/settingsActions'
 
 export const getImageBySymbol = (symbol: string) => imageMap[symbol]
@@ -38,9 +38,12 @@ export const findAndReturnTokenInfo = async (
     )
       return GAS
 
-    const NODE_URL = 'https://testnet2.neo.coz.io:443'
+    let endpoint = await getNode(net)
+    if (!endpoint) {
+      endpoint = await getRPCEndpoint(net)
+    }
 
-    const tokenNameResponse = await new n3Rpc.RPCClient(NODE_URL)
+    const tokenNameResponse = await new n3Rpc.RPCClient(endpoint)
       .invokeFunction(scriptHash, 'symbol')
       .catch(e => {
         console.error({ e })

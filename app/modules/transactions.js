@@ -214,14 +214,19 @@ export const calculateN3Fees = ({
 }) => (dispatch: DispatchType, getState: GetStateType): Promise<*> =>
   new Promise(async (resolve, reject) => {
     try {
-      const NODE_URL = 'https://testnet2.neo.coz.io:443'
-      const client = new n3Rpc.NeoServerRpcClient(NODE_URL)
       const state = getState()
+      const net = getNetwork(state)
       const wif = getWIF(state)
       const FROM_ACCOUNT = new n3Wallet.Account(wif)
       const tokenBalances = getTokenBalances(state)
       const tokensBalanceMap = keyBy(tokenBalances, 'symbol')
       const { tokens } = state.spunky.settings.data
+
+      let endpoint = await getNode(net)
+      if (!endpoint) {
+        endpoint = await getRPCEndpoint(net)
+      }
+      const client = new n3Rpc.NeoServerRpcClient(endpoint)
 
       const intents = buildNep17IntentsFromEntries(
         sendEntries,
@@ -314,8 +319,6 @@ export const sendTransaction = ({
           /*
             TODO:
               - Ledger support
-              - Support for test AND main net
-              - Node url should come from settings
           */
 
           if (!isWatchOnly)
@@ -326,17 +329,22 @@ export const sendTransaction = ({
               }),
             )
 
-          const NODE_URL = 'https://testnet2.neo.coz.io:443'
+          let endpoint = await getNode(net)
+          if (!endpoint) {
+            endpoint = await getRPCEndpoint(net)
+          }
+
           const FROM_ACCOUNT = new n3Wallet.Account(wif)
+
           const CONFIG = {
             account: FROM_ACCOUNT,
-            rpcAddress: NODE_URL,
+            rpcAddress: endpoint,
             // TODO: this will have to by dynamic based on test/mainnets
             networkMagic: 844378958,
           }
 
           const facade = await n3Api.NetworkFacade.fromConfig({
-            node: NODE_URL,
+            node: endpoint,
           })
 
           const signingConfig = {
