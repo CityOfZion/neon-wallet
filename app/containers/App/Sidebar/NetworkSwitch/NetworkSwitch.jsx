@@ -15,7 +15,7 @@ type Props = {
   controlledNet: string,
   className: string,
   disabled: boolean,
-  networks: Array<NetworkItemType>,
+  // networks: Array<NetworkItemType>,
   transparent: boolean,
   shouldSwitchNetworks: boolean,
   loadWalletData: () => void,
@@ -24,17 +24,16 @@ type Props = {
   net: string,
   isDisabled?: boolean,
   hideChevron?: Boolean,
+  chain: string,
 }
 
 export default class NetworkSwitch extends Component<Props> {
   static defaultProps = {
-    networks: getNetworks(),
     shouldSwitchNetworks: true,
   }
 
   render() {
     const {
-      networks,
       className,
       disabled,
       transparent,
@@ -42,7 +41,10 @@ export default class NetworkSwitch extends Component<Props> {
       settingsSelect,
       isDisabled,
       hideChevron,
+      chain,
     } = this.props
+
+    const networks = getNetworks(chain)
 
     return (
       <div id="network" className={classNames(styles.networkSwitch, className)}>
@@ -55,6 +57,7 @@ export default class NetworkSwitch extends Component<Props> {
           value={{
             label: findNetworkByDeprecatedLabel(
               this.props.controlledNet || this.props.net,
+              chain,
             ).label,
           }}
           onChange={this.handleChange}

@@ -55,3 +55,35 @@
   margin: -12px 0 0 12px;
   opacity: 0.5;
 }
+
+.withBorder {
+  border-right: 1px solid #5c677f;
+}
+
+.legacyContainer {
+  font-size: 14px;
+  margin-right: 12px;
+}
+
+.chainLogoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // padding-right: 24px;
+  height: 36px;
+  margin-right: 12px;
+
+  span {
+    margin-right: 12px;
+  }
+
+  img {
+    max-height: 32px;
+    margin-right: 12px;
+  }
+}
+
+.neoLogo {
+  height: 24px;
+}

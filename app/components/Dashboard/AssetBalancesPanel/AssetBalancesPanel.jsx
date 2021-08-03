@@ -24,6 +24,7 @@ type Props = {
   neoPriceChange: BigNumber,
   gasPriceChange: BigNumber,
   currencyCode: string,
+  chain: string,
 }
 
 export default class AssetBalancesPanel extends React.Component<Props> {
@@ -32,7 +33,7 @@ export default class AssetBalancesPanel extends React.Component<Props> {
   }
 
   render = () => {
-    const { NEO, GAS, className } = this.props
+    const { NEO, GAS, className, chain } = this.props
 
     const hasAssets = NEO !== '0' || GAS !== '0'
 
@@ -108,6 +109,7 @@ export default class AssetBalancesPanel extends React.Component<Props> {
             <LogoWithStrikethrough />
           </div>
         )}
+
         <div className={styles.claim}>
           <Claim className={styles.claimButton} />
         </div>

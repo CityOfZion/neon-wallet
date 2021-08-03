@@ -11,6 +11,7 @@ import darkLogo from '../../assets/images/logo-dark.png'
 import withLanguageData from '../../hocs/withLanguageData'
 import { updateSettingsActions } from '../../actions/settingsActions'
 import LanguageSelect from '../../components/Inputs/LanguageSelect'
+import ChainSwitch from '../../components/ChainSwitch'
 
 type Props = {
   children: React$Node,
@@ -18,6 +19,8 @@ type Props = {
   theme: ThemeType,
   language: string,
   setLanguageSetting: (value: String) => void,
+  setChain: (chain: string) => any,
+  chain: string,
 }
 
 type State = {
@@ -29,6 +32,11 @@ class HomeLayout extends React.Component<Props, State> {
     languageMenuOpen: false,
   }
 
+  updateChain = n3Toggled => {
+    const chain = n3Toggled ? 'neo3' : 'neo2'
+    this.props.setChain(chain)
+  }
+
   render() {
     const {
       children,
@@ -36,6 +44,7 @@ class HomeLayout extends React.Component<Props, State> {
       theme,
       language,
       setLanguageSetting,
+      chain,
     } = this.props
     const dynamicImage = theme === 'Light' ? lightLogo : darkLogo
     const { languageMenuOpen } = this.state
@@ -71,6 +80,7 @@ class HomeLayout extends React.Component<Props, State> {
           <div className={styles.loginHeader}>
             <FormattedMessage id="authLogin" />
           </div>
+          <ChainSwitch updateChain={this.updateChain} chain={chain} />
           {children}
         </div>
       </div>
@@ -80,6 +90,10 @@ class HomeLayout extends React.Component<Props, State> {
 
 const mapSettingsActionsToProps = actions => ({
   setLanguageSetting: language => actions.call({ language }),
+  setChain: chain =>
+    actions.call({
+      chain,
+    }),
 })
 
 export default compose(

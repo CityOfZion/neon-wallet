@@ -6,6 +6,8 @@ import {
   TEST_NETWORK_LABEL,
   TEST_NETWORK_DEPRECATED_LABEL,
   MAIN_NETWORK_DEPRECATED_LABEL,
+  N3_MAIN_NETWORK_LABEL,
+  N3_TEST_NETWORK_LABEL,
 } from './constants'
 
 export const isMainNetwork = (networkId: string) =>
@@ -13,22 +15,40 @@ export const isMainNetwork = (networkId: string) =>
 export const isTestNetwork = (networkId: string) =>
   networkId === TEST_NETWORK_ID
 
-export const getNetworks = () => [
-  {
-    id: MAIN_NETWORK_ID,
-    value: MAIN_NETWORK_ID,
-    label: MAIN_NETWORK_LABEL,
-    deprecatedLabel: MAIN_NETWORK_DEPRECATED_LABEL,
-    network: MAIN_NETWORK_DEPRECATED_LABEL,
-  },
-  {
-    id: TEST_NETWORK_ID,
-    value: TEST_NETWORK_ID,
-    label: TEST_NETWORK_LABEL,
-    deprecatedLabel: TEST_NETWORK_DEPRECATED_LABEL,
-    network: TEST_NETWORK_DEPRECATED_LABEL,
-  },
-]
+export const getNetworks = (chain?: string) =>
+  chain === 'neo3'
+    ? [
+        {
+          id: MAIN_NETWORK_ID,
+          value: MAIN_NETWORK_ID,
+          label: N3_MAIN_NETWORK_LABEL,
+          deprecatedLabel: MAIN_NETWORK_DEPRECATED_LABEL,
+          network: MAIN_NETWORK_DEPRECATED_LABEL,
+        },
+        {
+          id: TEST_NETWORK_ID,
+          value: TEST_NETWORK_ID,
+          label: N3_TEST_NETWORK_LABEL,
+          deprecatedLabel: TEST_NETWORK_DEPRECATED_LABEL,
+          network: TEST_NETWORK_DEPRECATED_LABEL,
+        },
+      ]
+    : [
+        {
+          id: MAIN_NETWORK_ID,
+          value: MAIN_NETWORK_ID,
+          label: MAIN_NETWORK_LABEL,
+          deprecatedLabel: MAIN_NETWORK_DEPRECATED_LABEL,
+          network: MAIN_NETWORK_DEPRECATED_LABEL,
+        },
+        {
+          id: TEST_NETWORK_ID,
+          value: TEST_NETWORK_ID,
+          label: TEST_NETWORK_LABEL,
+          deprecatedLabel: TEST_NETWORK_DEPRECATED_LABEL,
+          network: TEST_NETWORK_DEPRECATED_LABEL,
+        },
+      ]
 
 export const findNetwork = (networkId: string): NetworkItemType => {
   const networks = getNetworks()
@@ -42,8 +62,9 @@ export const findNetworkByLabel = (networkLabel: string): NetworkItemType => {
 
 export const findNetworkByDeprecatedLabel = (
   deprecatedLabel: string,
+  chain?: string,
 ): NetworkItemType => {
-  const networks = getNetworks()
+  const networks = getNetworks(chain)
   return (
     networks.find(network => network.deprecatedLabel === deprecatedLabel) ||
     networks[0]
