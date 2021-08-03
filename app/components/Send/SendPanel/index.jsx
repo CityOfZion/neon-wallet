@@ -52,9 +52,11 @@ type Props = {
   n3Fees: Object,
   toggleHasEnoughGas: () => void,
   hasEnoughGas: boolean,
+  loading: boolean,
 }
 
-const shouldDisableSendButton = sendRowDetails =>
+const shouldDisableSendButton = (sendRowDetails, loading) =>
+  loading ||
   sendRowDetails.some(
     detail => !detail.address || !detail.amount || isZero(detail.amount),
   )
@@ -92,6 +94,7 @@ const SendPanel = ({
   n3Fees,
   toggleHasEnoughGas,
   hasEnoughGas,
+  loading,
 }: Props) => {
   if (noSendableAssets) {
     return <ZeroAssets address={address} />
@@ -144,7 +147,9 @@ const SendPanel = ({
           className={styles.sendFormButton}
           renderIcon={() => <SendIcon />}
           type="submit"
-          disabled={shouldDisableSendButton(sendRowDetails) || !hasEnoughGas}
+          disabled={
+            shouldDisableSendButton(sendRowDetails, loading) || !hasEnoughGas
+          }
           onClick={() => handleSubmit(false)}
           id="send-assets"
         >

@@ -28,7 +28,10 @@ export default class PriorityFee extends React.Component<Props> {
       GAS,
       notEnoughGasCallback,
     } = this.props
-    const totalFees = Number(fees.systemFee) + Number(fees.networkFee)
+
+    const totalFees = parseFloat(
+      (Number(fees.systemFee) + Number(fees.networkFee)).toFixed(8),
+    )
     const totalFeesInFiat = (Number(gasPrice) * totalFees).toFixed(2)
     const hasSufficientGas = Number(GAS) > totalFees
 

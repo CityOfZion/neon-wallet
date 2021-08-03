@@ -201,7 +201,7 @@ const buildNep17IntentsFromEntries = (
     const intent = {
       from: config.account,
       to: address,
-      decimalAmt: amount,
+      decimalAmt: 30000,
       contractHash,
     }
     return intent
