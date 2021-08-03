@@ -22,7 +22,6 @@ import accountsActions, {
 } from '../../actions/accountsActions'
 import pricesActions from '../../actions/pricesActions'
 import { updateSettingsActions } from '../../actions/settingsActions'
-// import { getNetworks } from '../../core/networks'
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -33,10 +32,6 @@ import withNetworkData from '../../hocs/withNetworkData'
 import nodeStorageActions from '../../actions/nodeStorageActions'
 import dashboardActions from '../../actions/dashboardActions'
 import withChainData from '../../hocs/withChainData'
-
-// const mapStateToProps = state => ({
-//   networks: getNetworks(state.spunky.settings.chain),
-// })
 
 const actionCreators = {
   showModal,
