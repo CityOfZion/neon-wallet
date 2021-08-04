@@ -125,7 +125,10 @@ export const upgradeUserWalletNEP6 = (): Promise<*> =>
     })
   })
 
-export const recoverWallet = (wallet: Object, chain: string): Promise<*> =>
+export const recoverWallet = (
+  wallet: Object,
+  chain: string = 'neo2',
+): Promise<*> =>
   new Promise((resolve, reject) => {
     storage.get(
       chain === 'neo2' ? 'userWallet' : 'n3UserWallet',
@@ -363,7 +366,7 @@ export const generateNewWalletAccount = (
   walletName: string,
   authenticated: boolean = false,
   onFailure: () => any = () => undefined,
-  chain: string,
+  chain: string = 'neo2',
 ) => (dispatch: DispatchType) => {
   const dispatchError = (message: string) => {
     dispatch(showErrorNotification({ message }))
