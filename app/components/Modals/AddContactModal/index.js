@@ -26,6 +26,6 @@ export default compose(
     null,
     mapDispatchToProps,
   ),
-  withChainData,
+  withChainData(),
   withActions(addContactActions, mapContactActionsToProps),
 )(AddContactModal)

@@ -13,6 +13,7 @@ type Props = {
   address: string,
   asWrapper: boolean,
   children: Array<Node>,
+  chain: string,
 }
 
 export default class Address extends React.Component<Props> {
@@ -38,7 +39,7 @@ export default class Address extends React.Component<Props> {
   }
 
   handleClick = () => {
-    const { networkId, explorer, address } = this.props
-    openExplorerAddress(networkId, explorer, address)
+    const { networkId, explorer, address, chain } = this.props
+    openExplorerAddress(networkId, explorer, address, chain)
   }
 }

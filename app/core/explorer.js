@@ -62,6 +62,7 @@ export const getExplorerAddressLink = (
   networkId: string,
   explorer: ExplorerType,
   address: string,
+  chain: string,
 ) => {
   const baseURL = getExplorerBaseURL(networkId, explorer)
 
@@ -75,7 +76,7 @@ export const getExplorerAddressLink = (
     case NEOTUBE:
       return `${baseURL}/address/${address}`
     case DORA:
-      return `${baseURL}/address/neo2/mainnet/${address}`
+      return `${baseURL}/address/${chain}/mainnet/${address}`
     default:
       throw new Error(`Unknown explorer ${explorer}`)
   }
@@ -113,7 +114,8 @@ export const openExplorerAddress = (
   networkId: string,
   explorer: ExplorerType,
   address: string,
-) => openExternal(getExplorerAddressLink(networkId, explorer, address))
+  chain: string,
+) => openExternal(getExplorerAddressLink(networkId, explorer, address, chain))
 
 export const openExplorerAsset = (
   networkId: string,

@@ -24,6 +24,6 @@ export default function withLogoutReset(
   return compose(
     withData(authActions, mapAuthDataToProps),
     withReset(actions, shouldReset),
-    withoutProps(propName),
+    // withoutProps(propName),
   )
 }
