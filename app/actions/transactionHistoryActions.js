@@ -92,7 +92,7 @@ export default createActions(
     if (chain === 'neo3') {
       const results = await axios.get(
         `https://dora.coz.io/api/v1/neo3/${
-          net === 'MainNet' ? 'mainnet' : 'testnet'
+          net === 'MainNet' ? 'mainnet' : 'testnet_rc4'
         }/get_address_abstracts/${address}/${page}`,
       )
 
