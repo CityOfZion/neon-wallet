@@ -12,6 +12,9 @@ import Github from '../../../assets/images/release-assets/github.svg'
 import PatchLight from '../../../assets/images/release-assets/patch-light.svg'
 import PatchDark from '../../../assets/images/release-assets/patch-dark.svg'
 
+import N3SupportLight from '../../../assets/images/release-assets/n3_support_light.svg'
+import N3SupportDark from '../../../assets/images/release-assets/n3_support_dark.svg'
+
 const electron = require('electron').remote
 
 type Props = {
@@ -42,6 +45,64 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
       )}
     >
       <div className={styles.releaseNotesContents}>
+        <div className={styles.release}>
+          <div className={styles.releaseContent}>
+            <small className={styles.date}>Aug 5th 2021 </small>
+            <h3>Release v2.7.4</h3>
+
+            <p>
+              In this update you will find the following updates:
+              <br />
+              <br />
+              {/* eslint-disable-next-line */}
+              <li>Support for N3 main and test nets 🎉🎉</li>
+              <li>Under the hood dependency updates</li>
+              <li>Performance enhancements</li>
+              <br />
+              View full details of this release on GitHub
+              <br />
+            </p>
+
+            <Github
+              onClick={() =>
+                electron.shell.openExternal(
+                  'https://github.com/CityOfZion/neon-wallet/releases/tag/v2.7.4',
+                )
+              }
+            />
+          </div>
+          <div className={styles.marketingImage}>
+            {theme === 'Light' ? <n3SupportLight /> : <N3SupportDark />}
+          </div>
+        </div>
+
+        <div className={styles.release}>
+          <div className={styles.releaseContent}>
+            <small className={styles.date}>Dec 1st 2020 </small>
+            <h3>Patch v2.6.1</h3>
+
+            <p>
+              In this update you will find the following minor improvements:
+              <br />
+              <br />
+              <li>Updates RPC node list</li>
+              <li>Fixes edge case balance bugs</li>
+              <li>Adds Dora and Neotube to explorers</li>
+              <br />
+              View full details of this release on GitHub
+              <br />
+            </p>
+
+            <Github
+              onClick={() =>
+                electron.shell.openExternal(
+                  'https://github.com/CityOfZion/neon-wallet/releases/tag/v2.6.1',
+                )
+              }
+            />
+          </div>
+        </div>
+
         <div className={styles.release}>
           <div className={styles.releaseContent}>
             <small className={styles.date}>Jan 18th 2021 </small>
