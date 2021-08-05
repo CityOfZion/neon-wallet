@@ -16,6 +16,7 @@ type Props = {
   address: string,
   onSubmit: Function,
   networkId: string,
+  chain: string,
 }
 
 type State = {
