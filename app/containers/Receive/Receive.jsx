@@ -16,6 +16,7 @@ type Props = {
   prices: Object,
   showReceiveModal: Function,
   networkId: string,
+  chain: string,
 }
 
 type State = {
@@ -38,7 +39,7 @@ export default class Receive extends React.Component<Props, State> {
   }
 
   render() {
-    const { address, showReceiveModal, networkId } = this.props
+    const { address, showReceiveModal, networkId, chain } = this.props
 
     const { walletName } = this.state
 
@@ -50,6 +51,7 @@ export default class Receive extends React.Component<Props, State> {
         <ReceivePanel
           address={address}
           networkId={networkId}
+          chain={chain}
           onSubmit={props => showReceiveModal({ ...props, walletName })}
         />
       </section>

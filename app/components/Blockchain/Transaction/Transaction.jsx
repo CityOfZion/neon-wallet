@@ -89,6 +89,7 @@ export default class Transaction extends React.Component<Props> {
   handleViewTransaction = () => {
     const { networkId, explorer, tx, chain } = this.props
     const { txid } = tx
+    console.log({ chain })
     openExplorerTx(networkId, explorer, txid, chain)
   }
 

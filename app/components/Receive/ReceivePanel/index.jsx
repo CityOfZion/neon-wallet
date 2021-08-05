@@ -58,7 +58,7 @@ export default class ReceivePanel extends React.Component<Props, State> {
   tabOptions = Object.keys(this.options).map((key: string) => this.options[key])
 
   render() {
-    const { address } = this.props
+    const { address, chain } = this.props
     return (
       <Panel
         renderHeader={() => <ReceivePanelHeader address={address} />}
@@ -73,15 +73,29 @@ export default class ReceivePanel extends React.Component<Props, State> {
           className={classNames(styles.tabs, 'neon-tabs')}
         >
           <TabList>
-            {this.tabOptions.map(option => (
-              <Tab key={option.key}>{option.display}</Tab>
-            ))}
+            {chain === 'neo2' ? (
+              this.tabOptions.map(option => (
+                <Tab key={option.key}>{option.display}</Tab>
+              ))
+            ) : (
+              <Tab>{this.options.default.display}</Tab>
+            )}
           </TabList>
-          {this.tabOptions.map(option => (
-            <TabPanel key={option.key} selectedClassName={styles.homeTabPanel}>
-              {option.render()}
+
+          {chain === 'neo2' ? (
+            this.tabOptions.map(option => (
+              <TabPanel
+                key={option.key}
+                selectedClassName={styles.homeTabPanel}
+              >
+                {option.render()}
+              </TabPanel>
+            ))
+          ) : (
+            <TabPanel selectedClassName={styles.homeTabPanel}>
+              {this.options.default.render()}
             </TabPanel>
-          ))}
+          )}
         </Tabs>
       </Panel>
     )
