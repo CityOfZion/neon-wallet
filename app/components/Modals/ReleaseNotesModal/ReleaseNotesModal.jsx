@@ -72,7 +72,7 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
             />
           </div>
           <div className={styles.marketingImage}>
-            {theme === 'Light' ? <n3SupportLight /> : <N3SupportDark />}
+            {theme === 'Light' ? <N3SupportLight /> : <N3SupportDark />}
           </div>
         </div>
 
