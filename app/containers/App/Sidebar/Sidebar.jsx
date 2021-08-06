@@ -142,7 +142,7 @@ const Sidebar = ({
         </div>
       </NavLink>
 
-      {chain === 'neo2' && (
+      {/* {chain === 'neo2' && (
         <NavLink
           id="mobile"
           to={ROUTES.MOBILE}
@@ -152,7 +152,7 @@ const Sidebar = ({
           <MobileIcon />
           <div> Mobile app</div>
         </NavLink>
-      )}
+      )} */}
     </div>
 
     <Logout

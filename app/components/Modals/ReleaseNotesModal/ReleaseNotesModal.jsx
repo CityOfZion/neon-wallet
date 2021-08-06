@@ -55,7 +55,7 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
               <br />
               <br />
               {/* eslint-disable-next-line */}
-              <li>Support for N3 main and test nets 🎉🎉</li>
+              <li>Support for Neo (N3) MainNet and TestNet 🎉🎉</li>
               <li>Under the hood dependency updates</li>
               <li>Performance enhancements</li>
               <br />

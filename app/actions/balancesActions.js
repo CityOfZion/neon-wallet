@@ -146,6 +146,7 @@ async function getBalances({ net, address, isRetry = false, chain }: Props) {
     tokens: [],
     soundEnabled: true,
   }
+
   const network = findNetworkByDeprecatedLabel(net)
 
   let endpoint = await getNode(net, isRetry)
