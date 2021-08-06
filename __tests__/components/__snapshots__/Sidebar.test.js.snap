@@ -1110,40 +1110,6 @@ exports[`Sidebar renders without crashing 1`] = `
                                       </Link>
                                     </Route>
                                   </NavLink>
-                                  <NavLink
-                                    activeClassName="active"
-                                    aria-current="page"
-                                    className="mobileNavItem"
-                                    id="mobile"
-                                    to="/mobile"
-                                  >
-                                    <Route
-                                      path="\\\\/mobile"
-                                    >
-                                      <Link
-                                        aria-current={null}
-                                        className="mobileNavItem"
-                                        id="mobile"
-                                        replace={false}
-                                        to="/mobile"
-                                      >
-                                        <a
-                                          aria-current={null}
-                                          className="mobileNavItem"
-                                          href="/mobile"
-                                          id="mobile"
-                                          onClick={[Function]}
-                                        >
-                                          <Component>
-                                            <svg />
-                                          </Component>
-                                          <div>
-                                             Mobile app
-                                          </div>
-                                        </a>
-                                      </Link>
-                                    </Route>
-                                  </NavLink>
                                 </div>
                                 <Connect(withActions(Connect(withActions(Logout))))
                                   className="group logoutToolTipGroup navItem"
