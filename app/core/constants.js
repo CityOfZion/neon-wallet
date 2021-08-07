@@ -4,6 +4,10 @@ import React from 'react'
 import tokenList from './tokenList.json'
 import nodesMainNet from './nodes-main-net.json'
 import nodesTestNet from './nodes-test-net.json'
+
+import n3NodesMainNet from './n3-nodes-main-net.json'
+import n3NodesTestNet from './n3-nodes-test-net.json'
+
 import England from '../assets/flags/united-kingdom.svg'
 import China from '../assets/flags/china.svg'
 import France from '../assets/flags/france.svg'
@@ -112,7 +116,7 @@ export const LANGUAGES = {
 
 export const DEFAULT_LANGUAGE = LANGUAGES.ENGLISH.value
 
-export const DEFAULT_EXPLORER = EXPLORERS.NEO_SCAN
+export const DEFAULT_EXPLORER = EXPLORERS.DORA
 
 export const ROUTES = {
   HOME: '/',
@@ -146,6 +150,7 @@ export const ROUTES = {
   NEWS: '/news',
   OFFLINE_SIGNING_PROMPT: '/offline-signing-prompt',
   NETWORK_CONFIGURATION: '/network-configuration',
+  MOBILE: '/mobile',
 }
 
 export const NOTIFICATION_LEVELS = {
@@ -177,6 +182,7 @@ export const MODAL_TYPES = {
   GENERATED_TRANSACTION: 'GENERATED_TRANSACTION',
   IMPORT_TRANSACTION: 'IMPORT_TRANSACTION',
   RELEASE_NOTES: 'RELEASE_NOTES',
+  SHOW_QR_FOR_EXPORT: 'SHOW_QR_FOR_EXPORT',
 }
 
 export const TX_TYPES = {
@@ -193,6 +199,9 @@ export const TEST_NETWORK_ID = '2'
 export const TEST_NETWORK_LABEL = '2.x TestNet'
 export const TEST_NETWORK_DEPRECATED_LABEL = 'TestNet'
 
+export const N3_MAIN_NETWORK_LABEL = '3.x MainNet'
+export const N3_TEST_NETWORK_LABEL = '3.x TestNet'
+
 export const NETWORK_LABELS = [MAIN_NETWORK_LABEL, TEST_NETWORK_LABEL]
 
 // TestNet
@@ -204,6 +213,45 @@ export const TOKENS_TEST = {
 
 // MainNet
 export const TOKENS = tokenList
+
+export const N3_TOKENS_TEST = {
+  NEO: {
+    symbol: 'NEO',
+    companyName: 'NEO',
+    networks: {
+      '1': {
+        name: 'NEO',
+        hash: 'ef4073a0f2b305a38ec4050e4d3d28bc40ea63f5',
+        decimals: 0,
+        totalSupply: 0,
+      },
+      '2': {
+        name: 'NEO',
+        hash: 'ef4073a0f2b305a38ec4050e4d3d28bc40ea63f5',
+        decimals: 0,
+        totalSupply: 0,
+      },
+    },
+  },
+  GAS: {
+    symbol: 'GAS',
+    companyName: 'GAS',
+    networks: {
+      '1': {
+        name: 'GAS',
+        hash: 'd2a4cff31913016155e38e474a2c06d08be276cf',
+        decimals: 8,
+        totalSupply: 0,
+      },
+      '2': {
+        name: 'GAS',
+        hash: 'd2a4cff31913016155e38e474a2c06d08be276cf',
+        decimals: 8,
+        totalSupply: 0,
+      },
+    },
+  },
+}
 
 export const NEO_ID =
   'c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b'
@@ -230,6 +278,20 @@ export const ENDED_ICO_TOKENS = [
 
 export const DEFAULT_WALLET = {
   name: 'userWallet',
+  version: '1.0',
+  scrypt: {
+    cost: 16384,
+    blockSize: 8,
+    parallel: 8,
+    size: 64,
+  },
+  accounts: [],
+  extra: null,
+}
+
+export const N3_DEFAULT_WALLET = {
+  name: 'n3UserWallet',
+  chain: 'neo3',
   version: '1.0',
   scrypt: {
     cost: 16384,
@@ -285,5 +347,7 @@ export const TOKEN_SALE_FAILURE = 'token_sale_failure'
 
 export const NODES_MAIN_NET = nodesMainNet
 export const NODES_TEST_NET = nodesTestNet
+export const NODES_N3_TEST_NET = n3NodesTestNet
+export const NODES_N3_MAIN_NET = n3NodesMainNet
 
 export const PRICE_UNAVAILABLE = 'N/A'

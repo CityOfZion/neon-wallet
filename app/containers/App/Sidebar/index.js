@@ -8,6 +8,8 @@ import Sidebar from './Sidebar'
 import { addPendingTransaction } from '../../../actions/pendingTransactionActions'
 import withAuthData from '../../../hocs/withAuthData'
 import { blockHeightActions } from '../../../actions/blockHeightActions'
+import withNetworkData from '../../../hocs/withNetworkData'
+import withChainData from '../../../hocs/withChainData'
 
 const mapPendingTransactionsDataToProps = (
   pendingTransactions: Array<PendingTransactions>,
@@ -22,7 +24,9 @@ const mapBlockHeightDataToProps = (count: Number) => ({
 export default compose(
   withRouter, // allow `NavLink` components to re-render when the window location changes
   withAuthData(),
+  withNetworkData(),
+  withChainData(),
   withData(addPendingTransaction, mapPendingTransactionsDataToProps),
-  withCall(blockHeightActions, mapBlockHeightDataToProps),
+  // withCall(blockHeightActions, mapBlockHeightDataToProps),
   withData(blockHeightActions, mapBlockHeightDataToProps),
 )(Sidebar)

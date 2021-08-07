@@ -8,10 +8,13 @@ import {
   MAIN_NETWORK_ID,
   TEST_NETWORK_ID,
   NODES_MAIN_NET,
+  NODES_N3_MAIN_NET,
+  NODES_N3_TEST_NET,
   NODES_TEST_NET,
   NODE_EXLUSION_CRITERIA,
 } from '../core/constants'
 import { findNetworkByDeprecatedLabel } from '../core/networks'
+import { getSettings } from './settingsActions'
 
 const PING_TIMEOUT_OVERRIDE = 1000
 const DEFAULT_PING_TIMEOUT = settings.timeout.ping
@@ -63,17 +66,33 @@ export const getRPCEndpoint = async (
     ) {
       return cachedRPCUrl[net].node
     }
-    const NETWORK = findNetworkByDeprecatedLabel(net)
+
+    const { chain } = await getSettings()
+    const NETWORK = findNetworkByDeprecatedLabel(net, chain)
     let nodeList
-    switch (NETWORK.id) {
-      case MAIN_NETWORK_ID:
-        nodeList = NODES_MAIN_NET
-        break
-      case TEST_NETWORK_ID:
-        nodeList = NODES_TEST_NET
-        break
-      default:
-        nodeList = NODES_MAIN_NET
+
+    if (chain === 'neo2') {
+      switch (NETWORK.id) {
+        case MAIN_NETWORK_ID:
+          nodeList = NODES_MAIN_NET
+          break
+        case TEST_NETWORK_ID:
+          nodeList = NODES_TEST_NET
+          break
+        default:
+          nodeList = NODES_MAIN_NET
+      }
+    } else {
+      switch (NETWORK.id) {
+        case MAIN_NETWORK_ID:
+          nodeList = NODES_N3_MAIN_NET
+          break
+        case TEST_NETWORK_ID:
+          nodeList = NODES_N3_TEST_NET
+          break
+        default:
+          nodeList = NODES_N3_MAIN_NET
+      }
     }
 
     const data = [...nodeList]

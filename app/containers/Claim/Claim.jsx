@@ -15,6 +15,7 @@ type Props = {
   claimAmount: string,
   isWatchOnly?: boolean,
   intl: IntlShape,
+  chain: string,
 }
 
 export default class Claim extends Component<Props> {
@@ -49,7 +50,8 @@ export default class Claim extends Component<Props> {
   }
 
   handleClaim = () => {
-    this.props.doGasClaim()
+    const { chain } = this.props
+    this.props.doGasClaim(chain)
   }
 
   isDisabled = () => {

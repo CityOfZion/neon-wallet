@@ -195,6 +195,16 @@ export const RELEASE_NOTES = {
   '--release-notes-button-color': '#394152',
 }
 
+export const MOBILE = {
+  '---mobile-export-card-background': '#EAF2F7',
+  '--mobile-header-instructions-icon': '#282828',
+}
+
+export const CHAIN_SWITCH = {
+  '--chain-switch-background': '#eaf2f7',
+  '--chain-switch-text': '#3D4D56',
+}
+
 export default {
   ...NEWS,
   ...AMOUNTS_PANEL,
@@ -217,4 +227,6 @@ export default {
   ...LIGHT_NETWORK_CONFIG_TOOLTIP,
   ...NOTIFICATIONS,
   ...RELEASE_NOTES,
+  ...MOBILE,
+  ...CHAIN_SWITCH,
 }

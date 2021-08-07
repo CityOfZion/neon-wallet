@@ -52,6 +52,7 @@ type Props = {
   networkId: string,
   soundEnabled: boolean,
   setSoundSetting: boolean => any,
+  chain: string,
 }
 
 type Language = {
@@ -71,6 +72,7 @@ export const loadWalletRecovery = async (
   showSuccessNotification: Object => any,
   showErrorNotification: Object => any,
   setAccounts: (Array<Object>) => any,
+  chain: string,
 ) => {
   const { canceled, filePaths } = await dialog.showOpenDialog()
   if (canceled || !filePaths) return
@@ -84,7 +86,7 @@ export const loadWalletRecovery = async (
       return
     }
     const walletData = JSON.parse(data)
-    const recoveryData = await recoverWallet(walletData).catch(err => {
+    const recoveryData = await recoverWallet(walletData, chain).catch(err => {
       showErrorNotification({
         message: `An error occurred recovering wallet: ${err.message}`,
       })
@@ -128,11 +130,15 @@ export default class Settings extends Component<Props, State> {
   }
 
   saveWalletRecovery = async () => {
-    const { showSuccessNotification, showErrorNotification } = this.props
+    const { showSuccessNotification, showErrorNotification, chain } = this.props
 
     let content
     try {
-      content = JSON.stringify(await storageGet('userWallet'))
+      if (chain === 'neo2') {
+        content = JSON.stringify(await storageGet('userWallet'))
+      } else {
+        content = JSON.stringify(await storageGet('n3UserWallet'))
+      }
     } catch (e) {
       showErrorNotification({
         message: `An error occurred reading wallet file: ${e.message}`,
@@ -198,6 +204,7 @@ export default class Settings extends Component<Props, State> {
       showSuccessNotification,
       showErrorNotification,
       setAccounts,
+      chain,
     } = this.props
 
     const parsedCurrencyOptions = Object.keys(CURRENCIES).map(key => ({
@@ -229,6 +236,7 @@ export default class Settings extends Component<Props, State> {
         <FormattedMessage id="sidebarSettings">
           {t => (
             <HeaderBar
+              chain={this.props.chain}
               networkId={this.props.networkId}
               net={this.props.net}
               label={t}
@@ -347,6 +355,7 @@ export default class Settings extends Component<Props, State> {
                     showSuccessNotification,
                     showErrorNotification,
                     setAccounts,
+                    chain,
                   )
                 }
                 to={ROUTES.ENCRYPT}
@@ -382,17 +391,18 @@ export default class Settings extends Component<Props, State> {
     </Link>
   )
 
-  renderHeaderBarRightContent = () => (
-    <div
-      onClick={() => this.openTokenModal()}
-      className={styles.headerButtonContainer}
-    >
-      <AddIcon className={styles.add} />
-      <span>
-        <FormattedMessage id="addToken" />
-      </span>
-    </div>
-  )
+  renderHeaderBarRightContent = () =>
+    this.props.chain === 'neo2' && (
+      <div
+        onClick={() => this.openTokenModal()}
+        className={styles.headerButtonContainer}
+      >
+        <AddIcon className={styles.add} />
+        <span>
+          <FormattedMessage id="addToken" />
+        </span>
+      </div>
+    )
 
   openDiscordLink = () => shell.openExternal(DISCORD_INVITE_LINK)
 

@@ -38,9 +38,9 @@ export const getExplorerTxLink = (
   networkId: string,
   explorer: ExplorerType,
   txId: string,
+  chain: string = 'neo2',
 ) => {
   const baseURL = getExplorerBaseURL(networkId, explorer)
-
   switch (explorer) {
     case NEO_TRACKER:
       return `${baseURL}/tx/${txId}`
@@ -49,8 +49,12 @@ export const getExplorerTxLink = (
     case ANT_CHAIN:
       return `${baseURL}/tx/hash/0x${txId}`
     case NEOTUBE:
-    case DORA:
       return `${baseURL}/transaction/0x${txId}`
+    case DORA:
+      return `${baseURL}/transaction/${chain}/${
+        // eslint-disable-next-line
+        networkId == '1' ? 'mainnet' : 'testnet_rc4'
+      }/0x${txId}`
     default:
       throw new Error(`Unknown explorer ${explorer}`)
   }
@@ -60,6 +64,7 @@ export const getExplorerAddressLink = (
   networkId: string,
   explorer: ExplorerType,
   address: string,
+  chain: string = 'neo2',
 ) => {
   const baseURL = getExplorerBaseURL(networkId, explorer)
 
@@ -71,8 +76,9 @@ export const getExplorerAddressLink = (
     case ANT_CHAIN:
       return `${baseURL}/address/info/${address}`
     case NEOTUBE:
-    case DORA:
       return `${baseURL}/address/${address}`
+    case DORA:
+      return `${baseURL}/address/${chain}/mainnet/${address}`
     default:
       throw new Error(`Unknown explorer ${explorer}`)
   }
@@ -91,7 +97,7 @@ export const getExplorerAssetLink = (
     case ANT_CHAIN:
       return `${baseURL}/assets/hash/${assetId}`
     case DORA:
-      return `${baseURL}/contract/${assetId}`
+      return `${baseURL}/contract/neo2/mainnet/${assetId}`
     case NEOTUBE:
       return `${baseURL}/nep5/${assetId}`
     default:
@@ -103,13 +109,15 @@ export const openExplorerTx = (
   networkId: string,
   explorer: ExplorerType,
   txId: string,
-) => openExternal(getExplorerTxLink(networkId, explorer, txId))
+  chain: string,
+) => openExternal(getExplorerTxLink(networkId, explorer, txId, chain))
 
 export const openExplorerAddress = (
   networkId: string,
   explorer: ExplorerType,
   address: string,
-) => openExternal(getExplorerAddressLink(networkId, explorer, address))
+  chain: string,
+) => openExternal(getExplorerAddressLink(networkId, explorer, address, chain))
 
 export const openExplorerAsset = (
   networkId: string,

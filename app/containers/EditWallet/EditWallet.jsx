@@ -26,6 +26,7 @@ type Props = {
   address: string,
   history: Object,
   intl: IntlShape,
+  chain: string,
 }
 
 type State = {
@@ -112,6 +113,7 @@ class EditWallet extends Component<Props, State> {
       setAccounts,
       showModal,
       history,
+      chain,
     } = this.props
 
     const { label, key } = this.props.match.params
@@ -125,7 +127,9 @@ class EditWallet extends Component<Props, State> {
         </div>
       ),
       onClick: async () => {
-        const data = await getStorage('userWallet').catch(readError =>
+        const data = await getStorage(
+          chain === 'neo2' ? 'userWallet' : 'n3UserWallet',
+        ).catch(readError =>
           showErrorNotification({
             message: `An error occurred reading previously stored wallet: ${
               readError.message
@@ -134,7 +138,10 @@ class EditWallet extends Component<Props, State> {
         )
         if (data) {
           data.accounts = reject(data.accounts, { address: key })
-          await setStorage('userWallet', data).catch(saveError =>
+          await setStorage(
+            chain === 'neo2' ? 'userWallet' : 'n3UserWallet',
+            data,
+          ).catch(saveError =>
             showErrorNotification({
               message: `An error occurred updating the wallet: ${
                 saveError.message

@@ -338,9 +338,9 @@ exports[`Sidebar renders without crashing 1`] = `
               }
             }
           >
-            <withRouter(Connect(withData(Connect(withData(Connect(withCall(Connect(withData(Sidebar)))))))))>
+            <withRouter(Connect(withData(Connect(withData(withProps(Connect(withData(Connect(withData(Connect(withData(Sidebar))))))))))))>
               <Route>
-                <Connect(withData(Connect(withData(Connect(withCall(Connect(withData(Sidebar))))))))
+                <Connect(withData(Connect(withData(withProps(Connect(withData(Connect(withData(Connect(withData(Sidebar)))))))))))
                   history={
                     Object {
                       "action": "POP",
@@ -388,7 +388,7 @@ exports[`Sidebar renders without crashing 1`] = `
                     }
                   }
                 >
-                  <withData(Connect(withData(Connect(withCall(Connect(withData(Sidebar)))))))
+                  <withData(Connect(withData(withProps(Connect(withData(Connect(withData(Connect(withData(Sidebar))))))))))
                     dispatch={[Function]}
                     history={
                       Object {
@@ -438,7 +438,7 @@ exports[`Sidebar renders without crashing 1`] = `
                       }
                     }
                   >
-                    <withData(Connect(withCall(Connect(withData(Sidebar)))))
+                    <withData(withProps(Connect(withData(Connect(withData(Connect(withData(Sidebar))))))))
                       dispatch={[Function]}
                       history={
                         Object {
@@ -487,9 +487,9 @@ exports[`Sidebar renders without crashing 1`] = `
                           "url": "/",
                         }
                       }
-                      pendingTransactionsCount={0}
+                      networkId={1}
                     >
-                      <withCall(Connect(withData(Sidebar)))
+                      <Connect(withData(Connect(withData(Connect(withData(Sidebar))))))
                         dispatch={[Function]}
                         history={
                           Object {
@@ -538,10 +538,11 @@ exports[`Sidebar renders without crashing 1`] = `
                             "url": "/",
                           }
                         }
-                        pendingTransactionsCount={0}
-                        performAction={[Function]}
+                        net="MainNet"
+                        networkId={1}
                       >
-                        <withoutProps(Connect(withData(Sidebar)))
+                        <withData(Connect(withData(Connect(withData(Sidebar)))))
+                          chain="neo2"
                           dispatch={[Function]}
                           history={
                             Object {
@@ -590,10 +591,11 @@ exports[`Sidebar renders without crashing 1`] = `
                               "url": "/",
                             }
                           }
-                          pendingTransactionsCount={0}
-                          performAction={[Function]}
+                          net="MainNet"
+                          networkId={1}
                         >
-                          <Connect(withData(Sidebar))
+                          <withData(Connect(withData(Sidebar)))
+                            chain="neo2"
                             dispatch={[Function]}
                             history={
                               Object {
@@ -642,9 +644,12 @@ exports[`Sidebar renders without crashing 1`] = `
                                 "url": "/",
                               }
                             }
+                            net="MainNet"
+                            networkId={1}
                             pendingTransactionsCount={0}
                           >
                             <withData(Sidebar)
+                              chain="neo2"
                               count={300}
                               dispatch={[Function]}
                               history={
@@ -694,6 +699,8 @@ exports[`Sidebar renders without crashing 1`] = `
                                   "url": "/",
                                 }
                               }
+                              net="MainNet"
+                              networkId={1}
                               pendingTransactionsCount={0}
                             >
                               <div
@@ -711,7 +718,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                         <Connect(withData(IntlWrapper))
                                           store={undefined}
                                         >
-                                          <Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))))))))
+                                          <Connect(Connect(withData(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))))))))))
                                             store={undefined}
                                           />
                                            
@@ -740,7 +747,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                           <Connect(withData(IntlWrapper))
                                             store={undefined}
                                           >
-                                            <Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))))))))
+                                            <Connect(Connect(withData(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))))))))))
                                               store={undefined}
                                             />
                                              
@@ -1143,14 +1150,14 @@ exports[`Sidebar renders without crashing 1`] = `
                                 </Connect(withActions(Connect(withActions(Logout))))>
                               </div>
                             </withData(Sidebar)>
-                          </Connect(withData(Sidebar))>
-                        </withoutProps(Connect(withData(Sidebar)))>
-                      </withCall(Connect(withData(Sidebar)))>
-                    </withData(Connect(withCall(Connect(withData(Sidebar)))))>
-                  </withData(Connect(withData(Connect(withCall(Connect(withData(Sidebar)))))))>
-                </Connect(withData(Connect(withData(Connect(withCall(Connect(withData(Sidebar))))))))>
+                          </withData(Connect(withData(Sidebar)))>
+                        </withData(Connect(withData(Connect(withData(Sidebar)))))>
+                      </Connect(withData(Connect(withData(Connect(withData(Sidebar))))))>
+                    </withData(withProps(Connect(withData(Connect(withData(Connect(withData(Sidebar))))))))>
+                  </withData(Connect(withData(withProps(Connect(withData(Connect(withData(Connect(withData(Sidebar))))))))))>
+                </Connect(withData(Connect(withData(withProps(Connect(withData(Connect(withData(Connect(withData(Sidebar)))))))))))>
               </Route>
-            </withRouter(Connect(withData(Connect(withData(Connect(withCall(Connect(withData(Sidebar)))))))))>
+            </withRouter(Connect(withData(Connect(withData(withProps(Connect(withData(Connect(withData(Connect(withData(Sidebar))))))))))))>
           </Router>
         </MemoryRouter>
       </IntlProvider>

@@ -27,6 +27,7 @@ import EncryptQR from '../Settings/EncryptQR'
 import { ROUTES } from '../../core/constants'
 import OfflineSigningPrompt from '../../containers/OfflineSigningPrompt'
 import NetworkConfiguration from '../../containers/NetworkConfiguration'
+import Mobile from '../../containers/Mobile'
 
 export default ({ store }: { store: any }) => (
   <App store={store}>
@@ -127,6 +128,7 @@ export default ({ store }: { store: any }) => (
         path={ROUTES.OFFLINE_SIGNING_PROMPT}
         component={OfflineSigningPrompt}
       />
+      <PrivateRoute exact path={ROUTES.MOBILE} component={Mobile} />
       <Redirect to={ROUTES.DASHBOARD} />
     </Switch>
   </App>

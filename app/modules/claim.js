@@ -1,5 +1,12 @@
 // @flow
 import { api, type Claims } from '@cityofzion/neon-js'
+import {
+  api as n3Api,
+  wallet as n3Wallet,
+  u as n3U,
+  rpc as n3Rpc,
+  tx,
+} from '@cityofzion/neon-js-next'
 import { map, reduce } from 'lodash-es'
 
 import {
@@ -20,6 +27,7 @@ import { toBigNumber, toNumber } from '../core/math'
 import { ASSETS } from '../core/constants'
 import { FIVE_MINUTES_MS } from '../core/time'
 import poll from '../util/poll'
+import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 
 // Constants
 export const DISABLE_CLAIM = 'DISABLE_CLAIM'
@@ -117,6 +125,66 @@ const getUpdatedClaimableAmount = async ({
   return pollForUpdatedClaimableAmount({ net, address, claimableAmount })
 }
 
+export const handleN3GasClaim = async ({
+  FROM_ACCOUNT,
+  dispatch,
+  net,
+}: {
+  FROM_ACCOUNT: {},
+  dispatch: DispatchType,
+  net: string,
+}) => {
+  // TODO:
+  // - Ledger support/integration
+
+  let endpoint = await getNode(net)
+  if (!endpoint) {
+    endpoint = await getRPCEndpoint(net)
+  }
+
+  const rpcClient = new n3Rpc.RPCClient(endpoint)
+  const version = await rpcClient.execute(
+    new n3Rpc.Query({
+      method: 'getversion',
+      params: [],
+    }),
+  )
+  const networkMagic = version.network || version.magic || 844378958
+
+  const CONFIG = {
+    account: FROM_ACCOUNT,
+    rpcAddress: endpoint,
+    networkMagic,
+  }
+  const facade = await n3Api.NetworkFacade.fromConfig({
+    node: endpoint,
+  })
+  const signingConfig = {
+    signingCallback: n3Api.signWithAccount(CONFIG.account),
+  }
+
+  const results = await facade
+    .claimGas(FROM_ACCOUNT, signingConfig)
+    .catch(e => {
+      console.error(e)
+      dispatch(disableClaim(false))
+      dispatch(
+        showErrorNotification({
+          message: 'Error claiming GAS please try again.',
+        }),
+      )
+    })
+
+  if (results) {
+    dispatch(
+      showSuccessNotification({
+        message: 'Claim was successful! Your balance will update shortly.',
+      }),
+    )
+    setTimeout(() => dispatch(disableClaim(false)), FIVE_MINUTES_MS)
+  }
+}
+
 export const doGasClaim = () => async (
   dispatch: DispatchType,
   getState: GetStateType,
@@ -129,8 +197,15 @@ export const doGasClaim = () => async (
   const privateKey = getWIF(state)
   const signingFunction = getSigningFunction(state)
   const isHardwareClaim = getIsHardwareLogin(state)
+  const wif = getWIF(state)
+  const { chain } = state.spunky.settings.data
 
   dispatch(disableClaim(true))
+
+  if (chain === 'neo3') {
+    const FROM_ACCOUNT = new n3Wallet.Account(wif)
+    return handleN3GasClaim({ FROM_ACCOUNT, dispatch, net })
+  }
 
   if (isHardwareClaim) {
     dispatch(
