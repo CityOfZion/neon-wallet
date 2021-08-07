@@ -9,6 +9,7 @@ import { addPendingTransaction } from '../../../actions/pendingTransactionAction
 import withAuthData from '../../../hocs/withAuthData'
 import { blockHeightActions } from '../../../actions/blockHeightActions'
 import withNetworkData from '../../../hocs/withNetworkData'
+import withChainData from '../../../hocs/withChainData'
 
 const mapPendingTransactionsDataToProps = (
   pendingTransactions: Array<PendingTransactions>,
@@ -24,6 +25,7 @@ export default compose(
   withRouter, // allow `NavLink` components to re-render when the window location changes
   withAuthData(),
   withNetworkData(),
+  withChainData(),
   withData(addPendingTransaction, mapPendingTransactionsDataToProps),
   // withCall(blockHeightActions, mapBlockHeightDataToProps),
   withData(blockHeightActions, mapBlockHeightDataToProps),

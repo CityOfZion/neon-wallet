@@ -55,6 +55,7 @@ const ModalRenderer = (props: Props) => {
 
   if (modalType) {
     const Modal = MODAL_COMPONENTS[modalType]
+
     return (
       <Modal {...modalProps} {...omit(props, ['modalType', 'modalProps'])} />
     )

@@ -125,72 +125,78 @@ export const upgradeUserWalletNEP6 = (): Promise<*> =>
     })
   })
 
-export const recoverWallet = (wallet: Object): Promise<*> =>
+export const recoverWallet = (
+  wallet: Object,
+  chain: string = 'neo2',
+): Promise<*> =>
   new Promise((resolve, reject) => {
-    storage.get('userWallet', (readError, data) => {
-      if (readError) {
-        reject(readError)
-      }
+    storage.get(
+      chain === 'neo2' ? 'userWallet' : 'n3UserWallet',
+      (readError, data) => {
+        if (readError) {
+          reject(readError)
+        }
 
-      let accounts: Array<any> = []
+        let accounts: Array<any> = []
 
-      // If for some reason we have no NEP-6 wallet stored, create a default.
-      if (!data) {
-        // eslint-disable-next-line no-param-reassign
-        data = { ...DEFAULT_WALLET }
-      }
+        // If for some reason we have no NEP-6 wallet stored, create a default.
+        if (!data) {
+          // eslint-disable-next-line no-param-reassign
+          data = { ...DEFAULT_WALLET }
+        }
 
-      if (!wallet.accounts) {
-        // Load the old wallet type
+        if (!wallet.accounts) {
+          // Load the old wallet type
+          // eslint-disable-next-line
+          Object.keys(wallet).map((label: string) => {
+            const isDefault = accounts.length === 0 && wallet.length === 0
+            const newAccount = convertOldWalletAccount(
+              label,
+              wallet[label],
+              isDefault,
+            )
+            if (newAccount && newAccount.key) {
+              accounts.push(newAccount)
+            }
+          })
+        } else {
+          accounts = wallet.accounts // eslint-disable-line
+        }
+
+        if (!accounts.length) {
+          reject(Error('No accounts found in recovery file.'))
+        }
+
+        // check if wallet label already exists
+        const dupAccounts = intersectionBy(data.accounts, accounts, 'label')
+
+        if (dupAccounts.length > 0) {
+          const labels = dupAccounts.map(acc => `"${acc.label}"`)
+          const errMsg =
+            labels.length === 1
+              ? `A wallet named ${labels[0]} already exists locally.`
+              : `Wallets named ${toSentence(labels)} already exist locally.`
+
+          reject(Error(errMsg))
+          return
+        }
+
         // eslint-disable-next-line
-        Object.keys(wallet).map((label: string) => {
-          const isDefault = accounts.length === 0 && wallet.length === 0
-          const newAccount = convertOldWalletAccount(
-            label,
-            wallet[label],
-            isDefault,
-          )
-          if (newAccount && newAccount.key) {
-            accounts.push(newAccount)
+        accounts.some(account => {
+          if (account.key && !walletHasKey(data, account.key)) {
+            data.accounts.push(account)
           }
         })
-      } else {
-        accounts = wallet.accounts // eslint-disable-line
-      }
 
-      if (!accounts.length) {
-        reject(Error('No accounts found in recovery file.'))
-      }
-
-      // check if wallet label already exists
-      const dupAccounts = intersectionBy(data.accounts, accounts, 'label')
-
-      if (dupAccounts.length > 0) {
-        const labels = dupAccounts.map(acc => `"${acc.label}"`)
-        const errMsg =
-          labels.length === 1
-            ? `A wallet named ${labels[0]} already exists locally.`
-            : `Wallets named ${toSentence(labels)} already exist locally.`
-
-        reject(Error(errMsg))
-        return
-      }
-
-      // eslint-disable-next-line
-      accounts.some(account => {
-        if (account.key && !walletHasKey(data, account.key)) {
-          data.accounts.push(account)
-        }
-      })
-
-      storage.set('userWallet', data, saveError => {
-        if (saveError) {
-          reject(saveError)
-        } else {
-          resolve(data)
-        }
-      })
-    })
+        storage.set('userWallet', data, saveError => {
+          if (saveError) {
+            reject(saveError)
+          } else {
+            resolve(data)
+          }
+        })
+      },
+    )
   })
 
 // This method return the WIF from the encryptedWIF and passphrase
@@ -360,7 +366,7 @@ export const generateNewWalletAccount = (
   walletName: string,
   authenticated: boolean = false,
   onFailure: () => any = () => undefined,
-  chain: string,
+  chain: string = 'neo2',
 ) => (dispatch: DispatchType) => {
   const dispatchError = (message: string) => {
     dispatch(showErrorNotification({ message }))

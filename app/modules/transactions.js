@@ -201,7 +201,7 @@ const buildNep17IntentsFromEntries = (
     const intent = {
       from: config.account,
       to: address,
-      decimalAmt: 30000,
+      decimalAmt: amount,
       contractHash,
     }
     return intent
@@ -334,13 +334,22 @@ export const sendTransaction = ({
             endpoint = await getRPCEndpoint(net)
           }
 
+          const rpcClient = new n3Rpc.RPCClient(endpoint)
+          const version = await rpcClient.execute(
+            new n3Rpc.Query({
+              method: 'getversion',
+              params: [],
+            }),
+          )
+
+          const networkMagic = version.network || version.magic || 844378958
+
           const FROM_ACCOUNT = new n3Wallet.Account(wif)
 
           const CONFIG = {
             account: FROM_ACCOUNT,
             rpcAddress: endpoint,
-            // TODO: this will have to by dynamic based on test/mainnets
-            networkMagic: 844378958,
+            networkMagic,
           }
 
           const facade = await n3Api.NetworkFacade.fromConfig({

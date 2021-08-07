@@ -146,6 +146,7 @@ async function getBalances({ net, address, isRetry = false, chain }: Props) {
     tokens: [],
     soundEnabled: true,
   }
+
   const network = findNetworkByDeprecatedLabel(net)
 
   let endpoint = await getNode(net, isRetry)
@@ -313,13 +314,6 @@ async function getBalances({ net, address, isRetry = false, chain }: Props) {
 }
 
 async function getN3Balances({ net, address }: Props) {
-  /* 
-    TODO:
-    - Node URL should come from settings
-    - Ability to support network param above
-    - Error handling
-    - "User generated tokens"
-  */
   const balances = {
     NEO: 0,
     GAS: 0,
