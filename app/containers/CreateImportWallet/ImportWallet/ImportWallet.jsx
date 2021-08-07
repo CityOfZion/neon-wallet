@@ -76,6 +76,7 @@ const IMPORT_OPTIONS = {
               props.showSuccessNotification,
               props.showErrorNotification,
               props.setAccounts,
+              props.chain,
             )
           }}
         >

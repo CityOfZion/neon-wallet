@@ -28,6 +28,7 @@ type Props = {
   loadWalletData: Function,
   saveSelectedNode: Function,
   loading: boolean,
+  chain: string,
 }
 
 type State = {
@@ -49,7 +50,10 @@ export default class NetworkConfiguration extends React.Component<
 
   resetToDefault = () => {
     this.setState({ disableResetButton: true })
-    this.updateExplorerSettings({ value: 'NEOSCAN', label: EXPLORERS.NEO_SCAN })
+    this.updateExplorerSettings({
+      value: EXPLORERS.DORA,
+      label: EXPLORERS.DORA,
+    })
     this.props.handleNetworkChange('1')
     this.props.saveSelectedNode({ url: '', net: 'MainNet' })
     setTimeout(() => {
@@ -59,12 +63,23 @@ export default class NetworkConfiguration extends React.Component<
   }
 
   render() {
-    const parsedExplorerOptions = Object.keys(EXPLORERS).map(key => ({
-      value: key,
-      label: EXPLORERS[key],
-    }))
+    const { intl, loading, chain } = this.props
 
-    const { intl, loading } = this.props
+    let parsedExplorerOptions
+
+    if (chain === 'neo3') {
+      parsedExplorerOptions = [
+        {
+          value: EXPLORERS.DORA,
+          label: EXPLORERS.DORA,
+        },
+      ]
+    } else {
+      parsedExplorerOptions = Object.keys(EXPLORERS).map(key => ({
+        value: key,
+        label: EXPLORERS[key],
+      }))
+    }
 
     return (
       <FullHeightPanel

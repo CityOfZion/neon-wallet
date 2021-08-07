@@ -142,11 +142,19 @@ export const handleN3GasClaim = async ({
     endpoint = await getRPCEndpoint(net)
   }
 
+  const rpcClient = new n3Rpc.RPCClient(endpoint)
+  const version = await rpcClient.execute(
+    new n3Rpc.Query({
+      method: 'getversion',
+      params: [],
+    }),
+  )
+  const networkMagic = version.network || version.magic || 844378958
+
   const CONFIG = {
     account: FROM_ACCOUNT,
     rpcAddress: endpoint,
-    // TODO: this will have to by dynamic based on test/mainnets
-    networkMagic: 844378958,
+    networkMagic,
   }
   const facade = await n3Api.NetworkFacade.fromConfig({
     node: endpoint,

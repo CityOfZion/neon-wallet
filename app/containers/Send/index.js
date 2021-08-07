@@ -1,7 +1,7 @@
 // @flow
 import { compose } from 'recompose'
 import { values, omit } from 'lodash-es'
-import { withData } from 'spunky'
+import { withData, withCall } from 'spunky'
 import { connect, type MapStateToProps } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { injectIntl } from 'react-intl'
@@ -88,6 +88,7 @@ export default compose(
   withTokensData(),
   withBalancesData(mapBalanceDataToProps),
   withCurrencyData('currencyCode'),
+  withCall(contactsActions),
   withData(contactsActions, mapContactsDataToProps),
   withPricesData(mapPricesDataToProps),
   withNetworkData(),

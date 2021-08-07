@@ -25,6 +25,7 @@ type Props = {
   pendingTransactionsCount: number,
   count: number,
   store: any,
+  chain: string,
 }
 
 const Sidebar = ({
@@ -33,6 +34,7 @@ const Sidebar = ({
   pendingTransactionsCount,
   count,
   store,
+  chain,
 }: Props) => (
   <div className={classNames(styles.container, className)}>
     <div className={styles.group}>
@@ -140,15 +142,17 @@ const Sidebar = ({
         </div>
       </NavLink>
 
-      <NavLink
-        id="mobile"
-        to={ROUTES.MOBILE}
-        className={styles.mobileNavItem}
-        activeClassName={styles.active}
-      >
-        <MobileIcon />
-        <div> Mobile app</div>
-      </NavLink>
+      {/* {chain === 'neo2' && (
+        <NavLink
+          id="mobile"
+          to={ROUTES.MOBILE}
+          className={styles.mobileNavItem}
+          activeClassName={styles.active}
+        >
+          <MobileIcon />
+          <div> Mobile app</div>
+        </NavLink>
+      )} */}
     </div>
 
     <Logout

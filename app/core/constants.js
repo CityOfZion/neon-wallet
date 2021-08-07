@@ -200,7 +200,7 @@ export const TEST_NETWORK_LABEL = '2.x TestNet'
 export const TEST_NETWORK_DEPRECATED_LABEL = 'TestNet'
 
 export const N3_MAIN_NETWORK_LABEL = '3.x MainNet'
-export const N3_TEST_NETWORK_LABEL = '3.x TestNet (RC 3)'
+export const N3_TEST_NETWORK_LABEL = '3.x TestNet'
 
 export const NETWORK_LABELS = [MAIN_NETWORK_LABEL, TEST_NETWORK_LABEL]
 
