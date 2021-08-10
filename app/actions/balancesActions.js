@@ -4,6 +4,8 @@ import { rpc as n3Rpc } from '@cityofzion/neon-js-next'
 import { extend, isEmpty, get } from 'lodash-es'
 import { createActions } from 'spunky'
 import { Howl } from 'howler'
+import axios from 'axios'
+
 // $FlowFixMe
 import coinAudioSample from '../assets/audio/coin.wav'
 
@@ -16,7 +18,6 @@ import {
 } from '../core/formatters'
 import { toBigNumber } from '../core/math'
 import { findNetworkByDeprecatedLabel } from '../core/networks'
-import axios from 'axios'
 
 const { reverseHex, hexstring2str } = u
 const { Query } = rpc
