@@ -151,6 +151,7 @@ export const ROUTES = {
   OFFLINE_SIGNING_PROMPT: '/offline-signing-prompt',
   NETWORK_CONFIGURATION: '/network-configuration',
   MOBILE: '/mobile',
+  MIGRATION: '/migration',
 }
 
 export const NOTIFICATION_LEVELS = {

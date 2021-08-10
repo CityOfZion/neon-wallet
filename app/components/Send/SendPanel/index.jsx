@@ -53,6 +53,7 @@ type Props = {
   toggleHasEnoughGas: () => void,
   hasEnoughGas: boolean,
   loading: boolean,
+  isMigration: boolean,
 }
 
 const shouldDisableSendButton = (sendRowDetails, loading) =>
@@ -95,10 +96,14 @@ const SendPanel = ({
   toggleHasEnoughGas,
   hasEnoughGas,
   loading,
+  isMigration,
 }: Props) => {
   if (noSendableAssets) {
     return <ZeroAssets address={address} />
   }
+
+  // TODO: handle condition where is migration but not enough assets
+
   const maxRecipientsMet = sendRowDetails.length === maxNumberOfRecipients
 
   let content = (
@@ -113,24 +118,40 @@ const SendPanel = ({
         showConfirmSend={showConfirmSend}
         calculateMaxValue={calculateMaxValue}
         isWatchOnly={isWatchOnly}
+        isMigration={isMigration}
       />
-      {chain === 'neo2' && (
-        <div className={styles.priorityFeeContainer}>
-          <PriorityFee
-            availableGas={Number(get(sendableAssets, 'GAS.balance', 0))}
-            handleAddPriorityFee={handleAddPriorityFee}
-            fees={fees}
-            disabled={shouldDisableSendButton(sendRowDetails)}
-          />
-        </div>
-      )}
-
+      {chain === 'neo2' &&
+        !isMigration && (
+          <div className={styles.priorityFeeContainer}>
+            <PriorityFee
+              availableGas={Number(get(sendableAssets, 'GAS.balance', 0))}
+              handleAddPriorityFee={handleAddPriorityFee}
+              fees={fees}
+              disabled={shouldDisableSendButton(sendRowDetails)}
+            />
+          </div>
+        )}
       {chain === 'neo3' && (
         <div className={styles.priorityFeeContainer}>
           <N3Fees fees={n3Fees} notEnoughGasCallback={toggleHasEnoughGas} />{' '}
         </div>
       )}
-      {isWatchOnly ? (
+      {/* eslint-disable-next-line */}
+      {isMigration ? (
+        <Button
+          primary
+          className={styles.sendFormButton}
+          renderIcon={() => null}
+          type="submit"
+          disabled={
+            shouldDisableSendButton(sendRowDetails, loading) || !hasEnoughGas
+          }
+          onClick={() => handleSubmit(false)}
+          id="send-assets"
+        >
+          Continue
+        </Button>
+      ) : isWatchOnly ? (
         <Button
           className={styles.generateTransactionButton}
           renderIcon={() => <EditIcon />}
@@ -219,7 +240,9 @@ const SendPanel = ({
     )
   }
 
-  return (
+  return isMigration ? (
+    <div>{content}</div>
+  ) : (
     <Panel
       contentClassName={sendSuccess ? styles.sendSuccessContent : null}
       renderHeader={() => (

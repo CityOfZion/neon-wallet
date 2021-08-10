@@ -18,6 +18,7 @@ type Props = {
   removeRow: (index: number) => any,
   updateRowField: (index: number, field: string, value: any) => any,
   calculateMaxValue: (asset: string, index: number) => string,
+  isMigration?: boolean,
 }
 
 const SendRecipientList = ({
@@ -29,6 +30,7 @@ const SendRecipientList = ({
   clearErrors,
   showConfirmSend,
   calculateMaxValue,
+  isMigration,
 }: Props) => {
   const renderRows = () =>
     sendRowDetails.map((row, index) => (
@@ -44,11 +46,17 @@ const SendRecipientList = ({
         contacts={contacts}
         clearErrors={clearErrors}
         calculateMaxValue={calculateMaxValue}
+        isMigration={isMigration}
       />
     ))
 
   return (
-    <section className={styles.sendRecipientListContainer}>
+    <section
+      className={classNames({
+        [styles.sendRecipientListContainer]: true,
+        [styles.migrationContainer]: isMigration,
+      })}
+    >
       <div className={styles.sendRecipientListHeaders}>
         <h3
           className={classNames(styles.sendRecipientListHeader, styles.asset)}

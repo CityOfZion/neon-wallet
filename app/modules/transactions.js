@@ -8,7 +8,9 @@ import {
   rpc as n3Rpc,
   tx,
 } from '@cityofzion/neon-js-next'
+// import N2 from '@cityofzion/neon-js-legacy-latest'
 import { flatMap, keyBy, isEmpty, get } from 'lodash-es'
+import axios from 'axios'
 
 import {
   showErrorNotification,
@@ -30,9 +32,11 @@ import {
   validateTransactionsBeforeSending,
   getTokenBalancesMap,
 } from '../core/wallet'
-import { toNumber } from '../core/math'
+import { toBigNumber, toNumber } from '../core/math'
 import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 import { addPendingTransaction } from '../actions/pendingTransactionActions'
+
+const N2 = require('@cityofzion/neon-js-legacy-latest')
 
 const { reverseHex, ab2hexstring } = u
 
@@ -76,7 +80,7 @@ const buildTransferScript = (
 
   tokenEntries.forEach(({ address, amount, symbol }) => {
     const toAcct = new wallet.Account(address)
-    const { scriptHash, decimals } = tokensBalanceMap[symbol]
+    const { scriptHash, decimals = 8 } = tokensBalanceMap[symbol]
     const args = [
       u.reverseHex(fromAcct.scriptHash),
       u.reverseHex(toAcct.scriptHash),
@@ -100,7 +104,10 @@ const makeRequest = (
   config.intents = buildIntents(sendEntries)
 
   if (script === '') {
-    return api.sendAsset(config, api.neoscan)
+    // eslint-disable-next-line
+    const provider = new N2.api.neoCli.instance(config.url)
+    config.api = provider
+    return N2.api.sendAsset(config)
   }
   // eslint-disable-next-line no-param-reassign
   config.script = script
@@ -446,20 +453,56 @@ export const sendTransaction = ({
           intents: undefined,
           script: undefined,
           gas: undefined,
+          account: new wallet.Account(wif),
         }
-        const balanceResults = await api
-          .getBalanceFrom({ net, address: fromAddress }, api.neoscan)
-          .catch(e => {
-            // indicates that neo scan is down and that api.sendAsset and api.doInvoke
-            // will fail unless balances are supplied
-            console.error(e)
-            config.balance = generateBalanceInfo(
-              tokensBalanceMap,
-              fromAddress,
-              net,
-            )
+
+        if (net === 'MainNet') {
+          const balanceResults = await api
+            .getBalanceFrom({ net, address: fromAddress }, api.neoscan)
+            .catch(e => {
+              // indicates that neo scan is down and that api.sendAsset and api.doInvoke
+              // will fail unless balances are supplied
+              console.error(e)
+              config.balance = generateBalanceInfo(
+                tokensBalanceMap,
+                fromAddress,
+                net,
+              )
+            })
+
+          config.balance = balanceResults.balance
+        }
+        if (net === 'TestNet') {
+          const testnetBalances = await axios.get(
+            `https://dora.coz.io/api/v1/neo2/testnet/get_balance/${fromAddress}`,
+          )
+          const parsedTestNetBalances = {}
+
+          testnetBalances.data.balance.forEach(token => {
+            parsedTestNetBalances[token.asset_symbol || token.symbol] = {
+              name: token.asset_symbol || token.symbol,
+              balance: token.amount,
+              unspent: token.unspent,
+            }
           })
-        if (balanceResults) config.balance = balanceResults.balance
+
+          const Balance = new wallet.Balance({ address: fromAddress, net })
+
+          Object.values(parsedTestNetBalances).forEach(
+            // $FlowFixMe
+            ({ name, balance, unspent }) => {
+              if (name === 'GAS' || name === 'NEO') {
+                Balance.addAsset(name, { balance, unspent })
+              } else {
+                Balance.addToken(name, balance)
+              }
+            },
+          )
+
+          config.balance = Balance
+        }
+
+        debugger
 
         try {
           const script = buildTransferScript(
@@ -469,6 +512,7 @@ export const sendTransaction = ({
             // $FlowFixMe
             config.tokensBalanceMap,
           )
+
           if (isWatchOnly) {
             config.intents = buildIntents(sendEntries)
             config.script = script

@@ -74,7 +74,8 @@
     "flowtype/generic-spacing": 0,
     "no-param-reassign": ["warn"],
     "no-restricted-syntax": ["error", "LabeledStatement", "WithStatement"],
-    "no-await-in-loop": 0
+    "no-await-in-loop": 0,
+    "jsx-a11y/alt-text": 0
   },
   "settings": {
     "import/resolver": {

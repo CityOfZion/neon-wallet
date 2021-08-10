@@ -6,6 +6,7 @@ import { createActions } from 'spunky'
 import { TX_TYPES } from '../core/constants'
 import { findAndReturnTokenInfo } from '../util/findAndReturnTokenInfo'
 import { getSettings } from './settingsActions'
+import { toBigNumber } from '../core/math'
 
 type Props = {
   net: string,
@@ -96,6 +97,18 @@ export default createActions(
         }/get_address_abstracts/${address}/${page}`,
       )
 
+      // eslint-disable-next-line
+      data = results.data
+    } else if (net === 'TestNet' && chain === 'neo2') {
+      const results = await axios.get(
+        `https://dora.coz.io/api/v1/neo2/testnet/get_address_abstracts/${address}/${page}`,
+      )
+      console.log(results.data)
+      results.data.entries = results.data.entries.map(entry => {
+        const parsedEntry = { ...entry }
+        parsedEntry.amount = toBigNumber(parsedEntry.amount).toString()
+        return parsedEntry
+      })
       // eslint-disable-next-line
       data = results.data
     } else {

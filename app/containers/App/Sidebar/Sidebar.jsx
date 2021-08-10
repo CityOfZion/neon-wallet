@@ -15,6 +15,7 @@ import ContactsIcon from '../../../assets/navigation/contacts.svg'
 import SettingsIcon from '../../../assets/navigation/settings.svg'
 import NewsIcon from '../../../assets/navigation/news.svg'
 import MobileIcon from '../../../assets/navigation/mobile.svg'
+import MigrationIcon from '../../../assets/navigation/migration.svg'
 import LogoWithTooltipAndBlockHeight from '../../../components/LogoWithTooltipAndBlockHeight/LogoWithTooltipAndBlockHeight'
 
 import styles from './Sidebar.scss'
@@ -141,6 +142,18 @@ const Sidebar = ({
           <FormattedMessage id="sidebarSettings" />{' '}
         </div>
       </NavLink>
+
+      {chain === 'neo2' && (
+        <NavLink
+          id="settings"
+          to={ROUTES.MIGRATION}
+          className={styles.navItem}
+          activeClassName={styles.active}
+        >
+          <MigrationIcon />
+          <div> Migration</div>
+        </NavLink>
+      )}
 
       {/* {chain === 'neo2' && (
         <NavLink

@@ -1,0 +1,33 @@
+.migrationPanelContent {
+  padding: 0 !important;
+  display: flex;
+}
+
+.explanationContainer {
+  max-width: 305px;
+}
+
+.buttonsContainer {
+  display: flex;
+  width: 100%;
+
+  .innerButtonsContainer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 12px;
+
+    background: var(--input-background);
+    button {
+      max-width: 215px;
+    }
+  }
+
+  .explanationPlaceholder {
+    width: 305px;
+    min-width: 305px;
+    max-width: 305px;
+    padding: 24px;
+    background: var(--panel-receive-explanation);
+  }
+}

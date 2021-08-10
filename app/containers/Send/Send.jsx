@@ -29,6 +29,9 @@ type Props = {
     sendEntries: Array<SendEntryType>,
     fees: number,
   }) => Object,
+  performMigration: ({
+    sendEntries: Array<SendEntryType>,
+  }) => void,
   calculateN3Fees: ({
     sendEntries: Array<SendEntryType>,
   }) => Object,
@@ -45,6 +48,8 @@ type Props = {
   showImportModal: (props: Object) => void,
   intl: IntlShape,
   chain: string,
+  isMigration: boolean,
+  wif: string,
 }
 
 type State = {
@@ -91,7 +96,7 @@ export default class Send extends React.Component<Props, State> {
     tokens: [],
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.setState((prevState: Object) => {
       const newState = [...prevState.sendRowDetails]
 
@@ -104,6 +109,12 @@ export default class Send extends React.Component<Props, State> {
       if (address) {
         this.updateRowField(0, 'address', address)
       }
+    }
+
+    if (this.props.isMigration) {
+      const account = new n3Wallet.Account(this.props.wif)
+      console.log({ wif: this.props.wif, account })
+      this.updateRowField(0, 'address', account.address)
     }
   }
 
@@ -364,6 +375,10 @@ export default class Send extends React.Component<Props, State> {
       Promise.all(promises).then(values => {
         const isValid = values.every((result: boolean) => result)
 
+        if (isValid && this.props.isMigration) {
+          return this.handleMigration()
+        }
+
         if (isValid && !this.props.isWatchOnly && !generateTransaction) {
           this.setState({ showConfirmSend: true })
         }
@@ -372,6 +387,56 @@ export default class Send extends React.Component<Props, State> {
         }
       })
     }
+  }
+
+  handleMigration = (showTransactionModal: boolean = false) => {
+    // const {
+    //   sendTransaction,
+    //   isWatchOnly,
+    //   showGeneratedTransactionModal,
+    //   chain,
+    // } = this.props
+
+    const { sendRowDetails } = this.state
+
+    const sendEntries = sendRowDetails.map((row: Object) => ({
+      address: row.address,
+      amount: toNumber(row.amount.toString()),
+      symbol: row.asset,
+    }))
+
+    this.props.performMigration({
+      sendEntries,
+    })
+
+    // this.setState({ pendingTransaction: true })
+    // sendTransaction({
+    //   sendEntries: entries,
+    //   fees,
+    //   isWatchOnly: isWatchOnly || showTransactionModal,
+    //   chain,
+    // })
+    //   .then((result: Object) => {
+    //     if (isWatchOnly || showTransactionModal) {
+    //       this.setState({ pendingTransaction: false })
+    //       showGeneratedTransactionModal(result)
+    //     } else {
+    //       this.setState({
+    //         sendSuccess: true,
+    //         txid: result.txid,
+    //         pendingTransaction: false,
+    //       })
+    //     }
+    //   })
+    //   .catch((error: Object) => {
+    //     // TODO: here is where we must generate the expected txId locally
+    //     // and then add it to our pending tx arr
+    //     this.setState({
+    //       sendError: true,
+    //       sendErrorMessage: error.message,
+    //       pendingTransaction: false,
+    //     })
+    //   })
   }
 
   validateRowAmounts = (rows: Array<any>) => {
@@ -547,10 +612,10 @@ export default class Send extends React.Component<Props, State> {
   }
 
   validateAddress = async (formAddress: string, index: number) => {
-    const { intl, chain } = this.props
+    const { intl, chain, isMigration } = this.props
     const { errors } = this.state.sendRowDetails[index]
 
-    if (chain === 'neo3') {
+    if (chain === 'neo3' || isMigration) {
       if (!n3Wallet.isAddress(formAddress)) {
         errors.address = intl.formatMessage({
           id: 'errors.send.invalidAddress',
@@ -625,23 +690,26 @@ export default class Send extends React.Component<Props, State> {
       isWatchOnly,
       showImportModal,
       chain,
+      isMigration,
     } = this.props
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 
     return (
       <section className={styles.sendContainer}>
-        {shouldRenderHeaderBar && (
-          <HeaderBar
-            label={<FormattedMessage id="sendPageLabel" />}
-            shouldRenderRefresh
-          />
-        )}
-        {!noSendableAssets && (
-          <AmountsPanel
-            amountsData={this.createSendAmountsData()}
-            currencyCode={currencyCode}
-          />
-        )}
+        {shouldRenderHeaderBar &&
+          !isMigration && (
+            <HeaderBar
+              label={<FormattedMessage id="sendPageLabel" />}
+              shouldRenderRefresh
+            />
+          )}
+        {!noSendableAssets &&
+          !isMigration && (
+            <AmountsPanel
+              amountsData={this.createSendAmountsData()}
+              currencyCode={currencyCode}
+            />
+          )}
         <SendPanel
           calculateMaxValue={this.calculateMaxValue}
           maxNumberOfRecipients={MAX_NUMBER_OF_RECIPIENTS}
@@ -676,6 +744,7 @@ export default class Send extends React.Component<Props, State> {
           hasEnoughGas={hasEnoughGas}
           loading={loading}
           toggleHasEnoughGas={this.toggleHasEnoughGas}
+          isMigration={isMigration}
         />
       </section>
     )

@@ -16,6 +16,7 @@ import {
 } from '../core/formatters'
 import { toBigNumber } from '../core/math'
 import { findNetworkByDeprecatedLabel } from '../core/networks'
+import axios from 'axios'
 
 const { reverseHex, hexstring2str } = u
 const { Query } = rpc
@@ -282,16 +283,60 @@ async function getBalances({ net, address, isRetry = false, chain }: Props) {
     .getBalanceFrom({ net, address }, api.neoscan)
     .catch(e => console.error(e))
 
-  const assets = get(assetBalances, 'balance.assets', {})
+  const testnetBalances = await axios.get(
+    `https://dora.coz.io/api/v1/neo2/testnet/get_balance/${address}`,
+  )
+  const parsedTestNetBalances = {}
+
+  testnetBalances.data.balance.forEach(token => {
+    parsedTestNetBalances[token.asset_symbol || token.symbol] = {
+      balance: token.amount,
+      hash: token.asset_hash,
+    }
+  })
+
+  const assets =
+    net === 'MainNet'
+      ? get(assetBalances, 'balance.assets', {})
+      : parsedTestNetBalances
+
   // The API doesn't always return NEO or GAS keys if, for example, the address only has one asset
-  const neoBalance = assets.NEO ? assets.NEO.balance.toString() : '0'
-  const gasBalance = assets.GAS
-    ? assets.GAS.balance.round(COIN_DECIMAL_LENGTH).toString()
+  // eslint-disable-next-line
+  const neoBalance = assets.NEO
+    ? net === 'MainNet'
+      ? assets.NEO.balance.toString()
+      : assets.NEO.balance
     : '0'
+  // eslint-disable-next-line
+  const gasBalance = assets.GAS
+    ? net === 'MainNet'
+      ? assets.GAS.balance.round(COIN_DECIMAL_LENGTH).toString()
+      : assets.GAS.balance
+    : '0'
+
   const parsedAssets = [
     { [ASSETS.NEO]: neoBalance },
     { [ASSETS.GAS]: gasBalance },
   ]
+
+  if (net === 'TestNet') {
+    Object.keys(parsedTestNetBalances).map(sym => {
+      const balance = {
+        [parsedTestNetBalances[sym].hash]: {
+          balance: toBigNumber(parsedTestNetBalances[sym].balance),
+          symbol: sym,
+          networkId: '2',
+          scriptHash: parsedTestNetBalances[sym].hash,
+        },
+      }
+      if (sym !== 'GAS' && sym !== 'NEO') {
+        return parsedAssets.push(balance)
+      }
+
+      return null
+    })
+  }
+
   determineIfBalanceUpdated(
     { [ASSETS.NEO]: neoBalance },
     soundEnabled,

@@ -43,6 +43,7 @@ export default createActions(ID, ({ networkId }) => async () => {
       data =>
         !NODE_EXLUSION_CRITERIA.some(criteria => data.url.includes(criteria)),
     )
+  console.log({ networkId, TEST_NETWORK_ID })
   if (chain === 'neo2') {
     switch (networkId) {
       case MAIN_NETWORK_ID:

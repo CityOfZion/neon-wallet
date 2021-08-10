@@ -2,7 +2,7 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { compose } from 'recompose'
-import { withData, withActions } from 'spunky'
+import { withCall, withData, withActions } from 'spunky'
 import { injectIntl } from 'react-intl'
 
 import accountsActions, {
@@ -55,6 +55,8 @@ export default compose(
   ),
   withAuthData(),
   withChainData(),
+  withCall(accountsActions),
+  withCall(n3AccountsActions),
   withData(accountsActions, mapAccountsDataToProps),
   withData(n3AccountsActions, mapN3AccountsDataToProps),
   withData(walletLabelActions, mapAccountsDataToProps),

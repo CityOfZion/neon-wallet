@@ -27,6 +27,7 @@ type Props = {
   updateRowField: (index: number, field: string, value: any) => any,
   calculateMaxValue: (asset: string, index: number) => string,
   intl: IntlShape,
+  isMigration: boolean,
 }
 
 class SendRecipientListItem extends Component<Props> {
@@ -38,6 +39,7 @@ class SendRecipientListItem extends Component<Props> {
       clearErrors,
       calculateMaxValue,
       asset,
+      isMigration,
     } = this.props
 
     let normalizedValue = value
@@ -92,6 +94,7 @@ class SendRecipientListItem extends Component<Props> {
       showConfirmSend,
       numberOfRecipients,
       intl,
+      isMigration,
     } = this.props
 
     const selectInput = showConfirmSend ? (
@@ -103,7 +106,6 @@ class SendRecipientListItem extends Component<Props> {
         onChange={value => this.handleFieldChange(value, 'asset')}
         items={this.createAssetList()}
         onFocus={this.clearErrorsOnFocus}
-        disabled
       />
     )
 
@@ -131,9 +133,10 @@ class SendRecipientListItem extends Component<Props> {
         value={address || ''}
         name="address"
         onChange={value => this.handleFieldChange(value, 'address')}
-        items={this.createContactList()}
+        items={isMigration ? [] : this.createContactList()}
         onFocus={this.clearErrorsOnFocus}
         error={errors && errors.address}
+        disabled={isMigration}
       />
     )
 
@@ -150,7 +153,11 @@ class SendRecipientListItem extends Component<Props> {
 
     return (
       <li className={styles.sendRecipientListItem}>
-        <div className={styles.rowNumber}>{`${`0${index + 1}`.slice(-2)}`}</div>
+        {!isMigration && (
+          <div className={styles.rowNumber}>{`${`0${index + 1}`.slice(
+            -2,
+          )}`}</div>
+        )}
         <div className={styles.asset}>{selectInput}</div>
         <div className={styles.amount}>{numberInput}</div>
         <div className={styles.address}>{addressInput}</div>
