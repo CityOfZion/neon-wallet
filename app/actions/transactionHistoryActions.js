@@ -6,7 +6,6 @@ import { createActions } from 'spunky'
 import { TX_TYPES } from '../core/constants'
 import { findAndReturnTokenInfo } from '../util/findAndReturnTokenInfo'
 import { getSettings } from './settingsActions'
-import { toBigNumber } from '../core/math'
 
 type Props = {
   net: string,
@@ -105,7 +104,13 @@ export default createActions(
       )
       results.data.entries = results.data.entries.map(entry => {
         const parsedEntry = { ...entry }
-        parsedEntry.amount = toBigNumber(parsedEntry.amount).toString()
+        if (
+          entry.asset ===
+          '602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7'
+        ) {
+          parsedEntry.amount = entry.amount * 100000000
+        }
+
         return parsedEntry
       })
       // eslint-disable-next-line
