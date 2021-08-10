@@ -693,6 +693,24 @@ export default class Send extends React.Component<Props, State> {
     } = this.props
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 
+    const assets = isMigration ? {} : sendableAssets
+
+    console.log({ sendableAssets })
+    if (isMigration) {
+      if (sendableAssets.NEO) {
+        assets.NEO = sendableAssets.NEO
+      }
+      if (sendableAssets.GAS) {
+        assets.GAS = sendableAssets.GAS
+      }
+      if (sendableAssets.CGAS) {
+        assets.CGAS = sendableAssets.CGAS
+      }
+      if (sendableAssets.nNEO) {
+        assets.nNEO = sendableAssets.nNEO
+      }
+    }
+
     return (
       <section className={styles.sendContainer}>
         {shouldRenderHeaderBar &&
@@ -713,7 +731,7 @@ export default class Send extends React.Component<Props, State> {
           calculateMaxValue={this.calculateMaxValue}
           maxNumberOfRecipients={MAX_NUMBER_OF_RECIPIENTS}
           sendRowDetails={sendRowDetails}
-          sendableAssets={sendableAssets}
+          sendableAssets={assets}
           showConfirmSend={showConfirmSend}
           pendingTransaction={pendingTransaction}
           sendSuccess={sendSuccess}
