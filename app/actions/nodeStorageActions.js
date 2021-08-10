@@ -32,6 +32,11 @@ type Props = {
   net: Net,
 }
 
+export const resetCachedNode = () => {
+  delete cachedRPCUrl.MainNet
+  delete cachedRPCUrl.TestNet
+}
+
 export const determineIfCacheIsExpired = (
   timestamp: number,
   expiration: number = CACHE_EXPIRATION,
@@ -160,12 +165,14 @@ export const getNode = async (
     return ''
   }
 
+  console.log({ nodeInStorage })
   return nodeInStorage
 }
 
 export default createActions(
   ID,
   ({ url, net }: Props = {}) => async (): Promise<string> => {
+    console.log({ cachedRPCUrl })
     if (url || url === '') {
       await setNode(url, net)
       return url

@@ -152,6 +152,7 @@ async function getBalances({ net, address, isRetry = false, chain }: Props) {
   const network = findNetworkByDeprecatedLabel(net)
 
   let endpoint = await getNode(net, isRetry)
+  console.log({ endpoint })
   if (!endpoint) {
     endpoint = await getRPCEndpoint(net)
   }

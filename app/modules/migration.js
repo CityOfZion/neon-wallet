@@ -40,7 +40,7 @@ const N3 = require('@cityofzion/neon-js-next')
 // TODO: will need to be dynamic based on network
 const CGAS = '74f2dc36a68fdc4682034178eb2220729231db76'
 const CNEO = 'c074a05e9dcf0141cbe6b4b3475dd67baf4dcb60'
-const ProxyContract = '0f4fad9ae3830585a9264e6ec0b1eff3e89c6558'
+const ProxyContract = '7997ac991b66ca3810602639a2f2c1bd985e8b5a'
 const additionalInvocationGas = 0
 
 export const performMigration = ({
