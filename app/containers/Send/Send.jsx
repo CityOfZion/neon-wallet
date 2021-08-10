@@ -113,7 +113,6 @@ export default class Send extends React.Component<Props, State> {
 
     if (this.props.isMigration) {
       const account = new n3Wallet.Account(this.props.wif)
-      console.log({ wif: this.props.wif, account })
       this.updateRowField(0, 'address', account.address)
     }
   }

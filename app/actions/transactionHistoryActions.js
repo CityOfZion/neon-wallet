@@ -103,7 +103,6 @@ export default createActions(
       const results = await axios.get(
         `https://dora.coz.io/api/v1/neo2/testnet/get_address_abstracts/${address}/${page}`,
       )
-      console.log(results.data)
       results.data.entries = results.data.entries.map(entry => {
         const parsedEntry = { ...entry }
         parsedEntry.amount = toBigNumber(parsedEntry.amount).toString()

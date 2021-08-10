@@ -60,12 +60,10 @@ export const getRPCEndpoint = async (
 ) => {
   settings.timeout.ping = PING_TIMEOUT_OVERRIDE
   try {
-    console.log('getting RPC endpoint', { net })
     if (
       cachedRPCUrl[net] &&
       !determineIfCacheIsExpired(cachedRPCUrl[net].timestamp)
     ) {
-      console.log(cachedRPCUrl)
       return cachedRPCUrl[net].node
     }
 
@@ -96,8 +94,6 @@ export const getRPCEndpoint = async (
           nodeList = NODES_N3_MAIN_NET
       }
     }
-
-    console.log({ nodeList })
 
     const data = [...nodeList]
       .filter(
@@ -152,7 +148,6 @@ export const getNode = async (
   net: Net,
   errorOccurred?: boolean,
 ): Promise<string> => {
-  console.log('getting node', { net, errorOccurred })
   if (errorOccurred) {
     delete cachedRPCUrl[net]
     await setNode('', net)
@@ -164,7 +159,7 @@ export const getNode = async (
   if (!nodeInStorage || !expiration || determineIfCacheIsExpired(expiration)) {
     return ''
   }
-  console.log({ nodeInStorage })
+
   return nodeInStorage
 }
 

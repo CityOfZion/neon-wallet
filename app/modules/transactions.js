@@ -502,8 +502,6 @@ export const sendTransaction = ({
           config.balance = Balance
         }
 
-        debugger
-
         try {
           const script = buildTransferScript(
             config.net,
