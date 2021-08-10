@@ -13,8 +13,6 @@ import Nothing from '../../../assets/icons/nothing.svg'
 import { CURRENCIES, PRICE_UNAVAILABLE } from '../../../core/constants'
 import { imageMap } from '../../../assets/nep5/svg'
 
-imageMap
-
 type Props = {
   className: ?string,
   balances: Array<TokenBalanceType>,
