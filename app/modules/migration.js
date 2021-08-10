@@ -39,6 +39,7 @@ const N3 = require('@cityofzion/neon-js-next')
 
 // TODO: will need to be dynamic based on network
 const CGAS = '74f2dc36a68fdc4682034178eb2220729231db76'
+const CNEO = 'c074a05e9dcf0141cbe6b4b3475dd67baf4dcb60'
 const ProxyContract = '0f4fad9ae3830585a9264e6ec0b1eff3e89c6558'
 const additionalInvocationGas = 0
 
@@ -77,7 +78,7 @@ export const performMigration = ({
           N2.u.reverseHex(FROM_ACCOUNT.scriptHash), // sender on original chain
           '58', // destination chain ID
           N2.u.reverseHex(TO_ACCOUNT.scriptHash), // recipient on new chain
-          1, // amount
+          15, // amount
           0, // ?
           0, // ?
         ],
@@ -86,7 +87,7 @@ export const performMigration = ({
       const gas = additionalInvocationGas
       const intent = N2.api.makeIntent(
         // must be .8 GAS more than you want to swap
-        { GAS: 0.8 },
+        { GAS: 15 },
         N2.wallet.getAddressFromScriptHash(CGAS),
       )
 

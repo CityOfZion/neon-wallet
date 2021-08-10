@@ -1,14 +1,7 @@
 // @flow
 import React from 'react'
 import Send from '../../../containers/Send'
-// import { intlShape } from 'react-intl'
 
-// import InfoIcon from '../../../assets/icons/info.svg'
-// import n3Logo from '../../../assets/images/n3_logo.png'
-// import Button from '../../Button'
-// import PasswordInput from '../../Inputs/PasswordInput'
-// import TextInput from '../../Inputs/TextInput'
-// import CreateImportWalletForm from '../../CreateImportWalletForm'
 import styles from './TokenSwap.scss'
 
 type Props = {}
