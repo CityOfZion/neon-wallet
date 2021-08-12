@@ -1,6 +1,16 @@
 // @flow
+import axios from 'axios'
+import { keyBy } from 'lodash-es'
+import { wallet } from '@cityofzion/neon-js'
 
-import { getWIF } from '../core/deprecated'
+import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
+import { addPendingTransaction } from '../actions/pendingTransactionActions'
+import { getNetworkById, getTokenBalances, getWIF } from '../core/deprecated'
+import {
+  showErrorNotification,
+  showInfoNotification,
+  showSuccessNotification,
+} from './notifications'
 
 const N2 = require('@cityofzion/neon-js-legacy-latest')
 const N3 = require('@cityofzion/neon-js-next')
@@ -12,32 +22,133 @@ const NNEO = '17da3881ab2d050fea414c80b3fa8324d756f60e'
 const ProxyContract = '7997ac991b66ca3810602639a2f2c1bd985e8b5a'
 const additionalInvocationGas = 0
 
+const populateTestNetBalances = async (address: string) => {
+  const net = 'TestNet'
+
+  const testnetBalances = await axios.get(
+    `https://dora.coz.io/api/v1/neo2/testnet/get_balance/${address}`,
+  )
+  const parsedTestNetBalances = {}
+
+  testnetBalances.data.balance.forEach(token => {
+    parsedTestNetBalances[token.asset_symbol || token.symbol] = {
+      name: token.asset_symbol || token.symbol,
+      balance: token.amount,
+      unspent: token.unspent,
+    }
+  })
+
+  const Balance = new wallet.Balance({
+    address,
+    net,
+  })
+
+  Object.values(parsedTestNetBalances).forEach(
+    // $FlowFixMe
+    ({ name, balance, unspent }) => {
+      if (name === 'GAS' || name === 'NEO') {
+        Balance.addAsset(name, { balance, unspent })
+      } else {
+        Balance.addToken(name, balance)
+      }
+    },
+  )
+
+  return Balance
+}
+
 export const performMigration = ({
   sendEntries,
 }: {
   sendEntries: Array<SendEntryType>,
-}) => (dispatch: DispatchType, getState: GetStateType): Promise<*> => {
+}) => (dispatch: DispatchType, getState: GetStateType): Promise<*> =>
   // TODO: will need to be dynamic based on network
   // eslint-disable-next-line
-  const provider = new N2.api.neoCli.instance('https://testnet1.neo2.coz.io')
+  // const provider = new N2.api.neoCli.instance('https://testnet1.neo2.coz.io')
 
-  // TODO: Implement the following logic:
-  // Please ensure at least 1 cGAS at the user's address before starting the migration, otherwise the migration may fail!
-  // Currently the cross-chain contract adds a condition that migration to N3 is free as long as the amount of assets is
-  // greater than or equal to 10 NEO or 20 GAS; otherwise, the contract will charge 1 cGAS at the user's address if the condition is not met.
-
-  return new Promise(async (resolve, reject) => {
+  new Promise(async (resolve, reject) => {
     try {
+      dispatch(
+        showInfoNotification({
+          message: 'Broadcasting transaction to network...',
+          autoDismiss: 0,
+        }),
+      )
+
       const state = getState()
       const wif = getWIF(state)
 
+      const tokenBalances = getTokenBalances(state)
+      const tokensBalanceMap = keyBy(tokenBalances, 'symbol')
       const TO_ACCOUNT = new N3.wallet.Account(wif)
       const FROM_ACCOUNT = new N2.wallet.Account(wif)
-
       const entry = sendEntries[0]
 
+      // eslint-disable-next-line
+      const net = state.spunky.network.data == 1 ? 'MainNet' : 'TestNet'
+
+      let endpoint = await getNode(net)
+      if (!endpoint) {
+        endpoint = await getRPCEndpoint(net)
+      }
+
+      // eslint-disable-next-line
+      const provider = new N2.api.neoCli.instance(endpoint)
+
       const { symbol, amount } = entry
+
+      const determineIfCGASMintRequired = () => {
+        const userMustPayFee =
+          (symbol === 'NEO' && Number(amount) < 10) ||
+          (symbol === 'GAS' && Number(amount) < 20)
+
+        const userHasLessThanOneCGAS = tokensBalanceMap.CGAS
+          ? tokensBalanceMap.CGAS.balance.lt(1)
+          : true
+
+        return userMustPayFee && userHasLessThanOneCGAS
+      }
+
+      const hasBalanceForRequiredFee = (MIN_FEE = 1) => {
+        if (
+          !tokensBalanceMap.GAS ||
+          (tokensBalanceMap.GAS && tokensBalanceMap.GAS.balance.lt(MIN_FEE))
+        ) {
+          return false
+        }
+        return true
+      }
+
       const MINT_REQUIRED = symbol === 'NEO' || symbol === 'GAS'
+      const CGAS_MINT_REQUIRED = determineIfCGASMintRequired()
+
+      if (CGAS_MINT_REQUIRED) {
+        if (!hasBalanceForRequiredFee()) {
+          const generateMinRequirementString = () => {
+            const requirementMap = {
+              GAS: ' OR migrate at least 20 GAS.',
+              NEO: ' OR migrate at least 10 NEO.',
+              OTHER: '.',
+            }
+
+            if (requirementMap[symbol]) {
+              return requirementMap[symbol]
+            }
+            return requirementMap.OTHER
+          }
+          const message = `Account does not have enough to cover the 1 GAS fee... Please transfer at least 1 GAS to ${
+            FROM_ACCOUNT.address
+          } to proceed${generateMinRequirementString()}`
+          const error = new Error(message)
+          dispatch(
+            showErrorNotification({
+              message,
+              autoDismiss: 10000,
+            }),
+          )
+          return reject(error)
+        }
+      }
 
       const mintScript = N2.sc.createScript({
         scriptHash: symbol === 'NEO' ? NNEO : CGAS,
@@ -67,19 +178,21 @@ export const performMigration = ({
         script: MINT_REQUIRED ? mintScript + swapScript : swapScript,
         intents: undefined,
         gas,
+        balance: null,
+      }
+
+      if (net === 'TestNet') {
+        CONFIG.balance = await populateTestNetBalances(FROM_ACCOUNT.address)
       }
 
       if (MINT_REQUIRED) {
         const mintAmount = {
           [symbol]: Number(amount),
         }
-
-        // TODO: none of this is necessary is wallet has > 1 CGAS balance
-
-        // TODO: If wallet has less than 1 GAS and the transaction is below the minimum
-        // we need to throw an error
-
-        if (symbol === 'GAS' && Number(amount) < 20) {
+        // If a CGAS mint is required and the user
+        // is migrating GAS we add 1 to the mint amount
+        // (the min recommended fee required)
+        if (symbol === 'GAS' && CGAS_MINT_REQUIRED) {
           // $FlowFixMe
           mintAmount.GAS += 1
         }
@@ -90,8 +203,11 @@ export const performMigration = ({
             symbol === 'GAS' || symbol === 'CGAS' ? CGAS : NNEO,
           ),
         )
-
-        if (symbol === 'NEO' && Number(amount) < 10) {
+        // If a CGAS mint is required and the user
+        // is migrating a different token (NEO, CGAS, or NNEO)
+        // we still need to create a CGAS mint intent
+        // so they can pay the minimum required fee
+        if (CGAS_MINT_REQUIRED && symbol !== 'GAS') {
           // $FlowFixMe
           const mintGasFeeIntents = N2.api.makeIntent(
             1,
@@ -103,7 +219,16 @@ export const performMigration = ({
         }
       }
 
-      const config = await N2.api.doInvoke(CONFIG)
+      const config = await N2.api.doInvoke(CONFIG).catch(e => {
+        dispatch(
+          showErrorNotification({
+            message: `Oops something went wrong please try again... ${
+              e.message
+            }`,
+          }),
+        )
+        return reject(e)
+      })
 
       // eslint-disable-next-line
       if (config.response.hasOwnProperty('txid')) {
@@ -113,9 +238,31 @@ export const performMigration = ({
             config.response.txid
           }`,
         )
+
+        dispatch(
+          showSuccessNotification({
+            message:
+              'Transaction pending! Your balance will automatically update when the blockchain has processed it.',
+          }),
+        )
+
+        dispatch(
+          addPendingTransaction.call({
+            address: config.account.address,
+            tx: {
+              hash: config.response.txid,
+              sendEntries,
+            },
+            net,
+          }),
+        )
+
+        return resolve()
       }
     } catch (e) {
+      showErrorNotification({
+        message: `Oops something went wrong please try again... ${e.message}`,
+      })
       return reject(e)
     }
   })
-}

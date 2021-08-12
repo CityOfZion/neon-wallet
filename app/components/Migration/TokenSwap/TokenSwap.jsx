@@ -4,14 +4,13 @@ import Send from '../../../containers/Send'
 
 import styles from './TokenSwap.scss'
 
-type Props = {}
+type Props = {
+  handleSwapComplete: () => void,
+}
 
 type State = {}
 
-export default class CreateMigrationWallet extends React.Component<
-  Props,
-  State,
-> {
+export default class TokenSwap extends React.Component<Props, State> {
   render() {
     return (
       <div className={styles.container}>
@@ -29,7 +28,10 @@ export default class CreateMigrationWallet extends React.Component<
         </div>
 
         <div className={styles.formContainer}>
-          <Send isMigration />
+          <Send
+            isMigration
+            handleSwapComplete={this.props.handleSwapComplete}
+          />
         </div>
       </div>
     )

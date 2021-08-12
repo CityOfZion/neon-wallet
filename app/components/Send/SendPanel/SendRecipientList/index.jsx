@@ -73,7 +73,7 @@ const SendRecipientList = ({
         >
           <FormattedMessage id="sendAddressLabel" />
         </h3>
-        <div className={styles.delete} />
+        {!isMigration && <div className={styles.delete} />}
       </div>
       <ul className={styles.sendRecipientList}>{renderRows()}</ul>
     </section>

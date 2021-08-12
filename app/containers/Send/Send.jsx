@@ -31,7 +31,7 @@ type Props = {
   }) => Object,
   performMigration: ({
     sendEntries: Array<SendEntryType>,
-  }) => void,
+  }) => Object,
   calculateN3Fees: ({
     sendEntries: Array<SendEntryType>,
   }) => Object,
@@ -50,6 +50,7 @@ type Props = {
   chain: string,
   isMigration: boolean,
   wif: string,
+  handleSwapComplete: () => void,
 }
 
 type State = {
@@ -388,13 +389,8 @@ export default class Send extends React.Component<Props, State> {
     }
   }
 
-  handleMigration = (showTransactionModal: boolean = false) => {
-    // const {
-    //   sendTransaction,
-    //   isWatchOnly,
-    //   showGeneratedTransactionModal,
-    //   chain,
-    // } = this.props
+  handleMigration = () => {
+    this.setState({ loading: true })
 
     const { sendRowDetails } = this.state
 
@@ -404,38 +400,17 @@ export default class Send extends React.Component<Props, State> {
       symbol: row.asset,
     }))
 
-    this.props.performMigration({
-      sendEntries,
-    })
-
-    // this.setState({ pendingTransaction: true })
-    // sendTransaction({
-    //   sendEntries: entries,
-    //   fees,
-    //   isWatchOnly: isWatchOnly || showTransactionModal,
-    //   chain,
-    // })
-    //   .then((result: Object) => {
-    //     if (isWatchOnly || showTransactionModal) {
-    //       this.setState({ pendingTransaction: false })
-    //       showGeneratedTransactionModal(result)
-    //     } else {
-    //       this.setState({
-    //         sendSuccess: true,
-    //         txid: result.txid,
-    //         pendingTransaction: false,
-    //       })
-    //     }
-    //   })
-    //   .catch((error: Object) => {
-    //     // TODO: here is where we must generate the expected txId locally
-    //     // and then add it to our pending tx arr
-    //     this.setState({
-    //       sendError: true,
-    //       sendErrorMessage: error.message,
-    //       pendingTransaction: false,
-    //     })
-    //   })
+    this.props
+      .performMigration({
+        sendEntries,
+      })
+      .then(results => {
+        this.props.handleSwapComplete()
+      })
+      .catch(() => {
+        this.setState({ loading: false })
+        // TODO: implement possible additional error state here
+      })
   }
 
   validateRowAmounts = (rows: Array<any>) => {
@@ -695,7 +670,6 @@ export default class Send extends React.Component<Props, State> {
 
     const assets = isMigration ? {} : sendableAssets
 
-    console.log({ sendableAssets })
     if (isMigration) {
       if (sendableAssets.NEO) {
         assets.NEO = sendableAssets.NEO
@@ -727,6 +701,7 @@ export default class Send extends React.Component<Props, State> {
               currencyCode={currencyCode}
             />
           )}
+
         <SendPanel
           calculateMaxValue={this.calculateMaxValue}
           maxNumberOfRecipients={MAX_NUMBER_OF_RECIPIENTS}

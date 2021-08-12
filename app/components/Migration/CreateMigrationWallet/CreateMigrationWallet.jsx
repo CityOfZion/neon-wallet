@@ -1,4 +1,5 @@
 // @flow
+import classNames from 'classnames'
 import React from 'react'
 import { intlShape } from 'react-intl'
 
@@ -15,7 +16,7 @@ const PASS_MIN_LENGTH = 4
 type Props = {
   generateNewWalletAccount: Function,
   history: Object,
-
+  walletCreationDetected: boolean,
   authenticated: boolean,
   intl: intlShape,
   address: string,
@@ -34,6 +35,7 @@ type State = {
   key: string,
   walletName: string,
   submitButtonDisabled: boolean,
+  createNewWallet: boolean,
 }
 
 export default class CreateMigrationWallet extends React.Component<
@@ -50,6 +52,7 @@ export default class CreateMigrationWallet extends React.Component<
     key: '',
     walletName: '',
     submitButtonDisabled: false,
+    createNewWallet: false,
   }
 
   handleChangePassphrase = (e: SyntheticInputEvent<HTMLInputElement>) => {
@@ -211,45 +214,82 @@ export default class CreateMigrationWallet extends React.Component<
             </p>
           </div>
         </div>
-
-        <div className={styles.formContainer}>
-          <form
-            className={styles.importWalletForm}
-            onSubmit={this.createWalletAccount}
-          >
-            <div className={styles.inputContainer}>
-              <TextInput
-                value={walletName}
-                label={walletCreationWalletNameLabel}
-                onChange={e => this.setState({ walletName: e.target.value })}
-                placeholder={walletCreationWalletNamePlaceholder}
-                autoFocus
-              />
-              <PasswordInput
-                label={walletCreationWalletPasswordLabel}
-                onChange={this.handleChangePassphrase}
-                placeholder={walletCreationWalletPasswordPlaceholder}
-                error={passphraseError}
-              />
-              <PasswordInput
-                label={walletCreationWalletPasswordConfirmLabel}
-                onChange={this.handleChangePassphrase2}
-                placeholder={walletCreationWalletPasswordConfirmPlaceholder}
-                error={passphrase2Error}
-              />
-            </div>
-            <div className={styles.buttonContainer}>
+        {this.props.walletCreationDetected && !this.state.createNewWallet ? (
+          <React.Fragment>
+            <p className={styles.walletFound}>
+              {' '}
+              It looks like you have already created a wallet for your
+              correspondeing address on N3...
+            </p>
+            {/* <div className={styles.formContainer}>
+              <form className={styles.importWalletForm}>
+                <div className={styles.inputContainer} /> */}
+            <div
+              className={classNames([styles.buttonContainer, styles.noMargin])}
+            >
               <Button
                 type="submit"
                 shouldCenterButtonLabelText
                 primary
-                disabled={this.isDisabled()}
+                onClick={() => this.setState({ createNewWallet: true })}
+                // disabled={this.isDisabled()}
+              >
+                Create New Wallet
+              </Button>
+              <Button
+                type="submit"
+                shouldCenterButtonLabelText
+                primary
+                onClick={this.props.handleWalletCreatedComplete}
+                // disabled={this.isDisabled()}
               >
                 Continue
               </Button>
             </div>
-          </form>
-        </div>
+            {/* </div>
+              </form>
+            </div> */}
+          </React.Fragment>
+        ) : (
+          <div className={styles.formContainer}>
+            <form
+              className={styles.importWalletForm}
+              onSubmit={this.createWalletAccount}
+            >
+              <div className={styles.inputContainer}>
+                <TextInput
+                  value={walletName}
+                  label={walletCreationWalletNameLabel}
+                  onChange={e => this.setState({ walletName: e.target.value })}
+                  placeholder={walletCreationWalletNamePlaceholder}
+                  autoFocus
+                />
+                <PasswordInput
+                  label={walletCreationWalletPasswordLabel}
+                  onChange={this.handleChangePassphrase}
+                  placeholder={walletCreationWalletPasswordPlaceholder}
+                  error={passphraseError}
+                />
+                <PasswordInput
+                  label={walletCreationWalletPasswordConfirmLabel}
+                  onChange={this.handleChangePassphrase2}
+                  placeholder={walletCreationWalletPasswordConfirmPlaceholder}
+                  error={passphrase2Error}
+                />
+              </div>
+              <div className={styles.buttonContainer}>
+                <Button
+                  type="submit"
+                  shouldCenterButtonLabelText
+                  primary
+                  disabled={this.isDisabled()}
+                >
+                  Continue
+                </Button>
+              </div>
+            </form>
+          </div>
+        )}
       </div>
     )
   }

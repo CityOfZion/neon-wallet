@@ -138,19 +138,22 @@ const SendPanel = ({
       )}
       {/* eslint-disable-next-line */}
       {isMigration ? (
-        <Button
-          primary
-          className={styles.sendFormButton}
-          renderIcon={() => null}
-          type="submit"
-          disabled={
-            shouldDisableSendButton(sendRowDetails, loading) || !hasEnoughGas
-          }
-          onClick={() => handleSubmit(false)}
-          id="send-assets"
-        >
-          Continue
-        </Button>
+        <div className={styles.migrationButtonContainer}>
+          <Button
+            primary
+            className={styles.sendFormButton}
+            renderIcon={() => null}
+            type="submit"
+            shouldCenterButtonLabelText
+            disabled={
+              shouldDisableSendButton(sendRowDetails, loading) || !hasEnoughGas
+            }
+            onClick={() => handleSubmit(false)}
+            id="send-assets"
+          >
+            Continue
+          </Button>
+        </div>
       ) : isWatchOnly ? (
         <Button
           className={styles.generateTransactionButton}
@@ -241,7 +244,7 @@ const SendPanel = ({
   }
 
   return isMigration ? (
-    <div>{content}</div>
+    <div className={styles.migrationContent}>{content}</div>
   ) : (
     <Panel
       contentClassName={sendSuccess ? styles.sendSuccessContent : null}

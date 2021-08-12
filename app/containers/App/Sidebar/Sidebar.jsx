@@ -27,6 +27,7 @@ type Props = {
   count: number,
   store: any,
   chain: string,
+  net: string,
 }
 
 const Sidebar = ({
@@ -36,6 +37,7 @@ const Sidebar = ({
   count,
   store,
   chain,
+  net,
 }: Props) => (
   <div className={classNames(styles.container, className)}>
     <div className={styles.group}>
@@ -143,17 +145,18 @@ const Sidebar = ({
         </div>
       </NavLink>
 
-      {chain === 'neo2' && (
-        <NavLink
-          id="settings"
-          to={ROUTES.MIGRATION}
-          className={styles.navItem}
-          activeClassName={styles.active}
-        >
-          <MigrationIcon />
-          <div> Migration</div>
-        </NavLink>
-      )}
+      {chain === 'neo2' &&
+        net === 'TestNet' && (
+          <NavLink
+            id="migration"
+            to={ROUTES.MIGRATION}
+            className={styles.navItem}
+            activeClassName={styles.active}
+          >
+            <MigrationIcon />
+            <div> Migration</div>
+          </NavLink>
+        )}
 
       {/* {chain === 'neo2' && (
         <NavLink

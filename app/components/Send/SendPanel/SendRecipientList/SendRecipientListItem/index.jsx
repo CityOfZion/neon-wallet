@@ -161,9 +161,11 @@ class SendRecipientListItem extends Component<Props> {
         <div className={styles.asset}>{selectInput}</div>
         <div className={styles.amount}>{numberInput}</div>
         <div className={styles.address}>{addressInput}</div>
-        <div className={styles.delete}>
-          {numberOfRecipients > 1 && trashCanButton}
-        </div>
+        {!isMigration && (
+          <div className={styles.delete}>
+            {numberOfRecipients > 1 && trashCanButton}
+          </div>
+        )}
       </li>
     )
   }

@@ -2,7 +2,7 @@
   display: flex;
   padding: 24px;
   flex-direction: column;
-  height: 100%;
+  // height: 100%;
   // margin-bottom: 48px;
   width: 100%;
 
@@ -42,6 +42,7 @@
   .inputContainer {
     max-width: 380px;
     margin: auto;
+    height: 100%;
   }
 
   form {
@@ -51,11 +52,22 @@
 }
 
 .buttonContainer {
-  margin-top: 75px;
+  margin-top: -74px;
   display: flex;
   justify-content: flex-end;
 
   button {
     max-width: 212px;
+    margin-left: 24px;
   }
+}
+
+.walletFound {
+  margin-top: 24px;
+  font-size: 14px;
+  height: 100%;
+}
+
+.noMargin {
+  margin: 0 !important;
 }

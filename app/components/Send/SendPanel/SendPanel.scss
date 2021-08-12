@@ -196,3 +196,22 @@
     border: solid thin #8d98ae !important;
   }
 }
+
+.migrationButtonContainer {
+  // margin-top: 75px;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: -54px;
+
+  button {
+    max-width: 212px;
+    margin: unset;
+  }
+}
+
+.migrationContent {
+  flex-direction: column;
+  flex: 1;
+  display: flex;
+}
