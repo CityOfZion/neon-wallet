@@ -14,12 +14,11 @@ export const ID = 'blockHeight'
 
 export const getBlockHeight = async (networkId: string) => {
   let url = await getNode(networkId)
-  console.log({ url })
+
   if (isEmpty(url)) {
     url = await getRPCEndpoint(networkId)
-    console.log({ url })
   }
-  console.log({ url })
+
   const client = new rpc.RPCClient(url)
   const count = await client.getBlockCount()
   return count

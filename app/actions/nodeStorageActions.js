@@ -165,14 +165,12 @@ export const getNode = async (
     return ''
   }
 
-  console.log({ nodeInStorage })
   return nodeInStorage
 }
 
 export default createActions(
   ID,
   ({ url, net }: Props = {}) => async (): Promise<string> => {
-    console.log({ cachedRPCUrl })
     if (url || url === '') {
       await setNode(url, net)
       return url
