@@ -237,7 +237,6 @@ export default class Migration extends React.Component<Props, State> {
     )
 
     const migrationData = await this.fetchHistoryData()
-    console.log({ migrationData })
     const HAS_MIGRATED = !!migrationData.data.items.length
 
     if (HAS_MIGRATED) {
