@@ -101,6 +101,14 @@ export const performMigration = ({
         )
       }
 
+      if (symbol === 'nNEO' && Number(amount) < 1) {
+        return dispatch(
+          showErrorNotification({
+            message: 'Oops... you cannot migrate less than 1 nNEO.',
+          }),
+        )
+      }
+
       const hexRemark = N2.u.str2hexstring(TO_ACCOUNT.address)
 
       const hasBalanceForRequiredFee = (MIN_FEE = 1) => {
@@ -216,7 +224,9 @@ export const performMigration = ({
     } catch (e) {
       dispatch(
         showErrorNotification({
-          message: `Oops something went wrong please try again... ${e.message}`,
+          message: `Oops... Something went wrong please try again. ${
+            e.message
+          }`,
         }),
       )
       return reject(e)

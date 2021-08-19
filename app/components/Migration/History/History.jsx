@@ -48,7 +48,7 @@ export default class History extends React.Component<Props, State> {
         <div className={styles.container} onScroll={this.handleScroll}>
           <div className={styles.header}>
             <h3> Migration Summary </h3>
-            {net === '2' && (
+            {net === 'TestNet' && (
               <code onClick={() => this.props.fetchAdditonalData(true)}>
                 DEMO
               </code>

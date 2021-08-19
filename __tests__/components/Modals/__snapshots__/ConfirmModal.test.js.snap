@@ -27,7 +27,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
     style={
       Object {
         "content": Object {
-          "height": "200px",
+          "height": "250px",
           "width": "500px",
         },
       }
@@ -44,7 +44,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
       style={
         Object {
           "content": Object {
-            "height": "200px",
+            "height": "250px",
             "width": "500px",
           },
         }
@@ -201,7 +201,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
               "color": "var(--base-text)",
               "display": "flex",
               "flexDirection": "column",
-              "height": "200px",
+              "height": "250px",
               "margin": "auto",
               "padding": 0,
               "width": "500px",
@@ -352,7 +352,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
               >
                 <div
                   class="ReactModal__Content ReactModal__Content--after-open"
-                  style="position: absolute; top: 40px; left: 40px; right: 40px; bottom: 40px; overflow: auto; border-radius: 4px; outline: none; padding: 0px; width: 500px; height: 200px; margin: auto; box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 4px; display: flex; flex-direction: column; z-index: 5000;"
+                  style="position: absolute; top: 40px; left: 40px; right: 40px; bottom: 40px; overflow: auto; border-radius: 4px; outline: none; padding: 0px; width: 500px; height: 250px; margin: auto; box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 4px; display: flex; flex-direction: column; z-index: 5000;"
                   tabindex="-1"
                 >
                   <div
@@ -573,7 +573,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                   "color": "var(--base-text)",
                   "display": "flex",
                   "flexDirection": "column",
-                  "height": "200px",
+                  "height": "250px",
                   "margin": "auto",
                   "padding": 0,
                   "width": "500px",
@@ -1000,7 +1000,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
                     "color": "var(--base-text)",
                     "display": "flex",
                     "flexDirection": "column",
-                    "height": "200px",
+                    "height": "250px",
                     "left": "40px",
                     "margin": "auto",
                     "outline": "none",

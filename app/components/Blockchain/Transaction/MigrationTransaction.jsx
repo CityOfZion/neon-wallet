@@ -47,6 +47,7 @@ export default class MigrationTransaction extends React.Component<Props> {
 
   render = () => {
     const { tx } = this.props
+
     return (
       <React.Fragment>
         <div className={styles.migrationTxWrapper}>
