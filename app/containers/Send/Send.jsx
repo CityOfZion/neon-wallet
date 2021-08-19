@@ -13,7 +13,7 @@ import {
   addNumber,
 } from '../../core/math'
 import { isBlacklisted } from '../../core/wallet'
-import { PRICE_UNAVAILABLE } from '../../core/constants'
+import { MODAL_TYPES, PRICE_UNAVAILABLE } from '../../core/constants'
 import AmountsPanel from '../../components/AmountsPanel'
 import SendPanel from '../../components/Send/SendPanel'
 import HeaderBar from '../../components/HeaderBar'
@@ -51,6 +51,7 @@ type Props = {
   isMigration: boolean,
   wif: string,
   handleSwapComplete: () => void,
+  showModal: (modalType: string, modalProps: Object) => any,
 }
 
 type State = {
@@ -392,25 +393,76 @@ export default class Send extends React.Component<Props, State> {
   handleMigration = () => {
     this.setState({ loading: true })
 
+    const BLACK_HOLE_MAIN_NET = 'ANeo2toNeo3MigrationAddressxwPB2Hz' // MainNet
+    const BLACK_HOLE_TEST_NET = 'AJ36ZCpMhiHYMdMAUaP7i1i9pJz4jMdiQV' // TestNet
+
     const { sendRowDetails } = this.state
 
     const sendEntries = sendRowDetails.map((row: Object) => ({
-      address: row.address,
+      address:
+        this.props.networkId === '1'
+          ? BLACK_HOLE_MAIN_NET
+          : BLACK_HOLE_TEST_NET,
       amount: toNumber(row.amount.toString()),
       symbol: row.asset,
     }))
 
-    this.props
-      .performMigration({
-        sendEntries,
-      })
-      .then(results => {
-        this.props.handleSwapComplete()
-      })
-      .catch(() => {
-        this.setState({ loading: false })
-        // TODO: implement possible additional error state here
-      })
+    const TO_ACCOUNT = new n3Wallet.Account(this.props.wif)
+
+    const feeIsRequired = (symbol, amount) => {
+      const userMustPayFee =
+        (symbol === 'NEO' && Number(amount) < 10) ||
+        (symbol === 'GAS' && Number(amount) < 20)
+
+      return userMustPayFee
+    }
+
+    this.props.showModal(MODAL_TYPES.CONFIRM, {
+      title: 'Confirm Migration',
+      shouldRenderHeader: false,
+      height: '500px',
+      renderBody: () => (
+        <div className={styles.confirmMigration}>
+          <h2> Confirmation </h2>
+          <h4>
+            You are about to migrate {sendEntries[0].amount}{' '}
+            {sendEntries[0].symbol}
+          </h4>
+          <div>
+            From (Neo Legacy) <br />
+            <code> {this.props.address} </code>
+          </div>
+          <br />
+
+          <div>
+            To (Neo N3) <br />
+            <code> {TO_ACCOUNT.address}</code>
+          </div>
+          <br />
+          {feeIsRequired(sendEntries[0].symbol, sendEntries[0].amount) && (
+            <div className={styles.fee}>Fee: 1 GAS</div>
+          )}
+          <br />
+          <small>
+            Most users should recieve their tokens on Neo N3 within 30 minutes,
+            however some migrations may take up to 24 hours.{' '}
+          </small>
+        </div>
+      ),
+      onClick: () => {
+        this.props
+          .performMigration({
+            sendEntries,
+          })
+          .then(() => {
+            this.props.handleSwapComplete()
+          })
+          .catch(() => {
+            this.setState({ loading: false })
+            // TODO: implement possible additional error state here
+          })
+      },
+    })
   }
 
   validateRowAmounts = (rows: Array<any>) => {

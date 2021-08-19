@@ -7,20 +7,28 @@ import Nothing from '../../../assets/icons/nothing.svg'
 import styles from './History.scss'
 import MigrationTransaction from '../../Blockchain/Transaction/MigrationTransaction'
 import LogoWithStrikethrough from '../../LogoWithStrikethrough'
+// import Details from '../../Modals/MigrationDetails'
 
 type Props = {
   data: {
-    addresstxs: [],
-    total: number,
+    transactions: [],
+    pageCount: number,
   },
-  fetchAdditonalData: () => void,
+  fetchAdditonalData: (isDemo?: boolean) => void,
+  showTxHistoryModal: (tx: Object) => void,
+  net: string,
 }
 
-type State = {}
+type State = {
+  // selectedTransaction: Object | null,
+}
 
 export default class History extends React.Component<Props, State> {
+  // state = {
+  //   selectedTransaction: null,
+  // }
+
   handleScroll = (e: SyntheticInputEvent<EventTarget>) => {
-    // const { handleFetchAdditionalTxData } = this.props
     const bottom =
       e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight
     if (bottom) {
@@ -28,31 +36,50 @@ export default class History extends React.Component<Props, State> {
     }
   }
 
+  // handleShowMigrationStatus = tx => {
+  //   this.setState({ selectedTransaction: tx })
+  // }
+
   render() {
-    const { data } = this.props
+    const { data, net } = this.props
 
     return (
-      <div className={styles.container} onScroll={this.handleScroll}>
-        <h3> Migration Summary</h3>
-        {data.addresstxs.length ? (
-          <TransactionList
-            rowClassName={styles.rowClass}
-            className={styles.migrationTransactionListContainer}
-          >
-            {data.addresstxs.map((tx, i) => (
-              <MigrationTransaction
-                tx={tx}
-                key={`sentTx${i}`}
-                className={styles.sendSuccessBodyListItem}
-              />
-            ))}
-          </TransactionList>
-        ) : (
-          <div className={styles.emptyHistory}>
-            <LogoWithStrikethrough />
+      <React.Fragment>
+        <div className={styles.container} onScroll={this.handleScroll}>
+          <div className={styles.header}>
+            <h3> Migration Summary </h3>
+            {net === '2' && (
+              <code onClick={() => this.props.fetchAdditonalData(true)}>
+                DEMO
+              </code>
+            )}
           </div>
-        )}
-      </div>
+          {data.transactions.length ? (
+            <TransactionList
+              rowClassName={styles.rowClass}
+              className={styles.migrationTransactionListContainer}
+              alternateRows
+            >
+              {data.transactions.map((tx, i) => (
+                <div
+                  key={`sentTx${i}`}
+                  onClick={() => this.props.showTxHistoryModal(tx)}
+                  className={styles.txWrapper}
+                >
+                  <MigrationTransaction
+                    tx={tx}
+                    className={styles.sendSuccessBodyListItem}
+                  />
+                </div>
+              ))}
+            </TransactionList>
+          ) : (
+            <div className={styles.emptyHistory}>
+              <LogoWithStrikethrough />
+            </div>
+          )}
+        </div>
+      </React.Fragment>
     )
   }
 }

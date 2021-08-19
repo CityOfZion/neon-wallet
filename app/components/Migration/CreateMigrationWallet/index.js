@@ -8,6 +8,7 @@ import CreateMigrationWallet from './CreateMigrationWallet'
 import { generateNewWalletAccount } from '../../../modules/generateWallet'
 import withChainData from '../../../hocs/withChainData'
 import withAuthData from '../../../hocs/withAuthData'
+import withNetworkData from '../../../hocs/withNetworkData'
 
 const actionCreators = {
   generateNewWalletAccount,
@@ -23,4 +24,5 @@ export default compose(
   ),
   withAuthData(),
   withChainData(),
+  withNetworkData(),
 )(injectIntl(CreateMigrationWallet))

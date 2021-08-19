@@ -22,7 +22,7 @@
   display: flex;
   list-style-type: none;
   font-weight: 400;
-  margin-top: 8px;
+  // margin-top: 8px;
 
   // height: 50px;
 
@@ -35,4 +35,20 @@
 
 .emptyHistory {
   height: 500px;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  code {
+    margin-right: 48px;
+    cursor: pointer;
+  }
+}
+
+.txWrapper {
+  width: 100%;
 }

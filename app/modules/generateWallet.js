@@ -338,7 +338,7 @@ export const generateN3NewWalletAccount = (
         if (isMigration) {
           localStorage.setItem(
             `hasMigrated-${isMigration.legacyAddress}`,
-            'true',
+            walletName,
           )
           return isMigration.walletCreatedCallback()
         }

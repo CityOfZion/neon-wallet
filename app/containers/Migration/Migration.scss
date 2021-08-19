@@ -103,3 +103,44 @@
 .loading {
   animation: spin 2s linear infinite;
 }
+
+.confirmWalletCreation {
+  // min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  h2 {
+    margin-bottom: 0px;
+  }
+
+  code {
+    font-size: 14px;
+  }
+
+  small {
+    margin-bottom: 24px;
+  }
+
+  .fee {
+    font-size: 13px;
+  }
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 12px;
+
+  button,
+  div {
+    max-width: 225px;
+    margin-bottom: 12px;
+  }
+
+  small {
+    font-size: 10px;
+  }
+}

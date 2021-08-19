@@ -13,6 +13,7 @@ import ImportTransactionModal from '../../components/Modals/ImportTransactionMod
 import { MODAL_TYPES } from '../../core/constants'
 import ReleaseNotesModal from '../../components/Modals/ReleaseNotesModal'
 import ShowQrForExportModal from '../../components/Modals/ShowQrForExportModal'
+import MigrationDetails from '../../components/Modals/MigrationDetails'
 
 const {
   CONFIRM,
@@ -25,6 +26,7 @@ const {
   IMPORT_TRANSACTION,
   RELEASE_NOTES,
   SHOW_QR_FOR_EXPORT,
+  MIGRATION_DETAILS,
 } = MODAL_TYPES
 
 const MODAL_COMPONENTS = {
@@ -38,6 +40,7 @@ const MODAL_COMPONENTS = {
   [IMPORT_TRANSACTION]: ImportTransactionModal,
   [RELEASE_NOTES]: ReleaseNotesModal,
   [SHOW_QR_FOR_EXPORT]: ShowQrForExportModal,
+  [MIGRATION_DETAILS]: MigrationDetails,
 }
 
 type Props = {

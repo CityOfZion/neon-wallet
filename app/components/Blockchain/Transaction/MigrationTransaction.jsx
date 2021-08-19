@@ -1,59 +1,38 @@
 // @flow
 import React from 'react'
-// import type { Node } from 'react'
 import { FormattedMessage } from 'react-intl'
 import moment from 'moment'
-// import { isEmpty } from 'lodash-es'
 import classNames from 'classnames'
 
 import ReceiveIcon from '../../../assets/icons/receive-tx.svg'
-// import SendIcon from '../../../assets/icons/send-tx.svg'
-// import { TX_TYPES } from '../../../core/constants'
 import Button from '../../Button'
-// import PendingAbstract from './PendingAbstract'
-// import ClaimAbstract from './ClaimAbstract'
-// import SendAbstract from './SendAbstract'
-// import ReceiveAbstract from './ReceiveAbstract'
 import InfoIcon from '../../../assets/icons/info.svg'
-// import { openExplorerTx } from '../../../core/explorer'
-// import Tooltip from '../../Tooltip'
-
+import CheckMarkIcon from '../../../assets/icons/confirm.svg'
+import ClockIcon from '../../../assets/icons/clock.svg'
 import styles from './Transaction.scss'
 import { imageMap } from '../../../assets/nep5/png'
+import { toBigNumber } from '../../../core/math'
 
 const electron = require('electron').remote
 
 type Props = {
   tx: {
-    timestamp: number,
+    time: number,
     tokenname: string,
-    txhash: string,
+    assetHash: string,
+    destTransactionStatus: Number,
+    srcTransactionStatus: number,
+    amount: string,
   },
-  // tx: TxEntryType,
-  // pendingTx: {
-  //   asset: {
-  //     symbol: string,
-  //     image?: string,
-  //   },
-  //   blocktime: number,
-  //   amount: string,
-  //   to: string,
-  //   confirmations: number,
-  // },
-  // networkId: string,
-  // explorer: ExplorerType,
-  // contacts: Object,
-  // showAddContactModal: ({ address: string }) => null,
-  // address: string,
-  // className?: string,
-  // isPending?: boolean,
-  // chain: string,
 }
-
+const TOKEN_MAP = {
+  f46719e2d16bf50cddcef9d4bbfece901f73cbb6: 'nNEO',
+  '17da3881ab2d050fea414c80b3fa8324d756f60e': 'nNEO',
+  '74f2dc36a68fdc4682034178eb2220729231db76': 'CGAS',
+  c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b: 'NEO',
+  '602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7': 'GAS',
+}
 export default class MigrationTransaction extends React.Component<Props> {
-  // static defaultProps = {
-  //   tx: {},
-  // }
   renderTxDate = (time: ?number) => {
     if (!time) {
       return null
@@ -68,33 +47,53 @@ export default class MigrationTransaction extends React.Component<Props> {
 
   render = () => {
     const { tx } = this.props
-
     return (
-      <div
-        className={classNames([
-          styles.transactionContainer,
-          styles.migrationTransaction,
-          !tx.tokenname ? styles.errorTransaction : '',
-        ])}
-      >
-        <div className={styles.txTypeIconContainer}>
-          <div className={styles.receiveIconContainer}>
-            <ReceiveIcon />
+      <React.Fragment>
+        <div className={styles.migrationTxWrapper}>
+          <div
+            className={classNames([
+              styles.transactionContainer,
+              styles.migrationTransaction,
+              tx.destTransactionStatus === 0 && tx.srcTransactionStatus === 0
+                ? ''
+                : styles.errorTransaction,
+            ])}
+          >
+            <div className={styles.txLabelContainer}>
+              {imageMap[TOKEN_MAP[tx.assetHash]] && (
+                <img src={imageMap[TOKEN_MAP[tx.assetHash]]} />
+              )}
+              {TOKEN_MAP[tx.assetHash]}
+            </div>
+            <div className={styles.txAmountContainer}>
+              {toBigNumber(tx.amount).toString()}
+            </div>
+
+            {this.renderTxDate(tx.time)}
+
+            <div className={styles.statusContainer}>
+              {tx.destTransactionStatus === 0 &&
+              tx.srcTransactionStatus === 0 ? (
+                <div className={styles.statusCompleteContainer}>
+                  <CheckMarkIcon /> Completed
+                </div>
+              ) : (
+                <div className={styles.statusPendingContainer}>
+                  <ClockIcon />Pending{' '}
+                </div>
+              )}
+            </div>
           </div>
+          <div
+            className={classNames([
+              styles.statusProgessBar,
+              tx.destTransactionStatus === 0 && tx.srcTransactionStatus === 0
+                ? styles.isComplete
+                : '',
+            ])}
+          />
         </div>
-        <div className={styles.txLabelContainer}>
-          {tx.tokenname === 'NEP5 NEO' && <img src={imageMap.NEO} />}
-          {tx.tokenname || 'N/A'}
-        </div>
-        {this.renderTxDate(tx.timestamp)}
-        <Button
-          className={styles.transactionHistoryButton}
-          renderIcon={InfoIcon}
-          onClick={this.handleViewTransaction}
-        >
-          <FormattedMessage id="activityViewTx" />
-        </Button>
-      </div>
+      </React.Fragment>
     )
   }
 
@@ -102,17 +101,13 @@ export default class MigrationTransaction extends React.Component<Props> {
     // this.props.showAddContactModal({ address })
   }
 
-  handleViewTransaction = () => {
-    const { tx } = this.props
+  // handleViewTransaction = () => {
+  //   const { tx } = this.props
 
-    electron.shell.openExternal(
-      `https://explorer.poly.network/testnet/tx/${tx.txhash}`,
-    )
-
-    // const { txid } = tx
-    // openExplorerTx(networkId, explorer, txid, chain)
-    // https://explorer.poly.network/testnet/tx/c9e0a814ef14faf1742d049702b85e44b8c85ad0d33263b04692bb237fad0133
-  }
+  //   electron.shell.openExternal(
+  //     `https://explorer.poly.network/testnet/tx/${tx.txhash}`,
+  //   )
+  // }
 
   renderTxDate = (time: ?number) => {
     if (!time) {

@@ -6,3 +6,27 @@
     height: 100%;
   }
 }
+
+.confirmMigration {
+  // min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  h2 {
+    margin-bottom: 0px;
+  }
+
+  code {
+    font-size: 14px;
+  }
+
+  small {
+    margin-bottom: 24px;
+  }
+
+  .fee {
+    font-size: 13px;
+  }
+}

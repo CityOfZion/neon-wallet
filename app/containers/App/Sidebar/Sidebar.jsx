@@ -145,18 +145,17 @@ const Sidebar = ({
         </div>
       </NavLink>
 
-      {chain === 'neo2' &&
-        net === 'TestNet' && (
-          <NavLink
-            id="migration"
-            to={ROUTES.MIGRATION}
-            className={styles.navItem}
-            activeClassName={styles.active}
-          >
-            <MigrationIcon />
-            <div> Migration</div>
-          </NavLink>
-        )}
+      {chain === 'neo2' && (
+        <NavLink
+          id="migration"
+          to={ROUTES.MIGRATION}
+          className={classNames([styles.navItem, styles.migration])}
+          activeClassName={styles.active}
+        >
+          <MigrationIcon />
+          <div> Migration</div>
+        </NavLink>
+      )}
 
       {/* {chain === 'neo2' && (
         <NavLink

@@ -58,7 +58,7 @@ const extractTokens = (sendEntries: Array<SendEntryType>) =>
 const extractAssets = (sendEntries: Array<SendEntryType>) =>
   sendEntries.filter(({ symbol }) => !isToken(symbol))
 
-const buildIntents = (sendEntries: Array<SendEntryType>) => {
+export const buildIntents = (sendEntries: Array<SendEntryType>) => {
   const assetEntries = extractAssets(sendEntries)
   // $FlowFixMe
   return flatMap(assetEntries, ({ address, amount, symbol }) =>
@@ -66,7 +66,7 @@ const buildIntents = (sendEntries: Array<SendEntryType>) => {
   )
 }
 
-const buildTransferScript = (
+export const buildTransferScript = (
   net: NetworkType,
   sendEntries: Array<SendEntryType>,
   fromAddress: string,
@@ -129,10 +129,15 @@ export const generateBalanceInfo = (
 }
 
 // This adds some random bits to the transaction to prevent any hash collision.
-const attachAttributesForEmptyTransaction = (config: api.apiConfig) => {
+export const attachAttributesForEmptyTransaction = (
+  config: api.apiConfig,
+  addressString?: string,
+) => {
   config.tx.addAttribute(
     32,
-    reverseHex(wallet.getScriptHashFromAddress(config.address)),
+    reverseHex(
+      wallet.getScriptHashFromAddress(addressString || config.address),
+    ),
   )
   config.tx.addRemark(
     Date.now().toString() + ab2hexstring(wallet.generateRandomArray(4)),

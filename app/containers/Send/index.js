@@ -31,6 +31,7 @@ const mapDispatchToProps = (dispatch: Function) =>
       sendTransaction,
       calculateN3Fees,
       performMigration,
+      showModal,
       showSendModal: props => dispatch(showModal(MODAL_TYPES.SEND, props)),
       showGeneratedTransactionModal: props =>
         dispatch(showModal(MODAL_TYPES.GENERATED_TRANSACTION, props)),

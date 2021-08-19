@@ -2,14 +2,16 @@
 import classNames from 'classnames'
 import React from 'react'
 import { intlShape } from 'react-intl'
+import { wallet as n3Wallet } from '@cityofzion/neon-js-next'
 
-import InfoIcon from '../../../assets/icons/info.svg'
 import n3Logo from '../../../assets/images/n3_logo.png'
+import Address from '../../Blockchain/Address/Address'
 import Button from '../../Button'
 import PasswordInput from '../../Inputs/PasswordInput'
 import TextInput from '../../Inputs/TextInput'
 // import CreateImportWalletForm from '../../CreateImportWalletForm'
 import styles from './CreateMigrationWallet.scss'
+import { EXPLORERS } from '../../../core/constants'
 
 const PASS_MIN_LENGTH = 4
 
@@ -22,7 +24,9 @@ type Props = {
   address: string,
 
   wif: string,
-  handleWalletCreatedComplete: () => void,
+  handleWalletCreatedComplete: (name?: string, showModal?: boolean) => void,
+  networkId: string,
+  createdWalletName: string,
 }
 
 type State = {
@@ -174,7 +178,8 @@ export default class CreateMigrationWallet extends React.Component<
       'neo3',
       {
         legacyAddress: address,
-        walletCreatedCallback: () => handleWalletCreatedComplete(),
+        walletCreatedCallback: () =>
+          handleWalletCreatedComplete(walletName, true),
       },
     )
   }
@@ -199,6 +204,8 @@ export default class CreateMigrationWallet extends React.Component<
 
     this.isDisabled()
 
+    const TO_ACCOUNT = new n3Wallet.Account(this.props.wif)
+
     return (
       <div className={styles.container}>
         <div className={styles.explanation}>
@@ -216,11 +223,32 @@ export default class CreateMigrationWallet extends React.Component<
         </div>
         {this.props.walletCreationDetected && !this.state.createNewWallet ? (
           <React.Fragment>
-            <p className={styles.walletFound}>
+            <div className={styles.walletFound}>
               {' '}
               It looks like you have already created a wallet for your
               correspondeing address on N3...
-            </p>
+              <br />
+              <br />
+              <div>
+                Your N3 address is:{' '}
+                <Address
+                  address={TO_ACCOUNT.address}
+                  asWrapper
+                  chain="neo3"
+                  explorer={EXPLORERS.DORA}
+                  networkId={this.props.networkId}
+                >
+                  {/* $FlowFixMe */}
+                  <div className={styles.addressLink}>{TO_ACCOUNT.address}</div>
+                </Address>
+              </div>
+              <br />
+              <div>
+                Your N3 wallet name is: <br />
+                {this.props.createdWalletName}
+              </div>
+            </div>
+
             {/* <div className={styles.formContainer}>
               <form className={styles.importWalletForm}>
                 <div className={styles.inputContainer} /> */}
@@ -240,7 +268,11 @@ export default class CreateMigrationWallet extends React.Component<
                 type="submit"
                 shouldCenterButtonLabelText
                 primary
-                onClick={this.props.handleWalletCreatedComplete}
+                onClick={() =>
+                  this.props.handleWalletCreatedComplete(
+                    this.props.createdWalletName,
+                  )
+                }
                 // disabled={this.isDisabled()}
               >
                 Continue
