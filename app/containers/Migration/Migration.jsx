@@ -464,7 +464,7 @@ export default class Migration extends React.Component<Props, State> {
                                     wallet and take you back to the Neon login
                                     screen. You can log back into your Neo
                                     Legacy account and continue with migration
-                                    at anytime.{' '}
+                                    at any time.{' '}
                                   </small>
                                 </div>
                                 <Button

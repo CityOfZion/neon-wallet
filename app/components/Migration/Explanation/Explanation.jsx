@@ -57,9 +57,10 @@ export default function Explanation({
       </div>
 
       <p>
-        Praeter voluptatem accusantium doloremque laudantium, totam rem aperiam
-        eaque gaudere ut. Torquatos nostros? quos dolores eos, qui dolorem eum
-        iure reprehenderit,
+        Neon Wallet will format and relay your migration transaction to a utility
+        which will mint N3 NEO and GAS to your new N3 address. You can return to
+        the migration tab at any time to view the migration status for your address
+        or to relay new migration transactions.
       </p>
     </div>
   )

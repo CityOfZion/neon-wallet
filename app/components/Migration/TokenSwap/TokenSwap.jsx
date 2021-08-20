@@ -18,11 +18,9 @@ export default class TokenSwap extends React.Component<Props, State> {
           <div>
             <h3> Select a token to migrate</h3>
             <p>
-              Filium morte multavit si sine causa, mox videro; interea hoc
-              epicurus in gravissimo bello animadversionis metu degendae
-              praesidia firmissima ut ipsi auctori huius disciplinae placet:
-              constituam, quid sit voluptatem et accusamus et voluptates
-              omittantur m.
+              You can migrate using multiple transactions in Neon Wallet so don't
+              feel obligated to migrate all of your assets in a single event if you
+              aren't comfortable doing so.
             </p>
           </div>
         </div>

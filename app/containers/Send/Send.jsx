@@ -429,13 +429,13 @@ export default class Send extends React.Component<Props, State> {
             {sendEntries[0].symbol}
           </h4>
           <div>
-            From (Neo Legacy) <br />
+            From (Neo Legacy): <br />
             <code> {this.props.address} </code>
           </div>
           <br />
 
           <div>
-            To (Neo N3) <br />
+            To (Neo N3): <br />
             <code> {TO_ACCOUNT.address}</code>
           </div>
           <br />
