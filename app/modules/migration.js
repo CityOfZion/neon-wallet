@@ -110,6 +110,7 @@ export const performMigration = ({
       }
 
       const hexRemark = N2.u.str2hexstring(TO_ACCOUNT.address)
+      const hexTagRemark = N2.u.str2hexstring('Neon Desktop Migration')
 
       const hasBalanceForRequiredFee = (MIN_FEE = 1) => {
         if (
@@ -190,6 +191,10 @@ export const performMigration = ({
         new N2.tx.TransactionAttribute({
           usage: N2.tx.TxAttrUsage.Remark14,
           data: hexRemark,
+        },
+        new N2.tx.TransactionAttribute({
+          usage: N2.tx.TxAttrUsage.Remark15,
+          data: hexTagRemark,
         }),
       )
       c = await N2.api.signTx(c)
