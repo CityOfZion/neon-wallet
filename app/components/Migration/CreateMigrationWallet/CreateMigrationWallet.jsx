@@ -213,8 +213,10 @@ export default class CreateMigrationWallet extends React.Component<
           <div>
             <h3> Create your N3 wallet</h3>
             <p>
-              Let's get started by creating your new N3 wallet. Your private key will remain the same, but the derived address will be new!
-              All you have to do is give your N3 wallet a name and password. We'll take care of the rest!
+              Let's get started by creating your new N3 wallet. Your private key
+              will remain the same, but the derived address will be new! All you
+              have to do is give your N3 wallet a name and password. We'll take
+              care of the rest!
             </p>
           </div>
         </div>

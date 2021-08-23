@@ -1,5 +1,4 @@
 // @flow
-/* eslint-disable camelcase */
 import { api, sc, u, wallet, settings } from '@cityofzion/neon-js'
 import {
   api as n3Api,
@@ -8,7 +7,6 @@ import {
   rpc as n3Rpc,
   tx,
 } from '@cityofzion/neon-js-next'
-// import N2 from '@cityofzion/neon-js-legacy-latest'
 import { flatMap, keyBy, isEmpty, get } from 'lodash-es'
 import axios from 'axios'
 
@@ -32,7 +30,7 @@ import {
   validateTransactionsBeforeSending,
   getTokenBalancesMap,
 } from '../core/wallet'
-import { toBigNumber, toNumber } from '../core/math'
+import { toNumber } from '../core/math'
 import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 import { addPendingTransaction } from '../actions/pendingTransactionActions'
 
@@ -247,7 +245,6 @@ export const calculateN3Fees = ({
         { account: FROM_ACCOUNT },
       )
 
-      debugger
       const txBuilder = new n3Api.TransactionBuilder()
       for (const intent of intents) {
         if (intent.decimalAmt) {
