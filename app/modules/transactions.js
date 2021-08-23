@@ -247,6 +247,7 @@ export const calculateN3Fees = ({
         { account: FROM_ACCOUNT },
       )
 
+      debugger
       const txBuilder = new n3Api.TransactionBuilder()
       for (const intent of intents) {
         if (intent.decimalAmt) {

@@ -57,7 +57,7 @@ const LOGIN_OPTIONS = {
     render: () => <LoginLedgerNanoS />,
     displayKey: 'Ledger',
     renderDisplayMessage: () => <FormattedMessage id="authLedger" />,
-    chainSupport: ['neo2'],
+    chainSupport: ['neo2', 'neo3'],
   },
 }
 

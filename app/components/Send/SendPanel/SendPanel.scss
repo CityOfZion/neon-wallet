@@ -121,7 +121,7 @@
 
 .sendFormButton {
   width: 450px;
-  margin: 12px auto 12px auto;
+  margin: 12px auto 36px auto;
 }
 
 .confirmButtonsContainer {
@@ -140,6 +140,7 @@
 
 .sendSuccessPanel {
   height: 100%;
+  overflow-y: auto;
 }
 
 .priorityExplanationText {

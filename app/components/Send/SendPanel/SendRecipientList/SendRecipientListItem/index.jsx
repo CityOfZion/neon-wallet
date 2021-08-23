@@ -5,7 +5,7 @@ import { injectIntl, IntlShape } from 'react-intl'
 import SelectInput from '../../../../Inputs/SelectInput'
 import NumberInput from '../../../../Inputs/NumberInput'
 import DisplayInput from '../../../DisplayInput'
-import { toBigNumber } from '../../../../../core/math'
+import { isNumber, toBigNumber } from '../../../../../core/math'
 import { formatNumberByDecimalScale } from '../../../../../core/formatters'
 import TrashCanIcon from '../../../../../assets/icons/delete.svg'
 
@@ -51,7 +51,7 @@ class SendRecipientListItem extends Component<Props> {
       if (isContactString) {
         normalizedValue = contacts[value]
       }
-    } else if (type === 'amount' && value) {
+    } else if (type === 'amount' && value && isNumber(value)) {
       const dynamicMax = calculateMaxValue(asset, index)
       normalizedValue = toBigNumber(value).gt(toBigNumber(dynamicMax))
         ? dynamicMax

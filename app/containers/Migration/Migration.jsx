@@ -23,168 +23,6 @@ const CREATE_WALLET_STEP = 'CREATE_WALLET_STEP'
 const SELECT_TOKEN_STEP = 'SELECT_TOKEN_STEP'
 const MIGRATION_HISTORY_STEP = 'MIGRATION_HISTORY_STEP'
 
-const DATA_STUB = [
-  {
-    srcTransactionHash:
-      '54c3e4bc90b7005147bc44cdbc49486922393f8aebc94a7cfa00c7416a2d79ca',
-    assetHash: 'f46719e2d16bf50cddcef9d4bbfece901f73cbb6',
-    destTransactionHash: '',
-    srcAddress: 'AG4tZgCjdmjfT8pjXpvXtTM2KpBe6zRkc7',
-    destAddress: 'NNtgxn9X4oRG1y7UfxDyjef8aFy6eRpApa',
-    destTransactionStatus: 1,
-    time: 1629293183,
-    srcTransactionStatus: 1,
-    amount: '10',
-  },
-
-  {
-    srcTransactionHash:
-      '54c3e4bc90b7005147bc44cdbc49486922393f8aebc94a7cfa00c7416a2d79ca',
-    assetHash: 'f46719e2d16bf50cddcef9d4bbfece901f73cbb6',
-    destTransactionHash:
-      '225793d0a86bd46f303ffa48d936e24fb3db062a6ed72df8c9f8a54cd524894d',
-    srcAddress: 'AG4tZgCjdmjfT8pjXpvXtTM2KpBe6zRkc7',
-    destAddress: 'NNtgxn9X4oRG1y7UfxDyjef8aFy6eRpApa',
-    destTransactionStatus: 0,
-    time: 1629293183,
-    srcTransactionStatus: 0,
-    amount: '10',
-  },
-  {
-    srcTransactionHash:
-      '54c3e4bc90b7005147bc44cdbc49486922393f8aebc94a7cfa00c7416a2d79ca',
-    assetHash:
-      'c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b',
-    destTransactionHash:
-      '225793d0a86bd46f303ffa48d936e24fb3db062a6ed72df8c9f8a54cd524894d',
-    srcAddress: 'AG4tZgCjdmjfT8pjXpvXtTM2KpBe6zRkc7',
-    destAddress: 'NNtgxn9X4oRG1y7UfxDyjef8aFy6eRpApa',
-    destTransactionStatus: 0,
-    time: 1629293183,
-    srcTransactionStatus: 0,
-    amount: '10',
-  },
-  {
-    srcTransactionHash:
-      '54c3e4bc90b7005147bc44cdbc49486922393f8aebc94a7cfa00c7416a2d79ca',
-    assetHash:
-      '602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7',
-    destTransactionHash:
-      '225793d0a86bd46f303ffa48d936e24fb3db062a6ed72df8c9f8a54cd524894d',
-    srcAddress: 'AG4tZgCjdmjfT8pjXpvXtTM2KpBe6zRkc7',
-    destAddress: 'NNtgxn9X4oRG1y7UfxDyjef8aFy6eRpApa',
-    destTransactionStatus: 0,
-    time: 1629293183,
-    srcTransactionStatus: 0,
-    amount: '10',
-  },
-  {
-    srcTransactionHash:
-      '54c3e4bc90b7005147bc44cdbc49486922393f8aebc94a7cfa00c7416a2d79ca',
-    assetHash: '74f2dc36a68fdc4682034178eb2220729231db76',
-    destTransactionHash:
-      '225793d0a86bd46f303ffa48d936e24fb3db062a6ed72df8c9f8a54cd524894d',
-    srcAddress: 'AG4tZgCjdmjfT8pjXpvXtTM2KpBe6zRkc7',
-    destAddress: 'NNtgxn9X4oRG1y7UfxDyjef8aFy6eRpApa',
-    destTransactionStatus: 0,
-    time: 1629293183,
-    srcTransactionStatus: 0,
-    amount: '10',
-  },
-
-  {
-    srcTransactionHash:
-      '54c3e4bc90b7005147bc44cdbc49486922393f8aebc94a7cfa00c7416a2d79ca',
-    assetHash: 'f46719e2d16bf50cddcef9d4bbfece901f73cbb6',
-    destTransactionHash:
-      '225793d0a86bd46f303ffa48d936e24fb3db062a6ed72df8c9f8a54cd524894d',
-    srcAddress: 'AG4tZgCjdmjfT8pjXpvXtTM2KpBe6zRkc7',
-    destAddress: 'NNtgxn9X4oRG1y7UfxDyjef8aFy6eRpApa',
-    destTransactionStatus: 0,
-    time: 1629293183,
-    srcTransactionStatus: 0,
-    amount: '10',
-  },
-  {
-    srcTransactionHash:
-      '54c3e4bc90b7005147bc44cdbc49486922393f8aebc94a7cfa00c7416a2d79ca',
-    assetHash: 'f46719e2d16bf50cddcef9d4bbfece901f73cbb6',
-    destTransactionHash:
-      '225793d0a86bd46f303ffa48d936e24fb3db062a6ed72df8c9f8a54cd524894d',
-    srcAddress: 'AG4tZgCjdmjfT8pjXpvXtTM2KpBe6zRkc7',
-    destAddress: 'NNtgxn9X4oRG1y7UfxDyjef8aFy6eRpApa',
-    destTransactionStatus: 0,
-    time: 1629293183,
-    srcTransactionStatus: 0,
-    amount: '10',
-  },
-  {
-    srcTransactionHash:
-      '54c3e4bc90b7005147bc44cdbc49486922393f8aebc94a7cfa00c7416a2d79ca',
-    assetHash: 'f46719e2d16bf50cddcef9d4bbfece901f73cbb6',
-    destTransactionHash:
-      '225793d0a86bd46f303ffa48d936e24fb3db062a6ed72df8c9f8a54cd524894d',
-    srcAddress: 'AG4tZgCjdmjfT8pjXpvXtTM2KpBe6zRkc7',
-    destAddress: 'NNtgxn9X4oRG1y7UfxDyjef8aFy6eRpApa',
-    destTransactionStatus: 0,
-    time: 1629293183,
-    srcTransactionStatus: 0,
-    amount: '10',
-  },
-  {
-    srcTransactionHash:
-      '54c3e4bc90b7005147bc44cdbc49486922393f8aebc94a7cfa00c7416a2d79ca',
-    assetHash: 'f46719e2d16bf50cddcef9d4bbfece901f73cbb6',
-    destTransactionHash:
-      '225793d0a86bd46f303ffa48d936e24fb3db062a6ed72df8c9f8a54cd524894d',
-    srcAddress: 'AG4tZgCjdmjfT8pjXpvXtTM2KpBe6zRkc7',
-    destAddress: 'NNtgxn9X4oRG1y7UfxDyjef8aFy6eRpApa',
-    destTransactionStatus: 0,
-    time: 1629293183,
-    srcTransactionStatus: 0,
-    amount: '10',
-  },
-  {
-    srcTransactionHash:
-      '54c3e4bc90b7005147bc44cdbc49486922393f8aebc94a7cfa00c7416a2d79ca',
-    assetHash: 'f46719e2d16bf50cddcef9d4bbfece901f73cbb6',
-    destTransactionHash:
-      '225793d0a86bd46f303ffa48d936e24fb3db062a6ed72df8c9f8a54cd524894d',
-    srcAddress: 'AG4tZgCjdmjfT8pjXpvXtTM2KpBe6zRkc7',
-    destAddress: 'NNtgxn9X4oRG1y7UfxDyjef8aFy6eRpApa',
-    destTransactionStatus: 0,
-    time: 1629293183,
-    srcTransactionStatus: 0,
-    amount: '10',
-  },
-  {
-    srcTransactionHash:
-      '54c3e4bc90b7005147bc44cdbc49486922393f8aebc94a7cfa00c7416a2d79ca',
-    assetHash: 'f46719e2d16bf50cddcef9d4bbfece901f73cbb6',
-    destTransactionHash:
-      '225793d0a86bd46f303ffa48d936e24fb3db062a6ed72df8c9f8a54cd524894d',
-    srcAddress: 'AG4tZgCjdmjfT8pjXpvXtTM2KpBe6zRkc7',
-    destAddress: 'NNtgxn9X4oRG1y7UfxDyjef8aFy6eRpApa',
-    destTransactionStatus: 0,
-    time: 1629293183,
-    srcTransactionStatus: 0,
-    amount: '10',
-  },
-  {
-    srcTransactionHash:
-      '54c3e4bc90b7005147bc44cdbc49486922393f8aebc94a7cfa00c7416a2d79ca',
-    assetHash: 'f46719e2d16bf50cddcef9d4bbfece901f73cbb6',
-    destTransactionHash:
-      '225793d0a86bd46f303ffa48d936e24fb3db062a6ed72df8c9f8a54cd524894d',
-    srcAddress: 'AG4tZgCjdmjfT8pjXpvXtTM2KpBe6zRkc7',
-    destAddress: 'NNtgxn9X4oRG1y7UfxDyjef8aFy6eRpApa',
-    destTransactionStatus: 0,
-    time: 1629293183,
-    srcTransactionStatus: 0,
-    amount: '10',
-  },
-]
-
 type Props = {
   address: string,
   showModal: (modalType: string, modalProps: Object) => any,
@@ -208,14 +46,12 @@ type State = {
   hasCreatedN3Wallet: boolean,
   isExploding: boolean,
   createdWalletName: string,
-  isHistoryDemo: boolean,
 }
 
 export default class Migration extends React.Component<Props, State> {
   state = {
     step: '',
     loading: false,
-    isHistoryDemo: false,
     migrationData: {
       transactions: [],
       pageCount: 0,
@@ -276,7 +112,7 @@ export default class Migration extends React.Component<Props, State> {
     this.setState({ paginationData }, async () => {
       const migrationData = await this.fetchHistoryData()
       const HAS_MIGRATED = migrationData.data.items.length
-      const { isHistoryDemo } = this.state
+
       this.setState({
         loading: false,
       })
@@ -285,7 +121,7 @@ export default class Migration extends React.Component<Props, State> {
           step: MIGRATION_HISTORY_STEP,
           migrationData: {
             // $FlowFixMe
-            transactions: isHistoryDemo ? DATA_STUB : migrationData.data.items,
+            transactions: migrationData.data.items,
             pageCount: migrationData.data.pageCount,
           },
         })
@@ -296,32 +132,18 @@ export default class Migration extends React.Component<Props, State> {
   fetchHistoryData = async () => {
     this.setState({ loading: true })
     const { address } = this.props
-    const { paginationData, isHistoryDemo } = this.state
+    const { paginationData } = this.state
     const { page, size } = paginationData
 
     // $FlowFixMe
     const migrationResults = await axios.get(
-      `https://migration.ngd.network/transactions?addresses=${
-        isHistoryDemo ? 'AG4tZgCjdmjfT8pjXpvXtTM2KpBe6zRkc7' : address
-      }&assetHashes=c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b,f46719e2d16bf50cddcef9d4bbfece901f73cbb6,602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7,74f2dc36a68fdc4682034178eb2220729231db76&page=${page}&pageSize=${size}`,
+      `https://migration.ngd.network/transactions?addresses=${address}&assetHashes=c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b,f46719e2d16bf50cddcef9d4bbfece901f73cbb6,602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7,74f2dc36a68fdc4682034178eb2220729231db76&page=${page}&pageSize=${size}`,
     )
     this.setState({ loading: false })
     return migrationResults
   }
 
-  handlePagination = async (isDemo: boolean) => {
-    if (isDemo && !this.state.isHistoryDemo) {
-      return this.setState({ isHistoryDemo: true }, async () => {
-        const results = await this.fetchHistoryData()
-        this.setState({
-          migrationData: {
-            // $FlowFixMe
-            transactions: DATA_STUB,
-            pageCount: results.data.pageCount,
-          },
-        })
-      })
-    }
+  handlePagination = async () => {
     const { page, size } = this.state.paginationData
     const { pageCount, transactions } = this.state.migrationData
 
@@ -499,6 +321,7 @@ export default class Migration extends React.Component<Props, State> {
                     data={migrationData}
                     showTxHistoryModal={this.showTxHistoryModal}
                     fetchAdditonalData={this.handlePagination}
+                    handleRefreshHistory={this.handleRefreshHistory}
                   />
                 )}
               </React.Fragment>

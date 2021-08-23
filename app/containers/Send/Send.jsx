@@ -17,8 +17,9 @@ import { MODAL_TYPES, PRICE_UNAVAILABLE } from '../../core/constants'
 import AmountsPanel from '../../components/AmountsPanel'
 import SendPanel from '../../components/Send/SendPanel'
 import HeaderBar from '../../components/HeaderBar'
-
+import WarningIcon from '../../assets/icons/warning.svg'
 import styles from './Send.scss'
+import DialogueBox from '../../components/DialogueBox'
 
 const MAX_NUMBER_OF_RECIPIENTS = 25
 
@@ -299,6 +300,11 @@ export default class Send extends React.Component<Props, State> {
           MIN_EXPECTED_GAS_FEE * rowsWithAsset.length,
         )
 
+        if (totalSendableAssets < 0) {
+          // this.props.showErrorNotification({ message: 'oops' })
+          return toNumber(sendableAssets[asset].balance).toFixed(decimals)
+        }
+
         if (rowsWithAsset.length === 1 || rowsWithAsset.length === 0) {
           return toNumber(totalSendableAssets).toFixed(decimals)
         }
@@ -420,12 +426,13 @@ export default class Send extends React.Component<Props, State> {
     this.props.showModal(MODAL_TYPES.CONFIRM, {
       title: 'Confirm Migration',
       shouldRenderHeader: false,
-      height: '500px',
+      height: '524px',
       renderBody: () => (
         <div className={styles.confirmMigration}>
           <h2> Confirmation </h2>
           <h4>
-            You are about to migrate {sendEntries[0].amount}{' '}
+            You are about to migrate{' '}
+            {toBigNumber(sendEntries[0].amount).toString()}{' '}
             {sendEntries[0].symbol}
           </h4>
           <div>
@@ -440,7 +447,9 @@ export default class Send extends React.Component<Props, State> {
           </div>
           <br />
           {feeIsRequired(sendEntries[0].symbol, sendEntries[0].amount) && (
-            <div className={styles.fee}>Fee: 1 GAS</div>
+            <div className={styles.feeWarningContainer}>
+              <DialogueBox icon={<WarningIcon />} text="1 GAS Fee" />
+            </div>
           )}
           <br />
           <small>
@@ -462,6 +471,9 @@ export default class Send extends React.Component<Props, State> {
             // TODO: implement possible additional error state here
           })
       },
+      onCancel: () => {
+        this.setState({ loading: false })
+      },
     })
   }
 
@@ -479,7 +491,7 @@ export default class Send extends React.Component<Props, State> {
         )
         if (
           toBigNumber(accum[currRow.asset]).greaterThan(
-            toBigNumber(sendableAssets[currRow.asset].balance),
+            toBigNumber(Number(sendableAssets[currRow.asset].balance)),
           )
         ) {
           const { errors } = this.state.sendRowDetails[index]

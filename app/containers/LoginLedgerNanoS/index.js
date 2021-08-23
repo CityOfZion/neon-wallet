@@ -12,6 +12,7 @@ import {
 import LoginLedgerNanoS from './LoginLedgerNanoS'
 import ledgerActions from '../../actions/ledgerActions'
 import { ledgerLoginActions } from '../../actions/authActions'
+import withChainData from '../../hocs/withChainData'
 
 const mapLedgerActionsToProps = () => ({
   connect: () => ledgerActions.call(),
@@ -31,6 +32,7 @@ const mapLedgerErrorToProps = error => ({ error })
 
 export default compose(
   withCall(ledgerActions),
+  withChainData(),
   withActions(ledgerActions, mapLedgerActionsToProps),
   withActions(ledgerLoginActions, mapAccountActionsToProps),
   withProgress(ledgerActions, {

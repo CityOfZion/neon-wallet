@@ -137,6 +137,8 @@ export const performMigration = ({
           const requirementMap = {
             GAS: ' OR migrate at least 20 GAS.',
             NEO: ' OR migrate at least 10 NEO.',
+            nNEO: '.',
+            CGAS: '.',
             OTHER: '.',
           }
 
@@ -163,13 +165,8 @@ export const performMigration = ({
         account: FROM_ACCOUNT,
         intents: intent,
         fees: feeIsRequired() ? 1.0 : null,
-        // balance: null,
         script,
       }
-
-      // if (net === 'TestNet') {
-      //   CONFIG.balance = await populateTestNetBalances(FROM_ACCOUNT.address)
-      // }
 
       dispatch(
         showInfoNotification({
@@ -182,7 +179,23 @@ export const performMigration = ({
       c = await N2.api.fillUrl(c)
       // if (net !== 'TestNet') {
       c = await N2.api.fillBalance(c)
-      // }
+
+      if (symbol === 'GAS' || symbol === 'NEO') {
+        const { balance } = c
+        if (
+          balance.assets[symbol].unspent.length &&
+          balance.assets[symbol].unspent.length > 15
+        ) {
+          dispatch(
+            showErrorNotification({
+              message:
+                'This migration transaction has an excessive number of UTXO inputs and will require extra GAS in fees. Consider sending all your (GAS|NEO) to yourself first in order to consolidate your UTXOs into a single input before migrating, in order to avoid the extra fee.',
+            }),
+          )
+          return reject()
+        }
+      }
+
       c = script
         ? await N2.api.createInvocationTx(c)
         : await N2.api.createContractTx(c)
@@ -191,7 +204,7 @@ export const performMigration = ({
         new N2.tx.TransactionAttribute({
           usage: N2.tx.TxAttrUsage.Remark14,
           data: hexRemark,
-        },
+        }),
         new N2.tx.TransactionAttribute({
           usage: N2.tx.TxAttrUsage.Remark15,
           data: hexTagRemark,

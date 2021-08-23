@@ -22,7 +22,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
   width="500px"
 >
   <Connect(withData(BaseModal))
-    hideModal={[MockFunction]}
+    hideModal={[Function]}
     shouldRenderHeader={false}
     style={
       Object {
@@ -38,7 +38,7 @@ exports[`ConfirmModal should render without crashing 1`] = `
       backButtonAction={null}
       dispatch={[Function]}
       height="450px"
-      hideModal={[MockFunction]}
+      hideModal={[Function]}
       shouldCloseWithEscapeKey={true}
       shouldRenderHeader={false}
       style={

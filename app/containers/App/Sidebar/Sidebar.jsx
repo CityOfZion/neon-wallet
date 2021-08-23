@@ -27,7 +27,7 @@ type Props = {
   count: number,
   store: any,
   chain: string,
-  net: string,
+  isWatchOnly?: boolean,
 }
 
 const Sidebar = ({
@@ -37,7 +37,7 @@ const Sidebar = ({
   count,
   store,
   chain,
-  net,
+  isWatchOnly,
 }: Props) => (
   <div className={classNames(styles.container, className)}>
     <div className={styles.group}>
@@ -145,17 +145,18 @@ const Sidebar = ({
         </div>
       </NavLink>
 
-      {chain === 'neo2' && (
-        <NavLink
-          id="migration"
-          to={ROUTES.MIGRATION}
-          className={classNames([styles.navItem, styles.migration])}
-          activeClassName={styles.active}
-        >
-          <MigrationIcon />
-          <div> Migration</div>
-        </NavLink>
-      )}
+      {!isWatchOnly &&
+        chain === 'neo2' && (
+          <NavLink
+            id="migration"
+            to={ROUTES.MIGRATION}
+            className={classNames([styles.navItem, styles.migration])}
+            activeClassName={styles.active}
+          >
+            <MigrationIcon />
+            <div> Migration</div>
+          </NavLink>
+        )}
 
       {/* {chain === 'neo2' && (
         <NavLink

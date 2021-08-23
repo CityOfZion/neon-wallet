@@ -6,6 +6,7 @@ import { createActions } from 'spunky'
 import { TX_TYPES } from '../core/constants'
 import { findAndReturnTokenInfo } from '../util/findAndReturnTokenInfo'
 import { getSettings } from './settingsActions'
+import { toBigNumber } from '../core/math'
 
 type Props = {
   net: string,
@@ -30,6 +31,7 @@ export async function parseAbstractData(
 
   const parsedTo = abstract => {
     if (abstract.address_to === 'fees') return 'NETWORK FEES'
+    if (abstract.address_to === 'fee') return 'NETWORK FEES'
     if (abstract.address_to === 'mint') return 'MINT TOKENS'
     return abstract.address_to
   }
@@ -50,7 +52,7 @@ export async function parseAbstractData(
       from: parsedFrom(abstract),
       txid: abstract.txid,
       time: abstract.time,
-      amount: abstract.amount,
+      amount: toBigNumber(abstract.amount).toString(),
       asset,
       symbol: asset.symbol,
       image: asset.image,

@@ -34,7 +34,7 @@ const ConfirmModal = ({
 }: Props) => (
   <BaseModal
     title={title}
-    hideModal={hideModal}
+    hideModal={() => hideModal() && onCancel && onCancel()}
     shouldRenderHeader={shouldRenderHeader}
     style={{
       content: {
