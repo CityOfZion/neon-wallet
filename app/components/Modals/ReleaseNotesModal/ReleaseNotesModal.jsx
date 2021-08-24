@@ -54,7 +54,7 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
             <h3>Release v2.8.0</h3>
 
             <p>
-              In this update you will find the following updates:
+              In this release you will find the following updates:
               <br />
               <br />
               {/* eslint-disable-next-line */}
