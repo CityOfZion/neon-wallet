@@ -6,6 +6,7 @@ import { wallet } from '@cityofzion/neon-js'
 import { validatePassphraseLength } from '../../core/wallet'
 import { generateNewEncryptedWIF } from '../../modules/generateEncryptedWIF'
 import Encrypt from './Encrypt'
+import withChainData from '../../hocs/withChainData'
 
 const actionCreators = {
   generateNewEncryptedWIF,
@@ -19,8 +20,8 @@ export default compose(
     null,
     mapDispatchToProps,
   ),
+  withChainData(),
   withProps({
-    isWIF: wallet.isWIF,
     validatePassphraseLength,
   }),
 )(Encrypt)

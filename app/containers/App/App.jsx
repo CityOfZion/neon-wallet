@@ -32,6 +32,7 @@ const routesWithSideBar = [
   ROUTES.TOKEN_SALE,
   ROUTES.NEWS,
   ROUTES.MOBILE,
+  ROUTES.MIGRATION,
 ]
 
 class App extends Component<Props> {

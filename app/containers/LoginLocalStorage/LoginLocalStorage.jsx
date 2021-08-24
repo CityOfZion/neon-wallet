@@ -9,6 +9,7 @@ import StyledReactSelect from '../../components/Inputs/StyledReactSelect/StyledR
 
 import LoginIcon from '../../assets/icons/login.svg'
 import styles from '../Home/Home.scss'
+import { resetCachedNode } from '../../actions/nodeStorageActions'
 
 type Props = {
   loading: boolean,
@@ -16,6 +17,9 @@ type Props = {
   accounts: Object,
   n3Accounts: Object,
   chain: string,
+  newMigratedWalletName: string,
+  newWalletCreated: Function,
+  setChain: string => any,
 }
 
 type State = {
@@ -45,6 +49,49 @@ export default class LoginLocalStorage extends Component<Props, State> {
       clonedAccount.value = account.label
       return clonedAccount
     })
+  }
+
+  // NOTE: this is brutal but literally the only way
+  // I could seem to get all of these state updates
+  // to render as expected... No idea why.
+  handleNewMigrationWalletLogic = () => {
+    this.props.setChain('neo3')
+    setTimeout(() => {
+      resetCachedNode()
+      const selectedAccount = this.returnMappedAccounts().find(
+        account => account.label === this.props.newMigratedWalletName,
+      )
+      this.setState({ selectedAccount })
+      setTimeout(() => {
+        this.focusPasswordInput()
+      }, 100)
+    }, 100)
+  }
+
+  focusPasswordInput = () => {
+    const input = document.querySelector('input[type="password"]')
+    if (input) {
+      input.focus()
+    }
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    if (
+      this.props.newMigratedWalletName &&
+      prevProps.newMigratedWalletName !== this.props.newMigratedWalletName
+    ) {
+      this.handleNewMigrationWalletLogic()
+    }
+  }
+
+  componentDidMount() {
+    if (this.props.newMigratedWalletName) {
+      this.handleNewMigrationWalletLogic()
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.props.newMigratedWalletName) this.props.newWalletCreated('')
   }
 
   render() {

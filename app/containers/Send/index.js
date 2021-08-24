@@ -8,6 +8,7 @@ import { injectIntl } from 'react-intl'
 
 import Send from './Send'
 import { sendTransaction, calculateN3Fees } from '../../modules/transactions'
+import { performMigration } from '../../modules/migration'
 import { showModal } from '../../modules/modal'
 import { getNotifications } from '../../modules/notifications'
 import withPricesData from '../../hocs/withPricesData'
@@ -29,6 +30,8 @@ const mapDispatchToProps = (dispatch: Function) =>
     {
       sendTransaction,
       calculateN3Fees,
+      performMigration,
+      showModal,
       showSendModal: props => dispatch(showModal(MODAL_TYPES.SEND, props)),
       showGeneratedTransactionModal: props =>
         dispatch(showModal(MODAL_TYPES.GENERATED_TRANSACTION, props)),

@@ -151,6 +151,7 @@ export const ROUTES = {
   OFFLINE_SIGNING_PROMPT: '/offline-signing-prompt',
   NETWORK_CONFIGURATION: '/network-configuration',
   MOBILE: '/mobile',
+  MIGRATION: '/migration',
 }
 
 export const NOTIFICATION_LEVELS = {
@@ -183,6 +184,7 @@ export const MODAL_TYPES = {
   IMPORT_TRANSACTION: 'IMPORT_TRANSACTION',
   RELEASE_NOTES: 'RELEASE_NOTES',
   SHOW_QR_FOR_EXPORT: 'SHOW_QR_FOR_EXPORT',
+  MIGRATION_DETAILS: 'MIGRATION_DETAILS',
 }
 
 export const TX_TYPES = {

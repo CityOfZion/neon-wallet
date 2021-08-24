@@ -13,17 +13,25 @@ import styles from './EncryptPanel.scss'
 
 type Props = {
   handleSubmit: Function,
+  handleN3Submit: Function,
   validatePassphraseLength: Function,
   isWIF: Function,
   className: string,
   title: string,
   resetEncryptedWIF: Function,
   encryptedWIF: string,
+  chain: string,
+  n3Key: string,
 }
 
 export default class EncryptPanel extends React.Component<Props> {
+  componentWillUnmount() {
+    const { resetEncryptedWIF } = this.props
+    resetEncryptedWIF()
+  }
+
   render() {
-    const { className, resetEncryptedWIF, encryptedWIF } = this.props
+    const { className, resetEncryptedWIF, encryptedWIF, n3Key } = this.props
 
     return (
       <FormattedMessage id="encryptPanelHeader">
@@ -36,7 +44,7 @@ export default class EncryptPanel extends React.Component<Props> {
             renderHeaderIcon={this.renderIcon}
             renderInstructions={this.renderInstructions}
           >
-            {this.renderPanelContent(encryptedWIF, resetEncryptedWIF)}
+            {this.renderPanelContent(encryptedWIF || n3Key, resetEncryptedWIF)}
           </FullHeightPanel>
         )}
       </FormattedMessage>
@@ -91,7 +99,11 @@ export default class EncryptPanel extends React.Component<Props> {
     passphrase: string,
     confirmPassphrase: string,
   ) => {
-    const { handleSubmit } = this.props
-    handleSubmit(privateKey, passphrase, confirmPassphrase)
+    const { handleSubmit, chain, handleN3Submit } = this.props
+    if (chain === 'neo3') {
+      handleN3Submit(privateKey, passphrase, confirmPassphrase)
+    } else {
+      handleSubmit(privateKey, passphrase, confirmPassphrase)
+    }
   }
 }

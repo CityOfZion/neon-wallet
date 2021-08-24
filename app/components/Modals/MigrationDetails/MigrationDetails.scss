@@ -1,0 +1,141 @@
+.detailsContainer {
+  margin: 0 !important;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000000;
+
+  svg {
+    path {
+      fill: var(--base-text);
+    }
+  }
+}
+
+.stepStatusContainer {
+  border-left: dashed 1px #979797;
+  height: 70px;
+  margin: -38px 0px -32px 18px;
+  opacity: 0.5;
+}
+
+.stepStatusContainerPending {
+  border-left: dashed 1px #979797;
+  height: 70px;
+  margin: -38px 0px -14px 18px;
+  opacity: 0.5;
+}
+
+.innerContainer {
+  padding: 24px 24px 24px 24px;
+  z-index: 1000000;
+  flex-direction: column;
+  height: 100%;
+  justify-content: start;
+
+  small {
+    margin-top: -2px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.innerFullHeightContentClass {
+  margin: 0;
+  height: 100%;
+}
+
+.migrationIcon {
+  fill: var(--view-layout-header-icon-color);
+  stroke: var(--view-layout-header-icon-color);
+}
+
+.detailsContainer {
+  background: var(--input-background);
+  width: 384px;
+  border-radius: 4px;
+}
+
+.detailContainer {
+  padding: 12px;
+
+  font-size: 14px;
+}
+
+.statusDetailContainer {
+  padding: 12px;
+  font-size: 14px;
+
+  p {
+    margin: 0;
+    margin-bottom: 2px;
+  }
+
+  code {
+    font-size: 11px;
+    color: var(--base-link-color);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 300px;
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+  }
+}
+
+.stepContainer {
+  display: flex;
+  align-items: center;
+  padding: 0 6px 6px 12px;
+
+  svg {
+    max-width: 16px;
+    margin-right: 2px;
+  }
+
+  .completedStep {
+    height: 12px;
+    width: 12px;
+    background-color: #4cffb3;
+    border-radius: 50%;
+    display: inline-block;
+    // margin-left: 6px;
+  }
+
+  .incompleteStep {
+    background-color: transparent;
+    border: 1px solid #d355e7;
+    height: 12px;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    width: 12px;
+  }
+}
+
+.row {
+  display: flex;
+}
+
+.statusContainer {
+  display: flex;
+  align-items: center;
+  svg {
+    margin-right: 4px;
+    max-width: 16px;
+  }
+}
+
+.statusContainerPending {
+  display: flex;
+  align-items: center;
+  svg {
+    margin-right: 4px;
+    max-width: 10px;
+  }
+}
+
+.detailsContainerLabel {
+  height: 24px;
+}

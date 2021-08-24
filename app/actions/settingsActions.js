@@ -65,13 +65,12 @@ export const updateSettingsActions = createActions(
   // $FlowFixMe
   (values: Settings = {}) => async (): Promise<Settings> => {
     const settings = await getSettings()
-    const { chain } = settings
+    const { chain } = values
     const newSettings = {
       ...settings,
       ...values,
     }
     const parsedForLocalStorage = cloneDeep(newSettings)
-
     if (chain === 'neo2') {
       const tokensForStorage = [
         ...newSettings.tokens.filter(token => token.isUserGenerated),

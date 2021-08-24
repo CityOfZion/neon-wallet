@@ -15,6 +15,7 @@ import ContactsIcon from '../../../assets/navigation/contacts.svg'
 import SettingsIcon from '../../../assets/navigation/settings.svg'
 import NewsIcon from '../../../assets/navigation/news.svg'
 import MobileIcon from '../../../assets/navigation/mobile.svg'
+import MigrationIcon from '../../../assets/navigation/migration.svg'
 import LogoWithTooltipAndBlockHeight from '../../../components/LogoWithTooltipAndBlockHeight/LogoWithTooltipAndBlockHeight'
 
 import styles from './Sidebar.scss'
@@ -26,6 +27,8 @@ type Props = {
   count: number,
   store: any,
   chain: string,
+  isWatchOnly?: boolean,
+  signingFunction?: () => void,
 }
 
 const Sidebar = ({
@@ -35,6 +38,8 @@ const Sidebar = ({
   count,
   store,
   chain,
+  isWatchOnly,
+  signingFunction,
 }: Props) => (
   <div className={classNames(styles.container, className)}>
     <div className={styles.group}>
@@ -141,6 +146,20 @@ const Sidebar = ({
           <FormattedMessage id="sidebarSettings" />{' '}
         </div>
       </NavLink>
+
+      {!isWatchOnly &&
+        !signingFunction &&
+        chain === 'neo2' && (
+          <NavLink
+            id="migration"
+            to={ROUTES.MIGRATION}
+            className={classNames([styles.navItem, styles.migration])}
+            activeClassName={styles.active}
+          >
+            <MigrationIcon />
+            <div> Migration</div>
+          </NavLink>
+        )}
 
       {/* {chain === 'neo2' && (
         <NavLink

@@ -1,5 +1,35 @@
 @import '../../../../styles/variables';
 
+.migrationContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100% !important;
+  // max-width: 100%;
+  // padding-left: 24px;
+  margin: auto !important;
+  // margin-left: 24px !important;
+
+  height: 100%;
+  max-height: calc(100vh - 120px) !important;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  .asset {
+    min-width: 110px;
+  }
+
+  .amount {
+    min-width: 160px;
+  }
+
+  .address {
+    min-width: 350px !important;
+    width: 350px !important;
+    margin-right: 0 !important;
+  }
+}
+
 .sendRecipientListContainer {
   width: 85%;
   margin: 0 45px 0 auto;

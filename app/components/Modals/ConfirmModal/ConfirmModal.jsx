@@ -15,6 +15,9 @@ type Props = {
   hideModal: Function,
   width: string,
   renderBody: Function,
+  shouldRenderHeader: boolean,
+  height: string,
+  shouldRenderFooter: boolean,
 }
 
 const ConfirmModal = ({
@@ -25,15 +28,18 @@ const ConfirmModal = ({
   text,
   renderBody,
   width,
+  shouldRenderHeader = false,
+  height,
+  shouldRenderFooter = true,
 }: Props) => (
   <BaseModal
     title={title}
-    hideModal={hideModal}
-    shouldRenderHeader={false}
+    hideModal={() => hideModal() && onCancel && onCancel()}
+    shouldRenderHeader={shouldRenderHeader}
     style={{
       content: {
         width,
-        height: '200px',
+        height: height || '200px',
       },
     }}
   >
@@ -42,29 +48,31 @@ const ConfirmModal = ({
         {text && <strong className={styles.text}>{text}</strong>}
         {renderBody && renderBody()}
       </div>
-      <div className={styles.modalFooter}>
-        <Button
-          elevated
-          id="cancel"
-          onClick={() => {
-            hideModal()
-            onCancel()
-          }}
-        >
-          <FormattedMessage id="modalActionCancel" />
-        </Button>
-        <Button
-          id="confirm"
-          primary
-          className={styles.actionButton}
-          onClick={() => {
-            onClick()
-            hideModal()
-          }}
-        >
-          <FormattedMessage id="modalActionConfirm" />
-        </Button>
-      </div>
+      {shouldRenderFooter && (
+        <div className={styles.modalFooter}>
+          <Button
+            elevated
+            id="cancel"
+            onClick={() => {
+              hideModal()
+              onCancel()
+            }}
+          >
+            <FormattedMessage id="modalActionCancel" />
+          </Button>
+          <Button
+            id="confirm"
+            primary
+            className={styles.actionButton}
+            onClick={() => {
+              onClick()
+              hideModal()
+            }}
+          >
+            <FormattedMessage id="modalActionConfirm" />
+          </Button>
+        </div>
+      )}
     </div>
   </BaseModal>
 )

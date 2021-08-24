@@ -28,6 +28,7 @@ import { ROUTES } from '../../core/constants'
 import OfflineSigningPrompt from '../../containers/OfflineSigningPrompt'
 import NetworkConfiguration from '../../containers/NetworkConfiguration'
 import Mobile from '../../containers/Mobile'
+import Migration from '../../containers/Migration'
 
 export default ({ store }: { store: any }) => (
   <App store={store}>
@@ -129,6 +130,7 @@ export default ({ store }: { store: any }) => (
         component={OfflineSigningPrompt}
       />
       <PrivateRoute exact path={ROUTES.MOBILE} component={Mobile} />
+      <PrivateRoute exact path={ROUTES.MIGRATION} component={Migration} />
       <Redirect to={ROUTES.DASHBOARD} />
     </Switch>
   </App>
