@@ -1,12 +1,8 @@
 // @flow
 import React from 'react'
-import { FormattedMessage } from 'react-intl'
 import moment from 'moment'
 import classNames from 'classnames'
 
-import ReceiveIcon from '../../../assets/icons/receive-tx.svg'
-import Button from '../../Button'
-import InfoIcon from '../../../assets/icons/info.svg'
 import CheckMarkIcon from '../../../assets/icons/confirm.svg'
 import ClockIcon from '../../../assets/icons/clock.svg'
 import styles from './Transaction.scss'
@@ -97,18 +93,6 @@ export default class MigrationTransaction extends React.Component<Props> {
       </React.Fragment>
     )
   }
-
-  displayModal = (address: string) => {
-    // this.props.showAddContactModal({ address })
-  }
-
-  // handleViewTransaction = () => {
-  //   const { tx } = this.props
-
-  //   electron.shell.openExternal(
-  //     `https://explorer.poly.network/testnet/tx/${tx.txhash}`,
-  //   )
-  // }
 
   renderTxDate = (time: ?number) => {
     if (!time) {

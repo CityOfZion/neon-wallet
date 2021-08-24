@@ -15,6 +15,9 @@ import PatchDark from '../../../assets/images/release-assets/patch-dark.svg'
 import N3SupportLight from '../../../assets/images/release-assets/n3_support_light.svg'
 import N3SupportDark from '../../../assets/images/release-assets/n3_support_dark.svg'
 
+import MigrationLight from '../../../assets/images/release-assets/migration-light.svg'
+import MigrationDark from '../../../assets/images/release-assets/migration-dark.svg'
+
 const electron = require('electron').remote
 
 type Props = {
@@ -47,6 +50,35 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
       <div className={styles.releaseNotesContents}>
         <div className={styles.release}>
           <div className={styles.releaseContent}>
+            <small className={styles.date}>Aug 24th 2021 </small>
+            <h3>Release v2.8.0</h3>
+
+            <p>
+              In this update you will find the following updates:
+              <br />
+              <br />
+              {/* eslint-disable-next-line */}
+              <li>Support for asset migration to N3</li>
+              <li>Support for Neo Legacy TestNet</li>
+              <br />
+              View full details of this release on GitHub
+              <br />
+            </p>
+
+            <Github
+              onClick={() =>
+                electron.shell.openExternal(
+                  'https://github.com/CityOfZion/neon-wallet/releases/tag/v2.8.0',
+                )
+              }
+            />
+          </div>
+          <div className={styles.marketingImage}>
+            {theme === 'Light' ? <MigrationLight /> : <MigrationDark />}
+          </div>
+        </div>
+        <div className={styles.release}>
+          <div className={styles.releaseContent}>
             <small className={styles.date}>Aug 5th 2021 </small>
             <h3>Release v2.7.4</h3>
 
@@ -55,7 +87,7 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
               <br />
               <br />
               {/* eslint-disable-next-line */}
-              <li>Support for Neo (N3) MainNet and TestNet 🎉🎉</li>
+              <li>Support for Neo (N3) MainNet and TestNet 🎉</li>
               <li>Under the hood dependency updates</li>
               <li>Performance enhancements</li>
               <br />

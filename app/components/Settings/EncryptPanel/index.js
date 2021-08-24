@@ -2,6 +2,7 @@
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import { bindActionCreators } from 'redux'
+import withChainData from '../../../hocs/withChainData'
 import {
   getEncryptedWIF,
   resetEncryptedWIF,
@@ -24,4 +25,5 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps,
   ),
+  withChainData(),
 )(EncryptPanel)

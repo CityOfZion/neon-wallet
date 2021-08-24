@@ -127,7 +127,7 @@ export default class EncryptForm extends React.Component<Props, State> {
     const { validatePassphraseLength, intl } = this.props
     if (passphrase !== confirmPassphrase) {
       this.setState({
-        passphraseError: intl.formatMessage({ id: '  errors.password.match' }),
+        passphraseError: intl.formatMessage({ id: 'errors.password.match' }),
       })
       return false
     }

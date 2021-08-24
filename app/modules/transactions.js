@@ -102,10 +102,13 @@ const makeRequest = (
   config.intents = buildIntents(sendEntries)
 
   if (script === '') {
-    // eslint-disable-next-line
-    const provider = new N2.api.neoCli.instance(config.url)
-    config.api = provider
-    return N2.api.sendAsset(config)
+    if (config.net === 'TestNet') {
+      // eslint-disable-next-line
+      const provider = new N2.api.neoCli.instance(config.url)
+      config.api = provider
+      return N2.api.sendAsset(config)
+    }
+    return api.sendAsset(config, api.neoscan)
   }
   // eslint-disable-next-line no-param-reassign
   config.script = script
@@ -472,7 +475,6 @@ export const sendTransaction = ({
                 net,
               )
             })
-
           config.balance = balanceResults.balance
         }
         if (net === 'TestNet') {

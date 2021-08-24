@@ -28,6 +28,7 @@ type Props = {
   store: any,
   chain: string,
   isWatchOnly?: boolean,
+  signingFunction?: () => void,
 }
 
 const Sidebar = ({
@@ -38,6 +39,7 @@ const Sidebar = ({
   store,
   chain,
   isWatchOnly,
+  signingFunction,
 }: Props) => (
   <div className={classNames(styles.container, className)}>
     <div className={styles.group}>
@@ -146,6 +148,7 @@ const Sidebar = ({
       </NavLink>
 
       {!isWatchOnly &&
+        !signingFunction &&
         chain === 'neo2' && (
           <NavLink
             id="migration"
