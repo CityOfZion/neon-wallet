@@ -255,6 +255,7 @@ export const generateN3NewWalletAccount = (
   walletName: string,
   authenticated: boolean = false,
   onFailure: () => any = () => undefined,
+  isMigration?: { legacyAddress: string, walletCreatedCallback: () => void },
 ) => (dispatch: DispatchType) => {
   const dispatchError = (message: string) => {
     dispatch(showErrorNotification({ message }))
@@ -307,7 +308,7 @@ export const generateN3NewWalletAccount = (
         if (walletHasKey(storedWallet, encryptedWIF)) {
           onFailure()
           return dispatchError(
-            'A wallet with this encrypted key already exists locally.',
+            'A wallet with this encrypted key already exists locally, try using a different password.',
           )
         }
 
@@ -321,6 +322,7 @@ export const generateN3NewWalletAccount = (
         )
 
         dispatch(hideNotification(infoNotificationId))
+
         dispatch(
           newWalletAccount({
             account: {
@@ -333,6 +335,13 @@ export const generateN3NewWalletAccount = (
             isImport,
           }),
         )
+        if (isMigration) {
+          localStorage.setItem(
+            `hasMigrated-${isMigration.legacyAddress}`,
+            walletName,
+          )
+          return isMigration.walletCreatedCallback()
+        }
 
         if (wif) history.push(ROUTES.HOME)
         if (authenticated)
@@ -367,6 +376,7 @@ export const generateNewWalletAccount = (
   authenticated: boolean = false,
   onFailure: () => any = () => undefined,
   chain: string = 'neo2',
+  isMigration?: { legacyAddress: string, walletCreatedCallback: () => void },
 ) => (dispatch: DispatchType) => {
   const dispatchError = (message: string) => {
     dispatch(showErrorNotification({ message }))
@@ -392,6 +402,7 @@ export const generateNewWalletAccount = (
         walletName,
         authenticated,
         onFailure,
+        isMigration,
       ),
     )
   }

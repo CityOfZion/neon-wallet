@@ -32,6 +32,11 @@ type Props = {
   net: Net,
 }
 
+export const resetCachedNode = () => {
+  delete cachedRPCUrl.MainNet
+  delete cachedRPCUrl.TestNet
+}
+
 export const determineIfCacheIsExpired = (
   timestamp: number,
   expiration: number = CACHE_EXPIRATION,
@@ -159,6 +164,7 @@ export const getNode = async (
   if (!nodeInStorage || !expiration || determineIfCacheIsExpired(expiration)) {
     return ''
   }
+
   return nodeInStorage
 }
 

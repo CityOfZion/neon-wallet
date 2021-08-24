@@ -38,7 +38,8 @@ type RenderItemProps = {
   onSelect: Function,
 }
 
-const defaultRenderAfter = (props: Props) => <DropdownButton {...props} />
+const defaultRenderAfter = (props: Props) =>
+  !!props.items.length && <DropdownButton {...props} />
 
 const defaultItemValue = (item: string) => item
 
@@ -107,7 +108,11 @@ export default class SelectInput extends React.Component<Props, State> {
     )
   }
 
-  renderAfter = () => this.props.renderAfter({ onToggle: this.handleToggle })
+  renderAfter = () =>
+    this.props.renderAfter({
+      onToggle: this.handleToggle,
+      items: this.props.items,
+    })
 
   renderDropdown = ({ className }: { className: string }) => {
     const items = this.getItems()

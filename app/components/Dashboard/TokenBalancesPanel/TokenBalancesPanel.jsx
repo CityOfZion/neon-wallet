@@ -11,6 +11,7 @@ import { toFixedDecimals } from '../../../core/formatters'
 import { toBigNumber } from '../../../core/math'
 import Nothing from '../../../assets/icons/nothing.svg'
 import { CURRENCIES, PRICE_UNAVAILABLE } from '../../../core/constants'
+import { imageMap } from '../../../assets/nep5/svg'
 
 type Props = {
   className: ?string,
@@ -130,11 +131,11 @@ export default class TokenBalancesPanel extends React.Component<Props> {
           {balances.sort(this.sortByValueInPortfolio).map(token => (
             <React.Fragment key={token.scriptHash}>
               <span className={classNames(styles.rowCell, styles.tickerName)}>
-                {!!token.image && (
+                {(!!token.image || imageMap[token.symbol]) && (
                   <div className={styles.tokenImageContainer}>
                     <img
                       className={styles.tokenImage}
-                      src={token.image}
+                      src={token.image || imageMap[token.symbol]}
                       alt=""
                     />
                   </div>

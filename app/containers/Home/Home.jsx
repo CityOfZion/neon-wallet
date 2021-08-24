@@ -57,14 +57,14 @@ const LOGIN_OPTIONS = {
     render: () => <LoginLedgerNanoS />,
     displayKey: 'Ledger',
     renderDisplayMessage: () => <FormattedMessage id="authLedger" />,
-    chainSupport: ['neo2'],
+    chainSupport: ['neo2', 'neo3'],
   },
 }
 
 // NOTE: all other solutions seemed to be overly
 // complex... Revisit this if it becomes painful
 const shouldRenderReleaseNotes = version => {
-  const displayWhitelist = ['2.6.0', '2.6.1', '2.6.2', '2.7.4']
+  const displayWhitelist = ['2.6.0', '2.6.1', '2.6.2', '2.7.4', '2.8.0']
   if (
     displayWhitelist.includes(version) &&
     !localStorage.getItem(`hasSeenReleaseNotes-${version}`)

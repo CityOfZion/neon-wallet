@@ -13,6 +13,8 @@ import ConfirmIcon from '../../assets/icons/confirm.svg'
 import RefreshIcon from '../../assets/icons/refresh.svg'
 import styles from '../Home/Home.scss'
 import { getPublicKeys, MESSAGES } from '../../ledger/neonLedger'
+import DialogueBox from '../../components/DialogueBox'
+import WarningIcon from '../../assets/icons/warning.svg'
 
 const LEDGER_CONNECTION_STAGES = {
   NOT_CONNECTED: 1,
@@ -34,6 +36,7 @@ type Props = {
   login: Function,
   connect: Function,
   error: ?string,
+  chain: string,
 }
 
 type State = {
@@ -122,40 +125,48 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
   render() {
     const options = this.createOptionsFromKeys()
     const { loadingPublicKeys, publicKeys } = this.state
+    const { chain } = this.props
 
     return (
       <div id="loginLedgerNanoS" className={styles.flexContainer}>
-        <form>
-          {this.renderStatus()}
-          <FormattedMessage id="publicAddress">
-            {translation => (
-              <Label label={translation}>
-                {this.renderAdditionalLabelContent()}
-              </Label>
-            )}
-          </FormattedMessage>
-          <StyledReactSelect
-            value={this.state.addressOption}
-            isDisabled={publicKeys.length === 1}
-            onChange={addressOption => this.setState({ addressOption })}
-            options={options}
-            onMenuScrollToBottom={this.fetchAdditionalKeys}
-            isSearchable
-            isLoading={loadingPublicKeys}
+        {chain === 'neo2' ? (
+          <form>
+            {this.renderStatus()}
+            <FormattedMessage id="publicAddress">
+              {translation => (
+                <Label label={translation}>
+                  {this.renderAdditionalLabelContent()}
+                </Label>
+              )}
+            </FormattedMessage>
+            <StyledReactSelect
+              value={this.state.addressOption}
+              isDisabled={publicKeys.length === 1}
+              onChange={addressOption => this.setState({ addressOption })}
+              options={options}
+              onMenuScrollToBottom={this.fetchAdditionalKeys}
+              isSearchable
+              isLoading={loadingPublicKeys}
+            />
+            <Button
+              id="loginButton"
+              primary
+              type="submit"
+              className={styles.loginButtonMargin}
+              renderIcon={LoginIcon}
+              disabled={!this.canLogin()}
+              onClick={this.handleLogin}
+              shouldCenterButtonLabelText
+            >
+              <FormattedMessage id="authLogin" />
+            </Button>
+          </form>
+        ) : (
+          <DialogueBox
+            icon={<WarningIcon />}
+            text="Ledger support for N3 coming soon."
           />
-          <Button
-            id="loginButton"
-            primary
-            type="submit"
-            className={styles.loginButtonMargin}
-            renderIcon={LoginIcon}
-            disabled={!this.canLogin()}
-            onClick={this.handleLogin}
-            shouldCenterButtonLabelText
-          >
-            <FormattedMessage id="authLogin" />
-          </Button>
-        </form>
+        )}
       </div>
     )
   }

@@ -1,11 +1,5 @@
 [
   {
-    "url": "https://seed1.switcheo.network:10331"
-  },
-  {
-    "url": "https://seed3.switcheo.network:10331"
-  },
-  {
     "url": "http://seed1.ngd.network:10332"
   },
   {
@@ -31,18 +25,6 @@
   },
   {
     "url": "http://seed9.ngd.network:10332"
-  },
-  {
-    "url": "https://m2.neo.nash.io"
-  },
-  {
-    "url": "https://m3.neo.nash.io"
-  },
-  {
-    "url": "https://m4.neo.nash.io"
-  },
-  {
-    "url": "https://m5.neo.nash.io"
   },
   {
     "url": "https://mainnet1.neo2.coz.io:443"

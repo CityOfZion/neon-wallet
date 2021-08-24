@@ -21,6 +21,7 @@ type Props = {
   onBlur?: Function,
   label: string,
   shouldRenderErrorIcon?: boolean,
+  disabled?: boolean,
 }
 
 type State = {
@@ -65,6 +66,7 @@ export default class TextInput extends React.Component<Props, State> {
             className={classNames(styles.input, textInputClassName)}
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
+            disabled={this.props.disabled}
           />
           {error &&
             this.props.shouldRenderErrorIcon && (

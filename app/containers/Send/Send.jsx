@@ -13,12 +13,13 @@ import {
   addNumber,
 } from '../../core/math'
 import { isBlacklisted } from '../../core/wallet'
-import { PRICE_UNAVAILABLE } from '../../core/constants'
+import { MODAL_TYPES, PRICE_UNAVAILABLE } from '../../core/constants'
 import AmountsPanel from '../../components/AmountsPanel'
 import SendPanel from '../../components/Send/SendPanel'
 import HeaderBar from '../../components/HeaderBar'
-
+import WarningIcon from '../../assets/icons/warning.svg'
 import styles from './Send.scss'
+import DialogueBox from '../../components/DialogueBox'
 
 const MAX_NUMBER_OF_RECIPIENTS = 25
 
@@ -28,6 +29,9 @@ type Props = {
   sendTransaction: ({
     sendEntries: Array<SendEntryType>,
     fees: number,
+  }) => Object,
+  performMigration: ({
+    sendEntries: Array<SendEntryType>,
   }) => Object,
   calculateN3Fees: ({
     sendEntries: Array<SendEntryType>,
@@ -45,6 +49,10 @@ type Props = {
   showImportModal: (props: Object) => void,
   intl: IntlShape,
   chain: string,
+  isMigration: boolean,
+  wif: string,
+  handleSwapComplete: () => void,
+  showModal: (modalType: string, modalProps: Object) => any,
 }
 
 type State = {
@@ -91,7 +99,7 @@ export default class Send extends React.Component<Props, State> {
     tokens: [],
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.setState((prevState: Object) => {
       const newState = [...prevState.sendRowDetails]
 
@@ -104,6 +112,11 @@ export default class Send extends React.Component<Props, State> {
       if (address) {
         this.updateRowField(0, 'address', address)
       }
+    }
+
+    if (this.props.isMigration) {
+      const account = new n3Wallet.Account(this.props.wif)
+      this.updateRowField(0, 'address', account.address)
     }
   }
 
@@ -287,6 +300,11 @@ export default class Send extends React.Component<Props, State> {
           MIN_EXPECTED_GAS_FEE * rowsWithAsset.length,
         )
 
+        if (totalSendableAssets < 0) {
+          // this.props.showErrorNotification({ message: 'oops' })
+          return toNumber(sendableAssets[asset].balance).toFixed(decimals)
+        }
+
         if (rowsWithAsset.length === 1 || rowsWithAsset.length === 0) {
           return toNumber(totalSendableAssets).toFixed(decimals)
         }
@@ -364,6 +382,10 @@ export default class Send extends React.Component<Props, State> {
       Promise.all(promises).then(values => {
         const isValid = values.every((result: boolean) => result)
 
+        if (isValid && this.props.isMigration) {
+          return this.handleMigration()
+        }
+
         if (isValid && !this.props.isWatchOnly && !generateTransaction) {
           this.setState({ showConfirmSend: true })
         }
@@ -372,6 +394,87 @@ export default class Send extends React.Component<Props, State> {
         }
       })
     }
+  }
+
+  handleMigration = () => {
+    this.setState({ loading: true })
+
+    const BLACK_HOLE_MAIN_NET = 'ANeo2toNeo3MigrationAddressxwPB2Hz' // MainNet
+    const BLACK_HOLE_TEST_NET = 'AJ36ZCpMhiHYMdMAUaP7i1i9pJz4jMdiQV' // TestNet
+
+    const { sendRowDetails } = this.state
+
+    const sendEntries = sendRowDetails.map((row: Object) => ({
+      address:
+        this.props.networkId === '1'
+          ? BLACK_HOLE_MAIN_NET
+          : BLACK_HOLE_TEST_NET,
+      amount: toNumber(row.amount.toString()),
+      symbol: row.asset,
+    }))
+
+    const TO_ACCOUNT = new n3Wallet.Account(this.props.wif)
+
+    const feeIsRequired = (symbol, amount) => {
+      const userMustPayFee =
+        (symbol === 'NEO' && Number(amount) < 10) ||
+        (symbol === 'GAS' && Number(amount) < 20)
+
+      return userMustPayFee
+    }
+
+    this.props.showModal(MODAL_TYPES.CONFIRM, {
+      title: 'Confirm Migration',
+      shouldRenderHeader: false,
+      height: '524px',
+      renderBody: () => (
+        <div className={styles.confirmMigration}>
+          <h2> Confirmation </h2>
+          <h4>
+            You are about to migrate{' '}
+            {toBigNumber(sendEntries[0].amount).toString()}{' '}
+            {sendEntries[0].symbol}
+          </h4>
+          <div>
+            From (Neo Legacy): <br />
+            <code> {this.props.address} </code>
+          </div>
+          <br />
+
+          <div>
+            To (Neo N3): <br />
+            <code> {TO_ACCOUNT.address}</code>
+          </div>
+          <br />
+          {feeIsRequired(sendEntries[0].symbol, sendEntries[0].amount) && (
+            <div className={styles.feeWarningContainer}>
+              <DialogueBox icon={<WarningIcon />} text="1 GAS Fee" />
+            </div>
+          )}
+          <br />
+          <small>
+            Most users should recieve their tokens on Neo N3 within 30 minutes,
+            however some migrations may take up to 24 hours.{' '}
+          </small>
+        </div>
+      ),
+      onClick: () => {
+        this.props
+          .performMigration({
+            sendEntries,
+          })
+          .then(() => {
+            this.props.handleSwapComplete()
+          })
+          .catch(() => {
+            this.setState({ loading: false })
+            // TODO: implement possible additional error state here
+          })
+      },
+      onCancel: () => {
+        this.setState({ loading: false })
+      },
+    })
   }
 
   validateRowAmounts = (rows: Array<any>) => {
@@ -388,7 +491,7 @@ export default class Send extends React.Component<Props, State> {
         )
         if (
           toBigNumber(accum[currRow.asset]).greaterThan(
-            toBigNumber(sendableAssets[currRow.asset].balance),
+            toBigNumber(Number(sendableAssets[currRow.asset].balance)),
           )
         ) {
           const { errors } = this.state.sendRowDetails[index]
@@ -547,10 +650,10 @@ export default class Send extends React.Component<Props, State> {
   }
 
   validateAddress = async (formAddress: string, index: number) => {
-    const { intl, chain } = this.props
+    const { intl, chain, isMigration } = this.props
     const { errors } = this.state.sendRowDetails[index]
 
-    if (chain === 'neo3') {
+    if (chain === 'neo3' || isMigration) {
       if (!n3Wallet.isAddress(formAddress)) {
         errors.address = intl.formatMessage({
           id: 'errors.send.invalidAddress',
@@ -625,28 +728,49 @@ export default class Send extends React.Component<Props, State> {
       isWatchOnly,
       showImportModal,
       chain,
+      isMigration,
     } = this.props
     const noSendableAssets = Object.keys(sendableAssets).length === 0
 
+    const assets = isMigration ? {} : sendableAssets
+
+    if (isMigration) {
+      if (sendableAssets.NEO) {
+        assets.NEO = sendableAssets.NEO
+      }
+      if (sendableAssets.GAS) {
+        assets.GAS = sendableAssets.GAS
+      }
+      if (sendableAssets.CGAS) {
+        assets.CGAS = sendableAssets.CGAS
+      }
+      if (sendableAssets.nNEO) {
+        assets.nNEO = sendableAssets.nNEO
+      }
+    }
+
     return (
       <section className={styles.sendContainer}>
-        {shouldRenderHeaderBar && (
-          <HeaderBar
-            label={<FormattedMessage id="sendPageLabel" />}
-            shouldRenderRefresh
-          />
-        )}
-        {!noSendableAssets && (
-          <AmountsPanel
-            amountsData={this.createSendAmountsData()}
-            currencyCode={currencyCode}
-          />
-        )}
+        {shouldRenderHeaderBar &&
+          !isMigration && (
+            <HeaderBar
+              label={<FormattedMessage id="sendPageLabel" />}
+              shouldRenderRefresh
+            />
+          )}
+        {!noSendableAssets &&
+          !isMigration && (
+            <AmountsPanel
+              amountsData={this.createSendAmountsData()}
+              currencyCode={currencyCode}
+            />
+          )}
+
         <SendPanel
           calculateMaxValue={this.calculateMaxValue}
           maxNumberOfRecipients={MAX_NUMBER_OF_RECIPIENTS}
           sendRowDetails={sendRowDetails}
-          sendableAssets={sendableAssets}
+          sendableAssets={assets}
           showConfirmSend={showConfirmSend}
           pendingTransaction={pendingTransaction}
           sendSuccess={sendSuccess}
@@ -676,6 +800,7 @@ export default class Send extends React.Component<Props, State> {
           hasEnoughGas={hasEnoughGas}
           loading={loading}
           toggleHasEnoughGas={this.toggleHasEnoughGas}
+          isMigration={isMigration}
         />
       </section>
     )

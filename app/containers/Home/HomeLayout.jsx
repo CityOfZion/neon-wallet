@@ -12,6 +12,7 @@ import withLanguageData from '../../hocs/withLanguageData'
 import { updateSettingsActions } from '../../actions/settingsActions'
 import LanguageSelect from '../../components/Inputs/LanguageSelect'
 import ChainSwitch from '../../components/ChainSwitch'
+import { resetCachedNode } from '../../actions/nodeStorageActions'
 
 type Props = {
   children: React$Node,
@@ -35,6 +36,7 @@ class HomeLayout extends React.Component<Props, State> {
   updateChain = n3Toggled => {
     const chain = n3Toggled ? 'neo3' : 'neo2'
     this.props.setChain(chain)
+    resetCachedNode()
   }
 
   render() {

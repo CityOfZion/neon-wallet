@@ -10,7 +10,6 @@ type NotificationArgsType = {
   position?: $Values<typeof NOTIFICATION_POSITIONS>,
   dismissible?: boolean,
   autoDismiss?: number,
-  autoDismiss?: number,
   stack?: boolean,
   children?: React$Node,
 }
@@ -104,7 +103,7 @@ export const showErrorNotification = (args: NotificationArgsType) => (
       title: DEFAULT_ERROR_TITLE,
       ...args,
       level: NOTIFICATION_LEVELS.ERROR,
-      autoDismiss: 5,
+      autoDismiss: args.autoDismiss ? args.autoDismiss : 5,
     },
     dispatch,
   )

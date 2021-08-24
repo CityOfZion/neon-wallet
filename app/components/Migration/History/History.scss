@@ -1,0 +1,54 @@
+.container {
+  // padding: 24px;
+  width: 100%;
+  overflow-y: auto;
+  max-height: calc(100vh - 120px) !important;
+
+  h3 {
+    padding: 0 24px;
+  }
+
+  #transactionList {
+    width: 100%;
+    // margin: -10px;
+  }
+}
+
+.migrationTransactionListContainer {
+  // margin: 12px -34px 0 -34px;
+}
+
+.rowClass {
+  display: flex;
+  list-style-type: none;
+  font-weight: 400;
+  // margin-top: 8px;
+
+  // height: 50px;
+
+  .txid {
+    flex: 0 0 auto;
+    align-items: center;
+    display: flex;
+  }
+}
+
+.emptyHistory {
+  height: 500px;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  code {
+    margin-right: 48px;
+    cursor: pointer;
+  }
+}
+
+.txWrapper {
+  width: 100%;
+}

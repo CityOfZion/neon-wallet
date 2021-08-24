@@ -146,3 +146,101 @@
     }
   }
 }
+
+.migrationTransaction {
+  width: 100%;
+  display: flex;
+  height: 60px;
+  // background: #37414b;
+  // border-bottom: solid 2px#4cffb3;
+  cursor: pointer;
+  margin-bottom: 2px;
+  // margin: -2x -24px 2px -24px;
+
+  .migrationTxAddressContainer {
+    // width: 320px;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    font-size: 10px;
+    justify-content: space-between;
+
+    span {
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    button {
+      align-self: flex-end;
+      margin-top: 5px;
+
+      svg {
+        path {
+          fill: var(--tx-list-copy-icon);
+        }
+      }
+    }
+
+    .migrationAssetHash {
+      margin-right: 4px;
+    }
+  }
+
+  .statusContainer {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+  }
+
+  .statusCompleteContainer {
+    display: flex;
+    align-items: center;
+    color: var(--tx-icon-color);
+    // width: 80px;
+    svg {
+      margin-right: 3px;
+
+      path {
+        fill: var(--tx-icon-color);
+      }
+    }
+  }
+
+  .statusPendingContainer {
+    display: flex;
+    align-items: center;
+    margin-right: 6px;
+    min-height: 18px;
+    min-width: 80px;
+
+    svg {
+      margin-right: 3px;
+      min-height: 18px;
+      min-width: 24px;
+
+      path {
+        fill: var(--base-text);
+      }
+    }
+  }
+}
+
+.errorTransaction {
+  opacity: 0.4;
+}
+
+.statusProgessBar {
+  height: 2px;
+  width: 60%;
+  background-color: #4cffb3;
+}
+
+.migrationTxWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.isComplete {
+  width: 100%;
+}
