@@ -41,6 +41,7 @@ app.on('ready', () => {
       minHeight: 750,
       minWidth: 1200,
       titleBarStyle: 'hidden',
+      frame: false,
       show: false,
       icon: path.join(__dirname, 'icons/png/64x64.png'),
       contextIsolation: true,
