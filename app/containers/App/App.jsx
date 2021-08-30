@@ -11,6 +11,7 @@ import { upgradeUserWalletNEP6 } from '../../modules/generateWallet'
 import styles from './App.scss'
 import themes from '../../themes'
 import ErrorBoundary from '../../components/ErrorBoundaries/Main'
+import FramelessNavigation from '../../components/FramelessNavigation'
 
 type Props = {
   children: React$Node,
@@ -63,6 +64,7 @@ class App extends Component<Props> {
               />
             )}
           <div className={styles.wrapper}>
+            <FramelessNavigation />
             <div className={styles.content}>{children}</div>
             <Notifications />
             <ModalRenderer />

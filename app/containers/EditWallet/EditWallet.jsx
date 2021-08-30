@@ -27,6 +27,7 @@ type Props = {
   history: Object,
   intl: IntlShape,
   chain: string,
+  setN3Accounts: (Array<Object>) => any,
 }
 
 type State = {
@@ -114,12 +115,14 @@ class EditWallet extends Component<Props, State> {
       showModal,
       history,
       chain,
+      setN3Accounts,
     } = this.props
 
     const { label, key } = this.props.match.params
 
     showModal(MODAL_TYPES.CONFIRM, {
       title: 'Confirm Delete',
+      height: '200px',
       renderBody: () => (
         <div className={styles.confirmDeleteModalPrompt}>
           Please confirm removing saved wallet
@@ -137,7 +140,7 @@ class EditWallet extends Component<Props, State> {
           }),
         )
         if (data) {
-          data.accounts = reject(data.accounts, { address: key })
+          const accounts = reject(data.accounts, { address: key })
           await setStorage(
             chain === 'neo2' ? 'userWallet' : 'n3UserWallet',
             data,
@@ -151,7 +154,9 @@ class EditWallet extends Component<Props, State> {
           showSuccessNotification({
             message: 'Account deletion was successful.',
           })
-          setAccounts(data.accounts)
+          // eslint-disable-next-line
+          chain === 'neo2' ? setAccounts(accounts) : setN3Accounts(accounts)
+
           history.goBack()
         }
       },
