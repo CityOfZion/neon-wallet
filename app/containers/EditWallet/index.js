@@ -20,7 +20,9 @@ import withFailureNotification from '../../hocs/withFailureNotification'
 import withAuthData from '../../hocs/withAuthData'
 import { showModal } from '../../modules/modal'
 import EditWallet from './EditWallet'
-import n3AccountsActions from '../../actions/n3AccountsActions'
+import n3AccountsActions, {
+  updateAccountsActions as updateN3AccountsActions,
+} from '../../actions/n3AccountsActions'
 import withChainData from '../../hocs/withChainData'
 
 const mapAccountsDataToProps = accounts => ({
@@ -45,6 +47,10 @@ const mapSaveAccountsActionsToProps = actions => ({
   setAccounts: accounts => actions.call(accounts),
 })
 
+const mapSaveN3AccountsActionsToProps = actions => ({
+  setN3Accounts: accounts => actions.call(accounts),
+})
+
 const mapDispatchToProps = dispatch =>
   bindActionCreators(actionCreators, dispatch)
 
@@ -61,6 +67,7 @@ export default compose(
   withData(n3AccountsActions, mapN3AccountsDataToProps),
   withData(walletLabelActions, mapAccountsDataToProps),
   withActions(updateAccountsActions, mapSaveAccountsActionsToProps),
+  withActions(updateN3AccountsActions, mapSaveN3AccountsActionsToProps),
   withActions(updateLabelActions, mapSaveAccountActionsToProps),
   withFailureNotification(updateLabelActions),
   withSuccessNotification(
