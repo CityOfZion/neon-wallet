@@ -9,8 +9,6 @@ import styles from './FramelessNavigation.scss'
 
 const { remote } = require('electron')
 
-const win = remote.BrowserWindow.getFocusedWindow()
-
 type Props = {}
 
 const platforms = {
@@ -35,14 +33,17 @@ const platformsNames = {
 
 export default class HeaderBar extends React.PureComponent<Props> {
   minimize = () => {
+    const win = remote.BrowserWindow.getFocusedWindow()
     win.minimize()
   }
 
   maximize = () => {
+    const win = remote.BrowserWindow.getFocusedWindow()
     win.setFullScreen(!win.isFullScreen())
   }
 
   close = () => {
+    const win = remote.BrowserWindow.getFocusedWindow()
     win.close()
   }
 
