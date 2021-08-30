@@ -418,7 +418,9 @@ export default class Send extends React.Component<Props, State> {
     const feeIsRequired = (symbol, amount) => {
       const userMustPayFee =
         (symbol === 'NEO' && Number(amount) < 10) ||
-        (symbol === 'GAS' && Number(amount) < 20)
+        (symbol === 'GAS' && Number(amount) < 20) ||
+        (symbol === 'CGAS' && Number(amount) < 20) ||
+        (symbol === 'nNEO' && Number(amount) < 10)
 
       return userMustPayFee
     }
