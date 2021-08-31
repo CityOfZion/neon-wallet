@@ -7,9 +7,11 @@ import dns from 'dns'
 
 import { bindArgsFromN } from '../util/bindHelpers'
 import { resetBalanceState } from './balancesActions'
+import { getSettings } from './settingsActions'
 import { upgradeNEP6AddAddresses } from '../core/account'
 import { validatePassphraseLength } from '../core/wallet'
 import { legacySignWithLedger } from '../ledger/neonLedger'
+import { signWithLedger } from '../ledger/n3NeonLedger'
 
 type WifLoginProps = {
   wif: string,
@@ -192,14 +194,17 @@ export const ledgerLoginActions = createActions(
   ({ publicKey, account }: LedgerLoginProps) => async (): Promise<
     AccountType,
   > => {
-    const publicKeyEncoded = wallet.getPublicKeyEncoded(publicKey)
-    const walletAccount = new wallet.Account(publicKeyEncoded)
+    const { chain } = await getSettings()
+    const wlt = chain === 'neo3' ? n3Wallet : wallet
+    const publicKeyEncoded = wlt.getPublicKeyEncoded(publicKey)
+    const walletAccount = new wlt.Account(publicKeyEncoded)
     const hasInternetConnectivity = await checkForInternetConnectivity()
+    const signFunc = chain === 'neo3' ? signWithLedger : legacySignWithLedger
 
     return {
       publicKey,
       address: walletAccount.address,
-      signingFunction: bindArgsFromN(legacySignWithLedger, 3, account),
+      signingFunction: bindArgsFromN(signFunc, 3, account),
       isHardwareLogin: true,
       hasInternetConnectivity,
     }

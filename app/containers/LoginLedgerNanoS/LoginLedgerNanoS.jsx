@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import { wallet } from '@cityofzion/neon-js'
+import { wallet as n3Wallet } from '@cityofzion/neon-js-next'
 import { progressValues } from 'spunky'
 import classNames from 'classnames'
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
@@ -13,6 +14,10 @@ import ConfirmIcon from '../../assets/icons/confirm.svg'
 import RefreshIcon from '../../assets/icons/refresh.svg'
 import styles from '../Home/Home.scss'
 import { getPublicKeys, MESSAGES } from '../../ledger/neonLedger'
+import {
+  getPublicKeys as n3GetPublicKeys,
+  MESSAGES as N3MESSAGES,
+} from '../../ledger/n3NeonLedger'
 import DialogueBox from '../../components/DialogueBox'
 import WarningIcon from '../../assets/icons/warning.svg'
 
@@ -104,10 +109,10 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
       }
     }
     if (props.progress === FAILED && props.error) {
+      const MSG = props.chain === 'neo3' ? N3MESSAGES : MESSAGES
       return {
         isLoading: true,
-        ledgerStage:
-          props.error === MESSAGES.APP_CLOSED ? OPEN_APP : NOT_CONNECTED,
+        ledgerStage: props.error === MSG.APP_CLOSED ? OPEN_APP : NOT_CONNECTED,
       }
     }
     return {
@@ -125,70 +130,64 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
   render() {
     const options = this.createOptionsFromKeys()
     const { loadingPublicKeys, publicKeys } = this.state
-    const { chain } = this.props
 
     return (
       <div id="loginLedgerNanoS" className={styles.flexContainer}>
-        {chain === 'neo2' ? (
-          <form>
-            {this.renderStatus()}
-            <FormattedMessage id="publicAddress">
-              {translation => (
-                <Label label={translation}>
-                  {this.renderAdditionalLabelContent()}
-                </Label>
-              )}
-            </FormattedMessage>
-            <StyledReactSelect
-              value={this.state.addressOption}
-              isDisabled={publicKeys.length === 1}
-              onChange={addressOption => this.setState({ addressOption })}
-              options={options}
-              onMenuScrollToBottom={this.fetchAdditionalKeys}
-              isSearchable
-              isLoading={loadingPublicKeys}
-            />
-            <Button
-              id="loginButton"
-              primary
-              type="submit"
-              className={styles.loginButtonMargin}
-              renderIcon={LoginIcon}
-              disabled={!this.canLogin()}
-              onClick={this.handleLogin}
-              shouldCenterButtonLabelText
-            >
-              <FormattedMessage id="authLogin" />
-            </Button>
-          </form>
-        ) : (
-          <DialogueBox
-            icon={<WarningIcon />}
-            text="Ledger support for N3 coming soon."
+        <form>
+          {this.renderStatus()}
+          <FormattedMessage id="publicAddress">
+            {translation => (
+              <Label label={translation}>
+                {this.renderAdditionalLabelContent()}
+              </Label>
+            )}
+          </FormattedMessage>
+          <StyledReactSelect
+            value={this.state.addressOption}
+            isDisabled={publicKeys.length === 1}
+            onChange={addressOption => this.setState({ addressOption })}
+            options={options}
+            onMenuScrollToBottom={this.fetchAdditionalKeys}
+            isSearchable
+            isLoading={loadingPublicKeys}
           />
-        )}
+          <Button
+            id="loginButton"
+            primary
+            type="submit"
+            className={styles.loginButtonMargin}
+            renderIcon={LoginIcon}
+            disabled={!this.canLogin()}
+            onClick={this.handleLogin}
+            shouldCenterButtonLabelText
+          >
+            <FormattedMessage id="authLogin" />
+          </Button>
+        </form>
       </div>
     )
   }
 
   fetchAdditionalKeys = async () => {
     const { publicKeys } = this.state
+    const { chain } = this.props
 
     this.setState({ loadingPublicKeys: true, error: null })
 
     const lastAccountLoaded = publicKeys[publicKeys.length - 1].account
 
-    const nextBatchOfKeys = await getPublicKeys(lastAccountLoaded + 1).catch(
-      () => {
-        console.error(
-          'An error occurred getting additional public keys from ledger',
-        )
-        this.setState({
-          error: FETCH_ADDITIONAL_KEYS_ERROR,
-          loadingPublicKeys: false,
-        })
-      },
-    )
+    const getPublicKeysFunc = chain === 'neo3' ? n3GetPublicKeys : getPublicKeys
+    const nextBatchOfKeys = await getPublicKeysFunc(
+      lastAccountLoaded + 1,
+    ).catch(() => {
+      console.error(
+        'An error occurred getting additional public keys from ledger',
+      )
+      this.setState({
+        error: FETCH_ADDITIONAL_KEYS_ERROR,
+        loadingPublicKeys: false,
+      })
+    })
 
     if (nextBatchOfKeys) {
       this.setState(state => ({
@@ -227,9 +226,13 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
   }
 
   unencodedHexToAddress = (hexString: string) => {
+    const { chain } = this.props
+    // this function is the same for n2 and n3
     const encodedKey = wallet.getPublicKeyEncoded(hexString)
 
-    return new wallet.Account(encodedKey).address
+    return chain === 'neo3'
+      ? new n3Wallet.Account(encodedKey).address
+      : new wallet.Account(encodedKey).address
   }
 
   createOptionsFromKeys = () => {
@@ -252,7 +255,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
 
   renderStatus = () => {
     const { ledgerStage } = this.state
-
+    const { chain } = this.props
     return (
       <div className={styles.ledgerStagesContainer}>
         <div
@@ -278,7 +281,11 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
             {this.getStatusIcon(OPEN_APP)}
           </div>
           <div className={styles.ledgerStageText}>
-            <FormattedHTMLMessage id="auth.ledger.navigateToNeoApp" />
+            {chain === 'neo2' ? (
+              <FormattedHTMLMessage id="auth.ledger.navigateToNeoApp" />
+            ) : (
+              <FormattedHTMLMessage id="auth.ledger.navigateToNeo3App" />
+            )}
           </div>
         </div>
       </div>
