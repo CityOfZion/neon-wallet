@@ -136,19 +136,16 @@ export default class NeonLedger3 {
   /**
    * Gets the ECDH signature of the data from Ledger using acct
    * @param {string} data - unsigned transaction
+   * @param {number} magic - network magic
    * @param {number} [acct]
    * @return {Promise<string>}
    */
-  async getSignature(data: string, acct: number = 0): Promise<string> {
-    try {
-      return await n3ledger.getSignature(
-        this.device,
-        data,
-        n3ledger.BIP44(acct),
-      )
-    } catch (err) {
-      throw n3ledger.evalTransportError(err)
-    }
+  async getSignature(
+    data: string,
+    magic: number,
+    acct: number = 0,
+  ): Promise<string> {
+    return n3ledger.getSignature(this.device, data, n3ledger.BIP44(acct), magic)
   }
 }
 
@@ -176,28 +173,38 @@ export const getStartInfo = async () => {
 
 /**
  * Signs a transaction with Ledger. Returns the whole transaction string
- * @param {Transaction|string} unsignedTx - hexstring or Transaction object
- * @param {string} publicKeyEncoded - A compressed public key (33 bytes) as a hexstring
+ * @param {Transaction} tx - Transaction object
+ * @param {Number} magic - network magic
+ * @param {Number} witnessIndex - the index to the witness in `tx` to create a signature for
  * @param {number} acct - The account to sign with.
- * @return {string} Transaction as a hexstring.
+ * @return {string} Signature as a hexstring.
  */
 export const signWithLedger = async (
-  unsignedTx: Transaction | string,
-  publicKeyEncoded: string,
+  tx: Transaction,
+  magic: number,
+  witnessIndex: number,
   acct: number = 0,
 ): Promise<string> => {
   const ledger = await NeonLedger3.init()
   try {
-    const data =
-      typeof unsignedTx !== 'string' ? unsignedTx.serialize(false) : unsignedTx
-    const signature = await ledger.getSignature(data, acct)
-    const txObj = neonJs.tx.Transaction.deserialize(unsignedTx)
-    console.log(`sign with ledger, signers length: ${txObj.signers.length}`)
-    txObj.addWitness(
-      neonJs.tx.Witness.fromSignature(signature, publicKeyEncoded),
+    const scriptHashLedger = neonJs.wallet.getScriptHashFromPublicKey(
+      await ledger.getPublicKey(acct),
     )
-
-    return txObj.serialize(true)
+    const scriptHashWitness = neonJs.wallet.getScriptHashFromVerificationScript(
+      tx.witnesses[witnessIndex].verificationScript.toString(),
+    )
+    if (scriptHashLedger !== scriptHashWitness) {
+      throw new Error(
+        `Requested signature from ${neonJs.wallet.getAddressFromScriptHash(
+          scriptHashWitness,
+          neonJs.CONST.ADDR_VERSION, // TODO: can we get this value from else where? Not sure if we support every having a different one
+        )} but signing with ledger key of ${neonJs.wallet.getAddressFromScriptHash(
+          scriptHashLedger,
+          neonJs.CONST.ADDR_VERSION, // TODO: same check as above
+        )}.`,
+      )
+    }
+    return await ledger.getSignature(tx.serialize(false), magic, acct)
   } finally {
     await ledger.close()
   }
