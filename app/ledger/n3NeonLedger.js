@@ -174,24 +174,23 @@ export const getStartInfo = async () => {
 /**
  * Signs a transaction with Ledger. Returns the whole transaction string
  * @param {Transaction} tx - Transaction object
- * @param {Number} magic - network magic
- * @param {Number} witnessIndex - the index to the witness in `tx` to create a signature for
+ * @param {{network: number, witnessIndex: number}} details - signing details
  * @param {number} acct - The account to sign with.
  * @return {string} Signature as a hexstring.
  */
 export const signWithLedger = async (
   tx: Transaction,
-  magic: number,
-  witnessIndex: number,
+  details: { network: number, witnessIndex: number },
   acct: number = 0,
 ): Promise<string> => {
   const ledger = await NeonLedger3.init()
   try {
+    const publicKey = await ledger.getPublicKey(acct)
     const scriptHashLedger = neonJs.wallet.getScriptHashFromPublicKey(
-      await ledger.getPublicKey(acct),
+      publicKey.key,
     )
     const scriptHashWitness = neonJs.wallet.getScriptHashFromVerificationScript(
-      tx.witnesses[witnessIndex].verificationScript.toString(),
+      tx.witnesses[details.witnessIndex].verificationScript.toString(),
     )
     if (scriptHashLedger !== scriptHashWitness) {
       throw new Error(
@@ -204,7 +203,7 @@ export const signWithLedger = async (
         )}.`,
       )
     }
-    return await ledger.getSignature(tx.serialize(false), magic, acct)
+    return await ledger.getSignature(tx.serialize(false), details.network, acct)
   } finally {
     await ledger.close()
   }
