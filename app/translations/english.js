@@ -13,8 +13,6 @@ const MISCELLANEOUS = {
     'Connect and unlock your <strong>Ledger device</strong>',
   'auth.ledger.navigateToNeoApp':
     'Navigate to the <strong>NEO app</strong> on your device',
-  'auth.ledger.navigateToNeo3App':
-    'Navigate to the <strong>NEO3 app</strong> on your device',
   'auth.ledger.retry': 'Retry?',
   'auth.ledger.fetchAddress': 'Fetch additional addresses',
   publicAddress: 'Public Address',
