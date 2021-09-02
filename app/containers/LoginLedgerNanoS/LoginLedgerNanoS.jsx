@@ -281,11 +281,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
             {this.getStatusIcon(OPEN_APP)}
           </div>
           <div className={styles.ledgerStageText}>
-            {chain === 'neo2' ? (
-              <FormattedHTMLMessage id="auth.ledger.navigateToNeoApp" />
-            ) : (
-              <FormattedHTMLMessage id="auth.ledger.navigateToNeo3App" />
-            )}
+            Navigate to the <strong>NEO3 app</strong> on your device
           </div>
         </div>
       </div>
