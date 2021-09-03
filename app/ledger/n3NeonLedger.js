@@ -3,6 +3,14 @@ import * as neonJs from '@cityofzion/neon-js-next'
 import * as n3ledger from '@cityofzion/neon-ledger-next'
 import type { Transaction } from '@cityofzion/neon-js-next'
 import LedgerNode from '@ledgerhq/hw-transport-node-hid'
+import { cloneDeep } from "lodash-es"
+
+const VALID_STATUS = 0x9000
+const MSG_TOO_BIG = 0x6d08
+const APP_CLOSED = 0x6e00
+const APP_CLOSED_V2 = 0x6e01
+const TX_DENIED = 0x6985
+const TX_PARSE_ERR = 0x6d07
 
 export const MESSAGES = {
   NOT_SUPPORTED: 'Your computer does not support the ledger',
@@ -12,6 +20,32 @@ export const MESSAGES = {
   TX_DENIED: 'You have denied the transaction on your ledger',
   TX_PARSE_ERR:
     'Error parsing transaction. Make sure your NEO3 Ledger app version is up to date',
+}
+
+/**
+ * Evaluates Transport Error thrown and rewrite the error message to be more user friendly.
+ * @param {Error} err
+ * @return {Error}
+ */
+const evalTransportError = error => {
+  const err = cloneDeep(error)
+  switch (err.statusCode) {
+    case APP_CLOSED:
+    case APP_CLOSED_V2:
+      err.message = MESSAGES.APP_CLOSED
+      break
+    case MSG_TOO_BIG:
+      err.message = MESSAGES.MSG_TOO_BIG
+      break
+    case TX_DENIED:
+      err.message = MESSAGES.TX_DENIED
+      break
+    case TX_PARSE_ERR:
+      err.message = MESSAGES.TX_PARSE_ERR
+      break
+    default:
+  }
+  return err
 }
 
 export default class NeonLedger3 {
@@ -54,7 +88,7 @@ export default class NeonLedger3 {
       this.device = await LedgerNode.open(this.path)
       return this
     } catch (err) {
-      throw n3ledger.evalTransportError(err)
+      throw evalTransportError(err)
     }
   }
 
@@ -92,7 +126,7 @@ export default class NeonLedger3 {
       const key = await n3ledger.getPublicKey(this.device, n3ledger.BIP44(acct))
       return { account: acct, key }
     } catch (err) {
-      throw n3ledger.evalTransportError(err)
+      throw evalTransportError(err)
     }
   }
 
@@ -100,7 +134,7 @@ export default class NeonLedger3 {
     try {
       return this.device.device.getDeviceInfo()
     } catch (err) {
-      throw n3ledger.evalTransportError(err)
+      throw evalTransportError(err)
     }
   }
 
@@ -129,7 +163,7 @@ export default class NeonLedger3 {
         statusList,
       )
     } catch (err) {
-      throw n3ledger.evalTransportError(err)
+      throw evalTransportError(err)
     }
   }
 

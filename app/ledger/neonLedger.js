@@ -10,6 +10,7 @@ import { BIP44_PATH } from '../core/constants'
 const VALID_STATUS = 0x9000
 const MSG_TOO_BIG = 0x6d08
 const APP_CLOSED = 0x6e00
+const APP_CLOSED_V2 = 0x6e01
 const TX_DENIED = 0x6985
 const TX_PARSE_ERR = 0x6d07
 
@@ -32,6 +33,7 @@ const evalTransportError = error => {
   const err = cloneDeep(error)
   switch (err.statusCode) {
     case APP_CLOSED:
+    case APP_CLOSED_V2:
       err.message = MESSAGES.APP_CLOSED
       break
     case MSG_TOO_BIG:
