@@ -162,6 +162,7 @@ export const getPublicKeys = async (
 
 export const getStartInfo = async () => {
   const ledger = await NeonLedger3.init()
+
   try {
     const deviceInfo = await ledger.getDeviceInfo()
     const publicKey = await ledger.getPublicKey()

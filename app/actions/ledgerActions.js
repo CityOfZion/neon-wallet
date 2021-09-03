@@ -10,5 +10,6 @@ export default createActions(ID, () => async () => {
   const { chain } = await getSettings()
   const { deviceInfo, publicKey } =
     chain === 'neo3' ? await getStartInfo() : await getDeviceInfo()
+
   return { deviceInfo, publicKey }
 })
