@@ -129,14 +129,15 @@ export const handleN3GasClaim = async ({
   FROM_ACCOUNT,
   dispatch,
   net,
+  signingFunction,
+  isHardwareClaim,
 }: {
   FROM_ACCOUNT: {},
   dispatch: DispatchType,
   net: string,
+  signingFunction: () => void,
+  isHardwareClaim: boolean,
 }) => {
-  // TODO:
-  // - Ledger support/integration
-
   let endpoint = await getNode(net)
   if (!endpoint) {
     endpoint = await getRPCEndpoint(net)
@@ -159,8 +160,20 @@ export const handleN3GasClaim = async ({
   const facade = await n3Api.NetworkFacade.fromConfig({
     node: endpoint,
   })
+
+  if (isHardwareClaim) {
+    dispatch(
+      showInfoNotification({
+        message: 'Please sign the transaction on your hardware device',
+        autoDismiss: 0,
+      }),
+    )
+  }
+
   const signingConfig = {
-    signingCallback: n3Api.signWithAccount(CONFIG.account),
+    signingCallback: isHardwareClaim
+      ? signingFunction
+      : n3Api.signWithAccount(CONFIG.account),
   }
 
   const results = await facade
@@ -203,8 +216,14 @@ export const doGasClaim = () => async (
   dispatch(disableClaim(true))
 
   if (chain === 'neo3') {
-    const FROM_ACCOUNT = new n3Wallet.Account(wif)
-    return handleN3GasClaim({ FROM_ACCOUNT, dispatch, net })
+    const FROM_ACCOUNT = new n3Wallet.Account(isHardwareClaim ? publicKey : wif)
+    return handleN3GasClaim({
+      FROM_ACCOUNT,
+      dispatch,
+      net,
+      signingFunction,
+      isHardwareClaim,
+    })
   }
 
   if (isHardwareClaim) {
