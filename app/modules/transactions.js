@@ -357,7 +357,9 @@ export const sendTransaction = ({
 
           const networkMagic = version.network || version.magic || 844378958
 
-          const FROM_ACCOUNT = new n3Wallet.Account(wif)
+          const FROM_ACCOUNT = new n3Wallet.Account(
+            isHardwareSend ? publicKey : wif,
+          )
 
           const CONFIG = {
             account: FROM_ACCOUNT,
@@ -369,8 +371,19 @@ export const sendTransaction = ({
             node: endpoint,
           })
 
+          if (isHardwareSend && !isWatchOnly) {
+            dispatch(
+              showInfoNotification({
+                message: 'Please sign the transaction on your hardware device',
+                autoDismiss: 0,
+              }),
+            )
+          }
+
           const signingConfig = {
-            signingCallback: n3Api.signWithAccount(CONFIG.account),
+            signingCallback: isHardwareSend
+              ? signingFunction
+              : n3Api.signWithAccount(CONFIG.account),
           }
 
           const nep17Intents = buildNep17IntentsFromEntries(
