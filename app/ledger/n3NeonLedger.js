@@ -3,7 +3,7 @@ import * as neonJs from '@cityofzion/neon-js-next'
 import * as n3ledger from '@cityofzion/neon-ledger-next'
 import type { Transaction } from '@cityofzion/neon-js-next'
 import LedgerNode from '@ledgerhq/hw-transport-node-hid'
-import { cloneDeep } from "lodash-es"
+import { cloneDeep } from 'lodash-es'
 
 const VALID_STATUS = 0x9000
 const MSG_TOO_BIG = 0x6d08
