@@ -6,6 +6,7 @@ import type { Transaction } from '@cityofzion/neon-js'
 import LedgerNode from '@ledgerhq/hw-transport-node-hid'
 import asyncWrap from '../core/asyncHelper'
 import { BIP44_PATH } from '../core/constants'
+import * as n3ledger from '@cityofzion/neon-ledger-next'
 
 const VALID_STATUS = 0x9000
 const MSG_TOO_BIG = 0x6d08
@@ -76,8 +77,11 @@ export default class NeonLedger {
     const paths = await NeonLedger.list()
     if (paths.length === 0) throw new Error(MESSAGES.NOT_CONNECTED)
     if (paths[0]) {
-      const ledger = new NeonLedger(paths[0])
-      return ledger.open()
+      let ledger = new NeonLedger(paths[0])
+      ledger = await ledger.open()
+      const appName = await ledger.getAppName()
+      if (appName === 'NEO3') throw new Error(MESSAGES.APP_CLOSED)
+      return ledger
     }
     return null
   }
@@ -106,6 +110,15 @@ export default class NeonLedger {
   close(): Promise<void> {
     if (this.device) return this.device.close()
     return Promise.resolve()
+  }
+
+  async getAppName(): Promise<string>  {
+    try {
+      const appName = await n3ledger.getAppName(this.device)
+      return appName
+    } catch (e) {
+      return null
+    }
   }
 
   async getPublicKeys(
