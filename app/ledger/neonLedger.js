@@ -112,7 +112,7 @@ export default class NeonLedger {
     return Promise.resolve()
   }
 
-  async getAppName(): Promise<string> {
+  async getAppName(): Promise<string | null> {
     try {
       const appName = await n3ledger.getAppName(this.device)
       return appName
