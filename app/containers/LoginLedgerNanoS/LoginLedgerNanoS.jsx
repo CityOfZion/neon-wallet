@@ -100,9 +100,6 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
 
   computeStateFromProps = (props: Props) => {
     if (props.progress === LOADED) {
-      if (this.intervalId) {
-        clearInterval(this.intervalId)
-      }
       return {
         ledgerStage: CONNECTED,
         isLoading: false,
@@ -113,11 +110,15 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
       return {
         isLoading: true,
         ledgerStage: props.error === MSG.APP_CLOSED ? OPEN_APP : NOT_CONNECTED,
+        publicKeys: [],
+        addressOption: null,
       }
     }
     return {
       isLoading: true,
       ledgerStage: NOT_CONNECTED,
+      publicKeys: [],
+      addressOption: null,
     }
   }
 
