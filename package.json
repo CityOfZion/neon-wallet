@@ -89,7 +89,7 @@
     "@cityofzion/neon-js-next": "npm:@cityofzion/neon-js@5.0.0-next.15",
     "@cityofzion/neon-ledger-next": "npm:@cityofzion/neon-ledger@5.0.0-next.14",
     "@formatjs/intl-pluralrules": "^1.5.2",
-    "@ledgerhq/hw-transport-node-hid": "5.0.0",
+    "@ledgerhq/hw-transport-node-hid": "6.3.0",
     "axios": "0.21.1",
     "axios-retry": "3.1.1",
     "bignumber.js": "5.0.0",
