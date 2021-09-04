@@ -53,7 +53,7 @@ type State = {
   error: string | null,
 }
 
-const POLL_FREQUENCY_MS = 1000
+const POLL_FREQUENCY_MS = 3000
 
 const FETCH_ADDITIONAL_KEYS_ERROR = 'Error fetching additional public keys.'
 

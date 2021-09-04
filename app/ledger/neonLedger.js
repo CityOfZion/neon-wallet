@@ -265,9 +265,8 @@ export const getPublicKeys = async (
 export const getDeviceInfo = async () => {
   const ledger = await NeonLedger.init()
   try {
-    const deviceInfo = await ledger.getDeviceInfo()
-    const publicKey = await ledger.getPublicKey()
-    return { deviceInfo, publicKey }
+    return await Promise.all([ledger.getDeviceInfo(), ledger.getPublicKey()])
+      .then(([deviceInfo, publicKey]) => ({ deviceInfo, publicKey }))
   } finally {
     await ledger.close()
   }
