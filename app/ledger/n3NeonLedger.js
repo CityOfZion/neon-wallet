@@ -104,10 +104,9 @@ export default class NeonLedger3 {
     return Promise.resolve()
   }
 
-  async getAppName(): Promise<string>  {
+  async getAppName(): Promise<string> {
     try {
-      const appName = await n3ledger.getAppName(this.device)
-      return appName
+      return await n3ledger.getAppName(this.device)
     } catch (e) {
       return null
     }
@@ -210,8 +209,10 @@ export const getStartInfo = async () => {
   const ledger = await NeonLedger3.init()
 
   try {
-    return await Promise.all([ledger.getDeviceInfo(), ledger.getPublicKey()])
-      .then(([deviceInfo, publicKey]) => ({ deviceInfo, publicKey }))
+    return await Promise.all([
+      ledger.getDeviceInfo(),
+      ledger.getPublicKey(),
+    ]).then(([deviceInfo, publicKey]) => ({ deviceInfo, publicKey }))
   } finally {
     await ledger.close()
   }

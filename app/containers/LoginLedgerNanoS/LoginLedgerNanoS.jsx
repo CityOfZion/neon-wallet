@@ -93,7 +93,7 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
       })
     }
 
-    if (this.props.chain != nextProps.chain) {
+    if (this.props.chain !== nextProps.chain) {
       this.setState({
         publicKeys: [],
         addressOption: null,

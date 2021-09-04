@@ -4,9 +4,9 @@ import { cloneDeep } from 'lodash-es'
 import type { Transaction } from '@cityofzion/neon-js'
 
 import LedgerNode from '@ledgerhq/hw-transport-node-hid'
+import * as n3ledger from '@cityofzion/neon-ledger-next'
 import asyncWrap from '../core/asyncHelper'
 import { BIP44_PATH } from '../core/constants'
-import * as n3ledger from '@cityofzion/neon-ledger-next'
 
 const VALID_STATUS = 0x9000
 const MSG_TOO_BIG = 0x6d08
@@ -112,7 +112,7 @@ export default class NeonLedger {
     return Promise.resolve()
   }
 
-  async getAppName(): Promise<string>  {
+  async getAppName(): Promise<string> {
     try {
       const appName = await n3ledger.getAppName(this.device)
       return appName
@@ -265,8 +265,10 @@ export const getPublicKeys = async (
 export const getDeviceInfo = async () => {
   const ledger = await NeonLedger.init()
   try {
-    return await Promise.all([ledger.getDeviceInfo(), ledger.getPublicKey()])
-      .then(([deviceInfo, publicKey]) => ({ deviceInfo, publicKey }))
+    return await Promise.all([
+      ledger.getDeviceInfo(),
+      ledger.getPublicKey(),
+    ]).then(([deviceInfo, publicKey]) => ({ deviceInfo, publicKey }))
   } finally {
     await ledger.close()
   }
