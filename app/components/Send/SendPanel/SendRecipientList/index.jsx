@@ -53,7 +53,8 @@ const SendRecipientList = ({
   return (
     <section
       className={classNames({
-        [styles.sendRecipientListContainer]: true,
+        [styles.sendRecipientListContainer]: sendRowDetails.length > 1,
+        [styles.sendRecipientSingleListContainer]: sendRowDetails.length === 1,
         [styles.migrationContainer]: isMigration,
       })}
     >
