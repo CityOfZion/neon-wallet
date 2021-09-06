@@ -50,6 +50,34 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
       <div className={styles.releaseNotesContents}>
         <div className={styles.release}>
           <div className={styles.releaseContent}>
+            <small className={styles.date}>Sep 6th 2021 </small>
+            <h3>Release v2.8.1</h3>
+
+            <p>
+              In this release you will find the following updates:
+              <br />
+              <br />
+              {/* eslint-disable-next-line */}
+              <li>Migration Scam Alert: Do not use the Send tab to for N3 Migration</li>
+              <br />
+              View full details of this release on GitHub
+              <br />
+            </p>
+
+            <Github
+              onClick={() =>
+                electron.shell.openExternal(
+                  'https://github.com/CityOfZion/neon-wallet/releases/tag/v2.8.0',
+                )
+              }
+            />
+          </div>
+          <div className={styles.marketingImage}>
+            {theme === 'Light' ? <MigrationLight /> : <MigrationDark />}
+          </div>
+        </div>
+        <div className={styles.release}>
+          <div className={styles.releaseContent}>
             <small className={styles.date}>Aug 24th 2021 </small>
             <h3>Release v2.8.0</h3>
 
