@@ -18,6 +18,8 @@ import SendIcon from '../../../assets/icons/send.svg'
 import EditIcon from '../../../assets/icons/edit.svg'
 
 import styles from './SendPanel.scss'
+import WarningIcon from '../../../assets/icons/warning.svg'
+import AlertBox from '../../AlertBox'
 
 type Props = {
   sendRowDetails: Array<*>,
@@ -108,6 +110,10 @@ const SendPanel = ({
 
   let content = (
     <form>
+      {chain === 'neo2' &&
+      !isMigration && (
+        <AlertBox/>
+      )}
       <SendRecipientList
         sendRowDetails={sendRowDetails}
         sendableAssets={sendableAssets}
