@@ -67,7 +67,7 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
             <Github
               onClick={() =>
                 electron.shell.openExternal(
-                  'https://github.com/CityOfZion/neon-wallet/releases/tag/v2.8.0',
+                  'https://github.com/CityOfZion/neon-wallet/releases/tag/v2.8.2',
                 )
               }
             />
