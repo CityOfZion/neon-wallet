@@ -10,7 +10,7 @@ references:
 
   win_config: &win_config
     docker:
-      - image: electronuserland/builder:wine-01.19
+      - image: electronuserland/builder:wine
         environment:
           TARGET_ARCH: x64
     working_directory: ~/neon-wallet
