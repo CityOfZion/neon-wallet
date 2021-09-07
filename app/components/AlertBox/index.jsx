@@ -23,8 +23,8 @@ const AlertBox = () => (
         your friend. Any tokens you transfer from the SEND tab are going to
         someone else's wallet. Migration can only be performed through the
         MIGRATION tab, which will be enabled for Ledger when Ledger migration
-        support is available. Click this link to visit the COZ the COZ Twitter
-        for more information:{' '}
+        support is available. Click this link to visit the COZ Twitter for more
+        information:{' '}
         <a
           onClick={() => {
             electron.shell.openExternal('https://twitter.com/coz_official')
