@@ -98,6 +98,8 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
         publicKeys: [],
         addressOption: null,
       })
+      this.componentDidMount()
+      this.props.connect()
     }
 
     if (progress !== nextProps.progress || error !== nextProps.error) {
@@ -107,6 +109,9 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
 
   computeStateFromProps = (props: Props) => {
     if (props.progress === LOADED) {
+      if (this.intervalId) {
+        clearInterval(this.intervalId)
+      }
       return {
         ledgerStage: CONNECTED,
         isLoading: false,
