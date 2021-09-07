@@ -3,7 +3,7 @@ version: 2
 references:
   container_config: &container_config
     docker:
-      - image: electronuserland/builder:wine-chrome-05.18
+      - image: electronuserland/builder:wine-chrome-05.21
         environment:
           TARGET_ARCH: x64
     working_directory: ~/neon-wallet
