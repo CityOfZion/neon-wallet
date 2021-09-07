@@ -69,8 +69,8 @@ export default class NeonLedger3 {
     const paths = await NeonLedger3.list()
     if (paths.length === 0) throw new Error(MESSAGES.NOT_CONNECTED)
     if (paths[0]) {
-      let ledger = new NeonLedger3(paths[0])
-      ledger = await ledger.open()
+      const ledger = new NeonLedger3(paths[0])
+      await ledger.open()
       const appName = await ledger.getAppName()
       if (appName !== 'NEO3') throw new Error(MESSAGES.APP_CLOSED)
       return ledger
