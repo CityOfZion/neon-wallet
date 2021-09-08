@@ -37,7 +37,8 @@ export default class CreateMigrationWallet extends React.Component<
               >
                 here
               </a>
-              &nbsp; and install the <b>Neo N3</b> application to your hardware wallet.
+              &nbsp; and install the <b>Neo N3</b> application to your hardware
+              wallet.
             </p>
             <p>
               Once installed, open the <b>Neo N3</b> app on your device. We'll
