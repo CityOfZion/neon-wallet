@@ -180,7 +180,6 @@ export default class Migration extends React.Component<Props, State> {
   }
 
   render() {
-    console.log(this.props)
     const { step, migrationData, loading, hasCreatedN3Wallet } = this.state
 
     const TO_ACCOUNT = new n3Wallet.Account(this.props.wif)
