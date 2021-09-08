@@ -39,9 +39,13 @@ type Props = {
   progress: string,
   publicKey: LedgerPublicKey,
   login: Function,
-  connect: Function,
+  connect: (chain: string) => void,
   error: ?string,
   chain: string,
+  isMigration?: boolean,
+  handleChooseMigrationAddress: (*) => void,
+  hideFormElements: boolean,
+  onAppOpen: (isOpen: boolean) => void,
 }
 
 type State = {
@@ -76,7 +80,10 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    this.intervalId = setInterval(this.props.connect, POLL_FREQUENCY_MS)
+    this.intervalId = setInterval(
+      () => this.props.connect(this.props.chain),
+      POLL_FREQUENCY_MS,
+    )
   }
 
   componentWillReceiveProps(nextProps: Props) {
@@ -98,8 +105,6 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
         publicKeys: [],
         addressOption: null,
       })
-      this.componentDidMount()
-      this.props.connect()
     }
 
     if (progress !== nextProps.progress || error !== nextProps.error) {
@@ -112,12 +117,20 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
       if (this.intervalId) {
         clearInterval(this.intervalId)
       }
+
+      if (this.props.onAppOpen) {
+        this.props.onAppOpen(true)
+      }
+
       return {
         ledgerStage: CONNECTED,
         isLoading: false,
       }
     }
     if (props.progress === FAILED && props.error) {
+      if (this.props.onAppOpen) {
+        this.props.onAppOpen(false)
+      }
       const MSG = props.chain === 'neo3' ? N3MESSAGES : MESSAGES
       return {
         isLoading: true,
@@ -125,6 +138,9 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
         publicKeys: [],
         addressOption: null,
       }
+    }
+    if (this.props.onAppOpen) {
+      this.props.onAppOpen(false)
     }
     return {
       isLoading: true,
@@ -148,34 +164,55 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
       <div id="loginLedgerNanoS" className={styles.flexContainer}>
         <form>
           {this.renderStatus()}
-          <FormattedMessage id="publicAddress">
-            {translation => (
-              <Label label={translation}>
-                {this.renderAdditionalLabelContent()}
-              </Label>
+          {!this.props.hideFormElements && (
+            <React.Fragment>
+              <FormattedMessage id="publicAddress">
+                {translation => (
+                  <Label label={translation}>
+                    {this.renderAdditionalLabelContent()}
+                  </Label>
+                )}
+              </FormattedMessage>
+              <StyledReactSelect
+                value={this.state.addressOption}
+                isDisabled={publicKeys.length === 1}
+                onChange={addressOption => this.setState({ addressOption })}
+                options={options}
+                onMenuScrollToBottom={this.fetchAdditionalKeys}
+                isSearchable
+                isLoading={loadingPublicKeys}
+              />
+            </React.Fragment>
+          )}
+          {!this.props.isMigration &&
+            !this.props.hideFormElements && (
+              <Button
+                id="loginButton"
+                primary
+                type="submit"
+                className={styles.loginButtonMargin}
+                renderIcon={LoginIcon}
+                disabled={!this.canLogin()}
+                onClick={this.handleLogin}
+                shouldCenterButtonLabelText
+              >
+                <FormattedMessage id="authLogin" />
+              </Button>
             )}
-          </FormattedMessage>
-          <StyledReactSelect
-            value={this.state.addressOption}
-            isDisabled={publicKeys.length === 1}
-            onChange={addressOption => this.setState({ addressOption })}
-            options={options}
-            onMenuScrollToBottom={this.fetchAdditionalKeys}
-            isSearchable
-            isLoading={loadingPublicKeys}
-          />
-          <Button
-            id="loginButton"
-            primary
-            type="submit"
-            className={styles.loginButtonMargin}
-            renderIcon={LoginIcon}
-            disabled={!this.canLogin()}
-            onClick={this.handleLogin}
-            shouldCenterButtonLabelText
-          >
-            <FormattedMessage id="authLogin" />
-          </Button>
+
+          {this.props.isMigration &&
+            !this.props.hideFormElements && (
+              <Button
+                id="loginButton"
+                primary
+                type="submit"
+                className={styles.migrationContinueButton}
+                disabled={!this.canLogin()}
+                onClick={this.handleChooseN3Address}
+              >
+                Continue
+              </Button>
+            )}
         </form>
       </div>
     )
@@ -315,6 +352,18 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
       )
       if (keyData) {
         this.props.login(keyData)
+      }
+    }
+  }
+
+  handleChooseN3Address = () => {
+    const { addressOption, publicKeys } = this.state
+    if (publicKeys.length && addressOption) {
+      const keyData = publicKeys.find(
+        publicKey => addressOption.value === publicKey.key,
+      )
+      if (keyData) {
+        this.props.handleChooseMigrationAddress(keyData)
       }
     }
   }
