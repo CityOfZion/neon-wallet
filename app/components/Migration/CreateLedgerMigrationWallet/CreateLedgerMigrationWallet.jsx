@@ -37,7 +37,6 @@ export default class CreateMigrationWallet extends React.Component<
             chain="neo3"
             isMigration
             handleChooseMigrationAddress={({ key }) => {
-              console.log({ key })
               const publicKeyEncoded = n3Wallet.getPublicKeyEncoded(key)
               const walletAccount = new n3Wallet.Account(publicKeyEncoded)
               this.props.setAddress(walletAccount.address)
