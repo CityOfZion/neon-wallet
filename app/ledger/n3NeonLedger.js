@@ -70,7 +70,10 @@ export default class NeonLedger3 {
     if (paths.length === 0) throw new Error(MESSAGES.NOT_CONNECTED)
     if (paths[0]) {
       const ledger = new NeonLedger3(paths[0])
-      return ledger.open()
+      await ledger.open()
+      const appName = await ledger.getAppName()
+      if (appName !== 'NEO3') throw new Error(MESSAGES.APP_CLOSED)
+      return ledger
     }
     return null
   }
@@ -99,6 +102,14 @@ export default class NeonLedger3 {
   close(): Promise<void> {
     if (this.device) return this.device.close()
     return Promise.resolve()
+  }
+
+  async getAppName(): Promise<string | null> {
+    try {
+      return await n3ledger.getAppName(this.device)
+    } catch (e) {
+      return null
+    }
   }
 
   async getPublicKeys(
@@ -198,8 +209,10 @@ export const getStartInfo = async () => {
   const ledger = await NeonLedger3.init()
 
   try {
-    const deviceInfo = await ledger.getDeviceInfo()
-    const publicKey = await ledger.getPublicKey()
+    const [deviceInfo, publicKey] = await Promise.all([
+      ledger.getDeviceInfo(),
+      ledger.getPublicKey(),
+    ])
     return { deviceInfo, publicKey }
   } finally {
     await ledger.close()

@@ -1,11 +1,20 @@
 // @flow
 import axios from 'axios'
 import { keyBy } from 'lodash-es'
+import { api } from '@cityofzion/neon-js'
 // import { wallet } from '@cityofzion/neon-js'
 
 import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 import { addPendingTransaction } from '../actions/pendingTransactionActions'
-import { getAssetBalances, getTokenBalances, getWIF } from '../core/deprecated'
+import {
+  getAddress,
+  getAssetBalances,
+  getIsHardwareLogin,
+  getSigningFunction,
+  getTokenBalances,
+  getWIF,
+  getPublicKey,
+} from '../core/deprecated'
 import {
   showErrorNotification,
   showInfoNotification,
@@ -17,47 +26,13 @@ import { buildTransferScript } from './transactions'
 
 const N2 = require('@cityofzion/neon-js-legacy-latest')
 const N3 = require('@cityofzion/neon-js-next')
-const { wallet } = require('@cityofzion/neon-js-legacy-latest')
-
-const populateTestNetBalances = async (address: string) => {
-  const net = 'TestNet'
-
-  const testnetBalances = await axios.get(
-    `https://dora.coz.io/api/v1/neo2/testnet/get_balance/${address}`,
-  )
-  const parsedTestNetBalances = {}
-
-  testnetBalances.data.balance.forEach(token => {
-    parsedTestNetBalances[token.asset_symbol || token.symbol] = {
-      name: token.asset_symbol || token.symbol,
-      balance: token.amount,
-      unspent: token.unspent,
-    }
-  })
-
-  const Balance = new wallet.Balance({
-    address,
-    net,
-  })
-
-  Object.values(parsedTestNetBalances).forEach(
-    // $FlowFixMe
-    ({ name, balance, unspent }) => {
-      if (name === 'GAS' || name === 'NEO') {
-        Balance.addAsset(name, { balance, unspent })
-      } else {
-        Balance.addToken(name, balance)
-      }
-    },
-  )
-
-  return Balance
-}
 
 export const performMigration = ({
   sendEntries,
+  migrationAddress,
 }: {
   sendEntries: Array<SendEntryType>,
+  migrationAddress?: string,
 }) => (dispatch: DispatchType, getState: GetStateType): Promise<*> =>
   // TODO: will need to be dynamic based on network
   // eslint-disable-next-line
@@ -73,9 +48,18 @@ export const performMigration = ({
         ...getTokenBalancesMap(tokenBalances),
       }
       const tokensBalanceMap = keyBy(tokenBalances, 'symbol')
-      const TO_ACCOUNT = new N3.wallet.Account(wif)
-      const FROM_ACCOUNT = new N2.wallet.Account(wif)
+      const fromAddress = getAddress(state)
       const entry = sendEntries[0]
+      const signingFunction = getSigningFunction(state)
+      const isHardwareSend = getIsHardwareLogin(state)
+      const publicKey = getPublicKey(state)
+
+      const TO_ACCOUNT = new N3.wallet.Account(
+        isHardwareSend ? migrationAddress : wif,
+      )
+      const FROM_ACCOUNT = new N2.wallet.Account(
+        isHardwareSend ? fromAddress : wif,
+      )
 
       // eslint-disable-next-line
       const net = state.spunky.network.data == 1 ? 'MainNet' : 'TestNet'
@@ -166,8 +150,10 @@ export const performMigration = ({
         intents: intent,
         fees: feeIsRequired() ? 1.0 : null,
         script,
+        signingFunction: null,
+        publicKey,
+        error: false,
       }
-
       dispatch(
         showInfoNotification({
           message: 'Broadcasting transaction to network...',
@@ -175,7 +161,18 @@ export const performMigration = ({
         }),
       )
 
+      if (isHardwareSend) {
+        dispatch(
+          showInfoNotification({
+            message: 'Please sign the transaction on your hardware device',
+            autoDismiss: 0,
+          }),
+        )
+        CONFIG.signingFunction = signingFunction
+      }
+
       let c = await N2.api.fillSigningFunction(CONFIG)
+
       c = await N2.api.fillUrl(c)
       // if (net !== 'TestNet') {
       c = await N2.api.fillBalance(c)
@@ -210,15 +207,56 @@ export const performMigration = ({
           data: hexTagRemark,
         }),
       )
-      c = await N2.api.signTx(c)
-      c = await N2.api.sendTx(c)
-      // eslint-disable-next-line
-      if (c.response.hasOwnProperty('txid')) {
-        // eslint-disable-next-line
-        console.log(
-          `Swap initiated to ${TO_ACCOUNT.address} in tx 0x${c.response.txid}`,
-        )
 
+      if (isHardwareSend) {
+        if (script === '') {
+          c = await api.sendAsset(c, api.neoscan).catch(e => {
+            console.error({ e })
+            CONFIG.error = true
+            if (e.message === 'Navigate to the NEO app on your Ledger device') {
+              dispatch(
+                showInfoNotification({
+                  message: `Please open the legacy Neo app to sign the migration transaction.`,
+                }),
+              )
+
+              return reject()
+            }
+            dispatch(
+              showErrorNotification({
+                message: e.message,
+              }),
+            )
+            return reject()
+          })
+        } else {
+          c = await api.doInvoke(c, api.neoscan).catch(e => {
+            console.error({ e })
+            CONFIG.error = true
+            if (e.message === 'Navigate to the NEO app on your Ledger device') {
+              dispatch(
+                showInfoNotification({
+                  message: `Please open the legacy Neo app to sign the migration transaction.`,
+                }),
+              )
+              CONFIG.error = true
+              return reject()
+            }
+            dispatch(
+              showErrorNotification({
+                message: e.message,
+              }),
+            )
+            return reject()
+          })
+        }
+      } else {
+        c = await N2.api.signTx(c)
+        c = await N2.api.sendTx(c)
+      }
+
+      // eslint-disable-next-line
+      if ((c && c.response.hasOwnProperty('txid')) || !CONFIG.error) {
         dispatch(
           showSuccessNotification({
             message:
@@ -226,20 +264,35 @@ export const performMigration = ({
           }),
         )
 
-        dispatch(
-          addPendingTransaction.call({
-            address: c.account.address,
-            tx: {
-              hash: c.response.txid,
-              sendEntries,
-            },
-            net,
-          }),
-        )
+        // $FlowFixMe
+        if (CONFIG.tx.hash) {
+          dispatch(
+            addPendingTransaction.call({
+              address: CONFIG.account.address,
+              tx: {
+                hash: CONFIG.tx.hash,
+                sendEntries,
+              },
+              net,
+            }),
+          )
+        } else {
+          dispatch(
+            addPendingTransaction.call({
+              address: c.account.address,
+              tx: {
+                hash: c.response.txid,
+                sendEntries,
+              },
+              net,
+            }),
+          )
+        }
 
         return resolve()
       }
     } catch (e) {
+      console.error(e)
       dispatch(
         showErrorNotification({
           message: `Oops... Something went wrong please try again. ${

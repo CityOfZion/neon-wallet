@@ -329,11 +329,6 @@ export const sendTransaction = ({
   return chain === 'neo3'
     ? new Promise(async (resolve, reject) => {
         try {
-          /*
-            TODO:
-              - Ledger support
-          */
-
           if (!isWatchOnly)
             dispatch(
               showInfoNotification({

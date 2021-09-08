@@ -54,7 +54,7 @@ const LOGIN_OPTIONS = {
     chainSupport: ['neo2', 'neo3'],
   },
   ledger: {
-    render: () => <LoginLedgerNanoS />,
+    render: chain => <LoginLedgerNanoS chain={chain} />,
     displayKey: 'Ledger',
     renderDisplayMessage: () => <FormattedMessage id="authLedger" />,
     chainSupport: ['neo2', 'neo3'],
@@ -132,7 +132,7 @@ export default class Home extends React.Component<Props, State> {
                       key={option.displayKey}
                       selectedClassName={styles.homeTabPanel}
                     >
-                      {option.render()}
+                      {option.render(chain)}
                     </TabPanel>
                   ),
               )}

@@ -148,7 +148,6 @@ const Sidebar = ({
       </NavLink>
 
       {!isWatchOnly &&
-        !signingFunction &&
         chain === 'neo2' && (
           <NavLink
             id="migration"
