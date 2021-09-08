@@ -43,7 +43,7 @@ type Props = {
   error: ?string,
   chain: string,
   isMigration?: boolean,
-  handleChooseMigrationAddress: (address: string) => void,
+  handleChooseMigrationAddress: (*) => void,
 }
 
 type State = {

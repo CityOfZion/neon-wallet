@@ -248,7 +248,7 @@ export const performMigration = ({
           }),
         )
 
-        // eslint-disable-next-line
+        // $FlowFixMe
         if (CONFIG.tx.hash) {
           dispatch(
             addPendingTransaction.call({
