@@ -90,7 +90,7 @@
     "@cityofzion/neon-ledger-next": "npm:@cityofzion/neon-ledger@5.0.0-next.14",
     "@formatjs/intl-pluralrules": "^1.5.2",
     "@ledgerhq/hw-transport-node-hid": "6.3.0",
-    "axios": "0.21.1",
+    "axios": "0.21.2",
     "axios-retry": "3.1.1",
     "bignumber.js": "5.0.0",
     "buffer": "5.0.8",
