@@ -128,13 +128,19 @@ export default class NeonLedger3 {
   /**
    * Retrieves the public key of an account from the Ledger.
    * @param {number} [acct] - Account that you want to retrieve the public key from.
+   * @param {boolean} [showAddressOnDevice] - A boolean that blocks until a user confirms their ledger address on device
    * @return {{account: number, key: string }}
    */
   async getPublicKey(
     acct: number = 0,
+    showAddressOnDevice = false,
   ): Promise<{ account: number, key: string }> {
     try {
-      const key = await n3ledger.getPublicKey(this.device, n3ledger.BIP44(acct))
+      const key = await n3ledger.getPublicKey(
+        this.device,
+        n3ledger.BIP44(acct),
+        showAddressOnDevice,
+      )
       return { account: acct, key }
     } catch (err) {
       throw evalTransportError(err)
