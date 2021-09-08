@@ -39,9 +39,11 @@ type Props = {
   progress: string,
   publicKey: LedgerPublicKey,
   login: Function,
-  connect: Function,
+  connect: (chain: string) => void,
   error: ?string,
   chain: string,
+  isMigration?: boolean,
+  handleChooseMigrationAddress: (address: string) => void,
 }
 
 type State = {
@@ -76,7 +78,10 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    this.intervalId = setInterval(this.props.connect, POLL_FREQUENCY_MS)
+    this.intervalId = setInterval(
+      () => this.props.connect(this.props.chain),
+      POLL_FREQUENCY_MS,
+    )
   }
 
   componentWillReceiveProps(nextProps: Props) {
@@ -98,8 +103,6 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
         publicKeys: [],
         addressOption: null,
       })
-      this.componentDidMount()
-      this.props.connect()
     }
 
     if (progress !== nextProps.progress || error !== nextProps.error) {
@@ -164,18 +167,33 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
             isSearchable
             isLoading={loadingPublicKeys}
           />
-          <Button
-            id="loginButton"
-            primary
-            type="submit"
-            className={styles.loginButtonMargin}
-            renderIcon={LoginIcon}
-            disabled={!this.canLogin()}
-            onClick={this.handleLogin}
-            shouldCenterButtonLabelText
-          >
-            <FormattedMessage id="authLogin" />
-          </Button>
+          {!this.props.isMigration && (
+            <Button
+              id="loginButton"
+              primary
+              type="submit"
+              className={styles.loginButtonMargin}
+              renderIcon={LoginIcon}
+              disabled={!this.canLogin()}
+              onClick={this.handleLogin}
+              shouldCenterButtonLabelText
+            >
+              <FormattedMessage id="authLogin" />
+            </Button>
+          )}
+
+          {this.props.isMigration && (
+            <Button
+              id="loginButton"
+              primary
+              type="submit"
+              className={styles.migrationContinueButton}
+              disabled={!this.canLogin()}
+              onClick={this.handleChooseN3Address}
+            >
+              Continue
+            </Button>
+          )}
         </form>
       </div>
     )
@@ -315,6 +333,18 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
       )
       if (keyData) {
         this.props.login(keyData)
+      }
+    }
+  }
+
+  handleChooseN3Address = () => {
+    const { addressOption, publicKeys } = this.state
+    if (publicKeys.length && addressOption) {
+      const keyData = publicKeys.find(
+        publicKey => addressOption.value === publicKey.key,
+      )
+      if (keyData) {
+        this.props.handleChooseMigrationAddress(keyData)
       }
     }
   }

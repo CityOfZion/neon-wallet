@@ -53,6 +53,7 @@ type Props = {
   wif: string,
   handleSwapComplete: () => void,
   showModal: (modalType: string, modalProps: Object) => any,
+  migrationAddress?: string,
 }
 
 type State = {
@@ -115,7 +116,9 @@ export default class Send extends React.Component<Props, State> {
     }
 
     if (this.props.isMigration) {
-      const account = new n3Wallet.Account(this.props.wif)
+      const account = this.props.migrationAddress
+        ? new n3Wallet.Account(this.props.migrationAddress)
+        : new n3Wallet.Account(this.props.wif)
       this.updateRowField(0, 'address', account.address)
     }
   }
@@ -464,6 +467,7 @@ export default class Send extends React.Component<Props, State> {
         this.props
           .performMigration({
             sendEntries,
+            migrationAddress: this.props.migrationAddress,
           })
           .then(() => {
             this.props.handleSwapComplete()

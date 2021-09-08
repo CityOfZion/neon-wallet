@@ -6,6 +6,7 @@ import styles from './TokenSwap.scss'
 
 type Props = {
   handleSwapComplete: () => void,
+  migrationAddress?: string,
 }
 
 type State = {}
@@ -28,6 +29,7 @@ export default class TokenSwap extends React.Component<Props, State> {
         <div className={styles.formContainer}>
           <Send
             isMigration
+            migrationAddress={this.props.migrationAddress}
             handleSwapComplete={this.props.handleSwapComplete}
           />
         </div>

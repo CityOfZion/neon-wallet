@@ -7,6 +7,7 @@ import { wallet as n3Wallet } from '@cityofzion/neon-js-next'
 
 import Button from '../../components/Button'
 import HeaderBar from '../../components/HeaderBar'
+import CreateLedgerMigrationWallet from '../../components/Migration/CreateLedgerMigrationWallet'
 import CreateMigrationWallet from '../../components/Migration/CreateMigrationWallet'
 import TokenSwap from '../../components/Migration/TokenSwap'
 import History from '../../components/Migration/History'
@@ -30,6 +31,7 @@ type Props = {
   hideModal: () => any,
   logout: () => any,
   newWalletCreated: (name: string) => any,
+  isHardwareLogin: boolean,
 }
 
 type State = {
@@ -46,6 +48,7 @@ type State = {
   hasCreatedN3Wallet: boolean,
   isExploding: boolean,
   createdWalletName: string,
+  selectedN3LedgerAddress: string,
 }
 
 export default class Migration extends React.Component<Props, State> {
@@ -63,6 +66,7 @@ export default class Migration extends React.Component<Props, State> {
     hasCreatedN3Wallet: false,
     isExploding: false,
     createdWalletName: '',
+    selectedN3LedgerAddress: '',
   }
 
   async componentDidMount() {
@@ -176,6 +180,7 @@ export default class Migration extends React.Component<Props, State> {
   }
 
   render() {
+    console.log(this.props)
     const { step, migrationData, loading, hasCreatedN3Wallet } = this.state
 
     const TO_ACCOUNT = new n3Wallet.Account(this.props.wif)
@@ -227,7 +232,21 @@ export default class Migration extends React.Component<Props, State> {
           >
             <Explanation
               currentStep={step}
-              handleStepChange={step => !loading && this.setState({ step })}
+              handleStepChange={step => {
+                if (!loading && !this.props.isHardwareLogin) {
+                  this.setState({ step })
+                }
+                if (!loading && this.props.isHardwareLogin) {
+                  if (
+                    step === SELECT_TOKEN_STEP &&
+                    !this.state.selectedN3LedgerAddress
+                  ) {
+                    return this.setState({ step: CREATE_WALLET_STEP })
+                  }
+
+                  this.setState({ step })
+                }
+              }}
             />
 
             <Confetti active={this.state.isExploding} config={config} />
@@ -238,80 +257,96 @@ export default class Migration extends React.Component<Props, State> {
               </div>
             ) : (
               <React.Fragment>
-                {step === CREATE_WALLET_STEP && (
-                  <CreateMigrationWallet
-                    walletCreationDetected={hasCreatedN3Wallet}
-                    createdWalletName={this.state.createdWalletName}
-                    handleWalletCreatedComplete={(name, showModal) => {
-                      this.setState({
-                        step: SELECT_TOKEN_STEP,
-                        hasCreatedN3Wallet: true,
-                        createdWalletName: name,
-                      })
-                      if (showModal) {
-                        this.props.showModal(MODAL_TYPES.CONFIRM, {
-                          title: 'Confirm Migration',
-                          shouldRenderHeader: false,
-                          shouldRenderFooter: false,
-                          height: '450px',
-                          width: '600px',
-                          renderBody: () => (
-                            <div className={styles.confirmWalletCreation}>
-                              <h2> Congratulations! </h2>
-                              <h4>You have created your new Neo N3 wallet.</h4>
-                              <div>
-                                Your address is: <br />
-                                <code> {TO_ACCOUNT.address} </code>
-                              </div>
-                              <br />
-                              <div>Your wallet name is: {name}</div>
-                              <br />
-                              <div className={styles.modalFooter}>
+                {step === CREATE_WALLET_STEP &&
+                  !this.props.isHardwareLogin && (
+                    <CreateMigrationWallet
+                      walletCreationDetected={hasCreatedN3Wallet}
+                      createdWalletName={this.state.createdWalletName}
+                      handleWalletCreatedComplete={(name, showModal) => {
+                        this.setState({
+                          step: SELECT_TOKEN_STEP,
+                          hasCreatedN3Wallet: true,
+                          createdWalletName: name,
+                        })
+                        if (showModal) {
+                          this.props.showModal(MODAL_TYPES.CONFIRM, {
+                            title: 'Confirm Migration',
+                            shouldRenderHeader: false,
+                            shouldRenderFooter: false,
+                            height: '450px',
+                            width: '600px',
+                            renderBody: () => (
+                              <div className={styles.confirmWalletCreation}>
+                                <h2> Congratulations! </h2>
+                                <h4>
+                                  You have created your new Neo N3 wallet.
+                                </h4>
                                 <div>
+                                  Your address is: <br />
+                                  <code> {TO_ACCOUNT.address} </code>
+                                </div>
+                                <br />
+                                <div>Your wallet name is: {name}</div>
+                                <br />
+                                <div className={styles.modalFooter}>
+                                  <div>
+                                    <Button
+                                      elevated
+                                      id="cancel"
+                                      onClick={() => {
+                                        setTimeout(() => {
+                                          this.props.newWalletCreated(name)
+                                        }, 500)
+                                        this.props.logout()
+                                        this.props.hideModal()
+                                      }}
+                                    >
+                                      Log into your new wallet
+                                    </Button>
+                                    <small>
+                                      This will log you out of your Neo Legacy
+                                      wallet and take you back to the Neon login
+                                      screen. You can log back into your Neo
+                                      Legacy account and continue with migration
+                                      at any time.{' '}
+                                    </small>
+                                  </div>
                                   <Button
-                                    elevated
-                                    id="cancel"
+                                    id="confirm"
+                                    primary
+                                    className={styles.actionButton}
                                     onClick={() => {
-                                      setTimeout(() => {
-                                        this.props.newWalletCreated(name)
-                                      }, 500)
-                                      this.props.logout()
                                       this.props.hideModal()
                                     }}
                                   >
-                                    Log into your new wallet
+                                    Continue to migration
                                   </Button>
-                                  <small>
-                                    This will log you out of your Neo Legacy
-                                    wallet and take you back to the Neon login
-                                    screen. You can log back into your Neo
-                                    Legacy account and continue with migration
-                                    at any time.{' '}
-                                  </small>
                                 </div>
-                                <Button
-                                  id="confirm"
-                                  primary
-                                  className={styles.actionButton}
-                                  onClick={() => {
-                                    this.props.hideModal()
-                                  }}
-                                >
-                                  Continue to migration
-                                </Button>
                               </div>
-                            </div>
-                          ),
+                            ),
+                          })
+                        }
+                      }}
+                    />
+                  )}
+
+                {step === CREATE_WALLET_STEP &&
+                  this.props.isHardwareLogin && (
+                    <CreateLedgerMigrationWallet
+                      setAddress={selectedN3LedgerAddress => {
+                        this.setState({
+                          selectedN3LedgerAddress,
+                          step: SELECT_TOKEN_STEP,
                         })
-                      }
-                    }}
-                  />
-                )}
+                      }}
+                    />
+                  )}
 
                 {step === SELECT_TOKEN_STEP && (
                   <div className={styles.tokenSwapContainer}>
                     <TokenSwap
                       handleSwapComplete={this.handleMigrationSuccess}
+                      migrationAddress={this.state.selectedN3LedgerAddress}
                     />
                   </div>
                 )}

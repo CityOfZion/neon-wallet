@@ -59,7 +59,8 @@ type Props = {
 const shouldDisableSendButton = (sendRowDetails, loading) =>
   loading ||
   sendRowDetails.some(
-    detail => !detail.address || !detail.amount || isZero(detail.amount),
+    detail =>
+      !detail.address || !detail.amount || isZero(Number(detail.amount)),
   )
 
 const SendPanel = ({
