@@ -211,18 +211,28 @@ export const performMigration = ({
       if (isHardwareSend) {
         if (script === '') {
           c = await api.sendAsset(c, api.neoscan).catch(e => {
+            console.error({ e })
+            CONFIG.error = true
             if (e.message === 'Navigate to the NEO app on your Ledger device') {
               dispatch(
                 showInfoNotification({
                   message: `Please open the legacy Neo app to sign the migration transaction.`,
                 }),
               )
-              CONFIG.error = true
+
               return reject()
             }
+            dispatch(
+              showErrorNotification({
+                message: e.message,
+              }),
+            )
+            return reject()
           })
         } else {
           c = await api.doInvoke(c, api.neoscan).catch(e => {
+            console.error({ e })
+            CONFIG.error = true
             if (e.message === 'Navigate to the NEO app on your Ledger device') {
               dispatch(
                 showInfoNotification({
@@ -232,6 +242,12 @@ export const performMigration = ({
               CONFIG.error = true
               return reject()
             }
+            dispatch(
+              showErrorNotification({
+                message: e.message,
+              }),
+            )
+            return reject()
           })
         }
       } else {

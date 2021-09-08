@@ -428,59 +428,114 @@ export default class Send extends React.Component<Props, State> {
       return userMustPayFee
     }
 
-    this.props.showModal(MODAL_TYPES.CONFIRM, {
-      title: 'Confirm Migration',
-      shouldRenderHeader: false,
-      height: '524px',
-      renderBody: () => (
-        <div className={styles.confirmMigration}>
-          <h2> Confirmation </h2>
-          <h4>
-            You are about to migrate{' '}
-            {toBigNumber(sendEntries[0].amount).toString()}{' '}
-            {sendEntries[0].symbol}
-          </h4>
-          <div>
-            From (Neo Legacy): <br />
-            <code> {this.props.address} </code>
-          </div>
-          <br />
+    // eslint-disable-next-line
+    this.props.migrationAddress
+      ? this.props.showModal(MODAL_TYPES.LEDGER_MIGRATION_CONFIRM, {
+          title: 'Confirm Migration',
+          shouldRenderHeader: false,
+          height: '524px',
+          renderBody: () => (
+            <div className={styles.confirmMigration}>
+              <h2> Confirmation </h2>
+              <h4>
+                You are about to migrate{' '}
+                {toBigNumber(sendEntries[0].amount).toString()}{' '}
+                {sendEntries[0].symbol}
+              </h4>
+              <div>
+                From (Neo Legacy): <br />
+                <code> {this.props.address} </code>
+              </div>
+              <br />
 
-          <div>
-            To (Neo N3): <br />
-            <code> {TO_ACCOUNT.address}</code>
-          </div>
-          <br />
-          {feeIsRequired(sendEntries[0].symbol, sendEntries[0].amount) && (
-            <div className={styles.feeWarningContainer}>
-              <DialogueBox icon={<WarningIcon />} text="1 GAS Fee" />
+              <div>
+                To (Neo N3): <br />
+                <code> {TO_ACCOUNT.address}</code>
+              </div>
+              <br />
+              {feeIsRequired(sendEntries[0].symbol, sendEntries[0].amount) && (
+                <div className={styles.feeWarningContainer}>
+                  <DialogueBox icon={<WarningIcon />} text="1 GAS Fee" />
+                </div>
+              )}
+              <br />
+              <small>
+                Most users should recieve their tokens on Neo N3 within 30
+                minutes, however some migrations may take up to 24 hours.{' '}
+              </small>
             </div>
-          )}
-          <br />
-          <small>
-            Most users should recieve their tokens on Neo N3 within 30 minutes,
-            however some migrations may take up to 24 hours.{' '}
-          </small>
-        </div>
-      ),
-      onClick: () => {
-        this.props
-          .performMigration({
-            sendEntries,
-            migrationAddress: this.props.migrationAddress,
-          })
-          .then(() => {
-            this.props.handleSwapComplete()
-          })
-          .catch(() => {
+          ),
+          onClick: () => {
+            this.props
+              .performMigration({
+                sendEntries,
+                migrationAddress: this.props.migrationAddress,
+              })
+              .then(() => {
+                this.props.handleSwapComplete()
+              })
+              .catch(() => {
+                this.setState({ loading: false })
+                // TODO: implement possible additional error state here
+              })
+          },
+          onCancel: () => {
             this.setState({ loading: false })
-            // TODO: implement possible additional error state here
-          })
-      },
-      onCancel: () => {
-        this.setState({ loading: false })
-      },
-    })
+          },
+        })
+      : this.props.showModal(MODAL_TYPES.CONFIRM, {
+          title: 'Confirm Migration',
+          shouldRenderHeader: false,
+          height: '524px',
+          renderBody: () => (
+            <div className={styles.confirmMigration}>
+              <h2> Confirmation </h2>
+              <h4>
+                You are about to migrate{' '}
+                {toBigNumber(sendEntries[0].amount).toString()}{' '}
+                {sendEntries[0].symbol}
+              </h4>
+              <div>
+                From (Neo Legacy): <br />
+                <code> {this.props.address} </code>
+              </div>
+              <br />
+
+              <div>
+                To (Neo N3): <br />
+                <code> {TO_ACCOUNT.address}</code>
+              </div>
+              <br />
+              {feeIsRequired(sendEntries[0].symbol, sendEntries[0].amount) && (
+                <div className={styles.feeWarningContainer}>
+                  <DialogueBox icon={<WarningIcon />} text="1 GAS Fee" />
+                </div>
+              )}
+              <br />
+              <small>
+                Most users should recieve their tokens on Neo N3 within 30
+                minutes, however some migrations may take up to 24 hours.{' '}
+              </small>
+            </div>
+          ),
+          onClick: () => {
+            this.props
+              .performMigration({
+                sendEntries,
+                migrationAddress: this.props.migrationAddress,
+              })
+              .then(() => {
+                this.props.handleSwapComplete()
+              })
+              .catch(() => {
+                this.setState({ loading: false })
+                // TODO: implement possible additional error state here
+              })
+          },
+          onCancel: () => {
+            this.setState({ loading: false })
+          },
+        })
   }
 
   validateRowAmounts = (rows: Array<any>) => {
