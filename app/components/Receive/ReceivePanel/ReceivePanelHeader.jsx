@@ -32,9 +32,7 @@ const ReceivePanelHeader = ({ address }: Props) => (
             const ledger = await NeonLedger3.init()
             ledger.getPublicKey(0, true) // TODO: implement account
           }}
-          renderIcon={() => (
-            <LedgerIcon className={styles.copy} />
-          )}
+          renderIcon={() => <LedgerIcon className={styles.copy} />}
           buttonText="Verify on Ledger"
         />
       </div>
