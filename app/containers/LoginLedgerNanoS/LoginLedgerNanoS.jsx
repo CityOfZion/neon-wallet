@@ -80,14 +80,31 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
   }
 
   componentDidMount() {
+    this.setPolling(this.props.chain)
+  }
+
+  setPolling = (chain: string) => {
     this.intervalId = setInterval(
-      () => this.props.connect(this.props.chain),
+      () => this.props.connect(chain),
       POLL_FREQUENCY_MS,
     )
   }
 
   componentWillReceiveProps(nextProps: Props) {
     const { progress, error } = this.props
+
+    if (this.props.chain !== nextProps.chain) {
+      if (this.intervalId) {
+        clearInterval(this.intervalId)
+        this.setPolling(nextProps.chain)
+      }
+      return this.setState({
+        publicKeys: [],
+        addressOption: null,
+        ledgerStage: NOT_CONNECTED,
+        isLoading: true,
+      })
+    }
 
     if (nextProps.publicKey && !this.state.addressOption) {
       this.setState({
@@ -100,16 +117,10 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
       })
     }
 
-    if (this.props.chain !== nextProps.chain) {
-      this.setState({
-        publicKeys: [],
-        addressOption: null,
-      })
-    }
-
     if (progress !== nextProps.progress || error !== nextProps.error) {
       this.setState(this.computeStateFromProps(nextProps))
     }
+    return null
   }
 
   computeStateFromProps = (props: Props) => {
