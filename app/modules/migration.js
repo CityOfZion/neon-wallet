@@ -212,6 +212,9 @@ export const performMigration = ({
         if (script === '') {
           c = await api.sendAsset(c, api.neoscan).catch(e => {
             console.error({ e })
+            if (e.message === 'this.str.substr is not a function') {
+              return null
+            }
             CONFIG.error = true
             if (e.message === 'Navigate to the NEO app on your Ledger device') {
               dispatch(
@@ -232,6 +235,9 @@ export const performMigration = ({
         } else {
           c = await api.doInvoke(c, api.neoscan).catch(e => {
             console.error({ e })
+            if (e.message === 'this.str.substr is not a function') {
+              return null
+            }
             CONFIG.error = true
             if (e.message === 'Navigate to the NEO app on your Ledger device') {
               dispatch(
