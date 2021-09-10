@@ -31,7 +31,7 @@ export default class CreateMigrationWallet extends React.Component<
               <a
                 onClick={() => {
                   electron.shell.openExternal(
-                    'https://support.ledger.com/hc/en-us/articles/4404382258961-Install-uninstall-and-update-apps?docs=true',
+                    'https://medium.com/proof-of-working/ledger-migration-instructions-44b3b7c410e0',
                   )
                 }}
               >
