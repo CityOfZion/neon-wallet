@@ -433,7 +433,9 @@ export default class Send extends React.Component<Props, State> {
       ? this.props.showModal(MODAL_TYPES.LEDGER_MIGRATION_CONFIRM, {
           title: 'Confirm Migration',
           shouldRenderHeader: false,
-          height: '524px',
+          height: feeIsRequired(sendEntries[0].symbol, sendEntries[0].amount)
+            ? '650px'
+            : '580px',
           renderBody: () => (
             <div className={styles.confirmMigration}>
               <h2> Confirmation </h2>
@@ -450,7 +452,7 @@ export default class Send extends React.Component<Props, State> {
 
               <div>
                 To (Neo N3): <br />
-                <code> {TO_ACCOUNT.address}</code>
+                <code> {this.props.migrationAddress}</code>
               </div>
               <br />
               {feeIsRequired(sendEntries[0].symbol, sendEntries[0].amount) && (

@@ -52,7 +52,7 @@ class LedgerMigrationConfirm extends React.Component<Props, State> {
         style={{
           content: {
             width,
-            height: '650px',
+            height,
           },
         }}
       >
