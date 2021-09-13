@@ -17,6 +17,8 @@ import N3SupportDark from '../../../assets/images/release-assets/n3_support_dark
 
 import MigrationLight from '../../../assets/images/release-assets/migration-light.svg'
 import MigrationDark from '../../../assets/images/release-assets/migration-dark.svg'
+import Ledger from '../../../assets/images/release-assets/ledger.svg'
+import LedgerDark from '../../../assets/images/release-assets/ledger-dark.svg'
 
 const electron = require('electron').remote
 
@@ -48,6 +50,35 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
       )}
     >
       <div className={styles.releaseNotesContents}>
+        <div className={styles.release}>
+          <div className={styles.releaseContent}>
+            <small className={styles.date}>Sep 13th 2021 </small>
+            <h3>Release v2.9.0</h3>
+
+            <p>
+              In this release you will find the following updates:
+              <br />
+              <br />
+              {/* eslint-disable-next-line */}
+              <li>Implements ledger support for Neo N3</li>
+              <li>Allows ledger users to migrate from Neo Legacy to Neo N3</li>
+              <br />
+              View full details of this release on GitHub
+              <br />
+            </p>
+
+            <Github
+              onClick={() =>
+                electron.shell.openExternal(
+                  'https://github.com/CityOfZion/neon-wallet/releases/tag/v2.9.0',
+                )
+              }
+            />
+          </div>
+          <div className={styles.marketingImage}>
+            {theme === 'Light' ? <Ledger /> : <LedgerDark />}
+          </div>
+        </div>
         <div className={styles.release}>
           <div className={styles.releaseContent}>
             <small className={styles.date}>Aug 24th 2021 </small>
@@ -83,7 +114,7 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
             <h3>Release v2.7.4</h3>
 
             <p>
-              In this update you will find the following updates:
+              In this release you will find the following updates:
               <br />
               <br />
               {/* eslint-disable-next-line */}
