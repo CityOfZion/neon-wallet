@@ -80,7 +80,10 @@ export default class NeonLedger {
       const ledger = new NeonLedger(paths[0])
       await ledger.open()
       const appName = await ledger.getAppName()
-      if (appName === 'NEO -DN3' || appName === 'NEO3') {
+      if (
+        appName === 'NEO N3' ||
+        appName === 'NEO -DN3'
+      ) {
         throw new Error(MESSAGES.APP_CLOSED)
       }
       return ledger
