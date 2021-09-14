@@ -127,6 +127,7 @@ exports[`News renders without crashing 1`] = `
             "errors.send.decimal": "You can only send {asset} up to {decimalCount, number} decimals.",
             "errors.send.fraction": "You cannot send fractional amounts of NEO.",
             "errors.send.invalidAddress": "You need to specify a valid NEO address.",
+            "errors.send.invalidN3Address": "You need to specify a valid NEO N3 address.",
             "errors.send.negative": "You cannot send negative amounts of {asset}.",
             "errors.send.network": "A network error has occurred",
             "errors.send.number": "Amount must be a number.",

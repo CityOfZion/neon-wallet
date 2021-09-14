@@ -132,6 +132,7 @@ const ERRORS = {
   'errors.send.zero': `Can not send 0 {asset}.`,
   'errors.send.decimal': `You can only send {asset} up to {decimalCount, number} decimals.`,
   'errors.send.invalidAddress': 'You need to specify a valid NEO address.',
+  'errors.send.invalidN3Address': 'You need to specify a valid NEO N3 address.',
   'errors.send.blackListed':
     'Address is blacklisted. This is a known phishing address.',
 }

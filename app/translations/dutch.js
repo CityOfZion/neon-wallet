@@ -132,6 +132,7 @@ const ERRORS = {
   'errors.send.zero': `Je kunt geen 0 {asset} verzenden.`,
   'errors.send.decimal': `Je kunt {asset} tot maximaal {decimalCount, number} verzenden.`,
   'errors.send.invalidAddress': 'Je moet een geldig NEO adres invoeren..',
+  'errors.send.invalidN3Address': 'Je moet een geldig NEO N3 adres invoeren..',
   'errors.send.blackListed':
     'Adres is geblacklist, dit is een bekend phising adres.',
 }

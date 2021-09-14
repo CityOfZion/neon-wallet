@@ -129,6 +129,7 @@ const ERRORS = {
   'errors.send.zero': `Can not send 0 {asset}.`,
   'errors.send.decimal': `يمكنك فقط إرسال {asset} حتى {decimalCount, number} عشرية.`,
   'errors.send.invalidAddress': 'تحتاج إلى تحديد عنوان NEO صالح.',
+  'errors.send.invalidN3Address': 'تحتاج إلى تحديد عنوان NEO N3 صالح.',
   'errors.send.blackListed':
     'تم إدراج العنوان في القائمة السوداء. هذا عنوان تصيد معروف.',
 }

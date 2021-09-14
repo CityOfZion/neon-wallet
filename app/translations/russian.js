@@ -132,6 +132,7 @@ const ERRORS = {
   'errors.send.zero': `Вы не можете отправлять 0 {asset}.`,
   'errors.send.decimal': `Вы можете отправлять {asset} только размером до {decimalCount, number} чисел.`,
   'errors.send.invalidAddress': 'Вы должны ввести правильный адрес NEO.',
+  'errors.send.invalidN3Address': 'Вы должны ввести правильный адрес NEO N3.',
   'errors.send.blackListed':
     'Адрес в черном списке. Он был отмечен как фишинговый.',
 }
