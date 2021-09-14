@@ -127,6 +127,8 @@ const ERRORS = {
   'errors.send.zero': `Impossibile inviare 0 {asset}.`,
   'errors.send.decimal': `Puoi inviare solo {asset} fino a {decimalCount, number} decimali.`,
   'errors.send.invalidAddress': 'Devi specificare un indirizzo NEO valido.',
+  'errors.send.invalidN3Address':
+    'Devi specificare un indirizzo NEO N3 valido.',
   'errors.send.blackListed': `L'indirizzo è nella lista nera. Questo è un indirizzo di phishing noto.`,
 }
 

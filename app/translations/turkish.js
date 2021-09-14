@@ -127,6 +127,8 @@ const ERRORS = {
   'errors.send.zero': `0 {asset} gönderilemiyor.`,
   'errors.send.decimal': `En fazla {decimalCount, number} ondalık {asset} gönderebilirsiniz.`,
   'errors.send.invalidAddress': 'Geçerli bir NEO adresi belirtmeniz gerekiyor.',
+  'errors.send.invalidN3Address':
+    'Geçerli bir NEO N3 adresi belirtmeniz gerekiyor.',
   'errors.send.blackListed':
     'Adres kara listeye alındı. Bu bilinen bir kimlik avı adresidir.',
 }

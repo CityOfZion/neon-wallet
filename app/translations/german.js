@@ -131,6 +131,8 @@ const ERRORS = {
   'errors.send.zero': `Kann 0 {asset} nicht senden.`,
   'errors.send.decimal': `Sie können {asset} nur bis zu {decimalCount, number} Dezimalstellen senden.`,
   'errors.send.invalidAddress': 'Sie müssen eine gültige NEO-Adresse angeben.',
+  'errors.send.invalidN3Address':
+    'Sie müssen eine gültige NEO N3-Adresse angeben.',
   'errors.send.blackListed':
     'Die Adresse ist auf der schwarzen Liste. Dies ist eine bekannte Phishing-Adresse.',
 }

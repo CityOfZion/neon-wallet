@@ -133,6 +133,8 @@ const ERRORS = {
   'errors.send.decimal': `Você pode enviar apenas {asset} até {decimalCount, number} decimais.`,
   'errors.send.invalidAddress':
     'Você precisa especificar um endereço NEO válido.',
+  'errors.send.invalidN3Address':
+    'Você precisa especificar um endereço NEO N3 válido.',
   'errors.send.blackListed':
     'O endereço está na lista negra. Este é um endereço de phishing conhecido.',
 }

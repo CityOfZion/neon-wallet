@@ -121,6 +121,7 @@ const ERRORS = {
   'errors.send.zero': `无法发送0 {asset}.`,
   'errors.send.decimal': `您最多只能发送{asset}个{decimalCount，number}个小数.`,
   'errors.send.invalidAddress': '您需要指定一个有效的NEO地址.',
+  'errors.send.invalidN3Address': '您需要指定一个有效的NEO N3地址.',
   'errors.send.blackListed': '地址已列入黑名单。这是已知的网络钓鱼地址。',
 }
 

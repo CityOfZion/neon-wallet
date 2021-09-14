@@ -114,6 +114,7 @@ const ERRORS = {
   'errors.send.zero': `0 {asset}을 보낼 수 없습니다.`,
   'errors.send.decimal': `{asset}은 최대 {decimalCount, number} 소수까지만 보낼 수 있습니다.`,
   'errors.send.invalidAddress': '유효한 NEO 주소를 지정해야합니다.',
+  'errors.send.invalidN3Address': '유효한 NEO N3 주소를 지정해야합니다.',
   'errors.send.blackListed':
     '주소가 블랙리스트에 있습니다. 이것은 알려진 피싱 주소입니다.',
 }

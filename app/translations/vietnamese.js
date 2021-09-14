@@ -124,6 +124,7 @@ const ERRORS = {
   'errors.send.zero': `Không thể gửi 0 {asset}.`,
   'errors.send.decimal': `Bạn chỉ có thể gửi {asset} tối đa {decimalCount, number} số thập phân.`,
   'errors.send.invalidAddress': 'Bạn cần chỉ định một địa chỉ NEO hợp lệ.',
+  'errors.send.invalidN3Address': 'Bạn cần chỉ định một địa chỉ NEO N3 hợp lệ.',
   'errors.send.blackListed':
     'Địa chỉ được liệt kê vào danh sách đen. Đây là một địa chỉ lừa đảo được biết đến.',
 }

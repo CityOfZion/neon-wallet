@@ -722,13 +722,13 @@ export default class Send extends React.Component<Props, State> {
     if (chain === 'neo3' || isMigration) {
       if (formAddress[0].toLocaleUpperCase() !== 'N') {
         errors.address = intl.formatMessage({
-          id: 'errors.send.invalidAddress',
+          id: 'errors.send.invalidN3Address',
         })
       }
 
       if (!n3Wallet.isAddress(formAddress)) {
         errors.address = intl.formatMessage({
-          id: 'errors.send.invalidAddress',
+          id: 'errors.send.invalidN3Address',
         })
       }
 
