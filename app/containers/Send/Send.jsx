@@ -488,7 +488,10 @@ export default class Send extends React.Component<Props, State> {
       : this.props.showModal(MODAL_TYPES.CONFIRM, {
           title: 'Confirm Migration',
           shouldRenderHeader: false,
-          height: '524px',
+          height: feeIsRequired(sendEntries[0].symbol, sendEntries[0].amount)
+            ? '524px'
+            : '454px',
+
           renderBody: () => (
             <div className={styles.confirmMigration}>
               <h2> Confirmation </h2>
@@ -717,14 +720,21 @@ export default class Send extends React.Component<Props, State> {
     const { errors } = this.state.sendRowDetails[index]
 
     if (chain === 'neo3' || isMigration) {
+      if (formAddress[0].toLocaleUpperCase() !== 'N') {
+        errors.address = intl.formatMessage({
+          id: 'errors.send.invalidAddress',
+        })
+      }
+
       if (!n3Wallet.isAddress(formAddress)) {
         errors.address = intl.formatMessage({
           id: 'errors.send.invalidAddress',
         })
-        if (errors.address) {
-          this.updateRowField(index, 'errors', errors)
-          return false
-        }
+      }
+
+      if (errors.address) {
+        this.updateRowField(index, 'errors', errors)
+        return false
       }
     } else {
       if (!wallet.isAddress(formAddress)) {
