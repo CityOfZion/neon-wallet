@@ -269,7 +269,8 @@ export const doGasClaim = () => async (
   // step 2: send claim request
   try {
     let { claims } = await api.getClaimsFrom({ net, address }, api.neoscan)
-    if (isHardwareClaim) claims = claims.slice(0, 25)
+    // estimated byte size under ledger limit
+    if (isHardwareClaim) claims = claims.slice(0, 15)
     const { response } = await api.claimGas(
       { net, address, claims, publicKey, privateKey, signingFunction },
       api.neoscan,
