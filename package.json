@@ -13,7 +13,7 @@
     "start-dev": "cross-env NODE_ENV=development electron . --enable-logging --remote-debugging-port=9222 --progress",
     "assets-dev": "cross-env NODE_ENV=development webpack --config ./config/webpack.config.dev --progress",
     "test": "npm rebuild node-hid && ./node_modules/.bin/jest --coverage",
-    "test-ci": "yarn test --maxWorkers=4 --watchAll=false && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test-ci": "yarn test --maxWorkers=4 --watchAll=false",
     "test:e2e": "ava __e2e__/*.e2e.js --timeout=120s -s",
     "test-watch": "jest --watch",
     "pack": "build --dir",
