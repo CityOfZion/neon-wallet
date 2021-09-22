@@ -61,7 +61,7 @@ export default class TransactionHistory extends React.Component<Props> {
       await this.props.handleGetPendingTransactionInfo()
       this.props.handleRefreshTxData()
       showSuccessNotification({
-        message: 'Recevied latest transaction information.',
+        message: 'Received latest transaction information.',
       })
     }, REFRESH_INTERVAL_MS)
   }

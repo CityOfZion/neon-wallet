@@ -55,7 +55,7 @@ export default class History extends React.Component<Props, State> {
     this.historyDataInterval = setInterval(async () => {
       this.props.handleRefreshHistory().then(() =>
         showSuccessNotification({
-          message: 'Recevied latest migration information.',
+          message: 'Received latest migration information.',
         }),
       )
     }, REFRESH_INTERVAL_MS)
