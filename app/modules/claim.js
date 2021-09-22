@@ -1,11 +1,10 @@
 // @flow
 import { api, type Claims } from '@cityofzion/neon-js'
+import { api as apiLatest } from '@cityofzion/neon-js-legacy-latest'
 import {
   api as n3Api,
   wallet as n3Wallet,
-  u as n3U,
   rpc as n3Rpc,
-  tx,
 } from '@cityofzion/neon-js-next'
 import { map, reduce } from 'lodash-es'
 
@@ -43,8 +42,11 @@ export function disableClaim(disableClaimButton: boolean) {
 }
 
 const fetchClaims = async ({ net, address }) => {
-  const response = await api.getClaimsFrom({ net, address }, api.neoscan)
-  const { claims } = response.claims
+  let endpoint = await getNode(net)
+  if (!endpoint) {
+    endpoint = await getRPCEndpoint(net)
+  }
+  const { claims } = await apiLatest.neoCli.getClaims(endpoint, address)
   return map(claims, 'claim')
 }
 
@@ -268,7 +270,12 @@ export const doGasClaim = () => async (
 
   // step 2: send claim request
   try {
-    let { claims } = await api.getClaimsFrom({ net, address }, api.neoscan)
+    let endpoint = await getNode(net)
+    if (!endpoint) {
+      endpoint = await getRPCEndpoint(net)
+    }
+    let claims = await apiLatest.neoCli.getClaims(endpoint, address)
+
     // estimated byte size under ledger limit
     if (isHardwareClaim) claims = claims.slice(0, 15)
     const { response } = await api.claimGas(
