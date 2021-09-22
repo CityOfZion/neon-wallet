@@ -23,7 +23,7 @@ export default createActions(
 
     if (chain === 'neo2') {
       const unclaimed = await api.neoCli.getMaxClaimAmount(endpoint, address)
-      return { total: unclaimed.toRawNumber().toString()}
+      return { total: unclaimed.toRawNumber().toString() }
     }
 
     const rpcClient = new n3Rpc.RPCClient(endpoint)
