@@ -1,5 +1,5 @@
 // @flow
-import { api } from '@cityofzion/neon-js'
+import { api } from '@cityofzion/neon-js-legacy-latest'
 import { rpc as n3Rpc, u as n3U } from '@cityofzion/neon-js-next'
 import { createActions } from 'spunky'
 
@@ -16,18 +16,16 @@ export const ID = 'claims'
 export default createActions(
   ID,
   ({ net, address, chain }: Props = {}) => async (): Promise<*> => {
-    if (chain === 'neo2') {
-      const total = await api.getMaxClaimAmountFrom(
-        { net, address },
-        api.neoscan,
-      )
-      return { total: total.toString() }
-    }
-
     let endpoint = await getNode(net)
     if (!endpoint) {
       endpoint = await getRPCEndpoint(net)
     }
+
+    if (chain === 'neo2') {
+      const unclaimed = await api.neoCli.getMaxClaimAmount(endpoint, address)
+      return { total: unclaimed.toRawNumber().toString()}
+    }
+
     const rpcClient = new n3Rpc.RPCClient(endpoint)
     try {
       const query = {
