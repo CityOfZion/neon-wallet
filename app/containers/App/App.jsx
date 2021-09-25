@@ -1,5 +1,6 @@
 // @flow
-import React, { Component } from 'react'
+// $FlowFixMe
+import React, { Component, useEffect } from 'react'
 
 import { ROUTES } from '../../core/constants'
 import Sidebar from './Sidebar'
@@ -12,6 +13,7 @@ import styles from './App.scss'
 import themes from '../../themes'
 import ErrorBoundary from '../../components/ErrorBoundaries/Main'
 import FramelessNavigation from '../../components/FramelessNavigation'
+import { useWalletConnect } from '@cityofzion/wallet-connect-sdk-react'
 
 type Props = {
   children: React$Node,
@@ -36,43 +38,51 @@ const routesWithSideBar = [
   ROUTES.MIGRATION,
 ]
 
-class App extends Component<Props> {
-  async componentDidMount() {
-    this.props.checkVersion()
+const App = ({
+  children,
+  address,
+  theme,
+  location,
+  checkVersion,
+  showErrorNotification,
+  store,
+}: Props) => {
+  const walletConnectCtx = useWalletConnect()
+  console.log(walletConnectCtx)
 
-    try {
-      await upgradeUserWalletNEP6()
-    } catch (error) {
-      this.props.showErrorNotification({
-        message: `Error upgrading legacy wallet: ${error.message}`,
-      })
+  useEffect(() => {
+    async function handleUpgrade() {
+      checkVersion()
+      try {
+        await upgradeUserWalletNEP6()
+      } catch (error) {
+        showErrorNotification({
+          message: `Error upgrading legacy wallet: ${error.message}`,
+        })
+      }
     }
-  }
+    handleUpgrade()
+    return () => {
+      walletConnectCtx.disconnect()
+    }
+  })
 
-  render() {
-    const { children, address, theme, location } = this.props
-
-    return (
-      <ErrorBoundary>
-        <div style={themes[theme]} className={styles.container}>
-          {address &&
-            routesWithSideBar.includes(location.pathname) && (
-              <Sidebar
-                store={this.props.store}
-                theme={theme}
-                className={styles.sidebar}
-              />
-            )}
-          <div className={styles.wrapper}>
-            <FramelessNavigation />
-            <div className={styles.content}>{children}</div>
-            <Notifications />
-            <ModalRenderer />
-          </div>
+  return (
+    <ErrorBoundary>
+      <div style={themes[theme]} className={styles.container}>
+        {address &&
+          routesWithSideBar.includes(location.pathname) && (
+            <Sidebar store={store} theme={theme} className={styles.sidebar} />
+          )}
+        <div className={styles.wrapper}>
+          <FramelessNavigation />
+          <div className={styles.content}>{children}</div>
+          <Notifications />
+          <ModalRenderer />
         </div>
-      </ErrorBoundary>
-    )
-  }
+      </div>
+    </ErrorBoundary>
+  )
 }
 
 export default withThemeData()(App)
