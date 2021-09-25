@@ -1,6 +1,6 @@
 // @flow
 import { api, type Claims } from '@cityofzion/neon-js'
-import { api as apiLatest } from '@cityofzion/neon-js-legacy-latest'
+import { api as apiLatest, rpc } from '@cityofzion/neon-js-legacy-latest'
 import {
   api as n3Api,
   wallet as n3Wallet,
@@ -31,7 +31,7 @@ import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 // Constants
 export const DISABLE_CLAIM = 'DISABLE_CLAIM'
 const POLL_ATTEMPTS = 30
-const POLL_FREQUENCY = 10000
+const POLL_FREQUENCY = 4000
 
 // Actions
 export function disableClaim(disableClaimButton: boolean) {
@@ -82,23 +82,18 @@ const updateClaimableAmount = async ({
     throw new Error('Rejected by RPC server.')
   }
 
-  return response.result.response
+  return response
 }
 
-const pollForUpdatedClaimableAmount = async ({
-  net,
-  address,
-  claimableAmount,
-}) =>
+const pollForUpdatedClaimableAmount = async ({ net, address, txid }) =>
   poll(
     async () => {
-      const updatedClaimableAmount = await getClaimableAmount({ net, address })
+      // watch the sendAsset txid until it has been published
+      const client = new rpc.RPCClient('https://mainnet2.neo2.coz.io:443')
+      await client.getRawTransaction(txid)
 
-      if (toBigNumber(updatedClaimableAmount).eq(claimableAmount)) {
-        throw new Error('Waiting for updated claims took too long.')
-      }
-
-      return updatedClaimableAmount
+      // get the new claimable amount
+      return getClaimableAmount({ net, address })
     },
     { attempts: POLL_ATTEMPTS, frequency: POLL_FREQUENCY },
   )
@@ -116,7 +111,7 @@ const getUpdatedClaimableAmount = async ({
   if (toBigNumber(balance).eq(0)) {
     return claimableAmount
   }
-  await updateClaimableAmount({
+  const { txid } = await updateClaimableAmount({
     net,
     address,
     balance,
@@ -124,7 +119,7 @@ const getUpdatedClaimableAmount = async ({
     privateKey,
     signingFunction,
   })
-  return pollForUpdatedClaimableAmount({ net, address, claimableAmount })
+  return pollForUpdatedClaimableAmount({ net, address, txid })
 }
 
 export const handleN3GasClaim = async ({
