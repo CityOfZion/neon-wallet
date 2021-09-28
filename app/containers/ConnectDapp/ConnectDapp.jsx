@@ -1,8 +1,9 @@
 // @flow
 // $FlowFixMe
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import { FormattedMessage } from 'react-intl'
+import { wallet } from '@cityofzion/neon-js-next'
 
 import LockIcon from '../../assets/icons/add.svg'
 
@@ -13,9 +14,11 @@ import { ROUTES } from '../../core/constants'
 
 import styles from './styles.scss'
 import Button from '../../components/Button'
-import { useWalletConnect } from '@cityofzion/wallet-connect-sdk-react'
+import { useWalletConnect } from '../../context/WalletConnect/WalletConnectContext'
 
-type Props = {}
+type Props = {
+  address: string,
+}
 
 const CONNECTION_STEPS = {
   ENTER_URL: 'ENTER_URL',
@@ -25,13 +28,30 @@ const CONNECTION_STEPS = {
   TRANSACTION_ERROR: 'TRANSACTION_ERROR',
 }
 
-const ConnectDapp = (props: Props) => {
+const ConnectDapp = ({
+  address = 'NMkSudozST9kTkpNbyNB1EdU7KzfQoF3dY',
+}: Props) => {
   const [connectionUrl, setConnectionUrl] = useState('')
   const [connectionStep, setConnectionStep] = useState(
     CONNECTION_STEPS.ENTER_URL,
   )
   const [loading, setLoading] = useState(false)
   const walletConnectCtx = useWalletConnect()
+
+  useEffect(() => {
+    walletConnectCtx.init()
+
+    return () => {}
+  }, [])
+
+  useEffect(
+    () => {
+      console.log('working?')
+      console.log(walletConnectCtx.sessionProposals)
+      walletConnectCtx.approveSession(walletConnectCtx.sessionProposals[0])
+    },
+    [walletConnectCtx.sessionProposals],
+  )
 
   const renderHeader = () => <span>'testing</span>
 
@@ -49,13 +69,17 @@ const ConnectDapp = (props: Props) => {
     const { wcClient } = walletConnectCtx
     setLoading(true)
     try {
-      walletConnectCtx.connect()
-      await wcClient.pair({ uri: connectionUrl })
+      const account = new wallet.Account(address)
+      walletConnectCtx.addAccountAndChain(account.address, 'neo3:testnet')
+      await walletConnectCtx.onURI(connectionUrl)
+      setLoading(false)
     } catch (e) {
       console.error({ e })
       setLoading(false)
     }
   }
+
+  console.log(walletConnectCtx)
 
   return (
     <FullHeightPanel
@@ -85,7 +109,6 @@ const ConnectDapp = (props: Props) => {
           type="submit"
           className={styles.loginButtonMargin}
           disabled={!isValid()}
-          onClick={handleWalletConnectURLSubmit}
         >
           Connect
         </Button>

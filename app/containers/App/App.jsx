@@ -13,7 +13,7 @@ import styles from './App.scss'
 import themes from '../../themes'
 import ErrorBoundary from '../../components/ErrorBoundaries/Main'
 import FramelessNavigation from '../../components/FramelessNavigation'
-import { useWalletConnect } from '@cityofzion/wallet-connect-sdk-react'
+import { useWalletConnect } from '../../context/WalletConnect/WalletConnectContext'
 
 type Props = {
   children: React$Node,
@@ -48,11 +48,11 @@ const App = ({
   store,
 }: Props) => {
   const walletConnectCtx = useWalletConnect()
-  console.log(walletConnectCtx)
 
   useEffect(() => {
     async function handleUpgrade() {
       checkVersion()
+
       try {
         await upgradeUserWalletNEP6()
       } catch (error) {
@@ -62,10 +62,14 @@ const App = ({
       }
     }
     handleUpgrade()
-    return () => {
-      walletConnectCtx.disconnect()
-    }
-  })
+    // walletConnectCtx.resetApp()
+    console.log('App.jsx', { walletConnectCtx })
+    // return () => {
+    //   if (walletConnectCtx.pairings.length) {
+    //     walletConnectCtx.disconnect()
+    //   }
+    // }
+  }, [])
 
   return (
     <ErrorBoundary>

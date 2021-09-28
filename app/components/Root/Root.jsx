@@ -2,7 +2,7 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
-import { WalletConnectContextProvider } from '@cityofzion/wallet-connect-sdk-react'
+import { WalletConnectContextProvider } from '../../context/WalletConnect/WalletConnectContext'
 
 import IntlWrapper from './IntlWrapper'
 import Routes from './Routes'
@@ -17,10 +17,12 @@ const wcOptions = {
   methods: ['invokefunction'], // which RPC methods do you plan to call
   relayServer: 'wss://relay.walletconnect.org', // we are using walletconnect's official relay server
   appMetadata: {
-    name: 'MyApplicationName', // your application name to be displayed on the wallet
-    description: 'My Application description', // description to be shown on the wallet
-    url: 'https://myapplicationdescription.app/', // url to be linked on the wallet
-    icons: ['https://myapplicationdescription.app/myappicon.png'], // icon to be shown on the wallet
+    name: 'CoZ Wallet Prototype',
+    description: 'WalletConnect integration Prototype',
+    url: 'https://coz.io/',
+    icons: [
+      'https://raw.githubusercontent.com/CityOfZion/visual-identity/develop/_CoZ%20Branding/_Logo/_Logo%20icon/_PNG%20200x178px/CoZ_Icon_DARKBLUE_200x178px.png',
+    ],
   },
 }
 
