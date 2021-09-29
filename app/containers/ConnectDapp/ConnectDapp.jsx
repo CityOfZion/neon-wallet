@@ -7,6 +7,12 @@ import { wallet } from '@cityofzion/neon-js-next'
 
 import LockIcon from '../../assets/icons/add.svg'
 
+import Confirm from '../../assets/icons/confirm_connection.svg'
+import Deny from '../../assets/icons/deny_connection.svg'
+
+import WallletConnect from '../../assets/icons/wallet_connect.svg'
+import N3 from '../../assets/images/n3.svg'
+
 import CloseButton from '../../components/CloseButton'
 import TextInput from '../../components/Inputs/TextInput'
 import FullHeightPanel from '../../components/Panel/FullHeightPanel'
@@ -46,9 +52,9 @@ const ConnectDapp = ({
 
   useEffect(
     () => {
-      console.log('working?')
-      console.log(walletConnectCtx.sessionProposals)
-      walletConnectCtx.approveSession(walletConnectCtx.sessionProposals[0])
+      if (walletConnectCtx.sessionProposals[0]) {
+        setConnectionStep(CONNECTION_STEPS.APPROVE_CONNECTION)
+      }
     },
     [walletConnectCtx.sessionProposals],
   )
@@ -81,40 +87,94 @@ const ConnectDapp = ({
 
   console.log(walletConnectCtx)
 
-  return (
-    <FullHeightPanel
-      renderHeader={renderHeader}
-      headerText="Connect with a dApp"
-      renderCloseButton={() => <CloseButton routeTo={ROUTES.SETTINGS} />}
-      renderHeaderIcon={() => (
-        <div>
-          <LockIcon />
-        </div>
-      )}
-      renderInstructions={renderInstructions}
-    >
-      <form className={styles.form} onSubmit={handleWalletConnectURLSubmit}>
-        <TextInput
-          id="privateKey"
-          name="privateKey"
-          label="Scan or Paste URL"
-          placeholder="Scan or Paste URL"
-          value={connectionUrl}
-          onChange={e => setConnectionUrl(e.target.value)}
-          error={null}
-        />
-        <Button
-          id="loginButton"
-          primary
-          type="submit"
-          className={styles.loginButtonMargin}
-          disabled={!isValid()}
+  const proposal = walletConnectCtx.sessionProposals[0]
+
+  switch (true) {
+    case connectionStep === CONNECTION_STEPS.APPROVE_CONNECTION:
+      return (
+        <FullHeightPanel
+          renderHeader={renderHeader}
+          headerText="Wallet Connect"
+          renderCloseButton={() => <CloseButton routeTo={ROUTES.DASHBOARD} />}
+          renderHeaderIcon={() => (
+            <div>
+              <WallletConnect />
+            </div>
+          )}
+          renderInstructions={false}
         >
-          Connect
-        </Button>
-      </form>
-    </FullHeightPanel>
-  )
+          <div className={styles.approveConnectionContainer}>
+            <N3 />
+            <h3>{proposal.proposer.metadata.name} wants to connect</h3>
+            <div className={styles.connectionDetails}>
+              {proposal.proposer.metadata.name} wants to connect to your wallet
+              <div className={styles.details}>
+                <div className={styles.detailsLabel}>
+                  <label>dApp details</label>
+                </div>
+                <div className={styles.featuresRow}>
+                  <div>
+                    <label>CHAIN</label>
+                    {proposal.permissions.blockchain.chains[0]}
+                  </div>
+                  <div>
+                    <label>FEATURES</label>
+                    {proposal.permissions.jsonrpc.methods.join(', ')}
+                  </div>
+                </div>
+              </div>
+              <div className={styles.confirmation}>
+                Please confirm you would like to connect
+                <div>
+                  <Confirm
+                    onClick={() => walletConnectCtx.approveSession(proposal)}
+                  />
+
+                  <Deny
+                    onClick={() => walletConnectCtx.rejectSession(proposal)}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </FullHeightPanel>
+      )
+    default:
+      return (
+        <FullHeightPanel
+          renderHeader={renderHeader}
+          headerText="Connect with a dApp"
+          renderCloseButton={() => <CloseButton routeTo={ROUTES.DASHBOARD} />}
+          renderHeaderIcon={() => (
+            <div>
+              <LockIcon />
+            </div>
+          )}
+          renderInstructions={renderInstructions}
+        >
+          <form className={styles.form} onSubmit={handleWalletConnectURLSubmit}>
+            <TextInput
+              id="privateKey"
+              name="privateKey"
+              label="Scan or Paste URL"
+              placeholder="Scan or Paste URL"
+              value={connectionUrl}
+              onChange={e => setConnectionUrl(e.target.value)}
+              error={null}
+            />
+            <Button
+              id="loginButton"
+              primary
+              type="submit"
+              className={styles.loginButtonMargin}
+              disabled={!isValid()}
+            >
+              Connect
+            </Button>
+          </form>
+        </FullHeightPanel>
+      )
+  }
 }
 
 export default ConnectDapp

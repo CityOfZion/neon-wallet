@@ -2,6 +2,73 @@ p {
   margin: 0 0 12px 0;
 }
 
-form {
+.form {
   width: 420px;
+}
+
+.approveConnectionContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin-top: 24px;
+
+  svg {
+    margin: auto;
+  }
+
+  .connectionDetails {
+    background: #242d35;
+    border-radius: 4px;
+    width: 450px;
+    font-size: 16px;
+    color: #ffffff;
+    text-align: left;
+    padding: 24px;
+  }
+
+  .details {
+    background: #141b20;
+    padding: 6px;
+    margin: 12px 0;
+  }
+
+  .detailsLabel {
+    width: 100%;
+    text-align: left;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #626b7d;
+  }
+
+  .featuresRow {
+    display: flex;
+    justify-content: space-around;
+    font-size: 14px;
+    color: #ffffff;
+    font-family: var(--font-gotham-light);
+    padding: 6px 0px 12px 0px;
+
+    label {
+      margin-bottom: 0;
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+  }
+
+  .confirmation {
+    padding-top: 18px;
+    border-top: 1px solid #626b7d;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    svg {
+      margin: 0 6px;
+      cursor: pointer;
+    }
+  }
 }
