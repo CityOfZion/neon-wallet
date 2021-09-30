@@ -1,6 +1,7 @@
 // @flow
 // $FlowFixMe
 import React, { Component, useEffect } from 'react'
+import { wallet } from '@cityofzion/neon-js-next'
 
 import { ROUTES } from '../../core/constants'
 import Sidebar from './Sidebar'
@@ -14,6 +15,7 @@ import themes from '../../themes'
 import ErrorBoundary from '../../components/ErrorBoundaries/Main'
 import FramelessNavigation from '../../components/FramelessNavigation'
 import { useWalletConnect } from '../../context/WalletConnect/WalletConnectContext'
+import { N3Helper } from '../../context/WalletConnect/helpers'
 
 type Props = {
   children: React$Node,
@@ -23,6 +25,7 @@ type Props = {
   location: Object,
   theme: string,
   store: any,
+  wif: string,
 }
 
 const routesWithSideBar = [
@@ -46,6 +49,7 @@ const App = ({
   checkVersion,
   showErrorNotification,
   store,
+  wif,
 }: Props) => {
   const walletConnectCtx = useWalletConnect()
 
@@ -62,14 +66,27 @@ const App = ({
       }
     }
     handleUpgrade()
-    // walletConnectCtx.resetApp()
-    console.log('App.jsx', { walletConnectCtx })
-    // return () => {
-    //   if (walletConnectCtx.pairings.length) {
-    //     walletConnectCtx.disconnect()
-    //   }
-    // }
   }, [])
+
+  useEffect(
+    () => {
+      const account = new wallet.Account(wif)
+
+      // if the request method is 'testInvoke' we auto-accept it
+      walletConnectCtx.autoAcceptIntercept(
+        (acc, chain, req) => req.method === 'testInvoke',
+      )
+
+      walletConnectCtx.onRequestListener(async (acc, chain, req) => {
+        // TODO: this url needs to come from storage
+        return new N3Helper('https://testnet1.neo.coz.io:443').rpcCall(
+          account,
+          req,
+        )
+      })
+    },
+    [wif],
+  )
 
   return (
     <ErrorBoundary>

@@ -2,10 +2,7 @@
 
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import Client, { CLIENT_EVENTS } from '@walletconnect/client'
-// import { SessionTypes } from '@walletconnect/types'
-import { ERROR, getAppMetadata, getError } from '@walletconnect/utils'
-import { N3Helper } from './helpers'
-import { Account } from '@cityofzion/neon-core/lib/wallet/Account'
+import { ERROR } from '@walletconnect/utils'
 import KeyValueStorage from 'keyvaluestorage'
 import {
   formatJsonRpcError,
@@ -13,15 +10,7 @@ import {
   JsonRpcResponse,
 } from '@json-rpc-tools/utils'
 
-import {
-  DEFAULT_APP_METADATA,
-  DEFAULT_CHAIN_ID,
-  DEFAULT_LOGGER,
-  DEFAULT_METHODS,
-  DEFAULT_RELAY_PROVIDER,
-  DEFAULT_NEO_RPC_ADDRESS,
-  DEFAULT_NEO_NETWORK_MAGIC,
-} from './constants'
+import { DEFAULT_CHAIN_ID } from './constants'
 
 export const WalletConnectContext = React.createContext({})
 
@@ -41,8 +30,6 @@ export const WalletConnectContextProvider: React.FC<{
   const [results, setResults] = useState([])
   const [onRequestCallback, setOnRequestCallback] = useState(undefined)
   const [autoAcceptCallback, setAutoAcceptCallback] = useState(undefined)
-
-  console.log({ sessionProposals })
 
   useEffect(() => {
     const booststrap = async () => {
@@ -123,6 +110,7 @@ export const WalletConnectContextProvider: React.FC<{
   }
 
   const autoAcceptIntercept = listener => {
+    debugger
     setAutoAcceptCallback(() => listener)
   }
 
@@ -146,7 +134,7 @@ export const WalletConnectContextProvider: React.FC<{
 
   const checkApprovedRequest = useCallback(
     async (request: JsonRpcRequest) => {
-      return storage.getItem<boolean>(`request-${JSON.stringify(request)}`)
+      return storage.getItem(`request-${JSON.stringify(request)}`)
     },
     [storage],
   )

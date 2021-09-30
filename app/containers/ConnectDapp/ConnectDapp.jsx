@@ -34,6 +34,55 @@ const CONNECTION_STEPS = {
   TRANSACTION_ERROR: 'TRANSACTION_ERROR',
 }
 
+const REQUEST_MOCK = {
+  topic: 'a597459f33abca20cac77d62001100d3b79e743d6306e17d24f948588b811110',
+  request: {
+    id: 1632947416325648,
+    jsonrpc: '2.0',
+    method: 'invokefunction',
+    params: [
+      '0xd2a4cff31913016155e38e474a2c06d08be276cf',
+      'transfer',
+      [
+        {
+          type: 'Address',
+          value: 'NMkSudozST9kTkpNbyNB1EdU7KzfQoF3dY',
+        },
+        {
+          type: 'ScriptHash',
+          value: '0x010101c0775af568185025b0ce43cfaa9b990a2a',
+        },
+        {
+          type: 'Integer',
+          value: 100000000,
+        },
+        {
+          type: 'Array',
+          value: [
+            {
+              type: 'String',
+              value: 'createStream',
+            },
+            {
+              type: 'Address',
+              value: 'NMkSudozST9kTkpNbyNB1EdU7KzfQoF3dY',
+            },
+            {
+              type: 'Integer',
+              value: 1632947400000,
+            },
+            {
+              type: 'Integer',
+              value: 1633033800000,
+            },
+          ],
+        },
+      ],
+    ],
+  },
+  chainId: 'neo3:testnet',
+}
+
 const ConnectDapp = ({
   address = 'NMkSudozST9kTkpNbyNB1EdU7KzfQoF3dY',
 }: Props) => {
@@ -41,6 +90,8 @@ const ConnectDapp = ({
   const [connectionStep, setConnectionStep] = useState(
     CONNECTION_STEPS.ENTER_URL,
   )
+  const [proposal, setProposal] = useState(null)
+  const [request, setRequests] = useState(null)
   const [loading, setLoading] = useState(false)
   const walletConnectCtx = useWalletConnect()
 
@@ -54,9 +105,21 @@ const ConnectDapp = ({
     () => {
       if (walletConnectCtx.sessionProposals[0]) {
         setConnectionStep(CONNECTION_STEPS.APPROVE_CONNECTION)
+        setProposal(walletConnectCtx.sessionProposals[0])
       }
     },
     [walletConnectCtx.sessionProposals],
+  )
+
+  useEffect(
+    () => {
+      if (walletConnectCtx.requests[0]) {
+        console.log(walletConnectCtx.requests[0])
+        setRequests(walletConnectCtx.requests[0])
+        setConnectionStep(CONNECTION_STEPS.APPROVE_TRANSACTION)
+      }
+    },
+    [walletConnectCtx.requests],
   )
 
   const renderHeader = () => <span>'testing</span>
@@ -85,10 +148,6 @@ const ConnectDapp = ({
     }
   }
 
-  console.log(walletConnectCtx)
-
-  const proposal = walletConnectCtx.sessionProposals[0]
-
   switch (true) {
     case connectionStep === CONNECTION_STEPS.APPROVE_CONNECTION:
       return (
@@ -104,7 +163,8 @@ const ConnectDapp = ({
           renderInstructions={false}
         >
           <div className={styles.approveConnectionContainer}>
-            <N3 />
+            <img src={proposal.proposer.metadata.icons[0]} />
+
             <h3>{proposal.proposer.metadata.name} wants to connect</h3>
             <div className={styles.connectionDetails}>
               {proposal.proposer.metadata.name} wants to connect to your wallet
@@ -131,9 +191,51 @@ const ConnectDapp = ({
                   />
 
                   <Deny
-                    onClick={() => walletConnectCtx.rejectSession(proposal)}
+                    onClick={() => {
+                      walletConnectCtx.rejectSession(proposal)
+                      setConnectionStep(CONNECTION_STEPS.ENTER_URL)
+                      setConnectionUrl('')
+                    }}
                   />
                 </div>
+              </div>
+            </div>
+          </div>
+        </FullHeightPanel>
+      )
+    case connectionStep === CONNECTION_STEPS.APPROVE_TRANSACTION:
+      return (
+        <FullHeightPanel
+          renderHeader={renderHeader}
+          headerText="Wallet Connect"
+          renderCloseButton={() => <CloseButton routeTo={ROUTES.DASHBOARD} />}
+          renderHeaderIcon={() => (
+            <div>
+              <WallletConnect />
+            </div>
+          )}
+          renderInstructions={false}
+        >
+          <div className={styles.approveConnectionContainer}>
+            <img src={proposal.proposer.metadata.icons[0]} />
+
+            <h3>{proposal.proposer.metadata.name} wants to connect</h3>
+
+            <div className={styles.confirmation}>
+              Please confirm you would like to connect
+              <div>
+                <Confirm
+                  onClick={() => walletConnectCtx.approveRequest(request)}
+                />
+
+                <Deny
+                  onClick={() => {
+                    walletConnectCtx.rejectSession(proposal)
+                    setConnectionStep(CONNECTION_STEPS.ENTER_URL)
+                    setConnectionUrl('')
+                    setProposal(null)
+                  }}
+                />
               </div>
             </div>
           </div>
@@ -154,8 +256,7 @@ const ConnectDapp = ({
         >
           <form className={styles.form} onSubmit={handleWalletConnectURLSubmit}>
             <TextInput
-              id="privateKey"
-              name="privateKey"
+              name="dApp URL"
               label="Scan or Paste URL"
               placeholder="Scan or Paste URL"
               value={connectionUrl}
