@@ -92,6 +92,7 @@ declare module 'redux' {
 
   declare export function compose<A, B>(ab: (a: A) => B): (a: A) => B
   declare export function compose<A, B, C>(
+    // $FlowFixMe
     bc: (b: B) => C,
     ab: (a: A) => B,
   ): (a: A) => C
