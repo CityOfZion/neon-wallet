@@ -29,22 +29,47 @@ export const WalletConnectContextProvider = ({
   options: CtxOptions,
   children: any,
 }) => {
-  const [wcClient, setWcClient] = useState<Client | void>(undefined)
-  const [storage, setStorage] = useState<KeyValueStorage | void>(undefined)
-  const [sessionProposals, setSessionProposals] = useState<
-    SessionTypes.Proposal[],
-  >([])
-  const [initialized, setInitialized] = useState<boolean>(false)
+  // const [wcClient, setWcClient] = useState<Client>(undefined)
+  // const [storage, setStorage] = useState<KeyValueStorage>(undefined)
+  // const [sessionProposals, setSessionProposals] = useState<Array<any>>([])
+  // const [initialized, setInitialized] = useState<boolean>(false)
+  // // eslint-disable-next-line
+  // const [chains, setChains] = useState<Array<string>>(options.chainIds)
+  // const [accounts, setAccounts] = useState<Array<any>>([])
+  // const [sessions, setSessions] = useState<Array<any>>([])
+  // const [requests, setRequests] = useState<Array<any>>([])
+  // const [results, setResults] = useState<Array<any>>([])
+  // const [onRequestCallback, setOnRequestCallback] = useState(undefined)
+  // const [autoAcceptCallback, setAutoAcceptCallback] = useState(undefined)
+  // const [txHash, setTxHash] = useState<string>('')
+  // const [error, setError] = useState<any>(undefined)
+
+  // $FlowFixMe
+  const [wcClient, setWcClient] = useState(undefined)
+  // $FlowFixMe
+  const [storage, setStorage] = useState(undefined)
+  // $FlowFixMe
+  const [sessionProposals, setSessionProposals] = useState([])
+  // $FlowFixMe
+  const [initialized, setInitialized] = useState(false)
   // eslint-disable-next-line
-  const [chains, setChains] = useState<string[]>(options.chainIds)
-  const [accounts, setAccounts] = useState<string[]>([])
-  const [sessions, setSessions] = useState<SessionTypes.Created[]>([])
-  const [requests, setRequests] = useState<SessionTypes.RequestEvent[]>([])
-  const [results, setResults] = useState<any[]>([])
+  // eslint-disable-next-line $FlowFixMe
+  const [chains, setChains] = useState(options.chainIds)
+  // $FlowFixMe
+  const [accounts, setAccounts] = useState([])
+  // $FlowFixMe
+  const [sessions, setSessions] = useState([])
+  // $FlowFixMe
+  const [requests, setRequests] = useState([])
+  // $FlowFixMe
+  const [results, setResults] = useState([])
+  // $FlowFixMe
   const [onRequestCallback, setOnRequestCallback] = useState(undefined)
   const [autoAcceptCallback, setAutoAcceptCallback] = useState(undefined)
-  const [txHash, setTxHash] = useState<string>('')
-  const [error, setError] = useState<string | void | boolean>(undefined)
+  // $FlowFixMe
+  const [txHash, setTxHash] = useState('')
+  // $FlowFixMe
+  const [error, setError] = useState(undefined)
 
   const init = async () => {
     const st = new KeyValueStorage()
@@ -299,6 +324,7 @@ export const WalletConnectContextProvider = ({
       metadata: options.appMetadata,
     }
     const session = await wcClient.approve({ proposal, response })
+    // $FlowFixMe
     setSessionProposals(old => old.filter(i => i !== proposal))
     setSessions([session])
   }
@@ -322,6 +348,7 @@ export const WalletConnectContextProvider = ({
   }
 
   const removeFromPending = async (requestEvent: JsonRpcRequest) => {
+    // $FlowFixMe
     setRequests(requests.filter(x => x.request.id !== requestEvent.request.id))
   }
 

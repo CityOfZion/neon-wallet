@@ -22,7 +22,7 @@ import { convertToArbitraryDecimals } from '../../core/formatters'
 import styles from './styles.scss'
 import Button from '../../components/Button'
 import { useWalletConnect } from '../../context/WalletConnect/WalletConnectContext'
-import { N3Helper } from '../../context/WalletConnect/helpers'
+import N3Helper from '../../context/WalletConnect/helpers'
 
 import CheckMarkIcon from '../../assets/icons/confirm-circle.svg'
 import ErrorIcon from '../../assets/icons/wc-error.svg'

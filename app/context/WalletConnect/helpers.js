@@ -1,10 +1,9 @@
 // @flow
 import Neon, { rpc, sc } from '@cityofzion/neon-js-next'
 // eslint-disable-next-line
-import { Account } from '@cityofzion/neon-core/lib/wallet'
 import { JsonRpcRequest, JsonRpcResponse } from '@json-rpc-tools/utils'
 
-export class N3Helper {
+class N3Helper {
   rpcAddress: string
 
   constructor(rpcAddress?: string = 'https://testnet1.neo.coz.io:443') {
@@ -24,7 +23,7 @@ export class N3Helper {
   }
 
   rpcCall = async (
-    account: Account,
+    account: any,
     request: JsonRpcRequest,
   ): Promise<JsonRpcResponse> => {
     let result: any
@@ -61,7 +60,7 @@ export class N3Helper {
   }
 
   contractInvoke = async (
-    account: Account,
+    account: any,
     scriptHash: string,
     operation: string,
     ...args: any[]
@@ -137,3 +136,5 @@ export class N3Helper {
     return { error: { message: e.message, ...e } }
   }
 }
+
+export default N3Helper

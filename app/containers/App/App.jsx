@@ -15,7 +15,7 @@ import themes from '../../themes'
 import ErrorBoundary from '../../components/ErrorBoundaries/Main'
 import FramelessNavigation from '../../components/FramelessNavigation'
 import { useWalletConnect } from '../../context/WalletConnect/WalletConnectContext'
-import { N3Helper } from '../../context/WalletConnect/helpers'
+import N3Helper from '../../context/WalletConnect/helpers'
 
 type Props = {
   children: React$Node,
