@@ -1,23 +1,14 @@
 // @flow
-
-import Neon, { rpc, sc, tx } from '@cityofzion/neon-js-next'
+import Neon, { rpc, sc } from '@cityofzion/neon-js-next'
+// eslint-disable-next-line
 import { Account } from '@cityofzion/neon-core/lib/wallet'
 import { JsonRpcRequest, JsonRpcResponse } from '@json-rpc-tools/utils'
 
 export class N3Helper {
-  constructor(rpcAddress: string, networkMagic?: number) {
-    this.rpcAddress = rpcAddress
-    this.networkMagic = networkMagic
-  }
+  rpcAddress: string
 
-  static init = async (
-    rpcAddress: string,
-    networkMagic?: number,
-  ): Promise<N3Helper> => {
-    return new N3Helper(
-      rpcAddress,
-      networkMagic || (await N3Helper.getMagicOfRpcAddress(rpcAddress)),
-    )
+  constructor(rpcAddress?: string = 'https://testnet1.neo.coz.io:443') {
+    this.rpcAddress = rpcAddress
   }
 
   static getMagicOfRpcAddress = async (rpcAddress: string): Promise<number> => {
@@ -29,7 +20,6 @@ export class N3Helper {
         jsonrpc: '2.0',
       }),
     )
-
     return resp.network
   }
 
@@ -76,23 +66,16 @@ export class N3Helper {
     operation: string,
     ...args: any[]
   ): Promise<any> => {
+    const networkMagic = await N3Helper.getMagicOfRpcAddress(this.rpcAddress)
     const contract = new Neon.experimental.SmartContract(
       Neon.u.HexString.fromHex(scriptHash),
       {
-        networkMagic: this.networkMagic,
+        networkMagic,
         rpcAddress: this.rpcAddress,
-        account: account,
+        account,
       },
     )
-
     const convertedArgs = N3Helper.convertParams(args)
-    // console.log({ convertedArgs })
-    // const signer = new tx.Signer({
-    //   account: account.scriptHash,
-    //   scopes: 'CalledByEntry',
-    // })
-
-    // console.log({ signer })
     try {
       return await contract.invoke(operation, convertedArgs)
     } catch (e) {
@@ -105,16 +88,16 @@ export class N3Helper {
     operation: string,
     ...args: any[]
   ): Promise<any> => {
+    const networkMagic = await N3Helper.getMagicOfRpcAddress(this.rpcAddress)
     const contract = new Neon.experimental.SmartContract(
       Neon.u.HexString.fromHex(scriptHash),
       {
-        networkMagic: this.networkMagic,
+        networkMagic,
         rpcAddress: this.rpcAddress,
       },
     )
 
     const convertedArgs = N3Helper.convertParams(args)
-    console.log({ convertedArgs })
 
     try {
       return await contract.testInvoke(operation, convertedArgs)
@@ -126,11 +109,14 @@ export class N3Helper {
   static convertParams(args: any[]): any[] {
     return args.map(
       a =>
+        // eslint-disable-next-line
         a.value === undefined
           ? a
-          : a.type === 'Address'
+          : // eslint-disable-next-line
+            a.type === 'Address'
             ? sc.ContractParam.hash160(a.value)
-            : a.type === 'ScriptHash'
+            : // eslint-disable-next-line
+              a.type === 'ScriptHash'
               ? sc.ContractParam.hash160(Neon.u.HexString.fromHex(a.value))
               : a.type === 'Array'
                 ? sc.ContractParam.array(...N3Helper.convertParams(a.value))
@@ -141,12 +127,13 @@ export class N3Helper {
   static getInnerParams(p: any[]) {
     let params: any[] = []
     if (p.length > 2) {
+      // eslint-disable-next-line
       params = p[2]
     }
     return params
   }
 
-  static convertError(e) {
+  static convertError(e: any) {
     return { error: { message: e.message, ...e } }
   }
 }

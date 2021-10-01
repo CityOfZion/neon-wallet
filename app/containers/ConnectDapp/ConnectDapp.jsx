@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import { FormattedMessage } from 'react-intl'
 import { wallet } from '@cityofzion/neon-js-next'
-
+import axios from 'axios'
 import LockIcon from '../../assets/icons/add.svg'
 
 import Confirm from '../../assets/icons/confirm_connection.svg'
@@ -17,13 +17,19 @@ import CloseButton from '../../components/CloseButton'
 import TextInput from '../../components/Inputs/TextInput'
 import FullHeightPanel from '../../components/Panel/FullHeightPanel'
 import { ROUTES } from '../../core/constants'
+import { convertToArbitraryDecimals } from '../../core/formatters'
 
 import styles from './styles.scss'
 import Button from '../../components/Button'
 import { useWalletConnect } from '../../context/WalletConnect/WalletConnectContext'
+import { N3Helper } from '../../context/WalletConnect/helpers'
+
+import CheckMarkIcon from '../../assets/icons/confirm-circle.svg'
+import ErrorIcon from '../../assets/icons/wc-error.svg'
 
 type Props = {
   address: string,
+  history: any,
 }
 
 const CONNECTION_STEPS = {
@@ -83,21 +89,61 @@ const REQUEST_MOCK = {
   chainId: 'neo3:testnet',
 }
 
+const PROPOSAL_MOCK = {
+  relay: {
+    protocol: 'waku',
+  },
+  topic: 'dedcb1834048ce11b88c5582d624a2385f81d090c1e821d30490f97639d4c76d',
+  proposer: {
+    publicKey:
+      'f1a0997f891e1c48f3ff578bd69c2b85d0e5a1ac1f0ea8b9dc30426c7473342c',
+    controller: false,
+    metadata: {
+      name: 'Crypsydra',
+      description: 'WalletConnect integration Prototype',
+      url: 'https://crypsydra.vercel.app/',
+      icons: [
+        'https://raw.githubusercontent.com/CityOfZion/visual-identity/develop/_CoZ%20Branding/_Logo/_Logo%20icon/_PNG%20200x178px/CoZ_Icon_DARKBLUE_200x178px.png',
+      ],
+    },
+  },
+  signal: {
+    method: 'pairing',
+    params: {
+      topic: '9ed69162519da40f0e9c32a136e8e1f3c541862504e5e12806e2619fcc7977d8',
+    },
+  },
+  permissions: {
+    blockchain: {
+      chains: ['neo3:testnet'],
+    },
+    jsonrpc: {
+      methods: ['invokefunction'],
+    },
+    notifications: {
+      types: [],
+    },
+  },
+  ttl: 604800,
+}
+
 const ConnectDapp = ({
   address = 'NMkSudozST9kTkpNbyNB1EdU7KzfQoF3dY',
+  history,
 }: Props) => {
   const [connectionUrl, setConnectionUrl] = useState('')
   const [connectionStep, setConnectionStep] = useState(
     CONNECTION_STEPS.ENTER_URL,
   )
-  const [proposal, setProposal] = useState(null)
-  const [request, setRequests] = useState(null)
+  const [proposal, setProposal] = useState(PROPOSAL_MOCK)
+  const [request, setRequests] = useState(REQUEST_MOCK)
   const [loading, setLoading] = useState(false)
+  const [fee, setFee] = useState('')
+  const [contractName, setContractName] = useState('')
   const walletConnectCtx = useWalletConnect()
 
   useEffect(() => {
     walletConnectCtx.init()
-
     return () => {}
   }, [])
 
@@ -113,10 +159,55 @@ const ConnectDapp = ({
 
   useEffect(
     () => {
+      if (walletConnectCtx.txHash) {
+        setConnectionStep(CONNECTION_STEPS.TRANSACTION_SUCCESS)
+      }
+    },
+    [walletConnectCtx.txHash],
+  )
+
+  useEffect(
+    () => {
+      if (walletConnectCtx.error) {
+        setConnectionStep(CONNECTION_STEPS.TRANSACTION_ERROR)
+      }
+    },
+    [walletConnectCtx.error],
+  )
+
+  const getGasFee = async request => {
+    const account = new wallet.Account(address)
+    const testReq = {
+      ...request,
+      method: 'testInvoke',
+    }
+    const results = await new N3Helper(
+      'https://testnet1.neo.coz.io:443',
+    ).rpcCall(account, testReq)
+    const fee = convertToArbitraryDecimals(results.result.gasconsumed)
+
+    setFee(fee)
+  }
+
+  const getContractName = async request => {
+    const hash = request.params[2][1].value
+    const {
+      data: {
+        manifest: { name },
+      },
+    } = await axios.get(
+      `https://dora.coz.io/api/v1/neo3/testnet_rc4/contract/${hash}`,
+    )
+    setContractName(name)
+  }
+
+  useEffect(
+    () => {
       if (walletConnectCtx.requests[0]) {
-        console.log(walletConnectCtx.requests[0])
         setRequests(walletConnectCtx.requests[0])
         setConnectionStep(CONNECTION_STEPS.APPROVE_TRANSACTION)
+        getGasFee(walletConnectCtx.requests[0].request)
+        getContractName(walletConnectCtx.requests[0].request)
       }
     },
     [walletConnectCtx.requests],
@@ -149,6 +240,72 @@ const ConnectDapp = ({
   }
 
   switch (true) {
+    case connectionStep === CONNECTION_STEPS.TRANSACTION_ERROR:
+      return (
+        <FullHeightPanel
+          renderHeader={renderHeader}
+          headerText="Wallet Connect"
+          renderCloseButton={() => (
+            <CloseButton
+              routeTo={ROUTES.DASHBOARD}
+              onClick={() => {
+                walletConnectCtx.setError(undefined)
+              }}
+            />
+          )}
+          renderHeaderIcon={() => (
+            <div>
+              <WallletConnect />
+            </div>
+          )}
+          renderInstructions={false}
+        >
+          <div className={styles.txSuccessContainer}>
+            <ErrorIcon />
+            <h3> Transaction failed!</h3>
+            <p>An unkown error occurred please try again.</p>
+            <br />
+            <br />
+          </div>
+        </FullHeightPanel>
+      )
+    case connectionStep === CONNECTION_STEPS.TRANSACTION_SUCCESS:
+      return (
+        <FullHeightPanel
+          renderHeader={renderHeader}
+          headerText="Wallet Connect"
+          renderCloseButton={() => (
+            <CloseButton
+              routeTo={ROUTES.DASHBOARD}
+              onClick={() => {
+                walletConnectCtx.setTxHash('')
+              }}
+            />
+          )}
+          renderHeaderIcon={() => (
+            <div>
+              <WallletConnect />
+            </div>
+          )}
+          renderInstructions={false}
+        >
+          <div className={styles.txSuccessContainer}>
+            <CheckMarkIcon />
+            <h3> Transaction pending!</h3>
+            <p>
+              Once your transaction has been confirmed it will appear in your
+              activity feed.
+            </p>
+            <br />
+            <br />
+            <p>
+              <label>TRANSACTION ID</label>
+              <br />
+              <code>{walletConnectCtx.txHash}</code>
+            </p>
+          </div>
+        </FullHeightPanel>
+      )
     case connectionStep === CONNECTION_STEPS.APPROVE_CONNECTION:
       return (
         <FullHeightPanel
@@ -187,7 +344,10 @@ const ConnectDapp = ({
                 Please confirm you would like to connect
                 <div>
                   <Confirm
-                    onClick={() => walletConnectCtx.approveSession(proposal)}
+                    onClick={() => {
+                      walletConnectCtx.approveSession(proposal)
+                      history.push(ROUTES.DASHBOARD)
+                    }}
                   />
 
                   <Deny
@@ -195,6 +355,7 @@ const ConnectDapp = ({
                       walletConnectCtx.rejectSession(proposal)
                       setConnectionStep(CONNECTION_STEPS.ENTER_URL)
                       setConnectionUrl('')
+                      history.push(ROUTES.DASHBOARD)
                     }}
                   />
                 </div>
@@ -208,7 +369,17 @@ const ConnectDapp = ({
         <FullHeightPanel
           renderHeader={renderHeader}
           headerText="Wallet Connect"
-          renderCloseButton={() => <CloseButton routeTo={ROUTES.DASHBOARD} />}
+          renderCloseButton={() => (
+            <CloseButton
+              routeTo={ROUTES.DASHBOARD}
+              onClick={() => {
+                walletConnectCtx.rejectRequest(request)
+                setConnectionStep(CONNECTION_STEPS.ENTER_URL)
+                setConnectionUrl('')
+                history.push(ROUTES.DASHBOARD)
+              }}
+            />
+          )}
           renderHeaderIcon={() => (
             <div>
               <WallletConnect />
@@ -216,26 +387,124 @@ const ConnectDapp = ({
           )}
           renderInstructions={false}
         >
-          <div className={styles.approveConnectionContainer}>
+          <div
+            className={classNames([
+              styles.approveConnectionContainer,
+              styles.approveRequestContainer,
+            ])}
+          >
             <img src={proposal.proposer.metadata.icons[0]} />
 
-            <h3>{proposal.proposer.metadata.name} wants to connect</h3>
+            <h3>
+              {proposal.proposer.metadata.name} wants to call{' '}
+              <span className={styles.methodName}>{contractName}</span> contract
+            </h3>
 
-            <div className={styles.confirmation}>
-              Please confirm you would like to connect
-              <div>
-                <Confirm
-                  onClick={() => walletConnectCtx.approveRequest(request)}
-                />
+            <div className={styles.connectionDetails}>
+              <div
+                className={classNames([styles.detailsLabel, styles.detailRow])}
+              >
+                <label>hash</label>
+                <div className={styles.scriptHash}>
+                  {request.request.params[2][1].value}
+                </div>
+              </div>
 
-                <Deny
-                  onClick={() => {
-                    walletConnectCtx.rejectSession(proposal)
-                    setConnectionStep(CONNECTION_STEPS.ENTER_URL)
-                    setConnectionUrl('')
-                    setProposal(null)
-                  }}
-                />
+              <div
+                className={classNames([
+                  styles.detailsLabel,
+                  styles.detailRow,
+                  styles.noBorder,
+                ])}
+              >
+                <label>method</label>
+                <div>{request.request.params[1]}</div>
+              </div>
+              <div className={styles.details}>
+                <div className={styles.detailsLabel}>
+                  <label>request parameters</label>
+                </div>
+
+                <div className={styles.requestParams}>
+                  {request.request.params.map((p: any, i: number) => (
+                    <React.Fragment>
+                      <div className={styles.paramContainer}>
+                        <div key={i}>
+                          <div className={styles.index}>{i.toString(10)}</div>
+                          <div
+                            ml="0.5rem"
+                            title={
+                              typeof p === 'object' ? 'Array' : p.toString()
+                            }
+                          >
+                            {typeof p === 'object' ? (
+                              <div className={styles.centered}>
+                                {' '}
+                                Array/Dictionary <br /> <br />
+                              </div>
+                            ) : (
+                              p.toString()
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      {typeof p === 'object' && (
+                        <div className={styles.jsonParams}>
+                          {Object.keys(p).map((k: string) => (
+                            <div key={k} mt="0.5rem">
+                              <div>
+                                {p[k] &&
+                                  (typeof p[k] !== 'object' ? (
+                                    <div>
+                                      {' '}
+                                      {p[k].toString()} <br /> <br />{' '}
+                                    </div>
+                                  ) : (
+                                    <div>
+                                      {JSON.stringify(p[k], null, 4)}
+                                      <br />
+                                      <br />
+                                    </div>
+                                  ))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </React.Fragment>
+                  ))}
+                </div>
+              </div>
+              <div
+                className={classNames([styles.detailsLabel, styles.detailRow])}
+              >
+                <label>fee</label>
+                <div className={styles.scriptHash}>{fee} GAS</div>
+              </div>
+              <div className={styles.confirmation}>
+                Please confirm you would like to proceed
+                <div>
+                  <Confirm
+                    onClick={async () => {
+                      if (!loading) {
+                        setLoading(true)
+                        await walletConnectCtx.approveRequest(request)
+                        setLoading(false)
+                      }
+                    }}
+                  />
+
+                  <Deny
+                    onClick={() => {
+                      if (!loading) {
+                        walletConnectCtx.rejectRequest(request)
+                        setConnectionStep(CONNECTION_STEPS.ENTER_URL)
+                        setConnectionUrl('')
+                        history.push(ROUTES.DASHBOARD)
+                      }
+                    }}
+                  />
+                </div>
               </div>
             </div>
           </div>

@@ -353,4 +353,5 @@ class CreateImportSplitWalletForm extends React.Component<Props, State> {
   }
 }
 
+// $FlowFixMe
 export default withRouter(injectIntl(CreateImportSplitWalletForm))

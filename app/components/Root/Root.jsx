@@ -12,8 +12,7 @@ type Props = {
 }
 
 const wcOptions = {
-  chainId: 'neo3:testnet', // blockchain and network identifier
-  logger: 'debug', // use debug to show all log information on browser console
+  chainIds: ['neo3:testnet'], // blockchain and network identifier
   methods: ['invokefunction'], // which RPC methods do you plan to call
   relayServer: 'wss://relay.walletconnect.org', // we are using walletconnect's official relay server
   appMetadata: {

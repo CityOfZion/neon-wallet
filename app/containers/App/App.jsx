@@ -1,6 +1,6 @@
 // @flow
 // $FlowFixMe
-import React, { Component, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { wallet } from '@cityofzion/neon-js-next'
 
 import { ROUTES } from '../../core/constants'
@@ -26,6 +26,7 @@ type Props = {
   theme: string,
   store: any,
   wif: string,
+  history: any,
 }
 
 const routesWithSideBar = [
@@ -50,9 +51,9 @@ const App = ({
   showErrorNotification,
   store,
   wif,
+  history,
 }: Props) => {
   const walletConnectCtx = useWalletConnect()
-
   useEffect(() => {
     async function handleUpgrade() {
       checkVersion()
@@ -77,15 +78,30 @@ const App = ({
         (acc, chain, req) => req.method === 'testInvoke',
       )
 
-      walletConnectCtx.onRequestListener(async (acc, chain, req) => {
+      walletConnectCtx.onRequestListener(async (acc, chain, req) =>
         // TODO: this url needs to come from storage
-        return new N3Helper('https://testnet1.neo.coz.io:443').rpcCall(
-          account,
-          req,
-        )
-      })
+        new N3Helper('https://testnet1.neo.coz.io:443').rpcCall(account, req),
+      )
     },
     [wif],
+  )
+
+  useEffect(
+    () => {
+      if (walletConnectCtx.sessionProposals[0]) {
+        history.push(ROUTES.CONNECT_DAPP)
+      }
+    },
+    [walletConnectCtx.sessionProposals],
+  )
+
+  useEffect(
+    () => {
+      if (walletConnectCtx.requests[0]) {
+        history.push(ROUTES.CONNECT_DAPP)
+      }
+    },
+    [walletConnectCtx.requests],
   )
 
   return (

@@ -4,57 +4,50 @@ import React, { useCallback, useContext, useEffect, useState } from 'react'
 import Client, { CLIENT_EVENTS } from '@walletconnect/client'
 import { ERROR } from '@walletconnect/utils'
 import KeyValueStorage from 'keyvaluestorage'
+import { SessionTypes, AppMetadata } from '@walletconnect/types'
 import {
   formatJsonRpcError,
   JsonRpcRequest,
   JsonRpcResponse,
 } from '@json-rpc-tools/utils'
 
-import { DEFAULT_CHAIN_ID } from './constants'
+type CtxOptions = {
+  appMetadata: AppMetadata,
+  chainIds: string[],
+  logger?: string,
+  methods: string[],
+  relayServer: string,
+}
 
+// $FlowFixMe
 export const WalletConnectContext = React.createContext({})
 
-export const WalletConnectContextProvider: React.FC<{
+export const WalletConnectContextProvider = ({
+  options,
+  children,
+}: {
   options: CtxOptions,
   children: any,
-}> = ({ options, children }) => {
-  const [wcClient, setWcClient] = useState(undefined)
-  const [storage, setStorage] = useState(undefined)
-  const [neonHelper, setNeonHelper] = useState(undefined)
-  const [sessionProposals, setSessionProposals] = useState([])
-  const [initialized, setInitialized] = useState(false)
-  const [chains, setChains] = useState([DEFAULT_CHAIN_ID])
-  const [accounts, setAccounts] = useState([])
-  const [sessions, setSessions] = useState([])
-  const [requests, setRequests] = useState([])
-  const [results, setResults] = useState([])
+}) => {
+  const [wcClient, setWcClient] = useState<Client | void>(undefined)
+  const [storage, setStorage] = useState<KeyValueStorage | void>(undefined)
+  const [sessionProposals, setSessionProposals] = useState<
+    SessionTypes.Proposal[],
+  >([])
+  const [initialized, setInitialized] = useState<boolean>(false)
+  // eslint-disable-next-line
+  const [chains, setChains] = useState<string[]>(options.chainIds)
+  const [accounts, setAccounts] = useState<string[]>([])
+  const [sessions, setSessions] = useState<SessionTypes.Created[]>([])
+  const [requests, setRequests] = useState<SessionTypes.RequestEvent[]>([])
+  const [results, setResults] = useState<any[]>([])
   const [onRequestCallback, setOnRequestCallback] = useState(undefined)
   const [autoAcceptCallback, setAutoAcceptCallback] = useState(undefined)
-
-  useEffect(() => {
-    const booststrap = async () => {
-      var arr = [] // Array to hold the keys
-      // Iterate over localStorage and insert the keys that meet the condition into arr
-      for (var i = 0; i < localStorage.length; i++) {
-        if (localStorage.key(i).substring(0, 2) == 'wc') {
-          arr.push(localStorage.key(i))
-        }
-      }
-
-      // Iterate over arr and remove the items by key
-      for (var i = 0; i < arr.length; i++) {
-        localStorage.removeItem(arr[i])
-      }
-
-      init()
-    }
-
-    booststrap()
-  }, [])
+  const [txHash, setTxHash] = useState<string>('')
+  const [error, setError] = useState<string | void | boolean>(undefined)
 
   const init = async () => {
     const st = new KeyValueStorage()
-    console.log(st)
     setStorage(st)
     setWcClient(
       await Client.init({
@@ -66,15 +59,40 @@ export const WalletConnectContextProvider: React.FC<{
     )
   }
 
+  useEffect(() => {
+    const booststrap = async () => {
+      const arr = []
+      // eslint-disable-next-line
+      for (let i = 0; i < localStorage.length; i++) {
+        // eslint-disable-next-line
+        // eslint-disable-next-line $FlowFixMe
+        if (localStorage.key(i).substring(0, 2) === 'wc') {
+          arr.push(localStorage.key(i))
+        }
+      }
+      // eslint-disable-next-line
+      for (let i = 0; i < arr.length; i++) {
+        // eslint-disable-next-line
+        // eslint-disable-next-line $FlowFixMe
+        localStorage.removeItem(arr[i])
+      }
+      init()
+    }
+
+    booststrap()
+  }, [])
+
   const resetApp = async () => {
     try {
       if (sessions.length)
         await Promise.all(
-          sessions.map(session =>
-            wcClient.disconnect({
-              topic: session.topic,
-              reason: ERROR.USER_DISCONNECTED.format(),
-            }),
+          sessions.map(
+            session =>
+              wcClient &&
+              wcClient.disconnect({
+                topic: session.topic,
+                reason: ERROR.USER_DISCONNECTED.format(),
+              }),
           ),
         )
     } catch (e) {
@@ -105,37 +123,44 @@ export const WalletConnectContextProvider: React.FC<{
 
   // ---- MAKE REQUESTS AND SAVE/CHECK IF APPROVED ------------------------------//
 
-  const onRequestListener = listener => {
+  const onRequestListener = (listener: any) => {
     setOnRequestCallback(() => listener)
   }
 
-  const autoAcceptIntercept = listener => {
-    debugger
+  const autoAcceptIntercept = (listener: any) => {
     setAutoAcceptCallback(() => listener)
   }
-
-  const approveAndMakeRequest = async (request: JsonRpcRequest) => {
-    storage.setItem(`request-${JSON.stringify(request)}`, true)
-    return await makeRequest(request)
-  }
-
   const makeRequest = useCallback(
     async (request: JsonRpcRequest) => {
-      // TODO: allow multiple accounts
       const [namespace, reference, address] = accounts[0].split(':')
       const chainId = `${namespace}:${reference}`
       if (!onRequestCallback) {
         throw new Error('There is no onRequestCallback')
       }
-      return await onRequestCallback(address, chainId, request)
+      const results = await onRequestCallback(address, chainId, request)
+
+      if (results.result && request.method === 'invokefunction') {
+        setTxHash(results.result)
+      } else {
+        // TODO: use string error message here
+        setError(true)
+      }
+      return results
     },
     [accounts],
   )
 
+  const approveAndMakeRequest = async (request: JsonRpcRequest) => {
+    // $FlowFixMe
+    storage.setItem(`request-${JSON.stringify(request)}`, true)
+
+    return makeRequest(request)
+  }
+
   const checkApprovedRequest = useCallback(
-    async (request: JsonRpcRequest) => {
-      return storage.getItem(`request-${JSON.stringify(request)}`)
-    },
+    async (request: JsonRpcRequest) =>
+      // $FlowFixMe
+      storage.getItem(`request-${JSON.stringify(request)}`),
     [storage],
   )
 
@@ -151,36 +176,22 @@ export const WalletConnectContextProvider: React.FC<{
 
   const subscribeToEvents = useCallback(
     () => {
-      console.log('ACTION', 'subscribeToEvents')
-
       if (typeof wcClient === 'undefined') {
         throw new Error('Client is not initialized')
       }
-
       if (!accounts.length) {
         return
       }
-
       wcClient.on(CLIENT_EVENTS.session.proposal, proposal => {
         setSessionProposals(old => [...old, proposal])
         return null
       })
-
       wcClient.on(CLIENT_EVENTS.session.request, async requestEvent => {
-        // tslint:disable-next-line
-        console.log(
-          'EVENT',
-          CLIENT_EVENTS.session.request,
-          requestEvent.request,
-        )
-
         const askApproval = () => {
-          setRequests(old => {
-            return [
-              ...old.filter(i => i.request.id !== requestEvent.request.id),
-              requestEvent,
-            ]
-          })
+          setRequests(old => [
+            ...old.filter(i => i.request.id !== requestEvent.request.id),
+            requestEvent,
+          ])
         }
 
         const approve = async () => {
@@ -229,7 +240,7 @@ export const WalletConnectContextProvider: React.FC<{
         if (typeof wcClient === 'undefined') {
           throw new Error('Client is not initialized')
         }
-        console.log('EVENT', 'session_created')
+
         setSessions(wcClient.session.values)
       })
 
@@ -237,7 +248,7 @@ export const WalletConnectContextProvider: React.FC<{
         if (typeof wcClient === 'undefined') {
           throw new Error('Client is not initialized')
         }
-        console.log('EVENT', 'session_deleted')
+
         setSessions(wcClient.session.values)
       })
     },
@@ -263,7 +274,7 @@ export const WalletConnectContextProvider: React.FC<{
     await wcClient.pair({ uri })
   }
 
-  const getPeerOfRequest = async requestEvent => {
+  const getPeerOfRequest = async (requestEvent: JsonRpcRequest) => {
     if (typeof wcClient === 'undefined') {
       throw new Error('Client is not initialized')
     }
@@ -271,8 +282,7 @@ export const WalletConnectContextProvider: React.FC<{
     return peer
   }
 
-  const approveSession = async proposal => {
-    console.log('ACTION', 'approveSession')
+  const approveSession = async (proposal: SessionTypes.Proposal) => {
     if (typeof wcClient === 'undefined') {
       throw new Error('Client is not initialized')
     }
@@ -293,8 +303,7 @@ export const WalletConnectContextProvider: React.FC<{
     setSessions([session])
   }
 
-  const rejectSession = async proposal => {
-    console.log('ACTION', 'rejectSession')
+  const rejectSession = async (proposal: SessionTypes.Proposal) => {
     if (typeof wcClient === 'undefined') {
       throw new Error('Client is not initialized')
     }
@@ -303,7 +312,6 @@ export const WalletConnectContextProvider: React.FC<{
   }
 
   const disconnect = async (topic: string) => {
-    console.log('ACTION', 'disconnect')
     if (typeof wcClient === 'undefined') {
       throw new Error('Client is not initialized')
     }
@@ -313,11 +321,11 @@ export const WalletConnectContextProvider: React.FC<{
     })
   }
 
-  const removeFromPending = async requestEvent => {
+  const removeFromPending = async (requestEvent: JsonRpcRequest) => {
     setRequests(requests.filter(x => x.request.id !== requestEvent.request.id))
   }
 
-  const approveRequest = async requestEvent => {
+  const approveRequest = async (requestEvent: JsonRpcRequest) => {
     if (typeof wcClient === 'undefined') {
       throw new Error('Client is not initialized')
     }
@@ -341,7 +349,7 @@ export const WalletConnectContextProvider: React.FC<{
     await removeFromPending(requestEvent)
   }
 
-  const rejectRequest = async requestEvent => {
+  const rejectRequest = async (requestEvent: JsonRpcRequest) => {
     if (typeof wcClient === 'undefined') {
       throw new Error('Client is not initialized')
     }
@@ -408,6 +416,10 @@ export const WalletConnectContextProvider: React.FC<{
     addAccountAndChain,
     removeAccountAndChain,
     clearAccountAndChain,
+    error,
+    setError,
+    txHash,
+    setTxHash,
   }
 
   return (
