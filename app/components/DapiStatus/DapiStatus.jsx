@@ -1,5 +1,4 @@
 // @flow
-import { useWalletConnect } from '@cityofzion/wallet-connect-sdk-react'
 import Tippy from '@tippyjs/react'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
@@ -8,9 +7,12 @@ import { ROUTES } from '../../core/constants'
 import Dapps from '../../assets/icons/dapps.svg'
 import Plus from '../../assets/icons/add.svg'
 import styles from './DapiStatus.scss'
+import { useWalletConnect } from '../../context/WalletConnect/WalletConnectContext'
 
 const DapiStatus = () => {
-  const walletConnectCtx = useWalletConnect()
+  const { sessions, disconnect } = useWalletConnect()
+
+  console.log(useWalletConnect())
 
   return (
     <div className={styles.tooltipContainer}>
@@ -18,15 +20,39 @@ const DapiStatus = () => {
       <div className={styles.innerTooltipContainer}>
         <div className={styles.title}>
           CONNECTED DAPPS{' '}
-          <NavLink id="wallet-manager" exact to={ROUTES.CONNECT_DAPP}>
+          <NavLink exact to={ROUTES.CONNECT_DAPP}>
             {' '}
             <Plus />{' '}
           </NavLink>
         </div>
-        <div className={styles.dappList}>No dApps connected</div>
-        <NavLink id="wallet-manager" exact to={ROUTES.CONNECT_DAPP}>
-          <div className={styles.connectButton}> Connect </div>
-        </NavLink>
+        <div className={styles.dappList}>
+          {sessions.length ? (
+            sessions.map(s => (
+              <div className={styles.sessionContainer}>
+                <div>
+                  {' '}
+                  <img src={s.peer.metadata.icons[0]} />
+                  {s.peer.metadata.name}
+                </div>{' '}
+                <div
+                  className={styles.connectButton}
+                  onClick={() => disconnect(s.topic)}
+                >
+                  {' '}
+                  Disconnect{' '}
+                </div>
+              </div>
+            ))
+          ) : (
+            <div style={{ marginTop: 6 }}>No dApps connected </div>
+          )}
+        </div>
+
+        {!sessions.length && (
+          <NavLink id="wallet-manager" exact to={ROUTES.CONNECT_DAPP}>
+            <div className={styles.connectButton}> Connect </div>
+          </NavLink>
+        )}
       </div>
     </div>
   )

@@ -29,21 +29,6 @@ export const WalletConnectContextProvider = ({
   options: CtxOptions,
   children: any,
 }) => {
-  // const [wcClient, setWcClient] = useState<Client>(undefined)
-  // const [storage, setStorage] = useState<KeyValueStorage>(undefined)
-  // const [sessionProposals, setSessionProposals] = useState<Array<any>>([])
-  // const [initialized, setInitialized] = useState<boolean>(false)
-  // // eslint-disable-next-line
-  // const [chains, setChains] = useState<Array<string>>(options.chainIds)
-  // const [accounts, setAccounts] = useState<Array<any>>([])
-  // const [sessions, setSessions] = useState<Array<any>>([])
-  // const [requests, setRequests] = useState<Array<any>>([])
-  // const [results, setResults] = useState<Array<any>>([])
-  // const [onRequestCallback, setOnRequestCallback] = useState(undefined)
-  // const [autoAcceptCallback, setAutoAcceptCallback] = useState(undefined)
-  // const [txHash, setTxHash] = useState<string>('')
-  // const [error, setError] = useState<any>(undefined)
-
   // $FlowFixMe
   const [wcClient, setWcClient] = useState(undefined)
   // $FlowFixMe
@@ -84,31 +69,32 @@ export const WalletConnectContextProvider = ({
     )
   }
 
-  useEffect(() => {
-    const booststrap = async () => {
-      const arr = []
+  const clearStorage = async () => {
+    const arr = []
+    // eslint-disable-next-line
+    for (let i = 0; i < localStorage.length; i++) {
       // eslint-disable-next-line
-      for (let i = 0; i < localStorage.length; i++) {
-        // eslint-disable-next-line
-        // eslint-disable-next-line $FlowFixMe
-        if (localStorage.key(i).substring(0, 2) === 'wc') {
-          arr.push(localStorage.key(i))
-        }
+      // eslint-disable-next-line $FlowFixMe
+      if (localStorage.key(i).substring(0, 2) === 'wc') {
+        arr.push(localStorage.key(i))
       }
-      // eslint-disable-next-line
-      for (let i = 0; i < arr.length; i++) {
-        // eslint-disable-next-line
-        // eslint-disable-next-line $FlowFixMe
-        localStorage.removeItem(arr[i])
-      }
-      init()
     }
+    // eslint-disable-next-line
+    for (let i = 0; i < arr.length; i++) {
+      // eslint-disable-next-line
+      // eslint-disable-next-line $FlowFixMe
+      localStorage.removeItem(arr[i])
+    }
+  }
 
-    booststrap()
+  useEffect(() => {
+    init()
+    clearStorage()
   }, [])
 
   const resetApp = async () => {
     try {
+      clearStorage()
       if (sessions.length)
         await Promise.all(
           sessions.map(
@@ -147,7 +133,6 @@ export const WalletConnectContextProvider = ({
   )
 
   // ---- MAKE REQUESTS AND SAVE/CHECK IF APPROVED ------------------------------//
-
   const onRequestListener = (listener: any) => {
     setOnRequestCallback(() => listener)
   }

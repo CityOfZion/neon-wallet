@@ -1,4 +1,13 @@
+// @flow
+
 import { withRouter } from 'react-router-dom'
+import { compose } from 'recompose'
+
 import ConnectDapp from './ConnectDapp'
 
-export default withRouter(ConnectDapp)
+import withAuthData from '../../hocs/withAuthData'
+
+export default compose(
+  withRouter,
+  withAuthData(),
+)(ConnectDapp)

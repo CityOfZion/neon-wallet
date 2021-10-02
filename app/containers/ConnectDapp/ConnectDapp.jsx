@@ -127,10 +127,7 @@ const PROPOSAL_MOCK = {
   ttl: 604800,
 }
 
-const ConnectDapp = ({
-  address = 'NMkSudozST9kTkpNbyNB1EdU7KzfQoF3dY',
-  history,
-}: Props) => {
+const ConnectDapp = ({ address, history }: Props) => {
   const [connectionUrl, setConnectionUrl] = useState('')
   const [connectionStep, setConnectionStep] = useState(
     CONNECTION_STEPS.ENTER_URL,
