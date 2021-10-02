@@ -106,6 +106,7 @@ const ConnectDapp = ({ address, history, net }: Props) => {
     }
     const results = await new N3Helper(endpoint).rpcCall(account, testReq)
     const fee = convertToArbitraryDecimals(results.result.gasconsumed)
+    console.log({ fee })
     setFee(fee)
   }
 

@@ -98,7 +98,7 @@ const App = ({
         )
       })
     },
-    [wif, net],
+    [wif, net, isHardwareLogin, signingFunction, address],
   )
 
   useEffect(

@@ -84,6 +84,7 @@
     }
   },
   "dependencies": {
+    "@cityofzion/neon-core": "^5.0.0-next.15",
     "@cityofzion/neon-js": "3.11.9",
     "@cityofzion/neon-js-legacy-latest": "npm:@cityofzion/neon-js@4.9.0",
     "@cityofzion/neon-js-next": "npm:@cityofzion/neon-js@5.0.0-next.15",

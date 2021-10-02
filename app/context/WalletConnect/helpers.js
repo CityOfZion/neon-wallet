@@ -1,5 +1,6 @@
 // @flow
-import Neon, { rpc, sc, api, tx, u } from '@cityofzion/neon-js-next'
+import Neon, { rpc, tx, sc, u, api } from '@cityofzion/neon-js-next'
+import { sc as ncSC, u as ncU, tx as ncTx } from '@cityofzion/neon-core'
 import {
   setBlockExpiry,
   addFees,
@@ -95,14 +96,18 @@ class N3Helper {
         const facade = await api.NetworkFacade.fromConfig({
           node: this.rpcAddress,
         })
-        const builder = new sc.ScriptBuilder()
-        builder.emitAppCall(
-          Neon.u.HexString.fromHex(scriptHash).toString(),
-          operation,
-          convertedArgs,
-        )
-        const transaction = new tx.Transaction()
-        transaction.script = u.HexString.fromHex(builder.build())
+        const builder = new ncSC.ScriptBuilder()
+        builder
+          .emitAppCall(
+            Neon.u.HexString.fromHex(scriptHash).toString(),
+            operation,
+            convertedArgs,
+          )
+          .catch(e => {
+            console.error({ e })
+          })
+        const transaction = new ncTx.Transaction()
+        transaction.script = ncU.HexString.fromHex(builder.build())
         await setBlockExpiry(transaction, {
           rpcAddress: this.rpcAddress,
         }).catch(e => {
@@ -112,10 +117,9 @@ class N3Helper {
           account: account.scriptHash,
           scopes: 'CalledByEntry',
         })
-
         await addFees(transaction, {
           rpcAddress: this.rpcAddress,
-          account,
+          account: account.scriptHash,
           networkMagic,
         }).catch(e => {
           console.error({ e })
