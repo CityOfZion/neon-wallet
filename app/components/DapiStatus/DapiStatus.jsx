@@ -12,8 +12,6 @@ import { useWalletConnect } from '../../context/WalletConnect/WalletConnectConte
 const DapiStatus = () => {
   const { sessions, disconnect } = useWalletConnect()
 
-  console.log(useWalletConnect())
-
   return (
     <div className={styles.tooltipContainer}>
       <div className={styles.arrowUp} />
