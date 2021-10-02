@@ -1,6 +1,6 @@
 {
   "name": "Neon",
-  "version": "2.10.0-rc1",
+  "version": "2.10.0-rc2",
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",
   "homepage": "https://github.com/CityOfZion/neon-wallet",
@@ -87,7 +87,6 @@
     "@cityofzion/neon-js": "3.11.9",
     "@cityofzion/neon-js-legacy-latest": "npm:@cityofzion/neon-js@4.9.0",
     "@cityofzion/neon-js-next": "npm:@cityofzion/neon-js@5.0.0-next.15",
-    "@cityofzion/neon-js-next-10": "npm:@cityofzion/neon-js@5.0.0-next.13",
     "@cityofzion/neon-ledger-next": "npm:@cityofzion/neon-ledger@5.0.0-next.14",
     "@cityofzion/wallet-connect-sdk-core": "^1.0.2",
     "@cityofzion/wallet-connect-sdk-react": "^1.0.2",

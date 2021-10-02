@@ -16,6 +16,7 @@ import ErrorBoundary from '../../components/ErrorBoundaries/Main'
 import FramelessNavigation from '../../components/FramelessNavigation'
 import { useWalletConnect } from '../../context/WalletConnect/WalletConnectContext'
 import N3Helper from '../../context/WalletConnect/helpers'
+import { getNode, getRPCEndpoint } from '../../actions/nodeStorageActions'
 
 type Props = {
   children: React$Node,
@@ -27,6 +28,9 @@ type Props = {
   store: any,
   wif: string,
   history: any,
+  net: string,
+  isHardwareLogin: boolean,
+  signingFunction: () => void,
 }
 
 const routesWithSideBar = [
@@ -52,6 +56,9 @@ const App = ({
   store,
   wif,
   history,
+  net,
+  isHardwareLogin,
+  signingFunction,
 }: Props) => {
   const walletConnectCtx = useWalletConnect()
   useEffect(() => {
@@ -71,19 +78,27 @@ const App = ({
 
   useEffect(
     () => {
-      const account = new wallet.Account(wif)
+      const account = new wallet.Account(isHardwareLogin ? address : wif)
 
       // if the request method is 'testInvoke' we auto-accept it
       walletConnectCtx.autoAcceptIntercept(
         (acc, chain, req) => req.method === 'testInvoke',
       )
 
-      walletConnectCtx.onRequestListener(async (acc, chain, req) =>
-        // TODO: this url needs to come from storage
-        new N3Helper('https://testnet1.neo.coz.io:443').rpcCall(account, req),
-      )
+      walletConnectCtx.onRequestListener(async (acc, chain, req) => {
+        let endpoint = await getNode(net)
+        if (!endpoint) {
+          endpoint = await getRPCEndpoint(net)
+        }
+        return new N3Helper(endpoint).rpcCall(
+          account,
+          req,
+          isHardwareLogin,
+          signingFunction,
+        )
+      })
     },
-    [wif],
+    [wif, net],
   )
 
   useEffect(

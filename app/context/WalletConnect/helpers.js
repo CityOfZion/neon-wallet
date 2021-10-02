@@ -1,12 +1,16 @@
 // @flow
-import Neon, { rpc, sc } from '@cityofzion/neon-js-next'
+import Neon, { rpc, sc, api, tx, u } from '@cityofzion/neon-js-next'
+import {
+  setBlockExpiry,
+  addFees,
+} from '@cityofzion/neon-js-next/lib/experimental/helpers'
 // eslint-disable-next-line
 import { JsonRpcRequest, JsonRpcResponse } from '@json-rpc-tools/utils'
 
 class N3Helper {
   rpcAddress: string
 
-  constructor(rpcAddress?: string = 'https://testnet1.neo.coz.io:443') {
+  constructor(rpcAddress: string) {
     this.rpcAddress = rpcAddress
   }
 
@@ -25,6 +29,8 @@ class N3Helper {
   rpcCall = async (
     account: any,
     request: JsonRpcRequest,
+    isHardwareLogin?: boolean,
+    signingFunction?: () => void,
   ): Promise<JsonRpcResponse> => {
     let result: any
 
@@ -34,6 +40,8 @@ class N3Helper {
       }
 
       result = await this.contractInvoke(
+        isHardwareLogin,
+        signingFunction,
         account,
         request.params[0],
         request.params[1],
@@ -60,11 +68,14 @@ class N3Helper {
   }
 
   contractInvoke = async (
+    isHardwareLogin?: boolean,
+    signingFunction?: () => void,
     account: any,
     scriptHash: string,
     operation: string,
     ...args: any[]
   ): Promise<any> => {
+    debugger
     const networkMagic = await N3Helper.getMagicOfRpcAddress(this.rpcAddress)
     const contract = new Neon.experimental.SmartContract(
       Neon.u.HexString.fromHex(scriptHash),
@@ -74,9 +85,57 @@ class N3Helper {
         account,
       },
     )
+
     const convertedArgs = N3Helper.convertParams(args)
     try {
-      return await contract.invoke(operation, convertedArgs)
+      if (isHardwareLogin) {
+        const signingConfig = {
+          signingCallback: signingFunction,
+        }
+        const facade = await api.NetworkFacade.fromConfig({
+          node: this.rpcAddress,
+        })
+        const builder = new sc.ScriptBuilder()
+        builder.emitAppCall(
+          Neon.u.HexString.fromHex(scriptHash).toString(),
+          operation,
+          convertedArgs,
+        )
+        const transaction = new tx.Transaction()
+        transaction.script = u.HexString.fromHex(builder.build())
+        await setBlockExpiry(transaction, {
+          rpcAddress: this.rpcAddress,
+        }).catch(e => {
+          console.error({ e })
+        })
+        transaction.addSigner({
+          account: account.scriptHash,
+          scopes: 'CalledByEntry',
+        })
+
+        await addFees(transaction, {
+          rpcAddress: this.rpcAddress,
+          account,
+          networkMagic,
+        }).catch(e => {
+          console.error({ e })
+        })
+        const validateResult = await facade.validate(transaction)
+        if (!validateResult.valid) {
+          throw new Error('Unable to validate transaction')
+        }
+        const signedTx = await facade
+          .sign(transaction, signingConfig)
+          .catch(e => {
+            console.log(e)
+          })
+
+        console.log({ signedTx })
+        return new rpc.NeoServerRpcClient(this.rpcAddress).sendRawTransaction(
+          signedTx,
+        )
+      }
+      return contract.invoke(operation, convertedArgs)
     } catch (e) {
       return N3Helper.convertError(e)
     }

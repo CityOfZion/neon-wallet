@@ -1,35 +1,31 @@
 // @flow
-// $FlowFixMe
 import React, { useEffect, useState } from 'react'
 import classNames from 'classnames'
-import { FormattedMessage } from 'react-intl'
 import { wallet } from '@cityofzion/neon-js-next'
 import axios from 'axios'
-import LockIcon from '../../assets/icons/add.svg'
-
-import Confirm from '../../assets/icons/confirm_connection.svg'
-import Deny from '../../assets/icons/deny_connection.svg'
-
-import WallletConnect from '../../assets/icons/wallet_connect.svg'
-import N3 from '../../assets/images/n3.svg'
 
 import CloseButton from '../../components/CloseButton'
 import TextInput from '../../components/Inputs/TextInput'
 import FullHeightPanel from '../../components/Panel/FullHeightPanel'
 import { ROUTES } from '../../core/constants'
 import { convertToArbitraryDecimals } from '../../core/formatters'
-
 import styles from './styles.scss'
 import Button from '../../components/Button'
 import { useWalletConnect } from '../../context/WalletConnect/WalletConnectContext'
 import N3Helper from '../../context/WalletConnect/helpers'
-
+import LockIcon from '../../assets/icons/add.svg'
+import Confirm from '../../assets/icons/confirm_connection.svg'
+import Deny from '../../assets/icons/deny_connection.svg'
+import WallletConnect from '../../assets/icons/wallet_connect.svg'
 import CheckMarkIcon from '../../assets/icons/confirm-circle.svg'
 import ErrorIcon from '../../assets/icons/wc-error.svg'
+import { PROPOSAL_MOCK, REQUEST_MOCK } from './mocks'
+import { getNode, getRPCEndpoint } from '../../actions/nodeStorageActions'
 
 type Props = {
   address: string,
   history: any,
+  net: string,
 }
 
 const CONNECTION_STEPS = {
@@ -40,94 +36,7 @@ const CONNECTION_STEPS = {
   TRANSACTION_ERROR: 'TRANSACTION_ERROR',
 }
 
-const REQUEST_MOCK = {
-  topic: 'a597459f33abca20cac77d62001100d3b79e743d6306e17d24f948588b811110',
-  request: {
-    id: 1632947416325648,
-    jsonrpc: '2.0',
-    method: 'invokefunction',
-    params: [
-      '0xd2a4cff31913016155e38e474a2c06d08be276cf',
-      'transfer',
-      [
-        {
-          type: 'Address',
-          value: 'NMkSudozST9kTkpNbyNB1EdU7KzfQoF3dY',
-        },
-        {
-          type: 'ScriptHash',
-          value: '0x010101c0775af568185025b0ce43cfaa9b990a2a',
-        },
-        {
-          type: 'Integer',
-          value: 100000000,
-        },
-        {
-          type: 'Array',
-          value: [
-            {
-              type: 'String',
-              value: 'createStream',
-            },
-            {
-              type: 'Address',
-              value: 'NMkSudozST9kTkpNbyNB1EdU7KzfQoF3dY',
-            },
-            {
-              type: 'Integer',
-              value: 1632947400000,
-            },
-            {
-              type: 'Integer',
-              value: 1633033800000,
-            },
-          ],
-        },
-      ],
-    ],
-  },
-  chainId: 'neo3:testnet',
-}
-
-const PROPOSAL_MOCK = {
-  relay: {
-    protocol: 'waku',
-  },
-  topic: 'dedcb1834048ce11b88c5582d624a2385f81d090c1e821d30490f97639d4c76d',
-  proposer: {
-    publicKey:
-      'f1a0997f891e1c48f3ff578bd69c2b85d0e5a1ac1f0ea8b9dc30426c7473342c',
-    controller: false,
-    metadata: {
-      name: 'Crypsydra',
-      description: 'WalletConnect integration Prototype',
-      url: 'https://crypsydra.vercel.app/',
-      icons: [
-        'https://raw.githubusercontent.com/CityOfZion/visual-identity/develop/_CoZ%20Branding/_Logo/_Logo%20icon/_PNG%20200x178px/CoZ_Icon_DARKBLUE_200x178px.png',
-      ],
-    },
-  },
-  signal: {
-    method: 'pairing',
-    params: {
-      topic: '9ed69162519da40f0e9c32a136e8e1f3c541862504e5e12806e2619fcc7977d8',
-    },
-  },
-  permissions: {
-    blockchain: {
-      chains: ['neo3:testnet'],
-    },
-    jsonrpc: {
-      methods: ['invokefunction'],
-    },
-    notifications: {
-      types: [],
-    },
-  },
-  ttl: 604800,
-}
-
-const ConnectDapp = ({ address, history }: Props) => {
+const ConnectDapp = ({ address, history, net }: Props) => {
   const [connectionUrl, setConnectionUrl] = useState('')
   const [connectionStep, setConnectionStep] = useState(
     CONNECTION_STEPS.ENTER_URL,
@@ -146,9 +55,22 @@ const ConnectDapp = ({ address, history }: Props) => {
 
   useEffect(
     () => {
+      const currentChain = `neo3:${net.toLowerCase()}`
+
       if (walletConnectCtx.sessionProposals[0]) {
-        setConnectionStep(CONNECTION_STEPS.APPROVE_CONNECTION)
-        setProposal(walletConnectCtx.sessionProposals[0])
+        if (
+          !walletConnectCtx.sessionProposals[0].permissions.blockchain.chains.includes(
+            currentChain,
+          )
+        ) {
+          history.goBack()
+          walletConnectCtx.rejectSession(walletConnectCtx.sessionProposals[0])
+          setConnectionStep(CONNECTION_STEPS.ENTER_URL)
+          setConnectionUrl('')
+        } else {
+          setConnectionStep(CONNECTION_STEPS.APPROVE_CONNECTION)
+          setProposal(walletConnectCtx.sessionProposals[0])
+        }
       }
     },
     [walletConnectCtx.sessionProposals],
@@ -178,11 +100,12 @@ const ConnectDapp = ({ address, history }: Props) => {
       ...request,
       method: 'testInvoke',
     }
-    const results = await new N3Helper(
-      'https://testnet1.neo.coz.io:443',
-    ).rpcCall(account, testReq)
+    let endpoint = await getNode(net)
+    if (!endpoint) {
+      endpoint = await getRPCEndpoint(net)
+    }
+    const results = await new N3Helper(endpoint).rpcCall(account, testReq)
     const fee = convertToArbitraryDecimals(results.result.gasconsumed)
-
     setFee(fee)
   }
 
@@ -193,7 +116,9 @@ const ConnectDapp = ({ address, history }: Props) => {
         manifest: { name },
       },
     } = await axios.get(
-      `https://dora.coz.io/api/v1/neo3/testnet_rc4/contract/${hash}`,
+      net === 'MainNet'
+        ? `https://dora.coz.io/api/v1/neo3/mainnet/contract/${hash}`
+        : `https://dora.coz.io/api/v1/neo3/testnet_rc4/contract/${hash}`,
     )
     setContractName(name)
   }
@@ -223,11 +148,13 @@ const ConnectDapp = ({ address, history }: Props) => {
   const isValid = () => true
 
   const handleWalletConnectURLSubmit = async () => {
-    const { wcClient } = walletConnectCtx
     setLoading(true)
     try {
       const account = new wallet.Account(address)
-      walletConnectCtx.addAccountAndChain(account.address, 'neo3:testnet')
+      walletConnectCtx.addAccountAndChain(
+        account.address,
+        `neo3:${net.toLowerCase()}`,
+      )
       await walletConnectCtx.onURI(connectionUrl)
       setLoading(false)
     } catch (e) {
@@ -424,7 +351,7 @@ const ConnectDapp = ({ address, history }: Props) => {
 
                 <div className={styles.requestParams}>
                   {request.request.params.map((p: any, i: number) => (
-                    <React.Fragment>
+                    <React.Fragment key={i}>
                       <div className={styles.paramContainer}>
                         <div key={i}>
                           <div className={styles.index}>{i.toString(10)}</div>

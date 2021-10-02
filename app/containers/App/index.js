@@ -23,6 +23,7 @@ import { showErrorNotification } from '../../modules/notifications'
 import App from './App'
 import Loading from './Loading'
 import n3AccountsActions from '../../actions/n3AccountsActions'
+import withNetworkData from '../../hocs/withNetworkData'
 
 const { LOADING } = progressValues
 
@@ -67,4 +68,5 @@ export default compose(
   withLogoutReset(authActions),
   withLogoutReset(accountActions),
   withLogoutReset(n3AccountsActions),
+  withNetworkData(),
 )(App)
