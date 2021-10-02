@@ -1,11 +1,10 @@
 // @flow
 import { api, type Claims } from '@cityofzion/neon-js'
+import { api as apiLatest, rpc } from '@cityofzion/neon-js-legacy-latest'
 import {
   api as n3Api,
   wallet as n3Wallet,
-  u as n3U,
   rpc as n3Rpc,
-  tx,
 } from '@cityofzion/neon-js-next'
 import { map, reduce } from 'lodash-es'
 
@@ -32,7 +31,7 @@ import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 // Constants
 export const DISABLE_CLAIM = 'DISABLE_CLAIM'
 const POLL_ATTEMPTS = 30
-const POLL_FREQUENCY = 10000
+const POLL_FREQUENCY = 4000
 
 // Actions
 export function disableClaim(disableClaimButton: boolean) {
@@ -43,8 +42,11 @@ export function disableClaim(disableClaimButton: boolean) {
 }
 
 const fetchClaims = async ({ net, address }) => {
-  const response = await api.getClaimsFrom({ net, address }, api.neoscan)
-  const { claims } = response.claims
+  let endpoint = await getNode(net)
+  if (!endpoint) {
+    endpoint = await getRPCEndpoint(net)
+  }
+  const { claims } = await apiLatest.neoCli.getClaims(endpoint, address)
   return map(claims, 'claim')
 }
 
@@ -80,23 +82,18 @@ const updateClaimableAmount = async ({
     throw new Error('Rejected by RPC server.')
   }
 
-  return response.result.response
+  return response
 }
 
-const pollForUpdatedClaimableAmount = async ({
-  net,
-  address,
-  claimableAmount,
-}) =>
+const pollForUpdatedClaimableAmount = async ({ net, address, txid }) =>
   poll(
     async () => {
-      const updatedClaimableAmount = await getClaimableAmount({ net, address })
+      // watch the sendAsset txid until it has been published
+      const client = new rpc.RPCClient('https://mainnet2.neo2.coz.io:443')
+      await client.getRawTransaction(txid)
 
-      if (toBigNumber(updatedClaimableAmount).eq(claimableAmount)) {
-        throw new Error('Waiting for updated claims took too long.')
-      }
-
-      return updatedClaimableAmount
+      // get the new claimable amount
+      return getClaimableAmount({ net, address })
     },
     { attempts: POLL_ATTEMPTS, frequency: POLL_FREQUENCY },
   )
@@ -114,7 +111,7 @@ const getUpdatedClaimableAmount = async ({
   if (toBigNumber(balance).eq(0)) {
     return claimableAmount
   }
-  await updateClaimableAmount({
+  const { txid } = await updateClaimableAmount({
     net,
     address,
     balance,
@@ -122,7 +119,7 @@ const getUpdatedClaimableAmount = async ({
     privateKey,
     signingFunction,
   })
-  return pollForUpdatedClaimableAmount({ net, address, claimableAmount })
+  return pollForUpdatedClaimableAmount({ net, address, txid })
 }
 
 export const handleN3GasClaim = async ({
@@ -268,7 +265,12 @@ export const doGasClaim = () => async (
 
   // step 2: send claim request
   try {
-    let { claims } = await api.getClaimsFrom({ net, address }, api.neoscan)
+    let endpoint = await getNode(net)
+    if (!endpoint) {
+      endpoint = await getRPCEndpoint(net)
+    }
+    let claims = await apiLatest.neoCli.getClaims(endpoint, address)
+
     // estimated byte size under ledger limit
     if (isHardwareClaim) claims = claims.slice(0, 15)
     const { response } = await api.claimGas(
