@@ -409,29 +409,6 @@
   dependencies:
     "@cityofzion/neon-core" "^4.9.0"
 
-"@cityofzion/wallet-connect-sdk-core@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@cityofzion/wallet-connect-sdk-core/-/wallet-connect-sdk-core-1.0.2.tgz#8629361d1e15b0edc4d03501baba4bae33af0344"
-  integrity sha512-C7+swv1b8NNQ4zDBveBeX9jtOCHvvfWqX4tDdhmy240Z6Im9OSZEvC86XEY4Jkyk337xu0CK41aDX3fnSD/TTQ==
-  dependencies:
-    "@walletconnect/client" "^2.0.0-beta.17"
-    "@walletconnect/jsonrpc-utils" "^1.0.0"
-    "@walletconnect/qrcode-modal" "^2.0.0-alpha.20"
-    "@walletconnect/types" "^2.0.0-beta.17"
-    "@walletconnect/utils" "^2.0.0-beta.17"
-
-"@cityofzion/wallet-connect-sdk-react@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@cityofzion/wallet-connect-sdk-react/-/wallet-connect-sdk-react-1.0.2.tgz#42f2af4eb81d42a992876c9211e50a1c976472c3"
-  integrity sha512-2F3GFW/zEgxwqP+rFqJHhuelv6NwE5LOEQ+i3gU8NC8htY+LhEASSkkgABOuQu5FOxj0s0npL3NjcQFK5JTrTQ==
-  dependencies:
-    "@cityofzion/wallet-connect-sdk-core" "^1.0.2"
-    "@walletconnect/client" "^2.0.0-beta.17"
-    "@walletconnect/jsonrpc-utils" "^1.0.0"
-    "@walletconnect/qrcode-modal" "^2.0.0-alpha.20"
-    "@walletconnect/types" "^2.0.0-beta.17"
-    "@walletconnect/utils" "^2.0.0-beta.17"
-
 "@concordance/react@^1.0.0":
   version "1.0.0"
   resolved "https://registry.npmjs.org/@concordance/react/-/react-1.0.0.tgz"
@@ -915,7 +892,7 @@
     "@walletconnect/window-metadata" "1.0.0"
     detect-browser "5.2.0"
 
-"@walletconnect/client@2.0.0-beta.17", "@walletconnect/client@^2.0.0-beta.17":
+"@walletconnect/client@2.0.0-beta.17":
   version "2.0.0-beta.17"
   resolved "https://registry.yarnpkg.com/@walletconnect/client/-/client-2.0.0-beta.17.tgz#9434653b5787c1d07c567c8e29810a1e329034e6"
   integrity sha512-Wxp4JpT6g4nDoD5/Q+3lTMPgKA+CyLRixJbEPCDAtM2XRSGOwycVSMduiWnGceWNY/z+cZz3j0QvEYD3WCnjGg==
@@ -1048,11 +1025,6 @@
   resolved "https://registry.yarnpkg.com/@walletconnect/mobile-registry/-/mobile-registry-1.4.0.tgz#502cf8ab87330841d794819081e748ebdef7aee5"
   integrity sha512-ZtKRio4uCZ1JUF7LIdecmZt7FOLnX72RPSY7aUVu7mj7CSfxDwUn6gBuK6WGtH+NZCldBqDl5DenI5fFSvkKYw==
 
-"@walletconnect/mobile-registry@^2.0.0-alpha.20":
-  version "2.0.0-alpha.20"
-  resolved "https://registry.yarnpkg.com/@walletconnect/mobile-registry/-/mobile-registry-2.0.0-alpha.20.tgz#5f6c6299ec149effaf2a278250198e7ecf33d6b7"
-  integrity sha512-Qunuhp6dnjkIQgVWRRktLE3KGRbNw7AgZnLAoTsOakOLLVL+l9zOIUuowRcbCOpPzDK8Vb5Y2gWSPR1tce0hAg==
-
 "@walletconnect/qrcode-modal@^1.6.5":
   version "1.6.5"
   resolved "https://registry.yarnpkg.com/@walletconnect/qrcode-modal/-/qrcode-modal-1.6.5.tgz#58974ca8f826bd500121e85694dd342b3535cf2c"
@@ -1064,20 +1036,6 @@
     copy-to-clipboard "^3.3.1"
     preact "10.4.1"
     qrcode "1.4.4"
-
-"@walletconnect/qrcode-modal@^2.0.0-alpha.20":
-  version "2.0.0-alpha.20"
-  resolved "https://registry.yarnpkg.com/@walletconnect/qrcode-modal/-/qrcode-modal-2.0.0-alpha.20.tgz#b80da728183b5a9340d99ff507bb40d14727d87f"
-  integrity sha512-R+lKspxKfjQ5VCWFpuxQ49s+vEeBsKLXtAhOALRga/5dJVc33eRmgd6dJ2dEhkCaUJ6SDVPd3w3EF0jYBVBXPg==
-  dependencies:
-    "@walletconnect/mobile-registry" "^2.0.0-alpha.20"
-    "@walletconnect/types" "^2.0.0-alpha.20"
-    "@walletconnect/utils" "^2.0.0-alpha.20"
-    detect-browser "^5.1.0"
-    preact "^10.4.1"
-    qrcode "^1.4.4"
-    safe-json-utils "^1.1.1"
-    window-getters "^1.0.1"
 
 "@walletconnect/randombytes@^1.0.1":
   version "1.0.1"
@@ -1109,7 +1067,7 @@
     "@walletconnect/utils" "^1.6.5"
     ws "7.5.3"
 
-"@walletconnect/types@2.0.0-beta.17", "@walletconnect/types@^2.0.0-alpha.20", "@walletconnect/types@^2.0.0-beta.17":
+"@walletconnect/types@2.0.0-beta.17", "@walletconnect/types@^2.0.0-beta.17":
   version "2.0.0-beta.17"
   resolved "https://registry.yarnpkg.com/@walletconnect/types/-/types-2.0.0-beta.17.tgz#9432b01aec32cb1847faea13de0ecc00c4e3c82a"
   integrity sha512-YQjS9HqQSR6yztTarzeT9+DW5BTnDWBAlWedGGxiEdhuwV56FQJTZKnMjpM1f8yS5j0vBH/mSst65h7jS/65zQ==
@@ -1124,7 +1082,7 @@
   resolved "https://registry.yarnpkg.com/@walletconnect/types/-/types-1.6.5.tgz#31ad1415fc6e1e89e25a10ad5fed6958f56cefa8"
   integrity sha512-S9DsODI35PbIDuOSkIiF8SzTstqCqX/4+kV7n18vyukEFPlpSSHwZMwJUfzo9yJ0pqsqLNZta+jvb88gJRuAaA==
 
-"@walletconnect/utils@2.0.0-beta.17", "@walletconnect/utils@^2.0.0-alpha.20", "@walletconnect/utils@^2.0.0-beta.17":
+"@walletconnect/utils@2.0.0-beta.17", "@walletconnect/utils@^2.0.0-beta.17":
   version "2.0.0-beta.17"
   resolved "https://registry.yarnpkg.com/@walletconnect/utils/-/utils-2.0.0-beta.17.tgz#ac7fb9738c503b651ca84b10b27294a4f7c33322"
   integrity sha512-+1Yp1aymXDlrsVl/koDb0vt2XDwy71ERDxM81yqbLMTkAR8Y96aV+uVJS1tEVox72Eccj3QHb5JdgQYYJWp1MA==
@@ -4917,11 +4875,6 @@ detect-browser@5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/detect-browser/-/detect-browser-5.2.0.tgz#c9cd5afa96a6a19fda0bbe9e9be48a6b6e1e9c97"
   integrity sha512-tr7XntDAu50BVENgQfajMLzacmSe34D+qZc4zjnniz0ZVuw/TZcLcyxHQjYpJTM36sGEkZZlYLnIM1hH7alTMA==
-
-detect-browser@^5.1.0:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/detect-browser/-/detect-browser-5.2.1.tgz#b884f8d84e8f33bb874ffed10b4beea26133fcd1"
-  integrity sha512-eAcRiEPTs7utXWPaAgu/OX1HRJpxW7xSHpw4LTDrGFaeWnJ37HRlqpUkKsDm0AoTbtrvHQhH+5U2Cd87EGhJTg==
 
 detect-file@^1.0.0:
   version "1.0.0"
@@ -11223,11 +11176,6 @@ preact@10.4.1:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.4.1.tgz#9b3ba020547673a231c6cf16f0fbaef0e8863431"
   integrity sha512-WKrRpCSwL2t3tpOOGhf2WfTpcmbpxaWtDbdJdKdjd0aEiTkvOmS4NBkG6kzlaAHI9AkQ3iVqbFWM3Ei7mZ4o1Q==
 
-preact@^10.4.1:
-  version "10.5.14"
-  resolved "https://registry.yarnpkg.com/preact/-/preact-10.5.14.tgz#0b14a2eefba3c10a57116b90d1a65f5f00cd2701"
-  integrity sha512-KojoltCrshZ099ksUZ2OQKfbH66uquFoxHSbnwKbTJHeQNvx42EmC7wQVWNuDt6vC5s3nudRHFtKbpY4ijKlaQ==
-
 prebuild-install@^5.3.3, prebuild-install@^5.3.5:
   version "5.3.5"
   resolved "https://registry.npmjs.org/prebuild-install/-/prebuild-install-5.3.5.tgz"
@@ -11494,7 +11442,7 @@ qrcode@0.9.0:
     isarray "^2.0.1"
     pngjs "^2.3.1"
 
-qrcode@1.4.4, qrcode@^1.4.4:
+qrcode@1.4.4:
   version "1.4.4"
   resolved "https://registry.yarnpkg.com/qrcode/-/qrcode-1.4.4.tgz#f0c43568a7e7510a55efc3b88d9602f71963ea83"
   integrity sha512-oLzEC5+NKFou9P0bMj5+v6Z40evexeE29Z9cummZXZ9QXyMr3lphkURzxjXgPJC5azpxcshoDWV1xE46z+/c3Q==
@@ -14681,11 +14629,6 @@ wif@2.0.6:
   resolved "https://registry.npmjs.org/wif/-/wif-2.0.6.tgz"
   dependencies:
     bs58check "<3.0.0"
-
-window-getters@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/window-getters/-/window-getters-1.0.1.tgz#a564c258413b4808789633d8bfb7ed741d798aa0"
-  integrity sha512-cojBfDeV58XEurDgj+rre15c7dvu27bWCPlOIpwQgreOsw6qQk0UGDR1hi7ZHKw5+L0AENUNNWGG2h4yr2Y3hQ==
 
 window-size@^0.2.0:
   version "0.2.0"

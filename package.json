@@ -89,8 +89,6 @@
     "@cityofzion/neon-js-legacy-latest": "npm:@cityofzion/neon-js@4.9.0",
     "@cityofzion/neon-js-next": "npm:@cityofzion/neon-js@5.0.0-next.15",
     "@cityofzion/neon-ledger-next": "npm:@cityofzion/neon-ledger@5.0.0-next.14",
-    "@cityofzion/wallet-connect-sdk-core": "^1.0.2",
-    "@cityofzion/wallet-connect-sdk-react": "^1.0.2",
     "@formatjs/intl-pluralrules": "^1.5.2",
     "@json-rpc-tools/utils": "^1.7.6",
     "@ledgerhq/hw-transport-node-hid": "6.3.0",
