@@ -5,11 +5,16 @@ import { NavLink } from 'react-router-dom'
 
 import { ROUTES } from '../../core/constants'
 import Dapps from '../../assets/icons/dapps.svg'
+import GreenDapps from '../../assets/icons/green-dapps.svg'
 import Plus from '../../assets/icons/add.svg'
 import styles from './DapiStatus.scss'
 import { useWalletConnect } from '../../context/WalletConnect/WalletConnectContext'
 
-const DapiStatus = () => {
+const DapiStatus = ({
+  showSuccessNotification,
+}: {
+  showSuccessNotification: ({ message: string }) => void,
+}) => {
   const { sessions, disconnect } = useWalletConnect()
 
   return (
@@ -34,7 +39,14 @@ const DapiStatus = () => {
                 </div>{' '}
                 <div
                   className={styles.connectButton}
-                  onClick={() => disconnect(s.topic)}
+                  onClick={() => {
+                    showSuccessNotification({
+                      message: `You have successfully disconected from ${
+                        s.peer.metadata.name
+                      }`,
+                    })
+                    disconnect(s.topic)
+                  }}
                 >
                   {' '}
                   Disconnect{' '}
@@ -56,14 +68,19 @@ const DapiStatus = () => {
   )
 }
 
-const DashboardButton = ({ theme }: { theme: string }) => (
-  <Tippy interactive content={<DapiStatus />}>
+const DashboardButton = ({
+  theme,
+  showSuccessNotification,
+}: {
+  theme: string,
+  showSuccessNotification: ({ message: string }) => void,
+}) => (
+  <Tippy
+    interactive
+    content={<DapiStatus showSuccessNotification={showSuccessNotification} />}
+  >
     <div className={styles.contentContainer}>
-      {theme === 'Light' ? (
-        <Dapps id="manage-wallets" className={styles.manageWallets} />
-      ) : (
-        <Dapps id="manage-wallets" className={styles.manageWallets} />
-      )}
+      {theme === 'Light' ? <Dapps /> : <GreenDapps />}
       dApps
     </div>
   </Tippy>

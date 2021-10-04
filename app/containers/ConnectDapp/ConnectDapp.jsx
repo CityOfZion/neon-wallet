@@ -26,6 +26,8 @@ type Props = {
   address: string,
   history: any,
   net: string,
+  showSuccessNotification: ({ message: string }) => void,
+  showErrorNotification: ({ message: string }) => void,
 }
 
 const CONNECTION_STEPS = {
@@ -36,7 +38,13 @@ const CONNECTION_STEPS = {
   TRANSACTION_ERROR: 'TRANSACTION_ERROR',
 }
 
-const ConnectDapp = ({ address, history, net }: Props) => {
+const ConnectDapp = ({
+  address,
+  history,
+  net,
+  showSuccessNotification,
+  showErrorNotification,
+}: Props) => {
   const [connectionUrl, setConnectionUrl] = useState('')
   const [connectionStep, setConnectionStep] = useState(
     CONNECTION_STEPS.ENTER_URL,
@@ -75,7 +83,11 @@ const ConnectDapp = ({ address, history, net }: Props) => {
         if (
           !firstProposal.permissions.blockchain.chains.includes(currentChain)
         ) {
-          history.goBack()
+          showErrorNotification({
+            message: `Attempting to connect to dApp on ${
+              firstProposal.permissions.blockchain.chains[0]
+            } but you are currently on ${currentChain}. Please change network in settings and try again`,
+          })
           walletConnectCtx.rejectSession(firstProposal)
           setConnectionStep(CONNECTION_STEPS.ENTER_URL)
           setConnectionUrl('')
@@ -313,6 +325,13 @@ const ConnectDapp = ({ address, history, net }: Props) => {
                   <Confirm
                     onClick={() => {
                       walletConnectCtx.approveSession(proposal)
+                      showSuccessNotification({
+                        message: `You have accepted connection from ${
+                          proposal
+                            ? proposal.proposer.metadata.name
+                            : 'unknown dApp'
+                        }.`,
+                      })
                       history.push(ROUTES.DASHBOARD)
                     }}
                   />
@@ -320,6 +339,13 @@ const ConnectDapp = ({ address, history, net }: Props) => {
                   <Deny
                     onClick={() => {
                       walletConnectCtx.rejectSession(proposal)
+                      showSuccessNotification({
+                        message: `You have rejected connection from ${
+                          proposal
+                            ? proposal.proposer.metadata.name
+                            : 'unknown dApp'
+                        }.`,
+                      })
                       resetState()
                       history.push(ROUTES.DASHBOARD)
                     }}
@@ -463,6 +489,11 @@ const ConnectDapp = ({ address, history, net }: Props) => {
                   <Deny
                     onClick={() => {
                       if (!loading) {
+                        showSuccessNotification({
+                          message: `You have denied request from ${
+                            peer ? peer.metadata.name : 'unknown dApp'
+                          }.`,
+                        })
                         walletConnectCtx.rejectRequest(request)
                         resetState()
                         history.push(ROUTES.DASHBOARD)

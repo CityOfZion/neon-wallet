@@ -1,11 +1,12 @@
 .tooltipContainer {
   min-height: 100px;
   width: 275px;
-  background-color: rgba(24, 28, 34, 0.87);
+  background-color: var(--wc-tooltip-bg);
   border-radius: 4px;
   display: flex;
   flex-direction: column;
-  color: #8297a0;
+  color: var(--wc-tooltip-color);
+  box-shadow: var(--wc-tooltip-box-shadow);
 
   .innerTooltipContainer {
     padding: 12px;
@@ -13,7 +14,7 @@
 
   .plusButton {
     font-size: 24px;
-    color: #4cffb3;
+    color: var(--wc-tooltip-button-color);
   }
 
   .title {
@@ -33,19 +34,15 @@
 
     svg {
       path {
-        fill: #4cffb3;
+        fill: var(--wc-tooltip-button-color);
       }
     }
   }
 
   .dappList {
-    // border-top: 1px solid #3c4351;
-
     display: flex;
     align-items: center;
     justify-content: center;
-    // padding: 12px 0;
-    // margin-top: 12px;
     flex-direction: column;
   }
 
@@ -60,11 +57,11 @@
   .connectButton {
     cursor: pointer;
     margin-top: auto;
-    border: 1px solid #4cffb3;
+    border: 1px solid var(--wc-tooltip-button-color);
     border-radius: 4px;
     font-family: Helvetica;
     font-size: 14px;
-    color: #4cffb3;
+    color: var(--wc-tooltip-button-color);
     text-align: center;
     height: 31px;
     display: flex;
@@ -90,7 +87,7 @@
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
   margin: -5px auto 0 auto;
-  border-bottom: 5px solid rgba(24, 28, 34, 0.87);
+  border-bottom: 5px solid var(--wc-tooltip-bg);
 }
 
 .sessionContainer {
@@ -98,7 +95,7 @@
   justify-content: space-between;
   align-items: center;
   font-size: 13px;
-  color: #ffffff;
+  color: var(--base-text);
   width: 100%;
   border-bottom: 1px solid #3c4351;
   padding: 6px 0px;
