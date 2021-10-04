@@ -3,8 +3,6 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import { NavLink, Redirect } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
-import { useWalletConnect } from '@cityofzion/wallet-connect-sdk-react'
-import Tippy from '@tippyjs/react'
 
 import { ROUTES } from '../../core/constants'
 import AssetBalancesPanel from '../../components/Dashboard/AssetBalancesPanel'
@@ -16,9 +14,7 @@ import PortfolioPanel from '../../components/Dashboard/PortfolioPanel'
 import Wallet from '../../assets/icons/wallet.svg'
 import GreenWallet from '../../assets/icons/wallet-green.svg'
 import RefreshButton from '../Buttons/RefreshButton'
-
 import styles from './Dashboard.scss'
-import Tooltip from '../../components/Tooltip'
 import DapiStatus from '../../components/DapiStatus'
 
 type Props = {
