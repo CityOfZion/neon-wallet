@@ -86,7 +86,7 @@ const ConnectDapp = ({
           showErrorNotification({
             message: `Attempting to connect to dApp on ${
               firstProposal.permissions.blockchain.chains[0]
-            } but you are currently on ${currentChain}. Please change network in settings and try again`,
+            } but you are currently on ${currentChain}. Please change network in settings and try again.`,
           })
           walletConnectCtx.rejectSession(firstProposal)
           setConnectionStep(CONNECTION_STEPS.ENTER_URL)

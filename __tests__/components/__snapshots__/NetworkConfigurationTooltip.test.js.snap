@@ -1145,6 +1145,13 @@ exports[`Sidebar renders without crashing 1`] = `
                                               "--tx-list-copy-icon": "#9599a2",
                                               "--tx-list-odd-row": "#F1F5FC",
                                               "--view-layout-header-icon-color": "#282828",
+                                              "--wc-connection-details-bg": "#EAF2F7",
+                                              "--wc-connection-details-bg2": "#FFFFFF",
+                                              "--wc-param-index": "#EAF2F7",
+                                              "--wc-tooltip-bg": "#EAF0F3",
+                                              "--wc-tooltip-box-shadow": "-7px 6px 8px 0 rgba(255,255,255,0.63), 10px -13px 20px 0 #B2BAC1",
+                                              "--wc-tooltip-button-color": "#282828",
+                                              "--wc-tooltip-color": "#343434",
                                             }
                                           }
                                         >
