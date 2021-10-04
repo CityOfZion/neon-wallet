@@ -25,8 +25,8 @@ const DapiStatus = () => {
         </div>
         <div className={styles.dappList}>
           {sessions.length ? (
-            sessions.map(s => (
-              <div className={styles.sessionContainer}>
+            sessions.map((s, idx) => (
+              <div key={idx} className={styles.sessionContainer}>
                 <div>
                   {' '}
                   <img src={s.peer.metadata.icons[0]} />

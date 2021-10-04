@@ -54,7 +54,7 @@ export const WalletConnectContextProvider = ({
   // $FlowFixMe
   const [txHash, setTxHash] = useState('')
   // $FlowFixMe
-  const [error, setError] = useState(undefined)
+  const [error, setError] = useState(false)
 
   const init = async () => {
     const st = new KeyValueStorage()
@@ -147,13 +147,25 @@ export const WalletConnectContextProvider = ({
       if (!onRequestCallback) {
         throw new Error('There is no onRequestCallback')
       }
-      const results = await onRequestCallback(address, chainId, request)
+      const results = await onRequestCallback(address, chainId, request).catch(
+        e => {
+          console.error(e)
+          return setError(`An unkown error occurred please try again.`)
+        },
+      )
 
-      if (results.result && request.method === 'invokefunction') {
+      if (
+        results &&
+        results.result &&
+        request.method === 'invokefunction' &&
+        !results.result.error
+      ) {
         setTxHash(results.result)
       } else {
-        // TODO: use string error message here
-        setError(true)
+        const { result } = results
+        setError(
+          result ? result.error : 'An unkown error occurred please try again.',
+        )
       }
       return results
     },

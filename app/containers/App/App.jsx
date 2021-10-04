@@ -31,6 +31,7 @@ type Props = {
   net: string,
   isHardwareLogin: boolean,
   signingFunction: () => void,
+  publicKey: any,
 }
 
 const routesWithSideBar = [
@@ -59,6 +60,7 @@ const App = ({
   net,
   isHardwareLogin,
   signingFunction,
+  publicKey,
 }: Props) => {
   const walletConnectCtx = useWalletConnect()
   useEffect(() => {
@@ -78,7 +80,7 @@ const App = ({
 
   useEffect(
     () => {
-      const account = new wallet.Account(isHardwareLogin ? address : wif)
+      const account = new wallet.Account(isHardwareLogin ? publicKey : wif)
 
       // if the request method is 'testInvoke' we auto-accept it
       walletConnectCtx.autoAcceptIntercept(
@@ -98,7 +100,7 @@ const App = ({
         )
       })
     },
-    [wif, net, isHardwareLogin, signingFunction, address],
+    [wif, net, isHardwareLogin, signingFunction, address, publicKey],
   )
 
   useEffect(
@@ -107,7 +109,7 @@ const App = ({
         history.push(ROUTES.CONNECT_DAPP)
       }
     },
-    [walletConnectCtx.sessionProposals],
+    [walletConnectCtx.sessionProposals, history],
   )
 
   useEffect(
@@ -116,7 +118,7 @@ const App = ({
         history.push(ROUTES.CONNECT_DAPP)
       }
     },
-    [walletConnectCtx.requests],
+    [walletConnectCtx.requests, history],
   )
 
   return (

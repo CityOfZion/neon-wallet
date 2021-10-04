@@ -41,39 +41,51 @@ const ConnectDapp = ({ address, history, net }: Props) => {
   const [connectionStep, setConnectionStep] = useState(
     CONNECTION_STEPS.ENTER_URL,
   )
-  const [proposal, setProposal] = useState(PROPOSAL_MOCK)
-  const [request, setRequests] = useState(REQUEST_MOCK)
+  const [proposal, setProposal] = useState(null)
+  const [peer, setPeer] = useState(null)
+  const [request, setRequest] = useState(null)
   const [loading, setLoading] = useState(false)
   const [fee, setFee] = useState('')
   const [contractName, setContractName] = useState('')
   const walletConnectCtx = useWalletConnect()
+  const firstProposal = walletConnectCtx.sessionProposals[0]
+  const firstRequest = walletConnectCtx.requests[0]
+  const { error } = walletConnectCtx
+
+  const resetState = () => {
+    setConnectionUrl('')
+    setConnectionStep(CONNECTION_STEPS.ENTER_URL)
+    setProposal(null)
+    setRequest(null)
+    setLoading(false)
+    setContractName('')
+    setFee('')
+  }
 
   useEffect(() => {
     walletConnectCtx.init()
-    return () => {}
+    return () => null
   }, [])
 
   useEffect(
     () => {
       const currentChain = `neo3:${net.toLowerCase()}`
 
-      if (walletConnectCtx.sessionProposals[0]) {
+      if (firstProposal) {
         if (
-          !walletConnectCtx.sessionProposals[0].permissions.blockchain.chains.includes(
-            currentChain,
-          )
+          !firstProposal.permissions.blockchain.chains.includes(currentChain)
         ) {
           history.goBack()
-          walletConnectCtx.rejectSession(walletConnectCtx.sessionProposals[0])
+          walletConnectCtx.rejectSession(firstProposal)
           setConnectionStep(CONNECTION_STEPS.ENTER_URL)
           setConnectionUrl('')
         } else {
           setConnectionStep(CONNECTION_STEPS.APPROVE_CONNECTION)
-          setProposal(walletConnectCtx.sessionProposals[0])
+          setProposal(firstProposal)
         }
       }
     },
-    [walletConnectCtx.sessionProposals],
+    [history, net, walletConnectCtx, firstProposal],
   )
 
   useEffect(
@@ -87,53 +99,67 @@ const ConnectDapp = ({ address, history, net }: Props) => {
 
   useEffect(
     () => {
-      if (walletConnectCtx.error) {
-        setConnectionStep(CONNECTION_STEPS.TRANSACTION_ERROR)
-      }
+      walletConnectCtx.getPeerOfRequest(firstRequest).then(setPeer)
     },
-    [walletConnectCtx.error],
+    [firstRequest, walletConnectCtx],
   )
-
-  const getGasFee = async request => {
-    const account = new wallet.Account(address)
-    const testReq = {
-      ...request,
-      method: 'testInvoke',
-    }
-    let endpoint = await getNode(net)
-    if (!endpoint) {
-      endpoint = await getRPCEndpoint(net)
-    }
-    const results = await new N3Helper(endpoint).rpcCall(account, testReq)
-    const fee = convertToArbitraryDecimals(results.result.gasconsumed)
-    console.log({ fee })
-    setFee(fee)
-  }
-
-  const getContractName = async request => {
-    const hash = request.params[2][1].value
-    const {
-      data: {
-        manifest: { name },
-      },
-    } = await axios.get(
-      net === 'MainNet'
-        ? `https://dora.coz.io/api/v1/neo3/mainnet/contract/${hash}`
-        : `https://dora.coz.io/api/v1/neo3/testnet_rc4/contract/${hash}`,
-    )
-    setContractName(name)
-  }
 
   useEffect(
     () => {
-      if (walletConnectCtx.requests[0]) {
-        setRequests(walletConnectCtx.requests[0])
-        setConnectionStep(CONNECTION_STEPS.APPROVE_TRANSACTION)
-        getGasFee(walletConnectCtx.requests[0].request)
-        getContractName(walletConnectCtx.requests[0].request)
+      if (error) {
+        setConnectionStep(CONNECTION_STEPS.TRANSACTION_ERROR)
       }
     },
-    [walletConnectCtx.requests],
+    [error],
+  )
+
+  useEffect(
+    () => {
+      const getGasFee = async request => {
+        const account = new wallet.Account(address)
+        const testReq = {
+          ...request,
+          method: 'testInvoke',
+        }
+        let endpoint = await getNode(net)
+        if (!endpoint) {
+          endpoint = await getRPCEndpoint(net)
+        }
+        const results = await new N3Helper(endpoint).rpcCall(account, testReq)
+        const fee = convertToArbitraryDecimals(results.result.gasconsumed)
+        setFee(fee)
+      }
+
+      const getContractName = async request => {
+        const hash = request.params[0]
+        const {
+          data: {
+            manifest: { name },
+          },
+        } = await axios.get(
+          net === 'MainNet'
+            ? `https://dora.coz.io/api/v1/neo3/mainnet/contract/${hash}`
+            : `https://dora.coz.io/api/v1/neo3/testnet_rc4/contract/${hash}`,
+        )
+        setContractName(name)
+      }
+
+      if (request) {
+        getGasFee(request.request)
+        getContractName(request.request)
+      }
+    },
+    [request, address, net],
+  )
+
+  useEffect(
+    () => {
+      if (firstRequest) {
+        setRequest(firstRequest)
+        setConnectionStep(CONNECTION_STEPS.APPROVE_TRANSACTION)
+      }
+    },
+    [address, net, firstRequest],
   )
 
   const renderHeader = () => <span>'testing</span>
@@ -188,7 +214,11 @@ const ConnectDapp = ({ address, history, net }: Props) => {
           <div className={styles.txSuccessContainer}>
             <ErrorIcon />
             <h3> Transaction failed!</h3>
-            <p>An unkown error occurred please try again.</p>
+            <p>
+              {typeof error === 'string'
+                ? error
+                : 'An unkown error occurred please try again.'}
+            </p>
             <br />
             <br />
           </div>
@@ -236,7 +266,15 @@ const ConnectDapp = ({ address, history, net }: Props) => {
         <FullHeightPanel
           renderHeader={renderHeader}
           headerText="Wallet Connect"
-          renderCloseButton={() => <CloseButton routeTo={ROUTES.DASHBOARD} />}
+          renderCloseButton={() => (
+            <CloseButton
+              onClick={() => {
+                walletConnectCtx.rejectSession(proposal)
+                resetState()
+              }}
+              routeTo={ROUTES.DASHBOARD}
+            />
+          )}
           renderHeaderIcon={() => (
             <div>
               <WallletConnect />
@@ -245,11 +283,14 @@ const ConnectDapp = ({ address, history, net }: Props) => {
           renderInstructions={false}
         >
           <div className={styles.approveConnectionContainer}>
-            <img src={proposal.proposer.metadata.icons[0]} />
+            <img src={proposal && proposal.proposer.metadata.icons[0]} />
 
-            <h3>{proposal.proposer.metadata.name} wants to connect</h3>
+            <h3>
+              {proposal && proposal.proposer.metadata.name} wants to connect
+            </h3>
             <div className={styles.connectionDetails}>
-              {proposal.proposer.metadata.name} wants to connect to your wallet
+              {proposal && proposal.proposer.metadata.name} wants to connect to
+              your wallet
               <div className={styles.details}>
                 <div className={styles.detailsLabel}>
                   <label>dApp details</label>
@@ -257,11 +298,12 @@ const ConnectDapp = ({ address, history, net }: Props) => {
                 <div className={styles.featuresRow}>
                   <div>
                     <label>CHAIN</label>
-                    {proposal.permissions.blockchain.chains[0]}
+                    {proposal && proposal.permissions.blockchain.chains[0]}
                   </div>
                   <div>
                     <label>FEATURES</label>
-                    {proposal.permissions.jsonrpc.methods.join(', ')}
+                    {proposal &&
+                      proposal.permissions.jsonrpc.methods.join(', ')}
                   </div>
                 </div>
               </div>
@@ -278,8 +320,7 @@ const ConnectDapp = ({ address, history, net }: Props) => {
                   <Deny
                     onClick={() => {
                       walletConnectCtx.rejectSession(proposal)
-                      setConnectionStep(CONNECTION_STEPS.ENTER_URL)
-                      setConnectionUrl('')
+                      resetState()
                       history.push(ROUTES.DASHBOARD)
                     }}
                   />
@@ -299,8 +340,7 @@ const ConnectDapp = ({ address, history, net }: Props) => {
               routeTo={ROUTES.DASHBOARD}
               onClick={() => {
                 walletConnectCtx.rejectRequest(request)
-                setConnectionStep(CONNECTION_STEPS.ENTER_URL)
-                setConnectionUrl('')
+                resetState()
                 history.push(ROUTES.DASHBOARD)
               }}
             />
@@ -318,10 +358,10 @@ const ConnectDapp = ({ address, history, net }: Props) => {
               styles.approveRequestContainer,
             ])}
           >
-            <img src={proposal.proposer.metadata.icons[0]} />
+            <img src={peer && peer.metadata.icons[0]} />
 
             <h3>
-              {proposal.proposer.metadata.name} wants to call{' '}
+              {peer && peer.metadata.name} wants to call{' '}
               <span className={styles.methodName}>{contractName}</span> contract
             </h3>
 
@@ -331,7 +371,7 @@ const ConnectDapp = ({ address, history, net }: Props) => {
               >
                 <label>hash</label>
                 <div className={styles.scriptHash}>
-                  {request.request.params[2][1].value}
+                  {request && request.request.params[0]}
                 </div>
               </div>
 
@@ -343,7 +383,7 @@ const ConnectDapp = ({ address, history, net }: Props) => {
                 ])}
               >
                 <label>method</label>
-                <div>{request.request.params[1]}</div>
+                <div>{request && request.request.params[1]}</div>
               </div>
               <div className={styles.details}>
                 <div className={styles.detailsLabel}>
@@ -351,53 +391,54 @@ const ConnectDapp = ({ address, history, net }: Props) => {
                 </div>
 
                 <div className={styles.requestParams}>
-                  {request.request.params.map((p: any, i: number) => (
-                    <React.Fragment key={i}>
-                      <div className={styles.paramContainer}>
-                        <div key={i}>
-                          <div className={styles.index}>{i.toString(10)}</div>
-                          <div
-                            ml="0.5rem"
-                            title={
-                              typeof p === 'object' ? 'Array' : p.toString()
-                            }
-                          >
-                            {typeof p === 'object' ? (
-                              <div className={styles.centered}>
-                                {' '}
-                                Array/Dictionary <br /> <br />
-                              </div>
-                            ) : (
-                              p.toString()
-                            )}
+                  {request &&
+                    request.request.params.map((p: any, i: number) => (
+                      <React.Fragment key={i}>
+                        <div className={styles.paramContainer}>
+                          <div key={i}>
+                            <div className={styles.index}>{i.toString(10)}</div>
+                            <div
+                              ml="0.5rem"
+                              title={
+                                typeof p === 'object' ? 'Array' : p.toString()
+                              }
+                            >
+                              {typeof p === 'object' ? (
+                                <div className={styles.centered}>
+                                  {' '}
+                                  Array/Dictionary <br /> <br />
+                                </div>
+                              ) : (
+                                p.toString()
+                              )}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      {typeof p === 'object' && (
-                        <div className={styles.jsonParams}>
-                          {Object.keys(p).map((k: string) => (
-                            <div key={k} mt="0.5rem">
-                              <div>
-                                {p[k] &&
-                                  (typeof p[k] !== 'object' ? (
-                                    <div>
-                                      {' '}
-                                      {p[k].toString()} <br /> <br />{' '}
-                                    </div>
-                                  ) : (
-                                    <div>
-                                      {JSON.stringify(p[k], null, 4)}
-                                      <br />
-                                      <br />
-                                    </div>
-                                  ))}
+                        {typeof p === 'object' && (
+                          <div className={styles.jsonParams}>
+                            {Object.keys(p).map((k: string) => (
+                              <div key={k} mt="0.5rem">
+                                <div>
+                                  {p[k] &&
+                                    (typeof p[k] !== 'object' ? (
+                                      <div>
+                                        {' '}
+                                        {p[k].toString()} <br /> <br />{' '}
+                                      </div>
+                                    ) : (
+                                      <div>
+                                        {JSON.stringify(p[k], null, 4)}
+                                        <br />
+                                        <br />
+                                      </div>
+                                    ))}
+                                </div>
                               </div>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </React.Fragment>
-                  ))}
+                            ))}
+                          </div>
+                        )}
+                      </React.Fragment>
+                    ))}
                 </div>
               </div>
               <div
@@ -423,8 +464,7 @@ const ConnectDapp = ({ address, history, net }: Props) => {
                     onClick={() => {
                       if (!loading) {
                         walletConnectCtx.rejectRequest(request)
-                        setConnectionStep(CONNECTION_STEPS.ENTER_URL)
-                        setConnectionUrl('')
+                        resetState()
                         history.push(ROUTES.DASHBOARD)
                       }
                     }}

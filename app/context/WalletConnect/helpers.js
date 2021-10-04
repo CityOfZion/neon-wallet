@@ -1,6 +1,6 @@
 // @flow
-import Neon, { rpc, tx, sc, u, api } from '@cityofzion/neon-js-next'
-import { sc as ncSC, u as ncU, tx as ncTx } from '@cityofzion/neon-core'
+import Neon, { rpc, tx, sc, u, api, wallet } from '@cityofzion/neon-js-next'
+import { u as ncU, tx as ncTx } from '@cityofzion/neon-core'
 import {
   setBlockExpiry,
   addFees,
@@ -76,7 +76,6 @@ class N3Helper {
     operation: string,
     ...args: any[]
   ): Promise<any> => {
-    debugger
     const networkMagic = await N3Helper.getMagicOfRpcAddress(this.rpcAddress)
     const contract = new Neon.experimental.SmartContract(
       Neon.u.HexString.fromHex(scriptHash),
@@ -96,45 +95,61 @@ class N3Helper {
         const facade = await api.NetworkFacade.fromConfig({
           node: this.rpcAddress,
         })
-        const builder = new ncSC.ScriptBuilder()
-        builder
-          .emitAppCall(
+        const builder = new sc.ScriptBuilder()
+        try {
+          builder.emitAppCall(
             Neon.u.HexString.fromHex(scriptHash).toString(),
             operation,
             convertedArgs,
           )
-          .catch(e => {
-            console.error({ e })
-          })
-        const transaction = new ncTx.Transaction()
+        } catch (e) {
+          console.error({ e })
+        }
+        const transaction = new tx.Transaction()
+        // add script as neon-core HexString class
         transaction.script = ncU.HexString.fromHex(builder.build())
         await setBlockExpiry(transaction, {
           rpcAddress: this.rpcAddress,
-        }).catch(e => {
-          console.error({ e })
-        })
-        transaction.addSigner({
-          account: account.scriptHash,
-          scopes: 'CalledByEntry',
-        })
+          blocksTillExpiry: 100,
+        }).catch(console.error)
+        // add signers as neon-core Signer class array
+        transaction.signers = [
+          new ncTx.Signer({
+            account: account.scriptHash,
+            scopes: 'CalledByEntry',
+          }),
+        ]
+        transaction.systemFee = 0
+        transaction.networkFee = 0
+        transaction.witnesses = [
+          new ncTx.Witness({
+            verificationScript: wallet.getVerificationScriptFromPublicKey(
+              account.publicKey,
+            ),
+            invocationScript: '',
+          }),
+        ]
         await addFees(transaction, {
           rpcAddress: this.rpcAddress,
-          account: account.scriptHash,
+          account,
           networkMagic,
-        }).catch(e => {
-          console.error({ e })
-        })
-        const validateResult = await facade.validate(transaction)
-        if (!validateResult.valid) {
-          throw new Error('Unable to validate transaction')
-        }
+        }).catch(console.error)
+
+        // re-add script as neon-js HexString class
+        transaction.script = u.HexString.fromHex(builder.build())
+
+        // re-add signers as neon-core Signer class array
+        transaction.signers = [
+          new tx.Signer({
+            account: account.scriptHash,
+            scopes: 'CalledByEntry',
+          }),
+        ]
+
         const signedTx = await facade
           .sign(transaction, signingConfig)
-          .catch(e => {
-            console.log(e)
-          })
+          .catch(console.error)
 
-        console.log({ signedTx })
         return new rpc.NeoServerRpcClient(this.rpcAddress).sendRawTransaction(
           signedTx,
         )
@@ -179,7 +194,7 @@ class N3Helper {
             ? sc.ContractParam.hash160(a.value)
             : // eslint-disable-next-line
               a.type === 'ScriptHash'
-              ? sc.ContractParam.hash160(Neon.u.HexString.fromHex(a.value))
+              ? sc.ContractParam.hash160(a.value)
               : a.type === 'Array'
                 ? sc.ContractParam.array(...N3Helper.convertParams(a.value))
                 : a,
