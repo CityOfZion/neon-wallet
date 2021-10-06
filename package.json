@@ -91,7 +91,7 @@
     "@cityofzion/neon-ledger-next": "npm:@cityofzion/neon-ledger@5.0.0-next.14",
     "@formatjs/intl-pluralrules": "^1.5.2",
     "@json-rpc-tools/utils": "^1.7.6",
-    "@ledgerhq/hw-transport-node-hid": "6.3.0",
+    "@ledgerhq/hw-transport-node-hid-noevents": "^6.7.0",
     "@tippyjs/react": "^4.2.5",
     "@walletconnect/client": "2.0.0-beta.17",
     "@walletconnect/types": "2.0.0-beta.17",
