@@ -18,7 +18,11 @@ import withInitialCall from '../../hocs/withInitialCall'
 import withAuthData from '../../hocs/withAuthData'
 import withThemeData from '../../hocs/withThemeData'
 import { checkVersion } from '../../modules/metadata'
-import { showErrorNotification } from '../../modules/notifications'
+import {
+  showErrorNotification,
+  showInfoNotification,
+  hideNotification,
+} from '../../modules/notifications'
 
 import App from './App'
 import Loading from './Loading'
@@ -30,6 +34,8 @@ const { LOADING } = progressValues
 const actionCreators = {
   checkVersion,
   showErrorNotification,
+  showInfoNotification,
+  hideNotification,
 }
 
 const mapDispatchToProps = dispatch =>

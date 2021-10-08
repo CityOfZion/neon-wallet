@@ -23,6 +23,8 @@ type Props = {
   address: string,
   checkVersion: Function,
   showErrorNotification: Function,
+  showInfoNotification: Function,
+  hideNotification: Function,
   location: Object,
   theme: string,
   store: any,
@@ -61,6 +63,8 @@ const App = ({
   isHardwareLogin,
   signingFunction,
   publicKey,
+  showInfoNotification,
+  hideNotification,
 }: Props) => {
   const walletConnectCtx = useWalletConnect()
   useEffect(() => {
@@ -97,6 +101,8 @@ const App = ({
           req,
           isHardwareLogin,
           signingFunction,
+          showInfoNotification,
+          hideNotification,
         )
       })
     },

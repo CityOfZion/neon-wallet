@@ -98,6 +98,7 @@ async function getPrices(useFallbackApi = false) {
         prices[key] = toFixedDecimals(parseFloat(value) * prices.NEO, 2)
       }
     })
+
     // Within the neon-wallet app, we use the token's symbol to retrieve the token's price.
     // Therefore if any key in the price object is a "cryptocompare" symbol,
     // we have to replace it by the corresponding token's symbol.
@@ -105,7 +106,7 @@ async function getPrices(useFallbackApi = false) {
       prices[get(PRICE_API_SYMBOL_EXCEPTIONS.reverse, key, key)] = value
     })
 
-    if (isEmpty(prices) && PRICE_REQUEST_ATTEMPTS < 2) {
+    if (!prices.NEO && PRICE_REQUEST_ATTEMPTS < 2) {
       PRICE_REQUEST_ATTEMPTS += 1
       return getPrices(true)
     }

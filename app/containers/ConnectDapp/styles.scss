@@ -41,6 +41,7 @@ p {
   justify-content: center;
   text-align: center;
   margin-top: 24px;
+  margin-bottom: 48px;
 
   img {
     margin: auto;
@@ -174,6 +175,14 @@ p {
 
     div {
       display: flex;
+    }
+  }
+}
+
+.walletConnectIcon {
+  svg {
+    path {
+      fill: rgb(255, 255, 255) !important;
     }
   }
 }
