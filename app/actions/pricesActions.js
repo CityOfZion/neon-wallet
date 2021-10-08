@@ -106,14 +106,14 @@ async function getPrices(useFallbackApi = false) {
       prices[get(PRICE_API_SYMBOL_EXCEPTIONS.reverse, key, key)] = value
     })
 
-    //if the price data is missing and we havent tried too many times, attempt the fallback
+    // If the price data is missing and we havent tried too many times, attempt the fallback
     if (!prices.NEO && PRICE_REQUEST_ATTEMPTS < 2) {
       PRICE_REQUEST_ATTEMPTS += 1
       return getPrices(true)
     }
     return prices
   } catch (error) {
-    //If the attempt errors out, try the fallback
+    // If the attempt errors out, try the fallback
     if (PRICE_REQUEST_ATTEMPTS < 2) {
       PRICE_REQUEST_ATTEMPTS += 1
       return getPrices(true)
