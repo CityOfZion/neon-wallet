@@ -32,6 +32,8 @@ class N3Helper {
     request: JsonRpcRequest,
     isHardwareLogin?: boolean,
     signingFunction?: () => void,
+    showInfoNotification?: () => void,
+    hideNotification?: () => void,
   ): Promise<JsonRpcResponse> => {
     let result: any
 
@@ -43,6 +45,8 @@ class N3Helper {
       result = await this.contractInvoke(
         isHardwareLogin,
         signingFunction,
+        showInfoNotification,
+        hideNotification,
         account,
         request.params[0],
         request.params[1],
@@ -71,6 +75,8 @@ class N3Helper {
   contractInvoke = async (
     isHardwareLogin?: boolean,
     signingFunction?: () => void,
+    showInfoNotification?: (*) => void,
+    hideNotification?: (*) => void,
     account: any,
     scriptHash: string,
     operation: string,
@@ -146,9 +152,19 @@ class N3Helper {
           }),
         ]
 
+        let notificationId
+
+        if (showInfoNotification)
+          notificationId = showInfoNotification({
+            message: 'Please sign the transaction on your hardware device',
+            autoDismiss: 0,
+          })
+
         const signedTx = await facade
           .sign(transaction, signingConfig)
           .catch(console.error)
+
+        if (hideNotification && notificationId) hideNotification(notificationId)
 
         return new rpc.NeoServerRpcClient(this.rpcAddress).sendRawTransaction(
           signedTx,

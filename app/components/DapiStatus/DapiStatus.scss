@@ -28,6 +28,7 @@
     a {
       cursor: pointer;
       max-width: 24px;
+
       display: flex;
       align-items: center;
     }
@@ -75,9 +76,12 @@
 
 .contentContainer {
   margin-left: 24px;
+  display: flex;
+  align-items: center;
 
   svg {
     margin-right: 10px;
+    max-width: 15px;
   }
 }
 

@@ -288,7 +288,7 @@ const ConnectDapp = ({
             />
           )}
           renderHeaderIcon={() => (
-            <div>
+            <div className={styles.walletConnectIcon}>
               <WallletConnect />
             </div>
           )}
@@ -372,7 +372,7 @@ const ConnectDapp = ({
             />
           )}
           renderHeaderIcon={() => (
-            <div>
+            <div className={styles.walletConnectIcon}>
               <WallletConnect />
             </div>
           )}
