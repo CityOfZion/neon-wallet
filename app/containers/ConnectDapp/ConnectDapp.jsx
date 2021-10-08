@@ -21,6 +21,10 @@ import CheckMarkIcon from '../../assets/icons/confirm-circle.svg'
 import ErrorIcon from '../../assets/icons/wc-error.svg'
 import { PROPOSAL_MOCK, REQUEST_MOCK } from './mocks'
 import { getNode, getRPCEndpoint } from '../../actions/nodeStorageActions'
+import DialogueBox from '../../components/DialogueBox'
+import WarningIcon from '../../assets/icons/warning.svg'
+
+const electron = require('electron').remote
 
 type Props = {
   address: string,
@@ -28,6 +32,7 @@ type Props = {
   net: string,
   showSuccessNotification: ({ message: string }) => void,
   showErrorNotification: ({ message: string }) => void,
+  isHardwareLogin?: boolean,
 }
 
 const CONNECTION_STEPS = {
@@ -44,6 +49,7 @@ const ConnectDapp = ({
   net,
   showSuccessNotification,
   showErrorNotification,
+  isHardwareLogin,
 }: Props) => {
   const [connectionUrl, setConnectionUrl] = useState('')
   const [connectionStep, setConnectionStep] = useState(
@@ -390,6 +396,35 @@ const ConnectDapp = ({
               {peer && peer.metadata.name} wants to call{' '}
               <span className={styles.methodName}>{contractName}</span> contract
             </h3>
+
+            {isHardwareLogin && (
+              <DialogueBox
+                icon={
+                  <WarningIcon
+                    className={styles.warningIcon}
+                    height={60}
+                    width={60}
+                  />
+                }
+                renderText={() => (
+                  <div>
+                    To sign this transaction with your ledger, enable custom
+                    contract data in the Neo N3 app settings. Read more about
+                    how to enable this setting{' '}
+                    <a
+                      onClick={() => {
+                        electron.shell.openExternal(
+                          'https://medium.com/proof-of-working/signing-custom-transactions-with-ledger-29723f6eaa4',
+                        )
+                      }}
+                    >
+                      here
+                    </a>.
+                  </div>
+                )}
+                className={styles.warningDialogue}
+              />
+            )}
 
             <div className={styles.connectionDetails}>
               <div
