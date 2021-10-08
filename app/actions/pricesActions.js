@@ -80,7 +80,7 @@ async function getPrices(useFallbackApi = false) {
       .join(',')
 
     const url = useFallbackApi
-      ? `http://54.227.25.52:8090/data/pricemultifull?fsyms=${joinedTokens}&tsyms=${currency.toUpperCase()}`
+      ? `https://dora.coz.io/data/data/pricemultifull?fsyms=${joinedTokens}&tsyms=${currency.toUpperCase()}`
       : `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${joinedTokens}&tsyms=${currency.toUpperCase()}`
     const prices = await apiCallWrapper(url, currency)
 
@@ -88,7 +88,7 @@ async function getPrices(useFallbackApi = false) {
     // As of now, (27.07.2019), for instance NEX price can't be retrieve via the first api call above.
     // Therefore we need a second api call with currency NEO.
     const url2 = useFallbackApi
-      ? `http://54.227.25.52:8090/data/pricemultifull?fsyms=${joinedTokens}&tsyms=NEO`
+      ? `https://dora.coz.io/data/data/pricemultifull?fsyms=${joinedTokens}&tsyms=NEO`
       : `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${joinedTokens}&tsyms=NEO`
     const neoPrices = await apiCallWrapper(url2, 'NEO')
 
@@ -106,12 +106,18 @@ async function getPrices(useFallbackApi = false) {
       prices[get(PRICE_API_SYMBOL_EXCEPTIONS.reverse, key, key)] = value
     })
 
+    //if the price data is missing and we havent tried too many times, attempt the fallback
     if (!prices.NEO && PRICE_REQUEST_ATTEMPTS < 2) {
       PRICE_REQUEST_ATTEMPTS += 1
       return getPrices(true)
     }
     return prices
   } catch (error) {
+    //If the attempt errors out, try the fallback
+    if (PRICE_REQUEST_ATTEMPTS < 2) {
+      PRICE_REQUEST_ATTEMPTS += 1
+      return getPrices(true)
+    }
     console.error('An error occurred getting price data', { error })
     return {}
   }
