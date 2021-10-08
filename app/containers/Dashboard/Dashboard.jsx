@@ -23,6 +23,7 @@ type Props = {
   hasInternetConnectivity: boolean,
   internetConnectionPromptPresented: Boolean,
   theme: string,
+  chain: string,
 }
 
 const REFRESH_INTERVAL_MS = 30000
@@ -51,6 +52,7 @@ export default class Dashboard extends Component<Props> {
       address,
       hasInternetConnectivity,
       internetConnectionPromptPresented,
+      chain,
     } = this.props
     if (!hasInternetConnectivity && !internetConnectionPromptPresented) {
       return <Redirect to={ROUTES.OFFLINE_SIGNING_PROMPT} />
@@ -89,7 +91,7 @@ export default class Dashboard extends Component<Props> {
                 </span>
               </NavLink>
 
-              <DapiStatus theme={this.props.theme} />
+              {chain === 'neo3' && <DapiStatus theme={this.props.theme} />}
 
               <RefreshButton />
             </div>
