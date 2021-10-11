@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="20px" height="19px" viewBox="0 0 20 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Group 2</title>
-    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Group-2" transform="translate(3.500000, 3.500000)">
-            <path d="M11.5652366,-1.44102933 L14.3888412,1.48859982 L11.4843714,4.50228971 L12.9366106,6.00906052 L5.77388261,13.4410392 L-1.3888323,6.00907407 L5.77386833,-1.4228763 L7.20860798,0.0657369357 L8.66074851,-1.44101009 L10.113059,0.0657561733 L11.5652366,-1.44102933 Z" id="Path" stroke="#4CFEB1" stroke-width="2"></path>
-            <polygon id="Path-5" fill="#4CFEB1" points="3.42105263 5.64129571 6.15789474 8.47058824 8.89473684 5.64129571 7.53464231 4.23529412 6.15789474 5.65843664 4.78121894 4.23529412"></polygon>
-        </g>
+<svg width="20px" height="19px" viewBox="0 0 20 19" version="1.1" xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+
+  <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="Group-2" transform="translate(3.500000, 3.500000)">
+      <path
+        d="M11.5652366,-1.44102933 L14.3888412,1.48859982 L11.4843714,4.50228971 L12.9366106,6.00906052 L5.77388261,13.4410392 L-1.3888323,6.00907407 L5.77386833,-1.4228763 L7.20860798,0.0657369357 L8.66074851,-1.44101009 L10.113059,0.0657561733 L11.5652366,-1.44102933 Z"
+        id="Path" stroke="#4CFEB1" stroke-width="2"></path>
+      <polygon id="Path-5" fill="#4CFEB1"
+        points="3.42105263 5.64129571 6.15789474 8.47058824 8.89473684 5.64129571 7.53464231 4.23529412 6.15789474 5.65843664 4.78121894 4.23529412">
+      </polygon>
     </g>
+  </g>
 </svg>

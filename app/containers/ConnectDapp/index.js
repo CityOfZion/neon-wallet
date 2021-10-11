@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 
 import ConnectDapp from './ConnectDapp'
 import withAuthData from '../../hocs/withAuthData'
+import withThemeData from '../../hocs/withThemeData'
 import withNetworkData from '../../hocs/withNetworkData'
 import {
   showErrorNotification,
@@ -29,4 +30,5 @@ export default compose(
   withRouter,
   withAuthData(),
   withNetworkData(),
+  withThemeData(),
 )(ConnectDapp)

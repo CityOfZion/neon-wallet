@@ -18,11 +18,19 @@ import Confirm from '../../assets/icons/confirm_connection.svg'
 import Deny from '../../assets/icons/deny_connection.svg'
 import WallletConnect from '../../assets/icons/wallet_connect.svg'
 import CheckMarkIcon from '../../assets/icons/confirm-circle.svg'
+import DoraIcon from '../../assets/icons/dora_icon_light.svg'
+import DoraIconDark from '../../assets/icons/dora_icon_dark.svg'
+import Info from '../../assets/icons/info.svg'
+import Up from '../../assets/icons/chevron-up.svg'
+import Down from '../../assets/icons/chevron-down.svg'
+
 import ErrorIcon from '../../assets/icons/wc-error.svg'
-import { PROPOSAL_MOCK, REQUEST_MOCK } from './mocks'
+import { PROPOSAL_MOCK, REQUEST_MOCK, TX_STATE_TYPE_MAPPINGS } from './mocks'
 import { getNode, getRPCEndpoint } from '../../actions/nodeStorageActions'
 import DialogueBox from '../../components/DialogueBox'
 import WarningIcon from '../../assets/icons/warning.svg'
+import CopyToClipboard from '../../components/CopyToClipboard/CopyToClipboard'
+import Tooltip from '../../components/Tooltip'
 
 const electron = require('electron').remote
 
@@ -33,6 +41,7 @@ type Props = {
   showSuccessNotification: ({ message: string }) => void,
   showErrorNotification: ({ message: string }) => void,
   isHardwareLogin?: boolean,
+  theme: string,
 }
 
 const CONNECTION_STEPS = {
@@ -50,17 +59,19 @@ const ConnectDapp = ({
   showSuccessNotification,
   showErrorNotification,
   isHardwareLogin,
+  theme,
 }: Props) => {
   const [connectionUrl, setConnectionUrl] = useState('')
   const [connectionStep, setConnectionStep] = useState(
-    CONNECTION_STEPS.ENTER_URL,
+    CONNECTION_STEPS.APPROVE_TRANSACTION,
   )
   const [proposal, setProposal] = useState(null)
   const [peer, setPeer] = useState(null)
-  const [request, setRequest] = useState(null)
+  const [request, setRequest] = useState(REQUEST_MOCK)
   const [loading, setLoading] = useState(false)
   const [fee, setFee] = useState('')
   const [contractName, setContractName] = useState('')
+  const [requestParamsVisible, setRequestParamsVisible] = useState(true)
   const walletConnectCtx = useWalletConnect()
   const firstProposal = walletConnectCtx.sessionProposals[0]
   const firstRequest = walletConnectCtx.requests[0]
@@ -432,7 +443,36 @@ const ConnectDapp = ({
               >
                 <label>hash</label>
                 <div className={styles.scriptHash}>
-                  {request && request.request.params[0]}
+                  {request && request.request.params[0]}{' '}
+                  {theme === 'Light' ? (
+                    <DoraIcon
+                      onClick={() =>
+                        electron.shell.openExternal(
+                          net === 'MainNet'
+                            ? `https://dora.coz.io/contract/neo3/mainnet/${
+                                request.request.params[0]
+                              }`
+                            : `https://dora.coz.io/contract/neo3/testnet_rc4/${
+                                request.request.params[0]
+                              }`,
+                        )
+                      }
+                    />
+                  ) : (
+                    <DoraIconDark
+                      onClick={() =>
+                        electron.shell.openExternal(
+                          net === 'MainNet'
+                            ? `https://dora.coz.io/contract/neo3/mainnet/${
+                                request.request.params[0]
+                              }`
+                            : `https://dora.coz.io/contract/neo3/testnet_rc4/${
+                                request.request.params[0]
+                              }`,
+                        )
+                      }
+                    />
+                  )}
                 </div>
               </div>
 
@@ -449,64 +489,59 @@ const ConnectDapp = ({
               <div className={styles.details}>
                 <div className={styles.detailsLabel}>
                   <label>request parameters</label>
+
+                  <div>
+                    {requestParamsVisible ? (
+                      <Up onClick={() => setRequestParamsVisible(false)} />
+                    ) : (
+                      <Down onClick={() => setRequestParamsVisible(true)} />
+                    )}
+                  </div>
                 </div>
 
-                <div className={styles.requestParams}>
-                  {request &&
-                    request.request.params.map((p: any, i: number) => (
-                      <React.Fragment key={i}>
-                        <div className={styles.paramContainer}>
-                          <div key={i}>
-                            <div className={styles.index}>{i.toString(10)}</div>
-                            <div
-                              ml="0.5rem"
-                              title={
-                                typeof p === 'object' ? 'Array' : p.toString()
-                              }
-                            >
-                              {typeof p === 'object' ? (
-                                <div className={styles.centered}>
-                                  {' '}
-                                  Array/Dictionary <br /> <br />
+                {requestParamsVisible && (
+                  <div className={styles.requestParams}>
+                    {request &&
+                      request.request.params.map((p: any, i: number) => (
+                        <React.Fragment key={i}>
+                          {typeof p === 'object' &&
+                            p
+                              .find(p => p.type === 'Array')
+                              .value.map((arg, i) => (
+                                <div className={styles.paramContainer}>
+                                  <div>
+                                    <div className={styles.index}>{i}</div>
+                                    {arg.value}{' '}
+                                    <CopyToClipboard text={String(arg.value)} />
+                                  </div>
+                                  <div
+                                    className={styles.argType}
+                                    style={{
+                                      backgroundColor:
+                                        TX_STATE_TYPE_MAPPINGS[arg.type] &&
+                                        TX_STATE_TYPE_MAPPINGS[arg.type].color,
+                                    }}
+                                  >
+                                    {' '}
+                                    {arg.type}{' '}
+                                  </div>
                                 </div>
-                              ) : (
-                                p.toString()
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                        {typeof p === 'object' && (
-                          <div className={styles.jsonParams}>
-                            {Object.keys(p).map((k: string) => (
-                              <div key={k} mt="0.5rem">
-                                <div>
-                                  {p[k] &&
-                                    (typeof p[k] !== 'object' ? (
-                                      <div>
-                                        {' '}
-                                        {p[k].toString()} <br /> <br />{' '}
-                                      </div>
-                                    ) : (
-                                      <div>
-                                        {JSON.stringify(p[k], null, 4)}
-                                        <br />
-                                        <br />
-                                      </div>
-                                    ))}
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </React.Fragment>
-                    ))}
-                </div>
+                              ))}
+                        </React.Fragment>
+                      ))}
+                  </div>
+                )}
               </div>
               <div
                 className={classNames([styles.detailsLabel, styles.detailRow])}
               >
                 <label>fee</label>
-                <div className={styles.scriptHash}>{fee} GAS</div>
+                <div className={styles.fee}>
+                  {fee} GAS
+                  <Tooltip title="Other network fees may apply">
+                    <Info />{' '}
+                  </Tooltip>
+                </div>
               </div>
               <div className={styles.confirmation}>
                 Please confirm you would like to proceed
