@@ -63,11 +63,11 @@ const ConnectDapp = ({
 }: Props) => {
   const [connectionUrl, setConnectionUrl] = useState('')
   const [connectionStep, setConnectionStep] = useState(
-    CONNECTION_STEPS.APPROVE_TRANSACTION,
+    CONNECTION_STEPS.ENTER_URL,
   )
   const [proposal, setProposal] = useState(null)
   const [peer, setPeer] = useState(null)
-  const [request, setRequest] = useState(REQUEST_MOCK)
+  const [request, setRequest] = useState(null)
   const [loading, setLoading] = useState(false)
   const [fee, setFee] = useState('')
   const [contractName, setContractName] = useState('')
