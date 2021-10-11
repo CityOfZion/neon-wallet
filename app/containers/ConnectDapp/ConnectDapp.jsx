@@ -449,12 +449,10 @@ const ConnectDapp = ({
                       onClick={() =>
                         electron.shell.openExternal(
                           net === 'MainNet'
-                            ? `https://dora.coz.io/contract/neo3/mainnet/${
-                                request.request.params[0]
-                              }`
-                            : `https://dora.coz.io/contract/neo3/testnet_rc4/${
-                                request.request.params[0]
-                              }`,
+                            ? `https://dora.coz.io/contract/neo3/mainnet/${request &&
+                                request.request.params[0]}`
+                            : `https://dora.coz.io/contract/neo3/testnet_rc4/${request &&
+                                request.request.params[0]}`,
                         )
                       }
                     />
