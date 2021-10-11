@@ -219,6 +219,17 @@ const ConnectDapp = ({
     }
   }
 
+  const handleOpenDoraLink = hash => {
+    if (hash) {
+      return electron.shell.openExternal(
+        net === 'MainNet'
+          ? `https://dora.coz.io/contract/neo3/mainnet/${hash}`
+          : `https://dora.coz.io/contract/neo3/testnet_rc4/${hash}`,
+      )
+    }
+    return null
+  }
+
   switch (true) {
     case connectionStep === CONNECTION_STEPS.TRANSACTION_ERROR:
       return (
@@ -447,25 +458,13 @@ const ConnectDapp = ({
                   {theme === 'Light' ? (
                     <DoraIcon
                       onClick={() =>
-                        electron.shell.openExternal(
-                          net === 'MainNet'
-                            ? `https://dora.coz.io/contract/neo3/mainnet/${request &&
-                                request.request.params[0]}`
-                            : `https://dora.coz.io/contract/neo3/testnet_rc4/${request &&
-                                request.request.params[0]}`,
-                        )
+                        handleOpenDoraLink(request && request.request.params[0])
                       }
                     />
                   ) : (
                     <DoraIconDark
                       onClick={() =>
-                        electron.shell.openExternal(
-                          net === 'MainNet'
-                            ? `https://dora.coz.io/contract/neo3/mainnet/${request &&
-                                request.request.params[0]}`
-                            : `https://dora.coz.io/contract/neo3/testnet_rc4/${request &&
-                                request.request.params[0]}`,
-                        )
+                        handleOpenDoraLink(request && request.request.params[0])
                       }
                     />
                   )}
