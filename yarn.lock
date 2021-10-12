@@ -551,11 +551,7 @@
   resolved "https://registry.yarnpkg.com/@types/ms/-/ms-0.7.31.tgz#31b7ca6407128a3d2bbc27fe2d21b345397f6197"
   integrity sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==
 
-"@types/node@*":
-  version "14.11.8"
-  resolved "https://registry.npmjs.org/@types/node/-/node-14.11.8.tgz"
-
-"@types/node@15.0.3":
+"@types/node@*", "@types/node@15.0.3":
   version "15.0.3"
   resolved "https://registry.npmjs.org/@types/node/-/node-15.0.3.tgz"
 
@@ -4624,9 +4620,10 @@ electron-updater@^4.3.5:
     lodash.isequal "^4.5.0"
     semver "^7.3.2"
 
-electron@8.5.5:
-  version "8.5.5"
-  resolved "https://registry.npmjs.org/electron/-/electron-8.5.5.tgz"
+electron@11.5.0:
+  version "11.5.0"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-11.5.0.tgz#f1650543b9d8f2047d3807755bdb120153ed210f"
+  integrity sha512-WjNDd6lGpxyiNjE3LhnFCAk/D9GIj1rU3GSDealVShhkkkPR3Vh4q8ErXGDl1OAO/faomVa10KoFPUN/pLbNxg==
   dependencies:
     "@electron/get" "^1.0.1"
     "@types/node" "^12.0.12"
