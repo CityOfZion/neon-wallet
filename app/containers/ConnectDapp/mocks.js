@@ -84,3 +84,51 @@ export const PROPOSAL_MOCK = {
   },
   ttl: 604800,
 }
+
+export const TX_STATE_TYPE_MAPPINGS = {
+  Signature: {
+    color: '#E9265C',
+  },
+  Boolean: {
+    color: '#D355E7',
+  },
+  Integer: {
+    color: '#B167F2',
+  },
+  Hash160: {
+    color: '#008529',
+  },
+  Address: {
+    color: '#008529',
+  },
+  Null: {
+    color: 'rgba(255, 255, 255, 0.08)',
+  },
+  Hash256: {
+    color: '#1DB5FF',
+  },
+  ByteArray: {
+    color: '#0DCDFF',
+  },
+  PublicKey: {
+    color: '#00D69D',
+  },
+  String: {
+    color: '#67DD8B',
+  },
+  ByteString: {
+    color: '#67DD8B',
+  },
+  Array: {
+    color: '#F28F00',
+  },
+  Buffer: {
+    color: '#F28F00',
+  },
+  InteropInterface: {
+    color: '#A50000',
+  },
+  Void: {
+    color: '#528D93',
+  },
+}
