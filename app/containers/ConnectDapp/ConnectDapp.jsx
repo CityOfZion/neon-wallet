@@ -331,7 +331,7 @@ const ConnectDapp = ({
             <div className={styles.connectionDetails}>
               {proposal && proposal.proposer.metadata.name} wants to connect to
               your wallet
-              <div className={styles.details}>
+              <div className={styles.details} style={{ marginTop: 12 }}>
                 <div className={styles.detailsLabel}>
                   <label>dApp details</label>
                 </div>
@@ -347,7 +347,7 @@ const ConnectDapp = ({
                   </div>
                 </div>
               </div>
-              <div className={styles.confirmation}>
+              <div className={styles.confirmation} style={{ border: 'none' }}>
                 Please confirm you would like to connect
                 <div>
                   <Confirm
