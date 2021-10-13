@@ -5973,6 +5973,11 @@ eth-json-rpc-middleware@^6.0.0:
     pify "^3.0.0"
     safe-event-emitter "^1.0.1"
 
+eth-parse-uri@^0.6.7:
+  version "0.6.9"
+  resolved "https://registry.yarnpkg.com/eth-parse-uri/-/eth-parse-uri-0.6.9.tgz#2f481b95d062fb8ad5d92cccf10e63e5c4162344"
+  integrity sha512-6QWqTi5/hfOj7Ii5yxbYSIbsoT+SAS1+YQ1ze+VZ8JnZKPzmcu67wtDgY+YmLh+REZQIun1E7kd45JeSH/HDmA==
+
 eth-query@^2.1.0, eth-query@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/eth-query/-/eth-query-2.1.2.tgz#d6741d9000106b51510c72db92d6365456a6da5e"
@@ -8673,6 +8678,13 @@ js-string-escape@^1.0.1:
 js-tokens@^3.0.2:
   version "3.0.2"
   resolved "https://registry.npmjs.org/js-tokens/-/js-tokens-3.0.2.tgz"
+
+js-walletconnect-core@^0.6.5:
+  version "0.6.29"
+  resolved "https://registry.yarnpkg.com/js-walletconnect-core/-/js-walletconnect-core-0.6.29.tgz#b4e5645aa0de47322bdab959b36a031ad25539fa"
+  integrity sha512-vBT/JkTHHWA/arZNyQTO4DFS5KV5QzukW0kbbfWKDTTJPiti4XKmTGh3r+dLAH6N6zeKWIKcmypheTpbTsN58g==
+  dependencies:
+    eth-parse-uri "^0.6.7"
 
 js-yaml@^3.13.1, js-yaml@^3.14.0, js-yaml@^3.7.0, js-yaml@^3.8.2, js-yaml@^4.1.0, js-yaml@~3.7.0:
   version "3.14.0"
@@ -14258,7 +14270,14 @@ walker@~1.0.5:
   dependencies:
     makeerror "1.0.x"
 
-walletconnect@^1.6.5:
+walletconnect@0.6.5:
+  version "0.6.5"
+  resolved "https://registry.yarnpkg.com/walletconnect/-/walletconnect-0.6.5.tgz#bf059eb5d9cc19d9ca298d88fd7e4287d912a989"
+  integrity sha512-Mk2PI37Yf4+ii84/uIhbMNMal/OxTzWlCpb03SR4wCN3Z/hyvA7BSLIB60E5l7AN/rS/PJamw9lL7+hpyeWdsw==
+  dependencies:
+    js-walletconnect-core "^0.6.5"
+
+walletconnect@1.6.5:
   version "1.6.5"
   resolved "https://registry.yarnpkg.com/walletconnect/-/walletconnect-1.6.5.tgz#6893d0bd344c23e54dcf9056c247eb1412c9a329"
   integrity sha512-Kkev20Uoi3DNHgujq5AJ9OJoOGSjrLBMCd6iMaYJiuqai4/KKVFV3cHZacT68MvVWFxLXanGzyOtAxIY2Y1HAw==
