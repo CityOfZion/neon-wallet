@@ -147,7 +147,8 @@ export const handleN3GasClaim = async ({
       params: [],
     }),
   )
-  const networkMagic = version.network || version.magic || 844378958
+  const networkMagic =
+    version.protocol.network || version.network || version.magic || 860833102
 
   const CONFIG = {
     account: FROM_ACCOUNT,
