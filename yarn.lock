@@ -155,11 +155,11 @@
     isomorphic-ws "4.0.1"
     ws "7.4.5"
 
-"@cityofzion/neon-api@^5.0.0-next.15":
-  version "5.0.0-next.15"
-  resolved "https://registry.npmjs.org/@cityofzion/neon-api/-/neon-api-5.0.0-next.15.tgz"
+"@cityofzion/neon-api@^5.0.0-next.16":
+  version "5.0.0-next.16"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neon-api/-/neon-api-5.0.0-next.16.tgz#83d2f70c43b124424817ce1acf1925c5cb8131b4"
+  integrity sha512-wn7skR+gPvMGUS2GTP9xAW6TP0kwigtLC9+tV7xbl2idaRk3SVGzpI6TrPzCAtZ+mTCqznUjzT/R2jQTSxsCPg==
   dependencies:
-    axios "0.21.1"
     isomorphic-ws "4.0.1"
     ws "7.4.4"
 
@@ -184,9 +184,10 @@
     secure-random "1.1.2"
     wif "2.0.6"
 
-"@cityofzion/neon-core@^5.0.0-next.15":
-  version "5.0.0-next.15"
-  resolved "https://registry.npmjs.org/@cityofzion/neon-core/-/neon-core-5.0.0-next.15.tgz"
+"@cityofzion/neon-core@^5.0.0-next.16":
+  version "5.0.0-next.16"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neon-core/-/neon-core-5.0.0-next.16.tgz#f76224a564592c00b0d50fe5f620fe0dbba2a3d2"
+  integrity sha512-C9YoomPA5JuOh2HpYY99OYicJBRg+LncPbtTQ4WZ8ujQ4w9DA8DIdLJ0cfWCWFPvGxAt3dW2sxYMzWn+5oNWxg==
   dependencies:
     abort-controller "3.0.0"
     bignumber.js "7.2.1"
@@ -208,12 +209,13 @@
     "@cityofzion/neon-core" "^4.9.0"
     "@cityofzion/neon-nep5" "^4.9.0"
 
-"@cityofzion/neon-js-next@npm:@cityofzion/neon-js@5.0.0-next.15":
-  version "5.0.0-next.15"
-  resolved "https://registry.npmjs.org/@cityofzion/neon-js/-/neon-js-5.0.0-next.15.tgz"
+"@cityofzion/neon-js-next@npm:@cityofzion/neon-js@5.0.0-next.16":
+  version "5.0.0-next.16"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neon-js/-/neon-js-5.0.0-next.16.tgz#fa9b1f8331eb406a278e8883193d749750237e80"
+  integrity sha512-mN/0OHzsCPFJqN1WC/cjHBEoSEvURWRkiQdCQBLAbD71Mo12SXEWOd10858c9MQbfTPovT/pSy+eZdGSCANZwg==
   dependencies:
-    "@cityofzion/neon-api" "^5.0.0-next.15"
-    "@cityofzion/neon-core" "^5.0.0-next.15"
+    "@cityofzion/neon-api" "^5.0.0-next.16"
+    "@cityofzion/neon-core" "^5.0.0-next.16"
 
 "@cityofzion/neon-js@3.11.9":
   version "3.11.9"
