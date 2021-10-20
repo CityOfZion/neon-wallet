@@ -45,6 +45,12 @@
         "repo": "neon-wallet"
       }
     ],
+    "protocols": {
+      "name": "foobar-protocol",
+      "schemes": [
+        "foobar"
+      ]
+    },
     "dmg": {
       "background": "./app/assets/images/background.tiff",
       "window": {

@@ -14,6 +14,7 @@ const log = require('electron-log')
 const port = process.env.PORT || 3000
 
 let mainWindow = null
+let link
 
 // adapted from https://github.com/chentsulin/electron-react-boilerplate
 const installExtensions = () => {
@@ -144,6 +145,10 @@ app.on('ready', () => {
       inputMenu.popup(mainWindow)
     })
 
+    mainWindow.webContents.on('did-finish-load', () => {
+      mainWindow.webContents.send('link', link)
+    })
+
     if (process.env.START_HOT) {
       mainWindow.loadURL(`http://localhost:${port}/dist`)
     } else {
@@ -171,6 +176,27 @@ app.on('ready', () => {
     onAppReady()
   }
 })
+
+// // DEEP LINKING
+// let link
+// // This will catch clicks on links such as <a href="foobar://abc=1">open in foobar</a>
+// app.on('open-url', (event, url)  => {
+//   if (mainWindow?.webContents) {
+//     mainWindow.webContents.send('link', url)
+//   }
+// })
+// app.setAsDefaultProtocolClient('foobar')
+
+// // Export so you can access it from the renderer thread
+// module.exports.getLink = () => link
+
+app.on('open-url', (event, url) => {
+  link = url
+  if (mainWindow?.webContents) {
+    mainWindow.webContents.send('link', link)
+  }
+})
+app.setAsDefaultProtocolClient('foobar')
 
 app.on('web-contents-created', (event, wc) => {
   wc.on('before-input-event', (event, input) => {

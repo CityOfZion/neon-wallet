@@ -50,6 +50,7 @@ class App extends Component<Props> {
   }
 
   render() {
+    // console.log(getLink())
     const { children, address, theme, location } = this.props
 
     return (
