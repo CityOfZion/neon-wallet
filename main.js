@@ -47,6 +47,7 @@ app.on('ready', () => {
       icon: path.join(__dirname, 'icons/png/64x64.png'),
       contextIsolation: true,
       webPreferences: {
+        enableRemoteModule: true,
         allowRunningInsecureContent: false,
         webSecurity: true,
         nodeIntegration: false,
@@ -116,12 +117,6 @@ app.on('ready', () => {
               label: 'NEO Reddit',
               click() {
                 shell.openExternal('https://www.reddit.com/r/NEO/')
-              },
-            },
-            {
-              label: 'Slack',
-              click() {
-                shell.openExternal('https://neosmarteconomy.slack.com')
               },
             },
           ],

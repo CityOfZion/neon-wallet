@@ -152,6 +152,7 @@ export const ROUTES = {
   NETWORK_CONFIGURATION: '/network-configuration',
   MOBILE: '/mobile',
   MIGRATION: '/migration',
+  CONNECT_DAPP: '/connect-dapp',
 }
 
 export const NOTIFICATION_LEVELS = {

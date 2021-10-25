@@ -1,0 +1,122 @@
+.tooltipContainer {
+  min-height: 100px;
+  width: 275px;
+  background-color: var(--wc-tooltip-bg);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  color: var(--wc-tooltip-color);
+  box-shadow: var(--wc-tooltip-box-shadow);
+
+  .innerTooltipContainer {
+    padding: 12px;
+  }
+
+  .plusButton {
+    font-size: 24px;
+    color: var(--wc-tooltip-button-color);
+  }
+
+  .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #3c4351;
+    padding-bottom: 3px;
+
+    svg,
+    a {
+      cursor: pointer;
+      max-width: 24px;
+
+      display: flex;
+      align-items: center;
+    }
+
+    svg {
+      path {
+        fill: var(--wc-tooltip-button-color);
+      }
+    }
+  }
+
+  .dappList {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  a {
+    width: 100%;
+  }
+
+  .connectButton {
+    cursor: pointer;
+    margin-top: auto;
+    border: 1px solid var(--wc-tooltip-button-color);
+    border-radius: 4px;
+    font-family: Helvetica;
+    font-size: 14px;
+    color: var(--wc-tooltip-button-color);
+    text-align: center;
+    height: 31px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 12px;
+    width: 100%;
+    cursor: pointer;
+  }
+}
+
+.contentContainer {
+  margin-left: 24px;
+  display: flex;
+  align-items: center;
+
+  svg {
+    margin-right: 10px;
+    max-width: 15px;
+  }
+}
+
+.arrowUp {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  margin: -5px auto 0 auto;
+  border-bottom: 5px solid var(--wc-tooltip-bg);
+}
+
+.sessionContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: var(--base-text);
+  width: 100%;
+  border-bottom: 1px solid #3c4351;
+  padding: 6px 0px;
+
+  .connectButton {
+    width: 72px !important;
+    max-width: 72px !important;
+    font-size: 12px;
+    margin-top: 0px !important;
+  }
+
+  img {
+    max-width: 30px;
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+  }
+}
