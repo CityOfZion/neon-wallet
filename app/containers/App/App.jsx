@@ -21,13 +21,14 @@ const ipc = require('electron').ipcRenderer
 
 function parseQuery(queryString) {
   queryString = queryString.substring(queryString.indexOf('://') + 3)
-  var query = {}
-  var pairs = (queryString[0] === '?'
+  const query = {}
+  const pairs = (queryString[0] === '?'
     ? queryString.substr(1)
     : queryString
   ).split('&')
-  for (var i = 0; i < pairs.length; i++) {
-    var pair = pairs[i].split('=')
+  // eslint-disable-next-line
+  for (let i = 0; i < pairs.length; i++) {
+    const pair = pairs[i].split('=')
     query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '')
   }
   return query
@@ -99,10 +100,7 @@ const App = ({
 
   useEffect(() => {
     ipc.on('link', (event, url) => {
-      // console.log(url)
-      // console.log(parseQuery(decodeURI(url)))
       const { uri } = parseQuery(decodeURI(url))
-      console.log({ uri })
       if (uri) {
         history.push({
           pathname: ROUTES.CONNECT_DAPP,

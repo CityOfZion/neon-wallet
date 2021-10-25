@@ -46,9 +46,9 @@
       }
     ],
     "protocols": {
-      "name": "foobar-protocol",
+      "name": "neon-protocol",
       "schemes": [
-        "foobar"
+        "neon"
       ]
     },
     "dmg": {
