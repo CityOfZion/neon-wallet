@@ -17,6 +17,7 @@ import FramelessNavigation from '../../components/FramelessNavigation'
 import { useWalletConnect } from '../../context/WalletConnect/WalletConnectContext'
 import N3Helper from '../../context/WalletConnect/helpers'
 import { getNode, getRPCEndpoint } from '../../actions/nodeStorageActions'
+
 const ipc = require('electron').ipcRenderer
 
 function parseQuery(queryString) {
@@ -101,7 +102,6 @@ const App = ({
   useEffect(() => {
     ipc.on('link', (event, url) => {
       const { uri } = parseQuery(decodeURI(url))
-      console.log({ uri })
       if (uri) {
         history.push({
           pathname: ROUTES.CONNECT_DAPP,
