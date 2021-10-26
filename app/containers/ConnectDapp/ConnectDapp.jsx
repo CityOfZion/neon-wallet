@@ -73,6 +73,7 @@ const ConnectDapp = ({
   const [contractName, setContractName] = useState('')
   const [requestParamsVisible, setRequestParamsVisible] = useState(true)
   const [shouldDisplayReqParams, setShouldDisplayReqParams] = useState(false)
+  const [hasCheckedLinkedUri, setHasCheckedLinkedUri] = useState(false)
   const walletConnectCtx = useWalletConnect()
   const firstProposal = walletConnectCtx.sessionProposals[0]
   const firstRequest = walletConnectCtx.requests[0]
@@ -88,8 +89,37 @@ const ConnectDapp = ({
     setFee('')
   }
 
+  const handleWalletConnectURLSubmit = async uri => {
+    setLoading(true)
+    try {
+      const account = new wallet.Account(address)
+      walletConnectCtx.addAccountAndChain(
+        account.address,
+        `neo3:${net.toLowerCase()}`,
+      )
+      await walletConnectCtx.onURI(uri || connectionUrl)
+      setLoading(false)
+    } catch (e) {
+      console.error({ e })
+      setLoading(false)
+    }
+  }
+
   useEffect(() => {
-    walletConnectCtx.init()
+    walletConnectCtx.init().then(() => {
+      if (
+        history.location &&
+        history.location.state &&
+        history.location.state.uri
+      ) {
+        if (!hasCheckedLinkedUri) {
+          setHasCheckedLinkedUri(true)
+          setLoading(true)
+          setConnectionUrl(history.location.state.uri)
+          handleWalletConnectURLSubmit(history.location.state.uri)
+        }
+      }
+    })
     return () => null
   }, [])
 
@@ -129,7 +159,9 @@ const ConnectDapp = ({
 
   useEffect(
     () => {
-      walletConnectCtx.getPeerOfRequest(firstRequest).then(setPeer)
+      if (firstRequest) {
+        walletConnectCtx.getPeerOfRequest(firstRequest).then(setPeer)
+      }
     },
     [firstRequest, walletConnectCtx],
   )
@@ -210,22 +242,6 @@ const ConnectDapp = ({
   )
 
   const isValid = () => true
-
-  const handleWalletConnectURLSubmit = async () => {
-    setLoading(true)
-    try {
-      const account = new wallet.Account(address)
-      walletConnectCtx.addAccountAndChain(
-        account.address,
-        `neo3:${net.toLowerCase()}`,
-      )
-      await walletConnectCtx.onURI(connectionUrl)
-      setLoading(false)
-    } catch (e) {
-      console.error({ e })
-      setLoading(false)
-    }
-  }
 
   const handleOpenDoraLink = hash => {
     if (hash) {
@@ -603,7 +619,10 @@ const ConnectDapp = ({
           )}
           renderInstructions={renderInstructions}
         >
-          <form className={styles.form} onSubmit={handleWalletConnectURLSubmit}>
+          <form
+            className={styles.form}
+            onSubmit={() => handleWalletConnectURLSubmit()}
+          >
             <TextInput
               name="dApp URL"
               label="Scan or Paste URL"
@@ -617,7 +636,7 @@ const ConnectDapp = ({
               primary
               type="submit"
               className={styles.loginButtonMargin}
-              disabled={!isValid()}
+              disabled={!isValid() || loading}
             >
               Connect
             </Button>

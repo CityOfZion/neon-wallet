@@ -18,6 +18,23 @@ import { useWalletConnect } from '../../context/WalletConnect/WalletConnectConte
 import N3Helper from '../../context/WalletConnect/helpers'
 import { getNode, getRPCEndpoint } from '../../actions/nodeStorageActions'
 
+const ipc = require('electron').ipcRenderer
+
+function parseQuery(queryString) {
+  queryString = queryString.substring(queryString.indexOf('://') + 3)
+  const query = {}
+  const pairs = (queryString[0] === '?'
+    ? queryString.substr(1)
+    : queryString
+  ).split('&')
+  // eslint-disable-next-line
+  for (let i = 0; i < pairs.length; i++) {
+    const pair = pairs[i].split('=')
+    query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '')
+  }
+  return query
+}
+
 type Props = {
   children: React$Node,
   address: string,
@@ -80,6 +97,18 @@ const App = ({
       }
     }
     handleUpgrade()
+  }, [])
+
+  useEffect(() => {
+    ipc.on('link', (event, url) => {
+      const { uri } = parseQuery(decodeURI(url))
+      if (uri) {
+        history.push({
+          pathname: ROUTES.CONNECT_DAPP,
+          state: { uri: atob(uri) },
+        })
+      }
+    })
   }, [])
 
   useEffect(

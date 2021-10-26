@@ -81,6 +81,12 @@
       "target": "nsis",
       "icon": "build/icon.ico",
       "artifactName": "${productName}.${version}.${ext}"
+    },
+    "protocols": {
+      "name": "neon-protocol",
+      "schemes": [
+        "neon"
+      ]
     }
   },
   "dependencies": {
