@@ -100,7 +100,8 @@ const App = ({
 
   useEffect(() => {
     ipc.on('link', (event, url) => {
-      const { uri } = parseQuery(decodeURI(url))
+      const uri = url.replace('neon://uri=', '')
+      console.log({ uri })
       if (uri) {
         history.push({
           pathname: ROUTES.CONNECT_DAPP,

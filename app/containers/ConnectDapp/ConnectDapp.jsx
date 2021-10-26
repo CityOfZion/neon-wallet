@@ -91,7 +91,11 @@ const ConnectDapp = ({
   useEffect(() => {
     walletConnectCtx.init()
 
-    if (history.location.state.uri) {
+    if (
+      history.location &&
+      history.location.state &&
+      history.location.state.uri
+    ) {
       setConnectionUrl(history.location.state.uri)
     }
 
@@ -134,7 +138,10 @@ const ConnectDapp = ({
 
   useEffect(
     () => {
-      walletConnectCtx.getPeerOfRequest(firstRequest).then(setPeer)
+      if (firstRequest) {
+        debugger
+        walletConnectCtx.getPeerOfRequest(firstRequest).then(setPeer)
+      }
     },
     [firstRequest, walletConnectCtx],
   )
