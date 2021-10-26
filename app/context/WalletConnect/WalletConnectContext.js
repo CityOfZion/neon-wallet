@@ -288,16 +288,12 @@ export const WalletConnectContextProvider = ({
   )
 
   const onURI = async (data: any) => {
-    debugger
     const uri = typeof data === 'string' ? data : ''
     if (!uri) return
     if (typeof wcClient === 'undefined') {
       throw new Error('Client is not initialized')
     }
-    await wcClient.pair({ uri }).catch(e => {
-      console.log('pairing error', { e })
-    })
-    console.log('PAIRED!')
+    await wcClient.pair({ uri })
   }
 
   const getPeerOfRequest = async (requestEvent: JsonRpcRequest) => {
