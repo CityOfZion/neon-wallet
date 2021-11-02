@@ -12,14 +12,23 @@ import PendingAbstract from './PendingAbstract'
 import ClaimAbstract from './ClaimAbstract'
 import SendAbstract from './SendAbstract'
 import ReceiveAbstract from './ReceiveAbstract'
+import N3VoteAbstract from './N3VoteAbstract'
+import N3NEP17SendAbstract from './N3NEP17SendAbstract'
+import N3NEP17ReceiveAbstract from './N3NEP17ReceiveAbstract'
+import N3ContractInvocationAbstract from './N3ContractInvocationAbstract'
 import InfoIcon from '../../../assets/icons/info.svg'
 import { openExplorerTx } from '../../../core/explorer'
 import Tooltip from '../../Tooltip'
-
 import styles from './Transaction.scss'
 
 type Props = {
-  tx: TxEntryType,
+  address: string,
+  chain: string,
+  className?: string,
+  contacts: Object,
+  explorer: ExplorerType,
+  isPending?: boolean,
+  networkId: string,
   pendingTx: {
     asset: {
       symbol: string,
@@ -30,14 +39,8 @@ type Props = {
     to: string,
     confirmations: number,
   },
-  networkId: string,
-  explorer: ExplorerType,
-  contacts: Object,
   showAddContactModal: ({ address: string }) => null,
-  address: string,
-  className?: string,
-  isPending?: boolean,
-  chain: string,
+  tx: Object,
 }
 
 export default class Transaction extends React.Component<Props> {
@@ -48,12 +51,14 @@ export default class Transaction extends React.Component<Props> {
   render = () => {
     const {
       tx: { type },
+      chain,
       className,
       isPending,
     } = this.props
     return (
       <div className={classNames(styles.transactionContainer, className)}>
-        {this.renderAbstract(type)}
+        {chain !== 'neo3' && this.renderAbstract(type)}
+        {chain === 'neo3' && this.renderAbstractN3()}
         {!isPending && (
           <Button
             className={styles.transactionHistoryButton}
@@ -88,7 +93,15 @@ export default class Transaction extends React.Component<Props> {
 
   handleViewTransaction = () => {
     const { networkId, explorer, tx, chain } = this.props
-    const { txid } = tx
+    let txid
+    switch (chain) {
+      case 'neo3':
+        txid = tx.hash.substring(2)
+        break
+      default:
+        ;({ txid } = tx)
+    }
+
     openExplorerTx(networkId, explorer, txid, chain)
   }
 
@@ -148,6 +161,41 @@ export default class Transaction extends React.Component<Props> {
       case TX_TYPES.RECEIVE: {
         return <ReceiveAbstract {...abstractProps} />
       }
+      default:
+        console.warn('renderTxTypeIcon() invoked with an invalid argument!', {
+          type,
+        })
+        return null
+    }
+  }
+
+  /**
+   * Builds a contract invocation object.
+   * @returns {null|*}
+   */
+  renderAbstractN3 = () => {
+    const { isPending, tx, address } = this.props
+    const { time, type } = tx
+    const txDate = this.renderTxDate(time)
+
+    const metadata = {
+      txDate,
+      isPending,
+      findContact: this.findContact,
+      showAddContactModal: this.displayModal,
+      ...tx.metadata,
+    }
+
+    switch (type) {
+      case TX_TYPES.N3CONTRACTINVOCATION:
+        return <N3ContractInvocationAbstract {...metadata} />
+      case TX_TYPES.N3NEP17TRANSFER:
+        if (address === tx.metadata.to) {
+          return <N3NEP17ReceiveAbstract {...metadata} />
+        }
+        return <N3NEP17SendAbstract {...metadata} />
+      case TX_TYPES.N3VOTE:
+        return <N3VoteAbstract {...metadata} />
       default:
         console.warn('renderTxTypeIcon() invoked with an invalid argument!', {
           type,

@@ -67,6 +67,7 @@ export default class TransactionHistory extends Component<Props, State> {
     )
   }
 
+  // TODO - update this
   fetchHistory = async () => {
     const { showInfoNotification, net, address } = this.props
     const infoNotification = showInfoNotification({
@@ -93,7 +94,7 @@ export default class TransactionHistory extends Component<Props, State> {
         shouldFetchAdditionalPages = false
       }
     }
-
+    // TODO - Update export history
     const parsedAbstracts = await parseAbstractData(abstracts, address, net)
     return { infoNotification, parsedAbstracts }
   }
