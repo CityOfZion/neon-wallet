@@ -72,6 +72,8 @@ const ConnectDapp = ({
   const [fee, setFee] = useState('')
   const [contractName, setContractName] = useState('')
   const [requestParamsVisible, setRequestParamsVisible] = useState(true)
+  const [shouldDisplayReqParams, setShouldDisplayReqParams] = useState(false)
+  const [hasCheckedLinkedUri, setHasCheckedLinkedUri] = useState(false)
   const walletConnectCtx = useWalletConnect()
   const firstProposal = walletConnectCtx.sessionProposals[0]
   const firstRequest = walletConnectCtx.requests[0]
@@ -87,8 +89,37 @@ const ConnectDapp = ({
     setFee('')
   }
 
+  const handleWalletConnectURLSubmit = async uri => {
+    setLoading(true)
+    try {
+      const account = new wallet.Account(address)
+      walletConnectCtx.addAccountAndChain(
+        account.address,
+        `neo3:${net.toLowerCase()}`,
+      )
+      await walletConnectCtx.onURI(uri || connectionUrl)
+      setLoading(false)
+    } catch (e) {
+      console.error({ e })
+      setLoading(false)
+    }
+  }
+
   useEffect(() => {
-    walletConnectCtx.init()
+    walletConnectCtx.init().then(() => {
+      if (
+        history.location &&
+        history.location.state &&
+        history.location.state.uri
+      ) {
+        if (!hasCheckedLinkedUri) {
+          setHasCheckedLinkedUri(true)
+          setLoading(true)
+          setConnectionUrl(history.location.state.uri)
+          handleWalletConnectURLSubmit(history.location.state.uri)
+        }
+      }
+    })
     return () => null
   }, [])
 
@@ -128,7 +159,9 @@ const ConnectDapp = ({
 
   useEffect(
     () => {
-      walletConnectCtx.getPeerOfRequest(firstRequest).then(setPeer)
+      if (firstRequest) {
+        walletConnectCtx.getPeerOfRequest(firstRequest).then(setPeer)
+      }
     },
     [firstRequest, walletConnectCtx],
   )
@@ -185,6 +218,13 @@ const ConnectDapp = ({
     () => {
       if (firstRequest) {
         setRequest(firstRequest)
+
+        firstRequest.request.params.forEach((p: any) => {
+          if (typeof p === 'object' && p.find(p => p.type === 'Array')) {
+            setShouldDisplayReqParams(true)
+          }
+        })
+
         setConnectionStep(CONNECTION_STEPS.APPROVE_TRANSACTION)
       }
     },
@@ -202,22 +242,6 @@ const ConnectDapp = ({
   )
 
   const isValid = () => true
-
-  const handleWalletConnectURLSubmit = async () => {
-    setLoading(true)
-    try {
-      const account = new wallet.Account(address)
-      walletConnectCtx.addAccountAndChain(
-        account.address,
-        `neo3:${net.toLowerCase()}`,
-      )
-      await walletConnectCtx.onURI(connectionUrl)
-      setLoading(false)
-    } catch (e) {
-      console.error({ e })
-      setLoading(false)
-    }
-  }
 
   const handleOpenDoraLink = hash => {
     if (hash) {
@@ -481,52 +505,63 @@ const ConnectDapp = ({
                 <label>method</label>
                 <div>{request && request.request.params[1]}</div>
               </div>
-              <div className={styles.details}>
-                <div className={styles.detailsLabel}>
-                  <label>request parameters</label>
+              {shouldDisplayReqParams ? (
+                <div className={styles.details}>
+                  <div className={styles.detailsLabel}>
+                    <label>request parameters</label>
 
-                  <div>
-                    {requestParamsVisible ? (
-                      <Up onClick={() => setRequestParamsVisible(false)} />
-                    ) : (
-                      <Down onClick={() => setRequestParamsVisible(true)} />
-                    )}
+                    <div>
+                      {requestParamsVisible ? (
+                        <Up onClick={() => setRequestParamsVisible(false)} />
+                      ) : (
+                        <Down onClick={() => setRequestParamsVisible(true)} />
+                      )}
+                    </div>
                   </div>
+
+                  {requestParamsVisible && (
+                    <div className={styles.requestParams}>
+                      {request &&
+                        request.request.params.map((p: any, i: number) => (
+                          <React.Fragment key={i}>
+                            {typeof p === 'object' &&
+                              p.find(p => p.type === 'Array') &&
+                              p
+                                .find(p => p.type === 'Array')
+                                .value.map((arg, i) => (
+                                  <div className={styles.paramContainer}>
+                                    <div>
+                                      <div className={styles.index}>{i}</div>
+                                      {arg && arg.value}{' '}
+                                      <CopyToClipboard
+                                        text={String(arg && arg.value)}
+                                      />
+                                    </div>
+                                    <div
+                                      className={styles.argType}
+                                      style={{
+                                        backgroundColor:
+                                          TX_STATE_TYPE_MAPPINGS[
+                                            arg && arg.type
+                                          ] &&
+                                          TX_STATE_TYPE_MAPPINGS[
+                                            arg && arg.type
+                                          ].color,
+                                      }}
+                                    >
+                                      {' '}
+                                      {arg.type}{' '}
+                                    </div>
+                                  </div>
+                                ))}
+                          </React.Fragment>
+                        ))}
+                    </div>
+                  )}
                 </div>
-
-                {requestParamsVisible && (
-                  <div className={styles.requestParams}>
-                    {request &&
-                      request.request.params.map((p: any, i: number) => (
-                        <React.Fragment key={i}>
-                          {typeof p === 'object' &&
-                            p
-                              .find(p => p.type === 'Array')
-                              .value.map((arg, i) => (
-                                <div className={styles.paramContainer}>
-                                  <div>
-                                    <div className={styles.index}>{i}</div>
-                                    {arg.value}{' '}
-                                    <CopyToClipboard text={String(arg.value)} />
-                                  </div>
-                                  <div
-                                    className={styles.argType}
-                                    style={{
-                                      backgroundColor:
-                                        TX_STATE_TYPE_MAPPINGS[arg.type] &&
-                                        TX_STATE_TYPE_MAPPINGS[arg.type].color,
-                                    }}
-                                  >
-                                    {' '}
-                                    {arg.type}{' '}
-                                  </div>
-                                </div>
-                              ))}
-                        </React.Fragment>
-                      ))}
-                  </div>
-                )}
-              </div>
+              ) : (
+                <div className={styles.detailsLabel} />
+              )}
               <div
                 className={classNames([styles.detailsLabel, styles.detailRow])}
               >
@@ -584,7 +619,10 @@ const ConnectDapp = ({
           )}
           renderInstructions={renderInstructions}
         >
-          <form className={styles.form} onSubmit={handleWalletConnectURLSubmit}>
+          <form
+            className={styles.form}
+            onSubmit={() => handleWalletConnectURLSubmit()}
+          >
             <TextInput
               name="dApp URL"
               label="Scan or Paste URL"
@@ -598,7 +636,7 @@ const ConnectDapp = ({
               primary
               type="submit"
               className={styles.loginButtonMargin}
-              disabled={!isValid()}
+              disabled={!isValid() || loading}
             >
               Connect
             </Button>

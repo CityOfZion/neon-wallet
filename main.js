@@ -14,6 +14,7 @@ const log = require('electron-log')
 const port = process.env.PORT || 3000
 
 let mainWindow = null
+let link
 
 // adapted from https://github.com/chentsulin/electron-react-boilerplate
 const installExtensions = () => {
@@ -139,6 +140,10 @@ app.on('ready', () => {
       inputMenu.popup(mainWindow)
     })
 
+    mainWindow.webContents.on('did-finish-load', () => {
+      mainWindow.webContents.send('link', link)
+    })
+
     if (process.env.START_HOT) {
       mainWindow.loadURL(`http://localhost:${port}/dist`)
     } else {
@@ -166,6 +171,14 @@ app.on('ready', () => {
     onAppReady()
   }
 })
+
+app.on('open-url', (event, url) => {
+  link = url
+  if (mainWindow?.webContents) {
+    mainWindow.webContents.send('link', link)
+  }
+})
+app.setAsDefaultProtocolClient('neon')
 
 app.on('web-contents-created', (event, wc) => {
   wc.on('before-input-event', (event, input) => {

@@ -1,6 +1,6 @@
 {
   "name": "Neon",
-  "version": "2.10.0-rc5",
+  "version": "2.10.0-rc6",
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",
   "homepage": "https://github.com/CityOfZion/neon-wallet",
@@ -81,6 +81,12 @@
       "target": "nsis",
       "icon": "build/icon.ico",
       "artifactName": "${productName}.${version}.${ext}"
+    },
+    "protocols": {
+      "name": "neon-protocol",
+      "schemes": [
+        "neon"
+      ]
     }
   },
   "dependencies": {
@@ -88,7 +94,7 @@
     "@cityofzion/neon-core": "^5.0.0-next.15",
     "@cityofzion/neon-js": "3.11.9",
     "@cityofzion/neon-js-legacy-latest": "npm:@cityofzion/neon-js@4.9.0",
-    "@cityofzion/neon-js-next": "npm:@cityofzion/neon-js@5.0.0-next.15",
+    "@cityofzion/neon-js-next": "npm:@cityofzion/neon-js@5.0.0-next.16",
     "@cityofzion/neon-ledger-next": "npm:@cityofzion/neon-ledger@5.0.0-next.14",
     "@formatjs/intl-pluralrules": "^1.5.2",
     "@json-rpc-tools/utils": "^1.7.6",
@@ -165,7 +171,7 @@
     "spunky": "1.3.1",
     "svg-react-loader": "0.4.5",
     "uuid": "3.2.1",
-    "walletconnect": "^1.6.5"
+    "walletconnect": "1.6.5"
   },
   "devDependencies": {
     "autoprefixer": "7.1.6",
@@ -246,7 +252,8 @@
     "braces": "^2.3.1",
     "mem": "^4.0.0",
     "decompress-zip": "^0.2.2",
-    "https-proxy-agent": "^2.2.3"
+    "https-proxy-agent": "^2.2.3",
+    "walletconnect": "0.6.5"
   },
   "jest": {
     "moduleNameMapper": {

@@ -350,7 +350,11 @@ export const sendTransaction = ({
             }),
           )
 
-          const networkMagic = version.network || version.magic || 844378958
+          const networkMagic =
+            version.protocol.network ||
+            version.network ||
+            version.magic ||
+            860833102
 
           const FROM_ACCOUNT = new n3Wallet.Account(
             isHardwareSend ? publicKey : wif,
