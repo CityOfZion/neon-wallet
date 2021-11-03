@@ -1,5 +1,9 @@
 [
+  { "url": "https://testnet1.neo.coz.io:443" },
   { "url": "https://testnet2.neo.coz.io:443" },
-  { "url": "https://testnet2.neo.coz.io:443" },
-  { "url": "https://testnet2.neo.coz.io:443" }
+  { "url": "http://seed1t4.neo.org:20332" },
+  { "url": "http://seed2t4.neo.org:20332" },
+  { "url": "http://seed3t4.neo.org:20332" },
+  { "url": "http://seed4t4.neo.org:20332" },
+  { "url": "http://seed5t4.neo.org:20332" }
 ]
