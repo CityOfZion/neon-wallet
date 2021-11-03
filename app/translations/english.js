@@ -94,6 +94,8 @@ const MISCELLANEOUS = {
 
   noClaimableGas: 'Address has no claimable GAS',
   claimTimeDisclaimer: 'You can claim GAS once every 5 minutes',
+  claimFeeDisclaimerN3: 'Claiming GAS requires at least 0.01120527 GAS for transaction fees',
+  claimFeeGreater: 'Claimable GAS is less than transaction fees',
   claimUnavailableInWatch: 'GAS claims are unavailable in Watch mode',
   takeMeBack: 'Take me back',
 

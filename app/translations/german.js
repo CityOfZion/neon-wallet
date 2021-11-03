@@ -92,6 +92,8 @@ const MISCELLANEOUS = {
   walletQrCodes: 'Brieftaschen-QR-Codes',
   noClaimableGas: 'Die Adresse hat kein beanspruchbares GAS',
   claimTimeDisclaimer: 'Sie können GAS alle 5 Minuten anfordern',
+  claimFeeDisclaimerN3: 'Die Inanspruchnahme von GAS erfordert mindestens 0,01120527 GAS für Transaktionsgebühren',
+  claimFeeGreater: 'Anspruchsberechtigte GAS sind geringer als Transaktionsgebühren',
   claimUnavailableInWatch:
     'GAS-Ansprüche sind im Überwachungsmodus nicht verfügbar',
   takeMeBack: 'Nimm mich zurück',

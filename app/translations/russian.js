@@ -95,6 +95,8 @@ const MISCELLANEOUS = {
 
   noClaimableGas: 'Адрес не содержит GAS для запроса',
   claimTimeDisclaimer: 'Вы можете запрашивать GAS раз в 5 минут',
+  claimFeeDisclaimerN3: 'Требование GAS требует не менее 0,01120527 GAS для комиссии за транзакцию.',
+  claimFeeGreater: 'Требуемый GAS меньше комиссии за транзакцию',
   claimUnavailableInWatch: 'Запросы на GAS не доступны в режиме "Просмотр"',
   takeMeBack: 'Назад',
 
