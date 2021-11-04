@@ -192,7 +192,6 @@ export const handleN3GasClaim = async ({
         message: 'Claim was successful! Your balance will update shortly.',
       }),
     )
-    setTimeout(() => dispatch(disableClaim(false)), FIVE_MINUTES_MS)
   }
 }
 

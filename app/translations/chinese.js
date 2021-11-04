@@ -87,6 +87,8 @@ const MISCELLANEOUS = {
   // TODO: implement all
   noClaimableGas: '地址没有可声明的GAS',
   claimTimeDisclaimer: '您可以每5分钟申请一次GAS',
+  claimFeeDisclaimerN3: '申领 GAS 需要至少 0.01120527 GAS 来支付交易费用',
+  claimFeeGreater: '可索取的 GAS 低于交易费用',
   claimUnavailableInWatch: 'GAS声明在“监视”模式下不可用',
   takeMeBack: '带我回去',
   splitKeyWalletInstructions:
