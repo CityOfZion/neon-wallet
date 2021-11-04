@@ -4,61 +4,59 @@ import classNames from 'classnames'
 import { FormattedMessage, IntlShape, injectIntl } from 'react-intl'
 import Button from '../../Button'
 import styles from './Transaction.scss'
-import SendIcon from '../../../assets/icons/send-tx.svg'
+import ReceiveIcon from '../../../assets/icons/receive-tx.svg'
 import ContactsAdd from '../../../assets/icons/contacts-add.svg'
 import CopyToClipboard from '../../CopyToClipboard'
 
 type Props = {
-  amount: string | number,
-  findContact: React$Node,
   image: string,
-  intl: IntlShape,
   isPending: boolean,
-  to: string,
+  findContact: React$Node,
+  from: string,
+  intl: IntlShape,
   showAddContactModal: (to: string) => void,
   symbol: string,
+  to: string,
+  tokenName: string,
   txDate: React$Node,
 }
 
 class N3NEP11SendAbstract extends React.Component<Props> {
   render = () => {
     const {
-      amount,
-      findContact,
       image,
-      intl,
       isPending,
+      findContact,
+      from,
+      intl,
       to,
+      tokenName,
       showAddContactModal,
       symbol,
       txDate,
     } = this.props
-    //console.log("NEP 11 Send: ", this.props)
     const logo = image && <img src={image} alt={`${symbol}`} />
-    const contactTo = findContact(to)
+    const contactTo = to && findContact(to)
     const contactToExists = contactTo !== to
     return (
       <div className={classNames(styles.transactionContainerN3)}>
         <div className={styles.abstractContainerN3}>
           <div className={styles.txTypeIconContainerN3}>
             <div className={styles.sendIconContainer}>
-              <SendIcon />
+              <ReceiveIcon />
             </div>
           </div>
           {isPending ? 'Pending' : txDate}
-          <div className={styles.txLabelContainerN3}>Transfer</div>
+          <div className={styles.txLabelContainerN3}> NFT Transfer</div>
         </div>
 
         <div className={styles.txToContainerN3}>
           <div className={styles.txTransferContainerN3}>
-            <div className={styles.txTokenContainerN3}>
-              {logo}
-              {symbol}
-            </div>
-            <div className={styles.txAmountContainerN3}>{amount}</div>
+            <div className={styles.txNFTContainerN3}>{logo}</div>
+            <div className={styles.txAmountContainerN3}>{tokenName}</div>
           </div>
-          <div className={styles.txToContainerN3}>
-            <span>{contactTo}</span>
+          <div className={styles.txSubjectContainerN3}>
+            {contactTo}
             <CopyToClipboard
               className={styles.copy}
               text={contactTo}
@@ -68,7 +66,7 @@ class N3NEP11SendAbstract extends React.Component<Props> {
           <Button
             className={styles.transactionHistoryButton}
             renderIcon={ContactsAdd}
-            onClick={() => showAddContactModal(to)}
+            onClick={() => showAddContactModal(from)}
             disabled={contactToExists}
           >
             <FormattedMessage id="activityAddAddress" />

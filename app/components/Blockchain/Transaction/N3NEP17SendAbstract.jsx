@@ -56,8 +56,8 @@ class N3NEP17SendAbstract extends React.Component<Props> {
             </div>
             <div className={styles.txAmountContainerN3}>{amount}</div>
           </div>
-          <div className={styles.txToContainerN3}>
-            <span>{contactTo}</span>
+          <div className={styles.txSubjectContainerN3}>
+            {contactTo}
             <CopyToClipboard
               className={styles.copy}
               text={contactTo}

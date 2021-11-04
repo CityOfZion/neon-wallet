@@ -43,6 +43,19 @@
   align-items: center;
 }
 
+.txNFTContainerN3 {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+
+  img {
+    max-height: 50px;
+    max-width: 50px;
+    margin-bottom: 5px;
+  }
+}
+
 .txTokenContainerN3 {
   font-size: 14px;
   display: flex;
@@ -73,10 +86,11 @@
 
 
 .txTransferContainerN3 {
+  width: 200px;
   text-align: center;
   align-items: center;
   display: flex;
-  font-size: 12px;
+  font-size: 14px;
   justify-content: space-between;
 }
 
@@ -105,12 +119,37 @@
   }
 }
 
+.txSubjectContainerN3 {
+  //width: 100%;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  font-size: 14px;
+  //justify-content: space-between;
+
+  span {
+    text-overflow: ellipsis;
+  }
+
+  button {
+    margin-top: 5px;
+
+    svg {
+      path {
+        fill: var(--tx-list-copy-icon);
+      }
+    }
+  }
+}
+
+
+
 .txToContainerN3 {
   width: 100%;
   text-align: center;
   align-items: center;
   display: flex;
-  font-size: 12px;
+  font-size: 14px;
   justify-content: space-between;
 
   span {
@@ -174,7 +213,7 @@
   @extend .transactionContainer;
   justify-content: flex-start;
   margin: 0 60px 0 10px;
-  width: fit-content;
+  width: 300px;
 }
 
 .invocationTransaction {
