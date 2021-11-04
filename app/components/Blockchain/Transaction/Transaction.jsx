@@ -20,6 +20,8 @@ import InfoIcon from '../../../assets/icons/info.svg'
 import { openExplorerTx } from '../../../core/explorer'
 import Tooltip from '../../Tooltip'
 import styles from './Transaction.scss'
+import N3NEP11ReceiveAbstract from './N3NEP11ReceiveAbstract'
+import N3NEP11SendAbstract from './N3NEP11SendAbstract'
 
 type Props = {
   address: string,
@@ -93,14 +95,11 @@ export default class Transaction extends React.Component<Props> {
   handleViewTransaction = () => {
     const { networkId, explorer, tx, chain } = this.props
     let txid
-    switch (chain) {
-      case 'neo3':
-        txid = tx.hash.substring(2)
-        break
-      default:
-        ;({ txid } = tx)
+    if (chain === 'neo3') {
+      txid = tx.hash.substring(2)
+    } else {
+      ;({ txid } = tx)
     }
-
     openExplorerTx(networkId, explorer, txid, chain)
   }
 
@@ -174,12 +173,13 @@ export default class Transaction extends React.Component<Props> {
    */
   renderAbstractN3 = () => {
     const { isPending, tx, address } = this.props
-    const { time, type } = tx
+    const { time, type, sender } = tx
     const txDate = this.renderTxDate(time)
 
     const metadata = {
       txDate,
       isPending,
+      sender,
       findContact: this.findContact,
       showAddContactModal: this.displayModal,
       ...tx.metadata,
@@ -193,6 +193,11 @@ export default class Transaction extends React.Component<Props> {
           return <N3NEP17ReceiveAbstract {...metadata} />
         }
         return <N3NEP17SendAbstract {...metadata} />
+      case TX_TYPES.N3NEP11TRANSFER:
+        if (address === tx.metadata.to) {
+          return <N3NEP11ReceiveAbstract {...metadata} />
+        }
+        return <N3NEP11SendAbstract {...metadata} />
       case TX_TYPES.N3VOTE:
         return <N3VoteAbstract {...metadata} />
       default:

@@ -1,10 +1,12 @@
 // @flow
 import { NeoLegacyREST, NeoRest } from '@cityofzion/dora-ts/dist/api'
 import { createActions } from 'spunky'
+import { rpc as n3Rpc, sc } from '@cityofzion/neon-js-next'
 import { TX_TYPES } from '../core/constants'
 import { findAndReturnTokenInfo } from '../util/findAndReturnTokenInfo'
 import { getSettings } from './settingsActions'
 import { toBigNumber } from '../core/math'
+import { getNode, getRPCEndpoint } from './nodeStorageActions'
 
 type Props = {
   net: string,
@@ -83,12 +85,35 @@ export async function handleNeoActivity(
   if (!data.items) return results
   for (const item of data.items) {
     const unresolved = item.invocations.map(async invocation => {
-      const asset = await findAndReturnTokenInfo(
-        invocation.metadata.scripthash,
-        net,
-      )
+      let image
+      let assets
+      switch (invocation.type) {
+        case 'nep17_transfer':
+          assets = await findAndReturnTokenInfo(
+            invocation.metadata.scripthash,
+            net,
+          )
+          image = assets.image
+          break
+        case 'nep11_transfer':
+          let endpoint = await getNode(net)
+          if (!endpoint) {
+            endpoint = await getRPCEndpoint(net)
+          }
+          const properties = await new n3Rpc.RPCClient(endpoint)
+            .invokeFunction(invocation.metadata.scripthash, 'properties', [
+              invocation.metadata.token_id,
+            ])
+            .catch(e => {
+              console.error({ e })
+            })
+          console.log('properties: ', properties)
+          break
+        default:
+          break
+      }
       // flatten the invocations into individual events to support existing components
-      invocation.metadata.image = asset.image
+      invocation.metadata.image = image
       invocation.hash = item.hash
       invocation.sender = item.sender
       invocation.sysfee = item.sysfee
