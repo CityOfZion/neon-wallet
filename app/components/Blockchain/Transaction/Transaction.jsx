@@ -57,8 +57,7 @@ export default class Transaction extends React.Component<Props> {
     } = this.props
     return (
       <div className={classNames(styles.transactionContainer, className)}>
-        {chain !== 'neo3' && this.renderAbstract(type)}
-        {chain === 'neo3' && this.renderAbstractN3()}
+        {chain === 'neo3' ? this.renderAbstractN3() : this.renderAbstract(type)}
         {!isPending && (
           <Button
             className={styles.transactionHistoryButton}
