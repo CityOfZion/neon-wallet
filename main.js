@@ -26,7 +26,13 @@ if (gotTheLock) {
     // argv: An array of the second instance’s (command line / deep linked) arguments
     if (process.platform === 'win32') {
       // Keep only command line / deep linked arguments
-      deeplinkingUrl = argv.slice(1)
+      ;[, deeplinkingUrl] = argv.slice(1)
+      deeplinkingUrl = deeplinkingUrl.endsWith('/')
+        ? deeplinkingUrl.slice(0, -1)
+        : deeplinkingUrl
+      if (mainWindow?.webContents) {
+        mainWindow.webContents.send('link', deeplinkingUrl)
+      }
     }
 
     if (mainWindow) {

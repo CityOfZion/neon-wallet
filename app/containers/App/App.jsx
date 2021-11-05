@@ -94,7 +94,7 @@ const App = ({
   useEffect(
     () => {
       ipc.on('link', (event, url) => {
-        const { uri } = parseQuery(decodeURI(url))
+        const { uri } = parseQuery(url)
         if (uri) {
           history.push({
             pathname: ROUTES.CONNECT_DAPP,
