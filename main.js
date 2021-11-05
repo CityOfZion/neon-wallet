@@ -206,7 +206,15 @@ app.on('open-url', (event, url) => {
     mainWindow.webContents.send('link', deeplinkingUrl)
   }
 })
-app.setAsDefaultProtocolClient('neon')
+
+if (process.env.NODE_ENV === 'development' && process.platform === 'win32') {
+  // Set the path of electron.exe and your app.
+  // These two additional parameters are only available on windows.
+  // Setting this is required to get this working in dev mode.
+  app.setAsDefaultProtocolClient('neon', process.execPath, [])
+} else {
+  app.setAsDefaultProtocolClient('neon')
+}
 
 app.on('web-contents-created', (event, wc) => {
   wc.on('before-input-event', (event, input) => {
