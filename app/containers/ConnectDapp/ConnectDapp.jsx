@@ -82,8 +82,6 @@ const ConnectDapp = ({
   const firstRequest = walletConnectCtx.requests[0]
   const { error } = walletConnectCtx
 
-  console.log({ firstProposal, firstRequest })
-
   const resetState = () => {
     setConnectionUrl('')
     setConnectionStep(CONNECTION_STEPS.ENTER_URL)
