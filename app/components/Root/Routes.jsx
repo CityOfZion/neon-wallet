@@ -132,7 +132,12 @@ export default ({ store }: { store: any }) => (
       />
       <PrivateRoute exact path={ROUTES.MOBILE} component={Mobile} />
       <PrivateRoute exact path={ROUTES.MIGRATION} component={Migration} />
-      <PrivateRoute exact path={ROUTES.CONNECT_DAPP} component={ConnectDapp} />
+      <PrivateRoute
+        exact
+        path={ROUTES.CONNECT_DAPP}
+        component={ConnectDapp}
+        replace
+      />
       <Redirect to={ROUTES.DASHBOARD} />
     </Switch>
   </App>

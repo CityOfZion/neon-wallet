@@ -46,10 +46,13 @@ const NetworkSwitch = ({
   const networks = getNetworks(chain)
   const walletConnectCtx = useWalletConnect()
 
-  const handleChange = (option: NetworkItemType) => {
+  const handleChange = async (option: NetworkItemType) => {
     if (shouldSwitchNetworks) {
       onChange(option.id)
-      if (walletConnectCtx.resetApp) walletConnectCtx.resetApp()
+      if (walletConnectCtx.resetApp) {
+        walletConnectCtx.resetApp()
+        await walletConnectCtx.init()
+      }
       setTimeout(() => {
         loadWalletData()
       }, 0)

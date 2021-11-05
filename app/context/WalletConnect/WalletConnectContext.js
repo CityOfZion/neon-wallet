@@ -208,6 +208,12 @@ export const WalletConnectContextProvider = ({
         setSessionProposals(old => [...old, proposal])
         return null
       })
+
+      wcClient.on(CLIENT_EVENTS.session.notification, notification => {
+        console.warn({ notification })
+        return null
+      })
+
       wcClient.on(CLIENT_EVENTS.session.request, async requestEvent => {
         const askApproval = () => {
           setRequests(old => [
@@ -254,6 +260,7 @@ export const WalletConnectContextProvider = ({
             await askApproval()
           }
         } catch (e) {
+          console.error({ e })
           await reject(e.message)
         }
       })
@@ -293,7 +300,7 @@ export const WalletConnectContextProvider = ({
     if (typeof wcClient === 'undefined') {
       throw new Error('Client is not initialized')
     }
-    await wcClient.pair({ uri })
+    await wcClient.pair({ uri }).catch(console.error)
   }
 
   const getPeerOfRequest = async (requestEvent: JsonRpcRequest) => {

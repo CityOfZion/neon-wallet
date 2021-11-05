@@ -8,7 +8,7 @@ import CloseButton from '../../components/CloseButton'
 import TextInput from '../../components/Inputs/TextInput'
 import FullHeightPanel from '../../components/Panel/FullHeightPanel'
 import { ROUTES } from '../../core/constants'
-import { convertToArbitraryDecimals } from '../../core/formatters'
+import { convertToArbitraryDecimals, parseQuery } from '../../core/formatters'
 import styles from './styles.scss'
 import Button from '../../components/Button'
 import { useWalletConnect } from '../../context/WalletConnect/WalletConnectContext'
@@ -31,8 +31,10 @@ import DialogueBox from '../../components/DialogueBox'
 import WarningIcon from '../../assets/icons/warning.svg'
 import CopyToClipboard from '../../components/CopyToClipboard/CopyToClipboard'
 import Tooltip from '../../components/Tooltip'
+import Loader from '../../components/Loader'
 
 const electron = require('electron').remote
+const ipc = require('electron').ipcRenderer
 
 type Props = {
   address: string,
@@ -73,11 +75,14 @@ const ConnectDapp = ({
   const [contractName, setContractName] = useState('')
   const [requestParamsVisible, setRequestParamsVisible] = useState(true)
   const [shouldDisplayReqParams, setShouldDisplayReqParams] = useState(false)
-  const [hasCheckedLinkedUri, setHasCheckedLinkedUri] = useState(false)
+  const [pairingMap, setPairingMap] = useState({})
+
   const walletConnectCtx = useWalletConnect()
   const firstProposal = walletConnectCtx.sessionProposals[0]
   const firstRequest = walletConnectCtx.requests[0]
   const { error } = walletConnectCtx
+
+  console.log({ firstProposal, firstRequest })
 
   const resetState = () => {
     setConnectionUrl('')
@@ -92,12 +97,17 @@ const ConnectDapp = ({
   const handleWalletConnectURLSubmit = async uri => {
     setLoading(true)
     try {
+      if (!walletConnectCtx.wcClient) await walletConnectCtx.init()
+
       const account = new wallet.Account(address)
       walletConnectCtx.addAccountAndChain(
         account.address,
         `neo3:${net.toLowerCase()}`,
       )
-      await walletConnectCtx.onURI(uri || connectionUrl)
+
+      await walletConnectCtx
+        .onURI(uri || connectionUrl)
+        .catch(e => console.error({ e }))
       setLoading(false)
     } catch (e) {
       console.error({ e })
@@ -105,23 +115,39 @@ const ConnectDapp = ({
     }
   }
 
+  // Effect for handling linking when ConnectDapp is currently rendered (cannot push the same route twice)
   useEffect(() => {
-    walletConnectCtx.init().then(() => {
+    ipc.on('link', (event, url) => {
+      const { uri } = parseQuery(decodeURI(url))
+      setPairingMap({ ...pairingMap, [uri]: true })
+      if (uri && !pairingMap[uri]) {
+        const decoded = atob(uri)
+        setLoading(true)
+        setConnectionUrl(decoded)
+        handleWalletConnectURLSubmit(decoded)
+      }
+    })
+  }, [])
+
+  // Effect for handling passing URI as query param to component
+  useEffect(
+    () => {
       if (
         history.location &&
         history.location.state &&
-        history.location.state.uri
+        history.location.state.uri &&
+        !pairingMap[history.location.state.uri]
       ) {
-        if (!hasCheckedLinkedUri) {
-          setHasCheckedLinkedUri(true)
-          setLoading(true)
-          setConnectionUrl(history.location.state.uri)
-          handleWalletConnectURLSubmit(history.location.state.uri)
-        }
+        const decoded = atob(history.location.state.uri)
+        setPairingMap({ ...pairingMap, [history.location.state.uri]: true })
+        setLoading(true)
+        setConnectionUrl(decoded)
+        handleWalletConnectURLSubmit(decoded)
       }
-    })
-    return () => null
-  }, [])
+      return () => null
+    },
+    [history],
+  )
 
   useEffect(
     () => {
@@ -255,6 +281,26 @@ const ConnectDapp = ({
   }
 
   switch (true) {
+    case loading:
+      return (
+        <FullHeightPanel
+          renderHeader={renderHeader}
+          renderCloseButton={() => (
+            <CloseButton
+              routeTo={ROUTES.DASHBOARD}
+              onClick={() => {
+                walletConnectCtx.setError(undefined)
+              }}
+            />
+          )}
+          renderHeaderIcon={() => null}
+          renderInstructions={false}
+        >
+          <div>
+            <Loader />
+          </div>
+        </FullHeightPanel>
+      )
     case connectionStep === CONNECTION_STEPS.TRANSACTION_ERROR:
       return (
         <FullHeightPanel
