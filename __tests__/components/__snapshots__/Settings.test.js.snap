@@ -63,6 +63,8 @@ exports[`Settings renders without crashing 1`] = `
             "captureQR": "Capture",
             "captureQRCaps": "CAPTURE",
             "chooseAccount": "Choose an Existing Account",
+            "claimFeeDisclaimerN3": "Claiming GAS requires at least 0.01120527 GAS for transaction fees",
+            "claimFeeGreater": "Claimable GAS is less than transaction fees",
             "claimTimeDisclaimer": "You can claim GAS once every 5 minutes",
             "claimUnavailableInWatch": "GAS claims are unavailable in Watch mode",
             "completeExclaim": "Complete!",

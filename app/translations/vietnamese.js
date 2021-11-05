@@ -89,6 +89,8 @@ const MISCELLANEOUS = {
 
   noClaimableGas: 'Địa chỉ không có yêu cầu GAS',
   claimTimeDisclaimer: 'Bạn có thể yêu cầu GAS cứ sau 5 phút',
+  claimFeeDisclaimerN3: 'Yêu cầu GAS yêu cầu ít nhất 0,01120527 GAS cho phí giao dịch',
+  claimFeeGreater: 'GAS có thể yêu cầu thấp hơn phí giao dịch',
   claimUnavailableInWatch: 'Khiếu nại GAS không khả dụng trong chế độ Xem',
   takeMeBack: 'Đưa tôi trở lại',
   splitKeyWalletInstructions:

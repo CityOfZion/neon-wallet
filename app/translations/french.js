@@ -89,6 +89,8 @@ const MISCELLANEOUS = {
   noClaimableGas: `L'adresse n'a pas de GAS réclamable`,
   claimTimeDisclaimer:
     'Vous pouvez réclamer le GAS une fois toutes les 5 minutes',
+  claimFeeDisclaimerN3: 'La demande de GAS nécessite au moins 0,01120527 GAS pour les frais de transaction',
+  claimFeeGreater: 'Le GAS réclamable est inférieur aux frais de transaction',
   claimUnavailableInWatch: `Les réclamations GAS ne sont pas disponibles en mode montre`,
   takeMeBack: 'Reprends moi',
   splitKeyWalletInstructions: `L'option d'importation Split Key permet aux utilisateurs de créer un nouveau compte NEO en combinant la clé privée d'un compte existant avec une clé privée distincte.`,
