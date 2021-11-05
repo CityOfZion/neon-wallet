@@ -14,7 +14,30 @@ const log = require('electron-log')
 const port = process.env.PORT || 3000
 
 let mainWindow = null
-let link
+let deeplinkingUrl
+
+// Force Single Instance Application
+const gotTheLock = app.requestSingleInstanceLock()
+if (gotTheLock) {
+  app.on('second-instance', (e, argv) => {
+    // Someone tried to run a second instance, we should focus our window.
+
+    // Protocol handler for win32
+    // argv: An array of the second instance’s (command line / deep linked) arguments
+    if (process.platform === 'win32') {
+      // Keep only command line / deep linked arguments
+      deeplinkingUrl = argv.slice(1)
+    }
+
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore()
+      mainWindow.focus()
+    }
+  })
+} else {
+  app.quit()
+  return
+}
 
 // adapted from https://github.com/chentsulin/electron-react-boilerplate
 const installExtensions = () => {
@@ -71,6 +94,11 @@ app.on('ready', () => {
       mainWindow.webContents.once('dom-ready', () => {
         mainWindow.webContents.openDevTools()
       })
+    }
+
+    if (process.platform === 'win32') {
+      // Keep only command line / deep linked arguments
+      deeplinkingUrl = process.argv.slice(1)
     }
 
     if (process.platform !== 'darwin') {
@@ -141,7 +169,7 @@ app.on('ready', () => {
     })
 
     mainWindow.webContents.on('did-finish-load', () => {
-      mainWindow.webContents.send('link', link)
+      mainWindow.webContents.send('link', deeplinkingUrl)
     })
 
     if (process.env.START_HOT) {
@@ -173,9 +201,9 @@ app.on('ready', () => {
 })
 
 app.on('open-url', (event, url) => {
-  link = url
+  deeplinkingUrl = url
   if (mainWindow?.webContents) {
-    mainWindow.webContents.send('link', link)
+    mainWindow.webContents.send('link', deeplinkingUrl)
   }
 })
 app.setAsDefaultProtocolClient('neon')
