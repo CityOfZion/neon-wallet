@@ -923,7 +923,7 @@ exports[`Settings renders without crashing 1`] = `
                                                                                         Manage your neon wallet
                                                                                       </FormattedMessage>
                                                                                        - v
-                                                                                      2.10.0-rc6
+                                                                                      2.10.0-rc7
                                                                                     </div>
                                                                                     <div
                                                                                       className="settingsPanelHeaderItem"
