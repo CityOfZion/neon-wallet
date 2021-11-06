@@ -23,7 +23,10 @@ const Logout = ({ id, className, logout, promptHasBeenDisplayed }: Props) => {
       className={classNames(styles.logout, className)}
       onClick={() => {
         promptHasBeenDisplayed(false)
-        if (walletConnectCtx.resetApp) walletConnectCtx.resetApp()
+        if (walletConnectCtx.resetApp) {
+          walletConnectCtx.resetApp()
+          walletConnectCtx.init()
+        }
         logout()
       }}
     >
