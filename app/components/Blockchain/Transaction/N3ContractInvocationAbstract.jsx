@@ -14,6 +14,7 @@ type Props = {
 
 class N3ContractInvocationAbstract extends React.Component<Props> {
   render = () => {
+    // eslint-disable-next-line camelcase
     const { contract_name, isPending, method, txDate } = this.props
     return (
       <div className={classNames(styles.transactionContainerN3)}>
@@ -27,6 +28,7 @@ class N3ContractInvocationAbstract extends React.Component<Props> {
           <div className={styles.txLabelContainerN3}>Raw Invocation</div>
         </div>
         <div className={styles.txToContainerN3}>
+          {/* eslint-disable-next-line camelcase */}
           {contract_name} | {method}
         </div>
       </div>
