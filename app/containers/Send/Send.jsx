@@ -268,8 +268,6 @@ export default class Send extends React.Component<Props, State> {
   calculateMaxValue = (asset: string, index: number = 0) => {
     const { sendableAssets, chain } = this.props
 
-    const MIN_EXPECTED_GAS_FEE = 0.072
-
     if (chain === 'neo2') {
       if (sendableAssets[asset]) {
         const rows = [...this.state.sendRowDetails]
@@ -295,13 +293,14 @@ export default class Send extends React.Component<Props, State> {
       let totalSendableAssets = toBigNumber(sendableAssets[asset].balance)
 
       if (asset === 'GAS') {
-        const existingGasAmounts =
-          Number(this.calculateRowAmounts(asset, index)) - MIN_EXPECTED_GAS_FEE
+        // calculate the current transaction fee
+        const transactionFee = (
+          Number(this.state.n3Fees.networkFee) +
+          Number(this.state.n3Fees.systemFee)
+        ).toFixed(8)
 
-        totalSendableAssets = minusNumber(
-          totalSendableAssets,
-          MIN_EXPECTED_GAS_FEE * rowsWithAsset.length,
-        )
+        // Calculate the GAS less the current transaction fee
+        totalSendableAssets = minusNumber(totalSendableAssets, transactionFee)
 
         if (totalSendableAssets < 0) {
           // this.props.showErrorNotification({ message: 'oops' })
@@ -311,6 +310,10 @@ export default class Send extends React.Component<Props, State> {
         if (rowsWithAsset.length === 1 || rowsWithAsset.length === 0) {
           return toNumber(totalSendableAssets).toFixed(decimals)
         }
+
+        const existingGasAmounts = Number(
+          this.calculateRowAmounts(asset, index),
+        )
         return minusNumber(totalSendableAssets, existingGasAmounts).toFixed(
           decimals,
         )
