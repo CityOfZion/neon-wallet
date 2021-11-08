@@ -7,7 +7,24 @@ import {
 } from '@cityofzion/neon-js-next/lib/experimental/helpers'
 // eslint-disable-next-line
 import { JsonRpcRequest, JsonRpcResponse } from '@json-rpc-tools/utils'
+import { ContractParam } from '@cityofzion/neon-core/lib/sc'
+import { WitnessScope } from '@cityofzion/neon-core/lib/tx/components/WitnessScope'
+import { HexString } from '@cityofzion/neon-core/lib/u'
+import { Account } from '@cityofzion/neon-core/lib/wallet'
 
+type Signer = {
+  scope: WitnessScope,
+  allowedContracts?: string[],
+  allowedGroups?: string[],
+}
+
+type ContractInvocation = {
+  scriptHash: string,
+  operation: string,
+  args: any[],
+  abortOnFail?: boolean,
+  signer?: Signer,
+}
 class N3Helper {
   rpcAddress: string
 
@@ -42,22 +59,19 @@ class N3Helper {
         throw new Error('No account')
       }
 
-      result = await this.contractInvoke(
-        isHardwareLogin,
-        signingFunction,
-        showInfoNotification,
-        hideNotification,
-        account,
-        request.params[0],
-        request.params[1],
-        ...N3Helper.getInnerParams(request.params),
-      )
+      result = await this.multiInvoke(account, request.params)
+      // result = await this.contractInvoke(
+      //   isHardwareLogin,
+      //   signingFunction,
+      //   showInfoNotification,
+      //   hideNotification,
+      //   account,
+      //   request.params[0],
+      //   request.params[1],
+      //   ...N3Helper.getInnerParams(request.params),
+      // )
     } else if (request.method === 'testInvoke') {
-      result = await this.testInvoke(
-        request.params[0],
-        request.params[1],
-        ...N3Helper.getInnerParams(request.params),
-      )
+      result = await this.multiTestInvoke(account, request.params)
     } else {
       const { jsonrpc, ...queryLike } = request
       result = await new rpc.RPCClient(this.rpcAddress).execute(
@@ -70,6 +84,76 @@ class N3Helper {
       jsonrpc: '2.0',
       result,
     }
+  }
+
+  multiTestInvoke = async (
+    account: Account,
+    calls: ContractInvocation[],
+  ): Promise<any> => {
+    const sb = Neon.create.scriptBuilder()
+
+    calls.forEach(c => {
+      sb.emitContractCall({
+        scriptHash: c.scriptHash,
+        operation: c.operation,
+        args: N3Helper.convertParams(c.args),
+      })
+
+      if (c.abortOnFail) {
+        sb.emit(0x39)
+      }
+    })
+
+    const script = sb.build()
+    return new rpc.RPCClient(this.rpcAddress).invokeScript(
+      Neon.u.HexString.fromHex(script),
+      [N3Helper.buildSigner(account, calls)],
+    )
+  }
+
+  multiInvoke = async (
+    account: Account,
+    calls: ContractInvocation[],
+  ): Promise<any> => {
+    const sb = Neon.create.scriptBuilder()
+    const networkMagic = await N3Helper.getMagicOfRpcAddress(this.rpcAddress)
+
+    calls.forEach(c => {
+      sb.emitContractCall({
+        scriptHash: c.scriptHash,
+        operation: c.operation,
+        args: N3Helper.convertParams(c.args),
+      })
+
+      if (c.abortOnFail) {
+        sb.emit(0x39)
+      }
+    })
+
+    const script = sb.build()
+
+    const rpcClient = new rpc.RPCClient(this.rpcAddress)
+
+    const currentHeight = await rpcClient.getBlockCount()
+
+    const trx = new tx.Transaction({
+      script: Neon.u.HexString.fromHex(script),
+      validUntilBlock: currentHeight + 100,
+      signers: [N3Helper.buildSigner(account, calls)],
+    })
+
+    // eslint-disable-next-line
+    console.log(trx)
+
+    await Neon.experimental.txHelpers.addFees(trx, {
+      rpcAddress: this.rpcAddress,
+      networkMagic,
+      account,
+    })
+
+    trx.sign(account, networkMagic)
+
+    return rpcClient.sendRawTransaction(trx)
   }
 
   contractInvoke = async (
@@ -215,6 +299,60 @@ class N3Helper {
                 ? sc.ContractParam.array(...N3Helper.convertParams(a.value))
                 : a,
     )
+  }
+
+  static buildSigner(
+    account: Account,
+    call: ContractInvocation | ContractInvocation[],
+  ) {
+    const signer = new tx.Signer({
+      account: account.scriptHash,
+    })
+
+    if (Array.isArray(call)) {
+      signer.scopes = WitnessScope.None
+      const allowedContractsSet = new Set()
+      const allowedGroupsSet = new Set()
+      call.forEach(c => {
+        signer.scopes = Math.max(
+          signer.scopes,
+          (c.signer && c.signer.scope) || WitnessScope.CalledByEntry,
+        )
+        // eslint-disable-next-line
+        c.signer &&
+          c.signer.allowedContracts &&
+          c.signer.allowedContracts.forEach(ac => {
+            allowedContractsSet.add(Neon.u.HexString.fromHex(ac))
+          })
+        // eslint-disable-next-line
+        c.signer &&
+          c.signer.allowedGroups &&
+          c.signer.allowedGroups.forEach(ac => {
+            allowedGroupsSet.add(Neon.u.HexString.fromHex(ac))
+          })
+      })
+      if (allowedContractsSet.size) {
+        signer.allowedContracts = Array.from(allowedContractsSet)
+      }
+      if (allowedGroupsSet.size) {
+        signer.allowedGroups = Array.from(allowedGroupsSet)
+      }
+    } else {
+      signer.scopes =
+        (call.signer && call.signer.scope) || WitnessScope.CalledByEntry
+      if (call.signer && call.signer.allowedContracts) {
+        signer.allowedContracts = call.signer.allowedContracts.map(ac =>
+          Neon.u.HexString.fromHex(ac),
+        )
+      }
+      if (call.signer && call.signer.allowedGroups) {
+        signer.allowedGroups = call.signer.allowedGroups.map(ac =>
+          Neon.u.HexString.fromHex(ac),
+        )
+      }
+    }
+
+    return signer
   }
 
   static getInnerParams(p: any[]) {

@@ -65,11 +65,11 @@ const ConnectDapp = ({
 }: Props) => {
   const [connectionUrl, setConnectionUrl] = useState('')
   const [connectionStep, setConnectionStep] = useState(
-    CONNECTION_STEPS.ENTER_URL,
+    CONNECTION_STEPS.APPROVE_TRANSACTION,
   )
   const [proposal, setProposal] = useState(null)
   const [peer, setPeer] = useState(null)
-  const [request, setRequest] = useState(null)
+  const [request, setRequest] = useState(REQUEST_MOCK)
   const [loading, setLoading] = useState(false)
   const [fee, setFee] = useState('')
   const [contractName, setContractName] = useState('')
@@ -244,7 +244,7 @@ const ConnectDapp = ({
         setRequest(firstRequest)
 
         firstRequest.request.params.forEach((p: any) => {
-          if (typeof p === 'object' && p.find(p => p.type === 'Array')) {
+          if (typeof p === 'object' && p.args.find(p => p.type === 'Array')) {
             setShouldDisplayReqParams(true)
           }
         })
@@ -565,41 +565,43 @@ const ConnectDapp = ({
 
                   {requestParamsVisible && (
                     <div className={styles.requestParams}>
-                      {request &&
-                        request.request.params.map((p: any, i: number) => (
-                          <React.Fragment key={i}>
-                            {typeof p === 'object' &&
-                              p.find(p => p.type === 'Array') &&
-                              p
-                                .find(p => p.type === 'Array')
-                                .value.map((arg, i) => (
-                                  <div className={styles.paramContainer}>
-                                    <div>
-                                      <div className={styles.index}>{i}</div>
-                                      {arg && arg.value}{' '}
-                                      <CopyToClipboard
-                                        text={String(arg && arg.value)}
-                                      />
+                      {/* {request &&
+                        request.request.params.map(param =>
+                          param.map((p: any, i: number) => (
+                            <React.Fragment key={i}>
+                              {typeof p === 'object' &&
+                                p.find(p => p.type === 'Array') &&
+                                p
+                                  .find(p => p.type === 'Array')
+                                  .value.map((arg, i) => (
+                                    <div className={styles.paramContainer}>
+                                      <div>
+                                        <div className={styles.index}>{i}</div>
+                                        {arg && arg.value}{' '}
+                                        <CopyToClipboard
+                                          text={String(arg && arg.value)}
+                                        />
+                                      </div>
+                                      <div
+                                        className={styles.argType}
+                                        style={{
+                                          backgroundColor:
+                                            TX_STATE_TYPE_MAPPINGS[
+                                              arg && arg.type
+                                            ] &&
+                                            TX_STATE_TYPE_MAPPINGS[
+                                              arg && arg.type
+                                            ].color,
+                                        }}
+                                      >
+                                        {' '}
+                                        {arg.type}{' '}
+                                      </div>
                                     </div>
-                                    <div
-                                      className={styles.argType}
-                                      style={{
-                                        backgroundColor:
-                                          TX_STATE_TYPE_MAPPINGS[
-                                            arg && arg.type
-                                          ] &&
-                                          TX_STATE_TYPE_MAPPINGS[
-                                            arg && arg.type
-                                          ].color,
-                                      }}
-                                    >
-                                      {' '}
-                                      {arg.type}{' '}
-                                    </div>
-                                  </div>
-                                ))}
-                          </React.Fragment>
-                        ))}
+                                  ))}
+                            </React.Fragment>
+                          )),
+                        )} */}
                     </div>
                   )}
                 </div>

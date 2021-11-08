@@ -1,51 +1,100 @@
 export const REQUEST_MOCK = {
-  topic: 'a597459f33abca20cac77d62001100d3b79e743d6306e17d24f948588b811110',
+  id: 1636407714008317,
+  topic: '0835376d2aebd559770cda0584c03601c7aafbd623f26524822ac6a3ebcea7c8',
   request: {
-    id: 1632947416325648,
-    jsonrpc: '2.0',
     method: 'invokefunction',
     params: [
-      '0xd2a4cff31913016155e38e474a2c06d08be276cf',
-      'transfer',
-      [
-        {
-          type: 'Address',
-          value: 'NMkSudozST9kTkpNbyNB1EdU7KzfQoF3dY',
-        },
-        {
-          type: 'ScriptHash',
-          value: '0x010101c0775af568185025b0ce43cfaa9b990a2a',
-        },
-        {
-          type: 'Integer',
-          value: 100000000,
-        },
-        {
-          type: 'Array',
-          value: [
-            {
-              type: 'String',
-              value: 'createStream',
-            },
-            {
-              type: 'Address',
-              value: 'NMkSudozST9kTkpNbyNB1EdU7KzfQoF3dY',
-            },
-            {
-              type: 'Integer',
-              value: 1632947400000,
-            },
-            {
-              type: 'Integer',
-              value: 1633033800000,
-            },
-          ],
-        },
-      ],
+      {
+        scriptHash: '0xd2a4cff31913016155e38e474a2c06d08be276cf',
+        operation: 'transfer',
+        args: [
+          {
+            type: 'Address',
+            value: 'NMkSudozST9kTkpNbyNB1EdU7KzfQoF3dY',
+          },
+          {
+            type: 'ScriptHash',
+            value: '0x010101c0775af568185025b0ce43cfaa9b990a2a',
+          },
+          {
+            type: 'Integer',
+            value: 100000000,
+          },
+          {
+            type: 'Array',
+            value: [
+              {
+                type: 'String',
+                value: 'createStream',
+              },
+              {
+                type: 'Address',
+                value: 'NMkSudozST9kTkpNbyNB1EdU7KzfQoF3dY',
+              },
+              {
+                type: 'Integer',
+                value: 1637185260000,
+              },
+              {
+                type: 'Integer',
+                value: 1637196060000,
+              },
+            ],
+          },
+        ],
+      },
     ],
   },
-  chainId: 'neo3:testnet',
+  chainId: 'neo3:mainnet',
 }
+// export const REQUEST_MOCK = {
+//   topic: 'a597459f33abca20cac77d62001100d3b79e743d6306e17d24f948588b811110',
+//   request: {
+//     id: 1632947416325648,
+//     jsonrpc: '2.0',
+//     method: 'invokefunction',
+//     params: [
+//       '0xd2a4cff31913016155e38e474a2c06d08be276cf',
+//       'transfer',
+//       [
+//         {
+//           type: 'Address',
+//           value: 'NMkSudozST9kTkpNbyNB1EdU7KzfQoF3dY',
+//         },
+//         {
+//           type: 'ScriptHash',
+//           value: '0x010101c0775af568185025b0ce43cfaa9b990a2a',
+//         },
+//         {
+//           type: 'Integer',
+//           value: 100000000,
+//         },
+//         {
+//           type: 'Array',
+//           value: [
+//             {
+//               type: 'String',
+//               value: 'createStream',
+//             },
+//             {
+//               type: 'Address',
+//               value: 'NMkSudozST9kTkpNbyNB1EdU7KzfQoF3dY',
+//             },
+//             {
+//               type: 'Integer',
+//               value: 1632947400000,
+//             },
+//             {
+//               type: 'Integer',
+//               value: 1633033800000,
+//             },
+//           ],
+//         },
+//       ],
+//     ],
+//   },
+//   chainId: 'neo3:testnet',
+// }
 
 export const PROPOSAL_MOCK = {
   relay: {
