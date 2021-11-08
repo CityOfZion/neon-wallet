@@ -11,7 +11,7 @@ import CopyToClipboard from '../../CopyToClipboard'
 type Props = {
   image: string,
   isPending: boolean,
-  findContact: React$Node,
+  findContact: (address: string) => React$Node | null,
   from: string,
   intl: IntlShape,
   sender: string,

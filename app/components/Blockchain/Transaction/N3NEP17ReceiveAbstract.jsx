@@ -12,7 +12,7 @@ type Props = {
   amount: number,
   image: string,
   isPending: boolean,
-  findContact: React$Node,
+  findContact: (address: string) => React$Node | null,
   from: string,
   intl: IntlShape,
   showAddContactModal: (to: string) => void,

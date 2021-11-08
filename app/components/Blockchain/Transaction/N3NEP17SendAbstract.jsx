@@ -10,7 +10,7 @@ import CopyToClipboard from '../../CopyToClipboard'
 
 type Props = {
   amount: string | number,
-  findContact: React$Node,
+  findContact: (address: string) => React$Node | null,
   image: string,
   intl: IntlShape,
   isPending: boolean,

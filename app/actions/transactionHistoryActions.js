@@ -77,7 +77,7 @@ export async function parseAbstractData(
  * @returns {Promise<[]>}
  */
 export async function handleNeoActivity(
-  data: Array<any>,
+  data: Object,
   currentUserAddress: string,
   net: string,
 ) {
@@ -169,12 +169,11 @@ export default createActions(
       page = 1
     }
 
-    let data = { entries: [] }
     let parsedEntries = []
 
     if (chain === 'neo3') {
       const network = net === 'MainNet' ? 'mainnet' : 'testnet_rc4'
-      data = await NeoRest.addressTXFull(address, page, network)
+      const data = await NeoRest.addressTXFull(address, page, network)
       parsedEntries = await handleNeoActivity(data, address, net)
     } else {
       const network = net === 'MainNet' ? 'mainnet' : 'testnet'
