@@ -193,6 +193,10 @@ export const TX_TYPES = {
   SEND: 'SEND',
   RECEIVE: 'RECEIVE',
   CLAIM: 'CLAIM',
+  N3VOTE: 'vote',
+  N3NEP17TRANSFER: 'nep17_transfer',
+  N3NEP11TRANSFER: 'nep11_transfer',
+  N3CONTRACTINVOCATION: 'contract_invocation',
 }
 
 export const MAIN_NETWORK_ID = '1'
