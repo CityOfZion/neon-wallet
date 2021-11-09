@@ -48,15 +48,15 @@ class N3Helper {
         showInfoNotification,
         hideNotification,
         account,
-        request.params[0],
-        request.params[1],
-        ...N3Helper.getInnerParams(request.params),
+        request.params[0].scriptHash,
+        request.params[0].operation,
+        request.params[0].args,
       )
     } else if (request.method === 'testInvoke') {
       result = await this.testInvoke(
-        request.params[0],
-        request.params[1],
-        ...N3Helper.getInnerParams(request.params),
+        request.params[0].scriptHash,
+        request.params[0].operation,
+        request.params[0].args,
       )
     } else {
       const { jsonrpc, ...queryLike } = request
