@@ -93,7 +93,6 @@ const ConnectDapp = ({
   }
 
   const handleWalletConnectURLSubmit = async uri => {
-    console.log('handleWalletConnectURLSubmit')
     setLoading(true)
     try {
       if (!walletConnectCtx.wcClient) await walletConnectCtx.init()
