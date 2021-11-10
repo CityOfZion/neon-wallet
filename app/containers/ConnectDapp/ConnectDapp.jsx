@@ -79,7 +79,6 @@ const ConnectDapp = ({
 
   const walletConnectCtx = useWalletConnect()
   const firstProposal = walletConnectCtx.sessionProposals[0]
-  console.log(walletConnectCtx)
   const firstRequest = walletConnectCtx.requests[0]
   const { error } = walletConnectCtx
 
