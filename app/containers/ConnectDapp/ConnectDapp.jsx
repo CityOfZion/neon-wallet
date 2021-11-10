@@ -93,6 +93,7 @@ const ConnectDapp = ({
   }
 
   const handleWalletConnectURLSubmit = async uri => {
+    console.log('handleWalletConnectURLSubmit')
     setLoading(true)
     try {
       if (!walletConnectCtx.wcClient) await walletConnectCtx.init()
@@ -106,7 +107,11 @@ const ConnectDapp = ({
       await walletConnectCtx
         .onURI(uri || connectionUrl)
         .catch(e => console.error({ e }))
-      setLoading(false)
+
+      // setTimeout used here to prevent UI loading "flicker"
+      setTimeout(() => {
+        setLoading(false)
+      }, 1500)
     } catch (e) {
       console.error({ e })
       setLoading(false)
