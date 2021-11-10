@@ -54,57 +54,6 @@ const CONNECTION_STEPS = {
   TRANSACTION_ERROR: 'TRANSACTION_ERROR',
 }
 
-// const convertRequestToOldSchema(request: any) {
-//    const parsedRequest =  {
-//     topic: 'a597459f33abca20cac77d62001100d3b79e743d6306e17d24f948588b811110',
-//     request: {
-//       id: 1632947416325648,
-//       jsonrpc: '2.0',
-//       method: 'invokefunction',
-//       params: [
-//         '0xd2a4cff31913016155e38e474a2c06d08be276cf',
-//         'transfer',
-//         [
-//           {
-//             type: 'Address',
-//             value: 'NMkSudozST9kTkpNbyNB1EdU7KzfQoF3dY',
-//           },
-//           {
-//             type: 'ScriptHash',
-//             value: '0x010101c0775af568185025b0ce43cfaa9b990a2a',
-//           },
-//           {
-//             type: 'Integer',
-//             value: 100000000,
-//           },
-//           {
-//             type: 'Array',
-//             value: [
-//               {
-//                 type: 'String',
-//                 value: 'createStream',
-//               },
-//               {
-//                 type: 'Address',
-//                 value: 'NMkSudozST9kTkpNbyNB1EdU7KzfQoF3dY',
-//               },
-//               {
-//                 type: 'Integer',
-//                 value: 1632947400000,
-//               },
-//               {
-//                 type: 'Integer',
-//                 value: 1633033800000,
-//               },
-//             ],
-//           },
-//         ],
-//       ],
-//     },
-//     chainId: 'neo3:testnet',
-//   }
-// }
-
 const ConnectDapp = ({
   address,
   history,
