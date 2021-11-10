@@ -24,7 +24,7 @@ class N3Helper {
         jsonrpc: '2.0',
       }),
     )
-    return resp.network
+    return resp.protocol.network
   }
 
   rpcCall = async (
