@@ -73,7 +73,7 @@ const ConnectDapp = ({
   const [loading, setLoading] = useState(false)
   const [fee, setFee] = useState('')
   const [contractName, setContractName] = useState('')
-  const [contractAbi, setContractAbi] = useState(null)
+  const [contractAbi, setContractAbi] = useState(undefined)
   const [requestParamsVisible, setRequestParamsVisible] = useState(true)
   const [shouldDisplayReqParams, setShouldDisplayReqParams] = useState(false)
   const [pairingMap, setPairingMap] = useState({})
@@ -91,7 +91,7 @@ const ConnectDapp = ({
     setRequest(null)
     setLoading(false)
     setContractName('')
-    setContractAbi(null)
+    setContractAbi(undefined)
     setFee('')
   }
 
@@ -274,7 +274,7 @@ const ConnectDapp = ({
     </p>
   )
 
-  const renderParam = (arg: any, definition: object, index: string) => (
+  const renderParam = (arg: any, definition: any) => (
     <React.Fragment>
       <div className={styles.parameterName}>{definition.name}:</div>
       <div
@@ -499,11 +499,11 @@ const ConnectDapp = ({
         </FullHeightPanel>
       )
     case connectionStep === CONNECTION_STEPS.APPROVE_TRANSACTION:
-      try {
+      if (contractAbi && request) {
         paramDefinitions = contractAbi.methods.find(
           method => method.name === request.request.params[0].operation,
         ).parameters
-      } catch (e) {
+      } else if (request) {
         paramDefinitions = new Array(request.request.params[0].args.length)
           .fill()
           .map((_, i) => ({ name: i, type: 'unknown' }))
@@ -651,7 +651,7 @@ const ConnectDapp = ({
                                   ].color,
                               }}
                             >
-                              {renderParam(p, paramDefinitions[i], i)}
+                              {renderParam(p, paramDefinitions[i])}
                             </div>
                           ),
                         )}
