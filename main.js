@@ -24,7 +24,7 @@ if (gotTheLock) {
 
     // Protocol handler for win32
     // argv: An array of the second instance’s (command line / deep linked) arguments
-    if (process.platform === 'win32') {
+    if (process.platform === 'win32' || process.platform === 'linux') {
       // Keep only command line / deep linked arguments
       ;[, deeplinkingUrl] = argv.slice(1)
       deeplinkingUrl = deeplinkingUrl.endsWith('/')
