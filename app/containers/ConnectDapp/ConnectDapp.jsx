@@ -412,9 +412,9 @@ const ConnectDapp = ({
                   <div>
                     <label>CHAINS</label>
                     {proposal &&
-                      proposal.permissions.blockchain.chains.map(chain => {
-                        return <div key={chain}>{chain}</div>
-                      })}
+                      proposal.permissions.blockchain.chains.map(chain => (
+                        <div key={chain}>{chain}</div>
+                      ))}
                   </div>
                   <div>
                     <label>FEATURES</label>
