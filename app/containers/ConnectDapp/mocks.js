@@ -87,49 +87,52 @@ export const PROPOSAL_MOCK = {
 }
 
 export const TX_STATE_TYPE_MAPPINGS = {
+  Any: {
+    color: 'rgba(149,149,149,0.7)',
+  },
   Signature: {
-    color: '#E9265C',
+    color: 'rgba(233,38,92,0.7)',
   },
   Boolean: {
-    color: '#D355E7',
+    color: 'rgba(211,85,231,0.7)',
   },
   Integer: {
-    color: '#B167F2',
+    color: 'rgba(177,103,242,0.7)',
   },
   Hash160: {
-    color: '#008529',
+    color: 'rgba(0,133,41,0.7)',
   },
   Address: {
-    color: '#008529',
+    color: 'rgba(0,133,41,0.7)',
   },
   Null: {
-    color: 'rgba(255, 255, 255, 0.08)',
+    color: 'rgba(255,255,255,0.7)',
   },
   Hash256: {
-    color: '#1DB5FF',
+    color: 'rgba(29,181,255,0.7)',
   },
   ByteArray: {
-    color: '#0DCDFF',
+    color: 'rgba(13,205,255,0.7)',
   },
   PublicKey: {
-    color: '#00D69D',
+    color: 'rgba(0,214,157,0.7)',
   },
   String: {
-    color: '#67DD8B',
+    color: 'rgba(103,221,139,0.7)',
   },
   ByteString: {
-    color: '#67DD8B',
+    color: 'rgba(103,221,139,0.7)',
   },
   Array: {
-    color: '#F28F00',
+    color: 'rgba(242,143,0,0.7)',
   },
   Buffer: {
-    color: '#F28F00',
+    color: 'rgba(242,143,0,0.7)',
   },
   InteropInterface: {
-    color: '#A50000',
+    color: 'rgba(165,0,0,0.7)',
   },
   Void: {
-    color: '#528D93',
+    color: 'rgba(82,141,147,0.7)',
   },
 }

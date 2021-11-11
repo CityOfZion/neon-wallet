@@ -73,6 +73,7 @@ const ConnectDapp = ({
   const [loading, setLoading] = useState(false)
   const [fee, setFee] = useState('')
   const [contractName, setContractName] = useState('')
+  const [contractAbi, setContractAbi] = useState(undefined)
   const [requestParamsVisible, setRequestParamsVisible] = useState(true)
   const [shouldDisplayReqParams, setShouldDisplayReqParams] = useState(false)
   const [pairingMap, setPairingMap] = useState({})
@@ -81,6 +82,7 @@ const ConnectDapp = ({
   const firstProposal = walletConnectCtx.sessionProposals[0]
   const firstRequest = walletConnectCtx.requests[0]
   const { error } = walletConnectCtx
+  let paramDefinitions
 
   const resetState = () => {
     setConnectionUrl('')
@@ -89,6 +91,7 @@ const ConnectDapp = ({
     setRequest(null)
     setLoading(false)
     setContractName('')
+    setContractAbi(undefined)
     setFee('')
   }
 
@@ -222,11 +225,11 @@ const ConnectDapp = ({
         setFee(fee)
       }
 
-      const getContractName = async request => {
+      const getContractManifest = async request => {
         const hash = request.params[0].scriptHash
         const {
           data: {
-            manifest: { name },
+            manifest: { name, abi },
           },
         } = await axios.get(
           net === 'MainNet'
@@ -234,11 +237,12 @@ const ConnectDapp = ({
             : `https://dora.coz.io/api/v1/neo3/testnet_rc4/contract/${hash}`,
         )
         setContractName(name)
+        setContractAbi(abi)
       }
 
       if (request) {
         getGasFee(request.request)
-        getContractName(request.request)
+        getContractManifest(request.request)
       }
     },
     [request, address, net],
@@ -268,6 +272,40 @@ const ConnectDapp = ({
       signing before being broadcast to the blockchain. No action from the Dapp
       will happen without your direct approval.
     </p>
+  )
+
+  const renderParam = (arg: any, definition: any) => (
+    <React.Fragment>
+      <div className={styles.parameterName}>{definition.name}:</div>
+      <div
+        className={
+          arg.type === 'Array' ? styles.parameterArray : styles.parameterValue
+        }
+        style={{
+          borderColor:
+            TX_STATE_TYPE_MAPPINGS[definition && definition.type] &&
+            TX_STATE_TYPE_MAPPINGS[definition && definition.type].color,
+        }}
+      >
+        {arg.type !== 'Array' && (
+          <React.Fragment>
+            <span>{arg.value}</span>
+            <CopyToClipboard text={String(arg && arg.value)} />
+          </React.Fragment>
+        )}
+        {arg.type === 'Array' &&
+          arg.value.map((element, j) => (
+            <div>
+              <div className={styles.arrayValue}>
+                <div className={styles.index}>{j}</div>
+                <span>{element && element.value}</span>
+              </div>
+              <CopyToClipboard text={String(element && element.value)} />
+            </div>
+          ))}
+      </div>
+      <div className={styles.parameterType}>{definition.type}</div>
+    </React.Fragment>
   )
 
   const isValid = () => true
@@ -461,6 +499,16 @@ const ConnectDapp = ({
         </FullHeightPanel>
       )
     case connectionStep === CONNECTION_STEPS.APPROVE_TRANSACTION:
+      if (contractAbi && request) {
+        paramDefinitions = contractAbi.methods.find(
+          method => method.name === request.request.params[0].operation,
+        ).parameters
+      } else if (request) {
+        paramDefinitions = new Array(request.request.params[0].args.length)
+          .fill()
+          .map((_, i) => ({ name: i, type: 'unknown' }))
+      }
+
       return (
         <FullHeightPanel
           renderHeader={renderHeader}
@@ -580,38 +628,31 @@ const ConnectDapp = ({
                       {request &&
                         request.request.params[0].args.map(
                           (p: any, i: number) => (
-                            <React.Fragment key={i}>
-                              {p.type === 'Array' &&
-                                p.value.map((arg, i) => (
-                                  <div
-                                    key={i}
-                                    className={styles.paramContainer}
-                                  >
-                                    <div>
-                                      <div className={styles.index}>{i}</div>
-                                      {arg && arg.value}{' '}
-                                      <CopyToClipboard
-                                        text={String(arg && arg.value)}
-                                      />
-                                    </div>
-                                    <div
-                                      className={styles.argType}
-                                      style={{
-                                        backgroundColor:
-                                          TX_STATE_TYPE_MAPPINGS[
-                                            arg && arg.type
-                                          ] &&
-                                          TX_STATE_TYPE_MAPPINGS[
-                                            arg && arg.type
-                                          ].color,
-                                      }}
-                                    >
-                                      {' '}
-                                      {arg.type}{' '}
-                                    </div>
-                                  </div>
-                                ))}
-                            </React.Fragment>
+                            <div
+                              className={styles.methodParameter}
+                              style={{
+                                backgroundColor:
+                                  TX_STATE_TYPE_MAPPINGS[
+                                    paramDefinitions[i] &&
+                                      paramDefinitions[i].type
+                                  ] &&
+                                  TX_STATE_TYPE_MAPPINGS[
+                                    paramDefinitions[i] &&
+                                      paramDefinitions[i].type
+                                  ].color,
+                                borderColor:
+                                  TX_STATE_TYPE_MAPPINGS[
+                                    paramDefinitions[i] &&
+                                      paramDefinitions[i].type
+                                  ] &&
+                                  TX_STATE_TYPE_MAPPINGS[
+                                    paramDefinitions[i] &&
+                                      paramDefinitions[i].type
+                                  ].color,
+                              }}
+                            >
+                              {renderParam(p, paramDefinitions[i])}
+                            </div>
                           ),
                         )}
                     </div>
