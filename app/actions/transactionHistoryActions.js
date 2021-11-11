@@ -1,12 +1,12 @@
 // @flow
-import axios from 'axios'
-import { api } from '@cityofzion/neon-js'
+import { NeoLegacyREST, NeoRest } from '@cityofzion/dora-ts/dist/api'
 import { createActions } from 'spunky'
-
+import { rpc as n3Rpc, sc, u } from '@cityofzion/neon-js-next'
 import { TX_TYPES } from '../core/constants'
 import { findAndReturnTokenInfo } from '../util/findAndReturnTokenInfo'
 import { getSettings } from './settingsActions'
 import { toBigNumber } from '../core/math'
+import { getNode, getRPCEndpoint } from './nodeStorageActions'
 
 type Props = {
   net: string,
@@ -68,6 +68,86 @@ export async function parseAbstractData(
   return results
 }
 
+/**
+ * Parses a raw request for an address' history into a format usable by the
+ * activity components.
+ * @param data
+ * @param currentUserAddress
+ * @param net
+ * @returns {Promise<[]>}
+ */
+export async function handleNeoActivity(
+  data: Object,
+  currentUserAddress: string,
+  net: string,
+) {
+  const results = []
+  if (!data.items) return results
+  for (const item of data.items) {
+    const unresolved = item.invocations.map(async invocation => {
+      let image
+      let assets
+      let endpoint
+      switch (invocation.type) {
+        case 'nep17_transfer':
+          assets = await findAndReturnTokenInfo(
+            invocation.metadata.scripthash,
+            net,
+          )
+          // eslint-disable-next-line prefer-destructuring
+          image = assets.image
+          break
+        case 'nep11_transfer':
+          // Get the properties of the token
+          endpoint = await getNode(net)
+          if (!endpoint) {
+            endpoint = await getRPCEndpoint(net)
+          }
+          invocation.metadata.tokenName = Buffer.from(
+            invocation.metadata.token_id,
+            'hex',
+          ).toString()
+          assets = await new n3Rpc.RPCClient(endpoint).invokeFunction(
+            invocation.metadata.scripthash,
+            'properties',
+            [sc.ContractParam.string(invocation.metadata.tokenName)],
+          )
+          assets.stack[0].value.some(property => {
+            const key = u.HexString.fromBase64(property.key.value).toAscii()
+            if (key === 'image') {
+              image = u.HexString.fromBase64(property.value.value).toAscii()
+              return true
+            }
+            return false
+          })
+          break
+        default:
+          break
+      }
+      // flatten the invocations into individual events to support existing components
+      invocation.metadata.image = image
+      invocation.hash = item.hash
+      invocation.sender = item.sender
+      invocation.sysfee = item.sysfee
+      invocation.netfee = item.netfee
+      invocation.block = item.block
+      invocation.time = item.time
+      invocation.vmstate = item.vmstate
+
+      if (
+        invocation.metadata.scripthash ===
+        '0xd2a4cff31913016155e38e474a2c06d08be276cf'
+      ) {
+        invocation.metadata.amount /= 10 ** 8
+      }
+      return invocation
+    })
+    item.invocations = await Promise.all(unresolved)
+    results.push(...item.invocations)
+  }
+  return results
+}
+
 export const ID = 'transactionHistory'
 
 // TODO: Refactor to use immutable data types!
@@ -89,44 +169,21 @@ export default createActions(
       page = 1
     }
 
-    let data = { entries: [] }
+    let parsedEntries = []
 
     if (chain === 'neo3') {
-      const results = await axios.get(
-        `https://dora.coz.io/api/v1/neo3/${
-          net === 'MainNet' ? 'mainnet' : 'testnet_rc4'
-        }/get_address_abstracts/${address}/${page}`,
-      )
-
-      // eslint-disable-next-line
-      data = results.data
-    } else if (net === 'TestNet' && chain === 'neo2') {
-      const results = await axios.get(
-        `https://dora.coz.io/api/v1/neo2/testnet/get_address_abstracts/${address}/${page}`,
-      )
-      results.data.entries = results.data.entries.map(entry => {
-        const parsedEntry = { ...entry }
-        if (
-          entry.asset ===
-          '602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7'
-        ) {
-          parsedEntry.amount = entry.amount * 100000000
-        }
-
-        return parsedEntry
-      })
-      // eslint-disable-next-line
-      data = results.data
+      const network = net === 'MainNet' ? 'mainnet' : 'testnet_rc4'
+      const data = await NeoRest.addressTXFull(address, page, network)
+      parsedEntries = await handleNeoActivity(data, address, net)
     } else {
-      const endpoint = api.neoscan.getAPIEndpoint(net)
-      const results = await axios.get(
-        `${endpoint}/v1/get_address_abstracts/${address}/${page}`,
+      const network = net === 'MainNet' ? 'mainnet' : 'testnet'
+      const data = await NeoLegacyREST.getAddressAbstracts(
+        address,
+        page,
+        network,
       )
-      // eslint-disable-next-line
-      data = results.data
+      parsedEntries = await parseAbstractData(data.entries, address, net)
     }
-
-    const parsedEntries = await parseAbstractData(data.entries, address, net)
     page += 1
     if (shouldIncrementPagination) {
       if (page === 1) entries = []
