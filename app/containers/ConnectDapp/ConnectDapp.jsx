@@ -73,6 +73,7 @@ const ConnectDapp = ({
   const [loading, setLoading] = useState(false)
   const [fee, setFee] = useState('')
   const [contractName, setContractName] = useState('')
+  const [contractAbi, setContractAbi] = useState(undefined)
   const [requestParamsVisible, setRequestParamsVisible] = useState(true)
   const [shouldDisplayReqParams, setShouldDisplayReqParams] = useState(false)
   const [pairingMap, setPairingMap] = useState({})
@@ -81,6 +82,7 @@ const ConnectDapp = ({
   const firstProposal = walletConnectCtx.sessionProposals[0]
   const firstRequest = walletConnectCtx.requests[0]
   const { error } = walletConnectCtx
+  let paramDefinitions
 
   const resetState = () => {
     setConnectionUrl('')
@@ -89,6 +91,7 @@ const ConnectDapp = ({
     setRequest(null)
     setLoading(false)
     setContractName('')
+    setContractAbi(undefined)
     setFee('')
   }
 
@@ -106,7 +109,11 @@ const ConnectDapp = ({
       await walletConnectCtx
         .onURI(uri || connectionUrl)
         .catch(e => console.error({ e }))
-      setLoading(false)
+
+      // setTimeout used here to prevent UI loading "flicker"
+      setTimeout(() => {
+        setLoading(false)
+      }, 1500)
     } catch (e) {
       console.error({ e })
       setLoading(false)
@@ -184,7 +191,9 @@ const ConnectDapp = ({
   useEffect(
     () => {
       if (firstRequest) {
-        walletConnectCtx.getPeerOfRequest(firstRequest).then(setPeer)
+        walletConnectCtx
+          .getPeerOfRequest(walletConnectCtx.requests[0])
+          .then(setPeer)
       }
     },
     [firstRequest, walletConnectCtx],
@@ -216,11 +225,11 @@ const ConnectDapp = ({
         setFee(fee)
       }
 
-      const getContractName = async request => {
-        const hash = request.params[0]
+      const getContractManifest = async request => {
+        const hash = request.params[0].scriptHash
         const {
           data: {
-            manifest: { name },
+            manifest: { name, abi },
           },
         } = await axios.get(
           net === 'MainNet'
@@ -228,11 +237,12 @@ const ConnectDapp = ({
             : `https://dora.coz.io/api/v1/neo3/testnet_rc4/contract/${hash}`,
         )
         setContractName(name)
+        setContractAbi(abi)
       }
 
       if (request) {
         getGasFee(request.request)
-        getContractName(request.request)
+        getContractManifest(request.request)
       }
     },
     [request, address, net],
@@ -242,9 +252,8 @@ const ConnectDapp = ({
     () => {
       if (firstRequest) {
         setRequest(firstRequest)
-
-        firstRequest.request.params.forEach((p: any) => {
-          if (typeof p === 'object' && p.find(p => p.type === 'Array')) {
+        firstRequest.request.params[0].args.forEach((p: any) => {
+          if (p.type === 'Array') {
             setShouldDisplayReqParams(true)
           }
         })
@@ -263,6 +272,40 @@ const ConnectDapp = ({
       signing before being broadcast to the blockchain. No action from the Dapp
       will happen without your direct approval.
     </p>
+  )
+
+  const renderParam = (arg: any, definition: any) => (
+    <React.Fragment>
+      <div className={styles.parameterName}>{definition.name}:</div>
+      <div
+        className={
+          arg.type === 'Array' ? styles.parameterArray : styles.parameterValue
+        }
+        style={{
+          borderColor:
+            TX_STATE_TYPE_MAPPINGS[definition && definition.type] &&
+            TX_STATE_TYPE_MAPPINGS[definition && definition.type].color,
+        }}
+      >
+        {arg.type !== 'Array' && (
+          <React.Fragment>
+            <span>{arg.value}</span>
+            <CopyToClipboard text={String(arg && arg.value)} />
+          </React.Fragment>
+        )}
+        {arg.type === 'Array' &&
+          arg.value.map((element, j) => (
+            <div>
+              <div className={styles.arrayValue}>
+                <div className={styles.index}>{j}</div>
+                <span>{element && element.value}</span>
+              </div>
+              <CopyToClipboard text={String(element && element.value)} />
+            </div>
+          ))}
+      </div>
+      <div className={styles.parameterType}>{definition.type}</div>
+    </React.Fragment>
   )
 
   const isValid = () => true
@@ -405,8 +448,11 @@ const ConnectDapp = ({
                 </div>
                 <div className={styles.featuresRow}>
                   <div>
-                    <label>CHAIN</label>
-                    {proposal && proposal.permissions.blockchain.chains[0]}
+                    <label>CHAINS</label>
+                    {proposal &&
+                      proposal.permissions.blockchain.chains.map(chain => (
+                        <div key={chain}>{chain}</div>
+                      ))}
                   </div>
                   <div>
                     <label>FEATURES</label>
@@ -453,6 +499,16 @@ const ConnectDapp = ({
         </FullHeightPanel>
       )
     case connectionStep === CONNECTION_STEPS.APPROVE_TRANSACTION:
+      if (contractAbi && request) {
+        paramDefinitions = contractAbi.methods.find(
+          method => method.name === request.request.params[0].operation,
+        ).parameters
+      } else if (request) {
+        paramDefinitions = new Array(request.request.params[0].args.length)
+          .fill()
+          .map((_, i) => ({ name: i, type: 'unknown' }))
+      }
+
       return (
         <FullHeightPanel
           renderHeader={renderHeader}
@@ -522,17 +578,21 @@ const ConnectDapp = ({
               >
                 <label>hash</label>
                 <div className={styles.scriptHash}>
-                  {request && request.request.params[0]}{' '}
+                  {request && request.request.params[0].scriptHash}{' '}
                   {theme === 'Light' ? (
                     <DoraIcon
                       onClick={() =>
-                        handleOpenDoraLink(request && request.request.params[0])
+                        handleOpenDoraLink(
+                          request && request.request.params[0].scriptHash,
+                        )
                       }
                     />
                   ) : (
                     <DoraIconDark
                       onClick={() =>
-                        handleOpenDoraLink(request && request.request.params[0])
+                        handleOpenDoraLink(
+                          request && request.request.params[0].scriptHash,
+                        )
                       }
                     />
                   )}
@@ -547,7 +607,7 @@ const ConnectDapp = ({
                 ])}
               >
                 <label>method</label>
-                <div>{request && request.request.params[1]}</div>
+                <div>{request && request.request.params[0].operation}</div>
               </div>
               {shouldDisplayReqParams ? (
                 <div className={styles.details}>
@@ -566,40 +626,35 @@ const ConnectDapp = ({
                   {requestParamsVisible && (
                     <div className={styles.requestParams}>
                       {request &&
-                        request.request.params.map((p: any, i: number) => (
-                          <React.Fragment key={i}>
-                            {typeof p === 'object' &&
-                              p.find(p => p.type === 'Array') &&
-                              p
-                                .find(p => p.type === 'Array')
-                                .value.map((arg, i) => (
-                                  <div className={styles.paramContainer}>
-                                    <div>
-                                      <div className={styles.index}>{i}</div>
-                                      {arg && arg.value}{' '}
-                                      <CopyToClipboard
-                                        text={String(arg && arg.value)}
-                                      />
-                                    </div>
-                                    <div
-                                      className={styles.argType}
-                                      style={{
-                                        backgroundColor:
-                                          TX_STATE_TYPE_MAPPINGS[
-                                            arg && arg.type
-                                          ] &&
-                                          TX_STATE_TYPE_MAPPINGS[
-                                            arg && arg.type
-                                          ].color,
-                                      }}
-                                    >
-                                      {' '}
-                                      {arg.type}{' '}
-                                    </div>
-                                  </div>
-                                ))}
-                          </React.Fragment>
-                        ))}
+                        request.request.params[0].args.map(
+                          (p: any, i: number) => (
+                            <div
+                              className={styles.methodParameter}
+                              style={{
+                                backgroundColor:
+                                  TX_STATE_TYPE_MAPPINGS[
+                                    paramDefinitions[i] &&
+                                      paramDefinitions[i].type
+                                  ] &&
+                                  TX_STATE_TYPE_MAPPINGS[
+                                    paramDefinitions[i] &&
+                                      paramDefinitions[i].type
+                                  ].color,
+                                borderColor:
+                                  TX_STATE_TYPE_MAPPINGS[
+                                    paramDefinitions[i] &&
+                                      paramDefinitions[i].type
+                                  ] &&
+                                  TX_STATE_TYPE_MAPPINGS[
+                                    paramDefinitions[i] &&
+                                      paramDefinitions[i].type
+                                  ].color,
+                              }}
+                            >
+                              {renderParam(p, paramDefinitions[i])}
+                            </div>
+                          ),
+                        )}
                     </div>
                   )}
                 </div>
