@@ -451,7 +451,7 @@ const ConnectDapp = ({
                     <label>CHAINS</label>
                     {proposal &&
                       proposal.permissions.blockchain.chains.map(chain => (
-                        <div>{chain}</div>
+                        <div key={chain}>{chain}</div>
                       ))}
                   </div>
                   <div>
