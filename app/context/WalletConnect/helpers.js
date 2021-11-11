@@ -24,7 +24,7 @@ class N3Helper {
         jsonrpc: '2.0',
       }),
     )
-    return resp.network
+    return resp.protocol.network
   }
 
   rpcCall = async (
@@ -48,15 +48,15 @@ class N3Helper {
         showInfoNotification,
         hideNotification,
         account,
-        request.params[0],
-        request.params[1],
-        ...N3Helper.getInnerParams(request.params),
+        request.params[0].scriptHash,
+        request.params[0].operation,
+        ...request.params[0].args,
       )
     } else if (request.method === 'testInvoke') {
       result = await this.testInvoke(
-        request.params[0],
-        request.params[1],
-        ...N3Helper.getInnerParams(request.params),
+        request.params[0].scriptHash,
+        request.params[0].operation,
+        ...request.params[0].args,
       )
     } else {
       const { jsonrpc, ...queryLike } = request
@@ -215,15 +215,6 @@ class N3Helper {
                 ? sc.ContractParam.array(...N3Helper.convertParams(a.value))
                 : a,
     )
-  }
-
-  static getInnerParams(p: any[]) {
-    let params: any[] = []
-    if (p.length > 2) {
-      // eslint-disable-next-line
-      params = p[2]
-    }
-    return params
   }
 
   static convertError(e: any) {

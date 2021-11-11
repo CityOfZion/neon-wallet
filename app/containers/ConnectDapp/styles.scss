@@ -253,3 +253,63 @@ p {
   max-width: 440px;
   text-align: left;
 }
+
+.methodParameter {
+  display: flex;
+  align-items: center;
+  border-radius: 3px;
+  margin: 5px;
+
+  .parameterName {
+    color: #ffffff;
+    padding: 0 6px;
+    min-width: 50px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .parameterValue {
+    background: var(--wc-connection-details-bg2);
+    color: var(--wc-connection-details-color);
+    padding: 6px;
+    border-radius: 4px ;
+    border: 2px solid;
+    justify-content: space-between;
+    width: 300px;
+
+    span {
+      //width: 250px;
+      padding: 6px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+
+  .parameterArray {
+    background: var(--wc-connection-details-bg2);;
+    color: var(--wc-connection-details-color);
+    padding: 6px;
+    display: inline-table !important;
+    border-radius: 4px;
+    border: 2px solid;
+    width: 300px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    justify-content: space-between;
+
+    div {
+      justify-content: space-between;
+    }
+
+    .arrayValue {
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+  }
+
+  .parameterType {
+    color: #ffffff;
+    font-weight: 400;
+    padding: 3px;
+  }
+}
