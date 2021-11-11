@@ -411,11 +411,10 @@ const ConnectDapp = ({
                 <div className={styles.featuresRow}>
                   <div>
                     <label>CHAINS</label>
-                    {proposal && proposal.permissions.blockchain.chains.map( (chain) => {
-                      return (
-                        <div>{chain}</div>
-                      )
-                    })}
+                    {proposal &&
+                      proposal.permissions.blockchain.chains.map(chain => {
+                        return <div key={chain}>{chain}</div>
+                      })}
                   </div>
                   <div>
                     <label>FEATURES</label>
