@@ -198,6 +198,16 @@ export const CHAIN_SWITCH = {
   '--chain-switch-text': '#00e599',
 }
 
+export const WALLET_CONNECT = {
+  '--wc-tooltip-bg': 'rgba(24, 28, 34, 0.87)',
+  '--wc-tooltip-color': '#8297a0',
+  '--wc-tooltip-button-color': '#4cffb3',
+  '--wc-connection-details-bg': '#242d35',
+  '--wc-connection-details-color': '#ffffff',
+  '--wc-connection-details-bg2': '#141b20',
+  '--wc-param-index': '#1c2228',
+}
+
 export default {
   ...NEWS,
   ...CONTACTS,
@@ -222,4 +232,5 @@ export default {
   ...RELEASE_NOTES,
   ...MOBILE,
   ...CHAIN_SWITCH,
+  ...WALLET_CONNECT,
 }

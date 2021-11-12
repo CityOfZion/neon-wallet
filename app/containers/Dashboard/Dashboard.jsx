@@ -14,8 +14,8 @@ import PortfolioPanel from '../../components/Dashboard/PortfolioPanel'
 import Wallet from '../../assets/icons/wallet.svg'
 import GreenWallet from '../../assets/icons/wallet-green.svg'
 import RefreshButton from '../Buttons/RefreshButton'
-
 import styles from './Dashboard.scss'
+import DapiStatus from '../../components/DapiStatus'
 
 type Props = {
   loadWalletData: Function,
@@ -23,6 +23,7 @@ type Props = {
   hasInternetConnectivity: boolean,
   internetConnectionPromptPresented: Boolean,
   theme: string,
+  chain: string,
 }
 
 const REFRESH_INTERVAL_MS = 30000
@@ -41,6 +42,7 @@ export default class Dashboard extends Component<Props> {
   componentWillReceiveProps(nextProps: Props) {
     if (this.props.loadWalletData !== nextProps.loadWalletData) {
       this.removePolling()
+
       this.addPolling()
     }
   }
@@ -50,6 +52,7 @@ export default class Dashboard extends Component<Props> {
       address,
       hasInternetConnectivity,
       internetConnectionPromptPresented,
+      chain,
     } = this.props
     if (!hasInternetConnectivity && !internetConnectionPromptPresented) {
       return <Redirect to={ROUTES.OFFLINE_SIGNING_PROMPT} />
@@ -87,6 +90,9 @@ export default class Dashboard extends Component<Props> {
                   <FormattedMessage id="dashboardManageWallets" />
                 </span>
               </NavLink>
+
+              {chain === 'neo3' && <DapiStatus theme={this.props.theme} />}
+
               <RefreshButton />
             </div>
           )}

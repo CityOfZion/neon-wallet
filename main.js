@@ -14,6 +14,41 @@ const log = require('electron-log')
 const port = process.env.PORT || 3000
 
 let mainWindow = null
+let deeplinkingUrl
+
+// Force Single Instance Application
+const gotTheLock = app.requestSingleInstanceLock()
+if (gotTheLock) {
+  app.on('second-instance', (e, argv) => {
+    // Someone tried to run a second instance, we should focus our window.
+
+    // Protocol handler for win32
+    // argv: An array of the second instance’s (command line / deep linked) arguments
+    if (process.platform === 'win32' || process.platform === 'linux') {
+      // Keep only command line / deep linked arguments
+      const args = argv.slice(1)
+      if (process.platform === 'win32') {
+        deeplinkingUrl = args[1]
+      } else {
+        deeplinkingUrl = args[0]
+      }
+      deeplinkingUrl = deeplinkingUrl.endsWith('/')
+        ? deeplinkingUrl.slice(0, -1)
+        : deeplinkingUrl
+      if (mainWindow?.webContents) {
+        mainWindow.webContents.send('link', deeplinkingUrl)
+      }
+    }
+
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore()
+      mainWindow.focus()
+    }
+  })
+} else {
+  app.quit()
+  return
+}
 
 // adapted from https://github.com/chentsulin/electron-react-boilerplate
 const installExtensions = () => {
@@ -46,6 +81,7 @@ app.on('ready', () => {
       icon: path.join(__dirname, 'icons/png/64x64.png'),
       contextIsolation: true,
       webPreferences: {
+        enableRemoteModule: true,
         allowRunningInsecureContent: false,
         webSecurity: true,
         nodeIntegration: false,
@@ -69,6 +105,11 @@ app.on('ready', () => {
       mainWindow.webContents.once('dom-ready', () => {
         mainWindow.webContents.openDevTools()
       })
+    }
+
+    if (process.platform === 'win32') {
+      // Keep only command line / deep linked arguments
+      deeplinkingUrl = process.argv.slice(1)
     }
 
     if (process.platform !== 'darwin') {
@@ -117,12 +158,6 @@ app.on('ready', () => {
                 shell.openExternal('https://www.reddit.com/r/NEO/')
               },
             },
-            {
-              label: 'Slack',
-              click() {
-                shell.openExternal('https://neosmarteconomy.slack.com')
-              },
-            },
           ],
         },
       ]
@@ -142,6 +177,10 @@ app.on('ready', () => {
 
     mainWindow.webContents.on('context-menu', () => {
       inputMenu.popup(mainWindow)
+    })
+
+    mainWindow.webContents.on('did-finish-load', () => {
+      mainWindow.webContents.send('link', deeplinkingUrl)
     })
 
     if (process.env.START_HOT) {
@@ -171,6 +210,22 @@ app.on('ready', () => {
     onAppReady()
   }
 })
+
+app.on('open-url', (event, url) => {
+  deeplinkingUrl = url
+  if (mainWindow?.webContents) {
+    mainWindow.webContents.send('link', deeplinkingUrl)
+  }
+})
+
+if (process.env.NODE_ENV === 'development' && process.platform === 'win32') {
+  // Set the path of electron.exe and your app.
+  // These two additional parameters are only available on windows.
+  // Setting this is required to get this working in dev mode.
+  app.setAsDefaultProtocolClient('neon', process.execPath, [])
+} else {
+  app.setAsDefaultProtocolClient('neon')
+}
 
 app.on('web-contents-created', (event, wc) => {
   wc.on('before-input-event', (event, input) => {

@@ -21,3 +21,5 @@ module.file_ext=.js
 module.file_ext=.jsx
 module.file_ext=.json
 module.name_mapper='^assets' ->'<PROJECT_ROOT>/app/assets'
+sharedmemory.heap_size=3221225472
+server.max_workers=1

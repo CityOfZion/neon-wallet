@@ -70,6 +70,7 @@ export default class AddressInput extends React.Component<Props> {
     if (!contacts) {
       return []
     }
+    // $FlowFixMe
     return map(contacts, (address, name) => ({
       label: name,
       value: address,

@@ -1,7 +1,7 @@
 // @flow
 import storage from 'electron-json-storage'
 import { wallet } from '@cityofzion/neon-js'
-import { wallet as n3Wallet, logging } from '@cityofzion/neon-js-next'
+import { wallet as n3Wallet } from '@cityofzion/neon-js-next'
 import { isEmpty, intersectionBy } from 'lodash-es'
 import { ECCurves } from 'ecc-jsbn'
 import {
@@ -23,8 +23,6 @@ import {
 } from '../actions/n3AccountsActions'
 
 const { BigInteger } = require('jsbn')
-
-logging.logger.setDefaultLevel('info')
 
 // Constants
 export const NEW_WALLET_ACCOUNT = 'NEW_WALLET_ACCOUNT'

@@ -19,6 +19,8 @@ import MigrationLight from '../../../assets/images/release-assets/migration-ligh
 import MigrationDark from '../../../assets/images/release-assets/migration-dark.svg'
 import Ledger from '../../../assets/images/release-assets/ledger.svg'
 import LedgerDark from '../../../assets/images/release-assets/ledger-dark.svg'
+import release210Dark from '../../../assets/images/release-assets/2.10.0-dark.png'
+import release210Light from '../../../assets/images/release-assets/2.10.0-light.png'
 
 const electron = require('electron').remote
 
@@ -50,6 +52,40 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
       )}
     >
       <div className={styles.releaseNotesContents}>
+        <div className={styles.release}>
+          <div className={styles.releaseContent}>
+            <small className={styles.date}>Oct 8th 2021 </small>
+            <h3>Release v2.10.0</h3>
+
+            <p>
+              In this release you will find the following updates:
+              <br />
+              <br />
+              {/* eslint-disable-next-line */}
+              <li>Implements wallet connect support</li>
+              <li>Major dependency updates</li>
+              <br />
+              View full details of this release on GitHub
+              <br />
+            </p>
+
+            <Github
+              onClick={() =>
+                electron.shell.openExternal(
+                  'https://github.com/CityOfZion/neon-wallet/releases/tag/v2.10.0',
+                )
+              }
+            />
+          </div>
+          <div className={styles.marketingImage}>
+            {theme === 'Light' ? (
+              <img src={release210Light} />
+            ) : (
+              <img src={release210Dark} />
+            )}
+          </div>
+        </div>
+
         <div className={styles.release}>
           <div className={styles.releaseContent}>
             <small className={styles.date}>Sep 13th 2021 </small>

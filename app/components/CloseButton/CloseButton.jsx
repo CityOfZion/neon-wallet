@@ -8,17 +8,18 @@ type Props = {
   className: ?string,
   routeTo: string,
   renderWithoutLink?: boolean,
+  onClick: () => void,
 }
 
 export default class CloseButton extends React.Component<Props> {
   render = () => {
-    const { routeTo, renderWithoutLink } = this.props
+    const { routeTo, renderWithoutLink, onClick = () => null } = this.props
     return renderWithoutLink ? (
-      <span className={this.props.className}>
+      <span className={this.props.className} onClick={onClick}>
         <Close className={styles.icon} />
       </span>
     ) : (
-      <Link to={routeTo}>
+      <Link to={routeTo} onClick={onClick}>
         <span className={this.props.className}>
           <Close className={styles.icon} />
         </span>

@@ -18,17 +18,24 @@ import withInitialCall from '../../hocs/withInitialCall'
 import withAuthData from '../../hocs/withAuthData'
 import withThemeData from '../../hocs/withThemeData'
 import { checkVersion } from '../../modules/metadata'
-import { showErrorNotification } from '../../modules/notifications'
+import {
+  showErrorNotification,
+  showInfoNotification,
+  hideNotification,
+} from '../../modules/notifications'
 
 import App from './App'
 import Loading from './Loading'
 import n3AccountsActions from '../../actions/n3AccountsActions'
+import withNetworkData from '../../hocs/withNetworkData'
 
 const { LOADING } = progressValues
 
 const actionCreators = {
   checkVersion,
   showErrorNotification,
+  showInfoNotification,
+  hideNotification,
 }
 
 const mapDispatchToProps = dispatch =>
@@ -67,4 +74,5 @@ export default compose(
   withLogoutReset(authActions),
   withLogoutReset(accountActions),
   withLogoutReset(n3AccountsActions),
+  withNetworkData(),
 )(App)
