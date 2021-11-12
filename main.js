@@ -26,7 +26,12 @@ if (gotTheLock) {
     // argv: An array of the second instance’s (command line / deep linked) arguments
     if (process.platform === 'win32' || process.platform === 'linux') {
       // Keep only command line / deep linked arguments
-      ;[, deeplinkingUrl] = argv.slice(1)
+      const args = argv.slice(1)
+      if (process.platform === 'win32') {
+        deeplinkingUrl = args[1]
+      } else {
+        deeplinkingUrl = args[0]
+      }
       deeplinkingUrl = deeplinkingUrl.endsWith('/')
         ? deeplinkingUrl.slice(0, -1)
         : deeplinkingUrl
