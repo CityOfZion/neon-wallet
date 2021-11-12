@@ -297,7 +297,6 @@ export default class LoginLedgerNanoS extends React.Component<Props, State> {
   }
 
   createOptionsFromKeys = () => {
-    // $FlowFixMe
     const options = this.state.publicKeys.map((publicKey: LedgerPublicKey) => ({
       label: this.unencodedHexToAddress(publicKey.key),
       value: publicKey.key,

@@ -5,8 +5,7 @@
     "prettier",
     "prettier/flowtype",
     "prettier/react",
-    "plugin:flowtype/recommended",
-    "plugin:react-hooks/recommended"
+    "plugin:flowtype/recommended"
   ],
   "env": {
     "browser": true

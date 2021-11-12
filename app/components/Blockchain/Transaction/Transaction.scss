@@ -34,63 +34,11 @@
   }
 }
 
-.txLabelContainerN3 {
-  font-size: 14px;
-  display: flex;
-  text-align: center;
-  width: 100px;
-  flex-direction: column;
-  align-items: center;
-}
-
-.txNFTContainerN3 {
-  display: flex;
-  text-align: center;
-  flex-direction: column;
-  align-items: center;
-
-  img {
-    max-height: 50px;
-    max-width: 50px;
-    margin-bottom: 5px;
-  }
-}
-
-.txTokenContainerN3 {
-  font-size: 14px;
-  display: flex;
-  text-align: center;
-  flex-direction: column;
-  align-items: center;
-
-  img {
-    max-height: 25px;
-    max-width: 25px;
-    margin-bottom: 5px;
-  }
-}
-
 .txAmountContainer {
   width: 160px;
   text-align: center;
   font-weight: 400;
   font-size: 14px;
-}
-
-.txAmountContainerN3 {
-  width: 150px;
-  text-align: center;
-  font-weight: 400;
-  font-size: 14px;
-}
-
-.txTransferContainerN3 {
-  width: 200px;
-  text-align: center;
-  align-items: center;
-  display: flex;
-  font-size: 14px;
-  justify-content: space-between;
 }
 
 .txToContainer {
@@ -108,52 +56,6 @@
 
   button {
     align-self: flex-end;
-    margin-top: 5px;
-
-    svg {
-      path {
-        fill: var(--tx-list-copy-icon);
-      }
-    }
-  }
-}
-
-.txSubjectContainerN3 {
-  //width: 100%;
-  text-align: center;
-  align-items: center;
-  display: flex;
-  font-size: 14px;
-  //justify-content: space-between;
-
-  span {
-    text-overflow: ellipsis;
-  }
-
-  button {
-    margin-top: 5px;
-
-    svg {
-      path {
-        fill: var(--tx-list-copy-icon);
-      }
-    }
-  }
-}
-
-.txToContainerN3 {
-  width: 100%;
-  text-align: center;
-  align-items: center;
-  display: flex;
-  font-size: 14px;
-  justify-content: space-between;
-
-  span {
-    text-overflow: ellipsis;
-  }
-
-  button {
     margin-top: 5px;
 
     svg {
@@ -189,28 +91,10 @@
   }
 }
 
-.transactionContainerN3 {
-  display: flex;
-  align-items: center;
-  width: 100%;
-
-  button[disabled] {
-    background: transparent !important;
-    opacity: 0.3;
-  }
-}
-
 .abstractContainer {
   @extend .transactionContainer;
   justify-content: space-between;
   margin-left: 20px;
-}
-
-.abstractContainerN3 {
-  @extend .transactionContainer;
-  justify-content: flex-start;
-  margin: 0 60px 0 10px;
-  width: 300px;
 }
 
 .invocationTransaction {
@@ -238,33 +122,6 @@
 
 .txTypeIconContainer {
   margin-left: 20px;
-  .claimIconContainer {
-    svg {
-      path {
-        fill: var(--tx-icon-color);
-      }
-    }
-  }
-
-  .sendIconContainer {
-    svg {
-      path {
-        fill: #d355e7;
-      }
-    }
-  }
-
-  .receiveIconContainer {
-    svg {
-      path {
-        fill: var(--tx-icon-color);
-      }
-    }
-  }
-}
-
-.txTypeIconContainerN3 {
-  margin-left: 5px;
   .claimIconContainer {
     svg {
       path {

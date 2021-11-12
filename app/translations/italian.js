@@ -91,8 +91,6 @@ const MISCELLANEOUS = {
   walletQrCodes: 'Codici QR del portafoglio',
   noClaimableGas: `L'indirizzo non ha alcun GAS rivendicabile`,
   claimTimeDisclaimer: 'Puoi richiedere GAS una volta ogni 5 minuti',
-  claimFeeDisclaimerN3: 'La richiesta di GAS richiede almeno 0,01120527 GAS per le commissioni di transazione',
-  claimFeeGreater: 'Il GAS rivendicabile è inferiore alle commissioni di transazione',
   claimUnavailableInWatch:
     'I reclami GAS non sono disponibili in modalità Orologio',
   takeMeBack: 'Portami indietro',
@@ -120,6 +118,7 @@ const ERRORS = {
   'errors.network.general': 'Oops! Qualcosa è andato storto.',
   'errors.encrypt.valid': 'La chiave privata non è valida',
 
+  'errors.send.network': 'Si è verificato un errore di rete',
   'errors.send.balance': `Non hai abbastanza saldo per inviare {total} {asset}.`,
   'errors.send.network': 'Si è verificato un errore di rete',
   'errors.send.number': `L'importo deve essere un numero.`,

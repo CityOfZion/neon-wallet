@@ -94,8 +94,6 @@ const MISCELLANEOUS = {
 
   noClaimableGas: 'Adres heeft geen claimbaar GAS',
   claimTimeDisclaimer: 'Je kunt GAS elke 5 minuten claimen',
-  claimFeeDisclaimerN3: 'Het claimen van GAS vereist minimaal 0,01120527 GAS voor transactiekosten',
-  claimFeeGreater: 'Claimable GAS is minder dan transactiekosten',
   claimUnavailableInWatch: 'GAS claims zijn niet beschikbaar in Alleen-lezen Mode',
   takeMeBack: 'Terug',
 

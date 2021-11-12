@@ -19,7 +19,6 @@ import {
   showInfoNotification,
   hideNotification,
 } from '../../modules/notifications'
-import withChainData from '../../hocs/withChainData'
 
 const actionCreators = {
   showErrorNotification,
@@ -39,7 +38,6 @@ export default compose(
   withNetworkData(),
   withAuthData(),
   withLoadingProp(balancesActions),
-  withChainData(),
   withSuccessNotification(
     balancesActions,
     'notifications.success.receivedBlockchainInfo',

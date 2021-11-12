@@ -1,6 +1,6 @@
 {
   "name": "Neon",
-  "version": "2.10.0",
+  "version": "2.9.4",
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",
   "homepage": "https://github.com/CityOfZion/neon-wallet",
@@ -12,7 +12,7 @@
     "dev": "cross-env START_HOT=1 NODE_ENV=development node_modules/.bin/webpack-dev-server --progress --config ./config/webpack.config.dev",
     "start-dev": "cross-env NODE_ENV=development electron . --enable-logging --remote-debugging-port=9222 --progress",
     "assets-dev": "cross-env NODE_ENV=development webpack --config ./config/webpack.config.dev --progress",
-    "test": "npm rebuild node-hid && npm rebuild better-sqlite3 && ./node_modules/.bin/jest --coverage",
+    "test": "npm rebuild node-hid && ./node_modules/.bin/jest --coverage",
     "test-ci": "yarn test --maxWorkers=4 --watchAll=false",
     "test:e2e": "ava __e2e__/*.e2e.js --timeout=120s -s",
     "test-watch": "jest --watch",
@@ -81,28 +81,15 @@
       "target": "nsis",
       "icon": "build/icon.ico",
       "artifactName": "${productName}.${version}.${ext}"
-    },
-    "protocols": {
-      "name": "neon-protocol",
-      "schemes": [
-        "neon"
-      ]
     }
   },
   "dependencies": {
-    "@cityofzion/dora-ts": "^0.0.9",
-    "@cityofzion/neon-core": "^5.0.0-next.15",
     "@cityofzion/neon-js": "3.11.9",
     "@cityofzion/neon-js-legacy-latest": "npm:@cityofzion/neon-js@4.9.0",
     "@cityofzion/neon-js-next": "npm:@cityofzion/neon-js@5.0.0-next.16",
     "@cityofzion/neon-ledger-next": "npm:@cityofzion/neon-ledger@5.0.0-next.14",
     "@formatjs/intl-pluralrules": "^1.5.2",
-    "@json-rpc-tools/utils": "^1.7.6",
-    "@ledgerhq/hw-transport-node-hid-noevents": "^6.7.0",
-    "@tippyjs/react": "^4.2.5",
-    "@walletconnect/client": "2.0.0-beta.20",
-    "@walletconnect/types": "2.0.0-beta.20",
-    "@walletconnect/utils": "2.0.0-beta.20",
+    "@ledgerhq/hw-transport-node-hid": "6.3.0",
     "axios": "0.21.1",
     "axios-retry": "3.1.1",
     "bignumber.js": "5.0.0",
@@ -115,7 +102,7 @@
     "dotenv-cli": "^4.0.0",
     "ecc-jsbn": "0.2.0",
     "electron-context-menu": "0.9.1",
-    "electron-json-storage": "4.5.0",
+    "electron-json-storage": "4.1.0",
     "electron-log": "^4.2.4",
     "electron-save-file": "1.0.2",
     "electron-updater": "^4.3.5",
@@ -131,7 +118,6 @@
     "jsbn": "1.1.0",
     "json2csv": "^4.3.5",
     "jsqr": "1.1.1",
-    "keyvaluestorage": "^0.7.1",
     "lodash-es": "4.17.15",
     "moment": "2.22.2",
     "nock": "9.2.3",
@@ -139,10 +125,10 @@
     "prop-types": "15.6.2",
     "qrcode": "0.9.0",
     "raf": "3.4.0",
-    "react": "16.14.0",
+    "react": "16.4.2",
     "react-click-outside": "3.0.0",
     "react-data-grid": "2.0.73",
-    "react-dom": "16.14.0",
+    "react-dom": "16.4.2",
     "react-dom-confetti": "^0.2.0",
     "react-highlight-words": "0.12.0",
     "react-hot-loader": "4.6.3",
@@ -190,7 +176,7 @@
     "babel-preset-stage-0": "6.24.1",
     "cross-env": "5.1.1",
     "css-loader": "0.28.7",
-    "electron": "^10.0.0",
+    "electron": "8.5.5",
     "electron-builder": "22.11.11",
     "electron-builder-notarize": "^1.2.0",
     "electron-devtools-installer": "2.2.4",
@@ -214,9 +200,8 @@
     "eslint-plugin-prettier": "2.6.1",
     "eslint-plugin-promise": "3.6.0",
     "eslint-plugin-react": "7.19.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
     "extract-text-webpack-plugin": "4.0.0-beta.0",
-    "flow-bin": "0.90.0",
+    "flow-bin": "0.80.0",
     "html-webpack-plugin": "3.2.0",
     "husky": "0.14.3",
     "identity-obj-proxy": "3.0.0",
@@ -251,8 +236,7 @@
     "braces": "^2.3.1",
     "mem": "^4.0.0",
     "decompress-zip": "^0.2.2",
-    "https-proxy-agent": "^2.2.3",
-    "walletconnect": "0.6.5"
+    "https-proxy-agent": "^2.2.3"
   },
   "jest": {
     "moduleNameMapper": {

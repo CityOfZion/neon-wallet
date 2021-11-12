@@ -69,7 +69,6 @@ const TokenSaleSuccess = ({ tx, hideModal }: Props) => (
             <div className={styles.detailContainer}>
               <label>STATUS</label>
               <div>
-                {/* $FlowFixMe */}
                 {tx.destTransactionStatus === 0 &&
                 tx.srcTransactionStatus === 0 ? (
                   <div className={styles.statusContainer}>

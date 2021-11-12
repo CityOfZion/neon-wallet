@@ -60,18 +60,3 @@ export const toFixedDecimals = (
 
 export const formatFiat = (value: ValueType = 0): string =>
   toBigNumber(value).toFormat(2)
-
-export const parseQuery = (queryString: string): any => {
-  queryString = queryString.substring(queryString.indexOf('://') + 3)
-  const query = {}
-  const pairs = (queryString[0] === '?'
-    ? queryString.substr(1)
-    : queryString
-  ).split('&')
-  // eslint-disable-next-line
-  for (let i = 0; i < pairs.length; i++) {
-    const pair = pairs[i].split('=')
-    query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '')
-  }
-  return query
-}

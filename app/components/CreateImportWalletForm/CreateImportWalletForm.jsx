@@ -256,5 +256,4 @@ class CreateImportWalletForm extends React.Component<Props, State> {
   }
 }
 
-// $FlowFixMe
 export default withRouter(CreateImportWalletForm)

@@ -92,8 +92,6 @@ const MISCELLANEOUS = {
   // TODO: implement all
   noClaimableGas: 'العنوان لا يوجد لديه غاز يمكن المطالبة به',
   claimTimeDisclaimer: 'يمكنك المطالبة بالغاز مرة كل 5 دقائق',
-  claimFeeDisclaimerN3: 'تتطلب المطالبة بـ GAS 0.01120527 GAS على الأقل مقابل رسوم المعاملات',
-  claimFeeGreater: 'الغاز القابل للمطالبة به أقل من رسوم المعاملات',
   claimUnavailableInWatch: 'مطالبات GAS غير متاحة في وضع المشاهدة',
   takeMeBack: 'اعدني',
 

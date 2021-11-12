@@ -1,14 +1,13 @@
 // @flow
 import React, { Component } from 'react'
-import classNames from 'classnames'
 
+import classNames from 'classnames'
 import StyledReactSelect from '../../../../components/Inputs/StyledReactSelect/StyledReactSelect'
 import {
   getNetworks,
   findNetworkByDeprecatedLabel,
 } from '../../../../core/networks'
 import styles from './NetworkSwitch.scss'
-import { useWalletConnect } from '../../../../context/WalletConnect/WalletConnectContext'
 
 type Props = {
   onChange: Function,
@@ -16,6 +15,7 @@ type Props = {
   controlledNet: string,
   className: string,
   disabled: boolean,
+  // networks: Array<NetworkItemType>,
   transparent: boolean,
   shouldSwitchNetworks: boolean,
   loadWalletData: () => void,
@@ -27,60 +27,57 @@ type Props = {
   chain: string,
 }
 
-const NetworkSwitch = ({
-  className,
-  disabled,
-  transparent,
-  fontSize,
-  settingsSelect,
-  isDisabled,
-  hideChevron,
-  chain,
-  shouldSwitchNetworks = true,
-  handleControlledChange,
-  onChange,
-  loadWalletData,
-  controlledNet,
-  net,
-}: Props) => {
-  const networks = getNetworks(chain)
-  const walletConnectCtx = useWalletConnect()
-
-  const handleChange = async (option: NetworkItemType) => {
-    if (shouldSwitchNetworks) {
-      onChange(option.id)
-      if (walletConnectCtx.resetApp) {
-        walletConnectCtx.resetApp()
-        await walletConnectCtx.init()
-      }
-      setTimeout(() => {
-        loadWalletData()
-      }, 0)
-    } else {
-      handleControlledChange(option)
-    }
+export default class NetworkSwitch extends Component<Props> {
+  static defaultProps = {
+    shouldSwitchNetworks: true,
   }
 
-  return (
-    <div id="network" className={classNames(styles.networkSwitch, className)}>
-      <StyledReactSelect
-        fontSize={fontSize}
-        transparent={transparent}
-        settingsSelect={settingsSelect}
-        hideHighlight
-        disabled={disabled}
-        value={{
-          label: findNetworkByDeprecatedLabel(controlledNet || net, chain)
-            .label,
-        }}
-        onChange={handleChange}
-        options={networks}
-        isSearchable={false}
-        isDisabled={isDisabled}
-        hideChevron={hideChevron}
-      />
-    </div>
-  )
-}
+  render() {
+    const {
+      className,
+      disabled,
+      transparent,
+      fontSize,
+      settingsSelect,
+      isDisabled,
+      hideChevron,
+      chain,
+    } = this.props
 
-export default NetworkSwitch
+    const networks = getNetworks(chain)
+
+    return (
+      <div id="network" className={classNames(styles.networkSwitch, className)}>
+        <StyledReactSelect
+          fontSize={fontSize}
+          transparent={transparent}
+          settingsSelect={settingsSelect}
+          hideHighlight
+          disabled={disabled}
+          value={{
+            label: findNetworkByDeprecatedLabel(
+              this.props.controlledNet || this.props.net,
+              chain,
+            ).label,
+          }}
+          onChange={this.handleChange}
+          options={networks}
+          isSearchable={false}
+          isDisabled={isDisabled}
+          hideChevron={hideChevron}
+        />
+      </div>
+    )
+  }
+
+  handleChange = (option: NetworkItemType) => {
+    if (this.props.shouldSwitchNetworks) {
+      this.props.onChange(option.id)
+      setTimeout(() => {
+        this.props.loadWalletData()
+      }, 0)
+    } else {
+      this.props.handleControlledChange(option)
+    }
+  }
+}

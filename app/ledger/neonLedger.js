@@ -3,7 +3,7 @@ import { tx, wallet, u } from '@cityofzion/neon-js'
 import { cloneDeep } from 'lodash-es'
 import type { Transaction } from '@cityofzion/neon-js'
 
-import LedgerNode from '@ledgerhq/hw-transport-node-hid-noevents'
+import LedgerNode from '@ledgerhq/hw-transport-node-hid'
 import * as n3ledger from '@cityofzion/neon-ledger-next'
 import asyncWrap from '../core/asyncHelper'
 import { BIP44_PATH } from '../core/constants'

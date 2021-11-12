@@ -57,5 +57,4 @@ export default compose(
   withActions(accountActions, mapAccountActionsToProps),
   withData(internetConnectionPromptPresented),
   withThemeData(),
-  withChainData(),
 )(Dashboard)

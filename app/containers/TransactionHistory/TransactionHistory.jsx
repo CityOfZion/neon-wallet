@@ -2,26 +2,23 @@
 import React, { Component } from 'react'
 import fs from 'fs'
 import { Parser } from 'json2csv'
+import { api } from '@cityofzion/neon-js'
+import axios from 'axios'
 import { omit } from 'lodash-es'
 import moment from 'moment'
 import { FormattedMessage, intlShape } from 'react-intl'
 
-import { NeoLegacyREST, NeoRest } from '@cityofzion/dora-ts/dist/api'
 import HeaderBar from '../../components/HeaderBar'
 import TransactionHistoryPanel from '../../components/TransactionHistory/TransactionHistoryPanel'
 import styles from './TransactionHistory.scss'
 import RefreshButton from '../Buttons/RefreshButton'
 import ExportIcon from '../../assets/icons/export.svg'
 import PanelHeaderButton from '../../components/PanelHeaderButton/PanelHeaderButton'
-import {
-  handleNeoActivity,
-  parseAbstractData,
-} from '../../actions/transactionHistoryActions'
+import { parseAbstractData } from '../../actions/transactionHistoryActions'
 
 const { dialog, app } = require('electron').remote
 
 type Props = {
-  chain: string,
   showSuccessNotification: ({ message: string }) => string,
   showErrorNotification: ({ message: string }) => string,
   showInfoNotification: ({ message: string }) => string,
@@ -70,51 +67,35 @@ export default class TransactionHistory extends Component<Props, State> {
     )
   }
 
-  // TODO - update this
   fetchHistory = async () => {
-    const { showInfoNotification, net, address, chain } = this.props
+    const { showInfoNotification, net, address } = this.props
     const infoNotification = showInfoNotification({
       message: 'Fetching entire transaction history...',
     })
     const abstracts = []
+    const endpoint = api.neoscan.getAPIEndpoint(net)
+    let numberOfPages = 1
     let currentPage = 1
     let shouldFetchAdditionalPages = true
 
-    let data = { entries: [] }
-    let parsedEntries = []
-    while (shouldFetchAdditionalPages) {
-      if (chain === 'neo3') {
-        const network = net === 'MainNet' ? 'mainnet' : 'testnet_rc4'
-        data = await NeoRest.addressTXFull(address, currentPage, network)
-        parsedEntries = await handleNeoActivity(data, address, net)
-        parsedEntries.forEach((entry: Object) => {
-          Object.assign(entry, entry.metadata)
-          delete entry.metadata
-          abstracts.push(entry)
-        })
-        if (abstracts.length >= data.totalCount) {
-          shouldFetchAdditionalPages = false
-        }
-      } else {
-        const network = net === 'MainNet' ? 'mainnet' : 'testnet'
-        const data = await NeoLegacyREST.getAddressAbstracts(
-          address,
-          currentPage,
-          network,
-        )
-        parsedEntries = await parseAbstractData(data.entries, address, net)
-        abstracts.push(...parsedEntries)
-        if (
-          data.total_pages === 1 ||
-          data.total_pages === 0 ||
-          data.total_pages === currentPage
-        ) {
-          shouldFetchAdditionalPages = false
-        }
-      }
+    while (
+      (currentPage - 1 !== numberOfPages || currentPage === 1) &&
+      shouldFetchAdditionalPages
+    ) {
+      const { data } = await axios.get(
+        `${endpoint}/v1/get_address_abstracts/${address}/${currentPage}`,
+      )
+      abstracts.push(...data.entries)
+      numberOfPages = data.total_pages
       currentPage += 1
+
+      if (data.total_pages === 1 || data.total_pages === 0) {
+        shouldFetchAdditionalPages = false
+      }
     }
-    return { infoNotification, abstracts }
+
+    const parsedAbstracts = await parseAbstractData(abstracts, address, net)
+    return { infoNotification, parsedAbstracts }
   }
 
   saveHistoryFile = async () => {
@@ -137,10 +118,10 @@ export default class TransactionHistory extends Component<Props, State> {
       'id',
     ]
     try {
-      const { infoNotification, abstracts } = await this.fetchHistory()
+      const { infoNotification, parsedAbstracts } = await this.fetchHistory()
       const parser = new Parser(fields)
       const csv = parser.parse(
-        abstracts.map(abstract => {
+        parsedAbstracts.map(abstract => {
           const omitted = omit(abstract, [
             'isNetworkFee',
             'asset',

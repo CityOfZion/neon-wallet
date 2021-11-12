@@ -5,7 +5,6 @@ import { FormattedMessage } from 'react-intl'
 
 import LogoutIcon from '../../../../assets/navigation/logout.svg'
 import styles from './Logout.scss'
-import { useWalletConnect } from '../../../../context/WalletConnect/WalletConnectContext'
 
 type Props = {
   id?: string,
@@ -14,28 +13,20 @@ type Props = {
   promptHasBeenDisplayed: boolean => void,
 }
 
-const Logout = ({ id, className, logout, promptHasBeenDisplayed }: Props) => {
-  const walletConnectCtx = useWalletConnect()
-
-  return (
-    <div
-      id={id}
-      className={classNames(styles.logout, className)}
-      onClick={() => {
-        promptHasBeenDisplayed(false)
-        if (walletConnectCtx.resetApp) {
-          walletConnectCtx.resetApp()
-          walletConnectCtx.init()
-        }
-        logout()
-      }}
-    >
-      <LogoutIcon />
-      <div className={styles.logoutText}>
-        <FormattedMessage id="sidebarLogout" />
-      </div>
+const Logout = ({ id, className, logout, promptHasBeenDisplayed }: Props) => (
+  <div
+    id={id}
+    className={classNames(styles.logout, className)}
+    onClick={() => {
+      promptHasBeenDisplayed(false)
+      logout()
+    }}
+  >
+    <LogoutIcon />
+    <div className={styles.logoutText}>
+      <FormattedMessage id="sidebarLogout" />
     </div>
-  )
-}
+  </div>
+)
 
 export default Logout
