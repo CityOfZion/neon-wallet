@@ -2,6 +2,22 @@
 
 $size: 70px;
 
+.tinySideBar {
+  .navItem {
+    height: 62px;
+    border-left: 2px solid transparent;
+  }
+
+  .mobileNavItem {
+    height: 62px;
+    border-left: 2px solid transparent;
+
+    svg {
+      margin-left: 3px;
+    }
+  }
+}
+
 .container {
   display: flex;
   flex-direction: column;

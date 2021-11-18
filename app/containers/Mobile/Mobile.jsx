@@ -14,15 +14,21 @@ import EncryptedIcon from '../../assets/icons/export_encrypted.svg'
 import WatchIcon from '../../assets/icons/export_watch.svg'
 import Button from '../../components/Button'
 import Export from '../../assets/icons/external.svg'
-
 import EncryptedIconLight from '../../assets/icons/export_encrypted_light.svg'
 import WatchIconLight from '../../assets/icons/export_watch_light.svg'
+
+const { shell } = require('electron')
 
 type Props = {
   theme: string,
   showQrForExportModal: ({ IS_NEP2_EXPORT?: boolean }) => void,
   encryptedWIF?: string,
 }
+
+const ANDROID_LINK =
+  'https://play.google.com/store/apps/details?id=io.cityofzion.neon'
+
+const IOS_LINK = 'https://apps.apple.com/us/app/neon-wallet-mobile/id1530111452'
 
 export default class Receive extends React.Component<Props> {
   render() {
@@ -62,8 +68,8 @@ export default class Receive extends React.Component<Props> {
           <div className={styles.versionSelect}>
             Select which version of the NeonWallet app to download below.
             <div className={styles.versions}>
-              <AppStore />
-              <GooglePlay />
+              <AppStore onClick={() => shell.openExternal(IOS_LINK)} />
+              <GooglePlay onClick={() => shell.openExternal(ANDROID_LINK)} />
             </div>
           </div>
         </div>

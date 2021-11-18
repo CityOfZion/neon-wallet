@@ -41,7 +41,13 @@ const Sidebar = ({
   isWatchOnly,
   signingFunction,
 }: Props) => (
-  <div className={classNames(styles.container, className)}>
+  <div
+    className={classNames(
+      styles.container,
+      className,
+      chain === 'neo2' && styles.tinySideBar,
+    )}
+  >
     <div className={styles.group}>
       <LogoWithTooltipAndBlockHeight
         store={store}
@@ -160,17 +166,15 @@ const Sidebar = ({
           </NavLink>
         )}
 
-      {/* {chain === 'neo2' && (
-        <NavLink
-          id="mobile"
-          to={ROUTES.MOBILE}
-          className={styles.mobileNavItem}
-          activeClassName={styles.active}
-        >
-          <MobileIcon />
-          <div> Mobile app</div>
-        </NavLink>
-      )} */}
+      <NavLink
+        id="mobile"
+        to={ROUTES.MOBILE}
+        className={styles.mobileNavItem}
+        activeClassName={styles.active}
+      >
+        <MobileIcon />
+        <div> Mobile app</div>
+      </NavLink>
     </div>
 
     <Logout
