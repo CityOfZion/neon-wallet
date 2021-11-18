@@ -8,6 +8,7 @@
 
 .txDateContainer {
   width: 200px;
+  min-width: 200px;
   font-size: 14px;
   text-align: center;
 }
@@ -119,15 +120,16 @@
 }
 
 .txSubjectContainerN3 {
-  //width: 100%;
+  width: 100%;
   text-align: center;
   align-items: center;
   display: flex;
-  font-size: 14px;
-  //justify-content: space-between;
 
-  span {
+  p {
     text-overflow: ellipsis;
+    margin: 0;
+    width: 270px;
+    font-size: 13px;
   }
 
   button {
@@ -142,7 +144,7 @@
 }
 
 .txToContainerN3 {
-  width: 100%;
+  width: 450px;
   text-align: center;
   align-items: center;
   display: flex;
@@ -154,8 +156,6 @@
   }
 
   button {
-    margin-top: 5px;
-
     svg {
       path {
         fill: var(--tx-list-copy-icon);
@@ -236,20 +236,22 @@
   justify-content: center;
 }
 
+.sendIconContainer {
+  width: 25px;
+  min-width: 25px;
+  svg {
+    path {
+      fill: #d355e7;
+    }
+  }
+}
+
 .txTypeIconContainer {
   margin-left: 20px;
   .claimIconContainer {
     svg {
       path {
         fill: var(--tx-icon-color);
-      }
-    }
-  }
-
-  .sendIconContainer {
-    svg {
-      path {
-        fill: #d355e7;
       }
     }
   }
