@@ -707,7 +707,7 @@ exports[`Sidebar renders without crashing 1`] = `
                               pendingTransactionsCount={0}
                             >
                               <div
-                                className="container"
+                                className="container tinySideBar"
                               >
                                 <div
                                   className="group"
@@ -1142,6 +1142,40 @@ exports[`Sidebar renders without crashing 1`] = `
                                           </Component>
                                           <div>
                                              Migration
+                                          </div>
+                                        </a>
+                                      </Link>
+                                    </Route>
+                                  </NavLink>
+                                  <NavLink
+                                    activeClassName="active"
+                                    aria-current="page"
+                                    className="mobileNavItem"
+                                    id="mobile"
+                                    to="/mobile"
+                                  >
+                                    <Route
+                                      path="\\\\/mobile"
+                                    >
+                                      <Link
+                                        aria-current={null}
+                                        className="mobileNavItem"
+                                        id="mobile"
+                                        replace={false}
+                                        to="/mobile"
+                                      >
+                                        <a
+                                          aria-current={null}
+                                          className="mobileNavItem"
+                                          href="/mobile"
+                                          id="mobile"
+                                          onClick={[Function]}
+                                        >
+                                          <Component>
+                                            <svg />
+                                          </Component>
+                                          <div>
+                                             Mobile app
                                           </div>
                                         </a>
                                       </Link>
