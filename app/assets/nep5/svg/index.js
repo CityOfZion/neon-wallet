@@ -99,4 +99,5 @@ export const imageMap = {
   XQTA,
   ZPT,
   NOS,
+  GHOST
 }
