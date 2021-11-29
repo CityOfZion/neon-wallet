@@ -47,6 +47,7 @@ import WWB from './WWB.svg'
 import XQTA from './XQTA.svg'
 import ZPT from './ZPT.svg'
 import NOS from './NOS.svg'
+import GHOST from './GHOST.svg'
 import FLM from './FLM.svg'
 
 export const imageMap = {
@@ -99,5 +100,6 @@ export const imageMap = {
   XQTA,
   ZPT,
   NOS,
+  GHOST,
   FLM,
 }
