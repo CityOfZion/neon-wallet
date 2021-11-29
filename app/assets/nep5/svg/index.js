@@ -48,6 +48,7 @@ import XQTA from './XQTA.svg'
 import ZPT from './ZPT.svg'
 import NOS from './NOS.svg'
 import GHOST from './GHOST.svg'
+import FLM from './FLM.svg'
 
 export const imageMap = {
   NEO,
@@ -99,5 +100,6 @@ export const imageMap = {
   XQTA,
   ZPT,
   NOS,
-  GHOST
+  GHOST,
+  FLM,
 }
