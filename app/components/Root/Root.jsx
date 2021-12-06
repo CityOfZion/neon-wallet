@@ -13,7 +13,7 @@ type Props = {
 
 const wcOptions = {
   chainIds: ['neo3:testnet'], // blockchain and network identifier
-  methods: ['invokefunction'], // which RPC methods do you plan to call
+  methods: ['invokefunction', 'testInvoke', 'multiInvoke', 'multiTestInvoke'], // which RPC methods do you plan to call
   relayServer: 'wss://relay.walletconnect.org', // we are using walletconnect's official relay server
   appMetadata: {
     name: 'Neon Wallet',

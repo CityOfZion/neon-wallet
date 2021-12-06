@@ -57,16 +57,19 @@ export const WalletConnectContextProvider = ({
   const [error, setError] = useState(false)
 
   const init = async () => {
-    const st = new KeyValueStorage()
-    setStorage(st)
-    setWcClient(
-      await Client.init({
-        controller: true,
-        relayProvider: options.relayServer,
-        // logger: 'debug',
-        storage: st,
-      }),
-    )
+    console.log('init')
+    if (!wcClient) {
+      const st = new KeyValueStorage()
+      setStorage(st)
+      setWcClient(
+        await Client.init({
+          controller: true,
+          relayProvider: options.relayServer,
+          logger: 'debug',
+          storage: st,
+        }),
+      )
+    }
   }
 
   const clearStorage = async () => {
@@ -198,71 +201,123 @@ export const WalletConnectContextProvider = ({
 
   const subscribeToEvents = useCallback(
     () => {
-      if (typeof wcClient === 'undefined') {
-        throw new Error('Client is not initialized')
-      }
       if (!accounts.length) {
         return
       }
-      wcClient.on(CLIENT_EVENTS.session.proposal, proposal => {
-        setSessionProposals(old => [...old, proposal])
-        return null
-      })
-      wcClient.on(CLIENT_EVENTS.session.request, async requestEvent => {
-        const askApproval = () => {
-          setRequests(old => [
-            ...old.filter(i => i.request.id !== requestEvent.request.id),
-            requestEvent,
-          ])
-        }
 
-        const approve = async () => {
-          const response = await makeRequest(requestEvent.request)
-          await respondRequest(requestEvent.topic, response)
-        }
+      console.log('ACTION', 'subscribeToEvents')
 
-        const reject = async (message: string) => {
-          const response = formatJsonRpcError(requestEvent.request.id, message)
-          await respondRequest(requestEvent.topic, response)
-        }
+      if (typeof wcClient === 'undefined') {
+        throw new Error('Client is not initialized')
+      }
 
-        try {
-          const alreadyApproved = await checkApprovedRequest(
+      wcClient.on(
+        CLIENT_EVENTS.session.proposal,
+        (proposal: SessionTypes.Proposal) => {
+          if (typeof wcClient === 'undefined') {
+            throw new Error('Client is not initialized')
+          }
+          console.log('EVENT', 'session_proposal')
+          const supportedNamespaces: string[] = []
+          chains.forEach(chainId => {
+            const [namespace] = chainId.split(':')
+            if (!supportedNamespaces.includes(namespace)) {
+              supportedNamespaces.push(namespace)
+            }
+          })
+          const unsupportedChains: string[] = []
+          proposal.permissions.blockchain.chains.forEach(chainId => {
+            if (chains.includes(chainId)) return
+            unsupportedChains.push(chainId)
+          })
+          if (unsupportedChains.length) {
+            return wcClient.reject({ proposal })
+          }
+          const unsupportedMethods: string[] = []
+          proposal.permissions.jsonrpc.methods.forEach(method => {
+            if (options.methods.includes(method)) return
+            unsupportedMethods.push(method)
+          })
+          if (unsupportedMethods.length) {
+            return wcClient.reject({ proposal })
+          }
+          setSessionProposals(old => [...old, proposal])
+
+          return null
+        },
+      )
+
+      wcClient.on(
+        CLIENT_EVENTS.session.request,
+        async (requestEvent: SessionTypes.RequestEvent) => {
+          // tslint:disable-next-line
+          console.log(
+            'EVENT',
+            CLIENT_EVENTS.session.request,
             requestEvent.request,
           )
-          if (alreadyApproved) {
-            await approve()
-          } else if (autoAcceptCallback) {
-            let address
-            let chainId
-            if (accounts.length) {
-              const [namespace, reference, addr] = accounts[0].split(':')
-              address = addr
-              chainId = `${namespace}:${reference}`
-            }
-            const autoAccepted = autoAcceptCallback(
-              address,
-              chainId,
+
+          const askApproval = () => {
+            setRequests(old => {
+              return [
+                ...old.filter(i => i.request.id !== requestEvent.request.id),
+                requestEvent,
+              ]
+            })
+          }
+
+          const approve = async () => {
+            const response = await makeRequest(requestEvent.request)
+            await respondRequest(requestEvent.topic, response)
+          }
+
+          const reject = async (message: string) => {
+            console.log('rejecting@@!')
+            const response = formatJsonRpcError(
+              requestEvent.request.id,
+              message,
+            )
+            await respondRequest(requestEvent.topic, response)
+          }
+
+          try {
+            const alreadyApproved = await checkApprovedRequest(
               requestEvent.request,
             )
-            if (autoAccepted) {
+            if (alreadyApproved) {
               await approve()
+            } else if (autoAcceptCallback) {
+              let address
+              let chainId
+              if (accounts.length) {
+                const [namespace, reference, addr] = accounts[0].split(':')
+                address = addr
+                chainId = `${namespace}:${reference}`
+              }
+              const autoAccepted = autoAcceptCallback(
+                address,
+                chainId,
+                requestEvent.request,
+              )
+              if (autoAccepted) {
+                await approve()
+              } else {
+                await askApproval()
+              }
             } else {
               await askApproval()
             }
-          } else {
-            await askApproval()
+          } catch (e) {
+            await reject(e.message)
           }
-        } catch (e) {
-          await reject(e.message)
-        }
-      })
+        },
+      )
 
       wcClient.on(CLIENT_EVENTS.session.created, () => {
         if (typeof wcClient === 'undefined') {
           throw new Error('Client is not initialized')
         }
-
+        console.log('EVENT', 'session_created')
         setSessions(wcClient.session.values)
       })
 
@@ -270,11 +325,20 @@ export const WalletConnectContextProvider = ({
         if (typeof wcClient === 'undefined') {
           throw new Error('Client is not initialized')
         }
-
+        console.log('EVENT', 'session_deleted')
         setSessions(wcClient.session.values)
       })
     },
-    [chains, checkApprovedRequest, makeRequest, respondRequest, wcClient],
+    [
+      chains,
+      checkApprovedRequest,
+      makeRequest,
+      respondRequest,
+      wcClient,
+      accounts,
+      autoAcceptCallback,
+      options.methods,
+    ],
   )
 
   useEffect(
@@ -305,6 +369,8 @@ export const WalletConnectContextProvider = ({
   }
 
   const approveSession = async (proposal: SessionTypes.Proposal) => {
+    console.log('ACTION', 'approveSession')
+
     if (typeof wcClient === 'undefined') {
       throw new Error('Client is not initialized')
     }
@@ -327,6 +393,8 @@ export const WalletConnectContextProvider = ({
   }
 
   const rejectSession = async (proposal: SessionTypes.Proposal) => {
+    console.log('ACTION', 'rejectSession')
+
     if (typeof wcClient === 'undefined') {
       throw new Error('Client is not initialized')
     }
