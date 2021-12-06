@@ -894,20 +894,10 @@
   resolved "https://registry.yarnpkg.com/@walletconnect/safe-json/-/safe-json-1.0.0.tgz#12eeb11d43795199c045fafde97e3c91646683b2"
   integrity sha512-QJzp/S/86sUAgWY6eh5MKYmSfZaRpIlmCJdi5uG4DJlKkZrHEF7ye7gA+VtbVzvTtpM/gRwO2plQuiooIeXjfg==
 
-"@walletconnect/types@2.0.0-beta.17":
+"@walletconnect/types@2.0.0-beta.17", "@walletconnect/types@^2.0.0-beta.17":
   version "2.0.0-beta.17"
   resolved "https://registry.yarnpkg.com/@walletconnect/types/-/types-2.0.0-beta.17.tgz#9432b01aec32cb1847faea13de0ecc00c4e3c82a"
   integrity sha512-YQjS9HqQSR6yztTarzeT9+DW5BTnDWBAlWedGGxiEdhuwV56FQJTZKnMjpM1f8yS5j0vBH/mSst65h7jS/65zQ==
-  dependencies:
-    "@walletconnect/jsonrpc-types" "^1.0.0"
-    keyvaluestorage "^0.7.1"
-    pino "^6.7.0"
-    pino-pretty "^4.3.0"
-
-"@walletconnect/types@^2.0.0-beta.17", "@walletconnect/types@^2.0.0-beta.20.3":
-  version "2.0.0-beta.20.3"
-  resolved "https://registry.yarnpkg.com/@walletconnect/types/-/types-2.0.0-beta.20.3.tgz#c2206467262661744f8202856a0e0423f941bb0b"
-  integrity sha512-Z5DUcEDF6ZDvuNE+z/msgRLuUsQgY8hywRhmx8ia+/YXmC/iId7lt3GLxr3my1eOyhlGkCbhQAO5kyqZ8EPhPw==
   dependencies:
     "@walletconnect/jsonrpc-types" "^1.0.0"
     keyvaluestorage "^0.7.1"
@@ -926,22 +916,6 @@
     "@walletconnect/types" "^2.0.0-beta.17"
     "@walletconnect/window-getters" "^1.0.0"
     "@walletconnect/window-metadata" "^1.0.0"
-    query-string "^6.13.5"
-
-"@walletconnect/utils@^2.0.0-beta.17":
-  version "2.0.0-beta.20.3"
-  resolved "https://registry.yarnpkg.com/@walletconnect/utils/-/utils-2.0.0-beta.20.3.tgz#50e75fccce20f8f50e8df552f89a59b9ace6c6e2"
-  integrity sha512-qHEVBAzIegNFzzpeFoCF3p3QdxmyFaC6rNz2wFnjT+da5AvQ+tv/7Afvxr2Oa9N+7UDsEHzFgXgoqiBYDFa6sA==
-  dependencies:
-    "@walletconnect/ecies-25519" "^1.0.1"
-    "@walletconnect/encoding" "^1.0.0"
-    "@walletconnect/jsonrpc-utils" "^1.0.0"
-    "@walletconnect/logger" "^1.0.0"
-    "@walletconnect/safe-json" "^1.0.0"
-    "@walletconnect/types" "^2.0.0-beta.20.3"
-    "@walletconnect/window-getters" "^1.0.0"
-    "@walletconnect/window-metadata" "^1.0.0"
-    lodash.union "^4.6.0"
     query-string "^6.13.5"
 
 "@walletconnect/window-getters@^1.0.0":
@@ -9757,11 +9731,6 @@ lodash.tail@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.tail/-/lodash.tail-4.1.1.tgz#d2333a36d9e7717c8ad2f7cacafec7c32b444664"
   integrity sha1-0jM6NtnncXyK0vfKyv7HwytERmQ=
-
-lodash.union@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/lodash.union/-/lodash.union-4.6.0.tgz#48bb5088409f16f1821666641c44dd1aaae3cd88"
-  integrity sha1-SLtQiECfFvGCFmZkHETdGqrjzYg=
 
 lodash.uniq@^4.5.0:
   version "4.5.0"

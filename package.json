@@ -252,7 +252,10 @@
     "mem": "^4.0.0",
     "decompress-zip": "^0.2.2",
     "https-proxy-agent": "^2.2.3",
-    "walletconnect": "0.6.5"
+    "walletconnect": "0.6.5",
+    "@walletconnect/client": "2.0.0-beta.17",
+    "@walletconnect/types": "2.0.0-beta.17",
+    "@walletconnect/utils": "2.0.0-beta.17"
   },
   "jest": {
     "moduleNameMapper": {
