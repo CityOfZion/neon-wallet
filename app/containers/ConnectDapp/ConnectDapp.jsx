@@ -72,7 +72,7 @@ const ConnectDapp = ({
   const [request, setRequest] = useState(null)
   const [loading, setLoading] = useState(false)
   const [fee, setFee] = useState('')
-  const [requestParamsVisible, setRequestParamsVisible] = useState(true)
+  const [requestParamsVisible, setRequestParamsVisible] = useState({})
   const [pairingMap, setPairingMap] = useState({})
 
   const walletConnectCtx = useWalletConnect()
@@ -499,18 +499,6 @@ const ConnectDapp = ({
         </FullHeightPanel>
       )
     case connectionStep === CONNECTION_STEPS.APPROVE_TRANSACTION:
-      // if (contractAbi && request) {
-      //   paramDefinitions = contractAbi.methods.find(
-      //     method => method.name === request.request.params[0].operation,
-      //   ).parameters
-      // } else if (request) {
-      //   paramDefinitions = new Array(
-      //     request.request.params.invocations[0].args.length,
-      //   )
-      //     .fill()
-      //     .map((_, i) => ({ name: i, type: 'unknown' }))
-      // }
-
       return (
         <FullHeightPanel
           headerText="Wallet Connect"
@@ -574,7 +562,7 @@ const ConnectDapp = ({
             )}
 
             {request &&
-              request.request.params.invocations.map(invocation => (
+              request.request.params.invocations.map((invocation, i) => (
                 <React.Fragment>
                   <div className={styles.contractName}>
                     <div className={classNames([])}>
@@ -619,59 +607,70 @@ const ConnectDapp = ({
                       <div>{invocation.operation}</div>
                     </div>
                     {shouldDisplayReqParams(invocation) ? (
-                      <div className={styles.details}>
-                        <div className={styles.detailsLabel}>
+                      <div
+                        className={classNames([
+                          styles.details,
+                          styles.radius,
+                          styles.pointer,
+                        ])}
+                      >
+                        <div
+                          className={classNames([
+                            styles.radius,
+                            styles.detailsLabel,
+                            requestParamsVisible[i] ? null : styles.noBorder,
+                          ])}
+                          onClick={() =>
+                            setRequestParamsVisible({
+                              ...requestParamsVisible,
+                              [i]: !requestParamsVisible[i],
+                            })
+                          }
+                        >
                           <label>request parameters</label>
 
                           <div>
-                            {requestParamsVisible ? (
-                              <Up
-                                onClick={() => setRequestParamsVisible(false)}
-                              />
-                            ) : (
-                              <Down
-                                onClick={() => setRequestParamsVisible(true)}
-                              />
-                            )}
+                            {requestParamsVisible[i] ? <Up /> : <Down />}
                           </div>
                         </div>
 
-                        {shouldDisplayReqParams(invocation) && (
-                          <div className={styles.requestParams}>
-                            {invocation.args.map((p: any, i: number) => {
-                              const paramDefinitions = getParamDefinitions(
-                                invocation,
-                              )
-                              return (
-                                <div
-                                  className={styles.methodParameter}
-                                  style={{
-                                    backgroundColor:
-                                      TX_STATE_TYPE_MAPPINGS[
-                                        paramDefinitions[i] &&
-                                          paramDefinitions[i].type
-                                      ] &&
-                                      TX_STATE_TYPE_MAPPINGS[
-                                        paramDefinitions[i] &&
-                                          paramDefinitions[i].type
-                                      ].color,
-                                    borderColor:
-                                      TX_STATE_TYPE_MAPPINGS[
-                                        paramDefinitions[i] &&
-                                          paramDefinitions[i].type
-                                      ] &&
-                                      TX_STATE_TYPE_MAPPINGS[
-                                        paramDefinitions[i] &&
-                                          paramDefinitions[i].type
-                                      ].color,
-                                  }}
-                                >
-                                  {renderParam(p, paramDefinitions[i])}
-                                </div>
-                              )
-                            })}
-                          </div>
-                        )}
+                        {shouldDisplayReqParams(invocation) &&
+                          requestParamsVisible[i] && (
+                            <div className={styles.requestParams}>
+                              {invocation.args.map((p: any, i: number) => {
+                                const paramDefinitions = getParamDefinitions(
+                                  invocation,
+                                )
+                                return (
+                                  <div
+                                    className={styles.methodParameter}
+                                    style={{
+                                      backgroundColor:
+                                        TX_STATE_TYPE_MAPPINGS[
+                                          paramDefinitions[i] &&
+                                            paramDefinitions[i].type
+                                        ] &&
+                                        TX_STATE_TYPE_MAPPINGS[
+                                          paramDefinitions[i] &&
+                                            paramDefinitions[i].type
+                                        ].color,
+                                      borderColor:
+                                        TX_STATE_TYPE_MAPPINGS[
+                                          paramDefinitions[i] &&
+                                            paramDefinitions[i].type
+                                        ] &&
+                                        TX_STATE_TYPE_MAPPINGS[
+                                          paramDefinitions[i] &&
+                                            paramDefinitions[i].type
+                                        ].color,
+                                    }}
+                                  >
+                                    {renderParam(p, paramDefinitions[i])}
+                                  </div>
+                                )
+                              })}
+                            </div>
+                          )}
                       </div>
                     ) : null}
                   </div>
@@ -679,7 +678,11 @@ const ConnectDapp = ({
                 </React.Fragment>
               ))}
             <div
-              className={classNames([styles.detailsLabel, styles.detailRow])}
+              className={classNames([
+                styles.detailsLabel,
+                styles.detailRow,
+                styles.feeRow,
+              ])}
             >
               <label>fee</label>
               <div className={styles.fee}>

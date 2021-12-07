@@ -107,7 +107,9 @@ p {
 
   .confirmation {
     padding-top: 18px;
-    border-top: 1px solid #626b7d;
+    padding: 12px 24px;
+
+    // border-top: 1px solid #626b7d;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -115,6 +117,10 @@ p {
     svg {
       margin: 0 6px;
       cursor: pointer;
+    }
+
+    svg:last-child {
+      margin-right: 0;
     }
   }
 }
@@ -320,4 +326,19 @@ p {
     font-weight: 400;
     padding: 3px;
   }
+}
+
+.pointer {
+  cursor: pointer !important;
+}
+
+.radius {
+  border-radius: 4px !important;
+}
+
+.feeRow {
+  border-top: 1px solid #626b7d;
+  border-bottom: 1px solid #626b7d !important;
+  padding: 6px 24px !important;
+  width: auto !important;
 }

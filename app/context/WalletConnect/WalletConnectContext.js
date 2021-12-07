@@ -466,7 +466,6 @@ export const WalletConnectContextProvider = ({
     setRequests,
     results,
     setResults,
-
     init,
     resetApp,
     subscribeToEvents,
