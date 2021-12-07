@@ -50,7 +50,7 @@ p {
 
   .connectionDetails {
     background: var(--wc-connection-details-bg);
-    border-radius: 4px;
+    border-radius: 0 0 4px 4px;
     width: 450px;
     font-size: 16px;
     color: var(--wc-connection-details-color);
@@ -171,6 +171,15 @@ p {
     }
   }
 
+  .contractName {
+    background-color: var(--wc-connection-details-bg2);
+    height: 38px;
+    display: flex;
+    border-radius: 4px 4px 0 0;
+    align-items: center;
+    padding: 0 24px;
+  }
+
   .noBorder {
     border: none !important;
   }
@@ -271,7 +280,7 @@ p {
     background: var(--wc-connection-details-bg2);
     color: var(--wc-connection-details-color);
     padding: 6px;
-    border-radius: 4px ;
+    border-radius: 4px;
     border: 2px solid;
     justify-content: space-between;
     width: 300px;
@@ -285,7 +294,7 @@ p {
   }
 
   .parameterArray {
-    background: var(--wc-connection-details-bg2);;
+    background: var(--wc-connection-details-bg2);
     color: var(--wc-connection-details-color);
     padding: 6px;
     display: inline-table !important;
@@ -304,7 +313,6 @@ p {
       text-overflow: ellipsis;
       overflow: hidden;
     }
-
   }
 
   .parameterType {

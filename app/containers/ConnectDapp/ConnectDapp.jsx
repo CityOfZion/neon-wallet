@@ -25,7 +25,7 @@ import Up from '../../assets/icons/chevron-up.svg'
 import Down from '../../assets/icons/chevron-down.svg'
 
 import ErrorIcon from '../../assets/icons/wc-error.svg'
-import { PROPOSAL_MOCK, REQUEST_MOCK, TX_STATE_TYPE_MAPPINGS } from './mocks'
+import { TX_STATE_TYPE_MAPPINGS } from './mocks'
 import { getNode, getRPCEndpoint } from '../../actions/nodeStorageActions'
 import DialogueBox from '../../components/DialogueBox'
 import WarningIcon from '../../assets/icons/warning.svg'
@@ -72,17 +72,13 @@ const ConnectDapp = ({
   const [request, setRequest] = useState(null)
   const [loading, setLoading] = useState(false)
   const [fee, setFee] = useState('')
-  // const [contractName, setContractName] = useState('')
-  // const [contractAbi, setContractAbi] = useState(undefined)
   const [requestParamsVisible, setRequestParamsVisible] = useState(true)
-  // const [shouldDisplayReqParams, setShouldDisplayReqParams] = useState(false)
   const [pairingMap, setPairingMap] = useState({})
 
   const walletConnectCtx = useWalletConnect()
   const firstProposal = walletConnectCtx.sessionProposals[0]
   const firstRequest = walletConnectCtx.requests[0]
   const { error } = walletConnectCtx
-  // let paramDefinitions
 
   const resetState = () => {
     setConnectionUrl('')
@@ -90,8 +86,6 @@ const ConnectDapp = ({
     setProposal(null)
     setRequest(null)
     setLoading(false)
-    // setContractName('')
-    // setContractAbi(undefined)
     setFee('')
   }
 
@@ -157,7 +151,6 @@ const ConnectDapp = ({
   useEffect(
     () => {
       const currentChain = `neo3:${net.toLowerCase()}`
-
       if (firstProposal) {
         if (
           !firstProposal.permissions.blockchain.chains.includes(currentChain)
@@ -225,7 +218,7 @@ const ConnectDapp = ({
         setFee(fee)
       }
 
-      const getContractManifest = async invocation => {
+      const getContractManifest = async (invocation, chainId) => {
         setLoading(true)
         const hash = invocation.scriptHash
         const {
@@ -233,30 +226,25 @@ const ConnectDapp = ({
             manifest: { name, abi },
           },
         } = await axios.get(
-          net === 'MainNet'
-            ? `https://dora.coz.io/api/v1/neo3/testnet_rc4/contract/${hash}`
+          chainId.includes('mainnet')
+            ? `https://dora.coz.io/api/v1/neo3/mainnet/contract/${hash}`
             : `https://dora.coz.io/api/v1/neo3/testnet_rc4/contract/${hash}`,
         )
         setLoading(false)
         return { name, abi }
-        // setContractName(name)
-        // setContractAbi(abi)
       }
 
-      // KNOWN BUGS:
-      // - the request does not include chain info
-      // - The invocations key is missing from the latest data schema - what is the latest and greatest proposal
-      // - this is a moving target.
-
       const mapContractDataToInvocation = async request => {
-        for (const invocation of request.request.params) {
-          const { name, abi } = await getContractManifest(invocation)
+        for (const invocation of request.request.params.invocations) {
+          const { name, abi } = await getContractManifest(
+            invocation,
+            request.chainId,
+          )
           invocation.contract = {
             name,
             abi,
           }
         }
-        console.log({ request })
         setRequest(request)
         setConnectionStep(CONNECTION_STEPS.APPROVE_TRANSACTION)
       }
@@ -268,17 +256,6 @@ const ConnectDapp = ({
     },
     [firstRequest, address, net],
   )
-
-  // useEffect(
-  //   () => {
-  //     if (firstRequest) {
-  //       // console.log(firstRequest)
-  //       setRequest(firstRequest)
-  //       setConnectionStep(CONNECTION_STEPS.APPROVE_TRANSACTION)
-  //     }
-  //   },
-  //   [address, net, firstRequest],
-  // )
 
   const shouldDisplayReqParams = invocation =>
     invocation.args.some((p: any) => p.type === 'Array')
@@ -597,8 +574,14 @@ const ConnectDapp = ({
             )}
 
             {request &&
-              request.request.params.map(invocation => (
+              request.request.params.invocations.map(invocation => (
                 <React.Fragment>
+                  <div className={styles.contractName}>
+                    <div className={classNames([])}>
+                      {invocation.contract.name}
+                    </div>
+                  </div>
+
                   <div className={styles.connectionDetails}>
                     <div
                       className={classNames([
@@ -656,7 +639,6 @@ const ConnectDapp = ({
                         {shouldDisplayReqParams(invocation) && (
                           <div className={styles.requestParams}>
                             {invocation.args.map((p: any, i: number) => {
-                              console.log({ invocation })
                               const paramDefinitions = getParamDefinitions(
                                 invocation,
                               )
@@ -691,9 +673,7 @@ const ConnectDapp = ({
                           </div>
                         )}
                       </div>
-                    ) : (
-                      <div className={styles.detailsLabel} />
-                    )}
+                    ) : null}
                   </div>
                   <br />
                 </React.Fragment>

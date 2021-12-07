@@ -118,6 +118,7 @@ const SIDEBAR = {
   '--sidebar-active-icon': '#394152',
   '--sidebar-shadow':
     '-16px -16px 17px 0 rgba(255,255,255,0.44), -3px 16px 20px 0 rgba(18,21,23,0.24)',
+  '--sidebar-mobile-text': '#1c202a',
 }
 
 const TX_LIST = {

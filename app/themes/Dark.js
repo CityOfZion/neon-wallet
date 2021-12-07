@@ -115,6 +115,7 @@ const SIDEBAR = {
   '--sidebar-active-border': '#4CFFB3',
   '--sidebar-active-background': '#1B2029',
   '--sidebar-active-icon': '#fff',
+  '--sidebar-mobile-text': '#9CA0A8',
 }
 
 const TX_LIST = {

@@ -57,7 +57,6 @@ export const WalletConnectContextProvider = ({
   const [error, setError] = useState(false)
 
   const init = async () => {
-    console.log('init')
     if (!wcClient) {
       const st = new KeyValueStorage()
       setStorage(st)
@@ -205,8 +204,6 @@ export const WalletConnectContextProvider = ({
         return
       }
 
-      console.log('ACTION', 'subscribeToEvents')
-
       if (typeof wcClient === 'undefined') {
         throw new Error('Client is not initialized')
       }
@@ -217,7 +214,6 @@ export const WalletConnectContextProvider = ({
           if (typeof wcClient === 'undefined') {
             throw new Error('Client is not initialized')
           }
-          console.log('EVENT', 'session_proposal')
           const supportedNamespaces: string[] = []
           chains.forEach(chainId => {
             const [namespace] = chainId.split(':')
@@ -250,20 +246,11 @@ export const WalletConnectContextProvider = ({
       wcClient.on(
         CLIENT_EVENTS.session.request,
         async (requestEvent: SessionTypes.RequestEvent) => {
-          // tslint:disable-next-line
-          console.log(
-            'EVENT',
-            CLIENT_EVENTS.session.request,
-            requestEvent.request,
-          )
-
           const askApproval = () => {
-            setRequests(old => {
-              return [
-                ...old.filter(i => i.request.id !== requestEvent.request.id),
-                requestEvent,
-              ]
-            })
+            setRequests(old => [
+              ...old.filter(i => i.request.id !== requestEvent.request.id),
+              requestEvent,
+            ])
           }
 
           const approve = async () => {
@@ -272,7 +259,6 @@ export const WalletConnectContextProvider = ({
           }
 
           const reject = async (message: string) => {
-            console.log('rejecting@@!')
             const response = formatJsonRpcError(
               requestEvent.request.id,
               message,
@@ -317,7 +303,6 @@ export const WalletConnectContextProvider = ({
         if (typeof wcClient === 'undefined') {
           throw new Error('Client is not initialized')
         }
-        console.log('EVENT', 'session_created')
         setSessions(wcClient.session.values)
       })
 
@@ -325,7 +310,6 @@ export const WalletConnectContextProvider = ({
         if (typeof wcClient === 'undefined') {
           throw new Error('Client is not initialized')
         }
-        console.log('EVENT', 'session_deleted')
         setSessions(wcClient.session.values)
       })
     },
@@ -369,8 +353,6 @@ export const WalletConnectContextProvider = ({
   }
 
   const approveSession = async (proposal: SessionTypes.Proposal) => {
-    console.log('ACTION', 'approveSession')
-
     if (typeof wcClient === 'undefined') {
       throw new Error('Client is not initialized')
     }
@@ -393,8 +375,6 @@ export const WalletConnectContextProvider = ({
   }
 
   const rejectSession = async (proposal: SessionTypes.Proposal) => {
-    console.log('ACTION', 'rejectSession')
-
     if (typeof wcClient === 'undefined') {
       throw new Error('Client is not initialized')
     }
