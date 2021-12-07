@@ -57,35 +57,19 @@ class N3Helper {
     hideNotification?: () => void,
   ): Promise<JsonRpcResponse> => {
     let result: any
-
-    if (request.method === 'invokefunction') {
-      if (!account) {
-        throw new Error('No account')
-      }
-
-      result = await this.contractInvoke(
-        isHardwareLogin,
-        signingFunction,
-        showInfoNotification,
-        hideNotification,
-        account,
-        request.params[0].scriptHash,
-        request.params[0].operation,
-        ...request.params[0].args,
-      )
-    } else if (request.method === 'testInvoke') {
-      result = await this.testInvoke(
-        request.params[0].scriptHash,
-        request.params[0].operation,
-        ...request.params[0].args,
-      )
+    if (request.method === 'multiInvoke' || request.method === 'invoke') {
+      result = await this.multiInvoke(account, request.params)
+    } else if (
+      request.method === 'multiTestInvoke' ||
+      request.method === 'testInvoke'
+    ) {
+      result = await this.multiTestInvoke(account, request.params)
     } else {
       const { jsonrpc, ...queryLike } = request
       result = await new rpc.RPCClient(this.rpcAddress).execute(
         Neon.create.query({ ...queryLike, jsonrpc: '2.0' }),
       )
     }
-
     return {
       id: request.id,
       jsonrpc: '2.0',

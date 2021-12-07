@@ -72,17 +72,17 @@ const ConnectDapp = ({
   const [request, setRequest] = useState(null)
   const [loading, setLoading] = useState(false)
   const [fee, setFee] = useState('')
-  const [contractName, setContractName] = useState('')
-  const [contractAbi, setContractAbi] = useState(undefined)
+  // const [contractName, setContractName] = useState('')
+  // const [contractAbi, setContractAbi] = useState(undefined)
   const [requestParamsVisible, setRequestParamsVisible] = useState(true)
-  const [shouldDisplayReqParams, setShouldDisplayReqParams] = useState(false)
+  // const [shouldDisplayReqParams, setShouldDisplayReqParams] = useState(false)
   const [pairingMap, setPairingMap] = useState({})
 
   const walletConnectCtx = useWalletConnect()
   const firstProposal = walletConnectCtx.sessionProposals[0]
   const firstRequest = walletConnectCtx.requests[0]
   const { error } = walletConnectCtx
-  let paramDefinitions
+  // let paramDefinitions
 
   const resetState = () => {
     setConnectionUrl('')
@@ -90,8 +90,8 @@ const ConnectDapp = ({
     setProposal(null)
     setRequest(null)
     setLoading(false)
-    setContractName('')
-    setContractAbi(undefined)
+    // setContractName('')
+    // setContractAbi(undefined)
     setFee('')
   }
 
@@ -225,46 +225,63 @@ const ConnectDapp = ({
         setFee(fee)
       }
 
-      const getContractManifest = async request => {
-        const hash = request.params[0].scriptHash
+      const getContractManifest = async invocation => {
+        setLoading(true)
+        const hash = invocation.scriptHash
         const {
           data: {
             manifest: { name, abi },
           },
         } = await axios.get(
           net === 'MainNet'
-            ? `https://dora.coz.io/api/v1/neo3/mainnet/contract/${hash}`
+            ? `https://dora.coz.io/api/v1/neo3/testnet_rc4/contract/${hash}`
             : `https://dora.coz.io/api/v1/neo3/testnet_rc4/contract/${hash}`,
         )
-        setContractName(name)
-        setContractAbi(abi)
+        setLoading(false)
+        return { name, abi }
+        // setContractName(name)
+        // setContractAbi(abi)
       }
 
-      if (request) {
-        getGasFee(request.request)
-        getContractManifest(request.request)
-      }
-    },
-    [request, address, net],
-  )
+      // KNOWN BUGS:
+      // - the request does not include chain info
+      // - The invocations key is missing from the latest data schema - what is the latest and greatest proposal
+      // - this is a moving target.
 
-  useEffect(
-    () => {
-      if (firstRequest) {
-        setRequest(firstRequest)
-        firstRequest.request.params[0].args.forEach((p: any) => {
-          if (p.type === 'Array') {
-            setShouldDisplayReqParams(true)
+      const mapContractDataToInvocation = async request => {
+        for (const invocation of request.request.params) {
+          const { name, abi } = await getContractManifest(invocation)
+          invocation.contract = {
+            name,
+            abi,
           }
-        })
-
+        }
+        console.log({ request })
+        setRequest(request)
         setConnectionStep(CONNECTION_STEPS.APPROVE_TRANSACTION)
       }
+
+      if (firstRequest) {
+        getGasFee(firstRequest.request)
+        mapContractDataToInvocation(firstRequest)
+      }
     },
-    [address, net, firstRequest],
+    [firstRequest, address, net],
   )
 
-  const renderHeader = () => <span>'testing</span>
+  // useEffect(
+  //   () => {
+  //     if (firstRequest) {
+  //       // console.log(firstRequest)
+  //       setRequest(firstRequest)
+  //       setConnectionStep(CONNECTION_STEPS.APPROVE_TRANSACTION)
+  //     }
+  //   },
+  //   [address, net, firstRequest],
+  // )
+
+  const shouldDisplayReqParams = invocation =>
+    invocation.args.some((p: any) => p.type === 'Array')
 
   const renderInstructions = () => (
     <p>
@@ -273,6 +290,18 @@ const ConnectDapp = ({
       will happen without your direct approval.
     </p>
   )
+
+  const getParamDefinitions = invocation => {
+    if (invocation.contract && invocation.contract.abi) {
+      return invocation.contract.abi.methods.find(
+        method => method.name === invocation.operation,
+      ).parameters
+    }
+
+    return new Array(invocation.args.length)
+      .fill()
+      .map((_, i) => ({ name: i, type: 'unknown' }))
+  }
 
   const renderParam = (arg: any, definition: any) => (
     <React.Fragment>
@@ -308,8 +337,6 @@ const ConnectDapp = ({
     </React.Fragment>
   )
 
-  const isValid = () => true
-
   const handleOpenDoraLink = hash => {
     if (hash) {
       return electron.shell.openExternal(
@@ -325,7 +352,6 @@ const ConnectDapp = ({
     case loading:
       return (
         <FullHeightPanel
-          renderHeader={renderHeader}
           renderCloseButton={() => (
             <CloseButton
               routeTo={ROUTES.DASHBOARD}
@@ -345,7 +371,6 @@ const ConnectDapp = ({
     case connectionStep === CONNECTION_STEPS.TRANSACTION_ERROR:
       return (
         <FullHeightPanel
-          renderHeader={renderHeader}
           headerText="Wallet Connect"
           renderCloseButton={() => (
             <CloseButton
@@ -378,7 +403,6 @@ const ConnectDapp = ({
     case connectionStep === CONNECTION_STEPS.TRANSACTION_SUCCESS:
       return (
         <FullHeightPanel
-          renderHeader={renderHeader}
           headerText="Wallet Connect"
           renderCloseButton={() => (
             <CloseButton
@@ -415,7 +439,6 @@ const ConnectDapp = ({
     case connectionStep === CONNECTION_STEPS.APPROVE_CONNECTION:
       return (
         <FullHeightPanel
-          renderHeader={renderHeader}
           headerText="Wallet Connect"
           renderCloseButton={() => (
             <CloseButton
@@ -499,19 +522,20 @@ const ConnectDapp = ({
         </FullHeightPanel>
       )
     case connectionStep === CONNECTION_STEPS.APPROVE_TRANSACTION:
-      if (contractAbi && request) {
-        paramDefinitions = contractAbi.methods.find(
-          method => method.name === request.request.params[0].operation,
-        ).parameters
-      } else if (request) {
-        paramDefinitions = new Array(request.request.params[0].args.length)
-          .fill()
-          .map((_, i) => ({ name: i, type: 'unknown' }))
-      }
+      // if (contractAbi && request) {
+      //   paramDefinitions = contractAbi.methods.find(
+      //     method => method.name === request.request.params[0].operation,
+      //   ).parameters
+      // } else if (request) {
+      //   paramDefinitions = new Array(
+      //     request.request.params.invocations[0].args.length,
+      //   )
+      //     .fill()
+      //     .map((_, i) => ({ name: i, type: 'unknown' }))
+      // }
 
       return (
         <FullHeightPanel
-          renderHeader={renderHeader}
           headerText="Wallet Connect"
           renderCloseButton={() => (
             <CloseButton
@@ -540,7 +564,7 @@ const ConnectDapp = ({
 
             <h3>
               {peer && peer.metadata.name} wants to call{' '}
-              <span className={styles.methodName}>{contractName}</span> contract
+              {/* <span className={styles.methodName}>{contractName}</span> contract */}
             </h3>
 
             {isHardwareLogin && (
@@ -572,134 +596,146 @@ const ConnectDapp = ({
               />
             )}
 
-            <div className={styles.connectionDetails}>
-              <div
-                className={classNames([styles.detailsLabel, styles.detailRow])}
-              >
-                <label>hash</label>
-                <div className={styles.scriptHash}>
-                  {request && request.request.params[0].scriptHash}{' '}
-                  {theme === 'Light' ? (
-                    <DoraIcon
-                      onClick={() =>
-                        handleOpenDoraLink(
-                          request && request.request.params[0].scriptHash,
-                        )
-                      }
-                    />
-                  ) : (
-                    <DoraIconDark
-                      onClick={() =>
-                        handleOpenDoraLink(
-                          request && request.request.params[0].scriptHash,
-                        )
-                      }
-                    />
-                  )}
-                </div>
-              </div>
-
-              <div
-                className={classNames([
-                  styles.detailsLabel,
-                  styles.detailRow,
-                  styles.noBorder,
-                ])}
-              >
-                <label>method</label>
-                <div>{request && request.request.params[0].operation}</div>
-              </div>
-              {shouldDisplayReqParams ? (
-                <div className={styles.details}>
-                  <div className={styles.detailsLabel}>
-                    <label>request parameters</label>
-
-                    <div>
-                      {requestParamsVisible ? (
-                        <Up onClick={() => setRequestParamsVisible(false)} />
-                      ) : (
-                        <Down onClick={() => setRequestParamsVisible(true)} />
-                      )}
-                    </div>
-                  </div>
-
-                  {requestParamsVisible && (
-                    <div className={styles.requestParams}>
-                      {request &&
-                        request.request.params[0].args.map(
-                          (p: any, i: number) => (
-                            <div
-                              className={styles.methodParameter}
-                              style={{
-                                backgroundColor:
-                                  TX_STATE_TYPE_MAPPINGS[
-                                    paramDefinitions[i] &&
-                                      paramDefinitions[i].type
-                                  ] &&
-                                  TX_STATE_TYPE_MAPPINGS[
-                                    paramDefinitions[i] &&
-                                      paramDefinitions[i].type
-                                  ].color,
-                                borderColor:
-                                  TX_STATE_TYPE_MAPPINGS[
-                                    paramDefinitions[i] &&
-                                      paramDefinitions[i].type
-                                  ] &&
-                                  TX_STATE_TYPE_MAPPINGS[
-                                    paramDefinitions[i] &&
-                                      paramDefinitions[i].type
-                                  ].color,
-                              }}
-                            >
-                              {renderParam(p, paramDefinitions[i])}
-                            </div>
-                          ),
+            {request &&
+              request.request.params.map(invocation => (
+                <React.Fragment>
+                  <div className={styles.connectionDetails}>
+                    <div
+                      className={classNames([
+                        styles.detailsLabel,
+                        styles.detailRow,
+                      ])}
+                    >
+                      <label>hash</label>
+                      <div className={styles.scriptHash}>
+                        {invocation.scriptHash}{' '}
+                        {theme === 'Light' ? (
+                          <DoraIcon
+                            onClick={() =>
+                              handleOpenDoraLink(invocation.scriptHash)
+                            }
+                          />
+                        ) : (
+                          <DoraIconDark
+                            onClick={() =>
+                              handleOpenDoraLink(invocation.scriptHash)
+                            }
+                          />
                         )}
+                      </div>
                     </div>
-                  )}
-                </div>
-              ) : (
-                <div className={styles.detailsLabel} />
-              )}
-              <div
-                className={classNames([styles.detailsLabel, styles.detailRow])}
-              >
-                <label>fee</label>
-                <div className={styles.fee}>
-                  {fee} GAS
-                  <Tooltip title="Other network fees may apply">
-                    <Info />{' '}
-                  </Tooltip>
-                </div>
-              </div>
-              <div className={styles.confirmation}>
-                Please confirm you would like to proceed
-                <div>
-                  <Confirm
-                    onClick={async () => {
-                      if (!loading) {
-                        setLoading(true)
-                        await walletConnectCtx.approveRequest(request)
-                        setLoading(false)
-                      }
-                    }}
-                  />
 
-                  <Deny
-                    onClick={() => {
-                      if (!loading) {
-                        showSuccessNotification({
-                          message: `You have denied request from ${
-                            peer ? peer.metadata.name : 'unknown dApp'
-                          }.`,
-                        })
-                        walletConnectCtx.rejectRequest(request)
-                        resetState()
-                        history.push(ROUTES.DASHBOARD)
-                      }
-                    }}
-                  />
-                </div>
+                    <div
+                      className={classNames([
+                        styles.detailsLabel,
+                        styles.detailRow,
+                        styles.noBorder,
+                      ])}
+                    >
+                      <label>method</label>
+                      <div>{invocation.operation}</div>
+                    </div>
+                    {shouldDisplayReqParams(invocation) ? (
+                      <div className={styles.details}>
+                        <div className={styles.detailsLabel}>
+                          <label>request parameters</label>
+
+                          <div>
+                            {requestParamsVisible ? (
+                              <Up
+                                onClick={() => setRequestParamsVisible(false)}
+                              />
+                            ) : (
+                              <Down
+                                onClick={() => setRequestParamsVisible(true)}
+                              />
+                            )}
+                          </div>
+                        </div>
+
+                        {shouldDisplayReqParams(invocation) && (
+                          <div className={styles.requestParams}>
+                            {invocation.args.map((p: any, i: number) => {
+                              console.log({ invocation })
+                              const paramDefinitions = getParamDefinitions(
+                                invocation,
+                              )
+                              return (
+                                <div
+                                  className={styles.methodParameter}
+                                  style={{
+                                    backgroundColor:
+                                      TX_STATE_TYPE_MAPPINGS[
+                                        paramDefinitions[i] &&
+                                          paramDefinitions[i].type
+                                      ] &&
+                                      TX_STATE_TYPE_MAPPINGS[
+                                        paramDefinitions[i] &&
+                                          paramDefinitions[i].type
+                                      ].color,
+                                    borderColor:
+                                      TX_STATE_TYPE_MAPPINGS[
+                                        paramDefinitions[i] &&
+                                          paramDefinitions[i].type
+                                      ] &&
+                                      TX_STATE_TYPE_MAPPINGS[
+                                        paramDefinitions[i] &&
+                                          paramDefinitions[i].type
+                                      ].color,
+                                  }}
+                                >
+                                  {renderParam(p, paramDefinitions[i])}
+                                </div>
+                              )
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <div className={styles.detailsLabel} />
+                    )}
+                  </div>
+                  <br />
+                </React.Fragment>
+              ))}
+            <div
+              className={classNames([styles.detailsLabel, styles.detailRow])}
+            >
+              <label>fee</label>
+              <div className={styles.fee}>
+                {fee} GAS
+                <Tooltip title="Other network fees may apply">
+                  <Info />{' '}
+                </Tooltip>
+              </div>
+            </div>
+            <div className={styles.confirmation}>
+              Please confirm you would like to proceed
+              <div>
+                <Confirm
+                  onClick={async () => {
+                    if (!loading) {
+                      setLoading(true)
+                      await walletConnectCtx.approveRequest(request)
+                      setLoading(false)
+                    }
+                  }}
+                />
+
+                <Deny
+                  onClick={() => {
+                    if (!loading) {
+                      showSuccessNotification({
+                        message: `You have denied request from ${
+                          peer ? peer.metadata.name : 'unknown dApp'
+                        }.`,
+                      })
+                      walletConnectCtx.rejectRequest(request)
+                      resetState()
+                      history.push(ROUTES.DASHBOARD)
+                    }
+                  }}
+                />
               </div>
             </div>
           </div>
@@ -708,7 +744,6 @@ const ConnectDapp = ({
     default:
       return (
         <FullHeightPanel
-          renderHeader={renderHeader}
           headerText="Connect with a dApp"
           renderCloseButton={() => <CloseButton routeTo={ROUTES.DASHBOARD} />}
           renderHeaderIcon={() => (
@@ -735,7 +770,7 @@ const ConnectDapp = ({
               primary
               type="submit"
               className={styles.loginButtonMargin}
-              disabled={!isValid() || loading}
+              disabled={loading}
             >
               Connect
             </Button>
