@@ -97,7 +97,7 @@ export const WalletConnectContextProvider = ({
   const resetApp = async () => {
     try {
       clearStorage()
-      if (sessions.length)
+      if (sessions.length) {
         await Promise.all(
           sessions.map(
             session =>
@@ -108,18 +108,17 @@ export const WalletConnectContextProvider = ({
               }),
           ),
         )
+      }
+      setWcClient(undefined)
+      setSessionProposals([])
+      setInitialized(false)
+      setAccounts([])
+      setSessions([])
+      setRequests([])
+      setResults([])
     } catch (e) {
       // ignored
     }
-
-    setWcClient(undefined)
-    setSessionProposals([])
-    setInitialized(false)
-    setChains([])
-    setAccounts([])
-    setSessions([])
-    setRequests([])
-    setResults([])
   }
 
   const checkPersistedState = useCallback(

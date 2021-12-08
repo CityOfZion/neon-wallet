@@ -235,6 +235,7 @@ class N3Helper {
   ): Promise<any> => {
     const sb = Neon.create.scriptBuilder()
     const networkMagic = await N3Helper.getMagicOfRpcAddress(this.rpcAddress)
+
     cim.invocations.forEach(c => {
       sb.emitContractCall({
         scriptHash: c.scriptHash,

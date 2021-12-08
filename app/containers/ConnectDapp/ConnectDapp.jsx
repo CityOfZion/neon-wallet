@@ -95,6 +95,7 @@ const ConnectDapp = ({
       if (!walletConnectCtx.wcClient) await walletConnectCtx.init()
 
       const account = new wallet.Account(address)
+
       walletConnectCtx.addAccountAndChain(
         account.address,
         `neo3:${net.toLowerCase()}`,
@@ -152,6 +153,7 @@ const ConnectDapp = ({
     () => {
       const currentChain = `neo3:${net.toLowerCase()}`
       if (firstProposal) {
+        debugger
         if (
           !firstProposal.permissions.blockchain.chains.includes(currentChain)
         ) {
