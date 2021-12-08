@@ -7,8 +7,29 @@ import {
 } from '@cityofzion/neon-js-next/lib/experimental/helpers'
 // eslint-disable-next-line
 import { JsonRpcRequest, JsonRpcResponse } from '@json-rpc-tools/utils'
-import { Account } from '@cityofzion/neon-core/lib/wallet'
-import { WitnessScope } from '@cityofzion/neon-core/lib/tx/components/WitnessScope'
+
+type WitnessScope = {
+  None: 0,
+  /**
+   * CalledByEntry means that this condition must hold: EntryScriptHash == CallingScriptHash
+   * No params is needed, as the witness/permission/signature given on first invocation will automatically expire if entering deeper internal invokes
+   * This can be default safe choice for native NEO/GAS (previously used on Neo 2 as "attach" mode)
+   */
+  CalledByEntry: 1,
+  /**
+   * Custom hash for contract-specific
+   */
+  CustomContracts: 16,
+  /**
+   * Custom pubkey for group members, group can be found in contract manifest
+   */
+  CustomGroups: 32,
+  /**
+   * Global allows this witness in all contexts (default Neo2 behavior)
+   * This cannot be combined with other flags
+   */
+  Global: 128,
+}
 
 type Signer = {
   scope: WitnessScope,
@@ -205,7 +226,7 @@ class N3Helper {
   }
 
   multiTestInvoke = async (
-    account: Account,
+    account: any,
     cim: ContractInvocationMulti,
   ): Promise<any> => {
     const sb = Neon.create.scriptBuilder()
@@ -230,7 +251,7 @@ class N3Helper {
   }
 
   multiInvoke = async (
-    account: Account,
+    account: any,
     cim: ContractInvocationMulti,
   ): Promise<any> => {
     const sb = Neon.create.scriptBuilder()
@@ -271,7 +292,7 @@ class N3Helper {
     return rpcClient.sendRawTransaction(trx)
   }
 
-  static buildSigner(account: Account, signerEntry?: Signer) {
+  static buildSigner(account: any, signerEntry?: Signer) {
     const signer = new tx.Signer({
       account: account.scriptHash,
     })

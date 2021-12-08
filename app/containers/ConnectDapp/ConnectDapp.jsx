@@ -153,7 +153,6 @@ const ConnectDapp = ({
     () => {
       const currentChain = `neo3:${net.toLowerCase()}`
       if (firstProposal) {
-        debugger
         if (
           !firstProposal.permissions.blockchain.chains.includes(currentChain)
         ) {
