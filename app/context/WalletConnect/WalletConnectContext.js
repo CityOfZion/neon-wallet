@@ -158,8 +158,8 @@ export const WalletConnectContextProvider = ({
       if (
         results &&
         results.result &&
-        !request.method.includes('test') &&
-        !results.result.error
+        !results.result.error &&
+        !results.isTest
       ) {
         setTxHash(results.result)
       } else {

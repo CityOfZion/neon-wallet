@@ -85,6 +85,7 @@ class N3Helper {
       request.method === 'testInvoke'
     ) {
       result = await this.multiTestInvoke(account, request.params)
+      result.isTest = true
     } else {
       const { jsonrpc, ...queryLike } = request
       result = await new rpc.RPCClient(this.rpcAddress).execute(
@@ -265,7 +266,7 @@ class N3Helper {
       })
 
       if (c.abortOnFail) {
-        // sb.emit(0x39)
+        sb.emit(0x39)
       }
     })
 
