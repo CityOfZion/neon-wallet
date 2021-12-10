@@ -8,6 +8,48 @@ import {
 // eslint-disable-next-line
 import { JsonRpcRequest, JsonRpcResponse } from '@json-rpc-tools/utils'
 
+type WitnessScope = {
+  None: 0,
+  /**
+   * CalledByEntry means that this condition must hold: EntryScriptHash == CallingScriptHash
+   * No params is needed, as the witness/permission/signature given on first invocation will automatically expire if entering deeper internal invokes
+   * This can be default safe choice for native NEO/GAS (previously used on Neo 2 as "attach" mode)
+   */
+  CalledByEntry: 1,
+  /**
+   * Custom hash for contract-specific
+   */
+  CustomContracts: 16,
+  /**
+   * Custom pubkey for group members, group can be found in contract manifest
+   */
+  CustomGroups: 32,
+  /**
+   * Global allows this witness in all contexts (default Neo2 behavior)
+   * This cannot be combined with other flags
+   */
+  Global: 128,
+}
+
+type Signer = {
+  scope: WitnessScope,
+  allowedContracts?: string[],
+  allowedGroups?: string[],
+}
+
+type ContractInvocation = {
+  scriptHash: string,
+  operation: string,
+  args: any[],
+  abortOnFail?: boolean,
+  signer?: Signer,
+}
+
+type ContractInvocationMulti = {
+  signer: Signer[],
+  invocations: ContractInvocation[],
+}
+
 class N3Helper {
   rpcAddress: string
 
@@ -36,35 +78,20 @@ class N3Helper {
     hideNotification?: () => void,
   ): Promise<JsonRpcResponse> => {
     let result: any
-
-    if (request.method === 'invokefunction') {
-      if (!account) {
-        throw new Error('No account')
-      }
-
-      result = await this.contractInvoke(
-        isHardwareLogin,
-        signingFunction,
-        showInfoNotification,
-        hideNotification,
-        account,
-        request.params[0].scriptHash,
-        request.params[0].operation,
-        ...request.params[0].args,
-      )
-    } else if (request.method === 'testInvoke') {
-      result = await this.testInvoke(
-        request.params[0].scriptHash,
-        request.params[0].operation,
-        ...request.params[0].args,
-      )
+    if (request.method === 'multiInvoke' || request.method === 'invoke') {
+      result = await this.multiInvoke(account, request.params)
+    } else if (
+      request.method === 'multiTestInvoke' ||
+      request.method === 'testInvoke'
+    ) {
+      result = await this.multiTestInvoke(account, request.params)
+      result.isTest = true
     } else {
       const { jsonrpc, ...queryLike } = request
       result = await new rpc.RPCClient(this.rpcAddress).execute(
         Neon.create.query({ ...queryLike, jsonrpc: '2.0' }),
       )
     }
-
     return {
       id: request.id,
       jsonrpc: '2.0',
@@ -197,6 +224,100 @@ class N3Helper {
     } catch (e) {
       return N3Helper.convertError(e)
     }
+  }
+
+  multiTestInvoke = async (
+    account: any,
+    cim: ContractInvocationMulti,
+  ): Promise<any> => {
+    const sb = Neon.create.scriptBuilder()
+
+    cim.invocations.forEach(c => {
+      sb.emitContractCall({
+        scriptHash: c.scriptHash,
+        operation: c.operation,
+        args: N3Helper.convertParams(c.args),
+      })
+
+      if (c.abortOnFail) {
+        sb.emit(0x39)
+      }
+    })
+
+    const script = sb.build()
+    return new rpc.RPCClient(this.rpcAddress).invokeScript(
+      Neon.u.HexString.fromHex(script),
+      N3Helper.buildMultipleSigner(account, cim.signer),
+    )
+  }
+
+  multiInvoke = async (
+    account: any,
+    cim: ContractInvocationMulti,
+  ): Promise<any> => {
+    const sb = Neon.create.scriptBuilder()
+    const networkMagic = await N3Helper.getMagicOfRpcAddress(this.rpcAddress)
+
+    cim.invocations.forEach(c => {
+      sb.emitContractCall({
+        scriptHash: c.scriptHash,
+        operation: c.operation,
+        args: N3Helper.convertParams(c.args),
+      })
+
+      if (c.abortOnFail) {
+        sb.emit(0x39)
+      }
+    })
+
+    const script = sb.build()
+
+    const rpcClient = new rpc.RPCClient(this.rpcAddress)
+
+    const currentHeight = await rpcClient.getBlockCount()
+
+    const trx = new tx.Transaction({
+      script: Neon.u.HexString.fromHex(script),
+      validUntilBlock: currentHeight + 100,
+      signers: N3Helper.buildMultipleSigner(account, cim.signer),
+    })
+
+    await Neon.experimental.txHelpers.addFees(trx, {
+      rpcAddress: this.rpcAddress,
+      networkMagic,
+      account,
+    })
+
+    trx.sign(account, networkMagic)
+
+    return rpcClient.sendRawTransaction(trx)
+  }
+
+  static buildSigner(account: any, signerEntry?: Signer) {
+    const signer = new tx.Signer({
+      account: account.scriptHash,
+    })
+
+    signer.scopes = signerEntry && signerEntry.scope
+    if (signerEntry && signerEntry.allowedContracts) {
+      signer.allowedContracts = signerEntry.allowedContracts.map(ac =>
+        Neon.u.HexString.fromHex(ac),
+      )
+    }
+    if (signerEntry && signerEntry.allowedGroups) {
+      signer.allowedGroups = signerEntry.allowedGroups.map(ac =>
+        Neon.u.HexString.fromHex(ac),
+      )
+    }
+
+    return signer
+  }
+
+  static buildMultipleSigner(account: any, signers: Signer[]) {
+    return !signers.length
+      ? [N3Helper.buildSigner(account)]
+      : // $FlowFixMe
+        signers.map(s => N3Helper.buildSigner(account, s))
   }
 
   static convertParams(args: any[]): any[] {

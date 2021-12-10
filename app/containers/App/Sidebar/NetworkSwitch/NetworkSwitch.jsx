@@ -8,7 +8,6 @@ import {
   findNetworkByDeprecatedLabel,
 } from '../../../../core/networks'
 import styles from './NetworkSwitch.scss'
-import { useWalletConnect } from '../../../../context/WalletConnect/WalletConnectContext'
 
 type Props = {
   onChange: Function,
@@ -44,15 +43,10 @@ const NetworkSwitch = ({
   net,
 }: Props) => {
   const networks = getNetworks(chain)
-  const walletConnectCtx = useWalletConnect()
 
-  const handleChange = async (option: NetworkItemType) => {
+  const handleChange = (option: NetworkItemType) => {
     if (shouldSwitchNetworks) {
       onChange(option.id)
-      if (walletConnectCtx.resetApp) {
-        walletConnectCtx.resetApp()
-        await walletConnectCtx.init()
-      }
       setTimeout(() => {
         loadWalletData()
       }, 0)

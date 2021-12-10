@@ -1,6 +1,6 @@
 {
   "name": "Neon",
-  "version": "2.10.0",
+  "version": "2.11.0-RC-2",
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",
   "homepage": "https://github.com/CityOfZion/neon-wallet",
@@ -100,9 +100,9 @@
     "@json-rpc-tools/utils": "^1.7.6",
     "@ledgerhq/hw-transport-node-hid-noevents": "^6.7.0",
     "@tippyjs/react": "^4.2.5",
-    "@walletconnect/client": "2.0.0-beta.20",
-    "@walletconnect/types": "2.0.0-beta.20",
-    "@walletconnect/utils": "2.0.0-beta.20",
+    "@walletconnect/client": "2.0.0-beta.17",
+    "@walletconnect/types": "2.0.0-beta.17",
+    "@walletconnect/utils": "2.0.0-beta.17",
     "axios": "0.21.1",
     "axios-retry": "3.1.1",
     "bignumber.js": "5.0.0",
@@ -252,7 +252,10 @@
     "mem": "^4.0.0",
     "decompress-zip": "^0.2.2",
     "https-proxy-agent": "^2.2.3",
-    "walletconnect": "0.6.5"
+    "walletconnect": "0.6.5",
+    "@walletconnect/client": "2.0.0-beta.17",
+    "@walletconnect/types": "2.0.0-beta.17",
+    "@walletconnect/utils": "2.0.0-beta.17"
   },
   "jest": {
     "moduleNameMapper": {

@@ -66,12 +66,13 @@ $size: 70px;
 
   & svg,
   & svg path {
-    color: #1c202a;
     fill: currentColor;
+    margin-left: 9px;
   }
 
   &.active,
   &:hover {
+    color: var(--sidebar-mobile-text);
     background: var(--sidebar-active-background);
     border-color: var(--sidebar-active-border);
   }
