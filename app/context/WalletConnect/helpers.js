@@ -265,7 +265,7 @@ class N3Helper {
       })
 
       if (c.abortOnFail) {
-        sb.emit(0x39)
+        // sb.emit(0x39)
       }
     })
 
