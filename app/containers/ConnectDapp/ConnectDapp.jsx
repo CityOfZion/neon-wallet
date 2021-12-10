@@ -275,7 +275,6 @@ const ConnectDapp = ({
         method => method.name === invocation.operation,
       ).parameters
     }
-
     return new Array(invocation.args.length)
       .fill()
       .map((_, i) => ({ name: i, type: 'unknown' }))
@@ -634,44 +633,42 @@ const ConnectDapp = ({
                             {requestParamsVisible[i] ? <Up /> : <Down />}
                           </div>
                         </div>
-
-                        {shouldDisplayReqParams(invocation) &&
-                          requestParamsVisible[i] && (
-                            <div className={styles.requestParams}>
-                              {invocation.args.map((p: any, i: number) => {
-                                const paramDefinitions = getParamDefinitions(
-                                  invocation,
-                                )
-                                return (
-                                  <div
-                                    className={styles.methodParameter}
-                                    style={{
-                                      backgroundColor:
-                                        TX_STATE_TYPE_MAPPINGS[
-                                          paramDefinitions[i] &&
-                                            paramDefinitions[i].type
-                                        ] &&
-                                        TX_STATE_TYPE_MAPPINGS[
-                                          paramDefinitions[i] &&
-                                            paramDefinitions[i].type
-                                        ].color,
-                                      borderColor:
-                                        TX_STATE_TYPE_MAPPINGS[
-                                          paramDefinitions[i] &&
-                                            paramDefinitions[i].type
-                                        ] &&
-                                        TX_STATE_TYPE_MAPPINGS[
-                                          paramDefinitions[i] &&
-                                            paramDefinitions[i].type
-                                        ].color,
-                                    }}
-                                  >
-                                    {renderParam(p, paramDefinitions[i])}
-                                  </div>
-                                )
-                              })}
-                            </div>
-                          )}
+                        {requestParamsVisible[i] && (
+                          <div className={styles.requestParams}>
+                            {invocation.args.map((p: any, i: number) => {
+                              const paramDefinitions = getParamDefinitions(
+                                invocation,
+                              )
+                              return (
+                                <div
+                                  className={styles.methodParameter}
+                                  style={{
+                                    backgroundColor:
+                                      TX_STATE_TYPE_MAPPINGS[
+                                        paramDefinitions[i] &&
+                                          paramDefinitions[i].type
+                                      ] &&
+                                      TX_STATE_TYPE_MAPPINGS[
+                                        paramDefinitions[i] &&
+                                          paramDefinitions[i].type
+                                      ].color,
+                                    borderColor:
+                                      TX_STATE_TYPE_MAPPINGS[
+                                        paramDefinitions[i] &&
+                                          paramDefinitions[i].type
+                                      ] &&
+                                      TX_STATE_TYPE_MAPPINGS[
+                                        paramDefinitions[i] &&
+                                          paramDefinitions[i].type
+                                      ].color,
+                                  }}
+                                >
+                                  {renderParam(p, paramDefinitions[i])}
+                                </div>
+                              )
+                            })}
+                          </div>
+                        )}
                       </div>
                     ) : null}
                   </div>
