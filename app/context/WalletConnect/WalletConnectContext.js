@@ -60,14 +60,18 @@ export const WalletConnectContextProvider = ({
     if (!wcClient) {
       const st = new KeyValueStorage()
       setStorage(st)
-      setWcClient(
-        await Client.init({
-          controller: true,
-          relayProvider: options.relayServer,
-          logger: process.env.NODE_ENV === 'development' ? 'debug' : null,
-          storage: st,
-        }),
-      )
+      const clientOptions = {
+        controller: true,
+        relayProvider: options.relayServer,
+        storage: st,
+      }
+
+      if (process.env.NODE_ENV === 'development') {
+        // $FlowFixMe
+        clientOptions.logger = 'debug'
+      }
+
+      setWcClient(await Client.init(clientOptions))
     }
   }
 
