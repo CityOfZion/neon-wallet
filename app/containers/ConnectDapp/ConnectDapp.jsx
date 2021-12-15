@@ -54,6 +54,14 @@ const CONNECTION_STEPS = {
   TRANSACTION_ERROR: 'TRANSACTION_ERROR',
 }
 
+const WITNESS_SCOPE = {
+  '0': 'None',
+  '1': 'CalledByEntry',
+  '16': 'CustomContracts',
+  '32': 'CustomGroups',
+  '128': 'Global',
+}
+
 const ConnectDapp = ({
   address,
   history,
@@ -258,8 +266,7 @@ const ConnectDapp = ({
     [firstRequest, address, net],
   )
 
-  const shouldDisplayReqParams = invocation =>
-    invocation.args.some((p: any) => p.type === 'Array')
+  const shouldDisplayReqParams = invocation => !!invocation.args.length
 
   const renderInstructions = () => (
     <p>
@@ -618,7 +625,8 @@ const ConnectDapp = ({
                           className={classNames([
                             styles.radius,
                             styles.detailsLabel,
-                            requestParamsVisible[i] ? null : styles.noBorder,
+                            styles.noBorder,
+                            styles.noPadding,
                           ])}
                           onClick={() =>
                             setRequestParamsVisible({
@@ -675,6 +683,28 @@ const ConnectDapp = ({
                   <br />
                 </React.Fragment>
               ))}
+            {request &&
+              request.request.params.signer && (
+                <div
+                  className={classNames([
+                    styles.detailsLabel,
+                    styles.detailRow,
+                    styles.sigRow,
+                  ])}
+                >
+                  <label>signature scope</label>
+                  <div>
+                    {
+                      WITNESS_SCOPE[
+                        String(request.request.params.signer[0].scope)
+                      ]
+                    }
+                    {WITNESS_SCOPE[
+                      String(request.request.params.signer[0].scope)
+                    ] === 'Global' && <WarningIcon />}
+                  </div>
+                </div>
+              )}
             <div
               className={classNames([
                 styles.detailsLabel,
