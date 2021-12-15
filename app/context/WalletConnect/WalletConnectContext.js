@@ -64,7 +64,7 @@ export const WalletConnectContextProvider = ({
         await Client.init({
           controller: true,
           relayProvider: options.relayServer,
-          logger: 'debug',
+          logger: process.env.NODE_ENV === 'development' ? 'debug' : null,
           storage: st,
         }),
       )

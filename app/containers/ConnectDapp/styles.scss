@@ -55,7 +55,7 @@ p {
     font-size: 16px;
     color: var(--wc-connection-details-color);
     text-align: left;
-    padding: 24px;
+    padding: 6px 24px;
   }
 
   .details {
@@ -126,10 +126,6 @@ p {
 }
 
 .approveRequestContainer {
-  .connectionDetails {
-    padding-top: 12px !important;
-  }
-
   .methodName {
     color: var(--wc-tooltip-button-color);
   }
@@ -341,4 +337,35 @@ p {
   border-bottom: 1px solid #626b7d !important;
   padding: 6px 24px !important;
   width: auto !important;
+  height: 30px;
+  margin-bottom: 12px;
+}
+
+.sigRow {
+  margin-top: -12px;
+  border-top: none !important;
+  border-bottom: none !important;
+  padding: 6px 24px !important;
+  width: auto !important;
+  height: 30px;
+  color: var(--base-text) !important;
+
+  align-items: center;
+
+  svg {
+    margin-left: 4px;
+    max-width: 20px;
+    path {
+      fill: #d355e7 !important;
+    }
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.noPadding {
+  padding-bottom: 0px !important;
 }
