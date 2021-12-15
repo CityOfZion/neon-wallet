@@ -78,7 +78,10 @@ class N3Helper {
     hideNotification?: () => void,
   ): Promise<JsonRpcResponse> => {
     let result: any
-    if (request.method === 'multiInvoke' || request.method === 'invoke') {
+    if (
+      request.method === 'multiInvoke' ||
+      request.method === 'invokeFunction'
+    ) {
       result = await this.multiInvoke(
         account,
         request.params,
