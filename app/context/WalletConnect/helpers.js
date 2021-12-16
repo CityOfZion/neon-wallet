@@ -383,7 +383,7 @@ class N3Helper {
     return signer
   }
 
-  static buildMultipleSigner(account: any, signers: Signer[]) {
+  static buildMultipleSigner(account: any, signers: Signer[] = []) {
     return !signers.length
       ? [N3Helper.buildSigner(account)]
       : // $FlowFixMe
