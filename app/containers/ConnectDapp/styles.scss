@@ -274,7 +274,8 @@ p {
   .parameterName {
     color: #ffffff;
     padding: 0 6px;
-    min-width: 50px;
+    width: 50px;
+    display: inline !important;
     text-overflow: ellipsis;
     overflow: hidden;
   }
@@ -308,13 +309,23 @@ p {
     justify-content: space-between;
 
     div {
+      width: 300px;
       justify-content: space-between;
     }
 
     .arrayValue {
       text-overflow: ellipsis;
       overflow: hidden;
+      width: 300px;
+
+      span {
+        width: 225px;
+        padding: 6px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
     }
+
   }
 
   .parameterType {

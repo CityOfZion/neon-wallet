@@ -32,7 +32,7 @@ type WitnessScope = {
 }
 
 type Signer = {
-  scope: WitnessScope,
+  scopes: WitnessScope,
   allowedContracts?: string[],
   allowedGroups?: string[],
 }
@@ -41,12 +41,11 @@ type ContractInvocation = {
   scriptHash: string,
   operation: string,
   args: any[],
-  abortOnFail?: boolean,
-  signer?: Signer,
+  abortOnFail?: boolean
 }
 
 type ContractInvocationMulti = {
-  signer: Signer[],
+  signers: Signer[],
   invocations: ContractInvocation[],
 }
 
@@ -257,7 +256,7 @@ class N3Helper {
     const script = sb.build()
     return new rpc.RPCClient(this.rpcAddress).invokeScript(
       Neon.u.HexString.fromHex(script),
-      N3Helper.buildMultipleSigner(account, cim.signer),
+      N3Helper.buildMultipleSigner(account, cim.signers),
     )
   }
 
@@ -328,7 +327,7 @@ class N3Helper {
       transaction.script = u.HexString.fromHex(sb.build())
 
       // re-add signers as neon-core Signer class array
-      transaction.signers = N3Helper.buildMultipleSigner(account, cim.signer)
+      transaction.signers = N3Helper.buildMultipleSigner(account, cim.signers)
 
       let notificationId
 
@@ -352,7 +351,7 @@ class N3Helper {
     const trx = new tx.Transaction({
       script: Neon.u.HexString.fromHex(script),
       validUntilBlock: currentHeight + 100,
-      signers: N3Helper.buildMultipleSigner(account, cim.signer),
+      signers: N3Helper.buildMultipleSigner(account, cim.signers),
     })
     await Neon.experimental.txHelpers.addFees(trx, {
       rpcAddress: this.rpcAddress,
@@ -368,7 +367,7 @@ class N3Helper {
       account: account.scriptHash,
     })
 
-    signer.scopes = signerEntry && signerEntry.scope
+    signer.scopes = signerEntry && signerEntry.scopes
     if (signerEntry && signerEntry.allowedContracts) {
       signer.allowedContracts = signerEntry.allowedContracts.map(ac =>
         Neon.u.HexString.fromHex(ac),
