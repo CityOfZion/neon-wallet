@@ -1,10 +1,5 @@
 // @flow
-import Neon, { rpc, tx, sc, u, api, wallet } from '@cityofzion/neon-js-next'
-import { u as ncU, tx as ncTx } from '@cityofzion/neon-core'
-import {
-  setBlockExpiry,
-  addFees,
-} from '@cityofzion/neon-js-next/lib/experimental/helpers'
+import Neon, { rpc, tx, sc, api, wallet } from '@cityofzion/neon-js-next'
 // eslint-disable-next-line
 import { JsonRpcRequest, JsonRpcResponse } from '@json-rpc-tools/utils'
 
@@ -32,7 +27,7 @@ type WitnessScope = {
 }
 
 type Signer = {
-  scope: WitnessScope,
+  scopes: WitnessScope,
   allowedContracts?: string[],
   allowedGroups?: string[],
 }
@@ -42,11 +37,10 @@ type ContractInvocation = {
   operation: string,
   args: any[],
   abortOnFail?: boolean,
-  signer?: Signer,
 }
 
 type ContractInvocationMulti = {
-  signer: Signer[],
+  signers: Signer[],
   invocations: ContractInvocation[],
 }
 
@@ -109,133 +103,6 @@ class N3Helper {
     }
   }
 
-  contractInvoke = async (
-    isHardwareLogin?: boolean,
-    signingFunction?: () => void,
-    showInfoNotification?: (*) => void,
-    hideNotification?: (*) => void,
-    account: any,
-    scriptHash: string,
-    operation: string,
-    ...args: any[]
-  ): Promise<any> => {
-    const networkMagic = await N3Helper.getMagicOfRpcAddress(this.rpcAddress)
-    const contract = new Neon.experimental.SmartContract(
-      Neon.u.HexString.fromHex(scriptHash),
-      {
-        networkMagic,
-        rpcAddress: this.rpcAddress,
-        account,
-      },
-    )
-
-    const convertedArgs = N3Helper.convertParams(args)
-    try {
-      if (isHardwareLogin) {
-        const signingConfig = {
-          signingCallback: signingFunction,
-        }
-        const facade = await api.NetworkFacade.fromConfig({
-          node: this.rpcAddress,
-        })
-        const builder = new sc.ScriptBuilder()
-        try {
-          builder.emitAppCall(
-            Neon.u.HexString.fromHex(scriptHash).toString(),
-            operation,
-            convertedArgs,
-          )
-        } catch (e) {
-          console.error({ e })
-        }
-        const transaction = new tx.Transaction()
-        // add script as neon-core HexString class
-        transaction.script = ncU.HexString.fromHex(builder.build())
-        await setBlockExpiry(transaction, {
-          rpcAddress: this.rpcAddress,
-          blocksTillExpiry: 100,
-        }).catch(console.error)
-        // add signers as neon-core Signer class array
-        transaction.signers = [
-          new ncTx.Signer({
-            account: account.scriptHash,
-            scopes: 'CalledByEntry',
-          }),
-        ]
-        transaction.systemFee = 0
-        transaction.networkFee = 0
-        transaction.witnesses = [
-          new ncTx.Witness({
-            verificationScript: wallet.getVerificationScriptFromPublicKey(
-              account.publicKey,
-            ),
-            invocationScript: '',
-          }),
-        ]
-        await addFees(transaction, {
-          rpcAddress: this.rpcAddress,
-          account,
-          networkMagic,
-        }).catch(console.error)
-
-        // re-add script as neon-js HexString class
-        transaction.script = u.HexString.fromHex(builder.build())
-
-        // re-add signers as neon-core Signer class array
-        transaction.signers = [
-          new tx.Signer({
-            account: account.scriptHash,
-            scopes: 'CalledByEntry',
-          }),
-        ]
-
-        let notificationId
-
-        if (showInfoNotification)
-          notificationId = showInfoNotification({
-            message: 'Please sign the transaction on your hardware device',
-            autoDismiss: 0,
-          })
-
-        const signedTx = await facade
-          .sign(transaction, signingConfig)
-          .catch(console.error)
-
-        if (hideNotification && notificationId) hideNotification(notificationId)
-
-        return new rpc.NeoServerRpcClient(this.rpcAddress).sendRawTransaction(
-          signedTx,
-        )
-      }
-      return contract.invoke(operation, convertedArgs)
-    } catch (e) {
-      return N3Helper.convertError(e)
-    }
-  }
-
-  testInvoke = async (
-    scriptHash: string,
-    operation: string,
-    ...args: any[]
-  ): Promise<any> => {
-    const networkMagic = await N3Helper.getMagicOfRpcAddress(this.rpcAddress)
-    const contract = new Neon.experimental.SmartContract(
-      Neon.u.HexString.fromHex(scriptHash),
-      {
-        networkMagic,
-        rpcAddress: this.rpcAddress,
-      },
-    )
-
-    const convertedArgs = N3Helper.convertParams(args)
-
-    try {
-      return await contract.testInvoke(operation, convertedArgs)
-    } catch (e) {
-      return N3Helper.convertError(e)
-    }
-  }
-
   multiTestInvoke = async (
     account: any,
     cim: ContractInvocationMulti,
@@ -257,7 +124,7 @@ class N3Helper {
     const script = sb.build()
     return new rpc.RPCClient(this.rpcAddress).invokeScript(
       Neon.u.HexString.fromHex(script),
-      N3Helper.buildMultipleSigner(account, cim.signer),
+      N3Helper.buildMultipleSigner(account, cim.signers),
     )
   }
 
@@ -287,79 +154,49 @@ class N3Helper {
     const rpcClient = new rpc.RPCClient(this.rpcAddress)
     const currentHeight = await rpcClient.getBlockCount()
 
+    let trx = new tx.Transaction({
+      script: Neon.u.HexString.fromHex(script),
+      validUntilBlock: currentHeight + 100,
+      signers: N3Helper.buildMultipleSigner(account, cim.signers),
+    })
+
+    trx.witnesses = [
+      new tx.Witness({
+        verificationScript: wallet.getVerificationScriptFromPublicKey(
+          account.publicKey,
+        ),
+        invocationScript: '',
+      }),
+    ]
+
+    await Neon.experimental.txHelpers.addFees(trx, {
+      rpcAddress: this.rpcAddress,
+      networkMagic,
+      account,
+    })
+
     if (isHardwareLogin) {
-      const signingConfig = {
-        signingCallback: signingFunction,
-      }
       const facade = await api.NetworkFacade.fromConfig({
         node: this.rpcAddress,
       })
-      const transaction = new tx.Transaction()
-      // add script as neon-core HexString class
-      transaction.script = ncU.HexString.fromHex(sb.build())
-      await setBlockExpiry(transaction, {
-        rpcAddress: this.rpcAddress,
-        blocksTillExpiry: 100,
-      }).catch(console.error)
-      // add signers as neon-core Signer class array
-      transaction.signers = [
-        new ncTx.Signer({
-          account: account.scriptHash,
-          scopes: 'CalledByEntry',
-        }),
-      ]
-      transaction.systemFee = 0
-      transaction.networkFee = 0
-      transaction.witnesses = [
-        new ncTx.Witness({
-          verificationScript: wallet.getVerificationScriptFromPublicKey(
-            account.publicKey,
-          ),
-          invocationScript: '',
-        }),
-      ]
-      await addFees(transaction, {
-        rpcAddress: this.rpcAddress,
-        account,
-        networkMagic,
-      }).catch(console.error)
-
-      // re-add script as neon-js HexString class
-      transaction.script = u.HexString.fromHex(sb.build())
-
-      // re-add signers as neon-core Signer class array
-      transaction.signers = N3Helper.buildMultipleSigner(account, cim.signer)
+      const signingConfig = {
+        signingCallback: signingFunction,
+      }
 
       let notificationId
-
       if (showInfoNotification)
         notificationId = showInfoNotification({
           message: 'Please sign the transaction on your hardware device',
           autoDismiss: 0,
         })
 
-      const signedTx = await facade
-        .sign(transaction, signingConfig)
-        .catch(console.error)
+      trx = await facade.sign(trx, signingConfig).catch(console.error)
 
       if (hideNotification && notificationId) hideNotification(notificationId)
-
-      return new rpc.NeoServerRpcClient(this.rpcAddress).sendRawTransaction(
-        signedTx,
-      )
+    } else {
+      trx.sign(account, networkMagic)
     }
 
-    const trx = new tx.Transaction({
-      script: Neon.u.HexString.fromHex(script),
-      validUntilBlock: currentHeight + 100,
-      signers: N3Helper.buildMultipleSigner(account, cim.signer),
-    })
-    await Neon.experimental.txHelpers.addFees(trx, {
-      rpcAddress: this.rpcAddress,
-      networkMagic,
-      account,
-    })
-    trx.sign(account, networkMagic)
     return rpcClient.sendRawTransaction(trx)
   }
 
@@ -368,7 +205,7 @@ class N3Helper {
       account: account.scriptHash,
     })
 
-    signer.scopes = signerEntry && signerEntry.scope
+    signer.scopes = signerEntry && signerEntry.scopes
     if (signerEntry && signerEntry.allowedContracts) {
       signer.allowedContracts = signerEntry.allowedContracts.map(ac =>
         Neon.u.HexString.fromHex(ac),

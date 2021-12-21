@@ -684,7 +684,7 @@ const ConnectDapp = ({
                 </React.Fragment>
               ))}
             {request &&
-              request.request.params.signer && (
+              request.request.params.signers && (
                 <div
                   className={classNames([
                     styles.detailsLabel,
@@ -696,11 +696,11 @@ const ConnectDapp = ({
                   <div>
                     {
                       WITNESS_SCOPE[
-                        String(request.request.params.signer[0].scope)
+                        String(request.request.params.signers[0].scopes)
                       ]
                     }
                     {WITNESS_SCOPE[
-                      String(request.request.params.signer[0].scope)
+                      String(request.request.params.signers[0].scopes)
                     ] === 'Global' && <WarningIcon />}
                   </div>
                 </div>
