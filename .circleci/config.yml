@@ -55,7 +55,7 @@ jobs:
 
   build_macos:
     macos:
-      xcode: "11.0.0"
+      xcode: "12.0.0"
     steps:
       - checkout
       - restore_cache:
