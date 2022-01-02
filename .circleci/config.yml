@@ -87,26 +87,41 @@ jobs:
           path: dist
           destination: build
 
+  build_macos:
+    macos:
+      xcode: "12.0.0"
+    steps:
+      - checkout
+      - restore_cache:
+          key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
+      - run: curl -o- -L https://yarnpkg.com/install.sh | bash
+      - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
+      - run: yarn dist
+      - store_artifacts:
+          path: dist
+          destination: build
+
 workflows:
   version: 2
   build_test_and_deploy:
     jobs:
-      - build:
-          filters:
-            tags:
-              only: /v.*/
-      - test:
-          requires:
-            - build
-      - deploy_win64:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /v.*/
-      - deploy_linux:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /v.*/
+      - build_macos
+      # - build:
+      #     filters:
+      #       tags:
+      #         only: /v.*/
+      # - test:
+      #     requires:
+      #       - build
+      # - deploy_win64:
+      #     filters:
+      #       branches:
+      #         ignore: /.*/
+      #       tags:
+      #         only: /v.*/
+      # - deploy_linux:
+      #     filters:
+      #       branches:
+      #         ignore: /.*/
+      #       tags:
+      #         only: /v.*/
