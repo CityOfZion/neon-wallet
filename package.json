@@ -47,6 +47,7 @@
     ],
     "dmg": {
       "background": "./app/assets/images/background.tiff",
+      "sign": false,
       "window": {
         "width": 576,
         "height": 404
