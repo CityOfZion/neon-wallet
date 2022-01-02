@@ -81,7 +81,7 @@ jobs:
       size: "medium"
     steps:
       - checkout
-      - run: npm install --global windows-build-tools
+      - run: npm install --global --production windows-build-tools --vs2015
       - restore_cache:
           key: neon-wallet-dependencies-windows-cache-{{ checksum "yarn.lock" }}
       - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
