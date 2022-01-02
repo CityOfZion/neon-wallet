@@ -71,11 +71,30 @@ jobs:
           path: dist
           destination: build
 
+
+  build_win:
+    executor: win/default # executor type
+    steps:
+      - checkout
+      # - restore_cache:
+      #     key: neon-wallet-dependencies-windows-cache-{{ checksum "yarn.lock" }}
+      - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
+      # - save_cache:
+      #     key: neon-wallet-dependencies-windows-cache-{{ checksum "yarn.lock" }}
+      #     paths:
+      #       - /usr/local/share/.cache/yarn/v2
+      #       - ./node_modules
+      - run: yarn dist
+      - store_artifacts:
+          path: dist
+          destination: build
+
 workflows:
   version: 2
   test_and_deploy:
     jobs:
       - build_macos
+      - build_win
       # - build:
       #     filters:
       #       tags:
