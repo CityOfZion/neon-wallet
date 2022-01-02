@@ -37,7 +37,7 @@
       "app/dist/bundle.js",
       "app/dist/style.css"
     ],
-    "afterSign": "./notarize.js",
+    "afterSign": "electron-builder-notarize",
     "publish": [
       {
         "provider": "github",
@@ -47,7 +47,6 @@
     ],
     "dmg": {
       "background": "./app/assets/images/background.tiff",
-      "sign": false,
       "window": {
         "width": 576,
         "height": 404
