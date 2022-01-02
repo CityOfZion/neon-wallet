@@ -73,7 +73,9 @@ jobs:
 
 
   build_win:
-    executor: win/default # executor type
+    machine:
+      image: windows-default # Windows machine image
+    resource_class: windows.medium
     steps:
       - checkout
       # - restore_cache:
