@@ -83,6 +83,7 @@ jobs:
       - checkout
       - run: npm install --global --production windows-build-tools --vs2015
       - run: npm config set msvs_version 2015 -g
+      - run: choco install windows-sdk-8.1
       - restore_cache:
           key: neon-wallet-dependencies-windows-cache-{{ checksum "yarn.lock" }}
       - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
