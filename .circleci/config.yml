@@ -8,13 +8,6 @@ references:
           TARGET_ARCH: x64
     working_directory: ~/neon-wallet
 
-  win_config: &win_config
-    docker:
-      - image: electronuserland/builder:wine
-        environment:
-          TARGET_ARCH: x64
-    working_directory: ~/neon-wallet
-
   workspace_root: &workspace_root ~/neon-wallet
 
   attach_workspace: &attach_workspace
@@ -22,25 +15,6 @@ references:
       at: *workspace_root
 
 jobs:
-  build:
-    <<: *container_config
-    steps:
-      - checkout
-      - restore_cache:
-          key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
-      - run: apt-get -y update
-      - run: apt-get -y install libusb-1.0-0-dev icnsutils graphicsmagick libudev-dev
-      - run: yarn config delete proxy
-      - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
-      - run: yarn lint
-      - run: yarn flow
-      - run: yarn assets
-      - save_cache:
-          key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
-          paths:
-            - /usr/local/share/.cache/yarn/v2
-            - ./node_modules
-
   test:
     <<: *container_config
     steps:
@@ -48,30 +22,23 @@ jobs:
       - restore_cache:
           key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
       - run: apt-get -y update
+      # NOTE: not quite sure why this is necessary
       - run: apt-get -y install libusb-1.0-0-dev graphicsmagick libudev-dev
-      - run: apt-get -y install libxtst6 libxss1 libgtk2.0-0 libnss3 libasound2 libgconf-2-4
-      - run: yarn test-ci
-    store_artifacts:
-      - path: artifacts/
-      - destination: yarnpkg
-
-  deploy_win64:
-    <<: *win_config
-    steps:
-      - checkout
-      - restore_cache:
-          key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
-      - run: apt-get -y update
-      - run: apt-get -y install libusb-1.0-0-dev icnsutils graphicsmagick libudev-dev
-      - run: apt-get install --no-install-recommends -y gcc-multilib g++-multilib
+      # NOTE: not quite sure why this is necessary commenting out for now
+      # - run: apt-get -y install libxtst6 libxss1 libgtk2.0-0 libnss3 libasound2 libgconf-2-4
+      - run: yarn config delete proxy
       - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
+      - run: yarn lint
+      - run: yarn flow
       - run: yarn assets
-      - run: yarn electron-builder -w --x64
-      - store_artifacts:
-          path: dist
-          destination: build
+      - run: yarn test-ci
+      - save_cache:
+          key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - /usr/local/share/.cache/yarn/v2
+            - ./node_modules
 
-  deploy_linux:
+  build_linux:
     <<: *container_config
     steps:
       - checkout
@@ -81,7 +48,6 @@ jobs:
       - run: apt-get -y install libusb-1.0-0-dev icnsutils graphicsmagick libudev-dev
       - run: yarn config delete proxy
       - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
-      - run: yarn lint
       - run: yarn dist
       - store_artifacts:
           path: dist
@@ -95,6 +61,11 @@ jobs:
       - restore_cache:
           key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
       - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
+      - save_cache:
+          key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - /usr/local/share/.cache/yarn/v2
+            - ./node_modules
       - run: yarn dist
       - store_artifacts:
           path: dist
@@ -102,7 +73,7 @@ jobs:
 
 workflows:
   version: 2
-  build_test_and_deploy:
+  test_and_deploy:
     jobs:
       - build_macos
       # - build:
