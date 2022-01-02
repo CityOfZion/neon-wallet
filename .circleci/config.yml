@@ -1,4 +1,7 @@
-version: 2
+version: 2.1
+
+orbs:
+  win: circleci/windows@2.2.0
 
 references:
   container_config: &container_config
@@ -73,9 +76,9 @@ jobs:
 
 
   build_win:
-    machine:
-      image: windows-default # Windows machine image
-    resource_class: windows.medium
+    executor:
+      name: win/default # executor type
+      size: "medium"
     steps:
       - checkout
       # - restore_cache:
