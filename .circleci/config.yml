@@ -81,6 +81,7 @@ jobs:
       size: "medium"
     steps:
       - checkout
+      - run: npm install --global windows-build-tools
       - restore_cache:
           key: neon-wallet-dependencies-windows-cache-{{ checksum "yarn.lock" }}
       - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
@@ -98,16 +99,22 @@ workflows:
   version: 2
   test_and_deploy:
     jobs:
-      - build_macos
+      # run test on every commit
       - build_win
-      # - build:
+      # build artifacts only on tags with name v.*
+      # - deploy_macos:
       #     filters:
+      #       branches:
+      #         ignore: /.*/
       #       tags:
       #         only: /v.*/
-      # - test:
-      #     requires:
-      #       - build
-      # - deploy_win64:
+      # - deploy_linux:
+      #     filters:
+      #       branches:
+      #         ignore: /.*/
+      #       tags:
+      #         only: /v.*/
+      # - deploy_win:
       #     filters:
       #       branches:
       #         ignore: /.*/
