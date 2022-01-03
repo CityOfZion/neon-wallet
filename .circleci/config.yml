@@ -100,30 +100,26 @@ jobs:
 
 workflows:
   version: 2
-  test_and_deploy:
+  build_and_test:
     jobs:
       # run test on every commit
       - test
+  deploy:
+    jobs:
       # build artifacts only on tags with name v.*
-      - deploy_macos:
+      - build_macos:
           filters:
             branches:
               ignore: /.*/
             tags:
               only: /v.*/
-      - deploy_linux:
+      - build_win:
           filters:
             branches:
               ignore: /.*/
             tags:
               only: /v.*/
-      - deploy_win:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /v.*/
-      - deploy_linux:
+      - build_linux:
           filters:
             branches:
               ignore: /.*/
