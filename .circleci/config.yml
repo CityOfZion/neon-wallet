@@ -74,7 +74,6 @@ jobs:
           path: dist
           destination: build
 
-
   build_win:
     executor:
       name: win/default
@@ -104,6 +103,9 @@ workflows:
     jobs:
       # run test on every commit
       - test
+      - build_macos
+      - build_win
+      - build_linux
   deploy:
     jobs:
       # build artifacts only on tags with name v.*
