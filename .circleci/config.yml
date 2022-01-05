@@ -1,16 +1,12 @@
-version: 2
+version: 2.1
+
+orbs:
+  win: circleci/windows@2.2.0
 
 references:
   container_config: &container_config
     docker:
       - image: electronuserland/builder:wine-chrome-05.21
-        environment:
-          TARGET_ARCH: x64
-    working_directory: ~/neon-wallet
-
-  win_config: &win_config
-    docker:
-      - image: electronuserland/builder:wine
         environment:
           TARGET_ARCH: x64
     working_directory: ~/neon-wallet
@@ -22,25 +18,6 @@ references:
       at: *workspace_root
 
 jobs:
-  build:
-    <<: *container_config
-    steps:
-      - checkout
-      - restore_cache:
-          key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
-      - run: apt-get -y update
-      - run: apt-get -y install libusb-1.0-0-dev icnsutils graphicsmagick libudev-dev
-      - run: yarn config delete proxy
-      - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
-      - run: yarn lint
-      - run: yarn flow
-      - run: yarn assets
-      - save_cache:
-          key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
-          paths:
-            - /usr/local/share/.cache/yarn/v2
-            - ./node_modules
-
   test:
     <<: *container_config
     steps:
@@ -48,30 +25,19 @@ jobs:
       - restore_cache:
           key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
       - run: apt-get -y update
-      - run: apt-get -y install libusb-1.0-0-dev graphicsmagick libudev-dev
-      - run: apt-get -y install libxtst6 libxss1 libgtk2.0-0 libnss3 libasound2 libgconf-2-4
-      - run: yarn test-ci
-    store_artifacts:
-      - path: artifacts/
-      - destination: yarnpkg
-
-  deploy_win64:
-    <<: *win_config
-    steps:
-      - checkout
-      - restore_cache:
-          key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
-      - run: apt-get -y update
-      - run: apt-get -y install libusb-1.0-0-dev icnsutils graphicsmagick libudev-dev
-      - run: apt-get install --no-install-recommends -y gcc-multilib g++-multilib
+      - run: yarn config delete proxy
       - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
+      - run: yarn lint
+      - run: yarn flow
       - run: yarn assets
-      - run: yarn electron-builder -w --x64
-      - store_artifacts:
-          path: dist
-          destination: build
+      - run: yarn test-ci
+      - save_cache:
+          key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - /usr/local/share/.cache/yarn/v2
+            - ./node_modules
 
-  deploy_linux:
+  build_linux:
     <<: *container_config
     steps:
       - checkout
@@ -79,9 +45,35 @@ jobs:
           key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
       - run: apt-get -y update
       - run: apt-get -y install libusb-1.0-0-dev icnsutils graphicsmagick libudev-dev
+      - run: apt-get -y install libxtst6 libxss1 libgtk2.0-0 libnss3 libasound2 libgconf-2-4
       - run: yarn config delete proxy
       - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
-      - run: yarn lint
+      - run: yarn dist
+      - store_artifacts:
+          path: dist
+          destination: build
+
+  build_macos:
+    macos:
+      xcode: "12.0.0"
+    steps:
+      - checkout
+      - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
+      - run: yarn dist
+      - store_artifacts:
+          path: dist
+          destination: build
+
+  build_win:
+    executor:
+      name: win/default
+      size: "medium"
+    steps:
+      - checkout
+      - run: npm install --global --production windows-build-tools --vs2015
+      - run: npm config set msvs_version 2015 -g
+      - run: choco install windows-sdk-8.1
+      - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
       - run: yarn dist
       - store_artifacts:
           path: dist
@@ -89,22 +81,26 @@ jobs:
 
 workflows:
   version: 2
-  build_test_and_deploy:
+  build_and_test:
     jobs:
-      - build:
-          filters:
-            tags:
-              only: /v.*/
-      - test:
-          requires:
-            - build
-      - deploy_win64:
+      # run test on every commit
+      - test
+  deploy:
+    jobs:
+      # build artifacts only on tags with name v.*
+      - build_macos:
           filters:
             branches:
               ignore: /.*/
             tags:
               only: /v.*/
-      - deploy_linux:
+      - build_win:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v.*/
+      - build_linux:
           filters:
             branches:
               ignore: /.*/
