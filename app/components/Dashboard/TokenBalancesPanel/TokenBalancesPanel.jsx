@@ -10,8 +10,12 @@ import styles from './TokenBalancesPanel.scss'
 import { toFixedDecimals } from '../../../core/formatters'
 import { toBigNumber } from '../../../core/math'
 import Nothing from '../../../assets/icons/nothing.svg'
+import GM from '../../../assets/images/GM_Logo.png'
 import { CURRENCIES, PRICE_UNAVAILABLE } from '../../../core/constants'
-import { imageMap } from '../../../assets/nep5/svg'
+import { imageMap } from '../../../assets/nep5/png'
+import StyledReactSelect from '../../Inputs/StyledReactSelect/StyledReactSelect'
+
+const electron = require('electron').remote
 
 type Props = {
   className: ?string,
@@ -20,15 +24,42 @@ type Props = {
   currencyCode: string,
   address: string,
   intl: IntlShape,
+  nft?: Array<{
+    collection: string,
+    symbol: string,
+    count: number,
+  }>,
 }
 
-export default class TokenBalancesPanel extends React.Component<Props> {
+const TOKENS_OPTION = {
+  value: 'TOKENS',
+  label: 'Tokens',
+}
+
+const NFT_OPTION = {
+  value: 'NFT',
+  label: 'NFTs',
+}
+
+type State = {
+  currentDisplayOption: {
+    value: string,
+    label: string,
+  },
+}
+
+export default class TokenBalancesPanel extends React.Component<Props, State> {
   static defaultProps = {
     loading: false,
   }
 
+  state = {
+    currentDisplayOption: TOKENS_OPTION,
+  }
+
   render = () => {
     const { className, balances } = this.props
+    console.log(this.props)
     return (
       <Panel
         className={classNames(styles.tokenBalancesPanel, className)}
@@ -38,9 +69,12 @@ export default class TokenBalancesPanel extends React.Component<Props> {
         headerClassName={styles.headerStyle}
         renderHeader={this.renderHeader}
       >
-        {balances.length
-          ? this.renderTokenBalances()
-          : this.renderEmptyBalanceInfo()}
+        {/* eslint-disable-next-line */}
+        {this.state.currentDisplayOption.value === 'TOKENS'
+          ? balances.length
+            ? this.renderTokenBalances()
+            : this.renderEmptyBalanceInfo()
+          : this.renderNFTBalances()}
       </Panel>
     )
   }
@@ -110,6 +144,24 @@ export default class TokenBalancesPanel extends React.Component<Props> {
         <span>
           <FormattedMessage id="dashboardBalancePanelLabel" />
         </span>
+
+        {this.props.nft &&
+          !!this.props.nft.length && (
+            <span className={styles.duration}>
+              <StyledReactSelect
+                value={this.state.currentDisplayOption}
+                onChange={option =>
+                  this.setState({ currentDisplayOption: option })
+                }
+                options={[TOKENS_OPTION, NFT_OPTION]}
+                isSearchable={false}
+                fontWeight="normal"
+                transparent
+                hideHighlight
+                textAlign="right"
+              />
+            </span>
+          )}
       </div>
     </div>
   )
@@ -152,6 +204,67 @@ export default class TokenBalancesPanel extends React.Component<Props> {
           ))}
         </div>
       </div>
+    )
+  }
+
+  renderNFTBalances = () => {
+    return (
+      <React.Fragment>
+        <div className={styles.nftBalancesPanelContent}>
+          <div className={styles.gridContainer}>
+            <div className={classNames(styles.columnCell, styles.symbol)}>
+              SYMBOL
+            </div>
+            <div className={classNames(styles.columnCell, styles.priceLabel)}>
+              COLLECTION
+            </div>
+            <div className={classNames(styles.columnCell, styles.priceLabel)}>
+              AMOUNT
+            </div>
+
+            {this.props.nft &&
+              this.props.nft.length &&
+              this.props.nft.map(nft => (
+                <React.Fragment key={nft.symbol}>
+                  <span
+                    className={classNames(styles.rowCell, styles.tickerName)}
+                  >
+                    {imageMap[nft.symbol] && (
+                      <div className={styles.tokenImageContainer}>
+                        <img
+                          className={styles.tokenImage}
+                          src={imageMap[nft.symbol]}
+                          alt=""
+                        />
+                      </div>
+                    )}
+                    {nft.symbol}
+                  </span>
+                  <span className={classNames(styles.rowCell, styles.price)}>
+                    {nft.collection}
+                  </span>
+                  <span
+                    className={classNames(styles.rowCell, styles.balanceValue)}
+                  >
+                    {nft.count}
+                  </span>
+                </React.Fragment>
+              ))}
+          </div>
+          <div
+            className={styles.gmLink}
+            onClick={() => {
+              electron.shell.openExternal(
+                `https://ghostmarket.io/account/n3/${
+                  this.props.address
+                }/?tab=available`,
+              )
+            }}
+          >
+            View on Ghost Market <img className={styles.gmLogo} src={GM} />
+          </div>{' '}
+        </div>
+      </React.Fragment>
     )
   }
 }

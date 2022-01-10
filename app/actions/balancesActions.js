@@ -378,6 +378,15 @@ async function getN3Balances({ net, address }: Props) {
         params: [address],
       }),
     )
+
+    const nftResponse = await rpcClient.execute(
+      new rpc.Query({
+        method: 'getnep11balances',
+        params: [address],
+      }),
+    )
+    console.log({ nftResponse })
+
     const { result } = balanceResponse
     for (const balance of result.balance) {
       const { assethash, amount } = balance
