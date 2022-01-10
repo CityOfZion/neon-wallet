@@ -59,7 +59,7 @@ export default class TokenBalancesPanel extends React.Component<Props, State> {
 
   render = () => {
     const { className, balances } = this.props
-    console.log(this.props)
+
     return (
       <Panel
         className={classNames(styles.tokenBalancesPanel, className)}
@@ -207,64 +207,60 @@ export default class TokenBalancesPanel extends React.Component<Props, State> {
     )
   }
 
-  renderNFTBalances = () => {
-    return (
-      <React.Fragment>
-        <div className={styles.nftBalancesPanelContent}>
-          <div className={styles.gridContainer}>
-            <div className={classNames(styles.columnCell, styles.symbol)}>
-              SYMBOL
-            </div>
-            <div className={classNames(styles.columnCell, styles.priceLabel)}>
-              COLLECTION
-            </div>
-            <div className={classNames(styles.columnCell, styles.priceLabel)}>
-              AMOUNT
-            </div>
-
-            {this.props.nft &&
-              this.props.nft.length &&
-              this.props.nft.map(nft => (
-                <React.Fragment key={nft.symbol}>
-                  <span
-                    className={classNames(styles.rowCell, styles.tickerName)}
-                  >
-                    {imageMap[nft.symbol] && (
-                      <div className={styles.tokenImageContainer}>
-                        <img
-                          className={styles.tokenImage}
-                          src={imageMap[nft.symbol]}
-                          alt=""
-                        />
-                      </div>
-                    )}
-                    {nft.symbol}
-                  </span>
-                  <span className={classNames(styles.rowCell, styles.price)}>
-                    {nft.collection}
-                  </span>
-                  <span
-                    className={classNames(styles.rowCell, styles.balanceValue)}
-                  >
-                    {nft.count}
-                  </span>
-                </React.Fragment>
-              ))}
+  renderNFTBalances = () => (
+    <React.Fragment>
+      <div className={styles.nftBalancesPanelContent}>
+        <div className={styles.gridContainer}>
+          <div className={classNames(styles.columnCell, styles.symbol)}>
+            SYMBOL
           </div>
-          <div
-            className={styles.gmLink}
-            onClick={() => {
-              electron.shell.openExternal(
-                `https://ghostmarket.io/account/n3/${
-                  this.props.address
-                }/?tab=available`,
-              )
-            }}
-          >
-            View on Ghost Market <img className={styles.gmLogo} src={GM} />
-          </div>{' '}
+          <div className={classNames(styles.columnCell, styles.priceLabel)}>
+            COLLECTION
+          </div>
+          <div className={classNames(styles.columnCell, styles.priceLabel)}>
+            AMOUNT
+          </div>
+
+          {this.props.nft &&
+            this.props.nft.length &&
+            this.props.nft.map(nft => (
+              <React.Fragment key={nft.symbol}>
+                <span className={classNames(styles.rowCell, styles.tickerName)}>
+                  {imageMap[nft.symbol] && (
+                    <div className={styles.tokenImageContainer}>
+                      <img
+                        className={styles.tokenImage}
+                        src={imageMap[nft.symbol]}
+                        alt=""
+                      />
+                    </div>
+                  )}
+                  {nft.symbol}
+                </span>
+                <span className={classNames(styles.rowCell, styles.price)}>
+                  {nft.collection}
+                </span>
+                <span
+                  className={classNames(styles.rowCell, styles.balanceValue)}
+                >
+                  {nft.count}
+                </span>
+              </React.Fragment>
+            ))}
         </div>
-      </React.Fragment>
-    )
-  }
+        <div
+          className={styles.gmLink}
+          onClick={() => {
+            electron.shell.openExternal(
+              `https://ghostmarket.io/account/n3/${
+                this.props.address
+              }/?tab=available`,
+            )
+          }}
+        >
+          View on Ghost Market <img className={styles.gmLogo} src={GM} />
+        </div>{' '}
+      </div>
+    </React.Fragment>
+  )
 }
