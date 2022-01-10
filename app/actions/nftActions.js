@@ -13,9 +13,6 @@ type Props = {
   chain?: string,
 }
 
-// 1.) Query RPC a hardcoded node that has the `getnep11balances` functionality installed (this will give us the total)
-// 2.) For each token per assetHash query GM for the metadata and merge
-
 async function getNFTs({ net, address }) {
   if (net === 'MainNet') {
     const rpcClient = new rpc.RPCClient('http://seed1.neo.org:10332/', '2.3.3')
