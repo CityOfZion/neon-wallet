@@ -38,13 +38,14 @@ async function getNFTs({ net, address }) {
 
         const symbol = atob(tokenNameResponse.stack[0].value)
 
-        const API_URL = `https://api.ghostmarket.io/api/v1/metadata?contract=${
+        const API_URL = `https://dora.coz.io/api/v1/neo3/mainnet/contract/${
           nft.assethash
-        }&chain=n3&token_id=${nft.tokens[0].tokenid}`
+        }`
+
         const { data } = await axios.get(API_URL)
 
         const collectedData = {
-          collection: data.name || 'N/A',
+          name: data.manifest.name || 'N/A',
           symbol,
           count: nft.tokens.length,
         }

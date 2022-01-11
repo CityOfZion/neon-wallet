@@ -25,7 +25,7 @@ type Props = {
   address: string,
   intl: IntlShape,
   nft?: Array<{
-    collection: string,
+    name: string,
     symbol: string,
     count: number,
   }>,
@@ -212,13 +212,13 @@ export default class TokenBalancesPanel extends React.Component<Props, State> {
       <div className={styles.nftBalancesPanelContent}>
         <div className={styles.gridContainer}>
           <div className={classNames(styles.columnCell, styles.symbol)}>
-            SYMBOL
+            <FormattedMessage id="dashboardTokenBalancesToken" />
           </div>
           <div className={classNames(styles.columnCell, styles.priceLabel)}>
-            COLLECTION
+            NAME
           </div>
           <div className={classNames(styles.columnCell, styles.priceLabel)}>
-            AMOUNT
+            <FormattedMessage id="dashboardTokenBalancesHoldings" />
           </div>
 
           {this.props.nft &&
@@ -238,7 +238,7 @@ export default class TokenBalancesPanel extends React.Component<Props, State> {
                   {nft.symbol}
                 </span>
                 <span className={classNames(styles.rowCell, styles.price)}>
-                  {nft.collection}
+                  {nft.name}
                 </span>
                 <span
                   className={classNames(styles.rowCell, styles.balanceValue)}
