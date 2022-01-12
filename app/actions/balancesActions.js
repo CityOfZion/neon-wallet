@@ -378,6 +378,7 @@ async function getN3Balances({ net, address }: Props) {
         params: [address],
       }),
     )
+
     const { result } = balanceResponse
     for (const balance of result.balance) {
       const { assethash, amount } = balance

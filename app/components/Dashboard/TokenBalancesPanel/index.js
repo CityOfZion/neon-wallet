@@ -19,8 +19,10 @@ import withProgressPanel from '../../../hocs/withProgressPanel'
 import { toBigNumber } from '../../../core/math'
 import pricesActions from '../../../actions/pricesActions'
 import { imageMap } from '../../../assets/nep5/png'
+import nftActions from '../../../actions/nftActions'
 
 const mapPricesDataToProps = prices => ({ prices })
+const mapNftDataToProps = nft => ({ nft })
 
 const filterZeroBalanceTokens = balances =>
   filter(balances, token => toBigNumber(token.balance).gt(0))
@@ -64,6 +66,14 @@ const mapBalancesActionsToProps = (actions, props) => ({
     }),
 })
 
+const mapNftActionsToProps = (actions, props) => ({
+  refresh: () =>
+    actions.call({
+      net: props.net,
+      address: props.address,
+    }),
+})
+
 export default compose(
   withCurrencyData('currencyCode'),
 
@@ -79,5 +89,9 @@ export default compose(
   // expose data & functionality needed for `refresh` action
   withActions(balancesActions, mapBalancesActionsToProps),
   withLoadingProp(balancesActions),
+  withActions(nftActions, mapNftActionsToProps),
+  withLoadingProp(nftActions),
+
+  withData(nftActions, mapNftDataToProps),
   injectIntl,
 )(TokenBalancesPanel)

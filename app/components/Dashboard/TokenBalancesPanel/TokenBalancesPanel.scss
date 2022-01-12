@@ -4,6 +4,26 @@
   height: auto !important;
 }
 
+.gmLink {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin: 12px 0;
+  cursor: pointer;
+  align-items: center;
+}
+
+.nftBalancesPanelContent {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.gmLogo {
+  max-width: 32px;
+  width: 32px;
+}
+
 a {
   text-decoration: none;
   color: var(--base-link-color);
@@ -14,7 +34,8 @@ a {
   align-items: center;
 }
 
-.tokenBalancesPanelContent {
+.tokenBalancesPanelContent,
+.nftBalancesPanelContent {
   padding-top: 0px;
   padding-bottom: 0;
   font-size: 13px;
@@ -69,6 +90,7 @@ a {
   display: flex;
   align-items: center;
   height: 50px;
+  justify-content: space-between;
 }
 
 .emptyBalanceContainer {
