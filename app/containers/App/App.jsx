@@ -18,6 +18,7 @@ import { useWalletConnect } from '../../context/WalletConnect/WalletConnectConte
 import N3Helper from '../../context/WalletConnect/helpers'
 import { getNode, getRPCEndpoint } from '../../actions/nodeStorageActions'
 import { parseQuery } from '../../core/formatters'
+import { useState } from 'react'
 
 const ipc = require('electron').ipcRenderer
 
@@ -69,7 +70,20 @@ const App = ({
   showInfoNotification,
   hideNotification,
 }: Props) => {
+  const [quitting, setIsQuitting] = useState(false)
+
   const walletConnectCtx = useWalletConnect()
+  console.log({ walletConnectCtx })
+
+  // hack via IPC to listen for the quit message
+  ipc.on('quit', async () => {
+    if (!quitting) {
+      debugger
+      setIsQuitting(true)
+      await walletConnectCtx.resetApp()
+      ipc.send('closed')
+    }
+  })
 
   useEffect(() => {
     walletConnectCtx.init()

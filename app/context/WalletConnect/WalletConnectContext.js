@@ -99,8 +99,14 @@ export const WalletConnectContextProvider = ({
   }, [])
 
   const resetApp = async () => {
+    debugger
+
+    if (wcClient && wcClient.session.values && !sessions.length) {
+      setSessions(wcClient.session.values)
+    }
+
     try {
-      clearStorage()
+      console.log({ sessions })
       if (sessions.length) {
         await Promise.all(
           sessions.map(
@@ -113,6 +119,7 @@ export const WalletConnectContextProvider = ({
           ),
         )
       }
+      clearStorage()
       setWcClient(undefined)
       setSessionProposals([])
       setInitialized(false)
@@ -121,7 +128,7 @@ export const WalletConnectContextProvider = ({
       setRequests([])
       setResults([])
     } catch (e) {
-      // ignored
+      console.error({ e })
     }
   }
 

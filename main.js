@@ -5,6 +5,7 @@ const {
   BrowserWindow,
   globalShortcut,
   session,
+  ipcMain,
 } = require('electron') // eslint-disable-line import/no-extraneous-dependencies
 const path = require('path')
 const url = require('url')
@@ -28,8 +29,10 @@ if (gotTheLock) {
       // Keep only command line / deep linked arguments
       const args = argv.slice(1)
       if (process.platform === 'win32') {
+        // eslint-disable-next-line
         deeplinkingUrl = args[1]
       } else {
+        // eslint-disable-next-line
         deeplinkingUrl = args[0]
       }
       deeplinkingUrl = deeplinkingUrl.endsWith('/')
@@ -99,6 +102,13 @@ app.on('ready', () => {
     // https://discuss.atom.io/t/prevent-window-navigation-when-dropping-a-link/24365
     mainWindow.webContents.on('will-navigate', ev => {
       ev.preventDefault()
+    })
+
+    mainWindow.on('close', e => {
+      if (mainWindow) {
+        e.preventDefault()
+        mainWindow.webContents.send('quit')
+      }
     })
 
     if (process.env.NODE_ENV === 'development') {
@@ -242,6 +252,11 @@ app.on('web-contents-created', (event, wc) => {
 app.on('will-quit', () => {
   // Unregister all shortcuts.
   globalShortcut.unregisterAll()
+})
+
+ipcMain.on('closed', () => {
+  mainWindow = null
+  app.quit()
 })
 
 autoUpdater.logger = log
