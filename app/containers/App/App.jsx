@@ -70,23 +70,16 @@ const App = ({
   showInfoNotification,
   hideNotification,
 }: Props) => {
-  const [quitting, setIsQuitting] = useState(false)
-
   const walletConnectCtx = useWalletConnect()
-  console.log({ walletConnectCtx })
-
-  // hack via IPC to listen for the quit message
-  ipc.on('quit', async () => {
-    if (!quitting) {
-      debugger
-      setIsQuitting(true)
-      await walletConnectCtx.resetApp()
-      ipc.send('closed')
-    }
-  })
 
   useEffect(() => {
     walletConnectCtx.init()
+    // Listen for the 'quit' message and reset the wallet connect context
+    // once complete relay the 'closed' message to programmatically close electron
+    ipc.on('quit', async () => {
+      await walletConnectCtx.resetApp()
+      ipc.send('closed')
+    })
     return () => null
   }, [])
 

@@ -99,14 +99,7 @@ export const WalletConnectContextProvider = ({
   }, [])
 
   const resetApp = async () => {
-    debugger
-
-    if (wcClient && wcClient.session.values && !sessions.length) {
-      setSessions(wcClient.session.values)
-    }
-
     try {
-      console.log({ sessions })
       if (sessions.length) {
         await Promise.all(
           sessions.map(
@@ -119,6 +112,28 @@ export const WalletConnectContextProvider = ({
           ),
         )
       }
+
+      // BUG: for some reason when this reset app method
+      // was being invoked 'sessions' was an empty array.
+      // The check below will guarantee that all sessions
+      // are disconnected by checking storage.
+      if (
+        wcClient &&
+        wcClient.session.values &&
+        wcClient.session.values.length
+      ) {
+        await Promise.all(
+          wcClient.session.values.map(
+            session =>
+              wcClient &&
+              wcClient.disconnect({
+                topic: session.topic,
+                reason: ERROR.USER_DISCONNECTED.format(),
+              }),
+          ),
+        )
+      }
+
       clearStorage()
       setWcClient(undefined)
       setSessionProposals([])
