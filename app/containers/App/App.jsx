@@ -18,7 +18,6 @@ import { useWalletConnect } from '../../context/WalletConnect/WalletConnectConte
 import N3Helper from '../../context/WalletConnect/helpers'
 import { getNode, getRPCEndpoint } from '../../actions/nodeStorageActions'
 import { parseQuery } from '../../core/formatters'
-import { useState } from 'react'
 
 const ipc = require('electron').ipcRenderer
 
