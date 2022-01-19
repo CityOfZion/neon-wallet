@@ -1,7 +1,7 @@
 // @flow
 import React, { useEffect, useState } from 'react'
 import classNames from 'classnames'
-import { wallet } from '@cityofzion/neon-js-next'
+import { wallet, rpc } from '@cityofzion/neon-js-next'
 import axios from 'axios'
 
 import CloseButton from '../../components/CloseButton'
@@ -227,17 +227,22 @@ const ConnectDapp = ({
         setFee(fee)
       }
 
-      const getContractManifest = async (invocation, chainId) => {
+      const getContractManifest = async invocation => {
         setLoading(true)
-        const hash = invocation.scriptHash
+
+        let endpoint = await getNode(net)
+        if (!endpoint) {
+          endpoint = await getRPCEndpoint(net)
+        }
+        const rpcClient = new rpc.RPCClient(endpoint)
+
         const {
-          data: {
-            manifest: { name, abi },
-          },
-        } = await axios.get(
-          chainId.includes('mainnet')
-            ? `https://dora.coz.io/api/v1/neo3/mainnet/contract/${hash}`
-            : `https://dora.coz.io/api/v1/neo3/testnet_rc4/contract/${hash}`,
+          manifest: { name, abi },
+        } = await rpcClient.execute(
+          new rpc.Query({
+            method: 'getcontractstate',
+            params: [invocation.scriptHash],
+          }),
         )
         setLoading(false)
         return { name, abi }
@@ -245,10 +250,7 @@ const ConnectDapp = ({
 
       const mapContractDataToInvocation = async request => {
         for (const invocation of request.request.params.invocations) {
-          const { name, abi } = await getContractManifest(
-            invocation,
-            request.chainId,
-          )
+          const { name, abi } = await getContractManifest(invocation)
           invocation.contract = {
             name,
             abi,
