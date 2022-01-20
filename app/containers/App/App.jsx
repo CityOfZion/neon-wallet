@@ -73,6 +73,12 @@ const App = ({
 
   useEffect(() => {
     walletConnectCtx.init()
+    // Listen for the 'quit' message and reset the wallet connect context
+    // once complete relay the 'closed' message to programmatically close electron
+    ipc.on('quit', async () => {
+      await walletConnectCtx.resetApp()
+      ipc.send('closed')
+    })
     return () => null
   }, [])
 
