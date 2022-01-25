@@ -7,6 +7,7 @@ import pricesActions from './pricesActions'
 import transactionHistoryActions from './transactionHistoryActions'
 import { getPendingTransactionInfo } from './pendingTransactionActions'
 import { blockHeightActions } from './blockHeightActions'
+import nftActions from './nftActions'
 
 export const ID = 'account'
 
@@ -17,4 +18,5 @@ export default createBatchActions(ID, {
   pendingTransactionsInfo: getPendingTransactionInfo,
   prices: pricesActions,
   blockHeight: blockHeightActions,
+  nft: nftActions,
 })
