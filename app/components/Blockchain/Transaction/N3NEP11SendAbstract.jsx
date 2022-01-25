@@ -47,7 +47,10 @@ class N3NEP11SendAbstract extends React.Component<Props> {
             </div>
           </div>
           {isPending ? 'Pending' : txDate}
-          <div className={styles.txLabelContainerN3}> NFT Transfer</div>
+          <div className={styles.txLabelContainerN3} style={{ minWidth: 100 }}>
+            {' '}
+            NFT Transfer
+          </div>
         </div>
 
         <div className={styles.txToContainerN3}>

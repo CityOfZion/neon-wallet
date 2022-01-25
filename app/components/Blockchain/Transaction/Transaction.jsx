@@ -174,7 +174,7 @@ export default class Transaction extends React.Component<Props> {
   renderAbstractN3 = () => {
     const { isPending, tx, address } = this.props
     const { time, type, sender } = tx
-    const txDate = this.renderTxDate(time)
+    const txDate = this.renderTxDate(time || tx.metadata.time)
 
     const metadata = {
       txDate,
@@ -183,6 +183,10 @@ export default class Transaction extends React.Component<Props> {
       findContact: this.findContact,
       showAddContactModal: this.displayModal,
       ...tx.metadata,
+    }
+
+    if (type === TX_TYPES.N3NEP11TRANSFER) {
+      console.log({ tx, txDate })
     }
 
     switch (type) {
