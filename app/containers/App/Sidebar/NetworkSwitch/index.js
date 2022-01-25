@@ -1,6 +1,6 @@
 // @flow
 import { compose } from 'recompose'
-import { withActions, type Actions } from 'spunky'
+import { withActions, type Actions, withReset } from 'spunky'
 
 import NetworkSwitch from './NetworkSwitch'
 import networkActions from '../../../../actions/networkActions'
@@ -15,11 +15,12 @@ const mapActionsToProps = (actions: Actions): Object => ({
 })
 
 const mapAccountActionsToProps = (actions, props) => ({
-  loadWalletData: () =>
+  loadWalletData: (net: string) =>
     actions.call({
-      net: props.net,
+      net,
       address: props.address,
       tokens: props.tokens,
+      chain: props.chain,
     }),
 })
 
@@ -30,4 +31,5 @@ export default compose(
   withActions(networkActions, mapActionsToProps),
   withFilteredTokensData(),
   withActions(accountActions, mapAccountActionsToProps),
+  withReset(accountActions, ['networkId']),
 )(NetworkSwitch)

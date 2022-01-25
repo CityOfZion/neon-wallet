@@ -417,6 +417,7 @@ async function getN3Balances({ net, address }: Props) {
 export default createActions(
   ID,
   ({ net, address, tokens }: Props = {}) => async () => {
+    console.log({ net })
     const { chain } = await getSettings()
     if (chain === 'neo3') {
       return getN3Balances({ net, address, tokens })
