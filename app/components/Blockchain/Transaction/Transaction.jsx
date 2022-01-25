@@ -185,10 +185,6 @@ export default class Transaction extends React.Component<Props> {
       ...tx.metadata,
     }
 
-    if (type === TX_TYPES.N3NEP11TRANSFER) {
-      console.log({ tx, txDate })
-    }
-
     switch (type) {
       case TX_TYPES.N3CONTRACTINVOCATION:
         return <N3ContractInvocationAbstract {...metadata} />
