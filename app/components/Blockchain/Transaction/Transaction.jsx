@@ -174,7 +174,7 @@ export default class Transaction extends React.Component<Props> {
   renderAbstractN3 = () => {
     const { isPending, tx, address } = this.props
     const { time, type, sender } = tx
-    const txDate = this.renderTxDate(time)
+    const txDate = this.renderTxDate(time || tx.metadata.time)
 
     const metadata = {
       txDate,

@@ -79,7 +79,7 @@ export async function parseAbstractData(
  * @param net
  * @returns {Promise<[]>}
  */
-export async function handleNeoActivity(
+export async function computeN3Activity(
   data: Object,
   currentUserAddress: string,
   net: string,
@@ -103,6 +103,7 @@ export async function handleNeoActivity(
               image = getImageBySymbol(invocation.metadata.symbol)
               break
             case 'nep11_transfer':
+              invocation.metadata.time = item.time
               // Get the properties of the token
               endpoint = await getNode(net)
               if (!endpoint) {
@@ -140,10 +141,14 @@ export async function handleNeoActivity(
           invocation.vmstate = item.vmstate
 
           if (
-            invocation.metadata.scripthash ===
-            '0xd2a4cff31913016155e38e474a2c06d08be276cf'
+            invocation.metadata.scripthash !==
+            '0xef4073a0f2b305a38ec4050e4d3d28bc40ea63f5'
           ) {
-            invocation.metadata.amount /= 10 ** 8
+            // BUG: this will display incorrect data if the token does not have
+            // 8 decimals but this is a compromise to reduce network request overhead.
+            invocation.metadata.amount = toBigNumber(
+              (invocation.metadata.amount /= 10 ** 8),
+            ).toString()
           }
         } catch (e) {
           console.warn('invocation error:', invocation, e)
@@ -182,7 +187,7 @@ export default createActions(
     if (chain === 'neo3') {
       const network = net === 'MainNet' ? 'mainnet' : 'testnet_rc4'
       const data = await NeoRest.addressTXFull(address, page, network)
-      parsedEntries = await handleNeoActivity(data, address, net)
+      parsedEntries = await computeN3Activity(data, address, net)
     } else {
       const network = net === 'MainNet' ? 'mainnet' : 'testnet'
       const data = await NeoLegacyREST.getAddressAbstracts(
