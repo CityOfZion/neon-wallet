@@ -17,7 +17,7 @@ type Props = {
   disabled: boolean,
   transparent: boolean,
   shouldSwitchNetworks: boolean,
-  loadWalletData: () => void,
+  loadWalletData: (network: string) => void,
   settingsSelect: boolean,
   fontSize: number,
   net: string,
@@ -47,9 +47,8 @@ const NetworkSwitch = ({
   const handleChange = (option: NetworkItemType) => {
     if (shouldSwitchNetworks) {
       onChange(option.id)
-      setTimeout(() => {
-        loadWalletData()
-      }, 0)
+      const network = option.id === '1' ? 'MainNet' : 'TestNet'
+      loadWalletData(network)
     } else {
       handleControlledChange(option)
     }

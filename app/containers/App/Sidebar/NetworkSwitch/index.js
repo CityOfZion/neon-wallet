@@ -15,11 +15,12 @@ const mapActionsToProps = (actions: Actions): Object => ({
 })
 
 const mapAccountActionsToProps = (actions, props) => ({
-  loadWalletData: () =>
+  loadWalletData: (net: string) =>
     actions.call({
-      net: props.net,
+      net,
       address: props.address,
       tokens: props.tokens,
+      chain: props.chain,
     }),
 })
 
