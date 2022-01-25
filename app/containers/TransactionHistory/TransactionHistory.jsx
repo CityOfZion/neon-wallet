@@ -14,7 +14,7 @@ import RefreshButton from '../Buttons/RefreshButton'
 import ExportIcon from '../../assets/icons/export.svg'
 import PanelHeaderButton from '../../components/PanelHeaderButton/PanelHeaderButton'
 import {
-  handleNeoActivity,
+  computeN3Activity,
   parseAbstractData,
 } from '../../actions/transactionHistoryActions'
 
@@ -86,7 +86,7 @@ export default class TransactionHistory extends Component<Props, State> {
       if (chain === 'neo3') {
         const network = net === 'MainNet' ? 'mainnet' : 'testnet_rc4'
         data = await NeoRest.addressTXFull(address, currentPage, network)
-        parsedEntries = await handleNeoActivity(data, address, net)
+        parsedEntries = await computeN3Activity(data, address, net)
         parsedEntries.forEach((entry: Object) => {
           Object.assign(entry, entry.metadata)
           delete entry.metadata

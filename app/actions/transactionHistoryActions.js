@@ -97,8 +97,6 @@ export async function computeN3Activity(
         let assets
         let endpoint
 
-        console.log({ invocation, item })
-
         try {
           switch (invocation.type) {
             case 'nep17_transfer':
