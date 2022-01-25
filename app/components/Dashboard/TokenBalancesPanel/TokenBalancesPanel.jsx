@@ -24,6 +24,7 @@ type Props = {
   currencyCode: string,
   address: string,
   intl: IntlShape,
+  net: string,
   nft?: Array<{
     name: string,
     symbol: string,
@@ -252,9 +253,13 @@ export default class TokenBalancesPanel extends React.Component<Props, State> {
           className={styles.gmLink}
           onClick={() => {
             electron.shell.openExternal(
-              `https://ghostmarket.io/account/n3/${
-                this.props.address
-              }/?tab=available`,
+              this.props.net === 'TestNet'
+                ? `https://testnet.ghostmarket.io/account/n3/${
+                    this.props.address
+                  }/?tab=available`
+                : `https://ghostmarket.io/account/n3/${
+                    this.props.address
+                  }/?tab=available`,
             )
           }}
         >
