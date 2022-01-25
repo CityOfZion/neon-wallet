@@ -87,74 +87,69 @@ export async function computeN3Activity(
   const results = []
   if (!data.items) return results
   for (const item of data.items) {
-    const unresolved = item.invocations
-      .filter(i => {
-        const { from, to } = i.metadata
-        return from === currentUserAddress || to === currentUserAddress
-      })
-      .map(async invocation => {
-        let image
-        let assets
-        let endpoint
+    const unresolved = item.invocations.map(async invocation => {
+      let image
+      let assets
+      let endpoint
 
-        try {
-          switch (invocation.type) {
-            case 'nep17_transfer':
-              image = getImageBySymbol(invocation.metadata.symbol)
-              break
-            case 'nep11_transfer':
-              invocation.metadata.time = item.time
-              // Get the properties of the token
-              endpoint = await getNode(net)
-              if (!endpoint) {
-                endpoint = await getRPCEndpoint(net)
-              }
-              invocation.metadata.tokenName = Buffer.from(
-                invocation.metadata.token_id,
-                'hex',
-              ).toString()
-              assets = await new n3Rpc.RPCClient(endpoint).invokeFunction(
-                invocation.metadata.scripthash,
-                'properties',
-                [sc.ContractParam.string(invocation.metadata.tokenName)],
-              )
-              assets.stack[0].value.some(property => {
-                const key = u.HexString.fromBase64(property.key.value).toAscii()
-                if (key === 'image') {
-                  image = u.HexString.fromBase64(property.value.value).toAscii()
-                  return true
-                }
-                return false
-              })
-              break
-            default:
-              break
-          }
-          // flatten the invocations into individual events to support existing components
-          invocation.metadata.image = image
-          invocation.hash = item.hash
-          invocation.sender = item.sender
-          invocation.sysfee = item.sysfee
-          invocation.netfee = item.netfee
-          invocation.block = item.block
-          invocation.time = item.time
-          invocation.vmstate = item.vmstate
-
-          if (
-            invocation.metadata.scripthash !==
-            '0xef4073a0f2b305a38ec4050e4d3d28bc40ea63f5'
-          ) {
-            // BUG: this will display incorrect data if the token does not have
-            // 8 decimals but this is a compromise to reduce network request overhead.
-            invocation.metadata.amount = toBigNumber(
-              (invocation.metadata.amount /= 10 ** 8),
+      try {
+        switch (invocation.type) {
+          case 'nep17_transfer':
+            image = getImageBySymbol(invocation.metadata.symbol)
+            break
+          case 'nep11_transfer':
+            invocation.metadata.time = item.time
+            // Get the properties of the token
+            endpoint = await getNode(net)
+            if (!endpoint) {
+              endpoint = await getRPCEndpoint(net)
+            }
+            invocation.metadata.tokenName = Buffer.from(
+              invocation.metadata.token_id,
+              'hex',
             ).toString()
-          }
-        } catch (e) {
-          console.warn('invocation error:', invocation, e)
+            assets = await new n3Rpc.RPCClient(endpoint).invokeFunction(
+              invocation.metadata.scripthash,
+              'properties',
+              [sc.ContractParam.string(invocation.metadata.tokenName)],
+            )
+            assets.stack[0].value.some(property => {
+              const key = u.HexString.fromBase64(property.key.value).toAscii()
+              if (key === 'image') {
+                image = u.HexString.fromBase64(property.value.value).toAscii()
+                return true
+              }
+              return false
+            })
+            break
+          default:
+            break
         }
-        return invocation
-      })
+        // flatten the invocations into individual events to support existing components
+        invocation.metadata.image = image
+        invocation.hash = item.hash
+        invocation.sender = item.sender
+        invocation.sysfee = item.sysfee
+        invocation.netfee = item.netfee
+        invocation.block = item.block
+        invocation.time = item.time
+        invocation.vmstate = item.vmstate
+
+        if (
+          invocation.metadata.scripthash !==
+          '0xef4073a0f2b305a38ec4050e4d3d28bc40ea63f5'
+        ) {
+          // BUG: this will display incorrect data if the token does not have
+          // 8 decimals but this is a compromise to reduce network request overhead.
+          invocation.metadata.amount = toBigNumber(
+            (invocation.metadata.amount /= 10 ** 8),
+          ).toString()
+        }
+      } catch (e) {
+        console.warn('invocation error:', invocation, e)
+      }
+      return invocation
+    })
     item.invocations = await Promise.all(unresolved)
     results.push(...item.invocations)
   }
