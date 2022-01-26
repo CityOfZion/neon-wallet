@@ -254,7 +254,7 @@ export default class TokenBalancesPanel extends React.Component<Props, State> {
           onClick={() => {
             electron.shell.openExternal(
               this.props.net === 'TestNet'
-                ? `https://testnet.ghostmarket.io/account/n3/${
+                ? `https://testnet.ghostmarket.io/account/n3t/${
                     this.props.address
                   }/?tab=available`
                 : `https://ghostmarket.io/account/n3/${
