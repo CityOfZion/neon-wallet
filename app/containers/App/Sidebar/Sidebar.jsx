@@ -75,7 +75,13 @@ const Sidebar = ({
         activeClassName={styles.active}
       >
         {pendingTransactionsCount > 0 && (
-          <div className={styles.pendingTransactionsCount}>
+          <div
+            className={
+              chain === 'neo2'
+                ? styles.pendingTransactionsCount
+                : styles.pendingTransactionsCountN3
+            }
+          >
             {pendingTransactionsCount}
           </div>
         )}
