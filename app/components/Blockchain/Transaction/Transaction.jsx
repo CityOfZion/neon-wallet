@@ -22,6 +22,7 @@ import Tooltip from '../../Tooltip'
 import styles from './Transaction.scss'
 import N3NEP11ReceiveAbstract from './N3NEP11ReceiveAbstract'
 import N3NEP11SendAbstract from './N3NEP11SendAbstract'
+import N3PendingAbstract from './N3PendingAbstract'
 
 type Props = {
   address: string,
@@ -43,6 +44,7 @@ type Props = {
   },
   showAddContactModal: ({ address: string }) => null,
   tx: Object,
+  renderN2Tx?: boolean,
 }
 
 export default class Transaction extends React.Component<Props> {
@@ -56,10 +58,13 @@ export default class Transaction extends React.Component<Props> {
       chain,
       className,
       isPending,
+      renderN2Tx,
     } = this.props
     return (
       <div className={classNames(styles.transactionContainer, className)}>
-        {chain === 'neo3' ? this.renderAbstractN3() : this.renderAbstract(type)}
+        {chain === 'neo3' && !renderN2Tx
+          ? this.renderAbstractN3()
+          : this.renderAbstract(type)}
         {!isPending && (
           <Button
             className={styles.transactionHistoryButton}
@@ -115,7 +120,7 @@ export default class Transaction extends React.Component<Props> {
     )
   }
 
-  renderAbstract = (type: string) => {
+  renderAbstract = (type: string, isN3?: boolean) => {
     const { isPending, address } = this.props
     const { time, label, amount, isNetworkFee, to, from, image } = this.props.tx
     const contactTo = this.findContact(to)
@@ -142,7 +147,13 @@ export default class Transaction extends React.Component<Props> {
     }
 
     if (isPending) {
-      return (
+      return isN3 ? (
+        <N3PendingAbstract
+          {...abstractProps}
+          {...this.props.pendingTx}
+          renderTxDate={this.renderTxDate}
+        />
+      ) : (
         <PendingAbstract
           {...abstractProps}
           {...this.props.pendingTx}
@@ -174,7 +185,7 @@ export default class Transaction extends React.Component<Props> {
   renderAbstractN3 = () => {
     const { isPending, tx, address } = this.props
     const { time, type, sender } = tx
-    const txDate = this.renderTxDate(time || tx.metadata.time)
+    const txDate = this.renderTxDate(time || (tx.metadata && tx.metadata.time))
 
     const metadata = {
       txDate,
@@ -183,6 +194,10 @@ export default class Transaction extends React.Component<Props> {
       findContact: this.findContact,
       showAddContactModal: this.displayModal,
       ...tx.metadata,
+    }
+
+    if (isPending) {
+      return this.renderAbstract(type, true)
     }
 
     switch (type) {
