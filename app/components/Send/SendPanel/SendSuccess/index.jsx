@@ -70,6 +70,7 @@ export default class SendSuccess extends React.Component<Props> {
           <TransactionList>
             {transactions.map((tx, i) => (
               <Transaction
+                renderN2Tx
                 tx={tx}
                 key={`sentTx${i}`}
                 className={styles.sendSuccessBodyListItem}

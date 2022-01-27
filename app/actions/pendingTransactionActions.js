@@ -139,17 +139,11 @@ export const fetchTransactionInfo = async (
   if (Array.isArray(transactions[address]) && transactions[address].length) {
     const { chain } = await getSettings()
 
-    let client
-    if (chain === 'neo2') {
-      let url = await getNode(net)
-      if (isEmpty(url)) {
-        url = await getRPCEndpoint(net)
-      }
-      client = Neon.create.rpcClient(url)
-    } else {
-      const url = 'https://testnet2.neo.coz.io:443'
-      client = new rpc.RPCClient(url, '2.3.3')
+    let url = await getNode(net)
+    if (isEmpty(url)) {
+      url = await getRPCEndpoint(net)
     }
+    const client = Neon.create.rpcClient(url)
 
     const pendingTransactionInfo = []
 
