@@ -47,6 +47,7 @@ jobs:
       - run: apt-get -y install libusb-1.0-0-dev icnsutils graphicsmagick libudev-dev
       - run: apt-get -y install libxtst6 libxss1 libgtk2.0-0 libnss3 libasound2 libgconf-2-4
       - run: apt-get install libpng16-dev
+      - run: apt-get update && apt-get install nasm
       - run: yarn config delete proxy
       - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
       - run: yarn dist
