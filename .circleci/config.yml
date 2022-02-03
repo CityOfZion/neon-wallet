@@ -85,7 +85,7 @@ workflows:
   build_and_test:
     jobs:
       # run test on every commit
-      - build_linux
+      - test
   deploy:
     jobs:
       # build artifacts only on tags with name v.*
