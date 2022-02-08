@@ -39,6 +39,7 @@ jobs:
 
   build_linux:
     <<: *container_config
+    resource_class: large
     steps:
       - checkout
       - restore_cache:
