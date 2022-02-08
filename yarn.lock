@@ -188,13 +188,10 @@
     isomorphic-ws "4.0.1"
     ws "7.4.5"
 
-"@cityofzion/neon-api@^5.0.0-next.16":
-  version "5.0.0-next.16"
-  resolved "https://registry.yarnpkg.com/@cityofzion/neon-api/-/neon-api-5.0.0-next.16.tgz#83d2f70c43b124424817ce1acf1925c5cb8131b4"
-  integrity sha512-wn7skR+gPvMGUS2GTP9xAW6TP0kwigtLC9+tV7xbl2idaRk3SVGzpI6TrPzCAtZ+mTCqznUjzT/R2jQTSxsCPg==
-  dependencies:
-    isomorphic-ws "4.0.1"
-    ws "7.4.4"
+"@cityofzion/neon-api@^5.0.0-next.17":
+  version "5.0.0-next.17"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neon-api/-/neon-api-5.0.0-next.17.tgz#81d6765101c90a49564bddd967656ff290979bd4"
+  integrity sha512-QQiwopbDLmli9cyGvvmdhrpEyss2/9g+zJ4DJ2aP9T0Clep37Mv2Yfv10/XIXwrGPXdB/cXht58GevKa8P1cLQ==
 
 "@cityofzion/neon-core@^4.9.0":
   version "4.9.0"
@@ -218,7 +215,7 @@
     secure-random "1.1.2"
     wif "2.0.6"
 
-"@cityofzion/neon-core@^5.0.0-next.15", "@cityofzion/neon-core@^5.0.0-next.16":
+"@cityofzion/neon-core@^5.0.0-next.15":
   version "5.0.0-next.16"
   resolved "https://registry.yarnpkg.com/@cityofzion/neon-core/-/neon-core-5.0.0-next.16.tgz#f76224a564592c00b0d50fe5f620fe0dbba2a3d2"
   integrity sha512-C9YoomPA5JuOh2HpYY99OYicJBRg+LncPbtTQ4WZ8ujQ4w9DA8DIdLJ0cfWCWFPvGxAt3dW2sxYMzWn+5oNWxg==
@@ -235,6 +232,24 @@
     loglevel-plugin-prefix "0.8.4"
     scrypt-js "3.0.1"
 
+"@cityofzion/neon-core@^5.0.0-next.17":
+  version "5.0.0-next.17"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neon-core/-/neon-core-5.0.0-next.17.tgz#fe666b9432eabc7743be926882499d01a33c4f05"
+  integrity sha512-+yb9J+gJSvmOEP6raKOLJdg88GsVP6I6ITFAkdxeWe32PzgtMl1NxZc3QrWBOJ8PQ9t5CGN+KW2l+fwgMqfavQ==
+  dependencies:
+    abort-controller "3.0.0"
+    bignumber.js "7.2.1"
+    bn.js "5.2.0"
+    bs58 "4.0.1"
+    buffer "6.0.3"
+    cross-fetch "^3.1.4"
+    crypto-js "4.1.1"
+    elliptic "6.5.4"
+    lodash "4.17.21"
+    loglevel "1.8.0"
+    loglevel-plugin-prefix "0.8.4"
+    scrypt-js "3.0.1"
+
 "@cityofzion/neon-js-legacy-latest@npm:@cityofzion/neon-js@4.9.0":
   version "4.9.0"
   resolved "https://registry.yarnpkg.com/@cityofzion/neon-js/-/neon-js-4.9.0.tgz#39f46720cff76f807128d5882832a3d722d9fd25"
@@ -244,13 +259,13 @@
     "@cityofzion/neon-core" "^4.9.0"
     "@cityofzion/neon-nep5" "^4.9.0"
 
-"@cityofzion/neon-js-next@npm:@cityofzion/neon-js@5.0.0-next.16":
-  version "5.0.0-next.16"
-  resolved "https://registry.yarnpkg.com/@cityofzion/neon-js/-/neon-js-5.0.0-next.16.tgz#fa9b1f8331eb406a278e8883193d749750237e80"
-  integrity sha512-mN/0OHzsCPFJqN1WC/cjHBEoSEvURWRkiQdCQBLAbD71Mo12SXEWOd10858c9MQbfTPovT/pSy+eZdGSCANZwg==
+"@cityofzion/neon-js-next@npm:@cityofzion/neon-js@5.0.0-next.17":
+  version "5.0.0-next.17"
+  resolved "https://registry.yarnpkg.com/@cityofzion/neon-js/-/neon-js-5.0.0-next.17.tgz#ba09d3404f799bbc381e85f18664c5e6c996923e"
+  integrity sha512-36Gzh1wrDYvHKoCn7tBenbAOP2ke/rvpkzMwRILxGc3PmY4xJATzGKlpbw9koNFR4fs8uLKZCnyC4aT4XWWDKQ==
   dependencies:
-    "@cityofzion/neon-api" "^5.0.0-next.16"
-    "@cityofzion/neon-core" "^5.0.0-next.16"
+    "@cityofzion/neon-api" "^5.0.0-next.17"
+    "@cityofzion/neon-core" "^5.0.0-next.17"
 
 "@cityofzion/neon-js@3.11.9":
   version "3.11.9"
@@ -9737,7 +9752,7 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-lodash@4.17.15, lodash@^4.0.0, lodash@^4.0.1, lodash@^4.15.0, lodash@^4.16.2, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.2, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.8.0, lodash@~4.17.10, lodash@~4.17.4:
+lodash@4.17.15, lodash@4.17.21, lodash@^4.0.0, lodash@^4.0.1, lodash@^4.15.0, lodash@^4.16.2, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.2, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.8.0, lodash@~4.17.10, lodash@~4.17.4:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
@@ -9768,6 +9783,11 @@ loglevel@1.7.1, loglevel@^1.6.8:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/loglevel/-/loglevel-1.7.1.tgz#005fde2f5e6e47068f935ff28573e125ef72f197"
   integrity sha512-Hesni4s5UkWkwCGJMQGAh71PaLUmKFM60dHvq0zi/vDhhrzuk+4GgNbTXJ12YYQJn6ZKBDNIjYcuQGKudvqrIw==
+
+loglevel@1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/loglevel/-/loglevel-1.8.0.tgz#e7ec73a57e1e7b419cb6c6ac06bf050b67356114"
+  integrity sha512-G6A/nJLRgWOuuwdNuA6koovfEV1YpqqAG4pRUlFaz3jj2QNZ8M4vBqnVA+HBTmU/AMNUtlOsMmSpF6NyOjztbA==
 
 loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.2.0, loose-envify@^1.3.1, loose-envify@^1.4.0:
   version "1.4.0"
@@ -15694,11 +15714,6 @@ write@1.0.3:
   integrity sha512-/lg70HAjtkUgWPVZhZcm+T4hkL8Zbtp1nFNOn3lRrxnlv50SRBv7cR7RqR+GMsd3hUXy9hWBo4CHTbFTcOYwig==
   dependencies:
     mkdirp "^0.5.1"
-
-ws@7.4.4:
-  version "7.4.4"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-7.4.4.tgz#383bc9742cb202292c9077ceab6f6047b17f2d59"
-  integrity sha512-Qm8k8ojNQIMx7S+Zp8u/uHOx7Qazv3Yv4q68MiWWWOJhiwG5W3x7iqmRtJo8xxrciZUY4vRxUTJCKuRnF28ZZw==
 
 ws@7.4.5:
   version "7.4.5"
