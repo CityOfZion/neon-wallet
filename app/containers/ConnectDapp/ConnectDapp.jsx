@@ -304,8 +304,8 @@ const ConnectDapp = ({
       >
         {arg.type !== 'Array' && (
           <React.Fragment>
-            <span>{arg.value}</span>
-            <CopyToClipboard text={String(arg && arg.value)} />
+            <span>{arg.value || 'null'}</span>
+            <CopyToClipboard text={String((arg && arg.value) || 'null')} />
           </React.Fragment>
         )}
         {arg.type === 'Array' &&
