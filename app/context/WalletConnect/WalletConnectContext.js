@@ -54,6 +54,9 @@ export const WalletConnectContextProvider = ({
   // $FlowFixMe
   const [txHash, setTxHash] = useState('')
   // $FlowFixMe
+  const [messageVerification, setMessageVerificationResult] = useState({})
+
+  // $FlowFixMe
   const [error, setError] = useState(false)
 
   const init = async () => {
@@ -168,7 +171,7 @@ export const WalletConnectContextProvider = ({
     setAutoAcceptCallback(() => listener)
   }
   const makeRequest = useCallback(
-    async (request: JsonRpcRequest) => {
+    async ({ request }: JsonRpcRequest) => {
       const [namespace, reference, address] = accounts[0].split(':')
       const chainId = `${namespace}:${reference}`
       if (!onRequestCallback) {
@@ -185,9 +188,17 @@ export const WalletConnectContextProvider = ({
         results &&
         results.result &&
         !results.result.error &&
-        !results.isTest
+        !results.isTest &&
+        !results.isMessage
       ) {
         setTxHash(results.result)
+      } else if (
+        results &&
+        results.result &&
+        !results.result.error &&
+        results.isMessage
+      ) {
+        setMessageVerificationResult({ ...results, method: request.method })
       } else {
         const { result } = results
         setError(
@@ -199,11 +210,12 @@ export const WalletConnectContextProvider = ({
     [accounts],
   )
 
-  const approveAndMakeRequest = async (request: JsonRpcRequest) => {
+  const approveAndMakeRequest = async (
+    requestEvent: SessionTypes.RequestEvent,
+  ) => {
     // $FlowFixMe
-    storage.setItem(`request-${JSON.stringify(request)}`, true)
-
-    return makeRequest(request)
+    storage.setItem(`request-${JSON.stringify(requestEvent.request)}`, true)
+    return makeRequest(requestEvent)
   }
 
   const checkApprovedRequest = useCallback(
@@ -422,12 +434,12 @@ export const WalletConnectContextProvider = ({
     setRequests(requests.filter(x => x.request.id !== requestEvent.request.id))
   }
 
-  const approveRequest = async (requestEvent: JsonRpcRequest) => {
+  const approveRequest = async (requestEvent: SessionTypes.RequestEvent) => {
     if (typeof wcClient === 'undefined') {
       throw new Error('Client is not initialized')
     }
     try {
-      const response = await approveAndMakeRequest(requestEvent.request)
+      const response = await approveAndMakeRequest(requestEvent)
       await wcClient.respond({
         topic: requestEvent.topic,
         response,
@@ -516,6 +528,8 @@ export const WalletConnectContextProvider = ({
     setError,
     txHash,
     setTxHash,
+    setMessageVerificationResult,
+    messageVerification,
   }
 
   return (

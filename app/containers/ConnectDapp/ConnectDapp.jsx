@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import { wallet, rpc } from '@cityofzion/neon-js-next'
 import axios from 'axios'
+import { isEmpty } from 'lodash-es'
 
 import CloseButton from '../../components/CloseButton'
 import TextInput from '../../components/Inputs/TextInput'
@@ -23,15 +24,14 @@ import DoraIconDark from '../../assets/icons/dora_icon_dark.svg'
 import Info from '../../assets/icons/info.svg'
 import Up from '../../assets/icons/chevron-up.svg'
 import Down from '../../assets/icons/chevron-down.svg'
-
-import ErrorIcon from '../../assets/icons/wc-error.svg'
 import { TX_STATE_TYPE_MAPPINGS } from './mocks'
 import { getNode, getRPCEndpoint } from '../../actions/nodeStorageActions'
 import DialogueBox from '../../components/DialogueBox'
 import WarningIcon from '../../assets/icons/warning.svg'
 import CopyToClipboard from '../../components/CopyToClipboard/CopyToClipboard'
 import Tooltip from '../../components/Tooltip'
-import Loader from '../../components/Loader'
+import ConnectionLoader from '../../components/ConnectDapp/ConnectionLoader'
+import ConnectionError from '../../components/ConnectDapp/ConnectionError'
 
 const electron = require('electron').remote
 const ipc = require('electron').ipcRenderer
@@ -52,6 +52,9 @@ const CONNECTION_STEPS = {
   APPROVE_TRANSACTION: 'APPROVE_TRANSACTION',
   TRANSACTION_SUCCESS: 'TRANSACTION_SUCCESS',
   TRANSACTION_ERROR: 'TRANSACTION_ERROR',
+  SIGN_MESSAGE: 'SIGN_MESSAGE',
+  VERIFY_MESSAGE: 'VERIFY_MESSAGE',
+  MESSAGE_SUCCESS: 'MESSAGE_SUCCESS',
 }
 
 const WITNESS_SCOPE = {
@@ -192,6 +195,15 @@ const ConnectDapp = ({
 
   useEffect(
     () => {
+      if (!isEmpty(walletConnectCtx.messageVerification)) {
+        setConnectionStep(CONNECTION_STEPS.MESSAGE_SUCCESS)
+      }
+    },
+    [walletConnectCtx.messageVerification],
+  )
+
+  useEffect(
+    () => {
       if (firstRequest) {
         walletConnectCtx
           .getPeerOfRequest(walletConnectCtx.requests[0])
@@ -261,8 +273,20 @@ const ConnectDapp = ({
       }
 
       if (firstRequest) {
-        getGasFee(firstRequest.request)
-        mapContractDataToInvocation(firstRequest)
+        if (
+          firstRequest.request.method === 'signMessage' ||
+          firstRequest.request.method === 'verifyMessage'
+        ) {
+          setConnectionStep(
+            firstRequest.request.method === 'signMessage'
+              ? CONNECTION_STEPS.SIGN_MESSAGE
+              : CONNECTION_STEPS.VERIFY_MESSAGE,
+          )
+          setRequest(firstRequest)
+        } else {
+          getGasFee(firstRequest.request)
+          mapContractDataToInvocation(firstRequest)
+        }
       }
     },
     [firstRequest, address, net],
@@ -336,25 +360,11 @@ const ConnectDapp = ({
 
   switch (true) {
     case loading:
-      return (
-        <FullHeightPanel
-          renderCloseButton={() => (
-            <CloseButton
-              routeTo={ROUTES.DASHBOARD}
-              onClick={() => {
-                walletConnectCtx.setError(undefined)
-              }}
-            />
-          )}
-          renderHeaderIcon={() => null}
-          renderInstructions={false}
-        >
-          <div>
-            <Loader />
-          </div>
-        </FullHeightPanel>
-      )
+      return <ConnectionLoader />
     case connectionStep === CONNECTION_STEPS.TRANSACTION_ERROR:
+      return <ConnectionError />
+
+    case connectionStep === CONNECTION_STEPS.MESSAGE_SUCCESS:
       return (
         <FullHeightPanel
           headerText="Wallet Connect"
@@ -362,7 +372,8 @@ const ConnectDapp = ({
             <CloseButton
               routeTo={ROUTES.DASHBOARD}
               onClick={() => {
-                walletConnectCtx.setError(undefined)
+                // resetState()
+                walletConnectCtx.setMessageVerificationResult({})
               }}
             />
           )}
@@ -374,13 +385,15 @@ const ConnectDapp = ({
           renderInstructions={false}
         >
           <div className={styles.txSuccessContainer}>
-            <ErrorIcon />
-            <h3> Transaction failed!</h3>
-            <p>
-              {typeof error === 'string'
-                ? error
-                : 'An unkown error occurred please try again.'}
-            </p>
+            <CheckMarkIcon />
+            <h3>
+              {' '}
+              You have successfully{' '}
+              {walletConnectCtx.messageVerification.method === 'signMessage'
+                ? 'signed'
+                : 'verified'}{' '}
+              the message!
+            </h3>
             <br />
             <br />
           </div>
@@ -394,6 +407,7 @@ const ConnectDapp = ({
             <CloseButton
               routeTo={ROUTES.DASHBOARD}
               onClick={() => {
+                // resetState()
                 walletConnectCtx.setTxHash('')
               }}
             />
@@ -507,7 +521,105 @@ const ConnectDapp = ({
           </div>
         </FullHeightPanel>
       )
-    case connectionStep === CONNECTION_STEPS.APPROVE_TRANSACTION:
+    case connectionStep === CONNECTION_STEPS.SIGN_MESSAGE:
+      return (
+        <FullHeightPanel
+          headerText="Wallet Connect"
+          renderCloseButton={() => (
+            <CloseButton
+              routeTo={ROUTES.DASHBOARD}
+              onClick={() => {
+                walletConnectCtx.rejectRequest(request)
+                resetState()
+                history.push(ROUTES.DASHBOARD)
+              }}
+            />
+          )}
+          renderHeaderIcon={() => (
+            <div className={styles.walletConnectIcon}>
+              <WallletConnect />
+            </div>
+          )}
+          renderInstructions={false}
+        >
+          <div
+            className={classNames([
+              styles.approveConnectionContainer,
+              styles.approveRequestContainer,
+            ])}
+          >
+            <img src={peer && peer.metadata.icons[0]} />
+
+            <h3>{peer && peer.metadata.name} wants you to sign a message</h3>
+
+            {isHardwareLogin && (
+              <DialogueBox
+                icon={
+                  <WarningIcon
+                    className={styles.warningIcon}
+                    height={60}
+                    width={60}
+                  />
+                }
+                renderText={() => (
+                  <div>
+                    You can view the message below however, the N3 ledger app
+                    does not currently support message signing/verification.
+                  </div>
+                )}
+                className={styles.warningDialogue}
+              />
+            )}
+
+            <div className={styles.connectionDetails}>
+              <div
+                className={styles.details}
+                style={{ margin: '12px 0', padding: '12px' }}
+              >
+                <div
+                  className={styles.detailsLabel}
+                  style={{ marginBottom: '6px' }}
+                >
+                  <label>Message</label>
+                </div>
+                <div>{firstRequest.request.params}</div>
+              </div>
+            </div>
+
+            <div className={styles.confirmation}>
+              Please confirm you would like to proceed
+              <div>
+                <Confirm
+                  style={{ opacity: isHardwareLogin ? 0.2 : 1 }}
+                  onClick={async () => {
+                    if (!loading && !isHardwareLogin) {
+                      setLoading(true)
+                      await walletConnectCtx.approveRequest(request)
+                      setLoading(false)
+                    }
+                  }}
+                />
+
+                <Deny
+                  onClick={() => {
+                    if (!loading) {
+                      showSuccessNotification({
+                        message: `You have denied request from ${
+                          peer ? peer.metadata.name : 'unknown dApp'
+                        }.`,
+                      })
+                      walletConnectCtx.rejectRequest(request)
+                      resetState()
+                      history.push(ROUTES.DASHBOARD)
+                    }
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </FullHeightPanel>
+      )
+    case connectionStep === CONNECTION_STEPS.VERIFY_MESSAGE:
       return (
         <FullHeightPanel
           headerText="Wallet Connect"
@@ -537,9 +649,124 @@ const ConnectDapp = ({
             <img src={peer && peer.metadata.icons[0]} />
 
             <h3>
-              {peer && peer.metadata.name} wants to call{' '}
-              {/* <span className={styles.methodName}>{contractName}</span> contract */}
+              <h3>
+                {peer && peer.metadata.name} wants you to verify a message
+              </h3>
             </h3>
+
+            {isHardwareLogin && (
+              <DialogueBox
+                icon={
+                  <WarningIcon
+                    className={styles.warningIcon}
+                    height={60}
+                    width={60}
+                  />
+                }
+                renderText={() => (
+                  <div>
+                    You can view the message below however, the N3 ledger app
+                    does not currently support message signing/verification.
+                  </div>
+                )}
+                className={styles.warningDialogue}
+              />
+            )}
+
+            <div className={styles.connectionDetails}>
+              <div
+                className={styles.details}
+                style={{ margin: '12px 0', padding: '12px' }}
+              >
+                <div>
+                  {Object.keys(firstRequest.request.params).map(param => (
+                    <div key={param}>
+                      <div
+                        className={classNames([
+                          styles.detailsLabel,
+                          styles.detailRow,
+                        ])}
+                      >
+                        <label>{param}</label>
+                      </div>
+                      <div
+                        className={styles.methodParameter}
+                        style={{
+                          wordBreak: 'break-all',
+                          fontSize: 12,
+                        }}
+                      >
+                        {firstRequest.request.params[param]}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.confirmation}>
+              Please confirm you would like to proceed
+              <div>
+                <Confirm
+                  style={{ opacity: isHardwareLogin ? 0.2 : 1 }}
+                  onClick={async () => {
+                    if (!loading && !isHardwareLogin) {
+                      setLoading(true)
+                      await walletConnectCtx.approveRequest(request)
+                      setLoading(false)
+                    }
+                  }}
+                />
+
+                <Deny
+                  onClick={() => {
+                    if (!loading) {
+                      showSuccessNotification({
+                        message: `You have denied request from ${
+                          peer ? peer.metadata.name : 'unknown dApp'
+                        }.`,
+                      })
+                      walletConnectCtx.rejectRequest(request)
+                      resetState()
+                      history.push(ROUTES.DASHBOARD)
+                    }
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </FullHeightPanel>
+      )
+    case connectionStep === CONNECTION_STEPS.APPROVE_TRANSACTION:
+      return (
+        <FullHeightPanel
+          headerText="Wallet Connect"
+          renderCloseButton={() => (
+            <CloseButton
+              routeTo={ROUTES.DASHBOARD}
+              onClick={() => {
+                walletConnectCtx.rejectRequest(request)
+                resetState()
+                history.push(ROUTES.DASHBOARD)
+              }}
+            />
+          )}
+          renderHeaderIcon={() => (
+            <div className={styles.walletConnectIcon}>
+              <WallletConnect />
+            </div>
+          )}
+          renderInstructions={false}
+        >
+          <div
+            className={classNames([
+              styles.approveConnectionContainer,
+              styles.approveRequestContainer,
+            ])}
+          >
+            <img src={peer && peer.metadata.icons[0]} />
+
+            <h3>{peer && peer.metadata.name} wants to call </h3>
 
             {isHardwareLogin && (
               <DialogueBox
