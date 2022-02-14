@@ -3,7 +3,6 @@ import { u } from '@cityofzion/neon-js'
 import Neon, { rpc, tx, sc, api, wallet } from '@cityofzion/neon-js-next'
 // eslint-disable-next-line
 import { JsonRpcRequest, JsonRpcResponse } from '@json-rpc-tools/utils'
-import { Account } from '@cityofzion/neon-core/lib/wallet'
 import { randomBytes } from 'crypto'
 
 type WitnessScope = {
@@ -131,7 +130,7 @@ class N3Helper {
     }
   }
 
-  signMessage = (account: Account, message: string): SignedMessage => {
+  signMessage = (account: wallet.Account, message: string): SignedMessage => {
     const salt = randomBytes(16).toString('hex')
     const parameterHexString = u.str2hexstring(salt + message)
     const lengthHex = u.num2VarInt(parameterHexString.length / 2)
