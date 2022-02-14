@@ -32,6 +32,12 @@ import CopyToClipboard from '../../components/CopyToClipboard/CopyToClipboard'
 import Tooltip from '../../components/Tooltip'
 import ConnectionLoader from '../../components/ConnectDapp/ConnectionLoader'
 import ConnectionError from '../../components/ConnectDapp/ConnectionError'
+import MessageSuccess from '../../components/ConnectDapp/MessageSuccess'
+import TransactionSuccess from '../../components/ConnectDapp/TransactionSuccess'
+import VerifyOrSignMessage from '../../components/ConnectDapp/VerifyOrSignMessage'
+import ApproveConnection from '../../components/ConnectDapp/ApproveConnection'
+import ApproveTransaction from '../../components/ConnectDapp/ApproveTransaction'
+import ConnectionUrlForm from '../../components/ConnectDapp/ConnectionUrlForm'
 
 const electron = require('electron').remote
 const ipc = require('electron').ipcRenderer
@@ -55,14 +61,6 @@ const CONNECTION_STEPS = {
   SIGN_MESSAGE: 'SIGN_MESSAGE',
   VERIFY_MESSAGE: 'VERIFY_MESSAGE',
   MESSAGE_SUCCESS: 'MESSAGE_SUCCESS',
-}
-
-const WITNESS_SCOPE = {
-  '0': 'None',
-  '1': 'CalledByEntry',
-  '16': 'CustomContracts',
-  '32': 'CustomGroups',
-  '128': 'Global',
 }
 
 const ConnectDapp = ({
@@ -98,6 +96,7 @@ const ConnectDapp = ({
     setRequest(null)
     setLoading(false)
     setFee('')
+    // walletConnectCtx.setMessageVerificationResult({})
   }
 
   const handleWalletConnectURLSubmit = async uri => {
@@ -273,6 +272,19 @@ const ConnectDapp = ({
       }
 
       if (firstRequest) {
+        // if (firstRequest.request.params.error) {
+        //   walletConnectCtx.rejectSession(proposal).then(() => {
+        //     showSuccessNotification({
+        //       message: `You have rejected connection from ${
+        //         proposal ? proposal.proposer.metadata.name : 'unknown dApp'
+        //       } beacause the request included an error.`,
+        //     })
+        //     resetState()
+        //     return history.push(ROUTES.DASHBOARD)
+        //   })
+        // }
+
+        // if (!firstRequest.request.params.error) {
         if (
           firstRequest.request.method === 'signMessage' ||
           firstRequest.request.method === 'verifyMessage'
@@ -288,734 +300,83 @@ const ConnectDapp = ({
           mapContractDataToInvocation(firstRequest)
         }
       }
+      // }
     },
     [firstRequest, address, net],
   )
-
-  const shouldDisplayReqParams = invocation => !!invocation.args.length
-
-  const renderInstructions = () => (
-    <p>
-      All transactions requested by a connected Dapp will be presented for
-      signing before being broadcast to the blockchain. No action from the Dapp
-      will happen without your direct approval.
-    </p>
-  )
-
-  const getParamDefinitions = invocation => {
-    if (invocation.contract && invocation.contract.abi) {
-      return invocation.contract.abi.methods.find(
-        method => method.name === invocation.operation,
-      ).parameters
-    }
-    return new Array(invocation.args.length)
-      .fill()
-      .map((_, i) => ({ name: i, type: 'unknown' }))
-  }
-
-  const renderParam = (arg: any, definition: any) => (
-    <React.Fragment>
-      <div className={styles.parameterName}>{definition.name}:</div>
-      <div
-        className={
-          arg.type === 'Array' ? styles.parameterArray : styles.parameterValue
-        }
-        style={{
-          borderColor:
-            TX_STATE_TYPE_MAPPINGS[definition && definition.type] &&
-            TX_STATE_TYPE_MAPPINGS[definition && definition.type].color,
-        }}
-      >
-        {arg.type !== 'Array' && (
-          <React.Fragment>
-            <span>{arg.value || 'null'}</span>
-            <CopyToClipboard text={String((arg && arg.value) || 'null')} />
-          </React.Fragment>
-        )}
-        {arg.type === 'Array' &&
-          arg.value.map((element, j) => (
-            <div>
-              <div className={styles.arrayValue}>
-                <div className={styles.index}>{j}</div>
-                <span>{element && element.value}</span>
-              </div>
-              <CopyToClipboard text={String(element && element.value)} />
-            </div>
-          ))}
-      </div>
-      <div className={styles.parameterType}>{definition.type}</div>
-    </React.Fragment>
-  )
-
-  const handleOpenDoraLink = hash => {
-    if (hash) {
-      return electron.shell.openExternal(
-        net === 'MainNet'
-          ? `https://dora.coz.io/contract/neo3/mainnet/${hash}`
-          : `https://dora.coz.io/contract/neo3/testnet_rc4/${hash}`,
-      )
-    }
-    return null
-  }
 
   switch (true) {
     case loading:
       return <ConnectionLoader />
     case connectionStep === CONNECTION_STEPS.TRANSACTION_ERROR:
       return <ConnectionError />
-
     case connectionStep === CONNECTION_STEPS.MESSAGE_SUCCESS:
-      return (
-        <FullHeightPanel
-          headerText="Wallet Connect"
-          renderCloseButton={() => (
-            <CloseButton
-              routeTo={ROUTES.DASHBOARD}
-              onClick={() => {
-                // resetState()
-                walletConnectCtx.setMessageVerificationResult({})
-              }}
-            />
-          )}
-          renderHeaderIcon={() => (
-            <div>
-              <WallletConnect />
-            </div>
-          )}
-          renderInstructions={false}
-        >
-          <div className={styles.txSuccessContainer}>
-            <CheckMarkIcon />
-            <h3>
-              {' '}
-              You have successfully{' '}
-              {walletConnectCtx.messageVerification.method === 'signMessage'
-                ? 'signed'
-                : 'verified'}{' '}
-              the message!
-            </h3>
-            <br />
-            <br />
-          </div>
-        </FullHeightPanel>
-      )
+      return <MessageSuccess />
     case connectionStep === CONNECTION_STEPS.TRANSACTION_SUCCESS:
-      return (
-        <FullHeightPanel
-          headerText="Wallet Connect"
-          renderCloseButton={() => (
-            <CloseButton
-              routeTo={ROUTES.DASHBOARD}
-              onClick={() => {
-                // resetState()
-                walletConnectCtx.setTxHash('')
-              }}
-            />
-          )}
-          renderHeaderIcon={() => (
-            <div>
-              <WallletConnect />
-            </div>
-          )}
-          renderInstructions={false}
-        >
-          <div className={styles.txSuccessContainer}>
-            <CheckMarkIcon />
-            <h3> Transaction pending!</h3>
-            <p>
-              Once your transaction has been confirmed it will appear in your
-              activity feed.
-            </p>
-            <br />
-            <br />
-            <p>
-              <label>TRANSACTION ID</label>
-              <br />
-              <code>{walletConnectCtx.txHash}</code>
-            </p>
-          </div>
-        </FullHeightPanel>
-      )
+      return <TransactionSuccess />
     case connectionStep === CONNECTION_STEPS.APPROVE_CONNECTION:
       return (
-        <FullHeightPanel
-          headerText="Wallet Connect"
-          renderCloseButton={() => (
-            <CloseButton
-              onClick={() => {
-                walletConnectCtx.rejectSession(proposal)
-                resetState()
-              }}
-              routeTo={ROUTES.DASHBOARD}
-            />
-          )}
-          renderHeaderIcon={() => (
-            <div className={styles.walletConnectIcon}>
-              <WallletConnect />
-            </div>
-          )}
-          renderInstructions={false}
-        >
-          <div className={styles.approveConnectionContainer}>
-            <img src={proposal && proposal.proposer.metadata.icons[0]} />
-
-            <h3>
-              {proposal && proposal.proposer.metadata.name} wants to connect
-            </h3>
-            <div className={styles.connectionDetails}>
-              {proposal && proposal.proposer.metadata.name} wants to connect to
-              your wallet
-              <div className={styles.details} style={{ marginTop: 12 }}>
-                <div className={styles.detailsLabel}>
-                  <label>dApp details</label>
-                </div>
-                <div className={styles.featuresRow}>
-                  <div>
-                    <label>CHAINS</label>
-                    {proposal &&
-                      proposal.permissions.blockchain.chains.map(chain => (
-                        <div key={chain}>{chain}</div>
-                      ))}
-                  </div>
-                  <div>
-                    <label>FEATURES</label>
-                    {proposal &&
-                      proposal.permissions.jsonrpc.methods.join(', ')}
-                  </div>
-                </div>
-              </div>
-              <div className={styles.confirmation} style={{ border: 'none' }}>
-                Please confirm you would like to connect
-                <div>
-                  <Confirm
-                    onClick={() => {
-                      walletConnectCtx.approveSession(proposal)
-                      showSuccessNotification({
-                        message: `You have accepted connection from ${
-                          proposal
-                            ? proposal.proposer.metadata.name
-                            : 'unknown dApp'
-                        }.`,
-                      })
-                      history.push(ROUTES.DASHBOARD)
-                    }}
-                  />
-
-                  <Deny
-                    onClick={() => {
-                      walletConnectCtx.rejectSession(proposal)
-                      showSuccessNotification({
-                        message: `You have rejected connection from ${
-                          proposal
-                            ? proposal.proposer.metadata.name
-                            : 'unknown dApp'
-                        }.`,
-                      })
-                      resetState()
-                      history.push(ROUTES.DASHBOARD)
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </FullHeightPanel>
+        <ApproveConnection
+          proposal={proposal}
+          showSuccessNotification={showSuccessNotification}
+          resetState={resetState}
+          history={history}
+        />
       )
     case connectionStep === CONNECTION_STEPS.SIGN_MESSAGE:
       return (
-        <FullHeightPanel
-          headerText="Wallet Connect"
-          renderCloseButton={() => (
-            <CloseButton
-              routeTo={ROUTES.DASHBOARD}
-              onClick={() => {
-                walletConnectCtx.rejectRequest(request)
-                resetState()
-                history.push(ROUTES.DASHBOARD)
-              }}
-            />
-          )}
-          renderHeaderIcon={() => (
-            <div className={styles.walletConnectIcon}>
-              <WallletConnect />
-            </div>
-          )}
-          renderInstructions={false}
-        >
-          <div
-            className={classNames([
-              styles.approveConnectionContainer,
-              styles.approveRequestContainer,
-            ])}
-          >
-            <img src={peer && peer.metadata.icons[0]} />
-
-            <h3>{peer && peer.metadata.name} wants you to sign a message</h3>
-
-            {isHardwareLogin && (
-              <DialogueBox
-                icon={
-                  <WarningIcon
-                    className={styles.warningIcon}
-                    height={60}
-                    width={60}
-                  />
-                }
-                renderText={() => (
-                  <div>
-                    You can view the message below however, the N3 ledger app
-                    does not currently support message signing/verification.
-                  </div>
-                )}
-                className={styles.warningDialogue}
-              />
-            )}
-
-            <div className={styles.connectionDetails}>
-              <div
-                className={styles.details}
-                style={{ margin: '12px 0', padding: '12px' }}
-              >
-                <div
-                  className={styles.detailsLabel}
-                  style={{ marginBottom: '6px' }}
-                >
-                  <label>Message</label>
-                </div>
-                <div>{firstRequest.request.params}</div>
-              </div>
-            </div>
-
-            <div className={styles.confirmation}>
-              Please confirm you would like to proceed
-              <div>
-                <Confirm
-                  style={{ opacity: isHardwareLogin ? 0.2 : 1 }}
-                  onClick={async () => {
-                    if (!loading && !isHardwareLogin) {
-                      setLoading(true)
-                      await walletConnectCtx.approveRequest(request)
-                      setLoading(false)
-                    }
-                  }}
-                />
-
-                <Deny
-                  onClick={() => {
-                    if (!loading) {
-                      showSuccessNotification({
-                        message: `You have denied request from ${
-                          peer ? peer.metadata.name : 'unknown dApp'
-                        }.`,
-                      })
-                      walletConnectCtx.rejectRequest(request)
-                      resetState()
-                      history.push(ROUTES.DASHBOARD)
-                    }
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        </FullHeightPanel>
+        <VerifyOrSignMessage
+          request={request}
+          peer={peer}
+          isHardwareLogin={!!isHardwareLogin}
+          resetState={resetState}
+          history={history}
+          showSuccessNotification={showSuccessNotification}
+          setLoading={setLoading}
+          loading={loading}
+          isSignMessage
+        />
       )
     case connectionStep === CONNECTION_STEPS.VERIFY_MESSAGE:
       return (
-        <FullHeightPanel
-          headerText="Wallet Connect"
-          renderCloseButton={() => (
-            <CloseButton
-              routeTo={ROUTES.DASHBOARD}
-              onClick={() => {
-                walletConnectCtx.rejectRequest(request)
-                resetState()
-                history.push(ROUTES.DASHBOARD)
-              }}
-            />
-          )}
-          renderHeaderIcon={() => (
-            <div className={styles.walletConnectIcon}>
-              <WallletConnect />
-            </div>
-          )}
-          renderInstructions={false}
-        >
-          <div
-            className={classNames([
-              styles.approveConnectionContainer,
-              styles.approveRequestContainer,
-            ])}
-          >
-            <img src={peer && peer.metadata.icons[0]} />
-
-            <h3>
-              <h3>
-                {peer && peer.metadata.name} wants you to verify a message
-              </h3>
-            </h3>
-
-            {isHardwareLogin && (
-              <DialogueBox
-                icon={
-                  <WarningIcon
-                    className={styles.warningIcon}
-                    height={60}
-                    width={60}
-                  />
-                }
-                renderText={() => (
-                  <div>
-                    You can view the message below however, the N3 ledger app
-                    does not currently support message signing/verification.
-                  </div>
-                )}
-                className={styles.warningDialogue}
-              />
-            )}
-
-            <div className={styles.connectionDetails}>
-              <div
-                className={styles.details}
-                style={{ margin: '12px 0', padding: '12px' }}
-              >
-                <div>
-                  {Object.keys(firstRequest.request.params).map(param => (
-                    <div key={param}>
-                      <div
-                        className={classNames([
-                          styles.detailsLabel,
-                          styles.detailRow,
-                        ])}
-                      >
-                        <label>{param}</label>
-                      </div>
-                      <div
-                        className={styles.methodParameter}
-                        style={{
-                          wordBreak: 'break-all',
-                          fontSize: 12,
-                        }}
-                      >
-                        {firstRequest.request.params[param]}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className={styles.confirmation}>
-              Please confirm you would like to proceed
-              <div>
-                <Confirm
-                  style={{ opacity: isHardwareLogin ? 0.2 : 1 }}
-                  onClick={async () => {
-                    if (!loading && !isHardwareLogin) {
-                      setLoading(true)
-                      await walletConnectCtx.approveRequest(request)
-                      setLoading(false)
-                    }
-                  }}
-                />
-
-                <Deny
-                  onClick={() => {
-                    if (!loading) {
-                      showSuccessNotification({
-                        message: `You have denied request from ${
-                          peer ? peer.metadata.name : 'unknown dApp'
-                        }.`,
-                      })
-                      walletConnectCtx.rejectRequest(request)
-                      resetState()
-                      history.push(ROUTES.DASHBOARD)
-                    }
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        </FullHeightPanel>
+        <VerifyOrSignMessage
+          request={request}
+          peer={peer}
+          isHardwareLogin={!!isHardwareLogin}
+          resetState={resetState}
+          history={history}
+          showSuccessNotification={showSuccessNotification}
+          setLoading={setLoading}
+          loading={loading}
+          isSignMessage={false}
+        />
       )
     case connectionStep === CONNECTION_STEPS.APPROVE_TRANSACTION:
       return (
-        <FullHeightPanel
-          headerText="Wallet Connect"
-          renderCloseButton={() => (
-            <CloseButton
-              routeTo={ROUTES.DASHBOARD}
-              onClick={() => {
-                walletConnectCtx.rejectRequest(request)
-                resetState()
-                history.push(ROUTES.DASHBOARD)
-              }}
-            />
-          )}
-          renderHeaderIcon={() => (
-            <div className={styles.walletConnectIcon}>
-              <WallletConnect />
-            </div>
-          )}
-          renderInstructions={false}
-        >
-          <div
-            className={classNames([
-              styles.approveConnectionContainer,
-              styles.approveRequestContainer,
-            ])}
-          >
-            <img src={peer && peer.metadata.icons[0]} />
-
-            <h3>{peer && peer.metadata.name} wants to call </h3>
-
-            {isHardwareLogin && (
-              <DialogueBox
-                icon={
-                  <WarningIcon
-                    className={styles.warningIcon}
-                    height={60}
-                    width={60}
-                  />
-                }
-                renderText={() => (
-                  <div>
-                    To sign this transaction with your ledger, enable custom
-                    contract data in the Neo N3 app settings. Read more about
-                    how to enable this setting{' '}
-                    <a
-                      onClick={() => {
-                        electron.shell.openExternal(
-                          'https://medium.com/proof-of-working/signing-custom-transactions-with-ledger-29723f6eaa4',
-                        )
-                      }}
-                    >
-                      here
-                    </a>.
-                  </div>
-                )}
-                className={styles.warningDialogue}
-              />
-            )}
-
-            {request &&
-              request.request.params.invocations.map((invocation, i) => (
-                <React.Fragment>
-                  <div className={styles.contractName}>
-                    <div className={classNames([])}>
-                      {invocation.contract.name}
-                    </div>
-                  </div>
-
-                  <div className={styles.connectionDetails}>
-                    <div
-                      className={classNames([
-                        styles.detailsLabel,
-                        styles.detailRow,
-                      ])}
-                    >
-                      <label>hash</label>
-                      <div className={styles.scriptHash}>
-                        {invocation.scriptHash}{' '}
-                        {theme === 'Light' ? (
-                          <DoraIcon
-                            onClick={() =>
-                              handleOpenDoraLink(invocation.scriptHash)
-                            }
-                          />
-                        ) : (
-                          <DoraIconDark
-                            onClick={() =>
-                              handleOpenDoraLink(invocation.scriptHash)
-                            }
-                          />
-                        )}
-                      </div>
-                    </div>
-
-                    <div
-                      className={classNames([
-                        styles.detailsLabel,
-                        styles.detailRow,
-                        styles.noBorder,
-                      ])}
-                    >
-                      <label>method</label>
-                      <div>{invocation.operation}</div>
-                    </div>
-                    {shouldDisplayReqParams(invocation) ? (
-                      <div
-                        className={classNames([
-                          styles.details,
-                          styles.radius,
-                          styles.pointer,
-                        ])}
-                      >
-                        <div
-                          className={classNames([
-                            styles.radius,
-                            styles.detailsLabel,
-                            styles.noBorder,
-                            styles.noPadding,
-                          ])}
-                          onClick={() =>
-                            setRequestParamsVisible({
-                              ...requestParamsVisible,
-                              [i]: !requestParamsVisible[i],
-                            })
-                          }
-                        >
-                          <label>request parameters</label>
-
-                          <div>
-                            {requestParamsVisible[i] ? <Up /> : <Down />}
-                          </div>
-                        </div>
-                        {requestParamsVisible[i] && (
-                          <div className={styles.requestParams}>
-                            {invocation.args.map((p: any, i: number) => {
-                              const paramDefinitions = getParamDefinitions(
-                                invocation,
-                              )
-                              return (
-                                <div
-                                  className={styles.methodParameter}
-                                  style={{
-                                    backgroundColor:
-                                      TX_STATE_TYPE_MAPPINGS[
-                                        paramDefinitions[i] &&
-                                          paramDefinitions[i].type
-                                      ] &&
-                                      TX_STATE_TYPE_MAPPINGS[
-                                        paramDefinitions[i] &&
-                                          paramDefinitions[i].type
-                                      ].color,
-                                    borderColor:
-                                      TX_STATE_TYPE_MAPPINGS[
-                                        paramDefinitions[i] &&
-                                          paramDefinitions[i].type
-                                      ] &&
-                                      TX_STATE_TYPE_MAPPINGS[
-                                        paramDefinitions[i] &&
-                                          paramDefinitions[i].type
-                                      ].color,
-                                  }}
-                                >
-                                  {renderParam(p, paramDefinitions[i])}
-                                </div>
-                              )
-                            })}
-                          </div>
-                        )}
-                      </div>
-                    ) : null}
-                  </div>
-                  <br />
-                </React.Fragment>
-              ))}
-            {request &&
-              request.request.params.signers && (
-                <div
-                  className={classNames([
-                    styles.detailsLabel,
-                    styles.detailRow,
-                    styles.sigRow,
-                  ])}
-                >
-                  <label>signature scope</label>
-                  <div>
-                    {
-                      WITNESS_SCOPE[
-                        String(request.request.params.signers[0].scopes)
-                      ]
-                    }
-                    {WITNESS_SCOPE[
-                      String(request.request.params.signers[0].scopes)
-                    ] === 'Global' && <WarningIcon />}
-                  </div>
-                </div>
-              )}
-            <div
-              className={classNames([
-                styles.detailsLabel,
-                styles.detailRow,
-                styles.feeRow,
-              ])}
-            >
-              <label>fee</label>
-              <div className={styles.fee}>
-                {fee} GAS
-                <Tooltip title="Other network fees may apply">
-                  <Info />{' '}
-                </Tooltip>
-              </div>
-            </div>
-            <div className={styles.confirmation}>
-              Please confirm you would like to proceed
-              <div>
-                <Confirm
-                  onClick={async () => {
-                    if (!loading) {
-                      setLoading(true)
-                      await walletConnectCtx.approveRequest(request)
-                      setLoading(false)
-                    }
-                  }}
-                />
-
-                <Deny
-                  onClick={() => {
-                    if (!loading) {
-                      showSuccessNotification({
-                        message: `You have denied request from ${
-                          peer ? peer.metadata.name : 'unknown dApp'
-                        }.`,
-                      })
-                      walletConnectCtx.rejectRequest(request)
-                      resetState()
-                      history.push(ROUTES.DASHBOARD)
-                    }
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        </FullHeightPanel>
+        <ApproveTransaction
+          request={request}
+          peer={peer}
+          isHardwareLogin={!!isHardwareLogin}
+          resetState={resetState}
+          history={history}
+          showSuccessNotification={showSuccessNotification}
+          setLoading={setLoading}
+          loading={loading}
+          theme={theme}
+          net={net}
+          fee={fee}
+          requestParamsVisible={requestParamsVisible}
+          setRequestParamsVisible={setRequestParamsVisible}
+        />
       )
     default:
       return (
-        <FullHeightPanel
-          headerText="Connect with a dApp"
-          renderCloseButton={() => <CloseButton routeTo={ROUTES.DASHBOARD} />}
-          renderHeaderIcon={() => (
-            <div>
-              <LockIcon />
-            </div>
-          )}
-          renderInstructions={renderInstructions}
-        >
-          <form
-            className={styles.form}
-            onSubmit={() => handleWalletConnectURLSubmit()}
-          >
-            <TextInput
-              name="dApp URL"
-              label="Scan or Paste URL"
-              placeholder="Scan or Paste URL"
-              value={connectionUrl}
-              onChange={e => setConnectionUrl(e.target.value)}
-              error={null}
-            />
-            <Button
-              id="loginButton"
-              primary
-              type="submit"
-              className={styles.loginButtonMargin}
-              disabled={loading}
-            >
-              Connect
-            </Button>
-          </form>
-        </FullHeightPanel>
+        <ConnectionUrlForm
+          loading={loading}
+          handleWalletConnectURLSubmit={handleWalletConnectURLSubmit}
+          setConnectionUrl={setConnectionUrl}
+          connectionUrl={connectionUrl}
+        />
       )
   }
 }

@@ -171,7 +171,7 @@ export const WalletConnectContextProvider = ({
     setAutoAcceptCallback(() => listener)
   }
   const makeRequest = useCallback(
-    async ({ request }: JsonRpcRequest) => {
+    async (request: JsonRpcRequest) => {
       const [namespace, reference, address] = accounts[0].split(':')
       const chainId = `${namespace}:${reference}`
       if (!onRequestCallback) {
@@ -188,7 +188,7 @@ export const WalletConnectContextProvider = ({
         results &&
         results.result &&
         !results.result.error &&
-        !results.isTest &&
+        !results.result.isTest &&
         !results.isMessage
       ) {
         setTxHash(results.result)
@@ -196,6 +196,7 @@ export const WalletConnectContextProvider = ({
         results &&
         results.result &&
         !results.result.error &&
+        !results.result.isTest &&
         results.isMessage
       ) {
         setMessageVerificationResult({ ...results, method: request.method })

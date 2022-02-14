@@ -128,7 +128,7 @@ const App = ({
         }
         return new N3Helper(endpoint).rpcCall(
           account,
-          req,
+          req.request ? req.request : req,
           isHardwareLogin,
           signingFunction,
           showInfoNotification,
