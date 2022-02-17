@@ -1,7 +1,9 @@
 // @flow
+import { u } from '@cityofzion/neon-js'
 import Neon, { rpc, tx, sc, api, wallet } from '@cityofzion/neon-js-next'
 // eslint-disable-next-line
 import { JsonRpcRequest, JsonRpcResponse } from '@json-rpc-tools/utils'
+import { randomBytes } from 'crypto'
 
 type WitnessScope = {
   None: 0,
@@ -44,6 +46,13 @@ type ContractInvocationMulti = {
   invocations: ContractInvocation[],
 }
 
+type SignedMessage = {
+  publicKey: string,
+  data: string,
+  salt: string,
+  messageHex: string,
+}
+
 class N3Helper {
   rpcAddress: string
 
@@ -72,6 +81,7 @@ class N3Helper {
     hideNotification?: () => void,
   ): Promise<JsonRpcResponse> => {
     let result: any
+
     if (
       request.method === 'multiInvoke' ||
       request.method === 'invokeFunction'
@@ -84,13 +94,28 @@ class N3Helper {
         showInfoNotification,
         hideNotification,
       )
-    } else if (
+    }
+    if (
       request.method === 'multiTestInvoke' ||
       request.method === 'testInvoke'
     ) {
       result = await this.multiTestInvoke(account, request.params)
       result.isTest = true
-    } else {
+    }
+    if (request.method === 'signMessage') {
+      if (!account) {
+        throw new Error('No account')
+      }
+      result = this.signMessage(account, request.params)
+    }
+    if (request.method === 'verifyMessage') {
+      result = this.verifyMessage(request.params)
+    }
+    if (request.method === 'getapplicationlog') {
+      result = await new rpc.RPCClient(this.rpcAddress).getApplicationLog(
+        request.params[0],
+      )
+    } else if (!result) {
       const { jsonrpc, ...queryLike } = request
       result = await new rpc.RPCClient(this.rpcAddress).execute(
         Neon.create.query({ ...queryLike, jsonrpc: '2.0' }),
@@ -100,8 +125,27 @@ class N3Helper {
       id: request.id,
       jsonrpc: '2.0',
       result,
+      isMessage:
+        request.method === 'signMessage' || request.method === 'verifyMessage',
     }
   }
+
+  signMessage = (account: wallet.Account, message: string): SignedMessage => {
+    const salt = randomBytes(16).toString('hex')
+    const parameterHexString = u.str2hexstring(salt + message)
+    const lengthHex = u.num2VarInt(parameterHexString.length / 2)
+    const messageHex = `010001f0${lengthHex}${parameterHexString}0000`
+
+    return {
+      publicKey: account.publicKey,
+      data: wallet.sign(messageHex, account.privateKey),
+      salt,
+      messageHex,
+    }
+  }
+
+  verifyMessage = (verifyArgs: SignedMessage): boolean =>
+    wallet.verify(verifyArgs.messageHex, verifyArgs.data, verifyArgs.publicKey)
 
   multiTestInvoke = async (
     account: any,
