@@ -320,11 +320,11 @@ export default class Send extends React.Component<Props, State> {
       if (asset === 'GAS') {
         const existingGasAmounts =
           Number(this.calculateRowAmounts(asset, index)) -
-          this.state.expectedGasFee
+          Number(this.state.expectedGasFee)
 
         totalSendableAssets = minusNumber(
           totalSendableAssets,
-          this.state.expectedGasFee * rowsWithAsset.length,
+          Number(this.state.expectedGasFee) * rowsWithAsset.length,
         )
 
         if (totalSendableAssets < 0) {
