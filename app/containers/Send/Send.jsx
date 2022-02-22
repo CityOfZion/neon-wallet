@@ -22,6 +22,7 @@ import styles from './Send.scss'
 import DialogueBox from '../../components/DialogueBox'
 
 const MAX_NUMBER_OF_RECIPIENTS = 25
+const MIN_EXPECTED_N3_GAS_FEE = 0.072
 
 type Props = {
   sendableAssets: Object,
@@ -72,6 +73,8 @@ type State = {
     networkFee: string,
   },
   loading: boolean,
+  expectedGasFee: string | number,
+  isSendingTotalAmountOfGas: boolean,
 }
 
 export default class Send extends React.Component<Props, State> {
@@ -92,6 +95,8 @@ export default class Send extends React.Component<Props, State> {
       },
       hasEnoughGas: true,
       loading: false,
+      expectedGasFee: MIN_EXPECTED_N3_GAS_FEE,
+      isSendingTotalAmountOfGas: false,
     }
   }
 
@@ -120,6 +125,16 @@ export default class Send extends React.Component<Props, State> {
         ? new n3Wallet.Account(this.props.migrationAddress)
         : new n3Wallet.Account(this.props.wif)
       this.updateRowField(0, 'address', account.address)
+    }
+
+    // Calculate expected gas fee
+    this.setState({ loading: true })
+    const results = await this.attemptToCalculateN3Fees([])
+    if (results) {
+      const transactionFee = (
+        Number(results.networkFee) + Number(results.systemFee)
+      ).toFixed(8)
+      this.setState({ expectedGasFee: transactionFee })
     }
   }
 
@@ -234,17 +249,51 @@ export default class Send extends React.Component<Props, State> {
   }
 
   attemptToCalculateN3Fees = async (sendRowDetails: Array<Object>) => {
-    this.setState({ loading: true })
+    if (!sendRowDetails.length) {
+      const fees = await this.props
+        .calculateN3Fees({
+          sendEntries: [
+            // $flow-fix-me
+            { address: this.props.address, amount: 1, symbol: 'GAS' },
+          ],
+        })
+        .catch(() => {
+          console.warn('An error occurred attempting to calculate fees')
+        })
+      return fees
+    }
+
     const sendEntries = sendRowDetails.map((row: Object) => ({
       address: row.address,
       amount: toNumber(row.amount.toString()),
-      symbol: row.asset,
+      symbol: row.asset || 'GAS',
     }))
+
+    if (this.props.sendableAssets.GAS) {
+      const totalGasBeingSent = sendEntries.reduce((prev, curr) => {
+        if (curr.symbol === 'GAS') {
+          return prev + curr.amount
+        }
+        return 0
+      }, 0)
+      if (
+        (Number(totalGasBeingSent) + Number(this.state.expectedGasFee)).toFixed(
+          8,
+        ) ===
+        Number(
+          this.props.sendableAssets.GAS
+            ? this.props.sendableAssets.GAS.balance
+            : 0,
+        ).toFixed(8)
+      ) {
+        this.setState({ isSendingTotalAmountOfGas: true })
+      } else {
+        this.setState({ isSendingTotalAmountOfGas: false })
+      }
+    }
 
     let shouldCalculateFees = true
 
-    // TODO: not exactly sure what the criteria should be for
-    // attempting to calculate fees
     sendEntries.forEach(entry => {
       if (!n3Wallet.isAddress(entry.address)) {
         shouldCalculateFees = false
@@ -267,8 +316,6 @@ export default class Send extends React.Component<Props, State> {
 
   calculateMaxValue = (asset: string, index: number = 0) => {
     const { sendableAssets, chain } = this.props
-
-    const MIN_EXPECTED_GAS_FEE = 0.072
 
     if (chain === 'neo2') {
       if (sendableAssets[asset]) {
@@ -296,11 +343,12 @@ export default class Send extends React.Component<Props, State> {
 
       if (asset === 'GAS') {
         const existingGasAmounts =
-          Number(this.calculateRowAmounts(asset, index)) - MIN_EXPECTED_GAS_FEE
+          Number(this.calculateRowAmounts(asset, index)) -
+          Number(this.state.expectedGasFee)
 
         totalSendableAssets = minusNumber(
           totalSendableAssets,
-          MIN_EXPECTED_GAS_FEE * rowsWithAsset.length,
+          Number(this.state.expectedGasFee) * rowsWithAsset.length,
         )
 
         if (totalSendableAssets < 0) {
@@ -790,6 +838,7 @@ export default class Send extends React.Component<Props, State> {
       n3Fees,
       hasEnoughGas,
       loading,
+      isSendingTotalAmountOfGas,
     } = this.state
     const {
       sendableAssets,
@@ -874,6 +923,7 @@ export default class Send extends React.Component<Props, State> {
           loading={loading}
           toggleHasEnoughGas={this.toggleHasEnoughGas}
           isMigration={isMigration}
+          isSendingTotalAmountOfGas={isSendingTotalAmountOfGas}
         />
       </section>
     )

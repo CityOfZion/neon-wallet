@@ -152,7 +152,7 @@ declare type TokenBalanceType = {
 }
 
 declare type SendEntryType = {
-  amount: string,
+  amount: string | number,
   address: string,
   symbol: SymbolType,
   contractHash?: string,

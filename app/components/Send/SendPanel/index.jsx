@@ -19,6 +19,7 @@ import EditIcon from '../../../assets/icons/edit.svg'
 
 import styles from './SendPanel.scss'
 import AlertBox from '../../AlertBox'
+import TotalGasBeingSentAlert from '../../TotalGasBeingSentAlert'
 
 type Props = {
   sendRowDetails: Array<*>,
@@ -55,6 +56,7 @@ type Props = {
   hasEnoughGas: boolean,
   loading: boolean,
   isMigration: boolean,
+  isSendingTotalAmountOfGas: boolean,
 }
 
 const shouldDisableSendButton = (sendRowDetails, loading) =>
@@ -99,6 +101,7 @@ const SendPanel = ({
   hasEnoughGas,
   loading,
   isMigration,
+  isSendingTotalAmountOfGas,
 }: Props) => {
   if (noSendableAssets) {
     return <ZeroAssets address={address} />
@@ -111,6 +114,7 @@ const SendPanel = ({
   let content = (
     <form>
       {chain === 'neo2' && !isMigration && <AlertBox />}
+      {isSendingTotalAmountOfGas && <TotalGasBeingSentAlert />}
       <SendRecipientList
         sendRowDetails={sendRowDetails}
         sendableAssets={sendableAssets}
