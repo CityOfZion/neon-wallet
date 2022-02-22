@@ -114,7 +114,7 @@ const SendPanel = ({
   let content = (
     <form>
       {chain === 'neo2' && !isMigration && <AlertBox />}
-      {true && <TotalGasBeingSentAlert />}
+      {isSendingTotalAmountOfGas && <TotalGasBeingSentAlert />}
       <SendRecipientList
         sendRowDetails={sendRowDetails}
         sendableAssets={sendableAssets}
