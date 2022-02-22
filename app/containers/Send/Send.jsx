@@ -74,6 +74,7 @@ type State = {
   },
   loading: boolean,
   expectedGasFee: string | number,
+  isSendingTotalAmountOfGas: boolean,
 }
 
 export default class Send extends React.Component<Props, State> {
@@ -95,6 +96,7 @@ export default class Send extends React.Component<Props, State> {
       hasEnoughGas: true,
       loading: false,
       expectedGasFee: MIN_EXPECTED_N3_GAS_FEE,
+      isSendingTotalAmountOfGas: false,
     }
   }
 
@@ -267,15 +269,37 @@ export default class Send extends React.Component<Props, State> {
       symbol: row.asset || 'GAS',
     }))
 
+    if (this.props.sendableAssets.GAS) {
+      const totalGasBeingSent = sendEntries.reduce((prev, curr) => {
+        if (curr.symbol === 'GAS') {
+          return prev + curr.amount
+        }
+        return 0
+      }, 0)
+      if (
+        (Number(totalGasBeingSent) + Number(this.state.expectedGasFee)).toFixed(
+          8,
+        ) ===
+        Number(
+          this.props.sendableAssets.GAS
+            ? this.props.sendableAssets.GAS.balance
+            : 0,
+        ).toFixed(8)
+      ) {
+        this.setState({ isSendingTotalAmountOfGas: true })
+      } else {
+        this.setState({ isSendingTotalAmountOfGas: false })
+      }
+    }
+
     let shouldCalculateFees = true
 
-    // TODO: not exactly sure what the criteria should be for
-    // attempting to calculate fees
     sendEntries.forEach(entry => {
       if (!n3Wallet.isAddress(entry.address)) {
         shouldCalculateFees = false
       }
     })
+
     if (shouldCalculateFees) {
       const fees = await this.props
         .calculateN3Fees({ sendEntries })
@@ -814,6 +838,7 @@ export default class Send extends React.Component<Props, State> {
       n3Fees,
       hasEnoughGas,
       loading,
+      isSendingTotalAmountOfGas,
     } = this.state
     const {
       sendableAssets,
@@ -898,6 +923,7 @@ export default class Send extends React.Component<Props, State> {
           loading={loading}
           toggleHasEnoughGas={this.toggleHasEnoughGas}
           isMigration={isMigration}
+          isSendingTotalAmountOfGas={isSendingTotalAmountOfGas}
         />
       </section>
     )
