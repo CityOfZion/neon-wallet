@@ -127,14 +127,16 @@ export default class Send extends React.Component<Props, State> {
       this.updateRowField(0, 'address', account.address)
     }
 
-    // Calculate expected gas fee
-    this.setState({ loading: true })
-    const results = await this.attemptToCalculateN3Fees([])
-    if (results) {
-      const transactionFee = (
-        Number(results.networkFee) + Number(results.systemFee)
-      ).toFixed(8)
-      this.setState({ expectedGasFee: transactionFee })
+    if (this.props.chain === 'neo3') {
+      // Calculate expected gas fee
+      this.setState({ loading: true })
+      const results = await this.attemptToCalculateN3Fees([])
+      if (results) {
+        const transactionFee = (
+          Number(results.networkFee) + Number(results.systemFee)
+        ).toFixed(8)
+        this.setState({ expectedGasFee: transactionFee })
+      }
     }
   }
 
@@ -203,7 +205,10 @@ export default class Send extends React.Component<Props, State> {
       if (newState.length > 1) {
         newState.splice(index, 1)
       }
-      this.attemptToCalculateN3Fees(newState)
+
+      if (this.props.chain === 'neo3') {
+        this.attemptToCalculateN3Fees(newState)
+      }
       return { sendRowDetails: newState }
     })
   }
