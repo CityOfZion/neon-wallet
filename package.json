@@ -132,7 +132,7 @@
     "json2csv": "^4.3.5",
     "jsqr": "1.1.1",
     "keyvaluestorage": "^0.7.1",
-    "lodash-es": "4.17.15",
+    "lodash-es": "4.17.21",
     "moment": "2.22.2",
     "nock": "9.2.3",
     "node-hid": "^1.3.1",
