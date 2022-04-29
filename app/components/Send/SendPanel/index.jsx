@@ -268,6 +268,7 @@ const SendPanel = ({
           maxNumberOfRecipients={maxNumberOfRecipients}
           showSendModal={showSendModal}
           pushQRCodeData={pushQRCodeData}
+          chain={chain}
           disableAddRecipient={
             shouldDisableSendButton(sendRowDetails) || maxRecipientsMet
           }

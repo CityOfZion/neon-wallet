@@ -46,9 +46,12 @@ export const DEFAULT_THEME = THEMES.LIGHT
 export const EXPLORERS = {
   DORA: 'Dora',
   NEOTUBE: 'Neotube',
+  ANT_CHAIN: 'Antchain',
+}
+
+export const DEPRECATED_EXPLORERS = {
   NEO_TRACKER: 'Neotracker',
   NEO_SCAN: 'Neoscan',
-  ANT_CHAIN: 'Antchain',
 }
 
 export const LANGUAGES = {

@@ -9,6 +9,9 @@ import nodeStorageActions from '../../../actions/nodeStorageActions'
 import accountsActions, {
   updateAccountsActions,
 } from '../../../actions/accountsActions'
+
+import { updateAccountsActions as updateN3AccountsActions } from '../../../actions/n3AccountsActions'
+
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -31,6 +34,10 @@ const mapAccountsActionsToProps = actions => ({
   setAccounts: accounts => actions.call(accounts),
 })
 
+const mapN3AccountsActionsToProps = actions => ({
+  setN3Accounts: accounts => actions.call(accounts),
+})
+
 export default compose(
   connect(
     null,
@@ -40,4 +47,5 @@ export default compose(
   withCall(nodeStorageActions),
   withData(accountsActions, mapAccountsDataToProps),
   withActions(updateAccountsActions, mapAccountsActionsToProps),
+  withActions(updateN3AccountsActions, mapN3AccountsActionsToProps),
 )(ImportWallet)

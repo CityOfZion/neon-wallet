@@ -46,6 +46,7 @@ export default class AddContactPanel extends React.Component<Props> {
       >
         <div className={styles.formContainer}>
           <ContactForm
+            showScanner
             formName={name}
             newAddress
             formAddress={address}

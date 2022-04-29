@@ -39,6 +39,7 @@ const { dialog, shell } = require('electron').remote
 
 type Props = {
   setAccounts: (Array<Object>) => any,
+  setN3Accounts: (Array<Object>) => any,
   setCurrency: string => any,
   currency: string,
   setTheme: string => any,
@@ -72,6 +73,7 @@ export const loadWalletRecovery = async (
   showSuccessNotification: Object => any,
   showErrorNotification: Object => any,
   setAccounts: (Array<Object>) => any,
+  setN3Accounts: (Array<Object>) => any,
   chain: string,
 ) => {
   const { canceled, filePaths } = await dialog.showOpenDialog()
@@ -94,7 +96,8 @@ export const loadWalletRecovery = async (
 
     if (recoveryData) {
       showSuccessNotification({ message: 'Recovery was successful.' })
-      setAccounts(recoveryData.accounts)
+      if (chain === 'neo2') return setAccounts(recoveryData.accounts)
+      return setN3Accounts(recoveryData.accounts)
     }
   })
 }
@@ -205,6 +208,7 @@ export default class Settings extends Component<Props, State> {
       showErrorNotification,
       setAccounts,
       chain,
+      setN3Accounts,
     } = this.props
 
     const parsedCurrencyOptions = Object.keys(CURRENCIES).map(key => ({
@@ -355,6 +359,7 @@ export default class Settings extends Component<Props, State> {
                     showSuccessNotification,
                     showErrorNotification,
                     setAccounts,
+                    setN3Accounts,
                     chain,
                   )
                 }

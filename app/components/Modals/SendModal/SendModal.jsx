@@ -10,30 +10,39 @@ import type { RecipientData } from '../../../util/parseQRCode'
 type Props = {
   hideModal: () => any,
   pushQRCodeData: (data: Object) => any,
-  getRecipientData: string => any,
+  getRecipientData: (url: string, chain?: string) => any,
   clearRecipientData: () => null,
   recipientData: ?RecipientData,
   progress: ProgressState,
+  chain: string,
 }
 
 export default class SendModal extends React.Component<Props> {
   confirmAndClose = (recipientData: RecipientData) => {
-    const { pushQRCodeData, hideModal } = this.props
-
+    const { pushQRCodeData, hideModal, clearRecipientData } = this.props
     pushQRCodeData(recipientData)
+    clearRecipientData()
     hideModal()
   }
 
   get stepComponent(): React$Element<ConfirmDetails | ReadCode> {
-    const { recipientData, getRecipientData, progress } = this.props
-
+    const { recipientData, getRecipientData, progress, chain } = this.props
+    //  eslint-disable-next-line
     return recipientData ? (
-      <ConfirmDetails
-        recipientData={recipientData}
-        confirmAndClose={() => this.confirmAndClose(recipientData)}
-      />
+      chain === 'neo3' ? (
+        // $FlowFixMe
+        this.confirmAndClose(recipientData)
+      ) : (
+        <ConfirmDetails
+          recipientData={recipientData}
+          confirmAndClose={() => this.confirmAndClose(recipientData)}
+        />
+      )
     ) : (
-      <ReadCode callback={getRecipientData} callbackProgress={progress} />
+      <ReadCode
+        callback={url => getRecipientData(url, chain)}
+        callbackProgress={progress}
+      />
     )
   }
 

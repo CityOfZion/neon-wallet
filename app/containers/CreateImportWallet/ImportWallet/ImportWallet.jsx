@@ -19,6 +19,7 @@ import styles from './ImportWallet.scss'
 type Props = {
   authenticated: boolean,
   setAccounts: (Array<Object>) => any,
+  setN3Accounts: (Array<Object>) => any,
   showSuccessNotification: ({ message: string }) => string,
   showErrorNotification: ({ message: string }) => string,
   chain: string,
@@ -76,6 +77,7 @@ const IMPORT_OPTIONS = {
               props.showSuccessNotification,
               props.showErrorNotification,
               props.setAccounts,
+              props.setN3Accounts,
               props.chain,
             )
           }}

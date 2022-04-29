@@ -1,9 +1,10 @@
 // @flow
 import { openExternal } from './electron'
-import { EXPLORERS } from './constants'
+import { EXPLORERS, DEPRECATED_EXPLORERS } from './constants'
 import { isMainNetwork } from './networks'
 
-const { NEO_SCAN, NEO_TRACKER, ANT_CHAIN, DORA, NEOTUBE } = EXPLORERS
+const { ANT_CHAIN, DORA, NEOTUBE } = EXPLORERS
+const { NEO_SCAN, NEO_TRACKER } = DEPRECATED_EXPLORERS
 
 export const getExplorerBaseURL = (
   networkId: string,

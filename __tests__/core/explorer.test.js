@@ -7,6 +7,7 @@ import {
   MAIN_NETWORK_ID,
   TEST_NETWORK_ID,
   EXPLORERS,
+  DEPRECATED_EXPLORERS,
 } from '../../app/core/constants'
 import { shell } from 'electron'
 
@@ -32,14 +33,14 @@ describe('explorer tests', () => {
 
     test('NeoTracker mainnet explorer test', () => {
       const networkId = MAIN_NETWORK_ID
-      const explorer = EXPLORERS.NEO_TRACKER
+      const explorer = DEPRECATED_EXPLORERS.NEO_TRACKER
       const expectedUrl = `https://neotracker.io/tx/${txId}`
       expect(getExplorerTxLink(networkId, explorer, txId)).toEqual(expectedUrl)
     })
 
     test('NeoTracker testnet explorer test', () => {
       const networkId = TEST_NETWORK_ID
-      const explorer = EXPLORERS.NEO_TRACKER
+      const explorer = DEPRECATED_EXPLORERS.NEO_TRACKER
       const expectedUrl = `https://testnet.neotracker.io/tx/${txId}`
 
       expect(getExplorerTxLink(networkId, explorer, txId)).toEqual(expectedUrl)
@@ -47,7 +48,7 @@ describe('explorer tests', () => {
 
     test('NeoScan mainnet explorer test', () => {
       const networkId = MAIN_NETWORK_ID
-      const explorer = EXPLORERS.NEO_SCAN
+      const explorer = DEPRECATED_EXPLORERS.NEO_SCAN
       const expectedUrl = `https://neoscan.io/transaction/${txId}`
 
       expect(getExplorerTxLink(networkId, explorer, txId)).toEqual(expectedUrl)
@@ -55,7 +56,7 @@ describe('explorer tests', () => {
 
     test('NeoScan testnet explorer test', () => {
       const networkId = TEST_NETWORK_ID
-      const explorer = EXPLORERS.NEO_SCAN
+      const explorer = DEPRECATED_EXPLORERS.NEO_SCAN
       const expectedUrl = `https://neoscan-testnet.io/transaction/${txId}`
 
       expect(getExplorerTxLink(networkId, explorer, txId)).toEqual(expectedUrl)
@@ -83,7 +84,7 @@ describe('explorer tests', () => {
   describe('openExplorerTx tests', () => {
     test('open NeoTracker mainnet explorer test', () => {
       const networkId = MAIN_NETWORK_ID
-      const explorer = EXPLORERS.NEO_TRACKER
+      const explorer = DEPRECATED_EXPLORERS.NEO_TRACKER
       const expectedUrl = `https://neotracker.io/tx/${txId}`
       const spy = jest.spyOn(shell, 'openExternal')
 
@@ -114,7 +115,7 @@ describe('explorer tests', () => {
 
     test('NeoTracker mainnet explorer test', () => {
       const networkId = MAIN_NETWORK_ID
-      const explorer = EXPLORERS.NEO_TRACKER
+      const explorer = DEPRECATED_EXPLORERS.NEO_TRACKER
       const expectedUrl = `https://neotracker.io/address/${address}`
 
       expect(getExplorerAddressLink(networkId, explorer, address)).toEqual(
@@ -124,7 +125,7 @@ describe('explorer tests', () => {
 
     test('NeoTracker testnet explorer test', () => {
       const networkId = TEST_NETWORK_ID
-      const explorer = EXPLORERS.NEO_TRACKER
+      const explorer = DEPRECATED_EXPLORERS.NEO_TRACKER
       const expectedUrl = `https://testnet.neotracker.io/address/${address}`
 
       expect(getExplorerAddressLink(networkId, explorer, address)).toEqual(
@@ -134,7 +135,7 @@ describe('explorer tests', () => {
 
     test('NeoScan mainnet explorer test', () => {
       const networkId = MAIN_NETWORK_ID
-      const explorer = EXPLORERS.NEO_SCAN
+      const explorer = DEPRECATED_EXPLORERS.NEO_SCAN
       const expectedUrl = `https://neoscan.io/address/${address}/1`
 
       expect(getExplorerAddressLink(networkId, explorer, address)).toEqual(
@@ -144,7 +145,7 @@ describe('explorer tests', () => {
 
     test('NeoScan testnet explorer test', () => {
       const networkId = TEST_NETWORK_ID
-      const explorer = EXPLORERS.NEO_SCAN
+      const explorer = DEPRECATED_EXPLORERS.NEO_SCAN
       const expectedUrl = `https://neoscan-testnet.io/address/${address}/1`
 
       expect(getExplorerAddressLink(networkId, explorer, address)).toEqual(
