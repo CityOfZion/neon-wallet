@@ -590,7 +590,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                   accounts={null}
                                   chain="neo2"
                                   dispatch={[Function]}
-                                  explorer="Neotracker"
+                                  explorer="Dora"
                                   net="MainNet"
                                   networkId={1}
                                   networks={
@@ -621,7 +621,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                     address="TOOLTIP_TEST"
                                     chain="neo2"
                                     dispatch={[Function]}
-                                    explorer="Neotracker"
+                                    explorer="Dora"
                                     isWatchOnly={false}
                                     net="MainNet"
                                     networkId={1}
@@ -653,7 +653,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                       address="TOOLTIP_TEST"
                                       chain="neo2"
                                       dispatch={[Function]}
-                                      explorer="Neotracker"
+                                      explorer="Dora"
                                       isWatchOnly={false}
                                       net="MainNet"
                                       networkId={1}
@@ -686,7 +686,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                         address="TOOLTIP_TEST"
                                         chain="neo2"
                                         dispatch={[Function]}
-                                        explorer="Neotracker"
+                                        explorer="Dora"
                                         intl={
                                           Object {
                                             "defaultFormats": Object {},
@@ -1263,7 +1263,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                                       <div
                                                         className="configLabel"
                                                       >
-                                                        NEOTRACKER
+                                                        DORA
                                                       </div>
                                                     </div>
                                                   </div>
