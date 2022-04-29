@@ -4,13 +4,17 @@ import { noop } from 'lodash-es'
 import { FormattedMessage, intlShape } from 'react-intl'
 import { wallet } from '@cityofzion/neon-js'
 import { wallet as n3Wallet } from '@cityofzion/neon-js-next'
+import { type ProgressState } from 'spunky'
 
 import Button from '../../Button'
 import TextInput from '../../Inputs/TextInput'
 import DialogueBox from '../../DialogueBox'
 import AddContactIcon from '../../../assets/icons/contacts-add.svg'
 import WarningIcon from '../../../assets/icons/warning.svg'
+import GridIcon from '../../../assets/icons/grid.svg'
 import styles from './ContactForm.scss'
+import QrCodeScanner from '../../QrCodeScanner'
+import Close from '../../../assets/icons/close.svg'
 
 type Props = {
   submitLabel: string,
@@ -24,11 +28,15 @@ type Props = {
   onSubmit: Function,
   intl: intlShape,
   chain: string,
+  cameraAvailable: boolean,
+  progress: ProgressState,
+  showScanner: boolean,
 }
 
 type State = {
   nameError: string,
   addressError: string,
+  scannerActive: boolean,
 }
 
 export default class ContactForm extends React.Component<Props, State> {
@@ -38,7 +46,12 @@ export default class ContactForm extends React.Component<Props, State> {
     this.state = {
       nameError: '',
       addressError: '',
+      scannerActive: false,
     }
+  }
+
+  toggleScanner = () => {
+    this.setState(prevState => ({ scannerActive: !prevState.scannerActive }))
   }
 
   static defaultProps = {
@@ -51,58 +64,109 @@ export default class ContactForm extends React.Component<Props, State> {
   }
 
   render() {
-    const { submitLabel, formName, formAddress, intl } = this.props
-    const { nameError, addressError } = this.state
+    const {
+      submitLabel,
+      formName,
+      formAddress,
+      intl,
+      cameraAvailable,
+      progress,
+      showScanner,
+    } = this.props
+    const { nameError, addressError, scannerActive } = this.state
 
     return (
       <section className={styles.contactFormContainer}>
         <form className={styles.contactForm} onSubmit={this.handleSubmit}>
-          <TextInput
-            id="contactName"
-            name="name"
-            label={intl.formatMessage({
-              id: 'contactName',
-            })}
-            className={styles.input}
-            placeholder={intl.formatMessage({
-              id: 'enterAContactName',
-            })}
-            value={formName}
-            onChange={this.handleChangeName}
-            error={nameError}
-          />
-          <TextInput
-            id="contactAddress"
-            label={intl.formatMessage({
-              id: 'contactWalletAddress',
-            })}
-            name="address"
-            className={styles.input}
-            placeholder={intl.formatMessage({
-              id: 'enterAWalletAddress',
-            })}
-            value={formAddress}
-            onChange={this.handleChangeAddress}
-            error={addressError}
-          />
-          <div className={styles.dialogueAndButtonContainer}>
-            <DialogueBox
-              icon={<WarningIcon />}
-              text={intl.formatMessage({
-                id: 'editContactDisclaimer',
-              })}
-              className={styles.conactFormDialogue}
-            />
-          </div>
-          <Button
-            className={styles.submitButton}
-            primary
-            type="submit"
-            disabled={this.disableButton(formName, formAddress)}
-            renderIcon={AddContactIcon}
-          >
-            {submitLabel}
-          </Button>
+          {scannerActive ? (
+            <React.Fragment>
+              <div className={styles.scannerContainer}>
+                <QrCodeScanner
+                  callback={a => {
+                    this.props.setAddress(a)
+                    this.validateAddress(a)
+                    this.toggleScanner()
+                  }}
+                  callbackProgress={progress}
+                  width="316"
+                  height="178"
+                />
+              </div>
+              <div className={styles.loginButtonRowScannerActive}>
+                <Button
+                  id="scan-private-key-qr-button"
+                  renderIcon={Close}
+                  onClick={this.toggleScanner}
+                  primary
+                  style={{ width: 200, marginTop: 24 }}
+                >
+                  <FormattedMessage id="auth.cancel" />
+                </Button>
+              </div>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <TextInput
+                id="contactName"
+                name="name"
+                label={intl.formatMessage({
+                  id: 'contactName',
+                })}
+                className={styles.input}
+                placeholder={intl.formatMessage({
+                  id: 'enterAContactName',
+                })}
+                value={formName}
+                onChange={this.handleChangeName}
+                error={nameError}
+              />
+              <TextInput
+                id="contactAddress"
+                label={intl.formatMessage({
+                  id: 'contactWalletAddress',
+                })}
+                name="address"
+                className={styles.input}
+                placeholder={intl.formatMessage({
+                  id: 'enterAWalletAddress',
+                })}
+                value={formAddress}
+                onChange={this.handleChangeAddress}
+                error={addressError}
+              />
+              <div className={styles.dialogueAndButtonContainer}>
+                <DialogueBox
+                  icon={<WarningIcon />}
+                  text={intl.formatMessage({
+                    id: 'editContactDisclaimer',
+                  })}
+                  className={styles.conactFormDialogue}
+                />
+              </div>
+              <div className={styles.submitButtonRow}>
+                {showScanner && (
+                  <Button
+                    id="scan-private-key-qr-button"
+                    primary
+                    renderIcon={GridIcon}
+                    onClick={this.toggleScanner}
+                    disabled={!cameraAvailable}
+                  >
+                    <FormattedMessage id="authScanQRButton" />
+                  </Button>
+                )}
+                <Button
+                  className={styles.submitButton}
+                  primary
+                  type="submit"
+                  disabled={this.disableButton(formName, formAddress)}
+                  renderIcon={AddContactIcon}
+                >
+                  {submitLabel}
+                </Button>
+              </div>
+            </React.Fragment>
+          )}
         </form>
       </section>
     )

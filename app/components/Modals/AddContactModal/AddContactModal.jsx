@@ -28,6 +28,7 @@ class AddContactModal extends Component<Props> {
     return (
       <BaseModal hideModal={hideModal} height="600px">
         <ContactForm
+          showScanner
           formAddress={address}
           submitLabel={<FormattedMessage id="addToContacts" />}
           onSubmit={this.handleSubmit}

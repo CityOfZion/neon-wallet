@@ -143,16 +143,16 @@ export default class Send extends React.Component<Props, State> {
   pushQRCodeData = (data: Object) => {
     const { sendRowDetails } = this.state
     const { asset, address, amount } = data
-    const firstRowEmpty =
-      sendRowDetails.length === 1 && !parseInt(sendRowDetails[0].amount, 10)
-
-    if (firstRowEmpty) {
-      if (asset) this.updateRowField(0, 'asset', asset)
-      if (address) this.updateRowField(0, 'address', address)
-      if (amount) this.updateRowField(0, 'amount', amount)
-    } else {
-      this.addRow(data)
+    const currIndex = sendRowDetails.length - 1
+    if (asset) this.updateRowField(currIndex, 'asset', asset)
+    if (address) {
+      this.clearErrors(currIndex, 'address')
+      this.updateRowField(currIndex, 'address', address)
+      setTimeout(() => {
+        this.validateAddress(address, currIndex)
+      }, 500)
     }
+    if (amount) this.updateRowField(currIndex, 'amount', amount)
   }
 
   generateRow = (row: Object = {}) => {

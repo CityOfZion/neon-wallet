@@ -74,4 +74,26 @@
     margin-top: auto;
     margin-bottom: 26px;
   }
+
+  .submitButtonRow {
+    display: flex;
+    margin-top: auto;
+    button:first-child {
+      margin-right: 12px;
+    }
+    button:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+
+.scannerContainer {
+  display: flex;
+  justify-content: center;
+  // margin-bottom: 12px;
+  margin: 24px 0;
+  height: 250px;
+  position: relative;
+
 }

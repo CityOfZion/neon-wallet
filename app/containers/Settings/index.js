@@ -32,6 +32,7 @@ import withNetworkData from '../../hocs/withNetworkData'
 import nodeStorageActions from '../../actions/nodeStorageActions'
 import dashboardActions from '../../actions/dashboardActions'
 import withChainData from '../../hocs/withChainData'
+import { updateAccountsActions as updateN3AccountsActions } from '../../actions/n3AccountsActions'
 
 const actionCreators = {
   showModal,
@@ -48,6 +49,10 @@ const mapAccountsDataToProps = accounts => ({
 
 const mapAccountsActionsToProps = actions => ({
   setAccounts: accounts => actions.call(accounts),
+})
+
+const mapN3AccountsActionsToProps = actions => ({
+  setN3Accounts: accounts => actions.call(accounts),
 })
 
 const mapSettingsActionsToProps = actions => ({
@@ -93,6 +98,9 @@ export default compose(
   withActions(networkActions, mapActionsToProps),
   withRecall(nodeStorageActions, ['networkId']),
   withActions(updateAccountsActions, mapAccountsActionsToProps),
+
+  withActions(updateN3AccountsActions, mapN3AccountsActionsToProps),
+
   withActions(updateSettingsActions, mapSettingsActionsToProps),
   withReset(dashboardActions, ['currency']),
   withReset(pricesActions, ['currency']),

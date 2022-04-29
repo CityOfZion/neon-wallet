@@ -7,9 +7,10 @@ import {
   clearRecipientData,
 } from '../../../actions/sendModalActions'
 import withFailureNotification from '../../../hocs/withFailureNotification'
+import withChainData from '../../../hocs/withChainData'
 
 const mapGetDataToProps = action => ({
-  getRecipientData: url => action.call(url),
+  getRecipientData: (url, chain) => action.call({ url, chain }),
 })
 
 const mapClearDataToProps = action => ({
@@ -30,4 +31,5 @@ export default compose(
 
   withActions(clearRecipientData, mapClearDataToProps),
   withData(clearRecipientData, mapRecipientDataToProps),
+  withChainData(),
 )(SendModal)

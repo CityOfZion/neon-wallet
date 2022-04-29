@@ -138,7 +138,7 @@ export const recoverWallet = (
         let accounts: Array<any> = []
 
         // If for some reason we have no NEP-6 wallet stored, create a default.
-        if (!data) {
+        if (!data || !data.accounts) {
           // eslint-disable-next-line no-param-reassign
           data = { ...DEFAULT_WALLET }
         }
@@ -186,13 +186,17 @@ export const recoverWallet = (
           }
         })
 
-        storage.set('userWallet', data, saveError => {
-          if (saveError) {
-            reject(saveError)
-          } else {
-            resolve(data)
-          }
-        })
+        storage.set(
+          chain === 'neo2' ? 'userWallet' : 'n3UserWallet',
+          data,
+          saveError => {
+            if (saveError) {
+              reject(saveError)
+            } else {
+              resolve(data)
+            }
+          },
+        )
       },
     )
   })

@@ -26,6 +26,7 @@ type Props = {
   pushQRCodeData: (data: Object) => any,
   showImportModal: (props: Object) => void,
   intl: IntlShape,
+  chain: string,
 }
 
 const SendPanelHeader = ({
@@ -44,6 +45,7 @@ const SendPanelHeader = ({
   showImportModal,
   pushQRCodeData,
   intl,
+  chain,
 }: Props) => {
   const numberOfItems = sendRowDetails.length
 
