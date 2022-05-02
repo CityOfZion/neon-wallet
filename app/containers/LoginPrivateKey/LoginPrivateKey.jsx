@@ -58,10 +58,10 @@ export default class LoginPrivateKey extends React.Component<Props, State> {
             <React.Fragment>
               <div className={styles.scannerContainer}>
                 <QrCodeScanner
-                  callback={() =>
+                  callback={key =>
                     chain === 'neo3'
-                      ? loginWithN3PrivateKey(wif)
-                      : loginWithPrivateKey(wif)
+                      ? loginWithN3PrivateKey(key)
+                      : loginWithPrivateKey(key)
                   }
                   callbackProgress={progress}
                   width="316"

@@ -1,5 +1,9 @@
 // @flow
+import { rpc as n3Rpc } from '@cityofzion/neon-js-next'
+import { api, u, rpc, sc, wallet } from '@cityofzion/neon-js'
+
 import hashToSymbol from './hashToSymbol'
+import { getNode, getRPCEndpoint } from '../actions/nodeStorageActions'
 
 const INVALID_FORMAT = 'Invalid format'
 const INVALID_PROTOCOL = 'Invalid protocol'
@@ -13,11 +17,19 @@ export type RecipientData = {
   reference: ?string,
 }
 
-const parseQRCode = (data: string): RecipientData => {
+const parseQRCode = async ({
+  url,
+  net,
+  chain,
+}: {
+  url: string,
+  net: string,
+  chain: string,
+}): Promise<RecipientData> => {
   let parsedData
 
   try {
-    parsedData = new URL(data)
+    parsedData = new URL(url)
   } catch (err) {
     throw INVALID_FORMAT
   }
@@ -30,9 +42,24 @@ const parseQRCode = (data: string): RecipientData => {
   let asset = searchParams.get('asset')
   const assetIsHash = asset && asset !== 'NEO' && asset !== 'GAS'
 
-  if (assetIsHash) {
+  if (assetIsHash && chain === 'neo2') {
     asset = hashToSymbol(asset)
     if (!asset) throw UNRECOGNIZED_ASSET
+  } else {
+    let endpoint = await getNode(net)
+    if (!endpoint) {
+      endpoint = await getRPCEndpoint(net)
+    }
+    const tokenNameResponse = await new n3Rpc.RPCClient(endpoint)
+      .invokeFunction(asset, 'symbol')
+      .catch(e => {
+        console.error({ e })
+      })
+    const symbol = atob(tokenNameResponse.stack[0].value)
+    if (symbol) asset = symbol
+    else {
+      throw UNRECOGNIZED_ASSET
+    }
   }
 
   return {

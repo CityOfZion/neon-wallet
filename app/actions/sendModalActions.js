@@ -7,9 +7,10 @@ export const ID = 'send'
 
 export const getRecipientData = createActions(
   ID,
-  ({ url, chain }) => (): RecipientData => {
+  ({ url, chain, net }) => async (): Promise<RecipientData> => {
     try {
-      if (chain === 'neo2') return parseQRCode(url)
+      if (chain === 'neo2' || url.includes('neo:'))
+        return parseQRCode({ url, net, chain })
       return { address: url, amount: '', asset: '', reference: '' }
     } catch (msg) {
       throw new Error(msg)

@@ -10,11 +10,12 @@ import type { RecipientData } from '../../../util/parseQRCode'
 type Props = {
   hideModal: () => any,
   pushQRCodeData: (data: Object) => any,
-  getRecipientData: (url: string, chain?: string) => any,
+  getRecipientData: (url: string, chain?: string, net: string) => any,
   clearRecipientData: () => null,
   recipientData: ?RecipientData,
   progress: ProgressState,
   chain: string,
+  net: string,
 }
 
 export default class SendModal extends React.Component<Props> {
@@ -26,7 +27,8 @@ export default class SendModal extends React.Component<Props> {
   }
 
   get stepComponent(): React$Element<ConfirmDetails | ReadCode> {
-    const { recipientData, getRecipientData, progress, chain } = this.props
+    const { recipientData, getRecipientData, progress, chain, net } = this.props
+
     //  eslint-disable-next-line
     return recipientData ? (
       chain === 'neo3' ? (
@@ -40,7 +42,7 @@ export default class SendModal extends React.Component<Props> {
       )
     ) : (
       <ReadCode
-        callback={url => getRecipientData(url, chain)}
+        callback={url => getRecipientData(url, chain, net)}
         callbackProgress={progress}
       />
     )
