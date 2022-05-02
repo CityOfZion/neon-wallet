@@ -8,9 +8,10 @@ import {
 } from '../../../actions/sendModalActions'
 import withFailureNotification from '../../../hocs/withFailureNotification'
 import withChainData from '../../../hocs/withChainData'
+import withNetworkData from '../../../hocs/withNetworkData'
 
 const mapGetDataToProps = action => ({
-  getRecipientData: (url, chain) => action.call({ url, chain }),
+  getRecipientData: (url, chain, net) => action.call({ url, chain, net }),
 })
 
 const mapClearDataToProps = action => ({
@@ -28,7 +29,7 @@ export default compose(
       `An error occurred while scanning this QR code: ${message}. Please try again.`,
   ),
   withProgress(getRecipientData),
-
+  withNetworkData(),
   withActions(clearRecipientData, mapClearDataToProps),
   withData(clearRecipientData, mapRecipientDataToProps),
   withChainData(),
