@@ -111,6 +111,7 @@ async function getPrices(useFallbackApi = false) {
       PRICE_REQUEST_ATTEMPTS += 1
       return getPrices(true)
     }
+
     return prices
   } catch (error) {
     // If the attempt errors out, try the fallback
@@ -123,6 +124,38 @@ async function getPrices(useFallbackApi = false) {
   }
 }
 
+async function getPricesFromFlamingo() {
+  const settings = await getSettings()
+  const { currency } = settings
+  const EXCHANGE_RATE_URL = `https://api.flamingo.finance/fiat/exchange-rate?pair=USD_${currency.toUpperCase()}`
+  let exchangeRate = 1
+
+  if (currency !== 'usd') {
+    const results = await axios.get(EXCHANGE_RATE_URL).catch(error => {
+      console.error(`Unable to retrieve prices from the api ${url}`, error)
+      return 1
+    })
+    exchangeRate = results.data || 1
+  }
+
+  // Because all pairs are returned in their USD value
+  // we first check the exchange rate for all currency other than USD
+  const url = 'https://api.flamingo.finance/token-info/prices'
+  const results = await axios.get(url).catch(error => {
+    console.error(`Unable to retrieve prices from the api ${url}`, error)
+    return undefined
+  })
+  if (!results) return {}
+  return results.data.reduce((accum, curr) => {
+    accum[curr.symbol] = curr.usd_price * exchangeRate
+    return accum
+  }, {})
+}
+
 export const ID = 'prices'
 
-export default createActions(ID, () => () => getPrices())
+export default createActions(ID, () => async () => {
+  const { chain } = await getSettings()
+  if (chain === 'neo3') return getPricesFromFlamingo()
+  return getPrices()
+})
