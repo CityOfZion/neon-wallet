@@ -24,6 +24,7 @@ jobs:
       - checkout
       - restore_cache:
           key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
+      - run: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4EB27DB2A3B88B8B
       - run: apt-get -y update
       - run: yarn config delete proxy
       - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
