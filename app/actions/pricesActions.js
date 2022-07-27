@@ -132,7 +132,10 @@ async function getPricesFromFlamingo() {
 
   if (currency !== 'usd') {
     const results = await axios.get(EXCHANGE_RATE_URL).catch(error => {
-      console.error(`Unable to retrieve prices from the api ${url}`, error)
+      console.error(
+        `Unable to retrieve prices from the api ${EXCHANGE_RATE_URL}`,
+        error,
+      )
       return 1
     })
     exchangeRate = results.data || 1
