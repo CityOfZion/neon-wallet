@@ -15,7 +15,7 @@ import { CURRENCIES, PRICE_UNAVAILABLE } from '../../../core/constants'
 import { imageMap } from '../../../assets/nep5/png'
 import StyledReactSelect from '../../Inputs/StyledReactSelect/StyledReactSelect'
 
-const electron = require('electron').remote
+const electron = require('electron')
 
 type Props = {
   className: ?string,

@@ -40,6 +40,7 @@ export default class LoginLocalStorage extends Component<Props, State> {
 
   returnMappedAccounts = () => {
     const { chain, n3Accounts, accounts } = this.props
+    console.log({ chain, n3Accounts, accounts })
     let dynamicMappedAccounts = cloneDeep(accounts)
     if (chain === 'neo3') {
       dynamicMappedAccounts = cloneDeep(n3Accounts)

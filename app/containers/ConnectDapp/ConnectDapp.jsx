@@ -39,7 +39,7 @@ import ApproveConnection from '../../components/ConnectDapp/ApproveConnection'
 import ApproveTransaction from '../../components/ConnectDapp/ApproveTransaction'
 import ConnectionUrlForm from '../../components/ConnectDapp/ConnectionUrlForm'
 
-const electron = require('electron').remote
+const electron = require('electron')
 const ipc = require('electron').ipcRenderer
 
 type Props = {

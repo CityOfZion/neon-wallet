@@ -17,6 +17,8 @@ import { ROUTES, MODAL_TYPES } from '../../core/constants'
 import HomeLayout from './HomeLayout'
 import pack from '../../../package.json'
 
+console.log({ styles })
+
 type State = {
   tabIndex: number,
 }

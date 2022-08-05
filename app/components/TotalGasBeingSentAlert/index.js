@@ -6,7 +6,7 @@ import classNames from 'classnames'
 import styles from './TotalGasBeingSentAlert.scss'
 import WarningIcon from '../../assets/icons/warning.svg'
 
-const electron = require('electron').remote
+const electron = require('electron')
 
 const TotalGasBeingSentAlert = () => (
   <section className={classNames(styles.alertBox, 'alertBox')}>

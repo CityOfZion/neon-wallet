@@ -22,7 +22,7 @@ import LedgerDark from '../../../assets/images/release-assets/ledger-dark.svg'
 import release210Dark from '../../../assets/images/release-assets/2.10.0-dark.png'
 import release210Light from '../../../assets/images/release-assets/2.10.0-light.png'
 
-const electron = require('electron').remote
+const electron = require('electron')
 
 type Props = {
   hideModal: Function,

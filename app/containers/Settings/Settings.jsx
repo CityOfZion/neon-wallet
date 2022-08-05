@@ -35,7 +35,7 @@ import SaveIcon from '../../assets/icons/save-icon.svg'
 import pack from '../../../package.json'
 import { LanguageSettingsIcon } from '../../components/Inputs/LanguageSelect/LanguageSelect'
 
-const { dialog, shell } = require('electron').remote
+const { dialog, shell } = require('electron')
 
 type Props = {
   setAccounts: (Array<Object>) => any,
