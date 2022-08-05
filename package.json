@@ -38,6 +38,7 @@
       "app/dist/bundle.js",
       "app/dist/style.css"
     ],
+    "afterSign": "electron-builder-notarize",
     "publish": [
       {
         "provider": "github",
