@@ -1,6 +1,6 @@
 import { api } from '@cityofzion/neon-js'
 import nock from 'nock'
-import { ipcRenderer, app } from 'electron'
+import { ipcRenderer } from 'electron'
 
 import nodeStorageActions, {
   determineIfCacheIsExpired,
@@ -19,7 +19,7 @@ jest.mock(
   () => {
     const mElectron = {
       ipcRenderer: {
-        invoke: jest.fn(async () => `${app.getPath('userData')}/storage`),
+        invoke: jest.fn(async () => 'foo'),
       },
     }
     return mElectron
