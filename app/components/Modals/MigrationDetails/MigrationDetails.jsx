@@ -13,7 +13,7 @@ import BlockExplorerIcon from '../../../assets/icons/info.svg'
 import styles from './MigrationDetails.scss'
 import BaseModal from '../BaseModal'
 
-const electron = require('electron').remote
+const electron = require('electron')
 
 type Props = {
   hideModal: () => void,

@@ -25,7 +25,7 @@ import Info from '../../assets/icons/info.svg'
 import Up from '../../assets/icons/chevron-up.svg'
 import Down from '../../assets/icons/chevron-down.svg'
 
-const electron = require('electron').remote
+const electron = require('electron')
 
 const WITNESS_SCOPE = {
   '0': 'None',

@@ -8,7 +8,7 @@ import HeaderBar from '../../components/HeaderBar'
 import styles from './News.scss'
 import Loader from '../../components/Loader'
 
-const electron = require('electron').remote
+const electron = require('electron')
 
 type Props = {
   feed: {

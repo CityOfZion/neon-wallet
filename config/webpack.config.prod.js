@@ -2,7 +2,8 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const paths = require('./paths')
 
 const commonLoaders = {
@@ -61,7 +62,9 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify('production'),
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new ExtractTextPlugin('style.css'),
+    new MiniCssExtractPlugin({
+      filename: 'style.css',
+    }),
   ],
   module: {
     rules: [
@@ -77,29 +80,33 @@ module.exports = {
       },
       {
         test: /\.global\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader',
-        }),
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
         test: /^((?!\.global).)*\.css$/,
-        use: ExtractTextPlugin.extract({
-          use: ['css-loader', commonLoaders.cssModules],
-        }),
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          commonLoaders.cssModules,
+        ],
       },
       {
         test: /\.global\.scss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'resolve-url-loader', 'sass-loader'],
-        }),
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'resolve-url-loader',
+          'sass-loader',
+        ],
       },
       {
         test: /^((?!\.global).)*\.scss$/,
-        use: ExtractTextPlugin.extract({
-          use: [commonLoaders.cssModules, 'resolve-url-loader', 'sass-loader'],
-        }),
+        use: [
+          MiniCssExtractPlugin.loader,
+          commonLoaders.cssModules,
+          'resolve-url-loader',
+          'sass-loader',
+        ],
       },
       {
         test: /\.(png|jpg|jpeg|gif)$/,

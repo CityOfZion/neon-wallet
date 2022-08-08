@@ -17,7 +17,7 @@ import SaveIcon from '../../../assets/icons/save-icon.svg'
 import Button from '../../Button'
 import Loading from '../../../containers/App/Loading'
 
-const electron = require('electron').remote
+const electron = require('electron')
 
 type Tx = {
   type: number,

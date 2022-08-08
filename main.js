@@ -85,6 +85,7 @@ app.on('ready', () => {
       contextIsolation: true,
       webPreferences: {
         enableRemoteModule: true,
+        contextIsolation: false,
         allowRunningInsecureContent: false,
         webSecurity: true,
         nodeIntegration: false,
@@ -258,6 +259,8 @@ ipcMain.on('closed', () => {
   mainWindow = null
   app.quit()
 })
+
+ipcMain.handle('getPath', async () => `${app.getPath('userData')}/storage`)
 
 autoUpdater.logger = log
 autoUpdater.logger.transports.file.level = 'info'

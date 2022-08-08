@@ -9,7 +9,7 @@ import styles from './Transaction.scss'
 import { imageMap } from '../../../assets/nep5/png'
 import { toBigNumber } from '../../../core/math'
 
-const electron = require('electron').remote
+const electron = require('electron')
 
 type Props = {
   tx: {

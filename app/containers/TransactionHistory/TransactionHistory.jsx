@@ -18,7 +18,7 @@ import {
   parseAbstractData,
 } from '../../actions/transactionHistoryActions'
 
-const { dialog, app } = require('electron').remote
+const { dialog, app } = require('electron')
 
 type Props = {
   chain: string,

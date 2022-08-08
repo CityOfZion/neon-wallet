@@ -15,7 +15,7 @@ import ConfirmIcon from '../../../assets/icons/confirm.svg'
 import SaveIcon from '../../../assets/icons/save-icon.svg'
 import Button from '../../Button'
 
-const electron = require('electron').remote
+const electron = require('electron')
 
 type Props = {
   showSuccessNotification: ({ message: string }) => string,

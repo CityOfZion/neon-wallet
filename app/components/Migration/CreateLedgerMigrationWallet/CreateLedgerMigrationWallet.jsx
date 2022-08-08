@@ -6,7 +6,7 @@ import LoginLedgerNanoS from '../../../containers/LoginLedgerNanoS'
 import n3Logo from '../../../assets/images/n3_logo.png'
 import styles from './CreateLedgerMigrationWallet.scss'
 
-const electron = require('electron').remote
+const electron = require('electron')
 
 type Props = {
   setAddress: (address: string) => void,
