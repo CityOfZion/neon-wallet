@@ -69,14 +69,7 @@
       "hardenedRuntime": true,
       "entitlements": "mac-config/entitlements.mac.plist",
       "entitlementsInherit": "mac-config/entitlements.mac.plist",
-      "artifactName": "${productName}.${version}.${ext}",
-      "target": {
-        "target": "default",
-        "arch": [
-          "x64",
-          "arm64"
-        ]
-      }
+      "artifactName": "${productName}.${version}.${ext}"
     },
     "linux": {
       "target": [
