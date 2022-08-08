@@ -12,7 +12,7 @@
     "dev": "cross-env START_HOT=1 NODE_ENV=development node_modules/.bin/webpack-dev-server --progress --config ./config/webpack.config.dev",
     "start-dev": "cross-env NODE_ENV=development electron . --enable-logging --remote-debugging-port=9222 --progress",
     "assets-dev": "cross-env NODE_ENV=development webpack --config ./config/webpack.config.dev --progress",
-    "test": "npm rebuild node-hid && npm rebuild better-sqlite3 && ./node_modules/.bin/jest --coverage",
+    "test": "./node_modules/.bin/jest --coverage --no-watchman",
     "test-ci": "yarn test --maxWorkers=4 --watchAll=false",
     "test:e2e": "ava __e2e__/*.e2e.js --timeout=120s -s",
     "test-watch": "jest --watch",

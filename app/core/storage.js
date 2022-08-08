@@ -7,7 +7,6 @@ const set = promisify(storage.set, storage)
 
 export const getStorage = async key => {
   const path = await ipcRenderer.invoke('getPath')
-
   storage.setDataPath(path)
   return get(key)
 }

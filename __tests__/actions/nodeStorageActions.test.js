@@ -1,7 +1,6 @@
 import { api } from '@cityofzion/neon-js'
 import nock from 'nock'
 import { ipcRenderer } from 'electron'
-import os from 'os'
 
 import nodeStorageActions, {
   determineIfCacheIsExpired,
@@ -15,12 +14,14 @@ import {
   TEST_NETWORK_DEPRECATED_LABEL,
 } from '../../app/core/constants'
 
+const returnDirectory = () => __dirname
+
 jest.mock(
   'electron',
   () => {
     const mElectron = {
       ipcRenderer: {
-        invoke: jest.fn(async () => os.tmpdir()),
+        invoke: jest.fn(async () => returnDirectory()),
       },
     }
     return mElectron
