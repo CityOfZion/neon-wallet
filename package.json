@@ -69,7 +69,14 @@
       "hardenedRuntime": true,
       "entitlements": "mac-config/entitlements.mac.plist",
       "entitlementsInherit": "mac-config/entitlements.mac.plist",
-      "artifactName": "${productName}.${version}.${ext}"
+      "artifactName": "${productName}.${version}.${ext}",
+      "target": {
+        "target": "default",
+        "arch": [
+          "x64",
+          "arm64"
+        ]
+      }
     },
     "linux": {
       "target": [
@@ -120,7 +127,7 @@
     "electron-json-storage": "4.5.0",
     "electron-log": "^4.2.4",
     "electron-save-file": "1.0.2",
-    "electron-updater": "^4.3.5",
+    "electron-updater": "5.2.1",
     "es6-promisify": "5.0.0",
     "file-loader": "3.0.1",
     "flow-typed": "2.5.1",
