@@ -14,7 +14,7 @@ import {
   TEST_NETWORK_DEPRECATED_LABEL,
 } from '../../app/core/constants'
 
-const returnDirectory = () => __dirname
+const mockReturnDirectory = () => __dirname
 
 jest.mock(
   'electron',
