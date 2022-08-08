@@ -21,7 +21,7 @@ jest.mock(
   () => {
     const mElectron = {
       ipcRenderer: {
-        invoke: jest.fn(async () => returnDirectory()),
+        invoke: jest.fn(async () => mockReturnDirectory()),
       },
     }
     return mElectron
