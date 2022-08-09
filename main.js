@@ -6,6 +6,7 @@ const {
   globalShortcut,
   session,
   ipcMain,
+  safeStorage,
 } = require('electron') // eslint-disable-line import/no-extraneous-dependencies
 const path = require('path')
 const url = require('url')
@@ -261,6 +262,18 @@ ipcMain.on('closed', () => {
 })
 
 ipcMain.handle('getPath', async () => `${app.getPath('userData')}/storage`)
+
+ipcMain.handle('safeStorageEncrypt', async (event, value) => {
+  const buffer = safeStorage.encryptString(value)
+  const encrypted = buffer.toString('base64')
+  return encrypted
+})
+
+ipcMain.handle('safeStorageDecrypt', async (event, value) => {
+  const buffer = Buffer.from(value, 'base64')
+  const plainText = safeStorage.decryptString(buffer)
+  return plainText
+})
 
 autoUpdater.logger = log
 autoUpdater.logger.transports.file.level = 'info'
