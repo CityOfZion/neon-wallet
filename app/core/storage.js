@@ -5,6 +5,8 @@ import promisify from 'es6-promisify'
 const get = promisify(storage.get, storage)
 const set = promisify(storage.set, storage)
 
+const ENCRYPTED_FILES_WHITELIST = ['address']
+
 export const setStorage = async (key, value, encrypt = false) => {
   const path = await ipcRenderer.invoke('getPath')
   storage.setDataPath(path)
@@ -22,13 +24,17 @@ export const getStorage = async key => {
 
   // If the file name being requested includes address
   // and is NOT encrypted, we encrypt the file.
-  if (key && key.toLowerCase().includes('address')) {
+  if (
+    key &&
+    !!ENCRYPTED_FILES_WHITELIST.find(fileName =>
+      key.toLowerCase().includes(fileName),
+    )
+  ) {
     // if the value is a valid JS object it has not been encrypted
     if (typeof value === 'object') {
       await setStorage(key, value, true)
     }
   }
-
   // Only encrypted values get stored as strings
   if (typeof value === 'string') {
     const decryptedValue = await ipcRenderer.invoke('safeStorageDecrypt', value)
