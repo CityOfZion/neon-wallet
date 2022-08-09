@@ -5,15 +5,35 @@ import promisify from 'es6-promisify'
 const get = promisify(storage.get, storage)
 const set = promisify(storage.set, storage)
 
+export const setStorage = async (key, value, encrypt = false) => {
+  const path = await ipcRenderer.invoke('getPath')
+  storage.setDataPath(path)
+  const encryptedValue = await ipcRenderer.invoke(
+    'safeStorageEncrypt',
+    JSON.stringify(value),
+  )
+  await set(key, encrypt ? encryptedValue : value)
+}
+
 export const getStorage = async key => {
   const path = await ipcRenderer.invoke('getPath')
   storage.setDataPath(path)
-  return get(key)
-}
+  const value = await get(key)
 
-export const setStorage = async (key, value) => {
-  const path = await ipcRenderer.invoke('getPath')
+  // If the file name being requested includes address
+  // and is NOT encrypted, we encrypt the file.
+  if (key && key.toLowerCase().includes('address')) {
+    // if the value is a valid JS object it has not been encrypted
+    if (typeof value === 'object') {
+      await setStorage(key, value, true)
+    }
+  }
 
-  storage.setDataPath(path)
-  set(key, value)
+  // Only encrypted values get stored as strings
+  if (typeof value === 'string') {
+    const decryptedValue = await ipcRenderer.invoke('safeStorageDecrypt', value)
+    return JSON.parse(decryptedValue)
+  }
+
+  return value
 }
