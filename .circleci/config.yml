@@ -58,7 +58,7 @@ jobs:
 
   build_macos:
     macos:
-      xcode: "14.0.0"
+      xcode: "13.0.0"
     steps:
       - checkout
       - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
