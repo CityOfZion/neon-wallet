@@ -35,7 +35,7 @@ import SaveIcon from '../../assets/icons/save-icon.svg'
 import pack from '../../../package.json'
 import { LanguageSettingsIcon } from '../../components/Inputs/LanguageSelect/LanguageSelect'
 
-const { dialog, shell } = require('electron')
+const { ipcRenderer, shell } = require('electron')
 
 type Props = {
   setAccounts: (Array<Object>) => any,
@@ -76,7 +76,11 @@ export const loadWalletRecovery = async (
   setN3Accounts: (Array<Object>) => any,
   chain: string,
 ) => {
-  const { canceled, filePaths } = await dialog.showOpenDialog()
+  const { canceled, filePaths } = await ipcRenderer.invoke(
+    'dialog',
+    'showOpenDialog',
+    { properties: ['openFile'] },
+  )
   if (canceled || !filePaths) return
 
   const filepath = filePaths[0]
@@ -148,14 +152,18 @@ export default class Settings extends Component<Props, State> {
       })
       return
     }
-    const { filePath, canceled } = await dialog.showSaveDialog({
-      filters: [
-        {
-          name: 'JSON',
-          extensions: ['json'],
-        },
-      ],
-    })
+    const { filePath, canceled } = await await ipcRenderer.invoke(
+      'dialog',
+      'showSaveDialog',
+      {
+        filters: [
+          {
+            name: 'JSON',
+            extensions: ['json'],
+          },
+        ],
+      },
+    )
 
     if (filePath && !canceled) {
       fs.writeFile(filePath, content, errorWriting => {

@@ -7,11 +7,13 @@ const {
   session,
   ipcMain,
   safeStorage,
+  dialog,
 } = require('electron') // eslint-disable-line import/no-extraneous-dependencies
 const path = require('path')
 const url = require('url')
 const { autoUpdater } = require('electron-updater')
 const log = require('electron-log')
+const fs = require('fs')
 
 const port = process.env.PORT || 3000
 
@@ -261,7 +263,12 @@ ipcMain.on('closed', () => {
   app.quit()
 })
 
-ipcMain.handle('getPath', async () => `${app.getPath('userData')}/storage`)
+ipcMain.handle(
+  'getStoragePath',
+  async () => `${app.getPath('userData')}/storage`,
+)
+
+ipcMain.handle('getPath', async (event, folder) => app.getPath(folder))
 
 ipcMain.handle('safeStorageEncrypt', async (event, value) => {
   const buffer = safeStorage.encryptString(value)
@@ -273,6 +280,11 @@ ipcMain.handle('safeStorageDecrypt', async (event, value) => {
   const buffer = Buffer.from(value, 'base64')
   const plainText = safeStorage.decryptString(buffer)
   return plainText
+})
+
+ipcMain.handle('dialog', async (event, method, params) => {
+  const result = await dialog[method](params)
+  return result
 })
 
 autoUpdater.logger = log
