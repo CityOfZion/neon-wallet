@@ -17,7 +17,7 @@ import SaveIcon from '../../../assets/icons/save-icon.svg'
 import Button from '../../Button'
 import Loading from '../../../containers/App/Loading'
 
-const electron = require('electron')
+const { ipcRenderer } = require('electron')
 
 type Tx = {
   type: number,
@@ -113,27 +113,29 @@ export default class GeneratedTransactionModal extends React.Component<
 
   handleImport = async (isSignedRawTx: boolean = false) => {
     const { showErrorNotification } = this.props
-    const { dialog } = electron
     try {
-      dialog.showOpenDialog(fileName => {
-        if (fileName === undefined) {
-          return null
-        }
-        const rawData = fs.readFileSync(fileName[0])
+      ipcRenderer
+        .invoke('dialog', { properties: ['openFile'] })
+        .then(async fileName => {
+          if (fileName === undefined) {
+            return null
+          }
 
-        const data = isSignedRawTx
-          ? rawData.toString('utf8')
-          : JSON.parse(rawData)
-        const transaction = isSignedRawTx ? data : JSON.stringify(data)
+          const rawData = fs.readFileSync(fileName[0])
 
-        return isSignedRawTx
-          ? this.setState({
-              serializedTransactionInput: transaction,
-            })
-          : this.setState({
-              transaction,
-            })
-      })
+          const data = isSignedRawTx
+            ? rawData.toString('utf8')
+            : JSON.parse(rawData)
+          const transaction = isSignedRawTx ? data : JSON.stringify(data)
+
+          return isSignedRawTx
+            ? this.setState({
+                serializedTransactionInput: transaction,
+              })
+            : this.setState({
+                transaction,
+              })
+        })
     } catch (err) {
       console.error(err)
       showErrorNotification({
@@ -144,21 +146,20 @@ export default class GeneratedTransactionModal extends React.Component<
 
   handleSave = async (isSignedRawTx: boolean = false) => {
     const { showSuccessNotification, showErrorNotification } = this.props
-    const { dialog, app } = electron
+
+    const path = await ipcRenderer.invoke('getPath', 'documents')
     try {
-      dialog.showSaveDialog(
-        {
-          defaultPath: `${app.getPath(
-            'documents',
-          )}/neon-wallet-signed-transaction-${moment().unix()}`,
+      ipcRenderer
+        .invoke('dialog', 'showSaveDialog', {
+          defaultPath: `${path}}/neon-wallet-signed-transaction-${moment().unix()}`,
           filters: [
             {
               name: isSignedRawTx ? 'TXT' : 'JSON',
               extensions: isSignedRawTx ? ['txt'] : ['json'],
             },
           ],
-        },
-        fileName => {
+        })
+        .then(fileName => {
           if (fileName === undefined) {
             return
           }
@@ -181,8 +182,7 @@ export default class GeneratedTransactionModal extends React.Component<
               }
             },
           )
-        },
-      )
+        })
     } catch (err) {
       console.error(err)
       showErrorNotification({

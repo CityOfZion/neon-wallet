@@ -46,21 +46,20 @@ export default class GeneratedTransactionModal extends React.Component<
 
   handleSave = async () => {
     const { showSuccessNotification, showErrorNotification } = this.props
-    const { dialog, app } = electron
+    const { ipcRenderer } = electron
+    const path = await ipcRenderer.invoke('getPath', 'documents')
     try {
-      dialog.showSaveDialog(
-        {
-          defaultPath: `${app.getPath(
-            'documents',
-          )}/neon-wallet-transaction-${moment().unix()}`,
+      ipcRenderer
+        .invoke('dialog', 'showSaveDialog', {
+          defaultPath: `${path}/neon-wallet-transaction-${moment().unix()}`,
           filters: [
             {
               name: 'JSON',
               extensions: ['json'],
             },
           ],
-        },
-        fileName => {
+        })
+        .then(fileName => {
           if (fileName === undefined) {
             return
           }
@@ -82,8 +81,7 @@ export default class GeneratedTransactionModal extends React.Component<
               }
             },
           )
-        },
-      )
+        })
     } catch (err) {
       console.error(err)
       showErrorNotification({

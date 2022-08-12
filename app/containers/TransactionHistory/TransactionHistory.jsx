@@ -18,7 +18,7 @@ import {
   parseAbstractData,
 } from '../../actions/transactionHistoryActions'
 
-const { dialog, app } = require('electron')
+const { ipcRenderer, app } = require('electron')
 
 type Props = {
   chain: string,
@@ -154,10 +154,10 @@ export default class TransactionHistory extends Component<Props, State> {
         }),
       )
       hideNotification(infoNotification)
-      const result = await dialog.showSaveDialog({
-        defaultPath: `${app.getPath(
-          'documents',
-        )}/neon-wallet-activity-${moment().unix()}.csv`,
+      const path = await ipcRenderer.invoke('getPath', 'documents')
+
+      const result = await ipcRenderer.invoke('dialog', 'showSaveDialog', {
+        defaultPath: `${path}/neon-wallet-activity-${moment().unix()}.csv`,
         filters: [
           {
             name: 'CSV',
