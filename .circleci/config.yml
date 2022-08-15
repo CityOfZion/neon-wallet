@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   node: circleci/node@5.0.1
-  python: circleci/python@2.7.18
+  python: circleci/python@2.0.3
 
 jobs:
   test:
