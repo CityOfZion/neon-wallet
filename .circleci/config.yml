@@ -11,18 +11,17 @@ jobs:
       - node/install:
           node-version: "16.14.2"
       - checkout
-      - restore_cache:
-          key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
-      - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
+      # - restore_cache:
+      #     key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
+      - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1 --cache-folder ~/.cache/yarn
       - run: yarn lint
       - run: yarn flow
       - run: yarn assets
       - run: yarn test-ci
       - save_cache:
-          key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
           paths:
-            - ./node_modules
-            - /usr/local/share/.cache/yarn/v2
+            - ~/.cache/yarn
+          key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
   build:
     macos:
       xcode: "14.0.0"
@@ -30,15 +29,14 @@ jobs:
       - node/install:
           node-version: "16.14.2"
       - checkout
-      - restore_cache:
-          key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
-      - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
+      # - restore_cache:
+      #     key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
+      - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1 --cache-folder ~/.cache/yarn
       - run: yarn release:all
       - save_cache:
-          key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
           paths:
-            - ./node_modules
-            - /usr/local/share/.cache/yarn/v2
+            - ~/.cache/yarn
+          key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
       - store_artifacts:
           path: dist
           destination: build
