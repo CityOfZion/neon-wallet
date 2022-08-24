@@ -1,35 +1,12 @@
 // @flow
 import React, { useEffect, useState } from 'react'
-import classNames from 'classnames'
 import { wallet, rpc } from '@cityofzion/neon-js-next'
-import axios from 'axios'
 import { isEmpty } from 'lodash-es'
 
-import CloseButton from '../../components/CloseButton'
-import TextInput from '../../components/Inputs/TextInput'
-import FullHeightPanel from '../../components/Panel/FullHeightPanel'
-import { ROUTES } from '../../core/constants'
 import { convertToArbitraryDecimals, parseQuery } from '../../core/formatters'
-import styles from './styles.scss'
-import Button from '../../components/Button'
 import { useWalletConnect } from '../../context/WalletConnect/WalletConnectContext'
 import N3Helper from '../../context/WalletConnect/helpers'
-import LockIcon from '../../assets/icons/add.svg'
-import Confirm from '../../assets/icons/confirm_connection.svg'
-import Deny from '../../assets/icons/deny_connection.svg'
-import WallletConnect from '../../assets/icons/wallet_connect.svg'
-import CheckMarkIcon from '../../assets/icons/confirm-circle.svg'
-import DoraIcon from '../../assets/icons/dora_icon_light.svg'
-import DoraIconDark from '../../assets/icons/dora_icon_dark.svg'
-import Info from '../../assets/icons/info.svg'
-import Up from '../../assets/icons/chevron-up.svg'
-import Down from '../../assets/icons/chevron-down.svg'
-import { TX_STATE_TYPE_MAPPINGS } from './mocks'
 import { getNode, getRPCEndpoint } from '../../actions/nodeStorageActions'
-import DialogueBox from '../../components/DialogueBox'
-import WarningIcon from '../../assets/icons/warning.svg'
-import CopyToClipboard from '../../components/CopyToClipboard/CopyToClipboard'
-import Tooltip from '../../components/Tooltip'
 import ConnectionLoader from '../../components/ConnectDapp/ConnectionLoader'
 import ConnectionError from '../../components/ConnectDapp/ConnectionError'
 import MessageSuccess from '../../components/ConnectDapp/MessageSuccess'
@@ -39,7 +16,6 @@ import ApproveConnection from '../../components/ConnectDapp/ApproveConnection'
 import ApproveTransaction from '../../components/ConnectDapp/ApproveTransaction'
 import ConnectionUrlForm from '../../components/ConnectDapp/ConnectionUrlForm'
 
-const electron = require('electron')
 const ipc = require('electron').ipcRenderer
 
 type Props = {
@@ -87,7 +63,7 @@ const ConnectDapp = ({
   const walletConnectCtx = useWalletConnect()
   const firstProposal = walletConnectCtx.sessionProposals[0]
   const firstRequest = walletConnectCtx.requests[0]
-  const { error } = walletConnectCtx
+  // const { error } = walletConnectCtx
 
   const resetState = () => {
     setConnectionUrl('')
@@ -183,14 +159,14 @@ const ConnectDapp = ({
     [history, net, walletConnectCtx, firstProposal],
   )
 
-  useEffect(
-    () => {
-      if (walletConnectCtx.txHash) {
-        setConnectionStep(CONNECTION_STEPS.TRANSACTION_SUCCESS)
-      }
-    },
-    [walletConnectCtx.txHash],
-  )
+  // useEffect(
+  //   () => {
+  //     if (walletConnectCtx.txHash) {
+  //       setConnectionStep(CONNECTION_STEPS.TRANSACTION_SUCCESS)
+  //     }
+  //   },
+  //   [walletConnectCtx.txHash],
+  // )
 
   useEffect(
     () => {
@@ -212,14 +188,14 @@ const ConnectDapp = ({
     [firstRequest, walletConnectCtx],
   )
 
-  useEffect(
-    () => {
-      if (error) {
-        setConnectionStep(CONNECTION_STEPS.TRANSACTION_ERROR)
-      }
-    },
-    [error],
-  )
+  // useEffect(
+  //   () => {
+  //     if (error) {
+  //       setConnectionStep(CONNECTION_STEPS.TRANSACTION_ERROR)
+  //     }
+  //   },
+  //   [error],
+  // )
 
   useEffect(
     () => {
@@ -272,19 +248,6 @@ const ConnectDapp = ({
       }
 
       if (firstRequest) {
-        // if (firstRequest.request.params.error) {
-        //   walletConnectCtx.rejectSession(proposal).then(() => {
-        //     showSuccessNotification({
-        //       message: `You have rejected connection from ${
-        //         proposal ? proposal.proposer.metadata.name : 'unknown dApp'
-        //       } beacause the request included an error.`,
-        //     })
-        //     resetState()
-        //     return history.push(ROUTES.DASHBOARD)
-        //   })
-        // }
-
-        // if (!firstRequest.request.params.error) {
         if (
           firstRequest.request.method === 'signMessage' ||
           firstRequest.request.method === 'verifyMessage'

@@ -66,7 +66,17 @@ module.exports = {
     new webpack.IgnorePlugin(/vertx/),
   ],
   module: {
+    // ignoreWarnings: [/Failed to parse source map/],
     rules: [
+      {
+        test: /@?(@walletconnect).*\.(ts|js)x?$/,
+        // test: /@?(@walletconnect/sign-client).*\.(ts|js)x?$/,
+        loader: 'babel-loader',
+        options: {
+          presets: [['@babel/preset-env', { targets: 'defaults' }]],
+          // plugins: ['@babel/plugin-transform-runtime'],
+        },
+      },
       {
         test: /\.jsx?$/,
         use: {

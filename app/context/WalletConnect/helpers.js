@@ -1,9 +1,11 @@
 // @flow
 import { u } from '@cityofzion/neon-js'
+import { Account } from '@cityofzion/neon-core/lib/wallet'
 import Neon, { rpc, tx, sc, api, wallet } from '@cityofzion/neon-js-next'
 // eslint-disable-next-line
 import { JsonRpcRequest, JsonRpcResponse } from '@json-rpc-tools/utils'
 import { randomBytes } from 'crypto'
+import { type SessionRequest } from './WalletConnectContext'
 
 type WitnessScope = {
   None: 0,
@@ -53,6 +55,11 @@ type SignedMessage = {
   messageHex: string,
 }
 
+type SignMessagePayload = {
+  message: string,
+  version: number,
+}
+
 class N3Helper {
   rpcAddress: string
 
@@ -74,13 +81,16 @@ class N3Helper {
 
   rpcCall = async (
     account: any,
-    request: JsonRpcRequest,
+    sessionRequest: SessionRequest,
     isHardwareLogin?: boolean,
     signingFunction?: () => void,
     showInfoNotification?: () => void,
     hideNotification?: () => void,
   ): Promise<JsonRpcResponse> => {
     let result: any
+    const {
+      params: { request },
+    } = sessionRequest
 
     if (
       request.method === 'multiInvoke' ||
@@ -122,7 +132,7 @@ class N3Helper {
       )
     }
     return {
-      id: request.id,
+      id: sessionRequest.id,
       jsonrpc: '2.0',
       result,
       isMessage:
@@ -130,7 +140,24 @@ class N3Helper {
     }
   }
 
-  signMessage = (account: wallet.Account, message: string): SignedMessage => {
+  signMessage = (
+    account: Account,
+    message: string | SignMessagePayload,
+  ): SignedMessage => {
+    if (typeof message === 'string') {
+      return this.signMessageLegacy(account, message)
+    }
+    if (message.version === 1) {
+      return this.signMessageLegacy(account, message.message)
+    }
+    if (message.version === 2) {
+      return this.signMessageNew(account, message.message)
+    }
+
+    throw new Error('Invalid signMessage version')
+  }
+
+  signMessageLegacy = (account: Account, message: string): SignedMessage => {
     const salt = randomBytes(16).toString('hex')
     const parameterHexString = u.str2hexstring(salt + message)
     const lengthHex = u.num2VarInt(parameterHexString.length / 2)
@@ -139,6 +166,18 @@ class N3Helper {
     return {
       publicKey: account.publicKey,
       data: wallet.sign(messageHex, account.privateKey),
+      salt,
+      messageHex,
+    }
+  }
+
+  signMessageNew = (account: Account, message: string): SignedMessage => {
+    const salt = randomBytes(16).toString('hex')
+    const messageHex = u.str2hexstring(message)
+
+    return {
+      publicKey: account.publicKey,
+      data: wallet.sign(messageHex, account.privateKey, salt),
       salt,
       messageHex,
     }
