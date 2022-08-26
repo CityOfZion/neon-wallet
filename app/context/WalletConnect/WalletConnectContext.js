@@ -37,6 +37,12 @@ export const WalletConnectContextProvider = ({
   const [requests, setRequests] = useState([])
   const [onRequestCallback, setOnRequestCallback] = useState(undefined)
   const [autoAcceptCallback, setAutoAcceptCallback] = useState(undefined)
+  // $FlowFixMe
+  const [txHash, setTxHash] = useState('')
+  // $FlowFixMe
+  const [messageVerification, setMessageVerificationResult] = useState({})
+  //   // $FlowFixMe
+  const [error, setError] = useState(false)
 
   const init = useCallback(async () => {
     setSignClient(await SignClient.init(options))
@@ -120,7 +126,28 @@ export const WalletConnectContextProvider = ({
           if (!onRequestCallback) {
             throw new Error('There is no onRequestCallback')
           }
-          return onRequestCallback(address, chainId, requestEvent)
+          const response = await onRequestCallback(
+            address,
+            chainId,
+            requestEvent,
+          )
+          if (response && response.result && !response.isMessage) {
+            setTxHash(response.result)
+          } else if (response && response.result && response.isMessage) {
+            setMessageVerificationResult({
+              ...response,
+              method: requestEvent.params.request.method,
+            })
+          } else {
+            const { result } = response
+            setError(
+              result
+                ? result.error
+                : 'An unkown error occurred please try again.',
+            )
+          }
+
+          return response
         }
       }
     },
@@ -286,8 +313,8 @@ export const WalletConnectContextProvider = ({
   } // this should not be a callback because it would require the developer to put it as dependency
 
   const removeFromPending = async (requestEvent: JsonRpcRequest) => {
-    // $FlowFixMe
     setRequests(
+      // $FlowFixMe
       requests.filter(x => x.request?.id !== requestEvent.request?.id),
     )
   }
@@ -302,7 +329,6 @@ export const WalletConnectContextProvider = ({
         topic: requestEvent.topic,
         response,
       })
-      console.log({ requestEvent })
       await removeFromPending(requestEvent)
       return response
     } catch (error) {
@@ -349,6 +375,12 @@ export const WalletConnectContextProvider = ({
     onRequestListener,
     autoAcceptIntercept,
     resetApp,
+    setError,
+    error,
+    txHash,
+    messageVerification,
+    setMessageVerificationResult,
+    setTxHash,
   }
 
   return (

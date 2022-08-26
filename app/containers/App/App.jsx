@@ -144,20 +144,34 @@ const App = ({
   //   [wif, net, isHardwareLogin, signingFunction, address, publicKey],
   // )
 
-  useEffect(() => {
-    const account = new wallet.Account(isHardwareLogin ? publicKey : wif)
-    // if the request method is 'testInvoke' or 'multiTestInvoke' we auto-accept it
-    walletConnectCtx.autoAcceptIntercept((acc, chain, req: SessionRequest) =>
-      DEFAULT_AUTOACCEPT_METHODS.includes(req.params.request.method),
-    )
+  useEffect(
+    () => {
+      const account = new wallet.Account(isHardwareLogin ? publicKey : wif)
+      // if the request method is 'testInvoke' or 'multiTestInvoke' we auto-accept it
+      walletConnectCtx.autoAcceptIntercept((acc, chain, req: SessionRequest) =>
+        DEFAULT_AUTOACCEPT_METHODS.includes(req.params.request.method),
+      )
 
-    walletConnectCtx.onRequestListener(
-      async (acc, chain, req: SessionRequest) => {
-        const N3 = await N3Helper.init(DEFAULT_NETWORKS[chain].url)
-        return N3.rpcCall(account, req)
-      },
-    )
-  }, [])
+      walletConnectCtx.onRequestListener(
+        async (acc, chain, req: SessionRequest) => {
+          let endpoint = await getNode(net)
+          if (!endpoint) {
+            endpoint = await getRPCEndpoint(net)
+          }
+          const N3 = await N3Helper.init(endpoint)
+          return N3.rpcCall(
+            account,
+            req,
+            isHardwareLogin,
+            signingFunction,
+            showInfoNotification,
+            hideNotification,
+          )
+        },
+      )
+    },
+    [wif, net, isHardwareLogin, signingFunction, address, publicKey],
+  )
 
   useEffect(
     () => {

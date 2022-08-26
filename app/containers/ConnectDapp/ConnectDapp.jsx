@@ -63,9 +63,7 @@ const ConnectDapp = ({
   const walletConnectCtx = useWalletConnect()
   const firstProposal = walletConnectCtx.sessionProposals[0]
   const firstRequest = walletConnectCtx.requests[0]
-
-  // eslint-disable-next-line
-  console.log({ walletConnectCtx })
+  const { error } = walletConnectCtx
 
   const resetState = () => {
     setConnectionUrl('')
@@ -139,23 +137,23 @@ const ConnectDapp = ({
     [walletConnectCtx, firstProposal],
   )
 
-  // useEffect(
-  //   () => {
-  //     if (walletConnectCtx.txHash) {
-  //       setConnectionStep(CONNECTION_STEPS.TRANSACTION_SUCCESS)
-  //     }
-  //   },
-  //   [walletConnectCtx.txHash],
-  // )
+  useEffect(
+    () => {
+      if (walletConnectCtx.txHash) {
+        setConnectionStep(CONNECTION_STEPS.TRANSACTION_SUCCESS)
+      }
+    },
+    [walletConnectCtx.txHash],
+  )
 
-  // useEffect(
-  //   () => {
-  //     if (!isEmpty(walletConnectCtx.messageVerification)) {
-  //       setConnectionStep(CONNECTION_STEPS.MESSAGE_SUCCESS)
-  //     }
-  //   },
-  //   [walletConnectCtx.messageVerification],
-  // )
+  useEffect(
+    () => {
+      if (!isEmpty(walletConnectCtx.messageVerification)) {
+        setConnectionStep(CONNECTION_STEPS.MESSAGE_SUCCESS)
+      }
+    },
+    [walletConnectCtx.messageVerification],
+  )
 
   useEffect(
     () => {
@@ -168,14 +166,14 @@ const ConnectDapp = ({
     [firstRequest, walletConnectCtx],
   )
 
-  // useEffect(
-  //   () => {
-  //     if (error) {
-  //       setConnectionStep(CONNECTION_STEPS.TRANSACTION_ERROR)
-  //     }
-  //   },
-  //   [error],
-  // )
+  useEffect(
+    () => {
+      if (error) {
+        setConnectionStep(CONNECTION_STEPS.TRANSACTION_ERROR)
+      }
+    },
+    [error],
+  )
 
   useEffect(
     () => {
@@ -216,20 +214,7 @@ const ConnectDapp = ({
         return { name, abi }
       }
 
-      // const mapContractDataToInvocation = async request => {
-      //   for (const invocation of request.params.invocations) {
-      //     const { name, abi } = await getContractManifest(invocation)
-      //     invocation.contract = {
-      //       name,
-      //       abi,
-      //     }
-      //   }
-      //   setRequest(request)
-      //   setConnectionStep(CONNECTION_STEPS.APPROVE_TRANSACTION)
-      // }
-
       const mapContractDataToInvocation = async request => {
-        console.log({ request })
         for (const invocation of request.params.request.params.invocations) {
           const { name, abi } = await getContractManifest(invocation)
           invocation.contract = {
@@ -252,7 +237,7 @@ const ConnectDapp = ({
           request.method === 'verifyMessage'
         ) {
           setConnectionStep(
-            firstRequest.request.method === 'signMessage'
+            request.method === 'signMessage'
               ? CONNECTION_STEPS.SIGN_MESSAGE
               : CONNECTION_STEPS.VERIFY_MESSAGE,
           )
@@ -265,8 +250,6 @@ const ConnectDapp = ({
     },
     [firstRequest, address, net],
   )
-
-  console.log({ request })
 
   switch (true) {
     case loading:

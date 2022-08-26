@@ -72,9 +72,7 @@ const VerifyOrSignMessage = ({
         ])}
       >
         <img src={peer && peer.metadata.icons[0]} />
-        <h3>
-          <h3>{peer && peer.metadata.name} wants you to verify a message</h3>
-        </h3>
+        <h3>{peer && peer.metadata.name} wants you to verify a message</h3>
 
         {isHardwareLogin && (
           <DialogueBox
@@ -102,8 +100,8 @@ const VerifyOrSignMessage = ({
               style={{ margin: '12px 0', padding: '12px' }}
             >
               <div>
-                {!isEmpty(request.request.params) &&
-                  Object.keys(request.request.params).map(param => (
+                {!isEmpty(request.params.request.params) &&
+                  Object.keys(request.params.request.params).map(param => (
                     <div key={param}>
                       <div
                         className={classNames([
@@ -120,7 +118,9 @@ const VerifyOrSignMessage = ({
                           fontSize: 12,
                         }}
                       >
-                        {returnRequestParam(request.request.params[param])}
+                        {returnRequestParam(
+                          request.params.request.params[param],
+                        )}
                       </div>
                     </div>
                   ))}
@@ -141,7 +141,7 @@ const VerifyOrSignMessage = ({
               >
                 <label>Message</label>
               </div>
-              <div>{request.request.params}</div>
+              <div>{request.params.request.params.message}</div>
             </div>
           </div>
         )}
