@@ -1,6 +1,5 @@
 // @flow
 import { u } from '@cityofzion/neon-js'
-import { Account } from '@cityofzion/neon-core/lib/wallet'
 import Neon, { rpc, tx, sc, api, wallet } from '@cityofzion/neon-js-next'
 // eslint-disable-next-line
 import { JsonRpcRequest, JsonRpcResponse } from '@json-rpc-tools/utils'
@@ -153,7 +152,7 @@ class N3Helper {
   }
 
   signMessage = (
-    account: Account,
+    account: any,
     message: string | SignMessagePayload,
   ): SignedMessage => {
     if (typeof message === 'string') {
@@ -169,7 +168,7 @@ class N3Helper {
     throw new Error('Invalid signMessage version')
   }
 
-  signMessageLegacy = (account: Account, message: string): SignedMessage => {
+  signMessageLegacy = (account: any, message: string): SignedMessage => {
     const salt = randomBytes(16).toString('hex')
     const parameterHexString = u.str2hexstring(salt + message)
     const lengthHex = u.num2VarInt(parameterHexString.length / 2)
@@ -183,7 +182,7 @@ class N3Helper {
     }
   }
 
-  signMessageNew = (account: Account, message: string): SignedMessage => {
+  signMessageNew = (account: any, message: string): SignedMessage => {
     const salt = randomBytes(16).toString('hex')
     const messageHex = u.str2hexstring(message)
 
