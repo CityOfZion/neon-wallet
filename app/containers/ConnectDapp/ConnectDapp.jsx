@@ -127,8 +127,6 @@ const ConnectDapp = ({
 
   useEffect(
     () => {
-      // TODO: verify that that the requiredNamespaces chain
-      // matches the current chain/network that neon is set to
       if (firstProposal) {
         setProposal(firstProposal)
         setConnectionStep(CONNECTION_STEPS.APPROVE_CONNECTION)

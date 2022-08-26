@@ -1,13 +1,8 @@
 // @flow
-// $FlowFixMe
 import React, { useEffect } from 'react'
 import { wallet } from '@cityofzion/neon-js-next'
 
-import {
-  ROUTES,
-  DEFAULT_AUTOACCEPT_METHODS,
-  DEFAULT_NETWORKS,
-} from '../../core/constants'
+import { ROUTES, DEFAULT_AUTOACCEPT_METHODS } from '../../core/constants'
 import Sidebar from './Sidebar'
 import ModalRenderer from '../ModalRenderer'
 import Notifications from '../Notifications'
@@ -116,33 +111,6 @@ const App = ({
     },
     [history],
   )
-
-  // useEffect(
-  //   () => {
-  //     const account = new wallet.Account(isHardwareLogin ? publicKey : wif)
-
-  //     // if the request method is 'testInvoke' we auto-accept it
-  //     walletConnectCtx.autoAcceptIntercept(
-  //       (acc, chain, req) => req.method === 'testInvoke',
-  //     )
-
-  //     walletConnectCtx.onRequestListener(async (acc, chain, req) => {
-  //       let endpoint = await getNode(net)
-  //       if (!endpoint) {
-  //         endpoint = await getRPCEndpoint(net)
-  //       }
-  //       return new N3Helper(endpoint).rpcCall(
-  //         account,
-  //         req.request ? req.request : req,
-  //         isHardwareLogin,
-  //         signingFunction,
-  //         showInfoNotification,
-  //         hideNotification,
-  //       )
-  //     })
-  //   },
-  //   [wif, net, isHardwareLogin, signingFunction, address, publicKey],
-  // )
 
   useEffect(
     () => {

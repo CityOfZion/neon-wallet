@@ -100,7 +100,6 @@ class N3Helper {
     hideNotification?: () => void,
   ): Promise<JsonRpcResponse> => {
     let result: any
-    // console.log({ sessionRequest })
     const {
       params: { request },
     } = sessionRequest
