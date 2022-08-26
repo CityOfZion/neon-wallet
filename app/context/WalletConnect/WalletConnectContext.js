@@ -4,6 +4,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react'
 // eslint-disable-next-line
 import SignClient from '@walletconnect/sign-client'
 import { SignClientTypes, SessionTypes } from '@walletconnect/types'
+import { ERROR } from '@walletconnect/utils'
 
 import {
   formatJsonRpcError,
@@ -41,9 +42,38 @@ export const WalletConnectContextProvider = ({
     setSignClient(await SignClient.init(options))
   }, [])
 
+  const clearStorage = () => {
+    Object.values(localStorage).forEach(storageValue => {
+      if (
+        typeof storageValue === 'string' &&
+        (storageValue.substring(0, 2) === 'wc' ||
+          storageValue.includes('request-{'))
+      ) {
+        localStorage.removeItem(storageValue)
+      }
+    })
+  }
+
+  const resetApp = async () => {
+    if (sessions.length) {
+      await Promise.all(
+        sessions.map(
+          session =>
+            signClient &&
+            signClient.disconnect({
+              topic: session.topic,
+              reason: ERROR.USER_DISCONNECTED.format(),
+            }),
+        ),
+      )
+    }
+    clearStorage()
+  }
+
   useEffect(
     () => {
       init()
+      clearStorage()
     },
     [init],
   )
@@ -257,7 +287,9 @@ export const WalletConnectContextProvider = ({
 
   const removeFromPending = async (requestEvent: JsonRpcRequest) => {
     // $FlowFixMe
-    setRequests(requests.filter(x => x.request.id !== requestEvent.request.id))
+    setRequests(
+      requests.filter(x => x.request?.id !== requestEvent.request?.id),
+    )
   }
 
   const approveRequest = async (requestEvent: SessionRequest) => {
@@ -270,6 +302,7 @@ export const WalletConnectContextProvider = ({
         topic: requestEvent.topic,
         response,
       })
+      console.log({ requestEvent })
       await removeFromPending(requestEvent)
       return response
     } catch (error) {
@@ -315,6 +348,7 @@ export const WalletConnectContextProvider = ({
     rejectRequest,
     onRequestListener,
     autoAcceptIntercept,
+    resetApp,
   }
 
   return (

@@ -63,9 +63,21 @@ type SignMessagePayload = {
 class N3Helper {
   rpcAddress: string
 
-  constructor(rpcAddress: string) {
+  networkMagic: number
+
+  constructor(rpcAddress: string, networkMagic: number) {
     this.rpcAddress = rpcAddress
+    this.networkMagic = networkMagic
   }
+
+  static init = async (
+    rpcAddress: string,
+    networkMagic?: number,
+  ): Promise<N3Helper> =>
+    new N3Helper(
+      rpcAddress,
+      networkMagic || (await N3Helper.getMagicOfRpcAddress(rpcAddress)),
+    )
 
   static getMagicOfRpcAddress = async (rpcAddress: string): Promise<number> => {
     const resp: any = await new rpc.RPCClient(rpcAddress).execute(
@@ -88,6 +100,7 @@ class N3Helper {
     hideNotification?: () => void,
   ): Promise<JsonRpcResponse> => {
     let result: any
+    // console.log({ sessionRequest })
     const {
       params: { request },
     } = sessionRequest

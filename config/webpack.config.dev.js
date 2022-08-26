@@ -66,15 +66,14 @@ module.exports = {
     new webpack.IgnorePlugin(/vertx/),
   ],
   module: {
-    // ignoreWarnings: [/Failed to parse source map/],
     rules: [
+      // Must be added to support syntax used in several of the wallet
+      // connect dependencies => https://github.com/WalletConnect/walletconnect-monorepo/issues/1349
       {
         test: /@?(@walletconnect).*\.(ts|js)x?$/,
-        // test: /@?(@walletconnect/sign-client).*\.(ts|js)x?$/,
         loader: 'babel-loader',
         options: {
           presets: [['@babel/preset-env', { targets: 'defaults' }]],
-          // plugins: ['@babel/plugin-transform-runtime'],
         },
       },
       {

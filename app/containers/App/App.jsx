@@ -3,7 +3,11 @@
 import React, { useEffect } from 'react'
 import { wallet } from '@cityofzion/neon-js-next'
 
-import { ROUTES } from '../../core/constants'
+import {
+  ROUTES,
+  DEFAULT_AUTOACCEPT_METHODS,
+  DEFAULT_NETWORKS,
+} from '../../core/constants'
 import Sidebar from './Sidebar'
 import ModalRenderer from '../ModalRenderer'
 import Notifications from '../Notifications'
@@ -14,7 +18,10 @@ import styles from './App.scss'
 import themes from '../../themes'
 import ErrorBoundary from '../../components/ErrorBoundaries/Main'
 import FramelessNavigation from '../../components/FramelessNavigation'
-import { useWalletConnect } from '../../context/WalletConnect/WalletConnectContext'
+import {
+  useWalletConnect,
+  type SessionRequest,
+} from '../../context/WalletConnect/WalletConnectContext'
 import N3Helper from '../../context/WalletConnect/helpers'
 import { getNode, getRPCEndpoint } from '../../actions/nodeStorageActions'
 import { parseQuery } from '../../core/formatters'
@@ -72,7 +79,6 @@ const App = ({
   const walletConnectCtx = useWalletConnect()
 
   useEffect(() => {
-    walletConnectCtx.init()
     // Listen for the 'quit' message and reset the wallet connect context
     // once complete relay the 'closed' message to programmatically close electron
     ipc.on('quit', async () => {
@@ -85,7 +91,6 @@ const App = ({
   useEffect(() => {
     async function handleUpgrade() {
       checkVersion()
-
       try {
         await upgradeUserWalletNEP6()
       } catch (error) {
@@ -112,32 +117,47 @@ const App = ({
     [history],
   )
 
-  useEffect(
-    () => {
-      const account = new wallet.Account(isHardwareLogin ? publicKey : wif)
+  // useEffect(
+  //   () => {
+  //     const account = new wallet.Account(isHardwareLogin ? publicKey : wif)
 
-      // if the request method is 'testInvoke' we auto-accept it
-      walletConnectCtx.autoAcceptIntercept(
-        (acc, chain, req) => req.method === 'testInvoke',
-      )
+  //     // if the request method is 'testInvoke' we auto-accept it
+  //     walletConnectCtx.autoAcceptIntercept(
+  //       (acc, chain, req) => req.method === 'testInvoke',
+  //     )
 
-      walletConnectCtx.onRequestListener(async (acc, chain, req) => {
-        let endpoint = await getNode(net)
-        if (!endpoint) {
-          endpoint = await getRPCEndpoint(net)
-        }
-        return new N3Helper(endpoint).rpcCall(
-          account,
-          req.request ? req.request : req,
-          isHardwareLogin,
-          signingFunction,
-          showInfoNotification,
-          hideNotification,
-        )
-      })
-    },
-    [wif, net, isHardwareLogin, signingFunction, address, publicKey],
-  )
+  //     walletConnectCtx.onRequestListener(async (acc, chain, req) => {
+  //       let endpoint = await getNode(net)
+  //       if (!endpoint) {
+  //         endpoint = await getRPCEndpoint(net)
+  //       }
+  //       return new N3Helper(endpoint).rpcCall(
+  //         account,
+  //         req.request ? req.request : req,
+  //         isHardwareLogin,
+  //         signingFunction,
+  //         showInfoNotification,
+  //         hideNotification,
+  //       )
+  //     })
+  //   },
+  //   [wif, net, isHardwareLogin, signingFunction, address, publicKey],
+  // )
+
+  useEffect(() => {
+    const account = new wallet.Account(isHardwareLogin ? publicKey : wif)
+    // if the request method is 'testInvoke' or 'multiTestInvoke' we auto-accept it
+    walletConnectCtx.autoAcceptIntercept((acc, chain, req: SessionRequest) =>
+      DEFAULT_AUTOACCEPT_METHODS.includes(req.params.request.method),
+    )
+
+    walletConnectCtx.onRequestListener(
+      async (acc, chain, req: SessionRequest) => {
+        const N3 = await N3Helper.init(DEFAULT_NETWORKS[chain].url)
+        return N3.rpcCall(account, req)
+      },
+    )
+  }, [])
 
   useEffect(
     () => {
