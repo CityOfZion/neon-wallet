@@ -2,7 +2,7 @@
 import React from 'react'
 
 import QRCode from 'qrcode/lib/browser'
-import { clipboard } from 'electron'
+import { clipboard, ipcRenderer } from 'electron'
 import fs from 'fs'
 import storage from 'electron-json-storage'
 
@@ -45,7 +45,7 @@ export default function withCopyCanvasToClipboard(Component) {
       // $FlowFixMe
       const url = ref.toDataURL('image/jpg', 0.8)
       const base64Data = url.replace(/^data:image\/png;base64,/, '')
-      const storagePath = storage.getDefaultDataPath()
+      const storagePath = storage.getDataPath()
       await writeFile(`${storagePath}/${fileName}.jpg`, base64Data, 'base64')
       clipboard.writeImage(`${storagePath}/${fileName}.jpg`)
     }

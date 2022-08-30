@@ -1,32 +1,12 @@
-// @flow
-import { wallet } from '@cityofzion/neon-js'
-import { validatePassphraseLength } from '../core/wallet'
-
 // Constants
+// @flow
 export const NEW_ENCRYPTED_WIF = 'NEW_ENCRYPTED_WIF'
 export const RESET_ENCRYPTED_WIF = 'RESET_ENCRYPTED_WIF'
 
-export const generateNewEncryptedWIF = (
-  wif: string,
-  passphrase: string,
-  confirmPassphrase: string,
-) => {
-  if (passphrase !== confirmPassphrase) {
-    throw new Error('Passphrases do not match')
-  }
-  if (!validatePassphraseLength(passphrase)) {
-    throw new Error('Please choose a longer passphrase')
-  }
-  if (wif && !wallet.isWIF(wif)) {
-    throw new Error('The private key is not valid')
-  }
-
-  const encryptedWIF = wallet.encrypt(wif, passphrase)
-  return {
-    type: NEW_ENCRYPTED_WIF,
-    payload: { encryptedWIF },
-  }
-}
+export const setEncryptedWIF = (encryptedWIF: string) => ({
+  type: NEW_ENCRYPTED_WIF,
+  payload: { encryptedWIF },
+})
 
 export function resetEncryptedWIF() {
   return {

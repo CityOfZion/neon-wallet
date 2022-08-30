@@ -97,8 +97,7 @@ export default class ViewLayout extends Component<Props> {
     return (
       renderInstructions && (
         <div className={classNames(styles.instructions, instructionsClassName)}>
-          {' '}
-          {renderInstructions()}{' '}
+          {renderInstructions()}
         </div>
       )
     )

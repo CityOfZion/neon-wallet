@@ -1,7 +1,8 @@
 // @flow
-import React from 'react'
-import { noop } from 'lodash-es'
-import { FormattedMessage, intlShape } from 'react-intl'
+import React, { useState, useEffect } from 'react'
+import { useIntl } from 'react-intl'
+import { wallet } from '@cityofzion/neon-js'
+import { wallet as n3Wallet } from '@cityofzion/neon-js-next'
 
 import Button from '../../Button'
 import TextInput from '../../Inputs/TextInput'
@@ -11,208 +12,145 @@ import styles from './EncryptForm.scss'
 import { MIN_PASSPHRASE_LEN } from '../../../core/wallet'
 
 type Props = {
-  submitLabel: string,
-  formPrivateKey: string,
-  formPassphrase: string,
-  formConfirmPassphrase: string,
-  validatePassphraseLength: Function,
-  isWIF: Function,
-  onSubmit: Function,
-  intl: intlShape,
+  validatePassphraseLength(text: string): void,
+  setEncryptedWIF(encryptedWif: string): void,
+  chain: string,
 }
 
-type State = {
-  privateKeyError: string,
-  passphraseError: string,
-  confirmPassphraseError: string,
-  isDisabled: boolean,
-  privateKey: string,
-  passphrase: string,
-  confirmPassphrase: string,
-}
+const EncryptForm = ({
+  chain,
+  validatePassphraseLength,
+  setEncryptedWIF,
+}: Props) => {
+  const intl = useIntl()
 
-export default class EncryptForm extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props)
+  const [privateKey, setPrivateKey] = useState('')
+  const [passphrase, setPassphrase] = useState('')
+  const [confirmPassphrase, setConfirmPassphrase] = useState('')
+  const [privateKeyError, setPrivateKeyError] = useState('')
+  const [passphraseError, setPassphraseError] = useState('')
+  const [confirmPassphraseError, setConfirmPassphraseError] = useState('')
+  const [isDisabled, setIsDisabled] = useState(true)
 
-    this.state = {
-      privateKeyError: '',
-      passphraseError: '',
-      confirmPassphraseError: '',
-      isDisabled: true,
-      privateKey: '',
-      passphrase: '',
-      confirmPassphrase: '',
-    }
-  }
+  const validatePrivateKey = () => {
+    const isWIF = chain === 'neo3' ? n3Wallet.isWIF : wallet.isWIF
 
-  static defaultProps = {
-    submitLabel: 'Generate Encrypted key',
-    onSubmit: noop,
-    isWIF: noop,
-    validatePassphraseLength: noop,
-  }
-
-  render() {
-    const {
-      submitLabel,
-      formPrivateKey,
-      formPassphrase,
-      formConfirmPassphrase,
-      intl,
-    } = this.props
-    const {
-      privateKeyError,
-      passphraseError,
-      confirmPassphraseError,
-      isDisabled,
-    } = this.state
-
-    return (
-      <section className={styles.formContainer}>
-        <form className={styles.encryptForm} onSubmit={this.handleSubmit}>
-          <TextInput
-            id="privateKey"
-            name="privateKey"
-            label={<FormattedMessage id="encryptStep1Label" />}
-            placeholder={intl.formatMessage({ id: 'encryptStep1Placeholder' })}
-            value={formPrivateKey}
-            onChange={this.handleChangePrivateKey}
-            error={privateKeyError}
-          />
-          <PasswordInput
-            id="passphrase"
-            name="passphrase"
-            label={<FormattedMessage id="encryptStep2Label" />}
-            placeholder={intl.formatMessage({ id: 'encryptStep2Placeholder' })}
-            value={formPassphrase}
-            onChange={this.handleChangePassphrase}
-            error={passphraseError}
-          />
-          <PasswordInput
-            id="confirmPassphrase"
-            name="confirmPassphrase"
-            label={<FormattedMessage id="encryptStep3Label" />}
-            placeholder={intl.formatMessage({ id: 'encryptStep3Placeholder' })}
-            value={formConfirmPassphrase}
-            onChange={this.handleChangeConfirmPassphrase}
-            error={confirmPassphraseError}
-          />
-          <Button
-            className={styles.submitButton}
-            primary
-            type="submit"
-            renderIcon={AddIcon}
-            disabled={isDisabled}
-          >
-            {submitLabel}
-          </Button>
-        </form>
-      </section>
-    )
-  }
-
-  validatePrivateKey = (privateKey: string) => {
-    const { isWIF, intl } = this.props
     if (privateKey && !isWIF(privateKey)) {
-      this.setState({
-        privateKeyError: intl.formatMessage({ id: 'errors.encrypt.valid' }),
-      })
+      setPrivateKeyError(intl.formatMessage({ id: 'errors.encrypt.valid' }))
+
       return false
     }
+
     return true
   }
 
-  validatePassphrase = (passphrase: string, confirmPassphrase: string) => {
-    const { validatePassphraseLength, intl } = this.props
-    if (passphrase !== confirmPassphrase) {
-      this.setState({
-        confirmPassphrase: intl.formatMessage({ id: 'errors.password.match' }),
-      })
-      return false
-    }
-
+  const validatePassphrase = () => {
     if (!validatePassphraseLength(passphrase)) {
-      this.setState({
-        passphraseError: intl.formatMessage(
+      setPassphraseError(
+        intl.formatMessage(
           { id: 'errors.password.length' },
           { MIN_PASSPHRASE_LEN },
         ),
-      })
+      )
       return false
     }
+
     return true
   }
 
-  validate = (
-    privateKey: string,
-    passphrase: string,
-    confirmPassphrase: string,
-  ) => {
-    const validPrivateKey = this.validatePrivateKey(privateKey)
-    const validatePassphrase = this.validatePassphrase(
-      passphrase,
-      confirmPassphrase,
-    )
-
-    return validPrivateKey && validatePassphrase
-  }
-
-  clearErrors = (name: string) => {
-    if (name === 'passphrase' || name === 'confirmPassphrase') {
-      this.setState({ passphraseError: '' })
-      this.setState({ confirmPassphraseError: '' })
-    } else if (name === 'privateKey') {
-      this.setState({ privateKeyError: '' })
+  const validateConfirmPassphrase = () => {
+    if (passphrase !== confirmPassphrase) {
+      setConfirmPassphraseError(
+        intl.formatMessage({ id: 'errors.password.match' }),
+      )
+      return false
     }
+
+    return true
   }
 
-  setButtonIsDisabled = (
-    privateKey: string,
-    passphrase: string,
-    confirmPassphrase: string,
-  ) => {
-    this.setState({
-      isDisabled: !privateKey || !passphrase || !confirmPassphrase,
-    })
-  }
-
-  handleChangePrivateKey = (event: Object) => {
-    const newPrivateKey = event.target.value
-    const { passphrase, confirmPassphrase } = this.state
-
-    this.setState({ privateKey: newPrivateKey })
-    this.clearErrors(event.target.name)
-    this.setButtonIsDisabled(newPrivateKey, passphrase, confirmPassphrase)
-  }
-
-  handleChangePassphrase = (event: Object) => {
-    const newPassphrase = event.target.value
-    const { privateKey, confirmPassphrase } = this.state
-
-    this.setState({ passphrase: newPassphrase })
-    this.clearErrors(event.target.name)
-    this.setButtonIsDisabled(privateKey, newPassphrase, confirmPassphrase)
-  }
-
-  handleChangeConfirmPassphrase = (event: Object) => {
-    const newConfirmPassphrase = event.target.value
-    const { privateKey, passphrase } = this.state
-
-    this.setState({ confirmPassphrase: newConfirmPassphrase })
-    this.clearErrors(event.target.name)
-    this.setButtonIsDisabled(privateKey, passphrase, newConfirmPassphrase)
-  }
-
-  handleSubmit = (event: Object) => {
+  const handleSubmit = async event => {
     event.preventDefault()
-    const { onSubmit } = this.props
-    const { privateKey, passphrase, confirmPassphrase } = this.state
 
-    const validInput = this.validate(privateKey, passphrase, confirmPassphrase)
+    const privateKeyIsValid = validatePrivateKey()
+    const passphraseisValid = validatePassphrase()
+    const confirmPassphraseIsValid = validateConfirmPassphrase()
 
-    if (!validInput) return
+    if (!privateKeyIsValid || !passphraseisValid || !confirmPassphraseIsValid)
+      return
 
-    onSubmit(privateKey, passphrase, confirmPassphrase)
+    const encryptedWIF =
+      chain === 'neo3'
+        ? await n3Wallet.encrypt(privateKey, passphrase)
+        : wallet.encrypt(privateKey, passphrase)
+
+    setEncryptedWIF(encryptedWIF)
   }
+
+  useEffect(
+    () => {
+      setIsDisabled(!privateKey || !passphrase || !confirmPassphrase)
+    },
+    [privateKey, passphrase, confirmPassphrase],
+  )
+
+  useEffect(
+    () => {
+      setPassphraseError('')
+      setConfirmPassphraseError('')
+    },
+    [passphrase, confirmPassphrase],
+  )
+
+  useEffect(
+    () => {
+      setPrivateKeyError('')
+    },
+    [privateKey],
+  )
+
+  return (
+    <section className={styles.formContainer}>
+      <form className={styles.encryptForm} onSubmit={handleSubmit}>
+        <TextInput
+          id="privateKey"
+          name="privateKey"
+          label={intl.formatMessage({ id: 'encryptStep1Label' })}
+          placeholder={intl.formatMessage({ id: 'encryptStep1Placeholder' })}
+          value={privateKey}
+          onChange={event => setPrivateKey(event.target.value)}
+          error={privateKeyError}
+        />
+        <PasswordInput
+          id="passphrase"
+          name="passphrase"
+          label={intl.formatMessage({ id: 'encryptStep2Label' })}
+          placeholder={intl.formatMessage({ id: 'encryptStep2Placeholder' })}
+          value={passphrase}
+          onChange={event => setPassphrase(event.target.value)}
+          error={passphraseError}
+        />
+        <PasswordInput
+          id="confirmPassphrase"
+          name="confirmPassphrase"
+          label={intl.formatMessage({ id: 'encryptStep3Label' })}
+          placeholder={intl.formatMessage({ id: 'encryptStep3Placeholder' })}
+          value={confirmPassphrase}
+          onChange={event => setConfirmPassphrase(event.target.value)}
+          error={confirmPassphraseError}
+        />
+        <Button
+          className={styles.submitButton}
+          primary
+          type="submit"
+          renderIcon={AddIcon}
+          disabled={isDisabled}
+        >
+          {intl.formatMessage({ id: 'encryptButton' })}
+        </Button>
+      </form>
+    </section>
+  )
 }
+
+export default EncryptForm

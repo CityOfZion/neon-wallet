@@ -13,16 +13,12 @@ import styles from './EncryptSuccess.scss'
 
 type Props = {
   encryptedKey: string,
-  handleReset: Function,
+  resetEncryptedWIF: Function,
 }
 
 export default class EncryptSuccess extends React.Component<Props> {
-  static defaultProps = {
-    handleReset: noop,
-  }
-
   render() {
-    const { encryptedKey, handleReset } = this.props
+    const { encryptedKey, resetEncryptedWIF } = this.props
 
     return (
       <section>
@@ -51,7 +47,7 @@ export default class EncryptSuccess extends React.Component<Props> {
               exact
               to={ROUTES.DISPLAY_ENCRYPTED_WIF_QR}
             >
-              <Button primary renderIcon={() => <GridIcon />} type="submit">
+              <Button primary renderIcon={() => <GridIcon />}>
                 Generate QR Code
               </Button>
             </NavLink>
@@ -59,7 +55,7 @@ export default class EncryptSuccess extends React.Component<Props> {
 
           <Button
             className={styles.encryptResetButton}
-            onClick={handleReset}
+            onClick={resetEncryptedWIF}
             primary
             renderIcon={LockIcon}
           >

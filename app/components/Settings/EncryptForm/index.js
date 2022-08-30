@@ -1,4 +1,25 @@
-import { injectIntl } from 'react-intl'
+import { compose, withProps } from 'recompose'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import withChainData from '../../../hocs/withChainData'
 import EncryptForm from './EncryptForm'
+import { setEncryptedWIF } from '../../../modules/generateEncryptedWIF'
+import { validatePassphraseLength } from '../../../core/wallet'
 
-export default injectIntl(EncryptForm)
+const actionCreators = {
+  setEncryptedWIF,
+}
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(actionCreators, dispatch)
+
+export default compose(
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
+  withChainData(),
+  withProps({
+    validatePassphraseLength,
+  }),
+)(EncryptForm)
