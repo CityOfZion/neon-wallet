@@ -45,7 +45,7 @@ export default function withCopyCanvasToClipboard(Component) {
       // $FlowFixMe
       const url = ref.toDataURL('image/jpg', 0.8)
       const base64Data = url.replace(/^data:image\/png;base64,/, '')
-      const storagePath = storage.getDataPath()
+      const storagePath = await ipcRenderer.invoke('getStoragePath')
       await writeFile(`${storagePath}/${fileName}.jpg`, base64Data, 'base64')
       clipboard.writeImage(`${storagePath}/${fileName}.jpg`)
     }

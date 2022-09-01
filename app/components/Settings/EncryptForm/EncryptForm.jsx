@@ -140,7 +140,6 @@ const EncryptForm = ({
           error={confirmPassphraseError}
         />
         <Button
-          className={styles.submitButton}
           primary
           type="submit"
           renderIcon={AddIcon}

@@ -33,9 +33,9 @@ const Encrypt = ({ encryptedWIF, resetEncryptedWIF }: Props) => {
       )}
       renderHeaderIcon={HeaderIcon}
       renderInstructions={
-        encryptedWIF
+        !encryptedWIF
           ? () => intl.formatMessage({ id: 'encryptInstructions' })
-          : undefined
+          : null
       }
     >
       {!encryptedWIF ? (
