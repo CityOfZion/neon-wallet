@@ -69,8 +69,8 @@ const MISCELLANEOUS = {
     '{transferCount, number} {transferCount, plural, one {Ontvanger} other {Ontvangers}}',
   completeExclaim: 'Bevestigd!',
   sendQRExplanation:
-  // eslint-disable-next-line
-    "Dus je hebt een QR-code gekregen? Klik op Foto nemen en hou de QR-Code voor je camera.",
+    // eslint-disable-next-line
+    'Dus je hebt een QR-code gekregen? Klik op Foto nemen en hou de QR-Code voor je camera.',
   captureQR: 'Foto nemen',
   captureQRCaps: 'FOTO NEMEN',
 
@@ -85,7 +85,8 @@ const MISCELLANEOUS = {
 
   noAvailableAssetsToSend: 'Geen assets aanwezig om te verzenden',
   sendErrorLabel: 'Fout!',
-  automaticNodeSelectionTooltip: 'Sta NEON toe automatisch een node te selecteren',
+  automaticNodeSelectionTooltip:
+    'Sta NEON toe automatisch een node te selecteren',
 
   depositAssets:
     'Stort assets <b> compatibel met de NEO-blockchain </b> met als adres:',
@@ -94,14 +95,17 @@ const MISCELLANEOUS = {
 
   noClaimableGas: 'Adres heeft geen claimbaar GAS',
   claimTimeDisclaimer: 'Je kunt GAS elke 5 minuten claimen',
-  claimFeeDisclaimerN3: 'Het claimen van GAS vereist minimaal 0,01120527 GAS voor transactiekosten',
+  claimFeeDisclaimerN3:
+    'Het claimen van GAS vereist minimaal 0,01120527 GAS voor transactiekosten',
   claimFeeGreater: 'Claimable GAS is minder dan transactiekosten',
-  claimUnavailableInWatch: 'GAS claims zijn niet beschikbaar in Alleen-lezen Mode',
+  claimUnavailableInWatch:
+    'GAS claims zijn niet beschikbaar in Alleen-lezen Mode',
   takeMeBack: 'Terug',
 
   splitKeyWalletInstructions:
     'Met de importoptie Gesplitste Sleutel kunnen gebruikers een nieuw NEO-account aanmaken door de private key van een bestaand account te combineren met een aparte private key.',
-  splitKeyWalletNamePlaceholder: 'Voer je nieuwe Gesplitste Sleutel wallet naam in...',
+  splitKeyWalletNamePlaceholder:
+    'Voer je nieuwe Gesplitste Sleutel wallet naam in...',
   chooseAccount: 'Kies een bestaande account',
   nextStep: 'Volgende stap',
   previousStep: 'Vorige stap',
@@ -109,13 +113,11 @@ const MISCELLANEOUS = {
 }
 
 const ERRORS = {
-  'errors.contact.nameNull': "Naam kan niet leeg zijn.",
+  'errors.contact.nameNull': 'Naam kan niet leeg zijn.',
   'errors.contact.nameLength': 'Naam is te lang.',
-  'errors.contact.nameDupe':
-    'Je hebt al een account opgeslagen met die naam.',
+  'errors.contact.nameDupe': 'Je hebt al een account opgeslagen met die naam.',
   'errors.contact.invalidAddress': 'Adres is niet geldig.',
-  'errors.contact.contactExists':
-    'Je hebt als een contact met deze naam.',
+  'errors.contact.contactExists': 'Je hebt als een contact met deze naam.',
 
   'errors.password.length': `Wachtwoord moet tenminste {PASS_MIN_LENGTH, number} tekens bevatten.`,
   'errors.password.match': 'Wachtwoorden moeten overeen komen.',
@@ -274,7 +276,8 @@ const TRANSACTION_FEE = {
   fast: 'Snel',
   faster: 'Sneller',
   fastest: 'Snelst',
-  sendWithFee: 'Verstuur {itemCount, plural, one {asset} other {assets}} met vergoeding',
+  sendWithFee:
+    'Verstuur {itemCount, plural, one {asset} other {assets}} met vergoeding',
   sendWithoutFee:
     'Verstuur {itemCount, plural, one {asset} other {assets}} zonder vergoeding',
   Asset: 'Asset',
@@ -352,7 +355,8 @@ const NODE_SELECTION = {
 
 const ENCRYPT_KEY = {
   encryptPanelHeader: 'Beveilig een sleutel',
-  encryptInstructions: 'Kies een wachtwoord om een bestaande sleutel te beveiligen',
+  encryptInstructions:
+    'Kies een wachtwoord om een bestaande sleutel te beveiligen',
   encryptStep1Label: '1) VOER DE PRIVATE KEY IN DIE JE WILT BEVEILIGEN',
   encryptStep1Placeholder: 'Voer private key in',
   encryptStep2Label: '2) VERZIN WACHTWOORD',
@@ -364,8 +368,7 @@ const ENCRYPT_KEY = {
 
 const TOKEN_SALE = {
   tokenSalePageHeader: 'Doe mee in Tokenverkoop',
-  tokenSaleDisclaimer1:
-    'Lees en bevestig deze verklaringen om door te gaan',
+  tokenSaleDisclaimer1: 'Lees en bevestig deze verklaringen om door te gaan',
   tokenSaleDisclaimer2:
     'Ik begrijp dat het meerdere keren indienen van NEO of GAS kan leiden tot verlies van assets of tot een vertraagde terugbetaling kan leiden, afhankelijk van het beleid van het ICO-bedrijf.',
   tokenSaleDisclaimer3:

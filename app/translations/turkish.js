@@ -91,8 +91,10 @@ const MISCELLANEOUS = {
 
   noClaimableGas: `Adresin iddia edilebilir GAS yok`,
   claimTimeDisclaimer: 'GAS her 5 dakikada bir talep edebilirsiniz',
-  claimFeeDisclaimerN3: 'GAS talebinde bulunmak, işlem ücretleri için en az 0.01120527 GAS gerektirir',
-  claimFeeGreater: 'Hak talebinde bulunulabilir GAS, işlem ücretlerinden daha azdır',
+  claimFeeDisclaimerN3:
+    'GAS talebinde bulunmak, işlem ücretleri için en az 0.01120527 GAS gerektirir',
+  claimFeeGreater:
+    'Hak talebinde bulunulabilir GAS, işlem ücretlerinden daha azdır',
   claimUnavailableInWatch: 'GAS talepleri İzleme modunda kullanılamaz',
   takeMeBack: 'Beni geri al',
 
