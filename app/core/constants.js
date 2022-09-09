@@ -157,6 +157,7 @@ export const ROUTES = {
   MOBILE: '/mobile',
   MIGRATION: '/migration',
   CONNECT_DAPP: '/connect-dapp',
+  NFT: '/NFT',
 }
 
 export const NOTIFICATION_LEVELS = {

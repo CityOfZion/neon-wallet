@@ -16,6 +16,7 @@ import SettingsIcon from '../../../assets/navigation/settings.svg'
 import NewsIcon from '../../../assets/navigation/news.svg'
 import MobileIcon from '../../../assets/navigation/mobile.svg'
 import MigrationIcon from '../../../assets/navigation/migration.svg'
+import CanvasIcon from '../../../assets/navigation/canvas.svg'
 import LogoWithTooltipAndBlockHeight from '../../../components/LogoWithTooltipAndBlockHeight/LogoWithTooltipAndBlockHeight'
 
 import styles from './Sidebar.scss'
@@ -41,13 +42,7 @@ const Sidebar = ({
   isWatchOnly,
   signingFunction,
 }: Props) => (
-  <div
-    className={classNames(
-      styles.container,
-      className,
-      chain === 'neo2' && styles.tinySideBar,
-    )}
-  >
+  <div className={classNames(styles.container, className, styles.tinySideBar)}>
     <div className={styles.group}>
       <LogoWithTooltipAndBlockHeight
         store={store}
@@ -171,6 +166,16 @@ const Sidebar = ({
             <div> Migration</div>
           </NavLink>
         )}
+
+      <NavLink
+        id="NFT"
+        to={ROUTES.NFT}
+        className={styles.navItem}
+        activeClassName={styles.active}
+      >
+        <CanvasIcon height="25px" />
+        <div> NFT Gallery</div>
+      </NavLink>
 
       <NavLink
         id="mobile"
