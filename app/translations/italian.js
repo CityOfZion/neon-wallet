@@ -91,8 +91,10 @@ const MISCELLANEOUS = {
   walletQrCodes: 'Codici QR del portafoglio',
   noClaimableGas: `L'indirizzo non ha alcun GAS rivendicabile`,
   claimTimeDisclaimer: 'Puoi richiedere GAS una volta ogni 5 minuti',
-  claimFeeDisclaimerN3: 'La richiesta di GAS richiede almeno 0,01120527 GAS per le commissioni di transazione',
-  claimFeeGreater: 'Il GAS rivendicabile è inferiore alle commissioni di transazione',
+  claimFeeDisclaimerN3:
+    'La richiesta di GAS richiede almeno 0,01120527 GAS per le commissioni di transazione',
+  claimFeeGreater:
+    'Il GAS rivendicabile è inferiore alle commissioni di transazione',
   claimUnavailableInWatch:
     'I reclami GAS non sono disponibili in modalità Orologio',
   takeMeBack: 'Portami indietro',
