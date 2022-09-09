@@ -1,35 +1,12 @@
 // @flow
 import React, { useEffect, useState } from 'react'
-import classNames from 'classnames'
 import { wallet, rpc } from '@cityofzion/neon-js-next'
-import axios from 'axios'
-import { isEmpty } from 'lodash-es'
+import { cloneDeep, isEmpty } from 'lodash-es'
 
-import CloseButton from '../../components/CloseButton'
-import TextInput from '../../components/Inputs/TextInput'
-import FullHeightPanel from '../../components/Panel/FullHeightPanel'
-import { ROUTES } from '../../core/constants'
 import { convertToArbitraryDecimals, parseQuery } from '../../core/formatters'
-import styles from './styles.scss'
-import Button from '../../components/Button'
 import { useWalletConnect } from '../../context/WalletConnect/WalletConnectContext'
 import N3Helper from '../../context/WalletConnect/helpers'
-import LockIcon from '../../assets/icons/add.svg'
-import Confirm from '../../assets/icons/confirm_connection.svg'
-import Deny from '../../assets/icons/deny_connection.svg'
-import WallletConnect from '../../assets/icons/wallet_connect.svg'
-import CheckMarkIcon from '../../assets/icons/confirm-circle.svg'
-import DoraIcon from '../../assets/icons/dora_icon_light.svg'
-import DoraIconDark from '../../assets/icons/dora_icon_dark.svg'
-import Info from '../../assets/icons/info.svg'
-import Up from '../../assets/icons/chevron-up.svg'
-import Down from '../../assets/icons/chevron-down.svg'
-import { TX_STATE_TYPE_MAPPINGS } from './mocks'
 import { getNode, getRPCEndpoint } from '../../actions/nodeStorageActions'
-import DialogueBox from '../../components/DialogueBox'
-import WarningIcon from '../../assets/icons/warning.svg'
-import CopyToClipboard from '../../components/CopyToClipboard/CopyToClipboard'
-import Tooltip from '../../components/Tooltip'
 import ConnectionLoader from '../../components/ConnectDapp/ConnectionLoader'
 import ConnectionError from '../../components/ConnectDapp/ConnectionError'
 import MessageSuccess from '../../components/ConnectDapp/MessageSuccess'
@@ -39,7 +16,6 @@ import ApproveConnection from '../../components/ConnectDapp/ApproveConnection'
 import ApproveTransaction from '../../components/ConnectDapp/ApproveTransaction'
 import ConnectionUrlForm from '../../components/ConnectDapp/ConnectionUrlForm'
 
-const electron = require('electron')
 const ipc = require('electron').ipcRenderer
 
 type Props = {
@@ -96,21 +72,11 @@ const ConnectDapp = ({
     setRequest(null)
     setLoading(false)
     setFee('')
-    // walletConnectCtx.setMessageVerificationResult({})
   }
 
   const handleWalletConnectURLSubmit = async uri => {
     setLoading(true)
     try {
-      if (!walletConnectCtx.wcClient) await walletConnectCtx.init()
-
-      const account = new wallet.Account(address)
-
-      walletConnectCtx.addAccountAndChain(
-        account.address,
-        `neo3:${net.toLowerCase()}`,
-      )
-
       await walletConnectCtx
         .onURI(uri || connectionUrl)
         .catch(e => console.error({ e }))
@@ -161,26 +127,12 @@ const ConnectDapp = ({
 
   useEffect(
     () => {
-      const currentChain = `neo3:${net.toLowerCase()}`
       if (firstProposal) {
-        if (
-          !firstProposal.permissions.blockchain.chains.includes(currentChain)
-        ) {
-          showErrorNotification({
-            message: `Attempting to connect to dApp on ${
-              firstProposal.permissions.blockchain.chains[0]
-            } but you are currently on ${currentChain}. Please change network in settings and try again.`,
-          })
-          walletConnectCtx.rejectSession(firstProposal)
-          setConnectionStep(CONNECTION_STEPS.ENTER_URL)
-          setConnectionUrl('')
-        } else {
-          setConnectionStep(CONNECTION_STEPS.APPROVE_CONNECTION)
-          setProposal(firstProposal)
-        }
+        setProposal(firstProposal)
+        setConnectionStep(CONNECTION_STEPS.APPROVE_CONNECTION)
       }
     },
-    [history, net, walletConnectCtx, firstProposal],
+    [walletConnectCtx, firstProposal],
   )
 
   useEffect(
@@ -225,15 +177,16 @@ const ConnectDapp = ({
     () => {
       const getGasFee = async request => {
         const account = new wallet.Account(address)
-        const testReq = {
-          ...request,
-          method: 'testInvoke',
-        }
+        const testReq = cloneDeep(request)
+        testReq.params.request.method = 'testInvoke'
         let endpoint = await getNode(net)
         if (!endpoint) {
           endpoint = await getRPCEndpoint(net)
         }
-        const results = await new N3Helper(endpoint).rpcCall(account, testReq)
+        const results = await new N3Helper(endpoint, 0).rpcCall(
+          account,
+          testReq,
+        )
         const fee = convertToArbitraryDecimals(results.result.gasconsumed)
         setFee(fee)
       }
@@ -260,7 +213,7 @@ const ConnectDapp = ({
       }
 
       const mapContractDataToInvocation = async request => {
-        for (const invocation of request.request.params.invocations) {
+        for (const invocation of request.params.request.params.invocations) {
           const { name, abi } = await getContractManifest(invocation)
           invocation.contract = {
             name,
@@ -271,36 +224,27 @@ const ConnectDapp = ({
         setConnectionStep(CONNECTION_STEPS.APPROVE_TRANSACTION)
       }
 
+      // If the first request in the queue is signMessage or verifyMessage
+      // we can skip computing the GAS fee and fetching relevant contract data.
       if (firstRequest) {
-        // if (firstRequest.request.params.error) {
-        //   walletConnectCtx.rejectSession(proposal).then(() => {
-        //     showSuccessNotification({
-        //       message: `You have rejected connection from ${
-        //         proposal ? proposal.proposer.metadata.name : 'unknown dApp'
-        //       } beacause the request included an error.`,
-        //     })
-        //     resetState()
-        //     return history.push(ROUTES.DASHBOARD)
-        //   })
-        // }
-
-        // if (!firstRequest.request.params.error) {
+        const {
+          params: { request },
+        } = firstRequest
         if (
-          firstRequest.request.method === 'signMessage' ||
-          firstRequest.request.method === 'verifyMessage'
+          request.method === 'signMessage' ||
+          request.method === 'verifyMessage'
         ) {
           setConnectionStep(
-            firstRequest.request.method === 'signMessage'
+            request.method === 'signMessage'
               ? CONNECTION_STEPS.SIGN_MESSAGE
               : CONNECTION_STEPS.VERIFY_MESSAGE,
           )
           setRequest(firstRequest)
         } else {
-          getGasFee(firstRequest.request)
+          getGasFee(firstRequest)
           mapContractDataToInvocation(firstRequest)
         }
       }
-      // }
     },
     [firstRequest, address, net],
   )
@@ -319,8 +263,11 @@ const ConnectDapp = ({
         <ApproveConnection
           proposal={proposal}
           showSuccessNotification={showSuccessNotification}
+          showErrorNotification={showErrorNotification}
           resetState={resetState}
           history={history}
+          net={net}
+          address={address}
         />
       )
     case connectionStep === CONNECTION_STEPS.SIGN_MESSAGE:

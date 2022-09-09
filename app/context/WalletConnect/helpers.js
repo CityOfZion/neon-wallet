@@ -4,6 +4,7 @@ import Neon, { rpc, tx, sc, api, wallet } from '@cityofzion/neon-js-next'
 // eslint-disable-next-line
 import { JsonRpcRequest, JsonRpcResponse } from '@json-rpc-tools/utils'
 import { randomBytes } from 'crypto'
+import { type SessionRequest } from './WalletConnectContext'
 
 type WitnessScope = {
   None: 0,
@@ -53,12 +54,29 @@ type SignedMessage = {
   messageHex: string,
 }
 
+type SignMessagePayload = {
+  message: string,
+  version: number,
+}
+
 class N3Helper {
   rpcAddress: string
 
-  constructor(rpcAddress: string) {
+  networkMagic: number
+
+  constructor(rpcAddress: string, networkMagic: number) {
     this.rpcAddress = rpcAddress
+    this.networkMagic = networkMagic
   }
+
+  static init = async (
+    rpcAddress: string,
+    networkMagic?: number,
+  ): Promise<N3Helper> =>
+    new N3Helper(
+      rpcAddress,
+      networkMagic || (await N3Helper.getMagicOfRpcAddress(rpcAddress)),
+    )
 
   static getMagicOfRpcAddress = async (rpcAddress: string): Promise<number> => {
     const resp: any = await new rpc.RPCClient(rpcAddress).execute(
@@ -74,13 +92,16 @@ class N3Helper {
 
   rpcCall = async (
     account: any,
-    request: JsonRpcRequest,
+    sessionRequest: SessionRequest,
     isHardwareLogin?: boolean,
     signingFunction?: () => void,
     showInfoNotification?: () => void,
     hideNotification?: () => void,
   ): Promise<JsonRpcResponse> => {
     let result: any
+    const {
+      params: { request },
+    } = sessionRequest
 
     if (
       request.method === 'multiInvoke' ||
@@ -122,7 +143,7 @@ class N3Helper {
       )
     }
     return {
-      id: request.id,
+      id: sessionRequest.id,
       jsonrpc: '2.0',
       result,
       isMessage:
@@ -130,7 +151,24 @@ class N3Helper {
     }
   }
 
-  signMessage = (account: wallet.Account, message: string): SignedMessage => {
+  signMessage = (
+    account: any,
+    message: string | SignMessagePayload,
+  ): SignedMessage => {
+    if (typeof message === 'string') {
+      return this.signMessageLegacy(account, message)
+    }
+    if (message.version === 1) {
+      return this.signMessageLegacy(account, message.message)
+    }
+    if (message.version === 2) {
+      return this.signMessageNew(account, message.message)
+    }
+
+    throw new Error('Invalid signMessage version')
+  }
+
+  signMessageLegacy = (account: any, message: string): SignedMessage => {
     const salt = randomBytes(16).toString('hex')
     const parameterHexString = u.str2hexstring(salt + message)
     const lengthHex = u.num2VarInt(parameterHexString.length / 2)
@@ -139,6 +177,18 @@ class N3Helper {
     return {
       publicKey: account.publicKey,
       data: wallet.sign(messageHex, account.privateKey),
+      salt,
+      messageHex,
+    }
+  }
+
+  signMessageNew = (account: any, message: string): SignedMessage => {
+    const salt = randomBytes(16).toString('hex')
+    const messageHex = u.str2hexstring(message)
+
+    return {
+      publicKey: account.publicKey,
+      data: wallet.sign(messageHex, account.privateKey, salt),
       salt,
       messageHex,
     }
