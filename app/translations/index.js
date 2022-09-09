@@ -23,5 +23,5 @@ export default {
   turkish,
   arabic,
   russian,
-  dutch
+  dutch,
 }

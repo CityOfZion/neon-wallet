@@ -76,7 +76,8 @@ const MISCELLANEOUS = {
 
   noClaimableGas: '주소에 청구 가능한 가스가 없습니다',
   claimTimeDisclaimer: '5 분마다 GAS를 청구 할 수 있습니다.',
-  claimFeeDisclaimerN3: 'GAS를 청구하려면 거래 수수료에 대해 최소 0.01120527 GAS가 필요합니다.',
+  claimFeeDisclaimerN3:
+    'GAS를 청구하려면 거래 수수료에 대해 최소 0.01120527 GAS가 필요합니다.',
   claimFeeGreater: '청구 가능한 GAS가 거래 수수료보다 적습니다.',
   claimUnavailableInWatch:
     '시계 모드에서는 GAS 소유권 주장을 사용할 수 없습니다.',

@@ -1,20 +1,13 @@
 // @flow
-
 import React from 'react'
-import classNames from 'classnames'
-import { isEmpty } from 'lodash-es'
-import { JsonRpcRequest } from '@json-rpc-tools/utils'
-import { SessionTypes, AppMetadata } from '@walletconnect/types'
+import { SessionTypes } from '@walletconnect/types'
 
 import { useWalletConnect } from '../../context/WalletConnect/WalletConnectContext'
-import { ROUTES } from '../../core/constants'
+import { DEFAULT_NAMESPACES, ROUTES } from '../../core/constants'
 import CloseButton from '../CloseButton'
 import FullHeightPanel from '../Panel/FullHeightPanel'
 import WallletConnect from '../../assets/icons/wallet_connect.svg'
 import styles from '../../containers/ConnectDapp/styles.scss'
-import CheckMarkIcon from '../../assets/icons/confirm-circle.svg'
-import DialogueBox from '../DialogueBox'
-import WarningIcon from '../../assets/icons/warning.svg'
 import Confirm from '../../assets/icons/confirm_connection.svg'
 import Deny from '../../assets/icons/deny_connection.svg'
 
@@ -23,13 +16,44 @@ const ApproveConnection = ({
   resetState,
   history,
   showSuccessNotification,
+  showErrorNotification,
+  net,
+  address,
 }: {
   proposal: SessionTypes.Proposal,
   resetState: () => any,
   history: any,
   showSuccessNotification: ({ message: string }) => any,
+  showErrorNotification: ({ message: string }) => any,
+  net: string,
+  address: string,
 }) => {
   const walletConnectCtx = useWalletConnect()
+  const {
+    proposer: { metadata },
+    requiredNamespaces,
+  } = proposal.params
+
+  const approveSession = () => {
+    walletConnectCtx
+      .approveSession(
+        proposal,
+        [
+          {
+            address,
+            chain: `neo3:${net.toLowerCase()}`,
+          },
+        ],
+        DEFAULT_NAMESPACES,
+      )
+      .catch(e => {
+        // TODO: parse into a more user friendly error
+        showErrorNotification({
+          message: `An error occurred attempting to approve session: ${e}`,
+        })
+      })
+  }
+
   return (
     <FullHeightPanel
       headerText="Wallet Connect"
@@ -50,12 +74,11 @@ const ApproveConnection = ({
       renderInstructions={false}
     >
       <div className={styles.approveConnectionContainer}>
-        <img src={proposal && proposal.proposer.metadata.icons[0]} />
+        <img src={metadata.icons[0]} />
 
-        <h3>{proposal && proposal.proposer.metadata.name} wants to connect</h3>
+        <h3>{metadata.name} wants to connect</h3>
         <div className={styles.connectionDetails}>
-          {proposal && proposal.proposer.metadata.name} wants to connect to your
-          wallet
+          {metadata.name} wants to connect to your wallet
           <div className={styles.details} style={{ marginTop: 12 }}>
             <div className={styles.detailsLabel}>
               <label>dApp details</label>
@@ -63,14 +86,17 @@ const ApproveConnection = ({
             <div className={styles.featuresRow}>
               <div>
                 <label>CHAINS</label>
-                {proposal &&
-                  proposal.permissions.blockchain.chains.map(chain => (
-                    <div key={chain}>{chain}</div>
-                  ))}
+                {/* $FlowFixMe */}
+                {Object.values(requiredNamespaces).map(({ chains }, i) => (
+                  <div key={i}>{chains.join('')}</div>
+                ))}
               </div>
               <div>
                 <label>FEATURES</label>
-                {proposal && proposal.permissions.jsonrpc.methods.join(', ')}
+                {/* $FlowFixMe */}
+                {Object.values(requiredNamespaces).map(({ methods }) =>
+                  methods.join(', '),
+                )}
               </div>
             </div>
           </div>
@@ -79,12 +105,10 @@ const ApproveConnection = ({
             <div>
               <Confirm
                 onClick={() => {
-                  walletConnectCtx.approveSession(proposal)
+                  approveSession()
                   showSuccessNotification({
                     message: `You have accepted connection from ${
-                      proposal
-                        ? proposal.proposer.metadata.name
-                        : 'unknown dApp'
+                      proposal ? metadata.name : 'unknown dApp'
                     }.`,
                   })
                   history.push(ROUTES.DASHBOARD)
@@ -96,9 +120,7 @@ const ApproveConnection = ({
                   walletConnectCtx.rejectSession(proposal)
                   showSuccessNotification({
                     message: `You have rejected connection from ${
-                      proposal
-                        ? proposal.proposer.metadata.name
-                        : 'unknown dApp'
+                      proposal ? metadata.name : 'unknown dApp'
                     }.`,
                   })
                   resetState()

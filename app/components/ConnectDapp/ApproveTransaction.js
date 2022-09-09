@@ -100,7 +100,7 @@ const ApproveTransaction = ({
         )}
         {arg.type === 'Array' &&
           arg.value.map((element, j) => (
-            <div>
+            <div key={j}>
               <div className={styles.arrayValue}>
                 <div className={styles.index}>{j}</div>
                 <span>{element && element.value}</span>
@@ -184,7 +184,7 @@ const ApproveTransaction = ({
         )}
 
         {request &&
-          request.request.params.invocations.map((invocation, i) => (
+          request.params.request.params.invocations.map((invocation, i) => (
             <React.Fragment key={i}>
               <div className={styles.contractName}>
                 <div className={classNames([])}>{invocation.contract.name}</div>
@@ -295,7 +295,7 @@ const ApproveTransaction = ({
             </React.Fragment>
           ))}
         {request &&
-          request.request.params.signers && (
+          request.params.request.params.signers && (
             <div
               className={classNames([
                 styles.detailsLabel,
@@ -307,11 +307,11 @@ const ApproveTransaction = ({
               <div>
                 {
                   WITNESS_SCOPE[
-                    String(request.request.params.signers[0].scopes)
+                    String(request.params.request.params.signers[0].scopes)
                   ]
                 }
                 {WITNESS_SCOPE[
-                  String(request.request.params.signers[0].scopes)
+                  String(request.params.request.params.signers[0].scopes)
                 ] === 'Global' && <WarningIcon />}
               </div>
             </div>

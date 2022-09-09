@@ -94,7 +94,8 @@ const MISCELLANEOUS = {
 
   noClaimableGas: 'O endereço não possui GAS claimable',
   claimTimeDisclaimer: 'Você pode reivindicar o GAS uma vez a cada 5 minutos',
-  claimFeeDisclaimerN3: 'Reivindicar GAS requer pelo menos 0,01120527 GAS para taxas de transação',
+  claimFeeDisclaimerN3:
+    'Reivindicar GAS requer pelo menos 0,01120527 GAS para taxas de transação',
   claimFeeGreater: 'Claimable GAS é menor do que as taxas de transação',
   claimUnavailableInWatch:
     'As reivindicações de GAS não estão disponíveis neste modo',

@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   node: circleci/node@5.0.1
-  python: circleci/python@2.0.3
 
 jobs:
   test:
@@ -10,7 +9,8 @@ jobs:
       xcode: "14.0.0"
     steps:
       - node/install:
-          node-version: "16.14.2"
+          install-yarn: true
+          node-version: "16.14"
       - checkout
       - restore_cache:
           key: neon-wallet-deps-v2{{ checksum "yarn.lock" }}
@@ -28,7 +28,8 @@ jobs:
       xcode: "14.0.0"
     steps:
       - node/install:
-          node-version: "16.14.2"
+          install-yarn: true
+          node-version: "16.14"
       - checkout
       - restore_cache:
           key: neon-wallet-deps-v2{{ checksum "yarn.lock" }}

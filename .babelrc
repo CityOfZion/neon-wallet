@@ -1,13 +1,10 @@
 {
     "presets": [
-        "react",
-        "env",
-        "stage-0",
-        "flow"
+        "@babel/preset-react",
+        "@babel/preset-env",
+        "@babel/preset-flow"
     ],
     "plugins": [
-        "transform-async-to-generator",
-        "lodash",
         "react-hot-loader/babel"
     ]
 }
