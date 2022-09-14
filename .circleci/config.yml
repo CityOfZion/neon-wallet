@@ -5,8 +5,6 @@ jobs:
     macos:
       xcode: "14.0.0"
     steps:
-      - node/install:
-          install-yarn: true
       - checkout
       - restore_cache:
           key: neon-wallet-deps-v2{{ checksum "yarn.lock" }}
@@ -23,8 +21,6 @@ jobs:
     macos:
       xcode: "14.0.0"
     steps:
-      - node/install:
-          install-yarn: true
       - checkout
       - restore_cache:
           key: neon-wallet-deps-v2{{ checksum "yarn.lock" }}
