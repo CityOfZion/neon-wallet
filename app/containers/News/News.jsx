@@ -53,9 +53,10 @@ export default class News extends React.Component<Props, State> {
     )
   }
 
+  // TODO: replace the infinite scroll with a "load more" button
   handleScroll = (e: SyntheticInputEvent<EventTarget>) => {
     const bottom =
-      e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight
+      e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight - 48
     if (bottom) {
       setTimeout(() => {
         this.setState(state => ({ currentPage: state.currentPage + 1 }))

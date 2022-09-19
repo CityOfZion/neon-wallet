@@ -52,6 +52,7 @@ const routesWithSideBar = [
   ROUTES.NEWS,
   ROUTES.MOBILE,
   ROUTES.MIGRATION,
+  ROUTES.NFT,
 ]
 
 const App = ({

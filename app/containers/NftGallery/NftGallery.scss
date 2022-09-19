@@ -28,7 +28,8 @@
     flex-direction: column;
 
     img {
-      max-width: 320px;
+      // max-width: 250px;
+      border: 1px solid var(--news-content-border-color);
       border-radius: 6px 6px 0 0;
     }
   }
@@ -41,4 +42,30 @@
   border-radius: 0 0 6px 6px;
   height: 100%;
   text-overflow: ellipsis;
+}
+
+.placeholderContainer {
+  border: 1px solid var(--news-content-border-color);
+  svg {
+    width: 300px;
+    opacity: 0.1;
+  }
+
+  svg path {
+    fill: var(--base-text);
+  }
+}
+
+// .foo {
+//   max-width: 200px;
+// }
+
+// .newsImage {
+//   max-width: 100px;
+// }
+
+.loadMoreButton {
+  margin: 24px 0;
+  width: 400px;
+  max-width: 400px;
 }
