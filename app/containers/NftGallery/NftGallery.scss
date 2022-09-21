@@ -21,7 +21,6 @@
   justify-content: center;
 
   .newsItem {
-    cursor: pointer;
     padding: 12px;
     max-width: 320px;
     display: flex;
@@ -40,9 +39,13 @@
     }
 
     img {
-      // max-width: 250px;
+      cursor: pointer;
       border: 1px solid var(--news-content-border-color);
       border-radius: 6px 6px 0 0;
+    }
+
+    video {
+      cursor: pointer;
     }
   }
 }
@@ -67,14 +70,6 @@
     fill: var(--base-text);
   }
 }
-
-// .foo {
-//   max-width: 200px;
-// }
-
-// .newsImage {
-//   max-width: 100px;
-// }
 
 .loadMoreButton {
   margin: 24px 0;
@@ -101,4 +96,24 @@
   left: auto;
   top: auto;
   transform: none;
+}
+
+.transferButton {
+  z-index: 1000;
+  margin-left: auto;
+  width: 100px;
+  margin-bottom: -48px;
+  /* margin-top: 36px; */
+  margin-right: 12px;
+  opacity: 0.9;
+  margin-top: 12px;
+
+  button {
+    height: 36px;
+  }
+}
+
+.nftContainer {
+  display: flex;
+  max-width: 100px;
 }

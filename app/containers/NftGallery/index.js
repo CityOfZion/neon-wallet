@@ -11,18 +11,19 @@ import withAuthData from '../../hocs/withAuthData'
 import nftGalleryActions from '../../actions/nftGalleryActions'
 import withNetworkData from '../../hocs/withNetworkData'
 import withThemeData from '../../hocs/withThemeData'
+import { showModal } from '../../modules/modal'
 
 const mapNFTGalleryActionsToProps = actions => ({
   fetchAddtionalNFTData: (address, page, results) =>
     actions.call({ address, page, previousResults: results }),
+  showModal,
 })
 
 export default compose(
-  withCall(nftGalleryActions),
   withData(nftGalleryActions),
   withLoadingProp(nftGalleryActions),
   withActions(nftGalleryActions, mapNFTGalleryActionsToProps),
   withAuthData(),
   withNetworkData(),
-  withThemeData(),
+  withCall(nftGalleryActions),
 )(NftGallery)

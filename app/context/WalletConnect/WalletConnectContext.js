@@ -242,6 +242,7 @@ export const WalletConnectContextProvider = ({
 
       await signClient.pair({ uri })
     } catch (error) {
+      console.error(error)
       throw new Error('client Pair Error')
     }
   } // this should not be a callback because it would require the developer to put it as dependency
