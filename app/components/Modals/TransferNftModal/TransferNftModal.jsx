@@ -29,6 +29,8 @@ type Props = {
   address: string,
   tokenId: string,
   wif: string,
+  showSuccessNotification: ({ message: string }) => any,
+  showErrorNotification: ({ message: string }) => any,
 }
 
 export default function TransferNftModal(props: Props) {
@@ -41,6 +43,8 @@ export default function TransferNftModal(props: Props) {
     tokenId,
     address,
     wif,
+    showSuccessNotification,
+    showErrorNotification,
   } = props
   function handleSubmit() {}
 
@@ -134,41 +138,51 @@ export default function TransferNftModal(props: Props) {
   }
 
   async function transfer() {
-    let endpoint = await getNode(net)
-    if (!endpoint) {
-      endpoint = await getRPCEndpoint(net)
-    }
-    const account = new n3Wallet.Account(wif)
-    const testReq = {
-      params: {
-        request: {
-          method: 'multiInvoke',
-          params: {
-            invocations: [
-              {
-                scriptHash: contract,
-                operation: 'transfer',
-                args: [
-                  {
-                    type: 'Hash160',
-                    value: recipientAddress,
-                  },
-                  { type: 'ByteArray', value: tokenId },
-                  { type: 'Any', value: null },
-                ],
-              },
-            ],
-            signers: [{ scopes: 1 }],
+    try {
+      let endpoint = await getNode(net)
+      if (!endpoint) {
+        endpoint = await getRPCEndpoint(net)
+      }
+      const account = new n3Wallet.Account(wif)
+      const testReq = {
+        params: {
+          request: {
+            method: 'multiInvoke',
+            params: {
+              invocations: [
+                {
+                  scriptHash: contract,
+                  operation: 'transfer',
+                  args: [
+                    {
+                      type: 'Hash160',
+                      value: recipientAddress,
+                    },
+                    { type: 'ByteArray', value: tokenId },
+                    { type: 'Any', value: null },
+                  ],
+                },
+              ],
+              signers: [{ scopes: 1 }],
+            },
           },
         },
-      },
+      }
+      const results = await new N3Helper(endpoint, 0).rpcCall(account, testReq)
+
+      const { result } = results
+
+      showSuccessNotification({
+        message:
+          'Transaction pending! Your NFT will be transferred once the blockchain has processed it.',
+      })
+      hideModal()
+    } catch (e) {
+      console.error({ e })
+      showErrorNotification({
+        message: 'An unknown error has occurred. Please try again.',
+      })
     }
-    const results = await new N3Helper(endpoint, 0).rpcCall(account, testReq)
-    const fee = convertToArbitraryDecimals(results.result.gasconsumed)
-    setGasFee({
-      networkFee: fee,
-      systemFee: 0,
-    })
   }
 
   useEffect(() => {
