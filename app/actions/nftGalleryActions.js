@@ -34,12 +34,11 @@ export async function parseGhostMarketResults({
   previousResults: NftGalleryItem[],
 }): Promise<NftGalleryResults> {
   try {
-    const test = 'NbCimJY3XWFLSbooaJ1jgdgNiuk7zcdD4o'
     const LIMIT = 9
     const OFFSET = LIMIT * page
 
     const response = await axios.get(
-      `https://api.ghostmarket.io/api/v1/assets?chain=n3&owner=${test}&limit=9&offset=${OFFSET}&with_total=1`,
+      `https://api.ghostmarket.io/api/v1/assets?chain=n3&owner=${address}&limit=9&offset=${OFFSET}&with_total=1`,
     )
 
     const items = response?.data?.assets ?? []
