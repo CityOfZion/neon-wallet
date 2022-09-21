@@ -10,6 +10,7 @@ import News from './NftGallery'
 import withAuthData from '../../hocs/withAuthData'
 import newsActions from '../../actions/nftGalleryActions'
 import withNetworkData from '../../hocs/withNetworkData'
+import withThemeData from '../../hocs/withThemeData'
 
 const mapNFTGalleryActionsToProps = actions => ({
   fetchAddtionalNFTData: (address, page, results) =>
@@ -23,6 +24,7 @@ export default compose(
   withActions(newsActions, mapNFTGalleryActionsToProps),
   withAuthData(),
   withNetworkData(),
+  withThemeData(),
 )(News)
 
 // const mapDispatchToProps = (dispatch: Function) =>

@@ -1,5 +1,6 @@
 .newsPanel {
   height: 100%;
+  overflow: auto;
 }
 
 .newsPanelContent {
@@ -18,7 +19,6 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  padding-bottom: 48px !important;
 
   .newsItem {
     cursor: pointer;
@@ -88,4 +88,17 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.buttonLoadingIndicator {
+  position: relative;
+  // margin-top: 29px;
+  width: 15px;
+  height: 30px;
+  opacity: 0.4;
+  margin: auto;
+  // margin-top: 29px;
+  left: auto;
+  top: auto;
+  transform: none;
 }

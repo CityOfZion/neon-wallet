@@ -21,10 +21,14 @@ type Props = {
   networkId: string,
   net: string,
   page: number,
+  count: number,
+  theme: string,
 }
 
-function NFT({ image }: { image: string }) {
+function NFT({ imageHref, url = '' }: { imageHref: string, url: string }) {
   const [isLoading, setIsLoading] = useState(true)
+
+  const openLink = () => electron.shell.openExternal(url)
 
   function onLoad() {
     setIsLoading(false)
@@ -35,15 +39,18 @@ function NFT({ image }: { image: string }) {
       <div
         className={styles.placeholderContainer}
         style={{ display: isLoading ? 'block' : 'none' }}
+        onClick={openLink}
       >
         <CanvasIcon />
       </div>
 
+      {/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */}
       <img
-        src={image}
+        src={imageHref}
         className={styles.newsImage}
         style={{ display: isLoading ? 'none' : 'block' }}
         onLoad={onLoad}
+        onClick={openLink}
       />
     </>
   )
@@ -57,8 +64,9 @@ export default function NFTGallery({
   loading,
   page,
   fetchAddtionalNFTData,
+  count,
+  theme,
 }: Props) {
-  const openLink = () => electron.shell.openExternal('')
   return (
     <div className={styles.newsContainer}>
       <HeaderBar networkId={networkId} net={net} label="NFT Gallery" />
@@ -77,13 +85,13 @@ export default function NFTGallery({
                     metadata: { image, name, description },
                     tokenId,
                     collection,
+                    contract,
                   }) => (
-                    <div
-                      onClick={openLink}
-                      className={styles.newsItem}
-                      key={tokenId}
-                    >
-                      <NFT image={image} />
+                    <div className={styles.newsItem} key={tokenId}>
+                      <NFT
+                        imageHref={image}
+                        url={`https://ghostmarket.io/asset/n3/${contract}/${tokenId}/`}
+                      />
                       <div className={styles.content}>
                         <p className={styles.collectionName}>
                           {collection.name}
@@ -101,17 +109,23 @@ export default function NFTGallery({
                   ),
                 )}
 
-                <div className={styles.loadMoreButton}>
-                  <Button
-                    onClick={() =>
-                      fetchAddtionalNFTData(address, page + 1, results)
-                    }
-                    primary
-                    disabled={loading}
-                  >
-                    Load more
-                  </Button>
-                </div>
+                {count !== results.length && (
+                  <div className={styles.loadMoreButton}>
+                    <Button
+                      onClick={() =>
+                        fetchAddtionalNFTData(address, page + 1, results)
+                      }
+                      primary
+                      disabled={loading}
+                    >
+                      {loading ? (
+                        <Loader className={styles.buttonLoadingIndicator} />
+                      ) : (
+                        'Load more'
+                      )}
+                    </Button>
+                  </div>
+                )}
               </>
             ) : (
               <div className={styles.empty}>

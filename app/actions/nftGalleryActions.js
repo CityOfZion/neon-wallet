@@ -9,8 +9,20 @@ const NFT_PROVIDER = GHOST_MARKET
 
 // TODO: complete typings here
 export type NftGalleryItem = {
-  id: string,
+  metadata: any,
+  series: any,
+  tokenId: any,
+  contract: any,
+  collection: any,
 }
+
+export type NftGalleryResults = {
+  results: NftGalleryItem[],
+  count: number,
+  page: number,
+}
+
+const DEFAULT_NFT_GALLERY_RESULTS = { results: [], page: 0, count: 0 }
 
 export async function parseGhostMarketResults({
   address,
@@ -20,16 +32,18 @@ export async function parseGhostMarketResults({
   address: string,
   page: number,
   previousResults: NftGalleryItem[],
-}) {
+}): Promise<NftGalleryResults> {
   try {
     const test = 'NbCimJY3XWFLSbooaJ1jgdgNiuk7zcdD4o'
     const LIMIT = 9
     const OFFSET = LIMIT * page
 
     const response = await axios.get(
-      `https://api.ghostmarket.io/api/v1/assets?chain=n3&owner=${address}&limit=9&offset=${OFFSET}&with_total=1`,
+      `https://api.ghostmarket.io/api/v1/assets?chain=n3&owner=${test}&limit=9&offset=${OFFSET}&with_total=1`,
     )
+
     const items = response?.data?.assets ?? []
+    const count = response?.data?.total_results ?? 0
     if (items.length) {
       const results = items.map(asset => {
         const parsed = {
@@ -42,21 +56,21 @@ export async function parseGhostMarketResults({
         return parsed
       })
 
-      return { results: previousResults.concat(results), page }
+      return { results: previousResults.concat(results), page, count: 1 }
     }
 
-    return { results: previousResults, page: 0 }
+    return { results: previousResults, page: 0, count }
   } catch (e) {
     console.error('An error occurred fetching data for NFT gallery', { e })
-    return { results: [], page: 0 }
+    return DEFAULT_NFT_GALLERY_RESULTS
   }
 }
 
 export default createActions(
   ID,
-  ({ address, page, previousResults }) => async (): Promise<{
-    results: NftGalleryItem[],
-  }> => {
+  ({ address, page, previousResults }) => async (): Promise<
+    NftGalleryResults,
+  > => {
     switch (true) {
       case NFT_PROVIDER === GHOST_MARKET:
         return parseGhostMarketResults({ address, page, previousResults })
