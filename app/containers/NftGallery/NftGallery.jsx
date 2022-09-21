@@ -1,7 +1,5 @@
 // @flow
-import React, { useState, useEffect } from 'react'
-import moment from 'moment'
-import { FormattedMessage } from 'react-intl'
+import React, { useState } from 'react'
 
 import Panel from '../../components/Panel'
 import HeaderBar from '../../components/HeaderBar'
@@ -142,8 +140,6 @@ export default function NFTGallery({
   isWatchOnly,
   showModal,
 }: Props) {
-  console.log({ count })
-  console.log({ results })
   return (
     <div className={styles.newsContainer}>
       <HeaderBar networkId={networkId} net={net} label="NFT Gallery" />
