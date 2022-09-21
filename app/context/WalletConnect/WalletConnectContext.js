@@ -143,7 +143,7 @@ export const WalletConnectContextProvider = ({
             setError(
               result
                 ? result.error
-                : 'An unkown error occurred please try again.',
+                : 'An unknown error occurred please try again.',
             )
           }
 

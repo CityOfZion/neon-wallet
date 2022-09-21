@@ -36,7 +36,7 @@ const ConnectionError = () => {
         <p>
           {typeof error === 'string'
             ? error
-            : 'An unkown error occurred please try again.'}
+            : 'An unknown error occurred please try again.'}
         </p>
         <br />
         <br />
