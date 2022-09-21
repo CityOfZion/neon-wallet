@@ -767,12 +767,10 @@ exports[`News renders without crashing 1`] = `
                                 <Panel
                                   className="newsPanel"
                                   contentClassName="newsPanelContent"
-                                  onScroll={[Function]}
                                   renderHeader={null}
                                 >
                                   <div
                                     className="panel newsPanel"
-                                    onScroll={[Function]}
                                   >
                                     <Content
                                       className="content newsPanelContent"

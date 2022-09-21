@@ -1150,6 +1150,44 @@ exports[`Sidebar renders without crashing 1`] = `
                                   <NavLink
                                     activeClassName="active"
                                     aria-current="page"
+                                    className="navItem"
+                                    id="NFT"
+                                    to="/NFT"
+                                  >
+                                    <Route
+                                      path="\\\\/NFT"
+                                    >
+                                      <Link
+                                        aria-current={null}
+                                        className="navItem"
+                                        id="NFT"
+                                        replace={false}
+                                        to="/NFT"
+                                      >
+                                        <a
+                                          aria-current={null}
+                                          className="navItem"
+                                          href="/NFT"
+                                          id="NFT"
+                                          onClick={[Function]}
+                                        >
+                                          <Component
+                                            height="25px"
+                                          >
+                                            <svg
+                                              height="25px"
+                                            />
+                                          </Component>
+                                          <div>
+                                             NFT Gallery
+                                          </div>
+                                        </a>
+                                      </Link>
+                                    </Route>
+                                  </NavLink>
+                                  <NavLink
+                                    activeClassName="active"
+                                    aria-current="page"
                                     className="mobileNavItem"
                                     id="mobile"
                                     to="/mobile"
