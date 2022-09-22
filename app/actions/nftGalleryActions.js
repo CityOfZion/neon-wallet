@@ -55,7 +55,7 @@ export async function parseGhostMarketResults({
         return parsed
       })
 
-      return { results: previousResults.concat(results), page, count: 1 }
+      return { results: previousResults.concat(results), page, count }
     }
 
     return { results: previousResults, page: 0, count }

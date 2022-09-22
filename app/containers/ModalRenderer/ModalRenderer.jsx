@@ -15,6 +15,7 @@ import ReleaseNotesModal from '../../components/Modals/ReleaseNotesModal'
 import ShowQrForExportModal from '../../components/Modals/ShowQrForExportModal'
 import MigrationDetails from '../../components/Modals/MigrationDetails'
 import LedgerMigrationConfirm from '../../components/Modals/LedgerMigrationConfirm'
+import TransferNftModal from '../../components/Modals/TransferNftModal'
 
 const {
   CONFIRM,
@@ -29,6 +30,7 @@ const {
   SHOW_QR_FOR_EXPORT,
   MIGRATION_DETAILS,
   LEDGER_MIGRATION_CONFIRM,
+  TRANSFER_NFT,
 } = MODAL_TYPES
 
 const MODAL_COMPONENTS = {
@@ -44,6 +46,7 @@ const MODAL_COMPONENTS = {
   [SHOW_QR_FOR_EXPORT]: ShowQrForExportModal,
   [MIGRATION_DETAILS]: MigrationDetails,
   [LEDGER_MIGRATION_CONFIRM]: LedgerMigrationConfirm,
+  [TRANSFER_NFT]: TransferNftModal,
 }
 
 type Props = {

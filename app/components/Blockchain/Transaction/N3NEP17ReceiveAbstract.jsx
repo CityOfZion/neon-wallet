@@ -33,7 +33,12 @@ class N3NEP17ReceiveAbstract extends React.Component<Props> {
       symbol,
       txDate,
     } = this.props
-    const logo = image && <img src={image} alt={`${symbol}`} />
+    const logo = image && (
+      <img
+        src={image.replace('ipfs://', 'https://ipfs.io/ipfs/')}
+        alt={`${symbol}`}
+      />
+    )
     const contactFrom = from && findContact(from)
     const contactFromExists = contactFrom !== from
     return (
