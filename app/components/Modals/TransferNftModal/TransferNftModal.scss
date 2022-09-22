@@ -1,0 +1,39 @@
+.formContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: auto;
+}
+
+.encryptForm {
+  width: 500px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  form {
+    align-self: flex-start;
+  }
+
+  .submitButton {
+    margin-top: auto;
+    margin-bottom: 50px;
+  }
+}
+
+.nftContainer {
+  width: 100%;
+  display: flex;
+  margin: 24px 0;
+  justify-content: center;
+
+  video,
+  img,
+  svg {
+    max-width: 250px;
+    max-height: 250px;
+    margin: auto;
+    cursor: pointer;
+  }
+}

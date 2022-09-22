@@ -28,6 +28,7 @@ import App from './App'
 import Loading from './Loading'
 import n3AccountsActions from '../../actions/n3AccountsActions'
 import withNetworkData from '../../hocs/withNetworkData'
+import nftGalleryActions from '../../actions/nftGalleryActions'
 
 const { LOADING } = progressValues
 
@@ -74,5 +75,6 @@ export default compose(
   withLogoutReset(authActions),
   withLogoutReset(accountActions),
   withLogoutReset(n3AccountsActions),
+  withLogoutReset(nftGalleryActions),
   withNetworkData(),
 )(App)
