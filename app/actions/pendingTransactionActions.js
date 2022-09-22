@@ -23,15 +23,13 @@ export const parseContractTransaction = async (
   chain: string,
 ): Promise<Array<ParsedPendingTransaction>> => {
   const parsedData = []
-  // eslint-disable-next-line camelcase
 
-  console.log({ transaction })
   const {
     confirmations,
     txid,
     net_fee, // eslint-disable-line camelcase
     blocktime = 0,
-    hash,
+    hash = '',
     sendEntries,
   } = transaction
 

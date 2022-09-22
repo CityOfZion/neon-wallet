@@ -1,14 +1,13 @@
 // @flow
 import React, { useState, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { wallet as n3Wallet, sc } from '@cityofzion/neon-js-next'
+import { wallet as n3Wallet } from '@cityofzion/neon-js-next'
 
 import { NFT } from '../../../containers/NftGallery/NftGallery'
 import Button from '../../Button'
 import SelectInput from '../../Inputs/SelectInput'
 import TextInput from '../../Inputs/TextInput'
 import N3Fees from '../../Send/N3Fees'
-
 import BaseModal from '../BaseModal'
 import styles from './TransferNftModal.scss'
 import { getNode, getRPCEndpoint } from '../../../actions/nodeStorageActions'
@@ -32,14 +31,6 @@ type Props = {
   wif: string,
   showSuccessNotification: ({ message: string }) => any,
   showErrorNotification: ({ message: string }) => any,
-  // addPendingTransaction: ({
-  //   address: string,
-  //   tx: {
-  //     hash: string,
-  //     sendEntries: Array<SendEntryType>,
-  //   },
-  //   net: string,
-  // }) => any,
   dispatch: any => any,
 }
 
@@ -159,11 +150,6 @@ export default function TransferNftModal(props: Props) {
           },
         }),
       )
-
-      // amount: string | number,
-      // address: string,
-      // symbol: SymbolType,
-      // contractHash?: string,
 
       showSuccessNotification({
         message:
