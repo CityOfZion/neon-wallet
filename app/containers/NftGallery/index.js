@@ -1,6 +1,6 @@
 // @flow
 import { compose } from 'recompose'
-
+import { connect } from 'react-redux'
 import { withCall, withData, withActions } from 'spunky'
 
 import withLoadingProp from '../../hocs/withLoadingProp'
@@ -20,6 +20,10 @@ const mapNFTGalleryActionsToProps = actions => ({
 })
 
 export default compose(
+  connect(
+    null,
+    null,
+  ),
   withData(nftGalleryActions),
   withLoadingProp(nftGalleryActions),
   withActions(nftGalleryActions, mapNFTGalleryActionsToProps),

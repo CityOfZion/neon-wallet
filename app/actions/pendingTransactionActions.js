@@ -24,18 +24,21 @@ export const parseContractTransaction = async (
 ): Promise<Array<ParsedPendingTransaction>> => {
   const parsedData = []
   // eslint-disable-next-line camelcase
+
+  console.log({ transaction })
   const {
     confirmations,
     txid,
     net_fee, // eslint-disable-line camelcase
     blocktime = 0,
+    hash,
     sendEntries,
   } = transaction
 
   for (const send of sendEntries) {
     parsedData.push({
       confirmations,
-      txid: txid.substring(2),
+      txid: txid ? txid.substring(2) : hash.substring(2),
       net_fee,
       blocktime,
       amount: toBigNumber(send.amount).toString(),

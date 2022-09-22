@@ -14,6 +14,7 @@ import styles from './TransferNftModal.scss'
 import { getNode, getRPCEndpoint } from '../../../actions/nodeStorageActions'
 import N3Helper from '../../../context/WalletConnect/helpers'
 import { convertToArbitraryDecimals } from '../../../core/formatters'
+import { addPendingTransaction } from '../../../actions/pendingTransactionActions'
 
 type Props = {
   hideModal: () => any,
@@ -31,6 +32,15 @@ type Props = {
   wif: string,
   showSuccessNotification: ({ message: string }) => any,
   showErrorNotification: ({ message: string }) => any,
+  // addPendingTransaction: ({
+  //   address: string,
+  //   tx: {
+  //     hash: string,
+  //     sendEntries: Array<SendEntryType>,
+  //   },
+  //   net: string,
+  // }) => any,
+  dispatch: any => any,
 }
 
 export default function TransferNftModal(props: Props) {
@@ -45,6 +55,7 @@ export default function TransferNftModal(props: Props) {
     wif,
     showSuccessNotification,
     showErrorNotification,
+    dispatch,
   } = props
   function handleSubmit() {}
 
@@ -57,6 +68,7 @@ export default function TransferNftModal(props: Props) {
   const [recipientAddressError, setRecipientAddressError] = useState('')
   const [gasFee, setGasFee] = useState(DEFAULT_FEES)
   const [sendButtonDisabled, setSendButtonDisabled] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   function toggleHasEnoughGas(hasGas) {
     setSendButtonDisabled(!hasGas)
@@ -99,46 +111,9 @@ export default function TransferNftModal(props: Props) {
     isValidAddress(normalizedValue)
   }
 
-  async function testInvoke() {
-    let endpoint = await getNode(net)
-    if (!endpoint) {
-      endpoint = await getRPCEndpoint(net)
-    }
-    const account = new n3Wallet.Account(address)
-    const testReq = {
-      params: {
-        request: {
-          method: 'testInvoke',
-          params: {
-            invocations: [
-              {
-                scriptHash: contract,
-                operation: 'transfer',
-                args: [
-                  {
-                    type: 'Hash160',
-                    value: address,
-                  },
-                  { type: 'ByteArray', value: tokenId },
-                  { type: 'Any', value: null },
-                ],
-              },
-            ],
-            signers: [{ scopes: 1 }],
-          },
-        },
-      },
-    }
-    const results = await new N3Helper(endpoint, 0).rpcCall(account, testReq)
-    const fee = convertToArbitraryDecimals(results.result.gasconsumed)
-    setGasFee({
-      networkFee: fee,
-      systemFee: 0,
-    })
-  }
-
   async function transfer() {
     try {
+      setLoading(true)
       let endpoint = await getNode(net)
       if (!endpoint) {
         endpoint = await getRPCEndpoint(net)
@@ -172,12 +147,32 @@ export default function TransferNftModal(props: Props) {
 
       const { result } = results
 
+      dispatch(
+        addPendingTransaction.call({
+          address,
+          net,
+          tx: {
+            hash: result,
+            sendEntries: [
+              { amount: 1, address, contractHash: contract, symbol: 'N/A' },
+            ],
+          },
+        }),
+      )
+
+      // amount: string | number,
+      // address: string,
+      // symbol: SymbolType,
+      // contractHash?: string,
+
       showSuccessNotification({
         message:
           'Transaction pending! Your NFT will be transferred once the blockchain has processed it.',
       })
+      setLoading(false)
       hideModal()
     } catch (e) {
+      setLoading(false)
       console.error({ e })
       showErrorNotification({
         message: 'An unknown error has occurred. Please try again.',
@@ -186,6 +181,45 @@ export default function TransferNftModal(props: Props) {
   }
 
   useEffect(() => {
+    async function testInvoke() {
+      setLoading(true)
+      let endpoint = await getNode(net)
+      if (!endpoint) {
+        endpoint = await getRPCEndpoint(net)
+      }
+      const account = new n3Wallet.Account(address)
+      const testReq = {
+        params: {
+          request: {
+            method: 'testInvoke',
+            params: {
+              invocations: [
+                {
+                  scriptHash: contract,
+                  operation: 'transfer',
+                  args: [
+                    {
+                      type: 'Hash160',
+                      value: address,
+                    },
+                    { type: 'ByteArray', value: tokenId },
+                    { type: 'Any', value: null },
+                  ],
+                },
+              ],
+              signers: [{ scopes: 1 }],
+            },
+          },
+        },
+      }
+      const results = await new N3Helper(endpoint, 0).rpcCall(account, testReq)
+      const fee = convertToArbitraryDecimals(results.result.gasconsumed)
+      setGasFee({
+        networkFee: fee,
+        systemFee: 0,
+      })
+      setLoading(false)
+    }
     testInvoke()
   }, [])
 
@@ -216,13 +250,18 @@ export default function TransferNftModal(props: Props) {
             onFocus={() => setRecipientAddressError('')}
             error={recipientAddressError}
           />
-          <N3Fees fees={gasFee} notEnoughGasCallback={toggleHasEnoughGas} />{' '}
+
+          <N3Fees fees={gasFee} notEnoughGasCallback={toggleHasEnoughGas} />
+
           <Button
             className={styles.submitButton}
             primary
             type="submit"
             disabled={
-              recipientAddressError || !recipientAddress || sendButtonDisabled
+              recipientAddressError ||
+              !recipientAddress ||
+              sendButtonDisabled ||
+              loading
             }
             onClick={() => transfer()}
           >
