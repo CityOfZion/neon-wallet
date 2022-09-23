@@ -24,6 +24,7 @@ type Props = {
   internetConnectionPromptPresented: Boolean,
   theme: string,
   chain: string,
+  isWatchOnly: boolean,
 }
 
 const REFRESH_INTERVAL_MS = 30000
@@ -53,6 +54,7 @@ export default class Dashboard extends Component<Props> {
       hasInternetConnectivity,
       internetConnectionPromptPresented,
       chain,
+      isWatchOnly,
     } = this.props
     if (!hasInternetConnectivity && !internetConnectionPromptPresented) {
       return <Redirect to={ROUTES.OFFLINE_SIGNING_PROMPT} />
@@ -74,24 +76,27 @@ export default class Dashboard extends Component<Props> {
           )}
           renderRightContent={() => (
             <div className={classNames(styles.dashboardHeaderButonContainer)}>
-              <NavLink id="wallet-manager" exact to={ROUTES.WALLET_MANAGER}>
-                {this.props.theme === 'Light' ? (
-                  <Wallet
-                    id="manage-wallets"
-                    className={styles.manageWallets}
-                  />
-                ) : (
-                  <GreenWallet
-                    id="manage-wallets"
-                    className={styles.manageWallets}
-                  />
-                )}
-                <span>
-                  <FormattedMessage id="dashboardManageWallets" />
-                </span>
-              </NavLink>
+              {!isWatchOnly && (
+                <NavLink id="wallet-manager" exact to={ROUTES.WALLET_MANAGER}>
+                  {this.props.theme === 'Light' ? (
+                    <Wallet
+                      id="manage-wallets"
+                      className={styles.manageWallets}
+                    />
+                  ) : (
+                    <GreenWallet
+                      id="manage-wallets"
+                      className={styles.manageWallets}
+                    />
+                  )}
+                  <span>
+                    <FormattedMessage id="dashboardManageWallets" />
+                  </span>
+                </NavLink>
+              )}
 
-              {chain === 'neo3' && <DapiStatus theme={this.props.theme} />}
+              {chain === 'neo3' &&
+                !isWatchOnly && <DapiStatus theme={this.props.theme} />}
 
               <RefreshButton />
             </div>

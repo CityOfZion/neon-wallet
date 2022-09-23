@@ -237,7 +237,10 @@ export default function TransferNftModal(props: Props) {
             error={recipientAddressError}
           />
 
-          <N3Fees fees={gasFee} notEnoughGasCallback={toggleHasEnoughGas} />
+          <N3Fees
+            fees={loading ? DEFAULT_FEES : gasFee}
+            notEnoughGasCallback={toggleHasEnoughGas}
+          />
 
           <Button
             className={styles.submitButton}

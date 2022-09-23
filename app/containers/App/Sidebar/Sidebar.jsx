@@ -87,46 +87,50 @@ const Sidebar = ({
         </div>
       </NavLink>
 
-      <NavLink
-        id="send"
-        exact
-        to={ROUTES.SEND}
-        className={styles.navItem}
-        activeClassName={styles.active}
-      >
-        <SendIcon />
-        <div>
-          {' '}
-          <FormattedMessage id="sidebarSend" />{' '}
-        </div>
-      </NavLink>
+      {!isWatchOnly && [
+        <NavLink
+          id="send"
+          exact
+          to={ROUTES.SEND}
+          className={styles.navItem}
+          activeClassName={styles.active}
+        >
+          <SendIcon />
+          <div>
+            {' '}
+            <FormattedMessage id="sidebarSend" />{' '}
+          </div>
+        </NavLink>,
 
-      <NavLink
-        id="receive"
-        exact
-        to={ROUTES.RECEIVE}
-        className={styles.navItem}
-        activeClassName={styles.active}
-      >
-        <ReceiveIcon />
-        <div>
-          {' '}
-          <FormattedMessage id="sidebarReceive" />{' '}
-        </div>
-      </NavLink>
+        <NavLink
+          id="receive"
+          exact
+          to={ROUTES.RECEIVE}
+          className={styles.navItem}
+          activeClassName={styles.active}
+        >
+          <ReceiveIcon />
+          <div>
+            {' '}
+            <FormattedMessage id="sidebarReceive" />{' '}
+          </div>
+        </NavLink>,
+      ]}
 
-      <NavLink
-        id="contacts"
-        to={ROUTES.CONTACTS}
-        className={styles.navItem}
-        activeClassName={styles.active}
-      >
-        <ContactsIcon />
-        <div>
-          {' '}
-          <FormattedMessage id="sidebarContacts" />{' '}
-        </div>
-      </NavLink>
+      {!isWatchOnly && (
+        <NavLink
+          id="contacts"
+          to={ROUTES.CONTACTS}
+          className={styles.navItem}
+          activeClassName={styles.active}
+        >
+          <ContactsIcon />
+          <div>
+            {' '}
+            <FormattedMessage id="sidebarContacts" />{' '}
+          </div>
+        </NavLink>
+      )}
 
       <NavLink
         id="News"
@@ -173,8 +177,8 @@ const Sidebar = ({
         className={styles.navItem}
         activeClassName={styles.active}
       >
-        <CanvasIcon height="25px" />
-        <div> NFT Gallery</div>
+        <CanvasIcon height="20px" />
+        <div> NFTs</div>
       </NavLink>
 
       <NavLink

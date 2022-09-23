@@ -1,7 +1,6 @@
 .newsPanel {
   overflow: auto;
   height: 100%;
-  // min-height: max-content;
 }
 
 .newsPanelContent {
@@ -20,7 +19,6 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  // padding-bottom: 48px !important;
 
   .newsItem {
     cursor: pointer;

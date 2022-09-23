@@ -9,6 +9,7 @@ import Button from '../../components/Button'
 import CanvasIcon from '../../assets/navigation/canvas.svg'
 import LogoWithStrikethrough from '../../components/LogoWithStrikethrough'
 import { MODAL_TYPES } from '../../core/constants'
+import SendIcon from '../../assets/icons/send.svg'
 
 const { TRANSFER_NFT } = MODAL_TYPES
 
@@ -31,21 +32,12 @@ export function NFT({
   imageHref,
   url = '',
   mediaType,
-  isWatchOnly,
-  showModal,
-  contract,
-  tokenId,
 }: {
   imageHref: string,
   url: string,
   mediaType: string,
-  isWatchOnly: boolean,
-  showModal: (type: string, props: any) => any,
-  contract: string,
-  tokenId: string,
 }) {
   const [isLoading, setIsLoading] = useState(true)
-  const [displaySendButton, setDisplaySendButton] = useState(false)
 
   const openLink = () => electron.shell.openExternal(url)
 
@@ -53,43 +45,12 @@ export function NFT({
     setIsLoading(false)
   }
 
-  function showSendButton(display) {
-    if (!isWatchOnly) {
-      setDisplaySendButton(display)
-    }
-  }
-
   return (
     <>
-      {displaySendButton && (
-        <div
-          className={styles.transferButton}
-          onMouseEnter={() => showSendButton(true)}
-        >
-          <Button
-            primary
-            onClick={() =>
-              showModal(TRANSFER_NFT, {
-                imageHref,
-                url,
-                mediaType,
-                isWatchOnly: true,
-                showModal,
-                contract,
-                tokenId,
-              })
-            }
-          >
-            Send
-          </Button>
-        </div>
-      )}
       <div
         className={styles.placeholderContainer}
         style={{ display: isLoading ? 'block' : 'none' }}
         onClick={openLink}
-        onMouseEnter={() => showSendButton(true)}
-        onMouseLeave={() => showSendButton(false)}
       >
         <CanvasIcon />
       </div>
@@ -102,8 +63,6 @@ export function NFT({
             name="media"
             onLoadedMetadata={onLoad}
             loop
-            onMouseEnter={() => showSendButton(true)}
-            onMouseLeave={() => showSendButton(false)}
             onClick={openLink}
           >
             <source
@@ -119,8 +78,6 @@ export function NFT({
             style={{ display: isLoading ? 'none' : 'block' }}
             onLoad={onLoad}
             onClick={openLink}
-            onMouseEnter={() => showSendButton(true)}
-            onMouseLeave={() => showSendButton(false)}
           />
         )}
       </>
@@ -169,10 +126,6 @@ export default function NFTGallery({
                         // eslint-disable-next-line camelcase
                         mediaType={media_type}
                         url={`https://ghostmarket.io/asset/n3/${contract}/${tokenId}/`}
-                        isWatchOnly={isWatchOnly}
-                        showModal={showModal}
-                        contract={contract}
-                        tokenId={tokenId}
                       />
                       <div className={styles.content}>
                         <p className={styles.collectionName}>
@@ -185,7 +138,31 @@ export default function NFTGallery({
                             <br />
                           </>
                         )}
-                        <small>TOKEN ID:</small> <code>{tokenId}</code>
+                        <div className={styles.tokenId}>
+                          <p className={styles.collectionName}>TOKEN ID:</p>{' '}
+                          <p>{tokenId}</p>
+                        </div>
+                        {!isWatchOnly && (
+                          <div className={styles.transferButton}>
+                            <Button
+                              primary
+                              renderIcon={() => <SendIcon />}
+                              onClick={() =>
+                                showModal(TRANSFER_NFT, {
+                                  imageHref: image,
+                                  url: `https://ghostmarket.io/asset/n3/${contract}/${tokenId}/`,
+                                  mediaType: media_type,
+                                  isWatchOnly: true,
+                                  showModal,
+                                  contract,
+                                  tokenId,
+                                })
+                              }
+                            >
+                              Send
+                            </Button>
+                          </div>
+                        )}
                       </div>
                     </div>
                   )
