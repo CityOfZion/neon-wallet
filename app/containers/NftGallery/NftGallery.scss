@@ -44,7 +44,6 @@
     }
 
     .tokenId {
-      // display: inline;
       display: flex;
       align-items: center;
       font-size: 12px;
@@ -55,7 +54,6 @@
 
     img {
       cursor: pointer;
-      // border: 1px solid var(--news-content-border-color);
       border-radius: 6px 6px 0 0;
     }
 
@@ -67,7 +65,6 @@
 
 .content {
   border: 1px solid var(--news-content-border-color);
-  // border-top: none;
   padding: 6px 12px;
   border-radius: 0 0 6px 6px;
   height: 100%;
@@ -76,10 +73,6 @@
 
 .placeholderContainer {
   border: 1px solid var(--news-content-border-color);
-  // display: flex;
-  // justify-content: center;
-  // width: 150px;
-  // height: 150px;
 
   svg {
     width: 150px;
@@ -109,12 +102,10 @@
 
 .buttonLoadingIndicator {
   position: relative;
-  // margin-top: 29px;
   width: 15px;
   height: 30px;
   opacity: 0.4;
   margin: auto;
-  // margin-top: 29px;
   left: auto;
   top: auto;
   transform: none;
@@ -122,20 +113,6 @@
 
 .transferButton {
   margin: 12px 0;
-  // padding: 12px;
-  // width: 100%;
-  // z-index: 1000;
-  // margin-left: auto;
-  // width: 100px;
-  // margin-bottom: -48px;
-  // /* margin-top: 36px; */
-  // margin-right: 12px;
-  // opacity: 0.9;
-  // margin-top: 12px;
-
-  // button {
-  //   height: 36px;
-  // }
 }
 
 .nftContainer {

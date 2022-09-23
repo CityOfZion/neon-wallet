@@ -7,13 +7,26 @@ export const ID = 'nft-gallery'
 const GHOST_MARKET = 'GHOST_MARKET'
 const NFT_PROVIDER = GHOST_MARKET
 
-// TODO: complete typings here
 export type NftGalleryItem = {
-  metadata: any,
-  series: any,
-  tokenId: any,
-  contract: any,
-  collection: any,
+  metadata: {
+    attributes: any,
+    description: string,
+    image: string,
+    media_type: string,
+    name: string,
+  },
+  series: {
+    chain: string,
+    contrract: string,
+    creator: string,
+    current_supply: number,
+    description: string,
+  },
+  tokenId: string,
+  contract: string,
+  collection: {
+    name: string,
+  },
 }
 
 export type NftGalleryResults = {
