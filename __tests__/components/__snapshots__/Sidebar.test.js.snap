@@ -1172,14 +1172,14 @@ exports[`Sidebar renders without crashing 1`] = `
                                           onClick={[Function]}
                                         >
                                           <Component
-                                            height="25px"
+                                            height="20px"
                                           >
                                             <svg
-                                              height="25px"
+                                              height="20px"
                                             />
                                           </Component>
                                           <div>
-                                             NFT Gallery
+                                             NFTs
                                           </div>
                                         </a>
                                       </Link>
