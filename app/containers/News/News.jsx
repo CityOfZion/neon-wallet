@@ -45,7 +45,6 @@ export default class News extends React.Component<Props, State> {
           label={<FormattedMessage id="newsPageLabel" />}
         />
         <Panel
-          // onScroll={this.handleScroll}
           contentClassName={styles.newsPanelContent}
           className={styles.newsPanel}
         >
