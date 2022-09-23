@@ -31,7 +31,11 @@ type Props = {
   wif: string,
   showSuccessNotification: ({ message: string }) => any,
   showErrorNotification: ({ message: string }) => any,
+  showInfoNotification: ({ message: string }) => any,
+  hideNotification: (id: string) => void,
   dispatch: any => any,
+  isHardwareLogin: boolean,
+  signingFunction: () => void,
 }
 
 export default function TransferNftModal(props: Props) {
@@ -44,9 +48,13 @@ export default function TransferNftModal(props: Props) {
     tokenId,
     address,
     wif,
+    dispatch,
+    isHardwareLogin,
+    signingFunction,
     showSuccessNotification,
     showErrorNotification,
-    dispatch,
+    showInfoNotification,
+    hideNotification,
   } = props
   function handleSubmit() {}
 
@@ -198,7 +206,14 @@ export default function TransferNftModal(props: Props) {
           },
         },
       }
-      const results = await new N3Helper(endpoint, 0).rpcCall(account, testReq)
+      const results = await new N3Helper(endpoint, 0).rpcCall(
+        account,
+        testReq,
+        isHardwareLogin,
+        signingFunction,
+        showInfoNotification,
+        hideNotification,
+      )
       const fee = convertToArbitraryDecimals(results.result.gasconsumed)
       setGasFee({
         networkFee: fee,

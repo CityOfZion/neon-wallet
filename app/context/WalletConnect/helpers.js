@@ -95,8 +95,8 @@ class N3Helper {
     sessionRequest: SessionRequest,
     isHardwareLogin?: boolean,
     signingFunction?: () => void,
-    showInfoNotification?: () => void,
-    hideNotification?: () => void,
+    showInfoNotification?: ({ message: string }) => any,
+    hideNotification?: (id: string) => void,
   ): Promise<JsonRpcResponse> => {
     let result: any
     const {
