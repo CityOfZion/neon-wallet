@@ -1837,13 +1837,22 @@
   resolved "https://registry.yarnpkg.com/@stablelib/wipe/-/wipe-1.0.1.tgz#d21401f1d59ade56a62e139462a97f104ed19a36"
   integrity sha512-WfqfX/eXGiAd3RJe4VU2snh/ZPwtSjLG4ynQ/vYzvghTh7dHFcI1wl+nrkWG6lGhukOxOsUHfv8dUXr58D0ayg==
 
-"@stablelib/x25519@1.0.2", "@stablelib/x25519@^1.0.2":
+"@stablelib/x25519@1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@stablelib/x25519/-/x25519-1.0.2.tgz#ae21e2ab668076ec2eb2b4853b82a27fab045fa1"
   integrity sha512-wTR0t0Bp1HABLFRbYaE3vFLuco2QbAg6QvxBnzi5j9qjhYezWHW7OiCZyaWbt25UkSaoolUUT4Il0nS/2vcbSw==
   dependencies:
     "@stablelib/keyagreement" "^1.0.1"
     "@stablelib/random" "^1.0.1"
+    "@stablelib/wipe" "^1.0.1"
+
+"@stablelib/x25519@^1.0.2":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@stablelib/x25519/-/x25519-1.0.3.tgz#13c8174f774ea9f3e5e42213cbf9fc68a3c7b7fd"
+  integrity sha512-KnTbKmUhPhHavzobclVJQG5kuivH+qDLpe84iRqX3CLrKp881cF160JvXJ+hjn1aMyCwYOKeIZefIH/P5cJoRw==
+  dependencies:
+    "@stablelib/keyagreement" "^1.0.1"
+    "@stablelib/random" "^1.0.2"
     "@stablelib/wipe" "^1.0.1"
 
 "@szmarczak/http-timer@^1.1.2":
@@ -2255,7 +2264,7 @@
   resolved "https://registry.yarnpkg.com/@walletconnect/time/-/time-1.0.1.tgz#645f596887e67c56522edbc2b170d46a97c87ce0"
   integrity sha512-LtNtHupTNranehLMh8Z/JN6xVySysSoJNjNCQ0ML+hOUkim5QX/VdvfovSpaX9qA2b95u7bIuTcq0O3UBk7Iyw==
 
-"@walletconnect/types@2.0.0-beta.17", "@walletconnect/types@^2.0.0-beta.17":
+"@walletconnect/types@2.0.0-beta.17":
   version "2.0.0-beta.17"
   resolved "https://registry.yarnpkg.com/@walletconnect/types/-/types-2.0.0-beta.17.tgz#9432b01aec32cb1847faea13de0ecc00c4e3c82a"
   integrity sha512-YQjS9HqQSR6yztTarzeT9+DW5BTnDWBAlWedGGxiEdhuwV56FQJTZKnMjpM1f8yS5j0vBH/mSst65h7jS/65zQ==
@@ -2265,7 +2274,7 @@
     pino "^6.7.0"
     pino-pretty "^4.3.0"
 
-"@walletconnect/types@2.0.0-rc.3":
+"@walletconnect/types@2.0.0-rc.3", "@walletconnect/types@^2.0.0-beta.17":
   version "2.0.0-rc.3"
   resolved "https://registry.yarnpkg.com/@walletconnect/types/-/types-2.0.0-rc.3.tgz#fdb8b9d8e2d55e87faaad2723a2a56b4762a2714"
   integrity sha512-PkzgdBr4tSXQtyGT91P6cdQJ44dCwRRwIW4BDW6tRqsvziPcyt6aQzWYfKQiMl6i2fIMK/8fgr1oDYPcLQLvbA==
