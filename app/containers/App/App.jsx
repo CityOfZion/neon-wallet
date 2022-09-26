@@ -127,6 +127,7 @@ const App = ({
           if (!endpoint) {
             endpoint = await getRPCEndpoint(net)
           }
+          console.log(endpoint)
           const N3 = await N3Helper.init(endpoint)
           return N3.rpcCall(
             account,
