@@ -1,6 +1,5 @@
 export const DEFAULT_RELAY_PROVIDER = 'wss://relay.walletconnect.com'
 export const DEFAULT_METHODS = ['invokefunction', 'testInvoke']
-// export const DEFAULT_LOGGER = 'debug'
 export const DEFAULT_APP_METADATA = {
   name: 'CoZ Wallet Prototype',
   description: 'WalletConnect integration Prototype',
@@ -12,3 +11,4 @@ export const DEFAULT_APP_METADATA = {
 export const DEFAULT_CHAIN_ID = 'neo3:testnet'
 export const DEFAULT_NEO_RPC_ADDRESS = 'https://testnet1.neo.coz.io:443'
 export const DEFAULT_NEO_NETWORK_MAGIC = 877933390
+export const DEFAULT_PROJECT_ID = '56de852a69580b46d61b53f7b3922ce1'

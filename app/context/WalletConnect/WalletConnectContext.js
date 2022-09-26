@@ -22,7 +22,8 @@ export type AddressAndChain = {
 // $FlowFixMe
 export const WalletConnectContext = React.createContext({})
 
-export const WalletConnectContextProvider = ({
+export const
+ = ({
   options,
   children,
 }: {
@@ -45,12 +46,7 @@ export const WalletConnectContextProvider = ({
   const [error, setError] = useState(false)
 
   const init = useCallback(async () => {
-    try {
-      console.log('initializing WC client', { options })
       setSignClient(await SignClient.init(options))
-    } catch (e) {
-      console.error({ e })
-    }
   }, [])
 
   const clearStorage = () => {
