@@ -180,7 +180,7 @@ export default createActions(
     let parsedEntries = []
 
     if (chain === 'neo3') {
-      const network = net === 'MainNet' ? 'mainnet' : 'testnet_rc4'
+      const network = net === 'MainNet' ? 'mainnet' : 'testnet'
       const data = await NeoRest.addressTXFull(address, page, network)
       parsedEntries = await computeN3Activity(data, address, net)
     } else {

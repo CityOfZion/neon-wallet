@@ -42,7 +42,7 @@ async function getNFTs({ net, address }) {
       const symbol = atob(tokenNameResponse.stack[0].value)
 
       const API_URL = `https://dora.coz.io/api/v1/neo3/${
-        net === 'TestNet' ? 'testnet_rc4' : 'mainnet'
+        net === 'TestNet' ? 'testnet' : 'mainnet'
       }/contract/${nft.assethash}`
 
       const { data } = await axios.get(API_URL)

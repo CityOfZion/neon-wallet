@@ -84,7 +84,7 @@ export default class TransactionHistory extends Component<Props, State> {
     let parsedEntries = []
     while (shouldFetchAdditionalPages) {
       if (chain === 'neo3') {
-        const network = net === 'MainNet' ? 'mainnet' : 'testnet_rc4'
+        const network = net === 'MainNet' ? 'mainnet' : 'testnet'
         data = await NeoRest.addressTXFull(address, currentPage, network)
         parsedEntries = await computeN3Activity(data, address, net)
         parsedEntries.forEach((entry: Object) => {
