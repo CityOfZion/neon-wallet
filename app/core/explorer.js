@@ -54,7 +54,7 @@ export const getExplorerTxLink = (
     case DORA:
       return `${baseURL}/transaction/${chain}/${
         // eslint-disable-next-line
-        networkId == '1' ? 'mainnet' : testnet
+        networkId == '1' ? 'mainnet' : 'testnet'
       }/0x${txId}`
     default:
       throw new Error(`Unknown explorer ${explorer}`)
