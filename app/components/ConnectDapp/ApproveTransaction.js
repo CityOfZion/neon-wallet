@@ -304,16 +304,18 @@ const ApproveTransaction = ({
               ])}
             >
               <label>signature scope</label>
-              <div>
-                {
-                  WITNESS_SCOPE[
-                    String(request.params.request.params.signers[0].scopes)
-                  ]
-                }
-                {WITNESS_SCOPE[
-                  String(request.params.request.params.signers[0].scopes)
-                ] === 'Global' && <WarningIcon />}
-              </div>
+              {!!request.params.request.params.signers.length && (
+                <div>
+                  {
+                    WITNESS_SCOPE[
+                      String(request.params.request.params.signers[0]?.scopes)
+                    ]
+                  }
+                  {WITNESS_SCOPE[
+                    String(request.params.request.params.signers[0]?.scopes)
+                  ] === 'Global' && <WarningIcon />}
+                </div>
+              )}
             </div>
           )}
         <div
