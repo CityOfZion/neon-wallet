@@ -46,7 +46,6 @@ export const WalletConnectContextProvider = ({
 
   const init = useCallback(async () => {
     try {
-      console.log('initializing WC client', { options })
       setSignClient(await SignClient.init(options))
     } catch (e) {
       console.error({ e })
