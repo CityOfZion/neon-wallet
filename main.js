@@ -287,6 +287,19 @@ ipcMain.handle('dialog', async (event, method, params) => {
   return result
 })
 
+ipcMain.handle('minimize', () => {
+  const win = BrowserWindow.getFocusedWindow()
+  win.minimize()
+})
+ipcMain.handle('maximize', () => {
+  const win = BrowserWindow.getFocusedWindow()
+  win.setFullScreen(!win.isFullScreen())
+})
+ipcMain.handle('close', () => {
+  const win = BrowserWindow.getFocusedWindow()
+  win.close()
+})
+
 autoUpdater.logger = log
 autoUpdater.logger.transports.file.level = 'info'
 
