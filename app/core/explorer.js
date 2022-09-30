@@ -54,11 +54,7 @@ export const getExplorerTxLink = (
     case DORA:
       return `${baseURL}/transaction/${chain}/${
         // eslint-disable-next-line
-        networkId == '1'
-          ? 'mainnet'
-          : chain === 'neo3'
-            ? 'testnet_rc4'
-            : 'testnet'
+        networkId == '1' ? 'mainnet' : 'testnet'
       }/0x${txId}`
     default:
       throw new Error(`Unknown explorer ${explorer}`)
@@ -85,11 +81,7 @@ export const getExplorerAddressLink = (
     case DORA:
       return `${baseURL}/address/${chain}/${
         // eslint-disable-next-line
-        networkId == '1'
-          ? 'mainnet'
-          : chain === 'neo3'
-            ? 'testnet_rc4'
-            : 'testnet'
+        networkId == '1' ? 'mainnet' : 'testnet'
       }/${address}`
     default:
       throw new Error(`Unknown explorer ${explorer}`)
