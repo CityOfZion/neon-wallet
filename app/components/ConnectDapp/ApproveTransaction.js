@@ -118,7 +118,7 @@ const ApproveTransaction = ({
       return electron.shell.openExternal(
         net === 'MainNet'
           ? `https://dora.coz.io/contract/neo3/mainnet/${hash}`
-          : `https://dora.coz.io/contract/neo3/testnet_rc4/${hash}`,
+          : `https://dora.coz.io/contract/neo3/testnet/${hash}`,
       )
     }
     return null

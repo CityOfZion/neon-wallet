@@ -8,7 +8,7 @@ import {
 } from '../../../modules/generateEncryptedWIF'
 import EncryptQR from './EncryptQR'
 
-const mapStateToProps = (state: Object) => ({
+const mapStateToProps = state => ({
   encryptedWIF: getEncryptedWIF(state),
 })
 

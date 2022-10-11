@@ -7,7 +7,7 @@ import Minimize from '../../assets/icons/minimize.svg'
 import Maximize from '../../assets/icons/maximize.svg'
 import styles from './FramelessNavigation.scss'
 
-const { remote } = require('electron')
+const { ipcRenderer } = require('electron')
 
 type Props = {}
 
@@ -33,18 +33,15 @@ const platformsNames = {
 
 export default class HeaderBar extends React.PureComponent<Props> {
   minimize = () => {
-    const win = remote.BrowserWindow.getFocusedWindow()
-    win.minimize()
+    ipcRenderer.invoke('minimize')
   }
 
   maximize = () => {
-    const win = remote.BrowserWindow.getFocusedWindow()
-    win.setFullScreen(!win.isFullScreen())
+    ipcRenderer.invoke('maximize')
   }
 
   close = () => {
-    const win = remote.BrowserWindow.getFocusedWindow()
-    win.close()
+    ipcRenderer.invoke('close')
   }
 
   render() {

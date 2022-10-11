@@ -26,8 +26,7 @@ export default class ViewLayout extends Component<Props> {
     shouldRenderHeader: true,
     renderInstructions: () => (
       <div>
-        {' '}
-        <FormattedMessage id="walletCreationInstruction" />{' '}
+        <FormattedMessage id="walletCreationInstruction" />
       </div>
     ),
     iconColor: '#4CFFB3',
@@ -97,8 +96,7 @@ export default class ViewLayout extends Component<Props> {
     return (
       renderInstructions && (
         <div className={classNames(styles.instructions, instructionsClassName)}>
-          {' '}
-          {renderInstructions()}{' '}
+          {renderInstructions()}
         </div>
       )
     )
