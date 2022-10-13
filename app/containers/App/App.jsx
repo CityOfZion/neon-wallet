@@ -78,6 +78,7 @@ const App = ({
     // once complete relay the 'closed' message to programmatically close electron
     ipc.on('quit', async () => {
       await walletConnectCtx.resetApp()
+      debugger
       ipc.send('closed')
     })
     return () => null

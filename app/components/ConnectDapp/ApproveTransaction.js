@@ -260,6 +260,7 @@ const ApproveTransaction = ({
                           )
                           return (
                             <div
+                              key={i}
                               className={styles.methodParameter}
                               style={{
                                 backgroundColor:
