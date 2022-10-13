@@ -173,8 +173,10 @@ export default function NFTGallery({
                           </>
                         )}
                         <div className={styles.tokenId}>
-                          <p className={styles.collectionName}>TOKEN ID:</p>{' '}
-                          <p>{tokenId}</p>
+                          <div className={styles.collectionName}>TOKEN ID:</div>{' '}
+                          <div className={styles.tokenIdContainer}>
+                            {tokenId}
+                          </div>
                         </div>
                         {!isWatchOnly && (
                           <div className={styles.transferButton}>

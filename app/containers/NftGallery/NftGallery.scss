@@ -45,8 +45,16 @@
 
     .tokenId {
       display: flex;
-      align-items: center;
       font-size: 12px;
+
+      .tokenIdContainer {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        display: block;
+        width: 149px;
+      }
+
       .collectionName {
         margin-right: 4px;
       }
