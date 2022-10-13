@@ -46,6 +46,7 @@
     .tokenId {
       display: flex;
       font-size: 12px;
+      margin-bottom: 12px;
 
       .tokenIdContainer {
         overflow: hidden;
@@ -63,6 +64,7 @@
     img {
       cursor: pointer;
       border-radius: 6px 6px 0 0;
+      max-height: 375px;
     }
 
     video {
@@ -77,6 +79,8 @@
   border-radius: 0 0 6px 6px;
   height: 100%;
   text-overflow: ellipsis;
+  display: flex;
+  flex-direction: column;
 }
 
 .placeholderContainer {
@@ -120,7 +124,8 @@
 }
 
 .transferButton {
-  margin: 12px 0;
+  margin-top: auto;
+  margin-bottom: 12px;
 }
 
 .nftContainer {

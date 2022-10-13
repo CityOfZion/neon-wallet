@@ -33,7 +33,7 @@ export default compose(
   withAuthData(),
   withNetworkData(),
   withSuccessNotification(
-    dashboardActions,
+    nftGalleryActions,
     'notifications.success.receivedBlockchainInfo',
     {},
     true,

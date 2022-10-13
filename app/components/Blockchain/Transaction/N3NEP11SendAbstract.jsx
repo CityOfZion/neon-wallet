@@ -39,7 +39,6 @@ class N3NEP11SendAbstract extends React.Component<Props> {
       <img
         src={image.replace('ipfs://', 'https://ipfs.io/ipfs/')}
         alt={`${symbol}`}
-        style={{ marginLeft: '10px' }}
       />
     )
     const contactTo = to && findContact(to)
@@ -61,8 +60,10 @@ class N3NEP11SendAbstract extends React.Component<Props> {
 
         <div className={styles.txToContainerN3}>
           <div className={styles.txTransferContainerN3}>
-            <div className={styles.txNFTContainerN3}>{logo}</div>
-            <div className={styles.txAmountContainerN3}>{tokenName}</div>
+            <div className={styles.txNFTContainerN3}>
+              <div className={styles.txNFTImageWrapperN3}>{logo}</div>
+            </div>
+            <div className={styles.txAmountContainerN3} />
           </div>
           <div className={styles.txSubjectContainerN3}>
             <p>{contactTo}</p>
