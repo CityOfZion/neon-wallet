@@ -8,6 +8,7 @@ import priceHistoryActions from './priceHistoryActions'
 import { blockHeightActions } from './blockHeightActions'
 import { getPendingTransactionInfo } from './pendingTransactionActions'
 import nftActions from './nftActions'
+import nftGalleryActions from './nftGalleryActions'
 
 export const ID = 'dashboard'
 
@@ -19,4 +20,5 @@ export default createBatchActions(ID, {
   priceHistory: priceHistoryActions,
   getPendingTransactionInfo,
   height: blockHeightActions,
+  nftGallery: nftGalleryActions,
 })

@@ -3,24 +3,24 @@
   overflow: auto;
 }
 
-.newsPanelContent {
+.nftGalleryPanelContent {
   padding: 12px !important;
 }
 
-.newsContainer {
+.nftGalleryContainer {
   min-height: 100%;
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-.newsItemsContainer {
+.nftItemsContainer {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
 
-  .newsItem {
+  .nftWrapper {
     padding: 12px;
     max-width: 235px;
     display: flex;

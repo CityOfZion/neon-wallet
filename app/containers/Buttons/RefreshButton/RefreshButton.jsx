@@ -15,7 +15,6 @@ type Props = {
 class RefreshButton extends Component<Props> {
   render() {
     const { loadWalletData, loading } = this.props
-
     return (
       <div
         className={styles.refreshButton}
