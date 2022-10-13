@@ -55,7 +55,6 @@ export const WalletConnectContextProvider = ({
         storageKey.substring(0, 2) === 'wc'
       ) {
         const item = localStorage[storageKey]
-        console.log({ item })
         if (item) {
           localStorage.removeItem(storageKey)
         }
