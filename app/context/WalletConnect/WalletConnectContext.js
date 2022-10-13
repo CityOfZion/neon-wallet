@@ -49,13 +49,15 @@ export const WalletConnectContextProvider = ({
   }, [])
 
   const clearStorage = () => {
-    Object.values(localStorage).forEach(storageValue => {
+    Object.keys(localStorage).forEach(storageKey => {
       if (
-        typeof storageValue === 'string' &&
-        (storageValue.substring(0, 2) === 'wc' ||
-          storageValue.includes('request-{'))
+        typeof storageKey === 'string' &&
+        storageKey.substring(0, 2) === 'wc'
       ) {
-        localStorage.removeItem(storageValue)
+        const item = localStorage[storageKey]
+        if (item) {
+          localStorage.removeItem(storageKey)
+        }
       }
     })
   }
@@ -339,7 +341,11 @@ export const WalletConnectContextProvider = ({
           'Failed or Rejected Request',
         ),
       })
-      throw error
+      setError(
+        error.message
+          ? error.message
+          : 'An unkown error occurred please try again.',
+      )
     }
   } // this should not be a callback because it would require the developer to put it as dependency
 
