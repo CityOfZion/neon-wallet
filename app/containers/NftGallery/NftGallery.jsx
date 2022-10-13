@@ -1,5 +1,6 @@
 // @flow
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 
 import Panel from '../../components/Panel'
 import HeaderBar from '../../components/HeaderBar'
@@ -10,6 +11,7 @@ import CanvasIcon from '../../assets/navigation/canvas.svg'
 import LogoWithStrikethrough from '../../components/LogoWithStrikethrough'
 import { MODAL_TYPES } from '../../core/constants'
 import SendIcon from '../../assets/icons/send.svg'
+import RefreshButton from '../Buttons/RefreshButton'
 
 const { TRANSFER_NFT } = MODAL_TYPES
 
@@ -31,19 +33,41 @@ type Props = {
 export function NFT({
   imageHref,
   url = '',
-  mediaType,
+  mediaType = '',
 }: {
   imageHref: string,
   url: string,
   mediaType: string,
 }) {
   const [isLoading, setIsLoading] = useState(true)
+  const [parsedMediaType, setParsedMediaType] = useState(mediaType)
 
   const openLink = () => electron.shell.openExternal(url)
 
   function onLoad() {
     setIsLoading(false)
   }
+
+  useEffect(
+    () => {
+      async function determineMediaType() {
+        try {
+          const mediaUrl = imageHref.replace('ipfs://', 'https://ipfs.io/ipfs/')
+          const results = await axios.head(mediaUrl)
+          setParsedMediaType(results?.headers?.['content-type'] ?? '')
+        } catch (e) {
+          console.warn(
+            'Was unable to determine media type for NFT! Displaying default image...',
+          )
+        }
+      }
+
+      if (!mediaType) {
+        determineMediaType()
+      }
+    },
+    [mediaType],
+  )
 
   return (
     <>
@@ -56,7 +80,7 @@ export function NFT({
       </div>
 
       <>
-        {mediaType.includes('video') ? (
+        {parsedMediaType.includes('video') ? (
           // eslint-disable-next-line jsx-a11y/media-has-caption
           <video
             autoPlay
@@ -98,16 +122,25 @@ export default function NFTGallery({
   showModal,
 }: Props) {
   return (
-    <div className={styles.newsContainer}>
-      <HeaderBar networkId={networkId} net={net} label="NFT Gallery" />
+    <div className={styles.nftGalleryContainer}>
+      <HeaderBar
+        networkId={networkId}
+        net={net}
+        label="NFT Gallery"
+        renderRightContent={() => (
+          <div>
+            <RefreshButton />
+          </div>
+        )}
+      />
       <Panel
-        contentClassName={styles.newsPanelContent}
+        contentClassName={styles.nftGalleryPanelContent}
         className={styles.newsPanel}
       >
         {loading && !results?.length ? (
           <Loader />
         ) : (
-          <div className={styles.newsItemsContainer}>
+          <div className={styles.nftItemsContainer}>
             {results.length ? (
               <>
                 {results.map(data => {
@@ -120,7 +153,7 @@ export default function NFTGallery({
                   } = data
 
                   return (
-                    <div className={styles.newsItem} key={tokenId}>
+                    <div className={styles.nftWrapper} key={tokenId}>
                       <NFT
                         imageHref={image}
                         // eslint-disable-next-line camelcase
