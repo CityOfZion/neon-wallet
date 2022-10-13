@@ -28,7 +28,7 @@ export default class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, info: any) {
-    console.warn('An unkown error has occurred!', { error, info })
+    console.warn('An unknown error has occurred!', { error, info })
     this.setState({ hasError: true })
   }
 

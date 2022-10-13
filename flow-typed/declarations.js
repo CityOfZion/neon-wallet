@@ -95,6 +95,7 @@ type PendingTransaction = {
   net_fee: string,
   blocktime: number,
   type: string,
+  hash?: string,
 }
 
 type ParsedPendingTransaction = {

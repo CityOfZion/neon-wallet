@@ -16,6 +16,7 @@ import SettingsIcon from '../../../assets/navigation/settings.svg'
 import NewsIcon from '../../../assets/navigation/news.svg'
 import MobileIcon from '../../../assets/navigation/mobile.svg'
 import MigrationIcon from '../../../assets/navigation/migration.svg'
+import CanvasIcon from '../../../assets/navigation/canvas.svg'
 import LogoWithTooltipAndBlockHeight from '../../../components/LogoWithTooltipAndBlockHeight/LogoWithTooltipAndBlockHeight'
 
 import styles from './Sidebar.scss'
@@ -28,7 +29,6 @@ type Props = {
   store: any,
   chain: string,
   isWatchOnly?: boolean,
-  signingFunction?: () => void,
 }
 
 const Sidebar = ({
@@ -39,159 +39,173 @@ const Sidebar = ({
   store,
   chain,
   isWatchOnly,
-  signingFunction,
-}: Props) => (
-  <div
-    className={classNames(
-      styles.container,
-      className,
-      chain === 'neo2' && styles.tinySideBar,
-    )}
-  >
-    <div className={styles.group}>
-      <LogoWithTooltipAndBlockHeight
-        store={store}
-        theme={theme}
-        count={count}
-      />
-      <NavLink
-        id="dashboard"
-        exact
-        to={ROUTES.DASHBOARD}
-        className={styles.navItem}
-        activeClassName={styles.active}
-      >
-        <HomeIcon />
-        <div>
-          <FormattedMessage id="sidebarWallet" />
-        </div>
-      </NavLink>
+}: Props) => {
+  const isConditionalWatchOnlyLink = () =>
+    chain === 'neo2' || (chain === 'neo3' && !isWatchOnly)
 
-      <NavLink
-        id="history"
-        exact
-        to={ROUTES.TRANSACTION_HISTORY}
-        className={styles.navItem}
-        activeClassName={styles.active}
-      >
-        {pendingTransactionsCount > 0 && (
-          <div
-            className={
-              chain === 'neo2'
-                ? styles.pendingTransactionsCount
-                : styles.pendingTransactionsCountN3
-            }
-          >
-            {pendingTransactionsCount}
+  return (
+    <div
+      className={classNames(styles.container, className, styles.tinySideBar)}
+    >
+      <div className={styles.group}>
+        <LogoWithTooltipAndBlockHeight
+          store={store}
+          theme={theme}
+          count={count}
+        />
+        <NavLink
+          id="dashboard"
+          exact
+          to={ROUTES.DASHBOARD}
+          className={styles.navItem}
+          activeClassName={styles.active}
+        >
+          <HomeIcon />
+          <div>
+            <FormattedMessage id="sidebarWallet" />
           </div>
-        )}
-        <HistoryIcon />
-        <div>
-          {' '}
-          <FormattedMessage id="sidebarActivity" />{' '}
-        </div>
-      </NavLink>
+        </NavLink>
 
-      <NavLink
-        id="send"
-        exact
-        to={ROUTES.SEND}
-        className={styles.navItem}
-        activeClassName={styles.active}
-      >
-        <SendIcon />
-        <div>
-          {' '}
-          <FormattedMessage id="sidebarSend" />{' '}
-        </div>
-      </NavLink>
+        <NavLink
+          id="history"
+          exact
+          to={ROUTES.TRANSACTION_HISTORY}
+          className={styles.navItem}
+          activeClassName={styles.active}
+        >
+          {pendingTransactionsCount > 0 && (
+            <div
+              className={
+                chain === 'neo2'
+                  ? styles.pendingTransactionsCount
+                  : styles.pendingTransactionsCountN3
+              }
+            >
+              {pendingTransactionsCount}
+            </div>
+          )}
+          <HistoryIcon />
+          <div>
+            {' '}
+            <FormattedMessage id="sidebarActivity" />{' '}
+          </div>
+        </NavLink>
 
-      <NavLink
-        id="receive"
-        exact
-        to={ROUTES.RECEIVE}
-        className={styles.navItem}
-        activeClassName={styles.active}
-      >
-        <ReceiveIcon />
-        <div>
-          {' '}
-          <FormattedMessage id="sidebarReceive" />{' '}
-        </div>
-      </NavLink>
-
-      <NavLink
-        id="contacts"
-        to={ROUTES.CONTACTS}
-        className={styles.navItem}
-        activeClassName={styles.active}
-      >
-        <ContactsIcon />
-        <div>
-          {' '}
-          <FormattedMessage id="sidebarContacts" />{' '}
-        </div>
-      </NavLink>
-
-      <NavLink
-        id="News"
-        to={ROUTES.NEWS}
-        className={styles.navItem}
-        activeClassName={styles.active}
-      >
-        <NewsIcon />
-        <div>
-          {' '}
-          <FormattedMessage id="sidebarNews" />{' '}
-        </div>
-      </NavLink>
-
-      <NavLink
-        id="settings"
-        to={ROUTES.SETTINGS}
-        className={styles.navItem}
-        activeClassName={styles.active}
-      >
-        <SettingsIcon />
-        <div>
-          {' '}
-          <FormattedMessage id="sidebarSettings" />{' '}
-        </div>
-      </NavLink>
-
-      {!isWatchOnly &&
-        chain === 'neo2' && (
+        {isConditionalWatchOnlyLink && [
           <NavLink
-            id="migration"
-            to={ROUTES.MIGRATION}
-            className={classNames([styles.navItem, styles.migration])}
+            id="send"
+            exact
+            to={ROUTES.SEND}
+            className={styles.navItem}
             activeClassName={styles.active}
           >
-            <MigrationIcon />
-            <div> Migration</div>
+            <SendIcon />
+            <div>
+              {' '}
+              <FormattedMessage id="sidebarSend" />{' '}
+            </div>
+          </NavLink>,
+
+          <NavLink
+            id="receive"
+            exact
+            to={ROUTES.RECEIVE}
+            className={styles.navItem}
+            activeClassName={styles.active}
+          >
+            <ReceiveIcon />
+            <div>
+              {' '}
+              <FormattedMessage id="sidebarReceive" />{' '}
+            </div>
+          </NavLink>,
+        ]}
+
+        {isConditionalWatchOnlyLink && (
+          <NavLink
+            id="contacts"
+            to={ROUTES.CONTACTS}
+            className={styles.navItem}
+            activeClassName={styles.active}
+          >
+            <ContactsIcon />
+            <div>
+              {' '}
+              <FormattedMessage id="sidebarContacts" />{' '}
+            </div>
           </NavLink>
         )}
 
-      <NavLink
-        id="mobile"
-        to={ROUTES.MOBILE}
-        className={styles.mobileNavItem}
-        activeClassName={styles.active}
-      >
-        <MobileIcon />
-        <div> Mobile app</div>
-      </NavLink>
-    </div>
+        <NavLink
+          id="News"
+          to={ROUTES.NEWS}
+          className={styles.navItem}
+          activeClassName={styles.active}
+        >
+          <NewsIcon />
+          <div>
+            {' '}
+            <FormattedMessage id="sidebarNews" />{' '}
+          </div>
+        </NavLink>
 
-    <Logout
-      className={classNames(
-        styles.group,
-        styles.logoutToolTipGroup,
-        styles.navItem,
-      )}
-      id="logout"
-    />
-  </div>
-)
+        <NavLink
+          id="settings"
+          to={ROUTES.SETTINGS}
+          className={styles.navItem}
+          activeClassName={styles.active}
+        >
+          <SettingsIcon />
+          <div>
+            {' '}
+            <FormattedMessage id="sidebarSettings" />{' '}
+          </div>
+        </NavLink>
+
+        {!isWatchOnly &&
+          chain === 'neo2' && (
+            <NavLink
+              id="migration"
+              to={ROUTES.MIGRATION}
+              className={classNames([styles.navItem, styles.migration])}
+              activeClassName={styles.active}
+            >
+              <MigrationIcon />
+              <div> Migration</div>
+            </NavLink>
+          )}
+
+        <NavLink
+          id="NFT"
+          to={ROUTES.NFT}
+          className={styles.navItem}
+          activeClassName={styles.active}
+        >
+          <CanvasIcon height="20px" />
+          <div> NFTs</div>
+        </NavLink>
+
+        <NavLink
+          id="mobile"
+          to={ROUTES.MOBILE}
+          className={styles.mobileNavItem}
+          activeClassName={styles.active}
+        >
+          <MobileIcon />
+          <div> Mobile app</div>
+        </NavLink>
+      </div>
+
+      <Logout
+        className={classNames(
+          styles.group,
+          styles.logoutToolTipGroup,
+          styles.navItem,
+        )}
+        id="logout"
+      />
+    </div>
+  )
+}
 
 export default Sidebar

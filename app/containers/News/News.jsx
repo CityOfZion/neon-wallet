@@ -7,6 +7,7 @@ import Panel from '../../components/Panel'
 import HeaderBar from '../../components/HeaderBar'
 import styles from './News.scss'
 import Loader from '../../components/Loader'
+import Button from '../../components/Button'
 
 const electron = require('electron')
 
@@ -35,6 +36,7 @@ export default class News extends React.Component<Props, State> {
   }
 
   render() {
+    const { loading } = this.props
     return (
       <div className={styles.newsContainer}>
         <HeaderBar
@@ -43,24 +45,32 @@ export default class News extends React.Component<Props, State> {
           label={<FormattedMessage id="newsPageLabel" />}
         />
         <Panel
-          onScroll={this.handleScroll}
           contentClassName={styles.newsPanelContent}
           className={styles.newsPanel}
         >
-          {this.props.loading ? <Loader /> : this.parseItems()}
+          {loading ? (
+            <Loader />
+          ) : (
+            [
+              this.parseItems(),
+              <div className={styles.loadMoreButton}>
+                <Button
+                  onClick={() =>
+                    this.setState(state => ({
+                      currentPage: state.currentPage + 1,
+                    }))
+                  }
+                  primary
+                  disabled={loading}
+                >
+                  Load more
+                </Button>
+              </div>,
+            ]
+          )}
         </Panel>
       </div>
     )
-  }
-
-  handleScroll = (e: SyntheticInputEvent<EventTarget>) => {
-    const bottom =
-      e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight
-    if (bottom) {
-      setTimeout(() => {
-        this.setState(state => ({ currentPage: state.currentPage + 1 }))
-      }, 500)
-    }
   }
 
   parseItems = () => {

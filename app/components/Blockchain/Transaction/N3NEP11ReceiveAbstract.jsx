@@ -1,12 +1,9 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { FormattedMessage, IntlShape, injectIntl } from 'react-intl'
-import Button from '../../Button'
+import { injectIntl } from 'react-intl'
 import styles from './Transaction.scss'
 import ReceiveIcon from '../../../assets/icons/receive-tx.svg'
-import ContactsAdd from '../../../assets/icons/contacts-add.svg'
-import CopyToClipboard from '../../CopyToClipboard'
 
 type Props = {
   image: string,
@@ -21,7 +18,12 @@ class N3NEP11ReceiveAbstract extends React.Component<Props> {
   render = () => {
     const { image, isPending, tokenName, symbol, txDate } = this.props
 
-    const logo = image && <img src={image} alt={`${symbol}`} />
+    const logo = image && (
+      <img
+        src={image.replace('ipfs://', 'https://ipfs.io/ipfs/')}
+        alt={`${symbol}`}
+      />
+    )
 
     return (
       <div className={classNames(styles.transactionContainerN3)}>

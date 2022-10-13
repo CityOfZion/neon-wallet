@@ -23,6 +23,7 @@ import TokenSale from '../../containers/TokenSale'
 import Encrypt from '../../containers/Encrypt'
 import NodeSelect from '../../containers/NodeSelect'
 import News from '../../containers/News'
+import NftGallery from '../../containers/NftGallery'
 import EncryptQR from '../Settings/EncryptQR'
 import { ROUTES } from '../../core/constants'
 import OfflineSigningPrompt from '../../containers/OfflineSigningPrompt'
@@ -125,6 +126,7 @@ export default ({ store }: { store: any }) => (
         component={TransactionHistory}
       />
       <PrivateRoute exact path={ROUTES.NEWS} component={News} />
+      <PrivateRoute exact path={ROUTES.NFT} component={NftGallery} />
       <PrivateRoute
         exact
         path={ROUTES.OFFLINE_SIGNING_PROMPT}

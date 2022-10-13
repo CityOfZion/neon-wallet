@@ -1,4 +1,5 @@
 .newsPanel {
+  overflow: auto;
   height: 100%;
 }
 
@@ -40,4 +41,11 @@
   border-radius: 0 0 6px 6px;
   height: 100%;
   text-overflow: ellipsis;
+}
+
+.loadMoreButton {
+  padding: 24px 0 36px;
+  width: 400px;
+  max-width: 400px;
+  margin: auto;
 }

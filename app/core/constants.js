@@ -157,6 +157,7 @@ export const ROUTES = {
   MOBILE: '/mobile',
   MIGRATION: '/migration',
   CONNECT_DAPP: '/connect-dapp',
+  NFT: '/NFT',
 }
 
 export const NOTIFICATION_LEVELS = {
@@ -191,6 +192,7 @@ export const MODAL_TYPES = {
   SHOW_QR_FOR_EXPORT: 'SHOW_QR_FOR_EXPORT',
   MIGRATION_DETAILS: 'MIGRATION_DETAILS',
   LEDGER_MIGRATION_CONFIRM: 'LEDGER_MIGRATION_CONFIRM',
+  TRANSFER_NFT: 'TRANSFER_NFT',
 }
 
 export const TX_TYPES = {
