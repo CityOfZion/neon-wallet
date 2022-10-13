@@ -1,7 +1,6 @@
 // @flow
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-// import { useEffect } from 'react'
 
 import PrivateRoute from './PrivateRoute'
 import App from '../../containers/App'
@@ -31,128 +30,110 @@ import NetworkConfiguration from '../../containers/NetworkConfiguration'
 import Mobile from '../../containers/Mobile'
 import Migration from '../../containers/Migration'
 import ConnectDapp from '../../containers/ConnectDapp'
-// import { useWalletConnect } from '../../context/WalletConnect/WalletConnectContext'
 
-export default ({ store }: { store: any }) => {
-  // const walletConnectCtx = useWalletConnect()
-
-  // // We need to clear the wallet connect cache
-  // useEffect(() => {
-  //   walletConnectCtx.resetApp()
-  // }, [])
-
-  return (
-    <App store={store}>
-      <Switch>
-        <Route exact path={ROUTES.HOME} component={Home} />
-        <Route
-          exact
-          path={ROUTES.CREATE_WALLET}
-          render={props => <CreateWallet {...props} />}
-        />
-        <Route
-          exact
-          path={ROUTES.CREATE_WALLET_AUTHENTICATED}
-          render={props => <CreateWallet authenticated {...props} />}
-        />
-        <Route
-          exact
-          path={ROUTES.IMPORT_WALLET}
-          render={props => <ImportWallet {...props} />}
-        />
-        <Route
-          exact
-          path={ROUTES.IMPORT_WALLET_AUTHENTICATED}
-          render={props => <ImportWallet authenticated {...props} />}
-        />
-        <Route
-          exact
-          path={ROUTES.DISPLAY_WALLET_KEYS}
-          component={DisplayWalletAccounts}
-        />
-        <Route
-          exact
-          path={ROUTES.DISPLAY_WALLET_KEYS_AUTHENTICATED}
-          render={props => <DisplayWalletAccounts {...props} authenticated />}
-        />
-        <Route
-          exact
-          path={ROUTES.DISPLAY_WALLET_QRS_AUTHENTICATED}
-          render={props => (
-            <DisplayWalletAccountsQrCodes {...props} authenticated />
-          )}
-        />
-        <Route
-          exact
-          path={ROUTES.DISPLAY_WALLET_QRS}
-          render={props => <DisplayWalletAccountsQrCodes {...props} />}
-        />
-        <Route
-          exact
-          path={ROUTES.DISPLAY_ENCRYPTED_WIF_QR}
-          render={props => <EncryptQR {...props} />}
-        />
-        <Route exact path={ROUTES.SETTINGS} component={Settings} />
-        <Route
-          exact
-          path={ROUTES.NETWORK_CONFIGURATION}
-          component={NetworkConfiguration}
-        />
-        <PrivateRoute
-          exact
-          path={ROUTES.WALLET_MANAGER}
-          component={WalletManager}
-        />
-        <PrivateRoute exact path={ROUTES.EDIT_WALLET} component={EditWallet} />
-        <PrivateRoute exact path={ROUTES.DASHBOARD} component={Dashboard} />
-        <PrivateRoute exact path={ROUTES.RECEIVE} component={Receive} />
-        <PrivateRoute exact path={ROUTES.CONTACTS} component={Contacts} />
-        <PrivateRoute exact path={ROUTES.ADD_CONTACT} component={AddContact} />
-        <PrivateRoute
-          exact
-          path={ROUTES.EDIT_CONTACT}
-          component={EditContact}
-        />
-        <PrivateRoute exact path={ROUTES.SEND} component={Send} />
-        <PrivateRoute exact path={ROUTES.TOKEN_SALE} component={TokenSale} />
-        <PrivateRoute
-          exact
-          path={ROUTES.TOKEN_SALE_CONFIRMATION}
-          component={TokenSale}
-        />
-        <PrivateRoute
-          exact
-          path={ROUTES.TOKEN_SALE_SUCCESS}
-          component={TokenSale}
-        />
-        <PrivateRoute
-          exact
-          path={ROUTES.TOKEN_SALE_FAILURE}
-          component={TokenSale}
-        />
-        <PrivateRoute exact path={ROUTES.SEND_ADDRESS} component={Send} />
-        <PrivateRoute exact path={ROUTES.ENCRYPT} component={Encrypt} />
-        <PrivateRoute exact path={ROUTES.NODE_SELECT} component={NodeSelect} />
-        <PrivateRoute
-          exact
-          path={ROUTES.TRANSACTION_HISTORY}
-          component={TransactionHistory}
-        />
-        <PrivateRoute exact path={ROUTES.NEWS} component={News} />
-        <PrivateRoute
-          exact
-          path={ROUTES.OFFLINE_SIGNING_PROMPT}
-          component={OfflineSigningPrompt}
-        />
-        <PrivateRoute exact path={ROUTES.MOBILE} component={Mobile} />
-        <PrivateRoute exact path={ROUTES.MIGRATION} component={Migration} />
-        <PrivateRoute
-          exact
-          path={ROUTES.CONNECT_DAPP}
-          component={ConnectDapp}
-        />
-        <Redirect to={ROUTES.DASHBOARD} />
-      </Switch>
-    </App>
-  )
-}
+export default ({ store }: { store: any }) => (
+  <App store={store}>
+    <Switch>
+      <Route exact path={ROUTES.HOME} component={Home} />
+      <Route
+        exact
+        path={ROUTES.CREATE_WALLET}
+        render={props => <CreateWallet {...props} />}
+      />
+      <Route
+        exact
+        path={ROUTES.CREATE_WALLET_AUTHENTICATED}
+        render={props => <CreateWallet authenticated {...props} />}
+      />
+      <Route
+        exact
+        path={ROUTES.IMPORT_WALLET}
+        render={props => <ImportWallet {...props} />}
+      />
+      <Route
+        exact
+        path={ROUTES.IMPORT_WALLET_AUTHENTICATED}
+        render={props => <ImportWallet authenticated {...props} />}
+      />
+      <Route
+        exact
+        path={ROUTES.DISPLAY_WALLET_KEYS}
+        component={DisplayWalletAccounts}
+      />
+      <Route
+        exact
+        path={ROUTES.DISPLAY_WALLET_KEYS_AUTHENTICATED}
+        render={props => <DisplayWalletAccounts {...props} authenticated />}
+      />
+      <Route
+        exact
+        path={ROUTES.DISPLAY_WALLET_QRS_AUTHENTICATED}
+        render={props => (
+          <DisplayWalletAccountsQrCodes {...props} authenticated />
+        )}
+      />
+      <Route
+        exact
+        path={ROUTES.DISPLAY_WALLET_QRS}
+        render={props => <DisplayWalletAccountsQrCodes {...props} />}
+      />
+      <Route
+        exact
+        path={ROUTES.DISPLAY_ENCRYPTED_WIF_QR}
+        render={props => <EncryptQR {...props} />}
+      />
+      <Route exact path={ROUTES.SETTINGS} component={Settings} />
+      <Route
+        exact
+        path={ROUTES.NETWORK_CONFIGURATION}
+        component={NetworkConfiguration}
+      />
+      <PrivateRoute
+        exact
+        path={ROUTES.WALLET_MANAGER}
+        component={WalletManager}
+      />
+      <PrivateRoute exact path={ROUTES.EDIT_WALLET} component={EditWallet} />
+      <PrivateRoute exact path={ROUTES.DASHBOARD} component={Dashboard} />
+      <PrivateRoute exact path={ROUTES.RECEIVE} component={Receive} />
+      <PrivateRoute exact path={ROUTES.CONTACTS} component={Contacts} />
+      <PrivateRoute exact path={ROUTES.ADD_CONTACT} component={AddContact} />
+      <PrivateRoute exact path={ROUTES.EDIT_CONTACT} component={EditContact} />
+      <PrivateRoute exact path={ROUTES.SEND} component={Send} />
+      <PrivateRoute exact path={ROUTES.TOKEN_SALE} component={TokenSale} />
+      <PrivateRoute
+        exact
+        path={ROUTES.TOKEN_SALE_CONFIRMATION}
+        component={TokenSale}
+      />
+      <PrivateRoute
+        exact
+        path={ROUTES.TOKEN_SALE_SUCCESS}
+        component={TokenSale}
+      />
+      <PrivateRoute
+        exact
+        path={ROUTES.TOKEN_SALE_FAILURE}
+        component={TokenSale}
+      />
+      <PrivateRoute exact path={ROUTES.SEND_ADDRESS} component={Send} />
+      <PrivateRoute exact path={ROUTES.ENCRYPT} component={Encrypt} />
+      <PrivateRoute exact path={ROUTES.NODE_SELECT} component={NodeSelect} />
+      <PrivateRoute
+        exact
+        path={ROUTES.TRANSACTION_HISTORY}
+        component={TransactionHistory}
+      />
+      <PrivateRoute exact path={ROUTES.NEWS} component={News} />
+      <PrivateRoute
+        exact
+        path={ROUTES.OFFLINE_SIGNING_PROMPT}
+        component={OfflineSigningPrompt}
+      />
+      <PrivateRoute exact path={ROUTES.MOBILE} component={Mobile} />
+      <PrivateRoute exact path={ROUTES.MIGRATION} component={Migration} />
+      <PrivateRoute exact path={ROUTES.CONNECT_DAPP} component={ConnectDapp} />
+      <Redirect to={ROUTES.DASHBOARD} />
+    </Switch>
+  </App>
+)
