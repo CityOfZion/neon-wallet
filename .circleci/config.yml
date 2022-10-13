@@ -62,7 +62,7 @@ jobs:
     steps:
       - checkout
       - run: brew install pyenv
-      - run: pyenv global 2.7.18
+      - run: pyenv install 2.7.18
       - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
       - run: yarn release
       - store_artifacts:
