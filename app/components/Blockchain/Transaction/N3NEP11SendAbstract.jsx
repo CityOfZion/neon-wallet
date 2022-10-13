@@ -39,6 +39,7 @@ class N3NEP11SendAbstract extends React.Component<Props> {
       <img
         src={image.replace('ipfs://', 'https://ipfs.io/ipfs/')}
         alt={`${symbol}`}
+        style={{ marginLeft: '10px' }}
       />
     )
     const contactTo = to && findContact(to)

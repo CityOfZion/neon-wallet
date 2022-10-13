@@ -88,6 +88,7 @@ export function NFT({
             onLoadedMetadata={onLoad}
             loop
             onClick={openLink}
+            style={{ display: isLoading ? 'none' : 'block' }}
           >
             <source
               src={imageHref.replace('ipfs://', 'https://ipfs.io/ipfs/')}
