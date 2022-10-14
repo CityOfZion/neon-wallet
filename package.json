@@ -1,6 +1,6 @@
 {
   "name": "Neon",
-  "version": "2.16.7",
+  "version": "2.16.8",
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",
   "homepage": "https://github.com/CityOfZion/neon-wallet",
@@ -227,7 +227,7 @@
     "enzyme-adapter-react-16": "1.6.0",
     "enzyme-to-json": "3.2.1",
     "eslint": "^6.8.0",
-    "eslint-config-airbnb": "17.0.0",
+    "eslint-config-airbnb": "19.0.4",
     "eslint-config-import": "0.13.0",
     "eslint-config-prettier": "2.9.0",
     "eslint-import-resolver-babel-module": "5.3.1",
