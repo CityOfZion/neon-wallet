@@ -43,8 +43,6 @@ jobs:
     resource_class: large
     steps:
       - checkout
-      - restore_cache:
-          key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
       - run: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4EB27DB2A3B88B8B
       - run: apt-get -y update
       - run: apt-get -y install libusb-1.0-0-dev icnsutils graphicsmagick libudev-dev
@@ -61,8 +59,6 @@ jobs:
       xcode: "14.0.0"
     steps:
       - checkout
-      - restore_cache:
-          key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
       - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
       - run: npm --build-from-source install node-pre-gyp
       - run: yarn release
@@ -76,8 +72,6 @@ jobs:
       size: "medium"
     steps:
       - checkout
-      - restore_cache:
-          key: neon-wallet-dependencies-cache-{{ checksum "yarn.lock" }}
       - run: npm install --global --production windows-build-tools --vs2015
       - run: npm config set msvs_version 2015 -g
       - run: choco install windows-sdk-8.1
