@@ -61,10 +61,9 @@ jobs:
       xcode: "14.0.0"
     steps:
       - checkout
-      - run: brew install pyenv
-      - run: pyenv install 2.7.18
-      - run: pyenv global 2.7.18
-      - run: PATH=$(pyenv root)/shims:$PATH
+      - run: brew install wget
+      - run: wget https://www.python.org/ftp/python/2.7.18/python-2.7.18-macosx10.9.pkg
+      - run: sudo installer -pkg python-2.7.18-macosx10.9.pkg -target /
       - run: yarn install --ignore-engines --frozen-lockfile --network-timeout 1000000 --network-concurrency 1
       - run: yarn release
       - store_artifacts:
