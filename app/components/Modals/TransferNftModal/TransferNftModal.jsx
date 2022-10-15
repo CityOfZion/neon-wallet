@@ -160,8 +160,7 @@ export default function TransferNftModal(props: Props) {
       )
 
       showSuccessNotification({
-        message:
-          'Transaction pending! Your NFT will be transferred once the blockchain has processed it.',
+        message: 'Transaction pending! Your NFT will be transferred shortly.',
       })
       setLoading(false)
       hideModal()
