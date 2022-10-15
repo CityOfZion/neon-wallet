@@ -96,3 +96,15 @@ workflows:
               ignore: /.*/
             tags:
               only: /v.*/
+      - build_win:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v.*/
+      - build_linux:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v.*/
