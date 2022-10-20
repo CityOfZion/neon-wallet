@@ -175,15 +175,17 @@ const Sidebar = ({
             </NavLink>
           )}
 
-        <NavLink
-          id="NFT"
-          to={ROUTES.NFT}
-          className={styles.navItem}
-          activeClassName={styles.active}
-        >
-          <CanvasIcon height="20px" />
-          <div> NFTs</div>
-        </NavLink>
+        {chain === 'neo3' && (
+          <NavLink
+            id="NFT"
+            to={ROUTES.NFT}
+            className={styles.navItem}
+            activeClassName={styles.active}
+          >
+            <CanvasIcon height="20px" />
+            <div> NFTs</div>
+          </NavLink>
+        )}
 
         <NavLink
           id="mobile"
