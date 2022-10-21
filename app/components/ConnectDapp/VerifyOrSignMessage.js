@@ -9,9 +9,8 @@ import { useWalletConnect } from '../../context/WalletConnect/WalletConnectConte
 import { ROUTES } from '../../core/constants'
 import CloseButton from '../CloseButton'
 import FullHeightPanel from '../Panel/FullHeightPanel'
-import WallletConnect from '../../assets/icons/wallet_connect.svg'
+import WalletConnect from '../../assets/icons/wallet_connect.svg'
 import styles from '../../containers/ConnectDapp/styles.scss'
-import CheckMarkIcon from '../../assets/icons/confirm-circle.svg'
 import DialogueBox from '../DialogueBox'
 import WarningIcon from '../../assets/icons/warning.svg'
 import Confirm from '../../assets/icons/confirm_connection.svg'
@@ -60,7 +59,7 @@ const VerifyOrSignMessage = ({
       )}
       renderHeaderIcon={() => (
         <div className={styles.walletConnectIcon}>
-          <WallletConnect />
+          <WalletConnect />
         </div>
       )}
       renderInstructions={false}
@@ -141,7 +140,9 @@ const VerifyOrSignMessage = ({
               >
                 <label>Message</label>
               </div>
-              <div>{request.params.request.params.message}</div>
+              <div className={styles.wcMessageContents}>
+                {request.params.request.params.message}
+              </div>
             </div>
           </div>
         )}
