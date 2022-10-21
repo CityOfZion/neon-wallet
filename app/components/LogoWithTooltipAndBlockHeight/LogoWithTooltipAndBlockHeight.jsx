@@ -28,7 +28,6 @@ class LogoWithTooltipAndBlockHeight extends React.Component<Props> {
       <Tooltip
         position="left"
         interactive
-        distance={-60}
         theme="network-settings"
         onShow={() => this.handleOnShow()}
         html={
