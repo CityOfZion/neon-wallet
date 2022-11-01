@@ -716,7 +716,6 @@ exports[`Sidebar renders without crashing 1`] = `
                                     count={300}
                                   >
                                     <Tooltip
-                                      distance={-60}
                                       html={
                                         <Connect(withData(IntlWrapper))
                                           store={undefined}
@@ -740,7 +739,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                         className=""
                                         delay={0}
                                         disabled={false}
-                                        distance={-60}
+                                        distance={10}
                                         duration={375}
                                         followCursor={false}
                                         hideDelay={0}
