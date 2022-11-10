@@ -1,5 +1,5 @@
 // @flow
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { wallet } from '@cityofzion/neon-js-next'
 
 import { ROUTES, DEFAULT_AUTOACCEPT_METHODS } from '../../core/constants'
@@ -7,6 +7,7 @@ import Sidebar from './Sidebar'
 import ModalRenderer from '../ModalRenderer'
 import Notifications from '../Notifications'
 import withThemeData from '../../hocs/withThemeData'
+import withAuthData from '../../hocs/withAuthData'
 import { upgradeUserWalletNEP6 } from '../../modules/generateWallet'
 
 import styles from './App.scss'
@@ -20,6 +21,7 @@ import {
 import N3Helper from '../../context/WalletConnect/helpers'
 import { getNode, getRPCEndpoint } from '../../actions/nodeStorageActions'
 import { parseQuery } from '../../core/formatters'
+import { compose } from 'redux'
 
 const ipc = require('electron').ipcRenderer
 
@@ -99,27 +101,24 @@ const App = ({
     handleUpgrade()
   }, [])
 
-  useEffect(
-    () => {
-      ipc.on('link', (event, url) => {
-        const { uri } = parseQuery(decodeURI(url))
-        if (uri) {
-          if (address) {
-            history.push({
-              pathname: ROUTES.CONNECT_DAPP,
-              state: { uri },
-            })
-          } else {
-            showInfoNotification({
-              message: 'Please login before connecting to a dApp.',
-            })
-            setQueuedWcReroute(uri)
-          }
+  useEffect(() => {
+    ipc.on('link', (event, url) => {
+      const { uri } = parseQuery(decodeURI(url))
+      if (uri) {
+        if (store.getState()?.spunky?.auth?.data?.address) {
+          history.push({
+            pathname: ROUTES.CONNECT_DAPP,
+            state: { uri },
+          })
+        } else {
+          showInfoNotification({
+            message: 'Please login before connecting to a dApp.',
+          })
+          setQueuedWcReroute(uri)
         }
-      })
-    },
-    [history],
-  )
+      }
+    })
+  }, [])
 
   useEffect(
     () => {
@@ -203,4 +202,7 @@ const App = ({
   )
 }
 
-export default withThemeData()(App)
+export default compose(
+  withAuthData(),
+  withThemeData(),
+)(App)
