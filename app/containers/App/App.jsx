@@ -73,6 +73,7 @@ const App = ({
   hideNotification,
 }: Props) => {
   const walletConnectCtx = useWalletConnect()
+  const [queuedWcReroute, setQueuedWcReroute] = React.useState(null)
 
   useEffect(() => {
     // Listen for the 'quit' message and reset the wallet connect context
@@ -103,14 +104,38 @@ const App = ({
       ipc.on('link', (event, url) => {
         const { uri } = parseQuery(decodeURI(url))
         if (uri) {
-          history.push({
-            pathname: ROUTES.CONNECT_DAPP,
-            state: { uri },
-          })
+          if (address) {
+            history.push({
+              pathname: ROUTES.CONNECT_DAPP,
+              state: { uri },
+            })
+          } else {
+            showInfoNotification({
+              message: 'Please login before connecting to a dApp.',
+            })
+            setQueuedWcReroute(uri)
+          }
         }
       })
     },
     [history],
+  )
+
+  useEffect(
+    () => {
+      if (queuedWcReroute && address) {
+        setTimeout(() => {
+          // Add a timeout so that the dashboard still loads
+          // before redirecting to the connect dapp screen
+          setQueuedWcReroute(null)
+          history.push({
+            pathname: ROUTES.CONNECT_DAPP,
+            state: { uri: queuedWcReroute },
+          })
+        }, 1000)
+      }
+    },
+    [address, queuedWcReroute, history],
   )
 
   useEffect(
