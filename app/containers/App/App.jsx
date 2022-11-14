@@ -7,7 +7,6 @@ import Sidebar from './Sidebar'
 import ModalRenderer from '../ModalRenderer'
 import Notifications from '../Notifications'
 import withThemeData from '../../hocs/withThemeData'
-import withAuthData from '../../hocs/withAuthData'
 import { upgradeUserWalletNEP6 } from '../../modules/generateWallet'
 
 import styles from './App.scss'
@@ -202,7 +201,4 @@ const App = ({
   )
 }
 
-export default compose(
-  withAuthData(),
-  withThemeData(),
-)(App)
+export default withThemeData()(App)
