@@ -49,6 +49,7 @@ import ZPT from './ZPT.svg'
 import NOS from './NOS.svg'
 import GHOST from './GHOST.svg'
 import FLM from './FLM.svg'
+import NEP from './NEP.svg'
 import GFUND from './GFUND.svg'
 
 export const imageMap = {
@@ -103,5 +104,6 @@ export const imageMap = {
   NOS,
   GHOST,
   FLM,
+  NEP,
   GFUND,
 }

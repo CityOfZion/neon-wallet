@@ -50,6 +50,7 @@ import NOS from './NOS.png'
 import GHOST from './GHOST.png'
 import FLM from './FLM.png'
 import GM from './GM.png'
+import NEP from './NEP.png'
 import GFUND from './GFUND.png'
 
 export const imageMap = {
@@ -105,5 +106,6 @@ export const imageMap = {
   GHOST,
   FLM,
   GM,
+  NEP,
   GFUND,
 }
