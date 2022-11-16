@@ -1,5 +1,5 @@
 // @flow
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { wallet } from '@cityofzion/neon-js-next'
 
 import { ROUTES, DEFAULT_AUTOACCEPT_METHODS } from '../../core/constants'
@@ -73,6 +73,7 @@ const App = ({
   hideNotification,
 }: Props) => {
   const walletConnectCtx = useWalletConnect()
+  const [queuedWcReroute, setQueuedWcReroute] = React.useState(null)
 
   useEffect(() => {
     // Listen for the 'quit' message and reset the wallet connect context
@@ -98,19 +99,40 @@ const App = ({
     handleUpgrade()
   }, [])
 
-  useEffect(
-    () => {
-      ipc.on('link', (event, url) => {
-        const { uri } = parseQuery(decodeURI(url))
-        if (uri) {
+  useEffect(() => {
+    ipc.on('link', (event, url) => {
+      const { uri } = parseQuery(decodeURI(url))
+      if (uri) {
+        if (store.getState()?.spunky?.auth?.data?.address) {
           history.push({
             pathname: ROUTES.CONNECT_DAPP,
             state: { uri },
           })
+        } else {
+          showInfoNotification({
+            message: 'Please login before connecting to a dApp.',
+          })
+          setQueuedWcReroute(uri)
         }
-      })
+      }
+    })
+  }, [])
+
+  useEffect(
+    () => {
+      if (queuedWcReroute && address) {
+        setTimeout(() => {
+          // Add a timeout so that the dashboard still loads
+          // before redirecting to the connect dapp screen
+          setQueuedWcReroute(null)
+          history.push({
+            pathname: ROUTES.CONNECT_DAPP,
+            state: { uri: queuedWcReroute },
+          })
+        }, 1000)
+      }
     },
-    [history],
+    [address, queuedWcReroute, history],
   )
 
   useEffect(
