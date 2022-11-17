@@ -72,6 +72,10 @@ jobs:
       size: "medium"
     steps:
       - checkout
+      - run: unset CSC_LINK
+      - run: unset CSC_KEY_PASSWORD
+      - run: unset APPLE_ID
+      - run: unset APPLE_ID_PASSWORD
       - run: npm install --global --production windows-build-tools --vs2015
       - run: npm config set msvs_version 2015 -g
       - run: choco install windows-sdk-8.1
