@@ -1,6 +1,6 @@
 {
   "name": "Neon",
-  "version": "2.16.21",
+  "version": "2.16.22",
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",
   "homepage": "https://github.com/CityOfZion/neon-wallet",
@@ -91,7 +91,7 @@
       "target": "nsis",
       "icon": "build/icon.ico",
       "artifactName": "${productName}.${version}.${ext}",
-      "publisherName": "COZ Inc."
+      "publisherName": "COZ Inc. (5DRRKCU6DK)"
     },
     "protocols": {
       "name": "neon-protocol",
