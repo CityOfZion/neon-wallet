@@ -1,6 +1,6 @@
 {
   "name": "Neon",
-  "version": "2.16.16",
+  "version": "2.16.25",
   "main": "./main.js",
   "description": "Light wallet for NEO blockchain",
   "homepage": "https://github.com/CityOfZion/neon-wallet",
@@ -90,7 +90,8 @@
     "win": {
       "target": "nsis",
       "icon": "build/icon.ico",
-      "artifactName": "${productName}.${version}.${ext}"
+      "artifactName": "${productName}.${version}.${ext}",
+      "verifyUpdateCodeSignature": false
     },
     "protocols": {
       "name": "neon-protocol",
