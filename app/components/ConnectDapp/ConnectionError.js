@@ -9,7 +9,7 @@ import WallletConnect from '../../assets/icons/wallet_connect.svg'
 import styles from '../../containers/ConnectDapp/styles.scss'
 import ErrorIcon from '../../assets/icons/wc-error.svg'
 
-const ConnectionError = () => {
+const ConnectionError = ({ resetState }: { resetState: () => any }) => {
   const walletConnectCtx = useWalletConnect()
   const { error } = walletConnectCtx
   return (
@@ -20,6 +20,7 @@ const ConnectionError = () => {
           routeTo={ROUTES.DASHBOARD}
           onClick={() => {
             walletConnectCtx.setError(undefined)
+            resetState()
           }}
         />
       )}
