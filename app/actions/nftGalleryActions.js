@@ -9,18 +9,10 @@ const NFT_PROVIDER = GHOST_MARKET
 
 export type NftGalleryItem = {
   metadata: {
-    attributes: any,
     description: string,
-    image: string,
-    media_type: string,
+    mediaUri: string,
+    mediaType: string,
     name: string,
-  },
-  series: {
-    chain: string,
-    contrract: string,
-    creator: string,
-    current_supply: number,
-    description: string,
   },
   tokenId: string,
   contract: string,
@@ -35,11 +27,15 @@ export type NftGalleryResults = {
   page: number,
 }
 
-const DEFAULT_NFT_GALLERY_RESULTS = { results: [], page: 0, count: 0 }
+const DEFAULT_NFT_GALLERY_RESULTS = (previousResults?: NftGalleryItem[]) => ({
+  results: previousResults ?? [],
+  page: 0,
+  count: 0,
+})
 
 export async function parseGhostMarketResults({
   address,
-  page = 0,
+  page = 1,
   previousResults = [],
 }: {
   address: string,
@@ -47,34 +43,37 @@ export async function parseGhostMarketResults({
   previousResults: NftGalleryItem[],
 }): Promise<NftGalleryResults> {
   try {
-    const LIMIT = 8
-    const OFFSET = LIMIT * page
+    const SIZE = 8
 
     const response = await axios.get(
-      `https://api.ghostmarket.io/api/v1/assets?chain=n3&owner=${address}&limit=${LIMIT}&offset=${OFFSET}&with_total=1`,
+      `https://api.ghostmarket.io/api/v2/assets?chain=n3&owners[]=${address}&size=${SIZE}&page=${page}&getTotal=true`,
     )
 
-    const items = response?.data?.assets ?? []
-    const count = response?.data?.total_results ?? 0
-    if (items.length) {
-      const results = items.map(asset => {
-        const parsed = {
-          metadata: asset.nft.nft_metadata,
-          series: asset.nft.series,
-          tokenId: asset.nft.token_id,
-          contract: asset.nft.contract,
-          collection: asset.nft.collection,
-        }
-        return parsed
-      })
+    const { assets, total: count } = response?.data
 
-      return { results: previousResults.concat(results), page, count }
-    }
+    if (!assets || !assets.length || !count)
+      return DEFAULT_NFT_GALLERY_RESULTS(previousResults)
 
-    return { results: previousResults, page: 0, count }
+    const results = assets.map(
+      ({ metadata, collection, contract, tokenId }) => ({
+        metadata: {
+          description: metadata.description,
+          mediaUri: metadata.mediaUri,
+          mediaType: metadata.mediaType,
+          name: metadata.name,
+        },
+        tokenId,
+        contract: contract.hash,
+        collection: {
+          name: collection.name,
+        },
+      }),
+    )
+
+    return { results: previousResults.concat(results), page, count }
   } catch (e) {
     console.error('An error occurred fetching data for NFT gallery', { e })
-    return DEFAULT_NFT_GALLERY_RESULTS
+    return DEFAULT_NFT_GALLERY_RESULTS(previousResults)
   }
 }
 

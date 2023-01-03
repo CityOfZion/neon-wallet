@@ -31,11 +31,11 @@ type Props = {
 }
 
 export function NFT({
-  imageHref,
+  mediaUri,
   url = '',
   mediaType = '',
 }: {
-  imageHref: string,
+  mediaUri: string,
   url: string,
   mediaType: string,
 }) {
@@ -52,7 +52,7 @@ export function NFT({
     () => {
       async function determineMediaType() {
         try {
-          const mediaUrl = imageHref.replace('ipfs://', 'https://ipfs.io/ipfs/')
+          const mediaUrl = mediaUri.replace('ipfs://', 'https://ipfs.io/ipfs/')
           const results = await axios.head(mediaUrl)
           setParsedMediaType(results?.headers?.['content-type'] ?? '')
         } catch (e) {
@@ -66,7 +66,7 @@ export function NFT({
         determineMediaType()
       }
     },
-    [mediaType],
+    [mediaType, mediaUri],
   )
 
   return (
@@ -91,14 +91,14 @@ export function NFT({
             style={{ display: isLoading ? 'none' : 'block' }}
           >
             <source
-              src={imageHref.replace('ipfs://', 'https://ipfs.io/ipfs/')}
+              src={mediaUri.replace('ipfs://', 'https://ipfs.io/ipfs/')}
               type="video/mp4"
             />
           </video>
         ) : (
           // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
           <img
-            src={imageHref.replace('ipfs://', 'https://ipfs.io/ipfs/')}
+            src={mediaUri.replace('ipfs://', 'https://ipfs.io/ipfs/')}
             className={styles.newsImage}
             style={{ display: isLoading ? 'none' : 'block' }}
             onLoad={onLoad}
@@ -146,8 +146,7 @@ export default function NFTGallery({
               <>
                 {results.map(data => {
                   const {
-                    // eslint-disable-next-line camelcase
-                    metadata: { image, name, description, media_type },
+                    metadata: { mediaUri, name, description, mediaType },
                     tokenId,
                     collection,
                     contract,
@@ -156,9 +155,8 @@ export default function NFTGallery({
                   return (
                     <div className={styles.nftWrapper} key={tokenId}>
                       <NFT
-                        imageHref={image}
-                        // eslint-disable-next-line camelcase
-                        mediaType={media_type}
+                        mediaUri={mediaUri}
+                        mediaType={mediaType}
                         url={`https://ghostmarket.io/asset/n3/${contract}/${tokenId}/`}
                       />
                       <div className={styles.content}>
@@ -185,9 +183,9 @@ export default function NFTGallery({
                               renderIcon={() => <SendIcon />}
                               onClick={() =>
                                 showModal(TRANSFER_NFT, {
-                                  imageHref: image,
+                                  mediaUri,
                                   url: `https://ghostmarket.io/asset/n3/${contract}/${tokenId}/`,
-                                  mediaType: media_type,
+                                  mediaType,
                                   isWatchOnly: true,
                                   showModal,
                                   contract,
@@ -195,7 +193,7 @@ export default function NFTGallery({
                                 })
                               }
                             >
-                              Send
+                              SendButton
                             </Button>
                           </div>
                         )}

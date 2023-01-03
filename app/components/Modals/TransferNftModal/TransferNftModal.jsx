@@ -17,7 +17,7 @@ import { addPendingTransaction } from '../../../actions/pendingTransactionAction
 
 type Props = {
   hideModal: () => any,
-  imageHref: string,
+  mediaUri: string,
   url: string,
   mediaType: string,
   isWatchOnly: boolean,
