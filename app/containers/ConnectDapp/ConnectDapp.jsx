@@ -261,7 +261,7 @@ const ConnectDapp = ({
     case loading:
       return <ConnectionLoader />
     case connectionStep === CONNECTION_STEPS.TRANSACTION_ERROR:
-      return <ConnectionError />
+      return <ConnectionError resetState={resetState} />
     case connectionStep === CONNECTION_STEPS.MESSAGE_SUCCESS:
       return <MessageSuccess />
     case connectionStep === CONNECTION_STEPS.TRANSACTION_SUCCESS:
