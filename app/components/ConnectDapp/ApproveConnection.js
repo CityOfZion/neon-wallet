@@ -31,7 +31,11 @@ const ApproveConnection = ({
   showErrorNotification: ({ message: string }) => any,
   net: string,
   address: string,
-  showNetworkSwitchModal: () => void,
+  showNetworkSwitchModal: ({
+    dAppName: string,
+    approveSession: (network?: string) => void,
+    rejectSession: () => void,
+  }) => void,
 }) => {
   const walletConnectCtx = useWalletConnect()
   const {
