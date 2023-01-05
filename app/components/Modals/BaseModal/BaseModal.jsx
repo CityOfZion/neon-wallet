@@ -25,6 +25,7 @@ type Props = {
   shouldCloseWithEscapeKey: boolean,
   theme: string,
   shouldRenderHeader: boolean,
+  dismissable: boolean,
 }
 
 const BaseModal = ({
@@ -40,10 +41,15 @@ const BaseModal = ({
   shouldCloseWithEscapeKey,
   theme,
   shouldRenderHeader = true,
+  dismissable = true,
 }: Props) => (
   <ReactModal
     isOpen
-    onRequestClose={() => shouldCloseWithEscapeKey && hideModal()}
+    onRequestClose={() => {
+      if (dismissable) {
+        return shouldCloseWithEscapeKey && hideModal()
+      }
+    }}
     style={{
       content: {
         ...themes[theme],
