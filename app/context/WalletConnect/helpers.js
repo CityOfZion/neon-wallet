@@ -1,6 +1,13 @@
 // @flow
 import { u } from '@cityofzion/neon-js'
-import Neon, { rpc, tx, sc, api, wallet } from '@cityofzion/neon-js-next'
+import Neon, {
+  rpc,
+  tx,
+  sc,
+  api,
+  wallet,
+  u as uNext,
+} from '@cityofzion/neon-js-next'
 // eslint-disable-next-line
 import { JsonRpcRequest, JsonRpcResponse } from '@json-rpc-tools/utils'
 import { randomBytes } from 'crypto'
@@ -42,9 +49,13 @@ type ContractInvocation = {
   abortOnFail?: boolean,
 }
 
-type ContractInvocationMulti = {
+export type ContractInvocationMulti = {
   signers: Signer[],
   invocations: ContractInvocation[],
+  extraSystemFee?: number,
+  systemFeeOverride?: number,
+  extraNetworkFee?: number,
+  networkFeeOverride?: number,
 }
 
 type SignedMessage = {
@@ -263,11 +274,31 @@ class N3Helper {
       }),
     ]
 
-    await Neon.experimental.txHelpers.addFees(trx, {
+    const feeConfig = {
       rpcAddress: this.rpcAddress,
       networkMagic,
       account,
-    })
+      systemFeeOverride: undefined,
+      networkFeeOverride: undefined,
+    }
+
+    if (cim.extraNetworkFee) {
+      feeConfig.networkFeeOverride = (await Neon.experimental.txHelpers.calculateNetworkFee(
+        trx,
+        account,
+        feeConfig,
+      )).add(cim.extraNetworkFee)
+    }
+
+    if (cim.extraSystemFee) {
+      feeConfig.systemFeeOverride = (await Neon.experimental.txHelpers.getSystemFee(
+        trx.script,
+        feeConfig,
+        trx.signers,
+      )).add(cim.extraSystemFee)
+    }
+
+    await Neon.experimental.txHelpers.addFees(trx, feeConfig)
 
     if (isHardwareLogin) {
       const facade = await api.NetworkFacade.fromConfig({
