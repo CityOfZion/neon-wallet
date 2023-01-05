@@ -1,15 +1,18 @@
 // @flow
 import React from 'react'
 import { SessionTypes } from '@walletconnect/types'
+import { compose } from 'recompose'
+import { connect } from 'react-redux'
 
 import { useWalletConnect } from '../../context/WalletConnect/WalletConnectContext'
-import { DEFAULT_NAMESPACES, ROUTES } from '../../core/constants'
+import { DEFAULT_NAMESPACES, ROUTES, MODAL_TYPES } from '../../core/constants'
 import CloseButton from '../CloseButton'
 import FullHeightPanel from '../Panel/FullHeightPanel'
 import WallletConnect from '../../assets/icons/wallet_connect.svg'
 import styles from '../../containers/ConnectDapp/styles.scss'
 import Confirm from '../../assets/icons/confirm_connection.svg'
 import Deny from '../../assets/icons/deny_connection.svg'
+import { showModal } from '../../modules/modal'
 
 const ApproveConnection = ({
   proposal,
@@ -19,6 +22,7 @@ const ApproveConnection = ({
   showErrorNotification,
   net,
   address,
+  showNetworkSwitchModal,
 }: {
   proposal: SessionTypes.Proposal,
   resetState: () => any,
@@ -27,6 +31,11 @@ const ApproveConnection = ({
   showErrorNotification: ({ message: string }) => any,
   net: string,
   address: string,
+  showNetworkSwitchModal: ({
+    dAppName: string,
+    approveSession: (network?: string) => void,
+    rejectSession: () => void,
+  }) => void,
 }) => {
   const walletConnectCtx = useWalletConnect()
   const {
@@ -34,14 +43,14 @@ const ApproveConnection = ({
     requiredNamespaces,
   } = proposal.params
 
-  const approveSession = () => {
+  const approveSession = network => {
     walletConnectCtx
       .approveSession(
         proposal,
         [
           {
             address,
-            chain: `neo3:${net.toLowerCase()}`,
+            chain: `neo3:${network || net.toLowerCase()}`,
           },
         ],
         DEFAULT_NAMESPACES,
@@ -52,6 +61,39 @@ const ApproveConnection = ({
           message: `An error occurred attempting to approve session: ${e}`,
         })
       })
+
+    showSuccessNotification({
+      message: `You have accepted connection from ${
+        proposal ? metadata.name : 'unknown dApp'
+      }.`,
+    })
+    history.push(ROUTES.DASHBOARD)
+  }
+
+  const rejectSession = () => {
+    walletConnectCtx.rejectSession(proposal)
+    showSuccessNotification({
+      message: `You have rejected connection from ${
+        proposal ? metadata.name : 'unknown dApp'
+      }.`,
+    })
+    resetState()
+    history.push(ROUTES.DASHBOARD)
+  }
+
+  const handleApproveSessionClick = () => {
+    // 'neo3:testnet' or 'neo3:mainnet'
+    const proposedNetwork = proposal.params.requiredNamespaces.neo3.chains[0]
+    const currentNetwork = `neo3:${net.toLowerCase()}`
+
+    if (proposedNetwork !== currentNetwork) {
+      return showNetworkSwitchModal({
+        dAppName: metadata.name,
+        approveSession,
+        rejectSession,
+      })
+    }
+    approveSession()
   }
 
   return (
@@ -105,26 +147,13 @@ const ApproveConnection = ({
             <div>
               <Confirm
                 onClick={() => {
-                  approveSession()
-                  showSuccessNotification({
-                    message: `You have accepted connection from ${
-                      proposal ? metadata.name : 'unknown dApp'
-                    }.`,
-                  })
-                  history.push(ROUTES.DASHBOARD)
+                  handleApproveSessionClick()
                 }}
               />
 
               <Deny
                 onClick={() => {
-                  walletConnectCtx.rejectSession(proposal)
-                  showSuccessNotification({
-                    message: `You have rejected connection from ${
-                      proposal ? metadata.name : 'unknown dApp'
-                    }.`,
-                  })
-                  resetState()
-                  history.push(ROUTES.DASHBOARD)
+                  rejectSession()
                 }}
               />
             </div>
@@ -135,4 +164,14 @@ const ApproveConnection = ({
   )
 }
 
-export default ApproveConnection
+const mapDispatchToProps = dispatch => ({
+  showNetworkSwitchModal: props =>
+    dispatch(showModal(MODAL_TYPES.NETWORK_SWITCH, props)),
+})
+
+export default compose(
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
+)(ApproveConnection)

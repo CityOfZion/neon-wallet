@@ -24,7 +24,12 @@ const Logout = ({ id, className, logout, promptHasBeenDisplayed }: Props) => {
       onClick={async () => {
         promptHasBeenDisplayed(false)
         if (walletConnectCtx.resetApp) {
-          await walletConnectCtx.resetApp()
+          await walletConnectCtx.resetApp().catch(e => {
+            console.error(
+              'An error occurred attempting to reset wallet connect context! Logging out anyway...',
+              { e },
+            )
+          })
         }
         logout()
       }}

@@ -14,6 +14,7 @@ type Props = {
   renderInstructions: () => React$Node,
   renderHeaderIcon: () => React$Node,
   shouldRenderHeader: Boolean,
+  shouldRenderNavigation: Boolean,
   headerText: string,
   className: string,
   containerClassName: string,
@@ -24,6 +25,7 @@ type Props = {
 export default class ViewLayout extends Component<Props> {
   static defaultProps = {
     shouldRenderHeader: true,
+    shouldRenderNavigation: true,
     renderInstructions: () => (
       <div>
         <FormattedMessage id="walletCreationInstruction" />
@@ -33,20 +35,27 @@ export default class ViewLayout extends Component<Props> {
   }
 
   render() {
-    const { children, className, containerClassName } = this.props
+    const {
+      children,
+      className,
+      containerClassName,
+      shouldRenderNavigation,
+    } = this.props
 
     return (
       <div className={classNames(styles.layoutContainer, className)}>
         <div
           className={classNames(styles.contentContainer, containerClassName)}
         >
-          <div className={styles.navigation}>
-            <span>{this.renderBackButton()}</span>
-            <span>
-              <img src={greyLogo} alt="logo" />
-            </span>
-            <span>{this.renderCloseButton()}</span>
-          </div>
+          {shouldRenderNavigation && (
+            <div className={styles.navigation}>
+              <span>{this.renderBackButton()}</span>
+              <span>
+                <img src={greyLogo} alt="logo" />
+              </span>
+              <span>{this.renderCloseButton()}</span>
+            </div>
+          )}
           <div className={styles.scrollableContent}>
             {this.renderHeader()}
             {this.renderInstructions()}

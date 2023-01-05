@@ -187,7 +187,15 @@ const ConnectDapp = ({
           account,
           testReq,
         )
-        const fee = convertToArbitraryDecimals(results.result.gasconsumed)
+
+        const extraNetworkFee =
+          request.params.request.params.extraNetworkFee || 0
+        const extraSystemFee = request.params.request.params.extraSystemFee || 0
+
+        const fee = convertToArbitraryDecimals(
+          Number(results.result.gasconsumed) + extraNetworkFee + extraSystemFee,
+        )
+
         setFee(fee)
       }
 
