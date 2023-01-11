@@ -54,6 +54,39 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
       <div className={styles.releaseNotesContents}>
         <div className={styles.release}>
           <div className={styles.releaseContent}>
+            <small className={styles.date}>Jan 11th 2023 </small>
+            <h3>Release v2.16.27</h3>
+
+            <p>
+              In this update you will find the following minor improvements:
+              <br />
+              <br />
+              <li>Adds support for Apple Silicon</li>
+              <li>Fix for over the air updates on Windows</li>
+              <li>Wallet Connect UI/UX enhancements </li>
+              <li>Upgrade to v2 of the Ghost Market API</li>
+              <li>Various minor bug fixes</li>
+              <li>Under the hood dependency updates</li>
+              <br />
+              View full details of this release on GitHub
+              <br />
+            </p>
+
+            <Github
+              onClick={() =>
+                electron.shell.openExternal(
+                  'https://github.com/CityOfZion/neon-wallet/releases/tag/v2.16.27',
+                )
+              }
+            />
+          </div>
+          <div className={styles.marketingImage}>
+            {theme === 'Light' ? <PatchLight /> : <PatchDark />}
+          </div>
+        </div>
+
+        <div className={styles.release}>
+          <div className={styles.releaseContent}>
             <small className={styles.date}>Oct 8th 2021 </small>
             <h3>Release v2.10.0</h3>
 

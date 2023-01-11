@@ -2,7 +2,6 @@
 
 import React from 'react'
 import classNames from 'classnames'
-import { isEmpty } from 'lodash-es'
 import { JsonRpcRequest } from '@json-rpc-tools/utils'
 
 import { useWalletConnect } from '../../context/WalletConnect/WalletConnectContext'
@@ -11,7 +10,6 @@ import CloseButton from '../CloseButton'
 import FullHeightPanel from '../Panel/FullHeightPanel'
 import WallletConnect from '../../assets/icons/wallet_connect.svg'
 import styles from '../../containers/ConnectDapp/styles.scss'
-import CheckMarkIcon from '../../assets/icons/confirm-circle.svg'
 import DialogueBox from '../DialogueBox'
 import WarningIcon from '../../assets/icons/warning.svg'
 import Confirm from '../../assets/icons/confirm_connection.svg'
@@ -152,7 +150,9 @@ const ApproveTransaction = ({
       >
         <img src={peer && peer.metadata.icons[0]} />
 
-        <h3>{peer && peer.metadata.name} wants to call </h3>
+        <h3 className={styles.wantsToCallHeader}>
+          {peer && peer.metadata.name} wants to call{' '}
+        </h3>
 
         {isHardwareLogin && (
           <DialogueBox

@@ -109,8 +109,6 @@ p {
   .confirmation {
     padding-top: 18px;
     padding: 12px 24px;
-
-    // border-top: 1px solid #626b7d;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -137,6 +135,10 @@ p {
     align-items: center;
     padding: 12px 0;
     font-size: 12px;
+    max-width: 450px;
+    min-width: 450px;
+    width: 450px;
+    margin: auto;
 
     label {
       margin: 0;
@@ -181,6 +183,8 @@ p {
     border-radius: 4px 4px 0 0;
     align-items: center;
     padding: 0 24px;
+    width: 450px;
+    margin: auto;
   }
 
   .noBorder {
@@ -383,4 +387,9 @@ p {
 
 .wcMessageContents {
   word-wrap: break-word;
+}
+
+.wantsToCallHeader {
+  max-width: 450px;
+  margin: 12px 24px 24px 24px;
 }
