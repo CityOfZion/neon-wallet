@@ -75,7 +75,7 @@ const ApproveTransaction = ({
     return invocation.args.map((arg, i) => ({ name: i, type: arg.type }))
   }
 
-  const renderParam = (arg: any, definition: any, i: position) => {
+  const renderParam = (arg: any, definition: any, i: number) => {
     function mapArrayArg(argValue: any, index: number) {
       return (
         <div
@@ -143,7 +143,7 @@ const ApproveTransaction = ({
             arg.value.map(
               (arg, i) =>
                 arg.type === 'Array'
-                  ? renderParam(arg, { name: i, type: arg.type })
+                  ? renderParam(arg, { name: i, type: arg.type }, i)
                   : mapArrayArg(arg, i),
             )}
         </div>
@@ -367,7 +367,9 @@ const ApproveTransaction = ({
                               </div>
                             </div>
 
+                            {/* $FlowFixMe */}
                             {signer.allowedContracts?.length &&
+                              /* $FlowFixMe */
                               signer.allowedContracts?.map(contract => (
                                 <div
                                   className={classNames([
