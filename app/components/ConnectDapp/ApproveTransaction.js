@@ -72,44 +72,94 @@ const ApproveTransaction = ({
         method => method.name === invocation.operation,
       ).parameters
     }
-    return new Array(invocation.args.length)
-      .fill()
-      .map((_, i) => ({ name: i, type: 'unknown' }))
+    return invocation.args.map((arg, i) => ({ name: i, type: arg.type }))
   }
 
-  const renderParam = (arg: any, definition: any) => (
-    <React.Fragment>
-      <div className={styles.parameterName}>{definition.name}:</div>
+  const renderParam = (arg: any, definition: any, i: position) => {
+    function mapArrayArg(argValue: any, index: number) {
+      return (
+        <div
+          key={index}
+          className={styles.methodParameter}
+          style={{
+            backgroundColor: TX_STATE_TYPE_MAPPINGS[argValue.type]?.color,
+            borderColor: TX_STATE_TYPE_MAPPINGS[argValue.type]?.color,
+            padding: '0 2px',
+          }}
+        >
+          <div className={styles.arrayValue} style={{ width: 'auto' }}>
+            <div className={styles.index}>{index}</div>
+            <span>{argValue && argValue.value}</span>
+            <CopyToClipboard text={String(argValue && argValue.value)} />
+          </div>
+
+          <div
+            className={styles.parameterType}
+            style={{ justifyContent: 'flex-end', width: 'auto' }}
+          >
+            {argValue?.type}
+          </div>
+        </div>
+      )
+    }
+
+    return (
       <div
-        className={
-          arg.type === 'Array' ? styles.parameterArray : styles.parameterValue
-        }
+        key={i}
+        className={styles.methodParameter}
         style={{
-          borderColor:
-            TX_STATE_TYPE_MAPPINGS[definition && definition.type] &&
-            TX_STATE_TYPE_MAPPINGS[definition && definition.type].color,
+          backgroundColor: TX_STATE_TYPE_MAPPINGS[(definition?.type)]?.color,
+          borderColor: TX_STATE_TYPE_MAPPINGS[(definition?.type)]?.color,
         }}
       >
-        {arg.type !== 'Array' && (
-          <React.Fragment>
-            <span>{arg.value || 'null'}</span>
-            <CopyToClipboard text={String((arg && arg.value) || 'null')} />
-          </React.Fragment>
-        )}
-        {arg.type === 'Array' &&
-          arg.value.map((element, j) => (
-            <div key={j}>
-              <div className={styles.arrayValue}>
-                <div className={styles.index}>{j}</div>
-                <span>{element && element.value}</span>
-              </div>
-              <CopyToClipboard text={String(element && element.value)} />
-            </div>
-          ))}
+        <div
+          className={classNames({
+            [styles.parameterName]: true,
+            [styles.shortParam]: typeof definition?.name === 'number',
+          })}
+        >
+          {' '}
+          {definition?.name ?? null}
+        </div>
+        <div
+          className={
+            arg.type === 'Array' ? styles.parameterArray : styles.parameterValue
+          }
+          style={{
+            borderColor:
+              TX_STATE_TYPE_MAPPINGS[(definition?.type)] &&
+              TX_STATE_TYPE_MAPPINGS[(definition?.type)]?.color,
+
+            border: 'none',
+          }}
+        >
+          {arg.type !== 'Array' && (
+            <React.Fragment>
+              <span>{arg.value || 'null'}</span>
+              <CopyToClipboard text={String((arg && arg.value) || 'null')} />
+            </React.Fragment>
+          )}
+          {arg.type === 'Array' &&
+            arg.value.map(
+              (arg, i) =>
+                arg.type === 'Array'
+                  ? renderParam(arg, { name: i, type: arg.type })
+                  : mapArrayArg(arg, i),
+            )}
+        </div>
+        <div
+          className={styles.parameterType}
+          style={{
+            width: '50px',
+            justifyContent: 'center',
+            'margin-left': 'auto',
+          }}
+        >
+          {definition?.type}
+        </div>
       </div>
-      <div className={styles.parameterType}>{definition.type}</div>
-    </React.Fragment>
-  )
+    )
+  }
 
   const handleOpenDoraLink = hash => {
     if (hash) {
@@ -141,6 +191,8 @@ const ApproveTransaction = ({
         </div>
       )}
       renderInstructions={false}
+      className={styles.approveTransactionPanel}
+      containerClassName={styles.approveTransactionPanelContainer}
     >
       <div
         className={classNames([
@@ -187,10 +239,12 @@ const ApproveTransaction = ({
           request.params.request.params.invocations.map((invocation, i) => (
             <React.Fragment key={i}>
               <div className={styles.contractName}>
-                <div className={classNames([])}>{invocation.contract.name}</div>
+                <div className={classNames([])}>
+                  {invocation.contract?.name}
+                </div>
               </div>
 
-              <div className={styles.connectionDetails}>
+              <div className={styles.transactionDetails}>
                 <div
                   className={classNames([
                     styles.detailsLabel,
@@ -258,67 +312,122 @@ const ApproveTransaction = ({
                           const paramDefinitions = getParamDefinitions(
                             invocation,
                           )
-                          return (
-                            <div
-                              key={i}
-                              className={styles.methodParameter}
-                              style={{
-                                backgroundColor:
-                                  TX_STATE_TYPE_MAPPINGS[
-                                    paramDefinitions[i] &&
-                                      paramDefinitions[i].type
-                                  ] &&
-                                  TX_STATE_TYPE_MAPPINGS[
-                                    paramDefinitions[i] &&
-                                      paramDefinitions[i].type
-                                  ].color,
-                                borderColor:
-                                  TX_STATE_TYPE_MAPPINGS[
-                                    paramDefinitions[i] &&
-                                      paramDefinitions[i].type
-                                  ] &&
-                                  TX_STATE_TYPE_MAPPINGS[
-                                    paramDefinitions[i] &&
-                                      paramDefinitions[i].type
-                                  ].color,
-                              }}
-                            >
-                              {renderParam(p, paramDefinitions[i])}
-                            </div>
-                          )
+                          return renderParam(p, paramDefinitions[i], i)
                         })}
                       </div>
                     )}
                   </div>
                 ) : null}
+                {request?.params?.request?.params?.signers?.length > 1 && (
+                  <div
+                    className={classNames([
+                      styles.detailsLabel,
+                      styles.detailRow,
+                      styles.multiSigRow,
+                    ])}
+                    style={{ borderBottom: 'none' }}
+                  >
+                    <label>signature scopes</label>
+
+                    <div className={styles.multiSigColumn}>
+                      {request.params.request.params.signers.map(
+                        (signer, i) => (
+                          <div className={styles.multiSigCell}>
+                            <div
+                              style={{ display: 'flex', alignItems: 'center' }}
+                            >
+                              <div className={styles.index}>{i}</div>
+
+                              {WITNESS_SCOPE[String(signer.scopes)]}
+                              {WITNESS_SCOPE[String(signer.scopes)] ===
+                                'Global' && <WarningIcon />}
+                            </div>
+                            <div
+                              className={classNames([
+                                styles.detailsLabel,
+                                styles.detailRow,
+                              ])}
+                            >
+                              <label>account</label>
+                              <div className={styles.scriptHash}>
+                                {signer.account}{' '}
+                                {theme === 'Light' ? (
+                                  <DoraIcon
+                                    onClick={() =>
+                                      handleOpenDoraLink(signer.account)
+                                    }
+                                  />
+                                ) : (
+                                  <DoraIconDark
+                                    onClick={() =>
+                                      handleOpenDoraLink(signer.account)
+                                    }
+                                  />
+                                )}
+                              </div>
+                            </div>
+
+                            {signer.allowedContracts?.length &&
+                              signer.allowedContracts?.map(contract => (
+                                <div
+                                  className={classNames([
+                                    styles.detailsLabel,
+                                    styles.detailRow,
+                                    styles.contractRow,
+                                  ])}
+                                >
+                                  <label>contract</label>
+                                  <div className={styles.scriptHash}>
+                                    {contract}{' '}
+                                    {theme === 'Light' ? (
+                                      <DoraIcon
+                                        onClick={() =>
+                                          handleOpenDoraLink(contract)
+                                        }
+                                      />
+                                    ) : (
+                                      <DoraIconDark
+                                        onClick={() =>
+                                          handleOpenDoraLink(contract)
+                                        }
+                                      />
+                                    )}
+                                  </div>
+                                </div>
+                              ))}
+                          </div>
+                        ),
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
               <br />
             </React.Fragment>
           ))}
-        {request &&
-          request.params.request.params.signers && (
-            <div
-              className={classNames([
-                styles.detailsLabel,
-                styles.detailRow,
-                styles.sigRow,
-              ])}
-            >
-              <label>signature scope</label>
-              {!!request.params.request.params.signers.length && (
-                <div>
-                  {
-                    WITNESS_SCOPE[
-                      String(request.params.request.params.signers[0]?.scopes)
-                    ]
-                  }
-                  {WITNESS_SCOPE[
+        {request?.params?.request?.params?.signers?.length > 1 ? null : (
+          <div
+            className={classNames([
+              styles.detailsLabel,
+              styles.detailRow,
+              styles.singleSigRow,
+            ])}
+          >
+            <label>signature scope</label>
+            {!!request.params.request.params.signers.length && (
+              <div>
+                {
+                  WITNESS_SCOPE[
                     String(request.params.request.params.signers[0]?.scopes)
-                  ] === 'Global' && <WarningIcon />}
-                </div>
-              )}
-            </div>
-          )}
+                  ]
+                }
+                {WITNESS_SCOPE[
+                  String(request.params.request.params.signers[0]?.scopes)
+                ] === 'Global' && <WarningIcon />}
+              </div>
+            )}
+          </div>
+        )}
         <div
           className={classNames([
             styles.detailsLabel,
