@@ -42,6 +42,8 @@ p {
   text-align: center;
   margin-top: 24px;
   margin-bottom: 48px;
+  width: 100%;
+  margin: auto;
 
   img {
     margin: auto;
@@ -51,12 +53,15 @@ p {
   .connectionDetails {
     background: var(--wc-connection-details-bg);
     border-radius: 0 0 4px 4px;
-    width: 450px;
+
     font-size: 16px;
     color: var(--wc-connection-details-color);
     text-align: left;
     padding: 6px 24px;
     margin: auto;
+    max-width: 450px;
+    min-width: 450px;
+    width: 450px;
   }
 
   .details {
@@ -109,8 +114,6 @@ p {
   .confirmation {
     padding-top: 18px;
     padding: 12px 24px;
-
-    // border-top: 1px solid #626b7d;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -137,6 +140,8 @@ p {
     align-items: center;
     padding: 12px 0;
     font-size: 12px;
+    margin: auto;
+    width: 100%;
 
     label {
       margin: 0;
@@ -181,6 +186,8 @@ p {
     border-radius: 4px 4px 0 0;
     align-items: center;
     padding: 0 24px;
+    width: 600px;
+    margin: auto;
   }
 
   .noBorder {
@@ -229,9 +236,12 @@ p {
 
     .index {
       margin-right: 6px;
+
       background: var(--wc-param-index);
       height: 22px;
+      min-height: 22px;
       width: 22px;
+      min-width: 22px;
       font-size: 12px;
       color: var(--wc-tooltip-button-color);
       display: flex;
@@ -266,6 +276,10 @@ p {
   text-align: left;
 }
 
+.shortParam {
+  width: 10px !important;
+}
+
 .methodParameter {
   display: flex;
   align-items: center;
@@ -280,17 +294,18 @@ p {
     text-overflow: ellipsis;
     overflow: hidden;
   }
+
   .parameterValue {
     background: var(--wc-connection-details-bg2);
     color: var(--wc-connection-details-color);
-    padding: 6px;
+    padding: 2px;
+    margin: 4px;
     border-radius: 4px;
     border: 2px solid;
     justify-content: space-between;
     width: 300px;
 
     span {
-      //width: 250px;
       padding: 6px;
       text-overflow: ellipsis;
       overflow: hidden;
@@ -300,7 +315,8 @@ p {
   .parameterArray {
     background: var(--wc-connection-details-bg2);
     color: var(--wc-connection-details-color);
-    padding: 6px;
+    padding: 2px;
+    margin: 4px;
     display: inline-table !important;
     border-radius: 4px;
     border: 2px solid;
@@ -310,8 +326,9 @@ p {
     justify-content: space-between;
 
     div {
-      width: 300px;
+      // width: 100%;
       justify-content: space-between;
+      align-items: center;
     }
 
     .arrayValue {
@@ -320,7 +337,7 @@ p {
       width: 300px;
 
       span {
-        width: 225px;
+        width: 100%;
         padding: 6px;
         text-overflow: ellipsis;
         overflow: hidden;
@@ -347,7 +364,7 @@ p {
   border-top: 1px solid #626b7d;
   border-bottom: 1px solid #626b7d !important;
   padding: 6px 24px !important;
-  width: auto !important;
+  width: 600px !important;
   height: 30px;
   margin-bottom: 12px;
 }
@@ -377,10 +394,87 @@ p {
   }
 }
 
+.singleSigRow {
+  border-bottom: none !important;
+  padding: 6px 24px !important;
+  width: 600px !important;
+}
+
 .noPadding {
   padding-bottom: 0px !important;
 }
 
 .wcMessageContents {
   word-wrap: break-word;
+}
+
+.wantsToCallHeader {
+  margin: 12px 24px 24px 24px;
+}
+
+.approveTransactionPanel {
+  width: 800px;
+  margin: auto;
+}
+
+.approveTransactionPanelContainer {
+  width: 800px;
+}
+
+.multiSigRow {
+  display: flex;
+}
+
+.multiSigColumn {
+  display: flex;
+  flex-direction: column;
+  border-bottom: none !important;
+  background: var(--wc-connection-details-bg);
+  border-radius: 4px;
+  padding: 12px;
+  width: 450px;
+  margin-top: -12px;
+
+  .multiSigCell:first-child {
+    margin-top: 0px;
+  }
+
+  .multiSigCell {
+    margin-top: 24px;
+  }
+
+  .multiSigCell:last-child {
+    border-bottom: none;
+  }
+
+  .contractRow:last-child {
+    border-bottom: none !important;
+  }
+
+  .index {
+    margin-right: 6px;
+
+    background: var(--wc-param-index);
+    height: 22px;
+    min-height: 22px;
+    width: 22px;
+    min-width: 22px;
+    font-size: 12px;
+    color: var(--wc-tooltip-button-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+  }
+}
+
+.transactionDetails {
+  background: var(--wc-connection-details-bg);
+  border-radius: 0 0 4px 4px;
+  font-size: 16px;
+  color: var(--wc-connection-details-color);
+  text-align: left;
+  padding: 6px 24px;
+  margin: auto;
+  width: 600px;
 }
