@@ -75,7 +75,7 @@ const shouldRenderReleaseNotes = version => {
     '2.9.2',
     '2.10.0-rc5',
     '2.10.0',
-    '2.16.27',
+    '2.16.28',
   ]
   if (
     displayWhitelist.includes(version) &&

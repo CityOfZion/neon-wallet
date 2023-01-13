@@ -193,7 +193,9 @@ const ConnectDapp = ({
         const extraSystemFee = request.params.request.params.extraSystemFee || 0
 
         const fee = convertToArbitraryDecimals(
-          Number(results.result.gasconsumed) + extraNetworkFee + extraSystemFee,
+          Number(results.result.gasconsumed) +
+            Number(extraNetworkFee) +
+            Number(extraSystemFee),
         )
 
         setFee(fee)
