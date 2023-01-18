@@ -136,7 +136,7 @@ export async function computeN3Activity(
               // use the ghost market API
               const imageResults = await fetchMissingImageInfo(
                 invocation.metadata.scripthash,
-                invocation.metadata.token_id,
+                item.notifications[0]?.state[3]?.value,
               )
 
               if (imageResults?.data?.assets?.length) {
