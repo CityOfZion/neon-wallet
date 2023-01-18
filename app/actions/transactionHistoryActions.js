@@ -110,9 +110,6 @@ export async function computeN3Activity(
             break
           case 'nep11_transfer':
             invocation.metadata.time = item.time
-            // Get the properties of the token
-
-            // eslint-disable-next-line no-case-declarations
 
             invocation.metadata.tokenName = Buffer.from(
               invocation.metadata.token_id,
