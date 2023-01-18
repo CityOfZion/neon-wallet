@@ -100,6 +100,7 @@ export default class Transaction extends React.Component<Props> {
   handleViewTransaction = () => {
     const { networkId, explorer, tx, chain } = this.props
     let txid
+
     if (chain === 'neo3') {
       txid = tx.hash.substring(2)
     } else {

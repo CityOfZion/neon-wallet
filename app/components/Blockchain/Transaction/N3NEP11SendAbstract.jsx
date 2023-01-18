@@ -35,6 +35,7 @@ class N3NEP11SendAbstract extends React.Component<Props> {
       symbol,
       txDate,
     } = this.props
+
     const logo = image && (
       <img
         src={image.replace('ipfs://', 'https://ipfs.io/ipfs/')}
