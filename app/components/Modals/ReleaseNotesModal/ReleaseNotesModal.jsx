@@ -54,8 +54,8 @@ const ReleaseNotesModal = ({ hideModal, theme }: Props) => (
       <div className={styles.releaseNotesContents}>
         <div className={styles.release}>
           <div className={styles.releaseContent}>
-            <small className={styles.date}>Jan 13th 2023 </small>
-            <h3>Release v2.16.28</h3>
+            <small className={styles.date}>Jan 18th 2023 </small>
+            <h3>Release v2.16.29</h3>
 
             <p>
               In this update you will find the following minor improvements:

@@ -2,6 +2,8 @@
 import { NeoLegacyREST, NeoRest } from '@cityofzion/dora-ts/dist/api'
 import { createActions } from 'spunky'
 import { rpc as n3Rpc, sc, u } from '@cityofzion/neon-js-next'
+import axios from 'axios'
+
 import { TX_TYPES } from '../core/constants'
 import {
   getImageBySymbol,
@@ -15,6 +17,12 @@ type Props = {
   net: string,
   address: string,
   shouldIncrementPagination: boolean,
+}
+
+async function fetchMissingImageInfo(scriptHash, tokenId) {
+  const url = `https://api.ghostmarket.io/api/v2/assets?Chain=n3&Contract=${scriptHash}&TokenIds%5B%5D=${tokenId}`
+  const results = await axios.get(url)
+  return results
 }
 
 export async function parseAbstractData(
@@ -90,7 +98,10 @@ export async function computeN3Activity(
     const unresolved = item.invocations.map(async invocation => {
       let image
       let assets
-      let endpoint
+      let endpoint = await getNode(net)
+      if (!endpoint) {
+        endpoint = await getRPCEndpoint(net)
+      }
 
       try {
         switch (invocation.type) {
@@ -99,28 +110,39 @@ export async function computeN3Activity(
             break
           case 'nep11_transfer':
             invocation.metadata.time = item.time
-            // Get the properties of the token
-            endpoint = await getNode(net)
-            if (!endpoint) {
-              endpoint = await getRPCEndpoint(net)
-            }
+
             invocation.metadata.tokenName = Buffer.from(
               invocation.metadata.token_id,
               'hex',
             ).toString()
+
             assets = await new n3Rpc.RPCClient(endpoint).invokeFunction(
               invocation.metadata.scripthash,
               'properties',
               [sc.ContractParam.string(invocation.metadata.tokenName)],
             )
-            assets.stack[0].value.some(property => {
-              const key = u.HexString.fromBase64(property.key.value).toAscii()
-              if (key === 'image') {
-                image = u.HexString.fromBase64(property.value.value).toAscii()
-                return true
+
+            if (assets.stack.length) {
+              assets.stack[0].value.some(property => {
+                const key = u.HexString.fromBase64(property.key.value).toAscii()
+                if (key === 'image') {
+                  image = u.HexString.fromBase64(property.value.value).toAscii()
+                  return true
+                }
+                return false
+              })
+            } else {
+              // if for some reason getting the image directly from the contract fails
+              // use the ghost market API
+              const imageResults = await fetchMissingImageInfo(
+                invocation.metadata.scripthash,
+                item.notifications[0]?.state[3]?.value,
+              )
+
+              if (imageResults?.data?.assets?.length) {
+                image = imageResults.data.assets[0].metadata.mediaUri
               }
-              return false
-            })
+            }
             break
           default:
             break

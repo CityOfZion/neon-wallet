@@ -122,6 +122,10 @@ export default function NFTGallery({
   isWatchOnly,
   showModal,
 }: Props) {
+  function decodeTokenId(tokenId) {
+    return atob(tokenId)
+  }
+
   return (
     <div className={styles.nftGalleryContainer}>
       <HeaderBar
@@ -173,7 +177,7 @@ export default function NFTGallery({
                         <div className={styles.tokenId}>
                           <div className={styles.collectionName}>TOKEN ID:</div>{' '}
                           <div className={styles.tokenIdContainer}>
-                            {tokenId}
+                            {decodeTokenId(tokenId)}
                           </div>
                         </div>
                         {!isWatchOnly && (
@@ -193,7 +197,7 @@ export default function NFTGallery({
                                 })
                               }
                             >
-                              SendButton
+                              Send
                             </Button>
                           </div>
                         )}
