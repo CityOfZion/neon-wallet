@@ -149,9 +149,8 @@ const App = ({
           if (!endpoint) {
             endpoint = await getRPCEndpoint(net)
           }
-          const N3 = await N3Helper.init(endpoint)
+          const N3 = await N3Helper.init(endpoint, undefined, account)
           return N3.rpcCall(
-            account,
             req,
             isHardwareLogin,
             signingFunction,

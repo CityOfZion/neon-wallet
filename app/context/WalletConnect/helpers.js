@@ -1,95 +1,46 @@
 // @flow
-import { u } from '@cityofzion/neon-js'
-import Neon, {
-  rpc,
-  tx,
-  sc,
-  api,
-  wallet,
-  u as uNext,
-} from '@cityofzion/neon-js-next'
+import Neon, { rpc, api } from '@cityofzion/neon-js-next'
 // eslint-disable-next-line
-import { JsonRpcRequest, JsonRpcResponse } from '@json-rpc-tools/utils'
-import { randomBytes } from 'crypto'
+import { JsonRpcResponse } from '@json-rpc-tools/utils'
 import { type SessionRequest } from './WalletConnectContext'
 import { NeonInvoker } from '@cityofzion/neon-invoker'
 import { NeonSigner } from '@cityofzion/neon-signer'
+import { ContractInvocationMulti } from '@cityofzion/neo3-invoker'
+import { wallet } from '@cityofzion/neon-core'
 
-type WitnessScope = {
-  None: 0,
-  /**
-   * CalledByEntry means that this condition must hold: EntryScriptHash == CallingScriptHash
-   * No params is needed, as the witness/permission/signature given on first invocation will automatically expire if entering deeper internal invokes
-   * This can be default safe choice for native NEO/GAS (previously used on Neo 2 as "attach" mode)
-   */
-  CalledByEntry: 1,
-  /**
-   * Custom hash for contract-specific
-   */
-  CustomContracts: 16,
-  /**
-   * Custom pubkey for group members, group can be found in contract manifest
-   */
-  CustomGroups: 32,
-  /**
-   * Global allows this witness in all contexts (default Neo2 behavior)
-   * This cannot be combined with other flags
-   */
-  Global: 128,
-}
 
-type Signer = {
-  scopes: WitnessScope,
-  allowedContracts?: string[],
-  allowedGroups?: string[],
-}
-
-type ContractInvocation = {
-  scriptHash: string,
-  operation: string,
-  args: any[],
-  abortOnFail?: boolean,
-}
-
-export type ContractInvocationMulti = {
-  signers: Signer[],
-  invocations: ContractInvocation[],
-  extraSystemFee?: number,
-  systemFeeOverride?: number,
-  extraNetworkFee?: number,
-  networkFeeOverride?: number,
-}
-
-type SignedMessage = {
-  publicKey: string,
-  data: string,
-  salt: string,
-  messageHex: string,
-}
-
-type SignMessagePayload = {
-  message: string,
-  version: number,
-}
 
 class N3Helper {
   rpcAddress: string
+  networkMagic: number 
+  invoker: NeonInvoker
+  signer: NeonSigner
+  account: wallet.Account | undefined
 
-  networkMagic: number
-
-  constructor(rpcAddress: string, networkMagic: number) {
+  constructor(rpcAddress: string, networkMagic: number, invoker: NeonInvoker, signer: NeonSigner, account?: wallet.Account) {
+    this.invoker = invoker
+    this.signer = signer
     this.rpcAddress = rpcAddress
     this.networkMagic = networkMagic
+    this.account = account
   }
 
   static init = async (
     rpcAddress: string,
     networkMagic?: number,
-  ): Promise<N3Helper> =>
-    new N3Helper(
+    account?: wallet.Account
+  ): Promise<N3Helper> => {
+    const invoker = await NeonInvoker.init(rpcAddress, account)
+    const signer = new NeonSigner(account)
+
+    return new N3Helper(
       rpcAddress,
       networkMagic || (await N3Helper.getMagicOfRpcAddress(rpcAddress)),
+      invoker,
+      signer,
+      account
     )
+  }
 
   static getMagicOfRpcAddress = async (rpcAddress: string): Promise<number> => {
     const resp: any = await new rpc.RPCClient(rpcAddress).execute(
@@ -104,57 +55,38 @@ class N3Helper {
   }
 
   rpcCall = async (
-    account: any,
     sessionRequest: SessionRequest,
     isHardwareLogin?: boolean,
     signingFunction?: () => void,
     showInfoNotification?: ({ message: string }) => any,
     hideNotification?: (id: string) => void,
   ): Promise<JsonRpcResponse> => {
-    const signer = new NeonSigner(account)
+
     let result: any
     const {
       params: { request },
     } = sessionRequest
 
+    if (this.account === undefined) throw new Error("No Account");
     if (
       request.method === 'multiInvoke' ||
       request.method === 'invokeFunction'
     ) {
-      result = await this.multiInvoke(
-        account,
-        request.params,
-        isHardwareLogin,
-        signingFunction,
-        showInfoNotification,
-        hideNotification,
-      )
+      result = await this.multiInvoke(request.params, isHardwareLogin, signingFunction, showInfoNotification, hideNotification)
     }
     if (
       request.method === 'multiTestInvoke' ||
       request.method === 'testInvoke'
     ) {
-      result = await this.multiTestInvoke(account, request.params)
+      result = await this.multiTestInvoke(request.params)
       result.isTest = true
     }
     if (request.method === 'signMessage') {
-      if (!account) {
-        throw new Error('No account')
-      }
-      result = this.signMessage(account, request.params)
+
+      result = await this.signer.signMessage(request.params)
     }
     if (request.method === 'verifyMessage') {
-      result = this.verifyMessage(request.params)
-    }
-    if (request.method === 'getapplicationlog') {
-      result = await new rpc.RPCClient(this.rpcAddress).getApplicationLog(
-        request.params[0],
-      )
-    } else if (!result) {
-      const { jsonrpc, ...queryLike } = request
-      result = await new rpc.RPCClient(this.rpcAddress).execute(
-        Neon.create.query({ ...queryLike, jsonrpc: '2.0' }),
-      )
+      result = await this.signer.verifyMessage(request.params)
     }
     return {
       id: sessionRequest.id,
@@ -165,88 +97,24 @@ class N3Helper {
     }
   }
 
-  signMessage = (
-    account: any,
-    message: string | SignMessagePayload,
-  ): SignedMessage => {
-    if (typeof message === 'string') {
-      return this.signMessageLegacy(account, message)
-    }
-    if (message.version === 1) {
-      return this.signMessageLegacy(account, message.message)
-    }
-    if (message.version === 2) {
-      return this.signMessageNew(account, message.message)
-    }
-
-    throw new Error('Invalid signMessage version')
-  }
-
-  signMessageLegacy = (account: any, message: string): SignedMessage => {
-    const salt = randomBytes(16).toString('hex')
-    const parameterHexString = u.str2hexstring(salt + message)
-    const lengthHex = u.num2VarInt(parameterHexString.length / 2)
-    const messageHex = `010001f0${lengthHex}${parameterHexString}0000`
-
-    return {
-      publicKey: account.publicKey,
-      data: wallet.sign(messageHex, account.privateKey),
-      salt,
-      messageHex,
-    }
-  }
-
-  signMessageNew = (account: any, message: string): SignedMessage => {
-    const salt = randomBytes(16).toString('hex')
-    const messageHex = u.str2hexstring(message)
-
-    return {
-      publicKey: account.publicKey,
-      data: wallet.sign(messageHex, account.privateKey, salt),
-      salt,
-      messageHex,
-    }
-  }
-
-  verifyMessage = (verifyArgs: SignedMessage): boolean =>
-    wallet.verify(verifyArgs.messageHex, verifyArgs.data, verifyArgs.publicKey)
-
   multiTestInvoke = async (
-    account: any,
     cim: ContractInvocationMulti,
   ): Promise<any> => {
-    const sb = Neon.create.scriptBuilder()
-
-    cim.invocations.forEach(c => {
-      sb.emitContractCall({
-        scriptHash: c.scriptHash,
-        operation: c.operation,
-        args: N3Helper.convertParams(c.args),
-      })
-
-      if (c.abortOnFail) {
-        sb.emit(0x39)
-      }
-    })
-
-    const script = sb.build()
-    return new rpc.RPCClient(this.rpcAddress).invokeScript(
-      Neon.u.HexString.fromHex(script),
-      N3Helper.buildMultipleSigner(account, cim.signers),
-    )
+    if(this.account === undefined) throw new Error("no Account");
+    return await this.invoker.testInvoke(cim)
   }
 
   multiInvoke = async (
-    account: any,
     cim: ContractInvocationMulti,
     isHardwareLogin?: boolean,
     signingFunction?: () => void,
     showInfoNotification?: (*) => void,
     hideNotification?: (*) => void,
   ): Promise<any> => {
-    const invoker = await NeonInvoker.init(this.rpcAddress, account)
+    if(this.account === undefined) throw new Error("No Account");
+    
     if (!isHardwareLogin) {
-      return invoker.invokeFunction(cim)
+      return await this.invoker.invokeFunction(cim)
     } else {
       const facade = await api.NetworkFacade.fromConfig({
         node: this.rpcAddress,
@@ -257,7 +125,7 @@ class N3Helper {
       const script = NeonInvoker.buildScriptBuilder(cim)
       const rpcClient = new rpc.RPCClient(this.rpcAddress)
       const currentHeight = await rpcClient.getBlockCount()
-      const tx = invoker.buildTransaction(
+      const tx = this.invoker.buildTransaction(
         script,
         currentHeight + 100,
         cim.signers,
@@ -272,74 +140,26 @@ class N3Helper {
 
       if (hideNotification && notificationId) hideNotification(notificationId)
 
-      const systemFeeOverride = await invoker.overrideNetworkFeeOnTransaction(
+      const systemFeeOverride = await this.invoker.overrideNetworkFeeOnTransaction(
         tx,
-        invoker.rpcConfig,
+        this.invoker.rpcConfig,
         cim,
       )
-      const networkFeeOverride = await invoker.overrideSystemFeeOnTransaction(
+      const networkFeeOverride = await this.invoker.overrideSystemFeeOnTransaction(
         tx,
-        invoker.rpcConfig,
+        this.invoker.rpcConfig,
         cim,
       )
 
-      await NeonInvoker.addFeesToTransaction(tx, invoker.rpcConfig, {
+      await NeonInvoker.addFeesToTransaction(tx, {
+        ...this.invoker.rpcConfig,
         systemFeeOverride,
-        networkFeeOverride,
+        networkFeeOverride
       })
 
       const signedTrx = await facade.sign(tx, signingConfig)
-      return await invoker.sendTransaction(signedTrx)
+      return await this.invoker.sendTransaction(signedTrx)
     }
-  }
-
-  static buildSigner(account: any, signerEntry?: Signer) {
-    const signer = new tx.Signer({
-      account: account.scriptHash,
-    })
-
-    signer.scopes = signerEntry && signerEntry.scopes
-    if (signerEntry && signerEntry.allowedContracts) {
-      signer.allowedContracts = signerEntry.allowedContracts.map(ac =>
-        Neon.u.HexString.fromHex(ac),
-      )
-    }
-    if (signerEntry && signerEntry.allowedGroups) {
-      signer.allowedGroups = signerEntry.allowedGroups.map(ac =>
-        Neon.u.HexString.fromHex(ac),
-      )
-    }
-
-    return signer
-  }
-
-  static buildMultipleSigner(account: any, signers: Signer[] = []) {
-    return !signers.length
-      ? [N3Helper.buildSigner(account)]
-      : // $FlowFixMe
-        signers.map(s => N3Helper.buildSigner(account, s))
-  }
-
-  static convertParams(args: any[]): any[] {
-    return args.map(
-      a =>
-        // eslint-disable-next-line
-        a.value === undefined
-          ? a
-          : // eslint-disable-next-line
-            a.type === 'Address'
-            ? sc.ContractParam.hash160(a.value)
-            : // eslint-disable-next-line
-              a.type === 'ScriptHash'
-              ? sc.ContractParam.hash160(a.value)
-              : a.type === 'Array'
-                ? sc.ContractParam.array(...N3Helper.convertParams(a.value))
-                : a,
-    )
-  }
-
-  static convertError(e: any) {
-    return { error: { message: e.message, ...e } }
   }
 }
 

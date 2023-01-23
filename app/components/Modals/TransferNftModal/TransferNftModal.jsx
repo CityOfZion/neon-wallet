@@ -142,7 +142,8 @@ export default function TransferNftModal(props: Props) {
           },
         },
       }
-      const results = await new N3Helper(endpoint, 0).rpcCall(account, testReq)
+      const n3HelperInitialized = await N3Helper.init(endpoint, 0, account)
+      const results = await n3HelperInitialized.rpcCall(testReq)
 
       const { result } = results
 
@@ -205,8 +206,8 @@ export default function TransferNftModal(props: Props) {
           },
         },
       }
-      const results = await new N3Helper(endpoint, 0).rpcCall(
-        account,
+      const n3HelperInitialized = await N3Helper.init(endpoint, 0, account)
+      const results = await new n3HelperInitialized.rpcCall(
         testReq,
         isHardwareLogin,
         signingFunction,
