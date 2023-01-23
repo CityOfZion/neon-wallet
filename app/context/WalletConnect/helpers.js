@@ -12,6 +12,8 @@ import Neon, {
 import { JsonRpcRequest, JsonRpcResponse } from '@json-rpc-tools/utils'
 import { randomBytes } from 'crypto'
 import { type SessionRequest } from './WalletConnectContext'
+import { NeonInvoker } from '@cityofzion/neon-invoker'
+import { NeonSigner } from '@cityofzion/neon-signer'
 
 type WitnessScope = {
   None: 0,
@@ -109,6 +111,7 @@ class N3Helper {
     showInfoNotification?: ({ message: string }) => any,
     hideNotification?: (id: string) => void,
   ): Promise<JsonRpcResponse> => {
+    const signer = new NeonSigner(account)
     let result: any
     const {
       params: { request },
@@ -241,72 +244,24 @@ class N3Helper {
     showInfoNotification?: (*) => void,
     hideNotification?: (*) => void,
   ): Promise<any> => {
-    const sb = Neon.create.scriptBuilder()
-    const networkMagic = await N3Helper.getMagicOfRpcAddress(this.rpcAddress)
-
-    cim.invocations.forEach(c => {
-      sb.emitContractCall({
-        scriptHash: c.scriptHash,
-        operation: c.operation,
-        args: N3Helper.convertParams(c.args),
-      })
-      if (c.abortOnFail) {
-        sb.emit(0x39)
-      }
-    })
-
-    const script = sb.build()
-    const rpcClient = new rpc.RPCClient(this.rpcAddress)
-    const currentHeight = await rpcClient.getBlockCount()
-
-    let trx = new tx.Transaction({
-      script: Neon.u.HexString.fromHex(script),
-      validUntilBlock: currentHeight + 100,
-      signers: N3Helper.buildMultipleSigner(account, cim.signers),
-    })
-
-    trx.witnesses = [
-      new tx.Witness({
-        verificationScript: wallet.getVerificationScriptFromPublicKey(
-          account.publicKey,
-        ),
-        invocationScript: '',
-      }),
-    ]
-
-    const feeConfig = {
-      rpcAddress: this.rpcAddress,
-      networkMagic,
-      account,
-      systemFeeOverride: undefined,
-      networkFeeOverride: undefined,
-    }
-
-    if (cim.extraNetworkFee) {
-      feeConfig.networkFeeOverride = (await Neon.experimental.txHelpers.calculateNetworkFee(
-        trx,
-        account,
-        feeConfig,
-      )).add(cim.extraNetworkFee)
-    }
-
-    if (cim.extraSystemFee) {
-      feeConfig.systemFeeOverride = (await Neon.experimental.txHelpers.getSystemFee(
-        trx.script,
-        feeConfig,
-        trx.signers,
-      )).add(cim.extraSystemFee)
-    }
-
-    await Neon.experimental.txHelpers.addFees(trx, feeConfig)
-
-    if (isHardwareLogin) {
+    const invoker = await NeonInvoker.init(this.rpcAddress, account)
+    if (!isHardwareLogin) {
+      return invoker.invokeFunction(cim)
+    } else {
       const facade = await api.NetworkFacade.fromConfig({
         node: this.rpcAddress,
       })
       const signingConfig = {
         signingCallback: signingFunction,
       }
+      const script = NeonInvoker.buildScriptBuilder(cim)
+      const rpcClient = new rpc.RPCClient(this.rpcAddress)
+      const currentHeight = await rpcClient.getBlockCount()
+      const tx = invoker.buildTransaction(
+        script,
+        currentHeight + 100,
+        cim.signers,
+      )
 
       let notificationId
       if (showInfoNotification)
@@ -315,14 +270,27 @@ class N3Helper {
           autoDismiss: 0,
         })
 
-      trx = await facade.sign(trx, signingConfig).catch(console.error)
-
       if (hideNotification && notificationId) hideNotification(notificationId)
-    } else {
-      trx.sign(account, networkMagic)
-    }
 
-    return rpcClient.sendRawTransaction(trx)
+      const systemFeeOverride = await invoker.overrideNetworkFeeOnTransaction(
+        tx,
+        invoker.rpcConfig,
+        cim,
+      )
+      const networkFeeOverride = await invoker.overrideSystemFeeOnTransaction(
+        tx,
+        invoker.rpcConfig,
+        cim,
+      )
+
+      await NeonInvoker.addFeesToTransaction(tx, invoker.rpcConfig, {
+        systemFeeOverride,
+        networkFeeOverride,
+      })
+
+      const signedTrx = await facade.sign(tx, signingConfig)
+      return await invoker.sendTransaction(signedTrx)
+    }
   }
 
   static buildSigner(account: any, signerEntry?: Signer) {
