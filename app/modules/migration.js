@@ -219,7 +219,8 @@ export const performMigration = ({
             if (e.message === 'Navigate to the NEO app on your Ledger device') {
               dispatch(
                 showInfoNotification({
-                  message: `Please open the legacy Neo app to sign the migration transaction.`,
+                  message:
+                    'Please open the legacy Neo app to sign the migration transaction.',
                 }),
               )
 
@@ -242,7 +243,8 @@ export const performMigration = ({
             if (e.message === 'Navigate to the NEO app on your Ledger device') {
               dispatch(
                 showInfoNotification({
-                  message: `Please open the legacy Neo app to sign the migration transaction.`,
+                  message:
+                    'Please open the legacy Neo app to sign the migration transaction.',
                 }),
               )
               CONFIG.error = true
