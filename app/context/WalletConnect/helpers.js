@@ -330,7 +330,9 @@ class N3Helper {
       account: account.scriptHash,
     })
 
-    signer.scopes = signerEntry && signerEntry.scopes
+    signer.scopes = signerEntry
+      ? signerEntry.scopes
+      : tx.WitnessScope.CalledByEntry
     if (signerEntry && signerEntry.allowedContracts) {
       signer.allowedContracts = signerEntry.allowedContracts.map(ac =>
         Neon.u.HexString.fromHex(ac),

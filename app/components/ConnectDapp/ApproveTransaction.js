@@ -416,7 +416,7 @@ const ApproveTransaction = ({
             ])}
           >
             <label>signature scope</label>
-            {!!request.params.request.params.signers.length && (
+            {request.params.request.params.signers.length ? (
               <div>
                 {
                   WITNESS_SCOPE[
@@ -427,6 +427,8 @@ const ApproveTransaction = ({
                   String(request.params.request.params.signers[0]?.scopes)
                 ] === 'Global' && <WarningIcon />}
               </div>
+            ) : (
+              <div>{WITNESS_SCOPE['1']}</div>
             )}
           </div>
         )}
