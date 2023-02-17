@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
 
 import { WalletConnectContextProvider } from '../../context/WalletConnect/WalletConnectContext'
+import { SettingsContextProvider } from '../../context/settings/SettingsContext'
 import {
   DEFAULT_APP_METADATA,
   DEFAULT_PROJECT_ID,
@@ -23,15 +24,17 @@ const wcOptions = {
 }
 
 const Root = ({ store }: Props) => (
-  <Provider store={store}>
-    <WalletConnectContextProvider options={wcOptions}>
-      <IntlWrapper lang="english">
-        <HashRouter>
-          <Routes store={store} />
-        </HashRouter>
-      </IntlWrapper>
-    </WalletConnectContextProvider>
-  </Provider>
+  <SettingsContextProvider>
+    <Provider store={store}>
+      <WalletConnectContextProvider options={wcOptions}>
+        <IntlWrapper lang="english">
+          <HashRouter>
+            <Routes store={store} />
+          </HashRouter>
+        </IntlWrapper>
+      </WalletConnectContextProvider>
+    </Provider>
+  </SettingsContextProvider>
 )
 
 export default Root

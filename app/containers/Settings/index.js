@@ -12,16 +12,10 @@ import {
 } from 'spunky'
 
 import Settings from './Settings'
-import withExplorerData from '../../hocs/withExplorerData'
-import withCurrencyData from '../../hocs/withCurrencyData'
-import withThemeData from '../../hocs/withThemeData'
-import withLanguageData from '../../hocs/withLanguageData'
-import withSoundEnabledData from '../../hocs/withSoundEnabledData'
 import accountsActions, {
   updateAccountsActions,
 } from '../../actions/accountsActions'
 import pricesActions from '../../actions/pricesActions'
-import { updateSettingsActions } from '../../actions/settingsActions'
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -31,8 +25,8 @@ import networkActions from '../../actions/networkActions'
 import withNetworkData from '../../hocs/withNetworkData'
 import nodeStorageActions from '../../actions/nodeStorageActions'
 import dashboardActions from '../../actions/dashboardActions'
-import withChainData from '../../hocs/withChainData'
 import { updateAccountsActions as updateN3AccountsActions } from '../../actions/n3AccountsActions'
+import withSettingsContext from '../../hocs/withSettingsContext'
 
 const actionCreators = {
   showModal,
@@ -55,23 +49,6 @@ const mapN3AccountsActionsToProps = actions => ({
   setN3Accounts: accounts => actions.call(accounts),
 })
 
-const mapSettingsActionsToProps = actions => ({
-  setCurrency: currency =>
-    actions.call({
-      currency,
-    }),
-  setBlockExplorer: blockExplorer =>
-    actions.call({
-      blockExplorer,
-    }),
-  setTheme: theme =>
-    actions.call({
-      theme,
-    }),
-  setSoundSetting: soundEnabled => actions.call({ soundEnabled }),
-  setLanguageSetting: language => actions.call({ language }),
-})
-
 const mapActionsToProps = (actions: Actions): Object => ({
   handleNetworkChange: networkId => actions.call({ networkId }),
 })
@@ -85,24 +62,15 @@ export default compose(
     null,
     mapDispatchToProps,
   ),
-  withChainData(),
   withNetworkData(),
   withCall(nodeStorageActions),
   withData(accountsActions, mapAccountsDataToProps),
   withData(nodeStorageActions, mapSelectedNodeDataToProps),
-  withExplorerData(),
-  withCurrencyData(),
-  withThemeData(),
-  withSoundEnabledData(),
-  withLanguageData(),
   withActions(networkActions, mapActionsToProps),
   withRecall(nodeStorageActions, ['networkId']),
   withActions(updateAccountsActions, mapAccountsActionsToProps),
-
   withActions(updateN3AccountsActions, mapN3AccountsActionsToProps),
-
-  withActions(updateSettingsActions, mapSettingsActionsToProps),
   withReset(dashboardActions, ['currency']),
   withReset(pricesActions, ['currency']),
   withRecall(dashboardActions, ['currency']),
-)(Settings)
+)(withSettingsContext(Settings))

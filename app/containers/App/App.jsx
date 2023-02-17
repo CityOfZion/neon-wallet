@@ -20,6 +20,7 @@ import {
 import N3Helper from '../../context/WalletConnect/helpers'
 import { getNode, getRPCEndpoint } from '../../actions/nodeStorageActions'
 import { parseQuery } from '../../core/formatters'
+import withSettingsContext from '../../hocs/withSettingsContext'
 
 const ipc = require('electron').ipcRenderer
 
@@ -200,4 +201,4 @@ const App = ({
   )
 }
 
-export default withThemeData()(App)
+export default withSettingsContext(App)
