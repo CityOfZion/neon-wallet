@@ -5,7 +5,6 @@ import { Box } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 
 import { useSettingsContext } from '../../context/settings/SettingsContext'
-import pack from '../../../package.json'
 import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import styles from './Settings.scss'
 import {
@@ -15,25 +14,22 @@ import {
   DISCORD_INVITE_LINK,
   THEMES,
   LANGUAGES,
-  PIPEFY_SUPPORT,
   COZ_DONATIONS_ADDRESS,
   EXPLORERS,
 } from '../../core/constants'
 import Panel from '../../components/Panel'
-import AddIcon from '../../assets/icons/add.svg'
+
 import LockIcon from '../../assets/icons/lock.svg'
 import CurrencyIcon from '../../assets/icons/money.svg'
 import LightbulbIcon from '../../assets/icons/lightbulb-icon.svg'
 import CogIcon from '../../assets/icons/cog-icon.svg'
-import VolumeIcon from '../../assets/icons/volume-icon.svg'
 import TimeIcon from '../../assets/icons/time-icon.svg'
-import SaveIcon from '../../assets/icons/save-icon.svg'
 import Gift from '../../assets/icons/gift.svg'
 import Flag from '../../assets/icons/flag.svg'
 import CheckMarkIcon from '../../assets/icons/alternate-check.svg'
 import { ReleaseNotes } from '../../components/Modals/ReleaseNotesModal/ReleaseNotesModal'
 
-const { ipcRenderer, shell } = require('electron')
+const { shell } = require('electron')
 
 const CURRENCY_OPTIONS = Object.keys(CURRENCIES).map(key => ({
   value: key,
@@ -45,12 +41,6 @@ const LANGUAGE_OPTIONS = Object.keys(LANGUAGES).map(key => ({
   label: LANGUAGES[key].label,
   renderFlag: LANGUAGES[key].renderFlag,
 }))
-
-type Language = {
-  label: string,
-  value: string,
-  renderFlag: () => React$Element<any>,
-}
 
 const SETTINGS_TABS: {
   [key: string]: {
@@ -95,7 +85,6 @@ const SETTINGS_LINKS = {
 }
 
 export default function NewSettings({
-  settingsHaveUpdatedCallback,
   net,
   networkId,
   loadWalletData,
@@ -103,7 +92,6 @@ export default function NewSettings({
   showModal,
   saveSelectedNode,
 }: {
-  settingsHaveUpdatedCallback: Function,
   net: string,
   networkId: string,
   loadWalletData: Function,
@@ -213,7 +201,6 @@ export default function NewSettings({
             <ActiveSettingsTab
               net={net}
               activeTab={activeTab}
-              settingsHaveUpdatedCallback={settingsHaveUpdatedCallback}
               loadWalletData={loadWalletData}
               handleNetworkChange={handleNetworkChange}
               showModal={showModal}
@@ -303,9 +290,7 @@ function SettingsOptions({
 
 function ActiveSettingsTab({
   activeTab,
-  settingsHaveUpdatedCallback,
   net,
-  loadWalletData,
   handleNetworkChange,
   showModal,
   saveSelectedNode,
@@ -314,9 +299,7 @@ function ActiveSettingsTab({
     label: string,
     renderIcon: () => React$Element<any> | null,
   },
-  settingsHaveUpdatedCallback: () => void,
   net: string,
-  loadWalletData: Function,
   handleNetworkChange: Function,
   showModal: Function,
   saveSelectedNode: Function,
@@ -372,10 +355,6 @@ function ActiveSettingsTab({
             }
 
             handleNetworkChange(network === 'MainNet (default)' ? '1' : '2')
-            // loadWalletData(
-            //   network === 'MainNet (default)' ? 'MainNet' : 'TestNet',
-            //   settings.chain,
-            // )
           }}
         />
       )
@@ -404,13 +383,13 @@ function ActiveSettingsTab({
             CURRENCY_OPTIONS.find(({ value }) => value === settings.currency)
               ?.label
           }
+          /* $FlowFixMe */
           updateSettings={async ({ currency }) => {
             const nextCurrency = CURRENCY_OPTIONS.find(
               option => option.label === currency,
             )?.value
             /* $FlowFixMe */
             await setSetting({ currency: nextCurrency })
-            settingsHaveUpdatedCallback({ currency: nextCurrency })
           }}
         />
       )
@@ -426,13 +405,13 @@ function ActiveSettingsTab({
             LANGUAGE_OPTIONS.find(({ value }) => value === settings.language)
               ?.label
           }
+          /* $FlowFixMe */
           updateSettings={async ({ language }) => {
             const nextLanguage = LANGUAGE_OPTIONS.find(
               option => option.label === language,
             )?.value
             /* $FlowFixMe */
             await setSetting({ language: nextLanguage })
-            // settingsHaveUpdatedCallback({ currency: nextCurrency })
           }}
         />
       )
@@ -447,13 +426,13 @@ function ActiveSettingsTab({
             LANGUAGE_OPTIONS.find(({ value }) => value === settings.language)
               ?.label
           }
+          /* $FlowFixMe */
           updateSettings={async ({ language }) => {
             const nextLanguage = LANGUAGE_OPTIONS.find(
               option => option.label === language,
             )?.value
             /* $FlowFixMe */
             await setSetting({ language: nextLanguage })
-            // settingsHaveUpdatedCallback({ currency: nextCurrency })
           }}
         />
       )

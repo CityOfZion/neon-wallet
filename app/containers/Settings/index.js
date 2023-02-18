@@ -42,33 +42,6 @@ const actionCreators = {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(actionCreators, dispatch)
 
-const mapAccountsDataToProps = accounts => ({
-  accounts,
-})
-
-const mapAccountsActionsToProps = actions => ({
-  setAccounts: accounts => actions.call(accounts),
-})
-
-const mapN3AccountsActionsToProps = actions => ({
-  setN3Accounts: accounts => actions.call(accounts),
-})
-
-// const mapActionsToProps = (actions: Actions): Object => ({
-//   handleNetworkChange: networkId => actions.call({ networkId }),
-// })
-
-const mapSelectedNodeDataToProps = url => ({
-  selectedNode: url,
-})
-
-// NOTE: This is a temporary solution to update settings for
-// the rest of the application which is not yet fully subscribed to
-// the new settings context.
-const mapSettingsActionsToProps = actions => ({
-  settingsHaveUpdatedCallback: setting => actions.call(setting),
-})
-
 const mapSaveNodeActionsToProps = actions => ({
   saveSelectedNode: ({ url, net }) => actions.call({ url, net }),
 })
@@ -90,8 +63,6 @@ const mapNetworkActionsToProps = (actions: Actions): Object => ({
 const mapStateToProps = () => ({
   networks: getNetworks(),
 })
-
-// TODO: hack a way to get the dashboard to update when the settings change
 
 export default compose(
   connect(

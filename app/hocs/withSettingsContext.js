@@ -12,13 +12,7 @@ function withSettingsContext(WrappedComponent: React$ComponentType<any>) {
       <WrappedComponent
         {...props}
         {...settings}
-        setSetting={async (setting: { [key: string]: any }) => {
-          await setSetting(setting)
-          // NOTE: this is a hack to allow update the redux state tree to trigger
-          // rerenders of components that are not using the new context api.
-          if (props.settingsHaveUpdatedCallback)
-            props.settingsHaveUpdatedCallback()
-        }}
+        setSetting={(setting: { [key: string]: any }) => setSetting(setting)}
       />
     )
   }

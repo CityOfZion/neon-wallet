@@ -21,7 +21,6 @@ const CustomNetworkModal = ({ hideModal, handleAddCustomNetwork }: Props) => {
   const [isValidRpcUrl, setIsValidRpcUrl] = React.useState(false)
 
   async function validateUrl(rpcUrl: string) {
-    // const endpoint = 'http://127.0.0.1:50012'
     try {
       const rpcClient = new rpc.RPCClient(rpcUrl, '2.3.3')
       const results = await rpcClient.getBlockCount()
