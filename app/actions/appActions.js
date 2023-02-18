@@ -10,7 +10,7 @@ import n3AccountsActions from './n3AccountsActions'
 export const ID = 'app'
 
 export default createBatchActions(ID, {
-  network: networkActions,
+  // network: networkActions,
   accounts: accountsActions,
   n3Accounts: n3AccountsActions,
   settings: settingsActions,

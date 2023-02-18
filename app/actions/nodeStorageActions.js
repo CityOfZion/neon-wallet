@@ -153,24 +153,26 @@ export const getNode = async (
   net: Net,
   errorOccurred?: boolean,
 ): Promise<string> => {
+  console.log('getNode', { net, errorOccurred })
   if (errorOccurred) {
     delete cachedRPCUrl[net]
     await setNode('', net)
     return ''
   }
+
   const storage = await getStorage(`${STORAGE_KEY}-${net}`).catch(console.error)
   const nodeInStorage = get(storage, 'node')
   const expiration = get(storage, 'timestamp')
   if (!nodeInStorage || !expiration || determineIfCacheIsExpired(expiration)) {
     return ''
   }
-
   return nodeInStorage
 }
 
 export default createActions(
   ID,
   ({ url, net }: Props = {}) => async (): Promise<string> => {
+    console.log({ url, net })
     if (url || url === '') {
       await setNode(url, net)
       return url

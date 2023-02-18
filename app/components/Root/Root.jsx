@@ -2,6 +2,7 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
+import { ChakraProvider } from '@chakra-ui/react'
 
 import { WalletConnectContextProvider } from '../../context/WalletConnect/WalletConnectContext'
 import { SettingsContextProvider } from '../../context/settings/SettingsContext'
@@ -24,17 +25,19 @@ const wcOptions = {
 }
 
 const Root = ({ store }: Props) => (
-  <SettingsContextProvider>
-    <Provider store={store}>
-      <WalletConnectContextProvider options={wcOptions}>
-        <IntlWrapper lang="english">
-          <HashRouter>
-            <Routes store={store} />
-          </HashRouter>
-        </IntlWrapper>
-      </WalletConnectContextProvider>
-    </Provider>
-  </SettingsContextProvider>
+  <Provider store={store}>
+    <ChakraProvider resetCSS={false}>
+      <SettingsContextProvider>
+        <WalletConnectContextProvider options={wcOptions}>
+          <IntlWrapper lang="english">
+            <HashRouter>
+              <Routes store={store} />
+            </HashRouter>
+          </IntlWrapper>
+        </WalletConnectContextProvider>
+      </SettingsContextProvider>
+    </ChakraProvider>
+  </Provider>
 )
 
 export default Root

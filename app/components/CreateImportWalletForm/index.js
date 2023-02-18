@@ -5,7 +5,7 @@ import { injectIntl } from 'react-intl'
 
 import CreateImportWalletForm from './CreateImportWalletForm'
 import { generateNewWalletAccount } from '../../modules/generateWallet'
-import withChainData from '../../hocs/withChainData'
+import withSettingsContext from '../../hocs/withSettingsContext'
 
 const actionCreators = {
   generateNewWalletAccount,
@@ -21,5 +21,4 @@ export default compose(
     null,
     mapDispatchToProps,
   ),
-  withChainData(),
-)(injectIntl(CreateImportWalletForm))
+)(withSettingsContext(injectIntl(CreateImportWalletForm)))

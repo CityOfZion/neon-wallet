@@ -9,7 +9,7 @@ import withLoadingProp from '../../hocs/withLoadingProp'
 import withThemeData from '../../hocs/withThemeData'
 import pureStrategy from '../../hocs/helpers/pureStrategy'
 import { showModal } from '../../modules/modal'
-import withChainData from '../../hocs/withChainData'
+import withSettingsContext from '../../hocs/withSettingsContext'
 
 const actionCreators = {
   showModal,
@@ -25,5 +25,4 @@ export default compose(
   ),
   withLoadingProp(authActions, { strategy: pureStrategy }),
   withThemeData(),
-  withChainData(),
-)(Home)
+)(withSettingsContext(Home))

@@ -67,20 +67,6 @@ export default class NetworkConfiguration extends React.Component<
 
     let parsedExplorerOptions
 
-    if (chain === 'neo3') {
-      parsedExplorerOptions = [
-        {
-          value: EXPLORERS.DORA,
-          label: EXPLORERS.DORA,
-        },
-      ]
-    } else {
-      parsedExplorerOptions = Object.keys(EXPLORERS).map(key => ({
-        value: key,
-        label: EXPLORERS[key],
-      }))
-    }
-
     return (
       <FullHeightPanel
         containerClassName={styles.contentContainerStyle}

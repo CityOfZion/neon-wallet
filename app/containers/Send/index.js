@@ -23,7 +23,7 @@ import withSuccessNotification from '../../hocs/withSuccessNotification'
 import withFailureNotification from '../../hocs/withFailureNotification'
 import { MODAL_TYPES } from '../../core/constants'
 import withTokensData from '../../hocs/withTokensData'
-import withChainData from '../../hocs/withChainData'
+import withSettingsContext from '../../hocs/withSettingsContext'
 
 const mapDispatchToProps = (dispatch: Function) =>
   bindActionCreators(
@@ -87,7 +87,6 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps,
   ),
-  withChainData(),
   withTokensData(),
   withBalancesData(mapBalanceDataToProps),
   withCurrencyData('currencyCode'),
@@ -110,4 +109,4 @@ export default compose(
     true,
   ),
   injectIntl,
-)(Send)
+)(withSettingsContext(Send))

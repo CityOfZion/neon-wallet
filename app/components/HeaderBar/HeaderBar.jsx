@@ -9,6 +9,7 @@ import N3Logo from '../../assets/images/n3_logo.png'
 import OldNeoLogo from '../../assets/images/neo-logo.png'
 
 import styles from './HeaderBar.scss'
+import { MAIN_NETWORK_ID } from '../../core/constants'
 
 const NEO_IMAGE = imageMap.NEO
 
@@ -40,7 +41,7 @@ export default class HeaderBar extends React.PureComponent<Props> {
 
     return (
       <React.Fragment>
-        {!isMainNetwork(networkId) && (
+        {!isMainNetwork(networkId || MAIN_NETWORK_ID) && (
           <div className={styles.currentNetwork}>{net}</div>
         )}
         <div className={styles.headerBar}>

@@ -1,10 +1,10 @@
 import { compose, withProps } from 'recompose'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import withChainData from '../../../hocs/withChainData'
 import EncryptForm from './EncryptForm'
 import { setEncryptedWIF } from '../../../modules/generateEncryptedWIF'
 import { validatePassphraseLength } from '../../../core/wallet'
+import withSettingsContext from '../../../hocs/withSettingsContext'
 
 const actionCreators = {
   setEncryptedWIF,
@@ -18,8 +18,7 @@ export default compose(
     null,
     mapDispatchToProps,
   ),
-  withChainData(),
   withProps({
     validatePassphraseLength,
   }),
-)(EncryptForm)
+)(withSettingsContext(EncryptForm))

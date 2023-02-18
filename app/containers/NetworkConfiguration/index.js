@@ -33,7 +33,7 @@ import withAuthData from '../../hocs/withAuthData'
 import nodeStorageActions from '../../actions/nodeStorageActions'
 import dashboardActions from '../../actions/dashboardActions'
 import accountActions from '../../actions/accountActions'
-import withChainData from '../../hocs/withChainData'
+import withSettingsContext from '../../hocs/withSettingsContext'
 
 const mapStateToProps = () => ({
   networks: getNetworks(),
@@ -91,7 +91,6 @@ export default compose(
   ),
   withAuthData(),
   withNetworkData(),
-  withChainData(),
   withCall(nodeStorageActions),
   withData(accountsActions, mapAccountsDataToProps),
   withData(nodeStorageActions, mapSelectedNodeDataToProps),
@@ -114,4 +113,4 @@ export default compose(
   withLoadingProp(dashboardActions),
 
   injectIntl,
-)(NetworkConfiguration)
+)(withSettingsContext(NetworkConfiguration))

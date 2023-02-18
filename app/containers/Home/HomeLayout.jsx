@@ -8,19 +8,20 @@ import { FormattedMessage } from 'react-intl'
 import styles from './Home.scss'
 import lightLogo from '../../assets/images/logo-light.png'
 import darkLogo from '../../assets/images/logo-dark.png'
-import withLanguageData from '../../hocs/withLanguageData'
 import { updateSettingsActions } from '../../actions/settingsActions'
 import LanguageSelect from '../../components/Inputs/LanguageSelect'
 import ChainSwitch from '../../components/ChainSwitch'
 import { resetCachedNode } from '../../actions/nodeStorageActions'
+import networkActions from '../../actions/networkActions'
+import withSettingsContext from '../../hocs/withSettingsContext'
 
 type Props = {
   children: React$Node,
   renderNavigation?: Function,
   theme: ThemeType,
   language: string,
-  setLanguageSetting: (value: String) => void,
-  setChain: (chain: string) => any,
+  setSetting: ({ [key: string]: string }) => void,
+  // setChain: (chain: string) => any,
   chain: string,
 }
 
@@ -35,7 +36,7 @@ class HomeLayout extends React.Component<Props, State> {
 
   updateChain = n3Toggled => {
     const chain = n3Toggled ? 'neo3' : 'neo2'
-    this.props.setChain(chain)
+    this.props.setSetting({ chain })
     resetCachedNode()
   }
 
@@ -45,7 +46,7 @@ class HomeLayout extends React.Component<Props, State> {
       renderNavigation,
       theme,
       language,
-      setLanguageSetting,
+      setSetting,
       chain,
     } = this.props
     const dynamicImage = theme === 'Light' ? lightLogo : darkLogo
@@ -62,7 +63,9 @@ class HomeLayout extends React.Component<Props, State> {
         <div className={styles.innerHomeContainer}>
           {renderNavigation && renderNavigation()}
           <LanguageSelect
-            setLanguageSetting={setLanguageSetting}
+            setLanguageSetting={nextLanguage =>
+              setSetting({ language: nextLanguage })
+            }
             languageMenuOpen={languageMenuOpen}
             toggleMenu={languageMenuOpen => this.setState({ languageMenuOpen })}
             value={language}
@@ -91,14 +94,36 @@ class HomeLayout extends React.Component<Props, State> {
 }
 
 const mapSettingsActionsToProps = actions => ({
-  setLanguageSetting: language => actions.call({ language }),
   setChain: chain =>
     actions.call({
       chain,
     }),
 })
 
+const mapNetworkActionsToProps = (actions: Actions): Object => ({
+  handleNetworkChange: networkId => actions.call({ networkId }),
+})
+
+// const mapStateToProps = () => ({
+//   networks: getNetworks(),
+// })
+
+// // TODO: hack a way to get the dashboard to update when the settings change
+
+// export default compose(
+//   connect(
+//     mapStateToProps,
+//     mapDispatchToProps,
+//   ),
+//   withNetworkData(),
+//   withAuthData(),
+//   withActions(nodeStorageActions, mapSaveNodeActionsToProps),
+//   withRecall(accountActions, ['net']),
+//   withActions(accountActions, mapAccountActionsToProps),
+//   withActions(networkActions, mapNetworkActionsToProps),
+
 export default compose(
   withActions(updateSettingsActions, mapSettingsActionsToProps),
-  withLanguageData(),
-)(HomeLayout)
+  // if a user swtiches chains we are going to reset any network informtation
+  withActions(networkActions, mapNetworkActionsToProps),
+)(withSettingsContext(HomeLayout))

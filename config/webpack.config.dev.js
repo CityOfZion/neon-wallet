@@ -142,6 +142,7 @@ module.exports = {
           loader: 'file-loader',
         },
       },
+      { test: /\.mjs$/, include: /node_modules/, type: 'javascript/auto' },
     ],
   },
   // adapted from https://github.com/chentsulin/electron-react-boilerplate

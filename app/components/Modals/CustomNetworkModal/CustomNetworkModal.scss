@@ -1,0 +1,15 @@
+.releaseNotesContainer {
+  margin: 0 !important;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.closeButton {
+  cursor: pointer;
+}
+
+.releaseNotesContents {
+  display: flex;
+  padding: 48px 24px;
+  flex-direction: column;
+}

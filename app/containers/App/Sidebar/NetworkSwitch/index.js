@@ -8,7 +8,7 @@ import withNetworkData from '../../../../hocs/withNetworkData'
 import withAuthData from '../../../../hocs/withAuthData'
 import accountActions from '../../../../actions/accountActions'
 import withFilteredTokensData from '../../../../hocs/withFilteredTokensData'
-import withChainData from '../../../../hocs/withChainData'
+import withSettingsContext from '../../../../hocs/withSettingsContext'
 
 const mapActionsToProps = (actions: Actions): Object => ({
   onChange: networkId => actions.call({ networkId }),
@@ -27,8 +27,7 @@ const mapAccountActionsToProps = (actions, props) => ({
 export default compose(
   withAuthData(),
   withNetworkData(),
-  withChainData(),
   withActions(networkActions, mapActionsToProps),
   withFilteredTokensData(),
   withActions(accountActions, mapAccountActionsToProps),
-)(NetworkSwitch)
+)(withSettingsContext(NetworkSwitch))

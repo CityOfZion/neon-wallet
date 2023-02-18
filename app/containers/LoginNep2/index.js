@@ -9,7 +9,7 @@ import withFailureNotification from '../../hocs/withFailureNotification'
 import pureStrategy from '../../hocs/helpers/pureStrategy'
 import { nep2LoginActions } from '../../actions/authActions'
 import withCameraAvailability from '../../hocs/withCameraAvailability'
-import withChainData from '../../hocs/withChainData'
+import withSettingsContext from '../../hocs/withSettingsContext'
 
 const mapActionsToProps = actions => ({
   loginNep2: ({ passphrase, encryptedWIF, chain }) =>
@@ -17,11 +17,10 @@ const mapActionsToProps = actions => ({
 })
 
 export default compose(
-  withChainData(),
   withActions(nep2LoginActions, mapActionsToProps),
   withLoadingProp(nep2LoginActions, { strategy: pureStrategy }),
   withFailureNotification(nep2LoginActions),
   withProgress(nep2LoginActions),
   withCameraAvailability,
   injectIntl,
-)(LoginNep2)
+)(withSettingsContext(LoginNep2))

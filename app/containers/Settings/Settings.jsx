@@ -50,6 +50,7 @@ type Props = {
   soundEnabled: boolean,
   chain: string,
   setSetting: ({ [key: string]: any }) => any,
+  // settingsHaveUpdatedCallback: () => void,
 }
 
 type Language = {
@@ -193,7 +194,7 @@ const Settings = (props: Props) => {
     props.showModal(MODAL_TYPES.TOKEN)
   }
 
-  const renderDontions = () => (
+  const renderDonations = () => (
     <Link
       to={{
         pathname: ROUTES.SEND,
@@ -408,7 +409,7 @@ const Settings = (props: Props) => {
               title={<FormattedMessage id="settingsBackUpLinkLabel" />}
             />
           </div>
-          {renderDontions()}
+          {renderDonations()}
         </section>
       </Panel>
     </section>
