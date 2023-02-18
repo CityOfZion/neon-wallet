@@ -26,7 +26,6 @@ const {
 
 type IntlWrapperProps = {
   children: any,
-  language: string,
 }
 
 const tranlationsMappings = {
@@ -47,10 +46,6 @@ const tranlationsMappings = {
 function IntlWrapper(props: IntlWrapperProps) {
   const { children } = props
   const { settings } = useSettingsContext()
-
-  // const languageDisplayValue = settings
-  //   ? LANGUAGES[settings.language].label || LANGUAGES.ENGLISH.label
-  //   : LANGUAGES.ENGLISH.label
 
   const language = settings
     ? settings.language || DEFAULT_LANGUAGE

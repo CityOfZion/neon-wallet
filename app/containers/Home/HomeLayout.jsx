@@ -21,7 +21,6 @@ type Props = {
   theme: ThemeType,
   language: string,
   setSetting: ({ [key: string]: string }) => void,
-  // setChain: (chain: string) => any,
   chain: string,
 }
 
@@ -104,26 +103,8 @@ const mapNetworkActionsToProps = (actions: Actions): Object => ({
   handleNetworkChange: networkId => actions.call({ networkId }),
 })
 
-// const mapStateToProps = () => ({
-//   networks: getNetworks(),
-// })
-
-// // TODO: hack a way to get the dashboard to update when the settings change
-
-// export default compose(
-//   connect(
-//     mapStateToProps,
-//     mapDispatchToProps,
-//   ),
-//   withNetworkData(),
-//   withAuthData(),
-//   withActions(nodeStorageActions, mapSaveNodeActionsToProps),
-//   withRecall(accountActions, ['net']),
-//   withActions(accountActions, mapAccountActionsToProps),
-//   withActions(networkActions, mapNetworkActionsToProps),
-
 export default compose(
   withActions(updateSettingsActions, mapSettingsActionsToProps),
-  // if a user swtiches chains we are going to reset any network informtation
+  // if a user switches chains we are going to reset any cached network information
   withActions(networkActions, mapNetworkActionsToProps),
 )(withSettingsContext(HomeLayout))

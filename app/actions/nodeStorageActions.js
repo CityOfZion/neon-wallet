@@ -153,7 +153,6 @@ export const getNode = async (
   net: Net,
   errorOccurred?: boolean,
 ): Promise<string> => {
-  console.log('getNode', { net, errorOccurred })
   if (errorOccurred) {
     delete cachedRPCUrl[net]
     await setNode('', net)
@@ -172,7 +171,6 @@ export const getNode = async (
 export default createActions(
   ID,
   ({ url, net }: Props = {}) => async (): Promise<string> => {
-    console.log({ url, net })
     if (url || url === '') {
       await setNode(url, net)
       return url

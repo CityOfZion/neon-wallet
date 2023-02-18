@@ -56,8 +56,6 @@ const CustomNetworkModal = ({ hideModal, handleAddCustomNetwork }: Props) => {
       >
         <Box width="400px" marginTop="48px">
           <TextInput
-            // id="privateKey"
-            // name="privateKey"
             label="RPC Url"
             placeholder="Example: https://mainnet1.neo.coz.io:443"
             value={url}

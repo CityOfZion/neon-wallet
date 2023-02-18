@@ -35,7 +35,6 @@ import ConnectDapp from '../../containers/ConnectDapp'
 export default ({ store }: { store: any }) => (
   <App store={store}>
     <Switch>
-      {/* <Redirect to={ROUTES.HOME} /> */}
       <Route exact path={ROUTES.HOME} component={Home} />
       <Route
         exact

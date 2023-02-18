@@ -60,7 +60,6 @@ export const getSettings = async (): Promise<Settings> => {
 }
 
 export const updateSettings = async (values: Settings = {}) => {
-  console.log('UPDATING SETTINGS!', values)
   const settings = await getSettings()
   const { chain } = values
   const newSettings = {
@@ -79,7 +78,6 @@ export const updateSettings = async (values: Settings = {}) => {
   }
   // NOTE: we only save user generated tokens to local storage to avoid
   // conflicts in managing the "master" nep5 list
-
   await setStorage(STORAGE_KEY, parsedForLocalStorage)
   return newSettings
 }
