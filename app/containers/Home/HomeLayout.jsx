@@ -99,7 +99,7 @@ const mapSettingsActionsToProps = actions => ({
     }),
 })
 
-const mapNetworkActionsToProps = (actions: Actions): Object => ({
+const mapNetworkActionsToProps = (actions): Object => ({
   handleNetworkChange: networkId => actions.call({ networkId }),
 })
 
