@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl'
 import { Box } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 
+import { recoverWallet } from '../../modules/generateWallet'
 import { useSettingsContext } from '../../context/settings/SettingsContext'
 import HeaderBar from '../../components/HeaderBar/HeaderBar'
 import styles from './Settings.scss'
@@ -29,7 +30,44 @@ import Flag from '../../assets/icons/flag.svg'
 import CheckMarkIcon from '../../assets/icons/alternate-check.svg'
 import { ReleaseNotes } from '../../components/Modals/ReleaseNotesModal/ReleaseNotesModal'
 
-const { shell } = require('electron')
+const { shell, ipcRenderer } = require('electron')
+
+export const loadWalletRecovery = async (
+  showSuccessNotification: Object => any,
+  showErrorNotification: Object => any,
+  setAccounts: (Array<Object>) => any,
+  setN3Accounts: (Array<Object>) => any,
+  chain: string,
+) => {
+  const { canceled, filePaths } = await ipcRenderer.invoke(
+    'dialog',
+    'showOpenDialog',
+    { properties: ['openFile'] },
+  )
+  if (canceled || !filePaths) return
+
+  const filepath = filePaths[0]
+  fs.readFile(filepath, 'utf-8', async (err, data) => {
+    if (err) {
+      showErrorNotification({
+        message: `An error occurred reading the file: ${err.message}`,
+      })
+      return
+    }
+    const walletData = JSON.parse(data)
+    const recoveryData = await recoverWallet(walletData, chain).catch(err => {
+      showErrorNotification({
+        message: `An error occurred recovering wallet: ${err.message}`,
+      })
+    })
+
+    if (recoveryData) {
+      showSuccessNotification({ message: 'Recovery was successful.' })
+      if (chain === 'neo2') return setAccounts(recoveryData.accounts)
+      return setN3Accounts(recoveryData.accounts)
+    }
+  })
+}
 
 const CURRENCY_OPTIONS = Object.keys(CURRENCIES).map(key => ({
   value: key,
