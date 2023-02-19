@@ -13,339 +13,365 @@ exports[`Sidebar renders without crashing 1`] = `
     }
   }
 >
-  <Connect(withData(IntlWrapper))
+  <IntlWrapper
     lang="en"
   >
-    <withData(IntlWrapper)
-      dispatch={[Function]}
-      lang="en"
-      language="ENGLISH"
-      languageDisplayValue="English"
-    >
-      <IntlProvider
-        defaultFormats={Object {}}
-        defaultLocale="en"
-        formats={Object {}}
-        locale="en"
-        messages={
-          Object {
-            "Asset": "Assetasdasd",
-            "activityAddAddress": "Add",
-            "activityExport": "Export",
-            "activityPageLabel": "All Activity",
-            "activityViewTx": "View",
-            "addAContact": "Add A Contact",
-            "addContactDetails": "Add Contact Details",
-            "addToContacts": "Add to contacts",
-            "addToken": "Add Token",
-            "addressLabel": "PUBLIC ADDRESS",
-            "assetRecipients": "Asset {transferCount, plural, one {Recipient} other {Recipients}}",
-            "assets": "Assets",
-            "auth.cancel": "Cancel",
-            "auth.import.recoveryInstructions": "Upload a JSON wallet recovery file here to add your accounts to Neon. This option is also available on the Settings page.",
-            "auth.ledger.connectLedger": "Connect and unlock your <strong>Ledger device</strong>",
-            "auth.ledger.fetchAddress": "Fetch additional addresses",
-            "auth.ledger.navigateToNeoApp": "Navigate to the <strong>NEO app</strong> on your device",
-            "auth.ledger.retry": "Retry?",
-            "authCreateWallet": "Create Wallet",
-            "authEncrypted": "ENCRYPTED",
-            "authImportWallet": "Import Wallet",
-            "authLedger": "LEDGER",
-            "authLedgerAddressLabel": "PUBLIC ADDRESS",
-            "authLedgerFirstStep": "Connect and unlock your Ledger device",
-            "authLedgerSecondStep": "Navigate to the NEO app on your device",
-            "authLogin": "Login",
-            "authLoginButton": "Login",
-            "authPrivate": "PRIVATE",
-            "authPrivateKeyPlaceholder": "Enter your private key here",
-            "authSaved": "SAVED",
-            "authScanQRButton": "Scan QR",
-            "authWatch": "WATCH",
-            "authWatchPlaceholder": "Enter a NEO address here",
-            "automaticNodeSelectionTooltip": "Allow NEON to choose a node automatically",
-            "captureQR": "Capture",
-            "captureQRCaps": "CAPTURE",
-            "chooseAccount": "Choose an Existing Account",
-            "claimFeeDisclaimerN3": "Claiming GAS requires at least 0.01120527 GAS for transaction fees",
-            "claimFeeGreater": "Claimable GAS is less than transaction fees",
-            "claimTimeDisclaimer": "You can claim GAS once every 5 minutes",
-            "claimUnavailableInWatch": "GAS claims are unavailable in Watch mode",
-            "completeExclaim": "Complete!",
-            "confirmAndSend": "Confirm & Send",
-            "confirmRemoveContact": "Please confirm removing contact",
-            "confirmation": "Confirmation",
-            "confirmationRecipient": "{transferCount, number} {transferCount, plural, one {Recipient} other {Recipients}}",
-            "contactName": "Name",
-            "contactWalletAddress": "Wallet Address",
-            "contactsPageLabel": "Manage Contacts",
-            "copyAddressTooltip": "Copy Wallet Address",
-            "copyCodeImage": "Copy Code Image",
-            "createANewWallet": "Create New Wallet",
-            "dashboardAddressLabel": "Address:",
-            "dashboardAssetsPanelLabel": "System Assets",
-            "dashboardAssetsTotal": "TOTAL",
-            "dashboardBalancePanelLabel": "Token Balances",
-            "dashboardGasClaimButton": "Claim {amount} GAS",
-            "dashboardManageWallets": "Manage Wallets",
-            "dashboardMarketData1Day": "1 DAY",
-            "dashboardMarketData1Month": "1 MONTH",
-            "dashboardMarketData1Week": "1 WEEK",
-            "dashboardMarketDataLabel": "Market Data",
-            "dashboardPriceNotAvailable": "N/A",
-            "dashboardRefresh": "Refresh",
-            "dashboardTokenBalancesHoldings": "HOLDINGS",
-            "dashboardTokenBalancesPrice": "PRICE",
-            "dashboardTokenBalancesToken": "Token",
-            "dashboardValueLabel": "Total Wallet Value",
-            "deleteLabel": "Delete",
-            "depositAssets": "Deposit assets <b> compatible  with the NEO blockchain </b> using your address:",
-            "editAContact": "Edit A Contact",
-            "editContactDisclaimer": "Please review and ensure that you have entered the address correctly to avoid loss of funds",
-            "editRecipients": "Edit Recipients",
-            "encryptButton": "Generate Encrypted Key",
-            "encryptInstructions": "Choose a passphrase to encrypt an existing key",
-            "encryptPanelHeader": "Encrypt a key",
-            "encryptStep1Label": "1) ENTER THE PRIVATE KEY YOU WANT TO ENCRYPT",
-            "encryptStep1Placeholder": "Enter key",
-            "encryptStep2Label": "2) CREATE A PASSPHRASE",
-            "encryptStep2Placeholder": "Enter Passphrase",
-            "encryptStep3Label": "3) CONFIM YOUR PASSPHRASE",
-            "encryptStep3Placeholder": "Confirm Passphrase",
-            "encryptedKeyLabel": "ENCRYPTED KEY",
-            "enterAContactName": "Enter Contact Name...",
-            "enterAWalletAddress": "Enter Wallet Address...",
-            "errors.contact.contactExists": "You already have a contact with that address.",
-            "errors.contact.invalidAddress": "Address is not valid.",
-            "errors.contact.nameDupe": "You already have an account saved with that name.",
-            "errors.contact.nameLength": "Name is too long.",
-            "errors.contact.nameNull": "Name can't be null.",
-            "errors.encrypt.valid": "The private key is not valid.",
-            "errors.network.general": "Oops! Something went wrong...",
-            "errors.password.length": "Passphrase must contain at least {PASS_MIN_LENGTH, number} characters.",
-            "errors.password.match": "Passphrases must match.",
-            "errors.request.fractional": "You canot request fractional {asset}.",
-            "errors.request.max": "You cannot request more than 100,000,000 {asset}.",
-            "errors.request.min": "You cannot request 0 {asset}.",
-            "errors.request.validDecimals": "You can only request {asset} up to {validDecimals, number} decimals.",
-            "errors.send.balance": "You do not have enough balance to send {total} {asset}.",
-            "errors.send.blackListed": "Address is blacklisted. This is a known phishing address.",
-            "errors.send.decimal": "You can only send {asset} up to {decimalCount, number} decimals.",
-            "errors.send.fraction": "You cannot send fractional amounts of NEO.",
-            "errors.send.invalidAddress": "You need to specify a valid NEO address.",
-            "errors.send.invalidN3Address": "You need to specify a valid NEO N3 address.",
-            "errors.send.negative": "You cannot send negative amounts of {asset}.",
-            "errors.send.network": "A network error has occurred",
-            "errors.send.number": "Amount must be a number.",
-            "errors.send.zero": "Can not send 0 {asset}.",
-            "fast": "Fast",
-            "faster": "Faster",
-            "fastest": "Fastest",
-            "fee": "Fee:",
-            "generateQrCodes": "Generate QR Codes",
-            "importFile": "Import File",
-            "inputEncryptedPlaceholder": "Encrypted Key",
-            "inputPasswordPlaceholder": "Password",
-            "inputSelectPlaceholder": "Select",
-            "isLoadingMessage": "Loading...",
-            "manageWalletsCreate": "Create",
-            "manageWalletsEdit": "Edit",
-            "manageWalletsEditWallet": "Edit Wallet",
-            "manageWalletsEditWalletAddressLabel": "WALLET ADDRESS",
-            "manageWalletsEditWalletInstructions": "Modify Details",
-            "manageWalletsEditWalletNameLabel": "WALLET NAME",
-            "manageWalletsEditWalletNamePlaceholder": "Wallet Name",
-            "manageWalletsEditWalletSave": "Save Changes",
-            "manageWalletsImport": "Import",
-            "manageWalletsLabel": "Manage Wallets",
-            "modalActionCancel": "Cancel",
-            "modalActionConfirm": "Confirm",
-            "modifyDetails": "Modify Details",
-            "networkConfigTooltipAddress": "ADDRESS:",
-            "networkConfigTooltipPublicKey": "PUBLIC KEY:",
-            "networkConfigTooltipUpdateSettings": "Update Settings",
-            "networkSettingsAutomatic": "AUTOMATIC",
-            "networkSettingsCurrentLabel": "CURRENT NETWORK",
-            "networkSettingsExplorerLabel": "BLOCK EXPLORER",
-            "networkSettingsInstructions": "Manage all network settings related to how Neon interacts with the blockchain",
-            "networkSettingsLabel": "Network Settings",
-            "networkSettingsNodeSelectLabel": "NODE SELECTION",
-            "newContact": "New Contact",
-            "newsPageLabel": "News",
-            "nextStep": "Next Step",
-            "noAvailableAssetsToSend": "No available assets to send",
-            "noClaimableGas": "Address has no claimable GAS",
-            "noOptionsMessage": "No options",
-            "nodeSelectBlockHeight": "Block Height",
-            "nodeSelectInfo": "Top {nodeCount, number} nodes listed",
-            "nodeSelectPanelHeader": "Node Selection",
-            "nodeSelectSelectAutomatically": "Select automatically",
-            "nodeSelectionInstructions": "If you’re experiencing performance issues, try selecting a custom node below",
-            "nothingToSeeHere": "Nothing to see here!",
-            "notifications.failure.blockchainInfoFailure": "Failed to retrieve blockchain information.",
-            "notifications.success.accountSaved": "Account saved!",
-            "notifications.success.receivedBlockchainInfo": "Received latest blockchain information.",
-            "notifications.success.updatedWalletName": "Succesfully updated wallet name.",
-            "numberofTransactionsPending": "{transferCount, number} {transferCount, plural, one {Transfer} other {Transfers}} pending",
-            "previousStep": "Previous Step",
-            "print": "Print",
-            "priorityTransfer": "Priority Transfer",
-            "privateKey": "Private Key",
-            "privateKeyLabel": "PRIVATE KEY",
-            "publicAddress": "Public Address",
-            "receiveAssetsAddressLabel": "Your Public Address",
-            "receiveCopyCodeButton": "Copy Code Image",
-            "receiveDisclaimer": "Only send assets that are <b>compatible with the NEO blockchain (NEO, GAS, etc.)</b>. Sending other assets will result in permanent loss.",
-            "receivePageLabel": "Receive Assets",
-            "receiveQRExplanation": "<p>Ever sent assets to the wrong address because of an errant character in the wallet address?</p><p>If not, lucky you - but it happens with frightening regularity.</p>  <p>Here at CoZ, we want to ensure people that pay you get your details right. You can generate a QR code for requesting assets to help them help you.</p><p>Every code you generate will include your public wallet address, an asset amount and a reference - all set by you.</p>",
-            "receiveRequestTabAssets": "REQUEST ASSETS",
-            "receiveYourAddressTabLabel": "YOUR ADDRESS",
-            "recieveSelectMethod": "Select Deposit Method",
-            "recieveWhyUseQRLabel": "Why use a QR code?",
-            "recoverWallet": "RECOVER WALLET",
-            "recoverWalletLabel": "RECOVER WALLET",
-            "removeContact": "Remove Contact",
-            "requestAssetAmount": "AMOUNT",
-            "requestAssetAmountLabel": "Amount",
-            "requestAssetDepositLabel": "DEPOSIT INTO THIS WALLET",
-            "requestAssetLabel": "ASSET",
-            "requestAssetQRButton": "Generate QR Code",
-            "requestAssetRefLabel": "REFERENCE",
-            "requestAssetRefPlaceholder": "Add a note...",
-            "requestAssetYourQRHeader": "Your QR Code",
-            "requestAssetsAddressLabel": "ADDRESS",
-            "requestAssetsAmountLabel": "AMOUNT",
-            "requestAssetsAssetLabel": "ASSET",
-            "requestAssetsPaymentDetails": "PAYMENT REQUEST DETAILS",
-            "requestAssetsRefLabel": "REFERENCE",
-            "requestAssetsYourQRLabel": "YOUR QR CODE",
-            "saveContactButtonText": "Save Contact",
-            "selectAssets": "Select Assets",
-            "sendActivityLink": "Check the activity tab to see the status of your transaction.",
-            "sendAdd": "Add Recipient",
-            "sendAddressLabel": "RECIPIENT ADDRESS",
-            "sendAddressPlaceholder": "Add wallet or select contact",
-            "sendAmountLabel": "AMOUNT",
-            "sendAsset": "asset",
-            "sendAssetCapital": "Asset",
-            "sendAssetLabel": "ASSET",
-            "sendAssets": "assets",
-            "sendAssetsCapital": "Assets",
-            "sendBroadcasting": "Broadcasting transaction to network...",
-            "sendCompleteNotification": "Transaction pending! Your balance will automatically update when the blockchain has processed it.",
-            "sendCompletion": "Complete! {transferCount, number} {transferCount, plural, one {sendAsset} other {sendAssets}} to {transferCount, plural, one {sendRecipient} other {sendRecipients}}",
-            "sendDisclaimer": "Please review and ensure that you have entered the correct details to avoid loss of funds.",
-            "sendEnterQRCode": "Enter QR Code",
-            "sendErrorLabel": "Error!",
-            "sendImport": "Import",
-            "sendMaxAmount": "MAX",
-            "sendMoreAssets": "Send More Assets",
-            "sendPageLabel": "Send Assets",
-            "sendQRExplanation": "So you've been given a QR code? Click capture and hold it up to your camera.",
-            "sendRecipient": "recipient",
-            "sendRecipientCapital": "Recipient",
-            "sendRecipients": "recipients",
-            "sendRecipientsCapital": "Recipients",
-            "sendSelectAssets": "{transferCount, number} of {maxNumberOfRecipients, number} Recipients",
-            "sendTranfer": "TRANSFER",
-            "sendTransferMessage": "{transferCount, number} {transferCount, plural, one {sendTransfer} other {sendTransferPlural}} pending",
-            "sendTransferPlural": "TRANSFERS",
-            "sendWithFee": "Send {itemCount, plural, one {Asset} other {Assets}} With Fee",
-            "sendWithoutFee": "Send {itemCount, plural, one {Asset} other {Assets}} Without Fee",
-            "settingCurrencyLabel": "CURRENCY",
-            "settingsBackUpLink": "EXPORT",
-            "settingsBackUpLinkLabel": "BACKUP WALLET",
-            "settingsCommunity": "Community Support",
-            "settingsDonationLink": "Created by CoZ. Donations:",
-            "settingsEncryptLink": "ENCRYPT A KEY",
-            "settingsLanguageLabel": "LANGUAGE",
-            "settingsManageLabel": "Manage your neon wallet",
-            "settingsNetworkConfigLabel": "NETWORK CONFIGURATION",
-            "settingsRecoverWalletLink": "IMPORT",
-            "settingsSoundLabel": "SOUND",
-            "settingsThemeLabel": "THEME",
-            "sidebarActivity": "Activity",
-            "sidebarContacts": "Contacts",
-            "sidebarCurrentBlock": "CURRENT BLOCK",
-            "sidebarLogout": "Logout",
-            "sidebarNews": "News",
-            "sidebarReceive": "Receive",
-            "sidebarSend": "Send",
-            "sidebarSettings": "Settings",
-            "sidebarTokenSale": "Token Sale",
-            "sidebarWallet": "Wallet",
-            "splitKeyLabel": "SPLIT KEY",
-            "splitKeyWalletInstructions": "The Split Key import option allows users to create a new NEO account by combining the private key of an existing account with a separate private key.",
-            "splitKeyWalletNamePlaceholder": "Enter your new split key wallet name...",
-            "takeMeBack": "Take me back",
-            "tokenSaleDisclaimer1": "Please read and acknowledge these statements to continue",
-            "tokenSaleDisclaimer2": "I understand that submitting NEO or GAS multiple times may result in a loss of funds or a delayed refund depending on the policy of the ICO company.",
-            "tokenSaleDisclaimer3": "I understand that some sales may only accept NEO or GAS, and I have verified which is accepted.",
-            "tokenSaleDisclaimer4": "I understand that if I send NEO or GAS to a token sale that has already ended, I will lose my NEO/GAS and will not be refunded.",
-            "tokenSaleDisclaimer5": "I understand that City of Zion (CoZ) is not responsible for my usage of this feature, and I have consulted this software's licenses.",
-            "tokenSalePageHeader": "Participate in Token Sale",
-            "transactionFeeQuestion": "PRIORITIZE YOUR TRANSACTION WITH A FEE?",
-            "transactionId": "Transaction ID:",
-            "walletCreatedDisclaimer": "<b>Save these details!</b> If you lose these credentials, you lose access to your assets.",
-            "walletCreatedHeader": "Wallet Created!",
-            "walletCreationButton": "Create Wallet",
-            "walletCreationInstruction": "Enter Details",
-            "walletCreationWalletNameLabel": "WALLET NAME",
-            "walletCreationWalletNamePlaceholder": "Wallet Name",
-            "walletCreationWalletPasswordConfirmLabel": "CONFIRM PASSPHRASE",
-            "walletCreationWalletPasswordConfirmPlaceholder": "Confirm Password",
-            "walletCreationWalletPasswordLabel": "PASSPHRASE",
-            "walletCreationWalletPasswordPlaceholder": "Password",
-            "walletImportedHeader": "Wallet Created!",
-            "walletManagerNoLocalInfo": "It looks like you have no wallet information saved locally...",
-            "walletManagerRemoveWallet": "Remove Wallet",
-            "walletQrCodes": "Wallet QR Codes",
-          }
+    <IntlProvider
+      defaultFormats={Object {}}
+      defaultLocale="en"
+      formats={Object {}}
+      locale="en"
+      messages={
+        Object {
+          "Asset": "Assetasdasd",
+          "activityAddAddress": "Add",
+          "activityExport": "Export",
+          "activityPageLabel": "All Activity",
+          "activityViewTx": "View",
+          "addAContact": "Add A Contact",
+          "addContactDetails": "Add Contact Details",
+          "addToContacts": "Add to contacts",
+          "addToken": "Add Token",
+          "addressLabel": "PUBLIC ADDRESS",
+          "assetRecipients": "Asset {transferCount, plural, one {Recipient} other {Recipients}}",
+          "assets": "Assets",
+          "auth.cancel": "Cancel",
+          "auth.import.recoveryInstructions": "Upload a JSON wallet recovery file here to add your accounts to Neon. This option is also available on the Settings page.",
+          "auth.ledger.connectLedger": "Connect and unlock your <strong>Ledger device</strong>",
+          "auth.ledger.fetchAddress": "Fetch additional addresses",
+          "auth.ledger.navigateToNeoApp": "Navigate to the <strong>NEO app</strong> on your device",
+          "auth.ledger.retry": "Retry?",
+          "authCreateWallet": "Create Wallet",
+          "authEncrypted": "ENCRYPTED",
+          "authImportWallet": "Import Wallet",
+          "authLedger": "LEDGER",
+          "authLedgerAddressLabel": "PUBLIC ADDRESS",
+          "authLedgerFirstStep": "Connect and unlock your Ledger device",
+          "authLedgerSecondStep": "Navigate to the NEO app on your device",
+          "authLogin": "Login",
+          "authLoginButton": "Login",
+          "authPrivate": "PRIVATE",
+          "authPrivateKeyPlaceholder": "Enter your private key here",
+          "authSaved": "SAVED",
+          "authScanQRButton": "Scan QR",
+          "authWatch": "WATCH",
+          "authWatchPlaceholder": "Enter a NEO address here",
+          "automaticNodeSelectionTooltip": "Allow NEON to choose a node automatically",
+          "captureQR": "Capture",
+          "captureQRCaps": "CAPTURE",
+          "chooseAccount": "Choose an Existing Account",
+          "claimFeeDisclaimerN3": "Claiming GAS requires at least 0.01120527 GAS for transaction fees",
+          "claimFeeGreater": "Claimable GAS is less than transaction fees",
+          "claimTimeDisclaimer": "You can claim GAS once every 5 minutes",
+          "claimUnavailableInWatch": "GAS claims are unavailable in Watch mode",
+          "completeExclaim": "Complete!",
+          "confirmAndSend": "Confirm & Send",
+          "confirmRemoveContact": "Please confirm removing contact",
+          "confirmation": "Confirmation",
+          "confirmationRecipient": "{transferCount, number} {transferCount, plural, one {Recipient} other {Recipients}}",
+          "contactName": "Name",
+          "contactWalletAddress": "Wallet Address",
+          "contactsPageLabel": "Manage Contacts",
+          "copyAddressTooltip": "Copy Wallet Address",
+          "copyCodeImage": "Copy Code Image",
+          "createANewWallet": "Create New Wallet",
+          "dashboardAddressLabel": "Address:",
+          "dashboardAssetsPanelLabel": "System Assets",
+          "dashboardAssetsTotal": "TOTAL",
+          "dashboardBalancePanelLabel": "Token Balances",
+          "dashboardGasClaimButton": "Claim {amount} GAS",
+          "dashboardManageWallets": "Manage Wallets",
+          "dashboardMarketData1Day": "1 DAY",
+          "dashboardMarketData1Month": "1 MONTH",
+          "dashboardMarketData1Week": "1 WEEK",
+          "dashboardMarketDataLabel": "Market Data",
+          "dashboardPriceNotAvailable": "N/A",
+          "dashboardRefresh": "Refresh",
+          "dashboardTokenBalancesHoldings": "HOLDINGS",
+          "dashboardTokenBalancesPrice": "PRICE",
+          "dashboardTokenBalancesToken": "Token",
+          "dashboardValueLabel": "Total Wallet Value",
+          "deleteLabel": "Delete",
+          "depositAssets": "Deposit assets <b> compatible  with the NEO blockchain </b> using your address:",
+          "editAContact": "Edit A Contact",
+          "editContactDisclaimer": "Please review and ensure that you have entered the address correctly to avoid loss of funds",
+          "editRecipients": "Edit Recipients",
+          "encryptButton": "Generate Encrypted Key",
+          "encryptInstructions": "Choose a passphrase to encrypt an existing key",
+          "encryptPanelHeader": "Encrypt a key",
+          "encryptStep1Label": "1) ENTER THE PRIVATE KEY YOU WANT TO ENCRYPT",
+          "encryptStep1Placeholder": "Enter key",
+          "encryptStep2Label": "2) CREATE A PASSPHRASE",
+          "encryptStep2Placeholder": "Enter Passphrase",
+          "encryptStep3Label": "3) CONFIM YOUR PASSPHRASE",
+          "encryptStep3Placeholder": "Confirm Passphrase",
+          "encryptedKeyLabel": "ENCRYPTED KEY",
+          "enterAContactName": "Enter Contact Name...",
+          "enterAWalletAddress": "Enter Wallet Address...",
+          "errors.contact.contactExists": "You already have a contact with that address.",
+          "errors.contact.invalidAddress": "Address is not valid.",
+          "errors.contact.nameDupe": "You already have an account saved with that name.",
+          "errors.contact.nameLength": "Name is too long.",
+          "errors.contact.nameNull": "Name can't be null.",
+          "errors.encrypt.valid": "The private key is not valid.",
+          "errors.network.general": "Oops! Something went wrong...",
+          "errors.password.length": "Passphrase must contain at least {PASS_MIN_LENGTH, number} characters.",
+          "errors.password.match": "Passphrases must match.",
+          "errors.request.fractional": "You canot request fractional {asset}.",
+          "errors.request.max": "You cannot request more than 100,000,000 {asset}.",
+          "errors.request.min": "You cannot request 0 {asset}.",
+          "errors.request.validDecimals": "You can only request {asset} up to {validDecimals, number} decimals.",
+          "errors.send.balance": "You do not have enough balance to send {total} {asset}.",
+          "errors.send.blackListed": "Address is blacklisted. This is a known phishing address.",
+          "errors.send.decimal": "You can only send {asset} up to {decimalCount, number} decimals.",
+          "errors.send.fraction": "You cannot send fractional amounts of NEO.",
+          "errors.send.invalidAddress": "You need to specify a valid NEO address.",
+          "errors.send.invalidN3Address": "You need to specify a valid NEO N3 address.",
+          "errors.send.negative": "You cannot send negative amounts of {asset}.",
+          "errors.send.network": "A network error has occurred",
+          "errors.send.number": "Amount must be a number.",
+          "errors.send.zero": "Can not send 0 {asset}.",
+          "fast": "Fast",
+          "faster": "Faster",
+          "fastest": "Fastest",
+          "fee": "Fee:",
+          "generateQrCodes": "Generate QR Codes",
+          "importFile": "Import File",
+          "inputEncryptedPlaceholder": "Encrypted Key",
+          "inputPasswordPlaceholder": "Password",
+          "inputSelectPlaceholder": "Select",
+          "isLoadingMessage": "Loading...",
+          "manageWalletsCreate": "Create",
+          "manageWalletsEdit": "Edit",
+          "manageWalletsEditWallet": "Edit Wallet",
+          "manageWalletsEditWalletAddressLabel": "WALLET ADDRESS",
+          "manageWalletsEditWalletInstructions": "Modify Details",
+          "manageWalletsEditWalletNameLabel": "WALLET NAME",
+          "manageWalletsEditWalletNamePlaceholder": "Wallet Name",
+          "manageWalletsEditWalletSave": "Save Changes",
+          "manageWalletsImport": "Import",
+          "manageWalletsLabel": "Manage Wallets",
+          "modalActionCancel": "Cancel",
+          "modalActionConfirm": "Confirm",
+          "modifyDetails": "Modify Details",
+          "networkConfigTooltipAddress": "ADDRESS:",
+          "networkConfigTooltipPublicKey": "PUBLIC KEY:",
+          "networkConfigTooltipUpdateSettings": "Update Settings",
+          "networkSettingsAutomatic": "AUTOMATIC",
+          "networkSettingsCurrentLabel": "CURRENT NETWORK",
+          "networkSettingsExplorerLabel": "BLOCK EXPLORER",
+          "networkSettingsInstructions": "Manage all network settings related to how Neon interacts with the blockchain",
+          "networkSettingsLabel": "Network Settings",
+          "networkSettingsNodeSelectLabel": "NODE SELECTION",
+          "newContact": "New Contact",
+          "newsPageLabel": "News",
+          "nextStep": "Next Step",
+          "noAvailableAssetsToSend": "No available assets to send",
+          "noClaimableGas": "Address has no claimable GAS",
+          "noOptionsMessage": "No options",
+          "nodeSelectBlockHeight": "Block Height",
+          "nodeSelectInfo": "Top {nodeCount, number} nodes listed",
+          "nodeSelectPanelHeader": "Node Selection",
+          "nodeSelectSelectAutomatically": "Select automatically",
+          "nodeSelectionInstructions": "If you’re experiencing performance issues, try selecting a custom node below",
+          "nothingToSeeHere": "Nothing to see here!",
+          "notifications.failure.blockchainInfoFailure": "Failed to retrieve blockchain information.",
+          "notifications.success.accountSaved": "Account saved!",
+          "notifications.success.receivedBlockchainInfo": "Received latest blockchain information.",
+          "notifications.success.updatedWalletName": "Succesfully updated wallet name.",
+          "numberofTransactionsPending": "{transferCount, number} {transferCount, plural, one {Transfer} other {Transfers}} pending",
+          "previousStep": "Previous Step",
+          "print": "Print",
+          "priorityTransfer": "Priority Transfer",
+          "privateKey": "Private Key",
+          "privateKeyLabel": "PRIVATE KEY",
+          "publicAddress": "Public Address",
+          "receiveAssetsAddressLabel": "Your Public Address",
+          "receiveCopyCodeButton": "Copy Code Image",
+          "receiveDisclaimer": "Only send assets that are <b>compatible with the NEO blockchain (NEO, GAS, etc.)</b>. Sending other assets will result in permanent loss.",
+          "receivePageLabel": "Receive Assets",
+          "receiveQRExplanation": "<p>Ever sent assets to the wrong address because of an errant character in the wallet address?</p><p>If not, lucky you - but it happens with frightening regularity.</p>  <p>Here at CoZ, we want to ensure people that pay you get your details right. You can generate a QR code for requesting assets to help them help you.</p><p>Every code you generate will include your public wallet address, an asset amount and a reference - all set by you.</p>",
+          "receiveRequestTabAssets": "REQUEST ASSETS",
+          "receiveYourAddressTabLabel": "YOUR ADDRESS",
+          "recieveSelectMethod": "Select Deposit Method",
+          "recieveWhyUseQRLabel": "Why use a QR code?",
+          "recoverWallet": "RECOVER WALLET",
+          "recoverWalletLabel": "RECOVER WALLET",
+          "removeContact": "Remove Contact",
+          "requestAssetAmount": "AMOUNT",
+          "requestAssetAmountLabel": "Amount",
+          "requestAssetDepositLabel": "DEPOSIT INTO THIS WALLET",
+          "requestAssetLabel": "ASSET",
+          "requestAssetQRButton": "Generate QR Code",
+          "requestAssetRefLabel": "REFERENCE",
+          "requestAssetRefPlaceholder": "Add a note...",
+          "requestAssetYourQRHeader": "Your QR Code",
+          "requestAssetsAddressLabel": "ADDRESS",
+          "requestAssetsAmountLabel": "AMOUNT",
+          "requestAssetsAssetLabel": "ASSET",
+          "requestAssetsPaymentDetails": "PAYMENT REQUEST DETAILS",
+          "requestAssetsRefLabel": "REFERENCE",
+          "requestAssetsYourQRLabel": "YOUR QR CODE",
+          "saveContactButtonText": "Save Contact",
+          "selectAssets": "Select Assets",
+          "sendActivityLink": "Check the activity tab to see the status of your transaction.",
+          "sendAdd": "Add Recipient",
+          "sendAddressLabel": "RECIPIENT ADDRESS",
+          "sendAddressPlaceholder": "Add wallet or select contact",
+          "sendAmountLabel": "AMOUNT",
+          "sendAsset": "asset",
+          "sendAssetCapital": "Asset",
+          "sendAssetLabel": "ASSET",
+          "sendAssets": "assets",
+          "sendAssetsCapital": "Assets",
+          "sendBroadcasting": "Broadcasting transaction to network...",
+          "sendCompleteNotification": "Transaction pending! Your balance will automatically update when the blockchain has processed it.",
+          "sendCompletion": "Complete! {transferCount, number} {transferCount, plural, one {sendAsset} other {sendAssets}} to {transferCount, plural, one {sendRecipient} other {sendRecipients}}",
+          "sendDisclaimer": "Please review and ensure that you have entered the correct details to avoid loss of funds.",
+          "sendEnterQRCode": "Enter QR Code",
+          "sendErrorLabel": "Error!",
+          "sendImport": "Import",
+          "sendMaxAmount": "MAX",
+          "sendMoreAssets": "Send More Assets",
+          "sendPageLabel": "Send Assets",
+          "sendQRExplanation": "So you've been given a QR code? Click capture and hold it up to your camera.",
+          "sendRecipient": "recipient",
+          "sendRecipientCapital": "Recipient",
+          "sendRecipients": "recipients",
+          "sendRecipientsCapital": "Recipients",
+          "sendSelectAssets": "{transferCount, number} of {maxNumberOfRecipients, number} Recipients",
+          "sendTranfer": "TRANSFER",
+          "sendTransferMessage": "{transferCount, number} {transferCount, plural, one {sendTransfer} other {sendTransferPlural}} pending",
+          "sendTransferPlural": "TRANSFERS",
+          "sendWithFee": "Send {itemCount, plural, one {Asset} other {Assets}} With Fee",
+          "sendWithoutFee": "Send {itemCount, plural, one {Asset} other {Assets}} Without Fee",
+          "settingCurrencyLabel": "CURRENCY",
+          "settingsBackUpLink": "EXPORT",
+          "settingsBackUpLinkLabel": "BACKUP WALLET",
+          "settingsCommunity": "Community Support",
+          "settingsDonationLink": "Created by CoZ. Donations:",
+          "settingsEncryptLink": "ENCRYPT A KEY",
+          "settingsLanguageLabel": "LANGUAGE",
+          "settingsManageLabel": "Manage your neon wallet",
+          "settingsNetworkConfigLabel": "NETWORK CONFIGURATION",
+          "settingsRecoverWalletLink": "IMPORT",
+          "settingsSoundLabel": "SOUND",
+          "settingsThemeLabel": "THEME",
+          "sidebarActivity": "Activity",
+          "sidebarContacts": "Contacts",
+          "sidebarCurrentBlock": "CURRENT BLOCK",
+          "sidebarLogout": "Logout",
+          "sidebarNews": "News",
+          "sidebarReceive": "Receive",
+          "sidebarSend": "Send",
+          "sidebarSettings": "Settings",
+          "sidebarTokenSale": "Token Sale",
+          "sidebarWallet": "Wallet",
+          "splitKeyLabel": "SPLIT KEY",
+          "splitKeyWalletInstructions": "The Split Key import option allows users to create a new NEO account by combining the private key of an existing account with a separate private key.",
+          "splitKeyWalletNamePlaceholder": "Enter your new split key wallet name...",
+          "takeMeBack": "Take me back",
+          "tokenSaleDisclaimer1": "Please read and acknowledge these statements to continue",
+          "tokenSaleDisclaimer2": "I understand that submitting NEO or GAS multiple times may result in a loss of funds or a delayed refund depending on the policy of the ICO company.",
+          "tokenSaleDisclaimer3": "I understand that some sales may only accept NEO or GAS, and I have verified which is accepted.",
+          "tokenSaleDisclaimer4": "I understand that if I send NEO or GAS to a token sale that has already ended, I will lose my NEO/GAS and will not be refunded.",
+          "tokenSaleDisclaimer5": "I understand that City of Zion (CoZ) is not responsible for my usage of this feature, and I have consulted this software's licenses.",
+          "tokenSalePageHeader": "Participate in Token Sale",
+          "transactionFeeQuestion": "PRIORITIZE YOUR TRANSACTION WITH A FEE?",
+          "transactionId": "Transaction ID:",
+          "walletCreatedDisclaimer": "<b>Save these details!</b> If you lose these credentials, you lose access to your assets.",
+          "walletCreatedHeader": "Wallet Created!",
+          "walletCreationButton": "Create Wallet",
+          "walletCreationInstruction": "Enter Details",
+          "walletCreationWalletNameLabel": "WALLET NAME",
+          "walletCreationWalletNamePlaceholder": "Wallet Name",
+          "walletCreationWalletPasswordConfirmLabel": "CONFIRM PASSPHRASE",
+          "walletCreationWalletPasswordConfirmPlaceholder": "Confirm Password",
+          "walletCreationWalletPasswordLabel": "PASSPHRASE",
+          "walletCreationWalletPasswordPlaceholder": "Password",
+          "walletImportedHeader": "Wallet Created!",
+          "walletManagerNoLocalInfo": "It looks like you have no wallet information saved locally...",
+          "walletManagerRemoveWallet": "Remove Wallet",
+          "walletQrCodes": "Wallet QR Codes",
         }
-        onError={[Function]}
-        textComponent={Symbol(react.fragment)}
+      }
+      onError={[Function]}
+      textComponent={Symbol(react.fragment)}
+    >
+      <MemoryRouter
+        initialEntries={
+          Array [
+            "/",
+          ]
+        }
+        keyLength={0}
       >
-        <MemoryRouter
-          initialEntries={
-            Array [
-              "/",
-            ]
-          }
-          keyLength={0}
-        >
-          <Router
-            history={
-              Object {
-                "action": "POP",
-                "block": [Function],
-                "canGo": [Function],
-                "createHref": [Function],
-                "entries": Array [
-                  Object {
-                    "hash": "",
-                    "pathname": "/",
-                    "search": "",
-                    "state": undefined,
-                  },
-                ],
-                "go": [Function],
-                "goBack": [Function],
-                "goForward": [Function],
-                "index": 0,
-                "length": 1,
-                "listen": [Function],
-                "location": Object {
+        <Router
+          history={
+            Object {
+              "action": "POP",
+              "block": [Function],
+              "canGo": [Function],
+              "createHref": [Function],
+              "entries": Array [
+                Object {
                   "hash": "",
                   "pathname": "/",
                   "search": "",
                   "state": undefined,
                 },
-                "push": [Function],
-                "replace": [Function],
-              }
+              ],
+              "go": [Function],
+              "goBack": [Function],
+              "goForward": [Function],
+              "index": 0,
+              "length": 1,
+              "listen": [Function],
+              "location": Object {
+                "hash": "",
+                "pathname": "/",
+                "search": "",
+                "state": undefined,
+              },
+              "push": [Function],
+              "replace": [Function],
             }
-          >
-            <Connect(Connect(withData(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))))))))))>
-              <Connect(withData(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip))))))))))))))))))
+          }
+        >
+          <Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(EnhancedComponent)))))))))))))))))>
+            <Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(EnhancedComponent))))))))))))))))
+              networks={
+                Array [
+                  Object {
+                    "deprecatedLabel": "MainNet",
+                    "id": "1",
+                    "label": "2.x MainNet",
+                    "network": "MainNet",
+                    "value": "1",
+                  },
+                  Object {
+                    "deprecatedLabel": "TestNet",
+                    "id": "2",
+                    "label": "2.x TestNet",
+                    "network": "TestNet",
+                    "value": "2",
+                  },
+                  Object {
+                    "deprecatedLabel": "Custom",
+                    "id": "Custom",
+                    "label": "Custom",
+                    "network": "Custom",
+                    "value": "Custom",
+                  },
+                ]
+              }
+              showErrorNotification={[Function]}
+              showModal={[Function]}
+              showSuccessNotification={[Function]}
+            >
+              <withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(EnhancedComponent)))))))))))))))
+                dispatch={[Function]}
+                networkId={1}
                 networks={
                   Array [
                     Object {
@@ -362,15 +388,23 @@ exports[`Sidebar renders without crashing 1`] = `
                       "network": "TestNet",
                       "value": "2",
                     },
+                    Object {
+                      "deprecatedLabel": "Custom",
+                      "id": "Custom",
+                      "label": "Custom",
+                      "network": "Custom",
+                      "value": "Custom",
+                    },
                   ]
                 }
                 showErrorNotification={[Function]}
                 showModal={[Function]}
                 showSuccessNotification={[Function]}
               >
-                <withData(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))))))))
-                  chain="neo2"
+                <Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(EnhancedComponent)))))))))))))
                   dispatch={[Function]}
+                  net="MainNet"
+                  networkId={1}
                   networks={
                     Array [
                       Object {
@@ -387,15 +421,22 @@ exports[`Sidebar renders without crashing 1`] = `
                         "network": "TestNet",
                         "value": "2",
                       },
+                      Object {
+                        "deprecatedLabel": "Custom",
+                        "id": "Custom",
+                        "label": "Custom",
+                        "network": "Custom",
+                        "value": "Custom",
+                      },
                     ]
                   }
                   showErrorNotification={[Function]}
                   showModal={[Function]}
                   showSuccessNotification={[Function]}
                 >
-                  <withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))))))
-                    chain="neo2"
+                  <withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(EnhancedComponent))))))))))))
                     dispatch={[Function]}
+                    net="MainNet"
                     networkId={1}
                     networks={
                       Array [
@@ -413,14 +454,21 @@ exports[`Sidebar renders without crashing 1`] = `
                           "network": "TestNet",
                           "value": "2",
                         },
+                        Object {
+                          "deprecatedLabel": "Custom",
+                          "id": "Custom",
+                          "label": "Custom",
+                          "network": "Custom",
+                          "value": "Custom",
+                        },
                       ]
                     }
+                    performAction={[Function]}
                     showErrorNotification={[Function]}
                     showModal={[Function]}
                     showSuccessNotification={[Function]}
                   >
-                    <Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))))
-                      chain="neo2"
+                    <withoutProps(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(EnhancedComponent))))))))))))
                       dispatch={[Function]}
                       net="MainNet"
                       networkId={1}
@@ -440,14 +488,21 @@ exports[`Sidebar renders without crashing 1`] = `
                             "network": "TestNet",
                             "value": "2",
                           },
+                          Object {
+                            "deprecatedLabel": "Custom",
+                            "id": "Custom",
+                            "label": "Custom",
+                            "network": "Custom",
+                            "value": "Custom",
+                          },
                         ]
                       }
+                      performAction={[Function]}
                       showErrorNotification={[Function]}
                       showModal={[Function]}
                       showSuccessNotification={[Function]}
                     >
-                      <withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip))))))))))))
-                        chain="neo2"
+                      <Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(EnhancedComponent)))))))))))
                         dispatch={[Function]}
                         net="MainNet"
                         networkId={1}
@@ -467,15 +522,21 @@ exports[`Sidebar renders without crashing 1`] = `
                               "network": "TestNet",
                               "value": "2",
                             },
+                            Object {
+                              "deprecatedLabel": "Custom",
+                              "id": "Custom",
+                              "label": "Custom",
+                              "network": "Custom",
+                              "value": "Custom",
+                            },
                           ]
                         }
-                        performAction={[Function]}
                         showErrorNotification={[Function]}
                         showModal={[Function]}
                         showSuccessNotification={[Function]}
                       >
-                        <withoutProps(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip))))))))))))
-                          chain="neo2"
+                        <withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(EnhancedComponent))))))))))
+                          accounts={null}
                           dispatch={[Function]}
                           net="MainNet"
                           networkId={1}
@@ -495,15 +556,21 @@ exports[`Sidebar renders without crashing 1`] = `
                                 "network": "TestNet",
                                 "value": "2",
                               },
+                              Object {
+                                "deprecatedLabel": "Custom",
+                                "id": "Custom",
+                                "label": "Custom",
+                                "network": "Custom",
+                                "value": "Custom",
+                              },
                             ]
                           }
-                          performAction={[Function]}
                           showErrorNotification={[Function]}
                           showModal={[Function]}
                           showSuccessNotification={[Function]}
                         >
-                          <Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))
-                            chain="neo2"
+                          <withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(EnhancedComponent))))))))
+                            accounts={null}
                             dispatch={[Function]}
                             net="MainNet"
                             networkId={1}
@@ -523,16 +590,24 @@ exports[`Sidebar renders without crashing 1`] = `
                                   "network": "TestNet",
                                   "value": "2",
                                 },
+                                Object {
+                                  "deprecatedLabel": "Custom",
+                                  "id": "Custom",
+                                  "label": "Custom",
+                                  "network": "Custom",
+                                  "value": "Custom",
+                                },
                               ]
                             }
+                            selectedNode={null}
                             showErrorNotification={[Function]}
                             showModal={[Function]}
                             showSuccessNotification={[Function]}
                           >
-                            <withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip))))))))))
+                            <withData(Connect(withData(Connect(withData(injectIntl(EnhancedComponent))))))
                               accounts={null}
-                              chain="neo2"
                               dispatch={[Function]}
+                              explorer="Dora"
                               net="MainNet"
                               networkId={1}
                               networks={
@@ -551,16 +626,26 @@ exports[`Sidebar renders without crashing 1`] = `
                                     "network": "TestNet",
                                     "value": "2",
                                   },
+                                  Object {
+                                    "deprecatedLabel": "Custom",
+                                    "id": "Custom",
+                                    "label": "Custom",
+                                    "network": "Custom",
+                                    "value": "Custom",
+                                  },
                                 ]
                               }
+                              selectedNode={null}
                               showErrorNotification={[Function]}
                               showModal={[Function]}
                               showSuccessNotification={[Function]}
                             >
-                              <withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip))))))))
+                              <withData(Connect(withData(injectIntl(EnhancedComponent))))
                                 accounts={null}
-                                chain="neo2"
+                                address="TOOLTIP_TEST"
                                 dispatch={[Function]}
+                                explorer="Dora"
+                                isWatchOnly={false}
                                 net="MainNet"
                                 networkId={1}
                                 networks={
@@ -579,6 +664,13 @@ exports[`Sidebar renders without crashing 1`] = `
                                       "network": "TestNet",
                                       "value": "2",
                                     },
+                                    Object {
+                                      "deprecatedLabel": "Custom",
+                                      "id": "Custom",
+                                      "label": "Custom",
+                                      "network": "Custom",
+                                      "value": "Custom",
+                                    },
                                   ]
                                 }
                                 selectedNode={null}
@@ -586,11 +678,12 @@ exports[`Sidebar renders without crashing 1`] = `
                                 showModal={[Function]}
                                 showSuccessNotification={[Function]}
                               >
-                                <withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip))))))
+                                <withData(injectIntl(EnhancedComponent))
                                   accounts={null}
-                                  chain="neo2"
+                                  address="TOOLTIP_TEST"
                                   dispatch={[Function]}
                                   explorer="Dora"
+                                  isWatchOnly={false}
                                   net="MainNet"
                                   networkId={1}
                                   networks={
@@ -609,19 +702,330 @@ exports[`Sidebar renders without crashing 1`] = `
                                         "network": "TestNet",
                                         "value": "2",
                                       },
+                                      Object {
+                                        "deprecatedLabel": "Custom",
+                                        "id": "Custom",
+                                        "label": "Custom",
+                                        "network": "Custom",
+                                        "value": "Custom",
+                                      },
                                     ]
                                   }
                                   selectedNode={null}
                                   showErrorNotification={[Function]}
                                   showModal={[Function]}
                                   showSuccessNotification={[Function]}
+                                  theme="Light"
                                 >
-                                  <withData(Connect(withData(injectIntl(NetworkConfigurationTooltip))))
+                                  <EnhancedComponent
                                     accounts={null}
                                     address="TOOLTIP_TEST"
-                                    chain="neo2"
                                     dispatch={[Function]}
                                     explorer="Dora"
+                                    intl={
+                                      Object {
+                                        "defaultFormats": Object {},
+                                        "defaultLocale": "en",
+                                        "formatDate": [Function],
+                                        "formatDateToParts": [Function],
+                                        "formatDisplayName": [Function],
+                                        "formatHTMLMessage": [Function],
+                                        "formatList": [Function],
+                                        "formatMessage": [Function],
+                                        "formatNumber": [Function],
+                                        "formatNumberToParts": [Function],
+                                        "formatPlural": [Function],
+                                        "formatRelativeTime": [Function],
+                                        "formatTime": [Function],
+                                        "formatTimeToParts": [Function],
+                                        "formats": Object {},
+                                        "formatters": Object {
+                                          "getDateTimeFormat": [Function],
+                                          "getDisplayNames": [Function],
+                                          "getListFormat": [Function],
+                                          "getMessageFormat": [Function],
+                                          "getNumberFormat": [Function],
+                                          "getPluralRules": [Function],
+                                          "getRelativeTimeFormat": [Function],
+                                        },
+                                        "locale": "en",
+                                        "messages": Object {
+                                          "Asset": "Assetasdasd",
+                                          "activityAddAddress": "Add",
+                                          "activityExport": "Export",
+                                          "activityPageLabel": "All Activity",
+                                          "activityViewTx": "View",
+                                          "addAContact": "Add A Contact",
+                                          "addContactDetails": "Add Contact Details",
+                                          "addToContacts": "Add to contacts",
+                                          "addToken": "Add Token",
+                                          "addressLabel": "PUBLIC ADDRESS",
+                                          "assetRecipients": "Asset {transferCount, plural, one {Recipient} other {Recipients}}",
+                                          "assets": "Assets",
+                                          "auth.cancel": "Cancel",
+                                          "auth.import.recoveryInstructions": "Upload a JSON wallet recovery file here to add your accounts to Neon. This option is also available on the Settings page.",
+                                          "auth.ledger.connectLedger": "Connect and unlock your <strong>Ledger device</strong>",
+                                          "auth.ledger.fetchAddress": "Fetch additional addresses",
+                                          "auth.ledger.navigateToNeoApp": "Navigate to the <strong>NEO app</strong> on your device",
+                                          "auth.ledger.retry": "Retry?",
+                                          "authCreateWallet": "Create Wallet",
+                                          "authEncrypted": "ENCRYPTED",
+                                          "authImportWallet": "Import Wallet",
+                                          "authLedger": "LEDGER",
+                                          "authLedgerAddressLabel": "PUBLIC ADDRESS",
+                                          "authLedgerFirstStep": "Connect and unlock your Ledger device",
+                                          "authLedgerSecondStep": "Navigate to the NEO app on your device",
+                                          "authLogin": "Login",
+                                          "authLoginButton": "Login",
+                                          "authPrivate": "PRIVATE",
+                                          "authPrivateKeyPlaceholder": "Enter your private key here",
+                                          "authSaved": "SAVED",
+                                          "authScanQRButton": "Scan QR",
+                                          "authWatch": "WATCH",
+                                          "authWatchPlaceholder": "Enter a NEO address here",
+                                          "automaticNodeSelectionTooltip": "Allow NEON to choose a node automatically",
+                                          "captureQR": "Capture",
+                                          "captureQRCaps": "CAPTURE",
+                                          "chooseAccount": "Choose an Existing Account",
+                                          "claimFeeDisclaimerN3": "Claiming GAS requires at least 0.01120527 GAS for transaction fees",
+                                          "claimFeeGreater": "Claimable GAS is less than transaction fees",
+                                          "claimTimeDisclaimer": "You can claim GAS once every 5 minutes",
+                                          "claimUnavailableInWatch": "GAS claims are unavailable in Watch mode",
+                                          "completeExclaim": "Complete!",
+                                          "confirmAndSend": "Confirm & Send",
+                                          "confirmRemoveContact": "Please confirm removing contact",
+                                          "confirmation": "Confirmation",
+                                          "confirmationRecipient": "{transferCount, number} {transferCount, plural, one {Recipient} other {Recipients}}",
+                                          "contactName": "Name",
+                                          "contactWalletAddress": "Wallet Address",
+                                          "contactsPageLabel": "Manage Contacts",
+                                          "copyAddressTooltip": "Copy Wallet Address",
+                                          "copyCodeImage": "Copy Code Image",
+                                          "createANewWallet": "Create New Wallet",
+                                          "dashboardAddressLabel": "Address:",
+                                          "dashboardAssetsPanelLabel": "System Assets",
+                                          "dashboardAssetsTotal": "TOTAL",
+                                          "dashboardBalancePanelLabel": "Token Balances",
+                                          "dashboardGasClaimButton": "Claim {amount} GAS",
+                                          "dashboardManageWallets": "Manage Wallets",
+                                          "dashboardMarketData1Day": "1 DAY",
+                                          "dashboardMarketData1Month": "1 MONTH",
+                                          "dashboardMarketData1Week": "1 WEEK",
+                                          "dashboardMarketDataLabel": "Market Data",
+                                          "dashboardPriceNotAvailable": "N/A",
+                                          "dashboardRefresh": "Refresh",
+                                          "dashboardTokenBalancesHoldings": "HOLDINGS",
+                                          "dashboardTokenBalancesPrice": "PRICE",
+                                          "dashboardTokenBalancesToken": "Token",
+                                          "dashboardValueLabel": "Total Wallet Value",
+                                          "deleteLabel": "Delete",
+                                          "depositAssets": "Deposit assets <b> compatible  with the NEO blockchain </b> using your address:",
+                                          "editAContact": "Edit A Contact",
+                                          "editContactDisclaimer": "Please review and ensure that you have entered the address correctly to avoid loss of funds",
+                                          "editRecipients": "Edit Recipients",
+                                          "encryptButton": "Generate Encrypted Key",
+                                          "encryptInstructions": "Choose a passphrase to encrypt an existing key",
+                                          "encryptPanelHeader": "Encrypt a key",
+                                          "encryptStep1Label": "1) ENTER THE PRIVATE KEY YOU WANT TO ENCRYPT",
+                                          "encryptStep1Placeholder": "Enter key",
+                                          "encryptStep2Label": "2) CREATE A PASSPHRASE",
+                                          "encryptStep2Placeholder": "Enter Passphrase",
+                                          "encryptStep3Label": "3) CONFIM YOUR PASSPHRASE",
+                                          "encryptStep3Placeholder": "Confirm Passphrase",
+                                          "encryptedKeyLabel": "ENCRYPTED KEY",
+                                          "enterAContactName": "Enter Contact Name...",
+                                          "enterAWalletAddress": "Enter Wallet Address...",
+                                          "errors.contact.contactExists": "You already have a contact with that address.",
+                                          "errors.contact.invalidAddress": "Address is not valid.",
+                                          "errors.contact.nameDupe": "You already have an account saved with that name.",
+                                          "errors.contact.nameLength": "Name is too long.",
+                                          "errors.contact.nameNull": "Name can't be null.",
+                                          "errors.encrypt.valid": "The private key is not valid.",
+                                          "errors.network.general": "Oops! Something went wrong...",
+                                          "errors.password.length": "Passphrase must contain at least {PASS_MIN_LENGTH, number} characters.",
+                                          "errors.password.match": "Passphrases must match.",
+                                          "errors.request.fractional": "You canot request fractional {asset}.",
+                                          "errors.request.max": "You cannot request more than 100,000,000 {asset}.",
+                                          "errors.request.min": "You cannot request 0 {asset}.",
+                                          "errors.request.validDecimals": "You can only request {asset} up to {validDecimals, number} decimals.",
+                                          "errors.send.balance": "You do not have enough balance to send {total} {asset}.",
+                                          "errors.send.blackListed": "Address is blacklisted. This is a known phishing address.",
+                                          "errors.send.decimal": "You can only send {asset} up to {decimalCount, number} decimals.",
+                                          "errors.send.fraction": "You cannot send fractional amounts of NEO.",
+                                          "errors.send.invalidAddress": "You need to specify a valid NEO address.",
+                                          "errors.send.invalidN3Address": "You need to specify a valid NEO N3 address.",
+                                          "errors.send.negative": "You cannot send negative amounts of {asset}.",
+                                          "errors.send.network": "A network error has occurred",
+                                          "errors.send.number": "Amount must be a number.",
+                                          "errors.send.zero": "Can not send 0 {asset}.",
+                                          "fast": "Fast",
+                                          "faster": "Faster",
+                                          "fastest": "Fastest",
+                                          "fee": "Fee:",
+                                          "generateQrCodes": "Generate QR Codes",
+                                          "importFile": "Import File",
+                                          "inputEncryptedPlaceholder": "Encrypted Key",
+                                          "inputPasswordPlaceholder": "Password",
+                                          "inputSelectPlaceholder": "Select",
+                                          "isLoadingMessage": "Loading...",
+                                          "manageWalletsCreate": "Create",
+                                          "manageWalletsEdit": "Edit",
+                                          "manageWalletsEditWallet": "Edit Wallet",
+                                          "manageWalletsEditWalletAddressLabel": "WALLET ADDRESS",
+                                          "manageWalletsEditWalletInstructions": "Modify Details",
+                                          "manageWalletsEditWalletNameLabel": "WALLET NAME",
+                                          "manageWalletsEditWalletNamePlaceholder": "Wallet Name",
+                                          "manageWalletsEditWalletSave": "Save Changes",
+                                          "manageWalletsImport": "Import",
+                                          "manageWalletsLabel": "Manage Wallets",
+                                          "modalActionCancel": "Cancel",
+                                          "modalActionConfirm": "Confirm",
+                                          "modifyDetails": "Modify Details",
+                                          "networkConfigTooltipAddress": "ADDRESS:",
+                                          "networkConfigTooltipPublicKey": "PUBLIC KEY:",
+                                          "networkConfigTooltipUpdateSettings": "Update Settings",
+                                          "networkSettingsAutomatic": "AUTOMATIC",
+                                          "networkSettingsCurrentLabel": "CURRENT NETWORK",
+                                          "networkSettingsExplorerLabel": "BLOCK EXPLORER",
+                                          "networkSettingsInstructions": "Manage all network settings related to how Neon interacts with the blockchain",
+                                          "networkSettingsLabel": "Network Settings",
+                                          "networkSettingsNodeSelectLabel": "NODE SELECTION",
+                                          "newContact": "New Contact",
+                                          "newsPageLabel": "News",
+                                          "nextStep": "Next Step",
+                                          "noAvailableAssetsToSend": "No available assets to send",
+                                          "noClaimableGas": "Address has no claimable GAS",
+                                          "noOptionsMessage": "No options",
+                                          "nodeSelectBlockHeight": "Block Height",
+                                          "nodeSelectInfo": "Top {nodeCount, number} nodes listed",
+                                          "nodeSelectPanelHeader": "Node Selection",
+                                          "nodeSelectSelectAutomatically": "Select automatically",
+                                          "nodeSelectionInstructions": "If you’re experiencing performance issues, try selecting a custom node below",
+                                          "nothingToSeeHere": "Nothing to see here!",
+                                          "notifications.failure.blockchainInfoFailure": "Failed to retrieve blockchain information.",
+                                          "notifications.success.accountSaved": "Account saved!",
+                                          "notifications.success.receivedBlockchainInfo": "Received latest blockchain information.",
+                                          "notifications.success.updatedWalletName": "Succesfully updated wallet name.",
+                                          "numberofTransactionsPending": "{transferCount, number} {transferCount, plural, one {Transfer} other {Transfers}} pending",
+                                          "previousStep": "Previous Step",
+                                          "print": "Print",
+                                          "priorityTransfer": "Priority Transfer",
+                                          "privateKey": "Private Key",
+                                          "privateKeyLabel": "PRIVATE KEY",
+                                          "publicAddress": "Public Address",
+                                          "receiveAssetsAddressLabel": "Your Public Address",
+                                          "receiveCopyCodeButton": "Copy Code Image",
+                                          "receiveDisclaimer": "Only send assets that are <b>compatible with the NEO blockchain (NEO, GAS, etc.)</b>. Sending other assets will result in permanent loss.",
+                                          "receivePageLabel": "Receive Assets",
+                                          "receiveQRExplanation": "<p>Ever sent assets to the wrong address because of an errant character in the wallet address?</p><p>If not, lucky you - but it happens with frightening regularity.</p>  <p>Here at CoZ, we want to ensure people that pay you get your details right. You can generate a QR code for requesting assets to help them help you.</p><p>Every code you generate will include your public wallet address, an asset amount and a reference - all set by you.</p>",
+                                          "receiveRequestTabAssets": "REQUEST ASSETS",
+                                          "receiveYourAddressTabLabel": "YOUR ADDRESS",
+                                          "recieveSelectMethod": "Select Deposit Method",
+                                          "recieveWhyUseQRLabel": "Why use a QR code?",
+                                          "recoverWallet": "RECOVER WALLET",
+                                          "recoverWalletLabel": "RECOVER WALLET",
+                                          "removeContact": "Remove Contact",
+                                          "requestAssetAmount": "AMOUNT",
+                                          "requestAssetAmountLabel": "Amount",
+                                          "requestAssetDepositLabel": "DEPOSIT INTO THIS WALLET",
+                                          "requestAssetLabel": "ASSET",
+                                          "requestAssetQRButton": "Generate QR Code",
+                                          "requestAssetRefLabel": "REFERENCE",
+                                          "requestAssetRefPlaceholder": "Add a note...",
+                                          "requestAssetYourQRHeader": "Your QR Code",
+                                          "requestAssetsAddressLabel": "ADDRESS",
+                                          "requestAssetsAmountLabel": "AMOUNT",
+                                          "requestAssetsAssetLabel": "ASSET",
+                                          "requestAssetsPaymentDetails": "PAYMENT REQUEST DETAILS",
+                                          "requestAssetsRefLabel": "REFERENCE",
+                                          "requestAssetsYourQRLabel": "YOUR QR CODE",
+                                          "saveContactButtonText": "Save Contact",
+                                          "selectAssets": "Select Assets",
+                                          "sendActivityLink": "Check the activity tab to see the status of your transaction.",
+                                          "sendAdd": "Add Recipient",
+                                          "sendAddressLabel": "RECIPIENT ADDRESS",
+                                          "sendAddressPlaceholder": "Add wallet or select contact",
+                                          "sendAmountLabel": "AMOUNT",
+                                          "sendAsset": "asset",
+                                          "sendAssetCapital": "Asset",
+                                          "sendAssetLabel": "ASSET",
+                                          "sendAssets": "assets",
+                                          "sendAssetsCapital": "Assets",
+                                          "sendBroadcasting": "Broadcasting transaction to network...",
+                                          "sendCompleteNotification": "Transaction pending! Your balance will automatically update when the blockchain has processed it.",
+                                          "sendCompletion": "Complete! {transferCount, number} {transferCount, plural, one {sendAsset} other {sendAssets}} to {transferCount, plural, one {sendRecipient} other {sendRecipients}}",
+                                          "sendDisclaimer": "Please review and ensure that you have entered the correct details to avoid loss of funds.",
+                                          "sendEnterQRCode": "Enter QR Code",
+                                          "sendErrorLabel": "Error!",
+                                          "sendImport": "Import",
+                                          "sendMaxAmount": "MAX",
+                                          "sendMoreAssets": "Send More Assets",
+                                          "sendPageLabel": "Send Assets",
+                                          "sendQRExplanation": "So you've been given a QR code? Click capture and hold it up to your camera.",
+                                          "sendRecipient": "recipient",
+                                          "sendRecipientCapital": "Recipient",
+                                          "sendRecipients": "recipients",
+                                          "sendRecipientsCapital": "Recipients",
+                                          "sendSelectAssets": "{transferCount, number} of {maxNumberOfRecipients, number} Recipients",
+                                          "sendTranfer": "TRANSFER",
+                                          "sendTransferMessage": "{transferCount, number} {transferCount, plural, one {sendTransfer} other {sendTransferPlural}} pending",
+                                          "sendTransferPlural": "TRANSFERS",
+                                          "sendWithFee": "Send {itemCount, plural, one {Asset} other {Assets}} With Fee",
+                                          "sendWithoutFee": "Send {itemCount, plural, one {Asset} other {Assets}} Without Fee",
+                                          "settingCurrencyLabel": "CURRENCY",
+                                          "settingsBackUpLink": "EXPORT",
+                                          "settingsBackUpLinkLabel": "BACKUP WALLET",
+                                          "settingsCommunity": "Community Support",
+                                          "settingsDonationLink": "Created by CoZ. Donations:",
+                                          "settingsEncryptLink": "ENCRYPT A KEY",
+                                          "settingsLanguageLabel": "LANGUAGE",
+                                          "settingsManageLabel": "Manage your neon wallet",
+                                          "settingsNetworkConfigLabel": "NETWORK CONFIGURATION",
+                                          "settingsRecoverWalletLink": "IMPORT",
+                                          "settingsSoundLabel": "SOUND",
+                                          "settingsThemeLabel": "THEME",
+                                          "sidebarActivity": "Activity",
+                                          "sidebarContacts": "Contacts",
+                                          "sidebarCurrentBlock": "CURRENT BLOCK",
+                                          "sidebarLogout": "Logout",
+                                          "sidebarNews": "News",
+                                          "sidebarReceive": "Receive",
+                                          "sidebarSend": "Send",
+                                          "sidebarSettings": "Settings",
+                                          "sidebarTokenSale": "Token Sale",
+                                          "sidebarWallet": "Wallet",
+                                          "splitKeyLabel": "SPLIT KEY",
+                                          "splitKeyWalletInstructions": "The Split Key import option allows users to create a new NEO account by combining the private key of an existing account with a separate private key.",
+                                          "splitKeyWalletNamePlaceholder": "Enter your new split key wallet name...",
+                                          "takeMeBack": "Take me back",
+                                          "tokenSaleDisclaimer1": "Please read and acknowledge these statements to continue",
+                                          "tokenSaleDisclaimer2": "I understand that submitting NEO or GAS multiple times may result in a loss of funds or a delayed refund depending on the policy of the ICO company.",
+                                          "tokenSaleDisclaimer3": "I understand that some sales may only accept NEO or GAS, and I have verified which is accepted.",
+                                          "tokenSaleDisclaimer4": "I understand that if I send NEO or GAS to a token sale that has already ended, I will lose my NEO/GAS and will not be refunded.",
+                                          "tokenSaleDisclaimer5": "I understand that City of Zion (CoZ) is not responsible for my usage of this feature, and I have consulted this software's licenses.",
+                                          "tokenSalePageHeader": "Participate in Token Sale",
+                                          "transactionFeeQuestion": "PRIORITIZE YOUR TRANSACTION WITH A FEE?",
+                                          "transactionId": "Transaction ID:",
+                                          "walletCreatedDisclaimer": "<b>Save these details!</b> If you lose these credentials, you lose access to your assets.",
+                                          "walletCreatedHeader": "Wallet Created!",
+                                          "walletCreationButton": "Create Wallet",
+                                          "walletCreationInstruction": "Enter Details",
+                                          "walletCreationWalletNameLabel": "WALLET NAME",
+                                          "walletCreationWalletNamePlaceholder": "Wallet Name",
+                                          "walletCreationWalletPasswordConfirmLabel": "CONFIRM PASSPHRASE",
+                                          "walletCreationWalletPasswordConfirmPlaceholder": "Confirm Password",
+                                          "walletCreationWalletPasswordLabel": "PASSPHRASE",
+                                          "walletCreationWalletPasswordPlaceholder": "Password",
+                                          "walletImportedHeader": "Wallet Created!",
+                                          "walletManagerNoLocalInfo": "It looks like you have no wallet information saved locally...",
+                                          "walletManagerRemoveWallet": "Remove Wallet",
+                                          "walletQrCodes": "Wallet QR Codes",
+                                        },
+                                        "onError": [Function],
+                                        "textComponent": Symbol(react.fragment),
+                                        "timeZone": undefined,
+                                      }
+                                    }
                                     isWatchOnly={false}
                                     net="MainNet"
                                     networkId={1}
@@ -641,19 +1045,330 @@ exports[`Sidebar renders without crashing 1`] = `
                                           "network": "TestNet",
                                           "value": "2",
                                         },
+                                        Object {
+                                          "deprecatedLabel": "Custom",
+                                          "id": "Custom",
+                                          "label": "Custom",
+                                          "network": "Custom",
+                                          "value": "Custom",
+                                        },
                                       ]
                                     }
                                     selectedNode={null}
                                     showErrorNotification={[Function]}
                                     showModal={[Function]}
                                     showSuccessNotification={[Function]}
+                                    theme="Light"
                                   >
-                                    <withData(injectIntl(NetworkConfigurationTooltip))
+                                    <NetworkConfigurationTooltip
                                       accounts={null}
                                       address="TOOLTIP_TEST"
-                                      chain="neo2"
                                       dispatch={[Function]}
                                       explorer="Dora"
+                                      intl={
+                                        Object {
+                                          "defaultFormats": Object {},
+                                          "defaultLocale": "en",
+                                          "formatDate": [Function],
+                                          "formatDateToParts": [Function],
+                                          "formatDisplayName": [Function],
+                                          "formatHTMLMessage": [Function],
+                                          "formatList": [Function],
+                                          "formatMessage": [Function],
+                                          "formatNumber": [Function],
+                                          "formatNumberToParts": [Function],
+                                          "formatPlural": [Function],
+                                          "formatRelativeTime": [Function],
+                                          "formatTime": [Function],
+                                          "formatTimeToParts": [Function],
+                                          "formats": Object {},
+                                          "formatters": Object {
+                                            "getDateTimeFormat": [Function],
+                                            "getDisplayNames": [Function],
+                                            "getListFormat": [Function],
+                                            "getMessageFormat": [Function],
+                                            "getNumberFormat": [Function],
+                                            "getPluralRules": [Function],
+                                            "getRelativeTimeFormat": [Function],
+                                          },
+                                          "locale": "en",
+                                          "messages": Object {
+                                            "Asset": "Assetasdasd",
+                                            "activityAddAddress": "Add",
+                                            "activityExport": "Export",
+                                            "activityPageLabel": "All Activity",
+                                            "activityViewTx": "View",
+                                            "addAContact": "Add A Contact",
+                                            "addContactDetails": "Add Contact Details",
+                                            "addToContacts": "Add to contacts",
+                                            "addToken": "Add Token",
+                                            "addressLabel": "PUBLIC ADDRESS",
+                                            "assetRecipients": "Asset {transferCount, plural, one {Recipient} other {Recipients}}",
+                                            "assets": "Assets",
+                                            "auth.cancel": "Cancel",
+                                            "auth.import.recoveryInstructions": "Upload a JSON wallet recovery file here to add your accounts to Neon. This option is also available on the Settings page.",
+                                            "auth.ledger.connectLedger": "Connect and unlock your <strong>Ledger device</strong>",
+                                            "auth.ledger.fetchAddress": "Fetch additional addresses",
+                                            "auth.ledger.navigateToNeoApp": "Navigate to the <strong>NEO app</strong> on your device",
+                                            "auth.ledger.retry": "Retry?",
+                                            "authCreateWallet": "Create Wallet",
+                                            "authEncrypted": "ENCRYPTED",
+                                            "authImportWallet": "Import Wallet",
+                                            "authLedger": "LEDGER",
+                                            "authLedgerAddressLabel": "PUBLIC ADDRESS",
+                                            "authLedgerFirstStep": "Connect and unlock your Ledger device",
+                                            "authLedgerSecondStep": "Navigate to the NEO app on your device",
+                                            "authLogin": "Login",
+                                            "authLoginButton": "Login",
+                                            "authPrivate": "PRIVATE",
+                                            "authPrivateKeyPlaceholder": "Enter your private key here",
+                                            "authSaved": "SAVED",
+                                            "authScanQRButton": "Scan QR",
+                                            "authWatch": "WATCH",
+                                            "authWatchPlaceholder": "Enter a NEO address here",
+                                            "automaticNodeSelectionTooltip": "Allow NEON to choose a node automatically",
+                                            "captureQR": "Capture",
+                                            "captureQRCaps": "CAPTURE",
+                                            "chooseAccount": "Choose an Existing Account",
+                                            "claimFeeDisclaimerN3": "Claiming GAS requires at least 0.01120527 GAS for transaction fees",
+                                            "claimFeeGreater": "Claimable GAS is less than transaction fees",
+                                            "claimTimeDisclaimer": "You can claim GAS once every 5 minutes",
+                                            "claimUnavailableInWatch": "GAS claims are unavailable in Watch mode",
+                                            "completeExclaim": "Complete!",
+                                            "confirmAndSend": "Confirm & Send",
+                                            "confirmRemoveContact": "Please confirm removing contact",
+                                            "confirmation": "Confirmation",
+                                            "confirmationRecipient": "{transferCount, number} {transferCount, plural, one {Recipient} other {Recipients}}",
+                                            "contactName": "Name",
+                                            "contactWalletAddress": "Wallet Address",
+                                            "contactsPageLabel": "Manage Contacts",
+                                            "copyAddressTooltip": "Copy Wallet Address",
+                                            "copyCodeImage": "Copy Code Image",
+                                            "createANewWallet": "Create New Wallet",
+                                            "dashboardAddressLabel": "Address:",
+                                            "dashboardAssetsPanelLabel": "System Assets",
+                                            "dashboardAssetsTotal": "TOTAL",
+                                            "dashboardBalancePanelLabel": "Token Balances",
+                                            "dashboardGasClaimButton": "Claim {amount} GAS",
+                                            "dashboardManageWallets": "Manage Wallets",
+                                            "dashboardMarketData1Day": "1 DAY",
+                                            "dashboardMarketData1Month": "1 MONTH",
+                                            "dashboardMarketData1Week": "1 WEEK",
+                                            "dashboardMarketDataLabel": "Market Data",
+                                            "dashboardPriceNotAvailable": "N/A",
+                                            "dashboardRefresh": "Refresh",
+                                            "dashboardTokenBalancesHoldings": "HOLDINGS",
+                                            "dashboardTokenBalancesPrice": "PRICE",
+                                            "dashboardTokenBalancesToken": "Token",
+                                            "dashboardValueLabel": "Total Wallet Value",
+                                            "deleteLabel": "Delete",
+                                            "depositAssets": "Deposit assets <b> compatible  with the NEO blockchain </b> using your address:",
+                                            "editAContact": "Edit A Contact",
+                                            "editContactDisclaimer": "Please review and ensure that you have entered the address correctly to avoid loss of funds",
+                                            "editRecipients": "Edit Recipients",
+                                            "encryptButton": "Generate Encrypted Key",
+                                            "encryptInstructions": "Choose a passphrase to encrypt an existing key",
+                                            "encryptPanelHeader": "Encrypt a key",
+                                            "encryptStep1Label": "1) ENTER THE PRIVATE KEY YOU WANT TO ENCRYPT",
+                                            "encryptStep1Placeholder": "Enter key",
+                                            "encryptStep2Label": "2) CREATE A PASSPHRASE",
+                                            "encryptStep2Placeholder": "Enter Passphrase",
+                                            "encryptStep3Label": "3) CONFIM YOUR PASSPHRASE",
+                                            "encryptStep3Placeholder": "Confirm Passphrase",
+                                            "encryptedKeyLabel": "ENCRYPTED KEY",
+                                            "enterAContactName": "Enter Contact Name...",
+                                            "enterAWalletAddress": "Enter Wallet Address...",
+                                            "errors.contact.contactExists": "You already have a contact with that address.",
+                                            "errors.contact.invalidAddress": "Address is not valid.",
+                                            "errors.contact.nameDupe": "You already have an account saved with that name.",
+                                            "errors.contact.nameLength": "Name is too long.",
+                                            "errors.contact.nameNull": "Name can't be null.",
+                                            "errors.encrypt.valid": "The private key is not valid.",
+                                            "errors.network.general": "Oops! Something went wrong...",
+                                            "errors.password.length": "Passphrase must contain at least {PASS_MIN_LENGTH, number} characters.",
+                                            "errors.password.match": "Passphrases must match.",
+                                            "errors.request.fractional": "You canot request fractional {asset}.",
+                                            "errors.request.max": "You cannot request more than 100,000,000 {asset}.",
+                                            "errors.request.min": "You cannot request 0 {asset}.",
+                                            "errors.request.validDecimals": "You can only request {asset} up to {validDecimals, number} decimals.",
+                                            "errors.send.balance": "You do not have enough balance to send {total} {asset}.",
+                                            "errors.send.blackListed": "Address is blacklisted. This is a known phishing address.",
+                                            "errors.send.decimal": "You can only send {asset} up to {decimalCount, number} decimals.",
+                                            "errors.send.fraction": "You cannot send fractional amounts of NEO.",
+                                            "errors.send.invalidAddress": "You need to specify a valid NEO address.",
+                                            "errors.send.invalidN3Address": "You need to specify a valid NEO N3 address.",
+                                            "errors.send.negative": "You cannot send negative amounts of {asset}.",
+                                            "errors.send.network": "A network error has occurred",
+                                            "errors.send.number": "Amount must be a number.",
+                                            "errors.send.zero": "Can not send 0 {asset}.",
+                                            "fast": "Fast",
+                                            "faster": "Faster",
+                                            "fastest": "Fastest",
+                                            "fee": "Fee:",
+                                            "generateQrCodes": "Generate QR Codes",
+                                            "importFile": "Import File",
+                                            "inputEncryptedPlaceholder": "Encrypted Key",
+                                            "inputPasswordPlaceholder": "Password",
+                                            "inputSelectPlaceholder": "Select",
+                                            "isLoadingMessage": "Loading...",
+                                            "manageWalletsCreate": "Create",
+                                            "manageWalletsEdit": "Edit",
+                                            "manageWalletsEditWallet": "Edit Wallet",
+                                            "manageWalletsEditWalletAddressLabel": "WALLET ADDRESS",
+                                            "manageWalletsEditWalletInstructions": "Modify Details",
+                                            "manageWalletsEditWalletNameLabel": "WALLET NAME",
+                                            "manageWalletsEditWalletNamePlaceholder": "Wallet Name",
+                                            "manageWalletsEditWalletSave": "Save Changes",
+                                            "manageWalletsImport": "Import",
+                                            "manageWalletsLabel": "Manage Wallets",
+                                            "modalActionCancel": "Cancel",
+                                            "modalActionConfirm": "Confirm",
+                                            "modifyDetails": "Modify Details",
+                                            "networkConfigTooltipAddress": "ADDRESS:",
+                                            "networkConfigTooltipPublicKey": "PUBLIC KEY:",
+                                            "networkConfigTooltipUpdateSettings": "Update Settings",
+                                            "networkSettingsAutomatic": "AUTOMATIC",
+                                            "networkSettingsCurrentLabel": "CURRENT NETWORK",
+                                            "networkSettingsExplorerLabel": "BLOCK EXPLORER",
+                                            "networkSettingsInstructions": "Manage all network settings related to how Neon interacts with the blockchain",
+                                            "networkSettingsLabel": "Network Settings",
+                                            "networkSettingsNodeSelectLabel": "NODE SELECTION",
+                                            "newContact": "New Contact",
+                                            "newsPageLabel": "News",
+                                            "nextStep": "Next Step",
+                                            "noAvailableAssetsToSend": "No available assets to send",
+                                            "noClaimableGas": "Address has no claimable GAS",
+                                            "noOptionsMessage": "No options",
+                                            "nodeSelectBlockHeight": "Block Height",
+                                            "nodeSelectInfo": "Top {nodeCount, number} nodes listed",
+                                            "nodeSelectPanelHeader": "Node Selection",
+                                            "nodeSelectSelectAutomatically": "Select automatically",
+                                            "nodeSelectionInstructions": "If you’re experiencing performance issues, try selecting a custom node below",
+                                            "nothingToSeeHere": "Nothing to see here!",
+                                            "notifications.failure.blockchainInfoFailure": "Failed to retrieve blockchain information.",
+                                            "notifications.success.accountSaved": "Account saved!",
+                                            "notifications.success.receivedBlockchainInfo": "Received latest blockchain information.",
+                                            "notifications.success.updatedWalletName": "Succesfully updated wallet name.",
+                                            "numberofTransactionsPending": "{transferCount, number} {transferCount, plural, one {Transfer} other {Transfers}} pending",
+                                            "previousStep": "Previous Step",
+                                            "print": "Print",
+                                            "priorityTransfer": "Priority Transfer",
+                                            "privateKey": "Private Key",
+                                            "privateKeyLabel": "PRIVATE KEY",
+                                            "publicAddress": "Public Address",
+                                            "receiveAssetsAddressLabel": "Your Public Address",
+                                            "receiveCopyCodeButton": "Copy Code Image",
+                                            "receiveDisclaimer": "Only send assets that are <b>compatible with the NEO blockchain (NEO, GAS, etc.)</b>. Sending other assets will result in permanent loss.",
+                                            "receivePageLabel": "Receive Assets",
+                                            "receiveQRExplanation": "<p>Ever sent assets to the wrong address because of an errant character in the wallet address?</p><p>If not, lucky you - but it happens with frightening regularity.</p>  <p>Here at CoZ, we want to ensure people that pay you get your details right. You can generate a QR code for requesting assets to help them help you.</p><p>Every code you generate will include your public wallet address, an asset amount and a reference - all set by you.</p>",
+                                            "receiveRequestTabAssets": "REQUEST ASSETS",
+                                            "receiveYourAddressTabLabel": "YOUR ADDRESS",
+                                            "recieveSelectMethod": "Select Deposit Method",
+                                            "recieveWhyUseQRLabel": "Why use a QR code?",
+                                            "recoverWallet": "RECOVER WALLET",
+                                            "recoverWalletLabel": "RECOVER WALLET",
+                                            "removeContact": "Remove Contact",
+                                            "requestAssetAmount": "AMOUNT",
+                                            "requestAssetAmountLabel": "Amount",
+                                            "requestAssetDepositLabel": "DEPOSIT INTO THIS WALLET",
+                                            "requestAssetLabel": "ASSET",
+                                            "requestAssetQRButton": "Generate QR Code",
+                                            "requestAssetRefLabel": "REFERENCE",
+                                            "requestAssetRefPlaceholder": "Add a note...",
+                                            "requestAssetYourQRHeader": "Your QR Code",
+                                            "requestAssetsAddressLabel": "ADDRESS",
+                                            "requestAssetsAmountLabel": "AMOUNT",
+                                            "requestAssetsAssetLabel": "ASSET",
+                                            "requestAssetsPaymentDetails": "PAYMENT REQUEST DETAILS",
+                                            "requestAssetsRefLabel": "REFERENCE",
+                                            "requestAssetsYourQRLabel": "YOUR QR CODE",
+                                            "saveContactButtonText": "Save Contact",
+                                            "selectAssets": "Select Assets",
+                                            "sendActivityLink": "Check the activity tab to see the status of your transaction.",
+                                            "sendAdd": "Add Recipient",
+                                            "sendAddressLabel": "RECIPIENT ADDRESS",
+                                            "sendAddressPlaceholder": "Add wallet or select contact",
+                                            "sendAmountLabel": "AMOUNT",
+                                            "sendAsset": "asset",
+                                            "sendAssetCapital": "Asset",
+                                            "sendAssetLabel": "ASSET",
+                                            "sendAssets": "assets",
+                                            "sendAssetsCapital": "Assets",
+                                            "sendBroadcasting": "Broadcasting transaction to network...",
+                                            "sendCompleteNotification": "Transaction pending! Your balance will automatically update when the blockchain has processed it.",
+                                            "sendCompletion": "Complete! {transferCount, number} {transferCount, plural, one {sendAsset} other {sendAssets}} to {transferCount, plural, one {sendRecipient} other {sendRecipients}}",
+                                            "sendDisclaimer": "Please review and ensure that you have entered the correct details to avoid loss of funds.",
+                                            "sendEnterQRCode": "Enter QR Code",
+                                            "sendErrorLabel": "Error!",
+                                            "sendImport": "Import",
+                                            "sendMaxAmount": "MAX",
+                                            "sendMoreAssets": "Send More Assets",
+                                            "sendPageLabel": "Send Assets",
+                                            "sendQRExplanation": "So you've been given a QR code? Click capture and hold it up to your camera.",
+                                            "sendRecipient": "recipient",
+                                            "sendRecipientCapital": "Recipient",
+                                            "sendRecipients": "recipients",
+                                            "sendRecipientsCapital": "Recipients",
+                                            "sendSelectAssets": "{transferCount, number} of {maxNumberOfRecipients, number} Recipients",
+                                            "sendTranfer": "TRANSFER",
+                                            "sendTransferMessage": "{transferCount, number} {transferCount, plural, one {sendTransfer} other {sendTransferPlural}} pending",
+                                            "sendTransferPlural": "TRANSFERS",
+                                            "sendWithFee": "Send {itemCount, plural, one {Asset} other {Assets}} With Fee",
+                                            "sendWithoutFee": "Send {itemCount, plural, one {Asset} other {Assets}} Without Fee",
+                                            "settingCurrencyLabel": "CURRENCY",
+                                            "settingsBackUpLink": "EXPORT",
+                                            "settingsBackUpLinkLabel": "BACKUP WALLET",
+                                            "settingsCommunity": "Community Support",
+                                            "settingsDonationLink": "Created by CoZ. Donations:",
+                                            "settingsEncryptLink": "ENCRYPT A KEY",
+                                            "settingsLanguageLabel": "LANGUAGE",
+                                            "settingsManageLabel": "Manage your neon wallet",
+                                            "settingsNetworkConfigLabel": "NETWORK CONFIGURATION",
+                                            "settingsRecoverWalletLink": "IMPORT",
+                                            "settingsSoundLabel": "SOUND",
+                                            "settingsThemeLabel": "THEME",
+                                            "sidebarActivity": "Activity",
+                                            "sidebarContacts": "Contacts",
+                                            "sidebarCurrentBlock": "CURRENT BLOCK",
+                                            "sidebarLogout": "Logout",
+                                            "sidebarNews": "News",
+                                            "sidebarReceive": "Receive",
+                                            "sidebarSend": "Send",
+                                            "sidebarSettings": "Settings",
+                                            "sidebarTokenSale": "Token Sale",
+                                            "sidebarWallet": "Wallet",
+                                            "splitKeyLabel": "SPLIT KEY",
+                                            "splitKeyWalletInstructions": "The Split Key import option allows users to create a new NEO account by combining the private key of an existing account with a separate private key.",
+                                            "splitKeyWalletNamePlaceholder": "Enter your new split key wallet name...",
+                                            "takeMeBack": "Take me back",
+                                            "tokenSaleDisclaimer1": "Please read and acknowledge these statements to continue",
+                                            "tokenSaleDisclaimer2": "I understand that submitting NEO or GAS multiple times may result in a loss of funds or a delayed refund depending on the policy of the ICO company.",
+                                            "tokenSaleDisclaimer3": "I understand that some sales may only accept NEO or GAS, and I have verified which is accepted.",
+                                            "tokenSaleDisclaimer4": "I understand that if I send NEO or GAS to a token sale that has already ended, I will lose my NEO/GAS and will not be refunded.",
+                                            "tokenSaleDisclaimer5": "I understand that City of Zion (CoZ) is not responsible for my usage of this feature, and I have consulted this software's licenses.",
+                                            "tokenSalePageHeader": "Participate in Token Sale",
+                                            "transactionFeeQuestion": "PRIORITIZE YOUR TRANSACTION WITH A FEE?",
+                                            "transactionId": "Transaction ID:",
+                                            "walletCreatedDisclaimer": "<b>Save these details!</b> If you lose these credentials, you lose access to your assets.",
+                                            "walletCreatedHeader": "Wallet Created!",
+                                            "walletCreationButton": "Create Wallet",
+                                            "walletCreationInstruction": "Enter Details",
+                                            "walletCreationWalletNameLabel": "WALLET NAME",
+                                            "walletCreationWalletNamePlaceholder": "Wallet Name",
+                                            "walletCreationWalletPasswordConfirmLabel": "CONFIRM PASSPHRASE",
+                                            "walletCreationWalletPasswordConfirmPlaceholder": "Confirm Password",
+                                            "walletCreationWalletPasswordLabel": "PASSPHRASE",
+                                            "walletCreationWalletPasswordPlaceholder": "Password",
+                                            "walletImportedHeader": "Wallet Created!",
+                                            "walletManagerNoLocalInfo": "It looks like you have no wallet information saved locally...",
+                                            "walletManagerRemoveWallet": "Remove Wallet",
+                                            "walletQrCodes": "Wallet QR Codes",
+                                          },
+                                          "onError": [Function],
+                                          "textComponent": Symbol(react.fragment),
+                                          "timeZone": undefined,
+                                        }
+                                      }
                                       isWatchOnly={false}
                                       net="MainNet"
                                       networkId={1}
@@ -673,699 +1388,369 @@ exports[`Sidebar renders without crashing 1`] = `
                                             "network": "TestNet",
                                             "value": "2",
                                           },
+                                          Object {
+                                            "deprecatedLabel": "Custom",
+                                            "id": "Custom",
+                                            "label": "Custom",
+                                            "network": "Custom",
+                                            "value": "Custom",
+                                          },
                                         ]
                                       }
                                       selectedNode={null}
+                                      setSetting={[Function]}
                                       showErrorNotification={[Function]}
                                       showModal={[Function]}
                                       showSuccessNotification={[Function]}
                                       theme="Light"
                                     >
-                                      <NetworkConfigurationTooltip
-                                        accounts={null}
-                                        address="TOOLTIP_TEST"
-                                        chain="neo2"
-                                        dispatch={[Function]}
-                                        explorer="Dora"
-                                        intl={
+                                      <section
+                                        className="settingsItemsContainer networkItemsContainer tooltipContainer"
+                                        id="network-config-tooltip"
+                                        style={
                                           Object {
-                                            "defaultFormats": Object {},
-                                            "defaultLocale": "en",
-                                            "formatDate": [Function],
-                                            "formatDateToParts": [Function],
-                                            "formatDisplayName": [Function],
-                                            "formatHTMLMessage": [Function],
-                                            "formatList": [Function],
-                                            "formatMessage": [Function],
-                                            "formatNumber": [Function],
-                                            "formatNumberToParts": [Function],
-                                            "formatPlural": [Function],
-                                            "formatRelativeTime": [Function],
-                                            "formatTime": [Function],
-                                            "formatTimeToParts": [Function],
-                                            "formats": Object {},
-                                            "formatters": Object {
-                                              "getDateTimeFormat": [Function],
-                                              "getDisplayNames": [Function],
-                                              "getListFormat": [Function],
-                                              "getMessageFormat": [Function],
-                                              "getNumberFormat": [Function],
-                                              "getPluralRules": [Function],
-                                              "getRelativeTimeFormat": [Function],
-                                            },
-                                            "locale": "en",
-                                            "messages": Object {
-                                              "Asset": "Assetasdasd",
-                                              "activityAddAddress": "Add",
-                                              "activityExport": "Export",
-                                              "activityPageLabel": "All Activity",
-                                              "activityViewTx": "View",
-                                              "addAContact": "Add A Contact",
-                                              "addContactDetails": "Add Contact Details",
-                                              "addToContacts": "Add to contacts",
-                                              "addToken": "Add Token",
-                                              "addressLabel": "PUBLIC ADDRESS",
-                                              "assetRecipients": "Asset {transferCount, plural, one {Recipient} other {Recipients}}",
-                                              "assets": "Assets",
-                                              "auth.cancel": "Cancel",
-                                              "auth.import.recoveryInstructions": "Upload a JSON wallet recovery file here to add your accounts to Neon. This option is also available on the Settings page.",
-                                              "auth.ledger.connectLedger": "Connect and unlock your <strong>Ledger device</strong>",
-                                              "auth.ledger.fetchAddress": "Fetch additional addresses",
-                                              "auth.ledger.navigateToNeoApp": "Navigate to the <strong>NEO app</strong> on your device",
-                                              "auth.ledger.retry": "Retry?",
-                                              "authCreateWallet": "Create Wallet",
-                                              "authEncrypted": "ENCRYPTED",
-                                              "authImportWallet": "Import Wallet",
-                                              "authLedger": "LEDGER",
-                                              "authLedgerAddressLabel": "PUBLIC ADDRESS",
-                                              "authLedgerFirstStep": "Connect and unlock your Ledger device",
-                                              "authLedgerSecondStep": "Navigate to the NEO app on your device",
-                                              "authLogin": "Login",
-                                              "authLoginButton": "Login",
-                                              "authPrivate": "PRIVATE",
-                                              "authPrivateKeyPlaceholder": "Enter your private key here",
-                                              "authSaved": "SAVED",
-                                              "authScanQRButton": "Scan QR",
-                                              "authWatch": "WATCH",
-                                              "authWatchPlaceholder": "Enter a NEO address here",
-                                              "automaticNodeSelectionTooltip": "Allow NEON to choose a node automatically",
-                                              "captureQR": "Capture",
-                                              "captureQRCaps": "CAPTURE",
-                                              "chooseAccount": "Choose an Existing Account",
-                                              "claimFeeDisclaimerN3": "Claiming GAS requires at least 0.01120527 GAS for transaction fees",
-                                              "claimFeeGreater": "Claimable GAS is less than transaction fees",
-                                              "claimTimeDisclaimer": "You can claim GAS once every 5 minutes",
-                                              "claimUnavailableInWatch": "GAS claims are unavailable in Watch mode",
-                                              "completeExclaim": "Complete!",
-                                              "confirmAndSend": "Confirm & Send",
-                                              "confirmRemoveContact": "Please confirm removing contact",
-                                              "confirmation": "Confirmation",
-                                              "confirmationRecipient": "{transferCount, number} {transferCount, plural, one {Recipient} other {Recipients}}",
-                                              "contactName": "Name",
-                                              "contactWalletAddress": "Wallet Address",
-                                              "contactsPageLabel": "Manage Contacts",
-                                              "copyAddressTooltip": "Copy Wallet Address",
-                                              "copyCodeImage": "Copy Code Image",
-                                              "createANewWallet": "Create New Wallet",
-                                              "dashboardAddressLabel": "Address:",
-                                              "dashboardAssetsPanelLabel": "System Assets",
-                                              "dashboardAssetsTotal": "TOTAL",
-                                              "dashboardBalancePanelLabel": "Token Balances",
-                                              "dashboardGasClaimButton": "Claim {amount} GAS",
-                                              "dashboardManageWallets": "Manage Wallets",
-                                              "dashboardMarketData1Day": "1 DAY",
-                                              "dashboardMarketData1Month": "1 MONTH",
-                                              "dashboardMarketData1Week": "1 WEEK",
-                                              "dashboardMarketDataLabel": "Market Data",
-                                              "dashboardPriceNotAvailable": "N/A",
-                                              "dashboardRefresh": "Refresh",
-                                              "dashboardTokenBalancesHoldings": "HOLDINGS",
-                                              "dashboardTokenBalancesPrice": "PRICE",
-                                              "dashboardTokenBalancesToken": "Token",
-                                              "dashboardValueLabel": "Total Wallet Value",
-                                              "deleteLabel": "Delete",
-                                              "depositAssets": "Deposit assets <b> compatible  with the NEO blockchain </b> using your address:",
-                                              "editAContact": "Edit A Contact",
-                                              "editContactDisclaimer": "Please review and ensure that you have entered the address correctly to avoid loss of funds",
-                                              "editRecipients": "Edit Recipients",
-                                              "encryptButton": "Generate Encrypted Key",
-                                              "encryptInstructions": "Choose a passphrase to encrypt an existing key",
-                                              "encryptPanelHeader": "Encrypt a key",
-                                              "encryptStep1Label": "1) ENTER THE PRIVATE KEY YOU WANT TO ENCRYPT",
-                                              "encryptStep1Placeholder": "Enter key",
-                                              "encryptStep2Label": "2) CREATE A PASSPHRASE",
-                                              "encryptStep2Placeholder": "Enter Passphrase",
-                                              "encryptStep3Label": "3) CONFIM YOUR PASSPHRASE",
-                                              "encryptStep3Placeholder": "Confirm Passphrase",
-                                              "encryptedKeyLabel": "ENCRYPTED KEY",
-                                              "enterAContactName": "Enter Contact Name...",
-                                              "enterAWalletAddress": "Enter Wallet Address...",
-                                              "errors.contact.contactExists": "You already have a contact with that address.",
-                                              "errors.contact.invalidAddress": "Address is not valid.",
-                                              "errors.contact.nameDupe": "You already have an account saved with that name.",
-                                              "errors.contact.nameLength": "Name is too long.",
-                                              "errors.contact.nameNull": "Name can't be null.",
-                                              "errors.encrypt.valid": "The private key is not valid.",
-                                              "errors.network.general": "Oops! Something went wrong...",
-                                              "errors.password.length": "Passphrase must contain at least {PASS_MIN_LENGTH, number} characters.",
-                                              "errors.password.match": "Passphrases must match.",
-                                              "errors.request.fractional": "You canot request fractional {asset}.",
-                                              "errors.request.max": "You cannot request more than 100,000,000 {asset}.",
-                                              "errors.request.min": "You cannot request 0 {asset}.",
-                                              "errors.request.validDecimals": "You can only request {asset} up to {validDecimals, number} decimals.",
-                                              "errors.send.balance": "You do not have enough balance to send {total} {asset}.",
-                                              "errors.send.blackListed": "Address is blacklisted. This is a known phishing address.",
-                                              "errors.send.decimal": "You can only send {asset} up to {decimalCount, number} decimals.",
-                                              "errors.send.fraction": "You cannot send fractional amounts of NEO.",
-                                              "errors.send.invalidAddress": "You need to specify a valid NEO address.",
-                                              "errors.send.invalidN3Address": "You need to specify a valid NEO N3 address.",
-                                              "errors.send.negative": "You cannot send negative amounts of {asset}.",
-                                              "errors.send.network": "A network error has occurred",
-                                              "errors.send.number": "Amount must be a number.",
-                                              "errors.send.zero": "Can not send 0 {asset}.",
-                                              "fast": "Fast",
-                                              "faster": "Faster",
-                                              "fastest": "Fastest",
-                                              "fee": "Fee:",
-                                              "generateQrCodes": "Generate QR Codes",
-                                              "importFile": "Import File",
-                                              "inputEncryptedPlaceholder": "Encrypted Key",
-                                              "inputPasswordPlaceholder": "Password",
-                                              "inputSelectPlaceholder": "Select",
-                                              "isLoadingMessage": "Loading...",
-                                              "manageWalletsCreate": "Create",
-                                              "manageWalletsEdit": "Edit",
-                                              "manageWalletsEditWallet": "Edit Wallet",
-                                              "manageWalletsEditWalletAddressLabel": "WALLET ADDRESS",
-                                              "manageWalletsEditWalletInstructions": "Modify Details",
-                                              "manageWalletsEditWalletNameLabel": "WALLET NAME",
-                                              "manageWalletsEditWalletNamePlaceholder": "Wallet Name",
-                                              "manageWalletsEditWalletSave": "Save Changes",
-                                              "manageWalletsImport": "Import",
-                                              "manageWalletsLabel": "Manage Wallets",
-                                              "modalActionCancel": "Cancel",
-                                              "modalActionConfirm": "Confirm",
-                                              "modifyDetails": "Modify Details",
-                                              "networkConfigTooltipAddress": "ADDRESS:",
-                                              "networkConfigTooltipPublicKey": "PUBLIC KEY:",
-                                              "networkConfigTooltipUpdateSettings": "Update Settings",
-                                              "networkSettingsAutomatic": "AUTOMATIC",
-                                              "networkSettingsCurrentLabel": "CURRENT NETWORK",
-                                              "networkSettingsExplorerLabel": "BLOCK EXPLORER",
-                                              "networkSettingsInstructions": "Manage all network settings related to how Neon interacts with the blockchain",
-                                              "networkSettingsLabel": "Network Settings",
-                                              "networkSettingsNodeSelectLabel": "NODE SELECTION",
-                                              "newContact": "New Contact",
-                                              "newsPageLabel": "News",
-                                              "nextStep": "Next Step",
-                                              "noAvailableAssetsToSend": "No available assets to send",
-                                              "noClaimableGas": "Address has no claimable GAS",
-                                              "noOptionsMessage": "No options",
-                                              "nodeSelectBlockHeight": "Block Height",
-                                              "nodeSelectInfo": "Top {nodeCount, number} nodes listed",
-                                              "nodeSelectPanelHeader": "Node Selection",
-                                              "nodeSelectSelectAutomatically": "Select automatically",
-                                              "nodeSelectionInstructions": "If you’re experiencing performance issues, try selecting a custom node below",
-                                              "nothingToSeeHere": "Nothing to see here!",
-                                              "notifications.failure.blockchainInfoFailure": "Failed to retrieve blockchain information.",
-                                              "notifications.success.accountSaved": "Account saved!",
-                                              "notifications.success.receivedBlockchainInfo": "Received latest blockchain information.",
-                                              "notifications.success.updatedWalletName": "Succesfully updated wallet name.",
-                                              "numberofTransactionsPending": "{transferCount, number} {transferCount, plural, one {Transfer} other {Transfers}} pending",
-                                              "previousStep": "Previous Step",
-                                              "print": "Print",
-                                              "priorityTransfer": "Priority Transfer",
-                                              "privateKey": "Private Key",
-                                              "privateKeyLabel": "PRIVATE KEY",
-                                              "publicAddress": "Public Address",
-                                              "receiveAssetsAddressLabel": "Your Public Address",
-                                              "receiveCopyCodeButton": "Copy Code Image",
-                                              "receiveDisclaimer": "Only send assets that are <b>compatible with the NEO blockchain (NEO, GAS, etc.)</b>. Sending other assets will result in permanent loss.",
-                                              "receivePageLabel": "Receive Assets",
-                                              "receiveQRExplanation": "<p>Ever sent assets to the wrong address because of an errant character in the wallet address?</p><p>If not, lucky you - but it happens with frightening regularity.</p>  <p>Here at CoZ, we want to ensure people that pay you get your details right. You can generate a QR code for requesting assets to help them help you.</p><p>Every code you generate will include your public wallet address, an asset amount and a reference - all set by you.</p>",
-                                              "receiveRequestTabAssets": "REQUEST ASSETS",
-                                              "receiveYourAddressTabLabel": "YOUR ADDRESS",
-                                              "recieveSelectMethod": "Select Deposit Method",
-                                              "recieveWhyUseQRLabel": "Why use a QR code?",
-                                              "recoverWallet": "RECOVER WALLET",
-                                              "recoverWalletLabel": "RECOVER WALLET",
-                                              "removeContact": "Remove Contact",
-                                              "requestAssetAmount": "AMOUNT",
-                                              "requestAssetAmountLabel": "Amount",
-                                              "requestAssetDepositLabel": "DEPOSIT INTO THIS WALLET",
-                                              "requestAssetLabel": "ASSET",
-                                              "requestAssetQRButton": "Generate QR Code",
-                                              "requestAssetRefLabel": "REFERENCE",
-                                              "requestAssetRefPlaceholder": "Add a note...",
-                                              "requestAssetYourQRHeader": "Your QR Code",
-                                              "requestAssetsAddressLabel": "ADDRESS",
-                                              "requestAssetsAmountLabel": "AMOUNT",
-                                              "requestAssetsAssetLabel": "ASSET",
-                                              "requestAssetsPaymentDetails": "PAYMENT REQUEST DETAILS",
-                                              "requestAssetsRefLabel": "REFERENCE",
-                                              "requestAssetsYourQRLabel": "YOUR QR CODE",
-                                              "saveContactButtonText": "Save Contact",
-                                              "selectAssets": "Select Assets",
-                                              "sendActivityLink": "Check the activity tab to see the status of your transaction.",
-                                              "sendAdd": "Add Recipient",
-                                              "sendAddressLabel": "RECIPIENT ADDRESS",
-                                              "sendAddressPlaceholder": "Add wallet or select contact",
-                                              "sendAmountLabel": "AMOUNT",
-                                              "sendAsset": "asset",
-                                              "sendAssetCapital": "Asset",
-                                              "sendAssetLabel": "ASSET",
-                                              "sendAssets": "assets",
-                                              "sendAssetsCapital": "Assets",
-                                              "sendBroadcasting": "Broadcasting transaction to network...",
-                                              "sendCompleteNotification": "Transaction pending! Your balance will automatically update when the blockchain has processed it.",
-                                              "sendCompletion": "Complete! {transferCount, number} {transferCount, plural, one {sendAsset} other {sendAssets}} to {transferCount, plural, one {sendRecipient} other {sendRecipients}}",
-                                              "sendDisclaimer": "Please review and ensure that you have entered the correct details to avoid loss of funds.",
-                                              "sendEnterQRCode": "Enter QR Code",
-                                              "sendErrorLabel": "Error!",
-                                              "sendImport": "Import",
-                                              "sendMaxAmount": "MAX",
-                                              "sendMoreAssets": "Send More Assets",
-                                              "sendPageLabel": "Send Assets",
-                                              "sendQRExplanation": "So you've been given a QR code? Click capture and hold it up to your camera.",
-                                              "sendRecipient": "recipient",
-                                              "sendRecipientCapital": "Recipient",
-                                              "sendRecipients": "recipients",
-                                              "sendRecipientsCapital": "Recipients",
-                                              "sendSelectAssets": "{transferCount, number} of {maxNumberOfRecipients, number} Recipients",
-                                              "sendTranfer": "TRANSFER",
-                                              "sendTransferMessage": "{transferCount, number} {transferCount, plural, one {sendTransfer} other {sendTransferPlural}} pending",
-                                              "sendTransferPlural": "TRANSFERS",
-                                              "sendWithFee": "Send {itemCount, plural, one {Asset} other {Assets}} With Fee",
-                                              "sendWithoutFee": "Send {itemCount, plural, one {Asset} other {Assets}} Without Fee",
-                                              "settingCurrencyLabel": "CURRENCY",
-                                              "settingsBackUpLink": "EXPORT",
-                                              "settingsBackUpLinkLabel": "BACKUP WALLET",
-                                              "settingsCommunity": "Community Support",
-                                              "settingsDonationLink": "Created by CoZ. Donations:",
-                                              "settingsEncryptLink": "ENCRYPT A KEY",
-                                              "settingsLanguageLabel": "LANGUAGE",
-                                              "settingsManageLabel": "Manage your neon wallet",
-                                              "settingsNetworkConfigLabel": "NETWORK CONFIGURATION",
-                                              "settingsRecoverWalletLink": "IMPORT",
-                                              "settingsSoundLabel": "SOUND",
-                                              "settingsThemeLabel": "THEME",
-                                              "sidebarActivity": "Activity",
-                                              "sidebarContacts": "Contacts",
-                                              "sidebarCurrentBlock": "CURRENT BLOCK",
-                                              "sidebarLogout": "Logout",
-                                              "sidebarNews": "News",
-                                              "sidebarReceive": "Receive",
-                                              "sidebarSend": "Send",
-                                              "sidebarSettings": "Settings",
-                                              "sidebarTokenSale": "Token Sale",
-                                              "sidebarWallet": "Wallet",
-                                              "splitKeyLabel": "SPLIT KEY",
-                                              "splitKeyWalletInstructions": "The Split Key import option allows users to create a new NEO account by combining the private key of an existing account with a separate private key.",
-                                              "splitKeyWalletNamePlaceholder": "Enter your new split key wallet name...",
-                                              "takeMeBack": "Take me back",
-                                              "tokenSaleDisclaimer1": "Please read and acknowledge these statements to continue",
-                                              "tokenSaleDisclaimer2": "I understand that submitting NEO or GAS multiple times may result in a loss of funds or a delayed refund depending on the policy of the ICO company.",
-                                              "tokenSaleDisclaimer3": "I understand that some sales may only accept NEO or GAS, and I have verified which is accepted.",
-                                              "tokenSaleDisclaimer4": "I understand that if I send NEO or GAS to a token sale that has already ended, I will lose my NEO/GAS and will not be refunded.",
-                                              "tokenSaleDisclaimer5": "I understand that City of Zion (CoZ) is not responsible for my usage of this feature, and I have consulted this software's licenses.",
-                                              "tokenSalePageHeader": "Participate in Token Sale",
-                                              "transactionFeeQuestion": "PRIORITIZE YOUR TRANSACTION WITH A FEE?",
-                                              "transactionId": "Transaction ID:",
-                                              "walletCreatedDisclaimer": "<b>Save these details!</b> If you lose these credentials, you lose access to your assets.",
-                                              "walletCreatedHeader": "Wallet Created!",
-                                              "walletCreationButton": "Create Wallet",
-                                              "walletCreationInstruction": "Enter Details",
-                                              "walletCreationWalletNameLabel": "WALLET NAME",
-                                              "walletCreationWalletNamePlaceholder": "Wallet Name",
-                                              "walletCreationWalletPasswordConfirmLabel": "CONFIRM PASSPHRASE",
-                                              "walletCreationWalletPasswordConfirmPlaceholder": "Confirm Password",
-                                              "walletCreationWalletPasswordLabel": "PASSPHRASE",
-                                              "walletCreationWalletPasswordPlaceholder": "Password",
-                                              "walletImportedHeader": "Wallet Created!",
-                                              "walletManagerNoLocalInfo": "It looks like you have no wallet information saved locally...",
-                                              "walletManagerRemoveWallet": "Remove Wallet",
-                                              "walletQrCodes": "Wallet QR Codes",
-                                            },
-                                            "onError": [Function],
-                                            "textComponent": Symbol(react.fragment),
-                                            "timeZone": undefined,
-                                          }
-                                        }
-                                        isWatchOnly={false}
-                                        net="MainNet"
-                                        networkId={1}
-                                        networks={
-                                          Array [
-                                            Object {
-                                              "deprecatedLabel": "MainNet",
-                                              "id": "1",
-                                              "label": "2.x MainNet",
-                                              "network": "MainNet",
-                                              "value": "1",
-                                            },
-                                            Object {
-                                              "deprecatedLabel": "TestNet",
-                                              "id": "2",
-                                              "label": "2.x TestNet",
-                                              "network": "TestNet",
-                                              "value": "2",
-                                            },
-                                          ]
-                                        }
-                                        selectedNode={null}
-                                        showErrorNotification={[Function]}
-                                        showModal={[Function]}
-                                        showSuccessNotification={[Function]}
-                                        theme="Light"
-                                      >
-                                        <section
-                                          className="settingsItemsContainer networkItemsContainer tooltipContainer"
-                                          id="network-config-tooltip"
-                                          style={
-                                            Object {
-                                              "---mobile-export-card-background": "#EAF2F7",
-                                              "--amounts-panel-asset-amount-text": "#515151",
-                                              "--amounts-panel-asset-name-text": "#515151",
-                                              "--amounts-panel-asset-worth-text": "#515151",
-                                              "--amounts-panel-first-row-background": "#F1F5FC",
-                                              "--amounts-panel-second-row-background": "#fff",
-                                              "--auth-inner-container-box-shadow": "-16px -16px 17px 0 rgba(255, 255, 255, 0.44),
+                                            "---mobile-export-card-background": "#EAF2F7",
+                                            "--amounts-panel-asset-amount-text": "#515151",
+                                            "--amounts-panel-asset-name-text": "#515151",
+                                            "--amounts-panel-asset-worth-text": "#515151",
+                                            "--amounts-panel-first-row-background": "#F1F5FC",
+                                            "--amounts-panel-second-row-background": "#fff",
+                                            "--auth-inner-container-box-shadow": "-16px -16px 17px 0 rgba(255, 255, 255, 0.44),
   16px 16px 20px 0 rgba(18, 21, 23, 0.24)",
-                                              "--auth-main-container-background": "#fff",
-                                              "--auth-scan-qr-border": "#F1F5FC",
-                                              "--base-link-color": "#3063c9",
-                                              "--base-main-background": "#ECF3F8",
-                                              "--base-scrollbar-thumb": "#5c677f",
-                                              "--base-scrollbar-track": "#fff",
-                                              "--base-text": "#282828",
-                                              "--button-active": "#fff",
-                                              "--button-active-hover": "#fff",
-                                              "--button-flag-icon-color": "#394152",
-                                              "--button-flag-icon-opacity": 0.3,
-                                              "--button-icon-color": "#394152",
-                                              "--button-max-amount-background": "#8297A0",
-                                              "--button-max-amount-text": "#394152",
-                                              "--button-primary-background-image": "linear-gradient(180deg, #EAF2F7 2%, #E6F0F6 97%)",
-                                              "--button-primary-box-shadow": "-17px -17px 20px 0 rgba(255,255,255,0.54), 17px 17px 20px 0 #C6CCD1, inset -1px -1px 0 0 #A4B0C3, inset 1px 1px 0 0 #FFFFFF",
-                                              "--button-primary-disabled-background-color": "#E0E9EF",
-                                              "--button-primary-disabled-box-shadow": " -17px -17px 20px 0 rgba(255,255,255,0.54), 17px 17px 20px 0 #C6CCD1",
-                                              "--button-primary-disabled-text-color": "#acbbc4",
-                                              "--button-primary-hover-background-image": "linear-gradient(180deg, #FFFFFF 2%, #E2EAEF 100%)",
-                                              "--button-primary-text": "#394152",
-                                              "--button-priority-active-hover": "#fff",
-                                              "--button-priority-button-container-background": "linear-gradient(180deg, #eff5f8 2%, #e4edf2 97%)",
-                                              "--button-priority-button-container-shadow": "-4px -4px 9px 0 rgba(255, 255, 255, 0.54), 4px 4px 13px 0 #c6ccd1, inset -1px -1px 0 0 #a4b0c3, inset 1px 1px 0 0 #ffffff",
-                                              "--button-priority-conditional-box-shadow": "none",
-                                              "--button-priority-disabled-opacity": "1",
-                                              "--button-priority-standard-icon-color": "#394152",
-                                              "--button-priority-transfer-background": "linear-gradient(180deg, #EAF2F7 2%, #E6F0F6 97%)",
-                                              "--button-priority-transfer-button-border": "1px solid #a4b0c3",
-                                              "--button-priority-transfer-color": "#394152",
-                                              "--button-priority-transfer-disabled": "transparent",
-                                              "--button-priority-transfer-disabled-color": "#CCD4D9",
-                                              "--button-secondary-background": "#fff",
-                                              "--button-secondary-hover": "#F1F5FC",
-                                              "--button-secondary-text": "#394152",
-                                              "--chain-switch-background": "#eaf2f7",
-                                              "--chain-switch-text": "#3D4D56",
-                                              "--contacts-delete-contact-name": "#394152",
-                                              "--contacts-group-header-background": "#F1F5FC",
-                                              "--contacts-group-header-text": "#394152",
-                                              "--contacts-odd-numbered-row": "rgba(230, 230, 230, 0.1)",
-                                              "--dashboard-asset-panel-asset-name": "#5c677f",
-                                              "--dashboard-asset-panel-total-background": "#F1F5FC",
-                                              "--dashboard-market-data-line": "#3fd0ae",
-                                              "--dashboard-price-history-current-price": "#394152",
-                                              "--dashboard-token-balances-divider-line": "#F1F5FC",
-                                              "--dashboard-total-wallet-value-odd-row": "#F1F5FC",
-                                              "--dashboard-total-wallet-value-total-text": "#394152",
-                                              "--header-bar-default-icon-color": "#394152",
-                                              "--input-active": "linear-gradient(#F1F5FC, #F1F5FC), radial-gradient(circle at top left, #66eb8e, #66eb8e)",
-                                              "--input-active-border": "#66eb8e",
-                                              "--input-background": "#EAF2F7",
-                                              "--input-error": "#ee6d66",
-                                              "--input-error-text": "#fff",
-                                              "--input-icon": "#9ca0a9",
-                                              "--input-label": "#5c677f",
-                                              "--input-label-opacity": 0.5,
-                                              "--input-placeholder": "rgba(40, 40, 40, 0.5)",
-                                              "--input-select-hover": "#D4DEE4",
-                                              "--input-text": "#282828",
-                                              "--mobile-header-instructions-icon": "#282828",
-                                              "--modal-overlay": "rgba(26, 54, 80, 0.25)",
-                                              "--network-config-box-shadow": "-3px -3px 17px 0 transparent, 3px 4px 20px 0 rgba(18,21,23,0.24)",
-                                              "--network-config-tooltip-background": "#fff",
-                                              "--network-config-tooltip-color": "#394152",
-                                              "--network-config-tooltip-label": "#8D98AE",
-                                              "--news-content-border-color": "#ececec",
-                                              "--node-select-automatic-select-button-text": "#5c677f",
-                                              "--node-select-header-background": "#F1F5FC",
-                                              "--node-select-icon-color": "#282828",
-                                              "--node-select-node-count": "#5c677f",
-                                              "--node-select-refresh-icon": "#394152",
-                                              "--notifications-error-icon-color": "#fff",
-                                              "--notifications-success-icon-color": "#fff",
-                                              "--panel-background": "#fff",
-                                              "--panel-box-shadow": "-3px -3px 17px 0 rgba(255, 255, 255, 0.83), 3px 3px 20px 0 rgba(18, 21, 23, 0.09)",
-                                              "--panel-full-height-background": "#fff",
-                                              "--panel-full-height-header-icon-color": "#394152",
-                                              "--panel-full-height-instructions-border": "rgba(0, 0, 0, 0.15)",
-                                              "--panel-full-height-instructions-text": "#8297A0",
-                                              "--panel-full-height-nav-background": "#D4DEE4",
-                                              "--panel-header": "#D4DEE4",
-                                              "--panel-header-border": "#8d98ae",
-                                              "--panel-header-text": "#394152",
-                                              "--panel-icon": "#282828",
-                                              "--panel-label-text": "#8d98ae",
-                                              "--panel-receive-explanation": "#CDDAE1",
-                                              "--qr-scan-animation-end": "rgba(57, 65, 82, 0)",
-                                              "--qr-scan-animation-start": "rgba(57, 65, 82, 1)",
-                                              "--qr-scan-paused": "rgba(102, 237, 135, 0.6)",
-                                              "--release-notes-button-color": "#394152",
-                                              "--release-notes-date": "#8297a0",
-                                              "--release-notes-text": "#8c97a2",
-                                              "--secondary-button-icon-color": "#394152",
-                                              "--secondary-raised-base-text": "#7f8f98",
-                                              "--send-success-row-info": "#394152",
-                                              "--settings-donation-text": "#5c677f",
-                                              "--settings-item-border-color": "#F1F5FC",
-                                              "--settings-item-icon": "#cccccc",
-                                              "--settings-item-label": "#343b4a",
-                                              "--settings-link-text": "#282828",
-                                              "--settings-select-value-text": "#282828",
-                                              "--settings-spacer": "rgba(170, 178, 189, 0.3)",
-                                              "--side-bar-disabled-item-background": "#fff",
-                                              "--sidebar-active-background": "#F1F5FC",
-                                              "--sidebar-active-border": "#4CFFB3",
-                                              "--sidebar-active-icon": "#394152",
-                                              "--sidebar-background": "#fff",
-                                              "--sidebar-icon": "#9599a2",
-                                              "--sidebar-mobile-text": "#1c202a",
-                                              "--sidebar-shadow": "-16px -16px 17px 0 rgba(255,255,255,0.44), -3px 16px 20px 0 rgba(18,21,23,0.24)",
-                                              "--tab-border": "#394152",
-                                              "--tab-text": "#394152",
-                                              "--tx-icon-color": "#32E096",
-                                              "--tx-list-box-shadow": "-3px -3px 17px 0 rgba(255,255,255,0.44), 3px 4px 20px 0 rgba(18,21,23,0.24)",
-                                              "--tx-list-button-icon": "#394152",
-                                              "--tx-list-copy-icon": "#9599a2",
-                                              "--tx-list-odd-row": "#F1F5FC",
-                                              "--view-layout-header-icon-color": "#282828",
-                                              "--wc-connection-details-bg": "#EAF2F7",
-                                              "--wc-connection-details-bg2": "#FFFFFF",
-                                              "--wc-param-index": "#EAF2F7",
-                                              "--wc-tooltip-bg": "#EAF0F3",
-                                              "--wc-tooltip-box-shadow": "-7px 6px 8px 0 rgba(255,255,255,0.63), 10px -13px 20px 0 #B2BAC1",
-                                              "--wc-tooltip-button-color": "#282828",
-                                              "--wc-tooltip-color": "#343434",
-                                            }
+                                            "--auth-main-container-background": "#fff",
+                                            "--auth-scan-qr-border": "#F1F5FC",
+                                            "--base-link-color": "#3063c9",
+                                            "--base-main-background": "#ECF3F8",
+                                            "--base-scrollbar-thumb": "#5c677f",
+                                            "--base-scrollbar-track": "#fff",
+                                            "--base-text": "#282828",
+                                            "--button-active": "#fff",
+                                            "--button-active-hover": "#fff",
+                                            "--button-flag-icon-color": "#394152",
+                                            "--button-flag-icon-opacity": 0.3,
+                                            "--button-icon-color": "#394152",
+                                            "--button-max-amount-background": "#8297A0",
+                                            "--button-max-amount-text": "#394152",
+                                            "--button-primary-background-image": "linear-gradient(180deg, #EAF2F7 2%, #E6F0F6 97%)",
+                                            "--button-primary-box-shadow": "-17px -17px 20px 0 rgba(255,255,255,0.54), 17px 17px 20px 0 #C6CCD1, inset -1px -1px 0 0 #A4B0C3, inset 1px 1px 0 0 #FFFFFF",
+                                            "--button-primary-disabled-background-color": "#E0E9EF",
+                                            "--button-primary-disabled-box-shadow": " -17px -17px 20px 0 rgba(255,255,255,0.54), 17px 17px 20px 0 #C6CCD1",
+                                            "--button-primary-disabled-text-color": "#acbbc4",
+                                            "--button-primary-hover-background-image": "linear-gradient(180deg, #FFFFFF 2%, #E2EAEF 100%)",
+                                            "--button-primary-text": "#394152",
+                                            "--button-priority-active-hover": "#fff",
+                                            "--button-priority-button-container-background": "linear-gradient(180deg, #eff5f8 2%, #e4edf2 97%)",
+                                            "--button-priority-button-container-shadow": "-4px -4px 9px 0 rgba(255, 255, 255, 0.54), 4px 4px 13px 0 #c6ccd1, inset -1px -1px 0 0 #a4b0c3, inset 1px 1px 0 0 #ffffff",
+                                            "--button-priority-conditional-box-shadow": "none",
+                                            "--button-priority-disabled-opacity": "1",
+                                            "--button-priority-standard-icon-color": "#394152",
+                                            "--button-priority-transfer-background": "linear-gradient(180deg, #EAF2F7 2%, #E6F0F6 97%)",
+                                            "--button-priority-transfer-button-border": "1px solid #a4b0c3",
+                                            "--button-priority-transfer-color": "#394152",
+                                            "--button-priority-transfer-disabled": "transparent",
+                                            "--button-priority-transfer-disabled-color": "#CCD4D9",
+                                            "--button-secondary-background": "#fff",
+                                            "--button-secondary-hover": "#F1F5FC",
+                                            "--button-secondary-text": "#394152",
+                                            "--chain-switch-background": "#eaf2f7",
+                                            "--chain-switch-text": "#3D4D56",
+                                            "--contacts-delete-contact-name": "#394152",
+                                            "--contacts-group-header-background": "#F1F5FC",
+                                            "--contacts-group-header-text": "#394152",
+                                            "--contacts-odd-numbered-row": "rgba(230, 230, 230, 0.1)",
+                                            "--dashboard-asset-panel-asset-name": "#5c677f",
+                                            "--dashboard-asset-panel-total-background": "#F1F5FC",
+                                            "--dashboard-market-data-line": "#3fd0ae",
+                                            "--dashboard-price-history-current-price": "#394152",
+                                            "--dashboard-token-balances-divider-line": "#F1F5FC",
+                                            "--dashboard-total-wallet-value-odd-row": "#F1F5FC",
+                                            "--dashboard-total-wallet-value-total-text": "#394152",
+                                            "--header-bar-default-icon-color": "#394152",
+                                            "--input-active": "linear-gradient(#F1F5FC, #F1F5FC), radial-gradient(circle at top left, #66eb8e, #66eb8e)",
+                                            "--input-active-border": "#66eb8e",
+                                            "--input-background": "#EAF2F7",
+                                            "--input-error": "#ee6d66",
+                                            "--input-error-text": "#fff",
+                                            "--input-icon": "#9ca0a9",
+                                            "--input-label": "#5c677f",
+                                            "--input-label-opacity": 0.5,
+                                            "--input-placeholder": "rgba(40, 40, 40, 0.5)",
+                                            "--input-select-hover": "#D4DEE4",
+                                            "--input-text": "#282828",
+                                            "--mobile-header-instructions-icon": "#282828",
+                                            "--modal-overlay": "rgba(26, 54, 80, 0.25)",
+                                            "--network-config-box-shadow": "-3px -3px 17px 0 transparent, 3px 4px 20px 0 rgba(18,21,23,0.24)",
+                                            "--network-config-tooltip-background": "#fff",
+                                            "--network-config-tooltip-color": "#394152",
+                                            "--network-config-tooltip-label": "#8D98AE",
+                                            "--news-content-border-color": "#ececec",
+                                            "--node-select-automatic-select-button-text": "#5c677f",
+                                            "--node-select-header-background": "#F1F5FC",
+                                            "--node-select-icon-color": "#282828",
+                                            "--node-select-node-count": "#5c677f",
+                                            "--node-select-refresh-icon": "#394152",
+                                            "--notifications-error-icon-color": "#fff",
+                                            "--notifications-success-icon-color": "#fff",
+                                            "--panel-background": "#fff",
+                                            "--panel-box-shadow": "-3px -3px 17px 0 rgba(255, 255, 255, 0.83), 3px 3px 20px 0 rgba(18, 21, 23, 0.09)",
+                                            "--panel-full-height-background": "#fff",
+                                            "--panel-full-height-header-icon-color": "#394152",
+                                            "--panel-full-height-instructions-border": "rgba(0, 0, 0, 0.15)",
+                                            "--panel-full-height-instructions-text": "#8297A0",
+                                            "--panel-full-height-nav-background": "#D4DEE4",
+                                            "--panel-header": "#D4DEE4",
+                                            "--panel-header-border": "#8d98ae",
+                                            "--panel-header-text": "#394152",
+                                            "--panel-icon": "#282828",
+                                            "--panel-label-text": "#8d98ae",
+                                            "--panel-receive-explanation": "#CDDAE1",
+                                            "--qr-scan-animation-end": "rgba(57, 65, 82, 0)",
+                                            "--qr-scan-animation-start": "rgba(57, 65, 82, 1)",
+                                            "--qr-scan-paused": "rgba(102, 237, 135, 0.6)",
+                                            "--release-notes-button-color": "#394152",
+                                            "--release-notes-date": "#8297a0",
+                                            "--release-notes-text": "#8c97a2",
+                                            "--secondary-button-icon-color": "#394152",
+                                            "--secondary-raised-base-text": "#7f8f98",
+                                            "--send-success-row-info": "#394152",
+                                            "--settings-donation-text": "#5c677f",
+                                            "--settings-item-border-color": "#F1F5FC",
+                                            "--settings-item-icon": "#cccccc",
+                                            "--settings-item-label": "#343b4a",
+                                            "--settings-link-text": "#282828",
+                                            "--settings-select-value-text": "#282828",
+                                            "--settings-spacer": "rgba(170, 178, 189, 0.3)",
+                                            "--side-bar-disabled-item-background": "#fff",
+                                            "--sidebar-active-background": "#F1F5FC",
+                                            "--sidebar-active-border": "#4CFFB3",
+                                            "--sidebar-active-icon": "#394152",
+                                            "--sidebar-background": "#fff",
+                                            "--sidebar-icon": "#9599a2",
+                                            "--sidebar-mobile-text": "#1c202a",
+                                            "--sidebar-shadow": "-16px -16px 17px 0 rgba(255,255,255,0.44), -3px 16px 20px 0 rgba(18,21,23,0.24)",
+                                            "--tab-border": "#394152",
+                                            "--tab-text": "#394152",
+                                            "--tx-icon-color": "#32E096",
+                                            "--tx-list-box-shadow": "-3px -3px 17px 0 rgba(255,255,255,0.44), 3px 4px 20px 0 rgba(18,21,23,0.24)",
+                                            "--tx-list-button-icon": "#394152",
+                                            "--tx-list-copy-icon": "#9599a2",
+                                            "--tx-list-odd-row": "#F1F5FC",
+                                            "--view-layout-header-icon-color": "#282828",
+                                            "--wc-connection-details-bg": "#EAF2F7",
+                                            "--wc-connection-details-bg2": "#FFFFFF",
+                                            "--wc-param-index": "#EAF2F7",
+                                            "--wc-tooltip-bg": "#EAF0F3",
+                                            "--wc-tooltip-box-shadow": "-7px 6px 8px 0 rgba(255,255,255,0.63), 10px -13px 20px 0 #B2BAC1",
+                                            "--wc-tooltip-button-color": "#282828",
+                                            "--wc-tooltip-color": "#343434",
                                           }
-                                        >
-                                          <HashRouter>
-                                            <Router
-                                              history={
-                                                Object {
-                                                  "action": "POP",
-                                                  "block": [Function],
-                                                  "createHref": [Function],
-                                                  "go": [Function],
-                                                  "goBack": [Function],
-                                                  "goForward": [Function],
-                                                  "length": 1,
-                                                  "listen": [Function],
-                                                  "location": Object {
-                                                    "hash": "",
-                                                    "pathname": "/",
-                                                    "search": "",
-                                                    "state": undefined,
-                                                  },
-                                                  "push": [Function],
-                                                  "replace": [Function],
-                                                }
+                                        }
+                                      >
+                                        <HashRouter>
+                                          <Router
+                                            history={
+                                              Object {
+                                                "action": "POP",
+                                                "block": [Function],
+                                                "createHref": [Function],
+                                                "go": [Function],
+                                                "goBack": [Function],
+                                                "goForward": [Function],
+                                                "length": 1,
+                                                "listen": [Function],
+                                                "location": Object {
+                                                  "hash": "",
+                                                  "pathname": "/",
+                                                  "search": "",
+                                                  "state": undefined,
+                                                },
+                                                "push": [Function],
+                                                "replace": [Function],
                                               }
+                                            }
+                                          >
+                                            <div
+                                              className="innerContainer"
                                             >
                                               <div
-                                                className="innerContainer"
+                                                className="addressInfo"
                                               >
+                                                <span>
+                                                  ADDRESS:
+                                                </span>
                                                 <div
-                                                  className="addressInfo"
+                                                  className="addressLink"
                                                 >
-                                                  <span>
-                                                    ADDRESS:
-                                                  </span>
-                                                  <div
-                                                    className="addressLink"
-                                                  >
-                                                     
-                                                    TOOLTIP_TEST
-                                                  </div>
-                                                </div>
-                                                <SettingsLink
-                                                  label="AUTOMATIC"
-                                                  noBorderBottom={true}
-                                                  onClick={[Function]}
-                                                  renderIcon={[Function]}
-                                                  title="NODE SELECTION"
-                                                  to="/node-select"
-                                                  tooltip={true}
-                                                >
-                                                  <div
-                                                    className="settingsLink noBorderBottom defaultCursor"
-                                                    onClick={[Function]}
-                                                  >
-                                                    <div
-                                                      className="icon"
-                                                    >
-                                                      <Component>
-                                                        <svg />
-                                                      </Component>
-                                                       
-                                                    </div>
-                                                    <span
-                                                      className="settingsLinkLabel"
-                                                    >
-                                                      NODE SELECTION
-                                                    </span>
-                                                    <label
-                                                      className="greenLabel"
-                                                    >
-                                                      AUTOMATIC
-                                                    </label>
-                                                  </div>
-                                                </SettingsLink>
-                                                <div
-                                                  className="tooltipItemBorder"
-                                                />
-                                                <SettingsItem
-                                                  noBorderBottom={true}
-                                                  renderIcon={[Function]}
-                                                  title="BLOCK EXPLORER"
-                                                  tooltip={true}
-                                                >
-                                                  <div
-                                                    className="settingsItem noBorderBottom"
-                                                  >
-                                                    <div
-                                                      className="icon"
-                                                    >
-                                                      <Component>
-                                                        <svg />
-                                                      </Component>
-                                                       
-                                                    </div>
-                                                    <span
-                                                      className="settingsItemLabel"
-                                                    >
-                                                      BLOCK EXPLORER
-                                                    </span>
-                                                    <div
-                                                      className="settingsSelectContainer"
-                                                    >
-                                                      <div
-                                                        className="configLabel"
-                                                      >
-                                                        DORA
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                                </SettingsItem>
-                                                <div
-                                                  className="tooltipItemBorder"
-                                                />
-                                                <SettingsItem
-                                                  noBorderBottom={true}
-                                                  renderIcon={[Function]}
-                                                  title="CURRENT NETWORK"
-                                                  tooltip={true}
-                                                >
-                                                  <div
-                                                    className="settingsItem noBorderBottom"
-                                                  >
-                                                    <div
-                                                      className="icon"
-                                                    >
-                                                      <Component>
-                                                        <svg />
-                                                      </Component>
-                                                       
-                                                    </div>
-                                                    <span
-                                                      className="settingsItemLabel"
-                                                    >
-                                                      CURRENT NETWORK
-                                                    </span>
-                                                    <div
-                                                      className="settingsSelectContainer"
-                                                    >
-                                                      <div
-                                                        className="configLabel"
-                                                      >
-                                                        2.X MAINNET
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                                </SettingsItem>
-                                                <div
-                                                  className="tooltipItemBorder"
-                                                />
-                                                <div
-                                                  className="buttonContainer"
-                                                >
-                                                  <Link
-                                                    replace={false}
-                                                    to="/network-configuration"
-                                                  >
-                                                    <a
-                                                      href="#/network-configuration"
-                                                      onClick={[Function]}
-                                                    >
-                                                      <Button
-                                                        elevated={true}
-                                                        primary={false}
-                                                        renderIcon={[Function]}
-                                                        shouldCenterButtonLabelText={true}
-                                                        type="button"
-                                                      >
-                                                        <button
-                                                          className="button primary secondaryRaised"
-                                                          type="button"
-                                                        >
-                                                          <span
-                                                            className="icon centeredLabel secondary"
-                                                          >
-                                                            <Component>
-                                                              <svg />
-                                                            </Component>
-                                                          </span>
-                                                          <span>
-                                                            Update Settings
-                                                          </span>
-                                                        </button>
-                                                      </Button>
-                                                    </a>
-                                                  </Link>
+                                                   
+                                                  TOOLTIP_TEST
                                                 </div>
                                               </div>
-                                            </Router>
-                                          </HashRouter>
-                                        </section>
-                                      </NetworkConfigurationTooltip>
-                                    </withData(injectIntl(NetworkConfigurationTooltip))>
-                                  </withData(Connect(withData(injectIntl(NetworkConfigurationTooltip))))>
-                                </withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip))))))>
-                              </withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip))))))))>
-                            </withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip))))))))))>
-                          </Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))>
-                        </withoutProps(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip))))))))))))>
-                      </withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip))))))))))))>
-                    </Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))))>
-                  </withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))))))>
-                </withData(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))))))))>
-              </Connect(withData(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip))))))))))))))))))>
-            </Connect(Connect(withData(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))))))))))>
-          </Router>
-        </MemoryRouter>
-      </IntlProvider>
-    </withData(IntlWrapper)>
-  </Connect(withData(IntlWrapper))>
+                                              <SettingsLink
+                                                label="AUTOMATIC"
+                                                noBorderBottom={true}
+                                                onClick={[Function]}
+                                                renderIcon={[Function]}
+                                                title="NODE SELECTION"
+                                                to="/node-select"
+                                                tooltip={true}
+                                              >
+                                                <div
+                                                  className="settingsLink noBorderBottom defaultCursor"
+                                                  onClick={[Function]}
+                                                >
+                                                  <div
+                                                    className="icon"
+                                                  >
+                                                    <Component>
+                                                      <svg />
+                                                    </Component>
+                                                     
+                                                  </div>
+                                                  <span
+                                                    className="settingsLinkLabel"
+                                                  >
+                                                    NODE SELECTION
+                                                  </span>
+                                                  <label
+                                                    className="greenLabel"
+                                                  >
+                                                    AUTOMATIC
+                                                  </label>
+                                                </div>
+                                              </SettingsLink>
+                                              <div
+                                                className="tooltipItemBorder"
+                                              />
+                                              <SettingsItem
+                                                noBorderBottom={true}
+                                                renderIcon={[Function]}
+                                                title="BLOCK EXPLORER"
+                                                tooltip={true}
+                                              >
+                                                <div
+                                                  className="settingsItem noBorderBottom"
+                                                >
+                                                  <div
+                                                    className="icon"
+                                                  >
+                                                    <Component>
+                                                      <svg />
+                                                    </Component>
+                                                     
+                                                  </div>
+                                                  <span
+                                                    className="settingsItemLabel"
+                                                  >
+                                                    BLOCK EXPLORER
+                                                  </span>
+                                                  <div
+                                                    className="settingsSelectContainer"
+                                                  >
+                                                    <div
+                                                      className="configLabel"
+                                                    >
+                                                      DORA
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </SettingsItem>
+                                              <div
+                                                className="tooltipItemBorder"
+                                              />
+                                              <SettingsItem
+                                                noBorderBottom={true}
+                                                renderIcon={[Function]}
+                                                title="CURRENT NETWORK"
+                                                tooltip={true}
+                                              >
+                                                <div
+                                                  className="settingsItem noBorderBottom"
+                                                >
+                                                  <div
+                                                    className="icon"
+                                                  >
+                                                    <Component>
+                                                      <svg />
+                                                    </Component>
+                                                     
+                                                  </div>
+                                                  <span
+                                                    className="settingsItemLabel"
+                                                  >
+                                                    CURRENT NETWORK
+                                                  </span>
+                                                  <div
+                                                    className="settingsSelectContainer"
+                                                  >
+                                                    <div
+                                                      className="configLabel"
+                                                    >
+                                                      2.X MAINNET
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </SettingsItem>
+                                              <div
+                                                className="tooltipItemBorder"
+                                              />
+                                              <div
+                                                className="buttonContainer"
+                                              >
+                                                <Link
+                                                  replace={false}
+                                                  to="/network-configuration"
+                                                >
+                                                  <a
+                                                    href="#/network-configuration"
+                                                    onClick={[Function]}
+                                                  >
+                                                    <Button
+                                                      elevated={true}
+                                                      primary={false}
+                                                      renderIcon={[Function]}
+                                                      shouldCenterButtonLabelText={true}
+                                                      type="button"
+                                                    >
+                                                      <button
+                                                        className="button primary secondaryRaised"
+                                                        type="button"
+                                                      >
+                                                        <span
+                                                          className="icon centeredLabel secondary"
+                                                        >
+                                                          <Component>
+                                                            <svg />
+                                                          </Component>
+                                                        </span>
+                                                        <span>
+                                                          Update Settings
+                                                        </span>
+                                                      </button>
+                                                    </Button>
+                                                  </a>
+                                                </Link>
+                                              </div>
+                                            </div>
+                                          </Router>
+                                        </HashRouter>
+                                      </section>
+                                    </NetworkConfigurationTooltip>
+                                  </EnhancedComponent>
+                                </withData(injectIntl(EnhancedComponent))>
+                              </withData(Connect(withData(injectIntl(EnhancedComponent))))>
+                            </withData(Connect(withData(Connect(withData(injectIntl(EnhancedComponent))))))>
+                          </withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(EnhancedComponent))))))))>
+                        </withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(EnhancedComponent))))))))))>
+                      </Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(EnhancedComponent)))))))))))>
+                    </withoutProps(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(EnhancedComponent))))))))))))>
+                  </withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(EnhancedComponent))))))))))))>
+                </Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(EnhancedComponent)))))))))))))>
+              </withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(EnhancedComponent)))))))))))))))>
+            </Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(EnhancedComponent))))))))))))))))>
+          </Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(EnhancedComponent)))))))))))))))))>
+        </Router>
+      </MemoryRouter>
+    </IntlProvider>
+  </IntlWrapper>
 </Provider>
 `;

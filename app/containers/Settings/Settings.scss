@@ -112,3 +112,13 @@ $panel-top-margin: 25px;
     }
   }
 }
+
+.flagIconContainer {
+  svg {
+    width: 20px;
+  }
+}
+
+.languageSettingsOptionWrapper:hover {
+  color: var(--input-active-border) !important;
+}

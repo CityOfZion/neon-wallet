@@ -3,6 +3,7 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Box } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
+import fs from 'fs'
 
 import { recoverWallet } from '../../modules/generateWallet'
 import { useSettingsContext } from '../../context/settings/SettingsContext'
@@ -16,7 +17,6 @@ import {
   THEMES,
   LANGUAGES,
   COZ_DONATIONS_ADDRESS,
-  EXPLORERS,
 } from '../../core/constants'
 import Panel from '../../components/Panel'
 
@@ -102,10 +102,6 @@ const SETTINGS_TABS: {
     label: 'Theme',
     renderIcon: () => <LightbulbIcon />,
   },
-  BLOCK_EXPLORER: {
-    label: 'Block Explorer',
-    renderIcon: () => <CurrencyIcon />,
-  },
   RELEASE_NOTES: { label: 'Release Notes', renderIcon: () => <Gift /> },
 }
 
@@ -138,8 +134,6 @@ export default function NewSettings({
   saveSelectedNode: Function,
 }) {
   const { settings } = useSettingsContext()
-  /* $FlowFixMe */
-  const { chain } = settings
 
   const [activeTab, setActiveTab] = React.useState(
     SETTINGS_TABS.NETWORK_CONFIGURATION,
@@ -149,7 +143,7 @@ export default function NewSettings({
 
   return (
     <section className={styles.settingsContainer}>
-      <HeaderBar chain={chain} networkId={networkId} net={net} />
+      <HeaderBar chain={settings?.chain} networkId={networkId} net={net} />
 
       <Panel
         className={styles.settingsPanel}
@@ -269,6 +263,8 @@ function SettingsOptions({
   updateSettings,
   selectedSetting,
   settingName,
+  renderOption,
+  settingsOptionWrapperClassName = styles.settingsOptionWrapper,
 }: {
   activeTab: {
     label: string,
@@ -278,6 +274,8 @@ function SettingsOptions({
   selectedSetting: string,
   updateSettings: ({ [key: string]: string }) => void,
   settingName: string,
+  renderOption?: Function,
+  settingsOptionWrapperClassName?: string,
 }) {
   const { settings } = useSettingsContext()
   return (
@@ -297,12 +295,12 @@ function SettingsOptions({
             padding="12px 12px 12px 0"
             key={i}
             borderBottom={
-              settings.theme === THEMES.LIGHT
+              settings?.theme === THEMES.LIGHT
                 ? 'solid thin #5c677f1b'
                 : 'solid thin #394152e6'
             }
             cursor="pointer"
-            className={styles.settingsOptionWrapper}
+            className={settingsOptionWrapperClassName}
             maxWidth={850}
             onClick={() => updateSettings({ [settingName]: option })}
           >
@@ -312,7 +310,8 @@ function SettingsOptions({
               alignItems="center"
               justifyContent="space-between"
             >
-              {option}
+              {renderOption ? renderOption(option) : option}
+
               {option === selectedSetting && (
                 <Box className={styles.activeSettingCheckWrapper}>
                   <CheckMarkIcon />
@@ -344,31 +343,13 @@ function ActiveSettingsTab({
 }) {
   const { settings, setSetting } = useSettingsContext()
 
-  let parsedExplorerOptions
-
-  if (settings.chain === 'neo3') {
-    parsedExplorerOptions = [
-      {
-        value: EXPLORERS.DORA,
-        label: EXPLORERS.DORA,
-      },
-    ]
-  } else {
-    parsedExplorerOptions = Object.keys(EXPLORERS).map(key => ({
-      value: key,
-      label: EXPLORERS[key],
-    }))
-  }
-
   const selectedNetworkSetting = () => {
     if (net === 'MainNet') {
       return 'MainNet (default)'
     }
-
     if (net === 'TestNet') {
       return 'TestNet'
     }
-
     return 'Custom'
   }
 
@@ -404,7 +385,7 @@ function ActiveSettingsTab({
           activeTab={activeTab}
           /* $FlowFixMe */
           options={Object.values(THEMES)}
-          selectedSetting={settings.theme}
+          selectedSetting={settings?.theme}
           /* $FlowFixMe */
           updateSettings={({ theme }) => setSetting({ theme })}
         />
@@ -436,29 +417,29 @@ function ActiveSettingsTab({
       return (
         <SettingsOptions
           settingName="language"
+          renderOption={option => {
+            const language = LANGUAGE_OPTIONS.find(
+              ({ label }) => label === option,
+            )
+            /* $FlowFixMe */
+            return (
+              <Box display="flex" alignItems="center">
+                {language?.label}
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  marginLeft="12px"
+                  className={styles.flagIconContainer}
+                >
+                  {/*  $FlowFixMe  */}
+                  {language?.renderFlag()}
+                </Box>
+              </Box>
+            )
+          }}
           activeTab={activeTab}
           options={LANGUAGE_OPTIONS.map(({ label }) => label)}
-          selectedSetting={
-            /* $FlowFixMe */
-            LANGUAGE_OPTIONS.find(({ value }) => value === settings.language)
-              ?.label
-          }
-          /* $FlowFixMe */
-          updateSettings={async ({ language }) => {
-            const nextLanguage = LANGUAGE_OPTIONS.find(
-              option => option.label === language,
-            )?.value
-            /* $FlowFixMe */
-            await setSetting({ language: nextLanguage })
-          }}
-        />
-      )
-    case SETTINGS_TABS.BLOCK_EXPLORER.label:
-      return (
-        <SettingsOptions
-          settingName="explorer"
-          activeTab={activeTab}
-          options={parsedExplorerOptions.map(({ label }) => label)}
+          settingsOptionWrapperClassName={styles.languageSettingsOptionWrapper}
           selectedSetting={
             /* $FlowFixMe */
             LANGUAGE_OPTIONS.find(({ value }) => value === settings.language)

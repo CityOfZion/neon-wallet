@@ -41,6 +41,7 @@ const initialState = {
         language: DEFAULT_LANGUAGE,
         currency: DEFAULT_CURRENCY_CODE,
         soundEnabled: true,
+        chain: 'neo3',
       },
     },
   },
