@@ -50,6 +50,22 @@ $panel-top-margin: 25px;
   }
 }
 
+.addNetworkIconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  svg {
+    max-width: 22px;
+    width: 22px;
+    height: 22px;
+    max-height: 22px;
+    path {
+      fill: var(--input-active-border) !important;
+    }
+  }
+}
+
 .settingsIconContainer:hover,
 .settingsTabWrapper:hover {
   color: var(--input-active-border) !important;

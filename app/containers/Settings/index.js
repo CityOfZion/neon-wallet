@@ -42,8 +42,12 @@ const actionCreators = {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(actionCreators, dispatch)
 
-const mapSaveNodeActionsToProps = actions => ({
-  saveSelectedNode: ({ url, net }) => actions.call({ url, net }),
+const mapAccountsActionsToProps = actions => ({
+  setAccounts: accounts => actions.call(accounts),
+})
+
+const mapN3AccountsActionsToProps = actions => ({
+  setN3Accounts: accounts => actions.call(accounts),
 })
 
 const mapAccountActionsToProps = (actions, props) => ({
@@ -64,6 +68,14 @@ const mapStateToProps = () => ({
   networks: getNetworks(),
 })
 
+const mapSaveNodeActionsToProps = actions => ({
+  saveSelectedNode: ({ url, net }) => actions.call({ url, net }),
+})
+
+const mapSelectedNodeDataToProps = url => ({
+  selectedNode: url,
+})
+
 export default compose(
   connect(
     mapStateToProps,
@@ -71,8 +83,11 @@ export default compose(
   ),
   withNetworkData(),
   withAuthData(),
-  withActions(nodeStorageActions, mapSaveNodeActionsToProps),
   withRecall(accountActions, ['net']),
   withActions(accountActions, mapAccountActionsToProps),
   withActions(networkActions, mapNetworkActionsToProps),
+  withActions(updateAccountsActions, mapAccountsActionsToProps),
+  withActions(nodeStorageActions, mapSaveNodeActionsToProps),
+  withActions(updateN3AccountsActions, mapN3AccountsActionsToProps),
+  withData(nodeStorageActions, mapSelectedNodeDataToProps),
 )(Settings)

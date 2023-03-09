@@ -109,7 +109,7 @@ export default class NetworkConfigurationTooltip extends React.Component<
             </SettingsItem>
             <div className={styles.tooltipItemBorder} />
             <div className={styles.buttonContainer}>
-              <Link to={ROUTES.NETWORK_CONFIGURATION}>
+              <Link to={ROUTES.SETTINGS}>
                 <Button
                   shouldCenterButtonLabelText
                   elevated

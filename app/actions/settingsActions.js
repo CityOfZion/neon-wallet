@@ -23,6 +23,7 @@ export type Settings = {
   soundEnabled: boolean,
   chain: string,
   language: string,
+  customNetworks: Array<{ rpc: string, api: string, label: string }>,
 }
 
 const STORAGE_KEY = 'settings'
@@ -37,6 +38,7 @@ const DEFAULT_SETTINGS: () => Promise<Settings> = async () => ({
   language: DEFAULT_LANGUAGE,
   // TODO: create constant like the other defaults
   chain: 'neo2',
+  customNetworks: [],
 })
 
 export const getSettings = async (): Promise<Settings> => {

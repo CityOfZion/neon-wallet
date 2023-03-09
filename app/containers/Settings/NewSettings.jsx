@@ -28,6 +28,8 @@ import TimeIcon from '../../assets/icons/time-icon.svg'
 import Gift from '../../assets/icons/gift.svg'
 import Flag from '../../assets/icons/flag.svg'
 import CheckMarkIcon from '../../assets/icons/alternate-check.svg'
+import Plus from '../../assets/icons/add.svg'
+import EditIcon from '../../assets/icons/edit.svg'
 import { ReleaseNotes } from '../../components/Modals/ReleaseNotesModal/ReleaseNotesModal'
 
 const { shell, ipcRenderer } = require('electron')
@@ -60,7 +62,6 @@ export const loadWalletRecovery = async (
         message: `An error occurred recovering wallet: ${err.message}`,
       })
     })
-
     if (recoveryData) {
       showSuccessNotification({ message: 'Recovery was successful.' })
       if (chain === 'neo2') return setAccounts(recoveryData.accounts)
@@ -110,11 +111,13 @@ const SETTINGS_LINKS = {
     label: 'Encrypt Key',
     url: ROUTES.ENCRYPT,
     renderIcon: () => <LockIcon />,
+    route: ROUTES.ENCRYPT,
   },
   RECOVER_WALLET: {
     label: 'Recover Wallet',
     url: ROUTES.ENCRYPT,
     renderIcon: () => <TimeIcon />,
+    onClick: loadWalletRecovery,
   },
 }
 
@@ -125,6 +128,11 @@ export default function NewSettings({
   handleNetworkChange,
   showModal,
   saveSelectedNode,
+  showErrorNotification,
+  showSuccessNotification,
+  setAccounts,
+  setN3Accounts,
+  selectedNode,
 }: {
   net: string,
   networkId: string,
@@ -132,6 +140,11 @@ export default function NewSettings({
   handleNetworkChange: Function,
   showModal: Function,
   saveSelectedNode: Function,
+  showErrorNotification: Function,
+  showSuccessNotification: Function,
+  setAccounts: (Array<Object>) => any,
+  setN3Accounts: (Array<Object>) => any,
+  selectedNode: string,
 }) {
   const { settings } = useSettingsContext()
 
@@ -209,22 +222,50 @@ export default function NewSettings({
             <Box margin="12px 0" borderTop="solid thin #5c677f">
               <Box marginTop="12px" />
 
-              {/* $FlowFixMe */}
-              {Object.values(SETTINGS_LINKS).map(({ label, renderIcon }) => (
-                <Box
-                  cursor="pointer"
-                  className={styles.settingsTabWrapper}
-                  padding={12}
-                  key={label}
-                  display="flex"
-                  alignItems="center"
-                >
-                  <Box mr="12px" className={styles.settingsIconContainer}>
-                    {renderIcon()}
-                  </Box>
-                  {label}
-                </Box>
-              ))}
+              {Object.values(SETTINGS_LINKS).map(
+                /* $FlowFixMe */
+                ({ label, renderIcon, route, onClick }) =>
+                  route ? (
+                    <Link to={route}>
+                      <Box
+                        cursor="pointer"
+                        className={styles.settingsTabWrapper}
+                        padding={12}
+                        key={label}
+                        display="flex"
+                        alignItems="center"
+                      >
+                        <Box mr="12px" className={styles.settingsIconContainer}>
+                          {renderIcon()}
+                        </Box>
+                        {label}
+                      </Box>
+                    </Link>
+                  ) : (
+                    <Box
+                      cursor="pointer"
+                      className={styles.settingsTabWrapper}
+                      padding={12}
+                      key={label}
+                      display="flex"
+                      alignItems="center"
+                      onClick={() =>
+                        onClick({
+                          chain: settings.chain,
+                          showSuccessNotification,
+                          showErrorNotification,
+                          setAccounts,
+                          setN3Accounts,
+                        })
+                      }
+                    >
+                      <Box mr="12px" className={styles.settingsIconContainer}>
+                        {renderIcon()}
+                      </Box>
+                      {label}
+                    </Box>
+                  ),
+              )}
             </Box>
           </Box>
 
@@ -237,6 +278,7 @@ export default function NewSettings({
               handleNetworkChange={handleNetworkChange}
               showModal={showModal}
               saveSelectedNode={saveSelectedNode}
+              selectedNode={selectedNode}
             />
           </Box>
         </Box>
@@ -264,6 +306,7 @@ function SettingsOptions({
   selectedSetting,
   settingName,
   renderOption,
+  renderHeader,
   settingsOptionWrapperClassName = styles.settingsOptionWrapper,
 }: {
   activeTab: {
@@ -275,6 +318,7 @@ function SettingsOptions({
   updateSettings: ({ [key: string]: string }) => void,
   settingName: string,
   renderOption?: Function,
+  renderHeader?: Function,
   settingsOptionWrapperClassName?: string,
 }) {
   const { settings } = useSettingsContext()
@@ -287,7 +331,7 @@ function SettingsOptions({
         marginBottom="12px"
         color="var(--input-active-border)"
       >
-        {activeTab.label}
+        {renderHeader ? renderHeader() : activeTab.label}
       </Box>
       <Box maxHeight="300px" height="300px" overflow="auto">
         {options.map((option, i) => (
@@ -331,6 +375,7 @@ function ActiveSettingsTab({
   handleNetworkChange,
   showModal,
   saveSelectedNode,
+  selectedNode,
 }: {
   activeTab: {
     label: string,
@@ -340,6 +385,7 @@ function ActiveSettingsTab({
   handleNetworkChange: Function,
   showModal: Function,
   saveSelectedNode: Function,
+  selectedNode: string,
 }) {
   const { settings, setSetting } = useSettingsContext()
 
@@ -350,7 +396,61 @@ function ActiveSettingsTab({
     if (net === 'TestNet') {
       return 'TestNet'
     }
-    return 'Custom'
+
+    const customNetwork = settings.customNetworks.find(
+      n => n.rpc === selectedNode,
+    )
+
+    if (customNetwork) {
+      return customNetwork.label
+    }
+
+    return ''
+  }
+
+  const networkOptions = [
+    'MainNet (default)',
+    'TestNet',
+    ...Object.values(settings?.customNetworks ?? []).map(
+      network =>
+        /* $FlowFixMe */
+        network?.label,
+    ),
+  ]
+
+  const isCustomNetworkOption = option => {
+    if (option !== 'MainNet (default)' && option !== 'TestNet') {
+      return true
+    }
+    return false
+  }
+
+  const shouldRenderEditIcon = option => {
+    if (selectedNetworkSetting() === option) {
+      return true
+    }
+    return isCustomNetworkOption(option)
+  }
+
+  const renderAddOrEditCustomNetworkModal = (option = '') => {
+    showModal(MODAL_TYPES.CUSTOM_NETWORK, {
+      network: settings.customNetworks.find(n => n.label === option),
+      handleAddCustomNetwork: ({ api, rpc, label }) => {
+        const currentCustomNetworks = settings?.customNetworks ?? []
+
+        // NOTE: if the user is editing a custom network, we need to remove the old one
+        const newCustomNetworks = currentCustomNetworks.filter(
+          n => n.label !== option,
+        )
+
+        /* $FlowFixMe */
+        setSetting({
+          customNetworks: [...newCustomNetworks, { rpc, api, label }],
+        })
+        saveSelectedNode({ url: rpc, net: 'Custom' })
+        handleNetworkChange('Custom')
+      },
+    })
   }
 
   switch (activeTab.label) {
@@ -360,20 +460,71 @@ function ActiveSettingsTab({
           settingName="network"
           activeTab={activeTab}
           /* $FlowFixMe */
-          options={['MainNet (default)', 'TestNet', 'Custom']}
+          options={networkOptions}
+          renderHeader={() => (
+            <Box
+              width="100%"
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+              color="var(--input-active-border)"
+            >
+              Network Configuration{' '}
+              {settings.chain === 'neo3' && (
+                <Box
+                  className={styles.addNetworkIconContainer}
+                  onClick={() => renderAddOrEditCustomNetworkModal()}
+                >
+                  <Plus /> <Box marginLeft="4px">Custom network</Box>
+                </Box>
+              )}
+            </Box>
+          )}
+          renderOption={option => {
+            return (
+              <Box
+                display="flex"
+                alignItems="center"
+                className={styles.activeSettingCheckWrapper}
+              >
+                {option}{' '}
+                {shouldRenderEditIcon(option) &&
+                  (isCustomNetworkOption ? (
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      ml={12}
+                      onClick={() => renderAddOrEditCustomNetworkModal(option)}
+                    >
+                      <EditIcon />
+                    </Box>
+                  ) : (
+                    <Link to={ROUTES.NODE_SELECT}>
+                      <Box display="flex" alignItems="center" ml={12}>
+                        <EditIcon />
+                      </Box>
+                    </Link>
+                  ))}
+              </Box>
+            )
+          }}
           selectedSetting={selectedNetworkSetting()}
           /* $FlowFixMe */
           updateSettings={({ network }) => {
-            if (network === 'Custom') {
-              return showModal(MODAL_TYPES.CUSTOM_NETWORK, {
-                handleAddCustomNetwork: url => {
-                  saveSelectedNode({ url, net: 'Custom' })
-                  handleNetworkChange('Custom')
-                },
-              })
+            if (network === 'MainNet (default)' || network === 'TestNet') {
+              return handleNetworkChange(
+                network === 'MainNet (default)' ? '1' : '2',
+              )
             }
 
-            handleNetworkChange(network === 'MainNet (default)' ? '1' : '2')
+            const customNetwork = settings.customNetworks.find(
+              n => n.label === network,
+            )
+
+            if (customNetwork) {
+              saveSelectedNode({ url: customNetwork.rpc, net: 'Custom' })
+              handleNetworkChange('Custom')
+            }
           }}
         />
       )

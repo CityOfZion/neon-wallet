@@ -22,6 +22,7 @@ type Props = {
   language: string,
   setSetting: ({ [key: string]: string }) => void,
   chain: string,
+  handleNetworkChange: Function,
 }
 
 type State = {
@@ -36,6 +37,7 @@ class HomeLayout extends React.Component<Props, State> {
   updateChain = n3Toggled => {
     const chain = n3Toggled ? 'neo3' : 'neo2'
     this.props.setSetting({ chain })
+    this.props.handleNetworkChange('1')
     resetCachedNode()
   }
 
