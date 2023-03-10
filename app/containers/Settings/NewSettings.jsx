@@ -19,7 +19,6 @@ import {
   THEMES,
   LANGUAGES,
   COZ_DONATIONS_ADDRESS,
-  EXPLORERS,
 } from '../../core/constants'
 import Panel from '../../components/Panel'
 
@@ -112,12 +111,6 @@ const SETTINGS_TABS: {
     renderIcon: () => <LightbulbIcon />,
     shouldDisableOption: () => false,
   },
-  // NOTE: Dora appears to be the only operational explorer at the moment
-  // EXPLORERS: {
-  //   label: 'Explorers',
-  //   renderIcon: () => <BlockExplorerIcon />,
-  //   shouldDisableOption: (chain: string) => chain === 'neo3',
-  // },
   RELEASE_NOTES: {
     label: 'Release Notes',
     renderIcon: () => <Gift />,
@@ -151,7 +144,6 @@ export default function NewSettings({
   showSuccessNotification,
   setAccounts,
   setN3Accounts,
-  selectedNode,
 }: {
   net: string,
   networkId: string,
@@ -163,7 +155,6 @@ export default function NewSettings({
   showSuccessNotification: Function,
   setAccounts: (Array<Object>) => any,
   setN3Accounts: (Array<Object>) => any,
-  selectedNode: string,
 }) {
   const { settings } = useSettingsContext()
 
@@ -302,7 +293,6 @@ export default function NewSettings({
               handleNetworkChange={handleNetworkChange}
               showModal={showModal}
               saveSelectedNode={saveSelectedNode}
-              selectedNode={selectedNode}
             />
           </Box>
         </Box>
@@ -400,7 +390,6 @@ function ActiveSettingsTab({
   handleNetworkChange,
   showModal,
   saveSelectedNode,
-  selectedNode,
 }: {
   activeTab: {
     label: string,
@@ -410,7 +399,6 @@ function ActiveSettingsTab({
   handleNetworkChange: Function,
   showModal: Function,
   saveSelectedNode: Function,
-  selectedNode: string,
 }) {
   const { settings, setSetting } = useSettingsContext()
   const [selectedNodeLabel, setSelectedNodeLabel] = React.useState('')

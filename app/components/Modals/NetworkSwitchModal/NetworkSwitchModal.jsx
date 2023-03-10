@@ -72,25 +72,6 @@ export default function NetworkSwitchModal(props: Props) {
           you are currently on {net}, would you like to change networks and
           accept this request?
         </p>
-        {/* <div>
-            <br />
-            Open Neon on your mobile device and tap "Scan QR Code" to import
-            your account
-          </div>
-
-          <div className={styles.qr}>
-            <label>
-              {' '}
-              <FormattedMessage
-                id={IS_NEP2_EXPORT ? 'encryptedKeyLabel' : 'addressLabel'}
-              />{' '}
-            </label>
-            <canvas
-              ref={node => {
-                this.targetCanvas = node
-              }}
-            />
-          </div> */}
         <div className={styles.buttonContainer}>
           <Button onClick={handleCancelClick}>Cancel</Button>
           <Button primary onClick={handleApproveClick}>

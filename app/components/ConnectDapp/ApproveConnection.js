@@ -108,8 +108,6 @@ const ApproveConnection = ({
       })
     }
 
-    console.log({ proposedNetwork, currentNetwork })
-
     if (
       proposedNetwork === 'neo3:private' &&
       proposedNetwork !== currentNetwork
