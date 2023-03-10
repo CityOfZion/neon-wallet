@@ -14,9 +14,11 @@ import NeoLogo from '../../assets/icons/neo.svg'
 import NodeSelectIcon from '../../assets/icons/node-select.svg'
 import BlockExplorerIcon from '../../assets/icons/block-explorer.svg'
 import CogIcon from '../../assets/icons/cog-icon.svg'
-import networkConfigStyles from '../../containers/NetworkConfiguration/NetworkConfiguration.scss'
+// import networkConfigStyles from '../../containers/NetworkConfiguration/NetworkConfiguration.scss'
 import settingsStyles from '../../containers/Settings/Settings.scss'
 import styles from './NetworkConfigurationTooltip.scss'
+
+import type { Settings } from '../../actions/settingsActions'
 
 type Props = {
   address: string,
@@ -24,7 +26,7 @@ type Props = {
   theme: string,
   publicKey: string,
   selectedNode: string,
-  explorer: string,
+  settings: Settings,
   intl: IntlShape,
   chain: string,
 }
@@ -33,14 +35,21 @@ export default class NetworkConfigurationTooltip extends React.Component<
   Props,
 > {
   render() {
-    const { address, publicKey, theme, intl } = this.props
+    const {
+      address,
+      publicKey,
+
+      intl,
+      settings: { blockExplorer, theme },
+    } = this.props
+
     return (
       <section
         id="network-config-tooltip"
         style={themes[theme]}
         className={classNames(
           settingsStyles.settingsItemsContainer,
-          networkConfigStyles.networkItemsContainer,
+          // networkConfigStyles.networkItemsContainer,
           styles.tooltipContainer,
         )}
       >
@@ -85,7 +94,7 @@ export default class NetworkConfigurationTooltip extends React.Component<
             >
               <div className={settingsStyles.settingsSelectContainer}>
                 <div className={styles.configLabel}>
-                  {this.props.explorer.toUpperCase()}
+                  {blockExplorer.toUpperCase()}
                 </div>
               </div>
             </SettingsItem>
@@ -98,7 +107,7 @@ export default class NetworkConfigurationTooltip extends React.Component<
               tooltip
               noBorderBottom
             >
-              <div className={networkConfigStyles.settingsSelectContainer}>
+              <div>
                 <div className={styles.configLabel}>
                   {findNetworkByDeprecatedLabel(
                     this.props.net,

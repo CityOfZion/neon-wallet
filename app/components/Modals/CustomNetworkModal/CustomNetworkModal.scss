@@ -13,3 +13,15 @@
   padding: 48px 24px;
   flex-direction: column;
 }
+
+.removeNetwork {
+  svg {
+    margin-right: 10px;
+    min-height: 24px;
+    min-width: 24px;
+
+    path {
+      fill: #d355e7 !important;
+    }
+  }
+}

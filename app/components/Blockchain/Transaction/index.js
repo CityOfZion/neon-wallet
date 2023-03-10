@@ -6,7 +6,7 @@ import { invert } from 'lodash-es'
 
 import Transaction from './Transaction'
 import withNetworkData from '../../../hocs/withNetworkData'
-import withExplorerData from '../../../hocs/withExplorerData'
+// import withExplorerData from '../../../hocs/withExplorerData'
 import withAuthData from '../../../hocs/withAuthData'
 import { showModal } from '../../../modules/modal'
 import { MODAL_TYPES } from '../../../core/constants'
@@ -32,5 +32,5 @@ export default compose(
   withAuthData(),
   withData(contactsActions, mapContactsDataToProps),
   withNetworkData(),
-  withExplorerData(),
+  // withExplorerData(),
 )(withSettingsContext(Transaction))

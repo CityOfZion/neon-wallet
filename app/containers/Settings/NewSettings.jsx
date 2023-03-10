@@ -5,6 +5,8 @@ import { Box } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import fs from 'fs'
 
+import { get } from 'lodash-es'
+import { getStorage } from '../../core/storage'
 import { recoverWallet } from '../../modules/generateWallet'
 import { useSettingsContext } from '../../context/settings/SettingsContext'
 import HeaderBar from '../../components/HeaderBar/HeaderBar'
@@ -17,6 +19,7 @@ import {
   THEMES,
   LANGUAGES,
   COZ_DONATIONS_ADDRESS,
+  EXPLORERS,
 } from '../../core/constants'
 import Panel from '../../components/Panel'
 
@@ -30,6 +33,7 @@ import Flag from '../../assets/icons/flag.svg'
 import CheckMarkIcon from '../../assets/icons/alternate-check.svg'
 import Plus from '../../assets/icons/add.svg'
 import EditIcon from '../../assets/icons/edit.svg'
+import BlockExplorerIcon from '../../assets/icons/node-select.svg'
 import { ReleaseNotes } from '../../components/Modals/ReleaseNotesModal/ReleaseNotesModal'
 
 const { shell, ipcRenderer } = require('electron')
@@ -90,20 +94,35 @@ const SETTINGS_TABS: {
   NETWORK_CONFIGURATION: {
     label: 'Network Configuration',
     renderIcon: () => <CogIcon />,
+    // shouldDisableOption: (chain: string) => chain === 'neo2',
+    shouldDisableOption: () => false,
   },
   CURRENCY: {
     label: 'Currency',
     renderIcon: () => <CurrencyIcon />,
+    shouldDisableOption: () => false,
   },
   LANGUAGE: {
     label: 'Language',
     renderIcon: () => <Flag />,
+    shouldDisableOption: () => false,
   },
   THEME: {
     label: 'Theme',
     renderIcon: () => <LightbulbIcon />,
+    shouldDisableOption: () => false,
   },
-  RELEASE_NOTES: { label: 'Release Notes', renderIcon: () => <Gift /> },
+  // NOTE: Dora appears to be the only operational explorer at the moment
+  // EXPLORERS: {
+  //   label: 'Explorers',
+  //   renderIcon: () => <BlockExplorerIcon />,
+  //   shouldDisableOption: (chain: string) => chain === 'neo3',
+  // },
+  RELEASE_NOTES: {
+    label: 'Release Notes',
+    renderIcon: () => <Gift />,
+    shouldDisableOption: () => false,
+  },
 }
 
 const SETTINGS_LINKS = {
@@ -182,42 +201,47 @@ export default function NewSettings({
             width={375}
             maxWidth={400}
           >
-            {/* $FlowFixMe */}
-            {Object.values(SETTINGS_TABS).map(({ label, renderIcon }) => (
-              <Box
-                cursor="pointer"
-                padding={12}
-                key={label}
-                _hover={{ color: 'var(--input-active-border)' }}
-                color={
-                  label === activeTab.label ? 'var(--input-active-border)' : ''
-                }
-                className={styles.settingsTabWrapper}
-                onClick={() =>
-                  setActiveTab(
-                    /* $FlowFixMe */
-                    Object.values(SETTINGS_TABS).find(
-                      /* $FlowFixMe */
-                      t => t?.label === label,
-                    ) || SETTINGS_TABS.NETWORK_CONFIGURATION,
-                  )
-                }
-              >
-                <Box display="flex" alignItems="center">
+            {Object.values(SETTINGS_TABS).map(
+              /* $FlowFixMe */
+              ({ label, renderIcon, shouldDisableOption }) =>
+                shouldDisableOption(settings.chain) ? null : (
                   <Box
-                    className={
+                    cursor="pointer"
+                    padding={12}
+                    key={label}
+                    _hover={{ color: 'var(--input-active-border)' }}
+                    color={
                       label === activeTab.label
-                        ? styles.activeSettingsIconContainer
-                        : styles.settingsIconContainer
+                        ? 'var(--input-active-border)'
+                        : ''
                     }
-                    mr="12px"
+                    className={styles.settingsTabWrapper}
+                    onClick={() =>
+                      setActiveTab(
+                        /* $FlowFixMe */
+                        Object.values(SETTINGS_TABS).find(
+                          /* $FlowFixMe */
+                          t => t?.label === label,
+                        ) || SETTINGS_TABS.NETWORK_CONFIGURATION,
+                      )
+                    }
                   >
-                    {renderIcon()}
+                    <Box display="flex" alignItems="center">
+                      <Box
+                        className={
+                          label === activeTab.label
+                            ? styles.activeSettingsIconContainer
+                            : styles.settingsIconContainer
+                        }
+                        mr="12px"
+                      >
+                        {renderIcon()}
+                      </Box>
+                      {label}
+                    </Box>
                   </Box>
-                  {label}
-                </Box>
-              </Box>
-            ))}
+                ),
+            )}
 
             <Box margin="12px 0" borderTop="solid thin #5c677f">
               <Box marginTop="12px" />
@@ -329,6 +353,7 @@ function SettingsOptions({
         width="100%"
         borderBottom="solid thin #5c677f"
         marginBottom="12px"
+        marginTop="11px"
         color="var(--input-active-border)"
       >
         {renderHeader ? renderHeader() : activeTab.label}
@@ -388,6 +413,20 @@ function ActiveSettingsTab({
   selectedNode: string,
 }) {
   const { settings, setSetting } = useSettingsContext()
+  const [selectedNodeLabel, setSelectedNodeLabel] = React.useState('')
+
+  React.useEffect(() => {
+    const getSelectedNodeLabel = async () => {
+      const storage = await getStorage(`selectedNode-${net}`).catch(
+        console.error,
+      )
+      const labelInStorage = get(storage, 'label')
+      if (labelInStorage) {
+        setSelectedNodeLabel(labelInStorage)
+      }
+    }
+    getSelectedNodeLabel()
+  }, [])
 
   const selectedNetworkSetting = () => {
     if (net === 'MainNet') {
@@ -397,8 +436,9 @@ function ActiveSettingsTab({
       return 'TestNet'
     }
 
-    const customNetwork = settings.customNetworks.find(
-      n => n.rpc === selectedNode,
+    /* $FlowFixMe */
+    const customNetwork = settings?.customNetworks?.find(
+      n => n.label === selectedNodeLabel,
     )
 
     if (customNetwork) {
@@ -408,15 +448,18 @@ function ActiveSettingsTab({
     return ''
   }
 
-  const networkOptions = [
-    'MainNet (default)',
-    'TestNet',
-    ...Object.values(settings?.customNetworks ?? []).map(
-      network =>
-        /* $FlowFixMe */
-        network?.label,
-    ),
-  ]
+  const networkOptions = ['MainNet (default)', 'TestNet']
+
+  if (settings?.chain === 'neo3') {
+    networkOptions.push(
+      /* $FlowFixMe */
+      ...Object.values(settings?.customNetworks ?? []).map(
+        network =>
+          /* $FlowFixMe */
+          network?.label,
+      ),
+    )
+  }
 
   const isCustomNetworkOption = option => {
     if (option !== 'MainNet (default)' && option !== 'TestNet') {
@@ -425,16 +468,24 @@ function ActiveSettingsTab({
     return false
   }
 
-  const shouldRenderEditIcon = option => {
-    if (selectedNetworkSetting() === option) {
-      return true
-    }
-    return isCustomNetworkOption(option)
-  }
-
   const renderAddOrEditCustomNetworkModal = (option = '') => {
     showModal(MODAL_TYPES.CUSTOM_NETWORK, {
       network: settings.customNetworks.find(n => n.label === option),
+      handleRemoveCustomNetwork: label => {
+        const currentCustomNetworks = settings?.customNetworks ?? []
+
+        // NOTE: if the user is editing a custom network, we need to remove the old one
+        const newCustomNetworks = currentCustomNetworks.filter(
+          n => n.label !== option,
+        )
+        /* $FlowFixMe */
+        setSetting({
+          customNetworks: [...newCustomNetworks],
+        })
+
+        // NOTE: switch the user back to mainnet if they delete a network
+        handleNetworkChange('1')
+      },
       handleAddCustomNetwork: ({ api, rpc, label }) => {
         const currentCustomNetworks = settings?.customNetworks ?? []
 
@@ -447,10 +498,37 @@ function ActiveSettingsTab({
         setSetting({
           customNetworks: [...newCustomNetworks, { rpc, api, label }],
         })
-        saveSelectedNode({ url: rpc, net: 'Custom' })
+        saveSelectedNode({ url: rpc, net: 'Custom', label })
         handleNetworkChange('Custom')
       },
     })
+  }
+
+  const renderEditIcon = option => {
+    if (isCustomNetworkOption(option)) {
+      return (
+        <Box
+          display="flex"
+          alignItems="center"
+          ml={12}
+          onClick={() => renderAddOrEditCustomNetworkModal(option)}
+        >
+          <EditIcon />
+        </Box>
+      )
+    }
+
+    if (selectedNetworkSetting() === option) {
+      return (
+        <Link to={ROUTES.NODE_SELECT}>
+          <Box display="flex" alignItems="center" ml={12}>
+            <BlockExplorerIcon />
+          </Box>
+        </Link>
+      )
+    }
+
+    return null
   }
 
   switch (activeTab.label) {
@@ -487,24 +565,7 @@ function ActiveSettingsTab({
                 alignItems="center"
                 className={styles.activeSettingCheckWrapper}
               >
-                {option}{' '}
-                {shouldRenderEditIcon(option) &&
-                  (isCustomNetworkOption ? (
-                    <Box
-                      display="flex"
-                      alignItems="center"
-                      ml={12}
-                      onClick={() => renderAddOrEditCustomNetworkModal(option)}
-                    >
-                      <EditIcon />
-                    </Box>
-                  ) : (
-                    <Link to={ROUTES.NODE_SELECT}>
-                      <Box display="flex" alignItems="center" ml={12}>
-                        <EditIcon />
-                      </Box>
-                    </Link>
-                  ))}
+                {option} {renderEditIcon(option)}
               </Box>
             )
           }}
@@ -522,7 +583,12 @@ function ActiveSettingsTab({
             )
 
             if (customNetwork) {
-              saveSelectedNode({ url: customNetwork.rpc, net: 'Custom' })
+              saveSelectedNode({
+                url: customNetwork.rpc,
+                net: 'Custom',
+                label: customNetwork.label,
+              })
+              setSelectedNodeLabel(customNetwork.label)
               handleNetworkChange('Custom')
             }
           }}
@@ -563,7 +629,6 @@ function ActiveSettingsTab({
           }}
         />
       )
-
     case SETTINGS_TABS.LANGUAGE.label:
       return (
         <SettingsOptions

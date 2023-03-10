@@ -10,6 +10,7 @@ import {
   DEFAULT_APP_METADATA,
   DEFAULT_PROJECT_ID,
   DEFAULT_RELAY_PROVIDER,
+  DEFAULT_NAMESPACES,
 } from '../../core/constants'
 import IntlWrapper from './IntlWrapper'
 import Routes from './Routes'
@@ -22,6 +23,7 @@ const wcOptions = {
   appMetadata: DEFAULT_APP_METADATA,
   relayServer: DEFAULT_RELAY_PROVIDER,
   projectId: DEFAULT_PROJECT_ID,
+  nameSpaces: DEFAULT_NAMESPACES,
 }
 
 const Root = ({ store }: Props) => (

@@ -50,8 +50,8 @@ export default compose(
   withCall(nodeStorageActions),
   withData(accountsActions, mapAccountsDataToProps),
   withData(nodeStorageActions, mapSelectedNodeDataToProps),
-  withExplorerData(),
+  // withExplorerData(),
   withAuthData(),
   withThemeData(),
   injectIntl,
-)(withSettingsContext(NetworkConfigurationTooltip))
+)(NetworkConfigurationTooltip)

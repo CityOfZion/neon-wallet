@@ -49,8 +49,7 @@ export default class HeaderBar extends React.PureComponent<Props> {
               display="flex"
               alignItems="center"
             >
-              {net}
-
+              Custom network
               <WarningIcon />
             </Box>
           ) : (

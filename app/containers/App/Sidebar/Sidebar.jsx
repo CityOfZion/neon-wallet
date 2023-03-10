@@ -20,6 +20,7 @@ import CanvasIcon from '../../../assets/navigation/canvas.svg'
 import LogoWithTooltipAndBlockHeight from '../../../components/LogoWithTooltipAndBlockHeight/LogoWithTooltipAndBlockHeight'
 
 import styles from './Sidebar.scss'
+import { useSettingsContext } from '../../../context/settings/SettingsContext'
 
 type Props = {
   className: string,
@@ -29,6 +30,7 @@ type Props = {
   store: any,
   chain: string,
   isWatchOnly?: boolean,
+  net: string,
 }
 
 const Sidebar = ({
@@ -39,9 +41,12 @@ const Sidebar = ({
   store,
   chain,
   isWatchOnly,
+  net,
 }: Props) => {
   const isConditionalWatchOnlyLink = () =>
     chain === 'neo2' || (chain === 'neo3' && !isWatchOnly)
+
+  const { settings } = useSettingsContext()
 
   return (
     <div
@@ -52,6 +57,7 @@ const Sidebar = ({
           store={store}
           theme={theme}
           count={count}
+          settings={settings}
         />
         <NavLink
           id="dashboard"
@@ -66,30 +72,32 @@ const Sidebar = ({
           </div>
         </NavLink>
 
-        <NavLink
-          id="history"
-          exact
-          to={ROUTES.TRANSACTION_HISTORY}
-          className={styles.navItem}
-          activeClassName={styles.active}
-        >
-          {pendingTransactionsCount > 0 && (
-            <div
-              className={
-                chain === 'neo2'
-                  ? styles.pendingTransactionsCount
-                  : styles.pendingTransactionsCountN3
-              }
-            >
-              {pendingTransactionsCount}
+        {net !== 'Custom' && (
+          <NavLink
+            id="history"
+            exact
+            to={ROUTES.TRANSACTION_HISTORY}
+            className={styles.navItem}
+            activeClassName={styles.active}
+          >
+            {pendingTransactionsCount > 0 && (
+              <div
+                className={
+                  chain === 'neo2'
+                    ? styles.pendingTransactionsCount
+                    : styles.pendingTransactionsCountN3
+                }
+              >
+                {pendingTransactionsCount}
+              </div>
+            )}
+            <HistoryIcon />
+            <div>
+              {' '}
+              <FormattedMessage id="sidebarActivity" />{' '}
             </div>
-          )}
-          <HistoryIcon />
-          <div>
-            {' '}
-            <FormattedMessage id="sidebarActivity" />{' '}
-          </div>
-        </NavLink>
+          </NavLink>
+        )}
 
         {isConditionalWatchOnlyLink && [
           <NavLink
@@ -175,17 +183,18 @@ const Sidebar = ({
             </NavLink>
           )}
 
-        {chain === 'neo3' && (
-          <NavLink
-            id="NFT"
-            to={ROUTES.NFT}
-            className={styles.navItem}
-            activeClassName={styles.active}
-          >
-            <CanvasIcon height="20px" />
-            <div> NFTs</div>
-          </NavLink>
-        )}
+        {chain === 'neo3' &&
+          net !== 'Custom' && (
+            <NavLink
+              id="NFT"
+              to={ROUTES.NFT}
+              className={styles.navItem}
+              activeClassName={styles.active}
+            >
+              <CanvasIcon height="20px" />
+              <div> NFTs</div>
+            </NavLink>
+          )}
 
         <NavLink
           id="mobile"

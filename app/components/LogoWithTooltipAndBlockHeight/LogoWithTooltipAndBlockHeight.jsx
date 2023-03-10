@@ -15,11 +15,12 @@ type Props = {
   count: number,
   theme: string,
   store: any,
+  settings: Settings,
 }
 
 class LogoWithTooltipAndBlockHeight extends React.Component<Props> {
   render() {
-    const { count, theme, store } = this.props
+    const { count, theme, store, settings } = this.props
 
     const themeBasedLogo =
       theme === 'Light' ? LightLogoWithoutText : DarkLogoWithoutText
@@ -32,7 +33,7 @@ class LogoWithTooltipAndBlockHeight extends React.Component<Props> {
         onShow={() => this.handleOnShow()}
         html={
           <IntlWrapper store={store}>
-            <NetworkConfigurationTooltip store={store} />{' '}
+            <NetworkConfigurationTooltip settings={settings} store={store} />{' '}
           </IntlWrapper>
         }
       >

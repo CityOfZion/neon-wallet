@@ -9,12 +9,14 @@ import styles from './CustomNetworkModal.scss'
 import CloseButton from '../../CloseButton'
 import Add from '../../../assets/icons/add.svg'
 import Button from '../../Button'
+import DeleteIcon from '../../../assets/icons/delete.svg'
 import TextInput from '../../Inputs/TextInput'
 import { useSettingsContext } from '../../../context/settings/SettingsContext'
 
 type Props = {
   hideModal: Function,
   handleAddCustomNetwork: Function,
+  handleRemoveCustomNetwork: Function,
   network: {
     rpc: string,
     api: string,
@@ -26,6 +28,7 @@ const CustomNetworkModal = ({
   hideModal,
   handleAddCustomNetwork,
   network,
+  handleRemoveCustomNetwork,
 }: Props) => {
   const { settings } = useSettingsContext()
   const [rpc, setRpc] = React.useState('')
@@ -37,20 +40,6 @@ const CustomNetworkModal = ({
 
   async function validateRpc(rpcUrl: string) {
     try {
-      const labels = settings.customNetworks.map(({ rpc }) => rpc)
-      const alreadyExists = labels.includes(rpcUrl)
-      if (alreadyExists) {
-        if (network) {
-          if (network.rpc === rpcUrl) {
-            return setIsValidRpcUrl(true)
-          }
-        }
-        setIsValidRpcUrl(false)
-        return setRpcError(
-          `A custom network with the url ${rpcUrl} already exists`,
-        )
-      }
-
       const rpcClient = new neonJsRpc.RPCClient(rpcUrl, '2.3.3')
       const results = await rpcClient.getBlockCount()
 
@@ -68,11 +57,13 @@ const CustomNetworkModal = ({
       }
     }
     const labels = settings.customNetworks.map(({ label }) => label)
+
     const alreadyExists = labels.includes(name)
+
     if (alreadyExists) {
-      setIsValidLabel(false)
+      return setIsValidLabel(false)
     }
-    return true
+    return setIsValidLabel(true)
   }
 
   useEffect(() => {
@@ -108,7 +99,31 @@ const CustomNetworkModal = ({
           </div>
         )}
       >
-        <Box width="400px" marginTop="48px">
+        <Box width="420px">
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            margin="36px 0"
+            borderBottom="solid thin var(--panel-full-height-instructions-border)"
+            paddingBottom="5px"
+            fontSize="14px"
+          >
+            <Box className={styles.title}>Modify Network</Box>
+            <Box
+              cursor="pointer"
+              color="#d355e7"
+              className={styles.removeNetwork}
+              display="flex"
+              alignItems="center"
+              onClick={() => {
+                handleRemoveCustomNetwork(network)
+                hideModal()
+              }}
+            >
+              <DeleteIcon mr="-2" /> Remove network
+            </Box>
+          </Box>
+
           <TextInput
             label="Network name"
             placeholder="privatenet48"
@@ -117,11 +132,7 @@ const CustomNetworkModal = ({
               setLabel(event.target.value)
               validateLabel(event.target.value)
             }}
-            error={
-              !isValidLabel &&
-              label &&
-              `A custom network with the name ${label} already exists`
-            }
+            error={!isValidLabel && label && 'Network name already exists'}
           />
 
           <TextInput
@@ -144,7 +155,7 @@ const CustomNetworkModal = ({
             error={!isValidRpcUrl && rpc && rpcError}
           />
 
-          <Box marginTop={36} marginBottom={100}>
+          <Box marginTop={64} marginBottom={100}>
             <Button
               onClick={() => {
                 handleAddCustomNetwork({ api, rpc, label })
@@ -152,7 +163,7 @@ const CustomNetworkModal = ({
               }}
               primary
               type="submit"
-              disabled={!isValidRpcUrl && !isValidLabel && label}
+              disabled={!isValidRpcUrl || !isValidLabel || !label}
             >
               Add
             </Button>

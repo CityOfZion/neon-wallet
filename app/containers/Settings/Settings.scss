@@ -16,6 +16,7 @@ $panel-top-margin: 25px;
     .settingsPanelHeader {
       display: flex;
       align-items: center;
+      justify-content: space-between;
     }
 
     .settingsDonations {
