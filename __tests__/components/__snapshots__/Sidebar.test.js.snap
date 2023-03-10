@@ -715,7 +715,8 @@ exports[`Sidebar renders without crashing 1`] = `
                                       <IntlWrapper
                                         store={undefined}
                                       >
-                                        <Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(EnhancedComponent)))))))))))))))))
+                                        <Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))))))
+                                          settings={undefined}
                                           store={undefined}
                                         />
                                          
@@ -744,7 +745,8 @@ exports[`Sidebar renders without crashing 1`] = `
                                         <IntlWrapper
                                           store={undefined}
                                         >
-                                          <Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(EnhancedComponent)))))))))))))))))
+                                          <Connect(Connect(withData(withProps(Connect(withCall(Connect(withData(Connect(withData(Connect(withData(Connect(withData(injectIntl(NetworkConfigurationTooltip)))))))))))))))
+                                            settings={undefined}
                                             store={undefined}
                                           />
                                            

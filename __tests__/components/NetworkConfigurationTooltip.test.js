@@ -68,7 +68,7 @@ const networkConfigTooltipSetup = (
     <Provider store={store}>
       <IntlWrapper lang="en">
         <MemoryRouter initialEntries={['/']} keyLength={0}>
-          <NetworkConfigurationTooltip />
+          <NetworkConfigurationTooltip settings={{ blockExplorer: 'Dora' }} />
         </MemoryRouter>
       </IntlWrapper>
     </Provider>,

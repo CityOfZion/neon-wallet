@@ -195,7 +195,7 @@ export default function NewSettings({
             {Object.values(SETTINGS_TABS).map(
               /* $FlowFixMe */
               ({ label, renderIcon, shouldDisableOption }) =>
-                shouldDisableOption(settings.chain) ? null : (
+                shouldDisableOption(settings?.chain) ? null : (
                   <Box
                     cursor="pointer"
                     padding={12}
@@ -266,7 +266,7 @@ export default function NewSettings({
                       alignItems="center"
                       onClick={() =>
                         onClick({
-                          chain: settings.chain,
+                          chain: settings?.chain,
                           showSuccessNotification,
                           showErrorNotification,
                           setAccounts,
@@ -536,7 +536,7 @@ function ActiveSettingsTab({
               color="var(--input-active-border)"
             >
               Network Configuration{' '}
-              {settings.chain === 'neo3' && (
+              {settings?.chain === 'neo3' && (
                 <Box
                   className={styles.addNetworkIconContainer}
                   onClick={() => renderAddOrEditCustomNetworkModal()}
