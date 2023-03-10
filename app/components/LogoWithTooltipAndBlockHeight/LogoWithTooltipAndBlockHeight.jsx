@@ -11,6 +11,8 @@ import IntlWrapper from '../Root/IntlWrapper'
 import { LIGHT_NETWORK_CONFIG_TOOLTIP } from '../../themes/Light'
 import { DARK_NETWORK_CONFIG_TOOLTIP } from '../../themes/Dark'
 
+import type { Settings } from '../../actions/settingsActions'
+
 type Props = {
   count: number,
   theme: string,
