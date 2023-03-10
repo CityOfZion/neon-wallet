@@ -546,17 +546,15 @@ function ActiveSettingsTab({
               )}
             </Box>
           )}
-          renderOption={option => {
-            return (
-              <Box
-                display="flex"
-                alignItems="center"
-                className={styles.activeSettingCheckWrapper}
-              >
-                {option} {renderEditIcon(option)}
-              </Box>
-            )
-          }}
+          renderOption={option => (
+            <Box
+              display="flex"
+              alignItems="center"
+              className={styles.activeSettingCheckWrapper}
+            >
+              {option} {renderEditIcon(option)}
+            </Box>
+          )}
           selectedSetting={selectedNetworkSetting()}
           /* $FlowFixMe */
           updateSettings={({ network }) => {
