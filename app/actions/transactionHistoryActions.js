@@ -149,14 +149,16 @@ export async function computeN3Activity(
         }
         // check for gas claim
         if (
-          invocation.metadata.scripthash === '0xef4073a0f2b305a38ec4050e4d3d28bc40ea63f5' &&
+          invocation.metadata.scripthash ===
+            '0xef4073a0f2b305a38ec4050e4d3d28bc40ea63f5' &&
           invocation.metadata.amount === 0
         ) {
           invocation.type = 'CLAIM'
-          invocation.metadata.summary = 'GAS Claim to ' + invocation.metadata.to
+          invocation.metadata.summary = `GAS Claim to ${invocation.metadata.to}`
           invocation.metadata.symbol = 'GAS'
           image = getImageBySymbol(invocation.metadata.symbol)
-          invocation.metadata.amount = Number(item.transfers[1]?.amount) / 10 ** 8
+          invocation.metadata.amount =
+            Number(item.transfers[1]?.amount) / 10 ** 8
         }
         // flatten the invocations into individual events to support existing components
         invocation.metadata.image = image
