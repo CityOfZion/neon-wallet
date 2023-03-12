@@ -25,7 +25,7 @@ describe('N3ClaimTest', () => {
                 sender: "NdFBzZVMUXjdwnaDfeMK4zEVYEzjiVhFBt",
                 sysfee: "997775",
                 time: "1678191213.077000",
-                type: "CLAIM",
+                type: "nep17_transfer",
                 vmstate: "HALT"}],
             netfee: "122752",
             notifications: [{
