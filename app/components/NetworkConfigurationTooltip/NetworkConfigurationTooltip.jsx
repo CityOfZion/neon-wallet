@@ -31,7 +31,7 @@ type Props = {
 }
 
 type State = {
-  VotedNode: list,
+  VotedNode: Array<any>,
 }
 
 export default class NetworkConfigurationTooltip extends React.Component<
