@@ -161,7 +161,7 @@ exports[`Sidebar renders without crashing 1`] = `
             "modalActionConfirm": "Confirm",
             "modifyDetails": "Modify Details",
             "networkConfigTooltipAddress": "ADDRESS:",
-            "networkConfigTooltipNodeRanking": "Candidate Node Rank:",
+            "networkConfigTooltipNodeRanking": "Candidate Node Ranking:",
             "networkConfigTooltipPublicKey": "PUBLIC KEY:",
             "networkConfigTooltipUpdateSettings": "Update Settings",
             "networkConfigTooltipVotedNode": "Voted Candidate Node:",
@@ -849,7 +849,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                               "modalActionConfirm": "Confirm",
                                               "modifyDetails": "Modify Details",
                                               "networkConfigTooltipAddress": "ADDRESS:",
-                                              "networkConfigTooltipNodeRanking": "Candidate Node Rank:",
+                                              "networkConfigTooltipNodeRanking": "Candidate Node Ranking:",
                                               "networkConfigTooltipPublicKey": "PUBLIC KEY:",
                                               "networkConfigTooltipUpdateSettings": "Update Settings",
                                               "networkConfigTooltipVotedNode": "Voted Candidate Node:",
@@ -1220,7 +1220,7 @@ exports[`Sidebar renders without crashing 1`] = `
                                                   className="nodeRankingInfo"
                                                 >
                                                   <span>
-                                                    Candidate Node Rank:
+                                                    Candidate Node Ranking:
                                                   </span>
                                                   <div
                                                     className="nodeRanking"
