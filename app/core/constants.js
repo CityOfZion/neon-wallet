@@ -376,6 +376,7 @@ export const DEFAULT_METHODS = [
   'testInvoke',
   'signMessage',
   'verifyMessage',
+  'traverseIterator',
   'getapplicationlog',
   'getrawmempool',
   'getcontractstate',
@@ -384,6 +385,7 @@ export const DEFAULT_METHODS = [
 export const DEFAULT_AUTOACCEPT_METHODS = [
   'testInvoke',
   'verifyMessage',
+  'traverseIterator',
   'getapplicationlog',
   'getrawmempool',
   'getcontractstate',
