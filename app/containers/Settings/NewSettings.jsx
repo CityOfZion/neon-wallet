@@ -91,28 +91,37 @@ const SETTINGS_TABS: {
   },
 } = {
   NETWORK_CONFIGURATION: {
-    label: 'Network Configuration',
+    label: 'Network configuration',
+    renderTranslatedLabel: () => (
+      <FormattedMessage id="settingsNetworkConfigLabel" />
+    ),
     renderIcon: () => <CogIcon />,
     // shouldDisableOption: (chain: string) => chain === 'neo2',
     shouldDisableOption: () => false,
   },
   CURRENCY: {
     label: 'Currency',
+    renderTranslatedLabel: () => <FormattedMessage id="settingCurrencyLabel" />,
     renderIcon: () => <CurrencyIcon />,
     shouldDisableOption: () => false,
   },
   LANGUAGE: {
     label: 'Language',
+    renderTranslatedLabel: () => (
+      <FormattedMessage id="settingsLanguageLabel" />
+    ),
     renderIcon: () => <Flag />,
     shouldDisableOption: () => false,
   },
   THEME: {
     label: 'Theme',
+    renderTranslatedLabel: () => <FormattedMessage id="settingsThemeLabel" />,
     renderIcon: () => <LightbulbIcon />,
     shouldDisableOption: () => false,
   },
   RELEASE_NOTES: {
     label: 'Release Notes',
+    renderTranslatedLabel: () => 'Release Notes',
     renderIcon: () => <Gift />,
     shouldDisableOption: () => false,
   },
@@ -124,12 +133,14 @@ const SETTINGS_LINKS = {
     url: ROUTES.ENCRYPT,
     renderIcon: () => <LockIcon />,
     route: ROUTES.ENCRYPT,
+    renderTranslatedLabel: () => <FormattedMessage id="settingsEncryptLink" />,
   },
   RECOVER_WALLET: {
     label: 'Recover Wallet',
     url: ROUTES.ENCRYPT,
     renderIcon: () => <TimeIcon />,
     onClick: loadWalletRecovery,
+    renderTranslatedLabel: () => <FormattedMessage id="recoverWallet" />,
   },
 }
 
@@ -194,7 +205,12 @@ export default function NewSettings({
           >
             {Object.values(SETTINGS_TABS).map(
               /* $FlowFixMe */
-              ({ label, renderIcon, shouldDisableOption }) =>
+              ({
+                label,
+                renderIcon,
+                shouldDisableOption,
+                renderTranslatedLabel,
+              }) =>
                 shouldDisableOption(settings?.chain) ? null : (
                   <Box
                     cursor="pointer"
@@ -228,7 +244,7 @@ export default function NewSettings({
                       >
                         {renderIcon()}
                       </Box>
-                      {label}
+                      {renderTranslatedLabel()}
                     </Box>
                   </Box>
                 ),
@@ -239,7 +255,13 @@ export default function NewSettings({
 
               {Object.values(SETTINGS_LINKS).map(
                 /* $FlowFixMe */
-                ({ label, renderIcon, route, onClick }) =>
+                ({
+                  label,
+                  renderIcon,
+                  route,
+                  onClick,
+                  renderTranslatedLabel,
+                }) =>
                   route ? (
                     <Link to={route}>
                       <Box
@@ -277,7 +299,7 @@ export default function NewSettings({
                       <Box mr="12px" className={styles.settingsIconContainer}>
                         {renderIcon()}
                       </Box>
-                      {label}
+                      {renderTranslatedLabel()}
                     </Box>
                   ),
               )}
@@ -326,6 +348,7 @@ function SettingsOptions({
   activeTab: {
     label: string,
     renderIcon: () => React$Element<any> | null,
+    renderTranslatedLabel: () => React$Element<any> | null,
   },
   options: string[],
   selectedSetting: string,
@@ -346,7 +369,7 @@ function SettingsOptions({
         marginTop="11px"
         color="var(--input-active-border)"
       >
-        {renderHeader ? renderHeader() : activeTab.label}
+        {renderHeader ? renderHeader() : activeTab.renderTranslatedLabel()}
       </Box>
       <Box maxHeight="300px" height="300px" overflow="auto">
         {options.map((option, i) => (
@@ -394,6 +417,7 @@ function ActiveSettingsTab({
   activeTab: {
     label: string,
     renderIcon: () => React$Element<any> | null,
+    renderTranslatedLabel: () => React$Element<any> | null,
   },
   net: string,
   handleNetworkChange: Function,
@@ -535,7 +559,7 @@ function ActiveSettingsTab({
               justifyContent="space-between"
               color="var(--input-active-border)"
             >
-              Network Configuration{' '}
+              {activeTab.renderTranslatedLabel()}
               {settings?.chain === 'neo3' && (
                 <Box
                   className={styles.addNetworkIconContainer}
