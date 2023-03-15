@@ -161,8 +161,10 @@ exports[`Sidebar renders without crashing 1`] = `
             "modalActionConfirm": "Confirm",
             "modifyDetails": "Modify Details",
             "networkConfigTooltipAddress": "ADDRESS:",
+            "networkConfigTooltipNodeRanking": "Candidate Node Rank:",
             "networkConfigTooltipPublicKey": "PUBLIC KEY:",
             "networkConfigTooltipUpdateSettings": "Update Settings",
+            "networkConfigTooltipVotedNode": "Voted Candidate Node:",
             "networkSettingsAutomatic": "AUTOMATIC",
             "networkSettingsCurrentLabel": "CURRENT NETWORK",
             "networkSettingsExplorerLabel": "BLOCK EXPLORER",
@@ -847,8 +849,10 @@ exports[`Sidebar renders without crashing 1`] = `
                                               "modalActionConfirm": "Confirm",
                                               "modifyDetails": "Modify Details",
                                               "networkConfigTooltipAddress": "ADDRESS:",
+                                              "networkConfigTooltipNodeRanking": "Candidate Node Rank:",
                                               "networkConfigTooltipPublicKey": "PUBLIC KEY:",
                                               "networkConfigTooltipUpdateSettings": "Update Settings",
+                                              "networkConfigTooltipVotedNode": "Voted Candidate Node:",
                                               "networkSettingsAutomatic": "AUTOMATIC",
                                               "networkSettingsCurrentLabel": "CURRENT NETWORK",
                                               "networkSettingsExplorerLabel": "BLOCK EXPLORER",
@@ -1197,6 +1201,32 @@ exports[`Sidebar renders without crashing 1`] = `
                                                   >
                                                      
                                                     TOOLTIP_TEST
+                                                  </div>
+                                                </div>
+                                                <div
+                                                  className="votedNodeInfo"
+                                                >
+                                                  <span>
+                                                    Voted Candidate Node:
+                                                  </span>
+                                                  <div
+                                                    className="votedNode"
+                                                  >
+                                                     
+                                                    None selected.
+                                                  </div>
+                                                </div>
+                                                <div
+                                                  className="nodeRankingInfo"
+                                                >
+                                                  <span>
+                                                    Candidate Node Rank:
+                                                  </span>
+                                                  <div
+                                                    className="nodeRanking"
+                                                  >
+                                                     
+                                                    Vote for a candidate node!
                                                   </div>
                                                 </div>
                                                 <SettingsLink

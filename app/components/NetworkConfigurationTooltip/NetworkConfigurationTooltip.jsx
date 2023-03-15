@@ -3,6 +3,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { HashRouter, Link } from 'react-router-dom'
 import { IntlShape } from 'react-intl'
+import { NeoRest } from '@cityofzion/dora-ts/dist/api'
 
 import { ROUTES } from '../../core/constants'
 import SettingsItem from '../Settings/SettingsItem'
@@ -29,11 +30,52 @@ type Props = {
   chain: string,
 }
 
+type State = {
+  VotedNode: List,
+}
+
 export default class NetworkConfigurationTooltip extends React.Component<
   Props,
+  State,
 > {
+  state = {
+    VotedNode: [],
+  }
+
+  componentDidMount() {
+    this.returnVotedNode()
+  }
+
+  returnVotedNode = async () => {
+    try {
+      const results = []
+      const { net, address } = this.props
+      const network = net === 'MainNet' ? 'mainnet' : 'testnet'
+      const data1 = await NeoRest.voter(address, network)
+      const selectednode = data1.candidate
+      results.push(selectednode)
+
+      const data2 = await NeoRest.committee(network)
+      for (const item of data2) {
+        if (item.name === selectednode) {
+          results.push(data2.indexOf(item) + 1)
+          break
+        }
+      }
+      this.setState(state => ({
+        VotedNode: results,
+      }))
+    } catch (err) {
+      console.warn('Error building voted node info:', err)
+    }
+  }
+
   render() {
     const { address, publicKey, theme, intl } = this.props
+    let nodeinfo = ['None selected.', 'Vote for a candidate node!']
+    if (this.state.VotedNode.length === 2) {
+      nodeinfo = this.state.VotedNode
+    }
     return (
       <section
         id="network-config-tooltip"
@@ -64,6 +106,22 @@ export default class NetworkConfigurationTooltip extends React.Component<
                 <div className={styles.publicKey}> {publicKey}</div>
               </div>
             )}
+            <div className={styles.votedNodeInfo}>
+              <span>
+                {intl.formatMessage({
+                  id: 'networkConfigTooltipVotedNode',
+                })}
+              </span>
+              <div className={styles.votedNode}> {nodeinfo[0]}</div>
+            </div>
+            <div className={styles.nodeRankingInfo}>
+              <span>
+                {intl.formatMessage({
+                  id: 'networkConfigTooltipNodeRanking',
+                })}
+              </span>
+              <div className={styles.nodeRanking}> {nodeinfo[1]}</div>
+            </div>
 
             <SettingsLink
               to={ROUTES.NODE_SELECT}

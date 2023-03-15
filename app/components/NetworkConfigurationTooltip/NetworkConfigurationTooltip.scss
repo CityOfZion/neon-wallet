@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   width: 400px;
-  height: 350px;
+  height: 400px;
 
   span {
     text-align: left;
@@ -46,6 +46,7 @@
   width: 100%;
   flex-direction: column;
   align-items: baseline;
+  margin: 6px 0 ;
   opacity: 0.3;
 
   span {
@@ -58,10 +59,42 @@
   word-break: break-word;
 }
 
+.votedNodeInfo {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: baseline;
+  margin: 6px 0 ;
+
+  span {
+    font-size: 12px;
+  }
+}
+
+.votedNode {
+  font-size: 12px;
+}
+
+.nodeRankingInfo {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: baseline;
+  opacity: 0.3;
+
+  span {
+    font-size: 12px;
+  }
+}
+
+.nodeRanking {
+  font-size: 12 px;
+}
+
 .buttonContainer {
   display: flex;
   justify-content: center;
-  margin: 36px 0 6px 0;
+  margin: 18px 0 6px 0;
 
   button {
     width: 250px;

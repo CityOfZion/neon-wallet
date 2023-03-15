@@ -76,6 +76,8 @@ const MISCELLANEOUS = {
   networkConfigTooltipUpdateSettings: 'إعدادات التحديث',
   networkConfigTooltipPublicKey: 'المفتاح العمومي:',
   networkConfigTooltipAddress: 'عنوان:',
+  networkConfigTooltipVotedNode: 'عقدة المرشح المختارة:',
+  networkConfigTooltipNodeRanking: 'رتبة عقدة المرشح:',
 
   noOptionsMessage: 'لا يوجد خيارات',
   isLoadingMessage: 'جار التحميل...',

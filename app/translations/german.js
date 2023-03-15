@@ -77,6 +77,8 @@ const MISCELLANEOUS = {
   networkConfigTooltipUpdateSettings: 'Update Einstellungen',
   networkConfigTooltipPublicKey: 'ÖFFENTLICHER SCHLÜSSEL:',
   networkConfigTooltipAddress: 'ADRESSE:',
+  networkConfigTooltipVotedNode: 'Gewählter Kandidatenknoten:',
+  networkConfigTooltipNodeRanking: 'Rang des Kandidatenknotens:',
 
   noOptionsMessage: 'Keine Optionen',
   isLoadingMessage: 'Wird geladen...',
