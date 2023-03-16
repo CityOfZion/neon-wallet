@@ -161,10 +161,9 @@ exports[`Sidebar renders without crashing 1`] = `
             "modalActionConfirm": "Confirm",
             "modifyDetails": "Modify Details",
             "networkConfigTooltipAddress": "ADDRESS:",
-            "networkConfigTooltipNodeRanking": "Candidate Node Ranking:",
             "networkConfigTooltipPublicKey": "PUBLIC KEY:",
             "networkConfigTooltipUpdateSettings": "Update Settings",
-            "networkConfigTooltipVotedNode": "Voted Candidate Node:",
+            "networkConfigTooltipVotedNode": "VOTE CAST FOR:",
             "networkSettingsAutomatic": "AUTOMATIC",
             "networkSettingsCurrentLabel": "CURRENT NETWORK",
             "networkSettingsExplorerLabel": "BLOCK EXPLORER",
@@ -849,10 +848,9 @@ exports[`Sidebar renders without crashing 1`] = `
                                               "modalActionConfirm": "Confirm",
                                               "modifyDetails": "Modify Details",
                                               "networkConfigTooltipAddress": "ADDRESS:",
-                                              "networkConfigTooltipNodeRanking": "Candidate Node Ranking:",
                                               "networkConfigTooltipPublicKey": "PUBLIC KEY:",
                                               "networkConfigTooltipUpdateSettings": "Update Settings",
-                                              "networkConfigTooltipVotedNode": "Voted Candidate Node:",
+                                              "networkConfigTooltipVotedNode": "VOTE CAST FOR:",
                                               "networkSettingsAutomatic": "AUTOMATIC",
                                               "networkSettingsCurrentLabel": "CURRENT NETWORK",
                                               "networkSettingsExplorerLabel": "BLOCK EXPLORER",
@@ -1207,26 +1205,14 @@ exports[`Sidebar renders without crashing 1`] = `
                                                   className="votedNodeInfo"
                                                 >
                                                   <span>
-                                                    Voted Candidate Node:
+                                                    VOTE CAST FOR:
                                                   </span>
                                                   <div
                                                     className="votedNode"
                                                   >
-                                                     
-                                                    None selected.
-                                                  </div>
-                                                </div>
-                                                <div
-                                                  className="nodeRankingInfo"
-                                                >
-                                                  <span>
-                                                    Candidate Node Ranking:
-                                                  </span>
-                                                  <div
-                                                    className="nodeRanking"
-                                                  >
-                                                     
-                                                    Vote for a candidate node!
+                                                    <Component>
+                                                      <svg />
+                                                    </Component>
                                                   </div>
                                                 </div>
                                                 <SettingsLink

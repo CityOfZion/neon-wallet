@@ -18,6 +18,7 @@ import CogIcon from '../../assets/icons/cog-icon.svg'
 import networkConfigStyles from '../../containers/NetworkConfiguration/NetworkConfiguration.scss'
 import settingsStyles from '../../containers/Settings/Settings.scss'
 import styles from './NetworkConfigurationTooltip.scss'
+import WarningIcon from '../../assets/icons/warning.svg'
 
 type Props = {
   address: string,
@@ -72,10 +73,6 @@ export default class NetworkConfigurationTooltip extends React.Component<
 
   render() {
     const { address, publicKey, theme, intl } = this.props
-    let nodeinfo = ['None selected.', 'Vote for a candidate node!']
-    if (this.state.VotedNode.length === 2) {
-      nodeinfo = this.state.VotedNode
-    }
     return (
       <section
         id="network-config-tooltip"
@@ -112,15 +109,7 @@ export default class NetworkConfigurationTooltip extends React.Component<
                   id: 'networkConfigTooltipVotedNode',
                 })}
               </span>
-              <div className={styles.votedNode}> {nodeinfo[0]}</div>
-            </div>
-            <div className={styles.nodeRankingInfo}>
-              <span>
-                {intl.formatMessage({
-                  id: 'networkConfigTooltipNodeRanking',
-                })}
-              </span>
-              <div className={styles.nodeRanking}> {nodeinfo[1]}</div>
+              {this.renderNode()}
             </div>
 
             <SettingsLink
@@ -182,6 +171,29 @@ export default class NetworkConfigurationTooltip extends React.Component<
           </div>
         </HashRouter>
       </section>
+    )
+  }
+
+  renderNode() {
+    if (this.state.VotedNode.length === 2) {
+      const node = this.state.VotedNode
+      if (node[1] > 21) {
+        return (
+          <div className={styles.votedNode}>
+            {node[0]} <WarningIcon />
+          </div>
+        )
+      }
+      return (
+        <div className={styles.votedNode}>
+          {node[0]} #{node[1]}
+        </div>
+      )
+    }
+    return (
+      <div className={styles.votedNode}>
+        <WarningIcon />
+      </div>
     )
   }
 }
