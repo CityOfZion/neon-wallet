@@ -1,46 +1,21 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { FormattedMessage, IntlShape, injectIntl } from 'react-intl'
-import Button from '../../Button'
+import { injectIntl } from 'react-intl'
 import styles from './Transaction.scss'
 import ClaimIcon from '../../../assets/icons/claim.svg'
-import ContactsAdd from '../../../assets/icons/contacts-add.svg'
-import CopyToClipboard from '../../CopyToClipboard'
 
 type Props = {
   amount: number,
   image: string,
   isPending: boolean,
-  findContact: (address: string) => React$Node | null,
-  from: string,
-  intl: IntlShape,
-  showAddContactModal: (to: string) => void,
   symbol: string,
   txDate: React$Node,
 }
 
 class N3ClaimAbstract extends React.Component<Props> {
   render = () => {
-    const {
-      amount,
-      image,
-      isPending,
-      findContact,
-      from,
-      intl,
-      showAddContactModal,
-      symbol,
-      txDate,
-    } = this.props
-    const logo = image && (
-      <img
-        src={image.replace('ipfs://', 'https://ipfs.io/ipfs/')}
-        alt={`${symbol}`}
-      />
-    )
-    const contactFrom = from && findContact(from)
-    const contactFromExists = contactFrom !== from
+    const { amount, image, isPending, symbol, txDate } = this.props
     return (
       <div className={classNames(styles.transactionContainerN3)}>
         <div className={styles.abstractContainerN3}>
@@ -56,27 +31,11 @@ class N3ClaimAbstract extends React.Component<Props> {
         <div className={styles.txToContainerN3}>
           <div className={styles.txTransferContainerN3}>
             <div className={styles.txTokenContainerN3}>
-              {logo}
+              <img src={image} />
               {symbol}
             </div>
             <div className={styles.txAmountContainerN3}>{amount}</div>
           </div>
-          <div className={styles.txSubjectContainerN3}>
-            <p>{contactFrom}</p>
-            <CopyToClipboard
-              className={styles.copy}
-              text={contactFrom}
-              tooltip={intl.formatMessage({ id: 'copyAddressTooltip' })}
-            />
-          </div>
-          <Button
-            className={styles.transactionHistoryButton}
-            renderIcon={ContactsAdd}
-            onClick={() => showAddContactModal(from)}
-            disabled={contactFromExists}
-          >
-            <FormattedMessage id="activityAddAddress" />
-          </Button>
         </div>
       </div>
     )
