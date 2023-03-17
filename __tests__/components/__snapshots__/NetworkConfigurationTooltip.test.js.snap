@@ -1210,8 +1210,12 @@ exports[`Sidebar renders without crashing 1`] = `
                                                   <div
                                                     className="votedNode"
                                                   >
-                                                    <Component>
-                                                      <svg />
+                                                    <Component
+                                                      className="warningIcon"
+                                                    >
+                                                      <svg
+                                                        className="warningIcon"
+                                                      />
                                                     </Component>
                                                   </div>
                                                 </div>
