@@ -180,7 +180,7 @@ export default class NetworkConfigurationTooltip extends React.Component<
       if (node[1] > 21) {
         return (
           <div className={styles.votedNode}>
-            {node[0]} <WarningIcon />
+            {node[0]} <WarningIcon className={styles.warningIcon} />
           </div>
         )
       }
@@ -192,7 +192,7 @@ export default class NetworkConfigurationTooltip extends React.Component<
     }
     return (
       <div className={styles.votedNode}>
-        <WarningIcon />
+        <WarningIcon className={styles.warningIcon} />
       </div>
     )
   }
