@@ -74,8 +74,7 @@ const MISCELLANEOUS = {
   networkConfigTooltipUpdateSettings: 'Cập nhật cài đặt',
   networkConfigTooltipPublicKey: 'KHÓA CÔNG KHAI:',
   networkConfigTooltipAddress: 'ĐỊA CHỈ:',
-  networkConfigTooltipVotedNode: 'Ứng viên được chọn:',
-  networkConfigTooltipNodeRanking: 'Xếp hạng ứng viên:',
+  networkConfigTooltipVotedNode: 'Bình chọn cho:',
 
   noOptionsMessage: 'Không có lựa chọn',
   isLoadingMessage: 'Đang tải...',

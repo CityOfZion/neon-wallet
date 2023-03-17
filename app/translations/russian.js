@@ -77,8 +77,7 @@ const MISCELLANEOUS = {
   networkConfigTooltipUpdateSettings: 'Изменить Настройки',
   networkConfigTooltipPublicKey: 'ОТКРЫТЫЙ КЛЮЧ:',
   networkConfigTooltipAddress: 'АДРЕС:',
-  networkConfigTooltipVotedNode: 'Выбранный узел-кандидат:',
-  networkConfigTooltipNodeRanking: 'Ранг узла-кандидата:',
+  networkConfigTooltipVotedNode: 'Проголосовать за:',
 
   noOptionsMessage: 'Опции отсутствуют',
   isLoadingMessage: 'Загружается...',

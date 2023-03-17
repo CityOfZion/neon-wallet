@@ -77,8 +77,7 @@ const MISCELLANEOUS = {
   networkConfigTooltipUpdateSettings: 'Instelling bijwerken',
   networkConfigTooltipPublicKey: 'PUBLIC KEY:',
   networkConfigTooltipAddress: 'ADRES:',
-  networkConfigTooltipVotedNode: 'Gestemd kandidaat-knooppunt:',
-  networkConfigTooltipNodeRanking: 'Kandidaat Node Rank:',
+  networkConfigTooltipVotedNode: 'STEM UITGEBRACHT VOOR:',
 
   noOptionsMessage: 'Geen opties',
   isLoadingMessage: 'Bezig met laden...',
