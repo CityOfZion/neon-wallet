@@ -41,6 +41,8 @@ const mapSelectedNodeDataToProps = url => ({
   selectedNode: url,
 })
 
+export { renderNode } from './NetworkConfigurationTooltip'
+
 export default compose(
   connect(
     mapStateToProps,
