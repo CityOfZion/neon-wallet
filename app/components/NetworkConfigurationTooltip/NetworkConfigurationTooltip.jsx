@@ -52,14 +52,14 @@ export default class NetworkConfigurationTooltip extends React.Component<
       const results = []
       const { net, address } = this.props
       const network = net === 'MainNet' ? 'mainnet' : 'testnet'
-      const data1 = await NeoRest.voter(address, network)
-      const selectednode = data1.candidate
+      const candidateResponse = await NeoRest.voter(address, network)
+      const selectednode = candidateResponse.candidate
       results.push(selectednode)
 
-      const data2 = await NeoRest.committee(network)
-      for (const item of data2) {
+      const comitteeResponse = await NeoRest.committee(network)
+      for (const item of comitteeResponse) {
         if (item.name === selectednode) {
-          results.push(data2.indexOf(item) + 1)
+          results.push(comitteeResponse.indexOf(item) + 1)
           break
         }
       }
@@ -93,6 +93,14 @@ export default class NetworkConfigurationTooltip extends React.Component<
               </span>
               <div className={styles.addressLink}> {address}</div>
             </div>
+            <div className={styles.votedNodeInfo}>
+              <span>
+                {intl.formatMessage({
+                  id: 'networkConfigTooltipVotedNode',
+                })}
+              </span>
+              {this.renderNode()}
+            </div>
             {publicKey && (
               <div className={styles.publicKeyInfo}>
                 <span>
@@ -103,14 +111,6 @@ export default class NetworkConfigurationTooltip extends React.Component<
                 <div className={styles.publicKey}> {publicKey}</div>
               </div>
             )}
-            <div className={styles.votedNodeInfo}>
-              <span>
-                {intl.formatMessage({
-                  id: 'networkConfigTooltipVotedNode',
-                })}
-              </span>
-              {this.renderNode()}
-            </div>
 
             <SettingsLink
               to={ROUTES.NODE_SELECT}
