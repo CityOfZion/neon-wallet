@@ -1,18 +1,14 @@
 import React from 'react'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
-import { shallow, mount, render } from 'enzyme'
+import { mount } from 'enzyme'
 import thunk from 'redux-thunk'
 import { progressValues } from 'spunky'
 import { MemoryRouter } from 'react-router-dom'
-import { cloneDeep, wrap } from 'lodash-es'
 
-import { createStore, provideStore, provideState } from '../testHelpers'
-import Sidebar from '../../app/containers/App/Sidebar'
 import {
   THEMES,
   EXPLORERS,
-  MAIN_NETWORK_DEPRECATED_LABEL,
   MAIN_NETWORK_LABEL,
   DEFAULT_LANGUAGE,
 } from '../../app/core/constants'
