@@ -76,6 +76,7 @@ const MISCELLANEOUS = {
   networkConfigTooltipUpdateSettings: 'Ayarları güncelle',
   networkConfigTooltipPublicKey: 'PGENEL ANAHTAR:',
   networkConfigTooltipAddress: 'ADRES:',
+  networkConfigTooltipVotedNode: 'Şunun için oy verin:',
 
   noOptionsMessage: 'Seçenek yok',
   isLoadingMessage: 'Yükleniyor...',

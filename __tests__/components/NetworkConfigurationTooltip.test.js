@@ -1,22 +1,18 @@
 import React from 'react'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
-import { shallow, mount } from 'enzyme'
+import { mount } from 'enzyme'
 import thunk from 'redux-thunk'
 import { progressValues } from 'spunky'
 import { MemoryRouter } from 'react-router-dom'
-import { cloneDeep } from 'lodash-es'
 
-import { createStore, provideStore, provideState } from '../testHelpers'
-import Sidebar from '../../app/containers/App/Sidebar'
 import {
   THEMES,
   EXPLORERS,
-  MAIN_NETWORK_DEPRECATED_LABEL,
   MAIN_NETWORK_LABEL,
   DEFAULT_LANGUAGE,
 } from '../../app/core/constants'
-import NetworkConfigurationTooltip from '../../app/components/NetworkConfigurationTooltip'
+import NetworkConfigurationTooltip, { renderNode } from '../../app/components/NetworkConfigurationTooltip'
 import IntlWrapper from '../../app/components/Root/IntlWrapper'
 
 const { LOADED, LOADING } = progressValues
@@ -79,6 +75,27 @@ const networkConfigTooltipSetup = (
   }
 }
 
+const renderNodeSetup = (
+  node: Array<any>,
+  state = initialState,
+  shallowRender = true,
+) => {
+  const store = configureStore([thunk])(state)
+  const wrapper = mount(
+    <Provider store={store}>
+      <IntlWrapper lang="en">
+        <MemoryRouter initialEntries={['/']} keyLength={0}>
+          <div>{renderNode(node)}</div>
+        </MemoryRouter>
+      </IntlWrapper>
+    </Provider>,
+  )
+  return {
+    store,
+    wrapper,
+  }
+}
+
 describe('Sidebar', () => {
   test('renders without crashing', () => {
     const { wrapper } = networkConfigTooltipSetup()
@@ -89,5 +106,32 @@ describe('Sidebar', () => {
     const { wrapper } = networkConfigTooltipSetup()
     expect(wrapper.text().includes(MAIN_NETWORK_LABEL.toUpperCase())).toBe(true)
     expect(wrapper.text().includes(TEST_ADDRESS)).toBe(true)
+  })
+})
+
+describe('renderNode with no vote', () => {
+  test('renders warningicon with no vote', () => {
+    const node = []
+    const { wrapper } = renderNodeSetup(node)
+    expect(wrapper).toMatchSnapshot()
+  })
+})
+
+describe('renderNode with a vote', () => {
+  test('renders warningicon with no vote', () => {
+    const node = ['test node', 1]
+    const { wrapper } = renderNodeSetup(node)
+    expect(wrapper).toMatchSnapshot()
+    expect(wrapper.text().includes('test node #1')).toBe(true)
+  })
+})
+
+describe('renderNode with a node that has fallen out of top 21', () => {
+  test('renders warningicon with no vote', () => {
+    const node = ['test node', 22]
+    const { wrapper } = renderNodeSetup(node)
+    expect(wrapper).toMatchSnapshot()
+    expect(wrapper.text().includes('test node')).toBe(true)
+    expect(wrapper.text().includes('#22')).toBe(false)
   })
 })
