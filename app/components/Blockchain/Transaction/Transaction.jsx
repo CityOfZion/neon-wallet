@@ -16,6 +16,7 @@ import N3VoteAbstract from './N3VoteAbstract'
 import N3NEP17SendAbstract from './N3NEP17SendAbstract'
 import N3NEP17ReceiveAbstract from './N3NEP17ReceiveAbstract'
 import N3ContractInvocationAbstract from './N3ContractInvocationAbstract'
+import N3ClaimAbstract from './N3ClaimAbstract'
 import InfoIcon from '../../../assets/icons/info.svg'
 import { openExplorerTx } from '../../../core/explorer'
 import Tooltip from '../../Tooltip'
@@ -216,6 +217,8 @@ export default class Transaction extends React.Component<Props> {
         return <N3NEP11SendAbstract {...metadata} />
       case TX_TYPES.N3VOTE:
         return <N3VoteAbstract {...metadata} />
+      case TX_TYPES.CLAIM:
+        return <N3ClaimAbstract {...metadata} />
       default:
         console.warn('renderTxTypeIcon() invoked with an invalid argument!', {
           type,
